@@ -114,10 +114,10 @@ S.ready(function(S){
 	S.ready(function(S){
 		S.log(S.afterReady);
 		//we recommand u to use S.getScript and S.getCSS to load extra js and css files
-		var prototype = 'http://prototypejs.org/assets/2010/5/13/prototype.js';
-		S.getScript(prototype,function(){
+		var p = 'http://tbexample.googlecode.com/svn/trunk/sandbox/jquery-1.4.2.js';
+		S.getScript(p,function(){
 			if(typeof $ != 'undefined'){
-				S.log('prototype is ok','orange');
+				S.log('jquery is ok','orange');
 			}
 		});
 	});
@@ -126,6 +126,7 @@ S.ready(function(S){
 
 S.use('yui3','calendar-skin').ready(function(S){
 	YUI({
+		charset:'utf-8',
 		modules:{
 			'calendar':{
 				fullpath:'http://cubee.github.com/src/calendar/calendar.js',
