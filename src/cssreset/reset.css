@@ -54,8 +54,9 @@ q:before,q:after { content: ''; }
 abbr,acronym { border: none; font-variant: normal; }
 
 /* to preserve line-height and selector appearance */
-sup { vertical-align: text-top; }
+/*sup { vertical-align: text-top; }
 sub { vertical-align: text-bottom; }
+*/
 
 input,button,textarea,select {
 	font-family: inherit;
@@ -72,7 +73,7 @@ select, input, button, textarea {
 /**
  * fixed-width elements
  */
-pre, code, kbd, samp, tt{
+pre, code, kbd, samp, tt {
 	font-family: 'Courier New', Courier, monospace;
 }
 
@@ -99,12 +100,12 @@ abbr, acronym {
 	cursor: help;
 }
 
-ins { text-decoration: none; }
+/*ins { text-decoration: none; }
 del { text-decoration: line-through; }
-
+*/
 hr {
-    color: #D1D7DC;
-    background-color: #D1D7DC;
+    color: #ccc;
+    background-color: #ccc;
     border: none;
     height: 1px;
 }
