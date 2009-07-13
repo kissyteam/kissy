@@ -93,7 +93,7 @@ a:hover {
 	text-decoration: underline;
 }
 
-abbr,acronym {
+abbr, acronym {
 	/* indicating to users that more info is available */
 	border-bottom: 1px dotted;
 	cursor: help;

@@ -1,0 +1,272 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>Layout Test</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+		<link rel="stylesheet" href="reset.source.css" type="text/css" media="screen" />
+		<style type="text/css">
+			/*默认100%宽*/
+			
+			/* width 950px*/
+			.w950 #header,
+			.w950 #content,
+			.w950 #footer{
+				margin: 0 auto;
+				width: 950px;
+			}
+			/* width 750px*/
+			.w750 #header,
+			.w750 #content,
+			.w750 #footer{
+				margin: 0 auto;
+				width: 750px;
+			}
+
+			/* full width */
+			#page.full-width {
+				padding: 0 10px;
+			}
+
+			/*以上页面宽度结束，开始grid布局*/
+			.col-main { float: left; width: 100%; }
+			.col-sub, .col-extra { float: left; }
+			
+			/***********************************************
+			 * Default
+			 ***********************************************/
+			/* 2 Columns: .grid-c2-s5 */
+			.layout-c2 .main-wrap { margin-left: 200px; }
+			.layout-c2 .col-sub { width: 190px; margin-left: -100%; }
+			.layout-c2f .main-wrap { margin-right: 200px; }
+			.layout-c2f .col-sub { width: 190px; margin-left: -190px; }
+			
+			/* 3 Columns: .grid-c3-s5e6 */
+			.layout-c3 .main-wrap { margin: 0 240px 0 200px; }
+			.layout-c3 .col-sub { width: 190px; margin-left: -100%; }
+			.layout-c3 .col-extra { width: 230px; margin-left: -230px; }
+			.layout-c3f .main-wrap { margin: 0 200px 0 240px; }
+			.layout-c3f .col-sub { width: 190px; margin-left: -190px; }
+			.layout-c3f .col-extra { width: 230px; margin-left: -100%; }
+			.layout-c3e .main-wrap { margin-right: 440px; }
+			.layout-c3e .col-sub { width: 190px; margin-left: -430px; }
+			.layout-c3e .col-extra { width: 230px; margin-left: -230px; }
+			.layout-c3d .main-wrap { margin-right: 440px; }
+			.layout-c3d .col-sub { width: 190px; margin-left: -190px; }
+			.layout-c3d .col-extra { width: 230px; margin-left: -430px; }
+			.layout-c3c .main-wrap { margin-left: 440px; }
+			.layout-c3c .col-sub { width: 190px; margin-left: -100%; }
+			.layout-c3c .col-extra { width: 230px; margin-left: -100%; left: 200px; }
+			.layout-c3b .main-wrap { margin-left: 440px; }
+			.layout-c3b .col-sub { width: 190px; margin-left: -100%; left: 240px; }
+			.layout-c3b .col-extra { width: 230px; margin-left: -100%; }
+			
+			/***********************************************
+			 * 2 Columns
+			 * normal - main : sub
+			 *      f - sub  : main
+			 ***********************************************/
+			/* s4 */
+			.layout-c2-s4 .main-wrap { margin-left: 160px; }
+			.layout-c2-s4 .col-sub { width: 150px; margin-left: -100%; }
+			.layout-c2-s4f .main-wrap { margin-right: 160px; }
+			.layout-c2-s4f .col-sub { width: 150px; margin-left: -150px; }
+			
+			/* s6 */
+			.layout-c2-s6 .main-wrap { margin-left: 240px; }
+			.layout-c2-s6 .col-sub { width: 230px; margin-left: -100%; }
+			.layout-c2-s6f .main-wrap { margin-right: 240px; }
+			.layout-c2-s6f .col-sub { width: 230px; margin-left: -230px; }
+			
+			/* s7 */
+			.layout-c2-s7 .main-wrap { margin-left: 280px; }
+			.layout-c2-s7 .col-sub { width: 270px; margin-left: -100%; }
+			.layout-c2-s7f .main-wrap { margin-right: 280px; }
+			.layout-c2-s7f .col-sub { width: 270px; margin-left: -270px; }
+			
+			/* s8 */
+			.layout-c2-s8 .main-wrap { margin-left: 320px; }
+			.layout-c2-s8 .col-sub { width: 310px; margin-left: -100%; }
+			.layout-c2-s8f .main-wrap { margin-right: 320px; }
+			.layout-c2-s8f .col-sub { width: 310px; margin-left: -310px; }
+			
+			/* s9 */
+			.layout-c2-s9 .main-wrap { margin-left: 360px; }
+			.layout-c2-s9 .col-sub { width: 350px; margin-left: -100%; }
+			.layout-c2-s9f .main-wrap { margin-right: 360px; }
+			.layout-c2-s9f .col-sub { width: 350px; margin-left: -350px; }
+			
+			/* s10 */
+			.layout-c2-s10 .main-wrap { margin-left: 400px; }
+			.layout-c2-s10 .col-sub { width: 390px; margin-left: -100%; }
+			.layout-c2-s10f .main-wrap { margin-right: 400px; }
+			.layout-c2-s10f .col-sub { width: 390px; margin-left: -390px; }
+			
+			/* s11 */
+			.layout-c2-s11 .main-wrap { margin-left: 440px; }
+			.layout-c2-s11 .col-sub { width: 430px; margin-left: -100%; }
+			.layout-c2-s11f .main-wrap { margin-right: 440px; }
+			.layout-c2-s11f .col-sub { width: 430px; margin-left: -430px; }
+			
+			/* s12 */
+			.layout-c2-s12 .main-wrap { margin-left: 480px; }
+			.layout-c2-s12 .col-sub { width: 470px; margin-left: -100%; }
+			.layout-c2-s12f .main-wrap { margin-right: 480px; }
+			.layout-c2-s12f .col-sub { width: 470px; margin-left: -470px; }
+			
+			/***********************************************
+			 * 3 Columns
+			 * normal - sub   : main  : extra
+			 *      f - extra : main  : sub
+			 *      e - main  : sub   : extra
+			 *      d - main  : extra : sub
+			 *      c - sub   : extra : main
+			 *      b - extra : sub   : main
+			 ***********************************************/
+			/* s5e7 */
+			.layout-c3-s5e7 .main-wrap { margin: 0 280px 0 200px; }
+			.layout-c3-s5e7 .col-sub { width: 190px; margin-left: -100%; }
+			.layout-c3-s5e7 .col-extra { width: 270px; margin-left: -270px; }
+			.layout-c3-s5e7f .main-wrap { margin: 0 200px 0 280px; }
+			.layout-c3-s5e7f .col-sub { width: 190px; margin-left: -190px; }
+			.layout-c3-s5e7f .col-extra { width: 270px; margin-left: -100%; }
+			.layout-c3-s5e7e .main-wrap { margin-right: 480px; }
+			.layout-c3-s5e7e .col-sub { width: 190px; margin-left: -470px; }
+			.layout-c3-s5e7e .col-extra { width: 270px; margin-left: -270px; }
+			.layout-c3-s5e7d .main-wrap { margin-right: 480px; }
+			.layout-c3-s5e7d .col-sub { width: 190px; margin-left: -190px; }
+			.layout-c3-s5e7d .col-extra { width: 270px; margin-left: -470px; }
+			.layout-c3-s5e7c .main-wrap { margin-left: 480px; }
+			.layout-c3-s5e7c .col-sub { width: 190px; margin-left: -100%; }
+			.layout-c3-s5e7c .col-extra { width: 270px; margin-left: -100%; left: 200px; }
+			.layout-c3-s5e7b .main-wrap { margin-left: 480px; }
+			.layout-c3-s5e7b .col-sub { width: 190px; margin-left: -100%; left: 280px; }
+			.layout-c3-s5e7b .col-extra { width: 270px; margin-left: -100%; }
+			
+			/* s9e6 */
+			.layout-c3-s9e6 .main-wrap { margin: 0 240px 0 360px; }
+			.layout-c3-s9e6 .col-sub { width: 350px; margin-left: -100%; }
+			.layout-c3-s9e6 .col-extra { width: 230px; margin-left: -230px; }
+			.layout-c3-s9e6f .main-wrap { margin: 0 360px 0 240px; }
+			.layout-c3-s9e6f .col-sub { width: 350px; margin-left: -350px; }
+			.layout-c3-s9e6f .col-extra { width: 230px; margin-left: -100%; }
+			.layout-c3-s9e6e .main-wrap { margin-right: 600px; }
+			.layout-c3-s9e6e .col-sub { width: 350px; margin-left: -590px; }
+			.layout-c3-s9e6e .col-extra { width: 230px; margin-left: -230px; }
+			.layout-c3-s9e6d .main-wrap { margin-right: 600px; }
+			.layout-c3-s9e6d .col-sub { width: 350px; margin-left: -350px; }
+			.layout-c3-s9e6d .col-extra { width: 230px; margin-left: -590px; }
+			.layout-c3-s9e6c .main-wrap { margin-left: 600px; }
+			.layout-c3-s9e6c .col-sub { width: 350px; margin-left: -100%; }
+			.layout-c3-s9e6c .col-extra { width: 230px; margin-left: -100%; left: 360px; }
+			.layout-c3-s9e6b .main-wrap { margin-left: 600px; }
+			.layout-c3-s9e6b .col-sub { width: 350px; margin-left: -100%; left: 240px; }
+			.layout-c3-s9e6b .col-extra { width: 230px; margin-left: -100%; }
+			
+			/* s8e8 */
+			.layout-c3-s8e8 .main-wrap { margin: 0 320px 0 320px; }
+			.layout-c3-s8e8 .col-sub { width: 310px; margin-left: -100%; }
+			.layout-c3-s8e8 .col-extra { width: 310px; margin-left: -310px; }
+			
+			/***********************************************
+			 * Clearing
+			 ***********************************************/
+			.grid:after,
+			.main-wrap:after, .col-sub:after, .col-extra:after {
+				content: '\0020';
+				display: block;
+				height: 0;
+				clear: both;
+			}
+			.grid,
+			.main-wrap, .col-sub, .col-extra {
+				zoom: 1; /* clearing float for ie */
+			}
+			
+			/***********************************************
+			 * Misc
+			 ***********************************************/
+			/* bug fix: 当主栏没有内容时，在ff和chrome等浏览器下，布局不对 */
+			.col-main {
+				min-height: 1px;
+			}
+			
+			/* bug fix: 解决Chrome和Safari下选取文字时，背景区域不对的bug */
+			body:first-of-type .main-wrap {
+			    position: relative;
+			}
+			
+			/**
+			 * 最开始，position: relative是加在所有.col-sub和.col-extra上的
+			 * 当时调整的原因是position: relative有时会导致ie6下的性能问题
+			 * 但后来经过研究，ie6下的性能问题实际上是因为没有hasLayout引起的
+			 * 其它问题暂时都是空穴来风，尚未考证
+			 *
+			 * 依旧采用下面的写法，是出于最小影响原理
+			 * 因为只有下面这些布局需要position: relative来实现
+			 */
+			.layout-c3c .col-extra, .layout-c3b .col-sub,
+			.layout-c3-s5e7c .col-extra, .layout-c3-s5e7b .col-sub,
+			.layout-c3-s9e6c .col-extra, .layout-c3-s9e6b .col-sub {
+				position: relative;
+			}
+			
+			
+			
+			
+			/*demo test*/
+				#page { background: #EEE url(assets/layout-bg.png) }
+				
+				.main-wrap{ background: #CCC url(assets/layout-bg.png) }
+				.main-wrap .test-box{ border-color:#CCC;}
+				.col-sub { background: #99ccff url(assets/layout-bg.png)}
+				.col-sub .test-box-big{ border-color:#99ccff;}
+				.col-extra { background: #ffffcc url(assets/layout-bg.png);}
+				.col-extra .test-box-small{ border-color:#ffffcc;}
+
+				.test-box,
+				.test-box-big,
+				.test-box-small { padding: 10px; height: 90px; border: 5px solid; text-align: center; line-height: 90px; font-size: 18px; }
+				.width { font-family: 'Courier New', monospace; padding: 10px }
+				
+
+
+		</style>
+	</head>
+	<body>
+		<div id="page" class="w950">
+			<div id="header">
+				<h1>Grids Layout Demo</h1>
+			</div>
+			<div id="content" class="fullwidth inside-width-950">
+				<div class="grid layout-c2f">
+					<div class="col-main">
+						<div class="main-wrap">
+							<div class="test-box">main<span class="width">750px</span></div>
+						</div>
+					</div>
+					<div class="col-sub">
+						<div class="test-box-big">sub<span class="width">190px</span></div>
+					</div>
+				</div>
+				<div class="grid layout-c3">
+					<h2>三栏</h2>
+					<div class="col-main">
+						<div class="main-wrap">
+							<div class="test-box">main<span class="width">510px</span></div>
+						</div>
+					</div>
+					<div class="col-sub">
+						<div class="test-box-big">sub<span class="width">190px</span></div>
+					</div>
+					<div class="col-extra">
+						<div class="test-box-small">extra<span class="width">230px</span></div>
+					</div>
+				</div>
+				
+			</div>
+			<div id="footer">
+			footer
+			</div>
+		</div>
+	</body>
+</html>
