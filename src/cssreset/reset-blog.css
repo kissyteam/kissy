@@ -6,9 +6,10 @@ CSS Reset for Blog
 
 /* include(reset.css) */
 
-html {
+body {
     /* big font make content more readable */
-    font: 14px / 150%;
+    font-size: 14px;
+    line-height: 1.5;
     color: #444;
 }
 a {
