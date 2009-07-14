@@ -1,0 +1,50 @@
+/*
+CSS Reset for Blog
+适用：Blog 等以大段信息展示为主的页面
+维护：玉伯(lifesinger@gmail.com)
+*/
+
+/* include(reset.css) */
+
+html {
+    /* big font make content more readable */
+    font: 14px / 150%;
+    color: #444;
+}
+a {
+    /* blue is more readable for link */
+    color: #06c;
+}
+
+blockquote, ul, ol, dl {
+	/* giving blockquotes and lists room to breath */
+	margin: 1em;
+}
+ul, ol, dl {
+	/* bringing lists on to the page with breathing room */
+	margin-left: 2em;
+}
+ol li {
+	/* giving OL's LIs generated numbers */
+	list-style: decimal outside;
+}
+ul li {
+	/* giving UL's LIs generated disc markers */
+	list-style: disc outside;
+}
+dl dd {
+	/* providing spacing for definition terms */
+	margin-left: 1em;
+}
+th,td {
+	/* padding to make the table readable */
+	padding: .5em;
+}
+caption {
+	/* coordinated margin to match cell's padding */
+	margin-bottom: .5em;
+}
+p, fieldset, table, pre {
+	/* so things don't run into each other */
+	margin-bottom: 1em;
+}

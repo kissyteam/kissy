@@ -4,12 +4,14 @@ CSS Reset for Taobao
 维护：玉伯(lifesinger@gmail.com), 正淳(ragecarrier@gmail.com)
 */
 
+/* include(reset.css) */
+
 html {
     color: #404040; /* 淘宝文字默认色 */
     background: #fff; /* 覆盖掉用户在不知情的情况下，设置的页面背景 */
 }
 
 /* 淘宝链接默认色 */
-a { color: #36c; }
+a { color: #404040; }
 a:hover { color: #f60; }
 
