@@ -3,3 +3,15 @@
 · p 的 margin 是否需要恢复？
 · a 的默认颜色问题？
 · dfn, em 的默认样式？
+
+· yui cssbase 中的默认样式？
+
+· 疯狂测试
+
+
+· 与 yui-cssreset 相比，
+ 1. 去掉了 div, code, form 等重置样式
+ 2. 去掉了 caption 的样式
+ 3. 去掉了表单元素 inherit 一段
+ 4. 其它精简和调整
+

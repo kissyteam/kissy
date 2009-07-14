@@ -1,108 +1,38 @@
-/*! Taobao Style Platform Copyright(c) 2008-2100, Taobao.com Inc. Some rights reserved. */
+/*
+CSS Reset
+理念：Reset = Re + Set, 清除浏览器差异和重置默认样式是紧密不可分的。
+维护：玉伯(lifesinger@gmail.com), 正淳(ragecarrier@gmail.com)
+*/
 
-/**
- * reset.css based on YUI
- *
- * Update Log:
- * 2009-05-18   yubo    将html的默认背景色从白色改成透明
- * 2009-03-26   yubo    将reset.css和base.css合并为reset.css
- * 2009-02-11   yubo    将small的样式也reset掉
- * 2009-02-10   yubo    border: 0 -> border: none
- * 2008-12-23   yubo    margin: 0; padding: 0 中加入 button. 表单元素相关样式中也加入button
- * 2008-11-12	yubo	created initial version
- *  word-wrap:break-word; table-layout:fixed; overflow:hidden; text-overflow:ellipsis; 英文折行备注
- * html, legend { color: #404040; background:#fff; 经测试如果再设置body背景后会有上下空白出现，所以修改成transparent}
 
- */
-body { font: 12px/1.5 Tahoma,Helvetica,Arial,'宋体',sans-serif; }
-html, legend { color: #404040; background:transparent;}
-
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td {
-	margin: 0;
-	padding: 0;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-	font-size: inherit; font: 100%; 
-}
-td,th{
-	border: 1px solid #CCC;
-}
-fieldset,img {
-	border: none;
+/* 清除内外边距 */
+body, h1, h2, h3, h4, h5, h6, p, blockquote, /* structural elements 结构元素 */
+dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
+pre, /* text formatting elements 文本格式元素 */
+fieldset, lengend, button, input, textarea, /* form elements 表单元素 */
+th, td { /* table elements 表格元素 */
+    margin: 0;
+    padding: 0;
 }
 
-address,caption,cite,code,dfn,var{
-	font-style: normal;
-	font-weight: 400;
-}
-em{
-	font-style: normal;
-}
-li { list-style: none; }
 
-caption{ text-align: left; }
+/* 设置默认字体 */
+body,
+button, input, select, textarea { /* for ie */
+    font: 12px/1.5 Tahoma, Helvetica, Arial, "宋体", sans-serif;
+}
 
-h1,h2,h3,h4,h5,h6 { font-size: 100%;}
 h1 { font-size: 18px; /* 18px / 12px = 1.5 */ }
 h2 { font-size: 16px; }
 h3 { font-size: 14px; }
+h4, h5, h6 { font-size: 100%; }
 
-q:before,q:after { content: ''; }
+address, cite, dfn, em, var { font-style: normal; } /* 将斜体扶正 */
+code, kbd, pre, samp, tt { font-family: "Courier New", Courier, monospace; } /* 统一等宽字体 */
+small { font-size: 12px; } /* 小于 12px 的中文很难阅读，让 small 正常化 */
 
-abbr,acronym { border: none; font-variant: normal; }
 
-/* to preserve line-height and selector appearance */
-/*sup { vertical-align: text-top; }
-sub { vertical-align: text-bottom; }
-*/
-
-input,button,textarea,select {
-	font-family: inherit;
-	font-size: inherit;
-	font-weight: inherit;
-}
-/*to enable resizing for IE*/
-input,button,textarea,select { *font-size: 100%; }
-
-select, input, button, textarea {
-	font: 100% Tahoma,Helvetica,Arial,sans-serif;
-}
-
-/**
- * fixed-width elements
- */
-pre, code, kbd, samp, tt {
-	font-family: 'Courier New', Courier, monospace;
-}
-
-/**
- * 默认情况下，small的字号比默认小，这里reset掉，抹平差异
- * 对于中文默认为12px时，让small也12px非常有必要。小于12px的中文字很难识别
- */
-small { font-size: 100%; }
-
-/*a:link, a:visited {*/
-a {
-	color: #404040;
-	text-decoration: none;
-}
-/*a:hover, a:active {*/
-a:hover {
-	color: #f60;
-	text-decoration: underline;
-}
-
-abbr, acronym {
-	/* indicating to users that more info is available */
-	border-bottom: 1px dotted;
-	cursor: help;
-}
-
-/*ins { text-decoration: none; }
-del { text-decoration: line-through; }
-*/
+/* 重置结构元素 */
 hr {
     color: #ccc;
     background-color: #ccc;
@@ -110,16 +40,38 @@ hr {
     height: 1px;
 }
 
-/***********************************************
- * Misc Style
- ***********************************************/
-/* 让非ie浏览器默认也显示垂直滚动条，防止因滚动条引起的闪烁等 */
-html {
-    /*min-height: 101%; 这个方法不好，不是想要的效果 */
 
-    overflow-y: scroll; /* 在opera下会同时触发水平滚动条，但考虑opera的用户数，也就可以忽略了 */
+/* 重置列表元素 */
+li { list-style: none; }
 
-	/*overflow: -moz-scrollbars-vertical; 这个方法只针对firefox
-    overflow-x: auto; 上面一行会将overflow-x干掉，因此这里重设回来
-    ref: http://developer.mozilla.org/en/docs/Mozilla_CSS_Extensions#overflow */
+
+/* 重置文本格式元素 */
+a { color: blue; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+abbr[title], acronym[title] { /* 注：1.ie6 不支持 abbr; 2.这里用了属性选择符，ie6 下无效果 */
+	border-bottom: 1px dotted;
+	cursor: help;
 }
+
+q:before, q:after { content: ''; }
+
+
+/* 重置表单元素 */
+legend { color: #000; } /* for ie6 */
+fieldset, img { border: none; } /* img 搭车：让链接里的 img 无边框 */
+/* 注：optgroup 无法扶正 */
+button, input, select, textarea {
+    font-size: 100%; /* 使得表单元素在 ie 下能继承字体大小 */
+}
+
+/* 重置表格元素 */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+td, th { border: 1px solid #ccc; }
+
+
+/* 让非ie浏览器默认也显示垂直滚动条，防止因滚动条引起的闪烁 */
+html { overflow-y: scroll; }
