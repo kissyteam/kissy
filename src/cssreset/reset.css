@@ -20,7 +20,8 @@ th, td { /* table elements 表格元素 */
 /* 设置默认字体 */
 body,
 button, input, select, textarea { /* for ie */
-    font: 12px/1 Tahoma, Helvetica, Arial, "宋体", sans-serif;
+    /*font: 12px/1 Tahoma, Helvetica, Arial, "宋体", sans-serif;*/
+    font: 12px/1 Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif; /* 用 ascii 字符表示，使得在任何编码下都无问题 */
 }
 
 h1 { font-size: 18px; /* 18px / 12px = 1.5 */ }
