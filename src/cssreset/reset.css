@@ -1,26 +1,26 @@
 /*
 KISSY CSS Reset
-ÀíÄî£ºÇå³ıºÍÖØÖÃÊÇ½ôÃÜ²»¿É·ÖµÄ
-ÌØÉ«£º1.ÊÊÓ¦ÖĞÎÄ 2.»ùÓÚ×îĞÂÖ÷Á÷ä¯ÀÀÆ÷
-Î¬»¤£ºÓñ²®(lifesinger@gmail.com), Õı´¾(ragecarrier@gmail.com)
+ç†å¿µï¼šæ¸…é™¤å’Œé‡ç½®æ˜¯ç´§å¯†ä¸å¯åˆ†çš„
+ç‰¹è‰²ï¼š1.é€‚åº”ä¸­æ–‡ 2.åŸºäºæœ€æ–°ä¸»æµæµè§ˆå™¨
+ç»´æŠ¤ï¼šç‰ä¼¯(lifesinger@gmail.com), æ­£æ·³(ragecarrier@gmail.com)
 */
 
 
-/* Çå³ıÄÚÍâ±ß¾à */
-body, h1, h2, h3, h4, h5, h6, p, blockquote, /* structural elements ½á¹¹ÔªËØ */
-dl, dt, dd, ul, ol, li, /* list elements ÁĞ±íÔªËØ */
-pre, /* text formatting elements ÎÄ±¾¸ñÊ½ÔªËØ */
-fieldset, lengend, button, input, textarea, /* form elements ±íµ¥ÔªËØ */
-th, td { /* table elements ±í¸ñÔªËØ */
+/* æ¸…é™¤å†…å¤–è¾¹è· */
+body, h1, h2, h3, h4, h5, h6, p, blockquote, /* structural elements ç»“æ„å…ƒç´  */
+dl, dt, dd, ul, ol, li, /* list elements åˆ—è¡¨å…ƒç´  */
+pre, /* text formatting elements æ–‡æœ¬æ ¼å¼å…ƒç´  */
+fieldset, lengend, button, input, textarea, /* form elements è¡¨å•å…ƒç´  */
+th, td { /* table elements è¡¨æ ¼å…ƒç´  */
     margin: 0;
     padding: 0;
 }
 
 
-/* ÉèÖÃÄ¬ÈÏ×ÖÌå */
+/* è®¾ç½®é»˜è®¤å­—ä½“ */
 body,
 button, input, select, textarea { /* for ie */
-    font: 12px/1 Tahoma, Helvetica, Arial, "ËÎÌå", sans-serif;
+    font: 12px/1 Tahoma, Helvetica, Arial, "å®‹ä½“", sans-serif;
 }
 
 h1 { font-size: 18px; /* 18px / 12px = 1.5 */ }
@@ -28,12 +28,12 @@ h2 { font-size: 16px; }
 h3 { font-size: 14px; }
 h4, h5, h6 { font-size: 100%; }
 
-address, cite, dfn, em, var { font-style: normal; } /* ½«Ğ±Ìå·öÕı */
-code, kbd, pre, samp, tt { font-family: "Courier New", Courier, monospace; } /* Í³Ò»µÈ¿í×ÖÌå */
-small { font-size: 12px; } /* Ğ¡ÓÚ 12px µÄÖĞÎÄºÜÄÑÔÄ¶Á£¬ÈÃ small Õı³£»¯ */
+address, cite, dfn, em, var { font-style: normal; } /* å°†æ–œä½“æ‰¶æ­£ */
+code, kbd, pre, samp, tt { font-family: "Courier New", Courier, monospace; } /* ç»Ÿä¸€ç­‰å®½å­—ä½“ */
+small { font-size: 12px; } /* å°äº 12px çš„ä¸­æ–‡å¾ˆéš¾é˜…è¯»ï¼Œè®© small æ­£å¸¸åŒ– */
 
 
-/* ÖØÖÃ½á¹¹ÔªËØ */
+/* é‡ç½®ç»“æ„å…ƒç´  */
 hr {
     color: #ccc;
     background-color: #ccc;
@@ -42,15 +42,15 @@ hr {
 }
 
 
-/* ÖØÖÃÁĞ±íÔªËØ */
+/* é‡ç½®åˆ—è¡¨å…ƒç´  */
 ul, ol { list-style: none; }
 
 
-/* ÖØÖÃÎÄ±¾¸ñÊ½ÔªËØ */
+/* é‡ç½®æ–‡æœ¬æ ¼å¼å…ƒç´  */
 a { color: blue; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-abbr[title], acronym[title] { /* ×¢£º1.ie6 ²»Ö§³Ö abbr; 2.ÕâÀïÓÃÁËÊôĞÔÑ¡Ôñ·û£¬ie6 ÏÂÎŞĞ§¹û */
+abbr[title], acronym[title] { /* æ³¨ï¼š1.ie6 ä¸æ”¯æŒ abbr; 2.è¿™é‡Œç”¨äº†å±æ€§é€‰æ‹©ç¬¦ï¼Œie6 ä¸‹æ— æ•ˆæœ */
 	border-bottom: 1px dotted;
 	cursor: help;
 }
@@ -58,15 +58,15 @@ abbr[title], acronym[title] { /* ×¢£º1.ie6 ²»Ö§³Ö abbr; 2.ÕâÀïÓÃÁËÊôĞÔÑ¡Ôñ·û£¬ie
 q:before, q:after { content: ''; }
 
 
-/* ÖØÖÃ±íµ¥ÔªËØ */
+/* é‡ç½®è¡¨å•å…ƒç´  */
 legend { color: #000; } /* for ie6 */
-fieldset, img { border: none; } /* img ´î³µ£ºÈÃÁ´½ÓÀïµÄ img ÎŞ±ß¿ò */
-/* ×¢£ºoptgroup ÎŞ·¨·öÕı */
+fieldset, img { border: none; } /* img æ­è½¦ï¼šè®©é“¾æ¥é‡Œçš„ img æ— è¾¹æ¡† */
+/* æ³¨ï¼šoptgroup æ— æ³•æ‰¶æ­£ */
 button, input, select, textarea {
-    font-size: 100%; /* Ê¹µÃ±íµ¥ÔªËØÔÚ ie ÏÂÄÜ¼Ì³Ğ×ÖÌå´óĞ¡ */
+    font-size: 100%; /* ä½¿å¾—è¡¨å•å…ƒç´ åœ¨ ie ä¸‹èƒ½ç»§æ‰¿å­—ä½“å¤§å° */
 }
 
-/* ÖØÖÃ±í¸ñÔªËØ */
+/* é‡ç½®è¡¨æ ¼å…ƒç´  */
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -74,5 +74,5 @@ table {
 td, th { border: 1px solid #ccc; }
 
 
-/* ÈÃ·Çieä¯ÀÀÆ÷Ä¬ÈÏÒ²ÏÔÊ¾´¹Ö±¹ö¶¯Ìõ£¬·ÀÖ¹Òò¹ö¶¯ÌõÒıÆğµÄÉÁË¸ */
+/* è®©éieæµè§ˆå™¨é»˜è®¤ä¹Ÿæ˜¾ç¤ºå‚ç›´æ»šåŠ¨æ¡ï¼Œé˜²æ­¢å› æ»šåŠ¨æ¡å¼•èµ·çš„é—ªçƒ */
 html { overflow-y: scroll; }

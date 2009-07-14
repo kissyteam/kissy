@@ -1,17 +1,16 @@
 /*
 CSS Reset for Taobao
-×¢Òâ£ºÕâÀïÊÇ ONLY for Taobao µÄ reset rules
-Î¬»¤£ºÓñ²®(lifesinger@gmail.com), Õı´¾(ragecarrier@gmail.com)
+æ³¨æ„ï¼šè¿™é‡Œæ˜¯ ONLY for Taobao çš„ reset rules
+ç»´æŠ¤ï¼šç‰ä¼¯(lifesinger@gmail.com), æ­£æ·³(ragecarrier@gmail.com)
 */
 
 /* include(reset.css) */
 
 html {
-    color: #404040; /* ÌÔ±¦ÎÄ×ÖÄ¬ÈÏÉ« */
-    background: #fff; /* ¸²¸ÇµôÓÃ»§ÔÚ²»ÖªÇéµÄÇé¿öÏÂ£¬ÉèÖÃµÄÒ³Ãæ±³¾° */
+    color: #404040; /* æ·˜å®æ–‡å­—é»˜è®¤è‰² */
+    background: #fff; /* è¦†ç›–æ‰ç”¨æˆ·åœ¨ä¸çŸ¥æƒ…çš„æƒ…å†µä¸‹ï¼Œè®¾ç½®çš„é¡µé¢èƒŒæ™¯ */
 }
 
-/* ÌÔ±¦Á´½ÓÄ¬ÈÏÉ« */
+/* æ·˜å®é“¾æ¥é»˜è®¤è‰² */
 a { color: #404040; }
 a:hover { color: #f60; }
-
