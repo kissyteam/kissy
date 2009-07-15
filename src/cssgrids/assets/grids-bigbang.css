@@ -1,36 +1,204 @@
 /*
-Grids Layout for Taobao
+BigBang Grids Layout
 维护：玉伯(lifesinger@gmail.com), 正淳(ragecarrier@gmail.com)
 */
 
-/* require(grids.css) */
+#header {
+    margin-bottom: 10px;
+}
 
-/*
-淘宝采用了 6 种栅格布局：
-950                  .grid
-190    750           .grid-s5m0
-750    190           .grid-m0s5
-190    510    230    .grid-s5m0e6
-230    510    190    .grid-e6m0s5
-510    230    190    .grid-m0e6s5
-*/
+#footer {
+    margin-top: 10px;
+}
 
-/** 两栏布局 **/
-.grid-s5m0 .main-wrap { margin-left: 200px; }
-.grid-s5m0 .col-sub { width: 190px; margin-left: -100%; }
+.hidden {
+    display: none;
+}
 
-.grid-m0s5 .main-wrap { margin-right: 200px; }
-.grid-m0s5 .col-sub { width: 190px; margin-left: -190px; }
+/*demo test*/
+#page {
+    background: #EEE url(layout-bg.png)
+}
 
-/** 两栏布局 **/
-.grid-s5m0e6 .main-wrap { margin: 0 240px 0 200px; }
-.grid-s5m0e6 .col-sub { width: 190px; margin-left: -100%; }
-.grid-s5m0e6 .col-extra { width: 230px; margin-left: -230px; }
+#header {
+    position: relative;
+    height: 80px;
+    text-align: center;
+    line-height: 80px;
+    font-size: 70px;
+    color: #a3b4ae;
+    background: #99a8a2;
+}
 
-.grid-e6m0s5 .main-wrap { margin: 0 200px 0 240px; }
-.grid-e6m0s5 .col-sub { width: 190px; margin-left: -190px; }
-.grid-e6m0s5 .col-extra { width: 230px; margin-left: -100%; }
+#page-width {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    font-size: 14px;
+}
 
-.grid-m0e6s5 .main-wrap { margin-right: 440px; }
-.grid-m0e6s5 .col-sub { width: 190px; margin-left: -190px; }
-.grid-m0e6s5 .col-extra { width: 230px; margin-left: -430px; }
+#footer {
+    text-align: center;
+    font-size: 70px;
+    line-height: 80px;
+    color: #a3b4ae;
+    background: #99a8a2;
+}
+
+.main-wrap {
+    background: #99a8a2 url(layout-bg.png);
+}
+
+.col-main {
+    margin-bottom: 10px;
+}
+
+.main-wrap .test-box {
+    background: url(no-1.png) 50% 50% no-repeat;
+}
+
+.col-sub {
+    background: #99ccff url(layout-bg.png);
+    height: 100px;
+}
+
+.col-sub .test-box {
+    background: url(no-2.png) 50% 50% no-repeat;
+    border: solid 1px #99ccff;
+}
+
+.col-extra {
+    background: #ccff99 url(layout-bg.png);
+    height: 100px;
+}
+
+.col-extra .test-box {
+    background: url(no-3.png) 50% 50% no-repeat;
+    border: solid 1px #ccff99;
+}
+
+.test-box {
+    height: 100px;
+    text-align: right;
+    font-size: 18px;
+}
+
+.test-box {
+    height: 98px;
+    text-align: right;
+    font-size: 18px;
+    overflow: hidden;
+}
+
+.width {
+    font-family: 'Courier New', monospace;
+    line-height: 98px;
+    padding: 0 15px 0 0;
+}
+
+.drog-width {
+    position: absolute;
+    top: 50%;
+    margin: -15px 0 0;
+    background: url(handle-bg.png);
+    height: 30px;
+    width: 100%;
+    left: 0;
+}
+
+.drog-width-a {
+
+    float: left;
+    margin: 1px;
+    cursor: e-resize;
+    width: 8px;
+    height: 28px;
+    background: url(resize-handle.png) no-repeat;
+}
+
+.drog-width-a span {
+    display: none;
+}
+
+.close {
+    position: absolute;
+    right: 2px;
+    top: 4px;
+    width: 26px;
+    height: 26px;
+    background: url(close.png);
+}
+
+.close span {
+    display: none;
+}
+
+.drog-col {
+    position: absolute;
+    cursor: move;
+    left: 50%;
+    top: 50%;
+    margin: -15px 0 0 -15px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url(dd-handle.png) 0 -1px no-repeat;
+}
+
+.test-box-small .drog-col {
+    background-position: -30px -1px;
+}
+
+.drog-col:hover {
+
+    background: url(dd-handle.png) 0 -30px no-repeat;
+}
+
+.test-box-small .drog-col:hover {
+    background-position: -30px -30px;
+}
+
+.drog-col span {
+    display: none;
+}
+
+#add-row-btn {
+    margin: 10px 0 0;
+}
+
+#add-row-btn a {
+    display: block;
+    margin: 10px auto;
+    width: 102px;
+    height: 28px;
+    background: url(add-row.png) 0 0 no-repeat;
+}
+
+#add-row-btn span {
+    display: none;
+}
+
+#build-code {
+    text-align: center;
+}
+
+.tools {
+    position: relative;
+    height: 98px;
+}
+
+.lightbox_bg {
+    opacity: 0.4;
+    background-color: #ccc;
+    filter: Alpha(40);
+}
+
+.lightbox {
+    padding: 20px 10px 10px;
+    background-color: #ccc;
+    position: absolute;
+}
+
+.lightbox textarea {
+    padding: 10px;
+}

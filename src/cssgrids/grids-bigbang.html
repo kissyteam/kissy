@@ -1,14 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />	
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 <title>BigBang Grids Layout</title>
-<link type="text/css" href="../cssreset/reset.css" rel="stylesheet" />
-<link type="text/css" href="assets/grids-bigbang.css" rel="stylesheet" />
+<link type="text/css" href="../cssreset/reset.css" rel="stylesheet"/>
+<link type="text/css" href="grids.css" rel="stylesheet"/>
+<link type="text/css" href="assets/grids-bigbang.css" rel="stylesheet"/>
 <script type="text/javascript" src="../../lib/yui3/yui-min.js"></script>
 <script type="text/javascript" src="assets/grids-bigbang.js"></script>
 </head>
 <body>
+<div id="page" class="w950">
+    <div id="header">
+        header
+        <select id="page-width">
+            <option value="950">950</option>
+            <option value="auto">自适应</option>
+            <option value="750">750</option>
+        </select>
+    </div>
 
+    <div id="content">
+        <div class="layout grid" data-order="1">
+            <div class="col-main">
+                <div class="main-wrap">
+                    <div class="test-box">
+                        <span class="col-width">950px</span>
+                        <a class="insert-col" href="#">插入列</a>
+                        <a class="del-row hidden" href="#">删除</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="add-row">
+            <a id="add-row-btn" href="#"><span>添加栏</span></a>
+        </div>
+    </div>
+
+    <div id="footer">
+        footer
+    </div>
+    <div id="build-code">
+        <a id="build-code-btn" href="#">生成 HTML 代码</a>
+    </div>
+</div>
 </body>
 </html>
