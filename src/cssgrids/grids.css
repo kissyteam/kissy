@@ -10,15 +10,27 @@
     padding: 0 10px;
 }
 
+/* 居中 */
+#header, #content, #footer {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 页面宽度为 750px */
+.w750 #header, .w750 #content, .w750 #footer,
+/* 头尾 100%, 仅内容区域 750px */
+#content.w750 {
+    width: 750px;
+}
+
 /* 页面宽度为 950px */
 .w950 #header, .w950 #content, .w950 #footer,
 /* 头尾 100%, 仅内容区域 950px */
 #content.w950 {
     width: 950px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
+#page.w750,
 #page.w950 {
     /* 有宽度时，重置内边距为 0 */
     padding: 0;
