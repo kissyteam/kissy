@@ -23,6 +23,7 @@ a:hover {
     background-color: #B0F700;
     border: 1px solid #6CB100;
     -moz-border-radius: 11px;
+    -webkit-border-radius: 11px;
     cursor: pointer;
 }
 .button:hover {
