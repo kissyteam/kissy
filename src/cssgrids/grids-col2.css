@@ -1,0 +1,17 @@
+/*
+Grids Layout for Columns 2
+维护：玉伯(lifesinger@gmail.com), 正淳(ragecarrier@gmail.com)
+*/
+
+/* require(grids.css) */
+
+/*
+这里列举了960栅格下的所有两栏布局
+*/
+
+/** 两栏布局 **/
+.grid-s5m0 .main-wrap { margin-left: 200px; }
+.grid-s5m0 .col-sub { width: 190px; margin-left: -100%; }
+
+.grid-m0s5 .main-wrap { margin-right: 200px; }
+.grid-m0s5 .col-sub { width: 190px; margin-left: -190px; }

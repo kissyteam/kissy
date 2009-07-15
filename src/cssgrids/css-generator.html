@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<title>Grids CSS Generator</title>
+</head>
+<body>
+<pre style="font: 16px/20px 'Courier New', monospace;">
+<script type="text/javascript">
+
+    var println = function(msg) { document.write((msg ? msg : '') + '<br />'); };
+    var c = 40, g = 10, S_MIN, S_MAX, E_MIN, E_MAX, i, fs, s, fe, e, cls;
+
+    println('/** 所有两栏布局 **/');
+    S_MIN = 4, S_MAX = 12; // sub 的宽度不能超过 main
+    for (i = S_MIN; i <= S_MAX; ++i) {
+        fs = i * c, s = fs - g;
+
+        cls = '.grid-s' + i + 'm0';
+        println(cls + ' .main-wrap { margin-left: ' + fs + 'px; }');
+        println(cls + ' .col-sub { width: ' + s + 'px; margin-left: -100%; }');
+
+        cls = '.grid-m0s' + i;
+        println(cls + ' .main-wrap { margin-right: ' + fs + 'px; }');
+        println(cls + ' .col-sub { width: ' + s + 'px; margin-left: -' + s + 'px; }');
+
+        println();
+    }
+
+    println('/** 所有三栏布局 **/');
+    S_MIN = 4, S_MAX = 10;
+    E_MIN = 4, E_MAX = 10;
+
+    for (i = S_MIN; i <= S_MAX; ++i) {
+        E_MAX = Math.floor((24 - i) / 2);
+        while (i > (24 - i - E_MAX)) { // 保证 sub 和 extra 的宽度不超过 main 的宽度
+            E_MAX--;
+        }
+
+        fs = i * c, s = fs - g;
+        for (var j = E_MIN; j <= E_MAX; ++j) {
+            fe = j * c, e = fe - g;
+
+            // normal: s + 10 + m + 10 + e
+            cls = '.grid-s' + i + 'm0e' + j;
+            println(cls + ' .main-wrap { margin: 0 ' + fe + 'px 0 ' + fs + 'px; }');
+            println(cls + ' .col-sub { width: ' + s + 'px; margin-left: -100%; }');
+            println(cls + ' .col-extra { width: ' + e + 'px; margin-left: -' + e + 'px; }');
+
+            // f: e + 10 + m + 10 + s
+            cls = '.grid-e' + j + 'm0s' + i;
+            println(cls + ' .main-wrap { margin: 0 ' + fs + 'px 0 ' + fe + 'px; }');
+            println(cls + ' .col-sub { width: ' + s + 'px; margin-left: -' + s + 'px; }');
+            println(cls + ' .col-extra { width: ' + e + 'px; margin-left: -100%; }');
+
+            // e: m + 10 + s + 10 + e
+            cls = '.grid-m0s' + i + 'e' + j;
+            println(cls + ' .main-wrap { margin-right: ' + (fs + fe) + 'px; }');
+            println(cls + ' .col-sub { width: ' + s + 'px; margin-left: -' + (s + fe) + 'px; }');
+            println(cls + ' .col-extra { width: ' + e + 'px; margin-left: -' + e + 'px; }');
+
+            // d: m + 10 + e + 10 + s
+            cls = '.grid-m0e' + j + 's' + i;
+            println(cls + ' .main-wrap { margin-right: ' + (fs + fe) + 'px; }');
+            println(cls + ' .col-sub { width: ' + s + 'px; margin-left: -' + s + 'px; }');
+            println(cls + ' .col-extra { width: ' + e + 'px; margin-left: -' + (e + fs) + 'px; }');
+
+            // c: s + 10 + e + 10 + m
+            cls = '.grid-s' + i + 'e' + j + 'm0';
+            println(cls + ' .main-wrap { margin-left: ' + (fs + fe) + 'px; }');
+            println(cls + ' .col-sub { width: ' + s + 'px; margin-left: -100%; }');
+            println(cls + ' .col-extra { width: ' + e + 'px; margin-left: -100%; left: ' + fs + 'px; }');
+
+            // b: e + 10 + s + 10 + m
+            cls = '.grid-e' + j + 's' + i + 'm0';
+            println(cls + ' .main-wrap { margin-left: ' + (fs + fe) + 'px; }');
+            println(cls + ' .col-sub { width: ' + s + 'px; margin-left: -100%; left: ' + fe + 'px; }');
+            println(cls + ' .col-extra { width: ' + e + 'px; margin-left: -100%; }');
+
+            println();
+        }
+    }
+</script>
+</pre>
+</body>
+</html>

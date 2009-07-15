@@ -1,0 +1,292 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />	
+<title>Grid Design Tool</title>
+<link rel="stylesheet" href="../cssreset/reset.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../../lib/yui2/yui-utilities.js"></script>
+<script type="text/javascript" src="assets/grid-design-tool.js"></script>
+<style type="text/css">
+	body { font: 12px Verdana,Arial,sans-serif; color: #333; min-width: 1200px; }
+	h1 { font-size: 26px; color: #00859D; font-family: Constantia,serif; margin: 10px; }
+	a, a:hover { text-decoration: none; outline: none; color: #333; }
+	.h { color: #F50; }
+	.hidden { display: none!important; }
+
+	.controls-field { font-family: Courier New,Courier,monospace; background: #eee; padding: 5px 10px; margin: 10px; }
+	#gridForm input[type="text"] { width: 40px; }
+	#gridForm label { padding: 0 5px; }
+	#gridForm th,
+	#gridForm td { padding:2px 10px; text-align: center; }
+	#gridForm .flag-row td { padding: 0; font-size: 9px; }
+	#gridForm button { *margin-right: 10px; }
+	.flag-row a { color: #666; }
+	.flag-row a:hover { color: #00859D; }
+	.flag-row a.fixed { color: #999; cursor: default; }
+
+	#gridContainer { position: relative; border: 1px dashed #CCC; min-height: 200px; margin: 0 auto; overflow: hidden; }
+	#gridTips { text-align: center; margin-top: 60px; }
+
+	.grid { height: 100%; float: left; overflow: hidden; font-size: 9px; }
+	.column { background: #DBEFFA; }
+	.row { background: #DBEFFA; }
+	.gutter { background: #F1F9FD; }
+	.margin { background: #F3F3F3; }
+	.rule { background: #BDD8F4; }
+
+	.column { padding-top: 1em; }
+	.gutter { padding-top: 3em; }
+	.margin { padding-top: 5em; }
+	.rule .size { padding-top: 1em; }
+
+	#gridRowsContainer { position: absolute; top: 0; left: 0; opacity: 0.5; filter: alpha(opacity=50); }
+	#gridRowsContainer .grid { float: none; width: 100%; padding-top: 0; }
+
+	#gridRulesContainer { position: absolute; top: 0; left: 0; }
+	#gridRulesContainer .grid { float: none; padding-top: 0; }
+
+	#gridContainer .grid-box {
+		z-index: 99;
+		position: absolute; top: 0; left: 0;
+		opacity: 0.6; filter: alpha(opacity=60);
+		background: #9FC1EF;
+		cursor: move;
+		overflow: hidden;
+	}
+	#gridContainer .grid-box .box-info { padding: 5px; }
+	.box-info-cols,
+	.box-info-rows { display: block; }
+
+	#copyright { text-align: center; color: #999; }
+	#copyright a { text-decoration: underline; color: #999; }
+</style>
+<script type="text/javascript">
+	YAHOO.util.Event.onDOMReady(function() {
+		var Y = YAHOO.util;
+		var gf = Y.Dom.get('gridForm');
+
+		// set defalut focus
+		gf.N.focus();
+
+		Y.Event.on(gf.g, 'blur', function() {
+			gf.g2.value = gf.g.value;
+		});
+
+		var fixFlags = Y.Dom.getElementsByClassName('fix-flag', 'a');
+		Y.Event.on(fixFlags, 'click', function(e) {
+			Y.Event.preventDefault(e);
+			if(!Y.Dom.hasClass(this, 'fixed')) {
+				// disable self
+				gf[this.getAttribute('rel')].setAttribute('disabled', 'disabled');
+				Y.Dom.addClass(this, 'fixed');
+				this.setAttribute('title', '');
+
+				// enable others
+				for(var i = 0, len = fixFlags.length; i < len; ++i) {
+					var flag = fixFlags[i];
+					if(flag != this) {
+						gf[flag.getAttribute('rel')].removeAttribute('disabled');
+						Y.Dom.removeClass(flag, 'fixed');
+						flag.setAttribute('title', 'Make this to be calculated value.');
+					}
+				}
+			}
+		});
+
+		GridDesign.init(gf, Y.Dom.get('gridContainer'));
+		Y.Event.on('doDesign', 'click', function() {
+			if(checkInputs()) {
+				GridDesign.paint();
+			}
+		});
+
+		Y.Event.on('showRows', 'click', function() {
+			if(checkDesigned()) {
+				GridDesign.paintRows();
+			}
+		});
+
+		Y.Event.on('showRules', 'click', function() {
+			if(checkDesigned()) {
+				GridDesign.paintRules();
+			}
+		});
+
+		Y.Event.on('showBox', 'click', function() {
+			if(checkDesigned()) {
+				var on = Y.Dom.get('toggleBoxInfo').getAttribute('status') == 'on';
+			GridDesign.paintBox({'displayInfo': on, 'freeY': gf.freeY});
+			}
+		});
+
+		Y.Event.on('toggleBoxInfo', 'click', function() {
+			var infos = Y.Dom.getElementsByClassName('box-info');
+			var on = this.getAttribute('status') == 'on';
+			Y.Dom.batch(infos, function(info) {
+				Y.Dom[on ? 'addClass' : 'removeClass'](info, 'hidden');
+			});
+			this.setAttribute('status', on ? 'off' : 'on');
+		});
+
+		Y.Event.on('toggleColsInfo', 'click', function() {
+			var infos = Y.Dom.getElementsByClassName('box-info-cols');
+			var wInfos = Y.Dom.getElementsByClassName('box-info-w');
+			var flags = Y.Dom.getElementsByClassName('multi-flag');
+			if(infos.length < 1) return;
+
+			var colsIsHidden = Y.Dom.hasClass(infos[0], 'hidden');
+			var wIsHidden = Y.Dom.hasClass(wInfos[0], 'hidden');
+			var hIsHidden = Y.Dom.hasClass(Y.Dom.getElementsByClassName('box-info-h')[0], 'hidden');
+
+			var toggleFn = Y.Dom[colsIsHidden ? 'removeClass' : 'addClass'];
+			var toggleFn2 = Y.Dom[(wIsHidden && !hIsHidden) ? 'removeClass' : 'addClass'];
+
+			for(var i = 0, len = infos.length; i < len; ++i) {
+				toggleFn(infos[i], 'hidden');
+				toggleFn(wInfos[i], 'hidden');
+				toggleFn2(flags[i], 'hidden');
+			}
+		});
+
+		Y.Event.on('toggleRowsInfo', 'click', function() {
+			var infos = Y.Dom.getElementsByClassName('box-info-rows');
+			var hInfos = Y.Dom.getElementsByClassName('box-info-h');
+			var flags = Y.Dom.getElementsByClassName('multi-flag');
+			if(infos.length < 1) return;
+
+			var rowsIsHidden = Y.Dom.hasClass(infos[0], 'hidden');
+			var hIsHidden = Y.Dom.hasClass(hInfos[0], 'hidden');
+			var wIsHidden = Y.Dom.hasClass(Y.Dom.getElementsByClassName('box-info-w')[0], 'hidden');
+
+			var toggleFn = Y.Dom[rowsIsHidden ? 'removeClass' : 'addClass'];
+			var toggleFn2 = Y.Dom[(hIsHidden && !wIsHidden) ? 'removeClass' : 'addClass'];
+
+			for(var i = 0, len = infos.length; i < len; ++i) {
+				toggleFn(infos[i], 'hidden');
+				toggleFn(hInfos[i], 'hidden');
+				toggleFn2(flags[i], 'hidden');
+			}
+		});
+
+		Y.Event.on('hiddenAllNoise', 'click', toggleNoise);
+		Y.Event.on(document, 'dblclick', toggleNoise);
+
+		function toggleNoise() {
+			var noises = Y.Dom.getElementsByClassName('controls-field');
+			noises.push(Y.Dom.get('pageTitle'));
+			noises.push(Y.Dom.get('copyright'));
+		Y.Dom.batch(noises, function(noise) { GridDesign.CommonLib.toggleDisplay(noise); });
+		}
+
+		function checkDesigned() {
+			if(checkInputs()) {
+				var tips = Y.Dom.get('gridTips');
+				if(tips) {
+					tips.innerHTML = 'Please click the "Design" button first.';
+					return false;
+				}
+				return true;
+			}
+            return false;
+		}
+
+		function checkInputs() {
+			var ds = [gf.N, gf.c, gf.g, gf.m1, gf.m2, gf.W];
+			for(var i = 0, len = ds.length; i < len; ++i) {
+				var val = ds[i].value;
+				if(isNaN(val) || val < 0) {
+					Y.Dom.get('gridContainer').innerHTML = '<p id="gridTips" class="h">Don\'t use invalid value to confuse me.</p>';
+					ds[i].select();
+					ds[i].focus();
+					return false;
+				}
+			}
+
+			// All inputs are valid. Calculte the fixed value.
+			// N * (c + g) + m1 + m2 = W + g
+			var N = gf.N.value >> 0,
+			c = gf.c.value >> 0,
+			g = gf.g.value >> 0,
+			m1 = gf.m1.value >> 0,
+			m2 = gf.m2.value >> 0,
+			W = gf.W.value >> 0;
+
+			var fixedEl = gf[Y.Dom.getElementsByClassName('fixed', 'a')[0].getAttribute('rel')];
+			if(fixedEl == gf.W) {
+				gf.W.value = N * (c + g) + m1 + m2 - g;
+			} else if(fixedEl == gf.N) {
+				gf.N.value = Math.round((W + g - m1 - m2) / (c + g));
+			} else if(fixedEl == gf.c) {
+				gf.c.value = Math.round((W + g - m1 - m2) / N) - g;
+			}
+
+			if(gf.W.value * gf.N.value * gf.c.value < 0) {
+				Y.Dom.get('gridContainer').innerHTML = '<p id="gridTips" class="h">Input has negative value. Impossible to design.</p>';
+				return false;
+			}
+
+			return true;
+		}
+	});
+</script>
+</head>
+<body>
+<h1 id="pageTitle">Grid Design Tool</h1>
+<form onsubmit="return false;" id="gridForm" action="">
+	<div id="baseControls" class="controls-field">
+		<table>
+			<tbody>
+				<tr>
+					<th>Columns Number</th>
+					<th>* ( Column Width</th>
+					<th>+ Gutter Width )</th>
+					<th>+ Left Margin</th>
+					<th>+ Right Margin</th>
+					<th>= Total Width</th>
+					<th>+ Gutter Width</th>
+					<th></th>
+				</tr>
+				<tr>
+					<td><input type="text" value="24" autocomplete="off" name="N" /></td>
+					<td>* ( <input type="text" value="30" autocomplete="off" name="c" /></td>
+					<td>+ <input type="text" value="10" autocomplete="off" name="g" /> )</td>
+					<td>+ <input type="text" value="0" autocomplete="off" name="m1" /></td>
+					<td>+ <input type="text" value="0" autocomplete="off" name="m2" /></td>
+					<td>= <input type="text" value="950" autocomplete="off" name="W" disabled="disabled" /></td>
+					<td>+ <input type="text" value="10" autocomplete="off" name="g2" disabled="disabled" /></td>
+					<td>
+						<button id="doDesign">Design</button>
+						<button id="showRows">Rows</button>
+						<button id="showRules">Rules</button>
+						<button id="showBox">Add Box</button>
+					</td>
+				</tr>
+				<tr class="flag-row">
+					<td><a class="fix-flag" rel="N" href="#" title="Make this to be calculated value.">▲</a></td>
+					<td><a class="fix-flag" rel="c" href="#" title="Make this to be calculated value.">▲</a></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><a class="fix-flag fixed" rel="W" href="#">▲</a></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div id="gridContainer">
+		<p id="gridTips">Please click the "Design" button to display me.</p>
+	</div>
+	<div id="extraControls" class="controls-field">
+		<button id="toggleBoxInfo" status="on">Toggle Box Info</button>
+		<button id="hiddenAllNoise">Hidden All Noise</button>
+		<button id="toggleColsInfo">Toggle Cols Info</button>
+		<button id="toggleRowsInfo">Toggle Rows Info</button>
+		<input id="freeY" name="freeY" type="checkbox" autocomplete="off" /><label for="freeY">Free Y</label>
+	</div>
+	<div id="copyright">
+		Grid Design Tool Version 0.9 © 2008 <a href="http://lifesinger.org/">lifesinger</a>
+	</div>
+</form>
+</body>
+</html>
