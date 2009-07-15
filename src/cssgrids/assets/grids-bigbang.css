@@ -3,202 +3,134 @@ BigBang Grids Layout
 维护：玉伯(lifesinger@gmail.com), 正淳(ragecarrier@gmail.com)
 */
 
-#header {
-    margin-bottom: 10px;
+/** common styles **/
+body {
+    font: 14px '微软雅黑', serif;
+    color: #404040;
 }
-
-#footer {
-    margin-top: 10px;
+a {
+    color: #404040;
 }
-
+a:hover {
+    text-decoration: none;
+}
 .hidden {
     display: none;
 }
-
-/*demo test*/
-#page {
-    background: #EEE url(layout-bg.png)
+.button {
+    line-height: 1.2em;
+    padding: 4px 10px;
+    background-color: #B0F700;
+    border: 1px solid #6CB100;
+    -moz-border-radius: 11px;
+    cursor: pointer;
 }
-
-#header {
-    position: relative;
+.button:hover {
+    color: #000;
+    border-color: #4C7E00;
+}
+#header, #footer {
     height: 80px;
-    text-align: center;
     line-height: 80px;
+    text-align: center;
     font-size: 70px;
     color: #a3b4ae;
     background: #99a8a2;
 }
-
+#header {
+    position: relative;
+    margin-bottom: 10px;
+}
 #page-width {
     position: absolute;
     right: 5px;
     top: 5px;
     font-size: 14px;
 }
-
-#footer {
+.section {
     text-align: center;
-    font-size: 70px;
-    line-height: 80px;
-    color: #a3b4ae;
-    background: #99a8a2;
+    margin: 10px 0;
 }
 
-.main-wrap {
-    background: #99a8a2 url(layout-bg.png);
+/** grid styles **/
+#page,
+.grid, .main-wrap, .col-sub, .col-extra {
+    background: #F5F5F5 url(layout-bg.png);
 }
+.grid, .main-wrap { background-color: #99A8A2; }
+.main-wrap .tool-box { border-color: #99A8A2; background: url(no-1.png) 50% 50% no-repeat; }
+.col-sub { background-color: #9CF; }
+.col-sub .tool-box { border-color: #9CF; background: url(no-2.png) 50% 50% no-repeat; }
+.col-extra { background-color: #CF9; }
+.col-extra .tool-box { border-color: #CF9; background: url(no-3.png) 50% 50% no-repeat; }
 
-.col-main {
-    margin-bottom: 10px;
-}
-
-.main-wrap .test-box {
-    background: url(no-1.png) 50% 50% no-repeat;
-}
-
-.col-sub {
-    background: #99ccff url(layout-bg.png);
-    height: 100px;
-}
-
-.col-sub .test-box {
-    background: url(no-2.png) 50% 50% no-repeat;
-    border: solid 1px #99ccff;
-}
-
-.col-extra {
-    background: #ccff99 url(layout-bg.png);
-    height: 100px;
-}
-
-.col-extra .test-box {
-    background: url(no-3.png) 50% 50% no-repeat;
-    border: solid 1px #ccff99;
-}
-
-.test-box {
-    height: 100px;
+.layout { margin-bottom: 10px; }
+.tool-box {
+    position: relative;
+    padding: 10px;
+    height: 90px;
+    line-height: 90px;
+    border: #99A8A2 1px solid;
     text-align: right;
-    font-size: 18px;
+}
+.col-width {
+    font: 18px 'Courier New', monospace;
+    padding: 0 10px;
 }
 
-.test-box {
-    height: 98px;
-    text-align: right;
-    font-size: 18px;
-    overflow: hidden;
-}
-
-.width {
-    font-family: 'Courier New', monospace;
-    line-height: 98px;
-    padding: 0 15px 0 0;
-}
-
-.drog-width {
+/** drag & drop **/
+.col-strip {
     position: absolute;
     top: 50%;
+    left: 0;
     margin: -15px 0 0;
-    background: url(handle-bg.png);
     height: 30px;
     width: 100%;
-    left: 0;
+    background: url(handle-bg.png);
 }
-
-.drog-width-a {
-
+/* 拉动：改变宽度 */
+.resize-handle {
     float: left;
     margin: 1px;
-    cursor: e-resize;
     width: 8px;
     height: 28px;
     background: url(resize-handle.png) no-repeat;
+    cursor: e-resize;
+    text-indent: -999999px;
+    overflow: hidden;
 }
-
-.drog-width-a span {
-    display: none;
+/* 拖动：改变位置 */
+.dd-handle {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -15px 0 0 -15px;
+    width: 30px;
+    height: 30px;
+    background: url(dd-handle.png) 0 -1px no-repeat;
+    cursor: move;
+    text-indent: -999999px;
+    overflow: hidden;
 }
-
-.close {
+.dd-handle:hover {
+    background-position: 0 -30px;
+}
+.col-extra .dd-handle {
+    background-position: -30px -1px;
+}
+.col-extra .dd-handle:hover {
+    background-position: -30px -30px;
+}
+/* 删除列 */
+.del-col {
     position: absolute;
     right: 2px;
     top: 4px;
     width: 26px;
     height: 26px;
     background: url(close.png);
-}
-
-.close span {
-    display: none;
-}
-
-.drog-col {
-    position: absolute;
-    cursor: move;
-    left: 50%;
-    top: 50%;
-    margin: -15px 0 0 -15px;
-    display: block;
-    width: 30px;
-    height: 30px;
-    background: url(dd-handle.png) 0 -1px no-repeat;
-}
-
-.test-box-small .drog-col {
-    background-position: -30px -1px;
-}
-
-.drog-col:hover {
-
-    background: url(dd-handle.png) 0 -30px no-repeat;
-}
-
-.test-box-small .drog-col:hover {
-    background-position: -30px -30px;
-}
-
-.drog-col span {
-    display: none;
-}
-
-#add-row-btn {
-    margin: 10px 0 0;
-}
-
-#add-row-btn a {
-    display: block;
-    margin: 10px auto;
-    width: 102px;
-    height: 28px;
-    background: url(add-row.png) 0 0 no-repeat;
-}
-
-#add-row-btn span {
-    display: none;
-}
-
-#build-code {
-    text-align: center;
-}
-
-.tools {
-    position: relative;
-    height: 98px;
-}
-
-.lightbox_bg {
-    opacity: 0.4;
-    background-color: #ccc;
-    filter: Alpha(40);
-}
-
-.lightbox {
-    padding: 20px 10px 10px;
-    background-color: #ccc;
-    position: absolute;
-}
-
-.lightbox textarea {
-    padding: 10px;
+    cursor: pointer;
+    text-indent: -999999px;
+    overflow: hidden;
 }
