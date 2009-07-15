@@ -14,3 +14,9 @@ html {
 /* 淘宝链接默认色 */
 a { color: #404040; }
 a:hover { color: #f60; }
+
+/* 重置 hr */
+hr {
+    color: #ccc;
+    background-color: #ccc;
+}
