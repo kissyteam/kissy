@@ -1,5 +1,5 @@
-/*! KISSY CSS Reset Copyright (c) http://kissy.googlecode.com */
 /*
+KISSY CSS Reset
 理念：清除和重置是紧密不可分的
 特色：1.适应中文 2.基于最新主流浏览器
 维护：玉伯(lifesinger@gmail.com), 正淳(ragecarrier@gmail.com)
@@ -7,7 +7,7 @@
 
 
 /* 清除内外边距 */
-body, h1, h2, h3, h4, h5, h6, p, blockquote, /* structural elements 结构元素 */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
 dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
 pre, /* text formatting elements 文本格式元素 */
 fieldset, lengend, button, input, textarea, /* form elements 表单元素 */
@@ -34,21 +34,12 @@ code, kbd, pre, samp, tt { font-family: "Courier New", Courier, monospace; } /* 
 small { font-size: 12px; } /* 小于 12px 的中文很难阅读，让 small 正常化 */
 
 
-/* 重置结构元素 */
-hr {
-    color: #ccc;
-    background-color: #ccc;
-    border: none;
-    height: 1px;
-}
-
-
 /* 重置列表元素 */
 ul, ol { list-style: none; }
 
 
 /* 重置文本格式元素 */
-a { color: blue; text-decoration: none; }
+a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 abbr[title], acronym[title] { /* 注：1.ie6 不支持 abbr; 2.这里用了属性选择符，ie6 下无效果 */
@@ -72,8 +63,12 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-td, th { border: 1px solid #ccc; }
 
+/* 重置 hr */
+hr {
+    border: none;
+    height: 1px;
+}
 
 /* 让非ie浏览器默认也显示垂直滚动条，防止因滚动条引起的闪烁 */
 html { overflow-y: scroll; }
