@@ -14,10 +14,11 @@
 <div id="page" class="w950">
     <div id="header">
         header
-        <select id="page-width">
+        <select id="page-width" autocomplete="off">
             <option value="950">950</option>
             <option value="750">750</option>
             <option value="auto">自适应</option>
+            <option value="hamburger">汉堡包</option>
         </select>
     </div>
 
@@ -61,7 +62,6 @@
                 <div class="main-wrap">
                     <div class="tool-box">
                         <span class="col-width">510px</span>
-                        <span class="button add-col">+ 添加列</span>
                         <span class="button del-row" title="删除行">删除</span>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
         </div>
 
         <div class="section">
-            <span class="button add-row">+ 添加行</span>
+            <span id="add-row" class="button">+ 添加行</span>
         </div>
     </div>
 
@@ -97,6 +97,22 @@
     </div>
     <div class="section">
         <span id="build-code" class="button">生成 HTML 代码</span>
+    </div>
+    <div class="hidden">
+        <!-- 添加行的模板 -->
+        <div id="row-tmpl">
+            <div class="layout grid">
+                <div class="col-main">
+                    <div class="main-wrap">
+                        <div class="tool-box">
+                            <span class="col-width">950px</span>
+                            <span class="button add-col">+ 添加列</span>
+                            <span class="button del-row" title="删除行">删除</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
