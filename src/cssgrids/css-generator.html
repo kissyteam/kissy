@@ -9,11 +9,14 @@
 <script type="text/javascript">
 
     var println = function(msg) { document.write((msg ? msg : '') + '<br />'); };
-    var c = 40, g = 10, S_MIN, S_MAX, E_MIN, E_MAX, i, fs, s, fe, e, cls;
+    var c = 40, g = 10, N = 24,
+        COL_MIN = 4, S_MAX, E_MAX,
+        i, fs, s, fe, e, cls,
+        sum = [0, 0];
 
-    println('/** 所有两栏布局 **/');
-    S_MIN = 4, S_MAX = 12; // sub 的宽度不能超过 main
-    for (i = S_MIN; i <= S_MAX; ++i) {
+    println('/** 两栏布局 **/');
+    S_MAX = N - COL_MIN;
+    for (i = COL_MIN; i <= S_MAX; ++i) {
         fs = i * c, s = fs - g;
 
         cls = '.grid-s' + i + 'm0';
@@ -24,21 +27,17 @@
         println(cls + ' .main-wrap { margin-right: ' + fs + 'px; }');
         println(cls + ' .col-sub { width: ' + s + 'px; margin-left: -' + s + 'px; }');
 
+        sum[0] += 2;
         println();
     }
 
-    println('/** 所有三栏布局 **/');
-    S_MIN = 4, S_MAX = 10;
-    E_MIN = 4, E_MAX = 10;
-
-    for (i = S_MIN; i <= S_MAX; ++i) {
-        E_MAX = Math.floor((24 - i) / 2);
-        while (i > (24 - i - E_MAX)) { // 保证 sub 和 extra 的宽度不超过 main 的宽度
-            E_MAX--;
-        }
-
+    println('/** 三栏布局 **/');
+    S_MAX = N - 2 * COL_MIN;
+    for (i = COL_MIN; i <= S_MAX; ++i) {
         fs = i * c, s = fs - g;
-        for (var j = E_MIN; j <= E_MAX; ++j) {
+
+        E_MAX = N - i - COL_MIN;
+        for (var j = COL_MIN; j <= E_MAX; ++j) {
             fe = j * c, e = fe - g;
 
             // normal: s + 10 + m + 10 + e
@@ -77,9 +76,14 @@
             println(cls + ' .col-sub { width: ' + s + 'px; margin-left: -100%; left: ' + fe + 'px; }');
             println(cls + ' .col-extra { width: ' + e + 'px; margin-left: -100%; }');
 
+            sum[1] += 6;
             println();
         }
     }
+
+    println('/** 统计数据 **/');
+    println('/* 二栏栅格布局总数： ' + sum[0] + ' = (20 - 4 + 1) * 2 = 17 * 2 */');
+    println('/* 三栏栅格布局总数： ' + sum[1] + ' = ((16 - 4 + 1) + (16 - 4 + 1 - 1) + ... + 2 + 1) * 6 = (13 + 12 + ... + 2 + 1) * 6 = 13 * 7 * 6 */');
 </script>
 </pre>
 </body>

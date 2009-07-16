@@ -5,7 +5,7 @@
 <title>BigBang Grids Layout</title>
 <link type="text/css" href="../cssreset/reset.css" rel="stylesheet"/>
 <link type="text/css" href="grids.css" rel="stylesheet"/>
-<link type="text/css" href="grids-taobao.css" rel="stylesheet"/>
+<link type="text/css" href="grids-all.css" rel="stylesheet"/>
 <link type="text/css" href="assets/grids-bigbang.css" rel="stylesheet"/>
 <script type="text/javascript" src="../../lib/yui3/yui-min.js"></script>
 <script type="text/javascript" src="assets/grids-bigbang.js"></script>
@@ -95,9 +95,11 @@
     <div id="footer">
         footer
     </div>
+
     <div class="section">
         <span id="build-code" class="button">生成 HTML 代码</span>
     </div>
+
     <div class="hidden">
         <!-- 添加行的模板 -->
         <div id="row-tmpl">
@@ -110,6 +112,35 @@
                             <span class="button del-row" title="删除行">删除</span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 添加 col-sub 的模板 -->
+        <div id="col-sub-tmpl">
+            <div class="col-sub">
+                <div class="tool-box">
+                    <span class="col-width">190px</span>
+
+                    <div class="col-strip">
+                        <span title="改变宽度" class="resize-handle">拉动</span>
+                    </div>
+                    <span class="dd-handle" title="改变位置">拖动</span>
+                    <span class="del-col" title="删除列">删除</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 添加 col-extra 的模板 -->
+        <div id="col-extra-tmpl">
+            <div class="col-extra">
+                <div class="tool-box">
+                    <span class="col-width">230px</span>
+                    <div class="col-strip">
+                        <span title="改变宽度" class="resize-handle">拉动</span>
+                    </div>
+                    <span class="dd-handle" title="改变位置">拖动</span>
+                    <span class="del-col" title="删除列">删除</span>
                 </div>
             </div>
         </div>
