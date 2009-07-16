@@ -60,10 +60,15 @@ a:hover {
 }
 .grid, .main-wrap { background-color: #99A8A2; }
 .main-wrap .tool-box { border-color: #99A8A2; background: url(no-1.png) 50% 50% no-repeat; }
+
 .col-sub { background-color: #9CF; }
 .col-sub .tool-box { border-color: #9CF; background: url(no-2.png) 50% 50% no-repeat; }
+.dd-proxy { opacity: .7; filter: alpha(opacity=70); z-index: 999; }
+.col-sub .dd-proxy { background-color: #9CF; }
+
 .col-extra { background-color: #CF9; }
 .col-extra .tool-box { border-color: #CF9; background: url(no-3.png) 50% 50% no-repeat; }
+.col-extra .dd-proxy { background-color: #CF9; }
 
 .layout { margin-bottom: 10px; }
 .tool-box {
