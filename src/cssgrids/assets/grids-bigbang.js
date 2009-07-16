@@ -14,11 +14,13 @@ YUI().use("dd", function(Y) {
         DEFAULT_COL2 = LAYOUT + " " + GRID + "-m0s5",
         CLS_LAYOUT = "." + LAYOUT,
         HIDDEN = "hidden",
+        FLOAT_RIGHT = "float-right",
         CLS_COL_MAIN = ".col-main",
         CLS_COL_SUB = ".col-sub",
         CLS_COL_EXTRA = ".col-extra",
         CLS_ADD_COL = ".add-col",
-        CLS_DEL_COL = ".del-col";
+        CLS_DEL_COL = ".del-col",
+        CLS_COL_STRIP = ".col-strip";
 
     var BigBang = {
         /**
@@ -151,6 +153,8 @@ YUI().use("dd", function(Y) {
             // 这样会导致某些情况下的无谓更新，但总体来说，这样做能减少复杂度，是值得的
             var gridCls = this._getGridClass(layout),
                 type = this._getLayoutType(layout),
+                colSub = layout.query(CLS_COL_SUB),
+                colExtra = layout.query(CLS_COL_EXTRA),
                 sN = gridCls.replace(/^grid-.*s(\d).*$/, "$1") >> 0, eN = 0, mN = 0;
 
             if(type === 3) eN = gridCls.replace(/^grid-.*e(\d).*$/, "$1") >> 0;
@@ -164,12 +168,29 @@ YUI().use("dd", function(Y) {
             // 三栏时，1. 隐藏“添加列” 2. 隐藏 col-sub 的“删除”
             if(type === 3) {
                 layout.query(CLS_ADD_COL).addClass(HIDDEN);
-                layout.query(CLS_COL_SUB).query(CLS_DEL_COL).addClass(HIDDEN);
+                colSub.query(CLS_DEL_COL).addClass(HIDDEN);
             } else
             // 两栏时，1. 显示“添加列” 2. 显示 col-sub 的“删除”
             if(type === 2) {
                 layout.query(CLS_ADD_COL).removeClass(HIDDEN);
-                layout.query(CLS_COL_SUB).query(CLS_DEL_COL).removeClass(HIDDEN);
+                colSub.query(CLS_DEL_COL).removeClass(HIDDEN);
+            }
+
+            // 更新拖拉标志的位置
+            if(type > 1) {
+                if(/^grid-s\d.+$/.test(gridCls)) { // col-sub 在最左边
+                    colSub.query(CLS_COL_STRIP).addClass(FLOAT_RIGHT);
+                } else {
+                    colSub.query(CLS_COL_STRIP).removeClass(FLOAT_RIGHT);
+                }
+
+                if (type > 2) {
+                    if (/^grid-e\d.+$/.test(gridCls)) { // col-extra 在最左边
+                        colExtra.query(CLS_COL_STRIP).addClass(FLOAT_RIGHT);
+                    } else {
+                        colExtra.query(CLS_COL_STRIP).removeClass(FLOAT_RIGHT);
+                    }
+                }
             }
         },
 

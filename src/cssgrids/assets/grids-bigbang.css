@@ -100,6 +100,9 @@ a:hover {
     text-indent: -999999px;
     overflow: hidden;
 }
+.float-right .resize-handle {
+    float: right;
+}
 /* 拖动：改变位置 */
 .dd-handle {
     display: block;
