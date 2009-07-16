@@ -166,8 +166,9 @@ YUI().use("dd", function(Y) {
                 layout.query(CLS_ADD_COL).addClass(HIDDEN);
                 layout.query(CLS_COL_SUB).query(CLS_DEL_COL).addClass(HIDDEN);
             } else
-            // 两栏时，显示 col-sub 的“删除”
+            // 两栏时，1. 显示“添加列” 2. 显示 col-sub 的“删除”
             if(type === 2) {
+                layout.query(CLS_ADD_COL).removeClass(HIDDEN);
                 layout.query(CLS_COL_SUB).query(CLS_DEL_COL).removeClass(HIDDEN);
             }
         },
