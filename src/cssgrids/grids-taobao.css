@@ -7,7 +7,7 @@ Grids Layout for Taobao
 
 /*
 淘宝采用了 6 种栅格布局：
-950                  .grid
+950                  .grid-m
 190    750           .grid-s5m0
 750    190           .grid-m0s5
 190    510    230    .grid-s5m0e6

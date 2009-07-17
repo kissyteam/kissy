@@ -6,10 +6,12 @@ All Grids Layout
 /* require(grids.css) */
 
 /*
-包含了所有两栏和三栏布局
+下面包含了所有通栏、两栏和三栏布局
 注意1：col 的最小宽度为 4 * 40 - 10 = 150px
 注意2：改文件内容由 css-generator.html 自动生成，请勿手动修改
 */
+
+/** 通栏布局: .grid-m 无需任何特殊样式 **/
 
 /** 两栏布局 **/
 .grid-s4m0 .main-wrap { margin-left: 160px; }

@@ -5,17 +5,14 @@
 <title>BigBang Grids Layout</title>
 <link type="text/css" href="../cssreset/reset.css" rel="stylesheet"/>
 <link type="text/css" href="grids.css" rel="stylesheet"/>
-<link type="text/css" href="grids-all.css" rel="stylesheet"/>
 <link type="text/css" href="http://yui.yahooapis.com/2.7.0/build/resize/assets/skins/sam/resize.css" rel="stylesheet"/>
 <link type="text/css" href="assets/grids-bigbang.css" rel="stylesheet"/>
-<script type="text/javascript" src="../../lib/yui3/yui-min.js"></script>
-<script type="text/javascript" src="assets/grids-bigbang.js"></script>
 </head>
 <body>
 <div id="page" class="w950">
     <div id="header">
         header
-        <select id="page-width" autocomplete="off">
+        <select id="page-width" class="hidden" autocomplete="off">
             <option value="950">950</option>
             <option value="750">750</option>
             <option value="auto">自适应</option>
@@ -24,20 +21,9 @@
     </div>
 
     <div id="content">
-        <div class="layout grid">
-            <div class="col-main">
-                <div class="main-wrap">
-                    <div class="tool-box">
-                        <span class="col-width">950px</span>
-                        <span class="button add-col">+ 添加列</span>
-                        <span class="button del-row" title="删除行">删除</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <div id="page-loading"><img src="assets/loading.gif" alt="Loading ..." /></div>
         <div class="section">
-            <span id="add-row" class="button">+ 添加行</span>
+            <span id="add-row" class="hidden button">+ 添加行</span>
         </div>
     </div>
 
@@ -45,14 +31,15 @@
         footer
     </div>
 
-    <div class="section">
+    <div id="bottom-operations" class="section hidden">
         <span id="build-code" class="button">生成 HTML 代码</span>
+        <span id="share-link" class="button" title="点击后，请复制地址栏链接进行分享">生成分享链接</span>
     </div>
 
     <div class="hidden">
         <!-- 添加行的模板 -->
         <div id="row-tmpl">
-            <div class="layout grid">
+            <div class="layout grid-m">
                 <div class="col-main">
                     <div class="main-wrap">
                         <div class="tool-box">
@@ -95,5 +82,8 @@
         </div>
     </div>
 </div>
+<link type="text/css" href="grids-all.css" rel="stylesheet"/>
+<script type="text/javascript" src="../../lib/yui3/yui-min.js"></script>
+<script type="text/javascript" src="assets/grids-bigbang.js"></script>
 </body>
 </html>

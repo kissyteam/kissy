@@ -27,14 +27,15 @@ YUI({
         COL_EXTRA_DEFAULT_N = 6, // col-extra 的默认宽度
         LAYOUT = "layout",
         GRID = "grid",
-        DEFAULT_COL1 = LAYOUT + " " + GRID,
+        DEFAULT_COL1 = LAYOUT + " " + GRID + "-m",
         DEFAULT_COL2 = LAYOUT + " " + GRID + "-m0s" + COL_SUB_DEFAULT_N,
-        CLS_LAYOUT = "." + LAYOUT,
         RE_SCOL_N = /^.+s(\d+).*$/,
         RE_ECOL_N = /^.+e(\d+).*$/,
         HIDDEN = "hidden",
         FLOAT_RIGHT = "float-right",
         DD_PROXY = "dd-proxy",
+        CLS_LAYOUT = "." + LAYOUT,
+        CLS_ONE_COL = "." + GRID + "-m",
         CLS_MAIN_WRAP = ".main-wrap",
         CLS_COL_SUB = ".col-sub",
         CLS_COL_EXTRA = ".col-extra",
@@ -91,6 +92,11 @@ YUI({
             Y.on("click", function() {
                 self.generateHTMLCode();
             }, "#build-code");
+
+            // 5. 生成分享链接
+            Y.on("click", function() {
+                self.generateShareLink();
+            }, "#share-link");
         },
 
         /**
@@ -305,19 +311,13 @@ YUI({
         },
 
         /**
-         * 根据 gridCls 直接插入一行栅格布局
-         */
-        insertLayout: function() {
-            // TODO
-        },
-
-        /**
          * 插入行
          */
         insertRow: function(where) {
             var row = content.create(ROW_TMPL);
             content.insert(row, where);
             this._updateColMainWidth(row);
+            return row;
         },
 
         /**
@@ -489,7 +489,7 @@ YUI({
          * @return {number} layoutType 1 - 通栏, 2 - 两栏, 3 - 三栏, 0 - 其它情况
          */
         _getLayoutType: function(layout) {
-            if(layout.hasClass(GRID)) return 1;
+            if(layout.hasClass(CLS_ONE_COL.slice(1))) return 1;
 
             var gridCls = this._getGridCls(layout);
             if(gridCls.indexOf("e") != -1) return 3;
@@ -588,18 +588,117 @@ YUI({
         },
 
         /**
+         * 根据 gridCls 直接插入一行栅格布局
+         * @param {string|Array} gridFlags 例如："m0s5" 或 ["s5m0e6", "m0s6", "m"]
+         */
+        insertLayout: function(gridFlags) {
+            if(Y.Lang.isString(gridFlags)) gridFlags = [gridFlags];
+            var self = this, row,
+                defaultCls = CLS_ONE_COL.slice(1),
+                newCls,
+                insertPos = Y.Node.getDOMNode(Y.get("#add-row").get("parentNode"));
+
+            Y.each(gridFlags, function(flag) {
+                if(!self.checkGridFlagIsValid(flag)) return;
+                newCls = GRID + "-" + flag;
+
+                row = self.insertRow(insertPos);
+                if(newCls != defaultCls) {
+                    row.replaceClass(defaultCls, newCls);
+                }
+
+                if(flag.indexOf("s") != -1) { // col-sub
+                    row.append(COL_SUB_TMPL);
+                    self.initCol(row.query(CLS_COL_SUB));
+                }
+                if(flag.indexOf("e") != -1) { // col-extra
+                    row.append(COL_EXTRA_TMPL);
+                    self.initCol(row.query(CLS_COL_EXTRA));
+                }
+
+                // 更新 UI 信息
+                self._syncUI(row);
+            });
+        },
+
+        /**
+         * 检查 flag 是否符合栅格标记
+         */
+        checkGridFlagIsValid: function(flag) {
+            if(!flag) return false;
+
+            // 1. 通栏
+            if(flag === "m") return true;
+
+            // 2. 两栏
+            if(/^m0s\d{1,2}|s\d{1,2}m0$/.test(flag)) return true;
+
+            // 3. 三栏
+            var m = flag.match(/[m|s|e]\d{1,2}/g);
+
+            // 无匹配或总匹配数不为3
+            if(!m || m.length != 3) return false;
+
+            // 含有非 [m|s|e]\d{1,2} 字符
+            if(flag != m.join("")) return false;
+
+            // 含有 mm, ss, ee
+            if(m[0].charAt(0) == m[1].charAt(0)) return false;
+            if(m[0].charAt(0) == m[2].charAt(0)) return false;
+            return m[1].charAt(0) != m[2].charAt(0);
+        },
+
+        /**
+         * 从 location.hash 解析出默认布局
+         * @param {string} hash 格式为 s5m0e6-m0s6-m
+         */
+        parseHash: function(hash) {
+            if(hash) {
+                this.insertLayout(hash.split("-"));
+            }
+        },
+
+        /**
          * 生成 HTML 代码
          */
         generateHTMLCode: function() {
             // TODO
             alert("莫急莫急，尚未实现。");
+        },
+
+        /**
+         * 生成分享链接
+         */
+        generateShareLink: function() {
+            var hash = [], cls;
+
+            Y.each(content.queryAll(CLS_LAYOUT), function(layout) {
+                cls = layout.getAttribute("class");
+                hash.push(cls.replace(/^.*grid-(.+).*$/i, "$1"));
+            });
+
+            location.replace("#" + hash.join("-"));
         }
     };
 
     Y.on("domready", function() {
         BigBang.init();
 
-        // 添加默认布局
-        BigBang.insertLayout("");
+        // 隐藏 loading
+        Y.get("#page-loading").addClass("hidden");
+
+        // 从 hash 里获取布局数据
+        if(location.hash) {
+            BigBang.parseHash(location.hash.slice(1));
+
+        } else {
+            // 添加默认布局
+            BigBang.insertLayout(["s5m0e6", "m0s6", "m"]);
+        }
+
+        // 显示操作按钮
+        Y.get("#page-width").removeClass("hidden");
+        Y.get("#add-row").removeClass("hidden");
+        Y.get("#bottom-operations").removeClass("hidden");
     });
 });
