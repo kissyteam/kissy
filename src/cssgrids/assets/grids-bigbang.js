@@ -2,7 +2,20 @@
  * Grids BigBang Script by lifesinger@gmail.com
  */
 
-YUI().use("dd", function(Y) {
+YUI({
+    /*base: "http://t-yubo/assets/yui/3.0.0/build/",
+    debug: true,
+    filter: 'debug',*/
+    modules: {
+        "yui2-utilities": {
+            fullpath: "http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"
+        },
+        "resize": {
+            fullpath: "http://yui.yahooapis.com/2.7.0/build/resize/resize-min.js",
+            requires: ["yui2-utilities"]
+        }
+    }
+}).use("dd", "resize", function(Y) {
     // 共用变量
     var page, content, pageWidth, ROW_TMPL, COL_SUB_TMPL, COL_EXTRA_TMPL,
         GRIDS_N = 24,
@@ -71,10 +84,17 @@ YUI().use("dd", function(Y) {
         },
 
         /**
+         * 初始化 col
+         */
+        initCol: function(col) {
+            this._initDD(col);
+            this._initResize(col);
+        },
+
+        /**
          * 初始化拖放
          */
-        initDD: function(col) {
-            
+        _initDD: function(col) {
             var drag = new Y.DD.Drag({
                 node: col.query(CLS_TOOL_BOX),
                 handles: [CLS_DD_HANDLE]
@@ -105,6 +125,7 @@ YUI().use("dd", function(Y) {
 
                 // 调整样式
                 p.addClass(DD_PROXY);
+                col.setStyle("zIndex", "99");
 
                 // 获取初始值
                 // 注：当添加删除列后，下面这些值都会更新，因此放在 drag:start
@@ -161,7 +182,50 @@ YUI().use("dd", function(Y) {
                 // 还原样式
                 p.removeClass(DD_PROXY);
                 p.removeAttribute("style");
+                col.setStyle("zIndex", "");
             });
+        },
+
+        /**
+         * 初始化 Resize
+         */
+        _initResize: function(col) {
+            var resize = new YAHOO.util.Resize(Y.Node.getDOMNode(col),
+                    {
+                        handles: ["r", "l"],
+                        proxy: true,
+                        setSize: false
+                    });
+
+            var proxy = Y.get(resize.getProxyEl()),
+                layout = col.ancestor(CLS_LAYOUT),
+                colLeft = col.getX(),
+                colWidth = parseInt(col.getComputedStyle("width")),
+                activeHandle;
+
+            resize.on('startResize', function() {
+                activeHandle = Y.get(this.getActiveHandleEl());
+            });
+
+            resize.on('proxyResize', function(e) {
+                if(activeHandle.hasClass('yui-resize-handle-l')) {
+                    proxy.setStyles({
+                        left:  (colLeft - (e.width - colWidth)) + "px"
+                    });
+                }
+            });
+
+            /* nothing to do
+            resize.on('resize', function(e) {
+
+            });*/
+
+            resize.on('endResize', function(e) {
+                col.removeAttribute("style"); // 消除拉伸时设置的样式
+
+                
+            });
+
         },
 
         /**
@@ -223,7 +287,7 @@ YUI().use("dd", function(Y) {
 
                 col = layout.create(COL_SUB_TMPL);
                 layout.append(col);
-                this.initDD(col);
+                this.initCol(col);
 
             } else if(layoutType === 2) { // 两栏
                 gridCls = this._getGridCls(layout);
@@ -232,7 +296,7 @@ YUI().use("dd", function(Y) {
 
                 col = layout.create(COL_EXTRA_TMPL);
                 layout.append(col);
-                this.initDD(col);
+                this.initCol(col);
 
             } else {
                 needSyncUI = false;
@@ -334,16 +398,20 @@ YUI().use("dd", function(Y) {
         _updateResizeFlag: function(layoutType, gridCls, sCol, eCol) {
             if(layoutType > 1) {
                 if(/^.+s\d.*m0.*$/.test(gridCls)) { // col-sub 在 col-main 左边
-                    sCol.query(CLS_COL_STRIP).addClass(FLOAT_RIGHT);
+                    //sCol.query(CLS_COL_STRIP).addClass(FLOAT_RIGHT);
+                    sCol.addClass(FLOAT_RIGHT); // for YUI 2 Resize
                 } else {
-                    sCol.query(CLS_COL_STRIP).removeClass(FLOAT_RIGHT);
+                    //sCol.query(CLS_COL_STRIP).removeClass(FLOAT_RIGHT);
+                    sCol.removeClass(FLOAT_RIGHT); // for YUI 2 Resize
                 }
 
                 if (layoutType > 2) {
                     if (/^.+e\d.*m0.*$/.test(gridCls)) { // col-extra 在 col-main 左边
-                        eCol.query(CLS_COL_STRIP).addClass(FLOAT_RIGHT);
+                        //eCol.query(CLS_COL_STRIP).addClass(FLOAT_RIGHT);
+                        eCol.addClass(FLOAT_RIGHT); // for YUI 2 Resize
                     } else {
-                        eCol.query(CLS_COL_STRIP).removeClass(FLOAT_RIGHT);
+                        //eCol.query(CLS_COL_STRIP).removeClass(FLOAT_RIGHT);
+                        eCol.removeClass(FLOAT_RIGHT); // for YUI 2 Resize
                     }
                 }
             }

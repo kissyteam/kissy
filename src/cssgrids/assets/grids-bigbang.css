@@ -63,7 +63,7 @@ a:hover {
 
 .col-sub { background-color: #9CF; }
 .col-sub .tool-box { border-color: #9CF; background: url(no-2.png) 50% 50% no-repeat; }
-.dd-proxy { opacity: .7; filter: alpha(opacity=70); z-index: 999; }
+.dd-proxy { z-index: 999; opacity: .7; filter: alpha(opacity=70); }
 .col-sub .dd-proxy { background-color: #9CF; }
 
 .col-extra { background-color: #CF9; }
@@ -142,4 +142,18 @@ a:hover {
     cursor: pointer;
     text-indent: -999999px;
     overflow: hidden;
+}
+
+/* resize */
+.yui-resize div.yui-resize-handle {
+    width: 8px;
+}
+.yui-resize div.yui-resize-handle-r {
+    display: none;
+}
+.float-right div.yui-resize-handle-r {
+    display: block;
+}
+.float-right div.yui-resize-handle-l {
+    display: none;
 }
