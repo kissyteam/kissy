@@ -1,0 +1,150 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Google</title>
+<script type="text/javascript" src="../../../src/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="suggest.js"></script>
+<style type="text/css">
+body, td, a, p, .h {
+    font-family: arial, sans-serif
+}
+
+.h {
+    color: #36c;
+    font-size: 20px
+}
+
+.q {
+    color: #00c
+}
+
+.ts td {
+    padding: 0
+}
+
+.ts {
+    border-collapse: collapse
+}
+
+#gbar {
+    height: 22px;
+    padding-left: 0
+}
+
+.gbh, .gbd {
+    border-top: 1px solid #c9d7f1;
+    font-size: 1px
+}
+
+.gbh {
+    height: 0;
+    position: absolute;
+    top: 24px;
+    width: 100%
+}
+
+#gbi, #gbs {
+    background: #fff;
+    left: 0;
+    position: absolute;
+    top: 24px;
+    visibility: hidden;
+    z-index: 1000
+}
+
+#gbi {
+    border: 1px solid;
+    border-color: #c9d7f1 #36c #36c #a2bae7;
+    z-index: 1001
+}
+
+#guser {
+    padding-bottom: 7px !important;
+    text-align: right
+}
+
+#gbar, #guser {
+    font-size: 13px;
+    padding-top: 1px !important
+}
+
+@media all {
+    .gb1, .gb3 {
+        height: 22px;
+        margin-right: .5em;
+        vertical-align: top
+    }
+
+    #gbar {
+        float: left
+    }
+}
+
+.gb2 {
+    display: block;
+    padding: .2em .5em
+}
+
+a.gb1, a.gb2, a.gb3 {
+    color: #00c !important
+}
+
+.gb2, .gb3 {
+    text-decoration: none
+}
+a.gb2:hover {
+    background: #36c;
+    color: #fff !important
+}
+
+div, span, ol, li { margin: 0; padding: 0 }
+input { margin: 0 }
+
+</style>
+</head>
+<body bgcolor=#ffffff text=#000000 link=#0000cc vlink=#551a8b alink=#ff0000 style="padding-top: 20px">
+<center>
+    <br clear=all id=lgpd><img src=http://www.google.cn/intl/zh-CN/images/logo_cn.gif width=276 height=110 border=0 id=logo alt="Google" title="Google"><br><br>
+
+    <form action="http://www.google.cn/search" name=f>
+        <table cellpadding=0 cellspacing=0>
+            <tr valign=top>
+                <td width=25%>&nbsp;</td>
+                <td align=center nowrap><input name=hl type=hidden value=zh-CN><input id="gq" autocomplete="off" maxlength=2048 name=q size=55 title="Google 搜索" value=""><br><input name=btnG type=submit value="Google 搜索"><input name=btnI type=submit value="&nbsp;手气不错&nbsp;"></td>
+                <td nowrap width=25% align=left><font size=-1>&nbsp;&nbsp;<a href=http://www.google.cn/advanced_search?hl=zh-CN>高级搜索</a><br>&nbsp;&nbsp;<a href=http://www.google.cn/preferences?hl=zh-CN>使用偏好</a><br>&nbsp;&nbsp;<a href=http://www.google.cn/language_tools?hl=zh-CN>语言工具</a></font></td>
+            </tr>
+            <tr>
+                <td align=center colspan=3><font size=-1><span style="text-align:left"><input id=all type=radio name=meta value="" checked><label for=all>所有网页&nbsp;</label> <input id=ch type=radio name=meta value="lr=lang_zh-CN|lang_zh-TW"><label for=ch>中文网页&nbsp;</label> <input id=lgr type=radio name=meta value="lr=lang_zh-CN"><label for=lgr>简体中文网页&nbsp;</label> <input id=cty type=radio name=meta value="cr=countryCN"><label for=cty>中国的网页&nbsp;</label> </span></font></td>
+            </tr>
+        </table>
+    </form>
+    <script type="text/javascript">
+        (function() {
+            // Google
+            //var dataUrl = 'http://clients1.google.com/complete/search';
+            var dataUrl = 'http://www.google.cn/complete/search';
+            window.google = {};
+            window.google.ac = {};
+            window.google.ac.h = TB.Suggest.callback;
+
+            var sug = new TB.Suggest('gq', dataUrl, { autoFocus: true, resultFormat: '%result%' });
+
+            sug.subscribe('beforeDataRequest', function(query) {
+                this.dataScript.charset = 'utf-8';
+                this.queryParams = 'hl=zh-CN&q=' + encodeURIComponent(query);
+            });
+
+            // google: window.google.ac.h(["ni",[["牛博网","73,248 结果","0z"],["牛博网首页","12,200,617 结果","1z"],["你是准备替党说话 还是准备替老百姓说话","136,545 结果","2z"],["nike","117,000,000 结果","3"],["nikon","127,000,000 结果","4"],["nissan","135,000,000 结果","5"],["nine west","40,000,000 结果","6"],["nike鞋","3,380,000 结果","7"],["倪萍 再婚","36,400 结果","8"],["牛年祝福语","582,000 结果","9"]]])
+            // taobao: TB.Suggest.callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
+            sug.subscribe('onDataReturn', function(data) {
+                this.returnedData = data[1] || [];
+            });
+        })();
+    </script>
+
+    <br><br><font size=-1><a href="http://www.google.cn/intl/zh-CN/ads/">广告计划</a> - <a href="http://www.google.cn/intl/zh-CN/about.html">Google 大全</a> - <a href=http://www.google.com/ncr>Google.com in English</a></font>
+
+    <p><font size=-1>&copy;2009 - hacked by <a href="http://lifesinger.org/">lifesinger</a></font></p>
+</center>
+</body>
+</html>
