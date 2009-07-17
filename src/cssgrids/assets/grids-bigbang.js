@@ -3,9 +3,9 @@
  */
 
 YUI({
-    /*base: "http://t-yubo/assets/yui/3.0.0/build/",
-    debug: true,
-    filter: 'debug',*/
+    /*base: "http://t-yubo/assets/yui/3.0.0/build/",*/
+    debug: false,
+    /*filter: 'debug',*/
     modules: {
         "yui2-utilities": {
             fullpath: "http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"
@@ -267,11 +267,11 @@ YUI({
 
                 // 调整宽度符合栅格
                 activeN = self._calcActiveColWidth(layoutWidth, activeColCls, sWidth, eWidth);
-                console.log("activeN = " + activeN);
+                //console.log("activeN = " + activeN);
 
                 // 获取新的 gridCls
                 newGridCls = self._adjustGridClsByWidth(gridCls, activeColCls, activeN);
-                console.log("newGridCls = " + newGridCls);
+                //console.log("newGridCls = " + newGridCls);
 
                 if (newGridCls && newGridCls != gridCls) {
                     layout.replaceClass(gridCls, newGridCls);
