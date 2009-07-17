@@ -21,6 +21,8 @@ YUI({
         GRIDS_N = 24,
         UNIT_COL = 40,
         UNIT_GUTTER = 10,
+        COL_MIN_N = 4,
+        COL_MIN_WIDTH = UNIT_COL * COL_MIN_N - UNIT_GUTTER,
         LAYOUT = "layout",
         GRID = "grid",
         DEFAULT_COL1 = LAYOUT + " " + GRID,
@@ -34,7 +36,7 @@ YUI({
         CLS_COL_EXTRA = ".col-extra",
         CLS_ADD_COL = ".add-col",
         CLS_DEL_COL = ".del-col",
-        CLS_COL_STRIP = ".col-strip",
+        //CLS_COL_STRIP = ".col-strip",
         CLS_COL_WIDTH = ".col-width",
         CLS_DD_HANDLE = ".dd-handle",
         CLS_TOOL_BOX = ".tool-box";
@@ -134,8 +136,8 @@ YUI({
                 eCol = layout.query(CLS_COL_EXTRA);
                 sN = parseInt(gridCls.replace(/^.+s(\d).*$/, "$1"));
                 eN = parseInt(gridCls.replace(/^.+e(\d).*$/, "$1"));
-                sHalf = (sN * UNIT_COL - UNIT_GUTTER) / 2;
-                eHalf = (eN * UNIT_COL - UNIT_GUTTER) / 2;
+                sHalf = self._getWidthByN(sN) / 2;
+                eHalf = self._getWidthByN(eN) / 2;
                 mHalf = parseInt(mCol.getComputedStyle("width")) / 2;
                 pHalf = parseInt(p.getComputedStyle("width")) / 2;
                 mX = mCol.getX() + mHalf;
@@ -197,33 +199,68 @@ YUI({
                         setSize: false
                     });
 
-            var proxy = Y.get(resize.getProxyEl()),
-                layout = col.ancestor(CLS_LAYOUT),
-                colLeft = col.getX(),
+            var layout = col.ancestor(CLS_LAYOUT),
+                layoutWidth,
+                gridCls = this._getGridCls(layout),
+                newGridCls,
+                activeColCls = col.hasClass(CLS_COL_SUB.slice(1)) ? CLS_COL_SUB : CLS_COL_EXTRA,
+                proxy = Y.get(resize.getProxyEl()),
+                activeHandle,
+                handleAtLeft = true,
+                colLeft,
                 colWidth = parseInt(col.getComputedStyle("width")),
-                activeHandle;
+                sN = parseInt(gridCls.replace(/^.+s(\d).*$/, "$1")),
+                eN = parseInt(gridCls.replace(/^.+e(\d).*$/, "$1")),
+                sWidth = this._getWidthByN(sN),
+                eWidth = this._getWidthByN(eN),
+                self = this;
 
             resize.on('startResize', function() {
                 activeHandle = Y.get(this.getActiveHandleEl());
+                handleAtLeft = activeHandle.hasClass('yui-resize-handle-l');
+
+                // 下面这些值，在窗口拉伸和切换页面宽度时，有可能会改变，因此放在 resize start 中获取
+                layoutWidth = parseInt(layout.getComputedStyle("width"));
+                colLeft = col.getX();
             });
 
             resize.on('proxyResize', function(e) {
-                if(activeHandle.hasClass('yui-resize-handle-l')) {
+                console.log("colLeft = " + colLeft);
+                console.log("e.width = " + e.width);
+                if(handleAtLeft) {
                     proxy.setStyles({
+                        width: e.width + "px",
                         left:  (colLeft - (e.width - colWidth)) + "px"
                     });
+                    console.log("proxy.left = " + proxy.getStyle("left"));
+                    console.log("proxy.calcleft = " + (colLeft - (e.width - colWidth)) + "px");
                 }
             });
 
             /* nothing to do
             resize.on('resize', function(e) {
-
             });*/
 
             resize.on('endResize', function(e) {
-                col.removeAttribute("style"); // 消除拉伸时设置的样式
+                // 消除拉伸时设置的样式
+                col.removeAttribute("style");
 
-                
+                // 获取当前拉动的 col 宽度
+                if(activeColCls === CLS_COL_SUB) {
+                    sWidth = self._getWidthByN(self._getNByWidth(e.width));
+                } else {
+                    eWidth = self._getWidthByN(self._getNByWidth(e.width));
+                }
+
+                newGridCls = self._adjustGridClsByWidth(gridCls, layoutWidth, activeColCls, sWidth, eWidth);
+                console.log("newGridCls = " + newGridCls);
+
+                if (newGridCls && newGridCls != gridCls) {
+                    layout.replaceClass(gridCls, newGridCls);
+
+                    // 下面这些值需要动态更新，否则接下来的判断不对
+                    gridCls = newGridCls;
+                }
             });
 
         },
@@ -463,6 +500,56 @@ YUI({
             }
 
             return cls;
+        },
+
+
+        /**
+         * 根据宽度值调整 gridCls
+         */
+        _adjustGridClsByWidth: function(gridCls, layoutWidth, activeColCls, sWidth, eWidth) {
+            var sN = this._getNByWidth(sWidth),
+                eN = eWidth ? this._getNByWidth(sWidth) : 0,
+                mWidth, n;
+            eWidth = eWidth >> 0;
+
+            // 不能小于最小宽度
+            if(sN < COL_MIN_N) {
+                sN = COL_MIN_N;
+                sWidth = COL_MIN_WIDTH;
+            }
+            if(eN && eN < COL_MIN_N) {
+                eN = COL_MIN_N;
+                eWidth = COL_MIN_WIDTH;
+            }
+
+            // 也不能太宽，使得 main-wrap 的宽度小于最小宽度
+            mWidth = layoutWidth - sWidth - eWidth;
+            n = 0;
+            while (mWidth < COL_MIN_WIDTH) {
+                n++;
+                mWidth += UNIT_COL;
+            }
+            console.log(activeColCls);
+            if(activeColCls === CLS_COL_SUB) {
+                gridCls = gridCls.replace(/^(.+s)(\d)(.*)$/, function(s, m1, m2, m3) {
+                    console.log(m1 + " " + (sN - n) + m3);
+                    return m1 + (sN - n) + m3;
+                });
+            } else if(activeColCls === CLS_COL_EXTRA) {
+                gridCls = gridCls.replace(/^(.+e)(\d)(.*)$/, function(s, m1, m2, m3) {
+                    return m1 + (eN - n) + m3;
+                });
+            }
+
+            return gridCls;
+        },
+
+        _getWidthByN: function(n) {
+            return n * UNIT_COL - UNIT_GUTTER;
+        },
+
+        _getNByWidth: function(width) {
+            return Math.floor((width + UNIT_GUTTER) / UNIT_COL);
         }
     };
 
