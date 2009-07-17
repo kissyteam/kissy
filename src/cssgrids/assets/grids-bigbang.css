@@ -79,9 +79,16 @@ a:hover {
     border: #99A8A2 1px solid;
     text-align: right;
 }
+.float-right .tool-box {
+    text-align: left; /* 在左边时，文字向左对齐 */
+}
 .col-width {
     font: 18px 'Courier New', monospace;
-    padding: 0 10px;
+    padding: 0 5px;
+}
+.col-sub .col-width,
+.col-extra .col-width {
+    margin-right: -7px; /* 让宽度为150px时也能显示全 */    
 }
 
 /** drag & drop **/

@@ -16,18 +16,22 @@ YUI({
         }
     }
 }).use("dd", "resize", function(Y) {
-    // ¹²ÓÃ±äÁ¿
+    // å…±ç”¨å˜é‡å’Œå¸¸é‡
     var page, content, pageWidth, ROW_TMPL, COL_SUB_TMPL, COL_EXTRA_TMPL,
         GRIDS_N = 24,
         UNIT_COL = 40,
         UNIT_GUTTER = 10,
         COL_MIN_N = 4,
         COL_MIN_WIDTH = UNIT_COL * COL_MIN_N - UNIT_GUTTER,
+        COL_SUB_DEFAULT_N = 5, // col-sub çš„é»˜è®¤å®½åº¦
+        COL_EXTRA_DEFAULT_N = 6, // col-extra çš„é»˜è®¤å®½åº¦
         LAYOUT = "layout",
         GRID = "grid",
         DEFAULT_COL1 = LAYOUT + " " + GRID,
-        DEFAULT_COL2 = LAYOUT + " " + GRID + "-m0s5",
+        DEFAULT_COL2 = LAYOUT + " " + GRID + "-m0s" + COL_SUB_DEFAULT_N,
         CLS_LAYOUT = "." + LAYOUT,
+        RE_SCOL_N = /^.+s(\d+).*$/,
+        RE_ECOL_N = /^.+e(\d+).*$/,
         HIDDEN = "hidden",
         FLOAT_RIGHT = "float-right",
         DD_PROXY = "dd-proxy",
@@ -36,27 +40,26 @@ YUI({
         CLS_COL_EXTRA = ".col-extra",
         CLS_ADD_COL = ".add-col",
         CLS_DEL_COL = ".del-col",
-        //CLS_COL_STRIP = ".col-strip",
         CLS_COL_WIDTH = ".col-width",
         CLS_DD_HANDLE = ".dd-handle",
         CLS_TOOL_BOX = ".tool-box";
 
     var BigBang = {
         /**
-         * ³õÊ¼»¯
+         * åˆå§‹åŒ–
          */
         init: function() {
             var self = this;
             page = Y.get("#page");
             content = Y.get("#content");
 
-            // 1. ÇĞ»»Ò³Ãæ¿í¶È
+            // 1. åˆ‡æ¢é¡µé¢å®½åº¦
             pageWidth = Y.get("#page-width");
             pageWidth.on("change", function() {
                 self.switchPageWidth(this.get("value"));
             });
 
-            // 2. Ìí¼ÓĞĞ£¬Ìí¼ÓÁĞ£¬É¾³ıĞĞ£¬É¾³ıÁĞ
+            // 2. æ·»åŠ è¡Œï¼Œæ·»åŠ åˆ—ï¼Œåˆ é™¤è¡Œï¼Œåˆ é™¤åˆ—
             ROW_TMPL  = Y.get("#row-tmpl").get("innerHTML");
             COL_SUB_TMPL = Y.get("#col-sub-tmpl").get("innerHTML");
             COL_EXTRA_TMPL = Y.get("#col-extra-tmpl").get("innerHTML");
@@ -77,16 +80,21 @@ YUI({
                 }
             }, "span");
 
-            // 3. onresize
+            // 3. window onresize
             Y.on("resize", function() {
                 if(pageWidth.get("value") === "auto") {
                     self._updateAllColMainWidth();
                 }
             }, window);
+
+            // 4. ç”Ÿæˆ HTML ä»£ç 
+            Y.on("click", function() {
+                self.generateHTMLCode();
+            }, "#build-code");
         },
 
         /**
-         * ³õÊ¼»¯ col
+         * åˆå§‹åŒ– col
          */
         initCol: function(col) {
             this._initDD(col);
@@ -94,7 +102,7 @@ YUI({
         },
 
         /**
-         * ³õÊ¼»¯ÍÏ·Å
+         * åˆå§‹åŒ–æ‹–æ”¾
          */
         _initDD: function(col) {
             var drag = new Y.DD.Drag({
@@ -111,31 +119,31 @@ YUI({
                 eCol,
                 sN,
                 eN,
-                mHalf, // main-wrap ÔªËØµÄ°ë¿í
-                sHalf, // col-sub ÔªËØµÄ°ë¿í
-                eHalf, // col-extra ÔªËØµÄ°ë¿í
-                pHalf, // proxy ÔªËØµÄ°ë¿í
-                mX, // main-wrap ÖĞÖáÏßµÄ X ×ø±êÖµ
-                sX, // col-sub ÖĞÖáÏßµÄ X ×ø±êÖµ
-                eX, // col-extra ÖĞÖáÏßµÄ X ×ø±êÖµ
-                pX, // proxy ÖĞÖáÏßµÄ X ×ø±êÖµ
+                mHalf, // main-wrap å…ƒç´ çš„åŠå®½
+                sHalf, // col-sub å…ƒç´ çš„åŠå®½
+                eHalf, // col-extra å…ƒç´ çš„åŠå®½
+                pHalf, // proxy å…ƒç´ çš„åŠå®½
+                mX, // main-wrap ä¸­è½´çº¿çš„ X åæ ‡å€¼
+                sX, // col-sub ä¸­è½´çº¿çš„ X åæ ‡å€¼
+                eX, // col-extra ä¸­è½´çº¿çš„ X åæ ‡å€¼
+                pX, // proxy ä¸­è½´çº¿çš„ X åæ ‡å€¼
                 p,  // proxy node
                 self = this;
 
             drag.on("drag:start", function() {
                 p = this.get("dragNode");
 
-                // µ÷ÕûÑùÊ½
+                // è°ƒæ•´æ ·å¼
                 p.addClass(DD_PROXY);
                 col.setStyle("zIndex", "99");
 
-                // »ñÈ¡³õÊ¼Öµ
-                // ×¢£ºµ±Ìí¼ÓÉ¾³ıÁĞºó£¬ÏÂÃæÕâĞ©Öµ¶¼»á¸üĞÂ£¬Òò´Ë·ÅÔÚ drag:start
+                // è·å–åˆå§‹å€¼
+                // æ³¨ï¼šå½“æ·»åŠ åˆ é™¤åˆ—åï¼Œä¸‹é¢è¿™äº›å€¼éƒ½ä¼šæ›´æ–°ï¼Œå› æ­¤æ”¾åœ¨ drag:start
                 layoutType = self._getLayoutType(layout);
                 gridCls = self._getGridCls(layout);
                 eCol = layout.query(CLS_COL_EXTRA);
-                sN = parseInt(gridCls.replace(/^.+s(\d).*$/, "$1"));
-                eN = parseInt(gridCls.replace(/^.+e(\d).*$/, "$1"));
+                sN = parseInt(gridCls.replace(RE_SCOL_N, "$1"));
+                eN = parseInt(gridCls.replace(RE_ECOL_N, "$1"));
                 sHalf = self._getWidthByN(sN) / 2;
                 eHalf = self._getWidthByN(eN) / 2;
                 mHalf = parseInt(mCol.getComputedStyle("width")) / 2;
@@ -148,17 +156,17 @@ YUI({
             drag.on("drag:drag", function(e) {
                 var args;
 
-                // µÃµ½µ±Ç°×ø±ê
+                // å¾—åˆ°å½“å‰åæ ‡
                 pX = e.pageX + pHalf;
 
-                if (layoutType === 2) { // Á½À¸
+                if (layoutType === 2) { // ä¸¤æ 
                     args = [[mX], [pX, sN], null];
 
-                } else if(layoutType === 3) { // ÈıÀ¸
-                    if(col.hasClass(CLS_COL_SUB.slice(1))) { // ÍÏ¶¯µÄÊÇ col-sub
+                } else if(layoutType === 3) { // ä¸‰æ 
+                    if(col.hasClass(CLS_COL_SUB.slice(1))) { // æ‹–åŠ¨çš„æ˜¯ col-sub
                         args = [[mX], [pX, sN], [eX, eN]];
 
-                    } else { // ÍÏ¶¯µÄÊÇ col-extra
+                    } else { // æ‹–åŠ¨çš„æ˜¯ col-extra
                         args = [[mX], [sX, sN], [pX, eN]];
                     }
                 }
@@ -169,19 +177,19 @@ YUI({
                 if (newGridCls && newGridCls != gridCls) {
                     layout.replaceClass(gridCls, newGridCls);
 
-                    // ÏÂÃæÕâĞ©ÖµĞèÒª¶¯Ì¬¸üĞÂ£¬·ñÔò½ÓÏÂÀ´µÄÅĞ¶Ï²»¶Ô
+                    // ä¸‹é¢è¿™äº›å€¼éœ€è¦åŠ¨æ€æ›´æ–°ï¼Œå¦åˆ™æ¥ä¸‹æ¥çš„åˆ¤æ–­ä¸å¯¹
                     gridCls = newGridCls;
                     mX = mCol.getX() + mHalf;
                     sX = sCol.getX() + sHalf;
                     if(eCol) eX = eCol.getX() + eHalf;
 
-                    // ¸üĞÂÍÏÀ­±êÖ¾µÄÎ»ÖÃ
+                    // æ›´æ–°æ‹–æ‹‰æ ‡å¿—çš„ä½ç½®
                     self._updateResizeFlag(layoutType, gridCls, sCol, eCol);
                 }
             });
 
             drag.on("drag:end", function() {
-                // »¹Ô­ÑùÊ½
+                // è¿˜åŸæ ·å¼
                 p.removeClass(DD_PROXY);
                 p.removeAttribute("style");
                 col.setStyle("zIndex", "");
@@ -189,7 +197,7 @@ YUI({
         },
 
         /**
-         * ³õÊ¼»¯ Resize
+         * åˆå§‹åŒ– Resize
          */
         _initResize: function(col) {
             var resize = new YAHOO.util.Resize(Y.Node.getDOMNode(col),
@@ -201,72 +209,80 @@ YUI({
 
             var layout = col.ancestor(CLS_LAYOUT),
                 layoutWidth,
-                gridCls = this._getGridCls(layout),
+                gridCls,
                 newGridCls,
-                activeColCls = col.hasClass(CLS_COL_SUB.slice(1)) ? CLS_COL_SUB : CLS_COL_EXTRA,
                 proxy = Y.get(resize.getProxyEl()),
                 activeHandle,
                 handleAtLeft = true,
+                sWidth,
+                eWidth,
+                activeColCls = col.hasClass(CLS_COL_SUB.slice(1)) ? CLS_COL_SUB : CLS_COL_EXTRA,
                 colLeft,
-                colWidth = parseInt(col.getComputedStyle("width")),
-                sN = parseInt(gridCls.replace(/^.+s(\d).*$/, "$1")),
-                eN = parseInt(gridCls.replace(/^.+e(\d).*$/, "$1")),
-                sWidth = this._getWidthByN(sN),
-                eWidth = this._getWidthByN(eN),
+                colWidth,
+                activeN,
                 self = this;
 
             resize.on('startResize', function() {
                 activeHandle = Y.get(this.getActiveHandleEl());
                 handleAtLeft = activeHandle.hasClass('yui-resize-handle-l');
 
-                // ÏÂÃæÕâĞ©Öµ£¬ÔÚ´°¿ÚÀ­ÉìºÍÇĞ»»Ò³Ãæ¿í¶ÈÊ±£¬ÓĞ¿ÉÄÜ»á¸Ä±ä£¬Òò´Ë·ÅÔÚ resize start ÖĞ»ñÈ¡
+                // ä¸‹é¢è¿™äº›å€¼ï¼Œåœ¨resizeæ³¨å†Œåï¼Œæœ‰å¯èƒ½å› æ‹–åŠ¨è€Œæ”¹å˜
+                gridCls = self._getGridCls(layout);
+                sWidth = self._getWidthByN(parseInt(gridCls.replace(RE_SCOL_N, "$1")));
+                eWidth = self._getWidthByN(parseInt(gridCls.replace(RE_ECOL_N, "$1")));
+
+                // ä¸‹é¢è¿™äº›å€¼ï¼Œåœ¨çª—å£æ‹‰ä¼¸å’Œåˆ‡æ¢é¡µé¢å®½åº¦ç­‰æƒ…å½¢ä¸‹ï¼Œæœ‰å¯èƒ½ä¼šæ”¹å˜ï¼Œå› æ­¤æ”¾åœ¨ resize start ä¸­è·å–
                 layoutWidth = parseInt(layout.getComputedStyle("width"));
                 colLeft = col.getX();
+                colWidth = parseInt(col.getComputedStyle("width")); // å¯èƒ½å·²ç» resize è¿‡
             });
 
             resize.on('proxyResize', function(e) {
-                console.log("colLeft = " + colLeft);
-                console.log("e.width = " + e.width);
                 if(handleAtLeft) {
                     proxy.setStyles({
-                        width: e.width + "px",
-                        left:  (colLeft - (e.width - colWidth)) + "px"
+                        left: (colLeft - (e.width - colWidth)) + "px"
                     });
-                    console.log("proxy.left = " + proxy.getStyle("left"));
-                    console.log("proxy.calcleft = " + (colLeft - (e.width - colWidth)) + "px");
                 }
+
+                // åŠ¨æ€æ˜¾ç¤ºå®½åº¦
+                self._updateColWidth(col, self._getGridWidth(e.width) + "px");
             });
 
-            /* nothing to do
-            resize.on('resize', function(e) {
-            });*/
-
             resize.on('endResize', function(e) {
-                // Ïû³ıÀ­ÉìÊ±ÉèÖÃµÄÑùÊ½
+                // æ¶ˆé™¤æ‹‰ä¼¸æ—¶è®¾ç½®çš„æ ·å¼
                 col.removeAttribute("style");
 
-                // »ñÈ¡µ±Ç°À­¶¯µÄ col ¿í¶È
+                // è·å–å½“å‰æ‹‰åŠ¨çš„ col å®½åº¦
                 if(activeColCls === CLS_COL_SUB) {
                     sWidth = self._getWidthByN(self._getNByWidth(e.width));
                 } else {
                     eWidth = self._getWidthByN(self._getNByWidth(e.width));
                 }
 
-                newGridCls = self._adjustGridClsByWidth(gridCls, layoutWidth, activeColCls, sWidth, eWidth);
+                // è°ƒæ•´å®½åº¦ç¬¦åˆæ …æ ¼
+                activeN = self._calcActiveColWidth(layoutWidth, activeColCls, sWidth, eWidth);
+                console.log("activeN = " + activeN);
+
+                // è·å–æ–°çš„ gridCls
+                newGridCls = self._adjustGridClsByWidth(gridCls, activeColCls, activeN);
                 console.log("newGridCls = " + newGridCls);
 
                 if (newGridCls && newGridCls != gridCls) {
                     layout.replaceClass(gridCls, newGridCls);
-
-                    // ÏÂÃæÕâĞ©ÖµĞèÒª¶¯Ì¬¸üĞÂ£¬·ñÔò½ÓÏÂÀ´µÄÅĞ¶Ï²»¶Ô
                     gridCls = newGridCls;
+
+                    // æ›´æ–°åˆ—å®½
+                    self._updateColMainWidth(layout);
                 }
+                
+                // æœ‰å¯èƒ½æ‹‰ä¼¸åˆ°å°äºæœ€å°å®½åº¦ï¼Œè¿™æ—¶æ²¡æœ‰å¼•å‘ gridCls å˜åŒ–ï¼Œä½†ä¾æ—§éœ€è¦æ›´æ–°åˆ—å®½
+                self._updateColWidth(col, self._getWidthByN(activeN) + "px");
             });
 
         },
 
         /**
-         * ÇĞ»»Ò³Ãæ¿í¶È
+         * åˆ‡æ¢é¡µé¢å®½åº¦
          */
         switchPageWidth: function(type) {
             switch (type) {
@@ -289,14 +305,14 @@ YUI({
         },
 
         /**
-         * ¸ù¾İ gridCls Ö±½Ó²åÈëÒ»ĞĞÕ¤¸ñ²¼¾Ö
+         * æ ¹æ® gridCls ç›´æ¥æ’å…¥ä¸€è¡Œæ …æ ¼å¸ƒå±€
          */
         insertLayout: function() {
             // TODO
         },
 
         /**
-         * ²åÈëĞĞ
+         * æ’å…¥è¡Œ
          */
         insertRow: function(where) {
             var row = content.create(ROW_TMPL);
@@ -305,30 +321,30 @@ YUI({
         },
 
         /**
-         * É¾³ıĞĞ
+         * åˆ é™¤è¡Œ
          */
         removeRow: function(row) {
             row.remove();
         },
 
         /**
-         * ²åÈëÁĞ
+         * æ’å…¥åˆ—
          */
         insertCol: function(pos) {
             var layout = pos.ancestor(CLS_LAYOUT),
                 layoutType = this._getLayoutType(layout),
                 gridCls, newGridCls, col, needSyncUI = true;
 
-            if (layoutType === 1) { // Í¨À¸
+            if (layoutType === 1) { // é€šæ 
                 layout.setAttribute("class", DEFAULT_COL2);
 
                 col = layout.create(COL_SUB_TMPL);
                 layout.append(col);
                 this.initCol(col);
 
-            } else if(layoutType === 2) { // Á½À¸
+            } else if(layoutType === 2) { // ä¸¤æ 
                 gridCls = this._getGridCls(layout);
-                newGridCls = gridCls.replace(/^(.+)m0(.*)$/, "$1m0e6$2");
+                newGridCls = gridCls.replace(/^(.+)m0(.*)$/, "$1m0e" + COL_EXTRA_DEFAULT_N + "$2");
                 layout.replaceClass(gridCls, newGridCls);
 
                 col = layout.create(COL_EXTRA_TMPL);
@@ -343,22 +359,22 @@ YUI({
         },
 
         /**
-         * É¾³ıÁĞ
+         * åˆ é™¤åˆ—
          */
         removeCol: function(pos) {
             var layout = pos.ancestor(CLS_LAYOUT),
                 layoutType = this._getLayoutType(layout),
                 gridCls, newGridCls, needSyncUI = true;
 
-            if (layoutType === 2) { // Á½À¸
+            if (layoutType === 2) { // ä¸¤æ 
                 layout.query(CLS_COL_SUB).remove();
                 layout.setAttribute("class", DEFAULT_COL1);
 
-            } else if(layoutType === 3) { // ÈıÀ¸
+            } else if(layoutType === 3) { // ä¸‰æ 
                 layout.query(CLS_COL_EXTRA).remove();
 
                 gridCls = this._getGridCls(layout);
-                newGridCls = gridCls.replace(/^(.+)e\d(.*)$/, "$1$2");
+                newGridCls = gridCls.replace(/^(.+)e\d+(.*)$/, "$1$2");
                 layout.replaceClass(gridCls, newGridCls);
 
             } else {
@@ -369,58 +385,74 @@ YUI({
         },
 
         /**
-         * ¸üĞÂÀ¸¿í£¬°´Å¥×´Ì¬µÈ UI ĞÅÏ¢
+         * æ›´æ–°æ å®½ï¼ŒæŒ‰é’®çŠ¶æ€ç­‰ UI ä¿¡æ¯
          */
         _syncUI: function(layout) {
-            // ÎªÁË¼õÉÙñîºÏ£¬ÏÂÃæ½ö¸ù¾İ gridCls ¸üĞÂ UI
-            // ÕâÑù»áµ¼ÖÂÄ³Ğ©Çé¿öÏÂµÄÎŞÎ½¸üĞÂ£¬µ«×ÜÌåÀ´Ëµ£¬ÕâÑù×öÄÜ¼õÉÙ¸´ÔÓ¶È£¬ÊÇÖµµÃµÄ
+            // ä¸ºäº†å‡å°‘è€¦åˆï¼Œä¸‹é¢ä»…æ ¹æ® gridCls æ›´æ–° UI
+            // è¿™æ ·ä¼šå¯¼è‡´æŸäº›æƒ…å†µä¸‹çš„æ— è°“æ›´æ–°ï¼Œä½†æ€»ä½“æ¥è¯´ï¼Œè¿™æ ·åšèƒ½å‡å°‘å¤æ‚åº¦ï¼Œæ˜¯å€¼å¾—çš„
             var gridCls = this._getGridCls(layout),
                 layoutType = this._getLayoutType(layout),
                 sCol = layout.query(CLS_COL_SUB),
                 eCol = layout.query(CLS_COL_EXTRA),
-                sN = gridCls.replace(/^grid-.*s(\d).*$/, "$1") >> 0, eN = 0, mN = 0;
+                sN = gridCls.replace(RE_SCOL_N, "$1") >> 0, eN = 0, mN = 0;
 
-            if(layoutType === 3) eN = gridCls.replace(/^grid-.*e(\d).*$/, "$1") >> 0;
+            if(layoutType === 3) eN = gridCls.replace(RE_ECOL_N, "$1") >> 0;
             mN = GRIDS_N - sN - eN;
 
-            // ¸üĞÂÀ¸¿í
+            // æ›´æ–°æ å®½
             if(mN) { this._updateColMainWidth(layout); }
             if(sN) { this._updateColWidth(layout.query(CLS_COL_SUB), sN); }
             if(eN) { this._updateColWidth(layout.query(CLS_COL_EXTRA), eN); }
 
-            // ÈıÀ¸Ê±£¬1. Òş²Ø¡°Ìí¼ÓÁĞ¡± 2. Òş²Ø col-sub µÄ¡°É¾³ı¡±
+            // ä¸‰æ æ—¶ï¼Œ1. éšè—â€œæ·»åŠ åˆ—â€ 2. éšè— col-sub çš„â€œåˆ é™¤â€
             if(layoutType === 3) {
                 layout.query(CLS_ADD_COL).addClass(HIDDEN);
                 sCol.query(CLS_DEL_COL).addClass(HIDDEN);
             } else
-            // Á½À¸Ê±£¬1. ÏÔÊ¾¡°Ìí¼ÓÁĞ¡± 2. ÏÔÊ¾ col-sub µÄ¡°É¾³ı¡±
+            // ä¸¤æ æ—¶ï¼Œ1. æ˜¾ç¤ºâ€œæ·»åŠ åˆ—â€ 2. æ˜¾ç¤º col-sub çš„â€œåˆ é™¤â€
             if(layoutType === 2) {
                 layout.query(CLS_ADD_COL).removeClass(HIDDEN);
                 sCol.query(CLS_DEL_COL).removeClass(HIDDEN);
             }
 
-            // ¸üĞÂÍÏÀ­±êÖ¾µÄÎ»ÖÃ
+            // æ›´æ–°æ‹–æ‹‰æ ‡å¿—çš„ä½ç½®
             this._updateResizeFlag(layoutType, gridCls, sCol, eCol);
         },
 
         /**
-         * ¸üĞÂÁĞ¿í
+         * æ›´æ–°åˆ—å®½
          */
         _updateColWidth: function(col, val) {
-            val = Y.Lang.isNumber(val) ? val * UNIT_COL - UNIT_GUTTER + "px" : val;
+            val = Y.Lang.isNumber(val) ? this._getWidthByN(val) + "px" : val;
             col.query(CLS_COL_WIDTH).setContent(val);
         },
 
         /**
-         * ¸üĞÂ col-main µÄÁĞ¿í
+         * æ›´æ–° col-main çš„åˆ—å®½
          */
         _updateColMainWidth: function(layout) {
-            var mainWrap = layout.query(CLS_MAIN_WRAP);
-            this._updateColWidth(mainWrap, Y.DOM.getComputedStyle(Y.Node.getDOMNode(mainWrap), "width"));
+            var mainWrap = layout.query(CLS_MAIN_WRAP),
+                mainWidth = parseInt(mainWrap.getComputedStyle("width"));
+            this._updateColWidth(mainWrap, mainWidth + "px");
+
+            this._updateAddColButton(layout, mainWidth);
         },
 
         /**
-         * ¸üĞÂËùÓĞ col-main µÄÁĞ¿í
+         * æ›´æ–°â€œæ·»åŠ åˆ—â€æŒ‰é’®çš„æ˜¾ç¤ºçŠ¶æ€
+         */
+        _updateAddColButton: function(layout, mainWidth) {
+            // å½“å®½åº¦å°äºä¸€å®šå€¼æ—¶ï¼Œå·²ç»ä¸èƒ½æ·»åŠ  col-extra äº†ï¼Œéœ€è¦éšè—æ·»åŠ æŒ‰é’®
+            if(mainWidth < this._getWidthByN(COL_MIN_N + COL_EXTRA_DEFAULT_N)) {
+                layout.query(CLS_ADD_COL).addClass(HIDDEN);
+
+            } else if(!layout.query(CLS_COL_EXTRA)) { // ä¸æ˜¯ä¸‰æ 
+                layout.query(CLS_ADD_COL).removeClass(HIDDEN);
+            }
+        },
+        
+        /**
+         * æ›´æ–°æ‰€æœ‰ col-main çš„åˆ—å®½
          */
         _updateAllColMainWidth: function() {
             var self = this;
@@ -430,20 +462,18 @@ YUI({
         },
 
         /**
-         * ¸üĞÂ resize ±êÖ¾·û
+         * æ›´æ–° resize æ ‡å¿—ç¬¦
          */
         _updateResizeFlag: function(layoutType, gridCls, sCol, eCol) {
             if(layoutType > 1) {
-                if(/^.+s\d.*m0.*$/.test(gridCls)) { // col-sub ÔÚ col-main ×ó±ß
-                    //sCol.query(CLS_COL_STRIP).addClass(FLOAT_RIGHT);
+                if(/^.+s\d+.*m0.*$/.test(gridCls)) { // col-sub åœ¨ col-main å·¦è¾¹
                     sCol.addClass(FLOAT_RIGHT); // for YUI 2 Resize
                 } else {
-                    //sCol.query(CLS_COL_STRIP).removeClass(FLOAT_RIGHT);
                     sCol.removeClass(FLOAT_RIGHT); // for YUI 2 Resize
                 }
 
                 if (layoutType > 2) {
-                    if (/^.+e\d.*m0.*$/.test(gridCls)) { // col-extra ÔÚ col-main ×ó±ß
+                    if (/^.+e\d+.*m0.*$/.test(gridCls)) { // col-extra åœ¨ col-main å·¦è¾¹
                         //eCol.query(CLS_COL_STRIP).addClass(FLOAT_RIGHT);
                         eCol.addClass(FLOAT_RIGHT); // for YUI 2 Resize
                     } else {
@@ -455,8 +485,8 @@ YUI({
         },
 
         /**
-         * »ñÈ¡²¼¾ÖÀàĞÍ
-         * @return 1 - Í¨À¸, 2 - Á½À¸, 3 - ÈıÀ¸, 0 - ÆäËüÇé¿ö
+         * è·å–å¸ƒå±€ç±»å‹
+         * @return {number} layoutType 1 - é€šæ , 2 - ä¸¤æ , 3 - ä¸‰æ , 0 - å…¶å®ƒæƒ…å†µ
          */
         _getLayoutType: function(layout) {
             if(layout.hasClass(GRID)) return 1;
@@ -469,14 +499,14 @@ YUI({
         },
 
         /**
-         * »ñÈ¡ layout µÄ grid ÀàÃû
+         * è·å– layout çš„ grid ç±»å
          */
         _getGridCls: function(layout) {
             return layout.getAttribute("class").replace(/^.*(grid-\S+).*$/, "$1");
         },
 
         /**
-         * ¸ù¾İÖĞÖáÏßµÄÎ»ÖÃµÃµ½¶ÔÓ¦µÄ gridCls
+         * æ ¹æ®ä¸­è½´çº¿çš„ä½ç½®å¾—åˆ°å¯¹åº”çš„ gridCls
          * @param m [mX]
          * @param s [sX, sN]
          * @param e [eX, eN]
@@ -486,10 +516,10 @@ YUI({
             if(e && (m[0] == e[0] || s[0] == e[0])) return "";
 
             var cls = "grid-";
-            if(!e) { // Á½À¸
+            if(!e) { // ä¸¤æ 
                 cls += m[0] < s[0] ? "m0" + "s" + s[1] : "s" + s[1] + "m0";
 
-            } else { // ÈıÀ¸
+            } else { // ä¸‰æ 
                 if(     m[0] < s[0] && s[0] < e[0]) cls += "m0s" + s[1] + "e" + e[1];
                 else if(m[0] < e[0] && e[0] < s[0]) cls += "m0e" + e[1] + "s" + s[1];
                 else if(s[0] < m[0] && m[0] < e[0]) cls += "s" + s[1] + "m0e" + e[1];
@@ -502,46 +532,46 @@ YUI({
             return cls;
         },
 
-
         /**
-         * ¸ù¾İ¿í¶ÈÖµµ÷Õû gridCls
+         * è°ƒæ•´æ­£åœ¨ resize çš„ col çš„å®½åº¦ä¸ºå…è®¸å€¼
+         * @return {number} activeN
          */
-        _adjustGridClsByWidth: function(gridCls, layoutWidth, activeColCls, sWidth, eWidth) {
-            var sN = this._getNByWidth(sWidth),
-                eN = eWidth ? this._getNByWidth(sWidth) : 0,
-                mWidth, n;
+        _calcActiveColWidth: function(layoutWidth, activeColCls, sWidth, eWidth) {
             eWidth = eWidth >> 0;
+            var sN = this._getNByWidth(sWidth),
+                eN = this._getNByWidth(eWidth),
+                activeN, mWidth;
 
-            // ²»ÄÜĞ¡ÓÚ×îĞ¡¿í¶È
+            // ä¸èƒ½å°äºæœ€å°å®½åº¦
             if(sN < COL_MIN_N) {
                 sN = COL_MIN_N;
                 sWidth = COL_MIN_WIDTH;
             }
-            if(eN && eN < COL_MIN_N) {
+            if(eN < COL_MIN_N) {
                 eN = COL_MIN_N;
                 eWidth = COL_MIN_WIDTH;
             }
 
-            // Ò²²»ÄÜÌ«¿í£¬Ê¹µÃ main-wrap µÄ¿í¶ÈĞ¡ÓÚ×îĞ¡¿í¶È
+            // ä¹Ÿä¸èƒ½å¤ªå®½ï¼Œä½¿å¾— main-wrap çš„å®½åº¦å°äºæœ€å°å®½åº¦
+            activeN = (activeColCls === CLS_COL_SUB) ? sN : eN;
             mWidth = layoutWidth - sWidth - eWidth;
-            n = 0;
             while (mWidth < COL_MIN_WIDTH) {
-                n++;
+                activeN--;
                 mWidth += UNIT_COL;
             }
-            console.log(activeColCls);
-            if(activeColCls === CLS_COL_SUB) {
-                gridCls = gridCls.replace(/^(.+s)(\d)(.*)$/, function(s, m1, m2, m3) {
-                    console.log(m1 + " " + (sN - n) + m3);
-                    return m1 + (sN - n) + m3;
-                });
-            } else if(activeColCls === CLS_COL_EXTRA) {
-                gridCls = gridCls.replace(/^(.+e)(\d)(.*)$/, function(s, m1, m2, m3) {
-                    return m1 + (eN - n) + m3;
-                });
-            }
+            return activeN;
+        },
 
-            return gridCls;
+        /**
+         * æ ¹æ®å®½åº¦å€¼è°ƒæ•´ gridCls
+         */
+        _adjustGridClsByWidth: function(gridCls, activeColCls, activeN) {
+            var colFlag = activeColCls === CLS_COL_SUB ? "s" : "e",
+                re = new RegExp("^(.+" + colFlag + ")(\\d+)(.*)$");
+
+            return gridCls.replace(re, function(s, m1, m2, m3) {
+                return m1 + activeN + m3;
+            });
         },
 
         _getWidthByN: function(n) {
@@ -549,9 +579,27 @@ YUI({
         },
 
         _getNByWidth: function(width) {
+            width = width >> 0;
             return Math.floor((width + UNIT_GUTTER) / UNIT_COL);
+        },
+
+        _getGridWidth: function(width) {
+            return this._getWidthByN(this._getNByWidth(width));
+        },
+
+        /**
+         * ç”Ÿæˆ HTML ä»£ç 
+         */
+        generateHTMLCode: function() {
+            // TODO
+            alert("è«æ€¥è«æ€¥ï¼Œå°šæœªå®ç°ã€‚");
         }
     };
 
-    Y.on("domready", function() { BigBang.init(); });
+    Y.on("domready", function() {
+        BigBang.init();
+
+        // æ·»åŠ é»˜è®¤å¸ƒå±€
+        BigBang.insertLayout("");
+    });
 });
