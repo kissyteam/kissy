@@ -2,6 +2,10 @@
  * Grids BigBang Script by lifesinger@gmail.com
  */
 
+if(typeof KISSY === "undefined" || !KISSY) {
+    KISSY = {};
+}
+
 YUI({
     /*base: "http://t-yubo/assets/yui/3.0.0/build/",*/
     debug: false,
@@ -17,7 +21,8 @@ YUI({
     }
 }).use("dd", "resize", function(Y) {
     // 共用变量和常量
-    var page, content, pageWidth, ROW_TMPL, COL_SUB_TMPL, COL_EXTRA_TMPL,
+    var NS = KISSY,
+        page, content, pageWidth, ROW_TMPL, COL_SUB_TMPL, COL_EXTRA_TMPL,
         GRIDS_N = 24,
         UNIT_COL = 40,
         UNIT_GUTTER = 10,
@@ -45,7 +50,7 @@ YUI({
         CLS_DD_HANDLE = ".dd-handle",
         CLS_TOOL_BOX = ".tool-box";
 
-    var BigBang = {
+    NS.BigBang = {
         /**
          * 初始化
          */
@@ -682,18 +687,18 @@ YUI({
     };
 
     Y.on("domready", function() {
-        BigBang.init();
+        NS.BigBang.init();
 
         // 隐藏 loading
         Y.get("#page-loading").addClass("hidden");
 
         // 从 hash 里获取布局数据
         if(location.hash) {
-            BigBang.parseHash(location.hash.slice(1));
+            NS.BigBang.parseHash(location.hash.slice(1));
 
         } else {
             // 添加默认布局
-            BigBang.insertLayout(["s5m0e6", "m0s6", "m"]);
+            NS.BigBang.insertLayout(["s5m0e6", "m0s6", "m"]);
         }
 
         // 显示操作按钮

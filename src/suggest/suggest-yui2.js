@@ -7,7 +7,9 @@
  * @author lifesinger@gmail.com
  */
 
-var KISSY = KISSY || {};
+if(typeof KISSY === "undefined" || !KISSY) {
+    KISSY = {};
+}
 
 (function(NS) {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
