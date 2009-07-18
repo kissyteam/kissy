@@ -17,8 +17,6 @@ if(typeof KISSY === "undefined" || !KISSY) {
         ie = YAHOO.env.ua.ie, ie6 = (ie === 6),
         CALLBACK_STR = "KISSY.Suggest.callback", // 注意 KISSY 在这里是写死的
         STYLE_ID = "suggest-style", // 样式 style 元素的 id
-        CSS_TYPE = "text/css",
-        JS_TYPE = "text/javascript",
         BEFORE_DATA_REQUEST = "beforeDataRequest",
         ON_DATA_RETURN = "onDataReturn",
         BEFORE_SHOW = "beforeShow",
@@ -575,7 +573,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
 
             styleEl = document.createElement("style");
             styleEl.id = this.config.styleElId;
-            styleEl.type = CSS_TYPE;
+            styleEl.type = "text/css";
             head.appendChild(styleEl); // 先添加到DOM树中，都在cssText里的hack会失效
 
             if (styleEl.styleSheet) { // IE
@@ -715,7 +713,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
 
             if (!this.dataScript) {
                 var script = document.createElement("script");
-                script.type = JS_TYPE;
+                script.type = "text/javascript";
                 script.charset = "utf-8";
 
                 // jQuery ajax.js line 275:
