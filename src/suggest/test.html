@@ -3,11 +3,11 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=GB18030" />
 <title>Suggest Test</title>
-<link rel="stylesheet" href="../../../src/reset-grids.source.css" type="text/css" />
-<script type="text/javascript" src="../../../src/yahoo-dom-event.source.js"></script>
-<script type="text/javascript" src="suggest.source.js"></script>
+<link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" type="text/css" />
+<script type="text/javascript" src="../../lib/yui2/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="suggest-yui2.js"></script>
 <style type="text/css">
-    #page3 { padding: 50px 50px 300px; }
+    #page { padding: 50px 50px 300px; width: 950px; margin: 0 auto; }
     h1, h2, h3 { margin: 1em 0 0.3em; }
     .section ol { margin: 5px 20px; }
     .section ol li { list-style: decimal inside; margin: 5px 0; }
@@ -16,7 +16,7 @@
 </style>
 </head>
 <body>
-<div id="page3">
+<div id="page">
     <h1 id="logo">
         <a href="http://www.taobao.com">
             <img alt="淘宝网 Taobao.com - 阿里巴巴旗下网站" src="http://assets.taobaocdn.com/sys/header/logo.png" width="140" height="35" />
@@ -81,6 +81,7 @@
             <li>在提示层A项处按下鼠标，移动鼠标到其它地方，最后移动回A处释放，触发onItemSelect</li>
             <li>输入法开启，通过enter键输入英文时，不会触发提交</li>
             <li>选中某项，ESC键关闭，再次通过keydown打开时，能保持原来的选中项</li>
+            <li>没有选中项，ESC键关闭，再次通过keydown打开时，依旧没有选中项</li>
         </ol>
     </div>
 
@@ -145,10 +146,9 @@
     //var dataUrl = 'http://192.168.208.18:8090/sug';
 
     // 淘宝首页的情况
-    var sug = new TB.Suggest('q', dataUrl,
+    var sug = new KISSY.Suggest('q', dataUrl,
                 { autoFocus: true,
-                  resultFormat: '约%result%个宝贝',
-                  showCloseBtn: true
+                  resultFormat: '约%result%个宝贝'
                 });
 
     // 添加搜索布点参数
@@ -165,12 +165,8 @@
         });
     }
 
-    YAHOO.util.Event.on(sug.textInput.form, 'submit', function() {
-      //alert('on submit');
-    });
-
     // 测试事件
-    var sug2 = new TB.Suggest('q2', dataUrl);
+    var sug2 = new KISSY.Suggest('q2', dataUrl);
     sug2.subscribe('beforeDataRequest', function(query) {
         if(query == 'pig') {
             alert('你输入的是：' + query);
@@ -183,7 +179,7 @@
     });
 
     // 测试事件2
-    var sug3 = new TB.Suggest('q3', dataUrl);
+    var sug3 = new KISSY.Suggest('q3', dataUrl);
     sug3.subscribe('beforeShow', function(container) {
        container.appendChild(document.createTextNode('我是天下无敌的广告'));
     });
@@ -192,7 +188,7 @@
     });
 
     // 测试配置参数
-    var sug4 = new TB.Suggest('q4', dataUrl, {
+    var sug4 = new KISSY.Suggest('q4', dataUrl, {
         containerWidth: '200px',
         showCloseBtn: true
     });
@@ -223,7 +219,7 @@
         ["nokia n81", "2620"],
         ["nokia e66", "1740"]
     ];
-    var sug5 = new TB.Suggest('q5', jsonData);
+    var sug5 = new KISSY.Suggest('q5', jsonData);
 
     // 测试JSON数据源
     var jsonData2 = {};
@@ -251,19 +247,19 @@
         "nokia n81",
         "nokia e66"
     ];
-    var sug6 = new TB.Suggest('q6', jsonData2);
+    var sug6 = new KISSY.Suggest('q6', jsonData2);
 
     // 有啊有啊哈哈哈
     dataUrl = 'http://youa.baidu.com/suggest/se/s';
-    var suggestCallback = TB.Suggest.callback;
+    var suggestCallback = KISSY.Suggest.callback;
     // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
-    var sug7 = new TB.Suggest('q7', dataUrl);
+    var sug7 = new KISSY.Suggest('q7', dataUrl);
     sug7.subscribe('beforeDataRequest', function(query) {
         this.dataScript.charset = 'GB18030';
         this.queryParams = 'cmd=suggest&type=kwd&max_count=10&keyword=' + encodeURIComponent(query) + '&callback=suggestCallback';
     });
     // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
-    // taobao: TB.Suggest.callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
+    // taobao: KISSY.Suggest.callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
     sug7.subscribe('onDataReturn', function(data) {
         data = data['r'] || [];
         var result = [];

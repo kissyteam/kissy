@@ -3,6 +3,7 @@ Kissy - An Enjoyable UI Library
  * Source: http://code.google.com/p/kissy/
  * License: http://www.opensource.org/licenses/mit-license.php
 
+
 目录说明:
 
  - assets:   全局性的一些资源文件
@@ -11,5 +12,15 @@ Kissy - An Enjoyable UI Library
  - examples: 由开发者或社区用户撰写的实例说明和使用教程等文档
  - lib:      依赖的外部 JS 库
  - src:      源码、测试、build 脚本和开发文档等一切开发资料
+
+
+Something that is enjoyable gives you pleasure.
+
+理念：小巧灵活，简洁实用，使用起来让人感觉愉悦。
+测试过的浏览器： IE 6+, Firefox 3.5+, Safari 4+, Chrome 2+, Opera 10+
+
+Keep It
+    Simple & Stupid, Short & Sweet, Slim & Sexy... 
+Yeah! 
 
 Thanks for your reading!

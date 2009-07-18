@@ -3,11 +3,11 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=GB18030" />
 <title>Suggest Examples</title>
-<link rel="stylesheet" href="../../../src/reset-grids.css" type="text/css" />
-<script type="text/javascript" src="../../../src/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="suggest.js"></script>
+<link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" type="text/css" />
+<script type="text/javascript" src="../../lib/yui2/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="suggest-yui2.js"></script>
 <style type="text/css">
-    #page3 { padding: 50px 50px 300px; }
+    #page { padding: 50px 50px 300px; width: 750px; margin: 0 auto; }
     h1, h2, h3 { margin: 1em 0 0.3em; }
     .section { margin-bottom: 50px; }
     .section ol { margin: 5px 20px; }
@@ -17,7 +17,7 @@
 </style>
 </head>
 <body>
-<div id="page3">
+<div id="page">
     <div class="section">
         <h2>1. 淘宝首页的搜索提示：</h2>
         <form name="search" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
@@ -39,7 +39,7 @@
             (function() {
                 // 淘宝
                 var dataUrl = 'http://suggest.taobao.com/sug';
-                new TB.Suggest('q', dataUrl,
+                new KISSY.Suggest('q', dataUrl,
                     { autoFocus: true,
                       resultFormat: '约%result%个宝贝'
                     });
@@ -68,9 +68,9 @@
             (function() {
                 // 有啊
                 var dataUrl = 'http://youa.baidu.com/suggest/se/s';
-                window.suggestCallback = TB.Suggest.callback;
+                window.suggestCallback = KISSY.Suggest.callback;
 
-                var sug = new TB.Suggest('q2', dataUrl, {
+                var sug = new KISSY.Suggest('q2', dataUrl, {
                     containerClassName: 'youa-suggest-container'
                 });
 
@@ -80,7 +80,7 @@
                 });
 
                 // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
-                // taobao: TB.Suggest.callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
+                // taobao: KISSY.Suggest.callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
                 sug.subscribe('onDataReturn', function(data) {
                     data = data['r'] || [];
                     var result = [];
@@ -114,15 +114,28 @@
             </table>
             <input type="hidden" name="aq" value="f"/><input type="hidden" name="oq" value="n"/><input type="hidden" name="aqi" value="g10"/>
         </form>
+        <style type="text/css">
+            .g-sug { background: white; border: 1px solid #666; z-index: 100001 }
+            .g-sug li { color: #404040; padding: 2px 0 3px; font-size: 12px; line-height: 18px; float: left; width: 100% }
+            .g-sug li.selected { background-color: #D5E2FF; cursor: default; }
+            .g-sug li.selected span { color: #240055; cursor: default }
+            .g-sug li,.suggest-bottom{overflow: hidden; zoom: 1; clear: both }
+            /* hacks */
+            .g-sug { *margin-left: 2px; _margin-left: -2px; _margin-top: -3px }
+        </style>
         <script type="text/javascript">
             (function() {
                 // Google
                 var dataUrl = 'http://clients1.google.com/complete/search';
                 window.google = {};
                 window.google.ac = {};
-                window.google.ac.h = TB.Suggest.callback;
+                window.google.ac.h = KISSY.Suggest.callback;
 
-                var sug = new TB.Suggest('gq', dataUrl, { resultFormat: '%result%' });
+                var sug = new KISSY.Suggest('gq', dataUrl,
+                {
+                    resultFormat: '',
+                    containerClassName: 'g-sug'
+                });
 
                 sug.subscribe('beforeDataRequest', function(query) {
                     this.dataScript.charset = 'utf-8';
@@ -130,7 +143,7 @@
                 });
 
                 // google: window.google.ac.h(["ni",[["牛博网","73,248 结果","0z"],["牛博网首页","12,200,617 结果","1z"],["你是准备替党说话 还是准备替老百姓说话","136,545 结果","2z"],["nike","117,000,000 结果","3"],["nikon","127,000,000 结果","4"],["nissan","135,000,000 结果","5"],["nine west","40,000,000 结果","6"],["nike鞋","3,380,000 结果","7"],["倪萍 再婚","36,400 结果","8"],["牛年祝福语","582,000 结果","9"]]])
-                // taobao: TB.Suggest.callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
+                // taobao: KISSY.Suggest.callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
                 sug.subscribe('onDataReturn', function(data) {
                     this.returnedData = data[1] || [];
                 });
@@ -148,7 +161,7 @@
             (function() {
                 // 广告
                 var dataUrl = 'http://suggest.taobao.com/sug';
-                var sug = new TB.Suggest('q3', dataUrl,
+                var sug = new KISSY.Suggest('q3', dataUrl,
                     { showCloseBtn: true
                     });
 

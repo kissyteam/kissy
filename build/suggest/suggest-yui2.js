@@ -1,18 +1,39 @@
 /**
- * suggest.js
- * @author yubo@taobao.com
+ * KISSY.Suggest 提示补全组件
+ *
+ * suggest-yui2.js
+ * requires: yahoo-dom-event
+ *
+ * @author lifesinger@gmail.com
  */
 
-var TB = TB || {};
-(function() {
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang;
-    var head = document.getElementsByTagName('head')[0];
-    var ie = YAHOO.env.ua.ie, ie6 = (ie === 6);
+var KISSY = KISSY || {};
 
-    /**
-     * Suggest的默认配置
-     */
-    var defaultConfig = {
+(function(NS) {
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+        head = document.getElementsByTagName("head")[0],
+        ie = YAHOO.env.ua.ie, ie6 = (ie === 6),
+        CALLBACK_STR = "KISSY.Suggest.callback", // 注意 KISSY 在这里是写死的
+        STYLE_ID = "suggest-style", // 样式 style 元素的 id
+        CSS_TYPE = "text/css",
+        JS_TYPE = "text/javascript",
+        BEFORE_DATA_REQUEST = "beforeDataRequest",
+        ON_DATA_RETURN = "onDataReturn",
+        BEFORE_SHOW = "beforeShow",
+        ON_ITEM_SELECT = "onItemSelect",
+        ABSOLUTE = "absolute",
+        HIDDEN = "hidden",
+        NONE = "none",
+        PX = "px",
+        UNDEFINED = "undefined",
+        SPAN = "span",
+        LI = "li",
+        DIV = "div",
+
+        /**
+         * Suggest的默认配置
+         */
+        defaultConfig = {
         /**
          * 悬浮提示层的class
          * 提示层的默认结构如下：
@@ -29,45 +50,45 @@ var TB = TB || {};
          * </div>
          * @type String
          */
-        containerClassName: 'suggest-container',
+        containerClassName: "suggest-container",
 
         /**
          * 提示层的宽度
          * 注意：默认情况下，提示层的宽度和input输入框的宽度保持一致
-         * 示范取值：'200px', '10%'等，必须带单位
+         * 示范取值："200px", "10%"等，必须带单位
          * @type String
          */
-        containerWidth: 'auto',
+        containerWidth: "auto",
 
         /**
          * 提示层中，key元素的class
          * @type String
          */
-        keyElClassName: 'suggest-key',
+        keyElClassName: "suggest-key",
 
         /**
          * 提示层中，result元素的class
          * @type String
          */
-        resultElClassName: 'suggest-result',
+        resultElClassName: "suggest-result",
 
         /**
          * result的格式
          * @type String
          */
-        resultFormat: '约%result%条结果',
+        resultFormat: "约%result%条结果",
 
         /**
          * 提示层中，选中项的class
          * @type String
          */
-        selectedItemClassName: 'selected',
+        selectedItemClassName: "selected",
 
         /**
          * 提示层底部的class
          * @type String
          */
-        bottomClassName: 'suggest-bottom',
+        bottomClassName: "suggest-bottom",
 
         /**
          * 是否显示关闭按钮
@@ -79,13 +100,13 @@ var TB = TB || {};
          * 关闭按钮上的文字
          * @type String
          */
-        closeBtnText: '关闭',
+        closeBtnText: "关闭",
 
         /**
          * 关闭按钮的class
          * @type String
          */
-        closeBtnClassName: 'suggest-close-btn',
+        closeBtnClassName: "suggest-close-btn",
 
         /**
          * 是否需要iframe shim
@@ -97,13 +118,7 @@ var TB = TB || {};
          * iframe shim的class
          * @type String
          */
-        shimClassName: 'suggest-shim',
-
-        /**
-         * 样式style元素的id
-         * @type String
-         */
-        styleElId: 'J_SuggestStyle',
+        shimClassName: "suggest-shim",
 
         /**
          * 定时器的延时
@@ -126,7 +141,7 @@ var TB = TB || {};
 
     /**
      * 提示补全组件
-     * @class TB.Suggest
+     * @class Suggest
      * @requires YAHOO.util.Dom
      * @requires YAHOO.util.Event
      * @constructor
@@ -134,7 +149,7 @@ var TB = TB || {};
      * @param {String} dataSource
      * @param {Object} config
      */
-    TB.Suggest = function(textInput, dataSource, config) {
+    NS.Suggest = function(textInput, dataSource, config) {
         /**
          * 文本输入框
          * @type HTMLElement
@@ -149,7 +164,7 @@ var TB = TB || {};
 
         /**
          * JSON静态数据源
-         * @type Object 格式为 {'query1' : [['key1', 'result1'], []], 'query2' : [[], []]}
+         * @type Object 格式为 {"query1" : [["key1", "result1"], []], "query2" : [[], []]}
          */
         this.JSONDataSource = Lang.isObject(dataSource) ? dataSource : null;
 
@@ -175,13 +190,13 @@ var TB = TB || {};
          * 输入框的值
          * @type String
          */
-        this.query = '';
+        this.query = "";
 
         /**
          * 获取数据时的参数
          * @type String
          */
-        this.queryParams = '';
+        this.queryParams = "";
 
         /**
          * 内部定时器
@@ -214,7 +229,7 @@ var TB = TB || {};
          * 最新script的时间戳
          * @type String
          */
-        this._latestScriptTime = '';
+        this._latestScriptTime = "";
 
         /**
          * script返回的数据是否已经过期
@@ -239,7 +254,7 @@ var TB = TB || {};
         this._init();
     };
 
-    TB.Suggest.prototype = {
+    NS.Suggest.prototype = {
         /**
          * 初始化方法
          * @protected
@@ -252,10 +267,10 @@ var TB = TB || {};
             this._initStyle();
 
             // create events
-            this.createEvent('beforeDataRequest');
-            this.createEvent('onDataReturn');
-            this.createEvent('beforeShow');
-            this.createEvent('onItemSelect');
+            this.createEvent(BEFORE_DATA_REQUEST);
+            this.createEvent(ON_DATA_RETURN);
+            this.createEvent(BEFORE_SHOW);
+            this.createEvent(ON_ITEM_SELECT);
 
             // window resize event
             this._initResizeEvent();
@@ -269,15 +284,15 @@ var TB = TB || {};
             var instance = this;
 
             // turn off autocomplete
-            this.textInput.setAttribute('autocomplete', 'off');
+            this.textInput.setAttribute("autocomplete", "off");
 
             // focus
-            Event.on(this.textInput, 'focus', function() {
+            Event.on(this.textInput, "focus", function() {
                 instance.start();
             });
 
             // blur
-            Event.on(this.textInput, 'blur', function() {
+            Event.on(this.textInput, "blur", function() {
                 instance.stop();
                 instance.hide();
             });
@@ -288,9 +303,9 @@ var TB = TB || {};
             // keydown
             // 注：截至目前，在Opera9.64中，输入法开启时，依旧不会触发任何键盘事件
             var pressingCount = 0; // 持续按住某键时，连续触发的keydown次数。注意Opera只会触发一次。
-            Event.on(this.textInput, 'keydown', function(ev) {
+            Event.on(this.textInput, "keydown", function(ev) {
                 var keyCode = ev.charCode || ev.keyCode;
-                //console.log('keydown ' + keyCode);
+                //console.log("keydown " + keyCode);
 
                 switch (keyCode) {
                     case 27: // ESC键，隐藏提示层并还原初始输入
@@ -304,7 +319,7 @@ var TB = TB || {};
                         // 如果是键盘选中某项后回车，触发onItemSelect事件
                         if (instance._onKeyboardSelecting) {
                             if (instance.textInput.value == instance._getSelectedItemKey()) { // 确保值匹配
-                                instance.fireEvent('onItemSelect', instance.textInput.value);
+                                instance.fireEvent(ON_ITEM_SELECT, instance.textInput.value);
                             }
                         }
 
@@ -339,8 +354,8 @@ var TB = TB || {};
             });
 
             // reset pressingCount
-            Event.on(this.textInput, 'keyup', function() {
-                //console.log('keyup');
+            Event.on(this.textInput, "keyup", function() {
+                //console.log("keyup");
                 pressingCount = 0;
             });
         },
@@ -351,10 +366,10 @@ var TB = TB || {};
          */
         _initContainer: function() {
             // create
-            var container = document.createElement('div');
-            container.className = this.config['containerClassName'];
-            container.style.position = 'absolute';
-            container.style.visibility = 'hidden';
+            var container = document.createElement(DIV);
+            container.className = this.config.containerClassName;
+            container.style.position = ABSOLUTE;
+            container.style.visibility = HIDDEN;
             this.container = container;
 
             this._setContainerRegion();
@@ -380,15 +395,15 @@ var TB = TB || {};
             var docMode = document.documentMode;
             if (docMode === 7 && (ie === 7 || ie === 8)) {
                 left -= 2;
-            } else if (YAHOO.env.ua.gecko) { // firefox下左偏一像素
+            } else if (YAHOO.env.ua.gecko) { // firefox下左偏一像素 注：当 input 所在的父级容器有 margin: auto 时会出现
                 left++;
             }
 
-            this.container.style.left = left + 'px';
-            this.container.style.top = r.bottom + 'px';
+            this.container.style.left = left + PX;
+            this.container.style.top = r.bottom + PX;
 
-            if (this.config.containerWidth == 'auto') {
-                this.container.style.width = w + 'px';
+            if (this.config.containerWidth == "auto") {
+                this.container.style.width = w + PX;
             } else {
                 this.container.style.width = this.config.containerWidth;
             }
@@ -403,12 +418,12 @@ var TB = TB || {};
             var instance = this;
 
             // 鼠标事件
-            Event.on(this.container, 'mousemove', function(ev) {
-                //console.log('mouse move');
+            Event.on(this.container, "mousemove", function(ev) {
+                //console.log("mouse move");
                 var target = Event.getTarget(ev);
 
-                if (target.nodeName != 'LI') {
-                    target = Dom.getAncestorByTagName(target, 'li');
+                if (target.nodeName != "LI") {
+                    target = Dom.getAncestorByTagName(target, LI);
                 }
                 if (Dom.isAncestor(instance.container, target)) {
                     if (target != instance.selectedItem) {
@@ -437,7 +452,7 @@ var TB = TB || {};
             };
 
             // mouseup事件
-            Event.on(this.container, 'mouseup', function(ev) {
+            Event.on(this.container, "mouseup", function(ev) {
                 // 当mousedown在提示层，但mouseup在提示层外时，点击无效
                 if (!instance._isInContainer(Event.getXY(ev))) return;
                 var target = Event.getTarget(ev);
@@ -451,16 +466,16 @@ var TB = TB || {};
                 }
 
                 // 可能点击在li的子元素上
-                if (target.nodeName != 'LI') {
-                    target = Dom.getAncestorByTagName(target, 'li');
+                if (target.nodeName != "LI") {
+                    target = Dom.getAncestorByTagName(target, LI);
                 }
                 // 必须点击在container内部的li上
                 if (Dom.isAncestor(instance.container, target)) {
                     instance._updateInputFromSelectItem(target);
 
                     // 触发选中事件
-                    //console.log('on item select');
-                    instance.fireEvent('onItemSelect', instance.textInput.value);
+                    //console.log("on item select");
+                    instance.fireEvent(ON_ITEM_SELECT, instance.textInput.value);
 
                     // 提交表单前，先隐藏提示层并停止计时器
                     instance.textInput.blur();
@@ -483,12 +498,12 @@ var TB = TB || {};
                 // 通过js提交表单时，不会触发onsubmit事件
                 // 需要js自己触发
                 if (document.createEvent) { // ie
-                    var evObj = document.createEvent('MouseEvents');
-                    evObj.initEvent('submit', true, false);
+                    var evObj = document.createEvent("MouseEvents");
+                    evObj.initEvent("submit", true, false);
                     form.dispatchEvent(evObj);
                 }
                 else if (document.createEventObject) { // w3c
-                    form.fireEvent('onsubmit');
+                    form.fireEvent("onsubmit");
                 }
 
                 form.submit();
@@ -509,12 +524,12 @@ var TB = TB || {};
          * @protected
          */
         _initShim: function() {
-            var iframe = document.createElement('iframe');
-            iframe.src = 'about:blank';
+            var iframe = document.createElement("iframe");
+            iframe.src = "about:blank";
             iframe.className = this.config.shimClassName;
-            iframe.style.position = 'absolute';
-            iframe.style.visibility = 'hidden';
-            iframe.style.border = 'none';
+            iframe.style.position = ABSOLUTE;
+            iframe.style.visibility = HIDDEN;
+            iframe.style.border = NONE;
             this.container.shim = iframe;
 
             this._setShimRegion();
@@ -528,9 +543,9 @@ var TB = TB || {};
         _setShimRegion: function() {
             var container = this.container, shim = container.shim;
             if (shim) {
-                shim.style.left = (parseInt(container.style.left) - 2) + 'px'; // 解决吞边线bug
+                shim.style.left = (parseInt(container.style.left) - 2) + PX; // 解决吞边线bug
                 shim.style.top = container.style.top;
-                shim.style.width = (parseInt(container.style.width) + 2) + 'px';
+                shim.style.width = (parseInt(container.style.width) + 2) + PX;
             }
         },
 
@@ -539,26 +554,26 @@ var TB = TB || {};
          * @protected
          */
         _initStyle: function() {
-            var styleEl = document.getElementById(this.config.styleElId);
+            var styleEl = Dom.get(STYLE_ID);
             if (styleEl) return; // 防止多个实例时重复添加
 
-            var style = ".suggest-container{background:white;border:1px solid #91A8B4;z-index:100001}";
-            style += ".suggest-shim{z-index:100000}";
+            var style = ".suggest-container{background:white;border:1px solid #999;z-index:99999}";
+            style += ".suggest-shim{z-index:99998}";
             style += ".suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}";
-            style += ".suggest-container li.selected{background-color:#D5E2FF;cursor:default}";
+            style += ".suggest-container li.selected{background-color:#39F;cursor:default}";
             style += ".suggest-key{float:left;text-align:left;padding-left:5px}";
             style += ".suggest-result{float:right;text-align:right;padding-right:5px;color:green}";
-            style += ".suggest-container li.selected span{color:#240055;cursor:default}";
-            style += ".suggest-container li.selected .suggest-result{color:green}";
+            style += ".suggest-container li.selected span{color:#FFF;cursor:default}";
+            //style += ".suggest-container li.selected .suggest-result{color:green}";
             style += ".suggest-bottom{padding:0 5px 5px}";
             style += ".suggest-close-btn{float:right}";
             style += ".suggest-container li,.suggest-bottom{overflow:hidden;zoom:1;clear:both}";
             /* hacks */
             style += ".suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}";
 
-            styleEl = document.createElement('style');
+            styleEl = document.createElement("style");
             styleEl.id = this.config.styleElId;
-            styleEl.type = 'text/css';
+            styleEl.type = CSS_TYPE;
             head.appendChild(styleEl); // 先添加到DOM树中，都在cssText里的hack会失效
 
             if (styleEl.styleSheet) { // IE
@@ -575,7 +590,7 @@ var TB = TB || {};
         _initResizeEvent: function() {
             var instance = this, resizeTimer;
 
-            Event.on(window, 'resize', function() {
+            Event.on(window, "resize", function() {
                 if (resizeTimer) {
                     clearTimeout(resizeTimer);
                 }
@@ -591,7 +606,7 @@ var TB = TB || {};
          * 启动计时器，开始监听用户输入
          */
         start: function() {
-            TB.Suggest.focusInstance = this;
+            NS.Suggest.focusInstance = this;
 
             var instance = this;
             instance._timer = setTimeout(function() {
@@ -606,7 +621,7 @@ var TB = TB || {};
          * 停止计时器
          */
         stop: function() {
-            TB.Suggest.focusInstance = null;
+            NS.Suggest.focusInstance = null;
             clearTimeout(this._timer);
             this._isRunning = false;
         },
@@ -618,14 +633,14 @@ var TB = TB || {};
             if (this.isVisible()) return;
             var container = this.container, shim = container.shim;
 
-            container.style.visibility = '';
+            container.style.visibility = "";
 
             if (shim) {
                 if (!shim.style.height) { // 第一次显示时，需要设定高度
                     var r = Dom.getRegion(container);
-                    shim.style.height = (r.bottom - r.top - 2) + 'px';
+                    shim.style.height = (r.bottom - r.top - 2) + PX;
                 }
-                shim.style.visibility = '';
+                shim.style.visibility = "";
             }
         },
 
@@ -635,17 +650,17 @@ var TB = TB || {};
         hide: function() {
             if (!this.isVisible()) return;
             var container = this.container, shim = container.shim;
-            //console.log('hidden');
+            //console.log("hide");
 
-            if (shim) shim.style.visibility = 'hidden';
-            container.style.visibility = 'hidden';
+            if (shim) shim.style.visibility = HIDDEN;
+            container.style.visibility = HIDDEN;
         },
 
         /**
          * 提示层是否显示
          */
         isVisible: function() {
-            return this.container.style.visibility != 'hidden';
+            return this.container.style.visibility != HIDDEN;
         },
 
         /**
@@ -653,21 +668,21 @@ var TB = TB || {};
          */
         updateData: function() {
             if (!this._needUpdate()) return;
-            //console.log('update data');
+            //console.log("update data");
 
             this._updateQueryValueFromInput();
             var q = this.query;
 
             // 1. 输入为空时，隐藏提示层
             if (!Lang.trim(q).length) {
-                this._fillContainer('');
+                this._fillContainer("");
                 this.hide();
                 return;
             }
 
-            if (typeof this._dataCache[q] != 'undefined') { // 2. 使用缓存数据
-                //console.log('use cache');
-                this.returnedData = 'using cache';
+            if (typeof this._dataCache[q] != UNDEFINED) { // 2. 使用缓存数据
+                //console.log("use cache");
+                this.returnedData = "using cache";
                 this._fillContainer(this._dataCache[q]);
                 this._displayContainer();
 
@@ -693,13 +708,13 @@ var TB = TB || {};
          * 通过script元素加载数据
          */
         requestData: function() {
-            //console.log('request data via script');
+            //console.log("request data via script");
             if (!ie) this.dataScript = null; // IE不需要重新创建script元素
 
             if (!this.dataScript) {
-                var script = document.createElement('script');
-                script.type = 'text/javascript';
-                script.charset = 'utf-8';
+                var script = document.createElement("script");
+                script.type = JS_TYPE;
+                script.charset = "utf-8";
 
                 // jQuery ajax.js line 275:
                 // Use insertBefore instead of appendChild  to circumvent an IE6 bug.
@@ -710,20 +725,20 @@ var TB = TB || {};
                 if (!ie) {
                     var t = new Date().getTime();
                     this._latestScriptTime = t;
-                    script.setAttribute('time', t);
+                    script.setAttribute("time", t);
 
-                    Event.on(script, 'load', function() {
-                        //console.log('on load');
+                    Event.on(script, "load", function() {
+                        //console.log("on load");
                         // 判断返回的数据是否已经过期
-                        this._scriptDataIsOut = script.getAttribute('time') != this._latestScriptTime;
+                        this._scriptDataIsOut = script.getAttribute("time") != this._latestScriptTime;
                     }, this, true);
                 }
             }
 
             // 注意：没必要加时间戳，是否缓存由服务器返回的Header头控制
-            this.queryParams = 'q=' + encodeURIComponent(this.query) + '&code=utf-8&callback=TB.Suggest.callback';
-            this.fireEvent('beforeDataRequest', this.query);
-            this.dataScript.src = this.dataSource + '?' + this.queryParams;
+            this.queryParams = "q=" + encodeURIComponent(this.query) + "&code=utf-8&callback=" + CALLBACK_STR;
+            this.fireEvent(BEFORE_DATA_REQUEST, this.query);
+            this.dataScript.src = this.dataSource + "?" + this.queryParams;
         },
 
         /**
@@ -731,25 +746,25 @@ var TB = TB || {};
          * @param {Object} data
          */
         handleResponse: function(data) {
-            //console.log('handle response');
+            console.log("handle response");
             if (this._scriptDataIsOut) return; // 抛弃过期数据，否则会导致bug：1. 缓存key值不对； 2. 过期数据导致的闪屏
 
             this.returnedData = data;
-            this.fireEvent('onDataReturn', data);
+            this.fireEvent(ON_DATA_RETURN, data);
 
             // 格式化数据
             this.returnedData = this.formatData(this.returnedData);
 
             // 填充数据
-            var content = '';
+            var content = "";
             var len = this.returnedData.length;
             if (len > 0) {
-                var list = document.createElement('ol');
+                var list = document.createElement("ol");
                 for (var i = 0; i < len; ++i) {
                     var itemData = this.returnedData[i];
-                    var li = this.formatItem(itemData['key'], itemData['result']);
+                    var li = this.formatItem(itemData["key"], itemData["result"]);
                     // 缓存key值到attribute上
-                    li.setAttribute('key', itemData['key']);
+                    li.setAttribute("key", itemData["key"]);
                     list.appendChild(li);
                 }
                 content = list;
@@ -762,7 +777,7 @@ var TB = TB || {};
             // fire event
             if (Lang.trim(this.container.innerHTML)) {
                 // 实际上是beforeCache，但从用户的角度看，是beforeShow
-                this.fireEvent('beforeShow', this.container);
+                this.fireEvent(BEFORE_SHOW, this.container);
             }
 
             // cache
@@ -775,18 +790,18 @@ var TB = TB || {};
         /**
          * 格式化输入的数据对象为标准格式
          * @param {Object} data 格式可以有3种：
-         *  1. {'result' : [['key1', 'result1'], ['key2', 'result2'], ...]}
-         *  2. {'result' : ['key1', 'key2', ...]}
+         *  1. {"result" : [["key1", "result1"], ["key2", "result2"], ...]}
+         *  2. {"result" : ["key1", "key2", ...]}
          *  3. 1和2的组合
          *  4. 标准格式
-         *  5. 上面1-4中，直接取o['result']的值
+         *  5. 上面1-4中，直接取o["result"]的值
          * @return Object 标准格式的数据：
-         *  [{'key' : 'key1', 'result' : 'result1'}, {'key' : 'key2', 'result' : 'result2'}, ...]
+         *  [{"key" : "key1", "result" : "result1"}, {"key" : "key2", "result" : "result2"}, ...]
          */
         formatData: function(data) {
             var arr = [];
             if (!data) return arr;
-            if (Lang.isArray(data['result'])) data = data['result'];
+            if (Lang.isArray(data["result"])) data = data["result"];
             var len = data.length;
             if (!len) return arr;
 
@@ -795,9 +810,9 @@ var TB = TB || {};
                 item = data[i];
 
                 if (Lang.isString(item)) { // 只有key值时
-                    arr[i] = {'key' : item};
-                } else if (Lang.isArray(item) && item.length >= 2) { // ['key', 'result'] 取数组前2个
-                    arr[i] = {'key' : item[0], 'result' : item[1]};
+                    arr[i] = {"key" : item};
+                } else if (Lang.isArray(item) && item.length >= 2) { // ["key", "result"] 取数组前2个
+                    arr[i] = {"key" : item[0], "result" : item[1]};
                 } else {
                     arr[i] = item;
                 }
@@ -812,17 +827,16 @@ var TB = TB || {};
          * @return {HTMLElement}
          */
         formatItem: function(key, result) {
-            var li = document.createElement('li');
-
-            var keyEl = document.createElement('span');
+            var li = document.createElement(LI);
+            var keyEl = document.createElement(SPAN);
             keyEl.className = this.config.keyElClassName;
             keyEl.appendChild(document.createTextNode(key));
             li.appendChild(keyEl);
 
-            if (typeof result != 'undefined') { // 可以没有
-                var resultText = this.config.resultFormat.replace('%result%', result);
+            if (typeof result != UNDEFINED) { // 可以没有
+                var resultText = this.config.resultFormat.replace("%result%", result);
                 if (Lang.trim(resultText)) { // 有值时才创建
-                    var resultEl = document.createElement('span');
+                    var resultEl = document.createElement(SPAN);
                     resultEl.className = this.config.resultElClassName;
                     resultEl.appendChild(document.createTextNode(resultText));
                     li.appendChild(resultEl);
@@ -836,19 +850,19 @@ var TB = TB || {};
          * 添加提示层底部
          */
         appendBottom: function() {
-            var bottom = document.createElement('div');
+            var bottom = document.createElement(DIV);
             bottom.className = this.config.bottomClassName;
 
             if (this.config.showCloseBtn) {
-                var closeBtn = document.createElement('a');
-                closeBtn.href = 'javascript: void(0)';
-                closeBtn.setAttribute('target', '_self'); // bug fix: 覆盖<base target="_blank" />，否则会弹出空白页面
+                var closeBtn = document.createElement("a");
+                closeBtn.href = "javascript: void(0)";
+                closeBtn.setAttribute("target", "_self"); // bug fix: 覆盖<base target="_blank" />，否则会弹出空白页面
                 closeBtn.className = this.config.closeBtnClassName;
                 closeBtn.appendChild(document.createTextNode(this.config.closeBtnText));
 
                 // 没必要，点击时，输入框失去焦点，自动就关闭了
                 /*
-                 Event.on(closeBtn, 'click', function(ev) {
+                 Event.on(closeBtn, "click", function(ev) {
                  Event.stopEvent(ev);
                  this.hidden();
                  }, this, true);
@@ -870,7 +884,7 @@ var TB = TB || {};
          */
         _fillContainer: function(content) {
             if (content.nodeType == 1) {
-                this.container.innerHTML = '';
+                this.container.innerHTML = "";
                 this.container.appendChild(content);
             } else {
                 this.container.innerHTML = content;
@@ -896,10 +910,15 @@ var TB = TB || {};
          * @param {Boolean} down true表示down，false表示up
          */
         selectItem: function(down) {
-            //console.log('select item ' + down);
-            var items = this.container.getElementsByTagName('li');
+            //console.log("select item " + down);
+            var items = this.container.getElementsByTagName(LI);
             if (items.length == 0) return;
-            if (!this.isVisible()) this.show(); // 有可能用ESC隐藏了，这里要确保显示
+
+            // 有可能用ESC隐藏了，直接显示即可
+            if (!this.isVisible()){
+                this.show();
+                return; // 保留原来的选中状态
+            }
             var newSelectedItem;
 
             // 没有选中项时，选中第一/最后项
@@ -907,7 +926,7 @@ var TB = TB || {};
                 newSelectedItem = items[down ? 0 : items.length - 1];
             } else {
                 // 选中下/上一项
-                newSelectedItem = Dom[down ? 'getNextSibling' : 'getPreviousSibling'](this.selectedItem);
+                newSelectedItem = Dom[down ? "getNextSibling" : "getPreviousSibling"](this.selectedItem);
                 // 已经到了最后/前一项时，归位到输入框，并还原输入值
                 if (!newSelectedItem) {
                     this.textInput.value = this.query;
@@ -929,7 +948,7 @@ var TB = TB || {};
          * @protected
          */
         _removeSelectedItem: function() {
-            //console.log('remove selected item');
+            //console.log("remove selected item");
             Dom.removeClass(this.selectedItem, this.config.selectedItemClassName);
             this.selectedItem = null;
         },
@@ -940,7 +959,7 @@ var TB = TB || {};
          * @param {HTMLElement} item
          */
         _setSelectedItem: function(item) {
-            //console.log('set selected item');
+            //console.log("set selected item");
             Dom.addClass((item), this.config.selectedItemClassName);
             this.selectedItem = (item);
         },
@@ -950,13 +969,13 @@ var TB = TB || {};
          * @protected
          */
         _getSelectedItemKey: function() {
-            if (!this.selectedItem) return '';
+            if (!this.selectedItem) return "";
 
             // getElementsByClassName比较损耗性能，改用缓存数据到attribute上方法
-            //var keyEl = Dom.getElementsByClassName(this.config.keyElClassName, '*', this.selectedItem)[0];
+            //var keyEl = Dom.getElementsByClassName(this.config.keyElClassName, "*", this.selectedItem)[0];
             //return keyEl.innerHTML;
 
-            return this.selectedItem.getAttribute('key');
+            return this.selectedItem.getAttribute("key");
         },
 
         /**
@@ -977,27 +996,27 @@ var TB = TB || {};
 
     };
 
-    Lang.augmentProto(TB.Suggest, Y.EventProvider);
+    Lang.augmentProto(NS.Suggest, Y.EventProvider);
 
     /**
      * 当前激活的实例
      * @static
      */
-    TB.Suggest.focusInstance = null;
+    NS.Suggest.focusInstance = null;
 
     /**
      * 从jsonp中获取数据
      * @method callback
      */
-    TB.Suggest.callback = function(data) {
-        if (!TB.Suggest.focusInstance) return;
+    NS.Suggest.callback = function(data) {
+        if (!NS.Suggest.focusInstance) return;
         // 使得先运行script.onload事件，然后再执行callback函数
         setTimeout(function() {
-            TB.Suggest.focusInstance.handleResponse(data);
+            NS.Suggest.focusInstance.handleResponse(data);
         }, 0);
     };
 
-})();
+})(KISSY);
 
 
 /**
