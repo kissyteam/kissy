@@ -14,6 +14,7 @@
     .section ol li { list-style: decimal inside; margin: 5px 0; }
     .search-input { width: 300px; height: 20px; padding: 5px 2px 0 4px; }
     .search-submit { padding: 4px 10px; margin-left: 5px; }
+    .g-submit { padding: 1px 6px; margin-left: 5px; }
 </style>
 </head>
 <body>
@@ -106,8 +107,8 @@
                         <input type="hidden" value="en" name="hl"/>
                         <input style="padding: 3px 2px" value="" title="Google Search" size="55" id="gq" name="q" maxlength="2048" autocomplete="off"/>
                         <br/>
-                        <input type="submit" onclick="this.checked=1" value="Google Search" name="btnG"/>
-                        <input type="submit" onclick="this.checked=1" value="I'm Feeling Lucky" name="btnI"/>
+                        <input type="submit" class="g-submit" onclick="this.checked=1" value="Google Search" name="btnG"/>
+                        <input type="submit" class="g-submit" onclick="this.checked=1" value="I'm Feeling Lucky" name="btnI"/>
                     </td>
                 </tr>
                 </tbody>
