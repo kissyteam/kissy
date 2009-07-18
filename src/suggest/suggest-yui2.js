@@ -748,7 +748,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
          * @param {Object} data
          */
         handleResponse: function(data) {
-            console.log("handle response");
+            //console.log("handle response");
             if (this._scriptDataIsOut) return; // 抛弃过期数据，否则会导致bug：1. 缓存key值不对； 2. 过期数据导致的闪屏
 
             this.returnedData = data;
