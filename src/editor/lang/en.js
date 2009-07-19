@@ -3,6 +3,9 @@
     editor.lang["en"] = {
 
         // Basic buttons
+        bold              : "Bold",
+        italic            : "Italic",
+        underline         : "Underline",
         source            : "Source",
         newPage           : "New Page",
         save              : "Save",
@@ -11,9 +14,6 @@
         copy              : "Copy",
         paste             : "Paste",
         print             : "Print",
-        underline         : "Underline",
-        bold              : "Bold",
-        italic            : "Italic",
         strike            : "Strike Through",
         subscript         : "Subscript",
         superscript       : "Superscript",

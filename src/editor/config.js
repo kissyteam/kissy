@@ -10,17 +10,22 @@
         /**
          * 语言
          */
-        language : "en",
+        language: "en",
 
         /**
          * 需要加载的插件
          */
-        plugins : "",
+        plugins: "",
 
         /**
          * 主题
          */
-        theme : "default"
+        theme: "default",
+
+        /**
+         * Toolbar 上功能键
+         */
+        toolbar: ["bold", "italic", "underline"]
     };
 
 })(KISSY.Editor);

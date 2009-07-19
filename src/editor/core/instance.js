@@ -57,6 +57,7 @@
         _renderUI: function() {
             this._renderContainer();
             this._setupContentPanel();
+            editor.Toolbar.init(this);
         },
 
         /**

@@ -6,3 +6,7 @@
 .kissy-editor {
     border: 1px solid #DFDFDF;
 }
+
+.kissy-editor-toolbar {
+    background: #DFDFDF url(toolbar-bg.gif);
+}
