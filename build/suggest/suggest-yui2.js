@@ -21,14 +21,6 @@ if(typeof KISSY === "undefined" || !KISSY) {
         ON_DATA_RETURN = "onDataReturn",
         BEFORE_SHOW = "beforeShow",
         ON_ITEM_SELECT = "onItemSelect",
-        ABSOLUTE = "absolute",
-        HIDDEN = "hidden",
-        NONE = "none",
-        PX = "px",
-        UNDEFINED = "undefined",
-        SPAN = "span",
-        LI = "li",
-        DIV = "div",
 
         /**
          * Suggest的默认配置
@@ -366,10 +358,10 @@ if(typeof KISSY === "undefined" || !KISSY) {
          */
         _initContainer: function() {
             // create
-            var container = document.createElement(DIV);
+            var container = document.createElement("div");
             container.className = this.config.containerClassName;
-            container.style.position = ABSOLUTE;
-            container.style.visibility = HIDDEN;
+            container.style.position = "absolute";
+            container.style.visibility = "hidden";
             this.container = container;
 
             this._setContainerRegion();
@@ -399,11 +391,11 @@ if(typeof KISSY === "undefined" || !KISSY) {
                 left++;
             }
 
-            this.container.style.left = left + PX;
-            this.container.style.top = r.bottom + PX;
+            this.container.style.left = left + "px";
+            this.container.style.top = r.bottom + "px";
 
             if (this.config.containerWidth == "auto") {
-                this.container.style.width = w + PX;
+                this.container.style.width = w + "px";
             } else {
                 this.container.style.width = this.config.containerWidth;
             }
@@ -423,7 +415,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
                 var target = Event.getTarget(ev);
 
                 if (target.nodeName != "LI") {
-                    target = Dom.getAncestorByTagName(target, LI);
+                    target = Dom.getAncestorByTagName(target, "li");
                 }
                 if (Dom.isAncestor(instance.container, target)) {
                     if (target != instance.selectedItem) {
@@ -467,7 +459,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
 
                 // 可能点击在li的子元素上
                 if (target.nodeName != "LI") {
-                    target = Dom.getAncestorByTagName(target, LI);
+                    target = Dom.getAncestorByTagName(target, "li");
                 }
                 // 必须点击在container内部的li上
                 if (Dom.isAncestor(instance.container, target)) {
@@ -527,9 +519,9 @@ if(typeof KISSY === "undefined" || !KISSY) {
             var iframe = document.createElement("iframe");
             iframe.src = "about:blank";
             iframe.className = this.config.shimClassName;
-            iframe.style.position = ABSOLUTE;
-            iframe.style.visibility = HIDDEN;
-            iframe.style.border = NONE;
+            iframe.style.position = "absolute";
+            iframe.style.visibility = "hidden";
+            iframe.style.border = "none";
             this.container.shim = iframe;
 
             this._setShimRegion();
@@ -543,9 +535,9 @@ if(typeof KISSY === "undefined" || !KISSY) {
         _setShimRegion: function() {
             var container = this.container, shim = container.shim;
             if (shim) {
-                shim.style.left = (parseInt(container.style.left) - 2) + PX; // 解决吞边线bug
+                shim.style.left = (parseInt(container.style.left) - 2) + "px"; // 解决吞边线bug
                 shim.style.top = container.style.top;
-                shim.style.width = (parseInt(container.style.width) + 2) + PX;
+                shim.style.width = (parseInt(container.style.width) + 2) + "px";
             }
         },
 
@@ -572,7 +564,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
             style += ".suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}";
 
             styleEl = document.createElement("style");
-            styleEl.id = this.config.styleElId;
+            styleEl.id = STYLE_ID;
             styleEl.type = "text/css";
             head.appendChild(styleEl); // 先添加到DOM树中，都在cssText里的hack会失效
 
@@ -638,7 +630,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
             if (shim) {
                 if (!shim.style.height) { // 第一次显示时，需要设定高度
                     var r = Dom.getRegion(container);
-                    shim.style.height = (r.bottom - r.top - 2) + PX;
+                    shim.style.height = (r.bottom - r.top - 2) + "px";
                 }
                 shim.style.visibility = "";
             }
@@ -652,15 +644,15 @@ if(typeof KISSY === "undefined" || !KISSY) {
             var container = this.container, shim = container.shim;
             //console.log("hide");
 
-            if (shim) shim.style.visibility = HIDDEN;
-            container.style.visibility = HIDDEN;
+            if (shim) shim.style.visibility = "hidden";
+            container.style.visibility = "hidden";
         },
 
         /**
          * 提示层是否显示
          */
         isVisible: function() {
-            return this.container.style.visibility != HIDDEN;
+            return this.container.style.visibility != "hidden";
         },
 
         /**
@@ -680,7 +672,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
                 return;
             }
 
-            if (typeof this._dataCache[q] != UNDEFINED) { // 2. 使用缓存数据
+            if (typeof this._dataCache[q] != "undefined") { // 2. 使用缓存数据
                 //console.log("use cache");
                 this.returnedData = "using cache";
                 this._fillContainer(this._dataCache[q]);
@@ -827,16 +819,16 @@ if(typeof KISSY === "undefined" || !KISSY) {
          * @return {HTMLElement}
          */
         formatItem: function(key, result) {
-            var li = document.createElement(LI);
-            var keyEl = document.createElement(SPAN);
+            var li = document.createElement("li");
+            var keyEl = document.createElement("span");
             keyEl.className = this.config.keyElClassName;
             keyEl.appendChild(document.createTextNode(key));
             li.appendChild(keyEl);
 
-            if (typeof result != UNDEFINED) { // 可以没有
+            if (typeof result != "undefined") { // 可以没有
                 var resultText = this.config.resultFormat.replace("%result%", result);
                 if (Lang.trim(resultText)) { // 有值时才创建
-                    var resultEl = document.createElement(SPAN);
+                    var resultEl = document.createElement("span");
                     resultEl.className = this.config.resultElClassName;
                     resultEl.appendChild(document.createTextNode(resultText));
                     li.appendChild(resultEl);
@@ -850,7 +842,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
          * 添加提示层底部
          */
         appendBottom: function() {
-            var bottom = document.createElement(DIV);
+            var bottom = document.createElement("div");
             bottom.className = this.config.bottomClassName;
 
             if (this.config.showCloseBtn) {
@@ -911,7 +903,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
          */
         selectItem: function(down) {
             //console.log("select item " + down);
-            var items = this.container.getElementsByTagName(LI);
+            var items = this.container.getElementsByTagName("li");
             if (items.length == 0) return;
 
             // 有可能用ESC隐藏了，直接显示即可
