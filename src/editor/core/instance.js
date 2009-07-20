@@ -1,8 +1,6 @@
-/**
- * module: instance
- */
 
-(function(editor) {
+KISSY.Editor.add("instance", function(E) {
+
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         isIE = YAHOO.env.ua.ie,
 
@@ -19,7 +17,7 @@
     /**
      * 编辑器的实例类
      */
-    editor.Instance = function(textarea, config) {
+    E.Instance = function(textarea, config) {
         /**
          * 相关联的 textarea 元素
          */
@@ -27,23 +25,23 @@
 
         /**
          * 以下在 renderUI 中赋值
+         * @property container
+         * @property toolbar
+         * @property content
+         * @property contentDoc
+         * @property statusbar
          */
-        //this.container
-        //this.toolbar
-        //this.content
-        //this.contentDoc
-        //this.statusbar
 
         /**
          * 配置项
          */
-        this.config = Lang.merge(editor.config, config || {});
+        this.config = Lang.merge(E.config, config || {});
 
         // init
         this._init();
     };
 
-    editor.Instance.prototype = {
+    E.Instance.prototype = {
         /**
          * 初始化方法
          * @protected
@@ -57,7 +55,7 @@
         _renderUI: function() {
             this._renderContainer();
             this._setupContentPanel();
-            editor.Toolbar.init(this);
+            E.Toolbar.init(this);
         },
 
         /**
@@ -121,4 +119,4 @@
         }
     };
 
-})(KISSY.Editor);
+});

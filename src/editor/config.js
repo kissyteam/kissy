@@ -1,7 +1,7 @@
 ﻿
-(function(editor) {
+KISSY.Editor.add("config", function(E) {
 
-    editor.config = {
+    E.config = {
         /**
          * 基本路径
          */
@@ -28,4 +28,4 @@
         toolbar: ["bold", "italic", "underline"]
     };
 
-})(KISSY.Editor);
+});

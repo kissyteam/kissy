@@ -1,21 +1,19 @@
-/**
- * module: toolbar
- */
 
-(function(editor) {
+KISSY.Editor.add("toolbar", function(E) {
+
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         isIE = YAHOO.env.ua.ie;
 
-    editor.Toolbar = {
+    E.Toolbar = {
 
         /**
          * 根据传入的编辑器实例，初始化实例的工具条
-         * @param {KISSY.Editor} instance
+         * @param {KISSY.Editor} editor
          */
-        init: function(instance) {
-            var toolbar = instance.toolbar,
-                config = instance.config,
-                lang = editor.lang[instance.lang],
+        init: function(editor) {
+            var toolbar = editor.toolbar,
+                config = editor.config,
+                lang = editor.lang[editor.lang],
                 items = config.toolbar,
                 i, len;
 
@@ -27,4 +25,4 @@
 
     };
 
-})(KISSY.Editor);
+});

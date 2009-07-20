@@ -1,6 +1,7 @@
-﻿(function(editor) {
+﻿
+KISSY.Editor.add("lang~en", function(E) {
 
-    editor.lang["en"] = {
+    E.lang["en"] = {
 
         // Basic buttons
         bold              : "Bold",
@@ -74,7 +75,7 @@
             tag_h3        : "Heading 3",
             tag_h4        : "Heading 4",
             tag_h5        : "Heading 5",
-            tag_h6        : "Heading 6",
+            tag_h6        : "Heading 6"
         },
 
         font: {
@@ -136,4 +137,4 @@
         }
     };
 
-})(KISSY.Editor);
+});
