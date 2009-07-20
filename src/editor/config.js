@@ -25,7 +25,11 @@ KISSY.Editor.add("config", function(E) {
         /**
          * Toolbar 上功能键
          */
-        toolbar: ["bold", "italic", "underline"]
+        toolbar: [
+            "bold", "italic", "underline",
+            "",
+            "orderedList", "unorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight"
+        ]
     };
 
 });

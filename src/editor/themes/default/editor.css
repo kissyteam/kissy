@@ -7,6 +7,101 @@
     border: 1px solid #DFDFDF;
 }
 
+/* toolbar */
 .kissy-editor-toolbar {
-    background: #DFDFDF url(toolbar-bg.gif);
+    background: #E5E5E5 url(editor-bg.png) repeat-x 0 -192px;
+    padding: 3px 0;
+    border-bottom: 1px solid #DFDFDF;
+    line-height: 1;
+}
+
+.kissy-toolbar-button {
+    display: inline-block;
+    margin: 0 2px;
+}
+
+.kissy-toolbar-button-outer-box {
+    display: inline-block;
+    padding: 1px 0;
+}
+
+.kissy-toolbar-button-inner-box {
+    display: inline-block;
+    margin: 0 -1px;
+    padding: 3px 5px;
+}
+
+.kissy-toolbar-button:hover .kissy-toolbar-button-outer-box,
+.kissy-toolbar-button-hover .kissy-toolbar-button-outer-box,
+.kissy-toolbar-button:hover .kissy-toolbar-button-inner-box,
+.kissy-toolbar-button-hover .kissy-toolbar-button-inner-box {
+    border: 1px solid #A1BADF;
+}
+
+.kissy-toolbar-button:hover .kissy-toolbar-button-outer-box,
+.kissy-toolbar-button-hover .kissy-toolbar-button-outer-box {
+    border-width: 1px 0;
+    padding: 0;
+}
+
+.kissy-toolbar-button:hover .kissy-toolbar-button-inner-box,
+.kissy-toolbar-button-hover .kissy-toolbar-button-inner-box {
+    border-width: 0 1px;
+    padding: 3px 4px;
+}
+
+.kissy-toolbar-separator {
+    display: inline-block;
+    margin: 0 2px;
+    border-left: 1px solid #D6D6D6;
+    border-right: 1px solid #F7F7F7;
+    width: 0;
+    height: 18px;
+    position: relative;
+    top: 3px;
+}
+
+.kissy-toolbar-item {
+    display: inline-block;
+    background: url(toolbar-sprite.png) no-repeat;
+    width: 15px;
+    height: 14px;
+    text-indent: -999999px;
+    overflow: hidden;
+}
+
+.kissy-toolbar-bold {
+    background-position: -32px 0;
+}
+
+.kissy-toolbar-italic {
+    background-position: -48px 0;
+}
+
+.kissy-toolbar-orderedList {
+    background-position:-176px 0;
+}
+
+.kissy-toolbar-unorderedList {
+    background-position: -160px 0;
+}
+
+.kissy-toolbar-outdent {
+    background-position: -144px 0;
+}
+
+.kissy-toolbar-indent {
+    background-position:-128px 0;
+}
+
+.kissy-toolbar-justifyLeft {
+    background-position: -192px 0;
+}
+
+.kissy-toolbar-justifyCenter {
+    background-position:-208px 0;
+}
+
+.kissy-toolbar-justifyRight {
+    background-position:-224px 0;
 }

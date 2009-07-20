@@ -5,10 +5,9 @@ KISSY.Editor.add("instance", function(E) {
         isIE = YAHOO.env.ua.ie,
 
         EDITOR_CLASSNAME = "kissy-editor",
-        EDITOR_TMPL = '<div class="kissy-editor-toolbar"></div><iframe frameborder="0"></iframe><div class="kissy-editor-statusbar"></div>',
+        EDITOR_TMPL = '<div class="kissy-editor-toolbar"></div><iframe frameborder="0" scrolling="no"></iframe><div class="kissy-editor-statusbar"></div>',
         CONTENT_TMPL = '<!DOCTYPE html><html><head><title>Rich Text Area</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" /></head><body>{CONTENT}</body></html>',
 
-        LANG_DIR = "lang",
         PLUGINS_DIR = "plugins",
         THEMES_DIR = "themes",
         //EDITOR_CSS = "editor.css", TODO
@@ -99,7 +98,7 @@ KISSY.Editor.add("instance", function(E) {
             doc.close();
 
             // 关闭 firefox 默认打开的 spellcheck
-            doc.body.setAttribute("spellcheck", "false");
+            //doc.body.setAttribute("spellcheck", "false");
 
             doc.designMode = "on";
             // 注1：在 tinymce 里，designMode = "on" 放在 try catch 里。

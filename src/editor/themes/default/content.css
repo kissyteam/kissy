@@ -8,11 +8,10 @@ body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,lenge
 
 /* editor reset */
 body {
-    /* big font make content more readable */
-    font-size: 12px;
-    line-height: 1.5;
-    color: #444;
+    font: 12px/1.5 Verdana,sans-serif;
+    padding: 6px;
 }
+
 a {
     /* blue is more readable for link */
     color: #06c;
