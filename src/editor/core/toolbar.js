@@ -22,11 +22,19 @@ KISSY.Editor.add("toolbar", function(E) {
          * @param {KISSY.Editor} editor
          */
         init: function(editor) {
+
+            this._renderUI(editor);
+        },
+
+        /**
+         * ¹¹½¨ DOM
+         */
+        _renderUI: function(editor) {
             var toolbar = editor.toolbar,
                 config = editor.config,
                 lang = E.lang[config.language],
                 items = config.toolbar,
-                i, len, item, name,
+                i, len, item, name, button,
                 div = document.createElement("div");
 
             for(i = 0, len = items.length; i < len; ++i) {
@@ -49,9 +57,11 @@ KISSY.Editor.add("toolbar", function(E) {
                     div.innerHTML = TOOLBAR_SEPARATOR_TMPL;
                 }
 
-                toolbar.appendChild(div.firstChild);
+                button = div.firstChild;
+                toolbar.appendChild(button);
             }
         }
+
     };
 
 });

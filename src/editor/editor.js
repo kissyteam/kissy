@@ -59,12 +59,17 @@ KISSY.Editor = function(textarea, config) {
         _isLoaded: false,
 
         /**
+         * 插件
+         */
+        plugins: {},
+
+        /**
          * 加载所有模块
          */
         _load: function() {
             var mods = this.mods,
                 attached = this._attached,
-                i, name, m;
+                name, m;
 
             for (name in mods) {
                 m = mods[name];

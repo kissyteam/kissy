@@ -115,6 +115,14 @@ KISSY.Editor.add("instance", function(E) {
 
         _syncUI: function() {
 
+        },
+
+        /**
+         * 执行 exeCommand
+         */
+        exec: function(commandName, val) {
+            this.content.focus();
+            this.contentDoc.execCommand(commandName, false, val);
         }
     };
 

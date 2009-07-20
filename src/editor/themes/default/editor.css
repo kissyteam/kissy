@@ -57,8 +57,7 @@
     border-right: 1px solid #F7F7F7;
     width: 0;
     height: 18px;
-    position: relative;
-    top: 3px;
+    position: relative; top: 3px; /* TODO */
 }
 
 .kissy-toolbar-item {
@@ -76,6 +75,10 @@
 
 .kissy-toolbar-italic {
     background-position: -48px 0;
+}
+
+.kissy-toolbar-underline {
+    background-position: -64px 0;
 }
 
 .kissy-toolbar-orderedList {
