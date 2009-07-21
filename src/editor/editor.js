@@ -129,7 +129,10 @@ KISSY.Editor = function(textarea, config) {
                         ret[key] = {
                             name    : key,
                             type    : p.type,
+                            lang    : {},
+                            domEl   : null,
                             fn      : p.fn || function() {},
+                            init    : p.init || function() {},
                             details : p.details || {}
                         };
                     }
