@@ -81,11 +81,11 @@
     background-position: -64px 0;
 }
 
-.kissy-toolbar-orderedList {
+.kissy-toolbar-insertOrderedList {
     background-position:-176px 0;
 }
 
-.kissy-toolbar-unorderedList {
+.kissy-toolbar-insertUnorderedList {
     background-position: -160px 0;
 }
 

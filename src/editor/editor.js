@@ -21,9 +21,8 @@ KISSY.Editor = function(textarea, config) {
     if (!(this instanceof E)) {
         return new E(textarea, config);
     } else {
-        if (!E._isLoaded) {
-            // load modules
-            E._load();
+        if (!E._isReady) {
+            E._setup();
         }
         return new E.Instance(textarea, config);
     }
@@ -45,8 +44,42 @@ KISSY.Editor = function(textarea, config) {
 
         /**
          * 所有添加的模块
+         * 注：mod = { name: modName, fn: initFn, details: {...} }
          */
         mods: {},
+
+        /**
+         * 所有注册的插件
+         * 注：plugin = { name: pluginName, type: pluginType, fn: responseFn, details: {...} }
+         */
+        plugins: {},
+
+        /**
+         * 添加模块
+         */
+        add: function(name, fn, details) {
+            this.mods[name] = {
+                name: name,
+                fn: fn,
+                details: details || {}
+            };
+            return this; // chain support
+        },
+
+        /**
+         * 是否已完成 setup
+         */
+        _isReady: false,
+
+        /**
+         * setup to use
+         */
+        _setup: function() {
+            this._loadModules();
+            this._initPlugins();
+
+            this._isReady = true;
+        },
 
         /**
          * 已加载的模块
@@ -54,22 +87,12 @@ KISSY.Editor = function(textarea, config) {
         _attached: {},
 
         /**
-         * 是否已完成模块的加载
+         * 加载注册的所有模块
          */
-        _isLoaded: false,
-
-        /**
-         * 插件
-         */
-        plugins: {},
-
-        /**
-         * 加载所有模块
-         */
-        _load: function() {
+        _loadModules: function() {
             var mods = this.mods,
-                attached = this._attached,
-                name, m;
+                    attached = this._attached,
+                    name, m;
 
             for (name in mods) {
                 m = mods[name];
@@ -83,22 +106,36 @@ KISSY.Editor = function(textarea, config) {
                 }
             }
 
-            this._isLoaded = true;
-
             // TODO
             // lang 的加载可以延迟到实例化时，只加载当前 lang
         },
 
         /**
-         * 添加模块
+         * 初始化 plugins
          */
-        add: function(name, fn, details) {
-            this.mods[name] = {
-                name: name,
-                fn: fn,
-                details: details || {}
-            };
-            return this; // chain support
+        _initPlugins: function() {
+            var plugins = this.plugins,
+                ret = {},
+                name, arr, key, p, i, len;
+
+            for(name in plugins) {
+                p = plugins[name];
+                if(!p) continue;
+
+                arr = name.split(","); // 允许 name 为 "bold,italic,underline" 这种形式注册同类插件
+                for(i = 0, len = arr.length; i < len; ++i) {
+                    key = Lang.trim(arr[i]);
+                    if(!ret[key]) { // 不允许覆盖
+                        ret[key] = {
+                            name    : key,
+                            type    : p.type,
+                            fn      : p.fn || function() {},
+                            details : p.details || {}
+                        };
+                    }
+                }
+            }
+            this.plugins = ret;
         }
     });
 

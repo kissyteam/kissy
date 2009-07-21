@@ -28,7 +28,7 @@ KISSY.Editor.add("config", function(E) {
         toolbar: [
             "bold", "italic", "underline",
             "",
-            "orderedList", "unorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight"
+            "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight"
         ]
     };
 

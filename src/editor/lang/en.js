@@ -16,11 +16,11 @@ KISSY.Editor.add("lang~en", function(E) {
             text          : "Underline",
             title         : "Underline (Ctrl+U)"
         },
-        orderedList: {
+        insertOrderedList: {
             text          : "Numbered List",
             title         : "Numbered List (Ctrl+7)"
         },
-        unorderedList: {
+        insertUnorderedList: {
             text          : "Bullet List",
             title         : "Bullet List (Ctrl+8)"
         },

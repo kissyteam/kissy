@@ -2,13 +2,13 @@
 KISSY.Editor.add("instance", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
-        isIE = YAHOO.env.ua.ie,
+        //isIE = YAHOO.env.ua.ie,
 
         EDITOR_CLASSNAME = "kissy-editor",
-        EDITOR_TMPL = '<div class="kissy-editor-toolbar"></div><iframe frameborder="0" scrolling="no"></iframe><div class="kissy-editor-statusbar"></div>',
+        EDITOR_TMPL = '<div class="kissy-editor-toolbar"></div><iframe frameborder="0" scrolling="no"></iframe><div class="kissy-editor-statusbar"></div>', // TODO: remove scrolling="no"
         CONTENT_TMPL = '<!DOCTYPE html><html><head><title>Rich Text Area</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" /></head><body>{CONTENT}</body></html>',
 
-        PLUGINS_DIR = "plugins",
+        //PLUGINS_DIR = "plugins",
         THEMES_DIR = "themes",
         //EDITOR_CSS = "editor.css", TODO
         CONTENT_CSS =  "content.css";
