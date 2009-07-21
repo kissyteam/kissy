@@ -1,18 +1,25 @@
+
 KISSY.Editor.add("toolbar", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
-            //isIE = YAHOO.env.ua.ie,
-            TOOLBAR_BUTTON_TMPL = '',
-            TOOLBAR_SEPARATOR_TMPL = '<div class="kissy-toolbar-separator"></div>';
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, //Lang = YAHOO.lang,
+        isIE = YAHOO.env.ua.ie,
+        TYPE = E.PLUGIN_TYPE,
+        TOOLBAR_SEPARATOR_TMPL = '<div class="kissy-toolbar-separator"></div>',
 
-    TOOLBAR_BUTTON_TMPL += '<div class="kissy-toolbar-button" title="{TITLE}">';
-    TOOLBAR_BUTTON_TMPL += '    <div class="kissy-toolbar-button-outer-box">';
-    TOOLBAR_BUTTON_TMPL += '        <div class="kissy-toolbar-button-inner-box">';
-    TOOLBAR_BUTTON_TMPL += '            <span class="kissy-toolbar-item kissy-toolbar-{NAME}">{TEXT}</span>';
-    TOOLBAR_BUTTON_TMPL += '        </div>';
-    TOOLBAR_BUTTON_TMPL += '    </div>';
-    TOOLBAR_BUTTON_TMPL += '</div>';
-
+        TOOLBAR_BUTTON_TMPL = '\
+<div class="kissy-toolbar-button" title="{TITLE}">\
+    <div class="kissy-toolbar-button-outer-box">\
+        <div class="kissy-toolbar-button-inner-box">\
+            <span class="kissy-toolbar-item kissy-toolbar-{NAME}">{TEXT}</span>\
+        </div>\
+    </div>\
+</div>',
+        TOOLBAR_MENU_BUTTON_CLASS = "kissy-toolbar-menu-button",
+        TOOLBAR_MENU_BUTTON_TMPL = '\
+<div class="kissy-toolbar-menu-button-caption">\
+    <span class="kissy-toolbar-item kissy-toolbar-{NAME}">{TEXT}</span>\
+</div>\
+<div class="kissy-toolbar-menu-button-dropdown"></div>';
 
     E.Toolbar = {
 
@@ -21,19 +28,11 @@ KISSY.Editor.add("toolbar", function(E) {
          * @param {KISSY.Editor} editor
          */
         init: function(editor) {
-
-            this._renderUI(editor);
-        },
-
-        /**
-         * 构建 DOM
-         */
-        _renderUI: function(editor) {
             var config = editor.config,
                 lang = E.lang[config.language],
                 items = config.toolbar,
                 plugins = E.plugins,
-                i, len, key,
+                i, len, key, button,
                 div = document.createElement("div");
 
             for (i = 0,len = items.length; i < len; ++i) {
@@ -43,22 +42,41 @@ KISSY.Editor.add("toolbar", function(E) {
                     if (!(key in plugins)) continue; // 有可能配置项里有但插件里无
 
                     (function() {
-                        var p = plugins[key];
-                        var item = {
-                            name      : key, // bold
-                            text      : lang[key].text, // Bold
-                            title     : lang[key].title // Bold (Ctrl+B)
-                        };
+                        var p = plugins[key], innerBox, el;
 
-                        // TODO 根据 type 选择不同模版
+                        // 给 p 追加键值
+                        p.name = key;
+                        p.lang = lang[key];
+
+                        // 根据模板构建 DOM
                         div.innerHTML = TOOLBAR_BUTTON_TMPL
-                                .replace("{TITLE}", item.title)
-                                .replace("{NAME}", item.name)
-                                .replace("{TEXT}", item.text);
+                                .replace("{TITLE}", p.lang.title)
+                                .replace("{NAME}", p.name)
+                                .replace("{TEXT}", p.lang.text);
 
+                        p.domEl = el = div.firstChild;
+
+                        // 根据工具栏的插件类型，调整 DOM 结构
+                        // TODO 支持更多普适类插件类型
+                        if(p.type & TYPE.TOOLBAR_MENU_BUTTON) { // 下拉菜单
+                            Dom.addClass(el, TOOLBAR_MENU_BUTTON_CLASS);
+                            innerBox = el.getElementsByTagName("span")[0].parentNode;
+                            innerBox.innerHTML = TOOLBAR_MENU_BUTTON_TMPL
+                                .replace("{NAME}", p.name)
+                                .replace("{TEXT}", p.lang.text);
+
+                        }
+
+                        // 调用插件自己的初始化函数
+                        // 插件的个性化接口
+                        if(p.init) {
+                            p.init(p, editor);
+                        }
+
+                        // 注册点击时的响应函数
                         if (p.fn) {
-                            Event.on(div.firstChild, "click", function() {
-                                p.fn(item, editor);
+                            Event.on(el, "click", function() {
+                                p.fn(p, editor);
                             });
                         }
                     })();
@@ -67,8 +85,32 @@ KISSY.Editor.add("toolbar", function(E) {
                     div.innerHTML = TOOLBAR_SEPARATOR_TMPL;
                 }
 
-                editor.toolbar.appendChild(div.firstChild);
+                button = div.firstChild;
+                if(isIE) button = this._setItemUnselectable(button);
+                editor.toolbar.appendChild(button);
             }
+        },
+
+        /**
+         * 让元素不可选，解决 ie 下 selection 丢失的问题
+         */
+        _setItemUnselectable: function(el) {
+            var arr, i, len, n, a;
+
+            // 在 ie 下不行
+            //arr = [el].concat(Array.prototype.slice.call(el.getElementsByTagName("*")));
+
+            arr = el.getElementsByTagName("*");
+            for (i = -1, len = arr.length; i < len; ++i) {
+                a = (i == -1) ? el : arr[i];
+                
+                n = a.nodeName;
+                if (n && n != "INPUT") {
+                    a.setAttribute("unselectable", "on");
+                }
+            }
+
+            return el;
         }
 
     };

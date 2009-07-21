@@ -44,6 +44,14 @@ KISSY.Editor.add("lang~en", function(E) {
             text          : "Right Justify",
             title         : "Right Justify (Ctrl+R)"
         },
+        foreColor: {
+            text          : "Text Color",
+            title         : "Text Color"
+        },
+        backColor: {
+            text          : "Text Background Color",
+            title         : "Text Background Color"
+        },
 
         // Common messages and labels
         common: {

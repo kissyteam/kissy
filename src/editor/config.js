@@ -26,7 +26,7 @@ KISSY.Editor.add("config", function(E) {
          * Toolbar 上功能键
          */
         toolbar: [
-            "bold", "italic", "underline",
+            "bold", "italic", "underline", "foreColor", "backColor",
             "",
             "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight"
         ]

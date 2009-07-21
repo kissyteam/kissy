@@ -13,10 +13,18 @@
     padding: 3px 0;
     border-bottom: 1px solid #DFDFDF;
     line-height: 1;
+    zoom: 1;
+}
+.kissy-editor-toolbar:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
 }
 
 .kissy-toolbar-button {
-    display: inline-block;
+    display: block;
+    float: left;
     margin: 0 2px;
 }
 
@@ -51,7 +59,8 @@
 }
 
 .kissy-toolbar-separator {
-    display: inline-block;
+    display: block;
+    float: left;
     margin: 0 2px;
     border-left: 1px solid #D6D6D6;
     border-right: 1px solid #F7F7F7;
@@ -60,8 +69,20 @@
     position: relative; top: 3px; /* TODO */
 }
 
-.kissy-toolbar-item {
+.kissy-toolbar-menu-button-caption {
     display: inline-block;
+    padding: 0 4px 0 0;
+}
+
+.kissy-toolbar-menu-button-dropdown {
+    display: inline-block;
+    background: url(toolbar-sprite.png) no-repeat -388px 50%;
+    width: 7px;
+    height: 14px;
+}
+
+.kissy-toolbar-item {
+    display: block;
     background: url(toolbar-sprite.png) no-repeat;
     width: 15px;
     height: 14px;
@@ -107,4 +128,12 @@
 
 .kissy-toolbar-justifyRight {
     background-position:-224px 0;
+}
+
+.kissy-toolbar-foreColor {
+    background-position:-80px 0;
+}
+
+.kissy-toolbar-backColor {
+    background-position:-96px 0;
 }

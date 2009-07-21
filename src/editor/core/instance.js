@@ -1,7 +1,7 @@
 
 KISSY.Editor.add("instance", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+    var Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
         //isIE = YAHOO.env.ua.ie,
 
         EDITOR_CLASSNAME = "kissy-editor",
@@ -26,7 +26,7 @@ KISSY.Editor.add("instance", function(E) {
          * 以下在 renderUI 中赋值
          * @property container
          * @property toolbar
-         * @property content
+         * @property contentWin
          * @property contentDoc
          * @property statusbar
          */
@@ -82,7 +82,7 @@ KISSY.Editor.add("instance", function(E) {
 
             this.container = container;
             this.toolbar = container.childNodes[0];
-            this.content = iframe;
+            this.contentWin = iframe.contentWindow;
             this.contentDoc = iframe.contentWindow.document;
             this.statusbar = container.childNodes[2];
         },
@@ -97,9 +97,6 @@ KISSY.Editor.add("instance", function(E) {
             doc.write(CONTENT_TMPL.replace("{CONTENT_CSS}", contentCSSUrl).replace("{CONTENT}", this.textarea.value));
             doc.close();
 
-            // 关闭 firefox 默认打开的 spellcheck
-            //doc.body.setAttribute("spellcheck", "false");
-
             doc.designMode = "on";
             // 注1：在 tinymce 里，designMode = "on" 放在 try catch 里。
             //     原因是在 firefox 下，当iframe 在 display: none 的容器里，会导致错误。
@@ -107,6 +104,11 @@ KISSY.Editor.add("instance", function(E) {
             // 注2：在 tinymce 里，还针对 ie 开启了 contentEditable = true.
             //     原因是在 ie 下，IE needs to use contentEditable or it will display non secure items for HTTPS
             //     这个暂时不添加，等以后遇到此问题时再加上。
+
+            // 关闭 firefox 默认打开的 spellcheck
+            //doc.body.setAttribute("spellcheck", "false");
+
+            // TODO 让 ie 下选择背景色为 蓝底白字
         },
 
         _bindUI: function() {
@@ -121,7 +123,7 @@ KISSY.Editor.add("instance", function(E) {
          * 执行 exeCommand
          */
         exec: function(commandName, val) {
-            this.content.focus();
+            this.contentWin.focus();
             this.contentDoc.execCommand(commandName, false, val);
         }
     };
