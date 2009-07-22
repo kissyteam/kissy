@@ -13,17 +13,12 @@ KISSY.Editor.add("config", function(E) {
         language: "en",
 
         /**
-         * 需要加载的插件
-         */
-        plugins: "",
-
-        /**
          * 主题
          */
         theme: "default",
 
         /**
-         * Toolbar 上功能键
+         * Toolbar 上功能插件
          */
         toolbar: [
             "bold", "italic", "underline", "foreColor", "backColor",

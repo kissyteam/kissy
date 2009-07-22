@@ -50,7 +50,7 @@ KISSY.Editor = function(textarea, config) {
 
         /**
          * 所有注册的插件
-         * 注：plugin = { name: pluginName, type: pluginType, fn: responseFn, details: {...} }
+         * 注：plugin = { name: pluginName, type: pluginType, init: initFn, ... }
          */
         plugins: {},
 
@@ -104,6 +104,8 @@ KISSY.Editor = function(textarea, config) {
                         m.fn(this);
                     }
                 }
+
+                // 注意：m.details 暂时没用到，仅是预留的扩展接口
             }
 
             // TODO
@@ -122,19 +124,14 @@ KISSY.Editor = function(textarea, config) {
                 p = plugins[name];
                 if(!p) continue;
 
-                arr = name.split(","); // 允许 name 为 "bold,italic,underline" 这种形式注册同类插件
+                arr = name.split(","); // 允许 name 为 "bold,italic,underline" 这种形式一次注册多个同类插件
                 for(i = 0, len = arr.length; i < len; ++i) {
                     key = Lang.trim(arr[i]);
-                    if(!ret[key]) { // 不允许覆盖
-                        ret[key] = {
-                            name    : key,
-                            type    : p.type,
-                            lang    : {},
-                            domEl   : null,
-                            fn      : p.fn || function() {},
-                            init    : p.init || function() {},
-                            details : p.details || {}
-                        };
+
+                    if (!ret[key]) { // 不允许覆盖
+                        ret[key] = Lang.merge(p, {
+                            name: key
+                        });
                     }
                 }
             }
