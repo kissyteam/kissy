@@ -2,7 +2,7 @@
 KISSY.Editor.add("plugin", function(E) {
 
     /**
-     * 插件种类
+     * 鎻掍欢绉嶇被
      */
     E.PLUGIN_TYPE = {
         CUSTOM: 0,

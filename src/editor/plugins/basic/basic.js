@@ -19,11 +19,10 @@ KISSY.Editor.add("basic", function(E) {
 
         /**
          * 响应函数
-         * @param {object} p
          * @param {KISSY.Editor} editor
          */
-        fn: function(p, editor) {
-            editor.exec(p.name);
+        fn: function(editor) {
+            editor.execCommand(this.name);
         }
     };
 
@@ -37,25 +36,26 @@ KISSY.Editor.add("basic", function(E) {
         /**
          * 插件自己的初始化函数
          */
-        init: function(p, editor) {
-            var button = p.domEl,
-                indicatorColor = (p.name == "foreColor") ? "rgb(0,0,0)" : "rgb(255,255,255)",
-                caption = button.getElementsByTagName("span")[0].parentNode,
+        init: function(editor) {
+            var el = this.domEl,
+                indicatorColor = (this.name == "foreColor") ? "rgb(0,0,0)" : "rgb(255,255,255)",
+                caption = el.getElementsByTagName("span")[0].parentNode,
                 dropdown = caption.nextSibling;
 
-                Dom.addClass(button, "kissy-toolbar-color-button");
+                Dom.addClass(el, "kissy-toolbar-color-button");
                 caption.innerHTML = '<div class="kissy-toolbar-color-button-indicator" style="border-bottom-color:' + indicatorColor + '">'
                                    + caption.innerHTML
                                    + '</div>';
 
             // 点击 caption 区域
             Event.on(caption, "click", function() {
-                editor.exec(p.name);
+                editor.execCommand(this.name);
             });
             
             // 点击 dropdown 区域
             Event.on(dropdown, "click", function() {
                // TODO
+               console.log("click dropdown");
             });
         }
     };

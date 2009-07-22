@@ -1,7 +1,7 @@
 
 KISSY.Editor.add("toolbar", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, //Lang = YAHOO.lang,
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
         TOOLBAR_SEPARATOR_TMPL = '<div class="kissy-toolbar-separator kissy-inline-block"></div>',
@@ -22,113 +22,141 @@ KISSY.Editor.add("toolbar", function(E) {
 
         TOOLBAR_BUTTON_ACTIVE = "kissy-toolbar-button-active",
 
-        config, // µ±Ç° editor ÊµÀıµÄÅäÖÃ
-        lang, // µ±Ç° editor ÊµÀıµÄÓïÑÔ
-        items, // µ±Ç° editor ÊµÀı¹¤¾ßÀ¸ÉÏµÄÅäÖÃÏî
-        plugins = E.plugins, // ËùÓĞ×¢²áµÄÊµÀı
-        div = document.createElement("div"); // Í¨ÓÃ el ÈİÆ÷
+        editor, // å½“å‰ editor å®ä¾‹
+        config, // å½“å‰ editor å®ä¾‹çš„é…ç½®
+        lang, // å½“å‰ editor å®ä¾‹çš„è¯­è¨€
+        items, // å½“å‰ editor å®ä¾‹å·¥å…·æ ä¸Šçš„é…ç½®é¡¹
+
+        plugins, // æ‰€æœ‰æ³¨å†Œçš„å®ä¾‹
+        div = document.createElement("div"); // é€šç”¨ el å®¹å™¨
 
     
     E.Toolbar = {
 
         /**
-         * ¸ù¾İ´«ÈëµÄ±à¼­Æ÷ÊµÀı£¬³õÊ¼»¯ÊµÀıµÄ¹¤¾ßÌõ
-         * @param {KISSY.Editor} editor
+         * æ ¹æ®ä¼ å…¥çš„ç¼–è¾‘å™¨å®ä¾‹ï¼Œåˆå§‹åŒ–å®ä¾‹çš„å·¥å…·æ¡
+         * @param {KISSY.Editor} instance
          */
-        init: function(editor) {
-            var i, len, key, button;
+        init: function(instance) {
+            var i, len, key;
 
-            // ¸üĞÂÊµÀıÏà¹Ø±äÁ¿
+            // æ›´æ–°å’Œå®ä¾‹ç›¸å…³çš„å…¨å±€å˜é‡
+            editor = instance;
             config = editor.config;
             lang = E.lang[config.language];
             items = config.toolbar;
+            plugins = E.plugins; // æ”¾åœ¨è¿™é‡Œæ›´æ–°ï¼Œä¿è¯åœ¨ Editor._setup() ä¹‹åæ‰§è¡Œ
 
+            // éå†é…ç½®é¡¹ï¼Œæ‰¾åˆ°ç›¸å…³æ’ä»¶é¡¹ï¼Œå¹¶æ·»åŠ åˆ°å·¥å…·æ ä¸Š
             for (i = 0,len = items.length; i < len; ++i) {
                 key = items[i];
-
                 if (key) {
-                    if (!(key in plugins)) continue; // ÅäÖÃÏîÀïÓĞ£¬µ«²å¼şÀïÎŞ£¬Ö±½ÓºöÂÔ
-                    this._initItem(key, editor);
+                    if (!(key in plugins)) continue; // é…ç½®é¡¹é‡Œæœ‰ï¼Œä½†æ’ä»¶é‡Œæ— ï¼Œç›´æ¥å¿½ç•¥
+                    // æ·»åŠ æ’ä»¶é¡¹
+                    this._addItem(plugins[key]);
 
-                } else { // ·Ö¸ôÏß
-                    div.innerHTML = TOOLBAR_SEPARATOR_TMPL;
+                } else { // æ·»åŠ åˆ†éš”çº¿
+                    this._addSeparator();
                 }
-
-                button = div.firstChild;
-                if(isIE) button = this._setItemUnselectable(button);
-                editor.toolbar.appendChild(button);
             }
         },
 
         /**
-         * ³õÊ¼»¯¹¤¾ßÀ¸ÉÏµÄÏî
+         * æ·»åŠ å·¥å…·æ é¡¹
          */
-        _initItem: function(key, editor) {
-            var p = plugins[key], innerBox, el;
+        _addItem: function(p) {
+            var innerBox, el;
 
-            // µ±plugin Ã»ÓĞÉèÖÃ lang Ê±£¬²ÉÓÃÄ¬ÈÏÓïÑÔÅäÖÃ
-            if (!p.lang) p.lang = lang[key];
+            // å½“ plugin æ²¡æœ‰è®¾ç½® lang æ—¶ï¼Œé‡‡ç”¨é»˜è®¤è¯­è¨€é…ç½®
+            if (!p.lang) p.lang = lang[p.name] || {};
 
-            // ¸ù¾İÄ£°å¹¹½¨ DOM
+            // æ ¹æ®æ¨¡æ¿æ„å»º DOM
             div.innerHTML = TOOLBAR_BUTTON_TMPL
-                    .replace("{TITLE}", p.lang.title)
+                    .replace("{TITLE}", p.lang.title || "")
                     .replace("{NAME}", p.name)
-                    .replace("{TEXT}", p.lang.text);
+                    .replace("{TEXT}", p.lang.text || "");
 
+            // å¾—åˆ° domEl
             p.domEl = el = div.firstChild;
 
-            // ¸ù¾İ¹¤¾ßÀ¸µÄ²å¼şÀàĞÍ£¬µ÷Õû DOM ½á¹¹
-            // TODO Ö§³Ö¸ü¶àÆÕÊÊÀà²å¼şÀàĞÍ
-            if (p.type & TYPE.TOOLBAR_MENU_BUTTON) { // ÏÂÀ­²Ëµ¥
+            // æ ¹æ®å·¥å…·æ çš„æ’ä»¶ç±»å‹ï¼Œè°ƒæ•´ DOM ç»“æ„
+            // TODO æ”¯æŒæ›´å¤šæ™®é€‚ç±»æ’ä»¶ç±»å‹
+            if (p.type & TYPE.TOOLBAR_MENU_BUTTON) { // ä¸‹æ‹‰èœå•
                 innerBox = el.getElementsByTagName("span")[0].parentNode;
                 innerBox.innerHTML = TOOLBAR_MENU_BUTTON_TMPL
                         .replace("{NAME}", p.name)
-                        .replace("{TEXT}", p.lang.text);
+                        .replace("{TEXT}", p.lang.text || "");
             }
 
-            // µ÷ÓÃ²å¼ş×Ô¼ºµÄ³õÊ¼»¯º¯Êı
-            // ²å¼şµÄ¸öĞÔ»¯½Ó¿Ú
+            // ç»‘å®šäº‹ä»¶
+            this._bindItemUI(p);
+
+            // è°ƒç”¨æ’ä»¶è‡ªå·±çš„åˆå§‹åŒ–å‡½æ•°ï¼Œè¿™æ˜¯æ’ä»¶çš„ä¸ªæ€§åŒ–æ¥å£
             if (p.init) {
-                p.init(p, editor);
+                p.init(editor);
             }
 
-            // ×¢²áµã»÷Ê±µÄÏìÓ¦º¯Êı
+            // æ·»åŠ åˆ°å·¥å…·æ 
+            this._addToToolbar(el);
+        },
+
+        /**
+         * ç»™å·¥å…·æ é¡¹ç»‘å®šäº‹ä»¶
+         */
+        _bindItemUI: function(p) {
+            var el = p.domEl;
+
+            // 1. æ³¨å†Œç‚¹å‡»æ—¶çš„å“åº”å‡½æ•°
             if (p.fn) {
                 Event.on(el, "click", function() {
-                    p.fn(p, editor);
+                    p.fn(editor);
                 });
             }
 
-            // Ìí¼ÓÊó±êµã»÷Ê±£¬°´Å¥°´ÏÂµÄĞ§¹û
+            // 2. æ·»åŠ é¼ æ ‡ç‚¹å‡»æ—¶ï¼ŒæŒ‰é’®æŒ‰ä¸‹çš„æ•ˆæœ
             Event.on(el, "mousedown", function() {
                 Dom.addClass(el, TOOLBAR_BUTTON_ACTIVE);
             });
             Event.on(el, "mouseup", function() {
                 Dom.removeClass(el, TOOLBAR_BUTTON_ACTIVE);
             });
-            // TODO ÍêÉÆÏÂÃæµÄÊÂ¼ş£¬ÔÚ°´ÏÂ×´Ì¬£¬Êó±êÒÆ³öºÍÒÆÈëÊ±£¬×´Ì¬µÄÇĞ»»ºÍ»¹Ô­
+            // TODO å®Œå–„ä¸‹é¢çš„äº‹ä»¶ï¼Œåœ¨æŒ‰ä¸‹çŠ¶æ€ï¼Œé¼ æ ‡ç§»å‡ºå’Œç§»å…¥æ—¶ï¼ŒçŠ¶æ€çš„åˆ‡æ¢å’Œè¿˜åŸ
             Event.on(el, "mouseout", function(e) {
                 var toElement = Event.getRelatedTarget(e), isChild;
                 if (el.contains) {
                     isChild = el.contains(toElement);
-                } else if (el.compareDocumentPosition) { // ff 3.5 ÏÂÃ²ËÆÎŞĞ§£¬´ı¸ü½øÒ»²½²âÊÔÈ·¶¨
+                } else if (el.compareDocumentPosition) { // ff 3.5 ä¸‹è²Œä¼¼æ— æ•ˆï¼Œå¾…æ›´è¿›ä¸€æ­¥æµ‹è¯•ç¡®å®š
                     isChild = el.compareDocumentPosition(toElement) & 16;
                 }
                 if (isChild) return;
 
                 Dom.removeClass(el, TOOLBAR_BUTTON_ACTIVE);
             });
-
-
         },
 
         /**
-         * ÈÃÔªËØ²»¿ÉÑ¡£¬½â¾ö ie ÏÂ selection ¶ªÊ§µÄÎÊÌâ
+         * æ·»åŠ åˆ†éš”çº¿
+         */
+        _addSeparator: function() {
+            div.innerHTML = TOOLBAR_SEPARATOR_TMPL;
+            this._addToToolbar(div.firstChild);
+        },
+
+        /**
+         * å°† item æˆ– åˆ†éš”çº¿ æ·»åŠ åˆ°å·¥å…·æ 
+         */
+        _addToToolbar: function(el) {
+            if(isIE) el = this._setItemUnselectable(el);
+            editor.toolbar.appendChild(el);
+        },
+
+        /**
+         * è®©å…ƒç´ ä¸å¯é€‰ï¼Œè§£å†³ ie ä¸‹ selection ä¸¢å¤±çš„é—®é¢˜
          */
         _setItemUnselectable: function(el) {
             var arr, i, len, n, a;
 
-            // ÔÚ ie ÏÂ²»ĞĞ
+            // åœ¨ ie ä¸‹ä¸è¡Œ
             //arr = [el].concat(Array.prototype.slice.call(el.getElementsByTagName("*")));
 
             arr = el.getElementsByTagName("*");
@@ -143,7 +171,6 @@ KISSY.Editor.add("toolbar", function(E) {
 
             return el;
         }
-
     };
 
 });
