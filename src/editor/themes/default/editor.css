@@ -25,6 +25,7 @@ html>body .kissy-inline-block {
 /** editor **/
 .kissy-editor {
     border: 1px solid #DFDFDF;
+    line-height: 1 !important; /* bug fix: 否则 firefox 等浏览器下，editor 的高度会多于一些 */
 }
 
 /** toolbar **/

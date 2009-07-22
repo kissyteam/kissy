@@ -1,7 +1,7 @@
 
 KISSY.Editor.add("basic", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, //Lang = YAHOO.lang,
         //isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
         buttons;

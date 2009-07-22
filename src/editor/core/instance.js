@@ -5,12 +5,11 @@ KISSY.Editor.add("instance", function(E) {
         //isIE = YAHOO.env.ua.ie,
 
         EDITOR_CLASSNAME = "kissy-editor",
-        EDITOR_TMPL = '<div class="kissy-editor-toolbar"></div><iframe frameborder="0" scrolling="no"></iframe><div class="kissy-editor-statusbar"></div>', // TODO: remove scrolling="no"
+        EDITOR_TMPL = '<div class="kissy-editor-toolbar"></div><iframe frameborder="0"></iframe><div class="kissy-editor-statusbar"></div>',
         CONTENT_TMPL = '<!DOCTYPE html><html><head><title>Rich Text Area</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" /></head><body>{CONTENT}</body></html>',
 
-        //PLUGINS_DIR = "plugins",
         THEMES_DIR = "themes",
-        //EDITOR_CSS = "editor.css", TODO
+        //EDITOR_CSS = "editor.css", TODO: 动态加载 editor.css
         CONTENT_CSS =  "content.css";
 
     /**
@@ -23,6 +22,11 @@ KISSY.Editor.add("instance", function(E) {
         this.textarea = Dom.get(textarea);
 
         /**
+         * 配置项
+         */
+        this.config = Lang.merge(E.config, config || {});
+
+        /**
          * 以下在 renderUI 中赋值
          * @property container
          * @property toolbar
@@ -30,11 +34,6 @@ KISSY.Editor.add("instance", function(E) {
          * @property contentDoc
          * @property statusbar
          */
-
-        /**
-         * 配置项
-         */
-        this.config = Lang.merge(E.config, config || {});
 
         // init
         this._init();
@@ -85,6 +84,8 @@ KISSY.Editor.add("instance", function(E) {
             this.contentWin = iframe.contentWindow;
             this.contentDoc = iframe.contentWindow.document;
             this.statusbar = container.childNodes[2];
+
+            // TODO 目前是根据 textatea 的宽度来设定 editor 的宽度。可以考虑 config 里指定宽度
         },
 
         _setupContentPanel: function() {
@@ -120,10 +121,10 @@ KISSY.Editor.add("instance", function(E) {
         },
 
         /**
-         * 执行 exeCommand
+         * 执行 execCommand
          */
-        exec: function(commandName, val) {
-            this.contentWin.focus();
+        execCommand: function(commandName, val) {
+            this.contentWin.focus(); // 还原焦点
             this.contentDoc.execCommand(commandName, false, val);
         }
     };

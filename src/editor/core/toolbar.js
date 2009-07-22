@@ -4,7 +4,7 @@ KISSY.Editor.add("toolbar", function(E) {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, //Lang = YAHOO.lang,
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
-        TOOLBAR_SEPARATOR_TMPL = '<div class="kissy-toolbar-separator kissy-inline-block"> </div>',
+        TOOLBAR_SEPARATOR_TMPL = '<div class="kissy-toolbar-separator kissy-inline-block"></div>',
 
         TOOLBAR_BUTTON_TMPL = '\
 <div class="kissy-toolbar-button kissy-inline-block" title="{TITLE}">\
@@ -20,8 +20,15 @@ KISSY.Editor.add("toolbar", function(E) {
 </div>\
 <div class="kissy-toolbar-menu-button-dropdown kissy-inline-block"></div>',
 
-        TOOLBAR_BUTTON_ACTIVE = "kissy-toolbar-button-active";
+        TOOLBAR_BUTTON_ACTIVE = "kissy-toolbar-button-active",
 
+        config, // 当前 editor 实例的配置
+        lang, // 当前 editor 实例的语言
+        items, // 当前 editor 实例工具栏上的配置项
+        plugins = E.plugins, // 所有注册的实例
+        div = document.createElement("div"); // 通用 el 容器
+
+    
     E.Toolbar = {
 
         /**
@@ -29,77 +36,19 @@ KISSY.Editor.add("toolbar", function(E) {
          * @param {KISSY.Editor} editor
          */
         init: function(editor) {
-            var config = editor.config,
-                lang = E.lang[config.language],
-                items = config.toolbar,
-                plugins = E.plugins,
-                i, len, key, button,
-                div = document.createElement("div");
+            var i, len, key, button;
+
+            // 更新实例相关变量
+            config = editor.config;
+            lang = E.lang[config.language];
+            items = config.toolbar;
 
             for (i = 0,len = items.length; i < len; ++i) {
                 key = items[i];
 
                 if (key) {
-                    if (!(key in plugins)) continue; // 有可能配置项里有但插件里无
-
-                    // TODO 将下面的代码重构在小段函数
-                    (function() {
-                        var p = plugins[key], innerBox, el;
-
-                        // 更新 lang 值
-                        p.lang = lang[key];
-
-                        // 根据模板构建 DOM
-                        div.innerHTML = TOOLBAR_BUTTON_TMPL
-                                .replace("{TITLE}", p.lang.title)
-                                .replace("{NAME}", p.name)
-                                .replace("{TEXT}", p.lang.text);
-
-                        p.domEl = el = div.firstChild;
-
-                        // 根据工具栏的插件类型，调整 DOM 结构
-                        // TODO 支持更多普适类插件类型
-                        if(p.type & TYPE.TOOLBAR_MENU_BUTTON) { // 下拉菜单
-                            innerBox = el.getElementsByTagName("span")[0].parentNode;
-                            innerBox.innerHTML = TOOLBAR_MENU_BUTTON_TMPL
-                                .replace("{NAME}", p.name)
-                                .replace("{TEXT}", p.lang.text);
-                        }
-
-                        // 调用插件自己的初始化函数
-                        // 插件的个性化接口
-                        if(p.init) {
-                            p.init(p, editor);
-                        }
-
-                        // 注册点击时的响应函数
-                        if (p.fn) {
-                            Event.on(el, "click", function() {
-                                p.fn(p, editor);
-                            });
-                        }
-
-                        // 添加鼠标点击时，按钮按下的效果
-                        Event.on(el, "mousedown", function() {
-                           Dom.addClass(el, TOOLBAR_BUTTON_ACTIVE);
-                        });
-                        Event.on(el, "mouseup", function() {
-                            Dom.removeClass(el, TOOLBAR_BUTTON_ACTIVE);
-                        });
-                        // TODO 完善下面的事件，在按下状态，鼠标移出和移入时，状态的切换和还原
-                        Event.on(el, "mouseout", function(e) {
-                            var toElement = Event.getRelatedTarget(e), isChild;
-                            if(el.contains) {
-                                isChild = el.contains(toElement);
-                            } else if(el.compareDocumentPosition) { // ff 3.5 下貌似无效，待更进一步测试确定
-                                isChild = el.compareDocumentPosition(toElement) & 16;
-                            }
-                            if(isChild) return;
-
-                            Dom.removeClass(el, TOOLBAR_BUTTON_ACTIVE);
-                        });
-
-                    })();
+                    if (!(key in plugins)) continue; // 配置项里有，但插件里无，直接忽略
+                    this._initItem(key, editor);
 
                 } else { // 分隔线
                     div.innerHTML = TOOLBAR_SEPARATOR_TMPL;
@@ -109,6 +58,68 @@ KISSY.Editor.add("toolbar", function(E) {
                 if(isIE) button = this._setItemUnselectable(button);
                 editor.toolbar.appendChild(button);
             }
+        },
+
+        /**
+         * 初始化工具栏上的项
+         */
+        _initItem: function(key, editor) {
+            var p = plugins[key], innerBox, el;
+
+            // 当plugin 没有设置 lang 时，采用默认语言配置
+            if (!p.lang) p.lang = lang[key];
+
+            // 根据模板构建 DOM
+            div.innerHTML = TOOLBAR_BUTTON_TMPL
+                    .replace("{TITLE}", p.lang.title)
+                    .replace("{NAME}", p.name)
+                    .replace("{TEXT}", p.lang.text);
+
+            p.domEl = el = div.firstChild;
+
+            // 根据工具栏的插件类型，调整 DOM 结构
+            // TODO 支持更多普适类插件类型
+            if (p.type & TYPE.TOOLBAR_MENU_BUTTON) { // 下拉菜单
+                innerBox = el.getElementsByTagName("span")[0].parentNode;
+                innerBox.innerHTML = TOOLBAR_MENU_BUTTON_TMPL
+                        .replace("{NAME}", p.name)
+                        .replace("{TEXT}", p.lang.text);
+            }
+
+            // 调用插件自己的初始化函数
+            // 插件的个性化接口
+            if (p.init) {
+                p.init(p, editor);
+            }
+
+            // 注册点击时的响应函数
+            if (p.fn) {
+                Event.on(el, "click", function() {
+                    p.fn(p, editor);
+                });
+            }
+
+            // 添加鼠标点击时，按钮按下的效果
+            Event.on(el, "mousedown", function() {
+                Dom.addClass(el, TOOLBAR_BUTTON_ACTIVE);
+            });
+            Event.on(el, "mouseup", function() {
+                Dom.removeClass(el, TOOLBAR_BUTTON_ACTIVE);
+            });
+            // TODO 完善下面的事件，在按下状态，鼠标移出和移入时，状态的切换和还原
+            Event.on(el, "mouseout", function(e) {
+                var toElement = Event.getRelatedTarget(e), isChild;
+                if (el.contains) {
+                    isChild = el.contains(toElement);
+                } else if (el.compareDocumentPosition) { // ff 3.5 下貌似无效，待更进一步测试确定
+                    isChild = el.compareDocumentPosition(toElement) & 16;
+                }
+                if (isChild) return;
+
+                Dom.removeClass(el, TOOLBAR_BUTTON_ACTIVE);
+            });
+
+
         },
 
         /**
