@@ -79,25 +79,32 @@ KISSY.Editor.add("toolbar", function(E) {
             // 得到 domEl
             p.domEl = el = div.firstChild;
 
-            // 根据工具栏的插件类型，调整 DOM 结构
-            // TODO 支持更多普适类插件类型
-            if (p.type & TYPE.TOOLBAR_MENU_BUTTON) { // 下拉菜单
-                innerBox = el.getElementsByTagName("span")[0].parentNode;
-                innerBox.innerHTML = TOOLBAR_MENU_BUTTON_TMPL
-                        .replace("{NAME}", p.name)
-                        .replace("{TEXT}", p.lang.text || "");
+            // 根据插件类型，调整 DOM 结构
+            if (p.type & TYPE.TOOLBAR_MENU_BUTTON) { // 下拉按钮
+                this._renderMenuButton(p);
             }
 
             // 绑定事件
             this._bindItemUI(p);
 
+            // 添加到工具栏
+            this._addToToolbar(el);
+
             // 调用插件自己的初始化函数，这是插件的个性化接口
+            // init 放在添加到工具栏后面，可以保证 DOM 操作比如取 region 等操作的正确性
             if (p.init) {
                 p.init(editor);
             }
+        },
 
-            // 添加到工具栏
-            this._addToToolbar(el);
+        /**
+         * 初始化下拉按钮的 DOM
+         */
+        _renderMenuButton: function(p) {
+            var innerBox = p.domEl.getElementsByTagName("span")[0].parentNode;
+            innerBox.innerHTML = TOOLBAR_MENU_BUTTON_TMPL
+                    .replace("{NAME}", p.name)
+                    .replace("{TEXT}", p.lang.text || "");
         },
 
         /**
@@ -120,13 +127,15 @@ KISSY.Editor.add("toolbar", function(E) {
             Event.on(el, "mouseup", function() {
                 Dom.removeClass(el, TOOLBAR_BUTTON_ACTIVE);
             });
-            // TODO 完善下面的事件，在按下状态，鼠标移出和移入时，状态的切换和还原
+            // TODO 完善效果：在鼠标左键按下状态，将鼠标移出和移入按钮时，按钮状态的切换
+            // 注：firefox 下，按住左键，将鼠标移出和移入按钮时，不会触发 mouseout. 需要研究下 google 是如何实现的
             Event.on(el, "mouseout", function(e) {
                 var toElement = Event.getRelatedTarget(e), isChild;
+
                 if (el.contains) {
                     isChild = el.contains(toElement);
-                } else if (el.compareDocumentPosition) { // ff 3.5 下貌似无效，待更进一步测试确定
-                    isChild = el.compareDocumentPosition(toElement) & 16;
+                } else if (el.compareDocumentPosition) {
+                    isChild = el.compareDocumentPosition(toElement) & 8;
                 }
                 if (isChild) return;
 
