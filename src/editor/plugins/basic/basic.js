@@ -87,7 +87,7 @@ KISSY.Editor.add("basic", function(E) {
          * 初始化下拉框
          */
         _initDropDown: function(dropdown) {
-            this.dropMenu = E.Menu.generateDropMenu(dropdown, [-10, 8]);
+            this.dropMenu = E.Menu.generateDropMenu(dropdown, [-1, 1]);
 
             // 生成下拉框内的内容
             this._generatePalettes();

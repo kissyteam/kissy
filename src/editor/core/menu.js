@@ -22,7 +22,7 @@ KISSY.Editor.add("menu", function(E) {
             dropMenu.className = DROP_MENU_CLASS;
             dropMenu.style[VISIBILITY] = "hidden";
             document.body.appendChild(dropMenu);
-            this._setDropMenuPosition(trigger, dropMenu);
+            this._setDropMenuPosition(trigger, dropMenu, offset);
 
             // Event
             Event.on(trigger, "click", function() { // 点击时切换显示
@@ -45,18 +45,6 @@ KISSY.Editor.add("menu", function(E) {
             var r = Dom.getRegion(trigger),
                 left = r.left, top = r.bottom;
 
-            // ie8兼容模式
-            // document.documentMode:
-            // 5 - Quirks Mode
-            // 7 - IE7 Standards
-            // 8 - IE8 Standards
-            var docMode = document.documentMode;
-            if (docMode === 7 && (ie === 7 || ie === 8)) {
-                left -= 2;
-            } else if (YAHOO.env.ua.gecko) { // firefox下左偏一像素 注：当父级容器有 margin: auto 时会出现
-                left++;
-            }
-
             if(offset) {
                 left += offset[0];
                 top += offset[1];
@@ -69,7 +57,7 @@ KISSY.Editor.add("menu", function(E) {
         /**
          * window.onresize 时，重新调整 dropMenu 的位置
          */
-        _initResizeEvent: function(trigger, dropMenu) {
+        _initResizeEvent: function(trigger, dropMenu, offset) {
             var instance = this, resizeTimer;
 
             Event.on(window, "resize", function() {
@@ -78,7 +66,7 @@ KISSY.Editor.add("menu", function(E) {
                 }
 
                 resizeTimer = setTimeout(function() {
-                    instance._setDropMenuPosition(trigger, dropMenu);
+                    instance._setDropMenuPosition(trigger, dropMenu, offset);
                 }, 50);
             });
         }
