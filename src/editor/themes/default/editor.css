@@ -151,3 +151,29 @@ html>body .kissy-inline-block {
     background-color: #fff;
     white-space: nowrap;
 }
+
+/* È¡É«°å */
+.kissy-palette-table {
+    border: 1px solid #666;
+    border-collapse: collapse;
+    margin: 5px;
+}
+
+.kissy-palette-cell {
+    border-right: 1px solid #666;
+    height: 18px;
+    width: 18px;
+    cursor: pointer;
+}
+
+.kissy-palette-colorswatch {
+    height: 18px;
+    width: 18px;
+}
+
+.kissy-palette-cell-selected .kissy-palette-colorswatch {
+    background: url(toolbar-sprite.png) no-repeat -368px 50%;
+    border: 1px solid #333333;
+    height: 16px;
+    width: 16px;
+}
