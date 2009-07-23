@@ -1,10 +1,9 @@
 
 KISSY.Editor.add("color", function(E) {
-    
+
     var TO_STRING = "toString",
         PARSE_INT = parseInt,
-        RE = RegExp,
-        Y = YAHOO.util;
+        RE = RegExp;
 
     E.Color = {
         KEYWORDS: {
@@ -35,7 +34,7 @@ KISSY.Editor.add("color", function(E) {
                 val = this.toHex(val);
             }
 
-            if (this.re_hex.exec(val)) {
+            if(this.re_hex.exec(val)) {
                 val = "rgb(" + [
                     PARSE_INT(RE.$1, 16),
                     PARSE_INT(RE.$2, 16),
@@ -47,15 +46,16 @@ KISSY.Editor.add("color", function(E) {
 
         toHex: function(val) {
             val = this.KEYWORDS[val] || val;
+
             if (this.re_RGB.exec(val)) {
-                var r = Number(RE.$1),
-                    g = Number(RE.$2),
-                    b = Number(RE.$3);
+                var r = (RE.$1 >> 0)[TO_STRING](16),
+                    g = (RE.$2 >> 0)[TO_STRING](16),
+                    b = (RE.$3 >> 0)[TO_STRING](16);
 
                 val = [
-                    r[TO_STRING](16),
-                    g[TO_STRING](16),
-                    b[TO_STRING](16)
+                    r.length == 1 ? "0" + r : r,
+                    g.length == 1 ? "0" + g : g,
+                    b.length == 1 ? "0" + b : b
                 ].join("");
             }
 
@@ -70,4 +70,5 @@ KISSY.Editor.add("color", function(E) {
             return val.toLowerCase();
         }
     };
+
 });

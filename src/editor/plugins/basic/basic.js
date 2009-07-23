@@ -53,7 +53,6 @@ KISSY.Editor.add("basic", function(E) {
 
         /**
          * 当前选取色
-         * 在 init 里初始化
          */
         color: "",
 
@@ -68,15 +67,13 @@ KISSY.Editor.add("basic", function(E) {
         dropMenu: null,
 
         /**
-         * 插件自己的初始化函数
+         * 初始化
          */
         init: function(editor) {
-            this.color = (this.name == "foreColor") ? "#000" : "#FFF";
-
             var el = this.domEl,
-                caption = el.getElementsByTagName("span")[0].parentNode;
-                //dropdown = caption.nextSibling,
-                //self = this;
+            caption = el.getElementsByTagName("span")[0].parentNode;
+
+            this.color = (this.name == "foreColor") ? "#000000" : "#FFFFFF";
 
             Dom.addClass(el, "kissy-toolbar-color-button");
             caption.innerHTML = '<div class="kissy-toolbar-color-button-indicator" style="border-bottom-color:' + this.color + '">'
@@ -85,33 +82,29 @@ KISSY.Editor.add("basic", function(E) {
 
             this._indicator = caption.firstChild;
 
-            /*
-            // 点击 caption 区域
-            Event.on(caption, "click", function() {
-                editor.execCommand(self.name, self._getColor());
-            });
-
-            // 下拉框
-            this._initDropDown(dropdown);
-            */
-            // 注：上面的方案，是仿照 MS Office 2007，仅当点击下拉箭头时，才弹出下拉框。点击 caption 时，直接设置颜色
-            // 从逻辑上讲，上面的方案不错。
-            // 但是，考虑 web 页面上，按钮比较小，不区分 caption 和 dropdown，让每次点击都弹出下拉框，这样反而能增加
-            // 易用性。这也是 Google Docs 采取的方式。下面采用这种方式。
-            this._initDropDown(el);
+            // 有两种方案：
+            //  1. 仿照 MS Office 2007, 仅当点击下拉箭头时，才弹出下拉框。点击 caption 时，直接设置颜色。
+            //  2. 仿照 Google Docs, 不区分 caption 和 dropdown，让每次点击都弹出下拉框。
+            // 从逻辑上讲，方案1不错。但是，考虑 web 页面上，按钮比较小，方案2这样反而能增加易用性。
+            // 这里采用方案2
+            this._initDropMenu(editor, el);
         },
 
         /**
-         * 初始化下拉框
+         * 初始化下拉菜单
          */
-        _initDropDown: function(dropdown) {
-            this.dropMenu = E.Menu.generateDropMenu(dropdown, [1, 0]);
+        _initDropMenu: function(editor, trigger) {
+            this.dropMenu = E.Menu.generateDropMenu(editor, trigger, [1, 0]);
 
             // 生成下拉框内的内容
             this._generatePalettes();
 
             // 注册点击事件
-            this._bindPickEvent();
+            this._bindPickEvent(editor);
+
+            // 选中当前色
+            this._updateSelectedColor(this.color);
+
         },
 
         /**
@@ -131,10 +124,6 @@ KISSY.Editor.add("basic", function(E) {
 
             // 添加到 DOM 中
             this.dropMenu.innerHTML = htmlCode;
-
-            // 选中当前色
-            this.setColor(this.color);
-                
         },
 
         _getPaletteTable: function(colors) {
@@ -147,6 +136,7 @@ KISSY.Editor.add("basic", function(E) {
                 }
 
                 color = E.Color.toRGB("#" + colors[i]).toUpperCase();
+                //console.log("color = " + color);
                 trs += PALETTE_CELL_TMPL.replace(/{COLOR}/g, color);
             }
             trs += "</tr>";
@@ -157,7 +147,7 @@ KISSY.Editor.add("basic", function(E) {
         /**
          * 绑定取色事件
          */
-        _bindPickEvent: function() {
+        _bindPickEvent: function(editor) {
             var self = this;
 
             Event.on(this.dropMenu, "click", function(ev) {
@@ -167,14 +157,16 @@ KISSY.Editor.add("basic", function(E) {
                 if(attr && attr.indexOf("RGB") === 0) {
                     // 更新当前值
                     self.setColor(E.Color.toHex(attr));
-                }
 
+                    // 执行命令
+                    editor.execCommand(self.name, self.color);
+                }
             });
         },
 
         /**
          * 设置颜色
-         * @param val 格式 #RRGGBB
+         * @param {string} val 格式 #RRGGBB or #RGB
          */
         setColor: function(val) {
             this.color = val;
@@ -183,13 +175,22 @@ KISSY.Editor.add("basic", function(E) {
             this._indicator.style.borderBottomColor = val;
 
             // 更新 dropMenu 里对应的选中项
-            var i, len, swatches = this.dropMenu.getElementsByTagName("div"),
-                swatch;
+            this._updateSelectedColor(val);
+        },
+
+        /**
+         * 更新下拉菜单中选中的颜色
+         * @param {string} val 格式 #RRGGBB or #RGB
+         */
+        _updateSelectedColor: function(val) {
+            var i, len, swatch,
+                swatches = this.dropMenu.getElementsByTagName("div");
+            val = E.Color.toRGB(val);
+
             for(i = 0, len = swatches.length; i < len; ++i) {
                 swatch = swatches[i];
 
-                //console.log(swatch.style.backgroundColor);
-                if(E.Color.toHex(swatch.style.backgroundColor) == val) {
+                if(swatch.style.backgroundColor == val) {
                     Dom.addClass(swatch.parentNode, PALETTE_CELL_SELECTED);
                 } else {
                     Dom.removeClass(swatch.parentNode, PALETTE_CELL_SELECTED);

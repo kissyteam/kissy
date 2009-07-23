@@ -65,7 +65,7 @@ KISSY.Editor.add("toolbar", function(E) {
          * 添加工具栏项
          */
         _addItem: function(p) {
-            var innerBox, el;
+            var el;
 
             // 当 plugin 没有设置 lang 时，采用默认语言配置
             if (!p.lang) p.lang = lang[p.name] || {};
@@ -155,14 +155,14 @@ KISSY.Editor.add("toolbar", function(E) {
          * 将 item 或 分隔线 添加到工具栏
          */
         _addToToolbar: function(el) {
-            if(isIE) el = this._setItemUnselectable(el);
+            if(isIE) el = this.setItemUnselectable(el);
             editor.toolbar.appendChild(el);
         },
 
         /**
          * 让元素不可选，解决 ie 下 selection 丢失的问题
          */
-        _setItemUnselectable: function(el) {
+        setItemUnselectable: function(el) {
             var arr, i, len, n, a;
 
             // 在 ie 下不行

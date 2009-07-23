@@ -100,13 +100,13 @@
 
 <script type="text/javascript">
 
-    YUI({debug: true}).use("node", "console", "test", function (Y) {
-        var Assert = Y.Assert;
+    YUI({debug: YAHOO.env.ua.gecko ? true : false}).use("node", "console", "test", function (Y) {
+        var Assert = Y.Assert,
+            E = KISSY.Editor;
 
-        // 编辑器初始化的 TestCase
-        var initTestCase = new Y.Test.Case({
+        var testCase = new Y.Test.Case({
 
-            name: "Init Tests",
+            name: "Only Test",
 
             setUp: function () {
                 // nothing to do
@@ -116,14 +116,18 @@
                 // nothing to do
             },
 
-            testName : function () {
+            testColor : function () {
 
-                Assert.areEqual(1, 1, "ok");
+                // YUI bug
+                //Assert.areEqual("#FF0A00", Y.Color.toHex("rgb(255, 10, 0)"));
+
+                Assert.areEqual("#FF0A00", E.Color.toHex("rgb(255, 10, 0)"));
+
             }
         });
 
         var testSuite = new Y.Test.Suite("Editor Test Suite");
-        testSuite.add(initTestCase);
+        testSuite.add(testCase);
 
         new Y.Console({
             verbose : true,
