@@ -1,12 +1,25 @@
 
-KISSY.Editor.add("instance", function(E) {
+KISSY.Editor.add("core~instance", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
-        //isIE = YAHOO.env.ua.ie,
 
         EDITOR_CLASSNAME = "kissy-editor",
-        EDITOR_TMPL = '<div class="kissy-editor-toolbar"></div><iframe frameborder="0"></iframe><div class="kissy-editor-statusbar"></div>',
-        CONTENT_TMPL = '<!DOCTYPE html><html><head><title>Rich Text Area</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" /></head><body>{CONTENT}</body></html>',
+
+        EDITOR_TMPL = '' +
+'<div class="kissy-editor-toolbar"></div>' +
+'<iframe frameborder="0"></iframe>' +
+'<div class="kissy-editor-statusbar"></div>',
+
+        CONTENT_TMPL = '' +
+'<!DOCTYPE html>' +
+'<html>' +
+'<head>' +
+'<title>Rich Text Area</title>' +
+'<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' +
+'<link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" />' +
+'</head>' +
+'<body>{CONTENT}</body>' +
+'</html>',
 
         THEMES_DIR = "themes",
         //EDITOR_CSS = "editor.css", TODO: 动态加载 editor.css
@@ -95,7 +108,9 @@ KISSY.Editor.add("instance", function(E) {
 
             // 初始化 iframe 的内容
             doc.open();
-            doc.write(CONTENT_TMPL.replace("{CONTENT_CSS}", contentCSSUrl).replace("{CONTENT}", this.textarea.value));
+            doc.write(CONTENT_TMPL
+                    .replace("{CONTENT_CSS}", contentCSSUrl)
+                    .replace("{CONTENT}", this.textarea.value));
             doc.close();
 
             doc.designMode = "on";

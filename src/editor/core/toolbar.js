@@ -1,24 +1,25 @@
 
-KISSY.Editor.add("toolbar", function(E) {
+KISSY.Editor.add("core~toolbar", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
         TOOLBAR_SEPARATOR_TMPL = '<div class="kissy-toolbar-separator kissy-inline-block"></div>',
 
-        TOOLBAR_BUTTON_TMPL = '\
-<div class="kissy-toolbar-button kissy-inline-block" title="{TITLE}">\
-    <div class="kissy-toolbar-button-outer-box">\
-        <div class="kissy-toolbar-button-inner-box">\
-            <span class="kissy-toolbar-item kissy-toolbar-{NAME}">{TEXT}</span>\
-        </div>\
-    </div>\
-</div>',
-        TOOLBAR_MENU_BUTTON_TMPL = '\
-<div class="kissy-toolbar-menu-button-caption kissy-inline-block">\
-    <span class="kissy-toolbar-item kissy-toolbar-{NAME}">{TEXT}</span>\
-</div>\
-<div class="kissy-toolbar-menu-button-dropdown kissy-inline-block"></div>',
+        TOOLBAR_BUTTON_TMPL = '' +
+'<div class="kissy-toolbar-button kissy-inline-block" title="{TITLE}">' +
+    '<div class="kissy-toolbar-button-outer-box">' +
+        '<div class="kissy-toolbar-button-inner-box">' +
+            '<span class="kissy-toolbar-item kissy-toolbar-{NAME}">{TEXT}</span>' +
+        '</div>' +
+    '</div>' +
+'</div>',
+
+        TOOLBAR_MENU_BUTTON_TMPL = '' +
+'<div class="kissy-toolbar-menu-button-caption kissy-inline-block">' +
+    '<span class="kissy-toolbar-item kissy-toolbar-{NAME}">{TEXT}</span>' +
+'</div>' +
+'<div class="kissy-toolbar-menu-button-dropdown kissy-inline-block"></div>',
 
         TOOLBAR_BUTTON_ACTIVE = "kissy-toolbar-button-active",
 

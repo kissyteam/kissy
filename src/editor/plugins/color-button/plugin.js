@@ -1,35 +1,10 @@
 
-KISSY.Editor.add("basic", function(E) {
+KISSY.Editor.add("plugins~color-button", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, //Lang = YAHOO.lang,
-        //isIE = YAHOO.env.ua.ie,
-        TYPE = E.PLUGIN_TYPE;
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
+        TYPE = E.PLUGIN_TYPE,
 
-
-    /* 普通按钮 */
-    var buttons  = "bold,italic,underline,";
-    buttons += "insertOrderedList,insertUnorderedList,";
-    buttons += "outdent,indent,";
-    buttons += "justifyLeft,justifyCenter,justifyRight";
-
-    E.plugins[buttons] = {
-        /**
-         * 种类：普通按钮
-         */
-        type: TYPE.TOOLBAR_BUTTON,
-
-        /**
-         * 响应函数
-         * @param {KISSY.Editor} editor
-         */
-        fn: function(editor) {
-            editor.execCommand(this.name);
-        }
-    };
-
-
-    /* 颜色按钮 */
-    var PALETTE_TABLE_TMPL = '<table class="kissy-palette-table"><tbody>{TR}</tbody></table>',
+        PALETTE_TABLE_TMPL = '<table class="kissy-palette-table"><tbody>{TR}</tbody></table>',
         PALETTE_CELL_TMPL = '<td class="kissy-palette-cell"><div class="kissy-palette-colorswatch" title="{COLOR}" style="background-color:{COLOR}"></div></td>',
 
         COLOR_GRAY = ["000", "444", "666", "999", "CCC", "EEE", "F3F3F3", "FFF"],
@@ -45,7 +20,7 @@ KISSY.Editor.add("basic", function(E) {
 
         PALETTE_CELL_SELECTED = "kissy-palette-cell-selected";
 
-    E.plugins["foreColor,backColor"] = {
+    E.addPlugin(["foreColor", "backColor"], {
         /**
          * 种类：普通按钮 + 菜单按钮
          */
@@ -197,6 +172,6 @@ KISSY.Editor.add("basic", function(E) {
                 }
             }
         }
-    };
+    });
 
 });

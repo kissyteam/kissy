@@ -1,5 +1,5 @@
 
-KISSY.Editor.add("color", function(E) {
+KISSY.Editor.add("core~color", function(E) {
 
     var TO_STRING = "toString",
         PARSE_INT = parseInt,

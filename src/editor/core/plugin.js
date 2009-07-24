@@ -1,5 +1,5 @@
 
-KISSY.Editor.add("plugin", function(E) {
+KISSY.Editor.add("core~plugin", function(E) {
 
     /**
      * 插件种类

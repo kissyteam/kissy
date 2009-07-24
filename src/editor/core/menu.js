@@ -1,8 +1,7 @@
 
-KISSY.Editor.add("menu", function(E) {
+KISSY.Editor.add("core~menu", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
-        //isIE = YAHOO.env.ua.ie,
 
         VISIBILITY = "visibility",
         DROP_MENU_CLASS = "kissy-drop-menu";

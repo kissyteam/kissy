@@ -58,12 +58,34 @@ KISSY.Editor = function(textarea, config) {
          * 添加模块
          */
         add: function(name, fn, details) {
+
             this.mods[name] = {
                 name: name,
                 fn: fn,
                 details: details || {}
             };
+
             return this; // chain support
+        },
+
+        /**
+         * 添加插件
+         * @param {string|Array} name
+         */
+        addPlugin: function(name, p) {
+            var arr = typeof name == "string" ? [name] : name,
+                plugins = this.plugins,
+                key, i, len;
+
+            for (i = 0,len = arr.length; i < len; ++i) {
+                key = arr[i];
+
+                if (!plugins[key]) { // 不允许覆盖
+                    plugins[key] = Lang.merge(p, {
+                        name: key
+                    });
+                }
+            }
         },
 
         /**
@@ -76,8 +98,6 @@ KISSY.Editor = function(textarea, config) {
          */
         _setup: function() {
             this._loadModules();
-            this._initPlugins();
-
             this._isReady = true;
         },
 
@@ -91,8 +111,8 @@ KISSY.Editor = function(textarea, config) {
          */
         _loadModules: function() {
             var mods = this.mods,
-                    attached = this._attached,
-                    name, m;
+                attached = this._attached,
+                name, m;
 
             for (name in mods) {
                 m = mods[name];
@@ -110,32 +130,6 @@ KISSY.Editor = function(textarea, config) {
 
             // TODO
             // lang 的加载可以延迟到实例化时，只加载当前 lang
-        },
-
-        /**
-         * 初始化 plugins
-         */
-        _initPlugins: function() {
-            var plugins = this.plugins,
-                ret = {},
-                name, arr, key, p, i, len;
-
-            for(name in plugins) {
-                p = plugins[name];
-                if(!p) continue;
-
-                arr = name.split(","); // 允许 name 为 "bold,italic,underline" 这种形式一次注册多个同类插件
-                for(i = 0, len = arr.length; i < len; ++i) {
-                    key = Lang.trim(arr[i]);
-
-                    if (!ret[key]) { // 不允许覆盖
-                        ret[key] = Lang.merge(p, {
-                            name: key
-                        });
-                    }
-                }
-            }
-            this.plugins = ret;
         }
     });
 
