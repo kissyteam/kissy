@@ -41,6 +41,11 @@ html>body .kissy-inline-block {
 .kissy-toolbar-button {
     margin: 0 2px;
     vertical-align: middle;
+    cursor: default;
+    /* 防止双击 link 类标签时，文字被选中 */
+    -moz-user-select: none;
+    -khtml-user-select:none;
+    user-select: none;
 }
 
 .kissy-toolbar-button-outer-box {
@@ -81,17 +86,27 @@ html>body .kissy-inline-block {
     text-indent: -999999px;
     overflow: hidden;
 }
-.kissy-toolbar-bold { background-position: -32px 0; }
-.kissy-toolbar-italic { background-position: -48px 0; }
-.kissy-toolbar-underline { background-position: -64px 0; }
-.kissy-toolbar-link { background: none; text-indent: 0; }
-.kissy-toolbar-insertOrderedList { background-position:-176px 0; }
-.kissy-toolbar-insertUnorderedList { background-position: -160px 0; }
-.kissy-toolbar-outdent { background-position: -144px 0; }
-.kissy-toolbar-indent { background-position:-128px 0; }
-.kissy-toolbar-justifyLeft { background-position: -192px 0; }
-.kissy-toolbar-justifyCenter { background-position:-208px 0; }
-.kissy-toolbar-justifyRight { background-position:-224px 0; }
+.kissy-toolbar-undo { background-position: 0 50%; }
+.kissy-toolbar-redo { background-position: -16px 50%; }
+.kissy-toolbar-bold { background-position: -32px 50%; }
+.kissy-toolbar-italic { background-position: -48px 50%; }
+.kissy-toolbar-underline { background-position: -64px 50%; }
+.kissy-toolbar-link {
+    background: none;
+    text-indent: 0;
+    color: #009;
+    text-decoration: underline;
+    font: bold 12px Arial,sans-serif;
+    height: 15px;
+    width: auto;
+}
+.kissy-toolbar-insertOrderedList { background-position:-176px 50%; }
+.kissy-toolbar-insertUnorderedList { background-position: -160px 50%; }
+.kissy-toolbar-outdent { background-position: -144px 50%; }
+.kissy-toolbar-indent { background-position:-128px 50%; }
+.kissy-toolbar-justifyLeft { background-position: -192px 50%; }
+.kissy-toolbar-justifyCenter { background-position:-208px 50%; }
+.kissy-toolbar-justifyRight { background-position:-224px 50%; }
 .kissy-toolbar-foreColor { height: 12px; background-position:-80px 50%; }
 .kissy-toolbar-backColor { height: 12px; background-position:-96px 50%; }
 

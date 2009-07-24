@@ -1,9 +1,9 @@
 
-KISSY.Editor.add("plugins~link", function(E) {
+KISSY.Editor.add("plugins~undo", function(E) {
 
     var TYPE = E.PLUGIN_TYPE;
 
-    E.addPlugin("link", {
+    E.addPlugin(["undo", "redo"], {
         /**
          * 种类：普通按钮
          */
@@ -14,12 +14,9 @@ KISSY.Editor.add("plugins~link", function(E) {
          * @param {KISSY.Editor} editor
          */
         fn: function(editor) {
-            var lang = this.lang, val;
-
             // TODO
             // 完善细节
-            val = window.prompt(lang.dialogMessage, "http://");
-            editor.execCommand("createLink", val);
+            editor.execCommand(this.name);
         }
     });
 

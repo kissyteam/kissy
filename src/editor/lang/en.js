@@ -3,7 +3,15 @@ KISSY.Editor.add("lang~en", function(E) {
 
     E.lang["en"] = {
 
-        // Basic buttons
+        // Toolbar buttons
+        undo: {
+          text            : "Undo",
+          title           : "Undo (Ctrl+Z)"
+        },
+        redo: {
+          text            : "Redo",
+          title           : "Redo (Ctrl+Y)"
+        },
         bold: {
             text          : "Bold",
             title         : "Bold (Ctrl+B)"
@@ -15,6 +23,11 @@ KISSY.Editor.add("lang~en", function(E) {
         underline: {
             text          : "Underline",
             title         : "Underline (Ctrl+U)"
+        },
+        link: {
+            text          : "Link",
+            title         : "Add or remove link (Ctrl+K)",
+            dialogMessage : "Enter the URL"
         },
         insertOrderedList: {
             text          : "Numbered List",
