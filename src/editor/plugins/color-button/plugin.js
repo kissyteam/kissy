@@ -2,6 +2,7 @@
 KISSY.Editor.add("plugins~color-button", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
+        isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
 
         PALETTE_TABLE_TMPL = '<table class="kissy-palette-table"><tbody>{TR}</tbody></table>',
@@ -73,6 +74,9 @@ KISSY.Editor.add("plugins~color-button", function(E) {
 
             // 生成下拉框内的内容
             this._generatePalettes();
+
+            // 针对 ie，设置不可选择
+            if (isIE) E.Toolbar.setItemUnselectable(this.dropMenu);
 
             // 注册点击事件
             this._bindPickEvent(editor);

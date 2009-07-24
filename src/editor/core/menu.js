@@ -24,10 +24,6 @@ KISSY.Editor.add("core~menu", function(E) {
             dropMenu.style[VISIBILITY] = "hidden";
             document.body.appendChild(dropMenu);
 
-            // 针对 ie，设置不可选择
-            // TODO 在 ie 下还是不行，nnd
-            E.Toolbar.setItemUnselectable(dropMenu);
-
             // 点击触点时，显示下拉框
             // 注：一个编辑器实例，最多只能有一个激活的下拉框
             Event.on(trigger, "click", function(ev) {

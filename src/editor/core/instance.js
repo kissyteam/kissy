@@ -140,7 +140,7 @@ KISSY.Editor.add("core~instance", function(E) {
          */
         execCommand: function(commandName, val) {
             this.contentWin.focus(); // 还原焦点
-            this.contentDoc.execCommand(commandName, false, val);
+            E.Command.exec(this.contentDoc, commandName, val);
         }
     };
 
