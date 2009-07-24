@@ -84,6 +84,7 @@ html>body .kissy-inline-block {
 .kissy-toolbar-bold { background-position: -32px 0; }
 .kissy-toolbar-italic { background-position: -48px 0; }
 .kissy-toolbar-underline { background-position: -64px 0; }
+.kissy-toolbar-link { background: none; text-indent: 0; }
 .kissy-toolbar-insertOrderedList { background-position:-176px 0; }
 .kissy-toolbar-insertUnorderedList { background-position: -160px 0; }
 .kissy-toolbar-outdent { background-position: -144px 0; }

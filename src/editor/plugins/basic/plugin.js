@@ -1,5 +1,5 @@
 
-KISSY.Editor.add("plugins~basic-button", function(E) {
+KISSY.Editor.add("plugins~base", function(E) {
 
     var TYPE = E.PLUGIN_TYPE,
         buttons  = "bold,italic,underline," +

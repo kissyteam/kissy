@@ -23,6 +23,8 @@ KISSY.Editor.add("config", function(E) {
         toolbar: [
             "bold", "italic", "underline", "foreColor", "backColor",
             "",
+            "link",
+            "",
             "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight"
         ]
     };

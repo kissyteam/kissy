@@ -1,5 +1,5 @@
 
-KISSY.Editor.add("plugins~color-button", function(E) {
+KISSY.Editor.add("plugins~color", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
         isIE = YAHOO.env.ua.ie,
