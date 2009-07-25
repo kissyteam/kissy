@@ -44,8 +44,6 @@ html>body .kissy-inline-block {
     cursor: default;
     /* 防止双击 link 类标签时，文字被选中 */
     -moz-user-select: none;
-    -khtml-user-select:none;
-    user-select: none;
 }
 
 .kissy-toolbar-button-outer-box {

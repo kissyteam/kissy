@@ -21,6 +21,8 @@ KISSY.Editor.add("config", function(E) {
          * Toolbar 上功能插件
          */
         toolbar: [
+            "undo", "redo",
+            "",
             "bold", "italic", "underline", "foreColor", "backColor",
             "",
             "link",
