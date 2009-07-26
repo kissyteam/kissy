@@ -42,6 +42,7 @@ html>body .kissy-inline-block {
     margin: 0 2px;
     vertical-align: middle;
     cursor: default;
+    white-space: nowrap;
     /* 防止双击 link 类标签时，文字被选中 */
     -moz-user-select: none;
 }
@@ -63,16 +64,18 @@ html>body .kissy-inline-block {
     border: 1px solid #A1BADF;
 }
 
-.kissy-toolbar-button:hover .kissy-toolbar-button-outer-box,
-.kissy-toolbar-button-hover .kissy-toolbar-button-outer-box {
-    border-width: 1px 0;
-    padding: 0;
-}
-
 .kissy-toolbar-button:hover .kissy-toolbar-button-inner-box,
-.kissy-toolbar-button-hover .kissy-toolbar-button-inner-box {
+.kissy-toolbar-button-hover .kissy-toolbar-button-inner-box,
+.kissy-toolbar-select .kissy-toolbar-button-inner-box {
     border-width: 0 1px;
     padding: 3px 4px;
+}
+
+.kissy-toolbar-button:hover .kissy-toolbar-button-outer-box,
+.kissy-toolbar-button-hover .kissy-toolbar-button-outer-box,
+.kissy-toolbar-select .kissy-toolbar-button-outer-box {
+    border-width: 1px 0;
+    padding: 0;
 }
 
 .kissy-toolbar-item {
@@ -191,3 +194,47 @@ html>body .kissy-inline-block {
     height: 16px;
     width: 16px;
 }
+
+/* toolbar-select */
+.kissy-toolbar-select .kissy-toolbar-button-outer-box,
+.kissy-toolbar-select .kissy-toolbar-button-inner-box {
+    border-color: #BFCBDF;
+    border-style: solid;
+}
+
+.kissy-toolbar-select .kissy-toolbar-item {
+    background: none;
+    text-indent: 0;
+    color: #246;
+    font: 12px Arial,sans-serif;
+    height: 15px;
+    width: auto;
+}
+
+.kissy-option {
+    cursor: default;
+    margin: 0;
+    padding: 5px 15px;
+    color: #00C;
+}
+
+.kissy-toolbar-select .kissy-toolbar-fontName {
+    width: 91px;
+}
+
+.kissy-toolbar-select .kissy-toolbar-fontSize {
+    width: 35px;
+}
+
+.kissy-option-selected {
+    background: url(check.gif) no-repeat 0 50%;
+}
+
+.kissy-option:hover {
+    background-color: #E0EDFE;
+}
+
+.kissy-drop-menu-fontsize {
+    text-align: center;
+}
+

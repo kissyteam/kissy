@@ -23,9 +23,9 @@ KISSY.Editor.add("plugins~color", function(E) {
 
     E.addPlugin(["foreColor", "backColor"], {
         /**
-         * 种类：普通按钮 + 菜单按钮
+         * 种类：菜单按钮
          */
-        type: TYPE.TOOLBAR_BUTTON | TYPE.TOOLBAR_MENU_BUTTON,
+        type: TYPE.TOOLBAR_MENU_BUTTON,
 
         /**
          * 当前选取色
@@ -47,7 +47,7 @@ KISSY.Editor.add("plugins~color", function(E) {
          */
         init: function(editor) {
             var el = this.domEl,
-            caption = el.getElementsByTagName("span")[0].parentNode;
+                caption = el.getElementsByTagName("span")[0].parentNode;
 
             this.color = (this.name == "foreColor") ? "#000000" : "#FFFFFF";
 
@@ -179,3 +179,6 @@ KISSY.Editor.add("plugins~color", function(E) {
     });
 
 });
+
+// TODO
+//  1. 仿 google, 对键盘事件的支持

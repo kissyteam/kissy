@@ -21,6 +21,8 @@ KISSY.Editor.add("core~toolbar", function(E) {
 '</div>' +
 '<div class="kissy-toolbar-menu-button-dropdown kissy-inline-block"></div>',
 
+        TOOLBAR_MENU_BUTTON = 'kissy-toolbar-menu-button',
+        TOOLBAR_SELECT = 'kissy-toolbar-select',
         TOOLBAR_BUTTON_ACTIVE = "kissy-toolbar-button-active",
 
         editor, // 当前 editor 实例
@@ -66,9 +68,10 @@ KISSY.Editor.add("core~toolbar", function(E) {
          * 添加工具栏项
          */
         _addItem: function(p) {
-            var el;
+            var el, type = p.type;
 
             // 当 plugin 没有设置 lang 时，采用默认语言配置
+            // TODO: 考虑重构到 instance 模块里，因为 lang 仅跟实例相关
             if (!p.lang) p.lang = lang[p.name] || {};
 
             // 根据模板构建 DOM
@@ -81,8 +84,13 @@ KISSY.Editor.add("core~toolbar", function(E) {
             p.domEl = el = div.firstChild;
 
             // 根据插件类型，调整 DOM 结构
-            if (p.type & TYPE.TOOLBAR_MENU_BUTTON) { // 下拉按钮
+            if (type == TYPE.TOOLBAR_MENU_BUTTON || type == TYPE.TOOLBAR_SELECT) {
+                // 注：select 是一种特殊的 menu button
                 this._renderMenuButton(p);
+
+                if(type == TYPE.TOOLBAR_SELECT) {
+                    this._renderSelect(p);
+                }
             }
 
             // 绑定事件
@@ -102,10 +110,20 @@ KISSY.Editor.add("core~toolbar", function(E) {
          * 初始化下拉按钮的 DOM
          */
         _renderMenuButton: function(p) {
-            var innerBox = p.domEl.getElementsByTagName("span")[0].parentNode;
+            var el = p.domEl,
+                innerBox = el.getElementsByTagName("span")[0].parentNode;
+
+            Dom.addClass(el, TOOLBAR_MENU_BUTTON);
             innerBox.innerHTML = TOOLBAR_MENU_BUTTON_TMPL
                     .replace("{NAME}", p.name)
                     .replace("{TEXT}", p.lang.text || "");
+        },
+
+        /**
+         * 初始化 selectBox 的 DOM
+         */
+        _renderSelect: function(p) {
+            Dom.addClass(p.domEl, TOOLBAR_SELECT);
         },
 
         /**

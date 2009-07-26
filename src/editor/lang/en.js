@@ -12,6 +12,38 @@ KISSY.Editor.add("lang~en", function(E) {
           text            : "Redo",
           title           : "Redo (Ctrl+Y)"
         },
+        fontName: {
+          text            : "Font Name",  
+          title           : "Font",
+          options         : {
+              "Default"         : "Arial",
+              "Arial"           : "Arial",
+              "Times New Roman" : "Times New Roman",
+              "Arial Black"     : "Arial Black",
+              "Arial Narrow"    : "Arial Narrow",
+              "Comic Sans MS"   : "Comic Sans MS",
+              "Courier New"     : "Courier New",
+              "Garamond"        : "Garamond",
+              "Georgia"         : "Georgia",
+              "Tahoma"          : "Tahoma",
+              "Trebuchet MS"    : "Trebuchet MS",
+              "Verdana"         : "Verdana"
+          }
+        },
+        fontSize: {
+          text            : "Font Size",  
+          title           : "Font size",
+          options         : {
+              "Default"         : "10pt",
+              "8"               : "8pt",
+              "10"              : "10pt",
+              "12"              : "12pt",
+              "14"              : "14pt",
+              "18"              : "18pt",
+              "24"              : "24pt",
+              "36"              : "36pt"
+          }
+        },
         bold: {
             text          : "Bold",
             title         : "Bold (Ctrl+B)"
