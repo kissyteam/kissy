@@ -4,3 +4,11 @@
  - editor
  - KISSY core
 
+-----------------------
+ TabView & SlideView
+  - 例子：淘宝礼物频道
+
+-----------------------
+ Popup / Tooltips
+ - JavaScript 浮动定位提示效果：http://bbs.51js.com/viewthread.php?tid=84690&extra=page%3D1
+ - TinyBox http://www.leigeber.com/2009/05/javascript-popup-box/
