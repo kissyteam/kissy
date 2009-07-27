@@ -56,6 +56,10 @@ KISSY.Editor.add("lang~en", function(E) {
             text          : "Underline",
             title         : "Underline (Ctrl+U)"
         },
+        strikeThrough: {
+            text          : "Strikeout",
+            title         : "Strikeout"
+        },
         link: {
             text          : "Link",
             title         : "Add or remove link (Ctrl+K)",

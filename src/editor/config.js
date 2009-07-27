@@ -22,7 +22,7 @@ KISSY.Editor.add("config", function(E) {
          */
         toolbar: [
             "undo", "redo",
-            "fontName", "fontSize", "bold", "italic", "underline", "foreColor", "backColor",
+            "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
             "",
             "link",
             "",

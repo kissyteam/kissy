@@ -2,7 +2,7 @@
 KISSY.Editor.add("plugins~base", function(E) {
 
     var TYPE = E.PLUGIN_TYPE,
-        buttons  = "bold,italic,underline," +
+        buttons  = "bold,italic,underline,strikeThrough," +
                    "insertOrderedList,insertUnorderedList," +
                    "outdent,indent," +
                    "justifyLeft,justifyCenter,justifyRight";

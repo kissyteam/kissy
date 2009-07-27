@@ -164,12 +164,12 @@ KISSY.Editor.add("plugins~color", function(E) {
         _updateSelectedColor: function(val) {
             var i, len, swatch,
                 swatches = this.dropMenu.getElementsByTagName("div");
-            val = E.Color.toRGB(val);
 
             for(i = 0, len = swatches.length; i < len; ++i) {
                 swatch = swatches[i];
 
-                if(swatch.style.backgroundColor == val) {
+                // 获取的 backgroundColor 在不同浏览器下，格式有差异，需要统一转换后再比较
+                if(E.Color.toHex(swatch.style.backgroundColor) == val) {
                     Dom.addClass(swatch.parentNode, PALETTE_CELL_SELECTED);
                 } else {
                     Dom.removeClass(swatch.parentNode, PALETTE_CELL_SELECTED);

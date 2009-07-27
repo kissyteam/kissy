@@ -92,6 +92,7 @@ html>body .kissy-inline-block {
 .kissy-toolbar-bold { background-position: -32px 50%; }
 .kissy-toolbar-italic { background-position: -48px 50%; }
 .kissy-toolbar-underline { background-position: -64px 50%; }
+.kissy-toolbar-strikeThrough { background-position: -624px 50%; }
 .kissy-toolbar-link {
     background: none;
     text-indent: 0;
@@ -234,7 +235,7 @@ html>body .kissy-inline-block {
     background-color: #E0EDFE;
 }
 
-.kissy-drop-menu-fontsize {
+.kissy-drop-menu-fontSize {
     text-align: center;
 }
 
