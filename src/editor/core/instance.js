@@ -156,7 +156,7 @@ KISSY.Editor.add("core~instance", function(E) {
          */
         getData: function() {
             var bd = this.contentDoc.body,
-                data = '';
+                data = '', p = E.plugins["save"];
 
             // Firefox 下，_moz_editor_bogus_node, _moz_dirty 等特有属性
             // 这些特有属性，在用 innerHTML 获取时，自动过滤了
@@ -164,6 +164,10 @@ KISSY.Editor.add("core~instance", function(E) {
             // 只有标签没文本内容时，将内容置为空
             if(E.Dom.getText(bd)) {
                data = bd.innerHTML;
+
+                if(p && p.filterData) {
+                    data = p.filterData(data);
+                }
             }
 
             return data;

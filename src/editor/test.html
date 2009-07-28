@@ -84,7 +84,7 @@
         <h2>Test Cases:</h2>
         <ol>
             <li>基本按钮都可用</li>
-            <li>B（加粗）生成的代码在 A 级浏览器下统一</li>
+            <li>B / I / U / Strike 生成的代码在 A 级浏览器下一致，分别为 b, i, u, strike</li>
         </ol>
     </div>
     
@@ -125,8 +125,11 @@
     // 测试保存的结果
     YUI().use("node", function(Y) {
         Y.get("#submitBtn").on("click", function(e) {
-           e.preventDefault();
-           Y.get("#source").set("value", editorDemo.getData());
+            e.preventDefault();
+            var data = editorDemo.getData();
+
+            Y.get("#source").set("value", data);
+            editorDemo.contentDoc.body.innerHTML = data;
        });
     });
 

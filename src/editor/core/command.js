@@ -5,7 +5,10 @@ KISSY.Editor.add("core~command", function(E) {
 
         CUSTOM_COMMANDS = {
             backColor: ua.gecko ? "hiliteColor" : "backColor"
-        };
+        },
+        BASIC_COMMANDS = "bold,italic,underline,strike,strikeThrough",
+        STYLE_WITH_CSS = "styleWithCSS",
+        EXEC_COMMAND = "execCommand";
     
     E.Command = {
 
@@ -13,24 +16,20 @@ KISSY.Editor.add("core~command", function(E) {
          * 执行 doc.execCommand
          */
         exec: function(doc, cmdName, val) {
-            if(!doc.inited) {
-                this._initDoc(doc);
-            }
-
             cmdName = CUSTOM_COMMANDS[cmdName] || cmdName;
-            doc.execCommand(cmdName, false, val);
+
+            this._preExec(doc, cmdName);
+            doc[EXEC_COMMAND](cmdName, false, val);
         },
 
-        /**
-         * 对 doc 进行初始化操作
-         */
-        _initDoc: function(doc) {
-            if(ua.gecko) {
-                // 关闭 gecko 浏览器的 styleWithCSS 特性，使得产生的内容和 ie 一致
-                doc.execCommand("styleWithCSS", false, false);
-            }
+        _preExec: function(doc, cmdName) {
 
-            doc.inited = true;
+            // 关闭 gecko 浏览器的 styleWithCSS 特性，使得产生的内容和 ie 一致
+            if(ua.gecko && BASIC_COMMANDS.indexOf(cmdName) > -1) {
+                doc[EXEC_COMMAND](STYLE_WITH_CSS, false, false);
+            } else {
+                doc[EXEC_COMMAND](STYLE_WITH_CSS, false, true);
+            }
         }
     };
 

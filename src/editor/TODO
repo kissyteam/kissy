@@ -1,7 +1,0 @@
-
-
-- 以下功能暂时不做：
-   1. B 产生的内容统一为 strong. 目前 CKEditor 做到了。（Kissy 的方案和 Google 一样，统一为 b）
-   2. 删除所有内容后，还有一个 p 标签。产生的新内容都在 p 标签内。目前 CKEditor 和 TinyMCE 做到了。
-   
-
