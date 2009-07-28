@@ -104,6 +104,9 @@ KISSY.Editor.add("core~toolbar", function(E) {
             if (p.init) {
                 p.init(editor);
             }
+
+            // 标记为已初始化完成
+            p.inited = true;
         },
 
         /**

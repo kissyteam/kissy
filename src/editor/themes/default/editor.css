@@ -160,6 +160,8 @@ html>body .kissy-inline-block {
 /* ÏÂÀ­²Ëµ¥¿ò */
 .kissy-drop-menu {
     position: absolute;
+    top: 0;
+    left: 0;
     z-index: 20000;
     border: 1px solid #ccc;
     border-right-color: #676767;

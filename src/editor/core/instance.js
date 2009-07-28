@@ -2,24 +2,21 @@
 KISSY.Editor.add("core~instance", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
-
         EDITOR_CLASSNAME = "kissy-editor",
 
-        EDITOR_TMPL = '' +
-'<div class="kissy-editor-toolbar"></div>' +
-'<iframe frameborder="0"></iframe>' +
-'<div class="kissy-editor-statusbar"></div>',
+        EDITOR_TMPL  =  '<div class="kissy-editor-toolbar"></div>' +
+                        '<iframe frameborder="0"></iframe>' +
+                        '<div class="kissy-editor-statusbar"></div>',
 
-        CONTENT_TMPL = '' +
-'<!DOCTYPE html>' +
-'<html>' +
-'<head>' +
-'<title>Rich Text Area</title>' +
-'<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' +
-'<link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" />' +
-'</head>' +
-'<body>{CONTENT}</body>' +
-'</html>',
+        CONTENT_TMPL =  '<!DOCTYPE html>' +
+                        '<html>' +
+                        '<head>' +
+                        '<title>Rich Text Area</title>' +
+                        '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' +
+                        '<link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" />' +
+                        '</head>' +
+                        '<body>{CONTENT}</body>' +
+                        '</html>',
 
         THEMES_DIR = "themes",
         //EDITOR_CSS = "editor.css", TODO: 动态加载 editor.css
@@ -55,18 +52,37 @@ KISSY.Editor.add("core~instance", function(E) {
     E.Instance.prototype = {
         /**
          * 初始化方法
-         * @protected
          */
         _init: function() {
             this._renderUI();
-            this._bindUI();
-            this._syncUI();
+            this._initPlugins();
         },
 
         _renderUI: function() {
             this._renderContainer();
             this._setupContentPanel();
+        },
+
+        /**
+         * 初始化所有插件
+         */
+        _initPlugins: function() {
+            var key, p,
+                plugins = E.plugins;
+
+            // 工具栏上的插件
             E.Toolbar.init(this);
+
+            // 其它插件
+            for(key in plugins) {
+                p = plugins[key];
+                if(p.inited) continue;
+
+                if(p.init) {
+                    p.init(this);
+                }
+                p.inited = true;
+            }
         },
 
         /**
@@ -127,20 +143,30 @@ KISSY.Editor.add("core~instance", function(E) {
             // TODO 让 ie 下选择背景色为 蓝底白字
         },
 
-        _bindUI: function() {
-
-        },
-
-        _syncUI: function() {
-
-        },
-
         /**
          * 执行 execCommand
          */
         execCommand: function(commandName, val) {
             this.contentWin.focus(); // 还原焦点
             E.Command.exec(this.contentDoc, commandName, val);
+        },
+
+        /**
+         * 得到数据
+         */
+        getData: function() {
+            var bd = this.contentDoc.body,
+                data = '';
+
+            // Firefox 下，_moz_editor_bogus_node, _moz_dirty 等特有属性
+            // 这些特有属性，在用 innerHTML 获取时，自动过滤了
+
+            // 只有标签没文本内容时，将内容置为空
+            if(E.Dom.getText(bd)) {
+               data = bd.innerHTML;
+            }
+
+            return data;
         }
     };
 

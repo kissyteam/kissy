@@ -16,6 +16,7 @@
 <script type="text/javascript" src="lang/en.js"></script>
 
 <script type="text/javascript" src="core/plugin.js"></script>
+<script type="text/javascript" src="core/dom.js"></script>
 <script type="text/javascript" src="core/color.js"></script>
 <script type="text/javascript" src="core/command.js"></script>
 <script type="text/javascript" src="core/instance.js"></script>
@@ -27,10 +28,11 @@
 <script type="text/javascript" src="plugins/link/plugin.js"></script>
 <script type="text/javascript" src="plugins/undo/plugin.js"></script>
 <script type="text/javascript" src="plugins/font/plugin.js"></script>
+<script type="text/javascript" src="plugins/save/plugin.js"></script>
 
 <style type="text/css">
     #page {
-        padding: 50px 50px 300px;
+        padding: 50px;
         width: 950px;
         margin: 0 auto;
         line-height: 18px;
@@ -48,12 +50,26 @@
     .hidden {
         display: none;
     }
+    textarea {
+        padding: 8px;
+        line-height: 150%;
+    }
+    button {
+        padding: 4px 20px;
+        margin: 5px;
+    }
 </style>
 </head>
 <body class="yui-skin-sam">
 <div id="page">
     <h1>Editor: </h1>
-    <textarea id="demo" rows="15" cols="145"></textarea>
+
+    <form id="demoForm" action="" method="POST">
+        <textarea id="demo" rows="10" cols="145"></textarea>
+        <button id="submitBtn" type="submit">Submit</button>
+    </form>
+
+    <textarea rows="10" cols="107" id="source" autocomplete="off" style="font-family: 'Courier New',Courier,monospace; overflow-y: auto; width: 745px"></textarea>
 
     <div class="section">
         <h2>Features:</h2>
@@ -68,6 +84,7 @@
         <h2>Test Cases:</h2>
         <ol>
             <li>基本按钮都可用</li>
+            <li>B（加粗）生成的代码在 A 级浏览器下统一</li>
         </ol>
     </div>
     
@@ -105,6 +122,14 @@
     //console.dir(KISSY.Editor);
     //console.dir(editorDemo);
 
+    // 测试保存的结果
+    YUI().use("node", function(Y) {
+        Y.get("#submitBtn").on("click", function(e) {
+           e.preventDefault();
+           Y.get("#source").set("value", editorDemo.getData());
+       });
+    });
+
 </script>
 
 <div id="testLogger"></div>
@@ -132,7 +157,7 @@
                 // YUI bug
                 //Assert.areEqual("#FF0A00", Y.Color.toHex("rgb(255, 10, 0)"));
 
-                Assert.areEqual("#FF0A00", E.Color.toHex("rgb(255, 10, 0)"));
+                Assert.areEqual("#ff0a00", E.Color.toHex("rgb(255, 10, 0)"));
 
             }
         });

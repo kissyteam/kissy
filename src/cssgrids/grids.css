@@ -31,12 +31,6 @@ grids.css
     width: 950px;
 }
 
-#page.w750,
-#page.w950 {
-    /* 有宽度时，重置内边距为 0 */
-    padding: 0;
-}
-
 /** 布局基础样式 **/
 .col-main {
     float: left;
