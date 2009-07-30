@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="componentbuild" default="build" basedir=".">
+    <description>Component Build File</description>
+	
+	<import file="../build.xml"/>
+
+    <property file="build.properties"/>
+	<property name="src.dir" location="."/>
+	<property name="build.dir" location="${common.basedir}/../build/${component.name}"/>
+
+    <target name="prepare">
+        <delete file="${build.dir}/*.css"/>
+        <copy todir="${build.dir}">
+            <fileset dir="${src.dir}" includes="${component.files}"/>
+        </copy>
+    </target>
+
+    <target name="build" depends="prepare,compress,native2ascii">
+    </target>
+</project>

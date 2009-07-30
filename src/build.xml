@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="commonbuild" basedir=".">
+    <description>Common Build File</description>
+
+    <dirname property="common.basedir" file="${ant.file.commonbuild}"/>
+    <property name="build.dir" location="${common.basedir}/../build/"/>
+    <property name="tools.dir" location="${common.basedir}/../tools/"/>
+    <property name="charset" value="utf-8"/>
+
+    <target name="compress">
+        <apply executable="java" dest="${build.dir}">
+            <fileset dir="${build.dir}" includes="*.css,*.js"/>
+            <arg line="-jar"/>
+            <arg path="${tools.dir}/yuicompressor.jar"/>
+            <srcfile/>
+            <arg line="--charset ${charset} -o"/>
+            <targetfile/>
+            <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-min.\2"/>
+        </apply>
+    </target>
+
+    <target name="native2ascii">
+        <mkdir dir="${build.dir}/tmp"/>
+        <move todir="${build.dir}/tmp">
+            <fileset dir="${build.dir}" includes="*-min.js"/>
+        </move>
+        <native2ascii encoding="${charset}"
+                      src="${build.dir}/tmp"
+                      dest="${build.dir}"
+                      includes="*.js"/>
+        <delete dir="${build.dir}/tmp"/>
+    </target>
+</project>
