@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="componentbuild" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../build.xml"/>
+
+    <property file="build.properties"/>
+    <property name="src.dir" location="."/>
+
+    <target name="concat">
+        <concat destfile="reset-grids.css" encoding="${charset}" outputencoding="${charset}">
+            <path path="../cssreset/reset.css"/>
+            <path path="../cssgrids/grids.css"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="reset-grids.css"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
+    </target>
+</project>

@@ -7,15 +7,6 @@
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
-    <target name="prepare">
-        <delete>
-            <fileset dir="${build.dir}/${component.name}" includes="*.css,*.js"/>
-        </delete>
-        <copy todir="${build.dir}/${component.name}">
-            <fileset dir="${src.dir}" includes="${component.files}"/>
-        </copy>
-    </target>
-
-    <target name="build" depends="prepare,compress,native2ascii">
+    <target name="build" depends="common.build">
     </target>
 </project>

@@ -7,6 +7,25 @@
     <property name="tools.dir" location="${common.basedir}/../tools/"/>
     <property name="charset" value="utf-8"/>
 
+    <!-- 引入第三方包 -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="${tools.dir}/ant-contrib-0.6.jar"/>
+        </classpath>
+    </taskdef>
+
+    <!-- 清空与复制文件等准备工作 -->
+    <target name="prepare">
+        <mkdir dir="${build.dir}/${component.name}"/>        
+        <delete>
+            <fileset dir="${build.dir}/${component.name}" includes="*.css,*.js"/>
+        </delete>
+        <copy todir="${build.dir}/${component.name}">
+            <fileset dir="${src.dir}" includes="${component.files}"/>
+        </copy>
+    </target>
+
+    <!-- 压缩代码 -->
     <target name="compress">
         <apply executable="java" dest="${build.dir}/${component.name}">
             <fileset dir="${build.dir}/${component.name}" includes="*.css,*.js"/>
@@ -19,6 +38,7 @@
         </apply>
     </target>
 
+    <!-- 对 JS 文件 ASCII 化 -->
     <target name="native2ascii" depends="compress">
         <mkdir dir="${build.dir}/${component.name}/tmp"/>
         <move todir="${build.dir}/${component.name}/tmp">
@@ -29,5 +49,46 @@
                       dest="${build.dir}/${component.name}"
                       includes="*.js"/>
         <delete dir="${build.dir}/${component.name}/tmp"/>
+    </target>
+
+    <!-- 给文件加上版权信息 -->
+    <target name="copyright">
+        <tstamp>
+            <format property="build.time" pattern="yyyy-MM-dd HH:mm:ss"/>
+        </tstamp>
+
+        <buildnumber file="${common.basedir}/BUILD_NUMBER"/>
+
+        <mkdir dir="${build.dir}/${component.name}/tmp"/>
+        <move todir="${build.dir}/${component.name}/tmp">
+            <fileset dir="${build.dir}/${component.name}" includes="*.css,*.js"/>
+        </move>
+
+        <for param="file">
+            <path>
+                <fileset dir="${build.dir}/${component.name}/tmp" includes="*.css,*.js"/>
+            </path>
+            <sequential>
+                <concat destfile="@{file}.tmp" encoding="${charset}" outputencoding="${charset}">
+                    <header filtering="no" trimleading="yes">/*
+                        Copyright (c) 2009, Kissy UI Library. All rights reserved.
+                        http://kissy.googlecode.com/
+           
+                        Build: ${build.number}  Date: ${build.time}
+                        */
+                    </header>
+                    <fileset file="@{file}" />
+                </concat>
+                <rename src="@{file}.tmp" dest="@{file}"/>
+            </sequential>
+        </for>
+
+        <move todir="${build.dir}/${component.name}">
+            <fileset dir="${build.dir}/${component.name}/tmp" includes="*.css,*.js"/>
+        </move>
+        <delete dir="${build.dir}/${component.name}/tmp"/>
+    </target>
+
+    <target name="common.build" depends="prepare,compress,native2ascii,copyright">
     </target>
 </project>

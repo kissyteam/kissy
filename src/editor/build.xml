@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="componentbuild" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../build.xml"/>
+
+    <property file="build.properties"/>
+    <property name="src.dir" location="."/>
+
+    <target name="concat">
+        <concat destfile="editor.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="editor-base.js"/>
+            <path path="config.js"/>
+
+            <path path="lang/en.js"/>
+
+            <path path="core/plugin.js"/>
+            <path path="core/dom.js"/>
+            <path path="core/color.js"/>
+            <path path="core/command.js"/>
+            <path path="core/instance.js"/>
+            <path path="core/toolbar.js"/>
+            <path path="core/menu.js"/>
+
+            <path path="plugins/basic/plugin.js"/>
+            <path path="plugins/color/plugin.js"/>
+            <path path="plugins/link/plugin.js"/>
+            <path path="plugins/undo/plugin.js"/>
+            <path path="plugins/font/plugin.js"/>
+            <path path="plugins/save/plugin.js"/>
+        </concat>
+    </target>
+
+    <target name="build" depends="concat,common.build">
+    </target>
+</project>
