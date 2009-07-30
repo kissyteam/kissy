@@ -1,4 +1,9 @@
-/*! KISSY Style Platform Copyright(c) 2009 http://kissy.googlecode.com/ */
+/*
+Copyright (c) 2009, Kissy UI Library. All rights reserved.
+http://kissy.googlecode.com/
+
+Build: 40  Date: 2009-07-30 23:05:10
+*/
 /*
 reset.css
 理念：清除和重置是紧密不可分的
@@ -66,4 +71,3 @@ hr {
     height: 1px;
     color: #fff; /* for ie6 */
 }
-
