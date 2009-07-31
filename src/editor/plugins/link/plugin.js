@@ -1,7 +1,8 @@
 
 KISSY.Editor.add("plugins~link", function(E) {
 
-    var TYPE = E.PLUGIN_TYPE;
+    var TYPE = E.PLUGIN_TYPE,
+        ua = YAHOO.env.ua, isIE = ua.ie;
 
     E.addPlugin("link", {
         /**
@@ -14,12 +15,21 @@ KISSY.Editor.add("plugins~link", function(E) {
          * @param {KISSY.Editor} editor
          */
         fn: function(editor) {
-            var lang = this.lang, val;
+            var msg = this.lang.dialogMessage,
+                url = "http://",
+                range = editor.getSelectionRange(),
+                container = range.startContainer,
+                parentEl;
 
-            // TODO
-            // ÍêÉÆÏ¸½Ú
-            val = window.prompt(lang.dialogMessage, "http://");
-            editor.execCommand("createLink", val);
+           if(container.nodeType == 3) { // TextNode
+               parentEl = container.parentNode;
+               if(parentEl.nodeName == "A") {
+                   url = parentEl.href;
+               }
+           }
+
+            url = window.prompt(msg, url);
+            editor.execCommand("createLink", url);
         }
     });
 

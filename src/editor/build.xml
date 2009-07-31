@@ -18,6 +18,7 @@
             <path path="core/dom.js"/>
             <path path="core/color.js"/>
             <path path="core/command.js"/>
+            <path path="core/range.js"/>
             <path path="core/instance.js"/>
             <path path="core/toolbar.js"/>
             <path path="core/menu.js"/>

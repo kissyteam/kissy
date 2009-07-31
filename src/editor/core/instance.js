@@ -171,6 +171,13 @@ KISSY.Editor.add("core~instance", function(E) {
             }
 
             return data;
+        },
+
+        /**
+         * 获取选中区域的 Range 对象
+         */
+        getSelectionRange: function() {
+            return E.Range.getSelectionRange(this.contentWin);
         }
     };
 
