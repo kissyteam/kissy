@@ -2,8 +2,8 @@
 Copyright (c) 2009, Kissy UI Library. All rights reserved.
 http://kissy.googlecode.com/
 
-Date: 2009-07-31 10:42:21
-Revision: 92
+Date: 2009-07-31 10:47:49
+Revision: 93
 */
 /**
  * KISSY.Editor ¸»ÎÄ±¾±à¼­Æ÷
