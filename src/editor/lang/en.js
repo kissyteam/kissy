@@ -1,4 +1,4 @@
-﻿
+
 KISSY.Editor.add("lang~en", function(E) {
 
     E.lang["en"] = {

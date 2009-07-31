@@ -1,6 +1,6 @@
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="content-type" content="text/html; charset=GB18030">
 <title>Google</title>
 <script type="text/javascript" src="../../lib/yui2/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="suggest.js"></script>
@@ -114,7 +114,7 @@ input { margin: 0 }
                 <td nowrap width=25% align=left><font size=-1>&nbsp;&nbsp;<a href=http://www.google.cn/advanced_search?hl=zh-CN>高级搜索</a><br>&nbsp;&nbsp;<a href=http://www.google.cn/preferences?hl=zh-CN>使用偏好</a><br>&nbsp;&nbsp;<a href=http://www.google.cn/language_tools?hl=zh-CN>语言工具</a></font></td>
             </tr>
             <tr>
-                <td align=center colspan=3><font size=-1><span style="text-align:left"><input id=all type=radio name=meta value="" checked><label for=all>所有网页&nbsp;</label> <input id=ch type=radio name=meta value="lr=lang_zh-CN|lang_zh-TW"><label for=ch>中文网页&nbsp;</label> <input id=lgr type=radio name=meta value="lr=lang_zh-CN"><label for=lgr>简体中文网页&nbsp;</label> <input id=cty type=radio name=meta value="cr=countryCN"><label for=cty>中国的网页&nbsp;</label> </span></font></td>
+                <td align=center colspan=3><font size=-1><span style="text-align:left"><input id=all type=radio name=meta value="" checked><label for=all>所有网�?nbsp;</label> <input id=ch type=radio name=meta value="lr=lang_zh-CN|lang_zh-TW"><label for=ch>中文网页&nbsp;</label> <input id=lgr type=radio name=meta value="lr=lang_zh-CN"><label for=lgr>简体中文网�?nbsp;</label> <input id=cty type=radio name=meta value="cr=countryCN"><label for=cty>中国的网�?nbsp;</label> </span></font></td>
             </tr>
         </table>
     </form>
@@ -123,7 +123,7 @@ input { margin: 0 }
             // Google
             //var dataUrl = 'http://clients1.google.com/complete/search';
             //var dataUrl = 'http://www.google.cn/complete/search';
-            var dataUrl = 'http://clients1.googleapis.com/complete/search'; // 未过滤版本 from http://ajax.googleapis.com/
+            var dataUrl = 'http://clients1.googleapis.com/complete/search'; // 未过滤版�?from http://ajax.googleapis.com/
             window.google = {};
             window.google.ac = {};
             window.google.ac.h = KISSY.Suggest.callback;
@@ -135,8 +135,8 @@ input { margin: 0 }
                 this.queryParams = 'hl=zh-CN&q=' + encodeURIComponent(query);
             });
 
-            // google: window.google.ac.h(["ni",[["牛博网","73,248 结果","0z"],["牛博网首页","12,200,617 结果","1z"],["你是准备替党说话 还是准备替老百姓说话","136,545 结果","2z"],["nike","117,000,000 结果","3"],["nikon","127,000,000 结果","4"],["nissan","135,000,000 结果","5"],["nine west","40,000,000 结果","6"],["nike鞋","3,380,000 结果","7"],["倪萍 再婚","36,400 结果","8"],["牛年祝福语","582,000 结果","9"]]])
-            // taobao: KISSY.Suggest.callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
+            // google: window.google.ac.h(["ni",[["牛博�?,"73,248 结果","0z"],["牛博网首�?,"12,200,617 结果","1z"],["你是准备替党说话 还是准备替老百姓说�?,"136,545 结果","2z"],["nike","117,000,000 结果","3"],["nikon","127,000,000 结果","4"],["nissan","135,000,000 结果","5"],["nine west","40,000,000 结果","6"],["nike�?,"3,380,000 结果","7"],["倪萍 再婚","36,400 结果","8"],["牛年祝福�?,"582,000 结果","9"]]])
+            // taobao: KISSY.Suggest.callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike �?�?, "989000"], ["nike 女鞋", "253000"], ["nike 运动�?, "550000"], ["nike �?, "295000"], ["nike �?, "3160000"], ["nike 单肩�?, "38500"], ["nike 09", "786000"]]})
             sug.subscribe('onDataReturn', function(data) {
                 this.returnedData = data[1] || [];
             });

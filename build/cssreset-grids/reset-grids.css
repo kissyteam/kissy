@@ -2,30 +2,31 @@
 Copyright (c) 2009, Kissy UI Library. All rights reserved.
 http://kissy.googlecode.com/
 
-Build: 45  Date: 2009-07-30 23:16:49
+Date: 2009-07-31 10:42:15
+Revision: 92
 */
 /*
 reset.css
-ç†å¿µï¼šæ¸…é™¤å’Œé‡ç½®æ˜¯ç´§å¯†ä¸å¯åˆ†çš„
-ç‰¹è‰²ï¼š1.é€‚åº”ä¸­æ–‡ 2.åŸºäºæœ€æ–°ä¸»æµæµè§ˆå™¨
-ç»´æŠ¤ï¼šç‰ä¼¯(lifesinger@gmail.com), æ­£æ·³(ragecarrier@gmail.com)
+ÀíÄî£ºÇå³ıºÍÖØÖÃÊÇ½ôÃÜ²»¿É·ÖµÄ
+ÌØÉ«£º1.ÊÊÓ¦ÖĞÎÄ 2.»ùÓÚ×îĞÂÖ÷Á÷ä¯ÀÀÆ÷
+Î¬»¤£ºÓñ²®(lifesinger@gmail.com), Õı´¾(ragecarrier@gmail.com)
 */
 
-/** æ¸…é™¤å†…å¤–è¾¹è· **/
-body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements ç»“æ„å…ƒç´  */
-dl, dt, dd, ul, ol, li, /* list elements åˆ—è¡¨å…ƒç´  */
-pre, /* text formatting elements æ–‡æœ¬æ ¼å¼å…ƒç´  */
-form, fieldset, lengend, button, input, textarea, /* form elements è¡¨å•å…ƒç´  */
-th, td { /* table elements è¡¨æ ¼å…ƒç´  */
+/** Çå³ıÄÚÍâ±ß¾à **/
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements ½á¹¹ÔªËØ */
+dl, dt, dd, ul, ol, li, /* list elements ÁĞ±íÔªËØ */
+pre, /* text formatting elements ÎÄ±¾¸ñÊ½ÔªËØ */
+form, fieldset, lengend, button, input, textarea, /* form elements ±íµ¥ÔªËØ */
+th, td { /* table elements ±í¸ñÔªËØ */
     margin: 0;
     padding: 0;
 }
 
-/** è®¾ç½®é»˜è®¤å­—ä½“ **/
+/** ÉèÖÃÄ¬ÈÏ×ÖÌå **/
 body,
 button, input, select, textarea { /* for ie */
-    /*font: 12px/1 Tahoma, Helvetica, Arial, "å®‹ä½“", sans-serif;*/
-    font: 12px/1 Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif; /* ç”¨ ascii å­—ç¬¦è¡¨ç¤ºï¼Œä½¿å¾—åœ¨ä»»ä½•ç¼–ç ä¸‹éƒ½æ— é—®é¢˜ */
+    /*font: 12px/1 Tahoma, Helvetica, Arial, "ËÎÌå", sans-serif;*/
+    font: 12px/1 Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif; /* ÓÃ ascii ×Ö·û±íÊ¾£¬Ê¹µÃÔÚÈÎºÎ±àÂëÏÂ¶¼ÎŞÎÊÌâ */
 }
 
 h1 { font-size: 18px; /* 18px / 12px = 1.5 */ }
@@ -33,86 +34,86 @@ h2 { font-size: 16px; }
 h3 { font-size: 14px; }
 h4, h5, h6 { font-size: 100%; }
 
-address, cite, dfn, em, var { font-style: normal; } /* å°†æ–œä½“æ‰¶æ­£ */
-code, kbd, pre, samp, tt { font-family: "Courier New", Courier, monospace; } /* ç»Ÿä¸€ç­‰å®½å­—ä½“ */
-small { font-size: 12px; } /* å°äº 12px çš„ä¸­æ–‡å¾ˆéš¾é˜…è¯»ï¼Œè®© small æ­£å¸¸åŒ– */
+address, cite, dfn, em, var { font-style: normal; } /* ½«Ğ±Ìå·öÕı */
+code, kbd, pre, samp, tt { font-family: "Courier New", Courier, monospace; } /* Í³Ò»µÈ¿í×ÖÌå */
+small { font-size: 12px; } /* Ğ¡ÓÚ 12px µÄÖĞÎÄºÜÄÑÔÄ¶Á£¬ÈÃ small Õı³£»¯ */
 
-/** é‡ç½®åˆ—è¡¨å…ƒç´  **/
+/** ÖØÖÃÁĞ±íÔªËØ **/
 ul, ol { list-style: none; }
 
-/** é‡ç½®æ–‡æœ¬æ ¼å¼å…ƒç´  **/
+/** ÖØÖÃÎÄ±¾¸ñÊ½ÔªËØ **/
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-abbr[title], acronym[title] { /* æ³¨ï¼š1.ie6 ä¸æ”¯æŒ abbr; 2.è¿™é‡Œç”¨äº†å±æ€§é€‰æ‹©ç¬¦ï¼Œie6 ä¸‹æ— æ•ˆæœ */
+abbr[title], acronym[title] { /* ×¢£º1.ie6 ²»Ö§³Ö abbr; 2.ÕâÀïÓÃÁËÊôĞÔÑ¡Ôñ·û£¬ie6 ÏÂÎŞĞ§¹û */
 	border-bottom: 1px dotted;
 	cursor: help;
 }
 
 q:before, q:after { content: ''; }
 
-/** é‡ç½®è¡¨å•å…ƒç´  **/
+/** ÖØÖÃ±íµ¥ÔªËØ **/
 legend { color: #000; } /* for ie6 */
-fieldset, img { border: none; } /* img æ­è½¦ï¼šè®©é“¾æ¥é‡Œçš„ img æ— è¾¹æ¡† */
-/* æ³¨ï¼šoptgroup æ— æ³•æ‰¶æ­£ */
+fieldset, img { border: none; } /* img ´î³µ£ºÈÃÁ´½ÓÀïµÄ img ÎŞ±ß¿ò */
+/* ×¢£ºoptgroup ÎŞ·¨·öÕı */
 button, input, select, textarea {
-    font-size: 100%; /* ä½¿å¾—è¡¨å•å…ƒç´ åœ¨ ie ä¸‹èƒ½ç»§æ‰¿å­—ä½“å¤§å° */
+    font-size: 100%; /* Ê¹µÃ±íµ¥ÔªËØÔÚ ie ÏÂÄÜ¼Ì³Ğ×ÖÌå´óĞ¡ */
 }
 
-/** é‡ç½®è¡¨æ ¼å…ƒç´  **/
+/** ÖØÖÃ±í¸ñÔªËØ **/
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
 
-/** å…¶å®ƒ **/
+/** ÆäËü **/
 hr {
     border: none;
     height: 1px;
     color: #fff; /* for ie6 */
 }
 /*
-åŒé£ç¿¼æ …æ ¼å¸ƒå±€ Flying Swing Grids Layout
+Ë«·ÉÒíÕ¤¸ñ²¼¾Ö Flying Swing Grids Layout
 grids.css
-ç†å¿µï¼šç®€å•è´¨æœ´ï¼Œå°½é‡åˆ†ç¦»
-ç»´æŠ¤ï¼šç‰ä¼¯(lifesinger@gmail.com), æ­£æ·³(ragecarrier@gmail.com)
+ÀíÄî£º¼òµ¥ÖÊÆÓ£¬¾¡Á¿·ÖÀë
+Î¬»¤£ºÓñ²®(lifesinger@gmail.com), Õı´¾(ragecarrier@gmail.com)
 */
 
-/** é¡µé¢å®½åº¦ **/
+/** Ò³Ãæ¿í¶È **/
 #page {
-    /* é»˜è®¤å®½åº¦ä¸º 100%, ç•™ç‚¹å‘¼å¸ç©ºé—´ */
+    /* Ä¬ÈÏ¿í¶ÈÎª 100%, ÁôµãºôÎü¿Õ¼ä */
     padding: 0 10px;
 }
 
-/* å±…ä¸­ */
+/* ¾ÓÖĞ */
 #header, #content, #footer {
     margin-left: auto;
     margin-right: auto;
 }
 
-/* é¡µé¢å®½åº¦ä¸º 750px */
+/* Ò³Ãæ¿í¶ÈÎª 750px */
 .w750 #header, .w750 #content, .w750 #footer,
-/* å¤´å°¾ 100%, ä»…å†…å®¹åŒºåŸŸ 750px */
+/* Í·Î² 100%, ½öÄÚÈİÇøÓò 750px */
 #content.w750 {
     width: 750px;
 }
 
-/* é¡µé¢å®½åº¦ä¸º 950px */
+/* Ò³Ãæ¿í¶ÈÎª 950px */
 .w950 #header, .w950 #content, .w950 #footer,
-/* å¤´å°¾ 100%, ä»…å†…å®¹åŒºåŸŸ 950px */
+/* Í·Î² 100%, ½öÄÚÈİÇøÓò 950px */
 #content.w950 {
     width: 950px;
 }
 
-/** å¸ƒå±€åŸºç¡€æ ·å¼ **/
+/** ²¼¾Ö»ù´¡ÑùÊ½ **/
 .col-main {
     float: left;
     width: 100%;
-    /* bug fix: ä¸»æ æ²¡æœ‰å†…å®¹æ—¶ï¼Œåœ¨ Firefox å’Œ Chrome ç­‰æµè§ˆå™¨ä¸‹ï¼Œå¸ƒå±€ä¸å¯¹ */
+    /* bug fix: Ö÷À¸Ã»ÓĞÄÚÈİÊ±£¬ÔÚ Firefox ºÍ Chrome µÈä¯ÀÀÆ÷ÏÂ£¬²¼¾Ö²»¶Ô */
     min-height: 1px;
 }
 .main-wrap {
-    /* bug fix: åœ¨ Chrome å’Œ Safari ä¸‹é€‰å–æ–‡å­—ï¼ŒèƒŒæ™¯åŒºåŸŸä¸å¯¹ */
+    /* bug fix: ÔÚ Chrome ºÍ Safari ÏÂÑ¡È¡ÎÄ×Ö£¬±³¾°ÇøÓò²»¶Ô */
     position: relative;
 }
 .col-sub, .col-extra {
@@ -120,7 +121,7 @@ grids.css
     position: relative;
 }
 
-/** æ¸…é™¤æµ®åŠ¨ **/
+/** Çå³ı¸¡¶¯ **/
 .layout:after, .main-wrap:after, .col-sub:after, .col-extra:after {
 	content: '\0020';
 	display: block;

@@ -1,21 +1,21 @@
 /*
 CSS Reset for Taobao
-æ³¨æ„ï¼šè¿™é‡Œæ˜¯ ONLY for Taobao çš„ reset rules
-ç»´æŠ¤ï¼šç‰ä¼¯(lifesinger@gmail.com), æ­£æ·³(ragecarrier@gmail.com)
+×¢Òâ£ºÕâÀïÊÇ ONLY for Taobao µÄ reset rules
+Î¬»¤£ºÓñ²®(lifesinger@gmail.com), Õı´¾(ragecarrier@gmail.com)
 */
 
 /* require(reset.css) */
 
 html {
-    color: #404040; /* æ·˜å®æ–‡å­—é»˜è®¤è‰² */
-    background: #fff; /* è¦†ç›–æ‰ç”¨æˆ·åœ¨ä¸çŸ¥æƒ…çš„æƒ…å†µä¸‹ï¼Œè®¾ç½®çš„é¡µé¢èƒŒæ™¯ */
+    color: #404040; /* ÌÔ±¦ÎÄ×ÖÄ¬ÈÏÉ« */
+    background: #fff; /* ¸²¸ÇµôÓÃ»§ÔÚ²»ÖªÇéµÄÇé¿öÏÂ£¬ÉèÖÃµÄÒ³Ãæ±³¾° */
 }
 
-/* æ·˜å®é“¾æ¥é»˜è®¤è‰² */
+/* ÌÔ±¦Á´½ÓÄ¬ÈÏÉ« */
 a { color: #404040; }
 a:hover { color: #f60; }
 
-/* é‡ç½® hr */
+/* ÖØÖÃ hr */
 hr {
     color: #ccc;
     background-color: #ccc;
@@ -23,6 +23,6 @@ hr {
 
 /* misc */
 html {
-    /* è®©éieæµè§ˆå™¨é»˜è®¤ä¹Ÿæ˜¾ç¤ºå‚ç›´æ»šåŠ¨æ¡ï¼Œé˜²æ­¢å› æ»šåŠ¨æ¡å¼•èµ·çš„é—ªçƒ */
+    /* ÈÃ·Çieä¯ÀÀÆ÷Ä¬ÈÏÒ²ÏÔÊ¾´¹Ö±¹ö¶¯Ìõ£¬·ÀÖ¹Òò¹ö¶¯ÌõÒıÆğµÄÉÁË¸ */
     overflow-y: scroll;
 }

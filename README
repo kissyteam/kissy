@@ -4,20 +4,20 @@ Kissy - An Enjoyable UI Library
  * License: http://www.opensource.org/licenses/mit-license.php
 
 
-ç›®å½•è¯´æ˜:
+Ä¿Â¼ËµÃ÷:
 
- - assets:   å…¨å±€æ€§çš„ä¸€äº›èµ„æºæ–‡ä»¶
- - build:    æ ¹æ® src å†…å®¹ï¼Œç”¨ YUI Builder æ„å»ºå‡ºæ¥çš„ css/js æ–‡ä»¶
- - docs:     æ ¹æ® src å†…å®¹ï¼Œç”¨ YUI Builder æ„å»ºå‡ºæ¥çš„ API æ–‡æ¡£
- - examples: ç”±å¼€å‘è€…æˆ–ç¤¾åŒºç”¨æˆ·æ’°å†™çš„å®ä¾‹è¯´æ˜å’Œä½¿ç”¨æ•™ç¨‹ç­‰æ–‡æ¡£
- - lib:      ä¾èµ–çš„å¤–éƒ¨ JS åº“
- - src:      æºç ã€æµ‹è¯•ã€build è„šæœ¬å’Œå¼€å‘æ–‡æ¡£ç­‰ä¸€åˆ‡å¼€å‘èµ„æ–™
+ - assets:   È«¾ÖĞÔµÄÒ»Ğ©×ÊÔ´ÎÄ¼ş
+ - build:    ¸ù¾İ src ÄÚÈİ£¬ÓÃ Ant ¹¹½¨³öÀ´µÄ css/js ÎÄ¼ş
+ - docs:     ¸ù¾İ src ÄÚÈİ£¬ÓÃ YUI Builder ¹¹½¨³öÀ´µÄ API ÎÄµµ
+ - examples: ÓÉ¿ª·¢Õß»òÉçÇøÓÃ»§×«Ğ´µÄÊµÀıËµÃ÷ºÍÊ¹ÓÃ½Ì³ÌµÈÎÄµµ
+ - lib:      ÒÀÀµµÄÍâ²¿ JS ¿â
+ - src:      Ô´Âë¡¢²âÊÔ¡¢build ½Å±¾ºÍ¿ª·¢ÎÄµµµÈÒ»ÇĞ¿ª·¢×ÊÁÏ
 
 
 Something that is enjoyable gives you pleasure.
 
-ç†å¿µï¼šå°å·§çµæ´»ï¼Œç®€æ´å®ç”¨ï¼Œä½¿ç”¨èµ·æ¥è®©äººæ„Ÿè§‰æ„‰æ‚¦ã€‚
-æµ‹è¯•è¿‡çš„æµè§ˆå™¨ï¼š IE 6+, Firefox 3.5+, Safari 4+, Chrome 2+, Opera 10+
+ÀíÄî£ºĞ¡ÇÉÁé»î£¬¼ò½àÊµÓÃ£¬Ê¹ÓÃÆğÀ´ÈÃÈË¸Ğ¾õÓäÔÃ¡£
+²âÊÔ¹ıµÄä¯ÀÀÆ÷£º IE 6+, Firefox 3.5+, Safari 4+, Chrome 2+, Opera 10+
 
 Keep It
     Simple & Stupid, Short & Sweet, Slim & Sexy... 

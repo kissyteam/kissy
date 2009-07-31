@@ -15,32 +15,32 @@ KISSY.Editor.add("plugins~font", function(E) {
 
     E.addPlugin(["fontName", "fontSize"], {
         /**
-         * ç§ç±»ï¼šèœå•æŒ‰é’®
+         * ÖÖÀà£º²Ëµ¥°´Å¥
          */
         type: TYPE.TOOLBAR_SELECT,
 
         /**
-         * å½“å‰é€‰ä¸­å€¼
+         * µ±Ç°Ñ¡ÖĞÖµ
          */
         selectedValue: "",
 
         /**
-         * é€‰æ‹©æ¡†å¤´éƒ¨
+         * Ñ¡Ôñ¿òÍ·²¿
          */
         selectHead: null,
 
         /**
-         * å…³è”çš„ä¸‹æ‹‰é€‰æ‹©åˆ—è¡¨
+         * ¹ØÁªµÄÏÂÀ­Ñ¡ÔñÁĞ±í
          */
         selectList: null,
 
         /**
-         * ä¸‹æ‹‰æ¡†é‡Œçš„æ‰€æœ‰é€‰é¡¹å€¼
+         * ÏÂÀ­¿òÀïµÄËùÓĞÑ¡ÏîÖµ
          */
         options: [],
 
         /**
-         * åˆå§‹åŒ–
+         * ³õÊ¼»¯
          */
         init: function(editor) {
             var el = this.domEl;
@@ -50,25 +50,25 @@ KISSY.Editor.add("plugins~font", function(E) {
 
             this._initSelectList(editor, el);
 
-            // é€‰ä¸­å½“å‰å€¼
+            // Ñ¡ÖĞµ±Ç°Öµ
             this._setSelectedOption(this.options[DEFAULT]);
         },
 
         /**
-         * åˆå§‹åŒ–ä¸‹æ‹‰é€‰æ‹©æ¡†
+         * ³õÊ¼»¯ÏÂÀ­Ñ¡Ôñ¿ò
          */
         _initSelectList: function(editor, trigger) {
             this.selectList = E.Menu.generateDropMenu(editor, trigger, [1, 0]);
 
-            // åˆå§‹åŒ–ä¸‹æ‹‰æ¡† DOM
+            // ³õÊ¼»¯ÏÂÀ­¿ò DOM
             this._renderSelectList();
 
-            // æ³¨å†Œé€‰å–äº‹ä»¶
+            // ×¢²áÑ¡È¡ÊÂ¼ş
             this._bindPickEvent(editor);
         },
 
         /**
-         * åˆå§‹åŒ–ä¸‹æ‹‰æ¡† DOM
+         * ³õÊ¼»¯ÏÂÀ­¿ò DOM
          */
         _renderSelectList: function() {
             var htmlCode = "", options = this.options,
@@ -84,18 +84,18 @@ KISSY.Editor.add("plugins~font", function(E) {
                         .replace("{KEY}", key);
             }
 
-            // æ·»åŠ åˆ° DOM ä¸­
+            // Ìí¼Óµ½ DOM ÖĞ
             this.selectList.innerHTML = SELECT_TMPL.replace("{LI}", htmlCode);
 
-            // æ·»åŠ ä¸ªæ€§åŒ– class
+            // Ìí¼Ó¸öĞÔ»¯ class
             Dom.addClass(this.selectList, "kissy-drop-menu-" + this.name);
 
-            // é’ˆå¯¹ ieï¼Œè®¾ç½®ä¸å¯é€‰æ‹©
+            // Õë¶Ô ie£¬ÉèÖÃ²»¿ÉÑ¡Ôñ
             if (isIE) E.Toolbar.setItemUnselectable(this.selectList);
         },
 
         /**
-         * ç»‘å®šå–è‰²äº‹ä»¶
+         * °ó¶¨È¡É«ÊÂ¼ş
          */
         _bindPickEvent: function(editor) {
             var self = this;
@@ -112,25 +112,25 @@ KISSY.Editor.add("plugins~font", function(E) {
                 //console.log(val);
 
                 if(val) {
-                    // æ›´æ–°å½“å‰å€¼
+                    // ¸üĞÂµ±Ç°Öµ
                     self._setSelectedOption(val);
 
-                    // æ‰§è¡Œå‘½ä»¤
+                    // Ö´ĞĞÃüÁî
                     editor.execCommand(self.name, self.selectedValue);
                 }
             });
         },
 
         /**
-         * é€‰ä¸­æŸä¸€é¡¹
+         * Ñ¡ÖĞÄ³Ò»Ïî
          */
         _setSelectedOption: function(val) {
             this.selectedValue = val;
 
-            // æ›´æ–° head
+            // ¸üĞÂ head
             this.selectHead.innerHTML = this._getOptionKey(val);
 
-            // æ›´æ–° selectList ä¸­çš„é€‰ä¸­é¡¹
+            // ¸üĞÂ selectList ÖĞµÄÑ¡ÖĞÏî
             this._updateSelectedOption(val);
         },
 
@@ -155,7 +155,7 @@ KISSY.Editor.add("plugins~font", function(E) {
         },
 
         /**
-         * æ›´æ–°ä¸‹æ‹‰æ¡†çš„é€‰ä¸­é¡¹
+         * ¸üĞÂÏÂÀ­¿òµÄÑ¡ÖĞÏî
          */
         _updateSelectedOption: function(val) {
             var items = this.selectList.getElementsByTagName("li"),
@@ -176,4 +176,4 @@ KISSY.Editor.add("plugins~font", function(E) {
 });
 
 // TODO
-//  1. ä»¿ google, å¯¹é”®ç›˜äº‹ä»¶çš„æ”¯æŒ
+//  1. ·Â google, ¶Ô¼üÅÌÊÂ¼şµÄÖ§³Ö

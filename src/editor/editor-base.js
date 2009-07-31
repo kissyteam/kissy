@@ -1,5 +1,5 @@
 /**
- * KISSY.Editor å¯Œæ–‡æœ¬ç¼–è¾‘å™¨
+ * KISSY.Editor ¸»ÎÄ±¾±à¼­Æ÷
  * editor.js
  * requires: yahoo-dom-event
  * @author lifesinger@gmail.com
@@ -33,29 +33,29 @@ KISSY.Editor = function(textarea, config) {
 
     Lang.augmentObject(E, {
         /**
-         * ç‰ˆæœ¬å·
+         * °æ±¾ºÅ
          */
         version: "0.1",
 
         /**
-         * è¯­è¨€é…ç½®ï¼Œåœ¨ lang ç›®å½•æ·»åŠ 
+         * ÓïÑÔÅäÖÃ£¬ÔÚ lang Ä¿Â¼Ìí¼Ó
          */
         lang: {},
 
         /**
-         * æ‰€æœ‰æ·»åŠ çš„æ¨¡å—
-         * æ³¨ï¼šmod = { name: modName, fn: initFn, details: {...} }
+         * ËùÓĞÌí¼ÓµÄÄ£¿é
+         * ×¢£ºmod = { name: modName, fn: initFn, details: {...} }
          */
         mods: {},
 
         /**
-         * æ‰€æœ‰æ³¨å†Œçš„æ’ä»¶
-         * æ³¨ï¼šplugin = { name: pluginName, type: pluginType, init: initFn, ... }
+         * ËùÓĞ×¢²áµÄ²å¼ş
+         * ×¢£ºplugin = { name: pluginName, type: pluginType, init: initFn, ... }
          */
         plugins: {},
 
         /**
-         * æ·»åŠ æ¨¡å—
+         * Ìí¼ÓÄ£¿é
          */
         add: function(name, fn, details) {
 
@@ -69,7 +69,7 @@ KISSY.Editor = function(textarea, config) {
         },
 
         /**
-         * æ·»åŠ æ’ä»¶
+         * Ìí¼Ó²å¼ş
          * @param {string|Array} name
          */
         addPlugin: function(name, p) {
@@ -80,7 +80,7 @@ KISSY.Editor = function(textarea, config) {
             for (i = 0,len = arr.length; i < len; ++i) {
                 key = arr[i];
 
-                if (!plugins[key]) { // ä¸å…è®¸è¦†ç›–
+                if (!plugins[key]) { // ²»ÔÊĞí¸²¸Ç
                     plugins[key] = Lang.merge(p, {
                         name: key
                     });
@@ -89,7 +89,7 @@ KISSY.Editor = function(textarea, config) {
         },
 
         /**
-         * æ˜¯å¦å·²å®Œæˆ setup
+         * ÊÇ·ñÒÑÍê³É setup
          */
         _isReady: false,
 
@@ -102,12 +102,12 @@ KISSY.Editor = function(textarea, config) {
         },
 
         /**
-         * å·²åŠ è½½çš„æ¨¡å—
+         * ÒÑ¼ÓÔØµÄÄ£¿é
          */
         _attached: {},
 
         /**
-         * åŠ è½½æ³¨å†Œçš„æ‰€æœ‰æ¨¡å—
+         * ¼ÓÔØ×¢²áµÄËùÓĞÄ£¿é
          */
         _loadModules: function() {
             var mods = this.mods,
@@ -125,15 +125,15 @@ KISSY.Editor = function(textarea, config) {
                     }
                 }
 
-                // æ³¨æ„ï¼šm.details æš‚æ—¶æ²¡ç”¨åˆ°ï¼Œä»…æ˜¯é¢„ç•™çš„æ‰©å±•æ¥å£
+                // ×¢Òâ£ºm.details ÔİÊ±Ã»ÓÃµ½£¬½öÊÇÔ¤ÁôµÄÀ©Õ¹½Ó¿Ú
             }
 
             // TODO
-            // lang çš„åŠ è½½å¯ä»¥å»¶è¿Ÿåˆ°å®ä¾‹åŒ–æ—¶ï¼ŒåªåŠ è½½å½“å‰ lang
+            // lang µÄ¼ÓÔØ¿ÉÒÔÑÓ³Ùµ½ÊµÀı»¯Ê±£¬Ö»¼ÓÔØµ±Ç° lang
         }
     });
 
 })(KISSY.Editor);
 
 // TODO
-// 1. è‡ªåŠ¨æ›¿æ¢é¡µé¢ä¸­çš„ textarea ? çº¦å®šæœ‰ç‰¹æ®Š class çš„ä¸æ›¿æ¢
+// 1. ×Ô¶¯Ìæ»»Ò³ÃæÖĞµÄ textarea ? Ô¼¶¨ÓĞÌØÊâ class µÄ²»Ìæ»»

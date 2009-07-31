@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<meta http-equiv="content-type" content="text/html; charset=GB18030"/>
 <title>Grids CSS Generator</title>
 </head>
 <body>
@@ -14,7 +14,7 @@
         i, fs, s, fe, e, cls,
         sum = [0, 0];
 
-    println('/** ‰∏§Ê†èÂ∏ÉÂ±Ä **/');
+    println('/** ¡Ω¿∏≤ºæ÷ **/');
     S_MAX = N - COL_MIN;
     for (i = COL_MIN; i <= S_MAX; ++i) {
         fs = i * c, s = fs - g;
@@ -31,7 +31,7 @@
         println();
     }
 
-    println('/** ‰∏âÊ†èÂ∏ÉÂ±Ä **/');
+    println('/** »˝¿∏≤ºæ÷ **/');
     S_MAX = N - 2 * COL_MIN;
     for (i = COL_MIN; i <= S_MAX; ++i) {
         fs = i * c, s = fs - g;
@@ -81,9 +81,9 @@
         }
     }
 
-    println('/** ÁªüËÆ°Êï∞ÊçÆ **/');
-    println('/* ‰∫åÊ†èÊ†ÖÊ†ºÂ∏ÉÂ±ÄÊÄªÊï∞Ôºö ' + sum[0] + ' = (20 - 4 + 1) * 2 = 17 * 2 */');
-    println('/* ‰∏âÊ†èÊ†ÖÊ†ºÂ∏ÉÂ±ÄÊÄªÊï∞Ôºö ' + sum[1] + ' = ((16 - 4 + 1) + (16 - 4 + 1 - 1) + ... + 2 + 1) * 6 = (13 + 12 + ... + 2 + 1) * 6 = 13 * 7 * 6 */');
+    println('/** Õ≥º∆ ˝æ› **/');
+    println('/* ∂˛¿∏’§∏Ò≤ºæ÷◊‹ ˝£∫ ' + sum[0] + ' = (20 - 4 + 1) * 2 = 17 * 2 */');
+    println('/* »˝¿∏’§∏Ò≤ºæ÷◊‹ ˝£∫ ' + sum[1] + ' = ((16 - 4 + 1) + (16 - 4 + 1 - 1) + ... + 2 + 1) * 6 = (13 + 12 + ... + 2 + 1) * 6 = 13 * 7 * 6 */');
 </script>
 </pre>
 </body>

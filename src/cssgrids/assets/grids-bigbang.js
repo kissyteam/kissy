@@ -20,7 +20,7 @@ YUI({
         }
     }
 }).use("dd", "resize", function(Y) {
-    // å…±ç”¨å˜é‡å’Œå¸¸é‡
+    // ¹²ÓÃ±äÁ¿ºÍ³£Á¿
     var NS = KISSY,
         page, content, pageWidth, ROW_TMPL, COL_SUB_TMPL, COL_EXTRA_TMPL,
         GRIDS_N = 24,
@@ -28,8 +28,8 @@ YUI({
         UNIT_GUTTER = 10,
         COL_MIN_N = 4,
         COL_MIN_WIDTH = UNIT_COL * COL_MIN_N - UNIT_GUTTER,
-        COL_SUB_DEFAULT_N = 5, // col-sub çš„é»˜è®¤å®½åº¦
-        COL_EXTRA_DEFAULT_N = 6, // col-extra çš„é»˜è®¤å®½åº¦
+        COL_SUB_DEFAULT_N = 5, // col-sub µÄÄ¬ÈÏ¿í¶È
+        COL_EXTRA_DEFAULT_N = 6, // col-extra µÄÄ¬ÈÏ¿í¶È
         LAYOUT = "layout",
         GRID = "grid",
         DEFAULT_COL1 = LAYOUT + " " + GRID + "-m",
@@ -52,20 +52,20 @@ YUI({
 
     NS.BigBang = {
         /**
-         * åˆå§‹åŒ–
+         * ³õÊ¼»¯
          */
         init: function() {
             var self = this;
             page = Y.get("#page");
             content = Y.get("#content");
 
-            // 1. åˆ‡æ¢é¡µé¢å®½åº¦
+            // 1. ÇĞ»»Ò³Ãæ¿í¶È
             pageWidth = Y.get("#page-width");
             pageWidth.on("change", function() {
                 self.switchPageWidth(this.get("value"));
             });
 
-            // 2. æ·»åŠ è¡Œï¼Œæ·»åŠ åˆ—ï¼Œåˆ é™¤è¡Œï¼Œåˆ é™¤åˆ—
+            // 2. Ìí¼ÓĞĞ£¬Ìí¼ÓÁĞ£¬É¾³ıĞĞ£¬É¾³ıÁĞ
             ROW_TMPL  = Y.get("#row-tmpl").get("innerHTML");
             COL_SUB_TMPL = Y.get("#col-sub-tmpl").get("innerHTML");
             COL_EXTRA_TMPL = Y.get("#col-extra-tmpl").get("innerHTML");
@@ -93,19 +93,19 @@ YUI({
                 }
             }, window);
 
-            // 4. ç”Ÿæˆ HTML ä»£ç 
+            // 4. Éú³É HTML ´úÂë
             Y.on("click", function() {
                 self.generateHTMLCode();
             }, "#build-code");
 
-            // 5. ç”Ÿæˆåˆ†äº«é“¾æ¥
+            // 5. Éú³É·ÖÏíÁ´½Ó
             Y.on("click", function() {
                 self.generateShareLink();
             }, "#share-link");
         },
 
         /**
-         * åˆå§‹åŒ– col
+         * ³õÊ¼»¯ col
          */
         initCol: function(col) {
             this._initDD(col);
@@ -113,7 +113,7 @@ YUI({
         },
 
         /**
-         * åˆå§‹åŒ–æ‹–æ”¾
+         * ³õÊ¼»¯ÍÏ·Å
          */
         _initDD: function(col) {
             var drag = new Y.DD.Drag({
@@ -130,26 +130,26 @@ YUI({
                 eCol,
                 sN,
                 eN,
-                mHalf, // main-wrap å…ƒç´ çš„åŠå®½
-                sHalf, // col-sub å…ƒç´ çš„åŠå®½
-                eHalf, // col-extra å…ƒç´ çš„åŠå®½
-                pHalf, // proxy å…ƒç´ çš„åŠå®½
-                mX, // main-wrap ä¸­è½´çº¿çš„ X åæ ‡å€¼
-                sX, // col-sub ä¸­è½´çº¿çš„ X åæ ‡å€¼
-                eX, // col-extra ä¸­è½´çº¿çš„ X åæ ‡å€¼
-                pX, // proxy ä¸­è½´çº¿çš„ X åæ ‡å€¼
+                mHalf, // main-wrap ÔªËØµÄ°ë¿í
+                sHalf, // col-sub ÔªËØµÄ°ë¿í
+                eHalf, // col-extra ÔªËØµÄ°ë¿í
+                pHalf, // proxy ÔªËØµÄ°ë¿í
+                mX, // main-wrap ÖĞÖáÏßµÄ X ×ø±êÖµ
+                sX, // col-sub ÖĞÖáÏßµÄ X ×ø±êÖµ
+                eX, // col-extra ÖĞÖáÏßµÄ X ×ø±êÖµ
+                pX, // proxy ÖĞÖáÏßµÄ X ×ø±êÖµ
                 p,  // proxy node
                 self = this;
 
             drag.on("drag:start", function() {
                 p = this.get("dragNode");
 
-                // è°ƒæ•´æ ·å¼
+                // µ÷ÕûÑùÊ½
                 p.addClass(DD_PROXY);
                 col.setStyle("zIndex", "99");
 
-                // è·å–åˆå§‹å€¼
-                // æ³¨ï¼šå½“æ·»åŠ åˆ é™¤åˆ—åï¼Œä¸‹é¢è¿™äº›å€¼éƒ½ä¼šæ›´æ–°ï¼Œå› æ­¤æ”¾åœ¨ drag:start
+                // »ñÈ¡³õÊ¼Öµ
+                // ×¢£ºµ±Ìí¼ÓÉ¾³ıÁĞºó£¬ÏÂÃæÕâĞ©Öµ¶¼»á¸üĞÂ£¬Òò´Ë·ÅÔÚ drag:start
                 layoutType = self._getLayoutType(layout);
                 gridCls = self._getGridCls(layout);
                 eCol = layout.query(CLS_COL_EXTRA);
@@ -167,17 +167,17 @@ YUI({
             drag.on("drag:drag", function(e) {
                 var args;
 
-                // å¾—åˆ°å½“å‰åæ ‡
+                // µÃµ½µ±Ç°×ø±ê
                 pX = e.pageX + pHalf;
 
-                if (layoutType === 2) { // ä¸¤æ 
+                if (layoutType === 2) { // Á½À¸
                     args = [[mX], [pX, sN], null];
 
-                } else if(layoutType === 3) { // ä¸‰æ 
-                    if(col.hasClass(CLS_COL_SUB.slice(1))) { // æ‹–åŠ¨çš„æ˜¯ col-sub
+                } else if(layoutType === 3) { // ÈıÀ¸
+                    if(col.hasClass(CLS_COL_SUB.slice(1))) { // ÍÏ¶¯µÄÊÇ col-sub
                         args = [[mX], [pX, sN], [eX, eN]];
 
-                    } else { // æ‹–åŠ¨çš„æ˜¯ col-extra
+                    } else { // ÍÏ¶¯µÄÊÇ col-extra
                         args = [[mX], [sX, sN], [pX, eN]];
                     }
                 }
@@ -188,19 +188,19 @@ YUI({
                 if (newGridCls && newGridCls != gridCls) {
                     layout.replaceClass(gridCls, newGridCls);
 
-                    // ä¸‹é¢è¿™äº›å€¼éœ€è¦åŠ¨æ€æ›´æ–°ï¼Œå¦åˆ™æ¥ä¸‹æ¥çš„åˆ¤æ–­ä¸å¯¹
+                    // ÏÂÃæÕâĞ©ÖµĞèÒª¶¯Ì¬¸üĞÂ£¬·ñÔò½ÓÏÂÀ´µÄÅĞ¶Ï²»¶Ô
                     gridCls = newGridCls;
                     mX = mCol.getX() + mHalf;
                     sX = sCol.getX() + sHalf;
                     if(eCol) eX = eCol.getX() + eHalf;
 
-                    // æ›´æ–°æ‹–æ‹‰æ ‡å¿—çš„ä½ç½®
+                    // ¸üĞÂÍÏÀ­±êÖ¾µÄÎ»ÖÃ
                     self._updateResizeFlag(layoutType, gridCls, sCol, eCol);
                 }
             });
 
             drag.on("drag:end", function() {
-                // è¿˜åŸæ ·å¼
+                // »¹Ô­ÑùÊ½
                 p.removeClass(DD_PROXY);
                 p.removeAttribute("style");
                 col.setStyle("zIndex", "");
@@ -208,7 +208,7 @@ YUI({
         },
 
         /**
-         * åˆå§‹åŒ– Resize
+         * ³õÊ¼»¯ Resize
          */
         _initResize: function(col) {
             var resize = new YAHOO.util.Resize(Y.Node.getDOMNode(col),
@@ -237,15 +237,15 @@ YUI({
                 activeHandle = Y.get(this.getActiveHandleEl());
                 handleAtLeft = activeHandle.hasClass('yui-resize-handle-l');
 
-                // ä¸‹é¢è¿™äº›å€¼ï¼Œåœ¨resizeæ³¨å†Œåï¼Œæœ‰å¯èƒ½å› æ‹–åŠ¨è€Œæ”¹å˜
+                // ÏÂÃæÕâĞ©Öµ£¬ÔÚresize×¢²áºó£¬ÓĞ¿ÉÄÜÒòÍÏ¶¯¶ø¸Ä±ä
                 gridCls = self._getGridCls(layout);
                 sWidth = self._getWidthByN(parseInt(gridCls.replace(RE_SCOL_N, "$1")));
                 eWidth = self._getWidthByN(parseInt(gridCls.replace(RE_ECOL_N, "$1")));
 
-                // ä¸‹é¢è¿™äº›å€¼ï¼Œåœ¨çª—å£æ‹‰ä¼¸å’Œåˆ‡æ¢é¡µé¢å®½åº¦ç­‰æƒ…å½¢ä¸‹ï¼Œæœ‰å¯èƒ½ä¼šæ”¹å˜ï¼Œå› æ­¤æ”¾åœ¨ resize start ä¸­è·å–
+                // ÏÂÃæÕâĞ©Öµ£¬ÔÚ´°¿ÚÀ­ÉìºÍÇĞ»»Ò³Ãæ¿í¶ÈµÈÇéĞÎÏÂ£¬ÓĞ¿ÉÄÜ»á¸Ä±ä£¬Òò´Ë·ÅÔÚ resize start ÖĞ»ñÈ¡
                 layoutWidth = parseInt(layout.getComputedStyle("width"));
                 colLeft = col.getX();
-                colWidth = parseInt(col.getComputedStyle("width")); // å¯èƒ½å·²ç» resize è¿‡
+                colWidth = parseInt(col.getComputedStyle("width")); // ¿ÉÄÜÒÑ¾­ resize ¹ı
             });
 
             resize.on('proxyResize', function(e) {
@@ -255,26 +255,26 @@ YUI({
                     });
                 }
 
-                // åŠ¨æ€æ˜¾ç¤ºå®½åº¦
+                // ¶¯Ì¬ÏÔÊ¾¿í¶È
                 self._updateColWidth(col, self._getGridWidth(e.width) + "px");
             });
 
             resize.on('endResize', function(e) {
-                // æ¶ˆé™¤æ‹‰ä¼¸æ—¶è®¾ç½®çš„æ ·å¼
+                // Ïû³ıÀ­ÉìÊ±ÉèÖÃµÄÑùÊ½
                 col.removeAttribute("style");
 
-                // è·å–å½“å‰æ‹‰åŠ¨çš„ col å®½åº¦
+                // »ñÈ¡µ±Ç°À­¶¯µÄ col ¿í¶È
                 if(activeColCls === CLS_COL_SUB) {
                     sWidth = self._getWidthByN(self._getNByWidth(e.width));
                 } else {
                     eWidth = self._getWidthByN(self._getNByWidth(e.width));
                 }
 
-                // è°ƒæ•´å®½åº¦ç¬¦åˆæ …æ ¼
+                // µ÷Õû¿í¶È·ûºÏÕ¤¸ñ
                 activeN = self._calcActiveColWidth(layoutWidth, activeColCls, sWidth, eWidth);
                 //console.log("activeN = " + activeN);
 
-                // è·å–æ–°çš„ gridCls
+                // »ñÈ¡ĞÂµÄ gridCls
                 newGridCls = self._adjustGridClsByWidth(gridCls, activeColCls, activeN);
                 //console.log("newGridCls = " + newGridCls);
 
@@ -282,18 +282,18 @@ YUI({
                     layout.replaceClass(gridCls, newGridCls);
                     gridCls = newGridCls;
 
-                    // æ›´æ–°åˆ—å®½
+                    // ¸üĞÂÁĞ¿í
                     self._updateColMainWidth(layout);
                 }
                 
-                // æœ‰å¯èƒ½æ‹‰ä¼¸åˆ°å°äºæœ€å°å®½åº¦ï¼Œè¿™æ—¶æ²¡æœ‰å¼•å‘ gridCls å˜åŒ–ï¼Œä½†ä¾æ—§éœ€è¦æ›´æ–°åˆ—å®½
+                // ÓĞ¿ÉÄÜÀ­Éìµ½Ğ¡ÓÚ×îĞ¡¿í¶È£¬ÕâÊ±Ã»ÓĞÒı·¢ gridCls ±ä»¯£¬µ«ÒÀ¾ÉĞèÒª¸üĞÂÁĞ¿í
                 self._updateColWidth(col, self._getWidthByN(activeN) + "px");
             });
 
         },
 
         /**
-         * åˆ‡æ¢é¡µé¢å®½åº¦
+         * ÇĞ»»Ò³Ãæ¿í¶È
          */
         switchPageWidth: function(type) {
             switch (type) {
@@ -316,7 +316,7 @@ YUI({
         },
 
         /**
-         * æ’å…¥è¡Œ
+         * ²åÈëĞĞ
          */
         insertRow: function(where) {
             var row = content.create(ROW_TMPL);
@@ -326,28 +326,28 @@ YUI({
         },
 
         /**
-         * åˆ é™¤è¡Œ
+         * É¾³ıĞĞ
          */
         removeRow: function(row) {
             row.remove();
         },
 
         /**
-         * æ’å…¥åˆ—
+         * ²åÈëÁĞ
          */
         insertCol: function(pos) {
             var layout = pos.ancestor(CLS_LAYOUT),
                 layoutType = this._getLayoutType(layout),
                 gridCls, newGridCls, col, needSyncUI = true;
 
-            if (layoutType === 1) { // é€šæ 
+            if (layoutType === 1) { // Í¨À¸
                 layout.setAttribute("class", DEFAULT_COL2);
 
                 col = layout.create(COL_SUB_TMPL);
                 layout.append(col);
                 this.initCol(col);
 
-            } else if(layoutType === 2) { // ä¸¤æ 
+            } else if(layoutType === 2) { // Á½À¸
                 gridCls = this._getGridCls(layout);
                 newGridCls = gridCls.replace(/^(.+)m0(.*)$/, "$1m0e" + COL_EXTRA_DEFAULT_N + "$2");
                 layout.replaceClass(gridCls, newGridCls);
@@ -364,18 +364,18 @@ YUI({
         },
 
         /**
-         * åˆ é™¤åˆ—
+         * É¾³ıÁĞ
          */
         removeCol: function(pos) {
             var layout = pos.ancestor(CLS_LAYOUT),
                 layoutType = this._getLayoutType(layout),
                 gridCls, newGridCls, needSyncUI = true;
 
-            if (layoutType === 2) { // ä¸¤æ 
+            if (layoutType === 2) { // Á½À¸
                 layout.query(CLS_COL_SUB).remove();
                 layout.setAttribute("class", DEFAULT_COL1);
 
-            } else if(layoutType === 3) { // ä¸‰æ 
+            } else if(layoutType === 3) { // ÈıÀ¸
                 layout.query(CLS_COL_EXTRA).remove();
 
                 gridCls = this._getGridCls(layout);
@@ -390,11 +390,11 @@ YUI({
         },
 
         /**
-         * æ›´æ–°æ å®½ï¼ŒæŒ‰é’®çŠ¶æ€ç­‰ UI ä¿¡æ¯
+         * ¸üĞÂÀ¸¿í£¬°´Å¥×´Ì¬µÈ UI ĞÅÏ¢
          */
         _syncUI: function(layout) {
-            // ä¸ºäº†å‡å°‘è€¦åˆï¼Œä¸‹é¢ä»…æ ¹æ® gridCls æ›´æ–° UI
-            // è¿™æ ·ä¼šå¯¼è‡´æŸäº›æƒ…å†µä¸‹çš„æ— è°“æ›´æ–°ï¼Œä½†æ€»ä½“æ¥è¯´ï¼Œè¿™æ ·åšèƒ½å‡å°‘å¤æ‚åº¦ï¼Œæ˜¯å€¼å¾—çš„
+            // ÎªÁË¼õÉÙñîºÏ£¬ÏÂÃæ½ö¸ù¾İ gridCls ¸üĞÂ UI
+            // ÕâÑù»áµ¼ÖÂÄ³Ğ©Çé¿öÏÂµÄÎŞÎ½¸üĞÂ£¬µ«×ÜÌåÀ´Ëµ£¬ÕâÑù×öÄÜ¼õÉÙ¸´ÔÓ¶È£¬ÊÇÖµµÃµÄ
             var gridCls = this._getGridCls(layout),
                 layoutType = this._getLayoutType(layout),
                 sCol = layout.query(CLS_COL_SUB),
@@ -404,28 +404,28 @@ YUI({
             if(layoutType === 3) eN = gridCls.replace(RE_ECOL_N, "$1") >> 0;
             mN = GRIDS_N - sN - eN;
 
-            // æ›´æ–°æ å®½
+            // ¸üĞÂÀ¸¿í
             if(mN) { this._updateColMainWidth(layout); }
             if(sN) { this._updateColWidth(layout.query(CLS_COL_SUB), sN); }
             if(eN) { this._updateColWidth(layout.query(CLS_COL_EXTRA), eN); }
 
-            // ä¸‰æ æ—¶ï¼Œ1. éšè—â€œæ·»åŠ åˆ—â€ 2. éšè— col-sub çš„â€œåˆ é™¤â€
+            // ÈıÀ¸Ê±£¬1. Òş²Ø¡°Ìí¼ÓÁĞ¡± 2. Òş²Ø col-sub µÄ¡°É¾³ı¡±
             if(layoutType === 3) {
                 layout.query(CLS_ADD_COL).addClass(HIDDEN);
                 sCol.query(CLS_DEL_COL).addClass(HIDDEN);
             } else
-            // ä¸¤æ æ—¶ï¼Œ1. æ˜¾ç¤ºâ€œæ·»åŠ åˆ—â€ 2. æ˜¾ç¤º col-sub çš„â€œåˆ é™¤â€
+            // Á½À¸Ê±£¬1. ÏÔÊ¾¡°Ìí¼ÓÁĞ¡± 2. ÏÔÊ¾ col-sub µÄ¡°É¾³ı¡±
             if(layoutType === 2) {
                 layout.query(CLS_ADD_COL).removeClass(HIDDEN);
                 sCol.query(CLS_DEL_COL).removeClass(HIDDEN);
             }
 
-            // æ›´æ–°æ‹–æ‹‰æ ‡å¿—çš„ä½ç½®
+            // ¸üĞÂÍÏÀ­±êÖ¾µÄÎ»ÖÃ
             this._updateResizeFlag(layoutType, gridCls, sCol, eCol);
         },
 
         /**
-         * æ›´æ–°åˆ—å®½
+         * ¸üĞÂÁĞ¿í
          */
         _updateColWidth: function(col, val) {
             val = Y.Lang.isNumber(val) ? this._getWidthByN(val) + "px" : val;
@@ -433,7 +433,7 @@ YUI({
         },
 
         /**
-         * æ›´æ–° col-main çš„åˆ—å®½
+         * ¸üĞÂ col-main µÄÁĞ¿í
          */
         _updateColMainWidth: function(layout) {
             var mainWrap = layout.query(CLS_MAIN_WRAP),
@@ -444,20 +444,20 @@ YUI({
         },
 
         /**
-         * æ›´æ–°â€œæ·»åŠ åˆ—â€æŒ‰é’®çš„æ˜¾ç¤ºçŠ¶æ€
+         * ¸üĞÂ¡°Ìí¼ÓÁĞ¡±°´Å¥µÄÏÔÊ¾×´Ì¬
          */
         _updateAddColButton: function(layout, mainWidth) {
-            // å½“å®½åº¦å°äºä¸€å®šå€¼æ—¶ï¼Œå·²ç»ä¸èƒ½æ·»åŠ  col-extra äº†ï¼Œéœ€è¦éšè—æ·»åŠ æŒ‰é’®
+            // µ±¿í¶ÈĞ¡ÓÚÒ»¶¨ÖµÊ±£¬ÒÑ¾­²»ÄÜÌí¼Ó col-extra ÁË£¬ĞèÒªÒş²ØÌí¼Ó°´Å¥
             if(mainWidth < this._getWidthByN(COL_MIN_N + COL_EXTRA_DEFAULT_N)) {
                 layout.query(CLS_ADD_COL).addClass(HIDDEN);
 
-            } else if(!layout.query(CLS_COL_EXTRA)) { // ä¸æ˜¯ä¸‰æ 
+            } else if(!layout.query(CLS_COL_EXTRA)) { // ²»ÊÇÈıÀ¸
                 layout.query(CLS_ADD_COL).removeClass(HIDDEN);
             }
         },
         
         /**
-         * æ›´æ–°æ‰€æœ‰ col-main çš„åˆ—å®½
+         * ¸üĞÂËùÓĞ col-main µÄÁĞ¿í
          */
         _updateAllColMainWidth: function() {
             var self = this;
@@ -467,18 +467,18 @@ YUI({
         },
 
         /**
-         * æ›´æ–° resize æ ‡å¿—ç¬¦
+         * ¸üĞÂ resize ±êÖ¾·û
          */
         _updateResizeFlag: function(layoutType, gridCls, sCol, eCol) {
             if(layoutType > 1) {
-                if(/^.+s\d+.*m0.*$/.test(gridCls)) { // col-sub åœ¨ col-main å·¦è¾¹
+                if(/^.+s\d+.*m0.*$/.test(gridCls)) { // col-sub ÔÚ col-main ×ó±ß
                     sCol.addClass(FLOAT_RIGHT); // for YUI 2 Resize
                 } else {
                     sCol.removeClass(FLOAT_RIGHT); // for YUI 2 Resize
                 }
 
                 if (layoutType > 2) {
-                    if (/^.+e\d+.*m0.*$/.test(gridCls)) { // col-extra åœ¨ col-main å·¦è¾¹
+                    if (/^.+e\d+.*m0.*$/.test(gridCls)) { // col-extra ÔÚ col-main ×ó±ß
                         //eCol.query(CLS_COL_STRIP).addClass(FLOAT_RIGHT);
                         eCol.addClass(FLOAT_RIGHT); // for YUI 2 Resize
                     } else {
@@ -490,8 +490,8 @@ YUI({
         },
 
         /**
-         * è·å–å¸ƒå±€ç±»å‹
-         * @return {number} layoutType 1 - é€šæ , 2 - ä¸¤æ , 3 - ä¸‰æ , 0 - å…¶å®ƒæƒ…å†µ
+         * »ñÈ¡²¼¾ÖÀàĞÍ
+         * @return {number} layoutType 1 - Í¨À¸, 2 - Á½À¸, 3 - ÈıÀ¸, 0 - ÆäËüÇé¿ö
          */
         _getLayoutType: function(layout) {
             if(layout.hasClass(CLS_ONE_COL.slice(1))) return 1;
@@ -504,14 +504,14 @@ YUI({
         },
 
         /**
-         * è·å– layout çš„ grid ç±»å
+         * »ñÈ¡ layout µÄ grid ÀàÃû
          */
         _getGridCls: function(layout) {
             return layout.getAttribute("class").replace(/^.*(grid-\S+).*$/, "$1");
         },
 
         /**
-         * æ ¹æ®ä¸­è½´çº¿çš„ä½ç½®å¾—åˆ°å¯¹åº”çš„ gridCls
+         * ¸ù¾İÖĞÖáÏßµÄÎ»ÖÃµÃµ½¶ÔÓ¦µÄ gridCls
          * @param m [mX]
          * @param s [sX, sN]
          * @param e [eX, eN]
@@ -521,10 +521,10 @@ YUI({
             if(e && (m[0] == e[0] || s[0] == e[0])) return "";
 
             var cls = "grid-";
-            if(!e) { // ä¸¤æ 
+            if(!e) { // Á½À¸
                 cls += m[0] < s[0] ? "m0" + "s" + s[1] : "s" + s[1] + "m0";
 
-            } else { // ä¸‰æ 
+            } else { // ÈıÀ¸
                 if(     m[0] < s[0] && s[0] < e[0]) cls += "m0s" + s[1] + "e" + e[1];
                 else if(m[0] < e[0] && e[0] < s[0]) cls += "m0e" + e[1] + "s" + s[1];
                 else if(s[0] < m[0] && m[0] < e[0]) cls += "s" + s[1] + "m0e" + e[1];
@@ -538,7 +538,7 @@ YUI({
         },
 
         /**
-         * è°ƒæ•´æ­£åœ¨ resize çš„ col çš„å®½åº¦ä¸ºå…è®¸å€¼
+         * µ÷ÕûÕıÔÚ resize µÄ col µÄ¿í¶ÈÎªÔÊĞíÖµ
          * @return {number} activeN
          */
         _calcActiveColWidth: function(layoutWidth, activeColCls, sWidth, eWidth) {
@@ -547,7 +547,7 @@ YUI({
                 eN = this._getNByWidth(eWidth),
                 activeN, mWidth;
 
-            // ä¸èƒ½å°äºæœ€å°å®½åº¦
+            // ²»ÄÜĞ¡ÓÚ×îĞ¡¿í¶È
             if(sN < COL_MIN_N) {
                 sN = COL_MIN_N;
                 sWidth = COL_MIN_WIDTH;
@@ -557,7 +557,7 @@ YUI({
                 eWidth = COL_MIN_WIDTH;
             }
 
-            // ä¹Ÿä¸èƒ½å¤ªå®½ï¼Œä½¿å¾— main-wrap çš„å®½åº¦å°äºæœ€å°å®½åº¦
+            // Ò²²»ÄÜÌ«¿í£¬Ê¹µÃ main-wrap µÄ¿í¶ÈĞ¡ÓÚ×îĞ¡¿í¶È
             activeN = (activeColCls === CLS_COL_SUB) ? sN : eN;
             mWidth = layoutWidth - sWidth - eWidth;
             while (mWidth < COL_MIN_WIDTH) {
@@ -568,7 +568,7 @@ YUI({
         },
 
         /**
-         * æ ¹æ®å®½åº¦å€¼è°ƒæ•´ gridCls
+         * ¸ù¾İ¿í¶ÈÖµµ÷Õû gridCls
          */
         _adjustGridClsByWidth: function(gridCls, activeColCls, activeN) {
             var colFlag = activeColCls === CLS_COL_SUB ? "s" : "e",
@@ -593,8 +593,8 @@ YUI({
         },
 
         /**
-         * æ ¹æ® gridCls ç›´æ¥æ’å…¥ä¸€è¡Œæ …æ ¼å¸ƒå±€
-         * @param {string|Array} gridFlags ä¾‹å¦‚ï¼š"m0s5" æˆ– ["s5m0e6", "m0s6", "m"]
+         * ¸ù¾İ gridCls Ö±½Ó²åÈëÒ»ĞĞÕ¤¸ñ²¼¾Ö
+         * @param {string|Array} gridFlags ÀıÈç£º"m0s5" »ò ["s5m0e6", "m0s6", "m"]
          */
         insertLayout: function(gridFlags) {
             if(Y.Lang.isString(gridFlags)) gridFlags = [gridFlags];
@@ -621,41 +621,41 @@ YUI({
                     self.initCol(row.query(CLS_COL_EXTRA));
                 }
 
-                // æ›´æ–° UI ä¿¡æ¯
+                // ¸üĞÂ UI ĞÅÏ¢
                 self._syncUI(row);
             });
         },
 
         /**
-         * æ£€æŸ¥ flag æ˜¯å¦ç¬¦åˆæ …æ ¼æ ‡è®°
+         * ¼ì²é flag ÊÇ·ñ·ûºÏÕ¤¸ñ±ê¼Ç
          */
         checkGridFlagIsValid: function(flag) {
             if(!flag) return false;
 
-            // 1. é€šæ 
+            // 1. Í¨À¸
             if(flag === "m") return true;
 
-            // 2. ä¸¤æ 
+            // 2. Á½À¸
             if(/^m0s\d{1,2}|s\d{1,2}m0$/.test(flag)) return true;
 
-            // 3. ä¸‰æ 
+            // 3. ÈıÀ¸
             var m = flag.match(/[m|s|e]\d{1,2}/g);
 
-            // æ— åŒ¹é…æˆ–æ€»åŒ¹é…æ•°ä¸ä¸º3
+            // ÎŞÆ¥Åä»ò×ÜÆ¥ÅäÊı²»Îª3
             if(!m || m.length != 3) return false;
 
-            // å«æœ‰é [m|s|e]\d{1,2} å­—ç¬¦
+            // º¬ÓĞ·Ç [m|s|e]\d{1,2} ×Ö·û
             if(flag != m.join("")) return false;
 
-            // å«æœ‰ mm, ss, ee
+            // º¬ÓĞ mm, ss, ee
             if(m[0].charAt(0) == m[1].charAt(0)) return false;
             if(m[0].charAt(0) == m[2].charAt(0)) return false;
             return m[1].charAt(0) != m[2].charAt(0);
         },
 
         /**
-         * ä» location.hash è§£æå‡ºé»˜è®¤å¸ƒå±€
-         * @param {string} hash æ ¼å¼ä¸º s5m0e6-m0s6-m
+         * ´Ó location.hash ½âÎö³öÄ¬ÈÏ²¼¾Ö
+         * @param {string} hash ¸ñÊ½Îª s5m0e6-m0s6-m
          */
         parseHash: function(hash) {
             if(hash) {
@@ -664,15 +664,15 @@ YUI({
         },
 
         /**
-         * ç”Ÿæˆ HTML ä»£ç 
+         * Éú³É HTML ´úÂë
          */
         generateHTMLCode: function() {
             // TODO
-            alert("è«æ€¥è«æ€¥ï¼Œå°šæœªå®ç°ã€‚");
+            alert("Äª¼±Äª¼±£¬ÉĞÎ´ÊµÏÖ¡£");
         },
 
         /**
-         * ç”Ÿæˆåˆ†äº«é“¾æ¥
+         * Éú³É·ÖÏíÁ´½Ó
          */
         generateShareLink: function() {
             var hash = [], cls;
@@ -689,19 +689,19 @@ YUI({
     Y.on("domready", function() {
         NS.BigBang.init();
 
-        // éšè— loading
+        // Òş²Ø loading
         Y.get("#page-loading").addClass("hidden");
 
-        // ä» hash é‡Œè·å–å¸ƒå±€æ•°æ®
+        // ´Ó hash Àï»ñÈ¡²¼¾ÖÊı¾İ
         if(location.hash) {
             NS.BigBang.parseHash(location.hash.slice(1));
 
         } else {
-            // æ·»åŠ é»˜è®¤å¸ƒå±€
+            // Ìí¼ÓÄ¬ÈÏ²¼¾Ö
             NS.BigBang.insertLayout(["s5m0e6", "m0s6", "m"]);
         }
 
-        // æ˜¾ç¤ºæ“ä½œæŒ‰é’®
+        // ÏÔÊ¾²Ù×÷°´Å¥
         Y.get("#page-width").removeClass("hidden");
         Y.get("#add-row").removeClass("hidden");
         Y.get("#bottom-operations").removeClass("hidden");

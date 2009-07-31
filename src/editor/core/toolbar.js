@@ -25,67 +25,67 @@ KISSY.Editor.add("core~toolbar", function(E) {
         TOOLBAR_SELECT = 'kissy-toolbar-select',
         TOOLBAR_BUTTON_ACTIVE = "kissy-toolbar-button-active",
 
-        editor, // å½“å‰ editor å®ä¾‹
-        config, // å½“å‰ editor å®ä¾‹çš„é…ç½®
-        lang, // å½“å‰ editor å®ä¾‹çš„è¯­è¨€
-        items, // å½“å‰ editor å®ä¾‹å·¥å…·æ ä¸Šçš„é…ç½®é¡¹
+        editor, // µ±Ç° editor ÊµÀı
+        config, // µ±Ç° editor ÊµÀıµÄÅäÖÃ
+        lang, // µ±Ç° editor ÊµÀıµÄÓïÑÔ
+        items, // µ±Ç° editor ÊµÀı¹¤¾ßÀ¸ÉÏµÄÅäÖÃÏî
 
-        plugins, // æ‰€æœ‰æ³¨å†Œçš„å®ä¾‹
-        div = document.createElement("div"); // é€šç”¨ el å®¹å™¨
+        plugins, // ËùÓĞ×¢²áµÄÊµÀı
+        div = document.createElement("div"); // Í¨ÓÃ el ÈİÆ÷
 
     
     E.Toolbar = {
 
         /**
-         * æ ¹æ®ä¼ å…¥çš„ç¼–è¾‘å™¨å®ä¾‹ï¼Œåˆå§‹åŒ–å®ä¾‹çš„å·¥å…·æ¡
+         * ¸ù¾İ´«ÈëµÄ±à¼­Æ÷ÊµÀı£¬³õÊ¼»¯ÊµÀıµÄ¹¤¾ßÌõ
          * @param {KISSY.Editor} instance
          */
         init: function(instance) {
             var i, len, key;
 
-            // æ›´æ–°å’Œå®ä¾‹ç›¸å…³çš„å…¨å±€å˜é‡
+            // ¸üĞÂºÍÊµÀıÏà¹ØµÄÈ«¾Ö±äÁ¿
             editor = instance;
             config = editor.config;
             lang = E.lang[config.language];
             items = config.toolbar;
-            plugins = E.plugins; // æ”¾åœ¨è¿™é‡Œæ›´æ–°ï¼Œä¿è¯åœ¨ Editor._setup() ä¹‹åæ‰§è¡Œ
+            plugins = E.plugins; // ·ÅÔÚÕâÀï¸üĞÂ£¬±£Ö¤ÔÚ Editor._setup() Ö®ºóÖ´ĞĞ
 
-            // éå†é…ç½®é¡¹ï¼Œæ‰¾åˆ°ç›¸å…³æ’ä»¶é¡¹ï¼Œå¹¶æ·»åŠ åˆ°å·¥å…·æ ä¸Š
+            // ±éÀúÅäÖÃÏî£¬ÕÒµ½Ïà¹Ø²å¼şÏî£¬²¢Ìí¼Óµ½¹¤¾ßÀ¸ÉÏ
             for (i = 0,len = items.length; i < len; ++i) {
                 key = items[i];
                 if (key) {
-                    if (!(key in plugins)) continue; // é…ç½®é¡¹é‡Œæœ‰ï¼Œä½†æ’ä»¶é‡Œæ— ï¼Œç›´æ¥å¿½ç•¥
-                    // æ·»åŠ æ’ä»¶é¡¹
+                    if (!(key in plugins)) continue; // ÅäÖÃÏîÀïÓĞ£¬µ«²å¼şÀïÎŞ£¬Ö±½ÓºöÂÔ
+                    // Ìí¼Ó²å¼şÏî
                     this._addItem(plugins[key]);
 
-                } else { // æ·»åŠ åˆ†éš”çº¿
+                } else { // Ìí¼Ó·Ö¸ôÏß
                     this._addSeparator();
                 }
             }
         },
 
         /**
-         * æ·»åŠ å·¥å…·æ é¡¹
+         * Ìí¼Ó¹¤¾ßÀ¸Ïî
          */
         _addItem: function(p) {
             var el, type = p.type;
 
-            // å½“ plugin æ²¡æœ‰è®¾ç½® lang æ—¶ï¼Œé‡‡ç”¨é»˜è®¤è¯­è¨€é…ç½®
-            // TODO: è€ƒè™‘é‡æ„åˆ° instance æ¨¡å—é‡Œï¼Œå› ä¸º lang ä»…è·Ÿå®ä¾‹ç›¸å…³
+            // µ± plugin Ã»ÓĞÉèÖÃ lang Ê±£¬²ÉÓÃÄ¬ÈÏÓïÑÔÅäÖÃ
+            // TODO: ¿¼ÂÇÖØ¹¹µ½ instance Ä£¿éÀï£¬ÒòÎª lang ½ö¸úÊµÀıÏà¹Ø
             if (!p.lang) p.lang = lang[p.name] || {};
 
-            // æ ¹æ®æ¨¡æ¿æ„å»º DOM
+            // ¸ù¾İÄ£°å¹¹½¨ DOM
             div.innerHTML = TOOLBAR_BUTTON_TMPL
                     .replace("{TITLE}", p.lang.title || "")
                     .replace("{NAME}", p.name)
                     .replace("{TEXT}", p.lang.text || "");
 
-            // å¾—åˆ° domEl
+            // µÃµ½ domEl
             p.domEl = el = div.firstChild;
 
-            // æ ¹æ®æ’ä»¶ç±»å‹ï¼Œè°ƒæ•´ DOM ç»“æ„
+            // ¸ù¾İ²å¼şÀàĞÍ£¬µ÷Õû DOM ½á¹¹
             if (type == TYPE.TOOLBAR_MENU_BUTTON || type == TYPE.TOOLBAR_SELECT) {
-                // æ³¨ï¼šselect æ˜¯ä¸€ç§ç‰¹æ®Šçš„ menu button
+                // ×¢£ºselect ÊÇÒ»ÖÖÌØÊâµÄ menu button
                 this._renderMenuButton(p);
 
                 if(type == TYPE.TOOLBAR_SELECT) {
@@ -93,24 +93,24 @@ KISSY.Editor.add("core~toolbar", function(E) {
                 }
             }
 
-            // ç»‘å®šäº‹ä»¶
+            // °ó¶¨ÊÂ¼ş
             this._bindItemUI(p);
 
-            // æ·»åŠ åˆ°å·¥å…·æ 
+            // Ìí¼Óµ½¹¤¾ßÀ¸
             this._addToToolbar(el);
 
-            // è°ƒç”¨æ’ä»¶è‡ªå·±çš„åˆå§‹åŒ–å‡½æ•°ï¼Œè¿™æ˜¯æ’ä»¶çš„ä¸ªæ€§åŒ–æ¥å£
-            // init æ”¾åœ¨æ·»åŠ åˆ°å·¥å…·æ åé¢ï¼Œå¯ä»¥ä¿è¯ DOM æ“ä½œæ¯”å¦‚å– region ç­‰æ“ä½œçš„æ­£ç¡®æ€§
+            // µ÷ÓÃ²å¼ş×Ô¼ºµÄ³õÊ¼»¯º¯Êı£¬ÕâÊÇ²å¼şµÄ¸öĞÔ»¯½Ó¿Ú
+            // init ·ÅÔÚÌí¼Óµ½¹¤¾ßÀ¸ºóÃæ£¬¿ÉÒÔ±£Ö¤ DOM ²Ù×÷±ÈÈçÈ¡ region µÈ²Ù×÷µÄÕıÈ·ĞÔ
             if (p.init) {
                 p.init(editor);
             }
 
-            // æ ‡è®°ä¸ºå·²åˆå§‹åŒ–å®Œæˆ
+            // ±ê¼ÇÎªÒÑ³õÊ¼»¯Íê³É
             p.inited = true;
         },
 
         /**
-         * åˆå§‹åŒ–ä¸‹æ‹‰æŒ‰é’®çš„ DOM
+         * ³õÊ¼»¯ÏÂÀ­°´Å¥µÄ DOM
          */
         _renderMenuButton: function(p) {
             var el = p.domEl,
@@ -123,34 +123,34 @@ KISSY.Editor.add("core~toolbar", function(E) {
         },
 
         /**
-         * åˆå§‹åŒ– selectBox çš„ DOM
+         * ³õÊ¼»¯ selectBox µÄ DOM
          */
         _renderSelect: function(p) {
             Dom.addClass(p.domEl, TOOLBAR_SELECT);
         },
 
         /**
-         * ç»™å·¥å…·æ é¡¹ç»‘å®šäº‹ä»¶
+         * ¸ø¹¤¾ßÀ¸Ïî°ó¶¨ÊÂ¼ş
          */
         _bindItemUI: function(p) {
             var el = p.domEl;
 
-            // 1. æ³¨å†Œç‚¹å‡»æ—¶çš„å“åº”å‡½æ•°
+            // 1. ×¢²áµã»÷Ê±µÄÏìÓ¦º¯Êı
             if (p.fn) {
                 Event.on(el, "click", function() {
                     p.fn(editor);
                 });
             }
 
-            // 2. æ·»åŠ é¼ æ ‡ç‚¹å‡»æ—¶ï¼ŒæŒ‰é’®æŒ‰ä¸‹çš„æ•ˆæœ
+            // 2. Ìí¼ÓÊó±êµã»÷Ê±£¬°´Å¥°´ÏÂµÄĞ§¹û
             Event.on(el, "mousedown", function() {
                 Dom.addClass(el, TOOLBAR_BUTTON_ACTIVE);
             });
             Event.on(el, "mouseup", function() {
                 Dom.removeClass(el, TOOLBAR_BUTTON_ACTIVE);
             });
-            // TODO å®Œå–„æ•ˆæœï¼šåœ¨é¼ æ ‡å·¦é”®æŒ‰ä¸‹çŠ¶æ€ï¼Œå°†é¼ æ ‡ç§»å‡ºå’Œç§»å…¥æŒ‰é’®æ—¶ï¼ŒæŒ‰é’®çŠ¶æ€çš„åˆ‡æ¢
-            // æ³¨ï¼šfirefox ä¸‹ï¼ŒæŒ‰ä½å·¦é”®ï¼Œå°†é¼ æ ‡ç§»å‡ºå’Œç§»å…¥æŒ‰é’®æ—¶ï¼Œä¸ä¼šè§¦å‘ mouseout. éœ€è¦ç ”ç©¶ä¸‹ google æ˜¯å¦‚ä½•å®ç°çš„
+            // TODO ÍêÉÆĞ§¹û£ºÔÚÊó±ê×ó¼ü°´ÏÂ×´Ì¬£¬½«Êó±êÒÆ³öºÍÒÆÈë°´Å¥Ê±£¬°´Å¥×´Ì¬µÄÇĞ»»
+            // ×¢£ºfirefox ÏÂ£¬°´×¡×ó¼ü£¬½«Êó±êÒÆ³öºÍÒÆÈë°´Å¥Ê±£¬²»»á´¥·¢ mouseout. ĞèÒªÑĞ¾¿ÏÂ google ÊÇÈçºÎÊµÏÖµÄ
             Event.on(el, "mouseout", function(e) {
                 var toElement = Event.getRelatedTarget(e), isChild;
 
@@ -166,7 +166,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
         },
 
         /**
-         * æ·»åŠ åˆ†éš”çº¿
+         * Ìí¼Ó·Ö¸ôÏß
          */
         _addSeparator: function() {
             div.innerHTML = TOOLBAR_SEPARATOR_TMPL;
@@ -174,7 +174,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
         },
 
         /**
-         * å°† item æˆ– åˆ†éš”çº¿ æ·»åŠ åˆ°å·¥å…·æ 
+         * ½« item »ò ·Ö¸ôÏß Ìí¼Óµ½¹¤¾ßÀ¸
          */
         _addToToolbar: function(el) {
             if(isIE) el = this.setItemUnselectable(el);
@@ -182,12 +182,12 @@ KISSY.Editor.add("core~toolbar", function(E) {
         },
 
         /**
-         * è®©å…ƒç´ ä¸å¯é€‰ï¼Œè§£å†³ ie ä¸‹ selection ä¸¢å¤±çš„é—®é¢˜
+         * ÈÃÔªËØ²»¿ÉÑ¡£¬½â¾ö ie ÏÂ selection ¶ªÊ§µÄÎÊÌâ
          */
         setItemUnselectable: function(el) {
             var arr, i, len, n, a;
 
-            // åœ¨ ie ä¸‹ä¸è¡Œ
+            // ÔÚ ie ÏÂ²»ĞĞ
             //arr = [el].concat(Array.prototype.slice.call(el.getElementsByTagName("*")));
 
             arr = el.getElementsByTagName("*");

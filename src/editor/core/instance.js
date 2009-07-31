@@ -12,32 +12,32 @@ KISSY.Editor.add("core~instance", function(E) {
                         '<html>' +
                         '<head>' +
                         '<title>Rich Text Area</title>' +
-                        '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' +
+                        '<meta http-equiv="Content-Type" content="text/html; charset=GBK18030" />' +
                         '<link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" />' +
                         '</head>' +
                         '<body>{CONTENT}</body>' +
                         '</html>',
 
         THEMES_DIR = "themes",
-        //EDITOR_CSS = "editor.css", TODO: åŠ¨æ€åŠ è½½ editor.css
+        //EDITOR_CSS = "editor.css", TODO: ¶¯Ì¬¼ÓÔØ editor.css
         CONTENT_CSS =  "content.css";
 
     /**
-     * ç¼–è¾‘å™¨çš„å®ä¾‹ç±»
+     * ±à¼­Æ÷µÄÊµÀıÀà
      */
     E.Instance = function(textarea, config) {
         /**
-         * ç›¸å…³è”çš„ textarea å…ƒç´ 
+         * Ïà¹ØÁªµÄ textarea ÔªËØ
          */
         this.textarea = Dom.get(textarea);
 
         /**
-         * é…ç½®é¡¹
+         * ÅäÖÃÏî
          */
         this.config = Lang.merge(E.config, config || {});
 
         /**
-         * ä»¥ä¸‹åœ¨ renderUI ä¸­èµ‹å€¼
+         * ÒÔÏÂÔÚ renderUI ÖĞ¸³Öµ
          * @property container
          * @property toolbar
          * @property contentWin
@@ -51,7 +51,7 @@ KISSY.Editor.add("core~instance", function(E) {
 
     E.Instance.prototype = {
         /**
-         * åˆå§‹åŒ–æ–¹æ³•
+         * ³õÊ¼»¯·½·¨
          */
         _init: function() {
             this._renderUI();
@@ -64,16 +64,16 @@ KISSY.Editor.add("core~instance", function(E) {
         },
 
         /**
-         * åˆå§‹åŒ–æ‰€æœ‰æ’ä»¶
+         * ³õÊ¼»¯ËùÓĞ²å¼ş
          */
         _initPlugins: function() {
             var key, p,
                 plugins = E.plugins;
 
-            // å·¥å…·æ ä¸Šçš„æ’ä»¶
+            // ¹¤¾ßÀ¸ÉÏµÄ²å¼ş
             E.Toolbar.init(this);
 
-            // å…¶å®ƒæ’ä»¶
+            // ÆäËü²å¼ş
             for(key in plugins) {
                 p = plugins[key];
                 if(p.inited) continue;
@@ -86,7 +86,7 @@ KISSY.Editor.add("core~instance", function(E) {
         },
 
         /**
-         * ç”Ÿæˆ DOM ç»“æ„
+         * Éú³É DOM ½á¹¹
          */
         _renderContainer: function() {
             var textarea = this.textarea,
@@ -114,7 +114,7 @@ KISSY.Editor.add("core~instance", function(E) {
             this.contentDoc = iframe.contentWindow.document;
             this.statusbar = container.childNodes[2];
 
-            // TODO ç›®å‰æ˜¯æ ¹æ® textatea çš„å®½åº¦æ¥è®¾å®š editor çš„å®½åº¦ã€‚å¯ä»¥è€ƒè™‘ config é‡ŒæŒ‡å®šå®½åº¦
+            // TODO Ä¿Ç°ÊÇ¸ù¾İ textatea µÄ¿í¶ÈÀ´Éè¶¨ editor µÄ¿í¶È¡£¿ÉÒÔ¿¼ÂÇ config ÀïÖ¸¶¨¿í¶È
         },
 
         _setupContentPanel: function() {
@@ -122,7 +122,7 @@ KISSY.Editor.add("core~instance", function(E) {
                 config = this.config,
                 contentCSSUrl = config.base + THEMES_DIR + "/" + config.theme + "/" + CONTENT_CSS;
 
-            // åˆå§‹åŒ– iframe çš„å†…å®¹
+            // ³õÊ¼»¯ iframe µÄÄÚÈİ
             doc.open();
             doc.write(CONTENT_TMPL
                     .replace("{CONTENT_CSS}", contentCSSUrl)
@@ -130,38 +130,38 @@ KISSY.Editor.add("core~instance", function(E) {
             doc.close();
 
             doc.designMode = "on";
-            // æ³¨1ï¼šåœ¨ tinymce é‡Œï¼ŒdesignMode = "on" æ”¾åœ¨ try catch é‡Œã€‚
-            //     åŸå› æ˜¯åœ¨ firefox ä¸‹ï¼Œå½“iframe åœ¨ display: none çš„å®¹å™¨é‡Œï¼Œä¼šå¯¼è‡´é”™è¯¯ã€‚
-            //     ä½†ç»è¿‡æˆ‘æµ‹è¯•ï¼Œfirefox 3+ ä»¥ä¸Šå·²æ— æ­¤ç°è±¡ã€‚
-            // æ³¨2ï¼šåœ¨ tinymce é‡Œï¼Œè¿˜é’ˆå¯¹ ie å¼€å¯äº† contentEditable = true.
-            //     åŸå› æ˜¯åœ¨ ie ä¸‹ï¼ŒIE needs to use contentEditable or it will display non secure items for HTTPS
-            //     è¿™ä¸ªæš‚æ—¶ä¸æ·»åŠ ï¼Œç­‰ä»¥åé‡åˆ°æ­¤é—®é¢˜æ—¶å†åŠ ä¸Šã€‚
+            // ×¢1£ºÔÚ tinymce Àï£¬designMode = "on" ·ÅÔÚ try catch Àï¡£
+            //     Ô­ÒòÊÇÔÚ firefox ÏÂ£¬µ±iframe ÔÚ display: none µÄÈİÆ÷Àï£¬»áµ¼ÖÂ´íÎó¡£
+            //     µ«¾­¹ıÎÒ²âÊÔ£¬firefox 3+ ÒÔÉÏÒÑÎŞ´ËÏÖÏó¡£
+            // ×¢2£ºÔÚ tinymce Àï£¬»¹Õë¶Ô ie ¿ªÆôÁË contentEditable = true.
+            //     Ô­ÒòÊÇÔÚ ie ÏÂ£¬IE needs to use contentEditable or it will display non secure items for HTTPS
+            //     Õâ¸öÔİÊ±²»Ìí¼Ó£¬µÈÒÔºóÓöµ½´ËÎÊÌâÊ±ÔÙ¼ÓÉÏ¡£
 
-            // å…³é—­ firefox é»˜è®¤æ‰“å¼€çš„ spellcheck
+            // ¹Ø±Õ firefox Ä¬ÈÏ´ò¿ªµÄ spellcheck
             //doc.body.setAttribute("spellcheck", "false");
 
-            // TODO è®© ie ä¸‹é€‰æ‹©èƒŒæ™¯è‰²ä¸º è“åº•ç™½å­—
+            // TODO ÈÃ ie ÏÂÑ¡Ôñ±³¾°É«Îª À¶µ×°××Ö
         },
 
         /**
-         * æ‰§è¡Œ execCommand
+         * Ö´ĞĞ execCommand
          */
         execCommand: function(commandName, val) {
-            this.contentWin.focus(); // è¿˜åŸç„¦ç‚¹
+            this.contentWin.focus(); // »¹Ô­½¹µã
             E.Command.exec(this.contentDoc, commandName, val);
         },
 
         /**
-         * å¾—åˆ°æ•°æ®
+         * µÃµ½Êı¾İ
          */
         getData: function() {
             var bd = this.contentDoc.body,
                 data = '', p = E.plugins["save"];
 
-            // Firefox ä¸‹ï¼Œ_moz_editor_bogus_node, _moz_dirty ç­‰ç‰¹æœ‰å±æ€§
-            // è¿™äº›ç‰¹æœ‰å±æ€§ï¼Œåœ¨ç”¨ innerHTML è·å–æ—¶ï¼Œè‡ªåŠ¨è¿‡æ»¤äº†
+            // Firefox ÏÂ£¬_moz_editor_bogus_node, _moz_dirty µÈÌØÓĞÊôĞÔ
+            // ÕâĞ©ÌØÓĞÊôĞÔ£¬ÔÚÓÃ innerHTML »ñÈ¡Ê±£¬×Ô¶¯¹ıÂËÁË
 
-            // åªæœ‰æ ‡ç­¾æ²¡æ–‡æœ¬å†…å®¹æ—¶ï¼Œå°†å†…å®¹ç½®ä¸ºç©º
+            // Ö»ÓĞ±êÇ©Ã»ÎÄ±¾ÄÚÈİÊ±£¬½«ÄÚÈİÖÃÎª¿Õ
             if(E.Dom.getText(bd)) {
                data = bd.innerHTML;
 

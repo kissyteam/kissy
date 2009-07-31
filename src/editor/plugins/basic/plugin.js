@@ -9,12 +9,12 @@ KISSY.Editor.add("plugins~base", function(E) {
 
     E.addPlugin(buttons.split(","), {
         /**
-         * ç§ç±»ï¼šæ™®é€šæŒ‰é’®
+         * ÖÖÀà£ºÆÕÍ¨°´Å¥
          */
         type: TYPE.TOOLBAR_BUTTON,
 
         /**
-         * å“åº”å‡½æ•°
+         * ÏìÓ¦º¯Êı
          * @param {KISSY.Editor} editor
          */
         fn: function(editor) {

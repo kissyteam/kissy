@@ -2,10 +2,11 @@
 Copyright (c) 2009, Kissy UI Library. All rights reserved.
 http://kissy.googlecode.com/
 
-Build: 47  Date: 2009-07-30 23:23:23
+Date: 2009-07-31 10:42:18
+Revision: 92
 */
 /**
- * KISSY.Suggest æç¤ºè¡¥å…¨ç»„ä»¶
+ * KISSY.Suggest ÌáÊ¾²¹È«×é¼ş
  *
  * suggest.js
  * requires: yahoo-dom-event
@@ -13,28 +14,26 @@ Build: 47  Date: 2009-07-30 23:23:23
  * @author lifesinger@gmail.com
  */
 
-if(typeof KISSY === "undefined" || !KISSY) {
-    KISSY = {};
-}
+var KISSY = window.KISSY || {};
 
 (function(NS) {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         head = document.getElementsByTagName("head")[0],
         ie = YAHOO.env.ua.ie, ie6 = (ie === 6),
-        CALLBACK_STR = "KISSY.Suggest.callback", // æ³¨æ„ KISSY åœ¨è¿™é‡Œæ˜¯å†™æ­»çš„
-        STYLE_ID = "suggest-style", // æ ·å¼ style å…ƒç´ çš„ id
+        CALLBACK_STR = "KISSY.Suggest.callback", // ×¢Òâ KISSY ÔÚÕâÀïÊÇĞ´ËÀµÄ
+        STYLE_ID = "suggest-style", // ÑùÊ½ style ÔªËØµÄ id
         BEFORE_DATA_REQUEST = "beforeDataRequest",
         ON_DATA_RETURN = "onDataReturn",
         BEFORE_SHOW = "beforeShow",
         ON_ITEM_SELECT = "onItemSelect",
 
         /**
-         * Suggestçš„é»˜è®¤é…ç½®
+         * SuggestµÄÄ¬ÈÏÅäÖÃ
          */
         defaultConfig = {
         /**
-         * æ‚¬æµ®æç¤ºå±‚çš„class
-         * æç¤ºå±‚çš„é»˜è®¤ç»“æ„å¦‚ä¸‹ï¼š
+         * Ğü¸¡ÌáÊ¾²ãµÄclass
+         * ÌáÊ¾²ãµÄÄ¬ÈÏ½á¹¹ÈçÏÂ£º
          * <div class="suggest-container">
          *     <ol>
          *         <li>
@@ -51,94 +50,94 @@ if(typeof KISSY === "undefined" || !KISSY) {
         containerClassName: "suggest-container",
 
         /**
-         * æç¤ºå±‚çš„å®½åº¦
-         * æ³¨æ„ï¼šé»˜è®¤æƒ…å†µä¸‹ï¼Œæç¤ºå±‚çš„å®½åº¦å’Œinputè¾“å…¥æ¡†çš„å®½åº¦ä¿æŒä¸€è‡´
-         * ç¤ºèŒƒå–å€¼ï¼š"200px", "10%"ç­‰ï¼Œå¿…é¡»å¸¦å•ä½
+         * ÌáÊ¾²ãµÄ¿í¶È
+         * ×¢Òâ£ºÄ¬ÈÏÇé¿öÏÂ£¬ÌáÊ¾²ãµÄ¿í¶ÈºÍinputÊäÈë¿òµÄ¿í¶È±£³ÖÒ»ÖÂ
+         * Ê¾·¶È¡Öµ£º"200px", "10%"µÈ£¬±ØĞë´øµ¥Î»
          * @type String
          */
         containerWidth: "auto",
 
         /**
-         * æç¤ºå±‚ä¸­ï¼Œkeyå…ƒç´ çš„class
+         * ÌáÊ¾²ãÖĞ£¬keyÔªËØµÄclass
          * @type String
          */
         keyElClassName: "suggest-key",
 
         /**
-         * æç¤ºå±‚ä¸­ï¼Œresultå…ƒç´ çš„class
+         * ÌáÊ¾²ãÖĞ£¬resultÔªËØµÄclass
          * @type String
          */
         resultElClassName: "suggest-result",
 
         /**
-         * resultçš„æ ¼å¼
+         * resultµÄ¸ñÊ½
          * @type String
          */
-        resultFormat: "çº¦%result%æ¡ç»“æœ",
+        resultFormat: "Ô¼%result%Ìõ½á¹û",
 
         /**
-         * æç¤ºå±‚ä¸­ï¼Œé€‰ä¸­é¡¹çš„class
+         * ÌáÊ¾²ãÖĞ£¬Ñ¡ÖĞÏîµÄclass
          * @type String
          */
         selectedItemClassName: "selected",
 
         /**
-         * æç¤ºå±‚åº•éƒ¨çš„class
+         * ÌáÊ¾²ãµ×²¿µÄclass
          * @type String
          */
         bottomClassName: "suggest-bottom",
 
         /**
-         * æ˜¯å¦æ˜¾ç¤ºå…³é—­æŒ‰é’®
+         * ÊÇ·ñÏÔÊ¾¹Ø±Õ°´Å¥
          * @type Boolean
          */
         showCloseBtn: false,
 
         /**
-         * å…³é—­æŒ‰é’®ä¸Šçš„æ–‡å­—
+         * ¹Ø±Õ°´Å¥ÉÏµÄÎÄ×Ö
          * @type String
          */
-        closeBtnText: "å…³é—­",
+        closeBtnText: "¹Ø±Õ",
 
         /**
-         * å…³é—­æŒ‰é’®çš„class
+         * ¹Ø±Õ°´Å¥µÄclass
          * @type String
          */
         closeBtnClassName: "suggest-close-btn",
 
         /**
-         * æ˜¯å¦éœ€è¦iframe shim
+         * ÊÇ·ñĞèÒªiframe shim
          * @type Boolean
          */
         useShim: ie6,
 
         /**
-         * iframe shimçš„class
+         * iframe shimµÄclass
          * @type String
          */
         shimClassName: "suggest-shim",
 
         /**
-         * å®šæ—¶å™¨çš„å»¶æ—¶
+         * ¶¨Ê±Æ÷µÄÑÓÊ±
          * @type Number
          */
         timerDelay: 200,
 
         /**
-         * åˆå§‹åŒ–åï¼Œè‡ªåŠ¨æ¿€æ´»
+         * ³õÊ¼»¯ºó£¬×Ô¶¯¼¤»î
          * @type Boolean
          */
         autoFocus: false,
 
         /**
-         * é¼ æ ‡ç‚¹å‡»å®Œæˆé€‰æ‹©æ—¶ï¼Œæ˜¯å¦è‡ªåŠ¨æäº¤è¡¨å•
+         * Êó±êµã»÷Íê³ÉÑ¡ÔñÊ±£¬ÊÇ·ñ×Ô¶¯Ìá½»±íµ¥
          * @type Boolean
          */
         submitFormOnClickSelect: true
     };
 
     /**
-     * æç¤ºè¡¥å…¨ç»„ä»¶
+     * ÌáÊ¾²¹È«×é¼ş
      * @class Suggest
      * @requires YAHOO.util.Dom
      * @requires YAHOO.util.Event
@@ -149,101 +148,101 @@ if(typeof KISSY === "undefined" || !KISSY) {
      */
     NS.Suggest = function(textInput, dataSource, config) {
         /**
-         * æ–‡æœ¬è¾“å…¥æ¡†
+         * ÎÄ±¾ÊäÈë¿ò
          * @type HTMLElement
          */
         this.textInput = Dom.get(textInput);
 
         /**
-         * è·å–æ•°æ®çš„URL æˆ– JSONæ ¼å¼çš„é™æ€æ•°æ®
+         * »ñÈ¡Êı¾İµÄURL »ò JSON¸ñÊ½µÄ¾²Ì¬Êı¾İ
          * @type {String|Object}
          */
         this.dataSource = dataSource;
 
         /**
-         * JSONé™æ€æ•°æ®æº
-         * @type Object æ ¼å¼ä¸º {"query1" : [["key1", "result1"], []], "query2" : [[], []]}
+         * JSON¾²Ì¬Êı¾İÔ´
+         * @type Object ¸ñÊ½Îª {"query1" : [["key1", "result1"], []], "query2" : [[], []]}
          */
         this.JSONDataSource = Lang.isObject(dataSource) ? dataSource : null;
 
         /**
-         * é€šè¿‡jsonpè¿”å›çš„æ•°æ®
+         * Í¨¹ıjsonp·µ»ØµÄÊı¾İ
          * @type Object
          */
         this.returnedData = null;
 
         /**
-         * é…ç½®å‚æ•°
+         * ÅäÖÃ²ÎÊı
          * @type Object
          */
         this.config = Lang.merge(defaultConfig, config || {});
 
         /**
-         * å­˜æ”¾æç¤ºä¿¡æ¯çš„å®¹å™¨
+         * ´æ·ÅÌáÊ¾ĞÅÏ¢µÄÈİÆ÷
          * @type HTMLElement
          */
         this.container = null;
 
         /**
-         * è¾“å…¥æ¡†çš„å€¼
+         * ÊäÈë¿òµÄÖµ
          * @type String
          */
         this.query = "";
 
         /**
-         * è·å–æ•°æ®æ—¶çš„å‚æ•°
+         * »ñÈ¡Êı¾İÊ±µÄ²ÎÊı
          * @type String
          */
         this.queryParams = "";
 
         /**
-         * å†…éƒ¨å®šæ—¶å™¨
+         * ÄÚ²¿¶¨Ê±Æ÷
          * @private
          * @type Object
          */
         this._timer = null;
 
         /**
-         * è®¡æ—¶å™¨æ˜¯å¦å¤„äºè¿è¡ŒçŠ¶æ€
+         * ¼ÆÊ±Æ÷ÊÇ·ñ´¦ÓÚÔËĞĞ×´Ì¬
          * @private
          * @type Boolean
          */
         this._isRunning = false;
 
         /**
-         * è·å–æ•°æ®çš„scriptå…ƒç´ 
+         * »ñÈ¡Êı¾İµÄscriptÔªËØ
          * @type HTMLElement
          */
         this.dataScript = null;
 
         /**
-         * æ•°æ®ç¼“å­˜
+         * Êı¾İ»º´æ
          * @private
          * @type Object
          */
         this._dataCache = {};
 
         /**
-         * æœ€æ–°scriptçš„æ—¶é—´æˆ³
+         * ×îĞÂscriptµÄÊ±¼ä´Á
          * @type String
          */
         this._latestScriptTime = "";
 
         /**
-         * scriptè¿”å›çš„æ•°æ®æ˜¯å¦å·²ç»è¿‡æœŸ
+         * script·µ»ØµÄÊı¾İÊÇ·ñÒÑ¾­¹ıÆÚ
          * @type Boolean
          */
         this._scriptDataIsOut = false;
 
         /**
-         * æ˜¯å¦å¤„äºé”®ç›˜é€‰æ‹©çŠ¶æ€
+         * ÊÇ·ñ´¦ÓÚ¼üÅÌÑ¡Ôñ×´Ì¬
          * @private
          * @type Boolean
          */
         this._onKeyboardSelecting = false;
 
         /**
-         * æç¤ºå±‚çš„å½“å‰é€‰ä¸­é¡¹
+         * ÌáÊ¾²ãµÄµ±Ç°Ñ¡ÖĞÏî
          * @type Boolean
          */
         this.selectedItem = null;
@@ -254,7 +253,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
 
     NS.Suggest.prototype = {
         /**
-         * åˆå§‹åŒ–æ–¹æ³•
+         * ³õÊ¼»¯·½·¨
          * @protected
          */
         _init: function() {
@@ -275,7 +274,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * åˆå§‹åŒ–è¾“å…¥æ¡†
+         * ³õÊ¼»¯ÊäÈë¿ò
          * @protected
          */
         _initTextInput: function() {
@@ -299,35 +298,35 @@ if(typeof KISSY === "undefined" || !KISSY) {
             if (this.config.autoFocus) this.textInput.focus();
 
             // keydown
-            // æ³¨ï¼šæˆªè‡³ç›®å‰ï¼Œåœ¨Opera9.64ä¸­ï¼Œè¾“å…¥æ³•å¼€å¯æ—¶ï¼Œä¾æ—§ä¸ä¼šè§¦å‘ä»»ä½•é”®ç›˜äº‹ä»¶
-            var pressingCount = 0; // æŒç»­æŒ‰ä½æŸé”®æ—¶ï¼Œè¿ç»­è§¦å‘çš„keydownæ¬¡æ•°ã€‚æ³¨æ„Operaåªä¼šè§¦å‘ä¸€æ¬¡ã€‚
+            // ×¢£º½ØÖÁÄ¿Ç°£¬ÔÚOpera9.64ÖĞ£¬ÊäÈë·¨¿ªÆôÊ±£¬ÒÀ¾É²»»á´¥·¢ÈÎºÎ¼üÅÌÊÂ¼ş
+            var pressingCount = 0; // ³ÖĞø°´×¡Ä³¼üÊ±£¬Á¬Ğø´¥·¢µÄkeydown´ÎÊı¡£×¢ÒâOperaÖ»»á´¥·¢Ò»´Î¡£
             Event.on(this.textInput, "keydown", function(ev) {
                 var keyCode = ev.charCode || ev.keyCode;
                 //console.log("keydown " + keyCode);
 
                 switch (keyCode) {
-                    case 27: // ESCé”®ï¼Œéšè—æç¤ºå±‚å¹¶è¿˜åŸåˆå§‹è¾“å…¥
+                    case 27: // ESC¼ü£¬Òş²ØÌáÊ¾²ã²¢»¹Ô­³õÊ¼ÊäÈë
                         instance.hide();
                         instance.textInput.value = instance.query;
                         break;
-                    case 13: // ENTERé”®
-                        // æäº¤è¡¨å•å‰ï¼Œå…ˆéšè—æç¤ºå±‚å¹¶åœæ­¢è®¡æ—¶å™¨
-                        instance.textInput.blur(); // è¿™ä¸€å¥è¿˜å¯ä»¥é˜»æ­¢æ‰æµè§ˆå™¨çš„é»˜è®¤æäº¤äº‹ä»¶
+                    case 13: // ENTER¼ü
+                        // Ìá½»±íµ¥Ç°£¬ÏÈÒş²ØÌáÊ¾²ã²¢Í£Ö¹¼ÆÊ±Æ÷
+                        instance.textInput.blur(); // ÕâÒ»¾ä»¹¿ÉÒÔ×èÖ¹µôä¯ÀÀÆ÷µÄÄ¬ÈÏÌá½»ÊÂ¼ş
 
-                        // å¦‚æœæ˜¯é”®ç›˜é€‰ä¸­æŸé¡¹åå›è½¦ï¼Œè§¦å‘onItemSelectäº‹ä»¶
+                        // Èç¹ûÊÇ¼üÅÌÑ¡ÖĞÄ³Ïîºó»Ø³µ£¬´¥·¢onItemSelectÊÂ¼ş
                         if (instance._onKeyboardSelecting) {
-                            if (instance.textInput.value == instance._getSelectedItemKey()) { // ç¡®ä¿å€¼åŒ¹é…
+                            if (instance.textInput.value == instance._getSelectedItemKey()) { // È·±£ÖµÆ¥Åä
                                 instance.fireEvent(ON_ITEM_SELECT, instance.textInput.value);
                             }
                         }
 
-                        // æäº¤è¡¨å•
+                        // Ìá½»±íµ¥
                         instance._submitForm();
 
                         break;
-                    case 40: // DOWNé”®
-                    case 38: // UPé”®
-                        // æŒ‰ä½é”®ä¸åŠ¨æ—¶ï¼Œå»¶æ—¶å¤„ç†
+                    case 40: // DOWN¼ü
+                    case 38: // UP¼ü
+                        // °´×¡¼ü²»¶¯Ê±£¬ÑÓÊ±´¦Àí
                         if (pressingCount++ == 0) {
                             if (instance._isRunning) instance.stop();
                             instance._onKeyboardSelecting = true;
@@ -339,12 +338,12 @@ if(typeof KISSY === "undefined" || !KISSY) {
                         break;
                 }
 
-                // é DOWN/UP é”®æ—¶ï¼Œå¼€å¯è®¡æ—¶å™¨
+                // ·Ç DOWN/UP ¼üÊ±£¬¿ªÆô¼ÆÊ±Æ÷
                 if (keyCode != 40 && keyCode != 38) {
                     if (!instance._isRunning) {
-                        // 1. å½“ç½‘é€Ÿè¾ƒæ…¢ï¼Œjsè¿˜æœªä¸‹è½½å®Œæ—¶ï¼Œç”¨æˆ·å¯èƒ½å°±å·²ç»å¼€å§‹è¾“å…¥
-                        //    è¿™æ—¶ï¼Œfocusäº‹ä»¶å·²ç»ä¸ä¼šè§¦å‘ï¼Œéœ€è¦åœ¨keyupé‡Œè§¦å‘å®šæ—¶å™¨
-                        // 2. éDOWN/UPé”®æ—¶ï¼Œéœ€è¦æ¿€æ´»å®šæ—¶å™¨
+                        // 1. µ±ÍøËÙ½ÏÂı£¬js»¹Î´ÏÂÔØÍêÊ±£¬ÓÃ»§¿ÉÄÜ¾ÍÒÑ¾­¿ªÊ¼ÊäÈë
+                        //    ÕâÊ±£¬focusÊÂ¼şÒÑ¾­²»»á´¥·¢£¬ĞèÒªÔÚkeyupÀï´¥·¢¶¨Ê±Æ÷
+                        // 2. ·ÇDOWN/UP¼üÊ±£¬ĞèÒª¼¤»î¶¨Ê±Æ÷
                         instance.start();
                     }
                     instance._onKeyboardSelecting = false;
@@ -359,7 +358,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * åˆå§‹åŒ–æç¤ºå±‚å®¹å™¨
+         * ³õÊ¼»¯ÌáÊ¾²ãÈİÆ÷
          * @protected
          */
         _initContainer: function() {
@@ -378,14 +377,14 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * è®¾ç½®å®¹å™¨çš„left, top, width
+         * ÉèÖÃÈİÆ÷µÄleft, top, width
          * @protected
          */
         _setContainerRegion: function() {
             var r = Dom.getRegion(this.textInput);
-            var left = r.left, w = r.right - left - 2;  // å‡å»borderçš„2px
+            var left = r.left, w = r.right - left - 2;  // ¼õÈ¥borderµÄ2px
 
-            // ie8å…¼å®¹æ¨¡å¼
+            // ie8¼æÈİÄ£Ê½
             // document.documentMode:
             // 5 - Quirks Mode
             // 7 - IE7 Standards
@@ -393,7 +392,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
             var docMode = document.documentMode;
             if (docMode === 7 && (ie === 7 || ie === 8)) {
                 left -= 2;
-            } else if (YAHOO.env.ua.gecko) { // firefoxä¸‹å·¦åä¸€åƒç´  æ³¨ï¼šå½“ input æ‰€åœ¨çš„çˆ¶çº§å®¹å™¨æœ‰ margin: auto æ—¶ä¼šå‡ºç°
+            } else if (YAHOO.env.ua.gecko) { // firefoxÏÂ×óÆ«Ò»ÏñËØ ×¢£ºµ± input ËùÔÚµÄ¸¸¼¶ÈİÆ÷ÓĞ margin: auto Ê±»á³öÏÖ
                 left++;
             }
 
@@ -408,14 +407,14 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * åˆå§‹åŒ–å®¹å™¨äº‹ä»¶
-         * å­å…ƒç´ éƒ½ä¸ç”¨è®¾ç½®äº‹ä»¶ï¼Œå†’æ³¡åˆ°è¿™é‡Œç»Ÿä¸€å¤„ç†
+         * ³õÊ¼»¯ÈİÆ÷ÊÂ¼ş
+         * ×ÓÔªËØ¶¼²»ÓÃÉèÖÃÊÂ¼ş£¬Ã°Åİµ½ÕâÀïÍ³Ò»´¦Àí
          * @protected
          */
         _initContainerEvent: function() {
             var instance = this;
 
-            // é¼ æ ‡äº‹ä»¶
+            // Êó±êÊÂ¼ş
             Event.on(this.container, "mousemove", function(ev) {
                 //console.log("mouse move");
                 var target = Event.getTarget(ev);
@@ -425,9 +424,9 @@ if(typeof KISSY === "undefined" || !KISSY) {
                 }
                 if (Dom.isAncestor(instance.container, target)) {
                     if (target != instance.selectedItem) {
-                        // ç§»é™¤è€çš„
+                        // ÒÆ³ıÀÏµÄ
                         instance._removeSelectedItem();
-                        // è®¾ç½®æ–°çš„
+                        // ÉèÖÃĞÂµÄ
                         instance._setSelectedItem(target);
                     }
                 }
@@ -436,10 +435,10 @@ if(typeof KISSY === "undefined" || !KISSY) {
             var mouseDownItem = null;
             this.container.onmousedown = function(e) {
                 e = e || window.event;
-                // é¼ æ ‡æŒ‰ä¸‹å¤„çš„item
+                // Êó±ê°´ÏÂ´¦µÄitem
                 mouseDownItem = e.target || e.srcElement;
 
-                // é¼ æ ‡æŒ‰ä¸‹æ—¶ï¼Œè®©è¾“å…¥æ¡†ä¸ä¼šå¤±å»ç„¦ç‚¹
+                // Êó±ê°´ÏÂÊ±£¬ÈÃÊäÈë¿ò²»»áÊ§È¥½¹µã
                 // 1. for IE
                 instance.textInput.onbeforedeactivate = function() {
                     window.event.returnValue = false;
@@ -449,52 +448,52 @@ if(typeof KISSY === "undefined" || !KISSY) {
                 return false;
             };
 
-            // mouseupäº‹ä»¶
+            // mouseupÊÂ¼ş
             Event.on(this.container, "mouseup", function(ev) {
-                // å½“mousedownåœ¨æç¤ºå±‚ï¼Œä½†mouseupåœ¨æç¤ºå±‚å¤–æ—¶ï¼Œç‚¹å‡»æ— æ•ˆ
+                // µ±mousedownÔÚÌáÊ¾²ã£¬µ«mouseupÔÚÌáÊ¾²ãÍâÊ±£¬µã»÷ÎŞĞ§
                 if (!instance._isInContainer(Event.getXY(ev))) return;
                 var target = Event.getTarget(ev);
-                // åœ¨æç¤ºå±‚Aé¡¹å¤„æŒ‰ä¸‹é¼ æ ‡ï¼Œç§»åŠ¨åˆ°Bå¤„é‡Šæ”¾ï¼Œä¸è§¦å‘onItemSelect
+                // ÔÚÌáÊ¾²ãAÏî´¦°´ÏÂÊó±ê£¬ÒÆ¶¯µ½B´¦ÊÍ·Å£¬²»´¥·¢onItemSelect
                 if (target != mouseDownItem) return;
 
-                // ç‚¹å‡»åœ¨å…³é—­æŒ‰é’®ä¸Š
+                // µã»÷ÔÚ¹Ø±Õ°´Å¥ÉÏ
                 if (target.className == instance.config.closeBtnClassName) {
                     instance.hide();
                     return;
                 }
 
-                // å¯èƒ½ç‚¹å‡»åœ¨liçš„å­å…ƒç´ ä¸Š
+                // ¿ÉÄÜµã»÷ÔÚliµÄ×ÓÔªËØÉÏ
                 if (target.nodeName != "LI") {
                     target = Dom.getAncestorByTagName(target, "li");
                 }
-                // å¿…é¡»ç‚¹å‡»åœ¨containerå†…éƒ¨çš„liä¸Š
+                // ±ØĞëµã»÷ÔÚcontainerÄÚ²¿µÄliÉÏ
                 if (Dom.isAncestor(instance.container, target)) {
                     instance._updateInputFromSelectItem(target);
 
-                    // è§¦å‘é€‰ä¸­äº‹ä»¶
+                    // ´¥·¢Ñ¡ÖĞÊÂ¼ş
                     //console.log("on item select");
                     instance.fireEvent(ON_ITEM_SELECT, instance.textInput.value);
 
-                    // æäº¤è¡¨å•å‰ï¼Œå…ˆéšè—æç¤ºå±‚å¹¶åœæ­¢è®¡æ—¶å™¨
+                    // Ìá½»±íµ¥Ç°£¬ÏÈÒş²ØÌáÊ¾²ã²¢Í£Ö¹¼ÆÊ±Æ÷
                     instance.textInput.blur();
 
-                    // æäº¤è¡¨å•
+                    // Ìá½»±íµ¥
                     instance._submitForm();
                 }
             });
         },
 
         /**
-         * clické€‰æ‹© or enteråï¼Œæäº¤è¡¨å•
+         * clickÑ¡Ôñ or enterºó£¬Ìá½»±íµ¥
          */
         _submitForm: function() {
-            // æ³¨ï¼šå¯¹äºé”®ç›˜æ§åˆ¶enteré€‰æ‹©çš„æƒ…å†µï¼Œç”±htmlè‡ªèº«å†³å®šæ˜¯å¦æäº¤ã€‚å¦åˆ™ä¼šå¯¼è‡´è¾“å…¥æ³•å¼€å¯æ—¶ï¼Œç”¨enteré€‰æ‹©è‹±æ–‡æ—¶ä¹Ÿè§¦å‘æäº¤
+            // ×¢£º¶ÔÓÚ¼üÅÌ¿ØÖÆenterÑ¡ÔñµÄÇé¿ö£¬ÓÉhtml×ÔÉí¾ö¶¨ÊÇ·ñÌá½»¡£·ñÔò»áµ¼ÖÂÊäÈë·¨¿ªÆôÊ±£¬ÓÃenterÑ¡ÔñÓ¢ÎÄÊ±Ò²´¥·¢Ìá½»
             if (this.config.submitFormOnClickSelect) {
                 var form = this.textInput.form;
                 if (!form) return;
 
-                // é€šè¿‡jsæäº¤è¡¨å•æ—¶ï¼Œä¸ä¼šè§¦å‘onsubmitäº‹ä»¶
-                // éœ€è¦jsè‡ªå·±è§¦å‘
+                // Í¨¹ıjsÌá½»±íµ¥Ê±£¬²»»á´¥·¢onsubmitÊÂ¼ş
+                // ĞèÒªjs×Ô¼º´¥·¢
                 if (document.createEvent) { // ie
                     var evObj = document.createEvent("MouseEvents");
                     evObj.initEvent("submit", true, false);
@@ -509,7 +508,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * åˆ¤æ–­pæ˜¯å¦åœ¨æç¤ºå±‚å†…
+         * ÅĞ¶ÏpÊÇ·ñÔÚÌáÊ¾²ãÄÚ
          * @param {Array} p [x, y]
          */
         _isInContainer: function(p) {
@@ -518,7 +517,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * ç»™å®¹å™¨æ·»åŠ iframe shimå±‚
+         * ¸øÈİÆ÷Ìí¼Óiframe shim²ã
          * @protected
          */
         _initShim: function() {
@@ -535,25 +534,25 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * è®¾ç½®shimçš„left, top, width
+         * ÉèÖÃshimµÄleft, top, width
          * @protected
          */
         _setShimRegion: function() {
             var container = this.container, shim = container.shim;
             if (shim) {
-                shim.style.left = (parseInt(container.style.left) - 2) + "px"; // è§£å†³åè¾¹çº¿bug
+                shim.style.left = (parseInt(container.style.left) - 2) + "px"; // ½â¾öÍÌ±ßÏßbug
                 shim.style.top = container.style.top;
                 shim.style.width = (parseInt(container.style.width) + 2) + "px";
             }
         },
 
         /**
-         * åˆå§‹åŒ–æ ·å¼
+         * ³õÊ¼»¯ÑùÊ½
          * @protected
          */
         _initStyle: function() {
             var styleEl = Dom.get(STYLE_ID);
-            if (styleEl) return; // é˜²æ­¢å¤šä¸ªå®ä¾‹æ—¶é‡å¤æ·»åŠ 
+            if (styleEl) return; // ·ÀÖ¹¶à¸öÊµÀıÊ±ÖØ¸´Ìí¼Ó
 
             var style = ".suggest-container{background:white;border:1px solid #999;z-index:99999}";
             style += ".suggest-shim{z-index:99998}";
@@ -572,7 +571,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
             styleEl = document.createElement("style");
             styleEl.id = STYLE_ID;
             styleEl.type = "text/css";
-            head.appendChild(styleEl); // å…ˆæ·»åŠ åˆ°DOMæ ‘ä¸­ï¼Œéƒ½åœ¨cssTexté‡Œçš„hackä¼šå¤±æ•ˆ
+            head.appendChild(styleEl); // ÏÈÌí¼Óµ½DOMÊ÷ÖĞ£¬¶¼ÔÚcssTextÀïµÄhack»áÊ§Ğ§
 
             if (styleEl.styleSheet) { // IE
                 styleEl.styleSheet.cssText = style;
@@ -582,7 +581,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * window.onresizeæ—¶ï¼Œè°ƒæ•´æç¤ºå±‚çš„ä½ç½®
+         * window.onresizeÊ±£¬µ÷ÕûÌáÊ¾²ãµÄÎ»ÖÃ
          * @protected
          */
         _initResizeEvent: function() {
@@ -601,7 +600,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * å¯åŠ¨è®¡æ—¶å™¨ï¼Œå¼€å§‹ç›‘å¬ç”¨æˆ·è¾“å…¥
+         * Æô¶¯¼ÆÊ±Æ÷£¬¿ªÊ¼¼àÌıÓÃ»§ÊäÈë
          */
         start: function() {
             NS.Suggest.focusInstance = this;
@@ -616,7 +615,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * åœæ­¢è®¡æ—¶å™¨
+         * Í£Ö¹¼ÆÊ±Æ÷
          */
         stop: function() {
             NS.Suggest.focusInstance = null;
@@ -625,7 +624,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * æ˜¾ç¤ºæç¤ºå±‚
+         * ÏÔÊ¾ÌáÊ¾²ã
          */
         show: function() {
             if (this.isVisible()) return;
@@ -634,7 +633,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
             container.style.visibility = "";
 
             if (shim) {
-                if (!shim.style.height) { // ç¬¬ä¸€æ¬¡æ˜¾ç¤ºæ—¶ï¼Œéœ€è¦è®¾å®šé«˜åº¦
+                if (!shim.style.height) { // µÚÒ»´ÎÏÔÊ¾Ê±£¬ĞèÒªÉè¶¨¸ß¶È
                     var r = Dom.getRegion(container);
                     shim.style.height = (r.bottom - r.top - 2) + "px";
                 }
@@ -643,7 +642,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * éšè—æç¤ºå±‚
+         * Òş²ØÌáÊ¾²ã
          */
         hide: function() {
             if (!this.isVisible()) return;
@@ -655,14 +654,14 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * æç¤ºå±‚æ˜¯å¦æ˜¾ç¤º
+         * ÌáÊ¾²ãÊÇ·ñÏÔÊ¾
          */
         isVisible: function() {
             return this.container.style.visibility != "hidden";
         },
 
         /**
-         * æ›´æ–°æç¤ºå±‚çš„æ•°æ®
+         * ¸üĞÂÌáÊ¾²ãµÄÊı¾İ
          */
         updateData: function() {
             if (!this._needUpdate()) return;
@@ -671,43 +670,43 @@ if(typeof KISSY === "undefined" || !KISSY) {
             this._updateQueryValueFromInput();
             var q = this.query;
 
-            // 1. è¾“å…¥ä¸ºç©ºæ—¶ï¼Œéšè—æç¤ºå±‚
+            // 1. ÊäÈëÎª¿ÕÊ±£¬Òş²ØÌáÊ¾²ã
             if (!Lang.trim(q).length) {
                 this._fillContainer("");
                 this.hide();
                 return;
             }
 
-            if (typeof this._dataCache[q] != "undefined") { // 2. ä½¿ç”¨ç¼“å­˜æ•°æ®
+            if (typeof this._dataCache[q] != "undefined") { // 2. Ê¹ÓÃ»º´æÊı¾İ
                 //console.log("use cache");
                 this.returnedData = "using cache";
                 this._fillContainer(this._dataCache[q]);
                 this._displayContainer();
 
-            } else if (this.JSONDataSource) { // 3. ä½¿ç”¨JSONé™æ€æ•°æ®æº
+            } else if (this.JSONDataSource) { // 3. Ê¹ÓÃJSON¾²Ì¬Êı¾İÔ´
                 this.handleResponse(this.JSONDataSource[q]);
 
-            } else { // 4. è¯·æ±‚æœåŠ¡å™¨æ•°æ®
+            } else { // 4. ÇëÇó·şÎñÆ÷Êı¾İ
                 this.requestData();
             }
         },
 
         /**
-         * æ˜¯å¦éœ€è¦æ›´æ–°æ•°æ®
+         * ÊÇ·ñĞèÒª¸üĞÂÊı¾İ
          * @protected
          * @return Boolean
          */
         _needUpdate: function() {
-            // æ³¨æ„ï¼šåŠ å…¥ç©ºæ ¼ä¹Ÿç®—æœ‰å˜åŒ–
+            // ×¢Òâ£º¼ÓÈë¿Õ¸ñÒ²ËãÓĞ±ä»¯
             return this.textInput.value != this.query;
         },
 
         /**
-         * é€šè¿‡scriptå…ƒç´ åŠ è½½æ•°æ®
+         * Í¨¹ıscriptÔªËØ¼ÓÔØÊı¾İ
          */
         requestData: function() {
             //console.log("request data via script");
-            if (!ie) this.dataScript = null; // IEä¸éœ€è¦é‡æ–°åˆ›å»ºscriptå…ƒç´ 
+            if (!ie) this.dataScript = null; // IE²»ĞèÒªÖØĞÂ´´½¨scriptÔªËØ
 
             if (!this.dataScript) {
                 var script = document.createElement("script");
@@ -727,33 +726,33 @@ if(typeof KISSY === "undefined" || !KISSY) {
 
                     Event.on(script, "load", function() {
                         //console.log("on load");
-                        // åˆ¤æ–­è¿”å›çš„æ•°æ®æ˜¯å¦å·²ç»è¿‡æœŸ
+                        // ÅĞ¶Ï·µ»ØµÄÊı¾İÊÇ·ñÒÑ¾­¹ıÆÚ
                         this._scriptDataIsOut = script.getAttribute("time") != this._latestScriptTime;
                     }, this, true);
                 }
             }
 
-            // æ³¨æ„ï¼šæ²¡å¿…è¦åŠ æ—¶é—´æˆ³ï¼Œæ˜¯å¦ç¼“å­˜ç”±æœåŠ¡å™¨è¿”å›çš„Headerå¤´æ§åˆ¶
+            // ×¢Òâ£ºÃ»±ØÒª¼ÓÊ±¼ä´Á£¬ÊÇ·ñ»º´æÓÉ·şÎñÆ÷·µ»ØµÄHeaderÍ·¿ØÖÆ
             this.queryParams = "q=" + encodeURIComponent(this.query) + "&code=utf-8&callback=" + CALLBACK_STR;
             this.fireEvent(BEFORE_DATA_REQUEST, this.query);
             this.dataScript.src = this.dataSource + "?" + this.queryParams;
         },
 
         /**
-         * å¤„ç†è·å–çš„æ•°æ®
+         * ´¦Àí»ñÈ¡µÄÊı¾İ
          * @param {Object} data
          */
         handleResponse: function(data) {
             //console.log("handle response");
-            if (this._scriptDataIsOut) return; // æŠ›å¼ƒè¿‡æœŸæ•°æ®ï¼Œå¦åˆ™ä¼šå¯¼è‡´bugï¼š1. ç¼“å­˜keyå€¼ä¸å¯¹ï¼› 2. è¿‡æœŸæ•°æ®å¯¼è‡´çš„é—ªå±
+            if (this._scriptDataIsOut) return; // Å×Æú¹ıÆÚÊı¾İ£¬·ñÔò»áµ¼ÖÂbug£º1. »º´ækeyÖµ²»¶Ô£» 2. ¹ıÆÚÊı¾İµ¼ÖÂµÄÉÁÆÁ
 
             this.returnedData = data;
             this.fireEvent(ON_DATA_RETURN, data);
 
-            // æ ¼å¼åŒ–æ•°æ®
+            // ¸ñÊ½»¯Êı¾İ
             this.returnedData = this.formatData(this.returnedData);
 
-            // å¡«å……æ•°æ®
+            // Ìî³äÊı¾İ
             var content = "";
             var len = this.returnedData.length;
             if (len > 0) {
@@ -761,7 +760,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
                 for (var i = 0; i < len; ++i) {
                     var itemData = this.returnedData[i];
                     var li = this.formatItem(itemData["key"], itemData["result"]);
-                    // ç¼“å­˜keyå€¼åˆ°attributeä¸Š
+                    // »º´ækeyÖµµ½attributeÉÏ
                     li.setAttribute("key", itemData["key"]);
                     list.appendChild(li);
                 }
@@ -769,31 +768,31 @@ if(typeof KISSY === "undefined" || !KISSY) {
             }
             this._fillContainer(content);
 
-            // æœ‰å†…å®¹æ—¶æ‰æ·»åŠ åº•éƒ¨
+            // ÓĞÄÚÈİÊ±²ÅÌí¼Óµ×²¿
             if (len > 0) this.appendBottom();
 
             // fire event
             if (Lang.trim(this.container.innerHTML)) {
-                // å®é™…ä¸Šæ˜¯beforeCacheï¼Œä½†ä»ç”¨æˆ·çš„è§’åº¦çœ‹ï¼Œæ˜¯beforeShow
+                // Êµ¼ÊÉÏÊÇbeforeCache£¬µ«´ÓÓÃ»§µÄ½Ç¶È¿´£¬ÊÇbeforeShow
                 this.fireEvent(BEFORE_SHOW, this.container);
             }
 
             // cache
             this._dataCache[this.query] = this.container.innerHTML;
 
-            // æ˜¾ç¤ºå®¹å™¨
+            // ÏÔÊ¾ÈİÆ÷
             this._displayContainer();
         },
 
         /**
-         * æ ¼å¼åŒ–è¾“å…¥çš„æ•°æ®å¯¹è±¡ä¸ºæ ‡å‡†æ ¼å¼
-         * @param {Object} data æ ¼å¼å¯ä»¥æœ‰3ç§ï¼š
+         * ¸ñÊ½»¯ÊäÈëµÄÊı¾İ¶ÔÏóÎª±ê×¼¸ñÊ½
+         * @param {Object} data ¸ñÊ½¿ÉÒÔÓĞ3ÖÖ£º
          *  1. {"result" : [["key1", "result1"], ["key2", "result2"], ...]}
          *  2. {"result" : ["key1", "key2", ...]}
-         *  3. 1å’Œ2çš„ç»„åˆ
-         *  4. æ ‡å‡†æ ¼å¼
-         *  5. ä¸Šé¢1-4ä¸­ï¼Œç›´æ¥å–o["result"]çš„å€¼
-         * @return Object æ ‡å‡†æ ¼å¼çš„æ•°æ®ï¼š
+         *  3. 1ºÍ2µÄ×éºÏ
+         *  4. ±ê×¼¸ñÊ½
+         *  5. ÉÏÃæ1-4ÖĞ£¬Ö±½ÓÈ¡o["result"]µÄÖµ
+         * @return Object ±ê×¼¸ñÊ½µÄÊı¾İ£º
          *  [{"key" : "key1", "result" : "result1"}, {"key" : "key2", "result" : "result2"}, ...]
          */
         formatData: function(data) {
@@ -807,9 +806,9 @@ if(typeof KISSY === "undefined" || !KISSY) {
             for (var i = 0; i < len; ++i) {
                 item = data[i];
 
-                if (Lang.isString(item)) { // åªæœ‰keyå€¼æ—¶
+                if (Lang.isString(item)) { // Ö»ÓĞkeyÖµÊ±
                     arr[i] = {"key" : item};
-                } else if (Lang.isArray(item) && item.length >= 2) { // ["key", "result"] å–æ•°ç»„å‰2ä¸ª
+                } else if (Lang.isArray(item) && item.length >= 2) { // ["key", "result"] È¡Êı×éÇ°2¸ö
                     arr[i] = {"key" : item[0], "result" : item[1]};
                 } else {
                     arr[i] = item;
@@ -819,9 +818,9 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * æ ¼å¼åŒ–è¾“å‡ºé¡¹
-         * @param {String} key æŸ¥è¯¢å­—ç¬¦ä¸²
-         * @param {Number} result ç»“æœ å¯ä¸è®¾
+         * ¸ñÊ½»¯Êä³öÏî
+         * @param {String} key ²éÑ¯×Ö·û´®
+         * @param {Number} result ½á¹û ¿É²»Éè
          * @return {HTMLElement}
          */
         formatItem: function(key, result) {
@@ -831,9 +830,9 @@ if(typeof KISSY === "undefined" || !KISSY) {
             keyEl.appendChild(document.createTextNode(key));
             li.appendChild(keyEl);
 
-            if (typeof result != "undefined") { // å¯ä»¥æ²¡æœ‰
+            if (typeof result != "undefined") { // ¿ÉÒÔÃ»ÓĞ
                 var resultText = this.config.resultFormat.replace("%result%", result);
-                if (Lang.trim(resultText)) { // æœ‰å€¼æ—¶æ‰åˆ›å»º
+                if (Lang.trim(resultText)) { // ÓĞÖµÊ±²Å´´½¨
                     var resultEl = document.createElement("span");
                     resultEl.className = this.config.resultElClassName;
                     resultEl.appendChild(document.createTextNode(resultText));
@@ -845,7 +844,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * æ·»åŠ æç¤ºå±‚åº•éƒ¨
+         * Ìí¼ÓÌáÊ¾²ãµ×²¿
          */
         appendBottom: function() {
             var bottom = document.createElement("div");
@@ -854,11 +853,11 @@ if(typeof KISSY === "undefined" || !KISSY) {
             if (this.config.showCloseBtn) {
                 var closeBtn = document.createElement("a");
                 closeBtn.href = "javascript: void(0)";
-                closeBtn.setAttribute("target", "_self"); // bug fix: è¦†ç›–<base target="_blank" />ï¼Œå¦åˆ™ä¼šå¼¹å‡ºç©ºç™½é¡µé¢
+                closeBtn.setAttribute("target", "_self"); // bug fix: ¸²¸Ç<base target="_blank" />£¬·ñÔò»áµ¯³ö¿Õ°×Ò³Ãæ
                 closeBtn.className = this.config.closeBtnClassName;
                 closeBtn.appendChild(document.createTextNode(this.config.closeBtnText));
 
-                // æ²¡å¿…è¦ï¼Œç‚¹å‡»æ—¶ï¼Œè¾“å…¥æ¡†å¤±å»ç„¦ç‚¹ï¼Œè‡ªåŠ¨å°±å…³é—­äº†
+                // Ã»±ØÒª£¬µã»÷Ê±£¬ÊäÈë¿òÊ§È¥½¹µã£¬×Ô¶¯¾Í¹Ø±ÕÁË
                 /*
                  Event.on(closeBtn, "click", function(ev) {
                  Event.stopEvent(ev);
@@ -869,14 +868,14 @@ if(typeof KISSY === "undefined" || !KISSY) {
                 bottom.appendChild(closeBtn);
             }
 
-            // ä»…å½“æœ‰å†…å®¹æ—¶æ‰æ·»åŠ 
+            // ½öµ±ÓĞÄÚÈİÊ±²ÅÌí¼Ó
             if (Lang.trim(bottom.innerHTML)) {
                 this.container.appendChild(bottom);
             }
         },
 
         /**
-         * å¡«å……æç¤ºå±‚
+         * Ìî³äÌáÊ¾²ã
          * @protected
          * @param {String|HTMLElement} content innerHTML or Child Node
          */
@@ -888,12 +887,12 @@ if(typeof KISSY === "undefined" || !KISSY) {
                 this.container.innerHTML = content;
             }
 
-            // ä¸€æ—¦é‡æ–°å¡«å……äº†ï¼ŒselectedItemå°±æ²¡äº†ï¼Œéœ€è¦é‡ç½®
+            // Ò»µ©ÖØĞÂÌî³äÁË£¬selectedItem¾ÍÃ»ÁË£¬ĞèÒªÖØÖÃ
             this.selectedItem = null;
         },
 
         /**
-         * æ ¹æ®contanierçš„å†…å®¹ï¼Œæ˜¾ç¤ºæˆ–éšè—å®¹å™¨
+         * ¸ù¾İcontanierµÄÄÚÈİ£¬ÏÔÊ¾»òÒş²ØÈİÆ÷
          */
         _displayContainer: function() {
             if (Lang.trim(this.container.innerHTML)) {
@@ -904,37 +903,37 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * é€‰ä¸­æç¤ºå±‚ä¸­çš„ä¸Š/ä¸‹ä¸€ä¸ªæ¡
-         * @param {Boolean} down trueè¡¨ç¤ºdownï¼Œfalseè¡¨ç¤ºup
+         * Ñ¡ÖĞÌáÊ¾²ãÖĞµÄÉÏ/ÏÂÒ»¸öÌõ
+         * @param {Boolean} down true±íÊ¾down£¬false±íÊ¾up
          */
         selectItem: function(down) {
             //console.log("select item " + down);
             var items = this.container.getElementsByTagName("li");
             if (items.length == 0) return;
 
-            // æœ‰å¯èƒ½ç”¨ESCéšè—äº†ï¼Œç›´æ¥æ˜¾ç¤ºå³å¯
+            // ÓĞ¿ÉÄÜÓÃESCÒş²ØÁË£¬Ö±½ÓÏÔÊ¾¼´¿É
             if (!this.isVisible()){
                 this.show();
-                return; // ä¿ç•™åŸæ¥çš„é€‰ä¸­çŠ¶æ€
+                return; // ±£ÁôÔ­À´µÄÑ¡ÖĞ×´Ì¬
             }
             var newSelectedItem;
 
-            // æ²¡æœ‰é€‰ä¸­é¡¹æ—¶ï¼Œé€‰ä¸­ç¬¬ä¸€/æœ€åé¡¹
+            // Ã»ÓĞÑ¡ÖĞÏîÊ±£¬Ñ¡ÖĞµÚÒ»/×îºóÏî
             if (!this.selectedItem) {
                 newSelectedItem = items[down ? 0 : items.length - 1];
             } else {
-                // é€‰ä¸­ä¸‹/ä¸Šä¸€é¡¹
+                // Ñ¡ÖĞÏÂ/ÉÏÒ»Ïî
                 newSelectedItem = Dom[down ? "getNextSibling" : "getPreviousSibling"](this.selectedItem);
-                // å·²ç»åˆ°äº†æœ€å/å‰ä¸€é¡¹æ—¶ï¼Œå½’ä½åˆ°è¾“å…¥æ¡†ï¼Œå¹¶è¿˜åŸè¾“å…¥å€¼
+                // ÒÑ¾­µ½ÁË×îºó/Ç°Ò»ÏîÊ±£¬¹éÎ»µ½ÊäÈë¿ò£¬²¢»¹Ô­ÊäÈëÖµ
                 if (!newSelectedItem) {
                     this.textInput.value = this.query;
                 }
             }
 
-            // ç§»é™¤å½“å‰é€‰ä¸­é¡¹
+            // ÒÆ³ıµ±Ç°Ñ¡ÖĞÏî
             this._removeSelectedItem();
 
-            // é€‰ä¸­æ–°é¡¹
+            // Ñ¡ÖĞĞÂÏî
             if (newSelectedItem) {
                 this._setSelectedItem(newSelectedItem);
                 this._updateInputFromSelectItem();
@@ -942,7 +941,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * ç§»é™¤é€‰ä¸­é¡¹
+         * ÒÆ³ıÑ¡ÖĞÏî
          * @protected
          */
         _removeSelectedItem: function() {
@@ -952,7 +951,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * è®¾ç½®å½“å‰é€‰ä¸­é¡¹
+         * ÉèÖÃµ±Ç°Ñ¡ÖĞÏî
          * @protected
          * @param {HTMLElement} item
          */
@@ -963,13 +962,13 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * è·å–æç¤ºå±‚ä¸­é€‰ä¸­é¡¹çš„keyå­—ç¬¦ä¸²
+         * »ñÈ¡ÌáÊ¾²ãÖĞÑ¡ÖĞÏîµÄkey×Ö·û´®
          * @protected
          */
         _getSelectedItemKey: function() {
             if (!this.selectedItem) return "";
 
-            // getElementsByClassNameæ¯”è¾ƒæŸè€—æ€§èƒ½ï¼Œæ”¹ç”¨ç¼“å­˜æ•°æ®åˆ°attributeä¸Šæ–¹æ³•
+            // getElementsByClassName±È½ÏËğºÄĞÔÄÜ£¬¸ÄÓÃ»º´æÊı¾İµ½attributeÉÏ·½·¨
             //var keyEl = Dom.getElementsByClassName(this.config.keyElClassName, "*", this.selectedItem)[0];
             //return keyEl.innerHTML;
 
@@ -977,7 +976,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * å°†textInputçš„å€¼æ›´æ–°åˆ°this.query
+         * ½«textInputµÄÖµ¸üĞÂµ½this.query
          * @protected
          */
         _updateQueryValueFromInput: function() {
@@ -985,7 +984,7 @@ if(typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * å°†é€‰ä¸­é¡¹çš„å€¼æ›´æ–°åˆ°textInput
+         * ½«Ñ¡ÖĞÏîµÄÖµ¸üĞÂµ½textInput
          * @protected
          */
         _updateInputFromSelectItem: function() {
@@ -997,18 +996,18 @@ if(typeof KISSY === "undefined" || !KISSY) {
     Lang.augmentProto(NS.Suggest, Y.EventProvider);
 
     /**
-     * å½“å‰æ¿€æ´»çš„å®ä¾‹
+     * µ±Ç°¼¤»îµÄÊµÀı
      * @static
      */
     NS.Suggest.focusInstance = null;
 
     /**
-     * ä»jsonpä¸­è·å–æ•°æ®
+     * ´ÓjsonpÖĞ»ñÈ¡Êı¾İ
      * @method callback
      */
     NS.Suggest.callback = function(data) {
         if (!NS.Suggest.focusInstance) return;
-        // ä½¿å¾—å…ˆè¿è¡Œscript.onloadäº‹ä»¶ï¼Œç„¶åå†æ‰§è¡Œcallbackå‡½æ•°
+        // Ê¹µÃÏÈÔËĞĞscript.onloadÊÂ¼ş£¬È»ºóÔÙÖ´ĞĞcallbackº¯Êı
         setTimeout(function() {
             NS.Suggest.focusInstance.handleResponse(data);
         }, 0);
@@ -1018,41 +1017,41 @@ if(typeof KISSY === "undefined" || !KISSY) {
 
 
 /**
- * å°ç»“ï¼š
+ * Ğ¡½á£º
  *
- * æ•´ä¸ªç»„ä»¶ä»£ç ï¼Œç”±ä¸¤å¤§éƒ¨åˆ†ç»„æˆï¼šæ•°æ®å¤„ç† + äº‹ä»¶å¤„ç†
+ * Õû¸ö×é¼ş´úÂë£¬ÓÉÁ½´ó²¿·Ö×é³É£ºÊı¾İ´¦Àí + ÊÂ¼ş´¦Àí
  *
- * ä¸€ã€æ•°æ®å¤„ç†å¾ˆcoreï¼Œä½†ç›¸å¯¹æ¥è¯´æ˜¯ç®€å•çš„ï¼Œç”± requestData + handleResponse + formatDataç­‰è¾…åŠ©æ–¹æ³•ç»„æˆ
- * éœ€è¦æ³¨æ„ä¸¤ç‚¹ï¼š
- *  a. IEä¸­ï¼Œæ”¹å˜script.src, ä¼šè‡ªåŠ¨å–æ¶ˆæ‰ä¹‹å‰çš„è¯·æ±‚ï¼Œå¹¶å‘é€æ–°è¯·æ±‚ã€‚éIEä¸­ï¼Œå¿…é¡»æ–°åˆ›å»ºscriptæ‰è¡Œã€‚è¿™æ˜¯
- *     requestDataæ–¹æ³•ä¸­å­˜åœ¨ä¸¤ç§å¤„ç†æ–¹å¼çš„åŸå› ã€‚
- *  b. å½“ç½‘é€Ÿå¾ˆæ…¢ï¼Œæ•°æ®è¿”å›æ—¶ï¼Œç”¨æˆ·çš„è¾“å…¥å¯èƒ½å·²æ”¹å˜ï¼Œå·²ç»æœ‰è¯·æ±‚å‘é€å‡ºå»ï¼Œéœ€è¦æŠ›å¼ƒè¿‡æœŸæ•°æ®ã€‚ç›®å‰é‡‡ç”¨åŠ æ—¶é—´æˆ³
- *     çš„è§£å†³æ–¹æ¡ˆã€‚æ›´å¥½çš„è§£å†³æ–¹æ¡ˆæ˜¯ï¼Œè°ƒæ•´APIï¼Œä½¿å¾—è¿”å›çš„æ•°æ®ä¸­ï¼Œå¸¦æœ‰queryå€¼ã€‚
+ * Ò»¡¢Êı¾İ´¦ÀíºÜcore£¬µ«Ïà¶ÔÀ´ËµÊÇ¼òµ¥µÄ£¬ÓÉ requestData + handleResponse + formatDataµÈ¸¨Öú·½·¨×é³É
+ * ĞèÒª×¢ÒâÁ½µã£º
+ *  a. IEÖĞ£¬¸Ä±äscript.src, »á×Ô¶¯È¡ÏûµôÖ®Ç°µÄÇëÇó£¬²¢·¢ËÍĞÂÇëÇó¡£·ÇIEÖĞ£¬±ØĞëĞÂ´´½¨script²ÅĞĞ¡£ÕâÊÇ
+ *     requestData·½·¨ÖĞ´æÔÚÁ½ÖÖ´¦Àí·½Ê½µÄÔ­Òò¡£
+ *  b. µ±ÍøËÙºÜÂı£¬Êı¾İ·µ»ØÊ±£¬ÓÃ»§µÄÊäÈë¿ÉÄÜÒÑ¸Ä±ä£¬ÒÑ¾­ÓĞÇëÇó·¢ËÍ³öÈ¥£¬ĞèÒªÅ×Æú¹ıÆÚÊı¾İ¡£Ä¿Ç°²ÉÓÃ¼ÓÊ±¼ä´Á
+ *     µÄ½â¾ö·½°¸¡£¸üºÃµÄ½â¾ö·½°¸ÊÇ£¬µ÷ÕûAPI£¬Ê¹µÃ·µ»ØµÄÊı¾İÖĞ£¬´øÓĞqueryÖµ¡£
  *
- * äºŒã€äº‹ä»¶å¤„ç†çœ‹ä¼¼ç®€å•ï¼Œå®é™…ä¸Šæœ‰ä¸å°‘é™·é˜±ï¼Œåˆ†2éƒ¨åˆ†ï¼š
- *  1. è¾“å…¥æ¡†çš„focus/bluräº‹ä»¶ + é”®ç›˜æ§åˆ¶äº‹ä»¶
- *  2. æç¤ºå±‚ä¸Šçš„é¼ æ ‡æ‚¬æµ®å’Œç‚¹å‡»äº‹ä»¶
- * éœ€è¦æ³¨æ„ä»¥ä¸‹å‡ ç‚¹ï¼š
- *  a. å› ä¸ºç‚¹å‡»æç¤ºå±‚æ—¶ï¼Œé¦–å…ˆä¼šè§¦å‘è¾“å…¥æ¡†çš„bluräº‹ä»¶ï¼Œbluräº‹ä»¶ä¸­è°ƒç”¨hideæ–¹æ³•ï¼Œæç¤ºå±‚ä¸€æ—¦éšè—åï¼Œå°±æ•è·ä¸åˆ°
- *     ç‚¹å‡»äº‹ä»¶äº†ã€‚å› æ­¤æœ‰äº† this._mouseHovering æ¥æ’é™¤è¿™ç§æƒ…å†µï¼Œä½¿å¾—bluræ—¶ä¸ä¼šè§¦å‘hideï¼Œåœ¨æç¤ºå±‚çš„ç‚¹å‡»
- *     äº‹ä»¶ä¸­è‡ªè¡Œå¤„ç†ã€‚ï¼ˆ2009-06-18æ›´æ–°ï¼šé‡‡ç”¨mouseupæ¥æ›¿ä»£clickäº‹ä»¶ï¼Œä»£ç æ¸…æ™°ç®€å•äº†å¾ˆå¤šï¼‰
- *  b. å½“é¼ æ ‡ç§»åŠ¨åˆ°æŸé¡¹æˆ–é€šè¿‡ä¸Šä¸‹é”®é€‰ä¸­æŸé¡¹æ—¶ï¼Œç»™this.selectedItemèµ‹å€¼ï¼›å½“æç¤ºå±‚çš„æ•°æ®é‡æ–°å¡«å……æ—¶ï¼Œé‡ç½®
- *     this.selectedItem. è¿™ç§å¤„ç†æ–¹å¼å’Œgoogleçš„ä¸€è‡´ï¼Œå¯ä»¥ä½¿å¾—é€‰ä¸­æŸé¡¹ï¼Œéšè—ï¼Œå†æ¬¡æ‰“å¼€æ—¶ï¼Œä¾æ—§é€‰ä¸­åŸæ¥
- *     çš„é€‰ä¸­é¡¹ã€‚
- *  c. åœ¨ieç­‰æµè§ˆå™¨ä¸­ï¼Œè¾“å…¥æ¡†ä¸­è¾“å…¥ENTERé”®æ—¶ï¼Œä¼šè‡ªåŠ¨æäº¤è¡¨å•ã€‚å¦‚æœform.target="_blank", è‡ªåŠ¨æäº¤å’ŒJSæäº¤
- *     ä¼šæ‰“å¼€ä¸¤ä¸ªæäº¤é¡µé¢ã€‚å› æ­¤è¿™é‡Œé‡‡å–äº†åœ¨JSä¸­ä¸æäº¤çš„ç­–ç•¥ï¼ŒENTERé”®æ˜¯å¦æäº¤è¡¨å•ï¼Œå®Œå…¨ç”±HTMLä»£ç è‡ªèº«å†³å®šã€‚è¿™
- *     æ ·ä¹Ÿèƒ½ä½¿å¾—ç»„ä»¶å¾ˆå®¹æ˜“åº”ç”¨åœ¨ä¸éœ€è¦æäº¤è¡¨å•çš„åœºæ™¯ä¸­ã€‚ï¼ˆ2009-06-18æ›´æ–°ï¼šå¯ä»¥é€šè¿‡blur()å–æ¶ˆæ‰æµè§ˆå™¨çš„é»˜è®¤
- *     Enterå“åº”ï¼Œè¿™æ ·èƒ½ä½¿å¾—ä»£ç é€»è¾‘å’Œmouseupçš„ä¸€è‡´ï¼‰
- *  d. onItemSelect ä»…åœ¨é¼ æ ‡ç‚¹å‡»é€‰æ‹©æŸé¡¹ å’Œ é”®ç›˜é€‰ä¸­æŸé¡¹å›è½¦ åè§¦å‘ã€‚
- *  e. å½“textInputä¼šè§¦å‘è¡¨å•æäº¤æ—¶ï¼Œåœ¨enter keydown å’Œ keyupä¹‹é—´ï¼Œå°±ä¼šè§¦å‘æäº¤ã€‚å› æ­¤åœ¨keydownä¸­æ•æ‰äº‹ä»¶ã€‚
- *     å¹¶ä¸”åœ¨keydownä¸­èƒ½æ•æ‰åˆ°æŒç»­DOWN/UPï¼Œåœ¨keyupä¸­å°±ä¸è¡Œäº†ã€‚
+ * ¶ş¡¢ÊÂ¼ş´¦Àí¿´ËÆ¼òµ¥£¬Êµ¼ÊÉÏÓĞ²»ÉÙÏİÚå£¬·Ö2²¿·Ö£º
+ *  1. ÊäÈë¿òµÄfocus/blurÊÂ¼ş + ¼üÅÌ¿ØÖÆÊÂ¼ş
+ *  2. ÌáÊ¾²ãÉÏµÄÊó±êĞü¸¡ºÍµã»÷ÊÂ¼ş
+ * ĞèÒª×¢ÒâÒÔÏÂ¼¸µã£º
+ *  a. ÒòÎªµã»÷ÌáÊ¾²ãÊ±£¬Ê×ÏÈ»á´¥·¢ÊäÈë¿òµÄblurÊÂ¼ş£¬blurÊÂ¼şÖĞµ÷ÓÃhide·½·¨£¬ÌáÊ¾²ãÒ»µ©Òş²Øºó£¬¾Í²¶»ñ²»µ½
+ *     µã»÷ÊÂ¼şÁË¡£Òò´ËÓĞÁË this._mouseHovering À´ÅÅ³ıÕâÖÖÇé¿ö£¬Ê¹µÃblurÊ±²»»á´¥·¢hide£¬ÔÚÌáÊ¾²ãµÄµã»÷
+ *     ÊÂ¼şÖĞ×ÔĞĞ´¦Àí¡££¨2009-06-18¸üĞÂ£º²ÉÓÃmouseupÀ´Ìæ´úclickÊÂ¼ş£¬´úÂëÇåÎú¼òµ¥ÁËºÜ¶à£©
+ *  b. µ±Êó±êÒÆ¶¯µ½Ä³Ïî»òÍ¨¹ıÉÏÏÂ¼üÑ¡ÖĞÄ³ÏîÊ±£¬¸øthis.selectedItem¸³Öµ£»µ±ÌáÊ¾²ãµÄÊı¾İÖØĞÂÌî³äÊ±£¬ÖØÖÃ
+ *     this.selectedItem. ÕâÖÖ´¦Àí·½Ê½ºÍgoogleµÄÒ»ÖÂ£¬¿ÉÒÔÊ¹µÃÑ¡ÖĞÄ³Ïî£¬Òş²Ø£¬ÔÙ´Î´ò¿ªÊ±£¬ÒÀ¾ÉÑ¡ÖĞÔ­À´
+ *     µÄÑ¡ÖĞÏî¡£
+ *  c. ÔÚieµÈä¯ÀÀÆ÷ÖĞ£¬ÊäÈë¿òÖĞÊäÈëENTER¼üÊ±£¬»á×Ô¶¯Ìá½»±íµ¥¡£Èç¹ûform.target="_blank", ×Ô¶¯Ìá½»ºÍJSÌá½»
+ *     »á´ò¿ªÁ½¸öÌá½»Ò³Ãæ¡£Òò´ËÕâÀï²ÉÈ¡ÁËÔÚJSÖĞ²»Ìá½»µÄ²ßÂÔ£¬ENTER¼üÊÇ·ñÌá½»±íµ¥£¬ÍêÈ«ÓÉHTML´úÂë×ÔÉí¾ö¶¨¡£Õâ
+ *     ÑùÒ²ÄÜÊ¹µÃ×é¼şºÜÈİÒ×Ó¦ÓÃÔÚ²»ĞèÒªÌá½»±íµ¥µÄ³¡¾°ÖĞ¡££¨2009-06-18¸üĞÂ£º¿ÉÒÔÍ¨¹ıblur()È¡Ïûµôä¯ÀÀÆ÷µÄÄ¬ÈÏ
+ *     EnterÏìÓ¦£¬ÕâÑùÄÜÊ¹µÃ´úÂëÂß¼­ºÍmouseupµÄÒ»ÖÂ£©
+ *  d. onItemSelect ½öÔÚÊó±êµã»÷Ñ¡ÔñÄ³Ïî ºÍ ¼üÅÌÑ¡ÖĞÄ³Ïî»Ø³µ ºó´¥·¢¡£
+ *  e. µ±textInput»á´¥·¢±íµ¥Ìá½»Ê±£¬ÔÚenter keydown ºÍ keyupÖ®¼ä£¬¾Í»á´¥·¢Ìá½»¡£Òò´ËÔÚkeydownÖĞ²¶×½ÊÂ¼ş¡£
+ *     ²¢ÇÒÔÚkeydownÖĞÄÜ²¶×½µ½³ÖĞøDOWN/UP£¬ÔÚkeyupÖĞ¾Í²»ĞĞÁË¡£
  *
- * ã€å¾—åˆ°çš„ä¸€äº›ç¼–ç¨‹ç»éªŒã€‘ï¼š
- *  1. èŒè´£å•ä¸€åŸåˆ™ã€‚æ–¹æ³•çš„èŒè´£è¦å•ä¸€ï¼Œæ¯”å¦‚hideæ–¹æ³•å’Œshowæ–¹æ³•ï¼Œé™¤äº†æ”¹å˜visibility, å°±ä¸è¦æ‹¥æœ‰å…¶å®ƒåŠŸèƒ½ã€‚è¿™
- *     çœ‹ä¼¼ç®€å•ï¼ŒçœŸè¦åšåˆ°å´å¹¶ä¸å®¹æ˜“ã€‚ä¿æŒèŒè´£å•ä¸€ï¼Œä¿æŒç®€å•çš„å¥½å¤„æ˜¯ï¼Œä»£ç çš„æ•´ä½“é€»è¾‘æ›´æ¸…æ™°ï¼Œæ–¹æ³•çš„å¯å¤ç”¨æ€§ä¹Ÿæ
- *     é«˜äº†ã€‚
- *  2. å°å¿ƒäº‹ä»¶å¤„ç†ã€‚å½“äº‹ä»¶ä¹‹é—´æœ‰å…³è”æ—¶ï¼Œè¦ä»”ç»†æƒ³æ¸…æ¥šï¼Œè®¾è®¡å¥½åå†å†™ä»£ç ã€‚æ¯”å¦‚è¾“å…¥æ¡†çš„blurå’Œæç¤ºå±‚çš„clickäº‹ä»¶ã€‚
- *  3. æµ‹è¯•çš„é‡è¦æ€§ã€‚ç›®å‰æ˜¯åˆ—å‡ºTest Casesï¼Œä»¥åè¦å°è¯•è‡ªåŠ¨åŒ–ã€‚ä¿è¯æ¯æ¬¡æ”¹åŠ¨åï¼Œéƒ½ä¸å½±å“åŸæœ‰åŠŸèƒ½ã€‚
- *  4. æŒ‘é€‰æ­£ç¡®çš„äº‹ä»¶åšæ­£ç¡®çš„äº‹ï¼Œå¤ªé‡è¦äº†ï¼Œèƒ½çœå»å¾ˆå¤šå¾ˆå¤šçƒ¦æ¼ã€‚
+ * ¡¾µÃµ½µÄÒ»Ğ©±à³Ì¾­Ñé¡¿£º
+ *  1. Ö°Ôğµ¥Ò»Ô­Ôò¡£·½·¨µÄÖ°ÔğÒªµ¥Ò»£¬±ÈÈçhide·½·¨ºÍshow·½·¨£¬³ıÁË¸Ä±ävisibility, ¾Í²»ÒªÓµÓĞÆäËü¹¦ÄÜ¡£Õâ
+ *     ¿´ËÆ¼òµ¥£¬ÕæÒª×öµ½È´²¢²»ÈİÒ×¡£±£³ÖÖ°Ôğµ¥Ò»£¬±£³Ö¼òµ¥µÄºÃ´¦ÊÇ£¬´úÂëµÄÕûÌåÂß¼­¸üÇåÎú£¬·½·¨µÄ¿É¸´ÓÃĞÔÒ²Ìá
+ *     ¸ßÁË¡£
+ *  2. Ğ¡ĞÄÊÂ¼ş´¦Àí¡£µ±ÊÂ¼şÖ®¼äÓĞ¹ØÁªÊ±£¬Òª×ĞÏ¸ÏëÇå³ş£¬Éè¼ÆºÃºóÔÙĞ´´úÂë¡£±ÈÈçÊäÈë¿òµÄblurºÍÌáÊ¾²ãµÄclickÊÂ¼ş¡£
+ *  3. ²âÊÔµÄÖØÒªĞÔ¡£Ä¿Ç°ÊÇÁĞ³öTest Cases£¬ÒÔºóÒª³¢ÊÔ×Ô¶¯»¯¡£±£Ö¤Ã¿´Î¸Ä¶¯ºó£¬¶¼²»Ó°ÏìÔ­ÓĞ¹¦ÄÜ¡£
+ *  4. ÌôÑ¡ÕıÈ·µÄÊÂ¼ş×öÕıÈ·µÄÊÂ£¬Ì«ÖØÒªÁË£¬ÄÜÊ¡È¥ºÜ¶àºÜ¶à·³ÄÕ¡£
  *
  */

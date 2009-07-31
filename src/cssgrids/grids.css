@@ -1,45 +1,45 @@
 /*
-åŒé£ç¿¼æ …æ ¼å¸ƒå±€ Flying Swing Grids Layout
+Ë«·ÉÒíÕ¤¸ñ²¼¾Ö Flying Swing Grids Layout
 grids.css
-ç†å¿µï¼šç®€å•è´¨æœ´ï¼Œå°½é‡åˆ†ç¦»
-ç»´æŠ¤ï¼šç‰ä¼¯(lifesinger@gmail.com), æ­£æ·³(ragecarrier@gmail.com)
+ÀíÄî£º¼òµ¥ÖÊÆÓ£¬¾¡Á¿·ÖÀë
+Î¬»¤£ºÓñ²®(lifesinger@gmail.com), Õı´¾(ragecarrier@gmail.com)
 */
 
-/** é¡µé¢å®½åº¦ **/
+/** Ò³Ãæ¿í¶È **/
 #page {
-    /* é»˜è®¤å®½åº¦ä¸º 100%, ç•™ç‚¹å‘¼å¸ç©ºé—´ */
+    /* Ä¬ÈÏ¿í¶ÈÎª 100%, ÁôµãºôÎü¿Õ¼ä */
     padding: 0 10px;
 }
 
-/* å±…ä¸­ */
+/* ¾ÓÖĞ */
 #header, #content, #footer {
     margin-left: auto;
     margin-right: auto;
 }
 
-/* é¡µé¢å®½åº¦ä¸º 750px */
+/* Ò³Ãæ¿í¶ÈÎª 750px */
 .w750 #header, .w750 #content, .w750 #footer,
-/* å¤´å°¾ 100%, ä»…å†…å®¹åŒºåŸŸ 750px */
+/* Í·Î² 100%, ½öÄÚÈİÇøÓò 750px */
 #content.w750 {
     width: 750px;
 }
 
-/* é¡µé¢å®½åº¦ä¸º 950px */
+/* Ò³Ãæ¿í¶ÈÎª 950px */
 .w950 #header, .w950 #content, .w950 #footer,
-/* å¤´å°¾ 100%, ä»…å†…å®¹åŒºåŸŸ 950px */
+/* Í·Î² 100%, ½öÄÚÈİÇøÓò 950px */
 #content.w950 {
     width: 950px;
 }
 
-/** å¸ƒå±€åŸºç¡€æ ·å¼ **/
+/** ²¼¾Ö»ù´¡ÑùÊ½ **/
 .col-main {
     float: left;
     width: 100%;
-    /* bug fix: ä¸»æ æ²¡æœ‰å†…å®¹æ—¶ï¼Œåœ¨ Firefox å’Œ Chrome ç­‰æµè§ˆå™¨ä¸‹ï¼Œå¸ƒå±€ä¸å¯¹ */
+    /* bug fix: Ö÷À¸Ã»ÓĞÄÚÈİÊ±£¬ÔÚ Firefox ºÍ Chrome µÈä¯ÀÀÆ÷ÏÂ£¬²¼¾Ö²»¶Ô */
     min-height: 1px;
 }
 .main-wrap {
-    /* bug fix: åœ¨ Chrome å’Œ Safari ä¸‹é€‰å–æ–‡å­—ï¼ŒèƒŒæ™¯åŒºåŸŸä¸å¯¹ */
+    /* bug fix: ÔÚ Chrome ºÍ Safari ÏÂÑ¡È¡ÎÄ×Ö£¬±³¾°ÇøÓò²»¶Ô */
     position: relative;
 }
 .col-sub, .col-extra {
@@ -47,7 +47,7 @@ grids.css
     position: relative;
 }
 
-/** æ¸…é™¤æµ®åŠ¨ **/
+/** Çå³ı¸¡¶¯ **/
 .layout:after, .main-wrap:after, .col-sub:after, .col-extra:after {
 	content: '\0020';
 	display: block;

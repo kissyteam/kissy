@@ -13,7 +13,7 @@ KISSY.Editor.add("core~command", function(E) {
     E.Command = {
 
         /**
-         * æ‰§è¡Œ doc.execCommand
+         * Ö´ÐÐ doc.execCommand
          */
         exec: function(doc, cmdName, val) {
             cmdName = CUSTOM_COMMANDS[cmdName] || cmdName;
@@ -24,7 +24,7 @@ KISSY.Editor.add("core~command", function(E) {
 
         _preExec: function(doc, cmdName) {
 
-            // å…³é—­ gecko æµè§ˆå™¨çš„ styleWithCSS ç‰¹æ€§ï¼Œä½¿å¾—äº§ç”Ÿçš„å†…å®¹å’Œ ie ä¸€è‡´
+            // ¹Ø±Õ gecko ä¯ÀÀÆ÷µÄ styleWithCSS ÌØÐÔ£¬Ê¹µÃ²úÉúµÄÄÚÈÝºÍ ie Ò»ÖÂ
             if(ua.gecko && BASIC_COMMANDS.indexOf(cmdName) > -1) {
                 doc[EXEC_COMMAND](STYLE_WITH_CSS, false, false);
             } else {

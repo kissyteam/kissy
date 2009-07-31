@@ -2,6 +2,7 @@
 Copyright (c) 2009, Kissy UI Library. All rights reserved.
 http://kissy.googlecode.com/
 
-Build: 45  Date: 2009-07-30 23:16:49
+Date: 2009-07-31 10:42:15
+Revision: 92
 */
 body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,lengend,button,input,textarea,th,td{margin:0;padding:0;}body,button,input,select,textarea{font:12px/1 Tahoma,Helvetica,Arial,"\5b8b\4f53",sans-serif;}h1{font-size:18px;}h2{font-size:16px;}h3{font-size:14px;}h4,h5,h6{font-size:100%;}address,cite,dfn,em,var{font-style:normal;}code,kbd,pre,samp,tt{font-family:"Courier New",Courier,monospace;}small{font-size:12px;}ul,ol{list-style:none;}a{text-decoration:none;}a:hover{text-decoration:underline;}abbr[title],acronym[title]{border-bottom:1px dotted;cursor:help;}q:before,q:after{content:'';}legend{color:#000;}fieldset,img{border:none;}button,input,select,textarea{font-size:100%;}table{border-collapse:collapse;border-spacing:0;}hr{border:none;height:1px;color:#fff;}#page{padding:0 10px;}#header,#content,#footer{margin-left:auto;margin-right:auto;}.w750 #header,.w750 #content,.w750 #footer,#content.w750{width:750px;}.w950 #header,.w950 #content,.w950 #footer,#content.w950{width:950px;}.col-main{float:left;width:100%;min-height:1px;}.main-wrap{position:relative;}.col-sub,.col-extra{float:left;position:relative;}.layout:after,.main-wrap:after,.col-sub:after,.col-extra:after{content:'\0020';display:block;height:0;clear:both;}.layout,.main-wrap,.col-sub,.col-extra{zoom:1;}

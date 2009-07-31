@@ -9,57 +9,57 @@ KISSY.Editor.add("core~menu", function(E) {
     E.Menu = {
 
         /**
-         * ç”Ÿæˆä¸‹æ‹‰æ¡†
-         * @param {KISSY.Editor} editor dropMenu æ‰€å±çš„ç¼–è¾‘å™¨å®ä¾‹
+         * Éú³ÉÏÂÀ­¿ò
+         * @param {KISSY.Editor} editor dropMenu ËùÊôµÄ±à¼­Æ÷ÊµÀı
          * @param {HTMLElement} trigger
-         * @param {Array} offset dropMenu ä½ç½®çš„åç§»é‡
+         * @param {Array} offset dropMenu Î»ÖÃµÄÆ«ÒÆÁ¿
          * @return {HTMLElement} dropMenu
          */
         generateDropMenu: function(editor, trigger, offset) {
             var dropMenu = document.createElement("div"),
                  self = this;
 
-            // ç”Ÿæˆ DOM
+            // Éú³É DOM
             dropMenu.className = DROP_MENU_CLASS;
             dropMenu.style[VISIBILITY] = "hidden";
             document.body.appendChild(dropMenu);
 
-            // ç‚¹å‡»è§¦ç‚¹æ—¶ï¼Œæ˜¾ç¤ºä¸‹æ‹‰æ¡†
-            // æ³¨ï¼šä¸€ä¸ªç¼–è¾‘å™¨å®ä¾‹ï¼Œæœ€å¤šåªèƒ½æœ‰ä¸€ä¸ªæ¿€æ´»çš„ä¸‹æ‹‰æ¡†
+            // µã»÷´¥µãÊ±£¬ÏÔÊ¾ÏÂÀ­¿ò
+            // ×¢£ºÒ»¸ö±à¼­Æ÷ÊµÀı£¬×î¶àÖ»ÄÜÓĞÒ»¸ö¼¤»îµÄÏÂÀ­¿ò
             Event.on(trigger, "click", function(ev) {
-                // ä¸å‘ä¸Šä¼ æ’­ï¼Œè‡ªå·±æ§åˆ¶
-                // å¦åˆ™ document ä¸Šç›‘æ§ç‚¹å‡»åï¼Œä¼šå…³é—­åˆšæ‰“å¼€çš„ dropMenu
+                // ²»ÏòÉÏ´«²¥£¬×Ô¼º¿ØÖÆ
+                // ·ñÔò document ÉÏ¼à¿Øµã»÷ºó£¬»á¹Ø±Õ¸Õ´ò¿ªµÄ dropMenu
                 Event.stopPropagation(ev);
 
-                // éšè—å½“å‰æ¿€æ´»çš„ä¸‹æ‹‰æ¡†
+                // Òş²Øµ±Ç°¼¤»îµÄÏÂÀ­¿ò
                 self._hide(editor.activeDropMenu);
 
-                // æ‰“å¼€å½“å‰ trigger çš„ dropMenu
+                // ´ò¿ªµ±Ç° trigger µÄ dropMenu
                 if(editor.activeDropMenu != dropMenu) {
-                    self._setDropMenuPosition(trigger, dropMenu, offset); // å»¶è¿Ÿåˆ°æ˜¾ç¤ºæ—¶è°ƒæ•´ä½ç½®
+                    self._setDropMenuPosition(trigger, dropMenu, offset); // ÑÓ³Ùµ½ÏÔÊ¾Ê±µ÷ÕûÎ»ÖÃ
                     self._show(dropMenu);
                     editor.activeDropMenu = dropMenu;
 
-                } else { // ç¬¬äºŒæ¬¡ç‚¹å‡»åœ¨ trigger ä¸Šï¼Œå…³é—­ activeDropMenu, å¹¶ç½®ä¸º null. å¦åˆ™ä¼šå¯¼è‡´ç¬¬ä¸‰æ¬¡ç‚¹å‡»æ‰“ä¸å¼€
+                } else { // µÚ¶ş´Îµã»÷ÔÚ trigger ÉÏ£¬¹Ø±Õ activeDropMenu, ²¢ÖÃÎª null. ·ñÔò»áµ¼ÖÂµÚÈı´Îµã»÷´ò²»¿ª
                     editor.activeDropMenu = null;                   
                 }
             });
 
-            // document æ•è·åˆ°ç‚¹å‡»æ—¶ï¼Œå…³é—­å½“å‰æ¿€æ´»çš„ä¸‹æ‹‰æ¡†
+            // document ²¶»ñµ½µã»÷Ê±£¬¹Ø±Õµ±Ç°¼¤»îµÄÏÂÀ­¿ò
             Event.on([document, editor.contentDoc], "click", function() {
                 self._hide(editor.activeDropMenu);
                 editor.activeDropMenu = null;
             });
 
-            // æ”¹å˜çª—å£å¤§å°æ—¶ï¼ŒåŠ¨æ€è°ƒæ•´ä½ç½®
+            // ¸Ä±ä´°¿Ú´óĞ¡Ê±£¬¶¯Ì¬µ÷ÕûÎ»ÖÃ
             this._initResizeEvent(trigger, dropMenu, offset);
 
-            // è¿”å›
+            // ·µ»Ø
             return dropMenu;
         },
 
         /**
-         * è®¾ç½® dropMenu çš„ä½ç½®
+         * ÉèÖÃ dropMenu µÄÎ»ÖÃ
          */
         _setDropMenuPosition: function(trigger, dropMenu, offset) {
             var r = Dom.getRegion(trigger),
@@ -92,7 +92,7 @@ KISSY.Editor.add("core~menu", function(E) {
         },
 
         /**
-         * window.onresize æ—¶ï¼Œé‡æ–°è°ƒæ•´ dropMenu çš„ä½ç½®
+         * window.onresize Ê±£¬ÖØĞÂµ÷Õû dropMenu µÄÎ»ÖÃ
          */
         _initResizeEvent: function(trigger, dropMenu, offset) {
             var self = this, resizeTimer;
@@ -103,7 +103,7 @@ KISSY.Editor.add("core~menu", function(E) {
                 }
 
                 resizeTimer = setTimeout(function() {
-                    if(self._isVisible(dropMenu)) { // ä»…åœ¨æ˜¾ç¤ºæ—¶ï¼Œéœ€è¦åŠ¨æ€è°ƒæ•´
+                    if(self._isVisible(dropMenu)) { // ½öÔÚÏÔÊ¾Ê±£¬ĞèÒª¶¯Ì¬µ÷Õû
                         self._setDropMenuPosition(trigger, dropMenu, offset);
                     }
                 }, 50);

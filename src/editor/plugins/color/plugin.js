@@ -23,27 +23,27 @@ KISSY.Editor.add("plugins~color", function(E) {
 
     E.addPlugin(["foreColor", "backColor"], {
         /**
-         * ç§ç±»ï¼šèœå•æŒ‰é’®
+         * ÖÖÀà£º²Ëµ¥°´Å¥
          */
         type: TYPE.TOOLBAR_MENU_BUTTON,
 
         /**
-         * å½“å‰é€‰å–è‰²
+         * µ±Ç°Ñ¡È¡É«
          */
         color: "",
 
         /**
-         * å½“å‰é¢œè‰²æŒ‡ç¤ºæ¡
+         * µ±Ç°ÑÕÉ«Ö¸Ê¾Ìõ
          */
         _indicator: null,
 
         /**
-         * å…³è”çš„ä¸‹æ‹‰èœå•æ¡†
+         * ¹ØÁªµÄÏÂÀ­²Ëµ¥¿ò
          */
         dropMenu: null,
 
         /**
-         * åˆå§‹åŒ–
+         * ³õÊ¼»¯
          */
         init: function(editor) {
             var el = this.domEl,
@@ -58,50 +58,50 @@ KISSY.Editor.add("plugins~color", function(E) {
 
             this._indicator = caption.firstChild;
 
-            // æœ‰ä¸¤ç§æ–¹æ¡ˆï¼š
-            //  1. ä»¿ç…§ MS Office 2007, ä»…å½“ç‚¹å‡»ä¸‹æ‹‰ç®­å¤´æ—¶ï¼Œæ‰å¼¹å‡ºä¸‹æ‹‰æ¡†ã€‚ç‚¹å‡» caption æ—¶ï¼Œç›´æ¥è®¾ç½®é¢œè‰²ã€‚
-            //  2. ä»¿ç…§ Google Docs, ä¸åŒºåˆ† caption å’Œ dropdownï¼Œè®©æ¯æ¬¡ç‚¹å‡»éƒ½å¼¹å‡ºä¸‹æ‹‰æ¡†ã€‚
-            // ä»é€»è¾‘ä¸Šè®²ï¼Œæ–¹æ¡ˆ1ä¸é”™ã€‚ä½†æ˜¯ï¼Œè€ƒè™‘ web é¡µé¢ä¸Šï¼ŒæŒ‰é’®æ¯”è¾ƒå°ï¼Œæ–¹æ¡ˆ2è¿™æ ·åè€Œèƒ½å¢åŠ æ˜“ç”¨æ€§ã€‚
-            // è¿™é‡Œé‡‡ç”¨æ–¹æ¡ˆ2
+            // ÓĞÁ½ÖÖ·½°¸£º
+            //  1. ·ÂÕÕ MS Office 2007, ½öµ±µã»÷ÏÂÀ­¼ıÍ·Ê±£¬²Åµ¯³öÏÂÀ­¿ò¡£µã»÷ caption Ê±£¬Ö±½ÓÉèÖÃÑÕÉ«¡£
+            //  2. ·ÂÕÕ Google Docs, ²»Çø·Ö caption ºÍ dropdown£¬ÈÃÃ¿´Îµã»÷¶¼µ¯³öÏÂÀ­¿ò¡£
+            // ´ÓÂß¼­ÉÏ½²£¬·½°¸1²»´í¡£µ«ÊÇ£¬¿¼ÂÇ web Ò³ÃæÉÏ£¬°´Å¥±È½ÏĞ¡£¬·½°¸2ÕâÑù·´¶øÄÜÔö¼ÓÒ×ÓÃĞÔ¡£
+            // ÕâÀï²ÉÓÃ·½°¸2
             this._initDropMenu(editor, el);
         },
 
         /**
-         * åˆå§‹åŒ–ä¸‹æ‹‰èœå•
+         * ³õÊ¼»¯ÏÂÀ­²Ëµ¥
          */
         _initDropMenu: function(editor, trigger) {
             this.dropMenu = E.Menu.generateDropMenu(editor, trigger, [1, 0]);
 
-            // ç”Ÿæˆä¸‹æ‹‰æ¡†å†…çš„å†…å®¹
+            // Éú³ÉÏÂÀ­¿òÄÚµÄÄÚÈİ
             this._generatePalettes();
 
-            // é’ˆå¯¹ ieï¼Œè®¾ç½®ä¸å¯é€‰æ‹©
+            // Õë¶Ô ie£¬ÉèÖÃ²»¿ÉÑ¡Ôñ
             if (isIE) E.Toolbar.setItemUnselectable(this.dropMenu);
 
-            // æ³¨å†Œç‚¹å‡»äº‹ä»¶
+            // ×¢²áµã»÷ÊÂ¼ş
             this._bindPickEvent(editor);
 
-            // é€‰ä¸­å½“å‰è‰²
+            // Ñ¡ÖĞµ±Ç°É«
             this._updateSelectedColor(this.color);
 
         },
 
         /**
-         * ç”Ÿæˆå–è‰²æ¿
+         * Éú³ÉÈ¡É«°å
          */
         _generatePalettes: function() {
             var htmlCode = "";
 
-            // é»‘ç™½è‰²æ¿
+            // ºÚ°×É«°å
             htmlCode += this._getPaletteTable(COLOR_GRAY);
 
-            // å¸¸ç”¨è‰²æ¿
+            // ³£ÓÃÉ«°å
             htmlCode += this._getPaletteTable(COLOR_NORMAL);
 
-            // è¯¦ç»†è‰²æ¿
+            // ÏêÏ¸É«°å
             htmlCode += this._getPaletteTable(COLOR_DETAIL);
 
-            // æ·»åŠ åˆ° DOM ä¸­
+            // Ìí¼Óµ½ DOM ÖĞ
             this.dropMenu.innerHTML = htmlCode;
         },
 
@@ -124,7 +124,7 @@ KISSY.Editor.add("plugins~color", function(E) {
         },
 
         /**
-         * ç»‘å®šå–è‰²äº‹ä»¶
+         * °ó¶¨È¡É«ÊÂ¼ş
          */
         _bindPickEvent: function(editor) {
             var self = this;
@@ -134,32 +134,32 @@ KISSY.Editor.add("plugins~color", function(E) {
                     attr = target.getAttribute("title");
 
                 if(attr && attr.indexOf("RGB") === 0) {
-                    // æ›´æ–°å½“å‰å€¼
+                    // ¸üĞÂµ±Ç°Öµ
                     self.setColor(E.Color.toHex(attr));
 
-                    // æ‰§è¡Œå‘½ä»¤
+                    // Ö´ĞĞÃüÁî
                     editor.execCommand(self.name, self.color);
                 }
             });
         },
 
         /**
-         * è®¾ç½®é¢œè‰²
-         * @param {string} val æ ¼å¼ #RRGGBB or #RGB
+         * ÉèÖÃÑÕÉ«
+         * @param {string} val ¸ñÊ½ #RRGGBB or #RGB
          */
         setColor: function(val) {
             this.color = val;
 
-            // æ›´æ–° indicator
+            // ¸üĞÂ indicator
             this._indicator.style.borderBottomColor = val;
 
-            // æ›´æ–° dropMenu é‡Œå¯¹åº”çš„é€‰ä¸­é¡¹
+            // ¸üĞÂ dropMenu Àï¶ÔÓ¦µÄÑ¡ÖĞÏî
             this._updateSelectedColor(val);
         },
 
         /**
-         * æ›´æ–°ä¸‹æ‹‰èœå•ä¸­é€‰ä¸­çš„é¢œè‰²
-         * @param {string} val æ ¼å¼ #RRGGBB or #RGB
+         * ¸üĞÂÏÂÀ­²Ëµ¥ÖĞÑ¡ÖĞµÄÑÕÉ«
+         * @param {string} val ¸ñÊ½ #RRGGBB or #RGB
          */
         _updateSelectedColor: function(val) {
             var i, len, swatch,
@@ -168,7 +168,7 @@ KISSY.Editor.add("plugins~color", function(E) {
             for(i = 0, len = swatches.length; i < len; ++i) {
                 swatch = swatches[i];
 
-                // è·å–çš„ backgroundColor åœ¨ä¸åŒæµè§ˆå™¨ä¸‹ï¼Œæ ¼å¼æœ‰å·®å¼‚ï¼Œéœ€è¦ç»Ÿä¸€è½¬æ¢åå†æ¯”è¾ƒ
+                // »ñÈ¡µÄ backgroundColor ÔÚ²»Í¬ä¯ÀÀÆ÷ÏÂ£¬¸ñÊ½ÓĞ²îÒì£¬ĞèÒªÍ³Ò»×ª»»ºóÔÙ±È½Ï
                 if(E.Color.toHex(swatch.style.backgroundColor) == val) {
                     Dom.addClass(swatch.parentNode, PALETTE_CELL_SELECTED);
                 } else {
@@ -181,4 +181,4 @@ KISSY.Editor.add("plugins~color", function(E) {
 });
 
 // TODO
-//  1. ä»¿ google, å¯¹é”®ç›˜äº‹ä»¶çš„æ”¯æŒ
+//  1. ·Â google, ¶Ô¼üÅÌÊÂ¼şµÄÖ§³Ö

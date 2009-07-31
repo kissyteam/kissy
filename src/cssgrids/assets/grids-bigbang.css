@@ -1,11 +1,11 @@
 /*
 BigBang Grids Layout
-ç»´æŠ¤ï¼šç‰ä¼¯(lifesinger@gmail.com), æ­£æ·³(ragecarrier@gmail.com)
+Î¬»¤£ºÓñ²®(lifesinger@gmail.com), Õı´¾(ragecarrier@gmail.com)
 */
 
 /** common styles **/
 body {
-    font: 14px 'å¾®è½¯é›…é»‘', serif;
+    font: 14px 'Î¢ÈíÑÅºÚ', serif;
     color: #404040;
     padding-bottom: 50px;
 }
@@ -81,7 +81,7 @@ a:hover {
     text-align: right;
 }
 .float-right .tool-box {
-    text-align: left; /* åœ¨å·¦è¾¹æ—¶ï¼Œæ–‡å­—å‘å·¦å¯¹é½ */
+    text-align: left; /* ÔÚ×ó±ßÊ±£¬ÎÄ×ÖÏò×ó¶ÔÆë */
 }
 .col-width {
     font: 18px 'Courier New', monospace;
@@ -89,7 +89,7 @@ a:hover {
 }
 .col-sub .col-width,
 .col-extra .col-width {
-    margin-right: -7px; /* è®©å®½åº¦ä¸º150pxæ—¶ä¹Ÿèƒ½æ˜¾ç¤ºå…¨ */    
+    margin-right: -7px; /* ÈÃ¿í¶ÈÎª150pxÊ±Ò²ÄÜÏÔÊ¾È« */    
 }
 
 /** drag & drop **/
@@ -102,7 +102,7 @@ a:hover {
     width: 100%;
     background: url(handle-bg.png);
 }
-/* æ‹‰åŠ¨ï¼šæ”¹å˜å®½åº¦ */
+/* À­¶¯£º¸Ä±ä¿í¶È */
 .resize-handle {
     float: left;
     margin: 1px;
@@ -116,7 +116,7 @@ a:hover {
 .float-right .resize-handle {
     float: right;
 }
-/* æ‹–åŠ¨ï¼šæ”¹å˜ä½ç½® */
+/* ÍÏ¶¯£º¸Ä±äÎ»ÖÃ */
 .dd-handle {
     display: block;
     position: absolute;
@@ -139,7 +139,7 @@ a:hover {
 .col-extra .dd-handle:hover {
     background-position: -30px -30px;
 }
-/* åˆ é™¤åˆ— */
+/* É¾³ıÁĞ */
 .del-col {
     position: absolute;
     right: 2px;

@@ -1,19 +1,19 @@
 /*
 All Grids Layout
-ç»´æŠ¤ï¼šç‰ä¼¯(lifesinger@gmail.com), æ­£æ·³(ragecarrier@gmail.com)
+Î¬»¤£ºÓñ²®(lifesinger@gmail.com), Õı´¾(ragecarrier@gmail.com)
 */
 
 /* require(grids.css) */
 
 /*
-ä¸‹é¢åŒ…å«äº†æ‰€æœ‰é€šæ ã€ä¸¤æ å’Œä¸‰æ å¸ƒå±€
-æ³¨æ„1ï¼šcol çš„æœ€å°å®½åº¦ä¸º 4 * 40 - 10 = 150px
-æ³¨æ„2ï¼šæ”¹æ–‡ä»¶å†…å®¹ç”± css-generator.html è‡ªåŠ¨ç”Ÿæˆï¼Œè¯·å‹¿æ‰‹åŠ¨ä¿®æ”¹
+ÏÂÃæ°üº¬ÁËËùÓĞÍ¨À¸¡¢Á½À¸ºÍÈıÀ¸²¼¾Ö
+×¢Òâ1£ºcol µÄ×îĞ¡¿í¶ÈÎª 4 * 40 - 10 = 150px
+×¢Òâ2£º¸ÄÎÄ¼şÄÚÈİÓÉ css-generator.html ×Ô¶¯Éú³É£¬ÇëÎğÊÖ¶¯ĞŞ¸Ä
 */
 
-/** é€šæ å¸ƒå±€: .grid-m æ— éœ€ä»»ä½•ç‰¹æ®Šæ ·å¼ **/
+/** Í¨À¸²¼¾Ö: .grid-m ÎŞĞèÈÎºÎÌØÊâÑùÊ½ **/
 
-/** ä¸¤æ å¸ƒå±€ **/
+/** Á½À¸²¼¾Ö **/
 .grid-s4m0 .main-wrap { margin-left: 160px; }
 .grid-s4m0 .col-sub { width: 150px; margin-left: -100%; }
 .grid-m0s4 .main-wrap { margin-right: 160px; }
@@ -99,7 +99,7 @@ All Grids Layout
 .grid-m0s20 .main-wrap { margin-right: 800px; }
 .grid-m0s20 .col-sub { width: 790px; margin-left: -790px; }
 
-/** ä¸‰æ å¸ƒå±€ **/
+/** ÈıÀ¸²¼¾Ö **/
 .grid-s4m0e4 .main-wrap { margin: 0 160px 0 160px; }
 .grid-s4m0e4 .col-sub { width: 150px; margin-left: -100%; }
 .grid-s4m0e4 .col-extra { width: 150px; margin-left: -150px; }
@@ -1829,6 +1829,6 @@ All Grids Layout
 .grid-e4s16m0 .col-sub { width: 630px; margin-left: -100%; left: 160px; }
 .grid-e4s16m0 .col-extra { width: 150px; margin-left: -100%; }
 
-/** ç»Ÿè®¡æ•°æ® **/
-/* äºŒæ æ …æ ¼å¸ƒå±€æ€»æ•°ï¼š 34 = (20 - 4 + 1) * 2 = 17 * 2 */
-/* ä¸‰æ æ …æ ¼å¸ƒå±€æ€»æ•°ï¼š 546 = ((16 - 4 + 1) + (16 - 4 + 1 - 1) + ... + 2 + 1) * 6 = (13 + 12 + ... + 2 + 1) * 6 = 13 * 7 * 6 */
+/** Í³¼ÆÊı¾İ **/
+/* ¶şÀ¸Õ¤¸ñ²¼¾Ö×ÜÊı£º 34 = (20 - 4 + 1) * 2 = 17 * 2 */
+/* ÈıÀ¸Õ¤¸ñ²¼¾Ö×ÜÊı£º 546 = ((16 - 4 + 1) + (16 - 4 + 1 - 1) + ... + 2 + 1) * 6 = (13 + 12 + ... + 2 + 1) * 6 = 13 * 7 * 6 */

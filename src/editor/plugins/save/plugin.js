@@ -7,12 +7,12 @@ KISSY.Editor.add("plugins~save", function(E) {
 
     E.addPlugin("save", {
         /**
-         * ç§ç±»
+         * ÖÖÀà
          */
         type: TYPE.CUSTOM,
 
         /**
-         * åˆå§‹åŒ–
+         * ³õÊ¼»¯
          */
         init: function(editor) {
             var textarea = editor.textarea,
@@ -26,24 +26,24 @@ KISSY.Editor.add("plugins~save", function(E) {
         },
 
         /**
-         * è¿‡æ»¤æ•°æ®
+         * ¹ıÂËÊı¾İ
          */
         filterData: function(data) {
 
             //if(ua.gecko) {
                 //data = data
-                        // è®© gecko çš„æ ‡ç­¾è¯­ä¹‰åŒ–
+                        // ÈÃ gecko µÄ±êÇ©ÓïÒå»¯
                         //.replace(/<b>/g, "<strong>").replace(/<\/b>/g, "</strong>")
                         //.replace(/<i>/g, "<em>").replace(/<\/i>/g, "</em>")
                   //      ;
 
             //} else if(ua.ie) {
                 data = data
-                        // å°† ie çš„å¤§å†™æ ‡ç­¾å’Œ style ç­‰å±æ€§å€¼è½¬æ¢ä¸ºå°å†™
+                        // ½« ie µÄ´óĞ´±êÇ©ºÍ style µÈÊôĞÔÖµ×ª»»ÎªĞ¡Ğ´
                         .replace(/<\/?[^>]+>/g, function(tag) {
                             return tag.toLowerCase();
                         })
-                        // è®©æ ‡ç­¾æ ·å¼åŒ–
+                        // ÈÃ±êÇ©ÑùÊ½»¯
                         .replace(/<strong>/g, "<b>").replace(/<\/strong>/g, "</b>")
                         .replace(/<em>/g, "<i>").replace(/<\/em>/g, "</i>")
                         ;
@@ -51,12 +51,12 @@ KISSY.Editor.add("plugins~save", function(E) {
 
             return data;
 
-            // æ³¨:
-            //  1. å°†ç¼–è¾‘å™¨å®šä¹‰ä¸ºæ ·å¼ç¼–è¾‘å™¨è€Œéè¯­ä¹‰ç¼–è¾‘å™¨ã€‚
-            //  2. å®ç°è¯­ä¹‰åŒ–ï¼Œéœ€è¦å°† b, i, u, s è½¬æ¢ä¸º strong, em, ins, del. ä½†åœ¨å®é™…ä½¿ç”¨åœºæ™¯ä¸­ï¼Œ
-            //     æ–œä½“ä¸ä¸€å®šè¡¨ç¤ºå¼ºè°ƒï¼Œä¸‹åˆ’çº¿ä¹Ÿä¸å®šä¹‰ä»£è¡¨æ’å…¥ï¼Œå› æ­¤ goto 1.
-            //  4. å»æ‰äº† ua åˆ¤æ–­ï¼Œæ˜¯å› ä¸ºæœ‰å¯èƒ½ä»å…¶å®ƒåœ°æ–¹ copy è¿‡æ¥ï¼Œæ¯”å¦‚ word.
-            //  5. å½“ data å¾ˆå¤§æ—¶ï¼Œä¸Šé¢çš„ replace å¯èƒ½ä¼šæœ‰æ€§èƒ½é—®é¢˜ã€‚
+            // ×¢:
+            //  1. ½«±à¼­Æ÷¶¨ÒåÎªÑùÊ½±à¼­Æ÷¶ø·ÇÓïÒå±à¼­Æ÷¡£
+            //  2. ÊµÏÖÓïÒå»¯£¬ĞèÒª½« b, i, u, s ×ª»»Îª strong, em, ins, del. µ«ÔÚÊµ¼ÊÊ¹ÓÃ³¡¾°ÖĞ£¬
+            //     Ğ±Ìå²»Ò»¶¨±íÊ¾Ç¿µ÷£¬ÏÂ»®ÏßÒ²²»¶¨Òå´ú±í²åÈë£¬Òò´Ë goto 1.
+            //  4. È¥µôÁË ua ÅĞ¶Ï£¬ÊÇÒòÎªÓĞ¿ÉÄÜ´ÓÆäËüµØ·½ copy ¹ıÀ´£¬±ÈÈç word.
+            //  5. µ± data ºÜ´óÊ±£¬ÉÏÃæµÄ replace ¿ÉÄÜ»áÓĞĞÔÄÜÎÊÌâ¡£
         }
     });
  });

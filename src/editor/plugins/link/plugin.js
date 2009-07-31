@@ -5,19 +5,19 @@ KISSY.Editor.add("plugins~link", function(E) {
 
     E.addPlugin("link", {
         /**
-         * ç§ç±»ï¼šæ™®é€šæŒ‰é’®
+         * ÖÖÀà£ºÆÕÍ¨°´Å¥
          */
         type: TYPE.TOOLBAR_BUTTON,
 
         /**
-         * å“åº”å‡½æ•°
+         * ÏìÓ¦º¯Êı
          * @param {KISSY.Editor} editor
          */
         fn: function(editor) {
             var lang = this.lang, val;
 
             // TODO
-            // å®Œå–„ç»†èŠ‚
+            // ÍêÉÆÏ¸½Ú
             val = window.prompt(lang.dialogMessage, "http://");
             editor.execCommand("createLink", val);
         }

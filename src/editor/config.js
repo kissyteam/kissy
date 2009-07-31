@@ -1,24 +1,24 @@
-ï»¿
+
 KISSY.Editor.add("config", function(E) {
 
     E.config = {
         /**
-         * åŸºæœ¬è·¯å¾„
+         * »ù±¾Â·¾¶
          */
         base: "",
 
         /**
-         * è¯­è¨€
+         * ÓïÑÔ
          */
         language: "en",
 
         /**
-         * ä¸»é¢˜
+         * Ö÷Ìâ
          */
         theme: "default",
 
         /**
-         * Toolbar ä¸ŠåŠŸèƒ½æ’ä»¶
+         * Toolbar ÉÏ¹¦ÄÜ²å¼ş
          */
         toolbar: [
             "undo", "redo",

@@ -5,17 +5,17 @@ KISSY.Editor.add("plugins~undo", function(E) {
 
     E.addPlugin(["undo", "redo"], {
         /**
-         * ç§ç±»ï¼šæ™®é€šæŒ‰é’®
+         * ÖÖÀà£ºÆÕÍ¨°´Å¥
          */
         type: TYPE.TOOLBAR_BUTTON,
 
         /**
-         * å“åº”å‡½æ•°
+         * ÏìÓ¦º¯Êı
          * @param {KISSY.Editor} editor
          */
         fn: function(editor) {
             // TODO
-            // å®Œå–„ç»†èŠ‚
+            // ÍêÉÆÏ¸½Ú
             editor.execCommand(this.name);
         }
     });
