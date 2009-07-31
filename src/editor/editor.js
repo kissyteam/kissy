@@ -411,10 +411,9 @@ KISSY.Editor.add("core~command", function(E) {
         _preExec: function(doc, cmdName) {
 
             // 关闭 gecko 浏览器的 styleWithCSS 特性，使得产生的内容和 ie 一致
-            if(ua.gecko && BASIC_COMMANDS.indexOf(cmdName) > -1) {
-                doc[EXEC_COMMAND](STYLE_WITH_CSS, false, false);
-            } else {
-                doc[EXEC_COMMAND](STYLE_WITH_CSS, false, true);
+            if (ua.gecko) {
+                var val = BASIC_COMMANDS.indexOf(cmdName) == -1;
+                doc[EXEC_COMMAND](STYLE_WITH_CSS, false, val);
             }
         }
     };
@@ -994,7 +993,7 @@ KISSY.Editor.add("plugins~color", function(E) {
             var el = this.domEl,
                 caption = el.getElementsByTagName("span")[0].parentNode;
 
-            this.color = (this.name == "foreColor") ? "#000000" : "#FFFFFF";
+            this.color = (this.name == "foreColor") ? "#000000" : "#ffffff";
 
             Dom.addClass(el, "kissy-toolbar-color-button");
             caption.innerHTML = '<div class="kissy-toolbar-color-button-indicator" style="border-bottom-color:' + this.color + '">'
@@ -1387,24 +1386,15 @@ KISSY.Editor.add("plugins~save", function(E) {
          */
         filterData: function(data) {
 
-            //if(ua.gecko) {
-                //data = data
-                        // 让 gecko 的标签语义化
-                        //.replace(/<b>/g, "<strong>").replace(/<\/b>/g, "</strong>")
-                        //.replace(/<i>/g, "<em>").replace(/<\/i>/g, "</em>")
-                  //      ;
-
-            //} else if(ua.ie) {
-                data = data
-                        // 将 ie 的大写标签和 style 等属性值转换为小写
-                        .replace(/<\/?[^>]+>/g, function(tag) {
-                            return tag.toLowerCase();
-                        })
-                        // 让标签样式化
-                        .replace(/<strong>/g, "<b>").replace(/<\/strong>/g, "</b>")
-                        .replace(/<em>/g, "<i>").replace(/<\/em>/g, "</i>")
-                        ;
-            //}
+            data = data
+                // 将 ie 的大写标签和 style 等属性值转换为小写
+                .replace(/<\/?[^>]+>/g, function(tag) {
+                    return tag.toLowerCase();
+                })
+                // 让标签样式化
+                .replace(/<strong>/g, "<b>").replace(/<\/strong>/g, "</b>")
+                .replace(/<em>/g, "<i>").replace(/<\/em>/g, "</i>")
+                ;
 
             return data;
 
@@ -1414,6 +1404,10 @@ KISSY.Editor.add("plugins~save", function(E) {
             //     斜体不一定表示强调，下划线也不定义代表插入，因此 goto 1.
             //  4. 去掉了 ua 判断，是因为有可能从其它地方 copy 过来，比如 word.
             //  5. 当 data 很大时，上面的 replace 可能会有性能问题。
+
+            // FCKEditor 实现了部分语义化
+            // Google Docs 采用是实用主义
+            // 我这里暂时全部采用 Google Docs 的方案
         }
     });
  });
