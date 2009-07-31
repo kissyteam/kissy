@@ -25,10 +25,9 @@ KISSY.Editor.add("core~command", function(E) {
         _preExec: function(doc, cmdName) {
 
             // 关闭 gecko 浏览器的 styleWithCSS 特性，使得产生的内容和 ie 一致
-            if(ua.gecko && BASIC_COMMANDS.indexOf(cmdName) > -1) {
-                doc[EXEC_COMMAND](STYLE_WITH_CSS, false, false);
-            } else {
-                doc[EXEC_COMMAND](STYLE_WITH_CSS, false, true);
+            if (ua.gecko) {
+                var val = BASIC_COMMANDS.indexOf(cmdName) == -1;
+                doc[EXEC_COMMAND](STYLE_WITH_CSS, false, val);
             }
         }
     };

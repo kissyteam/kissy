@@ -49,7 +49,7 @@ KISSY.Editor.add("plugins~color", function(E) {
             var el = this.domEl,
                 caption = el.getElementsByTagName("span")[0].parentNode;
 
-            this.color = (this.name == "foreColor") ? "#000000" : "#FFFFFF";
+            this.color = (this.name == "foreColor") ? "#000000" : "#ffffff";
 
             Dom.addClass(el, "kissy-toolbar-color-button");
             caption.innerHTML = '<div class="kissy-toolbar-color-button-indicator" style="border-bottom-color:' + this.color + '">'
