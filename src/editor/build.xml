@@ -28,6 +28,7 @@
             <path path="plugins/color/plugin.js"/>
             <path path="plugins/link/plugin.js"/>
             <path path="plugins/indent/plugin.js"/>
+            <path path="plugins/justify/plugin.js"/>
             <path path="plugins/undo/plugin.js"/>
             <path path="plugins/save/plugin.js"/>
         </concat>

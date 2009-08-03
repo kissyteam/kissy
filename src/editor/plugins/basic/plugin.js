@@ -3,8 +3,7 @@ KISSY.Editor.add("plugins~base", function(E) {
 
     var TYPE = E.PLUGIN_TYPE,
         buttons  = "bold,italic,underline,strikeThrough," +
-                   "insertOrderedList,insertUnorderedList," +
-                   "justifyLeft,justifyCenter,justifyRight";
+                   "insertOrderedList,insertUnorderedList";
 
     E.addPlugin(buttons.split(","), {
         /**
