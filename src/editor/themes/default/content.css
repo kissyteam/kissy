@@ -11,17 +11,18 @@ em { font-style: italic; }
 
 /* editor reset */
 body {
-    font: 12px/150% Verdana,sans-serif;
+    font: 13px/150% Verdana,sans-serif;
     padding: 6px;
 }
 
 a {
     /* blue is more readable for link */
-    color: #06c;
+    color: blue;
+    text-decoration: underline;
 }
 
-blockquote, ul, ol, dl {
-	/* giving blockquotes and lists room to breath */
+ul, ol, dl {
+	/* giving lists room to breath */
 	margin: 1em;
 }
 ul, ol, dl {
@@ -51,4 +52,9 @@ caption {
 p, fieldset, table, pre {
 	/* so things don't run into each other */
 	margin-bottom: 1em;
+}
+blockquote {
+    margin-left: 30px;
+    padding: 10px;
+    border: 1px dashed #ddd;
 }
