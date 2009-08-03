@@ -16,7 +16,7 @@ KISSY.Editor.add("plugins~justify", function(E) {
          */
         fn: function(editor) {
             if(isIE) {
-                _ieFn(editor);
+                this._ieFn(editor);
             } else {
                 editor.execCommand(this.name);
             }
@@ -26,7 +26,10 @@ KISSY.Editor.add("plugins~justify", function(E) {
          * ie µÄÏìÓ¦º¯Êý
          */
         _ieFn: function(editor) {
-            
+            var range = editor.getSelectionRange(),
+                parentEl = range.parentElement();
+
+            alert(parentEl);
         }
     });
 
