@@ -2,7 +2,14 @@
 KISSY.Editor.add("plugins~save", function(E) {
 
     var Y = YAHOO.util, Event = Y.Event,
-        TYPE = E.PLUGIN_TYPE;
+        TYPE = E.PLUGIN_TYPE,
+
+        TAG_MAP = {
+            b: { tag: "strong" },
+            i: { tag: "em" },
+            u: { tag: "span", style: "text-decoration:underline" },
+            strike: { tag: "span", style: "text-decoration:line-through" }
+        };
 
 
     E.addPlugin("save", {
@@ -30,28 +37,38 @@ KISSY.Editor.add("plugins~save", function(E) {
          */
         filterData: function(data) {
 
-            data = data
+            data = data.replace(/<(\/?)([^>]+)>/g, function(m, slash, tag) {
+
                 // 将 ie 的大写标签和 style 等属性值转换为小写
-                .replace(/<\/?[^>]+>/g, function(tag) {
-                    return tag.toLowerCase();
-                })
-                // 让标签样式化
-                .replace(/<strong>/g, "<b>").replace(/<\/strong>/g, "</b>")
-                .replace(/<em>/g, "<i>").replace(/<\/em>/g, "</i>")
-                ;
+                tag = tag.toLowerCase();
+
+                // 让标签语义化
+                var map = TAG_MAP[tag],
+                    ret = tag;
+
+                // 找不到时，仅仅做小写转换
+                if(map) {
+                    ret = map["tag"];
+                    if(!slash && map["style"]) {
+                        ret += ' style="' + map["style"] + '"';
+                    }
+                }
+
+                return "<" + slash + ret + ">";
+            });
 
             return data;
 
             // 注:
-            //  1. 将编辑器定义为样式编辑器而非语义编辑器。
-            //  2. 实现语义化，需要将 b, i, u, s 转换为 strong, em, ins, del. 但在实际使用场景中，
-            //     斜体不一定表示强调，下划线也不定义代表插入，因此 goto 1.
-            //  4. 去掉了 ua 判断，是因为有可能从其它地方 copy 过来，比如 word.
-            //  5. 当 data 很大时，上面的 replace 可能会有性能问题。
+            //  1. 当 data 很大时，上面的 replace 可能会有性能问题。
+            //    （更新：已经将多个 replace 合并成了一个，正常情况下，不会有性能问题）
+            //
+            //  2. 尽量语义化，google 的实用，但未必对
+            // TODO: 进一步优化，比如 <span style="..."><span style="..."> 两个span可以合并为一个
 
             // FCKEditor 实现了部分语义化
             // Google Docs 采用是实用主义
-            // 我这里暂时全部采用 Google Docs 的方案
+            // KISSY Editor 的原则是：在保证实用的基础上，尽量语义化
         }
     });
  });

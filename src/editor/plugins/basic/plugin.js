@@ -15,7 +15,7 @@ KISSY.Editor.add("plugins~base", function(E) {
          * ÏìÓ¦º¯Êý
          * @param {KISSY.Editor} editor
          */
-        fn: function(editor) {
+        exec: function(editor) {
             editor.execCommand(this.name);
         }
     });

@@ -2,8 +2,7 @@
 KISSY.Editor.add("plugins~link", function(E) {
 
     var TYPE = E.PLUGIN_TYPE,
-        Lang = YAHOO.lang,
-        ua = YAHOO.env.ua, isIE = ua.ie;
+        Lang = YAHOO.lang;
 
     E.addPlugin("link", {
         /**
@@ -15,7 +14,7 @@ KISSY.Editor.add("plugins~link", function(E) {
          * ÏìÓ¦º¯Êý
          * @param {KISSY.Editor} editor
          */
-        fn: function(editor) {
+        exec: function(editor) {
             var msg = this.lang.dialogMessage,
                 url = "http://",
                 range = editor.getSelectionRange(),

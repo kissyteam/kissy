@@ -136,9 +136,9 @@ KISSY.Editor.add("core~toolbar", function(E) {
             var el = p.domEl;
 
             // 1. 注册点击时的响应函数
-            if (p.fn) {
+            if (p.exec) {
                 Event.on(el, "click", function() {
-                    p.fn(editor);
+                    p.exec(editor);
                 });
             }
 

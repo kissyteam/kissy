@@ -300,14 +300,24 @@ KISSY.Editor.add("core~plugin", function(E) {
 
 KISSY.Editor.add("core~dom", function(E) {
 
+    var UA = YAHOO.env.ua;
+
     E.Dom = {
-        getText: (document.documentElement.textContent !== undefined) ?
-            function(el) {
-                return el ? (el.textContent || '') : '';
-             } : function(el) {
-                 return el ? (el.innerText || '') : '';
-             }
+
+        /**
+         * 获取元素的文本内容
+         */
+        getText: function(el) {
+            return el ? (el.textContent || '') : '';
+        }
     };
+
+    // for ie
+    if (UA.ie) {
+        E.Dom.getText = function(el) {
+            return el ? (el.innerText || '') : '';
+        };
+    }
 
 });
 
@@ -415,6 +425,38 @@ KISSY.Editor.add("core~command", function(E) {
                 var val = BASIC_COMMANDS.indexOf(cmdName) == -1;
                 doc[EXEC_COMMAND](STYLE_WITH_CSS, false, val);
             }
+        }
+    };
+
+});
+KISSY.Editor.add("core~range", function(E) {
+
+    E.Range = {
+
+        /**
+         * 获取选中区域对象
+         */
+        getSelectionRange: function(win) {
+            var doc = win.document,
+                selection, range;
+
+            if (win.getSelection) { // W3C
+                selection = win.getSelection();
+
+                if (selection.getRangeAt)
+                    range = selection.getRangeAt(0);
+
+                else { // Safari! TODO: 待测试
+                    range = doc.createRange();
+                    range.setStart(selection.anchorNode, selection.anchorOffset);
+                    range.setEnd(selection.focusNode, selection.focusOffset);
+                }
+
+            } else if (doc.selection) { // IE
+                range = doc.selection.createRange();
+            }
+
+            return range;
         }
     };
 
@@ -592,6 +634,13 @@ KISSY.Editor.add("core~instance", function(E) {
             }
 
             return data;
+        },
+
+        /**
+         * 获取选中区域的 Range 对象
+         */
+        getSelectionRange: function() {
+            return E.Range.getSelectionRange(this.contentWin);
         }
     };
 
@@ -734,9 +783,9 @@ KISSY.Editor.add("core~toolbar", function(E) {
             var el = p.domEl;
 
             // 1. 注册点击时的响应函数
-            if (p.fn) {
+            if (p.exec) {
                 Event.on(el, "click", function() {
-                    p.fn(editor);
+                    p.exec(editor);
                 });
             }
 
@@ -922,9 +971,7 @@ KISSY.Editor.add("plugins~base", function(E) {
 
     var TYPE = E.PLUGIN_TYPE,
         buttons  = "bold,italic,underline,strikeThrough," +
-                   "insertOrderedList,insertUnorderedList," +
-                   "outdent,indent," +
-                   "justifyLeft,justifyCenter,justifyRight";
+                   "insertOrderedList,insertUnorderedList";
 
     E.addPlugin(buttons.split(","), {
         /**
@@ -936,12 +983,191 @@ KISSY.Editor.add("plugins~base", function(E) {
          * 响应函数
          * @param {KISSY.Editor} editor
          */
-        fn: function(editor) {
+        exec: function(editor) {
             editor.execCommand(this.name);
         }
     });
 
  });
+
+KISSY.Editor.add("plugins~font", function(E) {
+
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
+        isIE = YAHOO.env.ua.ie,
+        TYPE = E.PLUGIN_TYPE,
+
+        SELECT_TMPL = '<ul class="kissy-select-list">{LI}</ul>',
+        OPTION_TMPL = '<li class="kissy-option" data-value="{VALUE}">' +
+                          '<span class="kissy-option-checkbox"></span>' +
+                          '<span style="{STYLE}">{KEY}</span>' +
+                      '</li>',
+        OPTION_SELECTED = "kissy-option-selected",
+        DEFAULT = "Default";
+
+    E.addPlugin(["fontName", "fontSize"], {
+        /**
+         * 种类：菜单按钮
+         */
+        type: TYPE.TOOLBAR_SELECT,
+
+        /**
+         * 当前选中值
+         */
+        selectedValue: "",
+
+        /**
+         * 选择框头部
+         */
+        selectHead: null,
+
+        /**
+         * 关联的下拉选择列表
+         */
+        selectList: null,
+
+        /**
+         * 下拉框里的所有选项值
+         */
+        options: [],
+
+        /**
+         * 初始化
+         */
+        init: function(editor) {
+            var el = this.domEl;
+
+            this.options = this.lang.options;
+            this.selectHead = el.getElementsByTagName("span")[0];
+
+            this._initSelectList(editor, el);
+
+            // 选中当前值
+            this._setSelectedOption(this.options[DEFAULT]);
+        },
+
+        /**
+         * 初始化下拉选择框
+         */
+        _initSelectList: function(editor, trigger) {
+            this.selectList = E.Menu.generateDropMenu(editor, trigger, [1, 0]);
+
+            // 初始化下拉框 DOM
+            this._renderSelectList();
+
+            // 注册选取事件
+            this._bindPickEvent(editor);
+        },
+
+        /**
+         * 初始化下拉框 DOM
+         */
+        _renderSelectList: function() {
+            var htmlCode = "", options = this.options,
+                key, val;
+
+            for(key in options) {
+                if(key == DEFAULT) continue;
+                val = options[key];
+
+                htmlCode += OPTION_TMPL
+                        .replace("{VALUE}", val)
+                        .replace("{STYLE}", this._getOptionStyle(val))
+                        .replace("{KEY}", key);
+            }
+
+            // 添加到 DOM 中
+            this.selectList.innerHTML = SELECT_TMPL.replace("{LI}", htmlCode);
+
+            // 添加个性化 class
+            Dom.addClass(this.selectList, "kissy-drop-menu-" + this.name);
+
+            // 针对 ie，设置不可选择
+            if (isIE) E.Toolbar.setItemUnselectable(this.selectList);
+        },
+
+        /**
+         * 绑定取色事件
+         */
+        _bindPickEvent: function(editor) {
+            var self = this;
+
+            Event.on(this.selectList, "click", function(ev) {
+                var target = Event.getTarget(ev), val;
+
+                if(target.nodeName != "LI") {
+                    target = Dom.getAncestorByTagName(target, "li");
+                }
+                if(!target) return;
+
+                val = target.getAttribute("data-value");
+                //console.log(val);
+
+                if(val) {
+                    // 更新当前值
+                    self._setSelectedOption(val);
+
+                    // 执行命令
+                    editor.execCommand(self.name, self.selectedValue);
+                }
+            });
+        },
+
+        /**
+         * 选中某一项
+         */
+        _setSelectedOption: function(val) {
+            this.selectedValue = val;
+
+            // 更新 head
+            this.selectHead.innerHTML = this._getOptionKey(val);
+
+            // 更新 selectList 中的选中项
+            this._updateSelectedOption(val);
+        },
+
+        _getOptionStyle: function(val) {
+          if(this.name == "fontName") {
+              return "font-family:" + val;
+          } else { // font size
+              return "font-size:" + val;
+          }
+        },
+
+        _getOptionKey: function(val) {
+            var options = this.options, key;
+
+            for(key in options) {
+                if(key == DEFAULT) continue;
+                
+                if(options[key] == val) {
+                    return key;
+                }
+            }
+        },
+
+        /**
+         * 更新下拉框的选中项
+         */
+        _updateSelectedOption: function(val) {
+            var items = this.selectList.getElementsByTagName("li"),
+                i, len = items.length, item;
+
+            for(i = 0; i < len; ++i) {
+                item = items[i];
+
+                if(item.getAttribute("data-value") == val) {
+                    Dom.addClass(item, OPTION_SELECTED);
+                } else {
+                    Dom.removeClass(item, OPTION_SELECTED);
+                }
+            }
+        }
+    });
+
+});
+
+// TODO
+//  1. 仿 google, 对键盘事件的支持
 
 KISSY.Editor.add("plugins~color", function(E) {
 
@@ -1129,7 +1355,8 @@ KISSY.Editor.add("plugins~color", function(E) {
 
 KISSY.Editor.add("plugins~link", function(E) {
 
-    var TYPE = E.PLUGIN_TYPE;
+    var TYPE = E.PLUGIN_TYPE,
+        Lang = YAHOO.lang;
 
     E.addPlugin("link", {
         /**
@@ -1141,17 +1368,156 @@ KISSY.Editor.add("plugins~link", function(E) {
          * 响应函数
          * @param {KISSY.Editor} editor
          */
-        fn: function(editor) {
-            var lang = this.lang, val;
+        exec: function(editor) {
+            var msg = this.lang.dialogMessage,
+                url = "http://",
+                range = editor.getSelectionRange(),
+                container = range.startContainer,
+                parentEl;
 
-            // TODO
-            // 完善细节
-            val = window.prompt(lang.dialogMessage, "http://");
-            editor.execCommand("createLink", val);
+           if(container.nodeType == 3) { // TextNode
+               parentEl = container.parentNode;
+               if(parentEl.nodeName == "A") {
+                   url = parentEl.href;
+               }
+           }
+
+            url = Lang.trim(window.prompt(msg, url));
+
+            if(url) {
+                editor.execCommand("createLink", url);
+            } else {
+                editor.execCommand("unLink", url);
+            }
+
+            // TODO:
+            // 当选区包含链接/一部分包含链接时，生成的链接内容的调优处理。
+            // 目前只有 Google Docs 做了优化，其它编辑器都采用浏览器默认的处理方式。
+            // 先记于此，等以后优化。
         }
     });
 
  });
+
+KISSY.Editor.add("plugins~indent", function(E) {
+
+    var TYPE = E.PLUGIN_TYPE;
+
+    E.addPlugin(["indent", "outdent"], {
+        /**
+         * 种类：普通按钮
+         */
+        type: TYPE.TOOLBAR_BUTTON,
+
+        /**
+         * 响应函数
+         * @param {KISSY.Editor} editor
+         */
+        exec: function(editor) {
+            editor.execCommand(this.name);
+        }
+    });
+
+ });
+
+// TODO:
+//  目前仿 Google Docs，不做特殊处理。在不同浏览器下表现不同。
+//  等有时间了，可以考虑仿照 CKEditor 的实现方式。
+
+KISSY.Editor.add("plugins~justify", function(E) {
+
+    var Y = YAHOO.util, Dom = Y.Dom,
+        TYPE = E.PLUGIN_TYPE,
+        UA = YAHOO.env.ua,
+
+        // Ref: CKEditor - core/dom/elementpath.js
+        JUSTIFY_ELEMENTS = {
+
+            /* 结构元素 */
+            blockquote:1,
+            div:1,
+            h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,
+            hr:1,
+            p:1,
+
+            /* 文本格式元素 */
+            address:1,
+            center:1,
+            pre:1,
+
+            /* 表单元素 */
+            form:1,
+            fieldset:1,
+            caption:1,
+
+            /* 表格元素 */
+            table:1,
+            tbody:1,
+            tr:1, th:1, td:1,
+
+            /* 列表元素 */
+            ul:1, ol:1, dl:1,
+            dt:1, dd:1, li:1
+        },
+
+        plugin = {
+            /**
+             * 种类：普通按钮
+             */
+            type: TYPE.TOOLBAR_BUTTON,
+
+            /**
+             * 响应函数
+             * @param {KISSY.Editor} editor
+             */
+            exec: function(editor) {
+                editor.execCommand(this.name);
+            }
+        };
+
+    // 注：ie 下，默认使用 align 属性来实现对齐
+    // 下面采用自主操作 range 的方式来实现，以保持和其它浏览器一致
+    if (UA.ie) {
+
+        plugin.exec = function(editor) {
+            var range = editor.getSelectionRange(),
+                parentEl = range.parentElement(),
+                justifyAncestor;
+
+            // 获取可对齐的父元素
+            if (isJustifyElement(parentEl)) {
+                justifyAncestor = parentEl;
+            } else {
+                justifyAncestor = getJustifyAncestor(parentEl);
+            }
+
+            // 设置 text-align
+            if (justifyAncestor) {
+                justifyAncestor.style.textAlign = this.name.substring(7).toLowerCase();
+            }
+
+            /**
+             * 获取可设置对齐的父元素
+             */
+            function getJustifyAncestor(el) {
+                return Dom.getAncestorBy(el, function(arg) {
+                    return isJustifyElement(arg);
+                });
+            }
+
+            /**
+             * 判断是否可对齐元素
+             */
+            function isJustifyElement(el) {
+                return JUSTIFY_ELEMENTS[el.nodeName.toLowerCase()];
+            }
+        };
+    }
+    
+    // 注册插件
+    E.addPlugin(["justifyLeft", "justifyCenter", "justifyRight"], plugin);
+
+});
 
 KISSY.Editor.add("plugins~undo", function(E) {
 
@@ -1167,7 +1533,7 @@ KISSY.Editor.add("plugins~undo", function(E) {
          * 响应函数
          * @param {KISSY.Editor} editor
          */
-        fn: function(editor) {
+        exec: function(editor) {
             // TODO
             // 完善细节
             editor.execCommand(this.name);
@@ -1176,189 +1542,17 @@ KISSY.Editor.add("plugins~undo", function(E) {
 
  });
 
-KISSY.Editor.add("plugins~font", function(E) {
-
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
-        isIE = YAHOO.env.ua.ie,
-        TYPE = E.PLUGIN_TYPE,
-
-        SELECT_TMPL = '<ul class="kissy-select-list">{LI}</ul>',
-        OPTION_TMPL = '<li class="kissy-option" data-value="{VALUE}">' +
-                          '<span class="kissy-option-checkbox"></span>' +
-                          '<span style="{STYLE}">{KEY}</span>' +
-                      '</li>',
-        OPTION_SELECTED = "kissy-option-selected",
-        DEFAULT = "Default";
-
-    E.addPlugin(["fontName", "fontSize"], {
-        /**
-         * 种类：菜单按钮
-         */
-        type: TYPE.TOOLBAR_SELECT,
-
-        /**
-         * 当前选中值
-         */
-        selectedValue: "",
-
-        /**
-         * 选择框头部
-         */
-        selectHead: null,
-
-        /**
-         * 关联的下拉选择列表
-         */
-        selectList: null,
-
-        /**
-         * 下拉框里的所有选项值
-         */
-        options: [],
-
-        /**
-         * 初始化
-         */
-        init: function(editor) {
-            var el = this.domEl;
-
-            this.options = this.lang.options;
-            this.selectHead = el.getElementsByTagName("span")[0];
-
-            this._initSelectList(editor, el);
-
-            // 选中当前值
-            this._setSelectedOption(this.options[DEFAULT]);
-        },
-
-        /**
-         * 初始化下拉选择框
-         */
-        _initSelectList: function(editor, trigger) {
-            this.selectList = E.Menu.generateDropMenu(editor, trigger, [1, 0]);
-
-            // 初始化下拉框 DOM
-            this._renderSelectList();
-
-            // 注册选取事件
-            this._bindPickEvent(editor);
-        },
-
-        /**
-         * 初始化下拉框 DOM
-         */
-        _renderSelectList: function() {
-            var htmlCode = "", options = this.options,
-                key, val;
-
-            for(key in options) {
-                if(key == DEFAULT) continue;
-                val = options[key];
-
-                htmlCode += OPTION_TMPL
-                        .replace("{VALUE}", val)
-                        .replace("{STYLE}", this._getOptionStyle(val))
-                        .replace("{KEY}", key);
-            }
-
-            // 添加到 DOM 中
-            this.selectList.innerHTML = SELECT_TMPL.replace("{LI}", htmlCode);
-
-            // 添加个性化 class
-            Dom.addClass(this.selectList, "kissy-drop-menu-" + this.name);
-
-            // 针对 ie，设置不可选择
-            if (isIE) E.Toolbar.setItemUnselectable(this.selectList);
-        },
-
-        /**
-         * 绑定取色事件
-         */
-        _bindPickEvent: function(editor) {
-            var self = this;
-
-            Event.on(this.selectList, "click", function(ev) {
-                var target = Event.getTarget(ev), val;
-
-                if(target.nodeName != "LI") {
-                    target = Dom.getAncestorByTagName(target, "li");
-                }
-                if(!target) return;
-
-                val = target.getAttribute("data-value");
-                //console.log(val);
-
-                if(val) {
-                    // 更新当前值
-                    self._setSelectedOption(val);
-
-                    // 执行命令
-                    editor.execCommand(self.name, self.selectedValue);
-                }
-            });
-        },
-
-        /**
-         * 选中某一项
-         */
-        _setSelectedOption: function(val) {
-            this.selectedValue = val;
-
-            // 更新 head
-            this.selectHead.innerHTML = this._getOptionKey(val);
-
-            // 更新 selectList 中的选中项
-            this._updateSelectedOption(val);
-        },
-
-        _getOptionStyle: function(val) {
-          if(this.name == "fontName") {
-              return "font-family:" + val;
-          } else { // font size
-              return "font-size:" + val;
-          }
-        },
-
-        _getOptionKey: function(val) {
-            var options = this.options, key;
-
-            for(key in options) {
-                if(key == DEFAULT) continue;
-                
-                if(options[key] == val) {
-                    return key;
-                }
-            }
-        },
-
-        /**
-         * 更新下拉框的选中项
-         */
-        _updateSelectedOption: function(val) {
-            var items = this.selectList.getElementsByTagName("li"),
-                i, len = items.length, item;
-
-            for(i = 0; i < len; ++i) {
-                item = items[i];
-
-                if(item.getAttribute("data-value") == val) {
-                    Dom.addClass(item, OPTION_SELECTED);
-                } else {
-                    Dom.removeClass(item, OPTION_SELECTED);
-                }
-            }
-        }
-    });
-
-});
-
-// TODO
-//  1. 仿 google, 对键盘事件的支持
-
 KISSY.Editor.add("plugins~save", function(E) {
 
     var Y = YAHOO.util, Event = Y.Event,
-        TYPE = E.PLUGIN_TYPE;
+        TYPE = E.PLUGIN_TYPE,
+
+        TAG_MAP = {
+            b: { tag: "strong" },
+            i: { tag: "em" },
+            u: { tag: "span", style: "text-decoration:underline" },
+            strike: { tag: "span", style: "text-decoration:line-through" }
+        };
 
 
     E.addPlugin("save", {
@@ -1386,28 +1580,38 @@ KISSY.Editor.add("plugins~save", function(E) {
          */
         filterData: function(data) {
 
-            data = data
+            data = data.replace(/<(\/?)([^>]+)>/g, function(m, slash, tag) {
+
                 // 将 ie 的大写标签和 style 等属性值转换为小写
-                .replace(/<\/?[^>]+>/g, function(tag) {
-                    return tag.toLowerCase();
-                })
-                // 让标签样式化
-                .replace(/<strong>/g, "<b>").replace(/<\/strong>/g, "</b>")
-                .replace(/<em>/g, "<i>").replace(/<\/em>/g, "</i>")
-                ;
+                tag = tag.toLowerCase();
+
+                // 让标签语义化
+                var map = TAG_MAP[tag],
+                    ret = tag;
+
+                // 找不到时，仅仅做小写转换
+                if(map) {
+                    ret = map["tag"];
+                    if(!slash && map["style"]) {
+                        ret += ' style="' + map["style"] + '"';
+                    }
+                }
+
+                return "<" + slash + ret + ">";
+            });
 
             return data;
 
             // 注:
-            //  1. 将编辑器定义为样式编辑器而非语义编辑器。
-            //  2. 实现语义化，需要将 b, i, u, s 转换为 strong, em, ins, del. 但在实际使用场景中，
-            //     斜体不一定表示强调，下划线也不定义代表插入，因此 goto 1.
-            //  4. 去掉了 ua 判断，是因为有可能从其它地方 copy 过来，比如 word.
-            //  5. 当 data 很大时，上面的 replace 可能会有性能问题。
+            //  1. 当 data 很大时，上面的 replace 可能会有性能问题。
+            //    （更新：已经将多个 replace 合并成了一个，正常情况下，不会有性能问题）
+            //
+            //  2. 尽量语义化，google 的实用，但未必对
+            // TODO: 进一步优化，比如 <span style="..."><span style="..."> 两个span可以合并为一个
 
             // FCKEditor 实现了部分语义化
             // Google Docs 采用是实用主义
-            // 我这里暂时全部采用 Google Docs 的方案
+            // KISSY Editor 的原则是：在保证实用的基础上，尽量语义化
         }
     });
  });

@@ -13,7 +13,7 @@ KISSY.Editor.add("plugins~indent", function(E) {
          * ÏìÓ¦º¯Êý
          * @param {KISSY.Editor} editor
          */
-        fn: function(editor) {
+        exec: function(editor) {
             editor.execCommand(this.name);
         }
     });

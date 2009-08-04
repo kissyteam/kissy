@@ -1,3 +1,4 @@
+
 KISSY.Editor.add("plugins~justify", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom,
@@ -44,7 +45,7 @@ KISSY.Editor.add("plugins~justify", function(E) {
              * 响应函数
              * @param {KISSY.Editor} editor
              */
-            fn: function(editor) {
+            exec: function(editor) {
                 editor.execCommand(this.name);
             }
         };
@@ -53,7 +54,7 @@ KISSY.Editor.add("plugins~justify", function(E) {
     // 下面采用自主操作 range 的方式来实现，以保持和其它浏览器一致
     if (UA.ie) {
 
-        plugin.fn = function(editor) {
+        plugin.exec = function(editor) {
             var range = editor.getSelectionRange(),
                 parentEl = range.parentElement(),
                 justifyAncestor;

@@ -13,7 +13,7 @@ KISSY.Editor.add("plugins~undo", function(E) {
          * 响应函数
          * @param {KISSY.Editor} editor
          */
-        fn: function(editor) {
+        exec: function(editor) {
             // TODO
             // 完善细节
             editor.execCommand(this.name);
