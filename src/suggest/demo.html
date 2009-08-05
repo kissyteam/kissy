@@ -15,6 +15,7 @@
     .search-input { width: 300px; height: 20px; padding: 5px 2px 0 4px; }
     .search-submit { padding: 4px 10px; margin-left: 5px; }
     input.g-submit { padding: 2px 8px; margin-left: 5px; }
+    html { overflow-y: scroll; }
 </style>
 </head>
 <body>
@@ -55,15 +56,12 @@
             <button type="submit" class="search-submit">百度一下</button>
         </form>
         <style type="text/css">
-            .youa-suggest-container { background: white; border: 1px solid #5BA515; z-index: 100001 }
-            .youa-suggest-container li { color: #404040; padding: 2px 0 3px; font-size: 14px; line-height: 20px; float: left; width: 100% }
-            .youa-suggest-container li.selected { background-color: #DEEFC5; cursor: default; }
-            .youa-suggest-container .suggest-result { font-size: 12px; color: #999; }
-            .youa-suggest-container li.selected span { color: #240055; cursor: default }
+            .youa-suggest-container { border-color: #5BA515 }
+            .youa-suggest-container li { padding: 2px 0 3px; font-size: 14px; line-height: 20px }
+            .youa-suggest-container li.selected { background-color: #DEEFC5 }
+            .youa-suggest-container .suggest-result { font-size: 12px; color: #999 }
+            .youa-suggest-container li.selected span { color: #240055 }
             .youa-suggest-container li.selected .suggest-result { color: #999 }
-            .youa-suggest-container li,.suggest-bottom{overflow: hidden; zoom: 1; clear: both }
-            /* hacks */
-            .youa-suggest-container { *margin-left: 2px; _margin-left: -2px; _margin-top: -3px }
         </style>
         <script type="text/javascript">
             (function() {
@@ -72,7 +70,7 @@
                 window.suggestCallback = KISSY.Suggest.callback;
 
                 var sug = new KISSY.Suggest('q2', dataUrl, {
-                    containerClassName: 'youa-suggest-container'
+                    containerClass: 'youa-suggest-container'
                 });
 
                 sug.subscribe('beforeDataRequest', function(query) {
@@ -116,13 +114,10 @@
             <input type="hidden" name="aq" value="f"/><input type="hidden" name="oq" value="n"/><input type="hidden" name="aqi" value="g10"/>
         </form>
         <style type="text/css">
-            .g-sug { background: white; border: 1px solid #666; z-index: 100001 }
-            .g-sug li { color: #404040; padding: 2px 0 3px; font-size: 12px; line-height: 18px; float: left; width: 100% }
-            .g-sug li.selected { background-color: #D5E2FF; cursor: default; }
-            .g-sug li.selected span { color: #240055; cursor: default }
-            .g-sug li,.suggest-bottom{overflow: hidden; zoom: 1; clear: both }
-            /* hacks */
-            .g-sug { *margin-left: 2px; _margin-left: -2px; _margin-top: -3px }
+            .g-sug { border-color: #666 }
+            .g-sug li { padding: 2px 0 3px }
+            .g-sug li.selected { background-color: #D5E2FF }
+            .g-sug li.selected span { color: #240055 }
         </style>
         <script type="text/javascript">
             (function() {
@@ -135,7 +130,7 @@
                 var sug = new KISSY.Suggest('gq', dataUrl,
                 {
                     resultFormat: '',
-                    containerClassName: 'g-sug'
+                    containerClass: 'g-sug'
                 });
 
                 sug.subscribe('beforeDataRequest', function(query) {

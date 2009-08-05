@@ -2,8 +2,8 @@
 Copyright (c) 2009, Kissy UI Library. All rights reserved.
 http://kissy.googlecode.com/
 
-Date: 2009-07-31 10:42:18
-Revision: 92
+Date: 2009-08-05 21:25:28
+Revision: 104
 */
 /**
  * KISSY.Suggest 提示补全组件
@@ -20,8 +20,18 @@ var KISSY = window.KISSY || {};
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         head = document.getElementsByTagName("head")[0],
         ie = YAHOO.env.ua.ie, ie6 = (ie === 6),
+
         CALLBACK_STR = "KISSY.Suggest.callback", // 注意 KISSY 在这里是写死的
         STYLE_ID = "suggest-style", // 样式 style 元素的 id
+
+        CONTAINER_CLASS = "suggest-container",
+        KEY_EL_CLASS = "suggest-key", // 提示层中，key 元素的 class
+        RESULT_EL_CLASS = "suggest-result", // 提示层中，result 元素的 class
+        SELECTED_ITEM_CLASS = "selected", // 提示层中，选中项的 class
+        BOTTOM_CLASS = "suggest-bottom",
+        CLOSE_BTN_CLASS = "suggest-close-btn",
+        SHIM_CLASS = "suggest-shim", // iframe shim 的 class
+
         BEFORE_DATA_REQUEST = "beforeDataRequest",
         ON_DATA_RETURN = "onDataReturn",
         BEFORE_SHOW = "beforeShow",
@@ -32,9 +42,10 @@ var KISSY = window.KISSY || {};
          */
         defaultConfig = {
         /**
-         * 悬浮提示层的class
+         * 用户附加给悬浮提示层的 class
+         *
          * 提示层的默认结构如下：
-         * <div class="suggest-container">
+         * <div class="suggest-container [container-class]">
          *     <ol>
          *         <li>
          *             <span class="suggest-key">...</span>
@@ -47,7 +58,7 @@ var KISSY = window.KISSY || {};
          * </div>
          * @type String
          */
-        containerClassName: "suggest-container",
+        containerClass: "",
 
         /**
          * 提示层的宽度
@@ -58,34 +69,10 @@ var KISSY = window.KISSY || {};
         containerWidth: "auto",
 
         /**
-         * 提示层中，key元素的class
-         * @type String
-         */
-        keyElClassName: "suggest-key",
-
-        /**
-         * 提示层中，result元素的class
-         * @type String
-         */
-        resultElClassName: "suggest-result",
-
-        /**
          * result的格式
          * @type String
          */
         resultFormat: "约%result%条结果",
-
-        /**
-         * 提示层中，选中项的class
-         * @type String
-         */
-        selectedItemClassName: "selected",
-
-        /**
-         * 提示层底部的class
-         * @type String
-         */
-        bottomClassName: "suggest-bottom",
 
         /**
          * 是否显示关闭按钮
@@ -100,22 +87,10 @@ var KISSY = window.KISSY || {};
         closeBtnText: "关闭",
 
         /**
-         * 关闭按钮的class
-         * @type String
-         */
-        closeBtnClassName: "suggest-close-btn",
-
-        /**
          * 是否需要iframe shim
          * @type Boolean
          */
         useShim: ie6,
-
-        /**
-         * iframe shim的class
-         * @type String
-         */
-        shimClassName: "suggest-shim",
 
         /**
          * 定时器的延时
@@ -363,8 +338,13 @@ var KISSY = window.KISSY || {};
          */
         _initContainer: function() {
             // create
-            var container = document.createElement("div");
-            container.className = this.config.containerClassName;
+            var container = document.createElement("div"),
+                customContainerClass = this.config.containerClass;
+
+            container.className = CONTAINER_CLASS;
+            if(customContainerClass) {
+                container.className += " " + customContainerClass;
+            }
             container.style.position = "absolute";
             container.style.visibility = "hidden";
             this.container = container;
@@ -457,7 +437,7 @@ var KISSY = window.KISSY || {};
                 if (target != mouseDownItem) return;
 
                 // 点击在关闭按钮上
-                if (target.className == instance.config.closeBtnClassName) {
+                if (target.className == CLOSE_BTN_CLASS) {
                     instance.hide();
                     return;
                 }
@@ -487,19 +467,19 @@ var KISSY = window.KISSY || {};
          * click选择 or enter后，提交表单
          */
         _submitForm: function() {
-            // 注：对于键盘控制enter选择的情况，由html自身决定是否提交。否则会导致输入法开启时，用enter选择英文时也触发提交
+            // 注：对于键盘控制enter选择的情况，由html自身决定是否提交。否则会导致某些输入法下，用enter选择英文时也触发提交
             if (this.config.submitFormOnClickSelect) {
                 var form = this.textInput.form;
                 if (!form) return;
 
                 // 通过js提交表单时，不会触发onsubmit事件
                 // 需要js自己触发
-                if (document.createEvent) { // ie
+                if (document.createEvent) { // w3c
                     var evObj = document.createEvent("MouseEvents");
                     evObj.initEvent("submit", true, false);
                     form.dispatchEvent(evObj);
                 }
-                else if (document.createEventObject) { // w3c
+                else if (document.createEventObject) { // ie
                     form.fireEvent("onsubmit");
                 }
 
@@ -523,7 +503,7 @@ var KISSY = window.KISSY || {};
         _initShim: function() {
             var iframe = document.createElement("iframe");
             iframe.src = "about:blank";
-            iframe.className = this.config.shimClassName;
+            iframe.className = SHIM_CLASS;
             iframe.style.position = "absolute";
             iframe.style.visibility = "hidden";
             iframe.style.border = "none";
@@ -826,7 +806,7 @@ var KISSY = window.KISSY || {};
         formatItem: function(key, result) {
             var li = document.createElement("li");
             var keyEl = document.createElement("span");
-            keyEl.className = this.config.keyElClassName;
+            keyEl.className = KEY_EL_CLASS;
             keyEl.appendChild(document.createTextNode(key));
             li.appendChild(keyEl);
 
@@ -834,7 +814,7 @@ var KISSY = window.KISSY || {};
                 var resultText = this.config.resultFormat.replace("%result%", result);
                 if (Lang.trim(resultText)) { // 有值时才创建
                     var resultEl = document.createElement("span");
-                    resultEl.className = this.config.resultElClassName;
+                    resultEl.className = RESULT_EL_CLASS;
                     resultEl.appendChild(document.createTextNode(resultText));
                     li.appendChild(resultEl);
                 }
@@ -848,13 +828,13 @@ var KISSY = window.KISSY || {};
          */
         appendBottom: function() {
             var bottom = document.createElement("div");
-            bottom.className = this.config.bottomClassName;
+            bottom.className = BOTTOM_CLASS;
 
             if (this.config.showCloseBtn) {
                 var closeBtn = document.createElement("a");
                 closeBtn.href = "javascript: void(0)";
                 closeBtn.setAttribute("target", "_self"); // bug fix: 覆盖<base target="_blank" />，否则会弹出空白页面
-                closeBtn.className = this.config.closeBtnClassName;
+                closeBtn.className = CLOSE_BTN_CLASS;
                 closeBtn.appendChild(document.createTextNode(this.config.closeBtnText));
 
                 // 没必要，点击时，输入框失去焦点，自动就关闭了
@@ -946,7 +926,7 @@ var KISSY = window.KISSY || {};
          */
         _removeSelectedItem: function() {
             //console.log("remove selected item");
-            Dom.removeClass(this.selectedItem, this.config.selectedItemClassName);
+            Dom.removeClass(this.selectedItem, SELECTED_ITEM_CLASS);
             this.selectedItem = null;
         },
 
@@ -957,7 +937,7 @@ var KISSY = window.KISSY || {};
          */
         _setSelectedItem: function(item) {
             //console.log("set selected item");
-            Dom.addClass((item), this.config.selectedItemClassName);
+            Dom.addClass((item), SELECTED_ITEM_CLASS);
             this.selectedItem = (item);
         },
 
@@ -969,7 +949,7 @@ var KISSY = window.KISSY || {};
             if (!this.selectedItem) return "";
 
             // getElementsByClassName比较损耗性能，改用缓存数据到attribute上方法
-            //var keyEl = Dom.getElementsByClassName(this.config.keyElClassName, "*", this.selectedItem)[0];
+            //var keyEl = Dom.getElementsByClassName(KEY_EL_CLASS, "*", this.selectedItem)[0];
             //return keyEl.innerHTML;
 
             return this.selectedItem.getAttribute("key");
@@ -1054,4 +1034,9 @@ var KISSY = window.KISSY || {};
  *  3. 测试的重要性。目前是列出Test Cases，以后要尝试自动化。保证每次改动后，都不影响原有功能。
  *  4. 挑选正确的事件做正确的事，太重要了，能省去很多很多烦恼。
  *
+ */
+
+/**
+ * 2009-08-05 更新： 将 class 从配置项中移动到常量，原因是：修改默认 className 的可能性很小，仅保留一个
+ *                  containerClass 作为个性化样式的接口即可
  */
