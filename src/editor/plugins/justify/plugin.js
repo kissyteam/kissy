@@ -56,8 +56,15 @@ KISSY.Editor.add("plugins~justify", function(E) {
 
         plugin.exec = function(editor) {
             var range = editor.getSelectionRange(),
-                parentEl = range.parentElement(),
-                justifyAncestor;
+                parentEl, justifyAncestor;
+
+            if(range.parentElement) { // TextRange
+                parentEl = range.parentElement();
+            } else if(range.item) { // ControlRange
+                parentEl = range.item(0);
+            } else { // 不做任何处理
+                return;
+            }
 
             // 获取可对齐的父元素
             if (isJustifyElement(parentEl)) {

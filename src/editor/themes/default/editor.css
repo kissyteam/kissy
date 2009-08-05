@@ -87,12 +87,16 @@ html>body .kissy-inline-block {
     text-indent: -999999px;
     overflow: hidden;
 }
+.kissy-toolbar-source { background-position: -944px 50%; width: 16px; }
 .kissy-toolbar-undo { background-position: 0 50%; }
 .kissy-toolbar-redo { background-position: -16px 50%; }
 .kissy-toolbar-bold { background-position: -32px 50%; }
 .kissy-toolbar-italic { background-position: -48px 50%; }
 .kissy-toolbar-underline { background-position: -64px 50%; }
 .kissy-toolbar-strikeThrough { background-position: -624px 50%; }
+
+.kissy-toolbar-link { background-position: -560px 50%; width: 16px; }
+/* 文字版按钮
 .kissy-toolbar-link {
     background: none;
     text-indent: 0;
@@ -102,6 +106,11 @@ html>body .kissy-inline-block {
     height: 15px;
     width: auto;
 }
+*/
+.kissy-toolbar-blockquote { background-position:-241px 50%; }
+.kissy-toolbar-image { background-position:-978px 50%; width: 18px; }
+.kissy-toolbar-smiley { background-position:-961px 50%; width: 16px; }
+
 .kissy-toolbar-insertOrderedList { background-position:-176px 50%; }
 .kissy-toolbar-insertUnorderedList { background-position: -160px 50%; }
 .kissy-toolbar-outdent { background-position: -144px 50%; }
@@ -111,6 +120,8 @@ html>body .kissy-inline-block {
 .kissy-toolbar-justifyRight { background-position:-224px 50%; }
 .kissy-toolbar-foreColor { height: 12px; background-position:-80px 50%; }
 .kissy-toolbar-backColor { height: 12px; background-position:-96px 50%; }
+
+.kissy-toolbar-maximize { background-position:-996px 50%; }
 
 /* 分隔线 */
 .kissy-toolbar-separator {

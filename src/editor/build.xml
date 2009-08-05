@@ -27,10 +27,15 @@
             <path path="plugins/font/plugin.js"/>
             <path path="plugins/color/plugin.js"/>
             <path path="plugins/link/plugin.js"/>
+            <path path="plugins/blockquote/plugin.js"/>
+            <path path="plugins/image/plugin.js"/>
+            <path path="plugins/smiley/plugin.js"/>
             <path path="plugins/indent/plugin.js"/>
             <path path="plugins/justify/plugin.js"/>
             <path path="plugins/undo/plugin.js"/>
             <path path="plugins/save/plugin.js"/>
+            <path path="plugins/source/plugin.js"/>
+            <path path="plugins/maximize/plugin.js"/>
         </concat>
     </target>
 

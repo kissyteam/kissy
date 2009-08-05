@@ -46,8 +46,8 @@ KISSY.Editor.add("plugins~save", function(E) {
                 var map = TAG_MAP[tag],
                     ret = tag;
 
-                // 找不到时，仅仅做小写转换
-                if(map) {
+                // 仅针对 <tag> 这种不含属性的标签做进一步处理
+                if(tag.indexOf(" ") == -1 && map) {
                     ret = map["tag"];
                     if(!slash && map["style"]) {
                         ret += ' style="' + map["style"] + '"';

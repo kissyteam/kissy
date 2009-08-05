@@ -4,6 +4,10 @@ KISSY.Editor.add("lang~en", function(E) {
     E.lang["en"] = {
 
         // Toolbar buttons
+        source: {
+          text            : "Source",
+          title           : "Source"
+        },
         undo: {
           text            : "Undo",
           title           : "Undo (Ctrl+Z)"
@@ -65,6 +69,18 @@ KISSY.Editor.add("lang~en", function(E) {
             title         : "Add or remove link (Ctrl+K)",
             dialogMessage : "Enter the URL"
         },
+        blockquote: {
+            text          : "Blockquote",
+            title         : "Insert blockquote"
+        },
+        smiley: {
+            text          : "Smiley",
+            title         : "Insert smiley"
+        },
+        image: {
+            text          : "Image",
+            title         : "Insert or modify image..."
+        },
         insertOrderedList: {
             text          : "Numbered List",
             title         : "Numbered List (Ctrl+7)"
@@ -100,6 +116,10 @@ KISSY.Editor.add("lang~en", function(E) {
         backColor: {
             text          : "Text Background Color",
             title         : "Text Background Color"
+        },
+        maximize: {
+          text            : "Maximize",
+          title           : "Maximize"
         },
 
         // Common messages and labels
