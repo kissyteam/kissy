@@ -2,8 +2,8 @@
 Copyright (c) 2009, Kissy UI Library. All rights reserved.
 http://kissy.googlecode.com/
 
-Date: 2009-07-31 10:42:08
-Revision: 92
+Date: 2009-08-13 17:21:36
+Revision: 106
 */
 /*
 reset.css
@@ -16,7 +16,7 @@ reset.css
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
 dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
 pre, /* text formatting elements 文本格式元素 */
-form, fieldset, lengend, button, input, textarea, /* form elements 表单元素 */
+form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */
 th, td { /* table elements 表格元素 */
     margin: 0;
     padding: 0;
@@ -70,5 +70,5 @@ table {
 hr {
     border: none;
     height: 1px;
-    color: #fff; /* for ie6 */
+    *color: #fff; /* for ie6 */
 }
