@@ -72,8 +72,9 @@
                 <concat destfile="@{file}.tmp" encoding="${charset}" outputencoding="${charset}">
                     <header filtering="no" trimleading="yes">/*
                         Copyright (c) 2009, Kissy UI Library. All rights reserved.
+                        MIT Licensed
                         http://kissy.googlecode.com/
-           
+
                         Date: ${build.time}
                         Revision: ${svn.revision.max}
                         */
