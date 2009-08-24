@@ -1,271 +1,353 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=GB18030" />
-<title>Suggest Test</title>
-<link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=GB18030"/>
+<title>Lazyload Test</title>
 <script type="text/javascript" src="../../lib/yui2/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="suggest.js"></script>
-<style type="text/css">
-    #page { padding: 50px 50px 300px; width: 950px; margin: 0 auto; line-height: 18px; }
-    h1, h2, h3 { margin: 1em 0 0.3em; }
-    .section ol { margin: 5px 20px; }
-    .section ol li { list-style: decimal inside; margin: 5px 0; }
-    .search-input { width: 300px; height: 20px; padding: 5px 2px 0 4px; }
-    .search-submit { padding: 4px 10px; margin-left: 5px; }
-    html { overflow-y: scroll; }
-</style>
 </head>
 <body>
 <div id="page">
-    <h1>Suggest: </h1>
-    <form name="search" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
-        <input type="hidden" value="" name="sort"/>
-        <input type="hidden" value="D9_5_1" name="f"/>
-        <input type="hidden" value="" name="promote"/>
-        <input type="hidden" value="2" name="isnew"/>
-        <input type="hidden" value="b" name="atype"/>
-        <input type="hidden" value="all" name="commend"/>
-        <input type="hidden" value="auction" name="search_type"/>
-        <input type="hidden" value="initiative" name="user_action"/>
-        <input type="hidden" value="s1-e" name="ssid"/>
+<table width="100%" class="ts">
+    <tbody>
+    <tr>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 0px;"><a target="_blank" href="/imgres?imgurl=http://s.ngm.com/2008/03/animal-minds/img/animal-minds-hdr.jpg&amp;imgrefurl=http://ngm.nationalgeographic.com/2008/03/animal-minds/virginia-morell-text&amp;usg=__xKVSoY5kq1iIvltDVWQ2lF31ocE=&amp;h=413&amp;w=615&amp;sz=33&amp;hl=en&amp;start=1&amp;tbnid=uh2npfH2-QAUTM:&amp;tbnh=91&amp;tbnw=136&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="136" height="91" src="http://tbn3.google.com/images?q=tbn:uh2npfH2-QAUTM:http://s.ngm.com/2008/03/animal-minds/img/animal-minds-hdr.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 0px;"><a target="_blank" href="/imgres?imgurl=http://www.dyrevern.no/images/251/storfe_kuer_1.jpg&amp;imgrefurl=http://www.dyrevern.no/english&amp;usg=__80dRxny2tPdXLDv6wcesIR-ulgE=&amp;h=1000&amp;w=1500&amp;sz=426&amp;hl=en&amp;start=2&amp;tbnid=iQBjMqOgbjMmoM:&amp;tbnh=100&amp;tbnw=150&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="150" height="100" src="http://tbn3.google.com/images?q=tbn:iQBjMqOgbjMmoM:http://www.dyrevern.no/images/251/storfe_kuer_1.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 0px;"><a target="_blank" href="/imgres?imgurl=http://bigeyedeer.files.wordpress.com/2007/04/animal-surprise.jpg&amp;imgrefurl=http://bigeyedeer.wordpress.com/2007/04/09/presents-from-the-animal-kingdom/&amp;usg=__JEdBwX_rJMrM7mhZixJQvVQFhGE=&amp;h=400&amp;w=493&amp;sz=82&amp;hl=en&amp;start=3&amp;tbnid=SDQcpJGfT_-L8M:&amp;tbnh=105&amp;tbnw=130&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="130" height="105" src="http://tbn0.google.com/images?q=tbn:SDQcpJGfT_-L8M:http://bigeyedeer.files.wordpress.com/2007/04/animal-surprise.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 0px;"><a target="_blank" href="/imgres?imgurl=http://www.barqa.com/cms_images/animal%2520health(hr).jpg&amp;imgrefurl=http://www.barqa.com/cms.php%3Fcategoryid%3D151&amp;usg=__PKFod2WV2OxRmIABvZQ1EynVkiE=&amp;h=398&amp;w=600&amp;sz=84&amp;hl=en&amp;start=4&amp;tbnid=Uz_mecXinqXvAM:&amp;tbnh=90&amp;tbnw=135&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="135" height="90" src="http://tbn2.google.com/images?q=tbn:Uz_mecXinqXvAM:http://www.barqa.com/cms_images/animal%2520health(hr).jpg" style="border: 1px solid ;"/></a></td>
+    </tr>
+    <tr>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>Animal</b> Minds - National
+                <div class="f">615 x 413 - 33k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">ngm.nationalgeographic.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">Norwegian <b>Animal</b> Protection
+                <div class="f">1500 x 1000 - 426k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">dyrevern.no</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">April 9, 2007 in <b>animals</b>,
+                <div class="f">493 x 400 - 82k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">bigeyedeer.wordpress.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>Animal</b> Health Committee
+                <div class="f">600 x 398 - 84k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">barqa.com</cite></div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://www.curiosoft.com/images/AnimalJigsawScreenshots/animal-games-jigsaw-puzzles-screenshots-2.jpg&amp;imgrefurl=http://www.sharewareconnection.com/animal-jigsaw-puzzles.htm&amp;usg=__eP2sx0JWnnhehv79xj1X7sgbB08=&amp;h=480&amp;w=640&amp;sz=66&amp;hl=en&amp;start=5&amp;tbnid=g6U4s_7Gn-_bPM:&amp;tbnh=103&amp;tbnw=137&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="137" height="103" src="http://tbn0.google.com/images?q=tbn:g6U4s_7Gn-_bPM:http://www.curiosoft.com/images/AnimalJigsawScreenshots/animal-games-jigsaw-puzzles-screenshots-2.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://www.animaltalk.net/images/AnimalTalkhome.jpg&amp;imgrefurl=http://www.animaltalk.net/&amp;usg=__L_WMF6IdSSnNQoI90SZyWw4jHe4=&amp;h=819&amp;w=976&amp;sz=247&amp;hl=en&amp;start=6&amp;tbnid=cBdFZT7t-hnwhM:&amp;tbnh=125&amp;tbnw=149&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="149" height="125" src="http://tbn1.google.com/images?q=tbn:cBdFZT7t-hnwhM:http://www.animaltalk.net/images/AnimalTalkhome.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://www.teachwithmovies.org/guides/animal-farm-DVDcover.jpg&amp;imgrefurl=http://www.teachwithmovies.org/guides/animal-farm.html&amp;usg=__SQjvbajQ7NriFSotrWjnbl9s_SI=&amp;h=474&amp;w=352&amp;sz=60&amp;hl=en&amp;start=7&amp;tbnid=XvDUVYB9ZPBvKM:&amp;tbnh=129&amp;tbnw=96&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="96" height="129" src="http://tbn0.google.com/images?q=tbn:XvDUVYB9ZPBvKM:http://www.teachwithmovies.org/guides/animal-farm-DVDcover.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://www.indrasinha.com/graphics/animal_statue01-400.jpg&amp;imgrefurl=http://www.indrasinha.com/&amp;usg=___kbCHrPhefjHhiGmEGXXvoJ5Iv8=&amp;h=300&amp;w=400&amp;sz=42&amp;hl=en&amp;start=8&amp;tbnid=vZgiZ2ytUZSjxM:&amp;tbnh=93&amp;tbnw=124&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="124" height="93" src="http://tbn2.google.com/images?q=tbn:vZgiZ2ytUZSjxM:http://www.indrasinha.com/graphics/animal_statue01-400.jpg" style="border: 1px solid ;"/></a></td>
+    </tr>
+    <tr>
+        <td width="25%" valign="top" align="left">
+            <div class="std">Fun <b>Animal</b> Jigsaw Puzzles
+                <div class="f">640 x 480 - 66k</div>
+                <div class="a"><cite style="font-style: normal;">sharewareconnection.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>ANIMAL</b> COMMUNICATION - is it
+                <div class="f">976 x 819 - 247k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">animaltalk.net</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>ANIMAL</b> FARM
+                <div class="f">352 x 474 - 60k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">teachwithmovies.org</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>Animal</b>, sculpture by Eleanor
+                <div class="f">400 x 300 - 42k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">indrasinha.com</cite></div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://zannaland.com/wp-content/uploads/2009/08/animal_kingdom.jpg&amp;imgrefurl=http://www.typeamom.net/which-disney-resort-is-best-for-me.html&amp;usg=__QrXBlxlXAEWFw_BdOvfcGjz3JCc=&amp;h=400&amp;w=400&amp;sz=67&amp;hl=en&amp;start=9&amp;tbnid=X_ejsQsjaemfjM:&amp;tbnh=124&amp;tbnw=124&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="124" height="124" src="http://tbn3.google.com/images?q=tbn:X_ejsQsjaemfjM:http://zannaland.com/wp-content/uploads/2009/08/animal_kingdom.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://animalhousefund.org/photos/animal3.png&amp;imgrefurl=http://animalhousefund.org/&amp;usg=__KmUUiNJJwfU6TC8HswjWXvTYIOM=&amp;h=329&amp;w=309&amp;sz=155&amp;hl=en&amp;start=10&amp;tbnid=d2SlL_lDDcMnyM:&amp;tbnh=119&amp;tbnw=112&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="112" height="119" src="http://tbn1.google.com/images?q=tbn:d2SlL_lDDcMnyM:http://animalhousefund.org/photos/animal3.png" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://www.uiowa.edu/obermann/grants/IDRS/animal/articulating.animal.jpg&amp;imgrefurl=http://www.uiowa.edu/obermann/grants/IDRS/animal/&amp;usg=__RI-bu3uOSwZ6ml1m-USoW7PN5tY=&amp;h=340&amp;w=331&amp;sz=41&amp;hl=en&amp;start=11&amp;tbnid=m6vHi_-sWZP7HM:&amp;tbnh=119&amp;tbnw=116&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="116" height="119" src="http://tbn3.google.com/images?q=tbn:m6vHi_-sWZP7HM:http://www.uiowa.edu/obermann/grants/IDRS/animal/articulating.animal.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://hi5.bigoo.ws/content/layout/animal/animal_49.jpg&amp;imgrefurl=http://www.bigoo.ws/hi5/animal/animal-217656.htm&amp;usg=__5_rEJqpqCwhjSQgH-WEuXOqOQOA=&amp;h=768&amp;w=1024&amp;sz=82&amp;hl=en&amp;start=12&amp;tbnid=QlFHEZgRQobe1M:&amp;tbnh=113&amp;tbnw=150&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="150" height="113" src="http://tbn3.google.com/images?q=tbn:QlFHEZgRQobe1M:http://hi5.bigoo.ws/content/layout/animal/animal_49.jpg" style="border: 1px solid ;"/></a></td>
+    </tr>
+    <tr>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>Animal</b> Kingdom area Resorts
+                <div class="f">400 x 400 - 67k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">zannaland.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>Animal</b> House Fund
+                <div class="f">309 x 329 - 155k - png</div>
+                <div class="a"><cite style="font-style: normal;">animalhousefund.org</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">Articulating the <b>Animal</b>
 
-        <input name="q" id="q" class="search-input" />
+                <div class="f">331 x 340 - 41k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">uiowa.edu</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>Animal</b> Hi5 Layouts
+                <div class="f">1024 x 768 - 82k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">bigoo.ws</cite></div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Wikijunior_Animal_Alphabet.jpg/500px-Wikijunior_Animal_Alphabet.jpg&amp;imgrefurl=http://en.wikibooks.org/wiki/Wikijunior:Animal_Alphabet&amp;usg=__VhtzHb-sk4YNNu3tOuPhB8jinIE=&amp;h=500&amp;w=500&amp;sz=59&amp;hl=en&amp;start=13&amp;tbnid=e3Q3vzxmvsbPaM:&amp;tbnh=130&amp;tbnw=130&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="130" height="130" src="http://tbn3.google.com/images?q=tbn:e3Q3vzxmvsbPaM:http://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Wikijunior_Animal_Alphabet.jpg/500px-Wikijunior_Animal_Alphabet.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://www.dnabarcoding.ca/images/content/Misc-Animal-photo-collage1.jpg&amp;imgrefurl=http://www.dnabarcoding.ca/pa/ge/research/domains-of-life/animals&amp;usg=__9KR1m_lVOiO2D5DUrmSXjEOucZM=&amp;h=341&amp;w=458&amp;sz=127&amp;hl=en&amp;start=14&amp;tbnid=Cnc9NCFFxMTTwM:&amp;tbnh=95&amp;tbnw=128&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="128" height="95" src="http://tbn1.google.com/images?q=tbn:Cnc9NCFFxMTTwM:http://www.dnabarcoding.ca/images/content/Misc-Animal-photo-collage1.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://friendster.bigoo.ws/content/layout/animal/animal_17.jpg&amp;imgrefurl=http://www.bigoo.ws/friendster/animal/animal-211476.htm&amp;usg=__rNVCBbP_tG43NzJMl1PvCsrwJFk=&amp;h=768&amp;w=1024&amp;sz=90&amp;hl=en&amp;start=15&amp;tbnid=q_e1nqUsHkSkAM:&amp;tbnh=113&amp;tbnw=150&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="150" height="113" src="http://tbn1.google.com/images?q=tbn:q_e1nqUsHkSkAM:http://friendster.bigoo.ws/content/layout/animal/animal_17.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://coloringpagesforkids.info/wp-content/uploads/2009/02/animal-coloring-pages.jpg&amp;imgrefurl=http://coloringpagesforkids.info/&amp;usg=__bAGtVtI97TICUj4WVIqTpHEGN_Q=&amp;h=380&amp;w=380&amp;sz=56&amp;hl=en&amp;start=16&amp;tbnid=NYRQ2TrYseLvZM:&amp;tbnh=123&amp;tbnw=123&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="123" height="123" src="http://tbn0.google.com/images?q=tbn:NYRQ2TrYseLvZM:http://coloringpagesforkids.info/wp-content/uploads/2009/02/animal-coloring-pages.jpg" style="border: 1px solid ;"/></a></td>
+    </tr>
+    <tr>
+        <td width="25%" valign="top" align="left">
+            <div class="std">Wikijunior <b>Animal</b> Alphabet
+                <div class="f">500 x 500 - 59k</div>
+                <div class="a"><cite style="font-style: normal;">en.wikibooks.org</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">in varied <b>animal</b> phyla.
+                <div class="f">458 x 341 - 127k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">dnabarcoding.ca</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>Animal</b> Friendster Layouts
+                <div class="f">1024 x 768 - 90k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">bigoo.ws</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>Animals</b> | Comments(0)
+                <div class="f">380 x 380 - 56k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">coloringpagesforkids.info</cite></div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://webecoist.com/wp-content/uploads/2008/11/bizarre-animal-defense-mechanisms.jpg&amp;imgrefurl=http://webecoist.com/2008/11/24/weird-strange-amazin-animal-species/&amp;usg=__tymoi4q_hBWtMQzsVAPYaFTYnSs=&amp;h=375&amp;w=468&amp;sz=64&amp;hl=en&amp;start=17&amp;tbnid=vL6TKNxVWJaqVM:&amp;tbnh=103&amp;tbnw=128&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="128" height="103" src="http://tbn3.google.com/images?q=tbn:vL6TKNxVWJaqVM:http://webecoist.com/wp-content/uploads/2008/11/bizarre-animal-defense-mechanisms.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://latimesblogs.latimes.com/photos/uncategorized/2008/05/27/animal_rights_activists_are_trying_.jpg&amp;imgrefurl=http://latimesblogs.latimes.com/unleashed/2008/05/somehow-as-we-p.html&amp;usg=__fEXnU6xgkqFjXZUrebrs5umq3dg=&amp;h=640&amp;w=587&amp;sz=40&amp;hl=en&amp;start=18&amp;tbnid=WYQf88-sDeaFPM:&amp;tbnh=137&amp;tbnw=126&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="126" height="137" src="http://tbn3.google.com/images?q=tbn:WYQf88-sDeaFPM:http://latimesblogs.latimes.com/photos/uncategorized/2008/05/27/animal_rights_activists_are_trying_.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://www.berlin-life.com/media/pics/animal-park.jpg&amp;imgrefurl=http://www.berlin-life.com/berlin/animal-park&amp;usg=__TQciLtRg58kGtz8Q6MEoM3tz-c8=&amp;h=350&amp;w=467&amp;sz=26&amp;hl=en&amp;start=19&amp;tbnid=_8NOX00C6J0VAM:&amp;tbnh=96&amp;tbnw=128&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="128" height="96" src="http://tbn2.google.com/images?q=tbn:_8NOX00C6J0VAM:http://www.berlin-life.com/media/pics/animal-park.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://media-cdn.tripadvisor.com/media/photo-s/00/12/b6/2a/animal-kingdom.jpg&amp;imgrefurl=http://www.tripadvisor.com/LocationPhotos-g34515-Orlando_Florida.html&amp;usg=__sc5_Gt6M2huGs4ksQIGhZpbVUPo=&amp;h=412&amp;w=550&amp;sz=53&amp;hl=en&amp;start=20&amp;tbnid=8bBawdZ8thjKFM:&amp;tbnh=100&amp;tbnw=133&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26hl%3Den%26newwindow%3D1"><img width="133" height="100" src="http://tbn2.google.com/images?q=tbn:8bBawdZ8thjKFM:http://media-cdn.tripadvisor.com/media/photo-s/00/12/b6/2a/animal-kingdom.jpg" style="border: 1px solid ;"/></a></td>
+    </tr>
+    <tr>
+        <td width="25%" valign="top" align="left">
+            <div class="std">10 of the Strangest <b>Animal</b>
 
-        <button type="submit" class="search-submit">Search</button>
-    </form>
+                <div class="f">468 x 375 - 64k</div>
+                <div class="a"><cite style="font-style: normal;">webecoist.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">Austrian <b>animal</b> rights
+                <div class="f">587 x 640 - 40k</div>
+                <div class="a"><cite style="font-style: normal;">latimesblogs.latimes.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>animals</b> – and is one of
+                <div class="f">467 x 350 - 26k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">berlin-life.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>Animal</b> Kingdom
+                <div class="f">550 x 412 - 53k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">tripadvisor.com</cite></div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<table width="100%" class="ts">
+    <tbody>
+    <tr>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 0px;"><a target="_blank" href="/imgres?imgurl=http://www.berlin-life.com/media/pics/animal-park.jpg&amp;imgrefurl=http://www.berlin-life.com/berlin/animal-park&amp;usg=__TQciLtRg58kGtz8Q6MEoM3tz-c8=&amp;h=350&amp;w=467&amp;sz=26&amp;hl=en&amp;start=19&amp;tbnid=_8NOX00C6J0VAM:&amp;tbnh=96&amp;tbnw=128&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="128" height="96" src="http://tbn2.google.com/images?q=tbn:_8NOX00C6J0VAM:http://www.berlin-life.com/media/pics/animal-park.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 0px;"><a target="_blank" href="/imgres?imgurl=http://media-cdn.tripadvisor.com/media/photo-s/00/12/b6/2a/animal-kingdom.jpg&amp;imgrefurl=http://www.tripadvisor.com/LocationPhotos-g34515-Orlando_Florida.html&amp;usg=__sc5_Gt6M2huGs4ksQIGhZpbVUPo=&amp;h=412&amp;w=550&amp;sz=53&amp;hl=en&amp;start=20&amp;tbnid=8bBawdZ8thjKFM:&amp;tbnh=100&amp;tbnw=133&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="133" height="100" src="http://tbn2.google.com/images?q=tbn:8bBawdZ8thjKFM:http://media-cdn.tripadvisor.com/media/photo-s/00/12/b6/2a/animal-kingdom.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 0px;"><a target="_blank" href="/imgres?imgurl=http://www.treehugger.com/D%C3%BCrer-white-rhinocerous-war-animal-endangered.jpg&amp;imgrefurl=http://www.treehugger.com/files/2008/09/threatened-blood-animals-terror-poachers-okapi-gorilla-rhino-elephant.php&amp;usg=__ixkWq208X55ZJyMw19cabvS7l6E=&amp;h=327&amp;w=473&amp;sz=36&amp;hl=en&amp;start=21&amp;tbnid=S4r51pD5JCIHhM:&amp;tbnh=89&amp;tbnw=129&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="129" height="89" src="http://tbn1.google.com/images?q=tbn:S4r51pD5JCIHhM:http://www.treehugger.com/D%C3%BCrer-white-rhinocerous-war-animal-endangered.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 0px;"><a target="_blank" href="/imgres?imgurl=http://i287.photobucket.com/albums/ll149/glittergn/animal/animal014.gif&amp;imgrefurl=http://www.myspace.com/joots&amp;usg=__4Q3WwWu0MLZFAElQIQs0P9EOT4w=&amp;h=361&amp;w=353&amp;sz=83&amp;hl=en&amp;start=22&amp;tbnid=JEOL4WUwP_H0YM:&amp;tbnh=121&amp;tbnw=118&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="118" height="121" src="http://tbn3.google.com/images?q=tbn:JEOL4WUwP_H0YM:http://i287.photobucket.com/albums/ll149/glittergn/animal/animal014.gif" style="border: 1px solid ;"/></a></td>
+    </tr>
+    <tr>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>animals</b> – and is one of
+                <div class="f">467 x 350 - 26k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">berlin-life.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>Animal</b> Kingdom
+                <div class="f">550 x 412 - 53k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">tripadvisor.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">as military <b>animals</b>.
+                <div class="f">473 x 327 - 36k</div>
+                <div class="a"><cite style="font-style: normal;">treehugger.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">Glitter <b>Animal</b> Graphics
+                <div class="f">353 x 361 - 83k - gif</div>
+                <div class="a"><cite style="font-style: normal;">myspace.com</cite></div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://bakercountyfl.org/animal/photogallery/Animal%2520Control/Animal_Control_015.jpg&amp;imgrefurl=http://www.bakercountyfl.org/animal/&amp;usg=__XYqHycyBInfT_mkJDmEvecNVOtE=&amp;h=1944&amp;w=2592&amp;sz=248&amp;hl=en&amp;start=23&amp;tbnid=7t2ZkO1ghYoepM:&amp;tbnh=113&amp;tbnw=150&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="150" height="113" src="http://tbn1.google.com/images?q=tbn:7t2ZkO1ghYoepM:http://bakercountyfl.org/animal/photogallery/Animal%2520Control/Animal_Control_015.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://i287.photobucket.com/albums/ll149/glittergn/animal/animal002.gif&amp;imgrefurl=http://www.flickr.com/photos/whitehouse/3610762509/&amp;usg=__4QdxKp7rTNNwCXqJOKXcEPmN_ao=&amp;h=331&amp;w=300&amp;sz=94&amp;hl=en&amp;start=24&amp;tbnid=SAHAcHN4coSIjM:&amp;tbnh=119&amp;tbnw=108&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="108" height="119" src="http://tbn0.google.com/images?q=tbn:SAHAcHN4coSIjM:http://i287.photobucket.com/albums/ll149/glittergn/animal/animal002.gif" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://lineout.thestranger.com/files/2008/01/animal.gif&amp;imgrefurl=http://heatherfink.blogspot.com/&amp;usg=__vh8yzWzqxUwzV4hG86APTFeBrwQ=&amp;h=350&amp;w=375&amp;sz=56&amp;hl=en&amp;start=25&amp;tbnid=xKWu3ohu70kMXM:&amp;tbnh=114&amp;tbnw=122&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="122" height="114" src="http://tbn2.google.com/images?q=tbn:xKWu3ohu70kMXM:http://lineout.thestranger.com/files/2008/01/animal.gif" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://www.bell-environmental.com/webpics/Animal%2520Research%2520Photo.jpg&amp;imgrefurl=http://www.bell-environmental.com/content.php%3FcontentID%3D86&amp;usg=__5SasgSIBHdqOZsp2G8LqxldM3Gg=&amp;h=675&amp;w=900&amp;sz=430&amp;hl=en&amp;start=26&amp;tbnid=XRrV65jqTBBdCM:&amp;tbnh=109&amp;tbnw=146&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="146" height="109" src="http://tbn1.google.com/images?q=tbn:XRrV65jqTBBdCM:http://www.bell-environmental.com/webpics/Animal%2520Research%2520Photo.jpg" style="border: 1px solid ;"/></a></td>
+    </tr>
+    <tr>
+        <td width="25%" valign="top" align="left">
+            <div class="std">The Baker County <b>Animal</b>
 
-    <div class="section">
-        <h2>Features:</h2>
-        <ol>
-            <li>提示补全基本功能</li>
-            <li>完全跨域</li>
-            <li>小巧精简，仅依赖yui-dom-event, 压缩后不超过15k</li>
-            <li>支持所有A级浏览器</li>
-            <li>cache功能</li>
-            <li>支持键盘控制：上下选择及回车后直接提交，ESC键关闭</li>
-            <li>支持鼠标控制：鼠标选择和点击提交功能</li>
-            <li>支持JSON静态数据源</li>
-            <li>[DELAY] 支持匹配文字加亮</li>
-            <li>[DELAY] 动画效果</li>
-            <li>[DELAY] 在提示层中显示第一个搜索结果</li>
-            <li>[DELAY] 整合本地表单的提示记录</li>
-            <li>[DELAY] 关键词的模糊匹配提示功能</li>
-        </ol>
-    </div>
+                <div class="f">2592 x 1944 - 248k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">bakercountyfl.org</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">Glitter <b>Animal</b> Graphics
+                <div class="f">300 x 331 - 94k - gif</div>
+                <div class="a"><cite style="font-style: normal;">flickr.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">favorite muppet: <b>ANIMAL</b>
 
-    <div class="section">
-        <h2>Test Cases:</h2>
-        <ol>
-            <li>基本功能：输入时有提示，键盘操作，鼠标操作，点击提交按钮可正常提交</li>
-            <li>用Del或Backspace键将输入清空时，提示层隐藏</li>
-            <li>当返回结果为空时，提示层隐藏</li>
-            <li>点击提示层外面，能关闭提示层</li>
-            <li>ESC键能关闭提示层。并且当有选中项时，能还原输入值</li>
-            <li>鼠标悬浮在提示层，继续输入时，取消选中项</li>
-            <li>服务器超慢的处理（抛弃旧请求，只显示最新结果）</li>
-            <li>鼠标选中某项+点击 or 键盘选中某项+回车 时，会触发onItemSelect</li>
-            <li>先用鼠标选中某项，然后从侧边绕过提示层移动到输入框，ENTER提交，不触发onItemSelect</li>
-            <li>服务器超时和返回错误数据时的容错</li>
-            <li>鼠标点击选中，提交表单时，能触发form的onsubmit事件</li>
-            <li>ie6下，能覆盖select</li>
-            <li>在主流输入法开启时测试</li>
-            <li>在所有A级浏览器下测试</li>
-            <li>持续按下DOWN/UP键时，选中操作正常（注意Opera下无效）</li>
-            <li>在提示层任意处按下鼠标，保持按住状态，移动到提示层外释放鼠标，这时输入框应该保持focus状态</li>
-            <li>在提示层A项处按下鼠标，移动到B处释放，不触发onItemSelect</li>
-            <li>在提示层A项处按下鼠标，移动鼠标到其它地方，最后移动回A处释放，触发onItemSelect</li>
-            <li>输入法开启，通过enter键输入英文时，不会触发提交</li>
-            <li>选中某项，ESC键关闭，再次通过keydown打开时，能保持原来的选中项</li>
-            <li>没有选中项，ESC键关闭，再次通过keydown打开时，依旧没有选中项</li>
-        </ol>
-    </div>
+                <div class="f">375 x 350 - 56k - gif</div>
+                <div class="a"><cite style="font-style: normal;">heatherfink.blogspot.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">Pest Control in <b>Animal</b>
 
-    <div class="section">
-        <h2>References:</h2>
-        <ol>
-            <li><a href="http://www.cnbeta.com/articles/84703.htm">Google搜索建议升级</a></li>
-            <li><a href="http://developer.yahoo.com/yui/autocomplete/">YUI AutoComplete</a></li>
-        </ol>
-    </div>
+                <div class="f">900 x 675 - 430k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">bell-environmental.com</cite></div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://api.ning.com/files/4NHhjdQBWB7vKDgkSV8-TDIABaFZKvp8-t0EHkD3jeJEQuvBqWZfDWixHTsJ3aGPTzAk*BX8-t-uxpFeRyaWfVsg9gJP3xkU/animals_up_for_adoption.jpg&amp;imgrefurl=http://aspcacommunity.ning.com/video/658300:Video:104013&amp;usg=__sgKz9J4pi74nWw_vnSQdprLR9Go=&amp;h=499&amp;w=640&amp;sz=32&amp;hl=en&amp;start=27&amp;tbnid=Eq4AdyWCvY-L1M:&amp;tbnh=107&amp;tbnw=137&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="137" height="107" src="http://tbn0.google.com/images?q=tbn:Eq4AdyWCvY-L1M:http://api.ning.com/files/4NHhjdQBWB7vKDgkSV8-TDIABaFZKvp8-t0EHkD3jeJEQuvBqWZfDWixHTsJ3aGPTzAk*BX8-t-uxpFeRyaWfVsg9gJP3xkU/animals_up_for_adoption.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://nextseason.files.wordpress.com/2009/06/animal_collective-water_curses_photo-jpg.jpeg&amp;imgrefurl=http://newmradio.wordpress.com/&amp;usg=__CMKNy4m7uPron1TBaJ_2pApJnxU=&amp;h=561&amp;w=450&amp;sz=62&amp;hl=en&amp;start=28&amp;tbnid=4jk5t5p6j5DPZM:&amp;tbnh=133&amp;tbnw=107&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="107" height="133" src="http://tbn1.google.com/images?q=tbn:4jk5t5p6j5DPZM:http://nextseason.files.wordpress.com/2009/06/animal_collective-water_curses_photo-jpg.jpeg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://ocw.mit.edu/NR/rdonlyres/Brain-and-Cognitive-Sciences/9-201Advanced-Animal-BehaviorSpring2000/01304FF7-DCC3-4B21-8EEF-00E36D8E0157/0/chp_9_201_hamster2.jpg&amp;imgrefurl=http://ocw.mit.edu/OcwWeb/Brain-and-Cognitive-Sciences/9-201Advanced-Animal-BehaviorSpring2000/CourseHome/&amp;usg=__I9zsPJiL2QL8XAi4C96JKNhLneA=&amp;h=350&amp;w=368&amp;sz=48&amp;hl=en&amp;start=29&amp;tbnid=KEIzGt8uAZPE5M:&amp;tbnh=116&amp;tbnw=122&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="122" height="116" src="http://tbn3.google.com/images?q=tbn:KEIzGt8uAZPE5M:http://ocw.mit.edu/NR/rdonlyres/Brain-and-Cognitive-Sciences/9-201Advanced-Animal-BehaviorSpring2000/01304FF7-DCC3-4B21-8EEF-00E36D8E0157/0/chp_9_201_hamster2.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://www.istockphoto.com/file_thumbview_approve/1300501/2/istockphoto_1300501-large-animal-silhouette-collection.jpg&amp;imgrefurl=http://www.istockphoto.com/stock-illustration-1300501-large-animal-silhouette-collection.php&amp;usg=__U4i_FW6RQMyVGXZS7bkURHb73s8=&amp;h=380&amp;w=380&amp;sz=28&amp;hl=en&amp;start=30&amp;tbnid=O01bayHm5WSlpM:&amp;tbnh=123&amp;tbnw=123&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="123" height="123" src="http://tbn3.google.com/images?q=tbn:O01bayHm5WSlpM:http://www.istockphoto.com/file_thumbview_approve/1300501/2/istockphoto_1300501-large-animal-silhouette-collection.jpg" style="border: 1px solid ;"/></a></td>
+    </tr>
+    <tr>
+        <td width="25%" valign="top" align="left">
+            <div class="std">Comment by <b>Animal</b> Lover
+                <div class="f">640 x 499 - 32k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">aspcacommunity.ning.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">Tagged: <b>Animal</b> Collective
+                <div class="f">450 x 561 - 62k</div>
+                <div class="a"><cite style="font-style: normal;">newmradio.wordpress.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">in <b>animal</b> behavior.
+                <div class="f">368 x 350 - 48k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">ocw.mit.edu</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">Large <b>animal</b> silhouette
+                <div class="f">380 x 380 - 28k</div>
+                <div class="a"><cite style="font-style: normal;">istockphoto.com</cite></div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://thewinechicks.typepad.com/my_weblog/images/2008/01/10/animal_slippers_2.gif&amp;imgrefurl=http://thewinechicks.typepad.com/my_weblog/2008/01/animal-slippers.html&amp;usg=__mDzEmRIvFe32FRHhFV5dePAtj9I=&amp;h=318&amp;w=300&amp;sz=30&amp;hl=en&amp;start=31&amp;tbnid=pa5kAj2cRGi5WM:&amp;tbnh=118&amp;tbnw=111&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="111" height="118" src="http://tbn0.google.com/images?q=tbn:pa5kAj2cRGi5WM:http://thewinechicks.typepad.com/my_weblog/images/2008/01/10/animal_slippers_2.gif" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://www.thaiworldview.com/animal/jpg/animal06.jpg&amp;imgrefurl=http://www.thaiworldview.com/animal/animal.htm&amp;usg=__i3aj4E9lyTDaT1IhFgBFfRgl3Ok=&amp;h=300&amp;w=400&amp;sz=32&amp;hl=en&amp;start=32&amp;tbnid=SpdoJKhGOTeywM:&amp;tbnh=93&amp;tbnw=124&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="124" height="93" src="http://tbn0.google.com/images?q=tbn:SpdoJKhGOTeywM:http://www.thaiworldview.com/animal/jpg/animal06.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://static.howstuffworks.com/gif/animal-camouflage-3.jpg&amp;imgrefurl=http://animals.howstuffworks.com/animal-facts/animal-camouflage2.htm&amp;usg=__RI3RLioG0BI5bnPpSxElKoEphUM=&amp;h=605&amp;w=400&amp;sz=27&amp;hl=en&amp;start=33&amp;tbnid=Z3o9KhoMHhNfTM:&amp;tbnh=135&amp;tbnw=89&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="89" height="135" src="http://tbn1.google.com/images?q=tbn:Z3o9KhoMHhNfTM:http://static.howstuffworks.com/gif/animal-camouflage-3.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://hi5.bigoo.ws/content/layout/animal/animal_80.jpg&amp;imgrefurl=http://www.bigoo.ws/hi5/animal/animal-211194.htm&amp;usg=__pUGzpqvCL7ialvSbhc2Rbwo1XtM=&amp;h=768&amp;w=1024&amp;sz=87&amp;hl=en&amp;start=34&amp;tbnid=3Z0m_q_1Q-EWdM:&amp;tbnh=113&amp;tbnw=150&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="150" height="113" src="http://tbn2.google.com/images?q=tbn:3Z0m_q_1Q-EWdM:http://hi5.bigoo.ws/content/layout/animal/animal_80.jpg" style="border: 1px solid ;"/></a></td>
+    </tr>
+    <tr>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>Animal</b> Slippers
+                <div class="f">300 x 318 - 30k - gif</div>
+                <div class="a"><cite style="font-style: normal;">thewinechicks.typepad.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">Thai <b>animals</b>
 
-    <div class="section">
-        <h2>Crazy Test:</h2>
+                <div class="f">400 x 300 - 32k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">thaiworldview.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>Animal</b> Color Change
+                <div class="f">400 x 605 - 27k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">animals.howstuffworks.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std"><b>Animal</b> Hi5 Layouts
+                <div class="f">1024 x 768 - 87k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">bigoo.ws</cite></div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=https://blogspoon.s3.amazonaws.com/wp-content/uploads/2008/06/safari-zoo-animals-sm.gif&amp;imgrefurl=http://www.blog.spoongraphics.co.uk/freebies/free-vector-pack-safari-and-zoo-animals&amp;usg=__WfCGnDQDtNwnZxZX9SzIUpAqpfk=&amp;h=450&amp;w=450&amp;sz=30&amp;hl=en&amp;start=35&amp;tbnid=P-qKFUv4VFerUM:&amp;tbnh=127&amp;tbnw=127&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="127" height="127" src="http://tbn2.google.com/images?q=tbn:P-qKFUv4VFerUM:https://blogspoon.s3.amazonaws.com/wp-content/uploads/2008/06/safari-zoo-animals-sm.gif" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://www.dezeen.com/wp-content/uploads/2009/02/lite-by-animal-farm1.jpg&amp;imgrefurl=http://www.dezeen.com/2009/02/26/lite-by-animal-farm/&amp;usg=__bNwpuIvk1KzMkjYnsFoyyM4Cxoo=&amp;h=600&amp;w=450&amp;sz=40&amp;hl=en&amp;start=36&amp;tbnid=LiLhTkcLaaXgwM:&amp;tbnh=135&amp;tbnw=101&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="101" height="135" src="http://tbn1.google.com/images?q=tbn:LiLhTkcLaaXgwM:http://www.dezeen.com/wp-content/uploads/2009/02/lite-by-animal-farm1.jpg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://cdn.pitchfork.com/media/animal-crack.jpeg&amp;imgrefurl=http://pitchfork.com/news/34867-sxsw-thu-pains-of-being-pure-at-heart-matt-and-kim-suckers-primal-scream-eugene-francis-jnr-and-the-juniors/&amp;usg=__dH1eYm6-5Ky04y1uz-4NIjh1HVY=&amp;h=339&amp;w=452&amp;sz=97&amp;hl=en&amp;start=37&amp;tbnid=aGXTsOknpV32rM:&amp;tbnh=95&amp;tbnw=127&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="127" height="95" src="http://tbn3.google.com/images?q=tbn:aGXTsOknpV32rM:http://cdn.pitchfork.com/media/animal-crack.jpeg" style="border: 1px solid ;"/></a></td>
+        <td width="25%" valign="bottom" nowrap="" align="left" style="padding-top: 20px;"><a target="_blank" href="/imgres?imgurl=http://www.ntnu.no/gemini/2006-01e/bilder/medicine1.jpg&amp;imgrefurl=http://www.ntnu.no/gemini/2006-01e/medicine.htm&amp;usg=__Wen8YqSljMlBqLaANHK-KLDNoMU=&amp;h=397&amp;w=300&amp;sz=26&amp;hl=en&amp;start=38&amp;tbnid=CBftYystpXpqIM:&amp;tbnh=124&amp;tbnw=94&amp;prev=/images%3Fq%3Danimal%26gbv%3D2%26ndsp%3D18%26hl%3Den%26sa%3DN%26start%3D18%26newwindow%3D1"><img width="94" height="124" src="http://tbn1.google.com/images?q=tbn:CBftYystpXpqIM:http://www.ntnu.no/gemini/2006-01e/bilder/medicine1.jpg" style="border: 1px solid ;"/></a></td>
+    </tr>
+    <tr>
+        <td width="25%" valign="top" align="left">
+            <div class="std">Free Vector <b>Animal</b> Silhouettes
+                <div class="f">450 x 450 - 30k - gif</div>
+                <div class="a"><cite style="font-style: normal;">blog.spoongraphics.co.uk</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">lite-by-<b>animal</b>-farm1.jpg
+                <div class="f">450 x 600 - 40k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">dezeen.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">A test pressing of an <b>Animal</b>
 
-        <h3>1. beforeDataRequest 和 onDataReturn 事件：（请输入pig）</h3>
-        <form name="search2" method="get" action="http://search1.taobao.com/browse/search_auction.htm" target="_blank">
-            <input class="search-input" name="q" id="q2"/>
-            <button type="submit" class="search-submit">Search</button>
-        </form>
-
-        <h3>2. beforeShow 和 onItemSelect 事件：</h3>
-        <form name="search3" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
-            <input class="search-input" name="q" id="q3"/>
-            <button type="submit" class="search-submit">Search</button>
-        </form>
-
-        <h3>3. 测试提示层宽度和遮罩：</h3>
-        <form name="search4" method="get" action="http://search1.taobao.com/browse/search_auction.htm" target="_blank">
-            <input name="q" id="q4" style="margin-left: 100px" />
-            <button type="submit">Search</button>
-        </form>
-        <br>
-        <select>
-            <option>你能把我遮罩住吗，嘿嘿 你能把我遮罩住吗你能把我遮罩住吗</option>
-        </select>
-        <br>
-        <br>
-        <iframe src="about:blank"></iframe>
-
-        <h3>4. 测试JSON数据源：（请输入 nike 或 nokia ）</h3>
-        <form name="search4" method="get" action="http://search1.taobao.com/browse/search_auction.htm" target="_blank">
-            <input class="search-input" name="q" id="q5"/>
-            <button type="submit" class="search-submit">Search</button>
-        </form>
-
-        <h3>5. 输入框的提示：（请输入 nike 或 nokia）</h3>
-        <input class="search-input" id="q6" />
-
-        <h3>6. 有啊有啊哈哈哈：</h3>
-        <form name="search7" method="get" action="http://youa.baidu.com/search/s" target="_blank">
-            <input class="search-input" name="keyword" id="q7" />
-            <button type="submit" class="search-submit">百度一下</button>
-        </form>
-    </div>
-
+                <div class="f">452 x 339 - 97k - jpeg</div>
+                <div class="a"><cite style="font-style: normal;">pitchfork.com</cite></div>
+            </div>
+        </td>
+        <td width="25%" valign="top" align="left">
+            <div class="std">LESS <b>ANIMAL</b> TESTING: In
+                <div class="f">300 x 397 - 26k - jpg</div>
+                <div class="a"><cite style="font-style: normal;">ntnu.no</cite></div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </div>
 
+<script type="text/javascript" src="lazyload.js"></script>
 <script type="text/javascript">
 
-    var dataUrl = 'http://suggest.taobao.com/sug';
-    //var dataUrl = 'http://t-yubo/work/lab/suggest/sug.php';
-    //var dataUrl = 'http://192.168.208.18:8090/sug';
-
-    // 淘宝首页的情况
-    var sug = new KISSY.Suggest('q', dataUrl,
-                { autoFocus: true,
-                  resultFormat: '约%result%个宝贝'
-                });
-
-    // 添加搜索布点参数
-    var ssid = sug.textInput.form.ssid;
-    if (ssid) {
-        setTimeout(function() {
-            sug.textInput.form.reset();
-        }, 0); // ie no cache
-        ssid.setAttribute('autocomplete', 'off'); // w3c no cache
-        sug.subscribe('onItemSelect', function() {
-            if (ssid.value.indexOf('-p1') == -1) {
-                ssid.value += '-p1';
-            }
-        });
-    }
-
-    // 测试事件
-    var sug2 = new KISSY.Suggest('q2', dataUrl);
-    sug2.subscribe('beforeDataRequest', function(query) {
-        if(query == 'pig') {
-            alert('你输入的是：' + query);
-        }
-    });
-    sug2.subscribe('onDataReturn', function(data) {
-        if(this.query == 'pig') {
-            alert('返回的数据是：' + YAHOO.lang.dump(data));
-        }
-    });
-
-    // 测试事件2
-    var sug3 = new KISSY.Suggest('q3', dataUrl);
-    sug3.subscribe('beforeShow', function(container) {
-       container.appendChild(document.createTextNode('我是天下无敌的广告'));
-    });
-    sug3.subscribe('onItemSelect', function(query) {
-       alert('你选中了：' + query);
-    });
-
-    // 测试配置参数
-    var sug4 = new KISSY.Suggest('q4', dataUrl, {
-        containerWidth: '200px',
-        showCloseBtn: true
-    });
-
-    // 测试JSON数据源
-    var jsonData = {};
-    jsonData['nike'] = [
-        ["nike 正品", "2170000"],
-        ["nike 专柜 正品", "834000"],
-        ["nike 短袖", "242000"],
-        ["nike 板 鞋", "989000"],
-        ["nike 女鞋", "253000"],
-        ["nike 运动鞋", "550000"],
-        ["nike 包", "295000"],
-        ["nike 鞋", "3160000"],
-        ["nike 单肩包", "38500"],
-        ["nike 09", "786000"]
-    ];
-    jsonData['nokia'] = [
-        ["nokia 手机", "17900"],
-        ["nokia 5800", "3040"],
-        ["nokia e71", "3520"],
-        ["nokia 8800", "1850"],
-        ["nokia n95", "5890"],
-        ["nokia n97", "237"],
-        ["nokia n78", "2200"],
-        ["nokia n85", "2880"],
-        ["nokia n81", "2620"],
-        ["nokia e66", "1740"]
-    ];
-    var sug5 = new KISSY.Suggest('q5', jsonData);
-
-    // 测试JSON数据源
-    var jsonData2 = {};
-    jsonData2['nike'] = [
-        "nike 正品",
-        "nike 专柜 正品",
-        "nike 短袖",
-        "nike 板 鞋",
-        "nike 女鞋",
-        "nike 运动鞋",
-        "nike 包",
-        "nike 鞋",
-        "nike 单肩包",
-        "nike 09"
-    ];
-    jsonData2['nokia'] = [
-        "nokia 手机",
-        "nokia 5800",
-        "nokia e71",
-        "nokia 8800",
-        "nokia n95",
-        "nokia n97",
-        "nokia n78",
-        "nokia n85",
-        "nokia n81",
-        "nokia e66"
-    ];
-    var sug6 = new KISSY.Suggest('q6', jsonData2);
-
-    // 有啊有啊哈哈哈
-    dataUrl = 'http://youa.baidu.com/suggest/se/s';
-    var suggestCallback = KISSY.Suggest.callback;
-    // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
-    var sug7 = new KISSY.Suggest('q7', dataUrl);
-    sug7.subscribe('beforeDataRequest', function(query) {
-        this.dataScript.charset = 'GB18030';
-        this.queryParams = 'cmd=suggest&type=kwd&max_count=10&keyword=' + encodeURIComponent(query) + '&callback=suggestCallback';
-    });
-    // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
-    // taobao: KISSY.Suggest.callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
-    sug7.subscribe('onDataReturn', function(data) {
-        data = data['r'] || [];
-        var result = [];
-
-        for(var i = 0, len = data.length; i < len; ++i) {
-            result.push([data[i]['key'], data[i]['val']]);
-        }
-
-        this.returnedData = result;
-    });
+    new KISSY.Lazyload();
 
 </script>
 </body>
