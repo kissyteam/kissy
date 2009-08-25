@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed
 http://kissy.googlecode.com/
 
-Date: 2009-08-25 16:07:56
-Revision: 117
+Date: 2009-08-25 16:40:36
+Revision: 121
 */
 /**
  * KISSY.ImageLazyload 图片延迟加载组件
@@ -49,7 +49,7 @@ var KISSY = window.KISSY || {};
         }
 
         // 允许仅传递 config 参数
-        if(arguments.length === 1) {
+        if(typeof config === "undefined") {
             config = id;
             id = document;
         }
