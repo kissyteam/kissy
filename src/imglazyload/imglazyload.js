@@ -41,7 +41,7 @@ var KISSY = window.KISSY || {};
         }
 
         // 允许仅传递 config 参数
-        if(arguments.length === 1) {
+        if(typeof config === "undefined") {
             config = id;
             id = document;
         }
