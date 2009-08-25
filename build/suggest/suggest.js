@@ -1,9 +1,10 @@
 /*
 Copyright (c) 2009, Kissy UI Library. All rights reserved.
+MIT Licensed
 http://kissy.googlecode.com/
 
-Date: 2009-08-05 21:25:28
-Revision: 104
+Date: 2009-08-25 17:06:07
+Revision: 123
 */
 /**
  * KISSY.Suggest 提示补全组件
@@ -226,7 +227,7 @@ var KISSY = window.KISSY || {};
         this._init();
     };
 
-    NS.Suggest.prototype = {
+    Lang.augmentObject(NS.Suggest.prototype, {
         /**
          * 初始化方法
          * @protected
@@ -971,7 +972,7 @@ var KISSY = window.KISSY || {};
             this.textInput.value = this._getSelectedItemKey(this.selectedItem);
         }
 
-    };
+    });
 
     Lang.augmentProto(NS.Suggest, Y.EventProvider);
 

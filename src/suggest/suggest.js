@@ -219,7 +219,7 @@ var KISSY = window.KISSY || {};
         this._init();
     };
 
-    NS.Suggest.prototype = {
+    Lang.augmentObject(NS.Suggest.prototype, {
         /**
          * 初始化方法
          * @protected
@@ -964,7 +964,7 @@ var KISSY = window.KISSY || {};
             this.textInput.value = this._getSelectedItemKey(this.selectedItem);
         }
 
-    };
+    });
 
     Lang.augmentProto(NS.Suggest, Y.EventProvider);
 
