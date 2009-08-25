@@ -5,6 +5,8 @@
  * requires: yahoo-dom-event
  *
  * @author lifesinger@gmail.com
+ *
+ * TODO: container 支持集合（一次指定多个区域）
  */
 
 var KISSY = window.KISSY || {};
