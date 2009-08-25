@@ -45,6 +45,11 @@ KISSY.Editor.add("core~instance", function(E) {
          * @property statusbar
          */
 
+        /**
+         * 是否处于源码编辑状态
+         */
+        this.sourceMode = false;
+
         // init
         this._init();
     };
@@ -152,16 +157,26 @@ KISSY.Editor.add("core~instance", function(E) {
         },
 
         /**
-         * 得到数据
+         * 获取数据
          */
         getData: function() {
+            if(this.sourceMode) {
+                return this.textarea.value;
+            }
+            return this.getContentDocData();
+        },
+
+        /**
+         * 获取 contentDoc 中的数据
+         */
+        getContentDocData: function() {
             var bd = this.contentDoc.body,
                 data = '', p = E.plugins["save"];
 
             // Firefox 下，_moz_editor_bogus_node, _moz_dirty 等特有属性
             // 这些特有属性，在用 innerHTML 获取时，自动过滤了
 
-            // 只有标签没文本内容时，将内容置为空
+            // 只有标签没文本内容时，保留内容为空
             if(E.Dom.getText(bd)) {
                data = bd.innerHTML;
 

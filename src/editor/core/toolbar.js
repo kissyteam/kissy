@@ -154,10 +154,14 @@ KISSY.Editor.add("core~toolbar", function(E) {
             Event.on(el, "mouseout", function(e) {
                 var toElement = Event.getRelatedTarget(e), isChild;
 
-                if (el.contains) {
-                    isChild = el.contains(toElement);
-                } else if (el.compareDocumentPosition) {
-                    isChild = el.compareDocumentPosition(toElement) & 8;
+                try {
+                    if (el.contains) {
+                        isChild = el.contains(toElement);
+                    } else if (el.compareDocumentPosition) {
+                        isChild = el.compareDocumentPosition(toElement) & 8;
+                    }
+                } catch(e) {
+                    isChild = false; // 已经移动到 iframe 里
                 }
                 if (isChild) return;
 

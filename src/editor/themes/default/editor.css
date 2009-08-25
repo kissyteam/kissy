@@ -252,3 +252,9 @@ html>body .kissy-inline-block {
     text-align: center;
 }
 
+/* view source */
+.kissy-editor textarea {
+    font: 13px/150% "Courier New",monospace;
+    padding: 0;
+    border: none;
+}

@@ -58,10 +58,6 @@
     .hidden {
         display: none;
     }
-    textarea {
-        padding: 8px;
-        line-height: 150%;
-    }
     button {
         padding: 4px 20px;
         margin: 5px;
@@ -76,11 +72,9 @@
     <h1>Editor: </h1>
 
     <form id="demoForm" action="" method="POST">
-        <textarea id="demo" rows="10" cols="152"></textarea>
+        <textarea id="demo" rows="10" cols="152" style="width: 800px; height: 200px"></textarea>
         <button id="submitBtn" type="submit">Submit</button>
     </form>
-
-    <textarea rows="8" cols="115" id="source" autocomplete="off" style="font-family: 'Courier New',Courier,monospace; overflow-y: auto; width: 790px"></textarea>
 
     <div class="section">
         <h2>Features:</h2>
@@ -126,23 +120,12 @@
 <script type="text/javascript">
 
     var config = {
-        base: "http://t-yubo/space/kissy/src/editor/"
+        base: "http://t-yubo/kissy/src/editor/"
     };
     
     var editorDemo = new KISSY.Editor("demo", config);
     //console.dir(KISSY.Editor);
     //console.dir(editorDemo);
-
-    // 测试保存的结果
-    YUI().use("node", function(Y) {
-        Y.get("#submitBtn").on("click", function(e) {
-            e.preventDefault();
-            var data = editorDemo.getData();
-
-            Y.get("#source").set("value", data);
-            editorDemo.contentDoc.body.innerHTML = data;
-       });
-    });
 
 </script>
 
