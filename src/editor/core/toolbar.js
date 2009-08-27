@@ -1,7 +1,7 @@
 
 KISSY.Editor.add("core~toolbar", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
         TOOLBAR_SEPARATOR_TMPL = '<div class="kissy-toolbar-separator kissy-inline-block"></div>',
@@ -25,36 +25,43 @@ KISSY.Editor.add("core~toolbar", function(E) {
         TOOLBAR_SELECT = 'kissy-toolbar-select',
         TOOLBAR_BUTTON_ACTIVE = "kissy-toolbar-button-active",
 
-        editor, // 当前 editor 实例
-        config, // 当前 editor 实例的配置
-        lang, // 当前 editor 实例的语言
-        items, // 当前 editor 实例工具栏上的配置项
-
-        plugins, // 所有注册的实例
         div = document.createElement("div"); // 通用 el 容器
 
-    
-    E.Toolbar = {
+
+    E.Toolbar = function(editor) {
 
         /**
-         * 根据传入的编辑器实例，初始化实例的工具条
-         * @param {KISSY.Editor} instance
+         * 相关联的编辑器实例
          */
-        init: function(instance) {
-            var i, len, key;
+        this.editor = editor;
 
-            // 更新和实例相关的全局变量
-            editor = instance;
-            config = editor.config;
-            lang = E.lang[config.language];
-            items = config.toolbar;
-            plugins = E.plugins; // 放在这里更新，保证在 Editor._setup() 之后执行
+        /**
+         * 相关联的配置
+         */
+        this.config = editor.config;
+
+        /**
+         * 当前语言
+         */
+        this.lang = E.lang[this.config.language];
+    };
+    
+    Lang.augmentObject(E.Toolbar.prototype, {
+
+        /**
+         * 初始化工具条
+         */
+        init: function() {
+            var items = this.config.toolbar,
+                plugins = this.editor.plugins,
+                key;
 
             // 遍历配置项，找到相关插件项，并添加到工具栏上
-            for (i = 0,len = items.length; i < len; ++i) {
+            for (var i = 0, len = items.length; i < len; ++i) {
                 key = items[i];
                 if (key) {
-                    if (!(key in plugins)) continue; // 配置项里有，但插件里无，直接忽略
+                    if (!(key in plugins)) continue; // 配置项里有，但加载的插件里无，直接忽略
+
                     // 添加插件项
                     this._addItem(plugins[key]);
 
@@ -72,7 +79,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
 
             // 当 plugin 没有设置 lang 时，采用默认语言配置
             // TODO: 考虑重构到 instance 模块里，因为 lang 仅跟实例相关
-            if (!p.lang) p.lang = lang[p.name] || {};
+            if (!p.lang) p.lang = this.lang[p.name] || {};
 
             // 根据模板构建 DOM
             div.innerHTML = TOOLBAR_BUTTON_TMPL
@@ -101,8 +108,9 @@ KISSY.Editor.add("core~toolbar", function(E) {
 
             // 调用插件自己的初始化函数，这是插件的个性化接口
             // init 放在添加到工具栏后面，可以保证 DOM 操作比如取 region 等操作的正确性
+            p.editor = this.editor; // 给 p 增加 editor 属性
             if (p.init) {
-                p.init(editor);
+                p.init();
             }
 
             // 标记为已初始化完成
@@ -138,7 +146,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
             // 1. 注册点击时的响应函数
             if (p.exec) {
                 Event.on(el, "click", function() {
-                    p.exec(editor);
+                    p.exec();
                 });
             }
 
@@ -181,31 +189,9 @@ KISSY.Editor.add("core~toolbar", function(E) {
          * 将 item 或 分隔线 添加到工具栏
          */
         _addToToolbar: function(el) {
-            if(isIE) el = this.setItemUnselectable(el);
-            editor.toolbar.appendChild(el);
-        },
-
-        /**
-         * 让元素不可选，解决 ie 下 selection 丢失的问题
-         */
-        setItemUnselectable: function(el) {
-            var arr, i, len, n, a;
-
-            // 在 ie 下不行
-            //arr = [el].concat(Array.prototype.slice.call(el.getElementsByTagName("*")));
-
-            arr = el.getElementsByTagName("*");
-            for (i = -1, len = arr.length; i < len; ++i) {
-                a = (i == -1) ? el : arr[i];
-                
-                n = a.nodeName;
-                if (n && n != "INPUT") {
-                    a.setAttribute("unselectable", "on");
-                }
-            }
-
-            return el;
+            if(isIE) el = E.Dom.setItemUnselectable(el);
+            this.domEl.appendChild(el);
         }
-    };
+    });
 
 });

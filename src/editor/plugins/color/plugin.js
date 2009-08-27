@@ -45,7 +45,7 @@ KISSY.Editor.add("plugins~color", function(E) {
         /**
          * 初始化
          */
-        init: function(editor) {
+        init: function() {
             var el = this.domEl,
                 caption = el.getElementsByTagName("span")[0].parentNode;
 
@@ -63,23 +63,23 @@ KISSY.Editor.add("plugins~color", function(E) {
             //  2. 仿照 Google Docs, 不区分 caption 和 dropdown，让每次点击都弹出下拉框。
             // 从逻辑上讲，方案1不错。但是，考虑 web 页面上，按钮比较小，方案2这样反而能增加易用性。
             // 这里采用方案2
-            this._initDropMenu(editor, el);
+            this._initDropMenu(el);
         },
 
         /**
          * 初始化下拉菜单
          */
-        _initDropMenu: function(editor, trigger) {
-            this.dropMenu = E.Menu.generateDropMenu(editor, trigger, [1, 0]);
+        _initDropMenu: function(trigger) {
+            this.dropMenu = E.Menu.generateDropMenu(this.editor, trigger, [1, 0]);
 
             // 生成下拉框内的内容
             this._generatePalettes();
 
             // 针对 ie，设置不可选择
-            if (isIE) E.Toolbar.setItemUnselectable(this.dropMenu);
+            if (isIE) E.Dom.setItemUnselectable(this.dropMenu);
 
             // 注册点击事件
-            this._bindPickEvent(editor);
+            this._bindPickEvent();
 
             // 选中当前色
             this._updateSelectedColor(this.color);
@@ -126,8 +126,8 @@ KISSY.Editor.add("plugins~color", function(E) {
         /**
          * 绑定取色事件
          */
-        _bindPickEvent: function(editor) {
-            var self = this;
+        _bindPickEvent: function() {
+            var self = this, editor = this.editor;
 
             Event.on(this.dropMenu, "click", function(ev) {
                 var target = Event.getTarget(ev),

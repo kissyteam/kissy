@@ -42,13 +42,13 @@ KISSY.Editor.add("plugins~font", function(E) {
         /**
          * 初始化
          */
-        init: function(editor) {
+        init: function() {
             var el = this.domEl;
 
             this.options = this.lang.options;
             this.selectHead = el.getElementsByTagName("span")[0];
 
-            this._initSelectList(editor, el);
+            this._initSelectList(el);
 
             // 选中当前值
             this._setSelectedOption(this.options[DEFAULT]);
@@ -57,14 +57,14 @@ KISSY.Editor.add("plugins~font", function(E) {
         /**
          * 初始化下拉选择框
          */
-        _initSelectList: function(editor, trigger) {
-            this.selectList = E.Menu.generateDropMenu(editor, trigger, [1, 0]);
+        _initSelectList: function(trigger) {
+            this.selectList = E.Menu.generateDropMenu(this.editor, trigger, [1, 0]);
 
             // 初始化下拉框 DOM
             this._renderSelectList();
 
             // 注册选取事件
-            this._bindPickEvent(editor);
+            this._bindPickEvent();
         },
 
         /**
@@ -91,14 +91,14 @@ KISSY.Editor.add("plugins~font", function(E) {
             Dom.addClass(this.selectList, "kissy-drop-menu-" + this.name);
 
             // 针对 ie，设置不可选择
-            if (isIE) E.Toolbar.setItemUnselectable(this.selectList);
+            if (isIE) E.Dom.setItemUnselectable(this.selectList);
         },
 
         /**
          * 绑定取色事件
          */
-        _bindPickEvent: function(editor) {
-            var self = this;
+        _bindPickEvent: function() {
+            var self = this, editor = this.editor;
 
             Event.on(this.selectList, "click", function(ev) {
                 var target = Event.getTarget(ev), val;

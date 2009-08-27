@@ -117,7 +117,7 @@ KISSY.Editor = function(textarea, config) {
             for (name in mods) {
                 m = mods[name];
 
-                if (!attached[name] && m) {
+                if (!attached[name] && m) { // ≤ª‘ –Ì∏≤∏«
                     attached[name] = m;
 
                     if (m.fn) {

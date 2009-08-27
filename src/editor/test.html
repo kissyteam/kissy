@@ -12,31 +12,32 @@
 
 <script type="text/javascript" src="editor-base.js"></script>
 <script type="text/javascript" src="config.js"></script>
-
 <script type="text/javascript" src="lang/en.js"></script>
 
-<script type="text/javascript" src="core/plugin.js"></script>
-<script type="text/javascript" src="core/dom.js"></script>
+<!-- 所有 core 文件加载独立（顺序无关） -->
 <script type="text/javascript" src="core/color.js"></script>
 <script type="text/javascript" src="core/command.js"></script>
-<script type="text/javascript" src="core/range.js"></script>
+<script type="text/javascript" src="core/dom.js"></script>
 <script type="text/javascript" src="core/instance.js"></script>
-<script type="text/javascript" src="core/toolbar.js"></script>
 <script type="text/javascript" src="core/menu.js"></script>
+<script type="text/javascript" src="core/plugin.js"></script>
+<script type="text/javascript" src="core/range.js"></script>
+<script type="text/javascript" src="core/toolbar.js"></script>
 
+<!-- 所有 plugin 文件加载独立（顺序无关） -->
 <script type="text/javascript" src="plugins/basic/plugin.js"></script>
-<script type="text/javascript" src="plugins/font/plugin.js"></script>
-<script type="text/javascript" src="plugins/color/plugin.js"></script>
-<script type="text/javascript" src="plugins/link/plugin.js"></script>
 <script type="text/javascript" src="plugins/blockquote/plugin.js"></script>
+<script type="text/javascript" src="plugins/color/plugin.js"></script>
+<script type="text/javascript" src="plugins/font/plugin.js"></script>
 <script type="text/javascript" src="plugins/image/plugin.js"></script>
-<script type="text/javascript" src="plugins/smiley/plugin.js"></script>
 <script type="text/javascript" src="plugins/indent/plugin.js"></script>
 <script type="text/javascript" src="plugins/justify/plugin.js"></script>
-<script type="text/javascript" src="plugins/undo/plugin.js"></script>
-<script type="text/javascript" src="plugins/save/plugin.js"></script>
-<script type="text/javascript" src="plugins/source/plugin.js"></script>
+<script type="text/javascript" src="plugins/link/plugin.js"></script>
 <script type="text/javascript" src="plugins/maximize/plugin.js"></script>
+<script type="text/javascript" src="plugins/save/plugin.js"></script>
+<script type="text/javascript" src="plugins/smiley/plugin.js"></script>
+<script type="text/javascript" src="plugins/source/plugin.js"></script>
+<script type="text/javascript" src="plugins/undo/plugin.js"></script>
 
 <style type="text/css">
     #page {
@@ -81,18 +82,18 @@
         <ol>
             <li>编辑器基本功能</li>
             <li>小巧精简，仅依赖 yahoo-dom-event, 压缩后不超过 50k</li>
-            <li>支持所有A级浏览器</li>
+            <li>支持所有 A 级浏览器</li>
         </ol>
     </div>
 
     <div class="section">
         <h2>Test Cases:</h2>
         <ol>
-            <li>B / I / U / Strike 生成的代码在 A 级浏览器下一致，分别为 b, i, u, strike</li>
+            <li>B / I / U / Strike 生成的代码在 A 级浏览器下一致，分别为 strong, em, span, span</li>
+            <li>ol / ul 和 google docs 的处理方式一致，各个浏览器下的差异由浏览器自身决定</li>
             <li>foreColor / backColor 在 IE 下生成 font 标签，其它浏览器下生成 span 标签</li>
             <li>打开 foreColor / backColor 的取色板时，自动选中当前色</li>
-            <li>ol / ul 和 google docs 的处理方式一致，各个浏览器下的差异由浏览器自身决定</li>
-            
+
         </ol>
     </div>
     

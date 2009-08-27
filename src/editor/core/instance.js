@@ -39,22 +39,31 @@ KISSY.Editor.add("core~instance", function(E) {
         /**
          * 以下在 renderUI 中赋值
          * @property container
-         * @property toolbar
          * @property contentWin
          * @property contentDoc
          * @property statusbar
          */
 
         /**
+         * 与该实例相关的插件
+         */
+        //this.plugins = [];
+
+        /**
          * 是否处于源码编辑状态
          */
         this.sourceMode = false;
+
+        /**
+         * 工具栏
+         */
+        this.toolbar = new E.Toolbar(this);
 
         // init
         this._init();
     };
 
-    E.Instance.prototype = {
+    Lang.augmentObject(E.Instance.prototype, {
         /**
          * 初始化方法
          */
@@ -73,18 +82,26 @@ KISSY.Editor.add("core~instance", function(E) {
          */
         _initPlugins: function() {
             var key, p,
-                plugins = E.plugins;
+                staticPlugins = E.plugins,
+                plugins = [];
+
+            // 每个实例，拥有一份自己的 plugins 列表
+            for(key in staticPlugins) {
+                plugins[key] = staticPlugins[key];
+            }
+            this.plugins = plugins;
 
             // 工具栏上的插件
-            E.Toolbar.init(this);
+            this.toolbar.init();
 
             // 其它插件
             for(key in plugins) {
                 p = plugins[key];
                 if(p.inited) continue;
 
+                p.editor = this; // 给 p 增加 editor 属性
                 if(p.init) {
-                    p.init(this);
+                    p.init();
                 }
                 p.inited = true;
             }
@@ -114,7 +131,7 @@ KISSY.Editor.add("core~instance", function(E) {
             Dom.insertBefore(container, textarea);
 
             this.container = container;
-            this.toolbar = container.childNodes[0];
+            this.toolbar.domEl = container.childNodes[0];
             this.contentWin = iframe.contentWindow;
             this.contentDoc = iframe.contentWindow.document;
             this.statusbar = container.childNodes[2];
@@ -194,6 +211,6 @@ KISSY.Editor.add("core~instance", function(E) {
         getSelectionRange: function() {
             return E.Range.getSelectionRange(this.contentWin);
         }
-    };
+    });
 
 });

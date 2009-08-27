@@ -12,10 +12,10 @@ KISSY.Editor.add("plugins~link", function(E) {
 
         /**
          * ÏìÓ¦º¯Êý
-         * @param {KISSY.Editor} editor
          */
-        exec: function(editor) {
-            var msg = this.lang.dialogMessage,
+        exec: function() {
+            var editor = this.editor,
+                msg = this.lang.dialogMessage,
                 url = "http://",
                 range = editor.getSelectionRange(),
                 container = range.startContainer,

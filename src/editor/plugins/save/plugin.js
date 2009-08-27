@@ -16,18 +16,21 @@ KISSY.Editor.add("plugins~save", function(E) {
         /**
          * 种类
          */
-        type: TYPE.CUSTOM,
+        type: TYPE.FUNC,
 
         /**
          * 初始化
          */
-        init: function(editor) {
-            var textarea = editor.textarea,
+        init: function() {
+            var editor = this.editor,
+                textarea = editor.textarea,
                 form = textarea.form;
 
             if(form) {
                 Event.on(form, "submit", function() {
-                    textarea.value = editor.getData();
+                    if(!editor.sourceMode) {
+                        textarea.value = editor.getData();
+                    }
                 });
             }
         },
