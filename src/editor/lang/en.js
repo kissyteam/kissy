@@ -65,9 +65,9 @@ KISSY.Editor.add("lang~en", function(E) {
             title         : "Strikeout"
         },
         link: {
-            text          : "Link",
-            title         : "Add or remove link (Ctrl+K)",
-            dialogMessage : "Enter the URL"
+            href          : "URL:",
+            text          : "Text:",
+            target        : "Open link in new window"
         },
         blockquote: {
             text          : "Blockquote",

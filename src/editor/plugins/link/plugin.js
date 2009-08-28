@@ -2,7 +2,16 @@
 KISSY.Editor.add("plugins~link", function(E) {
 
     var TYPE = E.PLUGIN_TYPE,
-        Lang = YAHOO.lang;
+        Lang = YAHOO.lang,
+
+        DIALOG_CLS = "kissy-drop-menu-linkDialog",
+        DIALOG_TMPL = '<ul>' +
+                          '<li><label>{lang.href}<label><input class="kissy-linkDialog-href" onclick="this.select()" value="http://" type="text" /></li>' +
+                          '<li><label>{lang.text}<label><input class="kissy-linkDialog-text" type="text" /></li>' +
+                          '<li><input class="kissy-linkDialog-target" type="checkbox" /><label>{lang.target}</label></li>' +
+                          '<li><button </li>' +
+                      '</ul>'
+            ;
 
     E.addPlugin("link", {
         /**
@@ -11,9 +20,37 @@ KISSY.Editor.add("plugins~link", function(E) {
         type: TYPE.TOOLBAR_BUTTON,
 
         /**
+         * 关联的对话框
+         */
+        dialog: null,
+
+        /**
+         * 初始化函数
+         */
+        init: function() {
+            this._initDialog();
+        },
+
+        /**
+         * 初始化对话框
+         */
+        _initDialog: function() {
+            var dialog = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]),
+                lang = this.lang;
+
+            dialog.className += " " + DIALOG_CLS;
+            dialog.innerHTML = DIALOG_TMPL
+                    .replace("{lang.href}", lang.href)
+                    .replace("{lang.text}", lang.text)
+                    .replace("{lang.target}", lang.target);
+
+            this.dialog = dialog;
+        },
+
+        /**
          * 响应函数
          */
-        exec: function() {
+        exec2: function() {
             var editor = this.editor,
                 msg = this.lang.dialogMessage,
                 url = "http://",
