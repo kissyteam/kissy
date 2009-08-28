@@ -18,7 +18,7 @@ KISSY.Editor.add("plugins~link", function(E) {
                 msg = this.lang.dialogMessage,
                 url = "http://",
                 range = editor.getSelectionRange(),
-                container = range.startContainer,
+                container = range.startContainer || range.parentElement(),
                 parentEl;
 
            if(container.nodeType == 3) { // TextNode
