@@ -75,11 +75,11 @@ KISSY.Editor.add("core~toolbar", function(E) {
          * 添加工具栏项
          */
         _addItem: function(p) {
-            var el, type = p.type;
+            var el, type = p.type, lang = this.lang;
 
             // 当 plugin 没有设置 lang 时，采用默认语言配置
             // TODO: 考虑重构到 instance 模块里，因为 lang 仅跟实例相关
-            if (!p.lang) p.lang = this.lang[p.name] || {};
+            if (!p.lang) p.lang = Lang.merge(lang["common"], this.lang[p.name] || {});
 
             // 根据模板构建 DOM
             div.innerHTML = TOOLBAR_BUTTON_TMPL

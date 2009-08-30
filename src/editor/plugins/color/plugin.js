@@ -127,7 +127,7 @@ KISSY.Editor.add("plugins~color", function(E) {
          * 绑定取色事件
          */
         _bindPickEvent: function() {
-            var self = this, editor = this.editor;
+            var self = this;
 
             Event.on(this.dropMenu, "click", function(ev) {
                 var target = Event.getTarget(ev),
@@ -138,7 +138,7 @@ KISSY.Editor.add("plugins~color", function(E) {
                     self.setColor(E.Color.toHex(attr));
 
                     // 执行命令
-                    editor.execCommand(self.name, self.color);
+                    self.editor.execCommand(self.name, self.color);
                 }
             });
         },

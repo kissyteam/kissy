@@ -258,3 +258,47 @@ html>body .kissy-inline-block {
     padding: 0;
     border: none;
 }
+
+/* link dialog */
+.kissy-link-dialog {
+    padding: 10px 10px 0;
+}
+.kissy-link-dialog label {
+    width: 50px;
+    text-align: right;
+    display: inline-block;
+    zoom: 1;
+    margin-right: 10px;
+    vertical-align: middle;    
+}
+.kissy-link-dialog li {
+    margin: 0 0 10px;
+}
+.kissy-link-dialog input {
+    padding: 2px 1px;
+    vertical-align: middle;
+}
+.kissy-link-dialog-target input {
+    margin-left: 60px;
+    padding: 0 10px 0 0;
+}
+.kissy-link-dialog-actions {
+    padding: 0 5px 0 55px;
+    height: 25px;
+    line-height: 30px;
+}
+.kissy-link-dialog-actions button {
+    margin: 0 5px;
+    padding: 1px 0.8em 0;
+    *padding: 2px 0.8em 1px;
+    float: left;
+}
+.kissy-link-dialog-remove {
+    color: #00c;
+    text-decoration: underline;
+    cursor: pointer;
+    float: right;
+}
+.kissy-link-dialog-newlink-mode .kissy-link-dialog-remove {
+    display: none;
+}

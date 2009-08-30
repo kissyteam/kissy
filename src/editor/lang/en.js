@@ -38,14 +38,14 @@ KISSY.Editor.add("lang~en", function(E) {
           text            : "Font Size",  
           title           : "Font size",
           options         : {
-              "Default"         : "10pt",
-              "8"               : "8pt",
-              "10"              : "10pt",
-              "12"              : "12pt",
-              "14"              : "14pt",
-              "18"              : "18pt",
-              "24"              : "24pt",
-              "36"              : "36pt"
+              "Default"         : "2",
+              "8"               : "1",
+              "10"              : "2",
+              "12"              : "3",
+              "14"              : "4",
+              "18"              : "5",
+              "24"              : "6",
+              "36"              : "7"
           }
         },
         bold: {
@@ -67,7 +67,8 @@ KISSY.Editor.add("lang~en", function(E) {
         link: {
             href          : "URL:",
             text          : "Text:",
-            target        : "Open link in new window"
+            target        : "Open link in new window",
+            remove        : "Remove link"
         },
         blockquote: {
             text          : "Blockquote",

@@ -98,7 +98,7 @@ KISSY.Editor.add("plugins~font", function(E) {
          * 绑定取色事件
          */
         _bindPickEvent: function() {
-            var self = this, editor = this.editor;
+            var self = this;
 
             Event.on(this.selectList, "click", function(ev) {
                 var target = Event.getTarget(ev), val;
@@ -116,7 +116,7 @@ KISSY.Editor.add("plugins~font", function(E) {
                     self._setSelectedOption(val);
 
                     // 执行命令
-                    editor.execCommand(self.name, self.selectedValue);
+                    self.editor.execCommand(self.name, self.selectedValue);
                 }
             });
         },

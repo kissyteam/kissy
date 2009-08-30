@@ -26,6 +26,21 @@ KISSY.Editor.add("core~range", function(E) {
             }
 
             return range;
+        },
+
+        /**
+         * 获取起始点所在容器
+         */
+        getStartContainer: function(range) {
+            return range.startContainer || range.parentElement();
+        },
+
+        /**
+         * 获取选中文本
+         */
+        getSelectedText: function(range) {
+            if("text" in range) return range.text;
+            return range.toString();
         }
     };
 

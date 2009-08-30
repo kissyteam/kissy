@@ -11,9 +11,8 @@ KISSY.Editor.add("plugins~image", function(E) {
 
         /**
          * ÏìÓ¦º¯Êý
-         * @param {KISSY.Editor} editor
          */
-        exec: function(editor) {
+        exec: function() {
             alert("todo");
         }
     });
