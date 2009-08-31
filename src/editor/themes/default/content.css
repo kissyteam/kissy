@@ -58,3 +58,6 @@ blockquote {
     padding: 10px;
     border: 1px dashed #ddd;
 }
+h1, h2, h3 {
+    margin: 0.67em 0;
+}

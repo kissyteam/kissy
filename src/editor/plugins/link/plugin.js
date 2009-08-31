@@ -1,17 +1,19 @@
 
 KISSY.Editor.add("plugins~link", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE, Range = E.Range,
+        timeStamp = new Date().getTime(),
 
         DIALOG_CLS = "kissy-link-dialog",
+        NEW_LINK_CLS = "kissy-link-dialog-newlink-mode",
         BTN_OK_CLS = "kissy-link-dialog-ok",
         BTN_CANCEL_CLS = "kissy-link-dialog-cancel",
         BTN_REMOVE_CLS = "kissy-link-dialog-remove",
-        NEW_LINK_CLS = "kissy-link-dialog-newlink-mode",
-        timeStamp = new Date().getTime(),
-        DIALOG_TMPL = ['<form class="', NEW_LINK_CLS ,'"><ul>',
+        DEFAULT_HREF = "http://",
+
+        DIALOG_TMPL = ['<form onsubmit="return false"><ul>',
                           '<li class="kissy-link-dialog-href"><label>{href}</label><input name="href" size="40" value="http://" type="text" /></li>',
                           '<li class="kissy-link-dialog-text"><label>{text}</label><input name="text" size="40" type="text" /></li>',
                           '<li class="kissy-link-dialog-target"><input name="target" id="target_"', timeStamp ,' type="checkbox" /> <label for="target_"', timeStamp ,'>{target}</label></li>',
@@ -43,7 +45,6 @@ KISSY.Editor.add("plugins~link", function(E) {
          */
         init: function() {
             this._renderUI();
-            this._syncUI();
             this._bindUI();
         },
 
@@ -81,16 +82,14 @@ KISSY.Editor.add("plugins~link", function(E) {
 
                 switch(target.className) {
                     case BTN_OK_CLS:
-                        Event.preventDefault(ev);
                         self._createLink(form.href.value, form.text.value, form.target.checked);
                         break;
                     case BTN_CANCEL_CLS: // 直接往上冒泡，关闭对话框
-                        Event.preventDefault(ev);
                         break;
                     case BTN_REMOVE_CLS:
                         self._removeLink();
                         break;
-                    default: // 点击在非按钮处
+                    default: // 点击在非按钮处，停止冒泡，保留对话框
                         Event.stopPropagation(ev);
                 }
             });
@@ -106,19 +105,22 @@ KISSY.Editor.add("plugins~link", function(E) {
                 container = Range.getStartContainer(range),
                 parentEl;
 
+            // 修改链接
             if (container.nodeType == 3) { // TextNode
                 parentEl = container.parentNode;
-                if (parentEl.nodeName == "A") { // 修改链接
+                if (parentEl.nodeName == "A") {
                     form.href.value = parentEl.href;
                     form.text.value = E.Dom.getText(parentEl);
                     form.target.checked = parentEl.target === "_blank";
                     Dom.removeClass(form, NEW_LINK_CLS);
-                } else { // 新建链接
-                    form.href.value = "http://";
-                    form.text.value = Range.getSelectedText(range);
-                    Dom.addClass(form, NEW_LINK_CLS);
+                    return;
                 }
             }
+
+            // 新建链接
+            form.href.value = DEFAULT_HREF;
+            form.text.value = Range.getSelectedText(range);
+            Dom.addClass(form, NEW_LINK_CLS);
         },
 
         /**

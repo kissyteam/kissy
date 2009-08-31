@@ -80,7 +80,7 @@ KISSY.Editor.add("plugins~font", function(E) {
 
                 htmlCode += OPTION_TMPL
                         .replace("{VALUE}", val)
-                        .replace("{STYLE}", this._getOptionStyle(val))
+                        .replace("{STYLE}", this._getOptionStyle(key, val))
                         .replace("{KEY}", key);
             }
 
@@ -134,11 +134,11 @@ KISSY.Editor.add("plugins~font", function(E) {
             this._updateSelectedOption(val);
         },
 
-        _getOptionStyle: function(val) {
+        _getOptionStyle: function(key, val) {
           if(this.name == "fontName") {
               return "font-family:" + val;
           } else { // font size
-              return "font-size:" + val;
+              return "font-size:" + key + "px";
           }
         },
 
