@@ -1,9 +1,10 @@
 /*
 Copyright (c) 2009, Kissy UI Library. All rights reserved.
+MIT Licensed
 http://kissy.googlecode.com/
 
-Date: 2009-08-13 17:21:36
-Revision: 106
+Date: 2009-09-01 12:48:52
+Revision: 132
 */
 /*
 reset.css
@@ -70,5 +71,5 @@ table {
 hr {
     border: none;
     height: 1px;
-    *color: #fff; /* for ie6 */
+    *color: #fff; /* for ie7- */
 }

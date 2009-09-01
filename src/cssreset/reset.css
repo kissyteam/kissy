@@ -63,5 +63,5 @@ table {
 hr {
     border: none;
     height: 1px;
-    *color: #fff; /* for ie6 */
+    *color: #fff; /* for ie7- */
 }
