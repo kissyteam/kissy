@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" type="text/css"/>
 
 <script type="text/javascript" src="../../lib/yui2/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="../../lib/yui3/yui-min.js"></script>
 
 <link rel="stylesheet" href="themes/default/editor.css" type="text/css"/>
 
@@ -73,7 +72,7 @@
     <h1>Editor: </h1>
 
     <form id="demoForm" action="" method="POST">
-        <textarea id="demo" rows="50" cols="152" style="width: 800px; height: 300px">
+        <textarea id="demo" rows="50" cols="152" style="width: 900px; height: 300px">
             <p><img alt="" src="http://a.cksource.com/c/1/inc/img/demo-little-red.jpg" _cke_saved_src="http://a.cksource.com/c/1/inc/img/demo-little-red.jpg" align="left" height="168" hspace="10" width="120"></p>
 
             <h2 class="firstheading" id="firstheading">Little Red Riding Hood</h2>
@@ -179,52 +178,6 @@
     //console.dir(editorDemo);
 
 </script>
-
-<div id="testLogger"></div>
-
-<script type="text/javascript">
-
-    YUI({debug: YAHOO.env.ua.gecko ? true : false}).use("node", "console", "test", function (Y) {
-        var Assert = Y.Assert,
-            E = KISSY.Editor;
-
-        var testCase = new Y.Test.Case({
-
-            name: "Only Test",
-
-            setUp: function () {
-                // nothing to do
-            },
-
-            tearDown: function () {
-                // nothing to do
-            },
-
-            testColor : function () {
-
-                // YUI bug
-                //Assert.areEqual("#FF0A00", Y.Color.toHex("rgb(255, 10, 0)"));
-
-                Assert.areEqual("#ff0a00", E.Color.toHex("rgb(255, 10, 0)"));
-
-            }
-        });
-
-        var testSuite = new Y.Test.Suite("Editor Test Suite");
-        testSuite.add(testCase);
-
-        new Y.Console({
-            verbose : true,
-            newestOnTop : false
-
-        }).render("#testLogger");
-
-        Y.Test.Runner.add(testSuite);
-        Y.Test.Runner.run();
-
-    });
-</script>
-
 
 </body>
 </html>
