@@ -5,21 +5,28 @@
  * requires: yahoo-dom-event
  *
  * @author lifesinger@gmail.com
- *
- * TODO: container 支持集合（一次指定多个区域）
  */
 
 var KISSY = window.KISSY || {};
 
 (function() {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
-        DATA_SRC = "data-lazyload",
+        DATA_SRC = "data-lazyload-src",
+        MOD = { AUTO: "auto", MANUAL: "manual" },
 
         defaultConfig = {
+
+            /**
+             * 懒处理模式
+             *  auto   - 自动化。html 输出时，不对 img.src 做任何处理
+             *  manual - 输出 html 时，已经将需要延迟加载的 img.src 替换为 img.DATA_SRC
+             */
+            mod: MOD.AUTO,
+
             /**
              * 当前视窗往下，diff px 外的图片延迟加载
              * 适当设置此值，可以让用户在拖动时感觉图片已经加载好
-             * 默认为当前视窗高度（提前加载一屏）
+             * 默认为当前视窗高度（两屏以外的才延迟加载）
              */
             diff: Dom.getViewportHeight(),
 
@@ -36,23 +43,28 @@ var KISSY = window.KISSY || {};
      * @requires YAHOO.util.Event
      * @constructor
      */
-    function ImageLazyload(id, config) {
+    var ImageLazyload = function(containers, config) {
         // Factory or constructor
         if (!(this instanceof arguments.callee)) {
-            return new arguments.callee(id, config);
+            return new arguments.callee(containers, config);
         }
 
         // 允许仅传递 config 参数
         if(typeof config === "undefined") {
-            config = id;
-            id = document;
+            config = containers;
+            containers = [document];
+        }
+
+        // containers 是一个 HTMLElement
+        if(!Lang.isArray(containers)) {
+            containers = [Dom.get(containers) || document];
         }
 
         /**
-         * 图片所在容器，默认为 document
-         * @type HTMLElement
+         * 图片所在容器（可以多个），默认为 [document]
+         * @type Array
          */
-        this.container = Dom.get(id) || document;
+        this.containers = containers;
 
         /**
          * 配置参数
@@ -62,15 +74,16 @@ var KISSY = window.KISSY || {};
 
         /**
          * 需要延迟下载的图片
+         * @type Array
          */
         //this.images
 
         /**
          * 开始延迟的 Y 坐标
+         * @type number
          */
         //this.threshold
 
-        // init
         this._init();
     };
 
@@ -84,21 +97,22 @@ var KISSY = window.KISSY || {};
             this.images = this._filterImgs();
 
             if (this.images.length > 0) {
-                this._initScroll();
+                this._initLoadEvent();
             }
         },
 
         /**
-         * 初始化滚动事件
+         * 初始化加载事件
          * @protected
          */
-        _initScroll: function() {
+        _initLoadEvent: function() {
             var timer, self = this;
 
+            // 滚动时，加载图片
             Event.on(window, "scroll", function() {
                 if(timer) return;
 
-                timer = setTimeout(function(){
+                timer = setTimeout(function() {
                     // load
                     self._loadImgs();
 
@@ -110,6 +124,14 @@ var KISSY = window.KISSY || {};
 
                 }, 100); // 0.1s 内，用户感觉流畅
             });
+
+            // 手工模式时，第一屏也有可能有 data-src 项
+            if(this.config.mod === MOD.MANUAL) {
+                // 需要立即加载一次，以保证第一屏图片可见
+                Event.onDOMReady(function() {
+                    self._loadImgs(true);
+                });
+            }
         },
 
         /**
@@ -117,19 +139,35 @@ var KISSY = window.KISSY || {};
          * @protected
          */
         _filterImgs: function() {
-            var imgs = this.container.getElementsByTagName("img"),
+            var containers = this.containers,
                 threshold = this.threshold,
                 placeholder = this.config.placeholder,
-                img, ret = [];
+                isManualMod = this.config.mod === MOD.MANUAL,
+                img, data_src, ret = [];
 
-            for (var i = 0, len = imgs.length; i < len; ++i) {
-                img = imgs[i];
-                if (Dom.getY(img) > threshold) {
-                    img.setAttribute(DATA_SRC, img.src);
-                    img.src = placeholder;
-                    ret.push(img);
+            for (var n = 0, N = containers.length; n < N; ++n) {
+                var imgs = containers[n].getElementsByTagName("img");
+
+                for (var i = 0, len = imgs.length; i < len; ++i) {
+                    img = imgs[i];
+                    data_src = img.getAttribute(DATA_SRC);
+
+                    // 手工模式，只需处理有 data-src 的图片
+                    // 原因：当有不需要延迟的图片在 threshold 以后时，只处理有 data-src 的图片可以
+                    //      减少 IE 下被 abort 掉的 http 图片链接
+                    if (isManualMod && data_src) {
+                        img.src = placeholder;
+                        ret.push(img);
+
+                    // 自动模式，只需处理 threshold 外的图片
+                    } else if (Dom.getY(img) > threshold) {
+                        img.setAttribute(DATA_SRC, img.src);
+                        img.src = placeholder;
+                        ret.push(img);
+                    }
                 }
             }
+
             return ret;
         },
 
@@ -137,19 +175,20 @@ var KISSY = window.KISSY || {};
          * 加载图片
          * @protected
          */
-        _loadImgs: function() {
+        _loadImgs: function(force) {
             var scrollTop = Dom.getDocumentScrollTop();
-            if(scrollTop <= this.config.diff) return;
+            if(!force && scrollTop <= this.config.diff) return;
 
             var imgs = this.images,
                 threshold = this.threshold,
-                src, remain = [];
+                data_src, remain = [];
 
             for(var i = 0, img; img = imgs[i++];) {
                 if(Dom.getY(img) < threshold + scrollTop) {
-                    src = img.getAttribute(DATA_SRC);
-                    if(src) {
-                        img.src = src;
+                    data_src = img.getAttribute(DATA_SRC);
+
+                    if(data_src && img.src != data_src) {
+                        img.src = data_src;
                         img.removeAttribute(DATA_SRC);
                     }
                 } else {
@@ -192,5 +231,11 @@ var KISSY = window.KISSY || {};
  *     能实现延迟加载。缺点是：不渐进增强，无 JS 时，图片不能展示。对搜索爬虫不利。
  *  3. http://www.appelsiini.net/projects/lazyload jQuery Lazyload
  *
- * 最后的感慨：这个插件有点鸡肋
+ * 感慨：这个插件有点鸡肋
+ *
+ * 2009-09-03 更新：
+ *  1. 考虑到图片对主流 SEO 影响很小，腾讯一开始就替换掉 src 的方法是可行的。
+ *  2. 对于淘宝 srp 页面，将后一半图片延迟加载，是一个不错的权衡。
+ *  3. 上面 2 的缺点是，如用用户屏幕很高，第一屏露出了 data-src 项，则当用户不滚动屏幕时，
+ *     延迟的空白图片永远不会加载。（基本上可以）
  */
