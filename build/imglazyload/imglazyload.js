@@ -3,16 +3,14 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-09-07 20:56:41
-Revision: 137
+Date: 2009-09-07 22:43:08
+Revision: 138
 */
 /**
  * KISSY.ImageLazyload Í¼Æ¬ÑÓ³Ù¼ÓÔØ×é¼þ
  *
- * @requries    yahoo-dom-event
- * @creator     lifesinger@gmail.com
- * @changelog
- *      ver 1.0 @2009-08-25 Óñ²®£º ³õÊ¼°æ±¾
+ * @creator     Óñ²®<lifesinger@gmail.com>
+ * @depends     yahoo-dom-event
  */
 
 var KISSY = window.KISSY || {};

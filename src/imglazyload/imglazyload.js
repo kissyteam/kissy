@@ -1,10 +1,8 @@
 /**
  * KISSY.ImageLazyload Í¼Æ¬ÑÓ³Ù¼ÓÔØ×é¼þ
  *
- * @requries    yahoo-dom-event
- * @creator     lifesinger@gmail.com
- * @changelog
- *      ver 1.0 @2009-08-25 Óñ²®£º ³õÊ¼°æ±¾
+ * @creator     Óñ²®<lifesinger@gmail.com>
+ * @depends     yahoo-dom-event
  */
 
 var KISSY = window.KISSY || {};

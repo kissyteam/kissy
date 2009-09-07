@@ -81,7 +81,7 @@
                     </header>
                     <fileset file="@{file}" />
                 </concat>
-                <rename src="@{file}.tmp" dest="@{file}"/>
+                <move file="@{file}.tmp" tofile="@{file}"/>
             </sequential>
         </for>
 

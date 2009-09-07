@@ -1,16 +1,14 @@
 /**
  * KISSY.Editor ¸»ÎÄ±¾±à¼­Æ÷
- * editor.js
- * requires: yahoo-dom-event
- * @author lifesinger@gmail.com
+ *
+ * @creator     Óñ²®<lifesinger@gmail.com>
+ * @depends     yahoo-dom-event
  */
 
 var KISSY = window.KISSY || {};
 
 /**
  * @class Editor
- * @requires YAHOO.util.Dom
- * @requires YAHOO.util.Event
  * @constructor
  * @param {string|HTMLElement} textarea
  * @param {object} config

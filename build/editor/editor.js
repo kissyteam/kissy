@@ -1,24 +1,22 @@
 /*
 Copyright (c) 2009, Kissy UI Library. All rights reserved.
-MIT Licensed
+MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-08-31 17:06:24
-Revision: 129
+Date: 2009-09-07 22:43:06
+Revision: 138
 */
 /**
  * KISSY.Editor ¸»ÎÄ±¾±à¼­Æ÷
- * editor.js
- * requires: yahoo-dom-event
- * @author lifesinger@gmail.com
+ *
+ * @creator     Óñ²®<lifesinger@gmail.com>
+ * @depends     yahoo-dom-event
  */
 
 var KISSY = window.KISSY || {};
 
 /**
  * @class Editor
- * @requires YAHOO.util.Dom
- * @requires YAHOO.util.Event
  * @constructor
  * @param {string|HTMLElement} textarea
  * @param {object} config

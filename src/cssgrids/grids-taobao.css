@@ -1,5 +1,6 @@
 /*
 Grids Layout for Taobao
+
 维护：玉伯(lifesinger@gmail.com), 正淳(ragecarrier@gmail.com)
 */
 
@@ -22,7 +23,7 @@ Grids Layout for Taobao
 .grid-m0s5 .main-wrap { margin-right: 200px; }
 .grid-m0s5 .col-sub { width: 190px; margin-left: -190px; }
 
-/** 两栏布局 **/
+/** 三栏布局 **/
 .grid-s5m0e6 .main-wrap { margin: 0 240px 0 200px; }
 .grid-s5m0e6 .col-sub { width: 190px; margin-left: -100%; }
 .grid-s5m0e6 .col-extra { width: 230px; margin-left: -230px; }

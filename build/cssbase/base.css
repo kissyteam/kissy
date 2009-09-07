@@ -1,16 +1,15 @@
 /*
 Copyright (c) 2009, Kissy UI Library. All rights reserved.
-MIT Licensed
+MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-09-01 13:01:00
-Revision: 132
+Date: 2009-09-07 22:42:59
+Revision: 138
 */
 /*
-常用的基本 class
-base.css
+常用的基本样式 Base Style
 理念：少而精
-维护：玉伯(lifesinger@gmail.com), 正淳(ragecarrier@gmail.com)
+维护：玉伯<lifesinger@gmail.com>
 */
 
 /* 隐藏 */
@@ -25,4 +24,3 @@ base.css
     clear: both;
 }
 .clearfix { *zoom: 1; }
-

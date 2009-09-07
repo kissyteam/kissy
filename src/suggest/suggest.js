@@ -1,10 +1,8 @@
 /**
  * KISSY.Suggest 提示补全组件
  *
- * suggest.js
- * requires: yahoo-dom-event
- *
- * @author lifesinger@gmail.com
+ * @creator     玉伯<lifesinger@gmail.com>
+ * @depends     yahoo-dom-event
  */
 
 var KISSY = window.KISSY || {};

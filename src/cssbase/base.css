@@ -1,8 +1,7 @@
 /*
-常用的基本 class
-base.css
+常用的基本样式 Base Style
 理念：少而精
-维护：玉伯(lifesinger@gmail.com), 正淳(ragecarrier@gmail.com)
+维护：玉伯<lifesinger@gmail.com>
 */
 
 /* 隐藏 */
@@ -17,4 +16,3 @@ base.css
     clear: both;
 }
 .clearfix { *zoom: 1; }
-

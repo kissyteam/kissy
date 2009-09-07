@@ -1,22 +1,23 @@
 /*
 Copyright (c) 2009, Kissy UI Library. All rights reserved.
+MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-07-31 10:42:15
-Revision: 92
+Date: 2009-09-07 22:43:04
+Revision: 138
 */
 /*
-reset.css
+CSS Reset
 理念：清除和重置是紧密不可分的
 特色：1.适应中文 2.基于最新主流浏览器
-维护：玉伯(lifesinger@gmail.com), 正淳(ragecarrier@gmail.com)
+维护：玉伯<lifesinger@gmail.com>, 正淳<ragecarrier@gmail.com>
 */
 
 /** 清除内外边距 **/
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
 dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
 pre, /* text formatting elements 文本格式元素 */
-form, fieldset, lengend, button, input, textarea, /* form elements 表单元素 */
+form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */
 th, td { /* table elements 表格元素 */
     margin: 0;
     padding: 0;
@@ -70,13 +71,12 @@ table {
 hr {
     border: none;
     height: 1px;
-    color: #fff; /* for ie6 */
+    *color: #fff; /* for ie7- */
 }
 /*
 双飞翼栅格布局 Flying Swing Grids Layout
-grids.css
 理念：简单质朴，尽量分离
-维护：玉伯(lifesinger@gmail.com), 正淳(ragecarrier@gmail.com)
+维护：玉伯<lifesinger@gmail.com>, 正淳<ragecarrier@gmail.com>
 */
 
 /** 页面宽度 **/

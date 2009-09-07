@@ -1,18 +1,16 @@
 /*
 Copyright (c) 2009, Kissy UI Library. All rights reserved.
-MIT Licensed
+MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-08-25 17:06:07
-Revision: 123
+Date: 2009-09-07 22:43:10
+Revision: 138
 */
 /**
  * KISSY.Suggest 提示补全组件
  *
- * suggest.js
- * requires: yahoo-dom-event
- *
- * @author lifesinger@gmail.com
+ * @creator     玉伯<lifesinger@gmail.com>
+ * @depends     yahoo-dom-event
  */
 
 var KISSY = window.KISSY || {};
