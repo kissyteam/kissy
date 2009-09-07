@@ -1,10 +1,10 @@
 /**
  * KISSY.ImageLazyload 图片延迟加载组件
  *
- * imglazyload.js
- * requires: yahoo-dom-event
- *
- * @author lifesinger@gmail.com
+ * @requries    yahoo-dom-event
+ * @creator     lifesinger@gmail.com
+ * @changelog
+ *      ver 1.0 @2009-08-25 玉伯： 初始版本
  */
 
 var KISSY = window.KISSY || {};
@@ -38,9 +38,7 @@ var KISSY = window.KISSY || {};
 
     /**
      * 图片延迟加载组件
-     * @class Lazyload
-     * @requires YAHOO.util.Dom
-     * @requires YAHOO.util.Event
+     * @class ImageLazyload
      * @constructor
      */
     var ImageLazyload = function(containers, config) {
@@ -49,7 +47,7 @@ var KISSY = window.KISSY || {};
             return new arguments.callee(containers, config);
         }
 
-        // 允许仅传递 config 参数
+        // 允许仅传递 config 一个参数
         if(typeof config === "undefined") {
             config = containers;
             containers = [document];
@@ -126,8 +124,7 @@ var KISSY = window.KISSY || {};
             });
 
             // 手工模式时，第一屏也有可能有 data-src 项
-            alert(document.scrollTop)
-            if(this.config.mod === MOD.MANUAL) {
+            if(this.config.mod === MOD.MANUAL && Dom.getDocumentScrollTop() === 0) {
                 // 需要立即加载一次，以保证第一屏图片可见
                 Event.onDOMReady(function() {
                     self._loadImgs(true);
