@@ -126,6 +126,7 @@ var KISSY = window.KISSY || {};
             });
 
             // 手工模式时，第一屏也有可能有 data-src 项
+            alert(document.scrollTop)
             if(this.config.mod === MOD.MANUAL) {
                 // 需要立即加载一次，以保证第一屏图片可见
                 Event.onDOMReady(function() {
