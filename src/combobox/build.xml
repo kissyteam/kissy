@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="combobox.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../build.xml"/>
+
+    <property file="build.properties"/>
+    <property name="src.dir" location="."/>
+
+    <target name="build" depends="common.build">
+    </target>
+</project>
