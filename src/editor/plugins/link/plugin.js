@@ -5,6 +5,7 @@ KISSY.Editor.add("plugins~link", function(E) {
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE, Range = E.Range,
         timeStamp = new Date().getTime(),
+        HREF_REG = /^\w+:\/\/.*$/,
 
         DIALOG_CLS = "kissy-link-dialog",
         NEW_LINK_CLS = "kissy-link-dialog-newlink-mode",
@@ -87,7 +88,7 @@ KISSY.Editor.add("plugins~link", function(E) {
                     case BTN_CANCEL_CLS: // 直接往上冒泡，关闭对话框
                         break;
                     case BTN_REMOVE_CLS:
-                        self._removeLink();
+                        self._unLink();
                         break;
                     default: // 点击在非按钮处，停止冒泡，保留对话框
                         Event.stopPropagation(ev);
@@ -105,7 +106,7 @@ KISSY.Editor.add("plugins~link", function(E) {
                 container = Range.getStartContainer(range),
                 parentEl;
 
-            // 修改链接
+            // 修改链接界面
             if (container.nodeType == 3) { // TextNode
                 parentEl = container.parentNode;
                 if (parentEl.nodeName == "A") {
@@ -117,7 +118,7 @@ KISSY.Editor.add("plugins~link", function(E) {
                 }
             }
 
-            // 新建链接
+            // 新建链接界面
             form.href.value = DEFAULT_HREF;
             form.text.value = Range.getSelectedText(range);
             Dom.addClass(form, NEW_LINK_CLS);
@@ -127,38 +128,39 @@ KISSY.Editor.add("plugins~link", function(E) {
          * 创建/修改链接
          */
         _createLink: function(href, text, target) {
-            // href 为空时，移除链接。 TODO: 自动添加 http 等细节操作的完善
-            if (href.length < 7) {
-                this._removeLink();
+            href = this._getValidLink(href);
+
+            // href 为空时，移除链接
+            if (href.length === 0) {
+                this._unLink();
                 return;
             }
-
-            // text 为空时，自动设为 href 的值
-            if (!text) text = href;
 
             var editor = this.editor,
                 range = editor.getSelectionRange(),
                 container = Range.getStartContainer(range),
-                parentEl;
+                parentEl = container.parentNode;
+
+            // text 为空时，自动设为 href 的值
+            if (!text && container.nodeType == 3) { // TextNode
+                text = href;
+            }
 
             // 修改链接
-            if (container.nodeType == 3) { // TextNode
-                parentEl = container.parentNode;
-                if (parentEl.nodeName == "A") {
-                    parentEl.href = href;
-                    parentEl.innerHTML = text;
-                    if (target) {
-                        parentEl.setAttribute("target", "_blank");
-                    } else {
-                        parentEl.removeAttribute("target");
-                    }
-                    return;
+            if (parentEl.nodeName == "A") {
+                parentEl.href = href;
+                parentEl.innerHTML = text;
+                if (target) {
+                    parentEl.setAttribute("target", "_blank");
+                } else {
+                    parentEl.removeAttribute("target");
                 }
+                return;
             }
 
             // 创建链接
             var selectedText = Range.getSelectedText(range);
-            if (!selectedText) {
+            if (text && !selectedText) { // 有 text 时，表示是文本链接，不是图片等元素
                 if (!isIE) {
                     var a = document.createElement("A");
                     a.innerHTML = text;
@@ -166,12 +168,38 @@ KISSY.Editor.add("plugins~link", function(E) {
                 } else {
                     range.pasteHTML('<a href="' + href + '">' + text + '</a>');
                 }
+            } else {
+                editor.execCommand("createLink", href);
             }
-            editor.execCommand("createLink", href);
         },
 
-        _removeLink: function() {
-            this.editor.execCommand("unLink");
+        _getValidLink: function(href) {
+            href = Lang.trim(href);
+            if(href && !HREF_REG.test(href)) { // 不为空 或 不符合标准模式 abcd://efg
+               href = DEFAULT_HREF + href; // 添加默认前缀
+            }
+            return href;
+        },
+
+        /**
+         * 移除链接
+         */
+        _unLink: function() {
+            var editor = this.editor,
+                range = editor.getSelectionRange(),
+                selectedText = Range.getSelectedText(range),
+                container = Range.getStartContainer(range),
+                parentEl;
+
+            // 没有选中文字时
+            if (!selectedText && container.nodeType == 3) {
+                parentEl = container.parentNode;
+                if (parentEl.nodeName == "A") {
+                    parentEl.parentNode.replaceChild(container, parentEl);
+                }
+            } else {
+                editor.execCommand("unLink");
+            }
         }
     });
 

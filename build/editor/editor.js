@@ -1526,7 +1526,7 @@ KISSY.Editor.add("plugins~link", function(E) {
                     case BTN_CANCEL_CLS: // 直接往上冒泡，关闭对话框
                         break;
                     case BTN_REMOVE_CLS:
-                        self._removeLink();
+                        self._unLink();
                         break;
                     default: // 点击在非按钮处，停止冒泡，保留对话框
                         Event.stopPropagation(ev);
@@ -1568,7 +1568,7 @@ KISSY.Editor.add("plugins~link", function(E) {
         _createLink: function(href, text, target) {
             // href 为空时，移除链接。 TODO: 自动添加 http 等细节操作的完善
             if (href.length < 7) {
-                this._removeLink();
+                this._unLink();
                 return;
             }
 
@@ -1609,7 +1609,7 @@ KISSY.Editor.add("plugins~link", function(E) {
             editor.execCommand("createLink", href);
         },
 
-        _removeLink: function() {
+        _unLink: function() {
             this.editor.execCommand("unLink");
         }
     });
