@@ -66,7 +66,6 @@ KISSY.Editor.add("lang~en", function(E) {
         },
         link: {
             href          : "URL:",
-            text          : "Text:",
             target        : "Open link in new window",
             remove        : "Remove link"
         },

@@ -3,6 +3,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         isIE = YAHOO.env.ua.ie,
+        isIE6 = isIE === 6,
         TYPE = E.PLUGIN_TYPE,
         TOOLBAR_SEPARATOR_TMPL = '<div class="kissy-toolbar-separator kissy-inline-block"></div>',
 
@@ -24,6 +25,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
         TOOLBAR_MENU_BUTTON = 'kissy-toolbar-menu-button',
         TOOLBAR_SELECT = 'kissy-toolbar-select',
         TOOLBAR_BUTTON_ACTIVE = "kissy-toolbar-button-active",
+        TOOLBAR_BUTTON_HOVER = "kissy-toolbar-button-hover",
 
         div = document.createElement("div"); // 通用 el 容器
 
@@ -75,17 +77,23 @@ KISSY.Editor.add("core~toolbar", function(E) {
          * 添加工具栏项
          */
         _addItem: function(p) {
-            var el, type = p.type, lang = this.lang;
+            var el, type = p.type, lang = this.lang, html;
 
             // 当 plugin 没有设置 lang 时，采用默认语言配置
             // TODO: 考虑重构到 instance 模块里，因为 lang 仅跟实例相关
             if (!p.lang) p.lang = Lang.merge(lang["common"], this.lang[p.name] || {});
 
             // 根据模板构建 DOM
-            div.innerHTML = TOOLBAR_BUTTON_TMPL
+            html = TOOLBAR_BUTTON_TMPL
                     .replace("{TITLE}", p.lang.title || "")
                     .replace("{NAME}", p.name)
                     .replace("{TEXT}", p.lang.text || "");
+            if (isIE6) {
+                html = html
+                        .replace("outer-box", "outer-box kissy-inline-block")
+                        .replace("inner-box", "inner-box kissy-inline-block");
+            }
+            div.innerHTML = html;
 
             // 得到 domEl
             p.domEl = el = div.firstChild;
@@ -175,6 +183,16 @@ KISSY.Editor.add("core~toolbar", function(E) {
 
                 Dom.removeClass(el, TOOLBAR_BUTTON_ACTIVE);
             });
+
+            // 3. ie6 下，模拟 hover
+            if(isIE6) {
+                Event.on(el, "mouseenter", function() {
+                    Dom.addClass(el, TOOLBAR_BUTTON_HOVER);
+                });
+                Event.on(el, "mouseleave", function() {
+                    Dom.removeClass(el, TOOLBAR_BUTTON_HOVER);
+                });
+            }
         },
 
         /**

@@ -54,6 +54,7 @@ html>body .kissy-inline-block {
 .kissy-toolbar-button-inner-box {
     margin: 0 -1px;
     padding: 3px 5px;
+    _left: -1px;
 }
 
 /* Ðü¸¡±ß¿ò */
@@ -173,7 +174,7 @@ html>body .kissy-inline-block {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 20000;
+    z-index: 9001;
     border: 1px solid #ccc;
     border-right-color: #676767;
     border-bottom-color: #676767;
@@ -181,6 +182,9 @@ html>body .kissy-inline-block {
     color: #333;
     background-color: #fff;
     white-space: nowrap;
+}
+.kissy-drop-menu-shim {
+    z-index: 9000;
 }
 
 /* È¡É«°å */
@@ -195,6 +199,7 @@ html>body .kissy-inline-block {
     height: 18px;
     width: 18px;
     cursor: pointer;
+    *position: relative; /* hack for ie7- ·ñÔò±ß¿òÒþ²Ø²»ÁË */
 }
 
 .kissy-palette-colorswatch {
@@ -261,10 +266,10 @@ html>body .kissy-inline-block {
 
 /* link dialog */
 .kissy-link-dialog {
-    padding: 10px 10px 0;
+    padding: 10px;
 }
 .kissy-link-dialog label {
-    width: 50px;
+    width: 40px;
     text-align: right;
     display: inline-block;
     zoom: 1;
@@ -274,16 +279,19 @@ html>body .kissy-inline-block {
 .kissy-link-dialog li {
     margin: 0 0 10px;
 }
+li.kissy-link-dialog-actions {
+    margin-bottom: 0;
+}
 .kissy-link-dialog input {
     padding: 2px 1px;
     vertical-align: middle;
 }
 .kissy-link-dialog-target input {
-    margin-left: 60px;
+    margin-left: 50px;
     padding: 0 10px 0 0;
 }
 .kissy-link-dialog-actions {
-    padding: 0 5px 0 55px;
+    padding: 0 5px 0 45px;
     height: 25px;
     line-height: 30px;
 }
@@ -301,4 +309,7 @@ html>body .kissy-inline-block {
 }
 .kissy-link-dialog-newlink-mode .kissy-link-dialog-remove {
     display: none;
+}
+.kissy-link-dialog form {
+    width: 275px;
 }

@@ -5,7 +5,7 @@ KISSY.Editor.add("core~instance", function(E) {
         EDITOR_CLASSNAME = "kissy-editor",
 
         EDITOR_TMPL  =  '<div class="kissy-editor-toolbar"></div>' +
-                        '<iframe frameborder="0"></iframe>' +
+                        '<div class="kissy-editor-content"><iframe frameborder="0"></iframe></div>' +
                         '<div class="kissy-editor-statusbar"></div>',
 
         CONTENT_TMPL =  '<!DOCTYPE html>' +
@@ -113,18 +113,22 @@ KISSY.Editor.add("core~instance", function(E) {
         _renderContainer: function() {
             var textarea = this.textarea,
                 region = Dom.getRegion(textarea),
-                width = (region.right - region.left) + "px",
-                height = (region.bottom - region.top) + "px",
+                width = (region.right - region.left - 2) + "px", // YUI µÄ getRegion ÓÐ 2px Æ«²î
+                height = (region.bottom - region.top - 2) + "px",
                 container = document.createElement("div"),
-                iframe;
+                content, iframe;
 
             container.className = EDITOR_CLASSNAME;
             container.style.width = width;
             container.innerHTML = EDITOR_TMPL;
 
-            iframe = container.childNodes[1];
-            iframe.style.width = width;
-            iframe.style.height = height;
+            content = container.childNodes[1];
+            content.style.width = "100%";
+            content.style.height = height;
+
+            iframe = content.childNodes[0];
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
             iframe.setAttribute("frameBorder", 0);
 
             textarea.style.display = "none";

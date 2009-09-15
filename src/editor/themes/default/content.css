@@ -61,3 +61,7 @@ blockquote {
 h1, h2, h3 {
     margin: 0.67em 0;
 }
+
+a img {
+    border: 2px solid blue;
+}

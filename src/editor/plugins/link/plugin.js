@@ -5,7 +5,7 @@ KISSY.Editor.add("plugins~link", function(E) {
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE, Range = E.Range,
         timeStamp = new Date().getTime(),
-        HREF_REG = /^\w+:\/\/.*$/,
+        HREF_REG = /^\w+:\/\/.*|#.*$/,
 
         DIALOG_CLS = "kissy-link-dialog",
         NEW_LINK_CLS = "kissy-link-dialog-newlink-mode",
@@ -16,7 +16,6 @@ KISSY.Editor.add("plugins~link", function(E) {
 
         DIALOG_TMPL = ['<form onsubmit="return false"><ul>',
                           '<li class="kissy-link-dialog-href"><label>{href}</label><input name="href" size="40" value="http://" type="text" /></li>',
-                          '<li class="kissy-link-dialog-text"><label>{text}</label><input name="text" size="40" type="text" /></li>',
                           '<li class="kissy-link-dialog-target"><input name="target" id="target_"', timeStamp ,' type="checkbox" /> <label for="target_"', timeStamp ,'>{target}</label></li>',
                           '<li class="kissy-link-dialog-actions">',
                               '<button name="ok" class="', BTN_OK_CLS, '">{ok}</button>',
@@ -83,7 +82,7 @@ KISSY.Editor.add("plugins~link", function(E) {
 
                 switch(target.className) {
                     case BTN_OK_CLS:
-                        self._createLink(form.href.value, form.text.value, form.target.checked);
+                        self._createLink(form.href.value, form.target.checked);
                         break;
                     case BTN_CANCEL_CLS: // 直接往上冒泡，关闭对话框
                         break;
@@ -104,31 +103,31 @@ KISSY.Editor.add("plugins~link", function(E) {
                 form = this.form,
                 range = editor.getSelectionRange(),
                 container = Range.getStartContainer(range),
-                parentEl;
+                containerIsA = container.nodeName === "A", // 图片等链接
+                parentEl = container.parentNode,
+                parentIsA = parentEl && (parentEl.nodeName === "A"), // 文字链接
+                a;
 
             // 修改链接界面
-            if (container.nodeType == 3) { // TextNode
-                parentEl = container.parentNode;
-                if (parentEl.nodeName == "A") {
-                    form.href.value = parentEl.href;
-                    form.text.value = E.Dom.getText(parentEl);
-                    form.target.checked = parentEl.target === "_blank";
-                    Dom.removeClass(form, NEW_LINK_CLS);
-                    return;
-                }
+            if (containerIsA || parentIsA) {
+                a = containerIsA ? container : parentEl;
+                form.href.value = a.href;
+                form.target.checked = a.target === "_blank";
+                Dom.removeClass(form, NEW_LINK_CLS);
+                return;
             }
 
             // 新建链接界面
             form.href.value = DEFAULT_HREF;
-            form.text.value = Range.getSelectedText(range);
+            form.target.checked = false;
             Dom.addClass(form, NEW_LINK_CLS);
         },
 
         /**
          * 创建/修改链接
          */
-        _createLink: function(href, text, target) {
-            href = this._getValidLink(href);
+        _createLink: function(href, target) {
+            href = this._getValidHref(href);
 
             // href 为空时，移除链接
             if (href.length === 0) {
@@ -139,41 +138,39 @@ KISSY.Editor.add("plugins~link", function(E) {
             var editor = this.editor,
                 range = editor.getSelectionRange(),
                 container = Range.getStartContainer(range),
-                parentEl = container.parentNode;
-
-            // text 为空时，自动设为 href 的值
-            if (!text && container.nodeType == 3) { // TextNode
-                text = href;
-            }
+                containerIsA = container.nodeName === "A", // 是图片等链接
+                parentEl = container.parentNode,
+                parentIsA = parentEl && (parentEl.nodeName === "A"), // 文字链接
+                a;
 
             // 修改链接
-            if (parentEl.nodeName == "A") {
-                parentEl.href = href;
-                parentEl.innerHTML = text;
+            if (containerIsA || parentIsA) {
+                a = containerIsA ? container : parentEl;
+                a.href = href;
                 if (target) {
-                    parentEl.setAttribute("target", "_blank");
+                    a.setAttribute("target", "_blank");
                 } else {
-                    parentEl.removeAttribute("target");
+                    a.removeAttribute("target");
                 }
                 return;
             }
 
             // 创建链接
             var selectedText = Range.getSelectedText(range);
-            if (text && !selectedText) { // 有 text 时，表示是文本链接，不是图片等元素
+            if (container.nodeType == 3 && !selectedText) { // 文本链接
                 if (!isIE) {
-                    var a = document.createElement("A");
-                    a.innerHTML = text;
+                    a = document.createElement("A");
+                    a.innerHTML = href;
                     range.insertNode(a);
                 } else {
-                    range.pasteHTML('<a href="' + href + '">' + text + '</a>');
+                    range.pasteHTML('<a href="' + href + '">' + href + '</a>');
                 }
             } else {
                 editor.execCommand("createLink", href);
             }
         },
 
-        _getValidLink: function(href) {
+        _getValidHref: function(href) {
             href = Lang.trim(href);
             if(href && !HREF_REG.test(href)) { // 不为空 或 不符合标准模式 abcd://efg
                href = DEFAULT_HREF + href; // 添加默认前缀

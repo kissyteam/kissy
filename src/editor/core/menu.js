@@ -4,7 +4,11 @@ KISSY.Editor.add("core~menu", function(E) {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
 
         VISIBILITY = "visibility",
-        DROP_MENU_CLASS = "kissy-drop-menu";
+        HIDDEN = "hidden",
+        VISIBLE = "visible",
+        DROP_MENU_CLASS = "kissy-drop-menu",
+        SHIM_CLASS = DROP_MENU_CLASS + "-shim", //  // iframe shim 的 class
+        shim; // 共用一个 shim 即可
     
     E.Menu = {
 
@@ -76,18 +80,28 @@ KISSY.Editor.add("core~menu", function(E) {
 
         _isVisible: function(el) {
             if(!el) return false;
-            return el.style[VISIBILITY] != "hidden";
+            return el.style[VISIBILITY] != HIDDEN;
         },
 
         _hide: function(el) {
             if(el) {
-                el.style[VISIBILITY] = "hidden";
+                if(shim) {
+                    shim.style[VISIBILITY] = HIDDEN;
+                }
+
+                el.style[VISIBILITY] = HIDDEN;
             }
         },
 
         _show: function(el) {
             if(el) {
-                el.style[VISIBILITY] = "visible";
+                if(YAHOO.env.ua.ie === 6) {
+                    if(!shim) this._initShim();
+                    this._setShimRegion(el);
+                    shim.style[VISIBILITY] = VISIBLE;
+                }
+
+                el.style[VISIBILITY] = VISIBLE;
             }
         },
 
@@ -108,6 +122,30 @@ KISSY.Editor.add("core~menu", function(E) {
                     }
                 }, 50);
             });
+        },
+
+        _initShim: function() {
+            shim = document.createElement("iframe");
+            shim.src = "about:blank";
+            shim.className = SHIM_CLASS;
+            shim.style.position = "absolute";
+            shim.style.visibility = HIDDEN;
+            shim.style.border = "none";
+            document.body.appendChild(shim);
+        },
+
+        /**
+         * 设置 shim 的 region
+         * @protected
+         */
+        _setShimRegion: function(el) {
+            if (shim) {
+                var r = Dom.getRegion(el);
+                shim.style.left = r.left + "px";
+                shim.style.top = r.top + "px";
+                shim.style.width = r.width + "px";
+                shim.style.height = r.height + "px";
+            }
         }
     };
 
