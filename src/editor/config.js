@@ -21,14 +21,14 @@ KISSY.Editor.add("config", function(E) {
          * Toolbar 上功能插件
          */
         toolbar: [
-            "source", "undo", "redo",
+            "undo", "redo",
             "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
             "",
             "link", "smiley", "image", "blockquote", 
             "",
             "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight",
             "",
-            "maximize"
+            "maximize", "source"
         ]
     };
 
