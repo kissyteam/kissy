@@ -5,7 +5,7 @@ KISSY.Editor.add("core~instance", function(E) {
         EDITOR_CLASSNAME = "kissy-editor",
 
         EDITOR_TMPL  =  '<div class="kissy-editor-toolbar"></div>' +
-                        '<div class="kissy-editor-content"><iframe frameborder="0"></iframe></div>' +
+                        '<div class="kissy-editor-content"><iframe frameborder="0" allowtransparency="true"></iframe></div>' +
                         '<div class="kissy-editor-statusbar"></div>',
 
         CONTENT_TMPL =  '<!DOCTYPE html>' +
@@ -172,9 +172,9 @@ KISSY.Editor.add("core~instance", function(E) {
         /**
          * 执行 execCommand
          */
-        execCommand: function(commandName, val) {
+        execCommand: function(commandName, val, styleWithCSS) {
             this.contentWin.focus(); // 还原焦点
-            E.Command.exec(this.contentDoc, commandName, val);
+            E.Command.exec(this.contentDoc, commandName, val, styleWithCSS);
         },
 
         /**

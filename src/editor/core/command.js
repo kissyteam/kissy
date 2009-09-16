@@ -15,18 +15,18 @@ KISSY.Editor.add("core~command", function(E) {
         /**
          * 执行 doc.execCommand
          */
-        exec: function(doc, cmdName, val) {
+        exec: function(doc, cmdName, val, styleWithCSS) {
             cmdName = CUSTOM_COMMANDS[cmdName] || cmdName;
 
-            this._preExec(doc, cmdName);
+            this._preExec(doc, cmdName, styleWithCSS);
             doc[EXEC_COMMAND](cmdName, false, val);
         },
 
-        _preExec: function(doc, cmdName) {
+        _preExec: function(doc, cmdName, styleWithCSS) {
 
             // 关闭 gecko 浏览器的 styleWithCSS 特性，使得产生的内容和 ie 一致
             if (ua.gecko) {
-                var val = TAG_COMMANDS.indexOf(cmdName) === -1;
+                var val = typeof styleWithCSS === "undefined" ? (TAG_COMMANDS.indexOf(cmdName) === -1) : styleWithCSS;
                 doc[EXEC_COMMAND](STYLE_WITH_CSS, false, val);
             }
         }

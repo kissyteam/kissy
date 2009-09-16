@@ -33,6 +33,7 @@
 <script type="text/javascript" src="plugins/justify/plugin.js"></script>
 <script type="text/javascript" src="plugins/link/plugin.js"></script>
 <script type="text/javascript" src="plugins/maximize/plugin.js"></script>
+<script type="text/javascript" src="plugins/removeformat/plugin.js"></script>
 <script type="text/javascript" src="plugins/save/plugin.js"></script>
 <script type="text/javascript" src="plugins/smiley/plugin.js"></script>
 <script type="text/javascript" src="plugins/source/plugin.js"></script>
@@ -40,7 +41,7 @@
 
 <style type="text/css">
     #demo-page {
-        padding: 50px 0;
+        padding: 50px 20px;
         width: 1080px;
         margin: 0 auto;
         line-height: 18px;
@@ -146,6 +147,9 @@
             <li>[link] 将链接地址修改为空，等价移除链接</li>
             <li>[link] 用户输入的链接地址中无协议时，自动添加 http 协议</li>
             <li>[link] 选中图片时，添加/修改链接正常（需特别留意 ie）</li>
+            <li>[justify] 选中图片时，改变对齐时不抛异常</li>
+            <li>[indent] 对 li 的缩进，在 ie 下是整体缩进，与其它浏览器的细节处理不同</li>
+            <li>[blockquote] 在 ie 和 fifefox 下效果一致，其它浏览器未做统一性处理</li>
             <li>[ie6] 字体等下拉选择框能覆盖住 select 等元素</li>
         </ol>
     </div>
@@ -155,6 +159,7 @@
         <ol>
             <li>ie6 下，selectbox 按钮在鼠标悬浮时，边框色未改变</li>
             <li>ie6 下，下拉选取框无法遮盖住下面的光标</li>
+            <li>ie 下，iframe 编辑区域的选区是黑底白字，和默认的蓝底白字不同</li>
         </ol>
     </div>
 
@@ -175,7 +180,9 @@
             <li><a href="http://starkravingfinkle.org/blog/2007/07/firefox-3-contenteditable/">Firefox 3 – ContentEditable</a> (Firefox 3 才开始支持 contentEditalbe)</li>
             <li><a href="http://docs.google.com/">Google Docs</a> (简单与复杂的权衡)</li>
             <li><a href="http://ckeditor.com/demo/">CKEditor</a> (FCKEditor 的新一代产品)</li>
+            <li><a href="http://tinymce.moxiecode.com/examples/full.php">TinyMCE</a></li>
             <li><a href="http://developer.yahoo.com/yui/examples/editor/code_editor.html">YUI RTE</a></li>
+            <li><a href="http://nicedit.com/demos.php">NicEditor</a></li>
             <li><a href="http://bai.sohu.com/app/blog/#/app/blog/entry/edit.do">白社会编辑器</a></li>
         </ol>
     </div>

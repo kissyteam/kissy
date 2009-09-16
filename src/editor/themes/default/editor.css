@@ -121,8 +121,8 @@ html>body .kissy-inline-block {
 .kissy-toolbar-justifyRight { background-position:-224px 50%; }
 .kissy-toolbar-foreColor { height: 12px; background-position:-80px 50%; }
 .kissy-toolbar-backColor { height: 12px; background-position:-96px 50%; }
-
 .kissy-toolbar-maximize { background-position:-996px 50%; }
+.kissy-toolbar-removeformat { background-position:-256px 50%; }
 
 /* ·Ö¸ôÏß */
 .kissy-toolbar-separator {

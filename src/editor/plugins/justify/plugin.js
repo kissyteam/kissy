@@ -5,35 +5,7 @@ KISSY.Editor.add("plugins~justify", function(E) {
         TYPE = E.PLUGIN_TYPE,
         UA = YAHOO.env.ua,
 
-        // Ref: CKEditor - core/dom/elementpath.js
-        JUSTIFY_ELEMENTS = {
-
-            /* 结构元素 */
-            blockquote:1,
-            div:1,
-            h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,
-            hr:1,
-            p:1,
-
-            /* 文本格式元素 */
-            address:1,
-            center:1,
-            pre:1,
-
-            /* 表单元素 */
-            form:1,
-            fieldset:1,
-            caption:1,
-
-            /* 表格元素 */
-            table:1,
-            tbody:1,
-            tr:1, th:1, td:1,
-
-            /* 列表元素 */
-            ul:1, ol:1, dl:1,
-            dt:1, dd:1, li:1
-        },
+        JUSTIFY_ELEMENTS = E.Dom.BLOCK_ELEMENTS,
 
         plugin = {
             /**
@@ -53,8 +25,8 @@ KISSY.Editor.add("plugins~justify", function(E) {
     // 下面采用自主操作 range 的方式来实现，以保持和其它浏览器一致
     if (UA.ie) {
 
-        plugin.exec = function(editor) {
-            var range = editor.getSelectionRange(),
+        plugin.exec = function() {
+            var range = this.editor.getSelectionRange(),
                 parentEl, justifyAncestor;
 
             if(range.parentElement) { // TextRange
@@ -81,8 +53,8 @@ KISSY.Editor.add("plugins~justify", function(E) {
              * 获取可设置对齐的父元素
              */
             function getJustifyAncestor(el) {
-                return Dom.getAncestorBy(el, function(arg) {
-                    return isJustifyElement(arg);
+                return Dom.getAncestorBy(el, function(elem) {
+                    return isJustifyElement(elem);
                 });
             }
 

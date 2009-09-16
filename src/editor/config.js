@@ -28,7 +28,7 @@ KISSY.Editor.add("config", function(E) {
             "",
             "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight",
             "",
-            "maximize", "source"
+            "removeformat", "maximize", "source"
         ]
     };
 

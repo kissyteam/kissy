@@ -121,6 +121,10 @@ KISSY.Editor.add("lang~en", function(E) {
           text            : "Maximize",
           title           : "Maximize"
         },
+        removeformat: {
+          text            : "Remove Format",
+          title           : "Remove Format"
+        },
 
         // Common messages and labels
         common: {

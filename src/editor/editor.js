@@ -158,14 +158,14 @@ KISSY.Editor.add("config", function(E) {
          * Toolbar 上功能插件
          */
         toolbar: [
-            "source", "undo", "redo",
+            "undo", "redo",
             "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
             "",
             "link", "smiley", "image", "blockquote", 
             "",
             "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight",
             "",
-            "maximize"
+            "removeformat", "maximize", "source"
         ]
     };
 
@@ -238,7 +238,6 @@ KISSY.Editor.add("lang~en", function(E) {
         },
         link: {
             href          : "URL:",
-            text          : "Text:",
             target        : "Open link in new window",
             remove        : "Remove link"
         },
@@ -251,8 +250,8 @@ KISSY.Editor.add("lang~en", function(E) {
             title         : "Insert smiley"
         },
         image: {
-            text          : "Image",
-            title         : "Insert or modify image..."
+            web_legend    : "Enter image web address:",
+            ok            : "Insert"
         },
         insertOrderedList: {
             text          : "Numbered List",
@@ -293,6 +292,10 @@ KISSY.Editor.add("lang~en", function(E) {
         maximize: {
           text            : "Maximize",
           title           : "Maximize"
+        },
+        removeformat: {
+          text            : "Remove Format",
+          title           : "Remove Format"
         },
 
         // Common messages and labels
@@ -350,6 +353,36 @@ KISSY.Editor.add("core~dom", function(E) {
             }
 
             return el;
+        },
+
+        // Ref: CKEditor - core/dom/elementpath.js
+        BLOCK_ELEMENTS: {
+
+            /* 结构元素 */
+            blockquote:1,
+            div:1,
+            h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,
+            hr:1,
+            p:1,
+
+            /* 文本格式元素 */
+            address:1,
+            center:1,
+            pre:1,
+
+            /* 表单元素 */
+            form:1,
+            fieldset:1,
+            caption:1,
+
+            /* 表格元素 */
+            table:1,
+            tbody:1,
+            tr:1, th:1, td:1,
+
+            /* 列表元素 */
+            ul:1, ol:1, dl:1,
+            dt:1, dd:1, li:1
         }
     };
 
@@ -452,18 +485,18 @@ KISSY.Editor.add("core~command", function(E) {
         /**
          * 执行 doc.execCommand
          */
-        exec: function(doc, cmdName, val) {
+        exec: function(doc, cmdName, val, styleWithCSS) {
             cmdName = CUSTOM_COMMANDS[cmdName] || cmdName;
 
-            this._preExec(doc, cmdName);
+            this._preExec(doc, cmdName, styleWithCSS);
             doc[EXEC_COMMAND](cmdName, false, val);
         },
 
-        _preExec: function(doc, cmdName) {
+        _preExec: function(doc, cmdName, styleWithCSS) {
 
             // 关闭 gecko 浏览器的 styleWithCSS 特性，使得产生的内容和 ie 一致
             if (ua.gecko) {
-                var val = TAG_COMMANDS.indexOf(cmdName) === -1;
+                var val = typeof styleWithCSS === "undefined" ? (TAG_COMMANDS.indexOf(cmdName) === -1) : styleWithCSS;
                 doc[EXEC_COMMAND](STYLE_WITH_CSS, false, val);
             }
         }
@@ -503,8 +536,10 @@ KISSY.Editor.add("core~range", function(E) {
         /**
          * 获取起始点所在容器
          */
-        getStartContainer: function(range) {
-            return range.startContainer || range.parentElement();
+        getContainer: function(range) {
+            return range.startContainer || // w3c
+                   (range.parentElement && range.parentElement()) || // ms TextRange
+                   (range.commonParentElement && range.commonParentElement()); // ms IHTMLControlRange
         },
 
         /**
@@ -512,7 +547,7 @@ KISSY.Editor.add("core~range", function(E) {
          */
         getSelectedText: function(range) {
             if("text" in range) return range.text;
-            return range.toString();
+            return range.toString ? range.toString() : ""; // ms IHTMLControlRange 无 toString 方法
         }
     };
 
@@ -524,7 +559,7 @@ KISSY.Editor.add("core~instance", function(E) {
         EDITOR_CLASSNAME = "kissy-editor",
 
         EDITOR_TMPL  =  '<div class="kissy-editor-toolbar"></div>' +
-                        '<iframe frameborder="0"></iframe>' +
+                        '<div class="kissy-editor-content"><iframe frameborder="0" allowtransparency="true"></iframe></div>' +
                         '<div class="kissy-editor-statusbar"></div>',
 
         CONTENT_TMPL =  '<!DOCTYPE html>' +
@@ -632,18 +667,22 @@ KISSY.Editor.add("core~instance", function(E) {
         _renderContainer: function() {
             var textarea = this.textarea,
                 region = Dom.getRegion(textarea),
-                width = (region.right - region.left) + "px",
-                height = (region.bottom - region.top) + "px",
+                width = (region.right - region.left - 2) + "px", // YUI 的 getRegion 有 2px 偏差
+                height = (region.bottom - region.top - 2) + "px",
                 container = document.createElement("div"),
-                iframe;
+                content, iframe;
 
             container.className = EDITOR_CLASSNAME;
             container.style.width = width;
             container.innerHTML = EDITOR_TMPL;
 
-            iframe = container.childNodes[1];
-            iframe.style.width = width;
-            iframe.style.height = height;
+            content = container.childNodes[1];
+            content.style.width = "100%";
+            content.style.height = height;
+
+            iframe = content.childNodes[0];
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
             iframe.setAttribute("frameBorder", 0);
 
             textarea.style.display = "none";
@@ -687,9 +726,9 @@ KISSY.Editor.add("core~instance", function(E) {
         /**
          * 执行 execCommand
          */
-        execCommand: function(commandName, val) {
+        execCommand: function(commandName, val, styleWithCSS) {
             this.contentWin.focus(); // 还原焦点
-            E.Command.exec(this.contentDoc, commandName, val);
+            E.Command.exec(this.contentDoc, commandName, val, styleWithCSS);
         },
 
         /**
@@ -738,6 +777,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         isIE = YAHOO.env.ua.ie,
+        isIE6 = isIE === 6,
         TYPE = E.PLUGIN_TYPE,
         TOOLBAR_SEPARATOR_TMPL = '<div class="kissy-toolbar-separator kissy-inline-block"></div>',
 
@@ -759,6 +799,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
         TOOLBAR_MENU_BUTTON = 'kissy-toolbar-menu-button',
         TOOLBAR_SELECT = 'kissy-toolbar-select',
         TOOLBAR_BUTTON_ACTIVE = "kissy-toolbar-button-active",
+        TOOLBAR_BUTTON_HOVER = "kissy-toolbar-button-hover",
 
         div = document.createElement("div"); // 通用 el 容器
 
@@ -810,17 +851,23 @@ KISSY.Editor.add("core~toolbar", function(E) {
          * 添加工具栏项
          */
         _addItem: function(p) {
-            var el, type = p.type, lang = this.lang;
+            var el, type = p.type, lang = this.lang, html;
 
             // 当 plugin 没有设置 lang 时，采用默认语言配置
             // TODO: 考虑重构到 instance 模块里，因为 lang 仅跟实例相关
             if (!p.lang) p.lang = Lang.merge(lang["common"], this.lang[p.name] || {});
 
             // 根据模板构建 DOM
-            div.innerHTML = TOOLBAR_BUTTON_TMPL
+            html = TOOLBAR_BUTTON_TMPL
                     .replace("{TITLE}", p.lang.title || "")
                     .replace("{NAME}", p.name)
                     .replace("{TEXT}", p.lang.text || "");
+            if (isIE6) {
+                html = html
+                        .replace("outer-box", "outer-box kissy-inline-block")
+                        .replace("inner-box", "inner-box kissy-inline-block");
+            }
+            div.innerHTML = html;
 
             // 得到 domEl
             p.domEl = el = div.firstChild;
@@ -910,6 +957,16 @@ KISSY.Editor.add("core~toolbar", function(E) {
 
                 Dom.removeClass(el, TOOLBAR_BUTTON_ACTIVE);
             });
+
+            // 3. ie6 下，模拟 hover
+            if(isIE6) {
+                Event.on(el, "mouseenter", function() {
+                    Dom.addClass(el, TOOLBAR_BUTTON_HOVER);
+                });
+                Event.on(el, "mouseleave", function() {
+                    Dom.removeClass(el, TOOLBAR_BUTTON_HOVER);
+                });
+            }
         },
 
         /**
@@ -936,7 +993,11 @@ KISSY.Editor.add("core~menu", function(E) {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
 
         VISIBILITY = "visibility",
-        DROP_MENU_CLASS = "kissy-drop-menu";
+        HIDDEN = "hidden",
+        VISIBLE = "visible",
+        DROP_MENU_CLASS = "kissy-drop-menu",
+        SHIM_CLASS = DROP_MENU_CLASS + "-shim", //  // iframe shim 的 class
+        shim; // 共用一个 shim 即可
     
     E.Menu = {
 
@@ -1008,18 +1069,28 @@ KISSY.Editor.add("core~menu", function(E) {
 
         _isVisible: function(el) {
             if(!el) return false;
-            return el.style[VISIBILITY] != "hidden";
+            return el.style[VISIBILITY] != HIDDEN;
         },
 
         _hide: function(el) {
             if(el) {
-                el.style[VISIBILITY] = "hidden";
+                if(shim) {
+                    shim.style[VISIBILITY] = HIDDEN;
+                }
+
+                el.style[VISIBILITY] = HIDDEN;
             }
         },
 
         _show: function(el) {
             if(el) {
-                el.style[VISIBILITY] = "visible";
+                if(YAHOO.env.ua.ie === 6) {
+                    if(!shim) this._initShim();
+                    this._setShimRegion(el);
+                    shim.style[VISIBILITY] = VISIBLE;
+                }
+
+                el.style[VISIBILITY] = VISIBLE;
             }
         },
 
@@ -1040,6 +1111,30 @@ KISSY.Editor.add("core~menu", function(E) {
                     }
                 }, 50);
             });
+        },
+
+        _initShim: function() {
+            shim = document.createElement("iframe");
+            shim.src = "about:blank";
+            shim.className = SHIM_CLASS;
+            shim.style.position = "absolute";
+            shim.style.visibility = HIDDEN;
+            shim.style.border = "none";
+            document.body.appendChild(shim);
+        },
+
+        /**
+         * 设置 shim 的 region
+         * @protected
+         */
+        _setShimRegion: function(el) {
+            if (shim) {
+                var r = Dom.getRegion(el);
+                shim.style.left = r.left + "px";
+                shim.style.top = r.top + "px";
+                shim.style.width = r.width + "px";
+                shim.style.height = r.height + "px";
+            }
         }
     };
 
@@ -1066,185 +1161,66 @@ KISSY.Editor.add("plugins~base", function(E) {
     });
 
  });
+KISSY.Editor.add("plugins~blockquote", function(E) {
 
-KISSY.Editor.add("plugins~font", function(E) {
-
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
-        isIE = YAHOO.env.ua.ie,
+    var Y = YAHOO.util, Dom = Y.Dom,
         TYPE = E.PLUGIN_TYPE,
 
-        SELECT_TMPL = '<ul class="kissy-select-list">{LI}</ul>',
-        OPTION_TMPL = '<li class="kissy-option" data-value="{VALUE}">' +
-                          '<span class="kissy-option-checkbox"></span>' +
-                          '<span style="{STYLE}">{KEY}</span>' +
-                      '</li>',
-        OPTION_SELECTED = "kissy-option-selected",
-        DEFAULT = "Default";
+        BLOCKQUOTE = "blockquote",
+        BLOCKQUOTE_ELEMENTS = E.Dom.BLOCK_ELEMENTS;
 
-    E.addPlugin(["fontName", "fontSize"], {
+    E.addPlugin("blockquote", {
         /**
-         * 种类：菜单按钮
+         * 种类：普通按钮
          */
-        type: TYPE.TOOLBAR_SELECT,
+        type: TYPE.TOOLBAR_BUTTON,
 
         /**
-         * 当前选中值
+         * 响应函数
          */
-        selectedValue: "",
+        exec: function() {
+            var editor = this.editor,
+                range = editor.getSelectionRange(),
+                parentEl = E.Range.getContainer(range),
+                quotableAncestor;
 
-        /**
-         * 选择框头部
-         */
-        selectHead: null,
+            if(!parentEl) return;
 
-        /**
-         * 关联的下拉选择列表
-         */
-        selectList: null,
-
-        /**
-         * 下拉框里的所有选项值
-         */
-        options: [],
-
-        /**
-         * 初始化
-         */
-        init: function() {
-            var el = this.domEl;
-
-            this.options = this.lang.options;
-            this.selectHead = el.getElementsByTagName("span")[0];
-
-            this._initSelectList(el);
-
-            // 选中当前值
-            this._setSelectedOption(this.options[DEFAULT]);
-        },
-
-        /**
-         * 初始化下拉选择框
-         */
-        _initSelectList: function(trigger) {
-            this.selectList = E.Menu.generateDropMenu(this.editor, trigger, [1, 0]);
-
-            // 初始化下拉框 DOM
-            this._renderSelectList();
-
-            // 注册选取事件
-            this._bindPickEvent();
-        },
-
-        /**
-         * 初始化下拉框 DOM
-         */
-        _renderSelectList: function() {
-            var htmlCode = "", options = this.options,
-                key, val;
-
-            for(key in options) {
-                if(key == DEFAULT) continue;
-                val = options[key];
-
-                htmlCode += OPTION_TMPL
-                        .replace("{VALUE}", val)
-                        .replace("{STYLE}", this._getOptionStyle(key, val))
-                        .replace("{KEY}", key);
+            // 获取可引用的父元素
+            if (this.isQuotableElement(parentEl)) {
+                quotableAncestor = parentEl;
+            } else {
+                quotableAncestor = this.getQuotableAncestor(parentEl);
             }
 
-            // 添加到 DOM 中
-            this.selectList.innerHTML = SELECT_TMPL.replace("{LI}", htmlCode);
-
-            // 添加个性化 class
-            Dom.addClass(this.selectList, "kissy-drop-menu-" + this.name);
-
-            // 针对 ie，设置不可选择
-            if (isIE) E.Dom.setItemUnselectable(this.selectList);
+            // exec
+            if (quotableAncestor) {
+                var isQuoted = quotableAncestor.parentNode.nodeName.toLowerCase() === BLOCKQUOTE;
+                editor.execCommand(isQuoted ? "outdent" : "indent", null, false);
+            }
         },
 
         /**
-         * 绑定取色事件
+         * 获取可引用的父元素
          */
-        _bindPickEvent: function() {
+        getQuotableAncestor: function(el) {
             var self = this;
-
-            Event.on(this.selectList, "click", function(ev) {
-                var target = Event.getTarget(ev), val;
-
-                if(target.nodeName != "LI") {
-                    target = Dom.getAncestorByTagName(target, "li");
-                }
-                if(!target) return;
-
-                val = target.getAttribute("data-value");
-                //console.log(val);
-
-                if(val) {
-                    // 更新当前值
-                    self._setSelectedOption(val);
-
-                    // 执行命令
-                    self.editor.execCommand(self.name, self.selectedValue);
-                }
+            return Dom.getAncestorBy(el, function(elem) {
+                return self.isQuotableElement(elem);
             });
         },
 
         /**
-         * 选中某一项
+         * 判断是否可对齐元素
          */
-        _setSelectedOption: function(val) {
-            this.selectedValue = val;
-
-            // 更新 head
-            this.selectHead.innerHTML = this._getOptionKey(val);
-
-            // 更新 selectList 中的选中项
-            this._updateSelectedOption(val);
-        },
-
-        _getOptionStyle: function(key, val) {
-          if(this.name == "fontName") {
-              return "font-family:" + val;
-          } else { // font size
-              return "font-size:" + key + "px";
-          }
-        },
-
-        _getOptionKey: function(val) {
-            var options = this.options, key;
-
-            for(key in options) {
-                if(key == DEFAULT) continue;
-                
-                if(options[key] == val) {
-                    return key;
-                }
-            }
-        },
-
-        /**
-         * 更新下拉框的选中项
-         */
-        _updateSelectedOption: function(val) {
-            var items = this.selectList.getElementsByTagName("li"),
-                i, len = items.length, item;
-
-            for(i = 0; i < len; ++i) {
-                item = items[i];
-
-                if(item.getAttribute("data-value") == val) {
-                    Dom.addClass(item, OPTION_SELECTED);
-                } else {
-                    Dom.removeClass(item, OPTION_SELECTED);
-                }
-            }
+        isQuotableElement: function(el) {
+            return BLOCKQUOTE_ELEMENTS[el.nodeName.toLowerCase()];
         }
     });
-
 });
 
-// TODO
-//  1. 仿 google, 对键盘事件的支持
+// NOTES:
+//  目前样式仿 Google Docs
 
 KISSY.Editor.add("plugins~color", function(E) {
 
@@ -1429,33 +1405,208 @@ KISSY.Editor.add("plugins~color", function(E) {
 
 // TODO
 //  1. 仿 google, 对键盘事件的支持
+//  2. 光标变化时，动态更新当前颜色指示值
 
-KISSY.Editor.add("plugins~link", function(E) {
+KISSY.Editor.add("plugins~font", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
         isIE = YAHOO.env.ua.ie,
-        TYPE = E.PLUGIN_TYPE, Range = E.Range,
-        timeStamp = new Date().getTime(),
+        TYPE = E.PLUGIN_TYPE,
 
-        DIALOG_CLS = "kissy-link-dialog",
-        NEW_LINK_CLS = "kissy-link-dialog-newlink-mode",
-        BTN_OK_CLS = "kissy-link-dialog-ok",
-        BTN_CANCEL_CLS = "kissy-link-dialog-cancel",
-        BTN_REMOVE_CLS = "kissy-link-dialog-remove",
-        DEFAULT_HREF = "http://",
+        SELECT_TMPL = '<ul class="kissy-select-list">{LI}</ul>',
+        OPTION_TMPL = '<li class="kissy-option" data-value="{VALUE}">' +
+                          '<span class="kissy-option-checkbox"></span>' +
+                          '<span style="{STYLE}">{KEY}</span>' +
+                      '</li>',
+        OPTION_SELECTED = "kissy-option-selected",
+        DEFAULT = "Default";
 
-        DIALOG_TMPL = ['<form onsubmit="return false"><ul>',
-                          '<li class="kissy-link-dialog-href"><label>{href}</label><input name="href" size="40" value="http://" type="text" /></li>',
-                          '<li class="kissy-link-dialog-text"><label>{text}</label><input name="text" size="40" type="text" /></li>',
-                          '<li class="kissy-link-dialog-target"><input name="target" id="target_"', timeStamp ,' type="checkbox" /> <label for="target_"', timeStamp ,'>{target}</label></li>',
-                          '<li class="kissy-link-dialog-actions">',
+    E.addPlugin(["fontName", "fontSize"], {
+        /**
+         * 种类：菜单按钮
+         */
+        type: TYPE.TOOLBAR_SELECT,
+
+        /**
+         * 当前选中值
+         */
+        selectedValue: "",
+
+        /**
+         * 选择框头部
+         */
+        selectHead: null,
+
+        /**
+         * 关联的下拉选择列表
+         */
+        selectList: null,
+
+        /**
+         * 下拉框里的所有选项值
+         */
+        options: [],
+
+        /**
+         * 初始化
+         */
+        init: function() {
+            var el = this.domEl;
+
+            this.options = this.lang.options;
+            this.selectHead = el.getElementsByTagName("span")[0];
+
+            this._initSelectList(el);
+
+            // 选中当前值
+            this._setSelectedOption(this.options[DEFAULT]);
+        },
+
+        /**
+         * 初始化下拉选择框
+         */
+        _initSelectList: function(trigger) {
+            this.selectList = E.Menu.generateDropMenu(this.editor, trigger, [1, 0]);
+
+            // 初始化下拉框 DOM
+            this._renderSelectList();
+
+            // 注册选取事件
+            this._bindPickEvent();
+        },
+
+        /**
+         * 初始化下拉框 DOM
+         */
+        _renderSelectList: function() {
+            var htmlCode = "", options = this.options,
+                key, val;
+
+            for(key in options) {
+                if(key == DEFAULT) continue;
+                val = options[key];
+
+                htmlCode += OPTION_TMPL
+                        .replace("{VALUE}", val)
+                        .replace("{STYLE}", this._getOptionStyle(key, val))
+                        .replace("{KEY}", key);
+            }
+
+            // 添加到 DOM 中
+            this.selectList.innerHTML = SELECT_TMPL.replace("{LI}", htmlCode);
+
+            // 添加个性化 class
+            Dom.addClass(this.selectList, "kissy-drop-menu-" + this.name);
+
+            // 针对 ie，设置不可选择
+            if (isIE) E.Dom.setItemUnselectable(this.selectList);
+        },
+
+        /**
+         * 绑定取色事件
+         */
+        _bindPickEvent: function() {
+            var self = this;
+
+            Event.on(this.selectList, "click", function(ev) {
+                var target = Event.getTarget(ev), val;
+
+                if(target.nodeName != "LI") {
+                    target = Dom.getAncestorByTagName(target, "li");
+                }
+                if(!target) return;
+
+                val = target.getAttribute("data-value");
+                //console.log(val);
+
+                if(val) {
+                    // 更新当前值
+                    self._setSelectedOption(val);
+
+                    // 执行命令
+                    self.editor.execCommand(self.name, self.selectedValue);
+                }
+            });
+        },
+
+        /**
+         * 选中某一项
+         */
+        _setSelectedOption: function(val) {
+            this.selectedValue = val;
+
+            // 更新 head
+            this.selectHead.innerHTML = this._getOptionKey(val);
+
+            // 更新 selectList 中的选中项
+            this._updateSelectedOption(val);
+        },
+
+        _getOptionStyle: function(key, val) {
+          if(this.name == "fontName") {
+              return "font-family:" + val;
+          } else { // font size
+              return "font-size:" + key + "px";
+          }
+        },
+
+        _getOptionKey: function(val) {
+            var options = this.options, key;
+
+            for(key in options) {
+                if(key == DEFAULT) continue;
+                
+                if(options[key] == val) {
+                    return key;
+                }
+            }
+        },
+
+        /**
+         * 更新下拉框的选中项
+         */
+        _updateSelectedOption: function(val) {
+            var items = this.selectList.getElementsByTagName("li"),
+                i, len = items.length, item;
+
+            for(i = 0; i < len; ++i) {
+                item = items[i];
+
+                if(item.getAttribute("data-value") == val) {
+                    Dom.addClass(item, OPTION_SELECTED);
+                } else {
+                    Dom.removeClass(item, OPTION_SELECTED);
+                }
+            }
+        }
+    });
+
+});
+
+// TODO
+//  1. 仿 google, 对键盘事件的支持
+//  2. 光标变化时，动态更新当前字体显示值
+
+KISSY.Editor.add("plugins~image", function(E) {
+
+    var Y = YAHOO.util, Event = Y.Event, Lang = YAHOO.lang,
+        isIE = YAHOO.env.ua.ie,
+        TYPE = E.PLUGIN_TYPE,
+
+        DIALOG_CLS = "kissy-image-dialog",
+        BTN_OK_CLS = "kissy-image-dialog-ok",
+        BTN_CANCEL_CLS = "kissy-image-dialog-cancel",
+
+        DIALOG_TMPL = ['<form onsubmit="return false"><fieldset>',
+                          '<legend>{web_legend}</legend>',
+                          '<input name="imageUrl" size="50" />',
+                          '<div class="kissy-dialog-buttons">',
                               '<button name="ok" class="', BTN_OK_CLS, '">{ok}</button>',
                               '<button name="cancel" class="', BTN_CANCEL_CLS ,'">{cancel}</button>',
-                              '<span class="', BTN_REMOVE_CLS ,'">{remove}</span>',
-                          '</li>',
-                      '</ul></form>'].join("");
+                          '</div>',
+                      '</fieldset></form>'].join("");
 
-    E.addPlugin("link", {
+    E.addPlugin("image", {
         /**
          * 种类：普通按钮
          */
@@ -1470,6 +1621,11 @@ KISSY.Editor.add("plugins~link", function(E) {
          * 关联的表单
          */
         form: null,
+
+        /**
+         * 关联的 range 对象
+         */
+        range: null,
 
         /**
          * 初始化函数
@@ -1493,6 +1649,10 @@ KISSY.Editor.add("plugins~link", function(E) {
 
             this.dialog = dialog;
             this.form = dialog.getElementsByTagName("form")[0];
+
+            if(isIE) {
+                E.Dom.setItemUnselectable(dialog);
+            }
         },
 
         /**
@@ -1503,8 +1663,10 @@ KISSY.Editor.add("plugins~link", function(E) {
 
             // 显示/隐藏对话框时的事件
             Event.on(this.domEl, "click", function() {
-                // TODO：仅在显示时更新
-                self._syncUI();
+                // 仅在显示时更新
+                if (self.dialog.style.visibility === isIE ? "hidden" : "visible") { // 事件的触发顺序不同
+                    self._syncUI();
+                }
             });
 
             // 注册表单按钮点击事件
@@ -1513,12 +1675,9 @@ KISSY.Editor.add("plugins~link", function(E) {
 
                 switch(target.className) {
                     case BTN_OK_CLS:
-                        self._createLink(form.href.value, form.text.value, form.target.checked);
+                        self._insertImage(form.imageUrl.value);
                         break;
                     case BTN_CANCEL_CLS: // 直接往上冒泡，关闭对话框
-                        break;
-                    case BTN_REMOVE_CLS:
-                        self._unLink();
                         break;
                     default: // 点击在非按钮处，停止冒泡，保留对话框
                         Event.stopPropagation(ev);
@@ -1530,207 +1689,130 @@ KISSY.Editor.add("plugins~link", function(E) {
          * 更新界面上的表单值
          */
         _syncUI: function() {
-            var editor = this.editor,
-                form = this.form,
-                range = editor.getSelectionRange(),
-                container = Range.getStartContainer(range),
-                parentEl;
-
-            // 修改链接
-            if (container.nodeType == 3) { // TextNode
-                parentEl = container.parentNode;
-                if (parentEl.nodeName == "A") {
-                    form.href.value = parentEl.href;
-                    form.text.value = E.Dom.getText(parentEl);
-                    form.target.checked = parentEl.target === "_blank";
-                    Dom.removeClass(form, NEW_LINK_CLS);
-                    return;
-                }
-            }
-
-            // 新建链接
-            form.href.value = DEFAULT_HREF;
-            form.text.value = Range.getSelectedText(range);
-            Dom.addClass(form, NEW_LINK_CLS);
+            this.range = this.editor.getSelectionRange();
+            this.form.imageUrl.value = "";
         },
 
         /**
-         * 创建/修改链接
+         * 插入图片
          */
-        _createLink: function(href, text, target) {
-            // href 为空时，移除链接。 TODO: 自动添加 http 等细节操作的完善
-            if (href.length < 7) {
-                this._unLink();
+        _insertImage: function(imageUrl) {
+            imageUrl = Lang.trim(imageUrl);
+
+            // url 为空时，不处理
+            if (imageUrl.length === 0) {
                 return;
             }
 
-            // text 为空时，自动设为 href 的值
-            if (!text) text = href;
-
             var editor = this.editor,
-                range = editor.getSelectionRange(),
-                container = Range.getStartContainer(range),
-                parentEl;
+                range = this.range,
+                img;
 
-            // 修改链接
-            if (container.nodeType == 3) { // TextNode
-                parentEl = container.parentNode;
-                if (parentEl.nodeName == "A") {
-                    parentEl.href = href;
-                    parentEl.innerHTML = text;
-                    if (target) {
-                        parentEl.setAttribute("target", "_blank");
-                    } else {
-                        parentEl.removeAttribute("target");
-                    }
-                    return;
-                }
+            // 插入图片
+            if (!isIE) {
+                img = document.createElement("img");
+                img.src = imageUrl;
+                img.setAttribute("title", "");
+                range.insertNode(img);
+            } else {
+                range.select();
+                editor.execCommand("insertImage", imageUrl);
             }
-
-            // 创建链接
-            var selectedText = Range.getSelectedText(range);
-            if (!selectedText) {
-                if (!isIE) {
-                    var a = document.createElement("A");
-                    a.innerHTML = text;
-                    range.insertNode(a);
-                } else {
-                    range.pasteHTML('<a href="' + href + '">' + text + '</a>');
-                }
-            }
-            editor.execCommand("createLink", href);
-        },
-
-        _unLink: function() {
-            this.editor.execCommand("unLink");
         }
     });
 
  });
 
 // TODO:
-// 当选区包含链接/一部分包含链接时，生成的链接内容的调优处理。
-// 目前只有 Google Docs 做了优化，其它编辑器都采用浏览器默认的处理方式。
-// 先记于此，等以后优化。
-KISSY.Editor.add("plugins~blockquote", function(E) {
-
-    var TYPE = E.PLUGIN_TYPE;
-
-    E.addPlugin("blockquote", {
-        /**
-         * 种类：普通按钮
-         */
-        type: TYPE.TOOLBAR_BUTTON,
-
-        /**
-         * 响应函数
-         */
-        exec: function() {
-            alert("todo");
-        }
-    });
-
- });
-
-KISSY.Editor.add("plugins~image", function(E) {
-
-    var TYPE = E.PLUGIN_TYPE;
-
-    E.addPlugin("image", {
-        /**
-         * 种类：普通按钮
-         */
-        type: TYPE.TOOLBAR_BUTTON,
-
-        /**
-         * 响应函数
-         */
-        exec: function() {
-            alert("todo");
-        }
-    });
-
- });
-
-KISSY.Editor.add("plugins~smiley", function(E) {
-
-    var TYPE = E.PLUGIN_TYPE;
-
-    E.addPlugin("smiley", {
-        /**
-         * 种类：普通按钮
-         */
-        type: TYPE.TOOLBAR_BUTTON,
-
-        /**
-         * 响应函数
-         */
-        exec: function() {
-            alert("todo");
-        }
-    });
-
- });
-
+//  1. 图片上传功能
 KISSY.Editor.add("plugins~indent", function(E) {
 
-    var TYPE = E.PLUGIN_TYPE;
+    var Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
+        TYPE = E.PLUGIN_TYPE,
+        UA = YAHOO.env.ua,
 
-    E.addPlugin(["indent", "outdent"], {
-        /**
-         * 种类：普通按钮
-         */
-        type: TYPE.TOOLBAR_BUTTON,
+        INDENT_ELEMENTS = Lang.merge(E.Dom.BLOCK_ELEMENTS, {
+            li: 0 // 取消 li 元素的单独缩进，让 ol/ul 整体缩进
+        }),
+        INDENT_STEP = "40",
+        INDENT_UNIT = "px",
 
-        /**
-         * 响应函数
-         */
-        exec: function() {
-            this.editor.execCommand(this.name);
-        }
-    });
+        plugin = {
+            /**
+             * 种类：普通按钮
+             */
+            type: TYPE.TOOLBAR_BUTTON,
 
+            /**
+             * 响应函数
+             */
+            exec: function() {
+                this.editor.execCommand(this.name);
+            }
+        };
+
+    // 注：ie 下，默认使用 blockquote 元素来实现缩进
+    // 下面采用自主操作 range 的方式来实现，以保持和其它浏览器一致
+    if (UA.ie) {
+
+        plugin.exec = function() {
+            var range = this.editor.getSelectionRange(),
+                parentEl, indentableAncestor;
+
+            if(range.parentElement) { // TextRange
+                parentEl = range.parentElement();
+            } else if(range.item) { // ControlRange
+                parentEl = range.item(0);
+            } else { // 不做任何处理
+                return;
+            }
+
+            // 获取可缩进的父元素
+            if (isIndentableElement(parentEl)) {
+                 indentableAncestor = parentEl;
+            } else {
+                 indentableAncestor = getIndentableAncestor(parentEl);
+            }
+
+            // 设置 margin-left
+            if (indentableAncestor) {
+                var val = parseInt(indentableAncestor.style.marginLeft) >> 0;
+                val += (this.name === "indent" ? +1 : -1) * INDENT_STEP;
+
+                indentableAncestor.style.marginLeft = val + INDENT_UNIT;
+            }
+
+            /**
+             * 获取可缩进的父元素
+             */
+            function getIndentableAncestor(el) {
+                return Dom.getAncestorBy(el, function(elem) {
+                    return isIndentableElement(elem);
+                });
+            }
+
+            /**
+             * 判断是否可缩进元素
+             */
+            function isIndentableElement(el) {
+                return INDENT_ELEMENTS[el.nodeName.toLowerCase()];
+            }
+        };
+    }
+
+    // 注册插件
+    E.addPlugin(["indent", "outdent"], plugin);
  });
 
 // TODO:
-//  目前仿 Google Docs，不做特殊处理。在不同浏览器下表现不同。
-//  等有时间了，可以考虑仿照 CKEditor 的实现方式。
-
+//  1. 对 rtl 的支持
 KISSY.Editor.add("plugins~justify", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom,
         TYPE = E.PLUGIN_TYPE,
         UA = YAHOO.env.ua,
 
-        // Ref: CKEditor - core/dom/elementpath.js
-        JUSTIFY_ELEMENTS = {
-
-            /* 结构元素 */
-            blockquote:1,
-            div:1,
-            h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,
-            hr:1,
-            p:1,
-
-            /* 文本格式元素 */
-            address:1,
-            center:1,
-            pre:1,
-
-            /* 表单元素 */
-            form:1,
-            fieldset:1,
-            caption:1,
-
-            /* 表格元素 */
-            table:1,
-            tbody:1,
-            tr:1, th:1, td:1,
-
-            /* 列表元素 */
-            ul:1, ol:1, dl:1,
-            dt:1, dd:1, li:1
-        },
+        JUSTIFY_ELEMENTS = E.Dom.BLOCK_ELEMENTS,
 
         plugin = {
             /**
@@ -1750,8 +1832,8 @@ KISSY.Editor.add("plugins~justify", function(E) {
     // 下面采用自主操作 range 的方式来实现，以保持和其它浏览器一致
     if (UA.ie) {
 
-        plugin.exec = function(editor) {
-            var range = editor.getSelectionRange(),
+        plugin.exec = function() {
+            var range = this.editor.getSelectionRange(),
                 parentEl, justifyAncestor;
 
             if(range.parentElement) { // TextRange
@@ -1778,8 +1860,8 @@ KISSY.Editor.add("plugins~justify", function(E) {
              * 获取可设置对齐的父元素
              */
             function getJustifyAncestor(el) {
-                return Dom.getAncestorBy(el, function(arg) {
-                    return isJustifyElement(arg);
+                return Dom.getAncestorBy(el, function(elem) {
+                    return isJustifyElement(elem);
                 });
             }
 
@@ -1797,11 +1879,241 @@ KISSY.Editor.add("plugins~justify", function(E) {
 
 });
 
-KISSY.Editor.add("plugins~undo", function(E) {
+KISSY.Editor.add("plugins~link", function(E) {
+
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+        isIE = YAHOO.env.ua.ie,
+        TYPE = E.PLUGIN_TYPE, Range = E.Range,
+        timeStamp = new Date().getTime(),
+        HREF_REG = /^\w+:\/\/.*|#.*$/,
+
+        DIALOG_CLS = "kissy-link-dialog",
+        NEW_LINK_CLS = "kissy-link-dialog-newlink-mode",
+        BTN_OK_CLS = "kissy-link-dialog-ok",
+        BTN_CANCEL_CLS = "kissy-link-dialog-cancel",
+        BTN_REMOVE_CLS = "kissy-link-dialog-remove",
+        DEFAULT_HREF = "http://",
+
+        DIALOG_TMPL = ['<form onsubmit="return false"><ul>',
+                          '<li class="kissy-link-dialog-href"><label>{href}</label><input name="href" size="40" value="http://" type="text" /></li>',
+                          '<li class="kissy-link-dialog-target"><input name="target" id="target_"', timeStamp ,' type="checkbox" /> <label for="target_"', timeStamp ,'>{target}</label></li>',
+                          '<li class="kissy-link-dialog-actions">',
+                              '<button name="ok" class="', BTN_OK_CLS, '">{ok}</button>',
+                              '<button name="cancel" class="', BTN_CANCEL_CLS ,'">{cancel}</button>',
+                              '<span class="', BTN_REMOVE_CLS ,'">{remove}</span>',
+                          '</li>',
+                      '</ul></form>'].join("");
+
+    E.addPlugin("link", {
+        /**
+         * 种类：普通按钮
+         */
+        type: TYPE.TOOLBAR_BUTTON,
+
+        /**
+         * 关联的对话框
+         */
+        dialog: null,
+
+        /**
+         * 关联的表单
+         */
+        form: null,
+
+        /**
+         * 关联的 range 对象
+         */
+        range: null,
+
+        /**
+         * 初始化函数
+         */
+        init: function() {
+            this._renderUI();
+            this._bindUI();
+        },
+
+        /**
+         * 初始化对话框界面
+         */
+        _renderUI: function() {
+            var dialog = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]),
+                lang = this.lang;
+
+            dialog.className += " " + DIALOG_CLS;
+            dialog.innerHTML = DIALOG_TMPL.replace(/\{([^}]+)\}/g, function(match, key) {
+                return lang[key] ? lang[key] : key;
+            });
+
+            this.dialog = dialog;
+            this.form = dialog.getElementsByTagName("form")[0];
+
+            if(isIE) {
+                E.Dom.setItemUnselectable(dialog);
+            }
+        },
+
+        /**
+         * 绑定事件
+         */
+        _bindUI: function() {
+            var form = this.form, self = this;
+
+            // 显示/隐藏对话框时的事件
+            Event.on(this.domEl, "click", function() {
+                // 仅在显示时更新
+                if(self.dialog.style.visibility === isIE ? "hidden" : "visible") { // 事件的触发顺序不同
+                    self._syncUI();
+                }
+            });
+
+            // 注册表单按钮点击事件
+            Event.on(this.dialog, "click", function(ev) {
+                var target = Event.getTarget(ev);
+
+                switch(target.className) {
+                    case BTN_OK_CLS:
+                        self._createLink(form.href.value, form.target.checked);
+                        break;
+                    case BTN_CANCEL_CLS: // 直接往上冒泡，关闭对话框
+                        break;
+                    case BTN_REMOVE_CLS:
+                        self._unLink();
+                        break;
+                    default: // 点击在非按钮处，停止冒泡，保留对话框
+                        Event.stopPropagation(ev);
+                }
+            });
+        },
+
+        /**
+         * 更新界面上的表单值
+         */
+        _syncUI: function() {
+            this.range = this.editor.getSelectionRange();
+
+            var form = this.form,
+                container = Range.getContainer(this.range),
+                containerIsA = container.nodeName === "A", // 图片等链接
+                parentEl = container.parentNode,
+                parentIsA = parentEl && (parentEl.nodeName === "A"), // 文字链接
+                a;
+
+            // 修改链接界面
+            if (containerIsA || parentIsA) {
+                a = containerIsA ? container : parentEl;
+                form.href.value = a.href;
+                form.target.checked = a.target === "_blank";
+                Dom.removeClass(form, NEW_LINK_CLS);
+                return;
+            }
+
+            // 新建链接界面
+            form.href.value = DEFAULT_HREF;
+            form.target.checked = false;
+            Dom.addClass(form, NEW_LINK_CLS);
+        },
+
+        /**
+         * 创建/修改链接
+         */
+        _createLink: function(href, target) {
+            href = this._getValidHref(href);
+
+            // href 为空时，移除链接
+            if (href.length === 0) {
+                this._unLink();
+                return;
+            }
+
+            var editor = this.editor,
+                range = this.range,
+                container = Range.getContainer(range),
+                containerIsA = container.nodeName === "A", // 是图片等链接
+                parentEl = container.parentNode,
+                parentIsA = parentEl && (parentEl.nodeName === "A"), // 文字链接
+                a;
+
+            // 修改链接
+            if (containerIsA || parentIsA) {
+                a = containerIsA ? container : parentEl;
+                a.href = href;
+                if (target) {
+                    a.setAttribute("target", "_blank");
+                } else {
+                    a.removeAttribute("target");
+                }
+                return;
+            }
+
+            // 创建链接
+            var selectedText = Range.getSelectedText(range);
+            if (container.nodeType == 3 && !selectedText) { // 文本链接
+                if (!isIE) {
+                    a = document.createElement("A");
+                    a.innerHTML = href;
+                    range.insertNode(a);
+                } else {
+                    range.pasteHTML('<a href="' + href + '">' + href + '</a>');
+                }
+            } else {
+                if(range.select) range.select();
+                editor.execCommand("createLink", href);
+            }
+        },
+
+        _getValidHref: function(href) {
+            href = Lang.trim(href);
+            if(href && !HREF_REG.test(href)) { // 不为空 或 不符合标准模式 abcd://efg
+               href = DEFAULT_HREF + href; // 添加默认前缀
+            }
+            return href;
+        },
+
+        /**
+         * 移除链接
+         */
+        _unLink: function() {
+            var editor = this.editor,
+                range = this.range,
+                selectedText = Range.getSelectedText(range),
+                container = Range.getContainer(range),
+                parentEl;
+
+            // 没有选中文字时
+            if (!selectedText && container.nodeType == 3) {
+                parentEl = container.parentNode;
+                if (parentEl.nodeName == "A") {
+                    parentEl.parentNode.replaceChild(container, parentEl);
+                }
+            } else {
+                if(range.select) range.select();
+                editor.execCommand("unLink", null);
+            }
+        }
+    });
+
+ });
+
+// TODO:
+// 当选区包含链接/一部分包含链接时，生成的链接内容的调优处理。
+// 目前只有 Google Docs 做了优化，其它编辑器都采用浏览器默认的处理方式。
+// 先记于此，等以后优化。
+
+/**
+ * Notes:
+ *  1. 在 ie 下，点击工具栏上的按钮时，会导致 iframe 编辑区域的 range 选区丢失。解决办法是：
+ *     对所有元素添加 unselectable 属性。但是，对于 text input 框，为了能输入，不能有 unselectable
+ *     属性。这就导致了矛盾。因此，权衡之后的解决办法是：在对话框弹出前，将 range 对象保存起来，
+ *     丢失后，再通过 range.select() 选择回来。这基本上已经满足需求。
+ *  2. 目前只有 CKEditor 和 TinyMCE 等完全接管命名的编辑器处理得很完美。但 1 的解决方案，目前已经
+ *     够用，成本也很低。
+ */
+KISSY.Editor.add("plugins~maximize", function(E) {
 
     var TYPE = E.PLUGIN_TYPE;
 
-    E.addPlugin(["undo", "redo"], {
+    E.addPlugin("maximize", {
         /**
          * 种类：普通按钮
          */
@@ -1811,12 +2123,40 @@ KISSY.Editor.add("plugins~undo", function(E) {
          * 响应函数
          */
         exec: function() {
-            // TODO 完善细节
-            this.editor.execCommand(this.name);
+            alert("todo");
         }
     });
 
  });
+KISSY.Editor.add("plugins~removeformat", function(E) {
+
+    var Y = YAHOO.util, Dom = Y.Dom,
+        Range = E.Range,
+        TYPE = E.PLUGIN_TYPE,
+
+        FORMAT_TAGS_REG = /^(b|big|code|del|dfn|em|font|i|ins|kbd|q|samp|small|span|strike|strong|sub|sup|tt|u|var)$/g,
+        FORMAT_ATTRS = ["class","style","lang","width","height","align","hspace","valign"];
+
+    E.addPlugin("removeformat", {
+        /**
+         * 种类：普通按钮
+         */
+        type: TYPE.TOOLBAR_BUTTON,
+
+        /**
+         * 响应函数
+         */
+        exec: function() {
+            var editor = this.editor,
+                range = editor.getSelectionRange(),
+                parentEl = E.Range.getContainer(range);
+            if (!parentEl) return;
+
+            alert("正在实现中");
+
+        }
+    });
+});
 
 KISSY.Editor.add("plugins~save", function(E) {
 
@@ -1895,6 +2235,26 @@ KISSY.Editor.add("plugins~save", function(E) {
     });
  });
 
+KISSY.Editor.add("plugins~smiley", function(E) {
+
+    var TYPE = E.PLUGIN_TYPE;
+
+    E.addPlugin("smiley", {
+        /**
+         * 种类：普通按钮
+         */
+        type: TYPE.TOOLBAR_BUTTON,
+
+        /**
+         * 响应函数
+         */
+        exec: function() {
+            alert("todo");
+        }
+    });
+
+ });
+
 KISSY.Editor.add("plugins~source", function(E) {
 
     var TYPE = E.PLUGIN_TYPE;
@@ -1946,11 +2306,11 @@ KISSY.Editor.add("plugins~source", function(E) {
 
  });
 
-KISSY.Editor.add("plugins~maximize", function(E) {
+KISSY.Editor.add("plugins~undo", function(E) {
 
     var TYPE = E.PLUGIN_TYPE;
 
-    E.addPlugin("maximize", {
+    E.addPlugin(["undo", "redo"], {
         /**
          * 种类：普通按钮
          */
@@ -1960,7 +2320,8 @@ KISSY.Editor.add("plugins~maximize", function(E) {
          * 响应函数
          */
         exec: function() {
-            alert("todo");
+            // TODO 接管
+            this.editor.execCommand(this.name);
         }
     });
 

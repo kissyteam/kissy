@@ -31,8 +31,10 @@ KISSY.Editor.add("core~range", function(E) {
         /**
          * 获取起始点所在容器
          */
-        getStartContainer: function(range) {
-            return range.startContainer || range.parentElement();
+        getContainer: function(range) {
+            return range.startContainer || // w3c
+                   (range.parentElement && range.parentElement()) || // ms TextRange
+                   (range.commonParentElement && range.commonParentElement()); // ms IHTMLControlRange
         },
 
         /**
@@ -40,7 +42,7 @@ KISSY.Editor.add("core~range", function(E) {
          */
         getSelectedText: function(range) {
             if("text" in range) return range.text;
-            return range.toString();
+            return range.toString ? range.toString() : ""; // ms IHTMLControlRange 无 toString 方法
         }
     };
 

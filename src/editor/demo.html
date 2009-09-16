@@ -11,7 +11,7 @@
 
 <style type="text/css">
     #demo-page {
-        padding: 50px 0;
+        padding: 50px 20px;
         width: 1080px;
         margin: 0 auto;
         line-height: 18px;
@@ -109,12 +109,14 @@
     var config = {
         base: "http://kissy.googlecode.com/svn/trunk/src/editor/",
         toolbar: [
-            "source", "undo", "redo",
+            "undo", "redo",
             "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
             "",
-            "link",
+            "link", "image", "blockquote",
             "",
             "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight",
+            "",
+            "source"
         ]
     };
     
