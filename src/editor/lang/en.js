@@ -78,8 +78,8 @@ KISSY.Editor.add("lang~en", function(E) {
             title         : "Insert smiley"
         },
         image: {
-            text          : "Image",
-            title         : "Insert or modify image..."
+            web_legend    : "Enter image web address:",
+            ok            : "Insert"
         },
         insertOrderedList: {
             text          : "Numbered List",

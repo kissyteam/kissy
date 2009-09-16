@@ -313,3 +313,30 @@ li.kissy-link-dialog-actions {
 .kissy-link-dialog form {
     width: 275px;
 }
+
+/* image dialog */
+.kissy-image-dialog {
+    padding: 10px;
+    _width: 282px;
+}
+.kissy-image-dialog legend {
+    margin: 5px 0 2px;
+    font-weight: bold;
+}
+.kissy-image-dialog input {
+    padding: 2px 1px;
+    vertical-align: middle;
+    margin-left: 7px;
+}
+.kissy-image-dialog .kissy-dialog-buttons {
+    padding: 5px 0;
+    margin-left: 2px;
+}
+
+/* dialog common */
+.kissy-dialog-buttons button {
+    margin: 0 5px;
+    padding: 1px 0.8em 0;
+    *padding: 2px 0.8em 1px;
+    float: left;
+}

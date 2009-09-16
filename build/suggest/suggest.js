@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-09-07 22:43:10
-Revision: 138
+Date: 2009-09-16 09:30:59
+Revision: 147
 */
 /**
  * KISSY.Suggest 提示补全组件
@@ -362,6 +362,9 @@ var KISSY = window.KISSY || {};
         _setContainerRegion: function() {
             var r = Dom.getRegion(this.textInput);
             var left = r.left, w = r.right - left - 2;  // 减去border的2px
+
+            // bug fix: w 应该判断下是否大于 0, 后边设置 width 的时候如果小于 0, ie 下会报参数无效的错误
+            w = w > 0 ? w : 0;
 
             // ie8兼容模式
             // document.documentMode:

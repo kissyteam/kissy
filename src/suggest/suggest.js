@@ -355,6 +355,9 @@ var KISSY = window.KISSY || {};
             var r = Dom.getRegion(this.textInput);
             var left = r.left, w = r.right - left - 2;  // 减去border的2px
 
+            // bug fix: w 应该判断下是否大于 0, 后边设置 width 的时候如果小于 0, ie 下会报参数无效的错误
+            w = w > 0 ? w : 0;
+
             // ie8兼容模式
             // document.documentMode:
             // 5 - Quirks Mode
