@@ -167,16 +167,20 @@ var KISSY = window.KISSY || {};
          * ·¢ËÍÊý¾Ý
          */
         sendData: function(onLoadTime, apiUrl, pageId) {
-            new Image().src = [
+            var results = [
                 apiUrl,
                 "?page_id=", pageId,
                 "&os=", getOSInfo(), // operation system
                 "&bt=", getBrowserInfo(), // browser type
                 "&scr=", getScreenInfo(), // screen info
                 "&fl=", (onLoadTime - this.startTime), // full load time
-                "&dl=", (this.endTime - this.startTime), // dom load time
-                "&sl=", (this.sectionMaxImgLoadTime - this.endTime) // section load time
-            ].join("");
+                "&dl=", (this.endTime - this.startTime) // dom load time
+            ];
+
+            var sl = this.sectionMaxImgLoadTime - this.endTime;
+            if(sl > 0) results.push("&sl=" + sl); // section load time
+
+            new Image().src = results.join("");
         }
     };
 

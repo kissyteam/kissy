@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-09-17 09:41:41
-Revision: 149
+Date: 2009-09-17 10:14:00
+Revision: 150
 */
 /**
  * KISSY.Monitor 前端性能监控脚本
@@ -175,16 +175,20 @@ var KISSY = window.KISSY || {};
          * 发送数据
          */
         sendData: function(onLoadTime, apiUrl, pageId) {
-            new Image().src = [
+            var results = [
                 apiUrl,
                 "?page_id=", pageId,
                 "&os=", getOSInfo(), // operation system
                 "&bt=", getBrowserInfo(), // browser type
                 "&scr=", getScreenInfo(), // screen info
                 "&fl=", (onLoadTime - this.startTime), // full load time
-                "&dl=", (this.endTime - this.startTime), // dom load time
-                "&sl=", (this.sectionMaxImgLoadTime - this.endTime) // section load time
-            ].join("");
+                "&dl=", (this.endTime - this.startTime) // dom load time
+            ];
+
+            var sl = this.sectionMaxImgLoadTime - this.endTime;
+            if(sl > 0) results.push("&sl=" + sl); // section load time
+
+            new Image().src = results.join("");
         }
     };
 
