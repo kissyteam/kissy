@@ -1,7 +1,5 @@
 
- - ¿ª·¢ suggest µÄ YUI3 version
  - css modules
- - editor
  - KISSY core
 
 -----------------------
@@ -17,3 +15,4 @@
  ----------------------
  select box
  http://jquery-ui.googlecode.com/svn/branches/labs/selectmenu/index.html
+

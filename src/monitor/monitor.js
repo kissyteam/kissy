@@ -11,7 +11,11 @@ var KISSY = window.KISSY || {};
 
     var scripts = document.getElementsByTagName('script'),
         currentScript = scripts[scripts.length - 1],
-        ua = navigator.userAgent;
+        ua = navigator.userAgent,
+        startTime = 0, // 页头处的布点时间
+        endTime = 0,   // 页尾处的布点时间
+        sections = [], // 监控区域
+        sectionMaxImgLoadTime = 0; // 监控区域中，最慢的图片加载完成时间点
 
     /**
      * 获取元素
@@ -95,22 +99,6 @@ var KISSY = window.KISSY || {};
     KISSY.Monitor = {
 
         /**
-         * 页头处的布点时间
-         */
-        startTime: 0,
-
-        /**
-         * 页尾处的布点时间
-         */
-        endTime: 0,
-
-
-        /**
-         * 监控区域中，最慢的图片加载完成时间点
-         */
-        sectionMaxImgLoadTime: 0,
-
-        /**
          * 初始化
          */
         init: function(cfg) {
@@ -118,7 +106,6 @@ var KISSY = window.KISSY || {};
                 apiUrl = config["apiUrl"] || "http://igw.monitor.taobao.com/monitor-gw/receive.do",
                 pageId = "pageId" in config ? config["pageId"] : 0,
                 sampleRate = "sampleRate" in config ? config["sampleRate"] : 10000,
-                sections = config["sections"] || [],
                 self = this;
 
             // 无 pageId 时，不运行
@@ -127,11 +114,12 @@ var KISSY = window.KISSY || {};
             // 抽样：取 0 为幸运值
             if(parseInt(Math.random() * sampleRate)) return;
             
-            this.startTime = window["g_ks_monitor_st"]; // 读取页头处的布点时间
-            if(!this.startTime) return; // 有起始布点值时，才继续
+            startTime = window["g_ks_monitor_st"]; // 读取页头处的布点时间
+            if(!startTime) return; // 有起始布点值时，才继续
 
-            this.endTime = +new Date; // 读取页尾处的布点时间 注：此处近似为该脚本运行到此处的时间
-            this.sectionMaxImgLoadTime = this.endTime;
+            endTime = +new Date; // 读取页尾处的布点时间 注：此处近似为该脚本运行到此处的时间
+            sections = config["sections"] || [],
+            sectionMaxImgLoadTime = endTime;
 
             // monitor sections
             if(sections.length > 0) {
@@ -152,12 +140,12 @@ var KISSY = window.KISSY || {};
             var section = get(id);
             if (!section || section.nodeType !== 1) return;
 
-            var images = section.getElementsByTagName("img"), self = this;
+            var images = section.getElementsByTagName("img");
             for (var i = 0, len = images.length; i < len; ++i) {
                 addEvent(images[i], "load", function() {
                     var currTime = +new Date;
-                    if (currTime > self.sectionMaxImgLoadTime) {
-                        self.sectionMaxImgLoadTime = currTime;
+                    if (currTime > sectionMaxImgLoadTime) {
+                        sectionMaxImgLoadTime = currTime;
                     }
                 });
             }
@@ -173,12 +161,13 @@ var KISSY = window.KISSY || {};
                 "&os=", getOSInfo(), // operation system
                 "&bt=", getBrowserInfo(), // browser type
                 "&scr=", getScreenInfo(), // screen info
-                "&fl=", (onLoadTime - this.startTime), // full load time
-                "&dl=", (this.endTime - this.startTime) // dom load time
+                "&fl=", (onLoadTime - startTime), // full load time
+                "&dl=", (endTime - startTime) // dom load time
             ];
 
-            var sl = this.sectionMaxImgLoadTime - this.endTime;
-            if(sl > 0) results.push("&sl=" + sl); // section load time
+            if(sections.length > 0) {
+                results.push("&sl=" + (sectionMaxImgLoadTime - endTime)); // section load time
+            }
 
             new Image().src = results.join("");
         }
@@ -201,3 +190,9 @@ var KISSY = window.KISSY || {};
  *     这时监控不到图片的 onload（因为已经完成）
  *     但对于 detail 等绝大部分页面而言，不会出现这种情况
  */
+
+// TODO:
+//  1. 浏览器变化趋势图
+//  2. Flash, SilverLight, Gear 等安装情况
+//  3. 点击热图统计
+//  4. 用户滚动条状况
