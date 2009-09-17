@@ -12,7 +12,7 @@ KISSY.Editor.add("core~instance", function(E) {
                         '<html>' +
                         '<head>' +
                         '<title>Rich Text Area</title>' +
-                        '<meta http-equiv="Content-Type" content="text/html; charset=GBK18030" />' +
+                        '<meta http-equiv="content-type" content="text/html; charset=gb18030" />' +
                         '<link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" />' +
                         '</head>' +
                         '<body>{CONTENT}</body>' +
