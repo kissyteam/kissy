@@ -333,6 +333,15 @@ li.kissy-link-dialog-actions {
     margin-left: 2px;
 }
 
+/* smiley dialog */
+.kissy-smiley-icons {
+    padding: 5px;
+}
+.kissy-smiley-icons img {
+    cursor: pointer;
+    margin: 2px 5px;
+}
+
 /* dialog common */
 .kissy-dialog-buttons button {
     margin: 0 5px;

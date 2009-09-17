@@ -23,6 +23,8 @@
             <path path="core/toolbar.js"/>
             <path path="core/menu.js"/>
 
+            <path path="smilies/default/config.js"/>
+
             <fileset dir="plugins">
               <filename name="**/*.js"/>
             </fileset>
