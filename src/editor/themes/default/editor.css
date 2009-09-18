@@ -174,7 +174,7 @@ html>body .kissy-inline-block {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 9001;
+    z-index: 9002;
     border: 1px solid #ccc;
     border-right-color: #676767;
     border-bottom-color: #676767;
@@ -184,7 +184,7 @@ html>body .kissy-inline-block {
     white-space: nowrap;
 }
 .kissy-drop-menu-shim {
-    z-index: 9000;
+    z-index: 9001;
 }
 
 /* È¡É«°å */
@@ -348,4 +348,19 @@ li.kissy-link-dialog-actions {
     padding: 1px 0.8em 0;
     *padding: 2px 0.8em 1px;
     float: left;
+}
+
+/* maximize */
+.kissy-editor-maximize-mode {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 9000;
+}
+.kissy-editor-maximize-mode .kissy-editor-content,
+.kissy-editor-maximize-mode textarea {
+    width: 100% !important;
+    height: 100% !important;
 }
