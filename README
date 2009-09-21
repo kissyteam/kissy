@@ -24,3 +24,11 @@ Keep It
 Yeah! 
 
 Thanks for your reading!
+
+
+全局约定：（原则：在尽量避免冲突的基础上，尽量精简短小）
+
+      全局变量： g_ks_comp_xxx   比如： g_ks_monitor_st
+ class/id 命名： ks-comp-xxx     比如： ks-editor-toolbar-item
+ data 属性命名： data-comp-xxx   比如： data-lazyload-src
+

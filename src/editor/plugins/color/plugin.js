@@ -5,8 +5,8 @@ KISSY.Editor.add("plugins~color", function(E) {
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
 
-        PALETTE_TABLE_TMPL = '<table class="kissy-palette-table"><tbody>{TR}</tbody></table>',
-        PALETTE_CELL_TMPL = '<td class="kissy-palette-cell"><div class="kissy-palette-colorswatch" title="{COLOR}" style="background-color:{COLOR}"></div></td>',
+        PALETTE_TABLE_TMPL = '<table class="ks-editor-palette-table"><tbody>{TR}</tbody></table>',
+        PALETTE_CELL_TMPL = '<td class="ks-editor-palette-cell"><div class="ks-editor-palette-colorswatch" title="{COLOR}" style="background-color:{COLOR}"></div></td>',
 
         COLOR_GRAY = ["000", "444", "666", "999", "CCC", "EEE", "F3F3F3", "FFF"],
         COLOR_NORMAL = ["F00", "F90", "FF0", "0F0", "0FF", "00F", "90F", "F0F"],
@@ -19,7 +19,7 @@ KISSY.Editor.add("plugins~color", function(E) {
                 "660000", "783F04", "7F6000", "274E13", "0C343D", "073763", "20124D", "4C1130"
         ],
 
-        PALETTE_CELL_SELECTED = "kissy-palette-cell-selected";
+        PALETTE_CELL_SELECTED = "ks-editor-palette-cell-selected";
 
     E.addPlugin(["foreColor", "backColor"], {
         /**
@@ -51,8 +51,8 @@ KISSY.Editor.add("plugins~color", function(E) {
 
             this.color = (this.name == "foreColor") ? "#000000" : "#ffffff";
 
-            Dom.addClass(el, "kissy-toolbar-color-button");
-            caption.innerHTML = '<div class="kissy-toolbar-color-button-indicator" style="border-bottom-color:' + this.color + '">'
+            Dom.addClass(el, "ks-editor-toolbar-color-button");
+            caption.innerHTML = '<div class="ks-editor-toolbar-color-button-indicator" style="border-bottom-color:' + this.color + '">'
                                + caption.innerHTML
                                + '</div>';
 

@@ -5,12 +5,12 @@ KISSY.Editor.add("plugins~font", function(E) {
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
 
-        SELECT_TMPL = '<ul class="kissy-select-list">{LI}</ul>',
-        OPTION_TMPL = '<li class="kissy-option" data-value="{VALUE}">' +
-                          '<span class="kissy-option-checkbox"></span>' +
+        SELECT_TMPL = '<ul class="ks-editor-select-list">{LI}</ul>',
+        OPTION_TMPL = '<li class="ks-editor-option" data-value="{VALUE}">' +
+                          '<span class="ks-editor-option-checkbox"></span>' +
                           '<span style="{STYLE}">{KEY}</span>' +
                       '</li>',
-        OPTION_SELECTED = "kissy-option-selected",
+        OPTION_SELECTED = "ks-editor-option-selected",
         DEFAULT = "Default";
 
     E.addPlugin(["fontName", "fontSize"], {

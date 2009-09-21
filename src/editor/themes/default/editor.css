@@ -1,35 +1,35 @@
 /**
- * Styles for Editor
+ * Styles for KISSY Editor
  */
 
 /** common **/
-.kissy-inline-block {
+.ks-inline-block {
     position: relative;
     display: inline-block;
 }
 
-* html .kissy-inline-block {
+* html .ks-inline-block {
     display: inline;
 }
 
-*:first-child+html .kissy-inline-block {
+*:first-child+html .ks-inline-block {
     display: inline;
 }
 
-html>body .kissy-inline-block {
+html>body .ks-inline-block {
     display: -moz-inline-box;
     display: inline-block;
 }
 /* TODO 仔细检查上面的 hack 是否有些可以去掉 */
 
 /** editor **/
-.kissy-editor {
+.ks-editor {
     border: 1px solid #DFDFDF;
     line-height: 1 !important; /* bug fix: 否则 firefox 等浏览器下，editor 的高度会多于一些 */
 }
 
 /** toolbar **/
-.kissy-editor-toolbar {
+.ks-editor-toolbar {
     background: #E5E5E5 url(editor-bg.png) repeat-x 0 -192px;
     padding: 3px 0;
     border-bottom: 1px solid #DFDFDF;
@@ -38,7 +38,7 @@ html>body .kissy-inline-block {
     /* 高度自适应，正常情况下，单行高度 23px */
 }
 
-.kissy-toolbar-button {
+.ks-editor-toolbar-button {
     margin: 0 2px;
     vertical-align: middle;
     cursor: default;
@@ -47,39 +47,39 @@ html>body .kissy-inline-block {
     -moz-user-select: none;
 }
 
-.kissy-toolbar-button-outer-box {
+.ks-editor-toolbar-button-outer-box {
     padding: 1px 0;
 }
 
-.kissy-toolbar-button-inner-box {
+.ks-editor-toolbar-button-inner-box {
     margin: 0 -1px;
     padding: 3px 5px;
     _left: -1px;
 }
 
 /* 悬浮边框 */
-.kissy-toolbar-button:hover .kissy-toolbar-button-outer-box,
-.kissy-toolbar-button-hover .kissy-toolbar-button-outer-box,
-.kissy-toolbar-button:hover .kissy-toolbar-button-inner-box,
-.kissy-toolbar-button-hover .kissy-toolbar-button-inner-box {
+.ks-editor-toolbar-button:hover .ks-editor-toolbar-button-outer-box,
+.ks-editor-toolbar-button-hover .ks-editor-toolbar-button-outer-box,
+.ks-editor-toolbar-button:hover .ks-editor-toolbar-button-inner-box,
+.ks-editor-toolbar-button-hover .ks-editor-toolbar-button-inner-box {
     border: 1px solid #A1BADF;
 }
 
-.kissy-toolbar-button:hover .kissy-toolbar-button-inner-box,
-.kissy-toolbar-button-hover .kissy-toolbar-button-inner-box,
-.kissy-toolbar-select .kissy-toolbar-button-inner-box {
+.ks-editor-toolbar-button:hover .ks-editor-toolbar-button-inner-box,
+.ks-editor-toolbar-button-hover .ks-editor-toolbar-button-inner-box,
+.ks-editor-toolbar-select .ks-editor-toolbar-button-inner-box {
     border-width: 0 1px;
     padding: 3px 4px;
 }
 
-.kissy-toolbar-button:hover .kissy-toolbar-button-outer-box,
-.kissy-toolbar-button-hover .kissy-toolbar-button-outer-box,
-.kissy-toolbar-select .kissy-toolbar-button-outer-box {
+.ks-editor-toolbar-button:hover .ks-editor-toolbar-button-outer-box,
+.ks-editor-toolbar-button-hover .ks-editor-toolbar-button-outer-box,
+.ks-editor-toolbar-select .ks-editor-toolbar-button-outer-box {
     border-width: 1px 0;
     padding: 0;
 }
 
-.kissy-toolbar-item {
+.ks-editor-toolbar-item {
     display: block;
     background: url(toolbar-sprite.png) no-repeat;
     width: 15px;
@@ -88,17 +88,17 @@ html>body .kissy-inline-block {
     text-indent: -999999px;
     overflow: hidden;
 }
-.kissy-toolbar-source { background-position: -1013px 50%; width: 16px; }
-.kissy-toolbar-undo { background-position: 0 50%; }
-.kissy-toolbar-redo { background-position: -16px 50%; }
-.kissy-toolbar-bold { background-position: -32px 50%; }
-.kissy-toolbar-italic { background-position: -48px 50%; }
-.kissy-toolbar-underline { background-position: -64px 50%; }
-.kissy-toolbar-strikeThrough { background-position: -624px 50%; }
+.ks-editor-toolbar-source { background-position: -1013px 50%; width: 16px; }
+.ks-editor-toolbar-undo { background-position: 0 50%; }
+.ks-editor-toolbar-redo { background-position: -16px 50%; }
+.ks-editor-toolbar-bold { background-position: -32px 50%; }
+.ks-editor-toolbar-italic { background-position: -48px 50%; }
+.ks-editor-toolbar-underline { background-position: -64px 50%; }
+.ks-editor-toolbar-strikeThrough { background-position: -624px 50%; }
 
-.kissy-toolbar-link { background-position: -560px 50%; width: 16px; }
+.ks-editor-toolbar-link { background-position: -560px 50%; width: 16px; }
 /* 文字版按钮
-.kissy-toolbar-link {
+.ks-editor-toolbar-link {
     background: none;
     text-indent: 0;
     color: #009;
@@ -108,24 +108,24 @@ html>body .kissy-inline-block {
     width: auto;
 }
 */
-.kissy-toolbar-blockquote { background-position:-241px 50%; }
-.kissy-toolbar-image { background-position:-978px 50%; width: 18px; }
-.kissy-toolbar-smiley { background-position:-961px 50%; width: 16px; }
+.ks-editor-toolbar-blockquote { background-position:-241px 50%; }
+.ks-editor-toolbar-image { background-position:-978px 50%; width: 18px; }
+.ks-editor-toolbar-smiley { background-position:-961px 50%; width: 16px; }
 
-.kissy-toolbar-insertOrderedList { background-position:-176px 50%; }
-.kissy-toolbar-insertUnorderedList { background-position: -160px 50%; }
-.kissy-toolbar-outdent { background-position: -144px 50%; }
-.kissy-toolbar-indent { background-position:-128px 50%; }
-.kissy-toolbar-justifyLeft { background-position: -192px 50%; }
-.kissy-toolbar-justifyCenter { background-position:-208px 50%; }
-.kissy-toolbar-justifyRight { background-position:-224px 50%; }
-.kissy-toolbar-foreColor { height: 12px; background-position:-80px 50%; }
-.kissy-toolbar-backColor { height: 12px; background-position:-96px 50%; }
-.kissy-toolbar-maximize { background-position:-996px 50%; }
-.kissy-toolbar-removeformat { background-position:-256px 50%; }
+.ks-editor-toolbar-insertOrderedList { background-position:-176px 50%; }
+.ks-editor-toolbar-insertUnorderedList { background-position: -160px 50%; }
+.ks-editor-toolbar-outdent { background-position: -144px 50%; }
+.ks-editor-toolbar-indent { background-position:-128px 50%; }
+.ks-editor-toolbar-justifyLeft { background-position: -192px 50%; }
+.ks-editor-toolbar-justifyCenter { background-position:-208px 50%; }
+.ks-editor-toolbar-justifyRight { background-position:-224px 50%; }
+.ks-editor-toolbar-foreColor { height: 12px; background-position:-80px 50%; }
+.ks-editor-toolbar-backColor { height: 12px; background-position:-96px 50%; }
+.ks-editor-toolbar-maximize { background-position:-996px 50%; }
+.ks-editor-toolbar-removeformat { background-position:-256px 50%; }
 
-/* 分隔线 */
-.kissy-toolbar-separator {
+/* 工具条的分隔线 */
+.ks-editor-stripbar-sep {
     margin: 0 2px;
     width: 0;
     height: 16px;
@@ -135,13 +135,13 @@ html>body .kissy-inline-block {
 }
 
 /* 下拉按钮 caption */
-.kissy-toolbar-menu-button-caption {
+.ks-editor-toolbar-menu-button-caption {
     padding: 0 4px 0 0;
     vertical-align: middle;
 }
 
 /* 下拉按钮 dropdown */
-.kissy-toolbar-menu-button-dropdown {
+.ks-editor-toolbar-menu-button-dropdown {
     background: url(toolbar-sprite.png) no-repeat -388px 50%;
     width: 7px;
     height: 14px;
@@ -149,28 +149,28 @@ html>body .kissy-inline-block {
 }
 
 /* 颜色按钮 */
-.kissy-toolbar-color-button .kissy-toolbar-button-inner-box,
-.kissy-toolbar-color-button:hover .kissy-toolbar-button-inner-box,
-.kissy-toolbar-color-button-hover .kissy-toolbar-button-inner-box {
+.ks-editor-toolbar-color-button .ks-editor-toolbar-button-inner-box,
+.ks-editor-toolbar-color-button:hover .ks-editor-toolbar-button-inner-box,
+.ks-editor-toolbar-color-button-hover .ks-editor-toolbar-button-inner-box {
     padding-top: 2px;
     padding-bottom: 2px;
 }
 
-.kissy-toolbar-color-button-indicator {
+.ks-editor-toolbar-color-button-indicator {
     border-bottom: 4px solid #F0F0F0;
 }
 
 /* 按钮按下时的样式 active */
-.kissy-toolbar-button-active {
+.ks-editor-toolbar-button-active {
     background-color: #DDE1EB;
 }
-.kissy-toolbar-button-active .kissy-toolbar-outer-box,
-.kissy-toolbar-button-active .kissy-toolbar-inner-box {
+.ks-editor-toolbar-button-active .ks-editor-toolbar-outer-box,
+.ks-editor-toolbar-button-active .ks-editor-toolbar-inner-box {
     border-color: #729BD1;
 }
 
 /* 下拉菜单框 */
-.kissy-drop-menu {
+.ks-editor-drop-menu {
     position: absolute;
     top: 0;
     left: 0;
@@ -183,18 +183,18 @@ html>body .kissy-inline-block {
     background-color: #fff;
     white-space: nowrap;
 }
-.kissy-drop-menu-shim {
+.ks-editor-drop-menu-shim {
     z-index: 9001;
 }
 
 /* 取色板 */
-.kissy-palette-table {
+.ks-editor-palette-table {
     border: 1px solid #666;
     border-collapse: collapse;
     margin: 5px;
 }
 
-.kissy-palette-cell {
+.ks-editor-palette-cell {
     border-right: 1px solid #666;
     height: 18px;
     width: 18px;
@@ -202,12 +202,12 @@ html>body .kissy-inline-block {
     *position: relative; /* hack for ie7- 否则边框隐藏不了 */
 }
 
-.kissy-palette-colorswatch {
+.ks-editor-palette-colorswatch {
     height: 18px;
     width: 18px;
 }
 
-.kissy-palette-cell-selected .kissy-palette-colorswatch {
+.ks-editor-palette-cell-selected .ks-editor-palette-colorswatch {
     background: url(toolbar-sprite.png) no-repeat -368px 50%;
     border: 1px solid #333333;
     height: 16px;
@@ -215,13 +215,13 @@ html>body .kissy-inline-block {
 }
 
 /* toolbar-select */
-.kissy-toolbar-select .kissy-toolbar-button-outer-box,
-.kissy-toolbar-select .kissy-toolbar-button-inner-box {
+.ks-editor-toolbar-select .ks-editor-toolbar-button-outer-box,
+.ks-editor-toolbar-select .ks-editor-toolbar-button-inner-box {
     border-color: #BFCBDF;
     border-style: solid;
 }
 
-.kissy-toolbar-select .kissy-toolbar-item {
+.ks-editor-toolbar-select .ks-editor-toolbar-item {
     background: none;
     text-indent: 0;
     color: #246;
@@ -230,45 +230,45 @@ html>body .kissy-inline-block {
     width: auto;
 }
 
-.kissy-option {
+.ks-editor-option {
     cursor: default;
     margin: 0;
     padding: 5px 15px;
     color: #00C;
 }
 
-.kissy-toolbar-select .kissy-toolbar-fontName {
+.ks-editor-toolbar-select .ks-editor-toolbar-fontName {
     width: 91px;
 }
 
-.kissy-toolbar-select .kissy-toolbar-fontSize {
+.ks-editor-toolbar-select .ks-editor-toolbar-fontSize {
     width: 35px;
 }
 
-.kissy-option-selected {
+.ks-editor-option-selected {
     background: url(check.gif) no-repeat 0 50%;
 }
 
-.kissy-option:hover {
+.ks-editor-option:hover {
     background-color: #E0EDFE;
 }
 
-.kissy-drop-menu-fontSize {
+.ks-editor-drop-menu-fontSize {
     text-align: center;
 }
 
 /* view source */
-.kissy-editor textarea {
+.ks-editor textarea {
     font: 13px/150% "Courier New",monospace;
     padding: 0;
     border: none;
 }
 
 /* link dialog */
-.kissy-link-dialog {
+.ks-editor-link-dialog {
     padding: 10px;
 }
-.kissy-link-dialog label {
+.ks-editor-link-dialog label {
     width: 40px;
     text-align: right;
     display: inline-block;
@@ -276,74 +276,74 @@ html>body .kissy-inline-block {
     margin-right: 10px;
     vertical-align: middle;    
 }
-.kissy-link-dialog li {
+.ks-editor-link-dialog li {
     margin: 0 0 10px;
 }
-li.kissy-link-dialog-actions {
+li.ks-editor-link-dialog-actions {
     margin-bottom: 0;
 }
-.kissy-link-dialog input {
+.ks-editor-link-dialog input {
     padding: 2px 1px;
     vertical-align: middle;
 }
-.kissy-link-dialog-target input {
+.ks-editor-link-dialog-target input {
     margin-left: 50px;
     padding: 0 10px 0 0;
 }
-.kissy-link-dialog-actions {
+.ks-editor-link-dialog-actions {
     padding: 0 5px 0 45px;
     height: 25px;
     line-height: 30px;
 }
-.kissy-link-dialog-actions button {
+.ks-editor-link-dialog-actions button {
     margin: 0 5px;
     padding: 1px 0.8em 0;
     *padding: 2px 0.8em 1px;
     float: left;
 }
-.kissy-link-dialog-remove {
+.ks-editor-link-dialog-remove {
     color: #00c;
     text-decoration: underline;
     cursor: pointer;
     float: right;
 }
-.kissy-link-dialog-newlink-mode .kissy-link-dialog-remove {
+.ks-editor-link-dialog-newlink-mode .ks-editor-link-dialog-remove {
     display: none;
 }
-.kissy-link-dialog form {
+.ks-editor-link-dialog form {
     width: 275px;
 }
 
 /* image dialog */
-.kissy-image-dialog {
+.ks-editor-image-dialog {
     padding: 10px;
     _width: 282px;
 }
-.kissy-image-dialog legend {
+.ks-editor-image-dialog legend {
     margin: 5px 0 2px;
     font-weight: bold;
 }
-.kissy-image-dialog input {
+.ks-editor-image-dialog input {
     padding: 2px 1px;
     vertical-align: middle;
     margin-left: 7px;
 }
-.kissy-image-dialog .kissy-dialog-buttons {
+.ks-editor-image-dialog .ks-editor-dialog-buttons {
     padding: 5px 0;
     margin-left: 2px;
 }
 
 /* smiley dialog */
-.kissy-smiley-icons {
+.ks-editor-smiley-icons {
     padding: 5px;
 }
-.kissy-smiley-icons img {
+.ks-editor-smiley-icons img {
     cursor: pointer;
     margin: 2px 5px;
 }
 
 /* dialog common */
-.kissy-dialog-buttons button {
+.ks-editor-dialog-buttons button {
     margin: 0 5px;
     padding: 1px 0.8em 0;
     *padding: 2px 0.8em 1px;
@@ -351,7 +351,7 @@ li.kissy-link-dialog-actions {
 }
 
 /* maximize */
-.kissy-editor-maximize-mode {
+.ks-editor-maximize-mode {
     position: fixed;
     left: 0;
     top: 0;
@@ -359,8 +359,10 @@ li.kissy-link-dialog-actions {
     height: 100% !important;
     z-index: 9000;
 }
-.kissy-editor-maximize-mode .kissy-editor-content,
-.kissy-editor-maximize-mode textarea {
+.ks-editor-maximize-mode .ks-editor-content,
+.ks-editor-maximize-mode textarea {
     width: 100% !important;
     height: 100% !important;
 }
+
+

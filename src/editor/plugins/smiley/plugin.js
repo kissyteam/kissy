@@ -5,8 +5,8 @@ KISSY.Editor.add("plugins~smiley", function(E) {
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
 
-        DIALOG_CLS = "kissy-smiley-dialog",
-        DIALOG_TMPL = '<div class="kissy-smiley-icons">{icons}</div>';
+        DIALOG_CLS = "ks-editor-smiley-dialog",
+        DIALOG_TMPL = '<div class="ks-editor-smiley-icons">{icons}</div>';
 
     E.addPlugin("smiley", {
         /**

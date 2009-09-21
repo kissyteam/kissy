@@ -2,11 +2,11 @@
 KISSY.Editor.add("core~instance", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
-        EDITOR_CLASSNAME = "kissy-editor",
+        EDITOR_CLASSNAME = "ks-editor",
 
-        EDITOR_TMPL  =  '<div class="kissy-editor-toolbar"></div>' +
-                        '<div class="kissy-editor-content"><iframe frameborder="0" allowtransparency="true"></iframe></div>' +
-                        '<div class="kissy-editor-statusbar"></div>',
+        EDITOR_TMPL  =  '<div class="ks-editor-toolbar"></div>' +
+                        '<div class="ks-editor-content"><iframe frameborder="0" allowtransparency="true"></iframe></div>' +
+                        '<div class="ks-editor-statusbar"></div>',
 
         CONTENT_TMPL =  '<!DOCTYPE html>' +
                         '<html>' +

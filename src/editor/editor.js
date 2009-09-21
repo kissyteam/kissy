@@ -891,7 +891,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
             this._bindItemUI(p);
 
             // 添加到工具栏
-            this._addToToolbar(el);
+            this._addToStatusbar(el);
 
             // 调用插件自己的初始化函数，这是插件的个性化接口
             // init 放在添加到工具栏后面，可以保证 DOM 操作比如取 region 等操作的正确性
@@ -979,13 +979,13 @@ KISSY.Editor.add("core~toolbar", function(E) {
          */
         _addSeparator: function() {
             div.innerHTML = TOOLBAR_SEPARATOR_TMPL;
-            this._addToToolbar(div.firstChild);
+            this._addToStatusbar(div.firstChild);
         },
 
         /**
          * 将 item 或 分隔线 添加到工具栏
          */
-        _addToToolbar: function(el) {
+        _addToStatusbar: function(el) {
             if(isIE) el = E.Dom.setItemUnselectable(el);
             this.domEl.appendChild(el);
         }

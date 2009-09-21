@@ -5,27 +5,27 @@ KISSY.Editor.add("core~toolbar", function(E) {
         isIE = YAHOO.env.ua.ie,
         isIE6 = isIE === 6,
         TYPE = E.PLUGIN_TYPE,
-        TOOLBAR_SEPARATOR_TMPL = '<div class="kissy-toolbar-separator kissy-inline-block"></div>',
+        TOOLBAR_SEPARATOR_TMPL = '<div class="ks-editor-stripbar-sep ks-inline-block"></div>',
 
         TOOLBAR_BUTTON_TMPL = '' +
-'<div class="kissy-toolbar-button kissy-inline-block" title="{TITLE}">' +
-    '<div class="kissy-toolbar-button-outer-box">' +
-        '<div class="kissy-toolbar-button-inner-box">' +
-            '<span class="kissy-toolbar-item kissy-toolbar-{NAME}">{TEXT}</span>' +
+'<div class="ks-editor-toolbar-button ks-inline-block" title="{TITLE}">' +
+    '<div class="ks-editor-toolbar-button-outer-box">' +
+        '<div class="ks-editor-toolbar-button-inner-box">' +
+            '<span class="ks-editor-toolbar-item ks-editor-toolbar-{NAME}">{TEXT}</span>' +
         '</div>' +
     '</div>' +
 '</div>',
 
         TOOLBAR_MENU_BUTTON_TMPL = '' +
-'<div class="kissy-toolbar-menu-button-caption kissy-inline-block">' +
-    '<span class="kissy-toolbar-item kissy-toolbar-{NAME}">{TEXT}</span>' +
+'<div class="ks-editor-toolbar-menu-button-caption ks-inline-block">' +
+    '<span class="ks-editor-toolbar-item ks-editor-toolbar-{NAME}">{TEXT}</span>' +
 '</div>' +
-'<div class="kissy-toolbar-menu-button-dropdown kissy-inline-block"></div>',
+'<div class="ks-editor-toolbar-menu-button-dropdown ks-inline-block"></div>',
 
-        TOOLBAR_MENU_BUTTON = 'kissy-toolbar-menu-button',
-        TOOLBAR_SELECT = 'kissy-toolbar-select',
-        TOOLBAR_BUTTON_ACTIVE = "kissy-toolbar-button-active",
-        TOOLBAR_BUTTON_HOVER = "kissy-toolbar-button-hover",
+        TOOLBAR_MENU_BUTTON = 'ks-editor-toolbar-menu-button',
+        TOOLBAR_SELECT = 'ks-editor-toolbar-select',
+        TOOLBAR_BUTTON_ACTIVE = "ks-editor-toolbar-button-active",
+        TOOLBAR_BUTTON_HOVER = "ks-editor-toolbar-button-hover",
 
         div = document.createElement("div"); // 通用 el 容器
 
@@ -90,8 +90,8 @@ KISSY.Editor.add("core~toolbar", function(E) {
                     .replace("{TEXT}", p.lang.text || "");
             if (isIE6) {
                 html = html
-                        .replace("outer-box", "outer-box kissy-inline-block")
-                        .replace("inner-box", "inner-box kissy-inline-block");
+                        .replace("outer-box", "outer-box ks-inline-block")
+                        .replace("inner-box", "inner-box ks-inline-block");
             }
             div.innerHTML = html;
 
@@ -112,7 +112,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
             this._bindItemUI(p);
 
             // 添加到工具栏
-            this._addToToolbar(el);
+            this._addToStatusbar(el);
 
             // 调用插件自己的初始化函数，这是插件的个性化接口
             // init 放在添加到工具栏后面，可以保证 DOM 操作比如取 region 等操作的正确性
@@ -200,13 +200,13 @@ KISSY.Editor.add("core~toolbar", function(E) {
          */
         _addSeparator: function() {
             div.innerHTML = TOOLBAR_SEPARATOR_TMPL;
-            this._addToToolbar(div.firstChild);
+            this._addToStatusbar(div.firstChild);
         },
 
         /**
          * 将 item 或 分隔线 添加到工具栏
          */
-        _addToToolbar: function(el) {
+        _addToStatusbar: function(el) {
             if(isIE) el = E.Dom.setItemUnselectable(el);
             this.domEl.appendChild(el);
         }

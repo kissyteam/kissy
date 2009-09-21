@@ -6,7 +6,7 @@ KISSY.Editor.add("core~menu", function(E) {
         VISIBILITY = "visibility",
         HIDDEN = "hidden",
         VISIBLE = "visible",
-        DROP_MENU_CLASS = "kissy-drop-menu",
+        DROP_MENU_CLASS = "ks-editor-drop-menu",
         SHIM_CLASS = DROP_MENU_CLASS + "-shim", //  // iframe shim 的 class
         shim; // 共用一个 shim 即可
     

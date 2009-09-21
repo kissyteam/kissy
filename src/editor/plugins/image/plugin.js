@@ -5,14 +5,14 @@ KISSY.Editor.add("plugins~image", function(E) {
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
 
-        DIALOG_CLS = "kissy-image-dialog",
-        BTN_OK_CLS = "kissy-image-dialog-ok",
-        BTN_CANCEL_CLS = "kissy-image-dialog-cancel",
+        DIALOG_CLS = "ks-editor-image-dialog",
+        BTN_OK_CLS = "ks-editor-image-dialog-ok",
+        BTN_CANCEL_CLS = "ks-editor-image-dialog-cancel",
 
         DIALOG_TMPL = ['<form onsubmit="return false"><fieldset>',
                           '<legend>{web_legend}</legend>',
                           '<input name="imageUrl" size="50" />',
-                          '<div class="kissy-dialog-buttons">',
+                          '<div class="ks-editor-dialog-buttons">',
                               '<button name="ok" class="', BTN_OK_CLS, '">{ok}</button>',
                               '<button name="cancel" class="', BTN_CANCEL_CLS ,'">{cancel}</button>',
                           '</div>',

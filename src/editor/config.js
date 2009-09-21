@@ -34,6 +34,13 @@ KISSY.Editor.add("config", function(E) {
             "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight",
             "",
             "removeformat", "maximize", "source"
+        ],
+
+        /**
+         * Statusbar ÉÏµÄ²å¼þ
+         */
+        statusbar: [
+            "wordcount"
         ]
     };
 
