@@ -88,7 +88,7 @@ KISSY.Editor.add("plugins~font", function(E) {
             this.selectList.innerHTML = SELECT_TMPL.replace("{LI}", htmlCode);
 
             // 添加个性化 class
-            Dom.addClass(this.selectList, "kissy-drop-menu-" + this.name);
+            Dom.addClass(this.selectList, "ks-editor-drop-menu-" + this.name);
 
             // 针对 ie，设置不可选择
             if (isIE) E.Dom.setItemUnselectable(this.selectList);
