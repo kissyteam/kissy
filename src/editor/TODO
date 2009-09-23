@@ -11,9 +11,12 @@
  ~ removeformat
  ~ wordcount
  ~ 时间到期提醒
+ ~ format / template
+ ~ table
 
  ~ 已标记的待完善的 TODOs
  ~ 快捷键支持
+ ~ 图片上传，（加水印选项）
 
  [2009-09-17] ~ smiley
  [2009-09-17] ~ 预览功能

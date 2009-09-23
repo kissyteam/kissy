@@ -171,6 +171,13 @@ KISSY.Editor.add("config", function(E) {
             "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight",
             "",
             "removeformat", "maximize", "source"
+        ],
+
+        /**
+         * Statusbar 上的插件
+         */
+        statusbar: [
+            "wordcount"
         ]
     };
 
@@ -323,7 +330,8 @@ KISSY.Editor.add("core~plugin", function(E) {
         TOOLBAR_BUTTON: 2,
         TOOLBAR_MENU_BUTTON: 4,
         TOOLBAR_SELECT: 8,
-        FUNC: 16 // 纯功能性质插件，无 UI
+        STATUSBAR_ITEM: 16,
+        FUNC: 32 // 纯功能性质插件，无 UI
     };
 
 });
@@ -561,11 +569,11 @@ KISSY.Editor.add("core~range", function(E) {
 KISSY.Editor.add("core~instance", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
-        EDITOR_CLASSNAME = "kissy-editor",
+        EDITOR_CLASSNAME = "ks-editor",
 
-        EDITOR_TMPL  =  '<div class="kissy-editor-toolbar"></div>' +
-                        '<div class="kissy-editor-content"><iframe frameborder="0" allowtransparency="true"></iframe></div>' +
-                        '<div class="kissy-editor-statusbar"></div>',
+        EDITOR_TMPL  =  '<div class="ks-editor-toolbar"></div>' +
+                        '<div class="ks-editor-content"><iframe frameborder="0" allowtransparency="true"></iframe></div>' +
+                        '<div class="ks-editor-statusbar"></div>',
 
         CONTENT_TMPL =  '<!DOCTYPE html>' +
                         '<html>' +
@@ -784,27 +792,27 @@ KISSY.Editor.add("core~toolbar", function(E) {
         isIE = YAHOO.env.ua.ie,
         isIE6 = isIE === 6,
         TYPE = E.PLUGIN_TYPE,
-        TOOLBAR_SEPARATOR_TMPL = '<div class="kissy-toolbar-separator kissy-inline-block"></div>',
+        TOOLBAR_SEPARATOR_TMPL = '<div class="ks-editor-stripbar-sep ks-inline-block"></div>',
 
         TOOLBAR_BUTTON_TMPL = '' +
-'<div class="kissy-toolbar-button kissy-inline-block" title="{TITLE}">' +
-    '<div class="kissy-toolbar-button-outer-box">' +
-        '<div class="kissy-toolbar-button-inner-box">' +
-            '<span class="kissy-toolbar-item kissy-toolbar-{NAME}">{TEXT}</span>' +
+'<div class="ks-editor-toolbar-button ks-inline-block" title="{TITLE}">' +
+    '<div class="ks-editor-toolbar-button-outer-box">' +
+        '<div class="ks-editor-toolbar-button-inner-box">' +
+            '<span class="ks-editor-toolbar-item ks-editor-toolbar-{NAME}">{TEXT}</span>' +
         '</div>' +
     '</div>' +
 '</div>',
 
         TOOLBAR_MENU_BUTTON_TMPL = '' +
-'<div class="kissy-toolbar-menu-button-caption kissy-inline-block">' +
-    '<span class="kissy-toolbar-item kissy-toolbar-{NAME}">{TEXT}</span>' +
+'<div class="ks-editor-toolbar-menu-button-caption ks-inline-block">' +
+    '<span class="ks-editor-toolbar-item ks-editor-toolbar-{NAME}">{TEXT}</span>' +
 '</div>' +
-'<div class="kissy-toolbar-menu-button-dropdown kissy-inline-block"></div>',
+'<div class="ks-editor-toolbar-menu-button-dropdown ks-inline-block"></div>',
 
-        TOOLBAR_MENU_BUTTON = 'kissy-toolbar-menu-button',
-        TOOLBAR_SELECT = 'kissy-toolbar-select',
-        TOOLBAR_BUTTON_ACTIVE = "kissy-toolbar-button-active",
-        TOOLBAR_BUTTON_HOVER = "kissy-toolbar-button-hover",
+        TOOLBAR_MENU_BUTTON = 'ks-editor-toolbar-menu-button',
+        TOOLBAR_SELECT = 'ks-editor-toolbar-select',
+        TOOLBAR_BUTTON_ACTIVE = "ks-editor-toolbar-button-active",
+        TOOLBAR_BUTTON_HOVER = "ks-editor-toolbar-button-hover",
 
         div = document.createElement("div"); // 通用 el 容器
 
@@ -869,8 +877,8 @@ KISSY.Editor.add("core~toolbar", function(E) {
                     .replace("{TEXT}", p.lang.text || "");
             if (isIE6) {
                 html = html
-                        .replace("outer-box", "outer-box kissy-inline-block")
-                        .replace("inner-box", "inner-box kissy-inline-block");
+                        .replace("outer-box", "outer-box ks-inline-block")
+                        .replace("inner-box", "inner-box ks-inline-block");
             }
             div.innerHTML = html;
 
@@ -993,6 +1001,110 @@ KISSY.Editor.add("core~toolbar", function(E) {
 
 });
 
+KISSY.Editor.add("core~statusbar", function(E) {
+
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+        isIE = YAHOO.env.ua.ie,
+        isIE6 = isIE === 6,
+        TYPE = E.PLUGIN_TYPE,
+
+        SEP_TMPL = '<div class="ks-editor-stripbar-sep kissy-inline-block"></div>',
+        ITEM_TMPL = '<div class="ks-editor-statusbar-item ks-editor-statusbar-{NAME} ks-inline-block">{CONTENT}</div>',
+
+        div = document.createElement("div"); // 通用 el 容器
+
+    E.Statusbar = function(editor) {
+
+        /**
+         * 相关联的编辑器实例
+         */
+        this.editor = editor;
+
+        /**
+         * 相关联的配置
+         */
+        this.config = editor.config;
+
+        /**
+         * 当前语言
+         */
+        this.lang = E.lang[this.config.language];
+    };
+    
+    Lang.augmentObject(E.Statusbar.prototype, {
+
+        /**
+         * 初始化工具条
+         */
+        init: function() {
+            var items = this.config.statusbar,
+                plugins = this.editor.plugins,
+                key;
+
+            // 遍历配置项，找到相关插件项，并添加到工具栏上
+            for (var i = 0, len = items.length; i < len; ++i) {
+                key = items[i];
+                if (key) {
+                    if (!(key in plugins)) continue; // 配置项里有，但加载的插件里无，直接忽略
+
+                    // 添加插件项
+                    this._addItem(plugins[key]);
+
+                } else { // 添加分隔线
+                    this._addSep();
+                }
+            }
+        },
+
+        /**
+         * 添加工具栏项
+         */
+        _addItem: function(p) {
+            var el, type = p.type, lang = this.lang, html;
+
+            // 当 plugin 没有设置 lang 时，采用默认语言配置
+            // TODO: 考虑重构到 instance 模块里，因为 lang 仅跟实例相关
+            if (!p.lang) p.lang = Lang.merge(lang["common"], this.lang[p.name] || {});
+
+            // 根据模板构建 DOM
+            div.innerHTML = ITEM_TMPL.replace("{NAME}", p.name);
+
+            // 得到 domEl
+            p.domEl = el = div.firstChild;
+
+            // 添加到工具栏
+            this._addToStatusbar(el);
+
+            // 调用插件自己的初始化函数，这是插件的个性化接口
+            // init 放在添加到工具栏后面，可以保证 DOM 操作比如取 region 等操作的正确性
+            p.editor = this.editor; // 给 p 增加 editor 属性
+            if (p.init) {
+                p.init();
+            }
+
+            // 标记为已初始化完成
+            p.inited = true;
+        },
+
+        /**
+         * 添加分隔线
+         */
+        _addSep: function() {
+            div.innerHTML = SEP_TMPL;
+            this._addToStatusbar(div.firstChild);
+        },
+
+        /**
+         * 将 item 或 分隔线 添加到状态栏
+         */
+        _addToStatusbar: function(el) {
+            if(isIE) el = E.Dom.setItemUnselectable(el);
+            this.domEl.appendChild(el);
+        }
+    });
+
+});
+
 KISSY.Editor.add("core~menu", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
@@ -1000,7 +1112,7 @@ KISSY.Editor.add("core~menu", function(E) {
         VISIBILITY = "visibility",
         HIDDEN = "hidden",
         VISIBLE = "visible",
-        DROP_MENU_CLASS = "kissy-drop-menu",
+        DROP_MENU_CLASS = "ks-editor-drop-menu",
         SHIM_CLASS = DROP_MENU_CLASS + "-shim", //  // iframe shim 的 class
         shim; // 共用一个 shim 即可
     
@@ -1253,8 +1365,8 @@ KISSY.Editor.add("plugins~color", function(E) {
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
 
-        PALETTE_TABLE_TMPL = '<table class="kissy-palette-table"><tbody>{TR}</tbody></table>',
-        PALETTE_CELL_TMPL = '<td class="kissy-palette-cell"><div class="kissy-palette-colorswatch" title="{COLOR}" style="background-color:{COLOR}"></div></td>',
+        PALETTE_TABLE_TMPL = '<table class="ks-editor-palette-table"><tbody>{TR}</tbody></table>',
+        PALETTE_CELL_TMPL = '<td class="ks-editor-palette-cell"><div class="ks-editor-palette-colorswatch" title="{COLOR}" style="background-color:{COLOR}"></div></td>',
 
         COLOR_GRAY = ["000", "444", "666", "999", "CCC", "EEE", "F3F3F3", "FFF"],
         COLOR_NORMAL = ["F00", "F90", "FF0", "0F0", "0FF", "00F", "90F", "F0F"],
@@ -1267,7 +1379,7 @@ KISSY.Editor.add("plugins~color", function(E) {
                 "660000", "783F04", "7F6000", "274E13", "0C343D", "073763", "20124D", "4C1130"
         ],
 
-        PALETTE_CELL_SELECTED = "kissy-palette-cell-selected";
+        PALETTE_CELL_SELECTED = "ks-editor-palette-cell-selected";
 
     E.addPlugin(["foreColor", "backColor"], {
         /**
@@ -1299,8 +1411,8 @@ KISSY.Editor.add("plugins~color", function(E) {
 
             this.color = (this.name == "foreColor") ? "#000000" : "#ffffff";
 
-            Dom.addClass(el, "kissy-toolbar-color-button");
-            caption.innerHTML = '<div class="kissy-toolbar-color-button-indicator" style="border-bottom-color:' + this.color + '">'
+            Dom.addClass(el, "ks-editor-toolbar-color-button");
+            caption.innerHTML = '<div class="ks-editor-toolbar-color-button-indicator" style="border-bottom-color:' + this.color + '">'
                                + caption.innerHTML
                                + '</div>';
 
@@ -1438,12 +1550,12 @@ KISSY.Editor.add("plugins~font", function(E) {
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
 
-        SELECT_TMPL = '<ul class="kissy-select-list">{LI}</ul>',
-        OPTION_TMPL = '<li class="kissy-option" data-value="{VALUE}">' +
-                          '<span class="kissy-option-checkbox"></span>' +
+        SELECT_TMPL = '<ul class="ks-editor-select-list">{LI}</ul>',
+        OPTION_TMPL = '<li class="ks-editor-option" data-value="{VALUE}">' +
+                          '<span class="ks-editor-option-checkbox"></span>' +
                           '<span style="{STYLE}">{KEY}</span>' +
                       '</li>',
-        OPTION_SELECTED = "kissy-option-selected",
+        OPTION_SELECTED = "ks-editor-option-selected",
         DEFAULT = "Default";
 
     E.addPlugin(["fontName", "fontSize"], {
@@ -1618,14 +1730,14 @@ KISSY.Editor.add("plugins~image", function(E) {
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
 
-        DIALOG_CLS = "kissy-image-dialog",
-        BTN_OK_CLS = "kissy-image-dialog-ok",
-        BTN_CANCEL_CLS = "kissy-image-dialog-cancel",
+        DIALOG_CLS = "ks-editor-image-dialog",
+        BTN_OK_CLS = "ks-editor-image-dialog-ok",
+        BTN_CANCEL_CLS = "ks-editor-image-dialog-cancel",
 
         DIALOG_TMPL = ['<form onsubmit="return false"><fieldset>',
                           '<legend>{web_legend}</legend>',
                           '<input name="imageUrl" size="50" />',
-                          '<div class="kissy-dialog-buttons">',
+                          '<div class="ks-editor-dialog-buttons">',
                               '<button name="ok" class="', BTN_OK_CLS, '">{ok}</button>',
                               '<button name="cancel" class="', BTN_CANCEL_CLS ,'">{cancel}</button>',
                           '</div>',
@@ -1912,17 +2024,17 @@ KISSY.Editor.add("plugins~link", function(E) {
         timeStamp = new Date().getTime(),
         HREF_REG = /^\w+:\/\/.*|#.*$/,
 
-        DIALOG_CLS = "kissy-link-dialog",
-        NEW_LINK_CLS = "kissy-link-dialog-newlink-mode",
-        BTN_OK_CLS = "kissy-link-dialog-ok",
-        BTN_CANCEL_CLS = "kissy-link-dialog-cancel",
-        BTN_REMOVE_CLS = "kissy-link-dialog-remove",
+        DIALOG_CLS = "ks-editor-link-dialog",
+        NEW_LINK_CLS = "ks-editor-link-dialog-newlink-mode",
+        BTN_OK_CLS = "ks-editor-link-dialog-ok",
+        BTN_CANCEL_CLS = "ks-editor-link-dialog-cancel",
+        BTN_REMOVE_CLS = "ks-editor-link-dialog-remove",
         DEFAULT_HREF = "http://",
 
         DIALOG_TMPL = ['<form onsubmit="return false"><ul>',
-                          '<li class="kissy-link-dialog-href"><label>{href}</label><input name="href" size="40" value="http://" type="text" /></li>',
-                          '<li class="kissy-link-dialog-target"><input name="target" id="target_"', timeStamp ,' type="checkbox" /> <label for="target_"', timeStamp ,'>{target}</label></li>',
-                          '<li class="kissy-link-dialog-actions">',
+                          '<li class="ks-editor-link-dialog-href"><label>{href}</label><input name="href" size="40" value="http://" type="text" /></li>',
+                          '<li class="ks-editor-link-dialog-target"><input name="target" id="target_"', timeStamp ,' type="checkbox" /> <label for="target_"', timeStamp ,'>{target}</label></li>',
+                          '<li class="ks-editor-link-dialog-actions">',
                               '<button name="ok" class="', BTN_OK_CLS, '">{ok}</button>',
                               '<button name="cancel" class="', BTN_CANCEL_CLS ,'">{cancel}</button>',
                               '<span class="', BTN_REMOVE_CLS ,'">{remove}</span>',
@@ -2136,7 +2248,9 @@ KISSY.Editor.add("plugins~link", function(E) {
  */
 KISSY.Editor.add("plugins~maximize", function(E) {
 
-    var TYPE = E.PLUGIN_TYPE;
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
+        TYPE = E.PLUGIN_TYPE,
+        MAXIMIZE_MODE_CLS = "kissy-editor-maximize-mode";
 
     E.addPlugin("maximize", {
         /**
@@ -2145,10 +2259,37 @@ KISSY.Editor.add("plugins~maximize", function(E) {
         type: TYPE.TOOLBAR_BUTTON,
 
         /**
+         * 编辑器容器
+         */
+        container: null,
+
+        /**
+         * 容器的父节点
+         */
+        containerParentNode: null,
+
+        /**
+         * 初始化
+         */
+        init: function() {
+            this.container = this.editor.container;
+            this.containerParentNode = this.container.parentNode;
+        },
+
+        /**
          * 响应函数
          */
         exec: function() {
-            alert("todo");
+            var container = this.container;
+
+            if(Dom.hasClass(container, MAXIMIZE_MODE_CLS)) {
+                this.containerParentNode.appendChild(container);
+                Dom.removeClass(container, MAXIMIZE_MODE_CLS);
+            } else {
+                document.body.appendChild(container);
+                Dom.addClass(container, MAXIMIZE_MODE_CLS);
+            }
+
         }
     });
 
@@ -2266,8 +2407,8 @@ KISSY.Editor.add("plugins~smiley", function(E) {
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
 
-        DIALOG_CLS = "kissy-smiley-dialog",
-        DIALOG_TMPL = '<div class="kissy-smiley-icons">{icons}</div>';
+        DIALOG_CLS = "ks-editor-smiley-dialog",
+        DIALOG_TMPL = '<div class="ks-editor-smiley-icons">{icons}</div>';
 
     E.addPlugin("smiley", {
         /**
@@ -2457,6 +2598,26 @@ KISSY.Editor.add("plugins~undo", function(E) {
         exec: function() {
             // TODO 接管
             this.editor.execCommand(this.name);
+        }
+    });
+
+ });
+
+KISSY.Editor.add("plugins~wordcount", function(E) {
+
+    var TYPE = E.PLUGIN_TYPE;
+
+    E.addPlugin("wordcount", {
+        /**
+         * 种类：状态栏插件
+         */
+        type: TYPE.STATUSBAR_ITEM,
+
+        /**
+         * 响应函数
+         */
+        exec: function() {
+            alert("haha");
         }
     });
 
