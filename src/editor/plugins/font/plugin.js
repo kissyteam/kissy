@@ -147,7 +147,7 @@ KISSY.Editor.add("plugins~font", function(E) {
 
             for(key in options) {
                 if(key == DEFAULT) continue;
-                
+
                 if(options[key] == val) {
                     return key;
                 }

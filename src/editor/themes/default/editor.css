@@ -236,6 +236,9 @@ html>body .ks-inline-block {
     padding: 5px 15px;
     color: #00C;
 }
+.ks-editor-drop-menu-fontName .ks-editor-option {
+    font-size: 14px;
+}
 
 .ks-editor-toolbar-select .ks-editor-toolbar-fontName {
     width: 91px;

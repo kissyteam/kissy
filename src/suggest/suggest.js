@@ -267,7 +267,7 @@ var KISSY = window.KISSY || {};
             // 注：截至目前，在Opera9.64中，输入法开启时，依旧不会触发任何键盘事件
             var pressingCount = 0; // 持续按住某键时，连续触发的keydown次数。注意Opera只会触发一次。
             Event.on(this.textInput, "keydown", function(ev) {
-                var keyCode = ev.charCode || ev.keyCode;
+                var keyCode = ev.keyCode;
                 //console.log("keydown " + keyCode);
 
                 switch (keyCode) {
