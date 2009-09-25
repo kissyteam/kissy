@@ -10,11 +10,11 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
         },
         undo: {
           text            : "撤销",
-          title           : "撤销 (Ctrl+Z)"
+          title           : "撤销"
         },
         redo: {
           text            : "重做",
-          title           : "重做 (Ctrl+Y)"
+          title           : "重做"
         },
         fontName: {
           text            : "字体",
@@ -68,71 +68,75 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
             title         : "删除线"
         },
         link: {
+            text          : "链接",
+            title         : "插入/编辑链接",
             href          : "URL:",
             target        : "在新窗口打开链接",
             remove        : "移除链接"
         },
         blockquote: {
-            text          : "Blockquote",
-            title         : "Insert blockquote"
+            text          : "引用",
+            title         : "引用"
         },
         smiley: {
-            text          : "Smiley",
-            title         : "Insert smiley"
+            text          : "表情",
+            title         : "插入表情"
         },
         image: {
-            web_legend    : "Enter image web address:",
-            ok            : "Insert"
+            text          : "图片",
+            title         : "插入图片",
+            web_legend    : "请输入图片地址：",
+            ok            : "插入"
         },
         insertOrderedList: {
-            text          : "Numbered List",
-            title         : "Numbered List (Ctrl+7)"
+            text          : "有序列表",
+            title         : "有序列表"
         },
         insertUnorderedList: {
-            text          : "Bullet List",
-            title         : "Bullet List (Ctrl+8)"
+            text          : "无序列表",
+            title         : "无序列表"
         },
         outdent: {
-            text          : "Decrease Indent",
-            title         : "Decrease Indent"
+            text          : "减少缩进",
+            title         : "减少缩进"
         },
         indent: {
-            text          : "Increase Indent",
-            title         : "Increase Indent"
+            text          : "增加缩进",
+            title         : "增加缩进"
         },
         justifyLeft: {
-            text          : "Left Justify",
-            title         : "Left Justify (Ctrl+L)"
+            text          : "左对齐",
+            title         : "左对齐"
         },
         justifyCenter: {
-            text          : "Center Justify",
-            title         : "Center Justify (Ctrl+E)"
+            text          : "居中对齐",
+            title         : "居中对齐"
         },
         justifyRight: {
-            text          : "Right Justify",
-            title         : "Right Justify (Ctrl+R)"
+            text          : "右对齐",
+            title         : "右对齐"
         },
         foreColor: {
-            text          : "Text Color",
-            title         : "Text Color"
+            text          : "文本颜色",
+            title         : "文本颜色"
         },
         backColor: {
-            text          : "Text Background Color",
-            title         : "Text Background Color"
+            text          : "背景颜色",
+            title         : "背景颜色"
         },
         maximize: {
-          text            : "Maximize",
-          title           : "Maximize"
+          text            : "全屏编辑",
+          title           : "全屏编辑"
         },
         removeformat: {
-          text            : "Remove Format",
-          title           : "Remove Format"
+          text            : "清除格式",
+          title           : "清除格式"
         },
 
         // Common messages and labels
         common: {
-            ok            : "OK",
-            cancel        : "Cancel"
+            ok            : "确定",
+            cancel        : "取消"
         }
     };
 

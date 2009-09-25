@@ -65,6 +65,8 @@ KISSY.Editor.add("lang~en", function(E) {
             title         : "Strikeout"
         },
         link: {
+            text          : "Link",
+            title         : "Insert/Edit link",
             href          : "URL:",
             target        : "Open link in new window",
             remove        : "Remove link"
@@ -78,6 +80,8 @@ KISSY.Editor.add("lang~en", function(E) {
             title         : "Insert smiley"
         },
         image: {
+            text          : "Image",
+            title         : "Insert image",
             web_legend    : "Enter image web address:",
             ok            : "Insert"
         },

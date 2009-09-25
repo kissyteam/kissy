@@ -13,6 +13,7 @@
             <path path="config.js"/>
 
             <path path="lang/en.js"/>
+            <path path="lang/zh-cn.js"/>
 
             <path path="core/plugin.js"/>
             <path path="core/dom.js"/>

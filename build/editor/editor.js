@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-09-23 11:21:42
-Revision: 163
+Date: 2009-09-25 11:52:31
+Revision: 165
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -257,6 +257,8 @@ KISSY.Editor.add("lang~en", function(E) {
             title         : "Strikeout"
         },
         link: {
+            text          : "Link",
+            title         : "Insert/Edit link",
             href          : "URL:",
             target        : "Open link in new window",
             remove        : "Remove link"
@@ -270,6 +272,8 @@ KISSY.Editor.add("lang~en", function(E) {
             title         : "Insert smiley"
         },
         image: {
+            text          : "Image",
+            title         : "Insert image",
             web_legend    : "Enter image web address:",
             ok            : "Insert"
         },
@@ -322,6 +326,149 @@ KISSY.Editor.add("lang~en", function(E) {
         common: {
             ok            : "OK",
             cancel        : "Cancel"
+        }
+    };
+
+});
+
+KISSY.Editor.add("lang~zh-cn", function(E) {
+
+    E.lang["zh-cn"] = {
+
+        // Toolbar buttons
+        source: {
+          text            : "源码",
+          title           : "源码"
+        },
+        undo: {
+          text            : "撤销",
+          title           : "撤销"
+        },
+        redo: {
+          text            : "重做",
+          title           : "重做"
+        },
+        fontName: {
+          text            : "字体",
+          title           : "字体",
+          options         : {
+              "Default"         : "宋体",
+              "宋体"             : "宋体",
+              "黑体"             : "黑体",
+              "隶书"             : "隶书",
+              "楷体"             : "楷体_GB2312",
+              "幼圆"             : "幼圆",
+              "微软雅黑"          : "微软雅黑",
+              "Courier New"     : "Courier New",
+              "Garamond"        : "Garamond",
+              "Georgia"         : "Georgia",
+              "Impact"          : "Impact",
+              "Times New Roman" : "Times New Roman",
+              "Arial"           : "Arial",
+              "Tahoma"          : "Tahoma",
+              "Verdana"         : "Verdana"
+          }
+        },
+        fontSize: {
+          text            : "大小",
+          title           : "大小",
+          options         : {
+              "Default"         : "2",
+              "8"               : "1",
+              "10"              : "2",
+              "12"              : "3",
+              "14"              : "4",
+              "18"              : "5",
+              "24"              : "6",
+              "36"              : "7"
+          }
+        },
+        bold: {
+            text          : "粗体",
+            title         : "粗体"
+        },
+        italic: {
+            text          : "斜体",
+            title         : "斜体"
+        },
+        underline: {
+            text          : "下划线",
+            title         : "下划线"
+        },
+        strikeThrough: {
+            text          : "删除线",
+            title         : "删除线"
+        },
+        link: {
+            text          : "链接",
+            title         : "插入/编辑链接",
+            href          : "URL:",
+            target        : "在新窗口打开链接",
+            remove        : "移除链接"
+        },
+        blockquote: {
+            text          : "引用",
+            title         : "引用"
+        },
+        smiley: {
+            text          : "表情",
+            title         : "插入表情"
+        },
+        image: {
+            text          : "图片",
+            title         : "插入图片",
+            web_legend    : "请输入图片地址：",
+            ok            : "插入"
+        },
+        insertOrderedList: {
+            text          : "有序列表",
+            title         : "有序列表"
+        },
+        insertUnorderedList: {
+            text          : "无序列表",
+            title         : "无序列表"
+        },
+        outdent: {
+            text          : "减少缩进",
+            title         : "减少缩进"
+        },
+        indent: {
+            text          : "增加缩进",
+            title         : "增加缩进"
+        },
+        justifyLeft: {
+            text          : "左对齐",
+            title         : "左对齐"
+        },
+        justifyCenter: {
+            text          : "居中对齐",
+            title         : "居中对齐"
+        },
+        justifyRight: {
+            text          : "右对齐",
+            title         : "右对齐"
+        },
+        foreColor: {
+            text          : "文本颜色",
+            title         : "文本颜色"
+        },
+        backColor: {
+            text          : "背景颜色",
+            title         : "背景颜色"
+        },
+        maximize: {
+          text            : "全屏编辑",
+          title           : "全屏编辑"
+        },
+        removeformat: {
+          text            : "清除格式",
+          title           : "清除格式"
+        },
+
+        // Common messages and labels
+        common: {
+            ok            : "确定",
+            cancel        : "取消"
         }
     };
 
@@ -1700,7 +1847,7 @@ KISSY.Editor.add("plugins~font", function(E) {
 
             for(key in options) {
                 if(key == DEFAULT) continue;
-                
+
                 if(options[key] == val) {
                     return key;
                 }
