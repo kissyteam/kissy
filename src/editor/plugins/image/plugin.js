@@ -134,6 +134,3 @@ KISSY.Editor.add("plugins~image", function(E) {
     });
 
  });
-
-// TODO:
-//  1. 图片上传功能

@@ -4,19 +4,22 @@
  ~ 回车，IE 生成 p, Firefox 生成 br
  ~ 按钮状态的动态更新
  ~ 编辑区域的拉伸
- ~ 中文语言
+ ~ 快捷键支持
+ ~ 已标记的待完善的 TODOs
 
- ~ flash
+ ~ image upload
+ ~ wordcount
  ~ maxmize
  ~ removeformat
- ~ wordcount
- ~ 时间到期提醒
- ~ format / template
+ ~ format
+ ~ template
  ~ table
+ ~ flash
 
- ~ 已标记的待完善的 TODOs
- ~ 快捷键支持
- ~ 图片上传，（加水印选项）
+ ~ 小菊 bug fix
+ ~ 图片上传，（加水印选项，默认打勾，文案请用“图片加水印，防盗用”）
+ ~ 字数统计功能
+ ~ 帮派日常（10月9日 - 10月22日）
 
- [2009-09-17] ~ smiley
- [2009-09-17] ~ 预览功能
+ ~ 编辑器 WordPress 插件
+ ~ 清羽后台知识库系统（10月前需要做好 format/template/table 插件）
