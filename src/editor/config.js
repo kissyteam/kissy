@@ -40,7 +40,8 @@ KISSY.Editor.add("config", function(E) {
          * Statusbar ÉÏµÄ²å¼þ
          */
         statusbar: [
-            "wordcount"
+            "wordcount",
+            "resize"
         ]
     };
 

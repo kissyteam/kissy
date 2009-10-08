@@ -1,13 +1,11 @@
 
 KISSY.Editor.add("core~statusbar", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+    var Y = YAHOO.util, Lang = YAHOO.lang,
         isIE = YAHOO.env.ua.ie,
-        isIE6 = isIE === 6,
-        TYPE = E.PLUGIN_TYPE,
 
         SEP_TMPL = '<div class="ks-editor-stripbar-sep kissy-inline-block"></div>',
-        ITEM_TMPL = '<div class="ks-editor-statusbar-item ks-editor-statusbar-{NAME} ks-inline-block">{CONTENT}</div>',
+        ITEM_TMPL = '<div class="ks-editor-statusbar-item ks-editor-{NAME} ks-inline-block"></div>',
 
         div = document.createElement("div"); // 通用 el 容器
 
@@ -32,7 +30,7 @@ KISSY.Editor.add("core~statusbar", function(E) {
     Lang.augmentObject(E.Statusbar.prototype, {
 
         /**
-         * 初始化工具条
+         * 初始化
          */
         init: function() {
             var items = this.config.statusbar,
@@ -58,7 +56,7 @@ KISSY.Editor.add("core~statusbar", function(E) {
          * 添加工具栏项
          */
         _addItem: function(p) {
-            var el, type = p.type, lang = this.lang, html;
+            var el, lang = this.lang;
 
             // 当 plugin 没有设置 lang 时，采用默认语言配置
             // TODO: 考虑重构到 instance 模块里，因为 lang 仅跟实例相关

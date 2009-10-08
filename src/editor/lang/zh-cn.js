@@ -132,6 +132,17 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
           text            : "清除格式",
           title           : "清除格式"
         },
+        wordcount: {
+          tmpl            : "还可以输入 %remain% 字（含 html 代码）",
+          total           : 50000,
+          threshold       : 100
+        },
+        resize: {
+            larger_text   : "增大",
+            larger_title  : "增大编辑区域",
+            smaller_text  : "缩小",
+            smaller_title : "缩小编辑区域"
+        },
 
         // Common messages and labels
         common: {

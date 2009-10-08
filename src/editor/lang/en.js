@@ -129,6 +129,17 @@ KISSY.Editor.add("lang~en", function(E) {
           text            : "Remove Format",
           title           : "Remove Format"
         },
+        wordcount: {
+          tmpl            : "Remain %remain% words (include html code)",
+          total           : 50000,
+          threshold       : 100
+        },
+        resize: {
+            larger_text   : "Larger",
+            larger_title  : "Enlarge the editor",
+            smaller_text  : "Smaller",
+            smaller_title : "Shrink the editor"
+        },
 
         // Common messages and labels
         common: {

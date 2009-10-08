@@ -59,6 +59,11 @@ KISSY.Editor.add("core~instance", function(E) {
          */
         this.toolbar = new E.Toolbar(this);
 
+        /**
+         * 状态栏
+         */
+        this.statusbar = new E.Statusbar(this);
+
         // init
         this._init();
     };
@@ -94,6 +99,9 @@ KISSY.Editor.add("core~instance", function(E) {
             // 工具栏上的插件
             this.toolbar.init();
 
+            // 状态栏上的插件
+            this.statusbar.init();
+            
             // 其它插件
             for(key in plugins) {
                 p = plugins[key];
@@ -138,7 +146,8 @@ KISSY.Editor.add("core~instance", function(E) {
             this.toolbar.domEl = container.childNodes[0];
             this.contentWin = iframe.contentWindow;
             this.contentDoc = iframe.contentWindow.document;
-            this.statusbar = container.childNodes[2];
+            
+            this.statusbar.domEl = container.childNodes[2];
 
             // TODO 目前是根据 textatea 的宽度来设定 editor 的宽度。可以考虑 config 里指定宽度
         },

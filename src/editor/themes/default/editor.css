@@ -368,4 +368,46 @@ li.ks-editor-link-dialog-actions {
     height: 100% !important;
 }
 
+/** statusbar **/
+.ks-editor-statusbar {
+    background-color: #E5E5E5;
+    padding: 4px 0 5px;
+    border-top: 1px solid #DFDFDF;
+    line-height: 1;
+    zoom: 1;
+    /* 高度自适应，正常情况下，单行高度 23px */
+}
 
+.ks-editor-statusbar-item {
+    margin: 0 2px;
+    padding: 2px 0;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.ks-editor-wordcount {
+    padding-left: 3px;
+}
+.ks-editor-wordcount em {
+    font-weight: bold;
+    color: #333;
+}
+.ks-editor-wordcount-alarm em {
+    color: #f00;
+}
+
+/** resize **/
+.ks-editor-resize {
+    float: right;
+    background: url(resize.png) no-repeat 0 0;
+    width: 50px;
+}
+.ks-editor-resize span {
+    text-indent: -999999px;
+    display: block;
+    float: left;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 3px;
+}
