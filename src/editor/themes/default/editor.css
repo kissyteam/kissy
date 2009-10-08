@@ -370,6 +370,7 @@ li.ks-editor-link-dialog-actions {
 
 /** statusbar **/
 .ks-editor-statusbar {
+    position: relative;
     background-color: #E5E5E5;
     padding: 4px 0 5px;
     border-top: 1px solid #DFDFDF;
@@ -398,7 +399,9 @@ li.ks-editor-link-dialog-actions {
 
 /** resize **/
 .ks-editor-resize {
-    float: right;
+    position: absolute;
+    right: 0;
+    top: 3px;
     background: url(resize.png) no-repeat 0 0;
     width: 50px;
 }
