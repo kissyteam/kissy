@@ -198,7 +198,13 @@
 
     var config = {
         base: "http://t-yubo/kissy/src/editor/",
-        language: "zh-cn"
+        language: "zh-cn",
+        pluginsConfig: {
+            image: {
+                tabs        : "local|link|album",
+                localExtra  : '<label><input name="needWatermark" type="checkbox" checked="checked" />Õº∆¨º”ÀÆ”°£¨∑¿µ¡”√</label>'
+            }
+        }
     };
     
     var editorDemo = new KISSY.Editor("demo", config);

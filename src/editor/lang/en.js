@@ -82,7 +82,12 @@ KISSY.Editor.add("lang~en", function(E) {
         image: {
             text          : "Image",
             title         : "Insert image",
-            web_legend    : "Enter image web address:",
+            tab_link      : "Web Image",
+            tab_local     : "Local Image",
+            tab_album     : "Album Image",
+            label_link    : "Enter image web address:",
+            label_local   : "Browse your computer for the image file to upload:",
+            label_album   : "Select the image from your album:",
             ok            : "Insert"
         },
         insertOrderedList: {

@@ -85,7 +85,12 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
         image: {
             text          : "图片",
             title         : "插入图片",
-            web_legend    : "请输入图片地址：",
+            tab_link      : "网络图片",
+            tab_local     : "本地上传",
+            tab_album     : "我的相册",
+            label_link    : "请输入图片地址：",
+            label_local   : "请选择本地图片：",
+            label_album   : "请选择相册图片：",
             ok            : "插入"
         },
         insertOrderedList: {

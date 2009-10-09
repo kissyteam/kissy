@@ -1,22 +1,41 @@
 
 KISSY.Editor.add("plugins~image", function(E) {
 
-    var Y = YAHOO.util, Event = Y.Event, Lang = YAHOO.lang,
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
 
-        DIALOG_CLS = "ks-editor-image-dialog",
-        BTN_OK_CLS = "ks-editor-image-dialog-ok",
-        BTN_CANCEL_CLS = "ks-editor-image-dialog-cancel",
+        DIALOG_CLS = "ks-editor-image",
+        BTN_OK_CLS = "ks-editor-btn-ok",
+        BTN_CANCEL_CLS = "ks-editor-btn-cancel",
+        TAB_CLS = "ks-editor-image-tabs",
+        TAB_CONTENT_CLS = "ks-editor-image-tab-content",
+        SELECTED_TAB_CLS = "ks-editor-image-tab-selected",
+        TABS_TMPL = { local: '<li rel="local" class="' + SELECTED_TAB_CLS  + '">{tab_local}</li>',
+                      link: '<li rel="link">{tab_link}</li>',
+                      album: '<li rel="album">{tab_album}</li>'
+                    },
 
-        DIALOG_TMPL = ['<form onsubmit="return false"><fieldset>',
-                          '<legend>{web_legend}</legend>',
-                          '<input name="imageUrl" size="50" />',
-                          '<div class="ks-editor-dialog-buttons">',
-                              '<button name="ok" class="', BTN_OK_CLS, '">{ok}</button>',
-                              '<button name="cancel" class="', BTN_CANCEL_CLS ,'">{cancel}</button>',
+        DIALOG_TMPL = ['<form onsubmit="return false">',
+                          '<ul class="', TAB_CLS ,' ks-clearfix">',
+                          '</ul>',
+                          '<div class="', TAB_CONTENT_CLS, '" rel="local">',
+                              '<label>{label_local}</label>',
+                              '<input type="file" size="40" name="localPath" />',
                           '</div>',
-                      '</fieldset></form>'].join("");
+                          '<div class="', TAB_CONTENT_CLS, '" rel="link" style="display: none">',
+                              '<label>{label_link}</label>',
+                              '<input name="imageUrl" size="50" />',
+                          '</div>',
+                          '<div class="', TAB_CONTENT_CLS, '" rel="album" style="display: none">',
+                              '<label>{label_album}</label>',
+                              '<p>尚未实现</p>', // TODO: 从相册中选择图片
+                          '</div>',
+                          '<div class="ks-editor-dialog-actions">',
+                              '<button name="ok" class="', BTN_OK_CLS, '">{ok}</button>',
+                              '<span class="', BTN_CANCEL_CLS ,'">{cancel}</span>',
+                          '</div>',
+                      '</form>'].join("");
 
     E.addPlugin("image", {
         /**
@@ -71,7 +90,7 @@ KISSY.Editor.add("plugins~image", function(E) {
          * 绑定事件
          */
         _bindUI: function() {
-            var form = this.form, self = this;
+            var dialog = this.dialog, form = this.form, self = this;
 
             // 显示/隐藏对话框时的事件
             Event.on(this.domEl, "click", function() {
@@ -81,13 +100,29 @@ KISSY.Editor.add("plugins~image", function(E) {
                 }
             });
 
+            // tab 切换
+            var tabs = Dom.getElementsByClassName(TAB_CLS, "ul", dialog)[0].childNodes,
+                panels = Dom.getElementsByClassName(TAB_CONTENT_CLS, "div", dialog),
+                len = tabs.length;
+            Event.on(tabs, "click", function() {
+                var j = 0;
+                for(var i = 0; i < len; i++) {
+                    Dom.removeClass(tabs[i], SELECTED_TAB_CLS);
+                    panels[i].style.display = "none";
+                    if(tabs[i] == this) j = i;
+                }
+
+                Dom.addClass(tabs[j], SELECTED_TAB_CLS);
+                panels[j].style.display = "";
+            });
+
             // 注册表单按钮点击事件
-            Event.on(this.dialog, "click", function(ev) {
+            Event.on(dialog, "click", function(ev) {
                 var target = Event.getTarget(ev);
 
                 switch(target.className) {
                     case BTN_OK_CLS:
-                        self._insertImage(form.imageUrl.value);
+                        self._insertImage(form["imageUrl"].value);
                         break;
                     case BTN_CANCEL_CLS: // 直接往上冒泡，关闭对话框
                         break;
@@ -102,7 +137,7 @@ KISSY.Editor.add("plugins~image", function(E) {
          */
         _syncUI: function() {
             this.range = this.editor.getSelectionRange();
-            this.form.imageUrl.value = "";
+            this.form["imageUrl"].value = "";
         },
 
         /**

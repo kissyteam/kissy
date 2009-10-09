@@ -42,7 +42,12 @@ KISSY.Editor.add("config", function(E) {
         statusbar: [
             "wordcount",
             "resize"
-        ]
+        ],
+
+        /**
+         * ²å¼þµÄÅäÖÃ
+         */
+        pluginsConfig: {}
     };
 
 });

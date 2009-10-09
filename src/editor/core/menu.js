@@ -7,6 +7,8 @@ KISSY.Editor.add("core~menu", function(E) {
         HIDDEN = "hidden",
         VISIBLE = "visible",
         DROP_MENU_CLASS = "ks-editor-drop-menu",
+        SHADOW_CLASS = "ks-editor-drop-menu-shadow",
+        CONTENT_CLASS = "ks-editor-drop-menu-content",
         SHIM_CLASS = DROP_MENU_CLASS + "-shim", //  // iframe shim 的 class
         shim; // 共用一个 shim 即可
     
@@ -23,6 +25,10 @@ KISSY.Editor.add("core~menu", function(E) {
             var dropMenu = document.createElement("div"),
                  self = this;
 
+            // 添加阴影层
+            dropMenu.innerHTML = '<div class="' + SHADOW_CLASS + '"></div>'
+                               + '<div class="' + CONTENT_CLASS + '"></div>';
+            
             // 生成 DOM
             dropMenu.className = DROP_MENU_CLASS;
             dropMenu.style[VISIBILITY] = "hidden";
@@ -59,7 +65,7 @@ KISSY.Editor.add("core~menu", function(E) {
             this._initResizeEvent(trigger, dropMenu, offset);
 
             // 返回
-            return dropMenu;
+            return dropMenu.childNodes[1]; // 返回 content 部分
         },
 
         /**

@@ -22,6 +22,15 @@ html>body .ks-inline-block {
 }
 /* TODO 仔细检查上面的 hack 是否有些可以去掉 */
 
+/* 清除浮动 */
+.ks-clearfix:after {
+    content: '\0020';
+    display: block;
+    height: 0;
+    clear: both;
+}
+.ks-clearfix { *zoom: 1; }
+
 /** editor **/
 .ks-editor {
     border: 1px solid #DFDFDF;
@@ -174,14 +183,27 @@ html>body .ks-inline-block {
     position: absolute;
     top: 0;
     left: 0;
+    white-space: nowrap;
     z-index: 9002;
+}
+.ks-editor-drop-menu-shadow {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    background-color: #000;
+    opacity: .1;
+    filter: alpha(opacity=10);
+    z-index: -1;
+}
+.ks-editor-drop-menu-content {
     border: 1px solid #ccc;
-    border-right-color: #676767;
-    border-bottom-color: #676767;
+    /*border-right-color: #676767;
+    border-bottom-color: #676767;*/
     padding: 3.5px 0 0 0;
     color: #333;
     background-color: #fff;
-    white-space: nowrap;
 }
 .ks-editor-drop-menu-shim {
     z-index: 9001;
@@ -267,11 +289,11 @@ html>body .ks-inline-block {
     border: none;
 }
 
-/* link dialog */
-.ks-editor-link-dialog {
+/* link */
+.ks-editor-link {
     padding: 10px;
 }
-.ks-editor-link-dialog label {
+.ks-editor-link label {
     width: 40px;
     text-align: right;
     display: inline-block;
@@ -279,64 +301,89 @@ html>body .ks-inline-block {
     margin-right: 10px;
     vertical-align: middle;    
 }
-.ks-editor-link-dialog li {
+.ks-editor-link li {
     margin: 0 0 10px;
 }
-li.ks-editor-link-dialog-actions {
-    margin-bottom: 0;
-}
-.ks-editor-link-dialog input {
+.ks-editor-link input {
     padding: 2px 1px;
     vertical-align: middle;
 }
-.ks-editor-link-dialog-target input {
+.ks-editor-link-target input {
     margin-left: 50px;
     padding: 0 10px 0 0;
 }
-.ks-editor-link-dialog-actions {
+.ks-editor-link .ks-editor-dialog-actions {
     padding: 0 5px 0 45px;
     height: 25px;
     line-height: 30px;
+    margin-bottom: 0;
 }
-.ks-editor-link-dialog-actions button {
+.ks-editor-link-actions button {
     margin: 0 5px;
     padding: 1px 0.8em 0;
     *padding: 2px 0.8em 1px;
     float: left;
 }
-.ks-editor-link-dialog-remove {
+.ks-editor-link-remove {
     color: #00c;
-    text-decoration: underline;
     cursor: pointer;
     float: right;
+    line-height: 23px;
 }
-.ks-editor-link-dialog-newlink-mode .ks-editor-link-dialog-remove {
+.ks-editor-link-newlink-mode .ks-editor-link-remove {
     display: none;
 }
-.ks-editor-link-dialog form {
+.ks-editor-link form {
     width: 275px;
 }
 
-/* image dialog */
-.ks-editor-image-dialog {
-    padding: 10px;
+/* image */
+.ks-editor-image {
+    padding: 10px 0;
     _width: 282px;
 }
-.ks-editor-image-dialog legend {
-    margin: 5px 0 2px;
-    font-weight: bold;
+.ks-editor-image-tabs {
+    padding-left: 10px;
 }
-.ks-editor-image-dialog input {
+.ks-editor-image-tabs li {
+    float: left;
+    background-color: #f6f6f6;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    height: 21px;
+    line-height: 21px;
+    width: 60px;
+    margin-left: 5px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    top: 1px;
+}
+li.ks-editor-image-tab-selected {
+    border-color: #ccc;
+    cursor: default;
+    border-bottom: 1px solid #fff;
+}
+.ks-editor-image-tab-content {
+    padding: 10px 20px;
+    border-top: 1px solid #ccc;
+
+}
+.ks-editor-image label {
+    margin: 5px 0;
+    display: block;
+}
+.ks-editor-image input {
     padding: 2px 1px;
     vertical-align: middle;
-    margin-left: 7px;
 }
-.ks-editor-image-dialog .ks-editor-dialog-buttons {
-    padding: 5px 0;
-    margin-left: 2px;
+.ks-editor-image .ks-editor-dialog-actions {
+    padding-left: 15px;
+    overflow: hidden;
+    zoom: 1;
 }
 
-/* smiley dialog */
+/* smiley */
 .ks-editor-smiley-icons {
     padding: 5px;
 }
@@ -346,11 +393,18 @@ li.ks-editor-link-dialog-actions {
 }
 
 /* dialog common */
-.ks-editor-dialog-buttons button {
+.ks-editor-dialog-actions button {
+    float: left;
     margin: 0 5px;
     padding: 1px 0.8em 0;
     *padding: 2px 0.8em 1px;
+}
+.ks-editor-btn-cancel {
     float: left;
+    color: #00c;
+    cursor: pointer;
+    margin: 0 10px;
+    line-height: 23px;
 }
 
 /* maximize */
