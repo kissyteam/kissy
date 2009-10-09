@@ -1,9 +1,14 @@
 
 KISSY.Editor.add("plugins~wordcount", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         TYPE = E.PLUGIN_TYPE,
-        ALARM_CLS = "ks-editor-wordcount-alarm";
+        ALARM_CLS = "ks-editor-wordcount-alarm",
+
+        defaultConfig = {
+            total       : 50000,
+            threshold   : 100
+        };
 
     E.addPlugin("wordcount", {
 
@@ -24,8 +29,9 @@ KISSY.Editor.add("plugins~wordcount", function(E) {
          * ≥ı ºªØ
          */
         init: function() {
-            this.total = this.lang["total"];
-            this.threshold = this.lang["threshold"];
+            var config = Lang.merge(defaultConfig, this.editor.config.pluginsConfig[this.name] || {});
+            this.total = config["total"];
+            this.threshold = config["threshold"];
 
             this.renderUI();
             this.bindUI();

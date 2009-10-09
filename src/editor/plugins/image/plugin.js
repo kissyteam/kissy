@@ -73,7 +73,7 @@ KISSY.Editor.add("plugins~image", function(E) {
          * ³õÊ¼»¯º¯Êý
          */
         init: function() {
-            this.config = Lang.merge(defaultConfig, this.editor.config.pluginsConfig["image"] || {});
+            this.config = Lang.merge(defaultConfig, this.editor.config.pluginsConfig[this.name] || {});
 
             this._renderUI();
             this._bindUI();

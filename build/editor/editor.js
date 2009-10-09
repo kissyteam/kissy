@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-09 21:38:23
-Revision: 176
+Date: 2009-10-09 22:02:25
+Revision: 180
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -333,9 +333,7 @@ KISSY.Editor.add("lang~en", function(E) {
           title           : "Remove Format"
         },
         wordcount: {
-          tmpl            : "Remain %remain% words (include html code)",
-          total           : 50000,
-          threshold       : 100
+          tmpl            : "Remain %remain% words (include html code)"
         },
         resize: {
             larger_text   : "Larger",
@@ -492,9 +490,7 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
           title           : "清除格式"
         },
         wordcount: {
-          tmpl            : "还可以输入 %remain% 字（含 html 代码）",
-          total           : 50000,
-          threshold       : 100
+          tmpl            : "还可以输入 %remain% 字（含 html 代码）"
         },
         resize: {
             larger_text   : "增大",
@@ -2004,7 +2000,7 @@ KISSY.Editor.add("plugins~image", function(E) {
          * 初始化函数
          */
         init: function() {
-            this.config = Lang.merge(defaultConfig, this.editor.config.pluginsConfig["image"] || {});
+            this.config = Lang.merge(defaultConfig, this.editor.config.pluginsConfig[this.name] || {});
 
             this._renderUI();
             this._bindUI();
@@ -2959,9 +2955,14 @@ KISSY.Editor.add("plugins~undo", function(E) {
 
 KISSY.Editor.add("plugins~wordcount", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         TYPE = E.PLUGIN_TYPE,
-        ALARM_CLS = "ks-editor-wordcount-alarm";
+        ALARM_CLS = "ks-editor-wordcount-alarm",
+
+        defaultConfig = {
+            total       : 50000,
+            threshold   : 100
+        };
 
     E.addPlugin("wordcount", {
 
@@ -2982,8 +2983,9 @@ KISSY.Editor.add("plugins~wordcount", function(E) {
          * 初始化
          */
         init: function() {
-            this.total = this.lang["total"];
-            this.threshold = this.lang["threshold"];
+            var config = Lang.merge(defaultConfig, this.editor.config.pluginsConfig[this.name] || {});
+            this.total = config["total"];
+            this.threshold = config["threshold"];
 
             this.renderUI();
             this.bindUI();
