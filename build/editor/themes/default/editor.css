@@ -257,6 +257,7 @@ html>body .ks-inline-block {
     margin: 0;
     padding: 5px 15px;
     color: #00C;
+    line-height: 1;
 }
 .ks-editor-drop-menu-fontName .ks-editor-option {
     font-size: 14px;
