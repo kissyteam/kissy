@@ -312,33 +312,37 @@
 		oFCKeditor.ReplaceTextarea() ;
 	</script>
 -->
+    <!-- KISSY Editor START --->
     <link id="ks-editor-style" rel="stylesheet" href="http://kissy.googlecode.com/svn/trunk/build/editor/themes/default/editor-min.css" type="text/css"/>
     <script type="text/javascript" src="http://kissy.googlecode.com/svn/trunk/build/editor/editor-min.js"></script>
     <script type="text/javascript">
-        new KISSY.Editor("msgpost", {
-            base: "http://kissy.googlecode.com/svn/trunk/build/editor/",
-            language: "zh-cn",
-            toolbar: [
-                "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
-                "",
-                "link", "smiley", "image", "blockquote",
-                "",
-                "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight",
-                "",
-                "source"
-            ],
-            pluginsConfig: {
-                image: {
-                    tabs        : "local|link",
-                    localExtra  : '<label><input name="needWatermark" type="checkbox" checked="checked" />Í¼Æ¬¼ÓË®Ó¡£¬·ÀµÁÓÃ</label>'
-                },
-                wordcount: {
-                    total       : 20000,
-                    threshold   : 100
+        YAHOO.util.Event.onDOMReady(function() {
+            new KISSY.Editor("msgpost", {
+                base: "http://kissy.googlecode.com/svn/trunk/build/editor/",
+                language: "zh-cn",
+                toolbar: [
+                    "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
+                    "",
+                    "link", "smiley", "image", "blockquote",
+                    "",
+                    "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight",
+                    "",
+                    "source"
+                ],
+                pluginsConfig: {
+                    image: {
+                        tabs        : "local|link",
+                        localExtra  : '<label><input name="needWatermark" type="checkbox" checked="checked" />Í¼Æ¬¼ÓË®Ó¡£¬·ÀµÁÓÃ</label>'
+                    },
+                    wordcount: {
+                        total       : 20000,
+                        threshold   : 100
+                    }
                 }
-            }
+            });
         });
     </script>
+    <!-- KISSY Editor END --->
 
 	<script type="text/javascript">
 					var timeLimit=3600000;
