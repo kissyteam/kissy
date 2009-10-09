@@ -40,7 +40,7 @@ html>body .ks-inline-block {
 /** toolbar **/
 .ks-editor-toolbar {
     background: #E5E5E5 url(editor-bg.png) repeat-x 0 -192px;
-    padding: 3px 0;
+    padding: 3px;
     border-bottom: 1px solid #DFDFDF;
     line-height: 1;
     zoom: 1;
@@ -367,7 +367,13 @@ li.ks-editor-image-tab-selected {
 .ks-editor-image-tab-content {
     padding: 10px 20px;
     border-top: 1px solid #ccc;
-
+}
+.ks-editor-image-no-tab .ks-editor-image-tabs {
+    display: none;
+}
+.ks-editor-image-no-tab .ks-editor-image-tab-content {
+    border-top: none;
+    padding: 0 10px 10px;
 }
 .ks-editor-image label {
     margin: 5px 0;
@@ -381,6 +387,9 @@ li.ks-editor-image-tab-selected {
     padding-left: 15px;
     overflow: hidden;
     zoom: 1;
+}
+.ks-editor-image label input {
+    margin-right: 5px;
 }
 
 /* smiley */

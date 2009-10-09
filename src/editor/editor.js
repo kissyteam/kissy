@@ -177,8 +177,14 @@ KISSY.Editor.add("config", function(E) {
          * Statusbar 上的插件
          */
         statusbar: [
-            "wordcount"
-        ]
+            "wordcount",
+            "resize"
+        ],
+
+        /**
+         * 插件的配置
+         */
+        pluginsConfig: {}
     };
 
 });
@@ -266,7 +272,12 @@ KISSY.Editor.add("lang~en", function(E) {
         image: {
             text          : "Image",
             title         : "Insert image",
-            web_legend    : "Enter image web address:",
+            tab_link      : "Web Image",
+            tab_local     : "Local Image",
+            tab_album     : "Album Image",
+            label_link    : "Enter image web address:",
+            label_local   : "Browse your computer for the image file to upload:",
+            label_album   : "Select the image from your album:",
             ok            : "Insert"
         },
         insertOrderedList: {
@@ -312,6 +323,17 @@ KISSY.Editor.add("lang~en", function(E) {
         removeformat: {
           text            : "Remove Format",
           title           : "Remove Format"
+        },
+        wordcount: {
+          tmpl            : "Remain %remain% words (include html code)",
+          total           : 50000,
+          threshold       : 100
+        },
+        resize: {
+            larger_text   : "Larger",
+            larger_title  : "Enlarge the editor",
+            smaller_text  : "Smaller",
+            smaller_title : "Shrink the editor"
         },
 
         // Common messages and labels
@@ -409,7 +431,12 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
         image: {
             text          : "图片",
             title         : "插入图片",
-            web_legend    : "请输入图片地址：",
+            tab_link      : "网络图片",
+            tab_local     : "本地上传",
+            tab_album     : "我的相册",
+            label_link    : "请输入图片地址：",
+            label_local   : "请选择本地图片：",
+            label_album   : "请选择相册图片：",
             ok            : "插入"
         },
         insertOrderedList: {
@@ -455,6 +482,17 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
         removeformat: {
           text            : "清除格式",
           title           : "清除格式"
+        },
+        wordcount: {
+          tmpl            : "还可以输入 %remain% 字（含 html 代码）",
+          total           : 50000,
+          threshold       : 100
+        },
+        resize: {
+            larger_text   : "增大",
+            larger_title  : "增大编辑区域",
+            smaller_text  : "缩小",
+            smaller_title : "缩小编辑区域"
         },
 
         // Common messages and labels
@@ -773,6 +811,11 @@ KISSY.Editor.add("core~instance", function(E) {
          */
         this.toolbar = new E.Toolbar(this);
 
+        /**
+         * 状态栏
+         */
+        this.statusbar = new E.Statusbar(this);
+
         // init
         this._init();
     };
@@ -808,6 +851,9 @@ KISSY.Editor.add("core~instance", function(E) {
             // 工具栏上的插件
             this.toolbar.init();
 
+            // 状态栏上的插件
+            this.statusbar.init();
+            
             // 其它插件
             for(key in plugins) {
                 p = plugins[key];
@@ -852,7 +898,8 @@ KISSY.Editor.add("core~instance", function(E) {
             this.toolbar.domEl = container.childNodes[0];
             this.contentWin = iframe.contentWindow;
             this.contentDoc = iframe.contentWindow.document;
-            this.statusbar = container.childNodes[2];
+            
+            this.statusbar.domEl = container.childNodes[2];
 
             // TODO 目前是根据 textatea 的宽度来设定 editor 的宽度。可以考虑 config 里指定宽度
         },
@@ -1150,13 +1197,11 @@ KISSY.Editor.add("core~toolbar", function(E) {
 
 KISSY.Editor.add("core~statusbar", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+    var Y = YAHOO.util, Lang = YAHOO.lang,
         isIE = YAHOO.env.ua.ie,
-        isIE6 = isIE === 6,
-        TYPE = E.PLUGIN_TYPE,
 
         SEP_TMPL = '<div class="ks-editor-stripbar-sep kissy-inline-block"></div>',
-        ITEM_TMPL = '<div class="ks-editor-statusbar-item ks-editor-statusbar-{NAME} ks-inline-block">{CONTENT}</div>',
+        ITEM_TMPL = '<div class="ks-editor-statusbar-item ks-editor-{NAME} ks-inline-block"></div>',
 
         div = document.createElement("div"); // 通用 el 容器
 
@@ -1181,7 +1226,7 @@ KISSY.Editor.add("core~statusbar", function(E) {
     Lang.augmentObject(E.Statusbar.prototype, {
 
         /**
-         * 初始化工具条
+         * 初始化
          */
         init: function() {
             var items = this.config.statusbar,
@@ -1207,7 +1252,7 @@ KISSY.Editor.add("core~statusbar", function(E) {
          * 添加工具栏项
          */
         _addItem: function(p) {
-            var el, type = p.type, lang = this.lang, html;
+            var el, lang = this.lang;
 
             // 当 plugin 没有设置 lang 时，采用默认语言配置
             // TODO: 考虑重构到 instance 模块里，因为 lang 仅跟实例相关
@@ -1260,6 +1305,8 @@ KISSY.Editor.add("core~menu", function(E) {
         HIDDEN = "hidden",
         VISIBLE = "visible",
         DROP_MENU_CLASS = "ks-editor-drop-menu",
+        SHADOW_CLASS = "ks-editor-drop-menu-shadow",
+        CONTENT_CLASS = "ks-editor-drop-menu-content",
         SHIM_CLASS = DROP_MENU_CLASS + "-shim", //  // iframe shim 的 class
         shim; // 共用一个 shim 即可
     
@@ -1276,6 +1323,10 @@ KISSY.Editor.add("core~menu", function(E) {
             var dropMenu = document.createElement("div"),
                  self = this;
 
+            // 添加阴影层
+            dropMenu.innerHTML = '<div class="' + SHADOW_CLASS + '"></div>'
+                               + '<div class="' + CONTENT_CLASS + '"></div>';
+            
             // 生成 DOM
             dropMenu.className = DROP_MENU_CLASS;
             dropMenu.style[VISIBILITY] = "hidden";
@@ -1312,7 +1363,7 @@ KISSY.Editor.add("core~menu", function(E) {
             this._initResizeEvent(trigger, dropMenu, offset);
 
             // 返回
-            return dropMenu;
+            return dropMenu.childNodes[1]; // 返回 content 部分
         },
 
         /**
@@ -1873,28 +1924,58 @@ KISSY.Editor.add("plugins~font", function(E) {
 
 KISSY.Editor.add("plugins~image", function(E) {
 
-    var Y = YAHOO.util, Event = Y.Event, Lang = YAHOO.lang,
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
 
-        DIALOG_CLS = "ks-editor-image-dialog",
-        BTN_OK_CLS = "ks-editor-image-dialog-ok",
-        BTN_CANCEL_CLS = "ks-editor-image-dialog-cancel",
+        DIALOG_CLS = "ks-editor-image",
+        BTN_OK_CLS = "ks-editor-btn-ok",
+        BTN_CANCEL_CLS = "ks-editor-btn-cancel",
+        TAB_CLS = "ks-editor-image-tabs",
+        TAB_CONTENT_CLS = "ks-editor-image-tab-content",
+        NO_TAB_CLS = "ks-editor-image-no-tab",
+        SELECTED_TAB_CLS = "ks-editor-image-tab-selected",
 
-        DIALOG_TMPL = ['<form onsubmit="return false"><fieldset>',
-                          '<legend>{web_legend}</legend>',
-                          '<input name="imageUrl" size="50" />',
-                          '<div class="ks-editor-dialog-buttons">',
-                              '<button name="ok" class="', BTN_OK_CLS, '">{ok}</button>',
-                              '<button name="cancel" class="', BTN_CANCEL_CLS ,'">{cancel}</button>',
+        TABS_TMPL = { local: '<li rel="local" class="' + SELECTED_TAB_CLS  + '">{tab_local}</li>',
+                      link: '<li rel="link">{tab_link}</li>',
+                      album: '<li rel="album">{tab_album}</li>'
+                    },
+        DIALOG_TMPL = ['<form onsubmit="return false">',
+                          '<ul class="', TAB_CLS ,' ks-clearfix">',
+                          '</ul>',
+                          '<div class="', TAB_CONTENT_CLS, '" rel="local" style="display: none">',
+                              '<label>{label_local}</label>',
+                              '<input type="file" size="40" name="localPath" />',
+                              '{local_extra}',
                           '</div>',
-                      '</fieldset></form>'].join("");
+                          '<div class="', TAB_CONTENT_CLS, '" rel="link">',
+                              '<label>{label_link}</label>',
+                              '<input name="imageUrl" size="50" />',
+                          '</div>',
+                          '<div class="', TAB_CONTENT_CLS, '" rel="album" style="display: none">',
+                              '<label>{label_album}</label>',
+                              '<p style="width: 300px">尚未实现...</p>', // TODO: 从相册中选择图片
+                          '</div>',
+                          '<div class="ks-editor-dialog-actions">',
+                              '<button name="ok" class="', BTN_OK_CLS, '">{ok}</button>',
+                              '<span class="', BTN_CANCEL_CLS ,'">{cancel}</span>',
+                          '</div>',
+                      '</form>'].join(""),
+
+        defaultConfig = {
+            tabs: "link"
+        };
 
     E.addPlugin("image", {
         /**
          * 种类：普通按钮
          */
         type: TYPE.TOOLBAR_BUTTON,
+
+        /**
+         * 配置项
+         */
+        config: {},
 
         /**
          * 关联的对话框
@@ -1915,6 +1996,8 @@ KISSY.Editor.add("plugins~image", function(E) {
          * 初始化函数
          */
         init: function() {
+            this.config = Lang.merge(defaultConfig, this.editor.config.pluginsConfig["image"] || {});
+
             this._renderUI();
             this._bindUI();
         },
@@ -1926,6 +2009,9 @@ KISSY.Editor.add("plugins~image", function(E) {
             var dialog = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]),
                 lang = this.lang;
 
+            // 添加自定义项
+            lang["local_extra"] = this.config["local_extra"] || "";
+
             dialog.className += " " + DIALOG_CLS;
             dialog.innerHTML = DIALOG_TMPL.replace(/\{([^}]+)\}/g, function(match, key) {
                 return lang[key] ? lang[key] : key;
@@ -1933,9 +2019,53 @@ KISSY.Editor.add("plugins~image", function(E) {
 
             this.dialog = dialog;
             this.form = dialog.getElementsByTagName("form")[0];
+            if(isIE) E.Dom.setItemUnselectable(dialog);
 
-            if(isIE) {
-                E.Dom.setItemUnselectable(dialog);
+            this._renderTabs();
+        },
+
+        _renderTabs: function() {
+            var lang = this.lang,
+                ul = Dom.getElementsByClassName(TAB_CLS, "ul", this.dialog)[0],
+                panels = Dom.getElementsByClassName(TAB_CONTENT_CLS, "div", this.dialog);
+
+            // 根据配置添加 tabs
+            var keys = this.config["tabs"].split("|"), html = "";
+            for(var k = 0, l = keys.length; k < l; k++) {
+                html += TABS_TMPL[keys[k]];
+            }
+
+            // 文案
+            ul.innerHTML = html.replace(/\{([^}]+)\}/g, function(match, key) {
+                return lang[key] ? lang[key] : key;
+            });
+
+            // 只有一个 tabs 时不显示
+            var tabs = ul.childNodes, len = panels.length;
+            if(tabs.length === 1) {
+                Dom.addClass(this.dialog, NO_TAB_CLS);
+            }
+
+            // 切换
+            switchTab(tabs[0]); // 默认选中第一个Tab
+            Event.on(tabs, "click", function() {
+                switchTab(this);
+            });
+
+            function switchTab(trigger) {
+                var j = 0, rel = trigger.getAttribute("rel");
+
+                for (var i = 0; i < len; i++) {
+                    if(tabs[i]) Dom.removeClass(tabs[i], SELECTED_TAB_CLS);
+                    panels[i].style.display = "none";
+
+                    if (panels[i].getAttribute("rel") == rel) {
+                        j = i;
+                    }
+                }
+
+                Dom.addClass(trigger, SELECTED_TAB_CLS);
+                panels[j].style.display = "";
             }
         },
 
@@ -1959,7 +2089,7 @@ KISSY.Editor.add("plugins~image", function(E) {
 
                 switch(target.className) {
                     case BTN_OK_CLS:
-                        self._insertImage(form.imageUrl.value);
+                        self._insertImage(form["imageUrl"].value);
                         break;
                     case BTN_CANCEL_CLS: // 直接往上冒泡，关闭对话框
                         break;
@@ -1974,7 +2104,7 @@ KISSY.Editor.add("plugins~image", function(E) {
          */
         _syncUI: function() {
             this.range = this.editor.getSelectionRange();
-            this.form.imageUrl.value = "";
+            this.form["imageUrl"].value = "";
         },
 
         /**
@@ -2007,8 +2137,6 @@ KISSY.Editor.add("plugins~image", function(E) {
 
  });
 
-// TODO:
-//  1. 图片上传功能
 KISSY.Editor.add("plugins~indent", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
@@ -2171,19 +2299,19 @@ KISSY.Editor.add("plugins~link", function(E) {
         timeStamp = new Date().getTime(),
         HREF_REG = /^\w+:\/\/.*|#.*$/,
 
-        DIALOG_CLS = "ks-editor-link-dialog",
-        NEW_LINK_CLS = "ks-editor-link-dialog-newlink-mode",
-        BTN_OK_CLS = "ks-editor-link-dialog-ok",
-        BTN_CANCEL_CLS = "ks-editor-link-dialog-cancel",
-        BTN_REMOVE_CLS = "ks-editor-link-dialog-remove",
+        DIALOG_CLS = "ks-editor-link",
+        NEW_LINK_CLS = "ks-editor-link-newlink-mode",
+        BTN_OK_CLS = "ks-editor-btn-ok",
+        BTN_CANCEL_CLS = "ks-editor-btn-cancel",
+        BTN_REMOVE_CLS = "ks-editor-link-remove",
         DEFAULT_HREF = "http://",
 
         DIALOG_TMPL = ['<form onsubmit="return false"><ul>',
-                          '<li class="ks-editor-link-dialog-href"><label>{href}</label><input name="href" size="40" value="http://" type="text" /></li>',
-                          '<li class="ks-editor-link-dialog-target"><input name="target" id="target_"', timeStamp ,' type="checkbox" /> <label for="target_"', timeStamp ,'>{target}</label></li>',
-                          '<li class="ks-editor-link-dialog-actions">',
+                          '<li class="ks-editor-link-href"><label>{href}</label><input name="href" size="40" value="http://" type="text" /></li>',
+                          '<li class="ks-editor-link-target"><input name="target" id="target_"', timeStamp ,' type="checkbox" /> <label for="target_"', timeStamp ,'>{target}</label></li>',
+                          '<li class="ks-editor-dialog-actions">',
                               '<button name="ok" class="', BTN_OK_CLS, '">{ok}</button>',
-                              '<button name="cancel" class="', BTN_CANCEL_CLS ,'">{cancel}</button>',
+                              '<span class="', BTN_CANCEL_CLS ,'">{cancel}</span>',
                               '<span class="', BTN_REMOVE_CLS ,'">{remove}</span>',
                           '</li>',
                       '</ul></form>'].join("");
@@ -2471,6 +2599,77 @@ KISSY.Editor.add("plugins~removeformat", function(E) {
     });
 });
 
+KISSY.Editor.add("plugins~resize", function(E) {
+
+    var Y = YAHOO.util, Event = Y.Event,
+        TYPE = E.PLUGIN_TYPE,
+
+        TMPL = '<span class="ks-editor-resize-larger" title="{larger_title}">{larger_text}</span>'
+             + '<span class="ks-editor-resize-smaller" title="{smaller_title}">{smaller_text}</span>';
+
+
+    E.addPlugin("resize", {
+
+        /**
+         * 种类：状态栏插件
+         */
+        type: TYPE.STATUSBAR_ITEM,
+
+        contentEl: null,
+
+        currentHeight: 0,
+
+        /**
+         * 初始化
+         */
+        init: function() {
+            this.contentEl = this.editor.container.childNodes[1];
+            this.currentHeight = parseInt(this.contentEl.style.height);
+
+            this.renderUI();
+            this.bindUI();
+        },
+
+        renderUI: function() {
+            var lang = this.lang;
+
+            this.domEl.innerHTML = TMPL.replace(/\{([^}]+)\}/g, function(match, key) {
+                            return lang[key] ? lang[key] : key;
+                        });
+        },
+
+        bindUI: function() {
+            var spans = this.domEl.getElementsByTagName("span"),
+                largerEl = spans[0],
+                smallerEl = spans[1],
+                contentEl = this.contentEl;
+
+            Event.on(largerEl, "click", function() {
+                this.currentHeight += 100;
+                contentEl.style.height = this.currentHeight + "px";
+            }, this, true);
+
+            Event.on(smallerEl, "click", function() {
+
+                // 不能小于 0
+                if (this.currentHeight < 100) {
+                    this.currentHeight = 0;
+                } else {
+                    this.currentHeight -= 100;
+                }
+
+                contentEl.style.height = this.currentHeight + "px";
+            }, this, true);
+
+        }
+    });
+
+ });
+
+/**
+ * TODO:
+ *   - 将全屏编辑也放入此处
+ */
 KISSY.Editor.add("plugins~save", function(E) {
 
     var Y = YAHOO.util, Event = Y.Event,
@@ -2752,20 +2951,74 @@ KISSY.Editor.add("plugins~undo", function(E) {
 
 KISSY.Editor.add("plugins~wordcount", function(E) {
 
-    var TYPE = E.PLUGIN_TYPE;
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
+        TYPE = E.PLUGIN_TYPE,
+        ALARM_CLS = "ks-editor-wordcount-alarm";
 
     E.addPlugin("wordcount", {
+
         /**
          * 种类：状态栏插件
          */
         type: TYPE.STATUSBAR_ITEM,
 
+        total: Infinity,
+
+        remain: Infinity,
+
+        threshold: 0,
+
+        remainEl: null,
+
         /**
-         * 响应函数
+         * 初始化
          */
-        exec: function() {
-            alert("haha");
+        init: function() {
+            this.total = this.lang["total"];
+            this.threshold = this.lang["threshold"];
+
+            this.renderUI();
+            this.bindUI();
+
+            // 确保更新字数在内容加载完成后
+            var self = this;
+            setTimeout(function() {
+                self.syncUI();
+            }, 500);
+        },
+
+        renderUI: function() {
+            this.domEl.innerHTML = this.lang["tmpl"]
+                    .replace("%remain%", "<em>" + this.total + "</em>");
+
+            this.remainEl = this.domEl.getElementsByTagName("em")[0];
+        },
+
+        bindUI: function() {
+            var editor = this.editor;
+
+            Event.on(editor.textarea, "keyup", this.syncUI, this, true);
+
+            Event.on(editor.contentDoc, "keyup", this.syncUI, this, true);
+            // TODO: 插入链接/表情等有问题
+            Event.on(editor.container, "click", this.syncUI, this, true);
+        },
+
+        syncUI: function() {
+            this.remain = this.total - this.editor.getData().length;
+            this.remainEl.innerHTML = this.remain;
+
+            if(this.remain <= this.threshold) {
+                Dom.addClass(this.domEl, ALARM_CLS);
+            } else {
+                Dom.removeClass(this.domEl, ALARM_CLS);
+            }
         }
     });
 
  });
+
+/**
+ * TODO:
+ *   - 考虑 GBK 编码下，一个中文字符长度为 2
+ */

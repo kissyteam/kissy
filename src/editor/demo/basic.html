@@ -3,11 +3,11 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=GB18030"/>
 <title>Editor Demo</title>
-<link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" type="text/css"/>
-<script type="text/javascript" src="../../lib/yui2/yahoo-dom-event.js"></script>
+<link rel="stylesheet" href="../../../build/cssreset-grids/reset-grids-min.css" type="text/css"/>
+<script type="text/javascript" src="../../../lib/yui2/yahoo-dom-event.js"></script>
 
-<link rel="stylesheet" href="themes/default/editor.css" type="text/css"/>
-<script type="text/javascript" src="editor.js"></script>
+<link rel="stylesheet" href="../themes/default/editor.css" type="text/css"/>
+<script type="text/javascript" src="../editor.js"></script>
 
 <style type="text/css">
     #demo-page {
@@ -106,12 +106,10 @@
 </div>
 
 <script type="text/javascript">
-
     var config = {
         base: "http://kissy.googlecode.com/svn/trunk/src/editor/",
         language: "zh-cn",
         toolbar: [
-            "undo", "redo",
             "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
             "",
             "link", "smiley", "image", "blockquote",
@@ -119,13 +117,15 @@
             "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight",
             "",
             "source"
-        ]
+        ],
+        pluginsConfig: {
+            image: {
+                tabs        : "local|link",
+                localExtra  : '<label><input name="needWatermark" type="checkbox" checked="checked" />图片加水印，防盗用</label>'
+            }
+        }
     };
-    
-    var editorDemo = new KISSY.Editor("demo", config);
-    //console.dir(KISSY.Editor);
-    //console.dir(editorDemo);
-
+    new KISSY.Editor("demo", config);
 </script>
 </body>
 </html>
