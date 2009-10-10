@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-10 16:20:47
-Revision: 183
+Date: 2009-10-10 23:29:46
+Revision: 185
 */
 /**
  * KISSY.Editor ¸»ÎÄ±¾±à¼­Æ÷
@@ -372,16 +372,16 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
               "ºÚÌå"             : "ºÚÌå",
               "Á¥Êé"             : "Á¥Êé",
               "¿¬Ìå"             : "¿¬Ìå_GB2312",
-              "Ó×Ô²"             : "Ó×Ô²",
+              //"Ó×Ô²"             : "Ó×Ô²",
               "Î¢ÈíÑÅºÚ"          : "Î¢ÈíÑÅºÚ",
-              "Courier New"     : "Courier New",
-              "Garamond"        : "Garamond",
               "Georgia"         : "Georgia",
-              "Impact"          : "Impact",
+              //"Garamond"        : "Garamond",
               "Times New Roman" : "Times New Roman",
-              "Arial"           : "Arial",
-              "Tahoma"          : "Tahoma",
+              "Impact"          : "Impact",
+              "Courier New"     : "Courier New",
               "Verdana"         : "Verdana"
+              //"Arial"           : "Arial",
+              //"Tahoma"          : "Tahoma",
           }
         },
         fontSize: {
@@ -1970,6 +1970,7 @@ KISSY.Editor.add("plugins~image", function(E) {
                       link: '<li rel="link">{tab_link}</li>',
                       album: '<li rel="album">{tab_album}</li>'
                     },
+
         DIALOG_TMPL = ['<form onsubmit="return false">',
                           '<ul class="', TAB_CLS ,' ks-clearfix">',
                           '</ul>',
@@ -3057,7 +3058,7 @@ KISSY.Editor.add("plugins~wordcount", function(E) {
             var self = this;
             setTimeout(function() {
                 self.syncUI();
-            }, 500);
+            }, 50);
         },
 
         renderUI: function() {

@@ -40,7 +40,7 @@ KISSY.Editor.add("plugins~wordcount", function(E) {
             var self = this;
             setTimeout(function() {
                 self.syncUI();
-            }, 500);
+            }, 50);
         },
 
         renderUI: function() {

@@ -25,16 +25,16 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
               "ºÚÌå"             : "ºÚÌå",
               "Á¥Êé"             : "Á¥Êé",
               "¿¬Ìå"             : "¿¬Ìå_GB2312",
-              "Ó×Ô²"             : "Ó×Ô²",
+              //"Ó×Ô²"             : "Ó×Ô²",
               "Î¢ÈíÑÅºÚ"          : "Î¢ÈíÑÅºÚ",
-              "Courier New"     : "Courier New",
-              "Garamond"        : "Garamond",
               "Georgia"         : "Georgia",
-              "Impact"          : "Impact",
+              //"Garamond"        : "Garamond",
               "Times New Roman" : "Times New Roman",
-              "Arial"           : "Arial",
-              "Tahoma"          : "Tahoma",
+              "Impact"          : "Impact",
+              "Courier New"     : "Courier New",
               "Verdana"         : "Verdana"
+              //"Arial"           : "Arial",
+              //"Tahoma"          : "Tahoma",
           }
         },
         fontSize: {
