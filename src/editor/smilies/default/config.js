@@ -5,8 +5,12 @@ KISSY.Editor.add("smilies~config~default", function(E) {
 
     E.Smilies["default"] = {
 
-        name: "Default",
+        name: "default",
 
+        mode: "icons",
+
+        cols: 5,
+        
         fileNames: [
                 "smile",  "confused",  "cool",      "cry",   "eek",
                 "angry",  "wink",      "sweat",     "lol",   "stun",

@@ -40,9 +40,9 @@ KISSY.Editor.add("plugins~save", function(E) {
          */
         filterData: function(data) {
 
-            data = data.replace(/<(\/?)([^>]+)>/g, function(m, slash, tag) {
+            data = data.replace(/<(\/?)([^>\s]+)([^>]*)>/g, function(m, slash, tag, attr) {
 
-                // 将 ie 的大写标签和 style 等属性值转换为小写
+                // 将 ie 的大写标签转换为小写
                 tag = tag.toLowerCase();
 
                 // 让标签语义化
@@ -50,14 +50,14 @@ KISSY.Editor.add("plugins~save", function(E) {
                     ret = tag;
 
                 // 仅针对 <tag> 这种不含属性的标签做进一步处理
-                if(tag.indexOf(" ") == -1 && map) {
+                if(map && !attr) {
                     ret = map["tag"];
                     if(!slash && map["style"]) {
                         ret += ' style="' + map["style"] + '"';
                     }
                 }
 
-                return "<" + slash + ret + ">";
+                return "<" + slash + ret + attr + ">";
             });
 
             return data;

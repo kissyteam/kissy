@@ -107,7 +107,7 @@ KISSY.Editor.add("plugins~image", function(E) {
                 panels = Dom.getElementsByClassName(TAB_CONTENT_CLS, "div", this.dialog);
 
             // ∏˘æ›≈‰÷√ÃÌº” tabs
-            var keys = this.config["tabs"].split("|"), html = "";
+            var keys = this.config["tabs"], html = "";
             for(var k = 0, l = keys.length; k < l; k++) {
                 html += TABS_TMPL[keys[k]];
             }

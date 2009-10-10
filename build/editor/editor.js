@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-10 09:20:08
-Revision: 182
+Date: 2009-10-10 16:20:47
+Revision: 183
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -163,11 +163,6 @@ KISSY.Editor.add("config", function(E) {
         theme: "default",
 
         /**
-         * 表情，可以指定多套
-         */
-        smiley: ["default"],
-
-        /**
          * Toolbar 上功能插件
          */
         toolbar: [
@@ -192,7 +187,7 @@ KISSY.Editor.add("config", function(E) {
         /**
          * 插件的配置
          */
-        pluginsConfig: {}
+        pluginsConfig: { }
     };
 
 });
@@ -1465,14 +1460,45 @@ KISSY.Editor.add("smilies~config~default", function(E) {
 
     E.Smilies["default"] = {
 
-        name: "Default",
+        name: "default",
 
+        mode: "icons",
+
+        cols: 5,
+        
         fileNames: [
                 "smile",  "confused",  "cool",      "cry",   "eek",
                 "angry",  "wink",      "sweat",     "lol",   "stun",
                 "razz",   "shy",       "rolleyes",  "sad",   "happy",
                 "yes",    "no",        "heart",     "idea",  "rose"
         ],
+
+        fileExt: "gif"
+    };
+
+});
+
+KISSY.Editor.add("smilies~config~wangwang", function(E) {
+
+    E.Smilies = E.Smilies || {};
+
+    E.Smilies["wangwang"] = {
+
+        name: "wangwang",
+
+        mode: "sprite",
+
+		base: "http://a.tbcdn.cn/sys/wangwang/smiley/48x48/",
+
+		spriteStyle: "background: url(http://a.tbcdn.cn/sys/wangwang/smiley/sprite.png) no-repeat -1px 0; width: 288px; height: 235px",
+
+        unitStyle: "width: 24px; height: 24px",
+
+		filePattern: {
+			start : 0,
+			end   : 98,
+		    step  : 1	
+		},
 
         fileExt: "gif"
     };
@@ -2034,7 +2060,7 @@ KISSY.Editor.add("plugins~image", function(E) {
                 panels = Dom.getElementsByClassName(TAB_CONTENT_CLS, "div", this.dialog);
 
             // 根据配置添加 tabs
-            var keys = this.config["tabs"].split("|"), html = "";
+            var keys = this.config["tabs"], html = "";
             for(var k = 0, l = keys.length; k < l; k++) {
                 html += TABS_TMPL[keys[k]];
             }
@@ -2715,9 +2741,9 @@ KISSY.Editor.add("plugins~save", function(E) {
          */
         filterData: function(data) {
 
-            data = data.replace(/<(\/?)([^>]+)>/g, function(m, slash, tag) {
+            data = data.replace(/<(\/?)([^>\s]+)([^>]*)>/g, function(m, slash, tag, attr) {
 
-                // 将 ie 的大写标签和 style 等属性值转换为小写
+                // 将 ie 的大写标签转换为小写
                 tag = tag.toLowerCase();
 
                 // 让标签语义化
@@ -2725,14 +2751,14 @@ KISSY.Editor.add("plugins~save", function(E) {
                     ret = tag;
 
                 // 仅针对 <tag> 这种不含属性的标签做进一步处理
-                if(tag.indexOf(" ") == -1 && map) {
+                if(map && !attr) {
                     ret = map["tag"];
                     if(!slash && map["style"]) {
                         ret += ' style="' + map["style"] + '"';
                     }
                 }
 
-                return "<" + slash + ret + ">";
+                return "<" + slash + ret + attr + ">";
             });
 
             return data;
@@ -2758,13 +2784,23 @@ KISSY.Editor.add("plugins~smiley", function(E) {
         TYPE = E.PLUGIN_TYPE,
 
         DIALOG_CLS = "ks-editor-smiley-dialog",
-        DIALOG_TMPL = '<div class="ks-editor-smiley-icons">{icons}</div>';
+        ICONS_CLS = "ks-editor-smiley-icons",
+        SPRITE_CLS = "ks-editor-smiley-sprite",
+
+        defaultConfig = {
+                tabs: ["default"]
+            };
 
     E.addPlugin("smiley", {
         /**
          * 种类：普通按钮
          */
         type: TYPE.TOOLBAR_BUTTON,
+
+        /**
+         * 配置项
+         */
+        config: {},
 
         /**
          * 关联的对话框
@@ -2780,6 +2816,8 @@ KISSY.Editor.add("plugins~smiley", function(E) {
          * 初始化函数
          */
         init: function() {
+            this.config = Lang.merge(defaultConfig, this.editor.config.pluginsConfig[this.name] || {});
+
             this._renderUI();
             this._bindUI();
         },
@@ -2788,44 +2826,66 @@ KISSY.Editor.add("plugins~smiley", function(E) {
          * 初始化对话框界面
          */
         _renderUI: function() {
-            var dialog = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]),
-                lang = this.lang;
+            var dialog = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]);
 
             dialog.className += " " + DIALOG_CLS;
-            dialog.innerHTML = DIALOG_TMPL
-                    .replace("{icons}", this._getIconsList());
-
             this.dialog = dialog;
+            this._renderDialog();
 
-            if(isIE) {
-                E.Dom.setItemUnselectable(dialog);
-            }
+            if(isIE) E.Dom.setItemUnselectable(dialog);
         },
 
-        _getIconsList: function() {
-            var config = this.editor.config,
-                smileyName = config.smiley,
-                base = config.base + "smilies/" + smileyName + "/",
-                smiley = E.Smilies[smileyName],
-                fileNames = smiley["fileNames"],
-                fileExt = "." + smiley["fileExt"],
-                code = [],
+        _renderDialog: function() {
+            var smileyConfig = E.Smilies[this.config["tabs"][0]], // TODO: 支持多个 tab
+                mode = smileyConfig["mode"];
+
+            if(mode === "icons") this._renderIcons(smileyConfig);
+            else if(mode === "sprite") this._renderSprite(smileyConfig);
+
+        },
+
+        _renderIcons: function(config) {
+            var base = this.editor.config.base + "smilies/" + config["name"] + "/",
+                fileNames = config["fileNames"],
+                fileExt = "." + config["fileExt"],
+                cols = config["cols"],
+                htmlCode = [],
                 i, len = fileNames.length, name;
 
+            htmlCode.push('<div class="' + ICONS_CLS + '">');
             for(i = 0; i < len; i++) {
                 name = fileNames[i];
 
-                code.push(
+                htmlCode.push(
                         '<img src="' + base +  name + fileExt
                         + '" alt="' + name
                         + '" title="' + name
                         + '" />');
 
-                // TODO: 让 5 可配置
-                if(i % 5 === 4) code.push("<br />");
+                if(i % cols === cols - 1) htmlCode.push("<br />");
             }
+            htmlCode.push('</div');
 
-            return code.join("");
+            this.dialog.innerHTML = htmlCode.join("");
+        },
+
+        _renderSprite: function(config) {
+            var base = config.base,
+                filePattern = config["filePattern"],
+                fileExt = "." + config["fileExt"],
+                len = filePattern.end + 1,
+                step = filePattern.step,
+                i, code = [];
+
+            code.push('<div class="' + SPRITE_CLS + ' ks-clearfix" style="' + config["spriteStyle"] + '">');
+            for(i = 0; i < len; i += step) {
+                code.push(
+                        '<span data-icon="' + base +  i + fileExt
+                        + '" style="' + config["unitStyle"] + '"></span>');
+            }
+            code.push('</div');
+
+            this.dialog.innerHTML = code.join("");
         },
 
         /**
@@ -2841,6 +2901,9 @@ KISSY.Editor.add("plugins~smiley", function(E) {
                 switch(target.nodeName) {
                     case "IMG":
                         self._insertImage(target.src, target.getAttribute("alt"));
+                        break;
+                    case "SPAN":
+                        self._insertImage(target.getAttribute("data-icon"), "");
                         break;
                     default: // 点击在非按钮处，停止冒泡，保留对话框
                         Event.stopPropagation(ev);

@@ -25,6 +25,7 @@
 <script type="text/javascript" src="core/statusbar.js"></script>
 
 <script type="text/javascript" src="smilies/default/config.js"></script>
+<script type="text/javascript" src="smilies/wangwang/config.js"></script>
 
 <!-- 所有 plugin 文件加载独立（顺序无关） -->
 <script type="text/javascript" src="plugins/basic/plugin.js"></script>
@@ -201,8 +202,11 @@
         language: "zh-cn",
         pluginsConfig: {
             image: {
-                tabs        : "local|link|album",
+                tabs        : ["local", "link", "album"],
                 local_extra : '<label><input name="needWatermark" type="checkbox" checked="checked" />图片加水印，防盗用</label>'
+            },
+            smiley: {
+                tabs        : ["wangwang"]
             }
         }
     };

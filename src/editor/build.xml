@@ -26,6 +26,7 @@
             <path path="core/menu.js"/>
 
             <path path="smilies/default/config.js"/>
+            <path path="smilies/wangwang/config.js"/>
 
             <fileset dir="plugins">
               <filename name="**/*.js"/>

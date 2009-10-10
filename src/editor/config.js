@@ -18,11 +18,6 @@ KISSY.Editor.add("config", function(E) {
         theme: "default",
 
         /**
-         * 表情，可以指定多套
-         */
-        smiley: ["default"],
-
-        /**
          * Toolbar 上功能插件
          */
         toolbar: [
@@ -47,7 +42,7 @@ KISSY.Editor.add("config", function(E) {
         /**
          * 插件的配置
          */
-        pluginsConfig: {}
+        pluginsConfig: { }
     };
 
 });

@@ -400,6 +400,20 @@ li.ks-editor-image-tab-selected {
 .ks-editor-smiley-icons img {
     cursor: pointer;
     margin: 2px 5px;
+    border: 1px solid #fff;
+}
+.ks-editor-smiley-sprite {
+    margin: 5px 5px 10px;
+}
+.ks-editor-smiley-sprite span {
+    display: block;
+    float: left;
+    cursor: pointer;
+    border: 1px solid #fff;
+}
+.ks-editor-smiley-icons img:hover,
+.ks-editor-smiley-sprite span:hover {
+    border: 1px solid #808080;
 }
 
 /* dialog common */
