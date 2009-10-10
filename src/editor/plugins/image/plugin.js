@@ -17,6 +17,7 @@ KISSY.Editor.add("plugins~image", function(E) {
                       link: '<li rel="link">{tab_link}</li>',
                       album: '<li rel="album">{tab_album}</li>'
                     },
+
         DIALOG_TMPL = ['<form onsubmit="return false">',
                           '<ul class="', TAB_CLS ,' ks-clearfix">',
                           '</ul>',
