@@ -91,6 +91,8 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
             label_link    : "请输入图片地址：",
             label_local   : "请选择本地图片：",
             label_album   : "请选择相册图片：",
+            uploading     : "正在上传...",
+            upload_error  : "对不起，上传文件时发生了错误：",
             ok            : "插入"
         },
         insertOrderedList: {

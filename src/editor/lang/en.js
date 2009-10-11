@@ -88,6 +88,8 @@ KISSY.Editor.add("lang~en", function(E) {
             label_link    : "Enter image web address:",
             label_local   : "Browse your computer for the image file to upload:",
             label_album   : "Select the image from your album:",
+            uploading     : "Uploading...",
+            upload_error  : "Exception occurs when uploading file.",
             ok            : "Insert"
         },
         insertOrderedList: {
@@ -135,7 +137,7 @@ KISSY.Editor.add("lang~en", function(E) {
           title           : "Remove Format"
         },
         wordcount: {
-          tmpl            : "Remain %remain% words (include html code)"
+          tmpl            : "Remain %remain% words (include HTML code)"
         },
         resize: {
             larger_text   : "Larger",

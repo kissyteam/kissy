@@ -89,6 +89,14 @@ KISSY.Editor.add("core~menu", function(E) {
             return el.style[VISIBILITY] != HIDDEN;
         },
 
+        /**
+         * 隐藏编辑器当前打开的下拉框
+         */
+        hideActiveDropMenu: function(editor) {
+            this._hide(editor.activeDropMenu);
+            editor.activeDropMenu = null;
+        },
+
         _hide: function(el) {
             if(el) {
                 if(shim) {

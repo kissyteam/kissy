@@ -4,7 +4,9 @@
 <meta http-equiv="content-type" content="text/html; charset=GB18030"/>
 <title>Editor Test</title>
 <link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" type="text/css"/>
-<script type="text/javascript" src="../../lib/yui2/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="../../lib/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="../../lib/yui2/connection/connection-min.js"></script>
+<script type="text/javascript" src="../../lib/yui2/json/json-min.js"></script>
 
 <link rel="stylesheet" href="themes/default/editor.css" type="text/css"/>
 
@@ -202,11 +204,24 @@
         language: "zh-cn",
         pluginsConfig: {
             image: {
-                tabs        : ["local", "link", "album"],
-                local_extra : '<label><input name="needWatermark" type="checkbox" checked="checked" />图片加水印，防盗用</label>'
+                tabs              : ["local", "link", "album"],
+                upload: {
+                    actionUrl     : "http://test.yubo2.com/kissy/src/editor/demo/upload.php",
+                    //actionUrl     : "http://bangpai.taobao.com/json/image_upload.htm",
+                    //enableXdr     : true,
+                    connectionSwf : "http://test.yubo.com/assets/yui/2.8.0r4/build/connection/connection.swf",
+                    formatJSON    : function(data) {
+                        var ret = [];
+                        for(var key in data) {
+                            ret.push(data[key]);
+                        }
+                        return ret;
+                    },
+                    extraCode     : '<label><input name="needWatermark" type="checkbox" checked="checked" />图片加水印，防盗用</label>',
+                }
             },
             smiley: {
-                tabs        : ["wangwang"]
+                tabs         : ["wangwang"]
             }
         }
     };

@@ -1,7 +1,7 @@
 
 KISSY.Editor.add("plugins~image", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Connect = Y.Connect, Lang = YAHOO.lang,
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
 
@@ -10,6 +10,8 @@ KISSY.Editor.add("plugins~image", function(E) {
         BTN_CANCEL_CLS = "ks-editor-btn-cancel",
         TAB_CLS = "ks-editor-image-tabs",
         TAB_CONTENT_CLS = "ks-editor-image-tab-content",
+        UPLOADING_CLS = "ks-editor-image-uploading",
+        ACTIONS_CLS = "ks-editor-dialog-actions",
         NO_TAB_CLS = "ks-editor-image-no-tab",
         SELECTED_TAB_CLS = "ks-editor-image-tab-selected",
 
@@ -18,30 +20,40 @@ KISSY.Editor.add("plugins~image", function(E) {
                       album: '<li rel="album">{tab_album}</li>'
                     },
 
-        DIALOG_TMPL = ['<form onsubmit="return false">',
+        DIALOG_TMPL = ['<form action="javascript: void(0)">',
                           '<ul class="', TAB_CLS ,' ks-clearfix">',
                           '</ul>',
                           '<div class="', TAB_CONTENT_CLS, '" rel="local" style="display: none">',
                               '<label>{label_local}</label>',
-                              '<input type="file" size="40" name="localPath" />',
-                              '{local_extra}',
+                              '<input type="file" size="40" name="imgFile" />',
+                              '{local_extraCode}',
                           '</div>',
                           '<div class="', TAB_CONTENT_CLS, '" rel="link">',
                               '<label>{label_link}</label>',
-                              '<input name="imageUrl" size="50" />',
+                              '<input name="imgUrl" size="50" />',
                           '</div>',
                           '<div class="', TAB_CONTENT_CLS, '" rel="album" style="display: none">',
                               '<label>{label_album}</label>',
                               '<p style="width: 300px">尚未实现...</p>', // TODO: 从相册中选择图片
                           '</div>',
-                          '<div class="ks-editor-dialog-actions">',
+                          '<div class="', UPLOADING_CLS, '" style="display: none">',
+                              '<p style="width: 300px">{uploading}</p>',
+                          '</div>',
+                          '<div class="', ACTIONS_CLS ,'">',
                               '<button name="ok" class="', BTN_OK_CLS, '">{ok}</button>',
                               '<span class="', BTN_CANCEL_CLS ,'">{cancel}</span>',
                           '</div>',
                       '</form>'].join(""),
 
         defaultConfig = {
-            tabs: "link"
+            tabs: ["link"],
+            upload: {
+                actionUrl: "",
+                enableXdr: false,
+                connectionSwf: "http://a.tbcdn.cn/yui/2.8.0r4/build/connection/connection.swf",
+                formatJSON: function(data) { return data; },
+                extraCode: ""
+            }
         };
 
     E.addPlugin("image", {
@@ -70,14 +82,25 @@ KISSY.Editor.add("plugins~image", function(E) {
          */
         range: null,
 
+        currentTab: null,
+        currentPanel: null,
+        uploadingPanel: null,
+        actionsBar: null,
+
         /**
          * 初始化函数
          */
         init: function() {
-            this.config = Lang.merge(defaultConfig, this.editor.config.pluginsConfig[this.name] || {});
+            var pluginConfig = this.editor.config.pluginsConfig[this.name] || {};
+            this.config = Lang.merge(defaultConfig, pluginConfig);
+            this.config.upload = Lang.merge(defaultConfig.upload, pluginConfig.upload || {});
 
             this._renderUI();
             this._bindUI();
+
+            this.actionsBar = Dom.getElementsByClassName(ACTIONS_CLS, "div", this.dialog)[0];
+            this.uploadingPanel = Dom.getElementsByClassName(UPLOADING_CLS, "div", this.dialog)[0];
+            this.config.upload.enableXdr && this._initXdrUpload();
         },
 
         /**
@@ -88,7 +111,7 @@ KISSY.Editor.add("plugins~image", function(E) {
                 lang = this.lang;
 
             // 添加自定义项
-            lang["local_extra"] = this.config["local_extra"] || "";
+            lang["local_extraCode"] = this.config.upload.extraCode;
 
             dialog.className += " " + DIALOG_CLS;
             dialog.innerHTML = DIALOG_TMPL.replace(/\{([^}]+)\}/g, function(match, key) {
@@ -103,7 +126,7 @@ KISSY.Editor.add("plugins~image", function(E) {
         },
 
         _renderTabs: function() {
-            var lang = this.lang,
+            var lang = this.lang, self = this,
                 ul = Dom.getElementsByClassName(TAB_CLS, "ul", this.dialog)[0],
                 panels = Dom.getElementsByClassName(TAB_CONTENT_CLS, "div", this.dialog);
 
@@ -132,7 +155,6 @@ KISSY.Editor.add("plugins~image", function(E) {
 
             function switchTab(trigger) {
                 var j = 0, rel = trigger.getAttribute("rel");
-
                 for (var i = 0; i < len; i++) {
                     if(tabs[i]) Dom.removeClass(tabs[i], SELECTED_TAB_CLS);
                     panels[i].style.display = "none";
@@ -144,6 +166,9 @@ KISSY.Editor.add("plugins~image", function(E) {
 
                 Dom.addClass(trigger, SELECTED_TAB_CLS);
                 panels[j].style.display = "";
+
+                self.currentTab = trigger.getAttribute("rel");
+                self.currentPanel = panels[j];
             }
         },
 
@@ -151,7 +176,7 @@ KISSY.Editor.add("plugins~image", function(E) {
          * 绑定事件
          */
         _bindUI: function() {
-            var form = this.form, self = this;
+            var self = this;
 
             // 显示/隐藏对话框时的事件
             Event.on(this.domEl, "click", function() {
@@ -163,11 +188,17 @@ KISSY.Editor.add("plugins~image", function(E) {
 
             // 注册表单按钮点击事件
             Event.on(this.dialog, "click", function(ev) {
-                var target = Event.getTarget(ev);
+                var target = Event.getTarget(ev),
+                    currentTab = self.currentTab;
 
                 switch(target.className) {
                     case BTN_OK_CLS:
-                        self._insertImage(form["imageUrl"].value);
+                        if(currentTab === "local") {
+                            Event.stopPropagation(ev);
+                            self._insertLocalImage();
+                        } else {
+                            self._insertWebImage();
+                        }
                         break;
                     case BTN_CANCEL_CLS: // 直接往上冒泡，关闭对话框
                         break;
@@ -178,21 +209,115 @@ KISSY.Editor.add("plugins~image", function(E) {
         },
 
         /**
+         * 初始化跨域上传
+         */
+        _initXdrUpload: function() {
+            var tabs = this.config["tabs"];
+
+            for(var i = 0, len = tabs.length; i < len; i++) {
+                if(tabs[i] === "local") { // 有上传 tab 时才进行以下操作
+                    Connect.transport(this.config.upload.connectionSwf);
+                    //Connect.xdrReadyEvent.subscribe(function(){ alert("xdr ready"); });
+                    break;
+                }
+            }
+        },
+
+        _insertLocalImage: function() {
+            var form = this.form,
+                config = this.config,
+                imgFile = form["imgFile"].value,
+                actionUrl = config.upload.actionUrl,
+                self = this;
+
+            if (imgFile && actionUrl) {
+
+                // display uploading
+                this.uploadingPanel.style.display = "";
+                this.currentPanel.style.display = "none";
+                this.actionsBar.style.display = "none";
+
+                // send XHR
+                Connect.setForm(form, true);
+                Connect.asyncRequest("post", actionUrl, {
+                    upload: function(o) {
+                        try {
+                            // 标准格式如下：
+                            // 成功时，返回 ["0", "图片地址"]
+                            // 失败时，返回 ["1", "错误信息"]
+                            alert(o.responseText);
+                            var data = config.upload.formatJSON(Lang.JSON.parse(o.responseText));
+                            if (data[0] == "0") {
+                                self._insertImage(data[1]);
+                                self._hideDialog();
+                            } else {
+                                self._onUploadError(data[1]);
+                            }
+                        }
+                        catch(ex) {
+                            self._onUploadError(
+                                    Lang.dump(ex) +
+                                    "\no = " + Lang.dump(o) +
+                                    "\n[from upload catch code]");
+                        }
+                    },
+                    failure: function(o) {
+                        self._onUploadError(Lang.dump(o) + "\n[from failure code]");
+                    },
+                    xdr: config.upload.enableXdr
+                });
+            } else {
+                self._hideDialog();
+            }
+        },
+
+        _onUploadError: function(msg) {
+            alert(this.lang["upload_error"] + "\n\n" + msg);
+            this._hideDialog();
+
+            // 测试了以下错误类型：
+            //   - json parse 异常，包括 actionUrl 不存在、未登录、跨域等各种因素
+            //   - 服务器端返回错误信息 ["1", "error msg"]
+        },
+
+        _insertWebImage: function() {
+            var imgUrl = this.form["imgUrl"].value;
+            imgUrl && this._insertImage(imgUrl);
+        },
+
+        /**
+         * 隐藏对话框
+         */
+        _hideDialog: function() {
+            var activeDropMenu = this.editor.activeDropMenu;
+            if(activeDropMenu && Dom.isAncestor(activeDropMenu, this.dialog)) {
+                E.Menu.hideActiveDropMenu(this.editor);
+            }
+        },
+
+        /**
          * 更新界面上的表单值
          */
         _syncUI: function() {
-            this.range = this.editor.getSelectionRange();
-            this.form["imageUrl"].value = "";
+            this.range = this.editor.getSelectionRange(); // 保存 range
+
+            // reset
+            this.form["imgUrl"].value = "";
+            this.form["imgFile"].value = "";
+
+            this.uploadingPanel.style.display = "none";
+            this.currentPanel.style.display = "";
+            this.actionsBar.style.display = "";
         },
 
         /**
          * 插入图片
          */
-        _insertImage: function(imageUrl) {
-            imageUrl = Lang.trim(imageUrl);
+        _insertImage: function(imgUrl) {
+            imgUrl = Lang.trim(imgUrl);
 
             // url 为空时，不处理
-            if (imageUrl.length === 0) {
+            if (imgUrl.length === 0) {
                 return;
             }
 
@@ -203,14 +328,19 @@ KISSY.Editor.add("plugins~image", function(E) {
             // 插入图片
             if (!isIE) {
                 img = document.createElement("img");
-                img.src = imageUrl;
+                img.src = imgUrl;
                 img.setAttribute("title", "");
                 range.insertNode(img);
             } else {
                 range.select();
-                editor.execCommand("insertImage", imageUrl);
+                editor.execCommand("insertImage", imgUrl);
             }
         }
     });
 
  });
+
+/**
+ * TODO:
+ *   - 跨域支持
+ */

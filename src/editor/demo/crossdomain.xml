@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<cross-domain-policy>
+	<site-control permitted-cross-domain-policies="master-only"/>
+	<allow-access-from domain="*"/>
+</cross-domain-policy>
