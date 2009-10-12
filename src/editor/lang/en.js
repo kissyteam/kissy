@@ -137,7 +137,7 @@ KISSY.Editor.add("lang~en", function(E) {
           title           : "Remove Format"
         },
         wordcount: {
-          tmpl            : "Remain %remain% words (include HTML code)"
+          tmpl            : "Remain %remain% words (include html code)"
         },
         resize: {
             larger_text   : "Larger",
