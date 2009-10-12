@@ -49,9 +49,11 @@ KISSY.Editor.add("plugins~image", function(E) {
             tabs: ["link"],
             upload: {
                 actionUrl: "",
+                filter: "*",
+                filterMsg: "",
                 enableXdr: false,
                 connectionSwf: "http://a.tbcdn.cn/yui/2.8.0r4/build/connection/connection.swf",
-                formatJSON: function(data) { return data; },
+                formatResponse: function(data) { return data; },
                 extraCode: ""
             }
         };
@@ -225,19 +227,29 @@ KISSY.Editor.add("plugins~image", function(E) {
 
         _insertLocalImage: function() {
             var form = this.form,
-                config = this.config,
+                uploadConfig = this.config.upload,
                 imgFile = form["imgFile"].value,
-                actionUrl = config.upload.actionUrl,
-                self = this;
+                actionUrl = uploadConfig.actionUrl,
+                self = this, ext;
 
             if (imgFile && actionUrl) {
 
-                // display uploading
+                // 检查文件类型是否正确
+                if(uploadConfig.filter !== "*") {
+                    ext = imgFile.substring(imgFile.lastIndexOf(".") + 1).toLowerCase();
+                    if(uploadConfig.filter.indexOf(ext) == -1) {
+                        alert(uploadConfig.filterMsg);
+                        self.form.reset();
+                        return;
+                    }
+                }
+
+                // 显示上传滚动条
                 this.uploadingPanel.style.display = "";
                 this.currentPanel.style.display = "none";
                 this.actionsBar.style.display = "none";
 
-                // send XHR
+                // 发送 XHR
                 Connect.setForm(form, true);
                 Connect.asyncRequest("post", actionUrl, {
                     upload: function(o) {
@@ -245,8 +257,7 @@ KISSY.Editor.add("plugins~image", function(E) {
                             // 标准格式如下：
                             // 成功时，返回 ["0", "图片地址"]
                             // 失败时，返回 ["1", "错误信息"]
-                            alert(o.responseText);
-                            var data = config.upload.formatJSON(Lang.JSON.parse(o.responseText));
+                            var data = uploadConfig.formatResponse(Lang.JSON.parse(o.responseText));
                             if (data[0] == "0") {
                                 self._insertImage(data[1]);
                                 self._hideDialog();
@@ -261,10 +272,7 @@ KISSY.Editor.add("plugins~image", function(E) {
                                     "\n[from upload catch code]");
                         }
                     },
-                    failure: function(o) {
-                        self._onUploadError(Lang.dump(o) + "\n[from failure code]");
-                    },
-                    xdr: config.upload.enableXdr
+                    xdr: uploadConfig.enableXdr
                 });
             } else {
                 self._hideDialog();
@@ -302,9 +310,9 @@ KISSY.Editor.add("plugins~image", function(E) {
             this.range = this.editor.getSelectionRange(); // 保存 range
 
             // reset
-            this.form["imgUrl"].value = "";
-            this.form["imgFile"].value = "";
+            this.form.reset();
 
+            // restore
             this.uploadingPanel.style.display = "none";
             this.currentPanel.style.display = "";
             this.actionsBar.style.display = "";

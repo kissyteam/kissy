@@ -204,20 +204,19 @@
         language: "zh-cn",
         pluginsConfig: {
             image: {
-                tabs              : ["local", "link", "album"],
+                tabs               : ["local", "link", "album"],
                 upload: {
-                    actionUrl     : "http://test.yubo2.com/kissy/src/editor/demo/upload.php",
-                    //actionUrl     : "http://bangpai.taobao.com/json/image_upload.htm",
-                    //enableXdr     : true,
-                    connectionSwf : "http://test.yubo.com/assets/yui/2.8.0r4/build/connection/connection.swf",
-                    formatJSON    : function(data) {
+                    actionUrl      : "http://t-yubo/kissy/src/editor/demo/upload.php",
+                    filter         : "png|gif|jpg|jpeg",
+                    filterMsg      : "仅支持 JPG, PNG 和 GIF 图片，请重新选择。",
+                    //actionUrl      : "http://bangpai.taobao.com/json/image_upload.htm",
+                    //enableXdr      : true,
+                    formatResponse : function(data) {
                         var ret = [];
-                        for(var key in data) {
-                            ret.push(data[key]);
-                        }
+                        for(var key in data) ret.push(data[key]);
                         return ret;
                     },
-                    extraCode     : '<label><input name="needWatermark" type="checkbox" checked="checked" />图片加水印，防盗用</label>',
+                    extraCode      : '<label><input name="needWatermark" type="checkbox" checked="checked" />图片加水印，防盗用</label>'
                 }
             },
             smiley: {
