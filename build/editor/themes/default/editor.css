@@ -460,7 +460,8 @@ li.ks-editor-image-tab-selected {
     background-color: #E5E5E5;
     padding: 4px 0 5px;
     border-top: 1px solid #DFDFDF;
-    line-height: 1;
+    height: 16px;
+    line-height: 16px;
     zoom: 1;
     /* 高度自适应，正常情况下，单行高度 23px */
 }

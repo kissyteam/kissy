@@ -267,7 +267,7 @@
 								<th>内容：</th>
 								<td>
 									<!--编辑器本体-->
-									<textarea name="_fmw.p._0.c" id="msgpost" cols="50" rows="10"></textarea>
+									<textarea name="_fmw.p._0.c" id="msgpost" cols="50" rows="10" style="width: 760px; height: 200px"></textarea>
 									<p id="sessionHint"><font color='red'>温馨提示：请在60分00秒之内提交，否则将容易丢失您刚刚输入的内容。</font></p>
 										
 									<p class="verify">
@@ -321,15 +321,15 @@
                 base: "http://10.1.21.23/kissy/build/editor/",
                 language: "zh-cn",
                 toolbar: [
-                    "undo", "redo",
+                    "source", "", "undo", "redo",
+                    "",
                     "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
                     "",
                     "link", "smiley", "image",
                     "",
-                    "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight",
-                    "",
-                    "source"
+                    "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight"
                 ],
+                statusbar: ["resize"],
                 pluginsConfig: {
                     image: {
                         tabs               : ["local", "link"],
