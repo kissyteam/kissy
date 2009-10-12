@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-09-17 13:11:31
-Revision: 151
+Date: 2009-10-12 13:37:54
+Revision: 191
 */
 /**
  * KISSY.Monitor 前端性能监控脚本
@@ -198,3 +198,9 @@ var KISSY = window.KISSY || {};
  *     这时监控不到图片的 onload（因为已经完成）
  *     但对于 detail 等绝大部分页面而言，不会出现这种情况
  */
+
+// TODO:
+//  1. 浏览器变化趋势图
+//  2. Flash, SilverLight, Gear 等安装情况
+//  3. 点击热图统计
+//  4. 用户滚动条状况

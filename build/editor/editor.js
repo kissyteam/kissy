@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-12 11:02:37
-Revision: 187
+Date: 2009-10-12 13:37:51
+Revision: 191
 */
 /**
  * KISSY.Editor ¸»ÎÄ±¾±à¼­Æ÷
@@ -330,7 +330,7 @@ KISSY.Editor.add("lang~en", function(E) {
           title           : "Remove Format"
         },
         wordcount: {
-          tmpl            : "Remain %remain% words (include HTML code)"
+          tmpl            : "Remain %remain% words (include html code)"
         },
         resize: {
             larger_text   : "Larger",

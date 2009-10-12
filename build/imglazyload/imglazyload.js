@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-09-22 14:56:03
-Revision: 160
+Date: 2009-10-12 13:37:52
+Revision: 191
 */
 /**
  * KISSY.ImageLazyload 图片延迟加载组件
@@ -242,4 +242,10 @@ var KISSY = window.KISSY || {};
  *  2. 对于淘宝 srp 页面，将后一半图片延迟加载，是一个不错的权衡。
  *  3. 上面 2 的缺点是，如用用户屏幕很高，第一屏露出了 data-src 项，则当用户不滚动屏幕时，
  *     延迟的空白图片永远不会加载。（基本上可以）
+ */
+
+/**
+ * TODO:
+ *   - 背景图片的延迟加载
+ *   - 加载中的指示器
  */

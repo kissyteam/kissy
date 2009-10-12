@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-09-16 22:52:22
-Revision: 148
+Date: 2009-10-12 13:37:48
+Revision: 191
 */
 /*
 CSS Reset
@@ -55,7 +55,7 @@ q:before, q:after { content: ''; }
 
 /** 重置表单元素 **/
 legend { color: #000; } /* for ie6 */
-fieldset, img { border: none; } /* img 搭车：让链接里的 img 无边框 */
+fieldset, img { border: 0; } /* img 搭车：让链接里的 img 无边框 */
 /* 注：optgroup 无法扶正 */
 button, input, select, textarea {
     font-size: 100%; /* 使得表单元素在 ie 下能继承字体大小 */
@@ -69,7 +69,7 @@ table {
 
 /** 其它 **/
 hr {
-    border: none;
+    border: 0;
     height: 1px;
     *color: #fff; /* for ie7- */
 }
