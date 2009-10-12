@@ -19,3 +19,9 @@ KISSY.Editor.add("plugins~undo", function(E) {
     });
 
  });
+
+/**
+ * TODO:
+ *   - ie 下，只要有 dom 操作，undo 和 redo 就会失效。
+ *     http://swik.net/qooxdoo/qooxdoo+news/Clashed+with+IE%E2%80%99s+execCommand/cj7g7
+ */

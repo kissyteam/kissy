@@ -2,10 +2,11 @@
 
  ~ 起始字符，在 p 里面
  ~ 回车，IE 生成 p, Firefox 生成 br
- ~ 按钮状态的动态更新
+ ~ 按钮状态的动态更新（包括按钮选中状态的更新、字体字号的更新、颜色的动态更新等）
  ~ 编辑区域的拉伸
  ~ 快捷键支持
  ~ 已标记的待完善的 TODOs
+ ~ google code 上 WontFix 的 bug
 
  ~ maxmize
  ~ removeformat
@@ -14,8 +15,8 @@
  ~ table
  ~ flash
 
- ~ bug fix
- ~ 帮派日常（10月9日 - 10月22日）
+
+ ~ 帮派日常 & bug fix（10月9日 - 10月22日）
 
  ~ 编辑器 WordPress 插件
  ~ 清羽后台知识库系统（10月前需要做好 format/template/table 插件）
