@@ -313,12 +313,12 @@
 	</script>
 -->
     <!-- KISSY Editor START --->
-    <link id="ks-editor-style" rel="stylesheet" href="http://kissy.googlecode.com/svn/trunk/build/editor/themes/default/editor-min.css" type="text/css"/>
-    <script type="text/javascript" src="http://kissy.googlecode.com/svn/trunk/build/editor/editor-min.js"></script>
+    <link id="ks-editor-style" rel="stylesheet" href="http://10.1.21.23/kissy/build/editor/themes/default/editor-min.css" type="text/css"/>
+    <script type="text/javascript" src="http://10.1.21.23/kissy/build/editor/editor-min.js"></script>
     <script type="text/javascript">
         YAHOO.util.Event.onDOMReady(function() {
             new KISSY.Editor("msgpost", {
-                base: "http://kissy.googlecode.com/svn/trunk/build/editor/",
+                base: "http://10.1.21.23/kissy/build/editor/",
                 language: "zh-cn",
                 toolbar: [
                     "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
@@ -331,8 +331,20 @@
                 ],
                 pluginsConfig: {
                     image: {
-                        tabs        : ["local", "link"],
-                        local_extra  : '<label><input name="needWatermark" type="checkbox" checked="checked" />图片加水印，防盗用</label>'
+                        tabs               : ["local", "link"],
+                        upload: {
+                            actionUrl      : "http://10.1.21.23/kissy/src/editor/demo/upload.php",
+                            filter         : "png|gif|jpg|jpeg",
+                            filterMsg      : "仅支持 JPG, PNG 和 GIF 图片，请重新选择。",
+                            //actionUrl      : "http://bangpai.taobao.com/json/image_upload.htm",
+                            //enableXdr      : true,
+                            formatResponse : function(data) {
+                                var ret = [];
+                                for (var key in data) ret.push(data[key]);
+                                return ret;
+                            },
+                            extraCode      : '<label><input name="needWatermark" type="checkbox" checked="checked" />图片加水印，防盗用</label>'
+                        }
                     },
                     wordcount: {
                         total       : 20000,
