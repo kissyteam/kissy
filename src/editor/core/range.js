@@ -29,9 +29,9 @@ KISSY.Editor.add("core~range", function(E) {
         },
 
         /**
-         * 获取起始点所在容器
+         * 获取容器
          */
-        getContainer: function(range) {
+        getCommonAncestor: function(range) {
             return range.startContainer || // w3c
                    (range.parentElement && range.parentElement()) || // ms TextRange
                    (range.commonParentElement && range.commonParentElement()); // ms IHTMLControlRange

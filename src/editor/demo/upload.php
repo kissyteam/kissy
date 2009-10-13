@@ -3,7 +3,7 @@
  $HOST = $_SERVER['HTTP_HOST'];
 
  if(DIRECTORY_SEPARATOR=='\\') {
-	 sleep(1); // 加延时，查看进度条效果
+	 //sleep(1); // 加延时，查看进度条效果
 	 $uploaddir = 'e:\\web_root\\htdocs\\kissy\\src\\editor\\demo\\uploads\\';
  }
 

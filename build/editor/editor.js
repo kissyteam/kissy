@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-12 18:07:34
-Revision: 193
+Date: 2009-10-13 17:35:06
+Revision: 195
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -735,9 +735,9 @@ KISSY.Editor.add("core~range", function(E) {
         },
 
         /**
-         * 获取起始点所在容器
+         * 获取容器
          */
-        getContainer: function(range) {
+        getCommonAncestor: function(range) {
             return range.startContainer || // w3c
                    (range.parentElement && range.parentElement()) || // ms TextRange
                    (range.commonParentElement && range.commonParentElement()); // ms IHTMLControlRange
@@ -1352,14 +1352,19 @@ KISSY.Editor.add("core~menu", function(E) {
                     editor.activeDropMenu = dropMenu;
 
                 } else { // 第二次点击在 trigger 上，关闭 activeDropMenu, 并置为 null. 否则会导致第三次点击打不开
-                    editor.activeDropMenu = null;                   
+                    editor.activeDropMenu = null;
                 }
             });
 
             // document 捕获到点击时，关闭当前激活的下拉框
             Event.on([document, editor.contentDoc], "click", function() {
-                self._hide(editor.activeDropMenu);
-                editor.activeDropMenu = null;
+                if(editor.activeDropMenu) {
+                    self._hide(editor.activeDropMenu);
+                    editor.activeDropMenu = null;
+
+                    // 还原焦点
+                    editor.contentWin.focus();
+                }
             });
 
             // 改变窗口大小时，动态调整位置
@@ -1558,7 +1563,7 @@ KISSY.Editor.add("plugins~blockquote", function(E) {
         exec: function() {
             var editor = this.editor,
                 range = editor.getSelectionRange(),
-                parentEl = E.Range.getContainer(range),
+                parentEl = E.Range.getCommonAncestor(range),
                 quotableAncestor;
 
             if(!parentEl) return;
@@ -1990,7 +1995,7 @@ KISSY.Editor.add("plugins~image", function(E) {
                           '</ul>',
                           '<div class="', TAB_CONTENT_CLS, '" rel="local" style="display: none">',
                               '<label>{label_local}</label>',
-                              '<input type="file" size="40" name="imgFile" />',
+                              '<input type="file" size="40" name="imgFile" unselectable="on" />',
                               '{local_extraCode}',
                           '</div>',
                           '<div class="', TAB_CONTENT_CLS, '" rel="link">',
@@ -2266,13 +2271,16 @@ KISSY.Editor.add("plugins~image", function(E) {
             if(activeDropMenu && Dom.isAncestor(activeDropMenu, this.dialog)) {
                 E.Menu.hideActiveDropMenu(this.editor);
             }
+            // 还原焦点
+            this.editor.contentWin.focus();
         },
 
         /**
          * 更新界面上的表单值
          */
         _syncUI: function() {
-            this.range = this.editor.getSelectionRange(); // 保存 range
+            // 保存 range
+            this.range = this.editor.getSelectionRange();
 
             // reset
             this.form.reset();
@@ -2286,27 +2294,39 @@ KISSY.Editor.add("plugins~image", function(E) {
         /**
          * 插入图片
          */
-        _insertImage: function(imgUrl) {
-            imgUrl = Lang.trim(imgUrl);
+        _insertImage: function(url, alt) {
+            url = Lang.trim(url);
 
             // url 为空时，不处理
-            if (imgUrl.length === 0) {
+            if (url.length === 0) {
                 return;
             }
 
             var editor = this.editor,
-                range = this.range,
-                img;
+                range = this.range;
 
             // 插入图片
-            if (!isIE) {
-                img = document.createElement("img");
-                img.src = imgUrl;
-                img.setAttribute("title", "");
-                range.insertNode(img);
-            } else {
-                range.select();
-                editor.execCommand("insertImage", imgUrl);
+            if (window.getSelection) { // W3C
+                var img = document.createElement("img");
+                img.src = url;
+                img.setAttribute("alt", alt);
+
+                range.deleteContents(); // 清空选中内容
+                range.insertNode(img); // 插入图片
+                range.setStartAfter(img); // 使得连续插入图片时，添加在后面
+                editor.contentWin.focus(); // 显示光标
+
+            } else if(document.selection) { // IE
+                // 还原焦点
+                editor.contentWin.focus();
+
+                if("text" in range) { // TextRange
+                    range.select(); // 还原选区
+                    range.pasteHTML('<img src="' + url + '" alt="' + alt + '" />');
+
+                } else { // ControlRange
+                    range.execCommand("insertImage", false, url);
+                }
             }
         }
     });
@@ -2314,6 +2334,11 @@ KISSY.Editor.add("plugins~image", function(E) {
  });
 
 /**
+ * NOTES:
+ *   - <input type="file" unselectable="on" /> 这一行，折腾了一下午。如果不加 unselectable, 会导致 IE 下
+ *     焦点丢失（range.select() 和 contentDoc.focus() 不管用）。加上后，顺利解决。同时还自动使得 IE7- 下不可
+ *     输入。
+ *
  * TODO:
  *   - 跨域支持
  */
@@ -2586,7 +2611,7 @@ KISSY.Editor.add("plugins~link", function(E) {
             this.range = this.editor.getSelectionRange();
 
             var form = this.form,
-                container = Range.getContainer(this.range),
+                container = Range.getCommonAncestor(this.range),
                 containerIsA = container.nodeName === "A", // 图片等链接
                 parentEl = container.parentNode,
                 parentIsA = parentEl && (parentEl.nodeName === "A"), // 文字链接
@@ -2621,7 +2646,7 @@ KISSY.Editor.add("plugins~link", function(E) {
 
             var editor = this.editor,
                 range = this.range,
-                container = Range.getContainer(range),
+                container = Range.getCommonAncestor(range),
                 containerIsA = container.nodeName === "A", // 是图片等链接
                 parentEl = container.parentNode,
                 parentIsA = parentEl && (parentEl.nodeName === "A"), // 文字链接
@@ -2670,7 +2695,7 @@ KISSY.Editor.add("plugins~link", function(E) {
             var editor = this.editor,
                 range = this.range,
                 selectedText = Range.getSelectedText(range),
-                container = Range.getContainer(range),
+                container = Range.getCommonAncestor(range),
                 parentEl;
 
             // 没有选中文字时
@@ -2771,7 +2796,7 @@ KISSY.Editor.add("plugins~removeformat", function(E) {
         exec: function() {
             var editor = this.editor,
                 range = editor.getSelectionRange(),
-                parentEl = E.Range.getContainer(range);
+                parentEl = E.Range.getCommonAncestor(range);
             if (!parentEl) return;
 
             alert("正在实现中");
@@ -3074,17 +3099,26 @@ KISSY.Editor.add("plugins~smiley", function(E) {
             }
 
             var editor = this.editor,
-                range = editor.getSelectionRange(),
-                img;
+                range = editor.getSelectionRange();
 
             // 插入图片
-            if (!isIE) {
-                img = document.createElement("img");
+            if (window.getSelection) { // W3C
+                var img = document.createElement("img");
                 img.src = url;
                 img.setAttribute("alt", alt);
-                range.insertNode(img);
-            } else {
-                editor.execCommand("insertImage", url);
+
+                range.deleteContents(); // 清空选中内容
+                range.insertNode(img); // 插入图片
+                range.setStartAfter(img); // 使得连续插入图片时，添加在后面
+                editor.contentWin.focus(); // 显示光标
+                
+            } else if(document.selection) { // IE
+                if("text" in range) { // TextRange
+                    range.pasteHTML('<img src="' + url + '" alt="' + alt + '" />');
+
+                } else { // ControlRange
+                    editor.execCommand("insertImage", url);
+                }
             }
         }
     });
@@ -3167,6 +3201,11 @@ KISSY.Editor.add("plugins~undo", function(E) {
 
  });
 
+/**
+ * TODO:
+ *   - ie 下，只要有 dom 操作，undo 和 redo 就会失效。
+ *     http://swik.net/qooxdoo/qooxdoo+news/Clashed+with+IE%E2%80%99s+execCommand/cj7g7
+ */
 KISSY.Editor.add("plugins~wordcount", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,

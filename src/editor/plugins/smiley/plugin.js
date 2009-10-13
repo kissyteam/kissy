@@ -145,17 +145,26 @@ KISSY.Editor.add("plugins~smiley", function(E) {
             }
 
             var editor = this.editor,
-                range = editor.getSelectionRange(),
-                img;
+                range = editor.getSelectionRange();
 
             // 插入图片
-            if (!isIE) {
-                img = document.createElement("img");
+            if (window.getSelection) { // W3C
+                var img = document.createElement("img");
                 img.src = url;
                 img.setAttribute("alt", alt);
-                range.insertNode(img);
-            } else {
-                editor.execCommand("insertImage", url);
+
+                range.deleteContents(); // 清空选中内容
+                range.insertNode(img); // 插入图片
+                range.setStartAfter(img); // 使得连续插入图片时，添加在后面
+                editor.contentWin.focus(); // 显示光标
+                
+            } else if(document.selection) { // IE
+                if("text" in range) { // TextRange
+                    range.pasteHTML('<img src="' + url + '" alt="' + alt + '" />');
+
+                } else { // ControlRange
+                    editor.execCommand("insertImage", url);
+                }
             }
         }
     });

@@ -51,14 +51,19 @@ KISSY.Editor.add("core~menu", function(E) {
                     editor.activeDropMenu = dropMenu;
 
                 } else { // 第二次点击在 trigger 上，关闭 activeDropMenu, 并置为 null. 否则会导致第三次点击打不开
-                    editor.activeDropMenu = null;                   
+                    editor.activeDropMenu = null;
                 }
             });
 
             // document 捕获到点击时，关闭当前激活的下拉框
             Event.on([document, editor.contentDoc], "click", function() {
-                self._hide(editor.activeDropMenu);
-                editor.activeDropMenu = null;
+                if(editor.activeDropMenu) {
+                    self._hide(editor.activeDropMenu);
+                    editor.activeDropMenu = null;
+
+                    // 还原焦点
+                    editor.contentWin.focus();
+                }
             });
 
             // 改变窗口大小时，动态调整位置

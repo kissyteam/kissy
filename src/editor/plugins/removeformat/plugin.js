@@ -19,7 +19,7 @@ KISSY.Editor.add("plugins~removeformat", function(E) {
         exec: function() {
             var editor = this.editor,
                 range = editor.getSelectionRange(),
-                parentEl = E.Range.getContainer(range);
+                parentEl = E.Range.getCommonAncestor(range);
             if (!parentEl) return;
 
             alert("正在实现中");

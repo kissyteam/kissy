@@ -113,7 +113,7 @@ KISSY.Editor.add("plugins~link", function(E) {
             this.range = this.editor.getSelectionRange();
 
             var form = this.form,
-                container = Range.getContainer(this.range),
+                container = Range.getCommonAncestor(this.range),
                 containerIsA = container.nodeName === "A", // 图片等链接
                 parentEl = container.parentNode,
                 parentIsA = parentEl && (parentEl.nodeName === "A"), // 文字链接
@@ -148,7 +148,7 @@ KISSY.Editor.add("plugins~link", function(E) {
 
             var editor = this.editor,
                 range = this.range,
-                container = Range.getContainer(range),
+                container = Range.getCommonAncestor(range),
                 containerIsA = container.nodeName === "A", // 是图片等链接
                 parentEl = container.parentNode,
                 parentIsA = parentEl && (parentEl.nodeName === "A"), // 文字链接
@@ -197,7 +197,7 @@ KISSY.Editor.add("plugins~link", function(E) {
             var editor = this.editor,
                 range = this.range,
                 selectedText = Range.getSelectedText(range),
-                container = Range.getContainer(range),
+                container = Range.getCommonAncestor(range),
                 parentEl;
 
             // 没有选中文字时

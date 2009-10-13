@@ -1,7 +1,7 @@
 
 KISSY.Editor.add("core~instance", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         EDITOR_CLASSNAME = "ks-editor",
 
         EDITOR_TMPL  =  '<div class="ks-editor-toolbar"></div>' +
@@ -176,6 +176,20 @@ KISSY.Editor.add("core~instance", function(E) {
             //doc.body.setAttribute("spellcheck", "false");
 
             // TODO 让 ie 下选择背景色为 蓝底白字
+
+            // 让初始输入文字始终在 p 标签内
+            Event.on(doc, "click", function() {
+                if(Lang.trim(E.Dom.getText(doc.body.innerHTML)).length === 0) {
+                    doc.body.innerHTML = ""; // 彻底清空
+
+                    var p = document.createElement("p");
+                    doc.body.appendChild(p);
+
+                    var range = editor.getSelectionRange();
+                    range.insertNode(p);
+                    // TODO
+                }
+            });
         },
 
         /**
@@ -201,7 +215,7 @@ KISSY.Editor.add("core~instance", function(E) {
          */
         getContentDocData: function() {
             var bd = this.contentDoc.body,
-                data = '', p = E.plugins["save"];
+                data = "", p = E.plugins["save"];
 
             // Firefox 下，_moz_editor_bogus_node, _moz_dirty 等特有属性
             // 这些特有属性，在用 innerHTML 获取时，自动过滤了

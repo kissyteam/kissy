@@ -25,7 +25,7 @@ KISSY.Editor.add("plugins~image", function(E) {
                           '</ul>',
                           '<div class="', TAB_CONTENT_CLS, '" rel="local" style="display: none">',
                               '<label>{label_local}</label>',
-                              '<input type="file" size="40" name="imgFile" />',
+                              '<input type="file" size="40" name="imgFile" unselectable="on" />',
                               '{local_extraCode}',
                           '</div>',
                           '<div class="', TAB_CONTENT_CLS, '" rel="link">',
@@ -301,13 +301,16 @@ KISSY.Editor.add("plugins~image", function(E) {
             if(activeDropMenu && Dom.isAncestor(activeDropMenu, this.dialog)) {
                 E.Menu.hideActiveDropMenu(this.editor);
             }
+            // 还原焦点
+            this.editor.contentWin.focus();
         },
 
         /**
          * 更新界面上的表单值
          */
         _syncUI: function() {
-            this.range = this.editor.getSelectionRange(); // 保存 range
+            // 保存 range
+            this.range = this.editor.getSelectionRange();
 
             // reset
             this.form.reset();
@@ -321,27 +324,39 @@ KISSY.Editor.add("plugins~image", function(E) {
         /**
          * 插入图片
          */
-        _insertImage: function(imgUrl) {
-            imgUrl = Lang.trim(imgUrl);
+        _insertImage: function(url, alt) {
+            url = Lang.trim(url);
 
             // url 为空时，不处理
-            if (imgUrl.length === 0) {
+            if (url.length === 0) {
                 return;
             }
 
             var editor = this.editor,
-                range = this.range,
-                img;
+                range = this.range;
 
             // 插入图片
-            if (!isIE) {
-                img = document.createElement("img");
-                img.src = imgUrl;
-                img.setAttribute("title", "");
-                range.insertNode(img);
-            } else {
-                range.select();
-                editor.execCommand("insertImage", imgUrl);
+            if (window.getSelection) { // W3C
+                var img = document.createElement("img");
+                img.src = url;
+                img.setAttribute("alt", alt);
+
+                range.deleteContents(); // 清空选中内容
+                range.insertNode(img); // 插入图片
+                range.setStartAfter(img); // 使得连续插入图片时，添加在后面
+                editor.contentWin.focus(); // 显示光标
+
+            } else if(document.selection) { // IE
+                // 还原焦点
+                editor.contentWin.focus();
+
+                if("text" in range) { // TextRange
+                    range.select(); // 还原选区
+                    range.pasteHTML('<img src="' + url + '" alt="' + alt + '" />');
+
+                } else { // ControlRange
+                    range.execCommand("insertImage", false, url);
+                }
             }
         }
     });
@@ -349,6 +364,11 @@ KISSY.Editor.add("plugins~image", function(E) {
  });
 
 /**
+ * NOTES:
+ *   - <input type="file" unselectable="on" /> 这一行，折腾了一下午。如果不加 unselectable, 会导致 IE 下
+ *     焦点丢失（range.select() 和 contentDoc.focus() 不管用）。加上后，顺利解决。同时还自动使得 IE7- 下不可
+ *     输入。
+ *
  * TODO:
  *   - 跨域支持
  */
