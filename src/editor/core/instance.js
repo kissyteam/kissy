@@ -178,18 +178,18 @@ KISSY.Editor.add("core~instance", function(E) {
             // TODO 让 ie 下选择背景色为 蓝底白字
 
             // 让初始输入文字始终在 p 标签内
-            Event.on(doc, "click", function() {
-                if(Lang.trim(E.Dom.getText(doc.body.innerHTML)).length === 0) {
-                    doc.body.innerHTML = ""; // 彻底清空
-
-                    var p = document.createElement("p");
-                    doc.body.appendChild(p);
-
-                    var range = editor.getSelectionRange();
-                    range.insertNode(p);
-                    // TODO
-                }
-            });
+//            Event.on(doc, "click", function() {
+//                if(Lang.trim(E.Dom.getText(doc.body.innerHTML)).length === 0) {
+//                    doc.body.innerHTML = ""; // 彻底清空
+//
+//                    var p = document.createElement("p");
+//                    doc.body.appendChild(p);
+//
+//                    var range = this.getSelectionRange();
+//                    range.insertNode(p);
+//                    // TODO
+//                }
+//            });
         },
 
         /**
