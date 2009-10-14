@@ -39,32 +39,38 @@ KISSY.Editor.add("plugins~font", function(E) {
          */
         options: [],
 
+        range: null,
+
         /**
          * 初始化
          */
         init: function() {
-            var el = this.domEl;
-
             this.options = this.lang.options;
-            this.selectHead = el.getElementsByTagName("span")[0];
+            this.selectHead = this.domEl.getElementsByTagName("span")[0];
 
-            this._initSelectList(el);
+            this._renderUI();
+            this._bindUI();
+        },
 
-            // 选中当前值
+        _renderUI: function() {
+            // 初始化下拉框 DOM
+            this.selectList = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]);
+            this._renderSelectList();
+
+            // 选中默认值
             this._setSelectedOption(this.options[DEFAULT]);
         },
 
-        /**
-         * 初始化下拉选择框
-         */
-        _initSelectList: function(trigger) {
-            this.selectList = E.Menu.generateDropMenu(this.editor, trigger, [1, 0]);
-
-            // 初始化下拉框 DOM
-            this._renderSelectList();
-
+        _bindUI: function() {
             // 注册选取事件
             this._bindPickEvent();
+
+            // 隐藏光标，否则 ie 下光标会显示在层上面
+            if(isIE) {
+                Event.on(this.domEl, "click", function() {
+                    this.range = this.editor.getSelectionRange(); // 保存 range, 以便还原焦点
+                }, this, true);
+            }
         },
 
         /**
@@ -89,9 +95,6 @@ KISSY.Editor.add("plugins~font", function(E) {
 
             // 添加个性化 class
             Dom.addClass(this.selectList, "ks-editor-drop-menu-" + this.name);
-
-            // 针对 ie，设置不可选择
-            if (isIE) E.Dom.setItemUnselectable(this.selectList);
         },
 
         /**
@@ -101,24 +104,34 @@ KISSY.Editor.add("plugins~font", function(E) {
             var self = this;
 
             Event.on(this.selectList, "click", function(ev) {
-                var target = Event.getTarget(ev), val;
+                var target = Event.getTarget(ev);
 
                 if(target.nodeName != "LI") {
                     target = Dom.getAncestorByTagName(target, "li");
                 }
                 if(!target) return;
 
-                val = target.getAttribute("data-value");
-                //console.log(val);
-
-                if(val) {
-                    // 更新当前值
-                    self._setSelectedOption(val);
-
-                    // 执行命令
-                    self.editor.execCommand(self.name, self.selectedValue);
-                }
+                self._doAction(target.getAttribute("data-value"));
             });
+        },
+
+        /**
+         * 执行操作
+         */
+        _doAction: function(val) {
+            if(!val) return;
+
+            var editor = this.editor,
+                range = this.range;
+
+            // 更新当前值
+            this._setSelectedOption(val);
+
+            // 还原选区
+            if(isIE && range.select) range.select();
+
+            // 执行命令
+            editor.execCommand(this.name, this.selectedValue);
         },
 
         /**

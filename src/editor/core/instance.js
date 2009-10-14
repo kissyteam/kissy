@@ -2,10 +2,12 @@
 KISSY.Editor.add("core~instance", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+        UA = YAHOO.env.ua,
+        isIE = UA.ie,
         EDITOR_CLASSNAME = "ks-editor",
 
         EDITOR_TMPL  =  '<div class="ks-editor-toolbar"></div>' +
-                        '<div class="ks-editor-content"><iframe frameborder="0" allowtransparency="true"></iframe></div>' +
+                        '<div class="ks-editor-content"><iframe frameborder="0" allowtransparency="1"></iframe></div>' +
                         '<div class="ks-editor-statusbar"></div>',
 
         CONTENT_TMPL =  '<!DOCTYPE html>' +
@@ -164,32 +166,46 @@ KISSY.Editor.add("core~instance", function(E) {
                     .replace("{CONTENT}", this.textarea.value));
             doc.close();
 
-            doc.designMode = "on";
+            if (isIE) {
+                // 用 contentEditable 开启，否则 ie 下选区为黑底白字
+                doc.body.contentEditable = "true";
+            } else {
+                // firefox 对 designMode 的支持更好
+                doc.designMode = "on";
+            }
+
             // 注1：在 tinymce 里，designMode = "on" 放在 try catch 里。
             //     原因是在 firefox 下，当iframe 在 display: none 的容器里，会导致错误。
             //     但经过我测试，firefox 3+ 以上已无此现象。
-            // 注2：在 tinymce 里，还针对 ie 开启了 contentEditable = true.
+            // 注2： ie 用 contentEditable = true.
             //     原因是在 ie 下，IE needs to use contentEditable or it will display non secure items for HTTPS
-            //     这个暂时不添加，等以后遇到此问题时再加上。
+            // Ref:
+            //   - Differences between designMode and contentEditable
+            //     http://74.125.153.132/search?q=cache:5LveNs1yHyMJ:nagoon97.wordpress.com/2008/04/20/differences-between-designmode-and-contenteditable/+ie+contentEditable+designMode+different&cd=6&hl=en&ct=clnk
 
             // 关闭 firefox 默认打开的 spellcheck
             //doc.body.setAttribute("spellcheck", "false");
 
-            // TODO 让 ie 下选择背景色为 蓝底白字
-
             // 让初始输入文字始终在 p 标签内
-//            Event.on(doc, "click", function() {
-//                if(Lang.trim(E.Dom.getText(doc.body.innerHTML)).length === 0) {
-//                    doc.body.innerHTML = ""; // 彻底清空
-//
-//                    var p = document.createElement("p");
-//                    doc.body.appendChild(p);
-//
-//                    var range = this.getSelectionRange();
-//                    range.insertNode(p);
-//                    // TODO
-//                }
-//            });
+            if (Lang.trim(E.Dom.getText(doc.body)).length === 0) {
+                if(UA.gecko) {
+                    doc.body.innerHTML = '<p><br _moz_editor_bogus_node="TRUE" _moz_dirty=""/></p>';
+                } else {
+                    doc.body.innerHTML = '<p></p>';
+                }
+            }
+
+            if(isIE) {
+                // 点击的 iframe doc 非 body 区域时，还原焦点位置
+                Event.on(doc, "click", function() {
+                    if(doc.activeElement.parentNode.nodeType === 9) { // 点击在 doc 上
+                        var range = doc.selection.createRange();
+                        range.moveToElementText(doc.body.lastChild);
+                        range.collapse(false);
+                        range.select();
+                    }
+                });
+            }
         },
 
         /**
@@ -241,3 +257,8 @@ KISSY.Editor.add("core~instance", function(E) {
     });
 
 });
+
+/**
+ * NOTES:
+ *   - iframe body 的高宽需要和 iframe 一致，否则点击非 body 处，ie 下无法获取焦点
+ */

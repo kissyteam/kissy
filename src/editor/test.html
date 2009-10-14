@@ -78,6 +78,8 @@
 
     <form id="demo-form" action="preview.php" method="POST">
         <textarea name="code" id="demo" rows="50" cols="152" style="width: 900px; height: 295px">
+        </textarea>
+        <textarea name="code" id="demo2" rows="50" cols="152" style="display: none; width: 900px; height: 295px">
             <p><img alt="" src="http://a.cksource.com/c/1/inc/img/demo-little-red.jpg" align="left" height="168" hspace="10" width="120"></p>
 
             <h2 class="firstheading" id="firstheading">Little Red Riding Hood</h2>
@@ -141,33 +143,10 @@
     </div>
 
     <div class="section">
-        <h2>Test Cases:</h2>
-        <ol>
-            <li>[basic] B / I / U / Strike 生成的代码在 A 级浏览器下一致，分别为 strong, em, span, span</li>
-            <li>[basic] ol / ul 和 google docs 的处理方式一致，各个浏览器下的差异由浏览器自身决定（比如光标在列表中某一项时，改变列表类别时的处理）</li>
-            <li>[color] foreColor / backColor 在 IE 下生成 font 标签，其它浏览器下生成 span 标签</li>
-            <li>[color] 打开 foreColor / backColor 的取色板时，自动选中当前色</li>
-            <li>[font] font 在 IE 下生成 font 标签，其它浏览器下生成 span 标签</li>
-            <li>[font] 来回改变 font-family 和 font-size 时，不会出现 YUI RTE 中编辑失效的问题</li>
-            <li>[link] 有选中文本和没有选中文本时，创建链接的逻辑正确</li>
-            <li>[link] 光标处于链接中时，打开的 Link 对话框处于修改状态</li>
-            <li>[link] 有选中文本和没有选中文本时，都能移除当前链接</li>
-            <li>[link] 将链接地址修改为空，等价移除链接</li>
-            <li>[link] 用户输入的链接地址中无协议时，自动添加 http 协议</li>
-            <li>[link] 选中图片时，添加/修改链接正常（需特别留意 ie）</li>
-            <li>[justify] 选中图片时，改变对齐时不抛异常</li>
-            <li>[indent] 对 li 的缩进，在 ie 下是整体缩进，与其它浏览器的细节处理不同</li>
-            <li>[blockquote] 在 ie 和 fifefox 下效果一致，其它浏览器未做统一性处理</li>
-            <li>[ie6] 字体等下拉选择框能覆盖住 select 等元素</li>
-        </ol>
-    </div>
-
-    <div class="section">
         <h2>Known Issues:</h2>
         <ol>
             <li>ie6 下，selectbox 按钮在鼠标悬浮时，边框色未改变</li>
-            <li>ie6 下，下拉选取框无法遮盖住下面的光标</li>
-            <li>ie 下，iframe 编辑区域的选区是黑底白字，和默认的蓝底白字不同</li>
+            <li>ie 下，下拉选取框无法遮盖住下面的光标</li>
         </ol>
     </div>
 
@@ -201,6 +180,8 @@
 </div>
 
 <script type="text/javascript">
+
+    //document.domain = "yubo.com";
 
     var config = {
         base: "/kissy/src/editor/",

@@ -1,8 +1,5 @@
 
 
- ~ 起始字符，在 p 里面
- ~ 回车，IE 生成 p, Firefox 生成 br
- ~ 编辑区域的拉伸
  ~ 快捷键支持
  ~ 已标记的待完善的 TODOs
  ~ google code 上 WontFix 的 bug
@@ -14,6 +11,9 @@
  ~ table
  ~ flash
 
+ ~ resize 在 ie7- 下的 bug
+ ~ ie 下，颜色选取框的样式问题
+ ~ 在 chrome, safari, opera 下的测试
  ~ 按钮状态的动态更新（包括按钮选中状态的更新、字体字号的更新、颜色的动态更新等）
  ~ word 粘贴过滤
  ~ 帮派日常 & bug fix（10月9日 - 10月22日）
