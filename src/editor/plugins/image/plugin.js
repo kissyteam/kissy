@@ -60,9 +60,9 @@ KISSY.Editor.add("plugins~image", function(E) {
 
     E.addPlugin("image", {
         /**
-         * 种类：普通按钮
+         * 种类：按钮
          */
-        type: TYPE.TOOLBAR_BUTTON,
+        type: TYPE.TOOLBAR_DROP_BUTTON,
 
         /**
          * 配置项
@@ -311,6 +311,7 @@ KISSY.Editor.add("plugins~image", function(E) {
         _syncUI: function() {
             // 保存 range
             this.range = this.editor.getSelectionRange();
+            if(isIE) this.domEl.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
 
             // reset
             this.form.reset();

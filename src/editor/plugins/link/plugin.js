@@ -26,9 +26,9 @@ KISSY.Editor.add("plugins~link", function(E) {
 
     E.addPlugin("link", {
         /**
-         * 种类：普通按钮
+         * 种类：按钮
          */
-        type: TYPE.TOOLBAR_BUTTON,
+        type: TYPE.TOOLBAR_DROP_BUTTON,
 
         /**
          * 关联的对话框
@@ -111,6 +111,7 @@ KISSY.Editor.add("plugins~link", function(E) {
          */
         _syncUI: function() {
             this.range = this.editor.getSelectionRange();
+            if(isIE) this.domEl.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
 
             var form = this.form,
                 container = Range.getCommonAncestor(this.range),
@@ -146,13 +147,12 @@ KISSY.Editor.add("plugins~link", function(E) {
                 return;
             }
 
-            var editor = this.editor,
-                range = this.range,
+            var range = this.range,
                 container = Range.getCommonAncestor(range),
                 containerIsA = container.nodeName === "A", // 是图片等链接
                 parentEl = container.parentNode,
                 parentIsA = parentEl && (parentEl.nodeName === "A"), // 文字链接
-                a;
+                a, div = document.createElement("div"), fragment;
 
             // 修改链接
             if (containerIsA || parentIsA) {
@@ -167,18 +167,37 @@ KISSY.Editor.add("plugins~link", function(E) {
             }
 
             // 创建链接
-            var selectedText = Range.getSelectedText(range);
-            if (container.nodeType == 3 && !selectedText) { // 文本链接
-                if (!isIE) {
-                    a = document.createElement("A");
-                    a.innerHTML = href;
-                    range.insertNode(a);
-                } else {
-                    range.pasteHTML('<a href="' + href + '">' + href + '</a>');
+            a = document.createElement("a");
+            a.href = href;
+            if (target) a.setAttribute("target", "_blank");
+
+            if (isIE) {
+                if ("text" in range) { // TextRange
+                    if (range.select) range.select();
+
+                    a.innerHTML = range.htmlText || href;
+                    div.innerHTML = "";
+                    div.appendChild(a);
+                    range.pasteHTML(div.innerHTML);
+
+                } else { // ControlRange
+                    // TODO: ControlRange 链接的 target 实现
+                    this.editor.execCommand("createLink", href);
                 }
-            } else {
-                if(range.select) range.select();
-                editor.execCommand("createLink", href);
+
+            } else { // W3C
+                if(range.collapsed) {
+                    a.innerHTML = href;
+                }
+                else {
+                    fragment = range.cloneContents();
+                    while(fragment.firstChild) {
+                        a.appendChild(fragment.firstChild);
+                    }
+                }
+                range.deleteContents(); // 删除原内容
+                range.insertNode(a); // 插入链接
+                range.selectNode(a); // 选中链接
             }
         },
 

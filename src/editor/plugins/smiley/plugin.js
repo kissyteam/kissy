@@ -15,9 +15,9 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
     E.addPlugin("smiley", {
         /**
-         * 种类：普通按钮
+         * 种类：按钮
          */
-        type: TYPE.TOOLBAR_BUTTON,
+        type: TYPE.TOOLBAR_DROP_BUTTON,
 
         /**
          * 配置项
@@ -116,6 +116,12 @@ KISSY.Editor.add("plugins~smiley", function(E) {
         _bindUI: function() {
             var self = this;
 
+            // range 处理
+            Event.on(this.domEl, "click", function() {
+                self.range = self.editor.getSelectionRange(); // 保存 range, 以便还原
+                this.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+            });
+
             // 注册表单按钮点击事件
             Event.on(this.dialog, "click", function(ev) {
                 var target = Event.getTarget(ev);
@@ -145,7 +151,7 @@ KISSY.Editor.add("plugins~smiley", function(E) {
             }
 
             var editor = this.editor,
-                range = editor.getSelectionRange();
+                range = this.range;
 
             // 插入图片
             if (window.getSelection) { // W3C

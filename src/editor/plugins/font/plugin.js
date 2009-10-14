@@ -65,11 +65,13 @@ KISSY.Editor.add("plugins~font", function(E) {
             // 注册选取事件
             this._bindPickEvent();
 
-            // 隐藏光标，否则 ie 下光标会显示在层上面
+            // ie 的 range 处理
             if(isIE) {
+                var self = this;
                 Event.on(this.domEl, "click", function() {
-                    this.range = this.editor.getSelectionRange(); // 保存 range, 以便还原焦点
-                }, this, true);
+                    self.range = self.editor.getSelectionRange(); // 保存 range, 以便还原
+                    this.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+                });
             }
         },
 
@@ -121,17 +123,15 @@ KISSY.Editor.add("plugins~font", function(E) {
         _doAction: function(val) {
             if(!val) return;
 
-            var editor = this.editor,
-                range = this.range;
-
             // 更新当前值
             this._setSelectedOption(val);
 
             // 还原选区
+            var range = this.range;
             if(isIE && range.select) range.select();
 
             // 执行命令
-            editor.execCommand(this.name, this.selectedValue);
+            this.editor.execCommand(this.name, this.selectedValue);
         },
 
         /**

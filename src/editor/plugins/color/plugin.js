@@ -42,6 +42,8 @@ KISSY.Editor.add("plugins~color", function(E) {
          */
         dropMenu: null,
 
+        range: null,
+
         /**
          * 初始化
          */
@@ -58,19 +60,19 @@ KISSY.Editor.add("plugins~color", function(E) {
 
             this._indicator = caption.firstChild;
 
+            this._renderUI();
+            this._bindUI();
+
+        },
+
+        _renderUI: function() {
             // 有两种方案：
             //  1. 仿照 MS Office 2007, 仅当点击下拉箭头时，才弹出下拉框。点击 caption 时，直接设置颜色。
             //  2. 仿照 Google Docs, 不区分 caption 和 dropdown，让每次点击都弹出下拉框。
             // 从逻辑上讲，方案1不错。但是，考虑 web 页面上，按钮比较小，方案2这样反而能增加易用性。
             // 这里采用方案2
-            this._initDropMenu(el);
-        },
 
-        /**
-         * 初始化下拉菜单
-         */
-        _initDropMenu: function(trigger) {
-            this.dropMenu = E.Menu.generateDropMenu(this.editor, trigger, [1, 0]);
+            this.dropMenu = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]);
 
             // 生成下拉框内的内容
             this._generatePalettes();
@@ -78,12 +80,22 @@ KISSY.Editor.add("plugins~color", function(E) {
             // 针对 ie，设置不可选择
             if (isIE) E.Dom.setItemUnselectable(this.dropMenu);
 
-            // 注册点击事件
-            this._bindPickEvent();
-
             // 选中当前色
             this._updateSelectedColor(this.color);
+        },
 
+        _bindUI: function() {
+            // 注册选取事件
+            this._bindPickEvent();
+
+            // ie 的 range 处理
+            if(isIE) {
+                var self = this;
+                Event.on(this.domEl, "click", function() {
+                    self.range = self.editor.getSelectionRange(); // 保存 range, 以便还原
+                    this.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+                });
+            }
         },
 
         /**
@@ -134,15 +146,28 @@ KISSY.Editor.add("plugins~color", function(E) {
                     attr = target.getAttribute("title");
 
                 if(attr && attr.indexOf("RGB") === 0) {
-                    // 更新当前值
-                    self.setColor(E.Color.toHex(attr));
-
-                    // 执行命令
-                    self.editor.execCommand(self.name, self.color);
+                    self._doAction(attr);
                 }
             });
         },
 
+        /**
+         * 执行操作
+         */
+        _doAction: function(val) {
+            if (!val) return;
+
+            // 更新当前值
+            this.setColor(E.Color.toHex(val));
+
+            // 还原选区
+            var range = this.range;
+            if (isIE && range.select) range.select();
+
+            // 执行命令
+            this.editor.execCommand(this.name, this.color);
+        },
+        
         /**
          * 设置颜色
          * @param {string} val 格式 #RRGGBB or #RGB

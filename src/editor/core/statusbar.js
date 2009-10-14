@@ -69,7 +69,7 @@ KISSY.Editor.add("core~statusbar", function(E) {
             p.domEl = el = div.firstChild;
 
             // 添加到工具栏
-            this._addToStatusbar(el);
+            this._addToToolbar(el);
 
             // 调用插件自己的初始化函数，这是插件的个性化接口
             // init 放在添加到工具栏后面，可以保证 DOM 操作比如取 region 等操作的正确性
@@ -87,13 +87,13 @@ KISSY.Editor.add("core~statusbar", function(E) {
          */
         _addSep: function() {
             div.innerHTML = SEP_TMPL;
-            this._addToStatusbar(div.firstChild);
+            this._addToToolbar(div.firstChild);
         },
 
         /**
          * 将 item 或 分隔线 添加到状态栏
          */
-        _addToStatusbar: function(el) {
+        _addToToolbar: function(el) {
             if(isIE) el = E.Dom.setItemUnselectable(el);
             this.domEl.appendChild(el);
         }
