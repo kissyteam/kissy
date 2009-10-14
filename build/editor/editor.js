@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-13 17:35:06
-Revision: 195
+Date: 2009-10-14 18:01:48
+Revision: 198
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -166,14 +166,17 @@ KISSY.Editor.add("config", function(E) {
          * Toolbar 上功能插件
          */
         toolbar: [
+            "source",
+            "",
             "undo", "redo",
+            "",
             "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
             "",
             "link", "smiley", "image", "blockquote", 
             "",
-            "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight",
-            "",
-            "removeformat", "maximize", "source"
+            "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight"
+            //"",
+            //"removeformat"
         ],
 
         /**
@@ -516,10 +519,11 @@ KISSY.Editor.add("core~plugin", function(E) {
         CUSTOM: 0,
         TOOLBAR_SEPARATOR: 1,
         TOOLBAR_BUTTON: 2,
-        TOOLBAR_MENU_BUTTON: 4,
-        TOOLBAR_SELECT: 8,
-        STATUSBAR_ITEM: 16,
-        FUNC: 32 // 纯功能性质插件，无 UI
+        TOOLBAR_DROP_BUTTON: 4,
+        TOOLBAR_MENU_BUTTON: 8,
+        TOOLBAR_SELECT: 16,
+        STATUSBAR_ITEM: 32,
+        FUNC: 64 // 纯功能性质插件，无 UI
     };
 
 });
@@ -756,11 +760,13 @@ KISSY.Editor.add("core~range", function(E) {
 
 KISSY.Editor.add("core~instance", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+        UA = YAHOO.env.ua,
+        isIE = UA.ie,
         EDITOR_CLASSNAME = "ks-editor",
 
         EDITOR_TMPL  =  '<div class="ks-editor-toolbar"></div>' +
-                        '<div class="ks-editor-content"><iframe frameborder="0" allowtransparency="true"></iframe></div>' +
+                        '<div class="ks-editor-content"><iframe frameborder="0" allowtransparency="1"></iframe></div>' +
                         '<div class="ks-editor-statusbar"></div>',
 
         CONTENT_TMPL =  '<!DOCTYPE html>' +
@@ -919,18 +925,46 @@ KISSY.Editor.add("core~instance", function(E) {
                     .replace("{CONTENT}", this.textarea.value));
             doc.close();
 
-            doc.designMode = "on";
+            if (isIE) {
+                // 用 contentEditable 开启，否则 ie 下选区为黑底白字
+                doc.body.contentEditable = "true";
+            } else {
+                // firefox 对 designMode 的支持更好
+                doc.designMode = "on";
+            }
+
             // 注1：在 tinymce 里，designMode = "on" 放在 try catch 里。
             //     原因是在 firefox 下，当iframe 在 display: none 的容器里，会导致错误。
             //     但经过我测试，firefox 3+ 以上已无此现象。
-            // 注2：在 tinymce 里，还针对 ie 开启了 contentEditable = true.
+            // 注2： ie 用 contentEditable = true.
             //     原因是在 ie 下，IE needs to use contentEditable or it will display non secure items for HTTPS
-            //     这个暂时不添加，等以后遇到此问题时再加上。
+            // Ref:
+            //   - Differences between designMode and contentEditable
+            //     http://74.125.153.132/search?q=cache:5LveNs1yHyMJ:nagoon97.wordpress.com/2008/04/20/differences-between-designmode-and-contenteditable/+ie+contentEditable+designMode+different&cd=6&hl=en&ct=clnk
 
             // 关闭 firefox 默认打开的 spellcheck
             //doc.body.setAttribute("spellcheck", "false");
 
-            // TODO 让 ie 下选择背景色为 蓝底白字
+            // 让初始输入文字始终在 p 标签内
+            if (Lang.trim(E.Dom.getText(doc.body)).length === 0) {
+                if(UA.gecko) {
+                    doc.body.innerHTML = '<p><br _moz_editor_bogus_node="TRUE" _moz_dirty=""/></p>';
+                } else {
+                    doc.body.innerHTML = '<p></p>';
+                }
+            }
+
+            if(isIE) {
+                // 点击的 iframe doc 非 body 区域时，还原焦点位置
+                Event.on(doc, "click", function() {
+                    if(doc.activeElement.parentNode.nodeType === 9) { // 点击在 doc 上
+                        var range = doc.selection.createRange();
+                        range.moveToElementText(doc.body.lastChild);
+                        range.collapse(false);
+                        range.select();
+                    }
+                });
+            }
         },
 
         /**
@@ -956,7 +990,7 @@ KISSY.Editor.add("core~instance", function(E) {
          */
         getContentDocData: function() {
             var bd = this.contentDoc.body,
-                data = '', p = E.plugins["save"];
+                data = "", p = E.plugins["save"];
 
             // Firefox 下，_moz_editor_bogus_node, _moz_dirty 等特有属性
             // 这些特有属性，在用 innerHTML 获取时，自动过滤了
@@ -983,6 +1017,10 @@ KISSY.Editor.add("core~instance", function(E) {
 
 });
 
+/**
+ * NOTES:
+ *   - iframe body 的高宽需要和 iframe 一致，否则点击非 body 处，ie 下无法获取焦点
+ */
 KISSY.Editor.add("core~toolbar", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
@@ -1096,7 +1134,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
             this._bindItemUI(p);
 
             // 添加到工具栏
-            this._addToStatusbar(el);
+            this._addToToolbar(el);
 
             // 调用插件自己的初始化函数，这是插件的个性化接口
             // init 放在添加到工具栏后面，可以保证 DOM 操作比如取 region 等操作的正确性
@@ -1184,13 +1222,13 @@ KISSY.Editor.add("core~toolbar", function(E) {
          */
         _addSeparator: function() {
             div.innerHTML = TOOLBAR_SEPARATOR_TMPL;
-            this._addToStatusbar(div.firstChild);
+            this._addToToolbar(div.firstChild);
         },
 
         /**
          * 将 item 或 分隔线 添加到工具栏
          */
-        _addToStatusbar: function(el) {
+        _addToToolbar: function(el) {
             if(isIE) el = E.Dom.setItemUnselectable(el);
             this.domEl.appendChild(el);
         }
@@ -1268,7 +1306,7 @@ KISSY.Editor.add("core~statusbar", function(E) {
             p.domEl = el = div.firstChild;
 
             // 添加到工具栏
-            this._addToStatusbar(el);
+            this._addToToolbar(el);
 
             // 调用插件自己的初始化函数，这是插件的个性化接口
             // init 放在添加到工具栏后面，可以保证 DOM 操作比如取 region 等操作的正确性
@@ -1286,13 +1324,13 @@ KISSY.Editor.add("core~statusbar", function(E) {
          */
         _addSep: function() {
             div.innerHTML = SEP_TMPL;
-            this._addToStatusbar(div.firstChild);
+            this._addToToolbar(div.firstChild);
         },
 
         /**
          * 将 item 或 分隔线 添加到状态栏
          */
-        _addToStatusbar: function(el) {
+        _addToToolbar: function(el) {
             if(isIE) el = E.Dom.setItemUnselectable(el);
             this.domEl.appendChild(el);
         }
@@ -1647,6 +1685,8 @@ KISSY.Editor.add("plugins~color", function(E) {
          */
         dropMenu: null,
 
+        range: null,
+
         /**
          * 初始化
          */
@@ -1663,19 +1703,19 @@ KISSY.Editor.add("plugins~color", function(E) {
 
             this._indicator = caption.firstChild;
 
+            this._renderUI();
+            this._bindUI();
+
+        },
+
+        _renderUI: function() {
             // 有两种方案：
             //  1. 仿照 MS Office 2007, 仅当点击下拉箭头时，才弹出下拉框。点击 caption 时，直接设置颜色。
             //  2. 仿照 Google Docs, 不区分 caption 和 dropdown，让每次点击都弹出下拉框。
             // 从逻辑上讲，方案1不错。但是，考虑 web 页面上，按钮比较小，方案2这样反而能增加易用性。
             // 这里采用方案2
-            this._initDropMenu(el);
-        },
 
-        /**
-         * 初始化下拉菜单
-         */
-        _initDropMenu: function(trigger) {
-            this.dropMenu = E.Menu.generateDropMenu(this.editor, trigger, [1, 0]);
+            this.dropMenu = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]);
 
             // 生成下拉框内的内容
             this._generatePalettes();
@@ -1683,12 +1723,22 @@ KISSY.Editor.add("plugins~color", function(E) {
             // 针对 ie，设置不可选择
             if (isIE) E.Dom.setItemUnselectable(this.dropMenu);
 
-            // 注册点击事件
-            this._bindPickEvent();
-
             // 选中当前色
             this._updateSelectedColor(this.color);
+        },
 
+        _bindUI: function() {
+            // 注册选取事件
+            this._bindPickEvent();
+
+            // ie 的 range 处理
+            if(isIE) {
+                var self = this;
+                Event.on(this.domEl, "click", function() {
+                    self.range = self.editor.getSelectionRange(); // 保存 range, 以便还原
+                    this.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+                });
+            }
         },
 
         /**
@@ -1739,15 +1789,28 @@ KISSY.Editor.add("plugins~color", function(E) {
                     attr = target.getAttribute("title");
 
                 if(attr && attr.indexOf("RGB") === 0) {
-                    // 更新当前值
-                    self.setColor(E.Color.toHex(attr));
-
-                    // 执行命令
-                    self.editor.execCommand(self.name, self.color);
+                    self._doAction(attr);
                 }
             });
         },
 
+        /**
+         * 执行操作
+         */
+        _doAction: function(val) {
+            if (!val) return;
+
+            // 更新当前值
+            this.setColor(E.Color.toHex(val));
+
+            // 还原选区
+            var range = this.range;
+            if (isIE && range.select) range.select();
+
+            // 执行命令
+            this.editor.execCommand(this.name, this.color);
+        },
+        
         /**
          * 设置颜色
          * @param {string} val 格式 #RRGGBB or #RGB
@@ -1829,32 +1892,40 @@ KISSY.Editor.add("plugins~font", function(E) {
          */
         options: [],
 
+        range: null,
+
         /**
          * 初始化
          */
         init: function() {
-            var el = this.domEl;
-
             this.options = this.lang.options;
-            this.selectHead = el.getElementsByTagName("span")[0];
+            this.selectHead = this.domEl.getElementsByTagName("span")[0];
 
-            this._initSelectList(el);
+            this._renderUI();
+            this._bindUI();
+        },
 
-            // 选中当前值
+        _renderUI: function() {
+            // 初始化下拉框 DOM
+            this.selectList = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]);
+            this._renderSelectList();
+
+            // 选中默认值
             this._setSelectedOption(this.options[DEFAULT]);
         },
 
-        /**
-         * 初始化下拉选择框
-         */
-        _initSelectList: function(trigger) {
-            this.selectList = E.Menu.generateDropMenu(this.editor, trigger, [1, 0]);
-
-            // 初始化下拉框 DOM
-            this._renderSelectList();
-
+        _bindUI: function() {
             // 注册选取事件
             this._bindPickEvent();
+
+            // ie 的 range 处理
+            if(isIE) {
+                var self = this;
+                Event.on(this.domEl, "click", function() {
+                    self.range = self.editor.getSelectionRange(); // 保存 range, 以便还原
+                    this.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+                });
+            }
         },
 
         /**
@@ -1879,9 +1950,6 @@ KISSY.Editor.add("plugins~font", function(E) {
 
             // 添加个性化 class
             Dom.addClass(this.selectList, "ks-editor-drop-menu-" + this.name);
-
-            // 针对 ie，设置不可选择
-            if (isIE) E.Dom.setItemUnselectable(this.selectList);
         },
 
         /**
@@ -1891,24 +1959,32 @@ KISSY.Editor.add("plugins~font", function(E) {
             var self = this;
 
             Event.on(this.selectList, "click", function(ev) {
-                var target = Event.getTarget(ev), val;
+                var target = Event.getTarget(ev);
 
                 if(target.nodeName != "LI") {
                     target = Dom.getAncestorByTagName(target, "li");
                 }
                 if(!target) return;
 
-                val = target.getAttribute("data-value");
-                //console.log(val);
-
-                if(val) {
-                    // 更新当前值
-                    self._setSelectedOption(val);
-
-                    // 执行命令
-                    self.editor.execCommand(self.name, self.selectedValue);
-                }
+                self._doAction(target.getAttribute("data-value"));
             });
+        },
+
+        /**
+         * 执行操作
+         */
+        _doAction: function(val) {
+            if(!val) return;
+
+            // 更新当前值
+            this._setSelectedOption(val);
+
+            // 还原选区
+            var range = this.range;
+            if(isIE && range.select) range.select();
+
+            // 执行命令
+            this.editor.execCommand(this.name, this.selectedValue);
         },
 
         /**
@@ -2030,9 +2106,9 @@ KISSY.Editor.add("plugins~image", function(E) {
 
     E.addPlugin("image", {
         /**
-         * 种类：普通按钮
+         * 种类：按钮
          */
-        type: TYPE.TOOLBAR_BUTTON,
+        type: TYPE.TOOLBAR_DROP_BUTTON,
 
         /**
          * 配置项
@@ -2281,6 +2357,7 @@ KISSY.Editor.add("plugins~image", function(E) {
         _syncUI: function() {
             // 保存 range
             this.range = this.editor.getSelectionRange();
+            if(isIE) this.domEl.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
 
             // reset
             this.form.reset();
@@ -2426,11 +2503,11 @@ KISSY.Editor.add("plugins~indent", function(E) {
 //  1. 对 rtl 的支持
 KISSY.Editor.add("plugins~justify", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom,
+    var //Y = YAHOO.util, Dom = Y.Dom,
         TYPE = E.PLUGIN_TYPE,
-        UA = YAHOO.env.ua,
+        //UA = YAHOO.env.ua,
 
-        JUSTIFY_ELEMENTS = E.Dom.BLOCK_ELEMENTS,
+        //JUSTIFY_ELEMENTS = E.Dom.BLOCK_ELEMENTS,
 
         plugin = {
             /**
@@ -2448,50 +2525,53 @@ KISSY.Editor.add("plugins~justify", function(E) {
 
     // 注：ie 下，默认使用 align 属性来实现对齐
     // 下面采用自主操作 range 的方式来实现，以保持和其它浏览器一致
-    if (UA.ie) {
+    // 注：选择区域有多个块时，下面的代码有问题 [Issue 4]
+    // 暂时依旧用默认的浏览器命令
+//    if (UA.ie) {
+//
+//        plugin.exec = function() {
+//            var range = this.editor.getSelectionRange(),
+//                parentEl, justifyAncestor;
+//
+//            if(range.parentElement) { // TextRange
+//                parentEl = range.parentElement();
+//            } else if(range.item) { // ControlRange
+//                parentEl = range.item(0);
+//            } else { // 不做任何处理
+//                return;
+//            }
+//
+//            // 获取可对齐的父元素
+//            if (isJustifyElement(parentEl)) {
+//                justifyAncestor = parentEl;
+//            } else {
+//                justifyAncestor = getJustifyAncestor(parentEl);
+//            }
+//
+//            // 设置 text-align
+//            if (justifyAncestor) {
+//                justifyAncestor.style.textAlign = this.name.substring(7).toLowerCase();
+//            }
+//
+//            /**
+//             * 获取可设置对齐的父元素
+//             */
+//            function getJustifyAncestor(el) {
+//                return Dom.getAncestorBy(el, function(elem) {
+//                    return isJustifyElement(elem);
+//                });
+//            }
+//
+//            /**
+//             * 判断是否可对齐元素
+//             */
+//            function isJustifyElement(el) {
+//                return JUSTIFY_ELEMENTS[el.nodeName.toLowerCase()];
+//            }
+//        };
+//    }
 
-        plugin.exec = function() {
-            var range = this.editor.getSelectionRange(),
-                parentEl, justifyAncestor;
 
-            if(range.parentElement) { // TextRange
-                parentEl = range.parentElement();
-            } else if(range.item) { // ControlRange
-                parentEl = range.item(0);
-            } else { // 不做任何处理
-                return;
-            }
-
-            // 获取可对齐的父元素
-            if (isJustifyElement(parentEl)) {
-                justifyAncestor = parentEl;
-            } else {
-                justifyAncestor = getJustifyAncestor(parentEl);
-            }
-
-            // 设置 text-align
-            if (justifyAncestor) {
-                justifyAncestor.style.textAlign = this.name.substring(7).toLowerCase();
-            }
-
-            /**
-             * 获取可设置对齐的父元素
-             */
-            function getJustifyAncestor(el) {
-                return Dom.getAncestorBy(el, function(elem) {
-                    return isJustifyElement(elem);
-                });
-            }
-
-            /**
-             * 判断是否可对齐元素
-             */
-            function isJustifyElement(el) {
-                return JUSTIFY_ELEMENTS[el.nodeName.toLowerCase()];
-            }
-        };
-    }
-    
     // 注册插件
     E.addPlugin(["justifyLeft", "justifyCenter", "justifyRight"], plugin);
 
@@ -2524,9 +2604,9 @@ KISSY.Editor.add("plugins~link", function(E) {
 
     E.addPlugin("link", {
         /**
-         * 种类：普通按钮
+         * 种类：按钮
          */
-        type: TYPE.TOOLBAR_BUTTON,
+        type: TYPE.TOOLBAR_DROP_BUTTON,
 
         /**
          * 关联的对话框
@@ -2609,6 +2689,7 @@ KISSY.Editor.add("plugins~link", function(E) {
          */
         _syncUI: function() {
             this.range = this.editor.getSelectionRange();
+            if(isIE) this.domEl.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
 
             var form = this.form,
                 container = Range.getCommonAncestor(this.range),
@@ -2644,13 +2725,12 @@ KISSY.Editor.add("plugins~link", function(E) {
                 return;
             }
 
-            var editor = this.editor,
-                range = this.range,
+            var range = this.range,
                 container = Range.getCommonAncestor(range),
                 containerIsA = container.nodeName === "A", // 是图片等链接
                 parentEl = container.parentNode,
                 parentIsA = parentEl && (parentEl.nodeName === "A"), // 文字链接
-                a;
+                a, div = document.createElement("div"), fragment;
 
             // 修改链接
             if (containerIsA || parentIsA) {
@@ -2665,18 +2745,37 @@ KISSY.Editor.add("plugins~link", function(E) {
             }
 
             // 创建链接
-            var selectedText = Range.getSelectedText(range);
-            if (container.nodeType == 3 && !selectedText) { // 文本链接
-                if (!isIE) {
-                    a = document.createElement("A");
-                    a.innerHTML = href;
-                    range.insertNode(a);
-                } else {
-                    range.pasteHTML('<a href="' + href + '">' + href + '</a>');
+            a = document.createElement("a");
+            a.href = href;
+            if (target) a.setAttribute("target", "_blank");
+
+            if (isIE) {
+                if ("text" in range) { // TextRange
+                    if (range.select) range.select();
+
+                    a.innerHTML = range.htmlText || href;
+                    div.innerHTML = "";
+                    div.appendChild(a);
+                    range.pasteHTML(div.innerHTML);
+
+                } else { // ControlRange
+                    // TODO: ControlRange 链接的 target 实现
+                    this.editor.execCommand("createLink", href);
                 }
-            } else {
-                if(range.select) range.select();
-                editor.execCommand("createLink", href);
+
+            } else { // W3C
+                if(range.collapsed) {
+                    a.innerHTML = href;
+                }
+                else {
+                    fragment = range.cloneContents();
+                    while(fragment.firstChild) {
+                        a.appendChild(fragment.firstChild);
+                    }
+                }
+                range.deleteContents(); // 删除原内容
+                range.insertNode(a); // 插入链接
+                range.selectNode(a); // 选中链接
             }
         },
 
@@ -2969,9 +3068,9 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
     E.addPlugin("smiley", {
         /**
-         * 种类：普通按钮
+         * 种类：按钮
          */
-        type: TYPE.TOOLBAR_BUTTON,
+        type: TYPE.TOOLBAR_DROP_BUTTON,
 
         /**
          * 配置项
@@ -3070,6 +3169,12 @@ KISSY.Editor.add("plugins~smiley", function(E) {
         _bindUI: function() {
             var self = this;
 
+            // range 处理
+            Event.on(this.domEl, "click", function() {
+                self.range = self.editor.getSelectionRange(); // 保存 range, 以便还原
+                this.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+            });
+
             // 注册表单按钮点击事件
             Event.on(this.dialog, "click", function(ev) {
                 var target = Event.getTarget(ev);
@@ -3099,7 +3204,7 @@ KISSY.Editor.add("plugins~smiley", function(E) {
             }
 
             var editor = this.editor,
-                range = editor.getSelectionRange();
+                range = this.range;
 
             // 插入图片
             if (window.getSelection) { // W3C
