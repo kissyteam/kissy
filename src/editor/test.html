@@ -77,8 +77,6 @@
     <h1>Editor: </h1>
 
     <form id="demo-form" action="preview.php" method="POST">
-        <textarea name="code" id="demo2" rows="50" cols="152" style="display: none; width: 900px; height: 295px">
-        </textarea>
         <textarea name="code" id="demo" rows="50" cols="152" style="width: 900px; height: 295px">
             <p><img alt="" src="http://a.cksource.com/c/1/inc/img/demo-little-red.jpg" align="left" height="168" hspace="10" width="120"></p>
 
@@ -181,7 +179,8 @@
 
 <script type="text/javascript">
 
-    //document.domain = "yubo.com";
+    // Çå¿Õ³õÊ¼ÄÚÈÝ
+    document.getElementById("demo").value = "";
 
     var config = {
         base: "/kissy/src/editor/",
@@ -211,7 +210,7 @@
     var editorDemo = new KISSY.Editor("demo", config);
     //console.dir(KISSY.Editor);
     //console.dir(editorDemo);
-
+    
 </script>
 
 </body>

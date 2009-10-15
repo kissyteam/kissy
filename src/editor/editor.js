@@ -2454,6 +2454,15 @@ KISSY.Editor.add("plugins~indent", function(E) {
                 return;
             }
 
+            // TODO: 和 CKEditor 一样，完全实现多区域的 iterator
+            // 下面用 blockquote 临时解决最常见的选区的多个块的父级元素刚好是body的情景
+            // 注意：要求 blockquote 的样式为缩进样式
+            if(parentEl === this.editor.contentDoc.body) {
+                this.editor.execCommand(this.name);
+                return;
+            }
+            // end of 临时解决方案
+
             // 获取可缩进的父元素
             if (isIndentableElement(parentEl)) {
                  indentableAncestor = parentEl;
@@ -2491,8 +2500,16 @@ KISSY.Editor.add("plugins~indent", function(E) {
     E.addPlugin(["indent", "outdent"], plugin);
  });
 
-// TODO:
-//  1. 对 rtl 的支持
+/**
+ * NOTES:
+ * 
+ *  - 要想完全接管 ie 的默认实现，需要考虑的因素很多。比如：
+ *     1. range 只含 inline 元素，上面的代码已实现
+ *     2. range 含多个完整的块元素，这个需要实现一个 blockIterator
+ *     3. range 含块元素和另一个块元素的部分，这个得需要实现一个 html parser 来协助
+ *
+ */
+
 KISSY.Editor.add("plugins~justify", function(E) {
 
     var //Y = YAHOO.util, Dom = Y.Dom,
