@@ -27,7 +27,7 @@ KISSY.Editor.add("config", function(E) {
             "",
             "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
             "",
-            "link", "smiley", "image", "blockquote", 
+            "link", "smiley", "image",
             "",
             "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight"
             //"",

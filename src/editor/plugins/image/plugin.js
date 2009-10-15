@@ -2,7 +2,8 @@
 KISSY.Editor.add("plugins~image", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Connect = Y.Connect, Lang = YAHOO.lang,
-        isIE = YAHOO.env.ua.ie,
+        UA = YAHOO.env.ua,
+        isIE = UA.ie,
         TYPE = E.PLUGIN_TYPE,
 
         DIALOG_CLS = "ks-editor-image",
@@ -338,13 +339,22 @@ KISSY.Editor.add("plugins~image", function(E) {
 
             // 插入图片
             if (window.getSelection) { // W3C
-                var img = document.createElement("img");
+                var img = editor.contentDoc.createElement("img");
                 img.src = url;
                 img.setAttribute("alt", alt);
 
                 range.deleteContents(); // 清空选中内容
                 range.insertNode(img); // 插入图片
-                range.setStartAfter(img); // 使得连续插入图片时，添加在后面
+
+                // 使得连续插入图片时，添加在后面
+                if(UA.webkit) {
+                    var selection = editor.contentWin.getSelection();
+                    selection.addRange(range);
+                    selection.collapseToEnd();
+                } else {
+                    range.setStartAfter(img);
+                }
+
                 editor.contentWin.focus(); // 显示光标
 
             } else if(document.selection) { // IE

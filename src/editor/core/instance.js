@@ -17,7 +17,7 @@ KISSY.Editor.add("core~instance", function(E) {
                         '<meta http-equiv="content-type" content="text/html; charset=gb18030" />' +
                         '<link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" />' +
                         '</head>' +
-                        '<body>{CONTENT}</body>' +
+                        '<body spellcheck="false">{CONTENT}</body>' +
                         '</html>',
 
         THEMES_DIR = "themes",
@@ -182,9 +182,6 @@ KISSY.Editor.add("core~instance", function(E) {
             // Ref:
             //   - Differences between designMode and contentEditable
             //     http://74.125.153.132/search?q=cache:5LveNs1yHyMJ:nagoon97.wordpress.com/2008/04/20/differences-between-designmode-and-contenteditable/+ie+contentEditable+designMode+different&cd=6&hl=en&ct=clnk
-
-            // 关闭 firefox 默认打开的 spellcheck
-            //doc.body.setAttribute("spellcheck", "false");
 
             // 让初始输入文字始终在 p 标签内
             if (Lang.trim(E.Dom.getText(doc.body)).length === 0) {

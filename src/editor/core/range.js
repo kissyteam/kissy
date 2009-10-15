@@ -12,10 +12,10 @@ KISSY.Editor.add("core~range", function(E) {
             if (win.getSelection) { // W3C
                 selection = win.getSelection();
 
-                if (selection.getRangeAt)
+                if (selection.getRangeAt) {
                     range = selection.getRangeAt(0);
 
-                else { // Safari! TODO: 待测试
+                } else { // for Old Webkit! 高版本的已经支持 getRangeAt
                     range = doc.createRange();
                     range.setStart(selection.anchorNode, selection.anchorOffset);
                     range.setEnd(selection.focusNode, selection.focusOffset);

@@ -2,7 +2,8 @@
 KISSY.Editor.add("plugins~smiley", function(E) {
 
     var Y = YAHOO.util, Event = Y.Event, Lang = YAHOO.lang,
-        isIE = YAHOO.env.ua.ie,
+        UA = YAHOO.env.ua,
+        isIE = UA.ie,
         TYPE = E.PLUGIN_TYPE,
 
         DIALOG_CLS = "ks-editor-smiley-dialog",
@@ -155,15 +156,24 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
             // 插入图片
             if (window.getSelection) { // W3C
-                var img = document.createElement("img");
+                var img = editor.contentDoc.createElement("img");
                 img.src = url;
                 img.setAttribute("alt", alt);
 
                 range.deleteContents(); // 清空选中内容
                 range.insertNode(img); // 插入图片
-                range.setStartAfter(img); // 使得连续插入图片时，添加在后面
+
+                // 使得连续插入图片时，添加在后面
+                if(UA.webkit) {
+                    var selection = editor.contentWin.getSelection();
+                    selection.addRange(range);
+                    selection.collapseToEnd();
+                } else {
+                    range.setStartAfter(img);
+                }
+
                 editor.contentWin.focus(); // 显示光标
-                
+
             } else if(document.selection) { // IE
                 if("text" in range) { // TextRange
                     range.pasteHTML('<img src="' + url + '" alt="' + alt + '" />');
@@ -177,6 +187,11 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
  });
 
+/**
+ * NOTES:
+ *   - Webkit 下，不能将一个 document 内创建的 dom 节点移动到另一个 document
+ *     http://www.codingforums.com/archive/index.php/t-153219.html 
+ */
 // TODO:
 //  1. 多套表情支持
 //  2. 表情的多国语言支持，包括 alt 和 title 信息
