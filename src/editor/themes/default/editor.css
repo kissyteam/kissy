@@ -40,9 +40,11 @@ html>body .ks-inline-block {
 /** toolbar **/
 .ks-editor-toolbar {
     background: #E5E5E5 url(editor-bg.png) repeat-x 0 -192px;
-    padding: 3px;
+    padding: 3px 3px 2px;
+    *padding-bottom: 1px;
     border-bottom: 1px solid #DFDFDF;
     line-height: 1;
+    position: relative; overflow: hidden; /* 解决 inner-box margin: 0 -1px 导致的横向滚动条 bug */
     zoom: 1;
     /* 高度自适应，正常情况下，单行高度 23px */
 }
@@ -500,4 +502,11 @@ li.ks-editor-image-tab-selected {
     height: 20px;
     cursor: pointer;
     margin-right: 3px;
+}
+
+/* textarea */
+.ks-editor-content textarea {
+    /*去掉 webkit 浏览器添加的 resize 和聚焦时的 outline*/
+    resize: none; outline: none;
+    border: 0;
 }

@@ -164,7 +164,7 @@ KISSY.Editor.add("config", function(E) {
             "",
             "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
             "",
-            "link", "smiley", "image", "blockquote", 
+            "link", "smiley", "image",
             "",
             "insertOrderedList", "insertUnorderedList", "outdent", "indent", "justifyLeft", "justifyCenter", "justifyRight"
             //"",
@@ -511,11 +511,10 @@ KISSY.Editor.add("core~plugin", function(E) {
         CUSTOM: 0,
         TOOLBAR_SEPARATOR: 1,
         TOOLBAR_BUTTON: 2,
-        TOOLBAR_DROP_BUTTON: 4,
-        TOOLBAR_MENU_BUTTON: 8,
-        TOOLBAR_SELECT: 16,
-        STATUSBAR_ITEM: 32,
-        FUNC: 64 // 纯功能性质插件，无 UI
+        TOOLBAR_MENU_BUTTON: 4,
+        TOOLBAR_SELECT: 8,
+        STATUSBAR_ITEM: 16,
+        FUNC: 32 // 纯功能性质插件，无 UI
     };
 
 });
@@ -714,10 +713,10 @@ KISSY.Editor.add("core~range", function(E) {
             if (win.getSelection) { // W3C
                 selection = win.getSelection();
 
-                if (selection.getRangeAt)
+                if (selection.getRangeAt) {
                     range = selection.getRangeAt(0);
 
-                else { // Safari! TODO: 待测试
+                } else { // for Old Webkit! 高版本的已经支持 getRangeAt
                     range = doc.createRange();
                     range.setStart(selection.anchorNode, selection.anchorOffset);
                     range.setEnd(selection.focusNode, selection.focusOffset);
@@ -768,7 +767,7 @@ KISSY.Editor.add("core~instance", function(E) {
                         '<meta http-equiv="content-type" content="text/html; charset=gb18030" />' +
                         '<link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" />' +
                         '</head>' +
-                        '<body>{CONTENT}</body>' +
+                        '<body spellcheck="false">{CONTENT}</body>' +
                         '</html>',
 
         THEMES_DIR = "themes",
@@ -889,7 +888,7 @@ KISSY.Editor.add("core~instance", function(E) {
 
             iframe = content.childNodes[0];
             iframe.style.width = "100%";
-            iframe.style.height = "100%";
+            iframe.style.height = "100%"; // 使得 resize 插件能正常工作
             iframe.setAttribute("frameBorder", 0);
 
             textarea.style.display = "none";
@@ -933,9 +932,6 @@ KISSY.Editor.add("core~instance", function(E) {
             // Ref:
             //   - Differences between designMode and contentEditable
             //     http://74.125.153.132/search?q=cache:5LveNs1yHyMJ:nagoon97.wordpress.com/2008/04/20/differences-between-designmode-and-contenteditable/+ie+contentEditable+designMode+different&cd=6&hl=en&ct=clnk
-
-            // 关闭 firefox 默认打开的 spellcheck
-            //doc.body.setAttribute("spellcheck", "false");
 
             // 让初始输入文字始终在 p 标签内
             if (Lang.trim(E.Dom.getText(doc.body)).length === 0) {
@@ -2040,7 +2036,8 @@ KISSY.Editor.add("plugins~font", function(E) {
 KISSY.Editor.add("plugins~image", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Connect = Y.Connect, Lang = YAHOO.lang,
-        isIE = YAHOO.env.ua.ie,
+        UA = YAHOO.env.ua,
+        isIE = UA.ie,
         TYPE = E.PLUGIN_TYPE,
 
         DIALOG_CLS = "ks-editor-image",
@@ -2100,7 +2097,7 @@ KISSY.Editor.add("plugins~image", function(E) {
         /**
          * 种类：按钮
          */
-        type: TYPE.TOOLBAR_DROP_BUTTON,
+        type: TYPE.TOOLBAR_BUTTON,
 
         /**
          * 配置项
@@ -2376,13 +2373,22 @@ KISSY.Editor.add("plugins~image", function(E) {
 
             // 插入图片
             if (window.getSelection) { // W3C
-                var img = document.createElement("img");
+                var img = editor.contentDoc.createElement("img");
                 img.src = url;
                 img.setAttribute("alt", alt);
 
                 range.deleteContents(); // 清空选中内容
                 range.insertNode(img); // 插入图片
-                range.setStartAfter(img); // 使得连续插入图片时，添加在后面
+
+                // 使得连续插入图片时，添加在后面
+                if(UA.webkit) {
+                    var selection = editor.contentWin.getSelection();
+                    selection.addRange(range);
+                    selection.collapseToEnd();
+                } else {
+                    range.setStartAfter(img);
+                }
+
                 editor.contentWin.focus(); // 显示光标
 
             } else if(document.selection) { // IE
@@ -2615,7 +2621,7 @@ KISSY.Editor.add("plugins~link", function(E) {
         /**
          * 种类：按钮
          */
-        type: TYPE.TOOLBAR_DROP_BUTTON,
+        type: TYPE.TOOLBAR_BUTTON,
 
         /**
          * 关联的对话框
@@ -2916,6 +2922,7 @@ KISSY.Editor.add("plugins~removeformat", function(E) {
 KISSY.Editor.add("plugins~resize", function(E) {
 
     var Y = YAHOO.util, Event = Y.Event,
+        UA = YAHOO.env.ua,
         TYPE = E.PLUGIN_TYPE,
 
         TMPL = '<span class="ks-editor-resize-larger" title="{larger_title}">{larger_text}</span>'
@@ -2960,7 +2967,7 @@ KISSY.Editor.add("plugins~resize", function(E) {
 
             Event.on(largerEl, "click", function() {
                 this.currentHeight += 100;
-                contentEl.style.height = this.currentHeight + "px";
+                this._doResize();
             }, this, true);
 
             Event.on(smallerEl, "click", function() {
@@ -2972,10 +2979,18 @@ KISSY.Editor.add("plugins~resize", function(E) {
                     this.currentHeight -= 100;
                 }
 
-                contentEl.style.height = this.currentHeight + "px";
+                this._doResize();
             }, this, true);
+        },
 
+        _doResize: function() {
+            this.contentEl.style.height = this.currentHeight + "px";
+
+            // 本来通过设置 textarea 的 height: 100% 自动就适应高度了
+            // 但 ie7- 纯 css 方案有问题，因此干脆用下面这行 js 搞定
+            this.editor.textarea.style.height = this.currentHeight + "px";
         }
+
     });
 
  });
@@ -3064,7 +3079,8 @@ KISSY.Editor.add("plugins~save", function(E) {
 KISSY.Editor.add("plugins~smiley", function(E) {
 
     var Y = YAHOO.util, Event = Y.Event, Lang = YAHOO.lang,
-        isIE = YAHOO.env.ua.ie,
+        UA = YAHOO.env.ua,
+        isIE = UA.ie,
         TYPE = E.PLUGIN_TYPE,
 
         DIALOG_CLS = "ks-editor-smiley-dialog",
@@ -3079,7 +3095,7 @@ KISSY.Editor.add("plugins~smiley", function(E) {
         /**
          * 种类：按钮
          */
-        type: TYPE.TOOLBAR_DROP_BUTTON,
+        type: TYPE.TOOLBAR_BUTTON,
 
         /**
          * 配置项
@@ -3217,15 +3233,24 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
             // 插入图片
             if (window.getSelection) { // W3C
-                var img = document.createElement("img");
+                var img = editor.contentDoc.createElement("img");
                 img.src = url;
                 img.setAttribute("alt", alt);
 
                 range.deleteContents(); // 清空选中内容
                 range.insertNode(img); // 插入图片
-                range.setStartAfter(img); // 使得连续插入图片时，添加在后面
+
+                // 使得连续插入图片时，添加在后面
+                if(UA.webkit) {
+                    var selection = editor.contentWin.getSelection();
+                    selection.addRange(range);
+                    selection.collapseToEnd();
+                } else {
+                    range.setStartAfter(img);
+                }
+
                 editor.contentWin.focus(); // 显示光标
-                
+
             } else if(document.selection) { // IE
                 if("text" in range) { // TextRange
                     range.pasteHTML('<img src="' + url + '" alt="' + alt + '" />');
@@ -3239,6 +3264,11 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
  });
 
+/**
+ * NOTES:
+ *   - Webkit 下，不能将一个 document 内创建的 dom 节点移动到另一个 document
+ *     http://www.codingforums.com/archive/index.php/t-153219.html 
+ */
 // TODO:
 //  1. 多套表情支持
 //  2. 表情的多国语言支持，包括 alt 和 title 信息

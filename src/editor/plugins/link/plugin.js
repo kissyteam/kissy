@@ -28,7 +28,7 @@ KISSY.Editor.add("plugins~link", function(E) {
         /**
          * 种类：按钮
          */
-        type: TYPE.TOOLBAR_DROP_BUTTON,
+        type: TYPE.TOOLBAR_BUTTON,
 
         /**
          * 关联的对话框

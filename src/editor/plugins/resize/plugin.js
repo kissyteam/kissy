@@ -2,6 +2,7 @@
 KISSY.Editor.add("plugins~resize", function(E) {
 
     var Y = YAHOO.util, Event = Y.Event,
+        UA = YAHOO.env.ua,
         TYPE = E.PLUGIN_TYPE,
 
         TMPL = '<span class="ks-editor-resize-larger" title="{larger_title}">{larger_text}</span>'
@@ -46,7 +47,7 @@ KISSY.Editor.add("plugins~resize", function(E) {
 
             Event.on(largerEl, "click", function() {
                 this.currentHeight += 100;
-                contentEl.style.height = this.currentHeight + "px";
+                this._doResize();
             }, this, true);
 
             Event.on(smallerEl, "click", function() {
@@ -58,10 +59,18 @@ KISSY.Editor.add("plugins~resize", function(E) {
                     this.currentHeight -= 100;
                 }
 
-                contentEl.style.height = this.currentHeight + "px";
+                this._doResize();
             }, this, true);
+        },
 
+        _doResize: function() {
+            this.contentEl.style.height = this.currentHeight + "px";
+
+            // 本来通过设置 textarea 的 height: 100% 自动就适应高度了
+            // 但 ie7- 纯 css 方案有问题，因此干脆用下面这行 js 搞定
+            this.editor.textarea.style.height = this.currentHeight + "px";
         }
+
     });
 
  });

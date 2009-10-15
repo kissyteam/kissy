@@ -13,10 +13,11 @@
  ~ table
  ~ flash
 
- ~ resize 在 ie7- 下的 bug
- ~ ie 下，颜色选取框的样式问题
+ ~ ie7- 下，颜色选取等弹出框的样式问题
  ~ 在 chrome, safari, opera 下的测试
  ~ 统一编辑器 和 发表后帖子的内容样式
+ ~ autoFocus 以及 focusToEnd
+ ~ QC 上的 bug
  ~ 帮派日常 & bug fix（10月9日 - 10月22日）
 
  ~ 编辑器 WordPress 插件

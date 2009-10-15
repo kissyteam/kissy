@@ -8,11 +8,10 @@ KISSY.Editor.add("core~plugin", function(E) {
         CUSTOM: 0,
         TOOLBAR_SEPARATOR: 1,
         TOOLBAR_BUTTON: 2,
-        TOOLBAR_DROP_BUTTON: 4,
-        TOOLBAR_MENU_BUTTON: 8,
-        TOOLBAR_SELECT: 16,
-        STATUSBAR_ITEM: 32,
-        FUNC: 64 // 纯功能性质插件，无 UI
+        TOOLBAR_MENU_BUTTON: 4,
+        TOOLBAR_SELECT: 8,
+        STATUSBAR_ITEM: 16,
+        FUNC: 32 // 纯功能性质插件，无 UI
     };
 
 });

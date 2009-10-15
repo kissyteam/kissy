@@ -18,7 +18,7 @@ KISSY.Editor.add("plugins~smiley", function(E) {
         /**
          * 种类：按钮
          */
-        type: TYPE.TOOLBAR_DROP_BUTTON,
+        type: TYPE.TOOLBAR_BUTTON,
 
         /**
          * 配置项

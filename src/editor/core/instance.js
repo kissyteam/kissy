@@ -138,7 +138,7 @@ KISSY.Editor.add("core~instance", function(E) {
 
             iframe = content.childNodes[0];
             iframe.style.width = "100%";
-            iframe.style.height = "100%";
+            iframe.style.height = "100%"; // 使得 resize 插件能正常工作
             iframe.setAttribute("frameBorder", 0);
 
             textarea.style.display = "none";
