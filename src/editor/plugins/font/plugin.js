@@ -119,7 +119,7 @@ KISSY.Editor.add("plugins~font", function(E) {
 
             // ie6 ÏÂ£¬Ä£Äâ hover
             if(UA.ie === 6) {
-                var els = this.selectList.children;
+                var els = this.selectList.getElementsByTagName("li");
                 Event.on(els, "mouseenter", function() {
                     Dom.addClass(this, OPTION_ITEM_HOVER_CLS);
                 });

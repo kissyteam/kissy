@@ -280,7 +280,7 @@ html>body .ks-inline-block {
     background: url(check.gif) no-repeat 0 50%;
 }
 
-.ks-editor-option:hover,
+/*.ks-editor-option:hover,*/
 .ks-editor-option-hover {
     background-color: #E0EDFE;
 }
