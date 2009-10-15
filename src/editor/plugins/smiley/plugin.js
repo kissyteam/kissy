@@ -3,7 +3,6 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
     var Y = YAHOO.util, Event = Y.Event, Lang = YAHOO.lang,
         UA = YAHOO.env.ua,
-        isIE = UA.ie,
         TYPE = E.PLUGIN_TYPE,
 
         DIALOG_CLS = "ks-editor-smiley-dialog",
@@ -55,7 +54,7 @@ KISSY.Editor.add("plugins~smiley", function(E) {
             this.dialog = dialog;
             this._renderDialog();
 
-            if(isIE) E.Dom.setItemUnselectable(dialog);
+            if(UA.ie) E.Dom.setItemUnselectable(dialog);
         },
 
         _renderDialog: function() {

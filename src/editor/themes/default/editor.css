@@ -266,6 +266,10 @@ html>body .ks-inline-block {
 }
 .ks-editor-drop-menu-fontName .ks-editor-option {
     font-size: 14px;
+    _width: 110px;
+}
+.ks-editor-drop-menu-fontSize .ks-editor-option {
+    _width: 40px;
 }
 
 .ks-editor-toolbar-select .ks-editor-toolbar-fontName {
@@ -280,7 +284,7 @@ html>body .ks-inline-block {
     background: url(check.gif) no-repeat 0 50%;
 }
 
-/*.ks-editor-option:hover,*/
+.ks-editor-option:hover,
 .ks-editor-option-hover {
     background-color: #E0EDFE;
 }

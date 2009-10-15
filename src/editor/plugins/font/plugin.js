@@ -127,7 +127,6 @@ KISSY.Editor.add("plugins~font", function(E) {
                     Dom.removeClass(this, OPTION_ITEM_HOVER_CLS);
                 });
             }
-
         },
 
         /**
