@@ -2,9 +2,10 @@
 KISSY.Editor.add("plugins~font", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
-        isIE = YAHOO.env.ua.ie,
+        UA = YAHOO.env.ua,
         TYPE = E.PLUGIN_TYPE,
 
+        OPTION_ITEM_HOVER_CLS = "ks-editor-option-hover",
         SELECT_TMPL = '<ul class="ks-editor-select-list">{LI}</ul>',
         OPTION_TMPL = '<li class="ks-editor-option" data-value="{VALUE}">' +
                           '<span class="ks-editor-option-checkbox"></span>' +
@@ -66,7 +67,7 @@ KISSY.Editor.add("plugins~font", function(E) {
             this._bindPickEvent();
 
             // ie 的 range 处理
-            if(isIE) {
+            if(UA.ie) {
                 var self = this;
                 Event.on(this.domEl, "click", function() {
                     self.range = self.editor.getSelectionRange(); // 保存 range, 以便还原
@@ -115,6 +116,18 @@ KISSY.Editor.add("plugins~font", function(E) {
 
                 self._doAction(target.getAttribute("data-value"));
             });
+
+            // ie6 下，模拟 hover
+            if(UA.ie === 6) {
+                var els = this.selectList.children;
+                Event.on(els, "mouseenter", function() {
+                    Dom.addClass(this, OPTION_ITEM_HOVER_CLS);
+                });
+                Event.on(els, "mouseleave", function() {
+                    Dom.removeClass(this, OPTION_ITEM_HOVER_CLS);
+                });
+            }
+
         },
 
         /**
@@ -128,7 +141,7 @@ KISSY.Editor.add("plugins~font", function(E) {
 
             // 还原选区
             var range = this.range;
-            if(isIE && range.select) range.select();
+            if(UA.ie && range.select) range.select();
 
             // 执行命令
             this.editor.execCommand(this.name, this.selectedValue);

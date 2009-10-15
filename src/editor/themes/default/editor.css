@@ -214,11 +214,13 @@ html>body .ks-inline-block {
 
 /* 取色板 */
 .ks-editor-palette-table {
+    margin: 5px 8px 8px; /* ie7- 下，table 的 margin 无效，因此外面在包裹一层 div */
+}
+.ks-editor-palette-table table {
     border: 1px solid #666;
     border-collapse: collapse;
-    margin: 5px;
+    *border-right: 0;
 }
-
 .ks-editor-palette-cell {
     border-right: 1px solid #666;
     height: 18px;
@@ -278,7 +280,8 @@ html>body .ks-inline-block {
     background: url(check.gif) no-repeat 0 50%;
 }
 
-.ks-editor-option:hover {
+.ks-editor-option:hover,
+.ks-editor-option-hover {
     background-color: #E0EDFE;
 }
 
@@ -412,8 +415,8 @@ li.ks-editor-image-tab-selected {
     margin: 2px 5px;
     border: 1px solid #fff;
 }
-.ks-editor-smiley-sprite {
-    margin: 5px 5px 10px;
+.ks-editor-smiley-dialog {
+    padding: 8px 5px 10px;
 }
 .ks-editor-smiley-sprite span {
     display: block;
