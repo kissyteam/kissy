@@ -302,6 +302,7 @@ KISSY.Editor.add("plugins~image", function(E) {
             if(activeDropMenu && Dom.isAncestor(activeDropMenu, this.dialog)) {
                 E.Menu.hideActiveDropMenu(this.editor);
             }
+
             // 还原焦点
             this.editor.contentWin.focus();
         },
@@ -311,11 +312,7 @@ KISSY.Editor.add("plugins~image", function(E) {
          */
         _syncUI: function() {
             // 保存 range, 以便还原
-            this.range = this.editor.getSelectionRange();
-
-            // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
-            // 注：通过 blur / focus 等方式在 ie7- 下无效
-            isIE && this.editor.contentDoc.selection.empty();
+            this.range = E.Range.saveRange(this.editor);
 
             // reset
             this.form.reset();

@@ -207,3 +207,4 @@ KISSY.Editor.add("plugins~font", function(E) {
 // TODO
 //  1. 仿 google, 对键盘事件的支持
 //  2. 光标变化时，动态更新当前字体显示值
+//  3. ie 下接管，否则光标处于某标签内，改变字体时，改变的是整段标签的字体

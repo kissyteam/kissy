@@ -118,12 +118,7 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
             // range 处理
             Event.on(this.domEl, "click", function() {
-                // 保存 range, 以便还原
-                self.range = self.editor.getSelectionRange();
-
-                // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
-                // 注：通过 blur / focus 等方式在 ie7- 下无效
-                UA.ie && self.editor.contentDoc.selection.empty();
+                self.range = E.Range.saveRange(self.editor);
             });
 
             // 注册表单按钮点击事件

@@ -2,10 +2,11 @@
 KISSY.Editor.add("core~menu", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
+        UA = YAHOO.env.ua,
 
-        VISIBILITY = "visibility",
-        HIDDEN = "hidden",
-        VISIBLE = "visible",
+        DISPLAY = "display",
+        NONE = "none",
+        EMPTY = "",
         DROP_MENU_CLASS = "ks-editor-drop-menu",
         SHADOW_CLASS = "ks-editor-drop-menu-shadow",
         CONTENT_CLASS = "ks-editor-drop-menu-content",
@@ -31,7 +32,7 @@ KISSY.Editor.add("core~menu", function(E) {
             
             // 生成 DOM
             dropMenu.className = DROP_MENU_CLASS;
-            dropMenu.style[VISIBILITY] = "hidden";
+            dropMenu.style[DISPLAY] = NONE;
             document.body.appendChild(dropMenu);
 
             // 点击触点时，显示下拉框
@@ -91,7 +92,7 @@ KISSY.Editor.add("core~menu", function(E) {
 
         _isVisible: function(el) {
             if(!el) return false;
-            return el.style[VISIBILITY] != HIDDEN;
+            return el.style[DISPLAY] != NONE;
         },
 
         /**
@@ -105,22 +106,24 @@ KISSY.Editor.add("core~menu", function(E) {
         _hide: function(el) {
             if(el) {
                 if(shim) {
-                    shim.style[VISIBILITY] = HIDDEN;
+                    shim.style[DISPLAY] = NONE;
                 }
 
-                el.style[VISIBILITY] = HIDDEN;
+                el.style[DISPLAY] = NONE;
+                //el.style.visibility = "hidden";
+                // 注：visibilty 方式会导致ie下，上传并插入文件（选择了选取文件框）后，编辑区域焦点丢失
             }
         },
 
         _show: function(el) {
+            el.style[DISPLAY] = EMPTY;
+
             if(el) {
-                if(YAHOO.env.ua.ie === 6) {
+                if(UA.ie === 6) {
                     if(!shim) this._initShim();
                     this._setShimRegion(el);
-                    shim.style[VISIBILITY] = VISIBLE;
+                    shim.style[DISPLAY] = EMPTY;
                 }
-
-                el.style[VISIBILITY] = VISIBLE;
             }
         },
 
@@ -148,8 +151,8 @@ KISSY.Editor.add("core~menu", function(E) {
             shim.src = "about:blank";
             shim.className = SHIM_CLASS;
             shim.style.position = "absolute";
-            shim.style.visibility = HIDDEN;
-            shim.style.border = "none";
+            shim.style[DISPLAY] = NONE;
+            shim.style.border = NONE;
             document.body.appendChild(shim);
         },
 
@@ -169,3 +172,4 @@ KISSY.Editor.add("core~menu", function(E) {
     };
 
 });
+

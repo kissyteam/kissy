@@ -701,6 +701,8 @@ KISSY.Editor.add("core~command", function(E) {
 });
 KISSY.Editor.add("core~range", function(E) {
 
+    var isIE = YAHOO.env.ua.ie;
+
     E.Range = {
 
         /**
@@ -744,6 +746,21 @@ KISSY.Editor.add("core~range", function(E) {
         getSelectedText: function(range) {
             if("text" in range) return range.text;
             return range.toString ? range.toString() : ""; // ms IHTMLControlRange 无 toString 方法
+        },
+
+        /**
+         * 保存选区 for ie
+         */
+        saveRange: function(editor) {
+            // 1. 保存 range, 以便还原
+            isIE && editor.contentWin.focus(); // 确保下面这行 range 是编辑区域的，否则 [Issue 39]
+
+            // 2. 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+            // 通过 blur / focus 等方式在 ie7- 下无效
+            // 注意：2 和 1 冲突。权衡考虑，还是取消2
+            //isIE && editor.contentDoc.selection.empty();
+
+            return editor.getSelectionRange();
         }
     };
 
@@ -947,7 +964,9 @@ KISSY.Editor.add("core~instance", function(E) {
                 Event.on(doc, "click", function() {
                     if(doc.activeElement.parentNode.nodeType === 9) { // 点击在 doc 上
                         var range = doc.selection.createRange();
-                        range.moveToElementText(doc.body.lastChild);
+                        try { // 有时会报错
+                            range.moveToElementText(doc.body.lastChild);
+                        } catch(ex) { }
                         range.collapse(false);
                         range.select();
                     }
@@ -1329,10 +1348,11 @@ KISSY.Editor.add("core~statusbar", function(E) {
 KISSY.Editor.add("core~menu", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
+        UA = YAHOO.env.ua,
 
-        VISIBILITY = "visibility",
-        HIDDEN = "hidden",
-        VISIBLE = "visible",
+        DISPLAY = "display",
+        NONE = "none",
+        EMPTY = "",
         DROP_MENU_CLASS = "ks-editor-drop-menu",
         SHADOW_CLASS = "ks-editor-drop-menu-shadow",
         CONTENT_CLASS = "ks-editor-drop-menu-content",
@@ -1358,7 +1378,7 @@ KISSY.Editor.add("core~menu", function(E) {
             
             // 生成 DOM
             dropMenu.className = DROP_MENU_CLASS;
-            dropMenu.style[VISIBILITY] = "hidden";
+            dropMenu.style[DISPLAY] = NONE;
             document.body.appendChild(dropMenu);
 
             // 点击触点时，显示下拉框
@@ -1418,7 +1438,7 @@ KISSY.Editor.add("core~menu", function(E) {
 
         _isVisible: function(el) {
             if(!el) return false;
-            return el.style[VISIBILITY] != HIDDEN;
+            return el.style[DISPLAY] != NONE;
         },
 
         /**
@@ -1432,22 +1452,24 @@ KISSY.Editor.add("core~menu", function(E) {
         _hide: function(el) {
             if(el) {
                 if(shim) {
-                    shim.style[VISIBILITY] = HIDDEN;
+                    shim.style[DISPLAY] = NONE;
                 }
 
-                el.style[VISIBILITY] = HIDDEN;
+                el.style[DISPLAY] = NONE;
+                //el.style.visibility = "hidden";
+                // 注：visibilty 方式会导致ie下，上传并插入文件（选择了选取文件框）后，编辑区域焦点丢失
             }
         },
 
         _show: function(el) {
+            el.style[DISPLAY] = EMPTY;
+
             if(el) {
-                if(YAHOO.env.ua.ie === 6) {
+                if(UA.ie === 6) {
                     if(!shim) this._initShim();
                     this._setShimRegion(el);
-                    shim.style[VISIBILITY] = VISIBLE;
+                    shim.style[DISPLAY] = EMPTY;
                 }
-
-                el.style[VISIBILITY] = VISIBLE;
             }
         },
 
@@ -1475,8 +1497,8 @@ KISSY.Editor.add("core~menu", function(E) {
             shim.src = "about:blank";
             shim.className = SHIM_CLASS;
             shim.style.position = "absolute";
-            shim.style.visibility = HIDDEN;
-            shim.style.border = "none";
+            shim.style[DISPLAY] = NONE;
+            shim.style.border = NONE;
             document.body.appendChild(shim);
         },
 
@@ -1496,6 +1518,7 @@ KISSY.Editor.add("core~menu", function(E) {
     };
 
 });
+
 
 KISSY.Editor.add("smilies~config~default", function(E) {
 
@@ -1636,7 +1659,7 @@ KISSY.Editor.add("plugins~color", function(E) {
         isIE = YAHOO.env.ua.ie,
         TYPE = E.PLUGIN_TYPE,
 
-        PALETTE_TABLE_TMPL = '<table class="ks-editor-palette-table"><tbody>{TR}</tbody></table>',
+        PALETTE_TABLE_TMPL = '<div class="ks-editor-palette-table"><table><tbody>{TR}</tbody></table></div>',
         PALETTE_CELL_TMPL = '<td class="ks-editor-palette-cell"><div class="ks-editor-palette-colorswatch" title="{COLOR}" style="background-color:{COLOR}"></div></td>',
 
         COLOR_GRAY = ["000", "444", "666", "999", "CCC", "EEE", "F3F3F3", "FFF"],
@@ -1723,8 +1746,12 @@ KISSY.Editor.add("plugins~color", function(E) {
             if(isIE) {
                 var self = this;
                 Event.on(this.domEl, "click", function() {
-                    self.range = self.editor.getSelectionRange(); // 保存 range, 以便还原
-                    this.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+                    // 保存 range, 以便还原
+                    self.range = self.editor.getSelectionRange();
+
+                    // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+                    // 注：通过 blur / focus 等方式在 ie7- 下无效
+                    self.editor.contentDoc.selection.empty();
                 });
             }
         },
@@ -1843,9 +1870,10 @@ KISSY.Editor.add("plugins~color", function(E) {
 KISSY.Editor.add("plugins~font", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
-        isIE = YAHOO.env.ua.ie,
+        UA = YAHOO.env.ua,
         TYPE = E.PLUGIN_TYPE,
 
+        OPTION_ITEM_HOVER_CLS = "ks-editor-option-hover",
         SELECT_TMPL = '<ul class="ks-editor-select-list">{LI}</ul>',
         OPTION_TMPL = '<li class="ks-editor-option" data-value="{VALUE}">' +
                           '<span class="ks-editor-option-checkbox"></span>' +
@@ -1907,11 +1935,15 @@ KISSY.Editor.add("plugins~font", function(E) {
             this._bindPickEvent();
 
             // ie 的 range 处理
-            if(isIE) {
+            if(UA.ie) {
                 var self = this;
                 Event.on(this.domEl, "click", function() {
-                    self.range = self.editor.getSelectionRange(); // 保存 range, 以便还原
-                    this.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+                    // 保存 range, 以便还原
+                    self.range = self.editor.getSelectionRange();
+
+                    // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+                    // 注：通过 blur / focus 等方式在 ie7- 下无效
+                    self.editor.contentDoc.selection.empty();
                 });
             }
         },
@@ -1956,6 +1988,17 @@ KISSY.Editor.add("plugins~font", function(E) {
 
                 self._doAction(target.getAttribute("data-value"));
             });
+
+            // ie6 下，模拟 hover
+            if(UA.ie === 6) {
+                var els = this.selectList.getElementsByTagName("li");
+                Event.on(els, "mouseenter", function() {
+                    Dom.addClass(this, OPTION_ITEM_HOVER_CLS);
+                });
+                Event.on(els, "mouseleave", function() {
+                    Dom.removeClass(this, OPTION_ITEM_HOVER_CLS);
+                });
+            }
         },
 
         /**
@@ -1969,7 +2012,7 @@ KISSY.Editor.add("plugins~font", function(E) {
 
             // 还原选区
             var range = this.range;
-            if(isIE && range.select) range.select();
+            if(UA.ie && range.select) range.select();
 
             // 执行命令
             this.editor.execCommand(this.name, this.selectedValue);
@@ -2032,6 +2075,7 @@ KISSY.Editor.add("plugins~font", function(E) {
 // TODO
 //  1. 仿 google, 对键盘事件的支持
 //  2. 光标变化时，动态更新当前字体显示值
+//  3. ie 下接管，否则光标处于某标签内，改变字体时，改变的是整段标签的字体
 
 KISSY.Editor.add("plugins~image", function(E) {
 
@@ -2336,6 +2380,7 @@ KISSY.Editor.add("plugins~image", function(E) {
             if(activeDropMenu && Dom.isAncestor(activeDropMenu, this.dialog)) {
                 E.Menu.hideActiveDropMenu(this.editor);
             }
+
             // 还原焦点
             this.editor.contentWin.focus();
         },
@@ -2344,9 +2389,8 @@ KISSY.Editor.add("plugins~image", function(E) {
          * 更新界面上的表单值
          */
         _syncUI: function() {
-            // 保存 range
-            this.range = this.editor.getSelectionRange();
-            if(isIE) this.domEl.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+            // 保存 range, 以便还原
+            this.range = E.Range.saveRange(this.editor);
 
             // reset
             this.form.reset();
@@ -2661,9 +2705,7 @@ KISSY.Editor.add("plugins~link", function(E) {
             this.dialog = dialog;
             this.form = dialog.getElementsByTagName("form")[0];
 
-            if(isIE) {
-                E.Dom.setItemUnselectable(dialog);
-            }
+            isIE && E.Dom.setItemUnselectable(dialog);
         },
 
         /**
@@ -2703,8 +2745,8 @@ KISSY.Editor.add("plugins~link", function(E) {
          * 更新界面上的表单值
          */
         _syncUI: function() {
-            this.range = this.editor.getSelectionRange();
-            if(isIE) this.domEl.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+            // 保存 range, 以便还原
+            this.range = E.Range.saveRange(this.editor);
 
             var form = this.form,
                 container = Range.getCommonAncestor(this.range),
@@ -2765,7 +2807,7 @@ KISSY.Editor.add("plugins~link", function(E) {
             if (target) a.setAttribute("target", "_blank");
 
             if (isIE) {
-                if ("text" in range) { // TextRange
+                if("text" in range) { // TextRange
                     if (range.select) range.select();
 
                     a.innerHTML = range.htmlText || href;
@@ -2781,8 +2823,7 @@ KISSY.Editor.add("plugins~link", function(E) {
             } else { // W3C
                 if(range.collapsed) {
                     a.innerHTML = href;
-                }
-                else {
+                } else {
                     fragment = range.cloneContents();
                     while(fragment.firstChild) {
                         a.appendChild(fragment.firstChild);
@@ -3080,7 +3121,6 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
     var Y = YAHOO.util, Event = Y.Event, Lang = YAHOO.lang,
         UA = YAHOO.env.ua,
-        isIE = UA.ie,
         TYPE = E.PLUGIN_TYPE,
 
         DIALOG_CLS = "ks-editor-smiley-dialog",
@@ -3132,7 +3172,7 @@ KISSY.Editor.add("plugins~smiley", function(E) {
             this.dialog = dialog;
             this._renderDialog();
 
-            if(isIE) E.Dom.setItemUnselectable(dialog);
+            if(UA.ie) E.Dom.setItemUnselectable(dialog);
         },
 
         _renderDialog: function() {
@@ -3196,8 +3236,7 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
             // range 处理
             Event.on(this.domEl, "click", function() {
-                self.range = self.editor.getSelectionRange(); // 保存 range, 以便还原
-                this.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+                self.range = E.Range.saveRange(self.editor);
             });
 
             // 注册表单按钮点击事件
