@@ -197,7 +197,7 @@ KISSY.Editor.add("core~instance", function(E) {
                 Event.on(doc, "click", function() {
                     if(doc.activeElement.parentNode.nodeType === 9) { // 点击在 doc 上
                         var range = doc.selection.createRange();
-                        try { // 有时会报错
+                        try { // 有时会报错：编辑器 ie 下，切换源代码，再切换回去，点击编辑器框内，有无效指针的JS错误
                             range.moveToElementText(doc.body.lastChild);
                         } catch(ex) { }
                         range.collapse(false);
