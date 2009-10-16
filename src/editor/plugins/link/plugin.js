@@ -68,9 +68,7 @@ KISSY.Editor.add("plugins~link", function(E) {
             this.dialog = dialog;
             this.form = dialog.getElementsByTagName("form")[0];
 
-            if(isIE) {
-                E.Dom.setItemUnselectable(dialog);
-            }
+            isIE && E.Dom.setItemUnselectable(dialog);
         },
 
         /**
@@ -111,6 +109,7 @@ KISSY.Editor.add("plugins~link", function(E) {
          */
         _syncUI: function() {
             // 保存 range, 以便还原
+            isIE && this.editor.contentWin.focus(); // 确保下面这行 range 是编辑区域的，否则 [Issue 39]
             this.range = this.editor.getSelectionRange();
 
             // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
@@ -176,7 +175,7 @@ KISSY.Editor.add("plugins~link", function(E) {
             if (target) a.setAttribute("target", "_blank");
 
             if (isIE) {
-                if ("text" in range) { // TextRange
+                if("text" in range) { // TextRange
                     if (range.select) range.select();
 
                     a.innerHTML = range.htmlText || href;
@@ -192,8 +191,7 @@ KISSY.Editor.add("plugins~link", function(E) {
             } else { // W3C
                 if(range.collapsed) {
                     a.innerHTML = href;
-                }
-                else {
+                } else {
                     fragment = range.cloneContents();
                     while(fragment.firstChild) {
                         a.appendChild(fragment.firstChild);

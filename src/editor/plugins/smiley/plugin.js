@@ -123,7 +123,7 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
                 // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
                 // 注：通过 blur / focus 等方式在 ie7- 下无效
-                self.editor.contentDoc.selection.empty();
+                UA.ie && self.editor.contentDoc.selection.empty();
             });
 
             // 注册表单按钮点击事件
