@@ -110,8 +110,12 @@ KISSY.Editor.add("plugins~link", function(E) {
          * 更新界面上的表单值
          */
         _syncUI: function() {
+            // 保存 range, 以便还原
             this.range = this.editor.getSelectionRange();
-            if(isIE) this.domEl.focus(); // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+
+            // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+            // 注：通过 blur / focus 等方式在 ie7- 下无效
+            isIE && this.editor.contentDoc.selection.empty();
 
             var form = this.form,
                 container = Range.getCommonAncestor(this.range),

@@ -12,9 +12,10 @@
  ~ template
  ~ table
  ~ flash
+ ~ autosave / local storage
 
  ~ ie6 下，弹出框阴影和iframe shim有点奇怪
- ~ ie7- 下，弹出框弹出后，编辑区域焦点的隐藏
+ ~ ie 下，插入插件，取消对话框后，焦点的还原
  ~ 在 chrome, safari, opera 下的测试
  ~ 统一编辑器 和 发表后帖子的内容样式
  ~ autoFocus 以及 focusToEnd
