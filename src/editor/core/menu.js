@@ -156,7 +156,6 @@ KISSY.Editor.add("core~menu", function(E) {
             shim.style.position = "absolute";
             shim.style[DISPLAY] = NONE;
             shim.style.border = 0;
-            shim.frameborder = 0;
             document.body.appendChild(shim);
         },
 
@@ -169,8 +168,8 @@ KISSY.Editor.add("core~menu", function(E) {
                 var r = Dom.getRegion(el);
                 shim.style.left = r.left + "px";
                 shim.style.top = r.top + "px";
-                shim.style.width = r.width + "px";
-                shim.style.height = r.height + "px";
+                shim.style.width = (r.width - 1) + "px"; // 少一像素，否则 ie6 下会露出一像素
+                shim.style.height = (r.height - 1) + "px";
             }
         }
     };
