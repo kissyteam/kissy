@@ -117,7 +117,10 @@ KISSY.Editor.add("core~menu", function(E) {
 
         _show: function(el) {
             el.style[DISPLAY] = EMPTY;
+            if(UA.ie === 6) this._updateShimRegion(el);
+        },
 
+        _updateShimRegion: function(el) {
             if(el) {
                 if(UA.ie === 6) {
                     if(!shim) this._initShim();

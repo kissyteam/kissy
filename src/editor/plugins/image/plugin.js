@@ -167,6 +167,9 @@ KISSY.Editor.add("plugins~image", function(E) {
                     }
                 }
 
+                // ie6 下，需更新 iframe shim
+                if(UA.ie === 6) E.Menu._updateShimRegion(self.dialog);
+
                 Dom.addClass(trigger, SELECTED_TAB_CLS);
                 panels[j].style.display = "";
 
