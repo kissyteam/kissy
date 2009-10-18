@@ -155,7 +155,8 @@ KISSY.Editor.add("core~menu", function(E) {
             shim.className = SHIM_CLASS;
             shim.style.position = "absolute";
             shim.style[DISPLAY] = NONE;
-            shim.style.border = NONE;
+            shim.style.border = 0;
+            shim.frameborder = 0;
             document.body.appendChild(shim);
         },
 
