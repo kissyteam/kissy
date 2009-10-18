@@ -17,12 +17,10 @@ KISSY.Editor.add("core~instance", function(E) {
                         '<meta http-equiv="content-type" content="text/html; charset=gb18030" />' +
                         '<link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" />' +
                         '</head>' +
-                        '<body spellcheck="false">{CONTENT}</body>' +
+                        '<body spellcheck="false" class="ks-editor-post">{CONTENT}</body>' +
                         '</html>',
 
-        THEMES_DIR = "themes",
-        //EDITOR_CSS = "editor.css", TODO: 动态加载 editor.css
-        CONTENT_CSS =  "content.css";
+        THEMES_DIR = "themes";
 
     /**
      * 编辑器的实例类
@@ -162,7 +160,8 @@ KISSY.Editor.add("core~instance", function(E) {
         _setupContentPanel: function() {
             var doc = this.contentDoc,
                 config = this.config,
-                contentCSSUrl = config.base + THEMES_DIR + "/" + config.theme + "/" + CONTENT_CSS,
+                contentCSS = "content" + (config.debug ? "" : "-min") + ".css",
+                contentCSSUrl = config.base + THEMES_DIR + "/" + config.theme + "/" + contentCSS,
                 self = this;
 
             // 初始化 iframe 的内容

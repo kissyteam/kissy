@@ -1,0 +1,55 @@
+/*
+CSS Reset for Post
+Î¬»¤£ºÓñ²®(lifesinger@gmail.com)
+*/
+
+.ks-editor-post {
+    font: 14px/1.5 Tahoma,Helvetica,Arial,'\5b8b\4f53',sans-serif;
+}
+.ks-editor-post em {
+    /* giving em normal style */
+    font-style: italic;
+}
+.ks-editor-post ul,
+.ks-editor-post ol,
+.ks-editor-post dl {
+	/* giving lists room to breath */
+	margin: 1em 1em 1em 2em;
+}
+.ks-editor-post ol li {
+	/* giving OL's LIs generated numbers */
+	list-style: decimal outside;
+}
+.ks-editor-post ul li {
+	/* giving UL's LIs generated disc markers */
+	list-style: disc outside;
+}
+.ks-editor-post dl dd {
+	/* providing spacing for definition terms */
+	margin-left: 1em;
+}
+.ks-editor-post th,
+.ks-editor-post td {
+	/* padding to make the table readable */
+	padding: .5em;
+}
+.ks-editor-post caption {
+	/* coordinated margin to match cell's padding */
+	margin-bottom: .5em;
+}
+.ks-editor-post p,
+.ks-editor-post fieldset,
+.ks-editor-post table,
+.ks-editor-post pre {
+	/* so things don't run into each other */
+	margin-bottom: 1em;
+}
+.ks-editor-post blockquote {
+    /* make style equal indent */
+    margin: 0 0 0 40px;
+}
+.ks-editor-post h1,
+.ks-editor-post h2,
+.ks-editor-post h3 {
+    margin: 0.67em 0;
+}

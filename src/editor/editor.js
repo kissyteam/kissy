@@ -784,12 +784,10 @@ KISSY.Editor.add("core~instance", function(E) {
                         '<meta http-equiv="content-type" content="text/html; charset=gb18030" />' +
                         '<link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" />' +
                         '</head>' +
-                        '<body spellcheck="false">{CONTENT}</body>' +
+                        '<body spellcheck="false" class="ks-editor-post">{CONTENT}</body>' +
                         '</html>',
 
-        THEMES_DIR = "themes",
-        //EDITOR_CSS = "editor.css", TODO: 动态加载 editor.css
-        CONTENT_CSS =  "content.css";
+        THEMES_DIR = "themes";
 
     /**
      * 编辑器的实例类
@@ -844,6 +842,11 @@ KISSY.Editor.add("core~instance", function(E) {
         _init: function() {
             this._renderUI();
             this._initPlugins();
+
+            if(this.config.autoFocus) {
+                this.contentWin.focus();
+                this._focusToEnd();
+            }
         },
 
         _renderUI: function() {
@@ -924,7 +927,9 @@ KISSY.Editor.add("core~instance", function(E) {
         _setupContentPanel: function() {
             var doc = this.contentDoc,
                 config = this.config,
-                contentCSSUrl = config.base + THEMES_DIR + "/" + config.theme + "/" + CONTENT_CSS;
+                contentCSS = "content" + (config.debug ? "" : "-min") + ".css",
+                contentCSSUrl = config.base + THEMES_DIR + "/" + config.theme + "/" + contentCSS,
+                self = this;
 
             // 初始化 iframe 的内容
             doc.open();
@@ -962,15 +967,32 @@ KISSY.Editor.add("core~instance", function(E) {
             if(isIE) {
                 // 点击的 iframe doc 非 body 区域时，还原焦点位置
                 Event.on(doc, "click", function() {
-                    if(doc.activeElement.parentNode.nodeType === 9) { // 点击在 doc 上
-                        var range = doc.selection.createRange();
-                        try { // 有时会报错
-                            range.moveToElementText(doc.body.lastChild);
-                        } catch(ex) { }
-                        range.collapse(false);
-                        range.select();
+                    if (doc.activeElement.parentNode.nodeType === 9) { // 点击在 doc 上
+                        self._focusToEnd();
                     }
                 });
+            }
+        },
+
+        /**
+         * 将光标定位到最后一个元素
+         */
+        _focusToEnd: function() {
+            var lastChild = this.contentDoc.body.lastChild,
+                range = E.Range.getSelectionRange(this.contentWin);
+
+            if (UA.ie) {
+                try { // 有时会报错：编辑器 ie 下，切换源代码，再切换回去，点击编辑器框内，有无效指针的JS错误
+                    range.moveToElementText(lastChild);
+                } catch(ex) { }
+                range.collapse(false);
+                range.select();
+
+            } else {
+                try {
+                    range.setEnd(lastChild, lastChild.childNodes.length);
+                } catch(ex) { }
+                range.collapse(false);
             }
         },
 
@@ -1002,13 +1024,9 @@ KISSY.Editor.add("core~instance", function(E) {
             // Firefox 下，_moz_editor_bogus_node, _moz_dirty 等特有属性
             // 这些特有属性，在用 innerHTML 获取时，自动过滤了
 
-            // 只有标签没文本内容时，保留内容为空
-            if(E.Dom.getText(bd)) {
-               data = bd.innerHTML;
-
-                if(p && p.filterData) {
-                    data = p.filterData(data);
-                }
+           data = bd.innerHTML;
+            if(p && p.filterData) {
+                data = p.filterData(data);
             }
 
             return data;
@@ -1463,7 +1481,10 @@ KISSY.Editor.add("core~menu", function(E) {
 
         _show: function(el) {
             el.style[DISPLAY] = EMPTY;
+            if(UA.ie === 6) this._updateShimRegion(el);
+        },
 
+        _updateShimRegion: function(el) {
             if(el) {
                 if(UA.ie === 6) {
                     if(!shim) this._initShim();
@@ -1507,12 +1528,14 @@ KISSY.Editor.add("core~menu", function(E) {
          * @protected
          */
         _setShimRegion: function(el) {
-            if (shim) {
+            if (shim && this._isVisible(el)) {
                 var r = Dom.getRegion(el);
-                shim.style.left = r.left + "px";
-                shim.style.top = r.top + "px";
-                shim.style.width = r.width + "px";
-                shim.style.height = r.height + "px";
+                if (r.width > 0) {
+                    shim.style.left = r.left + "px";
+                    shim.style.top = r.top + "px";
+                    shim.style.width = (r.width - 1) + "px"; // 少一像素，否则 ie6 下会露出一像素
+                    shim.style.height = (r.height - 1) + "px";
+                }
             }
         }
     };
@@ -1592,66 +1615,6 @@ KISSY.Editor.add("plugins~base", function(E) {
     });
 
  });
-KISSY.Editor.add("plugins~blockquote", function(E) {
-
-    var Y = YAHOO.util, Dom = Y.Dom,
-        TYPE = E.PLUGIN_TYPE,
-
-        BLOCKQUOTE = "blockquote",
-        BLOCKQUOTE_ELEMENTS = E.Dom.BLOCK_ELEMENTS;
-
-    E.addPlugin("blockquote", {
-        /**
-         * 种类：普通按钮
-         */
-        type: TYPE.TOOLBAR_BUTTON,
-
-        /**
-         * 响应函数
-         */
-        exec: function() {
-            var editor = this.editor,
-                range = editor.getSelectionRange(),
-                parentEl = E.Range.getCommonAncestor(range),
-                quotableAncestor;
-
-            if(!parentEl) return;
-
-            // 获取可引用的父元素
-            if (this.isQuotableElement(parentEl)) {
-                quotableAncestor = parentEl;
-            } else {
-                quotableAncestor = this.getQuotableAncestor(parentEl);
-            }
-
-            // exec
-            if (quotableAncestor) {
-                var isQuoted = quotableAncestor.parentNode.nodeName.toLowerCase() === BLOCKQUOTE;
-                editor.execCommand(isQuoted ? "outdent" : "indent", null, false);
-            }
-        },
-
-        /**
-         * 获取可引用的父元素
-         */
-        getQuotableAncestor: function(el) {
-            var self = this;
-            return Dom.getAncestorBy(el, function(elem) {
-                return self.isQuotableElement(elem);
-            });
-        },
-
-        /**
-         * 判断是否可对齐元素
-         */
-        isQuotableElement: function(el) {
-            return BLOCKQUOTE_ELEMENTS[el.nodeName.toLowerCase()];
-        }
-    });
-});
-
-// NOTES:
-//  目前样式仿 Google Docs
 
 KISSY.Editor.add("plugins~color", function(E) {
 
@@ -2244,6 +2207,9 @@ KISSY.Editor.add("plugins~image", function(E) {
                         j = i;
                     }
                 }
+
+                // ie6 下，需更新 iframe shim
+                if(UA.ie === 6) E.Menu._updateShimRegion(self.dialog);
 
                 Dom.addClass(trigger, SELECTED_TAB_CLS);
                 panels[j].style.display = "";
@@ -2882,84 +2848,6 @@ KISSY.Editor.add("plugins~link", function(E) {
  *  2. 目前只有 CKEditor 和 TinyMCE 等完全接管命名的编辑器处理得很完美。但 1 的解决方案，目前已经
  *     够用，成本也很低。
  */
-KISSY.Editor.add("plugins~maximize", function(E) {
-
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
-        TYPE = E.PLUGIN_TYPE,
-        MAXIMIZE_MODE_CLS = "kissy-editor-maximize-mode";
-
-    E.addPlugin("maximize", {
-        /**
-         * 种类：普通按钮
-         */
-        type: TYPE.TOOLBAR_BUTTON,
-
-        /**
-         * 编辑器容器
-         */
-        container: null,
-
-        /**
-         * 容器的父节点
-         */
-        containerParentNode: null,
-
-        /**
-         * 初始化
-         */
-        init: function() {
-            this.container = this.editor.container;
-            this.containerParentNode = this.container.parentNode;
-        },
-
-        /**
-         * 响应函数
-         */
-        exec: function() {
-            var container = this.container;
-
-            if(Dom.hasClass(container, MAXIMIZE_MODE_CLS)) {
-                this.containerParentNode.appendChild(container);
-                Dom.removeClass(container, MAXIMIZE_MODE_CLS);
-            } else {
-                document.body.appendChild(container);
-                Dom.addClass(container, MAXIMIZE_MODE_CLS);
-            }
-
-        }
-    });
-
- });
-KISSY.Editor.add("plugins~removeformat", function(E) {
-
-    var Y = YAHOO.util, Dom = Y.Dom,
-        Range = E.Range,
-        TYPE = E.PLUGIN_TYPE,
-
-        FORMAT_TAGS_REG = /^(b|big|code|del|dfn|em|font|i|ins|kbd|q|samp|small|span|strike|strong|sub|sup|tt|u|var)$/g,
-        FORMAT_ATTRS = ["class","style","lang","width","height","align","hspace","valign"];
-
-    E.addPlugin("removeformat", {
-        /**
-         * 种类：普通按钮
-         */
-        type: TYPE.TOOLBAR_BUTTON,
-
-        /**
-         * 响应函数
-         */
-        exec: function() {
-            var editor = this.editor,
-                range = editor.getSelectionRange(),
-                parentEl = E.Range.getCommonAncestor(range);
-            if (!parentEl) return;
-
-            alert("正在实现中");
-
-        }
-    });
-});
-
 KISSY.Editor.add("plugins~resize", function(E) {
 
     var Y = YAHOO.util, Event = Y.Event,

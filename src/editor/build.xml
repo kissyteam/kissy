@@ -28,12 +28,44 @@
             <path path="smilies/default/config.js"/>
             <path path="smilies/wangwang/config.js"/>
 
-            <fileset dir="plugins">
-              <filename name="**/*.js"/>
-            </fileset>
+            <path path="plugins/basic/plugin.js"/>
+            <!--<path path="plugins/blockquote/plugin.js"/>-->
+            <path path="plugins/color/plugin.js"/>
+            <path path="plugins/font/plugin.js"/>
+            <path path="plugins/image/plugin.js"/>
+            <path path="plugins/indent/plugin.js"/>
+            <path path="plugins/justify/plugin.js"/>
+            <path path="plugins/link/plugin.js"/>
+            <!--<path path="plugins/removeformat/plugin.js"/>-->
+            <path path="plugins/resize/plugin.js"/>
+            <path path="plugins/save/plugin.js"/>
+            <path path="plugins/smiley/plugin.js"/>
+            <path path="plugins/source/plugin.js"/>
+            <path path="plugins/undo/plugin.js"/>
+            <path path="plugins/wordcount/plugin.js"/>
         </concat>
     </target>
 
-    <target name="build" depends="concat,common.build">
+    <target name="css.build">
+        <concat destfile="editor.css" encoding="${charset}" outputencoding="${charset}">
+           <path path="themes/default/editor.css"/>
+           <path path="themes/default/post.css"/>
+        </concat>
+        <copy file="themes/default/content.css" tofile="${build.dir}/${component.name}/themes/default/content-min.css"/>
+    </target>
+
+    <target name="clear">
+        <move todir="${build.dir}/${component.name}/themes/default">
+            <filelist dir="${build.dir}/${component.name}">
+                <file name="editor.css"/>
+                <file name="editor-min.css"/>
+            </filelist>
+        </move>
+        <delete>
+            <fileset file="editor.css"/>
+        </delete>
+    </target>
+
+    <target name="build" depends="concat,css.build,common.build,clear">
     </target>
 </project>

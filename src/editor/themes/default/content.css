@@ -1,69 +1,10 @@
-/*
-CSS Reset for Editor
-维护：玉伯(lifesinger@gmail.com)
-*/
+/* reset.css */
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;}body,button,input,select,textarea{font:12px/1 Tahoma,Helvetica,Arial,"\5b8b\4f53",sans-serif;}h1{font-size:18px;}h2{font-size:16px;}h3{font-size:14px;}h4,h5,h6{font-size:100%;}address,cite,dfn,em,var{font-style:normal;}code,kbd,pre,samp,tt{font-family:"Courier New",Courier,monospace;}small{font-size:12px;}ul,ol{list-style:none;}a{text-decoration:none;}a:hover{text-decoration:underline;}abbr[title],acronym[title]{border-bottom:1px dotted;cursor:help;}q:before,q:after{content:'';}legend{color:#000;}fieldset,img{border:0;}button,input,select,textarea{font-size:100%;}table{border-collapse:collapse;border-spacing:0;}hr{border:0;height:1px;*color:#fff;}
 
+/* only for iframe */
+body { padding: 6px; padding /*\**/: 6px 0\9; }
+a { color: blue; text-decoration: underline; }
+a img { border: 2px solid blue; }
 
-/* require(reset.css) */
-body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,lengend,button,input,textarea,th,td{margin:0;padding:0;}body,button,input,select,textarea{font:12px/100% Tahoma,Helvetica,Arial,"\5b8b\4f53",sans-serif;}h1{font-size:18px;}h2{font-size:16px;}h3{font-size:14px;}h4,h5,h6{font-size:100%;}address,cite,dfn,em,var{font-style:normal;}code,kbd,pre,samp,tt{font-family:"Courier New",Courier,monospace;}small{font-size:12px;}ul,ol{list-style:none;}a{text-decoration:none;}a:hover{text-decoration:underline;}abbr[title],acronym[title]{border-bottom:1px dotted;cursor:help;}q:before,q:after{content:'';}legend{color:#000;}fieldset,img{border:none;}button,input,select,textarea{font-size:100%;}table{border-collapse:collapse;border-spacing:0;}hr{border:none;height:1px;}
-em { font-style: italic; } 
-
-
-/* editor reset */
-body {
-    font: 13px/1.5 Verdana,sans-serif;
-    padding: 6px;
-    padding /*\**/: 6px 0\9
-}
-
-a {
-    /* blue is more readable for link */
-    color: blue;
-    text-decoration: underline;
-}
-
-ul, ol, dl {
-	/* giving lists room to breath */
-	margin: 1em;
-}
-ul, ol, dl {
-	/* bringing lists on to the page with breathing room */
-	margin-left: 2em;
-}
-ol li {
-	/* giving OL's LIs generated numbers */
-	list-style: decimal outside;
-}
-ul li {
-	/* giving UL's LIs generated disc markers */
-	list-style: disc outside;
-}
-dl dd {
-	/* providing spacing for definition terms */
-	margin-left: 1em;
-}
-th,td {
-	/* padding to make the table readable */
-	padding: .5em;
-}
-caption {
-	/* coordinated margin to match cell's padding */
-	margin-bottom: .5em;
-}
-p, fieldset, table, pre {
-	/* so things don't run into each other */
-	margin-bottom: 1em;
-}
-blockquote {
-    margin: 0 0 0 40px; /* 和缩进的样式保持一致 */
-    /*margin: 0 30px 10px;
-    padding: 10px 10px 0;
-    border: 1px dashed #ddd;*/
-}
-h1, h2, h3 {
-    margin: 0.67em 0;
-}
-
-a img {
-    border: 2px solid blue;
-}
+/* post.css */
+.ks-editor-post{font:14px/1.5 Tahoma,Helvetica,Arial,'\5b8b\4f53',sans-serif;}.ks-editor-post em{font-style:italic;}.ks-editor-post ul,.ks-editor-post ol,.ks-editor-post dl{margin:1em 1em 1em 2em;}.ks-editor-post ol li{list-style:decimal outside;}.ks-editor-post ul li{list-style:disc outside;}.ks-editor-post dl dd{margin-left:1em;}.ks-editor-post th,.ks-editor-post td{padding:.5em;}.ks-editor-post caption{margin-bottom:.5em;}.ks-editor-post p,.ks-editor-post fieldset,.ks-editor-post table,.ks-editor-post pre{margin-bottom:1em;}.ks-editor-post blockquote{margin:0 0 0 40px;}.ks-editor-post h1,.ks-editor-post h2,.ks-editor-post h3{margin:.67em 0;}
