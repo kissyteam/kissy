@@ -155,7 +155,7 @@ KISSY.Editor.add("core~menu", function(E) {
             shim.className = SHIM_CLASS;
             shim.style.position = "absolute";
             shim.style[DISPLAY] = NONE;
-            shim.style.border = 0;
+            shim.style.border = NONE;
             document.body.appendChild(shim);
         },
 
@@ -164,12 +164,14 @@ KISSY.Editor.add("core~menu", function(E) {
          * @protected
          */
         _setShimRegion: function(el) {
-            if (shim) {
+            if (shim && this._isVisible(el)) {
                 var r = Dom.getRegion(el);
-                shim.style.left = r.left + "px";
-                shim.style.top = r.top + "px";
-                shim.style.width = (r.width - 1) + "px"; // 少一像素，否则 ie6 下会露出一像素
-                shim.style.height = (r.height - 1) + "px";
+                if (r.width > 0) {
+                    shim.style.left = r.left + "px";
+                    shim.style.top = r.top + "px";
+                    shim.style.width = (r.width - 1) + "px"; // 少一像素，否则 ie6 下会露出一像素
+                    shim.style.height = (r.height - 1) + "px";
+                }
             }
         }
     };
