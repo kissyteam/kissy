@@ -14,11 +14,7 @@
  ~ flash
  ~ autosave / local storage
 
- ~ ie6 下，弹出框阴影和iframe shim有点奇怪
- ~ ie 下，插入插件，取消对话框后，焦点的还原
- ~ 在 chrome, safari, opera 下的测试
  ~ 统一编辑器 和 发表后帖子的内容样式
- ~ autoFocus 以及 focusToEnd
  ~ QC 上的 bug
  ~ 优化打包，去除不必要的插件
  ~ 帮派日常 & bug fix（10月9日 - 10月22日）

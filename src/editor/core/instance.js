@@ -77,6 +77,11 @@ KISSY.Editor.add("core~instance", function(E) {
         _init: function() {
             this._renderUI();
             this._initPlugins();
+
+            if(this.config.autoFocus) {
+                this.contentWin.focus();
+                this._focusToEnd();
+            }
         },
 
         _renderUI: function() {
@@ -157,7 +162,8 @@ KISSY.Editor.add("core~instance", function(E) {
         _setupContentPanel: function() {
             var doc = this.contentDoc,
                 config = this.config,
-                contentCSSUrl = config.base + THEMES_DIR + "/" + config.theme + "/" + CONTENT_CSS;
+                contentCSSUrl = config.base + THEMES_DIR + "/" + config.theme + "/" + CONTENT_CSS,
+                self = this;
 
             // 初始化 iframe 的内容
             doc.open();
@@ -195,15 +201,32 @@ KISSY.Editor.add("core~instance", function(E) {
             if(isIE) {
                 // 点击的 iframe doc 非 body 区域时，还原焦点位置
                 Event.on(doc, "click", function() {
-                    if(doc.activeElement.parentNode.nodeType === 9) { // 点击在 doc 上
-                        var range = doc.selection.createRange();
-                        try { // 有时会报错：编辑器 ie 下，切换源代码，再切换回去，点击编辑器框内，有无效指针的JS错误
-                            range.moveToElementText(doc.body.lastChild);
-                        } catch(ex) { }
-                        range.collapse(false);
-                        range.select();
+                    if (doc.activeElement.parentNode.nodeType === 9) { // 点击在 doc 上
+                        self._focusToEnd();
                     }
                 });
+            }
+        },
+
+        /**
+         * 将光标定位到最后一个元素
+         */
+        _focusToEnd: function() {
+            var lastChild = this.contentDoc.body.lastChild,
+                range = E.Range.getSelectionRange(this.contentWin);
+
+            if (UA.ie) {
+                try { // 有时会报错：编辑器 ie 下，切换源代码，再切换回去，点击编辑器框内，有无效指针的JS错误
+                    range.moveToElementText(lastChild);
+                } catch(ex) { }
+                range.collapse(false);
+                range.select();
+
+            } else {
+                try {
+                    range.setEnd(lastChild, lastChild.childNodes.length);
+                } catch(ex) { }
+                range.collapse(false);
             }
         },
 
@@ -235,13 +258,9 @@ KISSY.Editor.add("core~instance", function(E) {
             // Firefox 下，_moz_editor_bogus_node, _moz_dirty 等特有属性
             // 这些特有属性，在用 innerHTML 获取时，自动过滤了
 
-            // 只有标签没文本内容时，保留内容为空
-            if(E.Dom.getText(bd)) {
-               data = bd.innerHTML;
-
-                if(p && p.filterData) {
-                    data = p.filterData(data);
-                }
+           data = bd.innerHTML;
+            if(p && p.filterData) {
+                data = p.filterData(data);
             }
 
             return data;
