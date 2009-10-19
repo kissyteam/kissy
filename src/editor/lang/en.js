@@ -18,9 +18,8 @@ KISSY.Editor.add("lang~en", function(E) {
         },
         fontName: {
           text            : "Font Name",  
-          title           : "Font",
+          title           : "Font Name",
           options         : {
-              "Default"         : "Arial",
               "Arial"           : "Arial",
               "Times New Roman" : "Times New Roman",
               "Arial Black"     : "Arial Black",
@@ -35,10 +34,9 @@ KISSY.Editor.add("lang~en", function(E) {
           }
         },
         fontSize: {
-          text            : "Font Size",  
+          text            : "Size",
           title           : "Font size",
           options         : {
-              "Default"         : "2",
               "8"               : "1",
               "10"              : "2",
               "12"              : "3",

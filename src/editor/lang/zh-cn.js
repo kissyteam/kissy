@@ -20,7 +20,6 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
           text            : "字体",
           title           : "字体",
           options         : {
-              "Default"         : "宋体",
               "宋体"             : "宋体",
               "黑体"             : "黑体",
               "隶书"             : "隶书",
@@ -32,16 +31,15 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
               "Times New Roman" : "Times New Roman",
               "Impact"          : "Impact",
               "Courier New"     : "Courier New",
-              "Verdana"         : "Verdana"
-              //"Arial"           : "Arial",
-              //"Tahoma"          : "Tahoma",
+              "Arial"           : "Arial",
+              "Verdana"         : "Verdana",
+              "Tahoma"          : "Tahoma"
           }
         },
         fontSize: {
           text            : "大小",
           title           : "大小",
           options         : {
-              "Default"         : "2",
               "8"               : "1",
               "10"              : "2",
               "12"              : "3",

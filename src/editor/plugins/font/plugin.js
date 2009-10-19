@@ -11,8 +11,7 @@ KISSY.Editor.add("plugins~font", function(E) {
                           '<span class="ks-editor-option-checkbox"></span>' +
                           '<span style="{STYLE}">{KEY}</span>' +
                       '</li>',
-        OPTION_SELECTED = "ks-editor-option-selected",
-        DEFAULT = "Default";
+        OPTION_SELECTED = "ks-editor-option-selected";
 
     E.addPlugin(["fontName", "fontSize"], {
         /**
@@ -57,9 +56,6 @@ KISSY.Editor.add("plugins~font", function(E) {
             // 初始化下拉框 DOM
             this.selectList = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]);
             this._renderSelectList();
-
-            // 选中默认值
-            this._setSelectedOption(this.options[DEFAULT]);
         },
 
         _bindUI: function() {
@@ -88,7 +84,6 @@ KISSY.Editor.add("plugins~font", function(E) {
                 key, val;
 
             for(key in options) {
-                if(key == DEFAULT) continue;
                 val = options[key];
 
                 htmlCode += OPTION_TMPL
@@ -160,7 +155,9 @@ KISSY.Editor.add("plugins~font", function(E) {
             this.selectHead.innerHTML = this._getOptionKey(val);
 
             // 更新 selectList 中的选中项
-            this._updateSelectedOption(val);
+            if(val != this.text) {
+                this._updateSelectedOption(val);
+            }
         },
 
         _getOptionStyle: function(key, val) {
@@ -175,8 +172,6 @@ KISSY.Editor.add("plugins~font", function(E) {
             var options = this.options, key;
 
             for(key in options) {
-                if(key == DEFAULT) continue;
-
                 if(options[key] == val) {
                     return key;
                 }
