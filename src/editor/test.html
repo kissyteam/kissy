@@ -37,8 +37,8 @@
 <script type="text/javascript" src="plugins/image/plugin.js"></script>
 <script type="text/javascript" src="plugins/indent/plugin.js"></script>
 <script type="text/javascript" src="plugins/justify/plugin.js"></script>
+<script type="text/javascript" src="plugins/keystroke/plugin.js"></script>
 <script type="text/javascript" src="plugins/link/plugin.js"></script>
-<script type="text/javascript" src="plugins/maximize/plugin.js"></script>
 <script type="text/javascript" src="plugins/removeformat/plugin.js"></script>
 <script type="text/javascript" src="plugins/save/plugin.js"></script>
 <script type="text/javascript" src="plugins/smiley/plugin.js"></script>
@@ -206,14 +206,11 @@
                 tabs         : ["wangwang"]
             }
         },
-        autoFocus: true,
         debug: true
     };
     
-    var editorDemo = new KISSY.Editor("demo", config);
-    //console.dir(KISSY.Editor);
-    //console.dir(editorDemo);
-    
+    var editor = new KISSY.Editor("demo", config);
+    //editor.focus();
 </script>
 
 </body>

@@ -117,7 +117,11 @@ KISSY.Editor.add("core~menu", function(E) {
 
         _show: function(el) {
             el.style[DISPLAY] = EMPTY;
-            if(UA.ie === 6) this._updateShimRegion(el);
+            
+            if(UA.ie === 6) {
+                this._updateShimRegion(el);
+                shim.style[DISPLAY] = EMPTY;
+            }
         },
 
         _updateShimRegion: function(el) {
@@ -125,7 +129,6 @@ KISSY.Editor.add("core~menu", function(E) {
                 if(UA.ie === 6) {
                     if(!shim) this._initShim();
                     this._setShimRegion(el);
-                    shim.style[DISPLAY] = EMPTY;
                 }
             }
         },

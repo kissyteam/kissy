@@ -1,7 +1,8 @@
 
 KISSY.Editor.add("plugins~source", function(E) {
 
-    var TYPE = E.PLUGIN_TYPE;
+    var UA = YAHOO.env.ua,
+        TYPE = E.PLUGIN_TYPE;
 
     /**
      * 查看源代码插件
@@ -37,6 +38,11 @@ KISSY.Editor.add("plugins~source", function(E) {
                 editor.contentDoc.body.innerHTML = this.textarea.value;
             } else {
                 this.textarea.value = editor.getContentDocData();
+            }
+
+            // [bug fix] ie7-下，切换到源码时，iframe 的光标还可见，需隐藏掉
+            if(UA.ie < 8) {
+                editor.contentDoc.selection.empty();
             }
 
             // 切换显示

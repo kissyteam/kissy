@@ -252,6 +252,7 @@ KISSY.Editor.add("plugins~image", function(E) {
                 this.uploadingPanel.style.display = "";
                 this.currentPanel.style.display = "none";
                 this.actionsBar.style.display = "none";
+                if(UA.ie === 6) E.Menu._updateShimRegion(this.dialog); // ie6 下，还需更新 iframe shim
 
                 // 发送 XHR
                 Connect.setForm(form, true);

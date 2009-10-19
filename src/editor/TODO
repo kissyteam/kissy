@@ -12,10 +12,9 @@
  ~ flash
  ~ autosave / local storage
 
- ~ word 粘贴过滤
  ~ 按钮状态的动态更新（包括按钮选中状态的更新、字体字号的更新、颜色的动态更新等）
- ~ QC 上的 bug
- ~ 帮派日常 & bug fix（10月9日 - 10月22日）
+ ~ QC 上的 bug fix
+ ~ 帮派日常发布（10月22日）
 
  ~ 编辑器 WordPress 插件
  ~ 清羽后台知识库系统（10月前需要做好 format/template/table 插件）

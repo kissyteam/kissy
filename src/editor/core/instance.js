@@ -185,7 +185,7 @@ KISSY.Editor.add("core~instance", function(E) {
             //     http://74.125.153.132/search?q=cache:5LveNs1yHyMJ:nagoon97.wordpress.com/2008/04/20/differences-between-designmode-and-contenteditable/+ie+contentEditable+designMode+different&cd=6&hl=en&ct=clnk
 
             // 让初始输入文字始终在 p 标签内
-            if (Lang.trim(E.Dom.getText(doc.body)).length === 0) {
+            if (Lang.trim(doc.body.innerHTML).length === 0) {
                 if(UA.gecko) {
                     doc.body.innerHTML = '<p><br _moz_editor_bogus_node="TRUE" _moz_dirty=""/></p>';
                 } else {
@@ -279,8 +279,3 @@ KISSY.Editor.add("core~instance", function(E) {
     });
 
 });
-
-/**
- * NOTES:
- *   - iframe body 的高宽需要和 iframe 一致，否则点击非 body 处，ie 下无法获取焦点
- */

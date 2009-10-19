@@ -952,7 +952,7 @@ KISSY.Editor.add("core~instance", function(E) {
             //     http://74.125.153.132/search?q=cache:5LveNs1yHyMJ:nagoon97.wordpress.com/2008/04/20/differences-between-designmode-and-contenteditable/+ie+contentEditable+designMode+different&cd=6&hl=en&ct=clnk
 
             // 让初始输入文字始终在 p 标签内
-            if (Lang.trim(E.Dom.getText(doc.body)).length === 0) {
+            if (Lang.trim(doc.body.innerHTML).length === 0) {
                 if(UA.gecko) {
                     doc.body.innerHTML = '<p><br _moz_editor_bogus_node="TRUE" _moz_dirty=""/></p>';
                 } else {
@@ -1047,10 +1047,6 @@ KISSY.Editor.add("core~instance", function(E) {
 
 });
 
-/**
- * NOTES:
- *   - iframe body 的高宽需要和 iframe 一致，否则点击非 body 处，ie 下无法获取焦点
- */
 KISSY.Editor.add("core~toolbar", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
@@ -1486,7 +1482,11 @@ KISSY.Editor.add("core~menu", function(E) {
 
         _show: function(el) {
             el.style[DISPLAY] = EMPTY;
-            if(UA.ie === 6) this._updateShimRegion(el);
+            
+            if(UA.ie === 6) {
+                this._updateShimRegion(el);
+                shim.style[DISPLAY] = EMPTY;
+            }
         },
 
         _updateShimRegion: function(el) {
@@ -1494,7 +1494,6 @@ KISSY.Editor.add("core~menu", function(E) {
                 if(UA.ie === 6) {
                     if(!shim) this._initShim();
                     this._setShimRegion(el);
-                    shim.style[DISPLAY] = EMPTY;
                 }
             }
         },
@@ -2298,6 +2297,7 @@ KISSY.Editor.add("plugins~image", function(E) {
                 this.uploadingPanel.style.display = "";
                 this.currentPanel.style.display = "none";
                 this.actionsBar.style.display = "none";
+                if(UA.ie === 6) E.Menu._updateShimRegion(this.dialog); // ie6 下，还需更新 iframe shim
 
                 // 发送 XHR
                 Connect.setForm(form, true);
@@ -2435,15 +2435,15 @@ KISSY.Editor.add("plugins~image", function(E) {
 
 KISSY.Editor.add("plugins~indent", function(E) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
+    var //Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
         TYPE = E.PLUGIN_TYPE,
-        UA = YAHOO.env.ua,
+        //UA = YAHOO.env.ua,
 
-        INDENT_ELEMENTS = Lang.merge(E.Dom.BLOCK_ELEMENTS, {
-            li: 0 // 取消 li 元素的单独缩进，让 ol/ul 整体缩进
-        }),
-        INDENT_STEP = "40",
-        INDENT_UNIT = "px",
+//        INDENT_ELEMENTS = Lang.merge(E.Dom.BLOCK_ELEMENTS, {
+//            li: 0 // 取消 li 元素的单独缩进，让 ol/ul 整体缩进
+//        }),
+//        INDENT_STEP = "40",
+//        INDENT_UNIT = "px",
 
         plugin = {
             /**
@@ -2461,61 +2461,62 @@ KISSY.Editor.add("plugins~indent", function(E) {
 
     // 注：ie 下，默认使用 blockquote 元素来实现缩进
     // 下面采用自主操作 range 的方式来实现，以保持和其它浏览器一致
-    if (UA.ie) {
-
-        plugin.exec = function() {
-            var range = this.editor.getSelectionRange(),
-                parentEl, indentableAncestor;
-
-            if(range.parentElement) { // TextRange
-                parentEl = range.parentElement();
-            } else if(range.item) { // ControlRange
-                parentEl = range.item(0);
-            } else { // 不做任何处理
-                return;
-            }
-
-            // TODO: 和 CKEditor 一样，完全实现多区域的 iterator
-            // 下面用 blockquote 临时解决最常见的选区的多个块的父级元素刚好是body的情景
-            // 注意：要求 blockquote 的样式为缩进样式
-            if(parentEl === this.editor.contentDoc.body) {
-                this.editor.execCommand(this.name);
-                return;
-            }
-            // end of 临时解决方案
-
-            // 获取可缩进的父元素
-            if (isIndentableElement(parentEl)) {
-                 indentableAncestor = parentEl;
-            } else {
-                 indentableAncestor = getIndentableAncestor(parentEl);
-            }
-
-            // 设置 margin-left
-            if (indentableAncestor) {
-                var val = parseInt(indentableAncestor.style.marginLeft) >> 0;
-                val += (this.name === "indent" ? +1 : -1) * INDENT_STEP;
-
-                indentableAncestor.style.marginLeft = val + INDENT_UNIT;
-            }
-
-            /**
-             * 获取可缩进的父元素
-             */
-            function getIndentableAncestor(el) {
-                return Dom.getAncestorBy(el, function(elem) {
-                    return isIndentableElement(elem);
-                });
-            }
-
-            /**
-             * 判断是否可缩进元素
-             */
-            function isIndentableElement(el) {
-                return INDENT_ELEMENTS[el.nodeName.toLowerCase()];
-            }
-        };
-    }
+    // ie 下，暂时依旧用默认的
+//    if (UA.ie) {
+//
+//        plugin.exec = function() {
+//            var range = this.editor.getSelectionRange(),
+//                parentEl, indentableAncestor;
+//
+//            if(range.parentElement) { // TextRange
+//                parentEl = range.parentElement();
+//            } else if(range.item) { // ControlRange
+//                parentEl = range.item(0);
+//            } else { // 不做任何处理
+//                return;
+//            }
+//
+//            // TODO: 和 CKEditor 一样，完全实现多区域的 iterator
+//            // 下面用 blockquote 临时解决最常见的选区的多个块的父级元素刚好是body的情景
+//            // 注意：要求 blockquote 的样式为缩进样式
+//            if(parentEl === this.editor.contentDoc.body) {
+//                this.editor.execCommand(this.name);
+//                return;
+//            }
+//            // end of 临时解决方案
+//
+//            // 获取可缩进的父元素
+//            if (isIndentableElement(parentEl)) {
+//                 indentableAncestor = parentEl;
+//            } else {
+//                 indentableAncestor = getIndentableAncestor(parentEl);
+//            }
+//
+//            // 设置 margin-left
+//            if (indentableAncestor) {
+//                var val = parseInt(indentableAncestor.style.marginLeft) >> 0;
+//                val += (this.name === "indent" ? +1 : -1) * INDENT_STEP;
+//
+//                indentableAncestor.style.marginLeft = val + INDENT_UNIT;
+//            }
+//
+//            /**
+//             * 获取可缩进的父元素
+//             */
+//            function getIndentableAncestor(el) {
+//                return Dom.getAncestorBy(el, function(elem) {
+//                    return isIndentableElement(elem);
+//                });
+//            }
+//
+//            /**
+//             * 判断是否可缩进元素
+//             */
+//            function isIndentableElement(el) {
+//                return INDENT_ELEMENTS[el.nodeName.toLowerCase()];
+//            }
+//        };
+//    }
 
     // 注册插件
     E.addPlugin(["indent", "outdent"], plugin);
@@ -2606,6 +2607,38 @@ KISSY.Editor.add("plugins~justify", function(E) {
     E.addPlugin(["justifyLeft", "justifyCenter", "justifyRight"], plugin);
 
 });
+
+KISSY.Editor.add("plugins~keystroke", function(E) {
+
+    var Y = YAHOO.util, Event = Y.Event,
+        UA = YAHOO.env.ua,
+        TYPE = E.PLUGIN_TYPE;
+
+
+    E.addPlugin("keystroke", {
+        /**
+         * 种类
+         */
+        type: TYPE.FUNC,
+
+        /**
+         * 初始化
+         */
+        init: function() {
+            var editor = this.editor;
+
+            // [bug fix] ie7- 下，按下 Tab 键后，光标还在编辑器中闪烁，并且回车提交无效
+            if (UA.ie < 8) {
+                Event.on(editor.contentDoc, "keydown", function(ev) {
+                    if(ev.keyCode == 9) {
+                        this.selection.empty();
+                    }
+                });
+            }
+        }
+
+    });
+ });
 
 KISSY.Editor.add("plugins~link", function(E) {
 
@@ -2999,6 +3032,11 @@ KISSY.Editor.add("plugins~save", function(E) {
                 return "<" + slash + ret + attr + ">";
             });
 
+            // 过滤 word 的垃圾数据
+            if(data.indexOf("mso") > 0) {
+                data = this.filterWord(data);
+            }
+
             return data;
 
             // 注:
@@ -3011,7 +3049,49 @@ KISSY.Editor.add("plugins~save", function(E) {
             // FCKEditor 实现了部分语义化
             // Google Docs 采用是实用主义
             // KISSY Editor 的原则是：在保证实用的基础上，尽量语义化
+        },
+
+        /**
+         * 过滤 word 粘贴过来的垃圾数据
+         * Ref: CKEditor - pastefromword plugin
+         */
+        filterWord: function(html) {
+
+            // Remove onmouseover and onmouseout events (from MS Word comments effect)
+            html = html.replace(/<(\w[^>]*) onmouseover="([^\"]*)"([^>]*)/gi, "<$1$3");
+            html = html.replace(/<(\w[^>]*) onmouseout="([^\"]*)"([^>]*)/gi, "<$1$3");
+
+            // The original <Hn> tag send from Word is something like this: <Hn style="margin-top:0px;margin-bottom:0px">
+            html = html.replace(/<H(\d)([^>]*)>/gi, "<h$1>");
+
+            // Word likes to insert extra <font> tags, when using MSIE. (Wierd).
+            html = html.replace(/<(H\d)><FONT[^>]*>([\s\S]*?)<\/FONT><\/\1>/gi, "<$1>$2<\/$1>");
+            html = html.replace(/<(H\d)><EM>([\s\S]*?)<\/EM><\/\1>/gi, "<$1>$2<\/$1>");
+
+            // Remove <meta xx...>
+            html = html.replace(/<meta[^>]*>/ig, "");
+
+            // Remove <link rel="xx" href="file:///...">
+            html = html.replace(/<link rel="\S+" href="file:[^>]*">/ig, "");
+
+            // Remove <!--[if gte mso 9|10]>...<![endif]-->
+            html = html.replace(/<!--\[if gte mso [0-9]{1,2}\]>[\s\S]*?<!\[endif\]-->/ig, "");
+
+            // Remove <style> ...mso...</style>
+            html = html.replace(/<style>[\s\S]*?mso[\s\S]*?<\/style>/ig, "");
+
+            // Remove lang="..."
+            html = html.replace(/ lang=".+?"/ig, "");
+
+            // Remove <o:p></o:p>
+            html = html.replace(/<o:p><\/o:p>/ig, "");
+
+            // Remove class="MsoNormal"
+            html = html.replace(/ class="Mso.+?"/ig, "");
+
+            return html;
         }
+
     });
  });
 
@@ -3212,7 +3292,8 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
 KISSY.Editor.add("plugins~source", function(E) {
 
-    var TYPE = E.PLUGIN_TYPE;
+    var UA = YAHOO.env.ua,
+        TYPE = E.PLUGIN_TYPE;
 
     /**
      * 查看源代码插件
@@ -3248,6 +3329,11 @@ KISSY.Editor.add("plugins~source", function(E) {
                 editor.contentDoc.body.innerHTML = this.textarea.value;
             } else {
                 this.textarea.value = editor.getContentDocData();
+            }
+
+            // [bug fix] ie7-下，切换到源码时，iframe 的光标还可见，需隐藏掉
+            if(UA.ie < 8) {
+                editor.contentDoc.selection.empty();
             }
 
             // 切换显示

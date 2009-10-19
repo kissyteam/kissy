@@ -35,6 +35,7 @@
             <path path="plugins/image/plugin.js"/>
             <path path="plugins/indent/plugin.js"/>
             <path path="plugins/justify/plugin.js"/>
+            <path path="plugins/keystroke/plugin.js"/>
             <path path="plugins/link/plugin.js"/>
             <!--<path path="plugins/removeformat/plugin.js"/>-->
             <path path="plugins/resize/plugin.js"/>
