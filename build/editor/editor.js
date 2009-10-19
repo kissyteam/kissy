@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-18 17:51:05
-Revision: 217
+Date: 2009-10-19 09:31:54
+Revision: 220
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -850,11 +850,7 @@ KISSY.Editor.add("core~instance", function(E) {
         _init: function() {
             this._renderUI();
             this._initPlugins();
-
-            if(this.config.autoFocus) {
-                this.contentWin.focus();
-                this._focusToEnd();
-            }
+            this.config.autoFocus && this._focusToEnd();
         },
 
         _renderUI: function() {
@@ -986,6 +982,8 @@ KISSY.Editor.add("core~instance", function(E) {
          * 将光标定位到最后一个元素
          */
         _focusToEnd: function() {
+            this.contentWin.focus();
+
             var lastChild = this.contentDoc.body.lastChild,
                 range = E.Range.getSelectionRange(this.contentWin);
 
@@ -1002,6 +1000,13 @@ KISSY.Editor.add("core~instance", function(E) {
                 } catch(ex) { }
                 range.collapse(false);
             }
+        },
+
+        /**
+         * 获取焦点
+         */
+        focus: function() {
+          this._focusToEnd();
         },
 
         /**
@@ -2966,7 +2971,12 @@ KISSY.Editor.add("plugins~save", function(E) {
             if(form) {
                 Event.on(form, "submit", function() {
                     if(!editor.sourceMode) {
-                        textarea.value = editor.getData();
+                        var val = editor.getData();
+                        // 统一样式
+                        if(val.indexOf('<div class="ks-editor-post">') !== 0) {
+                            val = '<div class="ks-editor-post">' + val + '</div>';
+                        }
+                        textarea.value = val;
                     }
                 });
             }

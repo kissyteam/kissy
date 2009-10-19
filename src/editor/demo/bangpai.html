@@ -320,7 +320,7 @@
     <script type="text/javascript" src="http://kissy.googlecode.com/svn/trunk/build/editor/editor-min.js"></script>
     <script type="text/javascript">
         YAHOO.util.Event.onDOMReady(function() {
-            new KISSY.Editor("msgpost", {
+            var editor = new KISSY.Editor("msgpost", {
                 base: "http://kissy.googlecode.com/svn/trunk/build/editor/",
                 language: "zh-cn",
                 toolbar: [
@@ -353,6 +353,8 @@
                     }
                 }
             });
+            
+            editor.focus();
         });
     </script>
     <!-- KISSY Editor END --->

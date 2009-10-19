@@ -75,11 +75,7 @@ KISSY.Editor.add("core~instance", function(E) {
         _init: function() {
             this._renderUI();
             this._initPlugins();
-
-            if(this.config.autoFocus) {
-                this.contentWin.focus();
-                this._focusToEnd();
-            }
+            this.config.autoFocus && this._focusToEnd();
         },
 
         _renderUI: function() {
@@ -211,6 +207,8 @@ KISSY.Editor.add("core~instance", function(E) {
          * 将光标定位到最后一个元素
          */
         _focusToEnd: function() {
+            this.contentWin.focus();
+
             var lastChild = this.contentDoc.body.lastChild,
                 range = E.Range.getSelectionRange(this.contentWin);
 
@@ -227,6 +225,13 @@ KISSY.Editor.add("core~instance", function(E) {
                 } catch(ex) { }
                 range.collapse(false);
             }
+        },
+
+        /**
+         * 获取焦点
+         */
+        focus: function() {
+          this._focusToEnd();
         },
 
         /**
