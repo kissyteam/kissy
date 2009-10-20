@@ -22,10 +22,14 @@ KISSY.Editor.add("core~toolbar", function(E) {
 '</div>' +
 '<div class="ks-editor-toolbar-menu-button-dropdown ks-inline-block"></div>',
 
-        TOOLBAR_MENU_BUTTON = 'ks-editor-toolbar-menu-button',
-        TOOLBAR_SELECT = 'ks-editor-toolbar-select',
+        TOOLBAR_MENU_BUTTON = "ks-editor-toolbar-menu-button",
+        TOOLBAR_SELECT = "ks-editor-toolbar-select",
         TOOLBAR_BUTTON_ACTIVE = "ks-editor-toolbar-button-active",
         TOOLBAR_BUTTON_HOVER = "ks-editor-toolbar-button-hover",
+        TOOLBAR_BUTTON_SELECTED = "ks-editor-toolbar-button-selected",
+        STATE_CMDS = "fontName,fontSize,bold,italic,underline,strikeThrough"
+                     + "foreColor,backColor,insertOrderedList,insertUnorderedList"
+                     + "justifyLeft,justifyCenter,justifyRight",
 
         div = document.createElement("div"); // 通用 el 容器
 
@@ -46,6 +50,16 @@ KISSY.Editor.add("core~toolbar", function(E) {
          * 当前语言
          */
         this.lang = E.lang[this.config.language];
+
+        /**
+         * 所有加载的工具栏插件
+         */
+        this.items = [];
+
+        /**
+         * 所有需要动态更新状态的工具栏插件项
+         */
+        this.stateItems = [];
     };
     
     Lang.augmentObject(E.Toolbar.prototype, {
@@ -56,7 +70,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
         init: function() {
             var items = this.config.toolbar,
                 plugins = this.editor.plugins,
-                key;
+                key, p;
 
             // 遍历配置项，找到相关插件项，并添加到工具栏上
             for (var i = 0, len = items.length; i < len; ++i) {
@@ -65,12 +79,21 @@ KISSY.Editor.add("core~toolbar", function(E) {
                     if (!(key in plugins)) continue; // 配置项里有，但加载的插件里无，直接忽略
 
                     // 添加插件项
-                    this._addItem(plugins[key]);
+                    p = plugins[key];
+                    this._addItem(p);
+
+                    this.items.push(p);
+                    if(STATE_CMDS.indexOf(p.name) !== -1) {
+                        this.stateItems.push(p);
+                    }
 
                 } else { // 添加分隔线
                     this._addSeparator();
                 }
             }
+
+            // 状态更新
+            this._initUpdateState();
         },
 
         /**
@@ -209,6 +232,64 @@ KISSY.Editor.add("core~toolbar", function(E) {
         _addToToolbar: function(el) {
             if(isIE) el = E.Dom.setItemUnselectable(el);
             this.domEl.appendChild(el);
+        },
+
+        /**
+         * 初始化按钮状态的动态更新
+         */
+        _initUpdateState: function() {
+            var doc = this.editor.contentDoc,
+                self = this;
+
+            Event.on(doc, "click", function() { self.updateState(); });
+            Event.on(doc, "keyup", function(ev) {
+                var keyCode = ev.keyCode;
+
+                // PGUP,PGDN,END,HOME: 33 - 36
+                // LEFT,UP,RIGHT,DOWN：37 - 40
+                // BACKSPACE: 8
+                // ENTER: 13
+                // DEL: 46
+                if((keyCode >= 33 && keyCode <= 40)
+                    || keyCode === 8
+                    //|| keyCode === 13   // 暂时不监控，会导致 firefox 下，回车折行时，文本色的更新不对
+                    || keyCode === 46) {
+                    self.updateState();
+                }
+            });
+
+            // TODO: 监控粘贴时的事件，粘贴后需要更新按钮状态
+        },
+
+        /**
+         * 按钮状态的动态更新（包括按钮选中状态的更新、字体字号的更新、颜色的动态更新等）
+         * 遵守 Google Docs 的原则，让所有按钮始终可点击，只更新状态，不禁用按钮
+         */
+        updateState: function() {
+            var items = this.stateItems,
+                doc = this.editor.contentDoc,
+                p;
+
+            for(var i = 0, len = items.length; i < len; i++) {
+                p = items[i];
+
+                // 调用插件自己的状态更新函数
+                if(p.updateState) {
+                    p.updateState();
+                    continue;
+                }
+
+                // 默认的状态更新函数
+                try {
+                    if (doc.queryCommandEnabled(p.name)) {
+                        if (doc.queryCommandState(p.name)) {
+                            Dom.addClass(p.domEl, TOOLBAR_BUTTON_SELECTED);
+                        } else {
+                            Dom.removeClass(p.domEl, TOOLBAR_BUTTON_SELECTED);
+                        }
+                    }
+                } catch(ex) { }
+            }
         }
     });
 

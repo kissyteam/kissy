@@ -2,7 +2,8 @@
 KISSY.Editor.add("plugins~color", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
-        isIE = YAHOO.env.ua.ie,
+        UA = YAHOO.env.ua,
+        isIE = UA.ie,
         TYPE = E.PLUGIN_TYPE,
 
         PALETTE_TABLE_TMPL = '<div class="ks-editor-palette-table"><table><tbody>{TR}</tbody></table></div>',
@@ -19,6 +20,7 @@ KISSY.Editor.add("plugins~color", function(E) {
                 "660000", "783F04", "7F6000", "274E13", "0C343D", "073763", "20124D", "4C1130"
         ],
 
+        PALETTE_CELL_CLS = "ks-editor-palette-colorswatch",
         PALETTE_CELL_SELECTED = "ks-editor-palette-cell-selected";
 
     E.addPlugin(["foreColor", "backColor"], {
@@ -38,6 +40,11 @@ KISSY.Editor.add("plugins~color", function(E) {
         _indicator: null,
 
         /**
+         * 取色块
+         */
+        swatches: null,
+
+        /**
          * 关联的下拉菜单框
          */
         dropMenu: null,
@@ -51,7 +58,7 @@ KISSY.Editor.add("plugins~color", function(E) {
             var el = this.domEl,
                 caption = el.getElementsByTagName("span")[0].parentNode;
 
-            this.color = (this.name == "foreColor") ? "#000000" : "#ffffff";
+            this.color = this._getDefaultColor();
 
             Dom.addClass(el, "ks-editor-toolbar-color-button");
             caption.innerHTML = '<div class="ks-editor-toolbar-color-button-indicator" style="border-bottom-color:' + this.color + '">'
@@ -63,6 +70,7 @@ KISSY.Editor.add("plugins~color", function(E) {
             this._renderUI();
             this._bindUI();
 
+            this.swatches = Dom.getElementsByClassName(PALETTE_CELL_CLS, "div", this.dropMenu);
         },
 
         _renderUI: function() {
@@ -79,27 +87,23 @@ KISSY.Editor.add("plugins~color", function(E) {
 
             // 针对 ie，设置不可选择
             if (isIE) E.Dom.setItemUnselectable(this.dropMenu);
-
-            // 选中当前色
-            this._updateSelectedColor(this.color);
         },
 
         _bindUI: function() {
             // 注册选取事件
             this._bindPickEvent();
 
-            // ie 的 range 处理
-            if(isIE) {
-                var self = this;
-                Event.on(this.domEl, "click", function() {
-                    // 保存 range, 以便还原
-                    self.range = self.editor.getSelectionRange();
+            Event.on(this.domEl, "click", function() {
+                // 保存 range, 以便还原
+                this.range = self.editor.getSelectionRange();
 
-                    // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
-                    // 注：通过 blur / focus 等方式在 ie7- 下无效
-                    self.editor.contentDoc.selection.empty();
-                });
-            }
+                // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+                // 注：通过 blur / focus 等方式在 ie7- 下无效
+                isIE && this.editor.contentDoc.selection.empty();
+
+                // 更新选中色
+                this._updateSelectedColor(this.color);
+            }, this, true);
         },
 
         /**
@@ -179,11 +183,17 @@ KISSY.Editor.add("plugins~color", function(E) {
         setColor: function(val) {
             this.color = val;
 
+            this._updateIndicatorColor(val);
+            this._updateSelectedColor(val);
+        },
+
+        /**
+         * 更新指示器的颜色
+         * @param val HEX 格式
+         */
+        _updateIndicatorColor: function(val) {
             // 更新 indicator
             this._indicator.style.borderBottomColor = val;
-
-            // 更新 dropMenu 里对应的选中项
-            this._updateSelectedColor(val);
         },
 
         /**
@@ -191,8 +201,7 @@ KISSY.Editor.add("plugins~color", function(E) {
          * @param {string} val 格式 #RRGGBB or #RGB
          */
         _updateSelectedColor: function(val) {
-            var i, len, swatch,
-                swatches = this.dropMenu.getElementsByTagName("div");
+            var i, len, swatch, swatches = this.swatches;
 
             for(i = 0, len = swatches.length; i < len; ++i) {
                 swatch = swatches[i];
@@ -204,6 +213,35 @@ KISSY.Editor.add("plugins~color", function(E) {
                     Dom.removeClass(swatch.parentNode, PALETTE_CELL_SELECTED);
                 }
             }
+        },
+
+        /**
+         * 更新按钮状态
+         */
+        updateState: function() {
+            var doc = this.editor.contentDoc,
+                name = this.name, t, val;
+
+            if(name == "backColor" && UA.gecko) name = "hiliteColor";
+
+            try {
+                if (doc.queryCommandEnabled(name)) {
+                    t = doc.queryCommandValue(name);
+                    if (t === "transparent") t = ""; // 背景色为透明色时，取默认色
+                    val = t ? E.Color.toHex(t) : this._getDefaultColor(); // t 为空字符串时，表示点击在空行或尚未设置样式的地方
+
+                    if (val && val != this.color) {
+                        this.color = val;
+                        this._updateIndicatorColor(val);
+                    }
+                }
+            } catch(ex) {
+            }
+
+        },
+
+        _getDefaultColor: function() {
+            return (this.name == "foreColor") ? "#000000" : "#ffffff";
         }
     });
 

@@ -71,23 +71,30 @@ html>body .ks-inline-block {
 /* Ðü¸¡±ß¿ò */
 .ks-editor-toolbar-button:hover .ks-editor-toolbar-button-outer-box,
 .ks-editor-toolbar-button-hover .ks-editor-toolbar-button-outer-box,
-.ks-editor-toolbar-button:hover .ks-editor-toolbar-button-inner-box,
-.ks-editor-toolbar-button-hover .ks-editor-toolbar-button-inner-box {
-    border: 1px solid #A1BADF;
-}
-
+.ks-editor-toolbar-button-selected .ks-editor-toolbar-button-outer-box,
 .ks-editor-toolbar-button:hover .ks-editor-toolbar-button-inner-box,
 .ks-editor-toolbar-button-hover .ks-editor-toolbar-button-inner-box,
+.ks-editor-toolbar-button-selected .ks-editor-toolbar-button-inner-box {
+    border: 1px solid #A1BADF;
+}
+.ks-editor-toolbar-button:hover .ks-editor-toolbar-button-inner-box,
+.ks-editor-toolbar-button-hover .ks-editor-toolbar-button-inner-box,
+.ks-editor-toolbar-button-selected .ks-editor-toolbar-button-inner-box,
 .ks-editor-toolbar-select .ks-editor-toolbar-button-inner-box {
     border-width: 0 1px;
     padding: 3px 4px;
 }
-
 .ks-editor-toolbar-button:hover .ks-editor-toolbar-button-outer-box,
 .ks-editor-toolbar-button-hover .ks-editor-toolbar-button-outer-box,
+.ks-editor-toolbar-button-selected .ks-editor-toolbar-button-outer-box,
 .ks-editor-toolbar-select .ks-editor-toolbar-button-outer-box {
     border-width: 1px 0;
     padding: 0;
+}
+
+/* °´Å¥Ñ¡ÖÐ×´Ì¬ */
+.ks-editor-toolbar-button-selected {
+    background-color: #DDE1EB;
 }
 
 .ks-editor-toolbar-item {

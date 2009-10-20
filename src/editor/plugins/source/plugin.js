@@ -41,7 +41,7 @@ KISSY.Editor.add("plugins~source", function(E) {
             }
 
             // [bug fix] ie7-下，切换到源码时，iframe 的光标还可见，需隐藏掉
-            if(UA.ie < 8) {
+            if(UA.ie && UA.ie < 8) {
                 editor.contentDoc.selection.empty();
             }
 
