@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-21 15:51:41
-Revision: 224
+Date: 2009-10-21 16:06:29
+Revision: 225
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -969,14 +969,15 @@ KISSY.Editor.add("core~instance", function(E) {
             //   - Differences between designMode and contentEditable
             //     http://74.125.153.132/search?q=cache:5LveNs1yHyMJ:nagoon97.wordpress.com/2008/04/20/differences-between-designmode-and-contenteditable/+ie+contentEditable+designMode+different&cd=6&hl=en&ct=clnk
 
-            // 让初始输入文字始终在 p 标签内
-            if (Lang.trim(doc.body.innerHTML).length === 0) {
-                if(UA.gecko) {
-                    doc.body.innerHTML = '<p><br _moz_editor_bogus_node="TRUE" _moz_dirty=""/></p>';
-                } else {
-                    doc.body.innerHTML = '<p></p>';
-                }
-            }
+            // TODO: 让初始输入文字始终在 p 标签内
+            // 下面的处理办法不妥当
+//            if (Lang.trim(doc.body.innerHTML).length === 0) {
+//                if(UA.gecko) {
+//                    doc.body.innerHTML = '<p><br _moz_editor_bogus_node="TRUE" _moz_dirty=""/></p>';
+//                } else {
+//                    doc.body.innerHTML = '<p></p>';
+//                }
+//            }
 
             if(isIE) {
                 // 点击的 iframe doc 非 body 区域时，还原焦点位置

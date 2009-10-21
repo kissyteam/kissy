@@ -12,7 +12,6 @@
  ~ flash
  ~ autosave / local storage
 
- ~ QC 上的 bug fix
  ~ 帮派日常发布（10月22日）
 
  ~ 重构，包括 region/menu 等公共类的进一步拎取，焦点的统一管理等

@@ -961,14 +961,15 @@ KISSY.Editor.add("core~instance", function(E) {
             //   - Differences between designMode and contentEditable
             //     http://74.125.153.132/search?q=cache:5LveNs1yHyMJ:nagoon97.wordpress.com/2008/04/20/differences-between-designmode-and-contenteditable/+ie+contentEditable+designMode+different&cd=6&hl=en&ct=clnk
 
-            // 让初始输入文字始终在 p 标签内
-            if (Lang.trim(doc.body.innerHTML).length === 0) {
-                if(UA.gecko) {
-                    doc.body.innerHTML = '<p><br _moz_editor_bogus_node="TRUE" _moz_dirty=""/></p>';
-                } else {
-                    doc.body.innerHTML = '<p></p>';
-                }
-            }
+            // TODO: 让初始输入文字始终在 p 标签内
+            // 下面的处理办法不妥当
+//            if (Lang.trim(doc.body.innerHTML).length === 0) {
+//                if(UA.gecko) {
+//                    doc.body.innerHTML = '<p><br _moz_editor_bogus_node="TRUE" _moz_dirty=""/></p>';
+//                } else {
+//                    doc.body.innerHTML = '<p></p>';
+//                }
+//            }
 
             if(isIE) {
                 // 点击的 iframe doc 非 body 区域时，还原焦点位置
