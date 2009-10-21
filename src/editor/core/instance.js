@@ -103,16 +103,18 @@ KISSY.Editor.add("core~instance", function(E) {
             // 状态栏上的插件
             this.statusbar.init();
             
-            // 其它插件
-            for(key in plugins) {
+            // 其它功能性插件
+            for (key in plugins) {
                 p = plugins[key];
-                if(p.inited) continue;
+                if (p.inited) continue;
 
-                p.editor = this; // 给 p 增加 editor 属性
-                if(p.init) {
-                    p.init();
+                if (p.type === E.PLUGIN_TYPE.FUNC) {
+                    p.editor = this; // 给 p 增加 editor 属性
+                    if (p.init) {
+                        p.init();
+                    }
+                    p.inited = true;
                 }
-                p.inited = true;
             }
         },
 

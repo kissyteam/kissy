@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-21 16:30:18
-Revision: 226
+Date: 2009-10-21 17:13:03
+Revision: 227
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -893,16 +893,18 @@ KISSY.Editor.add("core~instance", function(E) {
             // 状态栏上的插件
             this.statusbar.init();
             
-            // 其它插件
-            for(key in plugins) {
+            // 其它功能性插件
+            for (key in plugins) {
                 p = plugins[key];
-                if(p.inited) continue;
+                if (p.inited) continue;
 
-                p.editor = this; // 给 p 增加 editor 属性
-                if(p.init) {
-                    p.init();
+                if (p.type === E.PLUGIN_TYPE.FUNC) {
+                    p.editor = this; // 给 p 增加 editor 属性
+                    if (p.init) {
+                        p.init();
+                    }
+                    p.inited = true;
                 }
-                p.inited = true;
             }
         },
 
