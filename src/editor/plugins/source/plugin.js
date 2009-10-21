@@ -1,8 +1,12 @@
 
 KISSY.Editor.add("plugins~source", function(E) {
 
-    var UA = YAHOO.env.ua,
-        TYPE = E.PLUGIN_TYPE;
+    var Y = YAHOO.util, Dom = Y.Dom,
+        UA = YAHOO.env.ua,
+        TYPE = E.PLUGIN_TYPE,
+
+        TOOLBAR_BUTTON_SELECTED = "ks-editor-toolbar-button-selected",
+        SRC_MODE_CLS = "ks-editor-src-mode";
 
     /**
      * 查看源代码插件
@@ -24,6 +28,9 @@ KISSY.Editor.add("plugins~source", function(E) {
 
             // 将 textarea 放入 iframe 下面
             this.iframe.parentNode.appendChild(editor.textarea);
+
+            // 添加 class
+            Dom.addClass(this.domEl, "ks-editor-toolbar-source-button");
         },
 
         /**
@@ -51,7 +58,27 @@ KISSY.Editor.add("plugins~source", function(E) {
 
             // 更新状态
             editor.sourceMode = !srcOn;
+
+            // 更新按钮状态
+            this._updateButtonState();
+        },
+
+        /**
+         * 更新按钮状态
+         */
+        _updateButtonState: function() {
+            var editor = this.editor,
+                srcOn = editor.sourceMode;
+
+            if(srcOn) {
+                Dom.addClass(editor.container, SRC_MODE_CLS);
+                Dom.addClass(this.domEl, TOOLBAR_BUTTON_SELECTED);
+            } else {
+                Dom.removeClass(editor.container, SRC_MODE_CLS);
+                Dom.removeClass(this.domEl, TOOLBAR_BUTTON_SELECTED);
+            }
         }
+
     });
 
  });

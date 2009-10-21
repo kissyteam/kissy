@@ -206,9 +206,8 @@ KISSY.Editor.add("lang~en", function(E) {
         },
         fontName: {
           text            : "Font Name",  
-          title           : "Font",
+          title           : "Font Name",
           options         : {
-              "Default"         : "Arial",
               "Arial"           : "Arial",
               "Times New Roman" : "Times New Roman",
               "Arial Black"     : "Arial Black",
@@ -223,10 +222,9 @@ KISSY.Editor.add("lang~en", function(E) {
           }
         },
         fontSize: {
-          text            : "Font Size",  
+          text            : "Size",
           title           : "Font size",
           options         : {
-              "Default"         : "2",
               "8"               : "1",
               "10"              : "2",
               "12"              : "3",
@@ -364,7 +362,6 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
           text            : "字体",
           title           : "字体",
           options         : {
-              "Default"         : "宋体",
               "宋体"             : "宋体",
               "黑体"             : "黑体",
               "隶书"             : "隶书",
@@ -376,16 +373,15 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
               "Times New Roman" : "Times New Roman",
               "Impact"          : "Impact",
               "Courier New"     : "Courier New",
-              "Verdana"         : "Verdana"
-              //"Arial"           : "Arial",
-              //"Tahoma"          : "Tahoma",
+              "Arial"           : "Arial",
+              "Verdana"         : "Verdana",
+              "Tahoma"          : "Tahoma"
           }
         },
         fontSize: {
           text            : "大小",
           title           : "大小",
           options         : {
-              "Default"         : "2",
               "8"               : "1",
               "10"              : "2",
               "12"              : "3",
@@ -660,6 +656,20 @@ KISSY.Editor.add("core~color", function(E) {
             }
 
             return val.toLowerCase();
+        },
+
+        /**
+         * Convert the custom integer (B G R) format to hex format.
+         */
+        int2hex: function(val) {
+            var red, green, blue;
+
+            val = val >> 0;
+            red = val & 255;
+            green = (val >> 8) & 255;
+            blue = (val >> 16) & 255;
+
+            return this.toHex("rgb(" + red + "," + green +"," + blue + ")");
         }
     };
 
@@ -1007,6 +1017,7 @@ KISSY.Editor.add("core~instance", function(E) {
         execCommand: function(commandName, val, styleWithCSS) {
             this.contentWin.focus(); // 还原焦点
             E.Command.exec(this.contentDoc, commandName, val, styleWithCSS);
+            this.toolbar.updateState();
         },
 
         /**
@@ -1070,10 +1081,15 @@ KISSY.Editor.add("core~toolbar", function(E) {
 '</div>' +
 '<div class="ks-editor-toolbar-menu-button-dropdown ks-inline-block"></div>',
 
-        TOOLBAR_MENU_BUTTON = 'ks-editor-toolbar-menu-button',
-        TOOLBAR_SELECT = 'ks-editor-toolbar-select',
+        TOOLBAR_MENU_BUTTON = "ks-editor-toolbar-menu-button",
+        TOOLBAR_SELECT = "ks-editor-toolbar-select",
         TOOLBAR_BUTTON_ACTIVE = "ks-editor-toolbar-button-active",
         TOOLBAR_BUTTON_HOVER = "ks-editor-toolbar-button-hover",
+        TOOLBAR_BUTTON_SELECTED = "ks-editor-toolbar-button-selected",
+    
+        STATE_CMDS = "fontName,fontSize,bold,italic,underline,strikeThrough"
+                     + "foreColor,backColor,insertOrderedList,insertUnorderedList"
+                     + "justifyLeft,justifyCenter,justifyRight",
 
         div = document.createElement("div"); // 通用 el 容器
 
@@ -1094,6 +1110,16 @@ KISSY.Editor.add("core~toolbar", function(E) {
          * 当前语言
          */
         this.lang = E.lang[this.config.language];
+
+        /**
+         * 所有加载的工具栏插件
+         */
+        this.items = [];
+
+        /**
+         * 所有需要动态更新状态的工具栏插件项
+         */
+        this.stateItems = [];
     };
     
     Lang.augmentObject(E.Toolbar.prototype, {
@@ -1104,7 +1130,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
         init: function() {
             var items = this.config.toolbar,
                 plugins = this.editor.plugins,
-                key;
+                key, p;
 
             // 遍历配置项，找到相关插件项，并添加到工具栏上
             for (var i = 0, len = items.length; i < len; ++i) {
@@ -1113,12 +1139,21 @@ KISSY.Editor.add("core~toolbar", function(E) {
                     if (!(key in plugins)) continue; // 配置项里有，但加载的插件里无，直接忽略
 
                     // 添加插件项
-                    this._addItem(plugins[key]);
+                    p = plugins[key];
+                    this._addItem(p);
+
+                    this.items.push(p);
+                    if(STATE_CMDS.indexOf(p.name) !== -1) {
+                        this.stateItems.push(p);
+                    }
 
                 } else { // 添加分隔线
                     this._addSeparator();
                 }
             }
+
+            // 状态更新
+            this._initUpdateState();
         },
 
         /**
@@ -1257,6 +1292,66 @@ KISSY.Editor.add("core~toolbar", function(E) {
         _addToToolbar: function(el) {
             if(isIE) el = E.Dom.setItemUnselectable(el);
             this.domEl.appendChild(el);
+        },
+
+        /**
+         * 初始化按钮状态的动态更新
+         */
+        _initUpdateState: function() {
+            var doc = this.editor.contentDoc,
+                self = this;
+
+            Event.on(doc, "click", function() { self.updateState(); });
+            Event.on(doc, "keyup", function(ev) {
+                var keyCode = ev.keyCode;
+
+                // PGUP,PGDN,END,HOME: 33 - 36
+                // LEFT,UP,RIGHT,DOWN：37 - 40
+                // BACKSPACE: 8
+                // ENTER: 13
+                // DEL: 46
+                if((keyCode >= 33 && keyCode <= 40)
+                    || keyCode === 8
+                    //|| keyCode === 13   // 暂时不监控，会导致 firefox 下，回车折行时，文本色的更新不对
+                    || keyCode === 46) {
+                    self.updateState();
+                }
+            });
+
+            // TODO: 监控粘贴时的事件，粘贴后需要更新按钮状态
+        },
+
+        /**
+         * 按钮状态的动态更新（包括按钮选中状态的更新、字体字号的更新、颜色的动态更新等）
+         * 遵守 Google Docs 的原则，让所有按钮始终可点击，只更新状态，不禁用按钮
+         */
+        updateState: function() {
+            var items = this.stateItems,
+                doc = this.editor.contentDoc,
+                p;
+
+            for(var i = 0, len = items.length; i < len; i++) {
+                p = items[i];
+
+                // 调用插件自己的状态更新函数
+                if(p.updateState) {
+                    p.updateState();
+                    continue;
+                }
+
+                // 默认的状态更新函数
+                try {
+                    if (doc.queryCommandEnabled(p.name)) {
+                        if (doc.queryCommandState(p.name)) {
+                            Dom.addClass(p.domEl, TOOLBAR_BUTTON_SELECTED);
+                        } else {
+                            Dom.removeClass(p.domEl, TOOLBAR_BUTTON_SELECTED);
+                        }
+                    }
+                } catch(ex) { }
+            }
+
+            // TODO: webkit 下，对齐的状态没获取到
         }
     });
 
@@ -1623,7 +1718,8 @@ KISSY.Editor.add("plugins~base", function(E) {
 KISSY.Editor.add("plugins~color", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event,
-        isIE = YAHOO.env.ua.ie,
+        UA = YAHOO.env.ua,
+        isIE = UA.ie,
         TYPE = E.PLUGIN_TYPE,
 
         PALETTE_TABLE_TMPL = '<div class="ks-editor-palette-table"><table><tbody>{TR}</tbody></table></div>',
@@ -1640,6 +1736,7 @@ KISSY.Editor.add("plugins~color", function(E) {
                 "660000", "783F04", "7F6000", "274E13", "0C343D", "073763", "20124D", "4C1130"
         ],
 
+        PALETTE_CELL_CLS = "ks-editor-palette-colorswatch",
         PALETTE_CELL_SELECTED = "ks-editor-palette-cell-selected";
 
     E.addPlugin(["foreColor", "backColor"], {
@@ -1659,6 +1756,11 @@ KISSY.Editor.add("plugins~color", function(E) {
         _indicator: null,
 
         /**
+         * 取色块
+         */
+        swatches: null,
+
+        /**
          * 关联的下拉菜单框
          */
         dropMenu: null,
@@ -1672,7 +1774,7 @@ KISSY.Editor.add("plugins~color", function(E) {
             var el = this.domEl,
                 caption = el.getElementsByTagName("span")[0].parentNode;
 
-            this.color = (this.name == "foreColor") ? "#000000" : "#ffffff";
+            this.color = this._getDefaultColor();
 
             Dom.addClass(el, "ks-editor-toolbar-color-button");
             caption.innerHTML = '<div class="ks-editor-toolbar-color-button-indicator" style="border-bottom-color:' + this.color + '">'
@@ -1684,6 +1786,7 @@ KISSY.Editor.add("plugins~color", function(E) {
             this._renderUI();
             this._bindUI();
 
+            this.swatches = Dom.getElementsByClassName(PALETTE_CELL_CLS, "div", this.dropMenu);
         },
 
         _renderUI: function() {
@@ -1700,27 +1803,23 @@ KISSY.Editor.add("plugins~color", function(E) {
 
             // 针对 ie，设置不可选择
             if (isIE) E.Dom.setItemUnselectable(this.dropMenu);
-
-            // 选中当前色
-            this._updateSelectedColor(this.color);
         },
 
         _bindUI: function() {
             // 注册选取事件
             this._bindPickEvent();
 
-            // ie 的 range 处理
-            if(isIE) {
-                var self = this;
-                Event.on(this.domEl, "click", function() {
-                    // 保存 range, 以便还原
-                    self.range = self.editor.getSelectionRange();
+            Event.on(this.domEl, "click", function() {
+                // 保存 range, 以便还原
+                this.range = self.editor.getSelectionRange();
 
-                    // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
-                    // 注：通过 blur / focus 等方式在 ie7- 下无效
-                    self.editor.contentDoc.selection.empty();
-                });
-            }
+                // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+                // 注：通过 blur / focus 等方式在 ie7- 下无效
+                isIE && this.editor.contentDoc.selection.empty();
+
+                // 更新选中色
+                this._updateSelectedColor(this.color);
+            }, this, true);
         },
 
         /**
@@ -1800,11 +1899,17 @@ KISSY.Editor.add("plugins~color", function(E) {
         setColor: function(val) {
             this.color = val;
 
+            this._updateIndicatorColor(val);
+            this._updateSelectedColor(val);
+        },
+
+        /**
+         * 更新指示器的颜色
+         * @param val HEX 格式
+         */
+        _updateIndicatorColor: function(val) {
             // 更新 indicator
             this._indicator.style.borderBottomColor = val;
-
-            // 更新 dropMenu 里对应的选中项
-            this._updateSelectedColor(val);
         },
 
         /**
@@ -1812,8 +1917,7 @@ KISSY.Editor.add("plugins~color", function(E) {
          * @param {string} val 格式 #RRGGBB or #RGB
          */
         _updateSelectedColor: function(val) {
-            var i, len, swatch,
-                swatches = this.dropMenu.getElementsByTagName("div");
+            var i, len, swatch, swatches = this.swatches;
 
             for(i = 0, len = swatches.length; i < len; ++i) {
                 swatch = swatches[i];
@@ -1825,6 +1929,38 @@ KISSY.Editor.add("plugins~color", function(E) {
                     Dom.removeClass(swatch.parentNode, PALETTE_CELL_SELECTED);
                 }
             }
+        },
+
+        /**
+         * 更新按钮状态
+         */
+        updateState: function() {
+            var doc = this.editor.contentDoc,
+                name = this.name, t, val;
+
+            if(name == "backColor" && UA.gecko) name = "hiliteColor";
+
+            try {
+                if (doc.queryCommandEnabled(name)) {
+                    t = doc.queryCommandValue(name);
+
+                    isIE && (t = E.Color.int2hex(t));
+                    if (t === "transparent") t = ""; // 背景色为透明色时，取默认色
+                    if(t === "rgba(0, 0, 0, 0)") t = ""; // webkit 的背景色是 rgba 的
+                    //console.log(t);
+                    
+                    val = t ? E.Color.toHex(t) : this._getDefaultColor(); // t 为空字符串时，表示点击在空行或尚未设置样式的地方
+                    if (val && val != this.color) {
+                        this.color = val;
+                        this._updateIndicatorColor(val);
+                    }
+                }
+            } catch(ex) {
+            }
+        },
+
+        _getDefaultColor: function() {
+            return (this.name == "foreColor") ? "#000000" : "#ffffff";
         }
     });
 
@@ -1832,7 +1968,6 @@ KISSY.Editor.add("plugins~color", function(E) {
 
 // TODO
 //  1. 仿 google, 对键盘事件的支持
-//  2. 光标变化时，动态更新当前颜色指示值
 
 KISSY.Editor.add("plugins~font", function(E) {
 
@@ -1847,7 +1982,15 @@ KISSY.Editor.add("plugins~font", function(E) {
                           '<span style="{STYLE}">{KEY}</span>' +
                       '</li>',
         OPTION_SELECTED = "ks-editor-option-selected",
-        DEFAULT = "Default";
+        WEBKIT_FONT_SIZE = {
+            "10px" : 1,
+            "13px" : 2,
+            "16px" : 3,
+            "18px" : 4,
+            "24px" : 5,
+            "32px" : 6,
+            "48px" : 7
+        };
 
     E.addPlugin(["fontName", "fontSize"], {
         /**
@@ -1875,6 +2018,19 @@ KISSY.Editor.add("plugins~font", function(E) {
          */
         options: [],
 
+        /**
+         * 下拉列表项
+         */
+        items: null,
+
+        /**
+         * 选中的项
+         */
+        selectedItem: null,
+
+        /**
+         * 选中区域对象
+         */
         range: null,
 
         /**
@@ -1892,27 +2048,30 @@ KISSY.Editor.add("plugins~font", function(E) {
             // 初始化下拉框 DOM
             this.selectList = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]);
             this._renderSelectList();
-
-            // 选中默认值
-            this._setSelectedOption(this.options[DEFAULT]);
+            this.items = this.selectList.getElementsByTagName("li");
         },
 
         _bindUI: function() {
             // 注册选取事件
             this._bindPickEvent();
 
-            // ie 的 range 处理
-            if(UA.ie) {
-                var self = this;
-                Event.on(this.domEl, "click", function() {
-                    // 保存 range, 以便还原
-                    self.range = self.editor.getSelectionRange();
+            Event.on(this.domEl, "click", function() {
+                // 保存 range, 以便还原
+                this.range = this.editor.getSelectionRange();
 
-                    // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
-                    // 注：通过 blur / focus 等方式在 ie7- 下无效
-                    self.editor.contentDoc.selection.empty();
-                });
-            }
+                // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+                // 注：通过 blur / focus 等方式在 ie7- 下无效
+                UA.ie && this.editor.contentDoc.selection.empty();
+
+                // 更新下拉框中的选中项
+                if(this.selectedValue) {
+                    this._updateSelectedOption(this.selectedValue);
+                } else if(this.selectedItem) {
+                    Dom.removeClass(this.selectedItem, OPTION_SELECTED);
+                    this.selectedItem = null;
+                }
+                
+            }, this, true);
         },
 
         /**
@@ -1923,7 +2082,6 @@ KISSY.Editor.add("plugins~font", function(E) {
                 key, val;
 
             for(key in options) {
-                if(key == DEFAULT) continue;
                 val = options[key];
 
                 htmlCode += OPTION_TMPL
@@ -1958,11 +2116,10 @@ KISSY.Editor.add("plugins~font", function(E) {
 
             // ie6 下，模拟 hover
             if(UA.ie === 6) {
-                var els = this.selectList.getElementsByTagName("li");
-                Event.on(els, "mouseenter", function() {
+                Event.on(this.items, "mouseenter", function() {
                     Dom.addClass(this, OPTION_ITEM_HOVER_CLS);
                 });
-                Event.on(els, "mouseleave", function() {
+                Event.on(this.items, "mouseleave", function() {
                     Dom.removeClass(this, OPTION_ITEM_HOVER_CLS);
                 });
             }
@@ -1974,8 +2131,10 @@ KISSY.Editor.add("plugins~font", function(E) {
         _doAction: function(val) {
             if(!val) return;
 
+            this.selectedValue = val;
+
             // 更新当前值
-            this._setSelectedOption(val);
+            this._setOption(val);
 
             // 还原选区
             var range = this.range;
@@ -1988,13 +2147,11 @@ KISSY.Editor.add("plugins~font", function(E) {
         /**
          * 选中某一项
          */
-        _setSelectedOption: function(val) {
-            this.selectedValue = val;
+        _setOption: function(val) {
+            // 更新头部
+            this._updateHeadText(this._getOptionKey(val));
 
-            // 更新 head
-            this.selectHead.innerHTML = this._getOptionKey(val);
-
-            // 更新 selectList 中的选中项
+            // 更新列表选中项
             this._updateSelectedOption(val);
         },
 
@@ -2008,21 +2165,24 @@ KISSY.Editor.add("plugins~font", function(E) {
 
         _getOptionKey: function(val) {
             var options = this.options, key;
-
+            
             for(key in options) {
-                if(key == DEFAULT) continue;
-
                 if(options[key] == val) {
                     return key;
                 }
             }
+            return null;
+        },
+
+        _updateHeadText: function(val) {
+            this.selectHead.innerHTML = val;
         },
 
         /**
          * 更新下拉框的选中项
          */
         _updateSelectedOption: function(val) {
-            var items = this.selectList.getElementsByTagName("li"),
+            var items = this.items,
                 i, len = items.length, item;
 
             for(i = 0; i < len; ++i) {
@@ -2030,10 +2190,50 @@ KISSY.Editor.add("plugins~font", function(E) {
 
                 if(item.getAttribute("data-value") == val) {
                     Dom.addClass(item, OPTION_SELECTED);
+                    this.selectedItem = item;
                 } else {
                     Dom.removeClass(item, OPTION_SELECTED);
                 }
             }
+        },
+
+        /**
+         * 更新按钮状态
+         */
+        updateState: function() {
+            var doc = this.editor.contentDoc,
+                options = this.options,
+                name = this.name, key, val;
+
+            try {
+                if (doc.queryCommandEnabled(name)) {
+                    val = doc.queryCommandValue(name);
+
+                    if(UA.webkit && name == "fontSize") {
+                        val = this._getWebkitFontSize(val);
+                    }
+                    
+                    val && (key = this._getOptionKey(val));
+                    //console.log(key + " : " + val);
+
+                    if (key in options) {
+                        if(val != this.selectedValue) {
+                            this.selectedValue = val;
+                            this._updateHeadText(key);
+                        }
+                    } else {
+                        this.selectedValue = "";
+                        this._updateHeadText(this.lang.text);
+                    }
+                }
+
+            } catch(ex) {
+            }
+        },
+
+        _getWebkitFontSize: function(val) {
+            if(val in WEBKIT_FONT_SIZE) return WEBKIT_FONT_SIZE[val];
+            return null;
         }
     });
 
@@ -2041,7 +2241,6 @@ KISSY.Editor.add("plugins~font", function(E) {
 
 // TODO
 //  1. 仿 google, 对键盘事件的支持
-//  2. 光标变化时，动态更新当前字体显示值
 //  3. ie 下接管，否则光标处于某标签内，改变字体时，改变的是整段标签的字体
 
 KISSY.Editor.add("plugins~image", function(E) {
@@ -2628,7 +2827,7 @@ KISSY.Editor.add("plugins~keystroke", function(E) {
             var editor = this.editor;
 
             // [bug fix] ie7- 下，按下 Tab 键后，光标还在编辑器中闪烁，并且回车提交无效
-            if (UA.ie < 8) {
+            if (UA.ie && UA.ie < 8) {
                 Event.on(editor.contentDoc, "keydown", function(ev) {
                     if(ev.keyCode == 9) {
                         this.selection.empty();
@@ -3292,8 +3491,12 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
 KISSY.Editor.add("plugins~source", function(E) {
 
-    var UA = YAHOO.env.ua,
-        TYPE = E.PLUGIN_TYPE;
+    var Y = YAHOO.util, Dom = Y.Dom,
+        UA = YAHOO.env.ua,
+        TYPE = E.PLUGIN_TYPE,
+
+        TOOLBAR_BUTTON_SELECTED = "ks-editor-toolbar-button-selected",
+        SRC_MODE_CLS = "ks-editor-src-mode";
 
     /**
      * 查看源代码插件
@@ -3315,6 +3518,9 @@ KISSY.Editor.add("plugins~source", function(E) {
 
             // 将 textarea 放入 iframe 下面
             this.iframe.parentNode.appendChild(editor.textarea);
+
+            // 添加 class
+            Dom.addClass(this.domEl, "ks-editor-toolbar-source-button");
         },
 
         /**
@@ -3332,7 +3538,7 @@ KISSY.Editor.add("plugins~source", function(E) {
             }
 
             // [bug fix] ie7-下，切换到源码时，iframe 的光标还可见，需隐藏掉
-            if(UA.ie < 8) {
+            if(UA.ie && UA.ie < 8) {
                 editor.contentDoc.selection.empty();
             }
 
@@ -3342,7 +3548,27 @@ KISSY.Editor.add("plugins~source", function(E) {
 
             // 更新状态
             editor.sourceMode = !srcOn;
+
+            // 更新按钮状态
+            this._updateButtonState();
+        },
+
+        /**
+         * 更新按钮状态
+         */
+        _updateButtonState: function() {
+            var editor = this.editor,
+                srcOn = editor.sourceMode;
+
+            if(srcOn) {
+                Dom.addClass(editor.container, SRC_MODE_CLS);
+                Dom.addClass(this.domEl, TOOLBAR_BUTTON_SELECTED);
+            } else {
+                Dom.removeClass(editor.container, SRC_MODE_CLS);
+                Dom.removeClass(this.domEl, TOOLBAR_BUTTON_SELECTED);
+            }
         }
+
     });
 
  });

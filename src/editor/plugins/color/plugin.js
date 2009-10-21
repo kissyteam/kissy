@@ -227,9 +227,13 @@ KISSY.Editor.add("plugins~color", function(E) {
             try {
                 if (doc.queryCommandEnabled(name)) {
                     t = doc.queryCommandValue(name);
-                    if (t === "transparent") t = ""; // 背景色为透明色时，取默认色
-                    val = t ? E.Color.toHex(t) : this._getDefaultColor(); // t 为空字符串时，表示点击在空行或尚未设置样式的地方
 
+                    isIE && (t = E.Color.int2hex(t));
+                    if (t === "transparent") t = ""; // 背景色为透明色时，取默认色
+                    if(t === "rgba(0, 0, 0, 0)") t = ""; // webkit 的背景色是 rgba 的
+                    //console.log(t);
+                    
+                    val = t ? E.Color.toHex(t) : this._getDefaultColor(); // t 为空字符串时，表示点击在空行或尚未设置样式的地方
                     if (val && val != this.color) {
                         this.color = val;
                         this._updateIndicatorColor(val);
@@ -237,7 +241,6 @@ KISSY.Editor.add("plugins~color", function(E) {
                 }
             } catch(ex) {
             }
-
         },
 
         _getDefaultColor: function() {
@@ -249,4 +252,3 @@ KISSY.Editor.add("plugins~color", function(E) {
 
 // TODO
 //  1. 仿 google, 对键盘事件的支持
-//  2. 光标变化时，动态更新当前颜色指示值

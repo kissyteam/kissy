@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-19 15:55:18
-Revision: 221
+Date: 2009-10-21 15:51:41
+Revision: 224
 */
 /**
  * Styles for KISSY Editor
@@ -79,23 +79,30 @@ html>body .ks-inline-block {
 /* 悬浮边框 */
 .ks-editor-toolbar-button:hover .ks-editor-toolbar-button-outer-box,
 .ks-editor-toolbar-button-hover .ks-editor-toolbar-button-outer-box,
-.ks-editor-toolbar-button:hover .ks-editor-toolbar-button-inner-box,
-.ks-editor-toolbar-button-hover .ks-editor-toolbar-button-inner-box {
-    border: 1px solid #A1BADF;
-}
-
+.ks-editor-toolbar-button-selected .ks-editor-toolbar-button-outer-box,
 .ks-editor-toolbar-button:hover .ks-editor-toolbar-button-inner-box,
 .ks-editor-toolbar-button-hover .ks-editor-toolbar-button-inner-box,
+.ks-editor-toolbar-button-selected .ks-editor-toolbar-button-inner-box {
+    border: 1px solid #A1BADF;
+}
+.ks-editor-toolbar-button:hover .ks-editor-toolbar-button-inner-box,
+.ks-editor-toolbar-button-hover .ks-editor-toolbar-button-inner-box,
+.ks-editor-toolbar-button-selected .ks-editor-toolbar-button-inner-box,
 .ks-editor-toolbar-select .ks-editor-toolbar-button-inner-box {
     border-width: 0 1px;
     padding: 3px 4px;
 }
-
 .ks-editor-toolbar-button:hover .ks-editor-toolbar-button-outer-box,
 .ks-editor-toolbar-button-hover .ks-editor-toolbar-button-outer-box,
+.ks-editor-toolbar-button-selected .ks-editor-toolbar-button-outer-box,
 .ks-editor-toolbar-select .ks-editor-toolbar-button-outer-box {
     border-width: 1px 0;
     padding: 0;
+}
+
+/* 按钮选中状态 */
+.ks-editor-toolbar-button-selected {
+    background-color: #DDE1EB;
 }
 
 .ks-editor-toolbar-item {
@@ -524,6 +531,19 @@ li.ks-editor-image-tab-selected {
     /*去掉 webkit 浏览器添加的 resize 和聚焦时的 outline*/
     resize: none; outline: none;
     border: 0;
+}
+
+/* src mode */
+.ks-editor-src-mode .ks-editor-toolbar-button,
+.ks-editor-src-mode .ks-editor-stripbar-sep {
+    visibility: hidden;
+    /*opacity: 0.3;
+    filter: alpha(opacity=30);*/
+}
+.ks-editor-src-mode .ks-editor-toolbar-source-button {
+    visibility: visible;
+    /*opacity: 1;
+    filter: alpha(opacity=100);*/
 }
 
 /*

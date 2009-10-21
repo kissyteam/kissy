@@ -11,7 +11,16 @@ KISSY.Editor.add("plugins~font", function(E) {
                           '<span class="ks-editor-option-checkbox"></span>' +
                           '<span style="{STYLE}">{KEY}</span>' +
                       '</li>',
-        OPTION_SELECTED = "ks-editor-option-selected";
+        OPTION_SELECTED = "ks-editor-option-selected",
+        WEBKIT_FONT_SIZE = {
+            "10px" : 1,
+            "13px" : 2,
+            "16px" : 3,
+            "18px" : 4,
+            "24px" : 5,
+            "32px" : 6,
+            "48px" : 7
+        };
 
     E.addPlugin(["fontName", "fontSize"], {
         /**
@@ -39,6 +48,19 @@ KISSY.Editor.add("plugins~font", function(E) {
          */
         options: [],
 
+        /**
+         * 下拉列表项
+         */
+        items: null,
+
+        /**
+         * 选中的项
+         */
+        selectedItem: null,
+
+        /**
+         * 选中区域对象
+         */
         range: null,
 
         /**
@@ -56,24 +78,30 @@ KISSY.Editor.add("plugins~font", function(E) {
             // 初始化下拉框 DOM
             this.selectList = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]);
             this._renderSelectList();
+            this.items = this.selectList.getElementsByTagName("li");
         },
 
         _bindUI: function() {
             // 注册选取事件
             this._bindPickEvent();
 
-            // ie 的 range 处理
-            if(UA.ie) {
-                var self = this;
-                Event.on(this.domEl, "click", function() {
-                    // 保存 range, 以便还原
-                    self.range = self.editor.getSelectionRange();
+            Event.on(this.domEl, "click", function() {
+                // 保存 range, 以便还原
+                this.range = this.editor.getSelectionRange();
 
-                    // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
-                    // 注：通过 blur / focus 等方式在 ie7- 下无效
-                    self.editor.contentDoc.selection.empty();
-                });
-            }
+                // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
+                // 注：通过 blur / focus 等方式在 ie7- 下无效
+                UA.ie && this.editor.contentDoc.selection.empty();
+
+                // 更新下拉框中的选中项
+                if(this.selectedValue) {
+                    this._updateSelectedOption(this.selectedValue);
+                } else if(this.selectedItem) {
+                    Dom.removeClass(this.selectedItem, OPTION_SELECTED);
+                    this.selectedItem = null;
+                }
+                
+            }, this, true);
         },
 
         /**
@@ -118,11 +146,10 @@ KISSY.Editor.add("plugins~font", function(E) {
 
             // ie6 下，模拟 hover
             if(UA.ie === 6) {
-                var els = this.selectList.getElementsByTagName("li");
-                Event.on(els, "mouseenter", function() {
+                Event.on(this.items, "mouseenter", function() {
                     Dom.addClass(this, OPTION_ITEM_HOVER_CLS);
                 });
-                Event.on(els, "mouseleave", function() {
+                Event.on(this.items, "mouseleave", function() {
                     Dom.removeClass(this, OPTION_ITEM_HOVER_CLS);
                 });
             }
@@ -134,8 +161,10 @@ KISSY.Editor.add("plugins~font", function(E) {
         _doAction: function(val) {
             if(!val) return;
 
+            this.selectedValue = val;
+
             // 更新当前值
-            this._setSelectedOption(val);
+            this._setOption(val);
 
             // 还原选区
             var range = this.range;
@@ -148,16 +177,12 @@ KISSY.Editor.add("plugins~font", function(E) {
         /**
          * 选中某一项
          */
-        _setSelectedOption: function(val) {
-            this.selectedValue = val;
+        _setOption: function(val) {
+            // 更新头部
+            this._updateHeadText(this._getOptionKey(val));
 
-            // 更新 head
-            this.selectHead.innerHTML = this._getOptionKey(val);
-
-            // 更新 selectList 中的选中项
-            if(val != this.text) {
-                this._updateSelectedOption(val);
-            }
+            // 更新列表选中项
+            this._updateSelectedOption(val);
         },
 
         _getOptionStyle: function(key, val) {
@@ -170,19 +195,24 @@ KISSY.Editor.add("plugins~font", function(E) {
 
         _getOptionKey: function(val) {
             var options = this.options, key;
-
+            
             for(key in options) {
                 if(options[key] == val) {
                     return key;
                 }
             }
+            return null;
+        },
+
+        _updateHeadText: function(val) {
+            this.selectHead.innerHTML = val;
         },
 
         /**
          * 更新下拉框的选中项
          */
         _updateSelectedOption: function(val) {
-            var items = this.selectList.getElementsByTagName("li"),
+            var items = this.items,
                 i, len = items.length, item;
 
             for(i = 0; i < len; ++i) {
@@ -190,10 +220,50 @@ KISSY.Editor.add("plugins~font", function(E) {
 
                 if(item.getAttribute("data-value") == val) {
                     Dom.addClass(item, OPTION_SELECTED);
+                    this.selectedItem = item;
                 } else {
                     Dom.removeClass(item, OPTION_SELECTED);
                 }
             }
+        },
+
+        /**
+         * 更新按钮状态
+         */
+        updateState: function() {
+            var doc = this.editor.contentDoc,
+                options = this.options,
+                name = this.name, key, val;
+
+            try {
+                if (doc.queryCommandEnabled(name)) {
+                    val = doc.queryCommandValue(name);
+
+                    if(UA.webkit && name == "fontSize") {
+                        val = this._getWebkitFontSize(val);
+                    }
+                    
+                    val && (key = this._getOptionKey(val));
+                    //console.log(key + " : " + val);
+
+                    if (key in options) {
+                        if(val != this.selectedValue) {
+                            this.selectedValue = val;
+                            this._updateHeadText(key);
+                        }
+                    } else {
+                        this.selectedValue = "";
+                        this._updateHeadText(this.lang.text);
+                    }
+                }
+
+            } catch(ex) {
+            }
+        },
+
+        _getWebkitFontSize: function(val) {
+            if(val in WEBKIT_FONT_SIZE) return WEBKIT_FONT_SIZE[val];
+            return null;
         }
     });
 
@@ -201,5 +271,4 @@ KISSY.Editor.add("plugins~font", function(E) {
 
 // TODO
 //  1. 仿 google, 对键盘事件的支持
-//  2. 光标变化时，动态更新当前字体显示值
 //  3. ie 下接管，否则光标处于某标签内，改变字体时，改变的是整段标签的字体

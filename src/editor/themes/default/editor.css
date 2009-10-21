@@ -525,3 +525,16 @@ li.ks-editor-image-tab-selected {
     border: 0;
 }
 
+/* src mode */
+.ks-editor-src-mode .ks-editor-toolbar-button,
+.ks-editor-src-mode .ks-editor-stripbar-sep {
+    visibility: hidden;
+    /*opacity: 0.3;
+    filter: alpha(opacity=30);*/
+}
+.ks-editor-src-mode .ks-editor-toolbar-source-button {
+    visibility: visible;
+    /*opacity: 1;
+    filter: alpha(opacity=100);*/
+}
+

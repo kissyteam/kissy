@@ -27,6 +27,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
         TOOLBAR_BUTTON_ACTIVE = "ks-editor-toolbar-button-active",
         TOOLBAR_BUTTON_HOVER = "ks-editor-toolbar-button-hover",
         TOOLBAR_BUTTON_SELECTED = "ks-editor-toolbar-button-selected",
+    
         STATE_CMDS = "fontName,fontSize,bold,italic,underline,strikeThrough"
                      + "foreColor,backColor,insertOrderedList,insertUnorderedList"
                      + "justifyLeft,justifyCenter,justifyRight",
@@ -290,6 +291,8 @@ KISSY.Editor.add("core~toolbar", function(E) {
                     }
                 } catch(ex) { }
             }
+
+            // TODO: webkit 下，对齐的状态没获取到
         }
     });
 

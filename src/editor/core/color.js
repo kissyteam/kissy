@@ -68,6 +68,20 @@ KISSY.Editor.add("core~color", function(E) {
             }
 
             return val.toLowerCase();
+        },
+
+        /**
+         * Convert the custom integer (B G R) format to hex format.
+         */
+        int2hex: function(val) {
+            var red, green, blue;
+
+            val = val >> 0;
+            red = val & 255;
+            green = (val >> 8) & 255;
+            blue = (val >> 16) & 255;
+
+            return this.toHex("rgb(" + red + "," + green +"," + blue + ")");
         }
     };
 
