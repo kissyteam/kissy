@@ -183,6 +183,11 @@ KISSY.Editor.add("config", function(E) {
          * 插件的配置
          */
         pluginsConfig: { }
+
+        /**
+         * 自动聚焦
+         */
+        // autoFocus: false
     };
 
 });
@@ -780,7 +785,7 @@ KISSY.Editor.add("core~instance", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         UA = YAHOO.env.ua,
-        isIE = UA.ie,
+        ie = UA.ie,
         EDITOR_CLASSNAME = "ks-editor",
 
         EDITOR_TMPL  =  '<div class="ks-editor-toolbar"></div>' +
@@ -852,7 +857,7 @@ KISSY.Editor.add("core~instance", function(E) {
         _init: function() {
             this._renderUI();
             this._initPlugins();
-            this.config.autoFocus && this._focusToEnd();
+            this._initAutoFocus();
         },
 
         _renderUI: function() {
@@ -944,7 +949,7 @@ KISSY.Editor.add("core~instance", function(E) {
                     .replace("{CONTENT}", this.textarea.value));
             doc.close();
 
-            if (isIE) {
+            if (ie) {
                 // 用 contentEditable 开启，否则 ie 下选区为黑底白字
                 doc.body.contentEditable = "true";
             } else {
@@ -971,13 +976,21 @@ KISSY.Editor.add("core~instance", function(E) {
 //                }
 //            }
 
-            if(isIE) {
+            if(ie) {
                 // 点击的 iframe doc 非 body 区域时，还原焦点位置
                 Event.on(doc, "click", function() {
                     if (doc.activeElement.parentNode.nodeType === 9) { // 点击在 doc 上
                         self._focusToEnd();
                     }
                 });
+            }
+        },
+
+        _initAutoFocus: function() {
+            if (this.config.autoFocus) {
+                this._focusToEnd();
+            } else if (ie === 6) { // ie6 下，会自动聚焦
+                this.contentDoc.selection.empty();
             }
         },
 
@@ -1812,7 +1825,7 @@ KISSY.Editor.add("plugins~color", function(E) {
 
             Event.on(this.domEl, "click", function() {
                 // 保存 range, 以便还原
-                this.range = self.editor.getSelectionRange();
+                this.range = this.editor.getSelectionRange();
 
                 // 聚集到按钮上，隐藏光标，否则 ie 下光标会显示在层上面
                 // 注：通过 blur / focus 等方式在 ie7- 下无效

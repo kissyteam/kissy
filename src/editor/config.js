@@ -46,6 +46,11 @@ KISSY.Editor.add("config", function(E) {
          * 插件的配置
          */
         pluginsConfig: { }
+
+        /**
+         * 自动聚焦
+         */
+        // autoFocus: false
     };
 
 });
