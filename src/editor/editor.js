@@ -1056,7 +1056,9 @@ KISSY.Editor.add("core~instance", function(E) {
             // Firefox 下，_moz_editor_bogus_node, _moz_dirty 等特有属性
             // 这些特有属性，在用 innerHTML 获取时，自动过滤了
 
-           data = bd.innerHTML;
+            data = bd.innerHTML;
+            if(data == "<br>") data = ""; // firefox 下会自动生成一个 br
+
             if(p && p.filterData) {
                 data = p.filterData(data);
             }
