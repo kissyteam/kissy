@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-22 22:58:28
-Revision: 231
+Date: 2009-10-22 23:40:00
+Revision: 232
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -2415,7 +2415,7 @@ KISSY.Editor.add("plugins~image", function(E) {
 
             dialog.className += " " + DIALOG_CLS;
             dialog.innerHTML = DIALOG_TMPL.replace(/\{([^}]+)\}/g, function(match, key) {
-                return lang[key] ? lang[key] : key;
+                return (key in lang) ? lang[key] : key;
             });
 
             this.dialog = dialog;
@@ -2438,7 +2438,7 @@ KISSY.Editor.add("plugins~image", function(E) {
 
             // 文案
             ul.innerHTML = html.replace(/\{([^}]+)\}/g, function(match, key) {
-                return lang[key] ? lang[key] : key;
+                return (key in lang) ? lang[key] : key;
             });
 
             // 只有一个 tabs 时不显示

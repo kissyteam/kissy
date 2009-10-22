@@ -2407,7 +2407,7 @@ KISSY.Editor.add("plugins~image", function(E) {
 
             dialog.className += " " + DIALOG_CLS;
             dialog.innerHTML = DIALOG_TMPL.replace(/\{([^}]+)\}/g, function(match, key) {
-                return lang[key] ? lang[key] : key;
+                return (key in lang) ? lang[key] : key;
             });
 
             this.dialog = dialog;
@@ -2430,7 +2430,7 @@ KISSY.Editor.add("plugins~image", function(E) {
 
             // 文案
             ul.innerHTML = html.replace(/\{([^}]+)\}/g, function(match, key) {
-                return lang[key] ? lang[key] : key;
+                return (key in lang) ? lang[key] : key;
             });
 
             // 只有一个 tabs 时不显示
