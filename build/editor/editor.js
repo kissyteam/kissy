@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-22 11:51:35
-Revision: 229
+Date: 2009-10-22 15:33:30
+Revision: 230
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -3240,12 +3240,12 @@ KISSY.Editor.add("plugins~save", function(E) {
             if(form) {
                 Event.on(form, "submit", function() {
                     if(!editor.sourceMode) {
-                        var val = editor.getData();
-                        // 统一样式
-                        if(val.indexOf('<div class="ks-editor-post">') !== 0) {
-                            val = '<div class="ks-editor-post">' + val + '</div>';
-                        }
-                        textarea.value = val;
+                        //var val = editor.getData();
+                        // 统一样式  由后台控制
+//                        if(val && val.indexOf('<div class="ks-editor-post">') !== 0) {
+//                            val = '<div class="ks-editor-post">' + val + '</div>';
+//                        }
+                        textarea.value = editor.getData();
                     }
                 });
             }

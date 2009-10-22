@@ -3232,12 +3232,12 @@ KISSY.Editor.add("plugins~save", function(E) {
             if(form) {
                 Event.on(form, "submit", function() {
                     if(!editor.sourceMode) {
-                        var val = editor.getData();
-                        // 统一样式
-                        if(val.indexOf('<div class="ks-editor-post">') !== 0) {
-                            val = '<div class="ks-editor-post">' + val + '</div>';
-                        }
-                        textarea.value = val;
+                        //var val = editor.getData();
+                        // 统一样式  由后台控制
+//                        if(val && val.indexOf('<div class="ks-editor-post">') !== 0) {
+//                            val = '<div class="ks-editor-post">' + val + '</div>';
+//                        }
+                        textarea.value = editor.getData();
                     }
                 });
             }
