@@ -88,6 +88,7 @@ KISSY.Editor.add("lang~en", function(E) {
             label_album   : "Select the image from your album:",
             uploading     : "Uploading...",
             upload_error  : "Exception occurs when uploading file.",
+            upload_filter : "Only allow PNG, GIF, JPG image type.",
             ok            : "Insert"
         },
         insertOrderedList: {

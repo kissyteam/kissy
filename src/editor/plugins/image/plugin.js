@@ -50,11 +50,15 @@ KISSY.Editor.add("plugins~image", function(E) {
             tabs: ["link"],
             upload: {
                 actionUrl: "",
-                filter: "*",
-                filterMsg: "",
+                filter: "png|gif|jpg|jpeg",
+                filterMsg: "", // Ä¬ÈÏÎª this.lang.upload_filter
                 enableXdr: false,
                 connectionSwf: "http://a.tbcdn.cn/yui/2.8.0r4/build/connection/connection.swf",
-                formatResponse: function(data) { return data; },
+                formatResponse: function(data) {
+                    var ret = [];
+                    for (var key in data) ret.push(data[key]);
+                    return ret;
+                },
                 extraCode: ""
             }
         };
@@ -95,6 +99,7 @@ KISSY.Editor.add("plugins~image", function(E) {
          */
         init: function() {
             var pluginConfig = this.editor.config.pluginsConfig[this.name] || {};
+            defaultConfig.upload.filterMsg = this.lang["upload_filter"];
             this.config = Lang.merge(defaultConfig, pluginConfig);
             this.config.upload = Lang.merge(defaultConfig.upload, pluginConfig.upload || {});
 

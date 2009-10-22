@@ -10,7 +10,7 @@ KISSY.Editor.add("config", function(E) {
         /**
          * ”Ô—‘
          */
-        language: "en",
+        language: "zh-cn",
 
         /**
          * ÷˜Ã‚
@@ -23,8 +23,8 @@ KISSY.Editor.add("config", function(E) {
         toolbar: [
             "source",
             "",
-            "undo", "redo",
-            "",
+            /*"undo", "redo",
+            "",*/
             "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
             "",
             "link", "smiley", "image",

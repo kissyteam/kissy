@@ -64,8 +64,15 @@ KISSY.Editor.add("core~menu", function(E) {
                 if(editor.activeDropMenu) {
                     self.hideActiveDropMenu(editor);
 
-                    // 还原焦点
-                    editor.contentWin.focus();
+                    // 还原选区和焦点
+                    if (this == editor.contentDoc) {
+                        // TODO: [bug 58]  需要重写一个 focusmanager 来统一管理焦点
+//                        if (UA.ie) {
+//                            var range = editor.getSelectionRange();
+//                            range.select();
+//                        }
+                        editor.contentWin.focus();
+                    }
                 }
             });
 

@@ -147,7 +147,7 @@ KISSY.Editor.add("config", function(E) {
         /**
          * 语言
          */
-        language: "en",
+        language: "zh-cn",
 
         /**
          * 主题
@@ -160,8 +160,8 @@ KISSY.Editor.add("config", function(E) {
         toolbar: [
             "source",
             "",
-            "undo", "redo",
-            "",
+            /*"undo", "redo",
+            "",*/
             "fontName", "fontSize", "bold", "italic", "underline", "strikeThrough", "foreColor", "backColor",
             "",
             "link", "smiley", "image",
@@ -281,6 +281,7 @@ KISSY.Editor.add("lang~en", function(E) {
             label_album   : "Select the image from your album:",
             uploading     : "Uploading...",
             upload_error  : "Exception occurs when uploading file.",
+            upload_filter : "Only allow PNG, GIF, JPG image type.",
             ok            : "Insert"
         },
         insertOrderedList: {
@@ -438,6 +439,7 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
             label_album   : "请选择相册图片：",
             uploading     : "正在上传...",
             upload_error  : "对不起，上传文件时发生了错误：",
+            upload_filter : "仅支持 JPG, PNG 和 GIF 图片，请重新选择。",
             ok            : "插入"
         },
         insertOrderedList: {
@@ -1542,8 +1544,15 @@ KISSY.Editor.add("core~menu", function(E) {
                 if(editor.activeDropMenu) {
                     self.hideActiveDropMenu(editor);
 
-                    // 还原焦点
-                    editor.contentWin.focus();
+                    // 还原选区和焦点
+                    if (this == editor.contentDoc) {
+                        // TODO: [bug 58]  需要重写一个 focusmanager 来统一管理焦点
+//                        if (UA.ie) {
+//                            var range = editor.getSelectionRange();
+//                            range.select();
+//                        }
+                        editor.contentWin.focus();
+                    }
                 }
             });
 
@@ -2325,11 +2334,15 @@ KISSY.Editor.add("plugins~image", function(E) {
             tabs: ["link"],
             upload: {
                 actionUrl: "",
-                filter: "*",
-                filterMsg: "",
+                filter: "png|gif|jpg|jpeg",
+                filterMsg: "", // 默认为 this.lang.upload_filter
                 enableXdr: false,
                 connectionSwf: "http://a.tbcdn.cn/yui/2.8.0r4/build/connection/connection.swf",
-                formatResponse: function(data) { return data; },
+                formatResponse: function(data) {
+                    var ret = [];
+                    for (var key in data) ret.push(data[key]);
+                    return ret;
+                },
                 extraCode: ""
             }
         };
@@ -2370,6 +2383,7 @@ KISSY.Editor.add("plugins~image", function(E) {
          */
         init: function() {
             var pluginConfig = this.editor.config.pluginsConfig[this.name] || {};
+            defaultConfig.upload.filterMsg = this.lang["upload_filter"];
             this.config = Lang.merge(defaultConfig, pluginConfig);
             this.config.upload = Lang.merge(defaultConfig.upload, pluginConfig.upload || {});
 

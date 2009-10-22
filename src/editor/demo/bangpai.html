@@ -322,7 +322,6 @@
         YAHOO.util.Event.onDOMReady(function() {
             new KISSY.Editor("msgpost", {
                 base: "http://a.tbcdn.cn/kissy/1.0.0/build/editor/",
-                language: "zh-cn",
                 toolbar: [
                     "source",
                     "",
@@ -338,13 +337,6 @@
                         tabs               : ["local", "link"],
                         upload: {
                             actionUrl      : "/kissy/src/editor/demo/upload.php",
-                            filter         : "png|gif|jpg|jpeg",
-                            filterMsg      : "仅支持 JPG, PNG 和 GIF 图片，请重新选择。",
-                            formatResponse : function(data) {
-                                var ret = [];
-                                for (var key in data) ret.push(data[key]);
-                                return ret;
-                            },
                             extraCode      : '<label><input name="needWatermark" type="checkbox" checked="checked" />图片加水印，防盗用</label>'
                         }
                     },
