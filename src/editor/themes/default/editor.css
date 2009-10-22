@@ -444,8 +444,9 @@ li.ks-editor-image-tab-selected {
 .ks-editor-dialog-actions button {
     float: left;
     margin: 0 5px;
-    padding: 1px 0.8em 0;
-    *padding: 2px 0.8em 1px;
+    padding: 1px 10px;
+    *padding: 2px 10px 0;
+    line-height: 17px;
 }
 .ks-editor-btn-cancel {
     float: left;

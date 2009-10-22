@@ -10,6 +10,7 @@ KISSY.Editor.add("core~menu", function(E) {
         DROP_MENU_CLASS = "ks-editor-drop-menu",
         SHADOW_CLASS = "ks-editor-drop-menu-shadow",
         CONTENT_CLASS = "ks-editor-drop-menu-content",
+        SELECTED_CLASS = "ks-editor-toolbar-button-selected",
         SHIM_CLASS = DROP_MENU_CLASS + "-shim", //  // iframe shim 的 class
         shim; // 共用一个 shim 即可
     
@@ -43,24 +44,25 @@ KISSY.Editor.add("core~menu", function(E) {
                 Event.stopPropagation(ev);
 
                 // 隐藏当前激活的下拉框
-                self._hide(editor.activeDropMenu);
+                self._hide(editor);
 
                 // 打开当前 trigger 的 dropMenu
                 if(editor.activeDropMenu != dropMenu) {
                     self._setDropMenuPosition(trigger, dropMenu, offset); // 延迟到显示时调整位置
-                    self._show(dropMenu);
                     editor.activeDropMenu = dropMenu;
+                    editor.activeDropButton = trigger;
+                    self._show(editor);
 
                 } else { // 第二次点击在 trigger 上，关闭 activeDropMenu, 并置为 null. 否则会导致第三次点击打不开
                     editor.activeDropMenu = null;
+                    editor.activeDropButton = null;
                 }
             });
 
             // document 捕获到点击时，关闭当前激活的下拉框
             Event.on([document, editor.contentDoc], "click", function() {
                 if(editor.activeDropMenu) {
-                    self._hide(editor.activeDropMenu);
-                    editor.activeDropMenu = null;
+                    self.hideActiveDropMenu(editor);
 
                     // 还原焦点
                     editor.contentWin.focus();
@@ -99,29 +101,40 @@ KISSY.Editor.add("core~menu", function(E) {
          * 隐藏编辑器当前打开的下拉框
          */
         hideActiveDropMenu: function(editor) {
-            this._hide(editor.activeDropMenu);
+            this._hide(editor);
             editor.activeDropMenu = null;
+            editor.activeDropButton = null;
         },
 
-        _hide: function(el) {
-            if(el) {
-                if(shim) {
-                    shim.style[DISPLAY] = NONE;
-                }
+        _hide: function(editor) {
+            var dropMenu = editor.activeDropMenu,
+                dropButton = editor.activeDropButton;
 
-                el.style[DISPLAY] = NONE;
-                //el.style.visibility = "hidden";
+            if(dropMenu) {
+                shim && (shim.style[DISPLAY] = NONE);
+
+                dropMenu.style[DISPLAY] = NONE;
+                //dropMenu.style.visibility = "hidden";
                 // 注：visibilty 方式会导致ie下，上传并插入文件（选择了选取文件框）后，编辑区域焦点丢失
             }
+
+            dropButton && (Dom.removeClass(dropButton, SELECTED_CLASS));
         },
 
-        _show: function(el) {
-            el.style[DISPLAY] = EMPTY;
-            
-            if(UA.ie === 6) {
-                this._updateShimRegion(el);
-                shim.style[DISPLAY] = EMPTY;
+        _show: function(editor) {
+            var dropMenu = editor.activeDropMenu,
+                dropButton = editor.activeDropButton;
+
+            if (dropMenu) {
+                dropMenu.style[DISPLAY] = EMPTY;
+
+                if (UA.ie === 6) {
+                    this._updateShimRegion(dropMenu);
+                    shim.style[DISPLAY] = EMPTY;
+                }
             }
+
+            dropButton && (Dom.addClass(dropButton, SELECTED_CLASS));
         },
 
         _updateShimRegion: function(el) {

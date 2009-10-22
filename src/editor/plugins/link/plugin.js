@@ -2,7 +2,7 @@
 KISSY.Editor.add("plugins~link", function(E) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
-        isIE = YAHOO.env.ua.ie,
+        UA = YAHOO.env.ua, isIE = UA.ie,
         TYPE = E.PLUGIN_TYPE, Range = E.Range,
         timeStamp = new Date().getTime(),
         HREF_REG = /^\w+:\/\/.*|#.*$/,
@@ -15,7 +15,7 @@ KISSY.Editor.add("plugins~link", function(E) {
         DEFAULT_HREF = "http://",
 
         DIALOG_TMPL = ['<form onsubmit="return false"><ul>',
-                          '<li class="ks-editor-link-href"><label>{href}</label><input name="href" size="40" value="http://" type="text" /></li>',
+                          '<li class="ks-editor-link-href"><label>{href}</label><input name="href" style="width: 220px" value="http://" type="text" /></li>',
                           '<li class="ks-editor-link-target"><input name="target" id="target_"', timeStamp ,' type="checkbox" /> <label for="target_"', timeStamp ,'>{target}</label></li>',
                           '<li class="ks-editor-dialog-actions">',
                               '<button name="ok" class="', BTN_OK_CLS, '">{ok}</button>',
@@ -67,6 +67,9 @@ KISSY.Editor.add("plugins~link", function(E) {
 
             this.dialog = dialog;
             this.form = dialog.getElementsByTagName("form")[0];
+
+            // webkit 调用默认的 exeCommand, 需隐藏 target 设置
+            UA.webkit && (this.form.target.parentNode.style.display = "none");
 
             isIE && E.Dom.setItemUnselectable(dialog);
         },
@@ -182,6 +185,9 @@ KISSY.Editor.add("plugins~link", function(E) {
                     // TODO: ControlRange 链接的 target 实现
                     this.editor.execCommand("createLink", href);
                 }
+
+            } else if(UA.webkit) { // TODO: https://bugs.webkit.org/show_bug.cgi?id=16867
+                this.editor.execCommand("createLink", href);
 
             } else { // W3C
                 if(range.collapsed) {
