@@ -2666,7 +2666,7 @@ KISSY.Editor.add("plugins~image", function(E) {
             if (window.getSelection) { // W3C
                 var img = editor.contentDoc.createElement("img");
                 img.src = url;
-                img.setAttribute("alt", alt);
+                if(alt) img.setAttribute("alt", alt);
 
                 range.deleteContents(); // 清空选中内容
                 range.insertNode(img); // 插入图片
