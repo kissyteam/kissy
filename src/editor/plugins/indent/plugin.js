@@ -21,7 +21,12 @@ KISSY.Editor.add("plugins~indent", function(E) {
              * 响应函数
              */
             exec: function() {
+                // 执行命令
                 this.editor.execCommand(this.name);
+
+                // 更新状态
+                // 缩进时，可能会干掉 list 等状态
+                this.editor.toolbar.updateState();
             }
         };
 

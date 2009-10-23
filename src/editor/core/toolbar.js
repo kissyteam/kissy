@@ -29,7 +29,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
         TOOLBAR_BUTTON_SELECTED = "ks-editor-toolbar-button-selected",
     
         STATE_CMDS = "fontName,fontSize,bold,italic,underline,strikeThrough"
-                     + "foreColor,backColor,insertOrderedList,insertUnorderedList"
+                     + "insertOrderedList,insertUnorderedList"
                      + "justifyLeft,justifyCenter,justifyRight",
 
         div = document.createElement("div"); // 通用 el 容器
@@ -253,7 +253,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
                 // DEL: 46
                 if((keyCode >= 33 && keyCode <= 40)
                     || keyCode === 8
-                    //|| keyCode === 13   // 暂时不监控，会导致 firefox 下，回车折行时，文本色的更新不对
+                    || keyCode === 13
                     || keyCode === 46) {
                     self.updateState();
                 }
@@ -266,13 +266,15 @@ KISSY.Editor.add("core~toolbar", function(E) {
          * 按钮状态的动态更新（包括按钮选中状态的更新、字体字号的更新、颜色的动态更新等）
          * 遵守 Google Docs 的原则，让所有按钮始终可点击，只更新状态，不禁用按钮
          */
-        updateState: function() {
-            var items = this.stateItems,
-                doc = this.editor.contentDoc,
-                p;
+        updateState: function(filterNames) {
+            var items = this.stateItems, p;
+            filterNames = filterNames ? filterNames.join("|") : "";
 
             for(var i = 0, len = items.length; i < len; i++) {
                 p = items[i];
+                
+                if(filterNames && filterNames.indexOf(p.name) === -1)
+                    continue;
 
                 // 调用插件自己的状态更新函数
                 if(p.updateState) {
@@ -281,18 +283,26 @@ KISSY.Editor.add("core~toolbar", function(E) {
                 }
 
                 // 默认的状态更新函数
-                try {
-                    if (doc.queryCommandEnabled(p.name)) {
-                        if (doc.queryCommandState(p.name)) {
-                            Dom.addClass(p.domEl, TOOLBAR_BUTTON_SELECTED);
-                        } else {
-                            Dom.removeClass(p.domEl, TOOLBAR_BUTTON_SELECTED);
-                        }
-                    }
-                } catch(ex) { }
+                this.updateItemState(p);
             }
 
             // TODO: webkit 下，对齐的状态没获取到
+        },
+
+        updateItemState: function(p) {
+            var doc = this.editor.contentDoc;
+
+            // 默认的状态更新函数
+            try {
+                if (doc.queryCommandEnabled(p.name)) {
+                    if (doc.queryCommandState(p.name)) {
+                        Dom.addClass(p.domEl, TOOLBAR_BUTTON_SELECTED);
+                    } else {
+                        Dom.removeClass(p.domEl, TOOLBAR_BUTTON_SELECTED);
+                    }
+                }
+            } catch(ex) {
+            }
         }
     });
 

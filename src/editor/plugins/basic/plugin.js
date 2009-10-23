@@ -15,7 +15,11 @@ KISSY.Editor.add("plugins~base", function(E) {
          * 响应函数
          */
         exec: function() {
+            // 执行命令
             this.editor.execCommand(this.name);
+
+            // 更新状态
+            this.editor.toolbar.updateState();
         }
     });
 

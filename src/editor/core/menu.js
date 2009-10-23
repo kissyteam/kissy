@@ -44,7 +44,7 @@ KISSY.Editor.add("core~menu", function(E) {
                 Event.stopPropagation(ev);
 
                 // 隐藏当前激活的下拉框
-                self._hide(editor);
+                editor.activeDropMenu && self._hide(editor);
 
                 // 打开当前 trigger 的 dropMenu
                 if(editor.activeDropMenu != dropMenu) {

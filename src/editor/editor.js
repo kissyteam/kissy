@@ -1035,7 +1035,6 @@ KISSY.Editor.add("core~instance", function(E) {
         execCommand: function(commandName, val, styleWithCSS) {
             this.contentWin.focus(); // 还原焦点
             E.Command.exec(this.contentDoc, commandName, val, styleWithCSS);
-            this.toolbar.updateState();
         },
 
         /**
@@ -1108,7 +1107,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
         TOOLBAR_BUTTON_SELECTED = "ks-editor-toolbar-button-selected",
     
         STATE_CMDS = "fontName,fontSize,bold,italic,underline,strikeThrough"
-                     + "foreColor,backColor,insertOrderedList,insertUnorderedList"
+                     + "insertOrderedList,insertUnorderedList"
                      + "justifyLeft,justifyCenter,justifyRight",
 
         div = document.createElement("div"); // 通用 el 容器
@@ -1332,7 +1331,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
                 // DEL: 46
                 if((keyCode >= 33 && keyCode <= 40)
                     || keyCode === 8
-                    //|| keyCode === 13   // 暂时不监控，会导致 firefox 下，回车折行时，文本色的更新不对
+                    || keyCode === 13
                     || keyCode === 46) {
                     self.updateState();
                 }
@@ -1345,13 +1344,15 @@ KISSY.Editor.add("core~toolbar", function(E) {
          * 按钮状态的动态更新（包括按钮选中状态的更新、字体字号的更新、颜色的动态更新等）
          * 遵守 Google Docs 的原则，让所有按钮始终可点击，只更新状态，不禁用按钮
          */
-        updateState: function() {
-            var items = this.stateItems,
-                doc = this.editor.contentDoc,
-                p;
+        updateState: function(filterNames) {
+            var items = this.stateItems, p;
+            filterNames = filterNames ? filterNames.join("|") : "";
 
             for(var i = 0, len = items.length; i < len; i++) {
                 p = items[i];
+                
+                if(filterNames && filterNames.indexOf(p.name) === -1)
+                    continue;
 
                 // 调用插件自己的状态更新函数
                 if(p.updateState) {
@@ -1360,18 +1361,26 @@ KISSY.Editor.add("core~toolbar", function(E) {
                 }
 
                 // 默认的状态更新函数
-                try {
-                    if (doc.queryCommandEnabled(p.name)) {
-                        if (doc.queryCommandState(p.name)) {
-                            Dom.addClass(p.domEl, TOOLBAR_BUTTON_SELECTED);
-                        } else {
-                            Dom.removeClass(p.domEl, TOOLBAR_BUTTON_SELECTED);
-                        }
-                    }
-                } catch(ex) { }
+                this.updateItemState(p);
             }
 
             // TODO: webkit 下，对齐的状态没获取到
+        },
+
+        updateItemState: function(p) {
+            var doc = this.editor.contentDoc;
+
+            // 默认的状态更新函数
+            try {
+                if (doc.queryCommandEnabled(p.name)) {
+                    if (doc.queryCommandState(p.name)) {
+                        Dom.addClass(p.domEl, TOOLBAR_BUTTON_SELECTED);
+                    } else {
+                        Dom.removeClass(p.domEl, TOOLBAR_BUTTON_SELECTED);
+                    }
+                }
+            } catch(ex) {
+            }
         }
     });
 
@@ -1524,7 +1533,7 @@ KISSY.Editor.add("core~menu", function(E) {
                 Event.stopPropagation(ev);
 
                 // 隐藏当前激活的下拉框
-                self._hide(editor);
+                editor.activeDropMenu && self._hide(editor);
 
                 // 打开当前 trigger 的 dropMenu
                 if(editor.activeDropMenu != dropMenu) {
@@ -1749,7 +1758,11 @@ KISSY.Editor.add("plugins~base", function(E) {
          * 响应函数
          */
         exec: function() {
+            // 执行命令
             this.editor.execCommand(this.name);
+
+            // 更新状态
+            this.editor.toolbar.updateState();
         }
     });
 
@@ -1912,6 +1925,14 @@ KISSY.Editor.add("plugins~color", function(E) {
                 if(attr && attr.indexOf("RGB") === 0) {
                     self._doAction(attr);
                 }
+
+                // 关闭悬浮框
+                Event.stopPropagation(ev);
+                E.Menu.hideActiveDropMenu(self.editor);
+                // 注：在这里阻止掉事件冒泡，自己处理对话框的关闭，是因为
+                // 在 Firefox 下，当执行 doAction 后，doc 获取到 click
+                // 触发 updateState 时，还获取不到当前的颜色值。
+                // 这样做，对性能也有好处，这种情况下不需要更新 updateState
             });
         },
 
@@ -1974,30 +1995,33 @@ KISSY.Editor.add("plugins~color", function(E) {
         /**
          * 更新按钮状态
          */
-        updateState: function() {
-            var doc = this.editor.contentDoc,
-                name = this.name, t, val;
-
-            if(name == "backColor" && UA.gecko) name = "hiliteColor";
-
-            try {
-                if (doc.queryCommandEnabled(name)) {
-                    t = doc.queryCommandValue(name);
-
-                    isIE && (t = E.Color.int2hex(t));
-                    if (t === "transparent") t = ""; // 背景色为透明色时，取默认色
-                    if(t === "rgba(0, 0, 0, 0)") t = ""; // webkit 的背景色是 rgba 的
-                    //console.log(t);
-                    
-                    val = t ? E.Color.toHex(t) : this._getDefaultColor(); // t 为空字符串时，表示点击在空行或尚未设置样式的地方
-                    if (val && val != this.color) {
-                        this.color = val;
-                        this._updateIndicatorColor(val);
-                    }
-                }
-            } catch(ex) {
-            }
-        },
+        // ie 下，queryCommandValue 无法正确获取到 backColor 的值
+        // 干脆禁用此功能，模仿 Office2007 的处理，显示最后的选取色
+//        updateState: function() {
+//            var doc = this.editor.contentDoc,
+//                name = this.name, t, val;
+//
+//            if(name == "backColor" && UA.gecko) name = "hiliteColor";
+//
+//            try {
+//                if (doc.queryCommandEnabled(name)) {
+//                    t = doc.queryCommandValue(name);
+//
+//                    if(isIE && typeof t == "number") { // ie下，对于 backColor, 有时返回 int 格式，有时又会直接返回 hex 格式
+//                        t = E.Color.int2hex(t);
+//                    }
+//                    if (t === "transparent") t = ""; // 背景色为透明色时，取默认色
+//                    if(t === "rgba(0, 0, 0, 0)") t = ""; // webkit 的背景色是 rgba 的
+//
+//                    val = t ? E.Color.toHex(t) : this._getDefaultColor(); // t 为空字符串时，表示点击在空行或尚未设置样式的地方
+//                    if (val && val != this.color) {
+//                        this.color = val;
+//                        this._updateIndicatorColor(val);
+//                    }
+//                }
+//            } catch(ex) {
+//            }
+//        },
 
         _getDefaultColor: function() {
             return (this.name == "foreColor") ? "#000000" : "#ffffff";
@@ -2152,6 +2176,14 @@ KISSY.Editor.add("plugins~font", function(E) {
                 if(!target) return;
 
                 self._doAction(target.getAttribute("data-value"));
+
+                // 关闭悬浮框
+                Event.stopPropagation(ev);
+                E.Menu.hideActiveDropMenu(self.editor);
+                // 注：在这里阻止掉事件冒泡，自己处理对话框的关闭，是因为
+                // 在 Firefox 下，当执行 doAction 后，doc 获取到 click
+                // 触发 updateState 时，还获取不到当前的颜色值。
+                // 这样做，对性能也有好处，这种情况下不需要更新 updateState
             });
 
             // ie6 下，模拟 hover
@@ -2699,7 +2731,12 @@ KISSY.Editor.add("plugins~indent", function(E) {
              * 响应函数
              */
             exec: function() {
+                // 执行命令
                 this.editor.execCommand(this.name);
+
+                // 更新状态
+                // 缩进时，可能会干掉 list 等状态
+                this.editor.toolbar.updateState();
             }
         };
 
@@ -2780,6 +2817,7 @@ KISSY.Editor.add("plugins~justify", function(E) {
 
     var //Y = YAHOO.util, Dom = Y.Dom,
         TYPE = E.PLUGIN_TYPE,
+        NAMES = ["justifyLeft", "justifyCenter", "justifyRight"],
         //UA = YAHOO.env.ua,
 
         //JUSTIFY_ELEMENTS = E.Dom.BLOCK_ELEMENTS,
@@ -2794,7 +2832,11 @@ KISSY.Editor.add("plugins~justify", function(E) {
              * 响应函数
              */
             exec: function() {
+                // 执行命令
                 this.editor.execCommand(this.name);
+
+                // 更新状态
+                this.editor.toolbar.updateState(NAMES);
             }
         };
 
@@ -2848,7 +2890,7 @@ KISSY.Editor.add("plugins~justify", function(E) {
 
 
     // 注册插件
-    E.addPlugin(["justifyLeft", "justifyCenter", "justifyRight"], plugin);
+    E.addPlugin(NAMES, plugin);
 
 });
 

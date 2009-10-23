@@ -142,6 +142,14 @@ KISSY.Editor.add("plugins~font", function(E) {
                 if(!target) return;
 
                 self._doAction(target.getAttribute("data-value"));
+
+                // 关闭悬浮框
+                Event.stopPropagation(ev);
+                E.Menu.hideActiveDropMenu(self.editor);
+                // 注：在这里阻止掉事件冒泡，自己处理对话框的关闭，是因为
+                // 在 Firefox 下，当执行 doAction 后，doc 获取到 click
+                // 触发 updateState 时，还获取不到当前的颜色值。
+                // 这样做，对性能也有好处，这种情况下不需要更新 updateState
             });
 
             // ie6 下，模拟 hover

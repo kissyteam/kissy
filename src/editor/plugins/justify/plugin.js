@@ -3,6 +3,7 @@ KISSY.Editor.add("plugins~justify", function(E) {
 
     var //Y = YAHOO.util, Dom = Y.Dom,
         TYPE = E.PLUGIN_TYPE,
+        NAMES = ["justifyLeft", "justifyCenter", "justifyRight"],
         //UA = YAHOO.env.ua,
 
         //JUSTIFY_ELEMENTS = E.Dom.BLOCK_ELEMENTS,
@@ -17,7 +18,11 @@ KISSY.Editor.add("plugins~justify", function(E) {
              * 响应函数
              */
             exec: function() {
+                // 执行命令
                 this.editor.execCommand(this.name);
+
+                // 更新状态
+                this.editor.toolbar.updateState(NAMES);
             }
         };
 
@@ -71,6 +76,6 @@ KISSY.Editor.add("plugins~justify", function(E) {
 
 
     // 注册插件
-    E.addPlugin(["justifyLeft", "justifyCenter", "justifyRight"], plugin);
+    E.addPlugin(NAMES, plugin);
 
 });

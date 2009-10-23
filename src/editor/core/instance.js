@@ -251,7 +251,6 @@ KISSY.Editor.add("core~instance", function(E) {
         execCommand: function(commandName, val, styleWithCSS) {
             this.contentWin.focus(); // »¹Ô­½¹µã
             E.Command.exec(this.contentDoc, commandName, val, styleWithCSS);
-            this.toolbar.updateState();
         },
 
         /**

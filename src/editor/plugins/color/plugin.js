@@ -156,6 +156,14 @@ KISSY.Editor.add("plugins~color", function(E) {
                 if(attr && attr.indexOf("RGB") === 0) {
                     self._doAction(attr);
                 }
+
+                // 关闭悬浮框
+                Event.stopPropagation(ev);
+                E.Menu.hideActiveDropMenu(self.editor);
+                // 注：在这里阻止掉事件冒泡，自己处理对话框的关闭，是因为
+                // 在 Firefox 下，当执行 doAction 后，doc 获取到 click
+                // 触发 updateState 时，还获取不到当前的颜色值。
+                // 这样做，对性能也有好处，这种情况下不需要更新 updateState
             });
         },
 
@@ -218,30 +226,33 @@ KISSY.Editor.add("plugins~color", function(E) {
         /**
          * 更新按钮状态
          */
-        updateState: function() {
-            var doc = this.editor.contentDoc,
-                name = this.name, t, val;
-
-            if(name == "backColor" && UA.gecko) name = "hiliteColor";
-
-            try {
-                if (doc.queryCommandEnabled(name)) {
-                    t = doc.queryCommandValue(name);
-
-                    isIE && (t = E.Color.int2hex(t));
-                    if (t === "transparent") t = ""; // 背景色为透明色时，取默认色
-                    if(t === "rgba(0, 0, 0, 0)") t = ""; // webkit 的背景色是 rgba 的
-                    //console.log(t);
-                    
-                    val = t ? E.Color.toHex(t) : this._getDefaultColor(); // t 为空字符串时，表示点击在空行或尚未设置样式的地方
-                    if (val && val != this.color) {
-                        this.color = val;
-                        this._updateIndicatorColor(val);
-                    }
-                }
-            } catch(ex) {
-            }
-        },
+        // ie 下，queryCommandValue 无法正确获取到 backColor 的值
+        // 干脆禁用此功能，模仿 Office2007 的处理，显示最后的选取色
+//        updateState: function() {
+//            var doc = this.editor.contentDoc,
+//                name = this.name, t, val;
+//
+//            if(name == "backColor" && UA.gecko) name = "hiliteColor";
+//
+//            try {
+//                if (doc.queryCommandEnabled(name)) {
+//                    t = doc.queryCommandValue(name);
+//
+//                    if(isIE && typeof t == "number") { // ie下，对于 backColor, 有时返回 int 格式，有时又会直接返回 hex 格式
+//                        t = E.Color.int2hex(t);
+//                    }
+//                    if (t === "transparent") t = ""; // 背景色为透明色时，取默认色
+//                    if(t === "rgba(0, 0, 0, 0)") t = ""; // webkit 的背景色是 rgba 的
+//
+//                    val = t ? E.Color.toHex(t) : this._getDefaultColor(); // t 为空字符串时，表示点击在空行或尚未设置样式的地方
+//                    if (val && val != this.color) {
+//                        this.color = val;
+//                        this._updateIndicatorColor(val);
+//                    }
+//                }
+//            } catch(ex) {
+//            }
+//        },
 
         _getDefaultColor: function() {
             return (this.name == "foreColor") ? "#000000" : "#ffffff";
