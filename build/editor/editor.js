@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-26 15:53:23
-Revision: 237
+Date: 2009-10-26 16:56:09
+Revision: 239
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -3112,14 +3112,13 @@ KISSY.Editor.add("plugins~link", function(E) {
             if (target) a.setAttribute("target", "_blank");
 
             if (isIE) {
+                if (range.select) range.select();
+                
                 if("text" in range) { // TextRange
-                    if (range.select) range.select();
-
                     a.innerHTML = range.htmlText || href;
                     div.innerHTML = "";
                     div.appendChild(a);
                     range.pasteHTML(div.innerHTML);
-
                 } else { // ControlRange
                     // TODO: ControlRange 链接的 target 实现
                     this.editor.execCommand("createLink", href);
