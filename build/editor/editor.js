@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-23 16:29:15
-Revision: 235
+Date: 2009-10-26 15:53:23
+Revision: 237
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -2696,7 +2696,11 @@ KISSY.Editor.add("plugins~image", function(E) {
 
                 if("text" in range) { // TextRange
                     range.select(); // 还原选区
-                    range.pasteHTML('<img src="' + url + '" alt="' + alt + '" />');
+
+                    var html = '<img src="' + url + '"';
+                    alt && (html += ' "alt="' + alt + '"');
+                    html += '>';
+                    range.pasteHTML(html);
 
                 } else { // ControlRange
                     range.execCommand("insertImage", false, url);

@@ -2688,7 +2688,11 @@ KISSY.Editor.add("plugins~image", function(E) {
 
                 if("text" in range) { // TextRange
                     range.select(); // 还原选区
-                    range.pasteHTML('<img src="' + url + '" alt="' + alt + '" />');
+
+                    var html = '<img src="' + url + '"';
+                    alt && (html += ' "alt="' + alt + '"');
+                    html += '>';
+                    range.pasteHTML(html);
 
                 } else { // ControlRange
                     range.execCommand("insertImage", false, url);
