@@ -5,6 +5,7 @@
     <dirname property="common.basedir" file="${ant.file.commonbuild}"/>
     <property name="build.dir" location="${common.basedir}/../build/"/>
     <property name="tools.dir" location="${common.basedir}/../tools/"/>
+    <property name="lib.dir" location="${common.basedir}/../lib/"/>
     <property name="charset" value="GB18030"/>
 
     <!-- 引入第三方包 -->

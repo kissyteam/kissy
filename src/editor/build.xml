@@ -7,7 +7,7 @@
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
-    <target name="concat">
+    <target name="editor.concat">
         <concat destfile="editor.js" encoding="${charset}" outputencoding="${charset}">
             <path path="editor-base.js"/>
             <path path="config.js"/>
@@ -47,12 +47,21 @@
         </concat>
     </target>
 
-    <target name="css.build">
+    <target name="css.concat">
         <concat destfile="editor.css" encoding="${charset}" outputencoding="${charset}">
            <path path="themes/default/editor.css"/>
            <path path="themes/default/post.css"/>
         </concat>
         <copy file="themes/default/content.css" tofile="${build.dir}/${component.name}/themes/default/content-min.css"/>
+    </target>
+
+    <target name="aio.concat">
+        <concat destfile="editor-aio.js" encoding="${charset}" outputencoding="${charset}">
+           <path path="${lib.dir}/yui2/yahoo-dom-event/yahoo-dom-event.js"/>
+           <path path="${lib.dir}/yui2/json/json-min.js"/>
+           <path path="${lib.dir}/yui2/connection/connection-min.js"/>
+           <path path="editor.js"/>
+        </concat>
     </target>
 
     <target name="clear">
@@ -65,8 +74,9 @@
         <delete>
             <fileset file="editor.css"/>
         </delete>
+        <move file="${build.dir}/${component.name}/editor-aio-min.js" tofile="${build.dir}/${component.name}/editor-aio.js"/>
     </target>
 
-    <target name="build" depends="concat,css.build,common.build,clear">
+    <target name="build" depends="editor.concat,css.concat,aio.concat,common.build,clear">
     </target>
 </project>

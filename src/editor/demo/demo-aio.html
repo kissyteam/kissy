@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=GB18030"/>
+<title>Editor Test</title>
+
+<!-- 依赖的css -->
+<link rel="stylesheet" href="http://kissy.googlecode.com/svn/trunk/build/cssreset-grids/reset-grids-min.css" type="text/css"/>
+<link rel="stylesheet" href="http://kissy.googlecode.com/svn/trunk/build/editor/themes/default/editor-min.css" type="text/css"/>
+
+<style type="text/css">
+    #demo-page {
+        padding: 50px 20px;
+        width: 1080px;
+        margin: 0 auto;
+        line-height: 18px;
+    }
+    #demo-page h1,
+    #demo-page h2,
+    #demo-page h3 {
+        margin: 1em 0 0.3em;
+    }
+    #demo-page .section ol {
+        margin: 5px 20px;
+    }
+    #demo-page .section ol li {
+        list-style: decimal inside;
+        margin: 5px 0;
+    }
+    #demo-page #submit-btn {
+        padding: 4px 20px;
+        margin: 10px 5px;
+    }
+</style>
+</head>
+<body>
+<div id="demo-page">
+    <h1>KISSY Editor: </h1>
+
+    <form id="demo-form" action="http://lifesinger.org/blog/wp-content/uploads/2009/09/editor-preview.php" method="POST">
+        <textarea name="code" id="demo" rows="50" cols="152" style="width: 900px; height: 295px">
+<p><img src="http://kissy.googlecode.com/svn/trunk/assets/kissy.png" alt="kissy.png" /></p>
+<p>欢迎使用 KISSY Editor!</p>
+        </textarea>
+        <p><button id="submit-btn" type="submit">Preview</button></p>
+    </form>
+
+    <div class="section">
+        <h2>Features:</h2>
+        <ol>
+            <li>编辑器基本功能</li>
+            <li>小巧精简，仅依赖 yahoo-dom-event, min 后不超过 50k, gzip 后不超过 20k</li>
+            <li>支持所有 A 级浏览器</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>Known Issues:</h2>
+        <ol>
+            <li>欢迎提交 bug： <a href="http://code.google.com/p/kissy/issues/list">http://code.google.com/p/kissy/issues/list</a></li>
+            <li>或发送 email：<a href="mailto:lifesinger@gmail.com">lifesinger (at) gmail.com</a></li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>References:</h2>
+        <ol>
+            <li><a href="http://msdn.microsoft.com/en-us/library/ms533049%28VS.85%29.aspx">Command Identifiers</a> (MSDN)</li>
+            <li><a href="http://msdn.microsoft.com/en-us/library/ms535869%28VS.85%29.aspx">selection Object</a> (MSDN)</li>
+            <li><a href="http://msdn.microsoft.com/en-us/library/ms535872%28VS.85%29.aspx">TextRange Object</a> (MSDN)</li>
+            <li><a href="http://msdn.microsoft.com/en-us/library/ms537447%28VS.85%29.aspx">controlRange Collection</a> (MSDN)</li>
+            <li><a href="https://developer.mozilla.org/en/Rich-Text_Editing_in_Mozilla">Rich-Text Editing in Mozilla</a> (MDC)</li>
+            <li><a href="https://developer.mozilla.org/en/DOM/Selection">Selection</a> (MDC)</li>
+            <li><a href="https://developer.mozilla.org/en/DOM%3arange">range</a> (MDC)</li>
+            <li><a href="http://www.quirksmode.org/dom/execCommand.html">execCommand Compatibility</a> (让人佩服的 PPK)</li>
+            <li><a href="http://www.quirksmode.org/dom/range_intro.html">Introduction to Range</a> (通俗易懂的 PPK)</li>
+            <li><a href="http://www.quirksmode.org/dom/w3c_range.html">Range Compatibility Table</a> (Range is EVIL)</li>
+            <li><a href="http://www.quirksmode.org/dom/execCommand/">contentEditable Demo</a> (PPK 的尝试)</li>
+            <li><a href="http://starkravingfinkle.org/blog/2007/07/firefox-3-contenteditable/">Firefox 3 – ContentEditable</a></li>
+            <li><a href="http://www.mozilla.org/editor/midas-spec.html">Midas Specification</a> (MDC)</li>
+            <li><a href="http://www.mozilla.org/editor/midasdemo/">Midas Demo</a></li>
+            <li><a href="http://www.kevinroth.com/rte/demo.htm">Cross-Browser Rich Text Editor (RTE) Demo</a></li>
+            <li><a href="http://ckeditor.com/demo/">CKEditor</a> (FCKEditor 的新一代产品，RTE 中的王者)</li>
+            <li><a href="http://tinymce.moxiecode.com/examples/full.php">TinyMCE</a>（后起之秀，我接触的第一个 RTE）</li>
+            <li><a href="http://docs.google.com/">Google Docs</a> (简单与复杂的权衡)</li>
+            <li><a href="http://developer.yahoo.com/yui/examples/editor/code_editor.html">YUI RTE</a>（爱恨交加）</li>
+            <li><a href="http://nicedit.com/demos.php">NicEditor</a>（采用 ContentEditable，跨域）</li>
+            <li><a href="http://bai.sohu.com/app/blog/#/app/blog/entry/edit.do">白社会编辑器</a>（简单够用，挺好）</li>
+        </ol>
+    </div>
+
+</div>
+
+<!-- editor js and init code -->
+<script type="text/javascript" src="http://kissy.googlecode.com/svn/trunk/build/editor/editor-aio.js"></script>
+<script type="text/javascript">
+    new KISSY.Editor("demo", {
+        base: "http://kissy.googlecode.com/svn/trunk/build/editor/",
+        pluginsConfig: {
+            image: {
+                tabs          : ["local", "link"], //"album"],
+                upload: {
+                    actionUrl : "your/path/to/upload.do"
+                }
+            },
+            smiley: {
+                tabs          : ["wangwang"]
+            }
+        }
+    });
+</script>
+</body>
+</html>
