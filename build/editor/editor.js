@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-26 16:56:09
-Revision: 239
+Date: 2009-10-27 13:45:49
+Revision: 241
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -3053,26 +3053,27 @@ KISSY.Editor.add("plugins~link", function(E) {
             // 保存 range, 以便还原
             this.range = E.Range.saveRange(this.editor);
 
-            var form = this.form,
-                container = Range.getCommonAncestor(this.range),
-                containerIsA = container.nodeName === "A", // 图片等链接
-                parentEl = container.parentNode,
-                parentIsA = parentEl && (parentEl.nodeName === "A"), // 文字链接
-                a;
+            var form = this.form, container, a;
+
+            container = Range.getCommonAncestor(this.range);
+            a = (container.nodeName == "A") ? container : Dom.getAncestorByTagName(container, "A");
 
             // 修改链接界面
-            if (containerIsA || parentIsA) {
-                a = containerIsA ? container : parentEl;
+            if(a) {
                 form.href.value = a.href;
                 form.target.checked = a.target === "_blank";
                 Dom.removeClass(form, NEW_LINK_CLS);
-                return;
+
+            } else { // 新建链接界面
+                form.href.value = DEFAULT_HREF;
+                form.target.checked = false;
+                Dom.addClass(form, NEW_LINK_CLS);
             }
 
-            // 新建链接界面
-            form.href.value = DEFAULT_HREF;
-            form.target.checked = false;
-            Dom.addClass(form, NEW_LINK_CLS);
+            // 放在 setTimout 里，是 for ie
+            setTimeout(function() {
+                form.href.select();
+            }, 50);
         },
 
         /**
@@ -3088,21 +3089,16 @@ KISSY.Editor.add("plugins~link", function(E) {
             }
 
             var range = this.range,
-                container = Range.getCommonAncestor(range),
-                containerIsA = container.nodeName === "A", // 是图片等链接
-                parentEl = container.parentNode,
-                parentIsA = parentEl && (parentEl.nodeName === "A"), // 文字链接
-                a, div = document.createElement("div"), fragment;
+                div = document.createElement("div"),
+                a, container, fragment;
 
             // 修改链接
-            if (containerIsA || parentIsA) {
-                a = containerIsA ? container : parentEl;
+            container = Range.getCommonAncestor(range);
+            a = (container.nodeName == "A") ? container : Dom.getAncestorByTagName(container, "A");
+            if (a) {
                 a.href = href;
-                if (target) {
-                    a.setAttribute("target", "_blank");
-                } else {
-                    a.removeAttribute("target");
-                }
+                if (target) a.setAttribute("target", "_blank");
+                else a.removeAttribute("target");
                 return;
             }
 
