@@ -73,6 +73,8 @@
         </move>
         <delete>
             <fileset file="editor.css"/>
+            <fileset file="editor.js"/>
+            <fileset file="editor-aio.js"/>
         </delete>
         <move file="${build.dir}/${component.name}/editor-aio-min.js" tofile="${build.dir}/${component.name}/editor-aio.js"/>
     </target>
