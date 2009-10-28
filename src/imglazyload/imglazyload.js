@@ -31,7 +31,7 @@ var KISSY = window.KISSY || {};
             /**
              * 占位指示图
              */
-            placeholder: "spaceball.gif"
+            placeholder: "http://a.tbcdn.cn/kissy/1.0.0/build/imglazyload/spaceball.gif"
         };
 
     /**
@@ -51,7 +51,7 @@ var KISSY = window.KISSY || {};
             containers = [document];
         }
 
-        // containers 是一个 HTMLElement
+        // containers 是一个 HTMLElement 时
         if(!Lang.isArray(containers)) {
             containers = [Dom.get(containers) || document];
         }
@@ -139,27 +139,26 @@ var KISSY = window.KISSY || {};
                 threshold = this.threshold,
                 placeholder = this.config.placeholder,
                 isManualMod = this.config.mod === MOD.MANUAL,
-                img, data_src, ret = [];
+                n, N, imgs, i, len, img,
+                ret = [];
 
-            for (var n = 0, N = containers.length; n < N; ++n) {
-                var imgs = containers[n].getElementsByTagName("img");
+            for (n = 0, N = containers.length; n < N; ++n) {
+                imgs = containers[n].getElementsByTagName("img");
 
-                for (var i = 0, len = imgs.length; i < len; ++i) {
+                for (i = 0, len = imgs.length; i < len; ++i) {
                     img = imgs[i];
-                    data_src = img.getAttribute(DATA_SRC);
 
-                    // 手工模式，只需处理有 data-src 的图片
-                    // 原因：当有不需要延迟的图片在 threshold 以后时，只处理有 data-src 的图片可以
-                    //      减少 IE 下被 abort 掉的 http 图片链接
-                    if (isManualMod && data_src) {
-                        img.src = placeholder;
-                        ret.push(img);
-
-                    // 自动模式，只需处理 threshold 外的图片
-                    } else if (Dom.getY(img) > threshold) {
-                        img.setAttribute(DATA_SRC, img.src);
-                        img.src = placeholder;
-                        ret.push(img);
+                    if (isManualMod) { // 手工模式，只处理有 data-src 的图片
+                        if (img.getAttribute(DATA_SRC)) {
+                            img.src = placeholder;
+                            ret.push(img);
+                        }
+                    } else { // 自动模式，只处理 threshold 外的图片
+                        if (Dom.getY(img) > threshold) {
+                            img.setAttribute(DATA_SRC, img.src);
+                            img.src = placeholder;
+                            ret.push(img);
+                        }
                     }
                 }
             }
@@ -227,12 +226,11 @@ var KISSY = window.KISSY || {};
  *     能实现延迟加载。缺点是：不渐进增强，无 JS 时，图片不能展示。对搜索爬虫不利。
  *  3. http://www.appelsiini.net/projects/lazyload jQuery Lazyload
  *
- * 感慨：这个插件有点鸡肋
  *
  * 2009-09-03 更新：
  *  1. 考虑到图片对主流 SEO 影响很小，腾讯一开始就替换掉 src 的方法是可行的。
  *  2. 对于淘宝 srp 页面，将后一半图片延迟加载，是一个不错的权衡。
- *  3. 上面 2 的缺点是，如用用户屏幕很高，第一屏露出了 data-src 项，则当用户不滚动屏幕时，
+ *  3. 上面 2 的缺点是，如用用户屏幕很高，第一屏露出了延迟图片，则当用户不滚动屏幕时，
  *     延迟的空白图片永远不会加载。（基本上可以）
  */
 
