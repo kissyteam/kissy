@@ -11,6 +11,7 @@ var KISSY = window.KISSY || {};
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         DATA_SRC = "data-lazyload-src",
         MOD = { AUTO: "auto", MANUAL: "manual" },
+        DEFAULT = "default",
 
         defaultConfig = {
 
@@ -26,7 +27,7 @@ var KISSY = window.KISSY || {};
              * 适当设置此值，可以让用户在拖动时感觉图片已经加载好
              * 默认为当前视窗高度（两屏以外的才延迟加载）
              */
-            diff: Dom.getViewportHeight(),
+            diff: DEFAULT,
 
             /**
              * 占位指示图
@@ -89,12 +90,24 @@ var KISSY = window.KISSY || {};
          * @protected
          */
         _init: function() {
-            this.threshold = Dom.getViewportHeight() + this.config.diff;
+            this.threshold = this._getThreshold();
             this.images = this._filterImgs();
 
             if (this.images.length > 0) {
                 this._initLoadEvent();
             }
+        },
+
+        /**
+         * 获取阈值
+         * @protected
+         */
+        _getThreshold: function() {
+            var diff = this.config.diff,
+                ret = Dom.getViewportHeight();
+
+            if(diff === DEFAULT) return 2*ret; // diff 默认为当前视窗高度（两屏以外的才延迟加载）
+            else return ret + diff;
         },
 
         /**
@@ -104,21 +117,11 @@ var KISSY = window.KISSY || {};
         _initLoadEvent: function() {
             var timer, self = this;
 
-            // 滚动时，加载图片
-            Event.on(window, "scroll", function fn() {
-                if(timer) return;
-
-                timer = setTimeout(function() {
-                    // load
-                    self._loadImgs();
-
-                    // free
-                    if (self.images.length === 0) {
-                        Event.removeListener(window, "scroll", fn);
-                    }
-                    timer = null;
-
-                }, 100); // 0.1s 内，用户感觉流畅
+            // scroll 和 resize 时，加载图片
+            Event.on(window, "scroll", loader);
+            Event.on(window, "resize", function() {
+                self.threshold = self._getThreshold();
+                loader(true);
             });
 
             // 手工模式时，第一屏也有可能有 data-src 项
@@ -127,6 +130,19 @@ var KISSY = window.KISSY || {};
                 Event.onDOMReady(function() {
                     self._loadImgs(true);
                 });
+            }
+
+            // 加载函数
+            function loader(force) {
+                if(timer) return;
+                timer = setTimeout(function() {
+                    self._loadImgs(force);
+                    if (self.images.length === 0) {
+                        Event.removeListener(window, "scroll", loader);
+                        Event.removeListener(window, "resize", loader);
+                    }
+                    timer = null;
+                }, 100); // 0.1s 内，用户感觉流畅
             }
         },
 
@@ -178,11 +194,11 @@ var KISSY = window.KISSY || {};
             if(!force && scrollTop <= this.config.diff) return;
 
             var imgs = this.images,
-                threshold = this.threshold,
+                threshold = this.threshold + scrollTop,
                 i, img, data_src, remain = [];
 
             for(i = 0, img; img = imgs[i++];) {
-                if(Dom.getY(img) < threshold + scrollTop) {
+                if(Dom.getY(img) <= threshold) {
                     data_src = img.getAttribute(DATA_SRC);
 
                     if(data_src && img.src != data_src) {
@@ -212,7 +228,7 @@ var KISSY = window.KISSY || {};
  *     脚本完全无用。
  *  4. 在 Opera 下，和 Firefox 一致，完美。
  *
- * 模式为 manual 时：
+ * 模式为 manual 时：（要延迟加载的图片，src 替换为 data-lazyload-src ）
  *  1. 在任何浏览器下都可以完美实现。
  *  2. 缺点是不渐进增强，无 JS 时，图片不能展示。
  *
@@ -230,6 +246,11 @@ var KISSY = window.KISSY || {};
  *  2. http://vip.qq.com/ 模板输出时，就替换掉图片的 src
  *  3. http://www.appelsiini.net/projects/lazyload jQuery Lazyload
  *  4. http://www.dynamixlabs.com/2008/01/17/a-quick-look-add-a-loading-icon-to-your-larger-images/
+ *
+ * 特别要注意的测试用例:
+ *  1. 初始窗口很小，拉大窗口时，图片加载正常
+ *  2. 页面有滚动位置时，刷新页面，图片加载正常
+ *  3. 手动模式，第一屏有延迟图片时，加载正常
  */
 
 /**
