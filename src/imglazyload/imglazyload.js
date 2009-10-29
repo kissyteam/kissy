@@ -229,10 +229,11 @@ var KISSY = window.KISSY || {};
  *  1. http://davidwalsh.name/lazyload MooTools 的图片延迟插件
  *  2. http://vip.qq.com/ 模板输出时，就替换掉图片的 src
  *  3. http://www.appelsiini.net/projects/lazyload jQuery Lazyload
+ *  4. http://www.dynamixlabs.com/2008/01/17/a-quick-look-add-a-loading-icon-to-your-larger-images/
  */
 
 /**
- * TODO:
- *   - 背景图片的延迟加载
- *   - 加载中的指示器
+ * TODOs:
+ *   - [取消] 背景图片的延迟加载（对于 css 里的背景图片和 sprite 场景很难处理）
+ *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  */
