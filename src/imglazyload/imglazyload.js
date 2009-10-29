@@ -40,7 +40,7 @@ var KISSY = window.KISSY || {};
      * @constructor
      */
     var ImageLazyload = function(containers, config) {
-        // Factory or constructor
+        // factory or constructor
         if (!(this instanceof arguments.callee)) {
             return new arguments.callee(containers, config);
         }
@@ -105,7 +105,7 @@ var KISSY = window.KISSY || {};
             var timer, self = this;
 
             // 滚动时，加载图片
-            Event.on(window, "scroll", function() {
+            Event.on(window, "scroll", function fn() {
                 if(timer) return;
 
                 timer = setTimeout(function() {
@@ -114,7 +114,7 @@ var KISSY = window.KISSY || {};
 
                     // free
                     if (self.images.length === 0) {
-                        Event.removeListener(window, "scroll", arguments.callee);
+                        Event.removeListener(window, "scroll", fn);
                     }
                     timer = null;
 
@@ -139,7 +139,7 @@ var KISSY = window.KISSY || {};
                 threshold = this.threshold,
                 placeholder = this.config.placeholder,
                 isManualMod = this.config.mod === MOD.MANUAL,
-                n, N, imgs, i, len, img,
+                n, N, imgs, i, len, img, data_src,
                 ret = [];
 
             for (n = 0, N = containers.length; n < N; ++n) {
@@ -147,14 +147,17 @@ var KISSY = window.KISSY || {};
 
                 for (i = 0, len = imgs.length; i < len; ++i) {
                     img = imgs[i];
+                    data_src = img.getAttribute(DATA_SRC);
 
                     if (isManualMod) { // 手工模式，只处理有 data-src 的图片
-                        if (img.getAttribute(DATA_SRC)) {
+                        if (data_src) {
                             img.src = placeholder;
                             ret.push(img);
                         }
-                    } else { // 自动模式，只处理 threshold 外的图片
-                        if (Dom.getY(img) > threshold) {
+                    } else { // 自动模式，只处理 threshold 外无 data-src 的图片
+                        // 注意：已有 data-src 的项，可能已有其它实例处理过，重复处理
+                        // 会导致 data-src 变成 placeholder
+                        if (Dom.getY(img) > threshold && !data_src) {
                             img.setAttribute(DATA_SRC, img.src);
                             img.src = placeholder;
                             ret.push(img);
@@ -176,9 +179,9 @@ var KISSY = window.KISSY || {};
 
             var imgs = this.images,
                 threshold = this.threshold,
-                data_src, remain = [];
+                i, img, data_src, remain = [];
 
-            for(var i = 0, img; img = imgs[i++];) {
+            for(i = 0, img; img = imgs[i++];) {
                 if(Dom.getY(img) < threshold + scrollTop) {
                     data_src = img.getAttribute(DATA_SRC);
 
@@ -190,6 +193,7 @@ var KISSY = window.KISSY || {};
                     remain.push(img);
                 }
             }
+
             this.images = remain;
         }
     });
@@ -200,38 +204,31 @@ var KISSY = window.KISSY || {};
 /**
  * NOTES:
  *
- * 目前的方案：
+ * 模式为 auto 时：
  *  1. 在 Firefox 下非常完美。脚本运行时，还没有任何图片开始下载，能真正做到延迟加载。
  *  2. 在 IE 下不尽完美。脚本运行时，有部分图片已经与服务器建立链接，这部分 Abort 掉，
- *     再在滚动时延迟加载，对于 listing 等页面说来，反而增加了链接数。
+ *     再在滚动时延迟加载，对于 srp 等页面说来，反而增加了链接数。
  *  3. 在 Safari 和 Chrome 下，因为 webkit 内核 bug，导致无法 Abort 掉下载。该
  *     脚本完全无用。
  *  4. 在 Opera 下，和 Firefox 一致，完美。
  *
+ * 模式为 manual 时：
+ *  1. 在任何浏览器下都可以完美实现。
+ *  2. 缺点是不渐进增强，无 JS 时，图片不能展示。
+ *
  * 缺点：
- *  1. 对于大部分情况下，需要拖动查看内容的页面（比如搜索结果页），滚动时加载有损用户体
- *     验。用户期望的是，所滚即所得。延迟加载会挑战用户的耐心，特别是网速不好时。
- *  2. 不支持 Webkit 内核浏览器；IE 下，有可能导致 HTTP 链接数的增加。
+ *  1. 对于大部分情况下，需要拖动查看内容的页面（比如搜索结果页），快速滚动时加载有损用
+ *     户体验（用户期望所滚即所得），特别是网速不好时。
+ *  2. auto 模式不支持 Webkit 内核浏览器；IE 下，有可能导致 HTTP 链接数的增加。
  *
  * 优点：
- *  1. 如果一个页面，大部分用户在第一屏就跳转，延迟加载图片可以减少流量，提高性能。
- *
- * 应用前需调研：
- *  1. 页面的滚动条拉动比率（有多少用户永远只看第一屏）
- *  2. 延迟加载图片对用户耐心的挑战。提前加载一屏是否解决问题？
+ *  1. 可以很好的提高页面初始加载速度。
+ *  2. 第一屏就跳转，延迟加载图片可以减少流量。
  *
  * 参考资料：
  *  1. http://davidwalsh.name/lazyload MooTools 的图片延迟插件
- *  2. http://vip.qq.com/ 模板输出时，就替换掉图片的 src. 这能使得在所有浏览器下都
- *     能实现延迟加载。缺点是：不渐进增强，无 JS 时，图片不能展示。对搜索爬虫不利。
+ *  2. http://vip.qq.com/ 模板输出时，就替换掉图片的 src
  *  3. http://www.appelsiini.net/projects/lazyload jQuery Lazyload
- *
- *
- * 2009-09-03 更新：
- *  1. 考虑到图片对主流 SEO 影响很小，腾讯一开始就替换掉 src 的方法是可行的。
- *  2. 对于淘宝 srp 页面，将后一半图片延迟加载，是一个不错的权衡。
- *  3. 上面 2 的缺点是，如用用户屏幕很高，第一屏露出了延迟图片，则当用户不滚动屏幕时，
- *     延迟的空白图片永远不会加载。（基本上可以）
  */
 
 /**
