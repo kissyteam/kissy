@@ -209,8 +209,6 @@ KISSY.Editor.add("core~instance", function(E) {
         _initAutoFocus: function() {
             if (this.config.autoFocus) {
                 this._focusToEnd();
-            } else if (ie === 6) { // ie6 下，会自动聚焦
-                this.contentDoc.selection.empty();
             }
         },
 
