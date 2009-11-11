@@ -18,7 +18,7 @@ var KISSY = window.KISSY || {};
             /**
              * 懒处理模式
              *  auto   - 自动化。html 输出时，不对 img.src 做任何处理
-             *  manual - 输出 html 时，已经将需要延迟加载的 img.src 替换为 img.DATA_SRC
+             *  manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 DATA_SRC
              */
             mod: MOD.AUTO,
 
@@ -222,13 +222,13 @@ var KISSY = window.KISSY || {};
  *
  * 模式为 auto 时：
  *  1. 在 Firefox 下非常完美。脚本运行时，还没有任何图片开始下载，能真正做到延迟加载。
- *  2. 在 IE 下不尽完美。脚本运行时，有部分图片已经与服务器建立链接，这部分 Abort 掉，
- *     再在滚动时延迟加载，对于 srp 等页面说来，反而增加了链接数。
- *  3. 在 Safari 和 Chrome 下，因为 webkit 内核 bug，导致无法 Abort 掉下载。该
+ *  2. 在 IE 下不尽完美。脚本运行时，有部分图片已经与服务器建立链接，这部分 abort 掉，
+ *     再在滚动时延迟加载，反而增加了链接数。
+ *  3. 在 Safari 和 Chrome 下，因为 webkit 内核 bug，导致无法 abort 掉下载。该
  *     脚本完全无用。
  *  4. 在 Opera 下，和 Firefox 一致，完美。
  *
- * 模式为 manual 时：（要延迟加载的图片，src 替换为 data-lazyload-src ）
+ * 模式为 manual 时：（要延迟加载的图片，src 属性替换为 data-lazyload-src ）
  *  1. 在任何浏览器下都可以完美实现。
  *  2. 缺点是不渐进增强，无 JS 时，图片不能展示。
  *
@@ -255,6 +255,6 @@ var KISSY = window.KISSY || {};
 
 /**
  * TODOs:
- *   - [取消] 背景图片的延迟加载（对于 css 里的背景图片和 sprite 场景很难处理）
+ *   - [取消] 背景图片的延迟加载（对于 css 里的背景图片和 sprite 很难处理）
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  */
