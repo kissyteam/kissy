@@ -26,6 +26,24 @@ KISSY.Editor.add("plugins~keystroke", function(E) {
                     }
                 });
             }
+
+            // Ctrl + Enter Ã·Ωª
+            var form = editor.textarea.form;
+            if (form) {
+                new YAHOO.util.KeyListener(
+                        editor.contentDoc.body,
+                        { ctrl: true, keys: 13 },
+                        {
+                            fn: function() {
+                                    if (!editor.sourceMode) {
+                                        editor.textarea.value = editor.getData();
+                                    }
+                                alert("jhaha");
+                                    form.submit();
+                                }
+                        }
+                ).enable();
+            }
         }
 
     });
