@@ -128,6 +128,7 @@
 
             <p>The tale makes the clearest contrast between the safe world of the village and the dangers of the <a href="http://en.wikipedia.org/wiki/enchanted_forest" title="enchanted forest">forest</a>, conventional antitheses that are essentially medieval, though no written versions are as old as that.</p>
         </textarea>
+        <textarea name="code2" id="demo2" rows="50" cols="152" style="width: 900px; height: 295px; display: none"></textarea>
         <p><button id="submit-btn" type="submit">Preview</button></p>
     </form>
 
@@ -200,6 +201,9 @@
     
     var editor = new KISSY.Editor("demo", config);
     //editor.focus();
+
+    document.getElementById("demo2").style.display = "";
+    var editor2 = new KISSY.Editor("demo2", config);
 </script>
 
 </body>

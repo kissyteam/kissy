@@ -31,14 +31,13 @@ KISSY.Editor.add("plugins~keystroke", function(E) {
             var form = editor.textarea.form;
             if (form) {
                 new YAHOO.util.KeyListener(
-                        editor.contentDoc.body,
+                        editor.contentDoc,
                         { ctrl: true, keys: 13 },
                         {
                             fn: function() {
                                     if (!editor.sourceMode) {
                                         editor.textarea.value = editor.getData();
                                     }
-                                alert("jhaha");
                                     form.submit();
                                 }
                         }
