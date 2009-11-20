@@ -10,7 +10,7 @@ KISSY.Editor.add("core~instance", function(E) {
                         '<div class="ks-editor-content"><iframe frameborder="0" allowtransparency="1"></iframe></div>' +
                         '<div class="ks-editor-statusbar"></div>',
 
-        CONTENT_TMPL =  '<!DOCTYPE html>' +
+        CONTENT_TMPL =  '<!doctype html>' +
                         '<html>' +
                         '<head>' +
                         '<title>Rich Text Area</title>' +
@@ -93,7 +93,7 @@ KISSY.Editor.add("core~instance", function(E) {
 
             // 每个实例，拥有一份自己的 plugins 列表
             for(key in staticPlugins) {
-                plugins[key] = staticPlugins[key];
+                plugins[key] = Lang.merge(staticPlugins[key]);
             }
             this.plugins = plugins;
 

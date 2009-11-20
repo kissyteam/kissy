@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-29 10:53:10
-Revision: 247
+Date: 2009-11-20 14:54:53
+Revision: 263
 */
 /**
  * KISSY.Editor 富文本编辑器
@@ -802,7 +802,7 @@ KISSY.Editor.add("core~instance", function(E) {
                         '<div class="ks-editor-content"><iframe frameborder="0" allowtransparency="1"></iframe></div>' +
                         '<div class="ks-editor-statusbar"></div>',
 
-        CONTENT_TMPL =  '<!DOCTYPE html>' +
+        CONTENT_TMPL =  '<!doctype html>' +
                         '<html>' +
                         '<head>' +
                         '<title>Rich Text Area</title>' +
@@ -885,7 +885,7 @@ KISSY.Editor.add("core~instance", function(E) {
 
             // 每个实例，拥有一份自己的 plugins 列表
             for(key in staticPlugins) {
-                plugins[key] = staticPlugins[key];
+                plugins[key] = Lang.merge(staticPlugins[key]);
             }
             this.plugins = plugins;
 
@@ -1001,8 +1001,6 @@ KISSY.Editor.add("core~instance", function(E) {
         _initAutoFocus: function() {
             if (this.config.autoFocus) {
                 this._focusToEnd();
-            } else if (ie === 6) { // ie6 下，会自动聚焦
-                this.contentDoc.selection.empty();
             }
         },
 
@@ -2932,6 +2930,23 @@ KISSY.Editor.add("plugins~keystroke", function(E) {
                         this.selection.empty();
                     }
                 });
+            }
+
+            // Ctrl + Enter 提交
+            var form = editor.textarea.form;
+            if (form) {
+                new YAHOO.util.KeyListener(
+                        editor.contentDoc,
+                        { ctrl: true, keys: 13 },
+                        {
+                            fn: function() {
+                                    if (!editor.sourceMode) {
+                                        editor.textarea.value = editor.getData();
+                                    }
+                                    form.submit();
+                                }
+                        }
+                ).enable();
             }
         }
 

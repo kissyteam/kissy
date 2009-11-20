@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-12 13:37:56
-Revision: 191
+Date: 2009-11-20 14:54:16
+Revision: 263
 */
 /**
  * KISSY.Suggest 提示补全组件
@@ -536,19 +536,19 @@ var KISSY = window.KISSY || {};
             var styleEl = Dom.get(STYLE_ID);
             if (styleEl) return; // 防止多个实例时重复添加
 
-            var style = ".suggest-container{background:white;border:1px solid #999;z-index:99999}";
-            style += ".suggest-shim{z-index:99998}";
-            style += ".suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}";
-            style += ".suggest-container li.selected{background-color:#39F;cursor:default}";
-            style += ".suggest-key{float:left;text-align:left;padding-left:5px}";
-            style += ".suggest-result{float:right;text-align:right;padding-right:5px;color:green}";
-            style += ".suggest-container li.selected span{color:#FFF;cursor:default}";
-            //style += ".suggest-container li.selected .suggest-result{color:green}";
-            style += ".suggest-bottom{padding:0 5px 5px}";
-            style += ".suggest-close-btn{float:right}";
-            style += ".suggest-container li,.suggest-bottom{overflow:hidden;zoom:1;clear:both}";
+            var style = ".suggest-container{background:white;border:1px solid #999;z-index:99999}"
+            + ".suggest-shim{z-index:99998}"
+            + ".suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}"
+            + ".suggest-container li.selected{background-color:#39F;cursor:default}"
+            + ".suggest-key{float:left;text-align:left;padding-left:5px}"
+            + ".suggest-result{float:right;text-align:right;padding-right:5px;color:green}"
+            + ".suggest-container li.selected span{color:#FFF;cursor:default}"
+            // + ".suggest-container li.selected .suggest-result{color:green}"
+            + ".suggest-bottom{padding:0 5px 5px}"
+            + ".suggest-close-btn{float:right}"
+            + ".suggest-container li,.suggest-bottom{overflow:hidden;zoom:1;clear:both}"
             /* hacks */
-            style += ".suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}";
+            + ".suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}";
 
             styleEl = document.createElement("style");
             styleEl.id = STYLE_ID;
