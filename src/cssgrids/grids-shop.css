@@ -1,0 +1,52 @@
+/*
+Grids Layout for Taobao Shop
+
+维护：小虎(xiaohu@taobao.com), yubo(yubo@taobao.com)
+*/
+
+/* require(grids.css) */
+
+/*
+淘宝店铺采用了 9 种栅格布局：
+950                  .grid-m
+190    750           .grid-s5m0
+750    190           .grid-m0s5
+190    550    190    .grid-s5m0e5
+190    550    190    .grid-e5m0s5
+550    190    190    .grid-m0s5e5
+550    190    190    .grid-m0e5s5
+190    190    550    .grid-s5m0e14
+190    190    550    .grid-m0s5e14
+*/
+
+/** 两栏布局 **/
+.grid-s5m0 .main-wrap { margin-left: 200px; }
+.grid-s5m0 .col-sub { width: 190px; margin-left: -100%; }
+
+.grid-m0s5 .main-wrap { margin-right: 200px; }
+.grid-m0s5 .col-sub { width: 190px; margin-left: -190px; }
+
+/** 三栏布局 **/
+.grid-s5m0e5 .main-wrap { margin: 0 200px 0 200px; }
+.grid-s5m0e5 .col-sub { width: 190px; margin-left: -100%; }
+.grid-s5m0e5 .col-extra { width: 190px; margin-left: -190px; }
+
+.grid-e5m0s5 .main-wrap { margin: 0 200px 0 200px; }
+.grid-e5m0s5 .col-sub { width: 190px; margin-left: -190px; }
+.grid-e5m0s5 .col-extra { width: 190px; margin-left: -100%; }
+
+.grid-m0s5e5 .main-wrap { margin-right: 400px; }
+.grid-m0s5e5 .col-sub { width: 190px; margin-left: -390px; }
+.grid-m0s5e5 .col-extra { width: 190px; margin-left: -190px; }
+
+.grid-m0e5s5 .main-wrap { margin-right: 400px; }
+.grid-m0e5s5 .col-sub { width: 190px; margin-left: -190px; }
+.grid-m0e5s5 .col-extra { width: 190px; margin-left: -390px; }
+
+.grid-s5m0e14 .main-wrap { margin: 0 560px 0 200px; }
+.grid-s5m0e14 .col-sub { width: 190px; margin-left: -100%; }
+.grid-s5m0e14 .col-extra { width: 550px; margin-left: -550px; }
+
+.grid-m0s5e14 .main-wrap { margin-right: 760px; }
+.grid-m0s5e14 .col-sub { width: 190px; margin-left: -750px; }
+.grid-m0s5e14 .col-extra { width: 550px; margin-left: -550px; }
