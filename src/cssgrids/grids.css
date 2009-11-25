@@ -16,13 +16,6 @@
     margin-right: auto;
 }
 
-/* 页面宽度为 750px */
-.w750 #header, .w750 #content, .w750 #footer,
-/* 头尾 100%, 仅内容区域 750px */
-#content.w750 {
-    width: 750px;
-}
-
 /* 页面宽度为 950px */
 .w950 #header, .w950 #content, .w950 #footer,
 /* 头尾 100%, 仅内容区域 950px */

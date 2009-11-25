@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-12 13:37:54
-Revision: 191
+Date: 2009-11-25 12:51:34
+Revision: 266
 */
 /**
  * KISSY.Monitor 前端性能监控脚本

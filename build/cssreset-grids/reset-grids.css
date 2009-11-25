@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-10-12 13:37:49
-Revision: 191
+Date: 2009-11-25 12:51:27
+Revision: 266
 */
 /*
 CSS Reset
@@ -26,8 +26,7 @@ th, td { /* table elements 表格元素 */
 /** 设置默认字体 **/
 body,
 button, input, select, textarea { /* for ie */
-    /*font: 12px/1 Tahoma, Helvetica, Arial, "宋体", sans-serif;*/
-    font: 12px/1 Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif; /* 用 ascii 字符表示，使得在任何编码下都无问题 */
+    font: 12px/1 Helvetica, Tahoma, Arial, \5b8b\4f53, sans-serif;
 }
 
 h1 { font-size: 18px; /* 18px / 12px = 1.5 */ }
@@ -89,13 +88,6 @@ hr {
 #header, #content, #footer {
     margin-left: auto;
     margin-right: auto;
-}
-
-/* 页面宽度为 750px */
-.w750 #header, .w750 #content, .w750 #footer,
-/* 头尾 100%, 仅内容区域 750px */
-#content.w750 {
-    width: 750px;
 }
 
 /* 页面宽度为 950px */

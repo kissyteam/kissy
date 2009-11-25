@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-11-11 16:29:21
-Revision: 252
+Date: 2009-11-25 12:51:32
+Revision: 266
 */
 /**
  * KISSY.ImageLazyload Í¼Æ¬ÑÓ³Ù¼ÓÔØ×é¼þ
