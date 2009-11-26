@@ -197,7 +197,7 @@ var KISSY = window.KISSY || {};
                 threshold = this.threshold + scrollTop,
                 i, img, data_src, remain = [];
 
-            for(i = 0, img; img = imgs[i++];) {
+            for(i = 0; img = imgs[i++];) {
                 if(Dom.getY(img) <= threshold) {
                     data_src = img.getAttribute(DATA_SRC);
 
