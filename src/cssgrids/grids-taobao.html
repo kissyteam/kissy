@@ -44,8 +44,8 @@
 		var trigger = document.getElementById("togglePageWidth");
 		trigger.onclick = function() {
 			var page = document.getElementById("page");
-            var is950 = page.className === "w950";
-			page.className = is950 ? "" : "w950";
+            var is950 = page.className === "t950";
+			page.className = is950 ? "" : "t950";
             this.innerHTML = !is950 ? "自适应宽度" : "切换为950宽";
 			return false;
 		};
@@ -53,7 +53,7 @@
 </script>
 </head>
 <body>
-<div id="page" class="w950">
+<div id="page" class="t950">
 	<div id="header">
 		<h1>Grids Layout for Taobao</h1>
 		<ul>

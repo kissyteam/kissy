@@ -298,8 +298,7 @@ YUI({
         switchPageWidth: function(type) {
             switch (type) {
                 case "950":
-                case "750":
-                    page.setAttribute("class", "w" + type);
+                    page.setAttribute("class", "t" + type);
                     content.removeAttribute("class");
                     break;
                 case "auto":
@@ -308,7 +307,7 @@ YUI({
                     break;
                 case "hamburger":
                     page.removeAttribute("class");
-                    content.setAttribute("class", "w950");
+                    content.setAttribute("class", "t950");
                     break;
             }
 

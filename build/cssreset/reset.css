@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-11-25 12:51:26
-Revision: 266
+Date: 2009-12-01 17:00:49
+Revision: 270
 */
 /*
 CSS Reset
@@ -26,7 +26,7 @@ th, td { /* table elements 表格元素 */
 /** 设置默认字体 **/
 body,
 button, input, select, textarea { /* for ie */
-    font: 12px/1 Helvetica, Tahoma, Arial, \5b8b\4f53, sans-serif;
+    font: 12px/1.5 Helvetica, Tahoma, Arial, \5b8b\4f53, sans-serif;
 }
 
 h1 { font-size: 18px; /* 18px / 12px = 1.5 */ }
@@ -35,7 +35,7 @@ h3 { font-size: 14px; }
 h4, h5, h6 { font-size: 100%; }
 
 address, cite, dfn, em, var { font-style: normal; } /* 将斜体扶正 */
-code, kbd, pre, samp, tt { font-family: "Courier New", Courier, monospace; } /* 统一等宽字体 */
+code, kbd, pre, samp { font-family: "Courier New", Courier, monospace; } /* 统一等宽字体 */
 small { font-size: 12px; } /* 小于 12px 的中文很难阅读，让 small 正常化 */
 
 /** 重置列表元素 **/
@@ -44,13 +44,6 @@ ul, ol { list-style: none; }
 /** 重置文本格式元素 **/
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
-
-abbr[title], acronym[title] { /* 注：1.ie6 不支持 abbr; 2.这里用了属性选择符，ie6 下无效果 */
-	border-bottom: 1px dotted;
-	cursor: help;
-}
-
-q:before, q:after { content: ''; }
 
 /** 重置表单元素 **/
 legend { color: #000; } /* for ie6 */
@@ -64,11 +57,4 @@ button, input, select, textarea {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
-}
-
-/** 其它 **/
-hr {
-    border: 0;
-    height: 1px;
-    *color: #fff; /* for ie7- */
 }

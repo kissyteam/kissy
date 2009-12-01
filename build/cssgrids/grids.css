@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-11-25 12:51:24
-Revision: 266
+Date: 2009-12-01 17:00:53
+Revision: 270
 */
 /*
 双飞翼栅格布局 Flying Swing Grids Layout
@@ -24,10 +24,10 @@ Revision: 266
     margin-right: auto;
 }
 
-/* 页面宽度为 950px */
-.w950 #header, .w950 #content, .w950 #footer,
+/* 页面类型为 950px 宽 */
+.t950 #header, .t950 #content, .t950 #footer,
 /* 头尾 100%, 仅内容区域 950px */
-#content.w950 {
+#content.t950 {
     width: 950px;
 }
 

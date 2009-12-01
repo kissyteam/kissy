@@ -16,10 +16,10 @@
     margin-right: auto;
 }
 
-/* 页面宽度为 950px */
-.w950 #header, .w950 #content, .w950 #footer,
+/* 页面类型为 950px 宽 */
+.t950 #header, .t950 #content, .t950 #footer,
 /* 头尾 100%, 仅内容区域 950px */
-#content.w950 {
+#content.t950 {
     width: 950px;
 }
 
