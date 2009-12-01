@@ -21,11 +21,7 @@ button, input, select, textarea { /* for ie */
     font: 12px/1.5 Helvetica, Tahoma, Arial, \5b8b\4f53, sans-serif;
 }
 
-h1 { font-size: 18px; /* 18px / 12px = 1.5 */ }
-h2 { font-size: 16px; }
-h3 { font-size: 14px; }
-h4, h5, h6 { font-size: 100%; }
-
+h1, h2, h3, h4, h5, h6 { font-size: 100%; }
 address, cite, dfn, em, var { font-style: normal; } /* 将斜体扶正 */
 code, kbd, pre, samp { font-family: "Courier New", Courier, monospace; } /* 统一等宽字体 */
 small { font-size: 12px; } /* 小于 12px 的中文很难阅读，让 small 正常化 */
@@ -36,6 +32,9 @@ ul, ol { list-style: none; }
 /** 重置文本格式元素 **/
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
+
+sup { vertical-align:text-top; } /* to preserve line-height */
+sub { vertical-align:text-bottom; }
 
 /** 重置表单元素 **/
 legend { color: #000; } /* for ie6 */
