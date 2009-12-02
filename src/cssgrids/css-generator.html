@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=GB18030"/>
@@ -6,7 +6,7 @@
 </head>
 <body>
 <pre style="font: 16px/20px 'Courier New', monospace;">
-<script type="text/javascript">
+<script>
 
     var println = function(msg) { document.write((msg ? msg : '') + '<br />'); };
     var c = 40, g = 10, N = 24,
@@ -68,12 +68,12 @@
             cls = '.grid-s' + i + 'e' + j + 'm0';
             println(cls + ' .main-wrap { margin-left: ' + (fs + fe) + 'px; }');
             println(cls + ' .col-sub { width: ' + s + 'px; margin-left: -100%; }');
-            println(cls + ' .col-extra { width: ' + e + 'px; margin-left: -100%; left: ' + fs + 'px; }');
+            println(cls + ' .col-extra { width: ' + e + 'px; margin-left: -100%; position: relative; left: ' + fs + 'px; }');
 
             // b: e + 10 + s + 10 + m
             cls = '.grid-e' + j + 's' + i + 'm0';
             println(cls + ' .main-wrap { margin-left: ' + (fs + fe) + 'px; }');
-            println(cls + ' .col-sub { width: ' + s + 'px; margin-left: -100%; left: ' + fe + 'px; }');
+            println(cls + ' .col-sub { width: ' + s + 'px; margin-left: -100%; position: relative; left: ' + fe + 'px; }');
             println(cls + ' .col-extra { width: ' + e + 'px; margin-left: -100%; }');
 
             sum[1] += 6;
