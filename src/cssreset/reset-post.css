@@ -1,51 +1,44 @@
 /*
-CSS Reset for Blog
-适用：Blog 等以大段信息展示为主的页面
+KISSY CSS Reset for Post Content
+适用：以大段文字展示为主的内容区块
 维护：玉伯(lifesinger@gmail.com)
 */
 
 /* require(reset.css) */
 
-body {
+.ks-post {
     /* big font make content more readable */
-    font-size: 14px;
-    line-height: 1.5;
-    color: #444;
+    font: 14px/1.8 verdana,tahoma,arial,sans-serif;
 }
-a {
-    /* blue is more readable for link */
-    color: #06c;
-}
-
-blockquote, ul, ol, dl {
+.ks-post blockquote, .ks-post ul, .ks-post ol, .ks-post dl {
 	/* giving blockquotes and lists room to breath */
 	margin: 1em;
 }
-ul, ol, dl {
+.ks-post ul, .ks-post ol, .ks-post dl {
 	/* bringing lists on to the page with breathing room */
 	margin-left: 2em;
 }
-ol li {
+.ks-post ol li {
 	/* giving OL's LIs generated numbers */
 	list-style: decimal outside;
 }
-ul li {
+.ks-post ul li {
 	/* giving UL's LIs generated disc markers */
 	list-style: disc outside;
 }
-dl dd {
+.ks-post dl dd {
 	/* providing spacing for definition terms */
 	margin-left: 1em;
 }
-th,td {
+.ks-post th, .ks-post td {
 	/* padding to make the table readable */
 	padding: .5em;
 }
-caption {
+.ks-post caption {
 	/* coordinated margin to match cell's padding */
 	margin-bottom: .5em;
 }
-p, fieldset, table, pre {
+.ks-post p, .ks-post fieldset, .ks-post table, .ks-post pre {
 	/* so things don't run into each other */
 	margin-bottom: 1em;
 }

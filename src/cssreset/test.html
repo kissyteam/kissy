@@ -1,35 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GB18030" />
+<meta http-equiv="content-type" content="text/html; charset=gbk" />
 <title>CSS Reset Test</title>
-<link rel="stylesheet" type="text/css" href="reset.css"/>
+<link rel="stylesheet" href="reset.css" />
 </head>
 <body>
 <h1>CSS Reset Test</h1>
 <hr />
+
+<h2>推荐使用的元素</h2>
 <p>
-    可以使用的元素：<br />
-    1. 结构元素：blockquote, body, br, div, h1 - h6, head, hr, html, p<br />
-    2. 头部元素：base, link, meta, script, style, title<br />
-    3. 列表元素：ul, ol, li, dl, dt, dd<br />
-    4. 文本格式元素：a, abbr, acronym, address, bdo, cite, code, del, dfn, em, ins, kbd, noscript, pre, q, samp, small, span, strong, sub, sup, tt, var<br />
-    5. 表单元素：button, fieldset, legend, form, input, label, optgroup, option, select, textarea<br />
-    6. 多媒体元素：area, img, map, object, param<br />
-    7. 表格元素：caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr<br />
-    8. 窗体元素：iframe
+1. 结构元素：blockquote, body, br, div, h1 - h6, head, hr, html, p<br />
+2. 头部元素：base, link, meta, script, style, title<br />
+3. 列表元素：ul, ol, li, dl, dt, dd<br />
+4. 文本格式元素：a, abbr, acronym, address, bdo, cite, code, del, dfn, em, ins, kbd, noscript, pre, q, samp, small, span, strong, sub, sup, var<br />
+5. 表单元素：button, fieldset, legend, form, input, label, optgroup, option, select, textarea<br />
+6. 多媒体元素：area, img, map, object, param<br />
+7. 表格元素：caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr<br />
+8. 窗体元素：iframe
 </p>
 <br />
+
+<h2>不推荐使用的元素</h2>
 <p>
-    不推荐使用的元素：<br />
-    1. 结构元素：无<br />
-    2. 头部元素：无<br />
-    3. 列表元素：dir, menu<br />
-    4. 文本格式元素：b, basefont, big, blink, center, comment, font, i, marquee, nobr, plaintext, ruby, s, strike, u, wbr, xmp<br />
-    5. 表单元素：isindex<br />
-    6. 多媒体元素：applet, bgsound, embed, noembed<br />
-    7. 表格元素：无<br />
-    8. 窗体元素：frame, frameset, noframes
+1. 结构元素：无<br />
+2. 头部元素：无<br />
+3. 列表元素：dir, menu<br />
+4. 文本格式元素：b, basefont, big, blink, center, comment, font, i, marquee, nobr, plaintext, ruby, s, strike, u, wbr, xmp<br />
+5. 表单元素：isindex<br />
+6. 多媒体元素：applet, bgsound, embed, noembed<br />
+7. 表格元素：无<br />
+8. 窗体元素：frame, frameset, noframes
+</p>
+<br />
+
+<h2>转世重生的元素</h2>
+<p>
+1. s - 表示 sprite, 可以用 &lt;s&gt;&;lt;/s&gt; 来做 icon 的占位元素<br />
+2. b - 表示 border, 可以用来作为圆角的占位元素<br />
+3. i - 预留，尚未想到合理的复活理由
 </p>
 
 <br />
@@ -124,7 +134,7 @@ in order that the reader may use these details to contact the document’s owner.
 <p>pre: </p>
 <pre>
 code, kbd, pre, samp, tt {
-	font-family: "Courier New", Courier, monospace;
+	font-family: courier new, courier, monospace;
 }
 </pre>
 <br />
@@ -294,7 +304,7 @@ you may simply have typed the address incorrectly.
 <h2>Frame and Window Elements 窗体元素：</h2>
 <br />
 <p>iframe:</p>
-<iframe src="test-taobao.html" height="200" width="500" frameborder="0">
+<iframe src="http://w3c.org/" height="200" width="500" frameborder="0">
     <p>Your browser does not support iframes. That kinda sucks, eh?</p>
 </iframe>
 <br />
@@ -305,7 +315,6 @@ you may simply have typed the address incorrectly.
     <li><a href="http://developer.yahoo.com/yui/3/cssreset/">YUI CSS Reset</a></li>
     <li><a href="http://developer.yahoo.com/yui/3/cssfonts/">YUI CSS Fonts</a></li>
     <li><a href="http://developer.yahoo.com/yui/3/cssbase/">YUI CSS Base</a></li>
-
 </ul>
 <br />
 <br />
