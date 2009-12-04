@@ -3,12 +3,12 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-01 17:00:53
-Revision: 270
+Date: 2009-12-04 16:47:24
+Revision: 274
 */
 /*
 双飞翼栅格布局 Flying Swing Grids Layout
-理念：简单质朴，尽量分离
+理念：简单质朴，语义化布局
 维护：玉伯<lifesinger@gmail.com>, 正淳<ragecarrier@gmail.com>
 */
 
@@ -24,10 +24,10 @@ Revision: 270
     margin-right: auto;
 }
 
-/* 页面类型为 950px 宽 */
-.t950 #header, .t950 #content, .t950 #footer,
+/* 页面为 950px 宽 */
+.w950 #header, .w950 #content, .w950 #footer,
 /* 头尾 100%, 仅内容区域 950px */
-#content.t950 {
+#content.w950 {
     width: 950px;
 }
 
@@ -38,13 +38,9 @@ Revision: 270
     /* bug fix: 主栏没有内容时，在 Firefox 和 Chrome 等浏览器下，布局不对 */
     min-height: 1px;
 }
-.main-wrap {
-    /* bug fix: 在 Chrome 和 Safari 下选取文字，背景区域不对 */
-    position: relative;
-}
 .col-sub, .col-extra {
     float: left;
-    position: relative;
+    /*position: relative;  按需设置，仅在需要时添加 */
 }
 
 /** 清除浮动 **/

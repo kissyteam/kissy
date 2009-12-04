@@ -3,7 +3,7 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-01 17:00:53
-Revision: 270
+Date: 2009-12-04 16:47:24
+Revision: 274
 */
-#page{padding:0 10px;}#header,#content,#footer{margin-left:auto;margin-right:auto;}.t950 #header,.t950 #content,.t950 #footer,#content.t950{width:950px;}.col-main{float:left;width:100%;min-height:1px;}.main-wrap{position:relative;}.col-sub,.col-extra{float:left;position:relative;}.layout:after,.main-wrap:after,.col-sub:after,.col-extra:after{content:'\0020';display:block;height:0;clear:both;}.layout,.main-wrap,.col-sub,.col-extra{zoom:1;}
+#page{padding:0 10px;}#header,#content,#footer{margin-left:auto;margin-right:auto;}.w950 #header,.w950 #content,.w950 #footer,#content.w950{width:950px;}.col-main{float:left;width:100%;min-height:1px;}.col-sub,.col-extra{float:left;}.layout:after,.main-wrap:after,.col-sub:after,.col-extra:after{content:'\0020';display:block;height:0;clear:both;}.layout,.main-wrap,.col-sub,.col-extra{zoom:1;}
