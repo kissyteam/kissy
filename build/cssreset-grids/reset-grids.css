@@ -3,13 +3,15 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-04 16:47:34
-Revision: 274
+Date: 2009-12-04 23:33:20
+Revision: 276
 */
 /*
 KISSY CSS Reset
-理念：reset 的目的是设定一套通用一致的默认样式，清除和重置是紧密不可分的
-特色：1.适应中文 2.基于最新主流浏览器
+理念：1. reset 的目的不是清除浏览器的默认样式，这仅是部分工作。清除和重置是紧密不可分的。
+     2. reset 的目的不是让默认样式在所有浏览器下一致，而是减少默认样式有可能带来的问题。
+     3. reset 期望提供一套普适通用的基础样式。但没有银弹，推荐根据具体需求，裁剪和修改后再使用。
+特色：1. 适应中文；2. 基于最新主流浏览器。
 维护：玉伯<lifesinger@gmail.com>, 正淳<ragecarrier@gmail.com>
 */
 
@@ -53,7 +55,7 @@ button, input, select, textarea { font-size: 100%; } /* 使得表单元素在 ie 下能继
 table { border-collapse: collapse; border-spacing: 0; }
 /*
 双飞翼栅格布局 Flying Swing Grids Layout
-理念：简单质朴，语义化布局
+理念：简单质朴，语义化布局。
 维护：玉伯<lifesinger@gmail.com>, 正淳<ragecarrier@gmail.com>
 */
 
