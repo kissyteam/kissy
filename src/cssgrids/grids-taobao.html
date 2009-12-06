@@ -27,7 +27,7 @@
     .col-extra .test-box { border-color: #B3EFAA; }
 
     .layout { margin-bottom: 20px; }
-	.test-box { font: 18px 'Courier New', monospace; padding: 10px; height: 90px; line-height: 90px; border: #ccc 1px solid; text-align: center; }
+	.test-box { font: 18px courier new, monospace; padding: 10px; height: 90px; line-height: 90px; border: #ccc 1px solid; text-align: center; }
 	.col-width { padding: 10px; }
 
     #content { padding: 10px 0; clear: both; }
@@ -36,15 +36,16 @@
 	#footer { padding-bottom: 80px; }
 	#footer .top { float: right; padding: 20px; }
 
-	#page .col-main .col-width { display: none; }
-	#page.w950 .col-main .col-width { display: inline; }
+	.col-main .col-width { display: none; }
+	.w950 .col-main .col-width { display: inline; }
 </style>
 <script type="text/javascript">
 	window.onload = function() {
-		var trigger = document.getElementById("togglePageWidth");
-		trigger.onclick = function() {
-			var page = document.getElementById("page");
-            var is950 = page.className === "w950";
+		var trigger = document.getElementById("togglePageWidth"),
+            page = document.getElementById("page"),
+            is950;
+        trigger.onclick = function() {
+            is950 = page.className === "w950";
 			page.className = is950 ? "" : "w950";
             this.innerHTML = !is950 ? "自适应宽度" : "切换为950宽";
 			return false;
@@ -64,11 +65,9 @@
 
 		<h2>通栏：.grid-m</h2>
 		<div class="layout grid-m">
-			<!--<div class="col-main">  犯傻了，通栏布局根本不需要再包一层
-				<div class="main-wrap">-->
-					<div class="test-box">main<span class="col-width">950px</span></div>
-					<!--</div>
-			</div>-->
+			<div class="col-main">
+                <div class="test-box">main<span class="col-width">950px</span></div>
+			</div>
 		</div>
 
 		<h2>两栏：.grid-s5m0</h2>
