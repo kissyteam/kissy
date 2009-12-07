@@ -1,5 +1,5 @@
 /*
-常用的基本样式 Base Style
+常用的通用样式 Common Style
 理念：少而精
 维护：玉伯<lifesinger@gmail.com>
 */
@@ -9,10 +9,10 @@
 .invisible { visibility: hidden; }
 
 /* 清除浮动 */
-.clearfix:after {
+.clear:after {
     content: '\0020';
     display: block;
     height: 0;
     clear: both;
 }
-.clearfix { *zoom: 1; }
+.clear { *zoom: 1; }
