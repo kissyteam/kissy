@@ -1,0 +1,21 @@
+/*
+Copyright (c) 2009, Kissy UI Library. All rights reserved.
+MIT Licensed.
+http://kissy.googlecode.com/
+
+Date: 2009-12-07 11:21:12
+Revision: 283
+*/
+/*
+常用的通用样式 Common Style
+理念：少而精
+维护：玉伯<lifesinger@gmail.com>
+*/
+
+/* 隐藏 */
+.hidden { display: none; }
+.invisible { visibility: hidden; }
+
+/* 清除浮动 */
+.clear:after { content: '\0020'; display: block; height: 0; clear: both; }
+.clear { *zoom: 1; }

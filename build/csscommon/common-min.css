@@ -1,0 +1,9 @@
+/*
+Copyright (c) 2009, Kissy UI Library. All rights reserved.
+MIT Licensed.
+http://kissy.googlecode.com/
+
+Date: 2009-12-07 11:21:12
+Revision: 283
+*/
+.hidden{display:none;}.invisible{visibility:hidden;}.clear:after{content:'\0020';display:block;height:0;clear:both;}.clear{*zoom:1;}
