@@ -3,7 +3,7 @@
  * @creator lifesinger@gmail.com
  */
 
-if(typeof KISSY === "undefined" && !KISSY) {
+if(typeof KISSY === "undefined" || !KISSY) {
     var KISSY = { version: "0.5.0" };
 }
 
