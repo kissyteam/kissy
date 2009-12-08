@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gbk" />
+<title>KISSY Test</title>
+<script src="../../lib/yui3/yui-min.js"></script>
+<script src="kissy.js"></script>
+</head>
+<body>
+<script>
+    var ENDLINE = "<br />", S = KISSY;
+
+    function log(msg) { document.write((msg || "") + ENDLINE); }
+
+    YUI().use(function(Y) {
+
+        var objA = { propA: "propA", toString: function() { return "objA"; } };
+        var FuncA = function() {};
+        FuncA.prototype = objA;
+
+        var a = new FuncA();
+        for(var p in a) console.log(p);
+
+        console.log("================");
+
+        var objB = {};
+        S.mix(objB, a);
+        for(p in a) console.log(p);
+        console.log("objB.toString() = " + objB);
+
+        console.log("================");
+
+        objB = {};
+        Y.mix(objB, a, true);
+        for(p in a) console.log(p);
+        console.log("objB.toString() = " + objB);
+
+        S.alias("TB");
+        TB.name = "tb";
+        alert(TB === S);
+    });
+
+</script>
+</body>
+</html>

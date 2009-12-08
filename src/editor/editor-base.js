@@ -33,7 +33,7 @@ KISSY.Editor = function(textarea, config) {
         /**
          * 版本号
          */
-        version: "0.1",
+        version: "1.0",
 
         /**
          * 语言配置，在 lang 目录添加
