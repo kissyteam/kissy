@@ -35,9 +35,21 @@
         for(p in a) console.log(p);
         console.log("objB.toString() = " + objB);
 
-        S.alias("TB");
+        console.log("================");
+
+        S.cloneTo("TB");
         TB.name = "tb";
-        alert(TB === S);
+        S.namespace("widget");
+        S.widget.SWidget = {};
+        TB.namespace("widget");
+        TB.widget.TBWidget = {};
+        //var ks = new S(), tb = new TB();
+        //debugger
+
+        //console.dir(S());
+        console.log("================");
+        debugger
+        console.dir(TB());
     });
 
 </script>

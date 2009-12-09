@@ -12,15 +12,17 @@ if (typeof KISSY === "undefined" || !KISSY) {
     function KISSY(c) {
         var o = this;
         // allow instantiation without the new operator
-        if (!(o instanceof KISSY)) {
-            return new KISSY(c);
+        if (!(o instanceof arguments.callee)) {
+            return new arguments.callee(c);
         }
 
         // init the core environment
         o._init();
         o._config(c);
+
         // bind the specified additional modules for this instance
         o._setup();
+
         return o;
     }
 }
@@ -28,14 +30,17 @@ if (typeof KISSY === "undefined" || !KISSY) {
 (function(S) {
 
     var win = window,
-        mix = function(r, s) {
-            if (r && typeof s === "object") {
-                for (var p in s) {
-                    r[p] = s[p];
+        mix = function(r, s, ov) {
+                if(!s || !r) return r;
+                if(typeof ov === "undefined") ov = true;
+                var p;
+                if (ov || !(p in r)) {
+                    for (p in s) {
+                        r[p] = s[p];
+                    }
                 }
-            }
-            return r;
-        };
+                return r;
+            };
 
     mix(S.prototype, {
 
@@ -191,24 +196,75 @@ if (typeof KISSY === "undefined" || !KISSY) {
         merge: function() {
             var a = arguments, o = {}, i, l = a.length;
             for (i = 0; i < l; ++i) {
-                this.mix(o, a[i], true);
+                mix(o, a[i], true);
             }
             return o;
         },
 
         /**
+         * Utility to set up the prototype, constructor and superclass properties to
+         * support an inheritance strategy that can chain constructors and methods.
+         * Static members will not be inherited.
+         *
+         * @method extend
+         * @param {Function} r the object to modify
+         * @param {Function} s the object to inherit
+         * @param {Object} px prototype properties to add/override
+         * @param {Object} sx static properties to add/override
+         * @return {KISSY} the KISSY instance
+         */
+        extend: function(r, s, px, sx) {
+            if (!s || !r) return r;
+
+            var OP = Object.prototype,
+                O = function (o) {
+                    function F() {};
+                    F.prototype = o;
+                    return new F();
+                },
+                sp = s.prototype,
+                rp = O(sp);
+
+            r.prototype = rp;
+            rp.constructor = r;
+            r.superclass = sp;
+
+            // assign constructor property
+            if (s !== Object && sp.constructor === OP.constructor) {
+                sp.constructor = s;
+            }
+
+            // add prototype overrides
+            if (px) {
+                mix(rp, px);
+            }
+
+            // add object overrides
+            if (sx) {
+                mix(r, sx);
+            }
+
+            return r;
+        },
+
+        /**
          * Clones KISSY to another global object.
          * <pre>
-         * S.cloneTo("TaoBao", "KouBei");
+         * S.cloneTo("TaoBao");
          * </pre>
          * @return {object}  A reference to the last object
          */
-        cloneTo: function() {
-            var a = arguments, l = a.length, i, o = this;
-            for (i = 0; i < l; i++) {
-                win[a[i]] = o;
-            }
-            return o;
+        cloneTo: function(name) {
+            win[name] = function(c) {
+                // allow instantiation without the new operator
+                if (!(this instanceof arguments.callee)) {
+                    return new arguments.callee(c);
+                }
+                r.superclass.constructor.apply(this, c);
+            };
+            var r = win[name];
+            S.extend(r, S, null, S);
+            return r;
         },
 
         /**
@@ -216,7 +272,8 @@ if (typeof KISSY === "undefined" || !KISSY) {
          * Be careful when naming packages. Reserved words may work in some browsers
          * and not others.
          * <pre>
-         * S.alias("TB");
+         * S.cloneTo("TB");
+         * TB.namespace("TB.app"); // returns TB.app
          * TB.namespace("app.Shop"); // returns TB.app.Shop
          * </pre>
          * @return {object}  A reference to the last namespace object created
@@ -225,7 +282,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
             var a = arguments, l = a.length, o = this, i, j, p;
             for (i = 0; i < l; i++) {
                 p = ("" + a[i]).split(".");
-                for (j = win[p[0]] ? 1 : 0; j < p.length; j++) {
+                for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; j++) {
                     o[p[j]] = o[p[j]] || {};
                     o = o[p[j]];
                 }
