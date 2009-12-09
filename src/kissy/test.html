@@ -1,57 +1,103 @@
 <!doctype html>
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=gbk" />
-<title>KISSY Test</title>
+<title>KISSY Tests</title>
+
 <script src="../../lib/yui3/yui-min.js"></script>
+<script src="../../lib/yui3/test-combo.js"></script>
+<link rel="stylesheet" href="../../lib/yui3/test-combo.css" />
+
 <script src="kissy.js"></script>
 </head>
-<body>
+
+<body class="yui-skin-sam">
+<h1>KISSY Tests</h1>
+<p><input type="button" value="Run Tests" id="btnRun" disabled="true"/></p>
+
 <script>
-    var ENDLINE = "<br />", S = KISSY;
+YUI().use("dump", "test", "console", "event-custom", function(Y) {
 
-    function log(msg) { document.write((msg || "") + ENDLINE); }
+    var button = Y.get('#btnRun'), Assert = Y.Assert;
 
-    YUI().use(function(Y) {
+    // Set up the page
+    button.set("disabled", false);
+    Y.on("click", function() { Y.Test.Runner.run(); }, button);
 
-        var objA = { propA: "propA", toString: function() { return "objA"; } };
-        var FuncA = function() {};
-        FuncA.prototype = objA;
+    // define testCase
+    var testNamespace = new Y.Test.Case({
 
-        var a = new FuncA();
-        for(var p in a) console.log(p);
+        name: "Core tests",
 
-        console.log("================");
+        test_use: function() {
 
-        var objB = {};
-        S.mix(objB, a);
-        for(p in a) console.log(p);
-        console.log("objB.toString() = " + objB);
+            // test sandbox
+            var s1 = KISSY().use();
+            var s2 = KISSY().use();
+            Assert.areNotSame(s1, s2);
+        },
 
-        console.log("================");
+        test_cloneTo: function() {
+            var S = KISSY;
 
-        objB = {};
-        Y.mix(objB, a, true);
-        for(p in a) console.log(p);
-        console.log("objB.toString() = " + objB);
+            // inherit properties from KISSY
+            S.cloneTo("Test");
+            Assert.areSame(Test.mix, S.mix);
+            Assert.areSame(Test.prototype.mix, S.prototype.mix);
 
-        console.log("================");
+            // instanceof work fine
+            S.cloneTo("Test2");
+            Assert.areEqual(new Test2() instanceof Test2, true);
+            Assert.areEqual(new Test2() instanceof KISSY, true);
 
-        S.cloneTo("TB");
-        TB.name = "tb";
-        S.namespace("widget");
-        S.widget.SWidget = {};
-        TB.namespace("widget");
-        TB.widget.TBWidget = {};
-        //var ks = new S(), tb = new TB();
-        //debugger
+            // doesn't affect each other
+            S.cloneTo("TB");
+            TB.name = "taobao";
+            S.cloneTo("KB");
+            KB.name = "koubei";
+            Assert.areNotEqual(TB.name, KB.name);
+        },
 
-        //console.dir(S());
-        console.log("================");
-        debugger
-        console.dir(TB());
+        test_namespace: function() {
+
+            function run(o, s, host) {
+                var ns, actual;
+
+                // normal
+                ns = o.namespace("app.Test");
+                actual = s + ".app.Test.name";
+                ns.name = actual;
+                Assert.areEqual(host.app.Test.name, actual);
+
+                // first part of argument is the global object
+                ns = o.namespace(s + ".app2.Test2");
+                actual = s + ".app2.Test2.name";
+                ns.name = actual;
+                Assert.areEqual(host.app2.Test2.name, actual);
+
+                // via cloned global object
+                o.cloneTo("TB");
+                ns = TB.namespace("app3.Test3");
+                actual = "TB.app3.Test3.name";
+                ns.name = actual;
+                Assert.areEqual(TB.app3.Test3.name, actual);
+            }
+
+            // via constructor
+            run(KISSY, "KISSY", KISSY);
+
+            // via instance
+            KISSY().use(function(S) {
+                run(S, "KISSY", KISSY);
+            });
+        }
+
     });
 
+    // run
+    new Y.Console().render();
+    Y.Test.Runner.add(testNamespace);
+    Y.Test.Runner.run();
+});
 </script>
 </body>
 </html>

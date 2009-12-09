@@ -29,10 +29,10 @@ if (typeof KISSY === "undefined" || !KISSY) {
 
 (function(S) {
 
-    var win = window,
+    var win = window, UNDEFINED = "undefined",
         mix = function(r, s, ov) {
                 if(!s || !r) return r;
-                if(typeof ov === "undefined") ov = true;
+                if(typeof ov === UNDEFINED) ov = true;
                 var p;
                 if (ov || !(p in r)) {
                     for (p in s) {
@@ -75,9 +75,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
             };
 
             o.config = {
-                debug: true,
-                useBrowserConsole: true,
-                throwFail: true
+                debug: true
             };
         },
 
@@ -280,6 +278,9 @@ if (typeof KISSY === "undefined" || !KISSY) {
          */
         namespace: function() {
             var a = arguments, l = a.length, o = this, i, j, p;
+            // allow instance.namespace() to work fine.
+            if(typeof o === "object") o = o.constructor;
+
             for (i = 0; i < l; i++) {
                 p = ("" + a[i]).split(".");
                 for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; j++) {
@@ -288,6 +289,30 @@ if (typeof KISSY === "undefined" || !KISSY) {
                 }
             }
             return o;
+        },
+
+        /**
+         * print debug info
+         * @param {String} msg The message to log.
+         * @param {String} cat The log category for the message. Default
+         * categories are "info", "warn", "error", time".
+         * Custom categories can be used as well. (opt)
+         * @param {String} src The source of the the message (opt)
+         * @return {KISSY} KISSY instance
+         */
+        log: function(msg, cat, src) {
+            var c = this.config;
+
+            if (c.debug) {
+                src && (msg = src + ": " + msg);
+                if (typeof console !== UNDEFINED && console.log) {
+                    console[cat && console[cat] ? cat : "log"](msg);
+                } else if (typeof opera !== UNDEFINED) {
+                    opera.postError(msg);
+                }
+            }
+
+            return this;
         }
     });
 
