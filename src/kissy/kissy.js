@@ -14,14 +14,14 @@ if (typeof KISSY === "undefined" || !KISSY) {
         // allow instantiation without the new operator
         if (!(o instanceof KISSY)) {
             return new KISSY(c);
-        } else {
-            // init the core environment
-            o._init();
-            o._config(c);
-            // bind the specified additional modules for this instance
-            o._setup();
-            return o;
         }
+
+        // init the core environment
+        o._init();
+        o._config(c);
+        // bind the specified additional modules for this instance
+        o._setup();
+        return o;
     }
 }
 
@@ -146,6 +146,11 @@ if (typeof KISSY === "undefined" || !KISSY) {
             // attach available modules
             o._attach(r);
 
+            // callback
+            if(callback) {
+                callback(o);
+            }
+
             // chain support
             return o;
         },
@@ -192,13 +197,13 @@ if (typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * Adds aliases to KISSY
+         * Clones KISSY to another global object.
          * <pre>
-         * S.alias("TaoBao", "KouBei");
+         * S.cloneTo("TaoBao", "KouBei");
          * </pre>
          * @return {object}  A reference to the last object
          */
-        alias: function() {
+        cloneTo: function() {
             var a = arguments, l = a.length, i, o = this;
             for (i = 0; i < l; i++) {
                 win[a[i]] = o;
