@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<title>Anim Tests</title>
+
+<script src="../../lib/yui3/yui-min.js"></script>
+<script src="../../lib/yui3/test-combo.js"></script>
+<link rel="stylesheet" href="../../lib/yui3/test-combo.css"/>
+
+<script src="../kissy/kissy.js"></script>
+<script src="anim-base.js"></script>
+<script src="anim-easing.js"></script>
+</head>
+
+<body class="yui-skin-sam">
+<h1>Anim Tests</h1>
+
+<div id="test1" style="position:absolute; padding: 10px; left:0;background:#f00;opacity:1">test</div>
+<div id="test2" style="border:0 solid #00ff00;position:absolute;left:0;top:600px;background:#0f0">test</div>
+
+<script>
+    KISSY().use("anim-base", "anim-easing", function(S) {
+        S.Anim("test2", "left:100px;top:100px;padding:10px;border:50px solid #ff0000", {
+            duration: 4000,
+            after: function() {
+                S.Anim("test1", "background:#0f0;left:500px;top:500px", {
+                    duration: 4000, easing: S.Easing.bouncePast
+                });
+            },
+            easing: S.Easing.elasticOut
+        });
+    });
+</script>
+</body>
+</html>
