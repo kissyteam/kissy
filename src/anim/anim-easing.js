@@ -8,6 +8,7 @@ KISSY.add("anim-easing", function(S) {
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
     // Adapted for KISSY by BP.Wang <lifesinger@gmail.com>
     // Preview: http://www.robertpenner.com/easing/easing_demo.html
+    // Preview2: http://scripty2.com/doc/scripty2%20fx/s2/fx/transitions.html
 
     /*!
      *  TERMS OF USE - EASING EQUATIONS
