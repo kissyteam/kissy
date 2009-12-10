@@ -5,6 +5,7 @@
 <title>Suggest Test</title>
 <link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" type="text/css" />
 <script type="text/javascript" src="../../lib/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="../kissy/kissy.js"></script>
 <script type="text/javascript" src="suggest.js"></script>
 <style type="text/css">
     #page { padding: 50px 50px 300px; width: 950px; margin: 0 auto; line-height: 18px; }
@@ -137,136 +138,138 @@
 
 <script type="text/javascript">
 
-    var dataUrl = 'http://suggest.taobao.com/sug';
-    //var dataUrl = 'http://t-yubo/work/lab/suggest/sug.php';
-    //var dataUrl = 'http://192.168.208.18:8090/sug';
+    KISSY().use("suggest", function(S) {
 
-    // 淘宝首页的情况
-    var sug = new KISSY.Suggest('q', dataUrl,
-                { autoFocus: true,
-                  resultFormat: '约%result%个宝贝'
-                });
+        var dataUrl = 'http://suggest.taobao.com/sug';
+        //var dataUrl = 'http://t-yubo/work/lab/suggest/sug.php';
+        //var dataUrl = 'http://192.168.208.18:8090/sug';
 
-    // 添加搜索布点参数
-    var ssid = sug.textInput.form.ssid;
-    if (ssid) {
-        setTimeout(function() {
-            sug.textInput.form.reset();
-        }, 0); // ie no cache
-        ssid.setAttribute('autocomplete', 'off'); // w3c no cache
-        sug.subscribe('onItemSelect', function() {
-            if (ssid.value.indexOf('-p1') == -1) {
-                ssid.value += '-p1';
+        // 淘宝首页的情况
+        var sug = new S.Suggest('q', dataUrl,
+        { autoFocus: true,
+            resultFormat: '约%result%个宝贝'
+        });
+
+        // 添加搜索布点参数
+        var ssid = sug.textInput.form.ssid;
+        if (ssid) {
+            setTimeout(function() {
+                sug.textInput.form.reset();
+            }, 0); // ie no cache
+            ssid.setAttribute('autocomplete', 'off'); // w3c no cache
+            sug.subscribe('onItemSelect', function() {
+                if (ssid.value.indexOf('-p1') == -1) {
+                    ssid.value += '-p1';
+                }
+            });
+        }
+
+        // 测试事件
+        var sug2 = new S.Suggest('q2', dataUrl);
+        sug2.subscribe('beforeDataRequest', function(query) {
+            if (query == 'pig') {
+                alert('你输入的是：' + query);
             }
         });
-    }
+        sug2.subscribe('onDataReturn', function(data) {
+            if (this.query == 'pig') {
+                alert('返回的数据是：' + YAHOO.lang.dump(data));
+            }
+        });
 
-    // 测试事件
-    var sug2 = new KISSY.Suggest('q2', dataUrl);
-    sug2.subscribe('beforeDataRequest', function(query) {
-        if(query == 'pig') {
-            alert('你输入的是：' + query);
-        }
+        // 测试事件2
+        var sug3 = new S.Suggest('q3', dataUrl);
+        sug3.subscribe('beforeShow', function(container) {
+            container.appendChild(document.createTextNode('我是天下无敌的广告'));
+        });
+        sug3.subscribe('onItemSelect', function(query) {
+            alert('你选中了：' + query);
+        });
+
+        // 测试配置参数
+        var sug4 = new S.Suggest('q4', dataUrl, {
+            containerWidth: '200px',
+            showCloseBtn: true
+        });
+
+        // 测试JSON数据源
+        var jsonData = {};
+        jsonData['nike'] = [
+            ["nike 正品", "2170000"],
+            ["nike 专柜 正品", "834000"],
+            ["nike 短袖", "242000"],
+            ["nike 板 鞋", "989000"],
+            ["nike 女鞋", "253000"],
+            ["nike 运动鞋", "550000"],
+            ["nike 包", "295000"],
+            ["nike 鞋", "3160000"],
+            ["nike 单肩包", "38500"],
+            ["nike 09", "786000"]
+        ];
+        jsonData['nokia'] = [
+            ["nokia 手机", "17900"],
+            ["nokia 5800", "3040"],
+            ["nokia e71", "3520"],
+            ["nokia 8800", "1850"],
+            ["nokia n95", "5890"],
+            ["nokia n97", "237"],
+            ["nokia n78", "2200"],
+            ["nokia n85", "2880"],
+            ["nokia n81", "2620"],
+            ["nokia e66", "1740"]
+        ];
+        var sug5 = new S.Suggest('q5', jsonData);
+
+        // 测试JSON数据源
+        var jsonData2 = {};
+        jsonData2['nike'] = [
+            "nike 正品",
+            "nike 专柜 正品",
+            "nike 短袖",
+            "nike 板 鞋",
+            "nike 女鞋",
+            "nike 运动鞋",
+            "nike 包",
+            "nike 鞋",
+            "nike 单肩包",
+            "nike 09"
+        ];
+        jsonData2['nokia'] = [
+            "nokia 手机",
+            "nokia 5800",
+            "nokia e71",
+            "nokia 8800",
+            "nokia n95",
+            "nokia n97",
+            "nokia n78",
+            "nokia n85",
+            "nokia n81",
+            "nokia e66"
+        ];
+        var sug6 = new S.Suggest('q6', jsonData2);
+
+        // 有啊有啊哈哈哈
+        dataUrl = 'http://youa.baidu.com/suggest/se/s';
+        window["suggestCallback"] = window["g_ks_suggest_callback"];
+        // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
+        var sug7 = new S.Suggest('q7', dataUrl);
+        sug7.subscribe('beforeDataRequest', function(query) {
+            this.dataScript.charset = 'GB18030';
+            this.queryParams = 'cmd=suggest&type=kwd&max_count=10&keyword=' + encodeURIComponent(query) + '&callback=suggestCallback';
+        });
+        // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
+        // taobao: g_ks_suggest_callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
+        sug7.subscribe('onDataReturn', function(data) {
+            data = data['r'] || [];
+            var result = [];
+
+            for (var i = 0, len = data.length; i < len; ++i) {
+                result.push([data[i]['key'], data[i]['val']]);
+            }
+
+            this.returnedData = result;
+        });
     });
-    sug2.subscribe('onDataReturn', function(data) {
-        if(this.query == 'pig') {
-            alert('返回的数据是：' + YAHOO.lang.dump(data));
-        }
-    });
-
-    // 测试事件2
-    var sug3 = new KISSY.Suggest('q3', dataUrl);
-    sug3.subscribe('beforeShow', function(container) {
-       container.appendChild(document.createTextNode('我是天下无敌的广告'));
-    });
-    sug3.subscribe('onItemSelect', function(query) {
-       alert('你选中了：' + query);
-    });
-
-    // 测试配置参数
-    var sug4 = new KISSY.Suggest('q4', dataUrl, {
-        containerWidth: '200px',
-        showCloseBtn: true
-    });
-
-    // 测试JSON数据源
-    var jsonData = {};
-    jsonData['nike'] = [
-        ["nike 正品", "2170000"],
-        ["nike 专柜 正品", "834000"],
-        ["nike 短袖", "242000"],
-        ["nike 板 鞋", "989000"],
-        ["nike 女鞋", "253000"],
-        ["nike 运动鞋", "550000"],
-        ["nike 包", "295000"],
-        ["nike 鞋", "3160000"],
-        ["nike 单肩包", "38500"],
-        ["nike 09", "786000"]
-    ];
-    jsonData['nokia'] = [
-        ["nokia 手机", "17900"],
-        ["nokia 5800", "3040"],
-        ["nokia e71", "3520"],
-        ["nokia 8800", "1850"],
-        ["nokia n95", "5890"],
-        ["nokia n97", "237"],
-        ["nokia n78", "2200"],
-        ["nokia n85", "2880"],
-        ["nokia n81", "2620"],
-        ["nokia e66", "1740"]
-    ];
-    var sug5 = new KISSY.Suggest('q5', jsonData);
-
-    // 测试JSON数据源
-    var jsonData2 = {};
-    jsonData2['nike'] = [
-        "nike 正品",
-        "nike 专柜 正品",
-        "nike 短袖",
-        "nike 板 鞋",
-        "nike 女鞋",
-        "nike 运动鞋",
-        "nike 包",
-        "nike 鞋",
-        "nike 单肩包",
-        "nike 09"
-    ];
-    jsonData2['nokia'] = [
-        "nokia 手机",
-        "nokia 5800",
-        "nokia e71",
-        "nokia 8800",
-        "nokia n95",
-        "nokia n97",
-        "nokia n78",
-        "nokia n85",
-        "nokia n81",
-        "nokia e66"
-    ];
-    var sug6 = new KISSY.Suggest('q6', jsonData2);
-
-    // 有啊有啊哈哈哈
-    dataUrl = 'http://youa.baidu.com/suggest/se/s';
-    var suggestCallback = KISSY.Suggest.callback;
-    // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
-    var sug7 = new KISSY.Suggest('q7', dataUrl);
-    sug7.subscribe('beforeDataRequest', function(query) {
-        this.dataScript.charset = 'GB18030';
-        this.queryParams = 'cmd=suggest&type=kwd&max_count=10&keyword=' + encodeURIComponent(query) + '&callback=suggestCallback';
-    });
-    // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
-    // taobao: KISSY.Suggest.callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
-    sug7.subscribe('onDataReturn', function(data) {
-        data = data['r'] || [];
-        var result = [];
-
-        for(var i = 0, len = data.length; i < len; ++i) {
-            result.push([data[i]['key'], data[i]['val']]);
-        }
-
-        this.returnedData = result;
-    });
-
 </script>
 </body>
 </html>

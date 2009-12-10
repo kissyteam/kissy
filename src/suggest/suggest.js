@@ -1,18 +1,16 @@
 /**
- * KISSY.Suggest 提示补全组件
- *
+ * 提示补全组件
+ * @module      suggest
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     yahoo-dom-event
+ * @depends     kissy-core, yahoo-dom-event
  */
+KISSY.add("suggest", function(S) {
 
-var KISSY = window.KISSY || {};
-
-(function(NS) {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         head = document.getElementsByTagName("head")[0],
         ie = YAHOO.env.ua.ie, ie6 = (ie === 6),
 
-        CALLBACK_STR = "KISSY.Suggest.callback", // 注意 KISSY 在这里是写死的
+        CALLBACK_STR = "g_ks_suggest_callback", // 约定的全局回调函数
         STYLE_ID = "suggest-style", // 样式 style 元素的 id
 
         CONTAINER_CLASS = "suggest-container",
@@ -112,7 +110,7 @@ var KISSY = window.KISSY || {};
      * @param {String} dataSource
      * @param {Object} config
      */
-    NS.Suggest = function(textInput, dataSource, config) {
+    var Suggest = function(textInput, dataSource, config) {
         /**
          * 文本输入框
          * @type HTMLElement
@@ -217,7 +215,7 @@ var KISSY = window.KISSY || {};
         this._init();
     };
 
-    Lang.augmentObject(NS.Suggest.prototype, {
+    S.mix(Suggest.prototype, {
         /**
          * 初始化方法
          * @protected
@@ -577,7 +575,7 @@ var KISSY = window.KISSY || {};
          * 启动计时器，开始监听用户输入
          */
         start: function() {
-            NS.Suggest.focusInstance = this;
+            S.Suggest.focusInstance = this;
 
             var instance = this;
             instance._timer = setTimeout(function() {
@@ -592,7 +590,7 @@ var KISSY = window.KISSY || {};
          * 停止计时器
          */
         stop: function() {
-            NS.Suggest.focusInstance = null;
+            S.Suggest.focusInstance = null;
             clearTimeout(this._timer);
             this._isRunning = false;
         },
@@ -967,27 +965,28 @@ var KISSY = window.KISSY || {};
 
     });
 
-    Lang.augmentProto(NS.Suggest, Y.EventProvider);
+    S.mix(Suggest.prototype, Y.EventProvider.prototype);
 
     /**
      * 当前激活的实例
      * @static
      */
-    NS.Suggest.focusInstance = null;
+    Suggest.focusInstance = null;
 
     /**
-     * 从jsonp中获取数据
-     * @method callback
+     * 约定的全局回调函数
      */
-    NS.Suggest.callback = function(data) {
-        if (!NS.Suggest.focusInstance) return;
-        // 使得先运行script.onload事件，然后再执行callback函数
+    window[CALLBACK_STR] = function(data) {
+        if (!Suggest.focusInstance) return;
+        // 使得先运行 script.onload 事件，然后再执行 callback 函数
         setTimeout(function() {
-            NS.Suggest.focusInstance.handleResponse(data);
+            Suggest.focusInstance.handleResponse(data);
         }, 0);
     };
+    
+    S.Suggest = Suggest;
+});
 
-})(KISSY);
 
 
 /**
