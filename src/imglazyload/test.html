@@ -4565,7 +4565,12 @@
 </div>
 </div>
 </div>
+<script type="text/javascript" src="../kissy/kissy.js"></script>
 <script type="text/javascript" src="imglazyload.js"></script>
-<script type="text/javascript">KISSY.ImageLazyload();</script>
+<script type="text/javascript">
+    KISSY().use("imglazyload", function(S){
+        S.ImageLazyload();
+    });
+</script>
 </body>
 </html>

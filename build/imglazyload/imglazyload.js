@@ -3,19 +3,17 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-11-25 12:51:32
-Revision: 266
+Date: 2009-12-10 23:31:39
+Revision: 298
 */
 /**
- * KISSY.ImageLazyload 图片延迟加载组件
- *
+ * 图片延迟加载组件
+ * @module      imglazyload
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     yahoo-dom-event
+ * @depends     kissy-core, yahoo-dom-event
  */
+KISSY.add("imglazyload", function(S) {
 
-var KISSY = window.KISSY || {};
-
-(function() {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         DATA_SRC = "data-lazyload-src",
         MOD = { AUTO: "auto", MANUAL: "manual" },
@@ -48,20 +46,20 @@ var KISSY = window.KISSY || {};
      * @class ImageLazyload
      * @constructor
      */
-    var ImageLazyload = function(containers, config) {
+    function ImageLazyload(containers, config) {
         // factory or constructor
         if (!(this instanceof arguments.callee)) {
             return new arguments.callee(containers, config);
         }
 
         // 允许仅传递 config 一个参数
-        if(typeof config === "undefined") {
+        if (typeof config === "undefined") {
             config = containers;
             containers = [document];
         }
 
         // containers 是一个 HTMLElement 时
-        if(!Lang.isArray(containers)) {
+        if (!Lang.isArray(containers)) {
             containers = [Dom.get(containers) || document];
         }
 
@@ -90,9 +88,9 @@ var KISSY = window.KISSY || {};
         //this.threshold
 
         this._init();
-    };
+    }
 
-    Lang.augmentObject(ImageLazyload.prototype, {
+    S.mix(ImageLazyload.prototype, {
         /**
          * 初始化
          * @protected
@@ -114,7 +112,7 @@ var KISSY = window.KISSY || {};
             var diff = this.config.diff,
                 ret = Dom.getViewportHeight();
 
-            if(diff === DEFAULT) return 2*ret; // diff 默认为当前视窗高度（两屏以外的才延迟加载）
+            if (diff === DEFAULT) return 2 * ret; // diff 默认为当前视窗高度（两屏以外的才延迟加载）
             else return ret + diff;
         },
 
@@ -133,7 +131,7 @@ var KISSY = window.KISSY || {};
             });
 
             // 手工模式时，第一屏也有可能有 data-src 项
-            if(this.config.mod === MOD.MANUAL) {
+            if (this.config.mod === MOD.MANUAL) {
                 // 需要立即加载一次，以保证第一屏图片可见
                 Event.onDOMReady(function() {
                     self._loadImgs(true);
@@ -142,7 +140,7 @@ var KISSY = window.KISSY || {};
 
             // 加载函数
             function loader(force) {
-                if(timer) return;
+                if (timer) return;
                 timer = setTimeout(function() {
                     self._loadImgs(force);
                     if (self.images.length === 0) {
@@ -166,10 +164,10 @@ var KISSY = window.KISSY || {};
                 n, N, imgs, i, len, img, data_src,
                 ret = [];
 
-            for (n = 0, N = containers.length; n < N; ++n) {
+            for (n = 0,N = containers.length; n < N; ++n) {
                 imgs = containers[n].getElementsByTagName("img");
 
-                for (i = 0, len = imgs.length; i < len; ++i) {
+                for (i = 0,len = imgs.length; i < len; ++i) {
                     img = imgs[i];
                     data_src = img.getAttribute(DATA_SRC);
 
@@ -199,17 +197,17 @@ var KISSY = window.KISSY || {};
          */
         _loadImgs: function(force) {
             var scrollTop = Dom.getDocumentScrollTop();
-            if(!force && scrollTop <= this.config.diff) return;
+            if (!force && scrollTop <= this.config.diff) return;
 
             var imgs = this.images,
                 threshold = this.threshold + scrollTop,
                 i, img, data_src, remain = [];
 
-            for(i = 0, img; img = imgs[i++];) {
-                if(Dom.getY(img) <= threshold) {
+            for (i = 0; img = imgs[i++];) {
+                if (Dom.getY(img) <= threshold) {
                     data_src = img.getAttribute(DATA_SRC);
 
-                    if(data_src && img.src != data_src) {
+                    if (data_src && img.src != data_src) {
                         img.src = data_src;
                         img.removeAttribute(DATA_SRC);
                     }
@@ -222,8 +220,8 @@ var KISSY = window.KISSY || {};
         }
     });
 
-    KISSY.ImageLazyload = ImageLazyload;
-})();
+    S.ImageLazyload = ImageLazyload;
+});
 
 /**
  * NOTES:
