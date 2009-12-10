@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-09 22:05:42
-Revision: 291
+Date: 2009-12-10 22:19:49
+Revision: 297
 */
 /**
  * @module kissy
@@ -57,13 +57,19 @@ if (typeof KISSY === "undefined" || !KISSY) {
          * @param name {string} module name
          * @param fn {function} entry point into the module that is used to bind module to the KISSY instance
          * @param version {string} version string
+         * @param details optional config data:
+         * submodules - sub modules
+         * requires - features that should be present before loading
+         * optional - optional features that should be present if load optional defined
+         * use - features that should be attached automatically
          * @return {KISSY} the KISSY instance
          */
-        add: function(name, fn, version) {
+        add: function(name, fn, version, details) {
             S.Env.mods[name] = {
                 name: name,
                 fn: fn,
-                version: version
+                version: version,
+                details: details || {}
             };
             return this; // chain support
         },
@@ -100,7 +106,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
          * @private
          */
         _setup: function() {
-            this.use("ks-base");
+            this.use("kissy-base");
         },
 
         /**
@@ -141,17 +147,30 @@ if (typeof KISSY === "undefined" || !KISSY) {
             }
 
             // process each module
-            for (i = 0; i < l; i++) {
-                name = a[i];
+            function f(name) {
                 // only attach a module once
-                if (used[name]) continue;
+                if (used[name]) return;
 
-                if (mods[name]) {
+                var m = mods[name], j, n, subs;
+
+                if (m) {
                     used[name] = true;
+                    subs = m.details.submodules;
                 }
 
-                // add this module to attach list
+                // make sure submodules are attached
+                if (subs) {
+                    if (typeof subs === "string") subs = [subs];
+                    for (j = 0,n = subs.length; j < n; j++) {
+                        f(subs[j]);
+                    }
+                }
+
+                // add this module to full list of things to attach
                 r.push(name);
+            }
+            for (i = 0; i < l; i++) {
+                f(a[i]);
             }
 
             // attach available modules
@@ -224,7 +243,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
 
             var OP = Object.prototype,
                 O = function (o) {
-                    function F() {};
+                    function F() {}
                     F.prototype = o;
                     return new F();
                 },

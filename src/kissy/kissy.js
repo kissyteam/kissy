@@ -235,7 +235,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
 
             var OP = Object.prototype,
                 O = function (o) {
-                    function F() {};
+                    function F() {}
                     F.prototype = o;
                     return new F();
                 },

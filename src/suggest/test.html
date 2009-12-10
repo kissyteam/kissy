@@ -116,7 +116,7 @@
         </select>
         <br>
         <br>
-        <iframe src="about:blank"></iframe>
+        <iframe src="http://lifesinger.org/"></iframe>
 
         <h3>4. 测试JSON数据源：（请输入 nike 或 nokia ）</h3>
         <form name="search4" method="get" action="http://search1.taobao.com/browse/search_auction.htm" target="_blank">
@@ -187,7 +187,7 @@
         });
 
         // 测试配置参数
-        var sug4 = new S.Suggest('q4', dataUrl, {
+        new S.Suggest('q4', dataUrl, {
             containerWidth: '200px',
             showCloseBtn: true
         });
@@ -218,7 +218,7 @@
             ["nokia n81", "2620"],
             ["nokia e66", "1740"]
         ];
-        var sug5 = new S.Suggest('q5', jsonData);
+        new S.Suggest('q5', jsonData);
 
         // 测试JSON数据源
         var jsonData2 = {};
@@ -246,7 +246,7 @@
             "nokia n81",
             "nokia e66"
         ];
-        var sug6 = new S.Suggest('q6', jsonData2);
+        new S.Suggest('q6', jsonData2);
 
         // 有啊有啊哈哈哈
         dataUrl = 'http://youa.baidu.com/suggest/se/s';

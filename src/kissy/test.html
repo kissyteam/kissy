@@ -34,6 +34,16 @@ YUI().use("dump", "test", "console", "event-custom", function(Y) {
             var s1 = KISSY().use();
             var s2 = KISSY().use();
             Assert.areNotSame(s1, s2);
+
+            // test sandbox independence
+            var d1, d2;
+            YUI().use("dom", function(Y) {
+                d1 = Y.DOM;
+            });
+            YUI().use("dom", function(Y) {
+                d2 = Y.DOM;
+            });
+            Assert.areNotSame(d1, d2);
         },
 
         test_cloneTo: function() {

@@ -39,12 +39,10 @@
             <button type="submit" class="search-submit">Ã‘Œ“œ≤ª∂</button>
         </form>
         <script type="text/javascript">
-            KISSY.cloneTo("TB");
+            //KISSY.cloneTo("TB");
             KISSY().use("suggest", function(S) {
-                // Ã‘±¶
-                var dataUrl = 'http://suggest.taobao.com/sug';
-                new S.Suggest('q', dataUrl,
-                { autoFocus: true,
+                S.Suggest('q', 'http://suggest.taobao.com/sug', {
+                    autoFocus: true,
                     resultFormat: '‘º%result%∏ˆ±¶±¥'
                 });
             });

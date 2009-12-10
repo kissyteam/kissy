@@ -3,6 +3,7 @@
 <meta http-equiv="content-type" content="text/html; charset=gbk">
 <title>Google</title>
 <script type="text/javascript" src="../../lib/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="../kissy/kissy.js"></script>
 <script type="text/javascript" src="suggest.js"></script>
 <style type="text/css">
 body, td, a, p, .h {
@@ -119,16 +120,17 @@ input { margin: 0 }
         </table>
     </form>
     <script type="text/javascript">
-        (function() {
+        KISSY().use("suggest", function(S) {
+
             // Google
             //var dataUrl = 'http://clients1.google.com/complete/search';
             //var dataUrl = 'http://www.google.cn/complete/search';
             var dataUrl = 'http://clients1.googleapis.com/complete/search'; // 未过滤版本 from http://ajax.googleapis.com/
             window.google = {};
             window.google.ac = {};
-            window.google.ac.h = KISSY.Suggest.callback;
+            window.google.ac.h = window["g_ks_suggest_callback"];
 
-            var sug = new KISSY.Suggest('gq', dataUrl, { autoFocus: true, resultFormat: '%result%' });
+            var sug = new S.Suggest('gq', dataUrl, { autoFocus: true, resultFormat: '%result%' });
 
             sug.subscribe('beforeDataRequest', function(query) {
                 this.dataScript.charset = 'utf-8';
@@ -136,11 +138,12 @@ input { margin: 0 }
             });
 
             // google: window.google.ac.h(["ni",[["牛博网","73,248 结果","0z"],["牛博网首页","12,200,617 结果","1z"],["你是准备替党说话 还是准备替老百姓说话","136,545 结果","2z"],["nike","117,000,000 结果","3"],["nikon","127,000,000 结果","4"],["nissan","135,000,000 结果","5"],["nine west","40,000,000 结果","6"],["nike鞋","3,380,000 结果","7"],["倪萍 再婚","36,400 结果","8"],["牛年祝福语","582,000 结果","9"]]])
-            // taobao: KISSY.Suggest.callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
+            // taobao: g_ks_suggest_callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
             sug.subscribe('onDataReturn', function(data) {
                 this.returnedData = data[1] || [];
             });
-        })();
+            
+        });
     </script>
 
     <br><br><font size=-1><a href="http://www.google.cn/intl/zh-CN/ads/">广告计划</a> - <a href="http://www.google.cn/intl/zh-CN/about.html">Google 大全</a> - <a href=http://www.google.com/ncr>Google.com in English</a></font>
