@@ -7,6 +7,22 @@
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
-    <target name="build" depends="common.build">
+    <target name="concat">
+        <concat destfile="anim-all.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="anim.js"/>
+            <path path="anim-base.js"/>
+            <path path="anim-easing.js"/>
+        </concat>
+    </target>
+
+    <target name="clear">
+        <delete>
+            <fileset file="anim-all.js"/>
+        </delete>
+        <move file="${build.dir}/${component.name}/anim-all.js" tofile="${build.dir}/${component.name}/anim.js"/>
+        <move file="${build.dir}/${component.name}/anim-all-min.js" tofile="${build.dir}/${component.name}/anim-min.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clear">
     </target>
 </project>

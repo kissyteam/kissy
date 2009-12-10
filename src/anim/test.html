@@ -10,6 +10,7 @@
 <script src="../kissy/kissy.js"></script>
 <script src="anim-base.js"></script>
 <script src="anim-easing.js"></script>
+<script src="anim.js"></script>
 </head>
 
 <body class="yui-skin-sam">
@@ -19,7 +20,7 @@
 <div id="test2" style="border:0 solid #00ff00;position:absolute;left:0;top:600px;background:#0f0">test</div>
 
 <script>
-    KISSY().use("anim-base", "anim-easing", function(S) {
+    KISSY().use("anim", function(S) {
         S.Anim("test2", "left:100px;top:100px;padding:10px;border:50px solid #ff0000", {
             duration: 4000,
             after: function() {

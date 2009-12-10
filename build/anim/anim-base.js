@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2009, Kissy UI Library. All rights reserved.
+MIT Licensed.
+http://kissy.googlecode.com/
+
+Date: 2009-12-10 08:39:06
+Revision: 292
+*/
 /**
  * @module anim
  * @submodule anim-base
