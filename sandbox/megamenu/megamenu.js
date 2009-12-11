@@ -9,7 +9,7 @@ KISSY.add("megamenu", function(S) {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         NONE = "none",
         BLOCK = "block",
-        CLOSEBTN_TMPL = '<span class="{hook_cls}">X</span>',
+        CLOSEBTN_TMPL = '<span class="{hook_cls}"></span>',
         BEFORE_SHOW = "beforeShow",
         ON_HIDE = "onHide",
 
