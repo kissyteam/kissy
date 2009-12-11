@@ -596,7 +596,7 @@ KISSY.add("suggest", function(S) {
 
                 var instance = this;
                 instance._timer = setTimeout(function() {
-                    instance.updateData();
+                    instance.updateContent();
                     instance._timer = setTimeout(arguments.callee, instance.config.timerDelay);
                 }, instance.config.timerDelay);
 
@@ -652,7 +652,7 @@ KISSY.add("suggest", function(S) {
             /**
              * 更新提示层的数据
              */
-            updateData: function() {
+            updateContent: function() {
                 if (!this._needUpdate()) return;
                 //console.log("update data");
 

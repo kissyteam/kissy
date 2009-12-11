@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=GB18030"/>
+<title>MegaMenu Test</title>
+<script type="text/javascript" src="../../lib/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<style type="text/css">
+    body {
+        font: 14px/1.5 tahoma, arial, sans-serif;
+    }
+    .ks-megamenu {
+        position: relative;
+    }
+    .ks-megamenu-item {
+        border: 1px solid #ccc;
+        width: 100px;
+        margin: 10px;
+        padding: 5px;
+        list-style: none;
+    }
+    .ks-megamenu-item-current {
+        border-color: #5C758E;
+        background-color: #5C758E;
+        color: #FFF;
+        width: 113px;
+        margin-left: 6px;
+    }
+    .ks-megamenu-view {
+        position: absolute;
+        top: 0;
+        left: 170px;
+        width: 500px;
+        height: 300px;
+        padding: 10px;        
+        border: 5px solid #5C758E;
+        background-color: #D4DCE3;
+        display: none;
+    }
+    .ks-megamenu-content {
+        display: none;
+    }
+    .ks-megamenu-closebtn {
+        position: absolute;
+        top: 5px;
+        right: 8px;
+        font: 14px tahoma,arial,sans-serif;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+<h1>MegaMenu Test</h1>
+
+<div id="demo" class="ks-megamenu">
+    <ul>
+        <li class="ks-megamenu-item">Item 1</li>
+        <li class="ks-megamenu-item">Item 2</li>
+        <li class="ks-megamenu-item">Item 3</li>
+        <li class="ks-megamenu-item">Item 4</li>
+        <li class="ks-megamenu-item">Item 5</li>
+    </ul>
+    <div class="ks-megamenu-view"></div>
+    <textarea class="ks-megamenu-content">Content 1</textarea>
+    <textarea class="ks-megamenu-content">Content 2</textarea>
+    <textarea class="ks-megamenu-content">Content 3</textarea>
+    <textarea class="ks-megamenu-content">Content 4</textarea>
+    <textarea class="ks-megamenu-content">Content 5</textarea>
+</div>
+
+<script type="text/javascript" src="../../../assets/yui/2.8.0r4/build/yahoo/yahoo.js"></script>
+<script type="text/javascript" src="../../src/kissy/kissy.js"></script>
+<script type="text/javascript" src="megamenu.js"></script>
+<script type="text/javascript">
+    KISSY().use("megamenu", function(S) {
+        var menu = new S.MegaMenu("demo");
+    });
+</script>
+
+<h2>References</h2>
+<ol>
+    <li><a href="http://yahoo.com/">Yahoo!</a>（2009 改版后的 Yahoo! 首页，最靓丽的部分就是左侧的导航区）</li>
+    <li><a href="http://www.useit.com/alertbox/mega-dropdown-menus.html">Mega Drop-Down Navigation Menus Work Well</a>（Jakob Nielsen 的文章就是经典）</li>
+</ol>
+</body>
+</html>

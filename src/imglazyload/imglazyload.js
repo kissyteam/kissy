@@ -66,7 +66,7 @@ KISSY.add("imglazyload", function(S) {
          * 配置参数
          * @type Object
          */
-        this.config = Lang.merge(defaultConfig, config || {});
+        this.config = S.merge(defaultConfig, config || {});
 
         /**
          * 需要延迟下载的图片
