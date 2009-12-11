@@ -1,11 +1,13 @@
+// vim: set et sw=4 ts=4 sts=4 fdm=marker ff=unix fenc=utf8 nobomb:
 /**
- * 超级菜单组件
+ * KISSY - Carousel Module
+ *
  * @module      carousel
- * @creator     明城<i.feelinglucky@gmail.com>
- * @depends     kissy-core, yahoo-dom-event
+ * @creator     mingcheng<i.feelinglucky#gmail.com>
+ * @depends     kissy-core, yahoo-dom-event, yahoo-animate
  */
-KISSY.add("carousel", function(S) {
 
+KISSY.add("carousel", function(S) {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang;
     var defaultConfig = {
         delay: 2000,
@@ -13,14 +15,13 @@ KISSY.add("carousel", function(S) {
         startDelay: 2000,
         autoStart: true,
         direction: 'vertical', // 'horizontal(h)' or 'vertical(v)'
-        distance: 'auto',
         //easing: function() {},
         //onScroll: function() {},
         //onBeforeScroll: function() {},
         //onPause: function() {},
         //onWakeup: function() {},
-        scrollSize: 1     // the number of li scrolls, default is 1
-    };
+        scrollSize: 1 // the number of horse scrolls, default is 1
+    }
 
     // find the next element which to scroll
     var findNextHorse = function(ref, size, direction) {
@@ -30,7 +31,7 @@ KISSY.add("carousel", function(S) {
             if (!ref) return false;
         }
         return ref;
-    };
+    }
 
     // queue the 'houses' for smooth scroll
     var queueHorses = function(container, size, direction) {
@@ -38,17 +39,17 @@ KISSY.add("carousel", function(S) {
         switch(direction) {
             case 'prev':
                 for (var i = 0; i < size; i++) {
-                    Dom.insertBefore(Dom.getLastChild(container), Dom.getFirstChild(container));
+                    Dom.insertBefore(Dom.getLastChild(container), Dom.getFirstChild(container))
                 }
                 break;
             default: 
                 for (var i = 0; i < size; i++) {
-                    Dom.insertAfter(Dom.getFirstChild(container), Dom.getLastChild(container));
+                    Dom.insertAfter(Dom.getFirstChild(container), Dom.getLastChild(container))
                 }
         }
-    };
+    }
 
-    // NOTICE: the container must be UL/OL
+    // NOTICE: the container must be scrollable
     var Carousel = function(container, config) {
         this.config = Lang.merge(defaultConfig, config || {});
 
@@ -56,31 +57,32 @@ KISSY.add("carousel", function(S) {
         this.container = Dom.get(container);
         this.horses = this.container.getElementsByTagName('li');
 
-        // count the total number of horses
+        // move pointer to first
+        this.pointer = this.horses[0];
+
+        // number of horses
         this.total = this.horses.length;
         if (this.total < this.config.scrollSize) {
             return;
         }
+        this.current = Dom.getAttribute(this.pointer, 'carousel:index');
 
-        // direction, default value is 'vertical'
+        // mark index
+        for(var i = 0, len = this.total; i < len;) {
+            Dom.setAttribute(this.horses[i], 'carousel:index', i++);
+        }
+
+        // default direction value is vertical
         this.direction = {
             x: (this.config.direction == 'horizontal') || (this.config.direction == 'h'),
             y: (this.config.direction == 'vertical')   || (this.config.direction == 'v')       
         };
 
-        for(var i = 0, len = this.total; i < len;) {
-            Dom.setAttribute(this.horses[i], 'carousel:index', i++);
-        }
-
-        // move pointer to first
-        this.pointer = this.horses[0];
-        this.current = Dom.getAttribute(this.pointer, 'carousel:index');
-
         // initialize
         this._init(); 
-    };
+    }
 
-    S.mix(Carousel.prototype, {
+    Lang.augmentObject(Carousel.prototype, {
         _init: function() {
             var config = this.config, container = this.container;
 
@@ -115,13 +117,14 @@ KISSY.add("carousel", function(S) {
         },
 
         play: function(direction) {
-            if (this._scrolling || this.paused) {
-                return;
-            }
-
             var _self = this, container = this.container, pointer = this.pointer,
                 config = this.config, callee = arguments.callee, attributes;
             direction = (direction == 'prev') ? 'prev' : 'next';
+
+            // is scrolling?
+            if (this._scrolling || this.paused) {
+                return;
+            }
 
             // find the destination
             var destination = findNextHorse(pointer, config.scrollSize, direction);
@@ -132,7 +135,7 @@ KISSY.add("carousel", function(S) {
                 destination = findNextHorse(pointer, config.scrollSize, direction);
             }
 
-            // forgive me for sucks IE, need more nice code here
+            // sucks IE, need more code to fix its bug
             if (this.direction.y) {
                 attributes = {
                     scroll: {
@@ -164,7 +167,6 @@ KISSY.add("carousel", function(S) {
             if (this.anim) {
                 this.anim.stop();
             }
-
             this.anim = new Y.Scroll(container, attributes, config.speed/1000, 
                 config.easing || Y.Easing.easeOut); 
             this.anim.onComplete.subscribe(function() {
@@ -185,9 +187,12 @@ KISSY.add("carousel", function(S) {
 
         pause: function() {
             this.paused = true;
+            // skip wakeup
             if (this._wakeupTimer) {
                 this._wakeupTimer.cancel();
             }
+
+            // run the callback
             if(Lang.isObject(this.onPauseEvent)) {
                 this.onPauseEvent.fire();
             }
@@ -195,12 +200,17 @@ KISSY.add("carousel", function(S) {
 
         wakeup: function() {
             this.paused = false;
+
+            // skip wakeup for previous set
             if (this._wakeupTimer) {
                 this._wakeupTimer.cancel();
             }
+
+            // run the callback
             if(Lang.isObject(this.onWakeupEvent)) {
                 this.onWakeupEvent.fire();
             }
+
             this._wakeupTimer = Lang.later(0, this, function() {
                 this.timer = Lang.later(this.config.delay, this, this.play);
             });
@@ -216,6 +226,7 @@ KISSY.add("carousel", function(S) {
                 return;
             }
 
+            // find direction element
             for(var i = 0, len = this.total, current = false; i < len; i++) {
                 var tmp = Dom.getAttribute(this.horses[i], 'carousel:index');
                 if (tmp == index) {
@@ -225,12 +236,14 @@ KISSY.add("carousel", function(S) {
             }
             if (!current) return;
 
+            // find opponent element
             this.pointer = findNextHorse(current, config.scrollSize, opponent);
             if (!this.pointer) {
                 queueHorses(pointer.parentNode, config.scrollSize, direction);
                 this.pointer = findNextHorse(current, config.scrollSize, opponent);
             }
 
+            // start scroll
             this.play(direction);
         },
 
@@ -244,4 +257,4 @@ KISSY.add("carousel", function(S) {
     });
 
     S.Carousel = Carousel;
-})();
+});
