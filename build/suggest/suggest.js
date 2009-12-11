@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-10 22:41:53
-Revision: 297
+Date: 2009-12-11 09:08:26
+Revision: 299
 */
 /**
  * 提示补全组件

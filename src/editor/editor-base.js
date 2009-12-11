@@ -1,35 +1,30 @@
 /**
  * KISSY.Editor 富文本编辑器
- *
+ * @module      editor
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     yahoo-dom-event
+ * @depends     kissy-core, yahoo-dom-event
  */
+KISSY.add("editor", function(S) {
 
-var KISSY = window.KISSY || {};
+    /**
+     * @constructor
+     * @param {string|HTMLElement} textarea
+     * @param {object} config
+     */
+    function Editor(textarea, config) {
+        var E = Editor;
+        // allow instantiation without the new operator
+        if (!(this instanceof E)) {
+            return new E(textarea, config);
+        }
 
-/**
- * @class Editor
- * @constructor
- * @param {string|HTMLElement} textarea
- * @param {object} config
- */
-KISSY.Editor = function(textarea, config) {
-    var E = KISSY.Editor;
-
-    if (!(this instanceof E)) {
-        return new E(textarea, config);
-    } else {
         if (!E._isReady) {
             E._setup();
         }
         return new E.Instance(textarea, config);
     }
-};
 
-(function(E) {
-    var Lang = YAHOO.lang;
-
-    Lang.augmentObject(E, {
+    S.mix(Editor, {
         /**
          * 版本号
          */
@@ -41,30 +36,10 @@ KISSY.Editor = function(textarea, config) {
         lang: {},
 
         /**
-         * 所有添加的模块
-         * 注：mod = { name: modName, fn: initFn, details: {...} }
-         */
-        mods: {},
-
-        /**
          * 所有注册的插件
          * 注：plugin = { name: pluginName, type: pluginType, init: initFn, ... }
          */
         plugins: {},
-
-        /**
-         * 添加模块
-         */
-        add: function(name, fn, details) {
-
-            this.mods[name] = {
-                name: name,
-                fn: fn,
-                details: details || {}
-            };
-
-            return this; // chain support
-        },
 
         /**
          * 添加插件
@@ -79,7 +54,7 @@ KISSY.Editor = function(textarea, config) {
                 key = arr[i];
 
                 if (!plugins[key]) { // 不允许覆盖
-                    plugins[key] = Lang.merge(p, {
+                    plugins[key] = S.merge(p, {
                         name: key
                     });
                 }
@@ -108,21 +83,18 @@ KISSY.Editor = function(textarea, config) {
          * 加载注册的所有模块
          */
         _loadModules: function() {
-            var mods = this.mods,
+            var mods = KISSY.Editor.Env.mods,
                 attached = this._attached,
                 name, m;
 
             for (name in mods) {
                 m = mods[name];
-
-                if (!attached[name] && m) { // 不允许覆盖
+                if (m) {
                     attached[name] = m;
-
                     if (m.fn) {
                         m.fn(this);
                     }
                 }
-
                 // 注意：m.details 暂时没用到，仅是预留的扩展接口
             }
 
@@ -131,7 +103,35 @@ KISSY.Editor = function(textarea, config) {
         }
     });
 
-})(KISSY.Editor);
+    S.Editor = Editor;
+});
+
+KISSY.Editor = {
+    /**
+     * 全局环境变量
+     */
+    Env: {
+        /**
+         * 所有添加的模块
+         * 注：mod = { name: modName, fn: initFn, details: {...} }
+         */
+        mods: {}
+    },
+
+    /**
+     * 添加模块
+     */
+    add: function(name, fn, details) {
+
+        this.Env.mods[name] = {
+            name: name,
+            fn: fn,
+            details: details || {}
+        };
+
+        return this; // chain support
+    }
+};
 
 // TODO
 // 1. 自动替换页面中的 textarea ? 约定有特殊 class 的不替换

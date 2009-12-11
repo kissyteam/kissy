@@ -101,19 +101,22 @@
 <!-- editor js and init code -->
 <script type="text/javascript" src="http://kissy.googlecode.com/svn/trunk/build/editor/editor-min.js"></script>
 <script type="text/javascript">
-    new KISSY.Editor("demo", {
-        base: "http://kissy.googlecode.com/svn/trunk/build/editor/",
-        pluginsConfig: {
-            image: {
-                tabs          : ["local", "link"], //"album"],
-                upload: {
-                    actionUrl : "your/path/to/upload.do"
+    KISSY().use("editor", function(S) {
+
+        S.Editor("demo", {
+            base: "http://kissy.googlecode.com/svn/trunk/build/editor/",
+            pluginsConfig: {
+                image: {
+                    tabs          : ["local", "link"], //"album"],
+                    upload: {
+                        actionUrl : "your/path/to/upload.do"
+                    }
+                },
+                smiley: {
+                    tabs          : ["wangwang"]
                 }
-            },
-            smiley: {
-                tabs          : ["wangwang"]
             }
-        }
+        });
     });
 </script>
 </body>

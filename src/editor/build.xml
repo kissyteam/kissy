@@ -9,6 +9,7 @@
 
     <target name="editor.concat">
         <concat destfile="editor.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="../kissy/kissy.js"/>
             <path path="editor-base.js"/>
             <path path="config.js"/>
 

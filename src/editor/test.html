@@ -10,6 +10,7 @@
 
 <link rel="stylesheet" href="themes/default/editor.css" type="text/css"/>
 
+<script type="text/javascript" src="../kissy/kissy.js"></script>
 <script type="text/javascript" src="editor-base.js"></script>
 <script type="text/javascript" src="config.js"></script>
 <script type="text/javascript" src="lang/en.js"></script>
@@ -179,31 +180,33 @@
 </div>
 
 <script type="text/javascript">
+    KISSY().use("editor", function(S) {
+        // 清空初始内容
+        document.getElementById("demo").value = "";
 
-    // 清空初始内容
-    document.getElementById("demo").value = "";
-
-    var config = {
-        base: "/kissy/src/editor/",
-        pluginsConfig: {
-            image: {
-                tabs               : ["local", "link"], //"album"],
-                upload: {
-                    actionUrl      : "/kissy/src/editor/demo/upload.php"
+        var config = {
+            base: "/kissy/src/editor/",
+            pluginsConfig: {
+                image: {
+                    tabs               : ["local", "link"], //"album"],
+                    upload: {
+                        actionUrl      : "/kissy/src/editor/demo/upload.php"
+                    }
+                },
+                smiley: {
+                    tabs         : ["wangwang"]
                 }
             },
-            smiley: {
-                tabs         : ["wangwang"]
-            }
-        },
-        debug: true
-    };
-    
-    var editor = new KISSY.Editor("demo", config);
-    //editor.focus();
+            debug: true
+        };
 
-//    document.getElementById("demo2").style.display = "";
-//    var editor2 = new KISSY.Editor("demo2", config);
+        var editor = new S.Editor("demo", config);
+        //editor.focus();
+
+        //    document.getElementById("demo2").style.display = "";
+        //    var editor2 = new KISSY.Editor("demo2", config);
+
+    });
 </script>
 
 </body>

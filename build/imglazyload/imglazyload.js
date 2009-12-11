@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-10 23:31:39
-Revision: 298
+Date: 2009-12-11 09:08:22
+Revision: 299
 */
 /**
  * 图片延迟加载组件
@@ -15,6 +15,7 @@ Revision: 298
 KISSY.add("imglazyload", function(S) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+        win = window, doc = document,
         DATA_SRC = "data-lazyload-src",
         MOD = { AUTO: "auto", MANUAL: "manual" },
         DEFAULT = "default",
@@ -55,16 +56,16 @@ KISSY.add("imglazyload", function(S) {
         // 允许仅传递 config 一个参数
         if (typeof config === "undefined") {
             config = containers;
-            containers = [document];
+            containers = [doc];
         }
 
         // containers 是一个 HTMLElement 时
         if (!Lang.isArray(containers)) {
-            containers = [Dom.get(containers) || document];
+            containers = [Dom.get(containers) || doc];
         }
 
         /**
-         * 图片所在容器（可以多个），默认为 [document]
+         * 图片所在容器（可以多个），默认为 [doc]
          * @type Array
          */
         this.containers = containers;
@@ -124,8 +125,8 @@ KISSY.add("imglazyload", function(S) {
             var timer, self = this;
 
             // scroll 和 resize 时，加载图片
-            Event.on(window, "scroll", loader);
-            Event.on(window, "resize", function() {
+            Event.on(win, "scroll", loader);
+            Event.on(win, "resize", function() {
                 self.threshold = self._getThreshold();
                 loader(true);
             });
@@ -144,8 +145,8 @@ KISSY.add("imglazyload", function(S) {
                 timer = setTimeout(function() {
                     self._loadImgs(force);
                     if (self.images.length === 0) {
-                        Event.removeListener(window, "scroll", loader);
-                        Event.removeListener(window, "resize", loader);
+                        Event.removeListener(win, "scroll", loader);
+                        Event.removeListener(win, "resize", loader);
                     }
                     timer = null;
                 }, 100); // 0.1s 内，用户感觉流畅
