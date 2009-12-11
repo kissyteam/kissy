@@ -7,15 +7,9 @@
 KISSY.add("megamenu", function(S) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
-
-        ITEM_CLS = "ks-megamenu-item",
-        VIEW_CLS = "ks-megamenu-view",
-        CONTENT_CLS = "ks-megamenu-content",
-        CURRENT_ITEM_CLS = ITEM_CLS + "-current",
         NONE = "none",
         BLOCK = "block",
-        CLOSEBTN_TMPL = '<span class="ks-megamenu-closebtn">X</span>',
-
+        CLOSEBTN_TMPL = '<span class="{hook_cls}">X</span>',
         BEFORE_SHOW = "beforeShow",
         ON_HIDE = "onHide",
 
@@ -25,6 +19,13 @@ KISSY.add("megamenu", function(S) {
              * 延迟时间
              */
             delay: 0.5,
+
+            // class
+            itemCls: "ks-megamenu-item",
+            viewCls: "ks-megamenu-view",
+            contentCls: "ks-megamenu-content",
+            currentItemCls: "ks-megamenu-item-current",
+            closeBtnCls: "ks-megamenu-closebtn",
 
             /**
              * 是否显示关闭按钮
@@ -52,25 +53,26 @@ KISSY.add("megamenu", function(S) {
          * 配置参数
          * @type Object
          */
-        this.config = S.merge(defaultConfig, config || {});
-        this.config.delay *= 1000;
+        var cfg = S.merge(defaultConfig, config || {});
+        cfg.delay *= 1000;
+        this.config = cfg;
 
         /**
          * 菜单项
          */
-        this.items = Dom.getElementsByClassName(ITEM_CLS, "*", container);
+        this.items = Dom.getElementsByClassName(cfg.itemCls, "*", container);
 
         /**
          * 显示容器
          */
-        this.view = Dom.getElementsByClassName(VIEW_CLS, "*", container)[0];
+        this.view = Dom.getElementsByClassName(cfg.viewCls, "*", container)[0];
         this.view.contentEl = this.view; // dataEl 是放置数据的容器，无关闭按钮时，就是 view 本身。
 
         /**
          * 内容
          */
         this.contents = [];
-        Dom.getElementsByClassName(CONTENT_CLS, "*", container, function(each) {
+        Dom.getElementsByClassName(cfg.contentCls, "*", container, function(each) {
             this.contents.push(each.value || each.innerHTML);
         }, this, true);
 
@@ -104,7 +106,7 @@ KISSY.add("megamenu", function(S) {
         _initCloseBtn: function() {
             var o = this, el, view = o.view;
 
-            view.innerHTML = CLOSEBTN_TMPL;
+            view.innerHTML = CLOSEBTN_TMPL.replace("{hook_cls}", o.config.closeBtnCls);
             Event.on(view.firstChild, "click", function() {
                 o.hide();
             });
@@ -150,7 +152,9 @@ KISSY.add("megamenu", function(S) {
         },
 
         show: function(index) {
-            var o = this, view = o.view, activeIndex = o.activeIndex;
+            var o = this, view = o.view,
+                activeIndex = o.activeIndex,
+                curCls = o.config.currentItemCls;
 
             // bugfix: YAHOO.lang.later 里的 d = d || [];
             index = index || 0;
@@ -167,9 +171,9 @@ KISSY.add("megamenu", function(S) {
 
             // toggle current item
             if(activeIndex >= 0) {
-                Dom.removeClass(o.items[activeIndex], CURRENT_ITEM_CLS);
+                Dom.removeClass(o.items[activeIndex], curCls);
             }
-            Dom.addClass(o.items[index], CURRENT_ITEM_CLS);
+            Dom.addClass(o.items[index], curCls);
 
             // load new content
             o.updateContent(index);
@@ -182,7 +186,7 @@ KISSY.add("megamenu", function(S) {
             var o = this;
 
             // hide current
-            Dom.removeClass(o.items[o.activeIndex], CURRENT_ITEM_CLS);
+            Dom.removeClass(o.items[o.activeIndex], o.config.currentItemCls);
             o.view.style.display = NONE;
 
             // update
