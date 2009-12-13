@@ -64,6 +64,7 @@ KISSY.Editor.add("plugins~image", function(E) {
         };
 
     E.addPlugin("image", {
+
         /**
          * ÷÷¿‡£∫∞¥≈•
          */
