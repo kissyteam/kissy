@@ -37,7 +37,7 @@
 
 /** Çå³ý¸¡¶¯ **/
 .layout:after, .main-wrap:after, .col-sub:after, .col-extra:after {
-	content: '\0020';
+	content: '\20';
 	display: block;
 	height: 0;
 	clear: both;

@@ -9,5 +9,5 @@
 .invisible { visibility: hidden; }
 
 /* Çå³ý¸¡¶¯ */
-.clear:after { content: '\0020'; display: block; height: 0; clear: both; }
+.clear:after { content: '\20'; display: block; height: 0; clear: both; }
 .clear { *zoom: 1; }
