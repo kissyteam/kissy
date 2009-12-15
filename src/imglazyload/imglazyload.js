@@ -84,6 +84,7 @@ KISSY.add("imglazyload", function(S) {
     }
 
     S.mix(ImageLazyload.prototype, {
+
         /**
          * 初始化
          * @protected
@@ -227,7 +228,7 @@ KISSY.add("imglazyload", function(S) {
  *     脚本完全无用。
  *  4. 在 Opera 下，和 Firefox 一致，完美。
  *
- * 模式为 manual 时：（要延迟加载的图片，src 属性替换为 data-lazyload-src ）
+ * 模式为 manual 时：（要延迟加载的图片，src 属性替换为 data-lazyload-src, 并将 src 的值赋为 placeholder ）
  *  1. 在任何浏览器下都可以完美实现。
  *  2. 缺点是不渐进增强，无 JS 时，图片不能展示。
  *
@@ -245,6 +246,7 @@ KISSY.add("imglazyload", function(S) {
  *  2. http://vip.qq.com/ 模板输出时，就替换掉图片的 src
  *  3. http://www.appelsiini.net/projects/lazyload jQuery Lazyload
  *  4. http://www.dynamixlabs.com/2008/01/17/a-quick-look-add-a-loading-icon-to-your-larger-images/
+ *  5. http://www.nczonline.net/blog/2009/11/30/empty-image-src-can-destroy-your-site/
  *
  * 特别要注意的测试用例:
  *  1. 初始窗口很小，拉大窗口时，图片加载正常

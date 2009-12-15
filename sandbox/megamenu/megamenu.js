@@ -17,8 +17,10 @@ KISSY.add("megamenu", function(S) {
 
             /**
              * 延迟时间
+             *  [x,y] - x 表示显示时的延迟，y 表示隐藏时的延迟
+             *  x     - 表示上面的 y 和 x 一样
              */
-            delay: 0.5,
+            delay: [0.1, 0.5],
 
             // class
             itemCls: "ks-megamenu-item",
@@ -54,7 +56,8 @@ KISSY.add("megamenu", function(S) {
          * @type Object
          */
         var cfg = S.merge(defaultConfig, config || {});
-        cfg.delay *= 1000;
+        cfg.delay[0] *= 1000;
+        cfg.delay[1] *= 1000;
         this.config = cfg;
 
         /**
@@ -127,13 +130,13 @@ KISSY.add("megamenu", function(S) {
 
                         // 不重复触发。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次显示。
                         if(o.activeIndex !== index) {
-                            o.showTimer = Lang.later(delay, o, "show", index);
+                            o.showTimer = Lang.later(delay[0], o, "show", index);
                         }
                     });
 
                     Event.on(items[index], "mouseout", function() {
                         if(o.showTimer) o.showTimer.cancel();
-                        o.hideTimer = Lang.later(delay, o, "hide");
+                        o.hideTimer = Lang.later(delay[1], o, "hide");
                     });
                 })(i);
             }
@@ -143,7 +146,7 @@ KISSY.add("megamenu", function(S) {
             });
 
             Event.on(view, "mouseout", function() {
-                o.hideTimer = Lang.later(delay, o, "hide");
+                o.hideTimer = Lang.later(delay[1], o, "hide");
             });
         },
 

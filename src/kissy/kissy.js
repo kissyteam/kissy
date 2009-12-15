@@ -272,16 +272,16 @@ if (typeof KISSY === "undefined" || !KISSY) {
          * @return {object}  A reference to the last object
          */
         cloneTo: function(name) {
-            win[name] = function(c) {
+            function O(c) {
                 // allow instantiation without the new operator
-                if (!(this instanceof arguments.callee)) {
-                    return new arguments.callee(c);
+                if (!(this instanceof O)) {
+                    return new O(c);
                 }
-                r.superclass.constructor.apply(this, c);
-            };
-            var r = win[name];
-            S.extend(r, S, null, S);
-            return r;
+                if(typeof c === UNDEFINED) c = []; // fix ie bug
+                O.superclass.constructor.apply(this, c);
+            }
+            S.extend(O, S, null, S);
+            return (win[name] = O);
         },
 
         /**
