@@ -15,26 +15,28 @@ Yeah!
 ===========
    目 录
 ===========
- - assets:   全局性的资源文件
+ - assets:   全局性资源文件
  - build:    根据 src 内容，用 Ant 构建出来的发布文件
  - docs:     根据 src 内容，用 JSDoc 构建出来的 API 文档
  - examples: 由开发者或社区用户撰写的实例说明和使用教程等文档
  - lib:      依赖的外部 JS 库
- - src:      源码、测试、build 脚本和开发文档等一切开发资料
+ - src:      源码、测试、build 脚本和开发文档等一切开发文件
+ - sandbox:  实验基地，存放开发中的组件。成熟后，经审核，再转入 src
  - tools:    打包压缩等工具
+ - tmp:      临时文件存放地
 
 ===========
    架 构
 ===========
-内部组织形式：采用 module, submodule 来分拆和组织代码。
-外部调用接口：component 机制，包括工具型组件 util 和界面型组件 widget.
+内部代码组织：采用 module, sub module 来分拆和组织代码
+外部调用接口：component 形式，包括工具型组件 utils 和 UI 型组件 widgets
 
 ===========
    约 定
 ===========
 原则：尽量避免潜在冲突，同时力求精简短小和见名知意。
  - 全局变量：       g_ks_comp_xxx   比如： g_ks_monitor_st
- - class/id 命名： ks-comp-xxx     比如： ks-editor-toolbar-item
+ - class/id 命名：  ks-comp-xxx     比如： ks-editor-toolbar-item
  - data 属性命名：  data-comp-xxx   比如： data-lazyload-src
 
 ===========
