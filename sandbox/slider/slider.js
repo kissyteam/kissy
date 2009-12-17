@@ -7,16 +7,18 @@
  * @link    http://www.gracecode.com/
  */
 
-KISSY.add("carousel", function(S) {
+KISSY.add("slider", function(S) {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang;
 
 	var defaultConfig = {
-		triggersClass: 'slider-triggers',
+		triggersClass: 'triggers',
         //triggers: null,
+        panelsClass: 'panels',
 		currentClass: 'current',
-		eventType: 'click',
-        effect: 'none', // opacity, scroll
-		delay: 2000,
+		eventType: 'click', // mouseover
+		//eventType: 'click', // mouseover
+        effect: 'none', // fade, scroll
+		delay: 5000,
 		speed: 500,
 		autoPlay: true,
         switchSize: false,
@@ -24,18 +26,57 @@ KISSY.add("carousel", function(S) {
         direction: 'vertical' // 'horizontal(h)' or 'vertical(v)'
 	};
 
-    // 
-    var effect = {
+    var _effects = {
         'none': function() {
-        
+            var config = this.config, direction = this.direction;
+            this.scroller[direction.x ? 'scrollLeft' : 'scrollTop'] = this.next * this.switchSize;
         },
 
-        'opacity': function() {
-        
+        'fade': function() {
+            var config = this.config, anim = this._anim, _self = this;
+            var current = this.panels[this.current], next = this.panels[this.next];
+            //if (anim) { anim.stop(); }
+            Dom.setStyle(current, 'opacity', 1);
+            Dom.setStyle(next, 'opacity', 0);
+            anim = new YAHOO.util.Anim(current, {opacity: { from: 1, to: 0 }}, config.speed/1000); 
+            anim.onComplete.subscribe(function() {
+                Dom.setStyle(current, 'opacity', 1);
+                _effects['none'].call(_self);
+                anim = new YAHOO.util.Anim(next, {opacity: { from: 0, to: 1 }}, config.speed/1000); 
+                anim.animate();
+            });
+            anim.animate();
         },
 
         'scroll': function() {
-        
+            var config = this.config, anim = this._anim;
+            var attributes, 
+                from = this.current * this.switchSize, to = this.next * this.switchSize;
+
+            if (this.direction.x) {
+                attributes = {
+                    scroll: {
+                        from: [from],
+                        to:   [to]
+                    }
+                }; 
+            } else {
+                attributes = {
+                    scroll: {
+                        from: [, from],
+                        to:   [, to]
+                    }
+                };
+            }
+
+            if (anim) { anim.stop(); }
+            anim = new Y.Scroll(this.scroller, attributes, config.speed/1000, config.easing || Y.Easing.easeOutStrong);
+            /*
+            anim.onComplete.subscribe(function() {
+                // ...
+            });
+            */
+            anim.animate();
         }
     };
 
@@ -49,7 +90,7 @@ KISSY.add("carousel", function(S) {
     Lang.augmentObject(Slider.prototype, {
         _init: function() {
             // 
-            var config = this.config, effect;
+            var config = this.config, container = this.container, effect;
 
             // direction
             this.direction = {
@@ -64,7 +105,7 @@ KISSY.add("carousel", function(S) {
             this.total = this.panels.length;
 
             // switch
-            this.switchSize = this.config.switchSize;
+            this.switchSize = parseInt(this.config.switchSize, 10);
             if (!this.switchSize) {
                 if (this.direction.x) {
                     this.switchSize = this.panels[0]['clientWidth'];
@@ -73,20 +114,21 @@ KISSY.add("carousel", function(S) {
                 }
             }
 
+            this.scroller = config.scroller || this.panels[0].parentNode;
+
             // triggers
             this.triggers = config.triggers;
             if (!this.triggers) {
                 var triggers = document.createElement('ul');
                 Dom.addClass(triggers, config.triggersClass);
-                for(var i = 0; i < total;) {
-                    var t = createElement('li');
+                for(var i = 0; i < this.total;) {
+                    var t = document.createElement('li');
                     t.innerHTML = ++i;
-                    triggers.appendChild(li);
+                    triggers.appendChild(t);
                 }
                 this.container.appendChild(triggers);
                 this.triggers = triggers.getElementsByTagName('li');
             }
-
 
             //
             this.current = config.startAt || 0;
@@ -94,8 +136,8 @@ KISSY.add("carousel", function(S) {
             // switch effect
             if (Lang.isFunction(config.effect)) {
                 effect = config.effect;
-            } else if (Lang.isString(config.effect) && Lang.isFunction(effect[config.effect]) {
-                effect = effect[config.effect];
+            } else if (Lang.isString(config.effect) && Lang.isFunction(_effects[config.effect])) {
+                effect = _effects[config.effect];
             } else {
                 effect = effect['none'];
             }
@@ -108,49 +150,94 @@ KISSY.add("carousel", function(S) {
                 this.onSwitchEvent = new Y.CustomEvent('onSwitchEvent', this, false, Y.CustomEvent.FLAT);
             }
 
-            // event
-            Event.on(this.panels, 'mouseover', function() {
-            
-            });
+            // bind event
+            Event.on(container, 'mouseover', function() {
+                this.sleep();
+            }, this, true);
 
-            Event.on(this.panels, 'mouseout', function() {
-            
-            });
+            Event.on(container, 'mouseout', function() {
+                if (config.autoPlay) {
+                    this.wakeup();
+                }
+            }, this, true);
 
-            Event.on(this.triggers, 'mouseover', function() {
-            
-            });
+            for (var i = 0, len = this.triggers.length, _self = this, _timer; i < len; i++) {
+                (function(index) {
+                    switch(config.eventType.toLowerCase()) {
+                        case 'mouseover':
+                            Event.on(_self.triggers[index], 'mouseover', function() {
+                                if (_timer) _timer.cancel();
+                                _timer = Lang.later(100, _self, function() {
+                                    this.switchTo(index);                               
+                                });
+                            });
 
-            Event.on(this.triggers, 'mouseout', function() {
-            
-            });
+                            Event.on(_self.triggers[index], 'mouseout', function() {
+                                _timer.cancel();
+                                if (config.autoPlay) {
+                                    _self.wakeup();
+                                }
+                            });
+                            break;
+                        default: 
+                            Event.on(_self.triggers[index], 'click', function(e) {
+                                Event.stopEvent(e);
+                                if (_timer) _timer.cancel();
+                                _timer = Lang.later(50, _self, function() {
+                                    this.switchTo(index);                               
+                                });
+                            });
+                    }
+                })(i);
+            }
 
-            // autoStart?
-            if (config.autoStart) {
-                Lang.later(config.delay, this, this.switchTo(this.current));
+            // init scroll size
+            Dom.addClass(this.triggers[this.current], config.currentClass);
+            this.scroller.scrollTop = 0; this.scroller.scrollLeft = 0;
+
+            // autoPlay?
+            if (config.autoPlay) {
+                this.pause = false;
+
+                Lang.later(config.delay, this, 
+                    function() {
+                        this.switchTo(++this.current);
+                    }
+                );
             }
         },
 
         switchTo: function(index) {
             var config = this.config;
 
-            this.next = index || ++this.current;
-            if (index > this.total) {
+            if (this.pause && !Lang.isNumber(index)) {
+                return;
+            }
+
+            if (this.timer) this.timer.cancel();
+
+            this.next = Lang.isNumber(index) ? index : this.current + 1;
+            if (this.next >= this.total) {
                 this.next = 0;
             }
 
-            this.onSwitchEvent.fire();
+            if (this.onSwitchEvent) {
+                this.onSwitchEvent.fire();
+            }
 
             this.effect.fire();
 
             this.current = this.next;
 
-            if (!this.pause || config.autoStart) {
+            Dom.removeClass(this.triggers, config.currentClass);
+            Dom.addClass(this.triggers[this.current], config.currentClass);
+
+            if (config.autoPlay) {
                 this.timer = Lang.later(config.delay, this, arguments.callee);
             }
         },
 
-        pause: function() {
+        sleep: function() {
             this.pause = true;
             if (this.timer) {
                 this.timer.cancel();
@@ -158,12 +245,13 @@ KISSY.add("carousel", function(S) {
         },
 
         wakeup: function() {
-            this.pause = false;
-
             if (this.timer) {
                 this.timer.cancel();
             }
-            this.switchTo(++this.current);
+            this.pause = false;
+            this.timer = Lang.later(this.config.delay, this, function() {
+                this.switchTo(++this.current);
+            });
         }
     });
 

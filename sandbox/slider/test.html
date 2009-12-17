@@ -3,26 +3,82 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
         <title></title>
+        <link rel="stylesheet" type="text/css" href="http://assets.taobaocdn.com/tbsp/core/reset.source.css" />
         <style>
+            .slider {
+                overflow: hidden;
+                height: 300px;
+                width: 500px;
+                position: relative;
+            }
 
+            .slider .panels {
+                overflow: hidden;
+                height: 300px;
+                width: 500px;
+            }
+
+            .slider .panels li {
+                height: 300px;
+                width: 500px;
+            }
+
+            .slider .triggers {
+                position: absolute;
+                top: 270px;
+                left: 355px;
+                overflow: hidden;
+                text-align: right;
+                width: 500px;
+            }
+
+            .slider .triggers li {
+                float: left;
+                border: 2px solid #ccc;
+                width: 20px;
+                height: 20px;
+                text-align: center;
+                line-height: 20px;
+                display: inline-block;
+                margin-right: 5px;
+                cursor: pointer;
+            }
+
+            .slider .triggers li.current {
+                border: 2px solid red;
+                background: yellow;
+            }
         </style>
+        <script type="text/javascript" src="../../lib/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+        <script type="text/javascript" src="http://a.tbcdn.cn/yui/2.8.0r4/build/animation/animation.js"></script>
+        <script type="text/javascript" src="../../src/kissy/kissy.js"></script>
+        <script type="text/javascript" src="slider.js"></script>
     </head>
     <body>
-        <div id="main-promo" class="slider">
-            <ol class="player">
-                <li style="background: red;"></li>
-                <li style="background: blue;"></li>
-                <li style="background: green;"></li>
-                <li style="background: yellow;"></li>
-                <li style="background: pink;"></li>
+        <div id="test1" class="slider">
+            <ol class="panels">
+                <li style="background: red;"><h2>0</h2></li>
+                <li style="background: blue;"><h2>1</h2></li>
+                <li style="background: #ccc;"><h2>2</h2></li>
+                <li style="background: yellow;"><h2>3</h2></li>
+                <li style="background: pink;"><h2>4</h2></li>
             </ol>
-            <ol class="trigger">
+            <!--
+            <ol class="triggers">
                 <li>1</li>
                 <li>2</li>
                 <li>3</li>
                 <li>4</li>
                 <li>5</li>
             </ol>
+            -->
         </div>
+        <script>
+            KISSY().use("slider", function(S) {
+                new S.Slider('test1', {
+		            triggersClass: 'triggers'
+                });
+            });
+        </script>
     </body>
 </html>
