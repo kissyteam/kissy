@@ -1,14 +1,16 @@
 /**
- * 图片延迟加载组件
- * @module      imglazyload
+ * 数据延迟加载组件
+ * 包括 img, textarea, 以及回调函数
+ * @module      datalazyload
  * @creator     玉伯<lifesinger@gmail.com>
  * @depends     kissy-core, yahoo-dom-event
  */
-KISSY.add("imglazyload", function(S) {
+KISSY.add("datalazyload", function(S) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         win = window, doc = document,
         DATA_SRC = "data-lazyload-src",
+        LAZY_TEXTAREA_CLS = "ks-datalazyload",
         MOD = { AUTO: "auto", MANUAL: "manual" },
         DEFAULT = "default",
 
@@ -16,30 +18,31 @@ KISSY.add("imglazyload", function(S) {
 
             /**
              * 懒处理模式
-             *  auto   - 自动化。html 输出时，不对 img.src 做任何处理
-             *  manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 DATA_SRC
+             *   auto   - 自动化。html 输出时，不对 img.src 做任何处理
+             *   manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 DATA_SRC
+             * 注：对于 textarea 数据，只有手动模式
              */
             mod: MOD.AUTO,
 
             /**
-             * 当前视窗往下，diff px 外的图片延迟加载
-             * 适当设置此值，可以让用户在拖动时感觉图片已经加载好
+             * 当前视窗往下，diff px 外的 img/textarea 延迟加载
+             * 适当设置此值，可以让用户在拖动时感觉数据已经加载好
              * 默认为当前视窗高度（两屏以外的才延迟加载）
              */
             diff: DEFAULT,
 
             /**
-             * 占位指示图
+             * 图像的占位图
              */
-            placeholder: "http://a.tbcdn.cn/kissy/1.0.0/build/imglazyload/spaceball.gif"
+            placeholder: "http://a.tbcdn.cn/kissy/1.0.2/build/datalazyload/dot.gif"
         };
 
     /**
-     * 图片延迟加载组件
-     * @class ImageLazyload
+     * 延迟加载组件
+     * @class DataLazyload
      * @constructor
      */
-    function ImageLazyload(containers, config) {
+    function DataLazyload(containers, config) {
         // factory or constructor
         if (!(this instanceof arguments.callee)) {
             return new arguments.callee(containers, config);
@@ -75,6 +78,18 @@ KISSY.add("imglazyload", function(S) {
         //this.images
 
         /**
+         * 需要延迟处理的 textarea
+         * @type Array
+         */
+        //this.areaes
+
+        /**
+         * 和延迟项绑定的回调函数
+         * @type object
+         */
+        this.callbacks = {els: [], fns: []};
+
+        /**
          * 开始延迟的 Y 坐标
          * @type number
          */
@@ -83,7 +98,7 @@ KISSY.add("imglazyload", function(S) {
         this._init();
     }
 
-    S.mix(ImageLazyload.prototype, {
+    S.mix(DataLazyload.prototype, {
 
         /**
          * 初始化
@@ -91,9 +106,9 @@ KISSY.add("imglazyload", function(S) {
          */
         _init: function() {
             this.threshold = this._getThreshold();
-            this.images = this._filterImgs();
+            this._filterItems();
 
-            if (this.images.length > 0) {
+            if (this._getItemsLength()) {
                 this._initLoadEvent();
             }
         },
@@ -111,6 +126,13 @@ KISSY.add("imglazyload", function(S) {
         },
 
         /**
+         * 获取当前延迟项的数量
+         */
+        _getItemsLength: function() {
+            return this.images.length + this.areaes.length + this.callbacks.els.length;
+        },
+
+        /**
          * 初始化加载事件
          * @protected
          */
@@ -121,42 +143,49 @@ KISSY.add("imglazyload", function(S) {
             Event.on(win, "scroll", loader);
             Event.on(win, "resize", function() {
                 self.threshold = self._getThreshold();
-                loader(true);
+                loader();
             });
 
-            // 手工模式时，第一屏也有可能有 data-src 项
-            if (this.config.mod === MOD.MANUAL) {
-                // 需要立即加载一次，以保证第一屏图片可见
+            // 需要立即加载一次，以保证第一屏的延迟项可见
+            if (self._getItemsLength()) {
                 Event.onDOMReady(function() {
-                    self._loadImgs(true);
+                    loadItems();
                 });
             }
 
             // 加载函数
-            function loader(force) {
+            function loader() {
                 if (timer) return;
                 timer = setTimeout(function() {
-                    self._loadImgs(force);
-                    if (self.images.length === 0) {
-                        Event.removeListener(win, "scroll", loader);
-                        Event.removeListener(win, "resize", loader);
-                    }
+                    loadItems();
                     timer = null;
                 }, 100); // 0.1s 内，用户感觉流畅
+            }
+
+            // 加载延迟项
+            function loadItems() {
+                self._loadImgs();
+                self._loadAreaes();
+                self._fireCallbacks();
+                
+                if (self._getItemsLength() === 0) {
+                    Event.removeListener(win, "scroll", loader);
+                    Event.removeListener(win, "resize", loader);
+                }
             }
         },
 
         /**
-         * 获取并初始化需要延迟下载的图片
+         * 获取并初始化需要延迟的 img 和 textarea
          * @protected
          */
-        _filterImgs: function() {
+        _filterItems: function() {
             var containers = this.containers,
                 threshold = this.threshold,
                 placeholder = this.config.placeholder,
                 isManualMod = this.config.mod === MOD.MANUAL,
-                n, N, imgs, i, len, img, data_src,
-                ret = [];
+                n, N, imgs, areaes, i, len, img, data_src,
+                lazyImgs = [], lazyAreaes = [];
 
             for (n = 0,N = containers.length; n < N; ++n) {
                 imgs = containers[n].getElementsByTagName("img");
@@ -168,7 +197,7 @@ KISSY.add("imglazyload", function(S) {
                     if (isManualMod) { // 手工模式，只处理有 data-src 的图片
                         if (data_src) {
                             img.src = placeholder;
-                            ret.push(img);
+                            lazyImgs.push(img);
                         }
                     } else { // 自动模式，只处理 threshold 外无 data-src 的图片
                         // 注意：已有 data-src 的项，可能已有其它实例处理过，重复处理
@@ -176,24 +205,31 @@ KISSY.add("imglazyload", function(S) {
                         if (Dom.getY(img) > threshold && !data_src) {
                             img.setAttribute(DATA_SRC, img.src);
                             img.src = placeholder;
-                            ret.push(img);
+                            lazyImgs.push(img);
                         }
+                    }
+                }
+
+                // 处理 textarea
+                areaes = containers[n].getElementsByTagName("textarea");
+                for( i = 0, len = areaes.length; i < len; ++i) {
+                    if(Dom.hasClass(areaes[i], LAZY_TEXTAREA_CLS)) {
+                        lazyAreaes.push(areaes[i]);
                     }
                 }
             }
 
-            return ret;
+            this.images = lazyImgs;
+            this.areaes = lazyAreaes;
         },
 
         /**
          * 加载图片
          * @protected
          */
-        _loadImgs: function(force) {
-            var scrollTop = Dom.getDocumentScrollTop();
-            if (!force && scrollTop <= this.config.diff) return;
-
+        _loadImgs: function() {
             var imgs = this.images,
+                scrollTop = Dom.getDocumentScrollTop(),
                 threshold = this.threshold + scrollTop,
                 i, img, data_src, remain = [];
 
@@ -211,10 +247,71 @@ KISSY.add("imglazyload", function(S) {
             }
 
             this.images = remain;
+        },
+
+        /**
+         * 加载 textarea 数据
+         * @protected
+         */
+        _loadAreaes: function() {
+            var areaes = this.areaes,
+                scrollTop = Dom.getDocumentScrollTop(),
+                threshold = this.threshold + scrollTop,
+                i, area, parent, remain = [];
+
+            for (i = 0; area = areaes[i++];) {
+                parent = area.parentNode;
+                // 注：area 可能处于 display: none 状态，Dom.getY(area) 获取不到 Y 值
+                //    因此这里采用 area.parentNode
+                if (Dom.getY(parent) <= threshold) {
+                    // parent.removeChild(area); TODO: 需不需要？
+                    parent.innerHTML = area.value;
+                } else {
+                    remain.push(area);
+                }
+            }
+
+            this.areaes = remain;
+        },
+
+        /**
+         * 触发回调
+         * @protected
+         */
+        _fireCallbacks: function() {
+            var callbacks = this.callbacks,
+                els = callbacks.els, fns = callbacks.fns,
+                scrollTop = Dom.getDocumentScrollTop(),
+                threshold = this.threshold + scrollTop,
+                i, el, fn, remainEls = [], remainFns = [];
+
+            for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
+                if (Dom.getY(el) <= threshold) {
+                    fn.call(el);
+                } else {
+                    remainEls.push(el);
+                    remainFns.push(fn);
+                }
+
+            }
+
+            callbacks.els = remainEls;
+            callbacks.fns = remainFns;
+        },
+
+        /**
+         * 添加回调函数。当 el 即将出现在视图中时，触发 fn
+         */
+        addCallback: function(el, fn) {
+            el = Dom.get(el);
+            if(el && typeof fn === "function") {
+                this.callbacks.els.push(el);
+                this.callbacks.fns.push(fn);
+            }
         }
     });
 
-    S.ImageLazyload = ImageLazyload;
+    S.DataLazyload = DataLazyload;
 });
 
 /**
@@ -252,10 +349,26 @@ KISSY.add("imglazyload", function(S) {
  *  1. 初始窗口很小，拉大窗口时，图片加载正常
  *  2. 页面有滚动位置时，刷新页面，图片加载正常
  *  3. 手动模式，第一屏有延迟图片时，加载正常
+ *
+ * 2009-12-17 补充：
+ *  1. textarea 延迟加载约定：页面中需要延迟的 dom 节点，放在
+ *       <textarea class="ks-datalazysrc invisible">dom code</textarea>
+ *     里。可以添加 hidden 等 class, 但建议用 invisible, 并设定 height = "实际高度".
+ *     这样可以保证滚动时，diff 更真实有效。
+ *     注意：textarea 加载后，会替换掉父容器中的所有内容。
+ *
+ *  2. 延迟 callback 约定：dataLazyload.addCallback(el, fn) 表示当 el 即将出现时，触发 fn.
+ *
+ *  3. 所有操作都是最多触发一次，比如 callback. 来回拖动滚动条时，只有 el 第一次出现时会触发 fn 回调。
  */
 
 /**
  * TODOs:
  *   - [取消] 背景图片的延迟加载（对于 css 里的背景图片和 sprite 很难处理）
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
+ */
+
+/**
+ * UPDATE LOG:
+ *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和触发回调函数
  */

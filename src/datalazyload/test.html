@@ -625,8 +625,9 @@
     </div>
 
 </div>
+<h2>Textarea 延迟加载测试</h2>
 <div class="box">
-
+<textarea class="ks-datalazyload" style="visibility:hidden; height: 400px">
     <div class="DetailResultItem">
 
         <div class="DetailPic">
@@ -635,7 +636,7 @@
         </div>
 
         <div class="PicDesc">
-            <h3 class="PicTitle">優人神鼓 U - Theatre Dance with Drum</h3>
+            <h3 class="PicTitle">我是 Textarea 里面的内容 - Theatre Dance with Drum</h3>
 
             <div class="PicByLine">
                 by <a href="/photos/matthewfch/">Matthew Fang</a> (<a title="Hide Matthew Fang in this search" href="?q=%E4%BA%BA&amp;eui=76195812%40N00">hide</a>)
@@ -698,8 +699,9 @@
 
 
     </div>
-
+</textarea>
 </div>
+
 <div class="box">
 
     <div class="DetailResultItem">
@@ -3202,7 +3204,7 @@
     </div>
 
 </div>
-<div class="box">
+<div class="box" id="lazyCallbackTest">
 
     <div class="DetailResultItem">
 
@@ -3212,7 +3214,7 @@
         </div>
 
         <div class="PicDesc">
-            <h3 class="PicTitle">Morning fog 人在畫中</h3>
+            <h3 class="PicTitle">出现我的时候，会 alert("Morning fog 人在畫中")</h3>
 
             <div class="PicByLine">
                 by <a href="/photos/chanmelmel/">Melinda ^..^</a> (<a title="Hide Melinda ^..^ in this search" href="?q=%E4%BA%BA&amp;eui=8945641%40N02">hide</a>)
@@ -4566,10 +4568,13 @@
 </div>
 </div>
 <script type="text/javascript" src="../kissy/kissy.js"></script>
-<script type="text/javascript" src="imglazyload.js"></script>
+<script type="text/javascript" src="datalazyload.js"></script>
 <script type="text/javascript">
-    KISSY().use("imglazyload", function(S){
-        S.ImageLazyload();
+    KISSY().use("datalazyload", function(S){
+        var lazyLoad = new S.DataLazyload();
+        lazyLoad.addCallback("lazyCallbackTest", function() {
+            alert("Morning fog 人在畫中");
+        });
     });
 </script>
 </body>

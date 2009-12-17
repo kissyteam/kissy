@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project name="imglazyload.build" default="build" basedir=".">
+<project name="datalazyload.build" default="build" basedir=".">
     <description>Component Build File</description>
 
     <import file="../build.xml"/>
