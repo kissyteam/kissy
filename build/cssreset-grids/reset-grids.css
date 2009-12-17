@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-11 09:08:16
-Revision: 299
+Date: 2009-12-17 21:11:28
+Revision: 317
 */
 /*
 KISSY CSS Reset
@@ -92,7 +92,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 /** Çå³ý¸¡¶¯ **/
 .layout:after, .main-wrap:after, .col-sub:after, .col-extra:after {
-	content: '\0020';
+	content: '\20';
 	display: block;
 	height: 0;
 	clear: both;

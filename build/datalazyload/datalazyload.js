@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2009, Kissy UI Library. All rights reserved.
+MIT Licensed.
+http://kissy.googlecode.com/
+
+Date: 2009-12-17 21:11:31
+Revision: 317
+*/
 /**
  * 数据延迟加载组件
  * 包括 img, textarea, 以及特定元素即将出现时的回调函数

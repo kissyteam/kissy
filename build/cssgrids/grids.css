@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-11 09:08:13
-Revision: 299
+Date: 2009-12-17 21:11:25
+Revision: 317
 */
 /*
 双飞翼栅格布局 Flying Swing Grids Layout
@@ -45,7 +45,7 @@ Revision: 299
 
 /** 清除浮动 **/
 .layout:after, .main-wrap:after, .col-sub:after, .col-extra:after {
-	content: '\0020';
+	content: '\20';
 	display: block;
 	height: 0;
 	clear: both;

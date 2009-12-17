@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-11 09:08:20
-Revision: 299
+Date: 2009-12-17 21:11:36
+Revision: 317
 */
 /**
  * @module kissy
@@ -280,16 +280,16 @@ if (typeof KISSY === "undefined" || !KISSY) {
          * @return {object}  A reference to the last object
          */
         cloneTo: function(name) {
-            win[name] = function(c) {
+            function O(c) {
                 // allow instantiation without the new operator
-                if (!(this instanceof arguments.callee)) {
-                    return new arguments.callee(c);
+                if (!(this instanceof O)) {
+                    return new O(c);
                 }
-                r.superclass.constructor.apply(this, c);
-            };
-            var r = win[name];
-            S.extend(r, S, null, S);
-            return r;
+                if(typeof c === UNDEFINED) c = []; // fix ie bug
+                O.superclass.constructor.apply(this, c);
+            }
+            S.extend(O, S, null, S);
+            return (win[name] = O);
         },
 
         /**
@@ -2730,6 +2730,7 @@ KISSY.Editor.add("plugins~image", function(E) {
         };
 
     E.addPlugin("image", {
+
         /**
          * ÷÷¿‡£∫∞¥≈•
          */
