@@ -1,9 +1,0 @@
-/*
-Copyright (c) 2009, Kissy UI Library. All rights reserved.
-MIT Licensed.
-http://kissy.googlecode.com/
-
-Date: 2009-12-11 09:08:22
-Revision: 299
-*/
-KISSY.add("imglazyload",function(f){var b=YAHOO.util,g=b.Dom,l=b.Event,i=YAHOO.lang,j=window,k=document,a="data-lazyload-src",d={AUTO:"auto",MANUAL:"manual"},h="default",e={mod:d.AUTO,diff:h,placeholder:"http://a.tbcdn.cn/kissy/1.0.0/build/imglazyload/spaceball.gif"};function c(n,m){if(!(this instanceof arguments.callee)){return new arguments.callee(n,m)}if(typeof m==="undefined"){m=n;n=[k]}if(!i.isArray(n)){n=[g.get(n)||k]}this.containers=n;this.config=i.merge(e,m||{});this._init()}f.mix(c.prototype,{_init:function(){this.threshold=this._getThreshold();this.images=this._filterImgs();if(this.images.length>0){this._initLoadEvent()}},_getThreshold:function(){var n=this.config.diff,m=g.getViewportHeight();if(n===h){return 2*m}else{return m+n}},_initLoadEvent:function(){var o,n=this;l.on(j,"scroll",m);l.on(j,"resize",function(){n.threshold=n._getThreshold();m(true)});if(this.config.mod===d.MANUAL){l.onDOMReady(function(){n._loadImgs(true)})}function m(p){if(o){return}o=setTimeout(function(){n._loadImgs(p);if(n.images.length===0){l.removeListener(j,"scroll",m);l.removeListener(j,"resize",m)}o=null},100)}},_filterImgs:function(){var o=this.containers,t=this.threshold,x=this.config.placeholder,p=this.config.mod===d.MANUAL,m,w,s,r,u,q,y,v=[];for(m=0,w=o.length;m<w;++m){s=o[m].getElementsByTagName("img");for(r=0,u=s.length;r<u;++r){q=s[r];y=q.getAttribute(a);if(p){if(y){q.src=x;v.push(q)}}else{if(g.getY(q)>t&&!y){q.setAttribute(a,q.src);q.src=x;v.push(q)}}}}return v},_loadImgs:function(p){var q=g.getDocumentScrollTop();if(!p&&q<=this.config.diff){return}var t=this.images,m=this.threshold+q,o,n,s,r=[];for(o=0;n=t[o++];){if(g.getY(n)<=m){s=n.getAttribute(a);if(s&&n.src!=s){n.src=s;n.removeAttribute(a)}}else{r.push(n)}}this.images=r}});f.ImageLazyload=c});
