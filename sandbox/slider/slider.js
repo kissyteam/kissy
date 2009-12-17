@@ -10,18 +10,21 @@
 KISSY.add("slider", function(S) {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang;
 
+    /**
+     * 默认配置
+     */
 	var defaultConfig = {
-		triggersClass: 'triggers',
-        //triggers: null,
+		triggersClass: 'triggers', // triggers 的 className
+        //triggers: null, // 如果指定，则不自动创建 triggers
         panelsClass: 'panels',
 		currentClass: 'current',
-		eventType: 'click', // mouseover
-		//eventType: 'click', // mouseover
-        effect: 'none', // fade, scroll
+		eventType: 'click', // mouse
+        effect: 'none', // 'fade', 'scroll'
 		delay: 5000,
 		speed: 500,
 		autoPlay: true,
         switchSize: false,
+        //startAt: 0,
         //onSwitch: function() {},
         direction: 'vertical' // 'horizontal(h)' or 'vertical(v)'
 	};
@@ -33,16 +36,17 @@ KISSY.add("slider", function(S) {
         },
 
         'fade': function() {
+            // @TODO 
             var config = this.config, anim = this._anim, _self = this;
             var current = this.panels[this.current], next = this.panels[this.next];
+
             //if (anim) { anim.stop(); }
             Dom.setStyle(current, 'opacity', 1);
             Dom.setStyle(next, 'opacity', 0);
-            anim = new YAHOO.util.Anim(current, {opacity: { from: 1, to: 0 }}, config.speed/1000); 
+            anim = new YAHOO.util.Anim(current, {opacity: {from: 1, to: 0}}, config.speed/1000); 
             anim.onComplete.subscribe(function() {
-                Dom.setStyle(current, 'opacity', 1);
                 _effects['none'].call(_self);
-                anim = new YAHOO.util.Anim(next, {opacity: { from: 0, to: 1 }}, config.speed/1000); 
+                anim = new YAHOO.util.Anim(next, {opacity: {from: 0, to: 1}}, config.speed/1000); 
                 anim.animate();
             });
             anim.animate();
@@ -141,13 +145,13 @@ KISSY.add("slider", function(S) {
             } else {
                 effect = effect['none'];
             }
-
             this.effect = new Y.CustomEvent('effect', this, false, Y.CustomEvent.FLAT);
             this.effect.subscribe(effect);
 
             // callback
             if (Lang.isFunction(config.onSwitch)) {
                 this.onSwitchEvent = new Y.CustomEvent('onSwitchEvent', this, false, Y.CustomEvent.FLAT);
+                this.onSwitchEvent.subscribe(config.onSwitch);
             }
 
             // bind event
@@ -164,7 +168,7 @@ KISSY.add("slider", function(S) {
             for (var i = 0, len = this.triggers.length, _self = this, _timer; i < len; i++) {
                 (function(index) {
                     switch(config.eventType.toLowerCase()) {
-                        case 'mouseover':
+                        case 'mouse':
                             Event.on(_self.triggers[index], 'mouseover', function() {
                                 if (_timer) _timer.cancel();
                                 _timer = Lang.later(100, _self, function() {
@@ -198,10 +202,9 @@ KISSY.add("slider", function(S) {
             // autoPlay?
             if (config.autoPlay) {
                 this.pause = false;
-
                 Lang.later(config.delay, this, 
                     function() {
-                        this.switchTo(++this.current);
+                        this.switchTo(this.current + 1);
                     }
                 );
             }
@@ -210,28 +213,36 @@ KISSY.add("slider", function(S) {
         switchTo: function(index) {
             var config = this.config;
 
+            //
             if (this.pause && !Lang.isNumber(index)) {
                 return;
             }
 
+            //
             if (this.timer) this.timer.cancel();
 
+            //
             this.next = Lang.isNumber(index) ? index : this.current + 1;
             if (this.next >= this.total) {
                 this.next = 0;
             }
 
+            //
+            this.effect.fire();
+
+            // 
+            this.current = this.next;
+
+            // run callback
             if (this.onSwitchEvent) {
                 this.onSwitchEvent.fire();
             }
 
-            this.effect.fire();
-
-            this.current = this.next;
-
+            // make current trigger class
             Dom.removeClass(this.triggers, config.currentClass);
             Dom.addClass(this.triggers[this.current], config.currentClass);
 
+            // continue paly?
             if (config.autoPlay) {
                 this.timer = Lang.later(config.delay, this, arguments.callee);
             }
