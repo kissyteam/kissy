@@ -16,17 +16,16 @@ KISSY.add("slider", function(S) {
 	var defaultConfig = {
 		triggersClass: 'triggers', // triggers 的 className
         //triggers: null, // 如果指定，则不自动创建 triggers
-        panelsClass: 'panels',
-		currentClass: 'current',
-		eventType: 'click', // mouse
-        effect: 'none', // 'fade', 'scroll'
-		delay: 5000,
-		speed: 500,
-		autoPlay: true,
-        switchSize: false,
-        //startAt: 0,
+		currentClass: 'current', // 标记 trigger 当前的 className
+		eventType: 'mouse', // trigger 触发方式: 'click' 为点击 'mouse' 为鼠标悬浮
+        effect: 'none', // 展现效果，目前有三个效果 'none', 'fade', 'scroll'
+		delay: 5000, // 卡盘间延迟展现时间
+		speed: 500, // 卡盘滚动以及渐变时间，当效果为 'none' 时无效
+		autoPlay: true, // 是否自动滚动
+        //switchSize: false,
+        startAt: 0, // 开始滚动第几个卡片
         //onSwitch: function() {},
-        direction: 'vertical' // 'horizontal(h)' or 'vertical(v)'
+        direction: 'vertical' // 滚动方向 'horizontal(h)' or 'vertical(v)'
 	};
 
     var _effects = {
@@ -36,19 +35,34 @@ KISSY.add("slider", function(S) {
         },
 
         'fade': function() {
-            // @TODO 
-            var config = this.config, anim = this._anim, _self = this;
-            var current = this.panels[this.current], next = this.panels[this.next];
+            var config = this.config, anim = this._anim, panels = this.panels,
+                current = panels[this.current] || panels[0], next = panels[this.next] || panels[panels.length - 1];
 
-            //if (anim) { anim.stop(); }
-            Dom.setStyle(current, 'opacity', 1);
-            Dom.setStyle(next, 'opacity', 0);
-            anim = new YAHOO.util.Anim(current, {opacity: {from: 1, to: 0}}, config.speed/1000); 
+            // init fade elements at first time
+            if (!this._initFade) {
+                Dom.setStyle(panels, 'position', 'absolute');
+                Dom.setStyle(panels, 'top',  config.slideOffsetY || 0);
+                Dom.setStyle(panels, 'left', config.slideOffsetX || 0);
+                Dom.setStyle(panels, 'z-index', 1);
+                Dom.setStyle(panels, 'display', 'none');
+                this.initFade = true;
+            }
+
+            if (anim && this._fading) {
+                anim.stop();
+            }
+            this._fading = true;
+            Dom.setStyle(current, 'z-index', 2);
+            Dom.setStyle(next, 'z-index', 1); Dom.setStyle(next, 'opacity', 1);
+            Dom.setStyle([current, next] , 'display', '');
+            anim = new YAHOO.util.Anim(current, {opacity: {from: 1, to: 0}}, 
+                            config.speed/1000 || .5, config.easing || Y.Easing.easeNone); 
             anim.onComplete.subscribe(function() {
-                _effects['none'].call(_self);
-                anim = new YAHOO.util.Anim(next, {opacity: {from: 0, to: 1}}, config.speed/1000); 
-                anim.animate();
-            });
+                Dom.setStyle(current, 'display', 'none');
+                Dom.setStyle([current, next], 'z-index', 1);
+                this._fading = false;
+            }, this, true);
+
             anim.animate();
         },
 
@@ -74,7 +88,7 @@ KISSY.add("slider", function(S) {
             }
 
             if (anim) { anim.stop(); }
-            anim = new Y.Scroll(this.scroller, attributes, config.speed/1000, config.easing || Y.Easing.easeOutStrong);
+            anim = new Y.Scroll(this.scroller, attributes, config.speed/1000 || .5, config.easing || Y.Easing.easeOutStrong);
             /*
             anim.onComplete.subscribe(function() {
                 // ...
@@ -93,7 +107,6 @@ KISSY.add("slider", function(S) {
 
     Lang.augmentObject(Slider.prototype, {
         _init: function() {
-            // 
             var config = this.config, container = this.container, effect;
 
             // direction
@@ -103,7 +116,7 @@ KISSY.add("slider", function(S) {
             };
 
             // panels
-            this.panels = this.config.panels || container.getElementsByTagName('li');
+            this.panels = this.config.panels || Array().slice.call(container.getElementsByTagName('li'));
 
             // total
             this.total = this.panels.length;
@@ -111,11 +124,8 @@ KISSY.add("slider", function(S) {
             // switch
             this.switchSize = parseInt(this.config.switchSize, 10);
             if (!this.switchSize) {
-                if (this.direction.x) {
-                    this.switchSize = this.panels[0]['clientWidth'];
-                } else {
-                    this.switchSize = this.panels[0]['clientHeight'];
-                }
+                var region = Y.Region.getRegion(this.panels[0]);
+                this.switchSize = region[this.direction.x ? 'width' : 'height'];
             }
 
             this.scroller = config.scroller || this.panels[0].parentNode;
@@ -131,11 +141,11 @@ KISSY.add("slider", function(S) {
                     triggers.appendChild(t);
                 }
                 this.container.appendChild(triggers);
-                this.triggers = triggers.getElementsByTagName('li');
+                this.triggers = Array().slice.call(triggers.getElementsByTagName('li'));
             }
 
             //
-            this.current = config.startAt || 0;
+            this.current = Lang.isNumber(config.startAt) ? config.startAt : 0;
 
             // switch effect
             if (Lang.isFunction(config.effect)) {
@@ -165,42 +175,43 @@ KISSY.add("slider", function(S) {
                 }
             }, this, true);
 
-            for (var i = 0, len = this.triggers.length, _self = this, _timer; i < len; i++) {
+            for (var i = 0, len = this.triggers.length, _timer, ie = YAHOO.env.ie; i < len; i++) {
                 (function(index) {
                     switch(config.eventType.toLowerCase()) {
                         case 'mouse':
-                            Event.on(_self.triggers[index], 'mouseover', function() {
+                            Event.on(this.triggers[index], ie ? 'mouseenter': 'mouseover', function() {
                                 if (_timer) _timer.cancel();
-                                _timer = Lang.later(100, _self, function() {
+                                _timer = Lang.later(50, this, function() {
                                     this.switchTo(index);                               
                                 });
-                            });
+                            }, this, true);
 
-                            Event.on(_self.triggers[index], 'mouseout', function() {
+                            Event.on(this.triggers[index], ie ? 'mouseleave' : 'mouseout', function() {
                                 _timer.cancel();
                                 if (config.autoPlay) {
-                                    _self.wakeup();
+                                    this.wakeup();
                                 }
-                            });
+                            }, this, true);
                             break;
                         default: 
-                            Event.on(_self.triggers[index], 'click', function(e) {
+                            Event.on(this.triggers[index], 'click', function(e) {
                                 Event.stopEvent(e);
                                 if (_timer) _timer.cancel();
-                                _timer = Lang.later(50, _self, function() {
+                                _timer = Lang.later(50, this, function() {
                                     this.switchTo(index);                               
                                 });
-                            });
+                            }, this, true);
                     }
-                })(i);
+                }).call(this, i);
             }
 
             // init scroll size
             Dom.addClass(this.triggers[this.current], config.currentClass);
-            this.scroller.scrollTop = 0; this.scroller.scrollLeft = 0;
+            this.scroller.scrollTop = this.switchSize * this.current;
+            this.scroller.scrollLeft = this.switchSize * this.current;
 
             // autoPlay?
-            if (config.autoPlay) {
+            if (config.autoPlay && this.panels.length > 1) {
                 this.pause = false;
                 Lang.later(config.delay, this, 
                     function() {
@@ -261,7 +272,7 @@ KISSY.add("slider", function(S) {
             }
             this.pause = false;
             this.timer = Lang.later(this.config.delay, this, function() {
-                this.switchTo(++this.current);
+                this.switchTo(this.current + 1);
             });
         }
     });

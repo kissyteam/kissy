@@ -25,14 +25,16 @@
 
             .slider .triggers {
                 position: absolute;
-                top: 270px;
-                left: 355px;
+                right: 10px;
+                bottom: 10px;
                 overflow: hidden;
                 text-align: right;
-                width: 500px;
+                z-index: 10;
+                *zoom: 1;
             }
 
             .slider .triggers li {
+                background: #fff;
                 float: left;
                 border: 2px solid #ccc;
                 width: 20px;
@@ -48,6 +50,10 @@
                 border: 2px solid red;
                 background: yellow;
             }
+
+            .box {
+                margin: 50px 20px;
+            }
         </style>
         <script type="text/javascript" src="../../lib/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
         <script type="text/javascript" src="http://a.tbcdn.cn/yui/2.8.0r4/build/animation/animation.js"></script>
@@ -55,13 +61,29 @@
         <script type="text/javascript" src="slider.js"></script>
     </head>
     <body>
+        <h1>默认</h1>
+        <div class="box">
         <div id="test1" class="slider">
             <ol class="panels">
-                <li style="background: red;"><h2>0</h2></li>
-                <li style="background: blue;"><h2>1</h2></li>
-                <li style="background: #ccc;"><h2>2</h2></li>
-                <li style="background: yellow;"><h2>3</h2></li>
-                <li style="background: pink;"><h2>4</h2></li>
+                <li><a href="#"><img
+                    src="http://img01.taobaocdn.com/tps/i1/T1yIBqXnpvXXXXXXXX-360-190.gif" 
+                    width="500" height="300" /></a></li>
+
+                <li><a href="#"><img
+                    src="http://cn.yimg.com/a/yushiliu/754361_homepage_focuspicture3_360_190_1215.gif" 
+                    width="500" height="300" /></a></li>
+
+                <li><a href="#"><img
+                    src="http://img06.taobaocdn.com/tps/i6/T1UkhpXoJCXXXXXXXX-360-190.png" 
+                    width="500" height="300" /></a></li>
+                
+                <li><a href="#"><img
+                    src="http://img01.taobaocdn.com/tps/i1/T1yIBqXnpvXXXXXXXX-360-190.gif" 
+                    width="500" height="300" /></a></li>
+
+                <li><a href="#"><img
+                    src="http://cn.yimg.com/a/yushiliu/754361_homepage_focuspicture3_360_190_1215.gif" 
+                    width="500" height="300" /></a></li>
             </ol>
             <!--
             <ol class="triggers">
@@ -75,10 +97,80 @@
         </div>
         <script>
             KISSY().use("slider", function(S) {
-                new S.Slider('test1', {
-		            triggersClass: 'triggers'
-                });
+                new S.Slider('test1');
             });
         </script>
+        </div>
+        <h1>效果</h1>
+        <div class="box">
+            <h2>fade</h2>
+            <div id="test2" class="slider">
+                <ol class="panels">
+                    <li var="0"><a href="#"><img
+                        src="http://img01.taobaocdn.com/tps/i1/T1GJhqXgtgXXXXXXXX-510-250.jpg" 
+                        width="500" height="300" /></a></li>
+
+                    <li var="1"><a href="#"><img
+                        src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-17/091217173902.gif" 
+                        width="500" height="300" /></a></li>
+
+                    <li var="2"><a href="#"><img
+                        src="http://img06.taobaocdn.com/tps/i6/T1UkhpXoJCXXXXXXXX-360-190.png" 
+                        width="500" height="300" /></a></li>
+
+                    <li var="3"><a href="#"><img
+                        src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-15/091215155949.jpg" 
+                        width="500" height="300" /></a></li>
+
+                    <li var="4"><a href="#"><img
+                        src="http://img05.taobaocdn.com/tps/i5/T1OH8qXiBxXXXXXXXX-510-250.jpg" 
+                        width="500" height="300" /></a></li>
+                </ol>
+            </div>
+            <script>
+                KISSY().use("slider", function(S) {
+                    new S.Slider('test2', {
+                        effect: 'fade',
+                		delay: 5000
+                    });
+                });
+            </script>
+
+            <h2>scroll</h2>
+            <div id="test3" class="slider">
+                <ol class="panels">
+                    <li><a href="#"><img
+                        src="http://img01.taobaocdn.com/tps/i1/T1yIBqXnpvXXXXXXXX-360-190.gif" 
+                        width="500" height="300" /></a></li>
+
+                    <li><a href="#"><img
+                        src="http://cn.yimg.com/a/yushiliu/754361_homepage_focuspicture3_360_190_1215.gif" 
+                        width="500" height="300" /></a></li>
+
+                    <li><a href="#"><img
+                        src="http://img06.taobaocdn.com/tps/i6/T1UkhpXoJCXXXXXXXX-360-190.png" 
+                        width="500" height="300" /></a></li>
+
+                    <li><a href="#"><img
+                        src="http://img01.taobaocdn.com/tps/i1/T1yIBqXnpvXXXXXXXX-360-190.gif" 
+                        width="500" height="300" /></a></li>
+
+                    <li><a href="#"><img
+                        src="http://cn.yimg.com/a/yushiliu/754361_homepage_focuspicture3_360_190_1215.gif" 
+                        width="500" height="300" /></a></li>
+                </ol>
+            </div>
+            <script>
+                KISSY().use("slider", function(S) {
+                    new S.Slider('test3', {
+                        effect: 'scroll',
+                        speed: 500,
+                		delay: 5000,
+		                eventType: 'mouse'
+                    });
+                });
+            </script>
+
+        </div>
     </body>
 </html>
