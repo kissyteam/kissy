@@ -15,10 +15,12 @@ KISSY.add("slider", function(S) {
      */
 	var defaultConfig = {
 		triggersClass: 'triggers', // triggers 的 className
+        // panels: null, // 如果指定，则不自动寻找，默认获取 container 的所有 li
         //triggers: null, // 如果指定，则不自动创建 triggers
 		currentClass: 'current', // 标记 trigger 当前的 className
 		eventType: 'mouse', // trigger 触发方式: 'click' 为点击 'mouse' 为鼠标悬浮
-        effect: 'none', // 展现效果，目前有三个效果 'none', 'fade', 'scroll'
+        effect: 'none', // 展现效果，目前有三个效果 'none', 'fade', 'scroll'，
+                        // 如果此参数为 function，则使用自定义效果
 		delay: 5000, // 卡盘间延迟展现时间
 		speed: 500, // 卡盘滚动以及渐变时间，当效果为 'none' 时无效
 		autoPlay: true, // 是否自动滚动
@@ -28,6 +30,9 @@ KISSY.add("slider", function(S) {
         direction: 'vertical' // 滚动方向 'horizontal(h)' or 'vertical(v)'
 	};
 
+    /**
+     * 展现效果
+     */
     var _effects = {
         'none': function() {
             var config = this.config, direction = this.direction;
@@ -102,6 +107,19 @@ KISSY.add("slider", function(S) {
         this.config = Lang.merge(defaultConfig, config || {});
         this.container = Dom.get(container);
 
+        // 确定滚动方向，方便效果函数操作
+        this.direction = {
+            x: (config.direction == 'horizontal') || (config.direction == 'h'),
+            y: (config.direction == 'vertical')   || (config.direction == 'v')       
+        };
+
+        // 获取面板
+        this.panels = this.config.panels || Array().slice.call(container.getElementsByTagName('li'));
+
+        // 计算面板的总数
+        this.total = this.panels.length;
+
+        // 初始化
         this._init();
     };
 
@@ -109,28 +127,17 @@ KISSY.add("slider", function(S) {
         _init: function() {
             var config = this.config, container = this.container, effect;
 
-            // direction
-            this.direction = {
-                x: (config.direction == 'horizontal') || (config.direction == 'h'),
-                y: (config.direction == 'vertical')   || (config.direction == 'v')       
-            };
-
-            // panels
-            this.panels = this.config.panels || Array().slice.call(container.getElementsByTagName('li'));
-
-            // total
-            this.total = this.panels.length;
-
-            // switch
+            // 计算切换大小，因此所有的 panels 必须同样大小
             this.switchSize = parseInt(this.config.switchSize, 10);
             if (!this.switchSize) {
                 var region = Y.Region.getRegion(this.panels[0]);
                 this.switchSize = region[this.direction.x ? 'width' : 'height'];
             }
 
+            // 获取滚动元素，默认为 li 的上级，也就是 li 或者 ol
             this.scroller = config.scroller || this.panels[0].parentNode;
 
-            // triggers
+            // 触发器
             this.triggers = config.triggers;
             if (!this.triggers) {
                 var triggers = document.createElement('ul');
@@ -144,10 +151,10 @@ KISSY.add("slider", function(S) {
                 this.triggers = Array().slice.call(triggers.getElementsByTagName('li'));
             }
 
-            //
+            // 确定开始的位置
             this.current = Lang.isNumber(config.startAt) ? config.startAt : 0;
 
-            // switch effect
+            // 确定滚动效果
             if (Lang.isFunction(config.effect)) {
                 effect = config.effect;
             } else if (Lang.isString(config.effect) && Lang.isFunction(_effects[config.effect])) {
@@ -158,18 +165,18 @@ KISSY.add("slider", function(S) {
             this.effect = new Y.CustomEvent('effect', this, false, Y.CustomEvent.FLAT);
             this.effect.subscribe(effect);
 
-            // callback
+            // 绑定回调
             if (Lang.isFunction(config.onSwitch)) {
                 this.onSwitchEvent = new Y.CustomEvent('onSwitchEvent', this, false, Y.CustomEvent.FLAT);
                 this.onSwitchEvent.subscribe(config.onSwitch);
             }
 
-            // bind event
-            Event.on(container, 'mouseover', function() {
+            // 绑定事件
+            Event.on(container, 'mouseover', function(e) {
                 this.sleep();
             }, this, true);
 
-            Event.on(container, 'mouseout', function() {
+            Event.on(container, 'mouseout', function(e) {
                 if (config.autoPlay) {
                     this.wakeup();
                 }
@@ -179,14 +186,14 @@ KISSY.add("slider", function(S) {
                 (function(index) {
                     switch(config.eventType.toLowerCase()) {
                         case 'mouse':
-                            Event.on(this.triggers[index], ie ? 'mouseenter': 'mouseover', function() {
+                            Event.on(this.triggers[index], ie ? 'mouseenter': 'mouseover', function(e) {
                                 if (_timer) _timer.cancel();
                                 _timer = Lang.later(50, this, function() {
                                     this.switchTo(index);                               
                                 });
                             }, this, true);
 
-                            Event.on(this.triggers[index], ie ? 'mouseleave' : 'mouseout', function() {
+                            Event.on(this.triggers[index], ie ? 'mouseleave' : 'mouseout', function(e) {
                                 _timer.cancel();
                                 if (config.autoPlay) {
                                     this.wakeup();
@@ -205,12 +212,12 @@ KISSY.add("slider", function(S) {
                 }).call(this, i);
             }
 
-            // init scroll size
+            // 初始化 triggers 的样式以及滚动距离
             Dom.addClass(this.triggers[this.current], config.currentClass);
             this.scroller.scrollTop = this.switchSize * this.current;
             this.scroller.scrollLeft = this.switchSize * this.current;
 
-            // autoPlay?
+            // 是否自动滚动
             if (config.autoPlay && this.panels.length > 1) {
                 this.pause = false;
                 Lang.later(config.delay, this, 
