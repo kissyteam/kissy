@@ -5,6 +5,11 @@
  * @creator mingcheng<i.feelinglucky#gmail.com>
  * @since   2009-12-16
  * @link    http://www.gracecode.com/
+ * @change
+ *     [+]new feature  [*]improvement  [!]change  [x]bug fix
+ *
+ *  [+] 2009-12-18
+ *      初始化版本
  */
 
 KISSY.add("slider", function(S) {
@@ -40,7 +45,7 @@ KISSY.add("slider", function(S) {
         },
 
         'fade': function() {
-            var config = this.config, anim = this._anim, panels = this.panels,
+            var config = this.config, panels = this.panels,
                 current = panels[this.current] || panels[0], next = panels[this.next] || panels[panels.length - 1];
 
             // init fade elements at first time
@@ -53,26 +58,26 @@ KISSY.add("slider", function(S) {
                 this.initFade = true;
             }
 
-            if (anim && this._fading) {
-                anim.stop();
+            if (this._anim && this._fading) {
+                this._anim.stop();
             }
             this._fading = true;
             Dom.setStyle(current, 'z-index', 2);
             Dom.setStyle(next, 'z-index', 1); Dom.setStyle(next, 'opacity', 1);
             Dom.setStyle([current, next] , 'display', '');
-            anim = new YAHOO.util.Anim(current, {opacity: {from: 1, to: 0}}, 
+            this._anim = new YAHOO.util.Anim(current, {opacity: {from: 1, to: 0}}, 
                             config.speed/1000 || .5, config.easing || Y.Easing.easeNone); 
-            anim.onComplete.subscribe(function() {
+            this._anim.onComplete.subscribe(function() {
                 Dom.setStyle(current, 'display', 'none');
                 Dom.setStyle([current, next], 'z-index', 1);
                 this._fading = false;
             }, this, true);
 
-            anim.animate();
+            this._anim.animate();
         },
 
         'scroll': function() {
-            var config = this.config, anim = this._anim;
+            var config = this.config;
             var attributes, 
                 from = this.current * this.switchSize, to = this.next * this.switchSize;
 
@@ -92,40 +97,47 @@ KISSY.add("slider", function(S) {
                 };
             }
 
-            if (anim) { anim.stop(); }
-            anim = new Y.Scroll(this.scroller, attributes, config.speed/1000 || .5, config.easing || Y.Easing.easeOutStrong);
+            if (this._anim) { this._anim.stop(); }
+            this._anim = new Y.Scroll(this.scroller, attributes, 
+                    config.speed/1000 || .5, config.easing || Y.Easing.easeOutStrong);
             /*
             anim.onComplete.subscribe(function() {
                 // ...
             });
             */
-            anim.animate();
+            this._anim.animate();
         }
     };
 
+
+    /**
+     * Slider 组件
+     *
+     * @params container Slider 容器
+     * @params config 配置函数
+     * @return Slider 实例
+     */
     var Slider = function(container, config) {
         this.config = Lang.merge(defaultConfig, config || {});
         this.container = Dom.get(container);
-
-        // 确定滚动方向，方便效果函数操作
-        this.direction = {
-            x: (config.direction == 'horizontal') || (config.direction == 'h'),
-            y: (config.direction == 'vertical')   || (config.direction == 'v')       
-        };
-
-        // 获取面板
-        this.panels = this.config.panels || Array().slice.call(container.getElementsByTagName('li'));
-
-        // 计算面板的总数
-        this.total = this.panels.length;
-
-        // 初始化
         this._init();
     };
 
     Lang.augmentObject(Slider.prototype, {
         _init: function() {
             var config = this.config, container = this.container, effect;
+
+            // 确定滚动方向，方便效果函数操作
+            this.direction = {
+                x: (config.direction == 'horizontal') || (config.direction == 'h'),
+                y: (config.direction == 'vertical')   || (config.direction == 'v')       
+            };
+
+            // 获取面板
+            this.panels = config.panels || Lang.merge([], container.getElementsByTagName('li'));
+
+            // 计算面板的总数
+            this.total = this.panels.length;
 
             // 计算切换大小，因此所有的 panels 必须同样大小
             this.switchSize = parseInt(this.config.switchSize, 10);
@@ -148,7 +160,7 @@ KISSY.add("slider", function(S) {
                     triggers.appendChild(t);
                 }
                 this.container.appendChild(triggers);
-                this.triggers = Array().slice.call(triggers.getElementsByTagName('li'));
+                this.triggers = Lang.merge([], triggers.getElementsByTagName('li'));
             }
 
             // 确定开始的位置
