@@ -60,6 +60,7 @@ KISSY.add("slider", function(S) {
 
             if (this._anim && this._fading) {
                 this._anim.stop();
+                Dom.setStyle(panels, 'display', 'none');
             }
             this._fading = true;
             Dom.setStyle(current, 'z-index', 2);
@@ -78,25 +79,8 @@ KISSY.add("slider", function(S) {
 
         'scroll': function() {
             var config = this.config;
-            var attributes, 
-                from = this.current * this.switchSize, to = this.next * this.switchSize;
-
-            if (this.direction.x) {
-                attributes = {
-                    scroll: {
-                        from: [from],
-                        to:   [to]
-                    }
-                }; 
-            } else {
-                attributes = {
-                    scroll: {
-                        from: [, from],
-                        to:   [, to]
-                    }
-                };
-            }
-
+            var attributes = {scroll: {to:[]}};
+            attributes.scroll.to[this.direction.x ? 0 : 1] = this.next * this.switchSize;
             if (this._anim) { this._anim.stop(); }
             this._anim = new Y.Scroll(this.scroller, attributes, 
                     config.speed/1000 || .5, config.easing || Y.Easing.easeOutStrong);
@@ -142,8 +126,7 @@ KISSY.add("slider", function(S) {
             // 计算切换大小，因此所有的 panels 必须同样大小
             this.switchSize = parseInt(this.config.switchSize, 10);
             if (!this.switchSize) {
-                var region = Y.Region.getRegion(this.panels[0]);
-                this.switchSize = region[this.direction.x ? 'width' : 'height'];
+                this.switchSize = this.panels[0][this.direction.x ? 'clientWidth' : 'clientHeight'];
             }
 
             // 获取滚动元素，默认为 li 的上级，也就是 li 或者 ol
@@ -206,7 +189,7 @@ KISSY.add("slider", function(S) {
                             }, this, true);
 
                             Event.on(this.triggers[index], ie ? 'mouseleave' : 'mouseout', function(e) {
-                                _timer.cancel();
+                                if (_timer) _timer.cancel();
                                 if (config.autoPlay) {
                                     this.wakeup();
                                 }
@@ -264,7 +247,7 @@ KISSY.add("slider", function(S) {
             this.current = this.next;
 
             // run callback
-            if (this.onSwitchEvent) {
+            if (Lang.isObject(this.onSwitchEvent) && this.onSwitchEvent.fire) {
                 this.onSwitchEvent.fire();
             }
 
