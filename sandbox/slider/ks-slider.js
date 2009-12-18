@@ -41,7 +41,6 @@ KISSY.add("slider", function(S) {
     var _effects = {
         /**
          * 默认无任何效果，直接切换
-         *
          */
         'none': function() {
             var t = this, config = t.config;
@@ -56,6 +55,7 @@ KISSY.add("slider", function(S) {
                 current = panels[t.current] || panels[0], next = panels[t.next] || panels[panels.length - 1];
 
             // 在首次运行时初始化节点
+            // @todo 需要优化
             if (!this._initFade) {
                 setStyle(panels, 'position', 'absolute');
                 setStyle(panels, 'top',  config.slideOffsetY || 0);
@@ -243,6 +243,7 @@ KISSY.add("slider", function(S) {
             this.scroller = scroller;
             this.triggers = triggers;
             this.current = current;
+            this.total = total;
         },
 
         /**
@@ -260,7 +261,7 @@ KISSY.add("slider", function(S) {
             // 计算下个标记位
             this.next = Lang.isNumber(index) ? index : t.current + 1;
             if (this.next >= t.total) {
-                this.next = 0;
+                this.next = Lang.isNumber(config.startAt) ? config.startAt : 0;
             }
 
             // 执行效果
