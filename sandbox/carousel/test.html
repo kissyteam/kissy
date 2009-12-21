@@ -172,6 +172,7 @@ KISSY().use("carousel", function(S) {
         direction: 'h',
         autoStart: false,
         speed: 500,
+        scrollWidth: 406,
         onBeforeScroll: function() {
             YAHOO.util.Dom.get('count').innerHTML = this.current;
         }
@@ -187,7 +188,7 @@ KISSY().use("carousel", function(S) {
     for(var i = 0; i < 5; i++) {
         ~function(idx) {
             YAHOO.util.Event.on('jump' + idx, 'click', function() {
-                h.jumpTo(idx, 'prev');
+                h.jumpTo(idx);
             });
         }(i);
     }
@@ -254,9 +255,10 @@ KISSY().use("carousel", function(S) {
 </div>
 <textarea id="logger" rows="10" cols="50"></textarea>
 <script type="text/javascript">
+    handle = null;
     KISSY().use("carousel", function(S) {
         var counter = 0;
-        var handle = new S.Carousel('demo2UL', {
+        handle = new S.Carousel('demo2UL', {
             onScroll: function() {
                 YAHOO.util.Dom.get('logger').value += 'haha ' + (++counter) + '\r\n';
             },
@@ -269,12 +271,6 @@ KISSY().use("carousel", function(S) {
 
         handle.pause();
         handle.wakeup();
-
-        /*
-         var handle = TB.widget.SimpleScroll.decorate('', {distance: 70, startDelay: 3, delay:2});
-         handle.onScroll(function(){
-         });
-         */
     });
 </script>
 <button onclick="handle.pause();">Pause</button><button onclick="handle.wakeup();">Play</button>

@@ -15,13 +15,14 @@ KISSY.add("carousel", function(S) {
         startDelay: 2000,
         autoStart: true,
         direction: 'vertical', // 'horizontal(h)' or 'vertical(v)'
+        scrollWidth: false,
         //easing: function() {},
         //onScroll: function() {},
         //onBeforeScroll: function() {},
         //onPause: function() {},
         //onWakeup: function() {},
         scrollSize: 1 // the number of horse scrolls, default is 1
-    }
+    };
 
     // find the next element which to scroll
     var findNextHorse = function(ref, size, direction) {
@@ -82,7 +83,7 @@ KISSY.add("carousel", function(S) {
         this._init(); 
     }
 
-    Lang.augmentObject(Carousel.prototype, {
+    S.mix(Carousel.prototype, {
         _init: function() {
             var config = this.config, container = this.container;
 
@@ -98,14 +99,10 @@ KISSY.add("carousel", function(S) {
 
             // stop scroll when mouseover the container
             Event.on(container, 'mouseover', function() {
-                if (this.config.autoStart) {
-                    this.pause();
-                }
+                if (config.autoStart) this.pause();
             }, this, true);
             Event.on(container, 'mouseout',  function() {
-                if (this.config.autoStart) {
-                    this.wakeup();
-                }
+                if (config.autoStart) this.wakeup();
             }, this, true);
 
             // autoStart?
@@ -115,6 +112,7 @@ KISSY.add("carousel", function(S) {
                 });
             }
         },
+
 
         play: function(direction) {
             var _self = this, container = this.container, pointer = this.pointer,
@@ -135,21 +133,27 @@ KISSY.add("carousel", function(S) {
                 destination = findNextHorse(pointer, config.scrollSize, direction);
             }
 
+            if (Lang.isNumber(config.scrollWidth)) {
+                var offset = config.scrollWidth * config.scrollSize;
+            }
+
             // sucks IE, need more code to fix its bug
             if (this.direction.y) {
-                attributes = {
-                    scroll: {
-                        from: [, pointer['offsetTop'] - container['offsetTop']],
-                        to:   [, destination['offsetTop'] - container['offsetTop']]
-                    }
-                };
+                var from = pointer['offsetTop'] - container['offsetTop'];
+                attributes = {scroll: { from: [, from] }};
+                if (offset) {
+                    attributes.scroll.to = [, from + (offset * (direction == 'next' ? 1 : -1))];
+                } else {
+                    attributes.scroll.to = [, destination['offsetTop'] - container['offsetTop']];
+                }
             } else {
-                attributes = {
-                    scroll: {
-                        from: [pointer['offsetLeft'] - container['offsetLeft']],
-                        to:   [destination['offsetLeft'] - container['offsetLeft']]
-                    }
-                }; 
+                var from = pointer['offsetLeft'] - container['offsetLeft'];
+                attributes = { scroll: { from: [from] } };
+                if (offset) {
+                    attributes.scroll.to = [from + (offset * (direction == 'next' ? 1 : -1))];
+                } else {
+                    attributes.scroll.to = [destination['offsetLeft'] - container['offsetLeft']];
+                }
             }
 
             // move pointer to next Item
@@ -167,21 +171,21 @@ KISSY.add("carousel", function(S) {
             if (this.anim) {
                 this.anim.stop();
             }
-            this.anim = new Y.Scroll(container, attributes, config.speed/1000, 
+            this.anim = new Y.Scroll(container, attributes, config.speed/1000,
                 config.easing || Y.Easing.easeOut); 
             this.anim.onComplete.subscribe(function() {
-                _self._scrolling = false;
+                this._scrolling = false;
 
                 // run the callback
-                if(Lang.isObject(_self.onScrollEvent)) {
-                    _self.onScrollEvent.fire();
+                if(Lang.isObject(this.onScrollEvent)) {
+                    this.onScrollEvent.fire();
                 }
 
                 // set next move time
-                if (!_self.paused && config.autoStart) {
-                    _self.timer = Lang.later(config.delay, _self, callee);
+                if (!this.paused && config.autoStart) {
+                    this.timer = Lang.later(config.delay, _self, callee);
                 }
-            });
+            }, this, true);
             this.anim.animate();
         },
 
@@ -217,10 +221,13 @@ KISSY.add("carousel", function(S) {
         },
 
         jumpTo: function(index, direction) {
-            direction = (direction == 'prev') ? 'prev' : 'next';
+            var _self = this, pointer = this.pointer, config = this.config;
 
-            var _self = this, pointer = this.pointer, config = this.config,
-                opponent = (direction == 'prev') ? 'next' : 'prev';
+            if (Lang.isUndefined(direction) && Lang.isNumber(this._prevIndex)) {
+                direction = index > this._prevIndex ? 'next' : 'prev';
+            }
+            direction = (direction == 'prev') ? 'prev' : 'next';
+            var opponent = (direction == 'prev') ? 'next' : 'prev';
 
             if (index > this.total) {
                 return;
@@ -242,6 +249,9 @@ KISSY.add("carousel", function(S) {
                 queueHorses(pointer.parentNode, config.scrollSize, direction);
                 this.pointer = findNextHorse(current, config.scrollSize, opponent);
             }
+
+            //
+            this._prevIndex = index;
 
             // start scroll
             this.play(direction);
