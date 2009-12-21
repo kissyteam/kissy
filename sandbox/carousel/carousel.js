@@ -24,6 +24,23 @@ KISSY.add("carousel", function(S) {
         scrollSize: 1 // the number of horse scrolls, default is 1
     };
 
+
+    //http://www.gtalbot.org/BrowserBugsSection/MSIE6Bugs/
+    function getRealOffset(o) {
+        var elem = Dom.get(o), leftOffset = elem.offsetLeft,
+            topOffset = elem.offsetTop, parent = elem.offsetParent;
+
+        // fix ie offsetLeft bug
+        while(parent) {
+            leftOffset += parent.offsetLeft;
+            topOffset += parent.offsetTop;
+            parent = parent.offsetParent;
+        }
+
+        return { top: topOffset, left: leftOffset };
+    }
+        
+
     // find the next element which to scroll
     var findNextHorse = function(ref, size, direction) {
         var func = Dom[(direction == 'prev') ? 'getPreviousSibling' : 'getNextSibling'];
@@ -137,9 +154,13 @@ KISSY.add("carousel", function(S) {
                 var offset = config.scrollWidth * config.scrollSize;
             }
 
+            var pointerOffset = getRealOffset(pointer),
+                containerOffset = getRealOffset(container),
+                destinationOffset = getRealOffset(destination);
             // sucks IE, need more code to fix its bug
             if (this.direction.y) {
-                var from = pointer['offsetTop'] - container['offsetTop'];
+
+                var from = pointerOffset.top - containerOffset.top;
                 attributes = {scroll: { from: [, from] }};
                 if (offset) {
                     attributes.scroll.to = [, from + (offset * (direction == 'next' ? 1 : -1))];
@@ -147,13 +168,22 @@ KISSY.add("carousel", function(S) {
                     attributes.scroll.to = [, destination['offsetTop'] - container['offsetTop']];
                 }
             } else {
-                var from = pointer['offsetLeft'] - container['offsetLeft'];
+                var from = pointerOffset.left - containerOffset.left;
                 attributes = { scroll: { from: [from] } };
                 if (offset) {
                     attributes.scroll.to = [from + (offset * (direction == 'next' ? 1 : -1))];
                 } else {
-                    attributes.scroll.to = [destination['offsetLeft'] - container['offsetLeft']];
+                    attributes.scroll.to = [destinationOffset.left - containerOffset.left];
                 }
+
+
+                /*
+                if (YAHOO.env.ua.ie) {
+                    var ieOffset = parseInt(Dom.getStyle(container.parentNode, 
+                                   direction == 'next' ? 'padding-left' : 'padding-right'), 10);
+                    attributes.scroll.to[0] += ieOffset * (direction == 'next' ? 1 : -1);
+                }
+                */
             }
 
             // move pointer to next Item
