@@ -68,13 +68,14 @@ KISSY.add("slider", function(S) {
             // 动画前的初始化
             if (this._anim && this._fading) {
                 this._anim.stop();
-                setStyle(panels, 'display', 'none');
             }
-            this._fading = true;
+            setStyle(panels, 'display', 'none');
             setStyle(current, 'z-index', 2);
             setStyle(next, 'z-index', 1);
             setStyle(next, 'opacity', 1);
             setStyle([current, next] , 'display', '');
+
+            this._fading = true;
 
             // 开始动画
             this._anim = new YAHOO.util.Anim(current, {opacity: {from: 1, to: 0}}, 
