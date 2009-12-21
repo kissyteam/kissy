@@ -1,13 +1,12 @@
 /**
- * Triggerable
- * @module      triggerable
+ * SlideView
+ * @module      slideview
  * @creator     ”Ò≤Æ<lifesinger@gmail.com>
  * @depends     kissy-core, yahoo-dom-event
  */
-KISSY.add("triggerable", function(S) {
+KISSY.add("slideview", function(S) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
-        win = window, doc = document,
 
         defaultConfig = {
         };
@@ -16,10 +15,10 @@ KISSY.add("triggerable", function(S) {
      * Triggerable
      * @constructor
      */
-    function Triggerable(triggers, panels, config) {
+    function SlideView(container, config) {
         // factory or constructor
         if (!(this instanceof arguments.callee)) {
-            return new arguments.callee(triggers, panels, config);
+            return new arguments.callee(container, config);
         }
 
         /**
@@ -37,7 +36,7 @@ KISSY.add("triggerable", function(S) {
         this._init();
     }
 
-    S.mix(TriggerableView.prototype, {
+    S.mix(SlideView.prototype, {
 
         /**
          * ≥ı ºªØ
@@ -47,5 +46,6 @@ KISSY.add("triggerable", function(S) {
         }
     });
 
-    S.Triggerable = Triggerable;
+    S.mix(SlideView.prototype, S.Triggerable);
+    S.SlideView = SlideView;
 });
