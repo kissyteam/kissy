@@ -982,7 +982,7 @@ KISSY.add("suggest", function(S) {
 
         });
 
-        S.mix(Suggest.prototype, Y.EventProvider.prototype);
+        S.augment(Suggest, Y.EventProvider);
 
         /**
          * 约定的全局回调函数

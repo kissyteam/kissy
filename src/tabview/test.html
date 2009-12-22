@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>TabView Test</title>
+<link rel="stylesheet" href="../../build/cssbase/base.css" />
+<script src="../../lib/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+</head>
+<body>
+<style type="text/css">
+    body { padding: 50px; }
+    
+	.box { position: relative; width: 600px; margin-bottom: 50px; }
+
+	.box-hd { position: absolute; z-index: 99; left: 20px }
+    .box-hd li {
+        float: left;
+        margin-right: 3px; padding-top: 8px;
+        width: 130px; height: 27px;
+        line-height: 21px; text-align: center;
+        background:url(assets/sprite.gif) no-repeat 0 6px;
+        cursor: pointer
+    }
+    .box-hd .current { background-position: 0 -40px; cursor: default!important }
+    .box-hd .current { font-size: 14px; color: #333; font-weight: bold }
+    .box-hd .current a:hover,
+    .box-hd .current a:active { text-decoration: none; cursor: default }
+    .box-hd a { color: #111 !important }
+	
+	.box-bd {
+		clear: both;
+		position: relative;
+		top: 29px;
+		border: 1px solid #AEC7E5;
+		height: 60px;
+		overflow: auto;
+		padding: 20px;
+	}
+</style>
+
+<div id="demo1" class="box">
+	<ul class="box-hd ks-tabview-nav">
+		<li class="current">标题 A</li>
+		<li>标题 B</li>
+		<li>标题 C</li>
+		<li>标题 D</li>
+	</ul>
+	<div class="box-bd ks-tabview-content">
+		<div>第一种结构，传入 id 即可 </div>
+		<div style="display: none">内容区域 B</div>
+		<div style="display: none">内容区域 C</div>
+		<div style="display: none">内容区域 D</div>
+	</div>
+</div>
+
+<div id="demo2" class="box">
+	<ul class="box-hd">
+		<li class="current">标题 A</li>
+		<li>标题 B</li>
+		<li>标题 C</li>
+		<li>标题 D</li>
+	</ul>
+	<div class="box-bd">
+		<div>第二种结构，传入自定义 navCls 和 contentCls </div>
+		<div style="display: none">内容区域 B</div>
+		<div style="display: none">内容区域 C</div>
+		<div style="display: none">内容区域 D</div>
+	</div>
+</div>
+
+<div id="demo3" class="box">
+	<ul class="box-hd">
+		<li class="ks-tabview-trigger current">标题 A</li>
+		<li class="ks-tabview-trigger">标题 B</li>
+		<li class="ks-tabview-trigger">标题 C</li>
+		<li class="ks-tabview-trigger">标题 D</li>
+	</ul>
+	<div class="box-bd">
+		<div class="ks-tabview-panel">第三种结构，传入 triggerCls 和 panelCls </div>
+		<div class="ks-tabview-panel" style="display: none">内容区域 B</div>
+		<div class="ks-tabview-panel" style="display: none">内容区域 C</div>
+		<div class="ks-tabview-panel" style="display: none">内容区域 D</div>
+	</div>
+</div>
+
+<div id="demo4" class="box">
+	<ul class="box-hd">
+		<li class="current">标题 A</li>
+		<li>标题 B</li>
+		<li>标题 C</li>
+		<li>标题 D</li>
+	</ul>
+	<div class="box-bd">
+		<div>第四种结构，直接传入 triggers 和 panels </div>
+		<div style="display: none">内容区域 B</div>
+		<div style="display: none">内容区域 C</div>
+		<div style="display: none">内容区域 D</div>
+	</div>
+</div>
+
+<script>
+
+</script>
+</body>
+</html>
