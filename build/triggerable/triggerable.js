@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2009, Kissy UI Library. All rights reserved.
+MIT Licensed.
+http://kissy.googlecode.com/
+
+Date: 2009-12-22 23:10:54
+Revision: 333
+*/
 /**
  * Triggerable
  * @module      triggerable

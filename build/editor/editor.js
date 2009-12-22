@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-17 21:11:36
-Revision: 317
+Date: 2009-12-22 23:10:42
+Revision: 333
 */
 /**
  * @module kissy
@@ -39,16 +39,16 @@ if (typeof KISSY === "undefined" || !KISSY) {
 
     var win = window, UNDEFINED = "undefined",
         mix = function(r, s, ov) {
-                if(!s || !r) return r;
-                if(typeof ov === UNDEFINED) ov = true;
-                var p;
-                if (ov || !(p in r)) {
-                    for (p in s) {
-                        r[p] = s[p];
-                    }
+            if (!s || !r) return r;
+            if (typeof ov === UNDEFINED) ov = true;
+            var p;
+            if (ov || !(p in r)) {
+                for (p in s) {
+                    r[p] = s[p];
                 }
-                return r;
-            };
+            }
+            return r;
+        };
 
     mix(S.prototype, {
 
@@ -169,6 +169,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
                 // add this module to full list of things to attach
                 r.push(name);
             }
+
             for (i = 0; i < l; i++) {
                 f(a[i]);
             }
@@ -177,7 +178,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
             o._attach(r);
 
             // callback
-            if(callback) {
+            if (callback) {
                 callback(o);
             }
 
@@ -243,7 +244,9 @@ if (typeof KISSY === "undefined" || !KISSY) {
 
             var OP = Object.prototype,
                 O = function (o) {
-                    function F() {}
+                    function F() {
+                    }
+
                     F.prototype = o;
                     return new F();
                 },
@@ -273,6 +276,17 @@ if (typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
+         * Applies prototype properties from the supplier to the receiver.
+         * The receiver must be a Function.
+         * @param {Function} r  the object to receive the augmentation
+         * @param {Function} s  the object that supplies the properties to augment
+         * @return {object} the augmented object
+         */
+        augment: function(r, s, ov) {
+            return this.mix(r.prototype, s.prototype, ov);
+        },
+
+        /**
          * Clones KISSY to another global object.
          * <pre>
          * S.cloneTo("TaoBao");
@@ -285,9 +299,10 @@ if (typeof KISSY === "undefined" || !KISSY) {
                 if (!(this instanceof O)) {
                     return new O(c);
                 }
-                if(typeof c === UNDEFINED) c = []; // fix ie bug
+                if (typeof c === UNDEFINED) c = []; // fix ie bug
                 O.superclass.constructor.apply(this, c);
             }
+
             S.extend(O, S, null, S);
             return (win[name] = O);
         },
@@ -306,7 +321,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
         namespace: function() {
             var a = arguments, l = a.length, o = this, i, j, p;
             // allow instance.namespace() to work fine.
-            if(typeof o === "object") o = o.constructor;
+            if (typeof o === "object") o = o.constructor;
 
             for (i = 0; i < l; i++) {
                 p = ("" + a[i]).split(".");

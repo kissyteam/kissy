@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-17 21:11:40
-Revision: 317
+Date: 2009-12-22 23:10:50
+Revision: 333
 */
 /**
  * 提示补全组件
@@ -990,7 +990,7 @@ KISSY.add("suggest", function(S) {
 
         });
 
-        S.mix(Suggest.prototype, Y.EventProvider.prototype);
+        S.augment(Suggest, Y.EventProvider);
 
         /**
          * 约定的全局回调函数

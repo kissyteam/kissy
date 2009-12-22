@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-17 21:11:31
-Revision: 317
+Date: 2009-12-22 23:10:37
+Revision: 333
 */
 /**
  * 数据延迟加载组件
