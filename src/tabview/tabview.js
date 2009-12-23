@@ -1,6 +1,7 @@
 /**
  * TabView
  * @module      tabview
+ * @creator     淘宝前端架构研发组
  * @depends     yahoo-dom-event, kissy-core, triggerable
  */
 KISSY.add("tabview", function(S) {

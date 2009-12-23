@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-23 08:44:13
-Revision: 334
+Date: 2009-12-23 17:51:01
+Revision: 338
 */
 /**
  * Triggerable
@@ -87,6 +87,11 @@ KISSY.add("triggerable", function(S) {
             var self = this;
             if(self.showTimer) self.showTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
             if(self.activeIndex === index) return; // 重复点击
+
+            // 立刻停止当前动画，以响应用户当前操作
+            if (self.anim && self.anim.isAnimated()) {
+                return;
+            }
 
             self.switchTo(index);
         },

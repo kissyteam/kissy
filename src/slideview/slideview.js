@@ -1,7 +1,7 @@
 /**
  * SlideView
  * @module      slideview
- * @creator     玉伯<lifesinger@gmail.com>
+ * @creator     淘宝前端架构研发组
  * @depends     kissy-core, yahoo-dom-event
  */
 KISSY.add("slideview", function(S) {

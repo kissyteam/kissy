@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+<meta charset="gbk"/>
 <title>TabView Test</title>
 <link rel="stylesheet" href="../../build/cssbase/base.css"/>
 <script src="../../lib/yui2/yui-base/yui-base-min.js"></script>
@@ -70,66 +70,65 @@
 
 <div id="demo1" class="box">
     <ul class="box-hd">
-        <li class="current">æ ‡é¢˜ A</li>
-        <li>æ ‡é¢˜ B</li>
-        <li>æ ‡é¢˜ C</li>
-        <li>æ ‡é¢˜ D</li>
-        <li>æ ‡é¢˜ E</li>
+        <li class="current">±êÌâ A</li>
+        <li>±êÌâ B</li>
+        <li>±êÌâ C</li>
+        <li>±êÌâ D</li>
+        <li>±êÌâ E</li>
     </ul>
     <div class="box-bd">
         <div>
 <pre>
-  - åœ¨å½“å‰ trigger ä¸­ mouseover/mouseout, click, focus, ä¸è§¦å‘
-  - é¼ æ ‡å¿«é€Ÿæ»‘è¿‡éå½“å‰ trigger, ä¸è§¦å‘
-  - mouseover åˆ°éå½“å‰ trigger, åœç•™æ—¶é—´åˆ°è¾¾å»¶è¿Ÿæ—¶ï¼Œè§¦å‘
-  - click æˆ– Tab åˆ‡æ¢åˆ° trigger, ç«‹å³è§¦å‘
-  - beforeSwitch/onSwitch äº‹ä»¶çš„è§¦å‘
-  - å»¶è¿Ÿçš„å†…å®¹èƒ½æ­£ç¡®åŠ è½½
+  - ÔÚµ±Ç° trigger ÖĞ mouseover/mouseout, click, focus, ²»´¥·¢
+  - Êó±ê¿ìËÙ»¬¹ı·Çµ±Ç° trigger, ²»´¥·¢
+  - mouseover µ½·Çµ±Ç° trigger, Í£ÁôÊ±¼äµ½´ïÑÓ³ÙÊ±£¬´¥·¢
+  - click »ò Tab ÇĞ»»µ½ trigger, Á¢¼´´¥·¢
+  - beforeSwitch/onSwitch ÊÂ¼şµÄ´¥·¢
+  - ÑÓ³ÙµÄÄÚÈİÄÜÕıÈ·¼ÓÔØ
 </pre>
         </div>
-        <div style="display: none">å†…å®¹ B</div>
-        <div style="display: none">å†…å®¹ C</div>
-        <div style="display: none">å†…å®¹ D</div>
-        <div style="display: none"><textarea class="ks-datalazyload-custom">æˆ‘æ˜¯å»¶è¿Ÿå†…å®¹</textarea></div>
+        <div style="display: none">ÄÚÈİ B</div>
+        <div style="display: none">ÄÚÈİ C</div>
+        <div style="display: none">ÄÚÈİ D</div>
+        <div style="display: none"><textarea class="ks-datalazyload-custom">ÎÒÊÇÑÓ³ÙÄÚÈİ</textarea></div>
     </div>
 </div>
 
 <script src="../kissy/kissy.js"></script>
-<!--<script src="../datalazyload/datalazyload.js"></script>-->
+<script src="../datalazyload/datalazyload.js"></script>
 <script src="../triggerable/triggerable.js"></script>
-<!--<script src="../tabview/tabview.js"></script>-->
+<script src="../tabview/tabview.js"></script>
 <script>
-//    KISSY().use("*", function(S) {
-//return;
-//        var tabView = new S.TabView("demo1", {
-//            navCls: "box-hd",
-//            contentCls: "box-bd",
-//            activeTriggerCls: "current"
-//        });
-//
-//        tabView.subscribe("beforeSwitch", function(index) {
-//            var activeIndex = this.activeIndex;
-//
-//            // ä¸æ”¹å˜ç¬¬ 1 ä¸ªå’Œç¬¬ 4 ä¸ª Panel çš„å†…å®¹
-//            if (activeIndex !== 0 && activeIndex !== 4) {
-//                this.panels[activeIndex].innerHTML = "index = " + index + ", beforeSwitch fired and return false!";
-//            }
-//
-//            // ç¬¬ 4 ä¸ª Tab ä¸å¯åˆ‡æ¢
-//            return index !== 3;
-//        });
-//
-//        tabView.subscribe("onSwitch", function(index) {
-//            if(index === 0 || index === 4) return; // ä¸æ”¹å˜ç¬¬ 1 ä¸ªå’Œç¬¬ 4 ä¸ª Panel çš„å†…å®¹
-//
-//            var panel = this.panels[index];
-//            panel.innerHTML = "index = " + index;
-//            if (index === 2) {
-//                panel.innerHTML += " and onSwitch fired!";
-//            }
-//        });
-//
-//    });
+    KISSY().use("*", function(S) {
+
+        var tabView = new S.TabView("demo1", {
+            navCls: "box-hd",
+            contentCls: "box-bd",
+            activeTriggerCls: "current"
+        });
+
+        tabView.subscribe("beforeSwitch", function(index) {
+            var activeIndex = this.activeIndex;
+
+            // ²»¸Ä±äµÚ 1 ¸öºÍµÚ 4 ¸ö Panel µÄÄÚÈİ
+            if (activeIndex !== 0 && activeIndex !== 4) {
+                this.panels[activeIndex].innerHTML = "index = " + index + ", beforeSwitch fired and return false!";
+            }
+
+            // µÚ 4 ¸ö Tab ²»¿ÉÇĞ»»
+            return index !== 3;
+        });
+
+        tabView.subscribe("onSwitch", function(index) {
+            if(index === 0 || index === 4) return; // ²»¸Ä±äµÚ 1 ¸öºÍµÚ 4 ¸ö Panel µÄÄÚÈİ
+
+            var panel = this.panels[index];
+            panel.innerHTML = "index = " + index;
+            if (index === 2) {
+                panel.innerHTML += " and onSwitch fired!";
+            }
+        });
+    });
 </script>
 </body>
 </html>
