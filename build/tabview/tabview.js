@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-22 23:10:52
-Revision: 333
+Date: 2009-12-23 08:44:19
+Revision: 334
 */
 /**
  * TabView
@@ -13,7 +13,7 @@ Revision: 333
  */
 KISSY.add("tabview", function(S) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, //Event = Y.Event, Lang = YAHOO.lang,
+    var Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
         CLS_PRE = "ks-tabview-",
 
         defaultConfig = {
@@ -45,6 +45,14 @@ KISSY.add("tabview", function(S) {
      * @constructor
      */
     function TabView(container, config) {
+        // 使 container 支持数组
+        if (Lang.isArray(container)) {
+            for (var rets = [], i = 0, len = container.length; i < len; i++) {
+                rets[rets.length] = new arguments.callee(container[i], config);
+            }
+            return rets;
+        }
+
         // factory or constructor
         if (!(this instanceof arguments.callee)) {
             return new arguments.callee(container, config);

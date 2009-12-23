@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-22 23:10:37
-Revision: 333
+Date: 2009-12-23 08:44:05
+Revision: 334
 */
 /**
  * 数据延迟加载组件
@@ -19,6 +19,7 @@ KISSY.add("datalazyload", function(S) {
         win = window, doc = document,
         DATA_SRC = "data-lazyload-src",
         LAZY_TEXTAREA_CLS = "ks-datalazyload",
+        CUSTOM_LAZYLOAD_CLS = "ks-datalazyload-custom",
         MOD = { AUTO: "auto", MANUAL: "manual" },
         DEFAULT = "default",
 
@@ -322,6 +323,16 @@ KISSY.add("datalazyload", function(S) {
          */
         _getItemsLength: function() {
             return this.images.length + this.areaes.length + this.callbacks.els.length;
+        },
+
+        /**
+         * 加载自定义延迟数据
+         */
+        loadCustomLazyData: function(parent) {
+            var textarea = parent.getElementsByTagName("textarea")[0];
+            if (textarea && Dom.hasClass(textarea, CUSTOM_LAZYLOAD_CLS)) {
+                parent.innerHTML = textarea.value;
+            }
         }
     });
 

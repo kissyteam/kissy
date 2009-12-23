@@ -129,6 +129,11 @@ KISSY.add("triggerable", function(S) {
             Dom.removeClass(triggers[self.activeIndex], cfg.activeTriggerCls);
             Dom.addClass(triggers[index], cfg.activeTriggerCls);
 
+            // 加载延迟数据
+            if (self.loadLazyData) {
+                self.loadLazyData(toPanel);
+            }
+
             // 切换 content
             self._switchContent(fromPanel, toPanel, index);
 
@@ -150,10 +155,14 @@ KISSY.add("triggerable", function(S) {
         _switchContent: function(fromPanel, toPanel/*, index*/) {
             // 最简单的切换效果：直接隐藏/显示
             fromPanel.style.display = "none";
-            toPanel.style.display = "";
+            toPanel.style.display = "block";
         }
     });
 
     S.augment(Triggerable, Y.EventProvider);
+    if(S.DataLazyload) {
+        Triggerable.prototype.loadLazyData = S.DataLazyload.prototype.loadCustomLazyData;
+    }
+
     S.Triggerable = Triggerable;
 });
