@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>测试 TB.widget.SimplePopup</title>
+<script type="text/javascript" src="../../tbra-widgets.js"></script>
+<script type="text/javascript" src="../../build/widget/simplepopup.js"></script>
+
+<style>
+#box {
+	padding: 10px 0 20px 300px;
+}
+#popup {
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+	background: #eee;
+}	
+
+#popup2 {
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+	background: #eee;
+}	
+
+#demo {
+	line-height: 20px;
+	border: 1px solid red;
+	display: block;
+	width:60px;
+	height: 30px;
+}
+
+#demo2 {
+	margin:0;
+	width: 200px;
+	border: 1px solid red;
+}
+
+#demo2 li {
+	background: #eee;
+	cursor: pointer;
+	margin: 5px 0;
+}
+</style>
+</head>
+<body>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div id="box">
+	<a href="#" id="demo" onclick="/*alert(1);*/" taobao:params="123">popup</a>
+	<select><option>1</option></option></select>
+ </div>
+ 
+<div style="border:1px solid red;width:200px; height:202px;" id="popup">Popup1</div>
+
+<script type="text/javascript">
+	
+	var handle = TB.widget.SimplePopup.decorate('demo', 'popup', {
+		width: 202,
+		height: 202,
+		position: 'bottom',
+		align: 'center',
+		effect: 'fade',
+		onShow: function(){
+			//alert(this.trigger.getAttribute('taobao:params'));
+		}
+	});
+</script>
+
+<ul id="demo2">
+	<li>Title 1</li>
+	<li>Title 2</li>
+	<li>Title 3</li>
+	<li>Title 4</li>
+</ul>
+
+<div style="border:1px solid blue;width:200px; height:202px;" id="popup2">Popup2</div>
+
+<script type="text/javascript">
+
+	var groupHandle = TB.widget.SimplePopup.decorate($('demo2').getElementsByTagName('li'), 'popup2', {
+		eventType: 'mouse',
+		width: 202,
+		height: 202,
+		offset: [5, 5],
+		autoFit: true,
+		position: 'right',
+		onShow: function() {
+			//groupHandle.currentHandle.popup.innerHTML = groupHandle.currentHandle.trigger.innerHTML;
+		}
+	});
+
+</script>
+
+</body>
+</html>
