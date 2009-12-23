@@ -95,41 +95,41 @@
 </div>
 
 <script src="../kissy/kissy.js"></script>
-<script src="../datalazyload/datalazyload.js"></script>
+<!--<script src="../datalazyload/datalazyload.js"></script>-->
 <script src="../triggerable/triggerable.js"></script>
-<script src="../tabview/tabview.js"></script>
+<!--<script src="../tabview/tabview.js"></script>-->
 <script>
-    KISSY().use("*", function(S) {
-
-        var tabView = new S.TabView("demo1", {
-            navCls: "box-hd",
-            contentCls: "box-bd",
-            activeTriggerCls: "current"
-        });
-
-        tabView.subscribe("beforeSwitch", function(index) {
-            var activeIndex = this.activeIndex;
-
-            // 不改变第 1 个和第 4 个 Panel 的内容
-            if (activeIndex !== 0 && activeIndex !== 4) {
-                this.panels[activeIndex].innerHTML = "index = " + index + ", beforeSwitch fired and return false!";
-            }
-
-            // 第 4 个 Tab 不可切换
-            return index !== 3;
-        });
-
-        tabView.subscribe("onSwitch", function(index) {
-            if(index === 0 || index === 4) return; // 不改变第 1 个和第 4 个 Panel 的内容
-
-            var panel = this.panels[index];
-            panel.innerHTML = "index = " + index;
-            if (index === 2) {
-                panel.innerHTML += " and onSwitch fired!";
-            }
-        });
-
-    });
+//    KISSY().use("*", function(S) {
+//return;
+//        var tabView = new S.TabView("demo1", {
+//            navCls: "box-hd",
+//            contentCls: "box-bd",
+//            activeTriggerCls: "current"
+//        });
+//
+//        tabView.subscribe("beforeSwitch", function(index) {
+//            var activeIndex = this.activeIndex;
+//
+//            // 不改变第 1 个和第 4 个 Panel 的内容
+//            if (activeIndex !== 0 && activeIndex !== 4) {
+//                this.panels[activeIndex].innerHTML = "index = " + index + ", beforeSwitch fired and return false!";
+//            }
+//
+//            // 第 4 个 Tab 不可切换
+//            return index !== 3;
+//        });
+//
+//        tabView.subscribe("onSwitch", function(index) {
+//            if(index === 0 || index === 4) return; // 不改变第 1 个和第 4 个 Panel 的内容
+//
+//            var panel = this.panels[index];
+//            panel.innerHTML = "index = " + index;
+//            if (index === 2) {
+//                panel.innerHTML += " and onSwitch fired!";
+//            }
+//        });
+//
+//    });
 </script>
 </body>
 </html>

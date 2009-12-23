@@ -6,18 +6,18 @@
 KISSY.add("tabview", function(S) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
-        CLS_PRE = "ks-tabview-",
+        CLS_PREFIX = "ks-tabview-",
 
         defaultConfig = {
             mackupType: 0, // mackup 的类型，取值如下：
 
             // 0 - 默认结构：通过 nav 和 content 来获取 triggers 和 panels
-            navCls: CLS_PRE + "nav",
-            contentCls: CLS_PRE + "content",
+            navCls: CLS_PREFIX + "nav",
+            contentCls: CLS_PREFIX + "content",
 
             // 1 - 适度灵活结构：通过 cls 来获取 triggers 和 panels
-            triggerCls: CLS_PRE + "trigger",
-            panelCls: CLS_PRE + "panel",
+            triggerCls: CLS_PREFIX + "trigger",
+            panelCls: CLS_PREFIX + "panel",
 
             // 2 - 完全自由结构：直接传入 triggers 和 panels
             triggers: [],
@@ -29,7 +29,7 @@ KISSY.add("tabview", function(S) {
             triggerDelay: 0.1, // 100ms
 
             activeIndex: 0, // 为了避免闪烁，mackup的默认激活项，应该与此 index 一致
-            activeTriggerCls: CLS_PRE + "trigger-active"
+            activeTriggerCls: CLS_PREFIX + "trigger-active"
         };
 
     /**
@@ -55,6 +55,13 @@ KISSY.add("tabview", function(S) {
          * @type HTMLElement
          */
         this.container = Dom.get(container);
+
+        // 根据配置信息，自动调整默认配置
+        if(config.triggerCls) {
+            defaultConfig.mackupType = 1;
+        } else if(config.triggers) {
+            defaultConfig.mackupType = 2;
+        }
 
         /**
          * 配置参数
@@ -83,6 +90,7 @@ KISSY.add("tabview", function(S) {
         // init
         this._init();
     }
+    S.augment(TabView, S.Triggerable);
 
     S.mix(TabView.prototype, {
 
@@ -132,6 +140,5 @@ KISSY.add("tabview", function(S) {
         }
     });
 
-    S.augment(TabView, S.Triggerable);
     S.TabView = TabView;
 });

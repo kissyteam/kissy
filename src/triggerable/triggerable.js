@@ -80,6 +80,11 @@ KISSY.add("triggerable", function(S) {
             if(self.showTimer) self.showTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
             if(self.activeIndex === index) return; // 重复点击
 
+            // 立刻停止当前动画，以响应用户当前操作
+            if (self.anim && self.anim.isAnimated()) {
+                return;
+            }
+
             self.switchTo(index);
         },
 
