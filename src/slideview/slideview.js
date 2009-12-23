@@ -41,13 +41,14 @@ KISSY.add("slideview", function(S) {
         effects = {
 
             // 最朴素的显示/隐藏效果
-            none: function(fromPanel, toPanel) {
+            none: function(fromPanel, toPanel, callback) {
                 fromPanel.style.display = NONE;
                 toPanel.style.display = BLOCK;
+                callback();
             },
 
             // 淡隐淡现效果
-            fade: function(fromPanel, toPanel) {
+            fade: function(fromPanel, toPanel, callback) {
                 var self = this, cfg = self.config;
 
                 // 设置 z-index
@@ -61,16 +62,18 @@ KISSY.add("slideview", function(S) {
                 self.anim = new Y.Anim(fromPanel, { opacity: { to: 0 } }, cfg.animDuration, cfg.animEasing);
                 self.anim.onComplete.subscribe(function() {
                     self.anim = null; // free
-                    
-                    // 让链接正确
+
+                    // 切换 z-index
                     Dom.setStyle(toPanel, Z_INDEX, 9);
                     Dom.setStyle(fromPanel, Z_INDEX, 1);
+
+                    callback();
                 });
                 self.anim.animate();
             },
 
             // 水平/垂直滚动效果
-            scroll: function(fromPanel, toPanel, index, isX) {
+            scroll: function(fromPanel, toPanel, callback, index, isX) {
                 var self = this, cfg = self.config,
                     diff = self.panelSize[isX ? 0 : 1] * index,
                     attributes = {};
@@ -79,6 +82,7 @@ KISSY.add("slideview", function(S) {
                 self.anim = new Y.Anim(self.content, attributes, cfg.animDuration, cfg.animEasing);
                 self.anim.onComplete.subscribe(function() {
                     self.anim = null; // free
+                    callback();
                 });
                 self.anim.animate();
             }
@@ -320,16 +324,16 @@ KISSY.add("slideview", function(S) {
         _switchContent: function(fromPanel, toPanel, index) {
             var self = this, cfg = self.config, type = cfg.effectType;
 
-
             // fire effect fn
-            effects[type].call(this, fromPanel, toPanel, index, type === TYPES.SCROLLX);
+            effects[type].call(this, fromPanel, toPanel, function() {
+                // 更新 activeIndex
+                self.activeIndex = index;
+
+                // fire onSwitch
+                self.fireEvent("onSwitch", index);
+            }, index, type === TYPES.SCROLLX);
         }
     });
 
     S.SlideView = SlideView;
 });
-
-/**
- * TODO:
- *   - onSwitch 的触发有必要放在动画结束后吗？
- */

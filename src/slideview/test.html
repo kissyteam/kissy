@@ -146,9 +146,12 @@
             activeTriggerCls: "current"
         });
 
-        new S.SlideView("slide-demo4", {
+        var slideView = new S.SlideView("slide-demo4", {
             effectType: "scrollx",
             activeTriggerCls: "current"
+        });
+        slideView.subscribe("onSwitch", function(index) {
+           S.log("onSwitch fired!"); 
         });
 
     });

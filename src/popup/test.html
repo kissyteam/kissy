@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>TabView Test</title>
+<link rel="stylesheet" href="../../build/cssbase/base.css"/>
+<script src="../../lib/yui2/yui-base/yui-base-min.js"></script>
+</head>
+<body>
+<style type="text/css">
+    body {
+        padding: 50px;
+    }
+
+    .box {
+        position: relative;
+        width: 750px;
+        margin-bottom: 50px;
+    }
+
+    .box-hd {
+        position: absolute;
+        z-index: 99;
+        left: 20px
+    }
+
+    .box-hd li {
+        float: left;
+        margin-right: 3px;
+        padding-top: 8px;
+        width: 130px;
+        height: 27px;
+        line-height: 21px;
+        text-align: center;
+        background: url(assets/sprite.gif) no-repeat 0 6px;
+        cursor: pointer
+    }
+
+    .box-hd .current {
+        background-position: 0 -40px;
+        cursor: default !important
+    }
+
+    .box-hd .current {
+        font-size: 14px;
+        color: #333;
+        font-weight: bold
+    }
+
+    .box-hd .current a:hover,
+    .box-hd .current a:active {
+        text-decoration: none;
+        cursor: default
+    }
+
+    .box-hd a {
+        color: #111 !important
+    }
+
+    .box-bd {
+        clear: both;
+        position: relative;
+        top: 29px;
+        border: 1px solid #AEC7E5;
+        height: 120px;
+        overflow: auto;
+        padding: 20px;
+    }
+</style>
+
+<div id="demo1" class="box">
+    <ul class="box-hd">
+        <li class="current">标题 A</li>
+        <li>标题 B</li>
+        <li>标题 C</li>
+        <li>标题 D</li>
+        <li>标题 E</li>
+    </ul>
+    <div class="box-bd">
+        <div>
+<pre>
+  - 在当前 trigger 中 mouseover/mouseout, click, focus, 不触发
+  - 鼠标快速滑过非当前 trigger, 不触发
+  - mouseover 到非当前 trigger, 停留时间到达延迟时，触发
+  - click 或 Tab 切换到 trigger, 立即触发
+  - beforeSwitch/onSwitch 事件的触发
+  - 延迟的内容能正确加载
+</pre>
+        </div>
+        <div style="display: none">内容 B</div>
+        <div style="display: none">内容 C</div>
+        <div style="display: none">内容 D</div>
+        <div style="display: none"><textarea class="ks-datalazyload-custom">我是延迟内容</textarea></div>
+    </div>
+</div>
+
+<script src="../kissy/kissy.js"></script>
+<script src="../datalazyload/datalazyload.js"></script>
+<script src="../triggerable/triggerable.js"></script>
+<script src="../tabview/tabview.js"></script>
+<script>
+    KISSY().use("*", function(S) {
+
+        var tabView = new S.TabView("demo1", {
+            navCls: "box-hd",
+            contentCls: "box-bd",
+            activeTriggerCls: "current"
+        });
+
+        tabView.subscribe("beforeSwitch", function(index) {
+            var activeIndex = this.activeIndex;
+
+            // 不改变第 1 个和第 4 个 Panel 的内容
+            if (activeIndex !== 0 && activeIndex !== 4) {
+                this.panels[activeIndex].innerHTML = "index = " + index + ", beforeSwitch fired and return false!";
+            }
+
+            // 第 4 个 Tab 不可切换
+            return index !== 3;
+        });
+
+        tabView.subscribe("onSwitch", function(index) {
+            if(index === 0 || index === 4) return; // 不改变第 1 个和第 4 个 Panel 的内容
+
+            var panel = this.panels[index];
+            panel.innerHTML = "index = " + index;
+            if (index === 2) {
+                panel.innerHTML += " and onSwitch fired!";
+            }
+        });
+    });
+</script>
+</body>
+</html>

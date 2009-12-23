@@ -135,20 +135,12 @@ KISSY.add("triggerable", function(S) {
             Dom.addClass(triggers[index], cfg.activeTriggerCls);
 
             // 加载延迟数据
-            if (self.loadLazyData) {
-                self.loadLazyData(toPanel);
+            if (self.loadCustomLazyData) {
+                self.loadCustomLazyData(toPanel);
             }
 
             // 切换 content
             self._switchContent(fromPanel, toPanel, index);
-
-            // 更新 activeIndex
-            self.activeIndex = index;
-
-            // fire onSwitch
-            self.fireEvent(ON_SWITCH, index);
-            // TODO: see above TODO
-            //self.fireEvent(ON_SWITCH, toPanel, index);
 
             return self; // chain
         },
@@ -157,16 +149,26 @@ KISSY.add("triggerable", function(S) {
          * 切换内容
          * @protected
          */
-        _switchContent: function(fromPanel, toPanel/*, index*/) {
+        _switchContent: function(fromPanel, toPanel, index) {
+            var self = this;
+
             // 最简单的切换效果：直接隐藏/显示
             fromPanel.style.display = "none";
             toPanel.style.display = "block";
+
+            // 更新 activeIndex
+            self.activeIndex = index;
+
+            // fire onSwitch
+            self.fireEvent(ON_SWITCH, index);
+            // TODO: see above TODO
+            //self.fireEvent(ON_SWITCH, toPanel, index);
         }
     });
 
     S.augment(Triggerable, Y.EventProvider);
     if(S.DataLazyload) {
-        Triggerable.prototype.loadLazyData = S.DataLazyload.prototype.loadCustomLazyData;
+        S.augment(Triggerable, S.DataLazyload, true, ["loadCustomLazyData"]);
     }
 
     S.Triggerable = Triggerable;
