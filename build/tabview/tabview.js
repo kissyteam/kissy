@@ -3,12 +3,13 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-23 17:51:05
-Revision: 338
+Date: 2009-12-25 00:20:57
+Revision: 351
 */
 /**
  * TabView
  * @module      tabview
+ * @creator     Óñ²®<lifesinger@gmail.com>, ÔÆÇ«<yunqian@taobao.com>
  * @depends     yahoo-dom-event, kissy-core, triggerable
  */
 KISSY.add("tabview", function(S) {
@@ -98,7 +99,6 @@ KISSY.add("tabview", function(S) {
         // init
         this._init();
     }
-    S.augment(TabView, S.Triggerable);
 
     S.mix(TabView.prototype, {
 
@@ -148,5 +148,6 @@ KISSY.add("tabview", function(S) {
         }
     });
 
+    S.augment(TabView, S.Triggerable, false);    
     S.TabView = TabView;
 });

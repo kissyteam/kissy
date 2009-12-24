@@ -10,8 +10,8 @@ KISSY.add("slideview", function(S) {
         BLOCK = "block", NONE = "none",
         OPACITY = "opacity", Z_INDEX = "z-index",
         RELATIVE = "relative", ABSOLUTE = "absolute",
+        SCROLLX = "scrollx", SCROLLY = "scrolly", FADE ="fade",
         CLS_PREFIX = "ks-slideview-",
-        TYPES = { NONE: "none", SCROLLX: "scrollx", SCROLLY: "scrolly", FADE: "fade" },
 
         defaultConfig = {
             // mackup 是固定的，详见 demo. nav 可以自动生成
@@ -25,9 +25,9 @@ KISSY.add("slideview", function(S) {
             autoPlayInterval: 5, // 自动播放间隔时间
             pauseOnMouseOver: true,  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
 
-            effectType: TYPES.NONE, // "scrollx", "scrolly", "fade"
+            effectType: NONE, // "scrollx", "scrolly", "fade"
             animDuration: .5, // 开启切换效果时，切换的时长
-            animEasing: Y.Easing && Y.Easing.easeNone, // easing method
+            animEasing: Y.Easing.easeNone, // easing method
 
             activeIndex: 0, // 为了避免闪烁，mackup的默认激活项，应该与此 index 一致
             activeTriggerCls: CLS_PREFIX + "trigger-active",
@@ -50,16 +50,13 @@ KISSY.add("slideview", function(S) {
             // 淡隐淡现效果
             fade: function(fromPanel, toPanel, callback) {
                 var self = this, cfg = self.config;
-
-                // 设置 z-index
-                Dom.setStyle(toPanel, Z_INDEX, 1);
-                Dom.setStyle(fromPanel, Z_INDEX, 9);
+                if (self.anim) self.anim.stop();
 
                 // 首先显示下一张
                 Dom.setStyle(toPanel, OPACITY, 1);
 
-                // 淡隐效果
-                self.anim = new Y.Anim(fromPanel, { opacity: {from: 1, to: 0}}, cfg.animDuration, cfg.animEasing);
+                // 动画切换
+                self.anim = new Y.Anim(fromPanel, {opacity: {to: 0}}, cfg.animDuration, cfg.animEasing);
                 self.anim.onComplete.subscribe(function() {
                     self.anim = null; // free
 
@@ -73,12 +70,15 @@ KISSY.add("slideview", function(S) {
             },
 
             // 水平/垂直滚动效果
-            scroll: function(fromPanel, toPanel, callback, index, isX) {
+            scroll: function(fromPanel, toPanel, callback, index) {
                 var self = this, cfg = self.config,
+                    isX = cfg.effectType === SCROLLX,
                     diff = self.panelSize[isX ? 0 : 1] * index,
                     attributes = {};
 
                 attributes[isX ? "left" : "top"] = { to: -diff };
+
+                if (self.anim) self.anim.stop();
                 self.anim = new Y.Anim(self.content, attributes, cfg.animDuration, cfg.animEasing);
                 self.anim.onComplete.subscribe(function() {
                     self.anim = null; // free
@@ -87,7 +87,7 @@ KISSY.add("slideview", function(S) {
                 self.anim.animate();
             }
         };
-    effects[TYPES.SCROLLX] = effects[TYPES.SCROLLY] = effects.scroll;
+    effects[SCROLLX] = effects[SCROLLY] = effects.scroll;
 
     /**
      * SlideView
@@ -108,9 +108,9 @@ KISSY.add("slideview", function(S) {
         self.container = Dom.get(container);
 
         // 根据效果类型，调整默认配置
-        if (config.effectType === TYPES.SCROLLX || config.effectType === TYPES.SCROLLY) {
+        if (config.effectType === SCROLLX || config.effectType === SCROLLY) {
             defaultConfig.animDuration = .8;
-            defaultConfig.animEasing = Y.Easing && Y.Easing.easeOutStrong;
+            defaultConfig.animEasing = Y.Easing.easeOutStrong;
         }
 
         /**
@@ -160,8 +160,9 @@ KISSY.add("slideview", function(S) {
 
         /**
          * 自动播放是否暂停
+         * @type boolean
          */
-        self.autoPlayIsPaused = false;
+        //self.paused = false;
 
         // init
         self._init();
@@ -174,15 +175,13 @@ KISSY.add("slideview", function(S) {
          * @protected
          */
         _init: function() {
-            var self = this;
+            var self = this, cfg = self.config;
 
             self._parseMackup();
             self._initStyle();
             self._initTriggers();
 
-            if (self.config.autoPlay) {
-                self._initAutoPlay();
-            }
+            if (cfg.autoPlay) self._initAutoPlay();
         },
 
         /**
@@ -236,6 +235,7 @@ KISSY.add("slideview", function(S) {
 
         /**
          * 根据 effectType，调整初始状态
+         * @protected
          */
         _initStyle: function() {
             var self = this,
@@ -250,7 +250,7 @@ KISSY.add("slideview", function(S) {
             // 最好指定第一个 panel 的 width 和 height，因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
 
             // 2. 初始化 panels 样式
-            if (type === TYPES.NONE) {
+            if (type === NONE) {
                 // 默认情况，只显示 activePanel
                 for (i = 0; i < len; i++) {
                     panels[i].style.display = i === activeIndex ? BLOCK : NONE;
@@ -265,13 +265,14 @@ KISSY.add("slideview", function(S) {
 
                 switch(type) {
                     // 如果是滚动效果
-                    case TYPES.SCROLLX: case TYPES.SCROLLY:
+                    case SCROLLX:
+                    case SCROLLY:
                         // 设置定位信息，为滚动效果做铺垫
                         self.container.style.position = RELATIVE;
                         self.content.style.position = ABSOLUTE;
 
                         // 水平排列
-                        if (type === TYPES.SCROLLX) {
+                        if (type === SCROLLX) {
                             Dom.setStyle(panels, "float", "left");
 
                             // 设置最大宽度，以保证有空间让 panels 水平排布
@@ -280,7 +281,7 @@ KISSY.add("slideview", function(S) {
                     break;
 
                     // 如果是透明效果，则初始化透明
-                    case TYPES.FADE:
+                    case FADE:
                         for (i = 0; i < len; i++) {
                             Dom.setStyle(panels[i], OPACITY, i === self.activeIndex ? 1 : 0);
                             panels[i].style.position = ABSOLUTE;
@@ -296,28 +297,28 @@ KISSY.add("slideview", function(S) {
 
         /**
          * 设置自动播放
+         * @protected
          */
         _initAutoPlay: function() {
-            var self = this, cfg = self.config, max = self.panels.length - 1;
+            var self = this,
+                cfg = self.config, max = self.panels.length - 1;
 
             // 鼠标悬停，停止自动播放
             if (cfg.pauseOnMouseOver) {
                 Event.on([self.content, self.nav], "mouseenter", function() {
-                    self.autoPlayIsPaused = true;
+                    self.paused = true;
                 });
 
                 Event.on([self.content, self.nav], "mouseleave", function() {
-                    self.autoPlayIsPaused = false;
+                    self.paused = false;
                 });
             }
 
             // 设置自动播放
-            if (cfg.autoPlay) {
-                self.autoPlayTimer = Lang.later(cfg.autoPlayInterval * 1000, this, function() {
-                    if (self.autoPlayIsPaused) return;
-                    self.switchTo(self.activeIndex < max ? self.activeIndex + 1 : 0);
-                }, null, true);
-            }
+            self.autoPlayTimer = Lang.later(cfg.autoPlayInterval * 1000, this, function() {
+                if (self.paused) return;
+                self.switchTo(self.activeIndex < max ? self.activeIndex + 1 : 0);
+            }, null, true);
         },
 
         /**
@@ -325,16 +326,12 @@ KISSY.add("slideview", function(S) {
          * @protected
          */
         _switchContent: function(fromPanel, toPanel, index) {
-            var self = this, cfg = self.config, type = cfg.effectType;
+            var self = this;
 
-            // fire effect fn
-            effects[type].call(self, fromPanel, toPanel, function() {
-                // 更新 activeIndex
-                self.activeIndex = index;
-
+            effects[self.config.effectType].call(self, fromPanel, toPanel, function() {
                 // fire onSwitch
                 self.fireEvent("onSwitch", index);
-            }, index, type === TYPES.SCROLLX);
+            }, index);
         }
     });
 

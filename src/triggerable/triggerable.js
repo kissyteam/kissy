@@ -77,14 +77,8 @@ KISSY.add("triggerable", function(S) {
          */
         _onFocusTrigger: function(index) {
             var self = this;
-            if(self.showTimer) self.showTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
             if(self.activeIndex === index) return; // 重复点击
-
-            // 立刻停止当前动画，以响应用户当前操作
-            if (self.anim && self.anim.isAnimated()) {
-                return;
-            }
-
+            if(self.showTimer) self.showTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
             self.switchTo(index);
         },
 
@@ -93,6 +87,7 @@ KISSY.add("triggerable", function(S) {
          * @protected
          */
         _onMouseEnterTrigger: function(index) {
+            //S.log("Triggerable._onMouseEnterTrigger: index = " + index);
             var self = this;
 
             // 不重复触发。比如：已显示内容时，将鼠标快速滑出再滑进来，不必触发
@@ -109,7 +104,6 @@ KISSY.add("triggerable", function(S) {
          */
         _onMouseLeaveTrigger: function() {
             var self = this;
-
             if (self.showTimer) self.showTimer.cancel();
         },
 
@@ -142,6 +136,9 @@ KISSY.add("triggerable", function(S) {
             // 切换 content
             self._switchContent(fromPanel, toPanel, index);
 
+            // 更新 activeIndex
+            self.activeIndex = index;
+
             return self; // chain
         },
 
@@ -155,9 +152,6 @@ KISSY.add("triggerable", function(S) {
             // 最简单的切换效果：直接隐藏/显示
             fromPanel.style.display = "none";
             toPanel.style.display = "block";
-
-            // 更新 activeIndex
-            self.activeIndex = index;
 
             // fire onSwitch
             self.fireEvent(ON_SWITCH, index);

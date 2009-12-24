@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-22 23:10:45
-Revision: 333
+Date: 2009-12-25 00:20:39
+Revision: 351
 */
 /**
  * @module kissy
@@ -38,15 +38,28 @@ if (typeof KISSY === "undefined" || !KISSY) {
 (function(S) {
 
     var win = window, UNDEFINED = "undefined",
-        mix = function(r, s, ov) {
+        mix = function(r, s, ov, wl) {
             if (!s || !r) return r;
             if (typeof ov === UNDEFINED) ov = true;
-            var p;
-            if (ov || !(p in r)) {
+            var i, p, l;
+
+            if (wl && (l = wl.length)) {
+                for (i = 0; i < l; i++) {
+                    p = wl[i];
+                    if (p in s) {
+                        if (ov || !(p in r)) {
+                            r[p] = s[p];
+                        }
+                    }
+                }
+            } else {
                 for (p in s) {
-                    r[p] = s[p];
+                    if (ov || !(p in r)) {
+                        r[p] = s[p];
+                    }
                 }
             }
+
             return r;
         };
 
@@ -280,10 +293,11 @@ if (typeof KISSY === "undefined" || !KISSY) {
          * The receiver must be a Function.
          * @param {Function} r  the object to receive the augmentation
          * @param {Function} s  the object that supplies the properties to augment
+         * @param wl {string[]} a whitelist.  If supplied, only properties in this list will be applied to the receiver.
          * @return {object} the augmented object
          */
-        augment: function(r, s, ov) {
-            return this.mix(r.prototype, s.prototype, ov);
+        augment: function(r, s, ov, wl) {
+            return mix(r.prototype, s.prototype, ov, wl);
         },
 
         /**
@@ -349,8 +363,6 @@ if (typeof KISSY === "undefined" || !KISSY) {
                 src && (msg = src + ": " + msg);
                 if (typeof console !== UNDEFINED && console.log) {
                     console[cat && console[cat] ? cat : "log"](msg);
-                } else if (typeof opera !== UNDEFINED) {
-                    opera.postError(msg);
                 }
             }
 

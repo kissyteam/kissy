@@ -142,7 +142,8 @@
 
         new S.SlideView("slide-demo3", {
             effectType: "scrolly",
-//            animDuration: 10,
+            autoPlay: false,
+            animDuration: 5,
             activeTriggerCls: "current"
         });
 
@@ -151,7 +152,7 @@
             activeTriggerCls: "current"
         });
         slideView.subscribe("onSwitch", function(index) {
-           S.log("onSwitch fired!"); 
+           S.log("onSwitch fired!");
         });
 
     });

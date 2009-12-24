@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-23 17:51:01
-Revision: 338
+Date: 2009-12-25 00:20:47
+Revision: 351
 */
 /**
  * Triggerable
@@ -85,14 +85,8 @@ KISSY.add("triggerable", function(S) {
          */
         _onFocusTrigger: function(index) {
             var self = this;
-            if(self.showTimer) self.showTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
             if(self.activeIndex === index) return; // 重复点击
-
-            // 立刻停止当前动画，以响应用户当前操作
-            if (self.anim && self.anim.isAnimated()) {
-                return;
-            }
-
+            if(self.showTimer) self.showTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
             self.switchTo(index);
         },
 
@@ -101,6 +95,7 @@ KISSY.add("triggerable", function(S) {
          * @protected
          */
         _onMouseEnterTrigger: function(index) {
+            //S.log("Triggerable._onMouseEnterTrigger: index = " + index);
             var self = this;
 
             // 不重复触发。比如：已显示内容时，将鼠标快速滑出再滑进来，不必触发
@@ -117,7 +112,6 @@ KISSY.add("triggerable", function(S) {
          */
         _onMouseLeaveTrigger: function() {
             var self = this;
-
             if (self.showTimer) self.showTimer.cancel();
         },
 
@@ -143,8 +137,8 @@ KISSY.add("triggerable", function(S) {
             Dom.addClass(triggers[index], cfg.activeTriggerCls);
 
             // 加载延迟数据
-            if (self.loadLazyData) {
-                self.loadLazyData(toPanel);
+            if (self.loadCustomLazyData) {
+                self.loadCustomLazyData(toPanel);
             }
 
             // 切换 content
@@ -153,11 +147,6 @@ KISSY.add("triggerable", function(S) {
             // 更新 activeIndex
             self.activeIndex = index;
 
-            // fire onSwitch
-            self.fireEvent(ON_SWITCH, index);
-            // TODO: see above TODO
-            //self.fireEvent(ON_SWITCH, toPanel, index);
-
             return self; // chain
         },
 
@@ -165,16 +154,23 @@ KISSY.add("triggerable", function(S) {
          * 切换内容
          * @protected
          */
-        _switchContent: function(fromPanel, toPanel/*, index*/) {
+        _switchContent: function(fromPanel, toPanel, index) {
+            var self = this;
+
             // 最简单的切换效果：直接隐藏/显示
             fromPanel.style.display = "none";
             toPanel.style.display = "block";
+
+            // fire onSwitch
+            self.fireEvent(ON_SWITCH, index);
+            // TODO: see above TODO
+            //self.fireEvent(ON_SWITCH, toPanel, index);
         }
     });
 
     S.augment(Triggerable, Y.EventProvider);
     if(S.DataLazyload) {
-        Triggerable.prototype.loadLazyData = S.DataLazyload.prototype.loadCustomLazyData;
+        S.augment(Triggerable, S.DataLazyload, true, ["loadCustomLazyData"]);
     }
 
     S.Triggerable = Triggerable;
