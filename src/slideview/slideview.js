@@ -1,7 +1,7 @@
 /**
  * SlideView
  * @module      slideview
- * @creator     淘宝前端架构研发组
+ * @creator     玉伯<lifesinger@gmail.com>, 明城<mingcheng@taobao.com>
  * @depends     kissy-core, yahoo-dom-event
  */
 KISSY.add("slideview", function(S) {
@@ -164,8 +164,6 @@ KISSY.add("slideview", function(S) {
         // init
         this._init();
     }
-
-    S.augment(SlideView, S.Triggerable);
 
     S.mix(SlideView.prototype, {
 
@@ -335,5 +333,6 @@ KISSY.add("slideview", function(S) {
         }
     });
 
+    S.augment(SlideView, S.Triggerable, false);
     S.SlideView = SlideView;
 });

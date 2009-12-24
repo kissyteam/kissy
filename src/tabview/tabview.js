@@ -1,7 +1,7 @@
 /**
  * TabView
  * @module      tabview
- * @creator     ÌÔ±¦Ç°¶Ë¼Ü¹¹ÑÐ·¢×é
+ * @creator     Óñ²®<lifesinger@gmail.com>, ÔÆÇ«<yunqian@taobao.com>
  * @depends     yahoo-dom-event, kissy-core, triggerable
  */
 KISSY.add("tabview", function(S) {
@@ -91,7 +91,6 @@ KISSY.add("tabview", function(S) {
         // init
         this._init();
     }
-    S.augment(TabView, S.Triggerable);
 
     S.mix(TabView.prototype, {
 
@@ -141,5 +140,6 @@ KISSY.add("tabview", function(S) {
         }
     });
 
+    S.augment(TabView, S.Triggerable, false);    
     S.TabView = TabView;
 });

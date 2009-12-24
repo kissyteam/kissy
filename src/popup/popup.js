@@ -1,7 +1,7 @@
 /**
  * TabView
  * @module      popup
- * @creator     淘宝前端架构研发组
+ * @creator     玉伯<lifesinger@gmail.com>
  * @depends     yahoo-dom-event, kissy-core, triggerable
  */
 KISSY.add("popup", function(S) {
@@ -91,7 +91,6 @@ KISSY.add("popup", function(S) {
         // init
         this._init();
     }
-    S.augment(Popup, S.Triggerable);
 
     S.mix(Popup.prototype, {
 
@@ -141,5 +140,6 @@ KISSY.add("popup", function(S) {
         }
     });
 
+    S.augment(Popup, S.Triggerable, false);
     S.Popup = Popup;
 });
