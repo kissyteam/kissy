@@ -1,0 +1,350 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>TB.widget.SimpleScroll Demo</title>
+<!--
+<script type="text/javascript" src="http://assets.taobaocdn.com/tbra/1.0/tbra-aio.js"></script>
+-->
+<script type="text/javascript" src="../../lib/yui2/yui-base/yui-base-min.js"></script>
+<script type="text/javascript" src="http://a.tbcdn.cn/yui/2.8.0r4/build/animation/animation.js"></script>
+<script type="text/javascript" src="../../src/kissy/kissy.js"></script>
+<script type="text/javascript" src="scrollview.js"></script>
+</head>
+<body>
+	
+<style type="text/css">
+
+#demo1 {
+	border: 1px solid #ccc;
+	width: 400px;	
+}
+
+#demo1 ul {
+	margin: 0 auto;
+	padding: 0;
+	list-style: none; 
+	font-size: 14px;
+	height: 20px;
+    overflow: hidden;
+}
+
+#demo1 ul li {
+	 line-height: 20px;
+}
+
+#demo2 {
+	padding: 5px 0;
+	border: 1px solid #ccc;
+	width: 100px;	
+}
+#demo2 ul {
+	margin: 0 auto;
+	padding: 0;
+	list-style: none;
+	height: 340px;
+	text-align: center;	
+	overflow: hidden;
+}
+#demo2 ul li {
+	*display: inline;
+}
+#demo2 ul li img {
+	display: block;
+	margin: 5px auto;
+	border: 1px solid #ccc;
+}
+
+#demo3 {
+	border: 1px solid #ccc;
+	font-size: 12px;
+	width: 510px;
+}
+
+#demo3 ul {
+	height:104px;
+	padding: 0;
+	margin:0pt 5px;	
+	overflow:hidden;
+	width:500px;
+}
+
+#demo3 ul li {
+	float:left;
+	height:104px;
+	margin-right:-1px;
+	padding:0pt 9px;
+	text-align:center;
+	width:83px;
+}
+
+#demo3 ul li img {
+	border:1px solid #D4D4D4;
+	display:block;
+	height:60px;
+	margin:5px 0pt;
+	width:80px;
+}
+
+
+#demo4 {
+    /*
+	padding: 5px 5px;
+	border: 1px solid #ccc;
+    */
+	width: 406px;
+	height: 62px;	
+}
+#demo4 ul {
+	margin: 0 auto;
+	padding: 0;
+	width: 406px;
+	height: 62px;
+	list-style: none;
+	white-space: nowrap;
+	overflow: hidden;
+	font-size:0;
+}
+#demo4 ul li {
+	display: inline;
+	margin-right: -1px;
+	*margin-right: -2px;
+}
+#demo4 ul li img {
+	border: 1px solid #ccc;
+}
+
+
+#demo5 {
+	width: 406px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid red;
+}
+
+#demo5 ul {
+	margin: 0 auto;
+	padding: 0;
+	width: 406px;
+	height: 62px;
+	list-style: none;
+	white-space: nowrap;
+	overflow: hidden;
+	font-size:0;
+}
+#demo5 ul li {
+    margin: 0;
+    padding: 0;
+    background: red;
+	display: inline-block;
+    width: 406px;
+	*display: inline;
+    *zoom: 1;
+}
+#demo5 ul li img {
+	border: 1px solid #ccc;
+}
+
+</style>
+
+<h2>Taobao Index ScrollView</h2>
+<div id="demo5">
+	<ul id="demo5UL">
+		<li number="1"><img src="http://pics.taobao.com/bao/album/secondhand/zhuj07042309.jpg"/></li>
+		<li number="2"><img src="http://pics.taobao.com/bao/album/secondhand/as050880_02.jpg"/></li>
+		<li number="3"><img src="http://pics.taobao.com/bao/album/secondhand/as050880_03.jpg"/></li>
+		<li number="4"><img src="http://pics.taobao.com/bao/album/chl/collection/sc070515006.gif"/></li>
+		<li number="5"><img src="http://pics.taobao.com/bao/album/secondhand/zhuj07042308.jpg"/></li>
+	</ul>
+</div>		
+<div>
+    <button id="prev">prev</button>
+    <button id="next">next</button>
+    <span id="count"></span>
+    <button id="jump0">0</button>
+    <button id="jump1">1</button>
+    <button id="jump2">2</button>
+    <button id="jump3">3</button>
+    <button id="jump4">4</button>
+</div>
+<script type="text/javascript">
+KISSY().use("scrollview", function(S) {
+
+       var h = new S.ScrollView('demo5UL', {
+        direction: 'h',
+        autoStart: false,
+        speed: 500,
+        scrollWidth: 406,
+        onBeforeScroll: function() {
+            YAHOO.util.Dom.get('count').innerHTML = this.current;
+        }
+    });
+    var totle = h.horses.length;
+    YAHOO.util.Event.on('next', 'click', function(e){
+        h.next();
+    });
+    YAHOO.util.Event.on('prev', 'click', function(e){
+        h.prev();
+    });
+
+    for(var i = 0; i < 5; i++) {
+        ~function(idx) {
+            YAHOO.util.Event.on('jump' + idx, 'click', function() {
+                h.jumpTo(idx);
+            });
+        }(i);
+    }
+
+    YAHOO.util.Dom.get('count').innerHTML = h.current;
+});
+</script>
+		
+<h2>Scroll Line</h2>
+<div id="demo1">	
+	<ul id="demo1UL">
+		<li var="1"><a href="#">Line 1 Line 1 Line 1 Line 1 Line 1</a></li>
+		<li var="2"><a href="#">Line 2 Line 2 Line 2 Line 2 Line 2</a></li>
+		<li var="3"><a href="#">Line 3 Line 3 Line 3 Line 3 Line 3</a></li>
+		<li var="4"><a href="#">Line 4 Line 4 Line 4 Line 4 Line 4</a></li>
+		<li var="5"><a href="#">Line 5 Line 5 Line 5 Line 5 Line 5</a></li>
+		<li var="6"><a href="#">Line 6 Line 6 Line 6 Line 6 Line 6</a></li>
+		<li var="7"><a href="#">Line 7 Line 7 Line 7 Line 7 Line 7</a></li>
+		<li var="8"><a href="#">Line 8 Line 8 Line 8 Line 8 Line 8</a></li>
+	</ul>
+</div>
+
+<script type="text/javascript">
+    KISSY().use("scrollview", function(S) {
+        new S.ScrollView('demo1UL');
+    });
+</script>
+
+
+<h2>Scroll Image</h2>
+<div id="demo2">
+	<ul id="demo2UL">
+		<li var="1">
+			<img src="http://pics.taobao.com/bao/album/secondhand/zhuj07042309.jpg"/>
+		</li>
+		<li var="2">
+			<img src="http://pics.taobao.com/bao/album/secondhand/as050880_02.jpg"/>
+		</li>
+		<li var="3">
+			<img src="http://pics.taobao.com/bao/album/secondhand/as050880_02.jpg"/>
+		</li>
+		<li var="4">
+			<img src="http://pics.taobao.com/bao/album/chl/collection/sc070515004.gif"/>
+		</li>
+		<li var="5">
+			<img src="http://pics.taobao.com/bao/album/chl/collection/sc070515006.gif"/>
+		</li>
+		<li var="6">
+			<img src="http://pics.taobao.com/bao/album/secondhand/zhuj07042308.jpg"/>
+		</li>
+		<li var="7">
+			<img src="http://pics.taobao.com/bao/album/secondhand/duoduo430gengxin80_60.jpg"/>
+			</li>
+		<li var="8">
+			<img src="http://pics.taobao.com/bao/album/secondhand/duoduo430gengxin80_601.jpg"/>
+		</li>
+		<li var="9">
+			<img src="http://pics.taobao.com/bao/album/secondhand/azhu05-11-3.jpg"/>
+		</li>
+		<li var="10">
+			<img src="http://pics.taobao.com/bao/album/secondhand/azhu04-24-1.jpg"/>
+		</li>
+	</ul>
+</div>
+<textarea id="logger" rows="10" cols="50"></textarea>
+<script type="text/javascript">
+    handle = null;
+    KISSY().use("scrollview", function(S) {
+        var counter = 0;
+        handle = new S.ScrollView('demo2UL', {
+            onScroll: function() {
+                YAHOO.util.Dom.get('logger').value += 'haha ' + (++counter) + '\r\n';
+            },
+            direction: 'vertical', // 'horizontal(h)' or 'vertical(v)'
+            scrollSize: 5,
+            autoStart: true,
+            delay: 2000,
+            speed: 1500
+        });
+
+        handle.pause();
+        handle.wakeup();
+    });
+</script>
+<button onclick="handle.pause();">Pause</button><button onclick="handle.wakeup();">Play</button>
+
+
+<h2>Scroll Multiple Images </h2>
+
+<div id="demo3">
+	<ul id="demo3UL">
+		<li>
+			<img src="http://pics.taobao.com/bao/album/secondhand/zhuj07042309.jpg"/>
+			买手机无担忧不满意包赔
+		</li>
+		<li>
+			<img src="http://pics.taobao.com/bao/album/secondhand/as050880_02.jpg"/>15寸热卖液晶500元
+		</li>
+		<li><img src="http://pics.taobao.com/bao/album/secondhand/as050880_03.jpg"/>只需60元淘个好硬盘</li>
+		<li><img src="http://pics.taobao.com/bao/album/chl/collection/sc070515004.gif"/>性价比的选择二手GPS</li>
+		<li><img src="http://pics.taobao.com/bao/album/chl/collection/sc070515006.gif"/>个人闲置影碟打折还包邮</li>
+		<li>
+			<img src="http://pics.taobao.com/bao/album/secondhand/zhuj07042308.jpg"/>入门级智能机199元起</li>
+		<li><img src="http://pics.taobao.com/bao/album/secondhand/duoduo430gengxin80_60.jpg"/>韩国浅口小单鞋正在流行</li>
+		<li><img src="http://pics.taobao.com/bao/album/secondhand/duoduo430gengxin80_601.jpg"/>大包包　装了再多又何妨</li>
+		<li><img src="http://pics.taobao.com/bao/album/secondhand/azhu05-11-3.jpg"/>食品优惠券3折,省不少</li>
+		<li><img src="http://pics.taobao.com/bao/album/secondhand/azhu04-24-1.jpg"/>购本本0风险无条件退货区</li>
+	</ul>
+</div>
+<script type="text/javascript">
+    KISSY().use("scrollview", function(S) {
+        //TB.widget.SimpleScroll.decorate('', {delay:2, scrollItemCount:5, speed:10});
+        new S.ScrollView('demo3UL', {
+            direction: 'horizontal', // '(h)' or 'vertical(v)'
+            scrollSize: 5,
+            autoStart: true,
+            delay: 2000,
+            speed: 1500
+        });
+    });
+</script>
+		
+		
+		
+		
+<h2>Scroll Image Horizontal</h2>
+<div id="demo4">
+	<ul id="demo4UL">
+		<li>
+			<img src="http://pics.taobao.com/bao/album/secondhand/zhuj07042309.jpg"/>
+		</li>
+		<li><img src="http://pics.taobao.com/bao/album/secondhand/as050880_02.jpg"/></li>
+		<li><img src="http://pics.taobao.com/bao/album/secondhand/as050880_03.jpg"/></li>
+		<li><img src="http://pics.taobao.com/bao/album/chl/collection/sc070515004.gif"/></li>
+		<li><img src="http://pics.taobao.com/bao/album/chl/collection/sc070515006.gif"/></li>
+		<li><img src="http://pics.taobao.com/bao/album/secondhand/zhuj07042308.jpg"/></li>
+		<li><img src="http://pics.taobao.com/bao/album/secondhand/duoduo430gengxin80_60.jpg"/></li>
+		<li><img src="http://pics.taobao.com/bao/album/secondhand/duoduo430gengxin80_601.jpg"/></li>
+		<li><img src="http://pics.taobao.com/bao/album/secondhand/azhu05-11-3.jpg"/></li>
+		<li><img src="http://pics.taobao.com/bao/album/secondhand/azhu04-24-1.jpg"/></li>
+	</ul>
+</div>		
+<script type="text/javascript">
+    KISSY().use("scrollview", function(S) {
+
+        //TB.widget.SimpleScroll.decorate('demo4UL', {delay:2, speed:50, direction:'h'});
+        new S.ScrollView('demo4UL', {
+            direction: 'h',
+            scrollSize: 5,
+            autoStart: true,
+            delay: 1000,
+            speed: 1000
+        });
+    });
+</script>		
+</body>
+</html>
