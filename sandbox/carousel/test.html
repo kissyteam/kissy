@@ -9,7 +9,7 @@
 <script type="text/javascript" src="../../lib/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="http://a.tbcdn.cn/yui/2.8.0r4/build/animation/animation.js"></script>
 <script type="text/javascript" src="../../src/kissy/kissy.js"></script>
-<script type="text/javascript" src="carousel.js"></script>
+<script type="text/javascript" src="ks-scrollview.js"></script>
 </head>
 <body>
 	
@@ -147,7 +147,7 @@
 
 </style>
 
-<h2>Taobao Index Carousel</h2>
+<h2>Taobao Index ScrollView</h2>
 <div id="demo5">
 	<ul id="demo5UL">
 		<li number="1"><img src="http://pics.taobao.com/bao/album/secondhand/zhuj07042309.jpg"/></li>
@@ -168,9 +168,9 @@
     <button id="jump4">4</button>
 </div>
 <script type="text/javascript">
-KISSY().use("carousel", function(S) {
+KISSY().use("scrollview", function(S) {
 
-       var h = new S.Carousel('demo5UL', {
+       var h = new S.ScrollView('demo5UL', {
         direction: 'h',
         autoStart: false,
         speed: 500,
@@ -214,8 +214,8 @@ KISSY().use("carousel", function(S) {
 </div>
 
 <script type="text/javascript">
-    KISSY().use("carousel", function(S) {
-        new S.Carousel('demo1UL');
+    KISSY().use("scrollview", function(S) {
+        new S.ScrollView('demo1UL');
     });
 </script>
 
@@ -258,9 +258,9 @@ KISSY().use("carousel", function(S) {
 <textarea id="logger" rows="10" cols="50"></textarea>
 <script type="text/javascript">
     handle = null;
-    KISSY().use("carousel", function(S) {
+    KISSY().use("scrollview", function(S) {
         var counter = 0;
-        handle = new S.Carousel('demo2UL', {
+        handle = new S.ScrollView('demo2UL', {
             onScroll: function() {
                 YAHOO.util.Dom.get('logger').value += 'haha ' + (++counter) + '\r\n';
             },
@@ -301,9 +301,9 @@ KISSY().use("carousel", function(S) {
 	</ul>
 </div>
 <script type="text/javascript">
-    KISSY().use("carousel", function(S) {
+    KISSY().use("scrollview", function(S) {
         //TB.widget.SimpleScroll.decorate('', {delay:2, scrollItemCount:5, speed:10});
-        new S.Carousel('demo3UL', {
+        new S.ScrollView('demo3UL', {
             direction: 'horizontal', // '(h)' or 'vertical(v)'
             scrollSize: 5,
             autoStart: true,
@@ -334,10 +334,10 @@ KISSY().use("carousel", function(S) {
 	</ul>
 </div>		
 <script type="text/javascript">
-    KISSY().use("carousel", function(S) {
+    KISSY().use("scrollview", function(S) {
 
         //TB.widget.SimpleScroll.decorate('demo4UL', {delay:2, speed:50, direction:'h'});
-        new S.Carousel('demo4UL', {
+        new S.ScrollView('demo4UL', {
             direction: 'h',
             scrollSize: 5,
             autoStart: true,
