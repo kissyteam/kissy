@@ -19,7 +19,7 @@ KISSY.add("slideview", function(S) {
             contentCls: CLS_PREFIX + "content",
 
             triggerType: "mouse", // or "click" 触发类型
-            triggerDelay: 0.1, // 触发延迟
+            triggerDelay: 0.2, // 触发延迟
 
             autoPlay: true,
             autoPlayInterval: 5, // 自动播放间隔时间
@@ -59,7 +59,7 @@ KISSY.add("slideview", function(S) {
                 Dom.setStyle(toPanel, OPACITY, 1);
 
                 // 淡隐效果
-                self.anim = new Y.Anim(fromPanel, { opacity: { to: 0 } }, cfg.animDuration, cfg.animEasing);
+                self.anim = new Y.Anim(fromPanel, { opacity: {from: 1, to: 0}}, cfg.animDuration, cfg.animEasing);
                 self.anim.onComplete.subscribe(function() {
                     self.anim = null; // free
 
@@ -78,11 +78,13 @@ KISSY.add("slideview", function(S) {
                     diff = self.panelSize[isX ? 0 : 1] * index,
                     attributes = {};
 
+                self._switching = true;
                 attributes[isX ? "left" : "top"] = { to: -diff };
                 self.anim = new Y.Anim(self.content, attributes, cfg.animDuration, cfg.animEasing);
                 self.anim.onComplete.subscribe(function() {
                     self.anim = null; // free
                     callback();
+                    self._switching = false;
                 });
                 self.anim.animate();
             }
@@ -261,6 +263,7 @@ KISSY.add("slideview", function(S) {
                     panels[i].style.display = BLOCK;
                 }
 
+                /*
                 // 设置定位信息，为滚动效果做铺垫
                 if (type === TYPES.SCROLLX || type === TYPES.SCROLLY) {
                     self.container.style.position = RELATIVE;
@@ -282,6 +285,33 @@ KISSY.add("slideview", function(S) {
                         panels[i].style.position = ABSOLUTE;
                         panels[i].style.zIndex = i === self.activeIndex ? 9 : 1;
                     }
+                }
+                */
+
+                switch(type) {
+                    // 如果是滚动效果
+                    case TYPES.SCROLLX: case TYPES.SCROLLY:
+                        // 设置定位信息，为滚动效果做铺垫
+                        self.container.style.position = RELATIVE;
+                        self.content.style.position = ABSOLUTE;
+
+                        // 水平排列
+                        if (type === TYPES.SCROLLX) {
+                            Dom.setStyle(panels, "float", "left");
+
+                            // 设置最大宽度，以保证有空间让 panels 水平排布
+                            this.content.style.width = self.panelSize[0] * len + "px";
+                        }
+                    break;
+
+                    // 如果是透明效果，则初始化透明
+                    case TYPES.FADE:
+                        for (i = 0; i < len; i++) {
+                            Dom.setStyle(panels[i], OPACITY, i === self.activeIndex ? 1 : 0);
+                            panels[i].style.position = ABSOLUTE;
+                            panels[i].style.zIndex = i === self.activeIndex ? 9 : 1;
+                        }
+                    break;
                 }
             }
 
@@ -316,6 +346,44 @@ KISSY.add("slideview", function(S) {
         },
 
         /**
+         * 切换操作
+         */
+        switchTo: function(index) {
+            var self = this, cfg = self.config,
+                triggers = self.triggers,
+                panels = self.panels,
+                fromPanel = panels[self.activeIndex],
+                type = cfg.effectType,
+                toPanel = panels[index], setStyle = Dom.setStyle;
+
+
+            if (self.anim && self._switching) {
+                self.anim.stop();
+            }
+
+            //S.log("Triggerable.switchTo: index = " + index);
+            // fire beforeSwitch
+            //if(!self.fireEvent(BEFORE_SWITCH, index)) return self;
+            // TODO: YUI 2.8.0r4 bug - don't pass multi args correctly
+            //if(!self.fireEvent(BEFORE_SWITCH, fromPanel, toPanel, index)) return self;
+
+            // 切换 active trigger
+            Dom.removeClass(triggers, cfg.activeTriggerCls);
+            Dom.addClass(triggers[index], cfg.activeTriggerCls);
+
+            // 加载延迟数据
+            if (self.loadCustomLazyData) {
+                self.loadCustomLazyData(toPanel);
+            }
+
+            // 切换 content
+            self._switchContent(fromPanel, toPanel, index);
+
+            return self; // chain
+        },
+
+
+        /**
          * 切换内容
          * @protected
          */
@@ -323,7 +391,7 @@ KISSY.add("slideview", function(S) {
             var self = this, cfg = self.config, type = cfg.effectType;
 
             // fire effect fn
-            effects[type].call(this, fromPanel, toPanel, function() {
+            effects[type].call(self, fromPanel, toPanel, function() {
                 // 更新 activeIndex
                 self.activeIndex = index;
 
