@@ -19,7 +19,7 @@ KISSY.add("slideview", function(S) {
             contentCls: CLS_PREFIX + "content",
 
             triggerType: "mouse", // or "click" 触发类型
-            triggerDelay: 0.2, // 触发延迟
+            triggerDelay: 0.1, // 触发延迟
 
             autoPlay: true,
             autoPlayInterval: 5, // 自动播放间隔时间
@@ -78,13 +78,11 @@ KISSY.add("slideview", function(S) {
                     diff = self.panelSize[isX ? 0 : 1] * index,
                     attributes = {};
 
-                self._switching = true;
                 attributes[isX ? "left" : "top"] = { to: -diff };
                 self.anim = new Y.Anim(self.content, attributes, cfg.animDuration, cfg.animEasing);
                 self.anim.onComplete.subscribe(function() {
                     self.anim = null; // free
                     callback();
-                    self._switching = false;
                 });
                 self.anim.animate();
             }
@@ -96,8 +94,10 @@ KISSY.add("slideview", function(S) {
      * @constructor
      */
     function SlideView(container, config) {
+        var self = this;
+        
         // factory or constructor
-        if (!(this instanceof arguments.callee)) {
+        if (!(self instanceof arguments.callee)) {
             return new arguments.callee(container, config);
         }
 
@@ -105,7 +105,7 @@ KISSY.add("slideview", function(S) {
          * 触发
          * @type HTMLElement
          */
-        this.container = Dom.get(container);
+        self.container = Dom.get(container);
 
         // 根据效果类型，调整默认配置
         if (config.effectType === TYPES.SCROLLX || config.effectType === TYPES.SCROLLY) {
@@ -117,19 +117,19 @@ KISSY.add("slideview", function(S) {
          * 配置参数
          * @type Object
          */
-        this.config = S.merge(defaultConfig, config || {});
+        self.config = S.merge(defaultConfig, config || {});
 
         /**
          * triggers
          * @type Array of HTMLElement
          */
-        this.triggers = [];
+        self.triggers = [];
 
         /**
          * panels
          * @type Array of HTMLElement
          */
-        this.panels = [];
+        self.panels = [];
 
         /**
          * nav
@@ -145,13 +145,13 @@ KISSY.add("slideview", function(S) {
          * panelSize
          * @type Array  [x, y]
          */
-        this.panelSize = [];
+        self.panelSize = [];
 
         /**
          * 当前激活的 index
          * @type number
          */
-        this.activeIndex = this.config.activeIndex;
+        self.activeIndex = self.config.activeIndex;
 
         /**
          * anim
@@ -161,10 +161,10 @@ KISSY.add("slideview", function(S) {
         /**
          * 自动播放是否暂停
          */
-        this.autoPlayIsPaused = false;
+        self.autoPlayIsPaused = false;
 
         // init
-        this._init();
+        self._init();
     }
 
     S.mix(SlideView.prototype, {
@@ -263,31 +263,6 @@ KISSY.add("slideview", function(S) {
                     panels[i].style.display = BLOCK;
                 }
 
-                /*
-                // 设置定位信息，为滚动效果做铺垫
-                if (type === TYPES.SCROLLX || type === TYPES.SCROLLY) {
-                    self.container.style.position = RELATIVE;
-                    self.content.style.position = ABSOLUTE;
-
-                    // 水平排列
-                    if (type === TYPES.SCROLLX) {
-                        Dom.setStyle(panels, "float", "left");
-
-                        // 设置最大宽度，以保证有空间让 panels 水平排布
-                        this.content.style.width = self.panelSize[0] * len + "px";
-                    }
-                }
-
-                // 初始化透明
-                if (type === TYPES.FADE) {
-                    for (i = 0; i < len; i++) {
-                        Dom.setStyle(panels[i], OPACITY, i === self.activeIndex ? 1 : 0);
-                        panels[i].style.position = ABSOLUTE;
-                        panels[i].style.zIndex = i === self.activeIndex ? 9 : 1;
-                    }
-                }
-                */
-
                 switch(type) {
                     // 如果是滚动效果
                     case TYPES.SCROLLX: case TYPES.SCROLLY:
@@ -344,44 +319,6 @@ KISSY.add("slideview", function(S) {
                 }, null, true);
             }
         },
-
-        /**
-         * 切换操作
-         */
-        switchTo: function(index) {
-            var self = this, cfg = self.config,
-                triggers = self.triggers,
-                panels = self.panels,
-                fromPanel = panels[self.activeIndex],
-                type = cfg.effectType,
-                toPanel = panels[index], setStyle = Dom.setStyle;
-
-
-            if (self.anim && self._switching) {
-                self.anim.stop();
-            }
-
-            //S.log("Triggerable.switchTo: index = " + index);
-            // fire beforeSwitch
-            //if(!self.fireEvent(BEFORE_SWITCH, index)) return self;
-            // TODO: YUI 2.8.0r4 bug - don't pass multi args correctly
-            //if(!self.fireEvent(BEFORE_SWITCH, fromPanel, toPanel, index)) return self;
-
-            // 切换 active trigger
-            Dom.removeClass(triggers, cfg.activeTriggerCls);
-            Dom.addClass(triggers[index], cfg.activeTriggerCls);
-
-            // 加载延迟数据
-            if (self.loadCustomLazyData) {
-                self.loadCustomLazyData(toPanel);
-            }
-
-            // 切换 content
-            self._switchContent(fromPanel, toPanel, index);
-
-            return self; // chain
-        },
-
 
         /**
          * 切换内容
