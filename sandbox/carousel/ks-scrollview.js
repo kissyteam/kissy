@@ -7,7 +7,7 @@
  * @depends     kissy-core, yahoo-dom-event, yahoo-animate
  */
 
-KISSY.add("carousel", function(S) {
+KISSY.add("scrollview", function(S) {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang;
     var defaultConfig = {
         delay: 2000,
@@ -68,7 +68,7 @@ KISSY.add("carousel", function(S) {
     }
 
     // NOTICE: the container must be scrollable
-    var Carousel = function(container, config) {
+    var ScrollView = function(container, config) {
         this.config = Lang.merge(defaultConfig, config || {});
 
         // carousel's elements
@@ -100,7 +100,7 @@ KISSY.add("carousel", function(S) {
         this._init(); 
     }
 
-    S.mix(Carousel.prototype, {
+    S.mix(ScrollView.prototype, {
         _init: function() {
             var config = this.config, container = this.container;
 
@@ -296,5 +296,5 @@ KISSY.add("carousel", function(S) {
         }
     });
 
-    S.Carousel = Carousel;
+    S.ScrollView = ScrollView;
 });
