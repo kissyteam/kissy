@@ -8,10 +8,17 @@
  */
 
 KISSY.add("scrollview", function(S) {
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang;
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+        getFirstChild = Dom.getFirstChild, getLastChild  = Dom.getLastChild,
+        insertBefore = Dom.insertBefore, insertAfter = Dom.insertAfter,
+        getAttribute = Dom.getAttribute, setAttribute = Dom.setAttribute;
+
+    var PREV = 'prev', NEXT = 'next', INDEX_FLAG = 'carousel:index',
+        HORIZONTAL = 'horizontal', VERTICAL = 'vertical';
+
     var defaultConfig = {
         delay: 2000,
-        speed: 1000,
+        speed: 500,
         startDelay: 2000,
         autoStart: true,
         direction: 'vertical', // 'horizontal(h)' or 'vertical(v)'
@@ -28,28 +35,33 @@ KISSY.add("scrollview", function(S) {
     /**
      * Get Element's real offset
      *
-     * @see http://www.gtalbot.org/BrowserBugsSection/MSIE6Bugs/
-     * @param Object 
+     * @param Object Elements
+     * @private
      */
-    function getRealOffset(o) {
-        var elem = Dom.get(o),
+    function getRealOffset(elem) {
+        var elem = Dom.get(elem),
             leftOffset = elem.offsetLeft,
             topOffset  = elem.offsetTop,
             parent     = elem.offsetParent;
 
-        // fix ie offsetLeft bug
+        // fix IE offsetLeft bug, see
+        // http://www.gtalbot.org/BrowserBugsSection/MSIE6Bugs/
         while(parent) {
             leftOffset += parent.offsetLeft;
-            topOffset += parent.offsetTop;
-            parent = parent.offsetParent;
+            topOffset  += parent.offsetTop;
+            parent      = parent.offsetParent;
         }
 
         return { top: topOffset, left: leftOffset };
     }
         
 
-    // find the next element which to scroll
-    var findNextHorse = function(ref, size, direction) {
+    /**
+     * 找到下个节点的位置
+     *
+     * @private
+     */
+    var findNextPanel = function(ref, size, direction) {
         var func = Dom[(direction == 'prev') ? 'getPreviousSibling' : 'getNextSibling'];
         for(var i = 0; i < size; i++) {
             ref = func(ref);
@@ -58,240 +70,251 @@ KISSY.add("scrollview", function(S) {
         return ref;
     }
 
-    // queue the 'houses' for smooth scroll
-    var queueHorses = function(container, size, direction) {
-        direction = (direction == 'prev') ? 'prev' : 'next';
+
+    /**
+     * 基于平滑滚动，重新排列元素位置
+     *
+     * @private
+     */
+    var rebuildSeq = function(container, size, direction) {
+        direction = (direction == PREV) ? PREV : NEXT;
         switch(direction) {
-            case 'prev':
+            case PREV:
                 for (var i = 0; i < size; i++) {
-                    Dom.insertBefore(Dom.getLastChild(container), Dom.getFirstChild(container))
+                    insertBefore(getLastChild(container), getFirstChild(container));
                 }
                 break;
             default: 
                 for (var i = 0; i < size; i++) {
-                    Dom.insertAfter(Dom.getFirstChild(container), Dom.getLastChild(container))
+                    insertAfter(getFirstChild(container), getLastChild(container));
                 }
         }
     }
 
+
+
+
     // NOTICE: the container must be scrollable
     var ScrollView = function(container, config) {
-        this.config = Lang.merge(defaultConfig, config || {});
+        var self = this, config = Lang.merge(defaultConfig, config || {}),
+        container, panels, currentPanel, current, total, i, len, direction;
 
         // carousel's elements
-        this.container = Dom.get(container);
-        this.horses = this.container.getElementsByTagName('li');
+        container = Dom.get(container), panels = container.getElementsByTagName('li');
 
-        // move pointer to first
-        this.pointer = this.horses[0];
-
-        // number of horses
-        this.total = this.horses.length;
-        if (this.total < this.config.scrollSize) {
+        // move current to first
+        currentPanel = panels[0] || [], total = panels.length;
+        if (total < config.scrollSize) {
             return;
         }
-        this.current = Dom.getAttribute(this.pointer, 'carousel:index');
 
         // mark index
-        for(var i = 0, len = this.total; i < len;) {
-            Dom.setAttribute(this.horses[i], 'carousel:index', i++);
+        for(i = 0, len = total; i < len; i++) {
+            setAttribute(panels[i], INDEX_FLAG, i);
         }
 
+        // mark current index
+        current = getAttribute(currentPanel, INDEX_FLAG);
+
         // default direction value is vertical
-        this.direction = {
-            x: (this.config.direction == 'horizontal') || (this.config.direction == 'h'),
-            y: (this.config.direction == 'vertical')   || (this.config.direction == 'v')       
+        direction = {
+            x: (config.direction == HORIZONTAL) || (config.direction == 'h'),
+            y: (config.direction == VERTICAL)   || (config.direction == 'v')       
         };
 
+        // 重新绑到实例化中
+        self.config    = config,
+        self.container = container, 
+        self.panels    = panels,
+        self.currentPanel = currentPanel,
+        self.current = current,
+        self.total     = total,
+        self.direction = direction;
+
         // initialize
-        this._init(); 
+        self._init(); 
     }
 
     S.mix(ScrollView.prototype, {
         _init: function() {
-            var config = this.config, container = this.container;
+            var self = this, config = self.config, container = self.container, 
+                panels = self.panels,
+                i, len, flag;
 
             // bind custom event
             var events = ['onScroll', 'onPause', 'onBeforeScroll', 'onPause', 'onWakeup'];
-            for(var i = 0,  len = events.length; i < len; i++) {
-                var flag = events[i];
+            for(i = 0,  len = events.length; i < len; i++) {
+                flag = events[i];
                 if (Lang.isFunction(config[flag])) {
-                    this[flag + 'Event'] = new Y.CustomEvent(flag, this, false, Y.CustomEvent.FLAT);
-                    this[flag + 'Event'].subscribe(config[flag]);
+                    self[flag + 'Event'] = new Y.CustomEvent(flag, self, false, Y.CustomEvent.FLAT);
+                    self[flag + 'Event'].subscribe(config[flag]);
                 }
             }
 
             // stop scroll when mouseover the container
-            Event.on(container, 'mouseover', function() {
-                if (config.autoStart) this.pause();
-            }, this, true);
-            Event.on(container, 'mouseout',  function() {
-                if (config.autoStart) this.wakeup();
-            }, this, true);
+            Event.on(container, 'mouseenter', function() {
+                if (config.autoStart) self.pause();
+            });
+
+            Event.on(container, 'mouseleave',  function() {
+                if (config.autoStart) self.wakeup();
+            });
 
             // autoStart?
             if (config.autoStart) {
-                Lang.later(config.startDelay, this, function() {
-                    this.play();
+                Lang.later(config.startDelay, self, function() {
+                    self.play();
                 });
             }
         },
 
 
         play: function(direction) {
-            var _self = this, container = this.container, pointer = this.pointer,
-                config = this.config, callee = arguments.callee, attributes;
-            direction = (direction == 'prev') ? 'prev' : 'next';
+            var self = this, container = self.container, currentPanel = self.currentPanel,
+                current = self.current,
+                config = self.config, callee = arguments.callee, attributes,
+                destination;
+
+            direction = (direction == PREV) ? PREV : NEXT;
 
             // is scrolling?
-            if (this._scrolling || this.paused) {
+            if (self._scrolling || self.paused) {
                 return;
             }
 
             // find the destination
-            var destination = findNextHorse(pointer, config.scrollSize, direction);
+            do {
+                destination = findNextPanel(currentPanel, config.scrollSize, direction);
+                // 如果往下没找到，则重新排序
+                if (!destination) {
+                    rebuildSeq(currentPanel.parentNode, config.scrollSize, direction);
+                }
+            } while(!destination);
 
-            // at the border? queue the 'horses' and refind the destination
-            if (!destination) {
-                queueHorses(pointer.parentNode, config.scrollSize, direction);
-                destination = findNextHorse(pointer, config.scrollSize, direction);
-            }
 
+            // 如果指定滚动距离，记录
             if (Lang.isNumber(config.scrollWidth)) {
                 var offset = config.scrollWidth * config.scrollSize;
             }
 
-            var pointerOffset = getRealOffset(pointer),
-                containerOffset = getRealOffset(container),
+            // 元素相对位置
+            var currentOffset     = getRealOffset(self.currentPanel),
+                containerOffset   = getRealOffset(container),
                 destinationOffset = getRealOffset(destination);
-            // sucks IE, need more code to fix its bug
-            if (this.direction.y) {
 
-                var from = pointerOffset.top - containerOffset.top;
+            // 滚动属性
+            if (self.direction.y) {
+                // 垂直滚动
+                var from = currentOffset.top - containerOffset.top;
                 attributes = {scroll: { from: [, from] }};
-                if (offset) {
-                    attributes.scroll.to = [, from + (offset * (direction == 'next' ? 1 : -1))];
-                } else {
-                    attributes.scroll.to = [, destination['offsetTop'] - container['offsetTop']];
-                }
+                attributes.scroll.to = offset ?
+                    [, from + (offset * (direction == NEXT ? 1 : -1))] : [, destinationOffset.top - containerOffset.top];
             } else {
-                var from = pointerOffset.left - containerOffset.left;
+                // 水平滚动
+                var from = currentOffset.left - containerOffset.left;
                 attributes = { scroll: { from: [from] } };
-                if (offset) {
-                    attributes.scroll.to = [from + (offset * (direction == 'next' ? 1 : -1))];
-                } else {
-                    attributes.scroll.to = [destinationOffset.left - containerOffset.left];
-                }
-
-
-                /*
-                if (YAHOO.env.ua.ie) {
-                    var ieOffset = parseInt(Dom.getStyle(container.parentNode, 
-                                   direction == 'next' ? 'padding-left' : 'padding-right'), 10);
-                    attributes.scroll.to[0] += ieOffset * (direction == 'next' ? 1 : -1);
-                }
-                */
+                // 如果手动设定了滚动距离
+                attributes.scroll.to = offset ? 
+                    [from + (offset * (direction == NEXT ? 1 : -1))] : [destinationOffset.left - containerOffset.left];
             }
 
-            // move pointer to next Item
-            this.pointer = destination;
+            // move current to next Item
+            self.currentPanel = destination;
 
             // mark current horses index
-            this.current = Dom.getAttribute(this.pointer, 'carousel:index');
+            self.current = getAttribute(destination, INDEX_FLAG);
 
-            if(Lang.isObject(this.onBeforeScrollEvent)) {
-                this.onBeforeScrollEvent.fire();
-            }
+            if(Lang.isObject(self.onBeforeScrollEvent)) self.onBeforeScrollEvent.fire();
 
             // start scroll
-            this._scrolling = true;
-            if (this.anim) {
-                this.anim.stop();
-            }
-            this.anim = new Y.Scroll(container, attributes, config.speed/1000,
-                config.easing || Y.Easing.easeOut); 
-            this.anim.onComplete.subscribe(function() {
-                this._scrolling = false;
+            self._scrolling = true;
+            if (self.anim) self.anim.stop();
+            self.anim = new Y.Scroll(container, attributes, config.speed/1000, 
+                                                            config.easing || Y.Easing.easeOut); 
+            self.anim.onComplete.subscribe(function() {
+                self._scrolling = false;
 
                 // run the callback
-                if(Lang.isObject(this.onScrollEvent)) {
-                    this.onScrollEvent.fire();
+                if(Lang.isObject(self.onScrollEvent)) {
+                    self.onScrollEvent.fire();
                 }
 
                 // set next move time
-                if (!this.paused && config.autoStart) {
-                    this.timer = Lang.later(config.delay, _self, callee);
+                if (!self.paused && config.autoStart) {
+                    self.timer = Lang.later(config.delay, self, callee);
                 }
-            }, this, true);
-            this.anim.animate();
+            });
+            self.anim.animate();
         },
 
         pause: function() {
-            this.paused = true;
+            var self = this;
+            self.paused = true;
             // skip wakeup
-            if (this._wakeupTimer) {
-                this._wakeupTimer.cancel();
-            }
+            if (self._wakeupTimer) self._wakeupTimer.cancel();
 
             // run the callback
-            if(Lang.isObject(this.onPauseEvent)) {
-                this.onPauseEvent.fire();
-            }
+            if(Lang.isObject(self.onPauseEvent)) self.onPauseEvent.fire();
         },
 
         wakeup: function() {
-            this.paused = false;
+            var self = this;
+            self.paused = false;
 
             // skip wakeup for previous set
-            if (this._wakeupTimer) {
-                this._wakeupTimer.cancel();
+            if (self._wakeupTimer) {
+                self._wakeupTimer.cancel();
             }
 
             // run the callback
             if(Lang.isObject(this.onWakeupEvent)) {
-                this.onWakeupEvent.fire();
+                self.onWakeupEvent.fire();
             }
 
-            this._wakeupTimer = Lang.later(0, this, function() {
-                this.timer = Lang.later(this.config.delay, this, this.play);
+            self._wakeupTimer = Lang.later(0, self, function() {
+                self.timer = Lang.later(self.config.delay, self, self.play);
             });
         },
 
+
         jumpTo: function(index, direction) {
-            var _self = this, pointer = this.pointer, config = this.config;
+            var self = this, config = self.config, currentPanel = self.currentPanel, 
+                total = self.total, 
+                current, opponent, i, tmp, len;
 
             if (Lang.isUndefined(direction) && Lang.isNumber(this._prevIndex)) {
-                direction = index > this._prevIndex ? 'next' : 'prev';
+                direction = index > self._prevIndex ? NEXT : PREV;
             }
-            direction = (direction == 'prev') ? 'prev' : 'next';
-            var opponent = (direction == 'prev') ? 'next' : 'prev';
+            direction = (direction == PREV) ? PREV : NEXT;
+            opponent = (direction == PREV) ? NEXT : PREV;
 
-            if (index > this.total) {
+            if (index > self.total) {
                 return;
             }
 
             // find direction element
-            for(var i = 0, len = this.total, current = false; i < len; i++) {
-                var tmp = Dom.getAttribute(this.horses[i], 'carousel:index');
+            for(i = 0, len = total; i < len; i++) {
+                tmp = getAttribute(self.panels[i], INDEX_FLAG);
                 if (tmp == index) {
-                    current = this.horses[i];
+                    current = self.panels[i];
                     break;
                 }
             }
             if (!current) return;
 
-            // find opponent element
-            this.pointer = findNextHorse(current, config.scrollSize, opponent);
-            if (!this.pointer) {
-                queueHorses(pointer.parentNode, config.scrollSize, direction);
-                this.pointer = findNextHorse(current, config.scrollSize, opponent);
-            }
+            do {
+                self.currentPanel = findNextPanel(current, config.scrollSize, opponent);
+                // find opponent element
+                if (!self.currentPanel) {
+                    rebuildSeq(current.parentNode, config.scrollSize, direction);
+                }
+            } while(!self.currentPanel);
 
             //
-            this._prevIndex = index;
+            self._prevIndex = index;
 
             // start scroll
-            this.play(direction);
+            self.play(direction);
         },
 
         next: function() {
