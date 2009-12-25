@@ -134,7 +134,7 @@ KISSY.add("triggerable", function(S) {
             Dom.addClass(triggers[index], cfg.activeTriggerCls);
 
             // ╪стьясЁыйЩ╬щ
-            if (self.loadCustomLazyData) {
+            if (self.loadCustomLazyData && toPanel.nodeType === 1) {
                 self.loadCustomLazyData(toPanel);
             }
 

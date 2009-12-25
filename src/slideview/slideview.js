@@ -95,6 +95,7 @@ KISSY.add("slideview", function(S) {
      */
     function SlideView(container, config) {
         var self = this;
+        config = config || {};
         
         // factory or constructor
         if (!(self instanceof arguments.callee)) {

@@ -9,7 +9,7 @@
 
     <target name="concat">
         <concat destfile="kissy-base.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../kissy/kissy.js"/>
+            <!--<path path="../kissy/kissy.js"/>-->
             <path path="../datalazyload/datalazyload.js"/>
             <path path="../triggerable/triggerable.js"/>
             <path path="../tabview/tabview.js"/>
