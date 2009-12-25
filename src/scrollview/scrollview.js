@@ -1,8 +1,8 @@
-// vim: set et sw=4 ts=4 sts=4 fdm=marker ff=unix fenc=utf8 nobomb:
+// vim: set et sw=4 ts=4 sts=4 fdm=marker ff=unix fenc=gbk nobomb:
 /**
- * KISSY - Carousel Module
+ * KISSY - ScrollView
  *
- * @module      carousel
+ * @module      scrollview
  * @creator     mingcheng<i.feelinglucky#gmail.com>
  * @depends     kissy-core, yahoo-dom-event, yahoo-animate
  */
@@ -14,23 +14,22 @@ KISSY.add("scrollview", function(S) {
         getAttribute = Dom.getAttribute, setAttribute = Dom.setAttribute;
 
     var PREV = 'prev', NEXT = 'next', INDEX_FLAG = 'carousel:index',
-        HORIZONTAL = 'horizontal', VERTICAL = 'vertical';
+        HORIZONTAL = 'horizontal', VERTICAL = 'vertical',
+        ON_SWITCH = 'onSwitch', ON_PAUSE = 'onPause', ON_BEFORE_SWITCH = 'onBeforeSwitch';
 
     var defaultConfig = {
-        delay: 2000,
-        speed: 500,
-        startDelay: 2000,
-        autoStart: true,
-        direction: 'vertical', // 'horizontal(h)' or 'vertical(v)'
-        scrollWidth: false,
+        animDuration: .5,
+        interval: 2,
+        autoPlay: true,
+        direction: VERTICAL, // 'horizontal(h)' or 'vertical(v)'
+        //offset: null,
         //easing: function() {},
         //onScroll: function() {},
         //onBeforeScroll: function() {},
         //onPause: function() {},
         //onWakeup: function() {},
-        scrollSize: 1 // the number of horse scrolls, default is 1
+        framesNum: 1 // Ã¿´Î¹ö¶¯µÄÖ¡Êı£¨¹ö¶¯¼¸¸ö LI£©
     };
-
 
     /**
      * Get Element's real offset
@@ -38,7 +37,7 @@ KISSY.add("scrollview", function(S) {
      * @param Object Elements
      * @private
      */
-    function getRealOffset(elem) {
+    var getRealOffset = function(elem) {
         var elem = Dom.get(elem),
             leftOffset = elem.offsetLeft,
             topOffset  = elem.offsetTop,
@@ -55,9 +54,8 @@ KISSY.add("scrollview", function(S) {
         return { top: topOffset, left: leftOffset };
     }
         
-
     /**
-     * æ‰¾åˆ°ä¸‹ä¸ªèŠ‚ç‚¹çš„ä½ç½®
+     * ÕÒµ½ÏÂ¸ö½ÚµãµÄÎ»ÖÃ
      *
      * @private
      */
@@ -72,7 +70,7 @@ KISSY.add("scrollview", function(S) {
 
 
     /**
-     * åŸºäºå¹³æ»‘æ»šåŠ¨ï¼Œé‡æ–°æ’åˆ—å…ƒç´ ä½ç½®
+     * »ùÓÚÆ½»¬¹ö¶¯£¬ÖØĞÂÅÅÁĞÔªËØÎ»ÖÃ
      *
      * @private
      */
@@ -91,20 +89,17 @@ KISSY.add("scrollview", function(S) {
         }
     }
 
-
-
-
     // NOTICE: the container must be scrollable
     var ScrollView = function(container, config) {
         var self = this, config = Lang.merge(defaultConfig, config || {}),
-        container, panels, currentPanel, current, total, i, len, direction;
+        container, panels, activePanel, activeIndex, total, i, len, direction;
 
         // carousel's elements
         container = Dom.get(container), panels = container.getElementsByTagName('li');
 
-        // move current to first
-        currentPanel = panels[0] || [], total = panels.length;
-        if (total < config.scrollSize) {
+        // move activeIndex to first
+        activePanel = panels[0] || [], total = panels.length;
+        if (total < config.framesNum) {
             return;
         }
 
@@ -113,8 +108,8 @@ KISSY.add("scrollview", function(S) {
             setAttribute(panels[i], INDEX_FLAG, i);
         }
 
-        // mark current index
-        current = getAttribute(currentPanel, INDEX_FLAG);
+        // mark activeIndex index
+        activeIndex = parseInt(getAttribute(activePanel, INDEX_FLAG), 10);
 
         // default direction value is vertical
         direction = {
@@ -122,12 +117,12 @@ KISSY.add("scrollview", function(S) {
             y: (config.direction == VERTICAL)   || (config.direction == 'v')       
         };
 
-        // é‡æ–°ç»‘åˆ°å®ä¾‹åŒ–ä¸­
+        // ÖØĞÂ°óµ½ÊµÀı»¯ÖĞ
         self.config    = config,
         self.container = container, 
         self.panels    = panels,
-        self.currentPanel = currentPanel,
-        self.current = current,
+        self.activePanel = activePanel,
+        self.activeIndex = activeIndex,
         self.total     = total,
         self.direction = direction;
 
@@ -137,194 +132,176 @@ KISSY.add("scrollview", function(S) {
 
     S.mix(ScrollView.prototype, {
         _init: function() {
-            var self = this, config = self.config, container = self.container, 
-                panels = self.panels,
-                i, len, flag;
+            var self = this; 
+            // °ó¶¨×Ô¶¨ÒåÊÂ¼ş
+            self.createEvent(ON_SWITCH);
+            self.createEvent(ON_PAUSE);
+            self.createEvent(ON_BEFORE_SWITCH);
 
-            // bind custom event
-            var events = ['onScroll', 'onPause', 'onBeforeScroll', 'onPause', 'onWakeup'];
-            for(i = 0,  len = events.length; i < len; i++) {
-                flag = events[i];
-                if (Lang.isFunction(config[flag])) {
-                    self[flag + 'Event'] = new Y.CustomEvent(flag, self, false, Y.CustomEvent.FLAT);
-                    self[flag + 'Event'].subscribe(config[flag]);
-                }
-            }
-
-            // stop scroll when mouseover the container
-            Event.on(container, 'mouseenter', function() {
-                if (config.autoStart) self.pause();
-            });
-
-            Event.on(container, 'mouseleave',  function() {
-                if (config.autoStart) self.wakeup();
-            });
-
-            // autoStart?
-            if (config.autoStart) {
-                Lang.later(config.startDelay, self, function() {
-                    self.play();
-                });
-            }
+            // Éè¶¨ÊÇ·ñ×Ô¶¯¹ö¶¯
+            self._initAutoPlay();
         },
 
+        _initAutoPlay: function()  {
+            var self = this, config = self.config, container = self.container;
+        
+            // stop scroll when mouseover the container
+            if (config.autoPlay) {
+                Event.on(container, 'mouseenter', function() {
+                    self.paused = true;
+                });
+
+                Event.on(container, 'mouseleave',  function() {
+                    self.paused = false;
+                });
+
+                self.autoPlayTimer = Lang.later(config.interval * 1000, self, function() {
+                    self.play();
+                }, null, true);
+            }
+        },
 
         play: function(direction) {
-            var self = this, container = self.container, currentPanel = self.currentPanel,
-                current = self.current,
-                config = self.config, callee = arguments.callee, attributes,
-                destination;
+            var self = this, config = self.config, 
+            activeIndex = self.activeIndex, total = self.total;
 
+            if (self.paused) return;
+
+            // È·¶¨¹ö¶¯·½Ïò
             direction = (direction == PREV) ? PREV : NEXT;
 
-            // is scrolling?
-            if (self._scrolling || self.paused) {
-                return;
+            // ¼ÆËãÏÂ¸ö¹ö¶¯µÄÎ»ÖÃ
+            activeIndex += (direction == NEXT ? 1 : -1) * config.framesNum;
+            if (activeIndex >= total) {
+                activeIndex = 0;
+            } else if (activeIndex < 0) {
+                activeIndex = total - 1;
             }
 
-            // find the destination
-            do {
-                destination = findNextPanel(currentPanel, config.scrollSize, direction);
-                // å¦‚æœå¾€ä¸‹æ²¡æ‰¾åˆ°ï¼Œåˆ™é‡æ–°æ’åº
-                if (!destination) {
-                    rebuildSeq(currentPanel.parentNode, config.scrollSize, direction);
-                }
-            } while(!destination);
-
-
-            // å¦‚æœæŒ‡å®šæ»šåŠ¨è·ç¦»ï¼Œè®°å½•
-            if (Lang.isNumber(config.scrollWidth)) {
-                var offset = config.scrollWidth * config.scrollSize;
-            }
-
-            // å…ƒç´ ç›¸å¯¹ä½ç½®
-            var currentOffset     = getRealOffset(self.currentPanel),
-                containerOffset   = getRealOffset(container),
-                destinationOffset = getRealOffset(destination);
-
-            // æ»šåŠ¨å±æ€§
-            if (self.direction.y) {
-                // å‚ç›´æ»šåŠ¨
-                var from = currentOffset.top - containerOffset.top;
-                attributes = {scroll: { from: [, from] }};
-                attributes.scroll.to = offset ?
-                    [, from + (offset * (direction == NEXT ? 1 : -1))] : [, destinationOffset.top - containerOffset.top];
-            } else {
-                // æ°´å¹³æ»šåŠ¨
-                var from = currentOffset.left - containerOffset.left;
-                attributes = { scroll: { from: [from] } };
-                // å¦‚æœæ‰‹åŠ¨è®¾å®šäº†æ»šåŠ¨è·ç¦»
-                attributes.scroll.to = offset ? 
-                    [from + (offset * (direction == NEXT ? 1 : -1))] : [destinationOffset.left - containerOffset.left];
-            }
-
-            // move current to next Item
-            self.currentPanel = destination;
-
-            // mark current horses index
-            self.current = getAttribute(destination, INDEX_FLAG);
-
-            if(Lang.isObject(self.onBeforeScrollEvent)) self.onBeforeScrollEvent.fire();
-
-            // start scroll
-            self._scrolling = true;
-            if (self.anim) self.anim.stop();
-            self.anim = new Y.Scroll(container, attributes, config.speed/1000, 
-                                                            config.easing || Y.Easing.easeOut); 
-            self.anim.onComplete.subscribe(function() {
-                self._scrolling = false;
-
-                // run the callback
-                if(Lang.isObject(self.onScrollEvent)) {
-                    self.onScrollEvent.fire();
-                }
-
-                // set next move time
-                if (!self.paused && config.autoStart) {
-                    self.timer = Lang.later(config.delay, self, callee);
-                }
-            });
-            self.anim.animate();
+            this.switchTo(activeIndex, direction);
         },
 
+        /**
+         * ÔİÍ£¶¯»­
+         *
+         */
         pause: function() {
-            var self = this;
-            self.paused = true;
-            // skip wakeup
-            if (self._wakeupTimer) self._wakeupTimer.cancel();
-
-            // run the callback
-            if(Lang.isObject(self.onPauseEvent)) self.onPauseEvent.fire();
+            this.paused = true;
+            this.fireEvent(ON_PAUSE, self);
         },
 
-        wakeup: function() {
-            var self = this;
-            self.paused = false;
+        /**
+         * ¼ÆËãÏà¶Ô¹ö¶¯µÄÎ»ÖÃ
+         *
+         * @private
+         */
+        _decideOffset: function (index, direction) {
+            var self = this, config = self.config, total = self.total, 
+                toPanel, fromPanel, opponent, i, tmp, len;
 
-            // skip wakeup for previous set
-            if (self._wakeupTimer) {
-                self._wakeupTimer.cancel();
-            }
+            if (index > total) return;
 
-            // run the callback
-            if(Lang.isObject(this.onWakeupEvent)) {
-                self.onWakeupEvent.fire();
-            }
-
-            self._wakeupTimer = Lang.later(0, self, function() {
-                self.timer = Lang.later(self.config.delay, self, self.play);
-            });
-        },
-
-
-        jumpTo: function(index, direction) {
-            var self = this, config = self.config, currentPanel = self.currentPanel, 
-                total = self.total, 
-                current, opponent, i, tmp, len;
-
-            if (Lang.isUndefined(direction) && Lang.isNumber(this._prevIndex)) {
-                direction = index > self._prevIndex ? NEXT : PREV;
+            if (Lang.isUndefined(direction) && Lang.isNumber(self.prevIndex)) {
+                direction = index > self.prevIndex ? NEXT : PREV;
             }
             direction = (direction == PREV) ? PREV : NEXT;
             opponent = (direction == PREV) ? NEXT : PREV;
 
-            if (index > self.total) {
-                return;
-            }
-
-            // find direction element
+            // Ñ°ÕÒ¹ö¶¯Ä¿±ê
             for(i = 0, len = total; i < len; i++) {
                 tmp = getAttribute(self.panels[i], INDEX_FLAG);
                 if (tmp == index) {
-                    current = self.panels[i];
+                    toPanel = self.panels[i];
                     break;
                 }
             }
-            if (!current) return;
+            if (!toPanel) return;
 
+            // Ñ°ÕÒĞèÒª¹ö¶¯µÄÆğÊ¼µã
             do {
-                self.currentPanel = findNextPanel(current, config.scrollSize, opponent);
-                // find opponent element
-                if (!self.currentPanel) {
-                    rebuildSeq(current.parentNode, config.scrollSize, direction);
+                fromPanel = findNextPanel(toPanel, config.framesNum, opponent);
+                if (!fromPanel) {
+                    rebuildSeq(toPanel.parentNode, config.framesNum, direction);
                 }
-            } while(!self.currentPanel);
+            } while(!fromPanel);
 
-            //
-            self._prevIndex = index;
+            self.fromPanel = fromPanel;
+            self.toPanel   = toPanel;
+            self.prevIndex = index;
+        },
 
-            // start scroll
-            self.play(direction);
+        switchTo: function(index, direction) {
+            var self = this, container = self.container, 
+                activePanel = self.activePanel, activeIndex = self.activeIndex,
+                config = self.config, callee = arguments.callee, 
+                attributes, destination;
+
+            if (self.prevIndex == index) return;
+
+            // È·¶¨¹ö¶¯µÄ·½ÏòÒÔ¼°Î»ÖÃ
+            self._decideOffset(index, direction);
+
+                // ¹ö¶¯¼ä¾à
+            var activeOffset = getRealOffset(self.fromPanel),
+                destinationOffset = getRealOffset(self.toPanel);
+                containerOffset = getRealOffset(container),
+
+                // ¹ö¶¯ÊôĞÔ
+                prop = self.direction.y ? 'top' : 'left',
+                from = activeOffset[prop] - containerOffset[prop],
+                to = destinationOffset[prop] - containerOffset[prop];
+
+            if (self.direction.y) {
+                // ´¹Ö±¹ö¶¯
+                attributes = {
+                    scroll: {
+                        from: [, from], to: [, to] 
+                    }
+                };
+            } else {
+                // Ë®Æ½¹ö¶¯
+                attributes = {
+                    scroll: {
+                        from: [from], to: [to]
+                    }
+                };
+            }
+
+            // move activeIndex to next Item
+            self.activePanel = self.toPanel;
+
+            // mark activeIndex horses index
+            self.activeIndex = parseInt(getAttribute(self.toPanel, INDEX_FLAG), 10);
+
+            // ¸øµ÷ÓÃÕß¸öÍ£Ö¹¶¯»­µÄ»ú»á
+            if (self.fireEvent(ON_BEFORE_SWITCH, self) === false) {
+                return self;
+            }
+
+            // ¿ªÊ¼¹ö¶¯
+            if (self.anim) self.anim.stop();
+            self.anim = new Y.Scroll(container, attributes, config.animDuration, 
+                                                        config.easing || Y.Easing.easeOut); 
+            self.anim.onComplete.subscribe(function() {
+                self.scrolling = false;
+
+                // ¶¯»­Íê³ÉÒÔºóµÄ»Øµ÷
+                self.fireEvent(ON_SWITCH, self);
+            });
+
+            self.scrolling = true;
+            self.anim.animate();
         },
 
         next: function() {
-            this.play('next');
+            this.play(NEXT);
         },
 
         prev: function() {
-            this.play('prev');
+            this.play(PREV);
         }
     });
 
+    S.augment(ScrollView, Y.EventProvider);
     S.ScrollView = ScrollView;
 });
