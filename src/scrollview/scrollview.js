@@ -22,6 +22,7 @@ KISSY.add("scrollview", function(S) {
         interval: 2,
         autoPlay: true,
         direction: VERTICAL, // 'horizontal(h)' or 'vertical(v)'
+        pauseOnMouseOver: true,  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
         //offset: null,
         //easing: function() {},
         //onScroll: function() {},
@@ -147,13 +148,15 @@ KISSY.add("scrollview", function(S) {
         
             // stop scroll when mouseover the container
             if (config.autoPlay) {
-                Event.on(container, 'mouseenter', function() {
-                    self.paused = true;
-                });
+                if (config.pauseOnMouseOver) {
+                    Event.on(container, 'mouseenter', function() {
+                        self.paused = true;
+                    });
 
-                Event.on(container, 'mouseleave',  function() {
-                    self.paused = false;
-                });
+                    Event.on(container, 'mouseleave',  function() {
+                        self.paused = false;
+                    });
+                }
 
                 self.autoPlayTimer = Lang.later(config.interval * 1000, self, function() {
                     if (self.paused) return;
@@ -178,15 +181,6 @@ KISSY.add("scrollview", function(S) {
             }
 
             this.switchTo(activeIndex, direction);
-        },
-
-        /**
-         * 暂停动画
-         *
-         */
-        pause: function() {
-            this.paused = true;
-            this.fireEvent(ON_PAUSE, self);
         },
 
         /**
@@ -273,7 +267,7 @@ KISSY.add("scrollview", function(S) {
             self.activeIndex = parseInt(getAttribute(self.toPanel, INDEX_FLAG), 10);
 
             // 给调用者个停止动画的机会
-            if (self.fireEvent(ON_BEFORE_SWITCH, self) === false) {
+            if (!self.fireEvent(ON_BEFORE_SWITCH, self)) {
                 return self;
             }
 
