@@ -7,8 +7,7 @@
 KISSY.add("megamenu", function(S) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
-        NONE = "none",
-        BLOCK = "block",
+        NONE = "none", BLOCK = "block",
         CLOSEBTN_TMPL = '<span class="{hook_cls}"></span>',
         BEFORE_SHOW = "beforeShow",
         ON_HIDE = "onHide",
@@ -20,7 +19,7 @@ KISSY.add("megamenu", function(S) {
              *  [x,y] - x 表示显示时的延迟，y 表示隐藏时的延迟
              *  x     - 表示上面的 y 和 x 一样
              */
-            delay: [0.1, 0.5],
+            delay: [.1, .5],
 
             // class
             itemCls: "ks-megamenu-item",
