@@ -172,14 +172,16 @@ KISSY().use("scrollview", function(S) {
 
        var h = new S.ScrollView('demo5UL', {
         direction: 'h',
-        autoStart: false,
-        speed: 500,
-        scrollWidth: 406,
-        onBeforeScroll: function() {
-            YAHOO.util.Dom.get('count').innerHTML = this.current;
-        }
+        autoPlay: false,
+        animDuration: .5,
+        offset: 406
     });
-    var totle = h.horses.length;
+
+   h.subscribe('onBeforeSwitch', function() {
+        YAHOO.util.Dom.get('count').innerHTML = this.activeIndex;
+   });
+
+    var totle = h.panels.length;
     YAHOO.util.Event.on('next', 'click', function(e){
         h.next();
     });
@@ -190,7 +192,7 @@ KISSY().use("scrollview", function(S) {
     for(var i = 0; i < 5; i++) {
         ~function(idx) {
             YAHOO.util.Event.on('jump' + idx, 'click', function() {
-                h.jumpTo(idx);
+                h.switchTo(idx);
             });
         }(i);
     }
@@ -261,18 +263,17 @@ KISSY().use("scrollview", function(S) {
     KISSY().use("scrollview", function(S) {
         var counter = 0;
         handle = new S.ScrollView('demo2UL', {
-            onScroll: function() {
-                YAHOO.util.Dom.get('logger').value += 'haha ' + (++counter) + '\r\n';
-            },
             direction: 'vertical', // 'horizontal(h)' or 'vertical(v)'
-            scrollSize: 5,
+            framesNum: 5,
             autoStart: true,
-            delay: 2000,
-            speed: 1500
+            interval: 2,
+            animDuration: 1.5
         });
 
-        handle.pause();
-        handle.wakeup();
+        handle.subscribe('onSwitch', function() {
+            YAHOO.util.Dom.get('logger').value += 'haha ' + (++counter) + '\r\n';
+        });
+        //handle.pause();
     });
 </script>
 <button onclick="handle.pause();">Pause</button><button onclick="handle.wakeup();">Play</button>
@@ -305,10 +306,10 @@ KISSY().use("scrollview", function(S) {
         //TB.widget.SimpleScroll.decorate('', {delay:2, scrollItemCount:5, speed:10});
         new S.ScrollView('demo3UL', {
             direction: 'horizontal', // '(h)' or 'vertical(v)'
-            scrollSize: 5,
+            framesNum: 5,
             autoStart: true,
-            delay: 2000,
-            speed: 1500
+            interval: 2,
+            animDuration: 1.5
         });
     });
 </script>
@@ -339,10 +340,10 @@ KISSY().use("scrollview", function(S) {
         //TB.widget.SimpleScroll.decorate('demo4UL', {delay:2, speed:50, direction:'h'});
         new S.ScrollView('demo4UL', {
             direction: 'h',
-            scrollSize: 5,
+            framesNum: 5,
             autoStart: true,
-            delay: 1000,
-            speed: 1000
+            interval: 4,
+            animDuration: 1
         });
     });
 </script>		

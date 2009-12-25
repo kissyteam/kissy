@@ -156,6 +156,7 @@ KISSY.add("scrollview", function(S) {
                 });
 
                 self.autoPlayTimer = Lang.later(config.interval * 1000, self, function() {
+                    if (self.paused) return;
                     self.play();
                 }, null, true);
             }
@@ -164,8 +165,6 @@ KISSY.add("scrollview", function(S) {
         play: function(direction) {
             var self = this, config = self.config, 
             activeIndex = self.activeIndex, total = self.total;
-
-            if (self.paused) return;
 
             // 确定滚动方向
             direction = (direction == PREV) ? PREV : NEXT;
