@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2009, Kissy UI Library. All rights reserved.
+MIT Licensed.
+http://kissy.googlecode.com/
+
+Date: 2009-12-25 17:10:12
+Revision: 359
+*/
 /**
  * 超级菜单组件
  * @module      megamenu
@@ -227,8 +235,3 @@ KISSY.add("megamenu", function(S) {
     S.augment(MegaMenu, S.Triggerable, false);
     S.MegaMenu = MegaMenu;
 });
-
-/**
- * TODO:
- *   - 类 YAHOO 首页，内容显示层的位置自适应
- */

@@ -3,14 +3,14 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-25 08:35:17
-Revision: 352
+Date: 2009-12-25 17:11:04
+Revision: 359
 */
 /**
  * SlideView
  * @module      slideview
  * @creator     Óñ²®<lifesinger@gmail.com>, Ã÷³Ç<mingcheng@taobao.com>
- * @depends     kissy-core, yahoo-dom-event
+ * @depends     kissy-core, yui-base, triggerable
  */
 KISSY.add("slideview", function(S) {
 

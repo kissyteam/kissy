@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-25 08:34:33
-Revision: 352
+Date: 2009-12-25 17:11:08
+Revision: 359
 */
 /**
  * Triggerable
@@ -122,6 +122,7 @@ KISSY.add("triggerable", function(S) {
          */
         switchTo: function(index) {
             var self = this, cfg = self.config,
+                activeIndex  =self.activeIndex,
                 triggers = self.triggers,
                 panels = self.panels,
                 fromPanel = panels[self.activeIndex],
@@ -135,7 +136,9 @@ KISSY.add("triggerable", function(S) {
             //if(!self.fireEvent(BEFORE_SWITCH, fromPanel, toPanel, index)) return self;
 
             // 切换 active trigger
-            Dom.removeClass(triggers[self.activeIndex], cfg.activeTriggerCls);
+            if(activeIndex >= 0) { // 有可能为 -1, 表示没有当前项
+                Dom.removeClass(triggers[activeIndex], cfg.activeTriggerCls);
+            }
             Dom.addClass(triggers[index], cfg.activeTriggerCls);
 
             // 加载延迟数据

@@ -2,7 +2,7 @@
  * SlideView
  * @module      slideview
  * @creator     Óñ²®<lifesinger@gmail.com>, Ã÷³Ç<mingcheng@taobao.com>
- * @depends     kissy-core, yahoo-dom-event
+ * @depends     kissy-core, yui-base, triggerable
  */
 KISSY.add("slideview", function(S) {
 

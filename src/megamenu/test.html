@@ -1,24 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=GB18030"/>
+<meta charset="gbk"/>
 <title>MegaMenu Test</title>
-<script type="text/javascript" src="../../lib/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<link rel="stylesheet" href="../../build/cssbase/base-min.css" />
+<script src="../../lib/yui2/yui-base/yui-base-min.js"></script>
 <style type="text/css">
     body {
-        font: 14px/1.5 tahoma, arial, sans-serif;
+        font-size: 14px;
+        padding: 20px 50px;
+    }
+    h1 {
+        font: 2em;
+        margin: 1.5em 0.5em;
     }
     .ks-megamenu {
         position: relative;
+        margin-bottom: 50px;
     }
-    .ks-megamenu-item {
+    .ks-megamenu-trigger {
         border: 1px solid #ccc;
         width: 100px;
         margin: 10px;
         padding: 5px;
         list-style: none;
     }
-    .ks-megamenu-item-current {
+    .ks-megamenu-trigger-active {
         border-color: #5C758E;
         background-color: #5C758E;
         color: #FFF;
@@ -28,7 +35,8 @@
     .ks-megamenu-view {
         position: absolute;
         top: 0;
-        left: 170px;
+        left: 130px;
+        _left: 120px;
         width: 500px;
         height: 300px;
         padding: 10px;        
@@ -42,9 +50,15 @@
     .ks-megamenu-closebtn {
         position: absolute;
         top: 5px;
-        right: 8px;
+        right: 5px;
+        padding: 0 5px;
+        width: 8px;
         font: 14px tahoma,arial,sans-serif;
         cursor: pointer;
+        background-color: #FAFADC;
+    }
+    .ks-megamenu-closebtn:after {
+        content:'X';
     }
 </style>
 </head>
@@ -53,13 +67,12 @@
 
 <div id="demo" class="ks-megamenu">
     <ul>
-        <li class="ks-megamenu-item">Item 1</li>
-        <li class="ks-megamenu-item">Item 2</li>
-        <li class="ks-megamenu-item">Item 3</li>
-        <li class="ks-megamenu-item">Item 4</li>
-        <li class="ks-megamenu-item">Item 5</li>
+        <li class="ks-megamenu-trigger">Item 1</li>
+        <li class="ks-megamenu-trigger">Item 2</li>
+        <li class="ks-megamenu-trigger">Item 3</li>
+        <li class="ks-megamenu-trigger">Item 4</li>
+        <li class="ks-megamenu-trigger">Item 5</li>
     </ul>
-    <div class="ks-megamenu-view"></div>
     <textarea class="ks-megamenu-content">Content 1</textarea>
     <textarea class="ks-megamenu-content">Content 2</textarea>
     <textarea class="ks-megamenu-content">Content 3</textarea>
@@ -68,10 +81,11 @@
 </div>
 
 <script type="text/javascript" src="../../src/kissy/kissy.js"></script>
+<script type="text/javascript" src="../triggerable/triggerable.js"></script>
 <script type="text/javascript" src="megamenu.js"></script>
 <script type="text/javascript">
-    KISSY().use("megamenu", function(S) {
-        var menu = new S.MegaMenu("demo");
+    KISSY().use("*", function(S) {
+        S.MegaMenu("demo");
     });
 </script>
 
