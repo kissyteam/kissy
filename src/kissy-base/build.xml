@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="kissy-base.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../build.xml"/>
+
+    <property file="build.properties"/>
+    <property name="src.dir" location="."/>
+
+    <target name="concat">
+        <concat destfile="kissy-base.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="../kissy/kissy.js"/>
+            <path path="../datalazyload/datalazyload.js"/>
+            <path path="../triggerable/triggerable.js"/>
+            <path path="../tabview/tabview.js"/>
+            <path path="../slideview/slideview.js"/>
+            <path path="../megamenu/megamenu.js"/>
+            <path path="../scrollview/scrollview.js"/>
+            <path path="../suggest/suggest.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="kissy-base.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
+    </target>
+</project>
