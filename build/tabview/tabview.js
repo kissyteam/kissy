@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-25 00:20:57
-Revision: 351
+Date: 2009-12-25 08:34:57
+Revision: 352
 */
 /**
  * TabView
@@ -46,6 +46,8 @@ KISSY.add("tabview", function(S) {
      * @constructor
      */
     function TabView(container, config) {
+        var self = this;
+        
         // 使 container 支持数组
         if (Lang.isArray(container)) {
             for (var rets = [], i = 0, len = container.length; i < len; i++) {
@@ -55,7 +57,7 @@ KISSY.add("tabview", function(S) {
         }
 
         // factory or constructor
-        if (!(this instanceof arguments.callee)) {
+        if (!(self instanceof arguments.callee)) {
             return new arguments.callee(container, config);
         }
 
@@ -63,7 +65,7 @@ KISSY.add("tabview", function(S) {
          * 容器
          * @type HTMLElement
          */
-        this.container = Dom.get(container);
+        self.container = Dom.get(container);
 
         // 根据配置信息，自动调整默认配置
         if(config.triggerCls) {
@@ -76,28 +78,28 @@ KISSY.add("tabview", function(S) {
          * 配置参数
          * @type Object
          */
-        this.config = S.merge(defaultConfig, config || {});
+        self.config = S.merge(defaultConfig, config || {});
 
         /**
          * triggers
          * @type Array of HTMLElement
          */
-        this.triggers = [];
+        self.triggers = [];
 
         /**
          * panels
          * @type Array of HTMLElement
          */
-        this.panels = [];
+        self.panels = [];
 
         /**
          * 当前激活的 index
          * @type number
          */
-        this.activeIndex = this.config.activeIndex;
+        self.activeIndex = self.config.activeIndex;
 
         // init
-        this._init();
+        self._init();
     }
 
     S.mix(TabView.prototype, {

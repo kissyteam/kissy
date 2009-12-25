@@ -29,12 +29,14 @@ KISSY.add("triggerable", function(S) {
          * ≥ı ºªØ triggers
          */
         _initTriggers: function() {
+            var self = this;
+            
             // create custom events
-            this.createEvent(BEFORE_SWITCH);
-            this.createEvent(ON_SWITCH);
+            self.createEvent(BEFORE_SWITCH);
+            self.createEvent(ON_SWITCH);
 
             // bind triggers events
-            this._bindTriggers();
+            self._bindTriggers();
         },
 
         /**

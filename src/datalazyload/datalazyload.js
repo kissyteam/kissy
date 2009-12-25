@@ -43,8 +43,10 @@ KISSY.add("datalazyload", function(S) {
      * @constructor
      */
     function DataLazyload(containers, config) {
+        var self = this;
+        
         // factory or constructor
-        if (!(this instanceof arguments.callee)) {
+        if (!(self instanceof arguments.callee)) {
             return new arguments.callee(containers, config);
         }
 
@@ -63,39 +65,39 @@ KISSY.add("datalazyload", function(S) {
          * 图片所在容器（可以多个），默认为 [doc]
          * @type Array
          */
-        this.containers = containers;
+        self.containers = containers;
 
         /**
          * 配置参数
          * @type Object
          */
-        this.config = S.merge(defaultConfig, config || {});
+        self.config = S.merge(defaultConfig, config || {});
 
         /**
          * 需要延迟下载的图片
          * @type Array
          */
-        //this.images
+        //self.images
 
         /**
          * 需要延迟处理的 textarea
          * @type Array
          */
-        //this.areaes
+        //self.areaes
 
         /**
          * 和延迟项绑定的回调函数
          * @type object
          */
-        this.callbacks = {els: [], fns: []};
+        self.callbacks = {els: [], fns: []};
 
         /**
          * 开始延迟的 Y 坐标
          * @type number
          */
-        //this.threshold
+        //self.threshold
 
-        this._init();
+        self._init();
     }
 
     S.mix(DataLazyload.prototype, {
@@ -105,11 +107,13 @@ KISSY.add("datalazyload", function(S) {
          * @protected
          */
         _init: function() {
-            this.threshold = this._getThreshold();
-            this._filterItems();
+            var self = this;
+            
+            self.threshold = self._getThreshold();
+            self._filterItems();
 
-            if (this._getItemsLength()) {
-                this._initLoadEvent();
+            if (self._getItemsLength()) {
+                self._initLoadEvent();
             }
         },
 
@@ -159,10 +163,11 @@ KISSY.add("datalazyload", function(S) {
          * @protected
          */
         _filterItems: function() {
-            var containers = this.containers,
-                threshold = this.threshold,
-                placeholder = this.config.placeholder,
-                isManualMod = this.config.mod === MOD.MANUAL,
+            var self = this,
+                containers = self.containers,
+                threshold = self.threshold,
+                placeholder = self.config.placeholder,
+                isManualMod = self.config.mod === MOD.MANUAL,
                 n, N, imgs, areaes, i, len, img, data_src,
                 lazyImgs = [], lazyAreaes = [];
 
@@ -198,17 +203,19 @@ KISSY.add("datalazyload", function(S) {
                 }
             }
 
-            this.images = lazyImgs;
-            this.areaes = lazyAreaes;
+            self.images = lazyImgs;
+            self.areaes = lazyAreaes;
         },
 
         /**
          * 加载延迟项
          */
         _loadItems: function() {
-            this._loadImgs();
-            this._loadAreaes();
-            this._fireCallbacks();
+            var self = this;
+            
+            self._loadImgs();
+            self._loadAreaes();
+            self._fireCallbacks();
         },
 
         /**
@@ -216,9 +223,10 @@ KISSY.add("datalazyload", function(S) {
          * @protected
          */
         _loadImgs: function() {
-            var imgs = this.images,
+            var self = this,
+                imgs = self.images,
                 scrollTop = Dom.getDocumentScrollTop(),
-                threshold = this.threshold + scrollTop,
+                threshold = self.threshold + scrollTop,
                 i, img, data_src, remain = [];
 
             for (i = 0; img = imgs[i++];) {
@@ -234,7 +242,7 @@ KISSY.add("datalazyload", function(S) {
                 }
             }
 
-            this.images = remain;
+            self.images = remain;
         },
 
         /**
@@ -242,9 +250,10 @@ KISSY.add("datalazyload", function(S) {
          * @protected
          */
         _loadAreaes: function() {
-            var areaes = this.areaes,
+            var self = this,
+                areaes = self.areaes,
                 scrollTop = Dom.getDocumentScrollTop(),
-                threshold = this.threshold + scrollTop,
+                threshold = self.threshold + scrollTop,
                 i, area, parent, remain = [];
 
             for (i = 0; area = areaes[i++];) {
@@ -258,7 +267,7 @@ KISSY.add("datalazyload", function(S) {
                 }
             }
 
-            this.areaes = remain;
+            self.areaes = remain;
         },
 
         /**
@@ -266,10 +275,11 @@ KISSY.add("datalazyload", function(S) {
          * @protected
          */
         _fireCallbacks: function() {
-            var callbacks = this.callbacks,
+            var self = this,
+                callbacks = self.callbacks,
                 els = callbacks.els, fns = callbacks.fns,
                 scrollTop = Dom.getDocumentScrollTop(),
-                threshold = this.threshold + scrollTop,
+                threshold = self.threshold + scrollTop,
                 i, el, fn, remainEls = [], remainFns = [];
 
             for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
@@ -314,7 +324,8 @@ KISSY.add("datalazyload", function(S) {
          * @protected
          */
         _getItemsLength: function() {
-            return this.images.length + this.areaes.length + this.callbacks.els.length;
+            var self = this;
+            return self.images.length + self.areaes.length + self.callbacks.els.length;
         },
 
         /**

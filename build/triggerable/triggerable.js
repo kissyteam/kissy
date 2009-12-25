@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-25 00:20:47
-Revision: 351
+Date: 2009-12-25 08:34:33
+Revision: 352
 */
 /**
  * Triggerable
@@ -37,12 +37,14 @@ KISSY.add("triggerable", function(S) {
          * ≥ı ºªØ triggers
          */
         _initTriggers: function() {
+            var self = this;
+            
             // create custom events
-            this.createEvent(BEFORE_SWITCH);
-            this.createEvent(ON_SWITCH);
+            self.createEvent(BEFORE_SWITCH);
+            self.createEvent(ON_SWITCH);
 
             // bind triggers events
-            this._bindTriggers();
+            self._bindTriggers();
         },
 
         /**

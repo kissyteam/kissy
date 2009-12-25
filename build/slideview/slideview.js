@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-25 00:21:15
-Revision: 351
+Date: 2009-12-25 08:35:17
+Revision: 352
 */
 /**
  * SlideView
