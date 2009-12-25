@@ -131,23 +131,25 @@
     KISSY().use("*", function(S) {
 
         S.SlideView("slide-demo1", {
+            autoPlay: false,
             activeTriggerCls: "current"
         });
 
         S.SlideView("slide-demo2", {
             effectType: "fade",
-//            autoPlay: false,
+            autoPlay: false,
             activeTriggerCls: "current"
         });
 
         S.SlideView("slide-demo3", {
             effectType: "scrolly",
-//            autoPlay: false,
+            autoPlay: false,
 //            animDuration: 5,
             activeTriggerCls: "current"
         });
 
         var slideView = new S.SlideView("slide-demo4", {
+            autoPlay: false,
             effectType: "scrollx",
             activeTriggerCls: "current"
         });
