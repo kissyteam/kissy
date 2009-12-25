@@ -25,10 +25,17 @@ KISSY.add("scrollview", function(S) {
     };
 
 
-    //http://www.gtalbot.org/BrowserBugsSection/MSIE6Bugs/
+    /**
+     * Get Element's real offset
+     *
+     * @see http://www.gtalbot.org/BrowserBugsSection/MSIE6Bugs/
+     * @param Object 
+     */
     function getRealOffset(o) {
-        var elem = Dom.get(o), leftOffset = elem.offsetLeft,
-            topOffset = elem.offsetTop, parent = elem.offsetParent;
+        var elem = Dom.get(o),
+            leftOffset = elem.offsetLeft,
+            topOffset  = elem.offsetTop,
+            parent     = elem.offsetParent;
 
         // fix ie offsetLeft bug
         while(parent) {
