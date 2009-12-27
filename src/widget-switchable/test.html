@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>Switchable Widget Test</title>
+<link rel="stylesheet" href="../../build/cssbase/base.css"/>
+<script src="../../lib/yui2/yui-base/yui-base-min.js"></script>
+<script src="../../lib/yui2/animation/animation-min.js"></script>
+<style type="text/css">
+    body { padding: 50px; }
+    .section { margin-bottom: 50px; }
+    .loading { background: #EBF5FA url(assets/loading.gif) no-repeat 50% 50%; }
+</style>
+</head>
+
+<body>
+<style type="text/css">
+    #demo1 { position: relative; width: 750px; padding-top: 29px; }
+    #demo1 .ks-switchable-nav { position: absolute; left: 20px; margin-top: -29px; z-index: 99; }
+    #demo1 .ks-switchable-nav li {
+        float: left;
+        width: 130px;
+        height: 27px;
+        line-height: 21px;
+        text-align: center;
+        background: url(assets/tabs-sprite.gif) no-repeat 0 6px;
+        margin-right: 3px;
+        padding-top: 8px;
+        cursor: pointer;
+    }
+    #demo1 .ks-switchable-nav li.active { background-position: 0 -40px; cursor: default; }
+    #demo1 .ks-switchable-content {
+        position: relative;
+        height: 120px;
+        padding: 20px;
+        border: 1px solid #AEC7E5;
+    }
+</style>
+<div id="demo1" class="section">
+    <ul class="ks-switchable-nav">
+        <li class="active">标题 A</li>
+        <li>标题 B</li>
+        <li>标题 C</li>
+        <li>标题 D</li>
+        <li>标题 E</li>
+    </ul>
+    <div class="ks-switchable-content">
+        <div>
+<pre>
+  - 在当前 trigger 中 mouseover/mouseout, click, focus, 不触发
+  - 鼠标快速滑过非当前 trigger, 不触发
+  - mouseover 到非当前 trigger, 停留时间到达延迟时，触发
+  - click 或 Tab 切换到 trigger, 立即触发
+  - beforeSwitch/onSwitch 事件的触发
+  - 延迟的内容能正确加载
+</pre>
+        </div>
+        <div style="display: none">内容 B</div>
+        <div style="display: none">内容 C</div>
+        <div style="display: none">内容 D</div>
+        <div style="display: none"><textarea class="ks-datalazyload-custom">我是延迟内容</textarea></div>
+    </div>
+</div>
+
+<style type="text/css">
+    #demo2 { position: relative; width: 470px; height: 150px; border: 1px solid #B6D1E6; overflow: hidden; }
+    #demo2 .ks-switchable-nav { position: absolute; bottom: 5px; right: 5px; z-index: 99; }
+    #demo2 .ks-switchable-nav li {
+        float: left;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        margin-left: 3px;
+        background-color: #FCF2CF;
+        border: 1px solid #F47500;
+        color: #D94B01;
+        text-align: center;
+        cursor: pointer;
+    }
+    #demo2 .ks-switchable-nav li.active {
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        margin-top: -1px;
+        color: #FFF;
+        background-color: #FF9415;
+        font-weight: bold;
+    }
+    #demo2 .ks-switchable-content li { height: 150px; width: 470px; overflow: hidden; }
+</style>
+<div id="demo2" class="section loading">
+    <ol class="ks-switchable-content">
+        <li><a href="http://ju.atpanel.com/?url=http://www.taobao.com/go/act/discount/hdfk091222.php?ad_id=&amp;am_id=&amp;cm_id=1400213687422f80dd4d&amp;pm_id=150021371293fce706af" target="_blank"><img src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
+        <li style="display: none;"><a target="_blank" href="http://click.mz.simba.taobao.com/cc_mt?p=&amp;s=24760534&amp;e=%2FzU1KBMrzT1jMRVFtqDNyn1tgJqIJA3Hy9QloO7MbgHOIBqxgkWBGKUTW8JURsTh01ynhY4RKTMplHfnVnxiYajw5JHBVqSAXBrj%2Bf%2BTLVcq5t6PSe6eCT%2F8Tn1KGQ46A85BMYIsMXzYy8dzkPxQZCyLyt0ostjNaENU1Z0QCSZaXSgNYtb%2FwhYogN3jOrIE2Q9NE12H0Hk111VWqQddJzvjKwdymURFo%2BK2etf0wTrlhYBv%2B5sdunm4S3KBeGdooeLPkaQt4Mg4u3TgCNezGX1Mh9B64cCdF8VN3SsQNW%2BgArkM4F%2BFplGwl1UuyTCLtMOb3cgDCxBQldTmR3mwFhNV09QNPjZ2bUxM3CBHkfb2wyn42y1yjjwMVjNQnmpt4NEtPh%2F5PsbupFa6ZZ2sVQdCo%2FjLJ9sf&amp;ec=ffloYVIRbFZ%2BaahPJekdUQ%3D%3D&amp;c=17016"><img width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-23/091223183208.gif"/></a></li>
+        <li style="display: none;"><a target="_blank" href="http://click.mz.simba.taobao.com/cc_mt?p=&amp;s=24798448&amp;e=Dt08prCb2XITS0fgsB0pLWPZBmxkOSJN1EB7EZoCufLOIBqxgkWBGKUTW8JURsTh01ynhY4RKTMplHfnVnxiYajw5JHBVqSAt7HSfVXUDnkq5t6PSe6eCSd9IEWxM6DY5jW4eHavsnjld8tbWfWIf0NgEPEBdwIXuRo%2FQWlri%2FCccv4G90g47kxxqcSSs7ZsXQACFCR9zsjZh1qchslOYhu59Q8UD6BjjuZFoAy0TE4uXdd4pbxxdJrgrtD%2BfMvuqiMtD4PmyoGxBt%2B2srbO5U%2Fog8jUR6%2FzXuoyNenTY%2FP%2Brhg39YSgUu8eW6WrZDwu5tnnXUloCQrRA34pP331dxor5HljN%2FSAvhPORJW8wGKHC7CGRMXM4dBtOB71E7w0Wpz21Ev%2BntcNbvZcCs%2FiY5mevJOITMIRttD1t3L9B%2FfTUz5VXlG8ca1q4Usgscjh5zxcycfFkahUxsXzpxKJ44cYFwN1TVzJHeVW89q6WFchrJ53rjXdyJ0xW%2Fx4B2ripb7pWXTGh%2FmDhBflWTUs1AFc42W8KKbZm6gpZSCD8t0%3D&amp;ec=DL3x6QG0a1NZfXKl6s6pcw%3D%3D&amp;c=54930"><img width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224104701.jpg"/></a></li>
+        <li style="display: none;"><a target="_blank" href="http://click.mz.simba.taobao.com/cc_mt?p=&amp;s=24795659&amp;e=Nq2QNsVOnaLIaLmY3w1CvJIl10lmm%2FgNzhEKtqFowS%2FOIBqxgkWBGNSahgRMj4Ic4J%2FwfVJD3oU%2FkEtTnfxQjXD89FjDuKlneThli3B9t4%2BYUm%2FmQp6nd7xXcC1T9PvuvJ%2F9AvFKTtPOQ6gP6lopX%2FRp145Rn2%2FF4xlEdwcbvDLanDbXeYQCWb4qMW65vsWvP3tFBEQbttDbIln1NdPiwvC93EloWleBw58TnUiWGMBY7He6IpEpV3R0bQGJmgpg9LhhfMwC6XvGelqVE0arMmkilKyzFf85DqzE3Sh1Lblha2B7YZmjCt9Q20vYDXA6cEgBXH0BKuiQ%2B9s943VwSa5AktraACg327jRRb5VgTHc88wYhKKejULYZL6EdivGa0ZGqF%2Bd2atUUfVGRTt%2BBZqPtHJoAML%2BiJpEHmQekVrUsty67Y0Uow%3D%3D&amp;ec=66%2BKbPPrIf9vrlog%2BZEgwQ%3D%3D&amp;c=52141"><img width="470" height="150" border="0" src="http://img.alimama.cn/adbrand/adboard/picture/2009-12-21/112066050001091221135534.jpg"/></a></li>
+        <li style="display: none;"><a href="http://ju.atpanel.com/?url=http://www.taobao.com/go/act/focus/nzdc_qqg2.php?TBG=7285.module-1.4&amp;ad_id=&amp;am_id=&amp;cm_id=140021305131ef184707&amp;pm_id=15002137139b40e4bba3" target="_blank"><img src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
+    </ol>
+</div>
+
+
+<style type="text/css">
+    #demo3 {
+        position: relative;
+        width: 515px;
+        height: 220px;
+        border: 1px solid #D3D2D2;
+        padding: 1px;
+        overflow: hidden;
+    }
+    #demo3 .yslider-stick {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 106px;
+        font-size: 14px;
+        background: #fff;
+        margin: 1px;
+        z-index: 99;
+    }
+    #demo3 .yslider-stick li {
+        border-bottom: 1px solid #EDEDED;
+    }
+    #demo3 .yslider-stick li a {
+        display: block;
+        text-indent: 15px;
+        padding: 8px 5px;
+        color: #666;
+    }
+    #demo3 .yslider-stick li.selected {
+        background-color: #C8282B;
+    }    
+    #demo3 .yslider-stick li.selected a {
+        color: #fff;
+    }
+    #demo3 .yslider-stage {
+        height: 220px;
+        width: 405px;
+    }
+</style>
+<div id="demo3">
+    <div class="yslider-stage">
+        <p><a href="http://co.youa.baidu.com/content/promo/zhongjimiaoshazong/index.html" target="_blank"><img width="405" height="220" alt="终极秒杀场" src="http://co.youa.baidu.com/picture/r/image/2009-12-25/236d430f443d05925ad7291d9ad6b560.jpg"/></a></p>
+        <p><a href="http://youa.baidu.com/zc" target="_blank"><img width="405" height="220" alt="9折话费" src="http://co.youa.baidu.com/picture/r/image/2009-12-25/4b2e801b6d174648ec77678d4a9f32e8.jpg"/></a></p>
+        <p><a href="http://co.youa.baidu.com/content/lottery/chrislotact/index.html?c=676" target="_blank"><img width="405" height="220" alt="彩票大派送" src="http://co.youa.baidu.com/picture/r/image/2009-12-21/eb76df2598316e6b5e52cd94ae2e3f1b.jpg"/></a></p>
+        <p><a href="http://co.youa.baidu.com/content/promo/nianzhongjihe/index.html" target="_blank"><img width="405" height="220" alt="限量抢购" src="http://co.youa.baidu.com/picture/r/image/2009-12-25/cc60334e6a75fab260e680cfc2b35ea7.jpg"/></a></p>
+        <p><a href="http://youa.baidu.com/shop/3710a13d15c375285841ef08/tab/0344b67328e77dc92132cad9" target="_blank"><img width="405" height="220" alt="周末购" src="http://co.youa.baidu.com/picture/r/image/2009-12-27/74538ac61dc0836f5d40d29b181868fc.jpg"/></a></p>
+        <p><a href="http://co.youa.baidu.com/content/promo/xmas09/index.html?c=740" target="_blank"><img width="405" height="220" alt="年终风暴" src="http://co.youa.baidu.com/picture/r/image/2009-12-23/d69f75d92daf625053bd0f92f2b5e586.jpg"/></a></p>
+    </div>
+    <ul class="yslider-stick">
+        <li class="selected"><a href="http://co.youa.baidu.com/content/promo/xmas09/index.html?c=740" target="_blank">年终风暴</a></li>
+        <li><a href="http://co.youa.baidu.com/content/promo/zhongjimiaoshazong/index.html" target="_blank">终极秒杀场</a></li>
+        <li><a href="http://youa.baidu.com/zc" target="_blank">9折话费</a></li>
+        <li><a href="http://co.youa.baidu.com/content/lottery/chrislotact/index.html?c=676" target="_blank">彩票大派送</a></li>
+        <li><a href="http://co.youa.baidu.com/content/promo/nianzhongjihe/index.html" target="_blank">限量抢购</a></li>
+        <li><a href="http://youa.baidu.com/shop/3710a13d15c375285841ef08/tab/0344b67328e77dc92132cad9" target="_blank">周末购</a></li>
+    </ul>
+</div>
+
+<script src="../kissy/kissy.js"></script>
+<script src="../widget/widget.js"></script>
+<script src="../widget-switchable/widget-switchable.js"></script>
+<script src="../widget-switchable/plugin-autoplay.js"></script>
+<script src="../widget-switchable/plugin-effect.js"></script>
+<script>
+    KISSY().use("*", function(S) {
+
+        // demo1: tabs
+        var tabs = new S.Widget("demo1").switchable();
+
+        tabs.subscribe("beforeSwitch", function(index) {
+            if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
+                this.panels[index].innerHTML = "index = " + index;
+            }
+        });
+
+        // demo2: slide
+        S.Widget("demo2").switchable({
+            autoPlay: true,
+            effectType: "scrolly",
+            animEasing: YAHOO.util.Easing.easeOutStrong
+        });
+
+        // demo3: youa slide
+        S.Widget("demo3").switchable({
+            navCls: "yslider-stick",
+            contentCls: "yslider-stage",
+            activeTriggerCls: "selected",
+            autoPlay: true,
+            effectType: "fade",
+            animEasing: YAHOO.util.Easing.easeOutStrong
+        });
+    });
+</script>
+</body>
+</html>
