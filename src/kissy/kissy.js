@@ -111,7 +111,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
          * @private
          */
         _setup: function() {
-            this.use("kissy-base");
+            this.use("kissy-core");
         },
 
         /**
@@ -292,8 +292,20 @@ if (typeof KISSY === "undefined" || !KISSY) {
             return mix(r.prototype, s.prototype, ov, wl);
         },
 
-        each: function() {
-            // TODO
+        /**
+         * Executes the supplied function on each item in the array.
+         * @method each
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item.  The
+         * function receives three arguments: the value, the index, the full array.
+         * @param obj Optional context object
+         */
+        each: function (arr, fn, obj) {
+            var l = (arr && arr.length) || 0, i;
+            for (i = 0; i < l; i++) {
+                fn.call(obj || this, arr[i], i, arr);
+            }
+            return this;
         },
 
         /**

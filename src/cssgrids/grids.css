@@ -4,22 +4,14 @@
 维护：玉伯<lifesinger@gmail.com>, 正淳<ragecarrier@gmail.com>
 */
 
-/** 页面宽度 **/
-#page {
-    /* 默认宽度为 100%, 留点呼吸空间 */
-    padding: 0 10px;
-}
-
 /* 居中 */
-#header, #content, #footer {
+#page {
     margin-left: auto;
     margin-right: auto;
 }
 
-/* 页面为 950px 宽 */
-.w950 #header, .w950 #content, .w950 #footer,
-/* 头尾 100%, 仅内容区域 950px */
-#content.w950 {
+/* 950px 宽 */
+.w950 {
     width: 950px;
 }
 

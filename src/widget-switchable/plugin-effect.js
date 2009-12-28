@@ -17,9 +17,9 @@ KISSY.add("widget-switchable-effect", function(S) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        effectType: NONE, // "scrollx", "scrolly", "fade"
-        animDuration: .5, // 开启切换效果时，切换的时长
-        animEasing: Y.Easing.easeNone, // easing method
+        effect: NONE, // "scrollx", "scrolly", "fade" 或者直接传入 custom effect fn
+        duration: .5, // 动画的时长
+        easing: Y.Easing.easeNone, // easing method
 
         panelSize: [] // 卡盘 panel 的宽高。一般不需要设定此值
         // 只有当无法正确获取高宽时，才需要设定
@@ -47,7 +47,7 @@ KISSY.add("widget-switchable-effect", function(S) {
             Dom.setStyle(toEl, OPACITY, 1);
 
             // 动画切换
-            self.anim = new Y.Anim(fromEl, {opacity: {to: 0}}, cfg.animDuration, cfg.animEasing);
+            self.anim = new Y.Anim(fromEl, {opacity: {to: 0}}, cfg.duration, cfg.easing);
             self.anim.onComplete.subscribe(function() {
                 self.anim = null; // free
 
@@ -70,7 +70,7 @@ KISSY.add("widget-switchable-effect", function(S) {
             attributes[isX ? "left" : "top"] = { to: -diff };
 
             if (self.anim) self.anim.stop();
-            self.anim = new Y.Anim(self.content, attributes, cfg.animDuration, cfg.animEasing);
+            self.anim = new Y.Anim(self.content, attributes, cfg.duration, cfg.easing);
             self.anim.onComplete.subscribe(function() {
                 self.anim = null; // free
                 callback();
@@ -85,7 +85,7 @@ KISSY.add("widget-switchable-effect", function(S) {
      */
     S.weave(function() {
         var self = this, cfg = self.config[SWITCHABLE],
-            type = cfg.effectType, panels = self.panels,
+            effect = cfg.effect, panels = self.panels,
             i, len = self.triggers.length,
             activeIndex = self.activeIndex;
 
@@ -98,20 +98,20 @@ KISSY.add("widget-switchable-effect", function(S) {
         //    最好指定第一个 panel 的 width 和 height，因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
 
         // 2. 初始化 panels 样式
-        if (type === NONE) {
+        if (effect === NONE) {
             // 默认情况，只显示 activePanel
             for (i = 0; i < len; i++) {
                 panels[i].style.display = i === activeIndex ? BLOCK : NONE;
             }
 
-        } else { // type = scrollx, scrolly, fade
+        } else { // effect = scrollx, scrolly, fade
 
             // 这些特效需要将 panels 都显示出来
             for (i = 0; i < len; i++) {
                 panels[i].style.display = BLOCK;
             }
 
-            switch (type) {
+            switch (effect) {
                 // 如果是滚动效果
                 case SCROLLX:
                 case SCROLLY:
@@ -120,7 +120,7 @@ KISSY.add("widget-switchable-effect", function(S) {
                     self.content.style.position = ABSOLUTE;
 
                     // 水平排列
-                    if (type === SCROLLX) {
+                    if (effect === SCROLLX) {
                         Dom.setStyle(panels, "float", "left");
 
                         // 设置最大宽度，以保证有空间让 panels 水平排布
@@ -152,9 +152,11 @@ KISSY.add("widget-switchable-effect", function(S) {
          * 切换内容
          */
         _switchPanel: function(fromEl, toEl, index) {
-            var self = this, cfg = self.config[SWITCHABLE];
+            var self = this, cfg = self.config[SWITCHABLE],
+                effect = cfg.effect,
+                fn = typeof effect === "function" ? effect : effects[effect];
 
-            effects[cfg.effectType].call(self, fromEl, toEl, function() {
+            fn.call(self, fromEl, toEl, function() {
                 // fire event
                 self.fireEvent("onSwitch", index);
             }, index);

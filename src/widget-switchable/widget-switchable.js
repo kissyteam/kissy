@@ -27,9 +27,6 @@ KISSY.add("widget-switchable", function(S) {
             triggers: [],
             panels: [],
 
-            // 是否没有触点
-            noTriggers: false,
-
             // 触发类型
             triggerType: "mouse", // or "click"
             // 触发延迟
@@ -79,6 +76,12 @@ KISSY.add("widget-switchable", function(S) {
         self.panels = self.panels || [];
 
         /**
+         * the parentNode of panels
+         * @type HTMLElement
+         */
+        //self.content
+
+        /**
          * 当前激活的 index
          * @type number
          */
@@ -117,13 +120,12 @@ KISSY.add("widget-switchable", function(S) {
         },
 
         /**
-         * 解析 mackup 的 switchable 部分，获取 triggers, panels, nav, content
+         * 解析 mackup 的 switchable 部分，获取 triggers, panels, content
          */
         _parseSwitchableMackup: function() {
             var self = this, container = self.container, cfg = self.config[SWITCHABLE],
                 nav, content, triggers = [], panels = [], i, len,
-                getElementsByClassName = Dom.getElementsByClassName,
-                hasTriggers = !cfg.noTriggers;
+                getElementsByClassName = Dom.getElementsByClassName;
 
             switch (cfg.mackupType) {
                 case 0: // 默认结构
@@ -144,18 +146,17 @@ KISSY.add("widget-switchable", function(S) {
 
             // 自动生成 triggers
             len = panels.length;
-            if(hasTriggers && len > 0 && !triggers.length) {
+            if(len > 0 && !triggers.length) {
                 triggers = self._generateTriggersMackup(len);
             }
 
             // 将 triggers 和 panels 转换为普通数组
             for (i = 0; i < len; i++) {
-                if(hasTriggers) self.triggers.push(triggers[i]);
+                self.triggers.push(triggers[i]);
                 self.panels.push(panels[i]);
             }
 
-            // 获取 nav, content
-            if(hasTriggers) self.nav = nav || triggers[0].parentNode;
+            // get content
             self.content = content || panels[0].parentNode;
         },
 

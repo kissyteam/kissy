@@ -9,16 +9,19 @@ KISSY.add("widget-switchable-autoplay", function(S) {
         SWITCHABLE = "switchable",
         Switchable = S.Switchable;
 
+    /**
+     * 添加默认配置
+     */
     S.mix(Switchable.Config, {
         autoPlay: false,
-        autoPlayInterval: 5, // 自动播放间隔时间
+        interval: 5, // 自动播放间隔时间
         pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
     });
 
     /**
-     * 初始化自动播放
+     * 织入初始化函数
      */
-    function initAutoPlay() {
+    S.weave(function() {
         var self = this, cfg = self.config[SWITCHABLE], max;
         if (!cfg.autoPlay) return;
 
@@ -34,11 +37,10 @@ KISSY.add("widget-switchable-autoplay", function(S) {
 
         // 设置自动播放
         max = self.panels.length - 1;
-        self.autoPlayTimer = Lang.later(cfg.autoPlayInterval * 1000, self, function() {
+        self.autoPlayTimer = Lang.later(cfg.interval * 1000, self, function() {
             if (self.paused) return;
             self.switchTo(self.activeIndex < max ? self.activeIndex + 1 : 0);
         }, null, true);
-    }
 
-    S.weave(initAutoPlay, "after", Switchable, "_initSwitchable");
+    }, "after", Switchable, "_initSwitchable");
 });
