@@ -1,9 +1,9 @@
 /**
  * Switchable Effect Plugin
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base, yui-animation, widget, widget-switchable
+ * @depends     kissy, yui-base, yui-animation, widget, switchable
  */
-KISSY.add("widget-switchable-effect", function(S) {
+KISSY.add("switchable-effect", function(S) {
 
     var Y = YAHOO.util, Dom = Y.Dom,
         SWITCHABLE = "switchable",
@@ -20,6 +20,8 @@ KISSY.add("widget-switchable-effect", function(S) {
         effect: NONE, // "scrollx", "scrolly", "fade" 或者直接传入 custom effect fn
         duration: .5, // 动画的时长
         easing: Y.Easing.easeNone, // easing method
+
+        steps: 1, // 一次滚动多少个 panels. 仅在 effect 为 scrollx/scrolly 时有效
 
         panelSize: [] // 卡盘 panel 的宽高。一般不需要设定此值
         // 只有当无法正确获取高宽时，才需要设定
@@ -63,7 +65,7 @@ KISSY.add("widget-switchable-effect", function(S) {
         // 水平/垂直滚动效果
         scroll: function(fromEl, toEl, callback, index) {
             var self = this, cfg = self.config[SWITCHABLE],
-                isX = cfg.effectType === SCROLLX,
+                isX = cfg.effect === SCROLLX,
                 diff = self.panelSize[isX ? 0 : 1] * index,
                 attributes = {};
 
@@ -81,7 +83,7 @@ KISSY.add("widget-switchable-effect", function(S) {
     effects[SCROLLX] = effects[SCROLLY] = effects.scroll;
 
     /**
-     * 织入初始化函数：根据 effectType，调整初始状态
+     * 织入初始化函数：根据 effect, 调整初始状态
      */
     S.weave(function() {
         var self = this, cfg = self.config[SWITCHABLE],
@@ -163,3 +165,8 @@ KISSY.add("widget-switchable-effect", function(S) {
         }
     });
 });
+
+/**
+ * TODO:
+ *  - apple 翻页效果
+ */

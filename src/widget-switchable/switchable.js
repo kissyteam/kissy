@@ -1,9 +1,9 @@
 /**
- * Widget Switchable
+ * Switchable
  * @creator     Óñ²®<lifesinger@gmail.com>
  * @depends     kissy, yui-base, widget
  */
-KISSY.add("widget-switchable", function(S) {
+KISSY.add("switchable", function(S) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         UNDEFINED = "undefined",

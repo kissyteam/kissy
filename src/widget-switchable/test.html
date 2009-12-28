@@ -98,7 +98,6 @@
     </ol>
 </div>
 
-
 <style type="text/css">
     #demo3 {
         position: relative;
@@ -139,7 +138,7 @@
         width: 405px;
     }
 </style>
-<div id="demo3">
+<div id="demo3" class="section">
     <div class="yslider-stage">
         <p><a href="http://co.youa.baidu.com/content/promo/zhongjimiaoshazong/index.html" target="_blank"><img width="405" height="220" alt="终极秒杀场" src="http://co.youa.baidu.com/picture/r/image/2009-12-25/236d430f443d05925ad7291d9ad6b560.jpg"/></a></p>
         <p><a href="http://youa.baidu.com/zc" target="_blank"><img width="405" height="220" alt="9折话费" src="http://co.youa.baidu.com/picture/r/image/2009-12-25/4b2e801b6d174648ec77678d4a9f32e8.jpg"/></a></p>
@@ -158,16 +157,96 @@
     </ul>
 </div>
 
+
+<style type="text/css">
+    #demo4 {
+        position: relative;
+        width: 680px;
+        height: 120px;
+        border: 1px solid #ccc;
+        background-color: #F9F9F9;
+        margin: auto;
+        overflow: hidden;
+    }
+    #demo4 .ks-switchable-nav {
+        position: absolute;
+        right: 30px;
+        top: -10px;
+    }
+    #demo4 .ks-switchable-nav li {
+        float: left;
+        padding: 5px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+    #demo4 .ks-switchable-nav li.active {
+        color: #C8282B;
+    }
+    #demo4 .ks-switchable-content img {
+        float: left;
+        width: 100px;
+        height: 75px;
+        padding: 2px;
+        margin: 20px 5px 20px 21px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+    }
+    #scroller {
+        position: relative;
+        width: 820px;
+    }
+    #scroller .prev, #scroller .next {
+        position: absolute;
+        top: 50px;
+        color: #5E6E84;
+        cursor: pointer;
+
+    }
+    #scroller .prev { left: 10px; }
+    #scroller .next { right: 10px; }
+</style>
+<div id="scroller" class="section">
+    <span class="prev">&lang; 上一页</span>
+    <span class="next">下一页 &rang;</span>
+    <div id="demo4">
+        <div class="ks-switchable-content">
+            <!-- 1-5 -->
+            <img src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg"/>
+            <img src="http://farm4.static.flickr.com/3089/2796719087_c3ee89a730_t.jpg"/>
+            <img src="http://farm1.static.flickr.com/79/244441862_08ec9b6b49_t.jpg"/>
+            <img src="http://farm1.static.flickr.com/28/66523124_b468cf4978_t.jpg"/>
+            <img src="http://farm1.static.flickr.com/164/399223606_b875ddf797_t.jpg"/>
+            <!-- 5-10 -->
+            <img src="http://farm1.static.flickr.com/163/399223609_db47d35b7c_t.jpg"/>
+            <img src="http://farm1.static.flickr.com/135/321464104_c010dbf34c_t.jpg"/>
+            <img src="http://farm1.static.flickr.com/40/117346184_9760f3aabc_t.jpg"/>
+            <img src="http://farm1.static.flickr.com/153/399232237_6928a527c1_t.jpg"/>
+            <img src="http://farm1.static.flickr.com/50/117346182_1fded507fa_t.jpg"/>
+            <!-- 10-15 -->
+            <img src="http://farm4.static.flickr.com/3629/3323896446_3b87a8bf75_t.jpg"/>
+            <img src="http://farm4.static.flickr.com/3023/3323897466_e61624f6de_t.jpg"/>
+            <img src="http://farm4.static.flickr.com/3650/3323058611_d35c894fab_t.jpg"/>
+            <img src="http://farm4.static.flickr.com/3635/3323893254_3183671257_t.jpg"/>
+            <img src="http://farm4.static.flickr.com/3624/3323893148_8318838fbd_t.jpg"/>
+        </div>
+        <ul class="ks-switchable-nav">
+            <li class="active">&bull;</li>
+            <li>&bull;</li>
+            <li>&bull;</li>
+        </ul>
+    </div>
+</div>
+
 <script src="../kissy/kissy.js"></script>
 <script src="../widget/widget.js"></script>
-<script src="../widget-switchable/widget-switchable.js"></script>
+<script src="../widget-switchable/switchable.js"></script>
 <script src="../widget-switchable/plugin-autoplay.js"></script>
 <script src="../widget-switchable/plugin-effect.js"></script>
 <script>
     KISSY().use("*", function(S) {
 
         var Y = YAHOO.util;
-
+/*
         // demo1: tabs
         var tabs = new S.Widget("demo1").switchable();
 
@@ -179,7 +258,7 @@
 
         // demo2: taobao slide
         S.Widget("demo2").switchable({
-            autoPlay: true,
+            autoplay: true,
             effect: "scrolly",
             easing: Y.Easing.easeOutStrong
         });
@@ -190,9 +269,16 @@
             contentCls: "yslider-stage",
             activeTriggerCls: "selected",
             delay: .2,
-            autoPlay: true,
+            autoplay: true,
             effect: "fade",
             duration: .8
+        });
+*/
+        // demo4: scroller
+        S.Widget("demo4").switchable({
+            effect: "scrollx",
+            easing: Y.Easing.easeOutStrong,
+            panelSize: [500, 75]
         });
 
 
