@@ -7,6 +7,7 @@ KISSY.add("switchable", function(S) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         UNDEFINED = "undefined",
+        DISPLAY = "display", BLOCK = "block", NONE = "none",
         SWITCHABLE = "switchable",
         BEFORE_SWITCH = "beforeSwitch", ON_SWITCH = "onSwitch",
         CLS_PREFIX = "ks-switchable-",
@@ -27,13 +28,22 @@ KISSY.add("switchable", function(S) {
             triggers: [],
             panels: [],
 
+            // 是否有触点
+            hasTriggers: true,
+
             // 触发类型
             triggerType: "mouse", // or "click"
             // 触发延迟
             delay: .1, // 100ms
 
             activeIndex: 0, // mackup 的默认激活项，应该与此 index 一致
-            activeTriggerCls: "active"
+            activeTriggerCls: "active",
+
+            // 切换视图内有多少个 panels
+            steps: 1,
+
+            // 切换视图区域的大小。一般不需要设定此值，仅当获取值不正确时，用于手工指定大小
+            viewSize: []
         };
 
     /**
@@ -76,6 +86,12 @@ KISSY.add("switchable", function(S) {
         self.panels = self.panels || [];
 
         /**
+         * length = panels.length / steps
+         * @type number
+         */
+        //self.length
+
+        /**
          * the parentNode of panels
          * @type HTMLElement
          */
@@ -102,10 +118,10 @@ KISSY.add("switchable", function(S) {
          * init switchable
          */
         _initSwitchable: function() {
-            var self = this;
+            var self = this, cfg = self.config[SWITCHABLE];
 
             // parse mackup
-            if(!self.panels.length) {
+            if(self.panels.length === 0) {
                 self._parseSwitchableMackup();
             }
 
@@ -114,7 +130,7 @@ KISSY.add("switchable", function(S) {
             self.createEvent(ON_SWITCH);
 
             // bind triggers
-            if(self.triggers.length) {
+            if(cfg.hasTriggers) {
                 self._bindTriggers();
             }
         },
@@ -123,15 +139,16 @@ KISSY.add("switchable", function(S) {
          * 解析 mackup 的 switchable 部分，获取 triggers, panels, content
          */
         _parseSwitchableMackup: function() {
-            var self = this, container = self.container, cfg = self.config[SWITCHABLE],
-                nav, content, triggers = [], panels = [], i, len,
+            var self = this, container = self.container,
+                cfg = self.config[SWITCHABLE], hasTriggers = cfg.hasTriggers,
+                nav, content, triggers = [], panels = [], i, n, m,
                 getElementsByClassName = Dom.getElementsByClassName;
 
             switch (cfg.mackupType) {
                 case 0: // 默认结构
                     nav = getElementsByClassName(cfg.navCls, "*", container)[0];
-                    content = getElementsByClassName(cfg.contentCls, "*", container)[0];
                     if(nav) triggers = Dom.getChildren(nav);
+                    content = getElementsByClassName(cfg.contentCls, "*", container)[0];
                     panels = Dom.getChildren(content);
                     break;
                 case 1: // 适度灵活
@@ -144,15 +161,24 @@ KISSY.add("switchable", function(S) {
                     break;
             }
 
+
+            // get length
+            n = panels.length;
+            self.length = n / cfg.steps;
+
             // 自动生成 triggers
-            len = panels.length;
-            if(len > 0 && !triggers.length) {
-                triggers = self._generateTriggersMackup(len);
+            if(hasTriggers && n > 0 && triggers.length === 0) {
+                triggers = self._generateTriggersMackup(self.length);
             }
 
-            // 将 triggers 和 panels 转换为普通数组
-            for (i = 0; i < len; i++) {
-                self.triggers.push(triggers[i]);
+            // 将 triggers 转换为普通数组
+            if (hasTriggers) {
+                for (i = 0, m = triggers.length; i < m; i++) {
+                    self.triggers.push(triggers[i]);
+                }
+            }
+            // 将 panels 转换为普通数组
+            for (i = 0; i < n; i++) {
                 self.panels.push(panels[i]);
             }
 
@@ -254,19 +280,22 @@ KISSY.add("switchable", function(S) {
         switchTo: function(index) {
             var self = this, cfg = self.config[SWITCHABLE],
                 triggers = self.triggers, panels = self.panels,
-                activeIndex = self.activeIndex;
+                activeIndex = self.activeIndex,
+                steps = cfg.steps,
+                fromIndex = activeIndex * steps, toIndex = index * steps;
             //S.log("Triggerable.switchTo: index = " + index);
 
             // fire event
             if (!self.fireEvent(BEFORE_SWITCH, index)) return self;
 
             // switch active trigger
-            if(!cfg.noTriggers) {
+            if(cfg.hasTriggers) {
                 self._switchTrigger(activeIndex > -1 ? triggers[activeIndex] : null, triggers[index]);
             }
 
-            // switch active panel
-            self._switchPanel(panels[activeIndex], panels[index], index);
+            // switch active panels
+            // TODO: slice 是否会带来性能下降？需要测试
+            self._switchView(panels.slice(fromIndex, fromIndex + steps), panels.slice(toIndex, toIndex + steps), index);
 
             // update activeIndex
             self.activeIndex = index;
@@ -277,23 +306,43 @@ KISSY.add("switchable", function(S) {
         /**
          * 切换当前触点
          */
-        _switchTrigger: function(fromEl, toEl/*, index*/) {
+        _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
             var activeTriggerCls = this.config[SWITCHABLE].activeTriggerCls;
 
-            if (fromEl) Dom.removeClass(fromEl, activeTriggerCls);
-            Dom.addClass(toEl, activeTriggerCls);
+            if (fromTrigger) Dom.removeClass(fromTrigger, activeTriggerCls);
+            Dom.addClass(toTrigger, activeTriggerCls);
         },
 
         /**
-         * 切换当前面板
+         * 切换当前视图
          */
-        _switchPanel: function(fromEl, toEl, index) {
+        _switchView: function(fromPanels, toPanels, index) {
             // 最简单的切换效果：直接隐藏/显示
-            fromEl.style.display = "none";
-            toEl.style.display = "block";
+            Dom.setStyle(fromPanels, DISPLAY,  NONE);
+            Dom.setStyle(toPanels, DISPLAY,  BLOCK);
 
             // fire onSwitch
             this.fireEvent(ON_SWITCH, index);
+        },
+
+        /**
+         * 切换到上一个视图
+         */
+        prev: function() {
+            var self = this, activeIndex = self.activeIndex;
+            if(activeIndex > 0) {
+                self.switchTo(activeIndex - 1);
+            }
+        },
+
+        /**
+         * 切换到下一个视图
+         */
+        next: function() {
+            var self = this, activeIndex = self.activeIndex;
+            if(activeIndex < self.length - 1) {
+                self.switchTo(activeIndex + 1);
+            }
         }
     });
 

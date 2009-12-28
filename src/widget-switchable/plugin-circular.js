@@ -1,9 +1,9 @@
 /**
- * Switchable Autoplay Plugin
+ * Switchable Circular Plugin
  * @creator     玉伯<lifesinger@gmail.com>
  * @depends     kissy, yui-base, widget, switchable
  */
-KISSY.add("switchable-autoplay", function(S) {
+KISSY.add("switchable-circular", function(S) {
 
     var Y = YAHOO.util, Event = Y.Event, Lang = YAHOO.lang,
         SWITCHABLE = "switchable",
@@ -13,9 +13,7 @@ KISSY.add("switchable-autoplay", function(S) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        autoplay: false,
-        interval: 5, // 自动播放间隔时间
-        pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
+        circular: false
     });
 
     /**

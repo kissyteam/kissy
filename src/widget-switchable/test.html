@@ -161,13 +161,17 @@
 <style type="text/css">
     #demo4 {
         position: relative;
-        width: 680px;
-        height: 120px;
-        border: 1px solid #ccc;
-        background-color: #F9F9F9;
-        margin: auto;
-        overflow: hidden;
+        width: 820px;
     }
+    #scroller-prev, #scroller-next {
+        position: absolute;
+        top: 50px;
+        color: #5E6E84;
+        cursor: pointer;
+    }
+    #scroller-prev { left: 10px; display: none; }
+    #scroller-next { right: 10px; }
+
     #demo4 .ks-switchable-nav {
         position: absolute;
         right: 30px;
@@ -182,33 +186,30 @@
     #demo4 .ks-switchable-nav li.active {
         color: #C8282B;
     }
-    #demo4 .ks-switchable-content img {
+
+    #scroller {
+        position: relative;
+        width: 680px;
+        height: 120px;
+        border: 1px solid #ccc;
+        background-color: #F9F9F9;
+        margin: auto;
+        overflow: hidden;
+    }
+    #scroller .ks-switchable-content img {
         float: left;
         width: 100px;
         height: 75px;
         padding: 2px;
-        margin: 20px 5px 20px 21px;
+        margin: 20px 15px;
         background-color: #fff;
         border: 1px solid #ccc;
     }
-    #scroller {
-        position: relative;
-        width: 820px;
-    }
-    #scroller .prev, #scroller .next {
-        position: absolute;
-        top: 50px;
-        color: #5E6E84;
-        cursor: pointer;
-
-    }
-    #scroller .prev { left: 10px; }
-    #scroller .next { right: 10px; }
 </style>
-<div id="scroller" class="section">
-    <span class="prev">&lang; 上一页</span>
-    <span class="next">下一页 &rang;</span>
-    <div id="demo4">
+<div id="demo4" class="section">
+    <span id="scroller-prev">&lang; 上一页</span>
+    <span id="scroller-next">下一页 &rang;</span>
+    <div id="scroller">
         <div class="ks-switchable-content">
             <!-- 1-5 -->
             <img src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg"/>
@@ -245,8 +246,8 @@
 <script>
     KISSY().use("*", function(S) {
 
-        var Y = YAHOO.util;
-/*
+        var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event;
+
         // demo1: tabs
         var tabs = new S.Widget("demo1").switchable();
 
@@ -273,12 +274,29 @@
             effect: "fade",
             duration: .8
         });
-*/
+
         // demo4: scroller
-        S.Widget("demo4").switchable({
+        var demo4 = S.Widget("demo4").switchable({
             effect: "scrollx",
             easing: Y.Easing.easeOutStrong,
-            panelSize: [500, 75]
+            steps: 5,
+            viewSize: [680]
+        });
+        demo4.subscribe("beforeSwitch", function(index) {
+            if(index === 0) {
+                Dom.get("scroller-prev").style.display = "none";
+            } else if(index === this.length - 1) {
+                Dom.get("scroller-next").style.display = "none";
+            } else {
+                Dom.get("scroller-prev").style.display = "block";
+                Dom.get("scroller-next").style.display = "block";
+            }
+        });
+        Event.on("scroller-prev", "click", function() {
+            demo4.prev();
+        });
+        Event.on("scroller-next", "click", function() {
+            demo4.next();
         });
 
 
