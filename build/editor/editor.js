@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-22 23:10:42
-Revision: 333
+Date: 2009-12-29 17:38:39
+Revision: 373
 */
 /**
  * @module kissy
@@ -37,16 +37,29 @@ if (typeof KISSY === "undefined" || !KISSY) {
 
 (function(S) {
 
-    var win = window, UNDEFINED = "undefined",
-        mix = function(r, s, ov) {
+    var win = window, UNDEFINED = "undefined", slice = Array.prototype.slice,
+        mix = function(r, s, ov, wl) {
             if (!s || !r) return r;
             if (typeof ov === UNDEFINED) ov = true;
-            var p;
-            if (ov || !(p in r)) {
+            var i, p, l;
+
+            if (wl && (l = wl.length)) {
+                for (i = 0; i < l; i++) {
+                    p = wl[i];
+                    if (p in s) {
+                        if (ov || !(p in r)) {
+                            r[p] = s[p];
+                        }
+                    }
+                }
+            } else {
                 for (p in s) {
-                    r[p] = s[p];
+                    if (ov || !(p in r)) {
+                        r[p] = s[p];
+                    }
                 }
             }
+
             return r;
         };
 
@@ -106,7 +119,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
          * @private
          */
         _setup: function() {
-            this.use("kissy-base");
+            this.use("kissy-core");
         },
 
         /**
@@ -120,7 +133,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
          */
         use: function() {
             var o = this,
-                a = Array.prototype.slice.call(arguments, 0),
+                a = slice.call(arguments, 0),
                 mods = S.Env.mods,
                 used = o.Env._used,
                 l = a.length,
@@ -158,16 +171,16 @@ if (typeof KISSY === "undefined" || !KISSY) {
                     subs = m.details.submodules;
                 }
 
+                // add this module to full list of things to attach
+                r.push(name);
+
                 // make sure submodules are attached
                 if (subs) {
                     if (typeof subs === "string") subs = [subs];
-                    for (j = 0,n = subs.length; j < n; j++) {
+                    for (j = 0, n = subs.length; j < n; j++) {
                         f(subs[j]);
                     }
                 }
-
-                // add this module to full list of things to attach
-                r.push(name);
             }
 
             for (i = 0; i < l; i++) {
@@ -280,10 +293,54 @@ if (typeof KISSY === "undefined" || !KISSY) {
          * The receiver must be a Function.
          * @param {Function} r  the object to receive the augmentation
          * @param {Function} s  the object that supplies the properties to augment
+         * @param wl {string[]} a whitelist.  If supplied, only properties in this list will be applied to the receiver.
          * @return {object} the augmented object
          */
-        augment: function(r, s, ov) {
-            return this.mix(r.prototype, s.prototype, ov);
+        augment: function(r, s, ov, wl) {
+            return mix(r.prototype, s.prototype, ov, wl);
+        },
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * @method each
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item.  The
+         * function receives three arguments: the value, the index, the full array.
+         * @param obj Optional context object
+         */
+        each: function (arr, fn, obj) {
+            var l = (arr && arr.length) || 0, i;
+            for (i = 0; i < l; i++) {
+                fn.call(obj || this, arr[i], i, arr);
+            }
+            return this;
+        },
+
+        /**
+         * Adds fn to domready event
+         */
+        ready: function(/*fn*/) {
+          // TODO
+        },
+
+        /**
+         * Execute the supplied method after the specified function
+         * @param fn {Function} the function to execute
+         * @param when {string} before or after
+         * @param obj the object hosting the method to displace
+         * @param sFn {string} the name of the method to displace
+         */
+        weave: function(fn, when, obj, sFn) {
+            var arr = [obj[sFn], fn];
+
+            if (when === "before") arr.reverse();
+            obj[sFn] = function() {
+                for (var i = 0, args = slice.call(arguments, 0); i < 2; i++) {
+                    arr[i].apply(this, args);
+                }
+            };
+
+            return this;
         },
 
         /**
@@ -349,8 +406,6 @@ if (typeof KISSY === "undefined" || !KISSY) {
                 src && (msg = src + ": " + msg);
                 if (typeof console !== UNDEFINED && console.log) {
                     console[cat && console[cat] ? cat : "log"](msg);
-                } else if (typeof opera !== UNDEFINED) {
-                    opera.postError(msg);
                 }
             }
 
@@ -361,7 +416,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
     // Give the KISSY global the same properties as an instance.
     // More importantly, the KISSY global provides global metadata,
     // so env needs to be configured.
-    mix(S, S.prototype);
+    mix(S, S.prototype); // TODO: white list?
     S._init();
 
 })(KISSY);

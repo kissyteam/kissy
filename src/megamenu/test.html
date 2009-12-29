@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>MegaMenu Test</title>
+<link rel="stylesheet" href="../../build/cssbase/base-min.css" />
+<script src="../../lib/yui2/yui-base/yui-base-min.js"></script>
+<style type="text/css">
+    body {
+        font-size: 14px;
+        padding: 20px 50px;
+    }
+    h1 {
+        font: 2em;
+        margin: 1.5em 0.5em;
+    }
+    .ks-megamenu {
+        position: relative;
+        margin-bottom: 50px;
+    }
+    .ks-switchable-nav li {
+        border: 1px solid #ccc;
+        width: 100px;
+        margin: 10px;
+        padding: 5px;
+        list-style: none;
+    }
+    .ks-switchable-nav .active {
+        border-color: #5C758E;
+        background-color: #5C758E;
+        color: #FFF;
+        width: 113px;
+        margin-left: 6px;
+    }
+    .ks-megamenu-view {
+        position: absolute;
+        top: 0;
+        left: 130px;
+        _left: 120px;
+        width: 500px;
+        height: 300px;
+        padding: 10px;        
+        border: 5px solid #5C758E;
+        background-color: #D4DCE3;
+        display: none;
+    }
+    .ks-switchable-content {
+        display: none;
+    }
+    .ks-megamenu-closebtn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        padding: 0 5px;
+        width: 8px;
+        font: 14px tahoma,arial,sans-serif;
+        cursor: pointer;
+        background-color: #FAFADC;
+    }
+    .ks-megamenu-closebtn:after {
+        content:'X';
+    }
+</style>
+</head>
+<body>
+<h1>MegaMenu Test</h1>
+
+<div id="demo" class="ks-megamenu">
+    <ul class="ks-switchable-nav">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+        <li>Item 5</li>
+    </ul>
+    <div class="ks-switchable-content">
+        <textarea class="ks-datalazyload-custom">Content 1</textarea>
+        <textarea class="ks-datalazyload-custom">Content 2</textarea>
+        <textarea class="ks-datalazyload-custom">Content 3</textarea>
+        <textarea class="ks-datalazyload-custom">Content 4</textarea>
+        <textarea class="ks-datalazyload-custom">Content 5</textarea>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../src/kissy/kissy.js"></script>
+<script type="text/javascript" src="../datalazyload/datalazyload.js"></script>
+<script type="text/javascript" src="../widget/widget.js"></script>
+<script type="text/javascript" src="../widget-switchable/switchable.js"></script>
+<script type="text/javascript" src="../widget-switchable/plugin-lazyload.js"></script>
+<script type="text/javascript" src="megamenu.js"></script>
+<script type="text/javascript">
+    KISSY().use("*", function(S) {
+        S.MegaMenu("demo", {
+            lazyDataType: "textarea-data"
+        });
+    });
+</script>
+
+<h2>References</h2>
+<ol>
+    <li><a href="http://yahoo.com/">Yahoo!</a>（2009 改版后的 Yahoo! 首页，最靓丽的部分就是左侧的导航区）</li>
+    <li><a href="http://www.useit.com/alertbox/mega-dropdown-menus.html">Mega Drop-Down Navigation Menus Work Well</a>（Jakob Nielsen 的文章就是经典）</li>
+</ol>
+</body>
+</html>

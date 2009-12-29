@@ -1,11 +1,3 @@
-/*
-Copyright (c) 2009, Kissy UI Library. All rights reserved.
-MIT Licensed.
-http://kissy.googlecode.com/
-
-Date: 2009-12-29 17:38:45
-Revision: 373
-*/
 /**
  * 超级菜单组件
  * @module      megamenu
