@@ -20,6 +20,9 @@ KISSY.add("switchable-autoplay", function(S) {
 
     /**
      * 织入初始化函数
+     * attached members:
+     *   - this.paused
+     *   - this.autoPlayTimer
      */
     S.weave(function() {
         var self = this, cfg = self.config[SWITCHABLE];
@@ -41,7 +44,7 @@ KISSY.add("switchable-autoplay", function(S) {
             self.switchTo(self.activeIndex < self.length - 1 ? self.activeIndex + 1 : 0);
         }, null, true);
 
-    }, "after", Switchable, "_initSwitchable");
+    }, "after", Switchable.prototype, "_initSwitchable");
 });
 
 /**

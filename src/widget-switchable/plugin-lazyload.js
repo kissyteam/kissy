@@ -68,5 +68,5 @@ KISSY.add("switchable-lazyload", function(S) {
             return true;
         }
 
-    }, "after", Switchable, "_initSwitchable");
+    }, "after", Switchable.prototype, "_initSwitchable");
 });

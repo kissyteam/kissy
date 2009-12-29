@@ -348,8 +348,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
                 if (!(this instanceof O)) {
                     return new O(c);
                 }
-                if (typeof c === UNDEFINED) c = []; // fix ie bug
-                O.superclass.constructor.apply(this, c);
+                O.superclass.constructor.call(this, c);
             }
 
             S.extend(O, S, null, S);

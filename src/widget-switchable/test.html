@@ -279,16 +279,20 @@
 <script src="../widget-switchable/plugin-effect.js"></script>
 <script src="../widget-switchable/plugin-circular.js"></script>
 <script src="../widget-switchable/plugin-lazyload.js"></script>
+<script src="../widget-switchable/tabs.js"></script>
 <script>
     KISSY().use("*", function(S) {
 
         var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event;
 
         // demo1: tabs
-        var tabs = new S.Widget("demo1").switchable({
+        /*var tabs = new S.Widget("demo1").switchable({
+            lazyDataType: "textarea-data"
+        });*/
+        var tabs = S.Tabs("demo1", {
             lazyDataType: "textarea-data"
         });
-
+        debugger
         tabs.subscribe("beforeSwitch", function(index) {
             if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
                 this.panels[index].innerHTML = "index = " + index;
@@ -352,7 +356,6 @@
         Event.on("scroller2-next", "click", function() {
             demo5.next();
         });
-
     });
 </script>
 </body>

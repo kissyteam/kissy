@@ -11,41 +11,43 @@ KISSY.add("switchable", function(S) {
         FORWARD = "forward", BACKWARD = "backward",
         SWITCHABLE = "switchable",
         BEFORE_SWITCH = "beforeSwitch", ON_SWITCH = "onSwitch",
-        CLS_PREFIX = "ks-switchable-",
-        Switchable = { };
+        CLS_PREFIX = "ks-switchable-";
 
-        Switchable.Config = {
-            mackupType: 0, // mackup 的类型，取值如下：
+    function Switchable() {
+    }
 
-            // 0 - 默认结构：通过 nav 和 content 来获取 triggers 和 panels
-            navCls: CLS_PREFIX + "nav",
-            contentCls: CLS_PREFIX + "content",
+    Switchable.Config = {
+        mackupType: 0, // mackup 的类型，取值如下：
 
-            // 1 - 适度灵活：通过 cls 来获取 triggers 和 panels
-            triggerCls: CLS_PREFIX + "trigger",
-            panelCls: CLS_PREFIX + "panel",
+        // 0 - 默认结构：通过 nav 和 content 来获取 triggers 和 panels
+        navCls: CLS_PREFIX + "nav",
+        contentCls: CLS_PREFIX + "content",
 
-            // 2 - 完全自由：直接传入 triggers 和 panels
-            triggers: [],
-            panels: [],
+        // 1 - 适度灵活：通过 cls 来获取 triggers 和 panels
+        triggerCls: CLS_PREFIX + "trigger",
+        panelCls: CLS_PREFIX + "panel",
 
-            // 是否有触点
-            hasTriggers: true,
+        // 2 - 完全自由：直接传入 triggers 和 panels
+        triggers: [],
+        panels: [],
 
-            // 触发类型
-            triggerType: "mouse", // or "click"
-            // 触发延迟
-            delay: .1, // 100ms
+        // 是否有触点
+        hasTriggers: true,
 
-            activeIndex: 0, // mackup 的默认激活项，应该与此 index 一致
-            activeTriggerCls: "active",
+        // 触发类型
+        triggerType: "mouse", // or "click"
+        // 触发延迟
+        delay: .1, // 100ms
 
-            // 切换视图内有多少个 panels
-            steps: 1,
+        activeIndex: 0, // mackup 的默认激活项，应该与此 index 一致
+        activeTriggerCls: "active",
 
-            // 切换视图区域的大小。一般不需要设定此值，仅当获取值不正确时，用于手工指定大小
-            viewSize: []
-        };
+        // 切换视图内有多少个 panels
+        steps: 1,
+
+        // 切换视图区域的大小。一般不需要设定此值，仅当获取值不正确时，用于手工指定大小
+        viewSize: []
+    };
 
     /**
      * Attaches switchable ablility to Widget.
@@ -53,13 +55,16 @@ KISSY.add("switchable", function(S) {
      *   - this.container
      *   - this.config
      * attached members:
-     *   - this.triggers  值为 [] 时，代表无触点
+     *   - this.triggers  可以为空值 []
      *   - this.panels    肯定有值，且 length > 1
+     *   - this.content
+     *   - this.length
      *   - this.activeIndex
      *   - this.switchTimer
      */
     S.Widget.prototype.switchable = function(config) {
-        var self = this; config = config || {};
+        var self = this;
+        config = config || {};
 
         // 根据配置信息，自动调整默认配置
         if (config.panelCls) {
@@ -107,13 +112,13 @@ KISSY.add("switchable", function(S) {
         }
 
         // attach and init
-        S.mix(self, Switchable);
+        S.mix(self, Switchable.prototype);
         self._initSwitchable();
 
-        return self; // chain
+        return self; // support chain
     };
 
-    S.mix(Switchable, {
+    S.mix(Switchable.prototype, {
 
         /**
          * init switchable
@@ -122,7 +127,7 @@ KISSY.add("switchable", function(S) {
             var self = this, cfg = self.config[SWITCHABLE];
 
             // parse mackup
-            if(self.panels.length === 0) {
+            if (self.panels.length === 0) {
                 self._parseSwitchableMackup();
             }
 
@@ -131,7 +136,7 @@ KISSY.add("switchable", function(S) {
             self.createEvent(ON_SWITCH);
 
             // bind triggers
-            if(cfg.hasTriggers) {
+            if (cfg.hasTriggers) {
                 self._bindTriggers();
             }
         },
@@ -148,7 +153,7 @@ KISSY.add("switchable", function(S) {
             switch (cfg.mackupType) {
                 case 0: // 默认结构
                     nav = getElementsByClassName(cfg.navCls, "*", container)[0];
-                    if(nav) triggers = Dom.getChildren(nav);
+                    if (nav) triggers = Dom.getChildren(nav);
                     content = getElementsByClassName(cfg.contentCls, "*", container)[0];
                     panels = Dom.getChildren(content);
                     break;
@@ -168,13 +173,13 @@ KISSY.add("switchable", function(S) {
             self.length = n / cfg.steps;
 
             // 自动生成 triggers
-            if(hasTriggers && n > 0 && triggers.length === 0) {
+            if (hasTriggers && n > 0 && triggers.length === 0) {
                 triggers = self._generateTriggersMackup(self.length);
             }
 
             // 将 triggers 转换为普通数组
             if (hasTriggers) {
-                for (i = 0, m = triggers.length; i < m; i++) {
+                for (i = 0,m = triggers.length; i < m; i++) {
                     self.triggers.push(triggers[i]);
                 }
             }
@@ -286,16 +291,16 @@ KISSY.add("switchable", function(S) {
                 fromIndex = activeIndex * steps, toIndex = index * steps;
             //S.log("Triggerable.switchTo: index = " + index);
 
-            if(index === activeIndex) return self;
+            if (index === activeIndex) return self;
             if (!self.fireEvent(BEFORE_SWITCH, index)) return self;
 
             // switch active trigger
-            if(cfg.hasTriggers) {
+            if (cfg.hasTriggers) {
                 self._switchTrigger(activeIndex > -1 ? triggers[activeIndex] : null, triggers[index]);
             }
 
             // switch active panels
-            if(typeof direction === UNDEFINED) {
+            if (typeof direction === UNDEFINED) {
                 direction = index > activeIndex ? FORWARD : FORWARD;
             }
             // TODO: slice 是否会带来性能下降？需要测试
@@ -326,8 +331,8 @@ KISSY.add("switchable", function(S) {
          */
         _switchView: function(fromPanels, toPanels, index/*, direction*/) {
             // 最简单的切换效果：直接隐藏/显示
-            Dom.setStyle(fromPanels, DISPLAY,  NONE);
-            Dom.setStyle(toPanels, DISPLAY,  BLOCK);
+            Dom.setStyle(fromPanels, DISPLAY, NONE);
+            Dom.setStyle(toPanels, DISPLAY, BLOCK);
 
             // fire onSwitch
             this.fireEvent(ON_SWITCH, index);
@@ -351,6 +356,7 @@ KISSY.add("switchable", function(S) {
         }
     });
 
-    S.mix(Switchable, Y.EventProvider.prototype);
+    S.augment(Switchable, Y.EventProvider);
+    
     S.Switchable = Switchable;
 });

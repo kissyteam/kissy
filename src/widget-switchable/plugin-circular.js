@@ -118,7 +118,7 @@ KISSY.add("switchable-circular", function(S) {
         // 覆盖滚动效果函数
         Effects[SCROLLX] = Effects[SCROLLY] = Effects.scroll = circularScroll;
 
-    }, "after", Switchable, "_initSwitchable");
+    }, "after", Switchable.prototype, "_initSwitchable");
 });
 
 /**
