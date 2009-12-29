@@ -8,14 +8,17 @@
     <property name="src.dir" location="."/>
 
     <target name="concat">
-        <concat destfile="kissy-base.js" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="kissy-widgets.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../kissy/kissy.js"/>
             <path path="../datalazyload/datalazyload.js"/>
             <path path="../widget/widget.js"/>
             <path path="../widget-switchable/switchable.js"/>
             <path path="../widget-switchable/plugin-autoplay.js"/>
             <path path="../widget-switchable/plugin-effect.js"/>
-            <path path="../suggest/suggest.js"/>
+            <path path="../widget-switchable/plugin-circular.js"/>
+            <path path="../widget-switchable/plugin-lazyload.js"/>
+            <!--<path path="../suggest/suggest.js"/>-->
+            <path path="../megamenu/megamenu.js"/>
         </concat>
     </target>
 

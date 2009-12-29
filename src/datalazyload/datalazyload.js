@@ -9,9 +9,10 @@ KISSY.add("datalazyload", function(S) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         win = window, doc = document,
-        DATA_SRC = "data-lazyload-src",
-        LAZY_TEXTAREA_CLS = "ks-datalazyload",
-        CUSTOM_LAZYLOAD_CLS = "ks-datalazyload-custom",
+        IMG_DATA_SRC = "data-lazyload-src",
+        TEXTAREA_DATA_CLS = "ks-datalazyload",
+        CUSTOM_IMG_DATA_SRC = IMG_DATA_SRC + "-custom",
+        CUSTOM_TEXTAREA_DATA_CLS = TEXTAREA_DATA_CLS + "-custom",
         MOD = { AUTO: "auto", MANUAL: "manual" },
         DEFAULT = "default",
 
@@ -20,7 +21,7 @@ KISSY.add("datalazyload", function(S) {
             /**
              * 懒处理模式
              *   auto   - 自动化。html 输出时，不对 img.src 做任何处理
-             *   manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 DATA_SRC
+             *   manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 IMG_DATA_SRC
              * 注：对于 textarea 数据，只有手动模式
              */
             mod: MOD.MANUAL,
@@ -97,7 +98,10 @@ KISSY.add("datalazyload", function(S) {
          */
         //self.threshold
 
-        self._init();
+        // 放在 setTimeout 里，解决 Safari 缓存问题（后退到延迟页面，延迟内容未加载）
+        setTimeout(function() {
+            self._init();
+        }, 0);
     }
 
     S.mix(DataLazyload.prototype, {
@@ -176,7 +180,7 @@ KISSY.add("datalazyload", function(S) {
 
                 for (i = 0,len = imgs.length; i < len; ++i) {
                     img = imgs[i];
-                    data_src = img.getAttribute(DATA_SRC);
+                    data_src = img.getAttribute(IMG_DATA_SRC);
 
                     if (isManualMod) { // 手工模式，只处理有 data-src 的图片
                         if (data_src) {
@@ -187,7 +191,7 @@ KISSY.add("datalazyload", function(S) {
                         // 注意：已有 data-src 的项，可能已有其它实例处理过，重复处理
                         // 会导致 data-src 变成 placeholder
                         if (Dom.getY(img) > threshold && !data_src) {
-                            img.setAttribute(DATA_SRC, img.src);
+                            img.setAttribute(IMG_DATA_SRC, img.src);
                             img.src = placeholder;
                             lazyImgs.push(img);
                         }
@@ -197,7 +201,7 @@ KISSY.add("datalazyload", function(S) {
                 // 处理 textarea
                 areaes = containers[n].getElementsByTagName("textarea");
                 for( i = 0, len = areaes.length; i < len; ++i) {
-                    if(Dom.hasClass(areaes[i], LAZY_TEXTAREA_CLS)) {
+                    if(Dom.hasClass(areaes[i], TEXTAREA_DATA_CLS)) {
                         lazyAreaes.push(areaes[i]);
                     }
                 }
@@ -231,18 +235,23 @@ KISSY.add("datalazyload", function(S) {
 
             for (i = 0; img = imgs[i++];) {
                 if (Dom.getY(img) <= threshold) {
-                    data_src = img.getAttribute(DATA_SRC);
-
-                    if (data_src && img.src != data_src) {
-                        img.src = data_src;
-                        img.removeAttribute(DATA_SRC);
-                    }
+                    self._loadImgSrc(img);
                 } else {
                     remain.push(img);
                 }
             }
 
             self.images = remain;
+        },
+
+        _loadImgSrc: function(img, flag) {
+            flag = flag || IMG_DATA_SRC;
+            var data_src = img.getAttribute(flag);
+
+            if (data_src && img.src != data_src) {
+                img.src = data_src;
+                img.removeAttribute(flag);
+            }
         },
 
         /**
@@ -330,14 +339,43 @@ KISSY.add("datalazyload", function(S) {
 
         /**
          * 加载自定义延迟数据
+         * @static
          */
-        loadCustomLazyData: function(parent) {
-            var textarea = parent.getElementsByTagName("textarea")[0];
-            if (textarea && Dom.hasClass(textarea, CUSTOM_LAZYLOAD_CLS)) {
-                parent.innerHTML = textarea.value;
+        loadCustomLazyData: function(containers, type, flag) {
+            var self = this, textarea, imgs;
+
+            // 支持数组
+            if (!Lang.isArray(containers)) {
+                containers = [Dom.get(containers)];
             }
+
+            // 遍历处理
+            S.each(containers, function(container) {
+                switch (type) {
+                    case "textarea-data":
+                        textarea = container.getElementsByTagName("textarea")[0];
+                        if (textarea && Dom.hasClass(textarea, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
+                            container.innerHTML = textarea.value;
+                        }
+                        break;
+                    //case "img-src":
+                    default:
+                        //S.log("loadCustomLazyData container = " + container.src);
+                        if(container.nodeName === "IMG") { // 本身就是图片
+                            imgs = [container];
+                        } else {
+                            imgs = container.getElementsByTagName("img");
+                        }
+                        for (var i = 0, len = imgs.length; i < len; i++) {
+                            self._loadImgSrc(imgs[i], flag || CUSTOM_IMG_DATA_SRC);
+                        }
+                }
+            });
         }
     });
+
+    // attach static methods
+    S.mix(DataLazyload, DataLazyload.prototype, true, ["loadCustomLazyData", "_loadImgSrc"]);
 
     S.DataLazyload = DataLazyload;
 });

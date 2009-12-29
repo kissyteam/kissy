@@ -251,17 +251,17 @@
             <img src="http://farm1.static.flickr.com/28/66523124_b468cf4978_t.jpg"/>
             <img src="http://farm1.static.flickr.com/164/399223606_b875ddf797_t.jpg"/>
             <!-- 5-10 -->
-            <img src="http://farm1.static.flickr.com/163/399223609_db47d35b7c_t.jpg"/>
-            <img src="http://farm1.static.flickr.com/135/321464104_c010dbf34c_t.jpg"/>
-            <img src="http://farm1.static.flickr.com/40/117346184_9760f3aabc_t.jpg"/>
-            <img src="http://farm1.static.flickr.com/153/399232237_6928a527c1_t.jpg"/>
-            <img src="http://farm1.static.flickr.com/50/117346182_1fded507fa_t.jpg"/>
+            <img data-lazyload-src-custom="http://farm1.static.flickr.com/163/399223609_db47d35b7c_t.jpg"/>
+            <img data-lazyload-src-custom="http://farm1.static.flickr.com/135/321464104_c010dbf34c_t.jpg"/>
+            <img data-lazyload-src-custom="http://farm1.static.flickr.com/40/117346184_9760f3aabc_t.jpg"/>
+            <img data-lazyload-src-custom="http://farm1.static.flickr.com/153/399232237_6928a527c1_t.jpg"/>
+            <img data-lazyload-src-custom="http://farm1.static.flickr.com/50/117346182_1fded507fa_t.jpg"/>
             <!-- 10-15 -->
-            <img src="http://farm4.static.flickr.com/3629/3323896446_3b87a8bf75_t.jpg"/>
-            <img src="http://farm4.static.flickr.com/3023/3323897466_e61624f6de_t.jpg"/>
-            <img src="http://farm4.static.flickr.com/3650/3323058611_d35c894fab_t.jpg"/>
-            <img src="http://farm4.static.flickr.com/3635/3323893254_3183671257_t.jpg"/>
-            <img src="http://farm4.static.flickr.com/3624/3323893148_8318838fbd_t.jpg"/>
+            <img data-lazyload-src-custom="http://farm4.static.flickr.com/3629/3323896446_3b87a8bf75_t.jpg"/>
+            <img data-lazyload-src-custom="http://farm4.static.flickr.com/3023/3323897466_e61624f6de_t.jpg"/>
+            <img data-lazyload-src-custom="http://farm4.static.flickr.com/3650/3323058611_d35c894fab_t.jpg"/>
+            <img data-lazyload-src-custom="http://farm4.static.flickr.com/3635/3323893254_3183671257_t.jpg"/>
+            <img data-lazyload-src-custom="http://farm4.static.flickr.com/3624/3323893148_8318838fbd_t.jpg"/>
         </div>
         <ul class="ks-switchable-nav">
             <li class="active">&bull;</li>
@@ -272,18 +272,22 @@
 </div>
 
 <script src="../kissy/kissy.js"></script>
+<script src="../datalazyload/datalazyload.js"></script>
 <script src="../widget/widget.js"></script>
 <script src="../widget-switchable/switchable.js"></script>
 <script src="../widget-switchable/plugin-autoplay.js"></script>
 <script src="../widget-switchable/plugin-effect.js"></script>
 <script src="../widget-switchable/plugin-circular.js"></script>
+<script src="../widget-switchable/plugin-lazyload.js"></script>
 <script>
     KISSY().use("*", function(S) {
 
         var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event;
 
         // demo1: tabs
-        var tabs = new S.Widget("demo1").switchable();
+        var tabs = new S.Widget("demo1").switchable({
+            lazyDataType: "textarea-data"
+        });
 
         tabs.subscribe("beforeSwitch", function(index) {
             if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
@@ -339,7 +343,8 @@
             effect: "scrollx",
             easing: Y.Easing.easeOutStrong,
             steps: 5,
-            viewSize: [680]
+            viewSize: [680],
+            lazyDataType: "img-src"
         });
         Event.on("scroller2-prev", "click", function() {
             demo5.prev();
