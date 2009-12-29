@@ -3,7 +3,7 @@
 <head>
 <meta charset="gbk"/>
 <title>Switchable Widget Test</title>
-<link rel="stylesheet" href="../../build/cssbase/base.css"/>
+<link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
 <script src="../../lib/yui2/yui-base/yui-base-min.js"></script>
 <script src="../../lib/yui2/animation/animation-min.js"></script>
 <style type="text/css">
@@ -204,11 +204,12 @@
         margin: 20px 15px;
         background-color: #fff;
         border: 1px solid #ccc;
+        _display: inline !important; /* fix ie6 双边距 bug */
     }
 </style>
 <div id="demo4" class="section scrollable">
-    <span id="scroller-prev" class="prev" style="display: none">&lang; 上一页</span>
-    <span id="scroller-next" class="next">下一页 &rang;</span>
+    <span id="scroller-prev" class="prev" style="display: none">&lsaquo; 上一页</span>
+    <span id="scroller-next" class="next">下一页 &rsaquo;</span>
     <div class="scroller">
         <div class="ks-switchable-content">
             <!-- 1-5 -->
@@ -239,8 +240,8 @@
 </div>
 
 <div id="demo5" class="section scrollable">
-    <span id="scroller2-prev" class="prev">&lang; 上一页</span>
-    <span id="scroller2-next" class="next">下一页 &rang;</span>
+    <span id="scroller2-prev" class="prev">&lsaquo; 上一页</span>
+    <span id="scroller2-next" class="next">下一页 &rsaquo;</span>
     <div class="scroller">
         <div class="ks-switchable-content">
             <!-- 1-5 -->

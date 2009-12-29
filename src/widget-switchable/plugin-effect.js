@@ -146,15 +146,15 @@ KISSY.add("switchable-effect", function(S) {
        /**
          * «–ªª ”Õº
          */
-        _switchView: function(fromEls, toEls, index) {
+        _switchView: function(fromEls, toEls, index, direction) {
             var self = this, cfg = self.config[SWITCHABLE],
                 effect = cfg.effect,
-                fn = typeof effect === "function" ? effect : effects[effect];
+                fn = typeof effect === "function" ? effect : Switchable.Effects[effect];
 
             fn.call(self, fromEls, toEls, function() {
                 // fire event
                 self.fireEvent("onSwitch", index);
-            }, index);
+            }, index, direction);
         }
     });
 });

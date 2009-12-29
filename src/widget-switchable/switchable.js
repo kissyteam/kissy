@@ -8,6 +8,7 @@ KISSY.add("switchable", function(S) {
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         UNDEFINED = "undefined",
         DISPLAY = "display", BLOCK = "block", NONE = "none",
+        FORWARD = "forward", BACKWARD = "backward",
         SWITCHABLE = "switchable",
         BEFORE_SWITCH = "beforeSwitch", ON_SWITCH = "onSwitch",
         CLS_PREFIX = "ks-switchable-",
@@ -277,7 +278,7 @@ KISSY.add("switchable", function(S) {
         /**
          * 切换操作
          */
-        switchTo: function(index) {
+        switchTo: function(index, direction) {
             var self = this, cfg = self.config[SWITCHABLE],
                 triggers = self.triggers, panels = self.panels,
                 activeIndex = self.activeIndex,
@@ -285,7 +286,7 @@ KISSY.add("switchable", function(S) {
                 fromIndex = activeIndex * steps, toIndex = index * steps;
             //S.log("Triggerable.switchTo: index = " + index);
 
-            // fire event
+            if(index === activeIndex) return self;
             if (!self.fireEvent(BEFORE_SWITCH, index)) return self;
 
             // switch active trigger
@@ -294,8 +295,15 @@ KISSY.add("switchable", function(S) {
             }
 
             // switch active panels
+            if(typeof direction === UNDEFINED) {
+                direction = index > activeIndex ? FORWARD : FORWARD;
+            }
             // TODO: slice 是否会带来性能下降？需要测试
-            self._switchView(panels.slice(fromIndex, fromIndex + steps), panels.slice(toIndex, toIndex + steps), index);
+            self._switchView(
+                panels.slice(fromIndex, fromIndex + steps),
+                panels.slice(toIndex, toIndex + steps),
+                index,
+                direction);
 
             // update activeIndex
             self.activeIndex = index;
@@ -316,7 +324,7 @@ KISSY.add("switchable", function(S) {
         /**
          * 切换当前视图
          */
-        _switchView: function(fromPanels, toPanels, index) {
+        _switchView: function(fromPanels, toPanels, index/*, direction*/) {
             // 最简单的切换效果：直接隐藏/显示
             Dom.setStyle(fromPanels, DISPLAY,  NONE);
             Dom.setStyle(toPanels, DISPLAY,  BLOCK);
@@ -330,7 +338,8 @@ KISSY.add("switchable", function(S) {
          */
         prev: function() {
             var self = this, activeIndex = self.activeIndex;
-            self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1);
+            self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1, BACKWARD);
+            // TODO: fire event when at first/last view.
         },
 
         /**
@@ -338,7 +347,7 @@ KISSY.add("switchable", function(S) {
          */
         next: function() {
             var self = this, activeIndex = self.activeIndex;
-            self.switchTo(activeIndex < self.length - 1 ? activeIndex + 1 : 0);
+            self.switchTo(activeIndex < self.length - 1 ? activeIndex + 1 : 0, FORWARD);
         }
     });
 
