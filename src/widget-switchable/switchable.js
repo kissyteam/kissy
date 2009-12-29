@@ -330,9 +330,7 @@ KISSY.add("switchable", function(S) {
          */
         prev: function() {
             var self = this, activeIndex = self.activeIndex;
-            if(activeIndex > 0) {
-                self.switchTo(activeIndex - 1);
-            }
+            self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1);
         },
 
         /**
@@ -340,9 +338,7 @@ KISSY.add("switchable", function(S) {
          */
         next: function() {
             var self = this, activeIndex = self.activeIndex;
-            if(activeIndex < self.length - 1) {
-                self.switchTo(activeIndex + 1);
-            }
+            self.switchTo(activeIndex < self.length - 1 ? activeIndex + 1 : 0);
         }
     });
 

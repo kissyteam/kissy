@@ -22,7 +22,7 @@ KISSY.add("switchable-autoplay", function(S) {
      * 织入初始化函数
      */
     S.weave(function() {
-        var self = this, cfg = self.config[SWITCHABLE], max;
+        var self = this, cfg = self.config[SWITCHABLE];
         if (!cfg.autoplay) return;
 
         // 鼠标悬停，停止自动播放
@@ -36,10 +36,9 @@ KISSY.add("switchable-autoplay", function(S) {
         }
 
         // 设置自动播放
-        max = self.panels.length / cfg.steps - 1;
         self.autoplayTimer = Lang.later(cfg.interval * 1000, self, function() {
             if (self.paused) return;
-            self.switchTo(self.activeIndex < max ? self.activeIndex + 1 : 0);
+            self.switchTo(self.activeIndex < self.length - 1 ? self.activeIndex + 1 : 0);
         }, null, true);
 
     }, "after", Switchable, "_initSwitchable");

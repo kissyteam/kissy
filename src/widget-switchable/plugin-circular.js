@@ -7,6 +7,8 @@ KISSY.add("switchable-circular", function(S) {
 
     var Y = YAHOO.util, Event = Y.Event, Lang = YAHOO.lang,
         SWITCHABLE = "switchable",
+        RELATIVE = "relative", LEFT = "left", TOP = "top",
+        SCROLLX = "scrollx", SCROLLY = "scrolly",
         Switchable = S.Switchable;
 
     /**
@@ -20,31 +22,34 @@ KISSY.add("switchable-circular", function(S) {
      * 织入初始化函数
      */
     S.weave(function() {
-        var self = this, cfg = self.config[SWITCHABLE], max;
-        if (!cfg.autoplay) return;
+        var self = this, cfg = self.config[SWITCHABLE],
+            max = self.length - 1, steps = cfg.steps,
+            panels = self.panels,
+            effect = cfg.effect, isX = effect === SCROLLX;
 
-        // 鼠标悬停，停止自动播放
-        if (cfg.pauseOnHover) {
-            Event.on(self.container, "mouseenter", function() {
-                self.paused = true;
-            });
-            Event.on(self.container, "mouseleave", function() {
-                self.paused = false;
-            });
-        }
+        if (!cfg.circular || (!isX && effect !== SCROLLY)) return; // 仅有滚动效果需要下面的调整
 
-        // 设置自动播放
-        max = self.panels.length / cfg.steps - 1;
-        self.autoplayTimer = Lang.later(cfg.interval * 1000, self, function() {
-            if (self.paused) return;
-            self.switchTo(self.activeIndex < max ? self.activeIndex + 1 : 0);
-        }, null, true);
+        self.subscribe("beforeSwitch", function(index) {
+            var activeIndex = self.activeIndex, i, from, to,
+                prop = isX ? LEFT : TOP,
+                panelDiff = self.viewSize[isX ? 0 : 1] / steps;
+
+            if (activeIndex === 0 && index === max) { // 从第一个到最后一个
+                from = max * steps;
+                to = (max + 1) * steps;
+
+                // 将最后一个视图内的 panels 调整到前面
+                for(i = from; i < to; i++) {
+                    panels[i].style.position = RELATIVE;
+                    panels[i].style[prop] = "-" + panelDiff * (i + steps - 1) + "px";
+                }
+            }
+        });
 
     }, "after", Switchable, "_initSwitchable");
 });
 
 /**
  * TODO:
- *  - 是否需要提供 play / pause / stop API ?
- *  - autoplayTimer 和 switchTimer 的关联？
+ *   - 是否需要考虑从 1 到 2 顺时针滚动？这需要添加 direction 判断。
  */

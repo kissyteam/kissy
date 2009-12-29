@@ -79,6 +79,7 @@ KISSY.add("switchable-effect", function(S) {
         }
     };
     effects[SCROLLX] = effects[SCROLLY] = effects.scroll;
+    S.Switchable.Effects = effects;
 
     /**
      * 织入初始化函数：根据 effect, 调整初始状态
@@ -99,14 +100,7 @@ KISSY.add("switchable-effect", function(S) {
         //    最好指定第一个 panel 的 width 和 height，因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
 
         // 2. 初始化 panels 样式
-        if (effect === NONE) {
-            // 默认情况，只显示 active panels
-            for (i = 0; i < len; i++) {
-                panels[i].style.display = (i >= fromIndex && i <= toIndex) ? BLOCK : NONE;
-            }
-
-        } else { // effect = scrollx, scrolly, fade
-
+        if (effect !== NONE) { // effect = scrollx, scrolly, fade
             // 这些特效需要将 panels 都显示出来
             for (i = 0; i < len; i++) {
                 panels[i].style.display = BLOCK;
