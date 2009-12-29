@@ -3,7 +3,7 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-29 17:38:53
-Revision: 373
+Date: 2009-12-29 17:49:04
+Revision: 375
 */
 KISSY.add("switchable-effect",function(j){var e=YAHOO.util,k=e.Dom,m="switchable",i="display",a="block",n="none",p="opacity",h="z-index",l="relative",g="absolute",d="scrollx",b="scrolly",f="fade",o=j.Switchable;j.mix(o.Config,{effect:n,duration:0.5,easing:e.Easing.easeNone});var c={none:function(r,q,s){k.setStyle(r,i,n);k.setStyle(q,i,a);s()},fade:function(v,q,w){if(v.length!==1){throw new Error("fade effect only supports steps == 1.")}var s=this,r=s.config[m],u=v[0],t=q[0];if(s.anim){s.anim.stop()}k.setStyle(t,p,1);s.anim=new e.Anim(u,{opacity:{to:0}},r.duration,r.easing);s.anim.onComplete.subscribe(function(){s.anim=null;k.setStyle(t,h,9);k.setStyle(u,h,1);w()});s.anim.animate()},scroll:function(u,r,w,s){var x=this,t=x.config[m],y=t.effect===d,v=x.viewSize[y?0:1]*s,q={};q[y?"left":"top"]={to:-v};if(x.anim){x.anim.stop()}x.anim=new e.Anim(x.content,q,t.duration,t.easing);x.anim.onComplete.subscribe(function(){x.anim=null;w()});x.anim.animate()}};c[d]=c[b]=c.scroll;j.Switchable.Effects=c;j.weave(function(){var x=this,t=x.config[m],z=t.effect,u=x.panels,v=t.steps,y=x.activeIndex,w=y*v,q=w+v-1,r,s=u.length;x.viewSize=[t.viewSize[0]||u[0].offsetWidth*v,t.viewSize[0]||u[0].offsetHeight*v];if(z!==n){for(r=0;r<s;r++){u[r].style.display=a}switch(z){case d:case b:x.content.style.position=g;x.content.parentNode.style.position=l;if(z===d){k.setStyle(u,"float","left");this.content.style.width=x.viewSize[0]*(s/v)+"px"}break;case f:for(r=0;r<s;r++){k.setStyle(u[r],p,(r>=w&&r<=q)?1:0);u[r].style.position=g;u[r].style.zIndex=(r>=w&&r<=q)?9:1}break}}},"after",o,"_initSwitchable");j.mix(o,{_switchView:function(x,q,t,w){var s=this,r=s.config[m],v=r.effect,u=typeof v==="function"?v:o.Effects[v];u.call(s,x,q,function(){s.fireEvent("onSwitch",t)},t,w)}})});

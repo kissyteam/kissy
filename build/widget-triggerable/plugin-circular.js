@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-29 17:38:53
-Revision: 373
+Date: 2009-12-29 17:49:04
+Revision: 375
 */
 /**
  * Switchable Circular Plugin

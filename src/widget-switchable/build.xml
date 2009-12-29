@@ -7,6 +7,20 @@
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
-    <target name="build" depends="common.build">
+    <target name="concat">
+        <concat destfile="switchable-aio.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="../widget-switchable/switchable.js"/>
+            <path path="../widget-switchable/plugin-autoplay.js"/>
+            <path path="../widget-switchable/plugin-effect.js"/>
+            <path path="../widget-switchable/plugin-circular.js"/>
+            <path path="../widget-switchable/plugin-lazyload.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="switchable-aio.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
     </target>
 </project>
