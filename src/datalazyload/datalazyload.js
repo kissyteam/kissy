@@ -45,7 +45,7 @@ KISSY.add("datalazyload", function(S) {
      */
     function DataLazyload(containers, config) {
         var self = this;
-        
+
         // factory or constructor
         if (!(self instanceof arguments.callee)) {
             return new arguments.callee(containers, config);
@@ -112,7 +112,7 @@ KISSY.add("datalazyload", function(S) {
          */
         _init: function() {
             var self = this;
-            
+
             self.threshold = self._getThreshold();
             self._filterItems();
 
@@ -200,8 +200,8 @@ KISSY.add("datalazyload", function(S) {
 
                 // 处理 textarea
                 areaes = containers[n].getElementsByTagName("textarea");
-                for( i = 0, len = areaes.length; i < len; ++i) {
-                    if(Dom.hasClass(areaes[i], TEXTAREA_DATA_CLS)) {
+                for (i = 0,len = areaes.length; i < len; ++i) {
+                    if (Dom.hasClass(areaes[i], TEXTAREA_DATA_CLS)) {
                         lazyAreaes.push(areaes[i]);
                     }
                 }
@@ -216,7 +216,7 @@ KISSY.add("datalazyload", function(S) {
          */
         _loadItems: function() {
             var self = this;
-            
+
             self._loadImgs();
             self._loadAreaes();
             self._fireCallbacks();
@@ -310,7 +310,7 @@ KISSY.add("datalazyload", function(S) {
          */
         addCallback: function(el, fn) {
             el = Dom.get(el);
-            if(el && typeof fn === "function") {
+            if (el && typeof fn === "function") {
                 this.callbacks.els.push(el);
                 this.callbacks.fns.push(fn);
             }
@@ -344,6 +344,7 @@ KISSY.add("datalazyload", function(S) {
         loadCustomLazyData: function(containers, type, flag) {
             var self = this, textarea, imgs;
 
+
             // 支持数组
             if (!Lang.isArray(containers)) {
                 containers = [Dom.get(containers)];
@@ -355,13 +356,15 @@ KISSY.add("datalazyload", function(S) {
                     case "textarea-data":
                         textarea = container.getElementsByTagName("textarea")[0];
                         if (textarea && Dom.hasClass(textarea, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
-                            container.innerHTML = textarea.value;
+                            setTimeout(function() { // fix chrome cache bug
+                                container.innerHTML = textarea.value;
+                            }, 0);
                         }
                         break;
                     //case "img-src":
                     default:
                         //S.log("loadCustomLazyData container = " + container.src);
-                        if(container.nodeName === "IMG") { // 本身就是图片
+                        if (container.nodeName === "IMG") { // 本身就是图片
                             imgs = [container];
                         } else {
                             imgs = container.getElementsByTagName("img");
