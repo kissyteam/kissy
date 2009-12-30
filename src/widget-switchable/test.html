@@ -293,6 +293,7 @@
         });*/
         var tabs = S.Tabs("demo1", {
             lazyDataType: "textarea-data"
+
         });
         tabs.subscribe("beforeSwitch", function(index) {
             if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
@@ -306,9 +307,10 @@
             effect: "scrolly",
             easing: Y.Easing.easeOutStrong
         });*/
-        S.Slide("demo2", {
+        var slide = S.Slide("demo2", {
             effect: "scrolly",
-            easing: Y.Easing.easeOutStrong
+            easing: Y.Easing.easeOutStrong,
+            circular: false
         });
 
         // demo3: youa slide

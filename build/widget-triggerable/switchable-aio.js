@@ -3,8 +3,8 @@ Copyright (c) 2010, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-30 18:55:24
-Revision: 384
+Date: 2009-12-30 20:19:58
+Revision: 387
 */
 /**
  * Switchable
@@ -701,14 +701,13 @@ KISSY.add("switchable-circular", function(S) {
      * 织入初始化函数
      */
     S.weave(function() {
-        var self = this, cfg = self.config[SWITCHABLE],
-            effect = cfg.effect, Effects = Switchable.Effects;
+        var self = this, cfg = self.config[SWITCHABLE];
 
         // 仅有滚动效果需要下面的调整
-        if (!cfg.circular || (effect !== SCROLLX && effect !== SCROLLY)) return;
-
-        // 覆盖滚动效果函数
-        Effects[SCROLLX] = Effects[SCROLLY] = Effects.scroll = circularScroll;
+        if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
+            // 覆盖滚动效果函数
+            cfg.effect = circularScroll;
+        }
 
     }, "after", Switchable.prototype, "_initSwitchable");
 });
