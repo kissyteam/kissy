@@ -98,10 +98,7 @@ KISSY.add("datalazyload", function(S) {
          */
         //self.threshold
 
-        // 放在 setTimeout 里，解决 Safari 缓存问题（后退到延迟页面，延迟内容未加载）
-        setTimeout(function() {
-            self._init();
-        }, 0);
+        self._init();
     }
 
     S.mix(DataLazyload.prototype, {

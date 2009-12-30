@@ -3,8 +3,8 @@ Copyright (c) 2010, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-30 19:19:21
-Revision: 386
+Date: 2009-12-30 22:40:49
+Revision: 390
 */
 /**
  * 数据延迟加载组件
@@ -106,10 +106,7 @@ KISSY.add("datalazyload", function(S) {
          */
         //self.threshold
 
-        // 放在 setTimeout 里，解决 Safari 缓存问题（后退到延迟页面，延迟内容未加载）
-        setTimeout(function() {
-            self._init();
-        }, 0);
+        self._init();
     }
 
     S.mix(DataLazyload.prototype, {
