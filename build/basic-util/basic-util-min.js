@@ -1,9 +1,9 @@
 /*
-Copyright (c) 2009, Kissy UI Library. All rights reserved.
+Copyright (c) 2010, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-30 15:05:46
-Revision: 382
+Date: 2009-12-30 15:58:31
+Revision: 383
 */
 KISSY.add("basic-util",function(c){var f=window,e=document,d=decodeURIComponent,b=navigator.userAgent.toLowerCase(),g=/msie/.test(b)&&!/opera/.test(b),a=function(h){return typeof(h)!=="string"?h:e.getElementById(h)};c.BasicUtil={get:a,getElementsByClassName:function(q,h,k){var m=[],o=(a(k)||e).getElementsByTagName(h||"*"),p=new RegExp("(^| )"+q+"( |$)","i");for(var n=0,j=o.length;n<j;n++){if(p.test(o[n].className)){m.push(o[n])}}return m},hasClass:function(i,h){i=a(i);if(!h||!i.className){return false}return(" "+i.className+" ").indexOf(" "+h+" ")>-1},addClass:function(i,h){if(!h){return}i=a(i);if(this.hasClass(i,h)){return}i.className+=" "+h},removeClass:function(i,h){i=a(i);if(!this.hasClass(i,h)){return}i.className=(" "+i.className+" ").replace(" "+h+" "," ");if(this.hasClass(i,h)){this.removeClass(i,h)}},addEvent:function(){if(f.addEventListener){return function(k,j,i,h){a(k).addEventListener(j,i,!!h)}}else{if(f.attachEvent){return function(j,i,h){a(j).attachEvent("on"+i,function(){h.apply(j)})}}}}(),removeEvent:function(){if(f.removeEventListener){return function(k,j,i,h){k.removeEventListener(j,i,!!h)}}else{if(f.detachEvent){return function(j,i,h){j.detachEvent("on"+i,h)}}}}(),getCookie:function(i){var h=e.cookie.match("(?:^|;)\\s*"+i+"=([^;]*)");return(h&&h[1])?d(h[1]):""},trim:function(h){return h.replace(/^\s+|\s+$/g,"")},parseQueryParams:function(q){var o={},j=q.split("&"),h,r,l,s;for(var m=0,n=j.length;m<n;++m){h=j[m];r=h.indexOf("=");l=h.slice(0,r);s=h.slice(r+1);o[d(l)]=d(s)}return o},pickDomain:function(j,k){k=k||location.hostname;var i=k.split("."),h=i.length;if(h<=2){return k}j=j||1;if(j>h-2){j=h-2}return i.slice(j).join(".")},getScript:function(h,k,j){var i=e.createElement("script");i.charset=j||e.charset||e.characterSet;i.src=h;if(typeof k==="function"){if(g){i.onreadystatechange=function(){var l=i.readyState;if(l==="loaded"||l==="complete"){i.onreadystatechange=null;k()}}}else{i.onload=k}}e.getElementsByTagName("head")[0].appendChild(i)},onReady:function(i){if(g){var h=setInterval(function(){try{e.documentElement.doScroll("left");clearInterval(h);i()}catch(j){}},50)}else{window.addEventListener("load",i,false)}}}});

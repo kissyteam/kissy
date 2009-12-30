@@ -72,7 +72,7 @@
             <sequential>
                 <concat destfile="@{file}.tmp" encoding="${charset}" outputencoding="${charset}">
                     <header filtering="no" trimleading="yes">/*
-                        Copyright (c) 2009, Kissy UI Library. All rights reserved.
+                        Copyright (c) 2010, Kissy UI Library. All rights reserved.
                         MIT Licensed.
                         http://kissy.googlecode.com/
 

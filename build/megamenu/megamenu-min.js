@@ -1,9 +1,9 @@
 /*
-Copyright (c) 2009, Kissy UI Library. All rights reserved.
+Copyright (c) 2010, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-30 12:18:35
-Revision: 380
+Date: 2009-12-30 15:58:48
+Revision: 383
 */
 KISSY.add("megamenu",function(f){var c=YAHOO.util,g=c.Dom,l=c.Event,i=YAHOO.lang,k="none",a="block",b='<span class="{hook_cls}"></span>',h="switchable",e="ks-megamenu-",d={hideDelay:0.5,viewCls:e+"view",closeBtnCls:e+"closebtn",showCloseBtn:true,activeIndex:-1};function j(m,o){var n=this;if(!(n instanceof j)){return new j(m,o)}o=f.merge(d,o||{});j.superclass.constructor.call(n,m,o);n.switchable(n.config);n.config=n.config[h];n.config[h]=n.config;n._init()}f.extend(j,f.Widget);f.mix(j.prototype,{_init:function(){var m=this;m._initView();if(m.config.showCloseBtn){m._initCloseBtn()}},_onFocusTrigger:function(n){var m=this;if(m.activeIndex===n){return}if(m.switchTimer){m.switchTimer.cancel()}if(m.hideTimer){m.hideTimer.cancel()}m.switchTo(n)},_onMouseEnterTrigger:function(n){var m=this;if(m.hideTimer){m.hideTimer.cancel()}m.switchTimer=i.later(m.config.delay*1000,m,function(){m.switchTo(n)})},_onMouseLeaveTrigger:function(){var m=this;if(m.switchTimer){m.switchTimer.cancel()}m.hideTimer=i.later(m.config.hideDelay*1000,m,function(){m.hide()})},_initView:function(){var o=this,n=o.config,m=g.getElementsByClassName(n.viewCls,"*",o.container)[0];if(!m){m=document.createElement("DIV");m.className=n.viewCls;o.container.appendChild(m)}l.on(m,"mouseenter",function(){if(o.hideTimer){o.hideTimer.cancel()}});l.on(m,"mouseleave",function(){o.hideTimer=i.later(n.hideDelay*1000,o,"hide")});o.viewContent=m;o.view=m},_initCloseBtn:function(){var n=this,o,m=n.view;m.innerHTML=b.replace("{hook_cls}",n.config.closeBtnCls);l.on(m.firstChild,"click",function(){n.hide()});o=document.createElement("div");m.appendChild(o);n.viewContent=o},_switchView:function(m,n,p){var o=this;o.view.style.display=a;o.viewContent.innerHTML=n[0].innerHTML;o.fireEvent("onSwitch",p)},hide:function(){var m=this;g.removeClass(m.triggers[m.activeIndex],m.config.activeTriggerCls);m.view.style.display=k;m.activeIndex=-1}});f.MegaMenu=j});

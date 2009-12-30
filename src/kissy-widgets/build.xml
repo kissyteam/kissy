@@ -9,12 +9,7 @@
 
     <target name="concat">
         <concat destfile="kissy-widgets.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../kissy/kissy.js"/>
-
-            <path path="../datalazyload/datalazyload.js"/>
-
             <path path="../widget/widget.js"/>
-
             <path path="../widget-switchable/switchable.js"/>
             <path path="../widget-switchable/plugin-autoplay.js"/>
             <path path="../widget-switchable/plugin-effect.js"/>
@@ -23,9 +18,7 @@
             <path path="../widget-switchable/tabs.js"/>
             <path path="../widget-switchable/slide.js"/>
             <path path="../widget-switchable/carousel.js"/>
-
             <path path="../megamenu/megamenu.js"/>
-
             <path path="../suggest/suggest.js"/>
         </concat>
     </target>

@@ -1,10 +1,10 @@
 /*
-Copyright (c) 2009, Kissy UI Library. All rights reserved.
+Copyright (c) 2010, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-30 15:05:46
-Revision: 382
+Date: 2009-12-30 15:58:31
+Revision: 383
 */
 /**
  * 常用的原生函数库
