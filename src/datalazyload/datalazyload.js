@@ -356,9 +356,7 @@ KISSY.add("datalazyload", function(S) {
                     case "textarea-data":
                         textarea = container.getElementsByTagName("textarea")[0];
                         if (textarea && Dom.hasClass(textarea, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
-                            setTimeout(function() { // fix chrome cache bug
-                                container.innerHTML = textarea.value;
-                            }, 0);
+                            container.innerHTML = textarea.value;
                         }
                         break;
                     //case "img-src":

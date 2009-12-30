@@ -3,8 +3,8 @@ Copyright (c) 2010, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-30 19:12:11
-Revision: 385
+Date: 2009-12-30 19:19:21
+Revision: 386
 */
 /**
  * 数据延迟加载组件
@@ -364,9 +364,7 @@ KISSY.add("datalazyload", function(S) {
                     case "textarea-data":
                         textarea = container.getElementsByTagName("textarea")[0];
                         if (textarea && Dom.hasClass(textarea, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
-                            setTimeout(function() { // fix chrome cache bug
-                                container.innerHTML = textarea.value;
-                            }, 0);
+                            container.innerHTML = textarea.value;
                         }
                         break;
                     //case "img-src":
