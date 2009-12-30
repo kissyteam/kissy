@@ -66,11 +66,13 @@ KISSY.add("switchable", function(S) {
         var self = this;
         config = config || {};
 
-        // 根据配置信息，自动调整默认配置
-        if (config.panelCls) {
-            Switchable.Config.mackupType = 1;
-        } else if (config.panels) {
-            Switchable.Config.mackupType = 2;
+        // 根据配置信息，调整默认配置
+        if (!("mackupType" in config)) {
+            if (config.panelCls) {
+                config.mackupType = 1;
+            } else if (config.panels) {
+                config.mackupType = 2;
+            }
         }
 
         /**

@@ -3,8 +3,8 @@ Copyright (c) 2010, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-30 15:58:59
-Revision: 383
+Date: 2009-12-30 18:55:24
+Revision: 384
 */
 /**
  * Tabs Widget
