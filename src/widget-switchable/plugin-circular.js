@@ -28,7 +28,7 @@ KISSY.add("switchable-circular", function(S) {
         var self = this, cfg = self.config[SWITCHABLE],
             len = self.length,
             activeIndex = self.activeIndex,
-            isX = cfg.effect === SCROLLX,
+            isX = cfg.scrollType === SCROLLX,
             prop = isX ? LEFT : TOP,
             viewDiff = self.viewSize[isX ? 0 : 1],
             diff = -viewDiff * index,
@@ -114,6 +114,7 @@ KISSY.add("switchable-circular", function(S) {
         // 仅有滚动效果需要下面的调整
         if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
             // 覆盖滚动效果函数
+            cfg.scrollType = cfg.effect; // 保存到 scrollType 中
             cfg.effect = circularScroll;
         }
 
