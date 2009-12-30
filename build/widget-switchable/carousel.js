@@ -3,40 +3,39 @@ Copyright (c) 2010, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-30 20:19:58
-Revision: 387
+Date: 2009-12-30 20:23:55
+Revision: 388
 */
 /**
- * Tabs Widget
+ * Carousel Widget
  * @creator     玉伯<lifesinger@gmail.com>
  * @depends     kissy, yui-base
  */
-KISSY.add("slide", function(S) {
+KISSY.add("carousel", function(S) {
 
     var SWITCHABLE = "switchable",
 
-    /**
-     * 默认配置，和 Switchable 相同的部分此处未列出
-     */
-    defaultConfig = {
-        autoplay: true,
-        circular: true
-    };
+        /**
+         * 默认配置，和 Switchable 相同的部分此处未列出
+         */
+        defaultConfig = {
+            circular: true
+        };
 
     /**
-     * Slide Class
+     * Carousel Class
      * @constructor
      */
-    function Slide(container, config) {
+    function Carousel(container, config) {
         var self = this;
 
         // factory or constructor
-        if (!(self instanceof Slide)) {
-            return new Slide(container, config);
+        if (!(self instanceof Carousel)) {
+            return new Carousel(container, config);
         }
 
         config = S.merge(defaultConfig, config || { });
-        Slide.superclass.constructor.call(self, container, config);
+        Carousel.superclass.constructor.call(self, container, config);
         self.switchable(self.config);
 
         // add quick access for config
@@ -44,6 +43,6 @@ KISSY.add("slide", function(S) {
         self.config[SWITCHABLE] = self.config;
     }
 
-    S.extend(Slide, S.Widget);
-    S.Slide = Slide;
+    S.extend(Carousel, S.Widget);
+    S.Carousel = Carousel;
 });
