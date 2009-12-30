@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-29 17:49:04
-Revision: 375
+Date: 2009-12-30 12:18:45
+Revision: 380
 */
 /**
  * Switchable Circular Plugin
@@ -126,7 +126,7 @@ KISSY.add("switchable-circular", function(S) {
         // 覆盖滚动效果函数
         Effects[SCROLLX] = Effects[SCROLLY] = Effects.scroll = circularScroll;
 
-    }, "after", Switchable, "_initSwitchable");
+    }, "after", Switchable.prototype, "_initSwitchable");
 });
 
 /**

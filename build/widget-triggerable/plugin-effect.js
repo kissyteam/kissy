@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-29 17:49:04
-Revision: 375
+Date: 2009-12-30 12:18:45
+Revision: 380
 */
 /**
  * Switchable Effect Plugin
@@ -19,7 +19,7 @@ KISSY.add("switchable-effect", function(S) {
         OPACITY = "opacity", Z_INDEX = "z-index",
         RELATIVE = "relative", ABSOLUTE = "absolute",
         SCROLLX = "scrollx", SCROLLY = "scrolly", FADE = "fade",
-        Switchable = S.Switchable;
+        Switchable = S.Switchable, Effects;
 
     /**
      * 添加默认配置
@@ -33,7 +33,7 @@ KISSY.add("switchable-effect", function(S) {
     /**
      * 定义效果集
      */
-    var effects = {
+    Switchable.Effects = {
 
         // 最朴素的显示/隐藏效果
         none: function(fromEls, toEls, callback) {
@@ -86,11 +86,13 @@ KISSY.add("switchable-effect", function(S) {
             self.anim.animate();
         }
     };
-    effects[SCROLLX] = effects[SCROLLY] = effects.scroll;
-    S.Switchable.Effects = effects;
+    Effects = Switchable.Effects;
+    Effects[SCROLLX] = Effects[SCROLLY] = Effects.scroll;
 
     /**
      * 织入初始化函数：根据 effect, 调整初始状态
+     * attached members:
+     *   - this.viewSize
      */
     S.weave(function() {
         var self = this, cfg = self.config[SWITCHABLE],
@@ -145,19 +147,19 @@ KISSY.add("switchable-effect", function(S) {
         // 3. 在 CSS 里，需要给 container 设定高宽和 overflow: hidden
         //    nav 的 cls 由 CSS 指定
 
-    }, "after", Switchable, "_initSwitchable");
+    }, "after", Switchable.prototype, "_initSwitchable");
 
     /**
      * 覆盖切换方法
      */
-    S.mix(Switchable, {
+    S.mix(Switchable.prototype, {
        /**
          * 切换视图
          */
         _switchView: function(fromEls, toEls, index, direction) {
             var self = this, cfg = self.config[SWITCHABLE],
                 effect = cfg.effect,
-                fn = typeof effect === "function" ? effect : Switchable.Effects[effect];
+                fn = typeof effect === "function" ? effect : Effects[effect];
 
             fn.call(self, fromEls, toEls, function() {
                 // fire event

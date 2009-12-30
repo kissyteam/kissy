@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-29 17:49:04
-Revision: 375
+Date: 2009-12-30 12:18:45
+Revision: 380
 */
 /**
  * Switchable Autoplay Plugin
@@ -28,6 +28,9 @@ KISSY.add("switchable-autoplay", function(S) {
 
     /**
      * 织入初始化函数
+     * attached members:
+     *   - this.paused
+     *   - this.autoPlayTimer
      */
     S.weave(function() {
         var self = this, cfg = self.config[SWITCHABLE];
@@ -49,7 +52,7 @@ KISSY.add("switchable-autoplay", function(S) {
             self.switchTo(self.activeIndex < self.length - 1 ? self.activeIndex + 1 : 0);
         }, null, true);
 
-    }, "after", Switchable, "_initSwitchable");
+    }, "after", Switchable.prototype, "_initSwitchable");
 });
 
 /**

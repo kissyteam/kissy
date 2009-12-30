@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-29 17:49:04
-Revision: 375
+Date: 2009-12-30 12:18:45
+Revision: 380
 */
 /**
  * Switchable
@@ -19,41 +19,43 @@ KISSY.add("switchable", function(S) {
         FORWARD = "forward", BACKWARD = "backward",
         SWITCHABLE = "switchable",
         BEFORE_SWITCH = "beforeSwitch", ON_SWITCH = "onSwitch",
-        CLS_PREFIX = "ks-switchable-",
-        Switchable = { };
+        CLS_PREFIX = "ks-switchable-";
 
-        Switchable.Config = {
-            mackupType: 0, // mackup 的类型，取值如下：
+    function Switchable() {
+    }
 
-            // 0 - 默认结构：通过 nav 和 content 来获取 triggers 和 panels
-            navCls: CLS_PREFIX + "nav",
-            contentCls: CLS_PREFIX + "content",
+    Switchable.Config = {
+        mackupType: 0, // mackup 的类型，取值如下：
 
-            // 1 - 适度灵活：通过 cls 来获取 triggers 和 panels
-            triggerCls: CLS_PREFIX + "trigger",
-            panelCls: CLS_PREFIX + "panel",
+        // 0 - 默认结构：通过 nav 和 content 来获取 triggers 和 panels
+        navCls: CLS_PREFIX + "nav",
+        contentCls: CLS_PREFIX + "content",
 
-            // 2 - 完全自由：直接传入 triggers 和 panels
-            triggers: [],
-            panels: [],
+        // 1 - 适度灵活：通过 cls 来获取 triggers 和 panels
+        triggerCls: CLS_PREFIX + "trigger",
+        panelCls: CLS_PREFIX + "panel",
 
-            // 是否有触点
-            hasTriggers: true,
+        // 2 - 完全自由：直接传入 triggers 和 panels
+        triggers: [],
+        panels: [],
 
-            // 触发类型
-            triggerType: "mouse", // or "click"
-            // 触发延迟
-            delay: .1, // 100ms
+        // 是否有触点
+        hasTriggers: true,
 
-            activeIndex: 0, // mackup 的默认激活项，应该与此 index 一致
-            activeTriggerCls: "active",
+        // 触发类型
+        triggerType: "mouse", // or "click"
+        // 触发延迟
+        delay: .1, // 100ms
 
-            // 切换视图内有多少个 panels
-            steps: 1,
+        activeIndex: 0, // mackup 的默认激活项，应该与此 index 一致
+        activeTriggerCls: "active",
 
-            // 切换视图区域的大小。一般不需要设定此值，仅当获取值不正确时，用于手工指定大小
-            viewSize: []
-        };
+        // 切换视图内有多少个 panels
+        steps: 1,
+
+        // 切换视图区域的大小。一般不需要设定此值，仅当获取值不正确时，用于手工指定大小
+        viewSize: []
+    };
 
     /**
      * Attaches switchable ablility to Widget.
@@ -61,13 +63,16 @@ KISSY.add("switchable", function(S) {
      *   - this.container
      *   - this.config
      * attached members:
-     *   - this.triggers  值为 [] 时，代表无触点
+     *   - this.triggers  可以为空值 []
      *   - this.panels    肯定有值，且 length > 1
+     *   - this.content
+     *   - this.length
      *   - this.activeIndex
      *   - this.switchTimer
      */
     S.Widget.prototype.switchable = function(config) {
-        var self = this; config = config || {};
+        var self = this;
+        config = config || {};
 
         // 根据配置信息，自动调整默认配置
         if (config.panelCls) {
@@ -115,13 +120,13 @@ KISSY.add("switchable", function(S) {
         }
 
         // attach and init
-        S.mix(self, Switchable);
+        S.mix(self, Switchable.prototype, false);
         self._initSwitchable();
 
-        return self; // chain
+        return self; // support chain
     };
 
-    S.mix(Switchable, {
+    S.mix(Switchable.prototype, {
 
         /**
          * init switchable
@@ -130,7 +135,7 @@ KISSY.add("switchable", function(S) {
             var self = this, cfg = self.config[SWITCHABLE];
 
             // parse mackup
-            if(self.panels.length === 0) {
+            if (self.panels.length === 0) {
                 self._parseSwitchableMackup();
             }
 
@@ -139,7 +144,7 @@ KISSY.add("switchable", function(S) {
             self.createEvent(ON_SWITCH);
 
             // bind triggers
-            if(cfg.hasTriggers) {
+            if (cfg.hasTriggers) {
                 self._bindTriggers();
             }
         },
@@ -156,7 +161,7 @@ KISSY.add("switchable", function(S) {
             switch (cfg.mackupType) {
                 case 0: // 默认结构
                     nav = getElementsByClassName(cfg.navCls, "*", container)[0];
-                    if(nav) triggers = Dom.getChildren(nav);
+                    if (nav) triggers = Dom.getChildren(nav);
                     content = getElementsByClassName(cfg.contentCls, "*", container)[0];
                     panels = Dom.getChildren(content);
                     break;
@@ -176,13 +181,13 @@ KISSY.add("switchable", function(S) {
             self.length = n / cfg.steps;
 
             // 自动生成 triggers
-            if(hasTriggers && n > 0 && triggers.length === 0) {
+            if (hasTriggers && n > 0 && triggers.length === 0) {
                 triggers = self._generateTriggersMackup(self.length);
             }
 
             // 将 triggers 转换为普通数组
             if (hasTriggers) {
-                for (i = 0, m = triggers.length; i < m; i++) {
+                for (i = 0,m = triggers.length; i < m; i++) {
                     self.triggers.push(triggers[i]);
                 }
             }
@@ -197,7 +202,6 @@ KISSY.add("switchable", function(S) {
 
         /**
          * 自动生成 triggers 的 mackup
-         * @protected
          */
         _generateTriggersMackup: function(len) {
             var self = this, cfg = self.config[SWITCHABLE],
@@ -294,16 +298,16 @@ KISSY.add("switchable", function(S) {
                 fromIndex = activeIndex * steps, toIndex = index * steps;
             //S.log("Triggerable.switchTo: index = " + index);
 
-            if(index === activeIndex) return self;
+            if (index === activeIndex) return self;
             if (!self.fireEvent(BEFORE_SWITCH, index)) return self;
 
             // switch active trigger
-            if(cfg.hasTriggers) {
+            if (cfg.hasTriggers) {
                 self._switchTrigger(activeIndex > -1 ? triggers[activeIndex] : null, triggers[index]);
             }
 
             // switch active panels
-            if(typeof direction === UNDEFINED) {
+            if (typeof direction === UNDEFINED) {
                 direction = index > activeIndex ? FORWARD : FORWARD;
             }
             // TODO: slice 是否会带来性能下降？需要测试
@@ -334,8 +338,8 @@ KISSY.add("switchable", function(S) {
          */
         _switchView: function(fromPanels, toPanels, index/*, direction*/) {
             // 最简单的切换效果：直接隐藏/显示
-            Dom.setStyle(fromPanels, DISPLAY,  NONE);
-            Dom.setStyle(toPanels, DISPLAY,  BLOCK);
+            Dom.setStyle(fromPanels, DISPLAY, NONE);
+            Dom.setStyle(toPanels, DISPLAY, BLOCK);
 
             // fire onSwitch
             this.fireEvent(ON_SWITCH, index);
@@ -359,7 +363,8 @@ KISSY.add("switchable", function(S) {
         }
     });
 
-    S.mix(Switchable, Y.EventProvider.prototype);
+    S.augment(Switchable, Y.EventProvider);
+    
     S.Switchable = Switchable;
 });
 /**
@@ -384,6 +389,9 @@ KISSY.add("switchable-autoplay", function(S) {
 
     /**
      * 织入初始化函数
+     * attached members:
+     *   - this.paused
+     *   - this.autoPlayTimer
      */
     S.weave(function() {
         var self = this, cfg = self.config[SWITCHABLE];
@@ -405,7 +413,7 @@ KISSY.add("switchable-autoplay", function(S) {
             self.switchTo(self.activeIndex < self.length - 1 ? self.activeIndex + 1 : 0);
         }, null, true);
 
-    }, "after", Switchable, "_initSwitchable");
+    }, "after", Switchable.prototype, "_initSwitchable");
 });
 
 /**
@@ -426,7 +434,7 @@ KISSY.add("switchable-effect", function(S) {
         OPACITY = "opacity", Z_INDEX = "z-index",
         RELATIVE = "relative", ABSOLUTE = "absolute",
         SCROLLX = "scrollx", SCROLLY = "scrolly", FADE = "fade",
-        Switchable = S.Switchable;
+        Switchable = S.Switchable, Effects;
 
     /**
      * 添加默认配置
@@ -440,7 +448,7 @@ KISSY.add("switchable-effect", function(S) {
     /**
      * 定义效果集
      */
-    var effects = {
+    Switchable.Effects = {
 
         // 最朴素的显示/隐藏效果
         none: function(fromEls, toEls, callback) {
@@ -493,11 +501,13 @@ KISSY.add("switchable-effect", function(S) {
             self.anim.animate();
         }
     };
-    effects[SCROLLX] = effects[SCROLLY] = effects.scroll;
-    S.Switchable.Effects = effects;
+    Effects = Switchable.Effects;
+    Effects[SCROLLX] = Effects[SCROLLY] = Effects.scroll;
 
     /**
      * 织入初始化函数：根据 effect, 调整初始状态
+     * attached members:
+     *   - this.viewSize
      */
     S.weave(function() {
         var self = this, cfg = self.config[SWITCHABLE],
@@ -552,19 +562,19 @@ KISSY.add("switchable-effect", function(S) {
         // 3. 在 CSS 里，需要给 container 设定高宽和 overflow: hidden
         //    nav 的 cls 由 CSS 指定
 
-    }, "after", Switchable, "_initSwitchable");
+    }, "after", Switchable.prototype, "_initSwitchable");
 
     /**
      * 覆盖切换方法
      */
-    S.mix(Switchable, {
+    S.mix(Switchable.prototype, {
        /**
          * 切换视图
          */
         _switchView: function(fromEls, toEls, index, direction) {
             var self = this, cfg = self.config[SWITCHABLE],
                 effect = cfg.effect,
-                fn = typeof effect === "function" ? effect : Switchable.Effects[effect];
+                fn = typeof effect === "function" ? effect : Effects[effect];
 
             fn.call(self, fromEls, toEls, function() {
                 // fire event
@@ -698,7 +708,7 @@ KISSY.add("switchable-circular", function(S) {
         // 覆盖滚动效果函数
         Effects[SCROLLX] = Effects[SCROLLY] = Effects.scroll = circularScroll;
 
-    }, "after", Switchable, "_initSwitchable");
+    }, "after", Switchable.prototype, "_initSwitchable");
 });
 
 /**
@@ -774,5 +784,118 @@ KISSY.add("switchable-lazyload", function(S) {
             return true;
         }
 
-    }, "after", Switchable, "_initSwitchable");
+    }, "after", Switchable.prototype, "_initSwitchable");
+});
+/**
+ * Tabs Widget
+ * @creator     玉伯<lifesinger@gmail.com>
+ * @depends     kissy, yui-base
+ */
+KISSY.add("tabs", function(S) {
+
+    var SWITCHABLE = "switchable";
+
+    /**
+     * Tabs Class
+     * @constructor
+     */
+    function Tabs(container, config) {
+        var self = this;
+
+        // factory or constructor
+        if (!(self instanceof Tabs)) {
+            return new Tabs(container, config);
+        }
+
+        Tabs.superclass.constructor.call(self, container, config);
+        self.switchable(self.config);
+
+        // add quick access for config
+        self.config = self.config[SWITCHABLE];
+        self.config[SWITCHABLE] = self.config;
+    }
+
+    S.extend(Tabs, S.Widget);
+    S.Tabs = Tabs;
+});
+/**
+ * Tabs Widget
+ * @creator     玉伯<lifesinger@gmail.com>
+ * @depends     kissy, yui-base
+ */
+KISSY.add("slide", function(S) {
+
+    var SWITCHABLE = "switchable",
+
+    /**
+     * 默认配置，和 Switchable 相同的部分此处未列出
+     */
+    defaultConfig = {
+        autoplay: true,
+        circular: true
+    };
+
+    /**
+     * Slide Class
+     * @constructor
+     */
+    function Slide(container, config) {
+        var self = this;
+
+        // factory or constructor
+        if (!(self instanceof Slide)) {
+            return new Slide(container, config);
+        }
+
+        config = S.merge(defaultConfig, config || { });
+        Slide.superclass.constructor.call(self, container, config);
+        self.switchable(self.config);
+
+        // add quick access for config
+        self.config = self.config[SWITCHABLE];
+        self.config[SWITCHABLE] = self.config;
+    }
+
+    S.extend(Slide, S.Widget);
+    S.Slide = Slide;
+});
+/**
+ * Carousel Widget
+ * @creator     玉伯<lifesinger@gmail.com>
+ * @depends     kissy, yui-base
+ */
+KISSY.add("carousel", function(S) {
+
+    var SWITCHABLE = "switchable",
+
+        /**
+         * 默认配置，和 Switchable 相同的部分此处未列出
+         */
+        defaultConfig = {
+            circular: true
+        };
+
+    /**
+     * Carousel Class
+     * @constructor
+     */
+    function Carousel(container, config) {
+        var self = this;
+
+        // factory or constructor
+        if (!(self instanceof Carousel)) {
+            return new Carousel(container, config);
+        }
+
+        config = S.merge(defaultConfig, config || { });
+        Carousel.superclass.constructor.call(self, container, config);
+        self.switchable(self.config);
+
+        // add quick access for config
+        self.config = self.config[SWITCHABLE];
+        self.config[SWITCHABLE] = self.config;
+    }
+
+    S.extend(Carousel, S.Widget);
+    S.Carousel = Carousel;
 });

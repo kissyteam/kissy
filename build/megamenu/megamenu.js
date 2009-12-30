@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-29 17:38:45
-Revision: 373
+Date: 2009-12-30 12:18:35
+Revision: 380
 */
 /**
  * 超级菜单组件
@@ -29,7 +29,9 @@ KISSY.add("megamenu", function(S) {
             viewCls: CLS_PREFIX + "view",
             closeBtnCls: CLS_PREFIX + "closebtn",
 
-            showCloseBtn: true // 是否显示关闭按钮
+            showCloseBtn: true, // 是否显示关闭按钮
+
+            activeIndex: -1 // 默认没有激活项
         };
 
     /**
@@ -40,22 +42,17 @@ KISSY.add("megamenu", function(S) {
         var self = this;
 
         // factory or constructor
-        if (!(self instanceof arguments.callee)) {
-            return new arguments.callee(container, config);
+        if (!(self instanceof MegaMenu)) {
+            return new MegaMenu(container, config);
         }
 
-        // extend Widget
-        MegaMenu.superclass.constructor.call(self, container);
+        config = S.merge(defaultConfig, config || { });
+        MegaMenu.superclass.constructor.call(self, container, config);
+        self.switchable(self.config);
 
-        /**
-         * 配置参数
-         * @type Object
-         */
-        self.config = S.merge(defaultConfig, config || {});
-
-        // attach Switchable
-        self.switchable(config);
-        S.mix(self.config, self.config[SWITCHABLE]);
+        // add quick access for config
+        self.config = self.config[SWITCHABLE];
+        self.config[SWITCHABLE] = self.config;
 
         /**
          * 显示容器
@@ -72,55 +69,44 @@ KISSY.add("megamenu", function(S) {
          */
         //self.hideTimer
 
-        /**
-         * 当前激活项
-         */
-        self.activeIndex = -1;
-
         // init
-        S.mix(self, Self);
         self._init();
 
     }
+
     S.extend(MegaMenu, S.Widget);
 
-    /**
-     * MegaMenu 特有的成员
-     */
-    var Self = {
+    S.mix(MegaMenu.prototype, {
 
         /**
          * 初始化操作
-         * @protected
          */
         _init: function() {
             var self = this;
 
             self._initView();
-            if(self.config.showCloseBtn) self._initCloseBtn();
+            if (self.config.showCloseBtn) self._initCloseBtn();
         },
 
         /**
          * click or tab 键激活 trigger 时触发的事件
-         * @override
          */
         _onFocusTrigger: function(index) {
             var self = this;
             if (self.activeIndex === index) return; // 重复点击
             if (self.switchTimer) self.switchTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
-            if(self.hideTimer) self.hideTimer.cancel(); // 取消隐藏
+            if (self.hideTimer) self.hideTimer.cancel(); // 取消隐藏
 
             self.switchTo(index);
         },
 
         /**
          * 鼠标悬浮在 trigger 上时触发的事件
-         * @override
          */
         _onMouseEnterTrigger: function(index) {
             //S.log("Triggerable._onMouseEnterTrigger: index = " + index);
             var self = this;
-            if(self.hideTimer) self.hideTimer.cancel(); // 取消隐藏
+            if (self.hideTimer) self.hideTimer.cancel(); // 取消隐藏
 
             // 不重复触发。比如：已显示内容时，将鼠标快速滑出再滑进来，不必触发
             self.switchTimer = Lang.later(self.config.delay * 1000, self, function() {
@@ -130,7 +116,6 @@ KISSY.add("megamenu", function(S) {
 
         /**
          * 鼠标移出 trigger 时触发的事件
-         * @override
          */
         _onMouseLeaveTrigger: function() {
             var self = this;
@@ -143,14 +128,13 @@ KISSY.add("megamenu", function(S) {
 
         /**
          * 初始化显示容器
-         * @protected
          */
         _initView: function() {
             var self = this, cfg = self.config,
                 view = Dom.getElementsByClassName(cfg.viewCls, "*", self.container)[0];
 
             // 自动生成 view
-            if(!view) {
+            if (!view) {
                 view = document.createElement("DIV");
                 view.className = cfg.viewCls;
                 self.container.appendChild(view);
@@ -158,7 +142,7 @@ KISSY.add("megamenu", function(S) {
 
             // init events
             Event.on(view, "mouseenter", function() {
-                if(self.hideTimer) self.hideTimer.cancel();
+                if (self.hideTimer) self.hideTimer.cancel();
             });
             Event.on(view, "mouseleave", function() {
                 self.hideTimer = Lang.later(cfg.hideDelay * 1000, self, "hide");
@@ -217,7 +201,7 @@ KISSY.add("megamenu", function(S) {
             // update
             self.activeIndex = -1;
         }
-    };
+    });
 
     S.MegaMenu = MegaMenu;
 });

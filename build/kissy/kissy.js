@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-29 17:38:41
-Revision: 373
+Date: 2009-12-30 12:18:31
+Revision: 380
 */
 /**
  * @module kissy
@@ -356,8 +356,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
                 if (!(this instanceof O)) {
                     return new O(c);
                 }
-                if (typeof c === UNDEFINED) c = []; // fix ie bug
-                O.superclass.constructor.apply(this, c);
+                O.superclass.constructor.call(this, c);
             }
 
             S.extend(O, S, null, S);
