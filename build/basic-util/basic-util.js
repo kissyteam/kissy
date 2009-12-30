@@ -3,8 +3,8 @@ Copyright (c) 2009, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-30 13:09:30
-Revision: 381
+Date: 2009-12-30 15:05:46
+Revision: 382
 */
 /**
  * 常用的原生函数库
@@ -16,6 +16,9 @@ Revision: 381
 KISSY.add("basic-util", function(S) {
 
     var win = window, doc = document, decode = decodeURIComponent,
+        ua = navigator.userAgent.toLowerCase(),
+        ie = /msie/.test(ua) && !/opera/.test(ua),
+        //ie6 = ie && !/msie 7/.test(ua) && !/msie 8/.test(ua),
         get = function(id) {
             return typeof(id) !== "string" ? id : doc.getElementById(id);
         };
@@ -109,7 +112,7 @@ KISSY.add("basic-util", function(S) {
             }
         }(),
 
-                /**
+        /**
          * 读取指定 Cookie 值
          */
         getCookie: function(name) {
@@ -141,23 +144,68 @@ KISSY.add("basic-util", function(S) {
             return ret;
         },
 
-		/**
-		 * 提取当前 hostname 的 domain
-		 * 默认返回一级域，如：
+        /**
+         * 提取当前 hostname 的 domain
+         * 默认返回一级域，如：
          *     www.daily.taobao.net -> daily.taobao.net
          *     shop.taobao.com      -> taobao.com
-		 * @param {number} deep 指定减少几级域，如 deep = 2, 则 www.xyz.taobao.com -> taobao.com
-		 * 注意：类似 sina.com.cn 这样带国家区域的域名可能有误，需要手动指定 deep
-		 */
-		pickDomain: function(deep, hostname) {
-			hostname = hostname || location.hostname;
+         * @param {number} deep 指定减少几级域，如 deep = 2, 则 www.xyz.taobao.com -> taobao.com
+         * 注意：类似 sina.com.cn 这样带国家区域的域名可能有误，需要手动指定 deep
+         */
+        pickDomain: function(deep, hostname) {
+            hostname = hostname || location.hostname;
             var arr = hostname.split("."), len = arr.length;
-            if(len <= 2) return hostname; // 本身就是 taobao.com 这种短域名时，直接返回
+            if (len <= 2) return hostname; // 本身就是 taobao.com 这种短域名时，直接返回
 
             deep = deep || 1; // 默认减少一级
-			if(deep > len -  2) deep = len - 2; // deep 过大时，至少保留两级域
+            if (deep > len - 2) deep = len - 2; // deep 过大时，至少保留两级域
 
-			return arr.slice(deep).join(".");
-		}
+            return arr.slice(deep).join(".");
+        },
+
+        /**
+         * 简单的异步获取 js
+         */
+        getScript: function (url, callback, charset) {
+            var node = doc.createElement("script");
+
+            node.charset = charset || doc.charset || doc.characterSet;
+            node.src = url;
+
+            if (typeof callback === "function") {
+                if (ie) {
+                    node.onreadystatechange = function() {
+                        var rs = node.readyState;
+                        if (rs === "loaded" || rs === "complete") {
+                            node.onreadystatechange = null;
+                            callback();
+                        }
+                    };
+                } else {
+                    node.onload = callback;
+                }
+            }
+
+            doc.getElementsByTagName("head")[0].appendChild(node);
+        },
+
+        /**
+         * 简单的 onDomReady 模拟方法
+         */
+        onReady:  function(callback) {
+            if (ie) {
+                var timer = setInterval(function() {
+                    try {
+                        doc.documentElement.doScroll("left");
+                        clearInterval(timer);
+                        callback();
+                    } catch (ex) {
+                    }
+                }, 50);
+            } else { // FireFox, Opera, Safari 3+
+                window.addEventListener("load", callback, false);
+            }
+
+        }
     };
 });
