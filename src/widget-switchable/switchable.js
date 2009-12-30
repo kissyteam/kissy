@@ -112,7 +112,7 @@ KISSY.add("switchable", function(S) {
         }
 
         // attach and init
-        S.mix(self, Switchable.prototype);
+        S.mix(self, Switchable.prototype, false);
         self._initSwitchable();
 
         return self; // support chain
@@ -194,7 +194,6 @@ KISSY.add("switchable", function(S) {
 
         /**
          * 自动生成 triggers 的 mackup
-         * @protected
          */
         _generateTriggersMackup: function(len) {
             var self = this, cfg = self.config[SWITCHABLE],

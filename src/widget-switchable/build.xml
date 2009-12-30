@@ -14,6 +14,9 @@
             <path path="../widget-switchable/plugin-effect.js"/>
             <path path="../widget-switchable/plugin-circular.js"/>
             <path path="../widget-switchable/plugin-lazyload.js"/>
+            <path path="../widget-switchable/tabs.js"/>
+            <path path="../widget-switchable/slide.js"/>
+            <path path="../widget-switchable/carousel.js"/>
         </concat>
     </target>
 

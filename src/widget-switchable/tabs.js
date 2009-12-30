@@ -5,6 +5,8 @@
  */
 KISSY.add("tabs", function(S) {
 
+    var SWITCHABLE = "switchable";
+
     /**
      * Tabs Class
      * @constructor
@@ -18,8 +20,11 @@ KISSY.add("tabs", function(S) {
         }
 
         Tabs.superclass.constructor.call(self, container, config);
+        self.switchable(self.config);
 
-        self.switchable(config);
+        // add quick access for config
+        self.config = self.config[SWITCHABLE];
+        self.config[SWITCHABLE] = self.config;
     }
 
     S.extend(Tabs, S.Widget);

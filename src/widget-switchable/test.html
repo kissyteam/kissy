@@ -280,6 +280,8 @@
 <script src="../widget-switchable/plugin-circular.js"></script>
 <script src="../widget-switchable/plugin-lazyload.js"></script>
 <script src="../widget-switchable/tabs.js"></script>
+<script src="../widget-switchable/slide.js"></script>
+<script src="../widget-switchable/carousel.js"></script>
 <script>
     KISSY().use("*", function(S) {
 
@@ -292,7 +294,6 @@
         var tabs = S.Tabs("demo1", {
             lazyDataType: "textarea-data"
         });
-        debugger
         tabs.subscribe("beforeSwitch", function(index) {
             if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
                 this.panels[index].innerHTML = "index = " + index;
@@ -300,14 +301,18 @@
         });
 
         // demo2: taobao slide
-        S.Widget("demo2").switchable({
+        /*S.Widget("demo2").switchable({
             autoplay: true,
+            effect: "scrolly",
+            easing: Y.Easing.easeOutStrong
+        });*/
+        S.Slide("demo2", {
             effect: "scrolly",
             easing: Y.Easing.easeOutStrong
         });
 
         // demo3: youa slide
-        S.Widget("demo3").switchable({
+        /*S.Widget("demo3").switchable({
             navCls: "yslider-stick",
             contentCls: "yslider-stage",
             activeTriggerCls: "selected",
@@ -315,10 +320,25 @@
             autoplay: true,
             effect: "fade",
             duration: .8
+        });*/
+        S.Slide("demo3", {
+            navCls: "yslider-stick",
+            contentCls: "yslider-stage",
+            activeTriggerCls: "selected",
+            delay: .2,
+            effect: "fade",
+            duration: .8
         });
 
         // demo4: scroller
-        var demo4 = S.Widget("demo4").switchable({
+        /*var demo4 = S.Widget("demo4").switchable({
+            effect: "scrollx",
+            easing: Y.Easing.easeOutStrong,
+            steps: 5,
+            viewSize: [680]
+        });*/
+        var demo4 = S.Carousel("demo4", {
+            circular: false,
             effect: "scrollx",
             easing: Y.Easing.easeOutStrong,
             steps: 5,
@@ -342,8 +362,14 @@
         });
 
         // demo5: circular scroller
-        var demo5 = S.Widget("demo5").switchable({
-            circular: true,
+        /*var demo5 = S.Widget("demo5").switchable({
+            effect: "scrollx",
+            easing: Y.Easing.easeOutStrong,
+            steps: 5,
+            viewSize: [680],
+            lazyDataType: "img-src"
+        });*/
+        var demo5 = S.Carousel("demo5", {
             effect: "scrollx",
             easing: Y.Easing.easeOutStrong,
             steps: 5,
