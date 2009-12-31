@@ -14,7 +14,7 @@ KISSY.add("datalazyload", function(S) {
         CUSTOM_IMG_DATA_SRC = IMG_DATA_SRC + "-custom",
         CUSTOM_TEXTAREA_DATA_CLS = TEXTAREA_DATA_CLS + "-custom",
         MOD = { AUTO: "auto", MANUAL: "manual" },
-        DEFAULT = "default",
+        DEFAULT = "default", NONE = "none",
 
         defaultConfig = {
 
@@ -169,7 +169,7 @@ KISSY.add("datalazyload", function(S) {
                 threshold = self.threshold,
                 placeholder = self.config.placeholder,
                 isManualMod = self.config.mod === MOD.MANUAL,
-                n, N, imgs, areaes, i, len, img, data_src,
+                n, N, imgs, areaes, i, len, img, area, data_src,
                 lazyImgs = [], lazyAreaes = [];
 
             for (n = 0,N = containers.length; n < N; ++n) {
@@ -198,8 +198,9 @@ KISSY.add("datalazyload", function(S) {
                 // 处理 textarea
                 areaes = containers[n].getElementsByTagName("textarea");
                 for (i = 0,len = areaes.length; i < len; ++i) {
-                    if (Dom.hasClass(areaes[i], TEXTAREA_DATA_CLS)) {
-                        lazyAreaes.push(areaes[i]);
+                    area = areaes[i];
+                    if (Dom.hasClass(area, TEXTAREA_DATA_CLS)) {
+                        lazyAreaes.push(area);
                     }
                 }
             }
@@ -241,6 +242,10 @@ KISSY.add("datalazyload", function(S) {
             self.images = remain;
         },
 
+        /**
+         * 加载图片 src
+         * @static
+         */
         _loadImgSrc: function(img, flag) {
             flag = flag || IMG_DATA_SRC;
             var data_src = img.getAttribute(flag);
@@ -267,13 +272,28 @@ KISSY.add("datalazyload", function(S) {
                 // 注：area 可能处于 display: none 状态，Dom.getY(area) 获取不到 Y 值
                 //    因此这里采用 area.parentNode
                 if (Dom.getY(parent) <= threshold) {
-                    parent.innerHTML = area.value;
+                    self._loadDataFromArea(parent, area);
                 } else {
                     remain.push(area);
                 }
             }
 
             self.areaes = remain;
+        },
+
+        /**
+         * 从 textarea 中加载数据
+         * @static
+         */
+        _loadDataFromArea: function(parent, area) {
+            //parent.innerHTML = area.value; // 这种方式会导致 chrome 缓存 bug
+
+            // 采用隐藏不去除方式
+            var content = document.createElement("DIV");
+            content.innerHTML = area.value;
+            area.style.display = NONE;
+            area.className = ""; // clear hooks
+            parent.appendChild(content);
         },
 
         /**
@@ -339,7 +359,7 @@ KISSY.add("datalazyload", function(S) {
          * @static
          */
         loadCustomLazyData: function(containers, type, flag) {
-            var self = this, textarea, imgs;
+            var self = this, area, imgs;
 
 
             // 支持数组
@@ -351,9 +371,9 @@ KISSY.add("datalazyload", function(S) {
             S.each(containers, function(container) {
                 switch (type) {
                     case "textarea-data":
-                        textarea = container.getElementsByTagName("textarea")[0];
-                        if (textarea && Dom.hasClass(textarea, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
-                            container.innerHTML = textarea.value;
+                        area = container.getElementsByTagName("textarea")[0];
+                        if (area && Dom.hasClass(area, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
+                            self._loadDataFromArea(container, area);
                         }
                         break;
                     //case "img-src":
@@ -373,7 +393,7 @@ KISSY.add("datalazyload", function(S) {
     });
 
     // attach static methods
-    S.mix(DataLazyload, DataLazyload.prototype, true, ["loadCustomLazyData", "_loadImgSrc"]);
+    S.mix(DataLazyload, DataLazyload.prototype, true, ["loadCustomLazyData", "_loadImgSrc", "_loadDataFromArea"]);
 
     S.DataLazyload = DataLazyload;
 });
