@@ -2,18 +2,43 @@
 <html>
 <head>
 <meta charset="gbk"/>
-<title>Switchable Widget Test</title>
+<title>Switchable Widgets Test</title>
+
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
 <script src="../../lib/yui2/yui-base/yui-base-min.js"></script>
 <script src="../../lib/yui2/animation/animation-min.js"></script>
+
+<script src="../kissy/kissy.js"></script>
+<script src="../datalazyload/datalazyload.js"></script>
+<script src="../widget/widget.js"></script>
+<script src="../widget-switchable/switchable.js"></script>
+<script src="../widget-switchable/plugin-autoplay.js"></script>
+<script src="../widget-switchable/plugin-effect.js"></script>
+<script src="../widget-switchable/plugin-circular.js"></script>
+<script src="../widget-switchable/plugin-lazyload.js"></script>
+<script src="../widget-switchable/tabs.js"></script>
+<script src="../widget-switchable/slide.js"></script>
+<script src="../widget-switchable/carousel.js"></script>
+
 <style type="text/css">
-    body { padding: 50px; }
-    .section { margin-bottom: 50px; }
+    body { padding: 20px 50px 50px; }
+    h2 { margin: 30px 0 10px; font-size: 17px; }
     .loading { background: #EBF5FA url(assets/loading.gif) no-repeat 50% 50%; }
+
+    p.code-switch { color: #09f; cursor: pointer; margin-top: 10px; }
+    pre.code {
+        color: #444;
+        cursor: auto;
+        border-left: 2px solid #7F96AA;
+        margin-top: 5px;
+        padding: 0 10px 20px 10px;
+        font-size: 14px;
+    }
 </style>
 </head>
 
 <body>
+<h2>Tabs - 普通标签页</h2>
 <style type="text/css">
     #demo1 { position: relative; width: 750px; padding-top: 29px; }
     #demo1 .ks-switchable-nav { position: absolute; left: 20px; margin-top: -29px; z-index: 99; }
@@ -61,7 +86,21 @@
         <div style="display: none"><textarea class="ks-datalazyload-custom">我是延迟内容</textarea></div>
     </div>
 </div>
+<script>
+    KISSY().use("*", function(S) {
+        var tabs = new S.Tabs("demo1", {
+            lazyDataType: "textarea-data"
+        });
+        tabs.subscribe("beforeSwitch", function(index) {
+            if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
+                this.panels[index].innerHTML = "index = " + index;
+            }
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
 
+<h2>Slide - 淘宝首页卡盘</h2>
 <style type="text/css">
     #demo2 { position: relative; width: 470px; height: 150px; border: 1px solid #B6D1E6; overflow: hidden; }
     #demo2 .ks-switchable-nav { position: absolute; bottom: 5px; right: 5px; z-index: 99; }
@@ -109,7 +148,17 @@
         </li>
     </ol>
 </div>
+<script>
+    KISSY().use("*", function(S) {
+        S.Slide("demo2", {
+            effect: "scrolly",
+            easing: YAHOO.util.Easing.easeOutStrong
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
 
+<h2>Slide - 有啊首页卡盘</h2>
 <style type="text/css">
     #demo3 {
         position: relative;
@@ -168,8 +217,21 @@
         <li><a href="http://youa.baidu.com/shop/3710a13d15c375285841ef08/tab/0344b67328e77dc92132cad9" target="_blank">周末购</a></li>
     </ul>
 </div>
+<script>
+    KISSY().use("*", function(S) {
+        S.Slide("demo3", {
+            navCls: "yslider-stick",
+            contentCls: "yslider-stage",
+            activeTriggerCls: "selected",
+            delay: .2,
+            effect: "fade",
+            duration: .8
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
 
-
+<h2>Carousel - 旋转木马</h2>
 <style type="text/css">
     .scrollable {
         position: relative;
@@ -216,44 +278,12 @@
         margin: 20px 15px;
         background-color: #fff;
         border: 1px solid #ccc;
-        _display: inline !important; /* fix ie6 双边距 bug */
+        display: inline !important; /* fix ie6 双边距 bug */
     }
 </style>
 <div id="demo4" class="section scrollable">
-    <span id="scroller-prev" class="prev" style="display: none">&lsaquo; 上一页</span>
+    <span id="scroller-prev" class="prev">&lsaquo; 上一页</span>
     <span id="scroller-next" class="next">下一页 &rsaquo;</span>
-    <div class="scroller">
-        <div class="ks-switchable-content">
-            <!-- 1-5 -->
-            <img src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg"/>
-            <img src="http://farm4.static.flickr.com/3089/2796719087_c3ee89a730_t.jpg"/>
-            <img src="http://farm1.static.flickr.com/79/244441862_08ec9b6b49_t.jpg"/>
-            <img src="http://farm1.static.flickr.com/28/66523124_b468cf4978_t.jpg"/>
-            <img src="http://farm1.static.flickr.com/164/399223606_b875ddf797_t.jpg"/>
-            <!-- 5-10 -->
-            <img src="http://farm1.static.flickr.com/163/399223609_db47d35b7c_t.jpg"/>
-            <img src="http://farm1.static.flickr.com/135/321464104_c010dbf34c_t.jpg"/>
-            <img src="http://farm1.static.flickr.com/40/117346184_9760f3aabc_t.jpg"/>
-            <img src="http://farm1.static.flickr.com/153/399232237_6928a527c1_t.jpg"/>
-            <img src="http://farm1.static.flickr.com/50/117346182_1fded507fa_t.jpg"/>
-            <!-- 10-15 -->
-            <img src="http://farm4.static.flickr.com/3629/3323896446_3b87a8bf75_t.jpg"/>
-            <img src="http://farm4.static.flickr.com/3023/3323897466_e61624f6de_t.jpg"/>
-            <img src="http://farm4.static.flickr.com/3650/3323058611_d35c894fab_t.jpg"/>
-            <img src="http://farm4.static.flickr.com/3635/3323893254_3183671257_t.jpg"/>
-            <img src="http://farm4.static.flickr.com/3624/3323893148_8318838fbd_t.jpg"/>
-        </div>
-        <ul class="ks-switchable-nav">
-            <li class="active">&bull;</li>
-            <li>&bull;</li>
-            <li>&bull;</li>
-        </ul>
-    </div>
-</div>
-
-<div id="demo5" class="section scrollable">
-    <span id="scroller2-prev" class="prev">&lsaquo; 上一页</span>
-    <span id="scroller2-next" class="next">下一页 &rsaquo;</span>
     <div class="scroller">
         <div class="ks-switchable-content">
             <!-- 1-5 -->
@@ -282,36 +312,173 @@
         </ul>
     </div>
 </div>
-
-<script src="../kissy/kissy.js"></script>
-<script src="../datalazyload/datalazyload.js"></script>
-<script src="../widget/widget.js"></script>
-<script src="../widget-switchable/switchable.js"></script>
-<script src="../widget-switchable/plugin-autoplay.js"></script>
-<script src="../widget-switchable/plugin-effect.js"></script>
-<script src="../widget-switchable/plugin-circular.js"></script>
-<script src="../widget-switchable/plugin-lazyload.js"></script>
-<script src="../widget-switchable/tabs.js"></script>
-<script src="../widget-switchable/slide.js"></script>
-<script src="../widget-switchable/carousel.js"></script>
 <script>
     KISSY().use("*", function(S) {
+        var Y = YAHOO.util, Event = Y.Event;
 
-        var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, UA = YAHOO.env.ua;
+        var demo4 = new S.Carousel("demo4", {
+            effect: "scrollx",
+            easing: Y.Easing.easeOutStrong,
+            steps: 5,
+            viewSize: [680],
+            lazyDataType: "img-src"
+        });
+
+        Event.on("scroller-prev", "click", function() {
+            demo4.prev();
+        });
+        Event.on("scroller-next", "click", function() {
+            demo4.next();
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+<h2>Carousel - 有啊滚动新闻条</h2>
+<style type="text/css">
+    .scroll-news { height: 20px; overflow: hidden; }
+    .scroll-news a { color: #FF7E00; }
+</style>
+<div id="demo5" class="scroll-news">
+    <ul class="news-items">
+        <li><a target="_blank" href="http://youa.baidu.com/shop/72e01b38fb26b4ebc5db0136">“一分钱”轻松体验有啊网购流程</a></li>
+        <li><a target="_blank" href="http://co.youa.baidu.com/content/payhelp/b12/zhaoshang/">开通网银，百付宝为您一路护航</a></li>
+        <li><a target="_blank" href="http://co.youa.baidu.com/picture/r/mall/guide/index.html">新手买家？帮助教程带您走通有啊</a></li>
+        <li><a target="_blank" href="http://youa.baidu.com/static/help/quality_form_build.html">尽情挥洒你的创意，共建百度有啊</a></li>
+        <li><a target="_blank" href="http://co.youa.baidu.com/content/help/A10/2008-09-06/153433185574.html">认准标识，精选实力卖家任您选择</a></li>
+        <li><a target="_blank" href="http://co.youa.baidu.com/content/help/A3/2/2008-09-01/143723181295.html#10">收藏</a> + <a target="_blank" href="http://co.youa.baidu.com/content/help/A3/2009-01-08/112820209991.html">购物车</a>，逛街搜店更便捷</li>
+    </ul>
+</div>
+<script>
+    KISSY().use("*", function(S) {
+        S.Carousel("demo5", {
+            contentCls: "news-items",
+            hasTriggers: false,
+            effect: "scrolly",
+            autoplay: true,
+            interval: 3,
+            duration: .2
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+<h2>Slide - 土豆今日焦点</h2>
+<style type="text/css">
+    #slideFocus { border: 1px solid #C2C2C2; height: 284px; width: 678px; overflow: hidden; }
+    #slideFocus .h { background: #f3f3f3; padding: 3px 0 7px 12px; }
+    #slideFocus .c { padding: 9px 10px 0; }
+    #slideFocus .pic { width: 379px; height: 233px; overflow: hidden; float: left; }
+    #slideFocus .txt { width: 270px; float: right; }
+    #slideFocus .desc-list h4 a { font-size: 14px; line-height: 25px; color: #f60; }
+    #slideFocus .desc-list p { height: 55px; line-height: 18px; color: #666; overflow: hidden; margin: 10px 0; }
+    #slideFocus .thumbs-list li { float: left; height: 62px; width: 84px; padding: 2px; margin: 1px; display: inline !important; }
+    #slideFocus .thumbs-list li.current { background-color: #f60; }
+</style>
+<div id="slideFocus">
+    <div class="h">
+        <h3>今日焦点视频</h3>
+    </div>
+    <div class="c">
+        <div class="pic loading">
+            <ul class="pic-list">
+                <li><a href="#"><img src="http://at-img4.tdimg.com/board/2010/1/2235.jpg"/></a></li>
+                <li><a href="#"><img src="http://at-img3.tdimg.com/board/2010/1/2_5.jpg"/></a></li>
+                <li><a href="#"><img src="http://at-img4.tdimg.com/board/2010/1/tt.jpg"/></a></li>
+                <li><a href="#"><img src="http://at-img2.tdimg.com/board/2009/12/avatarchina.jpg"/></a></li>
+                <li><a href="#"><img src="http://at-img1.tdimg.com/board/2009/12/0101jyu-daxue379.jpg"/></a></li>
+                <li><a href="#"><img src="http://at-img2.tdimg.com/board/2010/1/24_1.jpg"/></a></li>
+            </ul>
+        </div>
+        <div class="txt">
+            <ul class="desc-list">
+                <li style="display: block">
+                    <h4><a title="《神话》热播 第05集21:10分上线" target="_blank" href="http://www.tudou.com/home/_53991369">《神话》热播 第05集21:10分上线</a></h4>
+                    <p>秦代的刑场上，一个身着奇装异服的年轻人从天而降，众将士议论纷纷，不敢近前，不知是叛贼来劫法场，还是神仙妖孽下凡……</p>
+                </li>
+                <li style="display: none">
+                    <h4><a target="_blank" href="http://www.tudou.com/playlist/playindex.do?lid=7684460&amp;iid=44145734&amp;cid=3">2010年第一场强降雪飘落京城</a></h4>
+                    <p>继昨日凌晨降下新年首场小雪，今日首场强降雪飘落京城，据气象台预计雪后北京将降温至-16℃，这也将创下近40年来的最低温记录。</p>
+                </li>
+                <li style="display: none">
+                    <h4><a target="_blank" href="http://www.tudou.com/playlist/playindex.do?lid=7683893">娱乐圈丑闻 导演张一白吸毒被抓</a></h4>
+                    <p>正拍摄《杜拉拉升职记》的导演张一白因吸毒被抓，据传是其捧红的徐静蕾“告密”，衣食无忧、事业有成的明星，为何屡屡曝出吸毒丑闻？</p>
+                </li>
+                <li style="display: none">
+                    <h4><a target="_blank" href="http://www.tudou.com/home/avatar2010">詹姆斯-卡梅隆传奇巨制《阿凡达》</a></h4>
+                    <p>曾因《泰坦尼克号》创造过票房记录的好莱坞导演詹姆斯-卡梅隆，经过了14年的酝酿，耗资4亿美元拍制的科幻巨献《阿凡达》将于4日在中国上映！</p>
+                </li>
+                <li style="display: none">
+                    <h4><a target="_blank" href="http://www.tudou.com/playlist/playindex.do?lid=7637976">2009年大学生十大杯具事件</a></h4>
+                    <p>从70岁老教授潜规则艺校女生，到上海贫困女硕士自杀，09年发生在大学生身上的是非真是多得来令人惊诧，除了心酸就只有“杯具”了。</p>
+                </li>
+                <li style="display: none">
+                    <h4><a target="_blank" href="http://www.tudou.com/home/_52974690/">尚周刊 第三期</a></h4>
+                    <p>全新《尚周刊》在新年里与大家新鲜见面。简约是本周最IN的街头风！闪亮派对妆是每个潮女必备美妆术！想了解更多时尚资讯来《尚周刊》！</p>
+                </li>
+            </ul>
+            <ul class="thumbs-list">
+                <li class="current"><img width="84" height="62" src="http://at-img4.tdimg.com/board/2010/1/%CA%D7%D2%B3%BD%B9%B5%E3%CD%BCs.jpg"/></li>
+                <li><img width="84" height="62" src="http://at-img3.tdimg.com/board/2010/1/2_4.jpg"/></li>
+                <li><img width="84" height="62" src="http://at-img4.tdimg.com/board/2010/1/tt1.jpg"/></li>
+                <li><img width="84" height="62" src="http://at-img2.tdimg.com/board/2009/12/avatarchina-s.jpg"/></li>
+                <li><img width="84" height="62" src="http://at-img4.tdimg.com/board/2009/12/0101jyu-82641.jpg"/></li>
+                <li><img width="84" height="62" src="http://at-img1.tdimg.com/board/2010/1/4_1.jpg"/></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    KISSY().use("*", function(S) {
+        var Y = YAHOO.util, Dom = Y.Dom,
+            descList = Dom.getChildren(Dom.getElementsByClassName("desc-list", "ul", "slideFocus")[0]);
+
+        S.Slide("slideFocus", {
+            contentCls: "pic-list",
+            navCls: "thumbs-list",
+            activeTriggerCls: "current",
+            effect: "scrollx",
+            easing: YAHOO.util.Easing.easeOutStrong
+        })
+        .subscribe("beforeSwitch", function(index) {
+            S.each(descList, function(desc, i) {
+                desc.style.display = i === index ? "block" : "none";
+            });
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+
+<script>
+    KISSY().use("*", function() {
+        var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, UA = YAHOO.env.ua,
+            SHOW_CODE = "显示源码", HIDE_CODE = "隐藏源码";
+
+        Dom.getElementsByClassName("code-switch", "p", document, function(p) {
+            Event.on(p, "click", function() {
+              var showing = p.innerHTML === SHOW_CODE,
+                  next = Dom.getNextSibling(p), pre = next;
+
+                if(next.nodeName !== "PRE") {
+                    pre = document.createElement("PRE");
+                    pre.className = "code";
+                    pre.innerHTML = Dom.getPreviousSibling(p).innerHTML;
+                    if(UA.ie) {
+                        pre.innerHTML += "<br />// 请用非 ie 内核浏览器查看。";
+                    }
+                    Dom.insertAfter(pre, p);
+                }
+
+                pre.style.display = showing ? "block" : "none";
+                p.innerHTML = showing ? HIDE_CODE : SHOW_CODE;
+            });
+        });
 
         // demo1: tabs
         /*var tabs = new S.Widget("demo1").switchable({
             lazyDataType: "textarea-data"
         });*/
-        var tabs = S.Tabs("demo1", {
-            lazyDataType: "textarea-data"
-
-        });
-        tabs.subscribe("beforeSwitch", function(index) {
-            if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
-                this.panels[index].innerHTML = "index = " + index;
-            }
-        });
 
         // demo2: taobao slide
         /*S.Widget("demo2").switchable({
@@ -319,11 +486,6 @@
             effect: "scrolly",
             easing: Y.Easing.easeOutStrong
         });*/
-        var slide = S.Slide("demo2", {
-            effect: "scrolly",
-            easing: Y.Easing.easeOutStrong,
-            circular: false
-        });
 
         // demo3: youa slide
         /*S.Widget("demo3").switchable({
@@ -335,67 +497,15 @@
             effect: "fade",
             duration: .8
         });*/
-        S.Slide("demo3", {
-            navCls: "yslider-stick",
-            contentCls: "yslider-stage",
-            activeTriggerCls: "selected",
-            delay: .2,
-            effect: "fade",
-            duration: .8
-        });
 
-        // demo4: scroller
-        /*var demo4 = S.Widget("demo4").switchable({
-            effect: "scrollx",
-            easing: Y.Easing.easeOutStrong,
-            steps: 5,
-            viewSize: [680]
-        });*/
-        var demo4 = S.Carousel("demo4", {
-            circular: false,
-            effect: "scrollx",
-            easing: Y.Easing.easeOutStrong,
-            steps: 5,
-            viewSize: [680]
-        });
-        demo4.subscribe("beforeSwitch", function(index) {
-            if(index === 0) {
-                Dom.get("scroller-prev").style.display = "none";
-            } else if(index === this.length - 1) {
-                Dom.get("scroller-next").style.display = "none";
-            } else {
-                Dom.get("scroller-prev").style.display = "block";
-                Dom.get("scroller-next").style.display = "block";
-            }
-        });
-        Event.on("scroller-prev", "click", function() {
-            demo4.prev();
-        });
-        Event.on("scroller-next", "click", function() {
-            demo4.next();
-        });
-
-        // demo5: circular scroller
-        /*var demo5 = S.Widget("demo5").switchable({
+        // demo4: circular scroller
+        /*var demo4 = S.Widget("demo5").switchable({
             effect: "scrollx",
             easing: Y.Easing.easeOutStrong,
             steps: 5,
             viewSize: [680],
             lazyDataType: "img-src"
         });*/
-        var demo5 = S.Carousel("demo5", {
-            effect: "scrollx",
-            easing: Y.Easing.easeOutStrong,
-            steps: 5,
-            viewSize: [680],
-            lazyDataType: "img-src"
-        });
-        Event.on("scroller2-prev", "click", function() {
-            demo5.prev();
-        });
-        Event.on("scroller2-next", "click", function() {
-            demo5.next();
-        });
     });
 </script>
 </body>

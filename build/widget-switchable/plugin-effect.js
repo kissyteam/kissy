@@ -3,8 +3,8 @@ Copyright (c) 2010, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-30 20:31:18
-Revision: 389
+Date: 2010-01-03 21:56:25
+Revision: 393
 */
 /**
  * Switchable Effect Plugin

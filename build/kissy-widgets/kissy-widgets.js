@@ -3,8 +3,8 @@ Copyright (c) 2010, Kissy UI Library. All rights reserved.
 MIT Licensed.
 http://kissy.googlecode.com/
 
-Date: 2009-12-30 20:31:24
-Revision: 389
+Date: 2010-01-03 21:56:25
+Revision: 393
 */
 /**
  * Widget
@@ -427,7 +427,7 @@ KISSY.add("switchable-autoplay", function(S) {
      * 织入初始化函数
      * attached members:
      *   - this.paused
-     *   - this.autoPlayTimer
+     *   - this.autoplayTimer
      */
     S.weave(function() {
         var self = this, cfg = self.config[SWITCHABLE];
@@ -439,7 +439,13 @@ KISSY.add("switchable-autoplay", function(S) {
                 self.paused = true;
             });
             Event.on(self.container, "mouseleave", function() {
-                self.paused = false;
+                // 假设 interval 为 10s
+                // 在 8s 时，通过 focus 主动触发切换，停留 1s 后，鼠标移出
+                // 这时如果不 setTimeout, 再过 1s 后，主动触发的 panel 将被替换掉
+                // 为了保证每个 panel 的显示时间都不小于 interval, 此处加上 setTimeout
+                setTimeout(function() {
+                    self.paused = false;
+                }, cfg.interval * 1000);
             });
         }
 
