@@ -1,0 +1,88 @@
+/* 清除浮动 */
+.clearfix:after {
+    content: '\0020';
+    display: block;
+    height: 0;
+    clear: both;
+}
+.clearfix { *zoom: 1; }
+.hidden {display:none;}
+
+/*--日历--*/
+.c-call {background:white;height:auto;border:1px solid #9bc0e0;font-size:12px;font-family:Tahoma;}
+.c-call.multi-1 {width:189px !important;}
+.c-call.multi-2 {width:380px !important;_width:373px}
+.c-call.multi-3 {width:568px !important;_width:560px}
+.c-call {-moz-box-shadow: 2px 2px 0px #ccc;-webkit-box-shadow:2px 2px 0px #ccc;-khtml-box-shadow:2px 2px 0px #ccc;-ms-box-shadow:2px 2px 0px #ccc;}
+.c-call .c-box {margin:4px;_margin:4px 2px;height:auto;width:auto;float:left;*padding-bottom:5px;_padding-bottom:3px;position:relative;}
+.c-call .c-hd {background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') repeat-x 0 -41px; width:181px;height:24px;background-color:#40a6ff;position:relative;}
+.c-call .c-hd a {}
+.c-call .c-hd a.prev {overflow:hidden;text-indent:-100em;background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') no-repeat 0 4px; height:1;width:10px;float:left;position:absolute;left:3px;top:3px;/*background-color:red;*/font-size:10px;text-decoration:none;color:white;}
+.c-call .c-hd a.next {overflow:hidden;text-indent:-100em;background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') no-repeat 0 -15px; height:1;width:10px;position:absolute;right:3px;top:3px;/*background-color:red;*/font-size:10px;text-decoration:none;color:white;}
+
+.c-call .c-hd a.title,
+.c-call .c-hd a.title:link,
+.c-call .c-hd a.title:visited {color:white;text-decoration:none;position:relative;margin-left:auto;margin-right:auto;width:77px;height:17px;line-height:17px;display:block;top:3px;text-align:center;}
+.c-call .c-hd a.title:hover {border:1px solid #8cc6ff;top:2px;color:#f0ff00;background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') repeat-x 0 -75px;}
+
+
+.c-call .c-bd {width:181px;}
+.c-call .c-bd .whd {width:auto;height:19px;overflow:hidden;background-color:#cce7ff;margin-top:4px;*padding-left:2px;*width:179px;}
+.c-call .c-bd .whd span {float:left;width:25.857px;text-align:center;line-height:19px;}
+
+/*--hack for ff2 {{ --*/
+.c-call .c-bd .whd span, x:-moz-any-link {width:25px;}
+.c-call .c-bd .whd span, x:-moz-any-link, x:default {width:25.857px;}
+/*--hack for ff2 }} --*/
+
+.c-call .c-bd .dbd {width:181px;height:auto;background-color:white;margin-top:4px;*padding-left:2px;*width:179px;}
+.c-call .c-bd .dbd a,
+.c-call .c-bd .dbd a:link,
+.c-call .c-bd .dbd a:visited {color:#004499;float:left;width:25.857px;text-align:center;line-height:22px;text-decoration:none;}
+.c-call .c-bd .dbd a:hover {background-color:#ebf4fc;}
+
+/*--hack for ff2 {{ --*/
+.c-call .c-bd .dbd a, x:-moz-any-link {width:25px;}
+.c-call .c-bd .dbd a:link, x:-moz-any-link {width:25px;}
+.c-call .c-bd .dbd a:visited, x:-moz-any-link {width:25px;}
+.c-call .c-bd .dbd a,
+.c-call .c-bd .dbd a:link,
+.c-call .c-bd .dbd a:visited, x:-moz-any-link, x:default {width:25.857px;}
+/*--hack for ff2 }} --*/
+
+/*--日期的状态--*/
+.c-call .c-bd .dbd a.null,
+.c-call .c-bd .dbd a.null:link,
+.c-call .c-bd .dbd a.null:visited {background:white;color:white;cursor:default;}
+.c-call .c-bd .dbd a.today,
+.c-call .c-bd .dbd a.today:link,
+.c-call .c-bd .dbd a.today:visited {color:#ff6600;font-weight:bold;}
+.c-call .c-bd .dbd a.selected,
+.c-call .c-bd .dbd a.selected:link,
+.c-call .c-bd .dbd a.selected:visited {background-color:#cce7ff;}
+.c-call .c-bd .dbd a.disabled,
+.c-call .c-bd .dbd a.disabled:link,
+.c-call .c-bd .dbd a.disabled:visited{color:#8c8c8c;cursor:default;background-color:white;}
+.c-call .c-bd .dbd a.range,
+.c-call .c-bd .dbd a.range:link,
+.c-call .c-bd .dbd a.range:visited {background-color:#cce7ff;}
+
+.c-call .c-ft {text-align:center;width:181px;}
+.c-call .c-ft .c-time {line-height:25px;background-color:#e5e5e5;display:inline;padding:2px 5px;width:auto;}
+
+/*--时间列表--*/
+.c-timelist {position:absolute;height:auto;width:auto;_width:205px;border:1px solid #9bc0e0;background-color:#f2f2f2;z-index:100;}
+.c-timelist ul {width:50px;border-left:1px solid #9bc0e0;float:left;list-style:none;padding:0px;margin:5px 0px;}
+.c-timelist ul.first {border:0px !important;}
+.c-timelist ul li {text-align:center;float:left;width:100%;}
+
+.c-timelist ul li a,
+.c-timelist ul li a:link,
+.c-timelist ul li a:visited {line-height:18px;text-decoration:none;color:black;}
+.c-timelist ul li a:hover {background-color:#cce7f2;color:#004499;}
+
+/*--选择月份容器--*/
+.setime {position:absolute;left:0px;top:28px;right:0px;width:180px;background:#f2f2f2;border:1px solid #9bc0e0;text-align:center;vertical-align:middle;height:auto;padding-top:10px;padding-bottom:10px;}
+.setime p {height:30px;margin:0;padding:0;}
+.setime select,.setime input {width:80px;}
+
