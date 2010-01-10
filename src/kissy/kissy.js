@@ -227,7 +227,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
         merge: function() {
             var a = arguments, o = {}, i, l = a.length;
             for (i = 0; i < l; ++i) {
-                mix(o, a[i], true);
+                mix(o, a[i]);
             }
             return o;
         },
