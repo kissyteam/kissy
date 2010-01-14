@@ -1,9 +1,5 @@
 
 -----------------------
- TabView & SlideView
-  - 例子：淘宝礼物频道
-
------------------------
  Popup / Tooltips
  - JavaScript 浮动定位提示效果：http://bbs.51js.com/viewthread.php?tid=84690&extra=page%3D1
  - TinyBox http://www.leigeber.com/2009/05/javascript-popup-box/
@@ -11,5 +7,24 @@
 
  ----------------------
  ~ inputHint 组件
+
+ ----------------------
+  2010.1.14
+
+  API 思考
+  沙箱思考
+  页面内文件组织思考
+  重构 kissy 核心架构
+  dom
+  event
+  anim
+  重构 switchable
+  重构 datalazyload
+  port TBra 其它组件
+  再次思考，整理成《Thinking-of-KISSY》, 完善《淘宝前端架构》
+  calendar 组件
+  拖拽组件
+  图片上传
+  整理TBra 2.1
 
 -- EOF --
