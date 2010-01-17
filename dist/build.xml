@@ -1,0 +1,50 @@
+<project name="dist.build" default="build" basedir=".">
+    <description>Dist Build File</description>
+
+    <import file="../tools/build.xml"/>
+
+    <property name="src.dir" location="."/>
+    <property name="component.name" value="dist"/>
+    <property name="component.files" value="*.css, *.js"/>
+
+    <target name="pre-clean">
+        <delete>
+            <fileset dir="." includes="${component.files}"/>
+        </delete>
+    </target>
+
+    <target name="concat">
+        <concat destfile="reset-grids.css" encoding="${charset}" outputencoding="${charset}">
+            <path path="../src/cssreset/reset.css"/>
+            <path path="../src/cssgrids/grids.css"/>
+        </concat>
+        <concat destfile="base.css" encoding="${charset}" outputencoding="${charset}">
+            <path path="../src/cssreset/reset.css"/>
+            <path path="../src/cssgrids/grids.css"/>
+            <path path="../src/csscommon/common.css"/>
+        </concat>
+        <concat destfile="kissy-widgets.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="../src/widget/widget.js"/>
+            <path path="../src/widget-switchable/switchable.js"/>
+            <path path="../src/widget-switchable/plugin-autoplay.js"/>
+            <path path="../src/widget-switchable/plugin-effect.js"/>
+            <path path="../src/widget-switchable/plugin-circular.js"/>
+            <path path="../src/widget-switchable/plugin-lazyload.js"/>
+            <path path="../src/widget-switchable/tabs.js"/>
+            <path path="../src/widget-switchable/slide.js"/>
+            <path path="../src/widget-switchable/carousel.js"/>
+            <path path="../src/megamenu/megamenu.js"/>
+            <path path="../src/suggest/suggest.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <copy todir=".">
+            <fileset dir="${build.dir}/${component.name}" includes="${component.files}"/>
+        </copy>
+        <delete dir="${build.dir}/${component.name}"/>
+    </target>
+
+    <target name="build" depends="pre-clean,concat,common.build,clean">
+    </target>
+</project>
