@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0dev
 MIT Licensed
-build: 410 Jan 17 12:44
+build: 413 Jan 17 21:04
 */
 KISSY.add("megamenu",function(e){function d(a,b){var c=this;if(!(c instanceof d))return new d(a,b);b=e.merge(k,b||{});d.superclass.constructor.call(c,a,b);c.switchable(c.config);c.config=c.config[h];c.config[h]=c.config;c._init()}var i=YAHOO.util,j=i.Dom,f=i.Event,g=YAHOO.lang,h="switchable",k={hideDelay:0.5,viewCls:"ks-megamenu-view",closeBtnCls:"ks-megamenu-closebtn",showCloseBtn:true,activeIndex:-1};e.extend(d,e.Widget);e.mix(d.prototype,{_init:function(){var a=this;a._initView();a.config.showCloseBtn&&
 a._initCloseBtn()},_onFocusTrigger:function(a){var b=this;if(b.activeIndex!==a){b.switchTimer&&b.switchTimer.cancel();b.hideTimer&&b.hideTimer.cancel();b.switchTo(a)}},_onMouseEnterTrigger:function(a){var b=this;b.hideTimer&&b.hideTimer.cancel();b.switchTimer=g.later(b.config.delay*1E3,b,function(){b.switchTo(a)})},_onMouseLeaveTrigger:function(){var a=this;a.switchTimer&&a.switchTimer.cancel();a.hideTimer=g.later(a.config.hideDelay*1E3,a,function(){a.hide()})},_initView:function(){var a=this,b=a.config,

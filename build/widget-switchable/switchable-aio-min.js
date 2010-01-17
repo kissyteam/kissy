@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0dev
 MIT Licensed
-build: 410 Jan 17 12:44
+build: 413 Jan 17 21:04
 */
 KISSY.add("switchable",function(g){function i(){}var o=YAHOO.util,n=o.Dom,h=o.Event,d=YAHOO.lang;i.Config={mackupType:0,navCls:"ks-switchable-nav",contentCls:"ks-switchable-content",triggerCls:"ks-switchable-trigger",panelCls:"ks-switchable-panel",triggers:[],panels:[],hasTriggers:true,triggerType:"mouse",delay:0.1,activeIndex:0,activeTriggerCls:"active",steps:1,viewSize:[]};g.Widget.prototype.switchable=function(a){var b=this;a=a||{};if(!("mackupType"in a))if(a.panelCls)a.mackupType=1;else if(a.panels)a.mackupType=
 2;b.config.switchable=g.merge(i.Config,a||{});b.triggers=b.triggers||[];b.panels=b.panels||[];if(typeof b.activeIndex==="undefined")b.activeIndex=b.config.switchable.activeIndex;g.mix(b,i.prototype,false);b._initSwitchable();return b};g.mix(i.prototype,{_initSwitchable:function(){var a=this,b=a.config.switchable;a.panels.length===0&&a._parseSwitchableMackup();a.createEvent("beforeSwitch");a.createEvent("onSwitch");b.hasTriggers&&a._bindTriggers()},_parseSwitchableMackup:function(){var a=this,b=a.container,

@@ -1,0 +1,30 @@
+<project name="cssreset-grids.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../../tools/build.xml"/>
+
+    <property name="component.name" value="cssreset-grids"/>
+    <property name="component.files" value="*.css, *.js"/>
+    <property name="src.dir" location="."/>
+    <property name="dest.file" value="reset-grids.css"/>
+
+    <target name="pre-clean">
+        <delete>
+            <fileset dir="." includes="${component.files}"/>
+        </delete>
+    </target>
+
+    <target name="concat">
+        <concat destfile="${dest.file}" encoding="${charset}" outputencoding="${charset}">
+            <path path="../cssreset/reset-min.css"/>
+            <path path="../cssgrids/grids-min.css"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="${dest.file}"/>
+    </target>
+
+    <target name="build" depends="pre-clean,concat,compress,copyright,clean">
+    </target>
+</project>
