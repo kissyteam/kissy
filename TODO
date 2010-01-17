@@ -1,4 +1,27 @@
 
+ ----------------------
+  2010Q1
+
+  API 思考 - 细节上，借鉴 jQuery 的简洁易用风格；整体设计上，考虑类似 YUI3 的严谨组织
+  沙箱思考 - 借鉴 YUI3 的沙箱体系，但去掉设计过度的部分
+  页面内文件组织思考 - 暂不考虑组件的动态加载
+
+  重构 kissy 核心架构
+  dom
+  event
+  anim
+
+  重构 switchable
+  重构 datalazyload
+  port TBra 其它组件
+  再次思考，整理成《Thinking-of-KISSY》, 完善《淘宝前端架构》
+
+  calendar 组件
+  拖拽组件
+  图片上传
+
+  整理TBra 2.1
+
 -----------------------
  Popup / Tooltips
  - JavaScript 浮动定位提示效果：http://bbs.51js.com/viewthread.php?tid=84690&extra=page%3D1
@@ -7,24 +30,3 @@
 
  ----------------------
  ~ inputHint 组件
-
- ----------------------
-  2010.1.14
-
-  API 思考
-  沙箱思考
-  页面内文件组织思考
-  重构 kissy 核心架构
-  dom
-  event
-  anim
-  重构 switchable
-  重构 datalazyload
-  port TBra 其它组件
-  再次思考，整理成《Thinking-of-KISSY》, 完善《淘宝前端架构》
-  calendar 组件
-  拖拽组件
-  图片上传
-  整理TBra 2.1
-
--- EOF --
