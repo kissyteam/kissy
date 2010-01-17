@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <project name="editor.build" default="build" basedir=".">
     <description>Component Build File</description>
 
-    <import file="../build.xml"/>
+    <import file="../../tools/build.xml"/>
 
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
@@ -58,9 +57,9 @@
 
     <target name="aio.concat">
         <concat destfile="editor-aio.js" encoding="${charset}" outputencoding="${charset}">
-           <path path="${lib.dir}/yui2/yahoo-dom-event/yahoo-dom-event.js"/>
-           <path path="${lib.dir}/yui2/json/json-min.js"/>
-           <path path="${lib.dir}/yui2/connection/connection-min.js"/>
+           <path path="${third-party.dir}/yui2/yahoo-dom-event/yahoo-dom-event.js"/>
+           <path path="${third-party.dir}/yui2/json/json-min.js"/>
+           <path path="${third-party.dir}/yui2/connection/connection-min.js"/>
            <path path="editor.js"/>
         </concat>
     </target>

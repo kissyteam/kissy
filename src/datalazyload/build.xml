@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <project name="datalazyload.build" default="build" basedir=".">
     <description>Component Build File</description>
 
-    <import file="../build.xml"/>
+    <import file="../../tools/build.xml"/>
 
     <property file="build.properties"/>
     <property name="src.dir" location="."/>

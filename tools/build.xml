@@ -1,11 +1,10 @@
 <project name="common-build" basedir=".">
     <description>Common Build File</description>
 
-    <property name="root.dir" location="${ant.file.common-build}/../"/>
+    <dirname property="tools.dir" file="${ant.file.common-build}"/>
+    <property name="root.dir" location="${tools.dir}/../"/>
     <property name="build.dir" location="${root.dir}/build/"/>
-    <property name="third-party.dir" location="${root.dir}/third-party.dir/"/>
-    <property name="tools.dir" location="${root.dir}/tools/"/>
-
+    <property name="third-party.dir" location="${root.dir}/third-party/"/>
     <property name="version" value="1.0dev"/>
     <property name="charset" value="GB18030"/>
 
@@ -64,10 +63,11 @@
         <delete dir="${build.dir}/${component.name}/tmp"/>
     </target>
 
-    <!-- 给文件加上版权信息 -->
+    <!-- 替换版本信息以及给文件加上版权信息 -->
     <target name="copyright">
         <tstamp>
-            <format property="build.time" pattern="yyyy-MM-dd HH:mm:ss"/>
+            <format property="build.time" pattern="MMM d HH:mm" locale="en,UK"/>
+            <format property="build.year" pattern="yyyy"/>
         </tstamp>
         <svn>
             <wcVersion path="${root.dir}" prefix="svn."/>
@@ -84,18 +84,14 @@
             <sequential>
                 <concat destfile="@{file}.tmp" encoding="${charset}" outputencoding="${charset}">
                     <header filtering="no" trimleading="yes">/*
-                        KISSY JavaScript Library v${version}
-                        http://kissy.googlecode.com/
-                        
-                        Copyright 2010, Taobao UED
-                        MIT Licensed.
-
-                        Date: ${build.time}
-                        Revision: ${svn.revision.max}
+                        Copyright ${build.year}, KISSY UI Library v${version}
+                        MIT Licensed
+                        build: ${svn.revision.max} ${build.time}
                         */
                     </header>
                     <fileset file="@{file}" />
                 </concat>
+                <replaceregexp match="@VERSION@" replace="${version}" flags="g" byline="true" file="@{file}.tmp" />
                 <move file="@{file}.tmp" tofile="@{file}"/>
             </sequential>
         </for>
