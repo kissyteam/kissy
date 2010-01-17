@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0dev
 MIT Licensed
-build: 413 Jan 17 21:04
+build: 416 Jan 17 22:28
 */
 if(typeof KISSY==="undefined"||!KISSY){function KISSY(m){var h=this;if(!(h instanceof KISSY))return new KISSY(m);h._init();h._config(m);h._setup();return h}}
 (function(m,h,p){var q=Array.prototype.slice,i=function(a,c,b,e){if(!c||!a)return a;if(b===p)b=true;var f,d,g;if(e&&(g=e.length))for(f=0;f<g;f++){d=e[f];if(d in c)if(b||!(d in a))a[d]=c[d]}else for(d in c)if(b||!(d in a))a[d]=c[d];return a};i(h.prototype,{add:function(a,c,b,e){h.Env.mods[a]={name:a,fn:c,version:b,details:e||{}};return this},_init:function(){var a=this;a.version="1.0dev";a.Env={mods:{},_used:{},_attached:{}};a.Config={debug:true}},_config:function(a){i(this.Config,a)},_setup:function(){this.use("kissy-core")},
