@@ -1,9 +1,6 @@
 /*
-Copyright (c) 2010, Kissy UI Library. All rights reserved.
-MIT Licensed.
-http://kissy.googlecode.com/
-
-Date: 2009-12-30 15:58:52
-Revision: 383
+Copyright 2010, KISSY UI Library v1.0dev
+MIT Licensed
+build: 410 Jan 17 12:44
 */
-KISSY.add("widget",function(a){function b(c,e){var d=this;if(!(d instanceof b)){return new b(c,e)}d.container=YAHOO.util.Dom.get(c);d.config=e||{}}a.Widget=b});
+KISSY.add("widget",function(e){function a(c,d){var b=this;if(!(b instanceof a))return new a(c,d);b.container=YAHOO.util.Dom.get(c);b.config=d||{}}e.Widget=a});

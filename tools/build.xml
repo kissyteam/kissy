@@ -42,6 +42,8 @@
             <arg line="-jar"/>
             <arg path="${tools.dir}/closure-compiler.jar"/>
             <arg line="--charset ${charset}"/>
+            <arg value="--warning_level" />
+            <arg value="QUIET" />
             <arg value="--js"/>
             <srcfile/>
             <arg value="--js_output_file"/>

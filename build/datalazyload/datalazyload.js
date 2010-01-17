@@ -1,10 +1,7 @@
 /*
-Copyright (c) 2010, Kissy UI Library. All rights reserved.
-MIT Licensed.
-http://kissy.googlecode.com/
-
-Date: 2009-12-31 11:24:06
-Revision: 391
+Copyright 2010, KISSY UI Library v1.0dev
+MIT Licensed
+build: 410 Jan 17 12:43
 */
 /**
  * 数据延迟加载组件

@@ -1,10 +1,7 @@
 /*
-Copyright (c) 2010, Kissy UI Library. All rights reserved.
-MIT Licensed.
-http://kissy.googlecode.com/
-
-Date: 2010-01-03 21:56:25
-Revision: 393
+Copyright 2010, KISSY UI Library v1.0dev
+MIT Licensed
+build: 410 Jan 17 12:44
 */
 /**
  * Switchable

@@ -1,10 +1,7 @@
 /*
-Copyright (c) 2010, Kissy UI Library. All rights reserved.
-MIT Licensed.
-http://kissy.googlecode.com/
-
-Date: 2009-12-30 15:58:45
-Revision: 383
+Copyright 2010, KISSY UI Library v1.0dev
+MIT Licensed
+build: 410 Jan 17 12:43
 */
 /**
  * @module kissy
@@ -19,9 +16,10 @@ if (typeof KISSY === "undefined" || !KISSY) {
      */
     function KISSY(c) {
         var o = this;
+
         // allow instantiation without the new operator
-        if (!(o instanceof arguments.callee)) {
-            return new arguments.callee(c);
+        if (!(o instanceof KISSY)) {
+            return new KISSY(c);
         }
 
         // init the core environment
@@ -35,12 +33,12 @@ if (typeof KISSY === "undefined" || !KISSY) {
     }
 }
 
-(function(S) {
+(function(win, S, undefined) {
 
-    var win = window, UNDEFINED = "undefined", slice = Array.prototype.slice,
+    var slice = Array.prototype.slice,
         mix = function(r, s, ov, wl) {
             if (!s || !r) return r;
-            if (typeof ov === UNDEFINED) ov = true;
+            if (ov === undefined) ov = true;
             var i, p, l;
 
             if (wl && (l = wl.length)) {
@@ -93,7 +91,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
          */
         _init: function() {
             var o = this;
-            o.version = "@VERSION@";
+            o.version = "1.0dev";
 
             o.Env = {
                 mods: {},
@@ -101,7 +99,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
                 _attached: {}
             };
 
-            o.config = {
+            o.Config = {
                 debug: true
             };
         },
@@ -111,7 +109,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
          * @private
          */
         _config: function(c) {
-            mix(this.config, c);
+            mix(this.Config, c);
         },
 
         /**
@@ -235,7 +233,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
         merge: function() {
             var a = arguments, o = {}, i, l = a.length;
             for (i = 0; i < l; ++i) {
-                mix(o, a[i], true);
+                mix(o, a[i]);
             }
             return o;
         },
@@ -335,8 +333,8 @@ if (typeof KISSY === "undefined" || !KISSY) {
 
             if (when === "before") arr.reverse();
             obj[sFn] = function() {
-                for (var i = 0, args = slice.call(arguments, 0); i < 2; i++) {
-                    arr[i].apply(this, args);
+                for (var i = 0; i < 2; i++) {
+                    arr[i].apply(this, arguments);
                 }
             };
 
@@ -399,11 +397,11 @@ if (typeof KISSY === "undefined" || !KISSY) {
          * @return {KISSY} KISSY instance
          */
         log: function(msg, cat, src) {
-            var c = this.config;
+            var c = this.Config;
 
             if (c.debug) {
                 src && (msg = src + ": " + msg);
-                if (typeof console !== UNDEFINED && console.log) {
+                if (win.console !== undefined && console.log) {
                     console[cat && console[cat] ? cat : "log"](msg);
                 }
             }
@@ -418,4 +416,4 @@ if (typeof KISSY === "undefined" || !KISSY) {
     mix(S, S.prototype); // TODO: white list?
     S._init();
 
-})(KISSY);
+})(window, KISSY);

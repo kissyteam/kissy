@@ -2,8 +2,8 @@
 
 cd ../src
 for /F %%f in ('dir build.xml /b /s') do (
-	echo %%~pf
-	REM call c:\ourtools\ant\bin\ant.bat
+	cd %%~pf
+	call c:\ourtools\ant\bin\ant.bat
 )
 
 pause
