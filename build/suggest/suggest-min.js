@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0dev
 MIT Licensed
-build: 416 Jan 17 22:28
+build: 417 Jan 17 22:31
 */
 KISSY.add("suggest",function(m){m.Suggest=KISSY.Suggest?KISSY.Suggest:(KISSY.Suggest=function(){function i(a,b,c){if(!(this instanceof arguments.callee))return new arguments.callee(a,b,c);this.textInput=f.get(a);this.dataSource=b;this.JSONDataSource=g.isObject(b)?b:null;this.returnedData=null;this.config=g.merge(p,c||{});this.container=null;this.queryParams=this.query="";this._timer=null;this._isRunning=false;this.dataScript=null;this._dataCache={};this._latestScriptTime="";this._onKeyboardSelecting=
 this._scriptDataIsOut=false;this.selectedItem=null;this._init()}var n=YAHOO.util,f=n.Dom,h=n.Event,g=YAHOO.lang,l=window,d=document,o=d.getElementsByTagName("head")[0],k=YAHOO.env.ua.ie,p={containerClass:"",containerWidth:"auto",resultFormat:"\u7ea6%result%\u6761\u7ed3\u679c",showCloseBtn:false,closeBtnText:"\u5173\u95ed",useShim:k===6,timerDelay:200,autoFocus:false,submitFormOnClickSelect:true};m.mix(i.prototype,{_init:function(){this._initTextInput();this._initContainer();this.config.useShim&&this._initShim();this._initStyle();

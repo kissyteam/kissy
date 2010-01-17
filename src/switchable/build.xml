@@ -8,14 +8,14 @@
 
     <target name="concat">
         <concat destfile="switchable-aio.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../widget-switchable/switchable.js"/>
-            <path path="../widget-switchable/plugin-autoplay.js"/>
-            <path path="../widget-switchable/plugin-effect.js"/>
-            <path path="../widget-switchable/plugin-circular.js"/>
-            <path path="../widget-switchable/plugin-lazyload.js"/>
-            <path path="../widget-switchable/tabs.js"/>
-            <path path="../widget-switchable/slide.js"/>
-            <path path="../widget-switchable/carousel.js"/>
+            <path path="switchable.js"/>
+            <path path="plugin-autoplay.js"/>
+            <path path="plugin-effect.js"/>
+            <path path="plugin-circular.js"/>
+            <path path="plugin-lazyload.js"/>
+            <path path="tabs.js"/>
+            <path path="slide.js"/>
+            <path path="carousel.js"/>
         </concat>
     </target>
 
