@@ -7,90 +7,83 @@
 
     // If KISSY is already defined, the existing KISSY object will not
     // be overwritten so that defined namespaces are preserved.
-    if(S === undefined || !S) S = {};
+    if (S === undefined || !S) S = {};
 
-    var slice = Array.prototype.slice,
-        mix = function(r, s, ov, wl) {
-            if (!s || !r) return r;
-            if (ov === undefined) ov = true;
-            var i, p, l;
+    function mix(r, s, ov, wl) {
+        if (!s || !r) return r;
+        if (ov === undefined) ov = true;
+        var i, p, l;
 
-            if (wl && (l = wl.length)) {
-                for (i = 0; i < l; i++) {
-                    p = wl[i];
-                    if (p in s) {
-                        if (ov || !(p in r)) {
-                            r[p] = s[p];
-                        }
-                    }
-                }
-            } else {
-                for (p in s) {
+        if (wl && (l = wl.length)) {
+            for (i = 0; i < l; i++) {
+                p = wl[i];
+                if (p in s) {
                     if (ov || !(p in r)) {
                         r[p] = s[p];
                     }
                 }
             }
-
-            return r;
-        };
+        } else {
+            for (p in s) {
+                if (ov || !(p in r)) {
+                    r[p] = s[p];
+                }
+            }
+        }
+        return r;
+    }
 
     mix(S, {
 
         /**
-         * Initialize KISSY object
+         * The version of the library
+         * @type {string}
+         */
+        version: "@VERSION@",
+
+        /**
+         * Initializes KISSY object
          * @private
          */
         _init: function() {
-            S.version = "@VERSION@";
-
-            S.Env = {
+            this.Env = {
                 mods: {}
             };
 
-            S.Config = {
+            this.Config = {
                 debug: true
             };
         },
 
         /**
-         * Register a module
+         * Registers a module
          * @param name {string} module name
          * @param fn {function} entry point into the module that is used to bind module to KISSY
          * <pre>
          * KISSY.add("module-name", function(S, $){ });
          * </pre>
+         * @return {KISSY}
          */
         add: function(name, fn) {
-            // register
-            S.Env.mods[name] = {
+            var self = this;
+
+            // override mode
+            self.Env.mods[name] = {
                 name: name,
                 fn: fn
             };
 
             // call entry point
-            fn(S, S.Node);
+            fn(self, self.Node);
 
-            return S; // chain support
+            return self; // chain support
         },
 
         /**
-         * Call a function
-         * <pre>
-         * KISSY.call(function(S, $){ });
-         * </pre>
-         */
-        call: function(fn) {
-            // pass S and S.Node to fn
-            fn(S, S.Node);
-            return S;
-        },
-
-        /**
-         * Adds fn to domready event
+         * Adds function to domready event.
          */
         ready: function(/*fn*/) {
-          // TODO
+            // TODO
         },
 
         /**
