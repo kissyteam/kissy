@@ -1,34 +1,13 @@
 /**
  * @module kissy
- * @creator lifesinger@gmail.com
+ * @author lifesinger@gmail.com
  */
 
-if (typeof KISSY === "undefined" || !KISSY) {
-    /**
-     * The KISSY global object.
-     * @constructor
-     * @global
-     */
-    function KISSY(c) {
-        var o = this;
-
-        // allow instantiation without the new operator
-        if (!(o instanceof KISSY)) {
-            return new KISSY(c);
-        }
-
-        // init the core environment
-        o._init();
-        o._config(c);
-
-        // bind the specified additional modules for this instance
-        o._setup();
-
-        return o;
-    }
-}
-
 (function(win, S, undefined) {
+
+    // If KISSY is already defined, the existing KISSY object will not
+    // be overwritten so that defined namespaces are preserved.
+    if(S === undefined || !S) S = {};
 
     var slice = Array.prototype.slice,
         mix = function(r, s, ov, wl) {
@@ -56,160 +35,62 @@ if (typeof KISSY === "undefined" || !KISSY) {
             return r;
         };
 
-    mix(S.prototype, {
+    mix(S, {
 
         /**
-         * Register a module
-         * @param name {string} module name
-         * @param fn {function} entry point into the module that is used to bind module to the KISSY instance
-         * @param version {string} version string
-         * @param details optional config data:
-         * submodules - sub modules
-         * requires - features that should be present before loading
-         * optional - optional features that should be present if load optional defined
-         * use - features that should be attached automatically
-         * @return {KISSY} the KISSY instance
-         */
-        add: function(name, fn, version, details) {
-            S.Env.mods[name] = {
-                name: name,
-                fn: fn,
-                version: version,
-                details: details || {}
-            };
-            return this; // chain support
-        },
-
-        /**
-         * Initialize this KISSY instance
+         * Initialize KISSY object
          * @private
          */
         _init: function() {
-            var o = this;
-            o.version = "@VERSION@";
+            S.version = "@VERSION@";
 
-            o.Env = {
-                mods: {},
-                _used: {},
-                _attached: {}
+            S.Env = {
+                mods: {}
             };
 
-            o.Config = {
+            S.Config = {
                 debug: true
             };
         },
 
         /**
-         * Initialize this config
-         * @private
-         */
-        _config: function(c) {
-            mix(this.Config, c);
-        },
-
-        /**
-         * Attaches whatever modules were defined when the instance was created.
-         * @private
-         */
-        _setup: function() {
-            this.use("kissy-core");
-        },
-
-        /**
-         * Bind a module to a KISSY instance
+         * Register a module
+         * @param name {string} module name
+         * @param fn {function} entry point into the module that is used to bind module to KISSY
          * <pre>
-         * KISSY().use("*", function(S){});
-         * KISSY().use("editor", function(S){});
-         * KISSY().use(function(S){});
+         * KISSY.add("module-name", function(S, $){ });
          * </pre>
-         * @return {KISSY} the KISSY instance
          */
-        use: function() {
-            var o = this,
-                a = slice.call(arguments, 0),
-                mods = S.Env.mods,
-                used = o.Env._used,
-                l = a.length,
-                callback = a[l - 1],
-                i, k, name, r = [];
+        add: function(name, fn) {
+            // register
+            S.Env.mods[name] = {
+                name: name,
+                fn: fn
+            };
 
-            // the last argument is callback
-            if (typeof callback === "function") {
-                a.pop();
-            } else {
-                callback = null;
-            }
+            // call entry point
+            fn(S, S.Node);
 
-            // bind everything available
-            if (a[0] === "*") {
-                a = [];
-                for (k in mods) {
-                    a.push(k);
-                }
-                if (callback) {
-                    a.push(callback);
-                }
-                return o.use.apply(o, a);
-            }
-
-            // process each module
-            function f(name) {
-                // only attach a module once
-                if (used[name]) return;
-
-                var m = mods[name], j, n, subs;
-
-                if (m) {
-                    used[name] = true;
-                    subs = m.details.submodules;
-                }
-
-                // add this module to full list of things to attach
-                r.push(name);
-
-                // make sure submodules are attached
-                if (subs) {
-                    if (typeof subs === "string") subs = [subs];
-                    for (j = 0, n = subs.length; j < n; j++) {
-                        f(subs[j]);
-                    }
-                }
-            }
-
-            for (i = 0; i < l; i++) {
-                f(a[i]);
-            }
-
-            // attach available modules
-            o._attach(r);
-
-            // callback
-            if (callback) {
-                callback(o);
-            }
-
-            // chain support
-            return o;
+            return S; // chain support
         },
 
         /**
-         * Attaches modules to a KISSY instance
+         * Call a function
+         * <pre>
+         * KISSY.call(function(S, $){ });
+         * </pre>
          */
-        _attach: function(r) {
-            var mods = S.Env.mods,
-                attached = this.Env._attached,
-                i, l = r.length, name, m;
+        call: function(fn) {
+            // pass S and S.Node to fn
+            fn(S, S.Node);
+            return S;
+        },
 
-            for (i = 0; i < l; i++) {
-                name = r[i];
-                m = mods[name];
-                if (!attached[name] && m) {
-                    attached[name] = true;
-                    if (m.fn) {
-                        m.fn(this);
-                    }
-                }
-            }
+        /**
+         * Adds fn to domready event
+         */
+        ready: function(/*fn*/) {
+          // TODO
         },
 
         /**
@@ -310,13 +191,6 @@ if (typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * Adds fn to domready event
-         */
-        ready: function(/*fn*/) {
-          // TODO
-        },
-
-        /**
          * Execute the supplied method after the specified function
          * @param fn {Function} the function to execute
          * @param when {string} before or after
@@ -369,8 +243,6 @@ if (typeof KISSY === "undefined" || !KISSY) {
          */
         namespace: function() {
             var a = arguments, l = a.length, o = this, i, j, p;
-            // allow instance.namespace() to work fine.
-            if (typeof o === "object") o = o.constructor;
 
             for (i = 0; i < l; i++) {
                 p = ("" + a[i]).split(".");
@@ -405,10 +277,7 @@ if (typeof KISSY === "undefined" || !KISSY) {
         }
     });
 
-    // Give the KISSY global the same properties as an instance.
-    // More importantly, the KISSY global provides global metadata,
-    // so env needs to be configured.
-    mix(S, S.prototype); // TODO: white list?
+    // initialize KISSY
     S._init();
 
-})(window, KISSY);
+})(window, window.KISSY);
