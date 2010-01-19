@@ -7,7 +7,10 @@
 
     // If KISSY is already defined, the existing KISSY object will not
     // be overwritten so that defined namespaces are preserved.
-    if (S === undefined || !S) S = {};
+    if (win[S] === undefined) win[S] = {};
+
+    // shortcut
+    S = win[S];
 
     function mix(r, s, ov, wl) {
         if (!s || !r) return r;
@@ -36,13 +39,13 @@
     mix(S, {
 
         /**
-         * The version of the library
+         * The version of the library.
          * @type {string}
          */
         version: "@VERSION@",
 
         /**
-         * Initializes KISSY object
+         * Initializes KISSY object.
          * @private
          */
         _init: function() {
@@ -56,11 +59,11 @@
         },
 
         /**
-         * Registers a module
+         * Registers a module.
          * @param name {string} module name
          * @param fn {function} entry point into the module that is used to bind module to KISSY
          * <pre>
-         * KISSY.add("module-name", function(S, $){ });
+         * KISSY.add("module-name", function(S){ });
          * </pre>
          * @return {KISSY}
          */
@@ -73,35 +76,43 @@
                 fn: fn
             };
 
-            // call entry point
-            fn(self, self.Node);
+            // call entry point immediately
+            fn(self);
 
-            return self; // chain support
+            // chain support
+            return self;
         },
 
         /**
-         * Adds function to domready event.
+         * Specify a function to execute when the DOM is fully loaded.
+         * @type {function} fn A function to execute after the DOM is ready
+         * <pre>
+         * KISSY.ready(function(S){ });
+         * </pre>
+         * @return {KISSY}
          */
         ready: function(/*fn*/) {
             // TODO
+
+            return this;
         },
 
         /**
-         * Copies all the properties of s to r. overwrite mode.
+         * Copies all the properties of s to r.
          * @return {object} the augmented object
          */
         mix: mix,
 
         /**
          * Returns a new object containing all of the properties of
-         * all the supplied objects.  The properties from later objects
-         * will overwrite those in earlier objects.  Passing in a
+         * all the supplied objects. The properties from later objects
+         * will overwrite those in earlier objects. Passing in a
          * single object will create a shallow copy of it.
          * @return {object} the new merged object
          */
         merge: function() {
             var a = arguments, o = {}, i, l = a.length;
-            for (i = 0; i < l; ++i) {
+            for (i = 0; i < l; i++) {
                 mix(o, a[i]);
             }
             return o;
@@ -111,25 +122,21 @@
          * Utility to set up the prototype, constructor and superclass properties to
          * support an inheritance strategy that can chain constructors and methods.
          * Static members will not be inherited.
-         *
-         * @method extend
-         * @param {Function} r the object to modify
-         * @param {Function} s the object to inherit
-         * @param {Object} px prototype properties to add/override
-         * @param {Object} sx static properties to add/override
-         * @return {KISSY} the KISSY instance
+         * @param {function} r the object to modify
+         * @param {function} s the object to inherit
+         * @param {object} px prototype properties to add/override
+         * @param {object} sx static properties to add/override
+         * @return {object} r
          */
         extend: function(r, s, px, sx) {
             if (!s || !r) return r;
 
             var OP = Object.prototype,
                 O = function (o) {
-                    function F() {
-                    }
-
-                    F.prototype = o;
-                    return new F();
-                },
+                        function F() { }
+                        F.prototype = o;
+                        return new F();
+                    },
                 sp = s.prototype,
                 rp = O(sp);
 
@@ -270,7 +277,6 @@
         }
     });
 
-    // initialize KISSY
     S._init();
 
-})(window, window.KISSY);
+})(window, "KISSY");

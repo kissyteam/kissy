@@ -1,113 +1,209 @@
 <!doctype html>
 <html>
 <head>
-<title>KISSY Tests</title>
+<meta charset="gbk"/>
+<title>Test</title>
+<script>
+    var doc = document,
+        get = function(id) {
+            return typeof id === 'string' ? doc.getElementById(id) : id;
+        },
+        now = function() {
+            return new Date().getTime();
+        },
+        fix = function(val) {
+          return val < 10 ? '0' + val : val;
+        },
+        timeStamp = function() {
+            var d = new Date();
+            return fix(d.getHours()) + ':' + fix(d.getMinutes()) + ':' + fix(d.getSeconds());
+        },
+        tests = [],
+        log, hidepasses, times, wl,
+        konsole = {
+            init: function() {
+                log = get('log');
+                hidepasses = get('hidepasses').checked;
+                times = get('times').value;
+                wl = get('wl').value;
+            },
+            time: function (test) {
+                test.startTime = now();
+            },
+            timeEnd: function (test) {
+                test.tookTime = now() - test.startTime;
+            },
+            log: function (test) {
+                var status = test.status || 'passed',
+                        msg;
 
-<script src="../../third-party/yui3/yui-min.js"></script>
-<script src="../../third-party/yui3/test-combo.js"></script>
-<link rel="stylesheet" href="../../third-party/yui3/test-combo.css" />
+                msg = '<span class="' + status + '">';
+                msg += timeStamp() + '  ';
+                msg += test.name + ': ';
+                msg += test.tookTime + 'ms ';
+                if (test.extraMsg) msg += test.extraMsg + ' ';
+                msg += '[' + status.toUpperCase() + ']';
+                msg += '</span>';
 
-<script src="kissy.js"></script>
+                log.innerHTML += msg + '<br />';
+                log.scrollTop = log.scrollHeight;
+            }
+        };
+
+    // Adds test case
+    tests.add = function(name, fn) {
+        tests.push({
+            'name': name,
+            'fn': function() {
+                fn.call(this);
+            },
+            'fail': function(msg) {
+                this.status = 'failed';
+                this.extraMsg = msg || '';
+            }
+        });
+        return tests;
+    };
+
+    // Starts tests
+    function start() {
+        konsole.init();
+
+        var len = tests.length, test, i, j;
+        times = times || 1;
+        wl = wl || '';
+
+        log.innerHTML += timeStamp() + '  Start<br />';
+        for (i = 0; i < len; i++) {
+            test = tests[i];
+            if (wl && wl.indexOf(test.name) === -1) continue;
+            if (hidepasses && !test.status) continue;
+
+            j = times;
+            konsole.time(test);
+            while (j--) test.fn();
+            konsole.timeEnd(test);
+            konsole.log(test);
+        }
+        log.innerHTML += timeStamp() + '  Done<hr />';
+    }
+</script>
+<style type="text/css">
+    body {
+        margin: 0;
+        padding: 15px;
+        font-size: 12px;
+        line-height: 20px;
+        font-family: Verdana, Arial, sans-serif;
+    }
+
+    #konsole {
+        border: 1px solid #999;
+        background-color: #eee;
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    #log {
+        color: #666;
+        border: 1px solid #999;
+        background-color: #fff;
+        padding: 5px;
+        height: 312px;
+        overflow-x: auto;
+        overflow-y: scroll;
+        font: 14px / 16px "Courier New", Courier, monospace;
+        white-space: pre-wrap;
+    }
+
+    .passed {
+        color: darkgreen;
+    }
+
+    .failed {
+        color: #900;
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px dotted #ccc;
+        margin: 3px 0;
+        color: #fff;
+    }
+
+    button {
+        padding: 2px 20px;
+    }
+
+    #settings {
+        padding: 10px;
+        line-height: 25px;
+    }
+</style>
 </head>
-
-<body class="yui-skin-sam">
-<h1>KISSY Tests</h1>
-<p><input type="button" value="Run Tests" id="btnRun" disabled="true"/></p>
+<body>
+<form onsubmit="return false" action="">
+    <button type="button" onclick="start()">Start</button>
+    <div id="konsole">
+        <div id="log"></div>
+    </div>
+    <div id="settings">
+        Settings:<br/>
+        <input type="checkbox" id="hidepasses" name="hidepasses"/>
+        <label for="hidepasses">Hide passes</label><br/>
+        <input type="text" value="1" id="times" size="4"/>
+        <label for="times">Iteration times for each test function</label><br/>
+        <input type="text" value="" id="wl" size="12"/>
+        <label for="wl">The whitelist of test names</label>
+    </div>
+</form>
 
 <script>
-YUI().use("dump", "test", "console", "event-custom", function(Y) {
-
-    var button = Y.get('#btnRun'), Assert = Y.Assert;
-
-    // Set up the page
-    button.set("disabled", false);
-    Y.on("click", function() { Y.Test.Runner.run(); }, button);
-
-    // define testCase
-    var testNamespace = new Y.Test.Case({
-
-        name: "Core tests",
-
-        test_use: function() {
-
-            // test sandbox
-            var s1 = KISSY().use();
-            var s2 = KISSY().use();
-            Assert.areNotSame(s1, s2);
-
-            // test sandbox independence
-            var d1, d2;
-            YUI().use("dom", function(Y) {
-                d1 = Y.DOM;
-            });
-            YUI().use("dom", function(Y) {
-                d2 = Y.DOM;
-            });
-            Assert.areNotSame(d1, d2);
-        },
-
-        test_cloneTo: function() {
-            var S = KISSY;
-
-            // inherit properties from KISSY
-            S.cloneTo("Test");
-            Assert.areSame(Test.mix, S.mix);
-            Assert.areSame(Test.prototype.mix, S.prototype.mix);
-
-            // instanceof work fine
-            S.cloneTo("Test2");
-            Assert.areEqual(new Test2() instanceof Test2, true);
-            Assert.areEqual(new Test2() instanceof KISSY, true);
-
-            // doesn't affect each other
-            S.cloneTo("TB");
-            TB.name = "taobao";
-            S.cloneTo("KB");
-            KB.name = "koubei";
-            Assert.areNotEqual(TB.name, KB.name);
-        },
-
-        test_namespace: function() {
-
-            function run(o, s, host) {
-                var ns, actual;
-
-                // normal
-                ns = o.namespace("app.Test");
-                actual = s + ".app.Test.name";
-                ns.name = actual;
-                Assert.areEqual(host.app.Test.name, actual);
-
-                // first part of argument is the global object
-                ns = o.namespace(s + ".app2.Test2");
-                actual = s + ".app2.Test2.name";
-                ns.name = actual;
-                Assert.areEqual(host.app2.Test2.name, actual);
-
-                // via cloned global object
-                o.cloneTo("TB");
-                ns = TB.namespace("app3.Test3");
-                actual = "TB.app3.Test3.name";
-                ns.name = actual;
-                Assert.areEqual(TB.app3.Test3.name, actual);
-            }
-
-            // via constructor
-            run(KISSY, "KISSY", KISSY);
-
-            // via instance
-            KISSY().use(function(S) {
-                run(S, "KISSY", KISSY);
-            });
-        }
-
+    window.KISSY = {test: 'test'};
+</script>
+<script src="kissy.js"></script>
+<script>
+    
+    tests.add('testPreserve', function() {
+        if (!KISSY.test) this.fail();
     });
 
-    // run
-    new Y.Console().render();
-    Y.Test.Runner.add(testNamespace);
-    Y.Test.Runner.run();
-});
+    tests.add('testAdd', function() {
+        KISSY.add('test-mod', function(S) {
+           S.TestMod = { prop: 1 };
+        });
+
+        if(!KISSY.TestMod.prop) this.fail();
+        if(KISSY.Env.mods['test-mod'].name !== 'test-mod') this.fail();
+    });
+
+    tests.add('testMix', function() {
+        var S = KISSY,
+            o1 = { a: 1, b: 2 },
+            o3 = { a: 1, b: 2 },
+            o4 = { a: 1, b: 2 },
+            o2 = { a: 'a', c: true };
+
+        S.mix(o1, o2);
+        S.mix(o3, o2, false);
+        S.mix(o4, o2, true, ['c']);
+
+        if(o1.a !== 'a') this.fail();
+        if(o3.a !== 1) this.fail();
+        if(o4.a !== 1) this.fail();
+    });
+
+    tests.add('testMerge', function() {
+        var S = KISSY,
+            o1 = { a: 1, b: 2 },
+            o2 = { a: 'a', c: true },
+            o3;
+
+        o3 = S.merge(o1, o2);
+
+        if(o3.a !== 'a') this.fail();
+    });
+
 </script>
 </body>
 </html>
