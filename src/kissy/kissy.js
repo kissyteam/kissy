@@ -42,7 +42,7 @@
          * The version of the library.
          * @type {string}
          */
-        version: "@VERSION@",
+        version: '@VERSION@',
 
         /**
          * Initializes KISSY object.
@@ -60,8 +60,8 @@
 
         /**
          * Registers a module.
-         * @param name {string} module name
-         * @param fn {function} entry point into the module that is used to bind module to KISSY
+         * @param {string} name module name
+         * @param {function} fn entry point into the module that is used to bind module to KISSY
          * <pre>
          * KISSY.add("module-name", function(S){ });
          * </pre>
@@ -85,13 +85,13 @@
 
         /**
          * Specify a function to execute when the DOM is fully loaded.
-         * @type {function} fn A function to execute after the DOM is ready
+         * @param {function} fn A function to execute after the DOM is ready
          * <pre>
          * KISSY.ready(function(S){ });
          * </pre>
          * @return {KISSY}
          */
-        ready: function(/*fn*/) {
+        ready: function(fn) {
             // TODO
 
             return this;
@@ -164,10 +164,9 @@
 
         /**
          * Applies prototype properties from the supplier to the receiver.
-         * The receiver must be a Function.
-         * @param {Function} r  the object to receive the augmentation
-         * @param {Function} s  the object that supplies the properties to augment
-         * @param wl {string[]} a whitelist.  If supplied, only properties in this list will be applied to the receiver.
+         * @param {function} r  the object to receive the augmentation
+         * @param {function} s  the object that supplies the properties to augment
+         * @param {string[]} wl a whitelist
          * @return {object} the augmented object
          */
         augment: function(r, s, ov, wl) {
@@ -175,12 +174,31 @@
         },
 
         /**
+         * Execute the supplied method after the specified function.
+         * @param {function} fn the function to execute
+         * @param {string} when before or after
+         * @param {object} obj the object hosting the method to displace
+         * @param {string} sFn the name of the method to displace
+         */
+        weave: function(fn, when, obj, sFn) {
+            var arr = [obj[sFn], fn];
+            if (when === 'before') arr.reverse();
+
+            obj[sFn] = function() {
+                for (var i = 0, ret; i < 2; i++) {
+                    ret = arr[i].apply(this, arguments);
+                }
+                return ret;
+            };
+            return this;
+        },
+
+        /**
          * Executes the supplied function on each item in the array.
-         * @method each
-         * @param arr {Array} the array to iterate
-         * @param fn {Function} the function to execute on each item.  The
-         * function receives three arguments: the value, the index, the full array.
-         * @param obj Optional context object
+         * @param {array} arr the array to iterate
+         * @param {function} fn the function to execute on each item. The function
+         * receives three arguments: the value, the index, the full array.
+         * @param {object} obj optional context object
          */
         each: function (arr, fn, obj) {
             var l = (arr && arr.length) || 0, i;
@@ -191,64 +209,39 @@
         },
 
         /**
-         * Execute the supplied method after the specified function
-         * @param fn {Function} the function to execute
-         * @param when {string} before or after
-         * @param obj the object hosting the method to displace
-         * @param sFn {string} the name of the method to displace
-         */
-        weave: function(fn, when, obj, sFn) {
-            var arr = [obj[sFn], fn];
-
-            if (when === "before") arr.reverse();
-            obj[sFn] = function() {
-                for (var i = 0; i < 2; i++) {
-                    arr[i].apply(this, arguments);
-                }
-            };
-
-            return this;
-        },
-
-        /**
          * Clones KISSY to another global object.
          * <pre>
-         * S.cloneTo("TaoBao");
+         * S.cloneTo('TB');
          * </pre>
-         * @return {object}  A reference to the last object
+         * @return {object}  A reference to the clone object
          */
         cloneTo: function(name) {
-            function O(c) {
-                // allow instantiation without the new operator
-                if (!(this instanceof O)) {
-                    return new O(c);
-                }
-                O.superclass.constructor.call(this, c);
-            }
-
-            S.extend(O, S, null, S);
+            var O = win[name] || {};
+            mix(O, this);
+            O._init();
             return (win[name] = O);
         },
 
         /**
-         * Returns the namespace specified and creates it if it doesn't exist
-         * Be careful when naming packages. Reserved words may work in some browsers
-         * and not others.
+         * Returns the namespace specified and creates it if it doesn't exist. Be careful
+         * when naming packages. Reserved words may work in some browsers and not others.
          * <pre>
-         * S.cloneTo("TB");
-         * TB.namespace("TB.app"); // returns TB.app
-         * TB.namespace("app.Shop"); // returns TB.app.Shop
+         * S.namespace('KISSY.app'); // returns KISSY.app
+         * S.namespace('app.Shop'); // returns KISSY.app.Shop
+         * S.cloneTo('TB');
+         * TB.namespace('TB.app'); // returns TB.app
+         * TB.namespace('app.Shop'); // returns TB.app.Shop
          * </pre>
          * @return {object}  A reference to the last namespace object created
          */
         namespace: function() {
-            var a = arguments, l = a.length, o = this, i, j, p;
+            var a = arguments, l = a.length, o = null, i, j, p;
 
             for (i = 0; i < l; i++) {
-                p = ("" + a[i]).split(".");
+                p = ('' + a[i]).split('.');
+                o = this;
                 for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; j++) {
-                    o[p[j]] = o[p[j]] || {};
-                    o = o[p[j]];
+                    o = o[p[j]] = o[p[j]] || {};
                 }
             }
             return o;
@@ -279,4 +272,4 @@
 
     S._init();
 
-})(window, "KISSY");
+})(window, 'KISSY');

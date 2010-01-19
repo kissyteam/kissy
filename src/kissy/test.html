@@ -65,9 +65,18 @@
         return tests;
     };
 
+    // Resets tests
+    tests.reset = function() {
+      for(var i = 0, n = tests.length; i < n; i++) {
+          tests[i].status = '';
+          tests[i].extraMsg = '';
+      }
+    };
+
     // Starts tests
     function start() {
         konsole.init();
+        tests.reset();
 
         var len = tests.length, test, i, j;
         times = times || 1;
@@ -164,11 +173,11 @@
 <script src="kissy.js"></script>
 <script>
     
-    tests.add('testPreserve', function() {
+    tests.add('test_preserve', function() {
         if (!KISSY.test) this.fail();
     });
 
-    tests.add('testAdd', function() {
+    tests.add('test_add', function() {
         KISSY.add('test-mod', function(S) {
            S.TestMod = { prop: 1 };
         });
@@ -177,7 +186,7 @@
         if(KISSY.Env.mods['test-mod'].name !== 'test-mod') this.fail();
     });
 
-    tests.add('testMix', function() {
+    tests.add('test_mix', function() {
         var S = KISSY,
             o1 = { a: 1, b: 2 },
             o3 = { a: 1, b: 2 },
@@ -193,15 +202,129 @@
         if(o4.a !== 1) this.fail();
     });
 
-    tests.add('testMerge', function() {
+    tests.add('test_merge', function() {
         var S = KISSY,
-            o1 = { a: 1, b: 2 },
-            o2 = { a: 'a', c: true },
-            o3;
+            a = {
+                'bool' : false,
+                'num'  : 0,
+                'nul'  : null,
+                'undef': undefined,
+                'T'    : 'blabber'
+            },
+            b = {
+                'bool' : 'oops',
+                'num'  : 'oops',
+                'nul'  : 'oops',
+                'undef': 'oops',
+                'T'    : 'oops'
+            };
 
-        o3 = S.merge(o1, o2);
+        var c = S.merge(a, b);
 
-        if(o3.a !== 'a') this.fail();
+        if(c.bool !== 'oops') this.fail();
+        if(c.num !== 'oops') this.fail();
+        if(c.nul !== 'oops') this.fail();
+        if(c.undef !== 'oops') this.fail();
+        if(c.T !== 'oops') this.fail();
+    });
+
+    tests.add('test_extend', function() {
+        var S = KISSY;
+
+        function Bird(name) {
+            this.name = name;
+        }
+        Bird.prototype = {
+            getName: function() {
+                return this.name;
+            }
+        };
+
+        function Chicken(name) {
+            Chicken.superclass.constructor.call(this, name);
+        }
+        S.extend(Chicken, Bird);
+
+        var chicken = new Chicken('Tom');
+
+        if(chicken.getName() !== 'Tom') this.fail();
+    });
+
+    tests.add('test_augment', function() {
+        var S = KISSY;
+
+        function Bird(name) {
+            this.name = name;
+        }
+        Bird.prototype = {
+            getName: function() {
+                return this.name;
+            },
+            fly: function() {
+            }
+        };
+
+        function Pig(name) {
+            this.name = name;
+        }
+        S.augment(Pig, Bird);
+
+        var pig = new Pig('Babi');
+
+        if(!pig.fly) this.fail();
+    });
+
+    tests.add('test_weave', function() {
+        var S = KISSY;
+
+        function Bird(name) {
+            this.name = name;
+        }
+        Bird.prototype = {
+            getName: function() {
+                return this.name;
+            }
+        };
+
+        S.weave(function() {
+            this.name = 'Hacked ' + this.name;
+        }, 'before', Bird.prototype, 'getName');
+
+        var bird = new Bird('Bird');
+        if(bird.getName() !== 'Hacked Bird') this.fail(bird.getName());
+    });
+
+    tests.add('test_each', function() {
+        var S = KISSY, ret = 0;
+
+        S.each([1,2,3,4,5], function(num) {
+            ret += num;
+        });
+
+        if(ret !== 15) this.fail();
+    });
+
+    tests.add('test_namespace', function() {
+        var S = KISSY, ns, actual;
+
+        // normal
+        ns = S.namespace('app.Test');
+        ns.name = 'foo1';
+        if(S.app.Test.name !== 'foo1') this.fail();
+
+        // first part of argument is the global object
+        ns = S.namespace('KISSY.app2.Test2');
+        ns.name = 'foo2';
+        if(S.app2.Test2.name !== 'foo2') this.fail();
+
+        // via cloned global object
+        S.cloneTo('TB');
+        ns = TB.namespace('app3.Test3');
+        ns.name = 'foo3';
+        if(TB.app3.Test3.name !== 'foo3') this.fail();
+
+        // empty arguments
+        if(S.namespace() !== null) this.fail();
     });
 
 </script>
