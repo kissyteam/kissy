@@ -8,33 +8,43 @@
     // If KISSY is already defined, the existing KISSY object will not
     // be overwritten so that defined namespaces are preserved.
     if (win[S] === undefined) win[S] = {};
+    S = win[S]; // shortcut
 
-    // shortcut
-    S = win[S];
+    var doc = win.document,
 
-    function mix(r, s, ov, wl) {
-        if (!s || !r) return r;
-        if (ov === undefined) ov = true;
-        var i, p, l;
+        // Copies all the properties of s to r.
+        mix = function(r, s, ov, wl) {
+            if (!s || !r) return r;
+            if (ov === undefined) ov = true;
+            var i, p, l;
 
-        if (wl && (l = wl.length)) {
-            for (i = 0; i < l; i++) {
-                p = wl[i];
-                if (p in s) {
+            if (wl && (l = wl.length)) {
+                for (i = 0; i < l; i++) {
+                    p = wl[i];
+                    if (p in s) {
+                        if (ov || !(p in r)) {
+                            r[p] = s[p];
+                        }
+                    }
+                }
+            } else {
+                for (p in s) {
                     if (ov || !(p in r)) {
                         r[p] = s[p];
                     }
                 }
             }
-        } else {
-            for (p in s) {
-                if (ov || !(p in r)) {
-                    r[p] = s[p];
-                }
-            }
-        }
-        return r;
-    }
+            return r;
+        },
+
+        // Is the DOM ready to be used? Set to true once it occurs.
+        isReady = false,
+
+        // The functions to execute on DOM ready.
+        readyList = [],
+
+        // Has the ready events already been bound?
+        readyBound = false;
 
     mix(S, {
 
@@ -92,9 +102,82 @@
          * @return {KISSY}
          */
         ready: function(fn) {
-            // TODO
+            // Attach the listeners
+            if (!readyBound) this._bindReady();
+
+            // If the DOM is already ready
+            if (isReady) {
+                // Execute the function immediately
+                fn.call(win, this);
+            } else {
+                // Remember the function for later
+                readyList.push(fn);
+            }
 
             return this;
+        },
+
+        /**
+         * Binds ready events.
+         */
+        _bindReady: function() {
+            var self = this,
+                doScroll = doc.documentElement.doScroll,
+                eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded';
+
+            // Set to true once it runs
+            readyBound = true;
+
+            // IE event model is used
+            if (doScroll) {
+                if (win != win.top) { // iframe
+                    function stateChange() {
+                        if (doc.readyState === 'complete') {
+                            // remove onreadystatechange listener
+                            doc.detachEvent(eventType, stateChange);
+                            self._fireReady();
+                        }
+                    }
+                    doc.attachEvent(eventType, stateChange);
+                } else {
+                    function readyScroll() {
+                        try {
+                            // Ref: http://javascript.nwbox.com/IEContentLoaded/
+                            doScroll('left');
+                            self._fireReady();
+                        } catch(ex) {
+                            setTimeout(readyScroll, 1);
+                        }
+                    }
+                    readyScroll();
+                }
+            } else { // w3c mode
+                function domReady() {
+                    doc.removeEventListener(eventType, domReady, false);
+                    self._fireReady();
+                }
+                doc.addEventListener(eventType, domReady, false);
+            }
+        },
+
+        /**
+         * Executes functions bound to ready event.
+         */
+        _fireReady: function() {
+            // Remember that the DOM is ready
+            isReady = true;
+
+            // If there are functions bound, to execute
+            if (readyList) {
+                // Execute all of them
+                var fn, i = 0;
+                while (fn = readyList[i++]) {
+                    fn.call(win, this);
+                }
+
+                // Reset the list of functions
+                readyList = null;
+            }
         },
 
         /**
@@ -133,10 +216,12 @@
 
             var OP = Object.prototype,
                 O = function (o) {
-                        function F() { }
-                        F.prototype = o;
-                        return new F();
-                    },
+                    function F() {
+                    }
+
+                    F.prototype = o;
+                    return new F();
+                },
                 sp = s.prototype,
                 rp = O(sp);
 
@@ -194,21 +279,6 @@
         },
 
         /**
-         * Executes the supplied function on each item in the array.
-         * @param {array} arr the array to iterate
-         * @param {function} fn the function to execute on each item. The function
-         * receives three arguments: the value, the index, the full array.
-         * @param {object} obj optional context object
-         */
-        each: function (arr, fn, obj) {
-            var l = (arr && arr.length) || 0, i;
-            for (i = 0; i < l; i++) {
-                fn.call(obj || this, arr[i], i, arr);
-            }
-            return this;
-        },
-
-        /**
          * Clones KISSY to another global object.
          * <pre>
          * S.cloneTo('TB');
@@ -248,6 +318,21 @@
                 }
             }
             return o;
+        },
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * @param {array} arr the array to iterate
+         * @param {function} fn the function to execute on each item. The function
+         * receives three arguments: the value, the index, the full array.
+         * @param {object} obj optional context object
+         */
+        each: function (arr, fn, obj) {
+            var l = (arr && arr.length) || 0, i;
+            for (i = 0; i < l; i++) {
+                fn.call(obj || this, arr[i], i, arr);
+            }
+            return this;
         },
 
         /**

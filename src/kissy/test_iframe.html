@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>Test iframe</title>
+</head>
+<body>
+<script src="kissy.js"></script>
+<script>
+    var S = KISSY, readyTime, loadTime,
+        now = function() {
+            return new Date().getTime();
+        };
+
+    S.ready(function() {
+        readyTime = now();
+        S.log('iframe readTime = ' + readyTime);
+    });
+
+    window.onload = function() {
+        loadTime = now();
+        S.log('iframe loadTime = ' + loadTime);
+    }
+</script>
+<img src="http://farm3.static.flickr.com/2749/4128820868_20048e09c8.jpg" alt="test image"/>
+</body>
+</html>
