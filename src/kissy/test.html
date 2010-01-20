@@ -36,6 +36,7 @@
             echo: function(msg, br) {
                 if (br === undefined) br = '<br />';
                 log.innerHTML += msg + br;
+                log.scrollTop = log.scrollHeight;
             },
             log: function (test) {
                 var status = test.status || 'passed',
@@ -50,7 +51,6 @@
                 msg += '</span>';
 
                 this.echo(msg);
-                log.scrollTop = log.scrollHeight;
             }
         };
 
