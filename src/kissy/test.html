@@ -33,19 +33,23 @@
             timeEnd: function (test) {
                 test.tookTime = now() - test.startTime;
             },
+            echo: function(msg, br) {
+                if (br === undefined) br = '<br />';
+                log.innerHTML += msg + br;
+            },
             log: function (test) {
                 var status = test.status || 'passed',
-                        msg;
+                    msg;
 
                 msg = '<span class="' + status + '">';
                 msg += timeStamp() + '  ';
+                msg += '[' + status.toUpperCase() + '] ';
                 msg += test.name + ': ';
                 msg += test.tookTime + 'ms ';
-                if (test.extraMsg) msg += test.extraMsg + ' ';
-                msg += '[' + status.toUpperCase() + ']';
+                if (test.extraMsg) msg += test.extraMsg;
                 msg += '</span>';
 
-                log.innerHTML += msg + '<br />';
+                this.echo(msg);
                 log.scrollTop = log.scrollHeight;
             }
         };
@@ -82,7 +86,7 @@
         times = times || 1;
         wl = wl || '';
 
-        log.innerHTML += timeStamp() + '  Start<br />';
+        konsole.echo(timeStamp() + '  Start');
         for (i = 0; i < len; i++) {
             test = tests[i];
             if (wl && wl.indexOf(test.name) === -1) continue;
@@ -94,7 +98,7 @@
             konsole.timeEnd(test);
             konsole.log(test);
         }
-        log.innerHTML += timeStamp() + '  Done<hr />';
+        konsole.echo(timeStamp() + '  Done', '<hr />');
     }
 </script>
 <style type="text/css">
@@ -168,22 +172,39 @@
 </form>
 
 <script>
-    window.KISSY = {test: 'test'};
+    var firstRun = true;
+    window.KISSY = {test: 'ks-test-prop'};
+
+    function removeArrayItem(fn, arr) {
+        var ret = [];
+        for(var i = 0, len = arr.length; i < len; i++) {
+            if(!fn(arr[i], i, arr)) ret.push(arr[i]);
+        }
+        return ret;
+    }
 </script>
 <script src="kissy.js"></script>
 <script>
     
     tests.add('test_preserve', function() {
-        if (!KISSY.test) this.fail();
+        if(firstRun) { // only check in first Run
+            if (!KISSY.test) this.fail();
+            delete KISSY.test; // clear
+            firstRun = false;
+        }
     });
 
     tests.add('test_add', function() {
-        KISSY.add('test-mod', function(S) {
+        KISSY.add('test-ks-mod', function(S) {
            S.TestMod = { prop: 1 };
         });
 
         if(!KISSY.TestMod.prop) this.fail();
-        if(KISSY.Env.mods['test-mod'].name !== 'test-mod') this.fail();
+        if(KISSY.Env.mods['test-ks-mod'].name !== 'test-ks-mod') this.fail();
+
+        // clear
+        delete KISSY.TestMod;
+        delete KISSY.Env.mods['test-ks-mod'];
     });
 
     tests.add('test_mix', function() {
@@ -304,8 +325,35 @@
         if(ret !== 15) this.fail();
     });
 
+    tests.add('test_cloneTo', function() {
+        var S = KISSY;
+        S.cloneTo('TB');
+
+        // check static members
+        if(TB.mix !== S.mix) this.fail();
+        if(TB.cloneTo !== S.cloneTo) this.fail();
+
+        // check Env and Config
+        if(!TB.Env.mods) this.fail();
+        if(TB.Config.debug !== true) this.fail();
+
+        // check independence
+        TB.test = 2;
+        if(S.test === 2) this.fail();
+        TB.Config.debug = false;
+        if(S.Config.debug !== true) this.fail();
+
+        // test add modules
+        TB.add('test-tb-mod', function() { });
+        if(!TB.Env.mods['test-tb-mod']) this.fail();
+        if(S.Env.mods['test-tb-mod']) this.fail();
+
+        // clear
+        window.TB = undefined;
+    });
+
     tests.add('test_namespace', function() {
-        var S = KISSY, ns, actual;
+        var S = KISSY, ns;
 
         // normal
         ns = S.namespace('app.Test');
@@ -325,6 +373,27 @@
 
         // empty arguments
         if(S.namespace() !== null) this.fail();
+
+        // clear
+        delete S.app;
+        delete S.app2;
+        window.TB = undefined;
+    });
+
+    tests.add('test_log', function() {
+        var S = KISSY;
+
+        S.add('test-ks-mod', function() { });
+        S.log(S, 'dir');
+
+        S.cloneTo('TB');
+        TB.add('test-tb-mod', function() { });
+        TB.Config.debug = false;
+        S.log(TB, 'dir');
+
+        // clear
+        //delete S.Env.mods['test-ks-mod'];
+        //window.TB = undefined;
     });
 
 </script>

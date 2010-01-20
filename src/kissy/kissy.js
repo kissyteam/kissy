@@ -63,7 +63,7 @@
          * @param {string} name module name
          * @param {function} fn entry point into the module that is used to bind module to KISSY
          * <pre>
-         * KISSY.add("module-name", function(S){ });
+         * KISSY.add('module-name', function(S){ });
          * </pre>
          * @return {KISSY}
          */
@@ -217,8 +217,11 @@
          */
         cloneTo: function(name) {
             var O = win[name] || {};
+
             mix(O, this);
             O._init();
+            mix(O.Env.mods, this.Env.mods);
+
             return (win[name] = O);
         },
 
@@ -248,21 +251,20 @@
         },
 
         /**
-         * print debug info
-         * @param {String} msg The message to log.
-         * @param {String} cat The log category for the message. Default
-         * categories are "info", "warn", "error", time".
-         * Custom categories can be used as well. (opt)
-         * @param {String} src The source of the the message (opt)
-         * @return {KISSY} KISSY instance
+         * Prints debug info.
+         * @param {string} msg The message to log.
+         * @param {string} cat The log category for the message. Default
+         * categories are "info", "warn", "error", time" etc.
+         * @param {string} src The source of the the message (opt)
+         * @return {KISSY}
          */
         log: function(msg, cat, src) {
             var c = this.Config;
 
             if (c.debug) {
-                src && (msg = src + ": " + msg);
+                src && (msg = src + ': ' + msg);
                 if (win.console !== undefined && console.log) {
-                    console[cat && console[cat] ? cat : "log"](msg);
+                    console[cat && console[cat] ? cat : 'log'](msg);
                 }
             }
 
