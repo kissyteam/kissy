@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v0.9dev
 MIT Licensed
-build: 430 Jan 21 14:10
+build: 431 Jan 21 14:17
 */
 /**
  * @module kissy
@@ -413,17 +413,17 @@ build: 430 Jan 21 14:10
  * NOTES
  *
  * 2010-01-21:
- *  - 基于简单够用(2/8原则)原则，去掉了对 YUI3 沙箱的模拟（模拟版本备份：archives/2009 r402）
+ *  - 考虑简单够用和 2/8 原则，去掉了对 YUI3 沙箱的模拟（archives/2009 r402）
  *
- *  - add 方法决定内部代码的组织方式
+ *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 组织代码）
  *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱
- *  - mix, merge, extend, augment, weave 方法，决定了类库组件的基本实现方式，充分
- *    利用 mixin 特性和 prototype 方式来实现代码
+ *  - mix, merge, extend, augment, weave 方法，决定了类库代码的基本实现方式，
+ *    充分利用 mixin 特性和 prototype 方式来实现代码
  *  - cloneTo, namespace 方法，决定子库的实现和代码的整体组织
- *  - each, indexOf, trim 方法，对原生 JS 的两个补充
+ *  - each, indexOf, trim 方法，对原生 JS 的增强
  *  - log 方法，简单的调试工具
  * 
  *  - 考虑性能，each, indexOf, trim 尽可能用原生方法
- *  - 考虑简单够用原则，去掉 indexOf 对 fromIndex 的支持
+ *  - 考虑简单够用，去掉 indexOf 对 fromIndex 的支持
  *
  */
