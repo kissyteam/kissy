@@ -238,6 +238,29 @@
         if(ret !== 15) test.fail();
     }
 
+    function test_indexOf(test) {
+        var S = KISSY, a, ret;
+
+        ret = S.indexOf(6, [1, 2, 3, 4, 5]);
+        if(ret !== -1) test.fail('S.indexOf(6, [1, 2, 3, 4, 5]) = ' + ret);
+
+        ret = S.indexOf(a, [1, 2, 3, 4, undefined]);
+        if(ret === -1) test.fail('S.indexOf(a, [1, 2, 3, 4, undefined]) = ' + ret);
+
+        ret = S.indexOf(2, [1, 2, 3, 4, 5]);
+        if(ret === -1) test.fail('S.indexOf(2, [1, 2, 3, 4, 5]) = ' + ret);
+
+        ret = S.indexOf({}, [1, 2, {}, 4, 5]);
+        if(ret !== -1) test.fail('S.indexOf({}, [1, 2, {}, 4, 5]) = ' + ret);
+    }
+
+    function test_trim(test) {
+        var S = KISSY,
+            str = '    lots of spaces before and after    ';
+
+        if(S.trim(str) !== 'lots of spaces before and after') test.fail();
+    }
+
     function test_log(test) {
         var S = KISSY;
 

@@ -11,6 +11,10 @@
     S = win[S]; // shortcut
 
     var doc = win.document,
+        AP = Array.prototype,
+        forEach = AP.forEach,
+        indexOf = AP.indexOf,
+        REG_TRIM = /^\s+|\s+$/g,
 
         // Copies all the properties of s to r.
         mix = function(r, s, ov, wl) {
@@ -333,13 +337,46 @@
          * receives three arguments: the value, the index, the full array.
          * @param {object} obj optional context object
          */
-        each: function (arr, fn, obj) {
-            var l = (arr && arr.length) || 0, i;
-            for (i = 0; i < l; i++) {
-                fn.call(obj || this, arr[i], i, arr);
-            }
-            return this;
-        },
+        each: forEach ?
+              function (arr, fn, obj) {
+                  forEach.call(arr, fn, obj);
+                  return this;
+              } :
+              function(arr, fn, obj) {
+                  var l = (arr && arr.length) || 0, i;
+                  for (i = 0; i < l; i++) {
+                      fn.call(obj || this, arr[i], i, arr);
+                  }
+                  return this;
+              },
+
+        /**
+         * Report the index of some elements in the array.
+         */
+        indexOf: indexOf ?
+                 function(elem, arr) {
+                     return indexOf.call(arr, elem);
+                 } :
+                 function(elem, arr) {
+                     for (var i = 0, len = arr.length; i < len; i++) {
+                         if (arr[i] === elem) {
+                             return i;
+                         }
+                     }
+                     return -1;
+                 },
+
+        /**
+         * Remove the whitespace from the beginning and end of a string.
+         * @param {string} str
+         */
+        trim: String.prototype.trim ?
+              function(str) {
+                  return (str || '').trim();
+              } :
+              function(str) {
+                  return (str || '').replace(REG_TRIM, '');
+              },
 
         /**
          * Prints debug info.
@@ -366,3 +403,22 @@
     S._init();
 
 })(window, 'KISSY');
+
+/**
+ * NOTES
+ *
+ * 2010-01-21:
+ *  - 基于简单够用(2/8原则)原则，去掉了对 YUI3 沙箱的模拟（模拟版本备份：archives/2009 r402）
+ *
+ *  - add 方法决定内部代码的组织方式
+ *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱
+ *  - mix, merge, extend, augment, weave 方法，决定了类库组件的基本实现方式，充分
+ *    利用 mixin 特性和 prototype 方式来实现代码
+ *  - cloneTo, namespace 方法，决定子库的实现和代码的整体组织
+ *  - each, indexOf, trim 方法，对原生 JS 的两个补充
+ *  - log 方法，简单的调试工具
+ * 
+ *  - 考虑性能，each, indexOf, trim 尽可能用原生方法
+ *  - 考虑简单够用原则，去掉 indexOf 对 fromIndex 的支持
+ *
+ */

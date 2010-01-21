@@ -1,41 +1,27 @@
 /*
-Copyright 2010, KISSY UI Library v1.0dev
+Copyright 2010, KISSY UI Library v0.9dev
 MIT Licensed
-build: 417 Jan 17 22:31
+build: 430 Jan 21 14:10
 */
 /**
  * @module kissy
- * @creator lifesinger@gmail.com
+ * @author lifesinger@gmail.com
  */
-
-if (typeof KISSY === "undefined" || !KISSY) {
-    /**
-     * The KISSY global object.
-     * @constructor
-     * @global
-     */
-    function KISSY(c) {
-        var o = this;
-
-        // allow instantiation without the new operator
-        if (!(o instanceof KISSY)) {
-            return new KISSY(c);
-        }
-
-        // init the core environment
-        o._init();
-        o._config(c);
-
-        // bind the specified additional modules for this instance
-        o._setup();
-
-        return o;
-    }
-}
 
 (function(win, S, undefined) {
 
-    var slice = Array.prototype.slice,
+    // If KISSY is already defined, the existing KISSY object will not
+    // be overwritten so that defined namespaces are preserved.
+    if (win[S] === undefined) win[S] = {};
+    S = win[S]; // shortcut
+
+    var doc = win.document,
+        AP = Array.prototype,
+        forEach = AP.forEach,
+        indexOf = AP.indexOf,
+        REG_TRIM = /^\s+|\s+$/g,
+
+        // Copies all the properties of s to r.
         mix = function(r, s, ov, wl) {
             if (!s || !r) return r;
             if (ov === undefined) ov = true;
@@ -57,182 +43,174 @@ if (typeof KISSY === "undefined" || !KISSY) {
                     }
                 }
             }
-
             return r;
-        };
-
-    mix(S.prototype, {
-
-        /**
-         * Register a module
-         * @param name {string} module name
-         * @param fn {function} entry point into the module that is used to bind module to the KISSY instance
-         * @param version {string} version string
-         * @param details optional config data:
-         * submodules - sub modules
-         * requires - features that should be present before loading
-         * optional - optional features that should be present if load optional defined
-         * use - features that should be attached automatically
-         * @return {KISSY} the KISSY instance
-         */
-        add: function(name, fn, version, details) {
-            S.Env.mods[name] = {
-                name: name,
-                fn: fn,
-                version: version,
-                details: details || {}
-            };
-            return this; // chain support
         },
 
+        // Is the DOM ready to be used? Set to true once it occurs.
+        isReady = false,
+
+        // The functions to execute on DOM ready.
+        readyList = [],
+
+        // Has the ready events already been bound?
+        readyBound = false;
+
+    mix(S, {
+
         /**
-         * Initialize this KISSY instance
+         * The version of the library.
+         * @type {string}
+         */
+        version: '0.9dev',
+
+        /**
+         * Initializes KISSY object.
          * @private
          */
         _init: function() {
-            var o = this;
-            o.version = "1.0dev";
-
-            o.Env = {
-                mods: {},
-                _used: {},
-                _attached: {}
+            this.Env = {
+                mods: {}
             };
 
-            o.Config = {
+            this.Config = {
                 debug: true
             };
         },
 
         /**
-         * Initialize this config
-         * @private
-         */
-        _config: function(c) {
-            mix(this.Config, c);
-        },
-
-        /**
-         * Attaches whatever modules were defined when the instance was created.
-         * @private
-         */
-        _setup: function() {
-            this.use("kissy-core");
-        },
-
-        /**
-         * Bind a module to a KISSY instance
+         * Registers a module.
+         * @param {string} name module name
+         * @param {function} fn entry point into the module that is used to bind module to KISSY
          * <pre>
-         * KISSY().use("*", function(S){});
-         * KISSY().use("editor", function(S){});
-         * KISSY().use(function(S){});
+         * KISSY.add('module-name', function(S){ });
          * </pre>
-         * @return {KISSY} the KISSY instance
+         * @return {KISSY}
          */
-        use: function() {
-            var o = this,
-                a = slice.call(arguments, 0),
-                mods = S.Env.mods,
-                used = o.Env._used,
-                l = a.length,
-                callback = a[l - 1],
-                i, k, name, r = [];
+        add: function(name, fn) {
+            var self = this;
 
-            // the last argument is callback
-            if (typeof callback === "function") {
-                a.pop();
-            } else {
-                callback = null;
-            }
+            // override mode
+            self.Env.mods[name] = {
+                name: name,
+                fn: fn
+            };
 
-            // bind everything available
-            if (a[0] === "*") {
-                a = [];
-                for (k in mods) {
-                    a.push(k);
-                }
-                if (callback) {
-                    a.push(callback);
-                }
-                return o.use.apply(o, a);
-            }
-
-            // process each module
-            function f(name) {
-                // only attach a module once
-                if (used[name]) return;
-
-                var m = mods[name], j, n, subs;
-
-                if (m) {
-                    used[name] = true;
-                    subs = m.details.submodules;
-                }
-
-                // add this module to full list of things to attach
-                r.push(name);
-
-                // make sure submodules are attached
-                if (subs) {
-                    if (typeof subs === "string") subs = [subs];
-                    for (j = 0, n = subs.length; j < n; j++) {
-                        f(subs[j]);
-                    }
-                }
-            }
-
-            for (i = 0; i < l; i++) {
-                f(a[i]);
-            }
-
-            // attach available modules
-            o._attach(r);
-
-            // callback
-            if (callback) {
-                callback(o);
-            }
+            // call entry point immediately
+            fn(self);
 
             // chain support
-            return o;
+            return self;
         },
 
         /**
-         * Attaches modules to a KISSY instance
+         * Specify a function to execute when the DOM is fully loaded.
+         * @param {function} fn A function to execute after the DOM is ready
+         * <pre>
+         * KISSY.ready(function(S){ });
+         * </pre>
+         * @return {KISSY}
          */
-        _attach: function(r) {
-            var mods = S.Env.mods,
-                attached = this.Env._attached,
-                i, l = r.length, name, m;
+        ready: function(fn) {
+            // Attach the listeners
+            if (!readyBound) this._bindReady();
 
-            for (i = 0; i < l; i++) {
-                name = r[i];
-                m = mods[name];
-                if (!attached[name] && m) {
-                    attached[name] = true;
-                    if (m.fn) {
-                        m.fn(this);
+            // If the DOM is already ready
+            if (isReady) {
+                // Execute the function immediately
+                fn.call(win, this);
+            } else {
+                // Remember the function for later
+                readyList.push(fn);
+            }
+
+            return this;
+        },
+
+        /**
+         * Binds ready events.
+         */
+        _bindReady: function() {
+            var self = this,
+                doScroll = doc.documentElement.doScroll,
+                eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded';
+
+            // Set to true once it runs
+            readyBound = true;
+
+            // IE event model is used
+            if (doc.attachEvent) {
+                if (win != win.top) { // iframe
+                    function stateChange() {
+                        if (doc.readyState === 'complete') {
+                            // remove onreadystatechange listener
+                            doc.detachEvent(eventType, stateChange);
+                            self._fireReady();
+                        }
                     }
+                    doc.attachEvent(eventType, stateChange);
+                } else {
+                    function readyScroll() {
+                        try {
+                            // Ref: http://javascript.nwbox.com/IEContentLoaded/
+                            doScroll('left');
+                            self._fireReady();
+                        } catch(ex) {
+                            setTimeout(readyScroll, 1);
+                        }
+                    }
+                    readyScroll();
                 }
+
+                // A fallback to window.onload, that will always work.
+                win.attachEvent('onload', self._fireReady);
+                
+            } else { // w3c mode
+                function domReady() {
+                    doc.removeEventListener(eventType, domReady, false);
+                    self._fireReady();
+                }
+                doc.addEventListener(eventType, domReady, false);
             }
         },
 
         /**
-         * Copies all the properties of s to r. overwrite mode.
+         * Executes functions bound to ready event.
+         */
+        _fireReady: function() {
+            if(isReady) return;
+            
+            // Remember that the DOM is ready
+            isReady = true;
+
+            // If there are functions bound, to execute
+            if (readyList) {
+                // Execute all of them
+                var fn, i = 0;
+                while (fn = readyList[i++]) {
+                    fn.call(win, this);
+                }
+
+                // Reset the list of functions
+                readyList = null;
+            }
+        },
+
+        /**
+         * Copies all the properties of s to r.
          * @return {object} the augmented object
          */
         mix: mix,
 
         /**
          * Returns a new object containing all of the properties of
-         * all the supplied objects.  The properties from later objects
-         * will overwrite those in earlier objects.  Passing in a
+         * all the supplied objects. The properties from later objects
+         * will overwrite those in earlier objects. Passing in a
          * single object will create a shallow copy of it.
          * @return {object} the new merged object
          */
         merge: function() {
             var a = arguments, o = {}, i, l = a.length;
-            for (i = 0; i < l; ++i) {
+            for (i = 0; i < l; i++) {
                 mix(o, a[i]);
             }
             return o;
@@ -242,13 +220,11 @@ if (typeof KISSY === "undefined" || !KISSY) {
          * Utility to set up the prototype, constructor and superclass properties to
          * support an inheritance strategy that can chain constructors and methods.
          * Static members will not be inherited.
-         *
-         * @method extend
-         * @param {Function} r the object to modify
-         * @param {Function} s the object to inherit
-         * @param {Object} px prototype properties to add/override
-         * @param {Object} sx static properties to add/override
-         * @return {KISSY} the KISSY instance
+         * @param {function} r the object to modify
+         * @param {function} s the object to inherit
+         * @param {object} px prototype properties to add/override
+         * @param {object} sx static properties to add/override
+         * @return {object} r
          */
         extend: function(r, s, px, sx) {
             if (!s || !r) return r;
@@ -288,10 +264,9 @@ if (typeof KISSY === "undefined" || !KISSY) {
 
         /**
          * Applies prototype properties from the supplier to the receiver.
-         * The receiver must be a Function.
-         * @param {Function} r  the object to receive the augmentation
-         * @param {Function} s  the object that supplies the properties to augment
-         * @param wl {string[]} a whitelist.  If supplied, only properties in this list will be applied to the receiver.
+         * @param {function} r  the object to receive the augmentation
+         * @param {function} s  the object that supplies the properties to augment
+         * @param {string[]} wl a whitelist
          * @return {object} the augmented object
          */
         augment: function(r, s, ov, wl) {
@@ -299,110 +274,130 @@ if (typeof KISSY === "undefined" || !KISSY) {
         },
 
         /**
-         * Executes the supplied function on each item in the array.
-         * @method each
-         * @param arr {Array} the array to iterate
-         * @param fn {Function} the function to execute on each item.  The
-         * function receives three arguments: the value, the index, the full array.
-         * @param obj Optional context object
-         */
-        each: function (arr, fn, obj) {
-            var l = (arr && arr.length) || 0, i;
-            for (i = 0; i < l; i++) {
-                fn.call(obj || this, arr[i], i, arr);
-            }
-            return this;
-        },
-
-        /**
-         * Adds fn to domready event
-         */
-        ready: function(/*fn*/) {
-          // TODO
-        },
-
-        /**
-         * Execute the supplied method after the specified function
-         * @param fn {Function} the function to execute
-         * @param when {string} before or after
-         * @param obj the object hosting the method to displace
-         * @param sFn {string} the name of the method to displace
+         * Execute the supplied method after the specified function.
+         * @param {function} fn the function to execute
+         * @param {string} when before or after
+         * @param {object} obj the object hosting the method to displace
+         * @param {string} sFn the name of the method to displace
          */
         weave: function(fn, when, obj, sFn) {
             var arr = [obj[sFn], fn];
+            if (when === 'before') arr.reverse();
 
-            if (when === "before") arr.reverse();
             obj[sFn] = function() {
-                for (var i = 0; i < 2; i++) {
-                    arr[i].apply(this, arguments);
+                for (var i = 0, ret; i < 2; i++) {
+                    ret = arr[i].apply(this, arguments);
                 }
+                return ret;
             };
-
             return this;
         },
 
         /**
          * Clones KISSY to another global object.
          * <pre>
-         * S.cloneTo("TaoBao");
+         * S.cloneTo('TB');
          * </pre>
-         * @return {object}  A reference to the last object
+         * @return {object}  A reference to the clone object
          */
         cloneTo: function(name) {
-            function O(c) {
-                // allow instantiation without the new operator
-                if (!(this instanceof O)) {
-                    return new O(c);
-                }
-                O.superclass.constructor.call(this, c);
-            }
+            var O = win[name] || {};
 
-            S.extend(O, S, null, S);
+            mix(O, this);
+            O._init();
+            mix(O.Env.mods, this.Env.mods);
+
             return (win[name] = O);
         },
 
         /**
-         * Returns the namespace specified and creates it if it doesn't exist
-         * Be careful when naming packages. Reserved words may work in some browsers
-         * and not others.
+         * Returns the namespace specified and creates it if it doesn't exist. Be careful
+         * when naming packages. Reserved words may work in some browsers and not others.
          * <pre>
-         * S.cloneTo("TB");
-         * TB.namespace("TB.app"); // returns TB.app
-         * TB.namespace("app.Shop"); // returns TB.app.Shop
+         * S.namespace('KISSY.app'); // returns KISSY.app
+         * S.namespace('app.Shop'); // returns KISSY.app.Shop
+         * S.cloneTo('TB');
+         * TB.namespace('TB.app'); // returns TB.app
+         * TB.namespace('app.Shop'); // returns TB.app.Shop
          * </pre>
          * @return {object}  A reference to the last namespace object created
          */
         namespace: function() {
-            var a = arguments, l = a.length, o = this, i, j, p;
-            // allow instance.namespace() to work fine.
-            if (typeof o === "object") o = o.constructor;
+            var a = arguments, l = a.length, o = null, i, j, p;
 
             for (i = 0; i < l; i++) {
-                p = ("" + a[i]).split(".");
+                p = ('' + a[i]).split('.');
+                o = this;
                 for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; j++) {
-                    o[p[j]] = o[p[j]] || {};
-                    o = o[p[j]];
+                    o = o[p[j]] = o[p[j]] || {};
                 }
             }
             return o;
         },
 
         /**
-         * print debug info
-         * @param {String} msg The message to log.
-         * @param {String} cat The log category for the message. Default
-         * categories are "info", "warn", "error", time".
-         * Custom categories can be used as well. (opt)
-         * @param {String} src The source of the the message (opt)
-         * @return {KISSY} KISSY instance
+         * Executes the supplied function on each item in the array.
+         * @param {array} arr the array to iterate
+         * @param {function} fn the function to execute on each item. The function
+         * receives three arguments: the value, the index, the full array.
+         * @param {object} obj optional context object
+         */
+        each: forEach ?
+              function (arr, fn, obj) {
+                  forEach.call(arr, fn, obj);
+                  return this;
+              } :
+              function(arr, fn, obj) {
+                  var l = (arr && arr.length) || 0, i;
+                  for (i = 0; i < l; i++) {
+                      fn.call(obj || this, arr[i], i, arr);
+                  }
+                  return this;
+              },
+
+        /**
+         * Report the index of some elements in the array.
+         */
+        indexOf: indexOf ?
+                 function(elem, arr) {
+                     return indexOf.call(arr, elem);
+                 } :
+                 function(elem, arr) {
+                     for (var i = 0, len = arr.length; i < len; i++) {
+                         if (arr[i] === elem) {
+                             return i;
+                         }
+                     }
+                     return -1;
+                 },
+
+        /**
+         * Remove the whitespace from the beginning and end of a string.
+         * @param {string} str
+         */
+        trim: String.prototype.trim ?
+              function(str) {
+                  return (str || '').trim();
+              } :
+              function(str) {
+                  return (str || '').replace(REG_TRIM, '');
+              },
+
+        /**
+         * Prints debug info.
+         * @param {string} msg The message to log.
+         * @param {string} cat The log category for the message. Default
+         * categories are "info", "warn", "error", time" etc.
+         * @param {string} src The source of the the message (opt)
+         * @return {KISSY}
          */
         log: function(msg, cat, src) {
             var c = this.Config;
 
             if (c.debug) {
-                src && (msg = src + ": " + msg);
+                src && (msg = src + ': ' + msg);
                 if (win.console !== undefined && console.log) {
-                    console[cat && console[cat] ? cat : "log"](msg);
+                    console[cat && console[cat] ? cat : 'log'](msg);
                 }
             }
 
@@ -410,10 +405,25 @@ if (typeof KISSY === "undefined" || !KISSY) {
         }
     });
 
-    // Give the KISSY global the same properties as an instance.
-    // More importantly, the KISSY global provides global metadata,
-    // so env needs to be configured.
-    mix(S, S.prototype); // TODO: white list?
     S._init();
 
-})(window, KISSY);
+})(window, 'KISSY');
+
+/**
+ * NOTES
+ *
+ * 2010-01-21:
+ *  - 基于简单够用(2/8原则)原则，去掉了对 YUI3 沙箱的模拟（模拟版本备份：archives/2009 r402）
+ *
+ *  - add 方法决定内部代码的组织方式
+ *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱
+ *  - mix, merge, extend, augment, weave 方法，决定了类库组件的基本实现方式，充分
+ *    利用 mixin 特性和 prototype 方式来实现代码
+ *  - cloneTo, namespace 方法，决定子库的实现和代码的整体组织
+ *  - each, indexOf, trim 方法，对原生 JS 的两个补充
+ *  - log 方法，简单的调试工具
+ * 
+ *  - 考虑性能，each, indexOf, trim 尽可能用原生方法
+ *  - 考虑简单够用原则，去掉 indexOf 对 fromIndex 的支持
+ *
+ */
