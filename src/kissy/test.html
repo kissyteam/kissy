@@ -3,183 +3,22 @@
 <head>
 <meta charset="gbk"/>
 <title>Test</title>
+</head>
+<body>
+<script src="../test/test.js"></script>
+
+<h2>Test Data</h2>
+<script src="kissy.js"></script>
 <script>
-    var doc = document,
-        get = function(id) {
-            return typeof id === 'string' ? doc.getElementById(id) : id;
-        },
+    var S = KISSY,
+        doc = document,
         now = function() {
             return new Date().getTime();
         },
-        fix = function(val) {
-          return val < 10 ? '0' + val : val;
+        get = function(id) {
+            return typeof id === 'string' ? doc.getElementById(id) : id;
         },
-        timeStamp = function() {
-            var d = new Date();
-            return fix(d.getHours()) + ':' + fix(d.getMinutes()) + ':' + fix(d.getSeconds());
-        },
-        tests = [],
-        log, hidepasses, times, wl,
-        konsole = {
-            init: function() {
-                log = get('log');
-                hidepasses = get('hidepasses').checked;
-                times = get('times').value;
-                wl = get('wl').value;
-            },
-            time: function (test) {
-                test.startTime = now();
-            },
-            timeEnd: function (test) {
-                test.tookTime = now() - test.startTime;
-            },
-            echo: function(msg, br) {
-                if (br === undefined) br = '<br />';
-                log.innerHTML += msg + br;
-                log.scrollTop = log.scrollHeight;
-            },
-            log: function (test) {
-                var status = test.status || 'passed',
-                    msg;
-
-                msg = '<span class="' + status + '">';
-                msg += timeStamp() + '  ';
-                msg += '[' + status.toUpperCase() + '] ';
-                msg += test.name + ': ';
-                msg += test.tookTime + 'ms ';
-                if (test.extraMsg) msg += test.extraMsg;
-                msg += '</span>';
-
-                this.echo(msg);
-            }
-        };
-
-    // Adds test case
-    tests.add = function(name, fn) {
-        tests.push({
-            'name': name,
-            'fn': function() {
-                fn.call(this);
-            },
-            'fail': function(msg) {
-                this.status = 'failed';
-                if(msg) this.extraMsg += msg;
-            },
-            'extraMsg': ''
-        });
-        return tests;
-    };
-
-    // Resets tests
-    tests.reset = function() {
-      for(var i = 0, n = tests.length; i < n; i++) {
-          tests[i].status = '';
-          tests[i].extraMsg = '';
-      }
-    };
-
-    // Starts tests
-    function start() {
-        konsole.init();
-        tests.reset();
-
-        var len = tests.length, test, i, j;
-        times = times || 1;
-        wl = wl || '';
-
-        konsole.echo(timeStamp() + '  Start');
-        for (i = 0; i < len; i++) {
-            test = tests[i];
-            if (wl && wl.indexOf(test.name) === -1) continue;
-            if (hidepasses && !test.status) continue;
-
-            j = times;
-            konsole.time(test);
-            while (j--) test.fn();
-            konsole.timeEnd(test);
-            konsole.log(test);
-        }
-        konsole.echo(timeStamp() + '  Done', '<hr />');
-    }
-</script>
-<style type="text/css">
-    body {
-        margin: 0;
-        padding: 15px;
-        font-size: 12px;
-        line-height: 20px;
-        font-family: Verdana, Arial, sans-serif;
-    }
-
-    #konsole {
-        border: 1px solid #999;
-        background-color: #eee;
-        padding: 10px;
-        margin-top: 10px;
-    }
-
-    #log {
-        color: #666;
-        border: 1px solid #999;
-        background-color: #fff;
-        padding: 5px;
-        height: 312px;
-        overflow-x: auto;
-        overflow-y: scroll;
-        font: 14px / 16px "Courier New", Courier, monospace;
-        white-space: pre-wrap;
-    }
-
-    .passed {
-        color: darkgreen;
-    }
-
-    .failed {
-        color: #900;
-    }
-
-    hr {
-        border: 0;
-        border-top: 1px dotted #ccc;
-        margin: 3px 0;
-        color: #fff;
-    }
-
-    button {
-        padding: 2px 20px;
-    }
-
-    #settings {
-        padding: 10px;
-        line-height: 25px;
-    }
-</style>
-</head>
-<body>
-<form onsubmit="return false" action="">
-    <button type="button" onclick="start()">Start</button>
-    <div id="konsole">
-        <div id="log"></div>
-    </div>
-    <div id="settings">
-        Settings:<br/>
-        <input type="checkbox" id="hidepasses" name="hidepasses"/>
-        <label for="hidepasses">Hide passes</label><br/>
-        <input type="text" value="1" id="times" size="4"/>
-        <label for="times">Iteration times for each test function</label><br/>
-        <input type="text" value="" id="wl" size="12"/>
-        <label for="wl">The whitelist of test names</label>
-    </div>
-</form>
-
-<h2>Test Data</h2>
-<script>
-    var firstRun = true;
-    window.KISSY = {test: 'ks-test-prop'};
-</script>
-<script src="kissy.js"></script>
-<script>
-    var S = KISSY, readyTime, loadTime;
+        readyTime, loadTime;
 
     S.ready(function() {
         readyTime = now();
@@ -196,43 +35,37 @@
 
 <!-- Test Cases -->
 <script>
-    tests.add('test_preserve', function() {
-        if(firstRun) { // only check in first Run
-            if (!KISSY.test) this.fail();
-            delete KISSY.test; // clear
-            firstRun = false;
-        } else {
-            this.extraMsg = 'NOTICE: please test me in first run.';
-        }
-    });
 
-    tests.add('test_add', function() {
+    function test_preserve(test) {
+        if (!KISSY.Test) test.fail();
+    }
+
+    function test_add(test) {
         KISSY.add('test-ks-mod', function(S) {
            S.TestMod = { prop: 1 };
         });
 
-        if(!KISSY.TestMod.prop) this.fail();
-        if(KISSY.Env.mods['test-ks-mod'].name !== 'test-ks-mod') this.fail();
+        if(!KISSY.TestMod.prop) test.fail();
+        if(KISSY.Env.mods['test-ks-mod'].name !== 'test-ks-mod') test.fail();
 
         // clear
         delete KISSY.TestMod;
         delete KISSY.Env.mods['test-ks-mod'];
-    });
+    }
 
-    tests.add('test_ready', function() {
-
+    function test_ready(test) {
         // normal
         var diff = loadTime - readyTime;
-        this.extraMsg = 'loadTime - readyTime = ' + diff + 'ms';
-        if(diff < 0) this.fail();
+        test.extraMsg = 'loadTime - readyTime = ' + diff + 'ms';
+        if(diff < 0) test.fail();
 
         // iframe
         var ifr = get('test-iframe');
         diff = ifr.contentWindow.loadTime - ifr.contentWindow.readyTime;
-        if(diff < 0) this.fail();
-    });
+        if(diff < 0) test.fail();
+    }
 
-    tests.add('test_mix', function() {
+    function test_mix(test) {
         var S = KISSY,
             o1 = { a: 1, b: 2 },
             o3 = { a: 1, b: 2 },
@@ -243,12 +76,12 @@
         S.mix(o3, o2, false);
         S.mix(o4, o2, true, ['c']);
 
-        if(o1.a !== 'a') this.fail();
-        if(o3.a !== 1) this.fail();
-        if(o4.a !== 1) this.fail();
-    });
+        if(o1.a !== 'a') test.fail();
+        if(o3.a !== 1) test.fail();
+        if(o4.a !== 1) test.fail();
+    }
 
-    tests.add('test_merge', function() {
+    function test_merge(test) {
         var S = KISSY,
             a = {
                 'bool' : false,
@@ -267,14 +100,14 @@
 
         var c = S.merge(a, b);
 
-        if(c.bool !== 'oops') this.fail();
-        if(c.num !== 'oops') this.fail();
-        if(c.nul !== 'oops') this.fail();
-        if(c.undef !== 'oops') this.fail();
-        if(c.T !== 'oops') this.fail();
-    });
+        if(c.bool !== 'oops') test.fail();
+        if(c.num !== 'oops') test.fail();
+        if(c.nul !== 'oops') test.fail();
+        if(c.undef !== 'oops') test.fail();
+        if(c.T !== 'oops') test.fail();
+    }
 
-    tests.add('test_extend', function() {
+    function test_extend(test) {
         var S = KISSY;
 
         function Bird(name) {
@@ -293,10 +126,10 @@
 
         var chicken = new Chicken('Tom');
 
-        if(chicken.getName() !== 'Tom') this.fail();
-    });
+        if(chicken.getName() !== 'Tom') test.fail();
+    }
 
-    tests.add('test_augment', function() {
+    function test_augment(test) {
         var S = KISSY;
 
         function Bird(name) {
@@ -317,10 +150,10 @@
 
         var pig = new Pig('Babi');
 
-        if(!pig.fly) this.fail();
-    });
+        if(!pig.fly) test.fail();
+    }
 
-    tests.add('test_weave', function() {
+    function test_weave(test) {
         var S = KISSY;
 
         function Bird(name) {
@@ -337,75 +170,75 @@
         }, 'before', Bird.prototype, 'getName');
 
         var bird = new Bird('Bird');
-        if(bird.getName() !== 'Hacked Bird') this.fail(bird.getName());
-    });
+        if(bird.getName() !== 'Hacked Bird') test.fail(bird.getName());
+    }
 
-    tests.add('test_cloneTo', function() {
+    function test_cloneTo(test) {
         var S = KISSY;
         S.cloneTo('TB');
 
         // check static members
-        if(TB.mix !== S.mix) this.fail();
-        if(TB.cloneTo !== S.cloneTo) this.fail();
+        if(TB.mix !== S.mix) test.fail();
+        if(TB.cloneTo !== S.cloneTo) test.fail();
 
         // check Env and Config
-        if(!TB.Env.mods) this.fail();
-        if(TB.Config.debug !== true) this.fail();
+        if(!TB.Env.mods) test.fail();
+        if(TB.Config.debug !== true) test.fail();
 
         // check independence
         TB.test = 2;
-        if(S.test === 2) this.fail();
+        if(S.test === 2) test.fail();
         TB.Config.debug = false;
-        if(S.Config.debug !== true) this.fail();
+        if(S.Config.debug !== true) test.fail();
 
         // test add modules
         TB.add('test-tb-mod', function() { });
-        if(!TB.Env.mods['test-tb-mod']) this.fail();
-        if(S.Env.mods['test-tb-mod']) this.fail();
+        if(!TB.Env.mods['test-tb-mod']) test.fail();
+        if(S.Env.mods['test-tb-mod']) test.fail();
 
         // clear
         window.TB = undefined;
-    });
+    }
 
-    tests.add('test_namespace', function() {
+    function test_namespace(test) {
         var S = KISSY, ns;
 
         // normal
         ns = S.namespace('app.Test');
         ns.name = 'foo1';
-        if(S.app.Test.name !== 'foo1') this.fail();
+        if(S.app.Test.name !== 'foo1') test.fail();
 
         // first part of argument is the global object
         ns = S.namespace('KISSY.app2.Test2');
         ns.name = 'foo2';
-        if(S.app2.Test2.name !== 'foo2') this.fail();
+        if(S.app2.Test2.name !== 'foo2') test.fail();
 
         // via cloned global object
         S.cloneTo('TB');
         ns = TB.namespace('app3.Test3');
         ns.name = 'foo3';
-        if(TB.app3.Test3.name !== 'foo3') this.fail();
+        if(TB.app3.Test3.name !== 'foo3') test.fail();
 
         // empty arguments
-        if(S.namespace() !== null) this.fail();
+        if(S.namespace() !== null) test.fail();
 
         // clear
         delete S.app;
         delete S.app2;
         window.TB = undefined;
-    });
+    }
 
-    tests.add('test_each', function() {
+    function test_each(test) {
         var S = KISSY, ret = 0;
 
         S.each([1,2,3,4,5], function(num) {
             ret += num;
         });
 
-        if(ret !== 15) this.fail();
-    });
+        if(ret !== 15) test.fail();
+    }
 
-    tests.add('test_log', function() {
+    function test_log(test) {
         var S = KISSY;
 
         S.add('test-ks-mod', function() { });
@@ -419,8 +252,9 @@
         // clear
         //delete S.Env.mods['test-ks-mod'];
         //window.TB = undefined;
-    });
+    }
 
+    KISSY.Test.init();
 </script>
 </body>
 </html>
