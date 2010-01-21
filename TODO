@@ -6,8 +6,9 @@
   沙箱思考 - 借鉴 YUI3 的沙箱体系，但去掉设计过度的部分
   页面内文件组织思考 - 暂不考虑组件的动态加载
 
-  重构 kissy 核心架构
-  dom
+  重构 kissy 核心架构 - done
+  node
+  bom
   event
   anim
 
