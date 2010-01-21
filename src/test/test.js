@@ -4,7 +4,7 @@
  * @depends none
  */
 
-window.KISSY = window.KISSY || {};
+KISSY = window.KISSY || {};
 
 (function(win, S, undefined) {
 
@@ -24,7 +24,7 @@ window.KISSY = window.KISSY || {};
             return fix(d.getHours()) + ':' + fix(d.getMinutes()) + ':' + fix(d.getSeconds());
         },
         tests = [],
-        log, hidepasses, times, wl,
+        log, hidepasses, times, wl, scrollTimer,
         konsole = {
             init: function() {
                 log = get('log');
@@ -41,7 +41,14 @@ window.KISSY = window.KISSY || {};
             echo: function(msg, br) {
                 if (br === undefined) br = '<br />';
                 log.innerHTML += timeStamp() + '  ' + msg + br;
-                log.scrollTop = log.scrollHeight;
+                this.scrollToEnd();
+            },
+            scrollToEnd: function() {
+                if(scrollTimer) return;
+                scrollTimer = setTimeout(function() {
+                    log.scrollTop = log.scrollHeight;
+                    scrollTimer = null;
+                }, 5);
             },
             log: function (test) {
                 var msg = '';
@@ -93,6 +100,7 @@ window.KISSY = window.KISSY || {};
                 }
             }
 
+            // adjust for firefox
             if(navigator.userAgent.indexOf('Firefox') !== -1) {
                 tests.reverse();
             }
@@ -147,7 +155,17 @@ window.KISSY = window.KISSY || {};
         }
     };
 
-    // Renders immmediately
+    // render markup immediately
     S.Test.render();
+
+    // attach load event
+    function initTest() {
+        S.Test.init();
+    }
+    if(win.attachEvent) {
+        win.attachEvent('onload', initTest);
+    } else {
+        win.addEventListener('load', initTest, false);
+    }
 
 })(window, KISSY);

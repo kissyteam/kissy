@@ -129,7 +129,7 @@
             readyBound = true;
 
             // IE event model is used
-            if (doScroll) {
+            if (doc.attachEvent) {
                 if (win != win.top) { // iframe
                     function stateChange() {
                         if (doc.readyState === 'complete') {
@@ -151,6 +151,10 @@
                     }
                     readyScroll();
                 }
+
+                // A fallback to window.onload, that will always work.
+                win.attachEvent('onload', self._fireReady);
+                
             } else { // w3c mode
                 function domReady() {
                     doc.removeEventListener(eventType, domReady, false);
@@ -164,6 +168,8 @@
          * Executes functions bound to ready event.
          */
         _fireReady: function() {
+            if(isReady) return;
+            
             // Remember that the DOM is ready
             isReady = true;
 
