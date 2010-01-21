@@ -420,5 +420,4 @@
  * 
  *  - 考虑性能，each, indexOf, trim 尽可能用原生方法
  *  - 考虑简单够用，去掉 indexOf 对 fromIndex 的支持
- *
  */

@@ -1,34 +1,23 @@
 /**
- * Widget
- * @creator     Óñ²®<lifesinger@gmail.com>
- * @depends     kissy, yui-base
+ * @module  node
+ * @author  lifesinger@gmail.com
+ * @depends kissy
  */
-KISSY.add("widget", function(S) {
+
+KISSY.add('node', function(S) {
 
     /**
-     * Widget Class
+     * Node Class
      * @constructor
      */
-    function Widget(container, config) {
+    function Node(selector) {
         var self = this;
 
         // factory or constructor
-        if (!(self instanceof Widget)) {
-            return new Widget(container, config);
+        if (!(self instanceof Node)) {
+            return new Node(selector);
         }
-
-        /**
-         * the container of widget
-         * @type HTMLElement
-         */
-        self.container = YAHOO.util.Dom.get(container);
-
-        /**
-         * config infomation
-         * @type object
-         */
-        self.config = config || {};
     }
 
-    S.Widget = Widget;
+    S.Node = Node;
 });
