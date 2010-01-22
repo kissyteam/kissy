@@ -6,6 +6,9 @@
 </head>
 <body>
 <script src="../test/test.js"></script>
+<script>
+    KISSY.Test.Config.times = 200;
+</script>
 
 <h2>Test Data</h2>
 
@@ -300,6 +303,15 @@ all member testimonials.</a></p>
 <script>
     document.getElementById('test-data-div').innerHTML = document.getElementById('test-data-area').value;
 </script>
+<div><p id="foo"><span></span></p></div>
+<script>
+    // Ref: http://ejohn.org/blog/thoughts-on-queryselectorall/
+//    var foo = document.getElementById("foo");
+//    // should return nothing
+//    alert($('div span', foo).length);
+//    // will return the SPAN (booo!)
+//    alert(foo.querySelectorAll('div span').length);
+</script>
 
 <!-- Test Cases -->
 <script>
@@ -325,7 +337,7 @@ all member testimonials.</a></p>
         test.name = s;
         test.extraMsg = '\t{jquery}';
 
-        if($(s).get(0) !== doc.getElementById('test-data')) test.fail();
+        if(jQuery(s).get(0) !== doc.getElementById('test-data')) test.fail();
     }
 
     function test_get2a(test) {
@@ -333,7 +345,7 @@ all member testimonials.</a></p>
         test.name = s;
         test.extraMsg = '\t{rawjs}';
 
-        alert($('#test-data').get(0).querySelectorAll(s).length);
+        //alert($('#test-data').get(0).querySelectorAll(s).length);
         //alert($('#test-data').get(0).getElementsByClassName);
 
         if(doc.querySelectorAll) {
@@ -356,8 +368,93 @@ all member testimonials.</a></p>
         test.name = s;
         test.extraMsg = '\t{jquery}';
 
-        ret = $(s);
+        ret = jQuery(s);
         if(ret.length !== 6) test.fail(ret.length);
+    }
+
+    function test_get3a(test) {
+        var s = 'h3', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{rawjs}';
+
+        ret = doc.getElementsByTagName(s);
+        if(ret.length !== 9) test.fail(ret.length);
+    }
+
+    function test_get3b(test) {
+        var s = 'h3', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{kissy}';
+
+        ret = S.query(s);
+        if(ret.length !== 9) test.fail(ret.length);
+    }
+
+    function test_get3c(test) {
+        var s = 'h3', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{jquery}';
+
+        ret = jQuery(s);
+        if(ret.length !== 9) test.fail(ret.length);
+    }
+
+    function test_get4a(test) {
+        var s = 'div.description', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{rawjs}';
+
+        if(doc.querySelectorAll) {
+            ret = doc.querySelectorAll(s);
+        }
+        if(ret.length !== 6) test.fail(ret.length);
+    }
+
+    function test_get4b(test) {
+        var s = 'div.description', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{kissy}';
+
+        ret = S.query(s);
+        if(ret.length !== 6) test.fail(ret.length);
+    }
+
+    function test_get4c(test) {
+        var s = 'div.description', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{jquery}';
+
+        ret = jQuery(s);
+        if(ret.length !== 6) test.fail(ret.length);
+    }
+
+    function test_get5a(test) {
+        var s = '#test-data a', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{rawjs}';
+
+        if(doc.querySelectorAll) {
+            ret = doc.querySelectorAll(s);
+        }
+        if(ret.length !== 91) test.fail(ret.length);
+    }
+
+    function test_get5b(test) {
+        var s = '#test-data a', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{kissy}';
+
+        ret = S.query(s, doc, true);
+        if(ret.length !== 91) test.fail(ret.length);
+    }
+
+    function test_get5c(test) {
+        var s = '#test-data a', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{jquery}';
+
+        ret = jQuery(s);
+        if(ret.length !== 91) test.fail(ret.length);
     }
 
 </script>

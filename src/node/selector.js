@@ -72,7 +72,7 @@ KISSY.add('node-selector', function(S, undefined) {
                 ret = getElementsByClassName(className, tag, context);
 
             } else if (tag) { // case: tag
-                ret = getElementsByTagName(ret, tag);
+                ret = getElementsByTagName(context, tag);
             }
         }
 
@@ -143,5 +143,10 @@ KISSY.add('node-selector', function(S, undefined) {
  *
  * 2010-01-21:
  *  - 对 reg exec 的结果(id, tag, className)做 cache, 发现对性能影响很小，去掉
+ *
+ * References:
+ *  - getElementById 使用频率最高，使用直达通道优化
+ *  - querySelectorAll context 的注意点：http://ejohn.org/blog/thoughts-on-queryselectorall/
+ *  - getElementsByClassName 性能优于 querySelectorAll, 但 IE 系列不支持
  *
  */

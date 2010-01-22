@@ -90,7 +90,18 @@ KISSY = window.KISSY || {};
 
     S.Test = {
 
+        Config: { },
+
         init: function() {
+            // set config
+            var c = this.Config;
+            if(c.times) get('times').value = c.times;
+            if(c.hidepasses) get('hidepasses').checked = c.hidepasses;
+            if(c.wl) get('wl').value = c.wl;
+
+            // get config
+            konsole.init();
+
             // add test cases
             var prefix = 'test_',
                 global = win['RuntimeObject'] ? win['RuntimeObject'](prefix + '*') : win;
@@ -131,7 +142,6 @@ KISSY = window.KISSY || {};
         },
 
         start: function() {
-            konsole.init();
             tests.reset();
 
             var len = tests.length, test, i, j;
