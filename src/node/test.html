@@ -8,9 +8,12 @@
 <script src="../test/test.js"></script>
 
 <h2>Test Data</h2>
+
 <script src="../kissy/kissy.js"></script>
 <script src="node.js"></script>
 <script src="selector.js"></script>
+<script src="../../third-party/jquery/jquery-1.4.min.js"></script>
+
 <div id="test-data-div" style="width: 500px; height: 200px; overflow: auto; border: 1px solid #aaa"></div>
 <textarea id="test-data-area" style="display: none" rows="0" cols="0">
 <div id="test-data">
@@ -300,18 +303,60 @@ all member testimonials.</a></p>
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY;
+    var S = KISSY, doc = document;
 
-    function test_get1(test) {
-        test.name = '#id';
+    function test_get1a(test) {
+        test.name = '#test-data';
+        test.extraMsg = '\t{rawjs}';
 
-        if(S.query('#test-data').dom() !== document.getElementById('test-data')) test.fail();
+        if(doc.getElementById('test-data') !== doc.getElementById('test-data')) test.fail();
     }
 
-    function test_get2(test) {
-        test.name = '.class';
+    function test_get1b(test) {
+        var s = '#test-data';
+        test.name = s;
+        test.extraMsg = '\t{kissy}';
 
-        var ret = S.query('.headline');
+        if(S.query(s).dom() !== doc.getElementById('test-data')) test.fail();
+    }
+
+    function test_get1c(test) {
+        var s = '#test-data';
+        test.name = s;
+        test.extraMsg = '\t{jquery}';
+
+        if($(s).get(0) !== doc.getElementById('test-data')) test.fail();
+    }
+
+    function test_get2a(test) {
+        var s = '.headline', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{rawjs}';
+
+        alert($('#test-data').get(0).querySelectorAll(s).length);
+        //alert($('#test-data').get(0).getElementsByClassName);
+
+        if(doc.querySelectorAll) {
+            ret = doc.querySelectorAll(s);
+        }
+        if(ret.length !== 6) test.fail(ret.length);
+    }
+
+    function test_get2b(test) {
+        var s = '.headline', ret;
+        test.name = s;
+        test.extraMsg = '\t{kissy}';
+
+        ret = S.query(s);
+        if(ret.length !== 6) test.fail(ret.length);
+    }
+
+    function test_get2c(test) {
+        var s = '.headline', ret;
+        test.name = s;
+        test.extraMsg = '\t{jquery}';
+
+        ret = $(s);
         if(ret.length !== 6) test.fail(ret.length);
     }
 
