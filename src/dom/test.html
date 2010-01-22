@@ -13,7 +13,7 @@
 <h2>Test Data</h2>
 
 <script src="../kissy/kissy.js"></script>
-<script src="node.js"></script>
+<script src="dom.js"></script>
 <script src="selector.js"></script>
 <script src="../../third-party/jquery/jquery-1.4.min.js"></script>
 
@@ -455,6 +455,10 @@ all member testimonials.</a></p>
 
         ret = jQuery(s);
         if(ret.length !== 91) test.fail(ret.length);
+    }
+
+    function test_emptySelector(test) {
+        if(S.query('').length !== 0) test.fail();
     }
 
 </script>

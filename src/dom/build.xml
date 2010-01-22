@@ -1,4 +1,4 @@
-<project name="node.build" default="build" basedir=".">
+<project name="dom.build" default="build" basedir=".">
     <description>Component Build File</description>
 
     <import file="../../tools/build.xml"/>
