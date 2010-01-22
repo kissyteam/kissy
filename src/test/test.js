@@ -142,6 +142,10 @@ KISSY = window.KISSY || {};
         },
 
         start: function() {
+            // get latest settings
+            konsole.init();
+
+            // reset
             tests.reset();
 
             var len = tests.length, test, i, j;

@@ -22,7 +22,7 @@ KISSY.add('node', function(S) {
         /**
          * Related DOM Element
          */
-        self.domEl = typeof selector === 'string' ? S.query(selector, doc, true) : selector;
+        self.domEl = S.query(selector, doc);
     }
 
     S.mix(Node.prototype, {
@@ -35,5 +35,16 @@ KISSY.add('node', function(S) {
         }
     });
 
+    var StaticMethods = {
+       /**
+         * Sets and gets styles.
+         */
+        css: function() {
+            // TODO
+        }
+    };
+    S.mix(Node.prototype, StaticMethods);
+
     S.Node = Node;
+    S.Node.StaticMethods = StaticMethods;
 });

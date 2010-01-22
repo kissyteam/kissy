@@ -329,7 +329,7 @@ all member testimonials.</a></p>
         test.name = s;
         test.extraMsg = '\t{kissy}';
 
-        if(S.query(s).dom() !== doc.getElementById('test-data')) test.fail();
+        if(S.query(s)[0] !== doc.getElementById('test-data')) test.fail();
     }
 
     function test_get1c(test) {
@@ -337,7 +337,7 @@ all member testimonials.</a></p>
         test.name = s;
         test.extraMsg = '\t{jquery}';
 
-        if(jQuery(s).get(0) !== doc.getElementById('test-data')) test.fail();
+        if(jQuery(s)[0] !== doc.getElementById('test-data')) test.fail();
     }
 
     function test_get2a(test) {
@@ -444,12 +444,12 @@ all member testimonials.</a></p>
         test.name = s;
         test.extraMsg = '\t{kissy}';
 
-        ret = S.query(s, doc, true);
+        ret = S.query(s);
         if(ret.length !== 91) test.fail(ret.length);
     }
 
     function test_get5c(test) {
-        var s = '#test-data a', ret = [];
+        var s = '#test-data a', ret = [], ret2 = [];
         test.name = s;
         test.extraMsg = '\t{jquery}';
 

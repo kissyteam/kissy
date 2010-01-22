@@ -7,9 +7,9 @@
 KISSY.add('node-selector', function(S, undefined) {
 
     var doc = document,
-        Node = S.Node,
         STRING = 'string',
         supportGBCN = doc.getElementsByClassName,
+        slice = Array.prototype.slice,
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(#([\w-]+)?\s?|^)([\w-]+)?\.?(\w+)?$/;
 
@@ -17,10 +17,9 @@ KISSY.add('node-selector', function(S, undefined) {
      * Retrieves a Node or an Array of Nodes based on the given CSS selector.
      * @param {string} selector
      * @param {string|HTMLElement|Node} context A #id string, DOM Element, or Node to use as context.
-     * @param {boolean} dom If false, return Node, else return DOM Element. default is false.
      */
-    S.query = function(selector, context, dom) {
-        var match, ret, id, tag, className, i, len;
+    S.query = function(selector, context) {
+        var match, ret = [], id, tag, className, arr = [], i, len;
 
         // selector 必须为有效的字符串，否则怎来的怎么回去
         if (typeof selector !== STRING || !selector) {
@@ -38,7 +37,7 @@ KISSY.add('node-selector', function(S, undefined) {
 
         // 为 #id 优化
         if (REG_ID.test(selector)) { // case: #id
-            ret = getElementById(selector.slice(1));
+            ret = [getElementById(selector.slice(1))];
         }
         else {
             // 考虑 2/8 原则，仅支持以下选择器：
@@ -76,17 +75,11 @@ KISSY.add('node-selector', function(S, undefined) {
             }
         }
 
-        // 返回单个对象
-        if (!('length' in ret)) {
-            return dom ? ret : new Node(ret);
-        }
-
-        // 返回数组
-        var arr = [];
+        // 将 ret 转换为普通数组，并添加上 Node StaticMethods
         for (i = 0,len = ret.length; i < len; i++) {
-            arr[i] = dom ? ret : new Node(ret[i]);
+            arr[i] = ret[i];
         }
-        return arr;
+        return S.mix(arr, S.Node.StaticMethods);
     };
 
 
@@ -136,6 +129,24 @@ KISSY.add('node-selector', function(S, undefined) {
             return ret;
         }
     }
+
+    // 将 NodeList 转换为普通数组
+    function convertNodeListToArray(arr) {
+        return slice.call(arr, 0);
+    }
+
+    try {
+        slice.call(doc.documentElement.childNodes, 0);
+    }
+    catch(e) {
+        convertNodeListToArray = function(arr) {
+            var ret = [], i, len;
+            for (i = 0, len = arr.length; i < len; i++) {
+                ret[i] = arr[i];
+            }
+            return ret;
+        }
+    }
 });
 
 /**
@@ -143,10 +154,11 @@ KISSY.add('node-selector', function(S, undefined) {
  *
  * 2010-01-21:
  *  - 对 reg exec 的结果(id, tag, className)做 cache, 发现对性能影响很小，去掉
+ *  - getElementById 使用频率最高，使用直达通道优化
+ *  - getElementsByClassName 性能优于 querySelectorAll, 但 IE 系列不支持
+ *  - new Node() 即便 Node 很简单，在大量循环下，对性能也会有明显降低
+ *  - instanceof 对性能有影响
  *
  * References:
- *  - getElementById 使用频率最高，使用直达通道优化
  *  - querySelectorAll context 的注意点：http://ejohn.org/blog/thoughts-on-queryselectorall/
- *  - getElementsByClassName 性能优于 querySelectorAll, 但 IE 系列不支持
- *
  */
