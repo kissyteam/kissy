@@ -9,7 +9,6 @@ KISSY.add('selector', function(S, undefined) {
     var doc = document,
         STRING = 'string',
         SPACE = ' ',
-        supportGBCN = doc.getElementsByClassName,
         slice = Array.prototype.slice,
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+)?\.?([\w-]+)?$/;
@@ -140,11 +139,10 @@ KISSY.add('selector', function(S, undefined) {
         return ret;
     }
 
-    if (supportGBCN || doc.querySelectorAll) {
+    // 用原生的 getElementsByClassName
+    if (doc.getElementsByClassName) {
         getElementsByClassName = function(cls, tag, context) {
-            var els = supportGBCN ?
-                      context.getElementsByClassName(cls) :
-                      context.querySelectorAll('.' + cls),
+            var els = context.getElementsByClassName(cls),
                 ret = els, i = 0, j = 0, len = els.length, el;
 
             if (tag) {
@@ -158,6 +156,12 @@ KISSY.add('selector', function(S, undefined) {
                 }
             }
             return ret;
+        }
+    }
+    // 用原生的 querySelectorAll
+    else if (doc.querySelectorAll) {
+        getElementsByClassName = function(cls, tag, context) {
+            return context.querySelectorAll((tag ? tag : '') + '.' + cls);
         }
     }
 

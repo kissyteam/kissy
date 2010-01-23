@@ -317,14 +317,16 @@ all member testimonials.</a></p>
 <script>
     var S = KISSY, doc = document;
 
-    function test_get1a(test) {
-        test.name = '#test-data';
+    // #id:
+    function test_query_id_rj(test) {
+        var s = 'test-data';
+        test.name = '#' + s;
         test.extraMsg = '\t{rawjs}';
 
-        if(doc.getElementById('test-data') !== doc.getElementById('test-data')) test.fail();
+        if(doc.getElementById(s) !== doc.getElementById('test-data')) test.fail();
     }
 
-    function test_get1b(test) {
+    function test_query_id_ks(test) {
         var s = '#test-data';
         test.name = s;
         test.extraMsg = '\t{kissy}';
@@ -332,7 +334,7 @@ all member testimonials.</a></p>
         if(S.query(s)[0] !== doc.getElementById('test-data')) test.fail();
     }
 
-    function test_get1c(test) {
+    function test_query_id_jq(test) {
         var s = '#test-data';
         test.name = s;
         test.extraMsg = '\t{jquery}';
@@ -340,39 +342,10 @@ all member testimonials.</a></p>
         if(jQuery(s)[0] !== doc.getElementById('test-data')) test.fail();
     }
 
-    function test_get2a(test) {
-        var s = '.headline', ret = [];
-        test.name = s;
-        test.extraMsg = '\t{rawjs}';
+    function test_query_id_sep(test) { test.status = 'sep'; }
 
-        //alert($('#test-data').get(0).querySelectorAll(s).length);
-        //alert($('#test-data').get(0).getElementsByClassName);
-
-        if(doc.querySelectorAll) {
-            ret = doc.querySelectorAll(s);
-        }
-        if(ret.length !== 6) test.fail(ret.length);
-    }
-
-    function test_get2b(test) {
-        var s = '.headline', ret;
-        test.name = s;
-        test.extraMsg = '\t{kissy}';
-
-        ret = S.query(s);
-        if(ret.length !== 6) test.fail(ret.length);
-    }
-
-    function test_get2c(test) {
-        var s = '.headline', ret;
-        test.name = s;
-        test.extraMsg = '\t{jquery}';
-
-        ret = jQuery(s);
-        if(ret.length !== 6) test.fail(ret.length);
-    }
-
-    function test_get3a(test) {
+    // tag:
+    function test_query_tag_rj(test) {
         var s = 'h3', ret = [];
         test.name = s;
         test.extraMsg = '\t{rawjs}';
@@ -381,7 +354,7 @@ all member testimonials.</a></p>
         if(ret.length !== 9) test.fail(ret.length);
     }
 
-    function test_get3b(test) {
+    function test_query_tag_ks(test) {
         var s = 'h3', ret = [];
         test.name = s;
         test.extraMsg = '\t{kissy}';
@@ -390,7 +363,7 @@ all member testimonials.</a></p>
         if(ret.length !== 9) test.fail(ret.length);
     }
 
-    function test_get3c(test) {
+    function test_query_tag_jq(test) {
         var s = 'h3', ret = [];
         test.name = s;
         test.extraMsg = '\t{jquery}';
@@ -399,18 +372,109 @@ all member testimonials.</a></p>
         if(ret.length !== 9) test.fail(ret.length);
     }
 
-    function test_get4a(test) {
+    function test_query_tag_sep(test) { test.status = 'sep'; }
+
+    // .cls:
+    function test_query_cls_rj(test) {
+        var s = '.headline', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{rawjs}';
+
+        if(doc.querySelectorAll) ret = doc.querySelectorAll(s);
+        if(ret.length !== 6) test.fail(ret.length);
+    }
+
+    function test_query_cls_ks(test) {
+        var s = '.headline', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{kissy}';
+
+        ret = S.query(s);
+        if(ret.length !== 6) test.fail(ret.length);
+    }
+
+    function test_query_cls_jq(test) {
+        var s = '.headline', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{jquery}';
+
+        ret = jQuery(s);
+        if(ret.length !== 6) test.fail(ret.length);
+    }
+
+    function test_query_cls_sep(test) { test.status = 'sep'; }
+
+    // #id tag:
+    function test_query_idtag_rj(test) {
+        var s = '#test-data a', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{rawjs}';
+
+        if(doc.querySelectorAll) ret = doc.querySelectorAll(s);
+        if(ret.length !== 91) test.fail(ret.length);
+    }
+
+    function test_query_idtag_ks(test) {
+        var s = '#test-data a', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{kissy}';
+
+        ret = S.query(s);
+        if(ret.length !== 91) test.fail(ret.length);
+    }
+
+    function test_query_idtag_jq(test) {
+        var s = '#test-data a', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{jquery}';
+
+        ret = jQuery(s);
+        if(ret.length !== 91) test.fail(ret.length);
+    }
+
+    function test_query_idtag_sep(test) { test.status = 'sep'; }
+
+    // #id .cls:
+    function test_query_idcls_rj(test) {
+        var s = '#test-data .summary', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{rawjs}';
+
+        if(doc.querySelectorAll) ret = doc.querySelectorAll(s);
+        if(ret.length !== 12) test.fail(ret.length);
+    }
+
+    function test_query_idcls_ks(test) {
+        var s = '#test-data .summary', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{kissy}';
+
+        ret = S.query(s);
+        if(ret.length !== 12) test.fail(ret.length);
+    }
+
+    function test_query_idcls_jq(test) {
+        var s = '#test-data .summary', ret = [];
+        test.name = s;
+        test.extraMsg = '\t{jquery}';
+
+        ret = jQuery(s);
+        if(ret.length !== 12) test.fail(ret.length);
+    }
+
+    function test_query_idcls_sep(test) { test.status = 'sep'; }
+
+    // tag .cls:
+    function test_query_tagcls_rj(test) {
         var s = 'div.description', ret = [];
         test.name = s;
         test.extraMsg = '\t{rawjs}';
 
-        if(doc.querySelectorAll) {
-            ret = doc.querySelectorAll(s);
-        }
+        if(doc.querySelectorAll) ret = doc.querySelectorAll(s);
         if(ret.length !== 6) test.fail(ret.length);
     }
 
-    function test_get4b(test) {
+    function test_query_tagcls_ks(test) {
         var s = 'div.description', ret = [];
         test.name = s;
         test.extraMsg = '\t{kissy}';
@@ -419,7 +483,7 @@ all member testimonials.</a></p>
         if(ret.length !== 6) test.fail(ret.length);
     }
 
-    function test_get4c(test) {
+    function test_query_tagcls_jq(test) {
         var s = 'div.description', ret = [];
         test.name = s;
         test.extraMsg = '\t{jquery}';
@@ -428,36 +492,48 @@ all member testimonials.</a></p>
         if(ret.length !== 6) test.fail(ret.length);
     }
 
-    function test_get5a(test) {
-        var s = '#test-data a', ret = [];
+    function test_query_tagcls_sep(test) { test.status = 'sep'; }
+
+    // #id tag.cls:
+    function test_query_idtagcls_rj(test) {
+        var s = '#test-data p.date', ret = [];
         test.name = s;
         test.extraMsg = '\t{rawjs}';
 
-        if(doc.querySelectorAll) {
-            ret = doc.querySelectorAll(s);
-        }
-        if(ret.length !== 91) test.fail(ret.length);
+        if (doc.querySelectorAll) ret = doc.querySelectorAll(s);
+        if (ret.length !== 12) test.fail(ret.length);
     }
 
-    function test_get5b(test) {
-        var s = '#test-data a', ret = [];
+    function test_query_idtagcls_ks(test) {
+        var s = '#test-data p.date', ret = [];
         test.name = s;
         test.extraMsg = '\t{kissy}';
 
         ret = S.query(s);
-        if(ret.length !== 91) test.fail(ret.length);
+        if (ret.length !== 12) test.fail(ret.length);
     }
 
-    function test_get5c(test) {
-        var s = '#test-data a', ret = [], ret2 = [];
+    function test_query_idtagcls_jq(test) {
+        var s = '#test-data p.date', ret = [];
         test.name = s;
         test.extraMsg = '\t{jquery}';
 
         ret = jQuery(s);
-        if(ret.length !== 91) test.fail(ret.length);
+        if (ret.length !== 12) test.fail(ret.length);
     }
 
-    function test_emptySelector(test) {
+    function test_query_idtagcls_sep(test) {
+        test.status = 'sep';
+    }
+
+    // exceptions:
+    function test_query_exceptions(test) {
+
+        // ¿Õ×Ö·û´®·µ»Ø []
+        if(S.query('').length !== 0) test.fail();
+        if(S.query('  ').length !== 0) test.fail();
+
+        //
         if(S.query('').length !== 0) test.fail();
     }
 
