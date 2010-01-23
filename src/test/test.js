@@ -79,7 +79,7 @@ KISSY = window.KISSY || {};
             },
             fail: function(msg) {
                 this.status = 'failed';
-                if (msg) this.extraMsg += msg;
+                if (msg) this.extraMsg = msg;
             },
             status: PASSED,
             extraMsg: ''

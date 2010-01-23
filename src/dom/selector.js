@@ -112,6 +112,34 @@ KISSY.add('dom-selector', function(S, undefined) {
         return el.getElementsByTagName(tag);
     }
 
+    (function() {
+        // Check to see if the browser returns only elements
+        // when doing getElementsByTagName('*')
+
+        // Create a fake element
+        var div = doc.createElement('div');
+        div.appendChild(doc.createComment(''));
+
+        // Make sure no comments are found
+        if (div.getElementsByTagName(ANY).length > 0) {
+            getElementsByTagName = function(el, tag) {
+                var ret = el.getElementsByTagName(tag);
+
+                if (tag === ANY) {
+                    var t = [], i = 0, j = 0, node;
+                    while(node = ret[i++]) { // NOTICE: assignment
+                        // Filter out possible comments
+                        if(node.nodeType === 1) {
+                            t[j++] = node;
+                        }
+                    }
+                    ret = t;
+                }
+                return ret;
+            };
+        }
+    })();
+
     // query .cls
     function getElementsByClassName(cls, tag, context) {
         var els = context.getElementsByTagName(tag || ANY),
@@ -181,9 +209,9 @@ KISSY.add('dom-selector', function(S, undefined) {
 });
 
 /**
- * NOTES:
+ * Notes:
  *
- * 2010.01:
+ * 2010.01
  *  - 对 reg exec 的结果(id, tag, className)做 cache, 发现对性能影响很小，去掉
  *  - getElementById 使用频率最高，使用直达通道优化
  *  - getElementsByClassName 性能优于 querySelectorAll, 但 IE 系列不支持
@@ -195,6 +223,9 @@ KISSY.add('dom-selector', function(S, undefined) {
  *  - query 方法中的条件判断考虑了“频率优先”原则。最有可能出现的情况放在前面
  *  - Array 的 push 方法可以用 j++ 来替代，性能稍有提升
  *  - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组
+ *
+ * Bugs:
+ *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对，jQuery 也有此 bug, 诡异
  *
  * References:
  *  - MDC: querySelector, querySelectorAll, getElementsByClassName

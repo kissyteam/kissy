@@ -405,9 +405,9 @@
 })(window, 'KISSY');
 
 /**
- * NOTES
+ * Notes:
  *
- * 2010.01:
+ * 2010.01
  *  - 考虑简单够用和 2/8 原则，去掉了对 YUI3 沙箱的模拟（archives/2009 r402）
  *
  *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 组织代码）
