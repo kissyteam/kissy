@@ -229,4 +229,5 @@ KISSY.add('dom-selector', function(S, undefined) {
  * References:
  *  - MDC: querySelector, querySelectorAll, getElementsByClassName
  *  - querySelectorAll µÄË¼¿¼£ºhttp://ejohn.org/blog/thoughts-on-queryselectorall/
+ *  - MINI: http://james.padolsey.com/javascript/mini/
  */
