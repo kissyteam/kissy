@@ -550,10 +550,24 @@ all member testimonials.</a></p>
         if(S.query('#test-xxx p.yyy').length !== 0) test.fail();
         if(S.query('#test-data.date').length !== 0) test.fail();
 
+        // context 为 null 时，返回 []
+        // 注：这和 jQuery 不同，jQuery 此时会将 context 赋值为 doc
+        if(S.query('p', null).length !== 0) test.fail();
+
+        // context 为无效值时，返回 []
+        // 注：此时和 jQuery 一致
+        if(S.query('p', 1).length !== 0) test.fail();
+
+        // 支持 tag 为 * 号
+        if(S.query('*').length < 1) test.fail('*');
+        if(S.query('#test-data *').length !== 333) test.fail('#test-data *');
+        if(S.query('*.date').length !== 15) test.fail('*.date');
     }
 
     // temp test code
-
+    //alert(doc.querySelectorAll('*.date').length);
+    alert(jQuery('#test-data *').length);
+    alert(S.query('#test-data *').length);
 </script>
 </body>
 </html>

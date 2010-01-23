@@ -9,9 +9,10 @@ KISSY.add('dom-selector', function(S, undefined) {
     var doc = document,
         STRING = 'string',
         SPACE = ' ',
+        ANY = '*',
         slice = Array.prototype.slice,
         REG_ID = /^#[\w-]+$/,
-        REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+)?\.?([\w-]+)?$/;
+        REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
@@ -31,11 +32,13 @@ KISSY.add('dom-selector', function(S, undefined) {
         // #id .cls
         // tag.cls
         // #id tag.cls
-        // 注意：REG_QUERY 还会匹配 #id.cls 无效值
-        // 返回值为数组，没找到时返回空数组
+        // 注 1：REG_QUERY 还会匹配 #id.cls 无效值
+        // 注 2：tag 可以为 * 字符
+        // 返回值为数组
+        // 选择器无效或参数异常时，返回空数组
 
         // selector 为字符串是最常见的情况，优先考虑
-        // 注：空字符串无需判断，运行下去自动能返回空数组
+        // 注：空白字符串无需判断，运行下去自动能返回空数组
         if (typeof selector === STRING) {
             selector = S.trim(selector);
 
@@ -45,34 +48,22 @@ KISSY.add('dom-selector', function(S, undefined) {
                 if (t) ret = [t]; // #id 无效时，返回空数组
             }
             // selector 为支持列表中的其它 6 种
-            else if (match = REG_QUERY.exec(selector)) { // NOTICE: assginment
+            else if (match = REG_QUERY.exec(selector)) { // NOTICE: assignment
                 // 获取匹配出的信息
                 id = match[1];
                 tag = match[2];
                 cls = match[3];
 
-                if (id && (context = getElementById(id))) { // NOTICE: assignment
-                    // 进入此处，可能的情况为：#id tag, #id .cls, #id tag.cls, #id.cls
-                    // 其中 #id.cls 是无效选择器
+                if (context = id ? getElementById(id) : tuneContext(context)) { // NOTICE: assignment
 
-                    // #id tag
-                    if (tag && !cls) {
-                        ret = getElementsByTagName(context, tag);
-                    }
-                    // #id .cls or #id tag.cls
-                    else {
-                        if (selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
+                    // #id .cls | #id tag.cls | .cls | tag.cls
+                    if (cls) {
+                        if (!id || selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
                             ret = getElementsByClassName(cls, tag, context);
                         }
                     }
-                }
-                else if (context = tuneContext(context)) { // NOTICE: assignment
-                    // .class or tag.class
-                    if (cls) {
-                        ret = getElementsByClassName(cls, tag, context);
-                    }
-                    // tag
-                    else if (tag) { // 注：这里判断 tag, 可以去除 selector 为空白字符串的情况
+                    // #id tag | tag
+                    else if (tag) { // 排除空白字符串
                         ret = getElementsByTagName(context, tag);
                     }
                 }
@@ -88,7 +79,7 @@ KISSY.add('dom-selector', function(S, undefined) {
         }
         // 传入的 selector 是其它值时，返回空数组
 
-        // 将 NodeList 转换为普通数组，并添加上使用方法
+        // 将 NodeList 转换为普通数组，并添加上 DOM 方法
         return attachMethods(ret.item ? makeArray(ret) : ret);
     };
 
@@ -123,7 +114,7 @@ KISSY.add('dom-selector', function(S, undefined) {
 
     // query .cls
     function getElementsByClassName(cls, tag, context) {
-        var els = context.getElementsByTagName(tag || '*'),
+        var els = context.getElementsByTagName(tag || ANY),
             ret = [], i = 0, j = 0, len = els.length, el, t;
 
         cls = SPACE + cls + SPACE;
@@ -143,7 +134,7 @@ KISSY.add('dom-selector', function(S, undefined) {
             var els = context.getElementsByClassName(cls),
                 ret = els, i = 0, j = 0, len = els.length, el;
 
-            if (tag) {
+            if (tag && tag !== ANY) {
                 ret = [];
                 tag = tag.toUpperCase();
                 for (; i < len; i++) {
@@ -199,6 +190,11 @@ KISSY.add('dom-selector', function(S, undefined) {
  *  - new Node() 即便 Node 很简单，在大量循环下，对性能也会有明显降低
  *  - instanceof 对性能有影响
  *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无需冗余“防卫”
+ *  - query 方法第一天写了近 100 行；第二天发现能简化到 50 行；一觉醒来，发现还可
+ *    以进一步精简到 30 行以下。突然萌发兴趣去查 jQuery 的历史代码，求证是否有类似的经历……
+ *  - query 方法中的条件判断考虑了“频率优先”原则。最有可能出现的情况放在前面
+ *  - Array 的 push 方法可以用 j++ 来替代，性能稍有提升
+ *  - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组
  *
  * References:
  *  - MDC: querySelector, querySelectorAll, getElementsByClassName
