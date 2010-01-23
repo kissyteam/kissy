@@ -10,7 +10,6 @@ KISSY.add('dom-selector', function(S, undefined) {
         STRING = 'string',
         SPACE = ' ',
         ANY = '*',
-        slice = Array.prototype.slice,
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
@@ -146,7 +145,7 @@ KISSY.add('dom-selector', function(S, undefined) {
             ret = [], i = 0, j = 0, len = els.length, el, t;
 
         cls = SPACE + cls + SPACE;
-        for (; i < len; i++) {
+        for (; i < len; ++i) {
             el = els[i];
             t = el.className;
             if (t && (SPACE + t + SPACE).indexOf(cls) > -1) {
@@ -165,7 +164,7 @@ KISSY.add('dom-selector', function(S, undefined) {
             if (tag && tag !== ANY) {
                 ret = [];
                 tag = tag.toUpperCase();
-                for (; i < len; i++) {
+                for (; i < len; ++i) {
                     el = els[i];
                     if (el.tagName === tag) {
                         ret[j++] = el;
@@ -184,17 +183,17 @@ KISSY.add('dom-selector', function(S, undefined) {
 
     // 将 NodeList 转换为普通数组
     function makeArray(nodeList) {
-        return slice.call(nodeList, 0);
+        return Array.prototype.slice.call(nodeList);
     }
 
-    // ie 不支持 slice 转换 NodeList, 降级到普通方法
+    // ie 不支持用 slice 转换 NodeList, 降级到普通方法
     try {
-        slice.call(doc.documentElement.childNodes, 0);
+        makeArray(doc.documentElement.childNodes);
     }
     catch(e) {
         makeArray = function(nodeList) {
-            var ret = [], i, len;
-            for (i = 0,len = nodeList.length; i < len; i++) {
+            var ret = [], i = 0, len = nodeList.length;
+            for (; i < len; ++i) {
                 ret[i] = nodeList[i];
             }
             return ret;
