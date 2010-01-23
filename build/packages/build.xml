@@ -1,0 +1,29 @@
+<project name="packages.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../../tools/build.xml"/>
+
+    <property name="component.name" value="packages"/>
+    <property name="component.files" value="*.css, *.js"/>
+    <property name="src.dir" location="."/>
+
+    <target name="pre-clean">
+        <delete>
+            <fileset dir="." includes="${component.files}"/>
+        </delete>
+    </target>
+
+    <target name="concat">
+        <concat destfile="selector-aio.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="../kissy/kissy-min.js"/>
+            <path path="../dom/selector-min.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="selector-aio.js"/>
+    </target>
+
+    <target name="build" depends="pre-clean,concat,compress,copyright,clean">
+    </target>
+</project>
