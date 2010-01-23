@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v0.9dev
 MIT Licensed
-build: 431 Jan 21 14:17
+build: 444 Jan 23 23:34
 */
 /**
  * @module kissy
@@ -410,9 +410,9 @@ build: 431 Jan 21 14:17
 })(window, 'KISSY');
 
 /**
- * NOTES
+ * Notes:
  *
- * 2010-01-21:
+ * 2010.01
  *  - 考虑简单够用和 2/8 原则，去掉了对 YUI3 沙箱的模拟（archives/2009 r402）
  *
  *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 组织代码）
@@ -425,5 +425,4 @@ build: 431 Jan 21 14:17
  * 
  *  - 考虑性能，each, indexOf, trim 尽可能用原生方法
  *  - 考虑简单够用，去掉 indexOf 对 fromIndex 的支持
- *
  */

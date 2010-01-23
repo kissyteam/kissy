@@ -1,7 +1,7 @@
 /**
  * @module  selector
  * @author  lifesinger@gmail.com
- * @depends kissy, dom
+ * @depends kissy
  */
 
 KISSY.add('dom-selector', function(S, undefined) {
@@ -22,7 +22,7 @@ KISSY.add('dom-selector', function(S, undefined) {
     S.query = function(selector, context) {
         var match, t, ret = [], id, tag, cls;
 
-        // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/        
+        // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
         // 考虑 2/8 原则，仅支持以下选择器：
         // #id
         // tag
@@ -224,10 +224,13 @@ KISSY.add('dom-selector', function(S, undefined) {
  *  - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组
  *
  * Bugs:
- *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对，jQuery 也有此 bug, 诡异
+ *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 也有此 bug, 诡异
  *
  * References:
+ *  - http://ejohn.org/blog/selectors-that-people-actually-use/
+ *  - http://ejohn.org/blog/thoughts-on-queryselectorall/
  *  - MDC: querySelector, querySelectorAll, getElementsByClassName
- *  - querySelectorAll 的思考：http://ejohn.org/blog/thoughts-on-queryselectorall/
+ *  - Sizzle: http://github.com/jeresig/sizzle
  *  - MINI: http://james.padolsey.com/javascript/mini/
+ *  - XPath, TreeWalker：http://www.cnblogs.com/rubylouvre/archive/2009/07/24/1529640.html
  */
