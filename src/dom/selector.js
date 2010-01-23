@@ -4,7 +4,7 @@
  * @depends kissy, dom
  */
 
-KISSY.add('selector', function(S, undefined) {
+KISSY.add('dom-selector', function(S, undefined) {
 
     var doc = document,
         STRING = 'string',
@@ -33,7 +33,6 @@ KISSY.add('selector', function(S, undefined) {
         // #id tag.cls
         // 注意：REG_QUERY 还会匹配 #id.cls 无效值
         // 返回值为数组，没找到时返回空数组
-        // 如果选择器不在上面的列表中，或者参数非法，统统抛异常
 
         // selector 为字符串是最常见的情况，优先考虑
         // 注：空字符串无需判断，运行下去自动能返回空数组
@@ -46,49 +45,45 @@ KISSY.add('selector', function(S, undefined) {
                 if (t) ret = [t]; // #id 无效时，返回空数组
             }
             // selector 为支持列表中的其它 6 种
-            else if (match = REG_QUERY.exec(selector)) {
+            else if (match = REG_QUERY.exec(selector)) { // NOTICE: assginment
                 // 获取匹配出的信息
                 id = match[1];
                 tag = match[2];
                 cls = match[3];
 
-                if (id) {
+                if (id && (context = getElementById(id))) { // NOTICE: assignment
                     // 进入此处，可能的情况为：#id tag, #id .cls, #id tag.cls, #id.cls
                     // 其中 #id.cls 是无效选择器
 
-                    t = getElementById(id);
-
                     // #id tag
                     if (tag && !cls) {
-                        ret = getElementsByTagName(t, tag);
+                        ret = getElementsByTagName(context, tag);
                     }
                     // #id .cls or #id tag.cls
                     else {
                         if (selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
-                            ret = getElementsByClassName(cls, tag, t);
+                            ret = getElementsByClassName(cls, tag, context);
                         }
                     }
                 }
-                else {
-                    context = tuneContext(context);
-
+                else if (context = tuneContext(context)) { // NOTICE: assignment
                     // .class or tag.class
                     if (cls) {
                         ret = getElementsByClassName(cls, tag, context);
                     }
                     // tag
-                    else if(tag) { // 注：这里判断 tag, 可以去除 selector 为空白字符串的情况
+                    else if (tag) { // 注：这里判断 tag, 可以去除 selector 为空白字符串的情况
                         ret = getElementsByTagName(context, tag);
                     }
                 }
             }
         }
         // 传入的 selector 是 Node
-        else if (selector.nodeType) {
+        else if (selector && selector.nodeType) {
             ret = [selector];
         }
         // 传入的 selector 是 NodeList
-        else if (selector.item) {
+        else if (selector && selector.item) {
             ret = selector;
         }
         // 传入的 selector 是其它值时，返回空数组
@@ -97,19 +92,22 @@ KISSY.add('selector', function(S, undefined) {
         return attachMethods(ret.item ? makeArray(ret) : ret);
     };
 
-    // 调整 context
+    // 调整 context 为合理值
     function tuneContext(context) {
-        // 1). context 为 undefined 是最常见的情况，优先考虑。
+        // 1). context 为 undefined 是最常见的情况，优先考虑
         if (context === undefined) {
             context = doc;
         }
         // 2). context 的第二使用场景是传入 #id
         else if (typeof context === STRING && REG_ID.test(context)) {
             context = getElementById(context.slice(1));
-            // 注：#id 可能无效，这时获取的 context 为 null. 在下面的处理中会抛出预期的异常。
+            // 注：#id 可能无效，这时获取的 context 为 null
         }
-        // 3). context 还可以传入 HTMLElement, 此时无需处理。
-        // 4). 其它情况，保持 context 的传入值，下面的代码自动会抛出异常。
+        // 3). context 还可以传入 HTMLElement, 此时无需处理
+        // 4). 经历 1 - 3, 如果 context 还不是 HTMLElement, 赋值为 null
+        else if (context && context.nodeType !== 1 && context.nodeType !== 9) {
+            context = null;
+        }
         return context;
     }
 
@@ -200,7 +198,9 @@ KISSY.add('selector', function(S, undefined) {
  *  - getElementsByClassName 性能优于 querySelectorAll, 但 IE 系列不支持
  *  - new Node() 即便 Node 很简单，在大量循环下，对性能也会有明显降低
  *  - instanceof 对性能有影响
+ *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无需冗余“防卫”
  *
  * References:
- *  - querySelectorAll context 的注意点：http://ejohn.org/blog/thoughts-on-queryselectorall/
+ *  - MDC: querySelector, querySelectorAll, getElementsByClassName
+ *  - querySelectorAll 的思考：http://ejohn.org/blog/thoughts-on-queryselectorall/
  */

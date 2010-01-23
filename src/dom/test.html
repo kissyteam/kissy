@@ -7,7 +7,7 @@
 <body>
 <script src="../test/test.js"></script>
 <script>
-    KISSY.Test.Config.times = 200;
+    KISSY.Test.Config.times = 100;
 </script>
 
 <h2>Test Data</h2>
@@ -533,9 +533,26 @@ all member testimonials.</a></p>
         if(S.query('').length !== 0) test.fail();
         if(S.query('  ').length !== 0) test.fail();
 
-        //
-        if(S.query('').length !== 0) test.fail();
+        // 无参数时，返回空数组
+        if(S.query().length !== 0) test.fail();
+
+        // 传入 Node 时，返回 [Node]
+        if(S.query(doc)[0] !== doc) test.fail();
+
+        // 传入 NodeList 时，返回转换后的数组
+        var nodeList = doc.getElementsByTagName('h3');
+        if(S.query(nodeList)[0].className !== 'category') test.fail();
+
+        // 允许空白字符
+        if(S.query(' #test-data  p.date  ').length !== 12) test.fail();
+
+        // 无效选择器，返回 []
+        if(S.query('#test-xxx p.yyy').length !== 0) test.fail();
+        if(S.query('#test-data.date').length !== 0) test.fail();
+
     }
+
+    // temp test code
 
 </script>
 </body>
