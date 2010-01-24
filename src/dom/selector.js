@@ -224,9 +224,11 @@ KISSY.add('dom-selector', function(S, undefined) {
  *  - query 方法中的条件判断考虑了“频率优先”原则。最有可能出现的情况放在前面
  *  - Array 的 push 方法可以用 j++ 来替代，性能有提升
  *  - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组
+ *  - 从压缩角度考虑，还可以将 getElmentsByTagName 和 getElementsByClassName 定义为常量，
+ *    不过感觉这样做太“压缩控”了，还是保留不替换
  *
  * Bugs:
- *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 也有此 bug, 诡异
+ *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异
  *
  * References:
  *  - http://ejohn.org/blog/selectors-that-people-actually-use/
