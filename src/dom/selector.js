@@ -19,7 +19,7 @@ KISSY.add('dom-selector', function(S, undefined) {
      * @param {string|HTMLElement} context An id string or a HTMLElement used as context
      * @return {Array} The array of found HTMLElement
      */
-    S.query = function(selector, context) {
+    function query(selector, context) {
         var match, t, ret = [], id, tag, cls;
 
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
@@ -79,8 +79,8 @@ KISSY.add('dom-selector', function(S, undefined) {
         // 传入的 selector 是其它值时，返回空数组
 
         // 将 NodeList 转换为普通数组，并添加上 DOM 方法
-        return attachMethods(ret.item ? makeArray(ret) : ret);
-    };
+        return attach(ret.item ? makeArray(ret) : ret);
+    }
 
     // 调整 context 为合理值
     function tuneContext(context) {
@@ -201,10 +201,12 @@ KISSY.add('dom-selector', function(S, undefined) {
     }
 
     // 添加实用方法到 arr 上
-    function attachMethods(arr) {
+    function attach(arr) {
         return S.mix(arr, S.Dom);
     }
 
+    // public api
+    S.query = S.Dom.query = query;
 });
 
 /**
@@ -217,10 +219,10 @@ KISSY.add('dom-selector', function(S, undefined) {
  *  - new Node() 即便 Node 很简单，在大量循环下，对性能也会有明显降低
  *  - instanceof 对性能有影响
  *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无需冗余“防卫”
- *  - query 方法第一天写了近 100 行；第二天发现能简化到 50 行；一觉醒来，发现还可
- *    以进一步精简到 30 行以下。突然萌发兴趣去查 jQuery 的历史代码，求证是否有类似的经历……
+ *  - query 方法第一天写了近 100 行；第二天发现能简化到 50 行；一觉醒来，发现还可以进一步精简到
+ *    30 行以下。突然萌发兴趣去查 jQuery 的历史代码，求证是否有类似经历……
  *  - query 方法中的条件判断考虑了“频率优先”原则。最有可能出现的情况放在前面
- *  - Array 的 push 方法可以用 j++ 来替代，性能稍有提升
+ *  - Array 的 push 方法可以用 j++ 来替代，性能有提升
  *  - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组
  *
  * Bugs:

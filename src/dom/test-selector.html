@@ -16,7 +16,6 @@
 <script src="dom.js"></script>
 <script src="selector.js"></script>
 <script src="../../third-party/jquery/jquery-1.4.min.js"></script>
-<script src="../../third-party/misc/mini.js"></script>
 
 <div id="test-data-div" style="width: 500px; height: 200px; overflow: auto; border: 1px solid #aaa"></div>
 <textarea id="test-data-area" style="display: none" rows="0" cols="0">
@@ -339,10 +338,10 @@
 var S = KISSY, doc = document;
 
 // #id:
-function test_query_id_rj(test) {
+function test_query_id_pd(test) {
     var s = 'test-data';
     test.name = '#' + s;
-    test.extraMsg = '\t{rawjs}';
+    test.extraMsg = '\t{puredom}';
 
     if (doc.getElementById(s) !== doc.getElementById('test-data')) test.fail();
 }
@@ -363,23 +362,15 @@ function test_query_id_jq(test) {
     if (jQuery(s)[0] !== doc.getElementById('test-data')) test.fail();
 }
 
-function test_query_id_mn(test) {
-    var s = '#test-data';
-    test.name = s;
-    test.extraMsg = '\t{mini}';
-
-    if (mini(s)[0] !== doc.getElementById('test-data')) test.fail();
-}
-
 function test_query_id_sep(test) {
     test.status = 'sep';
 }
 
 // tag:
-function test_query_tag_rj(test) {
+function test_query_tag_pd(test) {
     var s = 'h3', ret = [];
     test.name = s;
-    test.extraMsg = '\t{rawjs}';
+    test.extraMsg = '\t{puredom}';
 
     ret = doc.getElementsByTagName(s);
     if (ret.length !== 9) test.fail(ret.length);
@@ -403,24 +394,15 @@ function test_query_tag_jq(test) {
     if (ret.length !== 9) test.fail(ret.length);
 }
 
-function test_query_tag_mn(test) {
-    var s = 'h3', ret = [];
-    test.name = s;
-    test.extraMsg = '\t{mini}';
-
-    ret = mini(s);
-    if (ret.length !== 9) test.fail(ret.length);
-}
-
 function test_query_tag_sep(test) {
     test.status = 'sep';
 }
 
 // .cls:
-function test_query_cls_rj(test) {
+function test_query_cls_pd(test) {
     var s = '.headline', ret = [];
     test.name = s;
-    test.extraMsg = '\t{rawjs}';
+    test.extraMsg = '\t{puredom}';
 
     if (doc.querySelectorAll) ret = doc.querySelectorAll(s);
     if (ret.length !== 6) test.fail(ret.length);
@@ -444,24 +426,15 @@ function test_query_cls_jq(test) {
     if (ret.length !== 6) test.fail(ret.length);
 }
 
-function test_query_cls_mn(test) {
-    var s = '.headline', ret = [];
-    test.name = s;
-    test.extraMsg = '\t{mini}';
-
-    ret = mini(s);
-    if (ret.length !== 6) test.fail(ret.length);
-}
-
 function test_query_cls_sep(test) {
     test.status = 'sep';
 }
 
 // #id tag:
-function test_query_idtag_rj(test) {
+function test_query_idtag_pd(test) {
     var s = '#test-data a', ret = [];
     test.name = s;
-    test.extraMsg = '\t{rawjs}';
+    test.extraMsg = '\t{puredom}';
 
     if (doc.querySelectorAll) ret = doc.querySelectorAll(s);
     if (ret.length !== 91) test.fail(ret.length);
@@ -485,24 +458,15 @@ function test_query_idtag_jq(test) {
     if (ret.length !== 91) test.fail(ret.length);
 }
 
-function test_query_idtag_mn(test) {
-    var s = '#test-data a', ret = [];
-    test.name = s;
-    test.extraMsg = '\t{mini}';
-
-    ret = mini(s);
-    if (ret.length !== 91) test.fail(ret.length);
-}
-
 function test_query_idtag_sep(test) {
     test.status = 'sep';
 }
 
 // #id .cls:
-function test_query_idcls_rj(test) {
+function test_query_idcls_pd(test) {
     var s = '#test-data .summary', ret = [];
     test.name = s;
-    test.extraMsg = '\t{rawjs}';
+    test.extraMsg = '\t{puredom}';
 
     if (doc.querySelectorAll) ret = doc.querySelectorAll(s);
     if (ret.length !== 12) test.fail(ret.length);
@@ -526,24 +490,15 @@ function test_query_idcls_jq(test) {
     if (ret.length !== 12) test.fail(ret.length);
 }
 
-function test_query_idcls_mn(test) {
-    var s = '#test-data .summary', ret = [];
-    test.name = s;
-    test.extraMsg = '\t{mini}';
-
-    ret = mini(s);
-    if (ret.length !== 12) test.fail(ret.length);
-}
-
 function test_query_idcls_sep(test) {
     test.status = 'sep';
 }
 
 // tag .cls:
-function test_query_tagcls_rj(test) {
+function test_query_tagcls_pd(test) {
     var s = 'div.description', ret = [];
     test.name = s;
-    test.extraMsg = '\t{rawjs}';
+    test.extraMsg = '\t{puredom}';
 
     if (doc.querySelectorAll) ret = doc.querySelectorAll(s);
     if (ret.length !== 6) test.fail(ret.length);
@@ -567,24 +522,15 @@ function test_query_tagcls_jq(test) {
     if (ret.length !== 6) test.fail(ret.length);
 }
 
-function test_query_tagcls_mn(test) {
-    var s = 'div.description', ret = [];
-    test.name = s;
-    test.extraMsg = '\t{mini}';
-
-    ret = mini(s);
-    if (ret.length !== 6) test.fail(ret.length);
-}
-
 function test_query_tagcls_sep(test) {
     test.status = 'sep';
 }
 
 // #id tag.cls:
-function test_query_idtagcls_rj(test) {
+function test_query_idtagcls_pd(test) {
     var s = '#test-data p.date', ret = [];
     test.name = s;
-    test.extraMsg = '\t{rawjs}';
+    test.extraMsg = '\t{puredom}';
 
     if (doc.querySelectorAll) ret = doc.querySelectorAll(s);
     if (ret.length !== 12) test.fail(ret.length);
@@ -605,15 +551,6 @@ function test_query_idtagcls_jq(test) {
     test.extraMsg = '\t{jquery}';
 
     ret = jQuery(s);
-    if (ret.length !== 12) test.fail(ret.length);
-}
-
-function test_query_idtagcls_mn(test) {
-    var s = '#test-data p.date', ret = [];
-    test.name = s;
-    test.extraMsg = '\t{mini}';
-
-    ret = mini(s);
     if (ret.length !== 12) test.fail(ret.length);
 }
 
