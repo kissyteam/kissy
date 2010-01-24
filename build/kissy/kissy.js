@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v0.9dev
 MIT Licensed
-build: 444 Jan 23 23:34
+build: 447 Jan 24 22:19
 */
 /**
  * @module kissy
@@ -210,7 +210,7 @@ build: 444 Jan 23 23:34
          */
         merge: function() {
             var a = arguments, o = {}, i, l = a.length;
-            for (i = 0; i < l; i++) {
+            for (i = 0; i < l; ++i) {
                 mix(o, a[i]);
             }
             return o;
@@ -285,7 +285,7 @@ build: 444 Jan 23 23:34
             if (when === 'before') arr.reverse();
 
             obj[sFn] = function() {
-                for (var i = 0, ret; i < 2; i++) {
+                for (var i = 0, ret; i < 2; ++i) {
                     ret = arr[i].apply(this, arguments);
                 }
                 return ret;
@@ -325,10 +325,10 @@ build: 444 Jan 23 23:34
         namespace: function() {
             var a = arguments, l = a.length, o = null, i, j, p;
 
-            for (i = 0; i < l; i++) {
+            for (i = 0; i < l; ++i) {
                 p = ('' + a[i]).split('.');
                 o = this;
-                for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; j++) {
+                for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
                     o = o[p[j]] = o[p[j]] || {};
                 }
             }
@@ -349,7 +349,7 @@ build: 444 Jan 23 23:34
               } :
               function(arr, fn, obj) {
                   var l = (arr && arr.length) || 0, i;
-                  for (i = 0; i < l; i++) {
+                  for (i = 0; i < l; ++i) {
                       fn.call(obj || this, arr[i], i, arr);
                   }
                   return this;
@@ -363,7 +363,7 @@ build: 444 Jan 23 23:34
                      return indexOf.call(arr, elem);
                  } :
                  function(elem, arr) {
-                     for (var i = 0, len = arr.length; i < len; i++) {
+                     for (var i = 0, len = arr.length; i < len; ++i) {
                          if (arr[i] === elem) {
                              return i;
                          }

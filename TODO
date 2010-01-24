@@ -7,7 +7,9 @@
   页面内文件组织思考 - 暂不考虑组件的动态加载
 
   重构 kissy 核心架构 - done
-  node
+  selector - done  还需添加 apply 方法
+  css 相关组件重整
+  dom
   bom
   event
   anim

@@ -234,5 +234,7 @@ KISSY.add('dom-selector', function(S, undefined) {
  *  - MDC: querySelector, querySelectorAll, getElementsByClassName
  *  - Sizzle: http://github.com/jeresig/sizzle
  *  - MINI: http://james.padolsey.com/javascript/mini/
+ *  - Peppy: http://jamesdonaghue.com/?p=40
+ *  - Sly: http://github.com/digitarald/sly
  *  - XPath, TreeWalker£ºhttp://www.cnblogs.com/rubylouvre/archive/2009/07/24/1529640.html
  */
