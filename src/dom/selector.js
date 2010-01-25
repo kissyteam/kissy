@@ -110,7 +110,6 @@ KISSY.add('dom-selector', function(S, undefined) {
     function getElementsByTagName(el, tag) {
         return el.getElementsByTagName(tag);
     }
-
     (function() {
         // Check to see if the browser returns only elements
         // when doing getElementsByTagName('*')
@@ -126,9 +125,9 @@ KISSY.add('dom-selector', function(S, undefined) {
 
                 if (tag === ANY) {
                     var t = [], i = 0, j = 0, node;
-                    while(node = ret[i++]) { // NOTICE: assignment
+                    while (node = ret[i++]) { // NOTICE: assignment
                         // Filter out possible comments
-                        if(node.nodeType === 1) {
+                        if (node.nodeType === 1) {
                             t[j++] = node;
                         }
                     }
@@ -141,43 +140,44 @@ KISSY.add('dom-selector', function(S, undefined) {
 
     // query .cls
     function getElementsByClassName(cls, tag, context) {
-        var els = context.getElementsByTagName(tag || ANY),
-            ret = [], i = 0, j = 0, len = els.length, el, t;
+        var els = context.getElementsByClassName(cls),
+            ret = els, i = 0, j = 0, len = els.length, el;
 
-        cls = SPACE + cls + SPACE;
-        for (; i < len; ++i) {
-            el = els[i];
-            t = el.className;
-            if (t && (SPACE + t + SPACE).indexOf(cls) > -1) {
-                ret[j++] = el;
+        if (tag && tag !== ANY) {
+            ret = [];
+            tag = tag.toUpperCase();
+            for (; i < len; ++i) {
+                el = els[i];
+                if (el.tagName === tag) {
+                    ret[j++] = el;
+                }
             }
         }
         return ret;
     }
+    if (!doc.getElementsByClassName) {
+        // 降级使用 querySelectorAll
+        if (doc.querySelectorAll) {
+            getElementsByClassName = function(cls, tag, context) {
+                return context.querySelectorAll((tag ? tag : '') + '.' + cls);
+            }
+        }
+        // 降级到普通方法
+        else {
+            getElementsByClassName = function(cls, tag, context) {
+                var els = context.getElementsByTagName(tag || ANY),
+                    ret = [], i = 0, j = 0, len = els.length, el, t;
 
-    // 用原生的 getElementsByClassName
-    if (doc.getElementsByClassName) {
-        getElementsByClassName = function(cls, tag, context) {
-            var els = context.getElementsByClassName(cls),
-                ret = els, i = 0, j = 0, len = els.length, el;
-
-            if (tag && tag !== ANY) {
-                ret = [];
-                tag = tag.toUpperCase();
+                cls = SPACE + cls + SPACE;
                 for (; i < len; ++i) {
                     el = els[i];
-                    if (el.tagName === tag) {
+                    t = el.className;
+                    if (t && (SPACE + t + SPACE).indexOf(cls) > -1) {
                         ret[j++] = el;
                     }
                 }
+                return ret;
             }
-            return ret;
-        }
-    }
-    // 用原生的 querySelectorAll
-    else if (doc.querySelectorAll) {
-        getElementsByClassName = function(cls, tag, context) {
-            return context.querySelectorAll((tag ? tag : '') + '.' + cls);
         }
     }
 
@@ -185,7 +185,6 @@ KISSY.add('dom-selector', function(S, undefined) {
     function makeArray(nodeList) {
         return Array.prototype.slice.call(nodeList);
     }
-
     // ie 不支持用 slice 转换 NodeList, 降级到普通方法
     try {
         makeArray(doc.documentElement.childNodes);
@@ -226,6 +225,8 @@ KISSY.add('dom-selector', function(S, undefined) {
  *
  *  - 从压缩角度考虑，还可以将 getElmentsByTagName 和 getElementsByClassName 定义为常量，
  *    不过感觉这样做太“压缩控”，还是保留不替换的好。
+ *
+ *  - 调整 getElementsByClassName 的降级写法，性能最差的放最后
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
