@@ -216,7 +216,6 @@ KISSY.add('dom-selector', function(S, undefined) {
  *  - 对 reg exec 的结果(id, tag, className)做 cache, 发现对性能影响很小，去掉。
  *  - getElementById 使用频率最高，使用直达通道优化。
  *  - getElementsByClassName 性能优于 querySelectorAll, 但 IE 系列不支持。
- *  - new Node() 即便 Node 很简单，在大量循环下，对性能也会有明显降低。
  *  - instanceof 对性能有影响。
  *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无需冗余“防卫”。
  *  - query 方法第一天写了近 100 行；第二天发现能简化到 50 行；一觉醒来，发现还可以进一步精简到
