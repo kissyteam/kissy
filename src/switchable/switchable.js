@@ -361,3 +361,14 @@ KISSY.add("switchable", function(S) {
     
     S.Switchable = Switchable;
 });
+
+/**
+ * Notes:
+ *
+ * TODOs:
+ *  - http://malsup.com/jquery/cycle/
+ *  - http://www.mall.taobao.com/go/chn/mall_chl/flagship.php
+ * 
+ * References:
+ *  - jQuery Scrollable http://flowplayer.org/tools/scrollable.html
+ */
