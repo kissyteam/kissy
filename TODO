@@ -35,3 +35,20 @@
 
  ----------------------
  ~ inputHint 组件
+
+ ----------------------
+ dom 包含以下内容：
+  base: create, query, remove, clone; text; html...
+  style: css, class
+  traversal: each, prev/next...
+  range
+  data
+  attr
+  info: nodeName, nodeType...
+  screen
+  manipulation
+  xpath
+  Ref:
+   - http://www.w3.org/DOM/DOMTR
+   - http://lifesinger.org/blog/wp-content/uploads/2009/07/yui-dom-full.png
+   - http://www.slideshare.net/jeresig/secrets-of-javascript-libraries
