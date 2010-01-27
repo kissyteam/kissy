@@ -205,7 +205,7 @@ KISSY.add('dom-selector', function(S, undefined) {
     }
 
     // public api
-    S.query = S.Dom.query = query;
+    S.query = query;
 });
 
 /**
@@ -230,6 +230,9 @@ KISSY.add('dom-selector', function(S, undefined) {
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
+ *
+ * TODO:
+ *  - 支持逗号分隔符 ,
  *
  * References:
  *  - http://ejohn.org/blog/selectors-that-people-actually-use/

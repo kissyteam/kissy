@@ -38,7 +38,7 @@ KISSY.add('node', function(S) {
        /**
          * Sets and gets styles.
          */
-        css: function() {
+        create: function() {
             // TODO
         }
     });
