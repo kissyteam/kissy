@@ -20,7 +20,7 @@ KISSY.add('dom-selector', function(S, undefined) {
      * @return {Array} The array of found HTMLElement
      */
     function query(selector, context) {
-        var match, t, ret = [], id, tag, cls;
+        var match, t, ret = [], id, tag, cls, i, len;
 
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
         // 考虑 2/8 原则，仅支持以下选择器：
@@ -33,6 +33,7 @@ KISSY.add('dom-selector', function(S, undefined) {
         // #id tag.cls
         // 注 1：REG_QUERY 还会匹配 #id.cls 无效值
         // 注 2：tag 可以为 * 字符
+        // 注 3：支持以上选择器的 , 号组合
         // 返回值为数组
         // 选择器无效或参数异常时，返回空数组
 
@@ -66,6 +67,14 @@ KISSY.add('dom-selector', function(S, undefined) {
                         ret = getElementsByTagName(context, tag);
                     }
                 }
+            }
+            // 对 , 号的支持
+            else if (selector.indexOf(',') > -1) {
+                var parts = selector.split(','), r = [];
+                for (i = 0, len = parts.length; i < len; ++i) {
+                    r = r.concat(query(parts[i], context));
+                }
+                ret = unique(r);
             }
         }
         // 传入的 selector 是 Node
@@ -199,6 +208,45 @@ KISSY.add('dom-selector', function(S, undefined) {
         }
     }
 
+    // Returns a unique array
+    var unique = (function() {
+        var uid = +new Date;
+
+        var data = (function() {
+            var n = 1;
+
+            return function(elem) {
+                var cacheIndex = elem[uid],
+                    nextCacheIndex = n++;
+
+                if (!cacheIndex) {
+                    elem[uid] = nextCacheIndex;
+                    return true;
+                }
+                return false;
+            };
+
+        })();
+
+        return function(arr) {
+            var length = arr.length,
+                ret = [],
+                r = -1,
+                i = 0,
+                item;
+
+            for (; i < length; ++i) {
+                item = arr[i];
+                if (data(item)) {
+                    ret[++r] = item;
+                }
+            }
+
+            uid += 1;
+            return ret;
+        };
+    })();
+
     // 添加实用方法到 arr 上
     function attach(arr) {
         return S.mix(arr, S.Dom);
@@ -226,7 +274,7 @@ KISSY.add('dom-selector', function(S, undefined) {
  *  - 从压缩角度考虑，还可以将 getElmentsByTagName 和 getElementsByClassName 定义为常量，
  *    不过感觉这样做太“压缩控”，还是保留不替换的好。
  *
- *  - 调整 getElementsByClassName 的降级写法，性能最差的放最后
+ *  - 调整 getElementsByClassName 的降级写法，性能最差的放最后。
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。

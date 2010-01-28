@@ -330,8 +330,7 @@
 var S = KISSY, doc = document;
 
 function test_only1(test) {
-    var jq = jQuery();
-    S.mix([], jq);
+    if(unique([1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6]).length !== 10) test.fail();
 }
 
 function test_only2(test) {
@@ -340,6 +339,44 @@ function test_only2(test) {
 }
 
 // temp test code
+// Returns a unique array
+    var unique = (function() {
+        var uid = +new Date;
+
+        var data = (function() {
+            var n = 1;
+
+            return function(elem) {
+                var cacheIndex = elem[uid],
+                    nextCacheIndex = n++;
+
+                if (!cacheIndex) {
+                    elem[uid] = nextCacheIndex;
+                    return true;
+                }
+                return false;
+            };
+
+        })();
+
+        return function(arr) {
+            var length = arr.length,
+                ret = [],
+                r = -1,
+                i = 0,
+                item;
+
+            for (; i < length; ++i) {
+                item = arr[i];
+                if (data(item)) {
+                    ret[++r] = item;
+                }
+            }
+
+            uid += 1;
+            return ret;
+        };
+    })();
 
 </script>
 </body>
