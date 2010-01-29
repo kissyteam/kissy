@@ -33,7 +33,7 @@ KISSY.add('dom-selector', function(S, undefined) {
         // #id tag.cls
         // 注 1：REG_QUERY 还会匹配 #id.cls 无效值
         // 注 2：tag 可以为 * 字符
-        // 注 3：支持以上选择器的 , 号组合
+        // 注 3：支持 , 号分组
         // 返回值为数组
         // 选择器无效或参数异常时，返回空数组
 
@@ -68,7 +68,7 @@ KISSY.add('dom-selector', function(S, undefined) {
                     }
                 }
             }
-            // 对 , 号的支持
+            // 支持 , 号分组
             else if (selector.indexOf(',') > -1) {
                 var parts = selector.split(','), r = [];
                 for (i = 0, len = parts.length; i < len; ++i) {
@@ -208,44 +208,12 @@ KISSY.add('dom-selector', function(S, undefined) {
         }
     }
 
-    // Returns a unique array
-    var unique = (function() {
-        var uid = +new Date;
-
-        var data = (function() {
-            var n = 1;
-
-            return function(elem) {
-                var cacheIndex = elem[uid],
-                    nextCacheIndex = n++;
-
-                if (!cacheIndex) {
-                    elem[uid] = nextCacheIndex;
-                    return true;
-                }
-                return false;
-            };
-
-        })();
-
-        return function(arr) {
-            var length = arr.length,
-                ret = [],
-                r = -1,
-                i = 0,
-                item;
-
-            for (; i < length; ++i) {
-                item = arr[i];
-                if (data(item)) {
-                    ret[++r] = item;
-                }
-            }
-
-            uid += 1;
-            return ret;
-        };
-    })();
+    // Returns a unique array TODO
+    function unique(arr) {
+        var ret = [];
+        ret = arr;
+        return ret;
+    }
 
     // 添加实用方法到 arr 上
     function attach(arr) {
@@ -278,9 +246,6 @@ KISSY.add('dom-selector', function(S, undefined) {
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
- *
- * TODO:
- *  - 支持逗号分隔符 ,
  *
  * References:
  *  - http://ejohn.org/blog/selectors-that-people-actually-use/

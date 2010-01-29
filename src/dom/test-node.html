@@ -7,7 +7,7 @@
 <body>
 <script src="../test/test.js"></script>
 <script>
-    KISSY.Test.Config.times = 100;
+    KISSY.Test.Config.times = 1;
 </script>
 
 <h2>Test Data</h2>
@@ -318,29 +318,27 @@
 </div>
 <!-- end main col --></div>
 </div>
+<select id="test-select">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+</select>
+<object id="test-object"></object>
+<div id="test-order">
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+    <p>4</p>
+</div>
 </div>
 </textarea>
 <script>
     document.getElementById('test-data-div').innerHTML = document.getElementById('test-data-area').value;
-</script>
-<div><p id="foo"><span></span></p></div>
 
-<!-- Test Cases -->
-<script>
-var S = KISSY, doc = document;
-
-function test_only1(test) {
-    if(unique([1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6]).length !== 10) test.fail();
-}
-
-function test_only2(test) {
-    var jq = jQuery();
-    Array.prototype.push.apply(jq, []);
-}
-
-// temp test code
-// Returns a unique array
-    var unique = (function() {
+    // temp test code
+    // uniq1
+    // 适当场景：数组由纯对象组成，比如 nodeList
+    var uniq1 = (function() {
         var uid = +new Date;
 
         var data = (function() {
@@ -348,7 +346,7 @@ function test_only2(test) {
 
             return function(elem) {
                 var cacheIndex = elem[uid],
-                    nextCacheIndex = n++;
+                        nextCacheIndex = n++;
 
                 if (!cacheIndex) {
                     elem[uid] = nextCacheIndex;
@@ -361,10 +359,10 @@ function test_only2(test) {
 
         return function(arr) {
             var length = arr.length,
-                ret = [],
-                r = -1,
-                i = 0,
-                item;
+                    ret = [],
+                    r = -1,
+                    i = 0,
+                    item;
 
             for (; i < length; ++i) {
                 item = arr[i];
@@ -377,6 +375,66 @@ function test_only2(test) {
             return ret;
         };
     })();
+
+    // uniq2
+    // 适用场景：数组由纯对象组成
+    function uniq2(nodes) {
+        var ret = [],
+                i, node;
+
+        for (i = 0; (node = nodes[i++]);) {
+            if (!node._found) {
+                ret[ret.length] = node;
+                node._found = true;
+            }
+        }
+
+        for (i = 0; (node = ret[i++]);) {
+            node._found = null;
+            node.removeAttribute('_found');
+        }
+
+        return ret;
+    }
+
+    // uniq3
+    function uniq3(arr) {
+        arr.sort();
+        for (var i = 1; i < arr.length; i++) {
+            if (arr[i] === arr[i - 1]) {
+                arr.splice(i--, 1);
+            }
+        }
+        return arr;
+    }
+
+</script>
+<div><p id="foo"><span></span></p></div>
+
+<!-- Test Cases -->
+<script>
+    var S = KISSY, doc = document;
+
+    var nodes = S.query('#test-data *, #w3c_main *'),
+        N = S.query('#test-data *').length;
+
+    function test_only1(test) {
+        if(uniq1(nodes).length !== N) test.fail();
+    }
+
+    function test_only2(test) {
+        if(uniq2(nodes).length !== N) test.fail();
+    }
+
+    function test_only3(test) {
+        if(uniq3(nodes).length !== N) test.fail();
+    }
+
+    // tmp code
+    var select = document.getElementById('test-select');
+    var object = document.getElementById('test-select');
+    //alert(select[112] = 35346);
+    //alert(object['hshsdhd'] = 1)
 
 </script>
 </body>
