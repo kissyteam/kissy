@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="gbk"/>
-<title>Test</title>
+<title>Node Test</title>
 </head>
 <body>
 <script src="../test/test.js"></script>
@@ -15,7 +15,7 @@
 <script src="../kissy/kissy.js"></script>
 <script src="node.js"></script>
 <script src="selector.js"></script>
-<script src="../../third-party/jquery/jquery-1.4.1.js"></script>
+<script src="../../third-party/jquery/jquery-1.4.1.min.js"></script>
 
 <div id="test-data-div" style="width: 500px; height: 200px; overflow: auto; border: 1px solid #aaa"></div>
 <textarea id="test-data-area" style="display: none" rows="0" cols="0">
@@ -325,33 +325,31 @@
 </select>
 <object id="test-object"></object>
 <div id="test-order">
-    <p>1</p>
+    <p id="xx1">1</p>
     <div id="test-order2">
-        <p>2</p>
+        <p id="xx2">2</p>
     </div>
-    <p>3</p>
-    <p>4</p>
+    <p id="xx3">3</p>
+    <p id="xx4">4</p>
 </div>
 </div>
 </textarea>
 <script>
     document.getElementById('test-data-div').innerHTML = document.getElementById('test-data-area').value;
 
-    // temp test code
-    // uniq1
-    // 适当场景：数组由纯对象组成，比如 nodeList
-    var uniq1 = (function() {
+    // 来自 Mini
+    var uniq_mini = (function() {
         var uid = +new Date;
 
         var data = (function() {
             var n = 1;
 
             return function(elem) {
-                var cacheIndex = elem[uid],
+                var cacheIndex = elem['_' + uid], // 添加 _ , fix ie select bug
                         nextCacheIndex = n++;
 
                 if (!cacheIndex) {
-                    elem[uid] = nextCacheIndex;
+                    elem['_' + uid] = nextCacheIndex;
                     return true;
                 }
                 return false;
@@ -378,15 +376,13 @@
         };
     })();
 
-    // uniq2
-    // 适用场景：数组由纯对象组成
-    function uniq2(nodes) {
-        var ret = [],
-                i, node;
+    // 来自 YUI3
+    function uniq_yui3(nodes) {
+        var ret = [], i = 0, j = 0, node;
 
-        for (i = 0; (node = nodes[i++]);) {
+        for (; (node = nodes[i++]);) {
             if (!node._found) {
-                ret[ret.length] = node;
+                ret[j++] = node;
                 node._found = true;
             }
         }
@@ -399,58 +395,44 @@
         return ret;
     }
 
-    // uniq3
-    function uniq3(arr) {
+    // 来自 jQuery
+    function uniq_jq(arr) {
         arr.sort();
-        for (var i = 1; i < arr.length; i++) {
+        for (var i = 1, len = arr.length; i < len; i++) {
             if (arr[i] === arr[i - 1]) {
                 arr.splice(i--, 1);
+                len--;
             }
         }
         return arr;
     }
 
+    // temp test code
+    var S = KISSY,
+        nodes = S.query('#test-order *, #test-order2 *');
+    debugger
+    nodes.sort();
+    debugger
 </script>
 <div><p id="foo"><span></span></p></div>
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY, doc = document;
-
-    var nodes = S.query('#test-data *, #w3c_main *'),
+    var S = KISSY,
+        nodes = S.query('#test-data *, #w3c_main *'),
         N = S.query('#test-data *').length;
 
-    function test_only1(test) {
-        if(uniq1(nodes).length !== N) test.fail();
+    function test_uniq_mini(test) {
+        if (uniq_mini(nodes).length !== N) test.fail();
     }
 
-    function test_only2(test) {
-        if(uniq2(nodes).length !== N) test.fail();
+    function test_uniq_yui3(test) {
+        if (uniq_yui3(nodes).length !== N) test.fail();
     }
 
-    function test_only3(test) {
-        if(uniq3(nodes).length !== N) test.fail();
+    function test_uniq_jq(test) {
+        if (uniq_jq(nodes).length !== N) test.fail(uniq_jq(nodes).length);
     }
-
-    // tmp code
-    var select = document.getElementById('test-select');
-    var object = document.getElementById('test-select');
-    //alert(select[112] = 35346);
-    //alert(object['hshsdhd'] = 1)
-
-    document.querySelectorAll = null;
-    var t = $('#test-order p, #test-order2 p');
-
-    var a = 0, b = 0;
-    [0, 0].sort(function() {
-        a = 1;
-        return 0;
-    });
-    [0, 1].sort(function() {
-        b = 1;
-        return 0;
-    });
-    alert(a === b);
 
 </script>
 </body>
