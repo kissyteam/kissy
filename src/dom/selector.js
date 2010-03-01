@@ -11,7 +11,18 @@ KISSY.add('dom-selector', function(S, undefined) {
         SPACE = ' ',
         ANY = '*',
         REG_ID = /^#[\w-]+$/,
-        REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
+        REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/,
+        hasDuplicate = false,
+	    baseHasDuplicate = true;
+
+    // Here we check if the JavaScript engine is using some sort of
+    // optimization where it does not always call our comparision
+    // function. If that is the case, discard the hasDuplicate value.
+    // Thus far that includes Google Chrome.
+    [0, 0].sort(function() {
+        baseHasDuplicate = false;
+        return 0;
+    });
 
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
@@ -70,11 +81,15 @@ KISSY.add('dom-selector', function(S, undefined) {
             }
             // 支持 , 号分组
             else if (selector.indexOf(',') > -1) {
-                var parts = selector.split(','), r = [];
-                for (i = 0, len = parts.length; i < len; ++i) {
-                    r = r.concat(query(parts[i], context));
+                if (doc.querySelectorAll) {
+                    ret = doc.querySelectorAll(selector);
+                } else {
+                    var parts = selector.split(','), r = [];
+                    for (i = 0,len = parts.length; i < len; ++i) {
+                        r = r.concat(query(parts[i], context));
+                    }
+                    ret = uniqueSort(r);
                 }
-                ret = unique(r);
             }
         }
         // 传入的 selector 是 Node
@@ -208,16 +223,42 @@ KISSY.add('dom-selector', function(S, undefined) {
         }
     }
 
-    // Returns a unique array TODO
-    function unique(arr) {
-        var ret = [];
-        ret = arr;
+    // 对于分组选择器，需要进行去重和排序
+    function uniqueSort(results) {
+        hasDuplicate = baseHasDuplicate;
+        results.sort(sortOrder);
+
+        if (hasDuplicate) {
+            for (var i = 1; i < results.length; i++) {
+                if (results[i] === results[i - 1]) {
+                    results.splice(i--, 1);
+                }
+            }
+        }
+        return results;
+    }
+
+    function sortOrder(a, b) {
+        var ret = a.compareDocumentPosition(b) & 4 ? -1 : a === b ? 0 : 1;
+        if (ret === 0) {
+            hasDuplicate = true;
+        }
         return ret;
+    }
+    if ('sourceIndex' in doc.documentElement) {
+        sortOrder = function(a, b) {
+            var ret = a.sourceIndex - b.sourceIndex;
+            if (ret === 0) {
+                hasDuplicate = true;
+            }
+            return ret;
+        };
     }
 
     // 添加实用方法到 arr 上
     function attach(arr) {
-        return S.mix(arr, S.Dom);
+//        return S.mix(arr, S.Dom); // TODO
+        return arr;
     }
 
     // public api
@@ -244,6 +285,9 @@ KISSY.add('dom-selector', function(S, undefined) {
  *
  *  - 调整 getElementsByClassName 的降级写法，性能最差的放最后。
  *
+ * 2010.02
+ *  - 添加对分组选择器的支持（主要参考 Sizzle 的代码，代去除了对非 Grade A 级浏览器的支持）
+ *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
  *
@@ -256,4 +300,5 @@ KISSY.add('dom-selector', function(S, undefined) {
  *  - Peppy: http://jamesdonaghue.com/?p=40
  *  - Sly: http://github.com/digitarald/sly
  *  - XPath, TreeWalker：http://www.cnblogs.com/rubylouvre/archive/2009/07/24/1529640.html
+ *  -
  */

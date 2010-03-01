@@ -1,13 +1,13 @@
 
  ----------------------
-  2010Q1
+  2010 Q1
 
   API 思考 - 细节上，借鉴 jQuery 和 YUI2 的简洁易用风格；整体设计上，考虑类似 YUI3 的严谨组织
   沙箱思考 - 借鉴 YUI3 的沙箱体系，但去掉设计过度的部分
   页面内文件组织思考 - 暂不考虑组件的动态加载
 
   重构 kissy 核心架构 - done
-  跟踪 jquery 代码，确定 Sizzle 返回后的数组进行了哪些处理
+  跟踪 jquery 代码，确定 Sizzle 返回后的数组进行了哪些处理 - done
   selector - done  还需添加 filter/apply 方法
 
   css 相关组件重整

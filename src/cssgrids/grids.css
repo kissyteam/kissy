@@ -35,5 +35,5 @@
 	clear: both;
 }
 .layout, .main-wrap, .col-sub, .col-extra {
-    zoom: 1;
+    *zoom: 1;
 }

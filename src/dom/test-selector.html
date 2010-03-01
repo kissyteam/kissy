@@ -15,7 +15,7 @@
 <script src="../kissy/kissy.js"></script>
 <script src="node.js"></script>
 <script src="selector.js"></script>
-<script src="../../third-party/jquery/jquery-1.4.1.min.js"></script>
+<script src="../../third-party/jquery/jquery-1.4.2.js"></script>
 
 <div id="test-data-div" style="width: 500px; height: 200px; overflow: auto; border: 1px solid #aaa"></div>
 <textarea id="test-data-area" style="display: none" rows="0" cols="0">
@@ -555,6 +555,38 @@ function test_query_idtagcls_jq(test) {
 }
 
 function test_query_idtagcls_sep(test) {
+    test.status = 'sep';
+}
+
+// group:
+function test_query_group_pd(test) {
+    var s = '#test-data .date, #w3c_main .date', ret = [];
+    test.name = s;
+    test.extraMsg = '\t{puredom}';
+
+    if (doc.querySelectorAll) ret = doc.querySelectorAll(s);
+    if (ret.length !== 15) test.fail(ret.length);
+}
+
+function test_query_group_ks(test) {
+    var s = '#test-data .date, #w3c_main .date', ret = [];
+    test.name = s;
+    test.extraMsg = '\t{kissy}';
+
+    ret = S.query(s);
+    if (ret.length !== 15) test.fail(ret.length);
+}
+
+function test_query_group_jq(test) {
+    var s = '#test-data .date, #w3c_main .date', ret = [];
+    test.name = s;
+    test.extraMsg = '\t{jquery}';
+
+    ret = jQuery(s);
+    if (ret.length !== 15) test.fail(ret.length);
+}
+
+function test_query_group_sep(test) {
     test.status = 'sep';
 }
 
