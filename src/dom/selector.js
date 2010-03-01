@@ -12,17 +12,7 @@ KISSY.add('dom-selector', function(S, undefined) {
         ANY = '*',
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/,
-        hasDuplicate = false,
-	    baseHasDuplicate = true;
-
-    // Here we check if the JavaScript engine is using some sort of
-    // optimization where it does not always call our comparision
-    // function. If that is the case, discard the hasDuplicate value.
-    // Thus far that includes Google Chrome.
-    [0, 0].sort(function() {
-        baseHasDuplicate = false;
-        return 0;
-    });
+        hasDuplicate = false;
 
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
@@ -79,7 +69,7 @@ KISSY.add('dom-selector', function(S, undefined) {
                     }
                 }
             }
-            // 支持 , 号分组
+            // 分组选择器
             else if (selector.indexOf(',') > -1) {
                 if (doc.querySelectorAll) {
                     ret = doc.querySelectorAll(selector);
@@ -225,9 +215,7 @@ KISSY.add('dom-selector', function(S, undefined) {
 
     // 对于分组选择器，需要进行去重和排序
     function uniqueSort(results) {
-        hasDuplicate = baseHasDuplicate;
         results.sort(sortOrder);
-
         if (hasDuplicate) {
             for (var i = 1; i < results.length; i++) {
                 if (results[i] === results[i - 1]) {
@@ -238,21 +226,14 @@ KISSY.add('dom-selector', function(S, undefined) {
         return results;
     }
 
+    // 该函数只在不支持 querySelectorAll 的 IE7- 浏览器中被调用，
+    // 因此只需考虑 sourceIndex 即可
     function sortOrder(a, b) {
-        var ret = a.compareDocumentPosition(b) & 4 ? -1 : a === b ? 0 : 1;
+        var ret = a.sourceIndex - b.sourceIndex;
         if (ret === 0) {
             hasDuplicate = true;
         }
         return ret;
-    }
-    if ('sourceIndex' in doc.documentElement) {
-        sortOrder = function(a, b) {
-            var ret = a.sourceIndex - b.sourceIndex;
-            if (ret === 0) {
-                hasDuplicate = true;
-            }
-            return ret;
-        };
     }
 
     // 添加实用方法到 arr 上
@@ -300,5 +281,9 @@ KISSY.add('dom-selector', function(S, undefined) {
  *  - Peppy: http://jamesdonaghue.com/?p=40
  *  - Sly: http://github.com/digitarald/sly
  *  - XPath, TreeWalker：http://www.cnblogs.com/rubylouvre/archive/2009/07/24/1529640.html
- *  -
+ *
+ *  - http://www.quirksmode.org/blog/archives/2006/01/contains_for_mo.html
+ *  - http://www.quirksmode.org/dom/getElementsByTagNames.html
+ *  - http://ejohn.org/blog/comparing-document-position/
+ *  - http://github.com/jeresig/sizzle/blob/master/sizzle.js
  */
