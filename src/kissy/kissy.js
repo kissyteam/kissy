@@ -335,17 +335,17 @@
          * @param {array} arr the array to iterate
          * @param {function} fn the function to execute on each item. The function
          * receives three arguments: the value, the index, the full array.
-         * @param {object} obj optional context object
+         * @param {object} context optional context object
          */
         each: forEach ?
-              function (arr, fn, obj) {
-                  forEach.call(arr, fn, obj);
+              function (arr, fn, context) {
+                  forEach.call(arr, fn, context);
                   return this;
               } :
-              function(arr, fn, obj) {
+              function(arr, fn, context) {
                   var l = (arr && arr.length) || 0, i;
                   for (i = 0; i < l; ++i) {
-                      fn.call(obj || this, arr[i], i, arr);
+                      fn.call(context || this, arr[i], i, arr);
                   }
                   return this;
               },

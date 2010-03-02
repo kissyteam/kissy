@@ -11,8 +11,7 @@ KISSY.add('dom-selector', function(S, undefined) {
         SPACE = ' ',
         ANY = '*',
         REG_ID = /^#[\w-]+$/,
-        REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/,
-        hasDuplicate = false;
+        REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
@@ -215,7 +214,20 @@ KISSY.add('dom-selector', function(S, undefined) {
 
     // 对于分组选择器，需要进行去重和排序
     function uniqueSort(results) {
-        results.sort(sortOrder);
+        var hasDuplicate = false;
+
+        // 按照 dom 位置排序
+        results.sort(function (a, b) {
+            // 该函数只在不支持 querySelectorAll 的 IE7- 浏览器中被调用，
+            // 因此只需考虑 sourceIndex 即可
+            var ret = a.sourceIndex - b.sourceIndex;
+            if (ret === 0) {
+                hasDuplicate = true;
+            }
+            return ret;
+        });
+
+        // 去重
         if (hasDuplicate) {
             for (var i = 1; i < results.length; i++) {
                 if (results[i] === results[i - 1]) {
@@ -223,22 +235,16 @@ KISSY.add('dom-selector', function(S, undefined) {
                 }
             }
         }
-        return results;
-    }
 
-    // 该函数只在不支持 querySelectorAll 的 IE7- 浏览器中被调用，
-    // 因此只需考虑 sourceIndex 即可
-    function sortOrder(a, b) {
-        var ret = a.sourceIndex - b.sourceIndex;
-        if (ret === 0) {
-            hasDuplicate = true;
-        }
-        return ret;
+        return results;
     }
 
     // 添加实用方法到 arr 上
     function attach(arr) {
-//        return S.mix(arr, S.Dom); // TODO
+        // 这里仅添加 each 方法，其它方法在各个组件中添加
+        arr.each = function(fn, context) {
+            S.each.call(arr, fn, context);
+        };
         return arr;
     }
 
