@@ -92,7 +92,7 @@ KISSY.add('dom-selector', function(S, undefined) {
         // 传入的 selector 是其它值时，返回空数组
 
         // 将 NodeList 转换为普通数组，并添加上 DOM 方法
-        return attach(ret.item ? makeArray(ret) : ret);
+        return ret.item ? makeArray(ret) : ret;
     }
 
     // 调整 context 为合理值
@@ -235,17 +235,7 @@ KISSY.add('dom-selector', function(S, undefined) {
                 }
             }
         }
-
         return results;
-    }
-
-    // 添加实用方法到 arr 上
-    function attach(arr) {
-        // 这里仅添加 each 方法，其它方法在各个组件中添加
-        arr.each = function(fn, context) {
-            S.each.call(arr, fn, context);
-        };
-        return arr;
     }
 
     // public api
