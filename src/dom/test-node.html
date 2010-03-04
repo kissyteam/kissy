@@ -318,118 +318,16 @@
 </div>
 <!-- end main col --></div>
 </div>
-<select id="test-select">
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-</select>
-<object id="test-object"></object>
-<div id="test-order">
-    <p id="xx1">1</p>
-    <div id="test-order2">
-        <p id="xx2">2</p>
-    </div>
-    <p id="xx3">3</p>
-    <p id="xx4">4</p>
-</div>
 </div>
 </textarea>
 <script>
     document.getElementById('test-data-div').innerHTML = document.getElementById('test-data-area').value;
-
-    // 来自 Mini
-    var uniq_mini = (function() {
-        var uid = +new Date;
-
-        var data = (function() {
-            var n = 1;
-
-            return function(elem) {
-                var cacheIndex = elem['_' + uid], // 添加 _ , fix ie select bug
-                        nextCacheIndex = n++;
-
-                if (!cacheIndex) {
-                    elem['_' + uid] = nextCacheIndex;
-                    return true;
-                }
-                return false;
-            };
-
-        })();
-
-        return function(arr) {
-            var length = arr.length,
-                    ret = [],
-                    r = -1,
-                    i = 0,
-                    item;
-
-            for (; i < length; ++i) {
-                item = arr[i];
-                if (data(item)) {
-                    ret[++r] = item;
-                }
-            }
-
-            uid += 1;
-            return ret;
-        };
-    })();
-
-    // 来自 YUI3
-    function uniq_yui3(nodes) {
-        var ret = [], i = 0, j = 0, node;
-
-        for (; (node = nodes[i++]);) {
-            if (!node._found) {
-                ret[j++] = node;
-                node._found = true;
-            }
-        }
-
-        for (i = 0; (node = ret[i++]);) {
-            node._found = null;
-            node.removeAttribute('_found');
-        }
-
-        return ret;
-    }
-
-    // 来自 jQuery
-    function uniq_jq(arr) {
-        arr.sort();
-        for (var i = 1, len = arr.length; i < len; i++) {
-            if (arr[i] === arr[i - 1]) {
-                arr.splice(i--, 1);
-                len--;
-            }
-        }
-        return arr;
-    }
-
-    // temp test code
-    var S = KISSY,
-        nodes = S.query('#test-order *, #test-order2 *');
 </script>
 <div><p id="foo"><span></span></p></div>
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY,
-        nodes = S.query('#test-data *, #w3c_main *'),
-        N = S.query('#test-data *').length;
-
-    function test_uniq_mini(test) {
-        if (uniq_mini(nodes).length !== N) test.fail();
-    }
-
-    function test_uniq_yui3(test) {
-        if (uniq_yui3(nodes).length !== N) test.fail();
-    }
-
-    function test_uniq_jq(test) {
-        if (uniq_jq(nodes).length !== N) test.fail(uniq_jq(nodes).length);
-    }
+    var S = KISSY;
 
 </script>
 </body>
