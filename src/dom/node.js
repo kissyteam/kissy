@@ -1,10 +1,10 @@
 /**
  * @module  node
  * @author  lifesinger@gmail.com
- * @depends kissy
+ * @depends kissy, dom-selector
  */
 
-KISSY.add('node', function(S) {
+KISSY.add('dom-node', function(S) {
 
     /**
      * The Node class provides a wrapper for manipulating DOM Node.
@@ -42,5 +42,10 @@ KISSY.add('node', function(S) {
             // TODO
         }
     });
+
+    // query api
+    S.one = function(selector, context) {
+
+    }
 
 });

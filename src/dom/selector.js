@@ -17,9 +17,10 @@ KISSY.add('dom-selector', function(S, undefined) {
      * Retrieves an Array of HTMLElement based on the given CSS selector.
      * @param {string} selector
      * @param {string|HTMLElement} context An id string or a HTMLElement used as context
+     * @param {boolean} pure is for internal usage only
      * @return {Array} The array of found HTMLElement
      */
-    function query(selector, context) {
+    function query(selector, context, pure) {
         var match, t, ret = [], id, tag, cls, i, len;
 
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
@@ -91,8 +92,17 @@ KISSY.add('dom-selector', function(S, undefined) {
         }
         // 传入的 selector 是其它值时，返回空数组
 
-        // 将 NodeList 转换为普通数组，并添加上 DOM 方法
-        return ret.item ? makeArray(ret) : ret;
+        // 将 NodeList 转换为普通数组
+        if(ret.item) {
+            ret = makeArray(ret);
+        }
+
+        // attach 上实用方法
+        if(!pure) {
+            attach(ret);
+        }
+
+        return ret;
     }
 
     // 调整 context 为合理值
@@ -235,11 +245,23 @@ KISSY.add('dom-selector', function(S, undefined) {
                 }
             }
         }
+
         return results;
+    }
+
+    // 添加实用方法到 arr 上
+    function attach(arr) {
+        // 这里仅添加 each 方法，其它方法在各个组件中添加
+        arr.each = function(fn, context) {
+            S.each(arr, fn, context);
+        };
     }
 
     // public api
     S.query = query;
+    S.get = function(selector, context) {
+        return query(selector, context, true)[0] || null;
+    }
 });
 
 /**
@@ -264,6 +286,12 @@ KISSY.add('dom-selector', function(S, undefined) {
  *
  * 2010.02
  *  - 添加对分组选择器的支持（主要参考 Sizzle 的代码，代去除了对非 Grade A 级浏览器的支持）
+ *
+ * 2010.03
+ *  - 基于原生 dom 的两个 api: S.query 返回数组; S.get 返回第一个。
+ *    基于 Node 的 api: S.one, 在 Node 中实现。
+ *    基于 NodeList 的 api: S.all, 在 NodeList 中实现。
+ *    通过 api 的分层，同时满足初级用户和高级用户的需求。
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
