@@ -4,7 +4,7 @@
  * @depends kissy
  */
 
-KISSY.add('dom-selector', function(S, undefined) {
+KISSY.add('selector', function(S, undefined) {
 
     var doc = document,
         STRING = 'string',
