@@ -42,6 +42,31 @@ KISSY.add("editor", function(S) {
         plugins: {},
 
         /**
+         * 全局环境变量
+         */
+        Env: {
+            /**
+             * 所有添加的模块
+             * 注：mod = { name: modName, fn: initFn, details: {...} }
+             */
+            mods: { }
+        },
+
+        /**
+         * 添加模块
+         */
+        add: function(name, fn, details) {
+
+            this.Env.mods[name] = {
+                name: name,
+                fn: fn,
+                details: details || {}
+            };
+
+            return this; // chain support
+        },
+
+        /**
          * 添加插件
          * @param {string|Array} name
          */
@@ -77,7 +102,7 @@ KISSY.add("editor", function(S) {
         /**
          * 已加载的模块
          */
-        _attached: {},
+        _attached: { },
 
         /**
          * 加载注册的所有模块
@@ -105,33 +130,6 @@ KISSY.add("editor", function(S) {
 
     S.Editor = Editor;
 });
-
-KISSY.Editor = {
-    /**
-     * 全局环境变量
-     */
-    Env: {
-        /**
-         * 所有添加的模块
-         * 注：mod = { name: modName, fn: initFn, details: {...} }
-         */
-        mods: {}
-    },
-
-    /**
-     * 添加模块
-     */
-    add: function(name, fn, details) {
-
-        this.Env.mods[name] = {
-            name: name,
-            fn: fn,
-            details: details || {}
-        };
-
-        return this; // chain support
-    }
-};
 
 // TODO
 // 1. 自动替换页面中的 textarea ? 约定有特殊 class 的不替换

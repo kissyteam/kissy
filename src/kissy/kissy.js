@@ -157,7 +157,9 @@
                 }
 
                 // A fallback to window.onload, that will always work.
-                win.attachEvent('onload', self._fireReady);
+                win.attachEvent('onload', function() {
+                    self._fireReady();
+                });
                 
             } else { // w3c mode
                 function domReady() {

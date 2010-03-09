@@ -5,11 +5,12 @@
 <html>
 <head>
 <title>Editor Preview</title>
-<meta http-equiv="Content-Type" content="text/html; charset=gb18030">
-<link rel="stylesheet" href="themes/default/content.css" type="text/css"/>
+<meta charset="gbk">
+<link rel="stylesheet" href="../cssreset/reset.css" />
+<link rel="stylesheet" href="themes/default/post.css" />
 </head>
 <head>
-<body>
+<body class="ks-editor-post">
 <?php
     echo(stripslashes($code));
 ?>

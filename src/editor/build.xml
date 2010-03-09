@@ -6,7 +6,7 @@
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
-    <target name="editor.concat">
+    <target name="js.concat">
         <concat destfile="editor.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../kissy/kissy.js"/>
             <path path="editor-base.js"/>
@@ -45,17 +45,6 @@
             <path path="plugins/undo/plugin.js"/>
             <path path="plugins/wordcount/plugin.js"/>
         </concat>
-    </target>
-
-    <target name="css.concat">
-        <concat destfile="editor.css" encoding="${charset}" outputencoding="${charset}">
-           <path path="themes/default/editor.css"/>
-           <path path="themes/default/post.css"/>
-        </concat>
-        <copy file="themes/default/content.css" tofile="${build.dir}/${component.name}/themes/default/content-min.css"/>
-    </target>
-
-    <target name="aio.concat">
         <concat destfile="editor-aio.js" encoding="${charset}" outputencoding="${charset}">
            <path path="${third-party.dir}/yui2/yahoo-dom-event/yahoo-dom-event.js"/>
            <path path="${third-party.dir}/yui2/json/json-min.js"/>
@@ -64,21 +53,28 @@
         </concat>
     </target>
 
+    <target name="css.concat">
+        <concat destfile="editor.css" encoding="${charset}" outputencoding="${charset}">
+           <path path="themes/default/editor.css"/>
+           <path path="themes/default/post.css"/>
+        </concat>
+        <copy file="themes/default/content.css" todir="${src.dir}"/>
+        <copy file="themes/default/post.css" todir="${src.dir}"/>
+    </target>
+
     <target name="clear">
         <move todir="${build.dir}/${component.name}/themes/default">
-            <filelist dir="${build.dir}/${component.name}">
-                <file name="editor.css"/>
-                <file name="editor-min.css"/>
-            </filelist>
+            <fileset dir="${build.dir}/${component.name}">
+                <include name="*.css"/>
+            </fileset>
         </move>
         <delete>
-            <fileset file="editor.css"/>
             <fileset file="editor.js"/>
             <fileset file="editor-aio.js"/>
         </delete>
-        <move file="${build.dir}/${component.name}/editor-aio-min.js" tofile="${build.dir}/${component.name}/editor-aio.js"/>
+        <move file="${build.dir}/${component.name}/editor-aio-min.js" todir="${build.dir}/${component.name}"/>
     </target>
 
-    <target name="build" depends="editor.concat,css.concat,aio.concat,common.build,clear">
+    <target name="build" depends="js.concat,css.concat,common.build,clear">
     </target>
 </project>

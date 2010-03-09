@@ -12,11 +12,6 @@
  ~ flash
  ~ autosave / local storage
 
- ~ 帮派日常发布（10月22日）
-
  ~ 梳理 & 重构代码，比如 region/menu 等公共类的进一步拎取，焦点的统一管理等
  ~ 改进移除链接功能，仿 google docs
-
  ~ 编辑器 WordPress 插件
- ~ 清羽后台知识库系统（10月前需要做好 format/template/table 插件）
- ~ 达夫淘江湖日志（10月中下旬开始，需要 淘江湖相册 功能）

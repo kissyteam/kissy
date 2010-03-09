@@ -1,54 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=GB18030"/>
+<meta charset="gbk"/>
 <title>Editor Test</title>
-<link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" type="text/css"/>
-<script type="text/javascript" src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="../../third-party/yui2/connection/connection-min.js"></script>
-<script type="text/javascript" src="../../third-party/yui2/json/json-min.js"></script>
+<link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" />
+<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="../../third-party/yui2/connection/connection-min.js"></script>
+<script src="../../third-party/yui2/json/json-min.js"></script>
 
-<link rel="stylesheet" href="themes/default/editor.css" type="text/css"/>
+<link rel="stylesheet" href="themes/default/editor.css" />
 
-<script type="text/javascript" src="../kissy/kissy.js"></script>
-<script type="text/javascript" src="editor-base.js"></script>
-<script type="text/javascript" src="config.js"></script>
-<script type="text/javascript" src="lang/en.js"></script>
-<script type="text/javascript" src="lang/zh-cn.js"></script>
+<script src="../kissy/kissy.js"></script>
+<script src="editor-base.js"></script>
+<script src="config.js"></script>
+<script src="lang/en.js"></script>
+<script src="lang/zh-cn.js"></script>
 
 <!-- 所有 core 文件加载独立（顺序无关） -->
-<script type="text/javascript" src="core/color.js"></script>
-<script type="text/javascript" src="core/command.js"></script>
-<script type="text/javascript" src="core/dom.js"></script>
-<script type="text/javascript" src="core/instance.js"></script>
-<script type="text/javascript" src="core/menu.js"></script>
-<script type="text/javascript" src="core/plugin.js"></script>
-<script type="text/javascript" src="core/range.js"></script>
-<script type="text/javascript" src="core/toolbar.js"></script>
-<script type="text/javascript" src="core/statusbar.js"></script>
+<script src="core/color.js"></script>
+<script src="core/command.js"></script>
+<script src="core/dom.js"></script>
+<script src="core/instance.js"></script>
+<script src="core/menu.js"></script>
+<script src="core/plugin.js"></script>
+<script src="core/range.js"></script>
+<script src="core/toolbar.js"></script>
+<script src="core/statusbar.js"></script>
 
-<script type="text/javascript" src="smilies/default/config.js"></script>
-<script type="text/javascript" src="smilies/wangwang/config.js"></script>
+<script src="smilies/default/config.js"></script>
+<script src="smilies/wangwang/config.js"></script>
 
 <!-- 所有 plugin 文件加载独立（顺序无关） -->
-<script type="text/javascript" src="plugins/basic/plugin.js"></script>
-<script type="text/javascript" src="plugins/blockquote/plugin.js"></script>
-<script type="text/javascript" src="plugins/color/plugin.js"></script>
-<script type="text/javascript" src="plugins/font/plugin.js"></script>
-<script type="text/javascript" src="plugins/image/plugin.js"></script>
-<script type="text/javascript" src="plugins/indent/plugin.js"></script>
-<script type="text/javascript" src="plugins/justify/plugin.js"></script>
-<script type="text/javascript" src="plugins/keystroke/plugin.js"></script>
-<script type="text/javascript" src="plugins/link/plugin.js"></script>
-<script type="text/javascript" src="plugins/removeformat/plugin.js"></script>
-<script type="text/javascript" src="plugins/save/plugin.js"></script>
-<script type="text/javascript" src="plugins/smiley/plugin.js"></script>
-<script type="text/javascript" src="plugins/source/plugin.js"></script>
-<script type="text/javascript" src="plugins/undo/plugin.js"></script>
-<script type="text/javascript" src="plugins/wordcount/plugin.js"></script>
-<script type="text/javascript" src="plugins/resize/plugin.js"></script>
+<script src="plugins/basic/plugin.js"></script>
+<script src="plugins/blockquote/plugin.js"></script>
+<script src="plugins/color/plugin.js"></script>
+<script src="plugins/font/plugin.js"></script>
+<script src="plugins/image/plugin.js"></script>
+<script src="plugins/indent/plugin.js"></script>
+<script src="plugins/justify/plugin.js"></script>
+<script src="plugins/keystroke/plugin.js"></script>
+<script src="plugins/link/plugin.js"></script>
+<script src="plugins/removeformat/plugin.js"></script>
+<script src="plugins/save/plugin.js"></script>
+<script src="plugins/smiley/plugin.js"></script>
+<script src="plugins/source/plugin.js"></script>
+<script src="plugins/undo/plugin.js"></script>
+<script src="plugins/wordcount/plugin.js"></script>
+<script src="plugins/resize/plugin.js"></script>
 
-<style type="text/css">
+<style >
     #demo-page {
         padding: 50px 20px;
         width: 1080px;
@@ -108,7 +108,7 @@
 
             <p>A
                 wolf wants to eat the girl but is afraid to do so in public. He
-                approaches the girl, and she naïvely tells him where she is going. He
+                approaches the girl, and she na?vely tells him where she is going. He
                 suggests the girl pick some flowers, which she does. In the meantime,
                 he goes to the grandmother's house and gains entry by pretending to be
                 the girl. He swallows the grandmother whole, and waits for the girl,
@@ -179,7 +179,7 @@
 
 </div>
 
-<script type="text/javascript">
+<script>
     KISSY.ready(function(S) {
         // 清空初始内容
         document.getElementById("demo").value = "";

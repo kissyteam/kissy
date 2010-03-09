@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.3
 MIT Licensed
-build: 469 Mar 9 17:10
+build: 471 Mar 9 21:15
 */
 /**
  * @module kissy
@@ -162,7 +162,9 @@ build: 469 Mar 9 17:10
                 }
 
                 // A fallback to window.onload, that will always work.
-                win.attachEvent('onload', self._fireReady);
+                win.attachEvent('onload', function() {
+                    self._fireReady();
+                });
                 
             } else { // w3c mode
                 function domReady() {
@@ -473,6 +475,31 @@ KISSY.add("editor", function(S) {
         plugins: {},
 
         /**
+         * 全局环境变量
+         */
+        Env: {
+            /**
+             * 所有添加的模块
+             * 注：mod = { name: modName, fn: initFn, details: {...} }
+             */
+            mods: { }
+        },
+
+        /**
+         * 添加模块
+         */
+        add: function(name, fn, details) {
+
+            this.Env.mods[name] = {
+                name: name,
+                fn: fn,
+                details: details || {}
+            };
+
+            return this; // chain support
+        },
+
+        /**
          * 添加插件
          * @param {string|Array} name
          */
@@ -508,7 +535,7 @@ KISSY.add("editor", function(S) {
         /**
          * 已加载的模块
          */
-        _attached: {},
+        _attached: { },
 
         /**
          * 加载注册的所有模块
@@ -536,33 +563,6 @@ KISSY.add("editor", function(S) {
 
     S.Editor = Editor;
 });
-
-KISSY.Editor = {
-    /**
-     * 全局环境变量
-     */
-    Env: {
-        /**
-         * 所有添加的模块
-         * 注：mod = { name: modName, fn: initFn, details: {...} }
-         */
-        mods: {}
-    },
-
-    /**
-     * 添加模块
-     */
-    add: function(name, fn, details) {
-
-        this.Env.mods[name] = {
-            name: name,
-            fn: fn,
-            details: details || {}
-        };
-
-        return this; // chain support
-    }
-};
 
 // TODO
 // 1. 自动替换页面中的 textarea ? 约定有特殊 class 的不替换
@@ -1229,8 +1229,8 @@ KISSY.Editor.add("core~instance", function(E) {
                         '<html>' +
                         '<head>' +
                         '<title>Rich Text Area</title>' +
-                        '<meta http-equiv="content-type" content="text/html; charset=gb18030" />' +
-                        '<link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" />' +
+                        '<meta charset="charset=gbk" />' +
+                        '<link href="{CONTENT_CSS}" rel="stylesheet" />' +
                         '</head>' +
                         '<body spellcheck="false" class="ks-editor-post">{CONTENT}</body>' +
                         '</html>',
@@ -1364,7 +1364,7 @@ KISSY.Editor.add("core~instance", function(E) {
             this.toolbar.domEl = container.childNodes[0];
             this.contentWin = iframe.contentWindow;
             this.contentDoc = iframe.contentWindow.document;
-            
+
             this.statusbar.domEl = container.childNodes[2];
 
             // TODO 目前是根据 textatea 的宽度来设定 editor 的宽度。可以考虑 config 里指定宽度
@@ -1505,6 +1505,10 @@ KISSY.Editor.add("core~instance", function(E) {
     });
 
 });
+
+// TODO:
+//  - 目前通过 html, body { height: 100% } 使得 ie 下所有 iframe 区域的右键能正确显示编辑菜单，
+//    缺点是编辑区域的 padding 不能设置，否则出现滚动条。后续需要从布局上进行改进，留着呼吸空白。
 
 KISSY.Editor.add("core~toolbar", function(E) {
 

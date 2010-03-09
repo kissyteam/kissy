@@ -14,8 +14,8 @@ KISSY.Editor.add("core~instance", function(E) {
                         '<html>' +
                         '<head>' +
                         '<title>Rich Text Area</title>' +
-                        '<meta http-equiv="content-type" content="text/html; charset=gb18030" />' +
-                        '<link type="text/css" href="{CONTENT_CSS}" rel="stylesheet" />' +
+                        '<meta charset="charset=gbk" />' +
+                        '<link href="{CONTENT_CSS}" rel="stylesheet" />' +
                         '</head>' +
                         '<body spellcheck="false" class="ks-editor-post">{CONTENT}</body>' +
                         '</html>',
@@ -149,7 +149,7 @@ KISSY.Editor.add("core~instance", function(E) {
             this.toolbar.domEl = container.childNodes[0];
             this.contentWin = iframe.contentWindow;
             this.contentDoc = iframe.contentWindow.document;
-            
+
             this.statusbar.domEl = container.childNodes[2];
 
             // TODO 目前是根据 textatea 的宽度来设定 editor 的宽度。可以考虑 config 里指定宽度
@@ -290,3 +290,7 @@ KISSY.Editor.add("core~instance", function(E) {
     });
 
 });
+
+// TODO:
+//  - 目前通过 html, body { height: 100% } 使得 ie 下所有 iframe 区域的右键能正确显示编辑菜单，
+//    缺点是编辑区域的 padding 不能设置，否则出现滚动条。后续需要从布局上进行改进，留着呼吸空白。

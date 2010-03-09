@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.3
 MIT Licensed
-build: 469 Mar 9 17:10
+build: 471 Mar 9 21:15
 */
 /**
  * Styles for KISSY Editor
@@ -550,7 +550,7 @@ CSS Reset for Post
 */
 
 .ks-editor-post {
-    font: 14px/1.5 Tahoma,Helvetica,Arial,'\5b8b\4f53',sans-serif;
+    font: 14px/1.5 tahoma,arial,\5b8b\4f53,sans-serif;
 }
 .ks-editor-post em {
     /* giving em normal style */

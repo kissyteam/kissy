@@ -4,7 +4,7 @@ CSS Reset for Post
 */
 
 .ks-editor-post {
-    font: 14px/1.5 Tahoma,Helvetica,Arial,'\5b8b\4f53',sans-serif;
+    font: 14px/1.5 tahoma,arial,\5b8b\4f53,sans-serif;
 }
 .ks-editor-post em {
     /* giving em normal style */
