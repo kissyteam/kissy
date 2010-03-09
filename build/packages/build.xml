@@ -14,14 +14,17 @@
     </target>
 
     <target name="concat">
-        <concat destfile="selector-aio.js" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="kissy-aio.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../kissy/kissy-min.js"/>
             <path path="../dom/selector-min.js"/>
+            <path path="../dom/dom-min.js"/>
+            <path path="../datalazyload/datalazyload-min.js"/>
+            <path path="../switchable/switchable-aio-min.js"/>
         </concat>
     </target>
 
     <target name="clean">
-        <delete file="selector-aio.js"/>
+        <delete file="kissy-aio.js"/>
     </target>
 
     <target name="build" depends="pre-clean,concat,compress,copyright,clean">

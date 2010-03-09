@@ -4567,13 +4567,13 @@
 </div>
 </div>
 </div>
-<script type="text/javascript" src="../kissy/kissy.js"></script>
-<script type="text/javascript" src="datalazyload.js"></script>
-<script type="text/javascript">
-    KISSY().use("datalazyload", function(S){
-        var lazyLoad = new S.DataLazyload({mod: "auto"});
-        lazyLoad.addCallback("lazyCallbackTest", function() {
-            alert("Morning fog 人在畫中");
+<script src="../kissy/kissy.js"></script>
+<script src="datalazyload.js"></script>
+<script>
+    KISSY.ready(function(S){
+        var lazyLoad = new S.DataLazyload({mod: 'auto'});
+        lazyLoad.addCallback('lazyCallbackTest', function() {
+            alert('Morning fog 人在畫中');
         });
     });
 </script>

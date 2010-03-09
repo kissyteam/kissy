@@ -1,17 +1,16 @@
 /**
  * Switchable Circular Plugin
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base, widget, switchable
+ * @depends     kissy, yui-base, switchable
  */
-KISSY.add("switchable-circular", function(S) {
+KISSY.add('switchable-circular', function(S) {
 
     var Y = YAHOO.util,
-        SWITCHABLE = "switchable",
-        RELATIVE = "relative",
-        LEFT = "left", TOP = "top",
-        PX = "px", EMPTY = "",
-        FORWARD = "forward", BACKWARD = "backward",
-        SCROLLX = "scrollx", SCROLLY = "scrolly",
+        RELATIVE = 'relative',
+        LEFT = 'left', TOP = 'top',
+        PX = 'px', EMPTY = '',
+        FORWARD = 'forward', BACKWARD = 'backward',
+        SCROLLX = 'scrollx', SCROLLY = 'scrolly',
         Switchable = S.Switchable;
 
     /**
@@ -25,7 +24,7 @@ KISSY.add("switchable-circular", function(S) {
      * 循环滚动效果函数
      */
     function circularScroll(fromEls, toEls, callback, index, direction) {
-        var self = this, cfg = self.config[SWITCHABLE],
+        var self = this, cfg = self.config,
             len = self.length,
             activeIndex = self.activeIndex,
             isX = cfg.scrollType === SCROLLX,
@@ -65,7 +64,7 @@ KISSY.add("switchable-circular", function(S) {
      * 调整位置
      */
     function adjustPosition(panels, index, isBackward, prop, viewDiff) {
-        var self = this, cfg = self.config[SWITCHABLE],
+        var self = this, cfg = self.config,
             steps = cfg.steps,
             len = self.length,
             start = isBackward ? len - 1 : 0,
@@ -76,7 +75,7 @@ KISSY.add("switchable-circular", function(S) {
         // 调整 panels 到下一个视图中
         for (i = from; i < to; i++) {
             panels[i].style.position = RELATIVE;
-            panels[i].style[prop] = (isBackward ? "-" : EMPTY) + viewDiff * len + PX;
+            panels[i].style[prop] = (isBackward ? '-' : EMPTY) + viewDiff * len + PX;
         }
 
         // 偏移量
@@ -87,7 +86,7 @@ KISSY.add("switchable-circular", function(S) {
      * 复原位置
      */
     function resetPosition(panels, index, isBackward, prop, viewDiff) {
-        var self = this, cfg = self.config[SWITCHABLE],
+        var self = this, cfg = self.config,
             steps = cfg.steps,
             len = self.length,
             start = isBackward ? len - 1 : 0,
@@ -106,19 +105,25 @@ KISSY.add("switchable-circular", function(S) {
     }
 
     /**
-     * 织入初始化函数
+     * 添加插件
      */
-    S.weave(function() {
-        var self = this, cfg = self.config[SWITCHABLE];
+    Switchable.Plugins.push({
+        name: 'circular',
 
-        // 仅有滚动效果需要下面的调整
-        if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
-            // 覆盖滚动效果函数
-            cfg.scrollType = cfg.effect; // 保存到 scrollType 中
-            cfg.effect = circularScroll;
+        /**
+         * 根据 effect, 调整初始状态
+         */
+        init: function(host) {
+            var cfg = host.config;
+
+            // 仅有滚动效果需要下面的调整
+            if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
+                // 覆盖滚动效果函数
+                cfg.scrollType = cfg.effect; // 保存到 scrollType 中
+                cfg.effect = circularScroll;
+            }
         }
-
-    }, "after", Switchable.prototype, "_initSwitchable");
+    });
 });
 
 /**

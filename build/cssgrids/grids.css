@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v0.9dev
+Copyright 2010, KISSY UI Library v1.0.3
 MIT Licensed
-build: 444 Jan 23 23:34
+build: 469 Mar 9 17:09
 */
 /*
 À´∑…“Ì’§∏Ò≤ºæ÷ Flying Swing Grids Layout
@@ -40,5 +40,5 @@ build: 444 Jan 23 23:34
 	clear: both;
 }
 .layout, .main-wrap, .col-sub, .col-extra {
-    zoom: 1;
+    *zoom: 1;
 }

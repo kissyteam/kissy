@@ -3,14 +3,12 @@
  * @creator     玉伯<lifesinger@gmail.com>
  * @depends     kissy, yui-base
  */
-KISSY.add("slide", function(S) {
-
-    var SWITCHABLE = "switchable",
+KISSY.add('slide', function(S) {
 
     /**
      * 默认配置，和 Switchable 相同的部分此处未列出
      */
-    defaultConfig = {
+    var defaultConfig = {
         autoplay: true,
         circular: true
     };
@@ -29,13 +27,8 @@ KISSY.add("slide", function(S) {
 
         config = S.merge(defaultConfig, config || { });
         Slide.superclass.constructor.call(self, container, config);
-        self.switchable(self.config);
-
-        // add quick access for config
-        self.config = self.config[SWITCHABLE];
-        self.config[SWITCHABLE] = self.config;
     }
 
-    S.extend(Slide, S.Widget);
+    S.extend(Slide, S.Switchable);
     S.Slide = Slide;
 });

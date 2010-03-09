@@ -1,12 +1,11 @@
 /**
  * Switchable Autoplay Plugin
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base, widget, switchable
+ * @depends     kissy, yui-base, selector, dom-base
  */
-KISSY.add("switchable-autoplay", function(S) {
+KISSY.add('switchable-autoplay', function(S) {
 
     var Y = YAHOO.util, Event = Y.Event, Lang = YAHOO.lang,
-        SWITCHABLE = "switchable",
         Switchable = S.Switchable;
 
     /**
@@ -19,38 +18,41 @@ KISSY.add("switchable-autoplay", function(S) {
     });
 
     /**
-     * 织入初始化函数
+     * 添加插件
      * attached members:
      *   - this.paused
      *   - this.autoplayTimer
      */
-    S.weave(function() {
-        var self = this, cfg = self.config[SWITCHABLE];
-        if (!cfg.autoplay) return;
+    Switchable.Plugins.push({
+        name: 'autoplay',
 
-        // 鼠标悬停，停止自动播放
-        if (cfg.pauseOnHover) {
-            Event.on(self.container, "mouseenter", function() {
-                self.paused = true;
-            });
-            Event.on(self.container, "mouseleave", function() {
-                // 假设 interval 为 10s
-                // 在 8s 时，通过 focus 主动触发切换，停留 1s 后，鼠标移出
-                // 这时如果不 setTimeout, 再过 1s 后，主动触发的 panel 将被替换掉
-                // 为了保证每个 panel 的显示时间都不小于 interval, 此处加上 setTimeout
-                setTimeout(function() {
-                    self.paused = false;
-                }, cfg.interval * 1000);
-            });
+        init: function(host) {
+            var cfg = host.config;
+            if (!cfg.autoplay) return;
+
+            // 鼠标悬停，停止自动播放
+            if (cfg.pauseOnHover) {
+                Event.on(host.container, 'mouseenter', function() {
+                    host.paused = true;
+                });
+                Event.on(host.container, 'mouseleave', function() {
+                    // 假设 interval 为 10s
+                    // 在 8s 时，通过 focus 主动触发切换，停留 1s 后，鼠标移出
+                    // 这时如果不 setTimeout, 再过 1s 后，主动触发的 panel 将被替换掉
+                    // 为了保证每个 panel 的显示时间都不小于 interval, 此处加上 setTimeout
+                    setTimeout(function() {
+                        host.paused = false;
+                    }, cfg.interval * 1000);
+                });
+            }
+
+            // 设置自动播放
+            host.autoplayTimer = Lang.later(cfg.interval * 1000, host, function() {
+                if (host.paused) return;
+                host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0);
+            }, null, true);
         }
-
-        // 设置自动播放
-        self.autoplayTimer = Lang.later(cfg.interval * 1000, self, function() {
-            if (self.paused) return;
-            self.switchTo(self.activeIndex < self.length - 1 ? self.activeIndex + 1 : 0);
-        }, null, true);
-
-    }, "after", Switchable.prototype, "_initSwitchable");
+    });
 });
 
 /**

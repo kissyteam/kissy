@@ -3,9 +3,7 @@
  * @creator     Óñ²®<lifesinger@gmail.com>
  * @depends     kissy, yui-base
  */
-KISSY.add("tabs", function(S) {
-
-    var SWITCHABLE = "switchable";
+KISSY.add('tabs', function(S) {
 
     /**
      * Tabs Class
@@ -20,13 +18,8 @@ KISSY.add("tabs", function(S) {
         }
 
         Tabs.superclass.constructor.call(self, container, config);
-        self.switchable(self.config);
-
-        // add quick access for config
-        self.config = self.config[SWITCHABLE];
-        self.config[SWITCHABLE] = self.config;
     }
 
-    S.extend(Tabs, S.Widget);
+    S.extend(Tabs, S.Switchable);
     S.Tabs = Tabs;
 });

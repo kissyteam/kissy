@@ -3,18 +3,18 @@
  * 包括 img, textarea, 以及特定元素即将出现时的回调函数
  * @module      datalazyload
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy-core, yahoo-dom-event
+ * @depends     kissy, yahoo-dom-event
  */
-KISSY.add("datalazyload", function(S) {
+KISSY.add('datalazyload', function(S, undefined) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
         win = window, doc = document,
-        IMG_DATA_SRC = "data-lazyload-src",
-        TEXTAREA_DATA_CLS = "ks-datalazyload",
-        CUSTOM_IMG_DATA_SRC = IMG_DATA_SRC + "-custom",
-        CUSTOM_TEXTAREA_DATA_CLS = TEXTAREA_DATA_CLS + "-custom",
-        MOD = { AUTO: "auto", MANUAL: "manual" },
-        DEFAULT = "default", NONE = "none",
+        IMG_DATA_SRC = 'data-lazyload-src',
+        TEXTAREA_DATA_CLS = 'ks-datalazyload',
+        CUSTOM_IMG_DATA_SRC = IMG_DATA_SRC + '-custom',
+        CUSTOM_TEXTAREA_DATA_CLS = TEXTAREA_DATA_CLS + '-custom',
+        MOD = { AUTO: 'auto', MANUAL: 'manual' },
+        DEFAULT = 'default', NONE = 'none',
 
         defaultConfig = {
 
@@ -36,7 +36,7 @@ KISSY.add("datalazyload", function(S) {
             /**
              * 图像的占位图
              */
-            placeholder: "http://a.tbcdn.cn/kissy/1.0.2/build/datalazyload/dot.gif"
+            placeholder: 'http://a.tbcdn.cn/kissy/1.0.2/build/datalazyload/dot.gif'
         };
 
     /**
@@ -47,12 +47,12 @@ KISSY.add("datalazyload", function(S) {
         var self = this;
 
         // factory or constructor
-        if (!(self instanceof arguments.callee)) {
-            return new arguments.callee(containers, config);
+        if (!(self instanceof DataLazyload)) {
+            return new DataLazyload(containers, config);
         }
 
         // 允许仅传递 config 一个参数
-        if (typeof config === "undefined") {
+        if (config === undefined) {
             config = containers;
             containers = [doc];
         }
@@ -126,8 +126,8 @@ KISSY.add("datalazyload", function(S) {
             var timer, self = this;
 
             // scroll 和 resize 时，加载图片
-            Event.on(win, "scroll", loader);
-            Event.on(win, "resize", function() {
+            Event.on(win, 'scroll', loader);
+            Event.on(win, 'resize', function() {
                 self.threshold = self._getThreshold();
                 loader();
             });
@@ -153,8 +153,8 @@ KISSY.add("datalazyload", function(S) {
                 self._loadItems();
 
                 if (self._getItemsLength() === 0) {
-                    Event.removeListener(win, "scroll", loader);
-                    Event.removeListener(win, "resize", loader);
+                    Event.removeListener(win, 'scroll', loader);
+                    Event.removeListener(win, 'resize', loader);
                 }
             }
         },
@@ -173,7 +173,7 @@ KISSY.add("datalazyload", function(S) {
                 lazyImgs = [], lazyAreaes = [];
 
             for (n = 0,N = containers.length; n < N; ++n) {
-                imgs = containers[n].getElementsByTagName("img");
+                imgs = containers[n].getElementsByTagName('img');
 
                 for (i = 0,len = imgs.length; i < len; ++i) {
                     img = imgs[i];
@@ -196,7 +196,7 @@ KISSY.add("datalazyload", function(S) {
                 }
 
                 // 处理 textarea
-                areaes = containers[n].getElementsByTagName("textarea");
+                areaes = containers[n].getElementsByTagName('textarea');
                 for (i = 0,len = areaes.length; i < len; ++i) {
                     area = areaes[i];
                     if (Dom.hasClass(area, TEXTAREA_DATA_CLS)) {
@@ -289,10 +289,10 @@ KISSY.add("datalazyload", function(S) {
             //parent.innerHTML = area.value; // 这种方式会导致 chrome 缓存 bug
 
             // 采用隐藏不去除方式
-            var content = document.createElement("DIV");
+            var content = document.createElement('DIV');
             content.innerHTML = area.value;
             area.style.display = NONE;
-            area.className = ""; // clear hooks
+            area.className = ''; // clear hooks
             parent.appendChild(content);
         },
 
@@ -327,7 +327,7 @@ KISSY.add("datalazyload", function(S) {
          */
         addCallback: function(el, fn) {
             el = Dom.get(el);
-            if (el && typeof fn === "function") {
+            if (el && typeof fn === 'function') {
                 this.callbacks.els.push(el);
                 this.callbacks.fns.push(fn);
             }
@@ -370,19 +370,19 @@ KISSY.add("datalazyload", function(S) {
             // 遍历处理
             S.each(containers, function(container) {
                 switch (type) {
-                    case "textarea-data":
-                        area = container.getElementsByTagName("textarea")[0];
+                    case 'textarea-data':
+                        area = container.getElementsByTagName('textarea')[0];
                         if (area && Dom.hasClass(area, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
                             self._loadDataFromArea(container, area);
                         }
                         break;
-                    //case "img-src":
+                    //case 'img-src':
                     default:
-                        //S.log("loadCustomLazyData container = " + container.src);
-                        if (container.nodeName === "IMG") { // 本身就是图片
+                        //S.log('loadCustomLazyData container = ' + container.src);
+                        if (container.nodeName === 'IMG') { // 本身就是图片
                             imgs = [container];
                         } else {
-                            imgs = container.getElementsByTagName("img");
+                            imgs = container.getElementsByTagName('img');
                         }
                         for (var i = 0, len = imgs.length; i < len; i++) {
                             self._loadImgSrc(imgs[i], flag || CUSTOM_IMG_DATA_SRC);
@@ -393,7 +393,7 @@ KISSY.add("datalazyload", function(S) {
     });
 
     // attach static methods
-    S.mix(DataLazyload, DataLazyload.prototype, true, ["loadCustomLazyData", "_loadImgSrc", "_loadDataFromArea"]);
+    S.mix(DataLazyload, DataLazyload.prototype, true, ['loadCustomLazyData', '_loadImgSrc', '_loadDataFromArea']);
 
     S.DataLazyload = DataLazyload;
 });
@@ -436,8 +436,8 @@ KISSY.add("datalazyload", function(S) {
  *
  * 2009-12-17 补充：
  *  1. textarea 延迟加载约定：页面中需要延迟的 dom 节点，放在
- *       <textarea class="ks-datalazysrc invisible">dom code</textarea>
- *     里。可以添加 hidden 等 class, 但建议用 invisible, 并设定 height = "实际高度".
+ *       <textarea class='ks-datalazysrc invisible'>dom code</textarea>
+ *     里。可以添加 hidden 等 class, 但建议用 invisible, 并设定 height = '实际高度'.
  *     这样可以保证滚动时，diff 更真实有效。
  *     注意：textarea 加载后，会替换掉父容器中的所有内容。
  *  2. 延迟 callback 约定：dataLazyload.addCallback(el, fn) 表示当 el 即将出现时，触发 fn.

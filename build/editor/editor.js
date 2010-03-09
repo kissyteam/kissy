@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v0.9dev
+Copyright 2010, KISSY UI Library v1.0.3
 MIT Licensed
-build: 444 Jan 23 23:34
+build: 469 Mar 9 17:10
 */
 /**
  * @module kissy
@@ -61,7 +61,7 @@ build: 444 Jan 23 23:34
          * The version of the library.
          * @type {string}
          */
-        version: '0.9dev',
+        version: '1.0.3',
 
         /**
          * Initializes KISSY object.
@@ -210,7 +210,7 @@ build: 444 Jan 23 23:34
          */
         merge: function() {
             var a = arguments, o = {}, i, l = a.length;
-            for (i = 0; i < l; i++) {
+            for (i = 0; i < l; ++i) {
                 mix(o, a[i]);
             }
             return o;
@@ -285,7 +285,7 @@ build: 444 Jan 23 23:34
             if (when === 'before') arr.reverse();
 
             obj[sFn] = function() {
-                for (var i = 0, ret; i < 2; i++) {
+                for (var i = 0, ret; i < 2; ++i) {
                     ret = arr[i].apply(this, arguments);
                 }
                 return ret;
@@ -325,10 +325,10 @@ build: 444 Jan 23 23:34
         namespace: function() {
             var a = arguments, l = a.length, o = null, i, j, p;
 
-            for (i = 0; i < l; i++) {
+            for (i = 0; i < l; ++i) {
                 p = ('' + a[i]).split('.');
                 o = this;
-                for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; j++) {
+                for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
                     o = o[p[j]] = o[p[j]] || {};
                 }
             }
@@ -340,17 +340,17 @@ build: 444 Jan 23 23:34
          * @param {array} arr the array to iterate
          * @param {function} fn the function to execute on each item. The function
          * receives three arguments: the value, the index, the full array.
-         * @param {object} obj optional context object
+         * @param {object} context optional context object
          */
         each: forEach ?
-              function (arr, fn, obj) {
-                  forEach.call(arr, fn, obj);
+              function (arr, fn, context) {
+                  forEach.call(arr, fn, context);
                   return this;
               } :
-              function(arr, fn, obj) {
+              function(arr, fn, context) {
                   var l = (arr && arr.length) || 0, i;
-                  for (i = 0; i < l; i++) {
-                      fn.call(obj || this, arr[i], i, arr);
+                  for (i = 0; i < l; ++i) {
+                      fn.call(context || this, arr[i], i, arr);
                   }
                   return this;
               },
@@ -363,7 +363,7 @@ build: 444 Jan 23 23:34
                      return indexOf.call(arr, elem);
                  } :
                  function(elem, arr) {
-                     for (var i = 0, len = arr.length; i < len; i++) {
+                     for (var i = 0, len = arr.length; i < len; ++i) {
                          if (arr[i] === elem) {
                              return i;
                          }
@@ -415,16 +415,19 @@ build: 444 Jan 23 23:34
  * 2010.01
  *  - 考虑简单够用和 2/8 原则，去掉了对 YUI3 沙箱的模拟（archives/2009 r402）
  *
- *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 组织代码）
- *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱
+ *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 组织代码）。
+ *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
  *  - mix, merge, extend, augment, weave 方法，决定了类库代码的基本实现方式，
- *    充分利用 mixin 特性和 prototype 方式来实现代码
- *  - cloneTo, namespace 方法，决定子库的实现和代码的整体组织
- *  - each, indexOf, trim 方法，对原生 JS 的增强
- *  - log 方法，简单的调试工具
+ *    充分利用 mixin 特性和 prototype 方式来实现代码。
+ *  - cloneTo, namespace 方法，决定子库的实现和代码的整体组织。
+ *  - each, indexOf, trim 方法，对原生 JS 的增强。
+ *  - log 方法，简单的调试工具。
  * 
- *  - 考虑性能，each, indexOf, trim 尽可能用原生方法
- *  - 考虑简单够用，去掉 indexOf 对 fromIndex 的支持
+ *  - 考虑性能，each, indexOf, trim 尽可能用原生方法。
+ *  - 考虑简单够用，去掉 indexOf 对 fromIndex 的支持。
+ *
+ *  - 字符串和数组的 trim, each 等方法，可以考虑类似 S.query() 的方式，给需要
+ *    操作的原生对象加上。这想法需仔细权衡，暂留。
  */
 /**
  * KISSY.Editor 富文本编辑器

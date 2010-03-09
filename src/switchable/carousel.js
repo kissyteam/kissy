@@ -3,14 +3,12 @@
  * @creator     玉伯<lifesinger@gmail.com>
  * @depends     kissy, yui-base
  */
-KISSY.add("carousel", function(S) {
-
-    var SWITCHABLE = "switchable",
+KISSY.add('carousel', function(S) {
 
         /**
          * 默认配置，和 Switchable 相同的部分此处未列出
          */
-        defaultConfig = {
+        var defaultConfig = {
             circular: true
         };
 
@@ -28,13 +26,8 @@ KISSY.add("carousel", function(S) {
 
         config = S.merge(defaultConfig, config || { });
         Carousel.superclass.constructor.call(self, container, config);
-        self.switchable(self.config);
-
-        // add quick access for config
-        self.config = self.config[SWITCHABLE];
-        self.config[SWITCHABLE] = self.config;
     }
 
-    S.extend(Carousel, S.Widget);
+    S.extend(Carousel, S.Switchable);
     S.Carousel = Carousel;
 });

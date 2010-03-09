@@ -9,16 +9,18 @@
 <script src="../../third-party/yui2/animation/animation-min.js"></script>
 
 <script src="../kissy/kissy.js"></script>
+<script src="../dom/selector.js"></script>
+<script src="../dom/dom.js"></script>
 <script src="../datalazyload/datalazyload.js"></script>
-<script src="../widget/widget.js"></script>
-<script src="../widget-switchable/switchable.js"></script>
-<script src="../widget-switchable/plugin-autoplay.js"></script>
-<script src="../widget-switchable/plugin-effect.js"></script>
-<script src="../widget-switchable/plugin-circular.js"></script>
-<script src="../widget-switchable/plugin-lazyload.js"></script>
-<script src="../widget-switchable/tabs.js"></script>
-<script src="../widget-switchable/slide.js"></script>
-<script src="../widget-switchable/carousel.js"></script>
+
+<script src="switchable.js"></script>
+<script src="plugin-autoplay.js"></script>
+<script src="plugin-effect.js"></script>
+<script src="plugin-circular.js"></script>
+<script src="plugin-lazyload.js"></script>
+<script src="tabs.js"></script>
+<script src="slide.js"></script>
+<script src="carousel.js"></script>
 
 <style type="text/css">
     body { padding: 20px 50px 50px; }
@@ -87,16 +89,17 @@
     </div>
 </div>
 <script>
-    KISSY().use("*", function(S) {
-        var tabs = new S.Tabs("demo1", {
-            lazyDataType: "textarea-data"
-        });
-        tabs.subscribe("beforeSwitch", function(index) {
+    (function() {
+        var S = KISSY,
+            tabs = new S.Tabs('#demo1', {
+                lazyDataType: 'textarea-data'
+            });
+        tabs.subscribe('beforeSwitch', function(index) {
             if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
-                this.panels[index].innerHTML = "index = " + index;
+                this.panels[index].innerHTML = 'index = ' + index;
             }
         });
-    });
+    })();
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -149,12 +152,12 @@
     </ol>
 </div>
 <script>
-    KISSY().use("*", function(S) {
-        S.Slide("demo2", {
-            effect: "scrolly",
+    (function() {
+        KISSY.Slide('#demo2', {
+            effect: 'scrolly',
             easing: YAHOO.util.Easing.easeOutStrong
         });
-    });
+    })();
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -218,16 +221,16 @@
     </ul>
 </div>
 <script>
-    KISSY().use("*", function(S) {
-        S.Slide("demo3", {
-            navCls: "yslider-stick",
-            contentCls: "yslider-stage",
-            activeTriggerCls: "selected",
+    (function() {
+        KISSY.Slide('#demo3', {
+            navCls: 'yslider-stick',
+            contentCls: 'yslider-stage',
+            activeTriggerCls: 'selected',
             delay: .2,
-            effect: "fade",
+            effect: 'fade',
             duration: .8
         });
-    });
+    })();
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -313,24 +316,24 @@
     </div>
 </div>
 <script>
-    KISSY().use("*", function(S) {
+    (function() {
         var Y = YAHOO.util, Event = Y.Event;
 
-        var demo4 = new S.Carousel("demo4", {
-            effect: "scrollx",
+        var demo4 = new KISSY.Carousel('#demo4', {
+            effect: 'scrollx',
             easing: Y.Easing.easeOutStrong,
             steps: 5,
             viewSize: [680],
-            lazyDataType: "img-src"
+            lazyDataType: 'img-src'
         });
 
-        Event.on("scroller-prev", "click", function() {
+        Event.on('scroller-prev', 'click', function() {
             demo4.prev();
         });
-        Event.on("scroller-next", "click", function() {
+        Event.on('scroller-next', 'click', function() {
             demo4.next();
         });
-    });
+    })();
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -350,16 +353,16 @@
     </ul>
 </div>
 <script>
-    KISSY().use("*", function(S) {
-        S.Carousel("demo5", {
-            contentCls: "news-items",
+    (function() {
+        KISSY.Carousel('#demo5', {
+            contentCls: 'news-items',
             hasTriggers: false,
-            effect: "scrolly",
+            effect: 'scrolly',
             autoplay: true,
             interval: 3,
             duration: .2
         });
-    });
+    })();
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -429,84 +432,63 @@
     </div>
 </div>
 <script>
-    KISSY().use("*", function(S) {
-        var Y = YAHOO.util, Dom = Y.Dom,
-            descList = Dom.getChildren(Dom.getElementsByClassName("desc-list", "ul", "slideFocus")[0]);
+    (function() {
+        var S = KISSY, Y = YAHOO.util, Dom = Y.Dom,
+            descList = Dom.getChildren(S.get('#slideFocus ul.desc-list'));
 
-        S.Slide("slideFocus", {
-            contentCls: "pic-list",
-            navCls: "thumbs-list",
-            activeTriggerCls: "current",
-            effect: "scrollx",
+        KISSY.Slide('#slideFocus', {
+            contentCls: 'pic-list',
+            navCls: 'thumbs-list',
+            activeTriggerCls: 'current',
+            effect: 'scrollx',
             easing: YAHOO.util.Easing.easeOutStrong
         })
-        .subscribe("beforeSwitch", function(index) {
+        .subscribe('beforeSwitch', function(index) {
             S.each(descList, function(desc, i) {
-                desc.style.display = i === index ? "block" : "none";
+                desc.style.display = i === index ? 'block' : 'none';
             });
         });
-    });
+    })();
 </script>
 <p class="code-switch">显示源码</p>
 
+<h2>引用文件说明</h2>
+
+<p>需要引用以下文件：</p>
+
+<pre>
+    
+    yui2/yui-base/yui-base-min.js （包括 yahoo-dom-event, event-mouseenter）
+    yui2/animation/animation-min.js （可选，有动画时才需要）
+
+    kissy/build/packages/kissy-aio-min.js
+</pre>
 
 <script>
-    KISSY().use("*", function() {
+    (function() {
         var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, UA = YAHOO.env.ua,
-            SHOW_CODE = "显示源码", HIDE_CODE = "隐藏源码";
+            SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
 
-        Dom.getElementsByClassName("code-switch", "p", document, function(p) {
-            Event.on(p, "click", function() {
+        Dom.getElementsByClassName('code-switch', 'p', document, function(p) {
+            Event.on(p, 'click', function() {
               var showing = p.innerHTML === SHOW_CODE,
                   next = Dom.getNextSibling(p), pre = next;
 
-                if(next.nodeName !== "PRE") {
-                    pre = document.createElement("PRE");
-                    pre.className = "code";
+                if(next.nodeName !== 'PRE') {
+                    pre = document.createElement('PRE');
+                    pre.className = 'code';
                     pre.innerHTML = Dom.getPreviousSibling(p).innerHTML;
                     if(UA.ie) {
-                        pre.innerHTML += "<br />// 请用非 ie 内核浏览器查看。";
+                        pre.innerHTML += '<br />// 请用非 ie 内核浏览器查看。';
                     }
                     Dom.insertAfter(pre, p);
                 }
 
-                pre.style.display = showing ? "block" : "none";
+                pre.style.display = showing ? 'block' : 'none';
                 p.innerHTML = showing ? HIDE_CODE : SHOW_CODE;
             });
         });
-
-        // demo1: tabs
-        /*var tabs = new S.Widget("demo1").switchable({
-            lazyDataType: "textarea-data"
-        });*/
-
-        // demo2: taobao slide
-        /*S.Widget("demo2").switchable({
-            autoplay: true,
-            effect: "scrolly",
-            easing: Y.Easing.easeOutStrong
-        });*/
-
-        // demo3: youa slide
-        /*S.Widget("demo3").switchable({
-            navCls: "yslider-stick",
-            contentCls: "yslider-stage",
-            activeTriggerCls: "selected",
-            delay: .2,
-            autoplay: true,
-            effect: "fade",
-            duration: .8
-        });*/
-
-        // demo4: circular scroller
-        /*var demo4 = S.Widget("demo5").switchable({
-            effect: "scrollx",
-            easing: Y.Easing.easeOutStrong,
-            steps: 5,
-            viewSize: [680],
-            lazyDataType: "img-src"
-        });*/
-    });
+    })();
 </script>
 </body>
 </html>
