@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.3
 MIT Licensed
-build: 472 Mar 9 22:03
+build: 473 Mar 9 22:20
 */
 if(typeof YAHOO=="undefined"||!YAHOO)var YAHOO={};YAHOO.namespace=function(){var a=arguments,h=null,f,d,m;for(f=0;f<a.length;f+=1){m=(""+a[f]).split(".");h=YAHOO;for(d=m[0]=="YAHOO"?1:0;d<m.length;d+=1){h[m[d]]=h[m[d]]||{};h=h[m[d]]}}return h};YAHOO.log=function(a,h,f){var d=YAHOO.widget.Logger;return d&&d.log?d.log(a,h,f):false};
 YAHOO.register=function(a,h,f){var d=YAHOO.env.modules,m,g,k;d[a]||(d[a]={versions:[],builds:[]});d=d[a];m=f.version;f=f.build;g=YAHOO.env.listeners;d.name=a;d.version=m;d.build=f;d.versions.push(m);d.builds.push(f);d.mainClass=h;for(k=0;k<g.length;k+=1)g[k](d);if(h){h.VERSION=m;h.BUILD=f}else YAHOO.log("mainClass is undefined for module "+a,"warn")};YAHOO.env=YAHOO.env||{modules:[],listeners:[]};YAHOO.env.getVersion=function(a){return YAHOO.env.modules[a]||null};
