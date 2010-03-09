@@ -1,12 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=GB18030"/>
+<meta charset="gbk" />
 <title>Editor Test</title>
 
-<!-- 依赖的css -->
-<link rel="stylesheet" href="http://kissy.googlecode.com/svn/trunk/build/cssreset/reset-min.css" type="text/css"/>
-<link rel="stylesheet" href="http://kissy.googlecode.com/svn/trunk/build/editor/themes/default/editor-min.css" type="text/css"/>
+<!-- 依赖的 css 文件 -->
+<link rel="stylesheet" href="http://kissy.googlecode.com/svn/trunk/build/cssreset/reset-min.css" />
+<link rel="stylesheet" href="http://kissy.googlecode.com/svn/trunk/build/editor/themes/default/editor-min.css" />
+<!-- 依赖的 css 文件 END -->
 
 <style type="text/css">
     #demo-page {
@@ -64,23 +65,21 @@
 
 </div>
 
-<!-- editor js and init code -->
-<script type="text/javascript" src="http://kissy.googlecode.com/svn/trunk/build/editor/editor-aio.js"></script>
-<script type="text/javascript">
-    KISSY().use("editor", function(S) {
-
-        S.Editor("demo", {
-            base: "http://kissy.googlecode.com/svn/trunk/build/editor/",
+<!--编辑器初始化代码 -->
+<script src="http://kissy.googlecode.com/svn/trunk/build/editor/editor-aio-min.js"></script>
+<script>
+    KISSY.ready(function(S) {
+        S.Editor('demo', {
+            base: 'http://kissy.googlecode.com/svn/trunk/build/editor/',
             pluginsConfig: {
                 image: {
-                    tabs          : ["local", "link"],
+                    tabs          : ['local', 'link'],
                     upload: {
-                        actionUrl : "your/path/to/upload.do"
+                        actionUrl : 'your/path/to/upload.do'
                     }
                 }
             }
         });
-
     });
 </script>
 </body>

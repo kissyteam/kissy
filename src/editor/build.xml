@@ -71,8 +71,9 @@
         <delete>
             <fileset file="editor.js"/>
             <fileset file="editor-aio.js"/>
+            <fileset file="*.css"/>
+            <fileset file="${build.dir}/${component.name}/editor-aio.js"/>
         </delete>
-        <move file="${build.dir}/${component.name}/editor-aio-min.js" todir="${build.dir}/${component.name}"/>
     </target>
 
     <target name="build" depends="js.concat,css.concat,common.build,clear">
