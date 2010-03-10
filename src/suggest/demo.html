@@ -1,19 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=GB18030" />
+<meta charset="gbk" />
 <title>Suggest Examples</title>
-<link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" type="text/css" />
-<script type="text/javascript" src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="../kissy/kissy.js"></script>
-<script type="text/javascript" src="suggest.js"></script>
+<link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" />
+<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="../kissy/kissy.js"></script>
+<script src="suggest.js"></script>
 <style type="text/css">
     #page { padding: 50px 50px 300px; width: 750px; margin: 0 auto; }
     h1, h2, h3 { margin: 1em 0 0.3em; }
     .section { margin-bottom: 50px; }
     .section ol { margin: 5px 20px; }
     .section ol li { list-style: decimal inside; margin: 5px 0; }
-    .search-input { width: 300px; height: 20px; padding: 5px 2px 0 4px; }
+    .search-input { width: 300px; height: 20px; padding: 3px 2px 2px 4px; }
     .search-submit { padding: 4px 10px; margin-left: 5px; }
     input.g-submit { padding: 2px 8px; margin-left: 5px; }
     html { overflow-y: scroll; }
@@ -39,8 +39,7 @@
             <button type="submit" class="search-submit">淘我喜欢</button>
         </form>
         <script type="text/javascript">
-            //KISSY.cloneTo("TB");
-            KISSY().use("suggest", function(S) {
+            KISSY.ready(function(S) {
                 S.Suggest('q', 'http://suggest.taobao.com/sug', {
                     autoFocus: true,
                     resultFormat: '约%result%个宝贝'
@@ -63,8 +62,8 @@
             .youa-suggest-container li.selected span { color: #240055 }
             .youa-suggest-container li.selected .suggest-result { color: #999 }
         </style>
-        <script type="text/javascript">
-            KISSY().use("suggest", function(S) {
+        <script>
+            KISSY.ready(function(S) {
                 // 有啊
                 var dataUrl = 'http://youa.baidu.com/suggest/se/s';
                 window["suggestCallback"] = window["g_ks_suggest_callback"];
@@ -120,7 +119,7 @@
             .g-sug li.selected span { color: #240055 }
         </style>
         <script type="text/javascript">
-            KISSY().use("suggest", function(S) {
+            KISSY.ready(function(S) {
                 // Google
                 var dataUrl = 'http://clients1.google.com/complete/search';
                 window.google = {};
@@ -154,7 +153,7 @@
             <button type="submit" class="search-submit">Search</button>
         </form>
         <script type="text/javascript">
-            KISSY().use("suggest", function(S) {
+            KISSY.ready(function(S) {
                 // 广告
                 var dataUrl = 'http://suggest.taobao.com/sug';
                 var sug = new S.Suggest('q3', dataUrl,

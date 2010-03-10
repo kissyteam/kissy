@@ -1,10 +1,11 @@
+<!doctype html>
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=gbk">
+<meta charset="gbk" />
 <title>Google</title>
-<script type="text/javascript" src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="../kissy/kissy.js"></script>
-<script type="text/javascript" src="suggest.js"></script>
+<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="../kissy/kissy.js"></script>
+<script src="suggest.js"></script>
 <style type="text/css">
 body, td, a, p, .h {
     font-family: arial, sans-serif
@@ -120,7 +121,7 @@ input { margin: 0 }
         </table>
     </form>
     <script type="text/javascript">
-        KISSY().use("suggest", function(S) {
+        KISSY.ready(function(S) {
 
             // Google
             //var dataUrl = 'http://clients1.google.com/complete/search';

@@ -19,7 +19,9 @@
   将 basic-util 功能在各个组件中实现
   重构 editor, fix 少量经常反馈的 bug + 适应新的代码组织方式 - done
   重构 switchable, 脱离对 YUI2 的依赖
-  重构 datalazyload, 脱离对 YUI2 的依赖
+  重构 suggest - half done
+  重构 megamenu, 并整理其它 switchable 应用，比如画报/排行榜等
+  重构 datalazyload
   实现 TBra 其它组件
 
   再次思考，整理《Thinking-of-KISSY》, 完善《淘宝前端架构》
