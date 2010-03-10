@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.3
+Copyright 2010, KISSY UI Library v1.0.4
 MIT Licensed
-build: 469 Mar 9 17:09
+build: 477 Mar 10 17:59
 */
 /**
  * 数据延迟加载组件
@@ -41,7 +41,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             /**
              * 图像的占位图
              */
-            placeholder: 'http://a.tbcdn.cn/kissy/1.0.2/build/datalazyload/dot.gif'
+            placeholder: 'http://a.tbcdn.cn/kissy/1.0.4/build/datalazyload/dot.gif'
         };
 
     /**

@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.3
+Copyright 2010, KISSY UI Library v1.0.4
 MIT Licensed
-build: 469 Mar 9 17:10
+build: 477 Mar 10 17:59
 */
 KISSY.add("switchable",function(g,j){function n(a,b){var c=this;b=b||{};if(!("mackupType"in b))if(b.panelCls)b.mackupType=1;else if(b.panels)b.mackupType=2;b=g.merge(n.Config,b);c.container=g.get(a);c.config=b;c.triggers=c.triggers||[];c.panels=c.panels||[];if(c.activeIndex===j)c.activeIndex=b.activeIndex;c._init()}var o=YAHOO.util,e=o.Dom,f=o.Event,h=YAHOO.lang,q=document;n.Config={mackupType:0,navCls:"ks-switchable-nav",contentCls:"ks-switchable-content",triggerCls:"ks-switchable-trigger",panelCls:"ks-switchable-panel",
 triggers:[],panels:[],hasTriggers:true,triggerType:"mouse",delay:0.1,activeIndex:0,activeTriggerCls:"active",steps:1,viewSize:[]};n.Plugins=[];g.mix(n.prototype,{_init:function(){var a=this,b=a.config;a.panels.length===0&&a._parseMackup();a.createEvent("beforeSwitch");a.createEvent("onSwitch");b.hasTriggers&&a._bindTriggers();g.each(n.Plugins,function(c){c.init&&c.init(a)})},_parseMackup:function(){var a=this,b=a.container,c=a.config,l=c.hasTriggers,k,p=[],d=[];switch(c.mackupType){case 0:if(k=g.get("."+

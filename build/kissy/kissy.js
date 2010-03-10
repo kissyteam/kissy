@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.3
+Copyright 2010, KISSY UI Library v1.0.4
 MIT Licensed
-build: 469 Mar 9 17:10
+build: 477 Mar 10 17:59
 */
 /**
  * @module kissy
@@ -61,7 +61,7 @@ build: 469 Mar 9 17:10
          * The version of the library.
          * @type {string}
          */
-        version: '1.0.3',
+        version: '1.0.4',
 
         /**
          * Initializes KISSY object.
@@ -162,7 +162,9 @@ build: 469 Mar 9 17:10
                 }
 
                 // A fallback to window.onload, that will always work.
-                win.attachEvent('onload', self._fireReady);
+                win.attachEvent('onload', function() {
+                    self._fireReady();
+                });
                 
             } else { // w3c mode
                 function domReady() {

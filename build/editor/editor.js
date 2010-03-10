@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.3
+Copyright 2010, KISSY UI Library v1.0.4
 MIT Licensed
-build: 473 Mar 9 22:20
+build: 477 Mar 10 17:59
 */
 /**
  * @module kissy
@@ -61,7 +61,7 @@ build: 473 Mar 9 22:20
          * The version of the library.
          * @type {string}
          */
-        version: '1.0.3',
+        version: '1.0.4',
 
         /**
          * Initializes KISSY object.
@@ -713,6 +713,7 @@ KISSY.Editor.add("lang~en", function(E) {
             uploading     : "Uploading...",
             upload_error  : "Exception occurs when uploading file.",
             upload_filter : "Only allow PNG, GIF, JPG image type.",
+            upload_linkFilter : "The image link is not in our whitelist. Please upload as local image.",
             ok            : "Insert"
         },
         insertOrderedList: {
@@ -871,6 +872,7 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
             uploading     : "正在上传...",
             upload_error  : "对不起，上传文件时发生了错误：",
             upload_filter : "仅支持 JPG, PNG 和 GIF 图片，请重新选择。",
+            upload_linkFilter : "对不起，图片所在网站不在允许范围内。\n请下载到本地，再通过\"本地上传\"上传图片。",
             ok            : "插入"
         },
         insertOrderedList: {
@@ -2765,6 +2767,8 @@ KISSY.Editor.add("plugins~image", function(E) {
         NO_TAB_CLS = "ks-editor-image-no-tab",
         SELECTED_TAB_CLS = "ks-editor-image-tab-selected",
 
+        REG_LINK_FILTER = /^(?:.*?:\/\/)?(.*?)\/.*$/,
+
         TABS_TMPL = { local: '<li rel="local" class="' + SELECTED_TAB_CLS  + '">{tab_local}</li>',
                       link: '<li rel="link">{tab_link}</li>',
                       album: '<li rel="album">{tab_album}</li>'
@@ -2801,6 +2805,8 @@ KISSY.Editor.add("plugins~image", function(E) {
                 actionUrl: "",
                 filter: "png|gif|jpg|jpeg",
                 filterMsg: "", // 默认为 this.lang.upload_filter
+                linkFilter: "",
+                linkFilterMsg: "", // 默认为 this.lang.upload_linkFilter
                 enableXdr: false,
                 connectionSwf: "http://a.tbcdn.cn/yui/2.8.0r4/build/connection/connection.swf",
                 formatResponse: function(data) {
@@ -2850,6 +2856,7 @@ KISSY.Editor.add("plugins~image", function(E) {
         init: function() {
             var pluginConfig = this.editor.config.pluginsConfig[this.name] || {};
             defaultConfig.upload.filterMsg = this.lang["upload_filter"];
+            defaultConfig.upload.linkFilterMsg = this.lang["upload_linkFilter"];
             this.config = Lang.merge(defaultConfig, pluginConfig);
             this.config.upload = Lang.merge(defaultConfig.upload, pluginConfig.upload || {});
 
@@ -3049,8 +3056,27 @@ KISSY.Editor.add("plugins~image", function(E) {
         },
 
         _insertWebImage: function() {
-            var imgUrl = this.form["imgUrl"].value;
-            imgUrl && this._insertImage(imgUrl);
+            var imgUrl = this.form["imgUrl"].value || '',
+                cfg = this.config.upload,
+                filter = cfg.linkFilter,
+                SEP = '|',
+                match, hostname;
+
+            // 获取 hostname
+            if(match = REG_LINK_FILTER.exec(imgUrl)) {
+               hostname = match[1];
+            }
+            if(!imgUrl || !hostname) return;
+
+            // 检查网址是否在白名单中
+            if (filter && filter !== "*") {
+                if ((SEP + filter.toLowerCase() + SEP).indexOf(SEP + hostname.toLowerCase() + SEP) === -1) {
+                    alert(cfg.linkFilterMsg);
+                    return;
+                }
+            }
+
+            this._insertImage(imgUrl);
         },
 
         /**
@@ -3830,6 +3856,9 @@ KISSY.Editor.add("plugins~save", function(E) {
 
             // Remove class="MsoNormal"
             html = html.replace(/ class="Mso.+?"/ig, "");
+
+            // Remove XML elements and declarations
+            html = html.replace(/<\\?\?xml[^>]*>/ig, "") ;
 
             return html;
         }
