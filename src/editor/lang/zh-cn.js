@@ -92,6 +92,7 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
             uploading     : "正在上传...",
             upload_error  : "对不起，上传文件时发生了错误：",
             upload_filter : "仅支持 JPG, PNG 和 GIF 图片，请重新选择。",
+            upload_linkFilter : "对不起，图片所在网站不在允许范围内。\n请下载到本地，再通过\"本地上传\"上传图片。",
             ok            : "插入"
         },
         insertOrderedList: {

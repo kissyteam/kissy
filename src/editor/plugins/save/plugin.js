@@ -122,6 +122,9 @@ KISSY.Editor.add("plugins~save", function(E) {
             // Remove class="MsoNormal"
             html = html.replace(/ class="Mso.+?"/ig, "");
 
+            // Remove XML elements and declarations
+            html = html.replace(/<\\?\?xml[^>]*>/ig, "") ;
+
             return html;
         }
 

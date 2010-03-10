@@ -89,6 +89,7 @@ KISSY.Editor.add("lang~en", function(E) {
             uploading     : "Uploading...",
             upload_error  : "Exception occurs when uploading file.",
             upload_filter : "Only allow PNG, GIF, JPG image type.",
+            upload_linkFilter : "The image link is not in our whitelist. Please upload as local image.",
             ok            : "Insert"
         },
         insertOrderedList: {

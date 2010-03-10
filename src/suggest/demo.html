@@ -7,7 +7,7 @@
 <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script src="../kissy/kissy.js"></script>
 <script src="suggest.js"></script>
-<style type="text/css">
+<style>
     #page { padding: 50px 50px 300px; width: 750px; margin: 0 auto; }
     h1, h2, h3 { margin: 1em 0 0.3em; }
     .section { margin-bottom: 50px; }
@@ -38,7 +38,7 @@
 
             <button type="submit" class="search-submit">淘我喜欢</button>
         </form>
-        <script type="text/javascript">
+        <script>
             KISSY.ready(function(S) {
                 S.Suggest('q', 'http://suggest.taobao.com/sug', {
                     autoFocus: true,
@@ -54,7 +54,7 @@
             <input class="search-input" name="keyword" id="q2" />
             <button type="submit" class="search-submit">百度一下</button>
         </form>
-        <style type="text/css">
+        <style>
             .youa-suggest-container { border-color: #5BA515 }
             .youa-suggest-container li { padding: 2px 0 3px; font-size: 14px; line-height: 20px }
             .youa-suggest-container li.selected { background-color: #DEEFC5 }
@@ -112,13 +112,13 @@
             </table>
             <input type="hidden" name="aq" value="f"/><input type="hidden" name="oq" value="n"/><input type="hidden" name="aqi" value="g10"/>
         </form>
-        <style type="text/css">
+        <style>
             .g-sug { border-color: #666 }
             .g-sug li { padding: 2px 0 3px }
             .g-sug li.selected { background-color: #D5E2FF }
             .g-sug li.selected span { color: #240055 }
         </style>
-        <script type="text/javascript">
+        <script>
             KISSY.ready(function(S) {
                 // Google
                 var dataUrl = 'http://clients1.google.com/complete/search';
@@ -152,7 +152,7 @@
             <input class="search-input" name="q" id="q3"/>
             <button type="submit" class="search-submit">Search</button>
         </form>
-        <script type="text/javascript">
+        <script>
             KISSY.ready(function(S) {
                 // 广告
                 var dataUrl = 'http://suggest.taobao.com/sug';

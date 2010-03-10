@@ -5,7 +5,7 @@
 <title>MegaMenu Test</title>
 <link rel="stylesheet" href="../../build/cssbase/base-min.css" />
 <script src="../../third-party/yui2/yui-base/yui-base-min.js"></script>
-<style type="text/css">
+<style>
     body {
         font-size: 14px;
         padding: 20px 50px;
@@ -82,16 +82,19 @@
     </div>
 </div>
 
-<script type="text/javascript" src="../../src/kissy/kissy.js"></script>
-<script type="text/javascript" src="../datalazyload/datalazyload.js"></script>
-<script type="text/javascript" src="../widget/widget.js"></script>
-<script type="text/javascript" src="../widget-switchable/switchable.js"></script>
-<script type="text/javascript" src="../widget-switchable/plugin-lazyload.js"></script>
-<script type="text/javascript" src="megamenu.js"></script>
-<script type="text/javascript">
-    KISSY().use("*", function(S) {
-        var menu = S.MegaMenu("demo", {
-            lazyDataType: "textarea-data"
+<script src="../kissy/kissy.js"></script>
+<script src="../dom/selector.js"></script>
+<script src="../dom/dom.js"></script>
+<script src="../datalazyload/datalazyload.js"></script>
+
+<script src="switchable.js"></script>
+<script src="plugin-lazyload.js"></script>
+
+<script src="megamenu.js"></script>
+<script>
+    KISSY.ready(function(S) {
+        S.MegaMenu('#demo', {
+            lazyDataType: 'textarea-data'
         });
     });
 </script>

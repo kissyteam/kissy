@@ -16,6 +16,8 @@ KISSY.Editor.add("plugins~image", function(E) {
         NO_TAB_CLS = "ks-editor-image-no-tab",
         SELECTED_TAB_CLS = "ks-editor-image-tab-selected",
 
+        REG_LINK_FILTER = /^(?:.*?:\/\/)?(.*?)\/.*$/,
+
         TABS_TMPL = { local: '<li rel="local" class="' + SELECTED_TAB_CLS  + '">{tab_local}</li>',
                       link: '<li rel="link">{tab_link}</li>',
                       album: '<li rel="album">{tab_album}</li>'
@@ -52,6 +54,8 @@ KISSY.Editor.add("plugins~image", function(E) {
                 actionUrl: "",
                 filter: "png|gif|jpg|jpeg",
                 filterMsg: "", // 默认为 this.lang.upload_filter
+                linkFilter: "",
+                linkFilterMsg: "", // 默认为 this.lang.upload_linkFilter
                 enableXdr: false,
                 connectionSwf: "http://a.tbcdn.cn/yui/2.8.0r4/build/connection/connection.swf",
                 formatResponse: function(data) {
@@ -101,6 +105,7 @@ KISSY.Editor.add("plugins~image", function(E) {
         init: function() {
             var pluginConfig = this.editor.config.pluginsConfig[this.name] || {};
             defaultConfig.upload.filterMsg = this.lang["upload_filter"];
+            defaultConfig.upload.linkFilterMsg = this.lang["upload_linkFilter"];
             this.config = Lang.merge(defaultConfig, pluginConfig);
             this.config.upload = Lang.merge(defaultConfig.upload, pluginConfig.upload || {});
 
@@ -300,8 +305,27 @@ KISSY.Editor.add("plugins~image", function(E) {
         },
 
         _insertWebImage: function() {
-            var imgUrl = this.form["imgUrl"].value;
-            imgUrl && this._insertImage(imgUrl);
+            var imgUrl = this.form["imgUrl"].value || '',
+                cfg = this.config.upload,
+                filter = cfg.linkFilter,
+                SEP = '|',
+                match, hostname;
+
+            // 获取 hostname
+            if(match = REG_LINK_FILTER.exec(imgUrl)) {
+               hostname = match[1];
+            }
+            if(!imgUrl || !hostname) return;
+
+            // 检查网址是否在白名单中
+            if (filter && filter !== "*") {
+                if ((SEP + filter.toLowerCase() + SEP).indexOf(SEP + hostname.toLowerCase() + SEP) === -1) {
+                    alert(cfg.linkFilterMsg);
+                    return;
+                }
+            }
+
+            this._insertImage(imgUrl);
         },
 
         /**

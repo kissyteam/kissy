@@ -56,23 +56,14 @@ KISSY.add('megamenu', function(S) {
         //self.hideTimer
 
         // init
-        self._init();
+        self._initView();
+        if (self.config.showCloseBtn) self._initCloseBtn();
 
     }
 
     S.extend(MegaMenu, S.Switchable);
 
     S.mix(MegaMenu.prototype, {
-
-        /**
-         * 初始化操作
-         */
-        _init: function() {
-            var self = this;
-
-            self._initView();
-            if (self.config.showCloseBtn) self._initCloseBtn();
-        },
 
         /**
          * click or tab 键激活 trigger 时触发的事件

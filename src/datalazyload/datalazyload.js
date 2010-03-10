@@ -36,7 +36,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             /**
              * Í¼ÏñµÄÕ¼Î»Í¼
              */
-            placeholder: 'http://a.tbcdn.cn/kissy/1.0.2/build/datalazyload/dot.gif'
+            placeholder: 'http://a.tbcdn.cn/kissy/1.0.4/build/datalazyload/dot.gif'
         };
 
     /**
