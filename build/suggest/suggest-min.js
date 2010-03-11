@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.4
 MIT Licensed
-build: 477 Mar 10 17:59
+build: 480 Mar 11 14:06
 */
 KISSY.add("suggest",function(l,p){function h(a,b,c){var d=this;if(!(d instanceof h))return new h(a,b,c);d.textInput=f.get(a);d.dataSource=b;d.JSONDataSource=i.isObject(b)?b:null;d.returnedData=null;d.config=i.merge(r,c||{});d.container=null;d.query="";d.queryParams="";d._timer=null;d._isRunning=false;d.dataScript=null;d._dataCache={};d._latestScriptTime="";d._scriptDataIsOut=false;d._onKeyboardSelecting=false;d.selectedItem=null;d._init()}var n=YAHOO.util,f=n.Dom,g=n.Event,i=YAHOO.lang,m=window,e=
 document,o=e.getElementsByTagName("head")[0],k=YAHOO.env.ua.ie,r={containerClass:"",containerWidth:"auto",resultFormat:"\u7ea6%result%\u6761\u7ed3\u679c",showCloseBtn:false,closeBtnText:"\u5173\u95ed",useShim:k===6,timerDelay:200,autoFocus:false,submitFormOnClickSelect:true};l.mix(h.prototype,{_init:function(){var a=this;a._initTextInput();a._initContainer();a.config.useShim&&a._initShim();a._initStyle();a.createEvent("beforeDataRequest");a.createEvent("onDataReturn");a.createEvent("beforeShow");a.createEvent("onItemSelect");
