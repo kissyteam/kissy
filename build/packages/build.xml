@@ -16,15 +16,15 @@
     <target name="concat">
         <!-- kissy-core: 核心文件，只含关键组件，一般在页头引入 -->
         <concat destfile="kissy-core.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../kissy/kissy-min.js"/>
-            <path path="../dom/selector-min.js"/>
-            <path path="../dom/dom-min.js"/>
+            <path path="../kissy/kissy.js"/>
+            <path path="../dom/selector.js"/>
+            <path path="../dom/dom.js"/>
         </concat>
         <!-- kissy-base: 常用 utils 和 widgets, 一般在页尾引入 -->
         <concat destfile="kissy-base.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../datalazyload/datalazyload-min.js"/>
-            <path path="../suggest/suggest-min.js"/>
-            <path path="../switchable/switchable-pkg-min.js"/>
+            <path path="../datalazyload/datalazyload.js"/>
+            <path path="../suggest/suggest.js"/>
+            <path path="../switchable/switchable-pkg.js"/>
         </concat>
         <!-- kissy: 包含 core 和 base 两部分，在页头无 kissy-core 时使用 -->
         <concat destfile="kissy.js" encoding="${charset}" outputencoding="${charset}">
@@ -33,12 +33,6 @@
         </concat>
     </target>
 
-    <target name="clean">
-        <delete file="kissy-core.js"/>
-        <delete file="kissy-base.js"/>
-        <delete file="kissy.js"/>
-    </target>
-
-    <target name="build" depends="pre-clean,concat,compress,copyright,clean">
+    <target name="build" depends="pre-clean,concat,compress,copyright">
     </target>
 </project>
