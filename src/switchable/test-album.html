@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>Album Test</title>
+<link rel="stylesheet" href="../../build/cssbase/base-min.css" />
+<script src="../../third-party/yui2/yui-base/yui-base-min.js"></script>
+<style>
+    body {
+        font-size: 14px;
+        padding: 20px 50px;
+    }
+    h1 {
+        font: 2em;
+        margin: 1.5em 0.5em;
+    }
+    .ks-megamenu {
+        position: relative;
+        margin-bottom: 50px;
+    }
+    .ks-switchable-nav li {
+        border: 1px solid #ccc;
+        width: 100px;
+        margin: 10px;
+        padding: 5px;
+        list-style: none;
+    }
+    .ks-switchable-nav .active {
+        border-color: #5C758E;
+        background-color: #5C758E;
+        color: #FFF;
+        width: 113px;
+        margin-left: 6px;
+    }
+    .ks-megamenu-view {
+        position: absolute;
+        top: 0;
+        left: 130px;
+        _left: 120px;
+        width: 500px;
+        height: 300px;
+        padding: 10px;        
+        border: 5px solid #5C758E;
+        background-color: #D4DCE3;
+        display: none;
+    }
+    .ks-switchable-content {
+        display: none;
+    }
+    .ks-megamenu-closebtn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        padding: 0 5px;
+        width: 8px;
+        font: 14px tahoma,arial,sans-serif;
+        cursor: pointer;
+        background-color: #FAFADC;
+    }
+    .ks-megamenu-closebtn:after {
+        content:'X';
+    }
+</style>
+</head>
+<body>
+<h1>Album Test</h1>
+
+TODO
+
+
+<script src="../kissy/kissy.js"></script>
+<script src="../dom/selector.js"></script>
+
+<script src="switchable.js"></script>
+<script src="plugin-lazyload.js"></script>
+
+<script src="album.js"></script>
+<script>
+    KISSY.ready(function(S) {
+
+    });
+</script>
+</body>
+</html>

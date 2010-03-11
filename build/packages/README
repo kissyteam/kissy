@@ -1,0 +1,20 @@
+
+文件使用说明：
+
+ ~ 分开引入。适用于精心雕琢的对性能有要求的页面：
+   kissy-core-min.js
+   </head>
+   ...
+   kissy-base-min.js
+   xxx-min.js (xxx 是业务或项目相关标识，比如 detail-min.js)
+   </body>
+
+   上面的方式，可以按照特定需求进一步打包成：
+   xxx-core-min.js （含 kissy-core-min.js 和 xxx core js）
+   </head>
+   ...
+   xxx-base-min.js （含 kissy-base.min 和 xxx js）
+   </body>
+
+~ 直接在页头或页尾引入：
+   kissy-min.js
