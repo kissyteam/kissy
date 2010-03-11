@@ -24,7 +24,7 @@
         <concat destfile="kissy-base.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../datalazyload/datalazyload-min.js"/>
             <path path="../suggest/suggest-min.js"/>
-            <path path="../switchable/switchable-aio-min.js"/>
+            <path path="../switchable/switchable-pkg-min.js"/>
         </concat>
         <!-- kissy: 包含 core 和 base 两部分，在页头无 kissy-core 时使用 -->
         <concat destfile="kissy.js" encoding="${charset}" outputencoding="${charset}">

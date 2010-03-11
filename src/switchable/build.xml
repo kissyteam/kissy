@@ -7,7 +7,7 @@
     <property name="src.dir" location="."/>
 
     <target name="concat">
-        <concat destfile="switchable-aio.js" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="switchable-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="switchable.js"/>
             <path path="plugin-autoplay.js"/>
             <path path="plugin-effect.js"/>
@@ -21,7 +21,7 @@
     </target>
 
     <target name="clean">
-        <delete file="switchable-aio.js"/>
+        <delete file="switchable-pkg.js"/>
     </target>
 
     <target name="build" depends="concat,common.build,clean">
