@@ -371,6 +371,7 @@ Y.Calendar.prototype = {
 	//处理起始日期,d:Date类型
 	handleRange : function(d){
 		var that = this;
+		var d = that.showdate(1,d);
 		if((that.range.start == null && that.range.end == null )||(that.range.start != null && that.range.end != null)){
 			that.range.start = d;
 			that.range.end = null;
@@ -381,6 +382,10 @@ Y.Calendar.prototype = {
 				var __t = that.range.start;
 				that.range.start = that.range.end;
 				that.range.end = __t;
+			}else{
+				if(/532/.test(Y.env.ua.webkit)){//hack for chrome
+					that.range.start = that.showdate(-1,that.range.start);
+				}
 			}
 			that.EventCenter['rangeselect'].fire(that.range);
 			that.render();
