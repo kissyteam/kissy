@@ -55,8 +55,14 @@ moreinfo:http://www.uedmagazine.com
 
 <!--yui2 seed-->
 <script src="../../third-party/yui2/yuiloader-dom-event/yuiloader-dom-event.js"></script>
+<script src="../../third-party/yui2/element/element-min.js"></script>
 <!--kissy-->
 <script src="../kissy/kissy.js"></script>
+<script src="calendar.js"></script>
+<!--calendar-skin-->
+<link href="skin.css" rel="stylesheet" type="text/css" />
+
+
 <script>
 <!--
 
@@ -73,83 +79,64 @@ var showdate = function(n,d){//¼ÆËãdÌìµÄÇ°¼¸Ìì»òÕßºó¼¸Ìì£¬·µ»Ødate,×¢£ºchromeÏÂ²
 
 
 KISSY.ready(function(S) {
-	var Tloader = new YAHOO.util.YUILoader();
-	Tloader.addModule({
-		name:'calendar-skin',
-		type:'css',
-		fullpath:'skin.css'
+	//¾²Ì¬ÈÕÀú,µ¥»÷»Øµ÷
+	new S.Calendar('J_calendar').on('select',function(d){
+		alert(d);
+		Y.log(d);
 	});
-	Tloader.addModule({
-		name:'calendar',
-		type:'js',
-		fullpath:'calendar.js',
-		requires:['element','dom','event','calendar-skin']
+
+	//¾²Ì¬Ë«ÔÂÈÕÀú,Ä¬ÈÏÑ¡ÖÐÄ³ÈÕ
+	new S.Calendar('J_multipage_1',{
+		multi_page:2,
+		selected:showdate(-2,new Date())
 	});
-	Tloader.require(['calendar','logger']);
-	Tloader.onSuccess = function(){
-		//logger control
-		new YAHOO.widget.LogReader();
 
-		//¾²Ì¬ÈÕÀú,µ¥»÷»Øµ÷
-		new S.Calendar('J_calendar').on('select',function(d){
-			alert(d);
-			Y.log(d);
-		});
+	//¾²Ì¬ÈýÔÂÈÕÀú
+	new S.Calendar('J_multipage_2',{
+		multi_page:3
+	});
 
-		//¾²Ì¬Ë«ÔÂÈÕÀú,Ä¬ÈÏÑ¡ÖÐÄ³ÈÕ
-		new S.Calendar('J_multipage_1',{
-			multi_page:2,
-			selected:showdate(-2,new Date())
-		});
+	//Ñ¡Ôñ·¶Î§,²¢°ó¶¨·¶Î§»Øµ÷
+	new S.Calendar('J_range',{
+		multi_page:2,
+		range_select:true
+	}).on('rangeselect',function(o){
+		alert(Y.lang.dump(o));
+	});
 
-		//¾²Ì¬ÈýÔÂÈÕÀú
-		new S.Calendar('J_multipage_2',{
-			multi_page:3
-		});
+	//Ñ¡Ôñ·¶Î§,Ö¸¶¨Ä¬ÈÏ·¶Î§
+	new S.Calendar('J_default_range',{
+		multi_page:2,
+		range_select:true,
+		range:{
+			start:showdate(-3,new Date()),
+			end:showdate(5,new Date())
+		}
+	});
 
-		//Ñ¡Ôñ·¶Î§,²¢°ó¶¨·¶Î§»Øµ÷
-		new S.Calendar('J_range',{
-			multi_page:2,
-			range_select:true
-		}).on('rangeselect',function(o){
-			alert(Y.lang.dump(o));
-		});
+	//ÔÂ·ÝÇÐ»»ÊÂ¼þ
+	new S.Calendar('J_all_events').on('switch',function(d){
+		alert('ÇÐ»»ÊÂ¼þ,ÔÂ·ÝÇÐ»»µ½'+Y.lang.dump(d));
+	});
 
-		//Ñ¡Ôñ·¶Î§,Ö¸¶¨Ä¬ÈÏ·¶Î§
-		new S.Calendar('J_default_range',{
-			multi_page:2,
-			range_select:true,
-			range:{
-				start:showdate(-3,new Date()),
-				end:showdate(5,new Date())
-			}
-		});
+	//PopupÈÕÀú,Ä¬ÈÏµã»÷´¥·¢
+	new S.Calendar('J_popup',{
+		popup:true	
+	});
 
-		//ÔÂ·ÝÇÐ»»ÊÂ¼þ
-		new S.Calendar('J_all_events').on('switch',function(d){
-			alert('ÇÐ»»ÊÂ¼þ,ÔÂ·ÝÇÐ»»µ½'+Y.lang.dump(d));
-		});
+	//PopupÈÕÀú,µ¥Ñ¡¹Ø±Õ
+	new S.Calendar('J_popup_closeable',{
+		popup:true,
+		closeable:true
+	}).on('select',function(d){
+		alert(Y.lang.dump(d));	
+	});
 
-		//PopupÈÕÀú,Ä¬ÈÏµã»÷´¥·¢
-		new S.Calendar('J_popup',{
-			popup:true	
-		});
-
-		//PopupÈÕÀú,µ¥Ñ¡¹Ø±Õ
-		new S.Calendar('J_popup_closeable',{
-			popup:true,
-			closeable:true
-		}).on('select',function(d){
-			alert(Y.lang.dump(d));	
-		});
-
-		//ÈÕÀú¿É²Ù×÷·¶Î§
-		new S.Calendar('J_mindate_maxdate',{
-			mindate:new Date(),
-			maxdate:showdate(10,new Date())
-		});
-	};
-	Tloader.insert();
+	//ÈÕÀú¿É²Ù×÷·¶Î§
+	new S.Calendar('J_mindate_maxdate',{
+		mindate:new Date(),
+		maxdate:showdate(10,new Date())
+	});
 });
 
 
