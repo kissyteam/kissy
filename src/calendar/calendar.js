@@ -1,14 +1,19 @@
 /**
+ * 依赖yahoo-dom-event.js,element.js,kissy.js
+ */
+KISSY.add('calendar', function(S) {
+
+/**
  *  全局对象的简写
  */
 Y = YAHOO;
 $D = Y.util.Dom;
 $E = Y.util.Event;
 /**
- * calendar.js | 日历控件 基于yui2
+ * calendar.js | 日历控件 基于yui2 & kissy
  * autohr:lijing00333@163.com 拔赤
  * 文件编码 gbk
- * @class Y.Calendar
+ * @class Calendar
  * @param { string } 容器或者触点id 
  * @param { object } 配置项
  * @return { object } 生成一个calendar实例
@@ -16,8 +21,8 @@ $E = Y.util.Event;
  * @requires { calendar-skin-default } 皮肤
  * 
  * Y.Calenar：	
- *	说明：	日历构造器，通过new Y.Calendar来render一个日历
- *	使用：	new Y.Calendar(id,options);
+ *	说明：	日历构造器，通过new Calendar来render一个日历
+ *	使用：	new Calendar(id,options);
  *	参数:	id:{string}容器id
  *	配置：	selected {date} 选中的日期
  *			mindate:{date} 最小可选日期
@@ -29,7 +34,7 @@ $E = Y.util.Event;
  *			multi_select:{number} 日历页数，默认为1
  *			date:{date} 默认显示该日期所在的月份，默认为当天
  *			navigator:{boolean} 是否可以选择跳转的月份，默认为true
- *		Y.Calendar的实例的方法：
+ *		Calendar的实例的方法：
  *			init:初始化，参数为options
  *			render:渲染，init在new的时候调用，render可以在运行时任意时刻调用，参数为options，其成员可覆盖原参数
  *			hide:隐藏，不会删除窗口
@@ -38,14 +43,14 @@ $E = Y.util.Event;
  */
 
 /**
- * @namespace Y.Calendar
+ * @namespace Calendar
  * 约定命名空间
  */
-Y.namespace("Y.Calendar");
-Y.Calendar = function(){
+Y.namespace("Calendar");
+Calendar = function(){
 	this.init.apply(this,arguments);
 };
-Y.Calendar.prototype = {
+S.mix(Calendar.prototype, { 
 	/**
 	 * @constructor init
 	 * 构造器
@@ -355,18 +360,6 @@ Y.Calendar.prototype = {
 			_month++;
 		}
 		return [_year,_month];
-	},
-	//处理箭头
-	handleArrow:function(){
-
-	},
-	//得到范围
-	getRange:function(){
-
-	},
-	//得到当前选中
-	getSelect:function(){
-
 	},
 	//处理起始日期,d:Date类型
 	handleRange : function(d){
@@ -703,14 +696,12 @@ Y.Calendar.prototype = {
 
 	}//Call constructor over
 	
-};//Y.Calendar.prototype over
+	
+});
 
-//若强制依赖kissy，则将Y.Calendar挂载到Kiss上
-if(typeof KISSY != 'undefined'){
-	KISSY.add('calendar', function(S) {
-		S.Calendar = Y.Calendar;
-	});
-}
+S.Calendar = Calendar;
+
+});
 
 	
 
