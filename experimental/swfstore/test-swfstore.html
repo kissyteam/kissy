@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SWFStore Test</title>
+<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="../../third-party/yui2/cookie/cookie-min.js"></script>
+<script src="../../third-party/yui2/element/element-min.js"></script>
+<script src="swf.js"></script>
+<script src="swfstore.js"></script>
+</head>
+<body>
+
+<!--Placeholder for SWF, will be replaced with embedded SWF if proper Flash Player is installed-->
+<div id="swfstoreContainer" style="width:0; height:0"></div>
+
+<!--Input Controls-->
+<div id="controls">
+    <label for="valueField">Text to store:</label>
+    <textarea cols="30" id="valueField" rows="5"></textarea>
+    <br/>
+
+    <label for="nameField">Storage name:</label>
+
+    <input id="nameField" type="text" value=""/>
+    <input id="save-button" name="save-button" type="Button" value="Save"/>
+    <input id="remove-button" name="remove-button" type="Button" value="Remove"/>
+    <input id="get-button" name="get-button" type="Button" value="Get"/>
+
+    <br/>
+    <br/>
+    <input id="purge-button" name="purge-button" type="button" value="Purge All Local Data"/>
+    <input id="removeat-button" name="removeat-button" type="Button" value="Remove Item At:"/> <input id="indexField" type="text" value="0" size="3"/>
+
+    <br/>
+    <br/>
+
+    <br/>
+    <div id="datatableContainer" style="x:40"></div>
+</div>
+
+<!--Local Scripts-->
+<script>
+    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event;
+
+    // the swfstore instance
+    var swfstore = new YAHOO.util.SWFStore("swfstoreContainer", false, true);
+
+    Dom.get("save-button").onclick = function () {
+        swfstore.setItem(Dom.get('nameField').value, Dom.get('valueField').value);
+    };
+
+    Dom.get("remove-button").onclick = function () {
+        swfstore.removeItem(Dom.get('nameField').value);
+    };
+
+    Dom.get("get-button").onclick = function () {
+        alert(swfstore.getValueOf(Dom.get('nameField').value));
+        //alert(swfstore.calculateCurrentSize());
+    };
+
+    Dom.get("purge-button").onclick = function() {
+        swfstore.clear();
+    };
+
+    Dom.get("removeat-button").onclick = function () {
+        var index = parseInt(YAHOO.util.Dom.get('indexField').value);
+        swfstore.removeItemAt(index);
+    };
+</script>
+</body>
+</html>
