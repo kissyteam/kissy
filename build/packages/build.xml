@@ -20,8 +20,8 @@
             <path path="../dom/selector.js"/>
             <path path="../dom/dom.js"/>
         </concat>
-        <!-- kissy-base: 常用 utils 和 widgets, 一般在页尾引入 -->
-        <concat destfile="kissy-base.js" encoding="${charset}" outputencoding="${charset}">
+        <!-- kissy-more: 常用 utils 和 widgets, 一般在页尾引入 -->
+        <concat destfile="kissy-more.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../datalazyload/datalazyload.js"/>
             <path path="../suggest/suggest.js"/>
             <path path="../switchable/switchable-pkg.js"/>
@@ -29,7 +29,7 @@
         <!-- kissy: 包含 core 和 base 两部分，在页头无 kissy-core 时使用 -->
         <concat destfile="kissy.js" encoding="${charset}" outputencoding="${charset}">
             <path path="kissy-core.js"/>
-            <path path="kissy-base.js"/>
+            <path path="kissy-more.js"/>
         </concat>
     </target>
 
