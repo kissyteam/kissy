@@ -15,6 +15,7 @@
   event
   bom
   anim
+  swfstore
 
   将 basic-util 功能在各个组件中实现
   重构 editor, fix 少量经常反馈的 bug + 适应新的代码组织方式 - done
