@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.4
 MIT Licensed
-build: 480 Mar 11 14:06
+build: 498 Mar 18 13:49
 */
 KISSY.add("switchable",function(h,i){function l(a,b){var c=this;b=b||{};if(!("mackupType"in b))if(b.panelCls)b.mackupType=1;else if(b.panels)b.mackupType=2;b=h.merge(l.Config,b);c.container=h.get(a);c.config=b;c.triggers=c.triggers||[];c.panels=c.panels||[];if(c.activeIndex===i)c.activeIndex=b.activeIndex;c._init()}var p=YAHOO.util,f=p.Dom,g=p.Event,j=YAHOO.lang,d=document;l.Config={mackupType:0,navCls:"ks-switchable-nav",contentCls:"ks-switchable-content",triggerCls:"ks-switchable-trigger",panelCls:"ks-switchable-panel",
 triggers:[],panels:[],hasTriggers:true,triggerType:"mouse",delay:0.1,activeIndex:0,activeTriggerCls:"active",steps:1,viewSize:[]};l.Plugins=[];h.mix(l.prototype,{_init:function(){var a=this,b=a.config;a.panels.length===0&&a._parseMackup();a.createEvent("beforeSwitch");a.createEvent("onSwitch");b.hasTriggers&&a._bindTriggers();h.each(l.Plugins,function(c){c.init&&c.init(a)})},_parseMackup:function(){var a=this,b=a.container,c=a.config,n=c.hasTriggers,m,q=[],e=[];switch(c.mackupType){case 0:if(m=h.get("."+

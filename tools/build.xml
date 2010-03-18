@@ -7,6 +7,7 @@
     <property name="third-party.dir" location="${root.dir}/third-party/"/>
     <property name="version" value="1.0.4"/>
     <property name="charset" value="GB18030"/>
+    <property name="copyright.files" value="*.css, *.js"/>
 
     <!-- 引入第三方包 -->
     <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
@@ -76,12 +77,12 @@
         </svn>
         <mkdir dir="${build.dir}/${component.name}/tmp"/>
         <move todir="${build.dir}/${component.name}/tmp">
-            <fileset dir="${build.dir}/${component.name}" includes="*.css,*.js"/>
+            <fileset dir="${build.dir}/${component.name}" includes="${copyright.files}"/>
         </move>
 
         <for param="file">
             <path>
-                <fileset dir="${build.dir}/${component.name}/tmp" includes="*.css,*.js"/>
+                <fileset dir="${build.dir}/${component.name}/tmp" includes="${copyright.files}"/>
             </path>
             <sequential>
                 <concat destfile="@{file}.tmp" encoding="${charset}" outputencoding="${charset}">
@@ -99,7 +100,7 @@
         </for>
 
         <move todir="${build.dir}/${component.name}">
-            <fileset dir="${build.dir}/${component.name}/tmp" includes="*.css,*.js"/>
+            <fileset dir="${build.dir}/${component.name}/tmp" includes="${copyright.files}"/>
         </move>
         <delete dir="${build.dir}/${component.name}/tmp"/>
     </target>

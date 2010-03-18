@@ -1,6 +1,8 @@
 <project name="packages.build" default="build" basedir=".">
     <description>Component Build File</description>
 
+    <property name="copyright.files" value="*-min.css, *-min.js"/>
+
     <import file="../../tools/build.xml"/>
 
     <property name="component.name" value="packages"/>

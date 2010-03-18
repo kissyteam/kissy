@@ -1,12 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.4
 MIT Licensed
-build: 493 Mar 17 14:02
-*/
-/*
-Copyright 2010, KISSY UI Library v1.0.4
-MIT Licensed
-build: 480 Mar 11 14:06
+build: 498 Mar 18 13:49
 */
 /**
  * 数据延迟加载组件
@@ -466,7 +461,7 @@ KISSY.add('datalazyload', function(S, undefined) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.4
 MIT Licensed
-build: 480 Mar 11 14:06
+build: 498 Mar 18 13:49
 */
 /**
  * 提示补全组件
@@ -1522,7 +1517,7 @@ KISSY.add("suggest", function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.4
 MIT Licensed
-build: 480 Mar 11 14:06
+build: 498 Mar 18 13:49
 */
 /**
  * Switchable
