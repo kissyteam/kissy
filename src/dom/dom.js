@@ -15,7 +15,7 @@ KISSY.add('dom-base', function(S, undefined) {
             } : { },
         SPACE = ' ';
 
-    S.Dom = {
+    S.DOM = {
 
         /**
          * Returns a NodeList that matches the selector.
@@ -36,10 +36,12 @@ KISSY.add('dom-base', function(S, undefined) {
             if (el && el.getAttribute) {
                 // getAttr
                 if (val === undefined) {
-                    return el.getAttribute(attr) || ''; // '' is added per DOM spec.
+                    return el.getAttribute(name);
+                    // 注1：当 name 不存在时，返回 null. YUI3 统一为 '', jQuery 统一
+                    //     为 undefined. KISSY 认为 null 是 de facto, 无需纠正
                 }
                 // setAttr
-                el.setAttribute(attr, val);
+                el.setAttribute(name, val);
             }
         },
 
@@ -153,7 +155,15 @@ KISSY.add('dom-base', function(S, undefined) {
     };
 
     // for quick access
-    var hasClass = S.Dom.hasClass,
-        addClass = S.Dom.addClass,
-        removeClass = S.Dom.removeClass;
+    var hasClass = S.DOM.hasClass,
+        addClass = S.DOM.addClass,
+        removeClass = S.DOM.removeClass;
 });
+
+/**
+ * Notes:
+ *
+ * 2010.03
+ *  - to note
+ *
+ */

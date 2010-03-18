@@ -17,11 +17,30 @@
 <script src="dom.js"></script>
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
 
-<div id="test-data"><p id="foo"><span></span></p></div>
+<div id="test-data">
+    <p id="foo">
+        <a href="../kissy/" title="test">test link</a>
+        <input type="text" id="test-input"><label class="test" for="test-input">label</label>
+    </p>
+</div>
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY;
+    var S = KISSY, D = S.DOM;
+
+    function test_attr(test) {
+        var a = S.get('#foo a'), label = S.get('#foo label');
+
+        // alert(a.href); // a.href 和 a['href'] 都返回绝对地址
+         alert(a.getAttribute('href')); // ie7- 下，会返回绝对地址
+
+        if(D.attr(label, 'class') !== 'test') test.fail(); // ie7- 要用 className
+        if(D.attr(label, 'for') !== 'test-input') test.fail(); // ie7- 要用 htmlFor
+
+        if(D.attr(a, 'none') !== null) test.fail(); // 不存在的属性返回 null
+        
+        if(D.attr(a, 'title') !== 'test') test.fail();
+    }
 
 </script>
 </body>
