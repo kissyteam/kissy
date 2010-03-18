@@ -173,6 +173,7 @@
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			//entry point
 			
+			
 			loadWhitelist();
 			
 			var callbacks:Object = {};
@@ -202,6 +203,8 @@
 			
 			yuibridge = new YUIBridge(stage);
 			yuibridge.addCallbacks(callbacks);
+			
+			trace("init");
 		}
 		
 		
@@ -282,6 +285,7 @@
 	    	var oldValue:Object = null;
 	    	var info:String;
 	    	
+			trace("setItem:",location,String(item));
 			
 			
 			
@@ -699,13 +703,24 @@
 			
 			var valid:Boolean;
 			
-			var pageURL:String = ExternalInterface.call("function(){return window.location.href;}");
+			try {
+				var pageURL:String = ExternalInterface.call("function(){return window.location.href;}");
+			}catch(e:Error){
+				
+			}
+			
 			 
 			for  each (var path:XML in contentXML["allow-access-from"] ) 
 			{
-				var url:String = path.@url;
 				
-				if(pathMatches(pageURL, url))
+				//CHANGE url ATTRIBUTE TO domain ATTRIBUTE
+				//SUPPORT FOR "*" || IP || DOMAIN
+				//longzang				longzang@taobao.com
+				//var url:String = path.@url;
+				var domain:String = path.@domain;
+				
+				
+				if(pathMatches(pageURL, domain))
 				{
 					valid = true;
 					break; 
@@ -725,7 +740,7 @@
 		}
 
 
-		private function pathMatches(page:String, path:String):Boolean
+		private function pathMatches(page:String, domain:String):Boolean
 		{
 			//remove the protocol when matching domains, because protocols are not to be specified in the whitelist				
 			/* var protocolPattern: RegExp = new RegExp("(http|https|file)\:\/\/");
@@ -736,13 +751,55 @@
     		//ExternalInterface.call("alert('this page's url: " + page + "/nproposed url: " + path + "')");
 				
 	    		
-			if(page.indexOf(path) > -1)
-			{
+			//if(page.indexOf(path) > -1)
+			//{
 				//if the loading page's url contains the whitelisted url as a substring, pass it
-				return true;
-			}
+				//return true;
+			//}
 			
-			else return false;
+			if (page == null) return false;
+			
+			
+			var tag:Boolean = false; 
+			var trimPattern:RegExp = /^\s+|\s+$/g;
+			var ipPattern:RegExp = /((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)){3}/;
+			var domainPattern:RegExp = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/; 
+			domain = domain.replace(trimPattern, "");
+			var pageHost:String = page.match(domainPattern)[0];
+			if (domain == "*") {
+				tag = true;
+				Security.allowDomain(domain);
+			}else if(ipPattern.test(domain)) {
+				if (pageHost == domain) {
+					tag = true;
+					Security.allowDomain(domain);
+				}
+			}else if (domainPattern.test(domain)) {
+				var domainParseData:Array = domain.split(".");
+				var allDomain:String;
+				if (domainParseData[0] == "*") {
+					var ps:String = String("\\").concat(domainParseData[0]).concat("\.");
+					ps = ps.replace(/\./, "\\.");
+					allDomain = domain.replace(new RegExp(ps, 'g'), "")
+					allDomain = allDomain.replace(/\./, "\\.");
+					if (tag = new RegExp(allDomain).test(page)) {
+						Security.allowDomain(pageHost);
+					}
+				}else {
+					if (tag = pageHost == domain) {
+						Security.allowDomain(pageHost);
+					}
+				}
+			}
+			trace(
+					"tag=" + tag,
+					"\n"+"domain=" + domain,
+					"\n"+"domainParseData=" + domainParseData,
+					"\n"+"allDomain=" + allDomain,
+					"\n"+"page=" + page,
+					"\n"+"pageHost=" + pageHost
+				)
+			return tag;
 		}
 		/**
 		 * @private
@@ -958,6 +1015,7 @@
  			//if(!_initialized)
  			{
  				_initialized = true;
+				trace("contentReady");
  				//once initialization is complete, let JS know 
  				yuibridge.sendEvent({type:"contentReady"});
  			}
