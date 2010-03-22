@@ -19,7 +19,7 @@
 
 <div id="test-data">
     <p id="foo">
-        <a href="../kissy/" title="test">test link</a>
+        <a href="../kissy/" title="test" data-test="test">test link</a>
         <input type="text" id="test-input" readonly><label class="test" for="test-input">label</label>
     </p>
 </div>
@@ -35,10 +35,9 @@
 
         // alert(a.href); // a.href 和 a['href'] 都返回绝对地址
         // alert(a.getAttribute('href')); // ie7- 下，会返回绝对地址
-        alert(input.getAttribute('readOnly')); // ie 下，有设置时，返回 true, 没设置时，返回 false. 其它浏览器无特殊处理
-        alert(input['readOnly']); // ie 下，有设置时，返回 true, 没设置时，返回 false. 其它浏览器无特殊处理
-debugger
-        alert(jQuery.attr(input, 'readonly')); // ie 下，有设置时，返回 true, 没设置时，返回 false. 其它浏览器无特殊处理
+        alert(a.getAttribute('data-test')); // ie 下，有设置时，返回 true, 没设置时，返回 false. 其它浏览器无特殊处理
+        alert(a['data-test']); // ie 下，有设置时，返回 true, 没设置时，返回 false. 其它浏览器无特殊处理
+        alert($.attr(a, 'data-test'));
 
         if(D.attr(label, 'class') !== 'test') test.fail(); // ie7- 要用 className
         if(D.attr(label, 'for') !== 'test-input') test.fail(); // ie7- 要用 htmlFor
