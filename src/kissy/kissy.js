@@ -399,6 +399,14 @@
             }
 
             return this;
+        },
+
+        /**
+         * Throws error message.
+         * @param msg
+         */
+        error: function(msg) {
+            throw msg;
         }
     });
 
