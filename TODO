@@ -10,6 +10,10 @@
   css 梳理 - done
   selector - 跟踪 jquery 代码，确定 Sizzle 返回后的数组进行了哪些处理 - done
 
+  将 basic-util 功能在各个组件中实现
+  整合 tback
+  重新思考 kissy 和 tbra 的关系
+
   dom
   node
   event
@@ -18,9 +22,6 @@
   anim
   swfstore
 
-  将 basic-util 功能在各个组件中实现
-  整合 tback
-  重新思考 kissy 和 tbra 的关系
   重构 editor, fix 少量经常反馈的 bug + 适应新的代码组织方式 - done
   重构 switchable, 脱离对 YUI2 的依赖
   实现 switchable album 组件
@@ -63,3 +64,6 @@
    - http://www.w3.org/DOM/DOMTR
    - http://lifesinger.org/blog/wp-content/uploads/2009/07/yui-dom-full.png
    - http://www.slideshare.net/jeresig/secrets-of-javascript-libraries
+
+ - 双飞翼布局申请专利
+ 

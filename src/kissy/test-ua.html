@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>UA Test</title>
+</head>
+<body>
+<script src="../test/test.js"></script>
+
+<h2>Test Data</h2>
+<script src="kissy.js"></script>
+<script src="kissy-ua.js"></script>
+
+<!-- Test Cases -->
+<script>
+
+    function test_ua(test) {
+        test.extraMsg = navigator.userAgent;
+    }
+
+    function test_browser(test) {
+        var ua = KISSY.UA, out = '';
+
+        out += 'ie = ' + ua.ie + ', ';
+        out += 'gecko = ' + ua.gecko + ', ';
+        out += 'firefox = ' + ua.firefox + ', ';
+        out += 'webkit = ' + ua.webkit + ', ';
+        out += 'chrome = ' + ua.chrome + ', ';
+        out += 'safari = ' + ua.safari + ', ';
+        out += 'mobile = ' + ua.mobile + ', ';
+        out += 'opera = ' + ua.opera;
+
+        test.extraMsg = out;
+    }
+
+    function test_documentMode(test) {
+        test.extraMsg = 'documentMode = ' + document.documentMode;
+    }
+
+</script>
+</body>
+</html>

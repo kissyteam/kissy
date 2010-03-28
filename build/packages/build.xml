@@ -19,6 +19,7 @@
         <!-- kissy-core: 核心文件，只含关键组件，一般在页头引入 -->
         <concat destfile="kissy-core.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../kissy/kissy.js"/>
+            <path path="../kissy/kissy-ua.js"/>
             <path path="../dom/selector.js"/>
             <path path="../dom/dom.js"/>
         </concat>
