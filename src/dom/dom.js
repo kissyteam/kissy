@@ -16,7 +16,7 @@ KISSY.add('dom-base', function(S, undefined) {
         },
         REG_SPECIAL_ATTRS = /href|src|style/,
         REG_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
-        SPACE = ' ';
+        REG_RETURN = /\r/g;
 
     if(oldIE) {
         S.mix(CUSTOM_ATTRS, {
@@ -99,59 +99,50 @@ KISSY.add('dom-base', function(S, undefined) {
         },
 
         /**
-         * Determines whether a HTMLElement has the given className.
+         * Get the current value of the HTMLElement.
          */
-        hasClass: function(el, className) {
-            if (!className || !el.className) return false;
-
-            return (SPACE + el.className + SPACE).indexOf(SPACE + className + SPACE) > -1;
-        },
-
-        /**
-         * Adds a given className to a HTMLElement.
-         */
-        addClass: function(el, className) {
-            if (!className) return;
-            if (hasClass(el, className)) return;
-
-            el.className += SPACE + className;
-        },
-
-        /**
-         * Removes a given className from a HTMLElement.
-         */
-        removeClass: function(el, className) {
-            if (!hasClass(el, className)) return;
-
-            el.className = (SPACE + el.className + SPACE).replace(SPACE + className + SPACE, SPACE);
-            if (hasClass(el, className)) {
-                removeClass(el, className);
+        val: function(el, value) {
+            if(!el || el.nodeType !== 1) {
+                return undefined;
             }
-        },
 
-        /**
-         * Replace a class with another class for a given element.
-         * If no oldClassName is present, the newClassName is simply added.
-         */
-        replaceClass: function(el, oldC, newC) {
-            removeClass(el, oldC);
-            addClass(el, newC);
-        },
+            // get value
+            if(value === undefined) {
 
-        /**
-         * If the className exists on the node it is removed, if it doesn't exist it is added.
-         * @param {boolean} force addClass optional boolean to indicate whether class
-         * should be added or removed regardless of current state.
-         */
-        toggleClass: function(el, className, force) {
-            var add = (force !== undefined) ? force :
-                      !(hasClass(el, className));
+                // 当没有设定 value 时，标准浏览器 option.value == option.text
+                // ie7- 下 optinos.value == '', 需要用 el.attributes.value 来判断是否有设定 value
+                if(nodeNameIs('option', el)) {
+                    return (el.attributes.value || {}).specified ? el.value : el.text;
+                }
+                // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
+                else if(nodeNameIs('select', el)) {
+                    var index = el.selectedIndex,
+                        options = el.options;
 
-            if (add) {
-                addClass(el, className);
-            } else {
-                removeClass(el, className);
+                    if (index < 0) {
+                        return null;
+                    }
+                    else if(el.type === 'select-one') {
+                        return S.DOM.val(options[index]);
+                    }
+
+                    // Loop through all the selected options
+                    var ret = [], i = 0, len = options.length;
+                    for (; i < len; ++i) {
+                        if (options[i].selected) {
+                            ret.push(S.DOM.val(options[i]));
+                        }
+                    }
+                    // Multi-Selects return an array
+                    return ret;
+                }
+
+                // 普通元素的 value, 归一化掉 \r
+                return (el.value || '').replace(REG_RETURN, '');
             }
+
+            // set value
+            el.value = value;
         },
 
         /**
@@ -184,13 +175,6 @@ KISSY.add('dom-base', function(S, undefined) {
         },
 
         /**
-         * Get the current value of the HTMLElement.
-         */
-        val: function(/*el, value*/) {
-            // TODO
-        },
-
-        /**
          * Creates a new HTMLElement using the provided html string.
          */
         create: function(/*htmlString, ownerDocument*/) {
@@ -199,10 +183,9 @@ KISSY.add('dom-base', function(S, undefined) {
         }
     };
 
-    // for quick access
-    var hasClass = S.DOM.hasClass,
-        addClass = S.DOM.addClass,
-        removeClass = S.DOM.removeClass;
+    function nodeNameIs(val, el) {
+        return el && el.nodeName.toUpperCase() === val.toUpperCase();
+    }
 });
 
 /**
@@ -218,5 +201,7 @@ KISSY.add('dom-base', function(S, undefined) {
  *    - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
  *    - jquery/attributes.js: Safari mis-reports the default selected
  *      property of an option 在 Safari 4 中已修复
+ *
+ *  ~ val:
  *
  */
