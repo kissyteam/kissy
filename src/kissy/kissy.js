@@ -371,6 +371,6 @@
  *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
  *  - mix, merge, extend, augment, weave 方法，决定了类库代码的基本实现方式，
  *    充分利用 mixin 特性和 prototype 方式来实现代码。
- *  - cloneTo, namespace 方法，决定子库的实现和代码的整体组织。
+ *  - app, namespace 方法，决定子库的实现和代码的整体组织。
  *  - log 方法，简单的调试工具。
  */
