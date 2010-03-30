@@ -1,12 +1,12 @@
 /**
  * @module  node
  * @author  lifesinger@gmail.com
- * @depends kissy, selector, dom
+ * @depends kissy, dom
  */
 
 KISSY.add('node', function(S) {
 
-    var Dom = S.Dom;
+    var DOM = S.DOM;
 
     /**
      * The Node class provides a wrapper for manipulating DOM Node.
@@ -29,22 +29,45 @@ KISSY.add('node', function(S) {
             domNode = html;
         }
         else if (typeof html === 'string') {
-            domNode = Dom.create(html, ownerDocument);
+            domNode = DOM.create(html, ownerDocument);
         }
 
         if (props) {
-            // TODO: set props to domNode
+            S.error('not implemented'); // TODO
         }
 
         self[0] = domNode;
     }
 
-    // TODO: imports methods from S.Dom
+    // imports standard methods from DOM
+    S.each([
+        'attr', 'removeAttr', 'val', 'text',
+        'create',
+        'hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'],
+        function(methodName) {
+
+            Node.prototype[methodName] = function(name, val) {
+                var domNode = this[0];
+
+                if(val === undefined) {
+                    return DOM[methodName](domNode, name);
+                }
+                else {
+                    DOM[methodName](domNode, name, val);
+                    return this;
+                }
+            }
+        });
+
+    // add more methods
+    S.mix(Node.prototype, {
+
+    });
 
     // query api
     S.one = function(selector, context) {
         return new Node(S.get(selector, context));
-    }
+    };
 
     S.Node = Node;
 

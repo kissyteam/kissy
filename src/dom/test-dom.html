@@ -13,7 +13,9 @@
 <h2>Test Data</h2>
 
 <script src="../kissy/kissy.js"></script>
+<script src="../kissy/kissy-lang.js"></script>
 <script src="../kissy/kissy-ua.js"></script>
+<script src="../kissy/kissy-json.js"></script>
 <script src="selector.js"></script>
 <script src="dom.js"></script>
 <script src="dom-class.js"></script>
@@ -22,12 +24,13 @@
 <!-- Test Cases -->
 <script>
     var S = KISSY, D = S.DOM,
-        a, input, radio, button, label, table, td, select, select2, select3, opt, opt2, area;
+        a, input, radio, radio2, button, label, table, td, select, select2, select3, opt, opt2, area, div;
 
     KISSY.ready(function() {
         a = S.get('#foo a');
         input = S.get('#foo input');
-        radio = S.query('#foo input')[1];
+        radio = S.get('#test-radio');
+        radio2 = S.get('#test-radio2');
         button = S.get('#foo button');
         label = S.get('#foo label');
         table = S.get('#test-table');
@@ -36,6 +39,7 @@
         select2 = S.get('#test-select2');
         select3 = S.get('#test-select3');
         opt = S.get('#test-opt');
+        div = S.get('#test-div');
         opt2 = S.query('#test-select option')[1];
         area = S.get('#foo textarea');
     });
@@ -179,6 +183,42 @@
         if(D.val(select2) != 2) test.fail();
         if(D.val(select3).toString() != '1,2') test.fail();
 
+        // radio
+        if(D.val(radio) != 'on') test.fail();
+        if(D.val(radio2) != 'on') test.fail();
+
+        // set value
+        D.val(a, 'test');
+        if(D.val(a) !== 'test') test.fail();
+        D.removeAttr(a, 'value');
+
+        // select set value
+        D.val(select, '3');
+        if(D.val(select) != 3) test.fail();
+        D.val(select, 0); // restore
+
+        D.val(select3, ['2','3']);
+        if(D.val(select3).length != 2) test.fail();
+    }
+
+    function test_text(test) {
+        D.text(div, 'hello, are you ok?');
+        if(D.text(div) !== 'hello, are you ok?') test.fail();
+    }
+
+    function test_create(test) {
+        var div, bd = document.body, el;
+
+        div = D.create('div');
+        div.id = 'test-create';
+        bd.appendChild(div);
+        if(!S.get('#test-create')) test.fail();
+
+        div = D.create('<div id="test-create2">create2</div>');
+        bd.appendChild(div);
+        el = S.get('#test-create2');
+        if(!el) test.fail();
+        if(D.text(el) !== 'create2') test.fail();
     }
 
     // temp code
@@ -190,13 +230,15 @@
     <p id="foo">
         <a href="../kissy/" style="color:red" class="link" title="test" data-test="test">test link</a>
         <input type="text" id="test-input" readonly maxlength="20" value="hello"/>
-        <input type="radio"/>
+        <input type="radio" id="test-radio" />
+        <input type="radio" id="test-radio2" checked />
         <label class="test" for="test-input">label</label>
         <button type="button" tabindex="3">Submit</button>
         <textarea rows="2" cols="2">
             test
         </textarea>
     </p>
+    <div id="test-div"></div>
     <table id="test-table" cellspacing="10">
         <tbody>
         <tr>
@@ -212,7 +254,7 @@
     <select id="test-select2">
         <option>2</option>
     </select>
-    <select id="test-select3" multiple>
+    <select id="test-select3" multiple autocomplete="off">
         <option selected>1</option>
         <option selected>2</option>
         <option>3</option>

@@ -6,6 +6,20 @@
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
-    <target name="build" depends="common.build">
+    <target name="concat">
+        <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="kissy.js"/>
+            <path path="kissy-lang.js"/>
+            <path path="kissy-ua.js"/>
+            <path path="kissy-json.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="kissy-pkg.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
     </target>
 </project>
+

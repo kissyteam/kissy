@@ -9,14 +9,18 @@ KISSY.add('dom-base', function(S, undefined) {
     var doc = document,
         docElement = doc.documentElement,
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
-        ie = S.UA.ie,
+        ua = S.UA,
+        ie = ua.ie,
         oldIE = ie && ie < 8,
         CUSTOM_ATTRS = {
             readonly: 'readOnly'
         },
-        REG_SPECIAL_ATTRS = /href|src|style/,
-        REG_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
-        REG_RETURN = /\r/g;
+        RE_SPECIAL_ATTRS = /href|src|style/,
+        RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
+        RE_RETURN = /\r/g,
+        RE_RADIO_CHECK = /radio|checkbox/,
+        defaultFrag = doc.createElement('DIV'),
+        RE_TAG = /^[a-z]+$/i;
 
     if(oldIE) {
         S.mix(CUSTOM_ATTRS, {
@@ -56,7 +60,7 @@ KISSY.add('dom-base', function(S, undefined) {
                 //  - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
                 //  - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
                 //  - href, src 直接获取的是 normalized 后的值，排除掉
-                if(!REG_SPECIAL_ATTRS.test(name)) {
+                if(!RE_SPECIAL_ATTRS.test(name)) {
                     ret = el[name];
                 }
                 // get style
@@ -70,7 +74,7 @@ KISSY.add('dom-base', function(S, undefined) {
                 }
 
                 // fix ie bugs:
-                if (oldIE && REG_NORMALIZED_ATTRS.test(name)) {
+                if (oldIE && RE_NORMALIZED_ATTRS.test(name)) {
                     // 不光是 href, src, 还有 rowspan 等非 mapping 属性，也需要用第 2 个参数来获取原始值
                     ret = el.getAttribute(name, 2);
                 }
@@ -114,8 +118,9 @@ KISSY.add('dom-base', function(S, undefined) {
                 if(nodeNameIs('option', el)) {
                     return (el.attributes.value || {}).specified ? el.value : el.text;
                 }
+
                 // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
-                else if(nodeNameIs('select', el)) {
+                if(nodeNameIs('select', el)) {
                     var index = el.selectedIndex,
                         options = el.options;
 
@@ -137,19 +142,39 @@ KISSY.add('dom-base', function(S, undefined) {
                     return ret;
                 }
 
+                // Handle the case where in Webkit "" is returned instead of "on" if a value isn't specified
+                if(ua.webkit && RE_RADIO_CHECK.test(el.type)) {
+                    return el.getAttribute('value') === null ? 'on' : el.value;
+                }
+
                 // 普通元素的 value, 归一化掉 \r
-                return (el.value || '').replace(REG_RETURN, '');
+                return (el.value || '').replace(RE_RETURN, '');
             }
 
             // set value
-            el.value = value;
+            if (nodeNameIs('select', el)) {
+                var vals = S.makeArray(value),
+                    opts = el.options, opt;
+
+                for (i = 0,len = opts.length; i < len; ++i) {
+                    opt = opts[i];
+                    opt.selected = S.inArray(S.DOM.val(opt), vals);
+                }
+
+                if (!vals.length) {
+                    el.selectedIndex = -1;
+                }
+            }
+            else {
+                el.value = value;
+            }
         },
 
         /**
          * Gets or sets styles on the HTMLElement.
          */
         css: function(/*el, prop, val*/) {
-            // TODO
+            S.error('not implemented'); // TODO
         },
 
         /**
@@ -171,20 +196,66 @@ KISSY.add('dom-base', function(S, undefined) {
          * Get the HTML contents of the HTMLElement.
          */
         html: function(/*el, htmlString*/) {
-            // TODO
+            S.error('not implemented'); // TODO
         },
 
         /**
          * Creates a new HTMLElement using the provided html string.
          */
-        create: function(/*htmlString, ownerDocument*/) {
-            // TODO
-            S.error('not implemented');
+        create: function(html, ownerDoc) {
+            if (typeof html === 'string') {
+                html = S.trim(html); // match IE which trims whitespace from innerHTML
+            }
+
+            // simple tag
+            if(RE_TAG.test(html)) {
+                return (ownerDoc || doc).createElement(html);
+            }
+            
+            var ret = null, nodes, frag;
+
+            frag = ownerDoc ? ownerDoc.createElement('DIV') : defaultFrag;
+            frag.innerHTML = html;
+            nodes = frag.childNodes;
+
+            if(nodes.length === 1) {
+                // return single node, breaking parentNode ref from "fragment"
+                ret = nodes[0].parentNode.removeChild(nodes[0]);
+            }
+            else {
+                ret = nl2frag(nodes, ownerDoc || doc);
+            }
+
+            return ret;
         }
     };
 
     function nodeNameIs(val, el) {
         return el && el.nodeName.toUpperCase() === val.toUpperCase();
+    }
+
+    // 将 nodeList 转换为 fragment
+    function nl2frag(nodes, ownerDoc) {
+        var ret = null, i, len;
+
+        if (nodes && (nodes.push || nodes.item) && nodes[0]) {
+            ownerDoc = ownerDoc || nodes[0].ownerDocument;
+            ret = ownerDoc.createDocumentFragment();
+
+            if (nodes.item) { // convert live list to static array
+                nodes = S.makeArray(nodes);
+            }
+
+            for (i = 0, len = nodes.length; i < len; ++i) {
+                ret.appendChild(nodes[i]);
+            }
+        }
+        // else inline with log for minification
+        else {
+            S.error('unable to convert ' + nodes + ' to fragment');
+        }
+
+        return ret;
     }
 });
 
@@ -202,6 +273,6 @@ KISSY.add('dom-base', function(S, undefined) {
  *    - jquery/attributes.js: Safari mis-reports the default selected
  *      property of an option 在 Safari 4 中已修复
  *
- *  ~ val:
- *
+ * TODO:
+ *  - create 的进一步完善，比如 cache, 对 table, form 元素的支持等等
  */

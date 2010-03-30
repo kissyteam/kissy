@@ -94,7 +94,7 @@ KISSY.add('selector', function(S, undefined) {
 
         // 将 NodeList 转换为普通数组
         if(ret.item) {
-            ret = makeArray(ret);
+            ret = S.makeArray(ret);
         }
 
         // attach 上实用方法
@@ -201,24 +201,6 @@ KISSY.add('selector', function(S, undefined) {
                 }
                 return ret;
             }
-        }
-    }
-
-    // 将 NodeList 转换为普通数组
-    function makeArray(nodeList) {
-        return Array.prototype.slice.call(nodeList);
-    }
-    // ie 不支持用 slice 转换 NodeList, 降级到普通方法
-    try {
-        makeArray(doc.documentElement.childNodes);
-    }
-    catch(e) {
-        makeArray = function(nodeList) {
-            var ret = [], i = 0, len = nodeList.length;
-            for (; i < len; ++i) {
-                ret[i] = nodeList[i];
-            }
-            return ret;
         }
     }
 

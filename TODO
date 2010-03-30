@@ -11,32 +11,42 @@
   selector - 跟踪 jquery 代码，确定 Sizzle 返回后的数组进行了哪些处理 - done
 
   将 basic-util 功能在各个组件中实现
-  整合 tback
+  思考整合 tback 的方式
   重新思考 kissy 和 tbra 的关系
 
-  dom
-  node
-  event
+  dom - 20% done
+  node - 5% done
   cookie
   bom
-  anim
   swfstore
+  calendar
+  drag & drop
 
+  重构 switchable, 脱离对 YUI2 DOM 的依赖
   重构 editor, fix 少量经常反馈的 bug + 适应新的代码组织方式 - done
-  重构 switchable, 脱离对 YUI2 的依赖
-  实现 switchable album 组件
-  重构 suggest - half done
-  重构 megamenu, 并整理其它 switchable 应用，比如画报/排行榜等
-  重构 datalazyload
-  实现 TBra 其它组件
+
+  检查所有 src, 发布 1.0.6
+
+----------------------
+ 2010 Q2
+
+  event
+  dom
+  node
+  anim
+  drag & drop
 
   docs
 
-  calendar 组件
-  拖拽组件
-  本地存储
+  重构 suggest
+  重构 datalazyload
+  重构 switchable, 脱离对 YUI2 Event, Anim 的依赖
+  重构 megamenu, 并整理其它 switchable 应用，比如画报/排行榜等
+  实现 switchable album 组件
+
   图片上传
 
+  实现 TBra 其它组件
   整理 TBra 2.1
 
 -----------------------

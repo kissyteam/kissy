@@ -9,6 +9,11 @@
 
 <h2>Test Data</h2>
 <script src="kissy.js"></script>
+<script src="kissy-lang.js"></script>
+<script src="kissy-ua.js"></script>
+<script src="kissy-json.js"></script>
+<script src="../../third-party/jquery/jquery-1.4.2.js"></script>
+
 <script>
     var S = KISSY,
         doc = document,
@@ -173,13 +178,9 @@
         if(bird.getName() !== 'Hacked Bird') test.fail(bird.getName());
     }
 
-    function test_cloneTo(test) {
+    function test_app(test) {
         var S = KISSY;
-        S.cloneTo('TB');
-
-        // check static members
-        if(TB.mix !== S.mix) test.fail();
-        if(TB.cloneTo !== S.cloneTo) test.fail();
+        S.app('TB');
 
         // check Env and Config
         if(!TB.Env.mods) test.fail();
@@ -204,9 +205,9 @@
         var S = KISSY, ns;
 
         // normal
-        ns = S.namespace('app.Test');
+        ns = S.namespace('app1.Test');
         ns.name = 'foo1';
-        if(S.app.Test.name !== 'foo1') test.fail();
+        if(S.app1.Test.name !== 'foo1') test.fail();
 
         // first part of argument is the global object
         ns = S.namespace('KISSY.app2.Test2');
@@ -214,7 +215,7 @@
         if(S.app2.Test2.name !== 'foo2') test.fail();
 
         // via cloned global object
-        S.cloneTo('TB');
+        S.app('TB');
         ns = TB.namespace('app3.Test3');
         ns.name = 'foo3';
         if(TB.app3.Test3.name !== 'foo3') test.fail();
@@ -223,9 +224,33 @@
         if(S.namespace() !== null) test.fail();
 
         // clear
-        delete S.app;
+        delete S.app1;
         delete S.app2;
         window.TB = undefined;
+    }
+
+    function test_log(test) {
+        var S = KISSY;
+
+        S.add('test-ks-mod', function() { });
+        S.log(S, 'dir');
+
+        S.app('TB');
+        TB.add('test-tb-mod', function() { });
+        TB.Config.debug = false;
+        S.log(TB, 'dir');
+
+        // clear
+        //delete S.Env.mods['test-ks-mod'];
+        //window.TB = undefined;
+    }
+
+    function test_error(test) {
+        try {
+            KISSY.error('wrong');
+        } catch(e) {
+            if(e !== 'wrong') test.fail();
+        }
     }
 
     function test_each(test) {
@@ -238,22 +263,6 @@
         if(ret !== 15) test.fail();
     }
 
-    function test_indexOf(test) {
-        var S = KISSY, a, ret;
-
-        ret = S.indexOf(6, [1, 2, 3, 4, 5]);
-        if(ret !== -1) test.fail('S.indexOf(6, [1, 2, 3, 4, 5]) = ' + ret);
-
-        ret = S.indexOf(a, [1, 2, 3, 4, undefined]);
-        if(ret === -1) test.fail('S.indexOf(a, [1, 2, 3, 4, undefined]) = ' + ret);
-
-        ret = S.indexOf(2, [1, 2, 3, 4, 5]);
-        if(ret === -1) test.fail('S.indexOf(2, [1, 2, 3, 4, 5]) = ' + ret);
-
-        ret = S.indexOf({}, [1, 2, {}, 4, 5]);
-        if(ret !== -1) test.fail('S.indexOf({}, [1, 2, {}, 4, 5]) = ' + ret);
-    }
-
     function test_trim(test) {
         var S = KISSY,
             str = '    lots of spaces before and after    ';
@@ -261,20 +270,102 @@
         if(S.trim(str) !== 'lots of spaces before and after') test.fail();
     }
 
-    function test_log(test) {
+    function test_isFunction(test) {
         var S = KISSY;
 
-        S.add('test-ks-mod', function() { });
-        S.log(S, 'dir');
+        if(S.isFunction(function(){}) !== true) test.fail();
+        if(S.UA.ie && S.isFunction(window.alert) !== false) test.fail();
+        if(S.isFunction(parseFloat) !== true) test.fail();
+    }
 
-        S.cloneTo('TB');
-        TB.add('test-tb-mod', function() { });
-        TB.Config.debug = false;
-        S.log(TB, 'dir');
+    function test_isArray(test) {
+        var S = KISSY;
 
-        // clear
-        //delete S.Env.mods['test-ks-mod'];
-        //window.TB = undefined;
+        if(S.isArray([]) !== true) test.fail();
+        if(S.isArray(arguments) !== false) test.fail();
+        if(S.isArray(document.getElementsByTagName('body')) !== false) test.fail();
+    }
+    
+    function test_inArray(test) {
+        var S = KISSY, a, ret;
+
+        ret = S.inArray(6, [1, 2, 3, 4, 5]);
+        if(ret) test.fail('S.indexOf(6, [1, 2, 3, 4, 5]) = ' + ret);
+
+        ret = S.inArray(a, [1, 2, 3, 4, undefined]);
+        if(!ret) test.fail('S.indexOf(a, [1, 2, 3, 4, undefined]) = ' + ret);
+
+        ret = S.inArray(2, [1, 2, 3, 4, 5]);
+        if(!ret) test.fail('S.indexOf(2, [1, 2, 3, 4, 5]) = ' + ret);
+
+        ret = S.inArray({}, [1, 2, {}, 4, 5]);
+        if(ret) test.fail('S.indexOf({}, [1, 2, {}, 4, 5]) = ' + ret);
+    }
+
+    function test_makeArray(test) {
+        var S = KISSY, o;
+
+        // 普通对象(无 length 属性)转换为 [obj]
+        o = {a:1};
+        if(S.makeArray(o)[0] !== o) test.fail();
+
+        // string 转换为 [str]
+        if(S.makeArray('test')[0] !== 'test') test.fail();
+
+        // function 转换为 [fn]
+        o = function() {};
+        if(S.makeArray(o)[0] !== o) test.fail();
+
+        // array-like 对象，转换为数组
+        if(S.makeArray({'0':0, '1':1, length:2}).length !== 2) test.fail();
+        if(S.makeArray({'0':0, '1':1, length:2})[1] !== 1) test.fail();
+
+        // nodeList 转换为普通数组
+        o = document.getElementsByTagName('body');
+        if(S.makeArray(o).length !== 1) test.fail();
+        if(S.makeArray(o)[0] !== o[0]) test.fail();
+        if(!S.makeArray(o).slice) test.fail();
+
+        // arguments 转换为普通数组
+        o = arguments;
+        if(S.makeArray(o).length !== 1) test.fail();
+        if(S.makeArray(o)[0] !== test) test.fail();
+        if(!S.makeArray(o).slice) test.fail();
+
+        // window 有 length, window[0] 指向 window
+        o = S.makeArray(window);
+        if(!o[0].parseFloat) test.fail();
+
+        // 伪 array-like 对象
+        o = S.makeArray({a:1,b:2,length:2});
+        if(o.length !== 2) test.fail();
+        if(o[0] !== undefined) test.fail();
+        if(o[1] !== undefined) test.fail();
+    }
+
+    function test_userAgent(test) {
+        test.extraMsg = navigator.userAgent;
+    }
+
+    function test_ua(test) {
+        var ua = KISSY.UA, out = '';
+
+        out += 'ie = ' + ua.ie + ', ';
+        out += 'gecko = ' + ua.gecko + ', ';
+        out += 'firefox = ' + ua.firefox + ', ';
+        out += 'webkit = ' + ua.webkit + ', ';
+        out += 'chrome = ' + ua.chrome + ', ';
+        out += 'safari = ' + ua.safari + ', ';
+        out += 'mobile = ' + ua.mobile + ', ';
+        out += 'opera = ' + ua.opera;
+
+        test.extraMsg = out;
+    }
+
+    function test_json_parse(test) {
+        var S = KISSY;
+
+        if(S.JSON.parse('{"a":true}').a !== true) test.fail();
     }
 
 </script>

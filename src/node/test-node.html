@@ -13,17 +13,127 @@
 <h2>Test Data</h2>
 
 <script src="../kissy/kissy.js"></script>
+<script src="../kissy/kissy-lang.js"></script>
+<script src="../kissy/kissy-ua.js"></script>
+<script src="../kissy/kissy-json.js"></script>
 <script src="../dom/selector.js"></script>
 <script src="../dom/dom.js"></script>
+<script src="../dom/dom-class.js"></script>
 <script src="node.js"></script>
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
-
-<div id="test-data"><p id="foo"><span></span></p></div>
 
 <!-- Test Cases -->
 <script>
     var S = KISSY;
 
+    function test_attr(test) {
+        var node = S.one('#foo a');
+
+        // set attr
+        if (node.attr('title') !== 'test') test.fail();
+
+        // get attr
+        node.attr('data-set', 'test-xx');
+        if (node.attr('data-set') !== 'test-xx') test.fail();
+    }
+
+    function test_removeAttr(test) {
+        var node = S.one('#foo label');
+
+        node.attr('test-remove', 'xx');
+        if (node.attr('test-remove') !== 'xx') test.fail();
+        
+        node.removeAttr('test-remove');
+        if (node.attr('test-remove') !== undefined) test.fail();
+    }
+
+    function test_hasClass(test) {
+        var a = S.one('#foo a');
+
+        if (a.hasClass('link') !== true) test.fail();
+        if (a.hasClass('link2') !== false) test.fail();
+    }
+
+    function test_addClass(test) {
+        var a = S.one('#foo a');
+
+        a.addClass('link-added');
+        if (a.hasClass('link-added') !== true) test.fail();
+
+        // clean up
+        D.removeClass(a, 'link-added');
+    }
+
+    function test_removeClass(test) {
+        D.removeClass(a, 'link');
+        if (D.hasClass(a, 'link') !== false) test.fail();
+
+        a.className = 'link link2 link link linkrr';
+        D.removeClass(a, 'link');
+        D.removeClass(a, 'linkrr');
+        if (S.trim(a.className) !== 'link2') test.fail();
+
+        // restore
+        a.className = 'link';
+    }
+
+    function test_replaceClass(test) {
+        // oldCls 有的话替换
+        D.replaceClass(a, 'link', 'link2');
+        if (S.trim(a.className) !== 'link2') test.fail();
+
+        // oldCls 没有的话，仅添加
+        D.replaceClass(a, 'link3', 'link');
+        if (S.trim(a.className) !== 'link2 link') test.fail();
+
+        // restore
+        a.className = 'link';
+    }
+
+    function test_toggleClass(test) {
+        D.toggleClass(a, 'link2');
+        if (D.hasClass(a, 'link2') !== true) test.fail();
+
+        D.toggleClass(a, 'link2');
+        if (D.hasClass(a, 'link2') !== false) test.fail();
+    }
+
 </script>
+
+<div id="test-data">
+    <p id="foo">
+        <a href="../kissy/" style="color:red" class="link" title="test" data-test="test">test link</a>
+        <input type="text" id="test-input" readonly maxlength="20" value="hello"/>
+        <input type="radio" id="test-radio" />
+        <input type="radio" id="test-radio2" checked />
+        <label class="test" for="test-input">label</label>
+        <button type="button" tabindex="3">Submit</button>
+        <textarea rows="2" cols="2">
+            test
+        </textarea>
+    </p>
+    <div id="test-div"></div>
+    <table id="test-table" cellspacing="10">
+        <tbody>
+        <tr>
+            <td rowspan="2" colspan="3">td</td>
+        </tr>
+        </tbody>
+    </table>
+    <select id="test-select">
+        <option id="test-opt" value="1">0</option>
+        <option>2</option>
+        <option>3</option>
+    </select>
+    <select id="test-select2">
+        <option>2</option>
+    </select>
+    <select id="test-select3" multiple autocomplete="off">
+        <option selected>1</option>
+        <option selected>2</option>
+        <option>3</option>
+    </select>
+</div>
+
 </body>
 </html>

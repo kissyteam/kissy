@@ -6,6 +6,19 @@
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
-    <target name="build" depends="common.build">
-    </target>
-</project>
+    <target name="concat">
+            <concat destfile="dom-pkg.js" encoding="${charset}" outputencoding="${charset}">
+                <path path="selector.js"/>
+                <path path="dom.js"/>
+                <path path="dom-class.js"/>
+            </concat>
+        </target>
+
+        <target name="clean">
+            <delete file="dom-pkg.js"/>
+        </target>
+
+        <target name="build" depends="concat,common.build,clean">
+        </target>
+    </project>
+

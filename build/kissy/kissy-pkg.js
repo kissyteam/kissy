@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.4
+Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 504 Mar 28 17:00
+build: 507 Mar 30 17:24
 */
 /**
  * @module kissy
@@ -16,10 +16,6 @@ build: 504 Mar 28 17:00
     S = win[S]; // shortcut
 
     var doc = win.document,
-        AP = Array.prototype,
-        forEach = AP.forEach,
-        indexOf = AP.indexOf,
-        REG_TRIM = /^\s+|\s+$/g,
 
         // Copies all the properties of s to r.
         mix = function(r, s, ov, wl) {
@@ -61,7 +57,7 @@ build: 504 Mar 28 17:00
          * The version of the library.
          * @type {string}
          */
-        version: '1.0.4',
+        version: '1.0.5',
 
         /**
          * Initializes KISSY object.
@@ -296,18 +292,17 @@ build: 504 Mar 28 17:00
         },
 
         /**
-         * Clones KISSY to another global object.
+         * create app based on KISSY.
          * <pre>
-         * S.cloneTo('TB');
+         * S.app('TB');
          * </pre>
-         * @return {object}  A reference to the clone object
+         * @return {object}  A reference to the app global object
          */
-        cloneTo: function(name) {
+        app: function(name) {
             var O = win[name] || {};
 
-            mix(O, this);
+            mix(O, this, true, ['_init', 'add', 'namespace']);
             O._init();
-            mix(O.Env.mods, this.Env.mods);
 
             return (win[name] = O);
         },
@@ -318,7 +313,7 @@ build: 504 Mar 28 17:00
          * <pre>
          * S.namespace('KISSY.app'); // returns KISSY.app
          * S.namespace('app.Shop'); // returns KISSY.app.Shop
-         * S.cloneTo('TB');
+         * S.app('TB');
          * TB.namespace('TB.app'); // returns TB.app
          * TB.namespace('app.Shop'); // returns TB.app.Shop
          * </pre>
@@ -336,6 +331,71 @@ build: 504 Mar 28 17:00
             }
             return o;
         },
+
+        /**
+         * Prints debug info.
+         * @param {string} msg The message to log.
+         * @param {string} cat The log category for the message. Default
+         * categories are "info", "warn", "error", time" etc.
+         * @param {string} src The source of the the message (opt)
+         * @return {KISSY}
+         */
+        log: function(msg, cat, src) {
+            var c = this.Config;
+
+            if (c.debug) {
+                src && (msg = src + ': ' + msg);
+                if (win.console !== undefined && console.log) {
+                    console[cat && console[cat] ? cat : 'log'](msg);
+                }
+            }
+
+            return this;
+        },
+
+        /**
+         * Throws error message.
+         * @param msg
+         */
+        error: function(msg) {
+            throw msg;
+        }
+    });
+
+    S._init();
+
+})(window, 'KISSY');
+
+/**
+ * Notes:
+ *
+ * 2010.01
+ *  - 考虑简单够用和 2/8 原则，去掉了对 YUI3 沙箱的模拟（archives/2009 r402）
+ *
+ *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 组织代码）。
+ *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
+ *  - mix, merge, extend, augment, weave 方法，决定了类库代码的基本实现方式，
+ *    充分利用 mixin 特性和 prototype 方式来实现代码。
+ *  - cloneTo, namespace 方法，决定子库的实现和代码的整体组织。
+ *  - log 方法，简单的调试工具。
+ */
+/**
+ * @module  lang
+ * @author  lifesinger@gmail.com
+ * @depends kissy
+ */
+
+KISSY.add('lang', function(S, undefined) {
+
+    var AP = Array.prototype,
+        forEach = AP.forEach,
+        indexOf = AP.indexOf,
+        slice = AP.slice,
+        push = AP.push,
+        REG_TRIM = /^\s+|\s+$/g,
+        toString = Object.prototype.toString;
+
+    S.mix(S, {
 
         /**
          * Executes the supplied function on each item in the array.
@@ -358,22 +418,6 @@ build: 504 Mar 28 17:00
               },
 
         /**
-         * Report the index of some elements in the array.
-         */
-        indexOf: indexOf ?
-                 function(elem, arr) {
-                     return indexOf.call(arr, elem);
-                 } :
-                 function(elem, arr) {
-                     for (var i = 0, len = arr.length; i < len; ++i) {
-                         if (arr[i] === elem) {
-                             return i;
-                         }
-                     }
-                     return -1;
-                 },
-
-        /**
          * Remove the whitespace from the beginning and end of a string.
          * @param {string} str
          */
@@ -385,49 +429,198 @@ build: 504 Mar 28 17:00
                   return (str || '').replace(REG_TRIM, '');
               },
 
-        /**
-         * Prints debug info.
-         * @param {string} msg The message to log.
-         * @param {string} cat The log category for the message. Default
-         * categories are "info", "warn", "error", time" etc.
-         * @param {string} src The source of the the message (opt)
-         * @return {KISSY}
-         */
-        log: function(msg, cat, src) {
-            var c = this.Config;
+        // NOTE: DOM methods and functions like alert aren't supported. They return false on IE.
+        isFunction: function(obj) {
+            return toString.call(obj) === '[object Function]';
+        },
 
-            if (c.debug) {
-                src && (msg = src + ': ' + msg);
-                if (win.console !== undefined && console.log) {
-                    console[cat && console[cat] ? cat : 'log'](msg);
-                }
+        isArray: function(obj) {
+            return toString.call(obj) === '[object Array]';
+        },
+
+        /**
+         * Search for a specified value within an array.
+         */
+        inArray: indexOf ?
+                 function(elem, arr) {
+                     return indexOf.call(arr, elem) !== -1;
+                 } :
+                 function(elem, arr) {
+                     for (var i = 0, len = arr.length; i < len; ++i) {
+                         if (arr[i] === elem) {
+                             return true;
+                         }
+                     }
+                     return false;
+                 },
+
+        makeArray: function(obj) {
+            if (obj === null) return [];
+            if (S.isArray(obj)) return obj;
+
+            // The strings and functions also have 'length'
+            if (typeof obj.length !== 'number' || typeof obj === 'string' || S.isFunction(obj)) {
+                return [obj];
             }
 
-            return this;
+            // ie 不支持用 slice 转换 NodeList, 降级到普通方法
+            if(obj.item && S.UA.ie) {
+                var ret = [], i = 0, len = obj.length;
+                for (; i < len; ++i) {
+                    ret[i] = obj[i];
+                }
+                return ret;
+            }
+
+            // array-like
+            return slice.call(obj);
+
         }
     });
+});
+/**
+ * @module  ua
+ * @author  lifesinger@gmail.com
+ * @depends kissy
+ */
 
-    S._init();
+KISSY.add('ua', function(S) {
 
-})(window, 'KISSY');
+    var ua = navigator.userAgent,
+        m,
+        o = {
+            ie: 0,
+            gecko: 0,
+            firefox:  0,
+            opera: 0,
+            webkit: 0,
+            safari: 0,
+            chrome: 0,
+            mobile: ''
+        },
+        numberify = function(s) {
+            var c = 0;
+            // convert '1.2.3.4' to 1.234
+            return parseFloat(s.replace(/\./g, function() {
+                return (c++ === 0) ? '.' : '';
+            }));
+        };
+
+    // WebKit
+    if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
+        o.webkit = numberify(m[1]);
+
+        // Chrome
+        if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
+            o.chrome = numberify(m[1]);
+        }
+        // Safari
+        else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
+            o.safari = numberify(m[1]);
+        }
+
+        // Apple Mobile
+        if (/ Mobile\//.test(ua)) {
+            o.mobile = 'Apple'; // iPhone or iPod Touch
+        }
+        // Other WebKit Mobile Browsers
+        else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
+            o.mobile = m[0]; // Nokia N-series, Android, webOS, ex: NokiaN95
+        }
+    }
+    // NOT WebKit
+    else {
+        // Opera
+        if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
+            o.opera = numberify(m[1]);
+
+            // Opera Mini
+            if ((ua.match(/Opera Mini[^;]*/))) {
+                o.mobile = m[0]; // ex: Opera Mini/2.0.4509/1316
+            }
+
+        // NOT WebKit or Opera
+        } else {
+            // MSIE
+            if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
+                o.ie = numberify(m[1]);
+
+            // NOT WebKit, Opera or IE
+            } else {
+                // Gecko
+                if ((m = ua.match(/Gecko/))) {
+                    o.gecko = 1; // Gecko detected, look for revision
+                    if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
+                        o.gecko = numberify(m[1]);
+                    }
+
+                    // Firefox
+                    if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
+                        o.firefox = numberify(m[1]);
+                    }
+                }
+            }
+        }
+    }
+
+    S.UA = o;
+});
 
 /**
  * Notes:
  *
- * 2010.01
- *  - 考虑简单够用和 2/8 原则，去掉了对 YUI3 沙箱的模拟（archives/2009 r402）
+ * 2010.03
+ *  - jQuery, YUI 等类库都推荐用特性探测替代浏览器嗅探。特性探测的好处是能自动适应未来设备和未知设备，比如
+ *    if(document.addEventListener) 假设 IE 10 支持标准事件，则代码不用修改，就自适应了“未来浏览器”。
+ *    对于未知浏览器也是如此。但是，这并不意味着浏览器嗅探就得彻底抛弃。当代码很明确就是针对已知特定浏览器的，
+ *    并且并非是某个特性探测可以解决时，用浏览器嗅探反而能带来代码的简洁，同时也也不会有什么后患。总之，一切
+ *    皆权衡。
+ *  - UA.ie && UA.ie < 8 并不意味着浏览器就不是 IE8, 有可能是 IE8 的兼容模式。进一步的判断需要使用 documentMode
  *
- *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 组织代码）。
- *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
- *  - mix, merge, extend, augment, weave 方法，决定了类库代码的基本实现方式，
- *    充分利用 mixin 特性和 prototype 方式来实现代码。
- *  - cloneTo, namespace 方法，决定子库的实现和代码的整体组织。
- *  - each, indexOf, trim 方法，对原生 JS 的增强。
- *  - log 方法，简单的调试工具。
+ * TODO:
+ *  - test mobile
+ *  - 权衡是否需要加入 maxthon 等国内浏览器嗅探？
  * 
- *  - 考虑性能，each, indexOf, trim 尽可能用原生方法。
- *  - 考虑简单够用，去掉 indexOf 对 fromIndex 的支持。
- *
- *  - 字符串和数组的 trim, each 等方法，可以考虑类似 S.query() 的方式，给需要
- *    操作的原生对象加上。这想法需仔细权衡，暂留。
+ *//**
+ * @module  json
+ * @author  lifesinger@gmail.com
+ * @depends kissy
+ */
+
+KISSY.add('json', function(S) {
+
+    var nativeJSON = window.JSON;
+
+    S.JSON = {
+        parse: function(data) {
+            if (typeof data !== 'string' || !data) {
+                return null;
+            }
+
+            // Make sure leading/trailing whitespace is removed (IE can't handle it)
+            data = S.trim(data);
+
+            // Make sure the incoming data is actual JSON
+            // Logic borrowed from http://json.org/json2.js
+            if (/^[\],:{}\s]*$/.test(data.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
+                .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
+                .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+
+                // Try to use the native JSON parser first
+                return (nativeJSON || {}).parse ?
+                       nativeJSON.parse(data) :
+                       (new Function('return ' + data))();
+
+            } else {
+                jQuery.error('Invalid JSON: ' + data);
+            }
+        }
+    };
+});
+
+/**
+ * TODO:
+ *  - stringify
+ *  - more unit test
+ *  - why use new Function instead of eval ?
  */

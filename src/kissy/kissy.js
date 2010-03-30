@@ -11,10 +11,6 @@
     S = win[S]; // shortcut
 
     var doc = win.document,
-        AP = Array.prototype,
-        forEach = AP.forEach,
-        indexOf = AP.indexOf,
-        REG_TRIM = /^\s+|\s+$/g,
 
         // Copies all the properties of s to r.
         mix = function(r, s, ov, wl) {
@@ -291,18 +287,17 @@
         },
 
         /**
-         * Clones KISSY to another global object.
+         * create app based on KISSY.
          * <pre>
-         * S.cloneTo('TB');
+         * S.app('TB');
          * </pre>
-         * @return {object}  A reference to the clone object
+         * @return {object}  A reference to the app global object
          */
-        cloneTo: function(name) {
+        app: function(name) {
             var O = win[name] || {};
 
-            mix(O, this);
+            mix(O, this, true, ['_init', 'add', 'namespace']);
             O._init();
-            mix(O.Env.mods, this.Env.mods);
 
             return (win[name] = O);
         },
@@ -313,7 +308,7 @@
          * <pre>
          * S.namespace('KISSY.app'); // returns KISSY.app
          * S.namespace('app.Shop'); // returns KISSY.app.Shop
-         * S.cloneTo('TB');
+         * S.app('TB');
          * TB.namespace('TB.app'); // returns TB.app
          * TB.namespace('app.Shop'); // returns TB.app.Shop
          * </pre>
@@ -331,54 +326,6 @@
             }
             return o;
         },
-
-        /**
-         * Executes the supplied function on each item in the array.
-         * @param {array} arr the array to iterate
-         * @param {function} fn the function to execute on each item. The function
-         * receives three arguments: the value, the index, the full array.
-         * @param {object} context optional context object
-         */
-        each: forEach ?
-              function (arr, fn, context) {
-                  forEach.call(arr, fn, context);
-                  return this;
-              } :
-              function(arr, fn, context) {
-                  var l = (arr && arr.length) || 0, i;
-                  for (i = 0; i < l; ++i) {
-                      fn.call(context || this, arr[i], i, arr);
-                  }
-                  return this;
-              },
-
-        /**
-         * Report the index of some elements in the array.
-         */
-        indexOf: indexOf ?
-                 function(elem, arr) {
-                     return indexOf.call(arr, elem);
-                 } :
-                 function(elem, arr) {
-                     for (var i = 0, len = arr.length; i < len; ++i) {
-                         if (arr[i] === elem) {
-                             return i;
-                         }
-                     }
-                     return -1;
-                 },
-
-        /**
-         * Remove the whitespace from the beginning and end of a string.
-         * @param {string} str
-         */
-        trim: String.prototype.trim ?
-              function(str) {
-                  return (str || '').trim();
-              } :
-              function(str) {
-                  return (str || '').replace(REG_TRIM, '');
-              },
 
         /**
          * Prints debug info.
@@ -425,12 +372,5 @@
  *  - mix, merge, extend, augment, weave 方法，决定了类库代码的基本实现方式，
  *    充分利用 mixin 特性和 prototype 方式来实现代码。
  *  - cloneTo, namespace 方法，决定子库的实现和代码的整体组织。
- *  - each, indexOf, trim 方法，对原生 JS 的增强。
  *  - log 方法，简单的调试工具。
- * 
- *  - 考虑性能，each, indexOf, trim 尽可能用原生方法。
- *  - 考虑简单够用，去掉 indexOf 对 fromIndex 的支持。
- *
- *  - 字符串和数组的 trim, each 等方法，可以考虑类似 S.query() 的方式，给需要
- *    操作的原生对象加上。这想法需仔细权衡，暂留。
  */
