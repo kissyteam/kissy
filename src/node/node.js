@@ -12,7 +12,7 @@ KISSY.add('node', function(S) {
      * The Node class provides a wrapper for manipulating DOM Node.
      */
     function Node(html, props, ownerDocument) {
-        var self = this, domNode, match;
+        var self = this, domNode;
 
         // factory or constructor
         if (!(self instanceof Node)) {
@@ -39,23 +39,39 @@ KISSY.add('node', function(S) {
         self[0] = domNode;
     }
 
-    // imports standard methods from DOM
-    S.each([
-        'attr', 'removeAttr', 'val', 'text',
-        'create',
-        'hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'],
+    // import dom methods
+    S.each(['attr', 'removeAttr'],
         function(methodName) {
-
             Node.prototype[methodName] = function(name, val) {
                 var domNode = this[0];
-
                 if(val === undefined) {
                     return DOM[methodName](domNode, name);
-                }
-                else {
+                } else {
                     DOM[methodName](domNode, name, val);
                     return this;
                 }
+            }
+        });
+
+    S.each(['val', 'text'],
+            function(methodName) {
+                Node.prototype[methodName] = function(val) {
+                    var domNode = this[0];
+                    if(val === undefined) {
+                        return DOM[methodName](domNode);
+                    } else {
+                        DOM[methodName](domNode, val);
+                        return this;
+                    }
+                }
+            });
+
+    S.each(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'],
+        function(methodName) {
+            Node.prototype[methodName] = function() {
+                var ret = DOM[methodName].apply(DOM, [this[0]].concat(S.makeArray(arguments)));
+                // 只有 hasClass 有返回值
+                return typeof ret === 'boolean' ? ret : this;
             }
         });
 
@@ -70,5 +86,4 @@ KISSY.add('node', function(S) {
     };
 
     S.Node = Node;
-
 });

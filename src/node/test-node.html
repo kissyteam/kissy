@@ -26,6 +26,21 @@
 <script>
     var S = KISSY;
 
+    function test_constructor(test) {
+        var div, bd = document.body, el;
+
+        div = S.Node('div')[0];
+        div.id = 'test-create';
+        bd.appendChild(div);
+        if(!S.get('#test-create')) test.fail();
+
+        div = new S.Node('<div id="test-create2">create2</div>')[0];
+        bd.appendChild(div);
+        el = S.get('#test-create2');
+        if(!el) test.fail();
+        if(S.DOM.text(el) !== 'create2') test.fail();
+    }
+
     function test_attr(test) {
         var node = S.one('#foo a');
 
@@ -55,47 +70,65 @@
     }
 
     function test_addClass(test) {
-        var a = S.one('#foo a');
-
-        a.addClass('link-added');
-        if (a.hasClass('link-added') !== true) test.fail();
+        if (S.one('#foo a')
+                .addClass('link-added')
+                .hasClass('link-added') !== true) test.fail();
 
         // clean up
-        D.removeClass(a, 'link-added');
+        S.one('#foo a').removeClass('link-added');
     }
 
     function test_removeClass(test) {
-        D.removeClass(a, 'link');
-        if (D.hasClass(a, 'link') !== false) test.fail();
+        var a = S.one('#foo a');
 
-        a.className = 'link link2 link link linkrr';
-        D.removeClass(a, 'link');
-        D.removeClass(a, 'linkrr');
-        if (S.trim(a.className) !== 'link2') test.fail();
+        if (a.removeClass('link').hasClass(a, 'link') !== false) test.fail();
+
+        a[0].className = 'link link2 link link linkrr';
+        a.removeClass('link').removeClass('linkrr');
+        if (S.trim(a[0].className) !== 'link2') test.fail();
 
         // restore
-        a.className = 'link';
+        a[0].className = 'link';
     }
 
     function test_replaceClass(test) {
+        var a = S.one('#foo a');
+
         // oldCls 有的话替换
-        D.replaceClass(a, 'link', 'link2');
-        if (S.trim(a.className) !== 'link2') test.fail();
+        a.replaceClass('link', 'link2');
+        if (S.trim(a[0].className) !== 'link2') test.fail();
 
         // oldCls 没有的话，仅添加
-        D.replaceClass(a, 'link3', 'link');
-        if (S.trim(a.className) !== 'link2 link') test.fail();
+        a.replaceClass('link3', 'link');
+        if (S.trim(a[0].className) !== 'link2 link') test.fail();
 
         // restore
-        a.className = 'link';
+        a[0].className = 'link';
     }
 
     function test_toggleClass(test) {
-        D.toggleClass(a, 'link2');
-        if (D.hasClass(a, 'link2') !== true) test.fail();
+        var a = S.one('#foo a');
 
-        D.toggleClass(a, 'link2');
-        if (D.hasClass(a, 'link2') !== false) test.fail();
+        if (a.toggleClass('link2').hasClass('link2') !== true) test.fail();
+        if (a.toggleClass('link2').hasClass('link2') !== false) test.fail();
+    }
+
+    function test_val(test) {
+        // normal
+        if (S.one('#foo input').val() !== 'hello') test.fail();
+
+        // area
+        if (S.one('#foo textarea').val().length !== 25) test.fail();
+
+        // set value
+        var a = S.one('#foo a');
+        if(a.val('test').val() !== 'test') test.fail();
+        a.removeAttr('value');
+    }
+
+    function test_text(test) {
+        var div = S.one('#test-div');
+        if(div.text('hello, are you ok?').text() !== 'hello, are you ok?') test.fail();
     }
 
 </script>
