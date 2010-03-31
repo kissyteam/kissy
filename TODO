@@ -10,21 +10,24 @@
   css 梳理 - done
   selector - 跟踪 jquery 代码，确定 Sizzle 返回后的数组进行了哪些处理 - done
 
+  重新思考 kissy 和 tbra, tback 的关系 - 简化为 lib 和 app 的关系 - done
   将 basic-util 功能在各个组件中实现
-  思考整合 tback 的方式
-  重新思考 kissy 和 tbra 的关系
 
   dom - 20% done
-  node - 5% done
+  node - 10% done
+  nodelist - 10%
   cookie
-  bom
+  ua - done
   swfstore
-  drag & drop
+  drag
+  anim
+  ajax
 
-  calendar
-  重构 switchable, 脱离对 YUI2 DOM 的依赖
+  overlay
+  重构 switchable, add album, 脱离对 YUI2 DOM 的依赖
   重构 editor, fix 少量经常反馈的 bug + 适应新的代码组织方式 - done
 
+  打包 editor 1.0.6
   检查所有 src, 发布 1.0.6
 
 ----------------------
@@ -33,11 +36,12 @@
   event
   dom
   node
-  anim
   drag & drop
 
   docs
 
+  review calendar
+  combobox
   重构 suggest
   重构 datalazyload
   重构 switchable, 脱离对 YUI2 Event, Anim 的依赖

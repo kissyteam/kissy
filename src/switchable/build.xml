@@ -16,7 +16,7 @@
             <path path="tabs.js"/>
             <path path="slide.js"/>
             <path path="carousel.js"/>
-            <path path="megamenu.js"/>
+            <path path="album.js"/>
         </concat>
     </target>
 
