@@ -6,7 +6,8 @@
 
 KISSY.add('node', function(S) {
 
-    var DOM = S.DOM;
+    var DOM = S.DOM,
+        NP = Node.prototype;
 
     /**
      * The Node class provides a wrapper for manipulating DOM Node.
@@ -42,7 +43,7 @@ KISSY.add('node', function(S) {
     // import dom methods
     S.each(['attr', 'removeAttr'],
         function(methodName) {
-            Node.prototype[methodName] = function(name, val) {
+            NP[methodName] = function(name, val) {
                 var domNode = this[0];
                 if(val === undefined) {
                     return DOM[methodName](domNode, name);
@@ -55,7 +56,7 @@ KISSY.add('node', function(S) {
 
     S.each(['val', 'text'],
             function(methodName) {
-                Node.prototype[methodName] = function(val) {
+                NP[methodName] = function(val) {
                     var domNode = this[0];
                     if(val === undefined) {
                         return DOM[methodName](domNode);
@@ -68,7 +69,7 @@ KISSY.add('node', function(S) {
 
     S.each(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'],
         function(methodName) {
-            Node.prototype[methodName] = function() {
+            NP[methodName] = function() {
                 var ret = DOM[methodName].apply(DOM, [this[0]].concat(S.makeArray(arguments)));
                 // 只有 hasClass 有返回值
                 return typeof ret === 'boolean' ? ret : this;
@@ -76,9 +77,7 @@ KISSY.add('node', function(S) {
         });
 
     // add more methods
-    S.mix(Node.prototype, {
-
-    });
+    //S.mix(NP, { });
 
     // query api
     S.one = function(selector, context) {

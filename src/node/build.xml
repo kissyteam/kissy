@@ -6,6 +6,17 @@
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
-    <target name="build" depends="common.build">
+    <target name="concat">
+        <concat destfile="node-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="node.js"/>
+            <path path="nodelist.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="node-pkg.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
     </target>
 </project>
