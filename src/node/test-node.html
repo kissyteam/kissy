@@ -20,6 +20,7 @@
 <script src="../dom/dom.js"></script>
 <script src="../dom/dom-class.js"></script>
 <script src="node.js"></script>
+<script src="nodelist.js"></script>
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
 
 <!-- Test Cases -->
@@ -129,6 +130,14 @@
     function test_text(test) {
         var div = S.one('#test-div');
         if(div.text('hello, are you ok?').text() !== 'hello, are you ok?') test.fail();
+    }
+
+    function test_one(test) {
+        if(S.one('#foo').one('input').attr('id') !== 'test-input') test.fail();
+    }
+
+    function test_all(test) {
+        if(S.one('#foo').all('input').length !== 3) test.fail();
     }
 
 </script>

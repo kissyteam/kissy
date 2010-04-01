@@ -33,6 +33,8 @@
 ----------------------
  2010 Q2
 
+  进一步的开发计划，人员协调，包括沉鱼、苏青等
+
   event
   dom
   node
@@ -43,7 +45,7 @@
   review calendar
   combobox
   重构 suggest
-  重构 datalazyload
+  重构 datalazyload, 解决服饰频道导致轮播第5屏失效的问题
   重构 switchable, 脱离对 YUI2 Event, Anim 的依赖
   重构 megamenu, 并整理其它 switchable 应用，比如画报/排行榜等
   实现 switchable album 组件
