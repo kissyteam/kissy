@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>Cookie Test</title>
+</head>
+<body>
+<script src="../test/test.js"></script>
+<script>
+    KISSY.Test.Config.times = 1;
+</script>
+
+<h2>Test Data</h2>
+
+<script src="../kissy/kissy.js"></script>
+<script src="../kissy/kissy-lang.js"></script>
+<script src="../kissy/kissy-ua.js"></script>
+<script src="../kissy/kissy-json.js"></script>
+<script src="cookie.js"></script>
+
+<!-- Test Cases -->
+<script>
+    var S = KISSY, Cookie = S.Cookie;
+
+    document.cookie = 'test0';
+    document.cookie = 'test1=1test0';
+    document.cookie = 'test02=2';
+    document.cookie = 'xtest0=x';
+    document.cookie = 'test3 t   =   ';
+
+    function test_get(test) {
+        if(Cookie.get('test0') !== '') test.fail();
+        if(Cookie.get('test1') !== '1test0') test.fail();
+        if(Cookie.get('test3 t') !== '') test.fail();
+        if(Cookie.get('test02') !== '2') test.fail();
+        if(Cookie.get('xtest0') !== 'x') test.fail();
+
+        if(Cookie.get('test4') !== undefined) test.fail();
+
+        if(Cookie.get(true) !== undefined) test.fail();
+        if(Cookie.get({}) !== undefined) test.fail();
+        if(Cookie.get(null) !== undefined) test.fail();
+    }
+
+    function test_cookie(test) {
+        test.extraMsg = 'document.cookie = "' + document.cookie + '"';
+    }
+</script>
+
+</body>
+</html>
