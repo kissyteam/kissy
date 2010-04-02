@@ -77,7 +77,7 @@ KISSY.add('cookie', function(S) {
  *   - get 方法要考虑 ie 下，
  *     值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
  *     除了正则获取，还可以 split 字符串的方式来获取。
- *   - api 设计上，还可以采取 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
+ *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
  *     独立成静态工具类的方式更优。
  *
  */

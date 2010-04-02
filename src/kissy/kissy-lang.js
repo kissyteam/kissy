@@ -10,9 +10,10 @@ KISSY.add('lang', function(S, undefined) {
         forEach = AP.forEach,
         indexOf = AP.indexOf,
         slice = AP.slice,
-        push = AP.push,
         REG_TRIM = /^\s+|\s+$/g,
-        toString = Object.prototype.toString;
+        toString = Object.prototype.toString,
+        encode = encodeURIComponent,
+        decode = decodeURIComponent;
 
     S.mix(S, {
 
@@ -83,7 +84,7 @@ KISSY.add('lang', function(S, undefined) {
             }
 
             // ie 不支持用 slice 转换 NodeList, 降级到普通方法
-            if(obj.item && S.UA.ie) {
+            if (obj.item && S.UA.ie) {
                 var ret = [], i = 0, len = obj.length;
                 for (; i < len; ++i) {
                     ret[i] = obj[i];
@@ -94,6 +95,113 @@ KISSY.add('lang', function(S, undefined) {
             // array-like
             return slice.call(obj);
 
+        },
+
+        /**
+         * Takes an object and converts it to an encoded URI-like param string.
+         * <pre>
+         *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
+         *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         *     {foo: undefined, bar: 2}    // -> 'foo=&bar=2'
+         * </pre>
+         */
+        param: function(o) {
+            if (!o) return '';
+
+            var buf = [], key, val, type;
+
+            for (key in o) {
+                val = o[key]; key = encode(key); type = typeof val;
+
+                if (type === 'undefined') {
+                    buf.push(key, '=&');
+                }
+                else if (type !== 'function' && type !== 'object') {
+                    buf.push(key, '=', encode(val), '&');
+                }
+                else if (S.isArray(val)) {
+                    if (val.length) {
+                        for (var i = 0, len = val.length; i < len; i++) {
+                            var t = typeof val[i];
+                            if (t != 'function' && t != 'object') {
+                                buf.push(key, '=', encode(val[i] === undefined ? '' : val[i]), '&');
+                            }
+                        }
+                    }
+                    else {
+                        buf.push(key, '=&');
+                    }
+                }
+            }
+
+            buf.pop();
+            return buf.join('');
+        },
+
+        /**
+         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
+         * This method is realy targeted at parsing query strings (hence the default value of "&" for the separator argument).
+         * For this reason, it does not consider anything that is either before a question
+         * mark (which signals the beginning of a query string) or beyond the hash symbol ("#"),
+         * and runs decodeURIComponent() on each parameter/value pair.
+         * Note that parameters which do not have a specified value will be set to undefined.
+         * <code>
+         | 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+         |
+         | 'section=blog;id=45', false, ';'        // -> {section: 'blog', id: '45'}
+         |
+         | 'http://www.example.com?section=blog&id=45#comments'        // -> {section: 'blog', id: '45'}
+         |
+         | 'section=blog&tag=javascript&tag=prototype&tag=doc'
+         | // -> {section: 'blog', tag: ['javascript', 'prototype', 'doc']}
+         |
+         | 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+         |
+         | 'id=45&raw'        // -> {id: '45', raw: undefined}
+         * </code>
+         * @param {String} string
+         * @param {Boolean} overwrite (optional) Items of the same name will overwrite previous values instead of creating an an array (Defaults to false).
+         * @return {Object} A literal with members
+         */
+        unparam: function(string, overwrite, separator) {
+            if (!string || !string.length) return { };
+
+            var match = string.trim().match(/([^?#]*)(#.*)?$/);
+            if (!match) return { };
+
+            var obj = { };
+            var pairs = match[1].split(separator || '&');
+
+            var pair, name, value;
+            for (var i = 0, len = pairs.length; i < len; ++i) {
+                pair = pairs[i].split('=');
+                name = decode(pair[0]);
+                value = decode(pair[1]);
+                if (value === '' || value === 'undefined') value = undefined; // &k 鍜?&k= 閮借繕鍘熸垚 undefined
+
+                if (overwrite !== true) {
+                    if (typeof obj[name] == 'undefined') {
+                        obj[name] = value;
+                    } else if (typeof obj[name] == 'string') {
+                        obj[name] = [obj[name]];
+                        obj[name].push(value);
+                    } else {
+                        obj[name].push(value);
+                    }
+                } else {
+                    obj[name] = value;
+                }
+            }
+            return obj;
         }
     });
 });
+
+/**
+ * Notes:
+ *
+ *  2010.04
+ *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
+ *
+ */
