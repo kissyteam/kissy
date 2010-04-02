@@ -1,3 +1,8 @@
+/*
+Copyright 2010, KISSY UI Library v1.0.5
+MIT Licensed
+build: 516 Apr 2 09:07
+*/
 /**
  * @module  cookie
  * @author  lifesinger@gmail.com

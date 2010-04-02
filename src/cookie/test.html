@@ -42,6 +42,22 @@
         if(Cookie.get(null) !== undefined) test.fail();
     }
 
+    function test_set(test) {
+        Cookie.set('set-test', 'xx');
+        if(Cookie.get('set-test') !== 'xx') test.fail();
+
+        Cookie.set('set-test2', 'xx', 0);
+        if(Cookie.get('set-test2') !== undefined) test.fail();
+
+        Cookie.set('set-test3', 'xx', new Date(2099, 1, 1));
+        if(Cookie.get('set-test3') !== 'xx') test.fail();
+    }
+
+    function test_remove(test) {
+        Cookie.remove('set-test');
+        if(Cookie.get('set-test') != undefined) test.fail();
+    }
+
     function test_cookie(test) {
         test.extraMsg = 'document.cookie = "' + document.cookie + '"';
     }
