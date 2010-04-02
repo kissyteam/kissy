@@ -344,20 +344,33 @@
     }
 
     function test_param(test) {
-        if($.param({foo:1, bar:2}) !== 'foo=1&bar=2') test.fail();
-        if($.param({foo:1, bar:[2,3]}) !== encodeURIComponent('foo=1&bar[]=2&bar[]=3')) test.fail();
-        if($.param({foo:undefined, bar:2}) !== 'foo=undefined&bar=2') test.fail();
-        if($.param({foo:null, bar:2}) !== 'foo=null&bar=2') test.fail();
-        if($.param({foo:true, bar:2}) !== 'foo=true&bar=2') test.fail();
-        if($.param({foo:false, bar:2}) !== 'foo=false&bar=2') test.fail();
-        if($.param({foo:'', bar:2}) !== 'foo=&bar=2') test.fail();
-        if($.param({foo:NaN, bar:2}) !== 'foo=NaN&bar=2') test.fail();
-        if($.param({foo:{}, bar:2}) !== 'bar=2') test.fail();
-        //if($.param({foo:function() {}, bar:2}) !== 'bar=2') test.fail();
+        if(S.param({foo:1, bar:2}) !== 'foo=1&bar=2') test.fail();
+        if(S.param({foo:1, bar:[2,3]}) !== encodeURI('foo=1&bar[]=2&bar[]=3')) test.fail();
+
+        if(S.param({foo:1, bar:[]}) !== encodeURI('foo=1')) test.fail();
+        if(S.param({foo:{}, bar:2}) !== 'bar=2') test.fail();
+        if(S.param({foo:function() {}, bar:2}) !== 'bar=2') test.fail();
+
+        if(S.param({foo:undefined, bar:2}) !== 'foo=undefined&bar=2') test.fail();
+        if(S.param({foo:null, bar:2}) !== 'foo=null&bar=2') test.fail();
+        if(S.param({foo:true, bar:2}) !== 'foo=true&bar=2') test.fail();
+        if(S.param({foo:false, bar:2}) !== 'foo=false&bar=2') test.fail();
+        if(S.param({foo:'', bar:2}) !== 'foo=&bar=2') test.fail();
+        if(S.param({foo:NaN, bar:2}) !== 'foo=NaN&bar=2') test.fail();
     }
 
     function test_unparam(test) {
+        if(S.unparam('foo=1&bar=2').foo !== '1') test.fail();
+        if(S.unparam('foo=1&bar=2').bar !== '2') test.fail();
 
+        if(S.unparam('foo=1&bar[]=2&bar[]=3').bar[0] !== '2') test.fail();
+        if(S.unparam('foo=1&bar[]=2&bar[]=3').bar[1] !== '3') test.fail();
+
+        if(S.unparam('foo=null&bar=2').foo !== 'null') test.fail();
+        if(S.unparam('foo=&bar=2').foo !== '') test.fail();
+        if(S.unparam('foo&bar=2').foo !== '') test.fail();
+
+        if(S.unparam('foo=1&bar=2&foo=3').foo !== '3') test.fail();        
     }
 
     function test_userAgent(test) {

@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.4
+Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 498 Mar 18 13:49
+build: 520 Apr 2 22:20
 */
 /**
  * @module kissy
@@ -16,10 +16,6 @@ build: 498 Mar 18 13:49
     S = win[S]; // shortcut
 
     var doc = win.document,
-        AP = Array.prototype,
-        forEach = AP.forEach,
-        indexOf = AP.indexOf,
-        REG_TRIM = /^\s+|\s+$/g,
 
         // Copies all the properties of s to r.
         mix = function(r, s, ov, wl) {
@@ -61,7 +57,7 @@ build: 498 Mar 18 13:49
          * The version of the library.
          * @type {string}
          */
-        version: '1.0.4',
+        version: '1.0.5',
 
         /**
          * Initializes KISSY object.
@@ -296,18 +292,17 @@ build: 498 Mar 18 13:49
         },
 
         /**
-         * Clones KISSY to another global object.
+         * create app based on KISSY.
          * <pre>
-         * S.cloneTo('TB');
+         * S.app('TB');
          * </pre>
-         * @return {object}  A reference to the clone object
+         * @return {object}  A reference to the app global object
          */
-        cloneTo: function(name) {
+        app: function(name) {
             var O = win[name] || {};
 
-            mix(O, this);
+            mix(O, this, true, ['_init', 'add', 'namespace']);
             O._init();
-            mix(O.Env.mods, this.Env.mods);
 
             return (win[name] = O);
         },
@@ -318,7 +313,7 @@ build: 498 Mar 18 13:49
          * <pre>
          * S.namespace('KISSY.app'); // returns KISSY.app
          * S.namespace('app.Shop'); // returns KISSY.app.Shop
-         * S.cloneTo('TB');
+         * S.app('TB');
          * TB.namespace('TB.app'); // returns TB.app
          * TB.namespace('app.Shop'); // returns TB.app.Shop
          * </pre>
@@ -336,6 +331,71 @@ build: 498 Mar 18 13:49
             }
             return o;
         },
+
+        /**
+         * Prints debug info.
+         * @param {string} msg The message to log.
+         * @param {string} cat The log category for the message. Default
+         * categories are "info", "warn", "error", time" etc.
+         * @param {string} src The source of the the message (opt)
+         * @return {KISSY}
+         */
+        log: function(msg, cat, src) {
+            var c = this.Config;
+
+            if (c.debug) {
+                src && (msg = src + ': ' + msg);
+                if (win.console !== undefined && console.log) {
+                    console[cat && console[cat] ? cat : 'log'](msg);
+                }
+            }
+
+            return this;
+        },
+
+        /**
+         * Throws error message.
+         * @param msg
+         */
+        error: function(msg) {
+            throw msg;
+        }
+    });
+
+    S._init();
+
+})(window, 'KISSY');
+
+/**
+ * Notes:
+ *
+ * 2010.01
+ *  - 考虑简单够用和 2/8 原则，去掉了对 YUI3 沙箱的模拟（archives/2009 r402）
+ *
+ *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 组织代码）。
+ *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
+ *  - mix, merge, extend, augment, weave 方法，决定了类库代码的基本实现方式，
+ *    充分利用 mixin 特性和 prototype 方式来实现代码。
+ *  - app, namespace 方法，决定子库的实现和代码的整体组织。
+ *  - log 方法，简单的调试工具。
+ */
+/**
+ * @module  lang
+ * @author  lifesinger@gmail.com
+ * @depends kissy
+ */
+
+KISSY.add('lang', function(S, undefined) {
+
+    var AP = Array.prototype,
+        forEach = AP.forEach,
+        indexOf = AP.indexOf,
+        slice = AP.slice,
+        REG_TRIM = /^\s+|\s+$/g,
+        REG_ARR_KEY = /^(\w+)\[\]$/,
+        toString = Object.prototype.toString;
+
+    S.mix(S, {
 
         /**
          * Executes the supplied function on each item in the array.
@@ -358,22 +418,6 @@ build: 498 Mar 18 13:49
               },
 
         /**
-         * Report the index of some elements in the array.
-         */
-        indexOf: indexOf ?
-                 function(elem, arr) {
-                     return indexOf.call(arr, elem);
-                 } :
-                 function(elem, arr) {
-                     for (var i = 0, len = arr.length; i < len; ++i) {
-                         if (arr[i] === elem) {
-                             return i;
-                         }
-                     }
-                     return -1;
-                 },
-
-        /**
          * Remove the whitespace from the beginning and end of a string.
          * @param {string} str
          */
@@ -385,56 +429,377 @@ build: 498 Mar 18 13:49
                   return (str || '').replace(REG_TRIM, '');
               },
 
-        /**
-         * Prints debug info.
-         * @param {string} msg The message to log.
-         * @param {string} cat The log category for the message. Default
-         * categories are "info", "warn", "error", time" etc.
-         * @param {string} src The source of the the message (opt)
-         * @return {KISSY}
-         */
-        log: function(msg, cat, src) {
-            var c = this.Config;
+        // NOTE: DOM methods and functions like alert aren't supported. They return false on IE.
+        isFunction: function(obj) {
+            return toString.call(obj) === '[object Function]';
+        },
 
-            if (c.debug) {
-                src && (msg = src + ': ' + msg);
-                if (win.console !== undefined && console.log) {
-                    console[cat && console[cat] ? cat : 'log'](msg);
-                }
+        isArray: function(obj) {
+            return toString.call(obj) === '[object Array]';
+        },
+
+        /**
+         * Search for a specified value within an array.
+         */
+        inArray: indexOf ?
+                 function(elem, arr) {
+                     return indexOf.call(arr, elem) !== -1;
+                 } :
+                 function(elem, arr) {
+                     for (var i = 0, len = arr.length; i < len; ++i) {
+                         if (arr[i] === elem) {
+                             return true;
+                         }
+                     }
+                     return false;
+                 },
+
+        makeArray: function(obj) {
+            if (obj === null) return [];
+            if (S.isArray(obj)) return obj;
+
+            // The strings and functions also have 'length'
+            if (typeof obj.length !== 'number' || typeof obj === 'string' || S.isFunction(obj)) {
+                return [obj];
             }
 
-            return this;
+            // ie 不支持用 slice 转换 NodeList, 降级到普通方法
+            if (obj.item && S.UA.ie) {
+                var ret = [], i = 0, len = obj.length;
+                for (; i < len; ++i) {
+                    ret[i] = obj[i];
+                }
+                return ret;
+            }
+
+            // array-like
+            return slice.call(obj);
+
+        },
+
+        /**
+         * Creates a serialized string of an array or object.
+         * <pre>
+         *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
+         *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         *     {foo: true, bar: 2}    // -> 'foo=true&bar=2'
+         * </pre>
+         */
+        param: function(o) {
+            // 非 object, 直接返回空
+            if (typeof o !== 'object') return '';
+
+            var buf = [], key, val;
+            for (key in o) {
+                val = o[key];
+
+                // val 为有效的非数组值
+                if (isValidParamValue(val)) {
+                    buf.push(key, '=', val + '', '&');
+                }
+                // val 为非空数组
+                else if (S.isArray(val) && val.length) {
+                    for (var i = 0, len = val.length; i < len; ++i) {
+                        if (isValidParamValue(val[i])) {
+                            buf.push(key + '[]=', val[i] + '', '&');
+                        }
+                    }
+                }
+                // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
+            }
+
+            buf.pop();
+            return encodeURI(buf.join(''));
+        },
+
+        /**
+         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
+         * <pre>
+         * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+         * 'section=blog&tag[]=js&tag[]=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+         * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+         * 'id=45&raw'        // -> {id: '45', raw: ''}
+         * </pre>
+         */
+        unparam: function(str, sep) {
+            if (typeof str !== 'string' || (str = decodeURI(S.trim(str))).length === 0) return {};
+
+            var ret = {},
+                pairs = str.split(sep || '&'),
+                pair, key, val, m,
+                i = 0, len = pairs.length;
+
+            for (; i < len; ++i) {
+                pair = pairs[i].split('=');
+                key = pair[0];
+                val = pair[1] || '';
+
+                if ((m = key.match(REG_ARR_KEY)) && m[1]) {
+                    ret[m[1]] = ret[m[1]] || [];
+                    ret[m[1]].push(val);
+                } else {
+                    ret[key] = val;
+                }
+            }
+            return ret;
         }
     });
 
-    S._init();
+    function isValidParamValue(val) {
+        var t = typeof val;
+        // val 为 null, undefined, number, string, boolean 时，返回 true
+        return val === null | (t !== 'object' && t !== 'function');
+    }
 
-})(window, 'KISSY');
+});
 
 /**
  * Notes:
  *
- * 2010.01
- *  - 考虑简单够用和 2/8 原则，去掉了对 YUI3 沙箱的模拟（archives/2009 r402）
+ *  2010.04
+ *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
+ *   - 对于 param, encodeURI 就可以了，和 jQuery 保持一致。
+ *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
  *
- *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 组织代码）。
- *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
- *  - mix, merge, extend, augment, weave 方法，决定了类库代码的基本实现方式，
- *    充分利用 mixin 特性和 prototype 方式来实现代码。
- *  - cloneTo, namespace 方法，决定子库的实现和代码的整体组织。
- *  - each, indexOf, trim 方法，对原生 JS 的增强。
- *  - log 方法，简单的调试工具。
- * 
- *  - 考虑性能，each, indexOf, trim 尽可能用原生方法。
- *  - 考虑简单够用，去掉 indexOf 对 fromIndex 的支持。
- *
- *  - 字符串和数组的 trim, each 等方法，可以考虑类似 S.query() 的方式，给需要
- *    操作的原生对象加上。这想法需仔细权衡，暂留。
  */
-/*
-Copyright 2010, KISSY UI Library v1.0.4
+/**
+ * @module  ua
+ * @author  lifesinger@gmail.com
+ * @depends kissy
+ */
+
+KISSY.add('ua', function(S) {
+
+    var ua = navigator.userAgent,
+        m,
+        o = {
+            ie: 0,
+            gecko: 0,
+            firefox:  0,
+            opera: 0,
+            webkit: 0,
+            safari: 0,
+            chrome: 0,
+            mobile: ''
+        },
+        numberify = function(s) {
+            var c = 0;
+            // convert '1.2.3.4' to 1.234
+            return parseFloat(s.replace(/\./g, function() {
+                return (c++ === 0) ? '.' : '';
+            }));
+        };
+
+    // WebKit
+    if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
+        o.webkit = numberify(m[1]);
+
+        // Chrome
+        if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
+            o.chrome = numberify(m[1]);
+        }
+        // Safari
+        else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
+            o.safari = numberify(m[1]);
+        }
+
+        // Apple Mobile
+        if (/ Mobile\//.test(ua)) {
+            o.mobile = 'Apple'; // iPhone or iPod Touch
+        }
+        // Other WebKit Mobile Browsers
+        else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
+            o.mobile = m[0]; // Nokia N-series, Android, webOS, ex: NokiaN95
+        }
+    }
+    // NOT WebKit
+    else {
+        // Opera
+        if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
+            o.opera = numberify(m[1]);
+
+            // Opera Mini
+            if ((ua.match(/Opera Mini[^;]*/))) {
+                o.mobile = m[0]; // ex: Opera Mini/2.0.4509/1316
+            }
+
+        // NOT WebKit or Opera
+        } else {
+            // MSIE
+            if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
+                o.ie = numberify(m[1]);
+
+            // NOT WebKit, Opera or IE
+            } else {
+                // Gecko
+                if ((m = ua.match(/Gecko/))) {
+                    o.gecko = 1; // Gecko detected, look for revision
+                    if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
+                        o.gecko = numberify(m[1]);
+                    }
+
+                    // Firefox
+                    if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
+                        o.firefox = numberify(m[1]);
+                    }
+                }
+            }
+        }
+    }
+
+    S.UA = o;
+});
+
+/**
+ * Notes:
+ *
+ * 2010.03
+ *  - jQuery, YUI 等类库都推荐用特性探测替代浏览器嗅探。特性探测的好处是能自动适应未来设备和未知设备，比如
+ *    if(document.addEventListener) 假设 IE 10 支持标准事件，则代码不用修改，就自适应了“未来浏览器”。
+ *    对于未知浏览器也是如此。但是，这并不意味着浏览器嗅探就得彻底抛弃。当代码很明确就是针对已知特定浏览器的，
+ *    并且并非是某个特性探测可以解决时，用浏览器嗅探反而能带来代码的简洁，同时也也不会有什么后患。总之，一切
+ *    皆权衡。
+ *  - UA.ie && UA.ie < 8 并不意味着浏览器就不是 IE8, 有可能是 IE8 的兼容模式。进一步的判断需要使用 documentMode
+ *
+ * TODO:
+ *  - test mobile
+ *  - 权衡是否需要加入 maxthon 等国内浏览器嗅探？
+ * 
+ *//**
+ * @module  json
+ * @author  lifesinger@gmail.com
+ * @depends kissy
+ */
+
+KISSY.add('json', function(S) {
+
+    var nativeJSON = window.JSON;
+
+    S.JSON = {
+        parse: function(data) {
+            if (typeof data !== 'string' || !data) {
+                return null;
+            }
+
+            // Make sure leading/trailing whitespace is removed (IE can't handle it)
+            data = S.trim(data);
+
+            // Make sure the incoming data is actual JSON
+            // Logic borrowed from http://json.org/json2.js
+            if (/^[\],:{}\s]*$/.test(data.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
+                .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
+                .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+
+                // Try to use the native JSON parser first
+                return (nativeJSON || {}).parse ?
+                       nativeJSON.parse(data) :
+                       (new Function('return ' + data))();
+
+            } else {
+                jQuery.error('Invalid JSON: ' + data);
+            }
+        }
+    };
+});
+
+/**
+ * TODO:
+ *  - stringify
+ *  - more unit test
+ *  - why use new Function instead of eval ?
+ *//*
+Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 498 Mar 18 13:49
+build: 520 Apr 2 22:21
+*/
+/**
+ * @module  cookie
+ * @author  lifesinger@gmail.com
+ * @depends kissy
+ */
+
+KISSY.add('cookie', function(S) {
+
+    var doc = document,
+        encode = encodeURIComponent,
+        decode = decodeURIComponent;
+
+    S.Cookie = {
+
+        /**
+         * 获取 cookie 值
+         * @return {string} 如果 name 不存在，返回 undefined
+         */
+        get: function(name) {
+            var ret, m;
+
+            if (isNotEmptyString(name)) {
+                if ((m = doc.cookie.match('(?:^| )' + name + '(?:(?:=([^;]*))|;|$)'))) {
+                    ret = m[1] ? decode(m[1]) : '';
+                }
+            }
+            return ret;
+        },
+
+        set: function(name, val, expires, domain, path, secure) {
+            var text = encode(val), date = expires;
+
+            // 从当前时间开始，多少天后过期
+            if (typeof date === 'number') {
+                date = new Date();
+                date.setTime(date.getTime() + expires * 86400000);
+            }
+            // expiration date
+            if (date instanceof Date) {
+                text += '; expires=' + date.toUTCString();
+            }
+
+            // domain
+            if (isNotEmptyString(domain)) {
+                text += '; domain=' + domain;
+            }
+
+            // path
+            if (isNotEmptyString(path)) {
+                text += '; path=' + path;
+            }
+
+            // secure
+            if (secure) {
+                text += '; secure';
+            }
+
+            doc.cookie = name + '=' + text;
+        },
+
+        remove: function(name) {
+            // 立刻过期
+            this.set(name, '', 0);
+        }
+    };
+
+    function isNotEmptyString(val) {
+        return typeof val === 'string' && val !== '';
+    }
+
+});
+
+/**
+ * Notes:
+ *
+ *  2010.04
+ *   - get 方法要考虑 ie 下，
+ *     值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
+ *     除了正则获取，还可以 split 字符串的方式来获取。
+ *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
+ *     独立成静态工具类的方式更优。
+ *
+ *//*
+Copyright 2010, KISSY UI Library v1.0.5
+MIT Licensed
+build: 520 Apr 2 22:20
 */
 /**
  * @module  selector
@@ -532,7 +897,7 @@ KISSY.add('selector', function(S, undefined) {
 
         // 将 NodeList 转换为普通数组
         if(ret.item) {
-            ret = makeArray(ret);
+            ret = S.makeArray(ret);
         }
 
         // attach 上实用方法
@@ -642,24 +1007,6 @@ KISSY.add('selector', function(S, undefined) {
         }
     }
 
-    // 将 NodeList 转换为普通数组
-    function makeArray(nodeList) {
-        return Array.prototype.slice.call(nodeList);
-    }
-    // ie 不支持用 slice 转换 NodeList, 降级到普通方法
-    try {
-        makeArray(doc.documentElement.childNodes);
-    }
-    catch(e) {
-        makeArray = function(nodeList) {
-            var ret = [], i = 0, len = nodeList.length;
-            for (; i < len; ++i) {
-                ret[i] = nodeList[i];
-            }
-            return ret;
-        }
-    }
-
     // 对于分组选择器，需要进行去重和排序
     function uniqueSort(results) {
         var hasDuplicate = false;
@@ -749,11 +1096,6 @@ KISSY.add('selector', function(S, undefined) {
  *  - http://ejohn.org/blog/comparing-document-position/
  *  - http://github.com/jeresig/sizzle/blob/master/sizzle.js
  */
-/*
-Copyright 2010, KISSY UI Library v1.0.4
-MIT Licensed
-build: 498 Mar 18 13:49
-*/
 /**
  * @module  dom-base
  * @author  lifesinger@gmail.com
@@ -765,13 +1107,27 @@ KISSY.add('dom-base', function(S, undefined) {
     var doc = document,
         docElement = doc.documentElement,
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
-        CUSTOM_ATTRIBUTES = (!docElement.hasAttribute) ? { // IE < 8
-                'for': 'htmlFor',
-                'class': 'className'
-            } : { },
-        SPACE = ' ';
+        ua = S.UA,
+        ie = ua.ie,
+        oldIE = ie && ie < 8,
+        CUSTOM_ATTRS = {
+            readonly: 'readOnly'
+        },
+        RE_SPECIAL_ATTRS = /href|src|style/,
+        RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
+        RE_RETURN = /\r/g,
+        RE_RADIO_CHECK = /radio|checkbox/,
+        defaultFrag = doc.createElement('DIV'),
+        RE_TAG = /^[a-z]+$/i;
 
-    S.Dom = {
+    if(oldIE) {
+        S.mix(CUSTOM_ATTRS, {
+            'for': 'htmlFor',
+            'class': 'className'
+        });
+    }
+
+    S.DOM = {
 
         /**
          * Returns a NodeList that matches the selector.
@@ -787,15 +1143,51 @@ KISSY.add('dom-base', function(S, undefined) {
          * Gets or sets the attribute of the HTMLElement.
          */
         attr: function(el, name, val) {
-            name = CUSTOM_ATTRIBUTES[name] || name;
+            // don't set attributes on element nodes
+            if (!el || el.nodeType !== 1) {
+                return undefined;
+            }
 
-            if (el && el.getAttribute) {
-                // getAttr
-                if (val === undefined) {
-                    return el.getAttribute(attr) || ''; // '' is added per DOM spec.
+            var ret;
+            name = name.toLowerCase();
+            name = CUSTOM_ATTRS[name] || name;
+
+            // get attribute
+            if (val === undefined) {
+                // 优先用 el[name] 获取 mapping 属性值：
+                //  - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
+                //  - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
+                //  - href, src 直接获取的是 normalized 后的值，排除掉
+                if(!RE_SPECIAL_ATTRS.test(name)) {
+                    ret = el[name];
                 }
-                // setAttr
-                el.setAttribute(attr, val);
+                // get style
+                else if(name === 'style') {
+                    ret = el.style.cssText;
+                }
+                
+                // 用 getAttribute 获取非 mapping 属性和 href, src 的值：
+                if(ret === undefined) {
+                    ret = el.getAttribute(name);
+                }
+
+                // fix ie bugs:
+                if (oldIE && RE_NORMALIZED_ATTRS.test(name)) {
+                    // 不光是 href, src, 还有 rowspan 等非 mapping 属性，也需要用第 2 个参数来获取原始值
+                    ret = el.getAttribute(name, 2);
+                }
+
+                // 对于不存在的属性，统一返回 undefined
+                return ret === null ? undefined : ret;
+            }
+
+            // set attribute
+            if(name === 'style') {
+                el.style.cssText = val;
+            }
+            else {
+                // convert the value to a string (all browsers do this but IE)
+                el.setAttribute(name, '' + val);
             }
         },
 
@@ -803,10 +1195,195 @@ KISSY.add('dom-base', function(S, undefined) {
          * Removes the attribute of the HTMLElement.
          */
         removeAttr: function(el, name) {
-            if(el & el.removeAttribute) {
+            if(el && el.nodeType === 1) {
                 el.removeAttribute(name);
             }
         },
+
+        /**
+         * Get the current value of the HTMLElement.
+         */
+        val: function(el, value) {
+            if(!el || el.nodeType !== 1) {
+                return undefined;
+            }
+
+            // get value
+            if(value === undefined) {
+
+                // 当没有设定 value 时，标准浏览器 option.value == option.text
+                // ie7- 下 optinos.value == '', 需要用 el.attributes.value 来判断是否有设定 value
+                if(nodeNameIs('option', el)) {
+                    return (el.attributes.value || {}).specified ? el.value : el.text;
+                }
+
+                // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
+                if(nodeNameIs('select', el)) {
+                    var index = el.selectedIndex,
+                        options = el.options;
+
+                    if (index < 0) {
+                        return null;
+                    }
+                    else if(el.type === 'select-one') {
+                        return S.DOM.val(options[index]);
+                    }
+
+                    // Loop through all the selected options
+                    var ret = [], i = 0, len = options.length;
+                    for (; i < len; ++i) {
+                        if (options[i].selected) {
+                            ret.push(S.DOM.val(options[i]));
+                        }
+                    }
+                    // Multi-Selects return an array
+                    return ret;
+                }
+
+                // Handle the case where in Webkit "" is returned instead of "on" if a value isn't specified
+                if(ua.webkit && RE_RADIO_CHECK.test(el.type)) {
+                    return el.getAttribute('value') === null ? 'on' : el.value;
+                }
+
+                // 普通元素的 value, 归一化掉 \r
+                return (el.value || '').replace(RE_RETURN, '');
+            }
+
+            // set value
+            if (nodeNameIs('select', el)) {
+                var vals = S.makeArray(value),
+                    opts = el.options, opt;
+
+                for (i = 0,len = opts.length; i < len; ++i) {
+                    opt = opts[i];
+                    opt.selected = S.inArray(S.DOM.val(opt), vals);
+                }
+
+                if (!vals.length) {
+                    el.selectedIndex = -1;
+                }
+            }
+            else {
+                el.value = value;
+            }
+        },
+
+        /**
+         * Gets or sets styles on the HTMLElement.
+         */
+        css: function(/*el, prop, val*/) {
+            S.error('not implemented'); // TODO
+        },
+
+        /**
+         * Gets or sets the the text content of the HTMLElement.
+         */
+        text: function(el, val) {
+            // getText
+            if (val === undefined) {
+                return (el || {})[TEXT] || '';
+            }
+
+            // setText
+            if (el) {
+                el[TEXT] = val;
+            }
+        },
+
+        /**
+         * Get the HTML contents of the HTMLElement.
+         */
+        html: function(/*el, htmlString*/) {
+            S.error('not implemented'); // TODO
+        },
+
+        /**
+         * Creates a new HTMLElement using the provided html string.
+         */
+        create: function(html, ownerDoc) {
+            if (typeof html === 'string') {
+                html = S.trim(html); // match IE which trims whitespace from innerHTML
+            }
+
+            // simple tag
+            if(RE_TAG.test(html)) {
+                return (ownerDoc || doc).createElement(html);
+            }
+            
+            var ret = null, nodes, frag;
+
+            frag = ownerDoc ? ownerDoc.createElement('DIV') : defaultFrag;
+            frag.innerHTML = html;
+            nodes = frag.childNodes;
+
+            if(nodes.length === 1) {
+                // return single node, breaking parentNode ref from "fragment"
+                ret = nodes[0].parentNode.removeChild(nodes[0]);
+            }
+            else {
+                ret = nl2frag(nodes, ownerDoc || doc);
+            }
+
+            return ret;
+        }
+    };
+
+    function nodeNameIs(val, el) {
+        return el && el.nodeName.toUpperCase() === val.toUpperCase();
+    }
+
+    // 将 nodeList 转换为 fragment
+    function nl2frag(nodes, ownerDoc) {
+        var ret = null, i, len;
+
+        if (nodes && (nodes.push || nodes.item) && nodes[0]) {
+            ownerDoc = ownerDoc || nodes[0].ownerDocument;
+            ret = ownerDoc.createDocumentFragment();
+
+            if (nodes.item) { // convert live list to static array
+                nodes = S.makeArray(nodes);
+            }
+
+            for (i = 0, len = nodes.length; i < len; ++i) {
+                ret.appendChild(nodes[i]);
+            }
+        }
+        // else inline with log for minification
+        else {
+            S.error('unable to convert ' + nodes + ' to fragment');
+        }
+
+        return ret;
+    }
+});
+
+/**
+ * Notes:
+ *
+ * 2010.03
+ *  ~ attr:
+ *    - 在 jquery/support.js 中，special attrs 里还有 maxlength, cellspacing,
+ *      rowspan, colspan, useap, frameboder, 但测试发现，在 Grade-A 级浏览器中
+ *      并无兼容性问题。
+ *    - 当 colspan/rowspan 属性值设置有误时，ie7- 会自动纠正，和 href 一样，需要传递
+ *      第 2 个参数来解决。jQuery 未考虑，存在兼容性 bug.
+ *    - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
+ *    - jquery/attributes.js: Safari mis-reports the default selected
+ *      property of an option 在 Safari 4 中已修复
+ *
+ * TODO:
+ *  - create 的进一步完善，比如 cache, 对 table, form 元素的支持等等
+ *//**
+ * @module  dom-class
+ * @author  lifesinger@gmail.com
+ * @depends kissy, dom-base
+ */
+
+KISSY.add('dom-class', function(S, undefined) {
+
+    var SPACE = ' ';
+
+    S.mix(S.DOM, {
 
         /**
          * Determines whether a HTMLElement has the given className.
@@ -862,58 +1439,191 @@ KISSY.add('dom-base', function(S, undefined) {
             } else {
                 removeClass(el, className);
             }
-        },
-
-        /**
-         * Gets or sets styles on the HTMLElement.
-         */
-        css: function(el, prop, val) {
-            // TODO
-        },
-
-        /**
-         * Gets or sets the the text content of the HTMLElement.
-         */
-        text: function(el, val) {
-            // getText
-            if (val === undefined) {
-                return (el || {})[TEXT] || '';
-            }
-
-            // setText
-            if (el) {
-                el[TEXT] = val;
-            }
-        },
-
-        /**
-         * Get the HTML contents of the HTMLElement.
-         */
-        html: function(el, htmlString) {
-            // TODO
-        },
-
-        /**
-         * Get the current value of the HTMLElement.
-         */
-        val: function(el, value) {
-            // TODO
-        },
-
-        /**
-         * Creates a new HTMLElement using the provided html string.
-         */
-        create: function(htmlString, ownerDocument) {
-            // TODO
         }
-    };
+    });
 
     // for quick access
-    var hasClass = S.Dom.hasClass,
-        addClass = S.Dom.addClass,
-        removeClass = S.Dom.removeClass;
+    var hasClass = S.DOM.hasClass,
+        addClass = S.DOM.addClass,
+        removeClass = S.DOM.removeClass;
 });
 /*
+Copyright 2010, KISSY UI Library v1.0.5
+MIT Licensed
+build: 520 Apr 2 22:20
+*/
+/**
+ * @module  node
+ * @author  lifesinger@gmail.com
+ * @depends kissy, dom
+ */
+
+KISSY.add('node', function(S) {
+
+    var DOM = S.DOM,
+        NP = Node.prototype;
+
+    /**
+     * The Node class provides a wrapper for manipulating DOM Node.
+     */
+    function Node(html, props, ownerDocument) {
+        var self = this, domNode;
+
+        // factory or constructor
+        if (!(self instanceof Node)) {
+            return new Node(html, props, ownerDocument);
+        }
+
+        // handle Node(''), Node(null), or Node(undefined)
+        if (!html) {
+            return null;
+        }
+
+        // handle Node(HTMLElement)
+        if (html.nodeType) {
+            domNode = html;
+        }
+        else if (typeof html === 'string') {
+            domNode = DOM.create(html, ownerDocument);
+        }
+
+        if (props) {
+            S.error('not implemented'); // TODO
+        }
+
+        self[0] = domNode;
+    }
+
+    // import dom methods
+    S.each(['attr', 'removeAttr'],
+        function(methodName) {
+            NP[methodName] = function(name, val) {
+                var domNode = this[0];
+                if(val === undefined) {
+                    return DOM[methodName](domNode, name);
+                } else {
+                    DOM[methodName](domNode, name, val);
+                    return this;
+                }
+            }
+        });
+
+    S.each(['val', 'text'],
+            function(methodName) {
+                NP[methodName] = function(val) {
+                    var domNode = this[0];
+                    if(val === undefined) {
+                        return DOM[methodName](domNode);
+                    } else {
+                        DOM[methodName](domNode, val);
+                        return this;
+                    }
+                }
+            });
+
+    S.each(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'],
+        function(methodName) {
+            NP[methodName] = function() {
+                var ret = DOM[methodName].apply(DOM, [this[0]].concat(S.makeArray(arguments)));
+                // 只有 hasClass 有返回值
+                return typeof ret === 'boolean' ? ret : this;
+            }
+        });
+
+    // add more methods
+    S.mix(NP, {
+
+        /**
+         * Retrieves a node based on the given CSS selector.
+         */
+        one: function(selector) {
+            return S.one(selector, this[0]);
+        },
+
+        /**
+         * Retrieves a nodeList based on the given CSS selector.
+         */
+        all: function(selector) {
+            return S.all(selector, this[0]);
+        }
+
+    });
+
+    // query api
+    S.one = function(selector, context) {
+        return new Node(S.get(selector, context));
+    };
+
+    S.Node = Node;
+});
+/**
+ * @module  nodelist
+ * @author  lifesinger@gmail.com
+ * @depends kissy, dom
+ */
+
+KISSY.add('nodelist', function(S) {
+
+    var DOM = S.DOM,
+        push = Array.prototype.push,
+        NP = NodeList.prototype;
+
+    /**
+     * The NodeList class provides a wrapper for manipulating DOM NodeList.
+     */
+    function NodeList(domNodes) {
+        // factory or constructor
+        if (!(this instanceof NodeList)) {
+            return new NodeList(domNodes);
+        }
+
+        // push nodes
+        push.apply(this, domNodes || []);
+    }
+
+    S.mix(NP, {
+
+        /**
+         * 默认长度为 0
+         */
+        length: 0,
+
+        /**
+         * Applies the given function to each Node in the NodeList. 
+         * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
+         * @param context An optional context to apply the function with Default context is the current Node instance
+         */
+        each: function(fn, context) {
+            var len = this.length, i = 0, node;
+            for (; i < len; ++i) {
+                node = new S.Node(this[i]);
+                fn.call(context || node, node, i, this);
+            }
+            return this;
+        }
+    });
+
+    // query api
+    S.all = function(selector, context) {
+        return new NodeList(S.query(selector, context, true));
+    };
+
+    S.NodeList = NodeList;
+});
+
+/**
+ * Notes:
+ *
+ *  2010.04
+ *   - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。
+ *     但从用户角度讲，this 的第一直觉是 $(this), kissy 和 yui3 保持一致，牺牲
+ *     性能，一切易用为首。
+ *   - 有了 each 方法，似乎不再需要 import 所有 dom 方法，意义不大。
+ *   - dom 是低级 api, node 是中级 api, 这是分层的一个原因。还有一个原因是，如果
+ *     直接在 node 里实现 dom 方法，则不大好将 dom 的方法耦合到 nodelist 里。可
+ *     以说，技术成本会制约 api 设计。
+ *
+ *//*
 Copyright 2010, KISSY UI Library v1.0.4
 MIT Licensed
 build: 498 Mar 18 13:49

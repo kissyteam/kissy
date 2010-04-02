@@ -18,10 +18,10 @@
     <target name="concat">
         <!-- kissy-core: 核心文件，只含关键组件，一般在页头引入 -->
         <concat destfile="kissy-core.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../kissy/kissy.js"/>
-            <path path="../kissy/kissy-ua.js"/>
-            <path path="../dom/selector.js"/>
-            <path path="../dom/dom.js"/>
+            <path path="../kissy/kissy-pkg.js"/>
+            <path path="../cookie/cookie.js"/>
+            <path path="../dom/dom-pkg.js"/>
+            <path path="../node/node-pkg.js"/>
         </concat>
         <!-- kissy-more: 常用 utils 和 widgets, 一般在页尾引入 -->
         <concat destfile="kissy-more.js" encoding="${charset}" outputencoding="${charset}">

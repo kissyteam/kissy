@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 507 Mar 30 17:24
+build: 520 Apr 2 22:20
 */
 /**
  * @module kissy
@@ -376,7 +376,7 @@ build: 507 Mar 30 17:24
  *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
  *  - mix, merge, extend, augment, weave 方法，决定了类库代码的基本实现方式，
  *    充分利用 mixin 特性和 prototype 方式来实现代码。
- *  - cloneTo, namespace 方法，决定子库的实现和代码的整体组织。
+ *  - app, namespace 方法，决定子库的实现和代码的整体组织。
  *  - log 方法，简单的调试工具。
  */
 /**
@@ -391,8 +391,8 @@ KISSY.add('lang', function(S, undefined) {
         forEach = AP.forEach,
         indexOf = AP.indexOf,
         slice = AP.slice,
-        push = AP.push,
         REG_TRIM = /^\s+|\s+$/g,
+        REG_ARR_KEY = /^(\w+)\[\]$/,
         toString = Object.prototype.toString;
 
     S.mix(S, {
@@ -464,7 +464,7 @@ KISSY.add('lang', function(S, undefined) {
             }
 
             // ie 不支持用 slice 转换 NodeList, 降级到普通方法
-            if(obj.item && S.UA.ie) {
+            if (obj.item && S.UA.ie) {
                 var ret = [], i = 0, len = obj.length;
                 for (; i < len; ++i) {
                     ret[i] = obj[i];
@@ -475,9 +475,95 @@ KISSY.add('lang', function(S, undefined) {
             // array-like
             return slice.call(obj);
 
+        },
+
+        /**
+         * Creates a serialized string of an array or object.
+         * <pre>
+         *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
+         *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         *     {foo: true, bar: 2}    // -> 'foo=true&bar=2'
+         * </pre>
+         */
+        param: function(o) {
+            // 非 object, 直接返回空
+            if (typeof o !== 'object') return '';
+
+            var buf = [], key, val;
+            for (key in o) {
+                val = o[key];
+
+                // val 为有效的非数组值
+                if (isValidParamValue(val)) {
+                    buf.push(key, '=', val + '', '&');
+                }
+                // val 为非空数组
+                else if (S.isArray(val) && val.length) {
+                    for (var i = 0, len = val.length; i < len; ++i) {
+                        if (isValidParamValue(val[i])) {
+                            buf.push(key + '[]=', val[i] + '', '&');
+                        }
+                    }
+                }
+                // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
+            }
+
+            buf.pop();
+            return encodeURI(buf.join(''));
+        },
+
+        /**
+         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
+         * <pre>
+         * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+         * 'section=blog&tag[]=js&tag[]=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+         * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+         * 'id=45&raw'        // -> {id: '45', raw: ''}
+         * </pre>
+         */
+        unparam: function(str, sep) {
+            if (typeof str !== 'string' || (str = decodeURI(S.trim(str))).length === 0) return {};
+
+            var ret = {},
+                pairs = str.split(sep || '&'),
+                pair, key, val, m,
+                i = 0, len = pairs.length;
+
+            for (; i < len; ++i) {
+                pair = pairs[i].split('=');
+                key = pair[0];
+                val = pair[1] || '';
+
+                if ((m = key.match(REG_ARR_KEY)) && m[1]) {
+                    ret[m[1]] = ret[m[1]] || [];
+                    ret[m[1]].push(val);
+                } else {
+                    ret[key] = val;
+                }
+            }
+            return ret;
         }
     });
+
+    function isValidParamValue(val) {
+        var t = typeof val;
+        // val 为 null, undefined, number, string, boolean 时，返回 true
+        return val === null | (t !== 'object' && t !== 'function');
+    }
+
 });
+
+/**
+ * Notes:
+ *
+ *  2010.04
+ *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
+ *   - 对于 param, encodeURI 就可以了，和 jQuery 保持一致。
+ *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
+ *
+ */
 /**
  * @module  ua
  * @author  lifesinger@gmail.com

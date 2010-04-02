@@ -11,9 +11,8 @@ KISSY.add('lang', function(S, undefined) {
         indexOf = AP.indexOf,
         slice = AP.slice,
         REG_TRIM = /^\s+|\s+$/g,
-        toString = Object.prototype.toString,
-        encode = encodeURIComponent,
-        decode = decodeURIComponent;
+        REG_ARR_KEY = /^(\w+)\[\]$/,
+        toString = Object.prototype.toString;
 
     S.mix(S, {
 
@@ -98,104 +97,81 @@ KISSY.add('lang', function(S, undefined) {
         },
 
         /**
-         * Takes an object and converts it to an encoded URI-like param string.
+         * Creates a serialized string of an array or object.
          * <pre>
          *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-         *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
+         *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
          *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
-         *     {foo: undefined, bar: 2}    // -> 'foo=&bar=2'
+         *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         *     {foo: true, bar: 2}    // -> 'foo=true&bar=2'
          * </pre>
          */
         param: function(o) {
-            if (!o) return '';
+            // 非 object, 直接返回空
+            if (typeof o !== 'object') return '';
 
-            var buf = [], key, val, type;
-
+            var buf = [], key, val;
             for (key in o) {
-                val = o[key]; key = encode(key); type = typeof val;
+                val = o[key];
 
-                if (type === 'undefined') {
-                    buf.push(key, '=&');
+                // val 为有效的非数组值
+                if (isValidParamValue(val)) {
+                    buf.push(key, '=', val + '', '&');
                 }
-                else if (type !== 'function' && type !== 'object') {
-                    buf.push(key, '=', encode(val), '&');
-                }
-                else if (S.isArray(val)) {
-                    if (val.length) {
-                        for (var i = 0, len = val.length; i < len; i++) {
-                            var t = typeof val[i];
-                            if (t != 'function' && t != 'object') {
-                                buf.push(key, '=', encode(val[i] === undefined ? '' : val[i]), '&');
-                            }
+                // val 为非空数组
+                else if (S.isArray(val) && val.length) {
+                    for (var i = 0, len = val.length; i < len; ++i) {
+                        if (isValidParamValue(val[i])) {
+                            buf.push(key + '[]=', val[i] + '', '&');
                         }
                     }
-                    else {
-                        buf.push(key, '=&');
-                    }
                 }
+                // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
             }
 
             buf.pop();
-            return buf.join('');
+            return encodeURI(buf.join(''));
         },
 
         /**
          * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-         * This method is realy targeted at parsing query strings (hence the default value of "&" for the separator argument).
-         * For this reason, it does not consider anything that is either before a question
-         * mark (which signals the beginning of a query string) or beyond the hash symbol ("#"),
-         * and runs decodeURIComponent() on each parameter/value pair.
-         * Note that parameters which do not have a specified value will be set to undefined.
-         * <code>
-         | 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-         |
-         | 'section=blog;id=45', false, ';'        // -> {section: 'blog', id: '45'}
-         |
-         | 'http://www.example.com?section=blog&id=45#comments'        // -> {section: 'blog', id: '45'}
-         |
-         | 'section=blog&tag=javascript&tag=prototype&tag=doc'
-         | // -> {section: 'blog', tag: ['javascript', 'prototype', 'doc']}
-         |
-         | 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
-         |
-         | 'id=45&raw'        // -> {id: '45', raw: undefined}
-         * </code>
-         * @param {String} string
-         * @param {Boolean} overwrite (optional) Items of the same name will overwrite previous values instead of creating an an array (Defaults to false).
-         * @return {Object} A literal with members
+         * <pre>
+         * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+         * 'section=blog&tag[]=js&tag[]=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+         * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+         * 'id=45&raw'        // -> {id: '45', raw: ''}
+         * </pre>
          */
-        unparam: function(string, overwrite, separator) {
-            if (!string || !string.length) return { };
+        unparam: function(str, sep) {
+            if (typeof str !== 'string' || (str = decodeURI(S.trim(str))).length === 0) return {};
 
-            var match = string.trim().match(/([^?#]*)(#.*)?$/);
-            if (!match) return { };
+            var ret = {},
+                pairs = str.split(sep || '&'),
+                pair, key, val, m,
+                i = 0, len = pairs.length;
 
-            var obj = { };
-            var pairs = match[1].split(separator || '&');
-
-            var pair, name, value;
-            for (var i = 0, len = pairs.length; i < len; ++i) {
+            for (; i < len; ++i) {
                 pair = pairs[i].split('=');
-                name = decode(pair[0]);
-                value = decode(pair[1]);
-                if (value === '' || value === 'undefined') value = undefined; // &k 鍜?&k= 閮借繕鍘熸垚 undefined
+                key = pair[0];
+                val = pair[1] || '';
 
-                if (overwrite !== true) {
-                    if (typeof obj[name] == 'undefined') {
-                        obj[name] = value;
-                    } else if (typeof obj[name] == 'string') {
-                        obj[name] = [obj[name]];
-                        obj[name].push(value);
-                    } else {
-                        obj[name].push(value);
-                    }
+                if ((m = key.match(REG_ARR_KEY)) && m[1]) {
+                    ret[m[1]] = ret[m[1]] || [];
+                    ret[m[1]].push(val);
                 } else {
-                    obj[name] = value;
+                    ret[key] = val;
                 }
             }
-            return obj;
+            return ret;
         }
     });
+
+    function isValidParamValue(val) {
+        var t = typeof val;
+        // val 为 null, undefined, number, string, boolean 时，返回 true
+        return val === null | (t !== 'object' && t !== 'function');
+    }
+
 });
 
 /**
@@ -203,5 +179,7 @@ KISSY.add('lang', function(S, undefined) {
  *
  *  2010.04
  *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
+ *   - 对于 param, encodeURI 就可以了，和 jQuery 保持一致。
+ *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
  *
  */
