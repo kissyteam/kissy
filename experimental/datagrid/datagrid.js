@@ -7,32 +7,31 @@
 /**
  * DataGrid功能点：
  * 1、数据源
- * 2、定义列 columnDef={label:'username',feild:'name',parser:function(record){return 'string'},sortable:true,visible:true}
- *    定义表头(支持嵌套) theadDef=[]
- * 3、用户自定义显示列
- * 4、新增、修改单条数据
- * 5、删除数据
+ * 2、定义表头
+ * 3  定义列
+ * 4、用户自定义显示列
+ * 5、增删改
  * 6、其他单条操作
  * 7、其他批量操作
  * 8、单选、多选、全选、反选功能
  * 9、服务器端翻页
  * 10、服务器端排序
  * 11、条目展开
+ * 12、高亮某行代码
  */
 
 KISSY.add("datagrid", function(S) {
 
     var Y = YAHOO.util, Dom = Y.Dom, Lang = YAHOO.lang,
         doc=document,
-        COL_CHECK='check',COL_RADIO = 'radio',
-        COL_TOGGLE = 'toggle',COL_FILTER = 'filter',COL_SINGLE_OP='single-op',COL_EXTRA='extra',
-        ROW_CLS='row',ROW_EXTRA_CLS='row-extra',ROW_SELECTED_CLS='selected'; 
+
+        ; 
 
     /**
      * DataGrid
      * @constructor
      */
-    function DataGrid(container,dataList,config){
+    function DataGrid(container,datasourceUri,config){
         var self=this;
          /**
          * the container of widget
@@ -46,10 +45,7 @@ KISSY.add("datagrid", function(S) {
         _preTbodyEl:null,
         _curTbodyEl:null,
         _selectType:null,
-        /**
-         * 
-         */
-        dataList:null,
+        datasouceShema:null,
         tableEl:null,
         /**
          * theadDef=[
@@ -92,6 +88,7 @@ KISSY.add("datagrid", function(S) {
         init:function(){
             
         },
+        rowStyleRender:function(){},
         renderThead:function(){},
         renderTbody:function(){},
         renderPagenation:function(){},

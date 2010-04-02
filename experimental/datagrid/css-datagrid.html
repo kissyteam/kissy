@@ -36,21 +36,21 @@
                     <col />
                 </colgroup>
                 <thead>
-                    <tr>
+                    <tr class="row">
                         <th class="col-extra"></th>
                         <th class="col-extra"></th>
                         <th class="col-extra"></th>
-                        <th colspan="3">可排序列<i></i></th>
+                        <th colspan="3">可排序列</th>
                         <th colspan="2">行状态</th>
                         <th colspan="2">字段渲染</th>
                     </tr>
-                    <tr>
+                    <tr class="row">
                         <th class="col-extra"></th>
                         <th class="col-extra"><i class="icon-checkbox"></i></th>
                         <th class="col-extra"></th>
-                        <th class="sortable">可排序列<i></i></th>
-                        <th class="sortable sort-asc">升序列<i></i></th>
-                        <th class="sortable sort-des">降序列<i></i></th>
+                        <th class="sortable">可排序列<i class="icon"></i></th>
+                        <th class="sortable sort-asc">升序列<i class="icon"></i></th>
+                        <th class="sortable sort-des">降序列<i class="icon"></i></th>
                         <th>展开状态</th>
                         <th>选中状态</th>
                         <th>单一字段</th>
@@ -58,8 +58,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr class="row row-loading">
+                        <td colspan="10"></td>
+                    </tr>
+                </tbody>
+                <tbody>
                     <tr class="row">
-                        <td class="col-extra"><i class="icon icon-expand"></i></td>
+                        <td class="col-extra"><i class="icon-expand"></i></td>
                         <td class="col-extra"><i class="icon-checkbox"></i></td>
                         <td class="col-extra"><i class="icon-radio"></i></td>
                         <td>123</td>
@@ -79,7 +84,7 @@
                         </td>
                     </tr>
                     <tr class="row row-selected">
-                        <td class="col-extra"><i class="icon icon-expand"></i></td>
+                        <td class="col-extra"><i class="icon-expand"></i></td>
                         <td class="col-extra"><i class="icon-checkbox"></i></td>
                         <td class="col-extra"><i class="icon-radio"></i></td>
                         <td>956</td>
@@ -99,7 +104,7 @@
                         </td>
                     </tr>
                     <tr class="row row-expanded">
-                        <td class="col-extra"><i class="icon icon-expand"></i></td>
+                        <td class="col-extra"><i class="icon-expand"></i></td>
                         <td class="col-extra"><i class="icon-checkbox"></i></td>
                         <td class="col-extra"><i class="icon-radio"></i></td>
                         <td>511</td>
@@ -119,7 +124,7 @@
                         </td>
                     </tr>
                     <tr class="row row-expanded row-selected">
-                        <td class="col-extra"><i class="icon icon-expand"></i></td>
+                        <td class="col-extra"><i class="icon-expand"></i></td>
                         <td class="col-extra"><i class="icon-checkbox"></i></td>
                         <td class="col-extra"><i class="icon-radio"></i></td>
                         <td>719</td>
@@ -141,7 +146,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="11">
+                        <td colspan="10">
                             <!--pagination START-->
                             <div class="pagination">
                                 <div class="standard">

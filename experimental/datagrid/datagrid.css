@@ -13,6 +13,7 @@
 
 /*表格部分*/
 .ks-datagrid .datagrid-table{width:100%;overflow:hidden;}
+.ks-datagrid .row-loading td{height:36px;border-bottom:1px solid #ccc;background:url(http://assets.taobaocdn.com/app/lottery/v2/img/loading.gif) no-repeat 50% 50%;}
 .ks-datagrid th,
 .ks-datagrid td{padding:5px;text-align:left;}
 .ks-datagrid th{background:#ebecee url(datagrid.png) repeat-x 0 -50px;line-height:14px;border:1px solid #cacaca;font-weight:bold;}
@@ -20,14 +21,14 @@
 
 /*排序th*/
 .ks-datagrid th.sortable{cursor:pointer;_text-decoration:underline;}
-.ks-datagrid th.sortable i{display:inline-block;width:13px;height:13px;margin-left:5px;background:url(datagrid.png) no-repeat -15px -185px;*background-position:-15px -188px;_background-position:-15px -185px;}
+.ks-datagrid th.sortable .icon{display:inline-block;width:13px;height:13px;margin-left:5px;background:url(datagrid.png) no-repeat -15px -185px;*background-position:-15px -188px;_background-position:-15px -185px;}
 .ks-datagrid th.sortable:hover{background:#d0d2d5 url(datagrid.png) repeat-x 0 -100px;}
 .ks-datagrid th.sort-asc,
 .ks-datagrid th.sort-des{background:#d0d2d5 url(datagrid.png) repeat-x 0 -100px;}
-.ks-datagrid th.sort-asc i{background-position:-15px -170px;*background-position:-15px -172px;_background-position:-15px -170px;}
-.ks-datagrid th.sort-des i{background-position:0 -170px;*background-position:0 -172px;_background-position:0 -170px;}
-.ks-datagrid th.sort-asc:hover i{background-position:0 -185px;*background-position:0 -188px;_background-position:0 -185px;}
-.ks-datagrid th.sort-des:hover i{background-position:-15px -185px;*background-position:-15px -188px;_background-position:-15px -185px;}
+.ks-datagrid th.sort-asc .icon{background-position:-15px -170px;*background-position:-15px -172px;_background-position:-15px -170px;}
+.ks-datagrid th.sort-des .icon{background-position:0 -170px;*background-position:0 -172px;_background-position:0 -170px;}
+.ks-datagrid th.sort-asc:hover .icon{background-position:0 -185px;*background-position:0 -188px;_background-position:0 -185px;}
+.ks-datagrid th.sort-des:hover .icon{background-position:-15px -185px;*background-position:-15px -188px;_background-position:-15px -185px;}
 
 /*特殊列*/
 .ks-datagrid tr.selected td{	background:#e8f3cc;}
