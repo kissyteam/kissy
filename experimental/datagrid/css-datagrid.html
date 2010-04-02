@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>CSS DataGrid</title>
+<link rel="stylesheet" href="../../build/cssreset/reset.css" />
+<link rel="stylesheet" href="datagrid.css" />
+</head>
+<body>
+<!-- box START -->
+<div class="box box-normal">
+    <div class="hd">
+        <h3>数据表格标题</h3>
+    </div>
+    <div class="bd">
+        <!-- data grid START -->
+        <div class="ks-datagrid">
+            <!-- toolbar START -->
+            <ul class="toolbar">
+                <li><a href="#">新增</a></li>
+                <li><a href="#">编辑</a></li>
+                <li><a href="#">删除</a></li>
+                <li><a href="#">移动</a></li>
+                <li><a href="#">设置列</a></li>
+            </ul>
+            <!-- toolbar END -->
+            <table class="datagrid-table">
+                <colgroup>
+                    <col width="25" />
+                    <col width="25" />
+                    <col width="25" />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="col-extra"></th>
+                        <th class="col-extra"></th>
+                        <th class="col-extra"></th>
+                        <th colspan="3">可排序列<i></i></th>
+                        <th colspan="2">行状态</th>
+                        <th colspan="2">字段渲染</th>
+                    </tr>
+                    <tr>
+                        <th class="col-extra"></th>
+                        <th class="col-extra"><i class="icon-checkbox"></i></th>
+                        <th class="col-extra"></th>
+                        <th class="sortable">可排序列<i></i></th>
+                        <th class="sortable sort-asc">升序列<i></i></th>
+                        <th class="sortable sort-des">降序列<i></i></th>
+                        <th>展开状态</th>
+                        <th>选中状态</th>
+                        <th>单一字段</th>
+                        <th>复合字段</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="row">
+                        <td class="col-extra"><i class="icon icon-expand"></i></td>
+                        <td class="col-extra"><i class="icon-checkbox"></i></td>
+                        <td class="col-extra"><i class="icon-radio"></i></td>
+                        <td>123</td>
+                        <td>001</td>
+                        <td>004</td>
+                        <td>折叠</td>
+                        <td>未选中</td>
+                        <td>沉鱼</td>
+                        <td><a href="http://fool2fish.cn">fool2fish</a></td>
+                    </tr>
+                    <tr class="row-extra row-selected" style="display:none">
+                        <td class="col-extra"></td>
+                        <td class="col-extra"></td>
+                        <td class="col-extra"></td>
+                        <td colspan="7">
+                            这里显示额外列信息
+                        </td>
+                    </tr>
+                    <tr class="row row-selected">
+                        <td class="col-extra"><i class="icon icon-expand"></i></td>
+                        <td class="col-extra"><i class="icon-checkbox"></i></td>
+                        <td class="col-extra"><i class="icon-radio"></i></td>
+                        <td>956</td>
+                        <td>002</td>
+                        <td>003</td>
+                        <td>折叠</td>
+                        <td><span class="h">选中</span></td>
+                        <td>沉鱼</td>
+                        <td><a href="http://fool2fish.cn">fool2fish</a></td>
+                    </tr>                     
+                    <tr class="row-extra" style="display:none">
+                        <td class="col-extra"></td>
+                        <td class="col-extra"></td>
+                        <td class="col-extra"></td>
+                        <td colspan="7">
+                            这里显示额外列信息
+                        </td>
+                    </tr>
+                    <tr class="row row-expanded">
+                        <td class="col-extra"><i class="icon icon-expand"></i></td>
+                        <td class="col-extra"><i class="icon-checkbox"></i></td>
+                        <td class="col-extra"><i class="icon-radio"></i></td>
+                        <td>511</td>
+                        <td>003</td>
+                        <td>002</td>
+                        <td><span class="h">展开</span></td>
+                        <td>未选中</td>
+                        <td>沉鱼</td>
+                        <td><a href="http://fool2fish.cn">fool2fish</a></td>
+                    </tr>
+                    <tr class="row-extra row-expanded">
+                        <td class="col-extra"></td>
+                        <td class="col-extra"></td>
+                        <td class="col-extra"></td>
+                        <td colspan="7">
+                            这里显示额外信息，可折叠
+                        </td>
+                    </tr>
+                    <tr class="row row-expanded row-selected">
+                        <td class="col-extra"><i class="icon icon-expand"></i></td>
+                        <td class="col-extra"><i class="icon-checkbox"></i></td>
+                        <td class="col-extra"><i class="icon-radio"></i></td>
+                        <td>719</td>
+                        <td>004</td>
+                        <td>001</td>
+                        <td><span class="h">展开</span></td>
+                        <td><span class="h">选中</span></td>
+                        <td>沉鱼</td>
+                        <td><a href="http://fool2fish.cn">fool2fish</a></td>
+                    </tr>
+                    <tr class="row-extra row-expanded row-selected">
+                        <td class="col-extra"></td>
+                        <td class="col-extra"></td>
+                        <td class="col-extra"></td>
+                        <td colspan="7">
+                            这里显示额外信息，可折叠
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="11">
+                            <!--pagination START-->
+                            <div class="pagination">
+                                <div class="standard">
+                                    <span class="page-info">100/500</span>
+                                    <a href="#" class="page-start">上一页</a>
+                                    <span class="page-start">上一页</span>
+                                    <a href="#" class="page">1</a>
+                                    <a href="#" class="page">2</a>
+                                    <span class="page">3</span>
+                                    <a href="#" class="page">4</a>
+                                    <a href="#" class="page">5</a>
+                                    <span class="page-end">下一页</span>
+                                    <a href="#" class="page-end">下一页</a>
+                                    <span class="page-skip">到第<input type="text" class="jump-to" size="3"/>页<button style="button" class="page-skip-button">确定</button></span>
+                                </div>
+                            </div>
+                            <!--pagination END-->
+                        </td>
+                    </tr>                    
+                </tfoot>
+            </table>
+        </div>
+        <!-- data grid END -->
+    </div>
+</div>
+<!-- box END -->
+</body>
+</html>
+<script src="../../lib/yui2/yui-base/yui-base-min.js"></script>
