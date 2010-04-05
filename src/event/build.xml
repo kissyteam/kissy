@@ -1,0 +1,25 @@
+<project name="event.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../../tools/build.xml"/>
+
+    <property file="build.properties"/>
+    <property name="src.dir" location="."/>
+
+    <target name="concat">
+        <concat destfile="event-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="event.js"/>
+            <path path="event-object.js"/>
+            <path path="event-target.js"/>
+            <path path="event-mouseenter.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="event-pkg.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
+    </target>
+</project>
+

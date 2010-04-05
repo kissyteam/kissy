@@ -11,24 +11,24 @@
   selector - 跟踪 jquery 代码，确定 Sizzle 返回后的数组进行了哪些处理 - done
   重新思考 kissy 和 tbra, tback 的关系 - 简化为 lib 和 app 的关系 - done
   重构 editor, fix 少量经常反馈的 bug + 适应新的代码组织方式 - done
-  将 basic-util 功能在各个组件中实现
+  将 basic-util 功能在各个组件中实现 - done
 
   dom - 20% done
+  event - 10% done
   node - 10% done
   nodelist - 10% done
   cookie - done
   ua - done
+  ajax - 10% done
+
   swfstore
-  drag
-  anim
-  ajax
+  overlay
+  refactor switchable, add album
+  docs - 5%
 
-  开发 overlay 组件
-  重构 switchable, add album, 尝试脱离对 YUI2 DOM 的依赖
-
-  docs 框架
-  打包 editor 1.0.6
-  检查所有 src, 发布 1.0.6
+  check and test all components
+  pack editor 1.0.6
+  release 1.0.6
 
 ----------------------
  2010 Q2
@@ -39,8 +39,9 @@
   dom
   node
   drag & drop
+  anim
 
-  review calendar
+  review calendar, 可参考 jQuery calendar plugin
   combobox
   重构 suggest
   重构 datalazyload, 解决服饰频道导致轮播第5屏失效的问题
@@ -50,6 +51,7 @@
   图片上传组件
   完善 docs
 
+  pickDomain
   实现 TBra 其它组件
   整理 TBra 2.1
 

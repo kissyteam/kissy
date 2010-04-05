@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.4
+Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 498 Mar 18 13:49
+build: 521 Apr 5 12:27
 */
 /**
  * 提示补全组件
@@ -373,7 +373,7 @@ KISSY.add("suggest", function(S, undefined) {
             // bug fix: w 应该判断下是否大于 0, 后边设置 width 的时候如果小于 0, ie 下会报参数无效的错误
             w = w > 0 ? w : 0;
 
-            // ie8兼容模式
+            // ie8 兼容模式
             // document.documentMode:
             // 5 - Quirks Mode
             // 7 - IE7 Standards

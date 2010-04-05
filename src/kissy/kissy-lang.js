@@ -48,6 +48,13 @@ KISSY.add('lang', function(S, undefined) {
                   return (str || '').replace(REG_TRIM, '');
               },
 
+        isEmptyObject: function(obj) {
+            for(var p in obj) {
+                return false;
+            }
+            return true;
+        },
+
         // NOTE: DOM methods and functions like alert aren't supported. They return false on IE.
         isFunction: function(obj) {
             return toString.call(obj) === '[object Function]';

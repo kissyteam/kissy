@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.4
+Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 498 Mar 18 13:49
+build: 521 Apr 5 12:27
 */
 /*
 KISSY CSS Reset
@@ -51,9 +51,9 @@ button, input, select, textarea { font-size: 100%; } /* 使得表单元素在 ie 下能继
 /** 重置表格元素 **/
 table { border-collapse: collapse; border-spacing: 0; }
 /*
-Copyright 2010, KISSY UI Library v1.0.4
+Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 498 Mar 18 13:49
+build: 521 Apr 5 12:27
 */
 /*
 双飞翼栅格布局 Flying Swing Grids Layout

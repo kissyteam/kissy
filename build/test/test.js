@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.4
+Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 498 Mar 18 13:49
+build: 521 Apr 5 12:27
 */
 /**
  * @module  test
@@ -9,7 +9,7 @@ build: 498 Mar 18 13:49
  * @depends none
  */
 
-KISSY = window.KISSY || {};
+var KISSY = window.KISSY || {};
 
 (function(win, S, undefined) {
 
@@ -48,7 +48,7 @@ KISSY = window.KISSY || {};
                 if (prefix === undefined) prefix = timeStamp() + ' ';
 
                 log.innerHTML += prefix + msg + br;
-                this.scrollToEnd();
+                konsole.scrollToEnd();
             },
             scrollToEnd: function() {
                 if (scrollTimer) return;
@@ -87,7 +87,8 @@ KISSY = window.KISSY || {};
                 if (msg) this.extraMsg = msg;
             },
             status: PASSED,
-            extraMsg: ''
+            extraMsg: '',
+            echo: konsole.echo
         });
     };
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 520 Apr 2 22:20
+build: 521 Apr 5 12:27
 */
 /**
  * @module kissy
@@ -359,6 +359,13 @@ build: 520 Apr 2 22:20
          */
         error: function(msg) {
             throw msg;
+        },
+
+        /**
+         * get current timeStamp
+         */
+        now: function() {
+            return new Date().getTime();
         }
     });
 
@@ -428,6 +435,13 @@ KISSY.add('lang', function(S, undefined) {
               function(str) {
                   return (str || '').replace(REG_TRIM, '');
               },
+
+        isEmptyObject: function(obj) {
+            for(var p in obj) {
+                return false;
+            }
+            return true;
+        },
 
         // NOTE: DOM methods and functions like alert aren't supported. They return false on IE.
         isFunction: function(obj) {
@@ -712,94 +726,7 @@ KISSY.add('json', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 520 Apr 2 22:21
-*/
-/**
- * @module  cookie
- * @author  lifesinger@gmail.com
- * @depends kissy
- */
-
-KISSY.add('cookie', function(S) {
-
-    var doc = document,
-        encode = encodeURIComponent,
-        decode = decodeURIComponent;
-
-    S.Cookie = {
-
-        /**
-         * 获取 cookie 值
-         * @return {string} 如果 name 不存在，返回 undefined
-         */
-        get: function(name) {
-            var ret, m;
-
-            if (isNotEmptyString(name)) {
-                if ((m = doc.cookie.match('(?:^| )' + name + '(?:(?:=([^;]*))|;|$)'))) {
-                    ret = m[1] ? decode(m[1]) : '';
-                }
-            }
-            return ret;
-        },
-
-        set: function(name, val, expires, domain, path, secure) {
-            var text = encode(val), date = expires;
-
-            // 从当前时间开始，多少天后过期
-            if (typeof date === 'number') {
-                date = new Date();
-                date.setTime(date.getTime() + expires * 86400000);
-            }
-            // expiration date
-            if (date instanceof Date) {
-                text += '; expires=' + date.toUTCString();
-            }
-
-            // domain
-            if (isNotEmptyString(domain)) {
-                text += '; domain=' + domain;
-            }
-
-            // path
-            if (isNotEmptyString(path)) {
-                text += '; path=' + path;
-            }
-
-            // secure
-            if (secure) {
-                text += '; secure';
-            }
-
-            doc.cookie = name + '=' + text;
-        },
-
-        remove: function(name) {
-            // 立刻过期
-            this.set(name, '', 0);
-        }
-    };
-
-    function isNotEmptyString(val) {
-        return typeof val === 'string' && val !== '';
-    }
-
-});
-
-/**
- * Notes:
- *
- *  2010.04
- *   - get 方法要考虑 ie 下，
- *     值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
- *     除了正则获取，还可以 split 字符串的方式来获取。
- *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
- *     独立成静态工具类的方式更优。
- *
- *//*
-Copyright 2010, KISSY UI Library v1.0.5
-MIT Licensed
-build: 520 Apr 2 22:20
+build: 521 Apr 5 12:27
 */
 /**
  * @module  selector
@@ -1450,7 +1377,511 @@ KISSY.add('dom-class', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 520 Apr 2 22:20
+build: 521 Apr 5 12:27
+*/
+/**
+ * @module  event
+ * @author  lifesinger@gmail.com
+ */
+
+KISSY.add('event', function(S, undefined) {
+
+    var DOM = S.DOM,
+        win = window,
+        doc = document,
+        simpleAdd = doc.addEventListener ?
+                    function(el, type, fn) {
+                        if (el.addEventListener) {
+                            el.addEventListener(type, fn, false);
+                        }
+                    } :
+                    function(el, type, fn) {
+                        if (el.attachEvent) {
+                            el.attachEvent('on' + type, fn);
+                        }
+                    },
+        simpleRemove = doc.removeEventListener ?
+                       function(el, type, fn) {
+                           if (el.removeEventListener) {
+                               el.removeEventListener(type, fn, false);
+                           }
+                       } :
+                       function(el, type, fn) {
+                           if (el.detachEvent) {
+                               el.detachEvent('on' + type, fn);
+                           }
+                       },
+        EVENT_GUID = 'data-ks-event-guid',
+        guid = S.now(),
+        // { id: { target: el, events: { type: { handle: obj, listeners: [...] } } }, ... }
+        cache = { };
+
+    var Event = {
+
+        // such as: { 'mouseenter' : { fix: 'mouseover', handle: fn } }
+        special: { },
+
+        /**
+         * Adds an event listener
+         *
+         * @param {String} target An element or custom EventTarget to assign the listener to
+         * @param {String} type The type of event to append
+         * @param {Function} fn The event handler
+         */
+        add: function(target, type, fn) {
+            var id = getID(target),
+                special, events, eventHandle;
+
+            // 不是有效的 target 或 参数不对
+            if(id === -1 || !type || !S.isFunction(fn)) return;
+
+            // 还没有添加过任何事件
+            if (!id) {
+                setID(target, (id = guid++));
+                cache[id] = {
+                    target: target,
+                    events: { }
+                };
+            }
+
+            // 没有添加过该类型事件
+            events = cache[id].events;
+            special = (!target.isCustomEventTarget && Event.special[type]) || { }; // special 仅针对 element
+            if (!events[type]) {
+                eventHandle = function(event) {
+                    if (!event || !event.fixed) {
+                        event = new S.EventObject(target, event, type);
+                    }
+                    if(special.setup) {
+                        special.setup(event);
+                    }
+                    return (special.handle || Event._handle)(target, event, events[type].listeners);
+                };
+
+                events[type] = {
+                    handle: eventHandle,
+                    listeners: []
+                };
+
+                if(!target.isCustomEventTarget) {
+                    simpleAdd(target, special.fix || type, eventHandle);
+                }
+                else if(target._addEvent) { // such as Node
+                    target._addEvent(type, eventHandle);
+                }
+            }
+
+            // 增加 listener
+            events[type].listeners.push(fn);
+        },
+
+        /**
+         * Detach an event or set of events from an element.
+         */
+        remove: function(target, type /* optional */, fn /* optional */) {
+            var id = getID(target),
+                events, eventsType, listeners,
+                i, len, c, t;
+
+            if (id === -1) return; // 不是有效的 target
+            if(!id || !(c = cache[id])) return; // 无 cache
+            if(c.target !== target) return; // target 不匹配
+            events = c.events || { };
+
+            if((eventsType = events[type])) {
+                listeners = eventsType.listeners;
+                len = listeners.length;
+
+                // 移除 fn
+                if(S.isFunction(fn) && len && S.inArray(fn, listeners)) {
+                    t = [];
+                    for(i = 0; i < len; ++i) {
+                        if(fn !== listeners[i]) {
+                            t.push(listeners[i]);
+                        }
+                    }
+                    listeners = t;
+                    len = t.length;
+                }
+
+                // remove(el, type)or fn 已移除光
+                if(fn === undefined || len === 0) {
+                    if(!target.isCustomEventTarget) {
+                        simpleRemove(target, type, eventsType.handle);
+                    }
+                    delete cache[id].type;
+                }
+            }
+
+            // remove(el) or type 已移除光
+            if(type === undefined || S.isEmptyObject(events)) {
+                for(type in events) {
+                    Event.remove(target, type);
+                }
+                delete cache[id];
+                removeID(target);
+            }
+        },
+
+        // static
+        _handle: function(target, event, listeners) {
+            var ret, i = 0, len = listeners.length;
+
+            for (; i < len; ++i) {
+                ret = listeners[i].call(target, event);
+
+                if (event.isImmediatePropagationStopped) {
+                    break;
+                }
+
+                if (ret === false) {
+                    event.halt();
+                }
+            }
+
+            return ret;
+        },
+
+        _getCache: function(id) {
+            return cache[id];
+        },
+
+        _simpleAdd: simpleAdd,
+        _simpleRemove: simpleRemove
+    };
+
+    function getID(target) {
+        var ret = -1;
+
+        // text and comment node
+        if (target.nodeType === 3 || target.nodeType === 8) {
+            return ret;
+        }
+
+        if (target.nodeType) { // HTML Element
+            ret = DOM.attr(target, EVENT_GUID);
+        }
+        else if (target.isCustomEventTarget) { // custom EventTarget
+            ret = target.eventTargetId;
+        }
+
+        return ret;
+    }
+
+    function setID(target, id) {
+        if (target.nodeType) { // HTML Element
+            DOM.attr(target, EVENT_GUID, id);
+        }
+        else if (target.isCustomEventTarget) { // custom EventTarget
+            target.eventTargetId = id;
+        }
+    }
+
+    function removeID(target) {
+        if (target.nodeType) { // HTML Element
+            DOM.removeAttr(target, EVENT_GUID);
+        }
+        else if (target.isCustomEventTarget) { // custom EventTarget
+            target.eventTargetId = undefined;
+        }
+    }
+
+    S.Event = Event;
+
+    // Prevent memory leaks in IE
+    // Window isn't included so as not to unbind existing unload events
+    // More info: http://isaacschlueter.com/2006/10/msie-memory-leaks/
+    if (win.attachEvent && !win.addEventListener) {
+        win.attachEvent('onunload', function() {
+            var id, target;
+            for (id in cache) {
+                if ((target = cache[id].target)) {
+                    // try/catch is to handle iframes being unloaded
+                    try {
+                        Event.remove(target);
+                    } catch(e) {
+                    }
+                }
+            }
+        });
+    }
+});
+
+/**
+ * TODO:
+ *   - 研究 jq 的 expando cache 方式
+ *   - event || window.event, 什么情况下取 window.event ? IE4 ?
+ *   - 更详尽细致的 test cases
+ *   - 内存泄漏测试
+ */
+/**
+ * @module  EventObject
+ * @author  lifesinger@gmail.com
+ */
+
+KISSY.add('event-object', function(S, undefined) {
+
+    var doc = document,
+        props = 'altKey attrChange attrName bubbles button cancelable charCode clientX clientY ctrlKey currentTarget data detail eventPhase fromElement handler keyCode layerX layerY metaKey newValue offsetX offsetY originalTarget pageX pageY prevValue relatedNode relatedTarget screenX screenY shiftKey srcElement target toElement view wheelDelta which'.split(' ');
+
+    /**
+     * KISSY's event system normalizes the event object according to
+     * W3C standards. The event object is guaranteed to be passed to
+     * the event handler. Most properties from the original event are
+     * copied over and normalized to the new event object.
+     */
+    function EventObject(currentTarget, domEvent, type) {
+        var self = this;
+        self.currentTarget = currentTarget;
+        self.originalEvent = domEvent || { };
+
+        if (domEvent) { // element
+            self.type = domEvent.type;
+            self._fix();
+        }
+        else { // custom
+            self.type = type;
+            self.target = currentTarget;
+        }
+
+        self.fixed = true;
+    }
+
+    S.mix(EventObject.prototype, {
+
+        _fix: function() {
+            var self = this,
+                originalEvent = self.originalEvent,
+                l = props.length, prop;
+
+            // clone properties of the original event object
+            while (l) {
+                prop = props[--l];
+                self[prop] = originalEvent[prop];
+            }
+
+            // fix target property, if necessary
+            if (!self.target) {
+                self.target = self.srcElement || doc; // srcElement might not be defined either
+            }
+
+        // check if target is a textnode (safari)
+            if (self.target.nodeType === 3) {
+                self.target = self.target.parentNode;
+            }
+
+            // add relatedTarget, if necessary
+            if (!self.relatedTarget && self.fromElement) {
+                self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
+            }
+
+            // calculate pageX/Y if missing and clientX/Y available
+            if (self.pageX === undefined && self.clientX !== undefined) {
+                var docEl = doc.documentElement, bd = doc.body;
+                self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
+                self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
+            }
+
+            // add which for key events
+            if (self.which === undefined) {
+                self.which = (self.charCode !== undefined) ? self.charCode : self.keyCode;
+            }
+
+            // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
+            if (self.metaKey === undefined) {
+                self.metaKey = self.ctrlKey;
+            }
+
+            // add which for click: 1 === left; 2 === middle; 3 === right
+            // Note: button is not normalized, so don't use it
+            if (!self.which && self.button !== undefined) {
+                self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
+            }
+        },
+
+        /**
+         * Prevents the event's default behavior
+         */
+        preventDefault: function() {
+            var e = this.originalEvent;
+
+            // if preventDefault exists run it on the original event
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            // otherwise set the returnValue property of the original event to false (IE)
+            else {
+                e.returnValue = false;
+            }
+
+            this.isDefaultPrevented = true;
+        },
+
+        /**
+         * Stops the propagation to the next bubble target
+         */
+        stopPropagation: function() {
+            var e = this.originalEvent;
+
+            // if stopPropagation exists run it on the original event
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            // otherwise set the cancelBubble property of the original event to true (IE)
+            else {
+                e.cancelBubble = true;
+            }
+
+            this.isPropagationStopped = true;
+        },
+
+        /**
+         * Stops the propagation to the next bubble target and
+         * prevents any additional listeners from being exectued
+         * on the current target.
+         */
+        stopImmediatePropagation: function() {
+            var e = this.originalEvent;
+
+            if (e.stopImmediatePropagation) {
+                e.stopImmediatePropagation();
+            } else {
+                this.stopPropagation();
+            }
+
+            this.isImmediatePropagationStopped = true;
+        },
+
+        /**
+         * Stops the event propagation and prevents the default
+         * event behavior.
+         * @param immediate {boolean} if true additional listeners
+         * on the current target will not be executed
+         */
+        halt: function(immediate) {
+            if (immediate) {
+                this.stopImmediatePropagation();
+            } else {
+                this.stopPropagation();
+            }
+
+            this.preventDefault();
+        }
+    });
+
+    S.EventObject = EventObject;
+
+});
+
+/**
+ * Notes:
+ *  2010.04
+ *   - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
+ *
+ * TODO:
+ *   - pageX, clientX, scrollLeft, clientLeft 的详细图解
+ */
+/**
+ * @module  EventTarget
+ * @author  lifesinger@gmail.com
+ */
+
+KISSY.add('event-target', function(S, undefined) {
+
+    var Event = S.Event;
+
+    /**
+     * EventTarget provides the implementation for any object to publish,
+     * subscribe and fire to custom events.
+     */
+    S.EventTarget = {
+
+        eventTargetId: undefined,
+
+        isCustomEventTarget: true,
+
+        fire: function(type) {
+            var id = this.eventTargetId || -1,
+                cache = Event._getCache(id) || { },
+                events = cache.events || { },
+                t = events[type];
+
+            if(t && S.isFunction(t.handle)) {
+                t.handle();
+            }
+        },
+
+        on: function(type, fn) {
+            Event.add(this, type, fn);
+        },
+
+        detach: function(type, fn) {
+            Event.remove(this, type, fn);
+        }
+    };
+});
+
+/**
+ * Notes:
+ *  2010.04
+ *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 是不需要
+ *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
+ */
+/**
+ * @module  event-mouseenter
+ * @author  lifesinger@gmail.com
+ */
+
+KISSY.add('event-mouseenter', function(S) {
+
+    var Event = S.Event;
+
+    if (!S.UA.ie) {
+        S.each([
+            { name: 'mouseenter', fix: 'mouseover' },
+            { name: 'mouseleave', fix: 'mouseout' }
+        ], function(o) {
+
+            Event.special[o.name] = {
+
+                fix: o.fix,
+
+                setup: function(event) {
+                    event.type = o.name;
+                },
+
+                handle: function(el, event, listeners) {
+                    // Check if mouse(over|out) are still within the same parent element
+                    var parent = event.relatedTarget;
+
+                    // Firefox sometimes assigns relatedTarget a XUL element
+                    // which we cannot access the parentNode property of
+                    try {
+                        // Traverse up the tree
+                        while (parent && parent !== el) {
+                            parent = parent.parentNode;
+                        }
+
+                        if (parent !== el) {
+                            // handle event if we actually just moused on to a non sub-element
+                            Event._handle(el, event, listeners);
+                        }
+                    } catch(e) {
+                    }
+                }
+            }
+        });
+    }
+});
+
+/**
+ * TODO:
+ *  - ie6 下，原生的 mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>, jQuery 也异常，
+ *    需要进一步研究
+ *//*
+Copyright 2010, KISSY UI Library v1.0.5
+MIT Licensed
+build: 521 Apr 5 12:27
 */
 /**
  * @module  node
@@ -1461,6 +1892,7 @@ build: 520 Apr 2 22:20
 KISSY.add('node', function(S) {
 
     var DOM = S.DOM,
+        Event = S.Event,
         NP = Node.prototype;
 
     /**
@@ -1529,6 +1961,13 @@ KISSY.add('node', function(S) {
                 return typeof ret === 'boolean' ? ret : this;
             }
         });
+
+    // import event methods
+    S.mix(NP, S.EventTarget);
+    NP._addEvent = function(type, handle) {
+        S.Event._simpleAdd(this[0], type, handle);
+    };
+    delete NP.fire;    
 
     // add more methods
     S.mix(NP, {
@@ -1624,9 +2063,161 @@ KISSY.add('nodelist', function(S) {
  *     以说，技术成本会制约 api 设计。
  *
  *//*
-Copyright 2010, KISSY UI Library v1.0.4
+Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 498 Mar 18 13:49
+build: 521 Apr 5 12:27
+*/
+/**
+ * @module  cookie
+ * @author  lifesinger@gmail.com
+ * @depends kissy
+ */
+
+KISSY.add('cookie', function(S) {
+
+    var doc = document,
+        encode = encodeURIComponent,
+        decode = decodeURIComponent;
+
+    S.Cookie = {
+
+        /**
+         * 获取 cookie 值
+         * @return {string} 如果 name 不存在，返回 undefined
+         */
+        get: function(name) {
+            var ret, m;
+
+            if (isNotEmptyString(name)) {
+                if ((m = doc.cookie.match('(?:^| )' + name + '(?:(?:=([^;]*))|;|$)'))) {
+                    ret = m[1] ? decode(m[1]) : '';
+                }
+            }
+            return ret;
+        },
+
+        set: function(name, val, expires, domain, path, secure) {
+            var text = encode(val), date = expires;
+
+            // 从当前时间开始，多少天后过期
+            if (typeof date === 'number') {
+                date = new Date();
+                date.setTime(date.getTime() + expires * 86400000);
+            }
+            // expiration date
+            if (date instanceof Date) {
+                text += '; expires=' + date.toUTCString();
+            }
+
+            // domain
+            if (isNotEmptyString(domain)) {
+                text += '; domain=' + domain;
+            }
+
+            // path
+            if (isNotEmptyString(path)) {
+                text += '; path=' + path;
+            }
+
+            // secure
+            if (secure) {
+                text += '; secure';
+            }
+
+            doc.cookie = name + '=' + text;
+        },
+
+        remove: function(name) {
+            // 立刻过期
+            this.set(name, '', 0);
+        }
+    };
+
+    function isNotEmptyString(val) {
+        return typeof val === 'string' && val !== '';
+    }
+
+});
+
+/**
+ * Notes:
+ *
+ *  2010.04
+ *   - get 方法要考虑 ie 下，
+ *     值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
+ *     除了正则获取，还可以 split 字符串的方式来获取。
+ *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
+ *     独立成静态工具类的方式更优。
+ *
+ *//*
+Copyright 2010, KISSY UI Library v1.0.5
+MIT Licensed
+build: 521 Apr 5 12:27
+*/
+/**
+ * @module  ajax
+ * @author  lifesinger@gmail.com
+ * @depends kissy
+ */
+
+KISSY.add('ajax', function(S) {
+
+    var doc = document,
+        UA = S.UA;
+    
+    S.Ajax = {
+
+        /**
+         * Sends an HTTP request to a remote server.
+         */
+        request: function(/*url, options*/) {
+            S.error('not implemented'); // TODO
+        },
+
+        /**
+         * Load a JavaScript file from the server using a GET HTTP request, then execute it.
+         */
+        getScript: function(url, callback, charset) {
+            var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+                node = doc.createElement('script');
+
+            node.src = url;
+            if(charset) node.charset = charset;
+            node.async = true;
+
+            if (S.isFunction(callback)) {
+                if (UA.ie) {
+                    node.onreadystatechange = function() {
+                        var rs = node.readyState;
+                        if (rs === 'loaded' || rs === 'complete') {
+                            // handle memory leak in IE
+                            node.onreadystatechange = null;
+                            callback();
+                        }
+                    };
+                } else {
+                    node.onload = callback;
+                }
+            }
+
+            head.appendChild(node);
+        }
+    };
+
+});
+
+/**
+ * Notes:
+ *
+ *  2010.04
+ *   - api 考虑：jQuery 的全耦合在 jQuery 对象上，ajaxComplete 等方法显得不优雅。
+ *         YUI2 的 YAHOO.util.Connect.Get.script 层级太深，YUI3 的 io 则野心
+ *         过大，KISSY 借鉴 ExtJS, 部分方法借鉴 jQuery.
+ *
+ *//*
+Copyright 2010, KISSY UI Library v1.0.5
+MIT Licensed
+build: 521 Apr 5 12:27
 */
 /**
  * 数据延迟加载组件
@@ -2084,9 +2675,9 @@ KISSY.add('datalazyload', function(S, undefined) {
  * UPDATE LOG:
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  *//*
-Copyright 2010, KISSY UI Library v1.0.4
+Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 498 Mar 18 13:49
+build: 521 Apr 5 12:27
 */
 /**
  * 提示补全组件
@@ -2458,7 +3049,7 @@ KISSY.add("suggest", function(S, undefined) {
             // bug fix: w 应该判断下是否大于 0, 后边设置 width 的时候如果小于 0, ie 下会报参数无效的错误
             w = w > 0 ? w : 0;
 
-            // ie8兼容模式
+            // ie8 兼容模式
             // document.documentMode:
             // 5 - Quirks Mode
             // 7 - IE7 Standards
@@ -3140,9 +3731,9 @@ KISSY.add("suggest", function(S, undefined) {
  * 2010-03-10 更新： 去除共享模式，适应 kissy 新的代码组织方式。
  */
 /*
-Copyright 2010, KISSY UI Library v1.0.4
+Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 498 Mar 18 13:49
+build: 521 Apr 5 12:27
 */
 /**
  * Switchable
@@ -4069,191 +4660,35 @@ KISSY.add('carousel', function(S) {
     S.Carousel = Carousel;
 });
 /**
- * 超级菜单组件
- * @module      megamenu
+ * Album Widget
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy-core, yui-base, switchable
+ * @depends     kissy, yui-base
  */
-KISSY.add('megamenu', function(S) {
-
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
-        NONE = 'none', BLOCK = 'block',
-        CLOSEBTN_TMPL = '<span class=\'{hook_cls}\'></span>',
-        CLS_PREFIX = 'ks-megamenu-',
+KISSY.add('album', function(S) {
 
         /**
-         * 默认配置，和 Switchable 相同的配置此处未列出
+         * 默认配置，和 Switchable 相同的部分此处未列出
          */
-        defaultConfig = {
-            hideDelay: .5,    // 隐藏延迟
-
-            viewCls: CLS_PREFIX + 'view',
-            closeBtnCls: CLS_PREFIX + 'closebtn',
-
-            showCloseBtn: true, // 是否显示关闭按钮
-
-            activeIndex: -1 // 默认没有激活项
+        var defaultConfig = {
+            circular: true
         };
 
     /**
-     * @class MegaMenu
+     * Album Class
      * @constructor
      */
-    function MegaMenu(container, config) {
+    function Album(container, config) {
         var self = this;
 
         // factory or constructor
-        if (!(self instanceof MegaMenu)) {
-            return new MegaMenu(container, config);
+        if (!(self instanceof Album)) {
+            return new Album(container, config);
         }
 
         config = S.merge(defaultConfig, config || { });
-        MegaMenu.superclass.constructor.call(self, container, config);
-
-        /**
-         * 显示容器
-         */
-        //self.view
-
-        /**
-         * 显示容器里的数据元素
-         */
-        //self.viewContent
-
-        /**
-         * 定时器
-         */
-        //self.hideTimer
-
-        // init
-        self._initView();
-        if (self.config.showCloseBtn) self._initCloseBtn();
-
+        Album.superclass.constructor.call(self, container, config);
     }
 
-    S.extend(MegaMenu, S.Switchable);
-
-    S.mix(MegaMenu.prototype, {
-
-        /**
-         * click or tab 键激活 trigger 时触发的事件
-         */
-        _onFocusTrigger: function(index) {
-            var self = this;
-            if (self.activeIndex === index) return; // 重复点击
-            if (self.switchTimer) self.switchTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
-            if (self.hideTimer) self.hideTimer.cancel(); // 取消隐藏
-
-            self.switchTo(index);
-        },
-
-        /**
-         * 鼠标悬浮在 trigger 上时触发的事件
-         */
-        _onMouseEnterTrigger: function(index) {
-            //S.log('Triggerable._onMouseEnterTrigger: index = ' + index);
-            var self = this;
-            if (self.hideTimer) self.hideTimer.cancel(); // 取消隐藏
-
-            // 不重复触发。比如：已显示内容时，将鼠标快速滑出再滑进来，不必触发
-            self.switchTimer = Lang.later(self.config.delay * 1000, self, function() {
-                self.switchTo(index);
-            });
-        },
-
-        /**
-         * 鼠标移出 trigger 时触发的事件
-         */
-        _onMouseLeaveTrigger: function() {
-            var self = this;
-            if (self.switchTimer) self.switchTimer.cancel();
-
-            self.hideTimer = Lang.later(self.config.hideDelay * 1000, self, function() {
-                self.hide();
-            });
-        },
-
-        /**
-         * 初始化显示容器
-         */
-        _initView: function() {
-            var self = this, cfg = self.config,
-                view = Dom.getElementsByClassName(cfg.viewCls, '*', self.container)[0];
-
-            // 自动生成 view
-            if (!view) {
-                view = document.createElement('DIV');
-                view.className = cfg.viewCls;
-                self.container.appendChild(view);
-            }
-
-            // init events
-            Event.on(view, 'mouseenter', function() {
-                if (self.hideTimer) self.hideTimer.cancel();
-            });
-            Event.on(view, 'mouseleave', function() {
-                self.hideTimer = Lang.later(cfg.hideDelay * 1000, self, 'hide');
-            });
-
-            // viewContent 是放置数据的容器，无关闭按钮时，就是 view 本身
-            self.viewContent = view;
-            self.view = view;
-        },
-
-        /**
-         * 初始化关闭按钮
-         * @protected
-         */
-        _initCloseBtn: function() {
-            var self = this, el, view = self.view;
-
-            view.innerHTML = CLOSEBTN_TMPL.replace('{hook_cls}', self.config.closeBtnCls);
-            Event.on(view.firstChild, 'click', function() {
-                self.hide();
-            });
-
-            // 更新 viewContent
-            el = document.createElement('div');
-            view.appendChild(el);
-            self.viewContent = el;
-        },
-
-        /**
-         * 切换视图内的内容
-         * @override
-         */
-        _switchView: function(oldContents, newContents, index) {
-            var self = this;
-
-            // 显示 view
-            self.view.style.display = BLOCK;
-
-            // 加载新数据
-            self.viewContent.innerHTML = newContents[0].innerHTML;
-
-            // fire onSwitch
-            self.fireEvent('onSwitch', index);
-        },
-
-        /**
-         * 隐藏内容
-         */
-        hide: function() {
-            var self = this;
-
-            // hide current
-            Dom.removeClass(self.triggers[self.activeIndex], self.config.activeTriggerCls);
-            self.view.style.display = NONE;
-
-            // update
-            self.activeIndex = -1;
-        }
-    });
-
-    S.MegaMenu = MegaMenu;
+    S.extend(Album, S.Switchable);
+    S.Album = Album;
 });
-
-/**
- * TODO:
- *   - 类 YAHOO 首页，内容显示层的位置自适应
- */

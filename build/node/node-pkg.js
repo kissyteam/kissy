@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 520 Apr 2 22:20
+build: 521 Apr 5 12:27
 */
 /**
  * @module  node
@@ -12,6 +12,7 @@ build: 520 Apr 2 22:20
 KISSY.add('node', function(S) {
 
     var DOM = S.DOM,
+        Event = S.Event,
         NP = Node.prototype;
 
     /**
@@ -80,6 +81,13 @@ KISSY.add('node', function(S) {
                 return typeof ret === 'boolean' ? ret : this;
             }
         });
+
+    // import event methods
+    S.mix(NP, S.EventTarget);
+    NP._addEvent = function(type, handle) {
+        S.Event._simpleAdd(this[0], type, handle);
+    };
+    delete NP.fire;    
 
     // add more methods
     S.mix(NP, {

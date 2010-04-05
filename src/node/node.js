@@ -7,6 +7,7 @@
 KISSY.add('node', function(S) {
 
     var DOM = S.DOM,
+        Event = S.Event,
         NP = Node.prototype;
 
     /**
@@ -75,6 +76,13 @@ KISSY.add('node', function(S) {
                 return typeof ret === 'boolean' ? ret : this;
             }
         });
+
+    // import event methods
+    S.mix(NP, S.EventTarget);
+    NP._addEvent = function(type, handle) {
+        S.Event._simpleAdd(this[0], type, handle);
+    };
+    delete NP.fire;    
 
     // add more methods
     S.mix(NP, {

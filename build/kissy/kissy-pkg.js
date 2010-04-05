@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 520 Apr 2 22:20
+build: 521 Apr 5 12:27
 */
 /**
  * @module kissy
@@ -359,6 +359,13 @@ build: 520 Apr 2 22:20
          */
         error: function(msg) {
             throw msg;
+        },
+
+        /**
+         * get current timeStamp
+         */
+        now: function() {
+            return new Date().getTime();
         }
     });
 
@@ -428,6 +435,13 @@ KISSY.add('lang', function(S, undefined) {
               function(str) {
                   return (str || '').replace(REG_TRIM, '');
               },
+
+        isEmptyObject: function(obj) {
+            for(var p in obj) {
+                return false;
+            }
+            return true;
+        },
 
         // NOTE: DOM methods and functions like alert aren't supported. They return false on IE.
         isFunction: function(obj) {

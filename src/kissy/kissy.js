@@ -354,6 +354,13 @@
          */
         error: function(msg) {
             throw msg;
+        },
+
+        /**
+         * get current timeStamp
+         */
+        now: function() {
+            return new Date().getTime();
         }
     });
 

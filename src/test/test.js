@@ -4,7 +4,7 @@
  * @depends none
  */
 
-KISSY = window.KISSY || {};
+var KISSY = window.KISSY || {};
 
 (function(win, S, undefined) {
 
@@ -43,7 +43,7 @@ KISSY = window.KISSY || {};
                 if (prefix === undefined) prefix = timeStamp() + ' ';
 
                 log.innerHTML += prefix + msg + br;
-                this.scrollToEnd();
+                konsole.scrollToEnd();
             },
             scrollToEnd: function() {
                 if (scrollTimer) return;
@@ -82,7 +82,8 @@ KISSY = window.KISSY || {};
                 if (msg) this.extraMsg = msg;
             },
             status: PASSED,
-            extraMsg: ''
+            extraMsg: '',
+            echo: konsole.echo
         });
     };
 

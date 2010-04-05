@@ -16,11 +16,19 @@
 <script src="../kissy/kissy-lang.js"></script>
 <script src="../kissy/kissy-ua.js"></script>
 <script src="../kissy/kissy-json.js"></script>
+
 <script src="../dom/selector.js"></script>
 <script src="../dom/dom.js"></script>
 <script src="../dom/dom-class.js"></script>
+
+<script src="../event/event.js"></script>
+<script src="../event/event-object.js"></script>
+<script src="../event/event-target.js"></script>
+<script src="../event/event-mouseenter.js"></script>
+
 <script src="node.js"></script>
 <script src="nodelist.js"></script>
+
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
 
 <!-- Test Cases -->
@@ -140,11 +148,19 @@
         if(S.one('#foo').all('input').length !== 3) test.fail();
     }
 
+    function test_on(test) {
+        S.one('#foo a').on('click', function(ev) {
+            ev.preventDefault();
+            test.echo('I am a node. instanceof Node = ' + (this instanceof S.Node));
+        });
+        test.extraMsg = '{click test link to invoke event}';
+    }
+    
 </script>
 
 <div id="test-data">
     <p id="foo">
-        <a href="../kissy/" style="color:red" class="link" title="test" data-test="test">test link</a>
+        <a href="./" style="color:red" class="link" title="test" data-test="test">test link</a>
         <input type="text" id="test-input" readonly maxlength="20" value="hello"/>
         <input type="radio" id="test-radio" />
         <input type="radio" id="test-radio2" checked />

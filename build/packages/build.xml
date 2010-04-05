@@ -19,9 +19,11 @@
         <!-- kissy-core: 核心文件，只含关键组件，一般在页头引入 -->
         <concat destfile="kissy-core.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../kissy/kissy-pkg.js"/>
-            <path path="../cookie/cookie.js"/>
             <path path="../dom/dom-pkg.js"/>
+            <path path="../event/event-pkg.js"/>
             <path path="../node/node-pkg.js"/>
+            <path path="../cookie/cookie.js"/>
+            <path path="../ajax/ajax.js"/>
         </concat>
         <!-- kissy-more: 常用 utils 和 widgets, 一般在页尾引入 -->
         <concat destfile="kissy-more.js" encoding="${charset}" outputencoding="${charset}">
