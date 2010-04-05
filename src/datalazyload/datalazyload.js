@@ -3,11 +3,11 @@
  * 包括 img, textarea, 以及特定元素即将出现时的回调函数
  * @module      datalazyload
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yahoo-dom-event
+ * @depends     kissy-core, yahoo-dom-event
  */
 KISSY.add('datalazyload', function(S, undefined) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+    var DOM = S.DOM, Event = S.Event, YDOM = YAHOO.util.Dom,
         win = window, doc = document,
         IMG_DATA_SRC = 'data-lazyload-src',
         TEXTAREA_DATA_CLS = 'ks-datalazyload',
@@ -37,7 +37,8 @@ KISSY.add('datalazyload', function(S, undefined) {
              * 图像的占位图
              */
             placeholder: 'http://a.tbcdn.cn/kissy/1.0.4/build/datalazyload/dot.gif'
-        };
+        },
+        DP = DataLazyload.prototype;
 
     /**
      * 延迟加载组件
@@ -58,8 +59,8 @@ KISSY.add('datalazyload', function(S, undefined) {
         }
 
         // containers 是一个 HTMLElement 时
-        if (!Lang.isArray(containers)) {
-            containers = [Dom.get(containers) || doc];
+        if (!S.isArray(containers)) {
+            containers = [S.get(containers) || doc];
         }
 
         /**
@@ -101,7 +102,7 @@ KISSY.add('datalazyload', function(S, undefined) {
         self._init();
     }
 
-    S.mix(DataLazyload.prototype, {
+    S.mix(DP, {
 
         /**
          * 初始化
@@ -134,7 +135,7 @@ KISSY.add('datalazyload', function(S, undefined) {
 
             // 需要立即加载一次，以保证第一屏的延迟项可见
             if (self._getItemsLength()) {
-                Event.onDOMReady(function() {
+                S.ready(function() {
                     loadItems();
                 });
             }
@@ -153,8 +154,8 @@ KISSY.add('datalazyload', function(S, undefined) {
                 self._loadItems();
 
                 if (self._getItemsLength() === 0) {
-                    Event.removeListener(win, 'scroll', loader);
-                    Event.removeListener(win, 'resize', loader);
+                    Event.remove(win, 'scroll', loader);
+                    Event.remove(win, 'resize', loader);
                 }
             }
         },
@@ -173,7 +174,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                 lazyImgs = [], lazyAreaes = [];
 
             for (n = 0,N = containers.length; n < N; ++n) {
-                imgs = containers[n].getElementsByTagName('img');
+                imgs = S.query('img', containers[n]);
 
                 for (i = 0,len = imgs.length; i < len; ++i) {
                     img = imgs[i];
@@ -187,7 +188,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                     } else { // 自动模式，只处理 threshold 外无 data-src 的图片
                         // 注意：已有 data-src 的项，可能已有其它实例处理过，重复处理
                         // 会导致 data-src 变成 placeholder
-                        if (Dom.getY(img) > threshold && !data_src) {
+                        if (YDOM.getY(img) > threshold && !data_src) {
                             img.setAttribute(IMG_DATA_SRC, img.src);
                             img.src = placeholder;
                             lazyImgs.push(img);
@@ -196,10 +197,10 @@ KISSY.add('datalazyload', function(S, undefined) {
                 }
 
                 // 处理 textarea
-                areaes = containers[n].getElementsByTagName('textarea');
+                areaes = S.query('textarea', containers[n]);
                 for (i = 0,len = areaes.length; i < len; ++i) {
                     area = areaes[i];
-                    if (Dom.hasClass(area, TEXTAREA_DATA_CLS)) {
+                    if (DOM.hasClass(area, TEXTAREA_DATA_CLS)) {
                         lazyAreaes.push(area);
                     }
                 }
@@ -227,12 +228,12 @@ KISSY.add('datalazyload', function(S, undefined) {
         _loadImgs: function() {
             var self = this,
                 imgs = self.images,
-                scrollTop = Dom.getDocumentScrollTop(),
+                scrollTop = YDOM.getDocumentScrollTop(),
                 threshold = self.threshold + scrollTop,
                 i, img, data_src, remain = [];
 
             for (i = 0; img = imgs[i++];) {
-                if (Dom.getY(img) <= threshold) {
+                if (YDOM.getY(img) <= threshold) {
                     self._loadImgSrc(img);
                 } else {
                     remain.push(img);
@@ -263,7 +264,7 @@ KISSY.add('datalazyload', function(S, undefined) {
         _loadAreaes: function() {
             var self = this,
                 areaes = self.areaes,
-                scrollTop = Dom.getDocumentScrollTop(),
+                scrollTop = YDOM.getDocumentScrollTop(),
                 threshold = self.threshold + scrollTop,
                 i, area, parent, remain = [];
 
@@ -271,7 +272,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                 parent = area.parentNode;
                 // 注：area 可能处于 display: none 状态，Dom.getY(area) 获取不到 Y 值
                 //    因此这里采用 area.parentNode
-                if (Dom.getY(parent) <= threshold) {
+                if (YDOM.getY(parent) <= threshold) {
                     self._loadDataFromArea(parent, area);
                 } else {
                     remain.push(area);
@@ -289,7 +290,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             //parent.innerHTML = area.value; // 这种方式会导致 chrome 缓存 bug
 
             // 采用隐藏不去除方式
-            var content = document.createElement('DIV');
+            var content = doc.createElement('DIV');
             content.innerHTML = area.value;
             area.style.display = NONE;
             area.className = ''; // clear hooks
@@ -304,12 +305,12 @@ KISSY.add('datalazyload', function(S, undefined) {
             var self = this,
                 callbacks = self.callbacks,
                 els = callbacks.els, fns = callbacks.fns,
-                scrollTop = Dom.getDocumentScrollTop(),
+                scrollTop = YDOM.getDocumentScrollTop(),
                 threshold = self.threshold + scrollTop,
                 i, el, fn, remainEls = [], remainFns = [];
 
             for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
-                if (Dom.getY(el) <= threshold) {
+                if (YDOM.getY(el) <= threshold) {
                     fn.call(el);
                 } else {
                     remainEls.push(el);
@@ -326,7 +327,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 添加回调函数。当 el 即将出现在视图中时，触发 fn
          */
         addCallback: function(el, fn) {
-            el = Dom.get(el);
+            el = S.get(el);
             if (el && typeof fn === 'function') {
                 this.callbacks.els.push(el);
                 this.callbacks.fns.push(fn);
@@ -339,7 +340,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          */
         _getThreshold: function() {
             var diff = this.config.diff,
-                ret = Dom.getViewportHeight();
+                ret = YDOM.getViewportHeight();
 
             if (diff === DEFAULT) return 2 * ret; // diff 默认为当前视窗高度（两屏以外的才延迟加载）
             else return ret + diff;
@@ -363,16 +364,16 @@ KISSY.add('datalazyload', function(S, undefined) {
 
 
             // 支持数组
-            if (!Lang.isArray(containers)) {
-                containers = [Dom.get(containers)];
+            if (!S.isArray(containers)) {
+                containers = [S.get(containers)];
             }
 
             // 遍历处理
             S.each(containers, function(container) {
                 switch (type) {
                     case 'textarea-data':
-                        area = container.getElementsByTagName('textarea')[0];
-                        if (area && Dom.hasClass(area, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
+                        area = S.get('textarea', container);
+                        if (area && DOM.hasClass(area, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
                             self._loadDataFromArea(container, area);
                         }
                         break;
@@ -382,7 +383,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                         if (container.nodeName === 'IMG') { // 本身就是图片
                             imgs = [container];
                         } else {
-                            imgs = container.getElementsByTagName('img');
+                            imgs = S.query('img', container);
                         }
                         for (var i = 0, len = imgs.length; i < len; i++) {
                             self._loadImgSrc(imgs[i], flag || CUSTOM_IMG_DATA_SRC);
@@ -393,7 +394,7 @@ KISSY.add('datalazyload', function(S, undefined) {
     });
 
     // attach static methods
-    S.mix(DataLazyload, DataLazyload.prototype, true, ['loadCustomLazyData', '_loadImgSrc', '_loadDataFromArea']);
+    S.mix(DataLazyload, DP, true, ['loadCustomLazyData', '_loadImgSrc', '_loadDataFromArea']);
 
     S.DataLazyload = DataLazyload;
 });
@@ -445,12 +446,13 @@ KISSY.add('datalazyload', function(S, undefined) {
  */
 
 /**
- * TODOs:
+ * TODO:
  *   - [取消] 背景图片的延迟加载（对于 css 里的背景图片和 sprite 很难处理）
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  */
 
 /**
  * UPDATE LOG:
+ *   - 2010-04-05 yubo 重构，使得对 YUI 的依赖仅限于 YDOM
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */

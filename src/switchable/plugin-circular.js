@@ -1,12 +1,10 @@
 /**
  * Switchable Circular Plugin
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base, switchable
  */
 KISSY.add('switchable-circular', function(S) {
 
-    var Y = YAHOO.util,
-        RELATIVE = 'relative',
+    var RELATIVE = 'relative',
         LEFT = 'left', TOP = 'top',
         PX = 'px', EMPTY = '',
         FORWARD = 'forward', BACKWARD = 'backward',
@@ -47,7 +45,7 @@ KISSY.add('switchable-circular', function(S) {
 
         // 开始动画
         if (self.anim) self.anim.stop();
-        self.anim = new Y.Anim(self.content, attributes, cfg.duration, cfg.easing);
+        self.anim = new YAHOO.util.Anim(self.content, attributes, cfg.duration, cfg.easing);
         self.anim.onComplete.subscribe(function() {
             if(isCritical) {
                 // 复原位置

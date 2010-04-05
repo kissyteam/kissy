@@ -1,17 +1,18 @@
 /**
  * Switchable
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base, selector, dom-base
+ * @depends     kissy-core, yui2-animation
  */
 KISSY.add('switchable', function(S, undefined) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+    var DOM = S.DOM, Event = S.Event,
         doc = document,
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
-        BEFORE_SWITCH = 'beforeSwitch', ON_SWITCH = 'onSwitch',
-        CLS_PREFIX = 'ks-switchable-';
+        EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
+        CLS_PREFIX = 'ks-switchable-',
+        SP = Switchable.prototype;
 
     /**
      * Switchable Widget
@@ -113,17 +114,17 @@ KISSY.add('switchable', function(S, undefined) {
         activeIndex: 0, // mackup 的默认激活项，应该与此 index 一致
         activeTriggerCls: 'active',
 
-        // 切换视图内有多少个 panels
+        // 可见视图内有多少个 panels
         steps: 1,
 
-        // 切换视图区域的大小。一般不需要设定此值，仅当获取值不正确时，用于手工指定大小
+        // 可见视图区域的大小。一般不需要设定此值，仅当获取值不正确时，用于手工指定大小
         viewSize: []
     };
 
-    // 插件信息
+    // 插件
     Switchable.Plugins = [];
 
-    S.mix(Switchable.prototype, {
+    S.mix(SP, {
 
         /**
          * init switchable
@@ -135,10 +136,6 @@ KISSY.add('switchable', function(S, undefined) {
             if (self.panels.length === 0) {
                 self._parseMackup();
             }
-
-            // create custom events
-            self.createEvent(BEFORE_SWITCH);
-            self.createEvent(ON_SWITCH);
 
             // bind triggers
             if (cfg.hasTriggers) {
@@ -166,10 +163,10 @@ KISSY.add('switchable', function(S, undefined) {
                 case 0: // 默认结构
                     nav = S.get(DOT + cfg.navCls, container);
                     if (nav) {
-                        triggers = Dom.getChildren(nav);
+                        triggers = DOM.children(nav);
                     }
                     content = S.get(DOT + cfg.contentCls, container);
-                    panels = Dom.getChildren(content);
+                    panels = DOM.children(content);
                     break;
                 case 1: // 适度灵活
                     triggers = S.query(DOT + cfg.triggerCls, container);
@@ -224,7 +221,7 @@ KISSY.add('switchable', function(S, undefined) {
             }
 
             self.container.appendChild(ul);
-            return Dom.getChildren(ul);
+            return DOM.children(ul);
         },
 
         /**
@@ -279,9 +276,9 @@ KISSY.add('switchable', function(S, undefined) {
 
             // 不重复触发。比如：已显示内容时，将鼠标快速滑出再滑进来，不必触发
             if (self.activeIndex !== index) {
-                self.switchTimer = Lang.later(self.config.delay * 1000, self, function() {
+                self.switchTimer = S.later(function() {
                     self.switchTo(index);
-                });
+                }, self.config.delay * 1000);
             }
         },
 
@@ -305,7 +302,7 @@ KISSY.add('switchable', function(S, undefined) {
             //S.log('Triggerable.switchTo: index = ' + index);
 
             if (index === activeIndex) return self;
-            if (!self.fireEvent(BEFORE_SWITCH, index)) return self;
+            if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
 
             // switch active trigger
             if (cfg.hasTriggers) {
@@ -316,7 +313,7 @@ KISSY.add('switchable', function(S, undefined) {
             if (direction === undefined) {
                 direction = index > activeIndex ? FORWARD : FORWARD;
             }
-            // TODO: slice 是否会带来性能下降？需要测试
+
             self._switchView(
                 panels.slice(fromIndex, fromIndex + steps),
                 panels.slice(toIndex, toIndex + steps),
@@ -335,33 +332,32 @@ KISSY.add('switchable', function(S, undefined) {
         _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
             var activeTriggerCls = this.config.activeTriggerCls;
 
-            if (fromTrigger) Dom.removeClass(fromTrigger, activeTriggerCls);
-            Dom.addClass(toTrigger, activeTriggerCls);
+            if (fromTrigger) DOM.removeClass(fromTrigger, activeTriggerCls);
+            DOM.addClass(toTrigger, activeTriggerCls);
         },
 
         /**
-         * 切换当前视图
+         * 切换视图
          */
-        _switchView: function(fromPanels, toPanels, index/*, direction*/) {
+        _switchView: function(fromPanels, toPanels/*, index, direction*/) {
             // 最简单的切换效果：直接隐藏/显示
-            Dom.setStyle(fromPanels, DISPLAY, NONE);
-            Dom.setStyle(toPanels, DISPLAY, BLOCK);
+            DOM.css(fromPanels, DISPLAY, NONE);
+            DOM.css(toPanels, DISPLAY, BLOCK);
 
             // fire onSwitch
-            this.fireEvent(ON_SWITCH, index);
+            this.fire(EVENT_SWITCH);
         },
 
         /**
-         * 切换到上一个视图
+         * 切换到上一视图
          */
         prev: function() {
             var self = this, activeIndex = self.activeIndex;
             self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1, BACKWARD);
-            // TODO: fire event when at first/last view.
         },
 
         /**
-         * 切换到下一个视图
+         * 切换到下一视图
          */
         next: function() {
             var self = this, activeIndex = self.activeIndex;
@@ -369,22 +365,26 @@ KISSY.add('switchable', function(S, undefined) {
         }
     });
 
-    S.augment(Switchable, Y.EventProvider);
+    S.mix(SP, S.EventTarget);
     
     S.Switchable = Switchable;
 });
 
 /**
- * Notes:
+ * NOTES:
+ *
+ * 2010.04
+ *  - 重构，脱离对 yahoo-dom-event 的依赖
  *
  * 2010.03
  *  - 重构，去掉 Widget, 部分代码直接采用 kissy 基础库
  *  - 插件机制从 weave 织入法改成 hook 钩子法
  *
- * TODOs:
+ * TODO:
  *  - http://malsup.com/jquery/cycle/
  *  - http://www.mall.taobao.com/go/chn/mall_chl/flagship.php
  * 
  * References:
  *  - jQuery Scrollable http://flowplayer.org/tools/scrollable.html
+ *
  */

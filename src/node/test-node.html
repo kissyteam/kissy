@@ -140,6 +140,32 @@
         if(div.text('hello, are you ok?').text() !== 'hello, are you ok?') test.fail();
     }
 
+    function test_html(test) {
+        var div = S.one('#test-div');
+        if(div.html('<p>hello, are you ok?</p>').html() !== '<p>hello, are you ok?</p>') test.fail();
+    }
+
+    function test_children(test) {
+        if(S.one('#foo').children().length !== 7) test.fail();
+        if(S.one('#foo').children()[0] !== S.get('#foo a')) test.fail();
+    }
+
+    function test_siblings(test) {
+        if(S.one('#foo a').siblings().length !== 6) test.fail();
+    }
+
+    function test_next(test) {
+        if(S.one('#foo a').next().prev()[0].nodeName !== 'A') test.fail();
+    }
+
+    function test_prev(test) {
+        if(S.one('#foo input').prev().next()[0].nodeName !== 'INPUT') test.fail();
+    }
+
+    function test_parent(test) {
+        if(S.one('#foo input').parent()[0].id !== 'foo') test.fail();
+    }
+
     function test_one(test) {
         if(S.one('#foo').one('input').attr('id') !== 'test-input') test.fail();
     }

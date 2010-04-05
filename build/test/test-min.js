@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 521 Apr 5 12:27
+build: 522 Apr 5 22:24
 */
 var KISSY=window.KISSY||{};
 (function(e,l,o){function p(){l.Test.init()}var i=e.document,g=function(a){return typeof a==="string"?i.getElementById(a):a},q=function(){return(new Date).getTime()},m=function(a){return a<10?"0"+a:a},t=function(){var a=new Date;return m(a.getHours())+":"+m(a.getMinutes())+":"+m(a.getSeconds())},c=[],j,r,k,h,n,f={init:function(){j=g("log");r=g("hidepasses").checked;k=g("times").value;h=g("wl").value},time:function(a){a.startTime=q()},timeEnd:function(a){a.tookTime=q()-a.startTime},echo:function(a,

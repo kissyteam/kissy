@@ -5,7 +5,7 @@
  */
 KISSY.add('switchable-effect', function(S) {
 
-    var Y = YAHOO.util, Dom = Y.Dom,
+    var Y = YAHOO.util, DOM = S.DOM, YDOM = Y.Dom,
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         OPACITY = 'opacity', Z_INDEX = 'z-index',
         RELATIVE = 'relative', ABSOLUTE = 'absolute',
@@ -28,22 +28,22 @@ KISSY.add('switchable-effect', function(S) {
 
         // 最朴素的显示/隐藏效果
         none: function(fromEls, toEls, callback) {
-            Dom.setStyle(fromEls, DISPLAY, NONE);
-            Dom.setStyle(toEls, DISPLAY, BLOCK);
+            DOM.css(fromEls, DISPLAY, NONE);
+            DOM.css(toEls, DISPLAY, BLOCK);
             callback();
         },
 
         // 淡隐淡现效果
         fade: function(fromEls, toEls, callback) {
             if(fromEls.length !== 1) {
-                throw new Error('fade effect only supports steps == 1.');
+                S.error('fade effect only supports steps == 1.');
             }
             var self = this, cfg = self.config,
                 fromEl = fromEls[0], toEl = toEls[0];
             if (self.anim) self.anim.stop();
 
             // 首先显示下一张
-            Dom.setStyle(toEl, OPACITY, 1);
+            YDOM.setStyle(toEl, OPACITY, 1);
 
             // 动画切换
             self.anim = new Y.Anim(fromEl, {opacity: {to: 0}}, cfg.duration, cfg.easing);
@@ -51,8 +51,8 @@ KISSY.add('switchable-effect', function(S) {
                 self.anim = null; // free
 
                 // 切换 z-index
-                Dom.setStyle(toEl, Z_INDEX, 9);
-                Dom.setStyle(fromEl, Z_INDEX, 1);
+                YDOM.setStyle(toEl, Z_INDEX, 9);
+                YDOM.setStyle(fromEl, Z_INDEX, 1);
 
                 callback();
             });
@@ -126,7 +126,7 @@ KISSY.add('switchable-effect', function(S) {
 
                         // 水平排列
                         if (effect === SCROLLX) {
-                            Dom.setStyle(panels, 'float', 'left');
+                            YDOM.setStyle(panels, 'float', 'left');
 
                             // 设置最大宽度，以保证有空间让 panels 水平排布
                             host.content.style.width = host.viewSize[0] * (len / steps) + 'px';
@@ -136,7 +136,7 @@ KISSY.add('switchable-effect', function(S) {
                     // 如果是透明效果，则初始化透明
                     case FADE:
                         for (i = 0; i < len; i++) {
-                            Dom.setStyle(panels[i], OPACITY, (i >= fromIndex && i <= toIndex) ? 1 : 0);
+                            YDOM.setStyle(panels[i], OPACITY, (i >= fromIndex && i <= toIndex) ? 1 : 0);
                             panels[i].style.position = ABSOLUTE;
                             panels[i].style.zIndex = (i >= fromIndex && i <= toIndex) ? 9 : 1;
                         }
@@ -162,7 +162,7 @@ KISSY.add('switchable-effect', function(S) {
                 fn = typeof effect === 'function' ? effect : Effects[effect];
 
             fn.call(self, fromEls, toEls, function() {
-                self.fireEvent('onSwitch', index);
+                self.fire('switch');
             }, index, direction);
         }
     });

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 521 Apr 5 12:27
+build: 522 Apr 5 22:24
 */
 /**
  * @module  selector
@@ -301,7 +301,6 @@ KISSY.add('selector', function(S, undefined) {
 /**
  * @module  dom-base
  * @author  lifesinger@gmail.com
- * @depends kissy, selector
  */
 
 KISSY.add('dom-base', function(S, undefined) {
@@ -473,8 +472,20 @@ KISSY.add('dom-base', function(S, undefined) {
         /**
          * Gets or sets styles on the HTMLElement.
          */
-        css: function(/*el, prop, val*/) {
-            S.error('not implemented'); // TODO
+        css: function(el, prop, val) {
+            // get style
+            if(val === undefined) {
+                return el.style[prop];
+            }
+
+            // set style
+            S.each(S.makeArray(el), function(elem) {
+                elem.style[prop] = val;
+            });
+
+            // TODO:
+            //  - 考虑各种兼容性问题和异常情况 opacity, z-index, float
+            //  - more test cases
         },
 
         /**
@@ -493,10 +504,58 @@ KISSY.add('dom-base', function(S, undefined) {
         },
 
         /**
-         * Get the HTML contents of the HTMLElement.
+         * Gets the HTML contents of the HTMLElement.
          */
-        html: function(/*el, htmlString*/) {
-            S.error('not implemented'); // TODO
+        html: function(el, htmlString) {
+            // set html
+            if(htmlString === undefined) {
+                return el.innerHTML;
+            }
+
+            // get html
+            el.innerHTML = htmlString;
+
+            // TODO:
+            //  - 考虑各种兼容和异常，添加疯狂测试
+        },
+
+        /**
+         * Gets the children of the HTMLElement.
+         */
+        children: function(el) {
+            if(el.children) { // 只有 firefox 的低版本不支持
+                return S.makeArray(el.children);
+            }
+            return getSiblings(el.firstChild);
+        },
+
+        /**
+         * Gets the siblings of the HTMLElment.
+         */
+        siblings: function(el) {
+            return getSiblings(el.parentNode.firstChild, el);
+        },
+
+        /**
+         * Gets the immediately following sibling of the element.
+         */
+        next: function(el) {
+            return nth(el, 1, 'nextSibling');
+        },
+
+        /**
+         * Gets the immediately preceding sibling of the element.
+         */
+        prev: function(el) {
+            return nth(el, 1, 'previousSibling');
+        },
+
+        /**
+         * Gets the parentNode of the elment.
+         */
+        parent: function(el) {
+            var parent = el.parentNode;
+            return parent && parent.nodeType !== 11 ? parent : null;
         },
 
         /**
@@ -530,8 +589,30 @@ KISSY.add('dom-base', function(S, undefined) {
         }
     };
 
+    // 判断 el 的 nodeName 是否指定值
     function nodeNameIs(val, el) {
         return el && el.nodeName.toUpperCase() === val.toUpperCase();
+    }
+
+    // 获取元素 el 的所有 siblings
+    function getSiblings(n/* first */, el) {
+        for (var r = [], j = 0; n; n = n.nextSibling) {
+            if (n.nodeType === 1 && n !== el) {
+                r[j++] = n;
+            }
+        }
+        return r;
+    }
+
+    // 获取元素 el 在 dir(ection) 上的第 n 个元素
+    function nth(el, n, dir) {
+        n = n || 0;
+        for (var i = 0; el; el = el[dir]) {
+            if (el.nodeType === 1 && i++ === n) {
+                break;
+            }
+        }
+        return el;
     }
 
     // 将 nodeList 转换为 fragment
@@ -591,7 +672,7 @@ KISSY.add('dom-class', function(S, undefined) {
          * Determines whether a HTMLElement has the given className.
          */
         hasClass: function(el, className) {
-            if (!className || !el.className) return false;
+            if (!className || !el || !el.className) return false;
 
             return (SPACE + el.className + SPACE).indexOf(SPACE + className + SPACE) > -1;
         },
@@ -600,7 +681,7 @@ KISSY.add('dom-class', function(S, undefined) {
          * Adds a given className to a HTMLElement.
          */
         addClass: function(el, className) {
-            if (!className) return;
+            if (!className || !el) return;
             if (hasClass(el, className)) return;
 
             el.className += SPACE + className;

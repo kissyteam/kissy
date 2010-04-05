@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="GB18030" />
+<meta charset="gbk" />
 <title>Lazyload Test</title>
 </head>
 <body>
@@ -4568,12 +4568,14 @@
 </div>
 
 <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script src="../kissy/kissy.js"></script>
+<script src="../../build/packages/kissy-core.js"></script>
+
 <script src="datalazyload.js"></script>
+
 <script>
     KISSY.ready(function(S){
         var lazyLoad = new S.DataLazyload({mod: 'auto'});
-        lazyLoad.addCallback('lazyCallbackTest', function() {
+        lazyLoad.addCallback('#lazyCallbackTest', function() {
             alert('Morning fog 人在畫中');
         });
     });

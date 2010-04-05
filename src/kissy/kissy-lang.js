@@ -48,8 +48,15 @@ KISSY.add('lang', function(S, undefined) {
                   return (str || '').replace(REG_TRIM, '');
               },
 
+        /**
+         * Check to see if an object is a plain object (created using "{}" or "new Object").
+         */
+        isPlainObject: function(obj) {
+            return obj && toString.call(obj) === '[object Object]' && !obj.nodeType && !obj.setInterval;
+        },
+
         isEmptyObject: function(obj) {
-            for(var p in obj) {
+            for (var p in obj) {
                 return false;
             }
             return true;
@@ -81,7 +88,7 @@ KISSY.add('lang', function(S, undefined) {
                  },
 
         makeArray: function(obj) {
-            if (obj === null) return [];
+            if (obj === null || obj === undefined) return [];
             if (S.isArray(obj)) return obj;
 
             // The strings and functions also have 'length'
@@ -170,6 +177,57 @@ KISSY.add('lang', function(S, undefined) {
                 }
             }
             return ret;
+        },
+
+        /**
+         * Executes the supplied function in the context of the supplied
+         * object 'when' milliseconds later. Executes the function a
+         * single time unless periodic is set to true.
+         * @param when {int} the number of milliseconds to wait until the fn
+         * is executed.
+         * @param o the context object.
+         * @param fn {Function|String} the function to execute or the name of
+         * the method in the 'o' object to execute.
+         * @param data [Array] data that is provided to the function. This accepts
+         * either a single item or an array. If an array is provided, the
+         * function is executed with one parameter for each array item. If
+         * you need to pass a single array parameter, it needs to be wrapped in
+         * an array [myarray].
+         * @param periodic {boolean} if true, executes continuously at supplied
+         * interval until canceled.
+         * @return {object} a timer object. Call the cancel() method on this object to
+         * stop the timer.
+         */
+        later: function(fn, when, periodic, o, data) {
+            when = when || 0;
+            o = o || { };
+            var m = fn, d = S.makeArray(data), f, r;
+
+            if (typeof fn === 'string') {
+                m = o[fn];
+            }
+
+            if (!m) {
+                S.error('method undefined');
+            }
+
+            f = function() {
+                m.apply(o, d);
+            };
+
+            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
+
+            return {
+                id: r,
+                interval: periodic,
+                cancel: function() {
+                    if (this.interval) {
+                        clearInterval(r);
+                    } else {
+                        clearTimeout(r);
+                    }
+                }
+            };
         }
     });
 
@@ -182,11 +240,14 @@ KISSY.add('lang', function(S, undefined) {
 });
 
 /**
- * Notes:
+ * NOTES:
  *
  *  2010.04
  *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
  *   - 对于 param, encodeURI 就可以了，和 jQuery 保持一致。
  *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
+ *
+ * TODO:
+ *   - 分析 jq 的 isPlainObject
  *
  */

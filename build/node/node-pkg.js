@@ -1,18 +1,16 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 521 Apr 5 12:27
+build: 522 Apr 5 22:24
 */
 /**
  * @module  node
  * @author  lifesinger@gmail.com
- * @depends kissy, dom
  */
 
 KISSY.add('node', function(S) {
 
     var DOM = S.DOM,
-        Event = S.Event,
         NP = Node.prototype;
 
     /**
@@ -47,7 +45,7 @@ KISSY.add('node', function(S) {
     }
 
     // import dom methods
-    S.each(['attr', 'removeAttr'],
+    S.each(['attr', 'removeAttr', 'css'],
         function(methodName) {
             NP[methodName] = function(name, val) {
                 var domNode = this[0];
@@ -60,7 +58,7 @@ KISSY.add('node', function(S) {
             }
         });
 
-    S.each(['val', 'text'],
+    S.each(['val', 'text', 'html'],
             function(methodName) {
                 NP[methodName] = function(val) {
                     var domNode = this[0];
@@ -72,6 +70,14 @@ KISSY.add('node', function(S) {
                     }
                 }
             });
+
+    S.each(['children', 'siblings', 'next', 'prev', 'parent'],
+        function(methodName) {
+            NP[methodName] = function() {
+                var ret = DOM[methodName](this[0]);
+                return ret ? new S[ret.length ? 'NodeList' : 'Node'](ret) : null;
+            }
+        });
 
     S.each(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'],
         function(methodName) {

@@ -1,14 +1,13 @@
 /**
  * Switchable Lazyload Plugin
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base, switchable, datalazyload
  */
 KISSY.add('switchable-lazyload', function(S) {
 
-    var Y = YAHOO.util, Dom = Y.Dom,
-        BEFORE_SWITCH = 'beforeSwitch',
+    var DOM = S.DOM,
+        EVENT_BEFORE_SWITCH = 'beforeSwitch',
         IMG_SRC = 'img-src', TEXTAREA_DATA = 'textarea-data',
-        FLAGS = {},
+        FLAGS = { },
         Switchable = S.Switchable,
         DataLazyload = S.DataLazyload;
 
@@ -34,19 +33,19 @@ KISSY.add('switchable-lazyload', function(S) {
                 type = cfg.lazyDataType, flag = cfg.lazyDataFlag || FLAGS[type];
             if (!DataLazyload || !type || !flag) return; // 没有延迟项
 
-            host.subscribe(BEFORE_SWITCH, loadLazyData);
+            host.on(EVENT_BEFORE_SWITCH, loadLazyData);
 
             /**
              * 加载延迟数据
              */
-            function loadLazyData(index) {
+            function loadLazyData(ev) {
                 var steps = cfg.steps,
-                    from = index * steps ,
+                    from = ev.toIndex * steps ,
                     to = from + steps;
 
                 DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type, flag);
                 if (isAllDone()) {
-                    host.unsubscribe(BEFORE_SWITCH, loadLazyData);
+                    host.detach(EVENT_BEFORE_SWITCH, loadLazyData);
                 }
             }
 
@@ -57,14 +56,14 @@ KISSY.add('switchable-lazyload', function(S) {
                 var imgs, textareas, i, len;
 
                 if (type === IMG_SRC) {
-                    imgs = host.container.getElementsByTagName('img');
+                    imgs = S.query('img', host.container);
                     for (i = 0,len = imgs.length; i < len; i++) {
-                        if (imgs[i].getAttribute(flag)) return false;
+                        if (DOM.attr(imgs[i], flag)) return false;
                     }
                 } else if (type === TEXTAREA_DATA) {
-                    textareas = host.container.getElementsByTagName('textarea');
+                    textareas = S.query('textarea', host.container);
                     for (i = 0,len = textareas.length; i < len; i++) {
-                        if (Dom.hasClass(textareas[i], flag)) return false;
+                        if (DOM.hasClass(textareas[i], flag)) return false;
                     }
                 }
 

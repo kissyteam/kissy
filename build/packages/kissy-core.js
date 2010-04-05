@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 521 Apr 5 12:27
+build: 522 Apr 5 22:24
 */
 /**
  * @module kissy
@@ -436,8 +436,15 @@ KISSY.add('lang', function(S, undefined) {
                   return (str || '').replace(REG_TRIM, '');
               },
 
+        /**
+         * Check to see if an object is a plain object (created using "{}" or "new Object").
+         */
+        isPlainObject: function(obj) {
+            return obj && toString.call(obj) === '[object Object]' && !obj.nodeType && !obj.setInterval;
+        },
+
         isEmptyObject: function(obj) {
-            for(var p in obj) {
+            for (var p in obj) {
                 return false;
             }
             return true;
@@ -469,7 +476,7 @@ KISSY.add('lang', function(S, undefined) {
                  },
 
         makeArray: function(obj) {
-            if (obj === null) return [];
+            if (obj === null || obj === undefined) return [];
             if (S.isArray(obj)) return obj;
 
             // The strings and functions also have 'length'
@@ -558,6 +565,57 @@ KISSY.add('lang', function(S, undefined) {
                 }
             }
             return ret;
+        },
+
+        /**
+         * Executes the supplied function in the context of the supplied
+         * object 'when' milliseconds later. Executes the function a
+         * single time unless periodic is set to true.
+         * @param when {int} the number of milliseconds to wait until the fn
+         * is executed.
+         * @param o the context object.
+         * @param fn {Function|String} the function to execute or the name of
+         * the method in the 'o' object to execute.
+         * @param data [Array] data that is provided to the function. This accepts
+         * either a single item or an array. If an array is provided, the
+         * function is executed with one parameter for each array item. If
+         * you need to pass a single array parameter, it needs to be wrapped in
+         * an array [myarray].
+         * @param periodic {boolean} if true, executes continuously at supplied
+         * interval until canceled.
+         * @return {object} a timer object. Call the cancel() method on this object to
+         * stop the timer.
+         */
+        later: function(fn, when, periodic, o, data) {
+            when = when || 0;
+            o = o || { };
+            var m = fn, d = S.makeArray(data), f, r;
+
+            if (typeof fn === 'string') {
+                m = o[fn];
+            }
+
+            if (!m) {
+                S.error('method undefined');
+            }
+
+            f = function() {
+                m.apply(o, d);
+            };
+
+            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
+
+            return {
+                id: r,
+                interval: periodic,
+                cancel: function() {
+                    if (this.interval) {
+                        clearInterval(r);
+                    } else {
+                        clearTimeout(r);
+                    }
+                }
+            };
         }
     });
 
@@ -570,12 +628,15 @@ KISSY.add('lang', function(S, undefined) {
 });
 
 /**
- * Notes:
+ * NOTES:
  *
  *  2010.04
  *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
  *   - 对于 param, encodeURI 就可以了，和 jQuery 保持一致。
  *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
+ *
+ * TODO:
+ *   - 分析 jq 的 isPlainObject
  *
  */
 /**
@@ -726,7 +787,7 @@ KISSY.add('json', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 521 Apr 5 12:27
+build: 522 Apr 5 22:24
 */
 /**
  * @module  selector
@@ -1026,7 +1087,6 @@ KISSY.add('selector', function(S, undefined) {
 /**
  * @module  dom-base
  * @author  lifesinger@gmail.com
- * @depends kissy, selector
  */
 
 KISSY.add('dom-base', function(S, undefined) {
@@ -1198,8 +1258,20 @@ KISSY.add('dom-base', function(S, undefined) {
         /**
          * Gets or sets styles on the HTMLElement.
          */
-        css: function(/*el, prop, val*/) {
-            S.error('not implemented'); // TODO
+        css: function(el, prop, val) {
+            // get style
+            if(val === undefined) {
+                return el.style[prop];
+            }
+
+            // set style
+            S.each(S.makeArray(el), function(elem) {
+                elem.style[prop] = val;
+            });
+
+            // TODO:
+            //  - 考虑各种兼容性问题和异常情况 opacity, z-index, float
+            //  - more test cases
         },
 
         /**
@@ -1218,10 +1290,58 @@ KISSY.add('dom-base', function(S, undefined) {
         },
 
         /**
-         * Get the HTML contents of the HTMLElement.
+         * Gets the HTML contents of the HTMLElement.
          */
-        html: function(/*el, htmlString*/) {
-            S.error('not implemented'); // TODO
+        html: function(el, htmlString) {
+            // set html
+            if(htmlString === undefined) {
+                return el.innerHTML;
+            }
+
+            // get html
+            el.innerHTML = htmlString;
+
+            // TODO:
+            //  - 考虑各种兼容和异常，添加疯狂测试
+        },
+
+        /**
+         * Gets the children of the HTMLElement.
+         */
+        children: function(el) {
+            if(el.children) { // 只有 firefox 的低版本不支持
+                return S.makeArray(el.children);
+            }
+            return getSiblings(el.firstChild);
+        },
+
+        /**
+         * Gets the siblings of the HTMLElment.
+         */
+        siblings: function(el) {
+            return getSiblings(el.parentNode.firstChild, el);
+        },
+
+        /**
+         * Gets the immediately following sibling of the element.
+         */
+        next: function(el) {
+            return nth(el, 1, 'nextSibling');
+        },
+
+        /**
+         * Gets the immediately preceding sibling of the element.
+         */
+        prev: function(el) {
+            return nth(el, 1, 'previousSibling');
+        },
+
+        /**
+         * Gets the parentNode of the elment.
+         */
+        parent: function(el) {
+            var parent = el.parentNode;
+            return parent && parent.nodeType !== 11 ? parent : null;
         },
 
         /**
@@ -1255,8 +1375,30 @@ KISSY.add('dom-base', function(S, undefined) {
         }
     };
 
+    // 判断 el 的 nodeName 是否指定值
     function nodeNameIs(val, el) {
         return el && el.nodeName.toUpperCase() === val.toUpperCase();
+    }
+
+    // 获取元素 el 的所有 siblings
+    function getSiblings(n/* first */, el) {
+        for (var r = [], j = 0; n; n = n.nextSibling) {
+            if (n.nodeType === 1 && n !== el) {
+                r[j++] = n;
+            }
+        }
+        return r;
+    }
+
+    // 获取元素 el 在 dir(ection) 上的第 n 个元素
+    function nth(el, n, dir) {
+        n = n || 0;
+        for (var i = 0; el; el = el[dir]) {
+            if (el.nodeType === 1 && i++ === n) {
+                break;
+            }
+        }
+        return el;
     }
 
     // 将 nodeList 转换为 fragment
@@ -1316,7 +1458,7 @@ KISSY.add('dom-class', function(S, undefined) {
          * Determines whether a HTMLElement has the given className.
          */
         hasClass: function(el, className) {
-            if (!className || !el.className) return false;
+            if (!className || !el || !el.className) return false;
 
             return (SPACE + el.className + SPACE).indexOf(SPACE + className + SPACE) > -1;
         },
@@ -1325,7 +1467,7 @@ KISSY.add('dom-class', function(S, undefined) {
          * Adds a given className to a HTMLElement.
          */
         addClass: function(el, className) {
-            if (!className) return;
+            if (!className || !el) return;
             if (hasClass(el, className)) return;
 
             el.className += SPACE + className;
@@ -1377,7 +1519,7 @@ KISSY.add('dom-class', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 521 Apr 5 12:27
+build: 522 Apr 5 22:24
 */
 /**
  * @module  event
@@ -1448,13 +1590,19 @@ KISSY.add('event', function(S, undefined) {
             events = cache[id].events;
             special = (!target.isCustomEventTarget && Event.special[type]) || { }; // special 仅针对 element
             if (!events[type]) {
-                eventHandle = function(event) {
+                eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
                         event = new S.EventObject(target, event, type);
+
+                        if(S.isPlainObject(eventData)) {
+                            S.mix(event, eventData);
+                        }
                     }
+
                     if(special.setup) {
                         special.setup(event);
                     }
+
                     return (special.handle || Event._handle)(target, event, events[type].listeners);
                 };
 
@@ -1550,6 +1698,9 @@ KISSY.add('event', function(S, undefined) {
         _simpleRemove: simpleRemove
     };
 
+    // shorthand
+    Event.on = Event.add;
+
     function getID(target) {
         var ret = -1;
 
@@ -1564,6 +1715,9 @@ KISSY.add('event', function(S, undefined) {
         else if (target.isCustomEventTarget) { // custom EventTarget
             ret = target.eventTargetId;
         }
+        else { // window, iframe, etc.
+            ret = target[EVENT_GUID];
+        }
 
         return ret;
     }
@@ -1575,6 +1729,13 @@ KISSY.add('event', function(S, undefined) {
         else if (target.isCustomEventTarget) { // custom EventTarget
             target.eventTargetId = id;
         }
+        else { // window, iframe, etc.
+            try {
+                target[EVENT_GUID] = id;
+            } catch(e) {
+                S.error(e);
+            }
+        }
     }
 
     function removeID(target) {
@@ -1583,6 +1744,9 @@ KISSY.add('event', function(S, undefined) {
         }
         else if (target.isCustomEventTarget) { // custom EventTarget
             target.eventTargetId = undefined;
+        }
+        else { // window, iframe, etc
+            target[EVENT_GUID] = undefined;
         }
     }
 
@@ -1613,6 +1777,7 @@ KISSY.add('event', function(S, undefined) {
  *   - event || window.event, 什么情况下取 window.event ? IE4 ?
  *   - 更详尽细致的 test cases
  *   - 内存泄漏测试
+ *   - target 为 window, iframe 等特殊对象时的 test case
  */
 /**
  * @module  EventObject
@@ -1800,14 +1965,14 @@ KISSY.add('event-target', function(S, undefined) {
 
         isCustomEventTarget: true,
 
-        fire: function(type) {
+        fire: function(type, eventData) {
             var id = this.eventTargetId || -1,
                 cache = Event._getCache(id) || { },
                 events = cache.events || { },
                 t = events[type];
 
             if(t && S.isFunction(t.handle)) {
-                t.handle();
+                t.handle(undefined, eventData);
             }
         },
 
@@ -1881,18 +2046,16 @@ KISSY.add('event-mouseenter', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 521 Apr 5 12:27
+build: 522 Apr 5 22:24
 */
 /**
  * @module  node
  * @author  lifesinger@gmail.com
- * @depends kissy, dom
  */
 
 KISSY.add('node', function(S) {
 
     var DOM = S.DOM,
-        Event = S.Event,
         NP = Node.prototype;
 
     /**
@@ -1927,7 +2090,7 @@ KISSY.add('node', function(S) {
     }
 
     // import dom methods
-    S.each(['attr', 'removeAttr'],
+    S.each(['attr', 'removeAttr', 'css'],
         function(methodName) {
             NP[methodName] = function(name, val) {
                 var domNode = this[0];
@@ -1940,7 +2103,7 @@ KISSY.add('node', function(S) {
             }
         });
 
-    S.each(['val', 'text'],
+    S.each(['val', 'text', 'html'],
             function(methodName) {
                 NP[methodName] = function(val) {
                     var domNode = this[0];
@@ -1952,6 +2115,14 @@ KISSY.add('node', function(S) {
                     }
                 }
             });
+
+    S.each(['children', 'siblings', 'next', 'prev', 'parent'],
+        function(methodName) {
+            NP[methodName] = function() {
+                var ret = DOM[methodName](this[0]);
+                return ret ? new S[ret.length ? 'NodeList' : 'Node'](ret) : null;
+            }
+        });
 
     S.each(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'],
         function(methodName) {
@@ -2065,7 +2236,7 @@ KISSY.add('nodelist', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 521 Apr 5 12:27
+build: 522 Apr 5 22:24
 */
 /**
  * @module  cookie
@@ -2152,7 +2323,7 @@ KISSY.add('cookie', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 521 Apr 5 12:27
+build: 522 Apr 5 22:24
 */
 /**
  * @module  ajax

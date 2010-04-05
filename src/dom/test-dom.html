@@ -25,9 +25,10 @@
 <!-- Test Cases -->
 <script>
     var S = KISSY, D = S.DOM,
-        a, input, radio, radio2, button, label, table, td, select, select2, select3, opt, opt2, area, div;
+        foo, a, input, radio, radio2, button, label, table, td, select, select2, select3, opt, opt2, area, div;
 
     KISSY.ready(function() {
+        foo = S.get('#foo');
         a = S.get('#foo a');
         input = S.get('#foo input');
         radio = S.get('#test-radio');
@@ -205,6 +206,31 @@
     function test_text(test) {
         D.text(div, 'hello, are you ok?');
         if(D.text(div) !== 'hello, are you ok?') test.fail();
+    }
+
+    function test_html(test) {
+        D.html(div, '<p>hello, are you ok?</p>');
+        if(D.html(div).toLowerCase() !== '<p>hello, are you ok?</p>') test.fail();
+    }
+
+    function test_children(test) {
+        if(D.children(foo).length !== 7) test.fail();
+    }
+
+    function test_siblings(test) {
+        if(D.siblings(a).length !== 6) test.fail();
+    }
+
+    function test_next(test) {
+        if(D.next(a) !== input) test.fail();
+    }
+
+    function test_prev(test) {
+        if(D.prev(input) !== a) test.fail();
+    }
+
+    function test_parent(test) {
+        if(D.parent(input).id !== 'foo') test.fail();
     }
 
     function test_create(test) {

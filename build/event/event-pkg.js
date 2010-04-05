@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 521 Apr 5 12:27
+build: 522 Apr 5 22:24
 */
 /**
  * @module  event
@@ -72,13 +72,19 @@ KISSY.add('event', function(S, undefined) {
             events = cache[id].events;
             special = (!target.isCustomEventTarget && Event.special[type]) || { }; // special 仅针对 element
             if (!events[type]) {
-                eventHandle = function(event) {
+                eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
                         event = new S.EventObject(target, event, type);
+
+                        if(S.isPlainObject(eventData)) {
+                            S.mix(event, eventData);
+                        }
                     }
+
                     if(special.setup) {
                         special.setup(event);
                     }
+
                     return (special.handle || Event._handle)(target, event, events[type].listeners);
                 };
 
@@ -174,6 +180,9 @@ KISSY.add('event', function(S, undefined) {
         _simpleRemove: simpleRemove
     };
 
+    // shorthand
+    Event.on = Event.add;
+
     function getID(target) {
         var ret = -1;
 
@@ -188,6 +197,9 @@ KISSY.add('event', function(S, undefined) {
         else if (target.isCustomEventTarget) { // custom EventTarget
             ret = target.eventTargetId;
         }
+        else { // window, iframe, etc.
+            ret = target[EVENT_GUID];
+        }
 
         return ret;
     }
@@ -199,6 +211,13 @@ KISSY.add('event', function(S, undefined) {
         else if (target.isCustomEventTarget) { // custom EventTarget
             target.eventTargetId = id;
         }
+        else { // window, iframe, etc.
+            try {
+                target[EVENT_GUID] = id;
+            } catch(e) {
+                S.error(e);
+            }
+        }
     }
 
     function removeID(target) {
@@ -207,6 +226,9 @@ KISSY.add('event', function(S, undefined) {
         }
         else if (target.isCustomEventTarget) { // custom EventTarget
             target.eventTargetId = undefined;
+        }
+        else { // window, iframe, etc
+            target[EVENT_GUID] = undefined;
         }
     }
 
@@ -237,6 +259,7 @@ KISSY.add('event', function(S, undefined) {
  *   - event || window.event, 什么情况下取 window.event ? IE4 ?
  *   - 更详尽细致的 test cases
  *   - 内存泄漏测试
+ *   - target 为 window, iframe 等特殊对象时的 test case
  */
 /**
  * @module  EventObject
@@ -424,14 +447,14 @@ KISSY.add('event-target', function(S, undefined) {
 
         isCustomEventTarget: true,
 
-        fire: function(type) {
+        fire: function(type, eventData) {
             var id = this.eventTargetId || -1,
                 cache = Event._getCache(id) || { },
                 events = cache.events || { },
                 t = events[type];
 
             if(t && S.isFunction(t.handle)) {
-                t.handle();
+                t.handle(undefined, eventData);
             }
         },
 

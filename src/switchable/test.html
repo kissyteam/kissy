@@ -5,16 +5,26 @@
 <title>Switchable Widgets Test</title>
 
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
-<script src="../../third-party/yui2/yui-base/yui-base-min.js"></script>
+<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script src="../../third-party/yui2/animation/animation-min.js"></script>
 
 <script src="../kissy/kissy.js"></script>
 <script src="../kissy/kissy-lang.js"></script>
 <script src="../kissy/kissy-ua.js"></script>
 <script src="../kissy/kissy-json.js"></script>
+
 <script src="../dom/selector.js"></script>
 <script src="../dom/dom.js"></script>
 <script src="../dom/dom-class.js"></script>
+
+<script src="../event/event.js"></script>
+<script src="../event/event-object.js"></script>
+<script src="../event/event-target.js"></script>
+<script src="../event/event-mouseenter.js"></script>
+
+<script src="../node/node.js"></script>
+<script src="../node/nodelist.js"></script>
+
 <script src="../datalazyload/datalazyload.js"></script>
 
 <script src="switchable.js"></script>
@@ -25,6 +35,7 @@
 <script src="tabs.js"></script>
 <script src="slide.js"></script>
 <script src="carousel.js"></script>
+<script src="album.js"></script>
 
 <style>
     body { padding: 20px 50px 50px; }
@@ -98,7 +109,8 @@
             tabs = new S.Tabs('#demo1', {
                 lazyDataType: 'textarea-data'
             });
-        tabs.subscribe('beforeSwitch', function(index) {
+        tabs.on('beforeSwitch', function(ev) {
+            var index = ev.toIndex;
             if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
                 this.panels[index].innerHTML = 'index = ' + index;
             }
@@ -447,9 +459,9 @@
             effect: 'scrollx',
             easing: YAHOO.util.Easing.easeOutStrong
         })
-        .subscribe('beforeSwitch', function(index) {
+        .on('beforeSwitch', function(ev) {
             S.each(descList, function(desc, i) {
-                desc.style.display = i === index ? 'block' : 'none';
+                desc.style.display = i === ev.toIndex ? 'block' : 'none';
             });
         });
     })();
@@ -462,36 +474,38 @@
 
 <pre>
     
-    yui2/yui-base/yui-base-min.js （包括 yahoo-dom-event, event-mouseenter）
-    yui2/animation/animation-min.js （可选，有动画时才需要）
+    yui2/yahoo-dom-event/yahoo-dom-event.js
+    yui2/animation/animation-min.js
 
-    kissy/build/packages/kissy-aio-min.js
+    kissy/build/packages/kissy-min.js
 </pre>
 
 <script>
     (function() {
-        var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, UA = YAHOO.env.ua,
-            SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+        var S = KISSY, SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
 
-        Dom.getElementsByClassName('code-switch', 'p', document, function(p) {
-            Event.on(p, 'click', function() {
-              var showing = p.innerHTML === SHOW_CODE,
-                  next = Dom.getNextSibling(p), pre = next;
+        S.all('p.code-switch').each(function(p) {
+            p.on('click', function() {
+                var showing = (p.text() === SHOW_CODE),
+                    next = p.next(),
+                    pre = next;
 
-                if(next.nodeName !== 'PRE') {
-                    pre = document.createElement('PRE');
-                    pre.className = 'code';
-                    pre.innerHTML = Dom.getPreviousSibling(p).innerHTML;
-                    if(UA.ie) {
-                        pre.innerHTML += '<br />// 请用非 ie 内核浏览器查看。';
+                if (next[0].nodeName !== 'PRE') {
+                    pre = S.Node('PRE');
+                    pre.attr('class', 'code')
+                        .html(p.prev().html());
+
+                    if (S.UA.ie) {
+                        pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
                     }
-                    Dom.insertAfter(pre, p);
+                    p.parent()[0].insertBefore(pre[0], p.next()[0]);
                 }
 
-                pre.style.display = showing ? 'block' : 'none';
-                p.innerHTML = showing ? HIDE_CODE : SHOW_CODE;
+                pre.css('display', showing ? 'block' : 'none');
+                p.html(showing ? HIDE_CODE : SHOW_CODE);
             });
         });
+
     })();
 </script>
 </body>

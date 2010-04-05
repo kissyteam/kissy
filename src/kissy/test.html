@@ -71,8 +71,7 @@
     }
 
     function test_mix(test) {
-        var S = KISSY,
-            o1 = { a: 1, b: 2 },
+        var o1 = { a: 1, b: 2 },
             o3 = { a: 1, b: 2 },
             o4 = { a: 1, b: 2 },
             o2 = { a: 'a', c: true };
@@ -87,8 +86,7 @@
     }
 
     function test_merge(test) {
-        var S = KISSY,
-            a = {
+        var a = {
                 'bool' : false,
                 'num'  : 0,
                 'nul'  : null,
@@ -113,8 +111,6 @@
     }
 
     function test_extend(test) {
-        var S = KISSY;
-
         function Bird(name) {
             this.name = name;
         }
@@ -135,8 +131,6 @@
     }
 
     function test_augment(test) {
-        var S = KISSY;
-
         function Bird(name) {
             this.name = name;
         }
@@ -159,8 +153,6 @@
     }
 
     function test_weave(test) {
-        var S = KISSY;
-
         function Bird(name) {
             this.name = name;
         }
@@ -179,7 +171,6 @@
     }
 
     function test_app(test) {
-        var S = KISSY;
         S.app('TB');
 
         // check Env and Config
@@ -202,12 +193,12 @@
     }
 
     function test_namespace(test) {
-        var S = KISSY, ns;
+        var ns;
 
         // normal
         ns = S.namespace('app1.Test');
         ns.name = 'foo1';
-        if(S.app1.Test.name !== 'foo1') test.fail();
+        if(S['app1'].Test.name !== 'foo1') test.fail();
 
         // first part of argument is the global object
         ns = S.namespace('KISSY.app2.Test2');
@@ -230,8 +221,6 @@
     }
 
     function test_log(test) {
-        var S = KISSY;
-
         S.add('test-ks-mod', function() { });
         S.log(S, 'dir');
 
@@ -254,7 +243,7 @@
     }
 
     function test_each(test) {
-        var S = KISSY, ret = 0;
+        var ret = 0;
 
         S.each([1,2,3,4,5], function(num) {
             ret += num;
@@ -264,30 +253,38 @@
     }
 
     function test_trim(test) {
-        var S = KISSY,
-            str = '    lots of spaces before and after    ';
-
+        var str = '    lots of spaces before and after    ';
         if(S.trim(str) !== 'lots of spaces before and after') test.fail();
     }
 
-    function test_isFunction(test) {
-        var S = KISSY;
+    function test_isPlainObject(test) {
+        if(S.isPlainObject({}) !== true) test.fail();
+        if(S.isPlainObject([]) === true) test.fail();
+        if(S.isPlainObject(function(){}) === true) test.fail();
+        if(S.isPlainObject(window) === true) test.fail();
+        if(S.isPlainObject(document.documentElement) === true) test.fail();
+    }
 
+    function test_isEmptyObject(test) {
+        if(S.isEmptyObject({}) !== true) test.fail();
+        if(S.isEmptyObject([]) !== true) test.fail();
+        if(S.isEmptyObject({a:1}) === true) test.fail();
+    }
+
+    function test_isFunction(test) {
         if(S.isFunction(function(){}) !== true) test.fail();
         if(S.UA.ie && S.isFunction(window.alert) !== false) test.fail();
         if(S.isFunction(parseFloat) !== true) test.fail();
     }
 
     function test_isArray(test) {
-        var S = KISSY;
-
         if(S.isArray([]) !== true) test.fail();
         if(S.isArray(arguments) !== false) test.fail();
         if(S.isArray(document.getElementsByTagName('body')) !== false) test.fail();
     }
     
     function test_inArray(test) {
-        var S = KISSY, a, ret;
+        var a, ret;
 
         ret = S.inArray(6, [1, 2, 3, 4, 5]);
         if(ret) test.fail('S.indexOf(6, [1, 2, 3, 4, 5]) = ' + ret);
@@ -303,7 +300,7 @@
     }
 
     function test_makeArray(test) {
-        var S = KISSY, o;
+        var o;
 
         // 普通对象(无 length 属性)转换为 [obj]
         o = {a:1};
@@ -373,6 +370,22 @@
         if(S.unparam('foo=1&bar=2&foo=3').foo !== '3') test.fail();        
     }
 
+    function test_later(test) {
+        S.later(function(data) {
+            test.echo(data);
+        }, 0, false, null, 'I am later data.');
+
+        var i = 0;
+        var timer = S.later(function(data) {
+                        test.echo(data + ' ' + ++i);
+                        if(i === 5) {
+                            timer.cancel();
+                            test.echo('later test done.');
+                        }
+                      },
+                      1000, true, null, 'I am periodic later data.');
+    }
+
     function test_userAgent(test) {
         test.extraMsg = navigator.userAgent;
     }
@@ -393,8 +406,6 @@
     }
 
     function test_json_parse(test) {
-        var S = KISSY;
-
         if(S.JSON.parse('{"a":true}').a !== true) test.fail();
     }
 

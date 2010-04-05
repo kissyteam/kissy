@@ -17,14 +17,14 @@ KISSY.add('event-target', function(S, undefined) {
 
         isCustomEventTarget: true,
 
-        fire: function(type) {
+        fire: function(type, eventData) {
             var id = this.eventTargetId || -1,
                 cache = Event._getCache(id) || { },
                 events = cache.events || { },
                 t = events[type];
 
             if(t && S.isFunction(t.handle)) {
-                t.handle();
+                t.handle(undefined, eventData);
             }
         },
 

@@ -14,7 +14,7 @@ KISSY.add('dom-class', function(S, undefined) {
          * Determines whether a HTMLElement has the given className.
          */
         hasClass: function(el, className) {
-            if (!className || !el.className) return false;
+            if (!className || !el || !el.className) return false;
 
             return (SPACE + el.className + SPACE).indexOf(SPACE + className + SPACE) > -1;
         },
@@ -23,7 +23,7 @@ KISSY.add('dom-class', function(S, undefined) {
          * Adds a given className to a HTMLElement.
          */
         addClass: function(el, className) {
-            if (!className) return;
+            if (!className || !el) return;
             if (hasClass(el, className)) return;
 
             el.className += SPACE + className;

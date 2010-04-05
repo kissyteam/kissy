@@ -1,18 +1,18 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 521 Apr 5 12:27
+build: 522 Apr 5 22:24
 */
 /**
  * 数据延迟加载组件
  * 包括 img, textarea, 以及特定元素即将出现时的回调函数
  * @module      datalazyload
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yahoo-dom-event
+ * @depends     kissy-core, yahoo-dom-event
  */
 KISSY.add('datalazyload', function(S, undefined) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+    var DOM = S.DOM, Event = S.Event, YDOM = YAHOO.util.Dom,
         win = window, doc = document,
         IMG_DATA_SRC = 'data-lazyload-src',
         TEXTAREA_DATA_CLS = 'ks-datalazyload',
@@ -42,7 +42,8 @@ KISSY.add('datalazyload', function(S, undefined) {
              * 图像的占位图
              */
             placeholder: 'http://a.tbcdn.cn/kissy/1.0.4/build/datalazyload/dot.gif'
-        };
+        },
+        DP = DataLazyload.prototype;
 
     /**
      * 延迟加载组件
@@ -63,8 +64,8 @@ KISSY.add('datalazyload', function(S, undefined) {
         }
 
         // containers 是一个 HTMLElement 时
-        if (!Lang.isArray(containers)) {
-            containers = [Dom.get(containers) || doc];
+        if (!S.isArray(containers)) {
+            containers = [S.get(containers) || doc];
         }
 
         /**
@@ -106,7 +107,7 @@ KISSY.add('datalazyload', function(S, undefined) {
         self._init();
     }
 
-    S.mix(DataLazyload.prototype, {
+    S.mix(DP, {
 
         /**
          * 初始化
@@ -139,7 +140,7 @@ KISSY.add('datalazyload', function(S, undefined) {
 
             // 需要立即加载一次，以保证第一屏的延迟项可见
             if (self._getItemsLength()) {
-                Event.onDOMReady(function() {
+                S.ready(function() {
                     loadItems();
                 });
             }
@@ -158,8 +159,8 @@ KISSY.add('datalazyload', function(S, undefined) {
                 self._loadItems();
 
                 if (self._getItemsLength() === 0) {
-                    Event.removeListener(win, 'scroll', loader);
-                    Event.removeListener(win, 'resize', loader);
+                    Event.remove(win, 'scroll', loader);
+                    Event.remove(win, 'resize', loader);
                 }
             }
         },
@@ -178,7 +179,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                 lazyImgs = [], lazyAreaes = [];
 
             for (n = 0,N = containers.length; n < N; ++n) {
-                imgs = containers[n].getElementsByTagName('img');
+                imgs = S.query('img', containers[n]);
 
                 for (i = 0,len = imgs.length; i < len; ++i) {
                     img = imgs[i];
@@ -192,7 +193,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                     } else { // 自动模式，只处理 threshold 外无 data-src 的图片
                         // 注意：已有 data-src 的项，可能已有其它实例处理过，重复处理
                         // 会导致 data-src 变成 placeholder
-                        if (Dom.getY(img) > threshold && !data_src) {
+                        if (YDOM.getY(img) > threshold && !data_src) {
                             img.setAttribute(IMG_DATA_SRC, img.src);
                             img.src = placeholder;
                             lazyImgs.push(img);
@@ -201,10 +202,10 @@ KISSY.add('datalazyload', function(S, undefined) {
                 }
 
                 // 处理 textarea
-                areaes = containers[n].getElementsByTagName('textarea');
+                areaes = S.query('textarea', containers[n]);
                 for (i = 0,len = areaes.length; i < len; ++i) {
                     area = areaes[i];
-                    if (Dom.hasClass(area, TEXTAREA_DATA_CLS)) {
+                    if (DOM.hasClass(area, TEXTAREA_DATA_CLS)) {
                         lazyAreaes.push(area);
                     }
                 }
@@ -232,12 +233,12 @@ KISSY.add('datalazyload', function(S, undefined) {
         _loadImgs: function() {
             var self = this,
                 imgs = self.images,
-                scrollTop = Dom.getDocumentScrollTop(),
+                scrollTop = YDOM.getDocumentScrollTop(),
                 threshold = self.threshold + scrollTop,
                 i, img, data_src, remain = [];
 
             for (i = 0; img = imgs[i++];) {
-                if (Dom.getY(img) <= threshold) {
+                if (YDOM.getY(img) <= threshold) {
                     self._loadImgSrc(img);
                 } else {
                     remain.push(img);
@@ -268,7 +269,7 @@ KISSY.add('datalazyload', function(S, undefined) {
         _loadAreaes: function() {
             var self = this,
                 areaes = self.areaes,
-                scrollTop = Dom.getDocumentScrollTop(),
+                scrollTop = YDOM.getDocumentScrollTop(),
                 threshold = self.threshold + scrollTop,
                 i, area, parent, remain = [];
 
@@ -276,7 +277,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                 parent = area.parentNode;
                 // 注：area 可能处于 display: none 状态，Dom.getY(area) 获取不到 Y 值
                 //    因此这里采用 area.parentNode
-                if (Dom.getY(parent) <= threshold) {
+                if (YDOM.getY(parent) <= threshold) {
                     self._loadDataFromArea(parent, area);
                 } else {
                     remain.push(area);
@@ -294,7 +295,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             //parent.innerHTML = area.value; // 这种方式会导致 chrome 缓存 bug
 
             // 采用隐藏不去除方式
-            var content = document.createElement('DIV');
+            var content = doc.createElement('DIV');
             content.innerHTML = area.value;
             area.style.display = NONE;
             area.className = ''; // clear hooks
@@ -309,12 +310,12 @@ KISSY.add('datalazyload', function(S, undefined) {
             var self = this,
                 callbacks = self.callbacks,
                 els = callbacks.els, fns = callbacks.fns,
-                scrollTop = Dom.getDocumentScrollTop(),
+                scrollTop = YDOM.getDocumentScrollTop(),
                 threshold = self.threshold + scrollTop,
                 i, el, fn, remainEls = [], remainFns = [];
 
             for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
-                if (Dom.getY(el) <= threshold) {
+                if (YDOM.getY(el) <= threshold) {
                     fn.call(el);
                 } else {
                     remainEls.push(el);
@@ -331,7 +332,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 添加回调函数。当 el 即将出现在视图中时，触发 fn
          */
         addCallback: function(el, fn) {
-            el = Dom.get(el);
+            el = S.get(el);
             if (el && typeof fn === 'function') {
                 this.callbacks.els.push(el);
                 this.callbacks.fns.push(fn);
@@ -344,7 +345,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          */
         _getThreshold: function() {
             var diff = this.config.diff,
-                ret = Dom.getViewportHeight();
+                ret = YDOM.getViewportHeight();
 
             if (diff === DEFAULT) return 2 * ret; // diff 默认为当前视窗高度（两屏以外的才延迟加载）
             else return ret + diff;
@@ -368,16 +369,16 @@ KISSY.add('datalazyload', function(S, undefined) {
 
 
             // 支持数组
-            if (!Lang.isArray(containers)) {
-                containers = [Dom.get(containers)];
+            if (!S.isArray(containers)) {
+                containers = [S.get(containers)];
             }
 
             // 遍历处理
             S.each(containers, function(container) {
                 switch (type) {
                     case 'textarea-data':
-                        area = container.getElementsByTagName('textarea')[0];
-                        if (area && Dom.hasClass(area, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
+                        area = S.get('textarea', container);
+                        if (area && DOM.hasClass(area, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
                             self._loadDataFromArea(container, area);
                         }
                         break;
@@ -387,7 +388,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                         if (container.nodeName === 'IMG') { // 本身就是图片
                             imgs = [container];
                         } else {
-                            imgs = container.getElementsByTagName('img');
+                            imgs = S.query('img', container);
                         }
                         for (var i = 0, len = imgs.length; i < len; i++) {
                             self._loadImgSrc(imgs[i], flag || CUSTOM_IMG_DATA_SRC);
@@ -398,7 +399,7 @@ KISSY.add('datalazyload', function(S, undefined) {
     });
 
     // attach static methods
-    S.mix(DataLazyload, DataLazyload.prototype, true, ['loadCustomLazyData', '_loadImgSrc', '_loadDataFromArea']);
+    S.mix(DataLazyload, DP, true, ['loadCustomLazyData', '_loadImgSrc', '_loadDataFromArea']);
 
     S.DataLazyload = DataLazyload;
 });
@@ -450,18 +451,20 @@ KISSY.add('datalazyload', function(S, undefined) {
  */
 
 /**
- * TODOs:
+ * TODO:
  *   - [取消] 背景图片的延迟加载（对于 css 里的背景图片和 sprite 很难处理）
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  */
 
 /**
  * UPDATE LOG:
+ *   - 2010-04-05 yubo 重构，使得对 YUI 的依赖仅限于 YDOM
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
- *//*
+ */
+/*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 521 Apr 5 12:27
+build: 522 Apr 5 22:24
 */
 /**
  * 提示补全组件
@@ -471,26 +474,26 @@ build: 521 Apr 5 12:27
  */
 KISSY.add("suggest", function(S, undefined) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+    var YDOM = YAHOO.util.Dom, DOM = S.DOM, Event = S.Event,
         win = window, doc = document,
         head = doc.getElementsByTagName("head")[0],
         ie = YAHOO.env.ua.ie, ie6 = (ie === 6),
 
         CALLBACK_STR = "g_ks_suggest_callback", // 约定的全局回调函数
-        STYLE_ID = "suggest-style", // 样式 style 元素的 id
+        STYLE_ID = "ks-suggest-style", // 样式 style 元素的 id
 
-        CONTAINER_CLASS = "suggest-container",
-        KEY_EL_CLASS = "suggest-key", // 提示层中，key 元素的 class
-        RESULT_EL_CLASS = "suggest-result", // 提示层中，result 元素的 class
+        CONTAINER_CLASS = "ks-suggest-container",
+        KEY_EL_CLASS = "ks-suggest-key", // 提示层中，key 元素的 class
+        RESULT_EL_CLASS = "ks-suggest-result", // 提示层中，result 元素的 class
         SELECTED_ITEM_CLASS = "selected", // 提示层中，选中项的 class
-        BOTTOM_CLASS = "suggest-bottom",
-        CLOSE_BTN_CLASS = "suggest-close-btn",
-        SHIM_CLASS = "suggest-shim", // iframe shim 的 class
+        BOTTOM_CLASS = "ks-suggest-bottom",
+        CLOSE_BTN_CLASS = "ks-suggest-close-btn",
+        SHIM_CLASS = "ks-suggest-shim", // iframe shim 的 class
 
-        BEFORE_DATA_REQUEST = "beforeDataRequest",
-        ON_DATA_RETURN = "onDataReturn",
-        BEFORE_SHOW = "beforeShow",
-        ON_ITEM_SELECT = "onItemSelect",
+        EVENT_DATA_REQUEST = "dataRequest",
+        EVENT_DATA_RETURN = "dataReturn",
+        EVENT_SHOW = "show",
+        EVENT_ITEM_SELECT = "itemSelect",
 
         /**
          * Suggest的默认配置
@@ -569,8 +572,6 @@ KISSY.add("suggest", function(S, undefined) {
     /**
      * 提示补全组件
      * @class Suggest
-     * @requires YAHOO.util.Dom
-     * @requires YAHOO.util.Event
      * @constructor
      * @param {String|HTMLElement} textInput
      * @param {String} dataSource
@@ -588,7 +589,7 @@ KISSY.add("suggest", function(S, undefined) {
          * 文本输入框
          * @type HTMLElement
          */
-        self.textInput = Dom.get(textInput);
+        self.textInput = S.get(textInput);
 
         /**
          * 获取数据的URL 或 JSON格式的静态数据
@@ -600,7 +601,7 @@ KISSY.add("suggest", function(S, undefined) {
          * JSON静态数据源
          * @type Object 格式为 {"query1" : [["key1", "result1"], []], "query2" : [[], []]}
          */
-        self.JSONDataSource = Lang.isObject(dataSource) ? dataSource : null;
+        self.JSONDataSource = S.isPlainObject(dataSource) ? dataSource : null;
 
         /**
          * 通过jsonp返回的数据
@@ -612,7 +613,7 @@ KISSY.add("suggest", function(S, undefined) {
          * 配置参数
          * @type Object
          */
-        self.config = Lang.merge(defaultConfig, config || {});
+        self.config = S.merge(defaultConfig, config || { });
 
         /**
          * 存放提示信息的容器
@@ -702,12 +703,6 @@ KISSY.add("suggest", function(S, undefined) {
             if (self.config.useShim) self._initShim();
             self._initStyle();
 
-            // create events
-            self.createEvent(BEFORE_DATA_REQUEST);
-            self.createEvent(ON_DATA_RETURN);
-            self.createEvent(BEFORE_SHOW);
-            self.createEvent(ON_ITEM_SELECT);
-
             // window resize event
             self._initResizeEvent();
         },
@@ -748,6 +743,11 @@ KISSY.add("suggest", function(S, undefined) {
                     case 27: // ESC键，隐藏提示层并还原初始输入
                         self.hide();
                         self.textInput.value = self.query;
+
+                        // 当输入框为空时，按下 ESC 键，输入框失去焦点
+                        if(self.query.length === 0) {
+                            self.textInput.blur();
+                        }
                         break;
                     case 13: // ENTER键
                         // 提交表单前，先隐藏提示层并停止计时器
@@ -756,7 +756,7 @@ KISSY.add("suggest", function(S, undefined) {
                         // 如果是键盘选中某项后回车，触发onItemSelect事件
                         if (self._onKeyboardSelecting) {
                             if (self.textInput.value == self._getSelectedItemKey()) { // 确保值匹配
-                                self.fireEvent(ON_ITEM_SELECT, self.textInput.value);
+                                self.fire(EVENT_ITEM_SELECT);
                             }
                         }
 
@@ -769,7 +769,7 @@ KISSY.add("suggest", function(S, undefined) {
                         if (pressingCount++ == 0) {
                             if (self._isRunning) self.stop();
                             self._onKeyboardSelecting = true;
-                            self.selectItem(keyCode == 40);
+                            self.selectItem(keyCode === 40);
 
                         } else if (pressingCount == 3) {
                             pressingCount = 0;
@@ -826,7 +826,7 @@ KISSY.add("suggest", function(S, undefined) {
          */
         _setContainerRegion: function() {
             var self = this,
-                r = Dom.getRegion(self.textInput),
+                r = YDOM.getRegion(self.textInput),
                 left = r.left,
                 w = r.right - left - 2;  // 减去border的2px
 
@@ -841,7 +841,7 @@ KISSY.add("suggest", function(S, undefined) {
             var docMode = doc.documentMode;
             if (docMode === 7 && (ie === 7 || ie === 8)) {
                 left -= 2;
-            } else if (YAHOO.env.ua.gecko) { // firefox下左偏一像素 注：当 input 所在的父级容器有 margin: auto 时会出现
+            } else if (S.UA.gecko) { // firefox下左偏一像素 注：当 input 所在的父级容器有 margin: auto 时会出现
                 left++;
             }
 
@@ -866,12 +866,12 @@ KISSY.add("suggest", function(S, undefined) {
             // 鼠标事件
             Event.on(self.container, "mousemove", function(ev) {
                 //console.log("mouse move");
-                var target = Event.getTarget(ev);
+                var target = ev.target;
 
                 if (target.nodeName != "LI") {
-                    target = Dom.getAncestorByTagName(target, "li");
+                    target = YDOM.getAncestorByTagName(target, "li");
                 }
-                if (Dom.isAncestor(self.container, target)) {
+                if (YDOM.isAncestor(self.container, target)) {
                     if (target != self.selectedItem) {
                         // 移除老的
                         self._removeSelectedItem();
@@ -883,9 +883,8 @@ KISSY.add("suggest", function(S, undefined) {
 
             var mouseDownItem = null;
             self.container.onmousedown = function(e) {
-                e = e || win.event;
                 // 鼠标按下处的item
-                mouseDownItem = e.target || e.srcElement;
+                mouseDownItem = e.target;
 
                 // 鼠标按下时，让输入框不会失去焦点
                 // 1. for IE
@@ -900,8 +899,9 @@ KISSY.add("suggest", function(S, undefined) {
             // mouseup事件
             Event.on(self.container, "mouseup", function(ev) {
                 // 当mousedown在提示层，但mouseup在提示层外时，点击无效
-                if (!self._isInContainer(Event.getXY(ev))) return;
-                var target = Event.getTarget(ev);
+                if (!self._isInContainer([ev.pageX, ev.pageY])) return;
+
+                var target = ev.target;
                 // 在提示层A项处按下鼠标，移动到B处释放，不触发onItemSelect
                 if (target != mouseDownItem) return;
 
@@ -913,15 +913,15 @@ KISSY.add("suggest", function(S, undefined) {
 
                 // 可能点击在li的子元素上
                 if (target.nodeName != "LI") {
-                    target = Dom.getAncestorByTagName(target, "li");
+                    target = YDOM.getAncestorByTagName(target, "li");
                 }
                 // 必须点击在container内部的li上
-                if (Dom.isAncestor(self.container, target)) {
+                if (YDOM.isAncestor(self.container, target)) {
                     self._updateInputFromSelectItem(target);
 
                     // 触发选中事件
                     //console.log("on item select");
-                    self.fireEvent(ON_ITEM_SELECT, self.textInput.value);
+                    self.fire(EVENT_ITEM_SELECT);
 
                     // 提交表单前，先隐藏提示层并停止计时器
                     self.textInput.blur();
@@ -961,7 +961,7 @@ KISSY.add("suggest", function(S, undefined) {
          * @param {Array} p [x, y]
          */
         _isInContainer: function(p) {
-            var r = Dom.getRegion(this.container);
+            var r = YDOM.getRegion(this.container);
             return p[0] >= r.left && p[0] <= r.right && p[1] >= r.top && p[1] <= r.bottom;
         },
 
@@ -1000,22 +1000,22 @@ KISSY.add("suggest", function(S, undefined) {
          * @protected
          */
         _initStyle: function() {
-            var styleEl = Dom.get(STYLE_ID);
+            var styleEl = S.get('#' + STYLE_ID);
             if (styleEl) return; // 防止多个实例时重复添加
 
-            var style = ".suggest-container{background:white;border:1px solid #999;z-index:99999}"
-                + ".suggest-shim{z-index:99998}"
-                + ".suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}"
-                + ".suggest-container li.selected{background-color:#39F;cursor:default}"
-                + ".suggest-key{float:left;text-align:left;padding-left:5px}"
-                + ".suggest-result{float:right;text-align:right;padding-right:5px;color:green}"
-                + ".suggest-container li.selected span{color:#FFF;cursor:default}"
-                // + ".suggest-container li.selected .suggest-result{color:green}"
-                + ".suggest-bottom{padding:0 5px 5px}"
-                + ".suggest-close-btn{float:right}"
-                + ".suggest-container li,.suggest-bottom{overflow:hidden;zoom:1;clear:both}"
+            var style = ".ks-suggest-container{background:white;border:1px solid #999;z-index:99999}"
+                + ".ks-suggest-shim{z-index:99998}"
+                + ".ks-suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}"
+                + ".ks-suggest-container li.selected{background-color:#39F;cursor:default}"
+                + ".ks-suggest-key{float:left;text-align:left;padding-left:5px}"
+                + ".ks-suggest-result{float:right;text-align:right;padding-right:5px;color:green}"
+                + ".ks-suggest-container li.selected span{color:#FFF;cursor:default}"
+                // + ".ks-suggest-container li.selected .suggest-result{color:green}"
+                + ".ks-suggest-bottom{padding:0 5px 5px}"
+                + ".ks-suggest-close-btn{float:right}"
+                + ".ks-suggest-container li,.suggest-bottom{overflow:hidden;zoom:1;clear:both}"
                 /* hacks */
-                + ".suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}";
+                + ".ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}";
 
             styleEl = doc.createElement("style");
             styleEl.id = STYLE_ID;
@@ -1082,7 +1082,7 @@ KISSY.add("suggest", function(S, undefined) {
 
             if (shim) {
                 if (!shim.style.height) { // 第一次显示时，需要设定高度
-                    var r = Dom.getRegion(container);
+                    var r = YDOM.getRegion(container);
                     shim.style.height = (r.bottom - r.top - 2) + "px";
                 }
                 shim.style.visibility = "";
@@ -1120,7 +1120,7 @@ KISSY.add("suggest", function(S, undefined) {
             var q = self.query;
 
             // 1. 输入为空时，隐藏提示层
-            if (!Lang.trim(q).length) {
+            if (!S.trim(q).length) {
                 self._fillContainer("");
                 self.hide();
                 return;
@@ -1185,7 +1185,7 @@ KISSY.add("suggest", function(S, undefined) {
 
             // 注意：没必要加时间戳，是否缓存由服务器返回的Header头控制
             self.queryParams = "q=" + encodeURIComponent(self.query) + "&code=utf-8&callback=" + CALLBACK_STR;
-            self.fireEvent(BEFORE_DATA_REQUEST, self.query);
+            self.fire(EVENT_DATA_REQUEST);
             self.dataScript.src = self.dataSource + "?" + self.queryParams;
         },
 
@@ -1200,7 +1200,7 @@ KISSY.add("suggest", function(S, undefined) {
             if (self._scriptDataIsOut) return; // 抛弃过期数据，否则会导致bug：1. 缓存key值不对； 2. 过期数据导致的闪屏
 
             self.returnedData = data;
-            self.fireEvent(ON_DATA_RETURN, data);
+            self.fire(EVENT_DATA_RETURN);
 
             // 格式化数据
             self.returnedData = self.formatData(self.returnedData);
@@ -1225,9 +1225,9 @@ KISSY.add("suggest", function(S, undefined) {
             if (len > 0) self.appendBottom();
 
             // fire event
-            if (Lang.trim(self.container.innerHTML)) {
+            if (S.trim(self.container.innerHTML)) {
                 // 实际上是beforeCache，但从用户的角度看，是beforeShow
-                self.fireEvent(BEFORE_SHOW, self.container);
+                self.fire(EVENT_SHOW);
             }
 
             // cache
@@ -1251,7 +1251,7 @@ KISSY.add("suggest", function(S, undefined) {
         formatData: function(data) {
             var arr = [];
             if (!data) return arr;
-            if (Lang.isArray(data["result"])) data = data["result"];
+            if (S.isArray(data["result"])) data = data["result"];
             var len = data.length;
             if (!len) return arr;
 
@@ -1259,9 +1259,9 @@ KISSY.add("suggest", function(S, undefined) {
             for (var i = 0; i < len; ++i) {
                 item = data[i];
 
-                if (Lang.isString(item)) { // 只有key值时
+                if (typeof item === "string") { // 只有key值时
                     arr[i] = {"key" : item};
-                } else if (Lang.isArray(item) && item.length >= 2) { // ["key", "result"] 取数组前2个
+                } else if (S.isArray(item) && item.length >= 2) { // ["key", "result"] 取数组前2个
                     arr[i] = {"key" : item[0], "result" : item[1]};
                 } else {
                     arr[i] = item;
@@ -1285,7 +1285,7 @@ KISSY.add("suggest", function(S, undefined) {
 
             if (result !== undefined) { // 可以没有
                 var resultText = this.config.resultFormat.replace("%result%", result);
-                if (Lang.trim(resultText)) { // 有值时才创建
+                if (S.trim(resultText)) { // 有值时才创建
                     var resultEl = doc.createElement("span");
                     resultEl.className = RESULT_EL_CLASS;
                     resultEl.appendChild(doc.createTextNode(resultText));
@@ -1310,19 +1310,11 @@ KISSY.add("suggest", function(S, undefined) {
                 closeBtn.className = CLOSE_BTN_CLASS;
                 closeBtn.appendChild(doc.createTextNode(this.config.closeBtnText));
 
-                // 没必要，点击时，输入框失去焦点，自动就关闭了
-                /*
-                 Event.on(closeBtn, "click", function(ev) {
-                 Event.stopEvent(ev);
-                 this.hidden();
-                 }, this, true);
-                 */
-
                 bottom.appendChild(closeBtn);
             }
 
             // 仅当有内容时才添加
-            if (Lang.trim(bottom.innerHTML)) {
+            if (S.trim(bottom.innerHTML)) {
                 this.container.appendChild(bottom);
             }
         },
@@ -1378,7 +1370,7 @@ KISSY.add("suggest", function(S, undefined) {
                 newSelectedItem = items[down ? 0 : items.length - 1];
             } else {
                 // 选中下/上一项
-                newSelectedItem = Dom[down ? "getNextSibling" : "getPreviousSibling"](self.selectedItem);
+                newSelectedItem = YDOM[down ? "getNextSibling" : "getPreviousSibling"](self.selectedItem);
                 // 已经到了最后/前一项时，归位到输入框，并还原输入值
                 if (!newSelectedItem) {
                     self.textInput.value = self.query;
@@ -1401,7 +1393,7 @@ KISSY.add("suggest", function(S, undefined) {
          */
         _removeSelectedItem: function() {
             //console.log("remove selected item");
-            Dom.removeClass(this.selectedItem, SELECTED_ITEM_CLASS);
+            DOM.removeClass(this.selectedItem, SELECTED_ITEM_CLASS);
             this.selectedItem = null;
         },
 
@@ -1412,8 +1404,8 @@ KISSY.add("suggest", function(S, undefined) {
          */
         _setSelectedItem: function(item) {
             //console.log("set selected item");
-            Dom.addClass((item), SELECTED_ITEM_CLASS);
-            this.selectedItem = (item);
+            DOM.addClass(item, SELECTED_ITEM_CLASS);
+            this.selectedItem = item;
         },
 
         /**
@@ -1448,7 +1440,7 @@ KISSY.add("suggest", function(S, undefined) {
 
     });
 
-    S.augment(Suggest, Y.EventProvider);
+    S.mix(Suggest.prototype, S.EventTarget);
 
     /**
      * 约定的全局回调函数
@@ -1517,22 +1509,23 @@ KISSY.add("suggest", function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 521 Apr 5 12:27
+build: 522 Apr 5 22:24
 */
 /**
  * Switchable
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base, selector, dom-base
+ * @depends     kissy-core, yui2-animation
  */
 KISSY.add('switchable', function(S, undefined) {
 
-    var Y = YAHOO.util, Dom = Y.Dom, Event = Y.Event, Lang = YAHOO.lang,
+    var DOM = S.DOM, Event = S.Event,
         doc = document,
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
-        BEFORE_SWITCH = 'beforeSwitch', ON_SWITCH = 'onSwitch',
-        CLS_PREFIX = 'ks-switchable-';
+        EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
+        CLS_PREFIX = 'ks-switchable-',
+        SP = Switchable.prototype;
 
     /**
      * Switchable Widget
@@ -1634,17 +1627,17 @@ KISSY.add('switchable', function(S, undefined) {
         activeIndex: 0, // mackup 的默认激活项，应该与此 index 一致
         activeTriggerCls: 'active',
 
-        // 切换视图内有多少个 panels
+        // 可见视图内有多少个 panels
         steps: 1,
 
-        // 切换视图区域的大小。一般不需要设定此值，仅当获取值不正确时，用于手工指定大小
+        // 可见视图区域的大小。一般不需要设定此值，仅当获取值不正确时，用于手工指定大小
         viewSize: []
     };
 
-    // 插件信息
+    // 插件
     Switchable.Plugins = [];
 
-    S.mix(Switchable.prototype, {
+    S.mix(SP, {
 
         /**
          * init switchable
@@ -1656,10 +1649,6 @@ KISSY.add('switchable', function(S, undefined) {
             if (self.panels.length === 0) {
                 self._parseMackup();
             }
-
-            // create custom events
-            self.createEvent(BEFORE_SWITCH);
-            self.createEvent(ON_SWITCH);
 
             // bind triggers
             if (cfg.hasTriggers) {
@@ -1687,10 +1676,10 @@ KISSY.add('switchable', function(S, undefined) {
                 case 0: // 默认结构
                     nav = S.get(DOT + cfg.navCls, container);
                     if (nav) {
-                        triggers = Dom.getChildren(nav);
+                        triggers = DOM.children(nav);
                     }
                     content = S.get(DOT + cfg.contentCls, container);
-                    panels = Dom.getChildren(content);
+                    panels = DOM.children(content);
                     break;
                 case 1: // 适度灵活
                     triggers = S.query(DOT + cfg.triggerCls, container);
@@ -1745,7 +1734,7 @@ KISSY.add('switchable', function(S, undefined) {
             }
 
             self.container.appendChild(ul);
-            return Dom.getChildren(ul);
+            return DOM.children(ul);
         },
 
         /**
@@ -1800,9 +1789,9 @@ KISSY.add('switchable', function(S, undefined) {
 
             // 不重复触发。比如：已显示内容时，将鼠标快速滑出再滑进来，不必触发
             if (self.activeIndex !== index) {
-                self.switchTimer = Lang.later(self.config.delay * 1000, self, function() {
+                self.switchTimer = S.later(function() {
                     self.switchTo(index);
-                });
+                }, self.config.delay * 1000);
             }
         },
 
@@ -1826,7 +1815,7 @@ KISSY.add('switchable', function(S, undefined) {
             //S.log('Triggerable.switchTo: index = ' + index);
 
             if (index === activeIndex) return self;
-            if (!self.fireEvent(BEFORE_SWITCH, index)) return self;
+            if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
 
             // switch active trigger
             if (cfg.hasTriggers) {
@@ -1837,7 +1826,7 @@ KISSY.add('switchable', function(S, undefined) {
             if (direction === undefined) {
                 direction = index > activeIndex ? FORWARD : FORWARD;
             }
-            // TODO: slice 是否会带来性能下降？需要测试
+
             self._switchView(
                 panels.slice(fromIndex, fromIndex + steps),
                 panels.slice(toIndex, toIndex + steps),
@@ -1856,33 +1845,32 @@ KISSY.add('switchable', function(S, undefined) {
         _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
             var activeTriggerCls = this.config.activeTriggerCls;
 
-            if (fromTrigger) Dom.removeClass(fromTrigger, activeTriggerCls);
-            Dom.addClass(toTrigger, activeTriggerCls);
+            if (fromTrigger) DOM.removeClass(fromTrigger, activeTriggerCls);
+            DOM.addClass(toTrigger, activeTriggerCls);
         },
 
         /**
-         * 切换当前视图
+         * 切换视图
          */
-        _switchView: function(fromPanels, toPanels, index/*, direction*/) {
+        _switchView: function(fromPanels, toPanels/*, index, direction*/) {
             // 最简单的切换效果：直接隐藏/显示
-            Dom.setStyle(fromPanels, DISPLAY, NONE);
-            Dom.setStyle(toPanels, DISPLAY, BLOCK);
+            DOM.css(fromPanels, DISPLAY, NONE);
+            DOM.css(toPanels, DISPLAY, BLOCK);
 
             // fire onSwitch
-            this.fireEvent(ON_SWITCH, index);
+            this.fire(EVENT_SWITCH);
         },
 
         /**
-         * 切换到上一个视图
+         * 切换到上一视图
          */
         prev: function() {
             var self = this, activeIndex = self.activeIndex;
             self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1, BACKWARD);
-            // TODO: fire event when at first/last view.
         },
 
         /**
-         * 切换到下一个视图
+         * 切换到下一视图
          */
         next: function() {
             var self = this, activeIndex = self.activeIndex;
@@ -1890,32 +1878,36 @@ KISSY.add('switchable', function(S, undefined) {
         }
     });
 
-    S.augment(Switchable, Y.EventProvider);
+    S.mix(SP, S.EventTarget);
     
     S.Switchable = Switchable;
 });
 
 /**
- * Notes:
+ * NOTES:
+ *
+ * 2010.04
+ *  - 重构，脱离对 yahoo-dom-event 的依赖
  *
  * 2010.03
  *  - 重构，去掉 Widget, 部分代码直接采用 kissy 基础库
  *  - 插件机制从 weave 织入法改成 hook 钩子法
  *
- * TODOs:
+ * TODO:
  *  - http://malsup.com/jquery/cycle/
  *  - http://www.mall.taobao.com/go/chn/mall_chl/flagship.php
  * 
  * References:
  *  - jQuery Scrollable http://flowplayer.org/tools/scrollable.html
- *//**
+ *
+ */
+/**
  * Switchable Autoplay Plugin
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base, selector, dom-base
  */
 KISSY.add('switchable-autoplay', function(S) {
 
-    var Y = YAHOO.util, Event = Y.Event, Lang = YAHOO.lang,
+    var Event = S.Event,
         Switchable = S.Switchable;
 
     /**
@@ -1957,10 +1949,10 @@ KISSY.add('switchable-autoplay', function(S) {
             }
 
             // 设置自动播放
-            host.autoplayTimer = Lang.later(cfg.interval * 1000, host, function() {
+            host.autoplayTimer = S.later(function() {
                 if (host.paused) return;
                 host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0);
-            }, null, true);
+            }, cfg.interval * 1000, true);
         }
     });
 });
@@ -1977,7 +1969,7 @@ KISSY.add('switchable-autoplay', function(S) {
  */
 KISSY.add('switchable-effect', function(S) {
 
-    var Y = YAHOO.util, Dom = Y.Dom,
+    var Y = YAHOO.util, DOM = S.DOM, YDOM = Y.Dom,
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         OPACITY = 'opacity', Z_INDEX = 'z-index',
         RELATIVE = 'relative', ABSOLUTE = 'absolute',
@@ -2000,22 +1992,22 @@ KISSY.add('switchable-effect', function(S) {
 
         // 最朴素的显示/隐藏效果
         none: function(fromEls, toEls, callback) {
-            Dom.setStyle(fromEls, DISPLAY, NONE);
-            Dom.setStyle(toEls, DISPLAY, BLOCK);
+            DOM.css(fromEls, DISPLAY, NONE);
+            DOM.css(toEls, DISPLAY, BLOCK);
             callback();
         },
 
         // 淡隐淡现效果
         fade: function(fromEls, toEls, callback) {
             if(fromEls.length !== 1) {
-                throw new Error('fade effect only supports steps == 1.');
+                S.error('fade effect only supports steps == 1.');
             }
             var self = this, cfg = self.config,
                 fromEl = fromEls[0], toEl = toEls[0];
             if (self.anim) self.anim.stop();
 
             // 首先显示下一张
-            Dom.setStyle(toEl, OPACITY, 1);
+            YDOM.setStyle(toEl, OPACITY, 1);
 
             // 动画切换
             self.anim = new Y.Anim(fromEl, {opacity: {to: 0}}, cfg.duration, cfg.easing);
@@ -2023,8 +2015,8 @@ KISSY.add('switchable-effect', function(S) {
                 self.anim = null; // free
 
                 // 切换 z-index
-                Dom.setStyle(toEl, Z_INDEX, 9);
-                Dom.setStyle(fromEl, Z_INDEX, 1);
+                YDOM.setStyle(toEl, Z_INDEX, 9);
+                YDOM.setStyle(fromEl, Z_INDEX, 1);
 
                 callback();
             });
@@ -2098,7 +2090,7 @@ KISSY.add('switchable-effect', function(S) {
 
                         // 水平排列
                         if (effect === SCROLLX) {
-                            Dom.setStyle(panels, 'float', 'left');
+                            YDOM.setStyle(panels, 'float', 'left');
 
                             // 设置最大宽度，以保证有空间让 panels 水平排布
                             host.content.style.width = host.viewSize[0] * (len / steps) + 'px';
@@ -2108,7 +2100,7 @@ KISSY.add('switchable-effect', function(S) {
                     // 如果是透明效果，则初始化透明
                     case FADE:
                         for (i = 0; i < len; i++) {
-                            Dom.setStyle(panels[i], OPACITY, (i >= fromIndex && i <= toIndex) ? 1 : 0);
+                            YDOM.setStyle(panels[i], OPACITY, (i >= fromIndex && i <= toIndex) ? 1 : 0);
                             panels[i].style.position = ABSOLUTE;
                             panels[i].style.zIndex = (i >= fromIndex && i <= toIndex) ? 9 : 1;
                         }
@@ -2134,7 +2126,7 @@ KISSY.add('switchable-effect', function(S) {
                 fn = typeof effect === 'function' ? effect : Effects[effect];
 
             fn.call(self, fromEls, toEls, function() {
-                self.fireEvent('onSwitch', index);
+                self.fire('switch');
             }, index, direction);
         }
     });
@@ -2147,12 +2139,10 @@ KISSY.add('switchable-effect', function(S) {
 /**
  * Switchable Circular Plugin
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base, switchable
  */
 KISSY.add('switchable-circular', function(S) {
 
-    var Y = YAHOO.util,
-        RELATIVE = 'relative',
+    var RELATIVE = 'relative',
         LEFT = 'left', TOP = 'top',
         PX = 'px', EMPTY = '',
         FORWARD = 'forward', BACKWARD = 'backward',
@@ -2193,7 +2183,7 @@ KISSY.add('switchable-circular', function(S) {
 
         // 开始动画
         if (self.anim) self.anim.stop();
-        self.anim = new Y.Anim(self.content, attributes, cfg.duration, cfg.easing);
+        self.anim = new YAHOO.util.Anim(self.content, attributes, cfg.duration, cfg.easing);
         self.anim.onComplete.subscribe(function() {
             if(isCritical) {
                 // 复原位置
@@ -2275,17 +2265,17 @@ KISSY.add('switchable-circular', function(S) {
 /**
  * TODO:
  *   - 是否需要考虑从 0 到 2（非最后一个） 的 backward 滚动？需要更灵活
- *//**
+ */
+/**
  * Switchable Lazyload Plugin
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base, switchable, datalazyload
  */
 KISSY.add('switchable-lazyload', function(S) {
 
-    var Y = YAHOO.util, Dom = Y.Dom,
-        BEFORE_SWITCH = 'beforeSwitch',
+    var DOM = S.DOM,
+        EVENT_BEFORE_SWITCH = 'beforeSwitch',
         IMG_SRC = 'img-src', TEXTAREA_DATA = 'textarea-data',
-        FLAGS = {},
+        FLAGS = { },
         Switchable = S.Switchable,
         DataLazyload = S.DataLazyload;
 
@@ -2311,19 +2301,19 @@ KISSY.add('switchable-lazyload', function(S) {
                 type = cfg.lazyDataType, flag = cfg.lazyDataFlag || FLAGS[type];
             if (!DataLazyload || !type || !flag) return; // 没有延迟项
 
-            host.subscribe(BEFORE_SWITCH, loadLazyData);
+            host.on(EVENT_BEFORE_SWITCH, loadLazyData);
 
             /**
              * 加载延迟数据
              */
-            function loadLazyData(index) {
+            function loadLazyData(ev) {
                 var steps = cfg.steps,
-                    from = index * steps ,
+                    from = ev.toIndex * steps ,
                     to = from + steps;
 
                 DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type, flag);
                 if (isAllDone()) {
-                    host.unsubscribe(BEFORE_SWITCH, loadLazyData);
+                    host.detach(EVENT_BEFORE_SWITCH, loadLazyData);
                 }
             }
 
@@ -2334,14 +2324,14 @@ KISSY.add('switchable-lazyload', function(S) {
                 var imgs, textareas, i, len;
 
                 if (type === IMG_SRC) {
-                    imgs = host.container.getElementsByTagName('img');
+                    imgs = S.query('img', host.container);
                     for (i = 0,len = imgs.length; i < len; i++) {
-                        if (imgs[i].getAttribute(flag)) return false;
+                        if (DOM.attr(imgs[i], flag)) return false;
                     }
                 } else if (type === TEXTAREA_DATA) {
-                    textareas = host.container.getElementsByTagName('textarea');
+                    textareas = S.query('textarea', host.container);
                     for (i = 0,len = textareas.length; i < len; i++) {
-                        if (Dom.hasClass(textareas[i], flag)) return false;
+                        if (DOM.hasClass(textareas[i], flag)) return false;
                     }
                 }
 

@@ -3,10 +3,13 @@
 <head>
 <meta charset="gbk" />
 <title>Suggest Test</title>
+
 <link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" />
 <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script src="../kissy/kissy.js"></script>
+<script src="../../build/packages/kissy-core.js"></script>
+
 <script src="suggest.js"></script>
+
 <style>
     #page { padding: 50px 50px 300px; width: 950px; margin: 0 auto; line-height: 18px; }
     h1, h2, h3 { margin: 1em 0 0.3em; }
@@ -79,6 +82,7 @@
             <li>输入法开启，通过enter键输入英文时，不会触发提交</li>
             <li>选中某项，ESC键关闭，再次通过keydown打开时，能保持原来的选中项</li>
             <li>没有选中项，ESC键关闭，再次通过keydown打开时，依旧没有选中项</li>
+            <li>当输入框为空时，按下 ESC 键，输入框失去焦点</li>
         </ol>
     </div>
 
@@ -93,13 +97,13 @@
     <div class="section">
         <h2>Crazy Test:</h2>
 
-        <h3>1. beforeDataRequest 和 onDataReturn 事件：（请输入pig）</h3>
+        <h3>1. dataRequest 和 dataReturn 事件：( 请输入 pig 和 dog )</h3>
         <form name="search2" method="get" action="http://search1.taobao.com/browse/search_auction.htm" target="_blank">
             <input class="search-input" name="q" id="q2"/>
             <button type="submit" class="search-submit">Search</button>
         </form>
 
-        <h3>2. beforeShow 和 onItemSelect 事件：</h3>
+        <h3>2. show 和 itemSelect 事件：</h3>
         <form name="search3" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
             <input class="search-input" name="q" id="q3"/>
             <button type="submit" class="search-submit">Search</button>
@@ -116,7 +120,7 @@
         </select>
         <br>
         <br>
-        <iframe src="http://lifesinger.org/"></iframe>
+        <iframe src="../../"></iframe>
 
         <h3>4. 测试JSON数据源：（请输入 nike 或 nokia ）</h3>
         <form name="search4" method="get" action="http://search1.taobao.com/browse/search_auction.htm" target="_blank">
@@ -145,49 +149,35 @@
         //var dataUrl = 'http://192.168.208.18:8090/sug';
 
         // 淘宝首页的情况
-        var sug = new S.Suggest('q', dataUrl,
+        var sug = new S.Suggest('#q', dataUrl,
         { autoFocus: true,
             resultFormat: '约%result%个宝贝'
         });
 
-        // 添加搜索布点参数
-        var ssid = sug.textInput.form.ssid;
-        if (ssid) {
-            setTimeout(function() {
-                sug.textInput.form.reset();
-            }, 0); // ie no cache
-            ssid.setAttribute('autocomplete', 'off'); // w3c no cache
-            sug.subscribe('onItemSelect', function() {
-                if (ssid.value.indexOf('-p1') == -1) {
-                    ssid.value += '-p1';
-                }
-            });
-        }
-
         // 测试事件
-        var sug2 = new S.Suggest('q2', dataUrl);
-        sug2.subscribe('beforeDataRequest', function(query) {
-            if (query == 'pig') {
-                alert('你输入的是：' + query);
+        var sug2 = new S.Suggest('#q2', dataUrl);
+        sug2.on('dataRequest', function() {
+            if (this.query === 'pig') {
+                alert('你输入的是：' + this.query);
             }
         });
-        sug2.subscribe('onDataReturn', function(data) {
-            if (this.query == 'pig') {
-                alert('返回的数据是：' + YAHOO.lang.dump(data));
+        sug2.on('dataReturn', function() {
+            if (this.query === 'dog') {
+                alert('返回的数据是：' + YAHOO.lang.dump(this.returnedData));
             }
         });
 
         // 测试事件2
-        var sug3 = new S.Suggest('q3', dataUrl);
-        sug3.subscribe('beforeShow', function(container) {
-            container.appendChild(document.createTextNode('我是天下无敌的广告'));
+        var sug3 = new S.Suggest('#q3', dataUrl);
+        sug3.on('show', function() {
+            this.container.appendChild(document.createTextNode('我是天下无敌的广告'));
         });
-        sug3.subscribe('onItemSelect', function(query) {
-            alert('你选中了：' + query);
+        sug3.on('itemSelect', function() {
+            alert('你选中了：' + this.textInput.value);
         });
 
         // 测试配置参数
-        new S.Suggest('q4', dataUrl, {
+        new S.Suggest('#q4', dataUrl, {
             containerWidth: '200px',
             showCloseBtn: true
         });
@@ -218,7 +208,7 @@
             ["nokia n81", "2620"],
             ["nokia e66", "1740"]
         ];
-        new S.Suggest('q5', jsonData);
+        new S.Suggest('#q5', jsonData);
 
         // 测试JSON数据源
         var jsonData2 = {};
@@ -246,21 +236,21 @@
             "nokia n81",
             "nokia e66"
         ];
-        new S.Suggest('q6', jsonData2);
+        new S.Suggest('#q6', jsonData2);
 
         // 有啊有啊哈哈哈
         dataUrl = 'http://youa.baidu.com/suggest/se/s';
         window["suggestCallback"] = window["g_ks_suggest_callback"];
         // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
-        var sug7 = new S.Suggest('q7', dataUrl);
-        sug7.subscribe('beforeDataRequest', function(query) {
-            this.dataScript.charset = 'GB18030';
-            this.queryParams = 'cmd=suggest&type=kwd&max_count=10&keyword=' + encodeURIComponent(query) + '&callback=suggestCallback';
+        var sug7 = new S.Suggest('#q7', dataUrl);
+        sug7.on('dataRequest', function() {
+            this.dataScript.charset = 'GBK';
+            this.queryParams = 'cmd=suggest&type=kwd&max_count=10&keyword=' + encodeURIComponent(this.query) + '&callback=suggestCallback';
         });
         // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
         // taobao: g_ks_suggest_callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
-        sug7.subscribe('onDataReturn', function(data) {
-            data = data['r'] || [];
+        sug7.on('dataReturn', function() {
+            var data = this.returnedData['r'] || [];
             var result = [];
 
             for (var i = 0, len = data.length; i < len; ++i) {

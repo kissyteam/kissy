@@ -181,13 +181,13 @@
         S.mix(Dog.prototype, S.EventTarget);
         S.mix(Dog.prototype, {
            run: function() {
-               this.fire('hungry');
+               this.fire('hungry', {tips: 'Tips: I like fish bone.'});
            }
         });
 
         var dog = new Dog('Joel');
         dog.on('hungry', function(ev) {
-           test.echo(this.name + ' is hungry now. Please give me food!');
+           test.echo(this.name + ' is hungry now. Please give me food! ' + ev.tips);
         });
         
         dog.run();

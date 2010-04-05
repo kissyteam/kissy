@@ -1,11 +1,10 @@
 /**
  * Switchable Autoplay Plugin
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base, selector, dom-base
  */
 KISSY.add('switchable-autoplay', function(S) {
 
-    var Y = YAHOO.util, Event = Y.Event, Lang = YAHOO.lang,
+    var Event = S.Event,
         Switchable = S.Switchable;
 
     /**
@@ -47,10 +46,10 @@ KISSY.add('switchable-autoplay', function(S) {
             }
 
             // 设置自动播放
-            host.autoplayTimer = Lang.later(cfg.interval * 1000, host, function() {
+            host.autoplayTimer = S.later(function() {
                 if (host.paused) return;
                 host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0);
-            }, null, true);
+            }, cfg.interval * 1000, true);
         }
     });
 });

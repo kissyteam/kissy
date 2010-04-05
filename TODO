@@ -21,9 +21,9 @@
   ua - done
   ajax - 10% done
 
+  refactor switchable, add album
   swfstore
   overlay
-  refactor switchable, add album
   docs - 5%
 
   check and test all components
@@ -54,6 +54,8 @@
   pickDomain
   实现 TBra 其它组件
   整理 TBra 2.1
+
+  核心组件都去除对 YUI 的依赖，首页重构为仅依赖 kissy
 
 -----------------------
  零散记事：
