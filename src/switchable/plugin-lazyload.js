@@ -6,7 +6,8 @@ KISSY.add('switchable-lazyload', function(S) {
 
     var DOM = S.DOM,
         EVENT_BEFORE_SWITCH = 'beforeSwitch',
-        IMG_SRC = 'img-src', TEXTAREA_DATA = 'textarea-data',
+        IMG_SRC = 'img-src',
+        TEXTAREA_DATA = 'textarea-data',
         FLAGS = { },
         Switchable = S.Switchable,
         DataLazyload = S.DataLazyload;

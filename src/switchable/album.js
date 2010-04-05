@@ -1,7 +1,6 @@
 /**
  * Album Widget
  * @creator     Óñ²®<lifesinger@gmail.com>
- * @depends     kissy, yui-base
  */
 KISSY.add('album', function(S) {
 

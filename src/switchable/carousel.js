@@ -1,7 +1,6 @@
 /**
  * Carousel Widget
  * @creator     Óñ²®<lifesinger@gmail.com>
- * @depends     kissy, yui-base
  */
 KISSY.add('carousel', function(S) {
 

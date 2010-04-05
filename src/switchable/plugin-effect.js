@@ -1,7 +1,6 @@
 /**
  * Switchable Effect Plugin
  * @creator     Óñ²®<lifesinger@gmail.com>
- * @depends     kissy, yui-base, yui-animation, switchable
  */
 KISSY.add('switchable-effect', function(S) {
 
@@ -159,7 +158,7 @@ KISSY.add('switchable-effect', function(S) {
         _switchView: function(fromEls, toEls, index, direction) {
             var self = this, cfg = self.config,
                 effect = cfg.effect,
-                fn = typeof effect === 'function' ? effect : Effects[effect];
+                fn = S.isFunction(effect) ? effect : Effects[effect];
 
             fn.call(self, fromEls, toEls, function() {
                 self.fire('switch');

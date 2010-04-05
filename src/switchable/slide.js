@@ -1,7 +1,6 @@
 /**
  * Tabs Widget
  * @creator     Óñ²®<lifesinger@gmail.com>
- * @depends     kissy, yui-base
  */
 KISSY.add('slide', function(S) {
 

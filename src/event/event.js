@@ -31,6 +31,7 @@ KISSY.add('event', function(S, undefined) {
                            }
                        },
         EVENT_GUID = 'data-ks-event-guid',
+        SPACE = ' ',
         guid = S.now(),
         // { id: { target: el, events: { type: { handle: obj, listeners: [...] } } }, ... }
         cache = { };
@@ -48,6 +49,14 @@ KISSY.add('event', function(S, undefined) {
          * @param {Function} fn The event handler
          */
         add: function(target, type, fn) {
+            // on(target, 'click focus', fn)
+            if((type = S.trim(type)) && type.indexOf(SPACE) > 0) {
+                S.each(type.split(SPACE), function(t) {
+                    Event.add(target, t, fn);
+                });
+                return;
+            }
+
             var id = getID(target),
                 special, events, eventHandle;
 

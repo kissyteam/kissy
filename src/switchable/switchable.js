@@ -237,10 +237,7 @@ KISSY.add('switchable', function(S, undefined) {
                     trigger = triggers[index];
 
                     // ÏìÓ¦µã»÷ºÍ Tab ¼ü
-                    Event.on(trigger, 'click', function() {
-                        self._onFocusTrigger(index);
-                    });
-                    Event.on(trigger, 'focus', function() {
+                    Event.on(trigger, 'click focus', function() {
                         self._onFocusTrigger(index);
                     });
 
