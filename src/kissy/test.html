@@ -282,7 +282,23 @@
         if(S.isArray(arguments) !== false) test.fail();
         if(S.isArray(document.getElementsByTagName('body')) !== false) test.fail();
     }
-    
+
+    function test_indexOf(test) {
+        var a, ret;
+
+        ret = S.indexOf(6, [1, 2, 3, 4, 5]);
+        if(ret !== -1) test.fail('S.indexOf(6, [1, 2, 3, 4, 5]) = ' + ret);
+
+        ret = S.indexOf(a, [1, 2, 3, 4, undefined]);
+        if(ret !== 4) test.fail('S.indexOf(a, [1, 2, 3, 4, undefined]) = ' + ret);
+
+        ret = S.indexOf(2, [1, 2, 3, 4, 5]);
+        if(ret !== 1) test.fail('S.indexOf(2, [1, 2, 3, 4, 5]) = ' + ret);
+
+        ret = S.indexOf({}, [1, 2, {}, 4, 5]);
+        if(ret !== -1) test.fail('S.indexOf({}, [1, 2, {}, 4, 5]) = ' + ret);
+    }
+
     function test_inArray(test) {
         var a, ret;
 
@@ -328,10 +344,6 @@
         if(S.makeArray(o).length !== 1) test.fail();
         if(S.makeArray(o)[0] !== test) test.fail();
         if(!S.makeArray(o).slice) test.fail();
-
-        // window 有 length, window[0] 指向 window
-        o = S.makeArray(window);
-        if(!o[0].parseFloat) test.fail();
 
         // 伪 array-like 对象
         o = S.makeArray({a:1,b:2,length:2});
@@ -384,6 +396,11 @@
                         }
                       },
                       1000, true, null, 'I am periodic later data.');
+    }
+
+    function test_globalEval(test) {
+        S.globalEval('var globalEvalTest = 1;');
+        if(window['globalEvalTest'] !== 1) test.fail();
     }
 
     function test_userAgent(test) {

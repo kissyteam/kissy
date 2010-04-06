@@ -6,7 +6,8 @@
 
 KISSY.add('lang', function(S, undefined) {
 
-    var AP = Array.prototype,
+    var doc = document,
+        AP = Array.prototype,
         forEach = AP.forEach,
         indexOf = AP.indexOf,
         slice = AP.slice,
@@ -74,18 +75,25 @@ KISSY.add('lang', function(S, undefined) {
         /**
          * Search for a specified value within an array.
          */
-        inArray: indexOf ?
+        indexOf: indexOf ?
                  function(elem, arr) {
-                     return indexOf.call(arr, elem) !== -1;
+                     return indexOf.call(arr, elem);
                  } :
                  function(elem, arr) {
                      for (var i = 0, len = arr.length; i < len; ++i) {
                          if (arr[i] === elem) {
-                             return true;
+                             return i;
                          }
                      }
-                     return false;
+                     return -1;
                  },
+
+        /**
+         * Search for a specified value index within an array.
+         */
+        inArray: function(arr, elem) {
+            return S.indexOf(arr, elem) !== -1;
+        },
 
         makeArray: function(obj) {
             if (obj === null || obj === undefined) return [];
@@ -228,6 +236,29 @@ KISSY.add('lang', function(S, undefined) {
                     }
                 }
             };
+        },
+
+        /**
+         * Evalulates a script in a global context
+         */
+        globalEval: function(data) {
+            if ((data = S.trim(data))) {
+                // Inspired by code by Andrea Giammarchi
+                // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
+                var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+                    script = doc.createElement('script');
+
+                if (S.UA.ie) { // TODO: feature test
+                    script.text = data;
+                } else {
+                    script.appendChild(doc.createTextNode(data));
+                }
+
+                // Use insertBefore instead of appendChild to circumvent an IE6 bug.
+                // This arises when a base node is used.
+                head.insertBefore(script, head.firstChild);
+                head.removeChild(script);
+            }
         }
     });
 
@@ -249,5 +280,6 @@ KISSY.add('lang', function(S, undefined) {
  *
  * TODO:
  *   - 分析 jq 的 isPlainObject
+ *   - globalEval 中，appendChild 方式真的比 text 方式性能更好?
  *
  */

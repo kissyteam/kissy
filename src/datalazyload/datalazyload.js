@@ -295,6 +295,13 @@ KISSY.add('datalazyload', function(S, undefined) {
             area.style.display = NONE;
             area.className = ''; // clear hooks
             parent.appendChild(content);
+
+            // 执行里面的脚本
+            if(!S.UA.gecko) { // firefox 会自动执行 TODO: feature test
+                S.query('script', content).each(function(script) {
+                    S.globalEval(script.text);
+                });
+            }
         },
 
         /**

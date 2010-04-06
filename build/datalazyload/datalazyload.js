@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 526 Apr 6 18:02
 */
 /**
  * 数据延迟加载组件
@@ -300,6 +300,13 @@ KISSY.add('datalazyload', function(S, undefined) {
             area.style.display = NONE;
             area.className = ''; // clear hooks
             parent.appendChild(content);
+
+            // 执行里面的脚本
+            if(!S.UA.gecko) { // firefox 会自动执行 TODO: feature test
+                S.query('script', content).each(function(script) {
+                    S.globalEval(script.text);
+                });
+            }
         },
 
         /**

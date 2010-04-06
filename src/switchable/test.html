@@ -100,7 +100,12 @@
         <div style="display: none">内容 B</div>
         <div style="display: none">内容 C</div>
         <div style="display: none">内容 D</div>
-        <div style="display: none"><textarea class="ks-datalazyload-custom">我是延迟内容</textarea></div>
+        <div style="display: none">
+            <textarea class="ks-datalazyload-custom">
+                我是延迟内容
+                <script>alert('我是延迟脚本，仅在第一次加载时执行。');</script>
+            </textarea>
+        </div>
     </div>
 </div>
 <script>
