@@ -170,7 +170,19 @@
         // 测试事件2
         var sug3 = new S.Suggest('#q3', dataUrl);
         sug3.on('show', function() {
-            this.container.appendChild(document.createTextNode('我是天下无敌的广告'));
+            var container = this.container,
+                list = S.get('ol', container);
+
+            list.insertBefore(
+                    S.DOM.create('<li class="even"><span class="ks-suggest-key">含 "' + this.query +'" 的商品</span></li>'),
+                    S.get('li', list)
+                 );
+            list.insertBefore(
+                    S.DOM.create('<li class="odd"><span class="ks-suggest-key">含 "' + this.query +'" 的店铺</span></li>'),
+                    S.get('li', list)                    
+                 );
+
+            container.appendChild(document.createTextNode('我是天下无敌的广告'));
         });
         sug3.on('itemSelect', function() {
             alert('你选中了：' + this.textInput.value);

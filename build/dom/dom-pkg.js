@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 527 Apr 6 22:39
 */
 /**
  * @module  selector
@@ -664,9 +664,10 @@ KISSY.add('dom-base', function(S, undefined) {
 
 KISSY.add('dom-class', function(S, undefined) {
 
-    var SPACE = ' ';
+    var SPACE = ' ',
+        DOM = S.DOM;
 
-    S.mix(S.DOM, {
+    S.mix(DOM, {
 
         /**
          * Determines whether a HTMLElement has the given className.
@@ -681,6 +682,7 @@ KISSY.add('dom-class', function(S, undefined) {
          * Adds a given className to a HTMLElement.
          */
         addClass: function(el, className) {
+            if(batch(el, addClass, DOM, className)) return;
             if (!className || !el) return;
             if (hasClass(el, className)) return;
 
@@ -691,6 +693,7 @@ KISSY.add('dom-class', function(S, undefined) {
          * Removes a given className from a HTMLElement.
          */
         removeClass: function(el, className) {
+            if(batch(el, removeClass, DOM, className)) return;
             if (!hasClass(el, className)) return;
 
             el.className = (SPACE + el.className + SPACE).replace(SPACE + className + SPACE, SPACE);
@@ -714,6 +717,8 @@ KISSY.add('dom-class', function(S, undefined) {
          * should be added or removed regardless of current state.
          */
         toggleClass: function(el, className, force) {
+            if(batch(el, DOM.toggleClass, DOM, className, force)) return;
+
             var add = (force !== undefined) ? force :
                       !(hasClass(el, className));
 
@@ -725,8 +730,22 @@ KISSY.add('dom-class', function(S, undefined) {
         }
     });
 
+    function batch(arr, method, context) {
+        if (S.isArray(arr)) {
+            S.each(arr, function(item) {
+                method.apply(context, Array.prototype.slice.call(arguments, 3));
+            });
+            return true;
+        }
+    }
+
     // for quick access
-    var hasClass = S.DOM.hasClass,
-        addClass = S.DOM.addClass,
-        removeClass = S.DOM.removeClass;
+    var hasClass = DOM.hasClass,
+        addClass = DOM.addClass,
+        removeClass = DOM.removeClass;
 });
+
+/**
+ * TODO:
+ *   - hasClass needs batch?
+ */

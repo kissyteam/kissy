@@ -49,13 +49,8 @@ KISSY.add('event', function(S, undefined) {
          * @param {Function} fn The event handler
          */
         add: function(target, type, fn) {
-            // on(target, 'click focus', fn)
-            if((type = S.trim(type)) && type.indexOf(SPACE) > 0) {
-                S.each(type.split(SPACE), function(t) {
-                    Event.add(target, t, fn);
-                });
-                return;
-            }
+            // ([targetA, targetB], 'click focus', fn)
+            if(batch('add', target, type, fn)) return;
 
             var id = getID(target),
                 special, events, eventHandle;
@@ -113,6 +108,9 @@ KISSY.add('event', function(S, undefined) {
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */) {
+            // ([targetA, targetB], 'click focus', fn)
+            if(batch('remove', target, type, fn)) return;
+
             var id = getID(target),
                 events, eventsType, listeners,
                 i, len, c, t;
@@ -186,6 +184,25 @@ KISSY.add('event', function(S, undefined) {
 
     // shorthand
     Event.on = Event.add;
+
+    function batch(methodName, targets, types, fn) {
+
+        // on([targetA, targetB], type, fn)
+        if (S.isArray(targets)) {
+            S.each(targets, function(target) {
+                Event[methodName](target, types, fn);
+            });
+            return true;
+        }
+
+        // on(target, 'click focus', fn)
+        if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
+            S.each(types.split(SPACE), function(type) {
+                Event[methodName](targets, type, fn);
+            });
+            return true;
+        }
+    }
 
     function getID(target) {
         var ret = -1;

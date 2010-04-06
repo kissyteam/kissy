@@ -18,6 +18,8 @@ KISSY.add("suggest", function(S, undefined) {
         KEY_EL_CLASS = "ks-suggest-key", // 提示层中，key 元素的 class
         RESULT_EL_CLASS = "ks-suggest-result", // 提示层中，result 元素的 class
         SELECTED_ITEM_CLASS = "selected", // 提示层中，选中项的 class
+        ODD_ITEM_CLASS = "odd", // 提示层中，奇数项的 class
+        EVEN_ITEM_CLASS = "even", // 提示层中，偶数项的 class
         BOTTOM_CLASS = "ks-suggest-bottom",
         CLOSE_BTN_CLASS = "ks-suggest-close-btn",
         SHIM_CLASS = "ks-suggest-shim", // iframe shim 的 class
@@ -48,7 +50,7 @@ KISSY.add("suggest", function(S, undefined) {
              * </div>
              * @type String
              */
-            containerClass: "",
+            containerCls: "",
 
             /**
              * 提示层的宽度
@@ -335,7 +337,7 @@ KISSY.add("suggest", function(S, undefined) {
         _initContainer: function() {
             // create
             var container = doc.createElement("div"),
-                customContainerClass = this.config.containerClass;
+                customContainerClass = this.config.containerCls;
 
             container.className = CONTAINER_CLASS;
             if (customContainerClass) {
@@ -693,7 +695,6 @@ KISSY.add("suggest", function(S, undefined) {
 
             if (!self.dataScript) {
                 var script = doc.createElement("script");
-                script.type = "text/javascript";
                 script.charset = "utf-8";
 
                 // jQuery ajax.js line 275:
@@ -747,6 +748,8 @@ KISSY.add("suggest", function(S, undefined) {
                     var li = self.formatItem(itemData["key"], itemData["result"]);
                     // 缓存key值到attribute上
                     li.setAttribute("key", itemData["key"]);
+                    // 添加奇偶 class
+                    DOM.addClass(li, i % 2 ? EVEN_ITEM_CLASS : ODD_ITEM_CLASS);
                     list.appendChild(li);
                 }
                 content = list;
@@ -1031,7 +1034,7 @@ KISSY.add("suggest", function(S, undefined) {
 
 /**
  * 2009-08-05 更新： 将 class 从配置项中移动到常量，原因是：修改默认 className 的可能性很小，仅保留一个
- *                  containerClass 作为个性化样式的接口即可
+ *                  containerCls 作为个性化样式的接口即可
  *
  * 2009-12-10 更新： 采用 kissy module 组织代码。为了避免多个沙箱下，对全局回调函数覆盖定义引发的问题，
  *                  采用共享模式。

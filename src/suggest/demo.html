@@ -72,7 +72,7 @@
                 window["suggestCallback"] = window["g_ks_suggest_callback"];
 
                 var sug = new S.Suggest('#q2', dataUrl, {
-                    containerClass: 'youa-suggest-container'
+                    containerCls: 'youa-suggest-container'
                 });
 
                 sug.on('dataRequest', function() {
@@ -132,7 +132,7 @@
                 var sug = new S.Suggest('#gq', dataUrl,
                 {
                     resultFormat: '',
-                    containerClass: 'g-sug'
+                    containerCls: 'g-sug'
                 });
 
                 sug.on('dataRequest', function() {

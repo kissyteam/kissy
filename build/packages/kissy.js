@@ -819,7 +819,7 @@ KISSY.add('json', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 527 Apr 6 22:39
 */
 /**
  * @module  selector
@@ -1482,9 +1482,10 @@ KISSY.add('dom-base', function(S, undefined) {
 
 KISSY.add('dom-class', function(S, undefined) {
 
-    var SPACE = ' ';
+    var SPACE = ' ',
+        DOM = S.DOM;
 
-    S.mix(S.DOM, {
+    S.mix(DOM, {
 
         /**
          * Determines whether a HTMLElement has the given className.
@@ -1499,6 +1500,7 @@ KISSY.add('dom-class', function(S, undefined) {
          * Adds a given className to a HTMLElement.
          */
         addClass: function(el, className) {
+            if(batch(el, addClass, DOM, className)) return;
             if (!className || !el) return;
             if (hasClass(el, className)) return;
 
@@ -1509,6 +1511,7 @@ KISSY.add('dom-class', function(S, undefined) {
          * Removes a given className from a HTMLElement.
          */
         removeClass: function(el, className) {
+            if(batch(el, removeClass, DOM, className)) return;
             if (!hasClass(el, className)) return;
 
             el.className = (SPACE + el.className + SPACE).replace(SPACE + className + SPACE, SPACE);
@@ -1532,6 +1535,8 @@ KISSY.add('dom-class', function(S, undefined) {
          * should be added or removed regardless of current state.
          */
         toggleClass: function(el, className, force) {
+            if(batch(el, DOM.toggleClass, DOM, className, force)) return;
+
             var add = (force !== undefined) ? force :
                       !(hasClass(el, className));
 
@@ -1543,15 +1548,28 @@ KISSY.add('dom-class', function(S, undefined) {
         }
     });
 
+    function batch(arr, method, context) {
+        if (S.isArray(arr)) {
+            S.each(arr, function(item) {
+                method.apply(context, Array.prototype.slice.call(arguments, 3));
+            });
+            return true;
+        }
+    }
+
     // for quick access
-    var hasClass = S.DOM.hasClass,
-        addClass = S.DOM.addClass,
-        removeClass = S.DOM.removeClass;
+    var hasClass = DOM.hasClass,
+        addClass = DOM.addClass,
+        removeClass = DOM.removeClass;
 });
-/*
+
+/**
+ * TODO:
+ *   - hasClass needs batch?
+ *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 527 Apr 6 22:39
 */
 /**
  * @module  event
@@ -1604,13 +1622,8 @@ KISSY.add('event', function(S, undefined) {
          * @param {Function} fn The event handler
          */
         add: function(target, type, fn) {
-            // on(target, 'click focus', fn)
-            if((type = S.trim(type)) && type.indexOf(SPACE) > 0) {
-                S.each(type.split(SPACE), function(t) {
-                    Event.add(target, t, fn);
-                });
-                return;
-            }
+            // ([targetA, targetB], 'click focus', fn)
+            if(batch('add', target, type, fn)) return;
 
             var id = getID(target),
                 special, events, eventHandle;
@@ -1668,6 +1681,9 @@ KISSY.add('event', function(S, undefined) {
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */) {
+            // ([targetA, targetB], 'click focus', fn)
+            if(batch('remove', target, type, fn)) return;
+
             var id = getID(target),
                 events, eventsType, listeners,
                 i, len, c, t;
@@ -1741,6 +1757,25 @@ KISSY.add('event', function(S, undefined) {
 
     // shorthand
     Event.on = Event.add;
+
+    function batch(methodName, targets, types, fn) {
+
+        // on([targetA, targetB], type, fn)
+        if (S.isArray(targets)) {
+            S.each(targets, function(target) {
+                Event[methodName](target, types, fn);
+            });
+            return true;
+        }
+
+        // on(target, 'click focus', fn)
+        if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
+            S.each(types.split(SPACE), function(type) {
+                Event[methodName](targets, type, fn);
+            });
+            return true;
+        }
+    }
 
     function getID(target) {
         var ret = -1;
@@ -2899,7 +2934,7 @@ KISSY.add('datalazyload', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 527 Apr 6 22:48
 */
 /**
  * 提示补全组件
@@ -2921,6 +2956,8 @@ KISSY.add("suggest", function(S, undefined) {
         KEY_EL_CLASS = "ks-suggest-key", // 提示层中，key 元素的 class
         RESULT_EL_CLASS = "ks-suggest-result", // 提示层中，result 元素的 class
         SELECTED_ITEM_CLASS = "selected", // 提示层中，选中项的 class
+        ODD_ITEM_CLASS = "odd", // 提示层中，奇数项的 class
+        EVEN_ITEM_CLASS = "even", // 提示层中，偶数项的 class
         BOTTOM_CLASS = "ks-suggest-bottom",
         CLOSE_BTN_CLASS = "ks-suggest-close-btn",
         SHIM_CLASS = "ks-suggest-shim", // iframe shim 的 class
@@ -2951,7 +2988,7 @@ KISSY.add("suggest", function(S, undefined) {
              * </div>
              * @type String
              */
-            containerClass: "",
+            containerCls: "",
 
             /**
              * 提示层的宽度
@@ -3238,7 +3275,7 @@ KISSY.add("suggest", function(S, undefined) {
         _initContainer: function() {
             // create
             var container = doc.createElement("div"),
-                customContainerClass = this.config.containerClass;
+                customContainerClass = this.config.containerCls;
 
             container.className = CONTAINER_CLASS;
             if (customContainerClass) {
@@ -3596,7 +3633,6 @@ KISSY.add("suggest", function(S, undefined) {
 
             if (!self.dataScript) {
                 var script = doc.createElement("script");
-                script.type = "text/javascript";
                 script.charset = "utf-8";
 
                 // jQuery ajax.js line 275:
@@ -3650,6 +3686,8 @@ KISSY.add("suggest", function(S, undefined) {
                     var li = self.formatItem(itemData["key"], itemData["result"]);
                     // 缓存key值到attribute上
                     li.setAttribute("key", itemData["key"]);
+                    // 添加奇偶 class
+                    DOM.addClass(li, i % 2 ? EVEN_ITEM_CLASS : ODD_ITEM_CLASS);
                     list.appendChild(li);
                 }
                 content = list;
@@ -3934,7 +3972,7 @@ KISSY.add("suggest", function(S, undefined) {
 
 /**
  * 2009-08-05 更新： 将 class 从配置项中移动到常量，原因是：修改默认 className 的可能性很小，仅保留一个
- *                  containerClass 作为个性化样式的接口即可
+ *                  containerCls 作为个性化样式的接口即可
  *
  * 2009-12-10 更新： 采用 kissy module 组织代码。为了避免多个沙箱下，对全局回调函数覆盖定义引发的问题，
  *                  采用共享模式。
