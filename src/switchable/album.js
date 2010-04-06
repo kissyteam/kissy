@@ -30,3 +30,9 @@ KISSY.add('album', function(S) {
     S.extend(Album, S.Switchable);
     S.Album = Album;
 });
+
+/**
+ * NOTES:
+ *  - 一个 Album 可以分解为 Carousel + Tabs, 其中 Carousel 的 panels 是 Tabs 的 trigggers 
+ *
+ */

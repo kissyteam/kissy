@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 522 Apr 5 22:24
+build: 524 Apr 6 09:10
 */
 /**
  * 数据延迟加载组件
@@ -464,7 +464,7 @@ KISSY.add('datalazyload', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 522 Apr 5 22:24
+build: 524 Apr 6 09:10
 */
 /**
  * 提示补全组件
@@ -1509,7 +1509,7 @@ KISSY.add("suggest", function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 522 Apr 5 22:24
+build: 524 Apr 6 09:10
 */
 /**
  * Switchable
@@ -1750,10 +1750,7 @@ KISSY.add('switchable', function(S, undefined) {
                     trigger = triggers[index];
 
                     // 响应点击和 Tab 键
-                    Event.on(trigger, 'click', function() {
-                        self._onFocusTrigger(index);
-                    });
-                    Event.on(trigger, 'focus', function() {
+                    Event.on(trigger, 'click focus', function() {
                         self._onFocusTrigger(index);
                     });
 
@@ -1965,7 +1962,6 @@ KISSY.add('switchable-autoplay', function(S) {
 /**
  * Switchable Effect Plugin
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base, yui-animation, switchable
  */
 KISSY.add('switchable-effect', function(S) {
 
@@ -2123,7 +2119,7 @@ KISSY.add('switchable-effect', function(S) {
         _switchView: function(fromEls, toEls, index, direction) {
             var self = this, cfg = self.config,
                 effect = cfg.effect,
-                fn = typeof effect === 'function' ? effect : Effects[effect];
+                fn = S.isFunction(effect) ? effect : Effects[effect];
 
             fn.call(self, fromEls, toEls, function() {
                 self.fire('switch');
@@ -2274,7 +2270,8 @@ KISSY.add('switchable-lazyload', function(S) {
 
     var DOM = S.DOM,
         EVENT_BEFORE_SWITCH = 'beforeSwitch',
-        IMG_SRC = 'img-src', TEXTAREA_DATA = 'textarea-data',
+        IMG_SRC = 'img-src',
+        TEXTAREA_DATA = 'textarea-data',
         FLAGS = { },
         Switchable = S.Switchable,
         DataLazyload = S.DataLazyload;
@@ -2344,7 +2341,6 @@ KISSY.add('switchable-lazyload', function(S) {
 /**
  * Tabs Widget
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base
  */
 KISSY.add('tabs', function(S) {
 
@@ -2369,7 +2365,6 @@ KISSY.add('tabs', function(S) {
 /**
  * Tabs Widget
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base
  */
 KISSY.add('slide', function(S) {
 
@@ -2403,7 +2398,6 @@ KISSY.add('slide', function(S) {
 /**
  * Carousel Widget
  * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base
  */
 KISSY.add('carousel', function(S) {
 
@@ -2432,37 +2426,4 @@ KISSY.add('carousel', function(S) {
 
     S.extend(Carousel, S.Switchable);
     S.Carousel = Carousel;
-});
-/**
- * Album Widget
- * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy, yui-base
- */
-KISSY.add('album', function(S) {
-
-        /**
-         * 默认配置，和 Switchable 相同的部分此处未列出
-         */
-        var defaultConfig = {
-            circular: true
-        };
-
-    /**
-     * Album Class
-     * @constructor
-     */
-    function Album(container, config) {
-        var self = this;
-
-        // factory or constructor
-        if (!(self instanceof Album)) {
-            return new Album(container, config);
-        }
-
-        config = S.merge(defaultConfig, config || { });
-        Album.superclass.constructor.call(self, container, config);
-    }
-
-    S.extend(Album, S.Switchable);
-    S.Album = Album;
 });

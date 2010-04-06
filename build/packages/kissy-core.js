@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 522 Apr 5 22:24
+build: 524 Apr 6 09:10
 */
 /**
  * @module kissy
@@ -787,7 +787,7 @@ KISSY.add('json', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 522 Apr 5 22:24
+build: 524 Apr 6 09:10
 */
 /**
  * @module  selector
@@ -1519,7 +1519,7 @@ KISSY.add('dom-class', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 522 Apr 5 22:24
+build: 524 Apr 6 09:10
 */
 /**
  * @module  event
@@ -1554,6 +1554,7 @@ KISSY.add('event', function(S, undefined) {
                            }
                        },
         EVENT_GUID = 'data-ks-event-guid',
+        SPACE = ' ',
         guid = S.now(),
         // { id: { target: el, events: { type: { handle: obj, listeners: [...] } } }, ... }
         cache = { };
@@ -1571,6 +1572,14 @@ KISSY.add('event', function(S, undefined) {
          * @param {Function} fn The event handler
          */
         add: function(target, type, fn) {
+            // on(target, 'click focus', fn)
+            if((type = S.trim(type)) && type.indexOf(SPACE) > 0) {
+                S.each(type.split(SPACE), function(t) {
+                    Event.add(target, t, fn);
+                });
+                return;
+            }
+
             var id = getID(target),
                 special, events, eventHandle;
 
@@ -2046,7 +2055,7 @@ KISSY.add('event-mouseenter', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 522 Apr 5 22:24
+build: 524 Apr 6 09:10
 */
 /**
  * @module  node
@@ -2236,7 +2245,7 @@ KISSY.add('nodelist', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 522 Apr 5 22:24
+build: 524 Apr 6 09:10
 */
 /**
  * @module  cookie
@@ -2323,7 +2332,7 @@ KISSY.add('cookie', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 522 Apr 5 22:24
+build: 524 Apr 6 09:10
 */
 /**
  * @module  ajax

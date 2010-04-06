@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 522 Apr 5 22:24
+build: 524 Apr 6 09:10
 */
 KISSY.add("suggest",function(e,n){function g(a,b,c){if(!(this instanceof g))return new g(a,b,c);this.textInput=e.get(a);this.dataSource=b;this.JSONDataSource=e.isPlainObject(b)?b:null;this.returnedData=null;this.config=e.merge(p,c||{});this.container=null;this.queryParams=this.query="";this._timer=null;this._isRunning=false;this.dataScript=null;this._dataCache={};this._latestScriptTime="";this._onKeyboardSelecting=this._scriptDataIsOut=false;this.selectedItem=null;this._init()}var h=YAHOO.util.Dom,
 o=e.DOM,i=e.Event,l=window,d=document,m=d.getElementsByTagName("head")[0],k=YAHOO.env.ua.ie,p={containerClass:"",containerWidth:"auto",resultFormat:"\u7ea6%result%\u6761\u7ed3\u679c",showCloseBtn:false,closeBtnText:"\u5173\u95ed",useShim:k===6,timerDelay:200,autoFocus:false,submitFormOnClickSelect:true};e.mix(g.prototype,{_init:function(){this._initTextInput();this._initContainer();this.config.useShim&&this._initShim();this._initStyle();this._initResizeEvent()},_initTextInput:function(){var a=this;a.textInput.setAttribute("autocomplete",

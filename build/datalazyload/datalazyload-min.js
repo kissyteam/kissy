@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 522 Apr 5 22:24
+build: 524 Apr 6 09:10
 */
 KISSY.add("datalazyload",function(g,w){function m(a,b){if(!(this instanceof m))return new m(a,b);if(b===w){b=a;a=[p]}g.isArray(a)||(a=[g.get(a)||p]);this.containers=a;this.config=g.merge(x,b||{});this.callbacks={els:[],fns:[]};this._init()}var s=g.DOM,n=g.Event,k=YAHOO.util.Dom,o=window,p=document,t={AUTO:"auto",MANUAL:"manual"},x={mod:t.MANUAL,diff:"default",placeholder:"http://a.tbcdn.cn/kissy/1.0.4/build/datalazyload/dot.gif"},u=m.prototype;g.mix(u,{_init:function(){this.threshold=this._getThreshold();
 this._filterItems();this._getItemsLength()&&this._initLoadEvent()},_initLoadEvent:function(){function a(){c||(c=setTimeout(function(){b();c=null},100))}function b(){d._loadItems();if(d._getItemsLength()===0){n.remove(o,"scroll",a);n.remove(o,"resize",a)}}var c,d=this;n.on(o,"scroll",a);n.on(o,"resize",function(){d.threshold=d._getThreshold();a()});d._getItemsLength()&&g.ready(function(){b()})},_filterItems:function(){var a=this.containers,b=this.threshold,c=this.config.placeholder,d=this.config.mod===

@@ -21,9 +21,9 @@
   ua - done
   ajax - 10% done
 
-  refactor switchable, add album
+  refactor switchable - done
   swfstore
-  overlay
+  overlay - 10%
   docs - 5%
 
   check and test all components
@@ -37,22 +37,24 @@
 
   event
   dom
-  node
+  node & nodelist
   drag & drop
   anim
+  ajax
 
-  review calendar, 可参考 jQuery calendar plugin
-  combobox
-  重构 suggest
+  overlay ( 思考 positionable, stackable )
+  基本底层组件思考：switchable, selectable( suggest 和 combobox 的下拉框)
+
+  refactor switchable, add ablum and remove dependence of yui2
+  review and refactor calendar, Ref: jQuery calendar plugin
+  develop combobox
+  refactor suggest, try to remove dependence of yui2
   重构 datalazyload, 解决服饰频道导致轮播第5屏失效的问题
-  重构 switchable, 脱离对 YUI2 Event, Anim 的依赖
-  重构 megamenu, 并整理其它 switchable 应用，比如画报/排行榜等
-  实现 switchable album 组件
   图片上传组件
   完善 docs
 
-  pickDomain
   实现 TBra 其它组件
+  整理 pickDomain 等实用方法
   整理 TBra 2.1
 
   核心组件都去除对 YUI 的依赖，首页重构为仅依赖 kissy

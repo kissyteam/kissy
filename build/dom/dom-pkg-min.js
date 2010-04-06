@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 522 Apr 5 22:24
+build: 524 Apr 6 09:10
 */
 KISSY.add("selector",function(h,k){function l(c,e,g){var a,b=[],d,f;if(typeof c===s){c=h.trim(c);if(u.test(c)){if(e=n(c.slice(1)))b=[e]}else if(a=w.exec(c)){d=a[1];f=a[2];a=a[3];if(e=d?n(d):q(e))if(a){if(!d||c.indexOf(p)!==-1)b=i(a,f,e)}else if(f)b=j(e,f)}else if(c.indexOf(",")>-1)if(m.querySelectorAll)b=m.querySelectorAll(c);else{d=c.split(",");f=[];b=0;for(c=d.length;b<c;++b)f=f.concat(l(d[b],e));b=o(f)}}else if(c&&c.nodeType)b=[c];else if(c&&c.item)b=c;if(b.item)b=h.makeArray(b);g||v(b);return b}
 function q(c){if(c===k)c=m;else if(typeof c===s&&u.test(c))c=n(c.slice(1));else if(c&&c.nodeType!==1&&c.nodeType!==9)c=null;return c}function n(c){return m.getElementById(c)}function j(c,e){return c.getElementsByTagName(e)}function i(c,e,g){g=c=g.getElementsByClassName(c);var a=0,b=0,d=c.length,f;if(e&&e!==r){g=[];for(e=e.toUpperCase();a<d;++a){f=c[a];if(f.tagName===e)g[b++]=f}}return g}function o(c){var e=false;c.sort(function(a,b){a=a.sourceIndex-b.sourceIndex;if(a===0)e=true;return a});if(e)for(var g=

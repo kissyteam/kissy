@@ -3,7 +3,6 @@
 <head>
 <meta charset="gbk"/>
 <title>Album Test</title>
-
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
 <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script src="../../third-party/yui2/animation/animation-min.js"></script>
@@ -38,24 +37,34 @@
 <script src="album.js"></script>
 
 <style>
-    body { padding: 20px 50px 50px; }
-    h2 { margin: 30px 0 10px; font-size: 17px; }
-    .loading { background: #EBF5FA url(assets/loading.gif) no-repeat 50% 50%; }
-
-    p.code-switch { color: #09f; cursor: pointer; margin-top: 10px; }
-    pre.code {
-        color: #444;
-        cursor: auto;
-        border-left: 2px solid #7F96AA;
-        margin-top: 5px;
-        padding: 0 10px 20px 10px;
-        font-size: 14px;
-    }
+    #page { padding: 50px 50px 300px; width: 950px; margin: 0 auto; line-height: 18px; }
+    h1, h2, h3 { margin: 1em 0 0.3em; }
+    .section ol { margin: 5px 20px; }
+    .section ol li { list-style: decimal inside; margin: 5px 0; }
+    .search-input { width: 300px; height: 20px; padding: 3px 2px 2px 4px; }
+    .search-submit { padding: 4px 10px; margin-left: 5px; }
+    html { overflow-y: scroll; }
 </style>
 </head>
 <body>
-<h2>淘宝商城首页 2010</h2>
+<div id="page">
+    <h1>Album: </h1>
 
+    <div class="section">
+        <h2>Test Cases:</h2>
+        <ol>
+            <li>相册基本功能</li>
+            <li>hash 定位功能</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>References:</h2>
+        <ol>
+            <li><a href="http://www.google.com/help/ig/travel/#t-world_destinations">Google Travel</a></li>
+        </ol>
+    </div>
+</div>
 <script>
     KISSY.ready(function(S) {
 
