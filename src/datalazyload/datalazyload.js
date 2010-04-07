@@ -266,14 +266,19 @@ KISSY.add('datalazyload', function(S, undefined) {
                 areaes = self.areaes,
                 scrollTop = YDOM.getDocumentScrollTop(),
                 threshold = self.threshold + scrollTop,
-                i, area, parent, remain = [];
+                i, area, el, remain = [];
 
             for (i = 0; area = areaes[i++];) {
-                parent = area.parentNode;
-                // 注：area 可能处于 display: none 状态，Dom.getY(area) 获取不到 Y 值
-                //    因此这里采用 area.parentNode
-                if (YDOM.getY(parent) <= threshold) {
-                    self._loadDataFromArea(parent, area);
+                el = area;
+
+                // 注：area 可能处于 display: none 状态，Dom.getY(area) 返回 undefined
+                //    这种情况下用 area.parentNode 的 Y 值来判断
+                if(YDOM.getY(el) === undefined) {
+                    el = area.parentNode;
+                }
+
+                if (YDOM.getY(el) <= threshold) {
+                    self._loadDataFromArea(area.parentNode, area);
                 } else {
                     remain.push(area);
                 }
@@ -286,15 +291,15 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 从 textarea 中加载数据
          * @static
          */
-        _loadDataFromArea: function(parent, area) {
-            //parent.innerHTML = area.value; // 这种方式会导致 chrome 缓存 bug
+        _loadDataFromArea: function(container, area) {
+            //container.innerHTML = area.value; // 这种方式会导致 chrome 缓存 bug
 
             // 采用隐藏不去除方式
-            var content = doc.createElement('DIV');
-            content.innerHTML = area.value;
+            var content = DOM.create(area.value);
             area.style.display = NONE;
-            area.className = ''; // clear hooks
-            parent.appendChild(content);
+            area.value = ''; // clear content
+            area.className = ''; // clear hook
+            container.insertBefore(content, area);
 
             // 执行里面的脚本
             if(!S.UA.gecko) { // firefox 会自动执行 TODO: feature test
