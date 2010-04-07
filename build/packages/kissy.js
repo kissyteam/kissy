@@ -2464,7 +2464,7 @@ KISSY.add('ajax', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 528 Apr 7 08:20
+build: 529 Apr 7 12:05
 */
 /**
  * 数据延迟加载组件
@@ -2765,7 +2765,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             // 采用隐藏不去除方式
             var content = DOM.create(area.value);
             area.style.display = NONE;
-            area.value = ''; // clear content
+            //area.value = ''; // clear content  不能清空，否则 F5 刷新，会丢内容
             area.className = ''; // clear hook
             container.insertBefore(content, area);
 
@@ -3987,7 +3987,7 @@ KISSY.add("suggest", function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 529 Apr 7 13:20
 */
 /**
  * Switchable
@@ -4022,11 +4022,11 @@ KISSY.add('switchable', function(S, undefined) {
 
         // 调整配置信息
         config = config || {};
-        if (!('mackupType' in config)) {
+        if (!('markupType' in config)) {
             if (config.panelCls) {
-                config.mackupType = 1;
+                config.markupType = 1;
             } else if (config.panels) {
-                config.mackupType = 2;
+                config.markupType = 2;
             }
         }
         config = S.merge(Switchable.Config, config);
@@ -4080,7 +4080,7 @@ KISSY.add('switchable', function(S, undefined) {
 
     // 默认配置
     Switchable.Config = {
-        mackupType: 0, // mackup 的类型，取值如下：
+        markupType: 0, // markup 的类型，取值如下：
 
         // 0 - 默认结构：通过 nav 和 content 来获取 triggers 和 panels
         navCls: CLS_PREFIX + 'nav',
@@ -4102,7 +4102,7 @@ KISSY.add('switchable', function(S, undefined) {
         // 触发延迟
         delay: .1, // 100ms
 
-        activeIndex: 0, // mackup 的默认激活项，应该与此 index 一致
+        activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
         activeTriggerCls: 'active',
 
         // 可见视图内有多少个 panels
@@ -4123,9 +4123,9 @@ KISSY.add('switchable', function(S, undefined) {
         _init: function() {
             var self = this, cfg = self.config;
 
-            // parse mackup
+            // parse markup
             if (self.panels.length === 0) {
-                self._parseMackup();
+                self._parseMarkup();
             }
 
             // bind triggers
@@ -4142,15 +4142,15 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * 解析 mackup, 获取 triggers, panels, content
+         * 解析 markup, 获取 triggers, panels, content
          */
-        _parseMackup: function() {
+        _parseMarkup: function() {
             var self = this, container = self.container,
                 cfg = self.config,
                 hasTriggers = cfg.hasTriggers,
                 nav, content, triggers = [], panels = [], i, n, m;
 
-            switch (cfg.mackupType) {
+            switch (cfg.markupType) {
                 case 0: // 默认结构
                     nav = S.get(DOT + cfg.navCls, container);
                     if (nav) {
@@ -4176,7 +4176,7 @@ KISSY.add('switchable', function(S, undefined) {
 
             // 自动生成 triggers
             if (hasTriggers && n > 0 && triggers.length === 0) {
-                triggers = self._generateTriggersMackup(self.length);
+                triggers = self._generateTriggersMarkup(self.length);
             }
 
             // 将 triggers 转换为普通数组
@@ -4195,9 +4195,9 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * 自动生成 triggers 的 mackup
+         * 自动生成 triggers 的 markup
          */
-        _generateTriggersMackup: function(len) {
+        _generateTriggersMarkup: function(len) {
             var self = this, cfg = self.config,
                 ul = doc.createElement('UL'), li, i;
 

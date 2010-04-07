@@ -297,7 +297,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             // 采用隐藏不去除方式
             var content = DOM.create(area.value);
             area.style.display = NONE;
-            area.value = ''; // clear content
+            //area.value = ''; // clear content  不能清空，否则 F5 刷新，会丢内容
             area.className = ''; // clear hook
             container.insertBefore(content, area);
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 528 Apr 7 08:20
+build: 529 Apr 7 12:05
 */
 /**
  * 数据延迟加载组件
@@ -302,7 +302,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             // 采用隐藏不去除方式
             var content = DOM.create(area.value);
             area.style.display = NONE;
-            area.value = ''; // clear content
+            //area.value = ''; // clear content  不能清空，否则 F5 刷新，会丢内容
             area.className = ''; // clear hook
             container.insertBefore(content, area);
 
