@@ -34,17 +34,12 @@ KISSY.add('swf', function(S) {
             canExpressInstall = UA.flash >= 8.0,
             shouldExpressInstall = canExpressInstall && params.useExpressInstall && !isFlashVersionRight,
             flashUrl = (shouldExpressInstall) ? EXPRESS_INSTALL_URL : swfUrl,
-            // TODO: rename to ks
+            // TODO: rename
             flashvars = 'YUISwfId=' + id + '&YUIBridgeCallback=' + EVENT_HANDLER,
             ret = '<object ';
 
-        // TODO: 确认以下三个私有变量是否有用
-        self._queue = [];
-        self._events =  {};
-        self._configs =  {};
-
-        self._id = id;
-        SWF._instances[id] = self;
+        self.id = id;
+        SWF.instances[id] = self;
 
         if ((el = S.get(el)) && (isFlashVersionRight || shouldExpressInstall) && flashUrl) {
             ret += 'id="' + id + '" ';
@@ -78,7 +73,7 @@ KISSY.add('swf', function(S) {
             ret += "</object>";
 
             el.innerHTML = ret;
-            self._swf = S.get('#' + id);
+            self.swf = S.get('#' + id);
         }
     }
 
@@ -86,24 +81,23 @@ KISSY.add('swf', function(S) {
      * The static collection of all instances of the SWFs on the page.
      * @static
      */
-    SWF._instances = (S.SWF || { })._instances || { };
+    SWF.instances = (S.SWF || { }).instances || { };
 
     /**
      * Handles an event coming from within the SWF and delegate it to a specific instance of SWF.
      * @static
      */
     SWF.eventHandler = function(swfId, event) {
-        SWF._instances[swfId]._eventHandler(event);
+        SWF.instances[swfId]._eventHandler(event);
     };
 
     S.augment(SWF, S.EventTarget);
-
     S.augment(SWF, {
 
         _eventHandler: function(event) {
             var self = this,
                 type = event.type;
-            
+
             if (type === 'log') {
                 S.log(event.message);
             } else if(type) {
@@ -118,17 +112,9 @@ KISSY.add('swf', function(S) {
          */
         callSWF: function (func, args) {
             var self = this;
-            if (self._swf[func]) {
-                return self._swf[func].apply(self._swf, args || []);
+            if (self.swf[func]) {
+                return self.swf[func].apply(self.swf, args || []);
             }
-        },
-
-        /**
-         * Public accessor to the unique name of the SWF instance.
-         * @return {String} Unique name of the SWF instance.
-         */
-        toString: function() {
-            return 'SWF ' + this._id;
         }
     });
 

@@ -12,6 +12,7 @@
 <h2>Test Data</h2>
 
 <script src="../../build/packages/kissy-core.js"></script>
+
 <script src="swf-ua.js"></script>
 <script src="swf.js"></script>
 <script src="swfstore.js"></script>
@@ -32,16 +33,24 @@
         <input id="removeat-button" name="removeat-button" type="Button" value="Remove Item At:"/> <input id="indexField" type="text" value="0" size="3"/>
         <input id="settings-button" name="purge-button" type="button" value="Display Settings"/>
     </div>
-    <ul id="data-list" style="float: left; margin: 0; width: 400px; height: 220px; border: 1px solid #ccc; ">
+    <ul id="data-list" style="float: left; margin: 0; width: 400px; height: 220px; border: 1px solid #ccc; overflow: scroll">
     </ul>
+    <style>
+        #data-list { list-style: none; padding-left: 10px; }
+        #data-list li { clear: both; height: 20px; overflow: hidden; }
+        #data-list .index { width: 20px; float: left; padding: 0 10px; }
+        #data-list .name { width: 80px; float: left; padding: 0 10px; }
+        #data-list .value { width: 200px; float: left; padding: 0 10px; }
+    </style>
 <div id="swfstore-container" style="width: 400px; height: 220px; border: 1px solid #ccc; float: right">
         Placeholder for SWF, will be replaced with embedded SWF if proper Flash Player is installed
     </div>
 </div>
+<p style="clear:both">References: <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.SWFStore.html">SWFStore API Documents</a></p>
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY;
+    var S = KISSY, swfstore;
 
     function test_ua(test) {
         if (S.UA.flash === null) test.fail();
@@ -70,47 +79,109 @@
         //        });
     }
 
-    function test_swfstore(test) {
-        if(test_swfstore.runned) return;
-        test_swfstore.runned = true;
+    S.Test.init();
+    init_swfstore(S.Test);
+    function init_swfstore(test) {
 
-        // the swfstore instance
-        var swfstore = new S.SWFStore('#swfstore-container');
-        swfstore.on('swfReady', function() {
+        // 初始化
+        swfstore = new S.SWFStore('#swfstore-container', 'swfstore-original.swf');
+        swfstore.on('contentReady', function() {
             test.echo('swfstore is ready!');
+            updateList();
         });
 
-        var dataList = S.get('#data-list'), items;
-        swfstore.on('save', function(event) {
-            items = this.getItems();
-            test.echo(items.length);
-        });
+        // 数据更新：当数据有 增加、删除、修改 操作时，都会触发 save 事件
+        swfstore.on('save', updateList);
+        var dataList = S.get('#data-list'), items, i, len, html;
+        function updateList(event) {
+            html = '';
+            items = swfstore.getItems();
+            for (i = 0,len = items.length; i < len; ++i) {
+                html += '<li><span class="index">' + i + '</span>' +
+                        '<span class="name">' + escapeHTML(swfstore.getNameAt(i)) + '</span>' +
+                        '<span class="value">' + escapeHTML(items[i]) + '</span></li>';
+            }
+            dataList.innerHTML = html;
+            dump(event);
+        }
+        function escapeHTML(str) {
+            return str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+        function dump(event) {
+            if(event) {
+                test.echo(
+                        'event = { type: "' + event.type
+                        + '", info: "' + event.info
+                        + '", message: "' + event.info
+                        + '", key: "' + event.key
+                        + '", oldValue: "' + event.oldValue
+                        + '", newValue: "' + event.newValue
+                        + '" }'
+                        );
+            }
+        }
 
-        S.one('#save-button').on('click', function () {
-            swfstore.setItem(S.get('#nameField').value, S.get('#valueField').value);
-        });
+        // 操作按钮
+        var nameEl = S.get('#nameField'),
+            valEl = S.get('#valueField'),
+            indexEl = S.get('#indexField');
+        S.one('#save-button').on('click', function () { swfstore.setItem(nameEl.value, valEl.value); });
+        S.one('#remove-button').on('click', function () { swfstore.removeItem(nameEl.value); });
+        S.one('#get-button').on('click', function () { test.echo('getValueOf("' + nameEl.value + '") = "' + swfstore.getValueOf(name.value) + '"'); });
+        S.one('#purge-button').on('click', function() { swfstore.clear(); });
+        S.one('#removeat-button').on('click', function () { swfstore.removeItemAt(parseInt(indexEl.value)); });
+        S.one('#settings-button').on('click', function() { swfstore.displaySettings(); });
 
-        S.one('#remove-button').on('click', function () {
-            swfstore.removeItem(S.get('#nameField').value);
+        // 事件监听
+        swfstore.on('clear', function() {
+            // 实际证明该事件不会触发，可以通过 save 事件监听( info === undefined )
         });
-
-        S.one('#get-button').on('click', function () {
-            var name = S.get('#nameField').value;
-            test.echo('getValueOf("' + name + '") = ' + swfstore.getValueOf(name));
+        swfstore.on('error', function(event) {
+            dump(event);
         });
-
-        S.one('#purge-button').on('click', function() {
-            swfstore.clear();
+        swfstore.on('inadequateDimensions', function(event) {
+            dump(event);
         });
-
-        S.one('#removeat-button').on('click', function () {
-            swfstore.removeItemAt(parseInt(S.get('#indexField').value));
+        swfstore.on('openingDialog', function(event) {
+            dump(event);
         });
-
-        S.one('#settings-button').on('click', function() {
-            swfstore.displaySettings();
+        swfstore.on('quotaExceededError', function(event) {
+            dump(event);
+        });
+        swfstore.on('securityError', function(event) {
+            dump(event);
+        });
+        swfstore.on('pending', function(event) {
+            dump(event);
+        });
+        swfstore.on('success', function(event) {
+            dump(event);
         });
     }
+
+    function test_get(test) {
+        // 'getItems', 'getLength'
+        // 'getValueAt', 'getNameAt', 'getTypeAt'
+        // 'getValueOf', 'getTypeOf'
+
+        // setup
+        swfstore.clear();
+        swfstore.setItem('name0', 'test');
+        swfstore.setItem('name1', {'p1': 'v1', 'p2': 'v2' });
+        return;
+        swfstore.setItem('name2', '');
+        swfstore.setItem('name3', undefined);
+        swfstore.setItem('name4', window);
+        swfstore.setItem('name5', NaN);
+return;
+        if(swfstore.getLength() !== 6) test.fail();
+        if(swfstore.getValueAt(3) !== undefined) test.fail();
+        if(swfstore.getNameAt(5) !== 'name5') test.fail();
+        if(swfstore.getTypeAt(1) !== null) test.fail();
+        if(swfstore.getValueOf('name2') !== '') test.fail();
+        if(swfstore.getTypeOf('name0') !== 'string') test.fail();
+    }
+    
 </script>
 </body>
 </html>

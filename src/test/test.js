@@ -122,6 +122,9 @@ var KISSY = window.KISSY || {};
             if (navigator.userAgent.indexOf('Firefox') !== -1) {
                 tests.reverse();
             }
+
+            // set inited flag
+            inited = true;
         },
 
         render: function() {
@@ -173,15 +176,20 @@ var KISSY = window.KISSY || {};
                 konsole.log(test);
             }
             konsole.echo('[DONE]', '<hr />');
-        }
+        },
+
+        echo: konsole.echo
     };
 
     // render markup immediately
     S.Test.render();
 
     // attach load event
+    var inited = false;
     function initTest() {
-        S.Test.init();
+        if (!inited) {
+            S.Test.init();
+        }
     }
 
     if (win.attachEvent) {

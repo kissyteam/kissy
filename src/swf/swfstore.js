@@ -20,7 +20,8 @@ KISSY.add('swfstore', function(S, undefined) {
     function SWFStore(el, swfUrl, shareData, useCompression) {
         var browser = 'other',
             cookie = Cookie.get(SWFSTORE),
-            params;
+            params,
+            self = this;
 
         // convert booleans to strings for flashvars compatibility
         shareData = (shareData !== undefined ? shareData : true) + '';
@@ -53,16 +54,18 @@ KISSY.add('swfstore', function(S, undefined) {
             }
         };
 
-        this.embeddedSWF = new S.SWF(el, swfUrl || 'swfstore.swf', params);
+        self.embeddedSWF = new S.SWF(el, swfUrl || 'swfstore.swf', params);
+
+        // 让 flash fired events 能通知到 swfstore
+        self.embeddedSWF._eventHandler = function(event) {
+            S.SWF.prototype._eventHandler.call(self, event);
+        }
     }
 
-    // events
-    S.each(['on', 'detach'], function(methodName) {
-        SP[methodName] = function(type, fn) {
-            this.embeddedSWF[methodName](type, fn);
-        }
-    });
+    // events support
+    S.augment(SWFStore, S.EventTarget);
 
+    // methods
     S.augment(SWFStore, {
         /**
          * Saves data to local storage. It returns a String that can
@@ -79,20 +82,28 @@ KISSY.add('swfstore', function(S, undefined) {
                 // http://yuilibrary.com/projects/yui2/ticket/2528593
                 data = data.replace(/\\/g, '\\\\');
             }
-            return this.embeddedSWF.callSWF('setItem', [location, data]);
+
+            // 当 name 为空值时，目前会触发 swf 的内部异常，此处不允许空键值
+            if ((location = S.trim(location + ''))) {
+                try {
+                    return this.embeddedSWF.callSWF('setItem', [location, data]);
+                }
+                catch(e) { // 当 swf 异常时，进一步捕获信息
+                    this.fire('error', { message: e });
+                }
+            }
         }
     });
 
     S.each([
-        'getShareData', 'setShareData',
-        'hasAdequateDimensions',
-        'getUseCompression', 'setUseCompression',
         'getValueAt', 'getNameAt', 'getTypeAt',
         'getValueOf', 'getTypeOf',
-        'getItems', 'removeItem', 'removeItemAt',
-        'getLength', 'calculateCurrentSize', 'getModificationDate',
-        'setSize', 'displaySettings',
-        'clear'
+        'getItems', 'getLength',
+        'removeItem', 'removeItemAt', 'clear',
+        'getShareData', 'setShareData',
+        'getUseCompression', 'setUseCompression',
+        'calculateCurrentSize', 'hasAdequateDimensions', 'setSize',
+        'getModificationDate', 'displaySettings'
     ], function(methodName) {
         SWFStore.prototype[methodName] = function() {
             return this.embeddedSWF.callSWF(methodName, S.makeArray(arguments));
@@ -107,4 +118,6 @@ KISSY.add('swfstore', function(S, undefined) {
  *   - 所有事件和方法的 test cases
  *   - 存储超过最大值时，会自动进行什么操作?
  *   - 当数据有变化时，自动通知各个页面的功能
+ *
+ *   - Bug: 点击 Remove, 当 name 不存在时，会将最后一条删除
  */
