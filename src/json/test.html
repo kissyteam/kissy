@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>JSON Test</title>
+</head>
+<body>
+<script src="../test/test.js"></script>
+
+<h2>Test Data</h2>
+<script src="../kissy/kissy.js"></script>
+<script src="json.js"></script>
+
+<!-- Test Cases -->
+<script>
+    var JSON = KISSY.JSON;
+
+    function test_stringify(test) {
+        if (JSON.stringify({'a': true}) !== '{"a":true}') test.fail();
+        if (JSON.stringify(true) !== 'true') test.fail();
+        if (JSON.stringify(null) !== 'null') test.fail();
+        if (JSON.stringify(undefined) !== undefined) test.fail();
+        if (JSON.stringify(NaN) !== 'null') test.fail(JSON.stringify(NaN));
+    }
+
+    function test_parse(test) {
+        if (JSON.parse('{"a":true}').a !== true) test.fail(S.JSON.stringify({"a":true}));
+        if (JSON.parse(true) !== true) test.fail();
+        if (JSON.parse('true') !== true) test.fail();
+        if (JSON.parse(null) !== null) test.fail();
+        if (JSON.parse('null') !== null) test.fail();
+        try {
+            JSON.parse(undefined);
+            test.fail();
+        } catch(e) {
+        }
+    }
+
+</script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 534 Apr 8 17:45
+build: 537 Apr 8 19:57
 */
 /**
  * @module kissy
@@ -775,330 +775,6 @@ KISSY.add('ua', function(S) {
  *  - 权衡是否需要加入 maxthon 等国内浏览器嗅探？
  * 
  *//*
- from http://www.JSON.org/json2.js
- 2010-03-20
- */
-
-KISSY.add('json', function (S) {
-
-    var JSON = S.JSON = window.JSON;
-
-    function f(n) {
-        // Format integers to have at least two digits.
-        return n < 10 ? '0' + n : n;
-    }
-
-    if (typeof Date.prototype.toJSON !== 'function') {
-
-        Date.prototype.toJSON = function () {
-
-            return isFinite(this.valueOf()) ?
-                   this.getUTCFullYear() + '-' +
-                   f(this.getUTCMonth() + 1) + '-' +
-                   f(this.getUTCDate()) + 'T' +
-                   f(this.getUTCHours()) + ':' +
-                   f(this.getUTCMinutes()) + ':' +
-                   f(this.getUTCSeconds()) + 'Z' : null;
-        };
-
-        String.prototype.toJSON =
-        Number.prototype.toJSON =
-        Boolean.prototype.toJSON = function () {
-            return this.valueOf();
-        };
-    }
-
-    var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
-        escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
-        gap,
-        indent,
-        meta = {    // table of character substitutions
-            '\b': '\\b',
-            '\t': '\\t',
-            '\n': '\\n',
-            '\f': '\\f',
-            '\r': '\\r',
-            '"' : '\\"',
-            '\\': '\\\\'
-        },
-        rep;
-
-
-    function quote(string) {
-
-        // If the string contains no control characters, no quote characters, and no
-        // backslash characters, then we can safely slap some quotes around it.
-        // Otherwise we must also replace the offending characters with safe escape
-        // sequences.
-
-        escapable.lastIndex = 0;
-        return escapable.test(string) ?
-               '"' + string.replace(escapable, function (a) {
-                   var c = meta[a];
-                   return typeof c === 'string' ? c :
-                          '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-               }) + '"' :
-               '"' + string + '"';
-    }
-
-
-    function str(key, holder) {
-
-        // Produce a string from holder[key].
-
-        var i,          // The loop counter.
-            k,          // The member key.
-            v,          // The member value.
-            length,
-            mind = gap,
-            partial,
-            value = holder[key];
-
-        // If the value has a toJSON method, call it to obtain a replacement value.
-
-        if (value && typeof value === 'object' &&
-            typeof value.toJSON === 'function') {
-            value = value.toJSON(key);
-        }
-
-        // If we were called with a replacer function, then call the replacer to
-        // obtain a replacement value.
-
-        if (typeof rep === 'function') {
-            value = rep.call(holder, key, value);
-        }
-
-        // What happens next depends on the value's type.
-
-        switch (typeof value) {
-            case 'string':
-                return quote(value);
-
-            case 'number':
-
-                // JSON numbers must be finite. Encode non-finite numbers as null.
-
-                return isFinite(value) ? String(value) : 'null';
-
-            case 'boolean':
-            case 'null':
-
-                // If the value is a boolean or null, convert it to a string. Note:
-                // typeof null does not produce 'null'. The case is included here in
-                // the remote chance that this gets fixed someday.
-
-                return String(value);
-
-            // If the type is 'object', we might be dealing with an object or an array or
-            // null.
-
-            case 'object':
-
-                // Due to a specification blunder in ECMAScript, typeof null is 'object',
-                // so watch out for that case.
-
-                if (!value) {
-                    return 'null';
-                }
-
-                // Make an array to hold the partial results of stringifying this object value.
-
-                gap += indent;
-                partial = [];
-
-                // Is the value an array?
-
-                if (Object.prototype.toString.apply(value) === '[object Array]') {
-
-                    // The value is an array. Stringify every element. Use null as a placeholder
-                    // for non-JSON values.
-
-                    length = value.length;
-                    for (i = 0; i < length; i += 1) {
-                        partial[i] = str(i, value) || 'null';
-                    }
-
-                    // Join all of the elements together, separated with commas, and wrap them in
-                    // brackets.
-
-                    v = partial.length === 0 ? '[]' :
-                        gap ? '[\n' + gap +
-                              partial.join(',\n' + gap) + '\n' +
-                              mind + ']' :
-                        '[' + partial.join(',') + ']';
-                    gap = mind;
-                    return v;
-                }
-
-                // If the replacer is an array, use it to select the members to be stringified.
-
-                if (rep && typeof rep === 'object') {
-                    length = rep.length;
-                    for (i = 0; i < length; i += 1) {
-                        k = rep[i];
-                        if (typeof k === 'string') {
-                            v = str(k, value);
-                            if (v) {
-                                partial.push(quote(k) + (gap ? ': ' : ':') + v);
-                            }
-                        }
-                    }
-                } else {
-
-                    // Otherwise, iterate through all of the keys in the object.
-
-                    for (k in value) {
-                        if (Object.hasOwnProperty.call(value, k)) {
-                            v = str(k, value);
-                            if (v) {
-                                partial.push(quote(k) + (gap ? ': ' : ':') + v);
-                            }
-                        }
-                    }
-                }
-
-                // Join all of the member texts together, separated with commas,
-                // and wrap them in braces.
-
-                v = partial.length === 0 ? '{}' :
-                    gap ? '{\n' + gap + partial.join(',\n' + gap) + '\n' +
-                          mind + '}' : '{' + partial.join(',') + '}';
-                gap = mind;
-                return v;
-        }
-    }
-
-    // If the JSON object does not yet have a stringify method, give it one.
-
-    if (typeof JSON.stringify !== 'function') {
-        JSON.stringify = function (value, replacer, space) {
-
-            // The stringify method takes a value and an optional replacer, and an optional
-            // space parameter, and returns a JSON text. The replacer can be a function
-            // that can replace values, or an array of strings that will select the keys.
-            // A default replacer method can be provided. Use of the space parameter can
-            // produce text that is more easily readable.
-
-            var i;
-            gap = '';
-            indent = '';
-
-            // If the space parameter is a number, make an indent string containing that
-            // many spaces.
-
-            if (typeof space === 'number') {
-                for (i = 0; i < space; i += 1) {
-                    indent += ' ';
-                }
-
-                // If the space parameter is a string, it will be used as the indent string.
-
-            } else if (typeof space === 'string') {
-                indent = space;
-            }
-
-            // If there is a replacer, it must be a function or an array.
-            // Otherwise, throw an error.
-
-            rep = replacer;
-            if (replacer && typeof replacer !== 'function' &&
-                (typeof replacer !== 'object' ||
-                 typeof replacer.length !== 'number')) {
-                throw new Error('JSON.stringify');
-            }
-
-            // Make a fake root object containing our value under the key of ''.
-            // Return the result of stringifying the value.
-
-            return str('', {'': value});
-        };
-    }
-
-
-    // If the JSON object does not yet have a parse method, give it one.
-
-    if (typeof JSON.parse !== 'function') {
-        JSON.parse = function (text, reviver) {
-
-            // The parse method takes a text and an optional reviver function, and returns
-            // a JavaScript value if the text is a valid JSON text.
-
-            var j;
-
-            function walk(holder, key) {
-
-                // The walk method is used to recursively walk the resulting structure so
-                // that modifications can be made.
-
-                var k, v, value = holder[key];
-                if (value && typeof value === 'object') {
-                    for (k in value) {
-                        if (Object.hasOwnProperty.call(value, k)) {
-                            v = walk(value, k);
-                            if (v !== undefined) {
-                                value[k] = v;
-                            } else {
-                                delete value[k];
-                            }
-                        }
-                    }
-                }
-                return reviver.call(holder, key, value);
-            }
-
-
-            // Parsing happens in four stages. In the first stage, we replace certain
-            // Unicode characters with escape sequences. JavaScript handles many characters
-            // incorrectly, either silently deleting them, or treating them as line endings.
-
-            text = String(text);
-            cx.lastIndex = 0;
-            if (cx.test(text)) {
-                text = text.replace(cx, function (a) {
-                    return '\\u' +
-                           ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-                });
-            }
-
-            // In the second stage, we run the text against regular expressions that look
-            // for non-JSON patterns. We are especially concerned with '()' and 'new'
-            // because they can cause invocation, and '=' because it can cause mutation.
-            // But just to be safe, we want to reject all unexpected forms.
-
-            // We split the second stage into 4 regexp operations in order to work around
-            // crippling inefficiencies in IE's and Safari's regexp engines. First we
-            // replace the JSON backslash pairs with '@' (a non-JSON character). Second, we
-            // replace all simple value tokens with ']' characters. Third, we delete all
-            // open brackets that follow a colon or comma or that begin the text. Finally,
-            // we look to see that the remaining characters are only whitespace or ']' or
-            // ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
-
-            if (/^[\],:{}\s]*$/.
-                test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@').
-                replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-                replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-
-                // In the third stage we use the eval function to compile the text into a
-                // JavaScript structure. The '{' operator is subject to a syntactic ambiguity
-                // in JavaScript: it can begin a block or an object literal. We wrap the text
-                // in parens to eliminate the ambiguity.
-
-                j = eval('(' + text + ')');
-
-                // In the optional fourth stage, we recursively walk the new structure, passing
-                // each name/value pair to a reviver function for possible transformation.
-
-                return typeof reviver === 'function' ?
-                       walk({'': j}, '') : j;
-            }
-
-            // If the text is not JSON parseable, then a SyntaxError is thrown.
-
-            throw new SyntaxError('JSON.parse');
-        };
-    }
-});
-/*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
 build: 527 Apr 6 22:39
@@ -2681,6 +2357,335 @@ KISSY.add('cookie', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
+build: 537 Apr 8 19:57
+*/
+/**
+ * from http://www.JSON.org/json2.js
+ * 2010-03-20
+ */
+
+KISSY.add('json', function (S) {
+
+    var JSON = S.JSON = window.JSON;
+
+    function f(n) {
+        // Format integers to have at least two digits.
+        return n < 10 ? '0' + n : n;
+    }
+
+    if (typeof Date.prototype.toJSON !== 'function') {
+
+        Date.prototype.toJSON = function (key) {
+
+            return isFinite(this.valueOf()) ?
+                   this.getUTCFullYear() + '-' +
+                   f(this.getUTCMonth() + 1) + '-' +
+                   f(this.getUTCDate()) + 'T' +
+                   f(this.getUTCHours()) + ':' +
+                   f(this.getUTCMinutes()) + ':' +
+                   f(this.getUTCSeconds()) + 'Z' : null;
+        };
+
+        String.prototype.toJSON =
+        Number.prototype.toJSON =
+        Boolean.prototype.toJSON = function (key) {
+            return this.valueOf();
+        };
+    }
+
+    var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+        escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+        gap,
+        indent,
+        meta = {    // table of character substitutions
+            '\b': '\\b',
+            '\t': '\\t',
+            '\n': '\\n',
+            '\f': '\\f',
+            '\r': '\\r',
+            '"' : '\\"',
+            '\\': '\\\\'
+        },
+        rep;
+
+
+    function quote(string) {
+
+        // If the string contains no control characters, no quote characters, and no
+        // backslash characters, then we can safely slap some quotes around it.
+        // Otherwise we must also replace the offending characters with safe escape
+        // sequences.
+
+        escapable.lastIndex = 0;
+        return escapable.test(string) ?
+               '"' + string.replace(escapable, function (a) {
+                   var c = meta[a];
+                   return typeof c === 'string' ? c :
+                          '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+               }) + '"' :
+               '"' + string + '"';
+    }
+
+
+    function str(key, holder) {
+
+        // Produce a string from holder[key].
+
+        var i,          // The loop counter.
+            k,          // The member key.
+            v,          // The member value.
+            length,
+            mind = gap,
+            partial,
+            value = holder[key];
+
+        // If the value has a toJSON method, call it to obtain a replacement value.
+
+        if (value && typeof value === 'object' &&
+            typeof value.toJSON === 'function') {
+            value = value.toJSON(key);
+        }
+
+        // If we were called with a replacer function, then call the replacer to
+        // obtain a replacement value.
+
+        if (typeof rep === 'function') {
+            value = rep.call(holder, key, value);
+        }
+
+        // What happens next depends on the value's type.
+
+        switch (typeof value) {
+            case 'string':
+                return quote(value);
+
+            case 'number':
+
+                // JSON numbers must be finite. Encode non-finite numbers as null.
+
+                return isFinite(value) ? String(value) : 'null';
+
+            case 'boolean':
+            case 'null':
+
+                // If the value is a boolean or null, convert it to a string. Note:
+                // typeof null does not produce 'null'. The case is included here in
+                // the remote chance that this gets fixed someday.
+
+                return String(value);
+
+            // If the type is 'object', we might be dealing with an object or an array or
+            // null.
+
+            case 'object':
+
+                // Due to a specification blunder in ECMAScript, typeof null is 'object',
+                // so watch out for that case.
+
+                if (!value) {
+                    return 'null';
+                }
+
+                // Make an array to hold the partial results of stringifying this object value.
+
+                gap += indent;
+                partial = [];
+
+                // Is the value an array?
+
+                if (Object.prototype.toString.apply(value) === '[object Array]') {
+
+                    // The value is an array. Stringify every element. Use null as a placeholder
+                    // for non-JSON values.
+
+                    length = value.length;
+                    for (i = 0; i < length; i += 1) {
+                        partial[i] = str(i, value) || 'null';
+                    }
+
+                    // Join all of the elements together, separated with commas, and wrap them in
+                    // brackets.
+
+                    v = partial.length === 0 ? '[]' :
+                        gap ? '[\n' + gap +
+                              partial.join(',\n' + gap) + '\n' +
+                              mind + ']' :
+                        '[' + partial.join(',') + ']';
+                    gap = mind;
+                    return v;
+                }
+
+                // If the replacer is an array, use it to select the members to be stringified.
+
+                if (rep && typeof rep === 'object') {
+                    length = rep.length;
+                    for (i = 0; i < length; i += 1) {
+                        k = rep[i];
+                        if (typeof k === 'string') {
+                            v = str(k, value);
+                            if (v) {
+                                partial.push(quote(k) + (gap ? ': ' : ':') + v);
+                            }
+                        }
+                    }
+                } else {
+
+                    // Otherwise, iterate through all of the keys in the object.
+
+                    for (k in value) {
+                        if (Object.hasOwnProperty.call(value, k)) {
+                            v = str(k, value);
+                            if (v) {
+                                partial.push(quote(k) + (gap ? ': ' : ':') + v);
+                            }
+                        }
+                    }
+                }
+
+                // Join all of the member texts together, separated with commas,
+                // and wrap them in braces.
+
+                v = partial.length === 0 ? '{}' :
+                    gap ? '{\n' + gap + partial.join(',\n' + gap) + '\n' +
+                          mind + '}' : '{' + partial.join(',') + '}';
+                gap = mind;
+                return v;
+        }
+    }
+
+    // If the JSON object does not yet have a stringify method, give it one.
+
+    if (typeof JSON.stringify !== 'function') {
+        JSON.stringify = function (value, replacer, space) {
+
+            // The stringify method takes a value and an optional replacer, and an optional
+            // space parameter, and returns a JSON text. The replacer can be a function
+            // that can replace values, or an array of strings that will select the keys.
+            // A default replacer method can be provided. Use of the space parameter can
+            // produce text that is more easily readable.
+
+            var i;
+            gap = '';
+            indent = '';
+
+            // If the space parameter is a number, make an indent string containing that
+            // many spaces.
+
+            if (typeof space === 'number') {
+                for (i = 0; i < space; i += 1) {
+                    indent += ' ';
+                }
+
+                // If the space parameter is a string, it will be used as the indent string.
+
+            } else if (typeof space === 'string') {
+                indent = space;
+            }
+
+            // If there is a replacer, it must be a function or an array.
+            // Otherwise, throw an error.
+
+            rep = replacer;
+            if (replacer && typeof replacer !== 'function' &&
+                (typeof replacer !== 'object' ||
+                 typeof replacer.length !== 'number')) {
+                throw new Error('JSON.stringify');
+            }
+
+            // Make a fake root object containing our value under the key of ''.
+            // Return the result of stringifying the value.
+
+            return str('', {'': value});
+        };
+    }
+
+
+    // If the JSON object does not yet have a parse method, give it one.
+
+    if (typeof JSON.parse !== 'function') {
+        JSON.parse = function (text, reviver) {
+
+            // The parse method takes a text and an optional reviver function, and returns
+            // a JavaScript value if the text is a valid JSON text.
+
+            var j;
+
+            function walk(holder, key) {
+
+                // The walk method is used to recursively walk the resulting structure so
+                // that modifications can be made.
+
+                var k, v, value = holder[key];
+                if (value && typeof value === 'object') {
+                    for (k in value) {
+                        if (Object.hasOwnProperty.call(value, k)) {
+                            v = walk(value, k);
+                            if (v !== undefined) {
+                                value[k] = v;
+                            } else {
+                                delete value[k];
+                            }
+                        }
+                    }
+                }
+                return reviver.call(holder, key, value);
+            }
+
+
+            // Parsing happens in four stages. In the first stage, we replace certain
+            // Unicode characters with escape sequences. JavaScript handles many characters
+            // incorrectly, either silently deleting them, or treating them as line endings.
+
+            text = String(text);
+            cx.lastIndex = 0;
+            if (cx.test(text)) {
+                text = text.replace(cx, function (a) {
+                    return '\\u' +
+                           ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+                });
+            }
+
+            // In the second stage, we run the text against regular expressions that look
+            // for non-JSON patterns. We are especially concerned with '()' and 'new'
+            // because they can cause invocation, and '=' because it can cause mutation.
+            // But just to be safe, we want to reject all unexpected forms.
+
+            // We split the second stage into 4 regexp operations in order to work around
+            // crippling inefficiencies in IE's and Safari's regexp engines. First we
+            // replace the JSON backslash pairs with '@' (a non-JSON character). Second, we
+            // replace all simple value tokens with ']' characters. Third, we delete all
+            // open brackets that follow a colon or comma or that begin the text. Finally,
+            // we look to see that the remaining characters are only whitespace or ']' or
+            // ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
+
+            if (/^[\],:{}\s]*$/.
+                test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@').
+                replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+                replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+
+                // In the third stage we use the eval function to compile the text into a
+                // JavaScript structure. The '{' operator is subject to a syntactic ambiguity
+                // in JavaScript: it can begin a block or an object literal. We wrap the text
+                // in parens to eliminate the ambiguity.
+
+                j = eval('(' + text + ')');
+
+                // In the optional fourth stage, we recursively walk the new structure, passing
+                // each name/value pair to a reviver function for possible transformation.
+
+                return typeof reviver === 'function' ?
+                       walk({'': j}, '') : j;
+            }
+
+            // If the text is not JSON parseable, then a SyntaxError is thrown.
+
+            throw new SyntaxError('JSON.parse');
+        };
+    }
+});
+/*
+Copyright 2010, KISSY UI Library v1.0.5
+MIT Licensed
 build: 524 Apr 6 09:10
 */
 /**
@@ -2746,7 +2751,318 @@ KISSY.add('ajax', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 529 Apr 7 12:05
+build: 532 Apr 8 08:24
+*/
+/**
+ * SWF UA info
+ * author: lifesinger@gmail.com
+ */
+
+KISSY.add('swf-ua', function(S) {
+
+    var UA = S.UA,
+        version = 0, sF = 'ShockwaveFlash',
+        ax6, mF, eP;
+
+    if (UA.ie) {
+        try {
+            ax6 = new ActiveXObject(sF + '.' + sF + '.6');
+            ax6.AllowScriptAccess = 'always';
+        } catch(e) {
+            if (ax6 !== null) {
+                version = 6.0;
+            }
+        }
+
+        if (version === 0) {
+            try {
+                version = numerify(
+                    new ActiveXObject(sF + '.' + sF)
+                        .GetVariable('$version')
+                        .replace(/[A-Za-z\s]+/g, '')
+                        .split(',')
+                    );
+
+            } catch (e) {
+            }
+        }
+    } else {
+        if ((mF = navigator.mimeTypes['application/x-shockwave-flash'])) {
+            if ((eP = mF.enabledPlugin)) {
+                version = numerify(
+                    eP.description
+                        .replace(/\s[rd]/g, '.')
+                        .replace(/[a-z\s]+/ig, '')
+                        .split('.')
+                    );
+            }
+        }
+    }
+
+    function numerify(arr) {
+        var ret = arr[0] + '.';
+        switch (arr[2].toString().length) {
+            case 1:
+                ret += '00';
+                break;
+            case 2:
+                ret += '0';
+                break;
+        }
+        return (ret += arr[2]);
+    }
+
+    UA.flash = parseFloat(version);
+});
+/**
+ * The SWF utility is a tool for embedding Flash applications in HTML pages.
+ * author: lifesinger@gmail.com
+ */
+
+KISSY.add('swf', function(S) {
+
+    var UA = S.UA,
+        uid = S.now(),
+
+        VERSION = 10.22,
+        CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
+        TYPE = 'application/x-shockwave-flash',
+        EXPRESS_INSTALL_URL = 'http://fpdownload.macromedia.com/pub/flashplayer/update/current/swf/autoUpdater.swf?' + uid,
+        EVENT_HANDLER = 'KISSY.SWF.eventHandler',
+
+        possibleAttributes = {align:'', allowNetworking:'', allowScriptAccess:'', base:'', bgcolor:'', menu:'', name:'', quality:'', salign:'', scale:'', tabindex:'', wmode:''};
+
+
+    /**
+     * Creates the SWF instance and keeps the configuration data
+     *
+     * @constructor
+     * @param {String|HTMLElement} el The id of the element, or the element itself that the SWF will be inserted into.
+     *        The width and height of the SWF will be set to the width and height of this container element.
+     * @param {Object} params (optional) Configuration parameters for the Flash application and values for Flashvars
+     *        to be passed to the SWF.
+     */
+    function SWF(el, swfUrl, params) {
+        var self = this,
+            id = 'ks-swf-' + uid++,
+            flashVersion = parseFloat(params.version) || VERSION,
+            isFlashVersionRight = UA.flash >= flashVersion,
+            canExpressInstall = UA.flash >= 8.0,
+            shouldExpressInstall = canExpressInstall && params.useExpressInstall && !isFlashVersionRight,
+            flashUrl = (shouldExpressInstall) ? EXPRESS_INSTALL_URL : swfUrl,
+            // TODO: rename to ks
+            flashvars = 'YUISwfId=' + id + '&YUIBridgeCallback=' + EVENT_HANDLER,
+            ret = '<object ';
+
+        // TODO: 确认以下三个私有变量是否有用
+        self._queue = [];
+        self._events =  {};
+        self._configs =  {};
+
+        self._id = id;
+        SWF._instances[id] = self;
+
+        if ((el = S.get(el)) && (isFlashVersionRight || shouldExpressInstall) && flashUrl) {
+            ret += 'id="' + id + '" ';
+
+            if (UA.ie) {
+                ret += 'classid="' + CID + '" '
+            } else {
+                ret += 'type="' + TYPE + '" data="' + flashUrl + '" ';
+            }
+
+            ret += 'width="100%" height="100%">';
+
+            if (UA.ie) {
+                ret += '<param name="movie" value="' + flashUrl + '"/>';
+            }
+
+            for (var attr in params.fixedAttributes) {
+                if (possibleAttributes.hasOwnProperty(attr)) {
+                    ret += '<param name="' + attr + '" value="' + params.fixedAttributes[attr] + '"/>';
+                }
+            }
+
+            for (var flashvar in params.flashVars) {
+                var fvar = params.flashVars[flashvar];
+                if (typeof fvar === 'string') {
+                    flashvars += "&" + flashvar + "=" + encodeURIComponent(fvar);
+                }
+            }
+
+            ret += '<param name="flashVars" value="' + flashvars + '"/>';
+            ret += "</object>";
+
+            el.innerHTML = ret;
+            self._swf = S.get('#' + id);
+        }
+    }
+
+    /**
+     * The static collection of all instances of the SWFs on the page.
+     * @static
+     */
+    SWF._instances = (S.SWF || { })._instances || { };
+
+    /**
+     * Handles an event coming from within the SWF and delegate it to a specific instance of SWF.
+     * @static
+     */
+    SWF.eventHandler = function(swfId, event) {
+        SWF._instances[swfId]._eventHandler(event);
+    };
+
+    S.augment(SWF, S.EventTarget);
+
+    S.augment(SWF, {
+
+        _eventHandler: function(event) {
+            var self = this,
+                type = event.type;
+            
+            if (type === 'log') {
+                S.log(event.message);
+            } else if(type) {
+                self.fire(type, event);
+            }
+        },
+
+        /**
+         * Calls a specific function exposed by the SWF's ExternalInterface.
+         * @param func {string} the name of the function to call
+         * @param args {array} the set of arguments to pass to the function.
+         */
+        callSWF: function (func, args) {
+            var self = this;
+            if (self._swf[func]) {
+                return self._swf[func].apply(self._swf, args || []);
+            }
+        },
+
+        /**
+         * Public accessor to the unique name of the SWF instance.
+         * @return {String} Unique name of the SWF instance.
+         */
+        toString: function() {
+            return 'SWF ' + this._id;
+        }
+    });
+
+    S.SWF = SWF;
+});
+/**
+ * Provides a swf based storage implementation.
+ */
+
+KISSY.add('swfstore', function(S, undefined) {
+
+    var UA = S.UA, Cookie = S.Cookie,
+        SWFSTORE = 'swfstore',
+        doc = document,
+        SP = SWFStore.prototype;
+
+    /**
+     * Class for the YUI SWFStore util.
+     * @constructor
+     * @param el {String|HTMLElement} Container element for the Flash Player instance.
+     * @param {String} swfUrl The URL of the SWF to be embedded into the page.
+     * @param shareData {Boolean} Whether or not data should be shared across browsers
+     * @param useCompression {Boolean} Container element for the Flash Player instance.
+     */
+    function SWFStore(el, swfUrl, shareData, useCompression) {
+        var browser = 'other',
+            cookie = Cookie.get(SWFSTORE),
+            params;
+
+        // convert booleans to strings for flashvars compatibility
+        shareData = (shareData !== undefined ? shareData : true) + '';
+        useCompression = (useCompression !== undefined ? useCompression : true) + '';
+
+        // browser detection
+        if (UA.ie) browser = 'ie';
+        else if (UA.gecko) browser = 'gecko';
+        else if (UA.webkit) browser = 'webkit';
+        else if (UA.opera) browser = 'opera';
+
+        // set cookie
+        if (!cookie || cookie === 'null') {
+            Cookie.set(SWFSTORE, (cookie = Math.round(Math.random() * Math.PI * 100000)));
+        }
+
+        params = {
+            version: 9.115,
+            useExpressInstall: false,
+            fixedAttributes: {
+                allowScriptAccess:'always',
+                allowNetworking:'all',
+                scale:'noScale'
+            },
+            flashVars: {
+                allowedDomain : doc.location.hostname,
+                shareData: shareData,
+                browser: cookie,
+                useCompression: useCompression
+            }
+        };
+
+        this.embeddedSWF = new S.SWF(el, swfUrl || 'swfstore.swf', params);
+    }
+
+    // events
+    S.each(['on', 'detach'], function(methodName) {
+        SP[methodName] = function(type, fn) {
+            this.embeddedSWF[methodName](type, fn);
+        }
+    });
+
+    S.augment(SWFStore, {
+        /**
+         * Saves data to local storage. It returns a String that can
+         * be one of three values: 'true' if the storage succeeded; 'false' if the user
+         * has denied storage on their machine or storage space allotted is not sufficient.
+         * <p>The size limit for the passed parameters is ~40Kb.</p>
+         * @param data {Object} The data to store
+         * @param location {String} The name of the 'cookie' or store
+         * @return {Boolean} Whether or not the save was successful
+         */
+        setItem: function(location, data) {
+            if (typeof data === 'string') {
+                // double encode strings to prevent parsing error
+                // http://yuilibrary.com/projects/yui2/ticket/2528593
+                data = data.replace(/\\/g, '\\\\');
+            }
+            return this.embeddedSWF.callSWF('setItem', [location, data]);
+        }
+    });
+
+    S.each([
+        'getShareData', 'setShareData',
+        'hasAdequateDimensions',
+        'getUseCompression', 'setUseCompression',
+        'getValueAt', 'getNameAt', 'getTypeAt',
+        'getValueOf', 'getTypeOf',
+        'getItems', 'removeItem', 'removeItemAt',
+        'getLength', 'calculateCurrentSize', 'getModificationDate',
+        'setSize', 'displaySettings',
+        'clear'
+    ], function(methodName) {
+        SWFStore.prototype[methodName] = function() {
+            return this.embeddedSWF.callSWF(methodName, S.makeArray(arguments));
+        }
+    });
+
+    S.SWFStore = SWFStore;
+});
+
+/**
+ * TODO:
+ *   - 所有事件和方法的 test cases
+ *   - 存储超过最大值时，会自动进行什么操作?
+ *   - 当数据有变化时，自动通知各个页面的功能
+ *//*
+Copyright 2010, KISSY UI Library v1.0.5
+MIT Licensed
+build: 537 Apr 8 19:58
 */
 /**
  * 数据延迟加载组件

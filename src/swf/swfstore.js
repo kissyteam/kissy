@@ -6,8 +6,7 @@ KISSY.add('swfstore', function(S, undefined) {
 
     var UA = S.UA, Cookie = S.Cookie,
         SWFSTORE = 'swfstore',
-        doc = document,
-        SP = SWFStore.prototype;
+        doc = document;
 
     /**
      * Class for the YUI SWFStore util.
@@ -81,6 +80,8 @@ KISSY.add('swfstore', function(S, undefined) {
                 // double encode strings to prevent parsing error
                 // http://yuilibrary.com/projects/yui2/ticket/2528593
                 data = data.replace(/\\/g, '\\\\');
+            } else {
+                data = S.JSON.stringify(data);
             }
 
             // 当 name 为空值时，目前会触发 swf 的内部异常，此处不允许空键值

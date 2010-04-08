@@ -422,11 +422,6 @@
         test.extraMsg = out;
     }
 
-    function test_json_parse(test) {
-        if(S.JSON.parse('{"a":true}').a !== true) test.fail();
-        if(S.JSON.stringify({"a":true}) !== '{"a":true}') test.fail(S.JSON.stringify({"a":true}));
-    }
-
 </script>
 </body>
 </html>

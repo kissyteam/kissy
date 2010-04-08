@@ -1,6 +1,6 @@
-/*
- from http://www.JSON.org/json2.js
- 2010-03-20
+/**
+ * from http://www.JSON.org/json2.js
+ * 2010-03-20
  */
 
 KISSY.add('json', function (S) {
@@ -14,7 +14,7 @@ KISSY.add('json', function (S) {
 
     if (typeof Date.prototype.toJSON !== 'function') {
 
-        Date.prototype.toJSON = function () {
+        Date.prototype.toJSON = function (key) {
 
             return isFinite(this.valueOf()) ?
                    this.getUTCFullYear() + '-' +
@@ -27,7 +27,7 @@ KISSY.add('json', function (S) {
 
         String.prototype.toJSON =
         Number.prototype.toJSON =
-        Boolean.prototype.toJSON = function () {
+        Boolean.prototype.toJSON = function (key) {
             return this.valueOf();
         };
     }
