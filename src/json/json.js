@@ -5,7 +5,7 @@
 
 KISSY.add('json', function (S) {
 
-    var JSON = S.JSON = window.JSON;
+    var JSON = S.JSON = window.JSON || { };
 
     function f(n) {
         // Format integers to have at least two digits.

@@ -76,12 +76,12 @@ KISSY.add('swfstore', function(S, undefined) {
          * @return {Boolean} Whether or not the save was successful
          */
         setItem: function(location, data) {
-            if (typeof data === 'string') {
+            if (typeof data === 'string') { // 快速通道
                 // double encode strings to prevent parsing error
                 // http://yuilibrary.com/projects/yui2/ticket/2528593
                 data = data.replace(/\\/g, '\\\\');
             } else {
-                data = S.JSON.stringify(data);
+                data = S.JSON.stringify(data) + ''; // 比如：stringify(undefined) = undefined, 强制转换为字符串
             }
 
             // 当 name 为空值时，目前会触发 swf 的内部异常，此处不允许空键值
@@ -107,7 +107,12 @@ KISSY.add('swfstore', function(S, undefined) {
         'getModificationDate', 'displaySettings'
     ], function(methodName) {
         SWFStore.prototype[methodName] = function() {
-            return this.embeddedSWF.callSWF(methodName, S.makeArray(arguments));
+            try {
+                return this.embeddedSWF.callSWF(methodName, S.makeArray(arguments));
+            }
+            catch(e) { // 当 swf 异常时，进一步捕获信息
+                this.fire('error', { message: e });
+            }
         }
     });
 
@@ -116,9 +121,8 @@ KISSY.add('swfstore', function(S, undefined) {
 
 /**
  * TODO:
- *   - 所有事件和方法的 test cases
  *   - 存储超过最大值时，会自动进行什么操作?
- *   - 当数据有变化时，自动通知各个页面的功能
+ *   - 广播功能：当数据有变化时，自动通知各个页面的功能
  *
  *   - Bug: 点击 Remove, 当 name 不存在时，会将最后一条删除
  */

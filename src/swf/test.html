@@ -12,6 +12,8 @@
 <h2>Test Data</h2>
 
 <script src="../../build/packages/kissy-core.js"></script>
+<script src="../cookie/cookie.js"></script>
+<script src="../json/json.js"></script>
 
 <script src="swf-ua.js"></script>
 <script src="swf.js"></script>
@@ -84,7 +86,7 @@
     function init_swfstore(test) {
 
         // 初始化
-        swfstore = new S.SWFStore('#swfstore-container', 'swfstore-original.swf');
+        swfstore = new S.SWFStore('#swfstore-container');
         swfstore.on('contentReady', function() {
             test.echo('swfstore is ready!');
             updateList();
@@ -168,19 +170,55 @@
         swfstore.clear();
         swfstore.setItem('name0', 'test');
         swfstore.setItem('name1', {'p1': 'v1', 'p2': 'v2' });
-        swfstore.setItem('name2', '');
+        swfstore.setItem('name2', true);
         swfstore.setItem('name3', undefined);
-        swfstore.setItem('name4', window);
-        swfstore.setItem('name5', NaN);
-return;
-        if(swfstore.getLength() !== 6) test.fail();
-        if(swfstore.getValueAt(3) !== undefined) test.fail();
-        if(swfstore.getNameAt(5) !== 'name5') test.fail();
-        if(swfstore.getTypeAt(1) !== null) test.fail();
-        if(swfstore.getValueOf('name2') !== '') test.fail();
-        if(swfstore.getTypeOf('name0') !== 'string') test.fail();
+        swfstore.setItem('name4', NaN);
+
+        if(swfstore.getLength() !== 5) test.fail();
+        if(swfstore.getValueAt(3) !== 'undefined') test.fail();
+        if(swfstore.getNameAt(4) !== 'name4') test.fail();
+        if(swfstore.getTypeAt(2) !== 'string') test.fail();
+        if(S.JSON.parse(swfstore.getValueOf('name1')).p1 !== 'v1') test.fail();
+        if(swfstore.getTypeOf('name4') !== 'string') test.fail();
+
+        // getTypeAt, getTypeOf 始终返回 'string', 这两个方法意义不大
     }
-    
+
+    function test_remove(test) {
+        // 'removeItem', 'removeItemAt', 'clear'
+
+        // setup
+        swfstore.clear();
+        swfstore.setItem('name0', 'test');
+        swfstore.setItem('name1', {'p1': 'v1', 'p2': 'v2' });
+        swfstore.setItem('name2', true);
+        swfstore.setItem('name3', undefined);
+        swfstore.setItem('name4', 'val4');
+
+        swfstore.removeItem('name1');
+        swfstore.removeItemAt(1);
+
+        if(swfstore.getLength() !== 3) test.fail();
+        if(swfstore.getValueAt(2) !== 'val4') test.fail();        
+    }
+
+    function test_misc(test) {
+//        swfstore.setShareData(false);
+//        swfstore.on('contentReady', function() {
+//            if (swfstore.getShareData() !== false) test.fail(swfstore.getShareData());
+//            swfstore.setShareData(true);
+//        });
+
+        swfstore.setUseCompression(false);
+        if(swfstore.getUseCompression() !== false) test.fail(swfstore.getUseCompression());
+        swfstore.setUseCompression(true);
+
+        test.echo('currentSize = ' + swfstore.calculateCurrentSize() + 'KB');
+        test.echo('hasAdequateDimensions = ' + swfstore.hasAdequateDimensions());
+        test.echo('getModificationDate = ' + swfstore.getModificationDate());
+//        swfstore.setSize(200);
+    }
+
 </script>
 </body>
 </html>
