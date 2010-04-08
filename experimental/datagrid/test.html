@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>DataGrid Test</title>
+<link rel="stylesheet" href="../../build/cssreset/reset.css" />
+<link rel="stylesheet" href="datagrid.css" />
+</head>
+<body>
+<!-- box START -->
+<div class="box box-normal">
+    <div class="hd">
+        <h3>数据表格标题</h3>
+    </div>
+    <div class="bd">
+        <!-- data grid START -->
+        <div id="KS_DataGrid">
+
+        </div>
+        <!-- data grid END -->
+    </div>
+</div>
+<!-- box END -->
+</body>
+</html>
+<script src="../../src/kissy/kissy.js"></script>
+<script src="../../src/kissy/kissy-lang.js"></script>
+<script src="../../src/kissy/kissy-ua.js"></script>
+<script src="../../src/kissy/kissy-json.js"></script>
+<script src="../../src/dom/dom.js"></script>
+<script src="../../src/dom/dom-class.js"></script>
+<script src="../../src/dom/selector.js"></script>
+<script src="../../src/event/event.js"></script>
+<script src="../../src/event/event-mouseenter.js"></script>
+<script src="../../src/event/event-object.js"></script>
+<script src="../../src/event/event-target.js"></script>
+<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="datagrid.js"></script>
+<script>
+KISSY.ready(function() {
+    var S=KISSY;
+    S.DataGrid('#KS_DataGrid');
+});
+</script>

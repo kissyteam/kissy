@@ -39,6 +39,9 @@
 .ks-datagrid .row td{border-top:1px dashed #ccc;}
 .ks-datagrid .row:hover td{background-color:#f6f6f6;}
 .ks-datagrid .row:hover td.col-extra{background-color:#ecedef;}
+.ks-datagrid .row-extra{display:none;}
+.ks-datagrid .row-extra td.col-extra{border-top:none;}
+.ks-datagrid .row-expanded{display:table-row;}
 .ks-datagrid .row-expanded td,
 .ks-datagrid .row-expanded:hover td{background:#e7eef9;}
 .ks-datagrid .row-expanded td.col-extra,
@@ -47,7 +50,7 @@
 .ks-datagrid .row-selected:hover td{background:#ebf7e5;}
 .ks-datagrid .row-selected td.col-extra,
 .ks-datagrid .row-selected:hover td.col-extra{background:#e0f2d7 url(datagrid-extra.png) repeat-y -100px 0;}
-.ks-datagrid .row-extra td.col-extra{border-top:none;}
+.ks-datagrid .row-loading:hover td{background-color:#fff;}
 
 /*Ãÿ ‚‘™Àÿ*/
 .ks-datagrid .icon-checkbox,
