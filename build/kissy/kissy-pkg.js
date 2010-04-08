@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 526 Apr 6 18:02
+build: 530 Apr 7 21:32
 */
 /**
  * @module kissy
@@ -263,12 +263,12 @@ build: 526 Apr 6 18:02
         /**
          * Applies prototype properties from the supplier to the receiver.
          * @param {function} r  the object to receive the augmentation
-         * @param {function} s  the object that supplies the properties to augment
+         * @param {object|function} s  the object that supplies the properties to augment
          * @param {string[]} wl a whitelist
          * @return {object} the augmented object
          */
         augment: function(r, s, ov, wl) {
-            return mix(r.prototype, s.prototype, ov, wl);
+            return mix(r.prototype, S.isFunction(s) ? s.prototype : s, ov, wl);
         },
 
         /**

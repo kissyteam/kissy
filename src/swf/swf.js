@@ -1,0 +1,136 @@
+/**
+ * The SWF utility is a tool for embedding Flash applications in HTML pages.
+ * author: lifesinger@gmail.com
+ */
+
+KISSY.add('swf', function(S) {
+
+    var UA = S.UA,
+        uid = S.now(),
+
+        VERSION = 10.22,
+        CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
+        TYPE = 'application/x-shockwave-flash',
+        EXPRESS_INSTALL_URL = 'http://fpdownload.macromedia.com/pub/flashplayer/update/current/swf/autoUpdater.swf?' + uid,
+        EVENT_HANDLER = 'KISSY.SWF.eventHandler',
+
+        possibleAttributes = {align:'', allowNetworking:'', allowScriptAccess:'', base:'', bgcolor:'', menu:'', name:'', quality:'', salign:'', scale:'', tabindex:'', wmode:''};
+
+
+    /**
+     * Creates the SWF instance and keeps the configuration data
+     *
+     * @constructor
+     * @param {String|HTMLElement} el The id of the element, or the element itself that the SWF will be inserted into.
+     *        The width and height of the SWF will be set to the width and height of this container element.
+     * @param {Object} params (optional) Configuration parameters for the Flash application and values for Flashvars
+     *        to be passed to the SWF.
+     */
+    function SWF(el, swfUrl, params) {
+        var self = this,
+            id = 'ks-swf-' + uid++,
+            flashVersion = parseFloat(params.version) || VERSION,
+            isFlashVersionRight = UA.flash >= flashVersion,
+            canExpressInstall = UA.flash >= 8.0,
+            shouldExpressInstall = canExpressInstall && params.useExpressInstall && !isFlashVersionRight,
+            flashUrl = (shouldExpressInstall) ? EXPRESS_INSTALL_URL : swfUrl,
+            // TODO: rename to ks
+            flashvars = 'YUISwfId=' + id + '&YUIBridgeCallback=' + EVENT_HANDLER,
+            ret = '<object ';
+
+        // TODO: 确认以下三个私有变量是否有用
+        self._queue = [];
+        self._events =  {};
+        self._configs =  {};
+
+        self._id = id;
+        SWF._instances[id] = self;
+
+        if ((el = S.get(el)) && (isFlashVersionRight || shouldExpressInstall) && flashUrl) {
+            ret += 'id="' + id + '" ';
+
+            if (UA.ie) {
+                ret += 'classid="' + CID + '" '
+            } else {
+                ret += 'type="' + TYPE + '" data="' + flashUrl + '" ';
+            }
+
+            ret += 'width="100%" height="100%">';
+
+            if (UA.ie) {
+                ret += '<param name="movie" value="' + flashUrl + '"/>';
+            }
+
+            for (var attr in params.fixedAttributes) {
+                if (possibleAttributes.hasOwnProperty(attr)) {
+                    ret += '<param name="' + attr + '" value="' + params.fixedAttributes[attr] + '"/>';
+                }
+            }
+
+            for (var flashvar in params.flashVars) {
+                var fvar = params.flashVars[flashvar];
+                if (typeof fvar === 'string') {
+                    flashvars += "&" + flashvar + "=" + encodeURIComponent(fvar);
+                }
+            }
+
+            ret += '<param name="flashVars" value="' + flashvars + '"/>';
+            ret += "</object>";
+
+            el.innerHTML = ret;
+            self._swf = S.get('#' + id);
+        }
+    }
+
+    /**
+     * The static collection of all instances of the SWFs on the page.
+     * @static
+     */
+    SWF._instances = (S.SWF || { })._instances || { };
+
+    /**
+     * Handles an event coming from within the SWF and delegate it to a specific instance of SWF.
+     * @static
+     */
+    SWF.eventHandler = function(swfId, event) {
+        SWF._instances[swfId]._eventHandler(event);
+    };
+
+    S.augment(SWF, S.EventTarget);
+
+    S.augment(SWF, {
+
+        _eventHandler: function(event) {
+            var self = this,
+                type = event.type;
+            
+            if (type === 'log') {
+                S.log(event.message);
+            } else if(type) {
+                self.fire(type, event);
+            }
+        },
+
+        /**
+         * Calls a specific function exposed by the SWF's ExternalInterface.
+         * @param func {string} the name of the function to call
+         * @param args {array} the set of arguments to pass to the function.
+         */
+        callSWF: function (func, args) {
+            var self = this;
+            if (self._swf[func]) {
+                return self._swf[func].apply(self._swf, args || []);
+            }
+        },
+
+        /**
+         * Public accessor to the unique name of the SWF instance.
+         * @return {String} Unique name of the SWF instance.
+         */
+        toString: function() {
+            return 'SWF ' + this._id;
+        }
+    });
+
+    S.SWF = SWF;
+});

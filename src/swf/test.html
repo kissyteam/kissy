@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>SWF Test</title>
+</head>
+<body>
+<script src="../test/test.js"></script>
+<script> KISSY.Test.Config.times = 1; </script>
+<style>.settings { display: none } </style>
+
+<h2>Test Data</h2>
+
+<script src="../../build/packages/kissy-core.js"></script>
+<script src="swf-ua.js"></script>
+<script src="swf.js"></script>
+<script src="swfstore.js"></script>
+
+<div>
+    <div id="controls" style="float: left; width: 500px">
+        <label for="valueField">Text to store:</label>
+        <textarea cols="30" id="valueField" rows="5"></textarea>
+        <br/>
+        <label for="nameField">Storage name:</label>
+        <input id="nameField" type="text" value=""/>
+        <input id="save-button" name="save-button" type="Button" value="Save"/>
+        <input id="remove-button" name="remove-button" type="Button" value="Remove"/>
+        <input id="get-button" name="get-button" type="Button" value="Get Value"/>
+        <br/>
+        <br/>
+        <input id="purge-button" name="purge-button" type="button" value="Purge All Local Data"/>
+        <input id="removeat-button" name="removeat-button" type="Button" value="Remove Item At:"/> <input id="indexField" type="text" value="0" size="3"/>
+        <input id="settings-button" name="purge-button" type="button" value="Display Settings"/>
+    </div>
+    <ul id="data-list" style="float: left; margin: 0; width: 400px; height: 220px; border: 1px solid #ccc; ">
+    </ul>
+<div id="swfstore-container" style="width: 400px; height: 220px; border: 1px solid #ccc; float: right">
+        Placeholder for SWF, will be replaced with embedded SWF if proper Flash Player is installed
+    </div>
+</div>
+
+<!-- Test Cases -->
+<script>
+    var S = KISSY;
+
+    function test_ua(test) {
+        if (S.UA.flash === null) test.fail();
+        test.extraMsg = 'S.UA.flash = ' + S.UA.flash;
+    }
+
+    function test_swf(/* test */) {
+        //        var params = {
+        //            version: 9.115,
+        //            useExpressInstall: false,
+        //            fixedAttributes: {
+        //                allowScriptAccess: 'always',
+        //                allowNetworking: 'all',
+        //                width: 50
+        //            },
+        //            flashVars: {
+        //                flashvar1: 'One word',
+        //                flashvar2: 'A word & another',
+        //                flashvar3: 'Three words - 100% done & done'
+        //            }
+        //        };
+        //
+        //        var swf = new KISSY.SWF('#swf-container', 'swfstore.swf', params);
+        //        swf.on('swfReady', function() {
+        //            test.echo('swf is ready!');
+        //        });
+    }
+
+    test_swfstore(); // auto run
+
+    function test_swfstore(test) {
+        if(test_swfstore.runned) return;
+        test_swfstore.runned = true;
+
+        // the swfstore instance
+        var swfstore = new S.SWFStore('#swfstore-container');
+        swfstore.on('swfReady', function() {
+            test.echo('swfstore is ready!');
+        });
+
+        var dataList = S.get('#data-list'), items;
+        swfstore.on('save', function(event) {
+            items = this.getItems();
+            debugger
+        });
+
+        S.one('#save-button').on('click', function () {
+            debugger
+            swfstore.setItem(S.get('#nameField').value, S.get('#valueField').value);
+        });
+
+        S.one('#remove-button').on('click', function () {
+            swfstore.removeItem(S.get('#nameField').value);
+        });
+
+        S.one('#get-button').on('click', function () {
+            test.echo('getValueOf(' + name + ') = ' + swfstore.getValueOf(S.get('#nameField').value));
+        });
+
+        S.one('#purge-button').on('click', function() {
+            swfstore.clear();
+        });
+
+        S.one('#removeat-button').on('click', function () {
+            swfstore.removeItemAt(parseInt(S.get('#indexField').value));
+        });
+
+        S.one('#settings-button').on('click', function() {
+            swfstore.displaySettings();
+        });
+    }
+</script>
+</body>
+</html>
