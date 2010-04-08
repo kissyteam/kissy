@@ -35,10 +35,27 @@
 <script src="../../src/event/event-object.js"></script>
 <script src="../../src/event/event-target.js"></script>
 <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="../../third-party/yui2/connection/connection.js"></script>
 <script src="datagrid.js"></script>
 <script>
-KISSY.ready(function() {
-    var S=KISSY;
-    S.DataGrid('#KS_DataGrid');
+KISSY.ready(function(S) {
+    var datagrid = new S.DataGrid('#KS_DataGrid','http://10.13.18.157:8080/tmashup/data/tmashup_my_pages_SearchGrid.e');
+    datagrid.datasourceDef = {
+       success:'success',
+       listData:'dataList',
+       info:'info'
+    };
+    datagrid.columnDef = [
+        {xType:'col-checkbox'},
+        {label:'复合字段：开发者+页面名称',field:['developer','name'],parser:function(developer,name){return developer + '：' + name;}},
+        {label:'所属站点',field:'site',parser:function(site){if(site=='CTU'){return '<span style="color:#f60;font-weight:bold;">'+site+'</span>';}else{return site;}}},
+        {label:'复合表头',children:[
+            {label:'页面id',field:'id',sortable:true},
+            {label:'组件id',field:'componentId'}
+        ]},
+        {label:'沉鱼自定义的',parser:function(){return 'fool2fish';}},
+        {xType:'col-extra'}
+    ];
+    datagrid.init();
 });
 </script>

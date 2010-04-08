@@ -1,14 +1,14 @@
 /**
  * DataGrid
  * @creator     沉鱼<fool2fish@gmail.com>
- * @depends     yahoo-dom-event, kissy-core
+ * @depends     kissy-core, yui2-yahoo-dom-event, yui2-connection
  */
 
 /**
  * DataGrid功能点：
  * 1、数据源
- * 2、定义表头
- * 3  定义列
+ * 2、定义表头、解析表头(完成)
+ * 3  定义列、解析列(完成)
  * 4、用户自定义显示列
  * 5、增删改
  * 6、其他单条操作
@@ -21,11 +21,12 @@
  */
 
 KISSY.add("datagrid", function(S) {
-    var DOM = S.DOM, Event = S.Event,YDOM = YAHOO.util.Dom,
+    var DOM = S.DOM, Event = S.Event,YDOM = YAHOO.util.Dom,YConnect=YAHOO.util.Connect,
         doc=document,
         COL_CHECKBOX='col-checkbox',COL_RADIO='col-radio',COL_EXTRA='col-extra',
         KS_DEPTH='KSDepth',KS_FATHER_IDX='KSFatherIdx',KS_CHILDREN_AMOUNT='KSChildrenAmount',
-        LOADING_EL_STR='<tbody><tr class="row row-loading"><td colspan="10"></td></tr></tbody>'
+        LOADING_EL_STR='<tbody><tr class="row row-loading"><td></td></tr></tbody>',
+        POST='post',GET='get'
         ;
 
     /**
@@ -42,30 +43,32 @@ KISSY.add("datagrid", function(S) {
             DOM.addClass(this.tableEl,'datagrid-table');
         //生成loading元素
         this.loadingEl=parseStrToEl(LOADING_EL_STR);
-            this.tableEl.appendChild(this.loadingEl);
-            this.loadingEl.style.display='none';
-        this.datasource=datasourceUri;
+        //记录数据源uri
+        this.datasourceUri=datasourceUri;
         
         //注册所有点击事件
         Event.add(this.tableEl,'click',function(e){
-
+            var t=Event.getTarget(e);
+            if(this.colSelectDef == COL_CHECKBOX )
         });
     }
 
     S.mix(DataGrid.prototype,{
+        connectMethod:POST,
         /**
-         * 定义datasource，指定datasource里各字段的用途（若未定义，则使用默认值）
+         * 定义datasource，指定datasource里各字段的用途(必须手工定义)
          * datasourceDef={
          *      success:'success',
-         *      listData:'',
-         *      recordPrimaryKey:'',
-         *      dataStart:'',
-         *      datalength:'',
-         *      dataFilter:'',
+         *      listData:'dataList',
+         *      recordPrimaryKey:'id',
+         *      dataStart:'start',
+         *      datalength:'pageSize',
+         *      dataAmount:'total'
          *      info:'info'
          * }
          */
-        datasouceDef:null,
+        datasourceDef:null,
+        requestResult:null,
         /**
          * JSON格式的数据源
          */
@@ -85,9 +88,9 @@ KISSY.add("datagrid", function(S) {
          *      ]},
          *      {label:'字段渲染',children:[
          *          {label:'单一字段',field:'name'},
-         *          {label:'复合字段',field:['nickname','homepage'],render:funtion('nickname','homepage'){...}}
+         *          {label:'复合字段',field:['nickname','homepage'],parser:funtion('nickname','homepage'){...}}
          *      ]},
-         *      {label:'',xType:COL_EXTRA,field:[...],render:function(){...}}
+         *      {label:'',xType:COL_EXTRA,field:[...],parser:function(){...}}
          * ]
          */
         columnDef:null,
@@ -127,28 +130,81 @@ KISSY.add("datagrid", function(S) {
         //翻页
         paginationEl:null,
         startLoading:function(){
-            this.loadingEl.style.display='table-row';
+            if(this.columnAmount){
+                var loadingTd = this.loadingEl.getElementsByTagName('td')[0];
+                loadingTd.colSpan = this.columnAmount;
+            }
+            //notice：没有把loadingEl加到tableEl中，采用diaplay:none的方式来切换loading框的显示，是因为ie下使用js去display:none loadingEl会有点问题：高度无法消除，下边框线一直可见
+            if(YDOM.getFirstChild(this.tableEl)){
+                var firstChild = YDOM.getFirstChild(this.tableEl);
+                YDOM.insertBefore(this.loadingEl, firstChild);
+            }else{
+                this.tableEl.appendChild(this.loadingEl);
+            }
         },
         endLoading:function(){
-            this.loadingEl.style.display='none';
+            this.tableEl.removeChild(this.loadingEl);
+        },
+        /**
+         * 每次异步请求返回值的基本处理
+         * @param o
+         */
+        _dataPreProcessor:function(o){
+            this.liveData = eval('('+o.responseText+')');
+            this.requestResult = this.liveData[this.datasourceDef.success];
+            if(this.requestResult){
+                this.listData = this.liveData[this.datasourceDef.listData];
+            }else{
+                var info = this.liveData[this.datasourceDef.info];
+                alert('错误：'+info);
+            }
+        },
+        /**
+         * 每次解析完columnDef之后的基本处理
+         */
+        _parseColumnDefPreProcessor:function(theadColDef, colDef, colExtraDef, colSelectDef){
+            this.theadColDef =theadColDef;
+            this.colDef = colDef;
+            this.colExtraDef = colExtraDef;
+            this.colSelectDef = colSelectDef;
         },
         init:function(postData){
-            this.startLoading();
-            postData = postData || '';
-            if(!this.columnDef){
-                
+            //确认datasourceDef定义过
+            if(!this.datasourceDef){
+                alert('请先定义组件的datasourceDef属性。');
+                return;
             }
-            var callback = function(flatColumnDef, colExtraDef, colSelectDef){
-                this.theadColDef = flatColumnDef;
-                this.colDef = flatColumnDef[flatColumnDef.length-1];
-                this.colExtraDef = colExtraDef;
-                this.colSelectDef = colSelectDef;
-                this._renderThead();
-                this._renderTbody();
-                this._renderTfoot();
-                this.endLoading();
+            //显示loading状态
+            this.startLoading();
+            var callback={
+                success:function(o){
+                    this._dataPreProcessor(o);
+                    //如果请求成功，且返回数据正确
+                    if(this.requestResult){
+                        //如果columnDef没有定义
+                        if(!this.columnDef){
+                            this.columnDef=[];
+                            var recordExample = this.listData[0];
+                            for(var i in recordExample){
+                                this.columnDef.push({label:i,field:i});
+                            }
+                        }
+                        //解析columnDef，并设置回调（回调套回调，真bt啊）
+                        parseColumnDefToFlat(this.columnDef,'children',function(theadColDef, colDef, colExtraDef, colSelectDef){
+                            this._parseColumnDefPreProcessor(theadColDef, colDef, colExtraDef, colSelectDef);
+                            this._renderThead();
+                            //渲染表头后，表格的列数确定，要重新渲染一次loading
+                            this.startLoading();
+                            this._renderTbody();
+                            this._renderTfoot();
+                            this.endLoading();
+                        },this);
+                    }
+                },
+                failure:function(){alert('获取数据失败，请刷新页面重试或联系管理员。');},
+                scope:this
             };
-            parseColumnDefToFlat(this.columnDef,'children',callback,this);
+            YConnect.asyncRequest(this.connectMethod,this.datasourceUri,callback,postData || '');
         },
         _renderThead:function(){
             var theadColDef=this.theadColDef;
@@ -221,6 +277,7 @@ KISSY.add("datagrid", function(S) {
                  tbodyHTMLFrag += this._renderRow(listData[i],i);   
             }
             tbodyHTMLFrag += '</tbody>';
+
             if(this.tbodyEl) this.tableEl.removeChild(this.tbodyEl);
             this.tbodyEl = parseStrToEl(tbodyHTMLFrag);
             this.tableEl.appendChild(this.tbodyEl);
@@ -233,7 +290,7 @@ KISSY.add("datagrid", function(S) {
          */
         _renderRow:function(recordData, idx, returnType, rowCls){
             var colDef = this.colDef;
-            var rowHTMLFrag = '<tr class="row' + (rowCls ? ' ' + rowCls : '') + '"' + (idx ? 'data-idx="' + idx + '"' : '') + '>';
+            var rowHTMLFrag = '<tr class="row' + (rowCls ? ' ' + rowCls : '') + '"' + (!(idx == null || typeof idx == 'undefined') ? ' data-idx="' + idx + '"' : '') + '>';
             //扩展按钮
             if(this.colExtraDef) rowHTMLFrag += '<td class="col-extra"><i class="icon-expand"></i></td>';
             //复选或者单选按钮
@@ -245,32 +302,40 @@ KISSY.add("datagrid", function(S) {
             for(var i = 0 , ilen = this.colDef.length ; i < ilen ; i++){
                 rowHTMLFrag += '<td>';
                 if(typeof colDef[i].field != 'undefined'){
-                    //单字段
-                    if( typeof colDef[i].field == 'string'){
+                    //如果field为单字段，且指向正确
+                    if( typeof colDef[i].field == 'string' && recordData[colDef[i].field]){
                         var fieldValue = recordData[colDef[i].field];
                         //需要经过渲染的
-                        if(colDef[i].render){
-                            rowHTMLFrag += colDef[i].render(fieldValue);
+                        if(colDef[i].parser){
+                            rowHTMLFrag += colDef[i].parser(fieldValue);
                         //不需要经过渲染的
                         }else{
                             rowHTMLFrag += fieldValue;
                         }
-                    //复合字段
+                    //如果field为复合字段（为方便起见，这里不验证每个字段是否有效）
                     }else if(S.isArray(colDef[i].field)){
                         var fieldValueArr=[];
-                        for(var j = 0 , jlen = colDef[i].field.length ; j < jlen ; i++){
+                        for(var j = 0 , jlen = colDef[i].field.length ; j < jlen ; j++){
                             fieldValueArr.push(recordData[colDef[i].field[j]]);
                         }
                         //需要经过渲染的
-                        if(colDef[i].render){
-                           rowHTMLFrag += colDef[i].render.apply(window,fieldValueArr);
+                        if(colDef[i].parser){
+                           rowHTMLFrag += colDef[i].parser.apply(window,fieldValueArr);
                         //不需要经过渲染的
                         }else{
                             rowHTMLFrag += fieldValueArr.toString();
                         }
-                    };
+                    }else{
+                        rowHTMLFrag += ' ';
+                    }
                 }else{
-                    rowHTMLFrag += ' ';
+                    //如果没有定义field，但有渲染器的时候，输出渲染器渲染结果
+                    if(this.colDef[i].parser){
+                        rowHTMLFrag += this.colDef[i].parser();
+                    //否则输出空格
+                    }else{
+                        rowHTMLFrag += ' ';
+                    }
                 }
                 rowHTMLFrag += '</td>';
             }
@@ -288,18 +353,18 @@ KISSY.add("datagrid", function(S) {
             var tfootHTMLFrag='<tfoot><tr><td colspan="' + this.columnAmount + '"></td></tr></tfoot>';
             if(this.tfootEl) this.tableEl.removeChild(this.tfootEl);
             this.tfootEl = parseStrToEl(tfootHTMLFrag);
-            this.tfootEl.appendChild(this.tbodyEl);
+            this.tableEl.appendChild(this.tfootEl);
         },
         update:function(){
 
         },
         renderPagination:function(){},
         appendRecord:function(){},
-        addRecord:function(record){},
-        modifyRecord:function(record){},
-        deleteRecord:function(recordIdx){},
-        moveRecord:function(recordIdx,toIndex){},
-        select:function(recordIdx){},
+        addRecord:function(){},
+        modifyRecord:function(){},
+        deleteRecord:function(){},
+        moveRecord:function(){},
+        select:function(){},
         selectAll:function(){},
         deselectAll:function(){},
         selectInverse:function(){},
@@ -320,7 +385,7 @@ KISSY.add("datagrid", function(S) {
         var refEl=DOM.next(oldEl);
         parentEl.removeChild(oldEl);
         if(refEl){
-            YDOM.insertBefore(newEl,refEl)
+            YDOM.insertBefore(newEl,refEl);
         }else{
             parentEl.appendChild(newEl);
         }
@@ -376,12 +441,17 @@ KISSY.add("datagrid", function(S) {
 
     /**
      * 将columnDef的树形结构展开成二维数组结构
-     * @param columnDef
+     * @param columnDef 表格的列设定
+     * @param childrenKey 指向子列的key
+     * @param callback 解析后的回调函数
+     * @param callbackObj 回调函数中的this指向的对象
      */
     function parseColumnDefToFlat(columnDef,childrenKey,callback,callbackObj){
         childrenKey = childrenKey || 'children';
-        //定义转换后的二维数组
-        var flatColumnDef=[];
+        //解析后的表头定义
+        var theadColDef = [];
+        //解析后的列定义
+        var colDef = [];
         //额外列定义
         var colExtraDef = null;
         //定义选择列的方式
@@ -411,6 +481,7 @@ KISSY.add("datagrid", function(S) {
         //得到过滤掉特殊列设定的列设定
         var pureColDef = filterColDef(columnDef);
 
+
         //判断tree是否有子树
         function ifTreeHasChildren(tree){
             for(var i = 0, len = tree.length; i < len; i++){
@@ -427,7 +498,7 @@ KISSY.add("datagrid", function(S) {
             var curTree = subTree;
             var curDepth = subTree[KS_DEPTH];
             while(curDepth > 0){
-                var fatherTree = flatColumnDef[curDepth-1][curTree[KS_FATHER_IDX]];
+                var fatherTree = theadColDef[curDepth-1][curTree[KS_FATHER_IDX]];
                 fatherTree[KS_CHILDREN_AMOUNT] = fatherTree[KS_CHILDREN_AMOUNT] + step;
                 curTree = fatherTree;
                 curDepth = fatherTree[KS_DEPTH];
@@ -440,25 +511,35 @@ KISSY.add("datagrid", function(S) {
             var treeHasChildren = ifTreeHasChildren(tree);
             //定义子树
             var subTree = [];
-            flatColumnDef[depth-1] = [];            
+            theadColDef[depth-1] = [];
             for(var i = 0,ilen = tree.length; i < ilen; i++){
-                //记录tree[i]所在子数组本身的索引
-                tree[i][KS_DEPTH] = depth-1;
-                //将tree[i]添加到flatColumnDef[depth-1]数组中去
-                flatColumnDef[depth-1].push(tree[i]);
-                //如果tree的节点有子树且tree[i]有子树
-                if(treeHasChildren && tree[i][childrenKey]){
-                    //记录tree[i]的子元素数
-                    tree[i][KS_CHILDREN_AMOUNT]=tree[i][childrenKey].length;
-                    for(var j=0,jlen=tree[i][childrenKey].length;j<jlen;j++){
-                        //在tree[i]子节点中记录tree[i]所在二维子数组的索引
-                        tree[i][childrenKey][j][KS_FATHER_IDX]=i;
-                        //将所有同一层级的tree[i]子节点放到一个数组
-                        subTree.push(tree[i][childrenKey][j]);
+                //如果tree有子树且tree[i]有子树
+                if(treeHasChildren){
+                    if(tree[i][childrenKey]){
+                        //记录tree[i]所在子数组本身的索引
+                        tree[i][KS_DEPTH] = depth-1;
+                        //将tree[i]添加到theadColDef[depth-1]数组中去
+                        theadColDef[depth-1].push(tree[i]);
+                        //记录tree[i]的子元素数
+                        tree[i][KS_CHILDREN_AMOUNT]=tree[i][childrenKey].length;
+                        for(var j=0,jlen=tree[i][childrenKey].length;j<jlen;j++){
+                            //在tree[i]子节点中记录tree[i]所在二维子数组的索引
+                            tree[i][childrenKey][j][KS_FATHER_IDX]=i;
+                            //将所有同一层级的tree[i]子节点放到一个数组
+                            subTree.push(tree[i][childrenKey][j]);
+                        }
+                        updateFathersChildrenAmount(tree[i]);
+                    }else{
+                        var curLength=theadColDef[depth-1].length;
+                        theadColDef[depth-1].push({KS_DEPTH:depth-1,KS_FATHER_IDX:curLength,KS_CHILDREN_AMOUNT:1});
+                        subTree.push(tree[i]);
                     }
-                    updateFathersChildrenAmount(tree[i]);
                 //如果无子树
                 }else{
+                    //记录tree[i]所在子数组本身的索引
+                    tree[i][KS_DEPTH] = depth-1;
+                    //将tree[i]添加到theadColDef[depth-1]数组中去
+                    theadColDef[depth-1].push(tree[i]);
                     tree[i][KS_CHILDREN_AMOUNT]=0;
                 }
             }
@@ -466,32 +547,37 @@ KISSY.add("datagrid", function(S) {
             if(subTree.length>0){
                 arguments.callee(subTree);
             }else{
-                callback.call(callbackObj || window , flatColumnDef, colExtraDef, colSelectDef);
-                //console.log(flatColumnDef);
+                colDef = theadColDef[theadColDef.length-1];
+                if(callback) callback.call(callbackObj || window , theadColDef, colDef, colExtraDef, colSelectDef);
+                //console.log(theadColDef);
+                //console.log(colDef);
                 //console.log(colExtraDef);
                 //console.log(colSelectDef);
             }
         }
         parse(pureColDef);
     }
-    
+
+    /**
+    测试数据 
     var test=[
        {label:'复选框',xType:COL_CHECKBOX},
        {label:'简单列'},
        {label:'可排序列',children:[
            {label:'升序列',sortable:true},
-           {label:'降序列',sortable:true},
+           {label:'降序列',sortable:true}
        ]},
        {label:'三层复合列',children:[
            {label:'第一列',children:[
                {label:'子列1'},
-               {label:'子列2'},
+               {label:'子列2'}
            ]},
-           {label:'第二列',sortable:true,field:'age'},
+           {label:'第二列',sortable:true,field:'age'}
        ]},
        {label:'扩展列',xType:COL_EXTRA}
     ];
     parseColumnDefToFlat(test,null,function(){});
+    */
 
     S.DataGrid = DataGrid;
 });
