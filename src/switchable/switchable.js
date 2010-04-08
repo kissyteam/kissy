@@ -188,16 +188,9 @@ KISSY.add('switchable', function(S, undefined) {
                 triggers = self._generateTriggersMarkup(self.length);
             }
 
-            // 将 triggers 转换为普通数组
-            if (hasTriggers) {
-                for (i = 0, m = triggers.length; i < m; i++) {
-                    self.triggers.push(triggers[i]);
-                }
-            }
-            // 将 panels 转换为普通数组
-            for (i = 0; i < n; i++) {
-                self.panels.push(panels[i]);
-            }
+            // 将 triggers 和 panels 转换为普通数组
+            self.triggers = S.makeArray(triggers);
+            self.panels = S.makeArray(panels);
 
             // get content
             self.content = content || panels[0].parentNode;

@@ -482,7 +482,7 @@ KISSY.add('ajax', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 532 Apr 8 08:24
+build: 542 Apr 8 23:12
 */
 /**
  * SWF UA info
@@ -581,17 +581,12 @@ KISSY.add('swf', function(S) {
             canExpressInstall = UA.flash >= 8.0,
             shouldExpressInstall = canExpressInstall && params.useExpressInstall && !isFlashVersionRight,
             flashUrl = (shouldExpressInstall) ? EXPRESS_INSTALL_URL : swfUrl,
-            // TODO: rename to ks
+            // TODO: rename
             flashvars = 'YUISwfId=' + id + '&YUIBridgeCallback=' + EVENT_HANDLER,
             ret = '<object ';
 
-        // TODO: 确认以下三个私有变量是否有用
-        self._queue = [];
-        self._events =  {};
-        self._configs =  {};
-
-        self._id = id;
-        SWF._instances[id] = self;
+        self.id = id;
+        SWF.instances[id] = self;
 
         if ((el = S.get(el)) && (isFlashVersionRight || shouldExpressInstall) && flashUrl) {
             ret += 'id="' + id + '" ';
@@ -625,7 +620,7 @@ KISSY.add('swf', function(S) {
             ret += "</object>";
 
             el.innerHTML = ret;
-            self._swf = S.get('#' + id);
+            self.swf = S.get('#' + id);
         }
     }
 
@@ -633,24 +628,23 @@ KISSY.add('swf', function(S) {
      * The static collection of all instances of the SWFs on the page.
      * @static
      */
-    SWF._instances = (S.SWF || { })._instances || { };
+    SWF.instances = (S.SWF || { }).instances || { };
 
     /**
      * Handles an event coming from within the SWF and delegate it to a specific instance of SWF.
      * @static
      */
     SWF.eventHandler = function(swfId, event) {
-        SWF._instances[swfId]._eventHandler(event);
+        SWF.instances[swfId]._eventHandler(event);
     };
 
     S.augment(SWF, S.EventTarget);
-
     S.augment(SWF, {
 
         _eventHandler: function(event) {
             var self = this,
                 type = event.type;
-            
+
             if (type === 'log') {
                 S.log(event.message);
             } else if(type) {
@@ -665,17 +659,9 @@ KISSY.add('swf', function(S) {
          */
         callSWF: function (func, args) {
             var self = this;
-            if (self._swf[func]) {
-                return self._swf[func].apply(self._swf, args || []);
+            if (self.swf[func]) {
+                return self.swf[func].apply(self.swf, args || []);
             }
-        },
-
-        /**
-         * Public accessor to the unique name of the SWF instance.
-         * @return {String} Unique name of the SWF instance.
-         */
-        toString: function() {
-            return 'SWF ' + this._id;
         }
     });
 
@@ -689,8 +675,7 @@ KISSY.add('swfstore', function(S, undefined) {
 
     var UA = S.UA, Cookie = S.Cookie,
         SWFSTORE = 'swfstore',
-        doc = document,
-        SP = SWFStore.prototype;
+        doc = document;
 
     /**
      * Class for the YUI SWFStore util.
@@ -703,7 +688,8 @@ KISSY.add('swfstore', function(S, undefined) {
     function SWFStore(el, swfUrl, shareData, useCompression) {
         var browser = 'other',
             cookie = Cookie.get(SWFSTORE),
-            params;
+            params,
+            self = this;
 
         // convert booleans to strings for flashvars compatibility
         shareData = (shareData !== undefined ? shareData : true) + '';
@@ -736,16 +722,18 @@ KISSY.add('swfstore', function(S, undefined) {
             }
         };
 
-        this.embeddedSWF = new S.SWF(el, swfUrl || 'swfstore.swf', params);
+        self.embeddedSWF = new S.SWF(el, swfUrl || 'swfstore.swf', params);
+
+        // 让 flash fired events 能通知到 swfstore
+        self.embeddedSWF._eventHandler = function(event) {
+            S.SWF.prototype._eventHandler.call(self, event);
+        }
     }
 
-    // events
-    S.each(['on', 'detach'], function(methodName) {
-        SP[methodName] = function(type, fn) {
-            this.embeddedSWF[methodName](type, fn);
-        }
-    });
+    // events support
+    S.augment(SWFStore, S.EventTarget);
 
+    // methods
     S.augment(SWFStore, {
         /**
          * Saves data to local storage. It returns a String that can
@@ -757,28 +745,43 @@ KISSY.add('swfstore', function(S, undefined) {
          * @return {Boolean} Whether or not the save was successful
          */
         setItem: function(location, data) {
-            if (typeof data === 'string') {
+            if (typeof data === 'string') { // 快速通道
                 // double encode strings to prevent parsing error
                 // http://yuilibrary.com/projects/yui2/ticket/2528593
                 data = data.replace(/\\/g, '\\\\');
+            } else {
+                data = S.JSON.stringify(data) + ''; // 比如：stringify(undefined) = undefined, 强制转换为字符串
             }
-            return this.embeddedSWF.callSWF('setItem', [location, data]);
+
+            // 当 name 为空值时，目前会触发 swf 的内部异常，此处不允许空键值
+            if ((location = S.trim(location + ''))) {
+                try {
+                    return this.embeddedSWF.callSWF('setItem', [location, data]);
+                }
+                catch(e) { // 当 swf 异常时，进一步捕获信息
+                    this.fire('error', { message: e });
+                }
+            }
         }
     });
 
     S.each([
-        'getShareData', 'setShareData',
-        'hasAdequateDimensions',
-        'getUseCompression', 'setUseCompression',
         'getValueAt', 'getNameAt', 'getTypeAt',
         'getValueOf', 'getTypeOf',
-        'getItems', 'removeItem', 'removeItemAt',
-        'getLength', 'calculateCurrentSize', 'getModificationDate',
-        'setSize', 'displaySettings',
-        'clear'
+        'getItems', 'getLength',
+        'removeItem', 'removeItemAt', 'clear',
+        'getShareData', 'setShareData',
+        'getUseCompression', 'setUseCompression',
+        'calculateCurrentSize', 'hasAdequateDimensions', 'setSize',
+        'getModificationDate', 'displaySettings'
     ], function(methodName) {
         SWFStore.prototype[methodName] = function() {
-            return this.embeddedSWF.callSWF(methodName, S.makeArray(arguments));
+            try {
+                return this.embeddedSWF.callSWF(methodName, S.makeArray(arguments));
+            }
+            catch(e) { // 当 swf 异常时，进一步捕获信息
+                this.fire('error', { message: e });
+            }
         }
     });
 
@@ -787,10 +790,11 @@ KISSY.add('swfstore', function(S, undefined) {
 
 /**
  * TODO:
- *   - 所有事件和方法的 test cases
- *   - 存储超过最大值时，会自动进行什么操作?
- *   - 当数据有变化时，自动通知各个页面的功能
- *//*
+ *   - 广播功能：当数据有变化时，自动通知各个页面
+ *
+ *   - Bug: 点击 Remove, 当 name 不存在时，会将最后一条删除
+ */
+/*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
 build: 537 Apr 8 19:58
@@ -2316,7 +2320,7 @@ KISSY.add("suggest", function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 529 Apr 7 13:20
+build: 542 Apr 8 23:11
 */
 /**
  * Switchable
@@ -2508,16 +2512,9 @@ KISSY.add('switchable', function(S, undefined) {
                 triggers = self._generateTriggersMarkup(self.length);
             }
 
-            // 将 triggers 转换为普通数组
-            if (hasTriggers) {
-                for (i = 0, m = triggers.length; i < m; i++) {
-                    self.triggers.push(triggers[i]);
-                }
-            }
-            // 将 panels 转换为普通数组
-            for (i = 0; i < n; i++) {
-                self.panels.push(panels[i]);
-            }
+            // 将 triggers 和 panels 转换为普通数组
+            self.triggers = S.makeArray(triggers);
+            self.panels = S.makeArray(panels);
 
             // get content
             self.content = content || panels[0].parentNode;
@@ -3234,3 +3231,165 @@ KISSY.add('carousel', function(S) {
     S.extend(Carousel, S.Switchable);
     S.Carousel = Carousel;
 });
+// vim: set et sw=4 ts=4 sts=4 fdm=marker ff=unix fenc=gbk nobomb:
+/**
+ * CoversFlow
+ * @author mingcheng<i.feelinglucky#gmail.com> - http://www.gracecode.com/
+ * @update log:
+ *    [2010-04-08] yubo: 精简 & 优化部分代码
+ */
+
+KISSY.add('coversflow', function(S) {
+    var Y = YAHOO.util, YDOM = Y.Dom, DOM = S.DOM, Event = S.Event,
+        VISIBILITY = 'visibility', CLICK = 'click',
+        MAGIC_NUMBER = 90,
+        MAGIC_DIVISOR = 1.25,
+        EVENT_BEFORE_SWITCH = 'beforeSwitch',
+        EVENT_ON_CURRENT = 'onCurrent',
+        EVENT_TWEEN = 'tween',
+        EVENT_FINISHED = 'finished',
+
+        /**
+         * 默认配置
+         */
+        defaultConfig = {
+            flowLength: 4, // Max number of images on each side of the focused one
+            aspectRatio: 1.964, // Aspect ratio of the ImageFlow container (width divided by height)
+            step: 150, // 步长，通常不用更改
+            width: 500, // 最大封面的宽
+            height: 350, // 最大封面的高
+            offset: 0, // 误差
+            animSpeed: 50,  // 动画间隔（毫秒）
+            autoSwitchToMiddle: true, // 自动切换到中间
+            hasTriggers: false, // 触点就是 panels
+            circular: true
+        };
+
+    function CoversFlow(container, config) {
+        var self = this;
+
+        if (!(self instanceof CoversFlow)) {
+            return new CoversFlow(container, config);
+        }
+
+        config = S.merge(defaultConfig, config || {});
+        CoversFlow.superclass.constructor.call(self, container, config);
+
+        self._initFlow();
+    }
+
+    S.extend(CoversFlow, S.Switchable);
+
+    S.augment(CoversFlow, {
+
+        _initFlow: function() {
+            var self = this, config = self.config;
+            
+            self.busy = false;             // 运行状态
+            self.curFrame = 0;             // 当前运行帧
+            self.targetFrame = 0;          // 目标滚动帧
+            self.zIndex = self.length;     // 最大 zIndex 值
+            self.region = YDOM.getRegion(self.container); // 容器的坐标和大小
+
+            self.maxFocus = config.flowLength * config.step;
+            self.maxHeight = self.region.height + Math.round(self.region.height / config.aspectRatio); // 最大高度
+            self.middleLine = self.region.width / 2; // 中间线
+            self.triggers = self.panels;   // triggers 就是 panels 自身
+
+            // 事件注入
+            self.on(EVENT_BEFORE_SWITCH, function(ev) {
+                var index = ev.toIndex;
+
+                self.perIndex = index; // 预保存滚动目标
+                self.targetFrame = -index * self.config.step;
+                return !self.busy;
+            });
+
+            // 自动切换到中间
+            if (config.autoSwitchToMiddle) {
+                self.switchTo(Math.floor(self.length / 2));
+            } else {
+                self._frame(0);
+            }
+        },
+
+        _switchView: function() {
+            var self = this, cfg = self.config;
+
+            if (self.targetFrame < self.curFrame - 1 || self.targetFrame > self.curFrame + 1) {
+                // fire onSwitch
+                self._frame(self.curFrame + (self.targetFrame - self.curFrame) / 3);
+                self._timer = S.later(self._switchView, cfg.animSpeed, false, self);
+                self.busy = true;
+            } else {
+                self.fire(EVENT_FINISHED);
+                self.busy = false; // 动画完成
+            }
+        },
+
+        /**
+         * 运行每帧动画
+         */
+        _frame: function(frame) {
+            var self = this, cfg = self.config, panels = self.panels,
+                region = self.region, middleLine = self.middleLine - cfg.offset, curPanel, curImgPos;
+
+            self.curFrame = frame; // 标记当前帧
+
+            for (var index = 0, len = panels.length; index < len; index++) {
+                curPanel = self.panels[index];
+                curImgPos = index * -cfg.step;
+                if ((curImgPos + self.maxFocus) < self.targetFrame || (curImgPos - self.maxFocus) > self.targetFrame) {
+                    // 隐藏多余的封面
+                    DOM.css(curPanel, VISIBILITY, 'hidden');
+                } else {
+                    // 动画曲线因子
+                    var x = (Math.sqrt(10000 + frame * frame) + 100), xs = frame / x * middleLine + middleLine;
+                    var height = (cfg.width / cfg.height * MAGIC_NUMBER) / x * middleLine, width = 0;
+
+                    if (height > self.maxHeight) {
+                        height = self.maxHeight;
+                    }
+                    width = cfg.width / cfg.height * height;
+
+                    // 计算并设置当前位置
+                    DOM.css(curPanel, 'left', xs - (MAGIC_NUMBER / MAGIC_DIVISOR) / x * middleLine + 'px');
+                    if (height && width) {
+                        DOM.css(curPanel, 'height', height + 'px');
+                        DOM.css(curPanel, 'width', width + 'px');
+                        DOM.css(curPanel, 'top', region.height / 2 - height / 2 + 'px');
+                    }
+                    DOM.css(curPanel, 'zIndex', self.zIndex * 100 - Math.ceil(x));
+                    DOM.css(curPanel, VISIBILITY, 'visible');
+
+                    // 绑定点击事件
+                    (function(index) {
+                        Event.remove(curPanel);
+
+                        if (self.perIndex === index) {
+                            Event.add(curPanel, CLICK, function(ev) {
+                                return self.fire(EVENT_ON_CURRENT, { panel: curPanel, index: index });
+                            });
+                        } else {
+                            Event.add(curPanel, CLICK, function(ev) {
+                                ev.preventDefault();
+                                self.switchTo(index);
+                            });
+                        }
+                    })(index);
+                }
+
+                self.fire(EVENT_TWEEN, { panel: curPanel, index: index });
+                frame += cfg.step;
+            }
+        }
+    });
+
+    S.CoversFlow = CoversFlow;
+
+});
+
+/**
+ * TODO:
+ *   - 进一步优化算法和部分 api
+ */

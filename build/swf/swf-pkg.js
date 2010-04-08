@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 532 Apr 8 08:24
+build: 542 Apr 8 23:12
 */
 /**
  * SWF UA info
@@ -100,17 +100,12 @@ KISSY.add('swf', function(S) {
             canExpressInstall = UA.flash >= 8.0,
             shouldExpressInstall = canExpressInstall && params.useExpressInstall && !isFlashVersionRight,
             flashUrl = (shouldExpressInstall) ? EXPRESS_INSTALL_URL : swfUrl,
-            // TODO: rename to ks
+            // TODO: rename
             flashvars = 'YUISwfId=' + id + '&YUIBridgeCallback=' + EVENT_HANDLER,
             ret = '<object ';
 
-        // TODO: 确认以下三个私有变量是否有用
-        self._queue = [];
-        self._events =  {};
-        self._configs =  {};
-
-        self._id = id;
-        SWF._instances[id] = self;
+        self.id = id;
+        SWF.instances[id] = self;
 
         if ((el = S.get(el)) && (isFlashVersionRight || shouldExpressInstall) && flashUrl) {
             ret += 'id="' + id + '" ';
@@ -144,7 +139,7 @@ KISSY.add('swf', function(S) {
             ret += "</object>";
 
             el.innerHTML = ret;
-            self._swf = S.get('#' + id);
+            self.swf = S.get('#' + id);
         }
     }
 
@@ -152,24 +147,23 @@ KISSY.add('swf', function(S) {
      * The static collection of all instances of the SWFs on the page.
      * @static
      */
-    SWF._instances = (S.SWF || { })._instances || { };
+    SWF.instances = (S.SWF || { }).instances || { };
 
     /**
      * Handles an event coming from within the SWF and delegate it to a specific instance of SWF.
      * @static
      */
     SWF.eventHandler = function(swfId, event) {
-        SWF._instances[swfId]._eventHandler(event);
+        SWF.instances[swfId]._eventHandler(event);
     };
 
     S.augment(SWF, S.EventTarget);
-
     S.augment(SWF, {
 
         _eventHandler: function(event) {
             var self = this,
                 type = event.type;
-            
+
             if (type === 'log') {
                 S.log(event.message);
             } else if(type) {
@@ -184,17 +178,9 @@ KISSY.add('swf', function(S) {
          */
         callSWF: function (func, args) {
             var self = this;
-            if (self._swf[func]) {
-                return self._swf[func].apply(self._swf, args || []);
+            if (self.swf[func]) {
+                return self.swf[func].apply(self.swf, args || []);
             }
-        },
-
-        /**
-         * Public accessor to the unique name of the SWF instance.
-         * @return {String} Unique name of the SWF instance.
-         */
-        toString: function() {
-            return 'SWF ' + this._id;
         }
     });
 
@@ -208,8 +194,7 @@ KISSY.add('swfstore', function(S, undefined) {
 
     var UA = S.UA, Cookie = S.Cookie,
         SWFSTORE = 'swfstore',
-        doc = document,
-        SP = SWFStore.prototype;
+        doc = document;
 
     /**
      * Class for the YUI SWFStore util.
@@ -222,7 +207,8 @@ KISSY.add('swfstore', function(S, undefined) {
     function SWFStore(el, swfUrl, shareData, useCompression) {
         var browser = 'other',
             cookie = Cookie.get(SWFSTORE),
-            params;
+            params,
+            self = this;
 
         // convert booleans to strings for flashvars compatibility
         shareData = (shareData !== undefined ? shareData : true) + '';
@@ -255,16 +241,18 @@ KISSY.add('swfstore', function(S, undefined) {
             }
         };
 
-        this.embeddedSWF = new S.SWF(el, swfUrl || 'swfstore.swf', params);
+        self.embeddedSWF = new S.SWF(el, swfUrl || 'swfstore.swf', params);
+
+        // 让 flash fired events 能通知到 swfstore
+        self.embeddedSWF._eventHandler = function(event) {
+            S.SWF.prototype._eventHandler.call(self, event);
+        }
     }
 
-    // events
-    S.each(['on', 'detach'], function(methodName) {
-        SP[methodName] = function(type, fn) {
-            this.embeddedSWF[methodName](type, fn);
-        }
-    });
+    // events support
+    S.augment(SWFStore, S.EventTarget);
 
+    // methods
     S.augment(SWFStore, {
         /**
          * Saves data to local storage. It returns a String that can
@@ -276,28 +264,43 @@ KISSY.add('swfstore', function(S, undefined) {
          * @return {Boolean} Whether or not the save was successful
          */
         setItem: function(location, data) {
-            if (typeof data === 'string') {
+            if (typeof data === 'string') { // 快速通道
                 // double encode strings to prevent parsing error
                 // http://yuilibrary.com/projects/yui2/ticket/2528593
                 data = data.replace(/\\/g, '\\\\');
+            } else {
+                data = S.JSON.stringify(data) + ''; // 比如：stringify(undefined) = undefined, 强制转换为字符串
             }
-            return this.embeddedSWF.callSWF('setItem', [location, data]);
+
+            // 当 name 为空值时，目前会触发 swf 的内部异常，此处不允许空键值
+            if ((location = S.trim(location + ''))) {
+                try {
+                    return this.embeddedSWF.callSWF('setItem', [location, data]);
+                }
+                catch(e) { // 当 swf 异常时，进一步捕获信息
+                    this.fire('error', { message: e });
+                }
+            }
         }
     });
 
     S.each([
-        'getShareData', 'setShareData',
-        'hasAdequateDimensions',
-        'getUseCompression', 'setUseCompression',
         'getValueAt', 'getNameAt', 'getTypeAt',
         'getValueOf', 'getTypeOf',
-        'getItems', 'removeItem', 'removeItemAt',
-        'getLength', 'calculateCurrentSize', 'getModificationDate',
-        'setSize', 'displaySettings',
-        'clear'
+        'getItems', 'getLength',
+        'removeItem', 'removeItemAt', 'clear',
+        'getShareData', 'setShareData',
+        'getUseCompression', 'setUseCompression',
+        'calculateCurrentSize', 'hasAdequateDimensions', 'setSize',
+        'getModificationDate', 'displaySettings'
     ], function(methodName) {
         SWFStore.prototype[methodName] = function() {
-            return this.embeddedSWF.callSWF(methodName, S.makeArray(arguments));
+            try {
+                return this.embeddedSWF.callSWF(methodName, S.makeArray(arguments));
+            }
+            catch(e) { // 当 swf 异常时，进一步捕获信息
+                this.fire('error', { message: e });
+            }
         }
     });
 
@@ -306,7 +309,7 @@ KISSY.add('swfstore', function(S, undefined) {
 
 /**
  * TODO:
- *   - 所有事件和方法的 test cases
- *   - 存储超过最大值时，会自动进行什么操作?
- *   - 当数据有变化时，自动通知各个页面的功能
+ *   - 广播功能：当数据有变化时，自动通知各个页面
+ *
+ *   - Bug: 点击 Remove, 当 name 不存在时，会将最后一条删除
  */

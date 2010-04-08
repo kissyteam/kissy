@@ -34,6 +34,11 @@
         <input id="purge-button" name="purge-button" type="button" value="Purge All Local Data"/>
         <input id="removeat-button" name="removeat-button" type="Button" value="Remove Item At:"/> <input id="indexField" type="text" value="0" size="3"/>
         <input id="settings-button" name="purge-button" type="button" value="Display Settings"/>
+        <br />
+        <br />
+        <input id="calcSize-button" name="calcSize-button" type="button" value="calculateCurrentSize"/>
+        <br />
+        <br />
     </div>
     <ul id="data-list" style="float: left; margin: 0; width: 400px; height: 220px; border: 1px solid #ccc; overflow: scroll">
     </ul>
@@ -93,7 +98,7 @@
         });
 
         // 数据更新：当数据有 增加、删除、修改 操作时，都会触发 save 事件
-        swfstore.on('save', updateList);
+        //swfstore.on('save', updateList);
         var dataList = S.get('#data-list'), items, i, len, html;
         function updateList(event) {
             html = '';
@@ -133,6 +138,7 @@
         S.one('#purge-button').on('click', function() { swfstore.clear(); });
         S.one('#removeat-button').on('click', function () { swfstore.removeItemAt(parseInt(indexEl.value)); });
         S.one('#settings-button').on('click', function() { swfstore.displaySettings(); });
+        S.one('#calcSize-button').on('click', function() { test.echo('currentSize = ' + swfstore.calculateCurrentSize() + ' KB'); });
 
         // 事件监听
         swfstore.on('clear', function() {
@@ -213,7 +219,7 @@
         if(swfstore.getUseCompression() !== false) test.fail(swfstore.getUseCompression());
         swfstore.setUseCompression(true);
 
-        test.echo('currentSize = ' + swfstore.calculateCurrentSize() + 'KB');
+        test.echo('currentSize = ' + swfstore.calculateCurrentSize() + ' KB');
         test.echo('hasAdequateDimensions = ' + swfstore.hasAdequateDimensions());
         test.echo('getModificationDate = ' + swfstore.getModificationDate());
 //        swfstore.setSize(200);
