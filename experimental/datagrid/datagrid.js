@@ -232,6 +232,7 @@ KISSY.add("datagrid", function(S) {
                     }
                 }
                 for(var j = 0 , jlen = theadColDef[i].length ; j < jlen ; j++){
+                    if(theadColDef[i][j][KS_DEPTH] != i) continue;
                     theadHTMLFrag += '<th';
                     //如果无子th
                     if(theadColDef[i][j][KS_CHILDREN_AMOUNT] == 0){
@@ -248,7 +249,7 @@ KISSY.add("datagrid", function(S) {
                         }
                         //rowspan
                         if(depth-1>i){
-                            theadHTMLFrag += ' rowspan="' + (depth-i) + '"';
+                            theadHTMLFrag += ' rowspan="' + (depth-theadColDef[i][j][KS_DEPTH]) + '"';
                         }
                     //如果有子th
                     }else{
@@ -560,13 +561,17 @@ KISSY.add("datagrid", function(S) {
             var subTree = [];
             theadColDef[depth-1] = [];
             for(var i = 0,ilen = tree.length; i < ilen; i++){
+                /* 如果tree[i][KS_DEPTH]不存在，则记录tree[i]的真正深度
+                 * 这里要做判定是因为如果在当前层级的tree有子节点的情况下
+                 * tree[i]刚好没有子节点了，那么，会把tree[i]当做tree[i]下一层级的子节点
+                 * 这样的话，确保得到的theadDef的最后一个元素（数组）为colDef
+                 */
+                if(typeof tree[i][KS_DEPTH] == 'undefined') tree[i][KS_DEPTH] = depth-1;
+                //jitree[i]添加到theadColDef[depth-1]数组中去
+                theadColDef[depth-1].push(tree[i]);
                 //如果tree有子树且tree[i]有子树
                 if(treeHasChildren){
                     if(tree[i][childrenKey]){
-                        //记录tree[i]所在子数组本身的索引
-                        tree[i][KS_DEPTH] = depth-1;
-                        //将tree[i]添加到theadColDef[depth-1]数组中去
-                        theadColDef[depth-1].push(tree[i]);
                         //记录tree[i]的子元素数
                         tree[i][KS_CHILDREN_AMOUNT]=tree[i][childrenKey].length;
                         for(var j=0,jlen=tree[i][childrenKey].length;j<jlen;j++){
@@ -577,16 +582,11 @@ KISSY.add("datagrid", function(S) {
                         }
                         updateFathersChildrenAmount(tree[i]);
                     }else{
-                        var curLength=theadColDef[depth-1].length;
-                        theadColDef[depth-1].push({KS_DEPTH:depth-1,KS_FATHER_IDX:curLength,KS_CHILDREN_AMOUNT:1});
+                        tree[i][KS_CHILDREN_AMOUNT]=0;
                         subTree.push(tree[i]);
                     }
                 //如果无子树
                 }else{
-                    //记录tree[i]所在子数组本身的索引
-                    tree[i][KS_DEPTH] = depth-1;
-                    //将tree[i]添加到theadColDef[depth-1]数组中去
-                    theadColDef[depth-1].push(tree[i]);
                     tree[i][KS_CHILDREN_AMOUNT]=0;
                 }
             }
@@ -604,27 +604,6 @@ KISSY.add("datagrid", function(S) {
         }
         parse(pureColDef);
     }
-
-    /**
-    测试数据 
-    var test=[
-       {label:'复选框',xType:COL_CHECKBOX},
-       {label:'简单列'},
-       {label:'可排序列',children:[
-           {label:'升序列',sortable:true},
-           {label:'降序列',sortable:true}
-       ]},
-       {label:'三层复合列',children:[
-           {label:'第一列',children:[
-               {label:'子列1'},
-               {label:'子列2'}
-           ]},
-           {label:'第二列',sortable:true,field:'age'}
-       ]},
-       {label:'扩展列',xType:COL_EXTRA}
-    ];
-    parseColumnDefToFlat(test,null,function(){});
-    */
 
     function enableColExtra(tableEl){
 
