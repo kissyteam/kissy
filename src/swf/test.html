@@ -70,8 +70,6 @@
         //        });
     }
 
-    test_swfstore(); // auto run
-
     function test_swfstore(test) {
         if(test_swfstore.runned) return;
         test_swfstore.runned = true;
@@ -85,11 +83,10 @@
         var dataList = S.get('#data-list'), items;
         swfstore.on('save', function(event) {
             items = this.getItems();
-            debugger
+            test.echo(items.length);
         });
 
         S.one('#save-button').on('click', function () {
-            debugger
             swfstore.setItem(S.get('#nameField').value, S.get('#valueField').value);
         });
 
@@ -98,7 +95,8 @@
         });
 
         S.one('#get-button').on('click', function () {
-            test.echo('getValueOf(' + name + ') = ' + swfstore.getValueOf(S.get('#nameField').value));
+            var name = S.get('#nameField').value;
+            test.echo('getValueOf("' + name + '") = ' + swfstore.getValueOf(name));
         });
 
         S.one('#purge-button').on('click', function() {
