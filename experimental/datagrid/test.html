@@ -54,7 +54,7 @@ KISSY.ready(function(S) {
             {label:'组件id',field:'componentId'}
         ]},
         {label:'沉鱼自定义的',parser:function(){return 'fool2fish';}},
-        {xType:'col-extra'}
+        {xType:'col-extra',field:'id',parser:function(id){return '我是一个扩展列,页面id是：'+id;}}
     ];
     datagrid.init();
 });

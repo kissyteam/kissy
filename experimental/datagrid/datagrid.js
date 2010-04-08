@@ -45,12 +45,7 @@ KISSY.add("datagrid", function(S) {
         this.loadingEl=parseStrToEl(LOADING_EL_STR);
         //记录数据源uri
         this.datasourceUri=datasourceUri;
-        
-        //注册所有点击事件
-        Event.add(this.tableEl,'click',function(e){
-            var t=Event.getTarget(e);
-            if(this.colSelectDef == COL_CHECKBOX )
-        });
+
     }
 
     S.mix(DataGrid.prototype,{
@@ -198,6 +193,18 @@ KISSY.add("datagrid", function(S) {
                             this._renderTbody();
                             this._renderTfoot();
                             this.endLoading();
+
+                            //根据特殊列设定添加事件
+                            if(colExtraDef){
+                                //点击展开按钮，加载扩展列内容，切换扩展列显示
+                            }
+                            //行选择方式
+                            if( colSelectDef == COL_CHECKBOX ){
+
+                            }else if( colSelectDef == COL_RADIO ){
+
+                            }
+
                         },this);
                     }
                 },
@@ -282,6 +289,46 @@ KISSY.add("datagrid", function(S) {
             this.tbodyEl = parseStrToEl(tbodyHTMLFrag);
             this.tableEl.appendChild(this.tbodyEl);
         },
+        _renderCellInner:function(cellDef,recordData){
+            var inner='';
+            if(typeof cellDef.field != 'undefined'){
+                //如果field为单字段，且指向正确
+                if( typeof cellDef.field == 'string' && recordData[cellDef.field]){
+                    var fieldValue = recordData[cellDef.field];
+                    //需要经过渲染的
+                    if(cellDef.parser){
+                        inner += cellDef.parser(fieldValue);
+                    //不需要经过渲染的
+                    }else{
+                        inner += fieldValue;
+                    }
+                //如果field为复合字段（为方便起见，这里不验证每个字段是否有效）
+                }else if(S.isArray(cellDef.field)){
+                    var fieldValueArr=[];
+                    for(var j = 0 , jlen = cellDef.field.length ; j < jlen ; j++){
+                        fieldValueArr.push(recordData[cellDef.field[j]]);
+                    }
+                    //需要经过渲染的
+                    if(cellDef.parser){
+                       inner += cellDef.parser.apply(window,fieldValueArr);
+                    //不需要经过渲染的
+                    }else{
+                        inner += fieldValueArr.toString();
+                    }
+                }else{
+                    inner += ' ';
+                }
+            }else{
+                //如果没有定义field，但有渲染器的时候，输出渲染器渲染结果
+                if(cellDef.parser){
+                    inner += cellDef.parser();
+                //否则输出空格
+                }else{
+                    inner += ' ';
+                }
+            }
+            return inner;
+        },
         /**
          * 渲染单条数据
          * @param {Object} recordData 单条数据
@@ -330,8 +377,8 @@ KISSY.add("datagrid", function(S) {
                     }
                 }else{
                     //如果没有定义field，但有渲染器的时候，输出渲染器渲染结果
-                    if(this.colDef[i].parser){
-                        rowHTMLFrag += this.colDef[i].parser();
+                    if(colDef[i].parser){
+                        rowHTMLFrag += colDef[i].parser();
                     //否则输出空格
                     }else{
                         rowHTMLFrag += ' ';
@@ -578,6 +625,18 @@ KISSY.add("datagrid", function(S) {
     ];
     parseColumnDefToFlat(test,null,function(){});
     */
+
+    function enableColExtra(tableEl){
+
+    }
+
+    function enableSelectByCheckbox(tableEl){
+
+    }
+
+    function enableSelectByRaio(tableEl){
+
+    }
 
     S.DataGrid = DataGrid;
 });
