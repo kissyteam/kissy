@@ -50,6 +50,7 @@
   develop combobox
   refactor suggest, try to remove dependence of yui2
   重构 datalazyload, 解决服饰频道导致轮播第5屏失效的问题
+  datatable
   图片上传组件
   完善 docs
 
