@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 537 Apr 8 19:57
+build: 545 Apr 9 13:24
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -10,7 +10,7 @@ build: 537 Apr 8 19:57
 
 KISSY.add('json', function (S) {
 
-    var JSON = S.JSON = window.JSON;
+    var JSON = S.JSON = window.JSON || { };
 
     function f(n) {
         // Format integers to have at least two digits.
