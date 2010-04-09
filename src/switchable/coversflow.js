@@ -61,7 +61,6 @@ KISSY.add('coversflow', function(S) {
             self.maxFocus = config.flowLength * config.step;
             self.maxHeight = self.region.height + Math.round(self.region.height / config.aspectRatio); // 最大高度
             self.middleLine = self.region.width / 2; // 中间线
-            self.triggers = self.panels;   // triggers 就是 panels 自身
 
             // 事件注入
             self.on(EVENT_BEFORE_SWITCH, function(ev) {
@@ -130,24 +129,31 @@ KISSY.add('coversflow', function(S) {
                     DOM.css(curPanel, VISIBILITY, 'visible');
 
                     // 绑定点击事件
-                    (function(index) {
-                        Event.remove(curPanel);
-
-                        if (self.perIndex === index) {
-                            Event.add(curPanel, CLICK, function(ev) {
-                                return self.fire(EVENT_ON_CURRENT, { panel: curPanel, index: index });
-                            });
-                        } else {
-                            Event.add(curPanel, CLICK, function(ev) {
-                                ev.preventDefault();
-                                self.switchTo(index);
-                            });
-                        }
-                    })(index);
+                    self._bindPanel(curPanel, index);
                 }
 
                 self.fire(EVENT_TWEEN, { panel: curPanel, index: index });
                 frame += cfg.step;
+            }
+        },
+
+        /**
+         * 绑定事件
+         */
+        _bindPanel: function(curPanel, index) {
+            var self = this;
+
+            Event.remove(curPanel);
+
+            if (self.perIndex === index) {
+                Event.add(curPanel, CLICK, function() {
+                    return self.fire(EVENT_ON_CURRENT, { panel: curPanel, index: index });
+                });
+            } else {
+                Event.add(curPanel, CLICK, function(ev) {
+                    ev.preventDefault();
+                    self.switchTo(index);
+                });
             }
         }
     });

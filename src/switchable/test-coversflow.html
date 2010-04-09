@@ -125,11 +125,23 @@
         right: 0px;
     }
 
-
-
     #coversflow li a img {
         width: 100%;
         height: 100%;
+    }
+
+    #nav-btns {
+        width: 100%;
+        text-align: center;
+        padding: 20px 0
+    }
+    #nav-btns button {
+        width: 120px;
+        padding: 10px;
+    }
+    #nav-btns .prev {
+        margin-left: -120px;
+        margin-right: 20px;
     }
 </style>
 <div id="coversflow">
@@ -255,7 +267,11 @@
     </li>
 </ul>
 </div>
-<button id="switch-btn">switchTo(4)</button>
+<div id="nav-btns">
+    <button id="prev-btn" class="prev">&laquo; Previous</button>
+    <button id="next-btn" class="next">Next &raquo;</button>
+</div>
+
 <script>
     KISSY.ready(function(S) {
 
@@ -263,10 +279,11 @@
             offset: 20
         });
 
-        S.one('#switch-btn').on('click', function() {
-            cf.switchTo(4);
+        S.each(['prev', 'next'], function(name) {
+            S.one('#' + name + '-btn').on('click', function() {
+                cf[name]();
+            });
         });
-
     });
 </script>
 </body>
