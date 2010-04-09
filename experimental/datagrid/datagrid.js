@@ -33,7 +33,7 @@ KISSY.add("datagrid", function(S) {
         POST = 'post',GET = 'get',
         //行class
         CLS_ROW = 'row', CLS_ROW_EXTRA = 'row-extra', CLS_ROW_SELECTED = 'row-selected', CLS_ROW_EXPANDED = 'row-expanded',
-        ATTR_ROW_ID = 'data-idx',
+        ATTR_ROW_IDX = 'data-idx',
         //单元格class
         CLS_CELL_CHECKBOX = 'cell-checkbox', CLS_CELL_RADIO = 'cell-radio', CLS_CELL_EXTRA = 'cell-extra',
         //排序class
@@ -133,10 +133,14 @@ KISSY.add("datagrid", function(S) {
         colgroupEl:null,
         //表头
         theadEl:null,
+        //触发全选的元素
+        selectAllTrigger:null,
         //显示loading的tbody
         loadingEl:null,
         //装载数据的tbody
         tbodyEl:null,
+        //标准列数组对象
+        rowElArr:null,
         //表尾
         tfootEl:null,
         //翻页
@@ -162,7 +166,12 @@ KISSY.add("datagrid", function(S) {
          * @param o
          */
         _dataPreProcessor:function(o){
-            this.liveData = eval('('+o.responseText+')');
+            try{
+                this.liveData = eval('('+o.responseText+')');
+            }catch(e){
+                alert('错误：请返回JSON格式的数据。');
+                return;
+            }
             this.requestResult = this.liveData[this.datasourceDef.success];
             if(this.requestResult){
                 this.listData = this.liveData[this.datasourceDef.listData];
@@ -204,6 +213,7 @@ KISSY.add("datagrid", function(S) {
                         //解析columnDef，并设置回调（回调套回调，真bt啊）
                         parseColumnDefToFlat(this.columnDef,'children',function(theadColDef, colDef, colExtraDef, colSelectDef){
                             this._parseColumnDefPreProcessor(theadColDef, colDef, colExtraDef, colSelectDef);
+                            
                             this._renderThead();
                             //渲染表头后，表格的列数确定，要重新渲染一次loading
                             this.startLoading();
@@ -234,7 +244,10 @@ KISSY.add("datagrid", function(S) {
                 if(cellDef.xType){
                     cell.className = CLS_CELL_EXTRA;
                     //全选
-                    if(cellDef.xType == COL_CHECKBOX) cell.innerHTML = '<i class="' + CLS_ICON_CHECKBOX + '"></i>';
+                    if(cellDef.xType == COL_CHECKBOX){
+                        cell.innerHTML = '<i class="' + CLS_ICON_CHECKBOX + '"></i>';
+                    }
+
                 //排序
                 }else if(cellDef.sortable){
                     cell.className = CLS_SORTABLE;
@@ -263,7 +276,11 @@ KISSY.add("datagrid", function(S) {
         _renderTheadCellSelect:function(selectType){
             var cell = doc.createElement('th');
                 cell.className = CLS_CELL_EXTRA;
-            if(selectType == COL_CHECKBOX) cell.innerHTML = '<i class="' + CLS_ICON_CHECKBOX + '"></i>';
+            if(selectType == COL_CHECKBOX){
+                this.selectAllTrigger = doc.createElement('i');
+                this.selectAllTrigger.className =  CLS_ICON_CHECKBOX;
+                cell.appendChild( this.selectAllTrigger );
+            }
             return cell;
         },
         /**
@@ -423,15 +440,14 @@ KISSY.add("datagrid", function(S) {
             return row;
         },
         _renderTbody:function(){
+            this.rowElArr = [];
             var listData = this.listData;
             var tbodyEl = doc.createElement('tbody');
             for(var i = 0 , len = listData.length ; i < len ; i++){
                 var row = this._renderRow(listData[i]);
-                    row.setAttribute(ATTR_ROW_ID,i);
+                    row.setAttribute(ATTR_ROW_IDX,i);
+                this.rowElArr.push(row);
                 tbodyEl.appendChild(row);
-                if(this.colExtraDef){
-                    tbodyEl.appendChild(this._renderRowExtra(listData[i]));
-                }
             }
             if(this.tbodyEl) this.tableEl.removeChild(this.tbodyEl);
             this.tbodyEl = tbodyEl;
@@ -452,36 +468,92 @@ KISSY.add("datagrid", function(S) {
         modifyRecord:function(){},
         deleteRecord:function(){},
         moveRecord:function(){},
-        select:function(){},
-        selectAll:function(){},
-        deselectAll:function(){},
-        selectInverse:function(){},
+        /**
+         * 将指定索引的行显示为指定的选中状态
+         * @param idx 要切换选中状态的行在listData中的索引号
+         * @param selectType 1为选中，0为取消选中，不填则为自动切换
+         */
+        _toggleSelectRow:function(idx,selectType){
+            var row = this.rowElArr[idx];
+            var nextSibling = YDOM.getNextSibling( row );
+            if( nextSibling && YDOM.hasClass( nextSibling , CLS_ROW_EXTRA )) var rowExtra = nextSibling;
+            if(typeof selectType == 'undefined'){
+                DOM.toggleClass( row , CLS_ROW_SELECTED );
+                if(rowExtra) DOM.toggleClass( rowExtra , CLS_ROW_SELECTED );
+            }else if(selectType){
+                YDOM.addClass( row , CLS_ROW_SELECTED );
+                if(rowExtra) YDOM.addClass( rowExtra , CLS_ROW_SELECTED );
+            }else{
+                YDOM.removeClass( row , CLS_ROW_SELECTED );
+                if(rowExtra) YDOM.removeClass( rowExtra , CLS_ROW_SELECTED );
+            }
+        },
+        _checkIfSelectAll:function(){
+            var ifSelectAll = true;
+            for(var i = 0 , len = this.rowElArr.length ; i < len ; i++){
+                if( !YDOM.hasClass( this.rowElArr[i] , CLS_ROW_SELECTED)){
+                    ifSelectAll = false;
+                    break;
+                }
+            }
+            var theadRow = this.theadEl.getElementsByTagName('tr')[0];
+            if(ifSelectAll){
+                YDOM.addClass( theadRow , CLS_ROW_SELECTED );
+            }else{
+                YDOM.removeClass( theadRow , CLS_ROW_SELECTED );
+            }
+        },
+        toggleSelectRow:function(){
+            for(var i = 0 , len = arguments.length ; i < len ; i++){
+                this._toggleSelectRow(arguments[i]);
+            }
+            this._checkIfSelectAll();
+        },
+        selectRow:function(){
+            for(var i = 0 , len = arguments.length ; i < len ; i++){
+                this._toggleSelectRow(arguments[i],1);
+            }
+            this._checkIfSelectAll();
+        },
+        deselectRow:function(){
+            for(var i = 0 , len = arguments.length ; i < len ; i++){
+                this._toggleSelectRow(arguments[i],0);
+            }
+            this._checkIfSelectAll();
+        },
+        selectAll:function(){
+            for(var i = 0 , len = this.rowElArr.length ; i < len ; i++){
+                this._toggleSelectRow(i,1);
+            }
+            this._checkIfSelectAll();
+        },
+        deselectAll:function(){
+            for(var i = 0 , len = this.rowElArr.length ; i < len ; i++){
+                this._toggleSelectRow(i,0);
+            }
+            this._checkIfSelectAll();
+        },
+        selectInverse:function(){
+            for(var i = 0 , len = this.rowElArr.length ; i < len ; i++){
+                this._toggleSelectRow(this.rowElArr[i]);
+            }
+            this._checkIfSelectAll();
+        },
         getSelectedRecord:function(){},
         _activateRowSelect:function(selectType){
             if( selectType == COL_CHECKBOX ){
                 YEvent.on(this.tableEl,'click',function(e){
                     var t = YEvent.getTarget(e);
-                    //如果点击的对象是td或者多选框的icon，且在tbody中
-                    if((YDOM.hasClass( t , CLS_ICON_CHECKBOX ) || t.nodeName.toLowerCase() == 'td' ) && YDOM.getAncestorByTagName( t , 'tbody' )){
-                        if(YDOM.getAncestorByClassName( t, CLS_ROW )){
-                            var row = YDOM.getAncestorByClassName( t, CLS_ROW );
-                            var rowExtra = YDOM.getNextSibling( row );
-
+                    if( (YDOM.hasClass( t , CLS_ICON_CHECKBOX) || t.nodeName.toLowerCase() == 'td') && YDOM.getAncestorByTagName( t , 'tbody' ) ){
+                        var row = YDOM.getAncestorByClassName( t , CLS_ROW ) || YDOM.getAncestorByClassName( t , CLS_ROW_EXTRA );
+                        this.toggleSelectRow( row.getAttribute(ATTR_ROW_IDX ));
+                    }else if( t == this.selectAllTrigger){
+                        var theadRow = this.theadEl.getElementsByTagName('tr')[0];
+                        if( YDOM.hasClass( theadRow , CLS_ROW_SELECTED ) ){
+                            this.deselectAll();
                         }else{
-                            var rowExtra = YDOM.getAncestorByClassName( t , CLS_ROW_EXTRA );
-                            var row = YDOM.getPreviousSibling( rowExtra );
+                            this.selectAll();
                         }
-                        DOM.toggleClass( row , CLS_ROW_SELECTED );
-                        DOM.toggleClass( rowExtra , CLS_ROW_SELECTED );
-                    //如果点击的元素时thead的多选框icon
-                    }else if( YDOM.hasClass( t , CLS_ICON_CHECKBOX ) ){
-                        var row = YDOM.getAncestorByClassName( t, CLS_ROW );
-                        if( YDOM.hasClass( row , CLS_ROW_SELECTED ) ){
-
-                        }else{
-
-                        }
-                        DOM.toggleClass( row , CLS_ROW_SELECTED );
                     }
                 },this,true);
             }else if( selectType == COL_RADIO ){
@@ -493,15 +565,19 @@ KISSY.add("datagrid", function(S) {
                 var t = YEvent.getTarget(e);
                 if( YDOM.hasClass( t , CLS_ICON_EXPAND ) ){
                     var row = YDOM.getAncestorByClassName( t , CLS_ROW );
-                    var rowExtra = YDOM.getNextSibling( row );
-                    //切换扩展列显示状态
-                    if( YDOM.hasClass( row , CLS_ROW_EXPANDED ) ){
-                        YDOM.removeClass( row , CLS_ROW_EXPANDED );
-                        YDOM.removeClass( rowExtra , CLS_ROW_EXPANDED );
+                    var nextSibling = YDOM.getNextSibling( row );
+                    //如果row无相邻元素，或者相邻元素不是扩展列
+                    if( !nextSibling || !YDOM.hasClass( nextSibling , CLS_ROW_EXTRA ) ){
+                        var idx = row.getAttribute( ATTR_ROW_IDX );
+                        var rowExtra = this._renderRowExtra( this.listData[idx] );
+                            rowExtra.setAttribute( ATTR_ROW_IDX , idx );
+                        if(YDOM.hasClass( row , CLS_ROW_SELECTED )) YDOM.addClass( rowExtra, CLS_ROW_SELECTED );
+                        YDOM.insertAfter( rowExtra , row );
                     }else{
-                        YDOM.addClass( row , CLS_ROW_EXPANDED );
-                        YDOM.addClass( rowExtra , CLS_ROW_EXPANDED );
+                        var rowExtra = nextSibling;
                     }
+                    DOM.toggleClass( row , CLS_ROW_EXPANDED );
+                    DOM.toggleClass( rowExtra , CLS_ROW_EXPANDED );
                 }
             },this,true);
         }
