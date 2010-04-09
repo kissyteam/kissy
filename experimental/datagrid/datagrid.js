@@ -21,12 +21,27 @@
  */
 
 KISSY.add("datagrid", function(S) {
-    var DOM = S.DOM, Event = S.Event,YDOM = YAHOO.util.Dom,YConnect=YAHOO.util.Connect,
+    var DOM = S.DOM, Event = S.Event, YDOM = YAHOO.util.Dom, YEvent= YAHOO.util.Event, YConnect=YAHOO.util.Connect,
         doc=document,
-        COL_CHECKBOX='col-checkbox',COL_RADIO='col-radio',COL_EXTRA='col-extra',
-        KS_DEPTH='KSDepth',KS_FATHER_IDX='KSFatherIdx',KS_CHILDREN_AMOUNT='KSChildrenAmount',
-        LOADING_EL_STR='<tbody><tr class="row row-loading"><td></td></tr></tbody>',
-        POST='post',GET='get'
+        //定义特殊列的类型
+        COL_CHECKBOX = 'COL_CHECKBOX', COL_RADIO = 'COL_RADIO', COL_EXTRA = 'COL_EXTRA',
+        //定义解析columnDef时要用到的三个内部属性
+        KS_DEPTH = 'KSDepth', KS_FATHER_IDX='KSFatherIdx', KS_CHILDREN_AMOUNT='KSChildrenAmount',
+        //loading的html片段 
+        LOADING_EL_STR = '<tbody><tr class="row row-loading"><td></td></tr></tbody>',
+        //请求方式
+        POST = 'post',GET = 'get',
+        //行class
+        CLS_ROW = 'row', CLS_ROW_EXTRA = 'row-extra', CLS_ROW_SELECTED = 'row-selected', CLS_ROW_EXPANDED = 'row-expanded',
+        ATTR_ROW_ID = 'data-idx',
+        //单元格class
+        CLS_CELL_CHECKBOX = 'cell-checkbox', CLS_CELL_RADIO = 'cell-radio', CLS_CELL_EXTRA = 'cell-extra',
+        //排序class
+        CLS_SORTABLE = 'sortable', CLS_SORT_DES = 'sort-des', CLS_SORT_ASC = 'sort-asc',
+        //特殊icon的class
+        CLS_ICON_EXPAND = 'icon-expand', CLS_ICON_CHECKBOX = 'icon-checkbox', CLS_ICON_RADIO = 'icon-radio',
+        //单击选择某列时，例外的元素
+        TAG_NAME_EXCEPTION = ' a input button select option textarea '
         ;
 
     /**
@@ -45,7 +60,6 @@ KISSY.add("datagrid", function(S) {
         this.loadingEl=parseStrToEl(LOADING_EL_STR);
         //记录数据源uri
         this.datasourceUri=datasourceUri;
-
     }
 
     S.mix(DataGrid.prototype,{
@@ -63,7 +77,10 @@ KISSY.add("datagrid", function(S) {
          * }
          */
         datasourceDef:null,
-        requestResult:null,
+        /**
+         * 记录最近一次查询类请求发送的数据
+         */
+        queryData:null,
         /**
          * JSON格式的数据源
          */
@@ -193,18 +210,10 @@ KISSY.add("datagrid", function(S) {
                             this._renderTbody();
                             this._renderTfoot();
                             this.endLoading();
-
-                            //根据特殊列设定添加事件
-                            if(colExtraDef){
-                                //点击展开按钮，加载扩展列内容，切换扩展列显示
-                            }
-                            //行选择方式
-                            if( colSelectDef == COL_CHECKBOX ){
-
-                            }else if( colSelectDef == COL_RADIO ){
-
-                            }
-
+                            //激活扩展功能
+                            if(colExtraDef) this._activateRowExpand();
+                            //选择行功能
+                            if(colSelectDef) this._activateRowSelect(colSelectDef);
                         },this);
                     }
                 },
@@ -213,189 +222,220 @@ KISSY.add("datagrid", function(S) {
             };
             YConnect.asyncRequest(this.connectMethod,this.datasourceUri,callback,postData || '');
         },
+        /**
+         * 渲染普通th
+         * @param cellDef
+         */
+        _renderTheadCell:function(cellDef){
+            var cell = doc.createElement('th');
+            //如果无子th
+            if(cellDef[KS_CHILDREN_AMOUNT] == 0){
+                //特殊列
+                if(cellDef.xType){
+                    cell.className = CLS_CELL_EXTRA;
+                    //全选
+                    if(cellDef.xType == COL_CHECKBOX) cell.innerHTML = '<i class="' + CLS_ICON_CHECKBOX + '"></i>';
+                //排序
+                }else if(cellDef.sortable){
+                    cell.className = CLS_SORTABLE;
+                    cell.innerHTML = '<i class="icon"></i>';
+                }
+            //如果有子th
+            }else{
+                cell.colSpan = cellDef[KS_CHILDREN_AMOUNT];
+            }
+            //文字标签
+            if(cellDef.label) cell.innerHTML = cellDef.label + cell.innerHTML;
+            return cell;
+        },
+        /**
+         * 渲染扩展按钮列的th
+         */
+        _renderTheadCellExpand:function(){
+            var cell = doc.createElement('th');
+                cell.className = CLS_CELL_EXTRA;
+            return cell;
+        },
+        /**
+         * 渲染选择列的th
+         * @param selectType
+         */
+        _renderTheadCellSelect:function(selectType){
+            var cell = doc.createElement('th');
+                cell.className = CLS_CELL_EXTRA;
+            if(selectType == COL_CHECKBOX) cell.innerHTML = '<i class="' + CLS_ICON_CHECKBOX + '"></i>';
+            return cell;
+        },
+        /**
+         * 渲染表头
+         */
         _renderThead:function(){
             var theadColDef=this.theadColDef;
-            var colgroupHTMLFrag = '<colgroup>';
-            var theadHTMLFrag = '<thead>';
+            var colgroupEl = doc.createElement('colgroup');
+            var theadEl = doc.createElement('thead');
             var depth = theadColDef.length;
             for(var i = 0 , ilen = theadColDef.length ; i < ilen ; i++){
-                theadHTMLFrag += '<tr class="row">';
+                var row = doc.createElement('tr');
+                    row.className = 'row';
                 //扩展按钮列
                 if( i == 0){
                     if(this.colExtraDef){
-                       theadHTMLFrag += '<th class="col-extra" rowspan="' + ilen + '"></th>';
+                        var theadCellExpand = this._renderTheadCellExpand();
+                            theadCellExpand.rowSpan = ilen;
+                        row.appendChild(theadCellExpand);
+                        var col =  doc.createElement('col');
+                            col.width = '25';
+                        colgroupEl.appendChild(col);
                     }
-                    if(this.colSelectDef == COL_CHECKBOX){
-                       theadHTMLFrag += '<th class="col-extra" rowspan="' + ilen + '"><i class="icon-checkbox"></i></th>';
-                    }else if(this.colSelectDef == COL_RADIO){
-                       theadHTMLFrag += '<th class="col-extra" rowspan="' + ilen + '"></th>';
+                    if(this.colSelectDef){
+                        var theadCellSelect = this._renderTheadCellSelect(this.colSelectDef);
+                             theadCellSelect.rowSpan = ilen;
+                        row.appendChild(theadCellSelect);
+                        var col =  doc.createElement('col');
+                            col.width = '25';
+                        colgroupEl.appendChild(col);
                     }
                 }
+                //普通列
                 for(var j = 0 , jlen = theadColDef[i].length ; j < jlen ; j++){
-                    if(theadColDef[i][j][KS_DEPTH] != i) continue;
-                    theadHTMLFrag += '<th';
-                    //如果无子th
-                    if(theadColDef[i][j][KS_CHILDREN_AMOUNT] == 0){
-                        //特殊列
-                        if(theadColDef[i][j].xType){
-                            colgroupHTMLFrag += '<col width="25" />';
-                            theadHTMLFrag += ' class="col-extra"';
-                        }else{
-                            colgroupHTMLFrag += '<col />';
-                            //排序
-                            if(theadColDef[i][j].sortable){
-                                theadHTMLFrag += ' class="sortable"';
-                            }
-                        }
-                        //rowspan
+                    var cellDef = theadColDef[i][j];
+                    if(cellDef[KS_DEPTH] != i) continue;
+                    var cell = this._renderTheadCell(cellDef);                      
+                    if(cellDef[KS_CHILDREN_AMOUNT] == 0){
+                        colgroupEl.appendChild(doc.createElement('col'));
                         if(depth-1>i){
-                            theadHTMLFrag += ' rowspan="' + (depth-theadColDef[i][j][KS_DEPTH]) + '"';
+                            cell.rowSpan = depth - i;
                         }
-                    //如果有子th
-                    }else{
-                        theadHTMLFrag += ' colspan="' + theadColDef[i][j][KS_CHILDREN_AMOUNT] + '"';
                     }
-                    theadHTMLFrag += '>';
-                    //文字标签
-                    theadHTMLFrag += theadColDef[i][j].label ? theadColDef[i][j].label : '';
-                    if(theadColDef[i][j][KS_CHILDREN_AMOUNT] == 0){
-                        //全选 icon
-                        theadHTMLFrag += ( theadColDef[i][j].xType == COL_CHECKBOX ) ? '<i class="icon-checkbox"></i>' : '';
-                        //排序 icon
-                        theadHTMLFrag += theadColDef[i][j].sortable ? '<i class="icon"></i>' : '';
-                    }                     
-                    theadHTMLFrag += '</th>';
+                    row.appendChild(cell);
                 }
-                theadHTMLFrag += '</tr>';
+                theadEl.appendChild(row);
             }
-            colgroupHTMLFrag += '</colgroup>';
-            theadHTMLFrag += '</thead>';
             if(this.colgroupEl) this.tableEl.removeChild(this.colgroupEl);
             if(this.theadEl) this.tableEl.removeChild(this.theadEl);
-            this.colgroupEl = parseStrToEl(colgroupHTMLFrag);
-            this.theadEl = parseStrToEl(theadHTMLFrag);
+            this.colgroupEl = colgroupEl;
+            this.theadEl = theadEl;
             this.tableEl.appendChild(this.colgroupEl);
             this.tableEl.appendChild(this.theadEl);
             this.columnAmount=this.colgroupEl.getElementsByTagName('col').length;
         },
-        _renderTbody:function(){
-            var listData = this.listData;
-            var tbodyHTMLFrag = '<tbody>';
-            for(var i = 0 , len = listData.length ; i < len ; i++){
-                 tbodyHTMLFrag += this._renderRow(listData[i],i);   
-            }
-            tbodyHTMLFrag += '</tbody>';
-
-            if(this.tbodyEl) this.tableEl.removeChild(this.tbodyEl);
-            this.tbodyEl = parseStrToEl(tbodyHTMLFrag);
-            this.tableEl.appendChild(this.tbodyEl);
-        },
-        _renderCellInner:function(cellDef,recordData){
-            var inner='';
+        /**
+         * 渲染普通单元格
+         * @param cellDef 单元格设定
+         * @param recordData 单条数据
+         */
+        _renderCell:function(cellDef,recordData){
+            var cell = doc.createElement('td');
+            //如果指定了字段
             if(typeof cellDef.field != 'undefined'){
-                //如果field为单字段，且指向正确
-                if( typeof cellDef.field == 'string' && recordData[cellDef.field]){
+                //如果是单字段
+                if(typeof cellDef.field == 'string'){
                     var fieldValue = recordData[cellDef.field];
-                    //需要经过渲染的
+                    //如果有渲染器
                     if(cellDef.parser){
-                        inner += cellDef.parser(fieldValue);
-                    //不需要经过渲染的
+                        cell.innerHTML = cellDef.parser(fieldValue);
+                    //如果无渲染器
                     }else{
-                        inner += fieldValue;
+                        cell.innerHTML = fieldValue;
                     }
-                //如果field为复合字段（为方便起见，这里不验证每个字段是否有效）
+                //如果是复合字段
                 }else if(S.isArray(cellDef.field)){
                     var fieldValueArr=[];
-                    for(var j = 0 , jlen = cellDef.field.length ; j < jlen ; j++){
-                        fieldValueArr.push(recordData[cellDef.field[j]]);
+                    for(var i = 0 , len = cellDef.field.length ; i<len ; i++){
+                        fieldValueArr.push(recordData[cellDef.field[i]]);
                     }
-                    //需要经过渲染的
+                    //如果有渲染器
                     if(cellDef.parser){
-                       inner += cellDef.parser.apply(window,fieldValueArr);
-                    //不需要经过渲染的
+                        cell.innerHTML = cellDef.parser.apply(window,fieldValueArr);
+                    //如果无渲染器
                     }else{
-                        inner += fieldValueArr.toString();
+                        cell.innerHTML = fieldValueArr.join(' ');
                     }
-                }else{
-                    inner += ' ';
                 }
+            //如果没指定字段
             }else{
-                //如果没有定义field，但有渲染器的时候，输出渲染器渲染结果
+                //如果有渲染器
                 if(cellDef.parser){
-                    inner += cellDef.parser();
-                //否则输出空格
+                    cell.innerHTML = cellDef.parser();
+                //如果无渲染器
                 }else{
-                    inner += ' ';
+                    cell.innerHTML = '';
                 }
             }
-            return inner;
+            return cell;
         },
         /**
-         * 渲染单条数据
-         * @param {Object} recordData 单条数据
-         * @param {Boolean} [returnType] 返回类型，如果为1的话返回dom元素，如果为0则返回拼接好的HTML片段
-         * @param {String} [rowCls] 可以额外加到tr上的class，可用来高亮显示单条数据(目前无对外入口)
+         * 渲染展开按钮单元格
          */
-        _renderRow:function(recordData, idx, returnType, rowCls){
-            var colDef = this.colDef;
-            var rowHTMLFrag = '<tr class="row' + (rowCls ? ' ' + rowCls : '') + '"' + (!(idx == null || typeof idx == 'undefined') ? ' data-idx="' + idx + '"' : '') + '>';
-            //扩展按钮
-            if(this.colExtraDef) rowHTMLFrag += '<td class="col-extra"><i class="icon-expand"></i></td>';
-            //复选或者单选按钮
-            if(this.colSelectDef == COL_CHECKBOX){
-                 rowHTMLFrag += '<td class="col-extra"><i class="icon-checkbox"></i></td>';
-            }else if(this.colSelectDef == COL_RADIO){
-                 rowHTMLFrag += '<td class="col-extra"><i class="icon-radio"></i></td>';
-            }
-            for(var i = 0 , ilen = this.colDef.length ; i < ilen ; i++){
-                rowHTMLFrag += '<td>';
-                if(typeof colDef[i].field != 'undefined'){
-                    //如果field为单字段，且指向正确
-                    if( typeof colDef[i].field == 'string' && recordData[colDef[i].field]){
-                        var fieldValue = recordData[colDef[i].field];
-                        //需要经过渲染的
-                        if(colDef[i].parser){
-                            rowHTMLFrag += colDef[i].parser(fieldValue);
-                        //不需要经过渲染的
-                        }else{
-                            rowHTMLFrag += fieldValue;
-                        }
-                    //如果field为复合字段（为方便起见，这里不验证每个字段是否有效）
-                    }else if(S.isArray(colDef[i].field)){
-                        var fieldValueArr=[];
-                        for(var j = 0 , jlen = colDef[i].field.length ; j < jlen ; j++){
-                            fieldValueArr.push(recordData[colDef[i].field[j]]);
-                        }
-                        //需要经过渲染的
-                        if(colDef[i].parser){
-                           rowHTMLFrag += colDef[i].parser.apply(window,fieldValueArr);
-                        //不需要经过渲染的
-                        }else{
-                            rowHTMLFrag += fieldValueArr.toString();
-                        }
-                    }else{
-                        rowHTMLFrag += ' ';
-                    }
-                }else{
-                    //如果没有定义field，但有渲染器的时候，输出渲染器渲染结果
-                    if(colDef[i].parser){
-                        rowHTMLFrag += colDef[i].parser();
-                    //否则输出空格
-                    }else{
-                        rowHTMLFrag += ' ';
-                    }
-                }
-                rowHTMLFrag += '</td>';
-            }
-            rowHTMLFrag += '</tr>';
-            if(returnType){
-                return parseStrToEl(rowHTMLFrag);
-            }else{
-                return rowHTMLFrag;
-            }
+        _renderCellExpand:function(){
+            var cell = doc.createElement('td');
+            cell.className = CLS_CELL_EXTRA;
+            cell.innerHTML = '<i class="' + CLS_ICON_EXPAND + '"></i>';
+            return cell;
         },
-        _renderRowExtra:function(){
-
+        /**
+         * 渲染选择单元格
+         * @param selectType 选择类型 接受 COL_CHECKBOX 活 COL_RADIO 两个参数值
+         */
+        _renderCellSelect:function(selectType){
+            var cell = doc.createElement('td');
+            cell.className = CLS_CELL_EXTRA;
+            if(selectType == COL_CHECKBOX){
+                 cell.innerHTML = '<i class="' + CLS_ICON_CHECKBOX + '"></i>';
+            }else if(selectType == COL_RADIO){
+                 cell.innerHTML = '<i class="' + CLS_ICON_RADIO + '"></i>';
+            }
+            return cell;
+        },
+        /**
+         * 渲染行
+         * @param recordData 单条数据
+         */
+        _renderRow:function(recordData){
+            var colDef = this.colDef;
+            var row = doc.createElement('tr');
+             row.className = CLS_ROW ;
+            //扩展按钮
+            if(this.colExtraDef) row.appendChild(this._renderCellExpand());
+            //复选或者单选按钮
+            if(this.colSelectDef) row.appendChild(this._renderCellSelect(this.colSelectDef));
+            for(var i = 0 , len = colDef.length ; i < len ; i++){
+                row.appendChild(this._renderCell(colDef[i],recordData));
+            }
+            return row;
+        },
+        _renderRowExtra:function(recordData){
+            var row = doc.createElement('tr');
+                row.className = CLS_ROW_EXTRA ;
+            if(this.colExtraDef){
+                var td = doc.createElement('td');
+                    td.className = CLS_CELL_EXTRA;
+                row.appendChild(td);
+            }
+            if(this.colSelectDef){
+                var td = doc.createElement('td');
+                    td.className = CLS_CELL_EXTRA;
+                row.appendChild(td);
+            }
+            var cell = this._renderCell(this.colExtraDef,recordData); 
+                cell.colSpan = this.columnAmount;
+            row.appendChild(cell);
+            return row;
+        },
+        _renderTbody:function(){
+            var listData = this.listData;
+            var tbodyEl = doc.createElement('tbody');
+            for(var i = 0 , len = listData.length ; i < len ; i++){
+                var row = this._renderRow(listData[i]);
+                    row.setAttribute(ATTR_ROW_ID,i);
+                tbodyEl.appendChild(row);
+                if(this.colExtraDef){
+                    tbodyEl.appendChild(this._renderRowExtra(listData[i]));
+                }
+            }
+            if(this.tbodyEl) this.tableEl.removeChild(this.tbodyEl);
+            this.tbodyEl = tbodyEl;
+            this.tableEl.appendChild(this.tbodyEl);
         },
         _renderTfoot:function(){
             var tfootHTMLFrag='<tfoot><tr><td colspan="' + this.columnAmount + '"></td></tr></tfoot>';
@@ -416,7 +456,55 @@ KISSY.add("datagrid", function(S) {
         selectAll:function(){},
         deselectAll:function(){},
         selectInverse:function(){},
-        getSelectedRecord:function(){}
+        getSelectedRecord:function(){},
+        _activateRowSelect:function(selectType){
+            if( selectType == COL_CHECKBOX ){
+                YEvent.on(this.tableEl,'click',function(e){
+                    var t = YEvent.getTarget(e);
+                    //如果点击的对象是td或者多选框的icon，且在tbody中
+                    if((YDOM.hasClass( t , CLS_ICON_CHECKBOX ) || t.nodeName.toLowerCase() == 'td' ) && YDOM.getAncestorByTagName( t , 'tbody' )){
+                        if(YDOM.getAncestorByClassName( t, CLS_ROW )){
+                            var row = YDOM.getAncestorByClassName( t, CLS_ROW );
+                            var rowExtra = YDOM.getNextSibling( row );
+
+                        }else{
+                            var rowExtra = YDOM.getAncestorByClassName( t , CLS_ROW_EXTRA );
+                            var row = YDOM.getPreviousSibling( rowExtra );
+                        }
+                        DOM.toggleClass( row , CLS_ROW_SELECTED );
+                        DOM.toggleClass( rowExtra , CLS_ROW_SELECTED );
+                    //如果点击的元素时thead的多选框icon
+                    }else if( YDOM.hasClass( t , CLS_ICON_CHECKBOX ) ){
+                        var row = YDOM.getAncestorByClassName( t, CLS_ROW );
+                        if( YDOM.hasClass( row , CLS_ROW_SELECTED ) ){
+
+                        }else{
+
+                        }
+                        DOM.toggleClass( row , CLS_ROW_SELECTED );
+                    }
+                },this,true);
+            }else if( selectType == COL_RADIO ){
+                alert('沉鱼还没有写好单选行的功能…');    
+            }
+        },
+        _activateRowExpand:function(){
+            YEvent.on(this.tableEl,'click',function(e){
+                var t = YEvent.getTarget(e);
+                if( YDOM.hasClass( t , CLS_ICON_EXPAND ) ){
+                    var row = YDOM.getAncestorByClassName( t , CLS_ROW );
+                    var rowExtra = YDOM.getNextSibling( row );
+                    //切换扩展列显示状态
+                    if( YDOM.hasClass( row , CLS_ROW_EXPANDED ) ){
+                        YDOM.removeClass( row , CLS_ROW_EXPANDED );
+                        YDOM.removeClass( rowExtra , CLS_ROW_EXPANDED );
+                    }else{
+                        YDOM.addClass( row , CLS_ROW_EXPANDED );
+                        YDOM.addClass( rowExtra , CLS_ROW_EXPANDED );
+                    }
+                }
+            },this,true);
+        }
     });
 
     DataGrid.Config={
@@ -603,18 +691,6 @@ KISSY.add("datagrid", function(S) {
             }
         }
         parse(pureColDef);
-    }
-
-    function enableColExtra(tableEl){
-
-    }
-
-    function enableSelectByCheckbox(tableEl){
-
-    }
-
-    function enableSelectByRaio(tableEl){
-
     }
 
     S.DataGrid = DataGrid;

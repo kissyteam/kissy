@@ -32,24 +32,24 @@
 
 /*特殊列*/
 .ks-datagrid tr.selected td{	background:#e8f3cc;}
-.ks-datagrid th.col-extra{padding:5px 0;*padding:3px 0;text-align:center;}
-.ks-datagrid td.col-extra{padding:5px 0;vertical-align:middle;text-align:center;border-top:1px solid #fff;border-right:1px solid #cacaca;background:#ecedef url(datagrid-extra.png) repeat-y 0 0;}
+.ks-datagrid th.cell-extra{padding:5px 0;*padding:3px 0;text-align:center;}
+.ks-datagrid td.cell-extra{padding:5px 0;vertical-align:middle;text-align:center;border-top:1px solid #fff;border-right:1px solid #cacaca;background:#ecedef url(datagrid-extra.png) repeat-y 0 0;}
 
 /*行*/
 .ks-datagrid .row td{border-top:1px dashed #ccc;}
 .ks-datagrid .row:hover td{background-color:#f6f6f6;}
-.ks-datagrid .row:hover td.col-extra{background-color:#ecedef;}
+.ks-datagrid .row:hover td.cell-extra{background-color:#ecedef;}
 .ks-datagrid .row-extra{display:none;}
-.ks-datagrid .row-extra td.col-extra{border-top:none;}
-.ks-datagrid .row-expanded{display:table-row;}
+.ks-datagrid .row-extra td.cell-extra{border-top:none;}
+.ks-datagrid .row-expanded{display:table-row;*display:block;}
 .ks-datagrid .row-expanded td,
 .ks-datagrid .row-expanded:hover td{background:#e7eef9;}
-.ks-datagrid .row-expanded td.col-extra,
-.ks-datagrid .row-expanded:hover td.col-extra{background:#d0e3fa url(datagrid-extra.png) repeat-y -50px 0;}
+.ks-datagrid .row-expanded td.cell-extra,
+.ks-datagrid .row-expanded:hover td.cell-extra{background:#d0e3fa url(datagrid-extra.png) repeat-y -50px 0;}
 .ks-datagrid .row-selected td,
 .ks-datagrid .row-selected:hover td{background:#ebf7e5;}
-.ks-datagrid .row-selected td.col-extra,
-.ks-datagrid .row-selected:hover td.col-extra{background:#e0f2d7 url(datagrid-extra.png) repeat-y -100px 0;}
+.ks-datagrid .row-selected td.cell-extra,
+.ks-datagrid .row-selected:hover td.cell-extra{background:#e0f2d7 url(datagrid-extra.png) repeat-y -100px 0;}
 .ks-datagrid .row-loading:hover td{background-color:#fff;}
 
 /*特殊元素*/
