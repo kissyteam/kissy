@@ -91,14 +91,14 @@
     function init_swfstore(test) {
 
         // 初始化
-        swfstore = new S.SWFStore('#swfstore-container');
+        swfstore = new S.SWFStore();
         swfstore.on('contentReady', function() {
             test.echo('swfstore is ready!');
             updateList();
         });
 
         // 数据更新：当数据有 增加、删除、修改 操作时，都会触发 save 事件
-        //swfstore.on('save', updateList);
+        swfstore.on('save', updateList);
         var dataList = S.get('#data-list'), items, i, len, html;
         function updateList(event) {
             html = '';
@@ -183,9 +183,9 @@
         if(swfstore.getLength() !== 5) test.fail();
         if(swfstore.getValueAt(3) !== 'undefined') test.fail();
         if(swfstore.getNameAt(4) !== 'name4') test.fail();
-        if(swfstore.getTypeAt(2) !== 'string') test.fail();
+       // if(swfstore.getTypeAt(2) !== 'string') test.fail();
         if(S.JSON.parse(swfstore.getValueOf('name1')).p1 !== 'v1') test.fail();
-        if(swfstore.getTypeOf('name4') !== 'string') test.fail();
+        //if(swfstore.getTypeOf('name4') !== 'string') test.fail();
 
         // getTypeAt, getTypeOf 始终返回 'string', 这两个方法意义不大
     }
@@ -215,9 +215,9 @@
 //            swfstore.setShareData(true);
 //        });
 
-        swfstore.setUseCompression(false);
-        if(swfstore.getUseCompression() !== false) test.fail(swfstore.getUseCompression());
-        swfstore.setUseCompression(true);
+//        swfstore.setUseCompression(false);
+//        if(swfstore.getUseCompression() !== false) test.fail(swfstore.getUseCompression());
+//        swfstore.setUseCompression(true);
 
         test.echo('currentSize = ' + swfstore.calculateCurrentSize() + ' KB');
         test.echo('hasAdequateDimensions = ' + swfstore.hasAdequateDimensions());

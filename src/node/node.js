@@ -105,8 +105,17 @@ KISSY.add('node', function(S) {
          */
         all: function(selector) {
             return S.all(selector, this[0]);
-        }
+        },
 
+        /**
+         * Insert the element to the end of the parent.
+         */
+        appendTo: function(parent) {
+            if((parent = S.get(parent)) && parent.appendChild) {
+                parent.appendChild(this[0]);
+            }
+            return this;
+        }
     });
 
     // query api
@@ -116,3 +125,8 @@ KISSY.add('node', function(S) {
 
     S.Node = Node;
 });
+
+/**
+ * TODO:
+ *   - append/appendTo, insertBefore/insertAfter, after/before 等操作的实现和测试
+ */

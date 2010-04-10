@@ -267,26 +267,6 @@
         },
 
         /**
-         * Execute the supplied method after the specified function.
-         * @param {function} fn the function to execute
-         * @param {string} when before or after
-         * @param {object} obj the object hosting the method to displace
-         * @param {string} sFn the name of the method to displace
-         */
-        weave: function(fn, when, obj, sFn) {
-            var arr = [obj[sFn], fn];
-            if (when === 'before') arr.reverse();
-
-            obj[sFn] = function() {
-                for (var i = 0, ret; i < 2; ++i) {
-                    ret = arr[i].apply(this, arguments);
-                }
-                return ret;
-            };
-            return this;
-        },
-
-        /**
          * create app based on KISSY.
          * <pre>
          * S.app('TB');
@@ -371,13 +351,17 @@
 /**
  * Notes:
  *
+ * 2010.04
+ *  - 移除掉 weave 方法，尚未考虑周全。
+ *
  * 2010.01
  *  - 考虑简单够用和 2/8 原则，去掉了对 YUI3 沙箱的模拟（archives/2009 r402）
  *
  *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 组织代码）。
  *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
- *  - mix, merge, extend, augment, weave 方法，决定了类库代码的基本实现方式，
+ *  - mix, merge, extend, augment 方法，决定了类库代码的基本实现方式，
  *    充分利用 mixin 特性和 prototype 方式来实现代码。
  *  - app, namespace 方法，决定子库的实现和代码的整体组织。
  *  - log 方法，简单的调试工具。
+ *
  */

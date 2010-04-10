@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 537 Apr 8 19:57
+build: 548 Apr 9 23:53
 */
 /**
  * @module kissy
@@ -272,26 +272,6 @@ build: 537 Apr 8 19:57
         },
 
         /**
-         * Execute the supplied method after the specified function.
-         * @param {function} fn the function to execute
-         * @param {string} when before or after
-         * @param {object} obj the object hosting the method to displace
-         * @param {string} sFn the name of the method to displace
-         */
-        weave: function(fn, when, obj, sFn) {
-            var arr = [obj[sFn], fn];
-            if (when === 'before') arr.reverse();
-
-            obj[sFn] = function() {
-                for (var i = 0, ret; i < 2; ++i) {
-                    ret = arr[i].apply(this, arguments);
-                }
-                return ret;
-            };
-            return this;
-        },
-
-        /**
          * create app based on KISSY.
          * <pre>
          * S.app('TB');
@@ -376,15 +356,19 @@ build: 537 Apr 8 19:57
 /**
  * Notes:
  *
+ * 2010.04
+ *  - 移除掉 weave 方法，尚未考虑周全。
+ *
  * 2010.01
  *  - 考虑简单够用和 2/8 原则，去掉了对 YUI3 沙箱的模拟（archives/2009 r402）
  *
  *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 组织代码）。
  *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
- *  - mix, merge, extend, augment, weave 方法，决定了类库代码的基本实现方式，
+ *  - mix, merge, extend, augment 方法，决定了类库代码的基本实现方式，
  *    充分利用 mixin 特性和 prototype 方式来实现代码。
  *  - app, namespace 方法，决定子库的实现和代码的整体组织。
  *  - log 方法，简单的调试工具。
+ *
  */
 /**
  * @module  lang
@@ -2080,7 +2064,7 @@ KISSY.add('event-mouseenter', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 548 Apr 9 23:53
 */
 /**
  * @module  node
@@ -2189,8 +2173,17 @@ KISSY.add('node', function(S) {
          */
         all: function(selector) {
             return S.all(selector, this[0]);
-        }
+        },
 
+        /**
+         * Insert the element to the end of the parent.
+         */
+        appendTo: function(parent) {
+            if((parent = S.get(parent)) && parent.appendChild) {
+                parent.appendChild(this[0]);
+            }
+            return this;
+        }
     });
 
     // query api
@@ -2200,6 +2193,11 @@ KISSY.add('node', function(S) {
 
     S.Node = Node;
 });
+
+/**
+ * TODO:
+ *   - append/appendTo, insertBefore/insertAfter, after/before 等操作的实现和测试
+ */
 /**
  * @module  nodelist
  * @author  lifesinger@gmail.com
@@ -2751,7 +2749,7 @@ KISSY.add('ajax', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 543 Apr 9 08:13
+build: 548 Apr 9 23:53
 */
 /**
  * SWF UA info
@@ -2949,12 +2947,12 @@ KISSY.add('swfstore', function(S, undefined) {
     /**
      * Class for the YUI SWFStore util.
      * @constructor
-     * @param el {String|HTMLElement} Container element for the Flash Player instance.
      * @param {String} swfUrl The URL of the SWF to be embedded into the page.
+     * @param container {String|HTMLElement} Container element for the Flash Player instance.
      * @param shareData {Boolean} Whether or not data should be shared across browsers
-     * @param useCompression {Boolean} Container element for the Flash Player instance.
+     * @param useCompression {Boolean} Container element for the Flash Player instance
      */
-    function SWFStore(el, swfUrl, shareData, useCompression) {
+    function SWFStore(swfUrl, container, shareData, useCompression) {
         var browser = 'other',
             cookie = Cookie.get(SWFSTORE),
             params,
@@ -2991,7 +2989,12 @@ KISSY.add('swfstore', function(S, undefined) {
             }
         };
 
-        self.embeddedSWF = new S.SWF(el, swfUrl || 'swfstore.swf', params);
+        // 如果没有传入，就自动生成
+        if(!container) {
+            // 注：container 的 style 不能有 visibility:hidden or display: none, 否则异常
+            container = new S.Node('<div style="height:0;width:0;overflow:hidden"></div>').appendTo(doc.body)[0];
+        }
+        self.embeddedSWF = new S.SWF(container, swfUrl || 'swfstore.swf', params);
 
         // 让 flash fired events 能通知到 swfstore
         self.embeddedSWF._eventHandler = function(event) {
@@ -3035,12 +3038,12 @@ KISSY.add('swfstore', function(S, undefined) {
     });
 
     S.each([
-        'getValueAt', 'getNameAt', 'getTypeAt',
-        'getValueOf', 'getTypeOf',
+        'getValueAt', 'getNameAt', //'getTypeAt',
+        'getValueOf', //'getTypeOf',
         'getItems', 'getLength',
         'removeItem', 'removeItemAt', 'clear',
-        'getShareData', 'setShareData',
-        'getUseCompression', 'setUseCompression',
+        //'getShareData', 'setShareData',
+        //'getUseCompression', 'setUseCompression',
         'calculateCurrentSize', 'hasAdequateDimensions', 'setSize',
         'getModificationDate', 'displaySettings'
     ], function(methodName) {
@@ -3058,10 +3061,15 @@ KISSY.add('swfstore', function(S, undefined) {
 });
 
 /**
+ * NOTES:
+ *
+ *  - [2010-04-09] yubo: 去掉 getTypeAt, getTypeOf, getShareData 等无用和调用
+ *     概率很小的接口，宁愿少几个接口，也不为了功能而功能
+ *
  * TODO:
  *   - 广播功能：当数据有变化时，自动通知各个页面
- *
  *   - Bug: 点击 Remove, 当 name 不存在时，会将最后一条删除
+ *   - container 的 overflow:hidden 是否有必要?
  */
 /*
 Copyright 2010, KISSY UI Library v1.0.5

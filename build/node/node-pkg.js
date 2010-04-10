@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 548 Apr 9 23:53
 */
 /**
  * @module  node
@@ -110,8 +110,17 @@ KISSY.add('node', function(S) {
          */
         all: function(selector) {
             return S.all(selector, this[0]);
-        }
+        },
 
+        /**
+         * Insert the element to the end of the parent.
+         */
+        appendTo: function(parent) {
+            if((parent = S.get(parent)) && parent.appendChild) {
+                parent.appendChild(this[0]);
+            }
+            return this;
+        }
     });
 
     // query api
@@ -121,6 +130,11 @@ KISSY.add('node', function(S) {
 
     S.Node = Node;
 });
+
+/**
+ * TODO:
+ *   - append/appendTo, insertBefore/insertAfter, after/before 等操作的实现和测试
+ */
 /**
  * @module  nodelist
  * @author  lifesinger@gmail.com

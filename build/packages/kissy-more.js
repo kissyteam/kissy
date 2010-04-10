@@ -482,7 +482,7 @@ KISSY.add('ajax', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 543 Apr 9 08:13
+build: 548 Apr 9 23:53
 */
 /**
  * SWF UA info
@@ -680,12 +680,12 @@ KISSY.add('swfstore', function(S, undefined) {
     /**
      * Class for the YUI SWFStore util.
      * @constructor
-     * @param el {String|HTMLElement} Container element for the Flash Player instance.
      * @param {String} swfUrl The URL of the SWF to be embedded into the page.
+     * @param container {String|HTMLElement} Container element for the Flash Player instance.
      * @param shareData {Boolean} Whether or not data should be shared across browsers
-     * @param useCompression {Boolean} Container element for the Flash Player instance.
+     * @param useCompression {Boolean} Container element for the Flash Player instance
      */
-    function SWFStore(el, swfUrl, shareData, useCompression) {
+    function SWFStore(swfUrl, container, shareData, useCompression) {
         var browser = 'other',
             cookie = Cookie.get(SWFSTORE),
             params,
@@ -722,7 +722,12 @@ KISSY.add('swfstore', function(S, undefined) {
             }
         };
 
-        self.embeddedSWF = new S.SWF(el, swfUrl || 'swfstore.swf', params);
+        // 如果没有传入，就自动生成
+        if(!container) {
+            // 注：container 的 style 不能有 visibility:hidden or display: none, 否则异常
+            container = new S.Node('<div style="height:0;width:0;overflow:hidden"></div>').appendTo(doc.body)[0];
+        }
+        self.embeddedSWF = new S.SWF(container, swfUrl || 'swfstore.swf', params);
 
         // 让 flash fired events 能通知到 swfstore
         self.embeddedSWF._eventHandler = function(event) {
@@ -766,12 +771,12 @@ KISSY.add('swfstore', function(S, undefined) {
     });
 
     S.each([
-        'getValueAt', 'getNameAt', 'getTypeAt',
-        'getValueOf', 'getTypeOf',
+        'getValueAt', 'getNameAt', //'getTypeAt',
+        'getValueOf', //'getTypeOf',
         'getItems', 'getLength',
         'removeItem', 'removeItemAt', 'clear',
-        'getShareData', 'setShareData',
-        'getUseCompression', 'setUseCompression',
+        //'getShareData', 'setShareData',
+        //'getUseCompression', 'setUseCompression',
         'calculateCurrentSize', 'hasAdequateDimensions', 'setSize',
         'getModificationDate', 'displaySettings'
     ], function(methodName) {
@@ -789,10 +794,15 @@ KISSY.add('swfstore', function(S, undefined) {
 });
 
 /**
+ * NOTES:
+ *
+ *  - [2010-04-09] yubo: 去掉 getTypeAt, getTypeOf, getShareData 等无用和调用
+ *     概率很小的接口，宁愿少几个接口，也不为了功能而功能
+ *
  * TODO:
  *   - 广播功能：当数据有变化时，自动通知各个页面
- *
  *   - Bug: 点击 Remove, 当 name 不存在时，会将最后一条删除
+ *   - container 的 overflow:hidden 是否有必要?
  */
 /*
 Copyright 2010, KISSY UI Library v1.0.5
