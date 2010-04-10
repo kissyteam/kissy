@@ -47,7 +47,7 @@ KISSY.ready(function(S) {
        info:'info'
     };
     datagrid.columnDef = [
-        {xType:'COL_CHECKBOX'},
+        {xType:'COL_RADIO'},
         {label:'单一表头、复合字段',field:['developer','name'],parser:function(developer,name){return developer + '：' +name;}},
         {label:'复合表头',children:[
             {label:'所属站点',field:'site',parser:function(site){if(site=='CTU'){return '<span style="color:#f60;font-weight:bold;">'+site+'</span>';}else{return site;}}},
@@ -56,9 +56,9 @@ KISSY.ready(function(S) {
                 {label:'组件id',field:'componentId',sortable:true}
             ]}
         ]},
-        {label:'自定义列',parser:function(){return 'fool2fish';}},
+        {label:'自定义列',parser:function(){return '<a href="#">点此查看</a>';}},
         {xType:'COL_EXTRA',field:'id',parser:function(id){return '我是一个扩展列,页面id是：'+id;}}
     ];
-    datagrid.init();
+    datagrid.init('');
 });
 </script>

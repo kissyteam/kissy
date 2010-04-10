@@ -9,15 +9,15 @@
  * 1、数据源
  * 2、定义表头、解析表头(完成)
  * 3  定义列、解析列(完成)
- * 4、用户自定义显示列
+ * 4、用户自定义显示列(完成)
  * 5、增删改
  * 6、其他单条操作
  * 7、其他批量操作
- * 8、单选、多选、全选、反选功能
+ * 8、单选、多选、全选、反选功能(完成)
  * 9、服务器端翻页
  * 10、服务器端排序
- * 11、条目展开
- * 12、高亮某行代码
+ * 11、条目展开（完成）
+ * 12、高亮某行代码（完成）
  */
 
 KISSY.add("datagrid", function(S) {
@@ -33,7 +33,7 @@ KISSY.add("datagrid", function(S) {
         POST = 'post',GET = 'get',
         //行class
         CLS_ROW = 'row', CLS_ROW_EXTRA = 'row-extra', CLS_ROW_SELECTED = 'row-selected', CLS_ROW_EXPANDED = 'row-expanded',
-        ATTR_ROW_IDX = 'data-idx',
+        ATTR_ROW_IDX = 'data-idx',ATTR_SORT_FIELD='data-sort-field',
         //单元格class
         CLS_CELL_CHECKBOX = 'cell-checkbox', CLS_CELL_RADIO = 'cell-radio', CLS_CELL_EXTRA = 'cell-extra',
         //排序class
@@ -90,7 +90,7 @@ KISSY.add("datagrid", function(S) {
          */
         listData:null,
         /**
-         * 定义列，用于渲染（若未定义，则渲染dataList中所有字段）
+         * 定义列，用于渲染(必须手工定义)
          * columnDef=[
          *      {label:'',xType:COL_EXPAND},
          *      {label:'',xType:COL_CHECKBOX},
@@ -159,7 +159,7 @@ KISSY.add("datagrid", function(S) {
             }
         },
         endLoading:function(){
-            this.tableEl.removeChild(this.loadingEl);
+            if(YDOM.isAncestor( this.tableEl , this.loadingEl )) this.tableEl.removeChild( this.loadingEl );
         },
         /**
          * 每次异步请求返回值的基本处理
@@ -195,42 +195,18 @@ KISSY.add("datagrid", function(S) {
                 alert('请先定义组件的datasourceDef属性。');
                 return;
             }
-            //显示loading状态
-            this.startLoading();
-            var callback={
-                success:function(o){
-                    this._dataPreProcessor(o);
-                    //如果请求成功，且返回数据正确
-                    if(this.requestResult){
-                        //如果columnDef没有定义
-                        if(!this.columnDef){
-                            this.columnDef=[];
-                            var recordExample = this.listData[0];
-                            for(var i in recordExample){
-                                this.columnDef.push({label:i,field:i});
-                            }
-                        }
-                        //解析columnDef，并设置回调（回调套回调，真bt啊）
-                        parseColumnDefToFlat(this.columnDef,'children',function(theadColDef, colDef, colExtraDef, colSelectDef){
-                            this._parseColumnDefPreProcessor(theadColDef, colDef, colExtraDef, colSelectDef);
-                            
-                            this._renderThead();
-                            //渲染表头后，表格的列数确定，要重新渲染一次loading
-                            this.startLoading();
-                            this._renderTbody();
-                            this._renderTfoot();
-                            this.endLoading();
-                            //激活扩展功能
-                            if(colExtraDef) this._activateRowExpand();
-                            //选择行功能
-                            if(colSelectDef) this._activateRowSelect(colSelectDef);
-                        },this);
-                    }
-                },
-                failure:function(){alert('获取数据失败，请刷新页面重试或联系管理员。');},
-                scope:this
-            };
-            YConnect.asyncRequest(this.connectMethod,this.datasourceUri,callback,postData || '');
+            //解析columnDef，成功后开始初始化界面
+            parseColumnDefToFlat(this.columnDef,'children',function(theadColDef, colDef, colExtraDef, colSelectDef){
+                this._parseColumnDefPreProcessor(theadColDef, colDef, colExtraDef, colSelectDef);
+                this._renderThead();
+                this._renderTfoot();
+                this.update(postData);
+                //激活扩展功能
+                if(colExtraDef) this._activateRowExpand();
+                //选择行功能
+                if(colSelectDef) this._activateRowSelect(colSelectDef);
+            },this);
+
         },
         /**
          * 渲染普通th
@@ -251,6 +227,7 @@ KISSY.add("datagrid", function(S) {
                 //排序
                 }else if(cellDef.sortable){
                     cell.className = CLS_SORTABLE;
+                    cell.setAttribute( ATTR_SORT_FIELD , cellDef.field );
                     cell.innerHTML = '<i class="icon"></i>';
                 }
             //如果有子th
@@ -344,7 +321,7 @@ KISSY.add("datagrid", function(S) {
         _renderCell:function(cellDef,recordData){
             var cell = doc.createElement('td');
             //如果指定了字段
-            if(typeof cellDef.field != 'undefined'){
+            if(cellDef.field != undefined ){
                 //如果是单字段
                 if(typeof cellDef.field == 'string'){
                     var fieldValue = recordData[cellDef.field];
@@ -459,8 +436,22 @@ KISSY.add("datagrid", function(S) {
             this.tfootEl = parseStrToEl(tfootHTMLFrag);
             this.tableEl.appendChild(this.tfootEl);
         },
-        update:function(){
-
+        update:function(postData){
+            if( postData == undefined ) return;
+            this.startLoading();
+            var callback={
+                success:function(o){
+                    this._dataPreProcessor(o);
+                    //如果请求成功，且返回数据正确
+                    if(this.requestResult){
+                        this._renderTbody();
+                        this.endLoading();
+                    }
+                },
+                failure:function(){alert('获取数据失败，请刷新页面重试或联系管理员。');},
+                scope:this
+            };
+            YConnect.asyncRequest(this.connectMethod, this.datasourceUri, callback, postData);
         },
         renderPagination:function(){},
         appendRecord:function(){},
@@ -477,7 +468,7 @@ KISSY.add("datagrid", function(S) {
             var row = this.rowElArr[idx];
             var nextSibling = YDOM.getNextSibling( row );
             if( nextSibling && YDOM.hasClass( nextSibling , CLS_ROW_EXTRA )) var rowExtra = nextSibling;
-            if(typeof selectType == 'undefined'){
+            if(selectType == undefined){
                 DOM.toggleClass( row , CLS_ROW_SELECTED );
                 if(rowExtra) DOM.toggleClass( rowExtra , CLS_ROW_SELECTED );
             }else if(selectType){
@@ -539,14 +530,25 @@ KISSY.add("datagrid", function(S) {
             }
             this._checkIfSelectAll();
         },
-        getSelectedRecord:function(){},
+        getSelectedRow:function(){
+            var selectedRowIdx = [];
+            for( var  i = 0 , len = this.rowElArr.length ; i < len ; i++ ){
+                if( YDOM.hasClass( this.rowElArr[i] , CLS_ROW_SELECTED ) ){
+                    selectedRowIdx.push( i );
+                }
+            }
+        },
+        /**
+         * 激活列选择功能
+         * @param selectType
+         */
         _activateRowSelect:function(selectType){
             if( selectType == COL_CHECKBOX ){
                 YEvent.on(this.tableEl,'click',function(e){
                     var t = YEvent.getTarget(e);
                     if( (YDOM.hasClass( t , CLS_ICON_CHECKBOX) || t.nodeName.toLowerCase() == 'td') && YDOM.getAncestorByTagName( t , 'tbody' ) ){
                         var row = YDOM.getAncestorByClassName( t , CLS_ROW ) || YDOM.getAncestorByClassName( t , CLS_ROW_EXTRA );
-                        this.toggleSelectRow( row.getAttribute(ATTR_ROW_IDX ));
+                        this.toggleSelectRow( row.getAttribute( ATTR_ROW_IDX ));
                     }else if( t == this.selectAllTrigger){
                         var theadRow = this.theadEl.getElementsByTagName('tr')[0];
                         if( YDOM.hasClass( theadRow , CLS_ROW_SELECTED ) ){
@@ -557,9 +559,21 @@ KISSY.add("datagrid", function(S) {
                     }
                 },this,true);
             }else if( selectType == COL_RADIO ){
-                alert('沉鱼还没有写好单选行的功能…');    
+                var curSelectedIdx = null;
+                YEvent.on(this.tableEl,'click',function(e){
+                    var t = YEvent.getTarget(e);
+                    if( (YDOM.hasClass( t , CLS_ICON_RADIO) || t.nodeName.toLowerCase() == 'td') && YDOM.getAncestorByTagName( t , 'tbody' )){
+                        var row = YDOM.getAncestorByClassName( t , CLS_ROW ) || YDOM.getAncestorByClassName( t , CLS_ROW_EXTRA );
+                        if(curSelectedIdx) this.deselectRow(curSelectedIdx);
+                        curSelectedIdx = row.getAttribute( ATTR_ROW_IDX );
+                        this.selectRow( curSelectedIdx );
+                    }
+                },this,true);
             }
         },
+        /**
+         * 激活扩展列功能
+         */
         _activateRowExpand:function(){
             YEvent.on(this.tableEl,'click',function(e){
                 var t = YEvent.getTarget(e);
@@ -582,10 +596,6 @@ KISSY.add("datagrid", function(S) {
             },this,true);
         }
     });
-
-    DataGrid.Config={
-        
-    };
 
     /**
      * 替换元素
@@ -693,7 +703,6 @@ KISSY.add("datagrid", function(S) {
         //得到过滤掉特殊列设定的列设定
         var pureColDef = filterColDef(columnDef);
 
-
         //判断tree是否有子树
         function ifTreeHasChildren(tree){
             for(var i = 0, len = tree.length; i < len; i++){
@@ -730,7 +739,7 @@ KISSY.add("datagrid", function(S) {
                  * tree[i]刚好没有子节点了，那么，会把tree[i]当做tree[i]下一层级的子节点
                  * 这样的话，确保得到的theadDef的最后一个元素（数组）为colDef
                  */
-                if(typeof tree[i][KS_DEPTH] == 'undefined') tree[i][KS_DEPTH] = depth-1;
+                if(tree[i][KS_DEPTH] == undefined) tree[i][KS_DEPTH] = depth-1;
                 //jitree[i]添加到theadColDef[depth-1]数组中去
                 theadColDef[depth-1].push(tree[i]);
                 //如果tree有子树且tree[i]有子树
@@ -760,10 +769,6 @@ KISSY.add("datagrid", function(S) {
             }else{
                 colDef = theadColDef[theadColDef.length-1];
                 if(callback) callback.call(callbackObj || window , theadColDef, colDef, colExtraDef, colSelectDef);
-                //console.log(theadColDef);
-                //console.log(colDef);
-                //console.log(colExtraDef);
-                //console.log(colSelectDef);
             }
         }
         parse(pureColDef);
