@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 548 Apr 9 23:53
+build: 549 Apr 11 10:07
 */
 /**
  * @module kissy
@@ -66,10 +66,6 @@ build: 548 Apr 9 23:53
         _init: function() {
             this.Env = {
                 mods: {}
-            };
-
-            this.Config = {
-                debug: true
             };
         },
 
@@ -278,13 +274,13 @@ build: 548 Apr 9 23:53
          * </pre>
          * @return {object}  A reference to the app global object
          */
-        app: function(name) {
-            var O = win[name] || {};
+        app: function(name, r) {
+            var O = win[name] || { };
 
             mix(O, this, true, ['_init', 'add', 'namespace']);
             O._init();
 
-            return (win[name] = O);
+            return mix((win[name] = O), r);
         },
 
         /**
@@ -321,9 +317,7 @@ build: 548 Apr 9 23:53
          * @return {KISSY}
          */
         log: function(msg, cat, src) {
-            var c = this.Config;
-
-            if (c.debug) {
+            if (this.Config.debug) {
                 src && (msg = src + ': ' + msg);
                 if (win.console !== undefined && console.log) {
                     console[cat && console[cat] ? cat : 'log'](msg);
@@ -338,7 +332,9 @@ build: 548 Apr 9 23:53
          * @param msg
          */
         error: function(msg) {
-            throw msg;
+            if(this.Config.debug) {
+                throw msg;
+            }
         },
 
         /**
@@ -350,6 +346,13 @@ build: 548 Apr 9 23:53
     });
 
     S._init();
+
+    // build 时，会将  替换为空
+    S.Config = { debug: '' };
+    // 可以通过在 url 上加 ?ks-debug 来开启 debug
+    if('ks-debug' in S.unparam(location.hash)){
+        S.Config.debug = true;
+    }
 
 })(window, 'KISSY');
 
@@ -537,7 +540,7 @@ KISSY.add('lang', function(S, undefined) {
          * </pre>
          */
         unparam: function(str, sep) {
-            if (typeof str !== 'string' || (str = decodeURI(S.trim(str))).length === 0) return {};
+            if (typeof str !== 'string' || (str = decodeURI(S.trim(str))).length === 0) return { };
 
             var ret = {},
                 pairs = str.split(sep || '&'),

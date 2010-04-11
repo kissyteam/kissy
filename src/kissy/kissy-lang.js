@@ -165,7 +165,7 @@ KISSY.add('lang', function(S, undefined) {
          * </pre>
          */
         unparam: function(str, sep) {
-            if (typeof str !== 'string' || (str = decodeURI(S.trim(str))).length === 0) return {};
+            if (typeof str !== 'string' || (str = decodeURI(S.trim(str))).length === 0) return { };
 
             var ret = {},
                 pairs = str.split(sep || '&'),

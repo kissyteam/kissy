@@ -62,10 +62,6 @@
             this.Env = {
                 mods: {}
             };
-
-            this.Config = {
-                debug: true
-            };
         },
 
         /**
@@ -273,13 +269,13 @@
          * </pre>
          * @return {object}  A reference to the app global object
          */
-        app: function(name) {
-            var O = win[name] || {};
+        app: function(name, r) {
+            var O = win[name] || { };
 
             mix(O, this, true, ['_init', 'add', 'namespace']);
             O._init();
 
-            return (win[name] = O);
+            return mix((win[name] = O), r);
         },
 
         /**
@@ -316,9 +312,7 @@
          * @return {KISSY}
          */
         log: function(msg, cat, src) {
-            var c = this.Config;
-
-            if (c.debug) {
+            if (this.Config.debug) {
                 src && (msg = src + ': ' + msg);
                 if (win.console !== undefined && console.log) {
                     console[cat && console[cat] ? cat : 'log'](msg);
@@ -333,7 +327,9 @@
          * @param msg
          */
         error: function(msg) {
-            throw msg;
+            if(this.Config.debug) {
+                throw msg;
+            }
         },
 
         /**
@@ -345,6 +341,13 @@
     });
 
     S._init();
+
+    // build 时，会将 @DEBUG@ 替换为空
+    S.Config = { debug: '@DEBUG@' };
+    // 可以通过在 url 上加 ?ks-debug 来开启 debug
+    if('ks-debug' in S.unparam(location.hash)){
+        S.Config.debug = true;
+    }
 
 })(window, 'KISSY');
 

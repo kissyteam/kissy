@@ -12,6 +12,7 @@
             <path path="kissy-lang.js"/>
             <path path="kissy-ua.js"/>
         </concat>
+        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="kissy-pkg.js" />
     </target>
 
     <target name="clean">
