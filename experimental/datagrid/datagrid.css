@@ -71,7 +71,9 @@
 .pagination .page-start,
 .pagination .page,
 .pagination .page-end,
-.pagination .page-skip{float:left;margin-left:3px;line-height:20px;}
+.pagination .page-skip,
+.pagination .page-prev,
+.pagination .page-next{float:left;margin-left:3px;line-height:20px;}
 .pagination span{color:#808080;}
 .pagination a{cursor:pointer;}
 .pagination a:hover,
@@ -79,7 +81,9 @@
 .pagination .page-info{padding-top:1px;}
 .pagination .page-start,
 .pagination .page,
-.pagination .page-end{padding:0 7px;border:1px solid #ccc;background:#fff;}
+.pagination .page-end,
+.pagination .page-prev,
+.pagination .page-next{padding:0 7px;border:1px solid #ccc;background:#fff;}
 .pagination .page-skip{margin-left:6px;color:#404040;}
 .pagination .page-skip-button{height:22px;line-height:14px;}
 .pagination span.page{border:none;padding:1px 5px;font-weight:bold;color:#f30;background:none;}

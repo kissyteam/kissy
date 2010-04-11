@@ -33,11 +33,14 @@ KISSY.add("datagrid", function(S) {
         POST = 'post',GET = 'get',
         //行class
         CLS_ROW = 'row', CLS_ROW_EXTRA = 'row-extra', CLS_ROW_SELECTED = 'row-selected', CLS_ROW_EXPANDED = 'row-expanded',
+        //行索引，可排序th的排序字段
         ATTR_ROW_IDX = 'data-idx',ATTR_SORT_FIELD='data-sort-field',
         //单元格class
         CLS_CELL_CHECKBOX = 'cell-checkbox', CLS_CELL_RADIO = 'cell-radio', CLS_CELL_EXTRA = 'cell-extra',
         //排序class
         CLS_SORTABLE = 'sortable', CLS_SORT_DES = 'sort-des', CLS_SORT_ASC = 'sort-asc',
+        //排序方式
+        DES = 'desc', ASC = 'asc',
         //特殊icon的class
         CLS_ICON_EXPAND = 'icon-expand', CLS_ICON_CHECKBOX = 'icon-checkbox', CLS_ICON_RADIO = 'icon-radio',
         //单击选择某列时，例外的元素
@@ -67,20 +70,22 @@ KISSY.add("datagrid", function(S) {
         /**
          * 定义datasource，指定datasource里各字段的用途(必须手工定义)
          * datasourceDef={
-         *      success:'success',
-         *      listData:'dataList',
-         *      recordPrimaryKey:'id',
-         *      dataStart:'start',
-         *      datalength:'pageSize',
-         *      dataAmount:'total'
-         *      info:'info'
+         *      success:'success',//是否返回正确
+         *      listData:'datalist',//list数据
+         *      recordPrimaryKey:'id',//record的主键
+         *      dataStart:'start',//查询起始条数
+         *      dataLimit:'pagesize',//查询返回条数
+         *      dataAmount:'total',//查询到的总条数
+         *      sortBy:'sortby',//排序字段
+         *      sortType:'sorttype',//排序方法
+         *      info:'info',//返回附加消息
          * }
          */
         datasourceDef:null,
         /**
          * 记录最近一次查询类请求发送的数据
          */
-        queryData:null,
+        latestQueryData:'',
         /**
          * JSON格式的数据源
          */
@@ -133,6 +138,10 @@ KISSY.add("datagrid", function(S) {
         colgroupEl:null,
         //表头
         theadEl:null,
+        //触发排序的th元素
+        sortTrigger:[],
+        //当前排序的th
+        curSortTrigger:null,
         //触发全选的元素
         selectAllTrigger:null,
         //显示loading的tbody
@@ -143,6 +152,10 @@ KISSY.add("datagrid", function(S) {
         rowElArr:null,
         //表尾
         tfootEl:null,
+        /**
+         * 翻页设置
+         */
+        paginationDef:null,
         //翻页
         paginationEl:null,
         startLoading:function(){
@@ -170,7 +183,9 @@ KISSY.add("datagrid", function(S) {
                 this.liveData = eval('('+o.responseText+')');
             }catch(e){
                 alert('错误：请返回JSON格式的数据。');
+                this.endLoading();
                 return;
+                
             }
             this.requestResult = this.liveData[this.datasourceDef.success];
             if(this.requestResult){
@@ -178,6 +193,7 @@ KISSY.add("datagrid", function(S) {
             }else{
                 var info = this.liveData[this.datasourceDef.info];
                 alert('错误：'+info);
+                this.endLoading();
             }
         },
         /**
@@ -192,19 +208,27 @@ KISSY.add("datagrid", function(S) {
         init:function(postData){
             //确认datasourceDef定义过
             if(!this.datasourceDef){
-                alert('请先定义组件的datasourceDef属性。');
+                alert('请定义组件的datasourceDef属性。');
                 return;
+            }
+            if(!this.columnDef){
+                alert('请定义组件的columnDef属性。');
             }
             //解析columnDef，成功后开始初始化界面
             parseColumnDefToFlat(this.columnDef,'children',function(theadColDef, colDef, colExtraDef, colSelectDef){
                 this._parseColumnDefPreProcessor(theadColDef, colDef, colExtraDef, colSelectDef);
                 this._renderThead();
                 this._renderTfoot();
+                if(this.paginationDef && this.paginationDef.dataLimit){
+                    postData = setQueryParamValue(this.latestQueryData, this.datasourceDef.dataLimit, this.paginationDef.dataLimit);
+                }
                 this.update(postData);
+                //激活排序
+                if(this.sortTrigger.length>0) this._activateRowSort();
                 //激活扩展功能
                 if(colExtraDef) this._activateRowExpand();
                 //选择行功能
-                if(colSelectDef) this._activateRowSelect(colSelectDef);
+                if(colSelectDef) this._activateRowSelect();
             },this);
 
         },
@@ -225,10 +249,11 @@ KISSY.add("datagrid", function(S) {
                     }
 
                 //排序
-                }else if(cellDef.sortable){
+                }else if(cellDef.sortable){                    
                     cell.className = CLS_SORTABLE;
                     cell.setAttribute( ATTR_SORT_FIELD , cellDef.field );
                     cell.innerHTML = '<i class="icon"></i>';
+                    this.sortTrigger.push(cell);
                 }
             //如果有子th
             }else{
@@ -436,6 +461,81 @@ KISSY.add("datagrid", function(S) {
             this.tfootEl = parseStrToEl(tfootHTMLFrag);
             this.tableEl.appendChild(this.tfootEl);
         },
+        _renderPagination:function(){
+            //激活翻页
+            if(!this.paginationEl){
+                var pagination = doc.createElement('div');
+                    pagination.className = 'pagination';
+                var wrapper = doc.createElement('div');
+                    wrapper.className = 'standard';
+                    pagination.appendChild(wrapper);
+                this._pageInfo = doc.createElement('span');
+                    this._pageInfo.className = 'page-info';
+                    wrapper.appendChild(this._pageInfo);
+                this._pageStart = doc.createElement('span');
+                    this._pageStart.className = 'page-start';
+                    this._pageStart.innerHTML = '上一页';
+                    wrapper.appendChild(this._pageStart);
+
+                this._pagePrev = doc.createElement('a');
+                    this._pagePrev.className = 'page-prev';
+                    this._pagePrev.innerHTML = '上一页';
+                    wrapper.appendChild(this._pagePrev);
+                YEvent.on(this._pagePrev,'click',function(e){
+                    var prevDataStart = getQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart) || 0;
+                    var newDataStart = prevDataStart - this.paginationDef.dataLimit;
+                    var postData = setQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart,newDataStart);
+                    this.update(postData);
+                },this,true);
+                /*for( var i = 0 ; i< 5 ; i++){
+                    this['_page'+i] = doc.createElement('a');
+                    this['_page'+i].className = 'page';
+                    wrapper.appendChild(this['_page'+i]);
+                }*/
+                this._pageNext = doc.createElement('a');
+                    this._pageNext.className = 'page-next';
+                    this._pageNext.innerHTML = '下一页';
+                    wrapper.appendChild(this._pageNext);
+                YEvent.on(this._pageNext,'click',function(e){
+                    var prevDataStart = getQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart) || 0;
+                    var newDataStart = prevDataStart + this.paginationDef.dataLimit;
+                    var postData = setQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart,newDataStart);
+                    this.update(postData);
+                },this,true);
+
+                this._pageEnd = doc.createElement('span');
+                    this._pageEnd.className = 'page-end';
+                    this._pageEnd.innerHTML = '下一页';
+                    wrapper.appendChild(this._pageEnd);
+
+                if(this.paginationEl) this.tableEl.removeChild(this.paginationEl);
+                this.paginationEl = pagination;
+                if(this.paginationDef.position == 'bottom'){
+                    YDOM.insertAfter(this.paginationEl, this.tableEl);
+                }else{
+                    YDOM.insertBefore(this.paginationEl, this.tableEl);
+                }
+            }
+            var queryData = this.latestQueryData;
+            var dataStart = getQueryParamValue(queryData,this.datasourceDef.dataStart);
+            var dataLimit = getQueryParamValue(queryData,this.datasourceDef.dataLimit);
+            var dataAmount = this.liveData[this.datasourceDef.dataAmount];
+            if(dataStart){
+                show(this._pagePrev);
+                hide(this._pageStart);
+            }else{
+                hide(this._pagePrev);
+                show(this._pageStart);
+            }
+            console.log(this.latestQueryData);
+            if( (dataStart+1) * dataLimit >= dataAmount ){
+                hide(this._pageNext);
+                show(this._pageEnd);
+            }else{
+                show(this._pageNext);
+                hide(this._pageEnd);
+            }
+        },
         update:function(postData){
             if( postData == undefined ) return;
             this.startLoading();
@@ -446,19 +546,25 @@ KISSY.add("datagrid", function(S) {
                     if(this.requestResult){
                         this._renderTbody();
                         this.endLoading();
+                        //保存最近一次的查询参数
+                        this.latestQueryData = postData;
+                        if( this.paginationDef ) this._renderPagination();
                     }
                 },
-                failure:function(){alert('获取数据失败，请刷新页面重试或联系管理员。');},
+                failure:function(){alert('获取数据失败，请刷新页面重试或联系管理员。');this.endLoading();},
                 scope:this
             };
             YConnect.asyncRequest(this.connectMethod, this.datasourceUri, callback, postData);
         },
-        renderPagination:function(){},
-        appendRecord:function(){},
-        addRecord:function(){},
-        modifyRecord:function(){},
-        deleteRecord:function(){},
-        moveRecord:function(){},
+        addRecord:function(){
+
+        },
+        modifyRecord:function(){
+
+        },
+        deleteRecord:function(){
+            
+        },
         /**
          * 将指定索引的行显示为指定的选中状态
          * @param idx 要切换选中状态的行在listData中的索引号
@@ -530,19 +636,78 @@ KISSY.add("datagrid", function(S) {
             }
             this._checkIfSelectAll();
         },
-        getSelectedRow:function(){
-            var selectedRowIdx = [];
+        /**
+         * 获取选中的行或者record
+         * @param returnBy 默认'record'，可选'index'
+         */
+        _getSelected:function(returnBy){
+            var selected = [];
             for( var  i = 0 , len = this.rowElArr.length ; i < len ; i++ ){
                 if( YDOM.hasClass( this.rowElArr[i] , CLS_ROW_SELECTED ) ){
-                    selectedRowIdx.push( i );
+                    if(returnBy == 'index'){
+                        selected.push( i );
+                    }else{
+                        selected.push( this.listData[i] );
+                    }
                 }
+            }
+            if( selected.length ==  0 ){
+                return null;
+            }else{
+                return selected;
             }
         },
         /**
-         * 激活列选择功能
-         * @param selectType
+         * 获取被选中record的索引
          */
-        _activateRowSelect:function(selectType){
+        getSelectedIndex:function(){
+            return this._getSelected('index');
+        },
+        /**
+         * 获取被选中的record
+         */
+        getSelectedRecord:function(){
+            return this._getSelected();
+        },
+        /**
+         * 激活排序功能
+         */
+        _activateRowSort:function(){
+            var sortTrigger  = this.sortTrigger;
+            YEvent.on(sortTrigger, 'click', function(e){
+                var t = YEvent.getTarget(e);
+                var sortBy;
+                var sortType;
+                if( t.nodeName.toLowerCase() != 'th' ) t = YDOM.getAncestorByClassName( t,  CLS_SORTABLE);
+                //获取排序字段
+                sortBy = t.getAttribute( ATTR_SORT_FIELD );
+                //获得排序类型 和 设置当前排序触点的样式
+                if( YDOM.hasClass( t , CLS_SORT_ASC ) ){
+                    sortType = DES;
+                    YDOM.removeClass( t, CLS_SORT_ASC);
+                    YDOM.addClass( t, CLS_SORT_DES);
+                //如果目前是降序排列或者目前列无排序
+                }else{
+                    sortType = ASC;
+                    YDOM.addClass( t, CLS_SORT_ASC);
+                    YDOM.removeClass( t, CLS_SORT_DES);
+                }
+                //修改前一个排序触点的样式
+                if( this.curSortTrigger && this.curSortTrigger != t ){
+                    YDOM.removeClass( this.curSortTrigger, CLS_SORT_DES);
+                    YDOM.removeClass( this.curSortTrigger, CLS_SORT_ASC);
+                }
+                this.curSortTrigger = t;
+                var queryData = setQueryParamValue( this.latestQueryData,this.datasourceDef.sortBy, sortBy);
+                queryData = setQueryParamValue( queryData,this.datasourceDef.sortType, sortType);
+                this.update(queryData);
+            }, this, true);
+        },
+        /**
+         * 激活列选择功能
+         */
+        _activateRowSelect:function(){
+            var selectType = this.colSelectDef;
             if( selectType == COL_CHECKBOX ){
                 YEvent.on(this.tableEl,'click',function(e){
                     var t = YEvent.getTarget(e);
@@ -596,6 +761,38 @@ KISSY.add("datagrid", function(S) {
             },this,true);
         }
     });
+
+    /**
+     * 获取查询字符串中指定key的值，如果没有则返回null
+     * @param queryString
+     * @param key
+     */
+    function getQueryParamValue(queryString, key) {
+        var result = queryString.match(new RegExp('(?:^|&)' + key + '=(.*?)(?=$|&)'));
+        return result && result[1];
+    }
+
+    /**
+     * 将查询字符串指定key的值换成新值
+     * @param queryString
+     * @param key
+     * @param newValue
+     */
+    function setQueryParamValue(queryString, key, newValue) {
+          var newParam = key + '=' + newValue;
+          if (!queryString) return newParam;
+
+          var replaced = false;
+          var params = queryString.split('&');
+          for (var i = 0; i < params.length; i++) {
+            if (params[i].split('=')[0] == key) {
+              params[i] = newParam;
+              replaced = true;
+            }
+          }
+          if (replaced) return params.join('&');
+          return queryString + '&' + newParam;
+     }
 
     /**
      * 替换元素
@@ -773,6 +970,9 @@ KISSY.add("datagrid", function(S) {
         }
         parse(pureColDef);
     }
+
+    function show(el){el.style.display=''}
+    function hide(el){el.style.display='none'}
 
     S.DataGrid = DataGrid;
 });
