@@ -268,6 +268,10 @@ KISSY.add('lang', function(S, undefined) {
         return val === null | (t !== 'object' && t !== 'function');
     }
 
+    // 可以通过在 url 上加 ?ks-debug 来开启 debug
+    if('ks-debug' in S.unparam(location.hash)){
+        S.Config.debug = true;
+    }
 });
 
 /**

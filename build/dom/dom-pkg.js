@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 527 Apr 6 22:39
+build: 551 Apr 11 11:50
 */
 /**
  * @module  selector
@@ -586,6 +586,26 @@ KISSY.add('dom-base', function(S, undefined) {
             }
 
             return ret;
+        },
+
+        /**
+         * Creates a stylesheet from a text blob of rules.
+         * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+         * @param {String} cssText The text containing the css rules
+         * @param {String} id An id to add to the stylesheet for later removal
+         */
+        addStyleSheet: function(cssText, id) {
+            var head = doc.getElementsByTagName('head')[0],
+                el = doc.createElement('style');
+
+            id && (el.id = id);
+            head.appendChild(el); // 先添加到 DOM 树中，否则在 cssText 里的 hack 会失效
+
+            if (el.styleSheet) { // IE
+                el.styleSheet.cssText = cssText;
+            } else { // W3C
+                el.appendChild(doc.createTextNode(cssText));
+            }
         }
     };
 

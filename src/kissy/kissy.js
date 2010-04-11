@@ -2,7 +2,6 @@
  * @module kissy
  * @author lifesinger@gmail.com
  */
-
 (function(win, S, undefined) {
 
     // If KISSY is already defined, the existing KISSY object will not
@@ -344,10 +343,6 @@
 
     // build 时，会将 @DEBUG@ 替换为空
     S.Config = { debug: '@DEBUG@' };
-    // 可以通过在 url 上加 ?ks-debug 来开启 debug
-    if('ks-debug' in S.unparam(location.hash)){
-        S.Config.debug = true;
-    }
 
 })(window, 'KISSY');
 

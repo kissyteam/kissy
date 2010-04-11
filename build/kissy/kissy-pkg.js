@@ -1,13 +1,12 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 549 Apr 11 10:07
+build: 551 Apr 11 12:05
 */
 /**
  * @module kissy
  * @author lifesinger@gmail.com
  */
-
 (function(win, S, undefined) {
 
     // If KISSY is already defined, the existing KISSY object will not
@@ -349,10 +348,6 @@ build: 549 Apr 11 10:07
 
     // build 时，会将  替换为空
     S.Config = { debug: '' };
-    // 可以通过在 url 上加 ?ks-debug 来开启 debug
-    if('ks-debug' in S.unparam(location.hash)){
-        S.Config.debug = true;
-    }
 
 })(window, 'KISSY');
 
@@ -643,6 +638,10 @@ KISSY.add('lang', function(S, undefined) {
         return val === null | (t !== 'object' && t !== 'function');
     }
 
+    // 可以通过在 url 上加 ?ks-debug 来开启 debug
+    if('ks-debug' in S.unparam(location.hash)){
+        S.Config.debug = true;
+    }
 });
 
 /**

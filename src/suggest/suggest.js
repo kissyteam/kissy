@@ -551,15 +551,7 @@ KISSY.add("suggest", function(S, undefined) {
                 /* hacks */
                 + ".ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}";
 
-            styleEl = doc.createElement("style");
-            styleEl.id = STYLE_ID;
-            head.appendChild(styleEl); // 先添加到DOM树中，都在cssText里的hack会失效
-
-            if (styleEl.styleSheet) { // IE
-                styleEl.styleSheet.cssText = style;
-            } else { // W3C
-                styleEl.appendChild(doc.createTextNode(style));
-            }
+            DOM.addStyleSheet(style, STYLE_ID);
         },
 
         /**

@@ -1,13 +1,12 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 549 Apr 11 10:07
+build: 551 Apr 11 12:05
 */
 /**
  * @module kissy
  * @author lifesinger@gmail.com
  */
-
 (function(win, S, undefined) {
 
     // If KISSY is already defined, the existing KISSY object will not
@@ -349,10 +348,6 @@ build: 549 Apr 11 10:07
 
     // build 时，会将  替换为空
     S.Config = { debug: '' };
-    // 可以通过在 url 上加 ?ks-debug 来开启 debug
-    if('ks-debug' in S.unparam(location.hash)){
-        S.Config.debug = true;
-    }
 
 })(window, 'KISSY');
 
@@ -643,6 +638,10 @@ KISSY.add('lang', function(S, undefined) {
         return val === null | (t !== 'object' && t !== 'function');
     }
 
+    // 可以通过在 url 上加 ?ks-debug 来开启 debug
+    if('ks-debug' in S.unparam(location.hash)){
+        S.Config.debug = true;
+    }
 });
 
 /**
@@ -764,7 +763,7 @@ KISSY.add('ua', function(S) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 527 Apr 6 22:39
+build: 551 Apr 11 11:50
 */
 /**
  * @module  selector
@@ -1349,6 +1348,26 @@ KISSY.add('dom-base', function(S, undefined) {
             }
 
             return ret;
+        },
+
+        /**
+         * Creates a stylesheet from a text blob of rules.
+         * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+         * @param {String} cssText The text containing the css rules
+         * @param {String} id An id to add to the stylesheet for later removal
+         */
+        addStyleSheet: function(cssText, id) {
+            var head = doc.getElementsByTagName('head')[0],
+                el = doc.createElement('style');
+
+            id && (el.id = id);
+            head.appendChild(el); // 先添加到 DOM 树中，否则在 cssText 里的 hack 会失效
+
+            if (el.styleSheet) { // IE
+                el.styleSheet.cssText = cssText;
+            } else { // W3C
+                el.appendChild(doc.createTextNode(cssText));
+            }
         }
     };
 
@@ -3552,7 +3571,7 @@ KISSY.add('datalazyload', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 527 Apr 6 22:48
+build: 551 Apr 11 11:50
 */
 /**
  * 提示补全组件
@@ -4107,15 +4126,7 @@ KISSY.add("suggest", function(S, undefined) {
                 /* hacks */
                 + ".ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}";
 
-            styleEl = doc.createElement("style");
-            styleEl.id = STYLE_ID;
-            head.appendChild(styleEl); // 先添加到DOM树中，都在cssText里的hack会失效
-
-            if (styleEl.styleSheet) { // IE
-                styleEl.styleSheet.cssText = style;
-            } else { // W3C
-                styleEl.appendChild(doc.createTextNode(style));
-            }
+            DOM.addStyleSheet(style, STYLE_ID);
         },
 
         /**
