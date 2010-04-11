@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 551 Apr 11 12:05
+build: 552 Apr 11 12:24
 */
 /**
  * @module kissy
@@ -279,7 +279,7 @@ build: 551 Apr 11 12:05
             mix(O, this, true, ['_init', 'add', 'namespace']);
             O._init();
 
-            return mix((win[name] = O), r);
+            return mix((win[name] = O), S.isFunction(r) ? r() : r);
         },
 
         /**

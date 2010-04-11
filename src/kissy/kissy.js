@@ -274,7 +274,7 @@
             mix(O, this, true, ['_init', 'add', 'namespace']);
             O._init();
 
-            return mix((win[name] = O), r);
+            return mix((win[name] = O), S.isFunction(r) ? r() : r);
         },
 
         /**
