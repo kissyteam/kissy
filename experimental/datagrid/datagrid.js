@@ -483,7 +483,7 @@ KISSY.add("datagrid", function(S) {
                     wrapper.appendChild(this._pagePrev);
                 YEvent.on(this._pagePrev,'click',function(e){
                     var prevDataStart = getQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart) || 0;
-                    var newDataStart = prevDataStart - this.paginationDef.dataLimit;
+                    var newDataStart = parseInt(prevDataStart,10) - parseInt(this.paginationDef.dataLimit,10);
                     var postData = setQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart,newDataStart);
                     this.update(postData);
                 },this,true);
@@ -498,7 +498,7 @@ KISSY.add("datagrid", function(S) {
                     wrapper.appendChild(this._pageNext);
                 YEvent.on(this._pageNext,'click',function(e){
                     var prevDataStart = getQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart) || 0;
-                    var newDataStart = prevDataStart + this.paginationDef.dataLimit;
+                    var newDataStart = parseInt(prevDataStart,10) + parseInt(this.paginationDef.dataLimit,10);
                     var postData = setQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart,newDataStart);
                     this.update(postData);
                 },this,true);
@@ -517,7 +517,7 @@ KISSY.add("datagrid", function(S) {
                 }
             }
             var queryData = this.latestQueryData;
-            var dataStart = getQueryParamValue(queryData,this.datasourceDef.dataStart);
+            var dataStart = getQueryParamValue(queryData,this.datasourceDef.dataStart) || 0;
             var dataLimit = getQueryParamValue(queryData,this.datasourceDef.dataLimit);
             var dataAmount = this.liveData[this.datasourceDef.dataAmount];
             if(dataStart){
@@ -527,8 +527,8 @@ KISSY.add("datagrid", function(S) {
                 hide(this._pagePrev);
                 show(this._pageStart);
             }
-            console.log(this.latestQueryData);
-            if( (dataStart+1) * dataLimit >= dataAmount ){
+            console.log(queryData +'/'+dataStart+'/'+dataLimit+'/'+dataAmount);
+            if( parseInt(dataStart,10) + parseInt(dataLimit,10) >= dataAmount ){
                 hide(this._pageNext);
                 show(this._pageEnd);
             }else{
