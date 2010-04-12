@@ -15,7 +15,15 @@
     <div class="bd">
         <!-- data grid START -->
         <div id="KS_DataGrid">
-
+            <!-- toolbar START -->
+            <ul class="ks-toolbar">
+                <li><a href="#">新增</a></li>
+                <li><a href="#">编辑</a></li>
+                <li><a href="#">删除</a></li>
+                <li><a href="#">移动</a></li>
+                <li><a href="#">设置列</a></li>
+            </ul>
+            <!-- toolbar END -->
         </div>
         <!-- data grid END -->
     </div>
@@ -53,6 +61,7 @@ KISSY.ready(function(S) {
     };
     datagrid.paginationDef = {
         dataLimit:5,
+        pageNumLength:8,
         position:'bottom'
     };
     datagrid.columnDef = [

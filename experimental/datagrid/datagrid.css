@@ -3,13 +3,13 @@
  * @creator 沉鱼<fool2fish@gmail.com>
  */
 
+/*工具条*/
+.ks-toolbar{height: 30px;border-bottom:1px solid #90b4e5;overflow:hidden;background:#ceddef url(datagrid.png) repeat-x 0 0;}
+.ks-toolbar li{float: left;overflow:hidden;margin:8px 0 0 -1px;padding: 0 10px;border-left: 1px solid #90b4e5;line-height: 14px;}
+
 /*通用设定*/
 .ks-datagrid a{color:#36c;}
 .ks-datagrid .h{color:#f30;}
-
-/*工具条*/
-.ks-datagrid .toolbar{height: 30px;border-bottom:1px solid #90b4e5;overflow:hidden;background:#ceddef url(datagrid.png) repeat-x 0 0;}
-.ks-datagrid .toolbar li{float: left;overflow:hidden;margin:8px 0 0 -1px;padding: 0 10px;border-left: 1px solid #90b4e5;line-height: 14px;}
 
 /*表格部分*/
 .ks-datagrid .datagrid-table{width:100%;overflow:hidden;}
@@ -65,25 +65,25 @@
 .ks-datagrid tfoot td{padding:0;}
 
 /*翻页*/
-.pagination{height:30px;border-top:1px solid #90b4e5;background:#ceddef url(datagrid.png) repeat-x 0 0;}
-.pagination .standard{float:right;margin:3px 10px 0 0;_display:inline;}
-.pagination .page-info,
-.pagination .page-start,
-.pagination .page,
-.pagination .page-end,
-.pagination .page-skip,
-.pagination .page-prev,
-.pagination .page-next{float:left;margin-left:3px;line-height:20px;}
-.pagination span{color:#808080;}
-.pagination a{cursor:pointer;}
-.pagination a:hover,
-.pagination a:active{color:#fff;text-decoration:none;background:#09f;}
-.pagination .page-info{padding-top:1px;}
-.pagination .page-start,
-.pagination .page,
-.pagination .page-end,
-.pagination .page-prev,
-.pagination .page-next{padding:0 7px;border:1px solid #ccc;background:#fff;}
-.pagination .page-skip{margin-left:6px;color:#404040;}
-.pagination .page-skip-button{height:22px;line-height:14px;}
-.pagination span.page{border:none;padding:1px 5px;font-weight:bold;color:#f30;background:none;}
+.ks-pagination{height:30px;border-top:1px solid #90b4e5;border-bottom:1px solid #90b4e5;background:#ceddef url(datagrid.png) repeat-x 0 0;}
+.ks-pagination .standard{float:right;margin:3px 10px 0 0;_display:inline;}
+.ks-pagination .page-info,
+.ks-pagination .page-start,
+.ks-pagination .page,
+.ks-pagination .page-end,
+.ks-pagination .page-skip,
+.ks-pagination .page-prev,
+.ks-pagination .page-next{float:left;margin-left:3px;line-height:20px;}
+.ks-pagination span{color:#808080;}
+.ks-pagination a{cursor:pointer;}
+.ks-pagination a:hover,
+.ks-pagination a:active{color:#fff;text-decoration:none;background:#09f;}
+.ks-pagination .page-info{padding-top:1px;}
+.ks-pagination .page-start,
+.ks-pagination .page,
+.ks-pagination .page-end,
+.ks-pagination .page-prev,
+.ks-pagination .page-next{padding:0 7px;border:1px solid #ccc;background:#fff;}
+.ks-pagination .page-skip{margin-left:6px;color:#404040;}
+.ks-pagination .page-skip-button{height:22px;line-height:14px;}
+.ks-pagination span.page{border:none;padding:1px 5px;font-weight:bold;color:#f30;background:none;}

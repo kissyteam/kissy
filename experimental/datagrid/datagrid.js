@@ -219,9 +219,6 @@ KISSY.add("datagrid", function(S) {
                 this._parseColumnDefPreProcessor(theadColDef, colDef, colExtraDef, colSelectDef);
                 this._renderThead();
                 this._renderTfoot();
-                if(this.paginationDef && this.paginationDef.dataLimit){
-                    postData = setQueryParamValue(this.latestQueryData, this.datasourceDef.dataLimit, this.paginationDef.dataLimit);
-                }
                 this.update(postData);
                 //激活排序
                 if(this.sortTrigger.length>0) this._activateRowSort();
@@ -462,83 +459,154 @@ KISSY.add("datagrid", function(S) {
             this.tableEl.appendChild(this.tfootEl);
         },
         _renderPagination:function(){
-            //激活翻页
-            if(!this.paginationEl){
-                var pagination = doc.createElement('div');
-                    pagination.className = 'pagination';
-                var wrapper = doc.createElement('div');
-                    wrapper.className = 'standard';
-                    pagination.appendChild(wrapper);
-                this._pageInfo = doc.createElement('span');
-                    this._pageInfo.className = 'page-info';
-                    wrapper.appendChild(this._pageInfo);
-                this._pageStart = doc.createElement('span');
-                    this._pageStart.className = 'page-start';
-                    this._pageStart.innerHTML = '上一页';
-                    wrapper.appendChild(this._pageStart);
 
-                this._pagePrev = doc.createElement('a');
-                    this._pagePrev.className = 'page-prev';
-                    this._pagePrev.innerHTML = '上一页';
-                    wrapper.appendChild(this._pagePrev);
-                YEvent.on(this._pagePrev,'click',function(e){
-                    var prevDataStart = getQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart) || 0;
-                    var newDataStart = parseInt(prevDataStart,10) - parseInt(this.paginationDef.dataLimit,10);
-                    var postData = setQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart,newDataStart);
-                    this.update(postData);
-                },this,true);
-                /*for( var i = 0 ; i< 5 ; i++){
-                    this['_page'+i] = doc.createElement('a');
-                    this['_page'+i].className = 'page';
-                    wrapper.appendChild(this['_page'+i]);
-                }*/
-                this._pageNext = doc.createElement('a');
-                    this._pageNext.className = 'page-next';
-                    this._pageNext.innerHTML = '下一页';
-                    wrapper.appendChild(this._pageNext);
-                YEvent.on(this._pageNext,'click',function(e){
-                    var prevDataStart = getQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart) || 0;
-                    var newDataStart = parseInt(prevDataStart,10) + parseInt(this.paginationDef.dataLimit,10);
-                    var postData = setQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart,newDataStart);
-                    this.update(postData);
-                },this,true);
+            var paginationEl = doc.createElement('div');
+                paginationEl.className = 'ks-pagination';
 
-                this._pageEnd = doc.createElement('span');
-                    this._pageEnd.className = 'page-end';
-                    this._pageEnd.innerHTML = '下一页';
-                    wrapper.appendChild(this._pageEnd);
+            var wrapper = doc.createElement('div');
+                wrapper.className = 'standard';
+                paginationEl.appendChild(wrapper);
 
-                if(this.paginationEl) this.tableEl.removeChild(this.paginationEl);
-                this.paginationEl = pagination;
-                if(this.paginationDef.position == 'bottom'){
-                    YDOM.insertAfter(this.paginationEl, this.tableEl);
-                }else{
-                    YDOM.insertBefore(this.paginationEl, this.tableEl);
-                }
+            this._pageInfoEl = doc.createElement('span');
+                this._pageInfoEl.className = 'page-info';
+                wrapper.appendChild(this._pageInfoEl);
+
+            this._pageStartEl = doc.createElement('span');
+                this._pageStartEl.className = 'page-start';
+                this._pageStartEl.innerHTML = '上一页';
+                wrapper.appendChild(this._pageStartEl);
+
+            this._pagePrevEl = doc.createElement('a');
+                this._pagePrevEl.className = 'page-prev';
+                this._pagePrevEl.innerHTML = '上一页';
+                wrapper.appendChild(this._pagePrevEl);
+            YEvent.on(this._pagePrevEl,'click',function(e){
+                var queryData = this.latestQueryData;
+                var dataStart = parseInt(getQueryParamValue(queryData,this.datasourceDef.dataStart) || 0,10);
+                var dataLimit = parseInt(getQueryParamValue(queryData,this.datasourceDef.dataLimit),10);
+                dataStart -= dataLimit;
+                var postData = setQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart,dataStart);
+                this.update(postData);
+            },this,true);
+
+            this._curPageNumEl = doc.createElement('span');
+                this._curPageNumEl.className = 'page';
+                wrapper.appendChild(this._curPageNumEl);
+
+            this._pageNumElArr = [];
+            for( var i = 0 , len = this.paginationDef.pageNumLength ; i < len ; i++ ){
+                var pageNumEl = doc.createElement('a');
+                    pageNumEl.className = 'page';
+                    pageNumEl.setAttribute('data-page-idx',i);
+                wrapper.appendChild(pageNumEl);
+                this._pageNumElArr.push(pageNumEl);
             }
+            YEvent.on(this._pageNumElArr,'click',function(e){
+                var t = YEvent.getTarget(e);
+                var queryData = this.latestQueryData;
+                var dataLimit = parseInt(getQueryParamValue(queryData,this.datasourceDef.dataLimit),10);
+                var dataStart = (parseInt(t.innerHTML,10)-1) * dataLimit;
+                var postData = setQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart,dataStart);
+                this.update(postData);
+            },this,true);
+
+            this._pageNextEl = doc.createElement('a');
+                this._pageNextEl.className = 'page-next';
+                this._pageNextEl.innerHTML = '下一页';
+                wrapper.appendChild(this._pageNextEl);
+            YEvent.on(this._pageNextEl,'click',function(e){
+                var queryData = this.latestQueryData;
+                var dataStart = parseInt(getQueryParamValue(queryData,this.datasourceDef.dataStart) || 0,10);
+                var dataLimit = parseInt(getQueryParamValue(queryData,this.datasourceDef.dataLimit),10);
+                dataStart += dataLimit;
+                var postData = setQueryParamValue(this.latestQueryData,this.datasourceDef.dataStart,dataStart);
+                this.update(postData);
+            },this,true);
+
+            this._pageEndEl = doc.createElement('span');
+                this._pageEndEl.className = 'page-end';
+                this._pageEndEl.innerHTML = '下一页';
+                wrapper.appendChild(this._pageEndEl);
+
+            this.paginationEl = paginationEl;
+            if(this.paginationDef.position == 'bottom'){
+                YDOM.insertAfter(this.paginationEl, this.tableEl);
+            }else{
+                YDOM.insertBefore(this.paginationEl, this.tableEl);
+            }
+
+        },
+        _updatePagination:function(){
+
+            //激活翻页()
+            if(!this.paginationEl) this._renderPagination();
+
             var queryData = this.latestQueryData;
-            var dataStart = getQueryParamValue(queryData,this.datasourceDef.dataStart) || 0;
-            var dataLimit = getQueryParamValue(queryData,this.datasourceDef.dataLimit);
-            var dataAmount = this.liveData[this.datasourceDef.dataAmount];
+            var dataStart = parseInt(getQueryParamValue(queryData,this.datasourceDef.dataStart) || 0,10);
+            var dataLimit = parseInt(getQueryParamValue(queryData,this.datasourceDef.dataLimit),10);
+            var dataAmount = parseInt(this.liveData[this.datasourceDef.dataAmount],10);
+            var pageNumLength = this.paginationDef.pageNumLength;
+            var totalPageNumLength = Math.ceil(dataAmount/dataLimit);
+
+            //显示记录总条数
+            this._pageInfoEl.innerHTML = '共'+dataAmount+'条记录';
+
+            //判定上一页状态
             if(dataStart){
-                show(this._pagePrev);
-                hide(this._pageStart);
+                show(this._pagePrevEl);
+                hide(this._pageStartEl);
             }else{
-                hide(this._pagePrev);
-                show(this._pageStart);
+                hide(this._pagePrevEl);
+                show(this._pageStartEl);
             }
-            console.log(queryData +'/'+dataStart+'/'+dataLimit+'/'+dataAmount);
-            if( parseInt(dataStart,10) + parseInt(dataLimit,10) >= dataAmount ){
-                hide(this._pageNext);
-                show(this._pageEnd);
+            
+            //判定下一页状态
+            if( dataStart + dataLimit >= dataAmount ){
+                hide(this._pageNextEl);
+                show(this._pageEndEl);
             }else{
-                show(this._pageNext);
-                hide(this._pageEnd);
+                show(this._pageNextEl);
+                hide(this._pageEndEl);
             }
+            
+            //显示当前页
+            var curPageNum = Math.ceil(dataStart / dataLimit)+1;
+            this._curPageNumEl.innerHTML = curPageNum;
+            //当前页码在页码中的位置
+            var curPageIdx = Math.floor( Math.min(totalPageNumLength,pageNumLength) / 2 );
+            //基础页码（基础页码+页码序号=真正的页码）
+            var basicPageNum = 0;
+            if( curPageNum - curPageIdx <= 0 ){
+                curPageIdx = curPageNum-1;
+            }else if( curPageNum > totalPageNumLength - Math.min(totalPageNumLength,pageNumLength) + curPageIdx + 1 ){
+                curPageIdx = curPageNum - ( totalPageNumLength - Math.min(totalPageNumLength,pageNumLength));
+                basicPageNum = totalPageNumLength - Math.min(totalPageNumLength,pageNumLength);
+            }else{
+                basicPageNum = curPageNum - curPageIdx - 1;
+            }
+
+             //渲染页码
+            for(var i = 0 , len = pageNumLength ; i < len ; i++){
+                //隐藏页码中超出总页数的部分
+                if( totalPageNumLength < i+1 ){
+                    hide(this._pageNumElArr[i]);
+                }else{
+                    this._pageNumElArr[i].innerHTML = i + 1 + basicPageNum ;
+                    if( i + 1 + basicPageNum == curPageNum ){
+                        YDOM.insertBefore( this._curPageNumEl , this._pageNumElArr[i]);
+                        hide(this._pageNumElArr[i]);
+                    }else{                         
+                        show(this._pageNumElArr[i]);
+                    }
+                }
+            }      
         },
         update:function(postData){
-            if( postData == undefined ) return;
+            if(postData == undefined) return;
             this.startLoading();
+            if(this.paginationDef && !getQueryParamValue(postData,this.datasourceDef.dataLimit)){
+                postData = setQueryParamValue(postData, this.datasourceDef.dataLimit, this.paginationDef.dataLimit);
+            }
             var callback={
                 success:function(o){
                     this._dataPreProcessor(o);
@@ -548,7 +616,7 @@ KISSY.add("datagrid", function(S) {
                         this.endLoading();
                         //保存最近一次的查询参数
                         this.latestQueryData = postData;
-                        if( this.paginationDef ) this._renderPagination();
+                        if( this.paginationDef ) this._updatePagination();
                     }
                 },
                 failure:function(){alert('获取数据失败，请刷新页面重试或联系管理员。');this.endLoading();},
