@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 537 Apr 8 19:58
+build: 553 Apr 12 09:29
 */
 /**
  * 数据延迟加载组件
@@ -308,7 +308,9 @@ KISSY.add('datalazyload', function(S, undefined) {
 
             // 执行里面的脚本
             if(!S.UA.gecko) { // firefox 会自动执行 TODO: feature test
-                S.query('script', content).each(function(script) {
+                // yuyin: 当 content 为 DocumentFragment 时，S.query 有错
+                // 下面直接用 container
+                S.query('script', container).each(function(script) {
                     S.globalEval(script.text);
                 });
             }

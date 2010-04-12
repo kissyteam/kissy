@@ -303,7 +303,9 @@ KISSY.add('datalazyload', function(S, undefined) {
 
             // 执行里面的脚本
             if(!S.UA.gecko) { // firefox 会自动执行 TODO: feature test
-                S.query('script', content).each(function(script) {
+                // yuyin: 当 content 为 DocumentFragment 时，S.query 有错
+                // 下面直接用 container
+                S.query('script', container).each(function(script) {
                     S.globalEval(script.text);
                 });
             }
