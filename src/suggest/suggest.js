@@ -416,7 +416,7 @@ KISSY.add("suggest", function(S, undefined) {
             });
 
             var mouseDownItem = null;
-            self.container.onmousedown = function(e) {
+            Event.on(self.container, 'mousedown', function(e) {
                 // 鼠标按下处的item
                 mouseDownItem = e.target;
 
@@ -428,7 +428,7 @@ KISSY.add("suggest", function(S, undefined) {
                 };
                 // 2. for W3C
                 return false;
-            };
+            });
 
             // mouseup事件
             Event.on(self.container, "mouseup", function(ev) {
