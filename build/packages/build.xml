@@ -40,6 +40,11 @@
         </concat>
     </target>
 
-    <target name="build" depends="pre-clean,concat,compress,copyright">
+    <target name="clean">
+        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="kissy-min.js" />
+        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="kissy-core-min.js" />
+    </target>
+
+    <target name="build" depends="pre-clean,concat,compress,copyright,clean">
     </target>
 </project>

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 552 Apr 11 12:24
+build: 558 Apr 13 13:41
 */
 /**
  * @module kissy
@@ -346,8 +346,8 @@ build: 552 Apr 11 12:24
 
     S._init();
 
-    // build 时，会将  替换为空
-    S.Config = { debug: '' };
+    // build 时，会将 @DEBUG@ 替换为空
+    S.Config = { debug: '@DEBUG@' };
 
 })(window, 'KISSY');
 

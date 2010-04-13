@@ -12,11 +12,11 @@
             <path path="kissy-lang.js"/>
             <path path="kissy-ua.js"/>
         </concat>
-        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="kissy-pkg.js" />
     </target>
 
     <target name="clean">
         <delete file="kissy-pkg.js"/>
+        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="${build.dir}/${component.name}/kissy-pkg-min.js" />
     </target>
 
     <target name="build" depends="concat,common.build,clean">
