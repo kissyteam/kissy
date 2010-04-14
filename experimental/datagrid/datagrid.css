@@ -27,29 +27,22 @@
 .ks-datagrid th.sort-des{background:#d0d2d5 url(datagrid.png) repeat-x 0 -100px;}
 .ks-datagrid th.sort-asc .icon{background-position:-15px -170px;*background-position:-15px -172px;_background-position:-15px -170px;}
 .ks-datagrid th.sort-des .icon{background-position:0 -170px;*background-position:0 -172px;_background-position:0 -170px;}
-.ks-datagrid th.sort-asc:hover .icon{background-position:0 -185px;*background-position:0 -188px;_background-position:0 -185px;}
-.ks-datagrid th.sort-des:hover .icon{background-position:-15px -185px;*background-position:-15px -188px;_background-position:-15px -185px;}
 
 /*特殊列*/
 .ks-datagrid tr.selected td{	background:#e8f3cc;}
 .ks-datagrid th.cell-extra{padding:5px 0;*padding:3px 0;text-align:center;}
-.ks-datagrid td.cell-extra{padding:5px 0;vertical-align:middle;text-align:center;border-top:1px solid #fff;border-right:1px solid #cacaca;background:#ecedef url(datagrid-extra.png) repeat-y 0 0;}
+.ks-datagrid td.cell-extra{padding:5px 0;vertical-align:middle;text-align:center;border-right:1px solid #cacaca;background:#ecedef url(datagrid-extra.png) repeat-y 0 0;}
 
 /*行*/
 .ks-datagrid .row td{border-top:1px dashed #ccc;}
 .ks-datagrid .row:hover td{background-color:#f6f6f6;}
 .ks-datagrid .row:hover td.cell-extra{background-color:#ecedef;}
 .ks-datagrid .row-extra{display:none;}
-.ks-datagrid .row-extra td.cell-extra{border-top:none;}
 .ks-datagrid .row-expanded{display:table-row;*display:block;}
-.ks-datagrid .row-expanded td,
-.ks-datagrid .row-expanded:hover td{background:#e7eef9;}
-.ks-datagrid .row-expanded td.cell-extra,
-.ks-datagrid .row-expanded:hover td.cell-extra{background:#d0e3fa url(datagrid-extra.png) repeat-y -50px 0;}
 .ks-datagrid .row-selected td,
-.ks-datagrid .row-selected:hover td{background:#ebf7e5;}
+.ks-datagrid .row-selected:hover td{background:#e7eef9;}
 .ks-datagrid .row-selected td.cell-extra,
-.ks-datagrid .row-selected:hover td.cell-extra{background:#e0f2d7 url(datagrid-extra.png) repeat-y -100px 0;}
+.ks-datagrid .row-selected:hover td.cell-extra{background:#d0e3fa url(datagrid-extra.png) repeat-y -50px 0;}
 .ks-datagrid .row-loading:hover td{background-color:#fff;}
 
 /*特殊元素*/
@@ -61,7 +54,6 @@
 .ks-datagrid .row-selected  .icon-radio{background-position:-15px -230px;}
 .ks-datagrid .icon-expand{display:inline-block;width:11px;height:11px;cursor:pointer;background:url(datagrid.png) no-repeat 0 -150px;}
 .ks-datagrid .row-expanded .icon-expand{background-position:-15px -150px;}
-
 .ks-datagrid tfoot td{padding:0;}
 
 /*翻页*/

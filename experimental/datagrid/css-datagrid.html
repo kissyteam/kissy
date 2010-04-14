@@ -13,10 +13,8 @@
         <h3>数据表格标题</h3>
     </div>
     <div class="bd">
-        <!-- data grid START -->
-        <div class="ks-datagrid">
-            <!-- toolbar START -->
-            <ul class="toolbar">
+        <!-- toolbar START -->
+            <ul class="ks-toolbar">
                 <li><a href="#">新增</a></li>
                 <li><a href="#">编辑</a></li>
                 <li><a href="#">删除</a></li>
@@ -24,6 +22,8 @@
                 <li><a href="#">设置列</a></li>
             </ul>
             <!-- toolbar END -->
+        <!-- data grid START -->
+        <div class="ks-datagrid">            
             <table class="datagrid-table">
                 <colgroup>
                     <col width="25" />
@@ -153,10 +153,12 @@
                 </tfoot>
             </table>
             <!--pagination START-->
-            <div class="pagination">
+            <div class="ks-pagination">
                 <div class="standard">
                     <span class="page-info">100/500</span>
-                    <span class="page-start">上一页</span>
+                    <span class="page-start">首页</span>
+                    <a class="page-start">首页</a>
+                    <span class="page-prev">上一页</span>
                     <a class="page-prev">上一页</a>
                     <a class="page">1</a>
                     <a class="page">2</a>
@@ -164,7 +166,9 @@
                     <a class="page">4</a>
                     <a class="page">5</a>
                     <a class="page-next">下一页</a>
-                    <span class="page-end">下一页</span>
+                    <span class="page-next">下一页</span>
+                    <a class="page-end">末页</a>
+                    <span class="page-end">末页</span>
                     <span class="page-skip">到第<input type="text" class="jump-to" size="3"/>页<button type="button" class="page-skip-button">确定</button></span>
                 </div>
             </div>

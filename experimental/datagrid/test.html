@@ -31,24 +31,14 @@
 <!-- box END -->
 </body>
 </html>
-<script src="../../src/kissy/kissy.js"></script>
-<script src="../../src/kissy/kissy-lang.js"></script>
-<script src="../../src/kissy/kissy-ua.js"></script>
-<script src="../../src/kissy/kissy-json.js"></script>
-<script src="../../src/dom/dom.js"></script>
-<script src="../../src/dom/dom-class.js"></script>
-<script src="../../src/dom/selector.js"></script>
-<script src="../../src/event/event.js"></script>
-<script src="../../src/event/event-mouseenter.js"></script>
-<script src="../../src/event/event-object.js"></script>
-<script src="../../src/event/event-target.js"></script>
+<script src="/tmashup/chenyu/kissy-core-min.js"></script>
 <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script src="../../third-party/yui2/connection/connection.js"></script>
 <script src="datagrid.js"></script>
 <script>
 KISSY.ready(function(S) {
     // 192.168.207.119  10.13.18.157
-    var datagrid = new S.DataGrid('#KS_DataGrid','http://192.168.207.119:8080/tmashup/data/tmashup_my_pages_SearchGrid.e');
+    var datagrid = new S.DataGrid('#KS_DataGrid','/tmashup/data/tmashup_my_pages_SearchGrid.e');
     datagrid.datasourceDef = {
         success:'success',
         listData:'dataList',
@@ -60,8 +50,8 @@ KISSY.ready(function(S) {
         sortBy:'sortby'        
     };
     datagrid.paginationDef = {
-        dataLimit:5,
-        pageNumLength:8,
+        dataLimit:20,
+        pageNumLength:5,
         position:'bottom'
     };
     datagrid.columnDef = [
@@ -75,8 +65,14 @@ KISSY.ready(function(S) {
             ]}
         ]},
         {label:'自定义列',parser:function(){return '<a href="#">点此查看</a>';}},
-        {xType:'COL_EXTRA',field:'id',parser:function(id){return '我是一个扩展列,页面id是：'+id;}}
+        {xType:'COL_EXTRA',field:'id',parser:function(id){return '我是一个扩展列,页面id是：'+id;}}//,expand:true}
     ];
-    datagrid.init('');
+    /*datagrid.columnDef = [
+        {xType:'COL_RADIO'},
+        {label:'单一表头、复合字段',field:['developer','name'],parser:function(developer,name){return developer + '：' +name;}},
+        {label:'所属站点',sortable:true,field:'site',parser:function(site){if(site=='CTU'){return '<span style="color:#f60;font-weight:bold;">'+site+'</span>';}else{return site;}}},
+        {label:'自定义列',parser:function(){return '<a href="#">点此查看</a>';}},
+    ];*/
+    datagrid.render('');
 });
 </script>
