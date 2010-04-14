@@ -22,7 +22,7 @@
 
 /**
  * 2010.04.12 玉伯review建议
- * 1、添加默认配置，简化最简单情况下的代码调用
+ * 1、添加默认配置，简化最简单情况下的代码调用(完成)
  * 2、使用var self=this，提高代码压缩率
  * 3、使用局部变量提高代码效率
  * 4、拆分文件（init&config,render,bind,util）
@@ -58,16 +58,16 @@ KISSY.add("datagrid", function(S) {
         //排序方式
         DES = 'desc', ASC = 'asc',
         //特殊icon的class
-        CLS_ICON_EXPAND = 'icon-expand', CLS_ICON_CHECKBOX = 'icon-checkbox', CLS_ICON_RADIO = 'icon-radio',
-        //单击选择某列时，例外的元素
-        TAG_NAME_EXCEPTION = ' a input button select option textarea '
+        CLS_ICON_EXPAND = 'icon-expand', CLS_ICON_CHECKBOX = 'icon-checkbox', CLS_ICON_RADIO = 'icon-radio'
         ;
 
     /**
      * DataGrid
      * @constructor
+     * @param container
+     * @param datasource
      */
-    function DataGrid(container,datasourceUri){
+    function DataGrid(container,datasource){
         //设置容器
         this.container = S.get(container);
             DOM.addClass(this.container,'ks-datagrid');
@@ -78,7 +78,7 @@ KISSY.add("datagrid", function(S) {
         //生成loading元素
         this.loadingEl=parseStrToEl(LOADING_EL_STR);
         //记录数据源uri
-        this.datasourceUri=datasourceUri;
+        this.datasourceUri=datasource;
     }
 
     S.mix(DataGrid.prototype,{
@@ -153,7 +153,7 @@ KISSY.add("datagrid", function(S) {
         loadingEl:null,
         //装载数据的tbody
         tbodyEl:null,
-        //标准列数组对象
+        //标准行数组对象
         rowElArr:null,
         //表尾
         tfootEl:null,
@@ -209,10 +209,33 @@ KISSY.add("datagrid", function(S) {
             this.colDef = colDef;
             this.colExtraDef = colExtraDef;
             this.colSelectDef = colSelectDef;
+            this.columnAmount = colDef.length ;
+            if( colExtraDef ) this.columnAmount++;
+            if( colSelectDef ) this.columnAmount++;
         },
         update:function(postData){
-            if(postData == undefined) return;
-            this.startLoading();
+            var self = this ;
+            function parseColumnDefCallback(theadColDef, colDef, colExtraDef, colSelectDef){
+                self._parseColumnDefPreProcessor(theadColDef, colDef, colExtraDef, colSelectDef);
+                self._renderColgroup();
+                self._renderThead();
+                if(self.listData) self._renderTbody();
+                self.endLoading();
+                //激活排序
+                if(self.sortTrigger.length>0) self._activateRowSort();
+                //激活扩展功能
+                if(colExtraDef) self._activateRowExpand();
+                //选择行功能
+                if(colSelectDef) self._activateRowSelect();
+            }
+            if( postData == undefined ){
+                if( self.columnDef && !self.colDef){
+                    //解析columnDef，成功后开始初始化界面
+                    parseColumnDefToFlat( self.columnDef,null,parseColumnDefCallback,self);
+                }
+                return;
+            }
+            self.startLoading();
             var paginationDef = this.paginationDef ;
             //如果进行了翻页定义，但postData中未指定dataLimit，则更新postData
             if(paginationDef && !getQueryParamValue( postData ,paginationDef.dataLimit )){
@@ -239,19 +262,7 @@ KISSY.add("datagrid", function(S) {
                         //如果列定义被解析过
                         if(!self.colDef){
                             //解析columnDef，成功后开始初始化界面
-                            parseColumnDefToFlat( self.columnDef,null,function(theadColDef, colDef, colExtraDef, colSelectDef){
-                                var self = this ;
-                                self._parseColumnDefPreProcessor(theadColDef, colDef, colExtraDef, colSelectDef);
-                                self._renderThead();
-                                self._renderTbody();
-                                this.endLoading();
-                                //激活排序
-                                if(self.sortTrigger.length>0) self._activateRowSort();
-                                //激活扩展功能
-                                if(colExtraDef) self._activateRowExpand();
-                                //选择行功能
-                                if(colSelectDef) self._activateRowSelect();
-                            },self);
+                            parseColumnDefToFlat( self.columnDef,null,parseColumnDefCallback,self);
                         //如果列定义没被解析过
                         }else{
                             self._renderTbody();
@@ -267,7 +278,7 @@ KISSY.add("datagrid", function(S) {
                     alert('获取数据失败，请刷新页面重试或联系管理员。');
                     this.endLoading();
                 },
-                scope:this
+                scope:self
             };
             YConnect.asyncRequest(this.connectMethod, this.datasourceUri, callback, postData);
         },
@@ -280,6 +291,25 @@ KISSY.add("datagrid", function(S) {
                 self._renderPagination();
             }
             self.update(postData);
+        },
+        _renderColgroup:function(){
+            var colgroupEl = doc.createElement('colgroup');
+            if(this.colExtraDef){
+                var col =  createEl( 'col' , null , null , colgroupEl );
+                    col.width = '25';
+            }
+            if(this.colSelectDef){
+                var col =  createEl( 'col' , null , null , colgroupEl );
+                    col.width = '25';
+            }
+            var colDef = this.colDef;
+            for( var i = 0 , len = colDef.length ; i < len ; i++ ){
+                var col =  createEl( 'col' , null , null , colgroupEl );
+                if( colDef[i].width ) col.width = colDef[i].width;
+            }
+            if(this.colgroupEl) this.tableEl.removeChild(this.colgroupEl);
+            this.colgroupEl = colgroupEl;
+            this.tableEl.appendChild(this.colgroupEl);
         },
         /**
          * 渲染普通th
@@ -339,7 +369,6 @@ KISSY.add("datagrid", function(S) {
          */
         _renderThead:function(){
             var theadColDef=this.theadColDef;
-            var colgroupEl = doc.createElement('colgroup');
             var theadEl = doc.createElement('thead');
             var depth = theadColDef.length;
             for(var i = 0 , ilen = theadColDef.length ; i < ilen ; i++){
@@ -351,17 +380,11 @@ KISSY.add("datagrid", function(S) {
                         var theadCellExpand = this._renderTheadCellExpand();
                             theadCellExpand.rowSpan = ilen;
                         row.appendChild(theadCellExpand);
-                        var col =  doc.createElement('col');
-                            col.width = '25';
-                        colgroupEl.appendChild(col);
                     }
                     if(this.colSelectDef){
                         var theadCellSelect = this._renderTheadCellSelect(this.colSelectDef);
                              theadCellSelect.rowSpan = ilen;
                         row.appendChild(theadCellSelect);
-                        var col =  doc.createElement('col');
-                            col.width = '25';
-                        colgroupEl.appendChild(col);
                     }
                 }
                 //普通列
@@ -369,23 +392,14 @@ KISSY.add("datagrid", function(S) {
                     var cellDef = theadColDef[i][j];
                     if(cellDef[KS_DEPTH] != i) continue;
                     var cell = this._renderTheadCell(cellDef);                      
-                    if(cellDef[KS_CHILDREN_AMOUNT] == 0){
-                        colgroupEl.appendChild(doc.createElement('col'));
-                        if(depth-1>i){
-                            cell.rowSpan = depth - i;
-                        }
-                    }
+                    if( cellDef[KS_CHILDREN_AMOUNT] == 0 && depth-1 > i) cell.rowSpan = depth - i;
                     row.appendChild(cell);
                 }
                 theadEl.appendChild(row);
             }
-            if(this.colgroupEl) this.tableEl.removeChild(this.colgroupEl);
             if(this.theadEl) this.tableEl.removeChild(this.theadEl);
-            this.colgroupEl = colgroupEl;
             this.theadEl = theadEl;
-            this.tableEl.appendChild(this.colgroupEl);
             this.tableEl.appendChild(this.theadEl);
-            this.columnAmount=this.colgroupEl.getElementsByTagName('col').length;
         },
         /**
          * 渲染普通单元格
@@ -516,13 +530,6 @@ KISSY.add("datagrid", function(S) {
         },
         _renderPagination:function(){
             var self = this;
-            function createEl(tagName,className,innerHTML ,parentNode){
-                var el = doc.createElement(tagName);
-                if(className) el.className = className;
-                if(innerHTML) el.innerHTML = innerHTML;
-                if(parentNode) parentNode.appendChild(el);
-                return el;
-            }
             var paginationEl = createEl( 'div', 'ks-pagination');
             var wrapperEl = createEl( 'div' , 'standard' , null , paginationEl);
             self._pageInfoEl = createEl( 'span' , 'page-info' , null , wrapperEl);
@@ -530,7 +537,7 @@ KISSY.add("datagrid", function(S) {
             self._pageStartDisabledEl = createEl( 'span' , 'page-start' , '首页' , wrapperEl);
             self._pagePrevEl = createEl( 'a' , 'page-prev' , '上一页' , wrapperEl);
             self._pagePrevDisabledEl = createEl( 'span' , 'page-prev' , '上一页' , wrapperEl);
-            self._curPageNumEl = createEl( 'span' , 'page' , null , wrapperEl);
+            self._curPageNumEl = createEl( 'span' , 'page' , '1' , wrapperEl);
             self._pageNumElArr = [];
             for( var i = 0 , len = self.paginationDef.pageNumLength ; i < len ; i++ ){
                 var pageNumEl = createEl( 'a' , 'page' , null , wrapperEl);
@@ -579,18 +586,21 @@ KISSY.add("datagrid", function(S) {
                 self.update(postData);
             }
             var pageTurningTrigger = self._pageNumElArr.concat(self._pageStartEl , self._pagePrevEl , self._pageNextEl , self._pageEndEl , self._pageSkipBtnEl ) ;
+            hide.apply(window,pageTurningTrigger);
             Event.on (pageTurningTrigger , 'click' , pageTurning );
         },
         _updatePagination:function(){
-            var self = this;
-            var queryData = this.latestQueryData;
-            var dataStart = parseInt(getQueryParamValue(queryData,this.datasourceDef.dataStart) || 0,10);
-            var dataLimit = parseInt(getQueryParamValue(queryData,this.datasourceDef.dataLimit),10);
-            var dataAmount = parseInt(this.liveData[this.datasourceDef.dataAmount],10);
-            var pageNumLength = this.paginationDef.pageNumLength;
-            var totalPageNumLength = Math.ceil(dataAmount/dataLimit);
+            var self = this,
+                queryData = self.latestQueryData,
+                dataStart = parseInt(getQueryParamValue(queryData,self.datasourceDef.dataStart) || 0,10),
+                dataLimit = parseInt(getQueryParamValue(queryData,self.datasourceDef.dataLimit),10),
+                dataAmount = parseInt(self.liveData[self.datasourceDef.dataAmount],10),
+                pageNumLength = self.paginationDef.pageNumLength,
+                totalPageNumLength = Math.ceil(dataAmount/dataLimit);
+
+            show(self._pageSkipBtnEl);
             //显示记录总条数
-            this._pageInfoEl.innerHTML = '共'+ totalPageNumLength +'页';
+            self._pageInfoEl.innerHTML = '共'+ totalPageNumLength +'页';
             //判定上一页状态
             if(dataStart){
                 show( self._pageStartEl , self._pagePrevEl );
@@ -601,15 +611,15 @@ KISSY.add("datagrid", function(S) {
             }
             //判定下一页状态
             if( dataStart + dataLimit >= dataAmount ){
-                hide( this._pageNextEl, this._pageEndEl );
-                show( this._pageNextDisabledEl , this._pageEndDisabledEl );
+                hide( self._pageNextEl, self._pageEndEl );
+                show( self._pageNextDisabledEl , self._pageEndDisabledEl );
             }else{
-                show( this._pageNextEl , this._pageEndEl );
-                hide( this._pageNextDisabledEl , this._pageEndDisabledEl );
+                show( self._pageNextEl , self._pageEndEl );
+                hide( self._pageNextDisabledEl , self._pageEndDisabledEl );
             }
             //显示当前页
             var curPageNum = Math.ceil(dataStart / dataLimit)+1;
-            this._curPageNumEl.innerHTML = curPageNum;
+            self._curPageNumEl.innerHTML = curPageNum;
             //当前页码在页码中的位置
             var curPageIdx = Math.floor( Math.min(totalPageNumLength,pageNumLength) / 2 );
             //基础页码（基础页码+页码序号=真正的页码）
@@ -626,14 +636,14 @@ KISSY.add("datagrid", function(S) {
             for(var i = 0 , len = pageNumLength ; i < len ; i++){
                 //隐藏页码中超出总页数的部分
                 if( totalPageNumLength < i+1 ){
-                    hide(this._pageNumElArr[i]);
+                    hide(self._pageNumElArr[i]);
                 }else{
-                    this._pageNumElArr[i].innerHTML = i + 1 + basicPageNum ;
+                    self._pageNumElArr[i].innerHTML = i + 1 + basicPageNum ;
                     if( i + 1 + basicPageNum == curPageNum ){
-                        YDOM.insertBefore( this._curPageNumEl , this._pageNumElArr[i]);
-                        hide(this._pageNumElArr[i]);
+                        YDOM.insertBefore( self._curPageNumEl , self._pageNumElArr[i]);
+                        hide(self._pageNumElArr[i]);
                     }else{                         
-                        show(this._pageNumElArr[i]);
+                        show(self._pageNumElArr[i]);
                     }
                 }
             }      
@@ -757,6 +767,7 @@ KISSY.add("datagrid", function(S) {
         _activateRowSort:function(){
             var sortTrigger  = this.sortTrigger;
             YEvent.on(sortTrigger, 'click', function(e){
+                if( this.latestQueryData == '') return;
                 var t = YEvent.getTarget(e);
                 var sortBy;
                 var sortType;
@@ -862,6 +873,14 @@ KISSY.add("datagrid", function(S) {
         pageNumLength:8,
         position:'bottom'
     };
+
+    function createEl(tagName,className,innerHTML ,parentNode){
+        var el = doc.createElement(tagName);
+        if(className) el.className = className;
+        if(innerHTML) el.innerHTML = innerHTML;
+        if(parentNode) parentNode.appendChild(el);
+        return el;
+    }
 
     /**
      * 获取查询字符串中指定key的值，如果没有则返回null
