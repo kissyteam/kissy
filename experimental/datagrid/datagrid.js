@@ -23,8 +23,8 @@
 /**
  * 2010.04.12 玉伯review建议
  * 1、添加默认配置，简化最简单情况下的代码调用(完成)
- * 2、使用var self=this，提高代码压缩率
- * 3、使用局部变量提高代码效率
+ * 2、使用var self=this，提高代码压缩率（完成）
+ * 3、使用局部变量提高代码效率（完成）
  * 4、拆分文件（init&config,render,bind,util）
  */
 
@@ -33,18 +33,17 @@
  * 1、数据源缓存（任何写操作时自动清空缓存）
  * 2、目前数据源挂在datagrid下，考虑以后datasource独立的兼容性
  * 3、添加自定义事件
- * 4、转yui方法到kissy
+ * 4、转yui方法到kissy（kissy已有方法完成）
  */
 
 KISSY.add("datagrid", function(S) {
+    
     var DOM = S.DOM, Event = S.Event, YDOM = YAHOO.util.Dom, YEvent= YAHOO.util.Event, YConnect=YAHOO.util.Connect,
         doc=document,
         //定义特殊列的类型
         COL_CHECKBOX = 'COL_CHECKBOX', COL_RADIO = 'COL_RADIO', COL_EXTRA = 'COL_EXTRA',
         //定义解析columnDef时要用到的三个内部属性
         KS_DEPTH = 'KSDepth', KS_FATHER_IDX='KSFatherIdx', KS_CHILDREN_AMOUNT='KSChildrenAmount',
-        //loading的html片段 
-        LOADING_EL_STR = '<tbody><tr class="row row-loading"><td></td></tr></tbody>',
         //请求方式
         POST = 'post',GET = 'get',
         //行class
@@ -58,49 +57,62 @@ KISSY.add("datagrid", function(S) {
         //排序方式
         DES = 'desc', ASC = 'asc',
         //特殊icon的class
-        CLS_ICON_EXPAND = 'icon-expand', CLS_ICON_CHECKBOX = 'icon-checkbox', CLS_ICON_RADIO = 'icon-radio'
+        CLS_ICON_EXPAND = 'icon-expand', CLS_ICON_CHECKBOX = 'icon-checkbox', CLS_ICON_RADIO = 'icon-radio',
+        //自定义事件
+        EVENT_RENDER_ROW = 'renderRow' , EVENT_RENDER_ROW_EXTRA = 'renderRowExtra'
         ;
 
     /**
      * DataGrid
      * @constructor
-     * @param container
-     * @param datasource
+     * @param container 放置表格的容器
+     * @param datasource 数据源的uri
      */
     function DataGrid(container,datasource){
+        var self = this ;
         //设置容器
-        this.container = S.get(container);
-            DOM.addClass(this.container,'ks-datagrid');
+        self.container = S.get(container);
+        DOM.addClass( self.container , 'ks-datagrid' );
         //生成表格元素
-        this.tableEl=doc.createElement('table');
-            this.container.appendChild(this.tableEl);
-            DOM.addClass(this.tableEl,'datagrid-table');
+        self.tableEl = createEl( 'table' , 'datagrid-table' , null , self.container );
         //生成loading元素
-        this.loadingEl=parseStrToEl(LOADING_EL_STR);
-        //记录数据源uri
-        this.datasourceUri=datasource;
+        var loadingTrEl = createEl( 'tr' , 'row row-loading' , createEl( 'td' ) );
+        self._loadingEl = createEl( 'tbody' , null , loadingTrEl );
+        //记录数据源uri(目前数据源功能集成在datagrid组件当中，且只接受json形式的返回数据)
+        self._datasourceUri = datasource ;
     }
 
     S.mix(DataGrid.prototype,{
-        connectMethod:POST,
+
+        /**************************************************************************************************************
+         * @数据源
+         * 注：目前数据源集成在datagrid里，以后考虑独立
+         *************************************************************************************************************/
+
         /**
-         * 定义datasource，指定datasource里各字段的用途(必须手工定义)
+         * 定义datasource，指定datasource里各字段的用途
+         * 默认值见 DataGrid.datasourceDef
          */
         datasourceDef:null,
         /**
-         * 记录最近一次查询类请求发送的数据
+         * 请求数据的方式
          */
-        latestQueryData:'',
+        connectMethod:POST,        
+        //记录最近一次查询类请求发送的数据
+        _latestQueryData:'',
+        //JSON格式的数据源
+        _liveData:null,
+        //数据源中的列表数据
+        _listData:null,
+        _dataCache:{},
+        
+        /**************************************************************************************************************
+         * @表格定义
+         *************************************************************************************************************/
+        
         /**
-         * JSON格式的数据源
-         */
-        liveData:null,
-        /**
-         * 数据源中的列表数据
-         */
-        listData:null,
-        /**
-         * 定义列，用于渲染(必须手工定义)
+         * 定义列，用于渲染，如不定义，则自动根据返回数据输出表格
+         * 例：
          * columnDef=[
          *      {label:'',xType:COL_EXPAND},
          *      {label:'',xType:COL_CHECKBOX},
@@ -117,125 +129,84 @@ KISSY.add("datagrid", function(S) {
          */
         columnDef:null,
         //总列数
-        columnAmount:null,
+        _columnAmount:null,
         //解析columnDef后得到的表头列定义
-        theadColDef:null,
+        _theadColDef:null,
         //解析columnDef后得到的表身普通列定义
-        colDef:null,
+        _colDef:null,
         //解析columnDef后得到的表身扩展列定义
-        colExtraDef:null,
+        _colExtraDef:null,
         //解析columnDef后得到的选择列定义
-        colSelectDef:null,
-        /**
-         * 定义字段，用于修改（若未定义，则所有字段都以填写输入框的形式修改）
-         * fieldDef={
-         *      index:{},
-         *      realname:{},
-         *      nickname:{},
-         *      pagename:{},
-         *      pageurl:{}
-         * }
-         */
-        fieldDef:null,
-        //表格
-        tableEl:null,
+        _colSelectDef:null,
+
+        /**************************************************************************************************************
+         * @表格元素
+         *************************************************************************************************************/
+
         //colgroup元素
-        colgroupEl:null,
+        _colgroupEl:null,
         //表头
-        theadEl:null,
+        _theadEl:null,
         //触发排序的th元素
-        sortTrigger:[],
+        _sortTrigger:[],
         //当前排序的th
-        curSortTrigger:null,
+        _curSortTrigger:null,
         //触发全选的元素
-        selectAllTrigger:null,
+        _selectAllTrigger:null,
         //显示loading的tbody
-        loadingEl:null,
+        _loadingEl:null,
         //装载数据的tbody
-        tbodyEl:null,
+        _tbodyEl:null,
         //标准行数组对象
-        rowElArr:null,
-        //表尾
-        tfootEl:null,
+        _rowElArr:null,
+
+        /**************************************************************************************************************
+         * @界面渲染
+         *************************************************************************************************************/
+
         /**
-         * 翻页设置
+         * 渲染表格，如果无postData则仅渲染表头等附加元素
+         * @param postData
          */
-        paginationDef:null,
-        //翻页
-        paginationEl:null,
-        startLoading:function(){
-            if(this.columnAmount){
-                var loadingTd = this.loadingEl.getElementsByTagName('td')[0];
-                loadingTd.colSpan = this.columnAmount;
+        render:function(postData){
+            var self = this ;
+            self.datasourceDef = self.datasourceDef || {};
+            self.datasourceDef = S.merge( DataGrid.datasourceDef , self.datasourceDef );
+            //激活翻页功能
+            if(self.paginationDef){
+                self.paginationDef = S.merge( DataGrid.paginationDef , self.paginationDef );
+                self._renderPagination();
             }
-            //notice：没有把loadingEl加到tableEl中，采用diaplay:none的方式来切换loading框的显示，是因为ie下使用js去display:none loadingEl会有点问题：高度无法消除，下边框线一直可见
-            if(YDOM.getFirstChild(this.tableEl)){
-                var firstChild = YDOM.getFirstChild(this.tableEl);
-                YDOM.insertBefore(this.loadingEl, firstChild);
-            }else{
-                this.tableEl.appendChild(this.loadingEl);
-            }
+            self.update(postData);
         },
-        endLoading:function(){
-            if(YDOM.isAncestor( this.tableEl , this.loadingEl )) this.tableEl.removeChild( this.loadingEl );
-        },
+
         /**
-         * 每次异步请求返回值的基本处理
-         * @param o
+         * 更新表格数据，postData必填，如果不需要任何参数也需要传递空字符串，否则更新不会执行
+         * @param postData
          */
-        _dataPreProcessor:function(o){
-            try{
-                this.liveData = eval('('+o.responseText+')');
-            }catch(e){
-                alert('错误：请返回JSON格式的数据。');
-                this.endLoading();
-                return;
-                
-            }
-            this.requestResult = this.liveData[this.datasourceDef.success];
-            if(this.requestResult){
-                this.listData = this.liveData[this.datasourceDef.listData];
-            }else{
-                var info = this.liveData[this.datasourceDef.info];
-                alert('错误：'+info);
-                this.endLoading();
-            }
-        },
-        /**
-         * 每次解析完columnDef之后的基本处理
-         */
-        _parseColumnDefPreProcessor:function(theadColDef, colDef, colExtraDef, colSelectDef){
-            this.theadColDef =theadColDef;
-            this.colDef = colDef;
-            this.colExtraDef = colExtraDef;
-            this.colSelectDef = colSelectDef;
-            this.columnAmount = colDef.length ;
-            if( colExtraDef ) this.columnAmount++;
-            if( colSelectDef ) this.columnAmount++;
-        },
         update:function(postData){
             var self = this ;
             function parseColumnDefCallback(theadColDef, colDef, colExtraDef, colSelectDef){
                 self._parseColumnDefPreProcessor(theadColDef, colDef, colExtraDef, colSelectDef);
                 self._renderColgroup();
                 self._renderThead();
-                if(self.listData) self._renderTbody();
-                self.endLoading();
+                if(self._listData) self._renderTbody();
+                self._endLoading();
                 //激活排序
-                if(self.sortTrigger.length>0) self._activateRowSort();
+                if(self._sortTrigger.length>0) self._activateRowSort();
                 //激活扩展功能
                 if(colExtraDef) self._activateRowExpand();
                 //选择行功能
                 if(colSelectDef) self._activateRowSelect();
             }
             if( postData == undefined ){
-                if( self.columnDef && !self.colDef){
-                    //解析columnDef，成功后开始初始化界面
+                if( self.columnDef && !self._colDef){
+                    //如果有列定义但未解析，则单纯解析列定义
                     parseColumnDefToFlat( self.columnDef,null,parseColumnDefCallback,self);
                 }
                 return;
             }
-            self.startLoading();
+            self._startLoading();
             var paginationDef = this.paginationDef ;
             //如果进行了翻页定义，但postData中未指定dataLimit，则更新postData
             if(paginationDef && !getQueryParamValue( postData ,paginationDef.dataLimit )){
@@ -247,7 +218,7 @@ KISSY.add("datagrid", function(S) {
                     self._dataPreProcessor(o);
                     //如果请求成功，且返回数据正确
                     if(self.requestResult){
-                        var listData = self.listData;
+                        var listData = self._listData;
                         //如果无列定义且返回了列表数据，则根据返回数据自动生成列定义,并手工解析
                         if( ! self.columnDef && listData.length > 0 ){
                             if(  listData.length > 0 ){
@@ -260,129 +231,164 @@ KISSY.add("datagrid", function(S) {
                             }
                         }
                         //如果列定义被解析过
-                        if(!self.colDef){
+                        if(!self._colDef){
                             //解析columnDef，成功后开始初始化界面
                             parseColumnDefToFlat( self.columnDef,null,parseColumnDefCallback,self);
                         //如果列定义没被解析过
                         }else{
                             self._renderTbody();
-                            self.endLoading();
+                            self._endLoading();
                         }
                         //保存最近一次的查询参数
-                        self.latestQueryData = postData;
+                        self._latestQueryData = postData;
                         //更新页码
                         if( self.paginationDef ) self._updatePagination();
                     }
                 },
                 failure:function(){
-                    alert('获取数据失败，请刷新页面重试或联系管理员。');
-                    this.endLoading();
+                    alert('error:获取数据失败，请刷新页面重试或联系管理员。');
+                    this._endLoading();
                 },
                 scope:self
             };
-            YConnect.asyncRequest(this.connectMethod, this.datasourceUri, callback, postData);
+            YConnect.asyncRequest(this.connectMethod, this._datasourceUri, callback, postData);
         },
-        render:function(postData){
+
+        //每次异步请求返回值的基本处理
+        _dataPreProcessor:function(o){
             var self = this ;
-            self.datasourceDef = self.datasourceDef || {};
-            self.datasourceDef = S.merge( DataGrid.datasourceDef , self.datasourceDef );
-            if(self.paginationDef){
-                self.paginationDef = S.merge( DataGrid.paginationDef , self.paginationDef );
-                self._renderPagination();
+            try{
+                self._liveData = eval('('+o.responseText+')');
+            }catch(e){
+                alert('error：请返回JSON格式的数据。');
+                self._endLoading();
+                return;
             }
-            self.update(postData);
+            var datasourceDef = self.datasourceDef ;
+            self.requestResult = self._liveData[datasourceDef.success];
+            if(self.requestResult){
+                self._listData = self._liveData[datasourceDef.listData];
+            }else{
+                var info = self._liveData[datasourceDef.info];
+                alert('error：'+info);
+                self._endLoading();
+            }
         },
+
+        //每次解析完columnDef之后的基本处理
+        _parseColumnDefPreProcessor:function(theadColDef, colDef, colExtraDef, colSelectDef){
+            var self = this ;
+            self._theadColDef =theadColDef;
+            self._colDef = colDef;
+            self._colExtraDef = colExtraDef;
+            self._colSelectDef = colSelectDef;
+            self._columnAmount = colDef.length ;
+            if( colExtraDef ) self._columnAmount++;
+            if( colSelectDef ) self._columnAmount++;
+        },
+
+        //显示loading状态
+        _startLoading:function(){
+            var self = this ;
+            if( self._columnAmount ){
+                var loadingTd = self._loadingEl.getElementsByTagName( 'td' )[0];
+                loadingTd.colSpan = self._columnAmount;
+            }
+            //notice：没有把loadingEl加到tableEl中，采用diaplay:none的方式来切换loading框的显示，是因为ie下使用js去display:none loadingEl会有点问题：高度无法消除，下边框线一直可见
+            if(YDOM.getFirstChild( self.tableEl )){
+                var firstChild = YDOM.getFirstChild( self.tableEl );
+                YDOM.insertBefore( self._loadingEl , firstChild );
+            }else{
+                self.tableEl.appendChild( self._loadingEl );
+            }
+        },
+
+        //隐藏loading状态
+        _endLoading:function(){
+            var self = this ;
+            if(YDOM.isAncestor( self.tableEl , self._loadingEl )) self.tableEl.removeChild( self._loadingEl );
+        },
+
+        //渲染colgroup，并附加到表格元素内
         _renderColgroup:function(){
-            var colgroupEl = doc.createElement('colgroup');
-            if(this.colExtraDef){
+            var self = this ,
+                colgroupEl = doc.createElement('colgroup');
+            if( self._colExtraDef ){
                 var col =  createEl( 'col' , null , null , colgroupEl );
                     col.width = '25';
             }
-            if(this.colSelectDef){
+            if( self._colSelectDef ){
                 var col =  createEl( 'col' , null , null , colgroupEl );
                     col.width = '25';
             }
-            var colDef = this.colDef;
+            var colDef = self._colDef;
             for( var i = 0 , len = colDef.length ; i < len ; i++ ){
                 var col =  createEl( 'col' , null , null , colgroupEl );
                 if( colDef[i].width ) col.width = colDef[i].width;
             }
-            if(this.colgroupEl) this.tableEl.removeChild(this.colgroupEl);
-            this.colgroupEl = colgroupEl;
-            this.tableEl.appendChild(this.colgroupEl);
+            if( self._colgroupEl ) self.tableEl.removeChild( self._colgroupEl );
+            self._colgroupEl = colgroupEl;
+            self.tableEl.appendChild( self._colgroupEl );
         },
-        /**
-         * 渲染普通th
-         * @param cellDef
-         */
-        _renderTheadCell:function(cellDef){
-            var cell = doc.createElement('th');
+
+        //渲染表头普通单元格
+        _renderTheadCell:function( cellDef ){
+            var cell = createEl('th');
             //如果无子th
-            if(cellDef[KS_CHILDREN_AMOUNT] == 0){
+            if( cellDef[KS_CHILDREN_AMOUNT] == 0 ){
                 //特殊列
-                if(cellDef.xType){
+                if( cellDef.xType ){
                     cell.className = CLS_CELL_EXTRA;
                     //全选
-                    if(cellDef.xType == COL_CHECKBOX){
+                    if( cellDef.xType == COL_CHECKBOX ){
                         cell.innerHTML = '<i class="' + CLS_ICON_CHECKBOX + '"></i>';
                     }
 
                 //排序
-                }else if(cellDef.sortable){                    
+                }else if( cellDef.sortable ){
                     cell.className = CLS_SORTABLE;
                     cell.setAttribute( ATTR_SORT_FIELD , cellDef.field );
                     cell.innerHTML = '<i class="icon"></i>';
-                    this.sortTrigger.push(cell);
+                    this._sortTrigger.push( cell );
                 }
             //如果有子th
             }else{
                 cell.colSpan = cellDef[KS_CHILDREN_AMOUNT];
             }
             //文字标签
-            if(cellDef.label) cell.innerHTML = cellDef.label + cell.innerHTML;
+            if( cellDef.label ) cell.innerHTML = cellDef.label + cell.innerHTML;
             return cell;
         },
-        /**
-         * 渲染扩展按钮列的th
-         */
+
+        //渲染表头扩展列单元格
         _renderTheadCellExpand:function(){
-            var cell = doc.createElement('th');
-                cell.className = CLS_CELL_EXTRA;
+            return createEl( 'th' , CLS_CELL_EXTRA );
+        },
+
+        //渲染表格选择列单元格
+        _renderTheadCellSelect:function( selectType ){
+            var cell = createEl( 'th' , CLS_CELL_EXTRA );
+            if( selectType == COL_CHECKBOX ) this._selectAllTrigger = createEl( 'i' , CLS_ICON_CHECKBOX , null , cell );
             return cell;
         },
-        /**
-         * 渲染选择列的th
-         * @param selectType
-         */
-        _renderTheadCellSelect:function(selectType){
-            var cell = doc.createElement('th');
-                cell.className = CLS_CELL_EXTRA;
-            if(selectType == COL_CHECKBOX){
-                this.selectAllTrigger = doc.createElement('i');
-                this.selectAllTrigger.className =  CLS_ICON_CHECKBOX;
-                cell.appendChild( this.selectAllTrigger );
-            }
-            return cell;
-        },
-        /**
-         * 渲染表头
-         */
+
+        //渲染表头
         _renderThead:function(){
-            var theadColDef=this.theadColDef;
-            var theadEl = doc.createElement('thead');
-            var depth = theadColDef.length;
+            var self = this,
+                theadColDef=this._theadColDef,
+                theadEl = doc.createElement('thead'),
+                depth = theadColDef.length;
             for(var i = 0 , ilen = theadColDef.length ; i < ilen ; i++){
-                var row = doc.createElement('tr');
-                    row.className = 'row';
+                var row = createEl( 'tr' , 'row' );
                 //扩展按钮列
                 if( i == 0){
-                    if(this.colExtraDef){
-                        var theadCellExpand = this._renderTheadCellExpand();
+                    if(self._colExtraDef){
+                        var theadCellExpand = self._renderTheadCellExpand();
                             theadCellExpand.rowSpan = ilen;
                         row.appendChild(theadCellExpand);
                     }
-                    if(this.colSelectDef){
-                        var theadCellSelect = this._renderTheadCellSelect(this.colSelectDef);
+                    if(self._colSelectDef){
+                        var theadCellSelect = self._renderTheadCellSelect(self._colSelectDef);
                              theadCellSelect.rowSpan = ilen;
                         row.appendChild(theadCellSelect);
                     }
@@ -391,22 +397,19 @@ KISSY.add("datagrid", function(S) {
                 for(var j = 0 , jlen = theadColDef[i].length ; j < jlen ; j++){
                     var cellDef = theadColDef[i][j];
                     if(cellDef[KS_DEPTH] != i) continue;
-                    var cell = this._renderTheadCell(cellDef);                      
+                    var cell = self._renderTheadCell(cellDef);
                     if( cellDef[KS_CHILDREN_AMOUNT] == 0 && depth-1 > i) cell.rowSpan = depth - i;
                     row.appendChild(cell);
                 }
                 theadEl.appendChild(row);
             }
-            if(this.theadEl) this.tableEl.removeChild(this.theadEl);
-            this.theadEl = theadEl;
-            this.tableEl.appendChild(this.theadEl);
+            if(self._theadEl) self.tableEl.removeChild(self._theadEl);
+            self._theadEl = theadEl;
+            self.tableEl.appendChild(self._theadEl);
         },
-        /**
-         * 渲染普通单元格
-         * @param cellDef 单元格设定
-         * @param recordData 单条数据
-         */
-        _renderCell:function(cellDef,recordData){
+
+        //渲染单元格
+        _renderCell:function( cellDef , recordData ){
             var cell = doc.createElement('td');
             //如果指定了字段
             if(cellDef.field != undefined ){
@@ -415,7 +418,7 @@ KISSY.add("datagrid", function(S) {
                     var fieldValue = recordData[cellDef.field];
                     //如果有渲染器
                     if(cellDef.parser){
-                        cell.innerHTML = cellDef.parser(fieldValue);
+                        appendChild( cell , cellDef.parser(fieldValue));
                     //如果无渲染器
                     }else{
                         cell.innerHTML = fieldValue;
@@ -428,7 +431,7 @@ KISSY.add("datagrid", function(S) {
                     }
                     //如果有渲染器
                     if(cellDef.parser){
-                        cell.innerHTML = cellDef.parser.apply(window,fieldValueArr);
+                        appendChild( cell , cellDef.parser.apply(window,fieldValueArr) );
                     //如果无渲染器
                     }else{
                         cell.innerHTML = fieldValueArr.join(' ');
@@ -438,7 +441,7 @@ KISSY.add("datagrid", function(S) {
             }else{
                 //如果有渲染器
                 if(cellDef.parser){
-                    cell.innerHTML = cellDef.parser();
+                    appendChild( cell , cellDef.parser());
                 //如果无渲染器
                 }else{
                     cell.innerHTML = '';
@@ -446,88 +449,180 @@ KISSY.add("datagrid", function(S) {
             }
             return cell;
         },
-        /**
-         * 渲染展开按钮单元格
-         */
+        
+        //渲染展开按钮单元格
         _renderCellExpand:function(){
-            var cell = doc.createElement('td');
-            cell.className = CLS_CELL_EXTRA;
-            cell.innerHTML = '<i class="' + CLS_ICON_EXPAND + '"></i>';
-            return cell;
+            return createEl( 'td' , CLS_CELL_EXTRA ,  '<i class="' + CLS_ICON_EXPAND + '"></i>' );
         },
-        /**
-         * 渲染选择单元格
-         * @param selectType 选择类型 接受 COL_CHECKBOX 活 COL_RADIO 两个参数值
-         */
+        
+        //渲染选择单元格
         _renderCellSelect:function(selectType){
-            var cell = doc.createElement('td');
-            cell.className = CLS_CELL_EXTRA;
             if(selectType == COL_CHECKBOX){
-                 cell.innerHTML = '<i class="' + CLS_ICON_CHECKBOX + '"></i>';
+                 var inner = '<i class="' + CLS_ICON_CHECKBOX + '"></i>';
             }else if(selectType == COL_RADIO){
-                 cell.innerHTML = '<i class="' + CLS_ICON_RADIO + '"></i>';
+                 var inner = '<i class="' + CLS_ICON_RADIO + '"></i>';
             }
-            return cell;
+            return createEl( 'td', CLS_CELL_EXTRA , inner );
         },
-        /**
-         * 渲染行
-         * @param recordData 单条数据
-         */
+        
+        //渲染标准行
         _renderRow:function(recordData){
-            var colDef = this.colDef;
-            var row = doc.createElement('tr');
-             row.className = CLS_ROW ;
+            var self = this, colDef = self._colDef;
+            var row = createEl( 'tr' , CLS_ROW );
             //扩展按钮
-            if(this.colExtraDef) row.appendChild(this._renderCellExpand());
+            if(self._colExtraDef) row.appendChild(self._renderCellExpand());
             //复选或者单选按钮
-            if(this.colSelectDef) row.appendChild(this._renderCellSelect(this.colSelectDef));
+            if(self._colSelectDef) row.appendChild(self._renderCellSelect(self._colSelectDef));
             for(var i = 0 , len = colDef.length ; i < len ; i++){
-                row.appendChild(this._renderCell(colDef[i],recordData));
+                row.appendChild(self._renderCell(colDef[i],recordData));
             }
+            self.fire( EVENT_RENDER_ROW , { row : row , recordData : recordData });
             return row;
         },
+
+        //渲染扩展列（扩展列的内容放到一个行里展示）
         _renderRowExtra:function(recordData){
-            var row = doc.createElement('tr');
-                row.className = CLS_ROW_EXTRA ;
-            if(this.colExtraDef){
-                var td = doc.createElement('td');
-                    td.className = CLS_CELL_EXTRA;
-                row.appendChild(td);
+            var self = this ;
+            var row = createEl( 'tr' , CLS_ROW_EXTRA ),
+                colSpan = self._columnAmount;
+            if(self._colExtraDef){
+                createEl( 'td' , CLS_CELL_EXTRA , null , row );
+                colSpan--;
             }
-            if(this.colSelectDef){
-                var td = doc.createElement('td');
-                    td.className = CLS_CELL_EXTRA;
-                row.appendChild(td);
+            if(self._colSelectDef){
+                createEl( 'td' , CLS_CELL_EXTRA , null , row );
+                colSpan--;
             }
-            var cell = this._renderCell(this.colExtraDef,recordData); 
-                cell.colSpan = this.columnAmount;
+            var cell = self._renderCell(self._colExtraDef,recordData);
+                cell.colSpan = colSpan;
             row.appendChild(cell);
+            self.fire( EVENT_RENDER_ROW_EXTRA , { row : row , recordData : recordData });
             return row;
         },
+
+        //渲染表格本身
         _renderTbody:function(){
-            this.rowElArr = [];
-            var listData = this.listData;
+            var self = this;
+            self._rowElArr = [];
+            var listData = self._listData;
             var tbodyEl = doc.createElement('tbody');
             for(var i = 0 , len = listData.length ; i < len ; i++){
-                var row = this._renderRow(listData[i]);
+                var row = self._renderRow(listData[i]);
                     row.setAttribute(ATTR_ROW_IDX,i);
-                this.rowElArr.push(row);
+                self._rowElArr.push(row);
                 tbodyEl.appendChild(row);
-                if( this.colExtraDef && this.colExtraDef.expand ){
-                    var rowExtra = this._renderRowExtra(listData[i]);
+                if( self._colExtraDef && self._colExtraDef.expand ){
+                    var rowExtra = self._renderRowExtra(listData[i]);
                         rowExtra.setAttribute(ATTR_ROW_IDX,i);
                     tbodyEl.appendChild(rowExtra);
                     DOM.addClass( row , CLS_ROW_EXPANDED );
                     DOM.addClass( rowExtra , CLS_ROW_EXPANDED );
                 }
             }
-            if(this.tbodyEl) this.tableEl.removeChild(this.tbodyEl);
-            this.tbodyEl = tbodyEl;
-            this.tableEl.appendChild(this.tbodyEl);
+            if(self._tbodyEl) self.tableEl.removeChild(self._tbodyEl);
+            self._tbodyEl = tbodyEl;
+            self.tableEl.appendChild(self._tbodyEl);
         },
-        _renderTfoot:function(){
-            
+
+        //激活排序功能
+        _activateRowSort:function(){
+            var self = this , sortTrigger  = self._sortTrigger;
+            Event.on(sortTrigger, 'click', function(e){
+                if( self._latestQueryData == '') return;
+                var t = this;
+                var sortBy = t.getAttribute( ATTR_SORT_FIELD );;
+                var sortType;
+                //获得排序类型 和 设置当前排序触点的样式
+                if( DOM.hasClass( t , CLS_SORT_ASC ) ){
+                    sortType = DES;
+                    DOM.removeClass( t, CLS_SORT_ASC);
+                    DOM.addClass( t, CLS_SORT_DES);
+                //如果目前是降序排列或者目前列无排序
+                }else{
+                    sortType = ASC;
+                    DOM.addClass( t, CLS_SORT_ASC);
+                    DOM.removeClass( t, CLS_SORT_DES);
+                }
+                //修改前一个排序触点的样式
+                if( self._curSortTrigger && self._curSortTrigger != t ){
+                    DOM.removeClass( self._curSortTrigger, CLS_SORT_DES);
+                    DOM.removeClass( self._curSortTrigger, CLS_SORT_ASC);
+                }
+                self._curSortTrigger = t;
+                var queryData = setQueryParamValue( self._latestQueryData,self.datasourceDef.sortBy, sortBy);
+                queryData = setQueryParamValue( queryData,self.datasourceDef.sortType, sortType);
+                self.update(queryData);
+            });
         },
+
+        //激活列选择功能
+        _activateRowSelect:function(){
+            var self = this , selectType = self._colSelectDef;
+            if( selectType == COL_CHECKBOX ){
+                Event.on(self.tableEl,'click',function(e){
+                    var t = e.target;
+                    if( (DOM.hasClass( t , CLS_ICON_CHECKBOX) || t.nodeName.toLowerCase() == 'td') && YDOM.getAncestorByTagName( t , 'tbody' ) ){
+                        var row = YDOM.getAncestorByClassName( t , CLS_ROW ) || YDOM.getAncestorByClassName( t , CLS_ROW_EXTRA );
+                        self.toggleSelectRow( row.getAttribute( ATTR_ROW_IDX ));
+                    }else if( t == self._selectAllTrigger){
+                        var theadRow = self._theadEl.getElementsByTagName('tr')[0];
+                        if( DOM.hasClass( theadRow , CLS_ROW_SELECTED ) ){
+                            self.deselectAll();
+                        }else{
+                            self.selectAll();
+                        }
+                    }
+                });
+            }else if( selectType == COL_RADIO ){
+                var curSelectedIdx;
+                Event.on(self.tableEl,'click',function(e){
+                    var t = e.target;
+                    if( (DOM.hasClass( t , CLS_ICON_RADIO) || t.nodeName.toLowerCase() == 'td') && YDOM.getAncestorByTagName( t , 'tbody' )){
+                        var row = YDOM.getAncestorByClassName( t , CLS_ROW ) || YDOM.getAncestorByClassName( t , CLS_ROW_EXTRA );
+                        if( curSelectedIdx != undefined ) self.deselectRow(curSelectedIdx);
+                        curSelectedIdx = row.getAttribute( ATTR_ROW_IDX );
+                        self.selectRow( curSelectedIdx );
+                    }
+                });
+            }
+        },
+        
+        //激活扩展列功能
+        _activateRowExpand:function(){
+            var self = this;
+            Event.on(self.tableEl,'click',function(e){
+                var t = e.target;
+                if( DOM.hasClass( t , CLS_ICON_EXPAND ) ){
+                    var row = YDOM.getAncestorByClassName( t , CLS_ROW );
+                    var nextSibling = YDOM.getNextSibling( row );
+                    //如果row无相邻元素，或者相邻元素不是扩展列
+                    if( !nextSibling || !DOM.hasClass( nextSibling , CLS_ROW_EXTRA ) ){
+                        var idx = row.getAttribute( ATTR_ROW_IDX );
+                        var rowExtra = self._renderRowExtra( self._listData[idx] );
+                            rowExtra.setAttribute( ATTR_ROW_IDX , idx );
+                        if(DOM.hasClass( row , CLS_ROW_SELECTED )) YDOM.addClass( rowExtra, CLS_ROW_SELECTED );
+                        YDOM.insertAfter( rowExtra , row );
+                    }else{
+                        var rowExtra = nextSibling;
+                    }
+                    DOM.toggleClass( row , CLS_ROW_EXPANDED );
+                    DOM.toggleClass( rowExtra , CLS_ROW_EXPANDED );
+                }
+            });
+        },
+
+        /**************************************************************************************************************
+         * @翻页
+         *************************************************************************************************************/
+
+        /**
+         * 翻页设置
+         * 默认值见 DataGrid.paginationDef
+         */
+        paginationDef:null,
+        //翻页
+        _paginationEl:null,
+        //渲染翻页
         _renderPagination:function(){
             var self = this;
             var paginationEl = createEl( 'div', 'ks-pagination');
@@ -561,11 +656,11 @@ KISSY.add("datagrid", function(S) {
 
             function pageTurning(e){
                 var t = this ;
-                var queryData = self.latestQueryData,
+                var queryData = self._latestQueryData,
                     datasourceDef = self.datasourceDef,
                     dataStart = parseInt(getQueryParamValue(queryData,self.datasourceDef.dataStart) || 0,10),
                     dataLimit = parseInt(getQueryParamValue(queryData,self.datasourceDef.dataLimit),10),
-                    dataAmount = parseInt(self.liveData[datasourceDef.dataAmount],10),
+                    dataAmount = parseInt(self._liveData[datasourceDef.dataAmount],10),
                     totalPageNumLength = Math.ceil(dataAmount/dataLimit);
                 if( t == self._pageStartEl ){
                     dataStart = '0';
@@ -589,12 +684,13 @@ KISSY.add("datagrid", function(S) {
             hide.apply(window,pageTurningTrigger);
             Event.on (pageTurningTrigger , 'click' , pageTurning );
         },
+        //更新翻页
         _updatePagination:function(){
             var self = this,
-                queryData = self.latestQueryData,
+                queryData = self._latestQueryData,
                 dataStart = parseInt(getQueryParamValue(queryData,self.datasourceDef.dataStart) || 0,10),
                 dataLimit = parseInt(getQueryParamValue(queryData,self.datasourceDef.dataLimit),10),
-                dataAmount = parseInt(self.liveData[self.datasourceDef.dataAmount],10),
+                dataAmount = parseInt(self._liveData[self.datasourceDef.dataAmount],10),
                 pageNumLength = self.paginationDef.pageNumLength,
                 totalPageNumLength = Math.ceil(dataAmount/dataLimit);
 
@@ -642,113 +738,75 @@ KISSY.add("datagrid", function(S) {
                     if( i + 1 + basicPageNum == curPageNum ){
                         YDOM.insertBefore( self._curPageNumEl , self._pageNumElArr[i]);
                         hide(self._pageNumElArr[i]);
-                    }else{                         
+                    }else{
                         show(self._pageNumElArr[i]);
                     }
                 }
-            }      
+            }
         },
-        addRecord:function(){
 
-        },
-        modifyRecord:function(){
+        /**************************************************************************************************************
+         * @选择操作
+         *************************************************************************************************************/
 
-        },
-        deleteRecord:function(){
-            
-        },
         /**
-         * 将指定索引的行显示为指定的选中状态
-         * @param idx 要切换选中状态的行在listData中的索引号
-         * @param selectType 1为选中，0为取消选中，不填则为自动切换
+         * 切换指定行选中状态
+         * @param idx 行索引
          */
-        _toggleSelectRow:function(idx,selectType){
-            var row = this.rowElArr[idx];
-            var nextSibling = YDOM.getNextSibling( row );
-            if( nextSibling && YDOM.hasClass( nextSibling , CLS_ROW_EXTRA )) var rowExtra = nextSibling;
-            if(selectType == undefined){
-                DOM.toggleClass( row , CLS_ROW_SELECTED );
-                if(rowExtra) DOM.toggleClass( rowExtra , CLS_ROW_SELECTED );
-            }else if(selectType){
-                YDOM.addClass( row , CLS_ROW_SELECTED );
-                if(rowExtra) YDOM.addClass( rowExtra , CLS_ROW_SELECTED );
-            }else{
-                YDOM.removeClass( row , CLS_ROW_SELECTED );
-                if(rowExtra) YDOM.removeClass( rowExtra , CLS_ROW_SELECTED );
-            }
-        },
-        _checkIfSelectAll:function(){
-            var ifSelectAll = true;
-            for(var i = 0 , len = this.rowElArr.length ; i < len ; i++){
-                if( !YDOM.hasClass( this.rowElArr[i] , CLS_ROW_SELECTED)){
-                    ifSelectAll = false;
-                    break;
-                }
-            }
-            var theadRow = this.theadEl.getElementsByTagName('tr')[0];
-            if(ifSelectAll){
-                YDOM.addClass( theadRow , CLS_ROW_SELECTED );
-            }else{
-                YDOM.removeClass( theadRow , CLS_ROW_SELECTED );
-            }
-        },
         toggleSelectRow:function(){
             for(var i = 0 , len = arguments.length ; i < len ; i++){
                 this._toggleSelectRow(arguments[i]);
             }
             this._checkIfSelectAll();
         },
+        /**
+         * 选中指定行
+         * @param idx 行索引
+         */
         selectRow:function(){
             for(var i = 0 , len = arguments.length ; i < len ; i++){
                 this._toggleSelectRow(arguments[i],1);
             }
             this._checkIfSelectAll();
         },
+        /**
+         * 取消选中指定行
+         * @param idx 行索引
+         */
         deselectRow:function(){
             for(var i = 0 , len = arguments.length ; i < len ; i++){
                 this._toggleSelectRow(arguments[i],0);
             }
             this._checkIfSelectAll();
         },
+        /**
+         * 全选
+         */
         selectAll:function(){
-            for(var i = 0 , len = this.rowElArr.length ; i < len ; i++){
+            for(var i = 0 , len = this._rowElArr.length ; i < len ; i++){
                 this._toggleSelectRow(i,1);
             }
             this._checkIfSelectAll();
         },
+        /**
+         * 全不选
+         */
         deselectAll:function(){
-            for(var i = 0 , len = this.rowElArr.length ; i < len ; i++){
+            for(var i = 0 , len = this._rowElArr.length ; i < len ; i++){
                 this._toggleSelectRow(i,0);
             }
             this._checkIfSelectAll();
         },
+        /**
+         * 反选
+         */
         selectInverse:function(){
-            for(var i = 0 , len = this.rowElArr.length ; i < len ; i++){
-                this._toggleSelectRow(this.rowElArr[i]);
+            for(var i = 0 , len = this._rowElArr.length ; i < len ; i++){
+                this._toggleSelectRow(this._rowElArr[i]);
             }
             this._checkIfSelectAll();
         },
-        /**
-         * 获取选中的行或者record
-         * @param returnBy 默认'record'，可选'index'
-         */
-        _getSelected:function(returnBy){
-            var selected = [];
-            for( var  i = 0 , len = this.rowElArr.length ; i < len ; i++ ){
-                if( YDOM.hasClass( this.rowElArr[i] , CLS_ROW_SELECTED ) ){
-                    if(returnBy == 'index'){
-                        selected.push( i );
-                    }else{
-                        selected.push( this.listData[i] );
-                    }
-                }
-            }
-            if( selected.length ==  0 ){
-                return null;
-            }else{
-                return selected;
-            }
-        },
+
         /**
          * 获取被选中record的索引
          */
@@ -761,99 +819,96 @@ KISSY.add("datagrid", function(S) {
         getSelectedRecord:function(){
             return this._getSelected();
         },
+
         /**
-         * 激活排序功能
+         * 将指定索引的行显示为指定的选中状态
+         * @param idx 要切换选中状态的行在listData中的索引号
+         * @param selectType 1为选中，0为取消选中，不填则为自动切换
          */
-        _activateRowSort:function(){
-            var sortTrigger  = this.sortTrigger;
-            YEvent.on(sortTrigger, 'click', function(e){
-                if( this.latestQueryData == '') return;
-                var t = YEvent.getTarget(e);
-                var sortBy;
-                var sortType;
-                if( t.nodeName.toLowerCase() != 'th' ) t = YDOM.getAncestorByClassName( t,  CLS_SORTABLE);
-                //获取排序字段
-                sortBy = t.getAttribute( ATTR_SORT_FIELD );
-                //获得排序类型 和 设置当前排序触点的样式
-                if( YDOM.hasClass( t , CLS_SORT_ASC ) ){
-                    sortType = DES;
-                    YDOM.removeClass( t, CLS_SORT_ASC);
-                    YDOM.addClass( t, CLS_SORT_DES);
-                //如果目前是降序排列或者目前列无排序
-                }else{
-                    sortType = ASC;
-                    YDOM.addClass( t, CLS_SORT_ASC);
-                    YDOM.removeClass( t, CLS_SORT_DES);
-                }
-                //修改前一个排序触点的样式
-                if( this.curSortTrigger && this.curSortTrigger != t ){
-                    YDOM.removeClass( this.curSortTrigger, CLS_SORT_DES);
-                    YDOM.removeClass( this.curSortTrigger, CLS_SORT_ASC);
-                }
-                this.curSortTrigger = t;
-                var queryData = setQueryParamValue( this.latestQueryData,this.datasourceDef.sortBy, sortBy);
-                queryData = setQueryParamValue( queryData,this.datasourceDef.sortType, sortType);
-                this.update(queryData);
-            }, this, true);
-        },
-        /**
-         * 激活列选择功能
-         */
-        _activateRowSelect:function(){
-            var selectType = this.colSelectDef;
-            if( selectType == COL_CHECKBOX ){
-                YEvent.on(this.tableEl,'click',function(e){
-                    var t = YEvent.getTarget(e);
-                    if( (YDOM.hasClass( t , CLS_ICON_CHECKBOX) || t.nodeName.toLowerCase() == 'td') && YDOM.getAncestorByTagName( t , 'tbody' ) ){
-                        var row = YDOM.getAncestorByClassName( t , CLS_ROW ) || YDOM.getAncestorByClassName( t , CLS_ROW_EXTRA );
-                        this.toggleSelectRow( row.getAttribute( ATTR_ROW_IDX ));
-                    }else if( t == this.selectAllTrigger){
-                        var theadRow = this.theadEl.getElementsByTagName('tr')[0];
-                        if( YDOM.hasClass( theadRow , CLS_ROW_SELECTED ) ){
-                            this.deselectAll();
-                        }else{
-                            this.selectAll();
-                        }
-                    }
-                },this,true);
-            }else if( selectType == COL_RADIO ){
-                var curSelectedIdx;
-                YEvent.on(this.tableEl,'click',function(e){
-                    var t = YEvent.getTarget(e);
-                    if( (YDOM.hasClass( t , CLS_ICON_RADIO) || t.nodeName.toLowerCase() == 'td') && YDOM.getAncestorByTagName( t , 'tbody' )){
-                        var row = YDOM.getAncestorByClassName( t , CLS_ROW ) || YDOM.getAncestorByClassName( t , CLS_ROW_EXTRA );
-                        if( curSelectedIdx != undefined ) this.deselectRow(curSelectedIdx);
-                        curSelectedIdx = row.getAttribute( ATTR_ROW_IDX );
-                        this.selectRow( curSelectedIdx );
-                    }
-                },this,true);
+        _toggleSelectRow:function(idx,selectType){
+            var row = this._rowElArr[idx];
+            var nextSibling = YDOM.getNextSibling( row );
+            if( nextSibling && DOM.hasClass( nextSibling , CLS_ROW_EXTRA )) var rowExtra = nextSibling;
+            if(selectType == undefined){
+                DOM.toggleClass( row , CLS_ROW_SELECTED );
+                if(rowExtra) DOM.toggleClass( rowExtra , CLS_ROW_SELECTED );
+            }else if(selectType){
+                DOM.addClass( row , CLS_ROW_SELECTED );
+                if(rowExtra) DOM.addClass( rowExtra , CLS_ROW_SELECTED );
+            }else{
+                DOM.removeClass( row , CLS_ROW_SELECTED );
+                if(rowExtra) DOM.removeClass( rowExtra , CLS_ROW_SELECTED );
             }
         },
-        /**
-         * 激活扩展列功能
-         */
-        _activateRowExpand:function(){
-            YEvent.on(this.tableEl,'click',function(e){
-                var t = YEvent.getTarget(e);
-                if( YDOM.hasClass( t , CLS_ICON_EXPAND ) ){
-                    var row = YDOM.getAncestorByClassName( t , CLS_ROW );
-                    var nextSibling = YDOM.getNextSibling( row );
-                    //如果row无相邻元素，或者相邻元素不是扩展列
-                    if( !nextSibling || !YDOM.hasClass( nextSibling , CLS_ROW_EXTRA ) ){
-                        var idx = row.getAttribute( ATTR_ROW_IDX );
-                        var rowExtra = this._renderRowExtra( this.listData[idx] );
-                            rowExtra.setAttribute( ATTR_ROW_IDX , idx );
-                        if(YDOM.hasClass( row , CLS_ROW_SELECTED )) YDOM.addClass( rowExtra, CLS_ROW_SELECTED );
-                        YDOM.insertAfter( rowExtra , row );
-                    }else{
-                        var rowExtra = nextSibling;
-                    }
-                    DOM.toggleClass( row , CLS_ROW_EXPANDED );
-                    DOM.toggleClass( rowExtra , CLS_ROW_EXPANDED );
+
+        //检查是否全选
+        _checkIfSelectAll:function(){
+            var ifSelectAll = true , rowElArr = this._rowElArr;
+            for(var i = 0 , len = rowElArr.length ; i < len ; i++){
+                if( !DOM.hasClass( rowElArr[i] , CLS_ROW_SELECTED)){
+                    ifSelectAll = false;
+                    break;
                 }
-            },this,true);
+            }
+            var theadRow = this._theadEl.getElementsByTagName('tr')[0];
+            if(ifSelectAll){
+                DOM.addClass( theadRow , CLS_ROW_SELECTED );
+            }else{
+                DOM.removeClass( theadRow , CLS_ROW_SELECTED );
+            }
+        },
+
+        /**
+         * 获取选中的行或者record
+         * @param returnBy 默认'record'，可选'index'
+         */
+        _getSelected:function(returnBy){
+            var selected = [];
+            for( var  i = 0 , len = this._rowElArr.length ; i < len ; i++ ){
+                if( YDOM.hasClass( this._rowElArr[i] , CLS_ROW_SELECTED ) ){
+                    if(returnBy == 'index'){
+                        selected.push( i );
+                    }else{
+                        selected.push( this._listData[i] );
+                    }
+                }
+            }
+            if( selected.length ==  0 ){
+                return null;
+            }else{
+                return selected;
+            }
+        },
+
+
+        /**************************************************************************************************************
+         * @增删改操作
+         *************************************************************************************************************/
+
+        addRecord:function(){
+
+        },
+        modifyRecord:function(){
+
+        },
+        deleteRecord:function(){
+
         }
+
+        /**************************************************************************************************************
+         * @自定义事件
+         *************************************************************************************************************/
+
+        
+
+
     });
+
+    S.mix(DataGrid.prototype, S.EventTarget);
+
+    /******************************************************************************************************************
+     * @默认定义
+     *****************************************************************************************************************/
 
     //数据源默认定义
     DataGrid.datasourceDef = {
@@ -874,13 +929,32 @@ KISSY.add("datagrid", function(S) {
         position:'bottom'
     };
 
-    function createEl(tagName,className,innerHTML ,parentNode){
+    /******************************************************************************************************************
+     * @util
+     *****************************************************************************************************************/
+
+    function createEl(tagName,className,inner ,parentNode){
         var el = doc.createElement(tagName);
         if(className) el.className = className;
-        if(innerHTML) el.innerHTML = innerHTML;
+        if(inner){
+            if( typeof inner == 'string' ){
+                el.innerHTML = inner;
+            }else{
+                el.appendChild(inner);
+            }
+        };
         if(parentNode) parentNode.appendChild(el);
         return el;
     }
+
+    function appendChild( o , child ){
+        if( o == undefined || child ==undefined ) return;
+        if( typeof child == 'string' ){
+            o.innerHTML = child;
+        }else{
+            o.appendChild( child );
+        }
+    };
 
     /**
      * 获取查询字符串中指定key的值，如果没有则返回null
@@ -1090,11 +1164,13 @@ KISSY.add("datagrid", function(S) {
         parse(pureColDef);
     }
 
+    //显示指定元素
     function show(){
         for( var i = 0 ,len = arguments.length ; i < len ; i++ ){
             arguments[i].style.display='';
         }
     }
+    //隐藏制定元素
     function hide(el){
         for( var i = 0 ,len = arguments.length ; i < len ; i++ ){
             arguments[i].style.display='none';

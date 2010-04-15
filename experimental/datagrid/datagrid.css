@@ -35,15 +35,20 @@
 
 /*行*/
 .ks-datagrid .row td{border-top:1px dashed #ccc;}
-.ks-datagrid .row:hover td{background-color:#f6f6f6;}
-.ks-datagrid .row:hover td.cell-extra{background-color:#ecedef;}
+/*预置特殊行样式*/
+.ks-datagrid .row-pink td{background:#ffd5d8;}
+.ks-datagrid .row-yellow td{background:#fefbda;}
+.ks-datagrid .row-green td{background:#eff6de;}
+.ks-datagrid .row-gray td{background:#eee;}
+/*hover样式*/
+.ks-datagrid .row-hover td{background-color:#f6f6f6;}
+.ks-datagrid .row-hover td.cell-extra{background-color:#ecedef;}
+/*正常样式*/
 .ks-datagrid .row-extra{display:none;}
 .ks-datagrid .row-expanded{display:table-row;*display:block;}
-.ks-datagrid .row-selected td,
-.ks-datagrid .row-selected:hover td{background:#e7eef9;}
-.ks-datagrid .row-selected td.cell-extra,
-.ks-datagrid .row-selected:hover td.cell-extra{background:#d0e3fa url(datagrid-extra.png) repeat-y -50px 0;}
-.ks-datagrid .row-loading:hover td{background-color:#fff;}
+.ks-datagrid .row-selected td{background:#e7eef9;}
+.ks-datagrid .row-selected td.cell-extra{background:#d0e3fa url(datagrid-extra.png) repeat-y -50px 0;}
+
 
 /*特殊元素*/
 .ks-datagrid .icon-checkbox,

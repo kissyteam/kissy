@@ -55,7 +55,7 @@ KISSY.ready(function(S) {
         position:'bottom'
     };
     datagrid.columnDef = [
-        {xType:'COL_RADIO'},
+        {xType:'COL_CHECKBOX'},
         {label:'单一表头、复合字段',width:300,field:['developer','name'],parser:function(developer,name){return developer + '：' +name;}},
         {label:'复合表头',children:[
             {label:'所属站点',width:200,sortable:true,field:'site',parser:function(site){if(site=='CTU'){return '<span style="color:#f60;font-weight:bold;">'+site+'</span>';}else{return site;}}},
@@ -74,5 +74,15 @@ KISSY.ready(function(S) {
         {label:'自定义列',parser:function(){return '<a href="#">点此查看</a>';}},
     ];*/
     datagrid.render('');
+
+    function highlight(o){
+        var row = o.row;
+        var recordData = o.recordData;
+        if( recordData.site && recordData.site == 'CTU'){
+            S.DOM.addClass( row , 'row-pink');
+        }
+    }
+    datagrid.on('renderRow',highlight);
+    datagrid.on('renderRowExtra',highlight);
 });
 </script>
