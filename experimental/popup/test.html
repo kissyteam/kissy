@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk" />
+<title>Popup Test</title>
+<link rel="stylesheet" href="../../build/cssreset/reset.css" />
+<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="../../build/packages/kissy-core-min.js"></script>
+<script src="popup.js"></script>
+</head>
+<body>
+
+<!-- box START -->
+<div class="box box-normal">
+    <div class="hd">
+        <h3>最简单的popup</h3>
+    </div>
+    <div class="bd">
+        <a href="#" class="trigger">点我</a>
+        <a href="#" class="trigger">点我也行</a>
+        <p id="popup" style="border:2px solid #d9e7f8;background:#fff;z-index:100;"><span style="color:#f30" class="close">点我关闭弹出框</span><br/>我是一个弹出框<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>我是一个弹出框</p>
+    </div>
+</div>
+<script type="text/javascript">
+(function(){
+    var S = KISSY;
+    var popup = new S.Popup('.trigger','#popup',{triggerType:'click',position:'right',align:'top',autoFit:true,hasMask:true,clsCloseBtn:'close'});
+})();
+</script>
+<p class="code-switch">显示源码</p>
+<!-- box END -->
+
+</body>
+</html>
