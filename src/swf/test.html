@@ -134,7 +134,7 @@
             indexEl = S.get('#indexField');
         S.one('#save-button').on('click', function () { swfstore.setItem(nameEl.value, valEl.value); });
         S.one('#remove-button').on('click', function () { swfstore.removeItem(nameEl.value); });
-        S.one('#get-button').on('click', function () { test.echo('getValueOf("' + nameEl.value + '") = "' + swfstore.getValueOf(name.value) + '"'); });
+        S.one('#get-button').on('click', function () { test.echo('getValueOf("' + nameEl.value + '") = "' + swfstore.getValueOf(nameEl.value) + '"'); });
         S.one('#purge-button').on('click', function() { swfstore.clear(); });
         S.one('#removeat-button').on('click', function () { swfstore.removeItemAt(parseInt(indexEl.value)); });
         S.one('#settings-button').on('click', function() { swfstore.displaySettings(); });
@@ -223,6 +223,10 @@
         test.echo('hasAdequateDimensions = ' + swfstore.hasAdequateDimensions());
         test.echo('getModificationDate = ' + swfstore.getModificationDate());
 //        swfstore.setSize(200);
+
+        // 存完之后立刻取
+        swfstore.setItem('test-x', 'xxx');
+        if(swfstore.getValueOf('test-x') !== 'xxx') test.fail();
     }
 
 </script>
