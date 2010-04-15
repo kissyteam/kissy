@@ -223,10 +223,6 @@
         test.echo('hasAdequateDimensions = ' + swfstore.hasAdequateDimensions());
         test.echo('getModificationDate = ' + swfstore.getModificationDate());
 //        swfstore.setSize(200);
-
-        // 存完之后立刻取
-        swfstore.setItem('test-x', 'xxx');
-        if(swfstore.getValueOf('test-x') !== 'xxx') test.fail();
     }
 
 </script>

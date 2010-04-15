@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 548 Apr 9 23:53
+build: 565 Apr 15 12:05
 */
 /**
  * SWF UA info
@@ -265,10 +265,10 @@ KISSY.add('swfstore', function(S, undefined) {
          * has denied storage on their machine or storage space allotted is not sufficient.
          * <p>The size limit for the passed parameters is ~40Kb.</p>
          * @param data {Object} The data to store
-         * @param location {String} The name of the 'cookie' or store
+         * @param key {String} The name of the 'cookie' or store
          * @return {Boolean} Whether or not the save was successful
          */
-        setItem: function(location, data) {
+        setItem: function(key, data) {
             if (typeof data === 'string') { // 快速通道
                 // double encode strings to prevent parsing error
                 // http://yuilibrary.com/projects/yui2/ticket/2528593
@@ -278,14 +278,21 @@ KISSY.add('swfstore', function(S, undefined) {
             }
 
             // 当 name 为空值时，目前会触发 swf 的内部异常，此处不允许空键值
-            if ((location = S.trim(location + ''))) {
+            if ((key = S.trim(key + ''))) {
                 try {
-                    return this.embeddedSWF.callSWF('setItem', [location, data]);
+                    return this.embeddedSWF.callSWF('setItem', [key, data]);
                 }
                 catch(e) { // 当 swf 异常时，进一步捕获信息
                     this.fire('error', { message: e });
                 }
             }
+        },
+
+        /**
+         * alias for getVauleOf
+         */
+        getItem: function(key) {
+            return this.embeddedSWF.callSWF('getValueOf', [key]);
         }
     });
 
