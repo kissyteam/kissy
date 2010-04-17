@@ -16,28 +16,27 @@ KISSY.add("datagrid", function(S) {
     function Popup(trigger, popup, config){
         var self=this;
 
-        // 触点和弹出框
         trigger = S.query( trigger );
         popup = S.get( popup );
         if( !trigger || !popup ) return;
 
         popup.style.position = 'absolute' ;
         popup.style.display = 'none' ;
-
-        // 将弹出框转成body的一级子元素
         S.ready(function(S) {
             doc.body.appendChild( popup );
         });
+        self.popup = popup ;
 
-        // 配置
         config = config || {};
         config = S.merge(Popup.Config, config);
+        self.config = config ;
 
         // 遮罩
         if( config.hasMask && !Popup.mask && config.triggerType == 'click' ){
             S.ready(function(S) {
                 var mask = document.createElement("div");
-					mask.className = "ks-popup-mask";
+                    mask.id = 'KSPopupMask' ;
+					mask.className = "ks-popup-mask" ;
 					doc.body.appendChild(mask);
 					mask.style.display = "none";
 				Popup.mask=mask;
@@ -57,55 +56,29 @@ KISSY.add("datagrid", function(S) {
 			});
         }
 
-        // trigger click handler
-        function triggerClickHandler(e){
-            e.preventDefault();
-            self.prevTrigger = self.curTrigger ;
-            self.curTrigger = this ;
-            if( self.prevTrigger == self.curTrigger ){
-                self.popup.style.display == 'none' ? self.show() : self.hide() ;
-            }else{
-                self.show();
-            }
+        for( var i = 0 , len = trigger.length ; i < len ; i++ ){
+            self.attachTrigger( trigger[i] );
         }
 
-        // mouseenter handler
-        function mouseenterHandler(e){
-            clearTimeout( self._popupHideTimeId );
-            // 如果mouseenter的对象是触点
-            if( this != popup ){
-                self.prevTrigger = self.curTrigger ;
-                self.curTrigger = this ;
-            }
-            self._popupShowTimeId = setTimeout( function(){ self.show(); }, config.delay * 1000 );
+        // 当触发事件为mouse时，给弹出层添加mouse事件处理句柄
+        if( config.triggerType == 'mouse' ){
+            Event.on( popup , 'mouseenter', function( e ){
+                var el = this;
+                self._mouseenterHandler( el );
+            } );
+            Event.on( popup , 'mouseleave', function( e ){
+                var el = this;
+                self._mouseleaveHandler();
+            } );
         }
 
-        // mouselive handler
-        function mouseleaveHandler(e){
-            clearTimeout( self._popupShowTimeId );
-		    self._popupHideTimeId = setTimeout( function(){ self.hide(); }, config.delay * 1000 );
-        }
 
-        //注册事件
-        if( config.triggerType == 'click' ){
-            Event.on( trigger , 'click' , triggerClickHandler );
-        }else if( config.triggerType == 'mouse' ){
-            if( config.disableClick ) Event.on( trigger , 'click' , function(e){ e.preventDefault(); } );
-            Event.on( trigger , 'mouseenter', mouseenterHandler );
-			Event.on( trigger , 'mouseleave', mouseleaveHandler );
-			Event.on( popup , 'mouseenter', mouseenterHandler );
-			Event.on( popup , 'mouseleave', mouseleaveHandler );
-        }
-
-        self.trigger = trigger ;
-        self.popup = popup ;
-        self.config = config ;
     }
 
     S.mix(Popup.prototype,{
-        //私有属性
-		_popupHideTimeId:null,
-		_popupShowTimeId:null,
+        trigger:[],
+        popup:null,
+        config:null,
         //前一次触点
         prevTrigger:null,
         //当前触点
@@ -158,12 +131,72 @@ KISSY.add("datagrid", function(S) {
             self.popup.style.display = 'none';            
         },
         //设置指定元素为触点
-        attachTrigger:function(el){
-
+        attachTrigger:function( el ){
+            var self = this , config = self.config ;
+            if( getIndexOfArrEl( self.trigger , el ) >= 0 ) return;
+            self.trigger.push( el );
+            //注册事件
+            if( config.triggerType == 'click' ){
+                Event.on( el , 'click' , function( e ){
+                    var el = this;
+                    self._triggerClickHandler( el );
+                } );
+            }else if( config.triggerType == 'mouse' ){
+                if( config.disableClick ) Event.on( el , 'click' , function(e){ e.preventDefault(); } );
+                Event.on( el , 'mouseenter', function( e ){
+                    var el = this;
+                    self._mouseenterHandler( el );
+                } );
+                Event.on( el , 'mouseleave', function( e ){
+                    self._mouseleaveHandler();
+                } );
+            }
         },
         //取消指定触点
-        detachTrigger:function(el){
-
+        detachTrigger:function( el ){
+            var self = this , config = self.config ;
+            if( getIndexOfArrEl( self.trigger , el ) < 0 ) return;
+            //注册事件
+                        
+        },
+		_popupHideTimeId:null,
+		_popupShowTimeId:null,
+        /**
+         * 鼠标单击触点的事件处理器
+         * @param el 触点
+         */
+        _triggerClickHandler:function(el){
+            var self = this ;
+            self.prevTrigger = self.curTrigger ;
+            self.curTrigger = el ;
+            if( self.prevTrigger == self.curTrigger ){
+                self.popup.style.display == 'none' ? self.show() : self.hide() ;
+            }else{
+                self.show();
+            }
+        },
+        /**
+         * 鼠标进入触点或者弹出层时的事件处理器
+         * @param el 触点或弹出层
+         */
+        _mouseenterHandler:function(el){
+            var self = this ;
+            clearTimeout( self._popupHideTimeId );
+            // 如果mouseenter的对象是触点
+            if( el != self.popup ){
+                self.prevTrigger = self.curTrigger ;
+                self.curTrigger = el ;
+            }
+            self._popupShowTimeId = setTimeout( function(){ self.show(); }, self.config.delay * 1000 );
+        },
+        /**
+         * 鼠标离开触点或者弹出层时的事件处理器
+         * @param el 触点或弹出层
+         */
+        _mouseleaveHandler:function(){
+            var self = this;
+            clearTimeout( self._popupShowTimeId );
+		    self._popupHideTimeId = setTimeout( function(){ self.hide(); }, self.config.delay * 1000 );
         }
     });
 
@@ -209,6 +242,7 @@ KISSY.add("datagrid", function(S) {
         mask.style.display = 'block';
         mask.style.height = YDom.getDocumentHeight() + 'px';
     };
+    
     //隐藏遮罩
     Popup.hideMask = function(){
         var mask = Popup.mask ;
@@ -216,5 +250,16 @@ KISSY.add("datagrid", function(S) {
     }
 
     S.Popup = Popup;
+
+    function getIndexOfArrEl( arr , el ){
+        var idx = -1 ;
+        for( var i = 0 , len = arr.length ; i < len ; i++ ){
+            if( arr[i] == el ){
+                idx = i;
+                break;
+            }
+        }
+        return idx;
+    }
 });
 
