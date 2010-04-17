@@ -1,13 +1,13 @@
 /**
  * Popup
  * @creator     沉鱼<fool2fish@gmail.com>
- * @depends     kissy-core, yui-core, yui2-animation
+ * @depends     kissy-core, yui-core
  */
 
 KISSY.add("datagrid", function(S) {
-    var DOM = S.DOM, Event = S.Event , YDom = YAHOO.util.Dom ,
-        doc = document
-        ;
+    var DOM = S.DOM, Event = S.Event , YDOM = YAHOO.util.Dom ,
+        doc = document,
+        POPUP_STATE = 'data-ks-popup-state' , POPUP_STATE_ENABLED = 'enabled' , POPUP_STATE_DISABLED = 'disabled';
 
     /**
      * Popup
@@ -30,6 +30,8 @@ KISSY.add("datagrid", function(S) {
         config = config || {};
         config = S.merge(Popup.Config, config);
         self.config = config ;
+        if( config.width != 'auto' ) popup.style.width = config.width+'px';
+        if( config.height != 'auto' ) popup.style.height = config.height+'px';
 
         // 遮罩
         if( config.hasMask && !Popup.mask && config.triggerType == 'click' ){
@@ -37,11 +39,14 @@ KISSY.add("datagrid", function(S) {
                 var mask = document.createElement("div");
                     mask.id = 'KSPopupMask' ;
 					mask.className = "ks-popup-mask" ;
+                    if( S.UA.ie === 6 ){
+                        mask.innerHTML = '<iframe src="mask-iframe.html" allowtransparency="true" frameborder="0" scrolling="no" style="position:absolute;width:100%;height:100%;left:0;top:0;z-index:10;background:transparent;"></iframe>';
+                    }
 					doc.body.appendChild(mask);
-					mask.style.display = "none";
+			        mask.style.display = "none";
 				Popup.mask=mask;
                 var maskStyle = '.ks-popup-mask{position:absolute;left:0;top:0;width:100%;font-size:0px;line-height:0px;background:#000;filter:alpha(opacity=20);opacity:0.2;}';
-                DOM.addStyleSheet(maskStyle, 'KSPopupMask');
+                DOM.addStyleSheet( maskStyle , 'KSPopupMask' );
             });
         }
 
@@ -72,79 +77,49 @@ KISSY.add("datagrid", function(S) {
             } );
         }
 
-
     }
 
     S.mix(Popup.prototype,{
         trigger:[],
-        popup:null,
-        config:null,
         //前一次触点
         prevTrigger:null,
         //当前触点
 		curTrigger:null,
         //显示弹出层
         show:function(){
-            var self = this ;
-            if( self.config.triggerType = 'click' && self.config.hasMask ) Popup.showMask();
-            var config = self.config , popup = self.popup ;
+            var self = this , config = self.config , popup = self.popup ;
+            if( config.triggerType = 'click' && config.hasMask ){
+                Popup.mask.style.zIndex = YDOM.getStyle(popup,'zIndex')-1;
+                Popup.showMask();
+            }
             popup.style.display = 'block';
-            if( config.width != 'auto' ) popup.style.width = config.width+'px';
-            if( config.height != 'auto' ) popup.style.height = config.height+'px';
-			var pos = YDom.getXY( self.curTrigger );
-			if ( S.isArray ( config.offset ) ) {
-				pos[0] += parseInt( config.offset[0] , 10 );
-				pos[1] += parseInt( config.offset[1] , 10 );
-			}
-			var  tw = self.curTrigger.offsetWidth, th = self.curTrigger.offsetHeight,
-				pw = popup.offsetWidth , ph = popup.offsetHeight,
-				dw = YDom.getViewportWidth(), dh = YDom.getViewportHeight(),
-				sl = YDom.getDocumentScrollLeft(), st = YDom.getDocumentScrollTop(),
-				l = pos[0], t = pos[1];
-			if (config.position == 'left') {
-				l = pos[0]-pw;
-				t = (config.align == 'center')?(t-ph/2+th/2):(config.align == 'bottom')?(t+th-ph):t;
-			} else if (config.position == 'right') {
-				l = pos[0]+tw;
-				t = (config.align == 'center')?(t-ph/2+th/2):(config.align == 'bottom')?(t+th-ph):t;
-			} else if (config.position == 'bottom') {
-				t = t+th;
-				l = (config.align == 'center')?(l+tw/2-pw/2):(config.align == 'right')?(l+tw-pw):l;
-			} else if (config.position == 'top') {
-				t = t-ph;
-				l = (config.align == 'center')?(l+tw/2-pw/2):(config.align == 'right')?(l+tw-pw):l;
-			}
-            //防止出界
-			if(config.autoFit) {
-				if ( t-st+ph > dh ) t = dh-ph+st-2; /* 2px 偏差 */
-                if ( l-sl+pw > dw) l = dw-pw+sl-2;
-                t = Math.max( t , 0 );
-			    l = Math.max( l , 0 );
-			}
-			popup.style.top = t + 'px';
-			popup.style.left = l + 'px';
+            Popup.setPosition( popup , self.curTrigger , config.position , config.align , config.offset , config.autoFit );
+            if( config.animType == 'fade') opacityAnim( popup , 0 , 1 );
         },
         //隐藏弹出层
         hide:function(){
-            var self = this ;
-            if( self.config.triggerType = 'click' && self.config.hasMask ) Popup.hideMask();
+            var self = this , config = self.config , popup = self.popup ;
+            if( config.triggerType = 'click' && config.hasMask ) Popup.hideMask();
             self.popup.style.display = 'none';            
         },
         //设置指定元素为触点
         attachTrigger:function( el ){
             var self = this , config = self.config ;
+            self.enableTrigger( el );
             if( getIndexOfArrEl( self.trigger , el ) >= 0 ) return;
             self.trigger.push( el );
             //注册事件
             if( config.triggerType == 'click' ){
                 Event.on( el , 'click' , function( e ){
                     var el = this;
+                    if( el.getAttribute( POPUP_STATE) == 'POPUP_STATE_DISABLE' ) return;
                     self._triggerClickHandler( el );
                 } );
             }else if( config.triggerType == 'mouse' ){
                 if( config.disableClick ) Event.on( el , 'click' , function(e){ e.preventDefault(); } );
                 Event.on( el , 'mouseenter', function( e ){
                     var el = this;
+                    if( el.getAttribute( POPUP_STATE) == 'POPUP_STATE_DISABLE' ) return;
                     self._mouseenterHandler( el );
                 } );
                 Event.on( el , 'mouseleave', function( e ){
@@ -152,13 +127,15 @@ KISSY.add("datagrid", function(S) {
                 } );
             }
         },
-        //取消指定触点
-        detachTrigger:function( el ){
-            var self = this , config = self.config ;
-            if( getIndexOfArrEl( self.trigger , el ) < 0 ) return;
-            //注册事件
-                        
+
+        enableTrigger:function( el ){
+            this._setTrigger( el , POPUP_STATE_ENABLED );
         },
+
+        disableTrigger:function( el ){
+            this._setTrigger( el , POPUP_STATE_DISABLED );
+        },
+        
 		_popupHideTimeId:null,
 		_popupShowTimeId:null,
         /**
@@ -197,14 +174,24 @@ KISSY.add("datagrid", function(S) {
             var self = this;
             clearTimeout( self._popupShowTimeId );
 		    self._popupHideTimeId = setTimeout( function(){ self.hide(); }, self.config.delay * 1000 );
+        },
+        _setTrigger:function( el , value ){
+            var self = this , triggerArr = [] ;
+            if( !el ){
+                triggerArr = self.trigger;
+            }else if( S.isArray(el) ){
+                triggerArr = el;
+            }else{
+                triggerArr.push( el );
+            }
+            for( var i = 0 , len = triggerArr.length ; i < len ; i++ ){
+                triggerArr[i].setAttribute( POPUP_STATE , value );
+            }
         }
+
     });
 
     S.mix( Popup.prototype , S.EventTarget );
-
-    /******************************************************************************************************************
-     * @默认设置
-     *****************************************************************************************************************/
 
     //默认配置
     Popup.Config = {
@@ -215,7 +202,7 @@ KISSY.add("datagrid", function(S) {
         // 触发延迟
         delay: 0.1, // 100ms
         // 显示或者隐藏弹出层时的动画效果
-        animType: null,// 'fade' , 'width' , 'height' , 'both'
+        animType: null,// 'fade'
         // 弹出框宽度
         width: 'auto' ,
         // 弹出框高度
@@ -240,13 +227,48 @@ KISSY.add("datagrid", function(S) {
         var mask = Popup.mask ;
         if( !mask ) return ;
         mask.style.display = 'block';
-        mask.style.height = YDom.getDocumentHeight() + 'px';
+        mask.style.height = YDOM.getDocumentHeight() + 'px';
     };
     
     //隐藏遮罩
     Popup.hideMask = function(){
         var mask = Popup.mask ;
         if( mask ) mask.style.display = 'none';
+    }
+
+    Popup.setPosition = function( el , refEl , position , align , offset , autoFit){
+        var pos = YDOM.getXY( refEl );
+        if ( S.isArray ( offset ) ) {
+            pos[0] += parseInt( offset[0] , 10 );
+            pos[1] += parseInt( offset[1] , 10 );
+        }
+        var  tw = refEl.offsetWidth, th = refEl.offsetHeight,
+            pw = el.offsetWidth , ph = el.offsetHeight,
+            dw = YDOM.getViewportWidth(), dh = YDOM.getViewportHeight(),
+            sl = YDOM.getDocumentScrollLeft(), st = YDOM.getDocumentScrollTop(),
+            l = pos[0], t = pos[1];
+        if (position == 'left') {
+            l = pos[0]-pw;
+            t = (align == 'center')?(t-ph/2+th/2):(align == 'bottom')?(t+th-ph):t;
+        } else if (position == 'right') {
+            l = pos[0]+tw;
+            t = (align == 'center')?(t-ph/2+th/2):(align == 'bottom')?(t+th-ph):t;
+        } else if (position == 'bottom') {
+            t = t+th;
+            l = (align == 'center')?(l+tw/2-pw/2):(align == 'right')?(l+tw-pw):l;
+        } else if (position == 'top') {
+            t = t-ph;
+            l = (align == 'center')?(l+tw/2-pw/2):(align == 'right')?(l+tw-pw):l;
+        }
+        //防止出界
+        if(autoFit) {
+            if ( t-st+ph > dh ) t = dh-ph+st-2; /* 2px 偏差 */
+            if ( l-sl+pw > dw) l = dw-pw+sl-2;
+            t = Math.max( t , 0 );
+            l = Math.max( l , 0 );
+        }
+        el.style.top = t + 'px';
+        el.style.left = l + 'px';
     }
 
     S.Popup = Popup;
@@ -260,6 +282,24 @@ KISSY.add("datagrid", function(S) {
             }
         }
         return idx;
+    }
+
+    function setOpacity( el , opacity ){
+            el.style.filter = 'alpha(opacity=' + opacity * 100 + ')';
+            el.style.opacity = opacity ;
+    }
+
+    function opacityAnim( el , from , to ){
+        var curOpacity = from , step = parseInt( ( to - from ) / 10 * 100 )/ 100;
+        setOpacity( el , curOpacity );
+        var intervalId = setInterval( function(){
+            curOpacity = curOpacity + step ;
+            if(( from > to && curOpacity < to ) || ( from < to && curOpacity > to)){
+                curOpacity = to;
+                clearInterval( intervalId );
+            }
+            setOpacity( el , curOpacity );
+        } , 25 );
     }
 });
 

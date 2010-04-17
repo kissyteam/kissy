@@ -18,13 +18,14 @@
     <div class="bd">
         <a href="#" class="trigger">点我</a>
         <a href="#" class="trigger">点我也行</a>
+        <select><option>请选择</option></select>
         <p id="popup" style="border:2px solid #d9e7f8;background:#fff;z-index:100;"><span style="color:#f30" class="close">点我关闭弹出框</span><br/>我是一个弹出框<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>我是一个弹出框</p>
     </div>
 </div>
 <script type="text/javascript">
 (function(){
     var S = KISSY;
-    var popup = new S.Popup('.trigger','#popup',{triggerType:'click',position:'right',align:'top',autoFit:true,hasMask:true,clsCloseBtn:'close'});
+    var popup = new S.Popup('.trigger','#popup',{triggerType:'click',position:'right',align:'top',autoFit:true,hasMask:true,clsCloseBtn:'close',animType:'fade'});
 })();
 </script>
 <p class="code-switch">显示源码</p>
