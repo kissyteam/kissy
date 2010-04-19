@@ -45,13 +45,15 @@ KISSY.add("datagrid", function(S) {
             });
         }
 
-        //为popup添加iframe底
-        S.ready(function(S) {
-            self._popupRebase = createEl('iframe',"ks-popup-rebase",doc.body);
-            self._popupRebase.style.display = 'none';
-            var rebaseStyle = '.ks-popup-rebase{position:absolute;border:none;filter:alpha(opacity=0);}';
-            DOM.addStyleSheet( rebaseStyle , 'KSPopupRebase' );
-        });
+        //为ie6下的popup添加iframe底（用以遮住select，但不特别处理ie6下的mask，以免select消失引起用户反感）
+        if(S.UA.ie===6){
+            S.ready(function(S) {
+                self._popupRebase = createEl('iframe',"ks-popup-rebase",doc.body);
+                self._popupRebase.style.display = 'none';
+                var rebaseStyle = '.ks-popup-rebase{position:absolute;border:none;filter:alpha(opacity=0);}';
+                DOM.addStyleSheet( rebaseStyle , 'KSPopupRebase' );
+            });
+        }
 
         // 关闭按钮
         if( config.clsCloseBtn ){
@@ -64,13 +66,14 @@ KISSY.add("datagrid", function(S) {
 			});
         }
 
+        self.trigger = [] ;
         for( var i = 0 , len = trigger.length ; i < len ; i++ ){
             self.attachTrigger( trigger[i] );
         }
 
         // 当触发事件为mouse时，给弹出层添加mouse事件处理句柄
         if( config.triggerType == 'mouse' ){
-            Event.on( popup , 'mouseover', function(){
+            Event.on( popup , 'mouseenter', function(){
                 clearTimeout( self._popupHideTimeId );
             } );
             Event.on( popup , 'mouseleave', function(){
@@ -81,7 +84,6 @@ KISSY.add("datagrid", function(S) {
     }
 
     S.mix(Popup.prototype,{
-        trigger:[],
         //前一次触点
         prevTrigger:null,
         //当前触点
@@ -89,30 +91,33 @@ KISSY.add("datagrid", function(S) {
         //显示弹出层
         show:function(){
             var self = this , config = self.config , popup = self.popup , popupZIndex = YDOM.getStyle(popup,'zIndex') ;
-            if(! popupZIndex > 0) popupZIndex = popup.style.zIndex = 10;
+            if(self.curTrigger.getAttribute(POPUP_STATE) == POPUP_STATE_DISABLED) return;
+            if( !(popupZIndex > 1)) popupZIndex = popup.style.zIndex = 2;
             if( config.triggerType = 'click' && config.hasMask ){
                 Popup.mask.style.zIndex = popupZIndex-1;
                 Popup.showMask();
             }
             popup.style.display = 'block';
-            popup.style.left = popup.style.top = '-1000px';
-            Popup.setPosition( popup , self.curTrigger , config.position , config.align , config.offset , config.autoFit );
-            var rebase = self._popupRebase;
-                rebase.style.display = '';
-                rebase.style.width = popup.offsetWidth + 'px';
-                rebase.style.height = popup.offsetHeight + 'px';
-                rebase.style.left = popup.style.left;
-                rebase.style.top = popup.style.top;
-                rebase.style.zIndex = popupZIndex - 1 ;
-            if( config.animType == 'fade') opacityAnim( popup , 0 , 1 );
+            //必须把自定义事件放这里，如果放在后面，引起popup尺寸变化，后面的位置计算就会出错了
             self.fire( 'afterShow' , { 'popup':popup , 'trigger':self.curTrigger });
+            Popup.setPosition( popup , self.curTrigger , config.position , config.align , config.offset , config.autoFit );
+            if(self._popupRebase){
+                var rebase = self._popupRebase;
+                    rebase.style.display = '';
+                    rebase.style.width = popup.offsetWidth + 'px';
+                    rebase.style.height = popup.offsetHeight + 'px';
+                    rebase.style.left = popup.style.left;
+                    rebase.style.top = popup.style.top;
+                    rebase.style.zIndex = popupZIndex - 1 ;
+            }
+            if( config.animType == 'fade') opacityAnim( popup , 0 , 1 );
         },
         //隐藏弹出层
         hide:function(){
             var self = this , config = self.config , popup = self.popup ;
             if( config.triggerType = 'click' && config.hasMask ) Popup.hideMask();
             popup.style.display = 'none';
-            if( self._popupRebase ) self._popupRebase.style.display = 'none';
+            if(self._popupRebase) self._popupRebase.style.display = 'none';
             self.fire( 'afterHide' , { 'popup':popup , 'trigger':self.curTrigger });
         },
         //设置指定元素为触点
