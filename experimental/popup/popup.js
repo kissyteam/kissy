@@ -45,7 +45,7 @@ KISSY.add("datagrid", function(S) {
 					doc.body.appendChild(mask);
 			        mask.style.display = "none";
 				Popup.mask=mask;
-                var maskStyle = '.ks-popup-mask{position:absolute;left:0;top:0;width:100%;font-size:0px;line-height:0px;background:#000;filter:alpha(opacity=20);opacity:0.2;}';
+                var maskStyle = '.ks-popup-mask{position:absolute;left:0;top:0;width:100%;font-size:0px;line-height:0px;}';//background:#000;filter:alpha(opacity=20);opacity:0.2;}';
                 DOM.addStyleSheet( maskStyle , 'KSPopupMask' );
             });
         }
