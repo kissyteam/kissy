@@ -36,19 +36,22 @@ KISSY.add("datagrid", function(S) {
         // 遮罩
         if( config.hasMask && !Popup.mask && config.triggerType == 'click' ){
             S.ready(function(S) {
-                var mask = document.createElement("div");
+                var mask = createEl('div',"ks-popup-mask",doc.body);
                     mask.id = 'KSPopupMask' ;
-					mask.className = "ks-popup-mask" ;
-                    if( S.UA.ie === 6 ){
-                        mask.innerHTML = '<iframe src="mask-iframe.html" allowtransparency="true" frameborder="0" scrolling="no" style="position:absolute;width:100%;height:100%;left:0;top:0;z-index:10;background:transparent;"></iframe>';
-                    }
-					doc.body.appendChild(mask);
 			        mask.style.display = "none";
 				Popup.mask=mask;
-                var maskStyle = '.ks-popup-mask{position:absolute;left:0;top:0;width:100%;font-size:0px;line-height:0px;}';//background:#000;filter:alpha(opacity=20);opacity:0.2;}';
+                var maskStyle = '.ks-popup-mask{position:absolute;left:0;top:0;width:100%;font-size:0px;line-height:0px;background:#000;filter:alpha(opacity=20);opacity:0.2;}';
                 DOM.addStyleSheet( maskStyle , 'KSPopupMask' );
             });
         }
+
+        //为popup添加iframe底
+        S.ready(function(S) {
+            self._popupRebase = createEl('iframe',"ks-popup-rebase",doc.body);
+            self._popupRebase.style.display = 'none';
+            var rebaseStyle = '.ks-popup-rebase{position:absolute;border:none;filter:alpha(opacity=0);}';
+            DOM.addStyleSheet( rebaseStyle , 'KSPopupRebase' );
+        });
 
         // 关闭按钮
         if( config.clsCloseBtn ){
@@ -67,12 +70,10 @@ KISSY.add("datagrid", function(S) {
 
         // 当触发事件为mouse时，给弹出层添加mouse事件处理句柄
         if( config.triggerType == 'mouse' ){
-            Event.on( popup , 'mouseenter', function( e ){
-                var el = this;
-                self._mouseenterHandler( el );
+            Event.on( popup , 'mouseover', function(){
+                clearTimeout( self._popupHideTimeId );
             } );
-            Event.on( popup , 'mouseleave', function( e ){
-                var el = this;
+            Event.on( popup , 'mouseleave', function(){
                 self._mouseleaveHandler();
             } );
         }
@@ -87,20 +88,32 @@ KISSY.add("datagrid", function(S) {
 		curTrigger:null,
         //显示弹出层
         show:function(){
-            var self = this , config = self.config , popup = self.popup ;
+            var self = this , config = self.config , popup = self.popup , popupZIndex = YDOM.getStyle(popup,'zIndex') ;
+            if(! popupZIndex > 0) popupZIndex = popup.style.zIndex = 10;
             if( config.triggerType = 'click' && config.hasMask ){
-                Popup.mask.style.zIndex = YDOM.getStyle(popup,'zIndex')-1;
+                Popup.mask.style.zIndex = popupZIndex-1;
                 Popup.showMask();
             }
             popup.style.display = 'block';
+            popup.style.left = popup.style.top = '-1000px';
             Popup.setPosition( popup , self.curTrigger , config.position , config.align , config.offset , config.autoFit );
+            var rebase = self._popupRebase;
+                rebase.style.display = '';
+                rebase.style.width = popup.offsetWidth + 'px';
+                rebase.style.height = popup.offsetHeight + 'px';
+                rebase.style.left = popup.style.left;
+                rebase.style.top = popup.style.top;
+                rebase.style.zIndex = popupZIndex - 1 ;
             if( config.animType == 'fade') opacityAnim( popup , 0 , 1 );
+            self.fire( 'afterShow' , { 'popup':popup , 'trigger':self.curTrigger });
         },
         //隐藏弹出层
         hide:function(){
             var self = this , config = self.config , popup = self.popup ;
             if( config.triggerType = 'click' && config.hasMask ) Popup.hideMask();
-            self.popup.style.display = 'none';            
+            popup.style.display = 'none';
+            if( self._popupRebase ) self._popupRebase.style.display = 'none';
+            self.fire( 'afterHide' , { 'popup':popup , 'trigger':self.curTrigger });
         },
         //设置指定元素为触点
         attachTrigger:function( el ){
@@ -110,19 +123,20 @@ KISSY.add("datagrid", function(S) {
             self.trigger.push( el );
             //注册事件
             if( config.triggerType == 'click' ){
-                Event.on( el , 'click' , function( e ){
+                Event.on( el , 'click' , function(e){
+                    e.preventDefault();
                     var el = this;
                     if( el.getAttribute( POPUP_STATE) == 'POPUP_STATE_DISABLE' ) return;
                     self._triggerClickHandler( el );
                 } );
             }else if( config.triggerType == 'mouse' ){
                 if( config.disableClick ) Event.on( el , 'click' , function(e){ e.preventDefault(); } );
-                Event.on( el , 'mouseenter', function( e ){
+                Event.on( el , 'mouseenter', function(){
                     var el = this;
                     if( el.getAttribute( POPUP_STATE) == 'POPUP_STATE_DISABLE' ) return;
                     self._mouseenterHandler( el );
                 } );
-                Event.on( el , 'mouseleave', function( e ){
+                Event.on( el , 'mouseleave', function(){
                     self._mouseleaveHandler();
                 } );
             }
@@ -168,7 +182,6 @@ KISSY.add("datagrid", function(S) {
         },
         /**
          * 鼠标离开触点或者弹出层时的事件处理器
-         * @param el 触点或弹出层
          */
         _mouseleaveHandler:function(){
             var self = this;
@@ -234,7 +247,7 @@ KISSY.add("datagrid", function(S) {
     Popup.hideMask = function(){
         var mask = Popup.mask ;
         if( mask ) mask.style.display = 'none';
-    }
+    };
 
     Popup.setPosition = function( el , refEl , position , align , offset , autoFit){
         var pos = YDOM.getXY( refEl );
@@ -262,16 +275,23 @@ KISSY.add("datagrid", function(S) {
         }
         //防止出界
         if(autoFit) {
-            if ( t-st+ph > dh ) t = dh-ph+st-2; /* 2px 偏差 */
+            if ( t-st+ph > dh ) t = dh-ph+st-2;
             if ( l-sl+pw > dw) l = dw-pw+sl-2;
             t = Math.max( t , 0 );
             l = Math.max( l , 0 );
         }
         el.style.top = t + 'px';
         el.style.left = l + 'px';
-    }
+    };
 
     S.Popup = Popup;
+
+    function createEl(tagName,className,parentNode){
+        var el = doc.createElement(tagName);
+        if(className) el.className = className;
+        if(parentNode) parentNode.appendChild(el);
+        return el;
+    }
 
     function getIndexOfArrEl( arr , el ){
         var idx = -1 ;

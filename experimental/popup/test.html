@@ -5,28 +5,87 @@
 <title>Popup Test</title>
 <link rel="stylesheet" href="../../build/cssreset/reset.css" />
 <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script src="../../build/packages/kissy-core-min.js"></script>
+<script src="../../build/packages/kissy-core.js"></script>
 <script src="popup.js"></script>
+<style type="text/css">
+body{padding:10px;line-height:1.5em;}
+h1 {margin:15px 0;color:#00859D;font-family:Constantia,serif;font-size:26px;}
+.box{margin-bottom:10px;}
+.box .hd{padding:6px 0;border-bottom:1px solid #ccc;}
+.box .hd h3{font-size:14px;}
+.box .bd{padding:10px;}
+.popup{padding:4px;border:1px solid #ccc;background:#fff;}
+select{margin-top:6px;}
+.trigger3{display:block;width:100px;height:100px;border:1px solid #ddd;}
+</style>
 </head>
 <body>
+<h1>KISSY Popup</h1>
 
 <!-- box START -->
-<div class="box box-normal">
+<div class="box">
     <div class="hd">
-        <h3>最简单的popup</h3>
+        <h3>1、使用默认配置的弹出层</h3>
     </div>
     <div class="bd">
-        <a href="#" class="trigger">点我</a>
-        <a href="#" class="trigger">点我也行</a>
-        <select><option>请选择</option></select>
-        <p id="popup" style="border:2px solid #d9e7f8;background:#fff;z-index:100;"><span style="color:#f30" class="close">点我关闭弹出框</span><br/>我是一个弹出框<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>我是一个弹出框</p>
+        <a href="#" id="J_Trigger1">点我就有惊喜哦</a>
+        <br/>
+        <select><option>我是一个select</option></select>
+        <div id="J_Popup1" class="popup popup1"><img height="70" width="190" src="http://img04.taobaocdn.com/tps/i4/T1PgtxXmRfXXXXXXXX-190-70.png"></div>
     </div>
 </div>
 <script type="text/javascript">
-(function(){
-    var S = KISSY;
-    var popup = new S.Popup('.trigger','#popup',{triggerType:'click',position:'right',align:'top',autoFit:true,hasMask:true,clsCloseBtn:'close',animType:'fade'});
-})();
+KISSY.ready(function(S) {
+     var popup = new S.Popup('#J_Trigger1','#J_Popup1');
+});
+</script>
+<p class="code-switch">显示源码</p>
+<!-- box END -->
+
+<!-- box START -->
+<div class="box">
+    <div class="hd">
+        <h3>2、鼠标hover触发弹出，且自定义弹出位置的</h3>
+    </div>
+    <div class="bd">
+        <a href="#" id="J_Trigger2">honey,hover me!</a>
+        <br/>
+        <select><option>我是一个select</option></select>
+        <div id="J_Popup2" class="popup popup2"><img src="http://img04.taobaocdn.com/tps/i4/T1z18xXh4sXXXXXXXX-190-70.gif"></div>
+    </div>
+</div>
+<script type="text/javascript">
+KISSY.ready(function(S) {
+     var popup = new S.Popup('#J_Trigger2','#J_Popup2',{triggerType:'mouse',position:'bottom',align:'center',animType:'fade',delay:1});
+});
+</script>
+<p class="code-switch">显示源码</p>
+<!-- box END -->
+
+<!-- box START -->
+<div class="box">
+    <div class="hd">
+        <h3>3、批量触点，且有自定义事件的</h3>
+    </div>
+    <div class="bd">
+        <a href="#" class="J_Trigger3 trigger3" data-detail="http://img03.taobaocdn.com/bao/uploaded/i3/T1nBtxXg4BXXaTgPA9_073840.jpg_310x310.jpg"><img height="100" width="100" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1nBtxXg4BXXaTgPA9_073840.jpg_100x100.jpg"></a>
+        <a href="#" class="J_Trigger3 trigger3" data-detail="http://img03.taobaocdn.com/bao/uploaded/i3/T1vOVxXlBwXXcZGuQ8_070309.jpg_310x310.jpg"><img height="100" width="100" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1vOVxXlBwXXcZGuQ8_070309.jpg_100x100.jpg"></a>
+        <a href="#" class="J_Trigger3 trigger3" data-detail="http://img03.taobaocdn.com/bao/uploaded/i3/T1eAdxXfXiXXbUx3ra_091205.jpg_310x310.jpg"><img height="100" width="100" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1eAdxXfXiXXbUx3ra_091205.jpg_100x100.jpg"></a>
+        <br/>
+        <select><option>我是一个select</option></select>
+        <div id="J_Popup3" class="popup popup3"></div>
+    </div>
+</div>
+<script type="text/javascript">
+KISSY.ready(function(S) {
+    /*var popup = new S.Popup('.J_Trigger3','#J_Popup3',{triggerType:'mouse',position:'top',align:'left',animType:'fade'});
+    function showDetail(o){
+        var trigger = o.trigger , popup = o.popup;
+        popup.innerHTML = '<img src="' + trigger.getAttribute('data-detail') + '">';
+    }
+    popup.on('afterShow',showDetail)
+    */
+});
 </script>
 <p class="code-switch">显示源码</p>
 <!-- box END -->
