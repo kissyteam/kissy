@@ -66,6 +66,9 @@ KISSY.add("datagrid", function(S) {
 			});
         }
 
+        /**
+         * 触点数组，即使只有一个触点也以数组的形式存在
+         */
         self.trigger = [] ;
         for( var i = 0 , len = trigger.length ; i < len ; i++ ){
             self.attachTrigger( trigger[i] );
@@ -81,13 +84,20 @@ KISSY.add("datagrid", function(S) {
             } );
         }
 
+        //self._popupHideTimeId = undefined;
+		//self._popupShowTimeId = undefined;
+        /**
+         * 前一次触点
+         */
+        //self.prevTrigger = undefined;
+        /**
+         * 当前触点
+         */
+		//self.curTrigger = undefined;
+
     }
 
     S.mix(Popup.prototype,{
-        //前一次触点
-        prevTrigger:null,
-        //当前触点
-		curTrigger:null,
         //显示弹出层
         show:function(){
             var self = this , config = self.config , popup = self.popup , popupZIndex = YDOM.getStyle(popup,'zIndex') ;
@@ -154,9 +164,7 @@ KISSY.add("datagrid", function(S) {
         disableTrigger:function( el ){
             this._setTrigger( el , POPUP_STATE_DISABLED );
         },
-        
-		_popupHideTimeId:null,
-		_popupShowTimeId:null,
+
         /**
          * 鼠标单击触点的事件处理器
          * @param el 触点
