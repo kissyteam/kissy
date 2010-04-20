@@ -1533,7 +1533,7 @@ KISSY.add('dom-class', function(S, undefined) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 527 Apr 6 22:39
+build: 573 Apr 19 21:31
 */
 /**
  * @module  event
@@ -2012,7 +2012,7 @@ KISSY.add('event-target', function(S, undefined) {
                 t = events[type];
 
             if(t && S.isFunction(t.handle)) {
-                t.handle(undefined, eventData);
+                return t.handle(undefined, eventData);
             }
         },
 

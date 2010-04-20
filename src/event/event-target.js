@@ -24,7 +24,7 @@ KISSY.add('event-target', function(S, undefined) {
                 t = events[type];
 
             if(t && S.isFunction(t.handle)) {
-                t.handle(undefined, eventData);
+                return t.handle(undefined, eventData);
             }
         },
 
