@@ -23,8 +23,11 @@
 
   refactor switchable - done
   swfstore - done
+  dom - 30%
   overlay - 10%
+  draggable - 10%
   docs - 5%
+  lazyload bug in iPad
 
   check and test all components
   pack editor 1.0.6
