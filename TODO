@@ -31,7 +31,8 @@
   调动三通，沉鱼，苏青，承玉和乔花，参与到 kissy 的相关工作中来
   review popup
   review calendar
-  lazyload bug in iPad
+  datalazyload bug in iPad
+  龙刚反馈图片延迟加载组件导致部分频道页面的轮播图片不正常
 
   check and test all components
   pack editor 1.0.6
@@ -49,6 +50,8 @@
   anim
   ajax
 
+  cssmodules 的规划和开发
+
   overlay ( 思考 positionable, stackable )
   基本底层组件思考：switchable, selectable( suggest 和 combobox 的下拉框)
 
@@ -59,6 +62,7 @@
   重构 datalazyload, 解决服饰频道导致轮播第5屏失效的问题
   datatable
   图片上传组件
+  编辑器二期
   完善 docs
 
   实现 TBra 其它组件
