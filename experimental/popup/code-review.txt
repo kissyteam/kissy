@@ -1,0 +1,20 @@
+
+ - add("datagrid")
+ - S.Event ,
+
+ - trigger 始终是 [], !trigger 应该判断 triggger.length
+ - getXY 已经考虑相对定位？ ready 里 appendChild 没必要？
+ - config || {} 没必要
+ - Popup.Config 还是 var defaultConfig ?
+ 
+ 
+ - createEl ? ready ?
+ - iframe shim. no S.ready! style 只需添加一次
+ 
+ - self.trigger = [] ?
+
+ - 建议 constructor 里只处理属性的初始化，事件相关的代码放到 _bindUI 里。或
+   者按照卫语句 -> config -> initPopup -> initMask -> initShim 来组织
+
+
+
