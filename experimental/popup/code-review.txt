@@ -16,5 +16,16 @@
  - 建议 constructor 里只处理属性的初始化，事件相关的代码放到 _bindUI 里。或
    者按照卫语句 -> config -> initPopup -> initMask -> initShim 来组织
 
+ - 默认配置：effect, closeBtnCls（有默认值会更好）, disableClick ?
+ - mix -> augment
+ - Popup 静态成员也可以用 S.mix(Popup, { })
+ - createMask ?
+ - Popup 上的方法，如果不需要 public，都可以直接变成私有变量
+ - getIndexArrEl 用 S.indexOf(el, arr)
+
+ - prototype 里，除了 show 和 hide，其它的都可以 protected
+ - attatchTrigger 建议：_bindTrigger
+ - setTrigger 里可以用 makeArray
+ - 事件的参数
 
 
