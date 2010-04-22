@@ -37,7 +37,7 @@ KISSY.add("popup", function(S) {
         // 初始化遮罩(所有popup公用一个遮罩即可)
         if( config.hasMask && config.triggerType == 'click' ) Mask.init();
 
-        //为ie6下的popup添加shim用以遮住select，但不特别处理ie6下的遮罩，以免select大量消失引起用户反感
+        //为ie6下的popup添加shim用以遮住select
         if(S.UA.ie===6) self._shim = new Shim();
 
         // 关闭按钮
@@ -328,6 +328,10 @@ KISSY.add("popup", function(S) {
  *       那么如果用户在popup.show的时候，如果动态修改了popup的内容，并且内容加载缓慢（比如加载了图片）
  *       当popup设置为上/左对齐或者自适应位置的时候
  *       就有可能导致popup的位置计算（因为拿不到popup准确的尺寸而）出现误差
+ *      -在ie6下，仅为popup设置了iframe的shim，而没有为透明遮罩设置iframe的shim
+ *       ie6下iframe的透明方式有2中
+ *       其中设置allowtransparent属性遮不住select
+ *       设置style.filter.opacity属性使得所有在iframe下的select都会消失，这种select消失带来的不适远大于不遮挡select
  * 
  */
 
