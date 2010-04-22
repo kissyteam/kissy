@@ -4,10 +4,12 @@
  * @depends     kissy-core, yui-core
  */
 
-KISSY.add("datagrid", function(S) {
+KISSY.add("popup", function(S) {
     var DOM = S.DOM, Event = S.Event , YDOM = YAHOO.util.Dom ,
         doc = document,
-        POPUP_STATE = 'data-ks-popup-state' , POPUP_STATE_ENABLED = 'enabled' , POPUP_STATE_DISABLED = 'disabled';
+        POPUP_STATE = 'data-ks-popup-state',
+        POPUP_STATE_ENABLED = 'enabled' ,
+        POPUP_STATE_DISABLED = 'disabled';
 
     /**
      * Popup
@@ -18,60 +20,35 @@ KISSY.add("datagrid", function(S) {
 
         trigger = S.query( trigger );
         popup = S.get( popup );
-        if( !trigger || !popup ) return;
+        if( trigger.length == 0 || !popup ) return;
 
         popup.style.position = 'absolute' ;
         popup.style.display = 'none' ;
+        self.popup = popup ;
         S.ready(function(S) {
             doc.body.appendChild( popup );
-        });
-        self.popup = popup ;
+        });         
 
-        config = config || {};
-        config = S.merge(Popup.Config, config);
+        config = S.merge(defaultConfig, config);
         self.config = config ;
         if( config.width != 'auto' ) popup.style.width = config.width+'px';
         if( config.height != 'auto' ) popup.style.height = config.height+'px';
 
-        // 遮罩
-        if( config.hasMask && !Popup.mask && config.triggerType == 'click' ){
-            S.ready(function(S) {
-                var mask = createEl('div',"ks-popup-mask",doc.body);
-                    mask.id = 'KSPopupMask' ;
-			        mask.style.display = "none";
-				Popup.mask=mask;
-                var maskStyle = '.ks-popup-mask{position:absolute;left:0;top:0;width:100%;font-size:0px;line-height:0px;background:#000;filter:alpha(opacity=20);opacity:0.2;}';
-                DOM.addStyleSheet( maskStyle , 'KSPopupMask' );
-            });
-        }
+        // 初始化遮罩(所有popup公用一个遮罩即可)
+        if( config.hasMask && config.triggerType == 'click' ) Mask.init();
 
-        //为ie6下的popup添加iframe底（用以遮住select，但不特别处理ie6下的mask，以免select消失引起用户反感）
-        if(S.UA.ie===6){
-            S.ready(function(S) {
-                self._popupRebase = createEl('iframe',"ks-popup-rebase",doc.body);
-                self._popupRebase.style.display = 'none';
-                var rebaseStyle = '.ks-popup-rebase{position:absolute;border:none;filter:alpha(opacity=0);}';
-                DOM.addStyleSheet( rebaseStyle , 'KSPopupRebase' );
-            });
-        }
+        //为ie6下的popup添加shim用以遮住select，但不特别处理ie6下的遮罩，以免select大量消失引起用户反感
+        if(S.UA.ie===6) self._shim = new Shim();
 
         // 关闭按钮
-        if( config.clsCloseBtn ){
-            Event.on( popup , 'click' , function(e){
-                e.preventDefault();
-                var t = e.target;
-                if( DOM.hasClass( t , config.clsCloseBtn ) ){
-                    self.hide();
-                } 				
-			});
-        }
+        self._bindCloseBtn();
 
-        /**
-         * 触点数组，即使只有一个触点也以数组的形式存在
-         */
+        //触点数组，即使只有一个触点也以数组的形式存在
         self.trigger = [] ;
+
+        //绑定触点，并添加到触点数组
         for( var i = 0 , len = trigger.length ; i < len ; i++ ){
-            self.attachTrigger( trigger[i] );
+            self.bindTrigger( trigger[i] );
         }
 
         // 当触发事件为mouse时，给弹出层添加mouse事件处理句柄
@@ -97,44 +74,32 @@ KISSY.add("datagrid", function(S) {
 
     }
 
-    S.mix(Popup.prototype,{
+    S.augment(Popup,{
         //显示弹出层
         show:function(){
-            var self = this , config = self.config , popup = self.popup , popupZIndex = YDOM.getStyle(popup,'zIndex') ;
+            var self = this , config = self.config , popup = self.popup ;
             if(self.curTrigger.getAttribute(POPUP_STATE) == POPUP_STATE_DISABLED) return;
-            if( !(popupZIndex > 1)) popupZIndex = popup.style.zIndex = 2;
-            if( config.triggerType = 'click' && config.hasMask ){
-                Popup.mask.style.zIndex = popupZIndex-1;
-                Popup.showMask();
-            }
+            if( !(YDOM.getStyle(popup,'zIndex') > 1)) popup.style.zIndex = 2;
+            if( config.hasMask && config.triggerType == 'click' ) Mask.show(popup);
             popup.style.display = 'block';
-            //必须把自定义事件放这里，如果放在后面，引起popup尺寸变化，后面的位置计算就会出错了
-            self.fire( 'afterShow' , { 'popup':popup , 'trigger':self.curTrigger });
-            Popup.setPosition( popup , self.curTrigger , config.position , config.align , config.offset , config.autoFit );
-            if(self._popupRebase){
-                var rebase = self._popupRebase;
-                    rebase.style.display = '';
-                    rebase.style.width = popup.offsetWidth + 'px';
-                    rebase.style.height = popup.offsetHeight + 'px';
-                    rebase.style.left = popup.style.left;
-                    rebase.style.top = popup.style.top;
-                    rebase.style.zIndex = popupZIndex - 1 ;
-            }
-            if( config.animType == 'fade') opacityAnim( popup , 0 , 1 );
+            self.fire( 'afterShow');
+            setPosition( popup , self.curTrigger , config.position , config.align , config.offset , config.autoFit );
+            if(self._shim) self._shim.show(popup);
+            if( config.effect == 'fade') opacityAnim( popup , 0 , 1 );
         },
         //隐藏弹出层
         hide:function(){
             var self = this , config = self.config , popup = self.popup ;
-            if( config.triggerType = 'click' && config.hasMask ) Popup.hideMask();
+            if(config.hasMask && config.triggerType == 'click') Mask.hide();            
             popup.style.display = 'none';
-            if(self._popupRebase) self._popupRebase.style.display = 'none';
-            self.fire( 'afterHide' , { 'popup':popup , 'trigger':self.curTrigger });
+            if(self._shim) self._shim.hide();
+            self.fire( 'afterHide');
         },
         //设置指定元素为触点
-        attachTrigger:function( el ){
+        bindTrigger:function( el ){
             var self = this , config = self.config ;
             self.enableTrigger( el );
-            if( getIndexOfArrEl( self.trigger , el ) >= 0 ) return;
+            if( S.indexOf(el, self.trigger) >= 0 ) return;
             self.trigger.push( el );
             //注册事件
             if( config.triggerType == 'click' ){
@@ -202,25 +167,36 @@ KISSY.add("datagrid", function(S) {
 		    self._popupHideTimeId = setTimeout( function(){ self.hide(); }, self.config.delay * 1000 );
         },
         _setTrigger:function( el , value ){
-            var self = this , triggerArr = [] ;
-            if( !el ){
-                triggerArr = self.trigger;
-            }else if( S.isArray(el) ){
-                triggerArr = el;
-            }else{
-                triggerArr.push( el );
-            }
+            var self = this ;
+            var triggerArr = S.makeArray(el || self.trigger) ;
             for( var i = 0 , len = triggerArr.length ; i < len ; i++ ){
                 triggerArr[i].setAttribute( POPUP_STATE , value );
             }
+        },
+        _bindCloseBtn:function(){
+            var self = this;
+            Event.on( self.popup , 'click' , function(e){
+                e.preventDefault();
+                var t = e.target;
+                if( DOM.hasClass( t , self.config.closeBtnCls ) ){
+                    self.hide();
+                }else{
+                    t = YDOM.getAncestorBy(t,function(el){
+                        return YDOM.getAncestorByClassName(el,self.config.closeBtnCls) && YDOM.isAncestor(self.popup,el);
+                    })
+                    if(t) self.hide();
+                }
+			});
         }
 
     });
 
-    S.mix( Popup.prototype , S.EventTarget );
+    S.augment( Popup , S.EventTarget );
+
+    S.Popup = Popup;
 
     //默认配置
-    Popup.Config = {
+    var defaultConfig = {
         // 触发类型
         triggerType: 'click', // or 'mouse'
         // 是否阻止触点的默认点击事件（只有当triggerType=='mouse'的时候该设定有效）
@@ -228,7 +204,7 @@ KISSY.add("datagrid", function(S) {
         // 触发延迟
         delay: 0.1, // 100ms
         // 显示或者隐藏弹出层时的动画效果
-        animType: null,// 'fade'
+        effect: null,// 'fade'
         // 弹出框宽度
         width: 'auto' ,
         // 弹出框高度
@@ -242,27 +218,55 @@ KISSY.add("datagrid", function(S) {
         // 是否有遮罩
         hasMask: false,
         // 弹出框内触发弹出框关闭的按钮的class
-        clsCloseBtn: null
+        closeBtnCls: 'KSCloseBtn'
     };
 
-    //遮罩对象
-    Popup.mask = null;
-
-    //显示遮罩
-    Popup.showMask = function(){
-        var mask = Popup.mask ;
-        if( !mask ) return ;
-        mask.style.display = 'block';
-        mask.style.height = YDOM.getDocumentHeight() + 'px';
+    //遮罩
+    var Mask={
+        domEl:null,
+        init:function(){
+            if(this.domEl) return;
+            var mask=DOM.create('<div id="KSPopupMask" class="ks-popup-mask" style="display:none;position:absolute;left:0;top:0;width:100%;font-size:0px;line-height:0px;background:#000;filter:alpha(opacity=20);opacity:0.2;"></div>');
+            this.domEl=mask;
+            S.ready(function(S) {
+                doc.body.appendChild(mask);
+            });
+        },
+        show:function(refEl){
+            var mask = this.domEl;
+            if(!mask) return;
+            mask.style.display = 'block';
+            mask.style.height = YDOM.getDocumentHeight() + 'px';
+            mask.style.zIndex = YDOM.getStyle(refEl,'zIndex')-2;
+        },
+        hide:function(){
+            var mask = this.domEl;
+            if(!mask) return;
+            mask.style.display='none';
+        }
     };
-    
-    //隐藏遮罩
-    Popup.hideMask = function(){
-        var mask = Popup.mask ;
-        if( mask ) mask.style.display = 'none';
-    };
 
-    Popup.setPosition = function( el , refEl , position , align , offset , autoFit){
+    //shim
+    function Shim(){
+        var self = this;
+        var shim=DOM.create('<iframe class="ks-popup-shim" style="display:none;position:absolute;border:none;filter:alpha(opacity=0);"></iframe>');
+        S.ready(function(S) {
+            doc.body.appendChild(shim);
+        });
+        self.show = function(refEl){
+            shim.style.display = 'block';
+            shim.style.width = refEl.offsetWidth + 'px';
+            shim.style.height = refEl.offsetHeight + 'px';
+            shim.style.left = refEl.style.left;
+            shim.style.top = refEl.style.top;
+            shim.style.zIndex = YDOM.getStyle(refEl,'zIndex')-1;
+        };
+        self.hide = function(){
+            shim.style.display = 'none';
+        };
+    }
+
+    function setPosition( el , refEl , position , align , offset , autoFit){
         var pos = YDOM.getXY( refEl );
         if ( S.isArray ( offset ) ) {
             pos[0] += parseInt( offset[0] , 10 );
@@ -297,26 +301,6 @@ KISSY.add("datagrid", function(S) {
         el.style.left = l + 'px';
     };
 
-    S.Popup = Popup;
-
-    function createEl(tagName,className,parentNode){
-        var el = doc.createElement(tagName);
-        if(className) el.className = className;
-        if(parentNode) parentNode.appendChild(el);
-        return el;
-    }
-
-    function getIndexOfArrEl( arr , el ){
-        var idx = -1 ;
-        for( var i = 0 , len = arr.length ; i < len ; i++ ){
-            if( arr[i] == el ){
-                idx = i;
-                break;
-            }
-        }
-        return idx;
-    }
-
     function setOpacity( el , opacity ){
             el.style.filter = 'alpha(opacity=' + opacity * 100 + ')';
             el.style.opacity = opacity ;
@@ -335,4 +319,15 @@ KISSY.add("datagrid", function(S) {
         } , 25 );
     }
 });
+
+/**
+ * Notes:
+ *
+ * 2010.04.22
+ *      -由于可以不给popup自定高度，而由popup中的内容自适应，并且开放自定义事件'afterShow'
+ *       那么如果用户在popup.show的时候，如果动态修改了popup的内容，并且内容加载缓慢（比如加载了图片）
+ *       当popup设置为上/左对齐或者自适应位置的时候
+ *       就有可能导致popup的位置计算（因为拿不到popup准确的尺寸而）出现误差
+ * 
+ */
 
