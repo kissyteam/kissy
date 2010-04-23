@@ -51,15 +51,8 @@ KISSY.add("popup", function(S) {
             self.bindTrigger( trigger[i] );
         }
 
-        // 当触发事件为mouse时，给弹出层添加mouse事件处理句柄
-        if( config.triggerType == 'mouse' ){
-            Event.on( popup , 'mouseenter', function(){
-                clearTimeout( self._popupHideTimeId );
-            } );
-            Event.on( popup , 'mouseleave', function(){
-                self._mouseleaveHandler();
-            } );
-        }
+        // 绑定弹出层，当triggerType为mouse时有效
+        self._bindPopup();
 
         //self._popupHideTimeId = undefined;
 		//self._popupShowTimeId = undefined;
@@ -107,17 +100,17 @@ KISSY.add("popup", function(S) {
                     e.preventDefault();
                     var el = this;
                     if( el.getAttribute( POPUP_STATE) == 'POPUP_STATE_DISABLE' ) return;
-                    self._triggerClickHandler( el );
+                    self._onClickTrigger( el );
                 } );
             }else if( config.triggerType == 'mouse' ){
                 if( config.disableClick ) Event.on( el , 'click' , function(e){ e.preventDefault(); } );
                 Event.on( el , 'mouseenter', function(){
                     var el = this;
                     if( el.getAttribute( POPUP_STATE) == 'POPUP_STATE_DISABLE' ) return;
-                    self._mouseenterHandler( el );
+                    self._onMouseEnter( el );
                 } );
                 Event.on( el , 'mouseleave', function(){
-                    self._mouseleaveHandler();
+                    self._onMouseLeave();
                 } );
             }
         },
@@ -130,11 +123,24 @@ KISSY.add("popup", function(S) {
             this._setTrigger( el , POPUP_STATE_DISABLED );
         },
 
+        //绑定popup的mouseenter和mouseleave事件
+        _bindPopup:function(){
+            var self = this;
+            if( self.config.triggerType == 'mouse' ){
+                Event.on( self.popup , 'mouseenter', function(){
+                    clearTimeout( self._popupHideTimeId );
+                } );
+                Event.on( self.popup , 'mouseleave', function(){
+                    self._onMouseLeave();
+                } );
+            }
+        },
+
         /**
          * 鼠标单击触点的事件处理器
          * @param el 触点
          */
-        _triggerClickHandler:function(el){
+        _onClickTrigger:function(el){
             var self = this ;
             self.prevTrigger = self.curTrigger ;
             self.curTrigger = el ;
@@ -148,7 +154,7 @@ KISSY.add("popup", function(S) {
          * 鼠标进入触点或者弹出层时的事件处理器
          * @param el 触点或弹出层
          */
-        _mouseenterHandler:function(el){
+        _onMouseEnter:function(el){
             var self = this ;
             clearTimeout( self._popupHideTimeId );
             // 如果mouseenter的对象是触点
@@ -161,7 +167,7 @@ KISSY.add("popup", function(S) {
         /**
          * 鼠标离开触点或者弹出层时的事件处理器
          */
-        _mouseleaveHandler:function(){
+        _onMouseLeave:function(){
             var self = this;
             clearTimeout( self._popupShowTimeId );
 		    self._popupHideTimeId = setTimeout( function(){ self.hide(); }, self.config.delay * 1000 );
