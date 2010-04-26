@@ -36,7 +36,7 @@
 <script src="slide.js"></script>
 <script src="carousel.js"></script>
 <script src="album.js"></script>
-
+<script src="accordion.js"></script>
 <style>
     body { padding: 20px 50px 50px; }
     h2 { margin: 30px 0 10px; font-size: 17px; }
@@ -473,12 +473,46 @@
 </script>
 <p class="code-switch">显示源码</p>
 
+<h2>Accordion - 手风琴</h2>
+<style>
+    #accordion1{width:300px;border:1px solid #ccc;}
+    #accordion1 .ks-switchable-trigger{padding:3px 10px;cursor:pointer;border-bottom:1px solid #ddd;background:#f3f3f3;}
+    #accordion1 .ks-switchable-trigger h3{display:inline-block;}
+    #accordion1 .ks-switchable-panel{height:150px;padding:3px 10px;}
+    #accordion1 .ks-icon{display:inline-block;width:12px;height:12px;overflow:hidden;margin-right:4px;font-size:0px;vertical-align:middle;background:url(assets/icon.png) no-repeat 0 0;}
+    #accordion1 .active .ks-icon{background-position:-20px 0;}
+</style>
+<div id="accordion1" class="section">
+    <div class="ks-switchable-trigger active"><i class="ks-icon"></i><h3>标题A</h3></div>
+    <div class="ks-switchable-panel">
+        1、支持鼠标滑过和点击触点两种方式<br/>
+        2、支持同时展开多个面板
+    </div>
+    <div class="ks-switchable-trigger"><i class="ks-icon"></i><h3>标题B</h3></div>
+    <div class="ks-switchable-panel" style="display:none;">内容B<br/>内容B<br/>内容B</div>
+    <div class="ks-switchable-trigger"><i class="ks-icon"></i><h3>标题C</h3></div>
+    <div class="ks-switchable-panel" style="display:none;">内容C<br/>内容C<br/>内容C<br/>内容C<br/>内容C</div>
+    <div class="ks-switchable-trigger"><i class="ks-icon"></i><h3>标题D</h3></div>
+    <div class="ks-switchable-panel" style="display:none;">内容D<br/>内容D<br/>内容D</div>
+</div>
+<script>
+    (function() {
+        var S = KISSY, Y = YAHOO.util, Dom = Y.Dom;
+        var myAccordion = new S.Accordion('#accordion1', {
+                markupType:1,
+                triggerType:"click",
+                multiPanelExpandable:false
+            });
+    })();
+</script>
+<p class="code-switch">显示源码</p>
+
 <h2>引用文件说明</h2>
 
 <p>需要引用以下文件：</p>
 
 <pre>
-    
+
     yui2/yahoo-dom-event/yahoo-dom-event.js
     yui2/animation/animation-min.js
 
