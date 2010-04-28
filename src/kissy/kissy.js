@@ -123,6 +123,12 @@
             // Set to true once it runs
             readyBound = true;
 
+            // Catch cases where ready() is called after the
+            // browser event has already occurred.
+            if (doc.readyState === 'complete') {
+                self._fireReady();
+            }
+
             // IE event model is used
             if (doc.attachEvent) {
                 if (win != win.top) { // iframe
