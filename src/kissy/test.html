@@ -151,6 +151,7 @@
         if(!pig.fly) test.fail();
     }
 
+    /*
     function test_weave(test) {
         function Bird(name) {
             this.name = name;
@@ -168,19 +169,17 @@
         var bird = new Bird('Bird');
         if(bird.getName() !== 'Hacked Bird') test.fail(bird.getName());
     }
+    */
 
     function test_app(test) {
         S.app('TB');
 
-        // check Env and Config
+        // check Env
         if(!TB.Env.mods) test.fail();
-        if(TB.Config.debug !== true) test.fail();
 
         // check independence
         TB.test = 2;
         if(S.test === 2) test.fail();
-        TB.Config.debug = false;
-        if(S.Config.debug !== true) test.fail();
 
         // test add modules
         TB.add('test-tb-mod', function() { });
@@ -225,7 +224,6 @@
 
         S.app('TB');
         TB.add('test-tb-mod', function() { });
-        TB.Config.debug = false;
         S.log(TB, 'dir');
 
         // clear
@@ -249,6 +247,11 @@
         });
 
         if(ret !== 15) test.fail();
+
+        // test context
+        S.each([1], function() {
+            if (this !== window) test.fail();
+        });
     }
 
     function test_trim(test) {

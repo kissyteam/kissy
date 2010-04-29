@@ -6,7 +6,8 @@
 
 KISSY.add('lang', function(S, undefined) {
 
-    var doc = document,
+    var win = window,
+        doc = document,
         AP = Array.prototype,
         forEach = AP.forEach,
         indexOf = AP.indexOf,
@@ -32,7 +33,7 @@ KISSY.add('lang', function(S, undefined) {
               function(arr, fn, context) {
                   var l = (arr && arr.length) || 0, i;
                   for (i = 0; i < l; ++i) {
-                      fn.call(context || this, arr[i], i, arr);
+                      fn.call(context || win, arr[i], i, arr);
                   }
                   return this;
               },
@@ -91,8 +92,8 @@ KISSY.add('lang', function(S, undefined) {
         /**
          * Search for a specified value index within an array.
          */
-        inArray: function(arr, elem) {
-            return S.indexOf(arr, elem) !== -1;
+        inArray: function(elem, arr) {
+            return S.indexOf(elem, arr) !== -1;
         },
 
         makeArray: function(obj) {
