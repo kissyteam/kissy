@@ -31,7 +31,7 @@
 <!-- box END -->
 </body>
 </html>
-<script src="/tmashup/chenyu/kissy-core-min.js"></script>
+<script src="../../build/packages/kissy-core-min.js"></script>
 <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script src="../../third-party/yui2/connection/connection.js"></script>
 <script src="datagrid.js"></script>
@@ -50,7 +50,7 @@ KISSY.ready(function(S) {
         sortBy:'sortby'        
     };
     datagrid.paginationDef = {
-        dataLimit:5,
+        dataLimit:20,
         pageNumLength:5,
         position:'bottom'
     };
@@ -59,12 +59,12 @@ KISSY.ready(function(S) {
         {label:'单一表头、复合字段',width:300,field:['developer','name'],parser:function(developer,name){return developer + '：' +name;}},
         {label:'复合表头',children:[
             {label:'所属站点',width:200,sortable:true,field:'site',parser:function(site){if(site=='CTU'){return '<span style="color:#f60;font-weight:bold;">'+site+'</span>';}else{return site;}}},
-            {label:'标识',children:[
+            { label:'标识',children:[
                 {label:'页面id（只有单字段才可排序）',width:400,field:'id',sortable:true},
                 {label:'组件id',width:200,field:'componentId',sortable:true}
             ]}
         ]},
-        {label:'自定义列',width:300,parser:function(){return '<a href="#">点此查看</a>';}},
+        {label:'自定义列',parser:function(){return '<a href="#">点此查看</a>';}},
         {xType:'COL_EXTRA',field:'id',parser:function(id){return '我是一个扩展列,页面id是：'+id;}}//,expand:true}
     ];
     /*datagrid.columnDef = [
@@ -79,7 +79,7 @@ KISSY.ready(function(S) {
         var row = o.row;
         var recordData = o.recordData;
         if( recordData.site && recordData.site == 'CTU'){
-            S.DOM.addClass( row , 'row-pink');
+            S.DOM.addClass( row , 'row-green');
         }
     }
     datagrid.on('renderRow',highlight);

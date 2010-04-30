@@ -36,9 +36,9 @@
 /*行*/
 .ks-datagrid .row td{border-top:1px dashed #ccc;}
 /*预置特殊行样式*/
-.ks-datagrid .row-pink td{background:#ffd5d8;}
-.ks-datagrid .row-yellow td{background:#fefbda;}
-.ks-datagrid .row-green td{background:#eff6de;}
+.ks-datagrid .row-red td{background:#ffccd0;}
+.ks-datagrid .row-yellow td{background:#fcf7c5;}
+.ks-datagrid .row-green td{background:#e7f2cd;}
 .ks-datagrid .row-gray td{background:#eee;}
 /*hover样式*/
 .ks-datagrid .row-hover td{background-color:#f6f6f6;}
@@ -70,7 +70,8 @@
 .ks-pagination .page-end,
 .ks-pagination .page-skip,
 .ks-pagination .page-prev,
-.ks-pagination .page-next{float:left;margin-left:3px;line-height:20px;}
+.ks-pagination .page-next,
+.ks-pagination .data-limit{float:left;margin-left:3px;line-height:20px;}
 .ks-pagination span{color:#808080;}
 .ks-pagination a{cursor:pointer;}
 .ks-pagination a:hover,
@@ -82,5 +83,6 @@
 .ks-pagination .page-prev,
 .ks-pagination .page-next{padding:0 7px;border:1px solid #ccc;background:#fff;}
 .ks-pagination .page-skip{margin-left:6px;color:#404040;}
-.ks-pagination .page-skip-button{height:22px;line-height:14px;}
+.ks-pagination .data-limit{margin-left:10px;padding-top:2px;*padding-top:1px;color:#404040;}
+.ks-pagination .page-skip-button{margin-left:2px;height:22px;line-height:14px;}
 .ks-pagination span.page{border:none;padding:1px 5px;font-weight:bold;color:#f30;background:none;}

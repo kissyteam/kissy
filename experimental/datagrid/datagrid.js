@@ -32,7 +32,7 @@
  * 其他
  * 1、数据源缓存（任何写操作时自动清空缓存）
  * 2、目前数据源挂在datagrid下，考虑以后datasource独立的兼容性
- * 3、添加自定义事件
+ * 3、添加自定义事件(完成)
  * 4、转yui方法到kissy（kissy已有方法完成）
  */
 
@@ -59,7 +59,8 @@ KISSY.add("datagrid", function(S) {
         //特殊icon的class
         CLS_ICON_EXPAND = 'icon-expand', CLS_ICON_CHECKBOX = 'icon-checkbox', CLS_ICON_RADIO = 'icon-radio',
         //自定义事件
-        EVENT_RENDER_ROW = 'renderRow' , EVENT_RENDER_ROW_EXTRA = 'renderRowExtra'
+        EVENT_RENDER_ROW = 'renderRow' , EVENT_RENDER_ROW_EXTRA = 'renderRowExtra', EVENT_GET_DATA = 'getData',
+        ROW_CLICK_SELECT_EXTRA_TAG = ' a img input button select option textarea label ';
         ;
 
     /**
@@ -216,33 +217,32 @@ KISSY.add("datagrid", function(S) {
                 success:function(o){
                     var self = this ;
                     self._dataPreProcessor(o);
+                    self.fire( EVENT_GET_DATA,{liveData:self._liveData} );
                     //如果请求成功，且返回数据正确
-                    if(self.requestResult){
+                    if(self._requestResult){
                         var listData = self._listData;
                         //如果无列定义且返回了列表数据，则根据返回数据自动生成列定义,并手工解析
-                        if( ! self.columnDef && listData.length > 0 ){
-                            if(  listData.length > 0 ){
-                                self.columnDef = [];
-                                for( var i in listData[0]){
-                                     self.columnDef.push({label:i,field:i});
-                                }
-                            }else{
-                                return;
+                        if( (!self.columnDef) && listData && listData.length > 0 ){
+                            self.columnDef = [];
+                            for( var i in listData[0]){
+                                 self.columnDef.push({label:i,field:i});
                             }
                         }
-                        //如果列定义被解析过
+                        //如果列定义没被解析过
                         if(!self._colDef){
                             //解析columnDef，成功后开始初始化界面
                             parseColumnDefToFlat( self.columnDef,null,parseColumnDefCallback,self);
-                        //如果列定义没被解析过
+                        //如果列定义被解析过
                         }else{
-                            self._renderTbody();
+                            if(listData) self._renderTbody();
                             self._endLoading();
                         }
                         //保存最近一次的查询参数
                         self._latestQueryData = postData;
                         //更新页码
                         if( self.paginationDef ) self._updatePagination();
+                    }else{
+                        self._endLoading();
                     }
                 },
                 failure:function(){
@@ -265,13 +265,9 @@ KISSY.add("datagrid", function(S) {
                 return;
             }
             var datasourceDef = self.datasourceDef ;
-            self.requestResult = self._liveData[datasourceDef.success];
-            if(self.requestResult){
+            self._requestResult = self._liveData[datasourceDef.success];
+            if(self._requestResult){
                 self._listData = self._liveData[datasourceDef.listData];
-            }else{
-                var info = self._liveData[datasourceDef.info];
-                alert('error：'+info);
-                self._endLoading();
             }
         },
 
@@ -528,7 +524,7 @@ KISSY.add("datagrid", function(S) {
         _activateRowSort:function(){
             var self = this , sortTrigger  = self._sortTrigger;
             Event.on(sortTrigger, 'click', function(e){
-                if( self._latestQueryData == '') return;
+                if( !self._listData || self._listData.length == 0 ) return;
                 var t = this;
                 var sortBy = t.getAttribute( ATTR_SORT_FIELD );;
                 var sortType;
@@ -558,10 +554,13 @@ KISSY.add("datagrid", function(S) {
         //激活列选择功能
         _activateRowSelect:function(){
             var self = this , selectType = self._colSelectDef;
+            function selectJudgement(t){
+                return  ( DOM.hasClass( t , CLS_ICON_CHECKBOX) || -ROW_CLICK_SELECT_EXTRA_TAG.indexOf( ' '+t.nodeName.toLowerCase()+' ' ) ) && YDOM.getAncestorByTagName( t , 'tbody' )
+            }
             if( selectType == COL_CHECKBOX ){
                 Event.on(self.tableEl,'click',function(e){
                     var t = e.target;
-                    if( (DOM.hasClass( t , CLS_ICON_CHECKBOX) || t.nodeName.toLowerCase() == 'td') && YDOM.getAncestorByTagName( t , 'tbody' ) ){
+                    if( selectJudgement(t) ){
                         var row = YDOM.getAncestorByClassName( t , CLS_ROW ) || YDOM.getAncestorByClassName( t , CLS_ROW_EXTRA );
                         self.toggleSelectRow( row.getAttribute( ATTR_ROW_IDX ));
                     }else if( t == self._selectAllTrigger){
@@ -577,7 +576,7 @@ KISSY.add("datagrid", function(S) {
                 var curSelectedIdx;
                 Event.on(self.tableEl,'click',function(e){
                     var t = e.target;
-                    if( (DOM.hasClass( t , CLS_ICON_RADIO) || t.nodeName.toLowerCase() == 'td') && YDOM.getAncestorByTagName( t , 'tbody' )){
+                    if( selectJudgement(t) ){
                         var row = YDOM.getAncestorByClassName( t , CLS_ROW ) || YDOM.getAncestorByClassName( t , CLS_ROW_EXTRA );
                         if( curSelectedIdx != undefined ) self.deselectRow(curSelectedIdx);
                         curSelectedIdx = row.getAttribute( ATTR_ROW_IDX );
@@ -643,9 +642,11 @@ KISSY.add("datagrid", function(S) {
             self._pageNextDisabledEl = createEl( 'span' , 'page-next' , '下一页' , wrapperEl);
             self._pageEndEl = createEl( 'a' , 'page-end' , '末页' , wrapperEl);
             self._pageEndDisabledEl = createEl( 'span' , 'page-end' , '末页' , wrapperEl);
-            var pageSkipEl = createEl( 'span' , 'page-skip' , '到第<input type="text" size="3" class="jump-to">页 <button class="page-skip-button" type="button">确定</button>' , wrapperEl);
-            self._pageSkipInputEl = pageSkipEl.getElementsByTagName('input')[0];
-            self._pageSkipBtnEl = pageSkipEl.getElementsByTagName('button')[0];
+            self._pageSkipEl = createEl( 'span' , 'page-skip' , '到第<input type="text" size="3" class="jump-to">页 <button class="page-skip-button" type="button">确定</button>' , wrapperEl);
+            self._pageSkipInputEl = self._pageSkipEl.getElementsByTagName('input')[0];
+            self._pageSkipBtnEl = self._pageSkipEl.getElementsByTagName('button')[0];
+            self._dataLimitEl = createEl( 'span' , 'data-limit' , '每页<select><option value=""></option><option value="20">20</option><option value="40">40</option><option value="60">60</option><option value="80">80</option></select>条' , wrapperEl);
+            self._dataLimitSetEl = self._dataLimitEl.getElementsByTagName('select')[0];
 
             if(self.paginationDef.position == 'bottom'){
                 YDOM.insertAfter( paginationEl, self.tableEl );
@@ -653,7 +654,7 @@ KISSY.add("datagrid", function(S) {
                 YDOM.insertBefore( paginationEl, self.tableEl );
             }
             self._paginationEl = paginationEl;
-
+            
             function pageTurning(e){
                 var t = this ;
                 var queryData = self._latestQueryData,
@@ -680,9 +681,32 @@ KISSY.add("datagrid", function(S) {
                 var postData = setQueryParamValue(queryData,datasourceDef.dataStart,dataStart);
                 self.update(postData);
             }
-            var pageTurningTrigger = self._pageNumElArr.concat(self._pageStartEl , self._pagePrevEl , self._pageNextEl , self._pageEndEl , self._pageSkipBtnEl ) ;
+            var pageTurningTrigger = self._pageNumElArr.concat(self._pageStartEl , self._pagePrevEl , self._pageNextEl , self._pageEndEl ) ;
             hide.apply(window,pageTurningTrigger);
-            Event.on (pageTurningTrigger , 'click' , pageTurning );
+            hide(self._pageSkipEl,self._dataLimitEl);
+            Event.on( pageTurningTrigger , 'click' , pageTurning );
+            Event.on( self._pageSkipBtnEl , 'click' , pageTurning );
+            Event.on( self._dataLimitSetEl , 'change' , function(e){
+                if( !self._listData ) return;
+                var t = this;
+                if( !t.options[0].value){
+                    var curLimit = self.paginationDef.dataLimit;
+                    var curLimitInSelect = false ;
+                    for( var i = 0 , len = t.options.length ; i < len ; i++ ){
+                        if( t.options[i].value == curLimit ){
+                            curLimitInSelect = true;
+                            break;
+                        }
+                    }
+                    if( curLimitInSelect ){
+                        t.removeChild( t.options[0] );
+                    }else{
+                        t.options[0].value = t.options[0].innerHTML = curLimit;
+                    }
+                }
+                self.paginationDef.dataLimit = t.value;
+                self.update( self._latestQueryData );
+            } );
         },
         //更新翻页
         _updatePagination:function(){
@@ -694,7 +718,8 @@ KISSY.add("datagrid", function(S) {
                 pageNumLength = self.paginationDef.pageNumLength,
                 totalPageNumLength = Math.ceil(dataAmount/dataLimit);
 
-            show(self._pageSkipBtnEl);
+            show(self._pageSkipEl);
+            show(self._dataLimitEl);
             //显示记录总条数
             self._pageInfoEl.innerHTML = '共'+ totalPageNumLength +'页';
             //判定上一页状态
@@ -893,13 +918,7 @@ KISSY.add("datagrid", function(S) {
         },
         deleteRecord:function(){
 
-        }
-
-        /**************************************************************************************************************
-         * @自定义事件
-         *************************************************************************************************************/
-
-        
+        }       
 
 
     });
@@ -907,7 +926,7 @@ KISSY.add("datagrid", function(S) {
     S.mix(DataGrid.prototype, S.EventTarget);
 
     /******************************************************************************************************************
-     * @默认定义
+     * @默认设置
      *****************************************************************************************************************/
 
     //数据源默认定义
