@@ -20,28 +20,80 @@ KISSY.add("coupleselect", function(S) {
         var self=this;
         self.container = container;
         config = S.merge(defaultConfig, config);
-        self.sourceBox = S.get('.'+config.sourceBoxCls);
-        self.targetBox = S.get('.'+config.targetBoxCls);
-        self.items = S.query('.'+config.itemCls);
+        self.config = config;
 
-        /**
-         * 当前触点
-         */
-		//self.curTrigger = undefined;
+        // 源容器
+        self.sourceBox = S.get('.'+config.sourceBoxCls,container);
+        // 目标容器
+        self.targetBox = S.get('.'+config.targetBoxCls,container);
+        // 绑定item本身相关鼠标操作
+        self._bindItems();
+        // 绑定添加触点
+        self.addTrigger = S.get('.'+config.addTriggerCls,container);
+        if(self.addTrigger) self._bindAddTrigger();
+        // 绑定移除触点
+        self.removeTrigger = S.get('.'+config.removeTriggerCls,container);
+        if(self.removeTrigger) self._bindRemoveTrigger();
+        // 绑定移动到顶部触点
+        self.moveTopTrigger = S.get('.'+config.moveTopTriggerCls,container);
+        if(self.moveTopTrigger) self._bindMoveTopTrigger();
+        // 绑定上移一个触点
+        self.moveUpTrigger = S.get('.'+config.moveUpTriggerCls,container);
+        if(self.moveUpTrigger) self._bindMoveUpTrigger();
+        // 绑定下移一个触点
+        self.moveDownTrigger = S.get('.'+config.moveDownTriggerCls,container);
+        if(self.moveDownTrigger) self._bindMoveDownTrigger();
+        // 绑定移动到底部触点
+        self.moveBottomTrigger = S.get('.'+config.moveBottomTriggerCls,container);
+        if(self.moveBottomTrigger) self._bindMoveBottomTrigger();
 
     }
 
     S.augment(CoupleSelect,{
-        // item鼠标操作相关
-        _bindItem:function(){},
-        _onClickItem:function(e){},
-        _onDbclickItem:function(e){},
+        // item本身操作相关
+        _bindItems:function(){
+            var self = this,config = self.config;
+            //对item的单击操作
+            Event.on(self.container,'click',function(e){
+                var t = this;
+                var item = getItem(t,config.itemCls);
+                if(item) self._onClickItem(item);
+            });
+            //对item的双击操作
+            if(config.enableMoveByDbclick){
+                Event.on(self.container,'dblclick',function(e){
+                    var t = this;
+                    var item = getItem(t,config.itemCls);
+                    if(item) self._onDbclickItem(item);
+                });
+            }
+        },
+        _onClickItem:function(item){
+            var self = this,config = self.config;
+            if(DOM.hasClass(item,config.itemSelectedCls)){
+                DOM.removeClass(item,config.itemSelectedCls);
+            }else{
+                self._clearSelectedStatus(YDOM.isAncestor(self.sourceBox,item) ? self.targetBox:self.sourceBox);
+                DOM.addClass(item,config.itemSelectedCls);                
+            }            
+        },
+        _onDbclickItem:function(item){
+
+        },
+        _clearSelectedStatus:function(box){
+            var self = this,sourceBox = self.sourceBox,targetBox = self.targetBox;
+            if(box == targetBox){
+
+            }else if(box==sourceBox){
+
+            }
+        },
         // 添加item相关
-        _bindAddItemTrigger:function(){},
+        _bindAddTrigger:function(){},
         _addItems:function(){},
         _addItem:function(){},
         // 移除item相关
-        _bindRemoveItemTrigger:function(){},
+        _bindRemoveTrigger:function(){},
         _removeItems :function(){},
         _removeItem:function(){},
         // 移动item相关
@@ -49,13 +101,16 @@ KISSY.add("coupleselect", function(S) {
         _bindMoveUpTrigger:function(){},
         _bindMoveDownTrigger:function(){},                                                           
         _bindMoveBottomTrigger:function(){},
-        _moveItemTop:function(e){},
-        _moveItemUp:function(e){},
-        _moveItemDown:function(e){},
-        _moveItemBotton:function(e){},
-        _moveItem:function(){},
+        _moveItemTop:function(){},
+        _moveItemUp:function(){},
+        _moveItemDown:function(){},
+        _moveItemBotton:function(){},
+        _moveItem:function(item,direct,step){
+                
+        },
         // 获取item相关
-        getItems:function(){}
+        getItems:function(){},
+        getSelectedItems:function(){}
         
     });
 
@@ -66,26 +121,29 @@ KISSY.add("coupleselect", function(S) {
     //默认配置                                                                                                                       -
     var defaultConfig = {
 
+        enableMultiSelect:true,
+        enableReaddItem:true,
+        enableMoveByDbclick:true,
+
+        // 建议以下配置不要修改，使用默认即可
+
         sourceBoxCls:KS_CS_PREFIX+'source-box',
         targetBoxCls:KS_CS_PREFIX+'target-box',
 
         itemCls:KS_CS_PREFIX+'item',
-        itemSelectedCls:KS_CS_PREFIX+'selected',
+        itemSelectedCls:KS_CS_PREFIX+'item-selected',
 
-        enableMultiSelect:false,
-        enableReaddItem:true,
-        enableMoveByDbclick:true,
+        addTriggerCls:KS_CS_PREFIX+'add',
+        removeTriggerCls:KS_CS_PREFIX+'remove',
 
-        // 建议一下配置不要修改，使用默认即可
-        addItemTriggerCls:KS_CS_PREFIX+'add',
-        removeItemTriggerCls:KS_CS_PREFIX+'remove',
-
-        moveItemTopTriggerCls:KS_CS_PREFIX+'move-top',
-        moveItemUpTriggerCls:KS_CS_PREFIX+'move-up',
-        moveItemDownTriggerCls:KS_CS_PREFIX+'move-down',
-        moveItemBottomTriggerCls:KS_CS_PREFIX+'move-bottom'
+        moveTopTriggerCls:KS_CS_PREFIX+'move-top',
+        moveUpTriggerCls:KS_CS_PREFIX+'move-up',
+        moveDownTriggerCls:KS_CS_PREFIX+'move-down',
+        moveBottomTriggerCls:KS_CS_PREFIX+'move-bottom'
         
     };
+
+    function getItem(t,className){return DOM.hasClass(t, className) ? t : YDOM.getAncestorByClassName(t, className)};
 
 });
 
