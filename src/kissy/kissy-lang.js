@@ -1,46 +1,77 @@
 /**
  * @module  lang
  * @author  lifesinger@gmail.com
- * @depends kissy
  */
-
 KISSY.add('lang', function(S, undefined) {
 
-    var win = window,
-        doc = document,
+    var win = window, doc = document,
         AP = Array.prototype,
-        forEach = AP.forEach,
         indexOf = AP.indexOf,
-        slice = AP.slice,
+        toString = Object.prototype.toString,
         REG_TRIM = /^\s+|\s+$/g,
-        REG_ARR_KEY = /^(\w+)\[\]$/,
-        toString = Object.prototype.toString;
+        REG_ARR_KEY = /^(\w+)\[\]$/;
 
     S.mix(S, {
 
         /**
-         * Executes the supplied function on each item in the array.
-         * @param {array} arr the array to iterate
-         * @param {function} fn the function to execute on each item. The function
-         * receives three arguments: the value, the index, the full array.
-         * @param {object} context optional context object
+         * Determines whether or not the provided object is a boolean.
          */
-        each: forEach ?
-              function (arr, fn, context) {
-                  forEach.call(arr, fn, context);
-                  return this;
-              } :
-              function(arr, fn, context) {
-                  var l = (arr && arr.length) || 0, i;
-                  for (i = 0; i < l; ++i) {
-                      fn.call(context || win, arr[i], i, arr);
-                  }
-                  return this;
-              },
+        isBoolean: function(o) {
+            return typeof o === 'boolean';
+        },
 
         /**
-         * Remove the whitespace from the beginning and end of a string.
-         * @param {string} str
+         * Determines whether or not the provided object is a string.
+         */
+        isString: function(o) {
+            return typeof o === 'string';
+        },
+
+        /**
+         * Determines whether or not the provided item is a legal number.
+         * NOTICE: Infinity and NaN return false.
+         */
+        isNumber: function(o) {
+            return typeof o === 'number' && isFinite(o);
+        },
+
+        /**
+         * Checks to see if an object is a plain object (created using "{}" or "new Object").
+         */
+        isPlainObject: function(o) {
+            // Make sure that DOM nodes and window objects don't pass through.
+            return o && toString.call(o) === '[object Object]' && !o['nodeType'] && !o['setInterval'];
+        },
+
+        /**
+         * Checks to see if an object is empty.
+         */
+        isEmptyObject: function(o) {
+            for (var p in o) {
+                return false;
+            }
+            return true;
+        },
+
+        /**
+         * Determines whether or not the provided object is a function.
+         * NOTICE: DOM methods and functions like alert aren't supported. They return false on IE.
+         */
+        isFunction: function(o) {
+            return typeof o === 'function';
+            // 对于 function 来说，直接用 typeof 的效果和 toString 一致
+            //return toString.call(o) === '[object Function]';
+        },
+
+        /**
+         * Determines whether or not the provided object is an array.
+         */
+        isArray: function(o) {
+            return toString.call(o) === '[object Array]';
+        },
+
+        /**
+         * Removes the whitespace from the beginning and end of a string.
          */
         trim: String.prototype.trim ?
               function(str) {
@@ -51,26 +82,17 @@ KISSY.add('lang', function(S, undefined) {
               },
 
         /**
-         * Check to see if an object is a plain object (created using "{}" or "new Object").
+         * Executes the supplied function on each item in the array.
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item. The function
+         *                      receives three arguments: the value, the index, the full array.
+         * @param context {Object} (opt)
          */
-        isPlainObject: function(obj) {
-            return obj && toString.call(obj) === '[object Object]' && !obj.nodeType && !obj.setInterval;
-        },
-
-        isEmptyObject: function(obj) {
-            for (var p in obj) {
-                return false;
+        each: function(arr, fn, context) {
+            var l = (arr && arr.length) || 0, i = 0;
+            for (; i < l; ++i) {
+                fn.call(context || win, arr[i], i, arr);
             }
-            return true;
-        },
-
-        // NOTE: DOM methods and functions like alert aren't supported. They return false on IE.
-        isFunction: function(obj) {
-            return toString.call(obj) === '[object Function]';
-        },
-
-        isArray: function(obj) {
-            return toString.call(obj) === '[object Array]';
         },
 
         /**
@@ -96,42 +118,44 @@ KISSY.add('lang', function(S, undefined) {
             return S.indexOf(elem, arr) !== -1;
         },
 
-        makeArray: function(obj) {
-            if (obj === null || obj === undefined) return [];
-            if (S.isArray(obj)) return obj;
+        /**
+         * Converts object to a true array.
+         */
+        makeArray: function(o) {
+            if (o === null || o === undefined) return [];
+            if (S.isArray(o)) return o;
 
             // The strings and functions also have 'length'
-            if (typeof obj.length !== 'number' || typeof obj === 'string' || S.isFunction(obj)) {
-                return [obj];
+            if (typeof o.length !== 'number' || typeof o === 'string' || S.isFunction(o)) {
+                return [o];
             }
 
             // ie 不支持用 slice 转换 NodeList, 降级到普通方法
-            if (obj.item && S.UA.ie) {
-                var ret = [], i = 0, len = obj.length;
+            if (o.item && S.UA.ie) {
+                var ret = [], i = 0, len = o.length;
                 for (; i < len; ++i) {
-                    ret[i] = obj[i];
+                    ret[i] = o[i];
                 }
                 return ret;
             }
 
             // array-like
-            return slice.call(obj);
-
+            return AP.slice.call(o);
         },
 
         /**
          * Creates a serialized string of an array or object.
-         * <pre>
-         *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-         *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
-         *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
-         *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-         *     {foo: true, bar: 2}    // -> 'foo=true&bar=2'
-         * </pre>
+         * <code>
+         * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
+         * {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
+         * </code>
          */
         param: function(o) {
-            // 非 object, 直接返回空
-            if (typeof o !== 'object') return '';
+            // 非 plain object, 直接返回空
+            if (!S.isPlainObject(o)) return '';
 
             var buf = [], key, val;
             for (key in o) {
@@ -151,22 +175,21 @@ KISSY.add('lang', function(S, undefined) {
                 }
                 // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
             }
-
             buf.pop();
             return encodeURI(buf.join(''));
         },
 
         /**
          * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-         * <pre>
+         * <code>
          * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
          * 'section=blog&tag[]=js&tag[]=doc' // -> {section: 'blog', tag: ['js', 'doc']}
          * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
          * 'id=45&raw'        // -> {id: '45', raw: ''}
-         * </pre>
+         * </code>
          */
         unparam: function(str, sep) {
-            if (typeof str !== 'string' || (str = decodeURI(S.trim(str))).length === 0) return { };
+            if (typeof str !== 'string' || (str = decodeURI(S.trim(str))).length === 0) return {};
 
             var ret = {},
                 pairs = str.split(sep || '&'),
@@ -192,19 +215,19 @@ KISSY.add('lang', function(S, undefined) {
          * Executes the supplied function in the context of the supplied
          * object 'when' milliseconds later. Executes the function a
          * single time unless periodic is set to true.
-         * @param when {int} the number of milliseconds to wait until the fn
-         * is executed.
-         * @param o the context object.
-         * @param fn {Function|String} the function to execute or the name of
-         * the method in the 'o' object to execute.
-         * @param data [Array] data that is provided to the function. This accepts
-         * either a single item or an array. If an array is provided, the
-         * function is executed with one parameter for each array item. If
+         * @param when {int} The number of milliseconds to wait until the fn
+         *                   is executed.
+         * @param o The context object.
+         * @param fn {Function|String} The function to execute or the name of
+         *                             the method in the 'o' object to execute.
+         * @param data [Array] data That is provided to the function. This accepts
+         *                          either a single item or an array. If an array is provided, the
+         *                          function is executed with one parameter for each array item. If
          * you need to pass a single array parameter, it needs to be wrapped in
          * an array [myarray].
          * @param periodic {boolean} if true, executes continuously at supplied
          * interval until canceled.
-         * @return {object} a timer object. Call the cancel() method on this object to
+         * @return {Object} a timer object. Call the cancel() method on this object to
          * stop the timer.
          */
         later: function(fn, when, periodic, o, data) {
@@ -260,16 +283,23 @@ KISSY.add('lang', function(S, undefined) {
                 head.insertBefore(script, head.firstChild);
                 head.removeChild(script);
             }
+        },
+
+        /**
+         * Gets current time stamp.
+         */
+        now: function() {
+            return new Date().getTime();
         }
     });
 
     function isValidParamValue(val) {
         var t = typeof val;
         // val 为 null, undefined, number, string, boolean 时，返回 true
-        return val === null | (t !== 'object' && t !== 'function');
+        return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // 可以通过在 url 上加 ?ks-debug 来开启 debug
+    // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
     if('ks-debug' in S.unparam(location.hash)){
         S.Config.debug = true;
     }

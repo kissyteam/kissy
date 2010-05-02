@@ -163,7 +163,7 @@
             cls = "";
 
         if (isStandardEl.checked) {
-            cls = name;
+            cls = ".grid-" + name;
             name = name.replace(/\d+/g, function(n) {
                 n = parseInt(n, 10) * 40;
                 return n ? n - g : 0;

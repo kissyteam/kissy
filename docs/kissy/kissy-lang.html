@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>kissy-lang &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+<div id="page" class="w866">
+    <div id="header">
+        <a class="logo" href="../"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+        <p class="rel-nav">
+            <a href="../../src/kissy/kissy-lang.js"><code>kissy-lang.js</code></a>
+        </p>
+    </div>
+    <div id="content" class="layout grid-s232m0">
+        <div class="col-main">
+            <div class="main-wrap">
+
+                <div class="section">
+                    <h3 id="methods">Methods</h3>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_isBoolean">isBoolean</a>
+                            <code>Boolean <em>isBoolean</em> ( o )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>判断是否布尔值。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_isString">isString</a>
+                            <code>Boolean <em>isString</em> ( o )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>判断是否字符串。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_isNumber">isNumber</a>
+                            <code>Boolean <em>isNumber</em> ( o )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>判断是否有效数值。</p>
+                            <p class="tips">Infinity 和 NaN 返回 false.</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_isPlainObject">isPlainObject</a>
+                            <code>Boolean <em>isPlainObject</em> ( o )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>判断是否普通对象（用 { } 或 new Object 创建的对象）。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_isEmptyObject">isEmptyObject</a>
+                            <code>Boolean <em>isEmptyObject</em> ( o )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>判断是否空对象（没有任何可遍历的属性）。</p>
+<pre class="example-code"><code>
+var S = KISSY;
+
+S.isEmptyObject({}); // => true
+S.isEmptyObject([]); // => true
+S.isEmptyObject({ a: 'a' }); // => false
+</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_isFunction">isFunction</a>
+                            <code>Boolean <em>isFunction</em> ( o )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>判断是否函数。</p>
+                            <p class="notice">IE 中，DOM 方法和 window 对象的部分方法比如 alert, 返回 false.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="member method">
+                        <h4>
+                            <a name="method_isArray">isArray</a>
+                            <code>Boolean <em>isArray</em> ( o )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>判断是否数组。</p>
+                            <p class="tips">arguments 和 NodeList 不是数组，返回 false.</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_trim">trim</a>
+                            <code>String <em>trim</em> ( str )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>去除字符串两端的空白字符。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_each">each</a>
+                            <code>void <em>each</em> ( arr, fn, context )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>遍历数组中的每一项，执行指定方法。</p>
+                            <dl class="parameters">
+                                <dt>Parameters:</dt>
+                                <dd>
+                                    <code class="param-name">arr</code>
+                                    <code class="param-type">&lt;Array&gt;</code>
+                                    需要遍历的数组。
+                                </dd>
+                                <dd>
+                                    <code class="param-name">fn</code>
+                                    <code class="param-type">&lt;Function&gt;</code>
+                                    执行函数。执行时，接收 3 个参数：当前项、当前 index, 数组。
+                                </dd>
+                                <dd>
+                                    <code class="param-name">context</code>
+                                    <code class="param-type">&lt;Object&gt;</code>
+                                    环境对象。
+                                </dd>
+                            </dl>
+<pre class="example-code"><code>
+var S = KISSY,
+    arr = [1, 2, 3, 4, 5],
+    sum = 0;
+
+S.each(arr, function(el, index) {
+    sum += el;
+});
+S.log(sum); // => 15
+</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_indexOf">indexOf</a>
+                            <code>Number <em>indexOf</em> ( elem, arr )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>返回元素 elem 在数组 arr 中的序号。找不到时返回 -1.</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_inArray">inArray</a>
+                            <code>Boolean <em>inArray</em> ( elem, arr )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>判断元素 elem 是否在数组 arr 中。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_makeArray">makeArray</a>
+                            <code>Array <em>makeArray</em> ( o )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>将对象 o 转换为数组。</p>
+                            <p class="tips">可以利用此方法将 arguments, NodeList 等 array-like 对象转换为真实数组。</p>
+<pre class="example-code"><code>
+var S = KISSY;
+
+S.makeArray('str'); // => ['str']
+S.makeArray(S.query('.div')); // => 由所有 div 元素组成的数组
+S.makeArray(null); // => []
+</code></pre>
+                            <p>makeArray 方法永远返回数组。</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="sub-wrap">
+                <div class="loc">
+                    <a href="../">home</a> &rsaquo;
+                    <a href="index.html">kissy</a> &rsaquo;
+                    kissy-lang :
+                </div>
+                <div class="toc">
+                    <h3>Methods</h3>
+                    <ul>
+                        <li><a href="#method_isBoolean">isBoolean</a></li>
+                        <li><a href="#method_isString">isString</a></li>
+                        <li><a href="#method_isNumber">isNumber</a></li>
+                        <li><a href="#method_isPlainObject">isPlainObject</a></li>
+                        <li><a href="#method_isEmptyObject">isEmptyObject</a></li>
+                        <li><a href="#method_isFunction">isFunction</a></li>
+                        <li><a href="#method_isArray">isArray</a></li>
+                        <li><a href="#method_trim">trim</a></li>
+                        <li><a href="#method_each">each</a></li>
+                        <li><a href="#method_indexOf">indexOf</a></li>
+                        <li><a href="#method_inArray">inArray</a></li>
+                        <li><a href="#method_makeArray">makeArray</a></li>
+                        <li><a href="#method_param">param</a></li>
+                        <li><a href="#method_unparam">unparam</a></li>
+                        <li><a href="#method_later">later</a></li>
+                        <li><a href="#method_now">now</a></li>
+                        <li><a href="#method_globalEval">globalEval</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+    </div>
+</div>
+</body>
+</html>

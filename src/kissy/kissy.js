@@ -11,7 +11,7 @@
 
     var doc = win.document,
 
-        // Copies all the properties of s to r.
+        // Copies all the properties of s to r
         mix = function(r, s, ov, wl) {
             if (!s || !r) return r;
             if (ov === undefined) ov = true;
@@ -49,7 +49,7 @@
 
         /**
          * The version of the library.
-         * @type {string}
+         * @type {String}
          */
         version: '@VERSION@',
 
@@ -58,18 +58,17 @@
          * @private
          */
         _init: function() {
-            this.Env = {
-                mods: {}
-            };
+            // Env 对象目前仅用于内部，为模块动态加载预留接口
+            this.Env = { mods: {} };
         },
 
         /**
          * Registers a module.
-         * @param {string} name module name
-         * @param {function} fn entry point into the module that is used to bind module to KISSY
-         * <pre>
+         * @param name {String} module name
+         * @param fn {Function} entry point into the module that is used to bind module to KISSY
+         * <code>
          * KISSY.add('module-name', function(S){ });
-         * </pre>
+         * </code>
          * @return {KISSY}
          */
         add: function(name, fn) {
@@ -90,10 +89,10 @@
 
         /**
          * Specify a function to execute when the DOM is fully loaded.
-         * @param {function} fn A function to execute after the DOM is ready
-         * <pre>
+         * @param fn {Function} A function to execute after the DOM is ready
+         * <code>
          * KISSY.ready(function(S){ });
-         * </pre>
+         * </code>
          * @return {KISSY}
          */
         ready: function(fn) {
@@ -118,29 +117,38 @@
         _bindReady: function() {
             var self = this,
                 doScroll = doc.documentElement.doScroll,
-                eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded';
+                eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
+                COMPLETE = 'complete';
 
             // Set to true once it runs
             readyBound = true;
 
             // Catch cases where ready() is called after the
             // browser event has already occurred.
-            if (doc.readyState === 'complete') {
-                self._fireReady();
+            if (doc.readyState === COMPLETE) {
+                return self._fireReady();
             }
 
+            // w3c mode
+            if (doc.addEventListener) {
+                function domReady() {
+                    doc.removeEventListener(eventType, domReady, false);
+                    self._fireReady();
+                }
+                doc.addEventListener(eventType, domReady, false);
+            }
             // IE event model is used
-            if (doc.attachEvent) {
+            else {
                 if (win != win.top) { // iframe
                     function stateChange() {
-                        if (doc.readyState === 'complete') {
-                            // remove onreadystatechange listener
+                        if (doc.readyState === COMPLETE) {
                             doc.detachEvent(eventType, stateChange);
                             self._fireReady();
                         }
                     }
                     doc.attachEvent(eventType, stateChange);
-                } else {
+                }
+                else {
                     function readyScroll() {
                         try {
                             // Ref: http://javascript.nwbox.com/IEContentLoaded/
@@ -157,13 +165,6 @@
                 win.attachEvent('onload', function() {
                     self._fireReady();
                 });
-                
-            } else { // w3c mode
-                function domReady() {
-                    doc.removeEventListener(eventType, domReady, false);
-                    self._fireReady();
-                }
-                doc.addEventListener(eventType, domReady, false);
             }
         },
 
@@ -191,7 +192,7 @@
 
         /**
          * Copies all the properties of s to r.
-         * @return {object} the augmented object
+         * @return {Object} the augmented object
          */
         mix: mix,
 
@@ -200,37 +201,47 @@
          * all the supplied objects. The properties from later objects
          * will overwrite those in earlier objects. Passing in a
          * single object will create a shallow copy of it.
-         * @return {object} the new merged object
+         * @return {Object} the new merged object
          */
         merge: function() {
-            var a = arguments, o = {}, i, l = a.length;
+            var o = {}, i, l = arguments.length;
             for (i = 0; i < l; ++i) {
-                mix(o, a[i]);
+                mix(o, arguments[i]);
             }
             return o;
+        },
+
+        /**
+         * Applies prototype properties from the supplier to the receiver.
+         * @param r {Function} the object to receive the augmentation
+         * @param s {Object|Function} the object that supplies the properties to augment
+         * @param wl {String[]} a whitelist
+         * @return {Object} the augmented object
+         */
+        augment: function(r, s, ov, wl) {
+            mix(r.prototype, s.prototype || s, ov, wl);
+            return r;
         },
 
         /**
          * Utility to set up the prototype, constructor and superclass properties to
          * support an inheritance strategy that can chain constructors and methods.
          * Static members will not be inherited.
-         * @param {function} r the object to modify
-         * @param {function} s the object to inherit
-         * @param {object} px prototype properties to add/override
-         * @param {object} sx static properties to add/override
-         * @return {object} r
+         * @param r {Function} the object to modify
+         * @param s {Function} the object to inherit
+         * @param px {Object} prototype properties to add/override
+         * @param sx {Object} static properties to add/override
+         * @return r {Object}
          */
         extend: function(r, s, px, sx) {
             if (!s || !r) return r;
 
             var OP = Object.prototype,
                 O = function (o) {
-                    function F() {
-                    }
-
-                    F.prototype = o;
-                    return new F();
-                },
+                        function F() {}
+                        F.prototype = o;
+                        return new F();
+                    },
                 sp = s.prototype,
                 rp = O(sp);
 
@@ -257,49 +268,19 @@
         },
 
         /**
-         * Applies prototype properties from the supplier to the receiver.
-         * @param {function} r  the object to receive the augmentation
-         * @param {object|function} s  the object that supplies the properties to augment
-         * @param {string[]} wl a whitelist
-         * @return {object} the augmented object
-         */
-        augment: function(r, s, ov, wl) {
-            return mix(r.prototype, S.isFunction(s) ? s.prototype : s, ov, wl);
-        },
-
-        /**
-         * create app based on KISSY.
-         * <pre>
-         * S.app('TB');
-         * </pre>
-         * @return {object}  A reference to the app global object
-         */
-        app: function(name, r) {
-            var O = win[name] || { };
-
-            mix(O, this, true, ['_init', 'add', 'namespace']);
-            O._init();
-
-            return mix((win[name] = O), S.isFunction(r) ? r() : r);
-        },
-
-        /**
          * Returns the namespace specified and creates it if it doesn't exist. Be careful
          * when naming packages. Reserved words may work in some browsers and not others.
-         * <pre>
+         * <code>
          * S.namespace('KISSY.app'); // returns KISSY.app
          * S.namespace('app.Shop'); // returns KISSY.app.Shop
-         * S.app('TB');
-         * TB.namespace('TB.app'); // returns TB.app
-         * TB.namespace('app.Shop'); // returns TB.app.Shop
-         * </pre>
-         * @return {object}  A reference to the last namespace object created
+         * </code>
+         * @return {Object}  A reference to the last namespace object created
          */
         namespace: function() {
-            var a = arguments, l = a.length, o = null, i, j, p;
+            var l = arguments.length, o = null, i, j, p;
 
             for (i = 0; i < l; ++i) {
-                p = ('' + a[i]).split('.');
+                p = ('' + arguments[i]).split('.');
                 o = this;
                 for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
                     o = o[p[j]] = o[p[j]] || {};
@@ -309,39 +290,51 @@
         },
 
         /**
+         * create app based on KISSY.
+         * @param name {String} the app name
+         * @param sx {Object} static properties to add/override
+         * <code>
+         * S.app('TB');
+         * TB.namespace('app'); // returns TB.app
+         * </code>
+         * @return {Object}  A reference to the app global object
+         */
+        app: function(name, sx) {
+            var O = win[name] || {};
+
+            mix(O, this, true, ['_init', 'add', 'namespace']);
+            O._init();
+
+            return mix((win[name] = O), typeof sx === 'function' ? sx() : sx);
+        },
+
+        /**
          * Prints debug info.
-         * @param {string} msg The message to log.
-         * @param {string} cat The log category for the message. Default
-         * categories are "info", "warn", "error", time" etc.
-         * @param {string} src The source of the the message (opt)
+         * @param msg {String} the message to log.
+         * @param cat {String} the log category for the message. Default
+         *                     categories are "info", "warn", "error", "time" etc.
+         * @param src {String} the source of the the message (opt)
          * @return {KISSY}
          */
         log: function(msg, cat, src) {
             if (this.Config.debug) {
-                src && (msg = src + ': ' + msg);
-                if (win.console !== undefined && console.log) {
+                if(src) {
+                    msg = src + ': ' + msg;
+                }
+                if (win['console'] !== undefined && console.log) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                 }
             }
-
             return this;
         },
 
         /**
          * Throws error message.
-         * @param msg
          */
         error: function(msg) {
             if(this.Config.debug) {
                 throw msg;
             }
-        },
-
-        /**
-         * get current timeStamp
-         */
-        now: function() {
-            return new Date().getTime();
         }
     });
 
@@ -353,19 +346,20 @@
 })(window, 'KISSY');
 
 /**
- * Notes:
+ * NOTES:
  *
  * 2010.04
  *  - 移除掉 weave 方法，尚未考虑周全。
  *
  * 2010.01
- *  - 考虑简单够用和 2/8 原则，去掉了对 YUI3 沙箱的模拟（archives/2009 r402）
- *
- *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 组织代码）。
+ *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）。
  *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
- *  - mix, merge, extend, augment 方法，决定了类库代码的基本实现方式，
- *    充分利用 mixin 特性和 prototype 方式来实现代码。
- *  - app, namespace 方法，决定子库的实现和代码的整体组织。
- *  - log 方法，简单的调试工具。
+ *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码。
+ *  - namespace, app 方法，决定子库的实现和代码的整体组织。
+ *  - log, error 方法，简单的调试工具和报错机制。
+ *  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
  *
+ * TODO:
+ *  - 模块动态加载 require 方法的实现。
+ * 
  */

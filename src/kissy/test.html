@@ -109,26 +109,6 @@
         if(c.T !== 'oops') test.fail();
     }
 
-    function test_extend(test) {
-        function Bird(name) {
-            this.name = name;
-        }
-        Bird.prototype = {
-            getName: function() {
-                return this.name;
-            }
-        };
-
-        function Chicken(name) {
-            Chicken.superclass.constructor.call(this, name);
-        }
-        S.extend(Chicken, Bird);
-
-        var chicken = new Chicken('Tom');
-
-        if(chicken.getName() !== 'Tom') test.fail();
-    }
-
     function test_augment(test) {
         function Bird(name) {
             this.name = name;
@@ -151,6 +131,26 @@
         if(!pig.fly) test.fail();
     }
 
+    function test_extend(test) {
+        function Bird(name) {
+            this.name = name;
+        }
+        Bird.prototype = {
+            getName: function() {
+                return this.name;
+            }
+        };
+
+        function Chicken(name) {
+            Chicken.superclass.constructor.call(this, name);
+        }
+        S.extend(Chicken, Bird);
+
+        var chicken = new Chicken('Tom');
+
+        if(chicken.getName() !== 'Tom') test.fail();
+    }
+
     /*
     function test_weave(test) {
         function Bird(name) {
@@ -170,25 +170,6 @@
         if(bird.getName() !== 'Hacked Bird') test.fail(bird.getName());
     }
     */
-
-    function test_app(test) {
-        S.app('TB');
-
-        // check Env
-        if(!TB.Env.mods) test.fail();
-
-        // check independence
-        TB.test = 2;
-        if(S.test === 2) test.fail();
-
-        // test add modules
-        TB.add('test-tb-mod', function() { });
-        if(!TB.Env.mods['test-tb-mod']) test.fail();
-        if(S.Env.mods['test-tb-mod']) test.fail();
-
-        // clear
-        window.TB = undefined;
-    }
 
     function test_namespace(test) {
         var ns;
@@ -218,6 +199,25 @@
         window.TB = undefined;
     }
 
+    function test_app(test) {
+        S.app('TB');
+
+        // check Env
+        if(!TB.Env.mods) test.fail();
+
+        // check independence
+        TB.test = 2;
+        if(S.test === 2) test.fail();
+
+        // test add modules
+        TB.add('test-tb-mod', function() { });
+        if(!TB.Env.mods['test-tb-mod']) test.fail();
+        if(S.Env.mods['test-tb-mod']) test.fail();
+
+        // clear
+        window.TB = undefined;
+    }
+
     function test_log(test) {
         S.add('test-ks-mod', function() { });
         S.log(S, 'dir');
@@ -239,6 +239,60 @@
         }
     }
 
+    function test_isBoolean(test) {
+        if(S.isBoolean(true) !== true) test.fail();
+        if(S.isBoolean(false) !== true) test.fail();
+        if(S.isBoolean(!1) !== true) test.fail();
+        if(S.isBoolean() === true) test.fail();
+        if(S.isBoolean(null) === true) test.fail();
+        if(S.isBoolean({}) === true) test.fail();
+    }
+
+    function test_isString(test) {
+        if(S.isString('') !== true) test.fail();
+        if(S.isString('aaa') !== true) test.fail();
+        if(S.isString() === true) test.fail();
+        if(S.isString({}) === true) test.fail();
+        if(S.isString(null) === true) test.fail();
+        if(S.isString(window) === true) test.fail();
+    }
+
+    function test_isNumber(test) {
+        if(S.isNumber(1) !== true) test.fail();
+        if(S.isNumber(0) !== true) test.fail();
+        if(S.isNumber(-1) !== true) test.fail();
+        if(S.isNumber(Infinity) === true) test.fail();
+        if(S.isNumber(-Infinity) === true) test.fail();
+        if(S.isNumber(NaN) === true) test.fail();
+    }
+    
+    function test_isPlainObject(test) {
+        if(S.isPlainObject({}) !== true) test.fail();
+        if(S.isPlainObject([]) === true) test.fail();
+        if(S.isPlainObject(function(){ }) === true) test.fail();
+        if(S.isPlainObject(window) === true) test.fail();
+        if(S.isPlainObject(document.documentElement) === true) test.fail();
+    }
+
+    function test_isEmptyObject(test) {
+        if(S.isEmptyObject({}) !== true) test.fail();
+        if(S.isEmptyObject([]) !== true) test.fail();
+        if(S.isEmptyObject(function() { }) !== true) test.fail();
+        if(S.isEmptyObject({a:1}) === true) test.fail();
+    }
+
+    function test_isFunction(test) {
+        if(S.isFunction(function(){}) !== true) test.fail();
+        if(S.UA.ie && S.isFunction(window.alert) !== false) test.fail();
+        if(S.isFunction(parseFloat) !== true) test.fail();
+    }
+
+    function test_isArray(test) {
+        if(S.isArray([]) !== true) test.fail();
+        if(S.isArray(arguments) !== false) test.fail();
+        if(S.isArray(document.getElementsByTagName('body')) !== false) test.fail();
+    }
+
     function test_each(test) {
         var ret = 0;
 
@@ -257,32 +311,6 @@
     function test_trim(test) {
         var str = '    lots of spaces before and after    ';
         if(S.trim(str) !== 'lots of spaces before and after') test.fail();
-    }
-
-    function test_isPlainObject(test) {
-        if(S.isPlainObject({}) !== true) test.fail();
-        if(S.isPlainObject([]) === true) test.fail();
-        if(S.isPlainObject(function(){}) === true) test.fail();
-        if(S.isPlainObject(window) === true) test.fail();
-        if(S.isPlainObject(document.documentElement) === true) test.fail();
-    }
-
-    function test_isEmptyObject(test) {
-        if(S.isEmptyObject({}) !== true) test.fail();
-        if(S.isEmptyObject([]) !== true) test.fail();
-        if(S.isEmptyObject({a:1}) === true) test.fail();
-    }
-
-    function test_isFunction(test) {
-        if(S.isFunction(function(){}) !== true) test.fail();
-        if(S.UA.ie && S.isFunction(window.alert) !== false) test.fail();
-        if(S.isFunction(parseFloat) !== true) test.fail();
-    }
-
-    function test_isArray(test) {
-        if(S.isArray([]) !== true) test.fail();
-        if(S.isArray(arguments) !== false) test.fail();
-        if(S.isArray(document.getElementsByTagName('body')) !== false) test.fail();
     }
 
     function test_indexOf(test) {
@@ -392,12 +420,12 @@
         var i = 0;
         var timer = S.later(function(data) {
                         test.echo(data + ' ' + ++i);
-                        if(i === 5) {
+                        if(i === 3) {
                             timer.cancel();
                             test.echo('later test done.');
                         }
                       },
-                      1000, true, null, 'I am periodic later data.');
+                      500, true, null, 'I am periodic later data.');
     }
 
     function test_globalEval(test) {
