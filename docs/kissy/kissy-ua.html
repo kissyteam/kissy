@@ -2,44 +2,124 @@
 <html>
 <head>
 <meta charset="gbk"/>
-<title>kissy - KISSY Docs</title>
+<title>kissy-ua &lsaquo; KISSY Docs</title>
 <link rel="stylesheet" href="../assets/base-min.css" />
 <link rel="stylesheet" href="../assets/docs.css" />
 </head>
 <body>
 <div id="page" class="w866">
     <div id="header">
-        <a class="logo" href="index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+        <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
         <p class="rel-nav">
-            <a href="../../src/kissy/">src files</a>
+            <a href="../../src/kissy/kissy-ua.js"><code>kissy-ua.js</code></a>
         </p>
     </div>
     <div id="content" class="layout grid-s232m0">
         <div class="col-main">
             <div class="main-wrap">
-                <p>这里是 KISSY 的文档。所有文档，都由开发者手工精心制作。赶快开始愉悦之旅吧。</p>
+
+                <div class="section summary">
+                    <p>通过 <code>KISSY.UA</code> 的属性，你可以获取浏览器等用户代理的信息。属性值遵循以下规则：</p>
+                    <ol>
+                        <li>表示当前引擎或浏览器的版本。版本号 1.2.3.4 会转换为数值 1.234</li>
+                        <li>如果不是当前引擎或浏览器，返回 0</li>
+                    </ol>
+                    <p class="tips">特别注意：</p>
+                    <ol>
+                        <li><code>KISSY.UA.mobile</code> 返回的是字符串，目前支持 Apple, Nokia, Android 等设备的探测。</li>
+                        <li><code>KISSY.UA.flash</code> 需要加载 swf-ua 模块才有值，否则始终为 0.</li>
+                    </ol>
+                </div>
+
+                <div class="section">
+                    <h3 id="methods">Properties</h3>
+
+                    <div class="member prop">
+                        <h4><a name="prop_webkit">webkit</a> - <code>Number</code></h4>
+                        <div class="detail">
+                            <p>webkit 的版本号。</p>
+                        </div>
+                    </div>
+
+                    <div class="member prop">
+                        <h4><a name="prop_chrome">chrome</a> - <code>Number</code></h4>
+                        <div class="detail">
+                            <p>chrome 的版本号。</p>
+                        </div>
+                    </div>
+
+                    <div class="member prop">
+                        <h4><a name="prop_safari">safari</a> - <code>Number</code></h4>
+                        <div class="detail">
+                            <p>safari 的版本号。</p>
+                        </div>
+                    </div>
+
+                    <div class="member prop">
+                        <h4><a name="prop_gecko">gecko</a> - <code>Number</code></h4>
+                        <div class="detail">
+                            <p>gecko 的版本号。</p>
+                        </div>
+                    </div>
+
+                    <div class="member prop">
+                        <h4><a name="prop_firefox">firefox</a> - <code>Number</code></h4>
+                        <div class="detail">
+                            <p>firefox 的版本号。</p>
+                        </div>
+                    </div>
+
+                    <div class="member prop">
+                        <h4><a name="prop_ie">ie</a> - <code>Number</code></h4>
+                        <div class="detail">
+                            <p>ie 的版本号。</p>
+                        </div>
+                    </div>
+
+                    <div class="member prop">
+                        <h4><a name="prop_opera">opera</a> - <code>Number</code></h4>
+                        <div class="detail">
+                            <p>opera 的版本号。</p>
+                        </div>
+                    </div>
+
+                    <div class="member prop">
+                        <h4><a name="prop_mobile">mobile</a> - <code>String</code></h4>
+                        <div class="detail">
+                            <p>mobile 的标志符。</p>
+                        </div>
+                    </div>
+
+                    <div class="member prop">
+                        <h4><a name="prop_flash">flash</a> - <code>Number</code></h4>
+                        <div class="detail">
+                            <p>flash 的版本号。</p>
+                            <p class="tips">需要加载 swf-ua 模块才有值，否则始终为 0</p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
         <div class="col-sub">
             <div class="sub-wrap">
-                <div class="loc"><a href="../">Home</a> &rsaquo; kissy:</div>
+                <div class="loc">
+                    <a href="../index.html">home</a> &rsaquo;
+                    <a href="index.html">kissy</a> &rsaquo;
+                    kissy-ua :
+                </div>
                 <div class="toc">
-                    <h3>Classes</h3>
-                    <ul>
-                        <li><a href="#KISSY">KISSY</a></li>
-                        <li><a href="#UA">KISSY.UA</a></li>
-                    </ul>
                     <h3>Properties</h3>
                     <ul>
-                        <li><a href="#kissy">kissy</a></li>
-                        <li><a href="#kissy-lang">kissy-lang</a></li>
-                        <li><a href="#kissy-ua">kissy-ua</a></li>
-                    </ul>
-                    <h3>Methods</h3>
-                    <ul>
-                        <li><a href="#kissy">kissy</a></li>
-                        <li><a href="#kissy-lang">kissy-lang</a></li>
-                        <li><a href="#kissy-ua">kissy-ua</a></li>
+                        <li><a href="#prop_webkit">webkit</a></li>
+                        <li><a href="#prop_chrome">chrome</a></li>
+                        <li><a href="#prop_safari">safari</a></li>
+                        <li><a href="#prop_gecko">gecko</a></li>
+                        <li><a href="#prop_firefox">firefox</a></li>
+                        <li><a href="#prop_ie">ie</a></li>
+                        <li><a href="#prop_opera">opera</a></li>
+                        <li><a href="#prop_mobile">mobile</a></li>
+                        <li><a href="#prop_flash">flash</a></li>
                     </ul>
                 </div>
             </div>

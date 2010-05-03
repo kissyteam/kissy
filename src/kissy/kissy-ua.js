@@ -1,21 +1,19 @@
 /**
- * @module  ua
+ * @module  kissy-ua
  * @author  lifesinger@gmail.com
- * @depends kissy
  */
-
-KISSY.add('ua', function(S) {
+KISSY.add('kissy-ua', function(S) {
 
     var ua = navigator.userAgent,
         m,
         o = {
-            ie: 0,
+            webkit: 0,
+            chrome: 0,
+            safari: 0,
             gecko: 0,
             firefox:  0,
+            ie: 0,
             opera: 0,
-            webkit: 0,
-            safari: 0,
-            chrome: 0,
             mobile: ''
         },
         numberify = function(s) {
@@ -41,7 +39,7 @@ KISSY.add('ua', function(S) {
 
         // Apple Mobile
         if (/ Mobile\//.test(ua)) {
-            o.mobile = 'Apple'; // iPhone or iPod Touch
+            o.mobile = 'Apple'; // iPad, iPhone or iPod Touch
         }
         // Other WebKit Mobile Browsers
         else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
@@ -87,18 +85,18 @@ KISSY.add('ua', function(S) {
 });
 
 /**
- * Notes:
+ * NOTES:
  *
  * 2010.03
  *  - jQuery, YUI 等类库都推荐用特性探测替代浏览器嗅探。特性探测的好处是能自动适应未来设备和未知设备，比如
- *    if(document.addEventListener) 假设 IE 10 支持标准事件，则代码不用修改，就自适应了“未来浏览器”。
+ *    if(document.addEventListener) 假设 IE9 支持标准事件，则代码不用修改，就自适应了“未来浏览器”。
  *    对于未知浏览器也是如此。但是，这并不意味着浏览器嗅探就得彻底抛弃。当代码很明确就是针对已知特定浏览器的，
- *    并且并非是某个特性探测可以解决时，用浏览器嗅探反而能带来代码的简洁，同时也也不会有什么后患。总之，一切
+ *    同时并非是某个特性探测可以解决时，用浏览器嗅探反而能带来代码的简洁，同时也也不会有什么后患。总之，一切
  *    皆权衡。
- *  - UA.ie && UA.ie < 8 并不意味着浏览器就不是 IE8, 有可能是 IE8 的兼容模式。进一步的判断需要使用 documentMode
+ *  - UA.ie && UA.ie < 8 并不意味着浏览器就不是 IE8, 有可能是 IE8 的兼容模式。进一步的判断需要使用 documentMode.
  *
  * TODO:
  *  - test mobile
- *  - 权衡是否需要加入 maxthon 等国内浏览器嗅探？
+ *  - 是否需要加入 maxthon 等国内浏览器嗅探？
  * 
  */

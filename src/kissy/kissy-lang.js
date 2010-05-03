@@ -1,15 +1,16 @@
 /**
- * @module  lang
+ * @module  kissy-lang
  * @author  lifesinger@gmail.com
  */
-KISSY.add('lang', function(S, undefined) {
+KISSY.add('kissy-lang', function(S, undefined) {
 
     var win = window, doc = document,
         AP = Array.prototype,
-        indexOf = AP.indexOf,
+        indexOf = AP.indexOf, filter = AP.filter,
         toString = Object.prototype.toString,
         REG_TRIM = /^\s+|\s+$/g,
-        REG_ARR_KEY = /^(\w+)\[\]$/;
+        REG_ARR_KEY = /^(\w+)\[\]$/,
+        REG_NOT_WHITE = /\S/;
 
     S.mix(S, {
 
@@ -85,7 +86,7 @@ KISSY.add('lang', function(S, undefined) {
          * Executes the supplied function on each item in the array.
          * @param arr {Array} the array to iterate
          * @param fn {Function} the function to execute on each item. The function
-         *                      receives three arguments: the value, the index, the full array.
+         *        receives three arguments: the value, the index, the full array.
          * @param context {Object} (opt)
          */
         each: function(arr, fn, context) {
@@ -142,6 +143,30 @@ KISSY.add('lang', function(S, undefined) {
             // array-like
             return AP.slice.call(o);
         },
+        /**
+        * Executes the supplied function on each item in the array.
+        * Returns a new array containing the items that the supplied
+        * function returned true for.
+        * @param arr {Array} the array to iterate
+        * @param fn {Function} the function to execute on each item
+        * @param context {Object} optional context object
+        * @return {Array} The items on which the supplied function
+        *         returned true. If no items matched an empty array is
+        *         returned.
+        */
+        filter: filter ?
+            function(arr, fn, context) {
+                return filter.call(arr, fn, context);
+            } :
+            function(arr, fn, context) {
+                var ret = [];
+                S.each(arr, function(item, i, arr) {
+                    if (fn.call(context, item, i, arr)) {
+                        ret.push(item);
+                    }
+                });
+                return ret;
+            },
 
         /**
          * Creates a serialized string of an array or object.
@@ -215,20 +240,18 @@ KISSY.add('lang', function(S, undefined) {
          * Executes the supplied function in the context of the supplied
          * object 'when' milliseconds later. Executes the function a
          * single time unless periodic is set to true.
-         * @param when {int} The number of milliseconds to wait until the fn
-         *                   is executed.
-         * @param o The context object.
-         * @param fn {Function|String} The function to execute or the name of
-         *                             the method in the 'o' object to execute.
-         * @param data [Array] data That is provided to the function. This accepts
-         *                          either a single item or an array. If an array is provided, the
-         *                          function is executed with one parameter for each array item. If
-         * you need to pass a single array parameter, it needs to be wrapped in
-         * an array [myarray].
-         * @param periodic {boolean} if true, executes continuously at supplied
-         * interval until canceled.
-         * @return {Object} a timer object. Call the cancel() method on this object to
-         * stop the timer.
+         * @param fn {Function|String} the function to execute or the name of the method in
+         *        the 'o' object to execute.
+         * @param when {Number} the number of milliseconds to wait until the fn is executed.
+         * @param periodic {Boolean} if true, executes continuously at supplied interval
+         *        until canceled.
+         * @param o {Object} the context object.
+         * @param data [Array] that is provided to the function. This accepts either a single
+         *        item or an array. If an array is provided, the function is executed with
+         *        one parameter for each array item. If you need to pass a single array
+         *        parameter, it needs to be wrapped in an array [myarray].
+         * @return {Object} a timer object. Call the cancel() method on this object to stop
+         *         the timer.
          */
         later: function(fn, when, periodic, o, data) {
             when = when || 0;
@@ -263,33 +286,30 @@ KISSY.add('lang', function(S, undefined) {
         },
 
         /**
-         * Evalulates a script in a global context
+         * Gets current date in milliseconds.
+         */
+        now: function() {
+            return new Date().getTime();
+        },
+
+        /**
+         * Evalulates a script in a global context.
          */
         globalEval: function(data) {
-            if ((data = S.trim(data))) {
+            if (data && REG_NOT_WHITE.test(data)) {
                 // Inspired by code by Andrea Giammarchi
                 // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
                 var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
                     script = doc.createElement('script');
 
-                if (S.UA.ie) { // TODO: feature test
-                    script.text = data;
-                } else {
-                    script.appendChild(doc.createTextNode(data));
-                }
+                // It works! All browsers support!
+                script.text = data;
 
                 // Use insertBefore instead of appendChild to circumvent an IE6 bug.
                 // This arises when a base node is used.
                 head.insertBefore(script, head.firstChild);
                 head.removeChild(script);
             }
-        },
-
-        /**
-         * Gets current time stamp.
-         */
-        now: function() {
-            return new Date().getTime();
         }
     });
 
@@ -308,13 +328,16 @@ KISSY.add('lang', function(S, undefined) {
 /**
  * NOTES:
  *
+ *  2010.05
+ *   - 增加 filter 方法。
+ *   - globalEval 中，直接采用 text 赋值，去掉 appendChild 方式。
+ *
  *  2010.04
  *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
  *   - 对于 param, encodeURI 就可以了，和 jQuery 保持一致。
  *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
  *
  * TODO:
- *   - 分析 jq 的 isPlainObject
- *   - globalEval 中，appendChild 方式真的比 text 方式性能更好?
+ *   - 分析 jq 的 isPlainObject 对 constructor 的细节处理
  *
  */

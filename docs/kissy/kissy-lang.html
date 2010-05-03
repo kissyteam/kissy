@@ -9,7 +9,7 @@
 <body>
 <div id="page" class="w866">
     <div id="header">
-        <a class="logo" href="../"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+        <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
         <p class="rel-nav">
             <a href="../../src/kissy/kissy-lang.js"><code>kissy-lang.js</code></a>
         </p>
@@ -141,8 +141,8 @@ var S = KISSY,
     arr = [1, 2, 3, 4, 5],
     sum = 0;
 
-S.each(arr, function(el, index) {
-    sum += el;
+S.each(arr, function(item) {
+    sum += item;
 });
 S.log(sum); // => 15
 </code></pre>
@@ -188,13 +188,160 @@ S.makeArray(null); // => []
                         </div>
                     </div>
 
+                    <div class="member method">
+                        <h4>
+                            <a name="method_filter">filter</a>
+                            <code>Array <em>filter</em> ( arr, fn, context )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>遍历数组，过滤出符和条件的数组项。</p>
+                            <dl class="parameters">
+                                <dt>Parameters:</dt>
+                                <dd>
+                                    <code class="param-name">arr</code>
+                                    <code class="param-type">&lt;Array&gt;</code>
+                                    需要遍历的数组。
+                                </dd>
+                                <dd>
+                                    <code class="param-name">fn</code>
+                                    <code class="param-type">&lt;Function&gt;</code>
+                                    过滤函数。执行时，接收 3 个参数：当前项、当前 index, 数组。
+                                </dd>
+                                <dd>
+                                    <code class="param-name">context</code>
+                                    <code class="param-type">&lt;Object&gt;</code>
+                                    环境对象。
+                                </dd>
+                            </dl>
+<pre class="example-code"><code>
+var S = KISSY,
+    arr = [1, 2, 3, 4, 5];
+
+var ret = S.filter(arr, function(item) {
+    return item % 2 === 0;
+});
+S.log(ret); // => [2, 4]
+</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_param">param</a>
+                            <code>String <em>param</em> ( o )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>将对象 o 转换为参数字符串。</p>
+<pre class="example-code"><code>
+var S = KISSY;
+
+S.param({ foo: 1, bar: 2 }); // => foo=1&bar=2
+S.param({ foo: 1, bar: [2, 3] }); // => foo=1&bar%5B%5D=2&bar%5B%5D=3
+S.param({ foo: '', bar: 2 }); // => foo=&bar=2
+S.param({ foo: undefined, bar: 2 }); // => foo=undefined&bar=2
+</code></pre>
+                            <p class="notice">返回的字符串经过了 encodeURI 编码。比如 <code>foo=1&bar%5B%5D=2&bar%5B%5D=3</code>, 解码后是 <code>foo=1&bar[]=2&bar[]=3</code></p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_unparam">unparam</a>
+                            <code>Object <em>unparam</em> ( str )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>将参数字符串 str 还原为对象。</p>
+<pre class="example-code"><code>
+var S = KISSY;
+
+S.unparam('foo=1&bar=2'); // => { foo: 1, bar: 2 }
+S.unparam('foo=1&bar[]=2&bar[]=3'); // => { foo: 1, bar: [2, 3] }
+</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_later">later</a>
+                            <code>Object <em>later</em> ( fn, when, periodic, o, data )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>延迟执行指定函数。</p>
+                            <dl class="parameters">
+                                <dt>Parameters:</dt>
+                                <dd>
+                                    <code class="param-name">fn</code>
+                                    <code class="param-type">&lt;Function&gt;</code>
+                                    延迟执行的函数。
+                                </dd>
+                                <dd>
+                                    <code class="param-name">when</code>
+                                    <code class="param-type">&lt;Number&gt;</code>
+                                    延迟时间，单位是毫秒。
+                                </dd>
+                                <dd>
+                                    <code class="param-name">periodic</code>
+                                    <code class="param-type">&lt;Boolean&gt;</code>
+                                    是不是周期性执行。默认为 false.
+                                </dd>
+                                <dd>
+                                    <code class="param-name">o</code>
+                                    <code class="param-type">&lt;Object&gt;</code>
+                                    环境对象。
+                                </dd>
+                                <dd>
+                                    <code class="param-name">data</code>
+                                    <code class="param-type">&lt;Array&gt;</code>
+                                    传递的参数。可以为单个对象，最后会转换成数组，依次传递给执行函数。
+                                </dd>
+                            </dl>
+                            <dl class="return">
+                                <dt>Returns: <code>Object</code></dt>
+                                <dd>timer 对象。拥有 id 和 interval 属性，还有 cancel 方法，用于取消定时器。</dd>
+                            </dl>
+<pre class="example-code"><code>
+var S = KISSY;
+
+S.later(function(data) {
+    S.log(data);
+}, 0, false, null, 'I am later data.');
+</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_now">now</a>
+                            <code>Number <em>now</em> ( )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>返回 new Date().getTime()</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_globalEval">globalEval</a>
+                            <code>void <em>globalEval</em> ( data )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>在全局环境里执行代码片段。</p>
+<pre class="example-code"><code>
+var S = KISSY;
+
+S.globalEval('var foo = 1;');
+S.log(window['foo']); // => 1
+</code></pre>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
         <div class="col-sub">
             <div class="sub-wrap">
                 <div class="loc">
-                    <a href="../">home</a> &rsaquo;
+                    <a href="../index.html">home</a> &rsaquo;
                     <a href="index.html">kissy</a> &rsaquo;
                     kissy-lang :
                 </div>
@@ -213,6 +360,7 @@ S.makeArray(null); // => []
                         <li><a href="#method_indexOf">indexOf</a></li>
                         <li><a href="#method_inArray">inArray</a></li>
                         <li><a href="#method_makeArray">makeArray</a></li>
+                        <li><a href="#method_filter">filter</a></li>
                         <li><a href="#method_param">param</a></li>
                         <li><a href="#method_unparam">unparam</a></li>
                         <li><a href="#method_later">later</a></li>

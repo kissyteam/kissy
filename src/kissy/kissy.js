@@ -312,7 +312,7 @@
          * Prints debug info.
          * @param msg {String} the message to log.
          * @param cat {String} the log category for the message. Default
-         *                     categories are "info", "warn", "error", "time" etc.
+         *        categories are "info", "warn", "error", "time" etc.
          * @param src {String} the source of the the message (opt)
          * @return {KISSY}
          */

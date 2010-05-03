@@ -22,9 +22,10 @@ a { color: #1F75CC; }
 .toc ul { padding-left: 20px; }
 
 .col-main p { margin: 1em 0; }
-.col-main blockquote, .col-main ul, .col-main ol, .col-main dl { margin: 1em; }
+.col-main blockquote, .col-main ul, .col-main ol { margin: 1em; }
 .col-main ol li { list-style: decimal outside; margin-left: 20px; }
 .col-main ul li { list-style: none; background: url(dot.gif) no-repeat 0 50%; padding-left: 15px; }
+.col-main dl { margin: 1em 0; }
 .col-main dl dd { margin-left: 1em; }
 
 .section h3 { background: url(dotted_line.gif) repeat-x 0 100%; padding: 5px 0 2px; margin: 0 0 15px -15px; }
@@ -36,8 +37,9 @@ a { color: #1F75CC; }
 .member .detail p { margin: 0.5em 0; }
 .method h4 code { display: block; }
 .method h4 em { font-weight: bold; }
-.example-code { background-color: #F4FAFF; border: 1px solid #AACCEE; padding: 0 20px 15px; }
+.example-code { background-color: #F4FAFF; border: 1px solid #AACCEE; padding: 0 20px 15px; margin-bottom: 5px; }
 .detail dt { font-weight: bold; }
+.summary { background-color: #FFFFE6; border: 1px solid #CACACA; padding: 0 20px 15px; margin: 5px 0 10px -15px; }
 .notice { background: url(notice.png) no-repeat 0 2px; padding-left: 20px; }
 .tips { background: url(info.png) no-repeat 0 2px; padding-left: 20px; }
 

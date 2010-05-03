@@ -382,6 +382,13 @@
         if(o[1] !== undefined) test.fail();
     }
 
+    function test_filter(test) {
+        var ret = S.filter([1, 2, 3, 4, 5], function(item) {
+            return item % 2 === 0;
+        });
+        if(ret.length !== 2) test.fail();
+    }
+
     function test_param(test) {
         if(S.param({foo:1, bar:2}) !== 'foo=1&bar=2') test.fail();
         if(S.param({foo:1, bar:[2,3]}) !== encodeURI('foo=1&bar[]=2&bar[]=3')) test.fail();
