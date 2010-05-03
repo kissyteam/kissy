@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>event &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+<div id="page" class="w866">
+    <div id="header">
+        <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+        <p class="rel-nav">
+            <a href="../../src/event/event.js"><code>event.js</code></a>
+        </p>
+    </div>
+    <div id="content" class="layout grid-s232m0">
+        <div class="col-main">
+            <div class="main-wrap">
+
+                <div class="section summary">
+                    <p>KISSY.Event 提供了添加、删除监听函数的事件操作方法。你可以用它来操作 DOM 对象的事件，也可以用来操作自定义 EventTarget 对象的事件。与事件相关的功能，只要你能想到，它基本上都能做到。赶快了解它吧，从这里开始。</p>
+                </div>
+
+                <div class="section">
+                    <h3 id="methods">Methods</h3>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_add">add</a>
+                            <code>void <em>add</em> ( target, type, fn )</code>
+                            <code>void <em>on</em> ( target, type, fn )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>给目标对象指定类型的事件添加监听函数。</p>
+                            <p>on 是 add 的别名。</p>
+                            <dl class="parameters">
+                                <dt>Parameters:</dt>
+                                <dd>
+                                    <code class="param-name">target</code>
+                                    <code class="param-type">&lt;EventTarget&gt;</code>
+                                    事件目标对象。可以是选择器或数组。
+                                </dd>
+                                <dd>
+                                    <code class="param-name">type</code>
+                                    <code class="param-type">&lt;String&gt;</code>
+                                    事件类型。可以是空格分隔的多个类型。
+                                </dd>
+                                <dd>
+                                    <code class="param-name">fn</code>
+                                    <code class="param-type">&lt;Function&gt;</code>
+                                    监听函数。执行时，接收 1 个参数：事件对象 ev.
+                                </dd>
+                            </dl>
+<pre class="example-code"><code>
+var S = KISSY, Event = S.Event;
+
+// 最常规的用法
+Event.add(document, 'click', function(ev) {
+    // handle code
+});
+
+// 支持选择器
+Event.on('.class', 'click', function(ev) {
+    // handle code
+});
+
+// 支持多类型
+Event.add('#id', 'mouseenter mouseleave', function(ev) {
+    // handle code
+});
+</code></pre>
+                            <p>不要怀疑，就这么简单！因为，本来就应该如此简单！</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="sub-wrap">
+                <div class="loc">
+                    <a href="../index.html">home</a> &rsaquo;
+                    <a href="index.html">event</a> &rsaquo;
+                    event :
+                </div>
+                <div class="toc">
+                    <h3>Methods</h3>
+                    <ul>
+                        <li><a href="#method_add">add</a></li>
+                        <li><a href="#method_add">on</a></li>
+                        <li><a href="#method_remove">remove</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+    </div>
+</div>
+</body>
+</html>

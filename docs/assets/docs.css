@@ -39,7 +39,7 @@ a { color: #1F75CC; }
 .method h4 em { font-weight: bold; }
 .example-code { background-color: #F4FAFF; border: 1px solid #AACCEE; padding: 0 20px 15px; margin-bottom: 5px; }
 .detail dt { font-weight: bold; }
-.summary { background-color: #FFFFE6; border: 1px solid #CACACA; padding: 0 20px 15px; margin: 5px 0 10px -15px; }
+.summary { background-color: #FFFFE6; border: 1px solid #CACACA; padding: 0 20px; margin: 5px 0 10px -15px; }
 .notice { background: url(notice.png) no-repeat 0 2px; padding-left: 20px; }
 .tips { background: url(info.png) no-repeat 0 2px; padding-left: 20px; }
 
