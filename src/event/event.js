@@ -104,7 +104,6 @@ KISSY.add('event', function(S, undefined) {
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */) {
-            // ([targetA, targetB], 'click focus', fn)
             if(batch('remove', target, type, fn)) return;
 
             var id = getID(target),

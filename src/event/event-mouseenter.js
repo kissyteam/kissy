@@ -46,6 +46,6 @@ KISSY.add('event-mouseenter', function(S) {
 
 /**
  * TODO:
- *  - ie6 下，原生的 mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>, jQuery 也异常，
- *    需要进一步研究
+ *  - ie6 下，原生的 mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>
+ *    jQuery 也异常，需要进一步研究
  */

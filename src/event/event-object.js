@@ -18,7 +18,7 @@ KISSY.add('event-object', function(S, undefined) {
         self.currentTarget = currentTarget;
         self.originalEvent = domEvent || { };
 
-        if (domEvent) { // element
+        if (domEvent) { // html element
             self.type = domEvent.type;
             self._fix();
         }
@@ -163,5 +163,5 @@ KISSY.add('event-object', function(S, undefined) {
  *   - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
  *
  * TODO:
- *   - pageX, clientX, scrollLeft, clientLeft µÄÏêÏ¸Í¼½â
+ *   - pageX, clientX, scrollLeft, clientLeft µÄÏêÏ¸²âÊÔ
  */

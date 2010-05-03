@@ -1,18 +1,16 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 573 Apr 19 21:31
+build: 600 May 3 22:25
 */
 /**
  * @module  event
  * @author  lifesinger@gmail.com
  */
-
 KISSY.add('event', function(S, undefined) {
 
     var DOM = S.DOM,
-        win = window,
-        doc = document,
+        win = window, doc = document,
         simpleAdd = doc.addEventListener ?
                     function(el, type, fn) {
                         if (el.addEventListener) {
@@ -47,14 +45,12 @@ KISSY.add('event', function(S, undefined) {
         special: { },
 
         /**
-         * Adds an event listener
-         *
-         * @param {String} target An element or custom EventTarget to assign the listener to
-         * @param {String} type The type of event to append
-         * @param {Function} fn The event handler
+         * Adds an event listener.
+         * @param target {Element} An element or custom EventTarget to assign the listener to.
+         * @param type {String} The type of event to append.
+         * @param fn {Function} The event handler.
          */
         add: function(target, type, fn) {
-            // ([targetA, targetB], 'click focus', fn)
             if(batch('add', target, type, fn)) return;
 
             var id = getID(target),
@@ -113,7 +109,6 @@ KISSY.add('event', function(S, undefined) {
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */) {
-            // ([targetA, targetB], 'click focus', fn)
             if(batch('remove', target, type, fn)) return;
 
             var id = getID(target),
@@ -160,7 +155,6 @@ KISSY.add('event', function(S, undefined) {
             }
         },
 
-        // static
         _handle: function(target, event, listeners) {
             var ret, i = 0, len = listeners.length;
 
@@ -192,6 +186,11 @@ KISSY.add('event', function(S, undefined) {
 
     function batch(methodName, targets, types, fn) {
 
+        // on('#id tag.className', type, fn)
+        if(S.isString(targets)) {
+            targets = S.query(targets);
+        }
+
         // on([targetA, targetB], type, fn)
         if (S.isArray(targets)) {
             S.each(targets, function(target) {
@@ -217,13 +216,16 @@ KISSY.add('event', function(S, undefined) {
             return ret;
         }
 
-        if (target.nodeType) { // HTML Element
+        // HTML Element
+        if (target.nodeType) {
             ret = DOM.attr(target, EVENT_GUID);
         }
-        else if (target.isCustomEventTarget) { // custom EventTarget
+        // custom EventTarget
+        else if (target.isCustomEventTarget) {
             ret = target.eventTargetId;
         }
-        else { // window, iframe, etc.
+        // window, iframe, etc.
+        else {
             ret = target[EVENT_GUID];
         }
 
@@ -231,29 +233,40 @@ KISSY.add('event', function(S, undefined) {
     }
 
     function setID(target, id) {
-        if (target.nodeType) { // HTML Element
+        // text and comment node
+        if (target.nodeType === 3 || target.nodeType === 8) {
+            return S.error('Text or comment node is not valid event target.');
+        }
+
+        // HTML Element
+        if (target.nodeType) {
             DOM.attr(target, EVENT_GUID, id);
         }
-        else if (target.isCustomEventTarget) { // custom EventTarget
+        // custom EventTarget
+        else if (target.isCustomEventTarget) {
             target.eventTargetId = id;
         }
-        else { // window, iframe, etc.
+        // window, iframe, etc.
+        else {
             try {
                 target[EVENT_GUID] = id;
-            } catch(e) {
-                S.error(e);
+            } catch(ex) {
+                S.error(ex);
             }
         }
     }
 
     function removeID(target) {
-        if (target.nodeType) { // HTML Element
+        // HTML Element
+        if (target.nodeType) {
             DOM.removeAttr(target, EVENT_GUID);
         }
-        else if (target.isCustomEventTarget) { // custom EventTarget
+        // custom EventTarget
+        else if (target.isCustomEventTarget) {
             target.eventTargetId = undefined;
         }
-        else { // window, iframe, etc
+        // window, iframe, etc.
+        else {
             target[EVENT_GUID] = undefined;
         }
     }
@@ -271,7 +284,7 @@ KISSY.add('event', function(S, undefined) {
                     // try/catch is to handle iframes being unloaded
                     try {
                         Event.remove(target);
-                    } catch(e) {
+                    } catch(ex) {
                     }
                 }
             }
@@ -291,7 +304,6 @@ KISSY.add('event', function(S, undefined) {
  * @module  EventObject
  * @author  lifesinger@gmail.com
  */
-
 KISSY.add('event-object', function(S, undefined) {
 
     var doc = document,
@@ -308,7 +320,7 @@ KISSY.add('event-object', function(S, undefined) {
         self.currentTarget = currentTarget;
         self.originalEvent = domEvent || { };
 
-        if (domEvent) { // element
+        if (domEvent) { // html element
             self.type = domEvent.type;
             self._fix();
         }
@@ -447,18 +459,18 @@ KISSY.add('event-object', function(S, undefined) {
 });
 
 /**
- * Notes:
+ * NOTES:
+ *
  *  2010.04
  *   - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
  *
  * TODO:
- *   - pageX, clientX, scrollLeft, clientLeft 的详细图解
+ *   - pageX, clientX, scrollLeft, clientLeft 的详细测试
  */
 /**
  * @module  EventTarget
  * @author  lifesinger@gmail.com
  */
-
 KISSY.add('event-target', function(S, undefined) {
 
     var Event = S.Event;
@@ -495,7 +507,8 @@ KISSY.add('event-target', function(S, undefined) {
 });
 
 /**
- * Notes:
+ * NOTES:
+ *
  *  2010.04
  *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 是不需要
  *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
@@ -504,7 +517,6 @@ KISSY.add('event-target', function(S, undefined) {
  * @module  event-mouseenter
  * @author  lifesinger@gmail.com
  */
-
 KISSY.add('event-mouseenter', function(S) {
 
     var Event = S.Event;
@@ -549,6 +561,6 @@ KISSY.add('event-mouseenter', function(S) {
 
 /**
  * TODO:
- *  - ie6 下，原生的 mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>, jQuery 也异常，
- *    需要进一步研究
+ *  - ie6 下，原生的 mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>
+ *    jQuery 也异常，需要进一步研究
  */
