@@ -2,7 +2,6 @@
  * @module  EventObject
  * @author  lifesinger@gmail.com
  */
-
 KISSY.add('event-object', function(S, undefined) {
 
     var doc = document,
@@ -158,7 +157,8 @@ KISSY.add('event-object', function(S, undefined) {
 });
 
 /**
- * Notes:
+ * NOTES:
+ *
  *  2010.04
  *   - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
  *

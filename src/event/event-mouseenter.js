@@ -2,7 +2,6 @@
  * @module  event-mouseenter
  * @author  lifesinger@gmail.com
  */
-
 KISSY.add('event-mouseenter', function(S) {
 
     var Event = S.Event;

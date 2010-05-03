@@ -75,8 +75,8 @@
         h = S.get('#link-h');
 
     function test_add_listenersOrder(test) {
-        S.Event.add(a, 'click', function(ev) { test.echo(1); });
-        S.Event.add(a, 'click', function(ev) { test.echo(2); });
+        S.Event.on(a, 'click', function(ev) { test.echo(1); });
+        S.Event.on(a, 'click', function(ev) { test.echo(2); });
         test.extraMsg = '{click link a should echo 1 -> 2}';
     }
 

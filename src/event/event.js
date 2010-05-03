@@ -2,12 +2,10 @@
  * @module  event
  * @author  lifesinger@gmail.com
  */
-
 KISSY.add('event', function(S, undefined) {
 
     var DOM = S.DOM,
-        win = window,
-        doc = document,
+        win = window, doc = document,
         simpleAdd = doc.addEventListener ?
                     function(el, type, fn) {
                         if (el.addEventListener) {
@@ -42,14 +40,12 @@ KISSY.add('event', function(S, undefined) {
         special: { },
 
         /**
-         * Adds an event listener
-         *
-         * @param {String} target An element or custom EventTarget to assign the listener to
-         * @param {String} type The type of event to append
-         * @param {Function} fn The event handler
+         * Adds an event listener.
+         * @param target {Element} An element or custom EventTarget to assign the listener to.
+         * @param type {String} The type of event to append.
+         * @param fn {Function} The event handler.
          */
         add: function(target, type, fn) {
-            // ([targetA, targetB], 'click focus', fn)
             if(batch('add', target, type, fn)) return;
 
             var id = getID(target),
@@ -155,7 +151,6 @@ KISSY.add('event', function(S, undefined) {
             }
         },
 
-        // static
         _handle: function(target, event, listeners) {
             var ret, i = 0, len = listeners.length;
 
@@ -187,6 +182,11 @@ KISSY.add('event', function(S, undefined) {
 
     function batch(methodName, targets, types, fn) {
 
+        // on('#id tag.className', type, fn)
+        if(S.isString(targets)) {
+            targets = S.query(targets);
+        }
+
         // on([targetA, targetB], type, fn)
         if (S.isArray(targets)) {
             S.each(targets, function(target) {
@@ -212,13 +212,16 @@ KISSY.add('event', function(S, undefined) {
             return ret;
         }
 
-        if (target.nodeType) { // HTML Element
+        // HTML Element
+        if (target.nodeType) {
             ret = DOM.attr(target, EVENT_GUID);
         }
-        else if (target.isCustomEventTarget) { // custom EventTarget
+        // custom EventTarget
+        else if (target.isCustomEventTarget) {
             ret = target.eventTargetId;
         }
-        else { // window, iframe, etc.
+        // window, iframe, etc.
+        else {
             ret = target[EVENT_GUID];
         }
 
@@ -226,29 +229,40 @@ KISSY.add('event', function(S, undefined) {
     }
 
     function setID(target, id) {
-        if (target.nodeType) { // HTML Element
+        // text and comment node
+        if (target.nodeType === 3 || target.nodeType === 8) {
+            return S.error('Text or comment node is not valid event target.');
+        }
+
+        // HTML Element
+        if (target.nodeType) {
             DOM.attr(target, EVENT_GUID, id);
         }
-        else if (target.isCustomEventTarget) { // custom EventTarget
+        // custom EventTarget
+        else if (target.isCustomEventTarget) {
             target.eventTargetId = id;
         }
-        else { // window, iframe, etc.
+        // window, iframe, etc.
+        else {
             try {
                 target[EVENT_GUID] = id;
-            } catch(e) {
-                S.error(e);
+            } catch(ex) {
+                S.error(ex);
             }
         }
     }
 
     function removeID(target) {
-        if (target.nodeType) { // HTML Element
+        // HTML Element
+        if (target.nodeType) {
             DOM.removeAttr(target, EVENT_GUID);
         }
-        else if (target.isCustomEventTarget) { // custom EventTarget
+        // custom EventTarget
+        else if (target.isCustomEventTarget) {
             target.eventTargetId = undefined;
         }
-        else { // window, iframe, etc
+        // window, iframe, etc.
+        else {
             target[EVENT_GUID] = undefined;
         }
     }
@@ -266,7 +280,7 @@ KISSY.add('event', function(S, undefined) {
                     // try/catch is to handle iframes being unloaded
                     try {
                         Event.remove(target);
-                    } catch(e) {
+                    } catch(ex) {
                     }
                 }
             }
