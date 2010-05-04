@@ -3,3 +3,7 @@
  * @creator ≥¡”„<fool2fish@gmail.com>
  */
  
+.ks-box{border:1px solid #ccc;}
+.ks-box-hd{border-bottom:1px solid #ccc;}
+.ks-box-hd-wrapper{padding:4px 10px;}
+.ks-box-hd-tit{display:inline-block;font-size:14px;font-weight:bold;color:#404040;}
