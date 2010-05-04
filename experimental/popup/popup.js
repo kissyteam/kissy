@@ -76,7 +76,7 @@ KISSY.add("popup", function(S) {
             if( !(YDOM.getStyle(popup,'zIndex') > 1)) popup.style.zIndex = 2;
             if( config.hasMask && config.triggerType == 'click' ) Mask.show(popup);
             popup.style.display = 'block';
-            self.fire( 'afterShow');
+            self.fire( 'show');
             setPosition( popup , self.curTrigger , config.position , config.align , config.offset , config.autoFit );
             if(self._shim) self._shim.show(popup);
             if( config.effect == 'fade') opacityAnim( popup , 0 , 1 );
@@ -87,7 +87,7 @@ KISSY.add("popup", function(S) {
             if(config.hasMask && config.triggerType == 'click') Mask.hide();            
             popup.style.display = 'none';
             if(self._shim) self._shim.hide();
-            self.fire( 'afterHide');
+            self.fire( 'hide');
         },
         //设置指定元素为触点
         bindTrigger:function( el ){

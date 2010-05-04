@@ -97,14 +97,14 @@ KISSY.ready(function(S) {
         var trigger = myPopup.curTrigger , popup = myPopup.popup;
         popup.innerHTML = '<img src="' + trigger.getAttribute('data-detail') + '">';
     }
-    myPopup.on('afterShow',showDetail);
+    myPopup.on('show',showDetail);
     
     var i = 1;
     function hideMsg(){
         window.status = '弹出层第'+i+'次关闭';
         i++;
     }
-    myPopup.on('afterHide',hideMsg);
+    myPopup.on('hide',hideMsg);
 });
 </script>
 <p class="code-switch">显示源码</p>
@@ -159,7 +159,7 @@ KISSY.ready(function(S) {
             myPopup.curTrigger.innerHTML = '我失效了' ;
         }
     }
-    myPopup.on('afterShow',disableTrigger);
+    myPopup.on('show',disableTrigger);
 
     Event.on(DOM.get('#J_EnableTrigger5'),'click',function(e){
         e.preventDefault();
