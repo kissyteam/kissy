@@ -6,7 +6,7 @@
 
 KISSY.add("coupleselect", function(S) {
     var DOM = S.DOM, Event = S.Event , YDOM = YAHOO.util.Dom ,
-        KS_CS_PREFIX = 'ks-coupleselect-',
+        KS_CS_PREFIX = 'ks-coupleselect-', DISABLED_SUFFIX='-disabled',
         doc = document;
 
     /**
@@ -115,6 +115,7 @@ KISSY.add("coupleselect", function(S) {
 			}else{
 				self._targetBox.appendChild(item);
 			}
+            self.fire( 'afterAddItem');
 		},
 		
         // 绑定移除选中item触点
@@ -136,9 +137,10 @@ KISSY.add("coupleselect", function(S) {
 			}else{
 				self._sourceBox.appendChild(item);
 			}
+            self.fire( 'afterRemoveItem');
 		},
 		
-        // 移动选中item相关
+        // 绑定移动targetBox中选中item相关
         _bindMoveTopTrigger:function(){
 			var self=this;
 			Event.on(self._moveTopTrigger,'click',function(e){
@@ -168,7 +170,7 @@ KISSY.add("coupleselect", function(S) {
 			});
 		},  
         _moveItem:function(method,position){
-			var self = this;			
+			var self = this,config=self.config;
 			if(!self._selectedItem || !YDOM.isAncestor(self._targetBox,self._selectedItem)) return;
 			var item = self._selectedItem , 
 				targetItems = self._getTargetItems(),
@@ -182,17 +184,33 @@ KISSY.add("coupleselect", function(S) {
 				YDOM.insertAfter(item,targetItems[position]);
 			}else{
 				YDOM.insertBefore(item,targetItems[position]);
-			}			
+			}
+            self.fire( 'afterMoveItem');
 		},
 		
         // 获取item相关
+        /**
+         * 获取targetBox中的items
+         * @param parser
+         */
+        getTargetItems:function(parser){
+            var items = this._getTargetItems();
+            if(parser){
+                var resultArr=[];
+                for(var i = 0,len=items.length;i<len;i++){
+                    resultArr.push(parser(items[i]));
+                };
+                return resultArr;
+            }else{
+                return items;
+            }
+        },
         _getSourceItems:function(){
 			return S.query('.'+this.config.itemCls,this._sourceBox);
 		},
 		_getTargetItems:function(){
 			return S.query('.'+this.config.itemCls,this._targetBox);
-		}, 
-
+		},
 		_clearSelectedItem:function(){
 			var self = this;
 			if(self._selectedItem){
