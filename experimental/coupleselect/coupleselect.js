@@ -8,6 +8,7 @@ KISSY.add("coupleselect", function(S) {
     var DOM = S.DOM, Event = S.Event , YDOM = YAHOO.util.Dom ,
         KS_CS_PREFIX = 'ks-coupleselect-', DISABLED_SUFFIX='-disabled',
         doc = document;
+		
 
     /**
      * CoupleSelect
