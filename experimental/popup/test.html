@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk" />
+<title>Popup Test</title>
+<link rel="stylesheet" href="../../build/cssreset/reset.css" />
+<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="../../build/packages/kissy-core.js"></script>
+<script src="popup.js"></script>
+<style type="text/css">
+body{line-height:1.5em;}
+#page{margin:10px;}
+h1 {margin:15px 0;color:#00859D;font-family:Constantia,serif;font-size:26px;}
+.box{margin-top:10px;}
+.box .hd{padding:6px 0;border-bottom:1px solid #ccc;}
+.box .hd h3{font-size:14px;}
+.box .bd{padding:10px;}
+.popup{z-index:100;padding:4px;border:1px solid #ccc;background:#fff;}
+select{margin-top:6px;}
+.trigger3{display:inline-block;width:100px;height:100px;border:1px solid #ddd;}
+p.code-switch { color: #09f; cursor: pointer; margin-top: 10px; }
+pre.code {
+	color: #444;
+	cursor: auto;
+	border-left: 2px solid #7F96AA;
+	margin-top: 5px;
+	padding: 0 10px 20px 10px;
+	font-size: 14px;
+}
+
+</style>
+</head>
+<body>
+<div id="page">
+<h1>KISSY Popup</h1>
+
+<!-- box START -->
+<div class="box">
+    <div class="hd">
+        <h3>1、使用默认配置的弹出层</h3>
+    </div>
+    <div class="bd">
+        <a href="#" id="J_Trigger1">点我就有惊喜哦</a>
+        <br/>
+        <select><option>我是一个select</option></select>
+        <div id="J_Popup1" class="popup popup1"><img height="70" width="190" src="http://img04.taobaocdn.com/tps/i4/T1PgtxXmRfXXXXXXXX-190-70.png"></div>
+    </div>
+</div>
+<script type="text/javascript">
+KISSY.ready(function(S) {
+     var myPopup = new S.Popup('#J_Trigger1','#J_Popup1');
+});
+</script>
+<p class="code-switch">显示源码</p>
+<!-- box END -->
+
+<!-- box START -->
+<div class="box">
+    <div class="hd">
+        <h3>2、鼠标hover触发弹出，且自定义弹出位置的</h3>
+    </div>
+    <div class="bd">
+        <a href="#" id="J_Trigger2">honey,hover me!</a>
+        <br/>
+        <select><option>我是一个select</option></select>
+        <div id="J_Popup2" class="popup popup2"><img src="http://img04.taobaocdn.com/tps/i4/T1z18xXh4sXXXXXXXX-190-70.gif"></div>
+    </div>
+</div>
+<script type="text/javascript">
+KISSY.ready(function(S) {
+     var myPopup = new S.Popup('#J_Trigger2','#J_Popup2',{triggerType:'mouse',position:'bottom',align:'center',effect:'fade'});
+});
+</script>
+<p class="code-switch">显示源码</p>
+<!-- box END -->
+
+<!-- box START -->
+<div class="box">
+    <div class="hd">
+        <h3>3、批量触点，且有自定义事件的</h3>
+    </div>
+    <div class="bd">
+        <a href="#" class="J_Trigger3 trigger3" data-detail="http://img03.taobaocdn.com/bao/uploaded/i3/T1nBtxXg4BXXaTgPA9_073840.jpg_310x310.jpg"><img height="100" width="100" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1nBtxXg4BXXaTgPA9_073840.jpg_100x100.jpg"></a>
+        <a href="#" class="J_Trigger3 trigger3" data-detail="http://img03.taobaocdn.com/bao/uploaded/i3/T1vOVxXlBwXXcZGuQ8_070309.jpg_310x310.jpg"><img height="100" width="100" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1vOVxXlBwXXcZGuQ8_070309.jpg_100x100.jpg"></a>
+        <a href="#" class="J_Trigger3 trigger3" data-detail="http://img03.taobaocdn.com/bao/uploaded/i3/T1eAdxXfXiXXbUx3ra_091205.jpg_310x310.jpg"><img height="100" width="100" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1eAdxXfXiXXbUx3ra_091205.jpg_100x100.jpg"></a>
+        <br/>
+        <select><option>我是一个select</option></select>
+        <div id="J_Popup3" class="popup popup3"></div>
+    </div>
+</div>
+<script type="text/javascript">
+KISSY.ready(function(S) {
+
+    var myPopup = new S.Popup('.J_Trigger3','#J_Popup3',{triggerType:'mouse',position:'bottom',align:'left',effect:'fade'});
+
+    function showDetail(){
+        var trigger = myPopup.curTrigger , popup = myPopup.popup;
+        popup.innerHTML = '<img src="' + trigger.getAttribute('data-detail') + '">';
+    }
+    myPopup.on('afterShow',showDetail);
+    
+    var i = 1;
+    function hideMsg(){
+        window.status = '弹出层第'+i+'次关闭';
+        i++;
+    }
+    myPopup.on('afterHide',hideMsg);
+});
+</script>
+<p class="code-switch">显示源码</p>
+<!-- box END -->
+
+<!-- box START -->
+<div class="box">
+    <div class="hd">
+        <h3>4、带遮罩和关闭按钮的弹出层</h3>
+    </div>
+    <div class="bd">
+        <a href="#" id="J_Trigger4">点我</a>
+        <br/>
+        <select><option>我是一个select</option></select>
+        <div id="J_Popup4" class="popup popup4"><a class="J_CloseBtn4">关闭</a><br/><img height="70" width="190" src="http://img04.taobaocdn.com/tps/i4/T1PgtxXmRfXXXXXXXX-190-70.png"><br/><button class="J_CloseBtn4">关闭</button></div>
+    </div>
+</div>
+<script type="text/javascript">
+KISSY.ready(function(S) {
+     var myPopup = new S.Popup('#J_Trigger4','#J_Popup4',{hasMask:true,closeBtnCls:'J_CloseBtn4'});
+});
+</script>
+<p class="code-switch">显示源码</p>
+<!-- box END -->
+
+<!-- box START -->
+<div class="box">
+    <div class="hd">
+        <h3>5、添加触点、激活和失活触点</h3>
+    </div>
+    <div class="bd">
+        <a href="#" id="J_Trigger5">我被点击一次后失效</a>
+        <br/>
+        <a href="#" id="J_EnableTrigger5">点我激活上面的失效触点</a>
+        <br/>
+        <select><option>我是一个select</option></select>
+        <br/>
+        <a href="#" id="J_Trigger6">我只是个链接</a>
+        <br/>
+        <a href="#" id="J_AttachTrigger6">点我将上面的链接加为触点</a>
+        <div id="J_Popup5" class="popup popup5"><img height="70" width="190" src="http://img04.taobaocdn.com/tps/i4/T1PgtxXmRfXXXXXXXX-190-70.png"><br/><button class="KSCloseBtn">关闭</button></div>
+    </div>
+</div>
+<script type="text/javascript">
+KISSY.ready(function(S) {
+    var DOM = S.DOM, Event = S.Event;
+    var myPopup = new S.Popup('#J_Trigger5','#J_Popup5');
+
+    function disableTrigger(){
+        if(myPopup.trigger[0] == myPopup.curTrigger){
+            myPopup.disableTrigger(myPopup.curTrigger);
+            myPopup.curTrigger.innerHTML = '我失效了' ;
+        }
+    }
+    myPopup.on('afterShow',disableTrigger);
+
+    Event.on(DOM.get('#J_EnableTrigger5'),'click',function(e){
+        e.preventDefault();
+        myPopup.enableTrigger(myPopup.trigger[0]);
+        myPopup.trigger[0].innerHTML = '我又生效了，点我一次还失效' ;
+    });
+
+    Event.on(DOM.get('#J_AttachTrigger6'),'click',function(e){
+        e.preventDefault();
+        var el = DOM.get('#J_Trigger6');
+        el.innerHTML = '点我也能弹出层了';
+        myPopup.bindTrigger(el);
+    });
+
+
+});
+</script>
+<p class="code-switch">显示源码</p>
+<!-- box END -->
+</div>
+</body>
+</html>
+<script>
+    (function() {
+        var S = KISSY, SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+
+        S.all('p.code-switch').each(function(p) {
+            p.on('click', function() {
+                var showing = (p.text() === SHOW_CODE),
+                    next = p.next(),
+                    pre = next;
+
+                if (next[0].nodeName !== 'PRE') {
+                    pre = S.Node('PRE');
+                    pre.attr('class', 'code')
+                        .html(p.prev().html());
+
+                    if (S.UA.ie) {
+                        pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
+                    }
+                    p.parent()[0].insertBefore(pre[0], p.next()[0]);
+                }
+
+                pre.css('display', showing ? 'block' : 'none');
+                p.html(showing ? HIDE_CODE : SHOW_CODE);
+            });
+        });
+
+    })();
+
+</script>
+
