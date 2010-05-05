@@ -1,0 +1,58 @@
+/**
+ * Pagination
+ * @creator 沉鱼<fool2fish@gmail.com>
+ */
+
+/***********************************************************************************************************************
+ * @默认（标准）样式
+ **********************************************************************************************************************/
+.ks-pagination{height:30px;}
+.ks-pagination-standard{float:right;margin:3px 10px 0 0;_display:inline;}
+
+.ks-pagination span{color:#808080;}
+.ks-pagination a{color:#04c;cursor:pointer;}
+.ks-pagination a:hover,
+.ks-pagination a:active{color:#f60;text-decoration:none;border:1px solid #f60;}
+
+.ks-pagination-info,
+.ks-pagination-start,
+.ks-pagination-prev,
+.ks-pagination-next,
+.ks-pagination-end,
+.ks-pagination-page,
+.ks-pagination-skip,
+.ks-pagination-data-limit{float:left;height:20px;margin-left:3px;line-height:20px;}
+
+.ks-pagination-info{padding-top:1px;}
+
+.ks-pagination-start,
+.ks-pagination-page,
+.ks-pagination-end,
+.ks-pagination-prev,
+.ks-pagination-next{padding:0 7px;border:1px solid #ccc;background:#fff;}
+
+.ks-pagination-skip{margin-left:6px;color:#404040;}
+.ks-pagination-skip-to{width:2em;}
+.ks-pagination-skip-button{margin-left:2px;height:22px;line-height:14px;}
+
+.ks-pagination-data-limit{margin-left:10px;padding-top:2px;*padding-top:1px;color:#404040;}
+
+span.ks-pagination-page{color:#f60;font-weight:700;border:1px solid #f60;background-color:#ffede1;}
+
+.ks-pagination-start,
+.ks-pagination-prev,
+.ks-pagination-next,
+.ks-pagination-end{background:url(img/pagination.png) no-repeat;}
+.ks-pagination-start,
+.ks-pagination-prev{width:6px;overflow:hidden;line-height:1000px;}
+.ks-pagination-next,
+.ks-pagination-end{padding-right:14px;}
+span.ks-pagination-start{background-position:0 -145px;}
+a.ks-pagination-start{background-position:0 -115px;}
+span.ks-pagination-prev{background-position:0 -25px;}
+a.ks-pagination-prev{background-position:0 5px;}
+span.ks-pagination-next{background-position:100% -85px;}
+a.ks-pagination-next{background-position:100% -55px;}
+span.ks-pagination-end{background-position:100% -205px;}
+a.ks-pagination-end{background-position:100% -175px;}
+
