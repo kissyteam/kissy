@@ -23,6 +23,7 @@
 .ks-box-bd-wrapper{padding:6px 10px;}
 .ks-box-act{position:absolute;right:1px;top:4px;padding-right:5px;line-height:21px;}
 .ks-box-act li{float:left;margin-right:10px;}
+.ks-box .ks-box  .ks-box-hd-tit{font-weight:normal;}
 
 /***********************************************************************************************************************
  * @强调盒子样式
@@ -32,7 +33,6 @@
 .ks-box-strong .ks-box-wrapper-rc-bl{background-position:-3px -143px;}
 .ks-box-strong .ks-box-wrapper-rc-br{background-position:0 -143px;}
 .ks-box-strong .ks-box-hd{border-color:#80b2ff;background-color:#a0beff;background-position:0 -150px;}
-.ks-box-strong .ks-box-hd-tit{color:#000;}
 .ks-box-strong .ks-box-bd{border-color:#80b2ff;}
 
 /***********************************************************************************************************************
@@ -44,3 +44,14 @@
 .ks-box-weak .ks-box-wrapper-rc-br{background-position:0 -73px;}
 .ks-box-weak .ks-box-hd{border-color:#ccc;background-color:#f2f2f2;background-position:0 -80px;}
 .ks-box-weak .ks-box-bd{border-color:#ccc;}
+
+/***********************************************************************************************************************
+ * @裸盒样式
+ **********************************************************************************************************************/
+.ks-box-naked .ks-box-wrapper-rc-tl,
+.ks-box-naked .ks-box-wrapper-rc-tr,
+.ks-box-naked .ks-box-wrapper-rc-bl,
+.ks-box-naked .ks-box-wrapper-rc-br{display:none;}
+.ks-box-naked .ks-box-hd{border:none;border-bottom:1px solid #d9e7fd;background:#fff;}
+.ks-box-naked .ks-box-hd-wrapper{border-bottom:1px solid #b2d1ff;}
+.ks-box-naked .ks-box-bd{border:none}
