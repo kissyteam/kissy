@@ -16,12 +16,12 @@
 .ks-box-cbl{float:left;margin-top:-4px;background-position:-3px -3px;}
 .ks-box-cbr{float:right;margin-top:-4px;background-position:0 -3px;}
 .ks-box-hd{border:1px solid #bad6ff;border-bottom:none;background:#cce1ff url(img/bar-repeatx.png) repeat-x 0 -10px;}
-.ks-box-hd-wrapper{padding:2px 10px;border:1px solid #f6faff;border-bottom:none;}
+.ks-box-hd-wrapper{padding:3px 10px;border:1px solid #f6faff;border-bottom:none;}
 .ks-box-icon{display:inline;}
-.ks-box-tit{display:inline;font-size:14px;font-weight:bold;}
+.ks-box-tit{display:inline;font-size:12px;font-weight:bold;}
 .ks-box-bd{border:1px solid #bad6ff;background:#fff;}
 .ks-box-act{position:absolute;right:1px;top:4px;padding-right:5px;line-height:21px;}
-.ks-box-act li{float:left;margin-right:10px;}
+.ks-box-act li{float:left;margin-right:5px;}
 
 /***********************************************************************************************************************
  * @强调样式
@@ -51,8 +51,6 @@
 .ks-box-weak .ks-box-cbl{background-position:-3px -73px;}
 .ks-box-weak .ks-box-cbr{background-position:0 -73px;}
 .ks-box-weak .ks-box-hd{border-color:#ddd;background-color:#f2f2f2;background-position:0 -80px;}
-.ks-box-weak .ks-box-hd-wrapper{padding:3px 10px;}
-.ks-box-weak .ks-box-tit{font-size:12px;}
 .ks-box-weak .ks-box-bd{border-color:#ddd;}
 
 /***********************************************************************************************************************
@@ -63,6 +61,5 @@
 .ks-box-naked .ks-box-cbl,
 .ks-box-naked .ks-box-cbr{display:none;}
 .ks-box-naked .ks-box-hd{border:none;border-bottom:1px solid #d9e7fd;background:#fff;}
-.ks-box-naked .ks-box-hd-wrapper{padding:3px 10px;border:none;border-bottom:1px solid #b2d1ff;}
-.ks-box-naked .ks-box-tit{font-size:12px;}
+.ks-box-naked .ks-box-hd-wrapper{border:none;border-bottom:1px solid #b2d1ff;}
 .ks-box-naked .ks-box-bd{border:none}
