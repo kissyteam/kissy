@@ -10,12 +10,12 @@
 .ks-box-ctl,
 .ks-box-ctr,
 .ks-box-cbl,
-.ks-box-cbr{position:relative;width:4px;height:4px;overflow:hidden;font-size:0;line-height:0;background:url(assets/bar-repeatx.png) no-repeat -3px 0;}
+.ks-box-cbr{position:relative;width:4px;height:4px;overflow:hidden;font-size:0;line-height:0;background:url(img/bar-repeatx.png) no-repeat -3px 0;}
 .ks-box-ctl{float:left;}
 .ks-box-ctr{float:right;background-position:0 0;}
 .ks-box-cbl{float:left;margin-top:-4px;background-position:-3px -3px;}
 .ks-box-cbr{float:right;margin-top:-4px;background-position:0 -3px;}
-.ks-box-hd{border:1px solid #bad6ff;border-bottom:none;background:#cce1ff url(assets/bar-repeatx.png) repeat-x 0 -10px;}
+.ks-box-hd{border:1px solid #bad6ff;border-bottom:none;background:#cce1ff url(img/bar-repeatx.png) repeat-x 0 -10px;}
 .ks-box-hd-wrapper{padding:2px 10px;border:1px solid #f6faff;border-bottom:none;}
 .ks-box-icon{display:inline;}
 .ks-box-tit{display:inline;font-size:14px;font-weight:bold;}
