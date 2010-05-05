@@ -7,16 +7,16 @@
  * @公共样式
  **********************************************************************************************************************/
 .ks-accordion{position:relative;margin-bottom:10px;}
-.ks-accordion-rc-tl,
-.ks-accordion-rc-tr,
-.ks-accordion-rc-bl,
-.ks-accordion-rc-br{position:relative;width:4px;height:4px;overflow:hidden;font-size:0;line-height:0;background:url(assets/bar-repeatx.png) no-repeat -3px 0;}
-.ks-accordion-rc-tl{float:left;*margin-top:-1px;}
-.ks-accordion-rc-tr{float:right;background-position:0 0;*margin-top:-1px;}
-.ks-accordion-rc-bl{float:left;margin-top:-4px;background-position:-3px -3px;}
-.ks-accordion-rc-br{float:right;margin-top:-4px;background-position:0 -3px;}
+.ks-accordion-ctl,
+.ks-accordion-ctr,
+.ks-accordion-cbl,
+.ks-accordion-cbr{position:relative;width:4px;height:4px;overflow:hidden;font-size:0;line-height:0;background:url(assets/bar-repeatx.png) no-repeat -3px 0;}
+.ks-accordion-ctl{float:left;*margin-top:-1px;}
+.ks-accordion-ctr{float:right;background-position:0 0;*margin-top:-1px;}
+.ks-accordion-cbl{float:left;margin-top:-4px;background-position:-3px -3px;}
+.ks-accordion-cbr{float:right;margin-top:-4px;background-position:0 -3px;}
 .ks-accordion-trigger{margin-top:-1px;border:1px solid #bad6ff;background:#cce1ff url(assets/bar-repeatx.png) repeat-x 0 -10px;cursor:pointer;}
-.ks-accordion-trigger-wrapper{padding:3px 10px;border:1px solid #f6faff;border-bottom:none;}
+.ks-accordion-trigger-wrapper{padding:4px 10px 3px 10px;border:1px solid #f6faff;border-bottom:none;}
 .ks-accordion-icon{display:inline-block;width:12px;height:12px;margin-right:4px;background:url(assets/icon.png) no-repeat 0 0;}
 .ks-accordion-active .ks-accordion-icon{background-position:-20px 0;}
 .ks-accordion-tit{display:inline;font-size:12px;font-weight:bold;}
@@ -25,42 +25,43 @@
 /***********************************************************************************************************************
  * @强调样式
  **********************************************************************************************************************/
-.ks-accordion-strong .ks-accordion-rc-tl{background-position:-3px -140px;}
-.ks-accordion-strong .ks-accordion-rc-tr{background-position:0 -140px;}
-.ks-accordion-strong .ks-accordion-rc-bl{background-position:-3px -143px;}
-.ks-accordion-strong .ks-accordion-rc-br{background-position:0 -143px;}
-.ks-accordion-strong  .ks-accordion-trigger{border-color:#80b2ff;background-color:#a0beff;background-position:0 -150px;}
-.ks-accordion-strong  .ks-accordion-panel{border-color:#80b2ff;}
+.ks-accordion-strong .ks-accordion-ctl{background-position:-3px -140px;}
+.ks-accordion-strong .ks-accordion-ctr{background-position:0 -140px;}
+.ks-accordion-strong .ks-accordion-cbl{background-position:-3px -143px;}
+.ks-accordion-strong .ks-accordion-cbr{background-position:0 -143px;}
+.ks-accordion-strong .ks-accordion-trigger{border-color:#80b2ff;background-color:#a0beff;background-position:0 -150px;}
+.ks-accordion-strong .ks-accordion-panel{border-color:#80b2ff;}
 
 /***********************************************************************************************************************
  * @标准样式
  **********************************************************************************************************************/
-.ks-accordion-normal .ks-accordion-rc-tl{background-position:-3px 0;}
-.ks-accordion-normal .ks-accordion-rc-tr{background-position:0 0;}
-.ks-accordion-normal .ks-accordion-rc-bl{background-position:-3px -3px;}
-.ks-accordion-normal .ks-accordion-rc-br{background-position:0 -3px;}
-.ks-accordion-normal  .ks-accordion-trigger{border-color:#bad6ff;background-color:#cce1ff;background-position:0 -10px;}
-.ks-accordion-normal  .ks-accordion-panel{border-color:#bad6ff;}
+.ks-accordion-normal .ks-accordion-ctl{background-position:-3px 0;}
+.ks-accordion-normal .ks-accordion-ctr{background-position:0 0;}
+.ks-accordion-normal .ks-accordion-cbl{background-position:-3px -3px;}
+.ks-accordion-normal .ks-accordion-cbr{background-position:0 -3px;}
+.ks-accordion-normal .ks-accordion-trigger{border-color:#bad6ff;background-color:#cce1ff;background-position:0 -10px;}
+.ks-accordion-normal .ks-accordion-panel{border-color:#bad6ff;}
 
 /***********************************************************************************************************************
  * @弱化样式
  **********************************************************************************************************************/
-.ks-accordion-weak .ks-accordion-rc-tl{background-position:-3px -70px;}
-.ks-accordion-weak .ks-accordion-rc-tr{background-position:0 -70px;}
-.ks-accordion-weak .ks-accordion-rc-bl{background-position:-3px -73px;}
-.ks-accordion-weak .ks-accordion-rc-br{background-position:0 -73px;}
-.ks-accordion-weak  .ks-accordion-trigger{border-color:#ddd;background-color:#f2f2f2;background-position:0 -80px;}
-.ks-accordion-weak  .ks-accordion-panel{border-color:#ddd;}
+.ks-accordion-weak .ks-accordion-ctl{background-position:-3px -70px;}
+.ks-accordion-weak .ks-accordion-ctr{background-position:0 -70px;}
+.ks-accordion-weak .ks-accordion-cbl{background-position:-3px -73px;}
+.ks-accordion-weak .ks-accordion-cbr{background-position:0 -73px;}
+.ks-accordion-weak .ks-accordion-trigger{border-color:#ddd;background-color:#f2f2f2;background-position:0 -80px;}
+.ks-accordion-weak .ks-accordion-panel{border-color:#ddd;}
 
 /***********************************************************************************************************************
  * @裸样式
  **********************************************************************************************************************/
-.ks-accordion-naked .ks-accordion-rc-tl,
-.ks-accordion-naked .ks-accordion-rc-tr,
-.ks-accordion-naked .ks-accordion-rc-bl,
-.ks-accordion-naked .ks-accordion-rc-br{display:none;}
-.ks-accordion-naked  .ks-accordion-trigger{border:none;border-bottom:1px solid #d9e7fd;background:#fff;}
-.ks-accordion-naked  .ks-accordion-trigger-wrapper{border:none;border-bottom:1px solid #b2d1ff;}
-.ks-accordion-naked  .ks-accordion-panel{border:none}
+.ks-accordion-naked .ks-accordion-ctl,
+.ks-accordion-naked .ks-accordion-ctr,
+.ks-accordion-naked .ks-accordion-cbl,
+.ks-accordion-naked .ks-accordion-cbr{display:none;}
+.ks-accordion-naked .ks-accordion-trigger{margin-top:0;}
+.ks-accordion-naked .ks-accordion-trigger{border:none;border-bottom:1px solid #d9e7fd;background:#fff;}
+.ks-accordion-naked .ks-accordion-trigger-wrapper{border:none;border-bottom:1px solid #b2d1ff;}
+.ks-accordion-naked .ks-accordion-panel{border:none}
 
 
