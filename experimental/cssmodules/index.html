@@ -4,7 +4,6 @@
 <meta charset="gbk"/>
 <title>CSS Modules Index</title>
 <link rel="stylesheet" href="../../build/cssreset/reset.css" />
-<link rel="stylesheet" href="box/box.css" />
 <style>
 #page{margin:10px;}
 </style>
@@ -12,22 +11,44 @@
 <body>
 <div id="page">
 
-<!-- box START -->
-<div class="ks-box">
-	<div class="ks-accrodion" id="KSAccordionVisualComponent">
-        <div class="ks-accrodion-trigger active"><i class="ks-accrodion-icon"></i><h3>布局类</h3></div>
-        <div class="ks-accrodion-panel">
-            1、支持鼠标滑过和点击触点两种方式<br>
-            2、支持同时展开多个面板
+<!-- accordion START -->
+    <div class="ks-accordion ks-accordion-naked">
+        <span class="ks-accordion-rc-tl"></span>
+        <span class="ks-accordion-rc-tr"></span>
+        <div class="ks-accordion-trigger ks-accordion-active">
+            <div class="ks-accordion-trigger-wrapper">
+                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">布局类</h3>
+            </div>
         </div>
-        <div class="ks-accrodion-trigger active"><i class="ks-accrodion-icon"></i><h3>盒子类</h3></div>
-        <div class="ks-accrodion-panel">
-            1、支持鼠标滑过和点击触点两种方式<br>
-            2、支持同时展开多个面板
+        <div class="ks-accordion-panel">
+            <div class="ks-accordion-panel-wrapper">
+                这里是内容
+            </div>
         </div>
+        <div class="ks-accordion-trigger ks-accordion-active">
+            <div class="ks-accordion-trigger-wrapper">
+                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">盒子类</h3>
+            </div>
+        </div>
+        <div class="ks-accordion-panel">
+            <div class="ks-accordion-panel-wrapper">
+                这里是内容
+            </div>
+        </div>
+        <div class="ks-accordion-trigger">
+            <div class="ks-accordion-trigger-wrapper">
+                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">手风琴-裸</h3>
+            </div>
+        </div>
+        <div class="ks-accordion-panel" style="display:none;">
+            <div class="ks-accordion-panel-wrapper">
+                这里是内容
+            </div>
+        </div>
+        <span class="ks-accordion-rc-bl"></span>
+        <span class="ks-accordion-rc-br"></span>
     </div>
-</div>
-<!-- box END -->
+    <!-- accordion END -->
     
 </div>
 </body>
