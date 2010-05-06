@@ -4,10 +4,10 @@
  */
 
 /***********************************************************************************************************************
- * @默认（标准）样式
+ * @公共样式
  **********************************************************************************************************************/
 .ks-pagination{height:30px;}
-.ks-pagination-standard{float:right;margin:3px 10px 0 0;_display:inline;}
+.ks-pagination-wrapper{float:right;margin:3px 10px 0 0;}
 
 .ks-pagination span{color:#808080;}
 .ks-pagination a{color:#04c;cursor:pointer;}
@@ -26,10 +26,11 @@
 .ks-pagination-info{padding-top:1px;}
 
 .ks-pagination-start,
-.ks-pagination-page,
-.ks-pagination-end,
 .ks-pagination-prev,
-.ks-pagination-next{padding:0 7px;border:1px solid #ccc;background:#fff;}
+.ks-pagination-next,
+.ks-pagination-end,
+.ks-pagination-page{padding:0 7px;border:1px solid #ccc;background:#fff url(img/pagination.png) no-repeat 1000px 1000px;}
+span.ks-pagination-page{color:#f60;font-weight:700;border:1px solid #f60;background-color:#ffede1;}
 
 .ks-pagination-skip{margin-left:6px;color:#404040;}
 .ks-pagination-skip-to{width:2em;}
@@ -37,12 +38,6 @@
 
 .ks-pagination-data-limit{margin-left:10px;padding-top:2px;*padding-top:1px;color:#404040;}
 
-span.ks-pagination-page{color:#f60;font-weight:700;border:1px solid #f60;background-color:#ffede1;}
-
-.ks-pagination-start,
-.ks-pagination-prev,
-.ks-pagination-next,
-.ks-pagination-end{background:url(img/pagination.png) no-repeat;}
 .ks-pagination-start,
 .ks-pagination-prev{width:6px;overflow:hidden;line-height:1000px;}
 .ks-pagination-next,
@@ -56,3 +51,29 @@ a.ks-pagination-next{background-position:100% -55px;}
 span.ks-pagination-end{background-position:100% -205px;}
 a.ks-pagination-end{background-position:100% -175px;}
 
+/***********************************************************************************************************************
+ * @标准样式
+ **********************************************************************************************************************/
+
+
+/***********************************************************************************************************************
+ * @弱化样式
+ **********************************************************************************************************************/
+.ks-pagination-weak a{text-decoration:underline;}
+.ks-pagination-weak a:hover,
+.ks-pagination-weak a:active{text-decoration:underline;border:none;}
+
+.ks-pagination-weak .ks-pagination-start,
+.ks-pagination-weak .ks-pagination-prev,
+.ks-pagination-weak .ks-pagination-next,
+ .ks-pagination-weak .ks-pagination-end,
+.ks-pagination-weak .ks-pagination-page{margin-left:0;padding:0;border:none;}
+
+.ks-pagination-weak .ks-pagination-page{padding:0 5px;}
+.ks-pagination-weak span.ks-pagination-page{background:#fff;}
+
+.ks-pagination-weak .ks-pagination-start,
+.ks-pagination-weak .ks-pagination-prev{width:12px;padding-right:2px;}
+
+.ks-pagination-weak .ks-pagination-next,
+.ks-pagination-weak .ks-pagination-end{padding-right:14px;}
