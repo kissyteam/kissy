@@ -1,0 +1,34 @@
+/**
+ * Message
+ * @creator 沉鱼<fool2fish@gmail.com>
+ */
+
+/***********************************************************************************************************************
+ * @公共样式
+ **********************************************************************************************************************/
+.ks-msg{position:relative;clear:both;}
+.ks-msg-wrapper{position:relative;float:left;clear:both;margin-bottom:6px;padding:3px 10px 3px 24px;border:1px solid #ffcc7f;background:#ffffe5;}
+.ks-msg-icon{position:absolute;top:4px;left:4px;width:16px;height:16px;overflow:hidden;font-size:0;line-height:0;background:url(img/msg.png) no-repeat 0 -160px;}
+.ks-msg-tit{display:inline;font-weight:bold;}
+.ks-msg-con{display:inline;}
+
+.ks-msg-error{border:1px solid #ff8080;background:#fff2f2;}
+.ks-msg-error .ks-msg-icon{background-position:0px 0px;}
+
+/***********************************************************************************************************************
+ * @强调样式
+ **********************************************************************************************************************/
+.ks-msg-strong{margin-bottom:10px;}
+.ks-msg-strong .ks-msg-wrapper{float:none;clear:both;margin:0;padding-left:42px;}
+.ks-msg-strong .ks-msg-icon{top:5px;left:5px;width:32px;height:32px;background-position:100% -160px;}
+.ks-msg-strong .ks-msg-tit{display:block;font-size:14px;}
+.ks-msg-strong .ks-msg-con{display:block;}
+
+/***********************************************************************************************************************
+ * @标准样式
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * @裸样式
+ **********************************************************************************************************************/
+.ks-msg-naked .ks-msg-wrapper{border:none;background:none;}
