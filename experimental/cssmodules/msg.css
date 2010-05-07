@@ -9,7 +9,7 @@
 .ks-msg{position:relative;padding-top:1px;margin-bottom:6px;}
 .ks-msg-wrapper{padding:3px 10px 3px 0;border:1px solid #ffcc7f;background:#ffffe5;}
 .ks-msg-icon{position:absolute;left:5px;top:6px;width:16px;height:16px;overflow:hidden;font-size:0;line-height:0;background:url(img/msg.png) no-repeat 0 -160px;}
-.ks-msg-tit{display:inline;padding-left:24px;padding-right:6px;font-weight:bold;}
+.ks-msg-tit{display:inline;padding-left:24px;padding-right:2px;font-weight:bold;}
 .ks-msg-con{display:inline;}
 
 .ks-msg-error{border:1px solid #ff8080;background:#fff2f2;}
