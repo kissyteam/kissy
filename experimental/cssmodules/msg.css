@@ -6,9 +6,9 @@
 /***********************************************************************************************************************
  * @公共样式
  **********************************************************************************************************************/
-.ks-msg{position:relative;margin-bottom:6px;}
-.ks-msg-wrapper{position:relative;padding:3px 10px 3px 0;border:1px solid #ffcc7f;background:#ffffe5;}
-.ks-msg-icon{position:absolute;left:5px;top:5px;width:16px;height:16px;overflow:hidden;font-size:0;line-height:0;background:url(img/msg.png) no-repeat 0 -160px;}
+.ks-msg{position:relative;padding-top:1px;margin-bottom:6px;}
+.ks-msg-wrapper{padding:3px 10px 3px 0;border:1px solid #ffcc7f;background:#ffffe5;}
+.ks-msg-icon{position:absolute;left:5px;top:6px;width:16px;height:16px;overflow:hidden;font-size:0;line-height:0;background:url(img/msg.png) no-repeat 0 -160px;}
 .ks-msg-tit{display:inline;padding-left:24px;padding-right:6px;font-weight:bold;}
 .ks-msg-con{display:inline;}
 
@@ -26,7 +26,7 @@
 .ks-msg-ok .ks-msg-icon{background-position:0 -200px;}
 .ks-msg-notice{border:1px solid #40b3ff;background:#e5f5ff;}
 .ks-msg-notice .ks-msg-icon{background-position:0 -240px;}
-.ks-msg-question{border:1px solid #ffcc7f;background:#ffffe5;}
+.ks-msg-question{border:1px solid #ffcc7f;background:#ffffe5;}   
 .ks-msg-question .ks-msg-icon{background-position:0 -280px;}
 
 /***********************************************************************************************************************
@@ -55,4 +55,4 @@
  * @裸样式
  **********************************************************************************************************************/
 .ks-msg-naked{margin-bottom:0;}
-.ks-msg-naked .ks-msg-wrapper{border:none;background:none;}
+.ks-msg-naked .ks-msg-wrapper{padding:4px 10px 4px 0;border:none;background:none;}
