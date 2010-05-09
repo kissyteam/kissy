@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 564 Apr 15 09:57
+build: 633 May 9 23:02
 */
 /**
  * Switchable
@@ -53,7 +53,7 @@ KISSY.add('switchable', function(S, undefined) {
 
         /**
          * ≈‰÷√≤Œ ˝
-         * @type object
+         * @type Object
          */
         self.config = config;
 

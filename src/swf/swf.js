@@ -107,8 +107,8 @@ KISSY.add('swf', function(S) {
 
         /**
          * Calls a specific function exposed by the SWF's ExternalInterface.
-         * @param func {string} the name of the function to call
-         * @param args {array} the set of arguments to pass to the function.
+         * @param func {String} the name of the function to call
+         * @param args {Array} the set of arguments to pass to the function.
          */
         callSWF: function (func, args) {
             var self = this;

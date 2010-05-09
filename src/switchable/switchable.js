@@ -48,7 +48,7 @@ KISSY.add('switchable', function(S, undefined) {
 
         /**
          * ≈‰÷√≤Œ ˝
-         * @type object
+         * @type Object
          */
         self.config = config;
 

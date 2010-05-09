@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 558 Apr 13 13:41
+build: 633 May 9 23:00
 */
 /**
  * @module kissy
@@ -16,7 +16,7 @@ build: 558 Apr 13 13:41
 
     var doc = win.document,
 
-        // Copies all the properties of s to r.
+        // Copies all the properties of s to r
         mix = function(r, s, ov, wl) {
             if (!s || !r) return r;
             if (ov === undefined) ov = true;
@@ -54,7 +54,7 @@ build: 558 Apr 13 13:41
 
         /**
          * The version of the library.
-         * @type {string}
+         * @type {String}
          */
         version: '1.0.5',
 
@@ -63,18 +63,17 @@ build: 558 Apr 13 13:41
          * @private
          */
         _init: function() {
-            this.Env = {
-                mods: {}
-            };
+            // Env 对象目前仅用于内部，为模块动态加载预留接口
+            this.Env = { mods: {} };
         },
 
         /**
          * Registers a module.
-         * @param {string} name module name
-         * @param {function} fn entry point into the module that is used to bind module to KISSY
-         * <pre>
+         * @param name {String} module name
+         * @param fn {Function} entry point into the module that is used to bind module to KISSY
+         * <code>
          * KISSY.add('module-name', function(S){ });
-         * </pre>
+         * </code>
          * @return {KISSY}
          */
         add: function(name, fn) {
@@ -95,10 +94,10 @@ build: 558 Apr 13 13:41
 
         /**
          * Specify a function to execute when the DOM is fully loaded.
-         * @param {function} fn A function to execute after the DOM is ready
-         * <pre>
+         * @param fn {Function} A function to execute after the DOM is ready
+         * <code>
          * KISSY.ready(function(S){ });
-         * </pre>
+         * </code>
          * @return {KISSY}
          */
         ready: function(fn) {
@@ -123,23 +122,38 @@ build: 558 Apr 13 13:41
         _bindReady: function() {
             var self = this,
                 doScroll = doc.documentElement.doScroll,
-                eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded';
+                eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
+                COMPLETE = 'complete';
 
             // Set to true once it runs
             readyBound = true;
 
+            // Catch cases where ready() is called after the
+            // browser event has already occurred.
+            if (doc.readyState === COMPLETE) {
+                return self._fireReady();
+            }
+
+            // w3c mode
+            if (doc.addEventListener) {
+                function domReady() {
+                    doc.removeEventListener(eventType, domReady, false);
+                    self._fireReady();
+                }
+                doc.addEventListener(eventType, domReady, false);
+            }
             // IE event model is used
-            if (doc.attachEvent) {
+            else {
                 if (win != win.top) { // iframe
                     function stateChange() {
-                        if (doc.readyState === 'complete') {
-                            // remove onreadystatechange listener
+                        if (doc.readyState === COMPLETE) {
                             doc.detachEvent(eventType, stateChange);
                             self._fireReady();
                         }
                     }
                     doc.attachEvent(eventType, stateChange);
-                } else {
+                }
+                else {
                     function readyScroll() {
                         try {
                             // Ref: http://javascript.nwbox.com/IEContentLoaded/
@@ -156,13 +170,6 @@ build: 558 Apr 13 13:41
                 win.attachEvent('onload', function() {
                     self._fireReady();
                 });
-                
-            } else { // w3c mode
-                function domReady() {
-                    doc.removeEventListener(eventType, domReady, false);
-                    self._fireReady();
-                }
-                doc.addEventListener(eventType, domReady, false);
             }
         },
 
@@ -190,7 +197,7 @@ build: 558 Apr 13 13:41
 
         /**
          * Copies all the properties of s to r.
-         * @return {object} the augmented object
+         * @return {Object} the augmented object
          */
         mix: mix,
 
@@ -199,37 +206,47 @@ build: 558 Apr 13 13:41
          * all the supplied objects. The properties from later objects
          * will overwrite those in earlier objects. Passing in a
          * single object will create a shallow copy of it.
-         * @return {object} the new merged object
+         * @return {Object} the new merged object
          */
         merge: function() {
-            var a = arguments, o = {}, i, l = a.length;
+            var o = {}, i, l = arguments.length;
             for (i = 0; i < l; ++i) {
-                mix(o, a[i]);
+                mix(o, arguments[i]);
             }
             return o;
+        },
+
+        /**
+         * Applies prototype properties from the supplier to the receiver.
+         * @param r {Function} the object to receive the augmentation
+         * @param s {Object|Function} the object that supplies the properties to augment
+         * @param wl {String[]} a whitelist
+         * @return {Object} the augmented object
+         */
+        augment: function(r, s, ov, wl) {
+            mix(r.prototype, s.prototype || s, ov, wl);
+            return r;
         },
 
         /**
          * Utility to set up the prototype, constructor and superclass properties to
          * support an inheritance strategy that can chain constructors and methods.
          * Static members will not be inherited.
-         * @param {function} r the object to modify
-         * @param {function} s the object to inherit
-         * @param {object} px prototype properties to add/override
-         * @param {object} sx static properties to add/override
-         * @return {object} r
+         * @param r {Function} the object to modify
+         * @param s {Function} the object to inherit
+         * @param px {Object} prototype properties to add/override
+         * @param sx {Object} static properties to add/override
+         * @return r {Object}
          */
         extend: function(r, s, px, sx) {
             if (!s || !r) return r;
 
             var OP = Object.prototype,
                 O = function (o) {
-                    function F() {
-                    }
-
-                    F.prototype = o;
-                    return new F();
-                },
+                        function F() {}
+                        F.prototype = o;
+                        return new F();
+                    },
                 sp = s.prototype,
                 rp = O(sp);
 
@@ -256,49 +273,19 @@ build: 558 Apr 13 13:41
         },
 
         /**
-         * Applies prototype properties from the supplier to the receiver.
-         * @param {function} r  the object to receive the augmentation
-         * @param {object|function} s  the object that supplies the properties to augment
-         * @param {string[]} wl a whitelist
-         * @return {object} the augmented object
-         */
-        augment: function(r, s, ov, wl) {
-            return mix(r.prototype, S.isFunction(s) ? s.prototype : s, ov, wl);
-        },
-
-        /**
-         * create app based on KISSY.
-         * <pre>
-         * S.app('TB');
-         * </pre>
-         * @return {object}  A reference to the app global object
-         */
-        app: function(name, r) {
-            var O = win[name] || { };
-
-            mix(O, this, true, ['_init', 'add', 'namespace']);
-            O._init();
-
-            return mix((win[name] = O), S.isFunction(r) ? r() : r);
-        },
-
-        /**
          * Returns the namespace specified and creates it if it doesn't exist. Be careful
          * when naming packages. Reserved words may work in some browsers and not others.
-         * <pre>
+         * <code>
          * S.namespace('KISSY.app'); // returns KISSY.app
          * S.namespace('app.Shop'); // returns KISSY.app.Shop
-         * S.app('TB');
-         * TB.namespace('TB.app'); // returns TB.app
-         * TB.namespace('app.Shop'); // returns TB.app.Shop
-         * </pre>
-         * @return {object}  A reference to the last namespace object created
+         * </code>
+         * @return {Object}  A reference to the last namespace object created
          */
         namespace: function() {
-            var a = arguments, l = a.length, o = null, i, j, p;
+            var l = arguments.length, o = null, i, j, p;
 
             for (i = 0; i < l; ++i) {
-                p = ('' + a[i]).split('.');
+                p = ('' + arguments[i]).split('.');
                 o = this;
                 for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
                     o = o[p[j]] = o[p[j]] || {};
@@ -308,39 +295,51 @@ build: 558 Apr 13 13:41
         },
 
         /**
+         * create app based on KISSY.
+         * @param name {String} the app name
+         * @param sx {Object} static properties to add/override
+         * <code>
+         * S.app('TB');
+         * TB.namespace('app'); // returns TB.app
+         * </code>
+         * @return {Object}  A reference to the app global object
+         */
+        app: function(name, sx) {
+            var O = win[name] || {};
+
+            mix(O, this, true, ['_init', 'add', 'namespace']);
+            O._init();
+
+            return mix((win[name] = O), typeof sx === 'function' ? sx() : sx);
+        },
+
+        /**
          * Prints debug info.
-         * @param {string} msg The message to log.
-         * @param {string} cat The log category for the message. Default
-         * categories are "info", "warn", "error", time" etc.
-         * @param {string} src The source of the the message (opt)
+         * @param msg {String} the message to log.
+         * @param cat {String} the log category for the message. Default
+         *        categories are "info", "warn", "error", "time" etc.
+         * @param src {String} the source of the the message (opt)
          * @return {KISSY}
          */
         log: function(msg, cat, src) {
             if (this.Config.debug) {
-                src && (msg = src + ': ' + msg);
-                if (win.console !== undefined && console.log) {
+                if(src) {
+                    msg = src + ': ' + msg;
+                }
+                if (win['console'] !== undefined && console.log) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                 }
             }
-
             return this;
         },
 
         /**
          * Throws error message.
-         * @param msg
          */
         error: function(msg) {
             if(this.Config.debug) {
                 throw msg;
             }
-        },
-
-        /**
-         * get current timeStamp
-         */
-        now: function() {
-            return new Date().getTime();
         }
     });
 
@@ -352,64 +351,98 @@ build: 558 Apr 13 13:41
 })(window, 'KISSY');
 
 /**
- * Notes:
+ * NOTES:
  *
  * 2010.04
  *  - 移除掉 weave 方法，尚未考虑周全。
  *
  * 2010.01
- *  - 考虑简单够用和 2/8 原则，去掉了对 YUI3 沙箱的模拟（archives/2009 r402）
- *
- *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 组织代码）。
+ *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）。
  *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
- *  - mix, merge, extend, augment 方法，决定了类库代码的基本实现方式，
- *    充分利用 mixin 特性和 prototype 方式来实现代码。
- *  - app, namespace 方法，决定子库的实现和代码的整体组织。
- *  - log 方法，简单的调试工具。
+ *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码。
+ *  - namespace, app 方法，决定子库的实现和代码的整体组织。
+ *  - log, error 方法，简单的调试工具和报错机制。
+ *  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
  *
+ * TODO:
+ *  - 模块动态加载 require 方法的实现。
+ * 
  */
 /**
- * @module  lang
+ * @module  kissy-lang
  * @author  lifesinger@gmail.com
- * @depends kissy
  */
+KISSY.add('kissy-lang', function(S, undefined) {
 
-KISSY.add('lang', function(S, undefined) {
-
-    var doc = document,
+    var win = window, doc = document, loc = location,
         AP = Array.prototype,
-        forEach = AP.forEach,
-        indexOf = AP.indexOf,
-        slice = AP.slice,
+        indexOf = AP.indexOf, filter = AP.filter,
+        toString = Object.prototype.toString,
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
-        toString = Object.prototype.toString;
+        REG_NOT_WHITE = /\S/;
 
     S.mix(S, {
 
         /**
-         * Executes the supplied function on each item in the array.
-         * @param {array} arr the array to iterate
-         * @param {function} fn the function to execute on each item. The function
-         * receives three arguments: the value, the index, the full array.
-         * @param {object} context optional context object
+         * Determines whether or not the provided object is a boolean.
          */
-        each: forEach ?
-              function (arr, fn, context) {
-                  forEach.call(arr, fn, context);
-                  return this;
-              } :
-              function(arr, fn, context) {
-                  var l = (arr && arr.length) || 0, i;
-                  for (i = 0; i < l; ++i) {
-                      fn.call(context || this, arr[i], i, arr);
-                  }
-                  return this;
-              },
+        isBoolean: function(o) {
+            return typeof o === 'boolean';
+        },
 
         /**
-         * Remove the whitespace from the beginning and end of a string.
-         * @param {string} str
+         * Determines whether or not the provided object is a string.
+         */
+        isString: function(o) {
+            return typeof o === 'string';
+        },
+
+        /**
+         * Determines whether or not the provided item is a legal number.
+         * NOTICE: Infinity and NaN return false.
+         */
+        isNumber: function(o) {
+            return typeof o === 'number' && isFinite(o);
+        },
+
+        /**
+         * Checks to see if an object is a plain object (created using "{}" or "new Object").
+         */
+        isPlainObject: function(o) {
+            // Make sure that DOM nodes and window objects don't pass through.
+            return o && toString.call(o) === '[object Object]' && !o['nodeType'] && !o['setInterval'];
+        },
+
+        /**
+         * Checks to see if an object is empty.
+         */
+        isEmptyObject: function(o) {
+            for (var p in o) {
+                return false;
+            }
+            return true;
+        },
+
+        /**
+         * Determines whether or not the provided object is a function.
+         * NOTICE: DOM methods and functions like alert aren't supported. They return false on IE.
+         */
+        isFunction: function(o) {
+            return typeof o === 'function';
+            // 对于 function 来说，直接用 typeof 的效果和 toString 一致
+            //return toString.call(o) === '[object Function]';
+        },
+
+        /**
+         * Determines whether or not the provided object is an array.
+         */
+        isArray: function(o) {
+            return toString.call(o) === '[object Array]';
+        },
+
+        /**
+         * Removes the whitespace from the beginning and end of a string.
          */
         trim: String.prototype.trim ?
               function(str) {
@@ -420,26 +453,17 @@ KISSY.add('lang', function(S, undefined) {
               },
 
         /**
-         * Check to see if an object is a plain object (created using "{}" or "new Object").
+         * Executes the supplied function on each item in the array.
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item. The function
+         *        receives three arguments: the value, the index, the full array.
+         * @param context {Object} (opt)
          */
-        isPlainObject: function(obj) {
-            return obj && toString.call(obj) === '[object Object]' && !obj.nodeType && !obj.setInterval;
-        },
-
-        isEmptyObject: function(obj) {
-            for (var p in obj) {
-                return false;
+        each: function(arr, fn, context) {
+            var l = (arr && arr.length) || 0, i = 0;
+            for (; i < l; ++i) {
+                fn.call(context || win, arr[i], i, arr);
             }
-            return true;
-        },
-
-        // NOTE: DOM methods and functions like alert aren't supported. They return false on IE.
-        isFunction: function(obj) {
-            return toString.call(obj) === '[object Function]';
-        },
-
-        isArray: function(obj) {
-            return toString.call(obj) === '[object Array]';
         },
 
         /**
@@ -461,46 +485,72 @@ KISSY.add('lang', function(S, undefined) {
         /**
          * Search for a specified value index within an array.
          */
-        inArray: function(arr, elem) {
-            return S.indexOf(arr, elem) !== -1;
+        inArray: function(elem, arr) {
+            return S.indexOf(elem, arr) !== -1;
         },
 
-        makeArray: function(obj) {
-            if (obj === null || obj === undefined) return [];
-            if (S.isArray(obj)) return obj;
+        /**
+         * Converts object to a true array.
+         */
+        makeArray: function(o) {
+            if (o === null || o === undefined) return [];
+            if (S.isArray(o)) return o;
 
             // The strings and functions also have 'length'
-            if (typeof obj.length !== 'number' || typeof obj === 'string' || S.isFunction(obj)) {
-                return [obj];
+            if (typeof o.length !== 'number' || typeof o === 'string' || S.isFunction(o)) {
+                return [o];
             }
 
             // ie 不支持用 slice 转换 NodeList, 降级到普通方法
-            if (obj.item && S.UA.ie) {
-                var ret = [], i = 0, len = obj.length;
+            if (o.item && S.UA.ie) {
+                var ret = [], i = 0, len = o.length;
                 for (; i < len; ++i) {
-                    ret[i] = obj[i];
+                    ret[i] = o[i];
                 }
                 return ret;
             }
 
             // array-like
-            return slice.call(obj);
-
+            return AP.slice.call(o);
         },
+        /**
+        * Executes the supplied function on each item in the array.
+        * Returns a new array containing the items that the supplied
+        * function returned true for.
+        * @param arr {Array} the array to iterate
+        * @param fn {Function} the function to execute on each item
+        * @param context {Object} optional context object
+        * @return {Array} The items on which the supplied function
+        *         returned true. If no items matched an empty array is
+        *         returned.
+        */
+        filter: filter ?
+            function(arr, fn, context) {
+                return filter.call(arr, fn, context);
+            } :
+            function(arr, fn, context) {
+                var ret = [];
+                S.each(arr, function(item, i, arr) {
+                    if (fn.call(context, item, i, arr)) {
+                        ret.push(item);
+                    }
+                });
+                return ret;
+            },
 
         /**
          * Creates a serialized string of an array or object.
-         * <pre>
-         *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-         *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
-         *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
-         *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-         *     {foo: true, bar: 2}    // -> 'foo=true&bar=2'
-         * </pre>
+         * <code>
+         * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
+         * {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
+         * </code>
          */
         param: function(o) {
-            // 非 object, 直接返回空
-            if (typeof o !== 'object') return '';
+            // 非 plain object, 直接返回空
+            if (!S.isPlainObject(o)) return '';
 
             var buf = [], key, val;
             for (key in o) {
@@ -520,22 +570,21 @@ KISSY.add('lang', function(S, undefined) {
                 }
                 // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
             }
-
             buf.pop();
             return encodeURI(buf.join(''));
         },
 
         /**
          * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-         * <pre>
+         * <code>
          * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
          * 'section=blog&tag[]=js&tag[]=doc' // -> {section: 'blog', tag: ['js', 'doc']}
          * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
          * 'id=45&raw'        // -> {id: '45', raw: ''}
-         * </pre>
+         * </code>
          */
         unparam: function(str, sep) {
-            if (typeof str !== 'string' || (str = decodeURI(S.trim(str))).length === 0) return { };
+            if (typeof str !== 'string' || (str = decodeURI(S.trim(str))).length === 0) return {};
 
             var ret = {},
                 pairs = str.split(sep || '&'),
@@ -561,20 +610,18 @@ KISSY.add('lang', function(S, undefined) {
          * Executes the supplied function in the context of the supplied
          * object 'when' milliseconds later. Executes the function a
          * single time unless periodic is set to true.
-         * @param when {int} the number of milliseconds to wait until the fn
-         * is executed.
-         * @param o the context object.
-         * @param fn {Function|String} the function to execute or the name of
-         * the method in the 'o' object to execute.
-         * @param data [Array] data that is provided to the function. This accepts
-         * either a single item or an array. If an array is provided, the
-         * function is executed with one parameter for each array item. If
-         * you need to pass a single array parameter, it needs to be wrapped in
-         * an array [myarray].
-         * @param periodic {boolean} if true, executes continuously at supplied
-         * interval until canceled.
-         * @return {object} a timer object. Call the cancel() method on this object to
-         * stop the timer.
+         * @param fn {Function|String} the function to execute or the name of the method in
+         *        the 'o' object to execute.
+         * @param when {Number} the number of milliseconds to wait until the fn is executed.
+         * @param periodic {Boolean} if true, executes continuously at supplied interval
+         *        until canceled.
+         * @param o {Object} the context object.
+         * @param data [Array] that is provided to the function. This accepts either a single
+         *        item or an array. If an array is provided, the function is executed with
+         *        one parameter for each array item. If you need to pass a single array
+         *        parameter, it needs to be wrapped in an array [myarray].
+         * @return {Object} a timer object. Call the cancel() method on this object to stop
+         *         the timer.
          */
         later: function(fn, when, periodic, o, data) {
             when = when || 0;
@@ -609,20 +656,24 @@ KISSY.add('lang', function(S, undefined) {
         },
 
         /**
-         * Evalulates a script in a global context
+         * Gets current date in milliseconds.
+         */
+        now: function() {
+            return new Date().getTime();
+        },
+
+        /**
+         * Evalulates a script in a global context.
          */
         globalEval: function(data) {
-            if ((data = S.trim(data))) {
+            if (data && REG_NOT_WHITE.test(data)) {
                 // Inspired by code by Andrea Giammarchi
                 // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
                 var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
                     script = doc.createElement('script');
 
-                if (S.UA.ie) { // TODO: feature test
-                    script.text = data;
-                } else {
-                    script.appendChild(doc.createTextNode(data));
-                }
+                // It works! All browsers support!
+                script.text = data;
 
                 // Use insertBefore instead of appendChild to circumvent an IE6 bug.
                 // This arises when a base node is used.
@@ -635,11 +686,11 @@ KISSY.add('lang', function(S, undefined) {
     function isValidParamValue(val) {
         var t = typeof val;
         // val 为 null, undefined, number, string, boolean 时，返回 true
-        return val === null | (t !== 'object' && t !== 'function');
+        return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // 可以通过在 url 上加 ?ks-debug 来开启 debug
-    if('ks-debug' in S.unparam(location.hash)){
+    // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
+    if(loc && loc.search && loc.search.indexOf('ks-debug') !== -1){
         S.Config.debug = true;
     }
 });
@@ -647,34 +698,35 @@ KISSY.add('lang', function(S, undefined) {
 /**
  * NOTES:
  *
+ *  2010.05
+ *   - 增加 filter 方法。
+ *   - globalEval 中，直接采用 text 赋值，去掉 appendChild 方式。
+ *
  *  2010.04
  *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
  *   - 对于 param, encodeURI 就可以了，和 jQuery 保持一致。
  *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
  *
  * TODO:
- *   - 分析 jq 的 isPlainObject
- *   - globalEval 中，appendChild 方式真的比 text 方式性能更好?
+ *   - 分析 jq 的 isPlainObject 对 constructor 的细节处理
  *
  */
 /**
- * @module  ua
+ * @module  kissy-ua
  * @author  lifesinger@gmail.com
- * @depends kissy
  */
-
-KISSY.add('ua', function(S) {
+KISSY.add('kissy-ua', function(S) {
 
     var ua = navigator.userAgent,
         m,
         o = {
-            ie: 0,
+            webkit: 0,
+            chrome: 0,
+            safari: 0,
             gecko: 0,
             firefox:  0,
+            ie: 0,
             opera: 0,
-            webkit: 0,
-            safari: 0,
-            chrome: 0,
             mobile: ''
         },
         numberify = function(s) {
@@ -700,7 +752,7 @@ KISSY.add('ua', function(S) {
 
         // Apple Mobile
         if (/ Mobile\//.test(ua)) {
-            o.mobile = 'Apple'; // iPhone or iPod Touch
+            o.mobile = 'Apple'; // iPad, iPhone or iPod Touch
         }
         // Other WebKit Mobile Browsers
         else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
@@ -746,24 +798,25 @@ KISSY.add('ua', function(S) {
 });
 
 /**
- * Notes:
+ * NOTES:
  *
  * 2010.03
  *  - jQuery, YUI 等类库都推荐用特性探测替代浏览器嗅探。特性探测的好处是能自动适应未来设备和未知设备，比如
- *    if(document.addEventListener) 假设 IE 10 支持标准事件，则代码不用修改，就自适应了“未来浏览器”。
+ *    if(document.addEventListener) 假设 IE9 支持标准事件，则代码不用修改，就自适应了“未来浏览器”。
  *    对于未知浏览器也是如此。但是，这并不意味着浏览器嗅探就得彻底抛弃。当代码很明确就是针对已知特定浏览器的，
- *    并且并非是某个特性探测可以解决时，用浏览器嗅探反而能带来代码的简洁，同时也也不会有什么后患。总之，一切
+ *    同时并非是某个特性探测可以解决时，用浏览器嗅探反而能带来代码的简洁，同时也也不会有什么后患。总之，一切
  *    皆权衡。
- *  - UA.ie && UA.ie < 8 并不意味着浏览器就不是 IE8, 有可能是 IE8 的兼容模式。进一步的判断需要使用 documentMode
+ *  - UA.ie && UA.ie < 8 并不意味着浏览器就不是 IE8, 有可能是 IE8 的兼容模式。进一步的判断需要使用 documentMode.
  *
  * TODO:
  *  - test mobile
- *  - 权衡是否需要加入 maxthon 等国内浏览器嗅探？
+ *  - 是否需要加入 maxthon 等国内浏览器嗅探？
  * 
- *//*
+ */
+/*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 551 Apr 11 11:50
+build: 633 May 9 23:00
 */
 /**
  * @module  selector
@@ -1533,18 +1586,16 @@ KISSY.add('dom-class', function(S, undefined) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 573 Apr 19 21:31
+build: 633 May 9 23:00
 */
 /**
  * @module  event
  * @author  lifesinger@gmail.com
  */
-
 KISSY.add('event', function(S, undefined) {
 
     var DOM = S.DOM,
-        win = window,
-        doc = document,
+        win = window, doc = document,
         simpleAdd = doc.addEventListener ?
                     function(el, type, fn) {
                         if (el.addEventListener) {
@@ -1579,14 +1630,12 @@ KISSY.add('event', function(S, undefined) {
         special: { },
 
         /**
-         * Adds an event listener
-         *
-         * @param {String} target An element or custom EventTarget to assign the listener to
-         * @param {String} type The type of event to append
-         * @param {Function} fn The event handler
+         * Adds an event listener.
+         * @param target {Element} An element or custom EventTarget to assign the listener to.
+         * @param type {String} The type of event to append.
+         * @param fn {Function} The event handler.
          */
         add: function(target, type, fn) {
-            // ([targetA, targetB], 'click focus', fn)
             if(batch('add', target, type, fn)) return;
 
             var id = getID(target),
@@ -1645,7 +1694,6 @@ KISSY.add('event', function(S, undefined) {
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */) {
-            // ([targetA, targetB], 'click focus', fn)
             if(batch('remove', target, type, fn)) return;
 
             var id = getID(target),
@@ -1692,7 +1740,6 @@ KISSY.add('event', function(S, undefined) {
             }
         },
 
-        // static
         _handle: function(target, event, listeners) {
             var ret, i = 0, len = listeners.length;
 
@@ -1724,6 +1771,11 @@ KISSY.add('event', function(S, undefined) {
 
     function batch(methodName, targets, types, fn) {
 
+        // on('#id tag.className', type, fn)
+        if(S.isString(targets)) {
+            targets = S.query(targets);
+        }
+
         // on([targetA, targetB], type, fn)
         if (S.isArray(targets)) {
             S.each(targets, function(target) {
@@ -1749,13 +1801,16 @@ KISSY.add('event', function(S, undefined) {
             return ret;
         }
 
-        if (target.nodeType) { // HTML Element
+        // HTML Element
+        if (target.nodeType) {
             ret = DOM.attr(target, EVENT_GUID);
         }
-        else if (target.isCustomEventTarget) { // custom EventTarget
+        // custom EventTarget
+        else if (target.isCustomEventTarget) {
             ret = target.eventTargetId;
         }
-        else { // window, iframe, etc.
+        // window, iframe, etc.
+        else {
             ret = target[EVENT_GUID];
         }
 
@@ -1763,29 +1818,40 @@ KISSY.add('event', function(S, undefined) {
     }
 
     function setID(target, id) {
-        if (target.nodeType) { // HTML Element
+        // text and comment node
+        if (target.nodeType === 3 || target.nodeType === 8) {
+            return S.error('Text or comment node is not valid event target.');
+        }
+
+        // HTML Element
+        if (target.nodeType) {
             DOM.attr(target, EVENT_GUID, id);
         }
-        else if (target.isCustomEventTarget) { // custom EventTarget
+        // custom EventTarget
+        else if (target.isCustomEventTarget) {
             target.eventTargetId = id;
         }
-        else { // window, iframe, etc.
+        // window, iframe, etc.
+        else {
             try {
                 target[EVENT_GUID] = id;
-            } catch(e) {
-                S.error(e);
+            } catch(ex) {
+                S.error(ex);
             }
         }
     }
 
     function removeID(target) {
-        if (target.nodeType) { // HTML Element
+        // HTML Element
+        if (target.nodeType) {
             DOM.removeAttr(target, EVENT_GUID);
         }
-        else if (target.isCustomEventTarget) { // custom EventTarget
+        // custom EventTarget
+        else if (target.isCustomEventTarget) {
             target.eventTargetId = undefined;
         }
-        else { // window, iframe, etc
+        // window, iframe, etc.
+        else {
             target[EVENT_GUID] = undefined;
         }
     }
@@ -1803,7 +1869,7 @@ KISSY.add('event', function(S, undefined) {
                     // try/catch is to handle iframes being unloaded
                     try {
                         Event.remove(target);
-                    } catch(e) {
+                    } catch(ex) {
                     }
                 }
             }
@@ -1823,7 +1889,6 @@ KISSY.add('event', function(S, undefined) {
  * @module  EventObject
  * @author  lifesinger@gmail.com
  */
-
 KISSY.add('event-object', function(S, undefined) {
 
     var doc = document,
@@ -1840,7 +1905,7 @@ KISSY.add('event-object', function(S, undefined) {
         self.currentTarget = currentTarget;
         self.originalEvent = domEvent || { };
 
-        if (domEvent) { // element
+        if (domEvent) { // html element
             self.type = domEvent.type;
             self._fix();
         }
@@ -1979,18 +2044,18 @@ KISSY.add('event-object', function(S, undefined) {
 });
 
 /**
- * Notes:
+ * NOTES:
+ *
  *  2010.04
  *   - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
  *
  * TODO:
- *   - pageX, clientX, scrollLeft, clientLeft 的详细图解
+ *   - pageX, clientX, scrollLeft, clientLeft 的详细测试
  */
 /**
  * @module  EventTarget
  * @author  lifesinger@gmail.com
  */
-
 KISSY.add('event-target', function(S, undefined) {
 
     var Event = S.Event;
@@ -2027,7 +2092,8 @@ KISSY.add('event-target', function(S, undefined) {
 });
 
 /**
- * Notes:
+ * NOTES:
+ *
  *  2010.04
  *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 是不需要
  *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
@@ -2036,7 +2102,6 @@ KISSY.add('event-target', function(S, undefined) {
  * @module  event-mouseenter
  * @author  lifesinger@gmail.com
  */
-
 KISSY.add('event-mouseenter', function(S) {
 
     var Event = S.Event;
@@ -2081,9 +2146,10 @@ KISSY.add('event-mouseenter', function(S) {
 
 /**
  * TODO:
- *  - ie6 下，原生的 mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>, jQuery 也异常，
- *    需要进一步研究
- *//*
+ *  - ie6 下，原生的 mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>
+ *    jQuery 也异常，需要进一步研究
+ */
+/*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
 build: 548 Apr 9 23:53
@@ -4620,7 +4686,7 @@ KISSY.add("suggest", function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 564 Apr 15 09:57
+build: 633 May 9 23:02
 */
 /**
  * Switchable
@@ -4672,7 +4738,7 @@ KISSY.add('switchable', function(S, undefined) {
 
         /**
          * 配置参数
-         * @type object
+         * @type Object
          */
         self.config = config;
 

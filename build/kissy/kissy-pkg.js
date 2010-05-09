@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 598 May 3 14:22
+build: 633 May 9 23:00
 */
 /**
  * @module kissy
@@ -374,7 +374,7 @@ build: 598 May 3 14:22
  */
 KISSY.add('kissy-lang', function(S, undefined) {
 
-    var win = window, doc = document,
+    var win = window, doc = document, loc = location,
         AP = Array.prototype,
         indexOf = AP.indexOf, filter = AP.filter,
         toString = Object.prototype.toString,
@@ -690,7 +690,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
     }
 
     // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
-    if('ks-debug' in S.unparam(location.hash)){
+    if(loc && loc.search && loc.search.indexOf('ks-debug') !== -1){
         S.Config.debug = true;
     }
 });

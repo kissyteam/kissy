@@ -2,38 +2,16 @@
  * SWF UA info
  * author: lifesinger@gmail.com
  */
-
 KISSY.add('swf-ua', function(S) {
 
-    var UA = S.UA,
-        version = 0, sF = 'ShockwaveFlash',
-        ax6, mF, eP;
+    function getFlashVersion() {
+        var version = 0,
+            sF = 'ShockwaveFlash',
+            mF = navigator.mimeTypes['application/x-shockwave-flash'],
+            ax6, eP;
 
-    if (UA.ie) {
-        try {
-            ax6 = new ActiveXObject(sF + '.' + sF + '.6');
-            ax6.AllowScriptAccess = 'always';
-        } catch(e) {
-            if (ax6 !== null) {
-                version = 6.0;
-            }
-        }
-
-        if (version === 0) {
-            try {
-                version = numerify(
-                    new ActiveXObject(sF + '.' + sF)
-                        .GetVariable('$version')
-                        .replace(/[A-Za-z\s]+/g, '')
-                        .split(',')
-                    );
-
-            } catch (e) {
-            }
-        }
-    } else {
-        if ((mF = navigator.mimeTypes['application/x-shockwave-flash'])) {
-            if ((eP = mF.enabledPlugin)) {
+        if (mF) {
+            if ((eP = mF['enabledPlugin'])) {
                 version = numerify(
                     eP.description
                         .replace(/\s[rd]/g, '.')
@@ -41,7 +19,30 @@ KISSY.add('swf-ua', function(S) {
                         .split('.')
                     );
             }
+        } else {
+            try {
+                ax6 = new ActiveXObject(sF + '.' + sF + '.6');
+                ax6.AllowScriptAccess = 'always';
+            } catch(e) {
+                if (ax6 !== null) {
+                    version = 6.0;
+                }
+            }
+
+            if (version === 0) {
+                try {
+                    version = numerify(
+                        new ActiveXObject(sF + '.' + sF)
+                            ['GetVariable']('$version')
+                            .replace(/[A-Za-z\s]+/g, '')
+                            .split(',')
+                        );
+                } catch (e) {
+                }
+            }
         }
+
+        return parseFloat(version);
     }
 
     function numerify(arr) {
@@ -57,5 +58,12 @@ KISSY.add('swf-ua', function(S) {
         return (ret += arr[2]);
     }
 
-    UA.flash = parseFloat(version);
+    S.UA.flash = getFlashVersion();
 });
+
+/**
+ * NOTES:
+ *
+ *  - getFlashVersion 函数中，存在 new ActiveX 和 try catch, 比较耗费性能，需要进一步测试和优化。
+ *
+ */
