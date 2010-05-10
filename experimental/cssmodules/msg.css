@@ -6,10 +6,10 @@
 /***********************************************************************************************************************
  * @公共样式
  **********************************************************************************************************************/
-.ks-msg{position:relative;padding-top:1px;margin-bottom:6px;}
-.ks-msg-wrapper{padding:3px 10px 3px 0;border:1px solid #ffcc7f;background:#ffffe5;}
-.ks-msg-icon{position:absolute;left:5px;top:6px;width:16px;height:16px;overflow:hidden;font-size:0;line-height:0;background:url(img/msg.png) no-repeat 0 -160px;}
-.ks-msg-tit{display:inline;padding-left:24px;padding-right:2px;font-weight:bold;}
+.ks-msg{padding-top:1px;margin-bottom:6px;}
+.ks-msg-wrapper{padding:3px 5px;border:1px solid #ffcc7f;background:#ffffe5;}
+.ks-msg-icon{float:left;width:16px;height:16px;overflow:hidden;margin:1px 5px 1px 0;font-size:0;line-height:0;background:url(img/msg.png) no-repeat 0 -160px;}
+.ks-msg-tit{display:inline;padding-right:2px;font-weight:bold;}
 .ks-msg-con{display:inline;}
 
 .ks-msg-error{border:1px solid #ff8080;background:#fff2f2;}
@@ -33,10 +33,10 @@
  * @强调样式
  **********************************************************************************************************************/
 .ks-msg-strong{margin-bottom:10px;}
-.ks-msg-strong .ks-msg-wrapper{padding:6px 10px 6px 0;}
-.ks-msg-strong .ks-msg-icon{top:7px;left:7px;width:32px;height:32px;background-position:100% -160px;}
-.ks-msg-strong .ks-msg-tit{display:block;margin-left:45px;padding-left:0;font-size:14px;}
-.ks-msg-strong .ks-msg-con{display:block;margin-left:45px;}
+.ks-msg-strong .ks-msg-wrapper{padding:6px 10px;}
+.ks-msg-strong .ks-msg-icon{width:32px;height:32px;margin-right:10px;background-position:100% -160px;}
+.ks-msg-strong .ks-msg-tit{display:block;padding-left:0;font-size:14px;}
+.ks-msg-strong .ks-msg-con{display:block;}
 
 .ks-msg-strong .ks-msg-error .ks-msg-icon{background-position:100% 0;}
 .ks-msg-strong .ks-msg-stop .ks-msg-icon{background-position:100% -40px;}
