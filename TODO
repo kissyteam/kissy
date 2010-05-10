@@ -33,7 +33,7 @@
   KISSY 基础元素风格设计
   Sizzle
   研究 jQuery EasyUI - http://jquery-easyui.wikidot.com/document
-  datalazyload bug in iPad
+  datalazyload bug in iPad + 重构 + 详细测试
   龙刚反馈图片延迟加载组件导致部分频道页面的轮播图片不正常
   ie7 有这样的 bug： 当 ua 字节超过 260 时，会返回为 IE6 http://jamiethompson.co.uk/web/2008/07/23/an-ie7-bug-that-returns-msie-60-user-agent-string/
   有脚：reset.css 里要不要加个 button{*visibility:visible} /* fix ie doulbe padding bug */ 不然老要在项目里重置这个

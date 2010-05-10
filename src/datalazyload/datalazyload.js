@@ -34,9 +34,9 @@ KISSY.add('datalazyload', function(S, undefined) {
             diff: DEFAULT,
 
             /**
-             * 图像的占位图
+             * 图像的占位图，默认无
              */
-            placeholder: 'http://a.tbcdn.cn/kissy/1.0.4/build/datalazyload/dot.gif'
+            placeholder: NONE
         },
         DP = DataLazyload.prototype;
 
@@ -182,7 +182,9 @@ KISSY.add('datalazyload', function(S, undefined) {
 
                     if (isManualMod) { // 手工模式，只处理有 data-src 的图片
                         if (data_src) {
-                            img.src = placeholder;
+                            if(placeholder !== NONE) {
+                                img.src = placeholder;
+                            }
                             lazyImgs.push(img);
                         }
                     } else { // 自动模式，只处理 threshold 外无 data-src 的图片
@@ -190,7 +192,10 @@ KISSY.add('datalazyload', function(S, undefined) {
                         // 会导致 data-src 变成 placeholder
                         if (YDOM.getY(img) > threshold && !data_src) {
                             img.setAttribute(IMG_DATA_SRC, img.src);
-                            img.src = placeholder;
+
+                            if(placeholder !== NONE) {
+                                img.src = placeholder;
+                            }
                             lazyImgs.push(img);
                         }
                     }
@@ -467,6 +472,7 @@ KISSY.add('datalazyload', function(S, undefined) {
 
 /**
  * UPDATE LOG:
+ *   - 2010-05-10 yubo ie6 下，在 dom ready 后执行，会导致 placeholder 重复加载，为比避免此问题，默认为 none, 去掉占位图
  *   - 2010-04-05 yubo 重构，使得对 YUI 的依赖仅限于 YDOM
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
