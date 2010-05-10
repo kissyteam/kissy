@@ -68,7 +68,7 @@ KISSY.ready(function(S) {
 </div>
 <script type="text/javascript">
 KISSY.ready(function(S) {
-     var myPopup = new S.Popup('#J_Trigger2','#J_Popup2',{triggerType:'mouse',position:'bottom',align:'center',effect:'fade'});
+     var myPopup = new S.Popup('#J_Trigger2','#J_Popup2',{triggerType:'mouse',position:'bottom',align:'center',effect:'fade',disableClick:true});
 });
 </script>
 <p class="code-switch">显示源码</p>
@@ -119,12 +119,12 @@ KISSY.ready(function(S) {
         <a href="#" id="J_Trigger4">点我</a>
         <br/>
         <select><option>我是一个select</option></select>
-        <div id="J_Popup4" class="popup popup4"><a class="J_CloseBtn4">关闭</a><br/><img height="70" width="190" src="http://img04.taobaocdn.com/tps/i4/T1PgtxXmRfXXXXXXXX-190-70.png"><br/><button class="J_CloseBtn4">关闭</button></div>
+        <div id="J_Popup4" class="popup popup4"><a class="KS_PopupCloseBtn">关闭</a><br/><img height="70" width="190" src="http://img04.taobaocdn.com/tps/i4/T1PgtxXmRfXXXXXXXX-190-70.png"><br/><button class="KS_PopupCloseBtn"><span>关闭</span></button></div>
     </div>
 </div>
 <script type="text/javascript">
 KISSY.ready(function(S) {
-     var myPopup = new S.Popup('#J_Trigger4','#J_Popup4',{hasMask:true,closeBtnCls:'J_CloseBtn4'});
+     var myPopup = new S.Popup('#J_Trigger4','#J_Popup4',{hasMask:true});
 });
 </script>
 <p class="code-switch">显示源码</p>
@@ -145,7 +145,7 @@ KISSY.ready(function(S) {
         <a href="#" id="J_Trigger6">我只是个链接</a>
         <br/>
         <a href="#" id="J_AttachTrigger6">点我将上面的链接加为触点</a>
-        <div id="J_Popup5" class="popup popup5"><img height="70" width="190" src="http://img04.taobaocdn.com/tps/i4/T1PgtxXmRfXXXXXXXX-190-70.png"><br/><button class="KSCloseBtn">关闭</button></div>
+        <div id="J_Popup5" class="popup popup5"><img height="70" width="190" src="http://img04.taobaocdn.com/tps/i4/T1PgtxXmRfXXXXXXXX-190-70.png"><br/><button class="KS_PopupCloseBtn"><span>关闭</span></button></div>
     </div>
 </div>
 <script type="text/javascript">
@@ -173,8 +173,26 @@ KISSY.ready(function(S) {
         el.innerHTML = '点我也能弹出层了';
         myPopup.bindTrigger(el);
     });
+});
+</script>
+<p class="code-switch">显示源码</p>
+<!-- box END -->
 
-
+<!-- box START -->
+<div class="box">
+    <div class="hd">
+        <h3>6、弹出层始终位于在屏幕中央的</h3>
+    </div>
+    <div class="bd">
+        <a href="#" id="J_Trigger7">点我</a>
+        <br/>
+        <select><option>我是一个select</option></select>
+        <div id="J_Popup7" class="popup popup7"><img height="70" width="190" src="http://img04.taobaocdn.com/tps/i4/T1PgtxXmRfXXXXXXXX-190-70.png"><br/><button class="KS_PopupCloseBtn"><span>关闭</span></button></div>
+    </div>
+</div>
+<script type="text/javascript">
+KISSY.ready(function(S) {
+     var myPopup = new S.Popup('#J_Trigger7','#J_Popup7',{hasMask:true,position:'screenCenter'});
 });
 </script>
 <p class="code-switch">显示源码</p>

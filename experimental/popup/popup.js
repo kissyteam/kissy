@@ -7,10 +7,9 @@
 KISSY.add("popup", function(S) {
     var DOM = S.DOM, Event = S.Event , YDOM = YAHOO.util.Dom ,
         doc = document,
-        POPUP_STATE = 'data-ks-popup-state',
+        POPUP_STATE = 'ks-data-popup-state',
         POPUP_STATE_ENABLED = 'enabled' ,
-        POPUP_STATE_DISABLED = 'disabled';
-		
+        POPUP_STATE_DISABLED = 'disabled';		
 
     /**
      * Popup
@@ -77,7 +76,7 @@ KISSY.add("popup", function(S) {
             if( config.hasMask && config.triggerType == 'click' ) Mask.show(popup);
             popup.style.display = 'block';
             self.fire( 'show');
-            setPosition( popup , self.curTrigger , config.position , config.align , config.offset , config.autoFit );
+            setPosition( popup , self.curTrigger , config.position , config.align , config.offset , config.autoFit );            
             if(self._shim) self._shim.show(popup);
             if( config.effect == 'fade') opacityAnim( popup , 0 , 1 );
         },
@@ -217,7 +216,7 @@ KISSY.add("popup", function(S) {
         // 弹出框高度
         height: 'auto',
         // 弹出框相对于触点的位置
-        position: 'right',// or 'bottom','left','top'
+        position: 'right',// or 'bottom','left','top','screenCenter'
         // 弹出框相对于触点的对齐方式
         align: 'top',// or 'right','bottom','left'
         // 弹出框的计算位置超出body时是否自动调整位置
@@ -225,7 +224,7 @@ KISSY.add("popup", function(S) {
         // 是否有遮罩
         hasMask: false,
         // 弹出框内触发弹出框关闭的按钮的class
-        closeBtnCls: 'KSCloseBtn'
+        closeBtnCls: 'KS_PopupCloseBtn'
     };
 
     //遮罩
@@ -296,6 +295,9 @@ KISSY.add("popup", function(S) {
         } else if (position == 'top') {
             t = t-ph;
             l = (align == 'center')?(l+tw/2-pw/2):(align == 'right')?(l+tw-pw):l;
+        } else if(position=='screenCenter'){
+            t = st + (dh-ph)/2;
+            l = sl + (dw-pw)/2;
         }
         //防止出界
         if(autoFit) {
