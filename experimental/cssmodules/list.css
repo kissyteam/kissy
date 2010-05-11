@@ -7,7 +7,7 @@
  * @公共样式
  **********************************************************************************************************************/
 .ks-list{overflow:hidden;}
-.ks-list-li{margin-top:-1px;padding:4px 10px 5px 10px;border-top:1px solid #ddd;background:#f2f2f2 url(img/bar-repeatx.png) repeat-x 0 -80px;}
+.ks-list-li{margin-top:-1px;padding:4px 10px 5px 10px;border-top:1px solid #ddd;background:#f2f2f2 url(img/bar-repeatx.png) repeat-x 0 -110px;}
 
 /***********************************************************************************************************************
  * @强调样式
@@ -17,7 +17,7 @@
 /***********************************************************************************************************************
  * @标准样式
  **********************************************************************************************************************/
-.ks-list-normal .ks-list-li{border-color:#ddd;background-color:#f2f2f2;background-position:0 -80px;}
+.ks-list-normal .ks-list-li{border-color:#ddd;background-color:#f2f2f2;background-position:0 -110px;}
 
 /***********************************************************************************************************************
  * @弱化样式
