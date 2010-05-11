@@ -7,25 +7,25 @@
  * @公共样式
  **********************************************************************************************************************/
 .ks-tab{position:relative;margin-bottom:10px;}
-.ks-tab-trigger-container{position:relative;height:30px;padding-left:15px;padding-bottom:2px;border-bottom:1px solid #bad6ff;background:url(img/bar-repeatx.png) repeat-x 0 -317px;}
-.ks-tab-trigger{position:relative;float:left;margin-top:2px;margin-right:3px;background:#e6e6e6 url(img/bar-repeatx.png) repeat-x 0 -80px;cursor:pointer;}
+.ks-tab-trigger-container{position:relative;height:30px;padding-left:15px;padding-bottom:2px;background:url(img/bar-repeatx.png) repeat-x 0 -437px;}
+.ks-tab-trigger{position:relative;float:left;margin-top:2px;margin-right:3px;background:#e6e6e6 url(img/bar-repeatx.png) repeat-x 0 -110px;cursor:pointer;}
 .ks-tab-trigger-ctl,
-.ks-tab-trigger-ctr{position:absolute;width:4px;height:4px;overflow:hidden;font-size:0;line-height:0;background:url(img/bar-repeatx.png) no-repeat -3px -70px;}
+.ks-tab-trigger-ctr{position:absolute;width:4px;height:4px;overflow:hidden;font-size:0;line-height:0;background:url(img/bar-repeatx.png) no-repeat -3px -130px;}
 .ks-tab-trigger-ctl{left:0;top:0;}
-.ks-tab-trigger-ctr{right:0;top:0;background-position:0 -70px;}
+.ks-tab-trigger-ctr{right:0;top:0;background-position:0 -130px;}
 .ks-tab-trigger-wrapper{float:left;height:26px;padding:0 15px;line-height:26px;font-weight:bold;border:1px solid #ddd;border-bottom:1px solid #bad6ff;}
 .ks-tab-trigger-active{margin-top:0;background-color:#cce1ff;background-position:0 -9px;}
 .ks-tab-trigger-active .ks-tab-trigger-ctl{background-position:-3px 0;}
 .ks-tab-trigger-active .ks-tab-trigger-ctr{background-position:0 0;}
 .ks-tab-trigger-active .ks-tab-trigger-wrapper{height:28px;line-height:28px;border:1px solid #bad6ff;border-bottom:1px solid #cce1ff;}
 .ks-tab-panel-container{position:relative;}
-.ks-tab-panel{border:1px solid #bad6ff;border-top:1px solid #fff;}
+.ks-tab-panel{border:1px solid #bad6ff;}
 .ks-tab-panel-cbl,
 .ks-tab-panel-cbr{position:relative;;width:4px;height:4px;overflow:hidden;font-size:0;line-height:0;background:url(img/bar-repeatx.png) no-repeat -3px -3px;}
 .ks-tab-panel-cbl{float:left;margin-top:-4px;}
 .ks-tab-panel-cbr{float:right;margin-top:-4px;background-position:0 -3px;}
 
-.ks-subtab-trigger-container{height:27px;overflow:hidden;border-bottom:1px dashed #ddd;background:#f2f2f2 url(img/bar-repeatx.png) repeat-x 0 -80px;}
+.ks-subtab-trigger-container{height:27px;overflow:hidden;border-bottom:1px dashed #ddd;background:#f2f2f2 url(img/bar-repeatx.png) repeat-x 0 -110px;}
 .ks-subtab-trigger{float:left;margin-top:5px;margin-left:-1px;border-left:1px solid #ddd;cursor:pointer;}
 .ks-subtab-trigger-wrapper{float:left;padding:0 15px;}
 .ks-subtab-trigger-active{color:#005ed9;}
@@ -33,28 +33,28 @@
 /***********************************************************************************************************************
  * @强调样式
  **********************************************************************************************************************/
-.ks-tab-strong .ks-tab-trigger-container{border-color:#80b2ff;background-position:0 -267px;}
-.ks-tab-strong .ks-tab-trigger{background-color:#e6e6e6;background-position:0 -220px;}
-.ks-tab-strong .ks-tab-trigger-ctl{background-position:-3px -210px;}
-.ks-tab-strong .ks-tab-trigger-ctr{background-position:0 -210px;}
+.ks-tab-strong .ks-tab-trigger-container{border-color:#80b2ff;background-position:0 -387px;}
+.ks-tab-strong .ks-tab-trigger{background-color:#e6e6e6;background-position:0 -310px;}
+.ks-tab-strong .ks-tab-trigger-ctl{background-position:-3px -300px;}
+.ks-tab-strong .ks-tab-trigger-ctr{background-position:0 -300px;}
 .ks-tab-strong .ks-tab-trigger-wrapper{border:1px solid #ccc;border-bottom:1px solid #80b2ff;}
-.ks-tab-strong .ks-tab-trigger-active{background-color:#a0beff;background-position:0 -149px;}
-.ks-tab-strong .ks-tab-trigger-active .ks-tab-trigger-ctl{background-position:-3px -140px;}
-.ks-tab-strong .ks-tab-trigger-active .ks-tab-trigger-ctr{background-position:0 -140px;}
+.ks-tab-strong .ks-tab-trigger-active{background-color:#a0beff;background-position:0 -209px;}
+.ks-tab-strong .ks-tab-trigger-active .ks-tab-trigger-ctl{background-position:-3px -200px;}
+.ks-tab-strong .ks-tab-trigger-active .ks-tab-trigger-ctr{background-position:0 -200px;}
 .ks-tab-strong .ks-tab-trigger-active .ks-tab-trigger-wrapper{border:1px solid #80b2ff;border-bottom:1px solid #a6c3ff;}
 .ks-tab-strong .ks-tab-panel{border-color:#80b2ff;}
-.ks-tab-strong .ks-tab-panel-cbl{background-position:-3px -143px;}
-.ks-tab-strong .ks-tab-panel-cbr{background-position:0 -143px;}
+.ks-tab-strong .ks-tab-panel-cbl{background-position:-3px -203px;}
+.ks-tab-strong .ks-tab-panel-cbr{background-position:0 -203px;}
 
 .ks-tab-strong  .ks-subtab-trigger-container{border-bottom:1px solid #ddd;}
 
 /***********************************************************************************************************************
  * @标准样式
  **********************************************************************************************************************/
-.ks-tab-normal .ks-tab-trigger-container{border-color:#bad6ff;background-position:0 -317px;}
-.ks-tab-normal .ks-tab-trigger{background-color:#f2f2f2;background-position:0 -80px;}
-.ks-tab-normal .ks-tab-trigger-ctl{background-position:-3px -70px;}
-.ks-tab-normal .ks-tab-trigger-ctr{background-position:0 -70px;}
+.ks-tab-normal .ks-tab-trigger-container{border-color:#bad6ff;background-position:0 -437px;}
+.ks-tab-normal .ks-tab-trigger{background-color:#f2f2f2;background-position:0 -110px;}
+.ks-tab-normal .ks-tab-trigger-ctl{background-position:-3px -100px;}
+.ks-tab-normal .ks-tab-trigger-ctr{background-position:0 -100px;}
 .ks-tab-normal .ks-tab-trigger-wrapper{border:1px solid #ddd;border-bottom:1px solid #bad6ff;}
 .ks-tab-normal .ks-tab-trigger-active{background-color:#cce1ff;background-position:0 -9px;}
 .ks-tab-normal .ks-tab-trigger-active .ks-tab-trigger-ctl{background-position:-3px 0;}
@@ -70,14 +70,14 @@
 /***********************************************************************************************************************
  * @弱化样式
  **********************************************************************************************************************/
-.ks-tab-weak .ks-tab-trigger-container{height:29px;padding-bottom:0;border-color:#ddd;background:none;}
-.ks-tab-weak .ks-tab-trigger{background-color:#fff;background-position:0 1000px;}
-.ks-tab-weak .ks-tab-trigger-ctl{background-position:-3px -70px;}
-.ks-tab-weak .ks-tab-trigger-ctr{background-position:0 -70px;}
+.ks-tab-weak .ks-tab-trigger-container{height:29px;padding-bottom:0;border-bottom:1px solid #ddd;background:none;}
+.ks-tab-weak .ks-tab-trigger{background-color:#fff;background-position:0 110px;}
+.ks-tab-weak .ks-tab-trigger-ctl{background-position:-3px -100px;}
+.ks-tab-weak .ks-tab-trigger-ctr{background-position:0 -100px;}
 .ks-tab-weak .ks-tab-trigger-wrapper{border:1px solid #ddd;border-bottom:none;}
-.ks-tab-weak .ks-tab-trigger-active{color:#005ed9;background-color:#f2f2f2;background-position:0 -80px;}
-.ks-tab-weak .ks-tab-trigger-active .ks-tab-trigger-ctl{background-position:-3px -70px;}
-.ks-tab-weak .ks-tab-trigger-active .ks-tab-trigger-ctr{background-position:0 -70px;}
+.ks-tab-weak .ks-tab-trigger-active{color:#005ed9;background-color:#f2f2f2;background-position:0 -110px;}
+.ks-tab-weak .ks-tab-trigger-active .ks-tab-trigger-ctl{background-position:-3px -100px;}
+.ks-tab-weak .ks-tab-trigger-active .ks-tab-trigger-ctr{background-position:0 -100px;}
 .ks-tab-weak .ks-tab-trigger-active .ks-tab-trigger-wrapper{border:1px solid #ddd;border-bottom:none;}
 .ks-tab-weak .ks-tab-panel{border:none;border-top:1px solid #eee;;}
 .ks-tab-weak .ks-tab-panel-cbl,
