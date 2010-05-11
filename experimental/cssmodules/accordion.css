@@ -25,11 +25,11 @@
 /***********************************************************************************************************************
  * @强调样式
  **********************************************************************************************************************/
-.ks-accordion-strong .ks-accordion-ctl{background-position:-3px -140px;}
-.ks-accordion-strong .ks-accordion-ctr{background-position:0 -140px;}
-.ks-accordion-strong .ks-accordion-cbl{background-position:-3px -143px;}
-.ks-accordion-strong .ks-accordion-cbr{background-position:0 -143px;}
-.ks-accordion-strong .ks-accordion-trigger{border-color:#80b2ff;background-color:#a0beff;background-position:0 -150px;}
+.ks-accordion-strong .ks-accordion-ctl{background-position:-3px -200px;}
+.ks-accordion-strong .ks-accordion-ctr{background-position:0 -200px;}
+.ks-accordion-strong .ks-accordion-cbl{background-position:-3px -203px;}
+.ks-accordion-strong .ks-accordion-cbr{background-position:0 -203px;}
+.ks-accordion-strong .ks-accordion-trigger{border-color:#80b2ff;background-color:#a0beff;background-position:0 -210px;}
 .ks-accordion-strong .ks-accordion-panel{border-color:#80b2ff;}
 
 /***********************************************************************************************************************
@@ -45,11 +45,11 @@
 /***********************************************************************************************************************
  * @弱化样式
  **********************************************************************************************************************/
-.ks-accordion-weak .ks-accordion-ctl{background-position:-3px -70px;}
-.ks-accordion-weak .ks-accordion-ctr{background-position:0 -70px;}
-.ks-accordion-weak .ks-accordion-cbl{background-position:-3px -73px;}
-.ks-accordion-weak .ks-accordion-cbr{background-position:0 -73px;}
-.ks-accordion-weak .ks-accordion-trigger{border-color:#ddd;background-color:#f2f2f2;background-position:0 -80px;}
+.ks-accordion-weak .ks-accordion-ctl{background-position:-3px -100px;}
+.ks-accordion-weak .ks-accordion-ctr{background-position:0 -100px;}
+.ks-accordion-weak .ks-accordion-cbl{background-position:-3px -103px;}
+.ks-accordion-weak .ks-accordion-cbr{background-position:0 -103px;}
+.ks-accordion-weak .ks-accordion-trigger{border-color:#ddd;background-color:#f2f2f2;background-position:0 -110px;}
 .ks-accordion-weak .ks-accordion-panel{border-color:#ddd;}
 
 /***********************************************************************************************************************
