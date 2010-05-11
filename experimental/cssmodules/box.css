@@ -7,16 +7,16 @@
  * @公共样式
  **********************************************************************************************************************/
 .ks-box{position:relative;margin-bottom:10px;}
-.ks-box-ctl,
-.ks-box-ctr,
-.ks-box-cbl,
-.ks-box-cbr{position:relative;width:4px;height:4px;overflow:hidden;font-size:0;line-height:0;background:url(img/bar-repeatx.png) no-repeat -3px 0;}
-.ks-box-ctl{float:left;}
-.ks-box-ctr{float:right;background-position:0 0;}
-.ks-box-cbl{float:left;margin-top:-4px;background-position:-3px -3px;}
-.ks-box-cbr{float:right;margin-top:-4px;background-position:0 -3px;}
-.ks-box-hd{border:1px solid #bad6ff;border-bottom:none;background:#cce1ff url(img/bar-repeatx.png) repeat-x 0 -10px;}
-.ks-box-hd-wrapper{padding:3px 10px;border:1px solid #f6faff;border-bottom:none;}
+.ks-box-ct,
+.ks-box-ct b,
+.ks-box-cb,
+.ks-box-cb b{display:block;position:relative;width:4px;height:4px;overflow:hidden;font-size:0;line-height:0;background:url(img/bar-repeatx.png) no-repeat -3px 0;}
+.ks-box-ct{width:100%;margin-bottom:-4px;}
+.ks-box-ct b{float:right;background-position:0 0;}
+.ks-box-cb{width:100%;margin-top:-4px;background-position:-3px -3px;}
+.ks-box-cb b{float:right;background-position:0 -3px;}
+.ks-box-hd{padding:3px 10px;border:1px solid #bad6ff;border-bottom:none;background:#cce1ff url(img/bar-repeatx.png) repeat-x 0 -10px;}
+.ks-box-hd-wrapper{margin:-3px -10px;padding:3px 10px;border:1px solid #f6faff;border-bottom:none;}
 .ks-box-icon{display:inline;}
 .ks-box-tit{display:inline;font-size:12px;font-weight:bold;}
 .ks-box-bd{border:1px solid #bad6ff;background:#fff;}
@@ -26,40 +26,40 @@
 /***********************************************************************************************************************
  * @强调样式
  **********************************************************************************************************************/
-.ks-box-strong .ks-box-ctl{background-position:-3px -140px;}
-.ks-box-strong .ks-box-ctr{background-position:0 -140px;}
-.ks-box-strong .ks-box-cbl{background-position:-3px -143px;}
-.ks-box-strong .ks-box-cbr{background-position:0 -143px;}
+.ks-box-strong .ks-box-ct{background-position:-3px -140px;}
+.ks-box-strong .ks-box-ct b{background-position:0 -140px;}
+.ks-box-strong .ks-box-cb{background-position:-3px -143px;}
+.ks-box-strong .ks-box-cb b{background-position:0 -143px;}
 .ks-box-strong .ks-box-hd{border-color:#80b2ff;background-color:#a0beff;background-position:0 -150px;}
 .ks-box-strong .ks-box-bd{border-color:#80b2ff;}
 
 /***********************************************************************************************************************
  * @标准样式
  **********************************************************************************************************************/
-.ks-box-normal .ks-box-ctl{background-position:-3px 0;}
-.ks-box-normal .ks-box-ctr{background-position:0 0;}
-.ks-box-normal .ks-box-cbl{background-position:-3px -3px;}
-.ks-box-normal .ks-box-cbr{background-position:0 -3px;}
+.ks-box-normal .ks-box-ct{background-position:-3px 0;}
+.ks-box-normal .ks-box-ct b{background-position:0 0;}
+.ks-box-normal .ks-box-cb{background-position:-3px -3px;}
+.ks-box-normal .ks-box-cb b{background-position:0 -3px;}
 .ks-box-normal .ks-box-hd{border-color:#bad6ff;background-color:#cce1ff;background-position:0 -10px;}
 .ks-box-normal .ks-box-bd{border-color:#bad6ff;}
 
 /***********************************************************************************************************************
  * @弱化样式
  **********************************************************************************************************************/
-.ks-box-weak .ks-box-ctl{background-position:-3px -70px;}
-.ks-box-weak .ks-box-ctr{background-position:0 -70px;}
-.ks-box-weak .ks-box-cbl{background-position:-3px -73px;}
-.ks-box-weak .ks-box-cbr{background-position:0 -73px;}
+.ks-box-weak .ks-box-ct{background-position:-3px -70px;}
+.ks-box-weak .ks-box-ct b{background-position:0 -70px;}
+.ks-box-weak .ks-box-cb{background-position:-3px -73px;}
+.ks-box-weak .ks-box-cb b{background-position:0 -73px;}
 .ks-box-weak .ks-box-hd{border-color:#ddd;background-color:#f2f2f2;background-position:0 -80px;}
 .ks-box-weak .ks-box-bd{border-color:#ddd;}
 
 /***********************************************************************************************************************
  * @裸样式
  **********************************************************************************************************************/
-.ks-box-naked .ks-box-ctl,
-.ks-box-naked .ks-box-ctr,
-.ks-box-naked .ks-box-cbl,
-.ks-box-naked .ks-box-cbr{display:none;}
+.ks-box-naked .ks-box-ct,
+.ks-box-naked .ks-box-ct b,
+.ks-box-naked .ks-box-cb,
+.ks-box-naked .ks-box-cb b{display:none;}
 .ks-box-naked .ks-box-hd{border:none;border-bottom:1px solid #d9e7fd;background:#fff;}
 .ks-box-naked .ks-box-hd-wrapper{border:none;border-bottom:1px solid #b2d1ff;}
 .ks-box-naked .ks-box-bd{border:none}
