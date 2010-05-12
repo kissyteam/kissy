@@ -1,0 +1,36 @@
+/**
+ * Button
+ * @creator 沉鱼<fool2fish@gmail.com>
+ */
+
+/***********************************************************************************************************************
+ * @公共样式
+ **********************************************************************************************************************/
+a.ks-button{display:inline-block;height:28px;margin-right:4px;padding-left:15px;vertical-align:bottom;border:none;background:#f2f2f2 url(img/button.png) no-repeat 0 -40px;cursor:pointer;}
+a.ks-button .ks-button-wrapper{display:inline-block;height:28px;padding-right:15px;font-size:14px;line-height:28px;background:#f2f2f2 url(img/button.png) no-repeat 100% -40px;}
+a.ks-button:active,
+a.ks-button:hover{text-decoration:none;}
+
+button.ks-button{margin-right:4px;padding:2px 10px;*padding:2px 0;vertical-align:bottom;font-size:14px;}
+
+/***********************************************************************************************************************
+ * @强调样式
+ **********************************************************************************************************************/
+a.ks-button-strong{height:30px;background-color:#c9dbff;background-position:0 0;}
+a.ks-button-strong .ks-button-wrapper{height:30px;line-height:30px;font-weight:bold;background-color:#c9dbff;background-position:100% 0;}
+
+button.ks-button-strong{font-weight:bold;}
+
+/***********************************************************************************************************************
+ * @标准样式
+ **********************************************************************************************************************/
+a.ks-button-normal{background-color:#f2f2f2;background-position:0 -40px;}
+a.ks-button-normal .ks-button-wrapper{background-color:#f2f2f2;background-position:100% -40px;}
+
+/***********************************************************************************************************************
+ * @弱化样式
+ **********************************************************************************************************************/
+a.ks-button-weak{background-color:#fafafa;background-position:0 -80px;}
+a.ks-button-weak .ks-button-wrapper{background-color:#fafafa;background-position:100% -80px;font-size:12px;}
+
+button.ks-button-weak{padding:0 5px;*padding:0;font-size:12px;}
