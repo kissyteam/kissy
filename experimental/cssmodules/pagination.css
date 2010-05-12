@@ -6,8 +6,8 @@
 /***********************************************************************************************************************
  * @公共样式
  **********************************************************************************************************************/
-.ks-pagination{height:30px;}
-.ks-pagination-wrapper{float:right;margin:3px 10px 0 0;}
+.ks-pagination{height:22px;}
+.ks-pagination-wrapper{float:right;}
 
 .ks-pagination span{color:#808080;}
 .ks-pagination a{color:#04c;cursor:pointer;}
@@ -67,10 +67,9 @@ a.ks-pagination-end{background-position:100% -175px;}
 .ks-pagination-weak .ks-pagination-prev,
 .ks-pagination-weak .ks-pagination-next,
  .ks-pagination-weak .ks-pagination-end,
-.ks-pagination-weak .ks-pagination-page{margin-left:0;padding:0;border:none;}
+.ks-pagination-weak .ks-pagination-page{margin-left:0;padding:0;border:none;background-color:transparent;}
 
 .ks-pagination-weak .ks-pagination-page{padding:0 5px;}
-.ks-pagination-weak span.ks-pagination-page{background:#fff;}
 
 .ks-pagination-weak .ks-pagination-start,
 .ks-pagination-weak .ks-pagination-prev{width:12px;padding-right:2px;}
