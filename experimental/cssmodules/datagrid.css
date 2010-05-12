@@ -18,8 +18,8 @@
 .ks-datagrid-cell-sortable{cursor:pointer;_text-decoration:underline;}
 .ks-datagrid-cell-sortable .ks-datagrid-icon{display:inline-block;width:13px;height:13px;margin-left:5px;background:url(img/icon.png) no-repeat -100px -40px;}
 .ks-datagrid-cell-sortable:hover{background:#dcdcdc url(img/bar-repeatx.png) repeat-x 0 -310px;}
-.ks-datagrid-cell-asc,
-.ks-datagrid-cell-desc{background-position:0 -310px;}
+.ks-datagrid .ks-datagrid-cell-asc,
+.ks-datagrid .ks-datagrid-cell-desc{background:#dcdcdc url(img/bar-repeatx.png) repeat-x 0 -310px;}
 .ks-datagrid-cell-asc .ks-datagrid-icon{background-position:-100px -20px;}
 .ks-datagrid-cell-desc .ks-datagrid-icon{background-position:-80px -20px;}
 
