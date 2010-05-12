@@ -38,6 +38,7 @@
   ie7 有这样的 bug： 当 ua 字节超过 260 时，会返回为 IE6 http://jamiethompson.co.uk/web/2008/07/23/an-ie7-bug-that-returns-msie-60-user-agent-string/
   有脚：reset.css 里要不要加个 button{*visibility:visible} /* fix ie doulbe padding bug */ 不然老要在项目里重置这个
   实现 tmp/JSlide.rar 中的特效
+  Switchable 里，增加最后一张和最前一张的事件
   
   check and test all components
   pack editor 1.0.6
