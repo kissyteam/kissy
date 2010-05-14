@@ -1,0 +1,19 @@
+/**
+ * Tree
+ * @creator 沉鱼<fool2fish@gmail.com>
+ */
+
+/***********************************************************************************************************************
+ * @公共样式
+ **********************************************************************************************************************/
+.ks-tree-item{background:url(img/tree-vline.png) repeat-y 7px 0;}
+.ks-tree-item-last{background:none;}
+.ks-tree{background:none;zoom:1;}
+.ks-tree-children{margin-left:20px;}
+.ks-tree-node{padding-left:20px;background:url(img/tree-corner.png) no-repeat 7px 50%;}
+.ks-tree-icon{display:inline-block;width:12px;height:12px;margin-left:-18px;margin-right:2px;background:url(img/icon.png) no-repeat -60px 0;cursor:pointer;}
+.ks-tree-node-wrapper{padding:2px 4px;cursor:pointer;}
+.ks-tree-node-wrapper:hover{background:#e1edff;}
+
+
+
