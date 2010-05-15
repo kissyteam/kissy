@@ -4,74 +4,123 @@
 <meta charset="gbk"/>
 <title>CSS Modules Index</title>
 <link rel="stylesheet" href="../../build/cssreset/reset.css" />
-<link rel="stylesheet" href="accordion.css" />
 <style>
-#page{margin:10px;}
+    #page{margin:10px;}
+    h1{margin-bottom:12px;padding:12px 0;font-size:24px;border-bottom:1px solid #ccc;}
+    h2{font-size:14px;font-weight:bold;}
+    .ks-cssmodule-item{float:left;width:206px;height:180px;overflow:hidden;margin:0 10px 10px 0;}
+    .ks-cssmodule-link{display:block;width:200px;height:174px;border:3px solid #eee;cursor:pointer;}
+    .ks-cssmodule-link:hover{border-color:#f8ddb5;}
+    .ks-cssmodule-img{width:200px;height:150px;overflow:hidden;}
+    .ks-cssmodule-title{display:block;height:24px;line-height:24px;text-align:center;font-weight:bold;font-size:14px;color:#444;background:#eee;}
+    .ks-css-module-desc{color:#888;}
 </style>
 </head>
 <body>
 <div id="page">
 
+    <h1>KISSY CSS Modules</h1>
+
+    <h2>基础约定和使用指南</h2>
 
 
-<!-- accordion START -->
-    <div class="ks-accordion ks-accordion-naked">
-        <span class="ks-accordion-rc-tl"></span>
-        <span class="ks-accordion-rc-tr"></span>
-        <div class="ks-accordion-trigger ks-accordion-active">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">布局</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel">
-            <div class="ks-accordion-panel-wrapper">
-                这里是内容
-            </div>
-        </div>
-        <div class="ks-accordion-trigger ks-accordion-active">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">盒子</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel">
-            <div class="ks-accordion-panel-wrapper">
-                这里是内容
-            </div>
-        </div>
-        <div class="ks-accordion-trigger ks-accordion-active">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">列表</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel">
-            <div class="ks-accordion-panel-wrapper">
-                这里是内容
-            </div>
-        </div>
-        <div class="ks-accordion-trigger ks-accordion-active">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">可切换面板</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel">
-            <div class="ks-accordion-panel-wrapper">
-                这里是内容
-            </div>
-        </div>
-        <div class="ks-accordion-trigger ks-accordion-active">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">可切换面板</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel">
-            <div class="ks-accordion-panel-wrapper">
-                这里是内容
-            </div>
-        </div>
-        <span class="ks-accordion-rc-bl"></span>
-        <span class="ks-accordion-rc-br"></span>
-    </div>
-    <!-- accordion END -->
+    <h2>样式文件</h2>
+
+
+    <h2>模块列表</h2>
+    <ul class="ks-cssmodule-list">
+        <li class="ks-cssmodule-item">
+            <a class="ks-cssmodule-link" href="layout.html">
+                <div class="ks-cssmodule-img"><img src="thumbnail/layout.png" alt="" /></div>
+                <strong class="ks-cssmodule-title">布局</strong>
+                <p class="ks-css-module-desc"></p>
+            </a>
+        </li>
+        <li class="ks-cssmodule-item">
+            <a class="ks-cssmodule-link" href="box.html">
+                <div class="ks-cssmodule-img"><img src="thumbnail/box.png" alt="" /></div>
+                <strong class="ks-cssmodule-title">盒子</strong>
+                <p class="ks-css-module-desc"></p>
+            </a>
+        </li>
+        <li class="ks-cssmodule-item">
+            <a class="ks-cssmodule-link" href="tab.html">
+                <div class="ks-cssmodule-img"><img src="thumbnail/tab.png" alt="" /></div>
+                <strong class="ks-cssmodule-title">卡盘</strong>
+                <p class="ks-css-module-desc"></p>
+            </a>
+        </li>
+        <li class="ks-cssmodule-item">
+            <a class="ks-cssmodule-link" href="accordion.html">
+                <div class="ks-cssmodule-img"><img src="thumbnail/accordion.png" alt="" /></div>
+                <strong class="ks-cssmodule-title">手风琴</strong>
+                <p class="ks-css-module-desc"></p>
+            </a>
+        </li>
+        <li class="ks-cssmodule-item">
+            <a class="ks-cssmodule-link" href="popup.html">
+                <div class="ks-cssmodule-img"><img src="thumbnail/popup.png" alt="" /></div>
+                <strong class="ks-cssmodule-title">弹出层</strong>
+                <p class="ks-css-module-desc"></p>
+            </a>
+        </li>
+        <li class="ks-cssmodule-item">
+            <a class="ks-cssmodule-link" href="msg.html">
+                <div class="ks-cssmodule-img"><img src="thumbnail/msg.png" alt="" /></div>
+                <strong class="ks-cssmodule-title">提示信息</strong>
+                <p class="ks-css-module-desc"></p>
+            </a>
+        </li>
+        <li class="ks-cssmodule-item">
+            <a class="ks-cssmodule-link" href="pagination.html">
+                <div class="ks-cssmodule-img"><img src="thumbnail/pagination.png" alt="" /></div>
+                <strong class="ks-cssmodule-title">翻页</strong>
+                <p class="ks-css-module-desc"></p>
+            </a>
+        </li>
+        <li class="ks-cssmodule-item">
+            <a class="ks-cssmodule-link" href="flowstep.html">
+                <div class="ks-cssmodule-img"><img src="thumbnail/flowstep.png" alt="" /></div>
+                <strong class="ks-cssmodule-title">步骤条</strong>
+                <p class="ks-css-module-desc"></p>
+            </a>
+        </li>
+        <li class="ks-cssmodule-item">
+            <a class="ks-cssmodule-link" href="button.html">
+                <div class="ks-cssmodule-img"><img src="thumbnail/button.png" alt="" /></div>
+                <strong class="ks-cssmodule-title">按钮&伪按钮</strong>
+                <p class="ks-css-module-desc"></p>
+            </a>
+        </li>
+        <li class="ks-cssmodule-item">
+            <a class="ks-cssmodule-link" href="bar.html">
+                <div class="ks-cssmodule-img"><img src="thumbnail/bar.png" alt="" /></div>
+                <strong class="ks-cssmodule-title">Bar</strong>
+                <p class="ks-css-module-desc"></p>
+            </a>
+        </li>
+        <li class="ks-cssmodule-item">
+            <a class="ks-cssmodule-link" href="datagrid.html">
+                <div class="ks-cssmodule-img"><img src="thumbnail/datagrid.png" alt="" /></div>
+                <strong class="ks-cssmodule-title">表格</strong>
+                <p class="ks-css-module-desc"></p>
+            </a>
+        </li>
+        <li class="ks-cssmodule-item">
+            <a class="ks-cssmodule-link" href="tree.html">
+                <div class="ks-cssmodule-img"><img src="thumbnail/tree.png" alt="" /></div>
+                <strong class="ks-cssmodule-title">树</strong>
+                <p class="ks-css-module-desc"></p>
+            </a>
+        </li>
+        <li class="ks-cssmodule-item">
+            <a class="ks-cssmodule-link" href="form.html">
+                <div class="ks-cssmodule-img"><img src="thumbnail/form.png" alt="" /></div>
+                <strong class="ks-cssmodule-title">表单</strong>
+                <p class="ks-css-module-desc"></p>
+            </a>
+        </li>
+    </ul>
     
 </div>
 </body>
