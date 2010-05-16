@@ -391,9 +391,11 @@
 
     function test_param(test) {
         if(S.param({foo:1, bar:2}) !== 'foo=1&bar=2') test.fail();
-        if(S.param({foo:1, bar:[2,3]}) !== encodeURI('foo=1&bar[]=2&bar[]=3')) test.fail();
+        if(S.param({foo:1, bar:[2,3]}) !== 'foo=1&bar[]=2&bar[]=3') test.fail();
 
-        if(S.param({foo:1, bar:[]}) !== encodeURI('foo=1')) test.fail();
+        if(S.param({'&#': '!#='}) !== '%26%23=!%23%3D') test.fail();
+
+        if(S.param({foo:1, bar:[]}) !== 'foo=1') test.fail();
         if(S.param({foo:{}, bar:2}) !== 'bar=2') test.fail();
         if(S.param({foo:function() {}, bar:2}) !== 'bar=2') test.fail();
 

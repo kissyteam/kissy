@@ -8,6 +8,8 @@ KISSY.add('kissy-lang', function(S, undefined) {
         AP = Array.prototype,
         indexOf = AP.indexOf, filter = AP.filter,
         toString = Object.prototype.toString,
+        encode = encodeURIComponent,
+        decode = decodeURIComponent,
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
         REG_NOT_WHITE = /\S/;
@@ -185,23 +187,24 @@ KISSY.add('kissy-lang', function(S, undefined) {
             var buf = [], key, val;
             for (key in o) {
                 val = o[key];
+                key = encode(key);
 
                 // val 为有效的非数组值
                 if (isValidParamValue(val)) {
-                    buf.push(key, '=', val + '', '&');
+                    buf.push(key, '=', encode(val + ''), '&');
                 }
                 // val 为非空数组
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key + '[]=', val[i] + '', '&');
+                            buf.push(key, '[]=', encode(val[i] + ''), '&');
                         }
                     }
                 }
                 // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
             }
             buf.pop();
-            return encodeURI(buf.join(''));
+            return buf.join('');
         },
 
         /**
@@ -214,7 +217,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * </code>
          */
         unparam: function(str, sep) {
-            if (typeof str !== 'string' || (str = decodeURI(S.trim(str))).length === 0) return {};
+            if (typeof str !== 'string' || (str = S.trim(str)).length === 0) return {};
 
             var ret = {},
                 pairs = str.split(sep || '&'),
@@ -223,8 +226,8 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
             for (; i < len; ++i) {
                 pair = pairs[i].split('=');
-                key = pair[0];
-                val = pair[1] || '';
+                key = decode(pair[0]);
+                val = decode(pair[1] || '');
 
                 if ((m = key.match(REG_ARR_KEY)) && m[1]) {
                     ret[m[1]] = ret[m[1]] || [];
@@ -334,7 +337,6 @@ KISSY.add('kissy-lang', function(S, undefined) {
  *
  *  2010.04
  *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
- *   - 对于 param, encodeURI 就可以了，和 jQuery 保持一致。
  *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
  *
  * TODO:

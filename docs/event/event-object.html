@@ -35,7 +35,7 @@
                 <div class="section">
                     <h3 id="props">Properties</h3>
 
-                    <p>ev 拥有的属性非常多，不同类型的事件，ev 的属性也有不同。所有属性列表如下：</p>
+                    <p>ev 拥有的属性非常多，不同类型的事件，ev 的属性也有不同。目前支持的属性列表如下：</p>
 <pre class="example-code"><code>
 altKey attrChange attrName bubbles button cancelable charCode
 clientX clientY ctrlKey currentTarget data detail eventPhase
@@ -60,11 +60,11 @@ isDefaultPrevented isPropagationStopped isImmediatePropagationStopped
                             <code>void <em>preventDefault</em>()</code>
                         </h4>
                         <div class="detail">
-                            <p>阻止掉默认行为的发生。</p>
+                            <p>阻止默认行为的发生。</p>
 <pre class="example-code"><code>
 var S = KISSY, Event = S.Event;
 
-// 最常规的用法：阻止掉链接的跳转
+// 最常规的用法：阻止链接跳转
 Event.add('#linkId', 'click', function(ev) {
     ev.preventDefault();
     // more code
@@ -89,17 +89,20 @@ Event.add('#linkId', 'click', function(ev) {
                             <code>void <em>stopImmediatePropagation</em>()</code>
                         </h4>
                         <div class="detail">
-                            <p>停止当前的事件冒泡。不光要停止冒泡到下一个事件目标，当前目标上的任何后续监听函数，也马上取消执行。</p>
-                            <p>文字上很难解释，将下面的代码执行一遍，你就明白了：</p>
-<pre class="example-code"><code>
-var S = KISSY, Event = S.Event;
+                            <p>停止当前事件冒泡。不光停止冒泡到下一个事件目标，当前目标上的任何后续监听函数，也马上取消执行。</p>
+                            <p>测试页面：<a href="example-stopImmediatePropagation.html">example-stopImmediatePropagation.html</a></p>
+                            <p class="notice">目前主流浏览器都尚未原生支持 stopImmediatePropagation 方法，慎用。</p>
+                        </div>
+                    </div>
 
-// 最常规的用法：阻止掉链接的跳转
-Event.add('#linkId', 'click', function(ev) {
-    ev.preventDefault();
-    // more code
-});
-</code></pre>
+                    <div class="member method">
+                        <h4>
+                            <a name="method_halt">halt</a>
+                            <code>void <em>halt</em>(immediate)</code>
+                        </h4>
+                        <div class="detail">
+                            <p>halt() 等价 stopPropagation() + preventDefault()</p>
+                            <p>halt(true) 等价 stopImmediatePropagation() + preventDefault()</p>
                         </div>
                     </div>
 
@@ -107,7 +110,7 @@ Event.add('#linkId', 'click', function(ev) {
 
                 <div class="section notes">
                     <p>看到此处，或许有一点感觉了，但似乎离“只要你能想到，它基本上就能做到”还有比较远的距离。</p>
-                    <p>预知高潮何在，请继续阅读 <a href="event-target.html">event-target</a></p>
+                    <p>请继续阅读 <a href="event-target.html">event-target</a></p>
                 </div>
             </div>
         </div>
