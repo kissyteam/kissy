@@ -1,24 +1,36 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
-<title>CSS Modules Button</title>
-<link rel="stylesheet" href="../../build/cssreset/reset.css" />    
-<link rel="stylesheet" href="button.css" />
-<style>
-#page{margin:10px;}
-</style>
+    <meta charset="gbk"/>
+    <title>CSS Modules Button</title>
+    <link rel="stylesheet" href="../../build/cssreset/reset.css" />
+    <link rel="stylesheet" href="button.css" />
+    <style>
+        #page {margin:0 10px;}
+        h1{margin-bottom:12px;padding:12px 0;font-size:24px;border-bottom:1px solid #ccc;}
+        h2{margin-bottom:12px;padding:6px 0;font-size:14px;font-weight:bold;border-bottom:1px dashed #ccc;}
+        strong.h{font-weight:bold;color:#f30;}
+        .ks-css-modules-desc{margin-bottom:12px;color:#888;}
+    </style>
 </head>
 <body>
-<div id="page">
-    <a class="ks-button ks-button-strong"><span class="ks-button-wrapper"><i class="ks-button-icon"></i>我是一个强调的伪按钮</span></a>
-    <a class="ks-button ks-button-normal"><span class="ks-button-wrapper"><i class="ks-button-icon"></i>我是一个标准的伪按钮</span></a>
-    <a class="ks-button ks-button-weak"><span class="ks-button-wrapper"><i class="ks-button-icon"></i>我是一个弱化的伪按钮</span></a>
-    <br/><br/>
-    <button class="ks-button ks-button-strong">我是一个强调的按钮</button>
-    <button class="ks-button ks-button-normal">我是一个标准的按钮</button>
-    <button class="ks-button ks-button-weak">我是一个弱化的按钮</button>
-</div>
+    <div id="page">
+        <h1>CSS Modules Button</h1>
+        <p class="ks-css-modules-desc">
+            由于Button和Input元素在样式上的缺陷，建议在给真正的按钮设置背景样式时使用定宽。
+        </p>
+
+        <h2>按钮</h2>
+        <button class="ks-button ks-button-strong">我是一个强调的按钮</button>
+        <button class="ks-button ks-button-normal">我是一个标准的按钮</button>
+        <button class="ks-button ks-button-weak">我是一个弱化的按钮</button>
+
+        <h2>伪按钮</h2>
+        <a class="ks-button ks-button-strong"><span class="ks-button-wrapper"><i class="ks-button-icon"></i>我是一个强调的伪按钮</span></a>
+        <a class="ks-button ks-button-normal"><span class="ks-button-wrapper"><i class="ks-button-icon"></i>我是一个标准的伪按钮</span></a>
+        <a class="ks-button ks-button-weak"><span class="ks-button-wrapper"><i class="ks-button-icon"></i>我是一个弱化的伪按钮</span></a>
+
+    </div>
 </body>
 </html>
 

@@ -1,51 +1,55 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
-<title>CSS Modules Bar</title>
-<link rel="stylesheet" href="../../build/cssreset/reset.css" />    
-<link rel="stylesheet" href="bar.css" />
-<style>
-#page{margin:10px;}
-.ks-bar{margin-bottom:10px;}
-</style>
+    <meta charset="gbk"/>
+    <title>CSS Modules Bar</title>
+    <link rel="stylesheet" href="../../build/cssreset/reset.css" />
+    <link rel="stylesheet" href="bar.css" />
+    <style>
+        #page {margin:0 10px;}
+        h1{margin-bottom:12px;padding:12px 0;font-size:24px;border-bottom:1px solid #ccc;}
+        h2{margin-bottom:12px;padding:6px 0;font-size:14px;font-weight:bold;border-bottom:1px dashed #ccc;}
+        strong.h{font-weight:bold;color:#f30;}
+        .ks-css-modules-desc{margin-bottom:12px;color:#888;}
+        .ks-bar{margin-bottom:10px;}
+    </style>
 </head>
 <body>
-<div id="page">
+    <div id="page">
+        <h1>CSS Modules Bar</h1>
+        <p class="ks-css-modules-desc">
+            用于放置操作类链接、按钮、翻页等元素。
+        </p>
 
-   <!-- bar START -->
-   <div class="ks-bar ks-bar-strong">
-        <div class="ks-bar-wrapper">
+        <h2>强调的Bar</h2>
+        <!-- bar START -->
+        <div class="ks-bar ks-bar-strong">
             强调的bar
         </div>
-    </div>
-    <!-- bar END -->
+        <!-- bar END -->
 
-    <!-- bar START -->
-    <div class="ks-bar ks-bar-normal">
-        <div class="ks-bar-wrapper">
+        <h2>标准的Bar</h2>
+        <!-- bar START -->
+        <div class="ks-bar ks-bar-normal">
             标准的bar
         </div>
-    </div>
-    <!-- bar END -->
+        <!-- bar END -->
 
-    <!-- bar START -->
-    <div class="ks-bar ks-bar-weak">
-        <div class="ks-bar-wrapper">
+        <h2>弱化的Bar</h2>
+        <!-- bar START -->
+        <div class="ks-bar ks-bar-weak">
             弱化的bar
         </div>
-    </div>
-    <!-- bar END -->
+        <!-- bar END -->
 
-    <!-- bar START -->
-    <div class="ks-bar ks-bar-naked">
-        <div class="ks-bar-wrapper">
+        <h2>裸的Bar</h2>
+        <!-- bar START -->
+        <div class="ks-bar ks-bar-naked">
             裸的bar
         </div>
+        <!-- bar END -->
+
     </div>
-    <!-- bar END -->
-    
-</div>
 </body>
 </html>
 

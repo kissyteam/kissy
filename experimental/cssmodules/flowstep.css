@@ -15,7 +15,7 @@
 .ks-flowstep li{float: left;height: 23px;overflow: hidden;font-size: 14px;font-weight:bold;line-height: 23px;text-align: center;background: #e4e4e4 url(img/flowstep.png) no-repeat 0 0;}
 .ks-flowstep span{display:block;background:url(img/flowstep.png) no-repeat 0 0;}
 .ks-flowstep .ks-flowstep-first{background-position:0 -69px;}
-.ks-flowstep .ks-flowstep-last{position:absolute;right:0px;_right:-1px;background-position:100% -92px;_width:100%;}
+.ks-flowstep .ks-flowstep-last{position:absolute;right:0;_right:-1px;background-position:100% -92px;_width:100%;}
 .ks-flowstep-current .ks-flowstep-last{background-color:transparent;background-position:100% -115px;}
 .ks-flowstep-done span{background-color: #ffe6ba;background-position: 0 -46px; color: #f60;}
 .ks-flowstep .ks-flowstep-current,

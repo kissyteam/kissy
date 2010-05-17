@@ -6,8 +6,7 @@
 /***********************************************************************************************************************
  * @公共样式
  **********************************************************************************************************************/
-.ks-bar{position:relative;border-top:1px solid #bad6ff;border-bottom:1px solid #bad6ff;background:#cce1ff url(img/bar-repeatx.png) repeat-x 0 -10px;}
-.ks-bar-wrapper{min-height:18px;padding:3px 10px;border-top:1px solid #fff;}
+.ks-bar{min-height:19px;padding:3px 10px;border-top:1px solid #bad6ff;border-bottom:1px solid #bad6ff;background:#cce1ff url(img/bar-repeatx.png) repeat-x 0 -10px;}
 
 /***********************************************************************************************************************
  * @强调样式

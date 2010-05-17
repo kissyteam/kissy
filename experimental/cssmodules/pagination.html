@@ -1,89 +1,101 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
-<title>CSS Modules Pagination</title>
-<link rel="stylesheet" href="../../build/cssreset/reset.css" />    
-<link rel="stylesheet" href="pagination.css" />
-<style>
-#page{margin:10px;}
-.ks-pagination{margin-bottom:10px;}
-</style>
+    <meta charset="gbk"/>
+    <title>CSS Modules Pagination</title>
+    <link rel="stylesheet" href="../../build/cssreset/reset.css" />
+    <link rel="stylesheet" href="pagination.css" />
+    <style>
+        #page {margin:0 10px;}
+        h1{margin-bottom:12px;padding:12px 0;font-size:24px;border-bottom:1px solid #ccc;}
+        h2{margin-bottom:12px;padding:6px 0;font-size:14px;font-weight:bold;border-bottom:1px dashed #ccc;}
+        strong.h{font-weight:bold;color:#f30;}
+        .ks-css-modules-desc{margin-bottom:12px;color:#888;}
+        .ks-pagination{margin-bottom:10px;}
+    </style>
 </head>
 <body>
-<div id="page">
-    
-    <!--page START-->
-    <div class="ks-pagination ks-pagination-normal">
-        <div class="ks-pagination-wrapper">
-            <span class="ks-pagination-info">共100页</span>
-            <span class="ks-pagination-start">首页</span>
-            <a class="ks-pagination-start" href="#">首页</a>
-            <span class="ks-pagination-prev">上一页</span>
-            <a class="ks-pagination-prev" href="#">上一页</a>
-            <a class="ks-pagination-page" href="#">1</a>
-            <a class="ks-pagination-page" href="#">2</a>
-            <span class="ks-pagination-page">3</span>
-            <a class="ks-pagination-page" href="#">4</a>
-            <a class="ks-pagination-page" href="#">5</a>
-            <a class="ks-pagination-next" href="#">下一页</a>
-            <span class="ks-pagination-next">下一页</span>
-            <a class="ks-pagination-end" href="#">末页</a>
-            <span class="ks-pagination-end">末页</span>
-            <span class="ks-pagination-skip">到第<input type="text" class="ks-pagination-skip-to"/>页<button type="button" class="ks-pagination-skip-button">确定</button></span>
-            <span class="ks-pagination-data-limit">每页<select><option>20条</option><option>40条</option><option>60条</option></select></span>
-        </div>
-    </div>
-    <!--page END-->
+    <div id="page">
+        <h1>CSS Modules Pagination</h1>
+        <p class="ks-css-modules-desc">
+            你可以根据具体情况删减模块中的小单元。
+        </p>
 
-    <!--page START-->
-    <div class="ks-pagination ks-pagination-normal">
-        <div class="ks-pagination-wrapper">
-            <a class="ks-pagination-start" href="#">首页</a>
-            <a class="ks-pagination-prev" href="#">上一页</a>
-            <span class="ks-pagination-page">3</span>
-            <a class="ks-pagination-next" href="#">下一页</a>
-            <a class="ks-pagination-end" href="#">末页</a>
+        <h2>标准的翻页-完整版</h2>
+        <!--page START-->
+        <div class="ks-pagination ks-pagination-normal">
+            <div class="ks-pagination-wrapper">
+                <span class="ks-pagination-info">共100页</span>
+                <span class="ks-pagination-start">首页</span>
+                <a class="ks-pagination-start" href="#">首页</a>
+                <span class="ks-pagination-prev">上一页</span>
+                <a class="ks-pagination-prev" href="#">上一页</a>
+                <a class="ks-pagination-page" href="#">1</a>
+                <a class="ks-pagination-page" href="#">2</a>
+                <span class="ks-pagination-page">3</span>
+                <a class="ks-pagination-page" href="#">4</a>
+                <a class="ks-pagination-page" href="#">5</a>
+                <a class="ks-pagination-next" href="#">下一页</a>
+                <span class="ks-pagination-next">下一页</span>
+                <a class="ks-pagination-end" href="#">末页</a>
+                <span class="ks-pagination-end">末页</span>
+                <span class="ks-pagination-skip">到第<input type="text" class="ks-pagination-skip-to"/>页<button type="button" class="ks-pagination-skip-button">确定</button></span>
+                <span class="ks-pagination-data-limit">每页<select><option>20条</option><option>40条</option><option>60条</option></select></span>
+            </div>
         </div>
-    </div>
-    <!--page END-->
+        <!--page END-->
 
-    <!--page START-->
-    <div class="ks-pagination ks-pagination-weak">
-        <div class="ks-pagination-wrapper">
-            <span class="ks-pagination-info">共100页</span>
-            <span class="ks-pagination-start">首页</span>
-            <a class="ks-pagination-start" href="#">首页</a>
-            <span class="ks-pagination-prev">上一页</span>
-            <a class="ks-pagination-prev" href="#">上一页</a>
-            <a class="ks-pagination-page" href="#">1</a>
-            <a class="ks-pagination-page" href="#">2</a>
-            <span class="ks-pagination-page">3</span>
-            <a class="ks-pagination-page" href="#">4</a>
-            <a class="ks-pagination-page" href="#">5</a>
-            <a class="ks-pagination-next" href="#">下一页</a>
-            <span class="ks-pagination-next">下一页</span>
-            <a class="ks-pagination-end" href="#">末页</a>
-            <span class="ks-pagination-end">末页</span>
-            <span class="ks-pagination-skip">到第<input type="text" class="ks-pagination-skip-to"/>页<button type="button" class="ks-pagination-skip-button">确定</button></span>
-            <span class="ks-pagination-data-limit">每页<select><option>20条</option><option>40条</option><option>60条</option></select></span>
+        <h2>标准的翻页-简化版</h2>
+        <!--page START-->
+        <div class="ks-pagination ks-pagination-normal">
+            <div class="ks-pagination-wrapper">
+                <a class="ks-pagination-start" href="#">首页</a>
+                <a class="ks-pagination-prev" href="#">上一页</a>
+                <span class="ks-pagination-page">3</span>
+                <a class="ks-pagination-next" href="#">下一页</a>
+                <a class="ks-pagination-end" href="#">末页</a>
+            </div>
         </div>
-    </div>
-    <!--page END-->
+        <!--page END-->
 
-    <!--page START-->
-    <div class="ks-pagination ks-pagination-weak">
-        <div class="ks-pagination-wrapper">
-            <a class="ks-pagination-start" href="#">首页</a>
-            <a class="ks-pagination-prev" href="#">上一页</a>
-            <span class="ks-pagination-page">3</span>
-            <a class="ks-pagination-next" href="#">下一页</a>
-            <a class="ks-pagination-end" href="#">末页</a>
+        <h2>弱化的翻页-完整版</h2>
+        <!--page START-->
+        <div class="ks-pagination ks-pagination-weak">
+            <div class="ks-pagination-wrapper">
+                <span class="ks-pagination-info">共100页</span>
+                <span class="ks-pagination-start">首页</span>
+                <a class="ks-pagination-start" href="#">首页</a>
+                <span class="ks-pagination-prev">上一页</span>
+                <a class="ks-pagination-prev" href="#">上一页</a>
+                <a class="ks-pagination-page" href="#">1</a>
+                <a class="ks-pagination-page" href="#">2</a>
+                <span class="ks-pagination-page">3</span>
+                <a class="ks-pagination-page" href="#">4</a>
+                <a class="ks-pagination-page" href="#">5</a>
+                <a class="ks-pagination-next" href="#">下一页</a>
+                <span class="ks-pagination-next">下一页</span>
+                <a class="ks-pagination-end" href="#">末页</a>
+                <span class="ks-pagination-end">末页</span>
+                <span class="ks-pagination-skip">到第<input type="text" class="ks-pagination-skip-to"/>页<button type="button" class="ks-pagination-skip-button">确定</button></span>
+                <span class="ks-pagination-data-limit">每页<select><option>20条</option><option>40条</option><option>60条</option></select></span>
+            </div>
         </div>
+        <!--page END-->
+
+        <h2>弱化的翻页-简化版</h2>
+        <!--page START-->
+        <div class="ks-pagination ks-pagination-weak">
+            <div class="ks-pagination-wrapper">
+                <a class="ks-pagination-start" href="#">首页</a>
+                <a class="ks-pagination-prev" href="#">上一页</a>
+                <span class="ks-pagination-page">3</span>
+                <a class="ks-pagination-next" href="#">下一页</a>
+                <a class="ks-pagination-end" href="#">末页</a>
+            </div>
+        </div>
+        <!--page END-->
+
     </div>
-    <!--page END-->
-    
-</div>
 </body>
 </html>
 

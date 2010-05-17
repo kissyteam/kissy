@@ -11,7 +11,7 @@ a.ks-button .ks-button-wrapper{display:inline-block;height:28px;padding-right:15
 a.ks-button:active,
 a.ks-button:hover{text-decoration:none;}
 
-button.ks-button{margin-right:4px;padding:2px 10px;*padding:2px 0;vertical-align:bottom;font-size:14px;}
+button.ks-button{padding:2px 10px;*padding:2px 0;vertical-align:bottom;font-size:14px;}
 
 /***********************************************************************************************************************
  * @强调样式

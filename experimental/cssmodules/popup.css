@@ -6,12 +6,11 @@
 /***********************************************************************************************************************
  * @默认（标准）样式
  **********************************************************************************************************************/
-.ks-popup{position:relative;padding:3px;background:#ddd;}
-.ks-popup-hd{border:1px solid #a7cbfe;border-bottom:none;background:#cce1ff url(img/bar-repeatx.png) repeat-x 0 -10px;}
-.ks-popup-hd-wrapper{padding:2px 10px;border:1px solid #f6faff;border-bottom:none;}
+.ks-popup{padding:3px;background:#aaa;}
+.ks-popup-hd{position:relative;padding:3px 10px;border:1px solid #a7cbfe;border-bottom:none;background:#cce1ff url(img/bar-repeatx.png) repeat-x 0 -10px;}
 .ks-popup-icon{display:inline;}
 .ks-popup-tit{display:inline;font-size:12px;font-weight:bold;}
 .ks-popup-bd{border:1px solid #a7cbfe;background:#fff;}
-.ks-popup-act{position:absolute;right:1px;top:4px;padding-right:5px;line-height:21px;}
-.ks-popup-act li{float:left;margin-right:5px;}
+.ks-popup-act{position:absolute;right:10px;top:3px;}
+.ks-popup-act a{float:left;margin-left:5px;}
 
