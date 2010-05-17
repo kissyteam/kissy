@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="gbk"/>
+    <title>CSS Modules Box (extended)</title>
+    <link rel="stylesheet" href="../../build/cssreset/reset.css" />
+    <link rel="stylesheet" href="box.css" />
+    <link rel="stylesheet" href="box-extended.css" />
+    <style>
+        #page {margin:0 10px;}
+        h1{margin-bottom:12px;padding:12px 0;font-size:24px;border-bottom:1px solid #ccc;}
+        h2{margin-bottom:12px;padding:6px 0;font-size:14px;font-weight:bold;border-bottom:1px dashed #ccc;}
+        strong.h{font-weight:bold;color:#f30;}
+        .ks-css-modules-desc{margin-bottom:12px;color:#888;}
+        .ks-box{width:200px;}
+        .ks-box-bd{height:120px;}
+    </style>
+</head>
+<body>
+    <div id="page">
+        <h1>CSS Modules Box (extended)</h1>
+        <p class="ks-css-modules-desc">
+            基于<a href="box.html">标准盒模型</a>扩展的样式。<br/>
+            支持嵌套，强调的盒子可嵌套所有盒子，标准的盒子只能嵌套弱化的盒子和裸的盒子，以此类推，否则样式不会生效。
+        </p>
+
+        <h2>强调的盒子</h2>
+        <!-- box START -->
+        <div class="ks-box ks-box-strong">
+            <u class="ks-box-top"><s></s><b></b></u>
+            <div class="ks-box-hd">
+                <h3 class="ks-box-title">盒子</h3>
+                <p class="ks-box-act">
+                    <a href="#">更多</a>
+                </p>
+            </div>
+            <div class="ks-box-bd">
+                这里显示盒子的内容<br/>
+            </div>
+            <u class="ks-box-bottom"><s></s><b></b></u>
+        </div>
+        <!-- box END -->
+
+        <h2>标准的盒子</h2>
+        <!-- box START -->
+        <div class="ks-box ks-box-normal">
+            <u class="ks-box-top"><s></s><b></b></u>
+            <div class="ks-box-hd">
+                <h3 class="ks-box-title">盒子</h3>
+                <p class="ks-box-act">
+                    <a href="#">更多</a>
+                </p>
+            </div>
+            <div class="ks-box-bd">
+                这里显示盒子的内容<br/>
+            </div>
+            <u class="ks-box-bottom"><s></s><b></b></u>
+        </div>
+        <!-- box END -->
+
+        <h2>弱化的盒子</h2>
+        <!-- box START -->
+        <div class="ks-box ks-box-weak">
+            <u class="ks-box-top"><s></s><b></b></u>
+            <div class="ks-box-hd">
+                <h3 class="ks-box-title">盒子</h3>
+                <p class="ks-box-act">
+                    <a href="#">更多</a>
+                </p>
+            </div>
+            <div class="ks-box-bd">
+                这里显示盒子的内容<br/>
+            </div>
+            <u class="ks-box-bottom"><s></s><b></b></u>
+        </div>
+        <!-- box END -->
+
+        <h2>裸的盒子</h2>
+        <!-- box START -->
+        <div class="ks-box ks-box-naked">
+            <u class="ks-box-top"><s></s><b></b></u>
+            <div class="ks-box-hd">
+                <h3 class="ks-box-title">盒子</h3>
+                <p class="ks-box-act">
+                    <a href="#">更多</a>
+                </p>
+            </div>
+            <div class="ks-box-bd">
+                这里显示盒子的内容<br/>
+            </div>
+            <u class="ks-box-bottom"><s></s><b></b></u>
+        </div>
+        <!-- box END -->
+        
+    </div>
+</body>
+</html>
+

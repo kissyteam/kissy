@@ -1,324 +1,126 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
-<title>CSS Modules Tab</title>
-<link rel="stylesheet" href="../../build/cssreset/reset.css" />
-<link rel="stylesheet" href="tab.css" />
-<style>
-#page{margin:10px;}
-</style>
+    <meta charset="gbk"/>
+    <title>CSS Modules Tab</title>
+    <link rel="stylesheet" href="../../build/cssreset/reset.css" />
+    <link rel="stylesheet" href="tab.css" />
+    <style>
+        #page {margin:0 10px;}
+        h1{margin-bottom:12px;padding:12px 0;font-size:24px;border-bottom:1px solid #ccc;}
+        h2{margin-bottom:12px;padding:6px 0;font-size:14px;font-weight:bold;border-bottom:1px dashed #ccc;}
+        strong.h{font-weight:bold;color:#f30;}
+        .ks-css-modules-desc{margin-bottom:12px;color:#888;}
+        .ks-tab{width:400px;}
+        .ks-tab-panel{height:120px;}
+    </style>
 </head>
 <body>
-<div id="page">
+    <div id="page">
+        <h1>CSS Modules Tab</h1>
+        <p class="ks-css-modules-desc">
+            tab的触点为自适应宽度<br/>
+            <strong class="h">注意：</strong>如果一级tab的触点的 ( fontSize + ( fontWeight == 'bold' ) ? 1 : 0 ) * 文字数 得到的结果为奇数的话，在ie6下的右圆角会出现1px的位置偏差。<br/>
+            要解决上述问题，你可以将触点文字设为偶数个，也可以将触点的宽度设置为偶数定宽。<br/>
+            面板容器如果要浮动，请设置宽度。
+        </p>
 
-    <!-- tab START -->
-    <div class="ks-tab ks-tab-strong">
-        <div class="ks-tab-wrapper">
+        <h2>单独的Tab</h2>
+        <!-- tab START -->
+        <div class="ks-tab">
             <ul class="ks-tab-trigger-container">
                 <li class="ks-tab-trigger">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">强调的tab</span>
+                    <u class="ks-tab-trigger-top"><s></s><b></b></u>
+                    tab
                 </li>
                 <li class="ks-tab-trigger ks-tab-trigger-active">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">当前触点</span>
+                    <u class="ks-tab-trigger-top"><s></s><b></b></u>
+                    当前触点
                 </li>
                 <li class="ks-tab-trigger">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">触点</span>
+                    <u class="ks-tab-trigger-top"><s></s><b></b></u>
+                    触点
                 </li>
             </ul>
             <div class="ks-tab-panel-container">
-                <b class="ks-tab-panel-ctl"></b>
-                <b class="ks-tab-panel-ctr"></b>
-                <div class="ks-tab-panel">
-                    <div class="ks-tab-panel-wrapper">
-                         这里显示tab的内容
-                    </div>
+                <u class="ks-tab-panel-top"><s></s><b></b></u>
+                <div class="ks-tab-panel" style="display:none;">
+                     内容一
                 </div>
-                <b class="ks-tab-panel-cbl"></b>
-                <b class="ks-tab-panel-cbr"></b>
+                <div class="ks-tab-panel">
+                     内容二
+                </div>
+                <div class="ks-tab-panel" style="display:none;">
+                     内容三
+                </div>
+                <u class="ks-tab-panel-bottom"><s></s><b></b></u>
             </div>
         </div>
-    </div>
-    <!-- tab END -->
+        <!-- tab END -->
 
-    <!-- tab START -->
-    <div class="ks-tab ks-tab-strong">
-        <div class="ks-tab-wrapper">
+        <h2>嵌套的Tab</h2>
+        <!-- tab START -->
+        <div class="ks-tab">
             <ul class="ks-tab-trigger-container">
                 <li class="ks-tab-trigger">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">强调的tab</span>
+                    <u class="ks-tab-trigger-top"><s></s><b></b></u>
+                    tab
                 </li>
                 <li class="ks-tab-trigger ks-tab-trigger-active">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">当前触点</span>
+                    <u class="ks-tab-trigger-top"><s></s><b></b></u>
+                    当前触点
                 </li>
                 <li class="ks-tab-trigger">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">触点</span>
+                    <u class="ks-tab-trigger-top"><s></s><b></b></u>
+                    触点
                 </li>
             </ul>
             <div class="ks-tab-panel-container">
-                <b class="ks-tab-panel-ctl"></b>
-                <b class="ks-tab-panel-ctr"></b>
+                <u class="ks-tab-panel-top"><s></s><b></b></u>
+                <div class="ks-tab-panel" style="display:none;">
+                    内容一
+                </div>
                 <div class="ks-tab-panel">
-                    <div class="ks-tab-panel-wrapper">
-
-                        <!-- subtab START -->
-                        <div class="ks-subtab">
-                            <div class="ks-subtab-wrapper">
-                                <ul class="ks-subtab-trigger-container">
-                                    <li class="ks-subtab-trigger">
-                                        <b class="ks-subtab-trigger-ctl"></b>
-                                        <b class="ks-subtab-trigger-ctr"></b>
-                                        <span class="ks-subtab-trigger-wrapper">嵌套的子tab</span>
-                                    </li>
-                                    <li class="ks-subtab-trigger ks-subtab-trigger-active">
-                                        <b class="ks-subtab-trigger-ctl"></b>
-                                        <b class="ks-subtab-trigger-ctr"></b>
-                                        <span class="ks-subtab-trigger-wrapper">当前触点</span>
-                                    </li>
-                                    <li class="ks-subtab-trigger">
-                                        <b class="ks-subtab-trigger-ctl"></b>
-                                        <b class="ks-subtab-trigger-ctr"></b>
-                                        <span class="ks-subtab-trigger-wrapper">触点</span>
-                                    </li>
-                                </ul>
-                                <div class="ks-subtab-panel-container">
-                                    <div class="ks-subtab-panel">
-                                        <div class="ks-subtab-panel-wrapper">
-                                            嵌套的子tab<br/>
-                                            子tab的样式由父tab决定
-                                        </div>
-                                    </div>
-                                </div>
+                     <!-- subtab START -->
+                    <div class="ks-subtab">
+                        <ul class="ks-subtab-trigger-container">
+                            <li class="ks-subtab-trigger">
+                                <u class="ks-subtab-trigger-top"><s></s><b></b></u>
+                                subtab
+                            </li>
+                            <li class="ks-subtab-trigger ks-subtab-trigger-active">
+                                <u class="ks-subtab-trigger-top"><s></s><b></b></u>
+                                当前触点
+                            </li>
+                            <li class="ks-subtab-trigger">
+                                <u class="ks-subtab-trigger-top"><s></s><b></b></u>
+                                触点
+                            </li>
+                        </ul>
+                        <div class="ks-subtab-panel-container">
+                            <u class="ks-subtab-panel-top"><s></s><b></b></u>
+                            <div class="ks-subtab-panel" style="display:none;">
+                                 子内容一
                             </div>
-                        </div>
-                        <!-- subtab END -->
-                        
-                    </div>
-                </div>
-                <b class="ks-tab-panel-cbl"></b>
-                <b class="ks-tab-panel-cbr"></b>
-            </div>
-        </div>
-    </div>
-    <!-- tab END -->
-
-    <!-- tab START -->
-    <div class="ks-tab ks-tab-normal">
-        <div class="ks-tab-wrapper">
-            <ul class="ks-tab-trigger-container">
-                <li class="ks-tab-trigger">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">标准的tab</span>
-                </li>
-                <li class="ks-tab-trigger ks-tab-trigger-active">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">当前触点</span>
-                </li>
-                <li class="ks-tab-trigger">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">触点</span>
-                </li>
-            </ul>
-            <div class="ks-tab-panel-container">
-                <b class="ks-tab-panel-ctl"></b>
-                <b class="ks-tab-panel-ctr"></b>
-                <div class="ks-tab-panel">
-                    <div class="ks-tab-panel-wrapper">
-                         这里显示tab的内容
-                    </div>
-                </div>
-                <b class="ks-tab-panel-cbl"></b>
-                <b class="ks-tab-panel-cbr"></b>
-            </div>
-        </div>
-    </div>
-    <!-- tab END -->
-
-    <!-- tab START -->
-    <div class="ks-tab ks-tab-normal">
-        <div class="ks-tab-wrapper">
-            <ul class="ks-tab-trigger-container">
-                <li class="ks-tab-trigger">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">标准的tab</span>
-                </li>
-                <li class="ks-tab-trigger ks-tab-trigger-active">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">当前触点</span>
-                </li>
-                <li class="ks-tab-trigger">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">触点</span>
-                </li>
-            </ul>
-            <div class="ks-tab-panel-container">
-                <b class="ks-tab-panel-ctl"></b>
-                <b class="ks-tab-panel-ctr"></b>
-                <div class="ks-tab-panel">
-                    <div class="ks-tab-panel-wrapper">
-
-                        <!-- subtab START -->
-                        <div class="ks-subtab">
-                            <div class="ks-subtab-wrapper">
-                                <ul class="ks-subtab-trigger-container">
-                                    <li class="ks-subtab-trigger">
-                                        <b class="ks-subtab-trigger-ctl"></b>
-                                        <b class="ks-subtab-trigger-ctr"></b>
-                                        <span class="ks-subtab-trigger-wrapper">嵌套的子tab</span>
-                                    </li>
-                                    <li class="ks-subtab-trigger ks-subtab-trigger-active">
-                                        <b class="ks-subtab-trigger-ctl"></b>
-                                        <b class="ks-subtab-trigger-ctr"></b>
-                                        <span class="ks-subtab-trigger-wrapper">当前触点</span>
-                                    </li>
-                                    <li class="ks-subtab-trigger">
-                                        <b class="ks-subtab-trigger-ctl"></b>
-                                        <b class="ks-subtab-trigger-ctr"></b>
-                                        <span class="ks-subtab-trigger-wrapper">触点</span>
-                                    </li>
-                                </ul>
-                                <div class="ks-subtab-panel-container">
-                                    <div class="ks-subtab-panel">
-                                        <div class="ks-subtab-panel-wrapper">
-                                            嵌套的子tab<br/>
-                                            子tab的样式由父tab决定
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="ks-subtab-panel">
+                                 子内容二
                             </div>
-                        </div>
-                        <!-- subtab END -->
-                        
-                    </div>
-                </div>
-                <b class="ks-tab-panel-cbl"></b>
-                <b class="ks-tab-panel-cbr"></b>
-            </div>
-        </div>
-    </div>
-    <!-- tab END -->
-
-    <!-- tab START -->
-    <div class="ks-tab ks-tab-weak">
-        <div class="ks-tab-wrapper">
-            <ul class="ks-tab-trigger-container">
-                <li class="ks-tab-trigger">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">弱化的tab</span>
-                </li>
-                <li class="ks-tab-trigger ks-tab-trigger-active">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">当前触点</span>
-                </li>
-                <li class="ks-tab-trigger">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">触点</span>
-                </li>
-            </ul>
-            <div class="ks-tab-panel-container">
-                <b class="ks-tab-panel-ctl"></b>
-                <b class="ks-tab-panel-ctr"></b>
-                <div class="ks-tab-panel">
-                    <div class="ks-tab-panel-wrapper">
-                         这里显示tab的内容
-                    </div>
-                </div>
-                <b class="ks-tab-panel-cbl"></b>
-                <b class="ks-tab-panel-cbr"></b>
-            </div>
-        </div>
-    </div>
-    <!-- tab END -->
-
-    <!-- tab START -->
-    <div class="ks-tab ks-tab-weak">
-        <div class="ks-tab-wrapper">
-            <ul class="ks-tab-trigger-container">
-                <li class="ks-tab-trigger">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">弱化的tab</span>
-                </li>
-                <li class="ks-tab-trigger ks-tab-trigger-active">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">当前触点</span>
-                </li>
-                <li class="ks-tab-trigger">
-                    <b class="ks-tab-trigger-ctl"></b>
-                    <b class="ks-tab-trigger-ctr"></b>
-                    <span class="ks-tab-trigger-wrapper">触点</span>
-                </li>
-            </ul>
-            <div class="ks-tab-panel-container">
-                <b class="ks-tab-panel-ctl"></b>
-                <b class="ks-tab-panel-ctr"></b>
-                <div class="ks-tab-panel">
-                    <div class="ks-tab-panel-wrapper">
-
-                        <!-- subtab START -->
-                        <div class="ks-subtab">
-                            <div class="ks-subtab-wrapper">
-                                <ul class="ks-subtab-trigger-container">
-                                    <li class="ks-subtab-trigger">
-                                        <b class="ks-subtab-trigger-ctl"></b>
-                                        <b class="ks-subtab-trigger-ctr"></b>
-                                        <span class="ks-subtab-trigger-wrapper">嵌套的子tab</span>
-                                    </li>
-                                    <li class="ks-subtab-trigger ks-subtab-trigger-active">
-                                        <b class="ks-subtab-trigger-ctl"></b>
-                                        <b class="ks-subtab-trigger-ctr"></b>
-                                        <span class="ks-subtab-trigger-wrapper">当前触点</span>
-                                    </li>
-                                    <li class="ks-subtab-trigger">
-                                        <b class="ks-subtab-trigger-ctl"></b>
-                                        <b class="ks-subtab-trigger-ctr"></b>
-                                        <span class="ks-subtab-trigger-wrapper">触点</span>
-                                    </li>
-                                </ul>
-                                <div class="ks-subtab-panel-container">
-                                    <div class="ks-subtab-panel">
-                                        <div class="ks-subtab-panel-wrapper">
-                                            嵌套的子tab<br/>
-                                            子tab的样式由父tab决定
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="ks-subtab-panel" style="display:none;">
+                                 子内容三
                             </div>
+                            <u class="ks-subtab-panel-bottom"><s></s><b></b></u>
                         </div>
-                        <!-- subtab END -->
-
                     </div>
+                    <!-- subtab END -->
                 </div>
-                <b class="ks-tab-panel-cbl"></b>
-                <b class="ks-tab-panel-cbr"></b>
+                <div class="ks-tab-panel" style="display:none;">
+                     内容三
+                </div>
+                <u class="ks-tab-panel-bottom"><s></s><b></b></u>
             </div>
         </div>
+        <!-- tab END -->
     </div>
-    <!-- tab END -->
-    
-</div>
 </body>
 </html>
 

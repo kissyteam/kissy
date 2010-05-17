@@ -1,196 +1,45 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
-<title>CSS Modules Box</title>
-<link rel="stylesheet" href="../../build/cssreset/reset.css" />
-<link rel="stylesheet" href="box.css" />
-<style>
-#page{margin:10px;}
-</style>
+    <meta charset="gbk"/>
+    <title>CSS Modules Box</title>
+    <link rel="stylesheet" href="../../build/cssreset/reset.css"/>
+    <link rel="stylesheet" href="box.css"/>
+    <style>
+        #page {margin:0 10px;}
+        h1{margin-bottom:12px;padding:12px 0;font-size:24px;border-bottom:1px solid #ccc;}
+        h2{margin-bottom:12px;padding:6px 0;font-size:14px;font-weight:bold;border-bottom:1px dashed #ccc;}
+        strong.h{font-weight:bold;color:#f30;}
+        .ks-css-modules-desc{margin-bottom:12px;color:#888;}
+        .ks-box{width:200px;}
+        .ks-box-bd{height:120px;}
+    </style>
 </head>
 <body>
 <div id="page">
-<!-- box START -->
-<div class="ks-box ks-box-strong">
-	<b class="ks-box-ctl"></b>
-    <b class="ks-box-ctr"></b>
-	<div class="ks-box-wrapper">
-		<div class="ks-box-hd">
-            <div class="ks-box-hd-wrapper">
-                <i class="ks-box-icon"></i>
-                <h3 class="ks-box-tit">盒子-强调</h3>
-            </div>
-		</div>
-		<div class="ks-box-bd">
-            <div class="ks-box-bd-wrapper">
-			    <p>这里显示盒子的内容</p>
-            </div>
-		</div>
-		<div class="ks-box-ft">
-            <div class="ks-box-ft-wrapper">
-                <ul class="ks-box-act">
-                    <li><a href="#" class="more">更多</a></li>
-                </ul>
-            </div>
-		</div>
-	</div>
-	<b class="ks-box-cbl"></b>
-    <b class="ks-box-cbr"></b>
-</div>
-<!-- box END -->
+    <h1>CSS Modules Box</h1>
+    <p class="ks-css-modules-desc">
+        你可以自由的对盒模型的html代码进行增加或者删减，比如：去掉圆角，或者标题<br/>
+        请<strong class="h">注意</strong>，如果你要给盒子设置浮动，请务必给盒子设置宽度，否则在ie下会出现样式错误。
+    </p>
 
-<!-- box START -->
-<div class="ks-box ks-box-strong">
-	<b class="ks-box-ctl"></b>
-    <b class="ks-box-ctr"></b>
-	<div class="ks-box-wrapper">
-		<div class="ks-box-bd">
-            <div class="ks-box-bd-wrapper">
-			    <p>这里显示盒子的内容</p>
-            </div>
-		</div>
-	</div>
-	<b class="ks-box-cbl"></b>
-    <b class="ks-box-cbr"></b>
-</div>
-<!-- box END -->
+    <h2>盒子</h2>
+    <!-- box START -->
+    <div class="ks-box">
+        <u class="ks-box-top"><s></s><b></b></u>
+        <div class="ks-box-hd">
+            <h3 class="ks-box-title">盒子</h3>
+            <p class="ks-box-act">
+                <a href="#">更多</a>
+            </p>
+        </div>
+        <div class="ks-box-bd">
+            这里显示盒子的内容<br/>
+        </div>
+        <u class="ks-box-bottom"><s></s><b></b></u>
+    </div>
+    <!-- box END -->
 
-<!-- box START -->
-<div class="ks-box ks-box-normal">
-	<b class="ks-box-ctl"></b>
-    <b class="ks-box-ctr"></b>
-	<div class="ks-box-wrapper">
-		<div class="ks-box-hd">
-            <div class="ks-box-hd-wrapper">
-                <i class="ks-box-icon"></i>
-                <h3 class="ks-box-tit">盒子-标准</h3>
-            </div>
-		</div>
-		<div class="ks-box-bd">
-            <div class="ks-box-bd-wrapper">
-			    <p>这里显示盒子的内容</p>
-            </div>
-		</div>
-		<div class="ks-box-ft">
-            <div class="ks-box-ft-wrapper">
-                <ul class="ks-box-act">
-                    <li><a href="#" class="more">更多</a></li>
-                </ul>
-            </div>
-		</div>
-	</div>
-	<b class="ks-box-cbl"></b>
-    <b class="ks-box-cbr"></b>
-</div>
-<!-- box END -->
-
-<!-- box START -->
-<div class="ks-box ks-box-normal">
-	<b class="ks-box-ctl"></b>
-    <b class="ks-box-ctr"></b>
-	<div class="ks-box-wrapper">
-		<div class="ks-box-bd">
-            <div class="ks-box-bd-wrapper">
-			    <p>这里显示盒子的内容</p>
-            </div>
-		</div>
-	</div>
-	<b class="ks-box-cbl"></b>
-    <b class="ks-box-cbr"></b>
-</div>
-<!-- box END -->
-
-<!-- box START -->
-<div class="ks-box ks-box-weak">
-	<b class="ks-box-ctl"></b>
-    <b class="ks-box-ctr"></b>
-	<div class="ks-box-wrapper">
-		<div class="ks-box-hd">
-            <div class="ks-box-hd-wrapper">
-                <i class="ks-box-icon"></i>
-                <h3 class="ks-box-tit">盒子-弱化</h3>
-            </div>
-		</div>
-		<div class="ks-box-bd">
-            <div class="ks-box-bd-wrapper">
-			    <p>这里显示盒子的内容</p>
-            </div>
-		</div>
-		<div class="ks-box-ft">
-            <div class="ks-box-ft-wrapper">
-                <ul class="ks-box-act">
-                    <li><a href="#" class="more">更多</a></li>
-                </ul>
-            </div>
-		</div>
-	</div>
-	<b class="ks-box-cbl"></b>
-    <b class="ks-box-cbr"></b>
-</div>
-<!-- box END -->
-
-<!-- box START -->
-<div class="ks-box ks-box-weak">
-	<b class="ks-box-ctl"></b>
-    <b class="ks-box-ctr"></b>
-	<div class="ks-box-wrapper">
-		<div class="ks-box-bd">
-            <div class="ks-box-bd-wrapper">
-			    <p>这里显示盒子的内容</p>
-            </div>
-		</div>
-	</div>
-	<b class="ks-box-cbl"></b>
-    <b class="ks-box-cbr"></b>
-</div>
-<!-- box END -->
-
-<!-- box START -->
-<div class="ks-box ks-box-naked">
-	<b class="ks-box-ctl"></b>
-    <b class="ks-box-ctr"></b>
-	<div class="ks-box-wrapper">
-		<div class="ks-box-hd">
-            <div class="ks-box-hd-wrapper">
-                <i class="ks-box-icon"></i>
-                <h3 class="ks-box-tit">盒子-裸</h3>
-            </div>
-		</div>
-		<div class="ks-box-bd">
-            <div class="ks-box-bd-wrapper">
-			    <p>这里显示盒子的内容</p>
-            </div>
-		</div>
-		<div class="ks-box-ft">
-            <div class="ks-box-ft-wrapper">
-                <ul class="ks-box-act">
-                    <li><a href="#" class="more">更多</a></li>
-                </ul>
-            </div>
-		</div>
-	</div>
-	<b class="ks-box-cbl"></b>
-    <b class="ks-box-cbr"></b>
-</div>
-<!-- box END -->
-
-<!-- box START -->
-<div class="ks-box ks-box-naked">
-	<b class="ks-box-ctl"></b>
-    <b class="ks-box-ctr"></b>
-	<div class="ks-box-wrapper">
-		<div class="ks-box-bd">
-            <div class="ks-box-bd-wrapper">
-			    <p>这里显示盒子的内容</p>
-            </div>
-		</div>
-	</div>
-	<b class="ks-box-cbl"></b>
-    <b class="ks-box-cbr"></b>
-</div>
-<!-- box END -->
-    
 </div>
 </body>
 </html>

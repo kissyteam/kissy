@@ -1,199 +1,53 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
-<title>CSS Modules Accordion</title>
-<link rel="stylesheet" href="../../build/cssreset/reset.css" />
-<link rel="stylesheet" href="accordion.css" />
-<link rel="stylesheet" href="list.css" />
-<style>
-    #page{margin:10px;}
-</style>
+    <meta charset="gbk"/>
+    <title>CSS Modules Accordion</title>
+    <link rel="stylesheet" href="../../build/cssreset/reset.css" />
+    <link rel="stylesheet" href="accordion.css" />
+    <style>
+        #page {margin:0 10px;}
+        h1{margin-bottom:12px;padding:12px 0;font-size:24px;border-bottom:1px solid #ccc;}
+        h2{margin-bottom:12px;padding:6px 0;font-size:14px;font-weight:bold;border-bottom:1px dashed #ccc;}
+        strong.h{font-weight:bold;color:#f30;}
+        .ks-css-modules-desc{margin-bottom:12px;color:#888;}
+        .ks-accordion{width:400px;}
+    </style>
 </head>
 <body>
-<div id="page">
+    <div id="page">
+        <h1>CSS Modules Accordion</h1>
+        <p class="ks-css-modules-desc">
+            组件如果被设置为浮动，请同时设置容器宽度。
+        </p>
+        
+        <h2>手风琴</h2>
+        <!-- accordion START -->
+        <div class="ks-accordion">
+            <u class="ks-accordion-top"><s></s><b></b></u>
+            <div class="ks-accordion-trigger ks-accordion-active">
+                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-title">站点管理</h3>
+            </div>
+            <div class="ks-accordion-panel">
+                这里是内容
+            </div>
+            <div class="ks-accordion-trigger">
+                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-title">页面管理</h3>
+            </div>
+            <div class="ks-accordion-panel" style="display:none;">
+                这里是内容
+            </div>
+            <div class="ks-accordion-trigger">
+                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-title">组件管理</h3>
+            </div>
+            <div class="ks-accordion-panel" style="display:none;">
+                这里是内容
+            </div>
+            <u class="ks-accordion-bottom"><s></s><b></b></u>
+        </div>
+        <!-- accordion END -->
 
-    <!-- accordion START -->
-    <div class="ks-accordion ks-accordion-strong">
-        <b class="ks-accordion-ctl"></b>
-        <b class="ks-accordion-ctr"></b>
-        <div class="ks-accordion-trigger">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">手风琴-强调</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel" style="display:none;">
-            <div class="ks-accordion-panel-wrapper">
-                这里是内容
-            </div>
-        </div>
-        <div class="ks-accordion-trigger ks-accordion-active">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">手风琴-强调</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel">
-            <div class="ks-accordion-panel-wrapper">
-                <!-- list START -->
-                <ul class="ks-list ks-list-normal">
-                    <li class="ks-list-li">标准列表</li>
-                    <li class="ks-list-li">我是一个列表</li>
-                    <li class="ks-list-li">我是一个列表</li>
-                </ul>
-                <!-- list END -->
-            </div>
-        </div>
-        <div class="ks-accordion-trigger ks-accordion-active">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">手风琴-强调</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel">
-            <div class="ks-accordion-panel-wrapper">
-                这里是内容
-            </div>
-        </div>
-        <b class="ks-accordion-cbl"></b>
-        <b class="ks-accordion-cbr"></b>
     </div>
-    <!-- accordion END -->
-
-    <!-- accordion START -->
-    <div class="ks-accordion ks-accordion-normal">
-        <b class="ks-accordion-ctl"></b>
-        <b class="ks-accordion-ctr"></b>
-        <div class="ks-accordion-trigger ks-accordion-active">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">手风琴-标准</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel">
-            <div class="ks-accordion-panel-wrapper">
-                <!-- list START -->
-                <ul class="ks-list ks-list-normal">
-                    <li class="ks-list-li">标准列表</li>
-                    <li class="ks-list-li">我是一个列表</li>
-                    <li class="ks-list-li">我是一个列表</li>
-                </ul>
-                <!-- list END -->
-            </div>
-        </div>
-        <div class="ks-accordion-trigger">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">手风琴-标准</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel" style="display:none;">
-            <div class="ks-accordion-panel-wrapper">
-                这里是内容
-            </div>
-        </div>
-        <div class="ks-accordion-trigger ks-accordion-active">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">手风琴-标准</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel">
-            <div class="ks-accordion-panel-wrapper">
-                这里是内容
-            </div>
-        </div>
-        <b class="ks-accordion-cbl"></b>
-        <b class="ks-accordion-cbr"></b>
-    </div>
-    <!-- accordion END -->
-
-    <!-- accordion START -->
-    <div class="ks-accordion ks-accordion-weak">
-        <b class="ks-accordion-ctl"></b>
-        <b class="ks-accordion-ctr"></b>
-        <div class="ks-accordion-trigger ks-accordion-active">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">手风琴-弱化</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel">
-            <div class="ks-accordion-panel-wrapper">
-                <!-- list START -->
-                <ul class="ks-list ks-list-weak">
-                    <li class="ks-list-li">标准列表</li>
-                    <li class="ks-list-li">我是一个列表</li>
-                    <li class="ks-list-li">我是一个列表</li>
-                </ul>
-                <!-- list END -->
-            </div>
-        </div>
-        <div class="ks-accordion-trigger ks-accordion-active">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">手风琴-弱化</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel">
-            <div class="ks-accordion-panel-wrapper">
-                这里是内容
-            </div>
-        </div>
-        <div class="ks-accordion-trigger">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">手风琴-弱化</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel" style="display:none;">
-            <div class="ks-accordion-panel-wrapper">
-                这里是内容
-            </div>
-        </div>
-        <b class="ks-accordion-cbl"></b>
-        <b class="ks-accordion-cbr"></b>
-    </div>
-    <!-- accordion END -->
-
-    <!-- accordion START -->
-    <div class="ks-accordion ks-accordion-naked">
-        <b class="ks-accordion-ctl"></b>
-        <b class="ks-accordion-ctr"></b>
-        <div class="ks-accordion-trigger ks-accordion-active">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">手风琴-裸</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel">
-            <div class="ks-accordion-panel-wrapper">
-                <!-- list START -->
-                <ul class="ks-list ks-list-naked">
-                    <li class="ks-list-li">标准列表</li>
-                    <li class="ks-list-li">我是一个列表</li>
-                    <li class="ks-list-li">我是一个列表</li>
-                </ul>
-                <!-- list END -->
-            </div>
-        </div>
-        <div class="ks-accordion-trigger ks-accordion-active">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">手风琴-裸</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel">
-            <div class="ks-accordion-panel-wrapper">
-                这里是内容
-            </div>
-        </div>
-        <div class="ks-accordion-trigger">
-            <div class="ks-accordion-trigger-wrapper">
-                <i class="ks-accordion-icon"></i><h3 class="ks-accordion-tit">手风琴-裸</h3>
-            </div>
-        </div>
-        <div class="ks-accordion-panel" style="display:none;">
-            <div class="ks-accordion-panel-wrapper">
-                这里是内容
-            </div>
-        </div>
-        <b class="ks-accordion-cbl"></b>
-        <b class="ks-accordion-cbr"></b>
-    </div>
-    <!-- accordion END -->
-    
-</div>
 </body>
 </html>
 
