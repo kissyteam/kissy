@@ -68,7 +68,21 @@
 .c-call .c-bd .dbd a.range:visited {background-color:#cce7ff;}
 
 .c-call .c-ft {text-align:center;width:181px;}
-.c-call .c-ft .c-time {line-height:25px;background-color:#e5e5e5;display:inline;padding:2px 5px;width:auto;}
+
+/*--时间控件--*/
+.c-call .c-ft .c-time {background-color:#e5e5e5;display:inline-block;*display:inline;*zoom:1;padding:3px 5px;*padding:2px 5px;_padding:3px 5px;width:88px;position:relative;padding-right:18px;*top:-2px;_top:-1px;}
+.c-time .cta {width:13px;height:20px;position:absolute;right:0;top:0;line-height:0;}
+/*hack for Opera*/
+@media all and (-webkit-min-device-pixel-ratio:10000), not all and (-webkit-min-device-pixel-ratio:0){
+	head~body .c-call .c-ft .c-time {padding:2px 5px 2px 0px;display:block;float:left;width:110px;margin-left:13px;}
+	head~body .c-call .c-ft .ct-ok {margin-left:0px;}
+	head~body .c-time .cta{}
+}
+.c-time button {width:13px;height:10px;border:0;overflow:hidden;/*text-indent:-100em;*/background:url("http://img05.taobaocdn.com/tps/i5/T1McxAXXRHXXXXXXXX-29-10.gif") no-repeat;cursor:pointer;}
+.c-time button.u {background-position:0 0;}
+.c-time button.d {background-position:-16px 0;}
+.c-time span {cursor:pointer;}
+.c-time span.on {padding:0 1px;background-color:#333;color:white}
 
 /*--时间列表--*/
 .c-timelist {position:absolute;height:auto;width:auto;_width:205px;border:1px solid #9bc0e0;background-color:#f2f2f2;z-index:100;}
@@ -85,3 +99,12 @@
 .setime {position:absolute;left:0px;top:28px;right:0px;width:180px;background:#f2f2f2;border:1px solid #9bc0e0;text-align:center;vertical-align:middle;height:auto;padding-top:10px;padding-bottom:10px;}
 .setime p {height:30px;margin:0;padding:0;}
 .setime select,.setime input {width:80px;}
+
+/*--选择时间的容器--*/
+.selectime {position:absolute;left:0px;bottom:28px;*bottom:32px;right:0px;width:180px;background:#f2f2f2;border:1px solid #9bc0e0;text-align:center;vertical-align:middle;height:auto;padding-top:10px;padding-bottom:10px;}
+.selectime a,
+.selectime a:link,
+.selectime a:visited {margin-left:10px;display:inline-block;*display:inline;float:left;text-decoration:none;color:#004499;}
+.selectime a:hover {text-decoration:underline;}
+.selectime a.x {position:absolute;right:3px;bottom:2px;font-weight:bold;font-family:"comic Sans MS"}
+.selectime select,.selectime input {width:80px;}

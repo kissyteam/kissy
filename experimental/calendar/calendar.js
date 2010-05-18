@@ -152,7 +152,8 @@ S.mix(Calendar.prototype, {
 				year:_oym[0],
 				month:_oym[1],
 				prev_arrow:_prev,
-				next_arrow:_next
+				next_arrow:_next,
+				withtime:that.withtime
 			},that));
 
 			//渲染日历内核
@@ -361,6 +362,18 @@ S.mix(Calendar.prototype, {
 		}
 		return [_year,_month];
 	},
+	//处理箭头
+	handleArrow:function(){
+
+	},
+	//得到范围
+	getRange:function(){
+
+	},
+	//得到当前选中
+	getSelect:function(){
+
+	},
 	//处理起始日期,d:Date类型
 	handleRange : function(d){
 		var that = this;
@@ -384,6 +397,255 @@ S.mix(Calendar.prototype, {
 			that.render();
 		}
 		return this;
+
+	},
+	//constructor 
+	/**
+	 * TimeSelector只支持选择，不支持初始化
+	 */
+	TimeSelector:function(ft,fathor){
+		//属性------------------
+		this.fathor = fathor;
+		//this.fcon = ft.ancestor('.c-box');//cc容器
+		this.fcon = $D.getAncestorByClassName(ft,'c-box');
+			//var con = new Y.util.Element(cc.id);
+		
+		this.popupannel = new Y.util.Element($D.getElementsByClassName('selectime','div',this.fcon)[0]);
+		
+		
+		//this.fcon.query('.selectime');//点选时间的弹出层
+
+
+
+		if(typeof fathor._time == 'undefined'){//确保初始值和当前时间一致
+			fathor._time = new Date();
+		}
+		this.time = fathor._time;
+		this.status = 's';//当前选择的状态，'h','m','s'依次判断更新哪个值
+		var _el = document.createElement('div');
+		_el.className = 'c-time';
+		_el.innerHTML = '时间：<span class="h">h</span>:<span class="m">m</span>:<span class="s">s</span><!--{{arrow--><div class="cta"><button class="u"></button><button class="d"></button></div><!--arrow}}-->';
+		this.ctime = new Y.util.Element(_el);
+		var _bn = document.createElement('button');
+		_bn.className = 'ct-ok';
+		_bn.innerHTML = '确定';
+		this.button = new Y.util.Element(_bn);
+		//this.button = Y.Node.create('<button class="ct-ok">确定</button>');
+		//小时
+		this.h_a = ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
+		//分钟
+		this.m_a = ['00','10','20','30','40','50'];
+		//秒
+		this.s_a = ['00','10','20','30','40','50'];
+				
+
+		//接口----------------
+		/**
+		 * 创建相应的容器html，值均包含在a中
+		 * 参数：要拼装的数组
+		 * 返回：拼好的innerHTML,结尾还要带一个关闭的a
+		 * 
+		 */
+		this.parseSubHtml = function(a){
+			var in_str = '';
+			for(var i = 0;i<a.length;i++){
+				in_str += '<a href="javascript:void(0);" class="item">'+a[i]+'</a>';
+			}
+			in_str += '<a href="javascript:void(0);" class="x">x</a>';
+			return in_str;
+		};
+		/**
+		 * 显示selectime容器
+		 * 参数，构造好的innerHTML
+		 */
+		this.showPopup= function(instr){
+			var that = this;
+			this.popupannel.set('innerHTML',instr);
+			
+			this.popupannel.removeClass('hidden');
+			var status = that.status;
+			var _con = that.ctime;
+			new Y.util.Element($D.getElementsByClassName('h','span',that.ctime)[0]).removeClass('on');
+			new Y.util.Element($D.getElementsByClassName('m','span',that.ctime)[0]).removeClass('on');
+			new Y.util.Element($D.getElementsByClassName('s','span',that.ctime)[0]).removeClass('on');
+			switch(status){
+				case 'h':
+					new Y.util.Element($D.getElementsByClassName('h','span',that.ctime)[0]).addClass('on');
+					break;
+				case 'm':
+					new Y.util.Element($D.getElementsByClassName('m','span',that.ctime)[0]).addClass('on');
+					break;
+				case 's':
+					new Y.util.Element($D.getElementsByClassName('s','span',that.ctime)[0]).addClass('on');
+					break;
+			}
+		};
+		/**
+		 * 隐藏selectime容器
+		 */
+		this.hidePopup= function(){
+			var that = this;
+			that.popupannel.addClass('hidden');
+		};
+		/**
+		 * 不对其做更多的上下文假设，仅仅根据time显示出来
+		 */
+		this.render = function(){
+			var that = this;
+			var h = that.get('h');
+			var m = that.get('m');
+			var s = that.get('s');
+			that.fathor._time = that.time;
+			$D.getElementsByClassName('h','span',that.ctime)[0].innerHTML = h;
+			$D.getElementsByClassName('m','span',that.ctime)[0].innerHTML = m;
+			$D.getElementsByClassName('s','span',that.ctime)[0].innerHTML = s;
+			return that;
+		};
+		//这里的set和get都只是对time的操作，并不对上下文做过多假设
+		/**
+		 * set(status,v)
+		 * h:2,'2'
+		 */
+		this.set = function(status,v){
+			var that = this;
+			var v = Number(v);
+			switch(status){
+				case 'h':
+					that.time.setHours(v);
+					break;
+				case 'm':
+					that.time.setMinutes(v);
+					break;
+				case 's':
+					that.time.setSeconds(v);
+					break;
+			}
+			that.render();
+		};
+		/**
+		 * get(status)
+		 */
+		this.get = function(status){
+			var that = this;
+			var time = that.time;
+			switch(status){
+				case 'h':
+					return time.getHours();
+					break;
+				case 'm':
+					return time.getMinutes();
+					break;
+				case 's':
+					return time.getSeconds();
+					break;
+			}
+		};
+
+		/**
+		 * add()
+		 * 状态值代表的变量增1
+		 */
+		this.add = function(){
+			var that = this;
+			var status = that.status;
+			var v = that.get(status);
+			v++;
+			that.set(status,v);
+		};
+		/**
+		 * minus()
+		 * 状态值代表的变量增1
+		 */
+		this.minus= function(){
+			var that = this;
+			var status = that.status;
+			var v = that.get(status);
+			v--;
+			that.set(status,v);
+		};
+		
+
+		
+		//构造---------
+		this.init = function(){
+			var that = this;
+			ft.set('innerHTML','');
+			ft.appendChild(that.ctime);
+			ft.appendChild(that.button);
+			that.render();
+			that.popupannel.on('click',function(e){
+				var el = new Y.util.Element($E.getTarget(e));
+				//var el = e.target;
+				if(el.hasClass('x')){//关闭
+					that.hidePopup();
+					return;
+				}else if(el.hasClass('item')){//点选一个值
+					var v = Number(el.get('innerHTML'));
+					that.set(that.status,v);
+					that.hidePopup();
+					return;
+				}
+			});
+			//确定的动作
+			that.button.on('click',function(e){
+				var d = that.fathor.date;
+				d.setHours(that.get('h'));
+				d.setMinutes(that.get('m'));
+				d.setSeconds(that.get('s'));
+				//that.fathor.EventCenter.fire('timeselect',d);
+				that.fathor.EventCenter['timeselect'].fire(d);
+				if(that.fathor.popup && that.fathor.closeable){
+					that.fathor.hide();
+				}
+			});
+			//ctime上的键盘事件，上下键，左右键的监听
+			//TODO 考虑是否去掉
+			/*
+			that.ctime.on('keyup',function(e){
+				if(e.keyCode == 38 || e.keyCode == 37){//up or left
+					e.halt();
+					that.add();
+				}
+				if(e.keyCode == 40 || e.keyCode == 39){//down or right
+					e.halt();
+					that.minus();
+				}
+			});
+			*/
+			//上的箭头动作
+			$E.on($D.getElementsByClassName('u','button',that.ctime)[0],'click',function(e){
+				that.hidePopup();
+				that.add();
+			});
+			//下的箭头动作
+			$E.on($D.getElementsByClassName('d','button',that.ctime)[0],'click',function(e){
+				that.hidePopup();
+				that.minus();
+			});
+			//弹出选择小时
+			$E.on($D.getElementsByClassName('h','span',that.ctime)[0],'click',function(e){
+				var in_str = that.parseSubHtml(that.h_a);
+				that.status = 'h';
+				that.showPopup(in_str);
+			});
+			//弹出选择分钟
+			$E.on($D.getElementsByClassName('m','span',that.ctime)[0],'click',function(e){
+				var in_str = that.parseSubHtml(that.m_a);
+				that.status = 'm';
+				that.showPopup(in_str);
+			});
+			//弹出选择秒
+			$E.on($D.getElementsByClassName('s','span',that.ctime)[0],'click',function(e){
+				var in_str = that.parseSubHtml(that.s_a);
+				that.status = 's';
+				that.showPopup(in_str);
+			});
+			
+
+
+		};
+		this.init();
+
 
 	},
 	/**
@@ -434,6 +696,8 @@ S.mix(Calendar.prototype, {
 					'<div class="c-time">',
 						'时间：00:00 	&hearts;',
 					'</div>',
+				'</div>',
+				'<div class="selectime hidden"><!--用以存放点选时间的一些关键值-->',
 				'</div>'
 			//'</div><!--#c-box-->'
 		].join("");
@@ -499,6 +763,11 @@ S.mix(Calendar.prototype, {
 			_next_cc_body.id = _o.id;
 			cc.fathor.con.appendChild(_next_cc_body);
 			cc.node = new Y.util.Element(cc.id);
+			if(cc.fathor.withtime){
+				var ft = new Y.util.Element($D.getElementsByClassName('c-ft','div',cc.id)[0]);
+				ft.removeClass('hidden');
+				cc.timmer = new cc.fathor.TimeSelector(ft,cc.fathor);
+			}
 			return this;
 		};
 		/**
@@ -556,6 +825,9 @@ S.mix(Calendar.prototype, {
 				$E.purgeElement($D.getElementsByClassName('title','a',con.get('id')), false, "click");
 				$E.on($D.getElementsByClassName('title','a',con.get('id')),'click',function(e){
 					$E.stopEvent(e);
+					try{
+						cc.timmer.hidePopup();
+					}catch(e){}
 					setime_node.set('innerHTML','');
 					var in_str = cc.fathor.templetShow(cc.nav_html,{
 						the_month:cc.month+1,

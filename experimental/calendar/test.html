@@ -44,6 +44,10 @@
 只可以选择今日之后的十天以内的日期
 <div id="J_mindate_maxdate"></div>
 <hr size=1 />
+<h3>可选择时间</h3>
+每个面板的time选择永远保持一致，而且当选择范围的时候，起始time和结束time是一致的
+<div id="J_with_time"></div>
+<hr size=1 />
 
 
 <p style="clear:both">
@@ -54,10 +58,10 @@ moreinfo:http://www.uedmagazine.com
 </p>
 
 <!--yui2 seed-->
-<script src="../../third-party/yui2/yuiloader-dom-event/yuiloader-dom-event.js"></script>
-<script src="../../third-party/yui2/element/element-min.js"></script>
+<script src="http://a.tbcdn.cn/yui/2.8.0r4/build/yuiloader-dom-event/yuiloader-dom-event.js"></script>
+<script src="http://a.tbcdn.cn/yui/2.8.0r4/build/element/element-min.js"></script>
 <!--kissy-->
-<script src="../kissy/kissy.js"></script>
+<script src="http://kissy.googlecode.com/svn/trunk/build/kissy/kissy-pkg-min.js"></script>
 <script src="calendar.js"></script>
 <!--calendar-skin-->
 <link href="skin.css" rel="stylesheet" type="text/css" />
@@ -136,6 +140,13 @@ KISSY.ready(function(S) {
 	new S.Calendar('J_mindate_maxdate',{
 		mindate:new Date(),
 		maxdate:showdate(10,new Date())
+	});
+
+	//日历可选择time
+	c = new S.Calendar('J_with_time',{
+		withtime:true
+	}).on('timeselect',function(d){
+		alert(Y.lang.dump(d));	
 	});
 });
 
