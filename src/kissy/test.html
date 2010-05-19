@@ -411,6 +411,9 @@
         if(S.unparam('foo=1&bar=2').foo !== '1') test.fail();
         if(S.unparam('foo=1&bar=2').bar !== '2') test.fail();
 
+        if(S.unparam('foo').foo !== '') test.fail();
+        if(S.unparam('foo=').foo !== '') test.fail();
+
         if(S.unparam('foo=1&bar[]=2&bar[]=3').bar[0] !== '2') test.fail();
         if(S.unparam('foo=1&bar[]=2&bar[]=3').bar[1] !== '3') test.fail();
 
