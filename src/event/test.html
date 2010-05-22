@@ -52,7 +52,7 @@
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY,
+    var S = KISSY, DOM = S.DOM, Event = S.Event,
         foo = S.get('#foo'),
         foo2 = S.get('#foo2'),
         bar = S.get('#bar'),
@@ -75,51 +75,51 @@
         h = S.get('#link-h');
 
     function test_add_listenersOrder(test) {
-        S.Event.on(a, 'click', function(ev) { test.echo(1); });
-        S.Event.on(a, 'click', function(ev) { test.echo(2); });
+        Event.on(a, 'click', function(ev) { test.echo(1); });
+        Event.on(a, 'click', function(ev) { test.echo(2); });
         test.extraMsg = '{click link a should echo 1 -> 2}';
     }
 
     function test_add_preventDefault(test) {
-        S.Event.add(b, 'click', function(ev) { ev.preventDefault(); });
+        Event.add(b, 'click', function(ev) { ev.preventDefault(); });
         test.extraMsg = '{click link b: nothing happen}';
     }
 
     function test_add_stopPropagation(test) {
-        S.Event.add(c2, 'click', function(ev) { ev.stopPropagation(); });
-        S.Event.add(li_c, 'click', function(ev) { test.echo('li-c'); });
+        Event.add(c2, 'click', function(ev) { ev.stopPropagation(); });
+        Event.add(li_c, 'click', function(ev) { test.echo('li-c'); });
         test.extraMsg = '{click link c1 should echo li-c; click link c2: nothing happen}';
     }
 
     function test_add_stopImmediatePropagation(test) {
-        S.Event.add(d1, 'click', function(ev) { test.echo(1); });
-        S.Event.add(d1, 'click', function(ev) { test.echo(2); });
+        Event.add(d1, 'click', function(ev) { test.echo(1); });
+        Event.add(d1, 'click', function(ev) { test.echo(2); });
 
-        S.Event.add(d2, 'click', function(ev) { test.echo(1); });
-        S.Event.add(d2, 'click', function(ev) { ev.stopImmediatePropagation(); });
-        S.Event.add(d2, 'click', function(ev) { test.echo(2); });
+        Event.add(d2, 'click', function(ev) { test.echo(1); });
+        Event.add(d2, 'click', function(ev) { ev.stopImmediatePropagation(); });
+        Event.add(d2, 'click', function(ev) { test.echo(2); });
 
-        S.Event.add(li_d, 'click', function(ev) { test.echo('li-d'); });
+        Event.add(li_d, 'click', function(ev) { test.echo('li-d'); });
         test.extraMsg = '{click link d1 should echo 1 -> 2 -> li-d; click link d2 should echo 1}';
     }
 
     function test_add_returnFalse(test) {
-        S.Event.add(e1, 'click', function(ev) { test.echo(1); });
-        S.Event.add(e1, 'click', function(ev) { test.echo(2); });
+        Event.add(e1, 'click', function(ev) { test.echo(1); });
+        Event.add(e1, 'click', function(ev) { test.echo(2); });
 
-        S.Event.add(e2, 'click', function(ev) { test.echo(1); return false; });
-        S.Event.add(e2, 'click', function(ev) { test.echo(2); });
+        Event.add(e2, 'click', function(ev) { test.echo(1); return false; });
+        Event.add(e2, 'click', function(ev) { test.echo(2); });
 
-        S.Event.add(li_e, 'click', function(ev) { test.echo('li-e'); });
+        Event.add(li_e, 'click', function(ev) { test.echo('li-e'); });
         test.extraMsg = '{click link e1 should echo 1 -> 2 -> li-e; click link e2 should echo 1 -> 2}';
     }
 
     function test_remove_fn(test) {
         function t() { test.echo('t'); }
 
-        S.Event.add(f, 'click', t);
-        S.Event.add(f, 'click', t);
-        S.Event.remove(f, 'click', t);
+        Event.add(f, 'click', t);
+        Event.add(f, 'click', t);
+        Event.remove(f, 'click', t);
 //        $(f).click(t);
 //        $(f).click(t);
 //        $(f).unbind('click', t);
@@ -128,17 +128,17 @@
     }
 
     function test_remove_type(test) {
-        S.Event.add(f, 'click', function() { test.echo(1); });
-        S.Event.add(f, 'click', function() { test.echo(2); });
-        S.Event.remove(f, 'click');
+        Event.add(f, 'click', function() { test.echo(1); });
+        Event.add(f, 'click', function() { test.echo(2); });
+        Event.remove(f, 'click');
 
         test.extraMsg = '{click link g: nothing happen}';
     }
 
     function test_remove_el(test) {
-        S.Event.add(h, 'click', function() { test.echo(1); });
-        S.Event.add(h, 'click', function() { test.echo(2); });
-        S.Event.remove(h);
+        Event.add(h, 'click', function() { test.echo(1); });
+        Event.add(h, 'click', function() { test.echo(2); });
+        Event.remove(h);
 
         test.extraMsg = '{click link h: nothing happen}';
     }
@@ -148,28 +148,28 @@
             info1 = S.get('#outer .info'),
             num1 = S.query('#outer .num')[1];
 
-        S.Event.add(outer, 'mouseenter', function(ev) {
-            S.DOM.text(info1, ev.type);
-            S.DOM.text(num1, ++n1);
+        Event.add(outer, 'mouseenter', function(ev) {
+            DOM.text(info1, ev.type);
+            DOM.text(num1, ++n1);
         });
 
-        S.Event.add(outer, 'mouseleave', function(ev) {
-            S.DOM.text(info1, ev.type);
-            S.DOM.text(num1, ++n1);
+        Event.add(outer, 'mouseleave', function(ev) {
+            DOM.text(info1, ev.type);
+            DOM.text(num1, ++n1);
         });
 
         var n2 = 0,
             info2 = S.get('#inner .info'),
             num2 = S.get('#inner .num');
 
-        S.Event.add(inner, 'mouseenter', function(ev) {
-            S.DOM.text(info2, ev.type);
-            S.DOM.text(num2, ++n2);
+        Event.add(inner, 'mouseenter', function(ev) {
+            DOM.text(info2, ev.type);
+            DOM.text(num2, ++n2);
         });
 
-        S.Event.add(inner, 'mouseleave', function(ev) {
-            S.DOM.text(info2, ev.type);
-            S.DOM.text(num2, ++n2);
+        Event.add(inner, 'mouseleave', function(ev) {
+            DOM.text(info2, ev.type);
+            DOM.text(num2, ++n2);
         });
     }
 
@@ -177,16 +177,16 @@
         function Dog(name) {
             this.name = name;
         }
-        S.mix(Dog.prototype, S.EventTarget);
-        S.mix(Dog.prototype, {
+        S.augment(Dog, S.EventTarget);
+        S.augment(Dog, {
            run: function() {
-               this.fire('hungry', {tips: 'Tips: I like fish bone.'});
+               this.fire('running', {speed: '80 km/h'});
            }
         });
 
-        var dog = new Dog('Joel');
-        dog.on('hungry', function(ev) {
-           test.echo(this.name + ' is hungry now. Please give me food! ' + ev.tips);
+        var dog = new Dog('Lady Gogo');
+        dog.on('running', function(ev) {
+           test.echo(this.name + ' is running now. Its speed is ' + ev.speed + '.');
         });
         
         dog.run();

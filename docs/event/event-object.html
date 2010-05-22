@@ -91,7 +91,7 @@ Event.add('#linkId', 'click', function(ev) {
                         <div class="detail">
                             <p>停止当前事件冒泡。不光停止冒泡到下一个事件目标，当前目标上的任何后续监听函数，也马上取消执行。</p>
                             <p>测试页面：<a href="example-stopImmediatePropagation.html">example-stopImmediatePropagation.html</a></p>
-                            <p class="notice">目前主流浏览器都尚未原生支持 stopImmediatePropagation 方法，慎用。</p>
+                            <p class="notice">目前主流浏览器都尚未原生支持 stopImmediatePropagation 方法。当同时使用多个类库时，该方法可能不会达到预期，需谨慎。</p>
                         </div>
                     </div>
 
