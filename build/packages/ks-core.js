@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 660 May 16 19:12
+build: 669 May 22 23:46
 */
 /**
  * @module kissy
@@ -818,7 +818,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 633 May 9 23:00
+build: 669 May 22 23:47
 */
 /**
  * @module  selector
@@ -1588,7 +1588,7 @@ KISSY.add('dom-class', function(S, undefined) {
  *//*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 633 May 9 23:00
+build: 669 May 22 23:47
 */
 /**
  * @module  event
@@ -2099,6 +2099,8 @@ KISSY.add('event-target', function(S, undefined) {
  *  2010.04
  *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 是不需要
  *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
+ *
+ *   - detach 命名是因为 removeEventListener 太长，remove 则太容易冲突
  */
 /**
  * @module  event-mouseenter

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 633 May 9 23:00
+build: 669 May 22 23:47
 */
 KISSY.add("event",function(d,j){function k(a,b,e,g){if(d.isString(b))b=d.query(b);if(d.isArray(b)){d.each(b,function(h){p[a](h,e,g)});return true}if((e=d.trim(e))&&e.indexOf(v)>0){d.each(e.split(v),function(h){p[a](b,h,g)});return true}}function i(a){var b=-1;if(a.nodeType===3||a.nodeType===8)return b;return b=a.nodeType?f.attr(a,s):a.isCustomEventTarget?a.eventTargetId:a[s]}function l(a,b){if(a.nodeType===3||a.nodeType===8)return d.error("Text or comment node is not valid event target.");if(a.nodeType)f.attr(a,
 s,b);else if(a.isCustomEventTarget)a.eventTargetId=b;else try{a[s]=b}catch(e){d.error(e)}}function c(a){if(a.nodeType)f.removeAttr(a,s);else if(a.isCustomEventTarget)a.eventTargetId=j;else a[s]=j}var f=d.DOM,o=window,w=document,x=w.addEventListener?function(a,b,e){a.addEventListener&&a.addEventListener(b,e,false)}:function(a,b,e){a.attachEvent&&a.attachEvent("on"+b,e)},y=w.removeEventListener?function(a,b,e){a.removeEventListener&&a.removeEventListener(b,e,false)}:function(a,b,e){a.detachEvent&&a.detachEvent("on"+

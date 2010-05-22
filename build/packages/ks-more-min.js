@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 663 May 19 17:23
+build: 669 May 22 23:47
 */
 KISSY.add("node",function(c){function m(g,l,j){var d;if(!(this instanceof m))return new m(g,l,j);if(!g)return null;if(g.nodeType)d=g;else if(typeof g==="string")d=n.create(g,j);l&&c.error("not implemented");this[0]=d}var n=c.DOM,h=m.prototype;c.each(["attr","removeAttr","css"],function(g){h[g]=function(l,j){var d=this[0];if(j===undefined)return n[g](d,l);else{n[g](d,l,j);return this}}});c.each(["val","text","html"],function(g){h[g]=function(l){var j=this[0];if(l===undefined)return n[g](j);else{n[g](j,
 l);return this}}});c.each(["children","siblings","next","prev","parent"],function(g){h[g]=function(){var l=n[g](this[0]);return l?new c[l.length?"NodeList":"Node"](l):null}});c.each(["hasClass","addClass","removeClass","replaceClass","toggleClass"],function(g){h[g]=function(){var l=n[g].apply(n,[this[0]].concat(c.makeArray(arguments)));return typeof l==="boolean"?l:this}});c.mix(h,c.EventTarget);h._addEvent=function(g,l){c.Event._simpleAdd(this[0],g,l)};delete h.fire;c.mix(h,{one:function(g){return c.one(g,
