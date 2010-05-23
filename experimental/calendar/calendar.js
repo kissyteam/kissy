@@ -796,6 +796,7 @@ S.mix(Calendar.prototype, {
 				d.setYear(cc.year);
 				*/
 				var d = new Date(cc.year+'/'+(cc.month+1)+'/'+selectedd);
+				cc.fathor.date = d;
 				cc.fathor.EventCenter['select'].fire(d);
 				if(cc.fathor.popup && cc.fathor.closeable){
 					cc.fathor.hide();
