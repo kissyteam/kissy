@@ -818,14 +818,12 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 669 May 22 23:47
+build: 671 May 23 14:23
 */
 /**
  * @module  selector
  * @author  lifesinger@gmail.com
- * @depends kissy
  */
-
 KISSY.add('selector', function(S, undefined) {
 
     var doc = document,
@@ -839,10 +837,9 @@ KISSY.add('selector', function(S, undefined) {
      * Retrieves an Array of HTMLElement based on the given CSS selector.
      * @param {string} selector
      * @param {string|HTMLElement} context An id string or a HTMLElement used as context
-     * @param {boolean} pure is for internal usage only
      * @return {Array} The array of found HTMLElement
      */
-    function query(selector, context, pure) {
+    function query(selector, context) {
         var match, t, ret = [], id, tag, cls, i, len;
 
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
@@ -884,6 +881,13 @@ KISSY.add('selector', function(S, undefined) {
                         if (!id || selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
                             ret = getElementsByClassName(cls, tag, context);
                         }
+                        // 处理 #id.cls
+                        else {
+                            t = getElementById(id);
+                            if(t && S.DOM.hasClass(t, cls)) {
+                                ret = [t];
+                            }
+                        }
                     }
                     // #id tag | tag
                     else if (tag) { // 排除空白字符串
@@ -903,6 +907,14 @@ KISSY.add('selector', function(S, undefined) {
                     ret = uniqueSort(r);
                 }
             }
+            // 采用外部选择器
+            else if(S.externalSelector) {
+                return S.externalSelector(selector, context);
+            }
+            // 依旧不支持，抛异常
+            else {
+                S.error('Unsupported selector: ' + selector);
+            }
         }
         // 传入的 selector 是 Node
         else if (selector && selector.nodeType) {
@@ -917,11 +929,6 @@ KISSY.add('selector', function(S, undefined) {
         // 将 NodeList 转换为普通数组
         if(ret.item) {
             ret = S.makeArray(ret);
-        }
-
-        // attach 上实用方法
-        if(!pure) {
-            attach(ret);
         }
 
         return ret;
@@ -1053,23 +1060,15 @@ KISSY.add('selector', function(S, undefined) {
         return results;
     }
 
-    // 添加实用方法到 arr 上
-    function attach(arr) {
-        // 这里仅添加 each 方法，其它方法在各个组件中添加
-        arr.each = function(fn, context) {
-            S.each(arr, fn, context);
-        };
-    }
-
     // public api
     S.query = query;
     S.get = function(selector, context) {
-        return query(selector, context, true)[0] || null;
+        return query(selector, context)[0] || null;
     }
 });
 
 /**
- * Notes:
+ * NOTES:
  *
  * 2010.01
  *  - 对 reg exec 的结果(id, tag, className)做 cache, 发现对性能影响很小，去掉。
@@ -1077,8 +1076,6 @@ KISSY.add('selector', function(S, undefined) {
  *  - getElementsByClassName 性能优于 querySelectorAll, 但 IE 系列不支持。
  *  - instanceof 对性能有影响。
  *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无需冗余“防卫”。
- *  - query 方法第一天写了近 100 行；第二天发现能简化到 50 行；一觉醒来，发现还可以进一步精简到
- *    30 行以下。突然萌发兴趣去查 jQuery 的历史代码，求证是否有类似经历……
  *  - query 方法中的条件判断考虑了“频率优先”原则。最有可能出现的情况放在前面。
  *  - Array 的 push 方法可以用 j++ 来替代，性能有提升。
  *  - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组。
@@ -1096,6 +1093,10 @@ KISSY.add('selector', function(S, undefined) {
  *    基于 Node 的 api: S.one, 在 Node 中实现。
  *    基于 NodeList 的 api: S.all, 在 NodeList 中实现。
  *    通过 api 的分层，同时满足初级用户和高级用户的需求。
+ *
+ * 2010.05
+ *  - 去掉给 S.query 返回值默认添加的 each 方法，保持纯净。
+ *  - 对于不支持的 selector, 采用外部耦合进来的 Selector.
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。

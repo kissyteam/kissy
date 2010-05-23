@@ -17,6 +17,9 @@
 <script src="../kissy/kissy-ua.js"></script>
 <script src="selector.js"></script>
 <script src="dom.js"></script>
+<script src="dom-class.js"></script>
+<script src="../sizzle/sizzle.js"></script>
+
 <script src="../../third-party/jquery/jquery-1.4.2.min.js"></script>
 
 <div id="test-data-div" style="width: 500px; height: 200px; overflow: auto; border: 1px solid #aaa"></div>
@@ -592,55 +595,26 @@ function test_query_group_sep(test) {
     test.status = 'sep';
 }
 
-// each:
-function test_query_each_pd(test) {
-    var ret = [], ret2 = [], i, len;
-
-    test.name = 'test each';
-    test.extraMsg = '\t{puredom}';
-
-    if (doc.querySelectorAll) {
-        ret = doc.querySelectorAll('.date');
-        for (i = 0, len = ret.length; i < len; i++) {
-            ret[i].className += ' test-each-pd';
-        }
-        ret2 = doc.querySelectorAll('.test-each-pd');
-    }
-
-    if (ret.length !== ret2.length) test.fail(ret.length);
-}
-
-function test_query_each_ks(test) {
-    var ret = [], ret2 = [];
-
-    test.name = 'test each';
+// unsupported selector:
+function test_query_unsupported_ks(test) {
+    var s = '#w3c_main .line .unit:first', ret = [];
+    test.name = s;
     test.extraMsg = '\t{kissy}';
 
-    ret = S.query('.date');
-    ret.each(function(el) {
-        el.className += ' test-each-ks';
-    });
-    ret2 = S.query('.test-each-ks');
-
-    if (ret.length !== ret2.length) test.fail(ret.length);
+    ret = S.query(s);
+    if (ret.length !== 1) test.fail(ret.length);
 }
 
-function test_query_each_jq(test) {
-    var ret = [], ret2 = [];
-
-    test.name = 'test each';
+function test_query_unsupported_jq(test) {
+    var s = '#w3c_main .line .unit:first', ret = [];
+    test.name = s;
     test.extraMsg = '\t{jquery}';
 
-    ret = S.query('.date');
-    ret.each(function(el) {
-        el.className += ' test-each-jq';
-    });
-    ret2 = S.query('.test-each-jq');
-
-    if (ret.length !== ret2.length) test.fail(ret.length);
+    ret = jQuery(s);
+    if (ret.length !== 1) test.fail(ret.length);
 }
 
-function test_query_each_sep(test) {
+function test_query_unsupported_sep(test) {
     test.status = 'sep';
 }
 
@@ -664,9 +638,9 @@ function test_query_exceptions(test) {
     // 允许空白字符
     if (S.query(' #test-data  p.date  ').length !== 12) test.fail();
 
-    // 无效选择器，返回 []
-    if (S.query('#test-xxx p.yyy').length !== 0) test.fail();
+    // #id.cls
     if (S.query('#test-data.date').length !== 0) test.fail();
+    if (S.query('#w3c_logo_shadow.w3c_leftCol').length !== 1) test.fail();
 
     // context 为 null 时，返回 []
     // 注：这和 jQuery 不同，jQuery 此时会将 context 赋值为 doc
