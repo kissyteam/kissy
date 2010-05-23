@@ -1,7 +1,6 @@
 /**
  * Provides a swf based storage implementation.
  */
-
 KISSY.add('swfstore', function(S, undefined) {
 
     var UA = S.UA, Cookie = S.Cookie,
@@ -56,7 +55,7 @@ KISSY.add('swfstore', function(S, undefined) {
         // 如果没有传入，就自动生成
         if(!container) {
             // 注：container 的 style 不能有 visibility:hidden or display: none, 否则异常
-            container = new S.Node('<div style="height:0;width:0;overflow:hidden"></div>').appendTo(doc.body)[0];
+            container = doc.body.appendChild(S.DOM.create('<div style="height:0;width:0;overflow:hidden"></div>'));
         }
         self.embeddedSWF = new S.SWF(container, swfUrl || 'swfstore.swf', params);
 

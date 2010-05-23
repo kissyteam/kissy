@@ -1,9 +1,7 @@
 /**
  * @module  cookie
  * @author  lifesinger@gmail.com
- * @depends kissy
  */
-
 KISSY.add('cookie', function(S) {
 
     var doc = document,
@@ -71,7 +69,7 @@ KISSY.add('cookie', function(S) {
 });
 
 /**
- * Notes:
+ * NOTES:
  *
  *  2010.04
  *   - get 方法要考虑 ie 下，

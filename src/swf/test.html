@@ -57,7 +57,7 @@
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY, swfstore;
+    var S = KISSY, Event = S.Event, swfstore;
 
     function test_ua(test) {
         if (S.UA.flash === null) test.fail();
@@ -132,13 +132,13 @@
         var nameEl = S.get('#nameField'),
             valEl = S.get('#valueField'),
             indexEl = S.get('#indexField');
-        S.one('#save-button').on('click', function () { swfstore.setItem(nameEl.value, valEl.value); });
-        S.one('#remove-button').on('click', function () { swfstore.removeItem(nameEl.value); });
-        S.one('#get-button').on('click', function () { test.echo('getValueOf("' + nameEl.value + '") = "' + swfstore.getValueOf(nameEl.value) + '"'); });
-        S.one('#purge-button').on('click', function() { swfstore.clear(); });
-        S.one('#removeat-button').on('click', function () { swfstore.removeItemAt(parseInt(indexEl.value)); });
-        S.one('#settings-button').on('click', function() { swfstore.displaySettings(); });
-        S.one('#calcSize-button').on('click', function() { test.echo('currentSize = ' + swfstore.calculateCurrentSize() + ' KB'); });
+        Event.on('#save-button', 'click', function () { swfstore.setItem(nameEl.value, valEl.value); });
+        Event.on('#remove-button', 'click', function () { swfstore.removeItem(nameEl.value); });
+        Event.on('#get-button', 'click', function () { test.echo('getValueOf("' + nameEl.value + '") = "' + swfstore.getValueOf(nameEl.value) + '"'); });
+        Event.on('#purge-button', 'click', function() { swfstore.clear(); });
+        Event.on('#removeat-button', 'click', function () { swfstore.removeItemAt(parseInt(indexEl.value)); });
+        Event.on('#settings-button', 'click', function() { swfstore.displaySettings(); });
+        Event.on('#calcSize-button', 'click', function() { test.echo('currentSize = ' + swfstore.calculateCurrentSize() + ' KB'); });
 
         // ÊÂ¼þ¼àÌý
         swfstore.on('clear', function() {

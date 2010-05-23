@@ -1,14 +1,12 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 676 May 23 14:43
 */
 /**
  * @module  cookie
  * @author  lifesinger@gmail.com
- * @depends kissy
  */
-
 KISSY.add('cookie', function(S) {
 
     var doc = document,
@@ -76,7 +74,7 @@ KISSY.add('cookie', function(S) {
 });
 
 /**
- * Notes:
+ * NOTES:
  *
  *  2010.04
  *   - get 方法要考虑 ie 下，

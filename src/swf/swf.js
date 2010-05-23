@@ -2,7 +2,6 @@
  * The SWF utility is a tool for embedding Flash applications in HTML pages.
  * author: lifesinger@gmail.com
  */
-
 KISSY.add('swf', function(S) {
 
     var UA = S.UA,

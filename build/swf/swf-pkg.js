@@ -1,44 +1,22 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 565 Apr 15 12:05
+build: 676 May 23 14:40
 */
 /**
  * SWF UA info
  * author: lifesinger@gmail.com
  */
-
 KISSY.add('swf-ua', function(S) {
 
-    var UA = S.UA,
-        version = 0, sF = 'ShockwaveFlash',
-        ax6, mF, eP;
+    function getFlashVersion() {
+        var version = 0,
+            sF = 'ShockwaveFlash',
+            mF = navigator.mimeTypes['application/x-shockwave-flash'],
+            ax6, eP;
 
-    if (UA.ie) {
-        try {
-            ax6 = new ActiveXObject(sF + '.' + sF + '.6');
-            ax6.AllowScriptAccess = 'always';
-        } catch(e) {
-            if (ax6 !== null) {
-                version = 6.0;
-            }
-        }
-
-        if (version === 0) {
-            try {
-                version = numerify(
-                    new ActiveXObject(sF + '.' + sF)
-                        .GetVariable('$version')
-                        .replace(/[A-Za-z\s]+/g, '')
-                        .split(',')
-                    );
-
-            } catch (e) {
-            }
-        }
-    } else {
-        if ((mF = navigator.mimeTypes['application/x-shockwave-flash'])) {
-            if ((eP = mF.enabledPlugin)) {
+        if (mF) {
+            if ((eP = mF['enabledPlugin'])) {
                 version = numerify(
                     eP.description
                         .replace(/\s[rd]/g, '.')
@@ -46,7 +24,30 @@ KISSY.add('swf-ua', function(S) {
                         .split('.')
                     );
             }
+        } else {
+            try {
+                ax6 = new ActiveXObject(sF + '.' + sF + '.6');
+                ax6.AllowScriptAccess = 'always';
+            } catch(e) {
+                if (ax6 !== null) {
+                    version = 6.0;
+                }
+            }
+
+            if (version === 0) {
+                try {
+                    version = numerify(
+                        new ActiveXObject(sF + '.' + sF)
+                            ['GetVariable']('$version')
+                            .replace(/[A-Za-z\s]+/g, '')
+                            .split(',')
+                        );
+                } catch (e) {
+                }
+            }
         }
+
+        return parseFloat(version);
     }
 
     function numerify(arr) {
@@ -62,13 +63,19 @@ KISSY.add('swf-ua', function(S) {
         return (ret += arr[2]);
     }
 
-    UA.flash = parseFloat(version);
+    S.UA.flash = getFlashVersion();
 });
+
+/**
+ * NOTES:
+ *
+ *  - getFlashVersion 函数中，存在 new ActiveX 和 try catch, 比较耗费性能，需要进一步测试和优化。
+ *
+ */
 /**
  * The SWF utility is a tool for embedding Flash applications in HTML pages.
  * author: lifesinger@gmail.com
  */
-
 KISSY.add('swf', function(S) {
 
     var UA = S.UA,
@@ -173,8 +180,8 @@ KISSY.add('swf', function(S) {
 
         /**
          * Calls a specific function exposed by the SWF's ExternalInterface.
-         * @param func {string} the name of the function to call
-         * @param args {array} the set of arguments to pass to the function.
+         * @param func {String} the name of the function to call
+         * @param args {Array} the set of arguments to pass to the function.
          */
         callSWF: function (func, args) {
             var self = this;
@@ -189,7 +196,6 @@ KISSY.add('swf', function(S) {
 /**
  * Provides a swf based storage implementation.
  */
-
 KISSY.add('swfstore', function(S, undefined) {
 
     var UA = S.UA, Cookie = S.Cookie,
@@ -244,7 +250,7 @@ KISSY.add('swfstore', function(S, undefined) {
         // 如果没有传入，就自动生成
         if(!container) {
             // 注：container 的 style 不能有 visibility:hidden or display: none, 否则异常
-            container = new S.Node('<div style="height:0;width:0;overflow:hidden"></div>').appendTo(doc.body)[0];
+            container = doc.body.appendChild(S.DOM.create('<div style="height:0;width:0;overflow:hidden"></div>'));
         }
         self.embeddedSWF = new S.SWF(container, swfUrl || 'swfstore.swf', params);
 
@@ -327,6 +333,7 @@ KISSY.add('swfstore', function(S, undefined) {
  *
  * TODO:
  *   - 广播功能：当数据有变化时，自动通知各个页面
+ *   - Bug: shareData 关闭时，Chrome 和 IE 重启后，会清空数据库
  *   - Bug: 点击 Remove, 当 name 不存在时，会将最后一条删除
  *   - container 的 overflow:hidden 是否有必要?
  */
