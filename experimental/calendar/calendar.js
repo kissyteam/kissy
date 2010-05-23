@@ -362,18 +362,6 @@ S.mix(Calendar.prototype, {
 		}
 		return [_year,_month];
 	},
-	//处理箭头
-	handleArrow:function(){
-
-	},
-	//得到范围
-	getRange:function(){
-
-	},
-	//得到当前选中
-	getSelect:function(){
-
-	},
 	//处理起始日期,d:Date类型
 	handleRange : function(d){
 		var that = this;
