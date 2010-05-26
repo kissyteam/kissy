@@ -1,0 +1,36 @@
+/**
+ * Form
+ * @creator ≥¡”„<fool2fish@gmail.com>
+ */
+
+.ks-form{padding:6px 10px;}
+.ks-form fieldset{margin-bottom:5px;*margin-bottom:0;padding:5px 0;border:1px solid #ccc;}
+.ks-form legend{margin-left:1em;font-weight:bold;}
+.ks-form input,
+.ks-form select{vertical-align:middle;}
+.ks-form-table{width:100%;}
+.ks-form-label{width:132px;padding:4px 0;*padding-top:6px;font-weight:normal;text-align:right;vertical-align:top;}
+.ks-form-label label{padding-right:12px;}
+.ks-form-required{display:inline-block;margin:0 6px 0 -13px;color:#f30;}
+.ks-form-field{padding-top:4px;}
+.ks-form-field-cell{display:inline-block;padding:0 8px 4px 0;}
+.ks-form-input{width:100px;height:16px;}
+.ks-form-textarea{width:445px;height:4em;line-height:1.2em;}
+.ks-form-button-box{padding:5px 0;text-align:center;}
+.ks-form-button-box button{min-width:50px;margin-right:5px;padding:1px 6px;*padding:0;cursor:pointer;}
+.ks-form-button-box button[type="submit"]{font-weight:bold;}
+
+.ks-form-calendar{position:relative;}
+.ks-form-calendar .ks-form-trigger{position:absolute;right:11px;top:3px;*top:5px;width:13px;height:13px;overflow:hidden;line-height:1000px;background:url(img/icon.png) no-repeat -80px 0;}
+.ks-form-calendar .ks-form-trigger-disabled{background-position:-100px 0;cursor:default;}
+
+.ks-form-select{position:relative;}
+.ks-form-select .ks-form-trigger{position:absolute;right:9px;top:1px;*top:3px;width:17px;height:18px;overflow:hidden;line-height:1000px;background:url(img/icon.png) no-repeat 0 -61px;}
+.ks-form-select .ks-form-trigger-disabled{background-position:-20px -61px;cursor:default;}
+
+.ks-form-numericupdown{position:relative;}
+.ks-form-numericupdown .ks-form-trigger{position:absolute;right:9px;top:1px;*top:3px;width:17px;height:18px;overflow:hidden;line-height:1000px;}
+.ks-form-numericupdown .ks-form-trigger-up{display:block;width:17px;height:9px;background:url(img/icon.png) no-repeat -40px -61px;}
+.ks-form-numericupdown .ks-form-trigger-down{display:block;width:17px;height:9px;background:url(img/icon.png) no-repeat -40px -70px;}
+.ks-form-numericupdown .ks-form-trigger-up-disabled{background-position:-60px -61px;cursor:default;}
+.ks-form-numericupdown .ks-form-trigger-down-disabled{background-position:-60px -70px;cursor:default;}
