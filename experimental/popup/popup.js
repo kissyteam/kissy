@@ -7,7 +7,7 @@
 KISSY.add("popup", function(S) {
     var DOM = S.DOM, Event = S.Event , YDOM = YAHOO.util.Dom ,
         doc = document,
-        POPUP_STATE = 'ks-data-popup-state',
+        POPUP_STATE = 'data-popup-state',
         POPUP_STATE_ENABLED = 'enabled' ,
         POPUP_STATE_DISABLED = 'disabled';		
 
@@ -188,8 +188,8 @@ KISSY.add("popup", function(S) {
                     self.hide();
                 }else{
                     t = YDOM.getAncestorBy(t,function(el){
-                        return YDOM.getAncestorByClassName(el,self.config.closeBtnCls) && YDOM.isAncestor(self.popup,el);
-                    })
+                        return YDOM.hasClass(el,self.config.closeBtnCls) && YDOM.isAncestor(self.popup,el);
+                    });
                     if(t) self.hide();
                 }
 			});
