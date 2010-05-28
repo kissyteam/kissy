@@ -1,88 +1,88 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
-<title>DataGrid Test</title>
-<link rel="stylesheet" href="../../build/cssreset/reset.css" />
-<link rel="stylesheet" href="datagrid.css" />
+    <meta charset="gbk"/>
+    <title>DataGrid Test</title>
+    <link rel="stylesheet" href="../../build/cssreset/reset.css" />
+    <link rel="stylesheet" href="../cssmodules/box.css" />
+    <link rel="stylesheet" href="../cssmodules/datagrid.css" />
+    <link rel="stylesheet" href="../cssmodules/pagination.css" />
+    <link rel="stylesheet" href="../cssmodules/bar.css" />
+    <style>
+        #page {margin:0 10px;}
+        h1{margin-bottom:12px;padding:12px 0;font-size:24px;border-bottom:1px solid #ccc;}
+        h2{margin-bottom:12px;padding:6px 0;font-size:14px;font-weight:bold;border-bottom:1px dashed #ccc;}
+        strong.h{font-weight:bold;color:#f30;}
+    </style>
 </head>
 <body>
-<!-- box START -->
-<div class="box box-normal">
-    <div class="hd">
-        <h3>数据表格标题</h3>
-    </div>
-    <div class="bd">
-        <!-- data grid START -->
-        <div id="KS_DataGrid">
-            <!-- toolbar START -->
-            <ul class="ks-toolbar">
-                <li><a href="#">新增</a></li>
-                <li><a href="#">编辑</a></li>
-                <li><a href="#">删除</a></li>
-                <li><a href="#">移动</a></li>
-                <li><a href="#">设置列</a></li>
-            </ul>
-            <!-- toolbar END -->
+    <div id="page">
+        <h1>数据表格</h1>
+        <div class="ks-box">
+            <u class="ks-box-top"><s></s><b></b></u>
+            <div class="ks-box-hd">
+                <h3 class="ks-box-title">数据表格</h3>
+            </div>
+            <div class="ks-box-bd">
+                <!-- data grid START -->
+                <div id="KS_DataGrid">
+
+                </div>
+                <!-- data grid END -->
+            </div>
+            <u class="ks-box-bottom"><s></s><b></b></u>
         </div>
-        <!-- data grid END -->
     </div>
-</div>
-<!-- box END -->
+
+    <script src="../../build/packages/kissy-core-min.js"></script>
+    <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+    <script src="../../third-party/yui2/connection/connection.js"></script>
+    <script src="datagrid.js"></script>
+    <script src="datagrid-render.js"></script>
+    <script src="datagrid-pagination.js"></script>
+    <script src="datagrid-operate.js"></script>
+    <script>
+    KISSY.ready(function(S) {
+
+        var datagrid = new S.DataGrid('#KS_DataGrid','http://192.168.207.119:8080/pamirsshine/data/tmashup_all_pages_SearchGrid.e');
+        datagrid.datasourceDef = {
+            success:'success',
+            listData:'dataList',
+            info:'info',
+            dataStart:'start',
+            dataLimit:'limit',
+            dataAmount:'total',
+            sortType:'sorttype',
+            sortBy:'sortby'
+        };
+        datagrid.paginationDef = {
+            dataLimit:5,
+            pageNumLength:5,
+            position:'bottom'
+        };
+        datagrid.columnDef = [
+            {xType:'COL_CHECKBOX'},
+            {label:'单一表头、复合字段',width:500,field:['developer','name'],parser:function(developer,name){return developer + '：' +name;}},
+            {label:'复合表头',children:[
+                {label:'所属站点',width:200,sortable:true,field:'site',parser:function(site){if(site=='CTU'){return '<span style="color:#f60;font-weight:bold;">'+site+'</span>';}else{return site;}}},
+                { label:'标识',children:[
+                    {label:'页面id（只有单字段才可排序）',width:400,field:'id',sortable:true},
+                    {label:'组件id',width:200,field:'componentId',sortable:true}
+                ]}
+            ]},
+            {label:'自定义列',width:400,parser:function(){return '<a href="#">点此查看</a>';}},
+            {xType:'COL_EXTRA',width:200,field:'id',parser:function(id){return '我是一个扩展列,页面id是：'+id;}}//,expand:true}
+        ];
+        /*datagrid.columnDef = [
+            {xType:'COL_RADIO'},
+            {label:'单一表头、复合字段',field:['developer','name'],parser:function(developer,name){return developer + '：' +name;}},
+            {label:'所属站点',sortable:true,field:'site',parser:function(site){if(site=='CTU'){return '<span style="color:#f60;font-weight:bold;">'+site+'</span>';}else{return site;}}},
+            {label:'自定义列',parser:function(){return '<a href="#">点此查看</a>';}},
+        ];*/
+        datagrid.render('');
+
+    });
+    </script>
+
 </body>
 </html>
-<script src="../../build/packages/ks-core-min.js"></script>
-<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script src="../../third-party/yui2/connection/connection.js"></script>
-<script src="datagrid.js"></script>
-<script>
-KISSY.ready(function(S) {
-    // 192.168.207.119  10.13.18.157
-    var datagrid = new S.DataGrid('#KS_DataGrid','/tmashup/data/tmashup_all_pages_SearchGrid.e');
-    datagrid.datasourceDef = {
-        success:'success',
-        listData:'dataList',
-        info:'info',
-        dataStart:'start',
-        dataLimit:'limit',
-        dataAmount:'total',
-        sortType:'sorttype',
-        sortBy:'sortby'        
-    };
-    datagrid.paginationDef = {
-        dataLimit:20,
-        pageNumLength:5,
-        position:'bottom'
-    };
-    datagrid.columnDef = [
-        {xType:'COL_CHECKBOX'},
-        {label:'单一表头、复合字段',width:300,field:['developer','name'],parser:function(developer,name){return developer + '：' +name;}},
-        {label:'复合表头',children:[
-            {label:'所属站点',width:200,sortable:true,field:'site',parser:function(site){if(site=='CTU'){return '<span style="color:#f60;font-weight:bold;">'+site+'</span>';}else{return site;}}},
-            { label:'标识',children:[
-                {label:'页面id（只有单字段才可排序）',width:400,field:'id',sortable:true},
-                {label:'组件id',width:200,field:'componentId',sortable:true}
-            ]}
-        ]},
-        {label:'自定义列',parser:function(){return '<a href="#">点此查看</a>';}},
-        {xType:'COL_EXTRA',field:'id',parser:function(id){return '我是一个扩展列,页面id是：'+id;}}//,expand:true}
-    ];
-    /*datagrid.columnDef = [
-        {xType:'COL_RADIO'},
-        {label:'单一表头、复合字段',field:['developer','name'],parser:function(developer,name){return developer + '：' +name;}},
-        {label:'所属站点',sortable:true,field:'site',parser:function(site){if(site=='CTU'){return '<span style="color:#f60;font-weight:bold;">'+site+'</span>';}else{return site;}}},
-        {label:'自定义列',parser:function(){return '<a href="#">点此查看</a>';}},
-    ];*/
-    datagrid.render('');
-
-    function highlight(o){
-        var row = o.row;
-        var recordData = o.recordData;
-        if( recordData.site && recordData.site == 'CTU'){
-            S.DOM.addClass( row , 'row-green');
-        }
-    }
-    datagrid.on('renderRow',highlight);
-    datagrid.on('renderRowExtra',highlight);
-});
-</script>
