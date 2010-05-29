@@ -84,6 +84,12 @@ KISSY.add("datagrid", function(S) {
          **************************************************/
 
         /**
+         * 表格本身的定义
+         * 默认值见 Datagrid.datagridDef
+         */
+        //self.datagridDef=null;
+
+        /**
          * 定义列，用于渲染，如不定义，则自动根据返回数据输出表格
          * 例：
          * columnDef=[
@@ -127,6 +133,11 @@ KISSY.add("datagrid", function(S) {
          */
         //self._colSelectDef=null;
 
+        /**
+         * 用户是否自定义列宽
+         */
+        //self._defColWidth = false;
+
         /***************************************************
          * 表格元素
          **************************************************/
@@ -134,7 +145,7 @@ KISSY.add("datagrid", function(S) {
         /**
          * 表格元素
          */
-        self.tableEl = DataGrid.create('<table class="'+ CLS_PREFIX + 'table"></table>',self.container);
+        self._tableEl = DataGrid.create('<table class="'+ CLS_PREFIX + 'table"></table>',self.container);
         
         /**
          * colgroup元素
@@ -220,8 +231,8 @@ KISSY.add("datagrid", function(S) {
                 prefix = '<table class="' + CLS_WRAPPER + '">';
                 suffix = '</table>';
             } else if (tag2.indexOf(tagName) > -1) {
-                prefix = '<table><tr class="' + CLS_WRAPPER + '">';
-                suffix = '</tr></table>';
+                prefix = '<table><tbody><tr class="' + CLS_WRAPPER + '">';
+                suffix = '</tr></tbody></table>';
             //tr元素一定要放到tbody里，否则浏览器会自动给tr外面加个tbody
             } else if(tagName == ' tr '){
                 prefix = '<table><tbody class="' + CLS_WRAPPER + '">';
@@ -272,6 +283,12 @@ KISSY.add("datagrid", function(S) {
               return queryString + '&' + newParam;
          },
 
+        //表格本身的默认定义
+        datagridDef:{
+            fixThead:false,
+            customizeCol:false
+        },
+
         //数据源默认定义
         datasourceDef:{
             success:'success',
@@ -282,12 +299,6 @@ KISSY.add("datagrid", function(S) {
             dataAmount:'total',
             sortType:'sorttype',
             sortBy:'sortby'
-        },
-
-        //表格定义
-        datatableDef:{
-            fixThead:false,
-            sortBy:1
         },
 
         //翻页默认定义

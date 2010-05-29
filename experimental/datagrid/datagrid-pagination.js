@@ -39,15 +39,15 @@ KISSY.add("datagrid-pagination", function(S) {
             self._pageSkipBtnEl = self._pageSkipEl.getElementsByTagName('button')[0];
 
             var curLimit = self.paginationDef.dataLimit, defaultOptionStr = '';
-            if( (curLimit < 100) && curLimit%20) defaultOptionStr='<option value="'+curLimit+'">'+curLimit+'</option>';
+            if( curLimit%20 || curLimit>80) defaultOptionStr='<option value="'+curLimit+'">'+curLimit+'</option>';
             
             self._dataLimitEl = create('<span class="' + CLS_PAGE_PREFIX + 'data-limit">Ã¿Ò³<select value="'+curLimit+'">'+ defaultOptionStr + '<option value="20">20</option><option value="40">40</option><option value="60">60</option><option value="80">80</option></select>Ìõ<span>', wrapperEl);
             self._dataLimitSetEl = self._dataLimitEl.getElementsByTagName('select')[0];
 
             if (self.paginationDef.position == 'bottom') {
-                YDOM.insertAfter(paginationEl, self.tableEl);
+                YDOM.insertAfter(paginationEl, self._tableEl);
             } else {
-                YDOM.insertBefore(paginationEl, self.tableEl);
+                YDOM.insertBefore(paginationEl, self._tableEl);
             }
             self._paginationEl = paginationEl;
 

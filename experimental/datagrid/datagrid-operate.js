@@ -10,6 +10,7 @@ KISSY.add("datagrid-operate", function(S) {
         doc = document,
 
         DataGrid = S.DataGrid,
+        create = DataGrid.create,
 
         //特殊列的类型
         COL_CHECKBOX = 'COL_CHECKBOX', COL_RADIO = 'COL_RADIO', COL_EXTRA = 'COL_EXTRA',
@@ -27,12 +28,85 @@ KISSY.add("datagrid-operate", function(S) {
         CLS_ICON_EXPAND = CLS_PREFIX + 'icon-expand', CLS_ICON_CHECKBOX = CLS_PREFIX + 'icon-checkbox', CLS_ICON_RADIO = CLS_PREFIX + 'icon-radio',
 
         //行索引，可排序th的排序字段
-        ATTR_ROW_IDX = 'data-list-idx',ATTR_SORT_FIELD = 'data-sort-field',
+        ATTR_ROW_IDX = 'data-list-idx',ATTR_CELL_IDX = 'data-cell-idx', ATTR_SORT_FIELD = 'data-sort-field',
 
         //排序方式
         DESC = 'desc', ASC = 'asc';
 
     S.augment(S.DataGrid,{
+        
+        /**************************************************************************************************************
+         * 滚动时，固定表头功能
+         *************************************************************************************************************/
+        _activateFixThead:function(){
+            var scrollState = 0,
+                self = this,
+                container = self.container,
+                table = self._tableEl,
+                thead = self._theadEl,
+                proxy = create('<table class="ks-datagrid-proxy ks-datagrid"></table>');
+            
+            S.ready(function() {
+                doc.body.appendChild(proxy);
+            });
+
+            if(!self._defColWidth) self._setColWidth();
+
+            Event.on(window,'scroll',function(){
+                var theadHeight = thead.offsetHeight,
+                    tWidth = container.offsetWidth,
+                    tHeight = container.offsetHeight,
+                    tLeft =  YDOM.getX(container),
+                    tTop =  YDOM.getY(container),
+                    scrollTop = YDOM.getDocumentScrollTop();
+                if(scrollTop<tTop){
+                    if(scrollState){
+                        table.style.paddingTop = 0;
+                        table.appendChild(thead);
+                    }
+                    scrollState = 0;                    
+                }else if( scrollTop > tTop+tHeight-theadHeight){
+                    if(scrollState != 3){
+                        proxy.style.top = '-400px';
+                    }
+                    scrollState = 3;
+                }else{
+                    if(!scrollState){
+                        table.style.paddingTop = theadHeight + 'px';
+                        proxy.appendChild(thead);
+                    }
+                    if(scrollState!=2){
+                        proxy.style.top='0px';
+                        proxy.style.left = tLeft+'px';
+                        proxy.style.width = tWidth+'px';
+                    }
+                    if(S.UA.ie===6){
+                        proxy.style.top = scrollTop+'px';
+                    }
+                    scrollState = 2;
+                }                                                                                    
+            });
+
+            Event.on(window,'resize',function(){
+                proxy.style.width = container.offsetWidth+'px';                
+            });
+        },
+
+        /**
+         * 渲染出表格（如果没有数据，则为渲染出表头后）,获取每列的实际宽度并赋值
+         */
+        _setColWidth:function(){
+            var self = this ,
+                colArr = self._colgroupEl.getElementsByTagName('col'),
+                thArr = self._theadEl.getElementsByTagName('th');
+            for(var i=0,len=colArr.length;i<len;i++){
+                if(!colArr[i].width) colArr[i].width = colArr[i].offsetWidth;
+            }
+            for(var j=0,len2=thArr.length;j<len2;j++){
+                if((!thArr[j].width) && (thArr[j].className.indexOf(CLS_CELL_EXTRA)<0)) thArr[j].width = thArr[j].offsetWidth;
+            }
+
+        },
 
         /**************************************************************************************************************
          * 激活排序，选择列和扩展列功能
@@ -40,7 +114,7 @@ KISSY.add("datagrid-operate", function(S) {
         
         //激活排序功能
         _activateRowSort:function(){
-            var self = this , sortTrigger  = self._sortTrigger;
+            var self = this , sortTrigger = self._sortTrigger;
             Event.on(sortTrigger, 'click', function(e){
                 if( !self._listData || self._listData.length == 0 ) return;
                 var t = this;
@@ -71,44 +145,51 @@ KISSY.add("datagrid-operate", function(S) {
 
         //激活列选择功能
         _activateRowSelect:function(){
-            var self = this , selectType = self._colSelectDef;
-            function selectJudgement(t){
-                return  (DOM.hasClass( t , CLS_ICON_CHECKBOX) || DOM.hasClass(t.parentNode,CLS_ROW)) && YDOM.getAncestorByTagName( t , 'tbody' )
+            var self = this ,selectDef=self._colSelectDef, selectType = selectDef.xType, curSelectedIdx;
+            function getRow(t){
+                var tc = t.className,p=t.parentNode,pc=p.className;
+                //如果t为单选/多选按钮icon
+                if( p.nodeName.toLowerCase()=='td'&&(tc.indexOf(CLS_ICON_CHECKBOX)+1 || tc.indexOf(CLS_ICON_RADIO)+1)){
+                    return p.parentNode;
+                //或者为td
+                }else if(pc.indexOf(CLS_ROW)+1 || pc.indexOf(CLS_ROW_EXTRA)+1){
+                    return p;
+                }else{
+                    return null;
+                }
             }
-            if( selectType == COL_CHECKBOX ){
-                Event.on(self.tableEl,'click',function(e){
-                    var t = e.target;
-                    if( selectJudgement(t) ){
-                        var row = YDOM.getAncestorByClassName( t , CLS_ROW ) || YDOM.getAncestorByClassName( t , CLS_ROW_EXTRA );
-                        self.toggleSelectRow( row.getAttribute( ATTR_ROW_IDX ));
-                    }else if( t == self._selectAllTrigger){
-                        if(!self._tbodyEl) return;
-                        var theadRow = self._theadEl.getElementsByTagName('tr')[0];
-                        if( DOM.hasClass( theadRow , CLS_ROW_SELECTED ) ){
-                            self.deselectAll();
-                        }else{
-                            self.selectAll();
-                        }
-                    }
-                });
-            }else if( selectType == COL_RADIO ){
-                var curSelectedIdx;
-                Event.on(self.tableEl,'click',function(e){
-                    var t = e.target;
-                    if( selectJudgement(t) ){
-                        var row = YDOM.getAncestorByClassName( t , CLS_ROW ) || YDOM.getAncestorByClassName( t , CLS_ROW_EXTRA );
-                        if( curSelectedIdx != undefined ) self.deselectRow(curSelectedIdx);
-                        curSelectedIdx = row.getAttribute( ATTR_ROW_IDX );
-                        self.selectRow( curSelectedIdx );
-                    }
-                });
-            }
+
+            Event.on(self._tableEl,'click',function(e){
+                var t=e.target, row = getRow(t);
+                if(!row) return;
+                if(selectType == COL_CHECKBOX){
+                    self.toggleSelectRow( row.getAttribute( ATTR_ROW_IDX ));
+                }else if(selectType == COL_RADIO){
+                    if( curSelectedIdx != undefined ) self.deselectRow(curSelectedIdx);
+                    curSelectedIdx = row.getAttribute( ATTR_ROW_IDX );
+                    self.selectRow( curSelectedIdx );
+                }
+            });
+
+            /**
+             * 全选/取消全选
+             * 由于滚动时如果固定页头，则thead会暂时从table中取出来，故需要直接将事件注册在全选触点上
+             */
+            Event.on(self._selectAllTrigger,'click',function(){
+                if(!self._tbodyEl) return;
+                var theadRow = self._theadEl.getElementsByTagName('tr')[0];
+                if(DOM.hasClass(theadRow,CLS_ROW_SELECTED)){
+                    self.deselectAll();
+                }else{
+                    self.selectAll();
+                }
+            });
         },
 
         //激活扩展列功能
         _activateRowExpand:function(){
             var self = this;
-            Event.on(self.tableEl,'click',function(e){
+            Event.on(self._tableEl,'click',function(e){
                 var t = e.target;
                 if( DOM.hasClass( t , CLS_ICON_EXPAND ) ){
                     var row = YDOM.getAncestorByClassName( t , CLS_ROW );
@@ -262,14 +343,14 @@ KISSY.add("datagrid-operate", function(S) {
             }else{
                 return selected;
             }
-        },
+        }
 
 
         /**************************************************************************************************************
          * @增删改操作
          *************************************************************************************************************/
 
-        addRecord:function(){
+        /*addRecord:function(){
 
         },
         modifyRecord:function(){
@@ -277,7 +358,7 @@ KISSY.add("datagrid-operate", function(S) {
         },
         deleteRecord:function(){
 
-        }
+        }*/
     });
 
 });

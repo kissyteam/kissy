@@ -6,7 +6,7 @@
 
 KISSY.add("datagrid-render", function(S) {
 
-    var DOM = S.DOM, Event = S.Event, YDOM = YAHOO.util.Dom,YConnect=YAHOO.util.Connect,
+    var DOM = S.DOM, Event = S.Event, YDOM = YAHOO.util.Dom, YConnect=YAHOO.util.Connect,
         doc = document,
 
         DataGrid = S.DataGrid,
@@ -27,13 +27,13 @@ KISSY.add("datagrid-render", function(S) {
         //排序单元格class
         CLS_SORTABLE = CLS_PREFIX + 'cell-sortable', CLS_SORT_DESC = CLS_PREFIX + 'cell-desc', CLS_SORT_ASC = CLS_PREFIX + 'cell-asc',
         //特殊icon的class
-        CLS_ICON_EXPAND = CLS_PREFIX + 'icon-expand', CLS_ICON_CHECKBOX = CLS_PREFIX + 'icon-checkbox', CLS_ICON_RADIO = CLS_PREFIX + 'icon-radio',
+        CLS_ICON_EXPAND = CLS_PREFIX + 'icon-expand', CLS_ICON_CHECKBOX = CLS_PREFIX + 'icon-checkbox', CLS_ICON_RADIO = CLS_PREFIX + 'icon-radio',CLS_ICON_HOLDER= CLS_PREFIX + 'icon-holder',
 
         //行索引，可排序th的排序字段
         ATTR_ROW_IDX = 'data-list-idx',ATTR_SORT_FIELD = 'data-sort-field',
 
         //自定义事件
-        EVENT_RENDER_ROW = 'renderRow' , EVENT_RENDER_ROW_EXTRA = 'renderRowExtra', EVENT_GET_DATA = 'getData';
+        EVENT_RENDER_ROW = 'renderRow' , EVENT_RENDER_ROW_EXTRA = 'renderRowExtra', EVENT_GET_DATA = 'getData',EVENT_RENDER_THEAD='renderThead';
 
     S.augment(S.DataGrid, {
 
@@ -43,6 +43,7 @@ KISSY.add("datagrid-render", function(S) {
          */
         render:function(postData) {
             var self = this ;
+            self.datagridDef = S.merge(DataGrid.datagridDef, self.datagridDef || {});
             self.datasourceDef = S.merge(DataGrid.datasourceDef, self.datasourceDef || {});
             //激活翻页功能
             if (self.paginationDef) {
@@ -71,6 +72,8 @@ KISSY.add("datagrid-render", function(S) {
                 if (colExtraDef) self._activateRowExpand();
                 //选择行功能
                 if (colSelectDef) self._activateRowSelect();
+                //固定表头
+                if(self.datagridDef.fixThead) self._activateFixThead();                
             }
 
             if (postData == undefined) {
@@ -186,11 +189,14 @@ KISSY.add("datagrid-render", function(S) {
             var colDef = self._colDef;
             for (var i = 0 , len = colDef.length; i < len; i++) {
                 var col = create('<col />', colgroupEl);
-                if (colDef[i].width) col.width = colDef[i].width;
+                if (colDef[i].width){
+                    col.width = colDef[i].width;
+                    self._defColWidth = true;
+                }
             }
-            if (self._colgroupEl) self.tableEl.removeChild(self._colgroupEl);
+            if (self._colgroupEl) self._tableEl.removeChild(self._colgroupEl);
             self._colgroupEl = colgroupEl;
-            self.tableEl.appendChild(self._colgroupEl);
+            self._tableEl.appendChild(self._colgroupEl);
         },
 
         //渲染表头普通单元格
@@ -198,16 +204,7 @@ KISSY.add("datagrid-render", function(S) {
             var cell = create('<th></th>');
             //如果无子th
             if (cellDef[KS_CHILDREN_AMOUNT] == 0) {
-                //特殊列
-                if (cellDef.xType) {
-                    cell.className = CLS_CELL_EXTRA;
-                    //全选
-                    if (cellDef.xType == COL_CHECKBOX) {
-                        cell.innerHTML = '<i class="' + CLS_ICON_CHECKBOX + '"></i>';
-                    }
-
-                    //排序
-                } else if (cellDef.sortable) {
+                if (cellDef.sortable) {
                     cell.className = CLS_SORTABLE;
                     cell.setAttribute(ATTR_SORT_FIELD, cellDef.field);
                     cell.innerHTML = '<i class="'+CLS_PREFIX+'icon"></i>';
@@ -225,13 +222,17 @@ KISSY.add("datagrid-render", function(S) {
 
         //渲染表头扩展列单元格
         _renderTheadCellExpand:function() {
-            return create('<th class="'+CLS_CELL_EXTRA+'"></th>');
+            return create('<th class="'+CLS_CELL_EXTRA+'"><i class="'+CLS_ICON_HOLDER+'"></i></th>');
         },
 
         //渲染表格选择列单元格
-        _renderTheadCellSelect:function(selectType) {
+        _renderTheadCellSelect:function(selectDef) {
             var cell = create('<th class="'+CLS_CELL_EXTRA+'"></th>');
-            if (selectType == COL_CHECKBOX) this._selectAllTrigger = create('<i class="'+CLS_ICON_CHECKBOX+'"></i>', cell);
+            if (selectDef.xType == COL_CHECKBOX){
+                this._selectAllTrigger = create('<i class="'+CLS_ICON_CHECKBOX+'"></i>', cell);
+            }else{
+                create('<i class="'+CLS_ICON_HOLDER+'"></i>', cell);
+            }
             return cell;
         },
 
@@ -266,9 +267,10 @@ KISSY.add("datagrid-render", function(S) {
                 }
                 theadEl.appendChild(row);
             }
-            if (self._theadEl) self.tableEl.removeChild(self._theadEl);
+            if (self._theadEl) self._tableEl.removeChild(self._theadEl);
             self._theadEl = theadEl;
-            self.tableEl.appendChild(self._theadEl);
+            self._tableEl.appendChild(self._theadEl);
+            self.fire(EVENT_RENDER_THEAD);
         },
 
         //渲染单元格
@@ -289,10 +291,10 @@ KISSY.add("datagrid-render", function(S) {
         },
 
         //渲染选择单元格
-        _renderCellSelect:function(selectType) {
-            if (selectType == COL_CHECKBOX) {
+        _renderCellSelect:function(selectDef) {
+            if (selectDef.xType == COL_CHECKBOX) {
                 var inner = '<i class="' + CLS_ICON_CHECKBOX + '"></i>';
-            } else if (selectType == COL_RADIO) {
+            } else if (selectDef.xType == COL_RADIO) {
                 var inner = '<i class="' + CLS_ICON_RADIO + '"></i>';
             }
             return create('<td class="' + CLS_CELL_EXTRA + '">'+ inner +'</td>');
@@ -352,9 +354,9 @@ KISSY.add("datagrid-render", function(S) {
                     DOM.addClass(rowExtra, CLS_ROW_EXPANDED);
                 }
             }
-            if (self._tbodyEl) self.tableEl.removeChild(self._tbodyEl);
+            if (self._tbodyEl) self._tableEl.removeChild(self._tbodyEl);
             self._tbodyEl = tbodyEl;
-            self.tableEl.appendChild(self._tbodyEl);
+            self._tableEl.appendChild(self._tbodyEl);
         }
     });
 
@@ -386,12 +388,9 @@ KISSY.add("datagrid-render", function(S) {
                 //如果是扩展按钮列
                 if (columnDef[i].xType == COL_EXTRA) {
                     colExtraDef = columnDef[i];
-                    //如果是复选框列
-                } else if (columnDef[i].xType == COL_CHECKBOX) {
-                    colSelectDef = COL_CHECKBOX;
-                    //如果是单选框列
-                } else if (columnDef[i].xType == COL_RADIO) {
-                    colSelectDef = COL_RADIO;
+                //如果是选择列（包括单选跟多选）
+                } else if (columnDef[i].xType == COL_CHECKBOX || columnDef[i].xType == COL_RADIO) {
+                    colSelectDef = columnDef[i];
                 } else {
                     colDef.push(columnDef[i]);
                 }

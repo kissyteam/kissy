@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../cssmodules/pagination.css" />
     <link rel="stylesheet" href="../cssmodules/bar.css" />
     <style>
-        #page {margin:0 10px;}
+        #page {margin:0 10px 1000px 10px;}
         h1{margin-bottom:12px;padding:12px 0;font-size:24px;border-bottom:1px solid #ccc;}
         h2{margin-bottom:12px;padding:6px 0;font-size:14px;font-weight:bold;border-bottom:1px dashed #ccc;}
         strong.h{font-weight:bold;color:#f30;}
@@ -45,6 +45,11 @@
     KISSY.ready(function(S) {
 
         var datagrid = new S.DataGrid('#KS_DataGrid','http://192.168.207.119:8080/pamirsshine/data/tmashup_all_pages_SearchGrid.e');
+
+        datagrid.datagridDef={
+            fixThead:true    
+        };
+
         datagrid.datasourceDef = {
             success:'success',
             listData:'dataList',
@@ -55,23 +60,25 @@
             sortType:'sorttype',
             sortBy:'sortby'
         };
+
         datagrid.paginationDef = {
-            dataLimit:5,
+            dataLimit:40,
             pageNumLength:5,
             position:'bottom'
         };
+        
         datagrid.columnDef = [
             {xType:'COL_CHECKBOX'},
-            {label:'单一表头、复合字段',width:500,field:['developer','name'],parser:function(developer,name){return developer + '：' +name;}},
+            {label:'单一表头、复合字段',width:200,field:['developer','name'],parser:function(developer,name){return developer + '：' +name;}},
             {label:'复合表头',children:[
-                {label:'所属站点',width:200,sortable:true,field:'site',parser:function(site){if(site=='CTU'){return '<span style="color:#f60;font-weight:bold;">'+site+'</span>';}else{return site;}}},
+                {label:'所属站点',width:150,sortable:true,field:'site',parser:function(site){if(site=='1'){return '<span style="color:#f60;font-weight:bold;">'+site+'</span>';}else{return site;}}},
                 { label:'标识',children:[
-                    {label:'页面id（只有单字段才可排序）',width:400,field:'id',sortable:true},
-                    {label:'组件id',width:200,field:'componentId',sortable:true}
+                    {label:'页面id（只有单字段才可排序）',width:300,field:'id',sortable:true},
+                    {label:'组件id',width:100,field:'componentId',sortable:true}
                 ]}
             ]},
-            {label:'自定义列',width:400,parser:function(){return '<a href="#">点此查看</a>';}},
-            {xType:'COL_EXTRA',width:200,field:'id',parser:function(id){return '我是一个扩展列,页面id是：'+id;}}//,expand:true}
+            {label:'自定义列',width:200,parser:function(){return '<a href="#">点此查看</a>';}},
+            {xType:'COL_EXTRA',field:'id',parser:function(id){return '我是一个扩展列,页面id是：'+id;}}//,expand:true}
         ];
         /*datagrid.columnDef = [
             {xType:'COL_RADIO'},
@@ -80,6 +87,7 @@
             {label:'自定义列',parser:function(){return '<a href="#">点此查看</a>';}},
         ];*/
         datagrid.render('');
+
 
     });
     </script>
