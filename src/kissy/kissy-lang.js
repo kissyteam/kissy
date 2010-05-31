@@ -227,7 +227,13 @@ KISSY.add('kissy-lang', function(S, undefined) {
             for (; i < len; ++i) {
                 pair = pairs[i].split('=');
                 key = decode(pair[0]);
-                val = decode(pair[1] || '');
+
+                // pair[1]可能包含gbk编码的中文，而decode(decodeURIComponent)仅能处理utf-8编码的中文，否则报错
+                try {
+                    val = decode(pair[1] || '');
+                } catch (ex) {
+                    val = pair[1] || '';
+                }
 
                 if ((m = key.match(REG_ARR_KEY)) && m[1]) {
                     ret[m[1]] = ret[m[1]] || [];
