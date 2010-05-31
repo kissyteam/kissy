@@ -51,3 +51,4 @@ a { color: #1F75CC; }
 .notice { background: url(notice.png) no-repeat 0 2px; padding-left: 20px; }
 .tips { background: url(info.png) no-repeat 0 2px; padding-left: 20px; }
 
+li .submod-key { display: inline-block; width: 120px; }

@@ -1,9 +1,7 @@
 /**
  * @module  dom-class
  * @author  lifesinger@gmail.com
- * @depends kissy, dom-base
  */
-
 KISSY.add('dom-class', function(S, undefined) {
 
     var SPACE = ' ',
@@ -28,7 +26,7 @@ KISSY.add('dom-class', function(S, undefined) {
             if (!className || !el) return;
             if (hasClass(el, className)) return;
 
-            el.className += SPACE + className;
+            el.className = S.trim(el.className + SPACE + className);
         },
 
         /**
@@ -55,8 +53,8 @@ KISSY.add('dom-class', function(S, undefined) {
 
         /**
          * If the className exists on the node it is removed, if it doesn't exist it is added.
-         * @param {boolean} force addClass optional boolean to indicate whether class
-         * should be added or removed regardless of current state.
+         * @param force {Boolean} optional boolean to indicate whether class
+         *        should be added or removed regardless of current state.
          */
         toggleClass: function(el, className, force) {
             if(batch(el, DOM.toggleClass, DOM, className, force)) return;

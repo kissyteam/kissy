@@ -1,16 +1,17 @@
 /**
- * @module  dom-base
+ * @module  dom
  * @author  lifesinger@gmail.com
  */
-
-KISSY.add('dom-base', function(S, undefined) {
+KISSY.add('dom', function(S, undefined) {
 
     var doc = document,
         docElement = doc.documentElement,
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
-        ua = S.UA,
-        ie = ua.ie,
+        UA = S.UA,
+        ie = UA.ie,
         oldIE = ie && ie < 8,
+        defaultFrag = doc.createElement('DIV'),
+        SPACE = ' ',
         CUSTOM_ATTRS = {
             readonly: 'readOnly'
         },
@@ -18,7 +19,6 @@ KISSY.add('dom-base', function(S, undefined) {
         RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
         RE_RETURN = /\r/g,
         RE_RADIO_CHECK = /radio|checkbox/,
-        defaultFrag = doc.createElement('DIV'),
         RE_TAG = /^[a-z]+$/i;
 
     if(oldIE) {
@@ -28,7 +28,7 @@ KISSY.add('dom-base', function(S, undefined) {
         });
     }
 
-    S.DOM = {
+    var DOM = {
 
         /**
          * Returns a NodeList that matches the selector.
@@ -39,67 +39,6 @@ KISSY.add('dom-base', function(S, undefined) {
          * Returns the first element that matches the selector.
          */
         get: S.get,
-
-        /**
-         * Gets or sets the attribute of the HTMLElement.
-         */
-        attr: function(el, name, val) {
-            // don't set attributes on element nodes
-            if (!el || el.nodeType !== 1) {
-                return undefined;
-            }
-
-            var ret;
-            name = name.toLowerCase();
-            name = CUSTOM_ATTRS[name] || name;
-
-            // get attribute
-            if (val === undefined) {
-                // 优先用 el[name] 获取 mapping 属性值：
-                //  - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
-                //  - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
-                //  - href, src 直接获取的是 normalized 后的值，排除掉
-                if(!RE_SPECIAL_ATTRS.test(name)) {
-                    ret = el[name];
-                }
-                // get style
-                else if(name === 'style') {
-                    ret = el.style.cssText;
-                }
-                
-                // 用 getAttribute 获取非 mapping 属性和 href, src 的值：
-                if(ret === undefined) {
-                    ret = el.getAttribute(name);
-                }
-
-                // fix ie bugs:
-                if (oldIE && RE_NORMALIZED_ATTRS.test(name)) {
-                    // 不光是 href, src, 还有 rowspan 等非 mapping 属性，也需要用第 2 个参数来获取原始值
-                    ret = el.getAttribute(name, 2);
-                }
-
-                // 对于不存在的属性，统一返回 undefined
-                return ret === null ? undefined : ret;
-            }
-
-            // set attribute
-            if(name === 'style') {
-                el.style.cssText = val;
-            }
-            else {
-                // convert the value to a string (all browsers do this but IE)
-                el.setAttribute(name, '' + val);
-            }
-        },
-
-        /**
-         * Removes the attribute of the HTMLElement.
-         */
-        removeAttr: function(el, name) {
-            if(el && el.nodeType === 1) {
-                el.removeAttribute(name);
-            }
-        },
 
         /**
          * Get the current value of the HTMLElement.
@@ -142,7 +81,7 @@ KISSY.add('dom-base', function(S, undefined) {
                 }
 
                 // Handle the case where in Webkit "" is returned instead of "on" if a value isn't specified
-                if(ua.webkit && RE_RADIO_CHECK.test(el.type)) {
+                if(UA.webkit && RE_RADIO_CHECK.test(el.type)) {
                     return el.getAttribute('value') === null ? 'on' : el.value;
                 }
 
@@ -309,6 +248,31 @@ KISSY.add('dom-base', function(S, undefined) {
         }
     };
 
+    // 批量操作
+    function batch(methodName, targets, classNames, arg1, arg2) {
+
+        // parse css selector
+        if(S.isString(targets)) {
+            targets = S.query(targets);
+        }
+
+        // parse [targetA, targetB]
+        if (S.isArray(targets)) {
+            S.each(targets, function(target) {
+                DOM[methodName](target, arg1, arg2);
+            });
+            return true;
+        }
+
+        // parse 'classNameA classNameB'
+        if ((classNames = S.trim(classNames)) && classNames.indexOf(SPACE) > 0) {
+            S.each(classNames.split(SPACE), function(className) {
+                DOM[methodName](targets, className, arg1);
+            });
+            return true;
+        }
+    }
+
     // 判断 el 的 nodeName 是否指定值
     function nodeNameIs(val, el) {
         return el && el.nodeName.toUpperCase() === val.toUpperCase();
@@ -358,10 +322,12 @@ KISSY.add('dom-base', function(S, undefined) {
 
         return ret;
     }
+
+    S.DOM = DOM;
 });
 
 /**
- * Notes:
+ * NOTES:
  *
  * 2010.03
  *  ~ attr:

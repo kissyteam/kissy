@@ -5,7 +5,6 @@
 KISSY.add('selector', function(S, undefined) {
 
     var doc = document,
-        STRING = 'string',
         SPACE = ' ',
         ANY = '*',
         REG_ID = /^#[\w-]+$/,
@@ -29,15 +28,15 @@ KISSY.add('selector', function(S, undefined) {
         // #id .cls
         // tag.cls
         // #id tag.cls
-        // 注 1：REG_QUERY 还会匹配 #id.cls 无效值
+        // 注 1：REG_QUERY 还会匹配 #id.cls
         // 注 2：tag 可以为 * 字符
         // 注 3：支持 , 号分组
         // 返回值为数组
-        // 选择器无效或参数异常时，返回空数组
+        // 选择器不支持时，抛出异常
 
         // selector 为字符串是最常见的情况，优先考虑
         // 注：空白字符串无需判断，运行下去自动能返回空数组
-        if (typeof selector === STRING) {
+        if (S.isString(selector)) {
             selector = S.trim(selector);
 
             // selector 为 #id 是最常见的情况，特殊优化处理
@@ -46,13 +45,13 @@ KISSY.add('selector', function(S, undefined) {
                 if (t) ret = [t]; // #id 无效时，返回空数组
             }
             // selector 为支持列表中的其它 6 种
-            else if (match = REG_QUERY.exec(selector)) { // NOTICE: assignment
+            else if ((match = REG_QUERY.exec(selector))) {
                 // 获取匹配出的信息
                 id = match[1];
                 tag = match[2];
                 cls = match[3];
 
-                if (context = id ? getElementById(id) : tuneContext(context)) { // NOTICE: assignment
+                if ((context = id ? getElementById(id) : tuneContext(context))) {
 
                     // #id .cls | #id tag.cls | .cls | tag.cls
                     if (cls) {
@@ -98,8 +97,8 @@ KISSY.add('selector', function(S, undefined) {
         else if (selector && selector.nodeType) {
             ret = [selector];
         }
-        // 传入的 selector 是 NodeList
-        else if (selector && selector.item) {
+        // 传入的 selector 是 NodeList 或已是 Array
+        else if (selector && (selector.item || S.isArray(selector))) {
             ret = selector;
         }
         // 传入的 selector 是其它值时，返回空数组
@@ -119,7 +118,7 @@ KISSY.add('selector', function(S, undefined) {
             context = doc;
         }
         // 2). context 的第二使用场景是传入 #id
-        else if (typeof context === STRING && REG_ID.test(context)) {
+        else if (S.isString(context) && REG_ID.test(context)) {
             context = getElementById(context.slice(1));
             // 注：#id 可能无效，这时获取的 context 为 null
         }
@@ -155,7 +154,7 @@ KISSY.add('selector', function(S, undefined) {
 
                 if (tag === ANY) {
                     var t = [], i = 0, j = 0, node;
-                    while (node = ret[i++]) { // NOTICE: assignment
+                    while ((node = ret[i++])) {
                         // Filter out possible comments
                         if (node.nodeType === 1) {
                             t[j++] = node;

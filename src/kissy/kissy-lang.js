@@ -228,7 +228,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 pair = pairs[i].split('=');
                 key = decode(pair[0]);
 
-                // pair[1]可能包含gbk编码的中文，而decode(decodeURIComponent)仅能处理utf-8编码的中文，否则报错
+                // pair[1] 可能包含 gbk 编码的中文，而 decodeURIComponent 仅能处理 utf-8 编码的中文，否则报错
                 try {
                     val = decode(pair[1] || '');
                 } catch (ex) {
