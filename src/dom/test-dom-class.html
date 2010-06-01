@@ -80,6 +80,11 @@
     function test_hasClass(test) {
         if (DOM.hasClass(a, 'link') !== true) test.fail();
         if (DOM.hasClass(a, 'link2') !== false) test.fail();
+
+        // special
+        DOM.hasClass();
+        DOM.hasClass(a, '');
+        DOM.hasClass('div', 'some-cls');
     }
 
     function test_addClass(test) {
@@ -88,6 +93,10 @@
 
         // clean up
         DOM.removeClass(a, 'link-added');
+
+        // special
+        DOM.addClass(a);
+        DOM.addClass(a, 'cls-a cls-b');
     }
 
     function test_removeClass(test) {

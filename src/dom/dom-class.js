@@ -5,87 +5,130 @@
 KISSY.add('dom-class', function(S, undefined) {
 
     var SPACE = ' ',
-        DOM = S.DOM;
+        DOM = S.DOM,
+        REG_SPACE = /\s+/,
+        REG_CLASS = /[\n\t]/g;
 
     S.mix(DOM, {
 
         /**
-         * Determines whether a HTMLElement has the given className.
+         * Determine whether any of the matched elements are assigned the given class.
          */
-        hasClass: function(el, className) {
-            if (!className || !el || !el.className) return false;
+        hasClass: function(selector, className) {
+            var elems = S.query(selector), i = 0, len = elems.length, cls;
+            if (!className || !len) return false;
+            className = SPACE + className + SPACE;
 
-            return (SPACE + el.className + SPACE).indexOf(SPACE + className + SPACE) > -1;
+            for (; i < len; i++) {
+                cls = elems[i].className;
+                if (cls && (SPACE + cls + SPACE).indexOf(className) > -1) {
+                    return true;
+                }
+            }
+            return false;
         },
 
         /**
-         * Adds a given className to a HTMLElement.
+         * Adds the specified class(es) to each of the set of matched elements.
          */
-        addClass: function(el, className) {
-            if(batch(el, addClass, DOM, className)) return;
-            if (!className || !el) return;
-            if (hasClass(el, className)) return;
+        addClass: function(selector, value) {
+            if(!S.isString(value)) return;
 
-            el.className = S.trim(el.className + SPACE + className);
-        },
+            var elems = S.query(selector),
+                i = 0, len = elems.length,
+                classNames = value.split(REG_SPACE),
+                cl = classNames.length,
+                elem, oldClass;
 
-        /**
-         * Removes a given className from a HTMLElement.
-         */
-        removeClass: function(el, className) {
-            if(batch(el, removeClass, DOM, className)) return;
-            if (!hasClass(el, className)) return;
-
-            el.className = (SPACE + el.className + SPACE).replace(SPACE + className + SPACE, SPACE);
-            if (hasClass(el, className)) {
-                removeClass(el, className);
+            for (; i < len; i++) {
+                elem = elems[i];
+                if (elem.nodeType === 1) {
+                    oldClass = elem.className;
+                    if (!oldClass) {
+                        elem.className = value;
+                    }
+                    else {
+                        var className = SPACE + oldClass + SPACE, setClass = oldClass, j = 0;
+                        for (; j < cl; j++) {
+                            // 下面这个判断可以用 hasClass. 但为了性能，牺牲少量空间换时间是值得的。
+                            if (className.indexOf(SPACE + classNames[j] + SPACE) < 0) {
+                                setClass += SPACE + classNames[j];
+                            }
+                        }
+                        elem.className = S.trim(setClass);
+                    }
+                }
             }
         },
 
         /**
-         * Replace a class with another class for a given element.
+         * Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
+         */
+        removeClass: function(selector, value) {
+            if (!(S.isString(value) || value === undefined)) return;
+
+            var elems = S.query(selector),
+                i = 0, len = elems.length,
+                classNames = value.split(REG_SPACE),
+                cl = classNames.length,
+                elem, oldClass;
+
+            for (; i < len; i++) {
+                elem = elems[i];
+                oldClass = elem.className;
+
+                if (elem.nodeType === 1 && oldClass) {
+                    if(value === undefined) {
+                        elem.className = '';
+                    }
+                    else {
+                        var className = (SPACE + oldClass + SPACE).replace(REG_CLASS, SPACE), j;
+                        for (; j < cl; j++) {
+                            className = className.replace(SPACE + classNames[j] + SPACE, SPACE);
+                        }
+                        elem.className = S.trim(className);
+                    }
+                }
+            }
+        },
+
+        /**
+         * Replace a class with another class for matched elements.
          * If no oldClassName is present, the newClassName is simply added.
          */
-        replaceClass: function(el, oldC, newC) {
-            removeClass(el, oldC);
-            addClass(el, newC);
+        replaceClass: function(selector, oldClassName, newClassName) {
+            DOM.removeClass(selector, oldClassName);
+            DOM.addClass(selector, newClassName);
         },
 
         /**
-         * If the className exists on the node it is removed, if it doesn't exist it is added.
-         * @param force {Boolean} optional boolean to indicate whether class
+         * Add or remove one or more classes from each element in the set of
+         * matched elements, depending on either the class's presence or the
+         * value of the switch argument.
+         * @param state {Boolean} optional boolean to indicate whether class
          *        should be added or removed regardless of current state.
          */
-        toggleClass: function(el, className, force) {
-            if(batch(el, DOM.toggleClass, DOM, className, force)) return;
+        toggleClass: function(selector, value, state) {
+            if(!S.isString(value)) return;
+            var isBool = S.isBoolean(state), bool;
 
-            var add = (force !== undefined) ? force :
-                      !(hasClass(el, className));
+            S.each(S.query(selector), function(elem) {
+                // toggle individual class names
+                var classNames = value.split(REG_SPACE),
+                    className, i = 0;
 
-            if (add) {
-                addClass(el, className);
-            } else {
-                removeClass(el, className);
-            }
+                while ((className = classNames[i++])) {
+                    // check each className given, space seperated list
+                    bool = isBool ? state : !DOM.hasClass(elem, className);
+                    DOM[bool ? 'addClass' : 'removeClass'](elem, className);
+                }
+            });
         }
     });
-
-    function batch(arr, method, context) {
-        if (S.isArray(arr)) {
-            S.each(arr, function(item) {
-                method.apply(context, Array.prototype.slice.call(arguments, 3));
-            });
-            return true;
-        }
-    }
-
-    // for quick access
-    var hasClass = DOM.hasClass,
-        addClass = DOM.addClass,
-        removeClass = DOM.removeClass;
 });
 
 /**
- * TODO:
- *   - hasClass needs batch?
+ * NOTES:
+ *   - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
+ *   - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
  */
