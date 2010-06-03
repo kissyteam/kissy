@@ -431,9 +431,9 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * NOTICE: DOM methods and functions like alert aren't supported. They return false on IE.
          */
         isFunction: function(o) {
-            return typeof o === 'function';
-            // 对于 function 来说，直接用 typeof 的效果和 toString 一致
-            //return toString.call(o) === '[object Function]';
+            //return typeof o === 'function';
+            // Safari 下，typeof NodeList 也返回 function
+            return toString.call(o) === '[object Function]';
         },
 
         /**
@@ -597,7 +597,13 @@ KISSY.add('kissy-lang', function(S, undefined) {
             for (; i < len; ++i) {
                 pair = pairs[i].split('=');
                 key = decode(pair[0]);
-                val = decode(pair[1] || '');
+
+                // pair[1] 可能包含 gbk 编码的中文，而 decodeURIComponent 仅能处理 utf-8 编码的中文，否则报错
+                try {
+                    val = decode(pair[1] || '');
+                } catch (ex) {
+                    val = pair[1] || '';
+                }
 
                 if ((m = key.match(REG_ARR_KEY)) && m[1]) {
                     ret[m[1]] = ret[m[1]] || [];
