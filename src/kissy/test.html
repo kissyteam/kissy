@@ -285,6 +285,8 @@
         if(S.isFunction(function(){}) !== true) test.fail();
         if(S.UA.ie && S.isFunction(window.alert) !== false) test.fail();
         if(S.isFunction(parseFloat) !== true) test.fail();
+        
+        if(S.isFunction(document.getElementsByTagName('div')) === true) test.fail();
     }
 
     function test_isArray(test) {
