@@ -7,6 +7,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
     var win = window, doc = document, loc = location,
         AP = Array.prototype,
         indexOf = AP.indexOf, filter = AP.filter,
+        trim = String.prototype.trim,
         toString = Object.prototype.toString,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
@@ -76,12 +77,12 @@ KISSY.add('kissy-lang', function(S, undefined) {
         /**
          * Removes the whitespace from the beginning and end of a string.
          */
-        trim: String.prototype.trim ?
+        trim: trim ?
               function(str) {
-                  return (str || '').trim();
+                  return (str == undefined) ? '' : trim.call(str);
               } :
               function(str) {
-                  return (str || '').replace(REG_TRIM, '');
+                  return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
               },
 
         /**

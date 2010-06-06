@@ -313,6 +313,16 @@
     function test_trim(test) {
         var str = '    lots of spaces before and after    ';
         if(S.trim(str) !== 'lots of spaces before and after') test.fail();
+
+        // special
+        if(S.trim(false) !== 'false') test.fail();
+        if(S.trim(0) !== '0') test.fail();
+        if(S.trim('') !== '') test.fail();
+        if(S.trim(NaN) !== 'NaN') test.fail();
+        if(S.trim(null) !== '') test.fail();
+        if(S.trim() !== '') test.fail();
+        
+        if(S.trim({}) !== {}.toString()) test.fail();
     }
 
     function test_indexOf(test) {

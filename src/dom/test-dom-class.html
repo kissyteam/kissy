@@ -78,59 +78,57 @@
         area = S.get('#foo textarea');
 
     function test_hasClass(test) {
-        if (DOM.hasClass(a, 'link') !== true) test.fail();
-        if (DOM.hasClass(a, 'link2') !== false) test.fail();
+        a.className = 'link link2 link3';
 
-        // special
-        DOM.hasClass();
-        DOM.hasClass(a, '');
-        DOM.hasClass('div', 'some-cls');
+        if (DOM.hasClass(a, 'link') !== true) test.fail();
+        if (DOM.hasClass(a, 'link4') !== false) test.fail();
+
+        //alert($(a).hasClass('link link3'));
+        if (DOM.hasClass(a, 'link link3') !== true) test.fail();
+        if (DOM.hasClass(a, 'link link4') !== false) test.fail();
     }
 
     function test_addClass(test) {
         DOM.addClass(a, 'link-added');
         if (DOM.hasClass(a, 'link-added') !== true) test.fail();
 
-        // clean up
-        DOM.removeClass(a, 'link-added');
-
-        // special
-        DOM.addClass(a);
         DOM.addClass(a, 'cls-a cls-b');
+        if (DOM.hasClass(a, 'cls-a') !== true) test.fail();
+        if (DOM.hasClass(a, 'cls-b') !== true) test.fail();
     }
 
     function test_removeClass(test) {
+        a.className = 'link link2 link3 link4 link5';
+
         DOM.removeClass(a, 'link');
         if (DOM.hasClass(a, 'link') !== false) test.fail();
 
-        a.className = 'link link2 link link linkrr';
-        DOM.removeClass(a, 'link');
-        DOM.removeClass(a, 'linkrr');
-        if (S.trim(a.className) !== 'link2') test.fail();
-
-        // restore
-        a.className = 'link';
+        DOM.removeClass(a, 'link2 link4');
+        DOM.removeClass(a, 'link3');
+        if (a.className !== 'link5') test.fail();
     }
 
     function test_replaceClass(test) {
+        a.className = 'link link3';
+
         // oldCls 有的话替换
         DOM.replaceClass(a, 'link', 'link2');
-        if (S.trim(a.className) !== 'link2') test.fail();
+        if (DOM.hasClass(a, 'link')) test.fail();
+        if (!DOM.hasClass(a, 'link2')) test.fail();
 
         // oldCls 没有的话，仅添加
-        DOM.replaceClass(a, 'link3', 'link');
-        if (S.trim(a.className) !== 'link2 link') test.fail();
-
-        // restore
-        a.className = 'link';
+        DOM.replaceClass(a, 'link4', 'link');
+        if (!DOM.hasClass(a, 'link')) test.fail();
     }
 
     function test_toggleClass(test) {
-        DOM.toggleClass(a, 'link2');
-        if (DOM.hasClass(a, 'link2') !== true) test.fail();
+        a.className = 'link link2';
 
         DOM.toggleClass(a, 'link2');
-        if (DOM.hasClass(a, 'link2') !== false) test.fail();
+        if (DOM.hasClass(a, 'link2')) test.fail();
+
+        DOM.toggleClass(a, 'link2');
+        if (!DOM.hasClass(a, 'link2')) test.fail();
     }
 </script>
 

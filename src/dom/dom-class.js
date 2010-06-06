@@ -14,82 +14,62 @@ KISSY.add('dom-class', function(S, undefined) {
         /**
          * Determine whether any of the matched elements are assigned the given class.
          */
-        hasClass: function(selector, className) {
-            var elems = S.query(selector), i = 0, len = elems.length, cls;
-            if (!className || !len) return false;
-            className = SPACE + className + SPACE;
-
-            for (; i < len; i++) {
-                cls = elems[i].className;
-                if (cls && (SPACE + cls + SPACE).indexOf(className) > -1) {
-                    return true;
+        hasClass: function(selector, value) {
+            return batch(selector, value, function(elem, classNames, cl) {
+                var elemClass = elem.className;
+                if (elemClass) {
+                    var className = SPACE + elemClass + SPACE, j = 0, ret = true;
+                    for (; j < cl; j++) {
+                        if (className.indexOf(SPACE + classNames[j] + SPACE) < 0) {
+                            ret = false;
+                            break;
+                        }
+                    }
+                    if (ret) return true;
                 }
-            }
-            return false;
+            }, true);
         },
 
         /**
          * Adds the specified class(es) to each of the set of matched elements.
          */
         addClass: function(selector, value) {
-            if(!S.isString(value)) return;
-
-            var elems = S.query(selector),
-                i = 0, len = elems.length,
-                classNames = value.split(REG_SPACE),
-                cl = classNames.length,
-                elem, oldClass;
-
-            for (; i < len; i++) {
-                elem = elems[i];
-                if (elem.nodeType === 1) {
-                    oldClass = elem.className;
-                    if (!oldClass) {
-                        elem.className = value;
-                    }
-                    else {
-                        var className = SPACE + oldClass + SPACE, setClass = oldClass, j = 0;
-                        for (; j < cl; j++) {
-                            // 下面这个判断可以用 hasClass. 但为了性能，牺牲少量空间换时间是值得的。
-                            if (className.indexOf(SPACE + classNames[j] + SPACE) < 0) {
-                                setClass += SPACE + classNames[j];
-                            }
-                        }
-                        elem.className = S.trim(setClass);
-                    }
+            batch(selector, value, function(elem, classNames, cl) {
+                var elemClass = elem.className;
+                if (!elemClass) {
+                    elem.className = value;
                 }
-            }
+                else {
+                    var className = SPACE + elemClass + SPACE, setClass = elemClass, j = 0;
+                    for (; j < cl; j++) {
+                        if (className.indexOf(SPACE + classNames[j] + SPACE) < 0) {
+                            setClass += SPACE + classNames[j];
+                        }
+                    }
+                    elem.className = S.trim(setClass);
+                }
+            });
         },
 
         /**
          * Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
          */
         removeClass: function(selector, value) {
-            if (!(S.isString(value) || value === undefined)) return;
-
-            var elems = S.query(selector),
-                i = 0, len = elems.length,
-                classNames = value.split(REG_SPACE),
-                cl = classNames.length,
-                elem, oldClass;
-
-            for (; i < len; i++) {
-                elem = elems[i];
-                oldClass = elem.className;
-
-                if (elem.nodeType === 1 && oldClass) {
-                    if(value === undefined) {
+            batch(selector, value, function(elem, classNames, cl) {
+                var elemClass = elem.className;
+                if (elemClass) {
+                    if (!cl) {
                         elem.className = '';
                     }
                     else {
-                        var className = (SPACE + oldClass + SPACE).replace(REG_CLASS, SPACE), j;
+                        var className = (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE), j = 0;
                         for (; j < cl; j++) {
                             className = className.replace(SPACE + classNames[j] + SPACE, SPACE);
                         }
                         elem.className = S.trim(className);
                     }
                 }
-            }
+            });
         },
 
         /**
@@ -109,22 +89,36 @@ KISSY.add('dom-class', function(S, undefined) {
          *        should be added or removed regardless of current state.
          */
         toggleClass: function(selector, value, state) {
-            if(!S.isString(value)) return;
-            var isBool = S.isBoolean(state), bool;
+            var isBool = S.isBoolean(state), has;
 
-            S.each(S.query(selector), function(elem) {
-                // toggle individual class names
-                var classNames = value.split(REG_SPACE),
-                    className, i = 0;
-
+            batch(selector, value, function(elem, classNames) {
+                var i = 0, className;
                 while ((className = classNames[i++])) {
-                    // check each className given, space seperated list
-                    bool = isBool ? state : !DOM.hasClass(elem, className);
-                    DOM[bool ? 'addClass' : 'removeClass'](elem, className);
+                    has = isBool ? !state : DOM.hasClass(elem, className);
+                    DOM[has ? 'removeClass' : 'addClass'](elem, className);
                 }
             });
         }
     });
+
+    function batch(selector, value, fn, resultIsBool) {
+        if (!(value = S.trim(value))) return resultIsBool ? false : undefined;
+
+        var elems = S.query(selector),
+            i = 0, len = elems.length,
+            classNames = value.split(REG_SPACE),
+            elem, ret;
+
+        for (; i < len; i++) {
+            elem = elems[i];
+            if (elem.nodeType === 1) {
+                ret = fn(elem, classNames, classNames.length);
+                if (ret !== undefined) return ret;
+            }
+        }
+
+        if (resultIsBool) return false;
+    }
 });
 
 /**
