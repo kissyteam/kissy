@@ -5,30 +5,10 @@
 KISSY.add('dom', function(S, undefined) {
 
     var doc = document,
-        docElement = doc.documentElement,
-        TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
-        UA = S.UA,
-        ie = UA.ie,
-        oldIE = ie && ie < 8,
         defaultFrag = doc.createElement('DIV'),
-        SPACE = ' ',
-        CUSTOM_ATTRS = {
-            readonly: 'readOnly'
-        },
-        RE_SPECIAL_ATTRS = /href|src|style/,
-        RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
-        RE_RETURN = /\r/g,
-        RE_RADIO_CHECK = /radio|checkbox/,
         RE_TAG = /^[a-z]+$/i;
 
-    if(oldIE) {
-        S.mix(CUSTOM_ATTRS, {
-            'for': 'htmlFor',
-            'class': 'className'
-        });
-    }
-
-    var DOM = {
+    S.DOM = {
 
         /**
          * Returns a NodeList that matches the selector.
@@ -41,75 +21,7 @@ KISSY.add('dom', function(S, undefined) {
         get: S.get,
 
         /**
-         * Get the current value of the HTMLElement.
-         */
-        val: function(el, value) {
-            if(!el || el.nodeType !== 1) {
-                return undefined;
-            }
-
-            // get value
-            if(value === undefined) {
-
-                // 当没有设定 value 时，标准浏览器 option.value == option.text
-                // ie7- 下 optinos.value == '', 需要用 el.attributes.value 来判断是否有设定 value
-                if(nodeNameIs('option', el)) {
-                    return (el.attributes.value || {}).specified ? el.value : el.text;
-                }
-
-                // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
-                if(nodeNameIs('select', el)) {
-                    var index = el.selectedIndex,
-                        options = el.options;
-
-                    if (index < 0) {
-                        return null;
-                    }
-                    else if(el.type === 'select-one') {
-                        return S.DOM.val(options[index]);
-                    }
-
-                    // Loop through all the selected options
-                    var ret = [], i = 0, len = options.length;
-                    for (; i < len; ++i) {
-                        if (options[i].selected) {
-                            ret.push(S.DOM.val(options[i]));
-                        }
-                    }
-                    // Multi-Selects return an array
-                    return ret;
-                }
-
-                // Handle the case where in Webkit "" is returned instead of "on" if a value isn't specified
-                if(UA.webkit && RE_RADIO_CHECK.test(el.type)) {
-                    return el.getAttribute('value') === null ? 'on' : el.value;
-                }
-
-                // 普通元素的 value, 归一化掉 \r
-                return (el.value || '').replace(RE_RETURN, '');
-            }
-
-            // set value
-            if (nodeNameIs('select', el)) {
-                var vals = S.makeArray(value),
-                    opts = el.options, opt;
-
-                for (i = 0,len = opts.length; i < len; ++i) {
-                    opt = opts[i];
-                    opt.selected = S.inArray(S.DOM.val(opt), vals);
-                }
-
-                if (!vals.length) {
-                    el.selectedIndex = -1;
-                }
-            }
-            else {
-                el.value = value;
-            }
-        },
-
-        /**
-         * Gets or sets styles on the HTMLElement.
+         * Gets or sets styles on the matches elements.
          */
         css: function(el, prop, val) {
             // get style
@@ -128,21 +40,6 @@ KISSY.add('dom', function(S, undefined) {
         },
 
         /**
-         * Gets or sets the the text content of the HTMLElement.
-         */
-        text: function(el, val) {
-            // getText
-            if (val === undefined) {
-                return (el || {})[TEXT] || '';
-            }
-
-            // setText
-            if (el) {
-                el[TEXT] = val;
-            }
-        },
-
-        /**
          * Gets the HTML contents of the HTMLElement.
          */
         html: function(el, htmlString) {
@@ -156,45 +53,6 @@ KISSY.add('dom', function(S, undefined) {
 
             // TODO:
             //  - 考虑各种兼容和异常，添加疯狂测试
-        },
-
-        /**
-         * Gets the children of the HTMLElement.
-         */
-        children: function(el) {
-            if(el.children) { // 只有 firefox 的低版本不支持
-                return S.makeArray(el.children);
-            }
-            return getSiblings(el.firstChild);
-        },
-
-        /**
-         * Gets the siblings of the HTMLElment.
-         */
-        siblings: function(el) {
-            return getSiblings(el.parentNode.firstChild, el);
-        },
-
-        /**
-         * Gets the immediately following sibling of the element.
-         */
-        next: function(el) {
-            return nth(el, 1, 'nextSibling');
-        },
-
-        /**
-         * Gets the immediately preceding sibling of the element.
-         */
-        prev: function(el) {
-            return nth(el, 1, 'previousSibling');
-        },
-
-        /**
-         * Gets the parentNode of the elment.
-         */
-        parent: function(el) {
-            var parent = el.parentNode;
-            return parent && parent.nodeType !== 11 ? parent : null;
         },
 
         /**
@@ -248,57 +106,6 @@ KISSY.add('dom', function(S, undefined) {
         }
     };
 
-    // 批量操作
-    function batch(methodName, targets, classNames, arg1, arg2) {
-
-        // parse css selector
-        if(S.isString(targets)) {
-            targets = S.query(targets);
-        }
-
-        // parse [targetA, targetB]
-        if (S.isArray(targets)) {
-            S.each(targets, function(target) {
-                DOM[methodName](target, arg1, arg2);
-            });
-            return true;
-        }
-
-        // parse 'classNameA classNameB'
-        if ((classNames = S.trim(classNames)) && classNames.indexOf(SPACE) > 0) {
-            S.each(classNames.split(SPACE), function(className) {
-                DOM[methodName](targets, className, arg1);
-            });
-            return true;
-        }
-    }
-
-    // 判断 el 的 nodeName 是否指定值
-    function nodeNameIs(val, el) {
-        return el && el.nodeName.toUpperCase() === val.toUpperCase();
-    }
-
-    // 获取元素 el 的所有 siblings
-    function getSiblings(n/* first */, el) {
-        for (var r = [], j = 0; n; n = n.nextSibling) {
-            if (n.nodeType === 1 && n !== el) {
-                r[j++] = n;
-            }
-        }
-        return r;
-    }
-
-    // 获取元素 el 在 dir(ection) 上的第 n 个元素
-    function nth(el, n, dir) {
-        n = n || 0;
-        for (var i = 0; el; el = el[dir]) {
-            if (el.nodeType === 1 && i++ === n) {
-                break;
-            }
-        }
-        return el;
-    }
-
     // 将 nodeList 转换为 fragment
     function nl2frag(nodes, ownerDoc) {
         var ret = null, i, len;
@@ -322,24 +129,9 @@ KISSY.add('dom', function(S, undefined) {
 
         return ret;
     }
-
-    S.DOM = DOM;
 });
 
 /**
- * NOTES:
- *
- * 2010.03
- *  ~ attr:
- *    - 在 jquery/support.js 中，special attrs 里还有 maxlength, cellspacing,
- *      rowspan, colspan, useap, frameboder, 但测试发现，在 Grade-A 级浏览器中
- *      并无兼容性问题。
- *    - 当 colspan/rowspan 属性值设置有误时，ie7- 会自动纠正，和 href 一样，需要传递
- *      第 2 个参数来解决。jQuery 未考虑，存在兼容性 bug.
- *    - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
- *    - jquery/attributes.js: Safari mis-reports the default selected
- *      property of an option 在 Safari 4 中已修复
- *
  * TODO:
  *  - create 的进一步完善，比如 cache, 对 table, form 元素的支持等等
  */

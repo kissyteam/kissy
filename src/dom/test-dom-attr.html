@@ -168,6 +168,45 @@
         if (DOM.attr(a, 'style')) test.fail();
     }
 
+    function test_val(test) {
+        // normal
+        if (DOM.val(input) !== 'hello') test.fail();
+
+        // area
+        if (DOM.val(area).length !== 25) test.fail();
+
+        // option
+        if(DOM.val(opt) != 1) test.fail();
+        if(DOM.val(opt2) != 2) test.fail();
+
+        // select
+        if(DOM.val(select) != 1) test.fail();
+        if(DOM.val(select2) != 2) test.fail();
+        if(DOM.val(select3).toString() != '1,2') test.fail();
+
+        // radio
+        if(DOM.val(radio) != 'on') test.fail();
+        if(DOM.val(radio2) != 'on') test.fail();
+
+        // set value
+        DOM.val(a, 'test');
+        if(DOM.val(a) !== 'test') test.fail();
+        DOM.removeAttr(a, 'value');
+
+        // select set value
+        DOM.val(select, '3');
+        if(DOM.val(select) != 3) test.fail();
+        DOM.val(select, 0); // restore
+
+        DOM.val(select3, ['2','3']);
+        if(DOM.val(select3).length != 2) test.fail();
+    }
+
+    function test_text(test) {
+        DOM.text(div, 'hello, are you ok?');
+        if(DOM.text(div) !== 'hello, are you ok?') test.fail();
+    }
+    
 </script>
 
 </body>

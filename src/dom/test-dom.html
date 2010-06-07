@@ -45,45 +45,6 @@
         area = S.get('#foo textarea');
     });
 
-    function test_val(test) {
-        // normal
-        if (D.val(input) !== 'hello') test.fail();
-
-        // area
-        if (D.val(area).length !== 25) test.fail();
-
-        // option
-        if(D.val(opt) != 1) test.fail();
-        if(D.val(opt2) != 2) test.fail();
-
-        // select
-        if(D.val(select) != 1) test.fail();
-        if(D.val(select2) != 2) test.fail();
-        if(D.val(select3).toString() != '1,2') test.fail();
-
-        // radio
-        if(D.val(radio) != 'on') test.fail();
-        if(D.val(radio2) != 'on') test.fail();
-
-        // set value
-        D.val(a, 'test');
-        if(D.val(a) !== 'test') test.fail();
-        D.removeAttr(a, 'value');
-
-        // select set value
-        D.val(select, '3');
-        if(D.val(select) != 3) test.fail();
-        D.val(select, 0); // restore
-
-        D.val(select3, ['2','3']);
-        if(D.val(select3).length != 2) test.fail();
-    }
-
-    function test_text(test) {
-        D.text(div, 'hello, are you ok?');
-        if(D.text(div) !== 'hello, are you ok?') test.fail();
-    }
-
     function test_html(test) {
         D.html(div, '<p>hello, are you ok?</p>');
         if(D.html(div).toLowerCase() !== '<p>hello, are you ok?</p>') test.fail();

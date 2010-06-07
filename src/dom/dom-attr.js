@@ -8,8 +8,14 @@ KISSY.add('dom-attr', function(S, undefined) {
         ie = UA.ie,
         oldIE = ie && ie < 8,
 
+        doc = document,
+        docElement = doc.documentElement,
+        TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
+
         RE_SPECIAL_ATTRS = /href|src|style/,
         RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
+        RE_RETURN = /\r/g,
+        RE_RADIO_CHECK = /radio|checkbox/,
 
         CUSTOM_ATTRS = {
             readonly: 'readOnly'
@@ -25,21 +31,22 @@ KISSY.add('dom-attr', function(S, undefined) {
     S.mix(S.DOM, {
 
         /**
-         * Gets or sets the attribute of the HTMLElement.
+         * Gets the value of an attribute for the first element in the set of matched elements or
+         * Sets an attribute for the set of matched elements.
          */
-        attr: function(el, name, val) {
+        attr: function(selector, name, val) {
             if(!(name = S.trim(name))) return;
 
             name = name.toLowerCase();
             name = CUSTOM_ATTRS[name] || name;
 
-            // get attribute
+            // getter
             if (val === undefined) {
                 // supports css selector/Node/NodeList
-                el = S.get(el);
+                var el = S.get(selector);
 
                 // only get attributes on element nodes
-                if (!el || el.nodeType !== 1) {
+                if (!isElementNode(el)) {
                     return undefined;
                 }
 
@@ -76,34 +83,143 @@ KISSY.add('dom-attr', function(S, undefined) {
                 return ret === null ? undefined : ret;
             }
 
-            // set attribute
-            S.each(S.query(el), function(elem) {
+            // setter
+            S.each(S.query(selector), function(el) {
                 // only set attributes on element nodes
-                if (!elem || elem.nodeType !== 1) {
+                if (!isElementNode(el)) {
                     return;
                 }
 
                 if (oldIE && name === 'style') {
-                    elem.style.cssText = val;
+                    el.style.cssText = val;
                 }
                 else {
                     // convert the value to a string (all browsers do this but IE)
-                    elem.setAttribute(name, '' + val);
+                    el.setAttribute(name, '' + val);
                 }
             });
         },
 
         /**
-         * Removes the attribute of the HTMLElement.
+         * Removes the attribute of the matched elements.
          */
-        removeAttr: function(el, name) {
-            S.each(S.query(el), function(elem) {
-                if (elem && elem.nodeType === 1) {
-                    elem.removeAttribute(name);
+        removeAttr: function(selector, name) {
+            S.each(S.query(selector), function(el) {
+                if (isElementNode(el)) {
+                    el.removeAttribute(name);
                 }
             });
+        },
+
+        /**
+         * Gets the current value of the first element in the set of matched or
+         * Sets the value of each element in the set of matched elements.
+         */
+        val: function(selector, value) {
+            // getter
+            if(value === undefined) {
+                // supports css selector/Node/NodeList
+                var el = S.get(selector);
+
+                // only gets value on element nodes
+                if (!isElementNode(el)) {
+                    return undefined;
+                }
+
+                // 当没有设定 value 时，标准浏览器 option.value === option.text
+                // ie7- 下，没有设定 value 时，option.value === '', 需要用 el.attributes.value 来判断是否有设定 value
+                if(nodeNameIs('option', el)) {
+                    return (el.attributes.value || {}).specified ? el.value : el.text;
+                }
+
+                // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
+                if(nodeNameIs('select', el)) {
+                    var index = el.selectedIndex,
+                        options = el.options;
+
+                    if (index < 0) {
+                        return null;
+                    }
+                    else if(el.type === 'select-one') {
+                        return S.DOM.val(options[index]);
+                    }
+
+                    // Loop through all the selected options
+                    var ret = [], i = 0, len = options.length;
+                    for (; i < len; ++i) {
+                        if (options[i].selected) {
+                            ret.push(S.DOM.val(options[i]));
+                        }
+                    }
+                    // Multi-Selects return an array
+                    return ret;
+                }
+
+                // Handle the case where in Webkit "" is returned instead of "on" if a value isn't specified
+                if(UA.webkit && RE_RADIO_CHECK.test(el.type)) {
+                    return el.getAttribute('value') === null ? 'on' : el.value;
+                }
+
+                // 普通元素的 value, 归一化掉 \r
+                return (el.value || '').replace(RE_RETURN, '');
+            }
+
+            // setter
+            S.each(S.query(selector), function(el) {
+                if (nodeNameIs('select', el)) {
+                    var vals = S.makeArray(value),
+                        opts = el.options, opt;
+
+                    for (i = 0, len = opts.length; i < len; ++i) {
+                        opt = opts[i];
+                        opt.selected = S.inArray(S.DOM.val(opt), vals);
+                    }
+
+                    if (!vals.length) {
+                        el.selectedIndex = -1;
+                    }
+                }
+                else if(isElementNode(el)) {
+                    el.value = value;
+                }
+            });
+        },
+
+        /**
+         * Gets the text context of the first element in the set of matched elements or
+         * Sets the text content of the matched elements.
+         */
+        text: function(selector, val) {
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = S.get(selector);
+
+                // only gets value on element nodes
+                if (isElementNode(el)) {
+                    return el[TEXT] || '';
+                }
+            }
+            // setter
+            else {
+                S.each(S.query(selector), function(el) {
+                   if(isElementNode(el)) {
+                       el[TEXT] = val;
+                   }
+                });
+            }
         }
     });
+
+    // 判断 el 的 nodeName 是否指定值
+    function nodeNameIs(val, el) {
+        return el && el.nodeName.toUpperCase() === val.toUpperCase();
+    }
+
+    // 是不是 element node
+    function isElementNode(el) {
+        return el && el.nodeType === 1;
+    }
 });
 
 /**
