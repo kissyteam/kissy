@@ -576,7 +576,7 @@ S.mix(Calendar.prototype, {
 			});
 			//确定的动作
 			that.button.on('click',function(e){
-				var d = that.fathor.date;
+				var d = that.fathor.dt_date;
 				d.setHours(that.get('h'));
 				d.setMinutes(that.get('m'));
 				d.setSeconds(that.get('s'));
@@ -784,7 +784,7 @@ S.mix(Calendar.prototype, {
 				d.setYear(cc.year);
 				*/
 				var d = new Date(cc.year+'/'+(cc.month+1)+'/'+selectedd);
-				cc.fathor.date = d;
+				cc.fathor.dt_date = d;
 				cc.fathor.EventCenter['select'].fire(d);
 				if(cc.fathor.popup && cc.fathor.closeable){
 					cc.fathor.hide();
