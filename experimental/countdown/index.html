@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="gbk" />
+        <title>Popup Test</title>
+        <link rel="stylesheet" href="../../build/cssreset/reset.css" />
+
+        <style type="text/css">
+            .test {
+                margin: 20px auto;
+                width: 500px;
+            }
+
+            .ks-countdown span span {
+                float:left;
+                overflow:hidden;
+                width:19px;
+                height:35px;
+                text-indent:-10000px;	
+                margin-right:1px;
+                background:url(countdown.png) no-repeat;
+            }
+            .ks-countdown span .c0{ background-position:0 0; }
+            .ks-countdown span .c1{ background-position:0 -40px; }
+            .ks-countdown span .c2{ background-position:0 -80px; }
+            .ks-countdown span .c3{ background-position:0 -120px; }
+            .ks-countdown span .c4{ background-position:0 -160px; }
+            .ks-countdown span .c5{ background-position:0 -200px; }
+            .ks-countdown span .c6{ background-position:0 -240px; }
+            .ks-countdown span .c7{ background-position:0 -280px; }
+            .ks-countdown span .c8{ background-position:0 -320px; }
+            .ks-countdown span .c9{ background-position:0 -360px; }
+            .ks-countdown span .separator{ width:10px; background-position:2px -395px;}
+        </style>
+    </head>
+    <body>
+        <div class="ks-countdown test">
+             <span id="J_countdown" ks-finish="123456">
+                <span class="c0">0</span>
+                <span class="c0">0</span>
+                <span class="separator">:</span>
+                <span class="c0">0</span>
+                <span class="c0">0</span>
+                <span class="separator">:</span>
+                <span class="c0">0</span>
+                <span class="c0">0</span>
+                <span class="separator">:</span>
+                <span class="c0">0</span>
+                <span class="c0">0</span>
+            </span>
+        </div>
+
+        <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+        <script src="../../build/packages/ks-core.js"></script>
+        <script src="countdown.js"></script>
+        <script>
+            ~function() {
+                var Util = YAHOO.util, Dom = Util.Dom , 
+                    Event = Util.Event, Lang = YAHOO.lang;
+
+                var items = Dom.get("J_countdown").getElementsByTagName('span');
+                handle = new KISSY.Countdown(items, {
+                    autoStart: true, // 自动开始
+                    interval:  1000, // 定制器间隔
+                    separatorCls: 'separator', // 间隔的样式名称
+                    timeLeft: 5 // 剩余时间，单位为秒
+                });           
+
+                handle.on('finished', function() {
+                    alert('I\'m finished!!');
+                });
+            }();
+        </script>
+    </body>
+</html>
