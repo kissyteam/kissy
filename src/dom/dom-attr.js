@@ -12,6 +12,9 @@ KISSY.add('dom-attr', function(S, undefined) {
         docElement = doc.documentElement,
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
 
+        DOM = S.DOM,
+        isElementNode = DOM._isElementNode,
+
         RE_SPECIAL_ATTRS = /href|src|style/,
         RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
         RE_RETURN = /\r/g,
@@ -28,7 +31,7 @@ KISSY.add('dom-attr', function(S, undefined) {
         });
     }
 
-    S.mix(S.DOM, {
+    S.mix(DOM, {
 
         /**
          * Gets the value of an attribute for the first element in the set of matched elements or
@@ -141,14 +144,14 @@ KISSY.add('dom-attr', function(S, undefined) {
                         return null;
                     }
                     else if(el.type === 'select-one') {
-                        return S.DOM.val(options[index]);
+                        return DOM.val(options[index]);
                     }
 
                     // Loop through all the selected options
                     var ret = [], i = 0, len = options.length;
                     for (; i < len; ++i) {
                         if (options[i].selected) {
-                            ret.push(S.DOM.val(options[i]));
+                            ret.push(DOM.val(options[i]));
                         }
                     }
                     // Multi-Selects return an array
@@ -172,7 +175,7 @@ KISSY.add('dom-attr', function(S, undefined) {
 
                     for (i = 0, len = opts.length; i < len; ++i) {
                         opt = opts[i];
-                        opt.selected = S.inArray(S.DOM.val(opt), vals);
+                        opt.selected = S.inArray(DOM.val(opt), vals);
                     }
 
                     if (!vals.length) {
@@ -214,11 +217,6 @@ KISSY.add('dom-attr', function(S, undefined) {
     // 判断 el 的 nodeName 是否指定值
     function nodeNameIs(val, el) {
         return el && el.nodeName.toUpperCase() === val.toUpperCase();
-    }
-
-    // 是不是 element node
-    function isElementNode(el) {
-        return el && el.nodeType === 1;
     }
 });
 

@@ -301,7 +301,7 @@ KISSY.add('switchable', function(S, undefined) {
 
             // switch active panels
             if (direction === undefined) {
-                direction = index > activeIndex ? FORWARD : FORWARD;
+                direction = index > activeIndex ? FORWARD : BACKWARD;
             }
 
             self._switchView(

@@ -21,6 +21,13 @@ KISSY.add('dom', function(S, undefined) {
         get: S.get,
 
         /**
+         * ÊÇ²»ÊÇ element node
+         */
+        _isElementNode: function(elem) {
+            return elem && elem.nodeType === 1;
+        },
+
+        /**
          * Gets or sets styles on the matches elements.
          */
         css: function(el, prop, val) {
