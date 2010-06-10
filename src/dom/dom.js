@@ -10,15 +10,7 @@ KISSY.add('dom', function(S, undefined) {
 
     S.DOM = {
 
-        /**
-         * Returns a NodeList that matches the selector.
-         */
-        query: S.query,
-
-        /**
-         * Returns the first element that matches the selector.
-         */
-        get: S.get,
+        
 
         /**
          * ÊÇ²»ÊÇ element node

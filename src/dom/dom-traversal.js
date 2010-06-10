@@ -10,6 +10,31 @@ KISSY.add('dom-traversal', function(S, undefined) {
     S.mix(DOM, {
 
         /**
+         * Returns a NodeList that matches the selector.
+         */
+        query: S.query,
+
+        /**
+         * Returns the first element that matches the selector.
+         */
+        get: S.get,
+
+        /**
+         * Finds the ancestor of the first matched element.
+         */
+        ancestor: function(elem, fn) {
+
+        },
+
+        /**
+         * Gets the parentNode of the element.
+         */
+        parent: function(elem, n) {
+            var parent = elem.parentNode;
+            return parent && parent.nodeType !== 11 ? parent : null;
+        },
+
+        /**
          * Gets the children of the first matched element.
          */
         children: function(elem) {
@@ -48,14 +73,6 @@ KISSY.add('dom-traversal', function(S, undefined) {
          */
         prev: function(elem, n) {
             return this.next(elem, n === undefined ? -1 : -n);
-        },
-
-        /**
-         * Gets the parentNode of the elment.
-         */
-        parent: function(elem, n) {
-            var parent = elem.parentNode;
-            return parent && parent.nodeType !== 11 ? parent : null;
         }
     });
 
