@@ -175,15 +175,18 @@ KISSY.add("datagrid-operate", function(S) {
              * 全选/取消全选
              * 由于滚动时如果固定页头，则thead会暂时从table中取出来，故需要直接将事件注册在全选触点上
              */
-            Event.on(self._selectAllTrigger,'click',function(){
-                if(!self._tbodyEl) return;
-                var theadRow = self._theadEl.getElementsByTagName('tr')[0];
-                if(DOM.hasClass(theadRow,CLS_ROW_SELECTED)){
-                    self.deselectAll();
-                }else{
-                    self.selectAll();
-                }
-            });
+            if(self._selectAllTrigger){
+                Event.on(self._selectAllTrigger,'click',function(){
+                    if(!self._tbodyEl) return;
+                    var theadRow = self._theadEl.getElementsByTagName('tr')[0];
+                    if(DOM.hasClass(theadRow,CLS_ROW_SELECTED)){
+                        self.deselectAll();
+                    }else{
+                        self.selectAll();
+                    }
+                });
+            }
+
         },
 
         //激活扩展列功能
