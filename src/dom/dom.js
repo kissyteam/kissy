@@ -10,8 +10,6 @@ KISSY.add('dom', function(S, undefined) {
 
     S.DOM = {
 
-        
-
         /**
          * ÊÇ²»ÊÇ element node
          */
