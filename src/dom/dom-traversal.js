@@ -10,40 +10,23 @@ KISSY.add('dom-traversal', function(S, undefined) {
     S.mix(DOM, {
 
         /**
-         * Returns a NodeList that matches the selector.
-         */
-        query: S.query,
-
-        /**
-         * Returns the first element that matches the selector.
-         */
-        get: S.get,
-
-        /**
-         * Finds the ancestor of the first matched element.
-         */
-        ancestor: function(elem, fn) {
-
-        },
-
-        /**
-         * Gets the parentNode of the element.
-         */
-        parent: function(elem, n) {
-            var parent = elem.parentNode;
-            return parent && parent.nodeType !== 11 ? parent : null;
-        },
-
-        /**
          * Gets the children of the first matched element.
          */
-        children: function(elem) {
+        children: function(elem, filter) {
             var ret = [];
             if ((elem = S.get(elem))) {
                 // 只有 firefox 的低版本不支持 children
                 ret = elem.children ? S.makeArray(elem.children) : getSiblings(elem.firstChild);
             }
             return ret;
+        },
+
+        /**
+         * Gets the parent node of the first matched element.
+         */
+        parent: function(elem, n) {
+            var parent = elem.parentNode;
+            return parent && parent.nodeType !== 11 ? parent : null;
         },
 
         /**

@@ -1062,8 +1062,10 @@ var posProcess = function(selector, context){
 };
 
 // EXPOSE
-
-//window.Sizzle = Sizzle;
-KISSY.externalSelector = Sizzle;
+KISSY.ExternalSelector = Sizzle;
+KISSY.ExternalSelector._filter = function(selector, filter) {
+    //Sizzle.matches( String selector, Array<DOMElement> set )
+    return Sizzle.matches(filter, KISSY.query(selector));
+};
 
 })();

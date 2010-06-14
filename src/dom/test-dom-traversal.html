@@ -21,6 +21,7 @@
 <script src="dom-traversal.js"></script>
 
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
+<script src="../../third-party/ext-core/ext-core.js"></script>
 
 <div id="test-data">
     <p id="foo">
@@ -55,6 +56,7 @@
         <option selected>2</option>
         <option>3</option>
     </select>
+    <div class="test-parent"><p><a id="test-parent">test parent</a></p></div>
 </div>
 
 <!-- Test Cases -->
@@ -66,8 +68,8 @@
     }
 
     // temp code
-    //alert(S.get('#test-select3').nextSibling.nextSibling);
-    
+    //alert(Ext.get('test-parent').parent('div', true).className);
+
 </script>
 
 </body>

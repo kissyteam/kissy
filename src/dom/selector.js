@@ -5,6 +5,7 @@
 KISSY.add('selector', function(S, undefined) {
 
     var doc = document,
+        DOM = S.DOM,
         SPACE = ' ',
         ANY = '*',
         REG_ID = /^#[\w-]+$/,
@@ -61,7 +62,7 @@ KISSY.add('selector', function(S, undefined) {
                         // 处理 #id.cls
                         else {
                             t = getElementById(id);
-                            if(t && S.DOM.hasClass(t, cls)) {
+                            if(t && DOM.hasClass(t, cls)) {
                                 ret = [t];
                             }
                         }
@@ -85,12 +86,12 @@ KISSY.add('selector', function(S, undefined) {
                 }
             }
             // 采用外部选择器
-            else if(S.externalSelector) {
-                return S.externalSelector(selector, context);
+            else if(S.ExternalSelector) {
+                return S.ExternalSelector(selector, context);
             }
             // 依旧不支持，抛异常
             else {
-                S.error('Unsupported selector: ' + selector);
+                error(selector);
             }
         }
         // 传入的 selector 是 Node
@@ -237,11 +238,62 @@ KISSY.add('selector', function(S, undefined) {
         return results;
     }
 
+    // throw exception
+    function error(msg) {
+        S.error('Unsupported selector: ' + msg);
+    }
+
     // public api
     S.query = query;
     S.get = function(selector, context) {
         return query(selector, context)[0] || null;
-    }
+    };
+
+    S.mix(DOM, {
+
+        query: query,
+
+        get: S.get,
+
+        /**
+         * Filters an array of elements to only include matches of a filter.
+         * @param filter selector or fn
+         */
+        filter: function(selector, filter) {
+            var elems = query(selector), match, tag, cls, ret = [];
+
+            // 默认仅支持最简单的 tag.cls 形式
+            if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
+                tag = match[2];
+                cls = match[3];
+                filter = function(elem) {
+                    return !((tag && elem.tagName !== tag.toUpperCase()) || (cls && !DOM.hasClass(elem, cls)));
+                }
+            }
+
+            if (S.isFunction(filter)) {
+                ret = S.filter(elems, filter);
+            }
+            // 其它复杂 filter, 采用外部选择器
+            else if (S.ExternalSelector) {
+                ret = S.ExternalSelector._filter(selector, filter);
+            }
+            else {
+                error(filter);
+            }
+
+            return ret;
+        },
+
+        /**
+         * Returns true if the passed element(s) match the passed filter
+         */
+        test: function(selector, filter) {
+            var elems = query(selector);
+            return DOM.filter(elems, filter).length === elems.length;
+        }
+
+    });
 });
 
 /**
@@ -274,6 +326,9 @@ KISSY.add('selector', function(S, undefined) {
  * 2010.05
  *  - 去掉给 S.query 返回值默认添加的 each 方法，保持纯净。
  *  - 对于不支持的 selector, 采用外部耦合进来的 Selector.
+ *
+ * 2010.06
+ *  - 增加 filter 和 test 方法
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。

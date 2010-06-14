@@ -15,8 +15,8 @@
 <script src="../kissy/kissy.js"></script>
 <script src="../kissy/kissy-lang.js"></script>
 <script src="../kissy/kissy-ua.js"></script>
-<script src="selector.js"></script>
 <script src="dom.js"></script>
+<script src="selector.js"></script>
 <script src="dom-class.js"></script>
 <script src="../sizzle/sizzle.js"></script>
 
@@ -340,7 +340,7 @@
 
 <!-- Test Cases -->
 <script>
-var S = KISSY, doc = document;
+var S = KISSY, DOM = S.DOM, doc = document;
 
 // #id:
 function test_query_id_pd(test) {
@@ -597,21 +597,21 @@ function test_query_group_sep(test) {
 
 // unsupported selector:
 function test_query_unsupported_ks(test) {
-    var s = '#w3c_main .line .unit:first', ret = [];
+    var s = '#w3c_main .line .unit', ret = [];
     test.name = s;
     test.extraMsg = '\t{kissy}';
 
     ret = S.query(s);
-    if (ret.length !== 1) test.fail(ret.length);
+    if (ret.length !== 4) test.fail(ret.length);
 }
 
 function test_query_unsupported_jq(test) {
-    var s = '#w3c_main .line .unit:first', ret = [];
+    var s = '#w3c_main .line .unit', ret = [];
     test.name = s;
     test.extraMsg = '\t{jquery}';
 
     ret = jQuery(s);
-    if (ret.length !== 1) test.fail(ret.length);
+    if (ret.length !== 4) test.fail(ret.length);
 }
 
 function test_query_unsupported_sep(test) {
@@ -655,6 +655,29 @@ function test_query_exceptions(test) {
     if (S.query('#test-data *').length !== 333) test.fail();
     if (S.query('*.date').length !== 15) test.fail();
 }
+
+function test_dom_filter(test) {
+    if(DOM.filter('div', '.category').length !== S.query('div.filter').length) test.fail();
+
+    var len = DOM.filter('span', 'h3.category .ribbon').length,
+        len2 = S.query('h3.category span.ribbon').length;
+    if(len !== len2) test.fail(len  + ' !== ' + len2);
+
+    var len3 = S.query('h3.category span.ribbon').length,
+        len4 = DOM.filter('span', function(elem) {
+           return DOM.hasClass(elem, 'ribbon');
+        }).length;
+    if(len3 !== len4) test.fail(len3  + ' !== ' + len4);
+}
+
+function test_dom_test(test) {
+    if(!DOM.test('.ribbon', 'span')) test.fail();
+
+    if(!DOM.test('.cateory', function(elem) {
+        return elem.tagName === 'H3';
+    })) test.fail();
+}
+
 </script>
 </body>
 </html>
