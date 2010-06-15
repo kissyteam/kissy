@@ -10,91 +10,92 @@ KISSY.add('dom-traversal', function(S, undefined) {
     S.mix(DOM, {
 
         /**
-         * Gets the children of the first matched element.
+         * Gets the parent node of the first matched element.
          */
-        children: function(elem, filter) {
-            var ret = [];
-            if ((elem = S.get(elem))) {
-                // 只有 firefox 的低版本不支持 children
-                ret = elem.children ? S.makeArray(elem.children) : getSiblings(elem.firstChild);
-            }
-            return ret;
+        parent: function(selector, filter) {
+            return nth(selector, filter, 'parentNode', function(elem) {
+                return elem.nodeType != 11;
+            });
         },
 
         /**
-         * Gets the parent node of the first matched element.
+         * Gets the following sibling of the first matched element.
          */
-        parent: function(elem, n) {
-            var parent = elem.parentNode;
-            return parent && parent.nodeType !== 11 ? parent : null;
+        next: function(selector, filter) {
+            return nth(selector, filter, 'nextSibling');
+        },
+
+        /**
+         * Gets the preceding sibling of the first matched element.
+         */
+        prev: function(selector, filter) {
+            return nth(selector, filter, 'previousSibling');
         },
 
         /**
          * Gets the siblings of the first matched element.
          */
-        siblings: function(elem) {
-            var ret = [];
-            if ((elem = S.get(elem)) && elem.parentNode) {
-                ret = getSiblings(elem.parentNode.firstChild, elem);
-            }
-            return ret;
+        siblings: function(selector,filter) {
+            return getSiblings(selector, filter, true);
         },
 
         /**
-         * Gets the immediately following sibling of the element.
+         * Gets the children of the first matched element.
          */
-        next: function(elem, n) {
-            var ret = null;
-            if ((elem = S.get(elem))) {
-                ret = nth(elem, n === undefined ? 1 : n);
-            }
-            return ret;
-        },
-
-        /**
-         * Gets the immediately preceding sibling of the element.
-         */
-        prev: function(elem, n) {
-            return this.next(elem, n === undefined ? -1 : -n);
+        children: function(selector, filter) {
+            return getSiblings(selector, filter);
         }
     });
 
-    // 获取元素 n 的所有 siblings, 不包括 elem
-    function getSiblings(n/* first */, elem) {
-        for (var r = [], j = 0; n; n = n.nextSibling) {
-            if (isElementNode(n) && n !== elem) {
-                r[j++] = n;
+    // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
+    // filter 可为 number, selector, fn
+    // direction 可为 parentNode, nextSibling, previousSibling
+    function nth(elem, filter, direction, extraFilter) {
+        if (!(elem = S.get(elem))) return null;
+        if(filter === undefined) filter = 1; // 默认取 1
+        var ret = null, fi, flen;
+
+        if(S.isNumber(filter) && filter >= 0) {
+            if(filter === 0) return elem;
+            fi = 0;
+            flen = filter;
+            filter = function() {
+                return ++fi === flen;
+            };
+        }
+
+        while((elem = elem[direction])) {
+            if (isElementNode(elem) && (!filter || DOM.test(elem, filter)) && (!extraFilter || extraFilter(elem))) {
+                ret = elem;
+                break;
             }
         }
-        return r;
+
+        return ret;
     }
 
-    // 获取元素 elem 在 d(irection) 上的第 n 个元素
-    function nth(elem, n, d) {
-        var ret = null;
+    // 获取元素 elem 的 siblings, 不包括自身
+    function getSiblings(selector, filter, parent) {
+        var ret = [], elem = S.get(selector), j, parentNode = elem, next;
+        if (elem && parent) parentNode = elem.parentNode;
 
-        if ((elem = S.get(elem))) {
-            n = n || 0;
-            if(n === 0) return elem;
-
-            if (d === undefined) d = n > 0 ? 'nextSibling' : 'previousSibling';
-            if (n < 0) n = -n;
-
-            for (var i = 0; n && (ret = elem[d]); ) {
-                if (isElementNode(ret) && i++ === n) {
-                    break;
+        if (parentNode) {
+            for (j = 0, next = parentNode.firstChild; next; next = next.nextSibling) {
+                if (isElementNode(next) && next !== elem && (!filter || DOM.test(next, filter))) {
+                    ret[j++] = next;
                 }
             }
         }
 
         return ret;
     }
+
 });
 
 /**
  * NOTES:
  *
- *  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是从用户
- *    的期望出发，在不看文档、不做深思的情况下，用户光看方法名，期望方法具有怎样的功能。
+ *  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
+ *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
  *
  */
