@@ -18,6 +18,13 @@ KISSY.add('kissy-lang', function(S, undefined) {
     S.mix(S, {
 
         /**
+         * Determines whether or not the provided object is undefined.
+         */
+        isUndefined: function(o) {
+            return o === undefined;
+        },
+
+        /**
          * Determines whether or not the provided object is a boolean.
          */
         isBoolean: function(o) {

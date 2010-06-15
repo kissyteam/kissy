@@ -86,13 +86,15 @@
         //alert($(a).hasClass('link link3'));
         if (DOM.hasClass(a, 'link link3') !== true) test.fail();
         if (DOM.hasClass(a, 'link link4') !== false) test.fail();
+
+        if (DOM.hasClass(a, '.link .link4') !== false) test.fail();
     }
 
     function test_addClass(test) {
         DOM.addClass(a, 'link-added');
         if (DOM.hasClass(a, 'link-added') !== true) test.fail();
 
-        DOM.addClass(a, 'cls-a cls-b');
+        DOM.addClass(a, '.cls-a cls-b');
         if (DOM.hasClass(a, 'cls-a') !== true) test.fail();
         if (DOM.hasClass(a, 'cls-b') !== true) test.fail();
     }
@@ -104,7 +106,7 @@
         if (DOM.hasClass(a, 'link') !== false) test.fail();
 
         DOM.removeClass(a, 'link2 link4');
-        DOM.removeClass(a, 'link3');
+        DOM.removeClass(a, '.link3');
         if (a.className !== 'link5') test.fail();
     }
 
@@ -112,7 +114,7 @@
         a.className = 'link link3';
 
         // oldCls ÓÐµÄ»°Ìæ»»
-        DOM.replaceClass(a, 'link', 'link2');
+        DOM.replaceClass(a, '.link', 'link2');
         if (DOM.hasClass(a, 'link')) test.fail();
         if (!DOM.hasClass(a, 'link2')) test.fail();
 
@@ -127,9 +129,12 @@
         DOM.toggleClass(a, 'link2');
         if (DOM.hasClass(a, 'link2')) test.fail();
 
-        DOM.toggleClass(a, 'link2');
+        DOM.toggleClass(a, '.link2');
         if (!DOM.hasClass(a, 'link2')) test.fail();
     }
+
+    // temp code
+    //alert(' .class1 .class2'.split(/[\.\s]\s*\.?/).length);
 </script>
 
 </body>

@@ -6,7 +6,7 @@ KISSY.add('dom-class', function(S, undefined) {
 
     var SPACE = ' ',
         DOM = S.DOM,
-        REG_SPACE = /\s+/,
+        REG_SPLIT = /[\.\s]\s*\.?/,
         REG_CLASS = /[\n\t]/g;
 
     S.mix(DOM, {
@@ -91,9 +91,10 @@ KISSY.add('dom-class', function(S, undefined) {
         toggleClass: function(selector, value, state) {
             var isBool = S.isBoolean(state), has;
 
-            batch(selector, value, function(elem, classNames) {
-                var i = 0, className;
-                while ((className = classNames[i++])) {
+            batch(selector, value, function(elem, classNames, cl) {
+                var j = 0, className;
+                for (; j < cl; j++) {
+                    className = classNames[j];
                     has = isBool ? !state : DOM.hasClass(elem, className);
                     DOM[has ? 'removeClass' : 'addClass'](elem, className);
                 }
@@ -106,7 +107,7 @@ KISSY.add('dom-class', function(S, undefined) {
 
         var elems = S.query(selector),
             i = 0, len = elems.length,
-            classNames = value.split(REG_SPACE),
+            classNames = value.split(REG_SPLIT),
             elem, ret;
 
         for (; i < len; i++) {
