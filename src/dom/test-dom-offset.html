@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="gbk"/>
-<title>dom-insertion Test</title>
+<title>dom-offset Test</title>
 </head>
 <body>
 <script src="../test/test.js"></script>
@@ -21,10 +21,8 @@
 <script src="dom-class.js"></script>
 <script src="dom-attr.js"></script>
 <script src="dom-traversal.js"></script>
-<script src="dom-create.js"></script>
-<script src="dom-insertion.js"></script>
+<script src="dom-offset.js"></script>
 
-<script src="../sizzle/sizzle.js"></script>
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
 <script src="../../third-party/ext-core/ext-core.js"></script>
 
@@ -73,19 +71,14 @@
 <script>
     var S = KISSY, DOM = S.DOM;
 
-    function test_insertBefore(test) {
-        var t = DOM.insertBefore('<p>inserted node</p>', '#test-next');
-        if(DOM.children('#test-insert').length !== 5) test.fail();
-        S.get('#test-insert').removeChild(t);
-    }
+    function test_offset(test) {
+        // temp code
+        alert(window.pageYOffset);
+        alert(document.documentElement.scrollTop);
+        alert(document.body.scrollTop);
 
-    function test_insertAfter(test) {
-        var t = DOM.insertAfter('<p class="test-insert">inserted node2</p>', '#test-next');
-        if(DOM.children('#test-insert')[1].className !== 'test-insert') test.fail();
-        S.get('#test-insert').removeChild(t);
     }
-
-    // temp code
+    
 
 </script>
 

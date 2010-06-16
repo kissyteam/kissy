@@ -6,6 +6,7 @@ KISSY.add('dom-create', function(S) {
 
     var doc = document,
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
+        isElementNode = DOM._isElementNode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc.createElement(DIV),
@@ -18,6 +19,7 @@ KISSY.add('dom-create', function(S) {
          * Creates a new HTMLElement using the provided html string.
          */
         create: function(html, props, ownerDoc) {
+            if(isElementNode(html)) return html;
             if (!(html = S.trim(html))) return null;
 
             var ret = null, creators = DOM._creators,
@@ -59,7 +61,7 @@ KISSY.add('dom-create', function(S) {
 
     // 添加成员到元素中
     function attachProps(elem, props) {
-        if (DOM._isElementNode(elem) && props) {
+        if (isElementNode(elem) && props) {
             for (var p in props) {
                 DOM.attr(elem, p, props[p]);
             }
