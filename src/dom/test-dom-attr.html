@@ -36,6 +36,7 @@
         </textarea>
     </p>
     <div id="test-div"></div>
+    <img id="test-img" src="../../assets/kissy.png" alt="kissy" />
     <table id="test-table" cellspacing="10">
         <tbody>
         <tr>
@@ -63,6 +64,7 @@
     var S = KISSY, DOM = S.DOM, 
         foo = S.get('#foo'),
         a = S.get('#foo a'),
+        img = S.get('#test-img'),
         input = S.get('#foo input'),
         radio = S.get('#test-radio'),
         radio2 = S.get('#test-radio2'),
@@ -122,6 +124,7 @@
         //alert(a.href); // 在所有浏览器下，a.href 和 a['href'] 都返回绝对地址
         //alert(a.getAttribute('href')); // ie7- 下，会返回绝对地址
         if (DOM.attr(a, 'href') !== '../kissy/') test.fail();
+        if (DOM.attr(img, 'src') !== '../../assets/kissy.png') test.fail();
 
         // colspan / rowspan:
         if (DOM.attr(td, 'rowspan') != 2) test.fail();

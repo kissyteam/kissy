@@ -74,22 +74,48 @@
 <script>
     var S = KISSY, DOM = S.DOM;
 
-    
+    function test_dom_create(test) {
+        var div = DOM.create('<div>'), html = '', tag = '';
+
+        S.each(['option', 'optgroup', 'td', 'th', 'tr', 'tbody', 'thead', 'tfoot', 'caption', 'col', 'colgroup', 'legend'], function(tag) {
+            html = '<' + tag + '></' + tag + '>';
+
+            //div.innerHTML = html;
+            //div.appendChild(jQuery(html)[0]);
+            div.appendChild(DOM.create(html));
+            S.log(tag + ' - ' + div.innerHTML);
+
+            html = div.innerHTML.toLowerCase();
+            if (!(html.indexOf('<' + tag + '>') === 0 || html.indexOf('<' + tag + ' ') === 0)) test.fail(tag);
+            div.innerHTML = '';
+        });
+
+        // script
+        html = tag = 'script';
+        div.appendChild(DOM.create('<script><\/script>'));
+        S.log(tag + ' - ' + div.innerHTML);
+        html = S.trim(div.innerHTML.toLowerCase());
+        if (!(html.indexOf('<' + tag + '>') === 0 || html.indexOf('<' + tag + ' ') === 0)) test.fail(tag);
+        div.innerHTML = '';
+
+        // null
+        if(DOM.create() !== null) test.fail();
+
+        // textNode
+        if(DOM.create('text node').nodeType !== 3) test.fail();
+
+        // 稍微复杂点
+        if(DOM.attr(DOM.create('<img id="test-img" />'), 'id') !== 'test-img') test.fail();
+
+        // 多个元素
+        if(DOM.create('<p></p><div></div>').nodeType !== 11) test.fail();
+        if(DOM.create('<p></p><div></div>').childNodes[0].tagName !== 'P') test.fail();
+
+        // 属性支持
+        if(DOM.create('<p>', { rel: '-1', 'class': 'test-p', data: 'test'}).className !== 'test-p') test.fail();
+    }
 
     // temp code
-//    DOM.create('<DIV>');
-
-    var div = document.createElement('div');
-
-    //div.innerHTML = '<table></table>';
-    //div.innerHTML = '<table><tr></tr></table>';
-    //div.appendChild($('<table><tr></tr></table>')[0]);
-    YUI().use('dom', function(Y) {
-        div.appendChild(Y.DOM.create('<table></table>'));
-        alert(div.innerHTML);
-    });
-
-    //alert(div.innerHTML);
 
 </script>
 
