@@ -3,11 +3,16 @@
 <head>
 <meta charset="gbk"/>
 <title>dom-offset Test</title>
+<style>
+    html { margin: 3px; border: 4px solid #eee; padding: 5px; }
+    body { margin: 6px; border: 7px solid #ccc; padding: 8px; }
+</style>
 </head>
 <body>
 <script src="../test/test.js"></script>
 <script>
     KISSY.Test.Config.times = 1;
+    document.body.className = ''; // remove attached cls
 </script>
 
 <h2>Test Data</h2>
@@ -20,65 +25,46 @@
 <script src="selector.js"></script>
 <script src="dom-class.js"></script>
 <script src="dom-attr.js"></script>
-<script src="dom-traversal.js"></script>
 <script src="dom-offset.js"></script>
 
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
-<script src="../../third-party/ext-core/ext-core.js"></script>
 
 <div id="test-data">
-    <p id="foo">
-        <a href="../kissy/" style="color:red" class="link" title="test" data-test="test">test link</a>
-        <input type="text" id="test-input" readonly maxlength="20" value="hello"/>
-        <input type="radio" id="test-radio" />
-        <input type="radio" id="test-radio2" checked />
-        <label class="test" for="test-input">label</label>
-        <button type="button" tabindex="3">Submit</button>
-        <textarea rows="2" cols="2">
-            test
-        </textarea>
-    </p>
-    <div id="test-div"></div>
-    <table id="test-table" cellspacing="10">
-        <tbody>
-        <tr>
-            <td rowspan="2" colspan="3">td</td>
-        </tr>
-        </tbody>
-    </table>
-    <select id="test-select">
-        <option id="test-opt" value="1">0</option>
-        <option>2</option>
-        <option>3</option>
-    </select>
-    <select id="test-select2">
-        <option>2</option>
-    </select>
-    <select id="test-select3" multiple autocomplete="off">
-        <option selected>1</option>
-        <option selected>2</option>
-        <option>3</option>
-    </select>
-    <div id="test-insert" class="test-parent">
-        <p id="test-next"><a>1</a></p>
-        <p class="test-next-p"><a class="test-a">2</a></p>
-        <p class="test-next"><a id="test-parent3">3</a></p>
-        <p class="test-p" id="test-prev"><em class="test-em"><span><a id="test-parent4">4</a></span></em></p>
-    </div>
 </div>
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY, DOM = S.DOM;
+    var S = KISSY, DOM = S.DOM, UA = S.UA;
 
     function test_offset(test) {
-        // temp code
-        alert(window.pageYOffset);
-        alert(document.documentElement.scrollTop);
-        alert(document.body.scrollTop);
 
+//        test.echo('docElem.clientLeft = ' + document.documentElement.clientLeft);
+//        test.echo('docElem.offsetLeft = ' + document.documentElement.offsetLeft);
+//        test.echo('body.clientLeft = ' + document.body.clientLeft);
+//        test.echo('body.offsetLeft = ' + document.body.offsetLeft);
+//        test.echo('box.offsetLeft = ' + S.get('#konsole').offsetLeft);
+//        test.echo('scrollLeft = ' + DOM.scrollLeft());
+//        test.echo('box.left = ' + S.get('#konsole').getBoundingClientRect().left);
+//        test.echo('jQuery offset.left = ' + jQuery('#konsole').offset().left);
+//        test.echo('KISSY offset.left = ' + DOM.offset('#konsole').left);
+
+        var ret = 33;
+        if(UA.ie === 6) ret = 30; // ie6 会忽略 html 的 margin
+        if(DOM.offset('#konsole').left !== ret) test.fail();
     }
-    
+
+    function test_scrollLeft(test) {
+        if(DOM.scrollLeft() !== 0) test.fail();        
+    }
+
+    function test_scrollTop(test) {
+        if(DOM.scrollTop() !== 0) test.fail();
+    }
+
+    // temp code
+    //alert(document.documentElement.clientLeft);
+    //alert(document.documentElement.clientWidth);
+    //alert(document.compatMode);
 
 </script>
 

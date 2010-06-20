@@ -68,13 +68,16 @@
         <p class="test-next"><a id="test-parent3">3</a></p>
         <p class="test-p" id="test-prev"><em class="test-em"><span><a id="test-parent4">4</a></span></em></p>
     </div>
+    <div id="test-html">
+        <p class="test-p">test html</p>
+    </div>
 </div>
 
 <!-- Test Cases -->
 <script>
     var S = KISSY, DOM = S.DOM;
 
-    function test_dom_create(test) {
+    function test_create(test) {
         var div = DOM.create('<div>'), html = '', tag = '';
 
         S.each(['option', 'optgroup', 'td', 'th', 'tr', 'tbody', 'thead', 'tfoot', 'caption', 'col', 'colgroup', 'legend'], function(tag) {
@@ -113,6 +116,18 @@
 
         //  Ù–‘÷ß≥÷
         if(DOM.create('<p>', { rel: '-1', 'class': 'test-p', data: 'test'}).className !== 'test-p') test.fail();
+    }
+
+    function test_html(test) {
+        var t = S.get('#test-html');
+
+        DOM.html(t, '<div>');
+        if(t.firstChild.nodeName !== 'DIV') test.fail();
+
+        DOM.html(t, '<p class="test-html">test p</p>');
+        if(!DOM.hasClass(t.firstChild, 'test-html')) test.fail();
+        if(DOM.text(t) !== 'test p') test.fail();
+
     }
 
     // temp code

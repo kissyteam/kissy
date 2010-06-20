@@ -4,11 +4,10 @@
  */
 KISSY.add('dom-offset', function(S, undefined) {
 
-    var DOM = S.DOM, UA = S.UA,
+    var DOM = S.DOM,
         win = window,
         doc = document,
         docElem = doc.documentElement,
-        PARSEFLOAT = 'parseFloat',
         OWNER_DOCUMENT = 'ownerDocument',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
 
@@ -19,11 +18,11 @@ KISSY.add('dom-offset', function(S, undefined) {
 
             // getter
             if (val === undefined) {
-                return getXY(elem);
+                return getOffset(elem);
             }
 
             // setter
-            setXY(elem, val);
+            setOffset(elem, val);
         },
 
         /**
@@ -41,73 +40,32 @@ KISSY.add('dom-offset', function(S, undefined) {
         }
     });
 
-    function getXY(elem) {
-        var defaultView = doc.defaultView,
-            computedStyle,
-            borderTopWidth, borderLeftWidth,
-            box, x = 0, y = 0,
-            hasAbsolute = false,
-            root = (doc.body || docElem),
-            p, ret = [0, 0];
+    function getOffset(elem) {
+        var box, x = 0, y = 0;
 
-        if (elem === root) return ret;
-
-        if (elem[GET_BOUNDING_CLIENT_RECT]) {
+        // 1. 对于 body 和 docElem, 直接返回 0, 绝大部分情况下，这都不会有问题
+        // 2. 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
+        if (elem !== doc.body && elem !== docElem && elem[GET_BOUNDING_CLIENT_RECT]) {
             box = elem[GET_BOUNDING_CLIENT_RECT]();
-            ret = [box.left + DOM.scrollLeft(), box.top + DOM.scrollTop()];
-        }
-        else {
-            p = elem;
-            while (p) {
-                x += p.offsetLeft;
-                y += p.offsetTop;
 
-                if(p.style.position === 'absolute') hasAbsolute = true;
+            // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
+            // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
+            // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
 
-                if (UA.gecko) {
-                    computedStyle = defaultView ? defaultView.getComputedStyle(p, null) : elem.currentStyle;
-                    x += borderLeftWidth = PARSEFLOAT(computedStyle.borderLeftWidth) || 0;
-                    y += borderTopWidth  = PARSEFLOAT(computedStyle.borderTopWidth) || 0;
-
-                    if (p != elem && p.style.overflow !== 'visible') {
-                        x += borderLeftWidth;
-                        y += borderTopWidth;
-                    }
-                }
-                p = p.offsetParent;
-            }
-
-            if (UA.safari && hasAbsolute) {
-                x -= root.offsetLeft;
-                y -= root.offsetTop;
-            }
-
-            if (UA.gecko && !hasAbsolute) {
-                computedStyle = defaultView ? defaultView.getComputedStyle(root, null) : root.currentStyle;
-                x += PARSEFLOAT(computedStyle.borderLeftWidth) || 0;
-                y += PARSEFLOAT(computedStyle.borderTopWidth) || 0;
-            }
-
-            while ((p = elem.parentNode) && p != root) {
-                if (!UA.opera || (p.tagName != 'TR' && p.style.display !== 'inline')) {
-                    x -= p.scrollLeft;
-                    y -= p.scrollTop;
-                }
-            }
-
-            ret = [x, y];
+            x = box.left + DOM.scrollLeft();
+            y = box.top + DOM.scrollTop();
         }
 
-        return ret;
+        return { left: x, top: y };
     }
 
-    function setXY(elem, val) {
-
+    function setOffset(elem, val) {
+        
     }
 });
 
 /**
  * TODO:
- *  - 考虑是否实现 jQuery 的 postion, offsetParent 等功能
+ *  - 考虑是否实现 jQuery 的 position, offsetParent 等功能
  *
  */

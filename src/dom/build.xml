@@ -8,9 +8,16 @@
 
     <target name="concat">
         <concat destfile="dom-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="selector.js"/>
             <path path="dom.js"/>
+            <path path="selector.js"/>
             <path path="dom-class.js"/>
+            <path path="dom-attr.js"/>
+            <path path="dom-style.js"/>
+            <path path="dom-style-ie.js"/>
+            <path path="dom-offset.js"/>
+            <path path="dom-traversal.js"/>
+            <path path="dom-create.js"/>
+            <path path="dom-insertion.js"/>
         </concat>
     </target>
 

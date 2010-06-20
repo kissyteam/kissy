@@ -2,7 +2,7 @@
  * @module  dom-create
  * @author  lifesinger@gmail.com
  */
-KISSY.add('dom-create', function(S) {
+KISSY.add('dom-create', function(S, undefined) {
 
     var doc = document,
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
@@ -55,6 +55,31 @@ KISSY.add('dom-create', function(S) {
                 var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
                 frag.innerHTML = html;
                 return frag;
+            }
+        },
+
+        /**
+         * Gets/Sets the HTML contents of the HTMLElement.
+         */
+        html: function(selector, val) {
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = S.get(selector);
+
+                // only gets value on element nodes
+                if (isElementNode(el)) {
+                    return el.innerHTML;
+                }
+            }
+            // setter
+            else {
+                S.each(S.query(selector), function(el) {
+                   if(isElementNode(el)) {
+                       el.innerHTML = '';
+                       el.appendChild(DOM.create(val));
+                   }
+                });
             }
         }
     });
