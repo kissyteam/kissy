@@ -11,20 +11,21 @@
 </head>
 <body>
 <div id="page">
-    <div class="container">
+    <img id="smallimg" class="jqzoom" src="close1_small.jpg" />
+    <!-- <div class="container">
         <div class="magnifier">
             <img id="smallimg" class="jqzoom" src="close1_small.jpg" />
-            <!-- <div class="glass hidden"></div>
-            <div class="zoom-icon"></div> -->
-        </div>
-        <!-- <div class="viewer">
+            <div class="glass hidden"></div>
+            <div class="zoom-icon"></div>
+        </div> 
+        <div class="viewer">
             <img src="close1_big.jpg" />
-        </div> -->
-    </div>
+        </div>
+    </div> -->
 </div>
 <script>
 KISSY.ready(function(S) {
-    var zm = S.Zoomer("#smallimg", {bigImageSrc:"close1_big.jpg"});
+    var zm = S.ImageZoom("#smallimg", {bigImageSrc:"close1_big.jpg"});
 });
 
 </script>

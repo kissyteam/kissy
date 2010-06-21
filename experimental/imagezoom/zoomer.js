@@ -1,62 +1,73 @@
 /**
  * 放大镜效果
- * @module      zoomer
+ * @module      imagezoom
  * @creater     
  * @depender    kissy-core, yahoo-dom-event
  */
 
-KISSY.add("zoomer", function(S, undefined) {
+KISSY.add("imagezoom", function(S, undefined) {
     var DOM = S.DOM,
         EVENT = S.Event,
-        win = window, 
-        doc = document,
         YDOM = YAHOO.util.Dom,
-        
+        HIDDEN = 'hidden',
+        IMGZOOM_CONTAINER_CLS = 'ks-imagezoom-container',
+        IMGZOOM_MAGNIFIER_CLS = 'ks-imagezoom-magnifier',
+        IMGZOOM_VIEWER_CLS = 'ks-imagezoom-viewer',
+        IMGZOOM_GLASS_CLS = 'ks-imagezoom-glass',
+        IMGZOOM_ICON_CLS = 'ks-imagezoom-icon',
+        POSITION = ['top', 'right', 'bottom', 'left'],
+        TYPE = ['default', 'glass', 'overlay'],
         /**
-         * zoomer的默认设置
+         * imagezoom的默认设置
          */
         defaultConfig = {
             /**
              * 默认设置
-             *<div class="container">
-             *   <div class="magnifier">
-             *    <img id="smallimg" class="jqzoom" src="close1_small.jpg" />
-             *   </div>
-             *</div>
              */
-            bigImageSrc: null,  // 大图片路径, 为null时取原图路径
+            bigImageSrc: '',    // 大图片路径, 为''时取原图路径
             offset: 10,         // 大图偏移量
-            border: 1,          // 边框宽度
-            containerCls: "container",  // 容器类
-            originCls: "magnifier",     // 
-            viewerCls: "viewer",        //
-            glassSizeW: 100,            // 镜片宽度
-            glassSizeH: 100,            // 镜片高度
-            useGlass: true,             // 是否需要镜片
-            glassCls: "glass",          // 镜片类
+            
+            glassSize: [100, 100],      // 镜片高,宽度
+            
             useZoomIcon: true,          // 是否需要zoomicon
-            zoomIconCls: "zoom-icon",   // 放大图标类
+            type: 'glass',            // 选择显示模式, 可选值: TYPE
+            position: 'left',          // 大图显示位置, 可选值: POSITION
+            preload: true               // 是否预加载
         };
         
         /** 
          * 放大镜组件
-         * @class Zoomer
+         * @class ImageZoom
          * @constructor
          * @param {String|HTMLElement} image
          * @param {Object} config
          */
-        function Zoomer(image, config) {
+        function ImageZoom(img, cfg) {
             var self = this;
             
-            if (!(self instanceof Zoomer)) {
-                return new Zoomer(image, config);
+            if (!(self instanceof ImageZoom)) {
+                return new ImageZoom(img, cfg);
             }
             
             /**
              * 需要缩放的图片
              * @type HTMLElement
              */
-            self.image = S.get(image);
+            self.image = S.get(img);
+            if (!self.image) {
+                return;
+            }
+            /**
+             * 整体容器
+             * @type HTMLElement
+             */
+            self.container = null;
+            
+            /**
+             * 小图外层
+             * @type HTMLElement
+             */
+            self.origin = null;
             
             /**
              * 放大显示的图片外层
@@ -68,39 +79,61 @@ KISSY.add("zoomer", function(S, undefined) {
              * 放大显示的图片
              * @type HTMLElement
              */
-            self.Image = null;
+            self.bigImage = null;
             
             /**
              * 配置参数
              * @type Object
              */
-            self.config = S.merge(defaultConfig, config || {});
+            self.config = S.merge(defaultConfig, cfg);
             
-            // TODO: 
-            self.container = S.get("."+self.config.containerCls);
-            self.origin = S.get("."+self.config.originCls);
+            /**
+             * 镜片
+             * @type HTMLElement
+             */
+            self.glass = null;
+            
+            /**
+             * 放大镜图标
+             * @type HTMLElement
+             */
+            self.zoomIcon = null;
             
             self._init();
         }
         
-        S.mix(Zoomer.prototype, {
+        S.augment(ImageZoom, {
             /**
              * 初始化方法
              * @protected
              */
             _init: function() {
-                var self = this;
+                /**
+                 * 构建所需DOM
+                 */
+                this._initContainer();
                 
-                self._initContainer();
+                var self = this,
+                    cfg = self.config,
+                    i = self.image,
+                    g = self.glass,
+                    z = self.zoomIcon;
+                
+                // 设置大图路径, 如果没有设定大图图片则用原图路径
+                if (!cfg.bigImageSrc) cfg.bigImageSrc = DOM.attr(i, 'src');
+                else if (cfg.preload) {
+                    // 预加载大图
+                    new Image().src = cfg.bigImageSrc;
+                }
                 
                 /**
                  * 鼠标进入小图时, 显示大图
                  */
                 EVENT.on(self.origin, 'mouseenter', function(ev) {
                     // 显示镜片
-                    if (self.config.useGlass) DOM.removeClass(self.glass, 'hidden');
+                    if (g) DOM.removeClass(g, HIDDEN);
                     // 隐藏放大镜图标
-                    if (self.config.useZoomIcon) DOM.addClass(self.zoomIcon, 'hidden');
+                    if (z) DOM.addClass(z, HIDDEN);
                     
                     // 创建/显示大图
                     self._zoom(ev);
@@ -111,12 +144,12 @@ KISSY.add("zoomer", function(S, undefined) {
                  */
                 EVENT.on(self.origin, 'mouseleave', function(ev) {
                     // 隐藏镜片
-                    if (self.config.useGlass) DOM.addClass(self.glass, 'hidden');
+                    if (g) DOM.addClass(g, HIDDEN);
                     // 显示放大镜
-                    if (self.config.useZoomIcon) DOM.removeClass(self.zoomIcon, 'hidden');
+                    if (z) DOM.removeClass(z, HIDDEN);
                     
                     // 隐藏大图
-                    DOM.addClass(self.viewer, 'hidden');
+                    DOM.addClass(self.viewer, HIDDEN);
                 });
             },
             
@@ -124,28 +157,49 @@ KISSY.add("zoomer", function(S, undefined) {
              * 根据config创建所需DOM
              */
             _initContainer: function() {
-                var self = this;
+                var self = this,
+                    cfg = self.config,
+                    c, o,
+                    i = self.image,
+                    g, z;
                 
-                // Todo: create original & contaner
-                //var origin = DOM.create('div');
-                //var container = DOM.create('div');
-                //DOM.addClass(container, self.config.containerCls);
-                //origin.appendChild(self.image);
+                // 构建整个容器
+                c = DOM.create('div');
+                DOM.addClass(c, IMGZOOM_CONTAINER_CLS);
+                DOM.parent(i).insertBefore(c, i);
+                self.container = c;
+                
+                // 构建小图外层
+                o = DOM.create('div');
+                DOM.addClass(o, IMGZOOM_MAGNIFIER_CLS);
+                o.appendChild(i);
+                c.appendChild(o);
+                self.origin = o;
                 
                 // 需要显示镜片
-                if (self.config.useGlass) {
-                    self.glass = DOM.create('div');
-                    DOM.addClass(self.glass, self.config.glassCls);
-                    DOM.addClass(self.glass, 'hidden');
-                    self.glass.style.height = self.config.glassSizeH+'px';
-                    self.glass.style.width = self.config.glassSizeW+'px';
-                    self.origin.appendChild(self.glass);
+                if (TYPE[1] == cfg.type) {
+                    g = DOM.create('div');
+                    DOM.addClass(g, IMGZOOM_GLASS_CLS);
+                    DOM.addClass(g, HIDDEN);
+                    g.style.height = cfg.glassSize[0]+'px';
+                    g.style.width = cfg.glassSize[1]+'px';
+                    o.appendChild(g);
+                    self.glass = g;
                 }
                 // 需要显示放大图标
-                if (self.config.useZoomIcon) {
-                    self.zoomIcon = DOM.create('div');
-                    DOM.addClass(self.zoomIcon, self.config.zoomIconCls);
-                    self.origin.appendChild(self.zoomIcon);
+                if (cfg.useZoomIcon) {
+                    z = DOM.create('div');
+                    DOM.addClass(z, IMGZOOM_ICON_CLS);
+                    o.appendChild(z);
+                    self.zoomIcon = z;
+                }
+                
+                // 调整容器大小及位置
+                self.container.style.height = parseInt(self.getStyle(o, 'marginTop')) + parseInt(self.getStyle(o, 'marginBottom')) + self.getSize(o).height + 'px';
+                if (POSITION[0] == cfg.position) {
+                    self.container.style.marginTop = self.getSize(i).height + parseInt(self.getStyle(i, 'borderTopWidth')) + cfg.offset + "px";
+                } else if (POSITION[3] == cfg.position) {
+                    self.container.style.marginLeft = self.getSize(i).width + parseInt(self.getStyle(i, 'borderLeftWidth')) + cfg.offset + "px";
                 }
             },
             
@@ -159,7 +213,7 @@ KISSY.add("zoomer", function(S, undefined) {
                 // 如果没有大图显示层, 创建之, 否则就显示
                 if (!self.viewer) {
                     self._createZoom();
-                } else DOM.removeClass(self.viewer, 'hidden');
+                } else DOM.removeClass(self.viewer, HIDDEN);
                 
                 /**
                  * 移动鼠标时更新大图偏移量
@@ -168,12 +222,12 @@ KISSY.add("zoomer", function(S, undefined) {
                     // 镜片偏移量并更新
                     var glassOffset = self.getGlassOffset(ev);
                     if (self.glass) {
-                        self.glass.style.left = glassOffset.left +'px';
-                        self.glass.style.top = glassOffset.top +'px';
+                        self.glass.style.left = glassOffset.left + 'px';
+                        self.glass.style.top = glassOffset.top + 'px';
                     }
                     // 计算大图偏移量并更新
                     var imageSize = self.getSize(self.image);
-                    var zoom = self.getSize(self.Image);
+                    var zoom = self.getSize(self.bigImage);
                     var scrollx = Math.round(glassOffset.left*zoom.width/imageSize.width);
                     var scrolly = Math.round(glassOffset.top*zoom.height/imageSize.height);
                     self.viewer.scrollLeft = scrollx;
@@ -182,42 +236,55 @@ KISSY.add("zoomer", function(S, undefined) {
             },
             
             /**
-             * 创建大图DOM
+             * 创建大图显示DOM
              */
             _createZoom: function() {
-                var self = this;
+                var self = this,
+                    cfg = self.config,
+                    i = self.image, v;
                 
-                // 设置大图路径, 如果没有设定大图图片则用原图路径
-                if (!self.config.bigImageSrc) self.config.bigImageSrc = DOM.attr(self.image, 'src');
-                
-                // 创建大图显示DOM结构, ex：<div class='viewerCls'><img src='bigImageSrc'/></div>
-                var vdiv = DOM.create('div');
-                DOM.addClass(vdiv, self.config.viewerCls);
+                // 创建大图显示DOM结构
+                v = DOM.create('div');
+                DOM.addClass(v, IMGZOOM_VIEWER_CLS);
                 var bimg = DOM.create('img');
-                DOM.attr(bimg, 'src', self.config.bigImageSrc);
-                vdiv.appendChild(bimg);
-                self.viewer = vdiv;
-                self.Image = bimg;
-                
+                DOM.attr(bimg, 'src', cfg.bigImageSrc);
+                v.appendChild(bimg);
                 // 添加到原有DOM中
-                self.container.appendChild(self.viewer);
+                self.container.appendChild(v);
+                self.bigImage = bimg;
+                self.viewer = v;
                 
                 // 获取小图片偏移量, 实际尺寸, 镜片实际尺寸
-                var imageOffset = self.getOffset(self.image),
-                    imageSize = self.getSize(self.image),
+                var imageOffset = self.getOffset(i),
+                    imageSize = self.getSize(i),
                     glassSize = self.getSize(self.glass);
                 
                 // 计算大图偏移量
-                var leftpos = imageOffset.left + imageSize.width + self.config.offset;
+                var leftpos, toppos;
                 
                 // 计算大图宽度高度
                 var bigImgWidth = Math.round(imageSize.height/glassSize.height*glassSize.width);
+                
+                if (POSITION[0] == cfg.position) {
+                    toppos = - (imageSize.height + parseInt(self.getStyle(i, 'borderTopWidth')) + cfg.offset - parseInt(self.getStyle(self.origin, 'marginTop')));
+                    leftpos = imageOffset.left;
+                } else if (POSITION[2] == cfg.position) {
+                    toppos = imageSize.height + imageOffset.top + cfg.offset;
+                    leftpos = imageOffset.left;
+                } else if (POSITION[3] == cfg.position) {
+                    toppos = imageOffset.top;
+                    leftpos = - (imageSize.width + parseInt(self.getStyle(i, 'borderLeftWidth')) + cfg.offset - parseInt(self.getStyle(self.origin, 'marginLeft')));
+                } else {
+                    toppos = imageOffset.top;
+                    leftpos = imageOffset.left + imageSize.width + cfg.offset;
+                }
 
-                self.viewer.style.top = imageOffset.top - self.config.border + 'px';
+                self.viewer.style.top = toppos + 'px';
                 self.viewer.style.left = leftpos + 'px';
-                self.viewer.style.height = imageSize.height - self.config.border*2 + 'px';
+                
+                self.viewer.style.height = imageSize.height + 'px';
                 self.viewer.style.width = bigImgWidth + 'px';
-                DOM.removeClass(self.viewer, 'hidden');
+                DOM.removeClass(v, HIDDEN);
             },
             
             /**
@@ -226,19 +293,20 @@ KISSY.add("zoomer", function(S, undefined) {
              * @return  x/y: 镜片在放大目标元素上的横/纵向位置
              */
             getGlassOffset: function(ev) {
-                var self = this;
-                var offset = {
-                    left: 0,
-                    top: 0
-                };
+                var self = this,
+                    i = self.image,
+                    offset = {
+                        left: 0,
+                        top: 0
+                    };
                 // 小图偏移量
-                var imageOffset = self.getOffset(self.image);
+                var imageOffset = self.getOffset(i);
                 // 鼠标在页面上的位置
                 var mousePoint = self.getMousePoint(ev);
                 // 镜片实际尺寸
                 var glassSize = self.getSize(self.glass);
                 // 小图实际尺寸
-                var imageSize = self.getSize(self.image);
+                var imageSize = self.getSize(i);
                 // 光标横向位置
                 var cursorX = mousePoint.x - imageOffset.left;
                 // 镜片横向偏移量
@@ -247,7 +315,7 @@ KISSY.add("zoomer", function(S, undefined) {
                 if (offset.left < 0) {
                     offset.left = 0;
                 } else if (offset.left > imageSize.width - glassSize.width) {
-                    offset.left = imageSize.width - glassSize.width - self.config.border*2;
+                    offset.left = imageSize.width - glassSize.width;
                 }
                 // 光标纵向位置
                 var cursorY = mousePoint.y - imageOffset.top;
@@ -256,7 +324,7 @@ KISSY.add("zoomer", function(S, undefined) {
                 if (offset.top < 0) {
                     offset.top = 0;
                 } else if (offset.top >= imageSize.height - glassSize.height) {
-                    offset.top = imageSize.height - glassSize.height - self.config.border*2;
+                    offset.top = imageSize.height - glassSize.height;
                 }
                 return offset;
             },
@@ -267,17 +335,18 @@ KISSY.add("zoomer", function(S, undefined) {
              * @return  元素可见尺寸
              */
             getSize: function(elm) {
-                var self = this;
-                if (elm == undefined) return {height:self.config.glassSizeH, width: self.config.glassSizeW};
+                var cfg = this.config;
+                if (!elm) return {height: cfg.glassSize[0], width: cfg.glassSize[1]};
                 return {
                     width: elm.clientWidth,
                     height: elm.clientHeight
                 };
             },
+            
             /**
              * 获取累计偏移量, 即元素到页面左上角的横行和纵向距离
-             * @param   element 目标元素
-             * @return  left:   横行偏移距离, top:纵向偏移距离
+             * @param   elm    目标元素
+             * @return  left:  横行偏移距离, top:纵向偏移距离
              */
             getOffset: function(elm) {
                 return {
@@ -285,6 +354,7 @@ KISSY.add("zoomer", function(S, undefined) {
                     top: YDOM.getXY(elm)[1]
                 };
             },
+            
             /**
              * 获取鼠标在页面上的位置
              * @param ev    触发事件
@@ -292,13 +362,31 @@ KISSY.add("zoomer", function(S, undefined) {
              */
             getMousePoint: function(ev) {
                 return {x: ev.pageX, y: ev.pageY}
+            },
+            
+            /**
+             * 获取元素样式
+             * @param elm 目标元素
+             * @param p   样式名称
+             * @return 元素对应的样式
+             */
+            getStyle: function(elm, p){
+                if (typeof elm == 'string') {
+                    elm = S.get(elm);
+                }
+
+                if (window.getComputedStyle) {
+                    //document.defaultView 
+                    var y = window.getComputedStyle(elm, '');
+                } else if (elm.currentStyle) {
+                    var y = elm.currentStyle;
+                }
+                return y[p];
             }
         });
+        S.augment(ImageZoom, S.EventTarget);
         
-        
-        S.mix(Zoomer.prototype, S.EventTarget);
-        
-        S.Zoomer = Zoomer;
+        S.ImageZoom = ImageZoom;
     
 });
 
@@ -307,7 +395,6 @@ KISSY.add("zoomer", function(S, undefined) {
  *
  * TODO:
  *  - 替换行174,175, 不使用scrollLeft, 而是替换成更新大图的position方式
- *  - 大图预加载;
  *  - 加入放大系数;
  *  - 加入跟随模式和反转模式;
  */

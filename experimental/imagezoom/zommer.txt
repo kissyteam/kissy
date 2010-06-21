@@ -55,3 +55,59 @@
 
 
 
+
+
+== ImageZoom ==
+===目录结构===
+|--imagezoom.js 核心组件
+|--test.html 测试页面
+|--imagezoom.css 测试页面样式, 其中包含一些imagezoom组件所需的样式
+|--close1_big.jpg和close1_small.jpg 示例图片
+\--pics 样例
+
+===使用===
+ . 示例
+html{{{
+<div id="page">
+    <img id="smallimg" class="jqzoom" src="close1_small.jpg" />
+</div>
+}}}
+js{{{
+KISSY.ready(function(S) {
+    var zm = S.ImageZoom("#smallimg", // 提供被放大图片选择器
+                        {bigImageSrc:"close1_big.jpg"});
+});
+}}}
+
+ . 构建出的DOM结构为
+html{{{
+    <div class="ks-imagezoom-container" style="height: 352px; margin-left: 320px;">
+        <div class="ks-imagezoom-magnifier" data-ks-event-guid="1277113364450">
+            <img src="close1_small.jpg" class="jqzoom" id="smallimg">
+            <div class="ks-imagezoom-glass hidden" style="height: 100px; width: 100px; left: 0px; top: 210px;"></div>
+            <div class="ks-imagezoom-icon"></div>
+        </div>
+        <div class="ks-imagezoom-viewer hidden" style="top: 20px; left: -300px; height: 310px; width: 310px;">
+            <img src="close1_big.jpg">
+        </div>
+    </div>
+}}}
+
+ . 配置选项
+js{{{
+    bigImageSrc: '',    // 大图片路径, 为''时取原图路径
+    offset: 10,         // 大图偏移量
+
+    glassSize: [100, 100],      // 镜片高,宽度
+
+    useZoomIcon: true,          // 是否需要zoomicon
+    type: 'default',            // 选择显示模式, 可选值: ['default', 'glass', 'overlay']
+    position: 'right',          // 大图显示位置, 可选值: ['top', 'right', 'bottom', 'left']
+    preload: true               // 是否预加载
+}}}
+ . 注意事项
+    1.
+    2.
+
+
+

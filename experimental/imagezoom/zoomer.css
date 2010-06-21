@@ -5,54 +5,52 @@
 img {
     border: 0;
 }
-.container img {
-    display:block;
-    border:1px solid #999;
+.ks-imagezoom-container img {
+    display: block;
 }
-.container {
+.ks-imagezoom-container {
     position: relative;
 }
-.magnifier {
+.ks-imagezoom-magnifier {
     position:absolute;
     margin:20px;
 }
-.magnifier .glass {
-    /*width:136px;
-    height:136px;*/
-    margin:0 2px 2px 0;
-    position:absolute;
-    left:0;
-    top:0;
-    /*cursor:move;*/
-    border:1px solid #999;
-    background:#FFF;
-    opacity:0.65;
-    filter:alpha(opacity=65);
+.ks-imagezoom-magnifier img {
+    border: 1px solid #999;
+    cursor: pointer;
 }
-.magnifier .zoom-icon {
-    background:url("http://img02.taobaocdn.com/tps/i2/T1uJNuXX8tXXXXXXXX-23-23.png") no-repeat scroll left top transparent;
-    bottom:0;
-    height:23px;
-    position:absolute;
-    right:0;
-    width:23px;
-    border-right:1px solid #999;
-    border-bottom:1px solid #999;
+.ks-imagezoom-magnifier .ks-imagezoom-glass {
+    margin: 0 2px 2px 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    /*cursor:move;*/
+    border: 1px solid #999;
+    background: #FFF;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+}
+.ks-imagezoom-magnifier .ks-imagezoom-icon {
+    background: url("http://img02.taobaocdn.com/tps/i2/T1uJNuXX8tXXXXXXXX-23-23.png") no-repeat scroll left top transparent;
+    bottom: 0;
+    height: 23px;
+    position: absolute;
+    right: 0;
+    width: 23px;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
 }
 .hidden {
-    display:none;
+    display: none;
     /*visibility: hidden;*/
 }
-.viewer{
-    background:none repeat scroll 0 0 #FFFFFF;
-    border:1px solid #CCCCCC;
-    left:500px;
-    overflow:hidden;
-    position:absolute;
-    text-align:center;
-    top:0;
-    z-index:100;
-}
-.jqzoom{
-    cursor:pointer;
+.ks-imagezoom-viewer {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    left: 500px;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    z-index: 100;
 }
