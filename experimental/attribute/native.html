@@ -1,0 +1,25 @@
+<script>
+function TestBaseInherit() {
+}
+
+Object.defineProperty(TestBaseInherit.prototype, "description", {
+	get : function () {
+		console.log("get TestBaseInherit's attribute description");
+		return this.desc;
+	},
+	set : function (val) {
+		console.log("set TestBaseInherit's attribute description");
+		this.desc = val;
+	}
+});
+
+TestBaseInherit.prototype.description="initial";
+var test=new TestBaseInherit();
+test.description = "Content container";	
+console.log("description:"+test.description);
+
+var test2=new TestBaseInherit();
+console.log("description:"+test2.description);
+
+
+</script>
