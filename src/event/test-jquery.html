@@ -1,5 +1,5 @@
 <div id="outer">
-	<a id="inner" href="#http://www.taobao.com">
+	<a id="inner" href="javascript:console.log('innner leaving');">
 		点我
 	</a>
 </div>
@@ -11,7 +11,7 @@ $(function(){
 	
 	/*
 	
-	jquery一切以节点为中心，自定义事件也必须附加在节点上，触发自定义事件在节点层次中冒泡
+	jquery一切以节点为中心（或任何操作要以jquery节点作为开始），自定义事件也必须附加在节点上，触发自定义事件在节点层次中冒泡
 	
 	KISSY借鉴，dom事件与自定义事件没有区别，那么触发的返回值没有意义
 	

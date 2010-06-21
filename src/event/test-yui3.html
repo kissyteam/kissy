@@ -1,12 +1,14 @@
 <div id="outer">
-	<a id="inner" href="#http://www.taobao.com">
+	<a id="inner" href="javascript:console.log('innner leaving');">
 		点我
 	</a>
 </div>
 
 <script type="text/javascript" src="http://yui.yahooapis.com/3.1.0/build/yui/yui-min.js"></script>
 <script>
-YUI({filter:"DEBUG"}).use("node","event","event-simulate",function(Y){
+YUI({
+	//filter:"DEBUG"
+	}).use("node","event","event-simulate",function(Y){
 	var inner=Y.one("#inner");
 	var outer=Y.one("#outer");
 	
@@ -34,7 +36,10 @@ YUI({filter:"DEBUG"}).use("node","event","event-simulate",function(Y){
 	
 	
 	
-	
+		/*
+		原理同dom事件，yui3不同于extjs之处在于对于自定义事件增加了模拟dom事件的冒泡（bubbleTarget），默认处理函数（defaultFn）以及自定义事件独有的广播（broadcast）。
+		
+	*/
 	function testCustom(){}
 	Y.augment(testCustom,Y.EventTarget);
 	
@@ -51,10 +56,7 @@ YUI({filter:"DEBUG"}).use("node","event","event-simulate",function(Y){
 	
 	});
 	
-	/*
-		原理同dom事件，yui3不同于extjs之处在于对于自定义事件增加了模拟dom事件的冒泡（bubbleTarget），默认处理函数（defaultFn）以及自定义事件独有的广播（broadcast）。
-		
-	*/
+
 	console.log(t.fire("run"));
 	
 });	
