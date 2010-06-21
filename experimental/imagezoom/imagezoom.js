@@ -1,7 +1,7 @@
 /**
  * 放大镜效果
  * @module      imagezoom
- * @creater     
+ * @creater     qiaohua@taobao.com
  * @depender    kissy-core, yahoo-dom-event
  */
 
@@ -99,7 +99,13 @@ KISSY.add("imagezoom", function(S, undefined) {
              */
             self.zoomIcon = null;
             
-            self._init();
+            // 当小图加载完毕之后, 初始化
+            self.image.onload = function(){
+                self._init();
+            }
+            if (self.image.complete) {
+                self._init();
+            }
         }
         
         S.augment(ImageZoom, {
@@ -392,8 +398,10 @@ KISSY.add("imagezoom", function(S, undefined) {
 
 /**
  * NOTES:
- *
+ *  2010.6.21
+ *      - 加入position选项, 动态构建所需dom;
+ *      - 小图加载之后才能继续;
  * TODO:
- *  - 加入跟随模式和反转模式;
- *  - 小图加载等待
+ *      - 加入跟随模式和反转模式;
+ *      - 大图加载等待
  */
