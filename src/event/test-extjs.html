@@ -1,0 +1,62 @@
+<div id="outer">
+	<a id="inner" href="#http://www.taobao.com">
+		点我
+	</a>
+</div>
+<script src="../../third-party/ext-core/ext-core-debug.js"></script>
+<script>
+	
+Ext.onReady(function(){
+	/*
+		Extjs dom 事件机制直接调用原生注册函数，每个用户的回调函数 a 被包装成另外一个函数 b 用以 normalize 事件，
+		b 函数被浏览器原生的事件注册机制使用，故和原生事件机制表现一致
+	*/
+	Ext.get("inner").on("click",function(e){
+		console.log("inner click -1");
+		return false;
+	});
+	
+	
+	Ext.get("inner").on("click",function(e){
+		console.log("inner click -2");
+	});
+	
+	
+	Ext.get("outer").on("click",function(e){
+		console.log("outer click");
+	});
+	
+	
+	
+	
+	
+	/*
+		Extjs 自定义事件机制，遵从observer-listener模式，
+		fire时如果一个自定义事件处理函数return false，那么之后的事件处理函数不再运行，并且fire返回false
+	*/
+	
+	
+	function test() {
+		test.superclass.constructor.apply(this,arguments);
+	}
+	
+	
+	Ext.extend(test,Ext.util.Observable);
+	
+	var t=new test();
+	
+	t.on("run",function(){
+		console.log("custom event run -1");
+		return false;
+	});
+	
+	t.on("run",function(){
+		console.log("custom event run -2");
+	
+	});
+	
+	
+	console.log(t.fireEvent("run"));
+});
+	
+</script>
