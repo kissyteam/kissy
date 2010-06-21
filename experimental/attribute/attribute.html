@@ -3,7 +3,7 @@
 <head>
 <meta charset="gbk"/>
 <title>attribute Test</title>
-<style>.settings,ks-test-form button { display: none } </style>
+<style>.settings,.ks-test-form button { display: none } </style>
 </head>
 <body>
 <script src="../../src/test/test.js"></script>
@@ -20,40 +20,75 @@
 <label>
 	code:
 <pre style="width:90%;height:400px;border:2px solid;overflow:auto;" id="demo">
-KISSY.ready(function (S) {
-    function TestBaseInherit() {
-        TestBaseInherit.superclass.constructor.apply(this, arguments);
-    }
-    S.extend(TestBaseInherit, S.Base);
-    S.Base.ATTRS = {
+	KISSY.ready(function(S){
+			
+		function TestBaseInherit(){
+			TestBaseInherit.superclass.constructor.apply(this,arguments);
+		}
+		
+		S.extend(TestBaseInherit,S.Base);
+		
+		S.Base.ATTRS = {
         test: {
-        		//默认值
             value: 1,
-            //返回值不为undefined就设置为返回值，否则设置为v
-            setter: function (v) {                
+            setter: function (v) {
+                S.Test.echo("setting attribute test : " + v);
             },
-            //没有就读取设置值，有就返回调用值
-            getter: function (v) {                
+            getter: function (v) {
+                S.Test.echo("getting attribute test : " + v);
                 return v;
             }
         }
     };
-    //所有父类以及该类的属性初始化
-    var test = new TestBaseInherit({
-    		//初始值
-        test: 99
-    });
-    test.on("beforetestchange", function (e) {       
-    });
-    test.on("aftertestchange", function (e) {       
-    });
-    test.get("test");
-    test.set("test", 2);
-    test.get("test");
-    test.reset();
-    test.get("test");
-   
-});
+    S.Test.init();
+		var test=new TestBaseInherit(
+		{test:99}
+		);
+		test.on("beforetestchange",function(e){
+			S.Test.echo("***********************************");
+			S.Test.echo("before set attribute test :");
+			S.Test.echo("going to set value :"+e.value);		
+			S.Test.echo("beforetestchange event return false");
+			return false;
+			S.Test.echo("***********************************");
+		});
+		
+		test.on("beforetestchange",function(e){
+			S.Test.echo("***********************************");
+			S.Test.echo("before set attribute test -2:");
+			S.Test.echo("going to set value -2:"+e.value);		
+			S.Test.echo("***********************************");
+		});
+		
+		test.on("beforetestchange",function(e){
+			S.Test.echo("***********************************");
+			S.Test.echo("before set attribute test -3:");
+			S.Test.echo("going to set value -3:"+e.value);		
+			S.Test.echo("***********************************");
+		});
+		
+		
+		test.on("aftertestchange",function(e){
+			S.Test.echo("***********************************");
+			S.Test.echo("after set attribute test :");
+			S.Test.echo("previous value :"+e.preVal);
+			S.Test.echo("new value :"+e.newVal);
+			S.Test.echo("***********************************");
+		});
+		S.Test.echo("loaded");
+		S.Test.echo("*********************************** going to get");
+		S.Test.echo("get attribute test :"+test.get("test"));
+		S.Test.echo("*********************************** going to set");
+		test.set("test",2);
+		S.Test.echo("*********************************** after set ,then get");
+		S.Test.echo("get attribute test :"+test.get("test"));
+		S.Test.echo("*********************************** going to reset");
+		test.reset();
+		S.Test.echo("*********************************** after reset ,then read");
+		S.Test.echo("reset attribute test :"+test.get("test"));
+		
+		
+	});
 </pre>
 </label>
 <script>
