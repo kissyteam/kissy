@@ -4,30 +4,19 @@
     <meta charset="gbk" />
     <title>Test</title>
     <link href="../../build/cssreset-grids/reset-grids-min.css" rel="stylesheet" type="text/css" />
-    <link href="zoomer.css" rel="stylesheet" type="text/css" />
+    <link href="imagezoom.css" rel="stylesheet" type="text/css" />
     <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
     <script src="../../build/packages/ks-core.js"></script>
-    <script src="zoomer.js"></script>
+    <script src="imagezoom.js"></script>
 </head>
 <body>
 <div id="page">
     <img id="smallimg" class="jqzoom" src="close1_small.jpg" />
-    <!-- <div class="container">
-        <div class="magnifier">
-            <img id="smallimg" class="jqzoom" src="close1_small.jpg" />
-            <div class="glass hidden"></div>
-            <div class="zoom-icon"></div>
-        </div> 
-        <div class="viewer">
-            <img src="close1_big.jpg" />
-        </div>
-    </div> -->
 </div>
 <script>
 KISSY.ready(function(S) {
     var zm = S.ImageZoom("#smallimg", {bigImageSrc:"close1_big.jpg"});
 });
-
 </script>
 </body>
 </html>

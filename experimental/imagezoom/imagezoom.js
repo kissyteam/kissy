@@ -31,7 +31,7 @@ KISSY.add("imagezoom", function(S, undefined) {
             
             useZoomIcon: true,          // 是否需要zoomicon
             type: 'glass',            // 选择显示模式, 可选值: TYPE
-            position: 'left',          // 大图显示位置, 可选值: POSITION
+            position: 'top',          // 大图显示位置, 可选值: POSITION
             preload: true               // 是否预加载
         };
         
@@ -338,8 +338,8 @@ KISSY.add("imagezoom", function(S, undefined) {
                 var cfg = this.config;
                 if (!elm) return {height: cfg.glassSize[0], width: cfg.glassSize[1]};
                 return {
-                    width: elm.clientWidth,
-                    height: elm.clientHeight
+                    width: elm.offsetWidth,
+                    height: elm.offsetHeight
                 };
             },
             
@@ -394,7 +394,6 @@ KISSY.add("imagezoom", function(S, undefined) {
  * NOTES:
  *
  * TODO:
- *  - 替换行174,175, 不使用scrollLeft, 而是替换成更新大图的position方式
- *  - 加入放大系数;
  *  - 加入跟随模式和反转模式;
+ *  - 小图加载等待
  */

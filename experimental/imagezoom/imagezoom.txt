@@ -60,8 +60,8 @@
 == ImageZoom ==
 ===目录结构===
 |--imagezoom.js 核心组件
-|--test.html 测试页面
 |--imagezoom.css 测试页面样式, 其中包含一些imagezoom组件所需的样式
+|--test.html 测试页面
 |--close1_big.jpg和close1_small.jpg 示例图片
 \--pics 样例
 
