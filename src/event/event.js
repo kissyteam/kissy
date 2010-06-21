@@ -156,12 +156,13 @@ KISSY.add('event', function(S, undefined) {
             for (; i < len; ++i) {
                 ret = listeners[i].call(target, event);
 
-                if (event.isImmediatePropagationStopped) {
-                    break;
+                // 自定义事件对象，可以用 return false 来立刻停止后续监听函数
+                if (ret === false && target.isCustomEventTarget) {
+                    event.stopImmediatePropagation();
                 }
 
-                if (ret === false) {
-                    event.halt();
+                if (event.isImmediatePropagationStopped) {
+                    break;
                 }
             }
 

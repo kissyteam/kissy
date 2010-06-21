@@ -16,9 +16,7 @@
 <script src="../kissy/kissy-lang.js"></script>
 <script src="../kissy/kissy-ua.js"></script>
 
-<script src="../dom/selector.js"></script>
-<script src="../dom/dom.js"></script>
-<script src="../dom/dom-class.js"></script>
+<script src="../../build/dom/dom-pkg.js"></script>
 
 <script src="event.js"></script>
 <script src="event-object.js"></script>
@@ -110,9 +108,18 @@
 
         Event.add(e2, 'click', function(ev) { test.echo(1); return false; });
         Event.add(e2, 'click', function(ev) { test.echo(2); });
-
         Event.add(li_e, 'click', function(ev) { test.echo('li-e'); });
-        test.extraMsg = '{click link e1 should echo 1 -> 2 -> li-e; click link e2 should echo 1 -> 2}';
+
+        //$(e2).click(function() { test.echo(1); return false; });
+        //$(e2).click(function() { test.echo(2); });
+        //$(li_e).click(function() { test.echo('li-e'); });
+
+        //e2.onclick = function() { return false; };
+        //e2.addEventListener('click', function() { test.echo(1); return false; }, false);
+        //e2.addEventListener('click', function() { test.echo(2); }, false);
+        //li_e.addEventListener('click', function() { test.echo('li-e'); }, false);
+
+        test.extraMsg = '{click link e1 should echo 1 -> 2 -> li-e; click link e2 should echo 1 -> 2 -> li-e}';
     }
 
     function test_remove_fn(test) {

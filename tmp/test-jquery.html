@@ -1,0 +1,57 @@
+<div id="outer">
+	<a id="inner" href="javascript:console.log('innner leaving');">
+		点我
+	</a>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+
+<script>
+$(function(){
+	
+	/*
+	
+	jquery一切以节点为中心（或任何操作要以jquery节点作为开始），自定义事件也必须附加在节点上，触发自定义事件在节点层次中冒泡
+	
+	KISSY借鉴，dom事件与自定义事件没有区别，那么触发的返回值没有意义
+	
+	return false 会停止冒泡以及阻止默认绑定，但不会阻止后续监听器运行
+	
+	*/
+	$("#inner").bind("click",function(){
+		console.log("inner click -1");
+		return false;
+	});
+	
+	$("#inner").bind("click",function(){
+		console.log("inner click -2");
+	});
+	
+	$("#inner").bind("custom",function(){
+		console.log("inner custom -1");
+		return false;
+	});
+	
+	$("#inner").bind("custom",function(){
+		console.log("inner custom -2");
+	
+	});
+	
+	$("#outer").bind("click",function(){
+		console.log("outer click");
+	});
+	
+	
+	$("#outer").bind("custom",function(){
+		console.log("outer custom");
+	});
+	
+	console.log($("#inner").trigger("click"));
+	
+	console.log($("#inner").trigger("custom"));
+	
+	
+	
+	
+});
+</script>
