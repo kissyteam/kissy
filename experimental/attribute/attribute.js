@@ -41,7 +41,6 @@ KISSY.add('attribute-base', function (S, undefined) {
         this._values = {};
     }
     S.augment(Attribute, {
-        constructor: Attribute,
         addAttribute: function (attr, attrConfig) {
             this._state[attr] = attrConfig;
         },
@@ -133,9 +132,8 @@ KISSY.add('attribute-base', function (S, undefined) {
         self._initAttr();
         self._initial(cfg);
     }
-    S.augment(Base, EventTarget);
-    S.augment(Base, Attribute);
-    S.augment(Base, {
+    S.augment(Base, EventTarget, Attribute, {
+    		constructor:Base,
         //init attr using constructor chain's attr meta info
         _initAttr: function () {
             var c = this.constructor;
