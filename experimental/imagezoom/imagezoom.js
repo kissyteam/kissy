@@ -1,5 +1,5 @@
 /**
- * æ”¾å¤§é•œæ•ˆæœ
+ * ·Å´ó¾µĞ§¹û
  * @module      imagezoom
  * @creater     qiaohua@taobao.com
  * @depender    kissy-core, yahoo-dom-event
@@ -17,26 +17,26 @@ KISSY.add("imagezoom", function(S, undefined) {
         IMGZOOM_ICON_CLS = 'ks-imagezoom-icon',
         POSITION = ['top', 'right', 'bottom', 'left'],
         TYPE = ['default', 'glass', 'overlay'],
+        IMG_READY = false,      // Ğ¡Í¼¼ÓÔØ×´Ì¬
+        BIGIMG_READY = false,   // ´óÍ¼¼ÓÔØ×´Ì¬
         /**
-         * imagezoomçš„é»˜è®¤è®¾ç½®
+         * imagezoomµÄÄ¬ÈÏÉèÖÃ
          */
         defaultConfig = {
             /**
-             * é»˜è®¤è®¾ç½®
+             * Ä¬ÈÏÉèÖÃ
              */
-            bigImageSrc: '',    // å¤§å›¾ç‰‡è·¯å¾„, ä¸º''æ—¶å–åŸå›¾è·¯å¾„
-            offset: 10,         // å¤§å›¾åç§»é‡
-            
-            glassSize: [100, 100],      // é•œç‰‡é«˜,å®½åº¦
-            
-            useZoomIcon: true,          // æ˜¯å¦éœ€è¦zoomicon
-            type: 'glass',            // é€‰æ‹©æ˜¾ç¤ºæ¨¡å¼, å¯é€‰å€¼: TYPE
-            position: 'top',          // å¤§å›¾æ˜¾ç¤ºä½ç½®, å¯é€‰å€¼: POSITION
-            preload: true               // æ˜¯å¦é¢„åŠ è½½
+            bigImageSrc: '',    // ´óÍ¼Æ¬Â·¾¶, Îª''Ê±È¡Ô­Í¼Â·¾¶
+            offset: 10,         // ´óÍ¼Æ«ÒÆÁ¿
+            glassSize: [100, 100],      // ¾µÆ¬¸ß,¿í¶È
+            useZoomIcon: true,          // ÊÇ·ñĞèÒªzoomicon
+            zType: 'default',           // Ñ¡ÔñÏÔÊ¾Ä£Ê½, ¿ÉÑ¡Öµ: TYPE
+            position: 'right',          // ´óÍ¼ÏÔÊ¾Î»ÖÃ, ¿ÉÑ¡Öµ: POSITION
+            preload: true               // ÊÇ·ñÔ¤¼ÓÔØ
         };
         
         /** 
-         * æ”¾å¤§é•œç»„ä»¶
+         * ·Å´ó¾µ×é¼ş
          * @class ImageZoom
          * @constructor
          * @param {String|HTMLElement} image
@@ -50,7 +50,7 @@ KISSY.add("imagezoom", function(S, undefined) {
             }
             
             /**
-             * éœ€è¦ç¼©æ”¾çš„å›¾ç‰‡
+             * ĞèÒªËõ·ÅµÄÍ¼Æ¬
              * @type HTMLElement
              */
             self.image = S.get(img);
@@ -58,64 +58,68 @@ KISSY.add("imagezoom", function(S, undefined) {
                 return;
             }
             /**
-             * æ•´ä½“å®¹å™¨
+             * ÕûÌåÈİÆ÷
              * @type HTMLElement
              */
             self.container = null;
             
             /**
-             * å°å›¾å¤–å±‚
+             * Ğ¡Í¼Íâ²ã
              * @type HTMLElement
              */
             self.origin = null;
             
             /**
-             * æ”¾å¤§æ˜¾ç¤ºçš„å›¾ç‰‡å¤–å±‚
+             * ·Å´óÏÔÊ¾µÄÍ¼Æ¬Íâ²ã
              * @type HTMLElement
              */
             self.viewer = null;
             
             /**
-             * æ”¾å¤§æ˜¾ç¤ºçš„å›¾ç‰‡
+             * ·Å´óÏÔÊ¾µÄÍ¼Æ¬
              * @type HTMLElement
              */
             self.bigImage = null;
             
             /**
-             * é…ç½®å‚æ•°
+             * ÅäÖÃ²ÎÊı
              * @type Object
              */
             self.config = S.merge(defaultConfig, cfg);
             
             /**
-             * é•œç‰‡
+             * ¾µÆ¬
              * @type HTMLElement
              */
             self.glass = null;
             
             /**
-             * æ”¾å¤§é•œå›¾æ ‡
+             * ·Å´ó¾µÍ¼±ê
              * @type HTMLElement
              */
             self.zoomIcon = null;
             
-            // å½“å°å›¾åŠ è½½å®Œæ¯•ä¹‹å, åˆå§‹åŒ–
+            // µ±Ğ¡Í¼¼ÓÔØÍê±ÏÖ®ºó, ³õÊ¼»¯
             self.image.onload = function(){
-                self._init();
+                if (!IMG_READY) {
+                    IMG_READY = !IMG_READY;
+                    self._init();
+                }
             }
-            if (self.image.complete) {
+            if (!IMG_READY && self.image.complete) {
+                IMG_READY = !IMG_READY;
                 self._init();
             }
         }
         
         S.augment(ImageZoom, {
             /**
-             * åˆå§‹åŒ–æ–¹æ³•
+             * ³õÊ¼»¯·½·¨
              * @protected
              */
             _init: function() {
                 /**
-                 * æ„å»ºæ‰€éœ€DOM
+                 * ¹¹½¨ËùĞèDOM
                  */
                 this._initContainer();
                 
@@ -125,42 +129,46 @@ KISSY.add("imagezoom", function(S, undefined) {
                     g = self.glass,
                     z = self.zoomIcon;
                 
-                // è®¾ç½®å¤§å›¾è·¯å¾„, å¦‚æœæ²¡æœ‰è®¾å®šå¤§å›¾å›¾ç‰‡åˆ™ç”¨åŸå›¾è·¯å¾„
+                // ÉèÖÃ´óÍ¼Â·¾¶, Èç¹ûÃ»ÓĞÉè¶¨´óÍ¼Í¼Æ¬ÔòÓÃÔ­Í¼Â·¾¶
                 if (!cfg.bigImageSrc) cfg.bigImageSrc = DOM.attr(i, 'src');
                 else if (cfg.preload) {
-                    // é¢„åŠ è½½å¤§å›¾
+                    // Ô¤¼ÓÔØ´óÍ¼
                     new Image().src = cfg.bigImageSrc;
                 }
                 
                 /**
-                 * é¼ æ ‡è¿›å…¥å°å›¾æ—¶, æ˜¾ç¤ºå¤§å›¾
+                 * Êó±ê½øÈëĞ¡Í¼Ê±, ÏÔÊ¾´óÍ¼
                  */
                 EVENT.on(self.origin, 'mouseenter', function(ev) {
-                    // æ˜¾ç¤ºé•œç‰‡
+                    // ÏÔÊ¾¾µÆ¬
                     if (g) DOM.removeClass(g, HIDDEN);
-                    // éšè—æ”¾å¤§é•œå›¾æ ‡
+                    // Òş²Ø·Å´ó¾µÍ¼±ê
                     if (z) DOM.addClass(z, HIDDEN);
                     
-                    // åˆ›å»º/æ˜¾ç¤ºå¤§å›¾
+                    // ´´½¨/ÏÔÊ¾´óÍ¼
+                    if (!self.viewer) {
+                        self._createZoom(ev);
+                    } else DOM.removeClass(self.viewer, HIDDEN);
+                    
                     self._zoom(ev);
                 });
                 
                 /**
-                 * é¼ æ ‡ç¦»å¼€å°å›¾æ—¶, éšè—å¤§å›¾
+                 * Êó±êÀë¿ªĞ¡Í¼Ê±, Òş²Ø´óÍ¼
                  */
                 EVENT.on(self.origin, 'mouseleave', function(ev) {
-                    // éšè—é•œç‰‡
+                    // Òş²Ø¾µÆ¬
                     if (g) DOM.addClass(g, HIDDEN);
-                    // æ˜¾ç¤ºæ”¾å¤§é•œ
+                    // ÏÔÊ¾·Å´ó¾µ
                     if (z) DOM.removeClass(z, HIDDEN);
                     
-                    // éšè—å¤§å›¾
-                    DOM.addClass(self.viewer, HIDDEN);
+                    // Òş²Ø´óÍ¼
+                    if (self.viewer) DOM.addClass(self.viewer, HIDDEN);
                 });
             },
             
             /**
-             * æ ¹æ®configåˆ›å»ºæ‰€éœ€DOM
+             * ¸ù¾İconfig´´½¨ËùĞèDOM
              */
             _initContainer: function() {
                 var self = this,
@@ -169,21 +177,21 @@ KISSY.add("imagezoom", function(S, undefined) {
                     i = self.image,
                     g, z;
                 
-                // æ„å»ºæ•´ä¸ªå®¹å™¨
+                // ¹¹½¨Õû¸öÈİÆ÷
                 c = DOM.create('div');
                 DOM.addClass(c, IMGZOOM_CONTAINER_CLS);
                 DOM.parent(i).insertBefore(c, i);
                 self.container = c;
                 
-                // æ„å»ºå°å›¾å¤–å±‚
+                // ¹¹½¨Ğ¡Í¼Íâ²ã
                 o = DOM.create('div');
                 DOM.addClass(o, IMGZOOM_MAGNIFIER_CLS);
                 o.appendChild(i);
                 c.appendChild(o);
                 self.origin = o;
                 
-                // éœ€è¦æ˜¾ç¤ºé•œç‰‡
-                if (TYPE[1] == cfg.type) {
+                // ¾µÆ¬Ä£Ê½ÏÂ
+                if (TYPE[1] == cfg.zType) {
                     g = DOM.create('div');
                     DOM.addClass(g, IMGZOOM_GLASS_CLS);
                     DOM.addClass(g, HIDDEN);
@@ -192,7 +200,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                     o.appendChild(g);
                     self.glass = g;
                 }
-                // éœ€è¦æ˜¾ç¤ºæ”¾å¤§å›¾æ ‡
+                // ĞèÒªÏÔÊ¾·Å´óÍ¼±ê
                 if (cfg.useZoomIcon) {
                     z = DOM.create('div');
                     DOM.addClass(z, IMGZOOM_ICON_CLS);
@@ -200,103 +208,150 @@ KISSY.add("imagezoom", function(S, undefined) {
                     self.zoomIcon = z;
                 }
                 
-                // è°ƒæ•´å®¹å™¨å¤§å°åŠä½ç½®
+                // µ÷ÕûÈİÆ÷´óĞ¡¼°Î»ÖÃ
                 self.container.style.height = parseInt(self.getStyle(o, 'marginTop')) + parseInt(self.getStyle(o, 'marginBottom')) + self.getSize(o).height + 'px';
                 if (POSITION[0] == cfg.position) {
-                    self.container.style.marginTop = self.getSize(i).height + parseInt(self.getStyle(i, 'borderTopWidth')) + cfg.offset + "px";
+                    self.container.style.marginTop = self.getSize(i).height + parseInt(self.getStyle(i, 'borderTopWidth')) + cfg.offset + 'px';
                 } else if (POSITION[3] == cfg.position) {
-                    self.container.style.marginLeft = self.getSize(i).width + parseInt(self.getStyle(i, 'borderLeftWidth')) + cfg.offset + "px";
+                    self.container.style.marginLeft = self.getSize(i).width + parseInt(self.getStyle(i, 'borderLeftWidth')) + cfg.offset + 'px';
                 }
             },
             
             /**
-             * è®¾ç½®æ”¾å¤§å›¾ç‰‡æ˜¾ç¤ºçš„åç§»é‡
-             * @param ev    è§¦å‘çš„äº‹ä»¶
+             * ÉèÖÃ·Å´óÍ¼Æ¬ÏÔÊ¾µÄÆ«ÒÆÁ¿
+             * @param ev    ´¥·¢µÄÊÂ¼ş
              */
             _zoom: function(ev) {
-                var self = this;
-                
-                // å¦‚æœæ²¡æœ‰å¤§å›¾æ˜¾ç¤ºå±‚, åˆ›å»ºä¹‹, å¦åˆ™å°±æ˜¾ç¤º
-                if (!self.viewer) {
-                    self._createZoom();
-                } else DOM.removeClass(self.viewer, HIDDEN);
-                
+                var self = this,
+                    cfg = self.config,
+                    g = self.glass;
                 /**
-                 * ç§»åŠ¨é¼ æ ‡æ—¶æ›´æ–°å¤§å›¾åç§»é‡
+                 * ÒÆ¶¯Êó±êÊ±¸üĞÂ´óÍ¼Æ«ÒÆÁ¿
                  */
                 EVENT.on(self.origin, 'mousemove', function(ev) {
-                    // é•œç‰‡åç§»é‡å¹¶æ›´æ–°
+                    // ¾µÆ¬Æ«ÒÆÁ¿²¢¸üĞÂ
                     var glassOffset = self.getGlassOffset(ev);
-                    if (self.glass) {
-                        self.glass.style.left = glassOffset.left + 'px';
-                        self.glass.style.top = glassOffset.top + 'px';
+                    if (g) {
+                        g.style.left = glassOffset.left + 'px';
+                        g.style.top = glassOffset.top + 'px';
                     }
-                    // è®¡ç®—å¤§å›¾åç§»é‡å¹¶æ›´æ–°
-                    var imageSize = self.getSize(self.image);
-                    var zoom = self.getSize(self.bigImage);
-                    var scrollx = Math.round(glassOffset.left*zoom.width/imageSize.width);
-                    var scrolly = Math.round(glassOffset.top*zoom.height/imageSize.height);
-                    self.viewer.scrollLeft = scrollx;
-                    self.viewer.scrollTop = scrolly;
+                    // ¼ÆËã´óÍ¼Æ«ÒÆÁ¿²¢¸üĞÂ
+                    var imageSize = self.getSize(self.image),
+                        zoom = self.getSize(self.bigImage),
+                        i = 0,
+                        j = 0,
+                        scrollx = Math.round(glassOffset.left*zoom.width/imageSize.width),
+                        scrolly = Math.round(glassOffset.top*zoom.height/imageSize.height);
+                    if (TYPE[2] == cfg.zType) {
+                        var glassSize = self.getSize(g);
+                        i = glassSize.width/2;
+                        j = glassSize.height/2
+                    }
+                    self.viewer.scrollLeft = scrollx + i;
+                    self.viewer.scrollTop = scrolly + j;
+                    
+                    // ¸úËæÄ£Ê½ÏÂ¸üĞÂÏÔÊ¾ÇøÓòÎ»ÖÃ
+                    if (TYPE[2] == cfg.zType) {
+                        self.viewer.style.left = glassOffset.left + 'px';
+                        self.viewer.style.top = glassOffset.top + 'px';
+                    }
                 });
             },
             
             /**
-             * åˆ›å»ºå¤§å›¾æ˜¾ç¤ºDOM
+             * ´´½¨´óÍ¼µÄÏÔÊ¾DOM
              */
-            _createZoom: function() {
+            _createZoom: function(ev) {
                 var self = this,
                     cfg = self.config,
                     i = self.image, v;
                 
-                // åˆ›å»ºå¤§å›¾æ˜¾ç¤ºDOMç»“æ„
+                // ´´½¨´óÍ¼ÏÔÊ¾DOM½á¹¹
                 v = DOM.create('div');
                 DOM.addClass(v, IMGZOOM_VIEWER_CLS);
                 var bimg = DOM.create('img');
                 DOM.attr(bimg, 'src', cfg.bigImageSrc);
                 v.appendChild(bimg);
-                // æ·»åŠ åˆ°åŸæœ‰DOMä¸­
-                self.container.appendChild(v);
+                // Ìí¼Óµ½Ô­ÓĞDOMÖĞ
+                if (TYPE[2] == cfg.zType) {
+                    self.origin.appendChild(v);
+                } else {
+                    self.container.appendChild(v);
+                }
                 self.bigImage = bimg;
                 self.viewer = v;
                 
-                // è·å–å°å›¾ç‰‡åç§»é‡, å®é™…å°ºå¯¸, é•œç‰‡å®é™…å°ºå¯¸
+                // »ñÈ¡Ğ¡Í¼Æ¬Æ«ÒÆÁ¿, Êµ¼Ê³ß´ç, ¾µÆ¬Êµ¼Ê³ß´ç
                 var imageOffset = self.getOffset(i),
                     imageSize = self.getSize(i),
                     glassSize = self.getSize(self.glass);
                 
-                // è®¡ç®—å¤§å›¾åç§»é‡
-                var leftpos, toppos;
-                
-                // è®¡ç®—å¤§å›¾å®½åº¦é«˜åº¦
-                var bigImgWidth = Math.round(imageSize.height/glassSize.height*glassSize.width);
-                
-                if (POSITION[0] == cfg.position) {
-                    toppos = - (imageSize.height + parseInt(self.getStyle(i, 'borderTopWidth')) + cfg.offset - parseInt(self.getStyle(self.origin, 'marginTop')));
-                    leftpos = imageOffset.left;
+                // ¼ÆËã´óÍ¼Æ«ÒÆÁ¿
+                var leftPos, topPos;
+                // ¼ÆËãÔ­Í¼±ß¿ò¿í¶È
+                var btw = parseInt(self.getStyle(i, 'borderTopWidth')),
+                    blw = parseInt(self.getStyle(i, 'borderLeftWidth'));
+                if (TYPE[2] == cfg.zType) {
+                    // ÏÔÊ¾ÇøÓò³õÊ¼Î»ÖÃ
+                    var mousePoint = self.getMousePoint(ev),
+                        cursorX = mousePoint.x - imageOffset.left,
+                        cursorY = mousePoint.y - imageOffset.top;
+                    leftPos = cursorX - glassSize.width/2;
+                    topPos = cursorY - glassSize.height/2;
+                } else if (POSITION[0] == cfg.position) {
+                    topPos = - (imageSize.height + btw + cfg.offset - parseInt(self.getStyle(self.origin, 'marginTop')));
+                    leftPos = imageOffset.left;
                 } else if (POSITION[2] == cfg.position) {
-                    toppos = imageSize.height + imageOffset.top + cfg.offset;
-                    leftpos = imageOffset.left;
+                    topPos = imageSize.height + imageOffset.top + cfg.offset;
+                    leftPos = imageOffset.left;
                 } else if (POSITION[3] == cfg.position) {
-                    toppos = imageOffset.top;
-                    leftpos = - (imageSize.width + parseInt(self.getStyle(i, 'borderLeftWidth')) + cfg.offset - parseInt(self.getStyle(self.origin, 'marginLeft')));
+                    topPos = imageOffset.top;
+                    leftPos = - (imageSize.width + blw + cfg.offset - parseInt(self.getStyle(self.origin, 'marginLeft')));
                 } else {
-                    toppos = imageOffset.top;
-                    leftpos = imageOffset.left + imageSize.width + cfg.offset;
+                    topPos = imageOffset.top;
+                    leftPos = imageOffset.left + imageSize.width + cfg.offset;
                 }
-
-                self.viewer.style.top = toppos + 'px';
-                self.viewer.style.left = leftpos + 'px';
+                self.viewer.style.top = topPos + 'px';
+                self.viewer.style.left = leftPos + 'px';
                 
-                self.viewer.style.height = imageSize.height + 'px';
-                self.viewer.style.width = bigImgWidth + 'px';
+                if (TYPE[2] == cfg.zType) {
+                    // ¸úËæÄ£Ê½ÏÂ, ÏÔÊ¾ÇøÓò¿í¸ß¶ÈÓÉÓÃ»§Éè¶¨µÄglass¿í¸ß¶È¾ö¶¨
+                    self.viewer.style.height = glassSize.height + 'px';
+                    self.viewer.style.width =  glassSize.width + 'px';
+                } else {
+                    self.viewer.style.height = imageSize.height - btw*2 + 'px';
+                    self.viewer.style.width =  Math.round(imageSize.height/glassSize.height*glassSize.width) - blw*2 + 'px';
+                    // ´óÍ¼¼ÓÔØÍêÖØĞÂÉèÖÃÏÔÊ¾ÇøÓò¿í¸ß¶È
+                    self.bigImage.onload = function() {
+                        if (!BIGIMG_READY) {
+                            BIGIMG_READY = !BIGIMG_READY;
+                            self._updateViewer();
+                        }
+                    }
+                    if (!BIGIMG_READY && self.bigImage.complete) {
+                        BIGIMG_READY = !BIGIMG_READY;
+                        self._updateViewer();
+                    }
+                }
                 DOM.removeClass(v, HIDDEN);
             },
             
             /**
-             * è·å–é•œç‰‡çš„åç§»é‡
-             * @param ev    è§¦å‘çš„äº‹ä»¶
-             * @return  x/y: é•œç‰‡åœ¨æ”¾å¤§ç›®æ ‡å…ƒç´ ä¸Šçš„æ¨ª/çºµå‘ä½ç½®
+             * ¸üĞÂÏÔÊ¾ÇøÓò´óĞ¡
+             */
+            _updateViewer: function() {
+                var self = this,
+                    bigImageSize = self.getSize(self.bigImage),
+                    imageSize = self.getSize(self.image),
+                    glassSize = self.getSize(self.glass);
+                self.viewer.style.height = Math.round(bigImageSize.height*glassSize.height/imageSize.height) + 'px';
+                self.viewer.style.width = Math.round(bigImageSize.width*glassSize.width/imageSize.width) + 'px';
+            },
+            
+            /**
+             * »ñÈ¡¾µÆ¬µÄÆ«ÒÆÁ¿
+             * @param ev    ´¥·¢µÄÊÂ¼ş
+             * @return  offset ¾µÆ¬ÔÚ·Å´óÄ¿±êÔªËØÉÏµÄºá×İÏòÎ»ÖÃ
              */
             getGlassOffset: function(ev) {
                 var self = this,
@@ -305,40 +360,45 @@ KISSY.add("imagezoom", function(S, undefined) {
                         left: 0,
                         top: 0
                     };
-                // å°å›¾åç§»é‡
+                // Ğ¡Í¼Æ«ÒÆÁ¿
                 var imageOffset = self.getOffset(i);
-                // é¼ æ ‡åœ¨é¡µé¢ä¸Šçš„ä½ç½®
+                // Êó±êÔÚÒ³ÃæÉÏµÄÎ»ÖÃ
                 var mousePoint = self.getMousePoint(ev);
-                // é•œç‰‡å®é™…å°ºå¯¸
+                // ¾µÆ¬Êµ¼Ê³ß´ç
                 var glassSize = self.getSize(self.glass);
-                // å°å›¾å®é™…å°ºå¯¸
+                // Ğ¡Í¼Êµ¼Ê³ß´ç
                 var imageSize = self.getSize(i);
-                // å…‰æ ‡æ¨ªå‘ä½ç½®
+                // ¹â±êºáÏòÎ»ÖÃ
                 var cursorX = mousePoint.x - imageOffset.left;
-                // é•œç‰‡æ¨ªå‘åç§»é‡
+                // ¾µÆ¬ºáÏòÆ«ÒÆÁ¿
                 offset.left = cursorX - glassSize.width/2;
-                
-                if (offset.left < 0) {
+                var i = 0,
+                    j = 0;
+                if (TYPE[2] == self.config.zType) {
+                    i = glassSize.width/2;
+                    j = glassSize.height/2;
+                }
+                if (offset.left < -i) {
                     offset.left = 0;
-                } else if (offset.left > imageSize.width - glassSize.width) {
+                } else if (offset.left > imageSize.width - glassSize.width + i) {
                     offset.left = imageSize.width - glassSize.width;
                 }
-                // å…‰æ ‡çºµå‘ä½ç½®
+                // ¹â±ê×İÏòÎ»ÖÃ
                 var cursorY = mousePoint.y - imageOffset.top;
-                // é•œç‰‡çºµå‘åç§»é‡
+                // ¾µÆ¬×İÏòÆ«ÒÆÁ¿
                 offset.top = cursorY - glassSize.height/2;
-                if (offset.top < 0) {
+                if (offset.top < -j) {
                     offset.top = 0;
-                } else if (offset.top >= imageSize.height - glassSize.height) {
+                } else if (offset.top > imageSize.height - glassSize.height + j) {
                     offset.top = imageSize.height - glassSize.height;
                 }
                 return offset;
             },
             
             /**
-             * è·å–å…ƒç´ çš„å®½é«˜åº¦(ä¸åŒ…æ‹¬è¾¹çº¿å’Œæ»šåŠ¨æ¡)
+             * »ñÈ¡ÔªËØµÄ¿í¸ß¶È(²»°üÀ¨±ßÏßºÍ¹ö¶¯Ìõ)
              * @param   HTMLElement
-             * @return  å…ƒç´ å¯è§å°ºå¯¸
+             * @return  ÔªËØ¿É¼û³ß´ç
              */
             getSize: function(elm) {
                 var cfg = this.config;
@@ -350,9 +410,9 @@ KISSY.add("imagezoom", function(S, undefined) {
             },
             
             /**
-             * è·å–ç´¯è®¡åç§»é‡, å³å…ƒç´ åˆ°é¡µé¢å·¦ä¸Šè§’çš„æ¨ªè¡Œå’Œçºµå‘è·ç¦»
-             * @param   elm    ç›®æ ‡å…ƒç´ 
-             * @return  left:  æ¨ªè¡Œåç§»è·ç¦», top:çºµå‘åç§»è·ç¦»
+             * »ñÈ¡ÀÛ¼ÆÆ«ÒÆÁ¿, ¼´ÔªËØµ½Ò³Ãæ×óÉÏ½ÇµÄºáĞĞºÍ×İÏò¾àÀë
+             * @param   elm    Ä¿±êÔªËØ
+             * @return  left  ºáĞĞÆ«ÒÆ¾àÀë, top:×İÏòÆ«ÒÆ¾àÀë
              */
             getOffset: function(elm) {
                 return {
@@ -362,19 +422,19 @@ KISSY.add("imagezoom", function(S, undefined) {
             },
             
             /**
-             * è·å–é¼ æ ‡åœ¨é¡µé¢ä¸Šçš„ä½ç½®
-             * @param ev    è§¦å‘äº‹ä»¶
-             * @return  x/y: é¼ æ ‡åœ¨é¡µé¢ä¸Šçš„æ¨ª/çºµå‘ä½ç½®
+             * »ñÈ¡Êó±êÔÚÒ³ÃæÉÏµÄÎ»ÖÃ
+             * @param ev        ´¥·¢ÊÂ¼ş
+             * @return offset   Êó±êÔÚÒ³ÃæÉÏµÄºá×İÏòÎ»ÖÃ
              */
             getMousePoint: function(ev) {
                 return {x: ev.pageX, y: ev.pageY}
             },
             
             /**
-             * è·å–å…ƒç´ æ ·å¼
-             * @param elm ç›®æ ‡å…ƒç´ 
-             * @param p   æ ·å¼åç§°
-             * @return å…ƒç´ å¯¹åº”çš„æ ·å¼
+             * »ñÈ¡ÔªËØÑùÊ½
+             * @param elm Ä¿±êÔªËØ
+             * @param p   ÑùÊ½Ãû³Æ
+             * @return ÔªËØ¶ÔÓ¦µÄÑùÊ½
              */
             getStyle: function(elm, p){
                 if (typeof elm == 'string') {
@@ -390,6 +450,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                 return y[p];
             }
         });
+        
         S.augment(ImageZoom, S.EventTarget);
         
         S.ImageZoom = ImageZoom;
@@ -398,10 +459,11 @@ KISSY.add("imagezoom", function(S, undefined) {
 
 /**
  * NOTES:
- *  2010.6.21
- *      - åŠ å…¥positioné€‰é¡¹, åŠ¨æ€æ„å»ºæ‰€éœ€dom;
- *      - å°å›¾åŠ è½½ä¹‹åæ‰èƒ½ç»§ç»­;
- * TODO:
- *      - åŠ å…¥è·Ÿéšæ¨¡å¼å’Œåè½¬æ¨¡å¼;
- *      - å¤§å›¾åŠ è½½ç­‰å¾…
+ *  2010.6
+ *      - ¼ÓÈëpositionÑ¡Ïî, ¶¯Ì¬¹¹½¨ËùĞèdom;
+ *      - Ğ¡Í¼¼ÓÔØÖ®ºó²ÅÄÜ¼ÌĞø;
+ *      - ´óÍ¼¼ÓÔØ
+ *      - ¼ÓÈë¸úËæÄ£Ê½
+ *  TODO:
+ *      - ¼ÓÈë·´×ªÄ£Ê½;
  */
