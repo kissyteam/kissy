@@ -213,13 +213,28 @@
 
         /**
          * Applies prototype properties from the supplier to the receiver.
-         * @param r {Function} the object to receive the augmentation
-         * @param s {Object|Function} the object that supplies the properties to augment
-         * @param wl {String[]} a whitelist
          * @return {Object} the augmented object
          */
-        augment: function(r, s, ov, wl) {
-            mix(r.prototype, s.prototype || s, ov, wl);
+        augment: function(/*r, s1, s2, ..., ov, wl*/) {
+            var args = arguments, len = args.length - 2,
+                r = args[0], ov = args[len], wl = args[len + 1],
+                i = 1;
+            
+            if(!S.isArray(wl)) {
+                ov = wl;
+                wl = undefined;
+                len++;
+            }
+
+            if(!S.isBoolean(ov)) {
+                ov = undefined;
+                len++;
+            }
+
+            for(; i < len; i++) {
+                mix(r.prototype, args[i].prototype || args[i], ov, wl);
+            }
+
             return r;
         },
 

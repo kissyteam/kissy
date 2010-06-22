@@ -124,11 +124,12 @@
         function Pig(name) {
             this.name = name;
         }
-        S.augment(Pig, Bird);
+        S.augment(Pig, Bird, { prop: 'test prop' });
 
         var pig = new Pig('Babi');
 
         if(!pig.fly) test.fail();
+        if(pig.prop !== 'test prop') test.fail();
     }
 
     function test_extend(test) {

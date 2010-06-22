@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.5
 MIT Licensed
-build: 669 May 22 23:46
+build: 720 Jun 22 16:48
 */
 /**
  * @module kissy
@@ -218,13 +218,28 @@ build: 669 May 22 23:46
 
         /**
          * Applies prototype properties from the supplier to the receiver.
-         * @param r {Function} the object to receive the augmentation
-         * @param s {Object|Function} the object that supplies the properties to augment
-         * @param wl {String[]} a whitelist
          * @return {Object} the augmented object
          */
-        augment: function(r, s, ov, wl) {
-            mix(r.prototype, s.prototype || s, ov, wl);
+        augment: function(/*r, s1, s2, ..., ov, wl*/) {
+            var args = arguments, len = args.length - 2,
+                r = args[0], ov = args[len], wl = args[len + 1],
+                i = 1;
+            
+            if(!S.isArray(wl)) {
+                ov = wl;
+                wl = undefined;
+                len++;
+            }
+
+            if(!S.isBoolean(ov)) {
+                ov = undefined;
+                len++;
+            }
+
+            for(; i < len; i++) {
+                mix(r.prototype, args[i].prototype || args[i], ov, wl);
+            }
+
             return r;
         },
 
@@ -377,6 +392,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
     var win = window, doc = document, loc = location,
         AP = Array.prototype,
         indexOf = AP.indexOf, filter = AP.filter,
+        trim = String.prototype.trim,
         toString = Object.prototype.toString,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
@@ -385,6 +401,13 @@ KISSY.add('kissy-lang', function(S, undefined) {
         REG_NOT_WHITE = /\S/;
 
     S.mix(S, {
+
+        /**
+         * Determines whether or not the provided object is undefined.
+         */
+        isUndefined: function(o) {
+            return o === undefined;
+        },
 
         /**
          * Determines whether or not the provided object is a boolean.
@@ -431,9 +454,9 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * NOTICE: DOM methods and functions like alert aren't supported. They return false on IE.
          */
         isFunction: function(o) {
-            return typeof o === 'function';
-            // 对于 function 来说，直接用 typeof 的效果和 toString 一致
-            //return toString.call(o) === '[object Function]';
+            //return typeof o === 'function';
+            // Safari 下，typeof NodeList 也返回 function
+            return toString.call(o) === '[object Function]';
         },
 
         /**
@@ -446,12 +469,12 @@ KISSY.add('kissy-lang', function(S, undefined) {
         /**
          * Removes the whitespace from the beginning and end of a string.
          */
-        trim: String.prototype.trim ?
+        trim: trim ?
               function(str) {
-                  return (str || '').trim();
+                  return (str == undefined) ? '' : trim.call(str);
               } :
               function(str) {
-                  return (str || '').replace(REG_TRIM, '');
+                  return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
               },
 
         /**
@@ -597,7 +620,13 @@ KISSY.add('kissy-lang', function(S, undefined) {
             for (; i < len; ++i) {
                 pair = pairs[i].split('=');
                 key = decode(pair[0]);
-                val = decode(pair[1] || '');
+
+                // pair[1] 可能包含 gbk 编码的中文，而 decodeURIComponent 仅能处理 utf-8 编码的中文，否则报错
+                try {
+                    val = decode(pair[1] || '');
+                } catch (ex) {
+                    val = pair[1] || '';
+                }
 
                 if ((m = key.match(REG_ARR_KEY)) && m[1]) {
                     ret[m[1]] = ret[m[1]] || [];
@@ -700,6 +729,9 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
 /**
  * NOTES:
+ *
+ *  2010.06
+ *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着 
  *
  *  2010.05
  *   - 增加 filter 方法。
