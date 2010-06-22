@@ -106,8 +106,8 @@ js{{{
     preload: true               // 是否预加载
 }}}
  . 注意事项
-    1.
-    2.
+    1. overlay下生成的dom有点不同, 直接把ks-imagezoom-viewer这层放到ks-imagezoom-magnifier中了;
+    2. 关于显示区域宽高, 显示区域宽=大图宽度*镜片宽度/小图宽度(之前其宽和小图宽度一致)
 
 
 
