@@ -11,6 +11,9 @@
 <p>
 <input type="button" id="r3" value="全部重置" />
 </p>
+<p>
+	for more to see ,come <a href="http://yiminghe.javaeye.com/blog/696296" target="_blank">here</a>
+</p>
 <script src="../../build/packages/ks-core.js"></script>
 <script src="../../src/node/node.js"></script>
 <script src="../../src/node/nodelist.js"></script>
@@ -165,15 +168,23 @@ KISSY.ready(function (S) {
      组件使用者，可以使用属性直观得和组件交互，同组件完全解耦分离，且组件开发者和使用者通过监控属性变化又达到了一定的统一协作。
      
     */
+    
+    
+    //通过输入框设置组件状态部分代码
     var v2 = S.one("#v2");
     var r2 = S.one("#r2");
+    
     //设置组件属性，通知组件更新自己的状态
     r2.on("click", function () {
         attrIn.set("v", v2.val());
     });
+    
+    //设置组件属性，通知组件更新自己的状态  
     attrIn.on("afterVChange", function () {
         v2.val(attrIn.get("v"));
     });
+    
+    //全部重置部分代码
     var r3 = S.one("#r3");
     r3.on("click", function () {
         //利用属性事件统一了调用者与开发者
