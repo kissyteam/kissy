@@ -5,8 +5,13 @@
 KISSY.add('attribute-base', function (S, undefined) {
     var EventTarget = S.EventTarget,
         BEFORE = "before",
-        CHANGE = "change",
+        CHANGE = "Change",
         AFTER = "after";
+        
+        function capitalFirst(s){
+        	var f=s.charAt(0);
+        	return f.toUpperCase()+s.substring(1);
+        }
     /**
      * Attribute provides the implementation for any object to deal with its attribute in aop ways
      */
@@ -46,16 +51,17 @@ KISSY.add('attribute-base', function (S, undefined) {
          *@param value attribute's value
          */
         set: function (attr, value) {
-            //if allow set
-            if (this.fire(BEFORE + attr + CHANGE, {
-                value: value
-            }) === false) return;
-            //get previous value
+        		//get previous value
             var preVal = this.get(attr);
+            //if allow set
+            if (this.fire(BEFORE + capitalFirst(attr) + CHANGE, {
+            		preVal: preVal,
+                newVal: value
+            }) === false) return;            
             //finally set
             this._set.apply(this, arguments);
             //notify set
-            this.fire(AFTER + attr + CHANGE, {
+            this.fire(AFTER + capitalFirst(attr) + CHANGE, {
                 preVal: preVal,
                 newVal: this._values[attr]
             });
@@ -71,6 +77,16 @@ KISSY.add('attribute-base', function (S, undefined) {
             //finally set
             this._values[attr] = value;
         },
+        //get default value for specified attribute
+        _getDefaultValue:function(attr){
+        	var attrConfig = this._state[attr]
+        	if(!attrConfig)	return;
+        	if(attrConfig.valueFn) {
+        		attrConfig.value=attrConfig.valueFn.call(this);
+        		delete attrConfig.valueFn;
+        	}
+        	return attrConfig.value;        		
+        },
         /**
          *get object's attribute value
          *@param attr{String} attribute's name
@@ -80,7 +96,9 @@ KISSY.add('attribute-base', function (S, undefined) {
             var attrConfig = this._state[attr],
                 getter = attrConfig && attrConfig.getter,
             //get user-set value or default value
-            ret = attr in this._values ? this._values[attr] : (attrConfig ? attrConfig.value : undefined);
+            ret = attr in this._values ? 
+            				this._values[attr] : 
+            				this._getDefaultValue(attr);
             //invoke getter for this attribute     
             if (getter) ret = getter.call(this, ret);
             return ret;
@@ -92,7 +110,7 @@ KISSY.add('attribute-base', function (S, undefined) {
         reset: function (attr) {
             if (attr !== undefined) {
                 //if attribute does not have default value,then set undefined
-                this.set(attr, this._state[attr].value);
+                this.set(attr, this._getDefaultValue(attr));
                 return;
             }
             for (var attr in this._state) {
