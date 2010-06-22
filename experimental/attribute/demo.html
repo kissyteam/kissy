@@ -1,10 +1,16 @@
+<html>
+<head>
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+</head>
+<body>
 <p>
-数字(0到3)：<input id="v" value="0" readonly/> <br/>
+数字(0到3)：<input id="v" value="0" readonly autocomplete="off"/> <br/>
 <input type="button" id="r" value="增加" />
 </p>
 
 <p>
-	<label>输入数字：<input id="v2" value="0"/></label> <br/>
+	<label>输入数字：<input id="v2" value="0" autocomplete="off"/></label> <br/>
 	<input type="button" id="r2" value="尝试直接设置" />
 </p>
 
@@ -15,8 +21,8 @@
 	for more to see ,come <a href="http://yiminghe.javaeye.com/blog/696296" target="_blank">here</a>
 </p>
 <script src="../../build/packages/ks-core.js"></script>
+<script src="../../build/event/event-pkg-min.js"></script>
 <script src="../../src/node/node.js"></script>
-<script src="../../src/node/nodelist.js"></script>
 <script src="attribute.js"></script>
 
 <script>
@@ -24,14 +30,11 @@ KISSY.ready(function (S) {
     /*
 	1.原始类，业务逻辑与ui混合
 	*/
-
     function Increaser(domInput, domAction, cfg) {
         this.input = domInput;
         this.domAction = domAction;
         var self = this;
-        this.domAction.on("click", function (e) {
-            self.increasing(e);
-        });
+        this.domAction.on("click", self.increasing, self);
         //0,3 属性默认值
         this.min = cfg.min.toString() || "0";
         this.max = cfg.max.toString() || "3";
@@ -48,15 +51,14 @@ KISSY.ready(function (S) {
 2.改进类，区分业务domain与ui，duplicate observed data，
 将数据复制到一个领域对象中，建立一个observer模式，用以同步领域对象和gui对象内的重复数据
 */
+
     function GuiIncreaser(domInput, domAction, cfg) {
         this.input = domInput;
         this.domAction = domAction;
         this.domainIncreaser = new DomainIncreaser(this.input.val(), cfg);
         this.domainIncreaser.addObserver(this);
         var self = this;
-        this.domAction.on("click", function (e) {
-            self.increasing(e);
-        });
+        this.domAction.on("click", self.increasing, self);
     }
     GuiIncreaser.prototype = {
         constructor: GuiIncreaser,
@@ -68,6 +70,7 @@ KISSY.ready(function (S) {
             this.input.val(v);
         }
     }
+
     function DomainIncreaser(v, cfg) {
         this.v = v;
         this.observers = [];
@@ -126,6 +129,7 @@ KISSY.ready(function (S) {
     /*
 			note : cfg should be first argument.
 		*/
+
     function AttributeIncreaser(cfg, domInput, domAction) {
         var self = this;
         AttributeIncreaser.superclass.constructor.apply(this, arguments);
@@ -133,13 +137,9 @@ KISSY.ready(function (S) {
         this.domAction = domAction;
         this._edge = parseInt(this.get("max")) + 1 + "";
         //domain业务逻辑
-        this.domAction.on("click", function (e) {
-            self.increase(e);
-        });
+        this.domAction.on("click", self.increase, self);
         //利用after事件触发实现属性与gui同步，属性首字母大小,after/before + Attribute + Change
-        this.on("afterVChange", function () {
-            self.afterVChange.apply(self, arguments);
-        });
+        this.on("afterVChange", self.afterVChange, self);
         //dimain业务逻辑，利用before事件触发，阻止非规范值输入
         this.on("beforeVChange", function (e) {
             if (parseInt(e.newVal) > parseInt(self._edge)) {
@@ -168,22 +168,17 @@ KISSY.ready(function (S) {
      组件使用者，可以使用属性直观得和组件交互，同组件完全解耦分离，且组件开发者和使用者通过监控属性变化又达到了一定的统一协作。
      
     */
-    
-    
     //通过输入框设置组件状态部分代码
     var v2 = S.one("#v2");
     var r2 = S.one("#r2");
-    
     //设置组件属性，通知组件更新自己的状态
     r2.on("click", function () {
         attrIn.set("v", v2.val());
     });
-    
     //设置组件属性，通知组件更新自己的状态  
     attrIn.on("afterVChange", function () {
         v2.val(attrIn.get("v"));
     });
-    
     //全部重置部分代码
     var r3 = S.one("#r3");
     r3.on("click", function () {
@@ -193,3 +188,5 @@ KISSY.ready(function (S) {
     //})();
 });
 </script>
+</body>
+</html>
