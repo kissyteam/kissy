@@ -28,6 +28,14 @@
   draggable - 10%
   docs - 10% done
 
+  event docs, 添加对 scope 和 return false 的理解
+  dom
+  dom docs
+  anim
+  ajax
+  combobox
+  overlay
+
   review popup - done
   review calendar
   KISSY 基础元素风格设计

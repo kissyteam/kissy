@@ -35,6 +35,7 @@
         <li><a id="link-f" href="#">link f</a></li>
         <li><a id="link-g" href="#">link g</a></li>
         <li><a id="link-h" href="#">link h</a></li>
+        <li><a id="link-s" href="#">link s</a></li>
     </ul>
 </div>
 
@@ -196,8 +197,23 @@
         dog.on('running', function(ev) {
            test.echo(this.name + ' is running now. Its speed is ' + ev.speed + '.');
         });
+        dog.on('running', function() {
+           test.echo('running fired 2.');
+            return false;
+        });
+        dog.on('running', function() {
+           test.echo('running fired 3.');
+        });
         
         dog.run();
+    }
+
+    function test_add_scope(test) {
+        Event.add('#link-s', 'click', function(ev) {
+            ev.preventDefault();
+            test.echo(this.p);
+        }, { p: 'scope test' });
+        test.extraMsg = '{click link s should echo "scope test"}';
     }
 
 </script>

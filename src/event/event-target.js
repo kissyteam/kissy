@@ -27,8 +27,8 @@ KISSY.add('event-target', function(S, undefined) {
             }
         },
 
-        on: function(type, fn) {
-            Event.add(this, type, fn);
+        on: function(type, fn, scope) {
+            Event.add(this, type, fn, scope);
         },
 
         detach: function(type, fn) {

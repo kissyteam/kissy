@@ -44,9 +44,10 @@ KISSY.add('event', function(S, undefined) {
          * @param target {Element} An element or custom EventTarget to assign the listener to.
          * @param type {String} The type of event to append.
          * @param fn {Function} The event handler.
+         * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
-        add: function(target, type, fn) {
-            if(batch('add', target, type, fn)) return;
+        add: function(target, type, fn, scope /* optional */) {
+            if(batch('add', target, type, fn, scope)) return;
 
             var id = getID(target),
                 special, events, eventHandle;
@@ -80,7 +81,7 @@ KISSY.add('event', function(S, undefined) {
                         special.setup(event);
                     }
 
-                    return (special.handle || Event._handle)(target, event, events[type].listeners);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners, scope);
                 };
 
                 events[type] = {
@@ -150,18 +151,18 @@ KISSY.add('event', function(S, undefined) {
             }
         },
 
-        _handle: function(target, event, listeners) {
+        _handle: function(target, event, listeners, scope) {
             var ret, i = 0, len = listeners.length;
+            scope = scope || target;
 
             for (; i < len; ++i) {
-                ret = listeners[i].call(target, event);
+                ret = listeners[i].call(scope, event);
 
                 // 自定义事件对象，可以用 return false 来立刻停止后续监听函数
-                if (ret === false && target.isCustomEventTarget) {
-                    event.stopImmediatePropagation();
-                }
-
-                if (event.isImmediatePropagationStopped) {
+                // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡
+                // 目前没有实现自定义事件对象的冒泡，因此 return false 和 stopImmediatePropagation 效果是一样的
+                if ((ret === false && target.isCustomEventTarget) ||
+                    event.isImmediatePropagationStopped) {
                     break;
                 }
             }
@@ -180,7 +181,7 @@ KISSY.add('event', function(S, undefined) {
     // shorthand
     Event.on = Event.add;
 
-    function batch(methodName, targets, types, fn) {
+    function batch(methodName, targets, types, fn, scope) {
 
         // on('#id tag.className', type, fn)
         if(S.isString(targets)) {
@@ -190,7 +191,7 @@ KISSY.add('event', function(S, undefined) {
         // on([targetA, targetB], type, fn)
         if (S.isArray(targets)) {
             S.each(targets, function(target) {
-                Event[methodName](target, types, fn);
+                Event[methodName](target, types, fn, scope);
             });
             return true;
         }
@@ -198,7 +199,7 @@ KISSY.add('event', function(S, undefined) {
         // on(target, 'click focus', fn)
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
             S.each(types.split(SPACE), function(type) {
-                Event[methodName](targets, type, fn);
+                Event[methodName](targets, type, fn, scope);
             });
             return true;
         }
