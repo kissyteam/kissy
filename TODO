@@ -14,9 +14,10 @@
   将 basic-util 功能在各个组件中实现 - done
 
   kissy - done
-  dom - 90%
+  dom - done
   event - done
-  打包 ks-core, 并将文件编码都改成 utf-8
+  打包 ks-core, 并将文件编码都改成 utf-8 - done
+  和 YUI/jQuery/ExtJS 对比，看还缺少哪些常用功能
 
   node - 20%
   nodelist - 20%
