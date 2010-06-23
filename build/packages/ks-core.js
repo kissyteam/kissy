@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 669 May 22 23:46
+build: 722 Jun 23 16:50
 */
 /**
  * @module kissy
@@ -56,14 +56,14 @@ build: 669 May 22 23:46
          * The version of the library.
          * @type {String}
          */
-        version: '1.0.5',
+        version: '1.0.8',
 
         /**
          * Initializes KISSY object.
          * @private
          */
         _init: function() {
-            // Env ¶ÔÏóÄ¿Ç°½öÓÃÓÚÄÚ²¿£¬ÎªÄ£¿é¶¯Ì¬¼ÓÔØÔ¤Áô½Ó¿Ú
+            // Env å¯¹è±¡ç›®å‰ä»…ç”¨äºå†…éƒ¨ï¼Œä¸ºæ¨¡å—åŠ¨æ€åŠ è½½é¢„ç•™æ¥å£
             this.Env = { mods: {} };
         },
 
@@ -218,13 +218,28 @@ build: 669 May 22 23:46
 
         /**
          * Applies prototype properties from the supplier to the receiver.
-         * @param r {Function} the object to receive the augmentation
-         * @param s {Object|Function} the object that supplies the properties to augment
-         * @param wl {String[]} a whitelist
          * @return {Object} the augmented object
          */
-        augment: function(r, s, ov, wl) {
-            mix(r.prototype, s.prototype || s, ov, wl);
+        augment: function(/*r, s1, s2, ..., ov, wl*/) {
+            var args = arguments, len = args.length - 2,
+                r = args[0], ov = args[len], wl = args[len + 1],
+                i = 1;
+            
+            if(!S.isArray(wl)) {
+                ov = wl;
+                wl = undefined;
+                len++;
+            }
+
+            if(!S.isBoolean(ov)) {
+                ov = undefined;
+                len++;
+            }
+
+            for(; i < len; i++) {
+                mix(r.prototype, args[i].prototype || args[i], ov, wl);
+            }
+
             return r;
         },
 
@@ -345,7 +360,7 @@ build: 669 May 22 23:46
 
     S._init();
 
-    // build Ê±£¬»á½« @DEBUG@ Ìæ»»Îª¿Õ
+    // build æ—¶ï¼Œä¼šå°† @DEBUG@ æ›¿æ¢ä¸ºç©º
     S.Config = { debug: '@DEBUG@' };
 
 })(window, 'KISSY');
@@ -354,18 +369,18 @@ build: 669 May 22 23:46
  * NOTES:
  *
  * 2010.04
- *  - ÒÆ³ıµô weave ·½·¨£¬ÉĞÎ´¿¼ÂÇÖÜÈ«¡£
+ *  - ç§»é™¤æ‰ weave æ–¹æ³•ï¼Œå°šæœªè€ƒè™‘å‘¨å…¨ã€‚
  *
  * 2010.01
- *  - add ·½·¨¾ö¶¨ÄÚ²¿´úÂëµÄ»ù±¾×éÖ¯·½Ê½£¨ÓÃ module ºÍ submodule À´×éÖ¯´úÂë£©¡£
- *  - ready ·½·¨¾ö¶¨Íâ²¿´úÂëµÄ»ù±¾µ÷ÓÃ·½Ê½£¬Ìá¹©ÁËÒ»¸ö¼òµ¥µÄÈõÉ³Ïä¡£
- *  - mix, merge, augment, extend ·½·¨£¬¾ö¶¨ÁËÀà¿â´úÂëµÄ»ù±¾ÊµÏÖ·½Ê½£¬³ä·ÖÀûÓÃ mixin ÌØĞÔºÍ prototype ·½Ê½À´ÊµÏÖ´úÂë¡£
- *  - namespace, app ·½·¨£¬¾ö¶¨×Ó¿âµÄÊµÏÖºÍ´úÂëµÄÕûÌå×éÖ¯¡£
- *  - log, error ·½·¨£¬¼òµ¥µÄµ÷ÊÔ¹¤¾ßºÍ±¨´í»úÖÆ¡£
- *  - ¿¼ÂÇ¼òµ¥¹»ÓÃºÍ 2/8 Ô­Ôò£¬È¥µô¶Ô YUI3 É³ÏäµÄÄ£Äâ¡££¨archives/2009 r402£©
+ *  - add æ–¹æ³•å†³å®šå†…éƒ¨ä»£ç çš„åŸºæœ¬ç»„ç»‡æ–¹å¼ï¼ˆç”¨ module å’Œ submodule æ¥ç»„ç»‡ä»£ç ï¼‰ã€‚
+ *  - ready æ–¹æ³•å†³å®šå¤–éƒ¨ä»£ç çš„åŸºæœ¬è°ƒç”¨æ–¹å¼ï¼Œæä¾›äº†ä¸€ä¸ªç®€å•çš„å¼±æ²™ç®±ã€‚
+ *  - mix, merge, augment, extend æ–¹æ³•ï¼Œå†³å®šäº†ç±»åº“ä»£ç çš„åŸºæœ¬å®ç°æ–¹å¼ï¼Œå……åˆ†åˆ©ç”¨ mixin ç‰¹æ€§å’Œ prototype æ–¹å¼æ¥å®ç°ä»£ç ã€‚
+ *  - namespace, app æ–¹æ³•ï¼Œå†³å®šå­åº“çš„å®ç°å’Œä»£ç çš„æ•´ä½“ç»„ç»‡ã€‚
+ *  - log, error æ–¹æ³•ï¼Œç®€å•çš„è°ƒè¯•å·¥å…·å’ŒæŠ¥é”™æœºåˆ¶ã€‚
+ *  - è€ƒè™‘ç®€å•å¤Ÿç”¨å’Œ 2/8 åŸåˆ™ï¼Œå»æ‰å¯¹ YUI3 æ²™ç®±çš„æ¨¡æ‹Ÿã€‚ï¼ˆarchives/2009 r402ï¼‰
  *
  * TODO:
- *  - Ä£¿é¶¯Ì¬¼ÓÔØ require ·½·¨µÄÊµÏÖ¡£
+ *  - æ¨¡å—åŠ¨æ€åŠ è½½ require æ–¹æ³•çš„å®ç°ã€‚
  * 
  */
 /**
@@ -377,6 +392,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
     var win = window, doc = document, loc = location,
         AP = Array.prototype,
         indexOf = AP.indexOf, filter = AP.filter,
+        trim = String.prototype.trim,
         toString = Object.prototype.toString,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
@@ -385,6 +401,13 @@ KISSY.add('kissy-lang', function(S, undefined) {
         REG_NOT_WHITE = /\S/;
 
     S.mix(S, {
+
+        /**
+         * Determines whether or not the provided object is undefined.
+         */
+        isUndefined: function(o) {
+            return o === undefined;
+        },
 
         /**
          * Determines whether or not the provided object is a boolean.
@@ -432,7 +455,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          */
         isFunction: function(o) {
             //return typeof o === 'function';
-            // Safari ÏÂ£¬typeof NodeList Ò²·µ»Ø function
+            // Safari ä¸‹ï¼Œtypeof NodeList ä¹Ÿè¿”å› function
             return toString.call(o) === '[object Function]';
         },
 
@@ -446,12 +469,12 @@ KISSY.add('kissy-lang', function(S, undefined) {
         /**
          * Removes the whitespace from the beginning and end of a string.
          */
-        trim: String.prototype.trim ?
+        trim: trim ?
               function(str) {
-                  return (str || '').trim();
+                  return (str == undefined) ? '' : trim.call(str);
               } :
               function(str) {
-                  return (str || '').replace(REG_TRIM, '');
+                  return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
               },
 
         /**
@@ -488,7 +511,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * Search for a specified value index within an array.
          */
         inArray: function(elem, arr) {
-            return S.indexOf(elem, arr) !== -1;
+            return S.indexOf(elem, arr) > -1;
         },
 
         /**
@@ -503,7 +526,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 return [o];
             }
 
-            // ie ²»Ö§³ÖÓÃ slice ×ª»» NodeList, ½µ¼¶µ½ÆÕÍ¨·½·¨
+            // ie ä¸æ”¯æŒç”¨ slice è½¬æ¢ NodeList, é™çº§åˆ°æ™®é€šæ–¹æ³•
             if (o.item && S.UA.ie) {
                 var ret = [], i = 0, len = o.length;
                 for (; i < len; ++i) {
@@ -551,7 +574,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * </code>
          */
         param: function(o) {
-            // ·Ç plain object, Ö±½Ó·µ»Ø¿Õ
+            // é plain object, ç›´æ¥è¿”å›ç©º
             if (!S.isPlainObject(o)) return '';
 
             var buf = [], key, val;
@@ -559,11 +582,11 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 val = o[key];
                 key = encode(key);
 
-                // val ÎªÓĞĞ§µÄ·ÇÊı×éÖµ
+                // val ä¸ºæœ‰æ•ˆçš„éæ•°ç»„å€¼
                 if (isValidParamValue(val)) {
                     buf.push(key, '=', encode(val + ''), '&');
                 }
-                // val Îª·Ç¿ÕÊı×é
+                // val ä¸ºéç©ºæ•°ç»„
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
@@ -571,7 +594,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
                         }
                     }
                 }
-                // ÆäËüÇé¿ö£º°üÀ¨¿ÕÊı×é¡¢²»ÊÇÊı×éµÄ object£¨°üÀ¨ Function, RegExp, Date etc.£©£¬Ö±½Ó¶ªÆú
+                // å…¶å®ƒæƒ…å†µï¼šåŒ…æ‹¬ç©ºæ•°ç»„ã€ä¸æ˜¯æ•°ç»„çš„ objectï¼ˆåŒ…æ‹¬ Function, RegExp, Date etc.ï¼‰ï¼Œç›´æ¥ä¸¢å¼ƒ
             }
             buf.pop();
             return buf.join('');
@@ -598,7 +621,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 pair = pairs[i].split('=');
                 key = decode(pair[0]);
 
-                // pair[1] ¿ÉÄÜ°üº¬ gbk ±àÂëµÄÖĞÎÄ£¬¶ø decodeURIComponent ½öÄÜ´¦Àí utf-8 ±àÂëµÄÖĞÎÄ£¬·ñÔò±¨´í
+                // pair[1] å¯èƒ½åŒ…å« gbk ç¼–ç çš„ä¸­æ–‡ï¼Œè€Œ decodeURIComponent ä»…èƒ½å¤„ç† utf-8 ç¼–ç çš„ä¸­æ–‡ï¼Œå¦åˆ™æŠ¥é”™
                 try {
                     val = decode(pair[1] || '');
                 } catch (ex) {
@@ -694,11 +717,11 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
     function isValidParamValue(val) {
         var t = typeof val;
-        // val Îª null, undefined, number, string, boolean Ê±£¬·µ»Ø true
+        // val ä¸º null, undefined, number, string, boolean æ—¶ï¼Œè¿”å› true
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // ¿ÉÒÔÍ¨¹ıÔÚ url ÉÏ¼Ó ?ks-debug À´¿ªÆô debug Ä£Ê½
+    // å¯ä»¥é€šè¿‡åœ¨ url ä¸ŠåŠ  ?ks-debug æ¥å¼€å¯ debug æ¨¡å¼
     if(loc && loc.search && loc.search.indexOf('ks-debug') !== -1){
         S.Config.debug = true;
     }
@@ -707,16 +730,19 @@ KISSY.add('kissy-lang', function(S, undefined) {
 /**
  * NOTES:
  *
+ *  2010.06
+ *   - unparam é‡Œçš„ try catch è®©äººå¾ˆéš¾å—ï¼Œä½†ä¸ºäº†é¡ºåº”å›½æƒ…ï¼Œå†³å®šè¿˜æ˜¯ç•™ç€ 
+ *
  *  2010.05
- *   - Ôö¼Ó filter ·½·¨¡£
- *   - globalEval ÖĞ£¬Ö±½Ó²ÉÓÃ text ¸³Öµ£¬È¥µô appendChild ·½Ê½¡£
+ *   - å¢åŠ  filter æ–¹æ³•ã€‚
+ *   - globalEval ä¸­ï¼Œç›´æ¥é‡‡ç”¨ text èµ‹å€¼ï¼Œå»æ‰ appendChild æ–¹å¼ã€‚
  *
  *  2010.04
- *   - param ºÍ unparam Ó¦¸Ã·ÅÔÚÊ²Ã´µØ·½ºÏÊÊ£¿ÓĞµã¾À½á£¬Ä¿Ç°Ôİ·Å´Ë´¦¡£
- *   - param ºÍ unparam ÊÇ²»ÍêÈ«¿ÉÄæµÄ¡£¶Ô¿ÕÖµµÄ´¦ÀíºÍ cookie ±£³ÖÒ»ÖÂ¡£
+ *   - param å’Œ unparam åº”è¯¥æ”¾åœ¨ä»€ä¹ˆåœ°æ–¹åˆé€‚ï¼Ÿæœ‰ç‚¹çº ç»“ï¼Œç›®å‰æš‚æ”¾æ­¤å¤„ã€‚
+ *   - param å’Œ unparam æ˜¯ä¸å®Œå…¨å¯é€†çš„ã€‚å¯¹ç©ºå€¼çš„å¤„ç†å’Œ cookie ä¿æŒä¸€è‡´ã€‚
  *
  * TODO:
- *   - ·ÖÎö jq µÄ isPlainObject ¶Ô constructor µÄÏ¸½Ú´¦Àí
+ *   - åˆ†æ jq çš„ isPlainObject å¯¹ constructor çš„ç»†èŠ‚å¤„ç†
  *
  */
 /**
@@ -809,23 +835,38 @@ KISSY.add('kissy-ua', function(S) {
  * NOTES:
  *
  * 2010.03
- *  - jQuery, YUI µÈÀà¿â¶¼ÍÆ¼öÓÃÌØĞÔÌ½²âÌæ´úä¯ÀÀÆ÷ĞáÌ½¡£ÌØĞÔÌ½²âµÄºÃ´¦ÊÇÄÜ×Ô¶¯ÊÊÓ¦Î´À´Éè±¸ºÍÎ´ÖªÉè±¸£¬±ÈÈç
- *    if(document.addEventListener) ¼ÙÉè IE9 Ö§³Ö±ê×¼ÊÂ¼ş£¬Ôò´úÂë²»ÓÃĞŞ¸Ä£¬¾Í×ÔÊÊÓ¦ÁË¡°Î´À´ä¯ÀÀÆ÷¡±¡£
- *    ¶ÔÓÚÎ´Öªä¯ÀÀÆ÷Ò²ÊÇÈç´Ë¡£µ«ÊÇ£¬Õâ²¢²»ÒâÎ¶×Åä¯ÀÀÆ÷ĞáÌ½¾ÍµÃ³¹µ×Å×Æú¡£µ±´úÂëºÜÃ÷È·¾ÍÊÇÕë¶ÔÒÑÖªÌØ¶¨ä¯ÀÀÆ÷µÄ£¬
- *    Í¬Ê±²¢·ÇÊÇÄ³¸öÌØĞÔÌ½²â¿ÉÒÔ½â¾öÊ±£¬ÓÃä¯ÀÀÆ÷ĞáÌ½·´¶øÄÜ´øÀ´´úÂëµÄ¼ò½à£¬Í¬Ê±Ò²Ò²²»»áÓĞÊ²Ã´ºó»¼¡£×ÜÖ®£¬Ò»ÇĞ
- *    ½ÔÈ¨ºâ¡£
- *  - UA.ie && UA.ie < 8 ²¢²»ÒâÎ¶×Åä¯ÀÀÆ÷¾Í²»ÊÇ IE8, ÓĞ¿ÉÄÜÊÇ IE8 µÄ¼æÈİÄ£Ê½¡£½øÒ»²½µÄÅĞ¶ÏĞèÒªÊ¹ÓÃ documentMode.
+ *  - jQuery, YUI ç­‰ç±»åº“éƒ½æ¨èç”¨ç‰¹æ€§æ¢æµ‹æ›¿ä»£æµè§ˆå™¨å—…æ¢ã€‚ç‰¹æ€§æ¢æµ‹çš„å¥½å¤„æ˜¯èƒ½è‡ªåŠ¨é€‚åº”æœªæ¥è®¾å¤‡å’ŒæœªçŸ¥è®¾å¤‡ï¼Œæ¯”å¦‚
+ *    if(document.addEventListener) å‡è®¾ IE9 æ”¯æŒæ ‡å‡†äº‹ä»¶ï¼Œåˆ™ä»£ç ä¸ç”¨ä¿®æ”¹ï¼Œå°±è‡ªé€‚åº”äº†â€œæœªæ¥æµè§ˆå™¨â€ã€‚
+ *    å¯¹äºæœªçŸ¥æµè§ˆå™¨ä¹Ÿæ˜¯å¦‚æ­¤ã€‚ä½†æ˜¯ï¼Œè¿™å¹¶ä¸æ„å‘³ç€æµè§ˆå™¨å—…æ¢å°±å¾—å½»åº•æŠ›å¼ƒã€‚å½“ä»£ç å¾ˆæ˜ç¡®å°±æ˜¯é’ˆå¯¹å·²çŸ¥ç‰¹å®šæµè§ˆå™¨çš„ï¼Œ
+ *    åŒæ—¶å¹¶éæ˜¯æŸä¸ªç‰¹æ€§æ¢æµ‹å¯ä»¥è§£å†³æ—¶ï¼Œç”¨æµè§ˆå™¨å—…æ¢åè€Œèƒ½å¸¦æ¥ä»£ç çš„ç®€æ´ï¼ŒåŒæ—¶ä¹Ÿä¹Ÿä¸ä¼šæœ‰ä»€ä¹ˆåæ‚£ã€‚æ€»ä¹‹ï¼Œä¸€åˆ‡
+ *    çš†æƒè¡¡ã€‚
+ *  - UA.ie && UA.ie < 8 å¹¶ä¸æ„å‘³ç€æµè§ˆå™¨å°±ä¸æ˜¯ IE8, æœ‰å¯èƒ½æ˜¯ IE8 çš„å…¼å®¹æ¨¡å¼ã€‚è¿›ä¸€æ­¥çš„åˆ¤æ–­éœ€è¦ä½¿ç”¨ documentMode.
  *
  * TODO:
  *  - test mobile
- *  - ÊÇ·ñĞèÒª¼ÓÈë maxthon µÈ¹úÄÚä¯ÀÀÆ÷ĞáÌ½£¿
+ *  - æ˜¯å¦éœ€è¦åŠ å…¥ maxthon ç­‰å›½å†…æµè§ˆå™¨å—…æ¢ï¼Ÿ
  * 
  */
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 671 May 23 14:23
+build: 722 Jun 23 16:50
 */
+/**
+ * @module  dom
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom', function(S) {
+
+    S.DOM = {
+        /**
+         * æ˜¯ä¸æ˜¯ element node
+         */
+        _isElementNode: function(elem) {
+            return elem && elem.nodeType === 1;
+        }
+    };
+});
 /**
  * @module  selector
  * @author  lifesinger@gmail.com
@@ -833,7 +874,7 @@ build: 671 May 23 14:23
 KISSY.add('selector', function(S, undefined) {
 
     var doc = document,
-        STRING = 'string',
+        DOM = S.DOM,
         SPACE = ' ',
         ANY = '*',
         REG_ID = /^#[\w-]+$/,
@@ -849,7 +890,7 @@ KISSY.add('selector', function(S, undefined) {
         var match, t, ret = [], id, tag, cls, i, len;
 
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
-        // ¿¼ÂÇ 2/8 Ô­Ôò£¬½öÖ§³ÖÒÔÏÂÑ¡ÔñÆ÷£º
+        // è€ƒè™‘ 2/8 åŸåˆ™ï¼Œä»…æ”¯æŒä»¥ä¸‹é€‰æ‹©å™¨ï¼š
         // #id
         // tag
         // .cls
@@ -857,51 +898,51 @@ KISSY.add('selector', function(S, undefined) {
         // #id .cls
         // tag.cls
         // #id tag.cls
-        // ×¢ 1£ºREG_QUERY »¹»áÆ¥Åä #id.cls ÎŞĞ§Öµ
-        // ×¢ 2£ºtag ¿ÉÒÔÎª * ×Ö·û
-        // ×¢ 3£ºÖ§³Ö , ºÅ·Ö×é
-        // ·µ»ØÖµÎªÊı×é
-        // Ñ¡ÔñÆ÷ÎŞĞ§»ò²ÎÊıÒì³£Ê±£¬·µ»Ø¿ÕÊı×é
+        // æ³¨ 1ï¼šREG_QUERY è¿˜ä¼šåŒ¹é… #id.cls
+        // æ³¨ 2ï¼štag å¯ä»¥ä¸º * å­—ç¬¦
+        // æ³¨ 3ï¼šæ”¯æŒ , å·åˆ†ç»„
+        // è¿”å›å€¼ä¸ºæ•°ç»„
+        // é€‰æ‹©å™¨ä¸æ”¯æŒæ—¶ï¼ŒæŠ›å‡ºå¼‚å¸¸
 
-        // selector Îª×Ö·û´®ÊÇ×î³£¼ûµÄÇé¿ö£¬ÓÅÏÈ¿¼ÂÇ
-        // ×¢£º¿Õ°××Ö·û´®ÎŞĞèÅĞ¶Ï£¬ÔËĞĞÏÂÈ¥×Ô¶¯ÄÜ·µ»Ø¿ÕÊı×é
-        if (typeof selector === STRING) {
+        // selector ä¸ºå­—ç¬¦ä¸²æ˜¯æœ€å¸¸è§çš„æƒ…å†µï¼Œä¼˜å…ˆè€ƒè™‘
+        // æ³¨ï¼šç©ºç™½å­—ç¬¦ä¸²æ— éœ€åˆ¤æ–­ï¼Œè¿è¡Œä¸‹å»è‡ªåŠ¨èƒ½è¿”å›ç©ºæ•°ç»„
+        if (S.isString(selector)) {
             selector = S.trim(selector);
 
-            // selector Îª #id ÊÇ×î³£¼ûµÄÇé¿ö£¬ÌØÊâÓÅ»¯´¦Àí
+            // selector ä¸º #id æ˜¯æœ€å¸¸è§çš„æƒ…å†µï¼Œç‰¹æ®Šä¼˜åŒ–å¤„ç†
             if (REG_ID.test(selector)) {
                 t = getElementById(selector.slice(1));
-                if (t) ret = [t]; // #id ÎŞĞ§Ê±£¬·µ»Ø¿ÕÊı×é
+                if (t) ret = [t]; // #id æ— æ•ˆæ—¶ï¼Œè¿”å›ç©ºæ•°ç»„
             }
-            // selector ÎªÖ§³ÖÁĞ±íÖĞµÄÆäËü 6 ÖÖ
-            else if (match = REG_QUERY.exec(selector)) { // NOTICE: assignment
-                // »ñÈ¡Æ¥Åä³öµÄĞÅÏ¢
+            // selector ä¸ºæ”¯æŒåˆ—è¡¨ä¸­çš„å…¶å®ƒ 6 ç§
+            else if ((match = REG_QUERY.exec(selector))) {
+                // è·å–åŒ¹é…å‡ºçš„ä¿¡æ¯
                 id = match[1];
                 tag = match[2];
                 cls = match[3];
 
-                if (context = id ? getElementById(id) : tuneContext(context)) { // NOTICE: assignment
+                if ((context = id ? getElementById(id) : tuneContext(context))) {
 
                     // #id .cls | #id tag.cls | .cls | tag.cls
                     if (cls) {
-                        if (!id || selector.indexOf(SPACE) !== -1) { // ÅÅ³ı #id.cls
+                        if (!id || selector.indexOf(SPACE) !== -1) { // æ’é™¤ #id.cls
                             ret = getElementsByClassName(cls, tag, context);
                         }
-                        // ´¦Àí #id.cls
+                        // å¤„ç† #id.cls
                         else {
                             t = getElementById(id);
-                            if(t && S.DOM.hasClass(t, cls)) {
+                            if(t && DOM.hasClass(t, cls)) {
                                 ret = [t];
                             }
                         }
                     }
                     // #id tag | tag
-                    else if (tag) { // ÅÅ³ı¿Õ°××Ö·û´®
+                    else if (tag) { // æ’é™¤ç©ºç™½å­—ç¬¦ä¸²
                         ret = getElementsByTagName(context, tag);
                     }
                 }
             }
-            // ·Ö×éÑ¡ÔñÆ÷
+            // åˆ†ç»„é€‰æ‹©å™¨
             else if (selector.indexOf(',') > -1) {
                 if (doc.querySelectorAll) {
                     ret = doc.querySelectorAll(selector);
@@ -913,26 +954,26 @@ KISSY.add('selector', function(S, undefined) {
                     ret = uniqueSort(r);
                 }
             }
-            // ²ÉÓÃÍâ²¿Ñ¡ÔñÆ÷
-            else if(S.externalSelector) {
-                return S.externalSelector(selector, context);
+            // é‡‡ç”¨å¤–éƒ¨é€‰æ‹©å™¨
+            else if(S.ExternalSelector) {
+                return S.ExternalSelector(selector, context);
             }
-            // ÒÀ¾É²»Ö§³Ö£¬Å×Òì³£
+            // ä¾æ—§ä¸æ”¯æŒï¼ŒæŠ›å¼‚å¸¸
             else {
-                S.error('Unsupported selector: ' + selector);
+                error(selector);
             }
         }
-        // ´«ÈëµÄ selector ÊÇ Node
+        // ä¼ å…¥çš„ selector æ˜¯ Node
         else if (selector && selector.nodeType) {
             ret = [selector];
         }
-        // ´«ÈëµÄ selector ÊÇ NodeList
-        else if (selector && selector.item) {
+        // ä¼ å…¥çš„ selector æ˜¯ NodeList æˆ–å·²æ˜¯ Array
+        else if (selector && (selector.item || S.isArray(selector))) {
             ret = selector;
         }
-        // ´«ÈëµÄ selector ÊÇÆäËüÖµÊ±£¬·µ»Ø¿ÕÊı×é
+        // ä¼ å…¥çš„ selector æ˜¯å…¶å®ƒå€¼æ—¶ï¼Œè¿”å›ç©ºæ•°ç»„
 
-        // ½« NodeList ×ª»»ÎªÆÕÍ¨Êı×é
+        // å°† NodeList è½¬æ¢ä¸ºæ™®é€šæ•°ç»„
         if(ret.item) {
             ret = S.makeArray(ret);
         }
@@ -940,19 +981,19 @@ KISSY.add('selector', function(S, undefined) {
         return ret;
     }
 
-    // µ÷Õû context ÎªºÏÀíÖµ
+    // è°ƒæ•´ context ä¸ºåˆç†å€¼
     function tuneContext(context) {
-        // 1). context Îª undefined ÊÇ×î³£¼ûµÄÇé¿ö£¬ÓÅÏÈ¿¼ÂÇ
+        // 1). context ä¸º undefined æ˜¯æœ€å¸¸è§çš„æƒ…å†µï¼Œä¼˜å…ˆè€ƒè™‘
         if (context === undefined) {
             context = doc;
         }
-        // 2). context µÄµÚ¶şÊ¹ÓÃ³¡¾°ÊÇ´«Èë #id
-        else if (typeof context === STRING && REG_ID.test(context)) {
+        // 2). context çš„ç¬¬äºŒä½¿ç”¨åœºæ™¯æ˜¯ä¼ å…¥ #id
+        else if (S.isString(context) && REG_ID.test(context)) {
             context = getElementById(context.slice(1));
-            // ×¢£º#id ¿ÉÄÜÎŞĞ§£¬ÕâÊ±»ñÈ¡µÄ context Îª null
+            // æ³¨ï¼š#id å¯èƒ½æ— æ•ˆï¼Œè¿™æ—¶è·å–çš„ context ä¸º null
         }
-        // 3). context »¹¿ÉÒÔ´«Èë HTMLElement, ´ËÊ±ÎŞĞè´¦Àí
-        // 4). ¾­Àú 1 - 3, Èç¹û context »¹²»ÊÇ HTMLElement, ¸³ÖµÎª null
+        // 3). context è¿˜å¯ä»¥ä¼ å…¥ HTMLElement, æ­¤æ—¶æ— éœ€å¤„ç†
+        // 4). ç»å† 1 - 3, å¦‚æœ context è¿˜ä¸æ˜¯ HTMLElement, èµ‹å€¼ä¸º null
         else if (context && context.nodeType !== 1 && context.nodeType !== 9) {
             context = null;
         }
@@ -983,7 +1024,7 @@ KISSY.add('selector', function(S, undefined) {
 
                 if (tag === ANY) {
                     var t = [], i = 0, j = 0, node;
-                    while (node = ret[i++]) { // NOTICE: assignment
+                    while ((node = ret[i++])) {
                         // Filter out possible comments
                         if (node.nodeType === 1) {
                             t[j++] = node;
@@ -1014,13 +1055,13 @@ KISSY.add('selector', function(S, undefined) {
         return ret;
     }
     if (!doc.getElementsByClassName) {
-        // ½µ¼¶Ê¹ÓÃ querySelectorAll
+        // é™çº§ä½¿ç”¨ querySelectorAll
         if (doc.querySelectorAll) {
             getElementsByClassName = function(cls, tag, context) {
                 return context.querySelectorAll((tag ? tag : '') + '.' + cls);
             }
         }
-        // ½µ¼¶µ½ÆÕÍ¨·½·¨
+        // é™çº§åˆ°æ™®é€šæ–¹æ³•
         else {
             getElementsByClassName = function(cls, tag, context) {
                 var els = context.getElementsByTagName(tag || ANY),
@@ -1039,14 +1080,14 @@ KISSY.add('selector', function(S, undefined) {
         }
     }
 
-    // ¶ÔÓÚ·Ö×éÑ¡ÔñÆ÷£¬ĞèÒª½øĞĞÈ¥ÖØºÍÅÅĞò
+    // å¯¹äºåˆ†ç»„é€‰æ‹©å™¨ï¼Œéœ€è¦è¿›è¡Œå»é‡å’Œæ’åº
     function uniqueSort(results) {
         var hasDuplicate = false;
 
-        // °´ÕÕ dom Î»ÖÃÅÅĞò
+        // æŒ‰ç…§ dom ä½ç½®æ’åº
         results.sort(function (a, b) {
-            // ¸Ãº¯ÊıÖ»ÔÚ²»Ö§³Ö querySelectorAll µÄ IE7- ä¯ÀÀÆ÷ÖĞ±»µ÷ÓÃ£¬
-            // Òò´ËÖ»Ğè¿¼ÂÇ sourceIndex ¼´¿É
+            // è¯¥å‡½æ•°åªåœ¨ä¸æ”¯æŒ querySelectorAll çš„ IE7- æµè§ˆå™¨ä¸­è¢«è°ƒç”¨ï¼Œ
+            // å› æ­¤åªéœ€è€ƒè™‘ sourceIndex å³å¯
             var ret = a.sourceIndex - b.sourceIndex;
             if (ret === 0) {
                 hasDuplicate = true;
@@ -1054,7 +1095,7 @@ KISSY.add('selector', function(S, undefined) {
             return ret;
         });
 
-        // È¥ÖØ
+        // å»é‡
         if (hasDuplicate) {
             for (var i = 1; i < results.length; i++) {
                 if (results[i] === results[i - 1]) {
@@ -1066,46 +1107,101 @@ KISSY.add('selector', function(S, undefined) {
         return results;
     }
 
+    // throw exception
+    function error(msg) {
+        S.error('Unsupported selector: ' + msg);
+    }
+
     // public api
     S.query = query;
     S.get = function(selector, context) {
         return query(selector, context)[0] || null;
-    }
+    };
+
+    S.mix(DOM, {
+
+        query: query,
+
+        get: S.get,
+
+        /**
+         * Filters an array of elements to only include matches of a filter.
+         * @param filter selector or fn
+         */
+        filter: function(selector, filter) {
+            var elems = query(selector), match, tag, cls, ret = [];
+
+            // é»˜è®¤ä»…æ”¯æŒæœ€ç®€å•çš„ tag.cls å½¢å¼
+            if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
+                tag = match[2];
+                cls = match[3];
+                filter = function(elem) {
+                    return !((tag && elem.tagName !== tag.toUpperCase()) || (cls && !DOM.hasClass(elem, cls)));
+                }
+            }
+
+            if (S.isFunction(filter)) {
+                ret = S.filter(elems, filter);
+            }
+            // å…¶å®ƒå¤æ‚ filter, é‡‡ç”¨å¤–éƒ¨é€‰æ‹©å™¨
+            else if (filter && S.ExternalSelector) {
+                ret = S.ExternalSelector._filter(selector, filter);
+            }
+            // filter ä¸ºç©ºæˆ–ä¸æ”¯æŒçš„ selector
+            else {
+                error(filter);
+            }
+
+            return ret;
+        },
+
+        /**
+         * Returns true if the passed element(s) match the passed filter
+         */
+        test: function(selector, filter) {
+            var elems = query(selector);
+            return DOM.filter(elems, filter).length === elems.length;
+        }
+
+    });
 });
 
 /**
  * NOTES:
  *
  * 2010.01
- *  - ¶Ô reg exec µÄ½á¹û(id, tag, className)×ö cache, ·¢ÏÖ¶ÔĞÔÄÜÓ°ÏìºÜĞ¡£¬È¥µô¡£
- *  - getElementById Ê¹ÓÃÆµÂÊ×î¸ß£¬Ê¹ÓÃÖ±´ïÍ¨µÀÓÅ»¯¡£
- *  - getElementsByClassName ĞÔÄÜÓÅÓÚ querySelectorAll, µ« IE ÏµÁĞ²»Ö§³Ö¡£
- *  - instanceof ¶ÔĞÔÄÜÓĞÓ°Ïì¡£
- *  - ÄÚ²¿·½·¨µÄ²ÎÊı£¬±ÈÈç cls, context µÈµÄÒì³£Çé¿ö£¬ÒÑ¾­ÔÚ query ·½·¨ÖĞÓĞ±£Ö¤£¬ÎŞĞèÈßÓà¡°·ÀÎÀ¡±¡£
- *  - query ·½·¨ÖĞµÄÌõ¼şÅĞ¶Ï¿¼ÂÇÁË¡°ÆµÂÊÓÅÏÈ¡±Ô­Ôò¡£×îÓĞ¿ÉÄÜ³öÏÖµÄÇé¿ö·ÅÔÚÇ°Ãæ¡£
- *  - Array µÄ push ·½·¨¿ÉÒÔÓÃ j++ À´Ìæ´ú£¬ĞÔÄÜÓĞÌáÉı¡£
- *  - ·µ»ØÖµ²ßÂÔºÍ Sizzle Ò»ÖÂ£¬Õı³£Ê±£¬·µ»ØÊı×é£»ÆäËüËùÓĞÇé¿ö£¬·µ»Ø¿ÕÊı×é¡£
+ *  - å¯¹ reg exec çš„ç»“æœ(id, tag, className)åš cache, å‘ç°å¯¹æ€§èƒ½å½±å“å¾ˆå°ï¼Œå»æ‰ã€‚
+ *  - getElementById ä½¿ç”¨é¢‘ç‡æœ€é«˜ï¼Œä½¿ç”¨ç›´è¾¾é€šé“ä¼˜åŒ–ã€‚
+ *  - getElementsByClassName æ€§èƒ½ä¼˜äº querySelectorAll, ä½† IE ç³»åˆ—ä¸æ”¯æŒã€‚
+ *  - instanceof å¯¹æ€§èƒ½æœ‰å½±å“ã€‚
+ *  - å†…éƒ¨æ–¹æ³•çš„å‚æ•°ï¼Œæ¯”å¦‚ cls, context ç­‰çš„å¼‚å¸¸æƒ…å†µï¼Œå·²ç»åœ¨ query æ–¹æ³•ä¸­æœ‰ä¿è¯ï¼Œæ— éœ€å†—ä½™â€œé˜²å«â€ã€‚
+ *  - query æ–¹æ³•ä¸­çš„æ¡ä»¶åˆ¤æ–­è€ƒè™‘äº†â€œé¢‘ç‡ä¼˜å…ˆâ€åŸåˆ™ã€‚æœ€æœ‰å¯èƒ½å‡ºç°çš„æƒ…å†µæ”¾åœ¨å‰é¢ã€‚
+ *  - Array çš„ push æ–¹æ³•å¯ä»¥ç”¨ j++ æ¥æ›¿ä»£ï¼Œæ€§èƒ½æœ‰æå‡ã€‚
+ *  - è¿”å›å€¼ç­–ç•¥å’Œ Sizzle ä¸€è‡´ï¼Œæ­£å¸¸æ—¶ï¼Œè¿”å›æ•°ç»„ï¼›å…¶å®ƒæ‰€æœ‰æƒ…å†µï¼Œè¿”å›ç©ºæ•°ç»„ã€‚
  *
- *  - ´ÓÑ¹Ëõ½Ç¶È¿¼ÂÇ£¬»¹¿ÉÒÔ½« getElmentsByTagName ºÍ getElementsByClassName ¶¨ÒåÎª³£Á¿£¬
- *    ²»¹ı¸Ğ¾õÕâÑù×öÌ«¡°Ñ¹Ëõ¿Ø¡±£¬»¹ÊÇ±£Áô²»Ìæ»»µÄºÃ¡£
+ *  - ä»å‹ç¼©è§’åº¦è€ƒè™‘ï¼Œè¿˜å¯ä»¥å°† getElmentsByTagName å’Œ getElementsByClassName å®šä¹‰ä¸ºå¸¸é‡ï¼Œ
+ *    ä¸è¿‡æ„Ÿè§‰è¿™æ ·åšå¤ªâ€œå‹ç¼©æ§â€ï¼Œè¿˜æ˜¯ä¿ç•™ä¸æ›¿æ¢çš„å¥½ã€‚
  *
- *  - µ÷Õû getElementsByClassName µÄ½µ¼¶Ğ´·¨£¬ĞÔÄÜ×î²îµÄ·Å×îºó¡£
+ *  - è°ƒæ•´ getElementsByClassName çš„é™çº§å†™æ³•ï¼Œæ€§èƒ½æœ€å·®çš„æ”¾æœ€åã€‚
  *
  * 2010.02
- *  - Ìí¼Ó¶Ô·Ö×éÑ¡ÔñÆ÷µÄÖ§³Ö£¨Ö÷Òª²Î¿¼ Sizzle µÄ´úÂë£¬´úÈ¥³ıÁË¶Ô·Ç Grade A ¼¶ä¯ÀÀÆ÷µÄÖ§³Ö£©
+ *  - æ·»åŠ å¯¹åˆ†ç»„é€‰æ‹©å™¨çš„æ”¯æŒï¼ˆä¸»è¦å‚è€ƒ Sizzle çš„ä»£ç ï¼Œä»£å»é™¤äº†å¯¹é Grade A çº§æµè§ˆå™¨çš„æ”¯æŒï¼‰
  *
  * 2010.03
- *  - »ùÓÚÔ­Éú dom µÄÁ½¸ö api: S.query ·µ»ØÊı×é; S.get ·µ»ØµÚÒ»¸ö¡£
- *    »ùÓÚ Node µÄ api: S.one, ÔÚ Node ÖĞÊµÏÖ¡£
- *    »ùÓÚ NodeList µÄ api: S.all, ÔÚ NodeList ÖĞÊµÏÖ¡£
- *    Í¨¹ı api µÄ·Ö²ã£¬Í¬Ê±Âú×ã³õ¼¶ÓÃ»§ºÍ¸ß¼¶ÓÃ»§µÄĞèÇó¡£
+ *  - åŸºäºåŸç”Ÿ dom çš„ä¸¤ä¸ª api: S.query è¿”å›æ•°ç»„; S.get è¿”å›ç¬¬ä¸€ä¸ªã€‚
+ *    åŸºäº Node çš„ api: S.one, åœ¨ Node ä¸­å®ç°ã€‚
+ *    åŸºäº NodeList çš„ api: S.all, åœ¨ NodeList ä¸­å®ç°ã€‚
+ *    é€šè¿‡ api çš„åˆ†å±‚ï¼ŒåŒæ—¶æ»¡è¶³åˆçº§ç”¨æˆ·å’Œé«˜çº§ç”¨æˆ·çš„éœ€æ±‚ã€‚
  *
  * 2010.05
- *  - È¥µô¸ø S.query ·µ»ØÖµÄ¬ÈÏÌí¼ÓµÄ each ·½·¨£¬±£³Ö´¿¾»¡£
- *  - ¶ÔÓÚ²»Ö§³ÖµÄ selector, ²ÉÓÃÍâ²¿ñîºÏ½øÀ´µÄ Selector.
+ *  - å»æ‰ç»™ S.query è¿”å›å€¼é»˜è®¤æ·»åŠ çš„ each æ–¹æ³•ï¼Œä¿æŒçº¯å‡€ã€‚
+ *  - å¯¹äºä¸æ”¯æŒçš„ selector, é‡‡ç”¨å¤–éƒ¨è€¦åˆè¿›æ¥çš„ Selector.
+ *
+ * 2010.06
+ *  - å¢åŠ  filter å’Œ test æ–¹æ³•
  *
  * Bugs:
- *  - S.query('#test-data *') µÈ´ø * ºÅµÄÑ¡ÔñÆ÷£¬ÔÚ IE6 ÏÂ·µ»ØµÄÖµ²»¶Ô¡£jQuery µÈÀà¿âÒ²ÓĞ´Ë bug, ¹îÒì¡£
+ *  - S.query('#test-data *') ç­‰å¸¦ * å·çš„é€‰æ‹©å™¨ï¼Œåœ¨ IE6 ä¸‹è¿”å›çš„å€¼ä¸å¯¹ã€‚jQuery ç­‰ç±»åº“ä¹Ÿæœ‰æ­¤ bug, è¯¡å¼‚ã€‚
  *
  * References:
  *  - http://ejohn.org/blog/selectors-that-people-actually-use/
@@ -1115,7 +1211,7 @@ KISSY.add('selector', function(S, undefined) {
  *  - MINI: http://james.padolsey.com/javascript/mini/
  *  - Peppy: http://jamesdonaghue.com/?p=40
  *  - Sly: http://github.com/digitarald/sly
- *  - XPath, TreeWalker£ºhttp://www.cnblogs.com/rubylouvre/archive/2009/07/24/1529640.html
+ *  - XPath, TreeWalkerï¼šhttp://www.cnblogs.com/rubylouvre/archive/2009/07/24/1529640.html
  *
  *  - http://www.quirksmode.org/blog/archives/2006/01/contains_for_mo.html
  *  - http://www.quirksmode.org/dom/getElementsByTagNames.html
@@ -1123,27 +1219,159 @@ KISSY.add('selector', function(S, undefined) {
  *  - http://github.com/jeresig/sizzle/blob/master/sizzle.js
  */
 /**
- * @module  dom-base
+ * @module  dom-class
  * @author  lifesinger@gmail.com
  */
+KISSY.add('dom-class', function(S, undefined) {
 
-KISSY.add('dom-base', function(S, undefined) {
+    var SPACE = ' ',
+        DOM = S.DOM,
+        REG_SPLIT = /[\.\s]\s*\.?/,
+        REG_CLASS = /[\n\t]/g;
 
-    var doc = document,
+    S.mix(DOM, {
+
+        /**
+         * Determine whether any of the matched elements are assigned the given class.
+         */
+        hasClass: function(selector, value) {
+            return batch(selector, value, function(elem, classNames, cl) {
+                var elemClass = elem.className;
+                if (elemClass) {
+                    var className = SPACE + elemClass + SPACE, j = 0, ret = true;
+                    for (; j < cl; j++) {
+                        if (className.indexOf(SPACE + classNames[j] + SPACE) < 0) {
+                            ret = false;
+                            break;
+                        }
+                    }
+                    if (ret) return true;
+                }
+            }, true);
+        },
+
+        /**
+         * Adds the specified class(es) to each of the set of matched elements.
+         */
+        addClass: function(selector, value) {
+            batch(selector, value, function(elem, classNames, cl) {
+                var elemClass = elem.className;
+                if (!elemClass) {
+                    elem.className = value;
+                }
+                else {
+                    var className = SPACE + elemClass + SPACE, setClass = elemClass, j = 0;
+                    for (; j < cl; j++) {
+                        if (className.indexOf(SPACE + classNames[j] + SPACE) < 0) {
+                            setClass += SPACE + classNames[j];
+                        }
+                    }
+                    elem.className = S.trim(setClass);
+                }
+            });
+        },
+
+        /**
+         * Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
+         */
+        removeClass: function(selector, value) {
+            batch(selector, value, function(elem, classNames, cl) {
+                var elemClass = elem.className;
+                if (elemClass) {
+                    if (!cl) {
+                        elem.className = '';
+                    }
+                    else {
+                        var className = (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE), j = 0;
+                        for (; j < cl; j++) {
+                            className = className.replace(SPACE + classNames[j] + SPACE, SPACE);
+                        }
+                        elem.className = S.trim(className);
+                    }
+                }
+            });
+        },
+
+        /**
+         * Replace a class with another class for matched elements.
+         * If no oldClassName is present, the newClassName is simply added.
+         */
+        replaceClass: function(selector, oldClassName, newClassName) {
+            DOM.removeClass(selector, oldClassName);
+            DOM.addClass(selector, newClassName);
+        },
+
+        /**
+         * Add or remove one or more classes from each element in the set of
+         * matched elements, depending on either the class's presence or the
+         * value of the switch argument.
+         * @param state {Boolean} optional boolean to indicate whether class
+         *        should be added or removed regardless of current state.
+         */
+        toggleClass: function(selector, value, state) {
+            var isBool = S.isBoolean(state), has;
+
+            batch(selector, value, function(elem, classNames, cl) {
+                var j = 0, className;
+                for (; j < cl; j++) {
+                    className = classNames[j];
+                    has = isBool ? !state : DOM.hasClass(elem, className);
+                    DOM[has ? 'removeClass' : 'addClass'](elem, className);
+                }
+            });
+        }
+    });
+
+    function batch(selector, value, fn, resultIsBool) {
+        if (!(value = S.trim(value))) return resultIsBool ? false : undefined;
+
+        var elems = S.query(selector),
+            i = 0, len = elems.length,
+            classNames = value.split(REG_SPLIT),
+            elem, ret;
+
+        for (; i < len; i++) {
+            elem = elems[i];
+            if (elem.nodeType === 1) {
+                ret = fn(elem, classNames, classNames.length);
+                if (ret !== undefined) return ret;
+            }
+        }
+
+        if (resultIsBool) return false;
+    }
+});
+
+/**
+ * NOTES:
+ *   - hasClass/addClass/removeClass çš„é€»è¾‘å’Œ jQuery ä¿æŒä¸€è‡´
+ *   - toggleClass ä¸æ”¯æŒ value ä¸º undefined çš„æƒ…å½¢ï¼ˆjQuery æ”¯æŒï¼‰
+ */
+/**
+ * @module  dom-attr
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-attr', function(S, undefined) {
+
+    var UA = S.UA,
+        ie = UA.ie,
+        oldIE = ie && ie < 8,
+
+        doc = document,
         docElement = doc.documentElement,
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
-        ua = S.UA,
-        ie = ua.ie,
-        oldIE = ie && ie < 8,
-        CUSTOM_ATTRS = {
-            readonly: 'readOnly'
-        },
+
+        DOM = S.DOM,
+        isElementNode = DOM._isElementNode,
+
         RE_SPECIAL_ATTRS = /href|src|style/,
         RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
         RE_RETURN = /\r/g,
         RE_RADIO_CHECK = /radio|checkbox/,
-        defaultFrag = doc.createElement('DIV'),
-        RE_TAG = /^[a-z]+$/i;
+
+        CUSTOM_ATTRS = {
+            readonly: 'readOnly'
+        };
 
     if(oldIE) {
         S.mix(CUSTOM_ATTRS, {
@@ -1152,97 +1380,111 @@ KISSY.add('dom-base', function(S, undefined) {
         });
     }
 
-    S.DOM = {
+    S.mix(DOM, {
 
         /**
-         * Returns a NodeList that matches the selector.
+         * Gets the value of an attribute for the first element in the set of matched elements or
+         * Sets an attribute for the set of matched elements.
          */
-        query: S.query,
+        attr: function(selector, name, val) {
+            if(!(name = S.trim(name))) return;
 
-        /**
-         * Returns the first element that matches the selector.
-         */
-        get: S.get,
-
-        /**
-         * Gets or sets the attribute of the HTMLElement.
-         */
-        attr: function(el, name, val) {
-            // don't set attributes on element nodes
-            if (!el || el.nodeType !== 1) {
-                return undefined;
-            }
-
-            var ret;
             name = name.toLowerCase();
             name = CUSTOM_ATTRS[name] || name;
 
-            // get attribute
+            // getter
             if (val === undefined) {
-                // ÓÅÏÈÓÃ el[name] »ñÈ¡ mapping ÊôĞÔÖµ£º
-                //  - ¿ÉÒÔÕıÈ·»ñÈ¡ readonly, checked, selected µÈÌØÊâ mapping ÊôĞÔÖµ
-                //  - ¿ÉÒÔ»ñÈ¡ÓÃ getAttribute ²»Ò»¶¨ÄÜ»ñÈ¡µ½µÄÖµ£¬±ÈÈç tabindex Ä¬ÈÏÖµ
-                //  - href, src Ö±½Ó»ñÈ¡µÄÊÇ normalized ºóµÄÖµ£¬ÅÅ³ıµô
+                // supports css selector/Node/NodeList
+                var el = S.get(selector);
+
+                // only get attributes on element nodes
+                if (!isElementNode(el)) {
+                    return undefined;
+                }
+
+                var ret;
+
+                // ä¼˜å…ˆç”¨ el[name] è·å– mapping å±æ€§å€¼ï¼š
+                //  - å¯ä»¥æ­£ç¡®è·å– readonly, checked, selected ç­‰ç‰¹æ®Š mapping å±æ€§å€¼
+                //  - å¯ä»¥è·å–ç”¨ getAttribute ä¸ä¸€å®šèƒ½è·å–åˆ°çš„å€¼ï¼Œæ¯”å¦‚ tabindex é»˜è®¤å€¼
+                //  - href, src ç›´æ¥è·å–çš„æ˜¯ normalized åçš„å€¼ï¼Œæ’é™¤æ‰
+                //  - style éœ€è¦ç”¨ getAttribute æ¥è·å–å­—ç¬¦ä¸²å€¼ï¼Œä¹Ÿæ’é™¤æ‰
                 if(!RE_SPECIAL_ATTRS.test(name)) {
                     ret = el[name];
                 }
-                // get style
-                else if(name === 'style') {
-                    ret = el.style.cssText;
-                }
                 
-                // ÓÃ getAttribute »ñÈ¡·Ç mapping ÊôĞÔºÍ href, src µÄÖµ£º
+                // ç”¨ getAttribute è·å–é mapping å±æ€§å’Œ href/src/style çš„å€¼ï¼š
                 if(ret === undefined) {
                     ret = el.getAttribute(name);
                 }
 
-                // fix ie bugs:
-                if (oldIE && RE_NORMALIZED_ATTRS.test(name)) {
-                    // ²»¹âÊÇ href, src, »¹ÓĞ rowspan µÈ·Ç mapping ÊôĞÔ£¬Ò²ĞèÒªÓÃµÚ 2 ¸ö²ÎÊıÀ´»ñÈ¡Ô­Ê¼Öµ
-                    ret = el.getAttribute(name, 2);
+                // fix ie bugs
+                if (oldIE) {
+                    // ä¸å…‰æ˜¯ href, src, è¿˜æœ‰ rowspan ç­‰é mapping å±æ€§ï¼Œä¹Ÿéœ€è¦ç”¨ç¬¬ 2 ä¸ªå‚æ•°æ¥è·å–åŸå§‹å€¼
+                    if(RE_NORMALIZED_ATTRS.test(name)) {
+                        ret = el.getAttribute(name, 2);
+                    }
+                    // åœ¨æ ‡å‡†æµè§ˆå™¨ä¸‹ï¼Œç”¨ getAttribute è·å– style å€¼
+                    // IE7- ä¸‹ï¼Œéœ€è¦ç”¨ cssText æ¥è·å–
+                    else if(name === 'style') {
+                        ret = el.style.cssText;
+                    }
                 }
 
-                // ¶ÔÓÚ²»´æÔÚµÄÊôĞÔ£¬Í³Ò»·µ»Ø undefined
+                // å¯¹äºä¸å­˜åœ¨çš„å±æ€§ï¼Œç»Ÿä¸€è¿”å› undefined
                 return ret === null ? undefined : ret;
             }
 
-            // set attribute
-            if(name === 'style') {
-                el.style.cssText = val;
-            }
-            else {
-                // convert the value to a string (all browsers do this but IE)
-                el.setAttribute(name, '' + val);
-            }
+            // setter
+            S.each(S.query(selector), function(el) {
+                // only set attributes on element nodes
+                if (!isElementNode(el)) {
+                    return;
+                }
+
+                if (oldIE && name === 'style') {
+                    el.style.cssText = val;
+                }
+                else {
+                    // convert the value to a string (all browsers do this but IE)
+                    el.setAttribute(name, '' + val);
+                }
+            });
         },
 
         /**
-         * Removes the attribute of the HTMLElement.
+         * Removes the attribute of the matched elements.
          */
-        removeAttr: function(el, name) {
-            if(el && el.nodeType === 1) {
-                el.removeAttribute(name);
-            }
+        removeAttr: function(selector, name) {
+            S.each(S.query(selector), function(el) {
+                if (isElementNode(el)) {
+                    el.removeAttribute(name);
+                }
+            });
         },
 
         /**
-         * Get the current value of the HTMLElement.
+         * Gets the current value of the first element in the set of matched or
+         * Sets the value of each element in the set of matched elements.
          */
-        val: function(el, value) {
-            if(!el || el.nodeType !== 1) {
-                return undefined;
-            }
-
-            // get value
+        val: function(selector, value) {
+            // getter
             if(value === undefined) {
+                // supports css selector/Node/NodeList
+                var el = S.get(selector);
 
-                // µ±Ã»ÓĞÉè¶¨ value Ê±£¬±ê×¼ä¯ÀÀÆ÷ option.value == option.text
-                // ie7- ÏÂ optinos.value == '', ĞèÒªÓÃ el.attributes.value À´ÅĞ¶ÏÊÇ·ñÓĞÉè¶¨ value
+                // only gets value on element nodes
+                if (!isElementNode(el)) {
+                    return undefined;
+                }
+
+                // å½“æ²¡æœ‰è®¾å®š value æ—¶ï¼Œæ ‡å‡†æµè§ˆå™¨ option.value === option.text
+                // ie7- ä¸‹ï¼Œæ²¡æœ‰è®¾å®š value æ—¶ï¼Œoption.value === '', éœ€è¦ç”¨ el.attributes.value æ¥åˆ¤æ–­æ˜¯å¦æœ‰è®¾å®š value
                 if(nodeNameIs('option', el)) {
                     return (el.attributes.value || {}).specified ? el.value : el.text;
                 }
 
-                // ¶ÔÓÚ select, ÌØ±ğÊÇ multiple type, ´æÔÚºÜÑÏÖØµÄ¼æÈİĞÔÎÊÌâ
+                // å¯¹äº select, ç‰¹åˆ«æ˜¯ multiple type, å­˜åœ¨å¾ˆä¸¥é‡çš„å…¼å®¹æ€§é—®é¢˜
                 if(nodeNameIs('select', el)) {
                     var index = el.selectedIndex,
                         options = el.options;
@@ -1251,14 +1493,14 @@ KISSY.add('dom-base', function(S, undefined) {
                         return null;
                     }
                     else if(el.type === 'select-one') {
-                        return S.DOM.val(options[index]);
+                        return DOM.val(options[index]);
                     }
 
                     // Loop through all the selected options
                     var ret = [], i = 0, len = options.length;
                     for (; i < len; ++i) {
                         if (options[i].selected) {
-                            ret.push(S.DOM.val(options[i]));
+                            ret.push(DOM.val(options[i]));
                         }
                     }
                     // Multi-Selects return an array
@@ -1266,150 +1508,169 @@ KISSY.add('dom-base', function(S, undefined) {
                 }
 
                 // Handle the case where in Webkit "" is returned instead of "on" if a value isn't specified
-                if(ua.webkit && RE_RADIO_CHECK.test(el.type)) {
+                if(UA.webkit && RE_RADIO_CHECK.test(el.type)) {
                     return el.getAttribute('value') === null ? 'on' : el.value;
                 }
 
-                // ÆÕÍ¨ÔªËØµÄ value, ¹éÒ»»¯µô \r
+                // æ™®é€šå…ƒç´ çš„ value, å½’ä¸€åŒ–æ‰ \r
                 return (el.value || '').replace(RE_RETURN, '');
             }
 
-            // set value
-            if (nodeNameIs('select', el)) {
-                var vals = S.makeArray(value),
-                    opts = el.options, opt;
+            // setter
+            S.each(S.query(selector), function(el) {
+                if (nodeNameIs('select', el)) {
+                    var vals = S.makeArray(value),
+                        opts = el.options, opt;
 
-                for (i = 0,len = opts.length; i < len; ++i) {
-                    opt = opts[i];
-                    opt.selected = S.inArray(S.DOM.val(opt), vals);
+                    for (i = 0, len = opts.length; i < len; ++i) {
+                        opt = opts[i];
+                        opt.selected = S.inArray(DOM.val(opt), vals);
+                    }
+
+                    if (!vals.length) {
+                        el.selectedIndex = -1;
+                    }
                 }
-
-                if (!vals.length) {
-                    el.selectedIndex = -1;
+                else if(isElementNode(el)) {
+                    el.value = value;
                 }
-            }
-            else {
-                el.value = value;
-            }
-        },
-
-        /**
-         * Gets or sets styles on the HTMLElement.
-         */
-        css: function(el, prop, val) {
-            // get style
-            if(val === undefined) {
-                return el.style[prop];
-            }
-
-            // set style
-            S.each(S.makeArray(el), function(elem) {
-                elem.style[prop] = val;
             });
-
-            // TODO:
-            //  - ¿¼ÂÇ¸÷ÖÖ¼æÈİĞÔÎÊÌâºÍÒì³£Çé¿ö opacity, z-index, float
-            //  - more test cases
         },
 
         /**
-         * Gets or sets the the text content of the HTMLElement.
+         * Gets the text context of the first element in the set of matched elements or
+         * Sets the text content of the matched elements.
          */
-        text: function(el, val) {
-            // getText
+        text: function(selector, val) {
+            // getter
             if (val === undefined) {
-                return (el || {})[TEXT] || '';
+                // supports css selector/Node/NodeList
+                var el = S.get(selector);
+
+                // only gets value on element nodes
+                if (isElementNode(el)) {
+                    return el[TEXT] || '';
+                }
             }
-
-            // setText
-            if (el) {
-                el[TEXT] = val;
+            // setter
+            else {
+                S.each(S.query(selector), function(el) {
+                   if(isElementNode(el)) {
+                       el[TEXT] = val;
+                   }
+                });
             }
-        },
+        }
+    });
 
-        /**
-         * Gets the HTML contents of the HTMLElement.
-         */
-        html: function(el, htmlString) {
-            // set html
-            if(htmlString === undefined) {
-                return el.innerHTML;
+    // åˆ¤æ–­ el çš„ nodeName æ˜¯å¦æŒ‡å®šå€¼
+    function nodeNameIs(val, el) {
+        return el && el.nodeName.toUpperCase() === val.toUpperCase();
+    }
+});
+
+/**
+ * NOTES:
+ *
+ * 2010.03
+ *  - åœ¨ jquery/support.js ä¸­ï¼Œspecial attrs é‡Œè¿˜æœ‰ maxlength, cellspacing,
+ *    rowspan, colspan, useap, frameboder, ä½†æµ‹è¯•å‘ç°ï¼Œåœ¨ Grade-A çº§æµè§ˆå™¨ä¸­
+ *    å¹¶æ— å…¼å®¹æ€§é—®é¢˜ã€‚
+ *  - å½“ colspan/rowspan å±æ€§å€¼è®¾ç½®æœ‰è¯¯æ—¶ï¼Œie7- ä¼šè‡ªåŠ¨çº æ­£ï¼Œå’Œ href ä¸€æ ·ï¼Œéœ€è¦ä¼ é€’
+ *    ç¬¬ 2 ä¸ªå‚æ•°æ¥è§£å†³ã€‚jQuery æœªè€ƒè™‘ï¼Œå­˜åœ¨å…¼å®¹æ€§ bug.
+ *  - jQuery è€ƒè™‘äº†æœªæ˜¾å¼è®¾å®š tabindex æ—¶å¼•å‘çš„å…¼å®¹é—®é¢˜ï¼Œkissy é‡Œå¿½ç•¥ï¼ˆå¤ªä¸å¸¸ç”¨äº†ï¼‰
+ *  - jquery/attributes.js: Safari mis-reports the default selected
+ *    property of an option åœ¨ Safari 4 ä¸­å·²ä¿®å¤
+ *
+ */
+/**
+ * @module  dom
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-style', function(S, undefined) {
+
+    var DOM = S.DOM,
+        doc = document, docElem = doc.documentElement,
+        STYLE = 'style', FLOAT = 'float',
+        CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
+        RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
+        RE_DASH = /-([a-z])/ig,
+        CAMELCASE_FN = function(all, letter) {
+            return letter.toUpperCase();
+        },
+        EMPTY = '',
+        DEFAULT_UNIT = 'px',
+        CUSTOM_STYLES = { };
+
+    S.mix(DOM, {
+
+        _CUSTOM_STYLES: CUSTOM_STYLES,
+
+        _getComputedStyle: function(elem, name) {
+            var val = '', d = elem.ownerDocument;
+
+            if (elem[STYLE]) {
+                val = d.defaultView.getComputedStyle(elem, null)[name];
             }
-
-            // get html
-            el.innerHTML = htmlString;
-
-            // TODO:
-            //  - ¿¼ÂÇ¸÷ÖÖ¼æÈİºÍÒì³££¬Ìí¼Ó·è¿ñ²âÊÔ
+            return val;
         },
 
         /**
-         * Gets the children of the HTMLElement.
+         * Gets or sets styles on the matches elements.
          */
-        children: function(el) {
-            if(el.children) { // Ö»ÓĞ firefox µÄµÍ°æ±¾²»Ö§³Ö
-                return S.makeArray(el.children);
-            }
-            return getSiblings(el.firstChild);
-        },
-
-        /**
-         * Gets the siblings of the HTMLElment.
-         */
-        siblings: function(el) {
-            return getSiblings(el.parentNode.firstChild, el);
-        },
-
-        /**
-         * Gets the immediately following sibling of the element.
-         */
-        next: function(el) {
-            return nth(el, 1, 'nextSibling');
-        },
-
-        /**
-         * Gets the immediately preceding sibling of the element.
-         */
-        prev: function(el) {
-            return nth(el, 1, 'previousSibling');
-        },
-
-        /**
-         * Gets the parentNode of the elment.
-         */
-        parent: function(el) {
-            var parent = el.parentNode;
-            return parent && parent.nodeType !== 11 ? parent : null;
-        },
-
-        /**
-         * Creates a new HTMLElement using the provided html string.
-         */
-        create: function(html, ownerDoc) {
-            if (typeof html === 'string') {
-                html = S.trim(html); // match IE which trims whitespace from innerHTML
-            }
-
-            // simple tag
-            if(RE_TAG.test(html)) {
-                return (ownerDoc || doc).createElement(html);
+        css: function(selector, name, val) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.css(selector, k, name[k]);
+                }
+                return;
             }
             
-            var ret = null, nodes, frag;
-
-            frag = ownerDoc ? ownerDoc.createElement('DIV') : defaultFrag;
-            frag.innerHTML = html;
-            nodes = frag.childNodes;
-
-            if(nodes.length === 1) {
-                // return single node, breaking parentNode ref from "fragment"
-                ret = nodes[0].parentNode.removeChild(nodes[0]);
+            if(name.indexOf('-') > 0) {
+                // webkit è®¤è¯† camel-case, å…¶å®ƒå†…æ ¸åªè®¤è¯† cameCase
+                name = name.replace(RE_DASH, CAMELCASE_FN);
             }
+            name = CUSTOM_STYLES[name] || name;
+
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var elem = S.get(selector), ret = '';
+
+                if (elem && elem.style) {
+                    ret = name.get ? name.get(elem) : elem.style[name];
+
+                    // æœ‰ get çš„ç›´æ¥ç”¨è‡ªå®šä¹‰å‡½æ•°çš„è¿”å›å€¼
+                    if(ret === '' && !name.get) {
+                        ret = DOM._getComputedStyle(elem, name);
+                    }
+                }
+
+                return ret === undefined ? '' : ret;
+            }
+            // setter
             else {
-                ret = nl2frag(nodes, ownerDoc || doc);
-            }
+                // normalize unsetting
+                if (val === null || val === EMPTY) {
+                    val = EMPTY;
+                }
+                // number values may need a unit
+                else if (!isNaN(new Number(val)) && RE_NEED_UNIT.test(name)) {
+                    val += DEFAULT_UNIT;
+                }
 
-            return ret;
+                // ignore negative width and height values
+                if ((name === 'width' || name === 'height') && parseFloat(val) < 0) {
+                    return;
+                }
+
+                S.each(S.query(selector), function(elem) {
+                    if (elem && elem.style) {
+                        name.set ? name.set(elem, val) : (elem.style[name] = val);
+                    }
+                });
+            }
         },
 
         /**
@@ -1419,47 +1680,428 @@ KISSY.add('dom-base', function(S, undefined) {
          * @param {String} id An id to add to the stylesheet for later removal
          */
         addStyleSheet: function(cssText, id) {
-            var head = doc.getElementsByTagName('head')[0],
-                el = doc.createElement('style');
+            var elem;
 
-            id && (el.id = id);
-            head.appendChild(el); // ÏÈÌí¼Óµ½ DOM Ê÷ÖĞ£¬·ñÔòÔÚ cssText ÀïµÄ hack »áÊ§Ğ§
+            // æœ‰çš„è¯ï¼Œç›´æ¥è·å–
+            if (id) elem = S.get(id);
+            if (!elem) elem = DOM.create('<style>', { id: id });
 
-            if (el.styleSheet) { // IE
-                el.styleSheet.cssText = cssText;
+            // å…ˆæ·»åŠ åˆ° DOM æ ‘ä¸­ï¼Œå†ç»™ cssText èµ‹å€¼ï¼Œå¦åˆ™ css hack ä¼šå¤±æ•ˆ
+            S.get('head').appendChild(elem);
+
+            if (elem.styleSheet) { // IE
+                elem.styleSheet.cssText = cssText;
             } else { // W3C
-                el.appendChild(doc.createTextNode(cssText));
+                elem.appendChild(doc.createTextNode(cssText));
             }
         }
-    };
+    });
 
-    // ÅĞ¶Ï el µÄ nodeName ÊÇ·ñÖ¸¶¨Öµ
-    function nodeNameIs(val, el) {
-        return el && el.nodeName.toUpperCase() === val.toUpperCase();
+    // normalize reserved word float alternatives ("cssFloat" or "styleFloat")
+    if (docElem[STYLE][CSS_FLOAT] !== undefined) {
+        CUSTOM_STYLES[FLOAT] = CSS_FLOAT;
     }
+    else if(docElem[STYLE][STYLE_FLOAT] !== undefined) {
+        CUSTOM_STYLES[FLOAT] = STYLE_FLOAT;
+    }
+});
 
-    // »ñÈ¡ÔªËØ el µÄËùÓĞ siblings
-    function getSiblings(n/* first */, el) {
-        for (var r = [], j = 0; n; n = n.nextSibling) {
-            if (n.nodeType === 1 && n !== el) {
-                r[j++] = n;
-            }
+/**
+ * NOTES:
+ *  - Opera ä¸‹ï¼Œcolor é»˜è®¤è¿”å› #XXYYZZ, é rgb(). ç›®å‰ jQuery ç­‰ç±»åº“å‡å¿½ç•¥æ­¤å·®å¼‚ï¼ŒKISSY ä¹Ÿå¿½ç•¥ã€‚
+ *  - Safari ä½ç‰ˆæœ¬ï¼Œtransparent ä¼šè¿”å›ä¸º rgba(0, 0, 0, 0), è€ƒè™‘ä½ç‰ˆæœ¬æ‰æœ‰æ­¤ bug, äº¦å¿½ç•¥ã€‚
+ *
+ *  - é webkit ä¸‹ï¼ŒjQuery.css paddingLeft è¿”å› style å€¼ï¼Œ padding-left è¿”å› computedStyle å€¼ï¼Œ
+ *    è¿”å›çš„å€¼ä¸åŒã€‚KISSY åšäº†ç»Ÿä¸€ï¼Œæ›´ç¬¦åˆé¢„æœŸã€‚
+ *
+ *  - getComputedStyle åœ¨ webkit ä¸‹ï¼Œä¼šèˆå¼ƒå°æ•°éƒ¨åˆ†ï¼Œie ä¸‹ä¼šå››èˆäº”å…¥ï¼Œgecko ä¸‹ç›´æ¥è¾“å‡º float å€¼ã€‚
+ *
+ *  - color: blue ç»§æ‰¿å€¼ï¼ŒgetComputedStyle, åœ¨ ie ä¸‹è¿”å› blue, opera è¿”å› #0000ff, å…¶å®ƒæµè§ˆå™¨
+ *    è¿”å› rgb(0, 0, 255)
+ *
+ *  - border-width å€¼ï¼Œie ä¸‹æœ‰å¯èƒ½è¿”å› medium/thin/thick ç­‰å€¼ï¼Œå…¶å®ƒæµè§ˆå™¨è¿”å› px å€¼ã€‚
+ *
+ *  - æ€»ä¹‹ï¼šè¦ä½¿å¾—è¿”å›å€¼å®Œå…¨ä¸€è‡´æ˜¯ä¸å¤§å¯èƒ½çš„ï¼ŒjQuery/ExtJS/KISSY æœªâ€œè¿½æ±‚å®Œç¾â€ã€‚YUI3 åšäº†éƒ¨åˆ†å®Œç¾å¤„ç†ï¼Œä½†
+ *    ä¾æ—§å­˜åœ¨æµè§ˆå™¨å·®å¼‚ã€‚
+ */
+/**
+ * @module  dom
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-style-ie', function(S, undefined) {
+
+    // only for ie
+    if (!S.UA.ie) return;
+
+    var DOM = S.DOM,
+        doc = document,
+        docElem = doc.documentElement,
+        OPACITY = 'opacity',
+        FILTER = 'filter',
+        FILTERS = 'filters',
+        CURRENT_STYLE = 'currentStyle',
+        LEFT = 'left',
+        CUSTOM_STYLES = DOM._CUSTOM_STYLES,
+        RE_NUMPX = /^-?\d+(?:px)?$/i,
+	    RE_NUM = /^-?\d/;
+
+    // use alpha filter for IE opacity
+    try {
+        if (docElem.style[OPACITY] === undefined && docElem[FILTERS]) {
+
+            CUSTOM_STYLES[OPACITY] = {
+
+                get: function(elem) {
+                    var val = 100;
+
+                    try { // will error if no DXImageTransform
+                        val = elem[FILTERS]['DXImageTransform.Microsoft.Alpha'][OPACITY];
+                    }
+                    catch(e) {
+                        try {
+                            val = elem[FILTERS]('alpha')[OPACITY];
+                        } catch(ex) {
+                            // æ²¡æœ‰è®¾ç½®è¿‡ opacity æ—¶ä¼šæŠ¥é”™ï¼Œè¿™æ—¶è¿”å› 1 å³å¯
+                        }
+                    }
+
+                    // å’Œå…¶ä»–æµè§ˆå™¨ä¿æŒä¸€è‡´ï¼Œè½¬æ¢ä¸ºå­—ç¬¦ä¸²ç±»å‹
+                    return val / 100 + '';
+                },
+
+                set: function(elem, val) {
+                    var style = elem.style;
+
+                    // IE has trouble with opacity if it does not have layout
+                    // Force it by setting the zoom level
+                    style.zoom = 1;
+
+                    // Set the alpha filter to set the opacity
+                    style[FILTER] = 'alpha(' + OPACITY + '=' + val * 100 + ')';
+                }
+            };
         }
-        return r;
+    }
+    catch(ex) {
+        S.log('IE filters ActiveX is disabled. ex = ' + ex);
     }
 
-    // »ñÈ¡ÔªËØ el ÔÚ dir(ection) ÉÏµÄµÚ n ¸öÔªËØ
-    function nth(el, n, dir) {
-        n = n || 0;
-        for (var i = 0; el; el = el[dir]) {
-            if (el.nodeType === 1 && i++ === n) {
+    // getComputedStyle for IE
+    if (!(doc.defaultView || { }).getComputedStyle && docElem[CURRENT_STYLE]) {
+
+        DOM._getComputedStyle = function(elem, name) {
+            var style = elem.style,
+                ret = elem[CURRENT_STYLE][name];
+
+            // From the awesome hack by Dean Edwards
+            // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
+            // If we're not dealing with a regular pixel number
+            // but a number that has a weird ending, we need to convert it to pixels
+            if (!RE_NUMPX.test(ret) && RE_NUM.test(ret)) {
+                // Remember the original values
+                var left = style[LEFT];
+
+                // Put in the new values to get a computed value out
+                style[LEFT] = (name === 'fontSize') ? '1em' : (ret || 0);
+                ret = style['pixelLeft'] + 'px';
+
+                // Revert the changed values
+                style[LEFT] = left;
+            }
+
+            return ret;
+        }
+    }
+});
+/**
+ * @module  dom-offset
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-offset', function(S, undefined) {
+
+    var DOM = S.DOM,
+        win = window,
+        doc = document,
+        docElem = doc.documentElement,
+        PARSEINT = parseInt,
+        POSITION = 'position',
+        RELATIVE = 'relative',
+        OWNER_DOCUMENT = 'ownerDocument',
+        GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
+
+    S.mix(DOM, {
+
+        offset: function(elem, val) {
+            // ownerDocument çš„åˆ¤æ–­å¯ä»¥ä¿è¯ elem æ²¡æœ‰æ¸¸ç¦»åœ¨ document ä¹‹å¤–ï¼ˆæ¯”å¦‚ fragmentï¼‰
+            if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
+
+            // getter
+            if (val === undefined) {
+                return getOffset(elem);
+            }
+
+            // setter
+            setOffset(elem, val);
+        },
+
+        /**
+         * Returns the left scroll value of the document.
+         */
+        scrollLeft: function() {
+            return win.pageXOffset || docElem.scrollLeft || doc.body.scrollLeft;
+        },
+
+        /**
+         * Returns the top scroll value of the document.
+         */
+        scrollTop: function() {
+            return win.pageYOffset || docElem.scrollTop || doc.body.scrollTop;
+        }
+    });
+
+    function getOffset(elem) {
+        var box, x = 0, y = 0;
+
+        // 1. å¯¹äº body å’Œ docElem, ç›´æ¥è¿”å› 0, ç»å¤§éƒ¨åˆ†æƒ…å†µä¸‹ï¼Œè¿™éƒ½ä¸ä¼šæœ‰é—®é¢˜
+        // 2. æ ¹æ® GBS æœ€æ–°æ•°æ®ï¼ŒA-Grade Browsers éƒ½å·²æ”¯æŒ getBoundingClientRect æ–¹æ³•ï¼Œä¸ç”¨å†è€ƒè™‘ä¼ ç»Ÿçš„å®ç°æ–¹å¼
+        if (elem !== doc.body && elem !== docElem && elem[GET_BOUNDING_CLIENT_RECT]) {
+            box = elem[GET_BOUNDING_CLIENT_RECT]();
+
+            // æ³¨ï¼šjQuery è¿˜è€ƒè™‘å‡å» docElem.clientLeft/clientTop
+            // ä½†æµ‹è¯•å‘ç°ï¼Œè¿™æ ·åè€Œä¼šå¯¼è‡´å½“ html å’Œ body æœ‰è¾¹è·/è¾¹æ¡†æ ·å¼æ—¶ï¼Œè·å–çš„å€¼ä¸æ­£ç¡®
+            // æ­¤å¤–ï¼Œie6 ä¼šå¿½ç•¥ html çš„ margin å€¼ï¼Œå¹¸è¿åœ°æ˜¯æ²¡æœ‰è°ä¼šå»è®¾ç½® html çš„ margin
+
+            x = box.left + DOM.scrollLeft();
+            y = box.top + DOM.scrollTop();
+        }
+
+        return { left: x, top: y };
+    }
+
+    function setOffset(elem, offset) {
+        var position = DOM.css(elem, POSITION);
+
+        // set position first, in-case top/left are set even on static elem
+        if (position === 'static') {
+            position = elem.style[POSITION] = RELATIVE;
+        }
+
+        var old = getOffset(elem),
+            relative = (position === RELATIVE),
+            left = PARSEINT(DOM.css(elem, 'left'), 10),
+            top = PARSEINT(DOM.css(elem, 'top'), 10);
+
+        left = S.isNumber(left) ? left : (relative ? 0 : elem.offsetLeft);
+        top = S.isNumber(top) ? top : (relative ? 0 : elem.offsetTop);
+
+        DOM.css(elem, {left: (left + offset.left - old.left), top: (top + offset.top - old.top)});
+    }
+});
+
+/**
+ * TODO:
+ *  - è€ƒè™‘æ˜¯å¦å®ç° jQuery çš„ position, offsetParent ç­‰åŠŸèƒ½
+ *  - æ›´è¯¦ç»†çš„æµ‹è¯•ç”¨ä¾‹ï¼ˆæ¯”å¦‚ï¼šæµ‹è¯• position ä¸º fixed çš„æƒ…å†µï¼‰
+ *
+ */
+/**
+ * @module  dom-traversal
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-traversal', function(S, undefined) {
+
+    var DOM = S.DOM,
+        isElementNode = DOM._isElementNode;
+
+    S.mix(DOM, {
+
+        /**
+         * Gets the parent node of the first matched element.
+         */
+        parent: function(selector, filter) {
+            return nth(selector, filter, 'parentNode', function(elem) {
+                return elem.nodeType != 11;
+            });
+        },
+
+        /**
+         * Gets the following sibling of the first matched element.
+         */
+        next: function(selector, filter) {
+            return nth(selector, filter, 'nextSibling');
+        },
+
+        /**
+         * Gets the preceding sibling of the first matched element.
+         */
+        prev: function(selector, filter) {
+            return nth(selector, filter, 'previousSibling');
+        },
+
+        /**
+         * Gets the siblings of the first matched element.
+         */
+        siblings: function(selector,filter) {
+            return getSiblings(selector, filter, true);
+        },
+
+        /**
+         * Gets the children of the first matched element.
+         */
+        children: function(selector, filter) {
+            return getSiblings(selector, filter);
+        }
+    });
+
+    // è·å–å…ƒç´  elem åœ¨ direction æ–¹å‘ä¸Šæ»¡è¶³ filter çš„ç¬¬ä¸€ä¸ªå…ƒç´ 
+    // filter å¯ä¸º number, selector, fn
+    // direction å¯ä¸º parentNode, nextSibling, previousSibling
+    function nth(elem, filter, direction, extraFilter) {
+        if (!(elem = S.get(elem))) return null;
+        if(filter === undefined) filter = 1; // é»˜è®¤å– 1
+        var ret = null, fi, flen;
+
+        if(S.isNumber(filter) && filter >= 0) {
+            if(filter === 0) return elem;
+            fi = 0;
+            flen = filter;
+            filter = function() {
+                return ++fi === flen;
+            };
+        }
+
+        while((elem = elem[direction])) {
+            if (isElementNode(elem) && (!filter || DOM.test(elem, filter)) && (!extraFilter || extraFilter(elem))) {
+                ret = elem;
                 break;
             }
         }
-        return el;
+
+        return ret;
     }
 
-    // ½« nodeList ×ª»»Îª fragment
+    // è·å–å…ƒç´  elem çš„ siblings, ä¸åŒ…æ‹¬è‡ªèº«
+    function getSiblings(selector, filter, parent) {
+        var ret = [], elem = S.get(selector), j, parentNode = elem, next;
+        if (elem && parent) parentNode = elem.parentNode;
+
+        if (parentNode) {
+            for (j = 0, next = parentNode.firstChild; next; next = next.nextSibling) {
+                if (isElementNode(next) && next !== elem && (!filter || DOM.test(next, filter))) {
+                    ret[j++] = next;
+                }
+            }
+        }
+
+        return ret;
+    }
+
+});
+
+/**
+ * NOTES:
+ *
+ *  - api çš„è®¾è®¡ä¸Šï¼Œæ²¡æœ‰è·Ÿéš jQuery. ä¸€æ˜¯ä¸ºäº†å’Œå…¶ä»– api ä¸€è‡´ï¼Œä¿æŒ first-all åŸåˆ™ã€‚äºŒæ˜¯
+ *    éµå¾ª 8/2 åŸåˆ™ï¼Œç”¨å°½å¯èƒ½å°‘çš„ä»£ç æ»¡è¶³ç”¨æˆ·æœ€å¸¸ç”¨çš„åŠŸèƒ½ã€‚
+ *
+ */
+/**
+ * @module  dom-create
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-create', function(S, undefined) {
+
+    var doc = document,
+        DOM = S.DOM, UA = S.UA, ie = UA.ie,
+        isElementNode = DOM._isElementNode,
+        DIV = 'div',
+        PARENT_NODE = 'parentNode',
+        DEFAULT_DIV = doc.createElement(DIV),
+        RE_TAG = /<(\w+)/,
+        RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
+
+    S.mix(DOM, {
+
+        /**
+         * Creates a new HTMLElement using the provided html string.
+         */
+        create: function(html, props, ownerDoc) {
+            if(isElementNode(html)) return html;
+            if (!(html = S.trim(html))) return null;
+
+            var ret = null, creators = DOM._creators,
+                m, tag = DIV, k, nodes;
+
+            // ç®€å• tag, æ¯”å¦‚ DOM.create('<p>')
+            if ((m = RE_SIMPLE_TAG.exec(html))) {
+                ret = (ownerDoc || doc).createElement(m[1]);
+            }
+            // å¤æ‚æƒ…å†µï¼Œæ¯”å¦‚ DOM.create('<img src="sprite.png" />')
+            else {
+                if ((m = RE_TAG.exec(html)) && (k = m[1]) && S.isFunction(creators[(k = k.toLowerCase())])) {
+                    tag = k;
+                }
+
+                nodes = creators[tag](html, ownerDoc).childNodes;
+
+                if (nodes.length === 1) {
+                    // return single node, breaking parentNode ref from "fragment"
+                    ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
+                }
+                else {
+                    // return multiple nodes as a fragment
+                    ret = nl2frag(nodes, ownerDoc || doc);
+                }
+            }
+
+            return attachProps(ret, props);
+        },
+
+        _creators: {
+            div: function(html, ownerDoc) {
+                var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
+                frag.innerHTML = html;
+                return frag;
+            }
+        },
+
+        /**
+         * Gets/Sets the HTML contents of the HTMLElement.
+         */
+        html: function(selector, val) {
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = S.get(selector);
+
+                // only gets value on element nodes
+                if (isElementNode(el)) {
+                    return el.innerHTML;
+                }
+            }
+            // setter
+            else {
+                S.each(S.query(selector), function(el) {
+                   if(isElementNode(el)) {
+                       el.innerHTML = '';
+                       el.appendChild(DOM.create(val));
+                   }
+                });
+            }
+        }
+    });
+
+    // æ·»åŠ æˆå‘˜åˆ°å…ƒç´ ä¸­
+    function attachProps(elem, props) {
+        if (isElementNode(elem) && props) {
+            for (var p in props) {
+                DOM.attr(elem, p, props[p]);
+            }
+        }
+        return elem;
+    }
+
+    // å°† nodeList è½¬æ¢ä¸º fragment
     function nl2frag(nodes, ownerDoc) {
         var ret = null, i, len;
 
@@ -1471,131 +2113,140 @@ KISSY.add('dom-base', function(S, undefined) {
                 nodes = S.makeArray(nodes);
             }
 
-            for (i = 0, len = nodes.length; i < len; ++i) {
+            for (i = 0,len = nodes.length; i < len; i++) {
                 ret.appendChild(nodes[i]);
             }
         }
-        // else inline with log for minification
         else {
-            S.error('unable to convert ' + nodes + ' to fragment');
+            S.log('Unable to convert ' + nodes + ' to fragment.');
         }
 
         return ret;
     }
+
+    // å®šä¹‰ creators, å¤„ç†æµè§ˆå™¨å…¼å®¹
+    var creators = DOM._creators,
+        create = DOM.create,
+        TABLE_OPEN = '<table>',
+        TABLE_CLOSE = '</table>',
+        RE_TBODY = /(?:\/(?:thead|tfoot|caption|col|colgroup)>)+\s*<tbody/,
+        creatorsMap = {
+            option: 'select',
+            td: 'tr',
+            tr: 'tbody',
+            tbody: 'table',
+            col: 'colgroup',
+            legend: 'fieldset' // ie æ”¯æŒï¼Œä½† gecko ä¸æ”¯æŒ
+        };
+
+    if (UA.gecko || ie) {
+        for (var p in creatorsMap) {
+            (function(tag) {
+                creators[p] = function(html, ownerDoc) {
+                    return create('<' + tag + '>' + html + '</' + tag + '>', null, ownerDoc);
+                }
+            })(creatorsMap[p]);
+        }
+
+        if (ie) {
+            // IE ä¸‹ä¸èƒ½å•ç‹¬æ·»åŠ  script å…ƒç´ 
+            creators.script = function(html, ownerDoc) {
+                var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
+                frag.innerHTML = '-' + html;
+                frag.removeChild(frag.firstChild);
+                return frag;
+            };
+
+            // IE7- adds TBODY when creating thead/tfoot/caption/col/colgroup elements
+            if (ie < 8) {
+                creators.tbody = function(html, ownerDoc) {
+                    var frag = create(TABLE_OPEN + html + TABLE_CLOSE, null, ownerDoc),
+                        tbody = frag.children['tags']('tbody')[0];
+
+                    if (frag.children.length > 1 && tbody && !RE_TBODY.test(html)) {
+                        tbody[PARENT_NODE].removeChild(tbody); // strip extraneous tbody
+                    }
+                    return frag;
+                };
+            }
+        }
+
+        S.mix(creators, {
+            optgroup: creators.option, // gecko æ”¯æŒï¼Œä½† ie ä¸æ”¯æŒ
+            th: creators.td,
+            thead: creators.tbody,
+            tfoot: creators.tbody,
+            caption: creators.tbody,
+            colgroup: creators.tbody
+        });
+    }
 });
 
 /**
- * Notes:
- *
- * 2010.03
- *  ~ attr:
- *    - ÔÚ jquery/support.js ÖĞ£¬special attrs Àï»¹ÓĞ maxlength, cellspacing,
- *      rowspan, colspan, useap, frameboder, µ«²âÊÔ·¢ÏÖ£¬ÔÚ Grade-A ¼¶ä¯ÀÀÆ÷ÖĞ
- *      ²¢ÎŞ¼æÈİĞÔÎÊÌâ¡£
- *    - µ± colspan/rowspan ÊôĞÔÖµÉèÖÃÓĞÎóÊ±£¬ie7- »á×Ô¶¯¾ÀÕı£¬ºÍ href Ò»Ñù£¬ĞèÒª´«µİ
- *      µÚ 2 ¸ö²ÎÊıÀ´½â¾ö¡£jQuery Î´¿¼ÂÇ£¬´æÔÚ¼æÈİĞÔ bug.
- *    - jQuery ¿¼ÂÇÁËÎ´ÏÔÊ½Éè¶¨ tabindex Ê±Òı·¢µÄ¼æÈİÎÊÌâ£¬kissy ÀïºöÂÔ£¨Ì«²»³£ÓÃÁË£©
- *    - jquery/attributes.js: Safari mis-reports the default selected
- *      property of an option ÔÚ Safari 4 ÖĞÒÑĞŞ¸´
- *
  * TODO:
- *  - create µÄ½øÒ»²½ÍêÉÆ£¬±ÈÈç cache, ¶Ô table, form ÔªËØµÄÖ§³ÖµÈµÈ
- *//**
- * @module  dom-class
- * @author  lifesinger@gmail.com
- * @depends kissy, dom-base
+ *  - ç ”ç©¶ jQuery çš„ buildFragment å’Œ clean
+ *  - å¢åŠ  cache, å®Œå–„ test cases
+ *  - æ”¯æŒæ›´å¤š props
  */
+/**
+ * @module  dom-insertion
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-insertion', function(S) {
 
-KISSY.add('dom-class', function(S, undefined) {
-
-    var SPACE = ' ',
-        DOM = S.DOM;
+    var DOM = S.DOM,
+        PARENT_NODE = 'parentNode',
+        NEXT_SIBLING = 'nextSibling';
 
     S.mix(DOM, {
 
         /**
-         * Determines whether a HTMLElement has the given className.
+         * Inserts the new node as the previous sibling of the reference node.
+         * @return {HTMLElement} The node that was inserted (or null if insert fails)
          */
-        hasClass: function(el, className) {
-            if (!className || !el || !el.className) return false;
+        insertBefore: function(newNode, refNode) {
+            newNode = DOM.create(newNode);
+            refNode = S.get(refNode);
 
-            return (SPACE + el.className + SPACE).indexOf(SPACE + className + SPACE) > -1;
-        },
-
-        /**
-         * Adds a given className to a HTMLElement.
-         */
-        addClass: function(el, className) {
-            if(batch(el, addClass, DOM, className)) return;
-            if (!className || !el) return;
-            if (hasClass(el, className)) return;
-
-            el.className += SPACE + className;
-        },
-
-        /**
-         * Removes a given className from a HTMLElement.
-         */
-        removeClass: function(el, className) {
-            if(batch(el, removeClass, DOM, className)) return;
-            if (!hasClass(el, className)) return;
-
-            el.className = (SPACE + el.className + SPACE).replace(SPACE + className + SPACE, SPACE);
-            if (hasClass(el, className)) {
-                removeClass(el, className);
+            if (newNode && refNode && refNode[PARENT_NODE]) {
+                refNode[PARENT_NODE].insertBefore(newNode, refNode);
             }
+
+            return newNode;
         },
 
         /**
-         * Replace a class with another class for a given element.
-         * If no oldClassName is present, the newClassName is simply added.
+         * Inserts the new node as the next sibling of the reference node.
+         * @return {HTMLElement} The node that was inserted (or null if insert fails)
          */
-        replaceClass: function(el, oldC, newC) {
-            removeClass(el, oldC);
-            addClass(el, newC);
-        },
+        insertAfter: function(newNode, refNode) {
+            newNode = DOM.create(newNode);
+            refNode = S.get(refNode);
 
-        /**
-         * If the className exists on the node it is removed, if it doesn't exist it is added.
-         * @param {boolean} force addClass optional boolean to indicate whether class
-         * should be added or removed regardless of current state.
-         */
-        toggleClass: function(el, className, force) {
-            if(batch(el, DOM.toggleClass, DOM, className, force)) return;
-
-            var add = (force !== undefined) ? force :
-                      !(hasClass(el, className));
-
-            if (add) {
-                addClass(el, className);
-            } else {
-                removeClass(el, className);
+            if (newNode && refNode && refNode[PARENT_NODE]) {
+                if (refNode[NEXT_SIBLING]) {
+                    refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
+                } else {
+                    refNode[PARENT_NODE].appendChild(newNode);
+                }
             }
+
+            return newNode;
         }
     });
 
-    function batch(arr, method, context) {
-        if (S.isArray(arr)) {
-            S.each(arr, function(item) {
-                method.apply(context, Array.prototype.slice.call(arguments, 3));
-            });
-            return true;
-        }
-    }
-
-    // for quick access
-    var hasClass = DOM.hasClass,
-        addClass = DOM.addClass,
-        removeClass = DOM.removeClass;
 });
 
 /**
- * TODO:
- *   - hasClass needs batch?
- *//*
-Copyright 2010, KISSY UI Library v1.0.5
+ * NOTES:
+ *  - appendChild/removeChild/replaceChild ç›´æ¥ç”¨åŸç”Ÿçš„
+ *  - append/appendTo, prepend/prependTo, wrap/unwrap æ”¾åœ¨ Node é‡Œ
+ *
+ */
+/*
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 669 May 22 23:47
+build: 722 Jun 23 16:51
 */
 /**
  * @module  event
@@ -1603,8 +2254,7 @@ build: 669 May 22 23:47
  */
 KISSY.add('event', function(S, undefined) {
 
-    var DOM = S.DOM,
-        win = window, doc = document,
+    var win = window, doc = document,
         simpleAdd = doc.addEventListener ?
                     function(el, type, fn) {
                         if (el.addEventListener) {
@@ -1627,13 +2277,15 @@ KISSY.add('event', function(S, undefined) {
                                el.detachEvent('on' + type, fn);
                            }
                        },
-        EVENT_GUID = 'data-ks-event-guid',
+        EVENT_GUID = 'ksEventTargetId',
         SPACE = ' ',
         guid = S.now(),
         // { id: { target: el, events: { type: { handle: obj, listeners: [...] } } }, ... }
         cache = { };
 
     var Event = {
+
+        EVENT_GUID: EVENT_GUID,
 
         // such as: { 'mouseenter' : { fix: 'mouseover', handle: fn } }
         special: { },
@@ -1643,17 +2295,18 @@ KISSY.add('event', function(S, undefined) {
          * @param target {Element} An element or custom EventTarget to assign the listener to.
          * @param type {String} The type of event to append.
          * @param fn {Function} The event handler.
+         * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
-        add: function(target, type, fn) {
-            if(batch('add', target, type, fn)) return;
+        add: function(target, type, fn, scope /* optional */) {
+            if(batch('add', target, type, fn, scope)) return;
 
             var id = getID(target),
                 special, events, eventHandle;
 
-            // ²»ÊÇÓĞĞ§µÄ target »ò ²ÎÊı²»¶Ô
+            // ä¸æ˜¯æœ‰æ•ˆçš„ target æˆ– å‚æ•°ä¸å¯¹
             if(id === -1 || !type || !S.isFunction(fn)) return;
 
-            // »¹Ã»ÓĞÌí¼Ó¹ıÈÎºÎÊÂ¼ş
+            // è¿˜æ²¡æœ‰æ·»åŠ è¿‡ä»»ä½•äº‹ä»¶
             if (!id) {
                 setID(target, (id = guid++));
                 cache[id] = {
@@ -1662,9 +2315,9 @@ KISSY.add('event', function(S, undefined) {
                 };
             }
 
-            // Ã»ÓĞÌí¼Ó¹ı¸ÃÀàĞÍÊÂ¼ş
+            // æ²¡æœ‰æ·»åŠ è¿‡è¯¥ç±»å‹äº‹ä»¶
             events = cache[id].events;
-            special = (!target.isCustomEventTarget && Event.special[type]) || { }; // special ½öÕë¶Ô element
+            special = (!target.isCustomEventTarget && Event.special[type]) || { }; // special ä»…é’ˆå¯¹ element
             if (!events[type]) {
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
@@ -1679,7 +2332,7 @@ KISSY.add('event', function(S, undefined) {
                         special.setup(event);
                     }
 
-                    return (special.handle || Event._handle)(target, event, events[type].listeners);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners, scope);
                 };
 
                 events[type] = {
@@ -1695,7 +2348,7 @@ KISSY.add('event', function(S, undefined) {
                 }
             }
 
-            // Ôö¼Ó listener
+            // å¢åŠ  listener
             events[type].listeners.push(fn);
         },
 
@@ -1709,16 +2362,16 @@ KISSY.add('event', function(S, undefined) {
                 events, eventsType, listeners,
                 i, len, c, t;
 
-            if (id === -1) return; // ²»ÊÇÓĞĞ§µÄ target
-            if(!id || !(c = cache[id])) return; // ÎŞ cache
-            if(c.target !== target) return; // target ²»Æ¥Åä
+            if (id === -1) return; // ä¸æ˜¯æœ‰æ•ˆçš„ target
+            if(!id || !(c = cache[id])) return; // æ—  cache
+            if(c.target !== target) return; // target ä¸åŒ¹é…
             events = c.events || { };
 
             if((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
 
-                // ÒÆ³ı fn
+                // ç§»é™¤ fn
                 if(S.isFunction(fn) && len && S.inArray(fn, listeners)) {
                     t = [];
                     for(i = 0; i < len; ++i) {
@@ -1730,7 +2383,7 @@ KISSY.add('event', function(S, undefined) {
                     len = t.length;
                 }
 
-                // remove(el, type)or fn ÒÑÒÆ³ı¹â
+                // remove(el, type)or fn å·²ç§»é™¤å…‰
                 if(fn === undefined || len === 0) {
                     if(!target.isCustomEventTarget) {
                         simpleRemove(target, type, eventsType.handle);
@@ -1739,7 +2392,7 @@ KISSY.add('event', function(S, undefined) {
                 }
             }
 
-            // remove(el) or type ÒÑÒÆ³ı¹â
+            // remove(el) or type å·²ç§»é™¤å…‰
             if(type === undefined || S.isEmptyObject(events)) {
                 for(type in events) {
                     Event.remove(target, type);
@@ -1749,18 +2402,19 @@ KISSY.add('event', function(S, undefined) {
             }
         },
 
-        _handle: function(target, event, listeners) {
+        _handle: function(target, event, listeners, scope) {
             var ret, i = 0, len = listeners.length;
+            scope = scope || target;
 
             for (; i < len; ++i) {
-                ret = listeners[i].call(target, event);
+                ret = listeners[i].call(scope, event);
 
-                if (event.isImmediatePropagationStopped) {
+                // è‡ªå®šä¹‰äº‹ä»¶å¯¹è±¡ï¼Œå¯ä»¥ç”¨ return false æ¥ç«‹åˆ»åœæ­¢åç»­ç›‘å¬å‡½æ•°
+                // æ³¨æ„ï¼šreturn false ä»…åœæ­¢å½“å‰ target çš„åç»­ç›‘å¬å‡½æ•°ï¼Œå¹¶ä¸ä¼šé˜»æ­¢å†’æ³¡
+                // ç›®å‰æ²¡æœ‰å®ç°è‡ªå®šä¹‰äº‹ä»¶å¯¹è±¡çš„å†’æ³¡ï¼Œå› æ­¤ return false å’Œ stopImmediatePropagation æ•ˆæœæ˜¯ä¸€æ ·çš„
+                if ((ret === false && target.isCustomEventTarget) ||
+                    event.isImmediatePropagationStopped) {
                     break;
-                }
-
-                if (ret === false) {
-                    event.halt();
                 }
             }
 
@@ -1778,7 +2432,7 @@ KISSY.add('event', function(S, undefined) {
     // shorthand
     Event.on = Event.add;
 
-    function batch(methodName, targets, types, fn) {
+    function batch(methodName, targets, types, fn, scope) {
 
         // on('#id tag.className', type, fn)
         if(S.isString(targets)) {
@@ -1788,7 +2442,7 @@ KISSY.add('event', function(S, undefined) {
         // on([targetA, targetB], type, fn)
         if (S.isArray(targets)) {
             S.each(targets, function(target) {
-                Event[methodName](target, types, fn);
+                Event[methodName](target, types, fn, scope);
             });
             return true;
         }
@@ -1796,73 +2450,40 @@ KISSY.add('event', function(S, undefined) {
         // on(target, 'click focus', fn)
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
             S.each(types.split(SPACE), function(type) {
-                Event[methodName](targets, type, fn);
+                Event[methodName](targets, type, fn, scope);
             });
             return true;
         }
     }
 
     function getID(target) {
-        var ret = -1;
-
-        // text and comment node
-        if (target.nodeType === 3 || target.nodeType === 8) {
-            return ret;
-        }
-
-        // HTML Element
-        if (target.nodeType) {
-            ret = DOM.attr(target, EVENT_GUID);
-        }
-        // custom EventTarget
-        else if (target.isCustomEventTarget) {
-            ret = target.eventTargetId;
-        }
-        // window, iframe, etc.
-        else {
-            ret = target[EVENT_GUID];
-        }
-
-        return ret;
+        return isTextOrCommentNode(target) ? -1 : target[EVENT_GUID];
     }
 
     function setID(target, id) {
         // text and comment node
-        if (target.nodeType === 3 || target.nodeType === 8) {
+        if (isTextOrCommentNode(target)) {
             return S.error('Text or comment node is not valid event target.');
         }
 
-        // HTML Element
-        if (target.nodeType) {
-            DOM.attr(target, EVENT_GUID, id);
-        }
-        // custom EventTarget
-        else if (target.isCustomEventTarget) {
-            target.eventTargetId = id;
-        }
-        // window, iframe, etc.
-        else {
-            try {
-                target[EVENT_GUID] = id;
-            } catch(ex) {
-                S.error(ex);
-            }
+        try {
+            target[EVENT_GUID] = id;
+        } catch(ex) {
+            // iframe è·¨åŸŸç­‰æƒ…å†µä¼šæŠ¥é”™
+            S.error(ex);
         }
     }
 
     function removeID(target) {
-        // HTML Element
-        if (target.nodeType) {
-            DOM.removeAttr(target, EVENT_GUID);
-        }
-        // custom EventTarget
-        else if (target.isCustomEventTarget) {
-            target.eventTargetId = undefined;
-        }
-        // window, iframe, etc.
-        else {
+        try {
             target[EVENT_GUID] = undefined;
+            delete target[EVENT_GUID];
+        } catch(ex) {
         }
+    }
+
+    function isTextOrCommentNode(target) {
+        return target.nodeType === 3 || target.nodeType === 8;
     }
 
     S.Event = Event;
@@ -1888,11 +2509,11 @@ KISSY.add('event', function(S, undefined) {
 
 /**
  * TODO:
- *   - ÑĞ¾¿ jq µÄ expando cache ·½Ê½
- *   - event || window.event, Ê²Ã´Çé¿öÏÂÈ¡ window.event ? IE4 ?
- *   - ¸üÏê¾¡Ï¸ÖÂµÄ test cases
- *   - ÄÚ´æĞ¹Â©²âÊÔ
- *   - target Îª window, iframe µÈÌØÊâ¶ÔÏóÊ±µÄ test case
+ *   - ç ”ç©¶ jq çš„ expando cache æ–¹å¼
+ *   - event || window.event, ä»€ä¹ˆæƒ…å†µä¸‹å– window.event ? IE4 ?
+ *   - æ›´è¯¦å°½ç»†è‡´çš„ test cases
+ *   - å†…å­˜æ³„æ¼æµ‹è¯•
+ *   - target ä¸º window, iframe ç­‰ç‰¹æ®Šå¯¹è±¡æ—¶çš„ test case
  */
 /**
  * @module  EventObject
@@ -2059,7 +2680,7 @@ KISSY.add('event-object', function(S, undefined) {
  *   - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
  *
  * TODO:
- *   - pageX, clientX, scrollLeft, clientLeft µÄÏêÏ¸²âÊÔ
+ *   - pageX, clientX, scrollLeft, clientLeft çš„è¯¦ç»†æµ‹è¯•
  */
 /**
  * @module  EventTarget
@@ -2067,7 +2688,8 @@ KISSY.add('event-object', function(S, undefined) {
  */
 KISSY.add('event-target', function(S, undefined) {
 
-    var Event = S.Event;
+    var Event = S.Event,
+        EVENT_GUID = Event.EVENT_GUID;
 
     /**
      * EventTarget provides the implementation for any object to publish,
@@ -2075,12 +2697,12 @@ KISSY.add('event-target', function(S, undefined) {
      */
     S.EventTarget = {
 
-        eventTargetId: undefined,
+        //ksEventTargetId: undefined,
 
         isCustomEventTarget: true,
 
         fire: function(type, eventData) {
-            var id = this.eventTargetId || -1,
+            var id = this[EVENT_GUID] || -1,
                 cache = Event._getCache(id) || { },
                 events = cache.events || { },
                 t = events[type];
@@ -2090,8 +2712,8 @@ KISSY.add('event-target', function(S, undefined) {
             }
         },
 
-        on: function(type, fn) {
-            Event.add(this, type, fn);
+        on: function(type, fn, scope) {
+            Event.add(this, type, fn, scope);
         },
 
         detach: function(type, fn) {
@@ -2104,10 +2726,10 @@ KISSY.add('event-target', function(S, undefined) {
  * NOTES:
  *
  *  2010.04
- *   - ³õÊ¼ÉèÏë api: publish, fire, on, detach. Êµ¼ÊÊµÏÖÊ±·¢ÏÖ£¬publish ÊÇ²»ĞèÒª
- *     µÄ£¬on Ê±ÄÜ×Ô¶¯ publish. api ¼ò»¯Îª£º´¥·¢/¶©ÔÄ/·´¶©ÔÄ
+ *   - åˆå§‹è®¾æƒ³ api: publish, fire, on, detach. å®é™…å®ç°æ—¶å‘ç°ï¼Œpublish æ˜¯ä¸éœ€è¦
+ *     çš„ï¼Œon æ—¶èƒ½è‡ªåŠ¨ publish. api ç®€åŒ–ä¸ºï¼šè§¦å‘/è®¢é˜…/åè®¢é˜…
  *
- *   - detach ÃüÃûÊÇÒòÎª removeEventListener Ì«³¤£¬remove ÔòÌ«ÈİÒ×³åÍ»
+ *   - detach å‘½åæ˜¯å› ä¸º removeEventListener å¤ªé•¿ï¼Œremove åˆ™å¤ªå®¹æ˜“å†²çª
  */
 /**
  * @module  event-mouseenter
@@ -2157,6 +2779,6 @@ KISSY.add('event-mouseenter', function(S) {
 
 /**
  * TODO:
- *  - ie6 ÏÂ£¬Ô­ÉúµÄ mouseenter/leave Ã²ËÆÒ²ÓĞ bug, ±ÈÈç <div><div /><div /><div /></div>
- *    jQuery Ò²Òì³££¬ĞèÒª½øÒ»²½ÑĞ¾¿
+ *  - ie6 ä¸‹ï¼ŒåŸç”Ÿçš„ mouseenter/leave è²Œä¼¼ä¹Ÿæœ‰ bug, æ¯”å¦‚ <div><div /><div /><div /></div>
+ *    jQuery ä¹Ÿå¼‚å¸¸ï¼Œéœ€è¦è¿›ä¸€æ­¥ç ”ç©¶
  */

@@ -124,6 +124,6 @@ KISSY.add('dom-class', function(S, undefined) {
 
 /**
  * NOTES:
- *   - hasClass/addClass/removeClass µÄÂß¼­ºÍ jQuery ±£³ÖÒ»ÖÂ
- *   - toggleClass ²»Ö§³Ö value Îª undefined µÄÇéĞÎ£¨jQuery Ö§³Ö£©
+ *   - hasClass/addClass/removeClass çš„é€»è¾‘å’Œ jQuery ä¿æŒä¸€è‡´
+ *   - toggleClass ä¸æ”¯æŒ value ä¸º undefined çš„æƒ…å½¢ï¼ˆjQuery æ”¯æŒï¼‰
  */

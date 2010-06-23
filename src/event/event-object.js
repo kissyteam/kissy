@@ -163,5 +163,5 @@ KISSY.add('event-object', function(S, undefined) {
  *   - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
  *
  * TODO:
- *   - pageX, clientX, scrollLeft, clientLeft µÄÏêÏ¸²âÊÔ
+ *   - pageX, clientX, scrollLeft, clientLeft çš„è¯¦ç»†æµ‹è¯•
  */

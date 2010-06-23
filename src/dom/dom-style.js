@@ -34,11 +34,19 @@ KISSY.add('dom-style', function(S, undefined) {
          * Gets or sets styles on the matches elements.
          */
         css: function(selector, name, val) {
-            name = CUSTOM_STYLES[name] || name;
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.css(selector, k, name[k]);
+                }
+                return;
+            }
+            
             if(name.indexOf('-') > 0) {
-                // webkit ÈÏÊ¶ camel-case, ÆäËüÄÚºËÖ»ÈÏÊ¶ cameCase
+                // webkit è®¤è¯† camel-case, å…¶å®ƒå†…æ ¸åªè®¤è¯† cameCase
                 name = name.replace(RE_DASH, CAMELCASE_FN);
             }
+            name = CUSTOM_STYLES[name] || name;
 
             // getter
             if (val === undefined) {
@@ -48,7 +56,7 @@ KISSY.add('dom-style', function(S, undefined) {
                 if (elem && elem.style) {
                     ret = name.get ? name.get(elem) : elem.style[name];
 
-                    // ÓĞ get µÄÖ±½ÓÓÃ×Ô¶¨Òåº¯ÊıµÄ·µ»ØÖµ
+                    // æœ‰ get çš„ç›´æ¥ç”¨è‡ªå®šä¹‰å‡½æ•°çš„è¿”å›å€¼
                     if(ret === '' && !name.get) {
                         ret = DOM._getComputedStyle(elem, name);
                     }
@@ -58,26 +66,18 @@ KISSY.add('dom-style', function(S, undefined) {
             }
             // setter
             else {
-                // suports hash
-                if(S.isPlainObject(val)) {
-                    for(var v in val) {
-                        DOM.css(selector, name, v);
-                    }
-                    return;
-                }
-
                 // normalize unsetting
                 if (val === null || val === EMPTY) {
                     val = EMPTY;
                 }
                 // number values may need a unit
-                else if (S.isNumber(new Number(val)) && RE_NEED_UNIT.test(name)) {
+                else if (!isNaN(new Number(val)) && RE_NEED_UNIT.test(name)) {
                     val += DEFAULT_UNIT;
                 }
 
                 // ignore negative width and height values
                 if ((name === 'width' || name === 'height') && parseFloat(val) < 0) {
-                    name.set = function(){};
+                    return;
                 }
 
                 S.each(S.query(selector), function(elem) {
@@ -95,13 +95,20 @@ KISSY.add('dom-style', function(S, undefined) {
          * @param {String} id An id to add to the stylesheet for later removal
          */
         addStyleSheet: function(cssText, id) {
-            var head = doc.getElementsByTagName('head')[0],
-                elem = doc.createElement('style');
+            var elem;
 
-            id && (elem.id = id);
-            head.appendChild(elem); // ÏÈÌí¼Óµ½ DOM Ê÷ÖĞ£¬·ñÔòÔÚ cssText ÀïµÄ hack »áÊ§Ğ§
+            // æœ‰çš„è¯ï¼Œç›´æ¥è·å–
+            if (id) elem = S.get(id);
+            if (!elem) elem = DOM.create('<style>', { id: id });
 
-            elem.styleSheet.cssText = cssText;
+            // å…ˆæ·»åŠ åˆ° DOM æ ‘ä¸­ï¼Œå†ç»™ cssText èµ‹å€¼ï¼Œå¦åˆ™ css hack ä¼šå¤±æ•ˆ
+            S.get('head').appendChild(elem);
+
+            if (elem.styleSheet) { // IE
+                elem.styleSheet.cssText = cssText;
+            } else { // W3C
+                elem.appendChild(doc.createTextNode(cssText));
+            }
         }
     });
 
@@ -116,8 +123,19 @@ KISSY.add('dom-style', function(S, undefined) {
 
 /**
  * NOTES:
- *  - Opera ÏÂ£¬color Ä¬ÈÏ·µ»Ø #XXYYZZ, ·Ç rgb(). Ä¿Ç° jQuery µÈÀà¿â¾ùºöÂÔ´Ë²îÒì£¬KISSY Ò²ºöÂÔ¡£
- *  - Safari µÍ°æ±¾£¬transparent »á·µ»ØÎª rgba(0, 0, 0, 0), ¿¼ÂÇµÍ°æ±¾²ÅÓĞ´Ë bug, ÒàºöÂÔ¡£
- *  - opacity Î´ÉèÖÃÊ±£¬Ä¬ÈÏ·µ»Ø 1. jQuery ·ÀÎÀ¹ıµ±£¿¿ÉÄÜÊÇ fix Ä³¸öµÍ°æ±¾ä¯ÀÀÆ÷µÄ bug.
- *  - Firefox ÏÂ£¬jQuery µÄ css paddingLeft ºÍ padding-left, ·µ»ØµÄÖµ²»Í¬£¬Ó¦¸ÃÍ³Ò»£¬¸ü·ûºÏÔ¤ÆÚ¡£
+ *  - Opera ä¸‹ï¼Œcolor é»˜è®¤è¿”å› #XXYYZZ, é rgb(). ç›®å‰ jQuery ç­‰ç±»åº“å‡å¿½ç•¥æ­¤å·®å¼‚ï¼ŒKISSY ä¹Ÿå¿½ç•¥ã€‚
+ *  - Safari ä½ç‰ˆæœ¬ï¼Œtransparent ä¼šè¿”å›ä¸º rgba(0, 0, 0, 0), è€ƒè™‘ä½ç‰ˆæœ¬æ‰æœ‰æ­¤ bug, äº¦å¿½ç•¥ã€‚
+ *
+ *  - é webkit ä¸‹ï¼ŒjQuery.css paddingLeft è¿”å› style å€¼ï¼Œ padding-left è¿”å› computedStyle å€¼ï¼Œ
+ *    è¿”å›çš„å€¼ä¸åŒã€‚KISSY åšäº†ç»Ÿä¸€ï¼Œæ›´ç¬¦åˆé¢„æœŸã€‚
+ *
+ *  - getComputedStyle åœ¨ webkit ä¸‹ï¼Œä¼šèˆå¼ƒå°æ•°éƒ¨åˆ†ï¼Œie ä¸‹ä¼šå››èˆäº”å…¥ï¼Œgecko ä¸‹ç›´æ¥è¾“å‡º float å€¼ã€‚
+ *
+ *  - color: blue ç»§æ‰¿å€¼ï¼ŒgetComputedStyle, åœ¨ ie ä¸‹è¿”å› blue, opera è¿”å› #0000ff, å…¶å®ƒæµè§ˆå™¨
+ *    è¿”å› rgb(0, 0, 255)
+ *
+ *  - border-width å€¼ï¼Œie ä¸‹æœ‰å¯èƒ½è¿”å› medium/thin/thick ç­‰å€¼ï¼Œå…¶å®ƒæµè§ˆå™¨è¿”å› px å€¼ã€‚
+ *
+ *  - æ€»ä¹‹ï¼šè¦ä½¿å¾—è¿”å›å€¼å®Œå…¨ä¸€è‡´æ˜¯ä¸å¤§å¯èƒ½çš„ï¼ŒjQuery/ExtJS/KISSY æœªâ€œè¿½æ±‚å®Œç¾â€ã€‚YUI3 åšäº†éƒ¨åˆ†å®Œç¾å¤„ç†ï¼Œä½†
+ *    ä¾æ—§å­˜åœ¨æµè§ˆå™¨å·®å¼‚ã€‚
  */

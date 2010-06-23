@@ -21,7 +21,7 @@ KISSY.add('selector', function(S, undefined) {
         var match, t, ret = [], id, tag, cls, i, len;
 
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
-        // ¿¼ÂÇ 2/8 Ô­Ôò£¬½öÖ§³ÖÒÔÏÂÑ¡ÔñÆ÷£º
+        // è€ƒè™‘ 2/8 åŸåˆ™ï¼Œä»…æ”¯æŒä»¥ä¸‹é€‰æ‹©å™¨ï¼š
         // #id
         // tag
         // .cls
@@ -29,25 +29,25 @@ KISSY.add('selector', function(S, undefined) {
         // #id .cls
         // tag.cls
         // #id tag.cls
-        // ×¢ 1£ºREG_QUERY »¹»áÆ¥Åä #id.cls
-        // ×¢ 2£ºtag ¿ÉÒÔÎª * ×Ö·û
-        // ×¢ 3£ºÖ§³Ö , ºÅ·Ö×é
-        // ·µ»ØÖµÎªÊı×é
-        // Ñ¡ÔñÆ÷²»Ö§³ÖÊ±£¬Å×³öÒì³£
+        // æ³¨ 1ï¼šREG_QUERY è¿˜ä¼šåŒ¹é… #id.cls
+        // æ³¨ 2ï¼štag å¯ä»¥ä¸º * å­—ç¬¦
+        // æ³¨ 3ï¼šæ”¯æŒ , å·åˆ†ç»„
+        // è¿”å›å€¼ä¸ºæ•°ç»„
+        // é€‰æ‹©å™¨ä¸æ”¯æŒæ—¶ï¼ŒæŠ›å‡ºå¼‚å¸¸
 
-        // selector Îª×Ö·û´®ÊÇ×î³£¼ûµÄÇé¿ö£¬ÓÅÏÈ¿¼ÂÇ
-        // ×¢£º¿Õ°××Ö·û´®ÎŞĞèÅĞ¶Ï£¬ÔËĞĞÏÂÈ¥×Ô¶¯ÄÜ·µ»Ø¿ÕÊı×é
+        // selector ä¸ºå­—ç¬¦ä¸²æ˜¯æœ€å¸¸è§çš„æƒ…å†µï¼Œä¼˜å…ˆè€ƒè™‘
+        // æ³¨ï¼šç©ºç™½å­—ç¬¦ä¸²æ— éœ€åˆ¤æ–­ï¼Œè¿è¡Œä¸‹å»è‡ªåŠ¨èƒ½è¿”å›ç©ºæ•°ç»„
         if (S.isString(selector)) {
             selector = S.trim(selector);
 
-            // selector Îª #id ÊÇ×î³£¼ûµÄÇé¿ö£¬ÌØÊâÓÅ»¯´¦Àí
+            // selector ä¸º #id æ˜¯æœ€å¸¸è§çš„æƒ…å†µï¼Œç‰¹æ®Šä¼˜åŒ–å¤„ç†
             if (REG_ID.test(selector)) {
                 t = getElementById(selector.slice(1));
-                if (t) ret = [t]; // #id ÎŞĞ§Ê±£¬·µ»Ø¿ÕÊı×é
+                if (t) ret = [t]; // #id æ— æ•ˆæ—¶ï¼Œè¿”å›ç©ºæ•°ç»„
             }
-            // selector ÎªÖ§³ÖÁĞ±íÖĞµÄÆäËü 6 ÖÖ
+            // selector ä¸ºæ”¯æŒåˆ—è¡¨ä¸­çš„å…¶å®ƒ 6 ç§
             else if ((match = REG_QUERY.exec(selector))) {
-                // »ñÈ¡Æ¥Åä³öµÄĞÅÏ¢
+                // è·å–åŒ¹é…å‡ºçš„ä¿¡æ¯
                 id = match[1];
                 tag = match[2];
                 cls = match[3];
@@ -56,10 +56,10 @@ KISSY.add('selector', function(S, undefined) {
 
                     // #id .cls | #id tag.cls | .cls | tag.cls
                     if (cls) {
-                        if (!id || selector.indexOf(SPACE) !== -1) { // ÅÅ³ı #id.cls
+                        if (!id || selector.indexOf(SPACE) !== -1) { // æ’é™¤ #id.cls
                             ret = getElementsByClassName(cls, tag, context);
                         }
-                        // ´¦Àí #id.cls
+                        // å¤„ç† #id.cls
                         else {
                             t = getElementById(id);
                             if(t && DOM.hasClass(t, cls)) {
@@ -68,12 +68,12 @@ KISSY.add('selector', function(S, undefined) {
                         }
                     }
                     // #id tag | tag
-                    else if (tag) { // ÅÅ³ı¿Õ°××Ö·û´®
+                    else if (tag) { // æ’é™¤ç©ºç™½å­—ç¬¦ä¸²
                         ret = getElementsByTagName(context, tag);
                     }
                 }
             }
-            // ·Ö×éÑ¡ÔñÆ÷
+            // åˆ†ç»„é€‰æ‹©å™¨
             else if (selector.indexOf(',') > -1) {
                 if (doc.querySelectorAll) {
                     ret = doc.querySelectorAll(selector);
@@ -85,26 +85,26 @@ KISSY.add('selector', function(S, undefined) {
                     ret = uniqueSort(r);
                 }
             }
-            // ²ÉÓÃÍâ²¿Ñ¡ÔñÆ÷
+            // é‡‡ç”¨å¤–éƒ¨é€‰æ‹©å™¨
             else if(S.ExternalSelector) {
                 return S.ExternalSelector(selector, context);
             }
-            // ÒÀ¾É²»Ö§³Ö£¬Å×Òì³£
+            // ä¾æ—§ä¸æ”¯æŒï¼ŒæŠ›å¼‚å¸¸
             else {
                 error(selector);
             }
         }
-        // ´«ÈëµÄ selector ÊÇ Node
+        // ä¼ å…¥çš„ selector æ˜¯ Node
         else if (selector && selector.nodeType) {
             ret = [selector];
         }
-        // ´«ÈëµÄ selector ÊÇ NodeList »òÒÑÊÇ Array
+        // ä¼ å…¥çš„ selector æ˜¯ NodeList æˆ–å·²æ˜¯ Array
         else if (selector && (selector.item || S.isArray(selector))) {
             ret = selector;
         }
-        // ´«ÈëµÄ selector ÊÇÆäËüÖµÊ±£¬·µ»Ø¿ÕÊı×é
+        // ä¼ å…¥çš„ selector æ˜¯å…¶å®ƒå€¼æ—¶ï¼Œè¿”å›ç©ºæ•°ç»„
 
-        // ½« NodeList ×ª»»ÎªÆÕÍ¨Êı×é
+        // å°† NodeList è½¬æ¢ä¸ºæ™®é€šæ•°ç»„
         if(ret.item) {
             ret = S.makeArray(ret);
         }
@@ -112,19 +112,19 @@ KISSY.add('selector', function(S, undefined) {
         return ret;
     }
 
-    // µ÷Õû context ÎªºÏÀíÖµ
+    // è°ƒæ•´ context ä¸ºåˆç†å€¼
     function tuneContext(context) {
-        // 1). context Îª undefined ÊÇ×î³£¼ûµÄÇé¿ö£¬ÓÅÏÈ¿¼ÂÇ
+        // 1). context ä¸º undefined æ˜¯æœ€å¸¸è§çš„æƒ…å†µï¼Œä¼˜å…ˆè€ƒè™‘
         if (context === undefined) {
             context = doc;
         }
-        // 2). context µÄµÚ¶şÊ¹ÓÃ³¡¾°ÊÇ´«Èë #id
+        // 2). context çš„ç¬¬äºŒä½¿ç”¨åœºæ™¯æ˜¯ä¼ å…¥ #id
         else if (S.isString(context) && REG_ID.test(context)) {
             context = getElementById(context.slice(1));
-            // ×¢£º#id ¿ÉÄÜÎŞĞ§£¬ÕâÊ±»ñÈ¡µÄ context Îª null
+            // æ³¨ï¼š#id å¯èƒ½æ— æ•ˆï¼Œè¿™æ—¶è·å–çš„ context ä¸º null
         }
-        // 3). context »¹¿ÉÒÔ´«Èë HTMLElement, ´ËÊ±ÎŞĞè´¦Àí
-        // 4). ¾­Àú 1 - 3, Èç¹û context »¹²»ÊÇ HTMLElement, ¸³ÖµÎª null
+        // 3). context è¿˜å¯ä»¥ä¼ å…¥ HTMLElement, æ­¤æ—¶æ— éœ€å¤„ç†
+        // 4). ç»å† 1 - 3, å¦‚æœ context è¿˜ä¸æ˜¯ HTMLElement, èµ‹å€¼ä¸º null
         else if (context && context.nodeType !== 1 && context.nodeType !== 9) {
             context = null;
         }
@@ -186,13 +186,13 @@ KISSY.add('selector', function(S, undefined) {
         return ret;
     }
     if (!doc.getElementsByClassName) {
-        // ½µ¼¶Ê¹ÓÃ querySelectorAll
+        // é™çº§ä½¿ç”¨ querySelectorAll
         if (doc.querySelectorAll) {
             getElementsByClassName = function(cls, tag, context) {
                 return context.querySelectorAll((tag ? tag : '') + '.' + cls);
             }
         }
-        // ½µ¼¶µ½ÆÕÍ¨·½·¨
+        // é™çº§åˆ°æ™®é€šæ–¹æ³•
         else {
             getElementsByClassName = function(cls, tag, context) {
                 var els = context.getElementsByTagName(tag || ANY),
@@ -211,14 +211,14 @@ KISSY.add('selector', function(S, undefined) {
         }
     }
 
-    // ¶ÔÓÚ·Ö×éÑ¡ÔñÆ÷£¬ĞèÒª½øĞĞÈ¥ÖØºÍÅÅĞò
+    // å¯¹äºåˆ†ç»„é€‰æ‹©å™¨ï¼Œéœ€è¦è¿›è¡Œå»é‡å’Œæ’åº
     function uniqueSort(results) {
         var hasDuplicate = false;
 
-        // °´ÕÕ dom Î»ÖÃÅÅĞò
+        // æŒ‰ç…§ dom ä½ç½®æ’åº
         results.sort(function (a, b) {
-            // ¸Ãº¯ÊıÖ»ÔÚ²»Ö§³Ö querySelectorAll µÄ IE7- ä¯ÀÀÆ÷ÖĞ±»µ÷ÓÃ£¬
-            // Òò´ËÖ»Ğè¿¼ÂÇ sourceIndex ¼´¿É
+            // è¯¥å‡½æ•°åªåœ¨ä¸æ”¯æŒ querySelectorAll çš„ IE7- æµè§ˆå™¨ä¸­è¢«è°ƒç”¨ï¼Œ
+            // å› æ­¤åªéœ€è€ƒè™‘ sourceIndex å³å¯
             var ret = a.sourceIndex - b.sourceIndex;
             if (ret === 0) {
                 hasDuplicate = true;
@@ -226,7 +226,7 @@ KISSY.add('selector', function(S, undefined) {
             return ret;
         });
 
-        // È¥ÖØ
+        // å»é‡
         if (hasDuplicate) {
             for (var i = 1; i < results.length; i++) {
                 if (results[i] === results[i - 1]) {
@@ -262,7 +262,7 @@ KISSY.add('selector', function(S, undefined) {
         filter: function(selector, filter) {
             var elems = query(selector), match, tag, cls, ret = [];
 
-            // Ä¬ÈÏ½öÖ§³Ö×î¼òµ¥µÄ tag.cls ĞÎÊ½
+            // é»˜è®¤ä»…æ”¯æŒæœ€ç®€å•çš„ tag.cls å½¢å¼
             if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
                 tag = match[2];
                 cls = match[3];
@@ -274,11 +274,11 @@ KISSY.add('selector', function(S, undefined) {
             if (S.isFunction(filter)) {
                 ret = S.filter(elems, filter);
             }
-            // ÆäËü¸´ÔÓ filter, ²ÉÓÃÍâ²¿Ñ¡ÔñÆ÷
+            // å…¶å®ƒå¤æ‚ filter, é‡‡ç”¨å¤–éƒ¨é€‰æ‹©å™¨
             else if (filter && S.ExternalSelector) {
                 ret = S.ExternalSelector._filter(selector, filter);
             }
-            // filter Îª¿Õ»ò²»Ö§³ÖµÄ selector
+            // filter ä¸ºç©ºæˆ–ä¸æ”¯æŒçš„ selector
             else {
                 error(filter);
             }
@@ -301,38 +301,38 @@ KISSY.add('selector', function(S, undefined) {
  * NOTES:
  *
  * 2010.01
- *  - ¶Ô reg exec µÄ½á¹û(id, tag, className)×ö cache, ·¢ÏÖ¶ÔĞÔÄÜÓ°ÏìºÜĞ¡£¬È¥µô¡£
- *  - getElementById Ê¹ÓÃÆµÂÊ×î¸ß£¬Ê¹ÓÃÖ±´ïÍ¨µÀÓÅ»¯¡£
- *  - getElementsByClassName ĞÔÄÜÓÅÓÚ querySelectorAll, µ« IE ÏµÁĞ²»Ö§³Ö¡£
- *  - instanceof ¶ÔĞÔÄÜÓĞÓ°Ïì¡£
- *  - ÄÚ²¿·½·¨µÄ²ÎÊı£¬±ÈÈç cls, context µÈµÄÒì³£Çé¿ö£¬ÒÑ¾­ÔÚ query ·½·¨ÖĞÓĞ±£Ö¤£¬ÎŞĞèÈßÓà¡°·ÀÎÀ¡±¡£
- *  - query ·½·¨ÖĞµÄÌõ¼şÅĞ¶Ï¿¼ÂÇÁË¡°ÆµÂÊÓÅÏÈ¡±Ô­Ôò¡£×îÓĞ¿ÉÄÜ³öÏÖµÄÇé¿ö·ÅÔÚÇ°Ãæ¡£
- *  - Array µÄ push ·½·¨¿ÉÒÔÓÃ j++ À´Ìæ´ú£¬ĞÔÄÜÓĞÌáÉı¡£
- *  - ·µ»ØÖµ²ßÂÔºÍ Sizzle Ò»ÖÂ£¬Õı³£Ê±£¬·µ»ØÊı×é£»ÆäËüËùÓĞÇé¿ö£¬·µ»Ø¿ÕÊı×é¡£
+ *  - å¯¹ reg exec çš„ç»“æœ(id, tag, className)åš cache, å‘ç°å¯¹æ€§èƒ½å½±å“å¾ˆå°ï¼Œå»æ‰ã€‚
+ *  - getElementById ä½¿ç”¨é¢‘ç‡æœ€é«˜ï¼Œä½¿ç”¨ç›´è¾¾é€šé“ä¼˜åŒ–ã€‚
+ *  - getElementsByClassName æ€§èƒ½ä¼˜äº querySelectorAll, ä½† IE ç³»åˆ—ä¸æ”¯æŒã€‚
+ *  - instanceof å¯¹æ€§èƒ½æœ‰å½±å“ã€‚
+ *  - å†…éƒ¨æ–¹æ³•çš„å‚æ•°ï¼Œæ¯”å¦‚ cls, context ç­‰çš„å¼‚å¸¸æƒ…å†µï¼Œå·²ç»åœ¨ query æ–¹æ³•ä¸­æœ‰ä¿è¯ï¼Œæ— éœ€å†—ä½™â€œé˜²å«â€ã€‚
+ *  - query æ–¹æ³•ä¸­çš„æ¡ä»¶åˆ¤æ–­è€ƒè™‘äº†â€œé¢‘ç‡ä¼˜å…ˆâ€åŸåˆ™ã€‚æœ€æœ‰å¯èƒ½å‡ºç°çš„æƒ…å†µæ”¾åœ¨å‰é¢ã€‚
+ *  - Array çš„ push æ–¹æ³•å¯ä»¥ç”¨ j++ æ¥æ›¿ä»£ï¼Œæ€§èƒ½æœ‰æå‡ã€‚
+ *  - è¿”å›å€¼ç­–ç•¥å’Œ Sizzle ä¸€è‡´ï¼Œæ­£å¸¸æ—¶ï¼Œè¿”å›æ•°ç»„ï¼›å…¶å®ƒæ‰€æœ‰æƒ…å†µï¼Œè¿”å›ç©ºæ•°ç»„ã€‚
  *
- *  - ´ÓÑ¹Ëõ½Ç¶È¿¼ÂÇ£¬»¹¿ÉÒÔ½« getElmentsByTagName ºÍ getElementsByClassName ¶¨ÒåÎª³£Á¿£¬
- *    ²»¹ı¸Ğ¾õÕâÑù×öÌ«¡°Ñ¹Ëõ¿Ø¡±£¬»¹ÊÇ±£Áô²»Ìæ»»µÄºÃ¡£
+ *  - ä»å‹ç¼©è§’åº¦è€ƒè™‘ï¼Œè¿˜å¯ä»¥å°† getElmentsByTagName å’Œ getElementsByClassName å®šä¹‰ä¸ºå¸¸é‡ï¼Œ
+ *    ä¸è¿‡æ„Ÿè§‰è¿™æ ·åšå¤ªâ€œå‹ç¼©æ§â€ï¼Œè¿˜æ˜¯ä¿ç•™ä¸æ›¿æ¢çš„å¥½ã€‚
  *
- *  - µ÷Õû getElementsByClassName µÄ½µ¼¶Ğ´·¨£¬ĞÔÄÜ×î²îµÄ·Å×îºó¡£
+ *  - è°ƒæ•´ getElementsByClassName çš„é™çº§å†™æ³•ï¼Œæ€§èƒ½æœ€å·®çš„æ”¾æœ€åã€‚
  *
  * 2010.02
- *  - Ìí¼Ó¶Ô·Ö×éÑ¡ÔñÆ÷µÄÖ§³Ö£¨Ö÷Òª²Î¿¼ Sizzle µÄ´úÂë£¬´úÈ¥³ıÁË¶Ô·Ç Grade A ¼¶ä¯ÀÀÆ÷µÄÖ§³Ö£©
+ *  - æ·»åŠ å¯¹åˆ†ç»„é€‰æ‹©å™¨çš„æ”¯æŒï¼ˆä¸»è¦å‚è€ƒ Sizzle çš„ä»£ç ï¼Œä»£å»é™¤äº†å¯¹é Grade A çº§æµè§ˆå™¨çš„æ”¯æŒï¼‰
  *
  * 2010.03
- *  - »ùÓÚÔ­Éú dom µÄÁ½¸ö api: S.query ·µ»ØÊı×é; S.get ·µ»ØµÚÒ»¸ö¡£
- *    »ùÓÚ Node µÄ api: S.one, ÔÚ Node ÖĞÊµÏÖ¡£
- *    »ùÓÚ NodeList µÄ api: S.all, ÔÚ NodeList ÖĞÊµÏÖ¡£
- *    Í¨¹ı api µÄ·Ö²ã£¬Í¬Ê±Âú×ã³õ¼¶ÓÃ»§ºÍ¸ß¼¶ÓÃ»§µÄĞèÇó¡£
+ *  - åŸºäºåŸç”Ÿ dom çš„ä¸¤ä¸ª api: S.query è¿”å›æ•°ç»„; S.get è¿”å›ç¬¬ä¸€ä¸ªã€‚
+ *    åŸºäº Node çš„ api: S.one, åœ¨ Node ä¸­å®ç°ã€‚
+ *    åŸºäº NodeList çš„ api: S.all, åœ¨ NodeList ä¸­å®ç°ã€‚
+ *    é€šè¿‡ api çš„åˆ†å±‚ï¼ŒåŒæ—¶æ»¡è¶³åˆçº§ç”¨æˆ·å’Œé«˜çº§ç”¨æˆ·çš„éœ€æ±‚ã€‚
  *
  * 2010.05
- *  - È¥µô¸ø S.query ·µ»ØÖµÄ¬ÈÏÌí¼ÓµÄ each ·½·¨£¬±£³Ö´¿¾»¡£
- *  - ¶ÔÓÚ²»Ö§³ÖµÄ selector, ²ÉÓÃÍâ²¿ñîºÏ½øÀ´µÄ Selector.
+ *  - å»æ‰ç»™ S.query è¿”å›å€¼é»˜è®¤æ·»åŠ çš„ each æ–¹æ³•ï¼Œä¿æŒçº¯å‡€ã€‚
+ *  - å¯¹äºä¸æ”¯æŒçš„ selector, é‡‡ç”¨å¤–éƒ¨è€¦åˆè¿›æ¥çš„ Selector.
  *
  * 2010.06
- *  - Ôö¼Ó filter ºÍ test ·½·¨
+ *  - å¢åŠ  filter å’Œ test æ–¹æ³•
  *
  * Bugs:
- *  - S.query('#test-data *') µÈ´ø * ºÅµÄÑ¡ÔñÆ÷£¬ÔÚ IE6 ÏÂ·µ»ØµÄÖµ²»¶Ô¡£jQuery µÈÀà¿âÒ²ÓĞ´Ë bug, ¹îÒì¡£
+ *  - S.query('#test-data *') ç­‰å¸¦ * å·çš„é€‰æ‹©å™¨ï¼Œåœ¨ IE6 ä¸‹è¿”å›çš„å€¼ä¸å¯¹ã€‚jQuery ç­‰ç±»åº“ä¹Ÿæœ‰æ­¤ bug, è¯¡å¼‚ã€‚
  *
  * References:
  *  - http://ejohn.org/blog/selectors-that-people-actually-use/
@@ -342,7 +342,7 @@ KISSY.add('selector', function(S, undefined) {
  *  - MINI: http://james.padolsey.com/javascript/mini/
  *  - Peppy: http://jamesdonaghue.com/?p=40
  *  - Sly: http://github.com/digitarald/sly
- *  - XPath, TreeWalker£ºhttp://www.cnblogs.com/rubylouvre/archive/2009/07/24/1529640.html
+ *  - XPath, TreeWalkerï¼šhttp://www.cnblogs.com/rubylouvre/archive/2009/07/24/1529640.html
  *
  *  - http://www.quirksmode.org/blog/archives/2006/01/contains_for_mo.html
  *  - http://www.quirksmode.org/dom/getElementsByTagNames.html

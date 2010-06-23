@@ -4,7 +4,8 @@
  */
 KISSY.add('event-target', function(S, undefined) {
 
-    var Event = S.Event;
+    var Event = S.Event,
+        EVENT_GUID = Event.EVENT_GUID;
 
     /**
      * EventTarget provides the implementation for any object to publish,
@@ -12,12 +13,12 @@ KISSY.add('event-target', function(S, undefined) {
      */
     S.EventTarget = {
 
-        eventTargetId: undefined,
+        //ksEventTargetId: undefined,
 
         isCustomEventTarget: true,
 
         fire: function(type, eventData) {
-            var id = this.eventTargetId || -1,
+            var id = this[EVENT_GUID] || -1,
                 cache = Event._getCache(id) || { },
                 events = cache.events || { },
                 t = events[type];
@@ -41,8 +42,8 @@ KISSY.add('event-target', function(S, undefined) {
  * NOTES:
  *
  *  2010.04
- *   - ³õÊ¼ÉèÏë api: publish, fire, on, detach. Êµ¼ÊÊµÏÖÊ±·¢ÏÖ£¬publish ÊÇ²»ĞèÒª
- *     µÄ£¬on Ê±ÄÜ×Ô¶¯ publish. api ¼ò»¯Îª£º´¥·¢/¶©ÔÄ/·´¶©ÔÄ
+ *   - åˆå§‹è®¾æƒ³ api: publish, fire, on, detach. å®é™…å®ç°æ—¶å‘ç°ï¼Œpublish æ˜¯ä¸éœ€è¦
+ *     çš„ï¼Œon æ—¶èƒ½è‡ªåŠ¨ publish. api ç®€åŒ–ä¸ºï¼šè§¦å‘/è®¢é˜…/åè®¢é˜…
  *
- *   - detach ÃüÃûÊÇÒòÎª removeEventListener Ì«³¤£¬remove ÔòÌ«ÈİÒ×³åÍ»
+ *   - detach å‘½åæ˜¯å› ä¸º removeEventListener å¤ªé•¿ï¼Œremove åˆ™å¤ªå®¹æ˜“å†²çª
  */

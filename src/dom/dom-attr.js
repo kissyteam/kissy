@@ -55,34 +55,34 @@ KISSY.add('dom-attr', function(S, undefined) {
 
                 var ret;
 
-                // ÓÅÏÈÓÃ el[name] »ñÈ¡ mapping ÊôĞÔÖµ£º
-                //  - ¿ÉÒÔÕıÈ·»ñÈ¡ readonly, checked, selected µÈÌØÊâ mapping ÊôĞÔÖµ
-                //  - ¿ÉÒÔ»ñÈ¡ÓÃ getAttribute ²»Ò»¶¨ÄÜ»ñÈ¡µ½µÄÖµ£¬±ÈÈç tabindex Ä¬ÈÏÖµ
-                //  - href, src Ö±½Ó»ñÈ¡µÄÊÇ normalized ºóµÄÖµ£¬ÅÅ³ıµô
-                //  - style ĞèÒªÓÃ getAttribute À´»ñÈ¡×Ö·û´®Öµ£¬Ò²ÅÅ³ıµô
+                // ä¼˜å…ˆç”¨ el[name] è·å– mapping å±æ€§å€¼ï¼š
+                //  - å¯ä»¥æ­£ç¡®è·å– readonly, checked, selected ç­‰ç‰¹æ®Š mapping å±æ€§å€¼
+                //  - å¯ä»¥è·å–ç”¨ getAttribute ä¸ä¸€å®šèƒ½è·å–åˆ°çš„å€¼ï¼Œæ¯”å¦‚ tabindex é»˜è®¤å€¼
+                //  - href, src ç›´æ¥è·å–çš„æ˜¯ normalized åçš„å€¼ï¼Œæ’é™¤æ‰
+                //  - style éœ€è¦ç”¨ getAttribute æ¥è·å–å­—ç¬¦ä¸²å€¼ï¼Œä¹Ÿæ’é™¤æ‰
                 if(!RE_SPECIAL_ATTRS.test(name)) {
                     ret = el[name];
                 }
                 
-                // ÓÃ getAttribute »ñÈ¡·Ç mapping ÊôĞÔºÍ href/src/style µÄÖµ£º
+                // ç”¨ getAttribute è·å–é mapping å±æ€§å’Œ href/src/style çš„å€¼ï¼š
                 if(ret === undefined) {
                     ret = el.getAttribute(name);
                 }
 
                 // fix ie bugs
                 if (oldIE) {
-                    // ²»¹âÊÇ href, src, »¹ÓĞ rowspan µÈ·Ç mapping ÊôĞÔ£¬Ò²ĞèÒªÓÃµÚ 2 ¸ö²ÎÊıÀ´»ñÈ¡Ô­Ê¼Öµ
+                    // ä¸å…‰æ˜¯ href, src, è¿˜æœ‰ rowspan ç­‰é mapping å±æ€§ï¼Œä¹Ÿéœ€è¦ç”¨ç¬¬ 2 ä¸ªå‚æ•°æ¥è·å–åŸå§‹å€¼
                     if(RE_NORMALIZED_ATTRS.test(name)) {
                         ret = el.getAttribute(name, 2);
                     }
-                    // ÔÚ±ê×¼ä¯ÀÀÆ÷ÏÂ£¬ÓÃ getAttribute »ñÈ¡ style Öµ
-                    // IE7- ÏÂ£¬ĞèÒªÓÃ cssText À´»ñÈ¡
+                    // åœ¨æ ‡å‡†æµè§ˆå™¨ä¸‹ï¼Œç”¨ getAttribute è·å– style å€¼
+                    // IE7- ä¸‹ï¼Œéœ€è¦ç”¨ cssText æ¥è·å–
                     else if(name === 'style') {
                         ret = el.style.cssText;
                     }
                 }
 
-                // ¶ÔÓÚ²»´æÔÚµÄÊôĞÔ£¬Í³Ò»·µ»Ø undefined
+                // å¯¹äºä¸å­˜åœ¨çš„å±æ€§ï¼Œç»Ÿä¸€è¿”å› undefined
                 return ret === null ? undefined : ret;
             }
 
@@ -129,13 +129,13 @@ KISSY.add('dom-attr', function(S, undefined) {
                     return undefined;
                 }
 
-                // µ±Ã»ÓĞÉè¶¨ value Ê±£¬±ê×¼ä¯ÀÀÆ÷ option.value === option.text
-                // ie7- ÏÂ£¬Ã»ÓĞÉè¶¨ value Ê±£¬option.value === '', ĞèÒªÓÃ el.attributes.value À´ÅĞ¶ÏÊÇ·ñÓĞÉè¶¨ value
+                // å½“æ²¡æœ‰è®¾å®š value æ—¶ï¼Œæ ‡å‡†æµè§ˆå™¨ option.value === option.text
+                // ie7- ä¸‹ï¼Œæ²¡æœ‰è®¾å®š value æ—¶ï¼Œoption.value === '', éœ€è¦ç”¨ el.attributes.value æ¥åˆ¤æ–­æ˜¯å¦æœ‰è®¾å®š value
                 if(nodeNameIs('option', el)) {
                     return (el.attributes.value || {}).specified ? el.value : el.text;
                 }
 
-                // ¶ÔÓÚ select, ÌØ±ğÊÇ multiple type, ´æÔÚºÜÑÏÖØµÄ¼æÈİĞÔÎÊÌâ
+                // å¯¹äº select, ç‰¹åˆ«æ˜¯ multiple type, å­˜åœ¨å¾ˆä¸¥é‡çš„å…¼å®¹æ€§é—®é¢˜
                 if(nodeNameIs('select', el)) {
                     var index = el.selectedIndex,
                         options = el.options;
@@ -163,7 +163,7 @@ KISSY.add('dom-attr', function(S, undefined) {
                     return el.getAttribute('value') === null ? 'on' : el.value;
                 }
 
-                // ÆÕÍ¨ÔªËØµÄ value, ¹éÒ»»¯µô \r
+                // æ™®é€šå…ƒç´ çš„ value, å½’ä¸€åŒ–æ‰ \r
                 return (el.value || '').replace(RE_RETURN, '');
             }
 
@@ -214,7 +214,7 @@ KISSY.add('dom-attr', function(S, undefined) {
         }
     });
 
-    // ÅĞ¶Ï el µÄ nodeName ÊÇ·ñÖ¸¶¨Öµ
+    // åˆ¤æ–­ el çš„ nodeName æ˜¯å¦æŒ‡å®šå€¼
     function nodeNameIs(val, el) {
         return el && el.nodeName.toUpperCase() === val.toUpperCase();
     }
@@ -224,13 +224,13 @@ KISSY.add('dom-attr', function(S, undefined) {
  * NOTES:
  *
  * 2010.03
- *  - ÔÚ jquery/support.js ÖĞ£¬special attrs Àï»¹ÓĞ maxlength, cellspacing,
- *    rowspan, colspan, useap, frameboder, µ«²âÊÔ·¢ÏÖ£¬ÔÚ Grade-A ¼¶ä¯ÀÀÆ÷ÖĞ
- *    ²¢ÎŞ¼æÈİĞÔÎÊÌâ¡£
- *  - µ± colspan/rowspan ÊôĞÔÖµÉèÖÃÓĞÎóÊ±£¬ie7- »á×Ô¶¯¾ÀÕı£¬ºÍ href Ò»Ñù£¬ĞèÒª´«µİ
- *    µÚ 2 ¸ö²ÎÊıÀ´½â¾ö¡£jQuery Î´¿¼ÂÇ£¬´æÔÚ¼æÈİĞÔ bug.
- *  - jQuery ¿¼ÂÇÁËÎ´ÏÔÊ½Éè¶¨ tabindex Ê±Òı·¢µÄ¼æÈİÎÊÌâ£¬kissy ÀïºöÂÔ£¨Ì«²»³£ÓÃÁË£©
+ *  - åœ¨ jquery/support.js ä¸­ï¼Œspecial attrs é‡Œè¿˜æœ‰ maxlength, cellspacing,
+ *    rowspan, colspan, useap, frameboder, ä½†æµ‹è¯•å‘ç°ï¼Œåœ¨ Grade-A çº§æµè§ˆå™¨ä¸­
+ *    å¹¶æ— å…¼å®¹æ€§é—®é¢˜ã€‚
+ *  - å½“ colspan/rowspan å±æ€§å€¼è®¾ç½®æœ‰è¯¯æ—¶ï¼Œie7- ä¼šè‡ªåŠ¨çº æ­£ï¼Œå’Œ href ä¸€æ ·ï¼Œéœ€è¦ä¼ é€’
+ *    ç¬¬ 2 ä¸ªå‚æ•°æ¥è§£å†³ã€‚jQuery æœªè€ƒè™‘ï¼Œå­˜åœ¨å…¼å®¹æ€§ bug.
+ *  - jQuery è€ƒè™‘äº†æœªæ˜¾å¼è®¾å®š tabindex æ—¶å¼•å‘çš„å…¼å®¹é—®é¢˜ï¼Œkissy é‡Œå¿½ç•¥ï¼ˆå¤ªä¸å¸¸ç”¨äº†ï¼‰
  *  - jquery/attributes.js: Safari mis-reports the default selected
- *    property of an option ÔÚ Safari 4 ÖĞÒÑĞŞ¸´
+ *    property of an option åœ¨ Safari 4 ä¸­å·²ä¿®å¤
  *
  */

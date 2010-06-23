@@ -70,7 +70,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          */
         isFunction: function(o) {
             //return typeof o === 'function';
-            // Safari ÏÂ£¬typeof NodeList Ò²·µ»Ø function
+            // Safari ä¸‹ï¼Œtypeof NodeList ä¹Ÿè¿”å› function
             return toString.call(o) === '[object Function]';
         },
 
@@ -126,7 +126,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * Search for a specified value index within an array.
          */
         inArray: function(elem, arr) {
-            return S.indexOf(elem, arr) !== -1;
+            return S.indexOf(elem, arr) > -1;
         },
 
         /**
@@ -141,7 +141,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 return [o];
             }
 
-            // ie ²»Ö§³ÖÓÃ slice ×ª»» NodeList, ½µ¼¶µ½ÆÕÍ¨·½·¨
+            // ie ä¸æ”¯æŒç”¨ slice è½¬æ¢ NodeList, é™çº§åˆ°æ™®é€šæ–¹æ³•
             if (o.item && S.UA.ie) {
                 var ret = [], i = 0, len = o.length;
                 for (; i < len; ++i) {
@@ -189,7 +189,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * </code>
          */
         param: function(o) {
-            // ·Ç plain object, Ö±½Ó·µ»Ø¿Õ
+            // é plain object, ç›´æ¥è¿”å›ç©º
             if (!S.isPlainObject(o)) return '';
 
             var buf = [], key, val;
@@ -197,11 +197,11 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 val = o[key];
                 key = encode(key);
 
-                // val ÎªÓĞĞ§µÄ·ÇÊı×éÖµ
+                // val ä¸ºæœ‰æ•ˆçš„éæ•°ç»„å€¼
                 if (isValidParamValue(val)) {
                     buf.push(key, '=', encode(val + ''), '&');
                 }
-                // val Îª·Ç¿ÕÊı×é
+                // val ä¸ºéç©ºæ•°ç»„
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
@@ -209,7 +209,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
                         }
                     }
                 }
-                // ÆäËüÇé¿ö£º°üÀ¨¿ÕÊı×é¡¢²»ÊÇÊı×éµÄ object£¨°üÀ¨ Function, RegExp, Date etc.£©£¬Ö±½Ó¶ªÆú
+                // å…¶å®ƒæƒ…å†µï¼šåŒ…æ‹¬ç©ºæ•°ç»„ã€ä¸æ˜¯æ•°ç»„çš„ objectï¼ˆåŒ…æ‹¬ Function, RegExp, Date etc.ï¼‰ï¼Œç›´æ¥ä¸¢å¼ƒ
             }
             buf.pop();
             return buf.join('');
@@ -236,7 +236,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 pair = pairs[i].split('=');
                 key = decode(pair[0]);
 
-                // pair[1] ¿ÉÄÜ°üº¬ gbk ±àÂëµÄÖĞÎÄ£¬¶ø decodeURIComponent ½öÄÜ´¦Àí utf-8 ±àÂëµÄÖĞÎÄ£¬·ñÔò±¨´í
+                // pair[1] å¯èƒ½åŒ…å« gbk ç¼–ç çš„ä¸­æ–‡ï¼Œè€Œ decodeURIComponent ä»…èƒ½å¤„ç† utf-8 ç¼–ç çš„ä¸­æ–‡ï¼Œå¦åˆ™æŠ¥é”™
                 try {
                     val = decode(pair[1] || '');
                 } catch (ex) {
@@ -332,11 +332,11 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
     function isValidParamValue(val) {
         var t = typeof val;
-        // val Îª null, undefined, number, string, boolean Ê±£¬·µ»Ø true
+        // val ä¸º null, undefined, number, string, boolean æ—¶ï¼Œè¿”å› true
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // ¿ÉÒÔÍ¨¹ıÔÚ url ÉÏ¼Ó ?ks-debug À´¿ªÆô debug Ä£Ê½
+    // å¯ä»¥é€šè¿‡åœ¨ url ä¸ŠåŠ  ?ks-debug æ¥å¼€å¯ debug æ¨¡å¼
     if(loc && loc.search && loc.search.indexOf('ks-debug') !== -1){
         S.Config.debug = true;
     }
@@ -346,17 +346,17 @@ KISSY.add('kissy-lang', function(S, undefined) {
  * NOTES:
  *
  *  2010.06
- *   - unparam ÀïµÄ try catch ÈÃÈËºÜÄÑÊÜ£¬µ«ÎªÁËË³Ó¦¹úÇé£¬¾ö¶¨»¹ÊÇÁô×Å 
+ *   - unparam é‡Œçš„ try catch è®©äººå¾ˆéš¾å—ï¼Œä½†ä¸ºäº†é¡ºåº”å›½æƒ…ï¼Œå†³å®šè¿˜æ˜¯ç•™ç€ 
  *
  *  2010.05
- *   - Ôö¼Ó filter ·½·¨¡£
- *   - globalEval ÖĞ£¬Ö±½Ó²ÉÓÃ text ¸³Öµ£¬È¥µô appendChild ·½Ê½¡£
+ *   - å¢åŠ  filter æ–¹æ³•ã€‚
+ *   - globalEval ä¸­ï¼Œç›´æ¥é‡‡ç”¨ text èµ‹å€¼ï¼Œå»æ‰ appendChild æ–¹å¼ã€‚
  *
  *  2010.04
- *   - param ºÍ unparam Ó¦¸Ã·ÅÔÚÊ²Ã´µØ·½ºÏÊÊ£¿ÓĞµã¾À½á£¬Ä¿Ç°Ôİ·Å´Ë´¦¡£
- *   - param ºÍ unparam ÊÇ²»ÍêÈ«¿ÉÄæµÄ¡£¶Ô¿ÕÖµµÄ´¦ÀíºÍ cookie ±£³ÖÒ»ÖÂ¡£
+ *   - param å’Œ unparam åº”è¯¥æ”¾åœ¨ä»€ä¹ˆåœ°æ–¹åˆé€‚ï¼Ÿæœ‰ç‚¹çº ç»“ï¼Œç›®å‰æš‚æ”¾æ­¤å¤„ã€‚
+ *   - param å’Œ unparam æ˜¯ä¸å®Œå…¨å¯é€†çš„ã€‚å¯¹ç©ºå€¼çš„å¤„ç†å’Œ cookie ä¿æŒä¸€è‡´ã€‚
  *
  * TODO:
- *   - ·ÖÎö jq µÄ isPlainObject ¶Ô constructor µÄÏ¸½Ú´¦Àí
+ *   - åˆ†æ jq çš„ isPlainObject å¯¹ constructor çš„ç»†èŠ‚å¤„ç†
  *
  */

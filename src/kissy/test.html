@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf-8"/>
 <title>KISSY Core Test</title>
 </head>
 <body>
@@ -361,34 +361,34 @@
     function test_makeArray(test) {
         var o;
 
-        // ÆÕÍ¨¶ÔÏó(ÎŞ length ÊôĞÔ)×ª»»Îª [obj]
+        // æ™®é€šå¯¹è±¡(æ—  length å±æ€§)è½¬æ¢ä¸º [obj]
         o = {a:1};
         if(S.makeArray(o)[0] !== o) test.fail();
 
-        // string ×ª»»Îª [str]
+        // string è½¬æ¢ä¸º [str]
         if(S.makeArray('test')[0] !== 'test') test.fail();
 
-        // function ×ª»»Îª [fn]
+        // function è½¬æ¢ä¸º [fn]
         o = function() {};
         if(S.makeArray(o)[0] !== o) test.fail();
 
-        // array-like ¶ÔÏó£¬×ª»»ÎªÊı×é
+        // array-like å¯¹è±¡ï¼Œè½¬æ¢ä¸ºæ•°ç»„
         if(S.makeArray({'0':0, '1':1, length:2}).length !== 2) test.fail();
         if(S.makeArray({'0':0, '1':1, length:2})[1] !== 1) test.fail();
 
-        // nodeList ×ª»»ÎªÆÕÍ¨Êı×é
+        // nodeList è½¬æ¢ä¸ºæ™®é€šæ•°ç»„
         o = document.getElementsByTagName('body');
         if(S.makeArray(o).length !== 1) test.fail();
         if(S.makeArray(o)[0] !== o[0]) test.fail();
         if(!S.makeArray(o).slice) test.fail();
 
-        // arguments ×ª»»ÎªÆÕÍ¨Êı×é
+        // arguments è½¬æ¢ä¸ºæ™®é€šæ•°ç»„
         o = arguments;
         if(S.makeArray(o).length !== 1) test.fail();
         if(S.makeArray(o)[0] !== test) test.fail();
         if(!S.makeArray(o).slice) test.fail();
 
-        // Î± array-like ¶ÔÏó
+        // ä¼ª array-like å¯¹è±¡
         o = S.makeArray({a:1,b:2,length:2});
         if(o.length !== 2) test.fail();
         if(o[0] !== undefined) test.fail();

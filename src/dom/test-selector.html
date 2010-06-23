@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf-8"/>
 <title>Selector Test</title>
 </head>
 <body>
@@ -52,7 +52,7 @@
         <li class="browsers"><a title="Browsers and User Agents, Authoring Tools, Web Servers" href="/standards/agents/"><span class="icon">
 <!-- --></span>Browsers and Authoring Tools</a></li>
         <li class="allspecs"><a href="/TR/"><span class="icon">
-<!-- --></span>¡­ or view all</a></li>
+<!-- --></span>â€¦ or view all</a></li>
     </ul>
     <h3 class="category tMarginLg"><span class="ribbon"><a href="Consortium/mission.html#principles">Web for All </a></span></h3>
     <ul class="theme">
@@ -168,11 +168,11 @@
 
             </div>
         </div>
-        <p class="noprint"><span class="more-news"><a title="More News" href="/News/archive">More news¡­</a></span></p>
+        <p class="noprint"><span class="more-news"><a title="More News" href="/News/archive">More newsâ€¦</a></span></p>
         <div class="w3c_events_talks">
             <div class="line">
                 <div class="unit size1on2">
-                    <div class="w3c_upcoming_talks" id="w3c_home_talks"><h2 class="category"><a href="/Talks/" title="More Talks¡­">
+                    <div class="w3c_upcoming_talks" id="w3c_home_talks"><h2 class="category"><a href="/Talks/" title="More Talksâ€¦">
                         Talks and Appearances
                     </a></h2>
                         <ul class="vevent_list">
@@ -192,7 +192,7 @@
                     </div>
                 </div>
                 <div class="unit size1on2 lastUnit">
-                    <div class="w3c_upcoming_events" id="w3c_home_upcoming_events"><h2 class="category"><a href="/participate/eventscal.html" title="More Events¡­">Events </a></h2>
+                    <div class="w3c_upcoming_events" id="w3c_home_upcoming_events"><h2 class="category"><a href="/participate/eventscal.html" title="More Eventsâ€¦">Events </a></h2>
                         <ul class="vevent_list">
                             <li class="vevent">
                                 <div class="date">
@@ -259,7 +259,7 @@
             Executive Officer</a>; learn more about <a href="/Consortium/Recruitment/">job opportunities</a>.</p>
     </div>
     <div id="w3c_home_recent_blogs"><h2 class="category">
-        <a href="/QA/" title="More Blog Entries¡­">W3C Blog
+        <a href="/QA/" title="More Blog Entriesâ€¦">W3C Blog
         </a>
     </h2>
         <ul class="hentry_list">
@@ -622,36 +622,36 @@ function test_query_unsupported_sep(test) {
 // exceptions:
 function test_query_exceptions(test) {
 
-    // ¿Õ×Ö·û´®·µ»Ø []
+    // ç©ºå­—ç¬¦ä¸²è¿”å› []
     if (S.query('').length !== 0) test.fail();
     if (S.query('  ').length !== 0) test.fail();
 
-    // ÎŞ²ÎÊıÊ±£¬·µ»Ø¿ÕÊı×é
+    // æ— å‚æ•°æ—¶ï¼Œè¿”å›ç©ºæ•°ç»„
     if (S.query().length !== 0) test.fail();
 
-    // ´«Èë Node Ê±£¬·µ»Ø [Node]
+    // ä¼ å…¥ Node æ—¶ï¼Œè¿”å› [Node]
     if (S.query(doc)[0] !== doc) test.fail();
 
-    // ´«Èë NodeList Ê±£¬·µ»Ø×ª»»ºóµÄÊı×é
+    // ä¼ å…¥ NodeList æ—¶ï¼Œè¿”å›è½¬æ¢åçš„æ•°ç»„
     var nodeList = doc.getElementsByTagName('h3');
     if (S.query(nodeList)[0].className !== 'category') test.fail();
 
-    // ÔÊĞí¿Õ°××Ö·û
+    // å…è®¸ç©ºç™½å­—ç¬¦
     if (S.query(' #test-data  p.date  ').length !== 12) test.fail();
 
     // #id.cls
     if (S.query('#test-data.date').length !== 0) test.fail();
     if (S.query('#w3c_logo_shadow.w3c_leftCol').length !== 1) test.fail();
 
-    // context Îª null Ê±£¬·µ»Ø []
-    // ×¢£ºÕâºÍ jQuery ²»Í¬£¬jQuery ´ËÊ±»á½« context ¸³ÖµÎª doc
+    // context ä¸º null æ—¶ï¼Œè¿”å› []
+    // æ³¨ï¼šè¿™å’Œ jQuery ä¸åŒï¼ŒjQuery æ­¤æ—¶ä¼šå°† context èµ‹å€¼ä¸º doc
     if (S.query('p', null).length !== 0) test.fail();
 
-    // context ÎªÎŞĞ§ÖµÊ±£¬·µ»Ø []
-    // ×¢£º´ËÊ±ºÍ jQuery Ò»ÖÂ
+    // context ä¸ºæ— æ•ˆå€¼æ—¶ï¼Œè¿”å› []
+    // æ³¨ï¼šæ­¤æ—¶å’Œ jQuery ä¸€è‡´
     if (S.query('p', 1).length !== 0) test.fail();
 
-    // Ö§³Ö tag Îª * ºÅ
+    // æ”¯æŒ tag ä¸º * å·
     if (S.query('*').length < 1) test.fail();
     if (S.query('#test-data *').length !== 333) test.fail();
     if (S.query('*.date').length !== 15) test.fail();

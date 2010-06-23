@@ -25,11 +25,11 @@ KISSY.add('dom-create', function(S, undefined) {
             var ret = null, creators = DOM._creators,
                 m, tag = DIV, k, nodes;
 
-            // ¼òµ¥ tag, ±ÈÈç DOM.create('<p>')
+            // ç®€å• tag, æ¯”å¦‚ DOM.create('<p>')
             if ((m = RE_SIMPLE_TAG.exec(html))) {
                 ret = (ownerDoc || doc).createElement(m[1]);
             }
-            // ¸´ÔÓÇé¿ö£¬±ÈÈç DOM.create('<img src="sprite.png" />')
+            // å¤æ‚æƒ…å†µï¼Œæ¯”å¦‚ DOM.create('<img src="sprite.png" />')
             else {
                 if ((m = RE_TAG.exec(html)) && (k = m[1]) && S.isFunction(creators[(k = k.toLowerCase())])) {
                     tag = k;
@@ -84,7 +84,7 @@ KISSY.add('dom-create', function(S, undefined) {
         }
     });
 
-    // Ìí¼Ó³ÉÔ±µ½ÔªËØÖĞ
+    // æ·»åŠ æˆå‘˜åˆ°å…ƒç´ ä¸­
     function attachProps(elem, props) {
         if (isElementNode(elem) && props) {
             for (var p in props) {
@@ -94,7 +94,7 @@ KISSY.add('dom-create', function(S, undefined) {
         return elem;
     }
 
-    // ½« nodeList ×ª»»Îª fragment
+    // å°† nodeList è½¬æ¢ä¸º fragment
     function nl2frag(nodes, ownerDoc) {
         var ret = null, i, len;
 
@@ -117,7 +117,7 @@ KISSY.add('dom-create', function(S, undefined) {
         return ret;
     }
 
-    // ¶¨Òå creators, ´¦Àíä¯ÀÀÆ÷¼æÈİ
+    // å®šä¹‰ creators, å¤„ç†æµè§ˆå™¨å…¼å®¹
     var creators = DOM._creators,
         create = DOM.create,
         TABLE_OPEN = '<table>',
@@ -129,7 +129,7 @@ KISSY.add('dom-create', function(S, undefined) {
             tr: 'tbody',
             tbody: 'table',
             col: 'colgroup',
-            legend: 'fieldset' // ie Ö§³Ö£¬µ« gecko ²»Ö§³Ö
+            legend: 'fieldset' // ie æ”¯æŒï¼Œä½† gecko ä¸æ”¯æŒ
         };
 
     if (UA.gecko || ie) {
@@ -142,7 +142,7 @@ KISSY.add('dom-create', function(S, undefined) {
         }
 
         if (ie) {
-            // IE ÏÂ²»ÄÜµ¥¶ÀÌí¼Ó script ÔªËØ
+            // IE ä¸‹ä¸èƒ½å•ç‹¬æ·»åŠ  script å…ƒç´ 
             creators.script = function(html, ownerDoc) {
                 var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
                 frag.innerHTML = '-' + html;
@@ -165,7 +165,7 @@ KISSY.add('dom-create', function(S, undefined) {
         }
 
         S.mix(creators, {
-            optgroup: creators.option, // gecko Ö§³Ö£¬µ« ie ²»Ö§³Ö
+            optgroup: creators.option, // gecko æ”¯æŒï¼Œä½† ie ä¸æ”¯æŒ
             th: creators.td,
             thead: creators.tbody,
             tfoot: creators.tbody,
@@ -177,7 +177,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
 /**
  * TODO:
- *  - ÑĞ¾¿ jQuery µÄ buildFragment ºÍ clean
- *  - Ôö¼Ó cache, ÍêÉÆ test cases
- *  - Ö§³Ö¸ü¶à props
+ *  - ç ”ç©¶ jQuery çš„ buildFragment å’Œ clean
+ *  - å¢åŠ  cache, å®Œå–„ test cases
+ *  - æ”¯æŒæ›´å¤š props
  */

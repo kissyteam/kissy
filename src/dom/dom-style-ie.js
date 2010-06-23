@@ -10,11 +10,10 @@ KISSY.add('dom-style-ie', function(S, undefined) {
     var DOM = S.DOM,
         doc = document,
         docElem = doc.documentElement,
-        OPACITY = 'opactiy',
+        OPACITY = 'opacity',
         FILTER = 'filter',
         FILTERS = 'filters',
         CURRENT_STYLE = 'currentStyle',
-        RUNTIME_STYLE = 'runtimeStyle',
         LEFT = 'left',
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
@@ -28,17 +27,20 @@ KISSY.add('dom-style-ie', function(S, undefined) {
 
                 get: function(elem) {
                     var val = 100;
+
                     try { // will error if no DXImageTransform
                         val = elem[FILTERS]['DXImageTransform.Microsoft.Alpha'][OPACITY];
                     }
                     catch(e) {
-                        try { // make sure its in the document
+                        try {
                             val = elem[FILTERS]('alpha')[OPACITY];
                         } catch(ex) {
-                            S.log('IE opacity filter not found.');
+                            // 没有设置过 opacity 时会报错，这时返回 1 即可
                         }
                     }
-                    return val / 100;
+
+                    // 和其他浏览器保持一致，转换为字符串类型
+                    return val / 100 + '';
                 },
 
                 set: function(elem, val) {
@@ -54,8 +56,8 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             };
         }
     }
-    catch(e) {
-        S.log('IE filters ActiveX is disabled.');
+    catch(ex) {
+        S.log('IE filters ActiveX is disabled. ex = ' + ex);
     }
 
     // getComputedStyle for IE
@@ -70,19 +72,18 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
             if (!RE_NUMPX.test(ret) && RE_NUM.test(ret)) {
-
                 // Remember the original values
-                var left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
+                var left = style[LEFT];
 
                 // Put in the new values to get a computed value out
-                elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
                 style[LEFT] = (name === 'fontSize') ? '1em' : (ret || 0);
                 ret = style['pixelLeft'] + 'px';
 
                 // Revert the changed values
                 style[LEFT] = left;
-                elem[RUNTIME_STYLE][LEFT] = rsLeft;
             }
+
+            return ret;
         }
     }
 });

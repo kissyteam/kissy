@@ -8,12 +8,16 @@ KISSY.add('dom-offset', function(S, undefined) {
         win = window,
         doc = document,
         docElem = doc.documentElement,
+        PARSEINT = parseInt,
+        POSITION = 'position',
+        RELATIVE = 'relative',
         OWNER_DOCUMENT = 'ownerDocument',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
 
     S.mix(DOM, {
 
         offset: function(elem, val) {
+            // ownerDocument çš„åˆ¤æ–­å¯ä»¥ä¿è¯ elem æ²¡æœ‰æ¸¸ç¦»åœ¨ document ä¹‹å¤–ï¼ˆæ¯”å¦‚ fragmentï¼‰
             if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
 
             // getter
@@ -43,14 +47,14 @@ KISSY.add('dom-offset', function(S, undefined) {
     function getOffset(elem) {
         var box, x = 0, y = 0;
 
-        // 1. ¶ÔÓÚ body ºÍ docElem, Ö±½Ó·µ»Ø 0, ¾ø´ó²¿·ÖÇé¿öÏÂ£¬Õâ¶¼²»»áÓĞÎÊÌâ
-        // 2. ¸ù¾İ GBS ×îĞÂÊı¾İ£¬A-Grade Browsers ¶¼ÒÑÖ§³Ö getBoundingClientRect ·½·¨£¬²»ÓÃÔÙ¿¼ÂÇ´«Í³µÄÊµÏÖ·½Ê½
+        // 1. å¯¹äº body å’Œ docElem, ç›´æ¥è¿”å› 0, ç»å¤§éƒ¨åˆ†æƒ…å†µä¸‹ï¼Œè¿™éƒ½ä¸ä¼šæœ‰é—®é¢˜
+        // 2. æ ¹æ® GBS æœ€æ–°æ•°æ®ï¼ŒA-Grade Browsers éƒ½å·²æ”¯æŒ getBoundingClientRect æ–¹æ³•ï¼Œä¸ç”¨å†è€ƒè™‘ä¼ ç»Ÿçš„å®ç°æ–¹å¼
         if (elem !== doc.body && elem !== docElem && elem[GET_BOUNDING_CLIENT_RECT]) {
             box = elem[GET_BOUNDING_CLIENT_RECT]();
 
-            // ×¢£ºjQuery »¹¿¼ÂÇ¼õÈ¥ docElem.clientLeft/clientTop
-            // µ«²âÊÔ·¢ÏÖ£¬ÕâÑù·´¶ø»áµ¼ÖÂµ± html ºÍ body ÓĞ±ß¾à/±ß¿òÑùÊ½Ê±£¬»ñÈ¡µÄÖµ²»ÕıÈ·
-            // ´ËÍâ£¬ie6 »áºöÂÔ html µÄ margin Öµ£¬ĞÒÔËµØÊÇÃ»ÓĞË­»áÈ¥ÉèÖÃ html µÄ margin
+            // æ³¨ï¼šjQuery è¿˜è€ƒè™‘å‡å» docElem.clientLeft/clientTop
+            // ä½†æµ‹è¯•å‘ç°ï¼Œè¿™æ ·åè€Œä¼šå¯¼è‡´å½“ html å’Œ body æœ‰è¾¹è·/è¾¹æ¡†æ ·å¼æ—¶ï¼Œè·å–çš„å€¼ä¸æ­£ç¡®
+            // æ­¤å¤–ï¼Œie6 ä¼šå¿½ç•¥ html çš„ margin å€¼ï¼Œå¹¸è¿åœ°æ˜¯æ²¡æœ‰è°ä¼šå»è®¾ç½® html çš„ margin
 
             x = box.left + DOM.scrollLeft();
             y = box.top + DOM.scrollTop();
@@ -59,13 +63,29 @@ KISSY.add('dom-offset', function(S, undefined) {
         return { left: x, top: y };
     }
 
-    function setOffset(elem, val) {
-        
+    function setOffset(elem, offset) {
+        var position = DOM.css(elem, POSITION);
+
+        // set position first, in-case top/left are set even on static elem
+        if (position === 'static') {
+            position = elem.style[POSITION] = RELATIVE;
+        }
+
+        var old = getOffset(elem),
+            relative = (position === RELATIVE),
+            left = PARSEINT(DOM.css(elem, 'left'), 10),
+            top = PARSEINT(DOM.css(elem, 'top'), 10);
+
+        left = S.isNumber(left) ? left : (relative ? 0 : elem.offsetLeft);
+        top = S.isNumber(top) ? top : (relative ? 0 : elem.offsetTop);
+
+        DOM.css(elem, {left: (left + offset.left - old.left), top: (top + offset.top - old.top)});
     }
 });
 
 /**
  * TODO:
- *  - ¿¼ÂÇÊÇ·ñÊµÏÖ jQuery µÄ position, offsetParent µÈ¹¦ÄÜ
+ *  - è€ƒè™‘æ˜¯å¦å®ç° jQuery çš„ position, offsetParent ç­‰åŠŸèƒ½
+ *  - æ›´è¯¦ç»†çš„æµ‹è¯•ç”¨ä¾‹ï¼ˆæ¯”å¦‚ï¼šæµ‹è¯• position ä¸º fixed çš„æƒ…å†µï¼‰
  *
  */

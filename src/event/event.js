@@ -4,8 +4,7 @@
  */
 KISSY.add('event', function(S, undefined) {
 
-    var DOM = S.DOM,
-        win = window, doc = document,
+    var win = window, doc = document,
         simpleAdd = doc.addEventListener ?
                     function(el, type, fn) {
                         if (el.addEventListener) {
@@ -28,13 +27,15 @@ KISSY.add('event', function(S, undefined) {
                                el.detachEvent('on' + type, fn);
                            }
                        },
-        EVENT_GUID = 'data-ks-event-guid',
+        EVENT_GUID = 'ksEventTargetId',
         SPACE = ' ',
         guid = S.now(),
         // { id: { target: el, events: { type: { handle: obj, listeners: [...] } } }, ... }
         cache = { };
 
     var Event = {
+
+        EVENT_GUID: EVENT_GUID,
 
         // such as: { 'mouseenter' : { fix: 'mouseover', handle: fn } }
         special: { },
@@ -52,10 +53,10 @@ KISSY.add('event', function(S, undefined) {
             var id = getID(target),
                 special, events, eventHandle;
 
-            // ²»ÊÇÓĞĞ§µÄ target »ò ²ÎÊı²»¶Ô
+            // ä¸æ˜¯æœ‰æ•ˆçš„ target æˆ– å‚æ•°ä¸å¯¹
             if(id === -1 || !type || !S.isFunction(fn)) return;
 
-            // »¹Ã»ÓĞÌí¼Ó¹ıÈÎºÎÊÂ¼ş
+            // è¿˜æ²¡æœ‰æ·»åŠ è¿‡ä»»ä½•äº‹ä»¶
             if (!id) {
                 setID(target, (id = guid++));
                 cache[id] = {
@@ -64,9 +65,9 @@ KISSY.add('event', function(S, undefined) {
                 };
             }
 
-            // Ã»ÓĞÌí¼Ó¹ı¸ÃÀàĞÍÊÂ¼ş
+            // æ²¡æœ‰æ·»åŠ è¿‡è¯¥ç±»å‹äº‹ä»¶
             events = cache[id].events;
-            special = (!target.isCustomEventTarget && Event.special[type]) || { }; // special ½öÕë¶Ô element
+            special = (!target.isCustomEventTarget && Event.special[type]) || { }; // special ä»…é’ˆå¯¹ element
             if (!events[type]) {
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
@@ -97,7 +98,7 @@ KISSY.add('event', function(S, undefined) {
                 }
             }
 
-            // Ôö¼Ó listener
+            // å¢åŠ  listener
             events[type].listeners.push(fn);
         },
 
@@ -111,16 +112,16 @@ KISSY.add('event', function(S, undefined) {
                 events, eventsType, listeners,
                 i, len, c, t;
 
-            if (id === -1) return; // ²»ÊÇÓĞĞ§µÄ target
-            if(!id || !(c = cache[id])) return; // ÎŞ cache
-            if(c.target !== target) return; // target ²»Æ¥Åä
+            if (id === -1) return; // ä¸æ˜¯æœ‰æ•ˆçš„ target
+            if(!id || !(c = cache[id])) return; // æ—  cache
+            if(c.target !== target) return; // target ä¸åŒ¹é…
             events = c.events || { };
 
             if((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
 
-                // ÒÆ³ı fn
+                // ç§»é™¤ fn
                 if(S.isFunction(fn) && len && S.inArray(fn, listeners)) {
                     t = [];
                     for(i = 0; i < len; ++i) {
@@ -132,7 +133,7 @@ KISSY.add('event', function(S, undefined) {
                     len = t.length;
                 }
 
-                // remove(el, type)or fn ÒÑÒÆ³ı¹â
+                // remove(el, type)or fn å·²ç§»é™¤å…‰
                 if(fn === undefined || len === 0) {
                     if(!target.isCustomEventTarget) {
                         simpleRemove(target, type, eventsType.handle);
@@ -141,7 +142,7 @@ KISSY.add('event', function(S, undefined) {
                 }
             }
 
-            // remove(el) or type ÒÑÒÆ³ı¹â
+            // remove(el) or type å·²ç§»é™¤å…‰
             if(type === undefined || S.isEmptyObject(events)) {
                 for(type in events) {
                     Event.remove(target, type);
@@ -158,9 +159,9 @@ KISSY.add('event', function(S, undefined) {
             for (; i < len; ++i) {
                 ret = listeners[i].call(scope, event);
 
-                // ×Ô¶¨ÒåÊÂ¼ş¶ÔÏó£¬¿ÉÒÔÓÃ return false À´Á¢¿ÌÍ£Ö¹ºóĞø¼àÌıº¯Êı
-                // ×¢Òâ£ºreturn false ½öÍ£Ö¹µ±Ç° target µÄºóĞø¼àÌıº¯Êı£¬²¢²»»á×èÖ¹Ã°Åİ
-                // Ä¿Ç°Ã»ÓĞÊµÏÖ×Ô¶¨ÒåÊÂ¼ş¶ÔÏóµÄÃ°Åİ£¬Òò´Ë return false ºÍ stopImmediatePropagation Ğ§¹ûÊÇÒ»ÑùµÄ
+                // è‡ªå®šä¹‰äº‹ä»¶å¯¹è±¡ï¼Œå¯ä»¥ç”¨ return false æ¥ç«‹åˆ»åœæ­¢åç»­ç›‘å¬å‡½æ•°
+                // æ³¨æ„ï¼šreturn false ä»…åœæ­¢å½“å‰ target çš„åç»­ç›‘å¬å‡½æ•°ï¼Œå¹¶ä¸ä¼šé˜»æ­¢å†’æ³¡
+                // ç›®å‰æ²¡æœ‰å®ç°è‡ªå®šä¹‰äº‹ä»¶å¯¹è±¡çš„å†’æ³¡ï¼Œå› æ­¤ return false å’Œ stopImmediatePropagation æ•ˆæœæ˜¯ä¸€æ ·çš„
                 if ((ret === false && target.isCustomEventTarget) ||
                     event.isImmediatePropagationStopped) {
                     break;
@@ -206,66 +207,33 @@ KISSY.add('event', function(S, undefined) {
     }
 
     function getID(target) {
-        var ret = -1;
-
-        // text and comment node
-        if (target.nodeType === 3 || target.nodeType === 8) {
-            return ret;
-        }
-
-        // HTML Element
-        if (target.nodeType) {
-            ret = DOM.attr(target, EVENT_GUID);
-        }
-        // custom EventTarget
-        else if (target.isCustomEventTarget) {
-            ret = target.eventTargetId;
-        }
-        // window, iframe, etc.
-        else {
-            ret = target[EVENT_GUID];
-        }
-
-        return ret;
+        return isTextOrCommentNode(target) ? -1 : target[EVENT_GUID];
     }
 
     function setID(target, id) {
         // text and comment node
-        if (target.nodeType === 3 || target.nodeType === 8) {
+        if (isTextOrCommentNode(target)) {
             return S.error('Text or comment node is not valid event target.');
         }
 
-        // HTML Element
-        if (target.nodeType) {
-            DOM.attr(target, EVENT_GUID, id);
-        }
-        // custom EventTarget
-        else if (target.isCustomEventTarget) {
-            target.eventTargetId = id;
-        }
-        // window, iframe, etc.
-        else {
-            try {
-                target[EVENT_GUID] = id;
-            } catch(ex) {
-                S.error(ex);
-            }
+        try {
+            target[EVENT_GUID] = id;
+        } catch(ex) {
+            // iframe è·¨åŸŸç­‰æƒ…å†µä¼šæŠ¥é”™
+            S.error(ex);
         }
     }
 
     function removeID(target) {
-        // HTML Element
-        if (target.nodeType) {
-            DOM.removeAttr(target, EVENT_GUID);
-        }
-        // custom EventTarget
-        else if (target.isCustomEventTarget) {
-            target.eventTargetId = undefined;
-        }
-        // window, iframe, etc.
-        else {
+        try {
             target[EVENT_GUID] = undefined;
+            delete target[EVENT_GUID];
+        } catch(ex) {
         }
+    }
+
+    function isTextOrCommentNode(target) {
+        return target.nodeType === 3 || target.nodeType === 8;
     }
 
     S.Event = Event;
@@ -291,9 +259,9 @@ KISSY.add('event', function(S, undefined) {
 
 /**
  * TODO:
- *   - ÑĞ¾¿ jq µÄ expando cache ·½Ê½
- *   - event || window.event, Ê²Ã´Çé¿öÏÂÈ¡ window.event ? IE4 ?
- *   - ¸üÏê¾¡Ï¸ÖÂµÄ test cases
- *   - ÄÚ´æĞ¹Â©²âÊÔ
- *   - target Îª window, iframe µÈÌØÊâ¶ÔÏóÊ±µÄ test case
+ *   - ç ”ç©¶ jq çš„ expando cache æ–¹å¼
+ *   - event || window.event, ä»€ä¹ˆæƒ…å†µä¸‹å– window.event ? IE4 ?
+ *   - æ›´è¯¦å°½ç»†è‡´çš„ test cases
+ *   - å†…å­˜æ³„æ¼æµ‹è¯•
+ *   - target ä¸º window, iframe ç­‰ç‰¹æ®Šå¯¹è±¡æ—¶çš„ test case
  */

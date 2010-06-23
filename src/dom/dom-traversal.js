@@ -47,12 +47,12 @@ KISSY.add('dom-traversal', function(S, undefined) {
         }
     });
 
-    // »ñÈ¡ÔªËØ elem ÔÚ direction ·½ÏòÉÏÂú×ã filter µÄµÚÒ»¸öÔªËØ
-    // filter ¿ÉÎª number, selector, fn
-    // direction ¿ÉÎª parentNode, nextSibling, previousSibling
+    // è·å–å…ƒç´  elem åœ¨ direction æ–¹å‘ä¸Šæ»¡è¶³ filter çš„ç¬¬ä¸€ä¸ªå…ƒç´ 
+    // filter å¯ä¸º number, selector, fn
+    // direction å¯ä¸º parentNode, nextSibling, previousSibling
     function nth(elem, filter, direction, extraFilter) {
         if (!(elem = S.get(elem))) return null;
-        if(filter === undefined) filter = 1; // Ä¬ÈÏÈ¡ 1
+        if(filter === undefined) filter = 1; // é»˜è®¤å– 1
         var ret = null, fi, flen;
 
         if(S.isNumber(filter) && filter >= 0) {
@@ -74,7 +74,7 @@ KISSY.add('dom-traversal', function(S, undefined) {
         return ret;
     }
 
-    // »ñÈ¡ÔªËØ elem µÄ siblings, ²»°üÀ¨×ÔÉí
+    // è·å–å…ƒç´  elem çš„ siblings, ä¸åŒ…æ‹¬è‡ªèº«
     function getSiblings(selector, filter, parent) {
         var ret = [], elem = S.get(selector), j, parentNode = elem, next;
         if (elem && parent) parentNode = elem.parentNode;
@@ -95,7 +95,7 @@ KISSY.add('dom-traversal', function(S, undefined) {
 /**
  * NOTES:
  *
- *  - api µÄÉè¼ÆÉÏ£¬Ã»ÓĞ¸úËæ jQuery. Ò»ÊÇÎªÁËºÍÆäËû api Ò»ÖÂ£¬±£³Ö first-all Ô­Ôò¡£¶şÊÇ
- *    ×ñÑ­ 8/2 Ô­Ôò£¬ÓÃ¾¡¿ÉÄÜÉÙµÄ´úÂëÂú×ãÓÃ»§×î³£ÓÃµÄ¹¦ÄÜ¡£
+ *  - api çš„è®¾è®¡ä¸Šï¼Œæ²¡æœ‰è·Ÿéš jQuery. ä¸€æ˜¯ä¸ºäº†å’Œå…¶ä»– api ä¸€è‡´ï¼Œä¿æŒ first-all åŸåˆ™ã€‚äºŒæ˜¯
+ *    éµå¾ª 8/2 åŸåˆ™ï¼Œç”¨å°½å¯èƒ½å°‘çš„ä»£ç æ»¡è¶³ç”¨æˆ·æœ€å¸¸ç”¨çš„åŠŸèƒ½ã€‚
  *
  */

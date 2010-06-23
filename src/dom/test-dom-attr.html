@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf-8"/>
 <title>dom-attr Test</title>
 </head>
 <body>
@@ -83,18 +83,18 @@
     function test_attr(test) {
 
         ///////////////////
-        // ²»´æÔÚµÄÊôĞÔ£º
+        // ä¸å­˜åœ¨çš„å±æ€§ï¼š
         //alert(a.getAttribute('no-exist')); // null
         //alert(a['no-exist']); // undefined
-        if (DOM.attr(a, 'no-exist') !== undefined) test.fail(); // kissy Àï£¬¶Ô²»´æÔÚµÄÊôĞÔ£¬Í³Ò»·µ»Ø undefined
+        if (DOM.attr(a, 'no-exist') !== undefined) test.fail(); // kissy é‡Œï¼Œå¯¹ä¸å­˜åœ¨çš„å±æ€§ï¼Œç»Ÿä¸€è¿”å› undefined
 
 
         //////////////////////
-        // ¶ÔÓÚ mapping ÊôĞÔ£º
-        //  1. readonly, checked µÈÊôĞÔÖ»ÄÜÍ¨¹ı el[name] ²ÅÄÜÕıÈ·»ñÈ¡
-        //  2. ¿ÉÒÔ»ñÈ¡ÓÃ getAttribute ²»Ò»¶¨ÄÜ»ñÈ¡µ½µÄÖµ£¬±ÈÈç tabindex Ä¬ÈÏÖµ
+        // å¯¹äº mapping å±æ€§ï¼š
+        //  1. readonly, checked ç­‰å±æ€§åªèƒ½é€šè¿‡ el[name] æ‰èƒ½æ­£ç¡®è·å–
+        //  2. å¯ä»¥è·å–ç”¨ getAttribute ä¸ä¸€å®šèƒ½è·å–åˆ°çš„å€¼ï¼Œæ¯”å¦‚ tabindex é»˜è®¤å€¼
         //alert(input.readonly);
-        //alert(input.readOnly); // true, ÕâÊÇÔ¤ÆÚÖµ£¬ÆäËü·½Ê½¶¼ÓĞ¼æÈİĞÔÎÊÌâ
+        //alert(input.readOnly); // true, è¿™æ˜¯é¢„æœŸå€¼ï¼Œå…¶å®ƒæ–¹å¼éƒ½æœ‰å…¼å®¹æ€§é—®é¢˜
         //alert(input.getAttribute('readonly'));
         //alert(input.getAttribute('readOnly'));
         if (DOM.attr(input, 'readonly') !== true) test.fail();
@@ -108,8 +108,8 @@
 
 
         ///////////////////////////
-        // ¶ÔÓÚ·Ç mapping ÊôĞÔ£º
-        // ie ÏÂ¿ÉÒÔÓÃ a.name »ò a['name'] »ñÈ¡£¬ÆäËüä¯ÀÀÆ÷ÏÂ²»ÄÜ£¬¼´±ãÓĞÖµÒ²·µ»Ø undefined
+        // å¯¹äºé mapping å±æ€§ï¼š
+        // ie ä¸‹å¯ä»¥ç”¨ a.name æˆ– a['name'] è·å–ï¼Œå…¶å®ƒæµè§ˆå™¨ä¸‹ä¸èƒ½ï¼Œå³ä¾¿æœ‰å€¼ä¹Ÿè¿”å› undefined
         //alert(a['data-test']);
         //alert(a.getAttribute('data-test'));
         if (DOM.attr(a, 'data-test') !== 'test') test.fail();
@@ -117,12 +117,12 @@
 
         /////////////////////
         // ie bugs fix:
-        if (DOM.attr(label, 'class') !== 'test') test.fail(); // ie7- ÒªÓÃ className
-        if (DOM.attr(label, 'for') !== 'test-input') test.fail(); // ie7- ÒªÓÃ htmlFor
+        if (DOM.attr(label, 'class') !== 'test') test.fail(); // ie7- è¦ç”¨ className
+        if (DOM.attr(label, 'for') !== 'test-input') test.fail(); // ie7- è¦ç”¨ htmlFor
 
         // href - http://www.glennjones.net/Post/809/getAttributehrefbug.htm
-        //alert(a.href); // ÔÚËùÓĞä¯ÀÀÆ÷ÏÂ£¬a.href ºÍ a['href'] ¶¼·µ»Ø¾ø¶ÔµØÖ·
-        //alert(a.getAttribute('href')); // ie7- ÏÂ£¬»á·µ»Ø¾ø¶ÔµØÖ·
+        //alert(a.href); // åœ¨æ‰€æœ‰æµè§ˆå™¨ä¸‹ï¼Œa.href å’Œ a['href'] éƒ½è¿”å›ç»å¯¹åœ°å€
+        //alert(a.getAttribute('href')); // ie7- ä¸‹ï¼Œä¼šè¿”å›ç»å¯¹åœ°å€
         if (DOM.attr(a, 'href') !== '../kissy/') test.fail();
         if (DOM.attr(img, 'src') !== '../../assets/kissy.png') test.fail();
 
@@ -132,12 +132,12 @@
 
 
         ///////////////////
-        // ÆÕÍ¨ÊôĞÔµÄ»ñÈ¡£º
+        // æ™®é€šå±æ€§çš„è·å–ï¼š
         if (DOM.attr(a, 'title') !== 'test') test.fail();
 
 
         ///////////////////
-        // ÊôĞÔµÄÉèÖÃ£º
+        // å±æ€§çš„è®¾ç½®ï¼š
         // normal
         DOM.attr(a, 'data-set', 'test-xx');
         if (DOM.attr(a, 'data-set') !== 'test-xx') test.fail();
@@ -146,13 +146,13 @@
 
 
         ///////////////////
-        // Òì³£²ÎÊı²âÊÔ£º
+        // å¼‚å¸¸å‚æ•°æµ‹è¯•ï¼š
         DOM.attr();
         DOM.attr(undefined,'name');
         DOM.attr(undefined,'name', '');
 
         ///////////////////
-        // batch ²âÊÔ£º
+        // batch æµ‹è¯•ï¼š
         if(DOM.attr('input', 'id') !== 'hidepasses') test.fail();
         DOM.attr('#test-data div', 'data-test', 'test');
         if(DOM.attr('#test-data div', 'data-test') !== 'test') test.fail();

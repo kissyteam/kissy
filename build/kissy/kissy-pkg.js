@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 720 Jun 22 16:48
+build: 722 Jun 23 16:50
 */
 /**
  * @module kissy
@@ -56,14 +56,14 @@ build: 720 Jun 22 16:48
          * The version of the library.
          * @type {String}
          */
-        version: '1.0.5',
+        version: '1.0.8',
 
         /**
          * Initializes KISSY object.
          * @private
          */
         _init: function() {
-            // Env ¶ÔÏóÄ¿Ç°½öÓÃÓÚÄÚ²¿£¬ÎªÄ£¿é¶¯Ì¬¼ÓÔØÔ¤Áô½Ó¿Ú
+            // Env å¯¹è±¡ç›®å‰ä»…ç”¨äºå†…éƒ¨ï¼Œä¸ºæ¨¡å—åŠ¨æ€åŠ è½½é¢„ç•™æ¥å£
             this.Env = { mods: {} };
         },
 
@@ -360,7 +360,7 @@ build: 720 Jun 22 16:48
 
     S._init();
 
-    // build Ê±£¬»á½« @DEBUG@ Ìæ»»Îª¿Õ
+    // build æ—¶ï¼Œä¼šå°† @DEBUG@ æ›¿æ¢ä¸ºç©º
     S.Config = { debug: '@DEBUG@' };
 
 })(window, 'KISSY');
@@ -369,18 +369,18 @@ build: 720 Jun 22 16:48
  * NOTES:
  *
  * 2010.04
- *  - ÒÆ³ıµô weave ·½·¨£¬ÉĞÎ´¿¼ÂÇÖÜÈ«¡£
+ *  - ç§»é™¤æ‰ weave æ–¹æ³•ï¼Œå°šæœªè€ƒè™‘å‘¨å…¨ã€‚
  *
  * 2010.01
- *  - add ·½·¨¾ö¶¨ÄÚ²¿´úÂëµÄ»ù±¾×éÖ¯·½Ê½£¨ÓÃ module ºÍ submodule À´×éÖ¯´úÂë£©¡£
- *  - ready ·½·¨¾ö¶¨Íâ²¿´úÂëµÄ»ù±¾µ÷ÓÃ·½Ê½£¬Ìá¹©ÁËÒ»¸ö¼òµ¥µÄÈõÉ³Ïä¡£
- *  - mix, merge, augment, extend ·½·¨£¬¾ö¶¨ÁËÀà¿â´úÂëµÄ»ù±¾ÊµÏÖ·½Ê½£¬³ä·ÖÀûÓÃ mixin ÌØĞÔºÍ prototype ·½Ê½À´ÊµÏÖ´úÂë¡£
- *  - namespace, app ·½·¨£¬¾ö¶¨×Ó¿âµÄÊµÏÖºÍ´úÂëµÄÕûÌå×éÖ¯¡£
- *  - log, error ·½·¨£¬¼òµ¥µÄµ÷ÊÔ¹¤¾ßºÍ±¨´í»úÖÆ¡£
- *  - ¿¼ÂÇ¼òµ¥¹»ÓÃºÍ 2/8 Ô­Ôò£¬È¥µô¶Ô YUI3 É³ÏäµÄÄ£Äâ¡££¨archives/2009 r402£©
+ *  - add æ–¹æ³•å†³å®šå†…éƒ¨ä»£ç çš„åŸºæœ¬ç»„ç»‡æ–¹å¼ï¼ˆç”¨ module å’Œ submodule æ¥ç»„ç»‡ä»£ç ï¼‰ã€‚
+ *  - ready æ–¹æ³•å†³å®šå¤–éƒ¨ä»£ç çš„åŸºæœ¬è°ƒç”¨æ–¹å¼ï¼Œæä¾›äº†ä¸€ä¸ªç®€å•çš„å¼±æ²™ç®±ã€‚
+ *  - mix, merge, augment, extend æ–¹æ³•ï¼Œå†³å®šäº†ç±»åº“ä»£ç çš„åŸºæœ¬å®ç°æ–¹å¼ï¼Œå……åˆ†åˆ©ç”¨ mixin ç‰¹æ€§å’Œ prototype æ–¹å¼æ¥å®ç°ä»£ç ã€‚
+ *  - namespace, app æ–¹æ³•ï¼Œå†³å®šå­åº“çš„å®ç°å’Œä»£ç çš„æ•´ä½“ç»„ç»‡ã€‚
+ *  - log, error æ–¹æ³•ï¼Œç®€å•çš„è°ƒè¯•å·¥å…·å’ŒæŠ¥é”™æœºåˆ¶ã€‚
+ *  - è€ƒè™‘ç®€å•å¤Ÿç”¨å’Œ 2/8 åŸåˆ™ï¼Œå»æ‰å¯¹ YUI3 æ²™ç®±çš„æ¨¡æ‹Ÿã€‚ï¼ˆarchives/2009 r402ï¼‰
  *
  * TODO:
- *  - Ä£¿é¶¯Ì¬¼ÓÔØ require ·½·¨µÄÊµÏÖ¡£
+ *  - æ¨¡å—åŠ¨æ€åŠ è½½ require æ–¹æ³•çš„å®ç°ã€‚
  * 
  */
 /**
@@ -455,7 +455,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          */
         isFunction: function(o) {
             //return typeof o === 'function';
-            // Safari ÏÂ£¬typeof NodeList Ò²·µ»Ø function
+            // Safari ä¸‹ï¼Œtypeof NodeList ä¹Ÿè¿”å› function
             return toString.call(o) === '[object Function]';
         },
 
@@ -511,7 +511,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * Search for a specified value index within an array.
          */
         inArray: function(elem, arr) {
-            return S.indexOf(elem, arr) !== -1;
+            return S.indexOf(elem, arr) > -1;
         },
 
         /**
@@ -526,7 +526,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 return [o];
             }
 
-            // ie ²»Ö§³ÖÓÃ slice ×ª»» NodeList, ½µ¼¶µ½ÆÕÍ¨·½·¨
+            // ie ä¸æ”¯æŒç”¨ slice è½¬æ¢ NodeList, é™çº§åˆ°æ™®é€šæ–¹æ³•
             if (o.item && S.UA.ie) {
                 var ret = [], i = 0, len = o.length;
                 for (; i < len; ++i) {
@@ -574,7 +574,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * </code>
          */
         param: function(o) {
-            // ·Ç plain object, Ö±½Ó·µ»Ø¿Õ
+            // é plain object, ç›´æ¥è¿”å›ç©º
             if (!S.isPlainObject(o)) return '';
 
             var buf = [], key, val;
@@ -582,11 +582,11 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 val = o[key];
                 key = encode(key);
 
-                // val ÎªÓĞĞ§µÄ·ÇÊı×éÖµ
+                // val ä¸ºæœ‰æ•ˆçš„éæ•°ç»„å€¼
                 if (isValidParamValue(val)) {
                     buf.push(key, '=', encode(val + ''), '&');
                 }
-                // val Îª·Ç¿ÕÊı×é
+                // val ä¸ºéç©ºæ•°ç»„
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
@@ -594,7 +594,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
                         }
                     }
                 }
-                // ÆäËüÇé¿ö£º°üÀ¨¿ÕÊı×é¡¢²»ÊÇÊı×éµÄ object£¨°üÀ¨ Function, RegExp, Date etc.£©£¬Ö±½Ó¶ªÆú
+                // å…¶å®ƒæƒ…å†µï¼šåŒ…æ‹¬ç©ºæ•°ç»„ã€ä¸æ˜¯æ•°ç»„çš„ objectï¼ˆåŒ…æ‹¬ Function, RegExp, Date etc.ï¼‰ï¼Œç›´æ¥ä¸¢å¼ƒ
             }
             buf.pop();
             return buf.join('');
@@ -621,7 +621,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 pair = pairs[i].split('=');
                 key = decode(pair[0]);
 
-                // pair[1] ¿ÉÄÜ°üº¬ gbk ±àÂëµÄÖĞÎÄ£¬¶ø decodeURIComponent ½öÄÜ´¦Àí utf-8 ±àÂëµÄÖĞÎÄ£¬·ñÔò±¨´í
+                // pair[1] å¯èƒ½åŒ…å« gbk ç¼–ç çš„ä¸­æ–‡ï¼Œè€Œ decodeURIComponent ä»…èƒ½å¤„ç† utf-8 ç¼–ç çš„ä¸­æ–‡ï¼Œå¦åˆ™æŠ¥é”™
                 try {
                     val = decode(pair[1] || '');
                 } catch (ex) {
@@ -717,11 +717,11 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
     function isValidParamValue(val) {
         var t = typeof val;
-        // val Îª null, undefined, number, string, boolean Ê±£¬·µ»Ø true
+        // val ä¸º null, undefined, number, string, boolean æ—¶ï¼Œè¿”å› true
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // ¿ÉÒÔÍ¨¹ıÔÚ url ÉÏ¼Ó ?ks-debug À´¿ªÆô debug Ä£Ê½
+    // å¯ä»¥é€šè¿‡åœ¨ url ä¸ŠåŠ  ?ks-debug æ¥å¼€å¯ debug æ¨¡å¼
     if(loc && loc.search && loc.search.indexOf('ks-debug') !== -1){
         S.Config.debug = true;
     }
@@ -731,18 +731,18 @@ KISSY.add('kissy-lang', function(S, undefined) {
  * NOTES:
  *
  *  2010.06
- *   - unparam ÀïµÄ try catch ÈÃÈËºÜÄÑÊÜ£¬µ«ÎªÁËË³Ó¦¹úÇé£¬¾ö¶¨»¹ÊÇÁô×Å 
+ *   - unparam é‡Œçš„ try catch è®©äººå¾ˆéš¾å—ï¼Œä½†ä¸ºäº†é¡ºåº”å›½æƒ…ï¼Œå†³å®šè¿˜æ˜¯ç•™ç€ 
  *
  *  2010.05
- *   - Ôö¼Ó filter ·½·¨¡£
- *   - globalEval ÖĞ£¬Ö±½Ó²ÉÓÃ text ¸³Öµ£¬È¥µô appendChild ·½Ê½¡£
+ *   - å¢åŠ  filter æ–¹æ³•ã€‚
+ *   - globalEval ä¸­ï¼Œç›´æ¥é‡‡ç”¨ text èµ‹å€¼ï¼Œå»æ‰ appendChild æ–¹å¼ã€‚
  *
  *  2010.04
- *   - param ºÍ unparam Ó¦¸Ã·ÅÔÚÊ²Ã´µØ·½ºÏÊÊ£¿ÓĞµã¾À½á£¬Ä¿Ç°Ôİ·Å´Ë´¦¡£
- *   - param ºÍ unparam ÊÇ²»ÍêÈ«¿ÉÄæµÄ¡£¶Ô¿ÕÖµµÄ´¦ÀíºÍ cookie ±£³ÖÒ»ÖÂ¡£
+ *   - param å’Œ unparam åº”è¯¥æ”¾åœ¨ä»€ä¹ˆåœ°æ–¹åˆé€‚ï¼Ÿæœ‰ç‚¹çº ç»“ï¼Œç›®å‰æš‚æ”¾æ­¤å¤„ã€‚
+ *   - param å’Œ unparam æ˜¯ä¸å®Œå…¨å¯é€†çš„ã€‚å¯¹ç©ºå€¼çš„å¤„ç†å’Œ cookie ä¿æŒä¸€è‡´ã€‚
  *
  * TODO:
- *   - ·ÖÎö jq µÄ isPlainObject ¶Ô constructor µÄÏ¸½Ú´¦Àí
+ *   - åˆ†æ jq çš„ isPlainObject å¯¹ constructor çš„ç»†èŠ‚å¤„ç†
  *
  */
 /**
@@ -835,15 +835,15 @@ KISSY.add('kissy-ua', function(S) {
  * NOTES:
  *
  * 2010.03
- *  - jQuery, YUI µÈÀà¿â¶¼ÍÆ¼öÓÃÌØĞÔÌ½²âÌæ´úä¯ÀÀÆ÷ĞáÌ½¡£ÌØĞÔÌ½²âµÄºÃ´¦ÊÇÄÜ×Ô¶¯ÊÊÓ¦Î´À´Éè±¸ºÍÎ´ÖªÉè±¸£¬±ÈÈç
- *    if(document.addEventListener) ¼ÙÉè IE9 Ö§³Ö±ê×¼ÊÂ¼ş£¬Ôò´úÂë²»ÓÃĞŞ¸Ä£¬¾Í×ÔÊÊÓ¦ÁË¡°Î´À´ä¯ÀÀÆ÷¡±¡£
- *    ¶ÔÓÚÎ´Öªä¯ÀÀÆ÷Ò²ÊÇÈç´Ë¡£µ«ÊÇ£¬Õâ²¢²»ÒâÎ¶×Åä¯ÀÀÆ÷ĞáÌ½¾ÍµÃ³¹µ×Å×Æú¡£µ±´úÂëºÜÃ÷È·¾ÍÊÇÕë¶ÔÒÑÖªÌØ¶¨ä¯ÀÀÆ÷µÄ£¬
- *    Í¬Ê±²¢·ÇÊÇÄ³¸öÌØĞÔÌ½²â¿ÉÒÔ½â¾öÊ±£¬ÓÃä¯ÀÀÆ÷ĞáÌ½·´¶øÄÜ´øÀ´´úÂëµÄ¼ò½à£¬Í¬Ê±Ò²Ò²²»»áÓĞÊ²Ã´ºó»¼¡£×ÜÖ®£¬Ò»ÇĞ
- *    ½ÔÈ¨ºâ¡£
- *  - UA.ie && UA.ie < 8 ²¢²»ÒâÎ¶×Åä¯ÀÀÆ÷¾Í²»ÊÇ IE8, ÓĞ¿ÉÄÜÊÇ IE8 µÄ¼æÈİÄ£Ê½¡£½øÒ»²½µÄÅĞ¶ÏĞèÒªÊ¹ÓÃ documentMode.
+ *  - jQuery, YUI ç­‰ç±»åº“éƒ½æ¨èç”¨ç‰¹æ€§æ¢æµ‹æ›¿ä»£æµè§ˆå™¨å—…æ¢ã€‚ç‰¹æ€§æ¢æµ‹çš„å¥½å¤„æ˜¯èƒ½è‡ªåŠ¨é€‚åº”æœªæ¥è®¾å¤‡å’ŒæœªçŸ¥è®¾å¤‡ï¼Œæ¯”å¦‚
+ *    if(document.addEventListener) å‡è®¾ IE9 æ”¯æŒæ ‡å‡†äº‹ä»¶ï¼Œåˆ™ä»£ç ä¸ç”¨ä¿®æ”¹ï¼Œå°±è‡ªé€‚åº”äº†â€œæœªæ¥æµè§ˆå™¨â€ã€‚
+ *    å¯¹äºæœªçŸ¥æµè§ˆå™¨ä¹Ÿæ˜¯å¦‚æ­¤ã€‚ä½†æ˜¯ï¼Œè¿™å¹¶ä¸æ„å‘³ç€æµè§ˆå™¨å—…æ¢å°±å¾—å½»åº•æŠ›å¼ƒã€‚å½“ä»£ç å¾ˆæ˜ç¡®å°±æ˜¯é’ˆå¯¹å·²çŸ¥ç‰¹å®šæµè§ˆå™¨çš„ï¼Œ
+ *    åŒæ—¶å¹¶éæ˜¯æŸä¸ªç‰¹æ€§æ¢æµ‹å¯ä»¥è§£å†³æ—¶ï¼Œç”¨æµè§ˆå™¨å—…æ¢åè€Œèƒ½å¸¦æ¥ä»£ç çš„ç®€æ´ï¼ŒåŒæ—¶ä¹Ÿä¹Ÿä¸ä¼šæœ‰ä»€ä¹ˆåæ‚£ã€‚æ€»ä¹‹ï¼Œä¸€åˆ‡
+ *    çš†æƒè¡¡ã€‚
+ *  - UA.ie && UA.ie < 8 å¹¶ä¸æ„å‘³ç€æµè§ˆå™¨å°±ä¸æ˜¯ IE8, æœ‰å¯èƒ½æ˜¯ IE8 çš„å…¼å®¹æ¨¡å¼ã€‚è¿›ä¸€æ­¥çš„åˆ¤æ–­éœ€è¦ä½¿ç”¨ documentMode.
  *
  * TODO:
  *  - test mobile
- *  - ÊÇ·ñĞèÒª¼ÓÈë maxthon µÈ¹úÄÚä¯ÀÀÆ÷ĞáÌ½£¿
+ *  - æ˜¯å¦éœ€è¦åŠ å…¥ maxthon ç­‰å›½å†…æµè§ˆå™¨å—…æ¢ï¼Ÿ
  * 
  */

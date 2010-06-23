@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf-8"/>
 <title>dom-style Test</title>
 </head>
 <body>
@@ -21,13 +21,15 @@
 <script src="dom-class.js"></script>
 <script src="dom-style.js"></script>
 <script src="dom-style-ie.js"></script>
+<script src="dom-attr.js"></script>
+<script src="dom-create.js"></script>
 
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
 <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script src="../../third-party/ext-core/ext-core.js"></script>
 
 <div id="test-data">
-    <div id="test-div" style="padding: 10px 2pt; background: transparent; float: left; border: 5px solid rgba(0,0,0,.201);"></div>
+    <div id="test-div" style="padding-left: 2pt; background: transparent; float: left; border: 5px solid rgba(0,0,0,.201);"></div>
     <img id="test-img" src="../../assets/kissy.png" alt="kissy" />
     <table id="test-table" cellspacing="10">
         <tbody>
@@ -45,7 +47,7 @@
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY, DOM = S.DOM;
+    var S = KISSY, DOM = S.DOM, UA = S.UA;
 
     function test_css(test) {
         var elem = S.get('#test-div');
@@ -53,9 +55,15 @@
         // getter
         if(DOM.css(elem, 'float') !== 'left') test.fail();
         if(DOM.css(elem, 'position') !== 'static') test.fail();
+        if(DOM.css(elem, 'backgroundColor') !== 'transparent') test.fail();
+        if(DOM.css(elem, 'backgroundPosition') !== '0% 0%') test.fail();
+        if(DOM.css(elem, 'fontSize') !== '12px') test.fail();
+        if(!UA.ie) if(DOM.css(elem, 'border-right-width') !== '5px') test.fail();
+        if(UA.ie) if(DOM.css(elem, 'border-right-width') !== 'medium') test.fail();
 
         if(DOM.css(elem, 'paddingLeft') !== '2pt') test.fail();
         if(DOM.css(elem, 'padding-left') !== '2pt') test.fail();
+        if(DOM.css(elem, 'padding-right') !== '0px') test.fail();
 
         if(DOM.css(elem, 'opacity') !== '1') test.fail();
 
@@ -66,16 +74,43 @@
             test.fail();
         }
 
+        DOM.css(elem, 'float', 'right');
+        if(DOM.css(elem, 'float') !== 'right') test.fail();
+
+        DOM.css(elem.parentNode, 'font-size', '100%');
+        if(DOM.css(elem, 'font-size') !== '12px') test.fail();
+
+        DOM.css(elem, 'opacity', '0.2');
+        if(DOM.css(elem, 'opacity') !== '0.2') test.fail();
+
+        DOM.css(elem, 'border', '2px dashed red');
+        if(DOM.css(elem, 'borderWidth') !== '2px') test.fail();
+
+        DOM.css(elem, {
+            marginLeft: '20px',
+            opacity: '0.8',
+            border: '2px solid #ccc'
+        });
+        if(DOM.css(elem, 'opacity') !== '0.8') test.fail();
+    }
+
+    function test_addStyleSheet(test) {
+
+        DOM.addStyleSheet('#test-div { padding: 100px; color: blue }');
+        if(UA.ie) if(DOM.css('#test-div', 'color') !== 'blue') test.fail();
+        if(UA.opera) if(DOM.css('#test-div', 'color') !== '#0000ff') test.fail();
+        if(!UA.ie && !UA.opera) if(DOM.css('#test-div', 'color') !== 'rgb(0, 0, 255)') test.fail();
+
     }
 
     // temp code
     //alert(!(document.defaultView || { }).getComputedStyle && document.documentElement.currentStyle);
     var t = S.get('#test-div');
-    //alert(t.style['paddingLeft']);
-    //alert(t.style['padding-left']);
-    alert(document.defaultView.getComputedStyle(t, null)['paddingLeft']);
+    //alert(document.defaultView.getComputedStyle(t, null)['paddingLeft']);
     //alert(jQuery(t).css('paddingLeft'));
-    alert(jQuery(t).css('padding-left'));
+    //alert(jQuery(t).css('padding-left'));
+    //alert(DOM.css(t, 'borderWidth'));
+    //alert(jQuery(t).css('borderWidth'));
 
 </script>
 

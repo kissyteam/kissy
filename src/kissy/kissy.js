@@ -58,7 +58,7 @@
          * @private
          */
         _init: function() {
-            // Env ����Ŀǰ�������ڲ���Ϊģ�鶯̬����Ԥ���ӿ�
+            // Env 对象目前仅用于内部，为模块动态加载预留接口
             this.Env = { mods: {} };
         },
 
@@ -355,7 +355,7 @@
 
     S._init();
 
-    // build ʱ���Ὣ @DEBUG@ �滻Ϊ��
+    // build 时，会将 @DEBUG@ 替换为空
     S.Config = { debug: '@DEBUG@' };
 
 })(window, 'KISSY');
@@ -364,17 +364,17 @@
  * NOTES:
  *
  * 2010.04
- *  - �Ƴ��� weave ��������δ������ȫ��
+ *  - 移除掉 weave 方法，尚未考虑周全。
  *
  * 2010.01
- *  - add ���������ڲ�����Ļ�����֯��ʽ���� module �� submodule ����֯���룩��
- *  - ready ���������ⲿ����Ļ������÷�ʽ���ṩ��һ���򵥵���ɳ�䡣
- *  - mix, merge, augment, extend ������������������Ļ���ʵ�ַ�ʽ��������� mixin ���Ժ� prototype ��ʽ��ʵ�ִ��롣
- *  - namespace, app �����������ӿ��ʵ�ֺʹ����������֯��
- *  - log, error �������򵥵ĵ��Թ��ߺͱ������ơ�
- *  - ���Ǽ򵥹��ú� 2/8 ԭ��ȥ���� YUI3 ɳ���ģ�⡣��archives/2009 r402��
+ *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）。
+ *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
+ *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码。
+ *  - namespace, app 方法，决定子库的实现和代码的整体组织。
+ *  - log, error 方法，简单的调试工具和报错机制。
+ *  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
  *
  * TODO:
- *  - ģ�鶯̬���� require ������ʵ�֡�
+ *  - 模块动态加载 require 方法的实现。
  * 
  */

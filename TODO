@@ -13,90 +13,63 @@
   重构 editor, fix 少量经常反馈的 bug + 适应新的代码组织方式 - done
   将 basic-util 功能在各个组件中实现 - done
 
-  dom - 20% done
-  event - 10% done
-  node - 10% done
-  nodelist - 10% done
-  cookie - done
-  ua - done
-  ajax - 10% done
+  kissy - done
+  dom - 90%
+  event - done
+  打包 ks-core, 并将文件编码都改成 utf-8
 
-  refactor switchable - done
-  swf - done
-  dom - 30%
-  overlay - 10%
-  draggable - 10%
-  docs - 10% done
-
-  event docs, 添加对 scope 和 return false 的理解
-  dom
-  dom docs
+  node - 20%
+  nodelist - 20%
   anim
   ajax
-  combobox
-  overlay
+  cookie - done
+  json - done
+  swf - done
+  sizzle - done
+  draggable
 
-  review popup - done
-  review calendar
-  KISSY 基础元素风格设计
-  Sizzle
-  研究 jQuery EasyUI - http://jquery-easyui.wikidot.com/document
+  cssmodules 基础元素风格设计比稿
+
+  switchable 需求征集（增加最后一张和最前一张的事件） & refactor
+  overlay
+  combobox
+  review and refactor calendar, Ref: jQuery calendar plugin
+  refactor suggest, try to remove dependence of yui2
   datalazyload bug in iPad + 重构 + 详细测试
+
+  docs - 20%
+   - event docs, 添加对 scope 和 return false 的理解
+
+  augment 对 constructor 的覆盖问题，可尝试 yui3 的问题
+  研究 jQuery EasyUI - http://jquery-easyui.wikidot.com/document
   龙刚反馈图片延迟加载组件导致部分频道页面的轮播图片不正常
   ie7 有这样的 bug： 当 ua 字节超过 260 时，会返回为 IE6 http://jamiethompson.co.uk/web/2008/07/23/an-ie7-bug-that-returns-msie-60-user-agent-string/
   有脚：reset.css 里要不要加个 button{*visibility:visible} /* fix ie doulbe padding bug */ 不然老要在项目里重置这个
   实现 tmp/JSlide.rar 中的特效
-  Switchable 里，增加最后一张和最前一张的事件
-  
+
+  除 editor 之外的组件都去除对 YUI 的依赖，首页重构为仅依赖 kissy
   check and test all components
-  pack editor 1.0.6
-  release 1.0.6
+  release 1.1.0
 
 ----------------------
  2010 下半年
 
-  进一步的开发计划，人员协调，包括拔赤、沉鱼、苏青等
-
-  event
-  dom
-  node & nodelist
   drag & drop
-  anim
-  ajax
   require 对 combo 的支持
+  基本底层组件思考：switchable, positionable, selectable( suggest 和 combobox 的下拉框)
 
-  cssmodules 的规划和开发
-
-  overlay ( 思考 positionable, stackable )
-  基本底层组件思考：switchable, selectable( suggest 和 combobox 的下拉框)
-
-  refactor switchable, add ablum and remove dependence of yui2
-  review and refactor calendar, Ref: jQuery calendar plugin
-  develop combobox
-  refactor suggest, try to remove dependence of yui2
-  重构 datalazyload, 解决服饰频道导致轮播第5屏失效的问题
-  datatable
   图片上传组件
   编辑器二期
   完善 docs
 
-  实现 TBra 其它组件
-  整理 pickDomain 等实用方法
+  整理 TBra 1.0 中的 pickDomain 等实用方法
   整理 TBra 2.1
 
-  核心组件都去除对 YUI 的依赖，首页重构为仅依赖 kissy
   放入 code.taobao.com
 
 -----------------------
  零散记事：
-
- ~ Popup / Tooltips
-  - JavaScript 浮动定位提示效果：http://bbs.51js.com/viewthread.php?tid=84690&extra=page%3D1
-  - TinyBox http://www.leigeber.com/2009/05/javascript-popup-box/
-  - Boxy http://onehackoranother.com/projects/jquery/boxy/
-
- ~ inputHint 组件
- - 双飞翼布局申请专利
-
- - 倒计时组件
+  - inputHint 组件
+  - 双飞翼布局申请专利
+  - 倒计时组件
  

@@ -49,7 +49,7 @@ KISSY.add('dom-insertion', function(S) {
 
 /**
  * NOTES:
- *  - appendChild/removeChild/replaceChild Ö±½ÓÓÃÔ­ÉúµÄ
- *  - append/appendTo, prepend/prependTo, wrap/unwrap ·ÅÔÚ Node Àï
+ *  - appendChild/removeChild/replaceChild ç›´æ¥ç”¨åŸç”Ÿçš„
+ *  - append/appendTo, prepend/prependTo, wrap/unwrap æ”¾åœ¨ Node é‡Œ
  *
  */

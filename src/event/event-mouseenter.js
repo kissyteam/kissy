@@ -46,6 +46,6 @@ KISSY.add('event-mouseenter', function(S) {
 
 /**
  * TODO:
- *  - ie6 ÏÂ£¬Ô­ÉúµÄ mouseenter/leave Ã²ËÆÒ²ÓĞ bug, ±ÈÈç <div><div /><div /><div /></div>
- *    jQuery Ò²Òì³££¬ĞèÒª½øÒ»²½ÑĞ¾¿
+ *  - ie6 ä¸‹ï¼ŒåŸç”Ÿçš„ mouseenter/leave è²Œä¼¼ä¹Ÿæœ‰ bug, æ¯”å¦‚ <div><div /><div /><div /></div>
+ *    jQuery ä¹Ÿå¼‚å¸¸ï¼Œéœ€è¦è¿›ä¸€æ­¥ç ”ç©¶
  */

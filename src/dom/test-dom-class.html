@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf-8"/>
 <title>dom-class Test</title>
 </head>
 <body>
@@ -113,12 +113,12 @@
     function test_replaceClass(test) {
         a.className = 'link link3';
 
-        // oldCls 有的话替换
+        // oldCls 鏈夌殑璇濇浛鎹�
         DOM.replaceClass(a, '.link', 'link2');
         if (DOM.hasClass(a, 'link')) test.fail();
         if (!DOM.hasClass(a, 'link2')) test.fail();
 
-        // oldCls 没有的话，仅添加
+        // oldCls 娌℃湁鐨勮瘽锛屼粎娣诲姞
         DOM.replaceClass(a, 'link4', 'link');
         if (!DOM.hasClass(a, 'link')) test.fail();
     }

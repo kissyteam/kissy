@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf-8"/>
 <title>dom-create Test</title>
 </head>
 <body>
@@ -107,14 +107,14 @@
         // textNode
         if(DOM.create('text node').nodeType !== 3) test.fail();
 
-        // ÉÔÎ¢¸´ÔÓµã
+        // ç¨å¾®å¤æ‚ç‚¹
         if(DOM.attr(DOM.create('<img id="test-img" />'), 'id') !== 'test-img') test.fail();
 
-        // ¶à¸öÔªËØ
+        // å¤šä¸ªå…ƒç´ 
         if(DOM.create('<p></p><div></div>').nodeType !== 11) test.fail();
         if(DOM.create('<p></p><div></div>').childNodes[0].tagName !== 'P') test.fail();
 
-        // ÊôĞÔÖ§³Ö
+        // å±æ€§æ”¯æŒ
         if(DOM.create('<p>', { rel: '-1', 'class': 'test-p', data: 'test'}).className !== 'test-p') test.fail();
     }
 

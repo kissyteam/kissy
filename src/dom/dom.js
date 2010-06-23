@@ -6,7 +6,7 @@ KISSY.add('dom', function(S) {
 
     S.DOM = {
         /**
-         *  «≤ª « element node
+         * ÊòØ‰∏çÊòØ element node
          */
         _isElementNode: function(elem) {
             return elem && elem.nodeType === 1;
