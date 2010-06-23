@@ -13,7 +13,7 @@ img {
 }
 .ks-imagezoom-magnifier {
     position:absolute;
-    margin:20px;
+    margin:20px 20px;
 }
 .ks-imagezoom-magnifier img {
     border: 1px solid #999;
@@ -48,7 +48,7 @@ img {
     /*visibility: hidden;*/
 }
 .ks-imagezoom-viewer {
-    background: none repeat scroll 0 0 #FFFFFF;
+    background: url("loading.gif") no-repeat scroll center center #FFFFFF;
     border: 1px solid #CCCCCC;
     left: 500px;
     overflow: hidden;
@@ -56,4 +56,20 @@ img {
     text-align: center;
     top: 0;
     z-index: 100;
+}
+
+#test-top {
+    margin-top: 300px;
+}
+#test-right {
+    margin-right: 40px;
+}
+#test-bottom {
+    margin-bottom: 40px;
+}
+#test-left {
+    margin-left: 300px;
+}
+#test-glass, #test-follow {
+    margin: 10px;
 }

@@ -97,16 +97,14 @@ html{{{
 js{{{
     bigImageSrc: '',    // 大图片路径, 为''时取原图路径
     offset: 10,         // 大图偏移量
-
     glassSize: [100, 100],      // 镜片高,宽度
-
     useZoomIcon: true,          // 是否需要zoomicon
-    type: 'default',            // 选择显示模式, 可选值: ['default', 'glass', 'overlay']
+    zType: 'default',           // 选择显示模式, 可选值: ['default', 'glass', 'follow']
     position: 'right',          // 大图显示位置, 可选值: ['top', 'right', 'bottom', 'left']
     preload: true               // 是否预加载
 }}}
  . 注意事项
-    1. overlay下生成的dom有点不同, 直接把ks-imagezoom-viewer这层放到ks-imagezoom-magnifier中了;
+    1. 跟随模式下生成的dom有点不同, 直接把ks-imagezoom-viewer这层放到ks-imagezoom-magnifier中了;
     2. 关于显示区域宽高, 显示区域宽=大图宽度*镜片宽度/小图宽度(之前其宽和小图宽度一致)
 
 

@@ -16,9 +16,8 @@ KISSY.add("imagezoom", function(S, undefined) {
         IMGZOOM_GLASS_CLS = 'ks-imagezoom-glass',
         IMGZOOM_ICON_CLS = 'ks-imagezoom-icon',
         POSITION = ['top', 'right', 'bottom', 'left'],
-        TYPE = ['default', 'glass', 'overlay'],
-        IMG_READY = false,      // 小图加载状态
-        BIGIMG_READY = false,   // 大图加载状态
+        TYPE = ['default', 'glass', 'follow'],
+        
         /**
          * imagezoom的默认设置
          */
@@ -28,11 +27,13 @@ KISSY.add("imagezoom", function(S, undefined) {
              */
             bigImageSrc: '',    // 大图片路径, 为''时取原图路径
             offset: 10,         // 大图偏移量
-            glassSize: [100, 100],      // 镜片高,宽度
+            glassSize: {height:100, width:100},      // 镜片高,宽度
             useZoomIcon: true,          // 是否需要zoomicon
             zType: 'default',           // 选择显示模式, 可选值: TYPE
             position: 'right',          // 大图显示位置, 可选值: POSITION
-            preload: true               // 是否预加载
+            preload: true,              // 是否预加载
+            timeout: 1000,              // 等待大图加载时间, 单位: ms
+            bigImageSize: {height:900, width:900}     // 设定大图的高宽度
         };
         
         /** 
@@ -99,15 +100,30 @@ KISSY.add("imagezoom", function(S, undefined) {
              */
             self.zoomIcon = null;
             
+            /**
+             * 小图加载状态
+             */
+            self.imageReady = false;
+            
+            /**
+             * 大图加载状态
+             */
+            self.bigImageReady = false;
+            
+            /**
+             * 信息提示定时
+             */
+            self.timer = null;
+            
             // 当小图加载完毕之后, 初始化
             self.image.onload = function(){
-                if (!IMG_READY) {
-                    IMG_READY = !IMG_READY;
+                if (!self.imageReady) {
+                    self.imageReady = !self.imageReady;
                     self._init();
                 }
             }
-            if (!IMG_READY && self.image.complete) {
-                IMG_READY = !IMG_READY;
+            if (!self.imageReady && self.image.complete && self.getSize(self.image).height) { 
+                self.imageReady = !self.imageReady;
                 self._init();
             }
         }
@@ -118,14 +134,15 @@ KISSY.add("imagezoom", function(S, undefined) {
              * @protected
              */
             _init: function() {
+                var self = this,
+                    i = self.image;
+                
+                self._initContainer();
+                
                 /**
                  * 构建所需DOM
                  */
-                this._initContainer();
-                
-                var self = this,
-                    cfg = self.config,
-                    i = self.image,
+                var cfg = self.config,
                     g = self.glass,
                     z = self.zoomIcon;
                 
@@ -149,8 +166,10 @@ KISSY.add("imagezoom", function(S, undefined) {
                     if (!self.viewer) {
                         self._createZoom(ev);
                     } else DOM.removeClass(self.viewer, HIDDEN);
-                    
-                    self._zoom(ev);
+                    // 
+                    self.timer = setTimeout(function(){
+                        if (!self.bigImageReady) self.showMsg();
+                    }, self.config.timeout);
                 });
                 
                 /**
@@ -164,6 +183,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                     
                     // 隐藏大图
                     if (self.viewer) DOM.addClass(self.viewer, HIDDEN);
+                    if (self.timer) clearTimeout(self.timer);
                 });
             },
             
@@ -178,13 +198,13 @@ KISSY.add("imagezoom", function(S, undefined) {
                     g, z;
                 
                 // 构建整个容器
-                c = DOM.create('div');
+                c = DOM.create('<div>');
                 DOM.addClass(c, IMGZOOM_CONTAINER_CLS);
                 DOM.parent(i).insertBefore(c, i);
                 self.container = c;
                 
                 // 构建小图外层
-                o = DOM.create('div');
+                o = DOM.create('<div>');
                 DOM.addClass(o, IMGZOOM_MAGNIFIER_CLS);
                 o.appendChild(i);
                 c.appendChild(o);
@@ -192,17 +212,17 @@ KISSY.add("imagezoom", function(S, undefined) {
                 
                 // 镜片模式下
                 if (TYPE[1] == cfg.zType) {
-                    g = DOM.create('div');
+                    g = DOM.create('<div>');
                     DOM.addClass(g, IMGZOOM_GLASS_CLS);
                     DOM.addClass(g, HIDDEN);
-                    g.style.height = cfg.glassSize[0]+'px';
-                    g.style.width = cfg.glassSize[1]+'px';
+                    g.style.height = cfg.glassSize.height+'px';
+                    g.style.width = cfg.glassSize.width+'px';
                     o.appendChild(g);
                     self.glass = g;
                 }
                 // 需要显示放大图标
                 if (cfg.useZoomIcon) {
-                    z = DOM.create('div');
+                    z = DOM.create('<div>');
                     DOM.addClass(z, IMGZOOM_ICON_CLS);
                     o.appendChild(z);
                     self.zoomIcon = z;
@@ -210,18 +230,50 @@ KISSY.add("imagezoom", function(S, undefined) {
                 
                 // 调整容器大小及位置
                 self.container.style.height = parseInt(self.getStyle(o, 'marginTop')) + parseInt(self.getStyle(o, 'marginBottom')) + self.getSize(o).height + 'px';
-                if (POSITION[0] == cfg.position) {
-                    self.container.style.marginTop = self.getSize(i).height + parseInt(self.getStyle(i, 'borderTopWidth')) + cfg.offset + 'px';
-                } else if (POSITION[3] == cfg.position) {
-                    self.container.style.marginLeft = self.getSize(i).width + parseInt(self.getStyle(i, 'borderLeftWidth')) + cfg.offset + 'px';
+            },
+            
+            /**
+             * 创建大图的显示DOM
+             */
+            _createZoom: function(ev) {
+                var self = this,
+                    cfg = self.config,
+                    v;
+                
+                // 创建显示区域的DOM结构
+                v = DOM.create('<div>');
+                DOM.addClass(v, IMGZOOM_VIEWER_CLS);
+                var bimg = DOM.create('<img>');
+                DOM.attr(bimg, 'src', cfg.bigImageSrc);
+                v.appendChild(bimg);
+                // 添加显示区域到原有DOM中, 跟随模式有点区别
+                if (TYPE[2] == cfg.zType) {
+                    self.origin.appendChild(v);
+                } else {
+                    self.container.appendChild(v);
+                }
+                self.bigImage = bimg;
+                self.viewer = v;
+                
+                self._updateViewer(ev, false);
+                self._zoom();
+                // 大图加载完毕后更新显示区域
+                self.bigImage.onload = function() {
+                    if (!self.bigImageReady) {
+                        self.bigImageReady = !self.bigImageReady;
+                        self._updateViewer(ev, true);
+                    }
+                }
+                if (!self.bigImageReady && self.bigImage.complete && self.getSize(self.bigImage).height) {
+                    self.bigImageReady = !self.bigImageReady;
+                    self._updateViewer(ev, true);
                 }
             },
             
             /**
              * 设置放大图片显示的偏移量
-             * @param ev    触发的事件
              */
-            _zoom: function(ev) {
+            _zoom: function() {
                 var self = this,
                     cfg = self.config,
                     g = self.glass;
@@ -259,93 +311,67 @@ KISSY.add("imagezoom", function(S, undefined) {
             },
             
             /**
-             * 创建大图的显示DOM
+             * 更新显示区域大小
              */
-            _createZoom: function(ev) {
-                var self = this,
-                    cfg = self.config,
-                    i = self.image, v;
-                
-                // 创建大图显示DOM结构
-                v = DOM.create('div');
-                DOM.addClass(v, IMGZOOM_VIEWER_CLS);
-                var bimg = DOM.create('img');
-                DOM.attr(bimg, 'src', cfg.bigImageSrc);
-                v.appendChild(bimg);
-                // 添加到原有DOM中
-                if (TYPE[2] == cfg.zType) {
-                    self.origin.appendChild(v);
-                } else {
-                    self.container.appendChild(v);
+            _updateViewer: function(ev, ready) {
+                var self = this;
+                if (ready) {
+                    if (self.timer) clearTimeout(self.timer);
+                    self.hideMsg();
                 }
-                self.bigImage = bimg;
-                self.viewer = v;
-                
-                // 获取小图片偏移量, 实际尺寸, 镜片实际尺寸
-                var imageOffset = self.getOffset(i),
-                    imageSize = self.getSize(i),
+                var i = self.image,
+                    cfg = self.config,
+                    imageOffset = self.getOffset(i),
                     glassSize = self.getSize(self.glass);
                 
-                // 计算大图偏移量
-                var leftPos, topPos;
-                // 计算原图边框宽度
-                var btw = parseInt(self.getStyle(i, 'borderTopWidth')),
-                    blw = parseInt(self.getStyle(i, 'borderLeftWidth'));
+                
+                // 计算显示区域位置
+                var leftPos, topPos, vHeight, vWidth;
                 if (TYPE[2] == cfg.zType) {
-                    // 显示区域初始位置
+                    // 跟随模式下, 设置显示区域初始位置
                     var mousePoint = self.getMousePoint(ev),
                         cursorX = mousePoint.x - imageOffset.left,
                         cursorY = mousePoint.y - imageOffset.top;
-                    leftPos = cursorX - glassSize.width/2;
-                    topPos = cursorY - glassSize.height/2;
-                } else if (POSITION[0] == cfg.position) {
-                    topPos = - (imageSize.height + btw + cfg.offset - parseInt(self.getStyle(self.origin, 'marginTop')));
-                    leftPos = imageOffset.left;
-                } else if (POSITION[2] == cfg.position) {
-                    topPos = imageSize.height + imageOffset.top + cfg.offset;
-                    leftPos = imageOffset.left;
-                } else if (POSITION[3] == cfg.position) {
-                    topPos = imageOffset.top;
-                    leftPos = - (imageSize.width + blw + cfg.offset - parseInt(self.getStyle(self.origin, 'marginLeft')));
+                    topPos = cursorX - glassSize.width/2;
+                    leftPos = cursorY - glassSize.height/2;
+                    // 跟随模式下, 显示区域宽高度由用户设定的glass宽高度决定
+                    vHeight = glassSize.height;
+                    vWidth =  glassSize.width;
                 } else {
-                    topPos = imageOffset.top;
-                    leftPos = imageOffset.left + imageSize.width + cfg.offset;
+                    // 区域显示在不同位置上计算left和top值
+                    var bigImageSize,
+                        imageSize = self.getSize(i),
+                        o = self.origin,
+                        v = self.viewer,
+                        btw = parseInt(self.getStyle(v, 'borderTopWidth')),
+                        blw = parseInt(self.getStyle(v, 'borderLeftWidth')),
+                        containerOffset = self.getOffset(self.container);
+                    if (!ready) {
+                        bigImageSize = cfg.bigImageSize;
+                    } else {
+                        bigImageSize = self.getSize(self.bigImage);
+                    }
+                    if (POSITION[0] == cfg.position) {
+                        topPos = - (imageSize.height + btw + cfg.offset - parseInt(self.getStyle(o, 'marginTop'))*2);
+                        leftPos = imageOffset.left - containerOffset.left;
+                    } else if (POSITION[2] == cfg.position) {
+                        topPos = imageSize.height + imageOffset.top + cfg.offset - containerOffset.top;
+                        leftPos = imageOffset.left - containerOffset.left;
+                    } else if (POSITION[3] == cfg.position) {
+                        topPos = imageOffset.top - containerOffset.top;
+                        leftPos = - (imageSize.width + blw + cfg.offset - parseInt(self.getStyle(o, 'marginLeft'))*2);
+                    } else {
+                        topPos = imageOffset.top - containerOffset.top;
+                        leftPos = imageOffset.left + imageSize.width + cfg.offset - containerOffset.left;
+                    }
+                    // 其他模式下, 显示区域宽高度由大小图的比例来定
+                    vHeight = Math.round(bigImageSize.height*glassSize.height/imageSize.height);
+                    vWidth = Math.round(bigImageSize.width*glassSize.width/imageSize.width);
                 }
+                self.viewer.style.height = vHeight + 'px';
+                self.viewer.style.width = vWidth + 'px';
                 self.viewer.style.top = topPos + 'px';
                 self.viewer.style.left = leftPos + 'px';
-                
-                if (TYPE[2] == cfg.zType) {
-                    // 跟随模式下, 显示区域宽高度由用户设定的glass宽高度决定
-                    self.viewer.style.height = glassSize.height + 'px';
-                    self.viewer.style.width =  glassSize.width + 'px';
-                } else {
-                    self.viewer.style.height = imageSize.height - btw*2 + 'px';
-                    self.viewer.style.width =  Math.round(imageSize.height/glassSize.height*glassSize.width) - blw*2 + 'px';
-                    // 大图加载完重新设置显示区域宽高度
-                    self.bigImage.onload = function() {
-                        if (!BIGIMG_READY) {
-                            BIGIMG_READY = !BIGIMG_READY;
-                            self._updateViewer();
-                        }
-                    }
-                    if (!BIGIMG_READY && self.bigImage.complete) {
-                        BIGIMG_READY = !BIGIMG_READY;
-                        self._updateViewer();
-                    }
-                }
-                DOM.removeClass(v, HIDDEN);
-            },
-            
-            /**
-             * 更新显示区域大小
-             */
-            _updateViewer: function() {
-                var self = this,
-                    bigImageSize = self.getSize(self.bigImage),
-                    imageSize = self.getSize(self.image),
-                    glassSize = self.getSize(self.glass);
-                self.viewer.style.height = Math.round(bigImageSize.height*glassSize.height/imageSize.height) + 'px';
-                self.viewer.style.width = Math.round(bigImageSize.width*glassSize.width/imageSize.width) + 'px';
             },
             
             /**
@@ -402,10 +428,10 @@ KISSY.add("imagezoom", function(S, undefined) {
              */
             getSize: function(elm) {
                 var cfg = this.config;
-                if (!elm) return {height: cfg.glassSize[0], width: cfg.glassSize[1]};
+                if (!elm) return cfg.glassSize;
                 return {
-                    width: elm.offsetWidth,
-                    height: elm.offsetHeight
+                    width: elm.clientWidth,
+                    height: elm.clientWidth
                 };
             },
             
@@ -448,6 +474,22 @@ KISSY.add("imagezoom", function(S, undefined) {
                     var y = elm.currentStyle;
                 }
                 return y[p];
+            },
+            
+            /**
+             * 大图片不可用时显示提示信息
+             */
+            showMsg: function(){
+                var b = S.get('b', self.viewer);
+                if (!b) {
+                    b = DOM.create('<b></b>');
+                    this.viewer.appendChild(b);
+                }
+                DOM.html(b, '图片暂不可用');
+            },
+            hideMsg: function(){
+                var b = S.get('b', self.viewer);
+                DOM.html(b, '');
             }
         });
         
@@ -461,9 +503,10 @@ KISSY.add("imagezoom", function(S, undefined) {
  * NOTES:
  *  2010.6
  *      - 加入position选项, 动态构建所需dom;
- *      - 小图加载之后才能继续;
- *      - 大图加载
+ *      - 小图加载;
+ *      - 大图加载之后才能显示;
  *      - 加入跟随模式
+ *      - 加入Timeout
  *  TODO:
  *      - 加入反转模式;
  */

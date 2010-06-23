@@ -10,13 +10,85 @@
     <script src="imagezoom.js"></script>
 </head>
 <body>
-<div id="page">
-    <img id="smallimg" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" />
+<h1>正常情况测试</h1>
+<p>默认模式(上右下左)</p>
+<div id="test-top">
+    <img id="top" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" />
 </div>
+<hr />
+
+<div id="test-right">
+    <img id="right" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" />
+</div>
+<hr />
+
+<div id="test-bottom">
+    <img id="bottom" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" />
+</div>
+<hr />
+
+<div id="test-left">
+    <img id="left" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" />
+</div>
+<hr />
+
+<p>镜片模式</p>
+<div id="test-glass">
+    <img id="glass" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" />
+</div>
+<hr />
+
+<p>跟随模式</p>
+<div id="test-follow">
+    <img id="follow" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" />
+</div>
+<br/>
+
+<h1>错误情况测试</h1>
+<hr />
+<p>小图不能访问(不显示)</p>
+<div id="test-small">
+    <img id="small" src="aa.jpg" />
+</div>
+<hr />
+<p>大图不能访问</p>
+<div id="test-big">
+    <img id="big" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" />
+</div>
+
 <script>
 KISSY.ready(function(S) {
-    var zm = S.ImageZoom("#smallimg", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", zType: 'glass'});
+    S.ImageZoom("#top", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", position: 'top', useZoomIcon: false});
 });
+
+KISSY.ready(function(S) {
+    S.ImageZoom("#right", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", position: 'right', useZoomIcon: false});
+});
+
+KISSY.ready(function(S) {
+    S.ImageZoom("#bottom", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", position: 'bottom', useZoomIcon: false});
+});
+
+KISSY.ready(function(S) {
+    S.ImageZoom("#left", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", position: 'left', useZoomIcon: false});
+});
+
+KISSY.ready(function(S) {
+    S.ImageZoom("#glass", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", zType: 'glass'});
+});
+
+KISSY.ready(function(S) {
+    S.ImageZoom("#follow", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", zType: 'follow'});
+});
+
+KISSY.ready(function(S) {
+    S.ImageZoom("#small", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", zType: 'glass'});
+});
+
+KISSY.ready(function(S) {
+    S.ImageZoom("#big", {bigImageSrc:"aa.jpg", zType: 'glass'});
+});
+
 </script>
 </body>
 </html>
