@@ -47,8 +47,10 @@ img {
     display: none;
     /*visibility: hidden;*/
 }
-.ks-imagezoom-viewer {
+.ks-imagezoom-viewer-bk {
     background: url("loading.gif") no-repeat scroll center center #FFFFFF;
+}
+.ks-imagezoom-viewer {
     border: 1px solid #CCCCCC;
     left: 500px;
     overflow: hidden;

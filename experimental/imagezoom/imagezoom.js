@@ -2,19 +2,20 @@
  * 放大镜效果
  * @module      imagezoom
  * @creater     qiaohua@taobao.com
- * @depender    kissy-core, yahoo-dom-event
+ * @depender    kissy-core
+ * @version     0.2
  */
 
 KISSY.add("imagezoom", function(S, undefined) {
     var DOM = S.DOM,
         EVENT = S.Event,
-        YDOM = YAHOO.util.Dom,
         HIDDEN = 'hidden',
         IMGZOOM_CONTAINER_CLS = 'ks-imagezoom-container',
         IMGZOOM_MAGNIFIER_CLS = 'ks-imagezoom-magnifier',
         IMGZOOM_VIEWER_CLS = 'ks-imagezoom-viewer',
         IMGZOOM_GLASS_CLS = 'ks-imagezoom-glass',
         IMGZOOM_ICON_CLS = 'ks-imagezoom-icon',
+        IMGZOOM_VIEWER_BK_CLS = 'ks-imagezoom-viewer-bk',
         POSITION = ['top', 'right', 'bottom', 'left'],
         TYPE = ['default', 'glass', 'follow'],
         
@@ -32,7 +33,7 @@ KISSY.add("imagezoom", function(S, undefined) {
             zType: 'default',           // 选择显示模式, 可选值: TYPE
             position: 'right',          // 大图显示位置, 可选值: POSITION
             preload: true,              // 是否预加载
-            timeout: 1000,              // 等待大图加载时间, 单位: ms
+            timeout: 6000,              // 等待大图加载时间, 单位: ms
             bigImageSize: {height:900, width:900}     // 设定大图的高宽度
         };
         
@@ -166,7 +167,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                     if (!self.viewer) {
                         self._createZoom(ev);
                     } else DOM.removeClass(self.viewer, HIDDEN);
-                    // 
+                    // 设置大图加载超时定时器
                     self.timer = setTimeout(function(){
                         if (!self.bigImageReady) self.showMsg();
                     }, self.config.timeout);
@@ -243,6 +244,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                 // 创建显示区域的DOM结构
                 v = DOM.create('<div>');
                 DOM.addClass(v, IMGZOOM_VIEWER_CLS);
+                DOM.addClass(v, IMGZOOM_VIEWER_BK_CLS);
                 var bimg = DOM.create('<img>');
                 DOM.attr(bimg, 'src', cfg.bigImageSrc);
                 v.appendChild(bimg);
@@ -311,7 +313,7 @@ KISSY.add("imagezoom", function(S, undefined) {
             },
             
             /**
-             * 更新显示区域大小
+             * 更新显示区域大小及位置
              */
             _updateViewer: function(ev, ready) {
                 var self = this;
@@ -321,7 +323,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                 }
                 var i = self.image,
                     cfg = self.config,
-                    imageOffset = self.getOffset(i),
+                    imageOffset = DOM.offset(i),
                     glassSize = self.getSize(self.glass);
                 
                 
@@ -345,7 +347,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                         v = self.viewer,
                         btw = parseInt(self.getStyle(v, 'borderTopWidth')),
                         blw = parseInt(self.getStyle(v, 'borderLeftWidth')),
-                        containerOffset = self.getOffset(self.container);
+                        containerOffset = DOM.offset(self.container);
                     if (!ready) {
                         bigImageSize = cfg.bigImageSize;
                     } else {
@@ -387,7 +389,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                         top: 0
                     };
                 // 小图偏移量
-                var imageOffset = self.getOffset(i);
+                var imageOffset = DOM.offset(i);
                 // 鼠标在页面上的位置
                 var mousePoint = self.getMousePoint(ev);
                 // 镜片实际尺寸
@@ -400,6 +402,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                 offset.left = cursorX - glassSize.width/2;
                 var i = 0,
                     j = 0;
+                // 跟随模式下, 偏移限制不同
                 if (TYPE[2] == self.config.zType) {
                     i = glassSize.width/2;
                     j = glassSize.height/2;
@@ -427,23 +430,10 @@ KISSY.add("imagezoom", function(S, undefined) {
              * @return  元素可见尺寸
              */
             getSize: function(elm) {
-                var cfg = this.config;
-                if (!elm) return cfg.glassSize;
+                if (!elm) return this.config.glassSize;
                 return {
                     width: elm.clientWidth,
                     height: elm.clientWidth
-                };
-            },
-            
-            /**
-             * 获取累计偏移量, 即元素到页面左上角的横行和纵向距离
-             * @param   elm    目标元素
-             * @return  left  横行偏移距离, top:纵向偏移距离
-             */
-            getOffset: function(elm) {
-                return {
-                    left: YDOM.getXY(elm)[0],
-                    top: YDOM.getXY(elm)[1]
                 };
             },
             
@@ -484,12 +474,14 @@ KISSY.add("imagezoom", function(S, undefined) {
                 if (!b) {
                     b = DOM.create('<b></b>');
                     this.viewer.appendChild(b);
+                    DOM.removeClass(this.viewer, IMGZOOM_VIEWER_BK_CLS);
                 }
                 DOM.html(b, '图片暂不可用');
             },
             hideMsg: function(){
-                var b = S.get('b', self.viewer);
+                var b = S.get('b', this.viewer);
                 DOM.html(b, '');
+                DOM.addClass(this.viewer, IMGZOOM_VIEWER_BK_CLS);
             }
         });
         
@@ -507,6 +499,7 @@ KISSY.add("imagezoom", function(S, undefined) {
  *      - 大图加载之后才能显示;
  *      - 加入跟随模式
  *      - 加入Timeout
+ *      - 6. 24  去除yahoo-dom-event依赖
  *  TODO:
  *      - 加入反转模式;
  */
