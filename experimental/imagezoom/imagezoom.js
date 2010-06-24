@@ -470,7 +470,7 @@ KISSY.add("imagezoom", function(S, undefined) {
              * 大图片不可用时显示提示信息
              */
             showMsg: function(){
-                var b = S.get('b', self.viewer);
+                var b = S.get('b', this.viewer);
                 if (!b) {
                     b = DOM.create('<b></b>');
                     this.viewer.appendChild(b);
