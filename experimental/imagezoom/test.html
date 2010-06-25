@@ -5,7 +5,6 @@
     <title>Test</title>
     <link href="../../build/cssreset-grids/reset-grids-min.css" rel="stylesheet" type="text/css" />
     <link href="imagezoom.css" rel="stylesheet" type="text/css" />
-    <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
     <script src="../../build/packages/ks-core.js"></script>
     <script src="imagezoom.js"></script>
 </head>
@@ -63,40 +62,40 @@
 </div>
 <script>
 KISSY.ready(function(S) {
-    S.ImageZoom("#top", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", position: 'top', useZoomIcon: false});
+    new S.ImageZoom("#top", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", position: 'top', useZoomIcon: false});
 });
 
 KISSY.ready(function(S) {
-    S.ImageZoom("#right", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", position: 'right', useZoomIcon: false});
+    new S.ImageZoom("#right", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", position: 'right', useZoomIcon: false});
 });
 
 KISSY.ready(function(S) {
-    S.ImageZoom("#bottom", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", position: 'bottom', useZoomIcon: false});
+    new S.ImageZoom("#bottom", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", position: 'bottom', useZoomIcon: false});
 });
 
 KISSY.ready(function(S) {
-    S.ImageZoom("#left", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", position: 'left', useZoomIcon: false});
+    new S.ImageZoom("#left", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", position: 'left', useZoomIcon: false});
 });
 
 KISSY.ready(function(S) {
-    S.ImageZoom("#glass", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", zType: 'glass'});
+    new S.ImageZoom("#glass", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", zType: 'glass'});
 });
 
 KISSY.ready(function(S) {
-    S.ImageZoom("#follow", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", zType: 'follow'});
+    new S.ImageZoom("#follow", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", zType: 'follow'});
 });
 
 KISSY.ready(function(S) {
-    S.ImageZoom("#small", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", zType: 'glass'});
+    new S.ImageZoom("#small", {bigImageSrc:"http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg", zType: 'glass'});
 });
 
 KISSY.ready(function(S) {
-    S.ImageZoom("#big", {bigImageSrc:"aa.jpg", zType: 'glass'});
+    new S.ImageZoom("#big", {bigImageSrc:"aa.jpg", zType: 'glass'});
 });
 
 
 KISSY.ready(function(S) {
-    S.ImageZoom("#bigbigfile", {bigImageSrc:"http://s.ngeo.com/wpf/media-live/photos/000/210/custom/21087_1600x1200-wallpaper-cb1275934547.jpg", zType: 'glass'});
+    new S.ImageZoom("#bigbigfile", {bigImageSrc:"http://s.ngeo.com/wpf/media-live/photos/000/210/custom/21087_1600x1200-wallpaper-cb1275934547.jpg", zType: 'glass'});
 });
 
 </script>
