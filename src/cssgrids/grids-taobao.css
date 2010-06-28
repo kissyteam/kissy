@@ -1,12 +1,12 @@
 /*
 Grids Layout for Taobao
-Î¬»¤£ºÓñ²®(lifesinger@gmail.com), Õı´¾(ragecarrier@gmail.com)
+ç»´æŠ¤ï¼šç‰ä¼¯(lifesinger@gmail.com), æ­£æ·³(ragecarrier@gmail.com)
 */
 
 /* require(grids.css) */
 
 /*
-ÌÔ±¦²ÉÓÃÁË 6 ÖÖÕ¤¸ñ²¼¾Ö£º
+æ·˜å®é‡‡ç”¨äº† 6 ç§æ …æ ¼å¸ƒå±€ï¼š
 950                  .grid-m
 190    750           .grid-s5m0
 750    190           .grid-m0s5
@@ -15,14 +15,14 @@ Grids Layout for Taobao
 510    230    190    .grid-m0e6s5
 */
 
-/** Á½À¸²¼¾Ö **/
+/** ä¸¤æ å¸ƒå±€ **/
 .grid-s5m0 .main-wrap { margin-left: 200px; }
 .grid-s5m0 .col-sub { width: 190px; margin-left: -100%; }
 
 .grid-m0s5 .main-wrap { margin-right: 200px; }
 .grid-m0s5 .col-sub { width: 190px; margin-left: -190px; }
 
-/** ÈıÀ¸²¼¾Ö **/
+/** ä¸‰æ å¸ƒå±€ **/
 .grid-s5m0e6 .main-wrap { margin: 0 240px 0 200px; }
 .grid-s5m0e6 .col-sub { width: 190px; margin-left: -100%; }
 .grid-s5m0e6 .col-extra { width: 230px; margin-left: -230px; }

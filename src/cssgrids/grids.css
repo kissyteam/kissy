@@ -1,33 +1,33 @@
 /*
-Ë«·ÉÒíÕ¤¸ñ²¼¾Ö Flying Swing Grids Layout
-ÀíÄî£º¼òµ¥ÖÊÆÓ£¬ÓïÒå»¯²¼¾Ö¡£
-Î¬»¤£ºÓñ²®<lifesinger@gmail.com>, Õı´¾<ragecarrier@gmail.com>
+åŒé£ç¿¼æ …æ ¼å¸ƒå±€ Flying Swing Grids Layout
+ç†å¿µï¼šç®€å•è´¨æœ´ï¼Œè¯­ä¹‰åŒ–å¸ƒå±€ã€‚
+ç»´æŠ¤ï¼šç‰ä¼¯<lifesinger@gmail.com>, æ­£æ·³<ragecarrier@gmail.com>
 */
 
-/* ¾ÓÖĞ */
+/* å±…ä¸­ */
 #page, #header, #content, #footer {
     margin-left: auto;
     margin-right: auto;
 }
 
-/* 950px ¿í */
+/* 950px å®½ */
 .w950 {
     width: 950px;
 }
 
-/** ²¼¾Ö»ù´¡ÑùÊ½ **/
+/** å¸ƒå±€åŸºç¡€æ ·å¼ **/
 .col-main {
     float: left;
     width: 100%;
-    /* bug fix: Ö÷À¸Ã»ÓĞÄÚÈİÊ±£¬ÔÚ Firefox ºÍ Chrome µÈä¯ÀÀÆ÷ÏÂ£¬²¼¾Ö²»¶Ô */
+    /* bug fix: ä¸»æ æ²¡æœ‰å†…å®¹æ—¶ï¼Œåœ¨ Firefox å’Œ Chrome ç­‰æµè§ˆå™¨ä¸‹ï¼Œå¸ƒå±€ä¸å¯¹ */
     min-height: 1px;
 }
 .col-sub, .col-extra {
     float: left;
-    /*position: relative;  °´ĞèÉèÖÃ£¬½öÔÚĞèÒªÊ±Ìí¼Ó */
+    /*position: relative;  æŒ‰éœ€è®¾ç½®ï¼Œä»…åœ¨éœ€è¦æ—¶æ·»åŠ  */
 }
 
-/** Çå³ı¸¡¶¯ **/
+/** æ¸…é™¤æµ®åŠ¨ **/
 .layout:after, .main-wrap:after, .col-sub:after, .col-extra:after {
 	content: '\20';
 	display: block;

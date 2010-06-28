@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 722 Jun 23 16:50
+build: 734 Jun 28 22:21
 */
 /**
  * @module  dom
@@ -731,7 +731,7 @@ KISSY.add('dom-attr', function(S, undefined) {
  *    第 2 个参数来解决。jQuery 未考虑，存在兼容性 bug.
  *  - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
  *  - jquery/attributes.js: Safari mis-reports the default selected
- *    property of an option 在 Safari 4 中已修复
+ *    property of an option 在 Safari 4 中已修复。
  *
  */
 /**
@@ -970,10 +970,12 @@ KISSY.add('dom-style-ie', function(S, undefined) {
  */
 KISSY.add('dom-offset', function(S, undefined) {
 
-    var DOM = S.DOM,
+    var DOM = S.DOM, UA = S.UA,
         win = window,
         doc = document,
         docElem = doc.documentElement,
+        isStrict = doc.compatMode === 'CSS1Compat',
+        MAX = Math.max,
         PARSEINT = parseInt,
         POSITION = 'position',
         RELATIVE = 'relative',
@@ -1007,6 +1009,37 @@ KISSY.add('dom-offset', function(S, undefined) {
          */
         scrollTop: function() {
             return win.pageYOffset || docElem.scrollTop || doc.body.scrollTop;
+        },
+
+        /**
+         * Returns the height of the document.
+         */
+        docHeight: function() {
+            return MAX(!isStrict ? doc.body.scrollHeight : docElem.scrollHeight, DOM.viewportHeight());
+        },
+
+        /**
+         * Returns the width of the document.
+         */
+        docWidth: function() {
+            return MAX(!isStrict ? doc.body.scrollWidth : docElem.scrollWidth, DOM.viewportWidth());
+        },
+
+        /**
+         * Returns the current height of the viewport.
+         */
+        viewportHeight: function() {
+            return UA.ie ?
+                (isStrict ? docElem.clientHeight : doc.body.clientHeight) :
+                win.innerHeight;
+        },
+
+        /**
+         * Returns the current width of the viewport.
+         */
+        viewportWidth: function() {
+            return !isStrict && !UA.opera ? doc.body.clientWidth :
+                UA.ie ? docElem.clientWidth : win.innerWidth;
         }
     });
 
@@ -1092,7 +1125,7 @@ KISSY.add('dom-traversal', function(S, undefined) {
         /**
          * Gets the siblings of the first matched element.
          */
-        siblings: function(selector,filter) {
+        siblings: function(selector, filter) {
             return getSiblings(selector, filter, true);
         },
 
@@ -1101,6 +1134,29 @@ KISSY.add('dom-traversal', function(S, undefined) {
          */
         children: function(selector, filter) {
             return getSiblings(selector, filter);
+        },
+
+        /**
+         * Check to see if a DOM node is within another DOM node.
+         */
+        contains: function(container, contained) {
+            var ret = false;
+
+            if ((container = S.get(container)) && (contained = S.get(contained))) {
+                if (container.contains) {
+                    return container.contains(contained);
+                }
+                else if (container.compareDocumentPosition) {
+                    return !!(container.compareDocumentPosition(contained) & 16);
+                }
+                else {
+                    while (!ret && (contained = contained.parentNode)) {
+                        ret = contained == container;
+                    }
+                }
+            }
+            
+            return ret;
         }
     });
 

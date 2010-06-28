@@ -35,7 +35,7 @@ KISSY.add('dom-traversal', function(S, undefined) {
         /**
          * Gets the siblings of the first matched element.
          */
-        siblings: function(selector,filter) {
+        siblings: function(selector, filter) {
             return getSiblings(selector, filter, true);
         },
 
@@ -44,6 +44,29 @@ KISSY.add('dom-traversal', function(S, undefined) {
          */
         children: function(selector, filter) {
             return getSiblings(selector, filter);
+        },
+
+        /**
+         * Check to see if a DOM node is within another DOM node.
+         */
+        contains: function(container, contained) {
+            var ret = false;
+
+            if ((container = S.get(container)) && (contained = S.get(contained))) {
+                if (container.contains) {
+                    return container.contains(contained);
+                }
+                else if (container.compareDocumentPosition) {
+                    return !!(container.compareDocumentPosition(contained) & 16);
+                }
+                else {
+                    while (!ret && (contained = contained.parentNode)) {
+                        ret = contained == container;
+                    }
+                }
+            }
+            
+            return ret;
         }
     });
 

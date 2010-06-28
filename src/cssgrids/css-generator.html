@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf-8"/>
 <title>Layout CSS Generator</title>
 <style>
     body {
@@ -19,15 +19,15 @@
 </style>
 </head>
 <body>
-<p>Õ¤¸ñ²¼¾ÖµÄÃüÃû£¨.grid-sXm0eY£©¹æÔòÈçÏÂ£º</p>
+<p>æ …æ ¼å¸ƒå±€çš„å‘½åï¼ˆ.grid-sXm0eYï¼‰è§„åˆ™å¦‚ä¸‹ï¼š</p>
 <ol>
-    <li>µ±µ¥ÔªÁĞµÄ¿í¶ÈÎª 40px µÄ±¶ÊıÊ±£¬<br />
-        sX ±íÊ¾ col-sub µÄ¿í¶È = X * 40 - 10,<br />
-        eY ±íÊ¾ col-extra µÄ¿í¶È = Y * 40 - 10,<br />
-        m0 ±íÊ¾ col-main µÄ¿í¶È = ×Ü¿í¶È - (X + Y) * 40,<br />
-        s-m-e µÄË³Ğò£¬±íÊ¾¸÷ÁĞµÄÅÅÁĞË³Ğò¡£<br />
-        ±ÈÈç£º×Ü¿íÎª 950px Ê±£¬.grid-e6m0s5 ±íÊ¾ col-extra(230) | col-main(510) | col-sub(190).<br />
-        ÏÂÃæÊÇ»ùÓÚ 40px µÄËùÓĞ±ê×¼Õ¤¸ñ²¼¾Ö¡£¿ÉÒÔ¸ù¾İÕ¤¸ñÃû£¬ËÑË÷¸´ÖÆÊ¹ÓÃ£¨Ë«»÷Õ¹¿ª´úÂëÇøÓò£©£º
+    <li>å½“å•å…ƒåˆ—çš„å®½åº¦ä¸º 40px çš„å€æ•°æ—¶ï¼Œ<br />
+        sX è¡¨ç¤º col-sub çš„å®½åº¦ = X * 40 - 10,<br />
+        eY è¡¨ç¤º col-extra çš„å®½åº¦ = Y * 40 - 10,<br />
+        m0 è¡¨ç¤º col-main çš„å®½åº¦ = æ€»å®½åº¦ - (X + Y) * 40,<br />
+        s-m-e çš„é¡ºåºï¼Œè¡¨ç¤ºå„åˆ—çš„æ’åˆ—é¡ºåºã€‚<br />
+        æ¯”å¦‚ï¼šæ€»å®½ä¸º 950px æ—¶ï¼Œ.grid-e6m0s5 è¡¨ç¤º col-extra(230) | col-main(510) | col-sub(190).<br />
+        ä¸‹é¢æ˜¯åŸºäº 40px çš„æ‰€æœ‰æ ‡å‡†æ …æ ¼å¸ƒå±€ã€‚å¯ä»¥æ ¹æ®æ …æ ¼åï¼Œæœç´¢å¤åˆ¶ä½¿ç”¨ï¼ˆåŒå‡»å±•å¼€ä»£ç åŒºåŸŸï¼‰ï¼š
 <pre style="height: 100px" ondblclick="this.style.height = (this.style.height === 'auto') ? '100px' : 'auto';">
 <script>
     var c = 40, g = 10, N = 24,
@@ -40,7 +40,7 @@
         var ps = name.indexOf("s"), pm = name.indexOf("m"), pe = name.indexOf("e"),
             out = "", sw, ew, ERROR_INFO = "Something is wrong!";
 
-        if(/\d*[a-z]\d*/i.test(name.replace(/s/, "").replace(/m/, "").replace(/e/, "")) // Ö»Ìæ»»Ò»¸ö£¬·ÀÖ¹¶à¸ö s/m/e
+        if(/\d*[a-z]\d*/i.test(name.replace(/s/, "").replace(/m/, "").replace(/e/, "")) // åªæ›¿æ¢ä¸€ä¸ªï¼Œé˜²æ­¢å¤šä¸ª s/m/e
            || (ps === -1 || pm === -1)
            || !/.*m0.*/i.test(name)) {
             return ERROR_INFO;
@@ -48,7 +48,7 @@
 
         cls = cls || ".grid-" + name;
         
-        if(pe === -1) { // Á½À¸
+        if(pe === -1) { // ä¸¤æ 
             if(ps < pm) { // .grid-sXm0
                 sw = parseInt(name.substring(ps + 1, pm), 10);
                 out += cls + " .main-wrap { margin-left: " + (sw + g) + "px; }" + ENDLINE;
@@ -60,7 +60,7 @@
                 out += cls + " .col-sub { width: " + sw + "px; margin-left: -" + sw + "px; }" + ENDLINE;
             }
 
-        } else { // ÈıÀ¸
+        } else { // ä¸‰æ 
             if(ps < pm && pm < pe) { // .grid-sXm0eY
                 sw = parseInt(name.substring(ps + 1, pm), 10);
                 ew = parseInt(name.substring(pe + 1), 10);
@@ -111,9 +111,9 @@
     function printAll() {
         var i, j, sw, ew, S_MAX, E_MAX, sum = [0, 0];
         
-        println("/** Á½¸ö¼Ù¶¨£ºa. ×Ü¿í¶ÈÎª 950px; b. ÁĞ¿í²»Ğ¡ÓÚ 150px. **/" + ENDLINE);
+        println("/** ä¸¤ä¸ªå‡å®šï¼ša. æ€»å®½åº¦ä¸º 950px; b. åˆ—å®½ä¸å°äº 150px. **/" + ENDLINE);
 
-        println("/** Á½À¸²¼¾Ö **/");
+        println("/** ä¸¤æ å¸ƒå±€ **/");
         S_MAX = N - COL_MIN;
         for (i = COL_MIN; i <= S_MAX; ++i) {
             sw = i * c - g;
@@ -126,7 +126,7 @@
             sum[0] += 2;
         }
 
-        println("/** ÈıÀ¸²¼¾Ö **/");
+        println("/** ä¸‰æ å¸ƒå±€ **/");
         S_MAX = N - 2 * COL_MIN;
         for (i = COL_MIN; i <= S_MAX; ++i) {
             sw = i * c - g;
@@ -152,9 +152,9 @@
             }
         }
 
-        println("/** Í³¼ÆÊı¾İ **/");
-        println("/* ¶şÀ¸Õ¤¸ñ²¼¾Ö×ÜÊı£º " + sum[0] + " = (20 - 4 + 1) * 2 = 17 * 2 */");
-        println("/* ÈıÀ¸Õ¤¸ñ²¼¾Ö×ÜÊı£º " + sum[1] + " = ((16 - 4 + 1) + (16 - 4 + 1 - 1) + ... + 2 + 1) * 6 = (13 + 12 + ... + 2 + 1) * 6 = 13 * 7 * 6 */");
+        println("/** ç»Ÿè®¡æ•°æ® **/");
+        println("/* äºŒæ æ …æ ¼å¸ƒå±€æ€»æ•°ï¼š " + sum[0] + " = (20 - 4 + 1) * 2 = 17 * 2 */");
+        println("/* ä¸‰æ æ …æ ¼å¸ƒå±€æ€»æ•°ï¼š " + sum[1] + " = ((16 - 4 + 1) + (16 - 4 + 1 - 1) + ... + 2 + 1) * 6 = (13 + 12 + ... + 2 + 1) * 6 = 13 * 7 * 6 */");
     }
 
     function generateLayoutStyle(name) {
@@ -177,19 +177,19 @@
 </script>
 </pre>
     </li>
-    <li>µ±µ¥ÔªÁĞµÄ¿í¶È²»ÊÇ 40px µÄ±¶ÊıÊ±£¬X ºÍ Y Ö±½Ó±íÊ¾¿í¶È¡£±ÈÈç£º<br />
-        ×Ü¿íÎª 950px Ê±£¬.grid-s120m0e50 ±íÊ¾ col-sub(120) | col-main(760) | col-extra(50), ÑùÊ½Îª£º
+    <li>å½“å•å…ƒåˆ—çš„å®½åº¦ä¸æ˜¯ 40px çš„å€æ•°æ—¶ï¼ŒX å’Œ Y ç›´æ¥è¡¨ç¤ºå®½åº¦ã€‚æ¯”å¦‚ï¼š<br />
+        æ€»å®½ä¸º 950px æ—¶ï¼Œ.grid-s120m0e50 è¡¨ç¤º col-sub(120) | col-main(760) | col-extra(50), æ ·å¼ä¸ºï¼š
 <pre>
 .grid-s120m0e50 .main-wrap { margin: 0 130px 0 60px; }
 .grid-s120m0e50 .col-sub { width: 120px; margin-left: -100%; }
 .grid-s120m0e50 .col-extra { width: 50px; margin-left: -50px; }            
 </pre>
     </li>
-    <li>¿ÉÒÔÊ¹ÓÃÏÂÃæµÄ±íµ¥À´×Ô¶¯Éú³É²¼¾ÖÑùÊ½£º
+    <li>å¯ä»¥ä½¿ç”¨ä¸‹é¢çš„è¡¨å•æ¥è‡ªåŠ¨ç”Ÿæˆå¸ƒå±€æ ·å¼ï¼š
         <form onsubmit="generateLayoutStyle(this.input.value); return false;" action="">
-            ÇëÊäÈë²¼¾ÖÃû³Æ£º.grid-<input name="input" type="text" size="12"/>(ÀıÈç£ºs8m0e9 »ò e90s200m0)<br />
-            <input id="is-standard" type="checkbox" style="margin-left: 188px" checked /><label for="is-standard">µ¥ÔªÁĞµÄ¿í¶ÈÊÇ 40px µÄ±¶Êı</label><br />
-            <button type="submit" style="margin-left: 185px">Éú³ÉÑùÊ½</button>
+            è¯·è¾“å…¥å¸ƒå±€åç§°ï¼š.grid-<input name="input" type="text" size="12"/>(ä¾‹å¦‚ï¼šs8m0e9 æˆ– e90s200m0)<br />
+            <input id="is-standard" type="checkbox" style="margin-left: 188px" checked /><label for="is-standard">å•å…ƒåˆ—çš„å®½åº¦æ˜¯ 40px çš„å€æ•°</label><br />
+            <button type="submit" style="margin-left: 185px">ç”Ÿæˆæ ·å¼</button>
             <pre id="layout-style"></pre>
         </form>
     </li>

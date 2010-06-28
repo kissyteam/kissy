@@ -1,18 +1,18 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 734 Jun 28 22:21
 */
 /*
-³£ÓÃµÄÍ¨ÓÃÑùÊ½ Common Style
-ÀíÄî£ºÉÙ¶ø¾«
-Î¬»¤£ºÓñ²®<lifesinger@gmail.com>
+å¸¸ç”¨çš„é€šç”¨æ ·å¼ Common Style
+ç†å¿µï¼šå°‘è€Œç²¾
+ç»´æŠ¤ï¼šç‰ä¼¯<lifesinger@gmail.com>
 */
 
-/* Òş²Ø */
+/* éšè— */
 .hidden { display: none; }
 .invisible { visibility: hidden; }
 
-/* Çå³ı¸¡¶¯ */
+/* æ¸…é™¤æµ®åŠ¨ */
 .clear:after { content: '\20'; display: block; height: 0; clear: both; }
 .clear { *zoom: 1; }

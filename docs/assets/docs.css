@@ -32,7 +32,6 @@ a { color: #1F75CC; }
 .col-main pre code { display: block; margin-top: -20px; }
 
 .section h3 { background: url(dotted_line.gif) repeat-x 0 100%; padding: 5px 0 2px; margin: 0 0 15px -15px; }
-.section em { font-weight: bold; color: #555; }
 
 .member { background: url(dotted_line.gif) repeat-x 0 100%; margin-bottom: 15px; }
 .member h4 { font-weight: normal; }
@@ -40,8 +39,8 @@ a { color: #1F75CC; }
 .member h4 a:hover { text-decoration: none; }
 .member .detail { padding: 5px 20px; }
 .member .detail p { margin: 0.5em 0; }
-.method h4 code { display: block; }
-.method h4 em { font-weight: bold; }
+.method h4 code { display: block; color: #B84545; }
+.method h4 em { font-weight: normal; }
 .example-code { background-color: #F4FAFF; border: 1px solid #AACCEE; padding: 0 20px 15px; margin-bottom: 5px; }
 .detail dt { font-weight: bold; }
 

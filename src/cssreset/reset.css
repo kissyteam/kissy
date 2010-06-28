@@ -1,47 +1,47 @@
 /*
 KISSY CSS Reset
-ÀíÄî£º1. reset µÄÄ¿µÄ²»ÊÇÇå³ıä¯ÀÀÆ÷µÄÄ¬ÈÏÑùÊ½£¬Õâ½öÊÇ²¿·Ö¹¤×÷¡£Çå³ıºÍÖØÖÃÊÇ½ôÃÜ²»¿É·ÖµÄ¡£
-     2. reset µÄÄ¿µÄ²»ÊÇÈÃÄ¬ÈÏÑùÊ½ÔÚËùÓĞä¯ÀÀÆ÷ÏÂÒ»ÖÂ£¬¶øÊÇ¼õÉÙÄ¬ÈÏÑùÊ½ÓĞ¿ÉÄÜ´øÀ´µÄÎÊÌâ¡£
-     3. reset ÆÚÍûÌá¹©Ò»Ì×ÆÕÊÊÍ¨ÓÃµÄ»ù´¡ÑùÊ½¡£µ«Ã»ÓĞÒøµ¯£¬ÍÆ¼ö¸ù¾İ¾ßÌåĞèÇó£¬²Ã¼ôºÍĞŞ¸ÄºóÔÙÊ¹ÓÃ¡£
-ÌØÉ«£º1. ÊÊÓ¦ÖĞÎÄ£»2. »ùÓÚ×îĞÂÖ÷Á÷ä¯ÀÀÆ÷¡£
-Î¬»¤£ºÓñ²®<lifesinger@gmail.com>, Õı´¾<ragecarrier@gmail.com>
+ç†å¿µï¼š1. reset çš„ç›®çš„ä¸æ˜¯æ¸…é™¤æµè§ˆå™¨çš„é»˜è®¤æ ·å¼ï¼Œè¿™ä»…æ˜¯éƒ¨åˆ†å·¥ä½œã€‚æ¸…é™¤å’Œé‡ç½®æ˜¯ç´§å¯†ä¸å¯åˆ†çš„ã€‚
+     2. reset çš„ç›®çš„ä¸æ˜¯è®©é»˜è®¤æ ·å¼åœ¨æ‰€æœ‰æµè§ˆå™¨ä¸‹ä¸€è‡´ï¼Œè€Œæ˜¯å‡å°‘é»˜è®¤æ ·å¼æœ‰å¯èƒ½å¸¦æ¥çš„é—®é¢˜ã€‚
+     3. reset æœŸæœ›æä¾›ä¸€å¥—æ™®é€‚é€šç”¨çš„åŸºç¡€æ ·å¼ã€‚ä½†æ²¡æœ‰é“¶å¼¹ï¼Œæ¨èæ ¹æ®å…·ä½“éœ€æ±‚ï¼Œè£å‰ªå’Œä¿®æ”¹åå†ä½¿ç”¨ã€‚
+ç‰¹è‰²ï¼š1. é€‚åº”ä¸­æ–‡ï¼›2. åŸºäºæœ€æ–°ä¸»æµæµè§ˆå™¨ã€‚
+ç»´æŠ¤ï¼šç‰ä¼¯<lifesinger@gmail.com>, æ­£æ·³<ragecarrier@gmail.com>
 */
 
-/** Çå³ıÄÚÍâ±ß¾à **/
-body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements ½á¹¹ÔªËØ */
-dl, dt, dd, ul, ol, li, /* list elements ÁĞ±íÔªËØ */
-pre, /* text formatting elements ÎÄ±¾¸ñÊ½ÔªËØ */
-form, fieldset, legend, button, input, textarea, /* form elements ±íµ¥ÔªËØ */
-th, td /* table elements ±í¸ñÔªËØ */ {
+/** æ¸…é™¤å†…å¤–è¾¹è· **/
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements ç»“æ„å…ƒç´  */
+dl, dt, dd, ul, ol, li, /* list elements åˆ—è¡¨å…ƒç´  */
+pre, /* text formatting elements æ–‡æœ¬æ ¼å¼å…ƒç´  */
+form, fieldset, legend, button, input, textarea, /* form elements è¡¨å•å…ƒç´  */
+th, td /* table elements è¡¨æ ¼å…ƒç´  */ {
     margin: 0;
     padding: 0;
 }
 
-/** ÉèÖÃÄ¬ÈÏ×ÖÌå **/
+/** è®¾ç½®é»˜è®¤å­—ä½“ **/
 body,
 button, input, select, textarea /* for ie */ {
     font: 12px/1.5 tahoma, arial, \5b8b\4f53, sans-serif;
 }
 h1, h2, h3, h4, h5, h6 { font-size: 100%; }
-address, cite, dfn, em, var { font-style: normal; } /* ½«Ğ±Ìå·öÕı */
-code, kbd, pre, samp { font-family: courier new, courier, monospace; } /* Í³Ò»µÈ¿í×ÖÌå */
-small { font-size: 12px; } /* Ğ¡ÓÚ 12px µÄÖĞÎÄºÜÄÑÔÄ¶Á£¬ÈÃ small Õı³£»¯ */
+address, cite, dfn, em, var { font-style: normal; } /* å°†æ–œä½“æ‰¶æ­£ */
+code, kbd, pre, samp { font-family: courier new, courier, monospace; } /* ç»Ÿä¸€ç­‰å®½å­—ä½“ */
+small { font-size: 12px; } /* å°äº 12px çš„ä¸­æ–‡å¾ˆéš¾é˜…è¯»ï¼Œè®© small æ­£å¸¸åŒ– */
 
-/** ÖØÖÃÁĞ±íÔªËØ **/
+/** é‡ç½®åˆ—è¡¨å…ƒç´  **/
 ul, ol { list-style: none; }
 
-/** ÖØÖÃÎÄ±¾¸ñÊ½ÔªËØ **/
+/** é‡ç½®æ–‡æœ¬æ ¼å¼å…ƒç´  **/
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-sup { vertical-align: text-top; } /* ÖØÖÃ£¬¼õÉÙ¶ÔĞĞ¸ßµÄÓ°Ïì */
+sup { vertical-align: text-top; } /* é‡ç½®ï¼Œå‡å°‘å¯¹è¡Œé«˜çš„å½±å“ */
 sub { vertical-align: text-bottom; }
 
-/** ÖØÖÃ±íµ¥ÔªËØ **/
+/** é‡ç½®è¡¨å•å…ƒç´  **/
 legend { color: #000; } /* for ie6 */
-fieldset, img { border: 0; } /* img ´î³µ£ºÈÃÁ´½ÓÀïµÄ img ÎŞ±ß¿ò */
-button, input, select, textarea { font-size: 100%; } /* Ê¹µÃ±íµ¥ÔªËØÔÚ ie ÏÂÄÜ¼Ì³Ğ×ÖÌå´óĞ¡ */
-/* ×¢£ºoptgroup ÎŞ·¨·öÕı */
+fieldset, img { border: 0; } /* img æ­è½¦ï¼šè®©é“¾æ¥é‡Œçš„ img æ— è¾¹æ¡† */
+button, input, select, textarea { font-size: 100%; } /* ä½¿å¾—è¡¨å•å…ƒç´ åœ¨ ie ä¸‹èƒ½ç»§æ‰¿å­—ä½“å¤§å° */
+/* æ³¨ï¼šoptgroup æ— æ³•æ‰¶æ­£ */
 
-/** ÖØÖÃ±í¸ñÔªËØ **/
+/** é‡ç½®è¡¨æ ¼å…ƒç´  **/
 table { border-collapse: collapse; border-spacing: 0; }

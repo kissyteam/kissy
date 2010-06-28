@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>dom-attr &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+<div id="page" class="w866">
+    <div id="header">
+        <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+        <p class="rel-nav">
+            <a href="../../src/dom/dom-attr.js"><code>dom-attr.js</code></a>
+        </p>
+    </div>
+    <div id="content" class="layout grid-s232m0">
+        <div class="col-main">
+            <div class="main-wrap">
+
+                <div class="section">
+                    <h3 id="methods">Methods</h3>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_attr">attr</a>
+                            <code>String <em>attr</em> ( selector, name )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>获取符合选择器的第一个元素的属性值。</p>
+                            <p class="tips">属性不存在时，返回 undefined</p>
+                        </div>
+                        <h4>
+                            <code>void <em>attr</em> ( selector, name, value )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>给符合选择器的所有元素设置属性值。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_removeAttr">removeAttr</a>
+                            <code>void <em>removeAttr</em> ( selector, name )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>移除符合选择器的所有元素的指定属性。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_val">val</a>
+                            <code>String <em>val</em> ( selector )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>获取符合选择器的第一个元素所的 value 值。</p>
+                            <p class="tips">无值时，返回空字符串。</p>                            
+                        </div>
+                        <h4>
+                            <code>void <em>val</em> ( selector, value )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>给符合选择器的所有元素设置 value 值。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_text">text</a>
+                            <code>String <em>text</em> ( selector )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>获取符合选择器的第一个元素所包含的文本值。</p>
+                            <p class="tips">无值时，返回空字符串。</p>
+                        </div>
+                        <h4>
+                            <code>void <em>text</em> ( selector, value )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>给符合选择器的所有元素设置文本值。</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="section">
+                    <h3>Examples</h3>
+                    <p>测试页面：<a href="../../src/dom/test-dom-attr.html"><code>test-dom-attr.html</code></a></p>
+
+                    <div class="section notes">
+                        <p>dom-attr 提供的所有方法：</p>
+                        <ol>
+                            <li>参数 selector 可以为数组：<code>DOM.attr([elem1, elem2], 'rel', 'val');</code></li>
+                            <li>setter 和 getter 都遵循 get first, set all 原则：如果是获取，仅获取符合选择器的第一个元素的值；如果是设置，则操作符合选择器的所有元素。</li>
+                        </ol>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="sub-wrap">
+                <div class="loc">
+                    <a href="../index.html">home</a> &rsaquo;
+                    <a href="index.html">dom</a> &rsaquo;
+                    dom-attr :
+                </div>
+                <div class="toc">
+                    <h3>Methods</h3>
+                    <ul>
+                        <li><a href="#method_attr">attr</a></li>
+                        <li><a href="#method_removeAttr">removeAttr</a></li>
+                        <li><a href="#method_val">val</a></li>
+                        <li><a href="#method_text">text</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+    </div>
+</div>
+</body>
+</html>

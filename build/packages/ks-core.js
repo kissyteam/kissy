@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 722 Jun 23 16:50
+build: 734 Jun 28 22:20
 */
 /**
  * @module kissy
@@ -123,7 +123,10 @@ build: 722 Jun 23 16:50
             var self = this,
                 doScroll = doc.documentElement.doScroll,
                 eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
-                COMPLETE = 'complete';
+                COMPLETE = 'complete',
+                fire = function() {
+                    self._fireReady();
+                };
 
             // Set to true once it runs
             readyBound = true;
@@ -131,45 +134,44 @@ build: 722 Jun 23 16:50
             // Catch cases where ready() is called after the
             // browser event has already occurred.
             if (doc.readyState === COMPLETE) {
-                return self._fireReady();
+                return fire();
             }
 
             // w3c mode
             if (doc.addEventListener) {
                 function domReady() {
                     doc.removeEventListener(eventType, domReady, false);
-                    self._fireReady();
+                    fire();
                 }
                 doc.addEventListener(eventType, domReady, false);
             }
             // IE event model is used
             else {
-                if (win != win.top) { // iframe
-                    function stateChange() {
-                        if (doc.readyState === COMPLETE) {
-                            doc.detachEvent(eventType, stateChange);
-                            self._fireReady();
-                        }
+                function stateChange() {
+                    if (doc.readyState === COMPLETE) {
+                        doc.detachEvent(eventType, stateChange);
+                        fire();
                     }
-                    doc.attachEvent(eventType, stateChange);
                 }
-                else {
+
+                // ensure firing before onload, maybe late but safe also for iframes
+                doc.attachEvent(eventType, stateChange);
+
+                // A fallback to window.onload, that will always work.
+                win.attachEvent('onload', fire);
+
+                if (win == win.top) { // not an iframe
                     function readyScroll() {
                         try {
                             // Ref: http://javascript.nwbox.com/IEContentLoaded/
                             doScroll('left');
-                            self._fireReady();
+                            fire();
                         } catch(ex) {
                             setTimeout(readyScroll, 1);
                         }
                     }
                     readyScroll();
                 }
-
-                // A fallback to window.onload, that will always work.
-                win.attachEvent('onload', function() {
-                    self._fireReady();
-                });
             }
         },
 
@@ -731,7 +733,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
  * NOTES:
  *
  *  2010.06
- *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着 
+ *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着。
  *
  *  2010.05
  *   - 增加 filter 方法。
@@ -742,7 +744,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
  *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
  *
  * TODO:
- *   - 分析 jq 的 isPlainObject 对 constructor 的细节处理
+ *   - 分析 jq 的 isPlainObject 对 constructor 等细节处理
  *
  */
 /**
@@ -850,7 +852,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 722 Jun 23 16:50
+build: 734 Jun 28 22:21
 */
 /**
  * @module  dom
@@ -1580,7 +1582,7 @@ KISSY.add('dom-attr', function(S, undefined) {
  *    第 2 个参数来解决。jQuery 未考虑，存在兼容性 bug.
  *  - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
  *  - jquery/attributes.js: Safari mis-reports the default selected
- *    property of an option 在 Safari 4 中已修复
+ *    property of an option 在 Safari 4 中已修复。
  *
  */
 /**
@@ -1819,10 +1821,12 @@ KISSY.add('dom-style-ie', function(S, undefined) {
  */
 KISSY.add('dom-offset', function(S, undefined) {
 
-    var DOM = S.DOM,
+    var DOM = S.DOM, UA = S.UA,
         win = window,
         doc = document,
         docElem = doc.documentElement,
+        isStrict = doc.compatMode === 'CSS1Compat',
+        MAX = Math.max,
         PARSEINT = parseInt,
         POSITION = 'position',
         RELATIVE = 'relative',
@@ -1856,6 +1860,37 @@ KISSY.add('dom-offset', function(S, undefined) {
          */
         scrollTop: function() {
             return win.pageYOffset || docElem.scrollTop || doc.body.scrollTop;
+        },
+
+        /**
+         * Returns the height of the document.
+         */
+        docHeight: function() {
+            return MAX(!isStrict ? doc.body.scrollHeight : docElem.scrollHeight, DOM.viewportHeight());
+        },
+
+        /**
+         * Returns the width of the document.
+         */
+        docWidth: function() {
+            return MAX(!isStrict ? doc.body.scrollWidth : docElem.scrollWidth, DOM.viewportWidth());
+        },
+
+        /**
+         * Returns the current height of the viewport.
+         */
+        viewportHeight: function() {
+            return UA.ie ?
+                (isStrict ? docElem.clientHeight : doc.body.clientHeight) :
+                win.innerHeight;
+        },
+
+        /**
+         * Returns the current width of the viewport.
+         */
+        viewportWidth: function() {
+            return !isStrict && !UA.opera ? doc.body.clientWidth :
+                UA.ie ? docElem.clientWidth : win.innerWidth;
         }
     });
 
@@ -1941,7 +1976,7 @@ KISSY.add('dom-traversal', function(S, undefined) {
         /**
          * Gets the siblings of the first matched element.
          */
-        siblings: function(selector,filter) {
+        siblings: function(selector, filter) {
             return getSiblings(selector, filter, true);
         },
 
@@ -1950,6 +1985,29 @@ KISSY.add('dom-traversal', function(S, undefined) {
          */
         children: function(selector, filter) {
             return getSiblings(selector, filter);
+        },
+
+        /**
+         * Check to see if a DOM node is within another DOM node.
+         */
+        contains: function(container, contained) {
+            var ret = false;
+
+            if ((container = S.get(container)) && (contained = S.get(contained))) {
+                if (container.contains) {
+                    return container.contains(contained);
+                }
+                else if (container.compareDocumentPosition) {
+                    return !!(container.compareDocumentPosition(contained) & 16);
+                }
+                else {
+                    while (!ret && (contained = contained.parentNode)) {
+                        ret = contained == container;
+                    }
+                }
+            }
+            
+            return ret;
         }
     });
 
@@ -2246,7 +2304,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 722 Jun 23 16:51
+build: 734 Jun 28 22:20
 */
 /**
  * @module  event
@@ -2383,12 +2441,12 @@ KISSY.add('event', function(S, undefined) {
                     len = t.length;
                 }
 
-                // remove(el, type)or fn 已移除光
+                // remove(el, type) or fn 已移除光
                 if(fn === undefined || len === 0) {
                     if(!target.isCustomEventTarget) {
                         simpleRemove(target, type, eventsType.handle);
                     }
-                    delete cache[id].type;
+                    delete events[type];
                 }
             }
 

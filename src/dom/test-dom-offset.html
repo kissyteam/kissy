@@ -30,6 +30,7 @@
 <script src="dom-offset.js"></script>
 
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
+<script src="../../third-party/ext-core/ext-core.js"></script>
 
 <div id="test-data">
     <div id="inner" style="background-color: #ffe4c4; width: 100px; height: 100px"></div>
@@ -37,7 +38,7 @@
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY, DOM = S.DOM, UA = S.UA;
+    var S = KISSY, DOM = S.DOM, UA = S.UA, ExtDOM = Ext.lib.Dom;
 
     function test_offset(test) {
 
@@ -68,6 +69,22 @@
 
     function test_scrollTop(test) {
         if(DOM.scrollTop() !== 0) test.fail();
+    }
+
+    function test_docHeight(test) {
+        if(DOM.docHeight() !== ExtDOM.getDocumentHeight()) test.fail();
+    }
+
+    function test_docWidth(test) {
+        if(DOM.docWidth() !== ExtDOM.getDocumentWidth()) test.fail();
+    }
+
+    function test_viewportHeight(test) {
+        if(DOM.viewportHeight() !== ExtDOM.getViewportHeight()) test.fail();
+    }
+
+    function test_viewportWidth(test) {
+        if(DOM.viewportWidth() !== ExtDOM.getViewportWidth()) test.fail();
     }
 
     // temp code

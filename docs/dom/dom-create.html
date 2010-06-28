@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>dom-create &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+<div id="page" class="w866">
+    <div id="header">
+        <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+        <p class="rel-nav">
+            <a href="../../src/dom/dom-create.js"><code>dom-create.js</code></a>
+        </p>
+    </div>
+    <div id="content" class="layout grid-s232m0">
+        <div class="col-main">
+            <div class="main-wrap">
+
+                <div class="section">
+                    <h3 id="methods">Methods</h3>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_create">create</a>
+                            <code>HTMLNode <em>create</em> ( html, props, ownerDoc )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>创建 DOM 节点。</p>
+                        </div>
+<pre class="example-code"><code>
+var S = KISSY, DOM = S.DOM;
+
+// 等价 document.createElement('div')
+DOM.create('&lt;div&gt;');
+DOM.create('&lt;div /&gt;');
+DOM.create('&lt;div&gt;&lt;/div&gt;');
+
+// 等价 document.createTextNode('text')
+DOM.create('text');
+
+// 创建时，同时添加属性值
+DOM.create('&lt;a&gt;', { href: 'hot.html', title: 'Hot Page' });
+
+// 直接内联属性
+DOM.create('&lt;img src="logo.png" alt="logo" /&gt;');
+</code></pre>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_html">html</a>
+                            <code>String <em>html</em> ( selector )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>获取符合选择器的第一个元素的 innerHTML.</p>
+                            <p class="tips">无值时，返回空字符串。</p>
+                        </div>
+                        <h4>
+                            <code>void <em>html</em> ( selector, value )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>给符合选择器的所有元素设置 innerHTML 值。</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="section">
+                    <h3>Examples</h3>
+                    <p>测试页面：<a href="../../src/dom/test-dom-create.html"><code>test-dom-create.html</code></a></p>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="sub-wrap">
+                <div class="loc">
+                    <a href="../index.html">home</a> &rsaquo;
+                    <a href="index.html">dom</a> &rsaquo;
+                    dom-create :
+                </div>
+                <div class="toc">
+                    <h3>Methods</h3>
+                    <ul>
+                        <li><a href="#method_create">create</a></li>
+                        <li><a href="#method_html">html</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+    </div>
+</div>
+</body>
+</html>

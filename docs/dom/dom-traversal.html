@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>dom-traversal &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+<div id="page" class="w866">
+    <div id="header">
+        <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+        <p class="rel-nav">
+            <a href="../../src/dom/dom-traversal.js"><code>dom-traversal.js</code></a>
+        </p>
+    </div>
+    <div id="content" class="layout grid-s232m0">
+        <div class="col-main">
+            <div class="main-wrap">
+
+                <div class="section">
+                    <h3 id="methods">Methods</h3>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_parent">parent</a>
+                            <code>HTMLElement <em>parent</em> ( selector, filter )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>获取符合选择器的第一个元素的祖先元素。</p>
+                            <p class="tips">filter 可以是自然数、选择器或函数。</p>
+                        </div>
+                        <pre class="example-code"><code>
+var S = KISSY, DOM = S.DOM,
+    elem = S.get('#id');
+
+// 返回 elem.parentNode
+DOM.parent(elem);
+
+// 返回 elem.parentNode.parentNode
+DOM.parent(elem, 2);
+
+// 寻找 elem 的祖先节点，返回第一个拥有 container class 值的祖先
+DOM.parent(elem, '.container');
+
+// 寻找 elem 的祖先节点，返回第一个 tagName 为 ul 的祖先
+DOM.parent(elem, 'ul');
+
+// 寻找 elem 的祖先节点，返回第一个 rel 属性为 data 值的祖先
+DOM.parent(elem, function(p) {
+    return DOM.attr(p, 'rel') == 'data';
+});
+</code></pre>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_next">next</a>
+                            <code>HTMLElement <em>next</em> ( selector, filter )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>向下获取符合选择器的第一个元素的同级节点。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_prev">prev</a>
+                            <code>HTMLElement <em>prev</em> ( selector, filter )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>向上获取符合选择器的第一个元素的同级节点。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_siblings">siblings</a>
+                            <code>Array&lt;HTMLElement&gt; <em>siblings</em> ( selector, filter )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>获取符合选择器的第一个元素的同级节点。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_children">children</a>
+                            <code>Array&lt;HTMLElement&gt; <em>children</em> ( selector, filter )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>获取符合选择器的第一个元素的所有子节点。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_contains">contains</a>
+                            <code>Boolean <em>contains</em> ( container, contained )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>判断 container 节点是否包含 contained 节点。</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="section">
+                    <h3>Examples</h3>
+                    <p>测试页面：<a href="../../src/dom/test-dom-traversal.html"><code>test-dom-traversal.html</code></a></p>
+
+                    <div class="section notes">
+                        <p>dom-traversal 提供的所有方法：</p>
+                        <ol>
+                            <li>参数 filter 可以是自然数、选择器或函数。</li>
+                            <li>setter 和 getter 都遵循 get first, set all 原则：如果是获取，仅获取符合选择器的第一个元素的值；如果是设置，则操作符合选择器的所有元素。</li>
+                        </ol>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="sub-wrap">
+                <div class="loc">
+                    <a href="../index.html">home</a> &rsaquo;
+                    <a href="index.html">dom</a> &rsaquo;
+                    dom-traversal :
+                </div>
+                <div class="toc">
+                    <h3>Methods</h3>
+                    <ul>
+                        <li><a href="#method_parent">parent</a></li>
+                        <li><a href="#method_next">next</a></li>
+                        <li><a href="#method_prev">prev</a></li>
+                        <li><a href="#method_siblings">siblings</a></li>
+                        <li><a href="#method_children">children</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+    </div>
+</div>
+</body>
+</html>

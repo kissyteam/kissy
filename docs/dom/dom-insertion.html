@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>dom-insertion &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+<div id="page" class="w866">
+    <div id="header">
+        <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+        <p class="rel-nav">
+            <a href="../../src/dom/dom-insertion.js"><code>dom-insertion.js</code></a>
+        </p>
+    </div>
+    <div id="content" class="layout grid-s232m0">
+        <div class="col-main">
+            <div class="main-wrap">
+
+                <div class="section">
+                    <h3 id="methods">Methods</h3>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_insertBefore">insertBefore</a>
+                            <code>HTMLElement <em>insertBefore</em> ( newNode, refNode )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>将 newNode 插入到 refNode 之前。</p>
+                            <dl class="parameters">
+                                <dt>Parameters:</dt>
+                                <dd>
+                                    <code class="param-name">newNode</code>
+                                    <code class="param-type">&lt;HTMLElement|String&gt;</code>
+                                    newNode, 要插入的新节点，可以是 html 字符串。
+                                </dd>
+                            </dl>
+                            <dl class="return">
+                                <dt>Returns: <code>HTMLElement</code></dt>
+                                <dd>插入的新节点 newNode</dd>
+                            </dl>
+<pre class="example-code"><code>
+var S = KISSY, DOM = S.DOM;
+
+// 在 elem2 前面插入 elem1
+DOM.insertBefore(elem1, elem2);
+
+// 在 elem2 前面插入 p 节点
+DOM.insertBefore('&lt;p&gt;', elem2);
+
+// 在第一个 class 为 hot 的元素前面插入 elem1
+DOM.insertBefore(elem1, '.hot');
+</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_insertAfter">insertAfter</a>
+                            <code>HTMLElement <em>insertAfter</em> ( newNode, refNode )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>将 newNode 插入到 refNode 之后。</p>
+                            <dl class="parameters">
+                                <dt>Parameters:</dt>
+                                <dd>
+                                    <code class="param-name">newNode</code>
+                                    <code class="param-type">&lt;HTMLElement|String&gt;</code>
+                                    newNode, 要插入的新节点，可以是 html 字符串。
+                                </dd>
+                            </dl>
+                            <dl class="return">
+                                <dt>Returns: <code>HTMLElement</code></dt>
+                                <dd>插入的新节点 newNode</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="section">
+                    <h3>Examples</h3>
+                    <p>测试页面：<a href="../../src/dom/test-dom-insertion.html"><code>test-dom-insertion.html</code></a></p>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="sub-wrap">
+                <div class="loc">
+                    <a href="../index.html">home</a> &rsaquo;
+                    <a href="index.html">dom</a> &rsaquo;
+                    dom-insertion :
+                </div>
+                <div class="toc">
+                    <h3>Methods</h3>
+                    <ul>
+                        <li><a href="#method_insertBefore">insertBefore</a></li>
+                        <li><a href="#method_insertAfter">insertAfter</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+    </div>
+</div>
+</body>
+</html>

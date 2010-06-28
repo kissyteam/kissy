@@ -141,6 +141,17 @@
         if(DOM.children(t, 'p:first')[0].id !== 'test-next') test.fail();
     }
 
+    function test_contains(test) {
+
+        if(DOM.contains(document, '#test-prev') !== true) test.fail();
+        if(DOM.contains(document.documentElement, document.body) !== true) test.fail();
+        if(DOM.contains(document, document.body) !== true) test.fail();
+        if(DOM.contains(document.body, document.documentElement) !== false) test.fail();
+        
+        if(DOM.contains(document.body) !== false) test.fail();
+        if(DOM.contains() !== false) test.fail();
+    }
+
     // temp code
     //alert(Ext.get('test-next').is('p'));
 

@@ -4,10 +4,12 @@
  */
 KISSY.add('dom-offset', function(S, undefined) {
 
-    var DOM = S.DOM,
+    var DOM = S.DOM, UA = S.UA,
         win = window,
         doc = document,
         docElem = doc.documentElement,
+        isStrict = doc.compatMode === 'CSS1Compat',
+        MAX = Math.max,
         PARSEINT = parseInt,
         POSITION = 'position',
         RELATIVE = 'relative',
@@ -41,6 +43,37 @@ KISSY.add('dom-offset', function(S, undefined) {
          */
         scrollTop: function() {
             return win.pageYOffset || docElem.scrollTop || doc.body.scrollTop;
+        },
+
+        /**
+         * Returns the height of the document.
+         */
+        docHeight: function() {
+            return MAX(!isStrict ? doc.body.scrollHeight : docElem.scrollHeight, DOM.viewportHeight());
+        },
+
+        /**
+         * Returns the width of the document.
+         */
+        docWidth: function() {
+            return MAX(!isStrict ? doc.body.scrollWidth : docElem.scrollWidth, DOM.viewportWidth());
+        },
+
+        /**
+         * Returns the current height of the viewport.
+         */
+        viewportHeight: function() {
+            return UA.ie ?
+                (isStrict ? docElem.clientHeight : doc.body.clientHeight) :
+                win.innerHeight;
+        },
+
+        /**
+         * Returns the current width of the viewport.
+         */
+        viewportWidth: function() {
+            return !isStrict && !UA.opera ? doc.body.clientWidth :
+                UA.ie ? docElem.clientWidth : win.innerWidth;
         }
     });
 

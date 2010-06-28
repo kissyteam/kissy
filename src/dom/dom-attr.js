@@ -231,6 +231,6 @@ KISSY.add('dom-attr', function(S, undefined) {
  *    第 2 个参数来解决。jQuery 未考虑，存在兼容性 bug.
  *  - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
  *  - jquery/attributes.js: Safari mis-reports the default selected
- *    property of an option 在 Safari 4 中已修复
+ *    property of an option 在 Safari 4 中已修复。
  *
  */
