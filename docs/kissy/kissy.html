@@ -163,7 +163,8 @@ function ClassA(config) {
                         </h4>
                         <div class="detail">
                             <p>将 s.prototype 的成员复制到 r.prototype 上。</p>
-                            <p class="tips">s 可以是函数对象，此时复制的是 s.prototype 的成员。s 也可以是普通对象，此时复制的就是 s 的成员。</p>
+                            <p class="tips">s 可以是非函数对象，此时复制的就是 s 的成员。</p>
+                            <p class="tips">可以一次传入多个 s, 比如 <code>S.augment(r, s1, s2, s3, ov, wl)</code></p>
                             <dl class="return">
                                 <dt>Returns: <code>Object</code></dt>
                                 <dd>r 对象</dd>

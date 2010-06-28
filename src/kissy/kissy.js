@@ -118,7 +118,10 @@
             var self = this,
                 doScroll = doc.documentElement.doScroll,
                 eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
-                COMPLETE = 'complete';
+                COMPLETE = 'complete',
+                fire = function() {
+                    self._fireReady();
+                };
 
             // Set to true once it runs
             readyBound = true;
@@ -126,45 +129,44 @@
             // Catch cases where ready() is called after the
             // browser event has already occurred.
             if (doc.readyState === COMPLETE) {
-                return self._fireReady();
+                return fire();
             }
 
             // w3c mode
             if (doc.addEventListener) {
                 function domReady() {
                     doc.removeEventListener(eventType, domReady, false);
-                    self._fireReady();
+                    fire();
                 }
                 doc.addEventListener(eventType, domReady, false);
             }
             // IE event model is used
             else {
-                if (win != win.top) { // iframe
-                    function stateChange() {
-                        if (doc.readyState === COMPLETE) {
-                            doc.detachEvent(eventType, stateChange);
-                            self._fireReady();
-                        }
+                function stateChange() {
+                    if (doc.readyState === COMPLETE) {
+                        doc.detachEvent(eventType, stateChange);
+                        fire();
                     }
-                    doc.attachEvent(eventType, stateChange);
                 }
-                else {
+
+                // ensure firing before onload, maybe late but safe also for iframes
+                doc.attachEvent(eventType, stateChange);
+
+                // A fallback to window.onload, that will always work.
+                win.attachEvent('onload', fire);
+
+                if (win == win.top) { // not an iframe
                     function readyScroll() {
                         try {
                             // Ref: http://javascript.nwbox.com/IEContentLoaded/
                             doScroll('left');
-                            self._fireReady();
+                            fire();
                         } catch(ex) {
                             setTimeout(readyScroll, 1);
                         }
                     }
                     readyScroll();
                 }
-
-                // A fallback to window.onload, that will always work.
-                win.attachEvent('onload', function() {
-                    self._fireReady();
-                });
             }
         },
 
