@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf-8"/>
 <title>kissy-lang &lsaquo; KISSY Docs</title>
 <link rel="stylesheet" href="../assets/base-min.css" />
 <link rel="stylesheet" href="../assets/docs.css" />
@@ -27,7 +27,7 @@
                             <code>Boolean <em>isUndefined</em> ( o )</code>
                         </h4>
                         <div class="detail">
-                            <p>ÅĞ¶ÏÊÇ·ñ undefined</p>
+                            <p>åˆ¤æ–­æ˜¯å¦ undefined</p>
                         </div>
                     </div>
 
@@ -37,7 +37,7 @@
                             <code>Boolean <em>isBoolean</em> ( o )</code>
                         </h4>
                         <div class="detail">
-                            <p>ÅĞ¶ÏÊÇ·ñ²¼¶ûÖµ¡£</p>
+                            <p>åˆ¤æ–­æ˜¯å¦å¸ƒå°”å€¼ã€‚</p>
                         </div>
                     </div>
 
@@ -47,7 +47,7 @@
                             <code>Boolean <em>isString</em> ( o )</code>
                         </h4>
                         <div class="detail">
-                            <p>ÅĞ¶ÏÊÇ·ñ×Ö·û´®¡£</p>
+                            <p>åˆ¤æ–­æ˜¯å¦å­—ç¬¦ä¸²ã€‚</p>
                         </div>
                     </div>
 
@@ -57,8 +57,8 @@
                             <code>Boolean <em>isNumber</em> ( o )</code>
                         </h4>
                         <div class="detail">
-                            <p>ÅĞ¶ÏÊÇ·ñÓĞĞ§ÊıÖµ¡£</p>
-                            <p class="tips">Infinity ºÍ NaN ·µ»Ø false.</p>
+                            <p>åˆ¤æ–­æ˜¯å¦æœ‰æ•ˆæ•°å€¼ã€‚</p>
+                            <p class="tips">Infinity å’Œ NaN è¿”å› false.</p>
                         </div>
                     </div>
 
@@ -68,7 +68,7 @@
                             <code>Boolean <em>isPlainObject</em> ( o )</code>
                         </h4>
                         <div class="detail">
-                            <p>ÅĞ¶ÏÊÇ·ñÆÕÍ¨¶ÔÏó£¨ÓÃ { } »ò new Object ´´½¨µÄ¶ÔÏó£©¡£</p>
+                            <p>åˆ¤æ–­æ˜¯å¦æ™®é€šå¯¹è±¡ï¼ˆç”¨ { } æˆ– new Object åˆ›å»ºçš„å¯¹è±¡ï¼‰ã€‚</p>
                         </div>
                     </div>
 
@@ -78,7 +78,7 @@
                             <code>Boolean <em>isEmptyObject</em> ( o )</code>
                         </h4>
                         <div class="detail">
-                            <p>ÅĞ¶ÏÊÇ·ñ¿Õ¶ÔÏó£¨Ã»ÓĞÈÎºÎ¿É±éÀúµÄÊôĞÔ£©¡£</p>
+                            <p>åˆ¤æ–­æ˜¯å¦ç©ºå¯¹è±¡ï¼ˆæ²¡æœ‰ä»»ä½•å¯éå†çš„å±æ€§ï¼‰ã€‚</p>
 <pre class="example-code"><code>
 var S = KISSY;
 
@@ -95,8 +95,8 @@ S.isEmptyObject({ a: 'a' }); // => false
                             <code>Boolean <em>isFunction</em> ( o )</code>
                         </h4>
                         <div class="detail">
-                            <p>ÅĞ¶ÏÊÇ·ñº¯Êı¡£</p>
-                            <p class="notice">IE ÖĞ£¬DOM ·½·¨ºÍ window ¶ÔÏóµÄ²¿·Ö·½·¨±ÈÈç alert, ·µ»Ø false.</p>
+                            <p>åˆ¤æ–­æ˜¯å¦å‡½æ•°ã€‚</p>
+                            <p class="notice">IE ä¸­ï¼ŒDOM æ–¹æ³•å’Œ window å¯¹è±¡çš„éƒ¨åˆ†æ–¹æ³•æ¯”å¦‚ alert, è¿”å› false.</p>
                         </div>
                     </div>
                     
@@ -106,8 +106,8 @@ S.isEmptyObject({ a: 'a' }); // => false
                             <code>Boolean <em>isArray</em> ( o )</code>
                         </h4>
                         <div class="detail">
-                            <p>ÅĞ¶ÏÊÇ·ñÊı×é¡£</p>
-                            <p class="tips">arguments ºÍ NodeList ²»ÊÇÊı×é£¬·µ»Ø false.</p>
+                            <p>åˆ¤æ–­æ˜¯å¦æ•°ç»„ã€‚</p>
+                            <p class="tips">arguments å’Œ NodeList ä¸æ˜¯æ•°ç»„ï¼Œè¿”å› false.</p>
                         </div>
                     </div>
 
@@ -117,7 +117,7 @@ S.isEmptyObject({ a: 'a' }); // => false
                             <code>String <em>trim</em> ( str )</code>
                         </h4>
                         <div class="detail">
-                            <p>È¥³ı×Ö·û´®Á½¶ËµÄ¿Õ°××Ö·û¡£</p>
+                            <p>å»é™¤å­—ç¬¦ä¸²ä¸¤ç«¯çš„ç©ºç™½å­—ç¬¦ã€‚</p>
                         </div>
                     </div>
 
@@ -127,23 +127,23 @@ S.isEmptyObject({ a: 'a' }); // => false
                             <code>void <em>each</em> ( arr, fn, context )</code>
                         </h4>
                         <div class="detail">
-                            <p>±éÀúÊı×éÖĞµÄÃ¿Ò»Ïî£¬Ö´ĞĞÖ¸¶¨·½·¨¡£</p>
+                            <p>éå†æ•°ç»„ä¸­çš„æ¯ä¸€é¡¹ï¼Œæ‰§è¡ŒæŒ‡å®šæ–¹æ³•ã€‚</p>
                             <dl class="parameters">
                                 <dt>Parameters:</dt>
                                 <dd>
                                     <code class="param-name">arr</code>
                                     <code class="param-type">&lt;Array&gt;</code>
-                                    ĞèÒª±éÀúµÄÊı×é¡£
+                                    éœ€è¦éå†çš„æ•°ç»„ã€‚
                                 </dd>
                                 <dd>
                                     <code class="param-name">fn</code>
                                     <code class="param-type">&lt;Function&gt;</code>
-                                    Ö´ĞĞº¯Êı¡£Ö´ĞĞÊ±£¬½ÓÊÕ 3 ¸ö²ÎÊı£ºµ±Ç°Ïî¡¢µ±Ç° index, Êı×é¡£
+                                    æ‰§è¡Œå‡½æ•°ã€‚æ‰§è¡Œæ—¶ï¼Œæ¥æ”¶ 3 ä¸ªå‚æ•°ï¼šå½“å‰é¡¹ã€å½“å‰ index, æ•°ç»„ã€‚
                                 </dd>
                                 <dd>
                                     <code class="param-name">context</code>
                                     <code class="param-type">&lt;Object&gt;</code>
-                                    »·¾³¶ÔÏó¡£
+                                    ç¯å¢ƒå¯¹è±¡ã€‚
                                 </dd>
                             </dl>
 <pre class="example-code"><code>
@@ -165,7 +165,7 @@ S.log(sum); // => 15
                             <code>Number <em>indexOf</em> ( elem, arr )</code>
                         </h4>
                         <div class="detail">
-                            <p>·µ»ØÔªËØ elem ÔÚÊı×é arr ÖĞµÄĞòºÅ¡£ÕÒ²»µ½Ê±·µ»Ø -1.</p>
+                            <p>è¿”å›å…ƒç´  elem åœ¨æ•°ç»„ arr ä¸­çš„åºå·ã€‚æ‰¾ä¸åˆ°æ—¶è¿”å› -1.</p>
                         </div>
                     </div>
 
@@ -175,7 +175,7 @@ S.log(sum); // => 15
                             <code>Boolean <em>inArray</em> ( elem, arr )</code>
                         </h4>
                         <div class="detail">
-                            <p>ÅĞ¶ÏÔªËØ elem ÊÇ·ñÔÚÊı×é arr ÖĞ¡£</p>
+                            <p>åˆ¤æ–­å…ƒç´  elem æ˜¯å¦åœ¨æ•°ç»„ arr ä¸­ã€‚</p>
                         </div>
                     </div>
 
@@ -185,16 +185,16 @@ S.log(sum); // => 15
                             <code>Array <em>makeArray</em> ( o )</code>
                         </h4>
                         <div class="detail">
-                            <p>½«¶ÔÏó o ×ª»»ÎªÊı×é¡£</p>
-                            <p class="tips">¿ÉÒÔÀûÓÃ´Ë·½·¨½« arguments, NodeList µÈ array-like ¶ÔÏó×ª»»ÎªÕæÊµÊı×é¡£</p>
+                            <p>å°†å¯¹è±¡ o è½¬æ¢ä¸ºæ•°ç»„ã€‚</p>
+                            <p class="tips">å¯ä»¥åˆ©ç”¨æ­¤æ–¹æ³•å°† arguments, NodeList ç­‰ array-like å¯¹è±¡è½¬æ¢ä¸ºçœŸå®æ•°ç»„ã€‚</p>
 <pre class="example-code"><code>
 var S = KISSY;
 
 S.makeArray('str'); // => ['str']
-S.makeArray(S.query('.div')); // => ÓÉËùÓĞ div ÔªËØ×é³ÉµÄÊı×é
+S.makeArray(S.query('.div')); // => ç”±æ‰€æœ‰ div å…ƒç´ ç»„æˆçš„æ•°ç»„
 S.makeArray(null); // => []
 </code></pre>
-                            <p>makeArray ·½·¨ÓÀÔ¶·µ»ØÊı×é¡£</p>
+                            <p>makeArray æ–¹æ³•æ°¸è¿œè¿”å›æ•°ç»„ã€‚</p>
                         </div>
                     </div>
 
@@ -204,23 +204,23 @@ S.makeArray(null); // => []
                             <code>Array <em>filter</em> ( arr, fn, context )</code>
                         </h4>
                         <div class="detail">
-                            <p>±éÀúÊı×é£¬¹ıÂË³ö·ûºÍÌõ¼şµÄÊı×éÏî¡£</p>
+                            <p>éå†æ•°ç»„ï¼Œè¿‡æ»¤å‡ºç¬¦å’Œæ¡ä»¶çš„æ•°ç»„é¡¹ã€‚</p>
                             <dl class="parameters">
                                 <dt>Parameters:</dt>
                                 <dd>
                                     <code class="param-name">arr</code>
                                     <code class="param-type">&lt;Array&gt;</code>
-                                    ĞèÒª±éÀúµÄÊı×é¡£
+                                    éœ€è¦éå†çš„æ•°ç»„ã€‚
                                 </dd>
                                 <dd>
                                     <code class="param-name">fn</code>
                                     <code class="param-type">&lt;Function&gt;</code>
-                                    ¹ıÂËº¯Êı¡£Ö´ĞĞÊ±£¬½ÓÊÕ 3 ¸ö²ÎÊı£ºµ±Ç°Ïî¡¢µ±Ç° index, Êı×é¡£
+                                    è¿‡æ»¤å‡½æ•°ã€‚æ‰§è¡Œæ—¶ï¼Œæ¥æ”¶ 3 ä¸ªå‚æ•°ï¼šå½“å‰é¡¹ã€å½“å‰ index, æ•°ç»„ã€‚
                                 </dd>
                                 <dd>
                                     <code class="param-name">context</code>
                                     <code class="param-type">&lt;Object&gt;</code>
-                                    »·¾³¶ÔÏó¡£
+                                    ç¯å¢ƒå¯¹è±¡ã€‚
                                 </dd>
                             </dl>
 <pre class="example-code"><code>
@@ -241,7 +241,7 @@ S.log(ret); // => [2, 4]
                             <code>String <em>param</em> ( o )</code>
                         </h4>
                         <div class="detail">
-                            <p>½«¶ÔÏó o ×ª»»Îª²ÎÊı×Ö·û´®¡£</p>
+                            <p>å°†å¯¹è±¡ o è½¬æ¢ä¸ºå‚æ•°å­—ç¬¦ä¸²ã€‚</p>
 <pre class="example-code"><code>
 var S = KISSY;
 
@@ -250,7 +250,7 @@ S.param({ foo: 1, bar: [2, 3] }); // => foo=1&bar%5B%5D=2&bar%5B%5D=3
 S.param({ foo: '', bar: 2 }); // => foo=&bar=2
 S.param({ foo: undefined, bar: 2 }); // => foo=undefined&bar=2
 </code></pre>
-                            <p class="notice">·µ»ØµÄ×Ö·û´®¾­¹ıÁË encodeURI ±àÂë¡£±ÈÈç <code>foo=1&bar%5B%5D=2&bar%5B%5D=3</code>, ½âÂëºóÊÇ <code>foo=1&bar[]=2&bar[]=3</code></p>
+                            <p class="notice">è¿”å›çš„å­—ç¬¦ä¸²ç»è¿‡äº† encodeURI ç¼–ç ã€‚æ¯”å¦‚ <code>foo=1&bar%5B%5D=2&bar%5B%5D=3</code>, è§£ç åæ˜¯ <code>foo=1&bar[]=2&bar[]=3</code></p>
                         </div>
                     </div>
 
@@ -260,7 +260,7 @@ S.param({ foo: undefined, bar: 2 }); // => foo=undefined&bar=2
                             <code>Object <em>unparam</em> ( str )</code>
                         </h4>
                         <div class="detail">
-                            <p>½«²ÎÊı×Ö·û´® str »¹Ô­Îª¶ÔÏó¡£</p>
+                            <p>å°†å‚æ•°å­—ç¬¦ä¸² str è¿˜åŸä¸ºå¯¹è±¡ã€‚</p>
 <pre class="example-code"><code>
 var S = KISSY;
 
@@ -276,38 +276,38 @@ S.unparam('foo=1&bar[]=2&bar[]=3'); // => { foo: 1, bar: [2, 3] }
                             <code>Object <em>later</em> ( fn, when, periodic, o, data )</code>
                         </h4>
                         <div class="detail">
-                            <p>ÑÓ³ÙÖ´ĞĞÖ¸¶¨º¯Êı¡£</p>
+                            <p>å»¶è¿Ÿæ‰§è¡ŒæŒ‡å®šå‡½æ•°ã€‚</p>
                             <dl class="parameters">
                                 <dt>Parameters:</dt>
                                 <dd>
                                     <code class="param-name">fn</code>
                                     <code class="param-type">&lt;Function&gt;</code>
-                                    ÑÓ³ÙÖ´ĞĞµÄº¯Êı¡£
+                                    å»¶è¿Ÿæ‰§è¡Œçš„å‡½æ•°ã€‚
                                 </dd>
                                 <dd>
                                     <code class="param-name">when</code>
                                     <code class="param-type">&lt;Number&gt;</code>
-                                    ÑÓ³ÙÊ±¼ä£¬µ¥Î»ÊÇºÁÃë¡£
+                                    å»¶è¿Ÿæ—¶é—´ï¼Œå•ä½æ˜¯æ¯«ç§’ã€‚
                                 </dd>
                                 <dd>
                                     <code class="param-name">periodic</code>
                                     <code class="param-type">&lt;Boolean&gt;</code>
-                                    ÊÇ²»ÊÇÖÜÆÚĞÔÖ´ĞĞ¡£Ä¬ÈÏÎª false.
+                                    æ˜¯ä¸æ˜¯å‘¨æœŸæ€§æ‰§è¡Œã€‚é»˜è®¤ä¸º false.
                                 </dd>
                                 <dd>
                                     <code class="param-name">o</code>
                                     <code class="param-type">&lt;Object&gt;</code>
-                                    »·¾³¶ÔÏó¡£
+                                    ç¯å¢ƒå¯¹è±¡ã€‚
                                 </dd>
                                 <dd>
                                     <code class="param-name">data</code>
                                     <code class="param-type">&lt;Array&gt;</code>
-                                    ´«µİµÄ²ÎÊı¡£¿ÉÒÔÎªµ¥¸ö¶ÔÏó£¬×îºó»á×ª»»³ÉÊı×é£¬ÒÀ´Î´«µİ¸øÖ´ĞĞº¯Êı¡£
+                                    ä¼ é€’çš„å‚æ•°ã€‚å¯ä»¥ä¸ºå•ä¸ªå¯¹è±¡ï¼Œæœ€åä¼šè½¬æ¢æˆæ•°ç»„ï¼Œä¾æ¬¡ä¼ é€’ç»™æ‰§è¡Œå‡½æ•°ã€‚
                                 </dd>
                             </dl>
                             <dl class="return">
                                 <dt>Returns: <code>Object</code></dt>
-                                <dd>timer ¶ÔÏó¡£ÓµÓĞ id ºÍ interval ÊôĞÔ£¬»¹ÓĞ cancel ·½·¨£¬ÓÃÓÚÈ¡Ïû¶¨Ê±Æ÷¡£</dd>
+                                <dd>timer å¯¹è±¡ã€‚æ‹¥æœ‰ id å’Œ interval å±æ€§ï¼Œè¿˜æœ‰ cancel æ–¹æ³•ï¼Œç”¨äºå–æ¶ˆå®šæ—¶å™¨ã€‚</dd>
                             </dl>
 <pre class="example-code"><code>
 var S = KISSY;
@@ -325,7 +325,7 @@ S.later(function(data) {
                             <code>Number <em>now</em> ( )</code>
                         </h4>
                         <div class="detail">
-                            <p>·µ»Ø new Date().getTime()</p>
+                            <p>è¿”å› new Date().getTime()</p>
                         </div>
                     </div>
 
@@ -335,7 +335,7 @@ S.later(function(data) {
                             <code>void <em>globalEval</em> ( data )</code>
                         </h4>
                         <div class="detail">
-                            <p>ÔÚÈ«¾Ö»·¾³ÀïÖ´ĞĞ´úÂëÆ¬¶Î¡£</p>
+                            <p>åœ¨å…¨å±€ç¯å¢ƒé‡Œæ‰§è¡Œä»£ç ç‰‡æ®µã€‚</p>
 <pre class="example-code"><code>
 var S = KISSY;
 

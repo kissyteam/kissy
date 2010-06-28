@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf-8"/>
 <title>selector &lsaquo; KISSY Docs</title>
 <link rel="stylesheet" href="../assets/base-min.css" />
 <link rel="stylesheet" href="../assets/docs.css" />
@@ -19,7 +19,7 @@
             <div class="main-wrap">
 
                 <div class="section summary">
-                    <p>CSS Selector �����������÷ǳ�����Ĵ�����ٻ�ȡ����� DOM Ԫ�أ�KISSY Ϊ���ṩ��һ���ǳ���Ч���ٵ�ѡ������</p>
+                    <p>CSS Selector 可以让我们用非常精简的代码快速获取所需的 DOM 元素，KISSY 为你提供了一个非常高效快速的选择器。</p>
                 </div>
 
                 <div class="section">
@@ -31,8 +31,8 @@
                             <code>Array&lt;HTMLElement&gt; <em>query</em> ( selector, context )</code>
                         </h4>
                         <div class="detail">
-                            <p>��ȡ����ѡ����������Ԫ�ء�</p>
-                            <p>�÷����ķ���ֵʼ�������顣</p>
+                            <p>获取符合选择器的所有元素。</p>
+                            <p>该方法的返回值始终是数组。</p>
                         </div>
                     </div>
 
@@ -42,8 +42,8 @@
                             <code>HTMLElement <em>get</em> ( selector, context )</code>
                         </h4>
                         <div class="detail">
-                            <p>��ȡ����ѡ�����ĵ�һ��Ԫ�ء�</p>
-                            <p>������ʱ���� null.</p>
+                            <p>获取符合选择器的第一个元素。</p>
+                            <p>不存在时返回 null.</p>
                         </div>
                     </div>
 
@@ -51,12 +51,12 @@
 
                 <div class="section">
                     <h3>Examples</h3>
-                    <p>��ֱ�Ӳ鿴����ҳ�棺<a href="../../src/dom/test-selector.html"><code>test-selector.html</code></a></p>
+                    <p>请直接查看测试页面：<a href="../../src/dom/test-selector.html"><code>test-selector.html</code></a></p>
 
-                    <p class="tips">ע�⣺Ĭ������£�KISSY ѡ������֧�� <code>#id tag.class</code> ������ʽ��</p>
+                    <p class="tips">注意：默认情况下，KISSY 选择器仅支持 <code>#id tag.class</code> 常用形式：</p>
 <pre class="example-code"><code>
 // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
-// ���� 2/8 ԭ�򣬽�֧������ѡ������
+// 考虑 2/8 原则，仅支持以下选择器：
 // #id
 // tag
 // .cls
@@ -64,13 +64,13 @@
 // #id .cls
 // tag.cls
 // #id tag.cls
-// ע 1��REG_QUERY ����ƥ�� #id.cls
-// ע 2��tag ����Ϊ * �ַ�
-// ע 3��֧�� , �ŷ���
-// ����ֵΪ����
-// ѡ������֧��ʱ���׳��쳣
+// 注 1：REG_QUERY 还会匹配 #id.cls
+// 注 2：tag 可以为 * 字符
+// 注 3：支持 , 号分组
+// 返回值为数组
+// 选择器不支持时，抛出异常
 </code></pre>
-                    <p>�������� sizzle ģ��ʱ��KISSY ֧�� jQuery ֧�ֵ����� CSS ѡ������������ο���<a href="http://wiki.github.com/jeresig/sizzle/">Sizzle Documents</a></p>
+                    <p>当加载了 sizzle 模块时，KISSY 支持 jQuery 支持的所有 CSS 选择器，具体请参考：<a href="http://wiki.github.com/jeresig/sizzle/">Sizzle Documents</a></p>
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf-8"/>
 <title>event-object &lsaquo; KISSY Docs</title>
 <link rel="stylesheet" href="../assets/base-min.css" />
 <link rel="stylesheet" href="../assets/docs.css" />
@@ -19,7 +19,7 @@
             <div class="main-wrap">
 
                 <div class="section summary">
-                    <p>ÁË½â EventObject Ç°£¬ÎÒÃÇÏÈÀ´»Ø¹ËÏÂÂù»ÄÊ±´úµÄ´úÂë£º</p>
+                    <p>äº†è§£ EventObject å‰ï¼Œæˆ‘ä»¬å…ˆæ¥å›é¡¾ä¸‹è›®è’æ—¶ä»£çš„ä»£ç ï¼š</p>
 <pre style="padding-top: 0"><code>
     document.onclick = function(ev) {
         ev = ev || window.event;
@@ -27,15 +27,15 @@
         // more code
     };
 </code></pre>
-                    <p>Èç´ËÊìÏ¤ÓÖ³óÂªµÄ´úÂë£¬ÇëÏÈÅ¬Á¦±£³Ö×¡ÅçÓ¿¶ø³öµÄÀáË®£¬ÎÒÃÇÀ´ÔÙ´ÎÈÏÊ¶ÏÂ ev ²ÎÊı¡£</p>
-                    <p>·­²é MSDN, ¿ÉÒÔµÃÖª ev ¾ÍÊÇ´«ËµÖĞµÄ event object. Õâ¸ö¶ÔÏóÒòÆä¼æÈİĞÔÎÊÌâ¶øÈÃ¿ª·¢ÕßÍ´¿à²»¿°¡£È»¶ø£¬Å×¿ª¼æÈİĞÔÎÊÌâ£¬¸Ã¶ÔÏóµÄÉè¼Æ»¹ÊÇ·Ç³£²»´íµÄ¡£ÔÚÕâ¸ö¶ÔÏóÀï£¬´æ´¢ÁËÓëÊÂ¼şÏà¹ØµÄÊôĞÔºÍ·½·¨£¬±ÈÈç target, preventDefault µÈ£¬·Ç³£ÊµÓÃ¡£</p>
-                    <p>ÓĞ¼øÓÚ´Ë£¬KISSY ½«Ô­ÉúµÄ event object ·â×°³É KISSY.EventObject, API »ù±¾×ñÑ­ <a href="http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html">DOM-Level-3-Events</a> ¹æ·¶¡£Íüµô¼æÈİĞÔ°É£¬»¹ event object ±¾É«£¡</p>
+                    <p>å¦‚æ­¤ç†Ÿæ‚‰åˆä¸‘é™‹çš„ä»£ç ï¼Œè¯·å…ˆåŠªåŠ›ä¿æŒä½å–·æ¶Œè€Œå‡ºçš„æ³ªæ°´ï¼Œæˆ‘ä»¬æ¥å†æ¬¡è®¤è¯†ä¸‹ ev å‚æ•°ã€‚</p>
+                    <p>ç¿»æŸ¥ MSDN, å¯ä»¥å¾—çŸ¥ ev å°±æ˜¯ä¼ è¯´ä¸­çš„ event object. è¿™ä¸ªå¯¹è±¡å› å…¶å…¼å®¹æ€§é—®é¢˜è€Œè®©å¼€å‘è€…ç—›è‹¦ä¸å ªã€‚ç„¶è€Œï¼ŒæŠ›å¼€å…¼å®¹æ€§é—®é¢˜ï¼Œè¯¥å¯¹è±¡çš„è®¾è®¡è¿˜æ˜¯éå¸¸ä¸é”™çš„ã€‚åœ¨è¿™ä¸ªå¯¹è±¡é‡Œï¼Œå­˜å‚¨äº†ä¸äº‹ä»¶ç›¸å…³çš„å±æ€§å’Œæ–¹æ³•ï¼Œæ¯”å¦‚ target, preventDefault ç­‰ï¼Œéå¸¸å®ç”¨ã€‚</p>
+                    <p>æœ‰é‰´äºæ­¤ï¼ŒKISSY å°†åŸç”Ÿçš„ event object å°è£…æˆ KISSY.EventObject, API åŸºæœ¬éµå¾ª <a href="http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html">DOM-Level-3-Events</a> è§„èŒƒã€‚å¿˜æ‰å…¼å®¹æ€§å§ï¼Œè¿˜ event object æœ¬è‰²ï¼</p>
                 </div>
 
                 <div class="section">
                     <h3 id="props">Properties</h3>
 
-                    <p>ev ÓµÓĞµÄÊôĞÔ·Ç³£¶à£¬²»Í¬ÀàĞÍµÄÊÂ¼ş£¬ev µÄÊôĞÔÒ²ÓĞ²»Í¬¡£Ä¿Ç°Ö§³ÖµÄÊôĞÔÁĞ±íÈçÏÂ£º</p>
+                    <p>ev æ‹¥æœ‰çš„å±æ€§éå¸¸å¤šï¼Œä¸åŒç±»å‹çš„äº‹ä»¶ï¼Œev çš„å±æ€§ä¹Ÿæœ‰ä¸åŒã€‚ç›®å‰æ”¯æŒçš„å±æ€§åˆ—è¡¨å¦‚ä¸‹ï¼š</p>
 <pre class="example-code"><code>
 altKey attrChange attrName bubbles button cancelable charCode
 clientX clientY ctrlKey currentTarget data detail eventPhase
@@ -44,11 +44,11 @@ offsetX offsetY originalTarget pageX pageY prevValue relatedNode
 relatedTarget screenX screenY shiftKey srcElement target
 toElement view wheelDelta which
 </code></pre>
-                    <p>³ıÁËÒÔÉÏÊôĞÔ£¬ev »¹ÓµÓĞÒÔÏÂÊôĞÔ£º</p>
+                    <p>é™¤äº†ä»¥ä¸Šå±æ€§ï¼Œev è¿˜æ‹¥æœ‰ä»¥ä¸‹å±æ€§ï¼š</p>
 <pre class="example-code"><code>
 isDefaultPrevented isPropagationStopped isImmediatePropagationStopped
 </code></pre>
-                    <p>Äã»¹¿ÉÒÔ¸ø ev Ìí¼Ó×Ô¶¨ÒåÊôĞÔ£¬Õâ½«ÔÚ <a href="event-target.html">event-target</a> ÖĞ½²Êö¡£</p>
+                    <p>ä½ è¿˜å¯ä»¥ç»™ ev æ·»åŠ è‡ªå®šä¹‰å±æ€§ï¼Œè¿™å°†åœ¨ <a href="event-target.html">event-target</a> ä¸­è®²è¿°ã€‚</p>
                 </div>
 
                 <div class="section">
@@ -60,11 +60,11 @@ isDefaultPrevented isPropagationStopped isImmediatePropagationStopped
                             <code>void <em>preventDefault</em>()</code>
                         </h4>
                         <div class="detail">
-                            <p>×èÖ¹Ä¬ÈÏĞĞÎªµÄ·¢Éú¡£</p>
+                            <p>é˜»æ­¢é»˜è®¤è¡Œä¸ºçš„å‘ç”Ÿã€‚</p>
 <pre class="example-code"><code>
 var S = KISSY, Event = S.Event;
 
-// ×î³£¹æµÄÓÃ·¨£º×èÖ¹Á´½ÓÌø×ª
+// æœ€å¸¸è§„çš„ç”¨æ³•ï¼šé˜»æ­¢é“¾æ¥è·³è½¬
 Event.add('#linkId', 'click', function(ev) {
     ev.preventDefault();
     // more code
@@ -79,7 +79,7 @@ Event.add('#linkId', 'click', function(ev) {
                             <code>void <em>stopPropagation</em>()</code>
                         </h4>
                         <div class="detail">
-                            <p>Í£Ö¹ÊÂ¼şÃ°Åİ¡£</p>
+                            <p>åœæ­¢äº‹ä»¶å†’æ³¡ã€‚</p>
                         </div>
                     </div>
 
@@ -89,9 +89,9 @@ Event.add('#linkId', 'click', function(ev) {
                             <code>void <em>stopImmediatePropagation</em>()</code>
                         </h4>
                         <div class="detail">
-                            <p>Í£Ö¹µ±Ç°ÊÂ¼şÃ°Åİ¡£²»¹âÍ£Ö¹Ã°Åİµ½ÏÂÒ»¸öÊÂ¼şÄ¿±ê£¬µ±Ç°Ä¿±êÉÏµÄÈÎºÎºóĞø¼àÌıº¯Êı£¬Ò²ÂíÉÏÈ¡ÏûÖ´ĞĞ¡£</p>
-                            <p>²âÊÔÒ³Ãæ£º<a href="example-stopImmediatePropagation.html">example-stopImmediatePropagation.html</a></p>
-                            <p class="notice">Ä¿Ç°Ö÷Á÷ä¯ÀÀÆ÷¶¼ÉĞÎ´Ô­ÉúÖ§³Ö stopImmediatePropagation ·½·¨¡£µ±Í¬Ê±Ê¹ÓÃ¶à¸öÀà¿âÊ±£¬¸Ã·½·¨¿ÉÄÜ²»»á´ïµ½Ô¤ÆÚ£¬Ğè½÷É÷¡£</p>
+                            <p>åœæ­¢å½“å‰äº‹ä»¶å†’æ³¡ã€‚ä¸å…‰åœæ­¢å†’æ³¡åˆ°ä¸‹ä¸€ä¸ªäº‹ä»¶ç›®æ ‡ï¼Œå½“å‰ç›®æ ‡ä¸Šçš„ä»»ä½•åç»­ç›‘å¬å‡½æ•°ï¼Œä¹Ÿé©¬ä¸Šå–æ¶ˆæ‰§è¡Œã€‚</p>
+                            <p>æµ‹è¯•é¡µé¢ï¼š<a href="example-stopImmediatePropagation.html">example-stopImmediatePropagation.html</a></p>
+                            <p class="notice">ç›®å‰ä¸»æµæµè§ˆå™¨éƒ½å°šæœªåŸç”Ÿæ”¯æŒ stopImmediatePropagation æ–¹æ³•ã€‚å½“åŒæ—¶ä½¿ç”¨å¤šä¸ªç±»åº“æ—¶ï¼Œè¯¥æ–¹æ³•å¯èƒ½ä¸ä¼šè¾¾åˆ°é¢„æœŸï¼Œéœ€è°¨æ…ã€‚</p>
                         </div>
                     </div>
 
@@ -101,16 +101,16 @@ Event.add('#linkId', 'click', function(ev) {
                             <code>void <em>halt</em>(immediate)</code>
                         </h4>
                         <div class="detail">
-                            <p>halt() µÈ¼Û stopPropagation() + preventDefault()</p>
-                            <p>halt(true) µÈ¼Û stopImmediatePropagation() + preventDefault()</p>
+                            <p>halt() ç­‰ä»· stopPropagation() + preventDefault()</p>
+                            <p>halt(true) ç­‰ä»· stopImmediatePropagation() + preventDefault()</p>
                         </div>
                     </div>
 
                 </div>
 
                 <div class="section notes">
-                    <p>¿´µ½´Ë´¦£¬»òĞíÓĞÒ»µã¸Ğ¾õÁË£¬µ«ËÆºõÀë¡°Ö»ÒªÄãÄÜÏëµ½£¬Ëü»ù±¾ÉÏ¾ÍÄÜ×öµ½¡±»¹ÓĞ±È½ÏÔ¶µÄ¾àÀë¡£</p>
-                    <p>Çë¼ÌĞøÔÄ¶Á <a href="event-target.html">event-target</a></p>
+                    <p>çœ‹åˆ°æ­¤å¤„ï¼Œæˆ–è®¸æœ‰ä¸€ç‚¹æ„Ÿè§‰äº†ï¼Œä½†ä¼¼ä¹ç¦»â€œåªè¦ä½ èƒ½æƒ³åˆ°ï¼Œå®ƒåŸºæœ¬ä¸Šå°±èƒ½åšåˆ°â€è¿˜æœ‰æ¯”è¾ƒè¿œçš„è·ç¦»ã€‚</p>
+                    <p>è¯·ç»§ç»­é˜…è¯» <a href="event-target.html">event-target</a></p>
                 </div>
             </div>
         </div>
