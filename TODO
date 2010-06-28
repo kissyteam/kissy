@@ -17,16 +17,16 @@
   dom - done
   event - done
   打包 ks-core, 并将文件编码都改成 utf-8 - done
-  和 YUI/jQuery/ExtJS 对比，看还缺少哪些常用功能
+  和 YUI/jQuery/ExtJS 的 DOM 对比，看还缺少哪些常用功能 - done
 
-  node - 20%
-  nodelist - 20%
-  anim
-  ajax
   cookie - done
   json - done
   swf - done
   sizzle - done
+  node - 20%
+  nodelist - 20%
+  anim
+  ajax
   draggable
 
   cssmodules 基础元素风格设计比稿
