@@ -133,12 +133,12 @@ KISSY.add('event', function(S, undefined) {
                     len = t.length;
                 }
 
-                // remove(el, type)or fn 已移除光
+                // remove(el, type) or fn 已移除光
                 if(fn === undefined || len === 0) {
                     if(!target.isCustomEventTarget) {
                         simpleRemove(target, type, eventsType.handle);
                     }
-                    delete cache[id].type;
+                    delete events[type];
                 }
             }
 

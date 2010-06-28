@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 722 Jun 23 16:51
+build: 732 Jun 28 10:28
 */
 /**
  * @module  event
@@ -138,12 +138,12 @@ KISSY.add('event', function(S, undefined) {
                     len = t.length;
                 }
 
-                // remove(el, type)or fn 已移除光
+                // remove(el, type) or fn 已移除光
                 if(fn === undefined || len === 0) {
                     if(!target.isCustomEventTarget) {
                         simpleRemove(target, type, eventsType.handle);
                     }
-                    delete cache[id].type;
+                    delete events[type];
                 }
             }
 

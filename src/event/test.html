@@ -75,8 +75,8 @@
         h = S.get('#link-h');
 
     function test_add_listenersOrder(test) {
-        Event.on(a, 'click', function(ev) { test.echo(1); });
-        Event.on(a, 'click', function(ev) { test.echo(2); });
+        Event.on(a, 'click', function() { test.echo(1); });
+        Event.on(a, 'click', function() { test.echo(2); });
         test.extraMsg = '{click link a should echo 1 -> 2}';
     }
 
@@ -87,29 +87,29 @@
 
     function test_add_stopPropagation(test) {
         Event.add(c2, 'click', function(ev) { ev.stopPropagation(); });
-        Event.add(li_c, 'click', function(ev) { test.echo('li-c'); });
+        Event.add(li_c, 'click', function() { test.echo('li-c'); });
         test.extraMsg = '{click link c1 should echo li-c; click link c2: nothing happen}';
     }
 
     function test_add_stopImmediatePropagation(test) {
-        Event.add(d1, 'click', function(ev) { test.echo(1); });
-        Event.add(d1, 'click', function(ev) { test.echo(2); });
+        Event.add(d1, 'click', function() { test.echo(1); });
+        Event.add(d1, 'click', function() { test.echo(2); });
 
-        Event.add(d2, 'click', function(ev) { test.echo(1); });
+        Event.add(d2, 'click', function() { test.echo(1); });
         Event.add(d2, 'click', function(ev) { ev.stopImmediatePropagation(); });
-        Event.add(d2, 'click', function(ev) { test.echo(2); });
+        Event.add(d2, 'click', function() { test.echo(2); });
 
-        Event.add(li_d, 'click', function(ev) { test.echo('li-d'); });
+        Event.add(li_d, 'click', function() { test.echo('li-d'); });
         test.extraMsg = '{click link d1 should echo 1 -> 2 -> li-d; click link d2 should echo 1}';
     }
 
     function test_add_returnFalse(test) {
-        Event.add(e1, 'click', function(ev) { test.echo(1); });
-        Event.add(e1, 'click', function(ev) { test.echo(2); });
+        Event.add(e1, 'click', function() { test.echo(1); });
+        Event.add(e1, 'click', function() { test.echo(2); });
 
-        Event.add(e2, 'click', function(ev) { test.echo(1); return false; });
-        Event.add(e2, 'click', function(ev) { test.echo(2); });
-        Event.add(li_e, 'click', function(ev) { test.echo('li-e'); });
+        Event.add(e2, 'click', function() { test.echo(1); return false; });
+        Event.add(e2, 'click', function() { test.echo(2); });
+        Event.add(li_e, 'click', function() { test.echo('li-e'); });
 
         //$(e2).click(function() { test.echo(1); return false; });
         //$(e2).click(function() { test.echo(2); });
@@ -152,7 +152,7 @@
         test.extraMsg = '{click link h: nothing happen}';
     }
 
-    function test_mouseenter(test) {
+    function test_mouseenter() {
         var n1 = 0,
             info1 = S.get('#outer .info'),
             num1 = S.query('#outer .num')[1];

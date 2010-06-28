@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 722 Jun 23 16:50
+build: 732 Jun 28 10:13
 */
 /**
  * @module kissy
@@ -123,7 +123,10 @@ build: 722 Jun 23 16:50
             var self = this,
                 doScroll = doc.documentElement.doScroll,
                 eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
-                COMPLETE = 'complete';
+                COMPLETE = 'complete',
+                fire = function() {
+                    self._fireReady();
+                };
 
             // Set to true once it runs
             readyBound = true;
@@ -131,45 +134,44 @@ build: 722 Jun 23 16:50
             // Catch cases where ready() is called after the
             // browser event has already occurred.
             if (doc.readyState === COMPLETE) {
-                return self._fireReady();
+                return fire();
             }
 
             // w3c mode
             if (doc.addEventListener) {
                 function domReady() {
                     doc.removeEventListener(eventType, domReady, false);
-                    self._fireReady();
+                    fire();
                 }
                 doc.addEventListener(eventType, domReady, false);
             }
             // IE event model is used
             else {
-                if (win != win.top) { // iframe
-                    function stateChange() {
-                        if (doc.readyState === COMPLETE) {
-                            doc.detachEvent(eventType, stateChange);
-                            self._fireReady();
-                        }
+                function stateChange() {
+                    if (doc.readyState === COMPLETE) {
+                        doc.detachEvent(eventType, stateChange);
+                        fire();
                     }
-                    doc.attachEvent(eventType, stateChange);
                 }
-                else {
+
+                // ensure firing before onload, maybe late but safe also for iframes
+                doc.attachEvent(eventType, stateChange);
+
+                // A fallback to window.onload, that will always work.
+                win.attachEvent('onload', fire);
+
+                if (win == win.top) { // not an iframe
                     function readyScroll() {
                         try {
                             // Ref: http://javascript.nwbox.com/IEContentLoaded/
                             doScroll('left');
-                            self._fireReady();
+                            fire();
                         } catch(ex) {
                             setTimeout(readyScroll, 1);
                         }
                     }
                     readyScroll();
                 }
-
-                // A fallback to window.onload, that will always work.
-                win.attachEvent('onload', function() {
-                    self._fireReady();
-                });
             }
         },
 
@@ -731,7 +733,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
  * NOTES:
  *
  *  2010.06
- *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着 
+ *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着。
  *
  *  2010.05
  *   - 增加 filter 方法。
@@ -742,7 +744,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
  *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
  *
  * TODO:
- *   - 分析 jq 的 isPlainObject 对 constructor 的细节处理
+ *   - 分析 jq 的 isPlainObject 对 constructor 等细节处理
  *
  */
 /**

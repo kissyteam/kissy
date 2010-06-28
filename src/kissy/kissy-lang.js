@@ -346,7 +346,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
  * NOTES:
  *
  *  2010.06
- *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着 
+ *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着。
  *
  *  2010.05
  *   - 增加 filter 方法。
@@ -357,6 +357,6 @@ KISSY.add('kissy-lang', function(S, undefined) {
  *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
  *
  * TODO:
- *   - 分析 jq 的 isPlainObject 对 constructor 的细节处理
+ *   - 分析 jq 的 isPlainObject 对 constructor 等细节处理
  *
  */
