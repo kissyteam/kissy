@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 735 Jun 28 22:29
+build: 738 Jun 29 13:32
 */
 /**
  * @module kissy
@@ -852,7 +852,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 735 Jun 28 22:29
+build: 738 Jun 29 13:31
 */
 /**
  * @module  dom
@@ -947,7 +947,7 @@ KISSY.add('selector', function(S, undefined) {
             // 分组选择器
             else if (selector.indexOf(',') > -1) {
                 if (doc.querySelectorAll) {
-                    ret = doc.querySelectorAll(selector);
+                    ret = (tuneContext(context)||doc).querySelectorAll(selector);
                 } else {
                     var parts = selector.split(','), r = [];
                     for (i = 0,len = parts.length; i < len; ++i) {
@@ -2304,7 +2304,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 735 Jun 28 22:29
+build: 738 Jun 29 13:32
 */
 /**
  * @module  event
