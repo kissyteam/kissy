@@ -311,7 +311,7 @@ KISSY.add("digital-clock",function(S,undefined){
 	            h = d.getHours(),
 	            m = d.getMinutes(),
 	            s = d.getSeconds();
-	        console.log(h,m,s);    
+	        //console.log(h,m,s);    
 	        //h = 88,
 	        //m = 88,
 	        //s = 88;
