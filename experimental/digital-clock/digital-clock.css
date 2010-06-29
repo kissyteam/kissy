@@ -28,7 +28,7 @@
 	}
 	
 	.ks-digitalclock-bar {
-		background-color:black;
+		background-color:#565656;
 		/*height:67px;*/		
 	}
 	
@@ -40,27 +40,27 @@
 	.ks-digitalclock-e1 .ks-digitalclock-first,.ks-digitalclock-e5 .ks-digitalclock-first {
 		/*border-width:10px;*/
 		border-bottom-style:solid;
-		border-color: transparent transparent black transparent;
+		border-color: transparent transparent #565656 transparent;
 	}
 	
 	.ks-digitalclock-e1 .ks-digitalclock-last {
 		/*border-width:5px 10px;*/
 		border-top-style:solid;
 		border-left-style:solid;	
-		border-color: black transparent transparent black;		
+		border-color: #565656 transparent transparent #565656;		
 	}	
 	
 	.ks-digitalclock-e2 .ks-digitalclock-first {			
 		/*border-width:5px 10px;*/
 		border-bottom-style:solid;
 		border-left-style:solid;
-		border-color: transparent transparent black black;
+		border-color: transparent transparent #565656 #565656;
 	}
 	
 	.ks-digitalclock-e2 .ks-digitalclock-last,.ks-digitalclock-e4 .ks-digitalclock-last {		
 		/*border-width:10px 10px;*/
 		border-top-style:solid;
-		border-color: black transparent transparent transparent;		
+		border-color: #565656 transparent transparent transparent;		
 	}	
 	
 	.ks-digitalclock-e4,.ks-digitalclock-e5 {
@@ -71,7 +71,7 @@
 		/*border-width:5px 10px;*/
 		border-right-style:solid;
 		border-bottom-style:solid;
-		border-color: transparent black black transparent;
+		border-color: transparent #565656 #565656 transparent;
 	}
 	
 	
@@ -80,7 +80,7 @@
 		/*border-width:5px 10px;*/
 		border-top-style:solid;
 		border-right-style:solid;	
-		border-color: black black transparent transparent;
+		border-color: #565656 #565656 transparent transparent;
 	}
 
 	.ks-digitalclock-horizonal {
@@ -105,12 +105,12 @@
 	
 	.ks-digitalclock-horizonal .ks-digitalclock-first{
 		border-right-style:solid;
-		border-color: transparent black transparent transparent;
+		border-color: transparent #565656 transparent transparent;
 	}
 	
 	.ks-digitalclock-horizonal .ks-digitalclock-last{
 		border-left-style:solid;
-		border-color: transparent transparent transparent black;
+		border-color: transparent transparent transparent #565656;
 	}
 	
 	.ks-digitalclock-ex {
@@ -128,12 +128,12 @@
 	
 	.ks-digitalclock-colon-top {
 		border-bottom-style:solid;
-		border-color:transparent transparent black transparent;
+		border-color:transparent transparent #565656 transparent;
 	}
 	
 	.ks-digitalclock-colon-bottom {
 		border-top-style:solid;
-		border-color:black transparent transparent transparent;
+		border-color:#565656 transparent transparent transparent;
 	}
 	
 	.ks-digitalclock-colon1,.ks-digitalclock-colon2 {

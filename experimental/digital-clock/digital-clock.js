@@ -108,6 +108,7 @@ KISSY.add("digital-clock",function(S,undefined){
 	,NUM_LIMIT=3
 	,MARGIN_LIMIT=2
 	,MARGIN_COMPENSATE=20
+	,BG_COLOR="#565656"
 	//电子钟组成部分和相应div的对照
 	,DIGITAL_CONFIG={
 		 0:N2("01111110")
@@ -196,7 +197,7 @@ KISSY.add("digital-clock",function(S,undefined){
 	            self._bars[4].one(".ks-digitalclock-last").css("border-width", BORDER_S * z + "px" + " " + Math.max(BORDER_L * z, NUM_LIMIT / 2) + "px");
 	        } else {
 	            self._domNode.all(".ks-digitalclock-element").each(function (node) {
-	                node.css("background-color", "black");
+	                node.css("background-color", BG_COLOR);
 	            });
 	        }
 	        self._bars[3].css("left", E45_LEFT * z + "px");
