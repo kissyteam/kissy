@@ -53,11 +53,16 @@ KISSY.add('attribute-base', function (S, undefined) {
         		var self=this;
         		//get previous value
             var preVal = self.get(attr);
+            
+            //no change ,just return
+            if(preVal===value) return;
+            
             //if allow set
             if (self.fire(BEFORE + capitalFirst(attr) + CHANGE, {
             		preVal: preVal,
                 newVal: value
-            }) === false) return;            
+            }) === false) return; 
+                       
             //finally set
             self._set.apply(this, arguments);
             //notify set

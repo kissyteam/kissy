@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk"/>
+<title>SWFAudio Test</title>
+</head>
+<body>
+
+<h2>SWFAudio Test Data</h2>
+
+<script src="../../build/packages/ks-core.js"></script>
+<script src="swfaudio.js"></script>
+
+
+<script>
+KISSY.ready(function(S){
+	var sm = S.soundManager;
+	sm.url="./soundmanager2.swf";
+	sm.useFlashBlock = true;
+	sm.onready(function(){
+		/*播放音乐
+			@param {String} music id
+			@param {String} music path
+		*/
+		sm.play("test","music.mp3");		
+	});
+});
+</script>
+</body>
+</html>
