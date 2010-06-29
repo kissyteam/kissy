@@ -76,7 +76,8 @@ KISSY.add('selector', function(S, undefined) {
             // 分组选择器
             else if (selector.indexOf(',') > -1) {
                 if (doc.querySelectorAll) {
-                    ret = doc.querySelectorAll(selector);
+                		//yiminghe:context considered
+                    ret = (tuneContext(context)||doc).querySelectorAll(selector);
                 } else {
                     var parts = selector.split(','), r = [];
                     for (i = 0,len = parts.length; i < len; ++i) {
