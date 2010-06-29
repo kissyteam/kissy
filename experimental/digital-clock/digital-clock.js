@@ -179,7 +179,7 @@ KISSY.add("digital-clock",function(S,undefined){
 	        self._bars[1].css("top", E24_TOP * z + "px");
 	        self._bars[3].css("top", E24_TOP * z + "px");
 	        //if zoom too small ,then triangle disappear !
-	        if (z > 0.2) {
+	        if (z >= 0.2) {
 	            self._domNode.all(".ks-digitalclock-element").each(function (node) {
 	                node.css("background-color", "transparent");
 	            });
@@ -276,7 +276,7 @@ KISSY.add("digital-clock",function(S,undefined){
 	    self.on("afterDateChange", self.repaint, self);
 	    self.on("afterZoomChange", self.zoom, self);
 	    setInterval(function () {
-	        return;
+	        //return;
 	        self.fire("tick", {
 	            date: self.get("date")
 	        });
@@ -310,9 +310,9 @@ KISSY.add("digital-clock",function(S,undefined){
 	            h = d.getHours(),
 	            m = d.getMinutes(),
 	            s = d.getSeconds();
-	        h = 88,
-	        m = 88,
-	        s = 88;
+	        //h = 88,
+	        //m = 88,
+	        //s = 88;
 	        self._ns[0].set("value", Math.floor(h / 10));
 	        self._ns[1].set("value", Math.floor(h % 10));
 	        self._ns[2].set("value", Math.floor(m / 10));
