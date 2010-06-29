@@ -150,72 +150,76 @@ KISSY.add("digital-clock",function(S,undefined){
 	    self.on("afterZoomChange", self.zoom, self);
 	}
 	S.extend(ClockNumber, S.Base, {
-			/**
-			 append this number to a clock container
-			 @param container {HTMLElement} clock container
-			 @return this for chain
-			*/
+	    /**
+	     append this number to a clock container
+	     @param container {HTMLElement} clock container
+	     @return this for chain
+	     */
 	    appendTo: function (container) {
 	        var self = this;
 	        self._domNode.appendTo(container[0]);
 	        return self;
 	    },
-	    
 	    //internal use ,zoom number
 	    zoom: function (e) {
 	        var z = e.newVal;
 	        var self = this;
-	        self._domNode.css("margin", "0 " + Math.max(C_MARGIN_LR*z,MARGIN_LIMIT) + "px");
-	        self._domNode.css("width", Math.max(C_WIDTH*z,C_WIDTH_LIMIT) + "px");
-	        self._domNode.css("height", Math.max(C_HEIGHT*z,C_HEIGHT_LIMIT) + "px");
+	        self._domNode.css("margin", "0 " + Math.max(C_MARGIN_LR * z, MARGIN_LIMIT) + "px");
+	        self._domNode.css("width", Math.max(C_WIDTH * z, C_WIDTH_LIMIT) + "px");
+	        self._domNode.css("height", Math.max(C_HEIGHT * z, C_HEIGHT_LIMIT) + "px");
 	        self._domNode.all(".ks-digitalclock-element").each(function (node) {
-	            node.css("height", D_HEIGHT*z + "px");
+	            node.css("height", D_HEIGHT * z + "px");
 	        });
 	        self._domNode.all(".ks-digitalclock-vertical").each(function (node) {
-	            node.css("width", Math.max(VERTICAL_WIDTH*z,NUM_LIMIT) + "px");
+	            node.css("width", Math.max(VERTICAL_WIDTH * z, NUM_LIMIT) + "px");
 	        });
 	        self._domNode.all(".ks-digitalclock-bar").each(function (node) {
-	            node.css("height", BAR_HEIGHT*z + "px");
+	            node.css("height", BAR_HEIGHT * z + "px");
 	        });
-	        self._domNode.all(".ks-digitalclock-first,.ks-digitalclock-last").each(function (node) {
-	            node.css("border-width", Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
-	        });
-	        self._bars[1].css("top", E24_TOP*z + "px");
-	        self._bars[3].css("top", E24_TOP*z + "px");
-	        self._bars[0].one(".ks-digitalclock-first").css("border-width", Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
-	        self._bars[4].one(".ks-digitalclock-first").css("border-width", Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
-	        self._bars[0].one(".ks-digitalclock-last").css("border-width", BORDER_S*z + "px" + " " + Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
-	        self._bars[1].one(".ks-digitalclock-first").css("border-width", BORDER_S*z + "px" + " " + Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
-	        self._bars[1].one(".ks-digitalclock-last").css("border-width", Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
-	        self._bars[3].one(".ks-digitalclock-last").css("border-width", Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
-	        self._bars[3].css("left", E45_LEFT*z + "px");
-	        self._bars[4].css("left", E45_LEFT*z + "px");
-	        self._bars[3].one(".ks-digitalclock-first").css("border-width", BORDER_S*z + "px" + " " + Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
-	        self._bars[4].one(".ks-digitalclock-last").css("border-width", BORDER_S*z + "px" + " " + Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
+	        self._bars[1].css("top", E24_TOP * z + "px");
+	        self._bars[3].css("top", E24_TOP * z + "px");
+	        //if zoom too small ,then triangle disappear !
+	        if (z > 0.2) {
+	            self._domNode.all(".ks-digitalclock-element").each(function (node) {
+	                node.css("background-color", "transparent");
+	            });
+	            self._domNode.all(".ks-digitalclock-first,.ks-digitalclock-last").each(function (node) {
+	                node.css("border-width", Math.max(BORDER_L * z, NUM_LIMIT / 2) + "px");
+	            });
+	            self._bars[0].one(".ks-digitalclock-first").css("border-width", Math.max(BORDER_L * z, NUM_LIMIT / 2) + "px");
+	            self._bars[4].one(".ks-digitalclock-first").css("border-width", Math.max(BORDER_L * z, NUM_LIMIT / 2) + "px");
+	            self._bars[0].one(".ks-digitalclock-last").css("border-width", BORDER_S * z + "px" + " " + Math.max(BORDER_L * z, NUM_LIMIT / 2) + "px");
+	            self._bars[1].one(".ks-digitalclock-first").css("border-width", BORDER_S * z + "px" + " " + Math.max(BORDER_L * z, NUM_LIMIT / 2) + "px");
+	            self._bars[1].one(".ks-digitalclock-last").css("border-width", Math.max(BORDER_L * z, NUM_LIMIT / 2) + "px");
+	            self._bars[3].one(".ks-digitalclock-last").css("border-width", Math.max(BORDER_L * z, NUM_LIMIT / 2) + "px");
+	            self._bars[3].one(".ks-digitalclock-first").css("border-width", BORDER_S * z + "px" + " " + Math.max(BORDER_L * z, NUM_LIMIT / 2) + "px");
+	            self._bars[4].one(".ks-digitalclock-last").css("border-width", BORDER_S * z + "px" + " " + Math.max(BORDER_L * z, NUM_LIMIT / 2) + "px");
+	        } else {
+	            self._domNode.all(".ks-digitalclock-element").each(function (node) {
+	                node.css("background-color", "black");
+	            });
+	        }
+	        self._bars[3].css("left", E45_LEFT * z + "px");
+	        self._bars[4].css("left", E45_LEFT * z + "px");
 	        self._domNode.all(".ks-digitalclock-horizonal").each(function (node) {
-	        		var height=Math.max(HORIZONAL_HEIGHT*z,NUM_LIMIT);
-	            node.css("width", HORIZONAL_WIDTH*z + "px");
+	            var height = Math.max(HORIZONAL_HEIGHT * z, NUM_LIMIT);
+	            node.css("width", HORIZONAL_WIDTH * z + "px");
 	            node.css("height", height + "px");
-	            node.css("left", HORIZONAL_LEFT*z + "px");
-	            node.one(".ks-digitalclock-bar").css("width", HORIZONAL_BAR_WIDTH*z + "px");
+	            node.css("left", HORIZONAL_LEFT * z + "px");
+	            node.one(".ks-digitalclock-bar").css("width", HORIZONAL_BAR_WIDTH * z + "px");
 	            node.one(".ks-digitalclock-bar").css("height", height + "px");
 	        });
-	        
-	        
-	        
-	        
-	        self._bars[2].css("left", E3_LEFT*z + "px");
-	        self._bars[2].css("top", E3_TOP*z + "px");
-	        self._bars[6].css("top", EX_TOP*z + "px");
+	        self._bars[2].css("left", E3_LEFT * z + "px");
+	        self._bars[2].css("top", E3_TOP * z + "px");
+	        self._bars[6].css("top", EX_TOP * z + "px");
 	    },
-	    
 	    //internal use ,synchronize data with ui
 	    repaint: function (e) {
 	        var self = this;
 	        var v = DIGITAL_CONFIG[e.newVal];
 	        //console.log(v.toString(2));
-	        for(var i=0;i<self._bars.length;i++) {
-	        		var node=self._bars[i];
+	        for (var i = 0; i < self._bars.length; i++) {
+	            var node = self._bars[i];
 	            v = v >> 1;
 	            var b = v & 1;
 	            if (b) {
@@ -227,27 +231,26 @@ KISSY.add("digital-clock",function(S,undefined){
 	    }
 	});
 	DigitalClock.ATTRS = {
-			/*
-			clock time
-			@default now
-			*/
+	    /*
+				clock time
+				@default now
+				*/
 	    date: {
 	        value: new Date()
 	    },
-	    
-	    zoom: {value:1},
-	    
+	    zoom: {
+	        value: 1
+	    },
 	    /*
-	    clock container to append
-	    @default body
-	    */
+		    clock container to append
+		    @default body
+		    */
 	    container: {
 	        valueFn: function () {
 	            return document.body;
 	        }
 	    }
 	};
-	
 	function DigitalClock(cfg) {
 	    var self = this;
 	    DigitalClock.superclass.constructor.call(self, cfg);
@@ -257,7 +260,6 @@ KISSY.add("digital-clock",function(S,undefined){
 	        self._ns.push(new ClockNumber().appendTo(self._container));
 	    }
 	    self._colon = new Node(COLON).appendTo(self._container[0]);
-	    
 	    for (var i = 0; i < 2; i++) {
 	        self._ns.push(new ClockNumber().appendTo(self._container));
 	    }
@@ -265,59 +267,56 @@ KISSY.add("digital-clock",function(S,undefined){
 	        self._ns.push(new ClockNumber().appendTo(self._container));
 	    }
 	    self._container.appendTo(self.get("container"));
-	    
 	    self.repaint({
 	        newVal: self.get("date")
 	    });
 	    self.zoom({
-	    	newVal:self.get("zoom")
+	        newVal: self.get("zoom")
 	    });
 	    self.on("afterDateChange", self.repaint, self);
 	    self.on("afterZoomChange", self.zoom, self);
-	    setInterval(function(){
-	    	//return;
-	    	self.fire("tick",{
-	    		date:self.get("date")
-	    	});
-	    	self.set("date",new Date());
-	    },1000);
+	    setInterval(function () {
+	        return;
+	        self.fire("tick", {
+	            date: self.get("date")
+	        });
+	        self.set("date", new Date());
+	    },
+	    1000);
 	}
 	S.extend(DigitalClock, S.Base, {
-		
-		
-			zoom:function(e){
-				var self = this;
-				var z=e.newVal;
-				for(var i=0;i<4;i++)
-					self._ns[i].set("zoom", z);
-				for(var i=4;i<6;i++)
-					self._ns[i].set("zoom", z*S_ZOOM);
-						
-	     	self._colon.css("width", COLON_WIDTH*z + "px");
-	    	self._colon.css("height", C_HEIGHT*z + "px");
-	    	self._colon.all(".ks-digitalclock-colon-top,.ks-digitalclock-colon-bottom").each(function (node) {
-	        node.css("border-width", BORDER_L*z + "px");
-	    	});
-	    	self._colon.one(".ks-digitalclock-colon1").css("left",COLON_LEFT*z+"px");
-	    	self._colon.one(".ks-digitalclock-colon2").css("left",COLON_LEFT*z+"px");
-	    	self._colon.one(".ks-digitalclock-colon1").css("top",COLON1_TOP*z+"px");
-	    	self._colon.one(".ks-digitalclock-colon2").css("top",COLON2_TOP*z+"px");
-	    	self._container.css("width",KS_WIDTH*z+MARGIN_COMPENSATE+"px");
-			},
-			
-			//internal use ,repaint its numbers and colon
+	    zoom: function (e) {
+	        var self = this;
+	        var z = e.newVal;
+	        for (var i = 0; i < 4; i++)
+	        self._ns[i].set("zoom", z);
+	        for (var i = 4; i < 6; i++)
+	        self._ns[i].set("zoom", z * S_ZOOM);
+	        self._colon.css("width", COLON_WIDTH * z + "px");
+	        self._colon.css("height", C_HEIGHT * z + "px");
+	        self._colon.all(".ks-digitalclock-colon-top,.ks-digitalclock-colon-bottom").each(function (node) {
+	            node.css("border-width", BORDER_L * z + "px");
+	        });
+	        self._colon.one(".ks-digitalclock-colon1").css("left", COLON_LEFT * z + "px");
+	        self._colon.one(".ks-digitalclock-colon2").css("left", COLON_LEFT * z + "px");
+	        self._colon.one(".ks-digitalclock-colon1").css("top", COLON1_TOP * z + "px");
+	        self._colon.one(".ks-digitalclock-colon2").css("top", COLON2_TOP * z + "px");
+	        self._container.css("width", KS_WIDTH * z + MARGIN_COMPENSATE + "px");
+	    },
+	    //internal use ,repaint its numbers and colon
 	    repaint: function (e) {
 	        var self = this;
 	        var d = e.newVal,
 	            h = d.getHours(),
 	            m = d.getMinutes(),
 	            s = d.getSeconds();
-	        //h=88,m=88,s=88;
+	        h = 88,
+	        m = 88,
+	        s = 88;
 	        self._ns[0].set("value", Math.floor(h / 10));
 	        self._ns[1].set("value", Math.floor(h % 10));
 	        self._ns[2].set("value", Math.floor(m / 10));
 	        self._ns[3].set("value", Math.floor(m % 10));
-	        
 	        self._ns[4].set("value", Math.floor(s / 10));
 	        self._ns[5].set("value", Math.floor(s % 10));
 	    }
