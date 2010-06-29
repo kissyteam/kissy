@@ -81,9 +81,11 @@ KISSY.add("digital-clock",function(S,undefined){
 	
 	//clock region
 	,C_WIDTH=120
+	,C_WIDTH_LIMIT=11
 	,C_HEIGHT=200
+	,C_HEIGHT_LIMIT=18
 	,C_MARGIN_LR=10
-	,D_WIDTH=20
+	,VERTICAL_WIDTH=20
 	,D_HEIGHT=97
 	,BAR_HEIGHT=67
 	,E24_TOP=104
@@ -94,7 +96,6 @@ KISSY.add("digital-clock",function(S,undefined){
 	,HORIZONAL_HEIGHT=20
 	,HORIZONAL_LEFT=6
 	,HORIZONAL_BAR_WIDTH=67
-	,HORIZONAL_BAR_HEIGHT=20
 	,E3_LEFT=6
 	,E3_TOP=180
 	,EX_TOP=90
@@ -104,7 +105,9 @@ KISSY.add("digital-clock",function(S,undefined){
 	,COLON2_TOP=90
 	,KS_WIDTH=710
 	,S_ZOOM=0.4
-	
+	,NUM_LIMIT=3
+	,MARGIN_LIMIT=2
+	,MARGIN_COMPENSATE=20
 	//电子钟组成部分和相应div的对照
 	,DIGITAL_CONFIG={
 		 0:N2("01111110")
@@ -162,38 +165,45 @@ KISSY.add("digital-clock",function(S,undefined){
 	    zoom: function (e) {
 	        var z = e.newVal;
 	        var self = this;
-	        self._domNode.css("margin", "0 " + C_MARGIN_LR*z + "px");
-	        self._domNode.css("width", C_WIDTH*z + "px");
-	        self._domNode.css("height", C_HEIGHT*z + "px");
+	        self._domNode.css("margin", "0 " + Math.max(C_MARGIN_LR*z,MARGIN_LIMIT) + "px");
+	        self._domNode.css("width", Math.max(C_WIDTH*z,C_WIDTH_LIMIT) + "px");
+	        self._domNode.css("height", Math.max(C_HEIGHT*z,C_HEIGHT_LIMIT) + "px");
 	        self._domNode.all(".ks-digitalclock-element").each(function (node) {
-	            node.css("width", D_WIDTH*z + "px");
 	            node.css("height", D_HEIGHT*z + "px");
+	        });
+	        self._domNode.all(".ks-digitalclock-vertical").each(function (node) {
+	            node.css("width", Math.max(VERTICAL_WIDTH*z,NUM_LIMIT) + "px");
 	        });
 	        self._domNode.all(".ks-digitalclock-bar").each(function (node) {
 	            node.css("height", BAR_HEIGHT*z + "px");
 	        });
 	        self._domNode.all(".ks-digitalclock-first,.ks-digitalclock-last").each(function (node) {
-	            node.css("border-width", BORDER_L*z + "px");
+	            node.css("border-width", Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
 	        });
 	        self._bars[1].css("top", E24_TOP*z + "px");
 	        self._bars[3].css("top", E24_TOP*z + "px");
-	        self._bars[0].one(".ks-digitalclock-first").css("border-width", BORDER_L*z + "px");
-	        self._bars[4].one(".ks-digitalclock-first").css("border-width", BORDER_L*z + "px");
-	        self._bars[0].one(".ks-digitalclock-last").css("border-width", BORDER_S*z + "px" + " " + BORDER_L + "px");
-	        self._bars[1].one(".ks-digitalclock-first").css("border-width", BORDER_S*z + "px" + " " + BORDER_L + "px");
-	        self._bars[1].one(".ks-digitalclock-last").css("border-width", BORDER_L*z + "px");
-	        self._bars[3].one(".ks-digitalclock-last").css("border-width", BORDER_L*z + "px");
+	        self._bars[0].one(".ks-digitalclock-first").css("border-width", Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
+	        self._bars[4].one(".ks-digitalclock-first").css("border-width", Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
+	        self._bars[0].one(".ks-digitalclock-last").css("border-width", BORDER_S*z + "px" + " " + Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
+	        self._bars[1].one(".ks-digitalclock-first").css("border-width", BORDER_S*z + "px" + " " + Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
+	        self._bars[1].one(".ks-digitalclock-last").css("border-width", Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
+	        self._bars[3].one(".ks-digitalclock-last").css("border-width", Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
 	        self._bars[3].css("left", E45_LEFT*z + "px");
 	        self._bars[4].css("left", E45_LEFT*z + "px");
-	        self._bars[3].one(".ks-digitalclock-first").css("border-width", BORDER_S*z + "px" + " " + BORDER_L + "px");
-	        self._bars[4].one(".ks-digitalclock-last").css("border-width", BORDER_S*z + "px" + " " + BORDER_L + "px");
+	        self._bars[3].one(".ks-digitalclock-first").css("border-width", BORDER_S*z + "px" + " " + Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
+	        self._bars[4].one(".ks-digitalclock-last").css("border-width", BORDER_S*z + "px" + " " + Math.max(BORDER_L*z,NUM_LIMIT/2) + "px");
 	        self._domNode.all(".ks-digitalclock-horizonal").each(function (node) {
+	        		var height=Math.max(HORIZONAL_HEIGHT*z,NUM_LIMIT);
 	            node.css("width", HORIZONAL_WIDTH*z + "px");
-	            node.css("height", HORIZONAL_HEIGHT*z + "px");
+	            node.css("height", height + "px");
 	            node.css("left", HORIZONAL_LEFT*z + "px");
 	            node.one(".ks-digitalclock-bar").css("width", HORIZONAL_BAR_WIDTH*z + "px");
-	            node.one(".ks-digitalclock-bar").css("height", HORIZONAL_BAR_HEIGHT*z + "px");
+	            node.one(".ks-digitalclock-bar").css("height", height + "px");
 	        });
+	        
+	        
+	        
+	        
 	        self._bars[2].css("left", E3_LEFT*z + "px");
 	        self._bars[2].css("top", E3_TOP*z + "px");
 	        self._bars[6].css("top", EX_TOP*z + "px");
@@ -265,6 +275,7 @@ KISSY.add("digital-clock",function(S,undefined){
 	    self.on("afterDateChange", self.repaint, self);
 	    self.on("afterZoomChange", self.zoom, self);
 	    setInterval(function(){
+	    	//return;
 	    	self.fire("tick",{
 	    		date:self.get("date")
 	    	});
@@ -291,7 +302,7 @@ KISSY.add("digital-clock",function(S,undefined){
 	    	self._colon.one(".ks-digitalclock-colon2").css("left",COLON_LEFT*z+"px");
 	    	self._colon.one(".ks-digitalclock-colon1").css("top",COLON1_TOP*z+"px");
 	    	self._colon.one(".ks-digitalclock-colon2").css("top",COLON2_TOP*z+"px");
-	    	self._container.css("width",KS_WIDTH*z+"px");
+	    	self._container.css("width",KS_WIDTH*z+MARGIN_COMPENSATE+"px");
 			},
 			
 			//internal use ,repaint its numbers and colon
@@ -301,7 +312,7 @@ KISSY.add("digital-clock",function(S,undefined){
 	            h = d.getHours(),
 	            m = d.getMinutes(),
 	            s = d.getSeconds();
-	        
+	        //h=88,m=88,s=88;
 	        self._ns[0].set("value", Math.floor(h / 10));
 	        self._ns[1].set("value", Math.floor(h % 10));
 	        self._ns[2].set("value", Math.floor(m / 10));
