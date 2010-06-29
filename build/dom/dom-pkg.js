@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 735 Jun 28 22:29
+build: 748 Jun 29 23:18
 */
 /**
  * @module  dom
@@ -34,11 +34,12 @@ KISSY.add('selector', function(S, undefined) {
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
      * @param {string} selector
-     * @param {string|HTMLElement} context An id string or a HTMLElement used as context
+     * @param {string|HTMLElement} context An #id string or a HTMLElement used as context
      * @return {Array} The array of found HTMLElement
      */
     function query(selector, context) {
         var match, t, ret = [], id, tag, cls, i, len;
+        context = tuneContext(context);
 
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
         // 考虑 2/8 原则，仅支持以下选择器：
@@ -72,7 +73,7 @@ KISSY.add('selector', function(S, undefined) {
                 tag = match[2];
                 cls = match[3];
 
-                if ((context = id ? getElementById(id) : tuneContext(context))) {
+                if ((context = id ? getElementById(id) : context)) {
 
                     // #id .cls | #id tag.cls | .cls | tag.cls
                     if (cls) {
@@ -95,8 +96,8 @@ KISSY.add('selector', function(S, undefined) {
             }
             // 分组选择器
             else if (selector.indexOf(',') > -1) {
-                if (doc.querySelectorAll) {
-                    ret = doc.querySelectorAll(selector);
+                if (context.querySelectorAll) {
+                    ret = context.querySelectorAll(selector);
                 } else {
                     var parts = selector.split(','), r = [];
                     for (i = 0,len = parts.length; i < len; ++i) {

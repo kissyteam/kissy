@@ -6,9 +6,9 @@ KISSY.add('event', function(S, undefined) {
 
     var win = window, doc = document,
         simpleAdd = doc.addEventListener ?
-                    function(el, type, fn) {
+                    function(el, type, fn, capture) {
                         if (el.addEventListener) {
-                            el.addEventListener(type, fn, false);
+                            el.addEventListener(type, fn, capture);
                         }
                     } :
                     function(el, type, fn) {
@@ -17,9 +17,9 @@ KISSY.add('event', function(S, undefined) {
                         }
                     },
         simpleRemove = doc.removeEventListener ?
-                       function(el, type, fn) {
+                       function(el, type, fn, capture) {
                            if (el.removeEventListener) {
-                               el.removeEventListener(type, fn, false);
+                               el.removeEventListener(type, fn, capture);
                            }
                        } :
                        function(el, type, fn) {
@@ -91,7 +91,7 @@ KISSY.add('event', function(S, undefined) {
                 };
 
                 if(!target.isCustomEventTarget) {
-                    simpleAdd(target, special.fix || type, eventHandle);
+                    simpleAdd(target, special.fix || type, eventHandle, special.capture);
                 }
                 else if(target._addEvent) { // such as Node
                     target._addEvent(type, eventHandle);
@@ -264,4 +264,5 @@ KISSY.add('event', function(S, undefined) {
  *   - 更详尽细致的 test cases
  *   - 内存泄漏测试
  *   - target 为 window, iframe 等特殊对象时的 test case
+ *   - special events 的 teardown 方法缺失，需要做特殊处理
  */

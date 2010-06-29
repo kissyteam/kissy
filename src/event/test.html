@@ -22,8 +22,10 @@
 <script src="event-object.js"></script>
 <script src="event-target.js"></script>
 <script src="event-mouseenter.js"></script>
+<script src="event-focusin.js"></script>
 
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
+<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
 
 <div id="foo">
     <ul id="bar">
@@ -38,8 +40,10 @@
         <li><a id="link-s" href="#">link s</a></li>
     </ul>
 </div>
-
-<div style="padding: 30px; background-color: #e3e4e5">
+<div id="test-focusin">
+    test focusin:  <input type="text"/>
+</div>
+<div style="margin-top: 10px; padding: 30px; background-color: #e3e4e5">
     <div id="outer" style="padding: 20px; background-color: #D6EDFC">
         <p class="info">move your mouse</p>
         <div id="inner" style="padding: 20px; background-color: #FFCC00">
@@ -214,6 +218,36 @@
             test.echo(this.p);
         }, { p: 'scope test' });
         test.extraMsg = '{click link s should echo "scope test"}';
+    }
+
+//    function test_add_beforeunload() {
+//
+//        YAHOO.util.Event.on(window, 'beforeunload', function(ev) {
+//           alert('yui2 beforeunload');
+//        });
+//
+//        Event.add(window, 'beforeunload', function(ev) {
+//           alert('kissy beforeunload');
+//        });
+//
+//    }
+
+    function test_add_focusin(test) {
+        Event.add('#test-focusin', 'focusin focusout', function(ev) {
+            test.echo('#test-focusin capture ' + ev.type + ' event');
+        });
+
+        $('#test-focusin').focusin(function(ev) {
+            test.echo('#test-focusin capture ' + ev.type + ' event [jQuery]');
+        });
+
+        Event.add('#test-focusin input', 'focusin focusout', function(ev) {
+            test.echo('#test-focusin input capture ' + ev.type + ' event');
+        });
+
+        Event.add('#test-focusin input', 'focus blur', function(ev) {
+            test.echo('#test-focusin input capture ' + ev.type + ' event');
+        });
     }
 
 </script>

@@ -12,6 +12,7 @@
             <path path="event-object.js"/>
             <path path="event-target.js"/>
             <path path="event-mouseenter.js"/>
+            <path path="event-focusin.js"/>
         </concat>
     </target>
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 735 Jun 28 22:29
+build: 748 Jun 29 23:18
 */
 /**
  * @module  event
@@ -11,9 +11,9 @@ KISSY.add('event', function(S, undefined) {
 
     var win = window, doc = document,
         simpleAdd = doc.addEventListener ?
-                    function(el, type, fn) {
+                    function(el, type, fn, capture) {
                         if (el.addEventListener) {
-                            el.addEventListener(type, fn, false);
+                            el.addEventListener(type, fn, capture);
                         }
                     } :
                     function(el, type, fn) {
@@ -22,9 +22,9 @@ KISSY.add('event', function(S, undefined) {
                         }
                     },
         simpleRemove = doc.removeEventListener ?
-                       function(el, type, fn) {
+                       function(el, type, fn, capture) {
                            if (el.removeEventListener) {
-                               el.removeEventListener(type, fn, false);
+                               el.removeEventListener(type, fn, capture);
                            }
                        } :
                        function(el, type, fn) {
@@ -96,7 +96,7 @@ KISSY.add('event', function(S, undefined) {
                 };
 
                 if(!target.isCustomEventTarget) {
-                    simpleAdd(target, special.fix || type, eventHandle);
+                    simpleAdd(target, special.fix || type, eventHandle, special.capture);
                 }
                 else if(target._addEvent) { // such as Node
                     target._addEvent(type, eventHandle);
@@ -269,6 +269,7 @@ KISSY.add('event', function(S, undefined) {
  *   - 更详尽细致的 test cases
  *   - 内存泄漏测试
  *   - target 为 window, iframe 等特殊对象时的 test case
+ *   - special events 的 teardown 方法缺失，需要做特殊处理
  */
 /**
  * @module  EventObject
@@ -536,4 +537,37 @@ KISSY.add('event-mouseenter', function(S) {
  * TODO:
  *  - ie6 下，原生的 mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>
  *    jQuery 也异常，需要进一步研究
+ */
+/**
+ * @module  event-focusin
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('event-focusin', function(S) {
+
+    var Event = S.Event;
+
+    // �÷� IE �����֧�� focusin/focusout
+    if (document.addEventListener) {
+        S.each([
+            { name: 'focusin', fix: 'focus' },
+            { name: 'focusout', fix: 'blur' }
+        ], function(o) {
+
+            Event.special[o.name] = {
+
+                fix: o.fix,
+
+                capture: true,
+
+                setup: function(event) {
+                    event.type = o.name;
+                }
+            }
+        });
+    }
+});
+
+/**
+ * NOTES:
+ *  - webkit �� opera ��֧�� DOMFocusIn/DOMFocusOut �¼����������д���Ѿ��ܴﵽԤ��Ч����ʱ������ԭ��֧�֡�
  */
