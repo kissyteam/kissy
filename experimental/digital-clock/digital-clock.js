@@ -130,7 +130,7 @@ KISSY.add("digital-clock",function(S,undefined){
 		@default 0
 		*/
     value: {
-        value: 0
+        value: 8
     },
     /*
     clock zoom value
@@ -311,6 +311,7 @@ KISSY.add("digital-clock",function(S,undefined){
 	            h = d.getHours(),
 	            m = d.getMinutes(),
 	            s = d.getSeconds();
+	        console.log(h,m,s);    
 	        //h = 88,
 	        //m = 88,
 	        //s = 88;
