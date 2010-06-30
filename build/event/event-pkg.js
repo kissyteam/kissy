@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 748 Jun 29 23:18
+build: 749 Jun 30 08:59
 */
 /**
  * @module  event
@@ -546,7 +546,7 @@ KISSY.add('event-focusin', function(S) {
 
     var Event = S.Event;
 
-    // �÷� IE �����֧�� focusin/focusout
+    // 让非 IE 浏览器支持 focusin/focusout
     if (document.addEventListener) {
         S.each([
             { name: 'focusin', fix: 'focus' },
@@ -569,5 +569,5 @@ KISSY.add('event-focusin', function(S) {
 
 /**
  * NOTES:
- *  - webkit �� opera ��֧�� DOMFocusIn/DOMFocusOut �¼����������д���Ѿ��ܴﵽԤ��Ч����ʱ������ԭ��֧�֡�
+ *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
