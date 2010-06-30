@@ -18,6 +18,9 @@ KISSY.add("imagezoom", function(S, undefined) {
         IMGZOOM_VIEWER_BK_CLS = 'ks-imagezoom-viewer-bk',
         POSITION = ['top', 'right', 'bottom', 'left'],
         TYPE = ['default', 'glass', 'follow'],
+        DIV = '<div>',
+        IMG = '<img>',
+        B = '<b>',
         
         /**
          * imagezoom的默认设置
@@ -199,13 +202,13 @@ KISSY.add("imagezoom", function(S, undefined) {
                     g, z;
                 
                 // 构建整个容器
-                c = DOM.create('<div>');
+                c = DOM.create(DIV);
                 DOM.addClass(c, IMGZOOM_CONTAINER_CLS);
                 DOM.parent(i).insertBefore(c, i);
                 self.container = c;
                 
                 // 构建小图外层
-                o = DOM.create('<div>');
+                o = DOM.create(DIV);
                 DOM.addClass(o, IMGZOOM_MAGNIFIER_CLS);
                 o.appendChild(i);
                 c.appendChild(o);
@@ -213,7 +216,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                 
                 // 镜片模式下
                 if (TYPE[1] == cfg.zType) {
-                    g = DOM.create('<div>');
+                    g = DOM.create(DIV);
                     DOM.addClass(g, IMGZOOM_GLASS_CLS);
                     DOM.addClass(g, HIDDEN);
                     g.style.height = cfg.glassSize.height+'px';
@@ -223,7 +226,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                 }
                 // 需要显示放大图标
                 if (cfg.useZoomIcon) {
-                    z = DOM.create('<div>');
+                    z = DOM.create(DIV);
                     DOM.addClass(z, IMGZOOM_ICON_CLS);
                     o.appendChild(z);
                     self.zoomIcon = z;
@@ -242,10 +245,10 @@ KISSY.add("imagezoom", function(S, undefined) {
                     v;
                 
                 // 创建显示区域的DOM结构
-                v = DOM.create('<div>');
+                v = DOM.create(DIV);
                 DOM.addClass(v, IMGZOOM_VIEWER_CLS);
                 DOM.addClass(v, IMGZOOM_VIEWER_BK_CLS);
-                var bimg = DOM.create('<img>');
+                var bimg = DOM.create(IMG);
                 DOM.attr(bimg, 'src', cfg.bigImageSrc);
                 v.appendChild(bimg);
                 // 添加显示区域到原有DOM中, 跟随模式有点区别
@@ -472,7 +475,7 @@ KISSY.add("imagezoom", function(S, undefined) {
             showMsg: function(){
                 var b = S.get('b', this.viewer);
                 if (!b) {
-                    b = DOM.create('<b></b>');
+                    b = DOM.create(B);
                     this.viewer.appendChild(b);
                     DOM.removeClass(this.viewer, IMGZOOM_VIEWER_BK_CLS);
                 }
@@ -502,4 +505,5 @@ KISSY.add("imagezoom", function(S, undefined) {
  *      - 6. 24  去除yahoo-dom-event依赖
  *  TODO:
  *      - 加入反转模式;
+ *      - 
  */
