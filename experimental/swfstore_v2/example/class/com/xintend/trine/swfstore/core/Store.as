@@ -81,6 +81,7 @@ package com.xintend.trine.swfstore.core {
 				info = "add";
 				archive.hash.push(key);
 			}
+			if (key == "" || key == null) return;
 			archive.storage[key] = data;
 			
 			
@@ -110,6 +111,7 @@ package com.xintend.trine.swfstore.core {
 			var info: String;
 			var storeEvent: StoreEvent;
 			var result: Boolean;
+			if (key == "" || key == null) return;
 			index =  archive.hash.indexOf(key);
 			if (index < 0) return;
 			oldValue = archive.storage[key];
