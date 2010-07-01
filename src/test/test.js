@@ -1,9 +1,7 @@
 /**
- * @module  test
+ * @module  单元测试
  * @author  lifesinger@gmail.com
- * @depends none
  */
-
 var KISSY = window.KISSY || {};
 
 (function(win, S, undefined) {

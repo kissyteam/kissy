@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 748 Jun 29 23:18
+build: 792 Jul 1 19:44
 */
 /**
  * @module kissy
@@ -852,7 +852,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 791 Jul 1 18:49
+build: 792 Jul 1 19:44
 */
 /**
  * @module  dom
@@ -2306,7 +2306,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 749 Jun 30 08:59
+build: 792 Jul 1 19:44
 */
 /**
  * @module  event

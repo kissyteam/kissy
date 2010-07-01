@@ -1,14 +1,12 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 792 Jul 1 19:45
 */
 /**
- * @module  test
+ * @module  单元测试
  * @author  lifesinger@gmail.com
- * @depends none
  */
-
 var KISSY = window.KISSY || {};
 
 (function(win, S, undefined) {
@@ -127,6 +125,9 @@ var KISSY = window.KISSY || {};
             if (navigator.userAgent.indexOf('Firefox') !== -1) {
                 tests.reverse();
             }
+
+            // set inited flag
+            inited = true;
         },
 
         render: function() {
@@ -178,15 +179,20 @@ var KISSY = window.KISSY || {};
                 konsole.log(test);
             }
             konsole.echo('[DONE]', '<hr />');
-        }
+        },
+
+        echo: konsole.echo
     };
 
     // render markup immediately
     S.Test.render();
 
     // attach load event
+    var inited = false;
     function initTest() {
-        S.Test.init();
+        if (!inited) {
+            S.Test.init();
+        }
     }
 
     if (win.attachEvent) {

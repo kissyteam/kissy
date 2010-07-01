@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 669 May 22 23:46
+build: 792 Jul 1 19:44
 */
 /**
  * @module kissy
@@ -56,14 +56,14 @@ build: 669 May 22 23:46
          * The version of the library.
          * @type {String}
          */
-        version: '1.0.5',
+        version: '1.0.8',
 
         /**
          * Initializes KISSY object.
          * @private
          */
         _init: function() {
-            // Env ¶ÔÏóÄ¿Ç°½öÓÃÓÚÄÚ²¿£¬ÎªÄ£¿é¶¯Ì¬¼ÓÔØÔ¤Áô½Ó¿Ú
+            // Env å¯¹è±¡ç›®å‰ä»…ç”¨äºå†…éƒ¨ï¼Œä¸ºæ¨¡å—åŠ¨æ€åŠ è½½é¢„ç•™æ¥å£
             this.Env = { mods: {} };
         },
 
@@ -123,7 +123,10 @@ build: 669 May 22 23:46
             var self = this,
                 doScroll = doc.documentElement.doScroll,
                 eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
-                COMPLETE = 'complete';
+                COMPLETE = 'complete',
+                fire = function() {
+                    self._fireReady();
+                };
 
             // Set to true once it runs
             readyBound = true;
@@ -131,45 +134,44 @@ build: 669 May 22 23:46
             // Catch cases where ready() is called after the
             // browser event has already occurred.
             if (doc.readyState === COMPLETE) {
-                return self._fireReady();
+                return fire();
             }
 
             // w3c mode
             if (doc.addEventListener) {
                 function domReady() {
                     doc.removeEventListener(eventType, domReady, false);
-                    self._fireReady();
+                    fire();
                 }
                 doc.addEventListener(eventType, domReady, false);
             }
             // IE event model is used
             else {
-                if (win != win.top) { // iframe
-                    function stateChange() {
-                        if (doc.readyState === COMPLETE) {
-                            doc.detachEvent(eventType, stateChange);
-                            self._fireReady();
-                        }
+                function stateChange() {
+                    if (doc.readyState === COMPLETE) {
+                        doc.detachEvent(eventType, stateChange);
+                        fire();
                     }
-                    doc.attachEvent(eventType, stateChange);
                 }
-                else {
+
+                // ensure firing before onload, maybe late but safe also for iframes
+                doc.attachEvent(eventType, stateChange);
+
+                // A fallback to window.onload, that will always work.
+                win.attachEvent('onload', fire);
+
+                if (win == win.top) { // not an iframe
                     function readyScroll() {
                         try {
                             // Ref: http://javascript.nwbox.com/IEContentLoaded/
                             doScroll('left');
-                            self._fireReady();
+                            fire();
                         } catch(ex) {
                             setTimeout(readyScroll, 1);
                         }
                     }
                     readyScroll();
                 }
-
-                // A fallback to window.onload, that will always work.
-                win.attachEvent('onload', function() {
-                    self._fireReady();
-                });
             }
         },
 
@@ -218,13 +220,28 @@ build: 669 May 22 23:46
 
         /**
          * Applies prototype properties from the supplier to the receiver.
-         * @param r {Function} the object to receive the augmentation
-         * @param s {Object|Function} the object that supplies the properties to augment
-         * @param wl {String[]} a whitelist
          * @return {Object} the augmented object
          */
-        augment: function(r, s, ov, wl) {
-            mix(r.prototype, s.prototype || s, ov, wl);
+        augment: function(/*r, s1, s2, ..., ov, wl*/) {
+            var args = arguments, len = args.length - 2,
+                r = args[0], ov = args[len], wl = args[len + 1],
+                i = 1;
+            
+            if(!S.isArray(wl)) {
+                ov = wl;
+                wl = undefined;
+                len++;
+            }
+
+            if(!S.isBoolean(ov)) {
+                ov = undefined;
+                len++;
+            }
+
+            for(; i < len; i++) {
+                mix(r.prototype, args[i].prototype || args[i], ov, wl);
+            }
+
             return r;
         },
 
@@ -345,7 +362,7 @@ build: 669 May 22 23:46
 
     S._init();
 
-    // build Ê±£¬»á½« @DEBUG@ Ìæ»»Îª¿Õ
+    // build æ—¶ï¼Œä¼šå°† @DEBUG@ æ›¿æ¢ä¸ºç©º
     S.Config = { debug: '@DEBUG@' };
 
 })(window, 'KISSY');
@@ -354,18 +371,18 @@ build: 669 May 22 23:46
  * NOTES:
  *
  * 2010.04
- *  - ÒÆ³ıµô weave ·½·¨£¬ÉĞÎ´¿¼ÂÇÖÜÈ«¡£
+ *  - ç§»é™¤æ‰ weave æ–¹æ³•ï¼Œå°šæœªè€ƒè™‘å‘¨å…¨ã€‚
  *
  * 2010.01
- *  - add ·½·¨¾ö¶¨ÄÚ²¿´úÂëµÄ»ù±¾×éÖ¯·½Ê½£¨ÓÃ module ºÍ submodule À´×éÖ¯´úÂë£©¡£
- *  - ready ·½·¨¾ö¶¨Íâ²¿´úÂëµÄ»ù±¾µ÷ÓÃ·½Ê½£¬Ìá¹©ÁËÒ»¸ö¼òµ¥µÄÈõÉ³Ïä¡£
- *  - mix, merge, augment, extend ·½·¨£¬¾ö¶¨ÁËÀà¿â´úÂëµÄ»ù±¾ÊµÏÖ·½Ê½£¬³ä·ÖÀûÓÃ mixin ÌØĞÔºÍ prototype ·½Ê½À´ÊµÏÖ´úÂë¡£
- *  - namespace, app ·½·¨£¬¾ö¶¨×Ó¿âµÄÊµÏÖºÍ´úÂëµÄÕûÌå×éÖ¯¡£
- *  - log, error ·½·¨£¬¼òµ¥µÄµ÷ÊÔ¹¤¾ßºÍ±¨´í»úÖÆ¡£
- *  - ¿¼ÂÇ¼òµ¥¹»ÓÃºÍ 2/8 Ô­Ôò£¬È¥µô¶Ô YUI3 É³ÏäµÄÄ£Äâ¡££¨archives/2009 r402£©
+ *  - add æ–¹æ³•å†³å®šå†…éƒ¨ä»£ç çš„åŸºæœ¬ç»„ç»‡æ–¹å¼ï¼ˆç”¨ module å’Œ submodule æ¥ç»„ç»‡ä»£ç ï¼‰ã€‚
+ *  - ready æ–¹æ³•å†³å®šå¤–éƒ¨ä»£ç çš„åŸºæœ¬è°ƒç”¨æ–¹å¼ï¼Œæä¾›äº†ä¸€ä¸ªç®€å•çš„å¼±æ²™ç®±ã€‚
+ *  - mix, merge, augment, extend æ–¹æ³•ï¼Œå†³å®šäº†ç±»åº“ä»£ç çš„åŸºæœ¬å®ç°æ–¹å¼ï¼Œå……åˆ†åˆ©ç”¨ mixin ç‰¹æ€§å’Œ prototype æ–¹å¼æ¥å®ç°ä»£ç ã€‚
+ *  - namespace, app æ–¹æ³•ï¼Œå†³å®šå­åº“çš„å®ç°å’Œä»£ç çš„æ•´ä½“ç»„ç»‡ã€‚
+ *  - log, error æ–¹æ³•ï¼Œç®€å•çš„è°ƒè¯•å·¥å…·å’ŒæŠ¥é”™æœºåˆ¶ã€‚
+ *  - è€ƒè™‘ç®€å•å¤Ÿç”¨å’Œ 2/8 åŸåˆ™ï¼Œå»æ‰å¯¹ YUI3 æ²™ç®±çš„æ¨¡æ‹Ÿã€‚ï¼ˆarchives/2009 r402ï¼‰
  *
  * TODO:
- *  - Ä£¿é¶¯Ì¬¼ÓÔØ require ·½·¨µÄÊµÏÖ¡£
+ *  - æ¨¡å—åŠ¨æ€åŠ è½½ require æ–¹æ³•çš„å®ç°ã€‚
  * 
  */
 /**
@@ -377,6 +394,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
     var win = window, doc = document, loc = location,
         AP = Array.prototype,
         indexOf = AP.indexOf, filter = AP.filter,
+        trim = String.prototype.trim,
         toString = Object.prototype.toString,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
@@ -385,6 +403,13 @@ KISSY.add('kissy-lang', function(S, undefined) {
         REG_NOT_WHITE = /\S/;
 
     S.mix(S, {
+
+        /**
+         * Determines whether or not the provided object is undefined.
+         */
+        isUndefined: function(o) {
+            return o === undefined;
+        },
 
         /**
          * Determines whether or not the provided object is a boolean.
@@ -431,9 +456,9 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * NOTICE: DOM methods and functions like alert aren't supported. They return false on IE.
          */
         isFunction: function(o) {
-            return typeof o === 'function';
-            // ¶ÔÓÚ function À´Ëµ£¬Ö±½ÓÓÃ typeof µÄĞ§¹ûºÍ toString Ò»ÖÂ
-            //return toString.call(o) === '[object Function]';
+            //return typeof o === 'function';
+            // Safari ä¸‹ï¼Œtypeof NodeList ä¹Ÿè¿”å› function
+            return toString.call(o) === '[object Function]';
         },
 
         /**
@@ -446,12 +471,12 @@ KISSY.add('kissy-lang', function(S, undefined) {
         /**
          * Removes the whitespace from the beginning and end of a string.
          */
-        trim: String.prototype.trim ?
+        trim: trim ?
               function(str) {
-                  return (str || '').trim();
+                  return (str == undefined) ? '' : trim.call(str);
               } :
               function(str) {
-                  return (str || '').replace(REG_TRIM, '');
+                  return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
               },
 
         /**
@@ -488,7 +513,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * Search for a specified value index within an array.
          */
         inArray: function(elem, arr) {
-            return S.indexOf(elem, arr) !== -1;
+            return S.indexOf(elem, arr) > -1;
         },
 
         /**
@@ -503,7 +528,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 return [o];
             }
 
-            // ie ²»Ö§³ÖÓÃ slice ×ª»» NodeList, ½µ¼¶µ½ÆÕÍ¨·½·¨
+            // ie ä¸æ”¯æŒç”¨ slice è½¬æ¢ NodeList, é™çº§åˆ°æ™®é€šæ–¹æ³•
             if (o.item && S.UA.ie) {
                 var ret = [], i = 0, len = o.length;
                 for (; i < len; ++i) {
@@ -551,7 +576,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * </code>
          */
         param: function(o) {
-            // ·Ç plain object, Ö±½Ó·µ»Ø¿Õ
+            // é plain object, ç›´æ¥è¿”å›ç©º
             if (!S.isPlainObject(o)) return '';
 
             var buf = [], key, val;
@@ -559,11 +584,11 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 val = o[key];
                 key = encode(key);
 
-                // val ÎªÓĞĞ§µÄ·ÇÊı×éÖµ
+                // val ä¸ºæœ‰æ•ˆçš„éæ•°ç»„å€¼
                 if (isValidParamValue(val)) {
                     buf.push(key, '=', encode(val + ''), '&');
                 }
-                // val Îª·Ç¿ÕÊı×é
+                // val ä¸ºéç©ºæ•°ç»„
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
@@ -571,7 +596,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
                         }
                     }
                 }
-                // ÆäËüÇé¿ö£º°üÀ¨¿ÕÊı×é¡¢²»ÊÇÊı×éµÄ object£¨°üÀ¨ Function, RegExp, Date etc.£©£¬Ö±½Ó¶ªÆú
+                // å…¶å®ƒæƒ…å†µï¼šåŒ…æ‹¬ç©ºæ•°ç»„ã€ä¸æ˜¯æ•°ç»„çš„ objectï¼ˆåŒ…æ‹¬ Function, RegExp, Date etc.ï¼‰ï¼Œç›´æ¥ä¸¢å¼ƒ
             }
             buf.pop();
             return buf.join('');
@@ -597,7 +622,13 @@ KISSY.add('kissy-lang', function(S, undefined) {
             for (; i < len; ++i) {
                 pair = pairs[i].split('=');
                 key = decode(pair[0]);
-                val = decode(pair[1] || '');
+
+                // pair[1] å¯èƒ½åŒ…å« gbk ç¼–ç çš„ä¸­æ–‡ï¼Œè€Œ decodeURIComponent ä»…èƒ½å¤„ç† utf-8 ç¼–ç çš„ä¸­æ–‡ï¼Œå¦åˆ™æŠ¥é”™
+                try {
+                    val = decode(pair[1] || '');
+                } catch (ex) {
+                    val = pair[1] || '';
+                }
 
                 if ((m = key.match(REG_ARR_KEY)) && m[1]) {
                     ret[m[1]] = ret[m[1]] || [];
@@ -688,11 +719,11 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
     function isValidParamValue(val) {
         var t = typeof val;
-        // val Îª null, undefined, number, string, boolean Ê±£¬·µ»Ø true
+        // val ä¸º null, undefined, number, string, boolean æ—¶ï¼Œè¿”å› true
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // ¿ÉÒÔÍ¨¹ıÔÚ url ÉÏ¼Ó ?ks-debug À´¿ªÆô debug Ä£Ê½
+    // å¯ä»¥é€šè¿‡åœ¨ url ä¸ŠåŠ  ?ks-debug æ¥å¼€å¯ debug æ¨¡å¼
     if(loc && loc.search && loc.search.indexOf('ks-debug') !== -1){
         S.Config.debug = true;
     }
@@ -701,16 +732,19 @@ KISSY.add('kissy-lang', function(S, undefined) {
 /**
  * NOTES:
  *
+ *  2010.06
+ *   - unparam é‡Œçš„ try catch è®©äººå¾ˆéš¾å—ï¼Œä½†ä¸ºäº†é¡ºåº”å›½æƒ…ï¼Œå†³å®šè¿˜æ˜¯ç•™ç€ã€‚
+ *
  *  2010.05
- *   - Ôö¼Ó filter ·½·¨¡£
- *   - globalEval ÖĞ£¬Ö±½Ó²ÉÓÃ text ¸³Öµ£¬È¥µô appendChild ·½Ê½¡£
+ *   - å¢åŠ  filter æ–¹æ³•ã€‚
+ *   - globalEval ä¸­ï¼Œç›´æ¥é‡‡ç”¨ text èµ‹å€¼ï¼Œå»æ‰ appendChild æ–¹å¼ã€‚
  *
  *  2010.04
- *   - param ºÍ unparam Ó¦¸Ã·ÅÔÚÊ²Ã´µØ·½ºÏÊÊ£¿ÓĞµã¾À½á£¬Ä¿Ç°Ôİ·Å´Ë´¦¡£
- *   - param ºÍ unparam ÊÇ²»ÍêÈ«¿ÉÄæµÄ¡£¶Ô¿ÕÖµµÄ´¦ÀíºÍ cookie ±£³ÖÒ»ÖÂ¡£
+ *   - param å’Œ unparam åº”è¯¥æ”¾åœ¨ä»€ä¹ˆåœ°æ–¹åˆé€‚ï¼Ÿæœ‰ç‚¹çº ç»“ï¼Œç›®å‰æš‚æ”¾æ­¤å¤„ã€‚
+ *   - param å’Œ unparam æ˜¯ä¸å®Œå…¨å¯é€†çš„ã€‚å¯¹ç©ºå€¼çš„å¤„ç†å’Œ cookie ä¿æŒä¸€è‡´ã€‚
  *
  * TODO:
- *   - ·ÖÎö jq µÄ isPlainObject ¶Ô constructor µÄÏ¸½Ú´¦Àí
+ *   - åˆ†æ jq çš„ isPlainObject å¯¹ constructor ç­‰ç»†èŠ‚å¤„ç†
  *
  */
 /**
@@ -803,23 +837,38 @@ KISSY.add('kissy-ua', function(S) {
  * NOTES:
  *
  * 2010.03
- *  - jQuery, YUI µÈÀà¿â¶¼ÍÆ¼öÓÃÌØĞÔÌ½²âÌæ´úä¯ÀÀÆ÷ĞáÌ½¡£ÌØĞÔÌ½²âµÄºÃ´¦ÊÇÄÜ×Ô¶¯ÊÊÓ¦Î´À´Éè±¸ºÍÎ´ÖªÉè±¸£¬±ÈÈç
- *    if(document.addEventListener) ¼ÙÉè IE9 Ö§³Ö±ê×¼ÊÂ¼ş£¬Ôò´úÂë²»ÓÃĞŞ¸Ä£¬¾Í×ÔÊÊÓ¦ÁË¡°Î´À´ä¯ÀÀÆ÷¡±¡£
- *    ¶ÔÓÚÎ´Öªä¯ÀÀÆ÷Ò²ÊÇÈç´Ë¡£µ«ÊÇ£¬Õâ²¢²»ÒâÎ¶×Åä¯ÀÀÆ÷ĞáÌ½¾ÍµÃ³¹µ×Å×Æú¡£µ±´úÂëºÜÃ÷È·¾ÍÊÇÕë¶ÔÒÑÖªÌØ¶¨ä¯ÀÀÆ÷µÄ£¬
- *    Í¬Ê±²¢·ÇÊÇÄ³¸öÌØĞÔÌ½²â¿ÉÒÔ½â¾öÊ±£¬ÓÃä¯ÀÀÆ÷ĞáÌ½·´¶øÄÜ´øÀ´´úÂëµÄ¼ò½à£¬Í¬Ê±Ò²Ò²²»»áÓĞÊ²Ã´ºó»¼¡£×ÜÖ®£¬Ò»ÇĞ
- *    ½ÔÈ¨ºâ¡£
- *  - UA.ie && UA.ie < 8 ²¢²»ÒâÎ¶×Åä¯ÀÀÆ÷¾Í²»ÊÇ IE8, ÓĞ¿ÉÄÜÊÇ IE8 µÄ¼æÈİÄ£Ê½¡£½øÒ»²½µÄÅĞ¶ÏĞèÒªÊ¹ÓÃ documentMode.
+ *  - jQuery, YUI ç­‰ç±»åº“éƒ½æ¨èç”¨ç‰¹æ€§æ¢æµ‹æ›¿ä»£æµè§ˆå™¨å—…æ¢ã€‚ç‰¹æ€§æ¢æµ‹çš„å¥½å¤„æ˜¯èƒ½è‡ªåŠ¨é€‚åº”æœªæ¥è®¾å¤‡å’ŒæœªçŸ¥è®¾å¤‡ï¼Œæ¯”å¦‚
+ *    if(document.addEventListener) å‡è®¾ IE9 æ”¯æŒæ ‡å‡†äº‹ä»¶ï¼Œåˆ™ä»£ç ä¸ç”¨ä¿®æ”¹ï¼Œå°±è‡ªé€‚åº”äº†â€œæœªæ¥æµè§ˆå™¨â€ã€‚
+ *    å¯¹äºæœªçŸ¥æµè§ˆå™¨ä¹Ÿæ˜¯å¦‚æ­¤ã€‚ä½†æ˜¯ï¼Œè¿™å¹¶ä¸æ„å‘³ç€æµè§ˆå™¨å—…æ¢å°±å¾—å½»åº•æŠ›å¼ƒã€‚å½“ä»£ç å¾ˆæ˜ç¡®å°±æ˜¯é’ˆå¯¹å·²çŸ¥ç‰¹å®šæµè§ˆå™¨çš„ï¼Œ
+ *    åŒæ—¶å¹¶éæ˜¯æŸä¸ªç‰¹æ€§æ¢æµ‹å¯ä»¥è§£å†³æ—¶ï¼Œç”¨æµè§ˆå™¨å—…æ¢åè€Œèƒ½å¸¦æ¥ä»£ç çš„ç®€æ´ï¼ŒåŒæ—¶ä¹Ÿä¹Ÿä¸ä¼šæœ‰ä»€ä¹ˆåæ‚£ã€‚æ€»ä¹‹ï¼Œä¸€åˆ‡
+ *    çš†æƒè¡¡ã€‚
+ *  - UA.ie && UA.ie < 8 å¹¶ä¸æ„å‘³ç€æµè§ˆå™¨å°±ä¸æ˜¯ IE8, æœ‰å¯èƒ½æ˜¯ IE8 çš„å…¼å®¹æ¨¡å¼ã€‚è¿›ä¸€æ­¥çš„åˆ¤æ–­éœ€è¦ä½¿ç”¨ documentMode.
  *
  * TODO:
  *  - test mobile
- *  - ÊÇ·ñĞèÒª¼ÓÈë maxthon µÈ¹úÄÚä¯ÀÀÆ÷ĞáÌ½£¿
+ *  - æ˜¯å¦éœ€è¦åŠ å…¥ maxthon ç­‰å›½å†…æµè§ˆå™¨å—…æ¢ï¼Ÿ
  * 
  */
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 671 May 23 14:23
+build: 792 Jul 1 19:44
 */
+/**
+ * @module  dom
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom', function(S) {
+
+    S.DOM = {
+        /**
+         * æ˜¯ä¸æ˜¯ element node
+         */
+        _isElementNode: function(elem) {
+            return elem && elem.nodeType === 1;
+        }
+    };
+});
 /**
  * @module  selector
  * @author  lifesinger@gmail.com
@@ -827,7 +876,7 @@ build: 671 May 23 14:23
 KISSY.add('selector', function(S, undefined) {
 
     var doc = document,
-        STRING = 'string',
+        DOM = S.DOM,
         SPACE = ' ',
         ANY = '*',
         REG_ID = /^#[\w-]+$/,
@@ -836,14 +885,15 @@ KISSY.add('selector', function(S, undefined) {
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
      * @param {string} selector
-     * @param {string|HTMLElement} context An id string or a HTMLElement used as context
+     * @param {string|HTMLElement} context An #id string or a HTMLElement used as context
      * @return {Array} The array of found HTMLElement
      */
     function query(selector, context) {
         var match, t, ret = [], id, tag, cls, i, len;
+        context = tuneContext(context);
 
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
-        // ¿¼ÂÇ 2/8 Ô­Ôò£¬½öÖ§³ÖÒÔÏÂÑ¡ÔñÆ÷£º
+        // è€ƒè™‘ 2/8 åŸåˆ™ï¼Œä»…æ”¯æŒä»¥ä¸‹é€‰æ‹©å™¨ï¼š
         // #id
         // tag
         // .cls
@@ -851,54 +901,54 @@ KISSY.add('selector', function(S, undefined) {
         // #id .cls
         // tag.cls
         // #id tag.cls
-        // ×¢ 1£ºREG_QUERY »¹»áÆ¥Åä #id.cls ÎŞĞ§Öµ
-        // ×¢ 2£ºtag ¿ÉÒÔÎª * ×Ö·û
-        // ×¢ 3£ºÖ§³Ö , ºÅ·Ö×é
-        // ·µ»ØÖµÎªÊı×é
-        // Ñ¡ÔñÆ÷ÎŞĞ§»ò²ÎÊıÒì³£Ê±£¬·µ»Ø¿ÕÊı×é
+        // æ³¨ 1ï¼šREG_QUERY è¿˜ä¼šåŒ¹é… #id.cls
+        // æ³¨ 2ï¼štag å¯ä»¥ä¸º * å­—ç¬¦
+        // æ³¨ 3ï¼šæ”¯æŒ , å·åˆ†ç»„
+        // è¿”å›å€¼ä¸ºæ•°ç»„
+        // é€‰æ‹©å™¨ä¸æ”¯æŒæ—¶ï¼ŒæŠ›å‡ºå¼‚å¸¸
 
-        // selector Îª×Ö·û´®ÊÇ×î³£¼ûµÄÇé¿ö£¬ÓÅÏÈ¿¼ÂÇ
-        // ×¢£º¿Õ°××Ö·û´®ÎŞĞèÅĞ¶Ï£¬ÔËĞĞÏÂÈ¥×Ô¶¯ÄÜ·µ»Ø¿ÕÊı×é
-        if (typeof selector === STRING) {
+        // selector ä¸ºå­—ç¬¦ä¸²æ˜¯æœ€å¸¸è§çš„æƒ…å†µï¼Œä¼˜å…ˆè€ƒè™‘
+        // æ³¨ï¼šç©ºç™½å­—ç¬¦ä¸²æ— éœ€åˆ¤æ–­ï¼Œè¿è¡Œä¸‹å»è‡ªåŠ¨èƒ½è¿”å›ç©ºæ•°ç»„
+        if (S.isString(selector)) {
             selector = S.trim(selector);
 
-            // selector Îª #id ÊÇ×î³£¼ûµÄÇé¿ö£¬ÌØÊâÓÅ»¯´¦Àí
+            // selector ä¸º #id æ˜¯æœ€å¸¸è§çš„æƒ…å†µï¼Œç‰¹æ®Šä¼˜åŒ–å¤„ç†
             if (REG_ID.test(selector)) {
                 t = getElementById(selector.slice(1));
-                if (t) ret = [t]; // #id ÎŞĞ§Ê±£¬·µ»Ø¿ÕÊı×é
+                if (t) ret = [t]; // #id æ— æ•ˆæ—¶ï¼Œè¿”å›ç©ºæ•°ç»„
             }
-            // selector ÎªÖ§³ÖÁĞ±íÖĞµÄÆäËü 6 ÖÖ
-            else if (match = REG_QUERY.exec(selector)) { // NOTICE: assignment
-                // »ñÈ¡Æ¥Åä³öµÄĞÅÏ¢
+            // selector ä¸ºæ”¯æŒåˆ—è¡¨ä¸­çš„å…¶å®ƒ 6 ç§
+            else if ((match = REG_QUERY.exec(selector))) {
+                // è·å–åŒ¹é…å‡ºçš„ä¿¡æ¯
                 id = match[1];
                 tag = match[2];
                 cls = match[3];
 
-                if (context = id ? getElementById(id) : tuneContext(context)) { // NOTICE: assignment
+                if ((context = id ? getElementById(id) : context)) {
 
                     // #id .cls | #id tag.cls | .cls | tag.cls
                     if (cls) {
-                        if (!id || selector.indexOf(SPACE) !== -1) { // ÅÅ³ı #id.cls
+                        if (!id || selector.indexOf(SPACE) !== -1) { // æ’é™¤ #id.cls
                             ret = getElementsByClassName(cls, tag, context);
                         }
-                        // ´¦Àí #id.cls
+                        // å¤„ç† #id.cls
                         else {
                             t = getElementById(id);
-                            if(t && S.DOM.hasClass(t, cls)) {
+                            if(t && DOM.hasClass(t, cls)) {
                                 ret = [t];
                             }
                         }
                     }
                     // #id tag | tag
-                    else if (tag) { // ÅÅ³ı¿Õ°××Ö·û´®
+                    else if (tag) { // æ’é™¤ç©ºç™½å­—ç¬¦ä¸²
                         ret = getElementsByTagName(context, tag);
                     }
                 }
             }
-            // ·Ö×éÑ¡ÔñÆ÷
+            // åˆ†ç»„é€‰æ‹©å™¨
             else if (selector.indexOf(',') > -1) {
-                if (doc.querySelectorAll) {
-                    ret = doc.querySelectorAll(selector);
+                if (context.querySelectorAll) {
+                    ret = context.querySelectorAll(selector);
                 } else {
                     var parts = selector.split(','), r = [];
                     for (i = 0,len = parts.length; i < len; ++i) {
@@ -907,26 +957,26 @@ KISSY.add('selector', function(S, undefined) {
                     ret = uniqueSort(r);
                 }
             }
-            // ²ÉÓÃÍâ²¿Ñ¡ÔñÆ÷
-            else if(S.externalSelector) {
-                return S.externalSelector(selector, context);
+            // é‡‡ç”¨å¤–éƒ¨é€‰æ‹©å™¨
+            else if(S.ExternalSelector) {
+                return S.ExternalSelector(selector, context);
             }
-            // ÒÀ¾É²»Ö§³Ö£¬Å×Òì³£
+            // ä¾æ—§ä¸æ”¯æŒï¼ŒæŠ›å¼‚å¸¸
             else {
-                S.error('Unsupported selector: ' + selector);
+                error(selector);
             }
         }
-        // ´«ÈëµÄ selector ÊÇ Node
+        // ä¼ å…¥çš„ selector æ˜¯ Node
         else if (selector && selector.nodeType) {
             ret = [selector];
         }
-        // ´«ÈëµÄ selector ÊÇ NodeList
-        else if (selector && selector.item) {
+        // ä¼ å…¥çš„ selector æ˜¯ NodeList æˆ–å·²æ˜¯ Array
+        else if (selector && (selector.item || S.isArray(selector))) {
             ret = selector;
         }
-        // ´«ÈëµÄ selector ÊÇÆäËüÖµÊ±£¬·µ»Ø¿ÕÊı×é
+        // ä¼ å…¥çš„ selector æ˜¯å…¶å®ƒå€¼æ—¶ï¼Œè¿”å›ç©ºæ•°ç»„
 
-        // ½« NodeList ×ª»»ÎªÆÕÍ¨Êı×é
+        // å°† NodeList è½¬æ¢ä¸ºæ™®é€šæ•°ç»„
         if(ret.item) {
             ret = S.makeArray(ret);
         }
@@ -934,19 +984,19 @@ KISSY.add('selector', function(S, undefined) {
         return ret;
     }
 
-    // µ÷Õû context ÎªºÏÀíÖµ
+    // è°ƒæ•´ context ä¸ºåˆç†å€¼
     function tuneContext(context) {
-        // 1). context Îª undefined ÊÇ×î³£¼ûµÄÇé¿ö£¬ÓÅÏÈ¿¼ÂÇ
+        // 1). context ä¸º undefined æ˜¯æœ€å¸¸è§çš„æƒ…å†µï¼Œä¼˜å…ˆè€ƒè™‘
         if (context === undefined) {
             context = doc;
         }
-        // 2). context µÄµÚ¶şÊ¹ÓÃ³¡¾°ÊÇ´«Èë #id
-        else if (typeof context === STRING && REG_ID.test(context)) {
+        // 2). context çš„ç¬¬äºŒä½¿ç”¨åœºæ™¯æ˜¯ä¼ å…¥ #id
+        else if (S.isString(context) && REG_ID.test(context)) {
             context = getElementById(context.slice(1));
-            // ×¢£º#id ¿ÉÄÜÎŞĞ§£¬ÕâÊ±»ñÈ¡µÄ context Îª null
+            // æ³¨ï¼š#id å¯èƒ½æ— æ•ˆï¼Œè¿™æ—¶è·å–çš„ context ä¸º null
         }
-        // 3). context »¹¿ÉÒÔ´«Èë HTMLElement, ´ËÊ±ÎŞĞè´¦Àí
-        // 4). ¾­Àú 1 - 3, Èç¹û context »¹²»ÊÇ HTMLElement, ¸³ÖµÎª null
+        // 3). context è¿˜å¯ä»¥ä¼ å…¥ HTMLElement, æ­¤æ—¶æ— éœ€å¤„ç†
+        // 4). ç»å† 1 - 3, å¦‚æœ context è¿˜ä¸æ˜¯ HTMLElement, èµ‹å€¼ä¸º null
         else if (context && context.nodeType !== 1 && context.nodeType !== 9) {
             context = null;
         }
@@ -977,7 +1027,7 @@ KISSY.add('selector', function(S, undefined) {
 
                 if (tag === ANY) {
                     var t = [], i = 0, j = 0, node;
-                    while (node = ret[i++]) { // NOTICE: assignment
+                    while ((node = ret[i++])) {
                         // Filter out possible comments
                         if (node.nodeType === 1) {
                             t[j++] = node;
@@ -1008,13 +1058,13 @@ KISSY.add('selector', function(S, undefined) {
         return ret;
     }
     if (!doc.getElementsByClassName) {
-        // ½µ¼¶Ê¹ÓÃ querySelectorAll
+        // é™çº§ä½¿ç”¨ querySelectorAll
         if (doc.querySelectorAll) {
             getElementsByClassName = function(cls, tag, context) {
                 return context.querySelectorAll((tag ? tag : '') + '.' + cls);
             }
         }
-        // ½µ¼¶µ½ÆÕÍ¨·½·¨
+        // é™çº§åˆ°æ™®é€šæ–¹æ³•
         else {
             getElementsByClassName = function(cls, tag, context) {
                 var els = context.getElementsByTagName(tag || ANY),
@@ -1033,14 +1083,14 @@ KISSY.add('selector', function(S, undefined) {
         }
     }
 
-    // ¶ÔÓÚ·Ö×éÑ¡ÔñÆ÷£¬ĞèÒª½øĞĞÈ¥ÖØºÍÅÅĞò
+    // å¯¹äºåˆ†ç»„é€‰æ‹©å™¨ï¼Œéœ€è¦è¿›è¡Œå»é‡å’Œæ’åº
     function uniqueSort(results) {
         var hasDuplicate = false;
 
-        // °´ÕÕ dom Î»ÖÃÅÅĞò
+        // æŒ‰ç…§ dom ä½ç½®æ’åº
         results.sort(function (a, b) {
-            // ¸Ãº¯ÊıÖ»ÔÚ²»Ö§³Ö querySelectorAll µÄ IE7- ä¯ÀÀÆ÷ÖĞ±»µ÷ÓÃ£¬
-            // Òò´ËÖ»Ğè¿¼ÂÇ sourceIndex ¼´¿É
+            // è¯¥å‡½æ•°åªåœ¨ä¸æ”¯æŒ querySelectorAll çš„ IE7- æµè§ˆå™¨ä¸­è¢«è°ƒç”¨ï¼Œ
+            // å› æ­¤åªéœ€è€ƒè™‘ sourceIndex å³å¯
             var ret = a.sourceIndex - b.sourceIndex;
             if (ret === 0) {
                 hasDuplicate = true;
@@ -1048,7 +1098,7 @@ KISSY.add('selector', function(S, undefined) {
             return ret;
         });
 
-        // È¥ÖØ
+        // å»é‡
         if (hasDuplicate) {
             for (var i = 1; i < results.length; i++) {
                 if (results[i] === results[i - 1]) {
@@ -1060,46 +1110,101 @@ KISSY.add('selector', function(S, undefined) {
         return results;
     }
 
+    // throw exception
+    function error(msg) {
+        S.error('Unsupported selector: ' + msg);
+    }
+
     // public api
     S.query = query;
     S.get = function(selector, context) {
         return query(selector, context)[0] || null;
-    }
+    };
+
+    S.mix(DOM, {
+
+        query: query,
+
+        get: S.get,
+
+        /**
+         * Filters an array of elements to only include matches of a filter.
+         * @param filter selector or fn
+         */
+        filter: function(selector, filter) {
+            var elems = query(selector), match, tag, cls, ret = [];
+
+            // é»˜è®¤ä»…æ”¯æŒæœ€ç®€å•çš„ tag.cls å½¢å¼
+            if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
+                tag = match[2];
+                cls = match[3];
+                filter = function(elem) {
+                    return !((tag && elem.tagName !== tag.toUpperCase()) || (cls && !DOM.hasClass(elem, cls)));
+                }
+            }
+
+            if (S.isFunction(filter)) {
+                ret = S.filter(elems, filter);
+            }
+            // å…¶å®ƒå¤æ‚ filter, é‡‡ç”¨å¤–éƒ¨é€‰æ‹©å™¨
+            else if (filter && S.ExternalSelector) {
+                ret = S.ExternalSelector._filter(selector, filter);
+            }
+            // filter ä¸ºç©ºæˆ–ä¸æ”¯æŒçš„ selector
+            else {
+                error(filter);
+            }
+
+            return ret;
+        },
+
+        /**
+         * Returns true if the passed element(s) match the passed filter
+         */
+        test: function(selector, filter) {
+            var elems = query(selector);
+            return DOM.filter(elems, filter).length === elems.length;
+        }
+
+    });
 });
 
 /**
  * NOTES:
  *
  * 2010.01
- *  - ¶Ô reg exec µÄ½á¹û(id, tag, className)×ö cache, ·¢ÏÖ¶ÔĞÔÄÜÓ°ÏìºÜĞ¡£¬È¥µô¡£
- *  - getElementById Ê¹ÓÃÆµÂÊ×î¸ß£¬Ê¹ÓÃÖ±´ïÍ¨µÀÓÅ»¯¡£
- *  - getElementsByClassName ĞÔÄÜÓÅÓÚ querySelectorAll, µ« IE ÏµÁĞ²»Ö§³Ö¡£
- *  - instanceof ¶ÔĞÔÄÜÓĞÓ°Ïì¡£
- *  - ÄÚ²¿·½·¨µÄ²ÎÊı£¬±ÈÈç cls, context µÈµÄÒì³£Çé¿ö£¬ÒÑ¾­ÔÚ query ·½·¨ÖĞÓĞ±£Ö¤£¬ÎŞĞèÈßÓà¡°·ÀÎÀ¡±¡£
- *  - query ·½·¨ÖĞµÄÌõ¼şÅĞ¶Ï¿¼ÂÇÁË¡°ÆµÂÊÓÅÏÈ¡±Ô­Ôò¡£×îÓĞ¿ÉÄÜ³öÏÖµÄÇé¿ö·ÅÔÚÇ°Ãæ¡£
- *  - Array µÄ push ·½·¨¿ÉÒÔÓÃ j++ À´Ìæ´ú£¬ĞÔÄÜÓĞÌáÉı¡£
- *  - ·µ»ØÖµ²ßÂÔºÍ Sizzle Ò»ÖÂ£¬Õı³£Ê±£¬·µ»ØÊı×é£»ÆäËüËùÓĞÇé¿ö£¬·µ»Ø¿ÕÊı×é¡£
+ *  - å¯¹ reg exec çš„ç»“æœ(id, tag, className)åš cache, å‘ç°å¯¹æ€§èƒ½å½±å“å¾ˆå°ï¼Œå»æ‰ã€‚
+ *  - getElementById ä½¿ç”¨é¢‘ç‡æœ€é«˜ï¼Œä½¿ç”¨ç›´è¾¾é€šé“ä¼˜åŒ–ã€‚
+ *  - getElementsByClassName æ€§èƒ½ä¼˜äº querySelectorAll, ä½† IE ç³»åˆ—ä¸æ”¯æŒã€‚
+ *  - instanceof å¯¹æ€§èƒ½æœ‰å½±å“ã€‚
+ *  - å†…éƒ¨æ–¹æ³•çš„å‚æ•°ï¼Œæ¯”å¦‚ cls, context ç­‰çš„å¼‚å¸¸æƒ…å†µï¼Œå·²ç»åœ¨ query æ–¹æ³•ä¸­æœ‰ä¿è¯ï¼Œæ— éœ€å†—ä½™â€œé˜²å«â€ã€‚
+ *  - query æ–¹æ³•ä¸­çš„æ¡ä»¶åˆ¤æ–­è€ƒè™‘äº†â€œé¢‘ç‡ä¼˜å…ˆâ€åŸåˆ™ã€‚æœ€æœ‰å¯èƒ½å‡ºç°çš„æƒ…å†µæ”¾åœ¨å‰é¢ã€‚
+ *  - Array çš„ push æ–¹æ³•å¯ä»¥ç”¨ j++ æ¥æ›¿ä»£ï¼Œæ€§èƒ½æœ‰æå‡ã€‚
+ *  - è¿”å›å€¼ç­–ç•¥å’Œ Sizzle ä¸€è‡´ï¼Œæ­£å¸¸æ—¶ï¼Œè¿”å›æ•°ç»„ï¼›å…¶å®ƒæ‰€æœ‰æƒ…å†µï¼Œè¿”å›ç©ºæ•°ç»„ã€‚
  *
- *  - ´ÓÑ¹Ëõ½Ç¶È¿¼ÂÇ£¬»¹¿ÉÒÔ½« getElmentsByTagName ºÍ getElementsByClassName ¶¨ÒåÎª³£Á¿£¬
- *    ²»¹ı¸Ğ¾õÕâÑù×öÌ«¡°Ñ¹Ëõ¿Ø¡±£¬»¹ÊÇ±£Áô²»Ìæ»»µÄºÃ¡£
+ *  - ä»å‹ç¼©è§’åº¦è€ƒè™‘ï¼Œè¿˜å¯ä»¥å°† getElmentsByTagName å’Œ getElementsByClassName å®šä¹‰ä¸ºå¸¸é‡ï¼Œ
+ *    ä¸è¿‡æ„Ÿè§‰è¿™æ ·åšå¤ªâ€œå‹ç¼©æ§â€ï¼Œè¿˜æ˜¯ä¿ç•™ä¸æ›¿æ¢çš„å¥½ã€‚
  *
- *  - µ÷Õû getElementsByClassName µÄ½µ¼¶Ğ´·¨£¬ĞÔÄÜ×î²îµÄ·Å×îºó¡£
+ *  - è°ƒæ•´ getElementsByClassName çš„é™çº§å†™æ³•ï¼Œæ€§èƒ½æœ€å·®çš„æ”¾æœ€åã€‚
  *
  * 2010.02
- *  - Ìí¼Ó¶Ô·Ö×éÑ¡ÔñÆ÷µÄÖ§³Ö£¨Ö÷Òª²Î¿¼ Sizzle µÄ´úÂë£¬´úÈ¥³ıÁË¶Ô·Ç Grade A ¼¶ä¯ÀÀÆ÷µÄÖ§³Ö£©
+ *  - æ·»åŠ å¯¹åˆ†ç»„é€‰æ‹©å™¨çš„æ”¯æŒï¼ˆä¸»è¦å‚è€ƒ Sizzle çš„ä»£ç ï¼Œä»£å»é™¤äº†å¯¹é Grade A çº§æµè§ˆå™¨çš„æ”¯æŒï¼‰
  *
  * 2010.03
- *  - »ùÓÚÔ­Éú dom µÄÁ½¸ö api: S.query ·µ»ØÊı×é; S.get ·µ»ØµÚÒ»¸ö¡£
- *    »ùÓÚ Node µÄ api: S.one, ÔÚ Node ÖĞÊµÏÖ¡£
- *    »ùÓÚ NodeList µÄ api: S.all, ÔÚ NodeList ÖĞÊµÏÖ¡£
- *    Í¨¹ı api µÄ·Ö²ã£¬Í¬Ê±Âú×ã³õ¼¶ÓÃ»§ºÍ¸ß¼¶ÓÃ»§µÄĞèÇó¡£
+ *  - åŸºäºåŸç”Ÿ dom çš„ä¸¤ä¸ª api: S.query è¿”å›æ•°ç»„; S.get è¿”å›ç¬¬ä¸€ä¸ªã€‚
+ *    åŸºäº Node çš„ api: S.one, åœ¨ Node ä¸­å®ç°ã€‚
+ *    åŸºäº NodeList çš„ api: S.all, åœ¨ NodeList ä¸­å®ç°ã€‚
+ *    é€šè¿‡ api çš„åˆ†å±‚ï¼ŒåŒæ—¶æ»¡è¶³åˆçº§ç”¨æˆ·å’Œé«˜çº§ç”¨æˆ·çš„éœ€æ±‚ã€‚
  *
  * 2010.05
- *  - È¥µô¸ø S.query ·µ»ØÖµÄ¬ÈÏÌí¼ÓµÄ each ·½·¨£¬±£³Ö´¿¾»¡£
- *  - ¶ÔÓÚ²»Ö§³ÖµÄ selector, ²ÉÓÃÍâ²¿ñîºÏ½øÀ´µÄ Selector.
+ *  - å»æ‰ç»™ S.query è¿”å›å€¼é»˜è®¤æ·»åŠ çš„ each æ–¹æ³•ï¼Œä¿æŒçº¯å‡€ã€‚
+ *  - å¯¹äºä¸æ”¯æŒçš„ selector, é‡‡ç”¨å¤–éƒ¨è€¦åˆè¿›æ¥çš„ Selector.
+ *
+ * 2010.06
+ *  - å¢åŠ  filter å’Œ test æ–¹æ³•
  *
  * Bugs:
- *  - S.query('#test-data *') µÈ´ø * ºÅµÄÑ¡ÔñÆ÷£¬ÔÚ IE6 ÏÂ·µ»ØµÄÖµ²»¶Ô¡£jQuery µÈÀà¿âÒ²ÓĞ´Ë bug, ¹îÒì¡£
+ *  - S.query('#test-data *') ç­‰å¸¦ * å·çš„é€‰æ‹©å™¨ï¼Œåœ¨ IE6 ä¸‹è¿”å›çš„å€¼ä¸å¯¹ã€‚jQuery ç­‰ç±»åº“ä¹Ÿæœ‰æ­¤ bug, è¯¡å¼‚ã€‚
  *
  * References:
  *  - http://ejohn.org/blog/selectors-that-people-actually-use/
@@ -1109,7 +1214,7 @@ KISSY.add('selector', function(S, undefined) {
  *  - MINI: http://james.padolsey.com/javascript/mini/
  *  - Peppy: http://jamesdonaghue.com/?p=40
  *  - Sly: http://github.com/digitarald/sly
- *  - XPath, TreeWalker£ºhttp://www.cnblogs.com/rubylouvre/archive/2009/07/24/1529640.html
+ *  - XPath, TreeWalkerï¼šhttp://www.cnblogs.com/rubylouvre/archive/2009/07/24/1529640.html
  *
  *  - http://www.quirksmode.org/blog/archives/2006/01/contains_for_mo.html
  *  - http://www.quirksmode.org/dom/getElementsByTagNames.html
@@ -1117,27 +1222,159 @@ KISSY.add('selector', function(S, undefined) {
  *  - http://github.com/jeresig/sizzle/blob/master/sizzle.js
  */
 /**
- * @module  dom-base
+ * @module  dom-class
  * @author  lifesinger@gmail.com
  */
+KISSY.add('dom-class', function(S, undefined) {
 
-KISSY.add('dom-base', function(S, undefined) {
+    var SPACE = ' ',
+        DOM = S.DOM,
+        REG_SPLIT = /[\.\s]\s*\.?/,
+        REG_CLASS = /[\n\t]/g;
 
-    var doc = document,
+    S.mix(DOM, {
+
+        /**
+         * Determine whether any of the matched elements are assigned the given class.
+         */
+        hasClass: function(selector, value) {
+            return batch(selector, value, function(elem, classNames, cl) {
+                var elemClass = elem.className;
+                if (elemClass) {
+                    var className = SPACE + elemClass + SPACE, j = 0, ret = true;
+                    for (; j < cl; j++) {
+                        if (className.indexOf(SPACE + classNames[j] + SPACE) < 0) {
+                            ret = false;
+                            break;
+                        }
+                    }
+                    if (ret) return true;
+                }
+            }, true);
+        },
+
+        /**
+         * Adds the specified class(es) to each of the set of matched elements.
+         */
+        addClass: function(selector, value) {
+            batch(selector, value, function(elem, classNames, cl) {
+                var elemClass = elem.className;
+                if (!elemClass) {
+                    elem.className = value;
+                }
+                else {
+                    var className = SPACE + elemClass + SPACE, setClass = elemClass, j = 0;
+                    for (; j < cl; j++) {
+                        if (className.indexOf(SPACE + classNames[j] + SPACE) < 0) {
+                            setClass += SPACE + classNames[j];
+                        }
+                    }
+                    elem.className = S.trim(setClass);
+                }
+            });
+        },
+
+        /**
+         * Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
+         */
+        removeClass: function(selector, value) {
+            batch(selector, value, function(elem, classNames, cl) {
+                var elemClass = elem.className;
+                if (elemClass) {
+                    if (!cl) {
+                        elem.className = '';
+                    }
+                    else {
+                        var className = (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE), j = 0;
+                        for (; j < cl; j++) {
+                            className = className.replace(SPACE + classNames[j] + SPACE, SPACE);
+                        }
+                        elem.className = S.trim(className);
+                    }
+                }
+            });
+        },
+
+        /**
+         * Replace a class with another class for matched elements.
+         * If no oldClassName is present, the newClassName is simply added.
+         */
+        replaceClass: function(selector, oldClassName, newClassName) {
+            DOM.removeClass(selector, oldClassName);
+            DOM.addClass(selector, newClassName);
+        },
+
+        /**
+         * Add or remove one or more classes from each element in the set of
+         * matched elements, depending on either the class's presence or the
+         * value of the switch argument.
+         * @param state {Boolean} optional boolean to indicate whether class
+         *        should be added or removed regardless of current state.
+         */
+        toggleClass: function(selector, value, state) {
+            var isBool = S.isBoolean(state), has;
+
+            batch(selector, value, function(elem, classNames, cl) {
+                var j = 0, className;
+                for (; j < cl; j++) {
+                    className = classNames[j];
+                    has = isBool ? !state : DOM.hasClass(elem, className);
+                    DOM[has ? 'removeClass' : 'addClass'](elem, className);
+                }
+            });
+        }
+    });
+
+    function batch(selector, value, fn, resultIsBool) {
+        if (!(value = S.trim(value))) return resultIsBool ? false : undefined;
+
+        var elems = S.query(selector),
+            i = 0, len = elems.length,
+            classNames = value.split(REG_SPLIT),
+            elem, ret;
+
+        for (; i < len; i++) {
+            elem = elems[i];
+            if (elem.nodeType === 1) {
+                ret = fn(elem, classNames, classNames.length);
+                if (ret !== undefined) return ret;
+            }
+        }
+
+        if (resultIsBool) return false;
+    }
+});
+
+/**
+ * NOTES:
+ *   - hasClass/addClass/removeClass çš„é€»è¾‘å’Œ jQuery ä¿æŒä¸€è‡´
+ *   - toggleClass ä¸æ”¯æŒ value ä¸º undefined çš„æƒ…å½¢ï¼ˆjQuery æ”¯æŒï¼‰
+ */
+/**
+ * @module  dom-attr
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-attr', function(S, undefined) {
+
+    var UA = S.UA,
+        ie = UA.ie,
+        oldIE = ie && ie < 8,
+
+        doc = document,
         docElement = doc.documentElement,
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
-        ua = S.UA,
-        ie = ua.ie,
-        oldIE = ie && ie < 8,
-        CUSTOM_ATTRS = {
-            readonly: 'readOnly'
-        },
+
+        DOM = S.DOM,
+        isElementNode = DOM._isElementNode,
+
         RE_SPECIAL_ATTRS = /href|src|style/,
         RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
         RE_RETURN = /\r/g,
         RE_RADIO_CHECK = /radio|checkbox/,
-        defaultFrag = doc.createElement('DIV'),
-        RE_TAG = /^[a-z]+$/i;
+
+        CUSTOM_ATTRS = {
+            readonly: 'readOnly'
+        };
 
     if(oldIE) {
         S.mix(CUSTOM_ATTRS, {
@@ -1146,97 +1383,111 @@ KISSY.add('dom-base', function(S, undefined) {
         });
     }
 
-    S.DOM = {
+    S.mix(DOM, {
 
         /**
-         * Returns a NodeList that matches the selector.
+         * Gets the value of an attribute for the first element in the set of matched elements or
+         * Sets an attribute for the set of matched elements.
          */
-        query: S.query,
+        attr: function(selector, name, val) {
+            if(!(name = S.trim(name))) return;
 
-        /**
-         * Returns the first element that matches the selector.
-         */
-        get: S.get,
-
-        /**
-         * Gets or sets the attribute of the HTMLElement.
-         */
-        attr: function(el, name, val) {
-            // don't set attributes on element nodes
-            if (!el || el.nodeType !== 1) {
-                return undefined;
-            }
-
-            var ret;
             name = name.toLowerCase();
             name = CUSTOM_ATTRS[name] || name;
 
-            // get attribute
+            // getter
             if (val === undefined) {
-                // ÓÅÏÈÓÃ el[name] »ñÈ¡ mapping ÊôĞÔÖµ£º
-                //  - ¿ÉÒÔÕıÈ·»ñÈ¡ readonly, checked, selected µÈÌØÊâ mapping ÊôĞÔÖµ
-                //  - ¿ÉÒÔ»ñÈ¡ÓÃ getAttribute ²»Ò»¶¨ÄÜ»ñÈ¡µ½µÄÖµ£¬±ÈÈç tabindex Ä¬ÈÏÖµ
-                //  - href, src Ö±½Ó»ñÈ¡µÄÊÇ normalized ºóµÄÖµ£¬ÅÅ³ıµô
+                // supports css selector/Node/NodeList
+                var el = S.get(selector);
+
+                // only get attributes on element nodes
+                if (!isElementNode(el)) {
+                    return undefined;
+                }
+
+                var ret;
+
+                // ä¼˜å…ˆç”¨ el[name] è·å– mapping å±æ€§å€¼ï¼š
+                //  - å¯ä»¥æ­£ç¡®è·å– readonly, checked, selected ç­‰ç‰¹æ®Š mapping å±æ€§å€¼
+                //  - å¯ä»¥è·å–ç”¨ getAttribute ä¸ä¸€å®šèƒ½è·å–åˆ°çš„å€¼ï¼Œæ¯”å¦‚ tabindex é»˜è®¤å€¼
+                //  - href, src ç›´æ¥è·å–çš„æ˜¯ normalized åçš„å€¼ï¼Œæ’é™¤æ‰
+                //  - style éœ€è¦ç”¨ getAttribute æ¥è·å–å­—ç¬¦ä¸²å€¼ï¼Œä¹Ÿæ’é™¤æ‰
                 if(!RE_SPECIAL_ATTRS.test(name)) {
                     ret = el[name];
                 }
-                // get style
-                else if(name === 'style') {
-                    ret = el.style.cssText;
-                }
                 
-                // ÓÃ getAttribute »ñÈ¡·Ç mapping ÊôĞÔºÍ href, src µÄÖµ£º
+                // ç”¨ getAttribute è·å–é mapping å±æ€§å’Œ href/src/style çš„å€¼ï¼š
                 if(ret === undefined) {
                     ret = el.getAttribute(name);
                 }
 
-                // fix ie bugs:
-                if (oldIE && RE_NORMALIZED_ATTRS.test(name)) {
-                    // ²»¹âÊÇ href, src, »¹ÓĞ rowspan µÈ·Ç mapping ÊôĞÔ£¬Ò²ĞèÒªÓÃµÚ 2 ¸ö²ÎÊıÀ´»ñÈ¡Ô­Ê¼Öµ
-                    ret = el.getAttribute(name, 2);
+                // fix ie bugs
+                if (oldIE) {
+                    // ä¸å…‰æ˜¯ href, src, è¿˜æœ‰ rowspan ç­‰é mapping å±æ€§ï¼Œä¹Ÿéœ€è¦ç”¨ç¬¬ 2 ä¸ªå‚æ•°æ¥è·å–åŸå§‹å€¼
+                    if(RE_NORMALIZED_ATTRS.test(name)) {
+                        ret = el.getAttribute(name, 2);
+                    }
+                    // åœ¨æ ‡å‡†æµè§ˆå™¨ä¸‹ï¼Œç”¨ getAttribute è·å– style å€¼
+                    // IE7- ä¸‹ï¼Œéœ€è¦ç”¨ cssText æ¥è·å–
+                    else if(name === 'style') {
+                        ret = el.style.cssText;
+                    }
                 }
 
-                // ¶ÔÓÚ²»´æÔÚµÄÊôĞÔ£¬Í³Ò»·µ»Ø undefined
+                // å¯¹äºä¸å­˜åœ¨çš„å±æ€§ï¼Œç»Ÿä¸€è¿”å› undefined
                 return ret === null ? undefined : ret;
             }
 
-            // set attribute
-            if(name === 'style') {
-                el.style.cssText = val;
-            }
-            else {
-                // convert the value to a string (all browsers do this but IE)
-                el.setAttribute(name, '' + val);
-            }
+            // setter
+            S.each(S.query(selector), function(el) {
+                // only set attributes on element nodes
+                if (!isElementNode(el)) {
+                    return;
+                }
+
+                if (oldIE && name === 'style') {
+                    el.style.cssText = val;
+                }
+                else {
+                    // convert the value to a string (all browsers do this but IE)
+                    el.setAttribute(name, '' + val);
+                }
+            });
         },
 
         /**
-         * Removes the attribute of the HTMLElement.
+         * Removes the attribute of the matched elements.
          */
-        removeAttr: function(el, name) {
-            if(el && el.nodeType === 1) {
-                el.removeAttribute(name);
-            }
+        removeAttr: function(selector, name) {
+            S.each(S.query(selector), function(el) {
+                if (isElementNode(el)) {
+                    el.removeAttribute(name);
+                }
+            });
         },
 
         /**
-         * Get the current value of the HTMLElement.
+         * Gets the current value of the first element in the set of matched or
+         * Sets the value of each element in the set of matched elements.
          */
-        val: function(el, value) {
-            if(!el || el.nodeType !== 1) {
-                return undefined;
-            }
-
-            // get value
+        val: function(selector, value) {
+            // getter
             if(value === undefined) {
+                // supports css selector/Node/NodeList
+                var el = S.get(selector);
 
-                // µ±Ã»ÓĞÉè¶¨ value Ê±£¬±ê×¼ä¯ÀÀÆ÷ option.value == option.text
-                // ie7- ÏÂ optinos.value == '', ĞèÒªÓÃ el.attributes.value À´ÅĞ¶ÏÊÇ·ñÓĞÉè¶¨ value
+                // only gets value on element nodes
+                if (!isElementNode(el)) {
+                    return undefined;
+                }
+
+                // å½“æ²¡æœ‰è®¾å®š value æ—¶ï¼Œæ ‡å‡†æµè§ˆå™¨ option.value === option.text
+                // ie7- ä¸‹ï¼Œæ²¡æœ‰è®¾å®š value æ—¶ï¼Œoption.value === '', éœ€è¦ç”¨ el.attributes.value æ¥åˆ¤æ–­æ˜¯å¦æœ‰è®¾å®š value
                 if(nodeNameIs('option', el)) {
                     return (el.attributes.value || {}).specified ? el.value : el.text;
                 }
 
-                // ¶ÔÓÚ select, ÌØ±ğÊÇ multiple type, ´æÔÚºÜÑÏÖØµÄ¼æÈİĞÔÎÊÌâ
+                // å¯¹äº select, ç‰¹åˆ«æ˜¯ multiple type, å­˜åœ¨å¾ˆä¸¥é‡çš„å…¼å®¹æ€§é—®é¢˜
                 if(nodeNameIs('select', el)) {
                     var index = el.selectedIndex,
                         options = el.options;
@@ -1245,14 +1496,14 @@ KISSY.add('dom-base', function(S, undefined) {
                         return null;
                     }
                     else if(el.type === 'select-one') {
-                        return S.DOM.val(options[index]);
+                        return DOM.val(options[index]);
                     }
 
                     // Loop through all the selected options
                     var ret = [], i = 0, len = options.length;
                     for (; i < len; ++i) {
                         if (options[i].selected) {
-                            ret.push(S.DOM.val(options[i]));
+                            ret.push(DOM.val(options[i]));
                         }
                     }
                     // Multi-Selects return an array
@@ -1260,150 +1511,169 @@ KISSY.add('dom-base', function(S, undefined) {
                 }
 
                 // Handle the case where in Webkit "" is returned instead of "on" if a value isn't specified
-                if(ua.webkit && RE_RADIO_CHECK.test(el.type)) {
+                if(UA.webkit && RE_RADIO_CHECK.test(el.type)) {
                     return el.getAttribute('value') === null ? 'on' : el.value;
                 }
 
-                // ÆÕÍ¨ÔªËØµÄ value, ¹éÒ»»¯µô \r
+                // æ™®é€šå…ƒç´ çš„ value, å½’ä¸€åŒ–æ‰ \r
                 return (el.value || '').replace(RE_RETURN, '');
             }
 
-            // set value
-            if (nodeNameIs('select', el)) {
-                var vals = S.makeArray(value),
-                    opts = el.options, opt;
+            // setter
+            S.each(S.query(selector), function(el) {
+                if (nodeNameIs('select', el)) {
+                    var vals = S.makeArray(value),
+                        opts = el.options, opt;
 
-                for (i = 0,len = opts.length; i < len; ++i) {
-                    opt = opts[i];
-                    opt.selected = S.inArray(S.DOM.val(opt), vals);
+                    for (i = 0, len = opts.length; i < len; ++i) {
+                        opt = opts[i];
+                        opt.selected = S.inArray(DOM.val(opt), vals);
+                    }
+
+                    if (!vals.length) {
+                        el.selectedIndex = -1;
+                    }
                 }
-
-                if (!vals.length) {
-                    el.selectedIndex = -1;
+                else if(isElementNode(el)) {
+                    el.value = value;
                 }
-            }
-            else {
-                el.value = value;
-            }
-        },
-
-        /**
-         * Gets or sets styles on the HTMLElement.
-         */
-        css: function(el, prop, val) {
-            // get style
-            if(val === undefined) {
-                return el.style[prop];
-            }
-
-            // set style
-            S.each(S.makeArray(el), function(elem) {
-                elem.style[prop] = val;
             });
-
-            // TODO:
-            //  - ¿¼ÂÇ¸÷ÖÖ¼æÈİĞÔÎÊÌâºÍÒì³£Çé¿ö opacity, z-index, float
-            //  - more test cases
         },
 
         /**
-         * Gets or sets the the text content of the HTMLElement.
+         * Gets the text context of the first element in the set of matched elements or
+         * Sets the text content of the matched elements.
          */
-        text: function(el, val) {
-            // getText
+        text: function(selector, val) {
+            // getter
             if (val === undefined) {
-                return (el || {})[TEXT] || '';
+                // supports css selector/Node/NodeList
+                var el = S.get(selector);
+
+                // only gets value on element nodes
+                if (isElementNode(el)) {
+                    return el[TEXT] || '';
+                }
             }
-
-            // setText
-            if (el) {
-                el[TEXT] = val;
+            // setter
+            else {
+                S.each(S.query(selector), function(el) {
+                   if(isElementNode(el)) {
+                       el[TEXT] = val;
+                   }
+                });
             }
-        },
+        }
+    });
 
-        /**
-         * Gets the HTML contents of the HTMLElement.
-         */
-        html: function(el, htmlString) {
-            // set html
-            if(htmlString === undefined) {
-                return el.innerHTML;
+    // åˆ¤æ–­ el çš„ nodeName æ˜¯å¦æŒ‡å®šå€¼
+    function nodeNameIs(val, el) {
+        return el && el.nodeName.toUpperCase() === val.toUpperCase();
+    }
+});
+
+/**
+ * NOTES:
+ *
+ * 2010.03
+ *  - åœ¨ jquery/support.js ä¸­ï¼Œspecial attrs é‡Œè¿˜æœ‰ maxlength, cellspacing,
+ *    rowspan, colspan, useap, frameboder, ä½†æµ‹è¯•å‘ç°ï¼Œåœ¨ Grade-A çº§æµè§ˆå™¨ä¸­
+ *    å¹¶æ— å…¼å®¹æ€§é—®é¢˜ã€‚
+ *  - å½“ colspan/rowspan å±æ€§å€¼è®¾ç½®æœ‰è¯¯æ—¶ï¼Œie7- ä¼šè‡ªåŠ¨çº æ­£ï¼Œå’Œ href ä¸€æ ·ï¼Œéœ€è¦ä¼ é€’
+ *    ç¬¬ 2 ä¸ªå‚æ•°æ¥è§£å†³ã€‚jQuery æœªè€ƒè™‘ï¼Œå­˜åœ¨å…¼å®¹æ€§ bug.
+ *  - jQuery è€ƒè™‘äº†æœªæ˜¾å¼è®¾å®š tabindex æ—¶å¼•å‘çš„å…¼å®¹é—®é¢˜ï¼Œkissy é‡Œå¿½ç•¥ï¼ˆå¤ªä¸å¸¸ç”¨äº†ï¼‰
+ *  - jquery/attributes.js: Safari mis-reports the default selected
+ *    property of an option åœ¨ Safari 4 ä¸­å·²ä¿®å¤ã€‚
+ *
+ */
+/**
+ * @module  dom
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-style', function(S, undefined) {
+
+    var DOM = S.DOM,
+        doc = document, docElem = doc.documentElement,
+        STYLE = 'style', FLOAT = 'float',
+        CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
+        RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
+        RE_DASH = /-([a-z])/ig,
+        CAMELCASE_FN = function(all, letter) {
+            return letter.toUpperCase();
+        },
+        EMPTY = '',
+        DEFAULT_UNIT = 'px',
+        CUSTOM_STYLES = { };
+
+    S.mix(DOM, {
+
+        _CUSTOM_STYLES: CUSTOM_STYLES,
+
+        _getComputedStyle: function(elem, name) {
+            var val = '', d = elem.ownerDocument;
+
+            if (elem[STYLE]) {
+                val = d.defaultView.getComputedStyle(elem, null)[name];
             }
-
-            // get html
-            el.innerHTML = htmlString;
-
-            // TODO:
-            //  - ¿¼ÂÇ¸÷ÖÖ¼æÈİºÍÒì³££¬Ìí¼Ó·è¿ñ²âÊÔ
+            return val;
         },
 
         /**
-         * Gets the children of the HTMLElement.
+         * Gets or sets styles on the matches elements.
          */
-        children: function(el) {
-            if(el.children) { // Ö»ÓĞ firefox µÄµÍ°æ±¾²»Ö§³Ö
-                return S.makeArray(el.children);
-            }
-            return getSiblings(el.firstChild);
-        },
-
-        /**
-         * Gets the siblings of the HTMLElment.
-         */
-        siblings: function(el) {
-            return getSiblings(el.parentNode.firstChild, el);
-        },
-
-        /**
-         * Gets the immediately following sibling of the element.
-         */
-        next: function(el) {
-            return nth(el, 1, 'nextSibling');
-        },
-
-        /**
-         * Gets the immediately preceding sibling of the element.
-         */
-        prev: function(el) {
-            return nth(el, 1, 'previousSibling');
-        },
-
-        /**
-         * Gets the parentNode of the elment.
-         */
-        parent: function(el) {
-            var parent = el.parentNode;
-            return parent && parent.nodeType !== 11 ? parent : null;
-        },
-
-        /**
-         * Creates a new HTMLElement using the provided html string.
-         */
-        create: function(html, ownerDoc) {
-            if (typeof html === 'string') {
-                html = S.trim(html); // match IE which trims whitespace from innerHTML
-            }
-
-            // simple tag
-            if(RE_TAG.test(html)) {
-                return (ownerDoc || doc).createElement(html);
+        css: function(selector, name, val) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.css(selector, k, name[k]);
+                }
+                return;
             }
             
-            var ret = null, nodes, frag;
-
-            frag = ownerDoc ? ownerDoc.createElement('DIV') : defaultFrag;
-            frag.innerHTML = html;
-            nodes = frag.childNodes;
-
-            if(nodes.length === 1) {
-                // return single node, breaking parentNode ref from "fragment"
-                ret = nodes[0].parentNode.removeChild(nodes[0]);
+            if(name.indexOf('-') > 0) {
+                // webkit è®¤è¯† camel-case, å…¶å®ƒå†…æ ¸åªè®¤è¯† cameCase
+                name = name.replace(RE_DASH, CAMELCASE_FN);
             }
+            name = CUSTOM_STYLES[name] || name;
+
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var elem = S.get(selector), ret = '';
+
+                if (elem && elem.style) {
+                    ret = name.get ? name.get(elem) : elem.style[name];
+
+                    // æœ‰ get çš„ç›´æ¥ç”¨è‡ªå®šä¹‰å‡½æ•°çš„è¿”å›å€¼
+                    if(ret === '' && !name.get) {
+                        ret = DOM._getComputedStyle(elem, name);
+                    }
+                }
+
+                return ret === undefined ? '' : ret;
+            }
+            // setter
             else {
-                ret = nl2frag(nodes, ownerDoc || doc);
-            }
+                // normalize unsetting
+                if (val === null || val === EMPTY) {
+                    val = EMPTY;
+                }
+                // number values may need a unit
+                else if (!isNaN(new Number(val)) && RE_NEED_UNIT.test(name)) {
+                    val += DEFAULT_UNIT;
+                }
 
-            return ret;
+                // ignore negative width and height values
+                if ((name === 'width' || name === 'height') && parseFloat(val) < 0) {
+                    return;
+                }
+
+                S.each(S.query(selector), function(elem) {
+                    if (elem && elem.style) {
+                        name.set ? name.set(elem, val) : (elem.style[name] = val);
+                    }
+                });
+            }
         },
 
         /**
@@ -1413,47 +1683,485 @@ KISSY.add('dom-base', function(S, undefined) {
          * @param {String} id An id to add to the stylesheet for later removal
          */
         addStyleSheet: function(cssText, id) {
-            var head = doc.getElementsByTagName('head')[0],
-                el = doc.createElement('style');
+            var elem;
 
-            id && (el.id = id);
-            head.appendChild(el); // ÏÈÌí¼Óµ½ DOM Ê÷ÖĞ£¬·ñÔòÔÚ cssText ÀïµÄ hack »áÊ§Ğ§
+            // æœ‰çš„è¯ï¼Œç›´æ¥è·å–
+            if (id) elem = S.get(id);
+            if (!elem) elem = DOM.create('<style>', { id: id });
 
-            if (el.styleSheet) { // IE
-                el.styleSheet.cssText = cssText;
+            // å…ˆæ·»åŠ åˆ° DOM æ ‘ä¸­ï¼Œå†ç»™ cssText èµ‹å€¼ï¼Œå¦åˆ™ css hack ä¼šå¤±æ•ˆ
+            S.get('head').appendChild(elem);
+
+            if (elem.styleSheet) { // IE
+                elem.styleSheet.cssText = cssText;
             } else { // W3C
-                el.appendChild(doc.createTextNode(cssText));
+                elem.appendChild(doc.createTextNode(cssText));
             }
         }
-    };
+    });
 
-    // ÅĞ¶Ï el µÄ nodeName ÊÇ·ñÖ¸¶¨Öµ
-    function nodeNameIs(val, el) {
-        return el && el.nodeName.toUpperCase() === val.toUpperCase();
+    // normalize reserved word float alternatives ("cssFloat" or "styleFloat")
+    if (docElem[STYLE][CSS_FLOAT] !== undefined) {
+        CUSTOM_STYLES[FLOAT] = CSS_FLOAT;
     }
+    else if(docElem[STYLE][STYLE_FLOAT] !== undefined) {
+        CUSTOM_STYLES[FLOAT] = STYLE_FLOAT;
+    }
+});
 
-    // »ñÈ¡ÔªËØ el µÄËùÓĞ siblings
-    function getSiblings(n/* first */, el) {
-        for (var r = [], j = 0; n; n = n.nextSibling) {
-            if (n.nodeType === 1 && n !== el) {
-                r[j++] = n;
-            }
+/**
+ * NOTES:
+ *  - Opera ä¸‹ï¼Œcolor é»˜è®¤è¿”å› #XXYYZZ, é rgb(). ç›®å‰ jQuery ç­‰ç±»åº“å‡å¿½ç•¥æ­¤å·®å¼‚ï¼ŒKISSY ä¹Ÿå¿½ç•¥ã€‚
+ *  - Safari ä½ç‰ˆæœ¬ï¼Œtransparent ä¼šè¿”å›ä¸º rgba(0, 0, 0, 0), è€ƒè™‘ä½ç‰ˆæœ¬æ‰æœ‰æ­¤ bug, äº¦å¿½ç•¥ã€‚
+ *
+ *  - é webkit ä¸‹ï¼ŒjQuery.css paddingLeft è¿”å› style å€¼ï¼Œ padding-left è¿”å› computedStyle å€¼ï¼Œ
+ *    è¿”å›çš„å€¼ä¸åŒã€‚KISSY åšäº†ç»Ÿä¸€ï¼Œæ›´ç¬¦åˆé¢„æœŸã€‚
+ *
+ *  - getComputedStyle åœ¨ webkit ä¸‹ï¼Œä¼šèˆå¼ƒå°æ•°éƒ¨åˆ†ï¼Œie ä¸‹ä¼šå››èˆäº”å…¥ï¼Œgecko ä¸‹ç›´æ¥è¾“å‡º float å€¼ã€‚
+ *
+ *  - color: blue ç»§æ‰¿å€¼ï¼ŒgetComputedStyle, åœ¨ ie ä¸‹è¿”å› blue, opera è¿”å› #0000ff, å…¶å®ƒæµè§ˆå™¨
+ *    è¿”å› rgb(0, 0, 255)
+ *
+ *  - border-width å€¼ï¼Œie ä¸‹æœ‰å¯èƒ½è¿”å› medium/thin/thick ç­‰å€¼ï¼Œå…¶å®ƒæµè§ˆå™¨è¿”å› px å€¼ã€‚
+ *
+ *  - æ€»ä¹‹ï¼šè¦ä½¿å¾—è¿”å›å€¼å®Œå…¨ä¸€è‡´æ˜¯ä¸å¤§å¯èƒ½çš„ï¼ŒjQuery/ExtJS/KISSY æœªâ€œè¿½æ±‚å®Œç¾â€ã€‚YUI3 åšäº†éƒ¨åˆ†å®Œç¾å¤„ç†ï¼Œä½†
+ *    ä¾æ—§å­˜åœ¨æµè§ˆå™¨å·®å¼‚ã€‚
+ */
+/**
+ * @module  dom
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-style-ie', function(S, undefined) {
+
+    // only for ie
+    if (!S.UA.ie) return;
+
+    var DOM = S.DOM,
+        doc = document,
+        docElem = doc.documentElement,
+        OPACITY = 'opacity',
+        FILTER = 'filter',
+        FILTERS = 'filters',
+        CURRENT_STYLE = 'currentStyle',
+        LEFT = 'left',
+        CUSTOM_STYLES = DOM._CUSTOM_STYLES,
+        RE_NUMPX = /^-?\d+(?:px)?$/i,
+	    RE_NUM = /^-?\d/;
+
+    // use alpha filter for IE opacity
+    try {
+        if (docElem.style[OPACITY] === undefined && docElem[FILTERS]) {
+
+            CUSTOM_STYLES[OPACITY] = {
+
+                get: function(elem) {
+                    var val = 100;
+
+                    try { // will error if no DXImageTransform
+                        val = elem[FILTERS]['DXImageTransform.Microsoft.Alpha'][OPACITY];
+                    }
+                    catch(e) {
+                        try {
+                            val = elem[FILTERS]('alpha')[OPACITY];
+                        } catch(ex) {
+                            // æ²¡æœ‰è®¾ç½®è¿‡ opacity æ—¶ä¼šæŠ¥é”™ï¼Œè¿™æ—¶è¿”å› 1 å³å¯
+                        }
+                    }
+
+                    // å’Œå…¶ä»–æµè§ˆå™¨ä¿æŒä¸€è‡´ï¼Œè½¬æ¢ä¸ºå­—ç¬¦ä¸²ç±»å‹
+                    return val / 100 + '';
+                },
+
+                set: function(elem, val) {
+                    var style = elem.style;
+
+                    // IE has trouble with opacity if it does not have layout
+                    // Force it by setting the zoom level
+                    style.zoom = 1;
+
+                    // Set the alpha filter to set the opacity
+                    style[FILTER] = 'alpha(' + OPACITY + '=' + val * 100 + ')';
+                }
+            };
         }
-        return r;
+    }
+    catch(ex) {
+        S.log('IE filters ActiveX is disabled. ex = ' + ex);
     }
 
-    // »ñÈ¡ÔªËØ el ÔÚ dir(ection) ÉÏµÄµÚ n ¸öÔªËØ
-    function nth(el, n, dir) {
-        n = n || 0;
-        for (var i = 0; el; el = el[dir]) {
-            if (el.nodeType === 1 && i++ === n) {
+    // getComputedStyle for IE
+    if (!(doc.defaultView || { }).getComputedStyle && docElem[CURRENT_STYLE]) {
+
+        DOM._getComputedStyle = function(elem, name) {
+            var style = elem.style,
+                ret = elem[CURRENT_STYLE][name];
+
+            // From the awesome hack by Dean Edwards
+            // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
+            // If we're not dealing with a regular pixel number
+            // but a number that has a weird ending, we need to convert it to pixels
+            if (!RE_NUMPX.test(ret) && RE_NUM.test(ret)) {
+                // Remember the original values
+                var left = style[LEFT];
+
+                // Put in the new values to get a computed value out
+                style[LEFT] = (name === 'fontSize') ? '1em' : (ret || 0);
+                ret = style['pixelLeft'] + 'px';
+
+                // Revert the changed values
+                style[LEFT] = left;
+            }
+
+            return ret;
+        }
+    }
+});
+/**
+ * @module  dom-offset
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-offset', function(S, undefined) {
+
+    var DOM = S.DOM, UA = S.UA,
+        win = window,
+        doc = document,
+        docElem = doc.documentElement,
+        isStrict = doc.compatMode === 'CSS1Compat',
+        MAX = Math.max,
+        PARSEINT = parseInt,
+        POSITION = 'position',
+        RELATIVE = 'relative',
+        OWNER_DOCUMENT = 'ownerDocument',
+        GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
+
+    S.mix(DOM, {
+
+        offset: function(elem, val) {
+            // ownerDocument çš„åˆ¤æ–­å¯ä»¥ä¿è¯ elem æ²¡æœ‰æ¸¸ç¦»åœ¨ document ä¹‹å¤–ï¼ˆæ¯”å¦‚ fragmentï¼‰
+            if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
+
+            // getter
+            if (val === undefined) {
+                return getOffset(elem);
+            }
+
+            // setter
+            setOffset(elem, val);
+        },
+
+        /**
+         * Returns the left scroll value of the document.
+         */
+        scrollLeft: function() {
+            return win.pageXOffset || docElem.scrollLeft || doc.body.scrollLeft;
+        },
+
+        /**
+         * Returns the top scroll value of the document.
+         */
+        scrollTop: function() {
+            return win.pageYOffset || docElem.scrollTop || doc.body.scrollTop;
+        },
+
+        /**
+         * Returns the height of the document.
+         */
+        docHeight: function() {
+            return MAX(!isStrict ? doc.body.scrollHeight : docElem.scrollHeight, DOM.viewportHeight());
+        },
+
+        /**
+         * Returns the width of the document.
+         */
+        docWidth: function() {
+            return MAX(!isStrict ? doc.body.scrollWidth : docElem.scrollWidth, DOM.viewportWidth());
+        },
+
+        /**
+         * Returns the current height of the viewport.
+         */
+        viewportHeight: function() {
+            return UA.ie ?
+                (isStrict ? docElem.clientHeight : doc.body.clientHeight) :
+                win.innerHeight;
+        },
+
+        /**
+         * Returns the current width of the viewport.
+         */
+        viewportWidth: function() {
+            return !isStrict && !UA.opera ? doc.body.clientWidth :
+                UA.ie ? docElem.clientWidth : win.innerWidth;
+        }
+    });
+
+    function getOffset(elem) {
+        var box, x = 0, y = 0;
+
+        // 1. å¯¹äº body å’Œ docElem, ç›´æ¥è¿”å› 0, ç»å¤§éƒ¨åˆ†æƒ…å†µä¸‹ï¼Œè¿™éƒ½ä¸ä¼šæœ‰é—®é¢˜
+        // 2. æ ¹æ® GBS æœ€æ–°æ•°æ®ï¼ŒA-Grade Browsers éƒ½å·²æ”¯æŒ getBoundingClientRect æ–¹æ³•ï¼Œä¸ç”¨å†è€ƒè™‘ä¼ ç»Ÿçš„å®ç°æ–¹å¼
+        if (elem !== doc.body && elem !== docElem && elem[GET_BOUNDING_CLIENT_RECT]) {
+            box = elem[GET_BOUNDING_CLIENT_RECT]();
+
+            // æ³¨ï¼šjQuery è¿˜è€ƒè™‘å‡å» docElem.clientLeft/clientTop
+            // ä½†æµ‹è¯•å‘ç°ï¼Œè¿™æ ·åè€Œä¼šå¯¼è‡´å½“ html å’Œ body æœ‰è¾¹è·/è¾¹æ¡†æ ·å¼æ—¶ï¼Œè·å–çš„å€¼ä¸æ­£ç¡®
+            // æ­¤å¤–ï¼Œie6 ä¼šå¿½ç•¥ html çš„ margin å€¼ï¼Œå¹¸è¿åœ°æ˜¯æ²¡æœ‰è°ä¼šå»è®¾ç½® html çš„ margin
+
+            x = box.left + DOM.scrollLeft();
+            y = box.top + DOM.scrollTop();
+        }
+
+        return { left: x, top: y };
+    }
+
+    function setOffset(elem, offset) {
+        var position = DOM.css(elem, POSITION);
+
+        // set position first, in-case top/left are set even on static elem
+        if (position === 'static') {
+            position = elem.style[POSITION] = RELATIVE;
+        }
+
+        var old = getOffset(elem),
+            relative = (position === RELATIVE),
+            left = PARSEINT(DOM.css(elem, 'left'), 10),
+            top = PARSEINT(DOM.css(elem, 'top'), 10);
+
+        left = S.isNumber(left) ? left : (relative ? 0 : elem.offsetLeft);
+        top = S.isNumber(top) ? top : (relative ? 0 : elem.offsetTop);
+
+        DOM.css(elem, {left: (left + offset.left - old.left), top: (top + offset.top - old.top)});
+    }
+});
+
+/**
+ * TODO:
+ *  - è€ƒè™‘æ˜¯å¦å®ç° jQuery çš„ position, offsetParent ç­‰åŠŸèƒ½
+ *  - æ›´è¯¦ç»†çš„æµ‹è¯•ç”¨ä¾‹ï¼ˆæ¯”å¦‚ï¼šæµ‹è¯• position ä¸º fixed çš„æƒ…å†µï¼‰
+ *
+ */
+/**
+ * @module  dom-traversal
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-traversal', function(S, undefined) {
+
+    var DOM = S.DOM,
+        isElementNode = DOM._isElementNode;
+
+    S.mix(DOM, {
+
+        /**
+         * Gets the parent node of the first matched element.
+         */
+        parent: function(selector, filter) {
+            return nth(selector, filter, 'parentNode', function(elem) {
+                return elem.nodeType != 11;
+            });
+        },
+
+        /**
+         * Gets the following sibling of the first matched element.
+         */
+        next: function(selector, filter) {
+            return nth(selector, filter, 'nextSibling');
+        },
+
+        /**
+         * Gets the preceding sibling of the first matched element.
+         */
+        prev: function(selector, filter) {
+            return nth(selector, filter, 'previousSibling');
+        },
+
+        /**
+         * Gets the siblings of the first matched element.
+         */
+        siblings: function(selector, filter) {
+            return getSiblings(selector, filter, true);
+        },
+
+        /**
+         * Gets the children of the first matched element.
+         */
+        children: function(selector, filter) {
+            return getSiblings(selector, filter);
+        },
+
+        /**
+         * Check to see if a DOM node is within another DOM node.
+         */
+        contains: function(container, contained) {
+            var ret = false;
+
+            if ((container = S.get(container)) && (contained = S.get(contained))) {
+                if (container.contains) {
+                    return container.contains(contained);
+                }
+                else if (container.compareDocumentPosition) {
+                    return !!(container.compareDocumentPosition(contained) & 16);
+                }
+                else {
+                    while (!ret && (contained = contained.parentNode)) {
+                        ret = contained == container;
+                    }
+                }
+            }
+            
+            return ret;
+        }
+    });
+
+    // è·å–å…ƒç´  elem åœ¨ direction æ–¹å‘ä¸Šæ»¡è¶³ filter çš„ç¬¬ä¸€ä¸ªå…ƒç´ 
+    // filter å¯ä¸º number, selector, fn
+    // direction å¯ä¸º parentNode, nextSibling, previousSibling
+    function nth(elem, filter, direction, extraFilter) {
+        if (!(elem = S.get(elem))) return null;
+        if(filter === undefined) filter = 1; // é»˜è®¤å– 1
+        var ret = null, fi, flen;
+
+        if(S.isNumber(filter) && filter >= 0) {
+            if(filter === 0) return elem;
+            fi = 0;
+            flen = filter;
+            filter = function() {
+                return ++fi === flen;
+            };
+        }
+
+        while((elem = elem[direction])) {
+            if (isElementNode(elem) && (!filter || DOM.test(elem, filter)) && (!extraFilter || extraFilter(elem))) {
+                ret = elem;
                 break;
             }
         }
-        return el;
+
+        return ret;
     }
 
-    // ½« nodeList ×ª»»Îª fragment
+    // è·å–å…ƒç´  elem çš„ siblings, ä¸åŒ…æ‹¬è‡ªèº«
+    function getSiblings(selector, filter, parent) {
+        var ret = [], elem = S.get(selector), j, parentNode = elem, next;
+        if (elem && parent) parentNode = elem.parentNode;
+
+        if (parentNode) {
+            for (j = 0, next = parentNode.firstChild; next; next = next.nextSibling) {
+                if (isElementNode(next) && next !== elem && (!filter || DOM.test(next, filter))) {
+                    ret[j++] = next;
+                }
+            }
+        }
+
+        return ret;
+    }
+
+});
+
+/**
+ * NOTES:
+ *
+ *  - api çš„è®¾è®¡ä¸Šï¼Œæ²¡æœ‰è·Ÿéš jQuery. ä¸€æ˜¯ä¸ºäº†å’Œå…¶ä»– api ä¸€è‡´ï¼Œä¿æŒ first-all åŸåˆ™ã€‚äºŒæ˜¯
+ *    éµå¾ª 8/2 åŸåˆ™ï¼Œç”¨å°½å¯èƒ½å°‘çš„ä»£ç æ»¡è¶³ç”¨æˆ·æœ€å¸¸ç”¨çš„åŠŸèƒ½ã€‚
+ *
+ */
+/**
+ * @module  dom-create
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-create', function(S, undefined) {
+
+    var doc = document,
+        DOM = S.DOM, UA = S.UA, ie = UA.ie,
+        isElementNode = DOM._isElementNode,
+        DIV = 'div',
+        PARENT_NODE = 'parentNode',
+        DEFAULT_DIV = doc.createElement(DIV),
+        RE_TAG = /<(\w+)/,
+        RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
+
+    S.mix(DOM, {
+
+        /**
+         * Creates a new HTMLElement using the provided html string.
+         */
+        create: function(html, props, ownerDoc) {
+            if(isElementNode(html)) return html;
+            if (!(html = S.trim(html))) return null;
+
+            var ret = null, creators = DOM._creators,
+                m, tag = DIV, k, nodes;
+
+            // ç®€å• tag, æ¯”å¦‚ DOM.create('<p>')
+            if ((m = RE_SIMPLE_TAG.exec(html))) {
+                ret = (ownerDoc || doc).createElement(m[1]);
+            }
+            // å¤æ‚æƒ…å†µï¼Œæ¯”å¦‚ DOM.create('<img src="sprite.png" />')
+            else {
+                if ((m = RE_TAG.exec(html)) && (k = m[1]) && S.isFunction(creators[(k = k.toLowerCase())])) {
+                    tag = k;
+                }
+
+                nodes = creators[tag](html, ownerDoc).childNodes;
+
+                if (nodes.length === 1) {
+                    // return single node, breaking parentNode ref from "fragment"
+                    ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
+                }
+                else {
+                    // return multiple nodes as a fragment
+                    ret = nl2frag(nodes, ownerDoc || doc);
+                }
+            }
+
+            return attachProps(ret, props);
+        },
+
+        _creators: {
+            div: function(html, ownerDoc) {
+                var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
+                frag.innerHTML = html;
+                return frag;
+            }
+        },
+
+        /**
+         * Gets/Sets the HTML contents of the HTMLElement.
+         */
+        html: function(selector, val) {
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = S.get(selector);
+
+                // only gets value on element nodes
+                if (isElementNode(el)) {
+                    return el.innerHTML;
+                }
+            }
+            // setter
+            else {
+                S.each(S.query(selector), function(el) {
+                   if(isElementNode(el)) {
+                       el.innerHTML = '';
+                       // æ’é™¤æ‰ val == '' çš„æƒ…å†µ
+                       if(val) el.appendChild(DOM.create(val));
+                   }
+                });
+            }
+        }
+    });
+
+    // æ·»åŠ æˆå‘˜åˆ°å…ƒç´ ä¸­
+    function attachProps(elem, props) {
+        if (isElementNode(elem) && props) {
+            for (var p in props) {
+                DOM.attr(elem, p, props[p]);
+            }
+        }
+        return elem;
+    }
+
+    // å°† nodeList è½¬æ¢ä¸º fragment
     function nl2frag(nodes, ownerDoc) {
         var ret = null, i, len;
 
@@ -1465,131 +2173,140 @@ KISSY.add('dom-base', function(S, undefined) {
                 nodes = S.makeArray(nodes);
             }
 
-            for (i = 0, len = nodes.length; i < len; ++i) {
+            for (i = 0,len = nodes.length; i < len; i++) {
                 ret.appendChild(nodes[i]);
             }
         }
-        // else inline with log for minification
         else {
-            S.error('unable to convert ' + nodes + ' to fragment');
+            S.log('Unable to convert ' + nodes + ' to fragment.');
         }
 
         return ret;
     }
+
+    // å®šä¹‰ creators, å¤„ç†æµè§ˆå™¨å…¼å®¹
+    var creators = DOM._creators,
+        create = DOM.create,
+        TABLE_OPEN = '<table>',
+        TABLE_CLOSE = '</table>',
+        RE_TBODY = /(?:\/(?:thead|tfoot|caption|col|colgroup)>)+\s*<tbody/,
+        creatorsMap = {
+            option: 'select',
+            td: 'tr',
+            tr: 'tbody',
+            tbody: 'table',
+            col: 'colgroup',
+            legend: 'fieldset' // ie æ”¯æŒï¼Œä½† gecko ä¸æ”¯æŒ
+        };
+
+    if (UA.gecko || ie) {
+        for (var p in creatorsMap) {
+            (function(tag) {
+                creators[p] = function(html, ownerDoc) {
+                    return create('<' + tag + '>' + html + '</' + tag + '>', null, ownerDoc);
+                }
+            })(creatorsMap[p]);
+        }
+
+        if (ie) {
+            // IE ä¸‹ä¸èƒ½å•ç‹¬æ·»åŠ  script å…ƒç´ 
+            creators.script = function(html, ownerDoc) {
+                var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
+                frag.innerHTML = '-' + html;
+                frag.removeChild(frag.firstChild);
+                return frag;
+            };
+
+            // IE7- adds TBODY when creating thead/tfoot/caption/col/colgroup elements
+            if (ie < 8) {
+                creators.tbody = function(html, ownerDoc) {
+                    var frag = create(TABLE_OPEN + html + TABLE_CLOSE, null, ownerDoc),
+                        tbody = frag.children['tags']('tbody')[0];
+
+                    if (frag.children.length > 1 && tbody && !RE_TBODY.test(html)) {
+                        tbody[PARENT_NODE].removeChild(tbody); // strip extraneous tbody
+                    }
+                    return frag;
+                };
+            }
+        }
+
+        S.mix(creators, {
+            optgroup: creators.option, // gecko æ”¯æŒï¼Œä½† ie ä¸æ”¯æŒ
+            th: creators.td,
+            thead: creators.tbody,
+            tfoot: creators.tbody,
+            caption: creators.tbody,
+            colgroup: creators.tbody
+        });
+    }
 });
 
 /**
- * Notes:
- *
- * 2010.03
- *  ~ attr:
- *    - ÔÚ jquery/support.js ÖĞ£¬special attrs Àï»¹ÓĞ maxlength, cellspacing,
- *      rowspan, colspan, useap, frameboder, µ«²âÊÔ·¢ÏÖ£¬ÔÚ Grade-A ¼¶ä¯ÀÀÆ÷ÖĞ
- *      ²¢ÎŞ¼æÈİĞÔÎÊÌâ¡£
- *    - µ± colspan/rowspan ÊôĞÔÖµÉèÖÃÓĞÎóÊ±£¬ie7- »á×Ô¶¯¾ÀÕı£¬ºÍ href Ò»Ñù£¬ĞèÒª´«µİ
- *      µÚ 2 ¸ö²ÎÊıÀ´½â¾ö¡£jQuery Î´¿¼ÂÇ£¬´æÔÚ¼æÈİĞÔ bug.
- *    - jQuery ¿¼ÂÇÁËÎ´ÏÔÊ½Éè¶¨ tabindex Ê±Òı·¢µÄ¼æÈİÎÊÌâ£¬kissy ÀïºöÂÔ£¨Ì«²»³£ÓÃÁË£©
- *    - jquery/attributes.js: Safari mis-reports the default selected
- *      property of an option ÔÚ Safari 4 ÖĞÒÑĞŞ¸´
- *
  * TODO:
- *  - create µÄ½øÒ»²½ÍêÉÆ£¬±ÈÈç cache, ¶Ô table, form ÔªËØµÄÖ§³ÖµÈµÈ
- *//**
- * @module  dom-class
- * @author  lifesinger@gmail.com
- * @depends kissy, dom-base
+ *  - ç ”ç©¶ jQuery çš„ buildFragment å’Œ clean
+ *  - å¢åŠ  cache, å®Œå–„ test cases
+ *  - æ”¯æŒæ›´å¤š props
  */
+/**
+ * @module  dom-insertion
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-insertion', function(S) {
 
-KISSY.add('dom-class', function(S, undefined) {
-
-    var SPACE = ' ',
-        DOM = S.DOM;
+    var DOM = S.DOM,
+        PARENT_NODE = 'parentNode',
+        NEXT_SIBLING = 'nextSibling';
 
     S.mix(DOM, {
 
         /**
-         * Determines whether a HTMLElement has the given className.
+         * Inserts the new node as the previous sibling of the reference node.
+         * @return {HTMLElement} The node that was inserted (or null if insert fails)
          */
-        hasClass: function(el, className) {
-            if (!className || !el || !el.className) return false;
+        insertBefore: function(newNode, refNode) {
+            newNode = DOM.create(newNode);
+            refNode = S.get(refNode);
 
-            return (SPACE + el.className + SPACE).indexOf(SPACE + className + SPACE) > -1;
-        },
-
-        /**
-         * Adds a given className to a HTMLElement.
-         */
-        addClass: function(el, className) {
-            if(batch(el, addClass, DOM, className)) return;
-            if (!className || !el) return;
-            if (hasClass(el, className)) return;
-
-            el.className += SPACE + className;
-        },
-
-        /**
-         * Removes a given className from a HTMLElement.
-         */
-        removeClass: function(el, className) {
-            if(batch(el, removeClass, DOM, className)) return;
-            if (!hasClass(el, className)) return;
-
-            el.className = (SPACE + el.className + SPACE).replace(SPACE + className + SPACE, SPACE);
-            if (hasClass(el, className)) {
-                removeClass(el, className);
+            if (newNode && refNode && refNode[PARENT_NODE]) {
+                refNode[PARENT_NODE].insertBefore(newNode, refNode);
             }
+
+            return newNode;
         },
 
         /**
-         * Replace a class with another class for a given element.
-         * If no oldClassName is present, the newClassName is simply added.
+         * Inserts the new node as the next sibling of the reference node.
+         * @return {HTMLElement} The node that was inserted (or null if insert fails)
          */
-        replaceClass: function(el, oldC, newC) {
-            removeClass(el, oldC);
-            addClass(el, newC);
-        },
+        insertAfter: function(newNode, refNode) {
+            newNode = DOM.create(newNode);
+            refNode = S.get(refNode);
 
-        /**
-         * If the className exists on the node it is removed, if it doesn't exist it is added.
-         * @param {boolean} force addClass optional boolean to indicate whether class
-         * should be added or removed regardless of current state.
-         */
-        toggleClass: function(el, className, force) {
-            if(batch(el, DOM.toggleClass, DOM, className, force)) return;
-
-            var add = (force !== undefined) ? force :
-                      !(hasClass(el, className));
-
-            if (add) {
-                addClass(el, className);
-            } else {
-                removeClass(el, className);
+            if (newNode && refNode && refNode[PARENT_NODE]) {
+                if (refNode[NEXT_SIBLING]) {
+                    refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
+                } else {
+                    refNode[PARENT_NODE].appendChild(newNode);
+                }
             }
+
+            return newNode;
         }
     });
 
-    function batch(arr, method, context) {
-        if (S.isArray(arr)) {
-            S.each(arr, function(item) {
-                method.apply(context, Array.prototype.slice.call(arguments, 3));
-            });
-            return true;
-        }
-    }
-
-    // for quick access
-    var hasClass = DOM.hasClass,
-        addClass = DOM.addClass,
-        removeClass = DOM.removeClass;
 });
 
 /**
- * TODO:
- *   - hasClass needs batch?
- *//*
-Copyright 2010, KISSY UI Library v1.0.5
+ * NOTES:
+ *  - appendChild/removeChild/replaceChild ç›´æ¥ç”¨åŸç”Ÿçš„
+ *  - append/appendTo, prepend/prependTo, wrap/unwrap æ”¾åœ¨ Node é‡Œ
+ *
+ */
+/*
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 669 May 22 23:47
+build: 792 Jul 1 19:44
 */
 /**
  * @module  event
@@ -1597,12 +2314,11 @@ build: 669 May 22 23:47
  */
 KISSY.add('event', function(S, undefined) {
 
-    var DOM = S.DOM,
-        win = window, doc = document,
+    var win = window, doc = document,
         simpleAdd = doc.addEventListener ?
-                    function(el, type, fn) {
+                    function(el, type, fn, capture) {
                         if (el.addEventListener) {
-                            el.addEventListener(type, fn, false);
+                            el.addEventListener(type, fn, capture);
                         }
                     } :
                     function(el, type, fn) {
@@ -1611,9 +2327,9 @@ KISSY.add('event', function(S, undefined) {
                         }
                     },
         simpleRemove = doc.removeEventListener ?
-                       function(el, type, fn) {
+                       function(el, type, fn, capture) {
                            if (el.removeEventListener) {
-                               el.removeEventListener(type, fn, false);
+                               el.removeEventListener(type, fn, capture);
                            }
                        } :
                        function(el, type, fn) {
@@ -1621,13 +2337,15 @@ KISSY.add('event', function(S, undefined) {
                                el.detachEvent('on' + type, fn);
                            }
                        },
-        EVENT_GUID = 'data-ks-event-guid',
+        EVENT_GUID = 'ksEventTargetId',
         SPACE = ' ',
         guid = S.now(),
         // { id: { target: el, events: { type: { handle: obj, listeners: [...] } } }, ... }
         cache = { };
 
     var Event = {
+
+        EVENT_GUID: EVENT_GUID,
 
         // such as: { 'mouseenter' : { fix: 'mouseover', handle: fn } }
         special: { },
@@ -1637,17 +2355,18 @@ KISSY.add('event', function(S, undefined) {
          * @param target {Element} An element or custom EventTarget to assign the listener to.
          * @param type {String} The type of event to append.
          * @param fn {Function} The event handler.
+         * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
-        add: function(target, type, fn) {
-            if(batch('add', target, type, fn)) return;
+        add: function(target, type, fn, scope /* optional */) {
+            if(batch('add', target, type, fn, scope)) return;
 
             var id = getID(target),
                 special, events, eventHandle;
 
-            // ²»ÊÇÓĞĞ§µÄ target »ò ²ÎÊı²»¶Ô
+            // ä¸æ˜¯æœ‰æ•ˆçš„ target æˆ– å‚æ•°ä¸å¯¹
             if(id === -1 || !type || !S.isFunction(fn)) return;
 
-            // »¹Ã»ÓĞÌí¼Ó¹ıÈÎºÎÊÂ¼ş
+            // è¿˜æ²¡æœ‰æ·»åŠ è¿‡ä»»ä½•äº‹ä»¶
             if (!id) {
                 setID(target, (id = guid++));
                 cache[id] = {
@@ -1656,9 +2375,9 @@ KISSY.add('event', function(S, undefined) {
                 };
             }
 
-            // Ã»ÓĞÌí¼Ó¹ı¸ÃÀàĞÍÊÂ¼ş
+            // æ²¡æœ‰æ·»åŠ è¿‡è¯¥ç±»å‹äº‹ä»¶
             events = cache[id].events;
-            special = (!target.isCustomEventTarget && Event.special[type]) || { }; // special ½öÕë¶Ô element
+            special = (!target.isCustomEventTarget && Event.special[type]) || { }; // special ä»…é’ˆå¯¹ element
             if (!events[type]) {
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
@@ -1673,7 +2392,7 @@ KISSY.add('event', function(S, undefined) {
                         special.setup(event);
                     }
 
-                    return (special.handle || Event._handle)(target, event, events[type].listeners);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners, scope);
                 };
 
                 events[type] = {
@@ -1682,14 +2401,14 @@ KISSY.add('event', function(S, undefined) {
                 };
 
                 if(!target.isCustomEventTarget) {
-                    simpleAdd(target, special.fix || type, eventHandle);
+                    simpleAdd(target, special.fix || type, eventHandle, special.capture);
                 }
                 else if(target._addEvent) { // such as Node
                     target._addEvent(type, eventHandle);
                 }
             }
 
-            // Ôö¼Ó listener
+            // å¢åŠ  listener
             events[type].listeners.push(fn);
         },
 
@@ -1703,16 +2422,16 @@ KISSY.add('event', function(S, undefined) {
                 events, eventsType, listeners,
                 i, len, c, t;
 
-            if (id === -1) return; // ²»ÊÇÓĞĞ§µÄ target
-            if(!id || !(c = cache[id])) return; // ÎŞ cache
-            if(c.target !== target) return; // target ²»Æ¥Åä
+            if (id === -1) return; // ä¸æ˜¯æœ‰æ•ˆçš„ target
+            if(!id || !(c = cache[id])) return; // æ—  cache
+            if(c.target !== target) return; // target ä¸åŒ¹é…
             events = c.events || { };
 
             if((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
 
-                // ÒÆ³ı fn
+                // ç§»é™¤ fn
                 if(S.isFunction(fn) && len && S.inArray(fn, listeners)) {
                     t = [];
                     for(i = 0; i < len; ++i) {
@@ -1724,16 +2443,16 @@ KISSY.add('event', function(S, undefined) {
                     len = t.length;
                 }
 
-                // remove(el, type)or fn ÒÑÒÆ³ı¹â
+                // remove(el, type) or fn å·²ç§»é™¤å…‰
                 if(fn === undefined || len === 0) {
                     if(!target.isCustomEventTarget) {
                         simpleRemove(target, type, eventsType.handle);
                     }
-                    delete cache[id].type;
+                    delete events[type];
                 }
             }
 
-            // remove(el) or type ÒÑÒÆ³ı¹â
+            // remove(el) or type å·²ç§»é™¤å…‰
             if(type === undefined || S.isEmptyObject(events)) {
                 for(type in events) {
                     Event.remove(target, type);
@@ -1743,18 +2462,19 @@ KISSY.add('event', function(S, undefined) {
             }
         },
 
-        _handle: function(target, event, listeners) {
+        _handle: function(target, event, listeners, scope) {
             var ret, i = 0, len = listeners.length;
+            scope = scope || target;
 
             for (; i < len; ++i) {
-                ret = listeners[i].call(target, event);
+                ret = listeners[i].call(scope, event);
 
-                if (event.isImmediatePropagationStopped) {
+                // è‡ªå®šä¹‰äº‹ä»¶å¯¹è±¡ï¼Œå¯ä»¥ç”¨ return false æ¥ç«‹åˆ»åœæ­¢åç»­ç›‘å¬å‡½æ•°
+                // æ³¨æ„ï¼šreturn false ä»…åœæ­¢å½“å‰ target çš„åç»­ç›‘å¬å‡½æ•°ï¼Œå¹¶ä¸ä¼šé˜»æ­¢å†’æ³¡
+                // ç›®å‰æ²¡æœ‰å®ç°è‡ªå®šä¹‰äº‹ä»¶å¯¹è±¡çš„å†’æ³¡ï¼Œå› æ­¤ return false å’Œ stopImmediatePropagation æ•ˆæœæ˜¯ä¸€æ ·çš„
+                if ((ret === false && target.isCustomEventTarget) ||
+                    event.isImmediatePropagationStopped) {
                     break;
-                }
-
-                if (ret === false) {
-                    event.halt();
                 }
             }
 
@@ -1772,7 +2492,7 @@ KISSY.add('event', function(S, undefined) {
     // shorthand
     Event.on = Event.add;
 
-    function batch(methodName, targets, types, fn) {
+    function batch(methodName, targets, types, fn, scope) {
 
         // on('#id tag.className', type, fn)
         if(S.isString(targets)) {
@@ -1782,7 +2502,7 @@ KISSY.add('event', function(S, undefined) {
         // on([targetA, targetB], type, fn)
         if (S.isArray(targets)) {
             S.each(targets, function(target) {
-                Event[methodName](target, types, fn);
+                Event[methodName](target, types, fn, scope);
             });
             return true;
         }
@@ -1790,73 +2510,40 @@ KISSY.add('event', function(S, undefined) {
         // on(target, 'click focus', fn)
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
             S.each(types.split(SPACE), function(type) {
-                Event[methodName](targets, type, fn);
+                Event[methodName](targets, type, fn, scope);
             });
             return true;
         }
     }
 
     function getID(target) {
-        var ret = -1;
-
-        // text and comment node
-        if (target.nodeType === 3 || target.nodeType === 8) {
-            return ret;
-        }
-
-        // HTML Element
-        if (target.nodeType) {
-            ret = DOM.attr(target, EVENT_GUID);
-        }
-        // custom EventTarget
-        else if (target.isCustomEventTarget) {
-            ret = target.eventTargetId;
-        }
-        // window, iframe, etc.
-        else {
-            ret = target[EVENT_GUID];
-        }
-
-        return ret;
+        return isTextOrCommentNode(target) ? -1 : target[EVENT_GUID];
     }
 
     function setID(target, id) {
         // text and comment node
-        if (target.nodeType === 3 || target.nodeType === 8) {
+        if (isTextOrCommentNode(target)) {
             return S.error('Text or comment node is not valid event target.');
         }
 
-        // HTML Element
-        if (target.nodeType) {
-            DOM.attr(target, EVENT_GUID, id);
-        }
-        // custom EventTarget
-        else if (target.isCustomEventTarget) {
-            target.eventTargetId = id;
-        }
-        // window, iframe, etc.
-        else {
-            try {
-                target[EVENT_GUID] = id;
-            } catch(ex) {
-                S.error(ex);
-            }
+        try {
+            target[EVENT_GUID] = id;
+        } catch(ex) {
+            // iframe è·¨åŸŸç­‰æƒ…å†µä¼šæŠ¥é”™
+            S.error(ex);
         }
     }
 
     function removeID(target) {
-        // HTML Element
-        if (target.nodeType) {
-            DOM.removeAttr(target, EVENT_GUID);
-        }
-        // custom EventTarget
-        else if (target.isCustomEventTarget) {
-            target.eventTargetId = undefined;
-        }
-        // window, iframe, etc.
-        else {
+        try {
             target[EVENT_GUID] = undefined;
+            delete target[EVENT_GUID];
+        } catch(ex) {
         }
+    }
+
+    function isTextOrCommentNode(target) {
+        return target.nodeType === 3 || target.nodeType === 8;
     }
 
     S.Event = Event;
@@ -1882,11 +2569,12 @@ KISSY.add('event', function(S, undefined) {
 
 /**
  * TODO:
- *   - ÑĞ¾¿ jq µÄ expando cache ·½Ê½
- *   - event || window.event, Ê²Ã´Çé¿öÏÂÈ¡ window.event ? IE4 ?
- *   - ¸üÏê¾¡Ï¸ÖÂµÄ test cases
- *   - ÄÚ´æĞ¹Â©²âÊÔ
- *   - target Îª window, iframe µÈÌØÊâ¶ÔÏóÊ±µÄ test case
+ *   - ç ”ç©¶ jq çš„ expando cache æ–¹å¼
+ *   - event || window.event, ä»€ä¹ˆæƒ…å†µä¸‹å– window.event ? IE4 ?
+ *   - æ›´è¯¦å°½ç»†è‡´çš„ test cases
+ *   - å†…å­˜æ³„æ¼æµ‹è¯•
+ *   - target ä¸º window, iframe ç­‰ç‰¹æ®Šå¯¹è±¡æ—¶çš„ test case
+ *   - special events çš„ teardown æ–¹æ³•ç¼ºå¤±ï¼Œéœ€è¦åšç‰¹æ®Šå¤„ç†
  */
 /**
  * @module  EventObject
@@ -2053,7 +2741,7 @@ KISSY.add('event-object', function(S, undefined) {
  *   - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
  *
  * TODO:
- *   - pageX, clientX, scrollLeft, clientLeft µÄÏêÏ¸²âÊÔ
+ *   - pageX, clientX, scrollLeft, clientLeft çš„è¯¦ç»†æµ‹è¯•
  */
 /**
  * @module  EventTarget
@@ -2061,7 +2749,8 @@ KISSY.add('event-object', function(S, undefined) {
  */
 KISSY.add('event-target', function(S, undefined) {
 
-    var Event = S.Event;
+    var Event = S.Event,
+        EVENT_GUID = Event.EVENT_GUID;
 
     /**
      * EventTarget provides the implementation for any object to publish,
@@ -2069,12 +2758,12 @@ KISSY.add('event-target', function(S, undefined) {
      */
     S.EventTarget = {
 
-        eventTargetId: undefined,
+        //ksEventTargetId: undefined,
 
         isCustomEventTarget: true,
 
         fire: function(type, eventData) {
-            var id = this.eventTargetId || -1,
+            var id = this[EVENT_GUID] || -1,
                 cache = Event._getCache(id) || { },
                 events = cache.events || { },
                 t = events[type];
@@ -2084,8 +2773,8 @@ KISSY.add('event-target', function(S, undefined) {
             }
         },
 
-        on: function(type, fn) {
-            Event.add(this, type, fn);
+        on: function(type, fn, scope) {
+            Event.add(this, type, fn, scope);
         },
 
         detach: function(type, fn) {
@@ -2098,10 +2787,10 @@ KISSY.add('event-target', function(S, undefined) {
  * NOTES:
  *
  *  2010.04
- *   - ³õÊ¼ÉèÏë api: publish, fire, on, detach. Êµ¼ÊÊµÏÖÊ±·¢ÏÖ£¬publish ÊÇ²»ĞèÒª
- *     µÄ£¬on Ê±ÄÜ×Ô¶¯ publish. api ¼ò»¯Îª£º´¥·¢/¶©ÔÄ/·´¶©ÔÄ
+ *   - åˆå§‹è®¾æƒ³ api: publish, fire, on, detach. å®é™…å®ç°æ—¶å‘ç°ï¼Œpublish æ˜¯ä¸éœ€è¦
+ *     çš„ï¼Œon æ—¶èƒ½è‡ªåŠ¨ publish. api ç®€åŒ–ä¸ºï¼šè§¦å‘/è®¢é˜…/åè®¢é˜…
  *
- *   - detach ÃüÃûÊÇÒòÎª removeEventListener Ì«³¤£¬remove ÔòÌ«ÈİÒ×³åÍ»
+ *   - detach å‘½åæ˜¯å› ä¸º removeEventListener å¤ªé•¿ï¼Œremove åˆ™å¤ªå®¹æ˜“å†²çª
  */
 /**
  * @module  event-mouseenter
@@ -2151,20 +2840,51 @@ KISSY.add('event-mouseenter', function(S) {
 
 /**
  * TODO:
- *  - ie6 ÏÂ£¬Ô­ÉúµÄ mouseenter/leave Ã²ËÆÒ²ÓĞ bug, ±ÈÈç <div><div /><div /><div /></div>
- *    jQuery Ò²Òì³££¬ĞèÒª½øÒ»²½ÑĞ¾¿
+ *  - ie6 ä¸‹ï¼ŒåŸç”Ÿçš„ mouseenter/leave è²Œä¼¼ä¹Ÿæœ‰ bug, æ¯”å¦‚ <div><div /><div /><div /></div>
+ *    jQuery ä¹Ÿå¼‚å¸¸ï¼Œéœ€è¦è¿›ä¸€æ­¥ç ”ç©¶
+ */
+/**
+ * @module  event-focusin
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('event-focusin', function(S) {
+
+    var Event = S.Event;
+
+    // è®©é IE æµè§ˆå™¨æ”¯æŒ focusin/focusout
+    if (document.addEventListener) {
+        S.each([
+            { name: 'focusin', fix: 'focus' },
+            { name: 'focusout', fix: 'blur' }
+        ], function(o) {
+
+            Event.special[o.name] = {
+
+                fix: o.fix,
+
+                capture: true,
+
+                setup: function(event) {
+                    event.type = o.name;
+                }
+            }
+        });
+    }
+});
+
+/**
+ * NOTES:
+ *  - webkit å’Œ opera å·²æ”¯æŒ DOMFocusIn/DOMFocusOut äº‹ä»¶ï¼Œä½†ä¸Šé¢çš„å†™æ³•å·²ç»èƒ½è¾¾åˆ°é¢„æœŸæ•ˆæœï¼Œæš‚æ—¶ä¸è€ƒè™‘åŸç”Ÿæ”¯æŒã€‚
  */
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 792 Jul 1 19:45
 */
 /**
  * @module  cookie
  * @author  lifesinger@gmail.com
- * @depends kissy
  */
-
 KISSY.add('cookie', function(S) {
 
     var doc = document,
@@ -2174,8 +2894,8 @@ KISSY.add('cookie', function(S) {
     S.Cookie = {
 
         /**
-         * »ñÈ¡ cookie Öµ
-         * @return {string} Èç¹û name ²»´æÔÚ£¬·µ»Ø undefined
+         * è·å– cookie å€¼
+         * @return {string} å¦‚æœ name ä¸å­˜åœ¨ï¼Œè¿”å› undefined
          */
         get: function(name) {
             var ret, m;
@@ -2191,7 +2911,7 @@ KISSY.add('cookie', function(S) {
         set: function(name, val, expires, domain, path, secure) {
             var text = encode(val), date = expires;
 
-            // ´Óµ±Ç°Ê±¼ä¿ªÊ¼£¬¶àÉÙÌìºó¹ıÆÚ
+            // ä»å½“å‰æ—¶é—´å¼€å§‹ï¼Œå¤šå°‘å¤©åè¿‡æœŸ
             if (typeof date === 'number') {
                 date = new Date();
                 date.setTime(date.getTime() + expires * 86400000);
@@ -2220,7 +2940,7 @@ KISSY.add('cookie', function(S) {
         },
 
         remove: function(name) {
-            // Á¢¿Ì¹ıÆÚ
+            // ç«‹åˆ»è¿‡æœŸ
             this.set(name, '', 0);
         }
     };
@@ -2232,19 +2952,20 @@ KISSY.add('cookie', function(S) {
 });
 
 /**
- * Notes:
+ * NOTES:
  *
  *  2010.04
- *   - get ·½·¨Òª¿¼ÂÇ ie ÏÂ£¬
- *     ÖµÎª¿ÕµÄ cookie Îª 'test3; test3=3; test3tt=2; test1=t1test3; test3', Ã»ÓĞµÈÓÚºÅ¡£
- *     ³ıÁËÕıÔò»ñÈ¡£¬»¹¿ÉÒÔ split ×Ö·û´®µÄ·½Ê½À´»ñÈ¡¡£
- *   - api Éè¼ÆÉÏ£¬Ô­±¾Ïë½è¼ø jQuery µÄ¼òÃ÷·ç¸ñ£ºS.cookie(name, ...), µ«¿¼ÂÇµ½¿ÉÀ©Õ¹ĞÔ£¬Ä¿Ç°
- *     ¶ÀÁ¢³É¾²Ì¬¹¤¾ßÀàµÄ·½Ê½¸üÓÅ¡£
+ *   - get æ–¹æ³•è¦è€ƒè™‘ ie ä¸‹ï¼Œ
+ *     å€¼ä¸ºç©ºçš„ cookie ä¸º 'test3; test3=3; test3tt=2; test1=t1test3; test3', æ²¡æœ‰ç­‰äºå·ã€‚
+ *     é™¤äº†æ­£åˆ™è·å–ï¼Œè¿˜å¯ä»¥ split å­—ç¬¦ä¸²çš„æ–¹å¼æ¥è·å–ã€‚
+ *   - api è®¾è®¡ä¸Šï¼ŒåŸæœ¬æƒ³å€Ÿé‰´ jQuery çš„ç®€æ˜é£æ ¼ï¼šS.cookie(name, ...), ä½†è€ƒè™‘åˆ°å¯æ‰©å±•æ€§ï¼Œç›®å‰
+ *     ç‹¬ç«‹æˆé™æ€å·¥å…·ç±»çš„æ–¹å¼æ›´ä¼˜ã€‚
  *
- *//*
-Copyright 2010, KISSY UI Library v1.0.5
+ */
+/*
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 545 Apr 9 13:24
+build: 792 Jul 1 19:45
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -2571,21 +3292,19 @@ KISSY.add('json', function (S) {
     }
 });
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 792 Jul 1 19:44
 */
 /**
  * @module  ajax
  * @author  lifesinger@gmail.com
- * @depends kissy
  */
-
 KISSY.add('ajax', function(S) {
 
     var doc = document,
         UA = S.UA;
-    
+
     S.Ajax = {
 
         /**
@@ -2628,17 +3347,17 @@ KISSY.add('ajax', function(S) {
 });
 
 /**
- * Notes:
- *
+ * NOTES:
  *  2010.04
- *   - api ¿¼ÂÇ£ºjQuery µÄÈ«ñîºÏÔÚ jQuery ¶ÔÏóÉÏ£¬ajaxComplete µÈ·½·¨ÏÔµÃ²»ÓÅÑÅ¡£
- *         YUI2 µÄ YAHOO.util.Connect.Get.script ²ã¼¶Ì«Éî£¬YUI3 µÄ io ÔòÒ°ĞÄ
- *         ¹ı´ó£¬KISSY ½è¼ø ExtJS, ²¿·Ö·½·¨½è¼ø jQuery.
+ *   - api è€ƒè™‘ï¼šjQuery çš„å…¨è€¦åˆåœ¨ jQuery å¯¹è±¡ä¸Šï¼ŒajaxComplete ç­‰æ–¹æ³•ä¸ä¼˜é›…ã€‚
+ *         YUI2 çš„ YAHOO.util.Connect.Get.script å±‚çº§å¤ªæ·±ï¼ŒYUI3 çš„ io åˆ™
+ *         é‡å¿ƒè¿‡å¤§ï¼ŒKISSY å€Ÿé‰´ ExtJS, éƒ¨åˆ†æ–¹æ³•å€Ÿé‰´ jQuery.
  *
- *//*
-Copyright 2010, KISSY UI Library v1.0.5
+ */
+/*
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 671 May 23 14:23
+build: 792 Jul 1 19:45
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -3704,2975 +4423,10 @@ var posProcess = function(selector, context){
 };
 
 // EXPOSE
-
-//window.Sizzle = Sizzle;
-KISSY.externalSelector = Sizzle;
+KISSY.ExternalSelector = Sizzle;
+KISSY.ExternalSelector._filter = function(selector, filter) {
+    //Sizzle.matches( String selector, Array<DOMElement> set )
+    return Sizzle.matches(filter, KISSY.query(selector));
+};
 
 })();
-/*
-Copyright 2010, KISSY UI Library v1.0.5
-MIT Licensed
-build: 548 Apr 9 23:53
-*/
-/**
- * @module  node
- * @author  lifesinger@gmail.com
- */
-
-KISSY.add('node', function(S) {
-
-    var DOM = S.DOM,
-        NP = Node.prototype;
-
-    /**
-     * The Node class provides a wrapper for manipulating DOM Node.
-     */
-    function Node(html, props, ownerDocument) {
-        var self = this, domNode;
-
-        // factory or constructor
-        if (!(self instanceof Node)) {
-            return new Node(html, props, ownerDocument);
-        }
-
-        // handle Node(''), Node(null), or Node(undefined)
-        if (!html) {
-            return null;
-        }
-
-        // handle Node(HTMLElement)
-        if (html.nodeType) {
-            domNode = html;
-        }
-        else if (typeof html === 'string') {
-            domNode = DOM.create(html, ownerDocument);
-        }
-
-        if (props) {
-            S.error('not implemented'); // TODO
-        }
-
-        self[0] = domNode;
-    }
-
-    // import dom methods
-    S.each(['attr', 'removeAttr', 'css'],
-        function(methodName) {
-            NP[methodName] = function(name, val) {
-                var domNode = this[0];
-                if(val === undefined) {
-                    return DOM[methodName](domNode, name);
-                } else {
-                    DOM[methodName](domNode, name, val);
-                    return this;
-                }
-            }
-        });
-
-    S.each(['val', 'text', 'html'],
-            function(methodName) {
-                NP[methodName] = function(val) {
-                    var domNode = this[0];
-                    if(val === undefined) {
-                        return DOM[methodName](domNode);
-                    } else {
-                        DOM[methodName](domNode, val);
-                        return this;
-                    }
-                }
-            });
-
-    S.each(['children', 'siblings', 'next', 'prev', 'parent'],
-        function(methodName) {
-            NP[methodName] = function() {
-                var ret = DOM[methodName](this[0]);
-                return ret ? new S[ret.length ? 'NodeList' : 'Node'](ret) : null;
-            }
-        });
-
-    S.each(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'],
-        function(methodName) {
-            NP[methodName] = function() {
-                var ret = DOM[methodName].apply(DOM, [this[0]].concat(S.makeArray(arguments)));
-                // Ö»ÓĞ hasClass ÓĞ·µ»ØÖµ
-                return typeof ret === 'boolean' ? ret : this;
-            }
-        });
-
-    // import event methods
-    S.mix(NP, S.EventTarget);
-    NP._addEvent = function(type, handle) {
-        S.Event._simpleAdd(this[0], type, handle);
-    };
-    delete NP.fire;    
-
-    // add more methods
-    S.mix(NP, {
-
-        /**
-         * Retrieves a node based on the given CSS selector.
-         */
-        one: function(selector) {
-            return S.one(selector, this[0]);
-        },
-
-        /**
-         * Retrieves a nodeList based on the given CSS selector.
-         */
-        all: function(selector) {
-            return S.all(selector, this[0]);
-        },
-
-        /**
-         * Insert the element to the end of the parent.
-         */
-        appendTo: function(parent) {
-            if((parent = S.get(parent)) && parent.appendChild) {
-                parent.appendChild(this[0]);
-            }
-            return this;
-        }
-    });
-
-    // query api
-    S.one = function(selector, context) {
-        return new Node(S.get(selector, context));
-    };
-
-    S.Node = Node;
-});
-
-/**
- * TODO:
- *   - append/appendTo, insertBefore/insertAfter, after/before µÈ²Ù×÷µÄÊµÏÖºÍ²âÊÔ
- */
-/**
- * @module  nodelist
- * @author  lifesinger@gmail.com
- * @depends kissy, dom
- */
-
-KISSY.add('nodelist', function(S) {
-
-    var DOM = S.DOM,
-        push = Array.prototype.push,
-        NP = NodeList.prototype;
-
-    /**
-     * The NodeList class provides a wrapper for manipulating DOM NodeList.
-     */
-    function NodeList(domNodes) {
-        // factory or constructor
-        if (!(this instanceof NodeList)) {
-            return new NodeList(domNodes);
-        }
-
-        // push nodes
-        push.apply(this, domNodes || []);
-    }
-
-    S.mix(NP, {
-
-        /**
-         * Ä¬ÈÏ³¤¶ÈÎª 0
-         */
-        length: 0,
-
-        /**
-         * Applies the given function to each Node in the NodeList. 
-         * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
-         * @param context An optional context to apply the function with Default context is the current Node instance
-         */
-        each: function(fn, context) {
-            var len = this.length, i = 0, node;
-            for (; i < len; ++i) {
-                node = new S.Node(this[i]);
-                fn.call(context || node, node, i, this);
-            }
-            return this;
-        }
-    });
-
-    // query api
-    S.all = function(selector, context) {
-        return new NodeList(S.query(selector, context, true));
-    };
-
-    S.NodeList = NodeList;
-});
-
-/**
- * Notes:
- *
- *  2010.04
- *   - each ·½·¨´«¸ø fn µÄ this, ÔÚ jQuery ÀïÖ¸ÏòÔ­Éú¶ÔÏó£¬ÕâÑù¿ÉÒÔ±ÜÃâĞÔÄÜÎÊÌâ¡£
- *     µ«´ÓÓÃ»§½Ç¶È½²£¬this µÄµÚÒ»Ö±¾õÊÇ $(this), kissy ºÍ yui3 ±£³ÖÒ»ÖÂ£¬ÎşÉü
- *     ĞÔÄÜ£¬Ò»ÇĞÒ×ÓÃÎªÊ×¡£
- *   - ÓĞÁË each ·½·¨£¬ËÆºõ²»ÔÙĞèÒª import ËùÓĞ dom ·½·¨£¬ÒâÒå²»´ó¡£
- *   - dom ÊÇµÍ¼¶ api, node ÊÇÖĞ¼¶ api, ÕâÊÇ·Ö²ãµÄÒ»¸öÔ­Òò¡£»¹ÓĞÒ»¸öÔ­ÒòÊÇ£¬Èç¹û
- *     Ö±½ÓÔÚ node ÀïÊµÏÖ dom ·½·¨£¬Ôò²»´óºÃ½« dom µÄ·½·¨ñîºÏµ½ nodelist Àï¡£¿É
- *     ÒÔËµ£¬¼¼Êõ³É±¾»áÖÆÔ¼ api Éè¼Æ¡£
- *
- *//*
-Copyright 2010, KISSY UI Library v1.0.5
-MIT Licensed
-build: 565 Apr 15 12:05
-*/
-/**
- * SWF UA info
- * author: lifesinger@gmail.com
- */
-
-KISSY.add('swf-ua', function(S) {
-
-    var UA = S.UA,
-        version = 0, sF = 'ShockwaveFlash',
-        ax6, mF, eP;
-
-    if (UA.ie) {
-        try {
-            ax6 = new ActiveXObject(sF + '.' + sF + '.6');
-            ax6.AllowScriptAccess = 'always';
-        } catch(e) {
-            if (ax6 !== null) {
-                version = 6.0;
-            }
-        }
-
-        if (version === 0) {
-            try {
-                version = numerify(
-                    new ActiveXObject(sF + '.' + sF)
-                        .GetVariable('$version')
-                        .replace(/[A-Za-z\s]+/g, '')
-                        .split(',')
-                    );
-
-            } catch (e) {
-            }
-        }
-    } else {
-        if ((mF = navigator.mimeTypes['application/x-shockwave-flash'])) {
-            if ((eP = mF.enabledPlugin)) {
-                version = numerify(
-                    eP.description
-                        .replace(/\s[rd]/g, '.')
-                        .replace(/[a-z\s]+/ig, '')
-                        .split('.')
-                    );
-            }
-        }
-    }
-
-    function numerify(arr) {
-        var ret = arr[0] + '.';
-        switch (arr[2].toString().length) {
-            case 1:
-                ret += '00';
-                break;
-            case 2:
-                ret += '0';
-                break;
-        }
-        return (ret += arr[2]);
-    }
-
-    UA.flash = parseFloat(version);
-});
-/**
- * The SWF utility is a tool for embedding Flash applications in HTML pages.
- * author: lifesinger@gmail.com
- */
-
-KISSY.add('swf', function(S) {
-
-    var UA = S.UA,
-        uid = S.now(),
-
-        VERSION = 10.22,
-        CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
-        TYPE = 'application/x-shockwave-flash',
-        EXPRESS_INSTALL_URL = 'http://fpdownload.macromedia.com/pub/flashplayer/update/current/swf/autoUpdater.swf?' + uid,
-        EVENT_HANDLER = 'KISSY.SWF.eventHandler',
-
-        possibleAttributes = {align:'', allowNetworking:'', allowScriptAccess:'', base:'', bgcolor:'', menu:'', name:'', quality:'', salign:'', scale:'', tabindex:'', wmode:''};
-
-
-    /**
-     * Creates the SWF instance and keeps the configuration data
-     *
-     * @constructor
-     * @param {String|HTMLElement} el The id of the element, or the element itself that the SWF will be inserted into.
-     *        The width and height of the SWF will be set to the width and height of this container element.
-     * @param {Object} params (optional) Configuration parameters for the Flash application and values for Flashvars
-     *        to be passed to the SWF.
-     */
-    function SWF(el, swfUrl, params) {
-        var self = this,
-            id = 'ks-swf-' + uid++,
-            flashVersion = parseFloat(params.version) || VERSION,
-            isFlashVersionRight = UA.flash >= flashVersion,
-            canExpressInstall = UA.flash >= 8.0,
-            shouldExpressInstall = canExpressInstall && params.useExpressInstall && !isFlashVersionRight,
-            flashUrl = (shouldExpressInstall) ? EXPRESS_INSTALL_URL : swfUrl,
-            // TODO: rename
-            flashvars = 'YUISwfId=' + id + '&YUIBridgeCallback=' + EVENT_HANDLER,
-            ret = '<object ';
-
-        self.id = id;
-        SWF.instances[id] = self;
-
-        if ((el = S.get(el)) && (isFlashVersionRight || shouldExpressInstall) && flashUrl) {
-            ret += 'id="' + id + '" ';
-
-            if (UA.ie) {
-                ret += 'classid="' + CID + '" '
-            } else {
-                ret += 'type="' + TYPE + '" data="' + flashUrl + '" ';
-            }
-
-            ret += 'width="100%" height="100%">';
-
-            if (UA.ie) {
-                ret += '<param name="movie" value="' + flashUrl + '"/>';
-            }
-
-            for (var attr in params.fixedAttributes) {
-                if (possibleAttributes.hasOwnProperty(attr)) {
-                    ret += '<param name="' + attr + '" value="' + params.fixedAttributes[attr] + '"/>';
-                }
-            }
-
-            for (var flashvar in params.flashVars) {
-                var fvar = params.flashVars[flashvar];
-                if (typeof fvar === 'string') {
-                    flashvars += "&" + flashvar + "=" + encodeURIComponent(fvar);
-                }
-            }
-
-            ret += '<param name="flashVars" value="' + flashvars + '"/>';
-            ret += "</object>";
-
-            el.innerHTML = ret;
-            self.swf = S.get('#' + id);
-        }
-    }
-
-    /**
-     * The static collection of all instances of the SWFs on the page.
-     * @static
-     */
-    SWF.instances = (S.SWF || { }).instances || { };
-
-    /**
-     * Handles an event coming from within the SWF and delegate it to a specific instance of SWF.
-     * @static
-     */
-    SWF.eventHandler = function(swfId, event) {
-        SWF.instances[swfId]._eventHandler(event);
-    };
-
-    S.augment(SWF, S.EventTarget);
-    S.augment(SWF, {
-
-        _eventHandler: function(event) {
-            var self = this,
-                type = event.type;
-
-            if (type === 'log') {
-                S.log(event.message);
-            } else if(type) {
-                self.fire(type, event);
-            }
-        },
-
-        /**
-         * Calls a specific function exposed by the SWF's ExternalInterface.
-         * @param func {string} the name of the function to call
-         * @param args {array} the set of arguments to pass to the function.
-         */
-        callSWF: function (func, args) {
-            var self = this;
-            if (self.swf[func]) {
-                return self.swf[func].apply(self.swf, args || []);
-            }
-        }
-    });
-
-    S.SWF = SWF;
-});
-/**
- * Provides a swf based storage implementation.
- */
-
-KISSY.add('swfstore', function(S, undefined) {
-
-    var UA = S.UA, Cookie = S.Cookie,
-        SWFSTORE = 'swfstore',
-        doc = document;
-
-    /**
-     * Class for the YUI SWFStore util.
-     * @constructor
-     * @param {String} swfUrl The URL of the SWF to be embedded into the page.
-     * @param container {String|HTMLElement} Container element for the Flash Player instance.
-     * @param shareData {Boolean} Whether or not data should be shared across browsers
-     * @param useCompression {Boolean} Container element for the Flash Player instance
-     */
-    function SWFStore(swfUrl, container, shareData, useCompression) {
-        var browser = 'other',
-            cookie = Cookie.get(SWFSTORE),
-            params,
-            self = this;
-
-        // convert booleans to strings for flashvars compatibility
-        shareData = (shareData !== undefined ? shareData : true) + '';
-        useCompression = (useCompression !== undefined ? useCompression : true) + '';
-
-        // browser detection
-        if (UA.ie) browser = 'ie';
-        else if (UA.gecko) browser = 'gecko';
-        else if (UA.webkit) browser = 'webkit';
-        else if (UA.opera) browser = 'opera';
-
-        // set cookie
-        if (!cookie || cookie === 'null') {
-            Cookie.set(SWFSTORE, (cookie = Math.round(Math.random() * Math.PI * 100000)));
-        }
-
-        params = {
-            version: 9.115,
-            useExpressInstall: false,
-            fixedAttributes: {
-                allowScriptAccess:'always',
-                allowNetworking:'all',
-                scale:'noScale'
-            },
-            flashVars: {
-                allowedDomain : doc.location.hostname,
-                shareData: shareData,
-                browser: cookie,
-                useCompression: useCompression
-            }
-        };
-
-        // Èç¹ûÃ»ÓĞ´«Èë£¬¾Í×Ô¶¯Éú³É
-        if(!container) {
-            // ×¢£ºcontainer µÄ style ²»ÄÜÓĞ visibility:hidden or display: none, ·ñÔòÒì³£
-            container = new S.Node('<div style="height:0;width:0;overflow:hidden"></div>').appendTo(doc.body)[0];
-        }
-        self.embeddedSWF = new S.SWF(container, swfUrl || 'swfstore.swf', params);
-
-        // ÈÃ flash fired events ÄÜÍ¨Öªµ½ swfstore
-        self.embeddedSWF._eventHandler = function(event) {
-            S.SWF.prototype._eventHandler.call(self, event);
-        }
-    }
-
-    // events support
-    S.augment(SWFStore, S.EventTarget);
-
-    // methods
-    S.augment(SWFStore, {
-        /**
-         * Saves data to local storage. It returns a String that can
-         * be one of three values: 'true' if the storage succeeded; 'false' if the user
-         * has denied storage on their machine or storage space allotted is not sufficient.
-         * <p>The size limit for the passed parameters is ~40Kb.</p>
-         * @param data {Object} The data to store
-         * @param key {String} The name of the 'cookie' or store
-         * @return {Boolean} Whether or not the save was successful
-         */
-        setItem: function(key, data) {
-            if (typeof data === 'string') { // ¿ìËÙÍ¨µÀ
-                // double encode strings to prevent parsing error
-                // http://yuilibrary.com/projects/yui2/ticket/2528593
-                data = data.replace(/\\/g, '\\\\');
-            } else {
-                data = S.JSON.stringify(data) + ''; // ±ÈÈç£ºstringify(undefined) = undefined, Ç¿ÖÆ×ª»»Îª×Ö·û´®
-            }
-
-            // µ± name Îª¿ÕÖµÊ±£¬Ä¿Ç°»á´¥·¢ swf µÄÄÚ²¿Òì³££¬´Ë´¦²»ÔÊĞí¿Õ¼üÖµ
-            if ((key = S.trim(key + ''))) {
-                try {
-                    return this.embeddedSWF.callSWF('setItem', [key, data]);
-                }
-                catch(e) { // µ± swf Òì³£Ê±£¬½øÒ»²½²¶»ñĞÅÏ¢
-                    this.fire('error', { message: e });
-                }
-            }
-        },
-
-        /**
-         * alias for getVauleOf
-         */
-        getItem: function(key) {
-            return this.embeddedSWF.callSWF('getValueOf', [key]);
-        }
-    });
-
-    S.each([
-        'getValueAt', 'getNameAt', //'getTypeAt',
-        'getValueOf', //'getTypeOf',
-        'getItems', 'getLength',
-        'removeItem', 'removeItemAt', 'clear',
-        //'getShareData', 'setShareData',
-        //'getUseCompression', 'setUseCompression',
-        'calculateCurrentSize', 'hasAdequateDimensions', 'setSize',
-        'getModificationDate', 'displaySettings'
-    ], function(methodName) {
-        SWFStore.prototype[methodName] = function() {
-            try {
-                return this.embeddedSWF.callSWF(methodName, S.makeArray(arguments));
-            }
-            catch(e) { // µ± swf Òì³£Ê±£¬½øÒ»²½²¶»ñĞÅÏ¢
-                this.fire('error', { message: e });
-            }
-        }
-    });
-
-    S.SWFStore = SWFStore;
-});
-
-/**
- * NOTES:
- *
- *  - [2010-04-09] yubo: È¥µô getTypeAt, getTypeOf, getShareData µÈÎŞÓÃºÍµ÷ÓÃ
- *     ¸ÅÂÊºÜĞ¡µÄ½Ó¿Ú£¬ÄşÔ¸ÉÙ¼¸¸ö½Ó¿Ú£¬Ò²²»ÎªÁË¹¦ÄÜ¶ø¹¦ÄÜ
- *
- * TODO:
- *   - ¹ã²¥¹¦ÄÜ£ºµ±Êı¾İÓĞ±ä»¯Ê±£¬×Ô¶¯Í¨Öª¸÷¸öÒ³Ãæ
- *   - Bug: µã»÷ Remove, µ± name ²»´æÔÚÊ±£¬»á½«×îºóÒ»ÌõÉ¾³ı
- *   - container µÄ overflow:hidden ÊÇ·ñÓĞ±ØÒª?
- */
-/*
-Copyright 2010, KISSY UI Library v1.0.5
-MIT Licensed
-build: 553 Apr 12 09:29
-*/
-/**
- * Êı¾İÑÓ³Ù¼ÓÔØ×é¼ş
- * °üÀ¨ img, textarea, ÒÔ¼°ÌØ¶¨ÔªËØ¼´½«³öÏÖÊ±µÄ»Øµ÷º¯Êı
- * @module      datalazyload
- * @creator     Óñ²®<lifesinger@gmail.com>
- * @depends     kissy-core, yahoo-dom-event
- */
-KISSY.add('datalazyload', function(S, undefined) {
-
-    var DOM = S.DOM, Event = S.Event, YDOM = YAHOO.util.Dom,
-        win = window, doc = document,
-        IMG_DATA_SRC = 'data-lazyload-src',
-        TEXTAREA_DATA_CLS = 'ks-datalazyload',
-        CUSTOM_IMG_DATA_SRC = IMG_DATA_SRC + '-custom',
-        CUSTOM_TEXTAREA_DATA_CLS = TEXTAREA_DATA_CLS + '-custom',
-        MOD = { AUTO: 'auto', MANUAL: 'manual' },
-        DEFAULT = 'default', NONE = 'none',
-
-        defaultConfig = {
-
-            /**
-             * ÀÁ´¦ÀíÄ£Ê½
-             *   auto   - ×Ô¶¯»¯¡£html Êä³öÊ±£¬²»¶Ô img.src ×öÈÎºÎ´¦Àí
-             *   manual - Êä³ö html Ê±£¬ÒÑ¾­½«ĞèÒªÑÓ³Ù¼ÓÔØµÄÍ¼Æ¬µÄ src ÊôĞÔÌæ»»Îª IMG_DATA_SRC
-             * ×¢£º¶ÔÓÚ textarea Êı¾İ£¬Ö»ÓĞÊÖ¶¯Ä£Ê½
-             */
-            mod: MOD.MANUAL,
-
-            /**
-             * µ±Ç°ÊÓ´°ÍùÏÂ£¬diff px ÍâµÄ img/textarea ÑÓ³Ù¼ÓÔØ
-             * ÊÊµ±ÉèÖÃ´ËÖµ£¬¿ÉÒÔÈÃÓÃ»§ÔÚÍÏ¶¯Ê±¸Ğ¾õÊı¾İÒÑ¾­¼ÓÔØºÃ
-             * Ä¬ÈÏÎªµ±Ç°ÊÓ´°¸ß¶È£¨Á½ÆÁÒÔÍâµÄ²ÅÑÓ³Ù¼ÓÔØ£©
-             */
-            diff: DEFAULT,
-
-            /**
-             * Í¼ÏñµÄÕ¼Î»Í¼
-             */
-            placeholder: 'http://a.tbcdn.cn/kissy/1.0.4/build/datalazyload/dot.gif'
-        },
-        DP = DataLazyload.prototype;
-
-    /**
-     * ÑÓ³Ù¼ÓÔØ×é¼ş
-     * @constructor
-     */
-    function DataLazyload(containers, config) {
-        var self = this;
-
-        // factory or constructor
-        if (!(self instanceof DataLazyload)) {
-            return new DataLazyload(containers, config);
-        }
-
-        // ÔÊĞí½ö´«µİ config Ò»¸ö²ÎÊı
-        if (config === undefined) {
-            config = containers;
-            containers = [doc];
-        }
-
-        // containers ÊÇÒ»¸ö HTMLElement Ê±
-        if (!S.isArray(containers)) {
-            containers = [S.get(containers) || doc];
-        }
-
-        /**
-         * Í¼Æ¬ËùÔÚÈİÆ÷£¨¿ÉÒÔ¶à¸ö£©£¬Ä¬ÈÏÎª [doc]
-         * @type Array
-         */
-        self.containers = containers;
-
-        /**
-         * ÅäÖÃ²ÎÊı
-         * @type Object
-         */
-        self.config = S.merge(defaultConfig, config || {});
-
-        /**
-         * ĞèÒªÑÓ³ÙÏÂÔØµÄÍ¼Æ¬
-         * @type Array
-         */
-        //self.images
-
-        /**
-         * ĞèÒªÑÓ³Ù´¦ÀíµÄ textarea
-         * @type Array
-         */
-        //self.areaes
-
-        /**
-         * ºÍÑÓ³ÙÏî°ó¶¨µÄ»Øµ÷º¯Êı
-         * @type object
-         */
-        self.callbacks = {els: [], fns: []};
-
-        /**
-         * ¿ªÊ¼ÑÓ³ÙµÄ Y ×ø±ê
-         * @type number
-         */
-        //self.threshold
-
-        self._init();
-    }
-
-    S.mix(DP, {
-
-        /**
-         * ³õÊ¼»¯
-         * @protected
-         */
-        _init: function() {
-            var self = this;
-
-            self.threshold = self._getThreshold();
-            self._filterItems();
-
-            if (self._getItemsLength()) {
-                self._initLoadEvent();
-            }
-        },
-
-        /**
-         * ³õÊ¼»¯¼ÓÔØÊÂ¼ş
-         * @protected
-         */
-        _initLoadEvent: function() {
-            var timer, self = this;
-
-            // scroll ºÍ resize Ê±£¬¼ÓÔØÍ¼Æ¬
-            Event.on(win, 'scroll', loader);
-            Event.on(win, 'resize', function() {
-                self.threshold = self._getThreshold();
-                loader();
-            });
-
-            // ĞèÒªÁ¢¼´¼ÓÔØÒ»´Î£¬ÒÔ±£Ö¤µÚÒ»ÆÁµÄÑÓ³ÙÏî¿É¼û
-            if (self._getItemsLength()) {
-                S.ready(function() {
-                    loadItems();
-                });
-            }
-
-            // ¼ÓÔØº¯Êı
-            function loader() {
-                if (timer) return;
-                timer = setTimeout(function() {
-                    loadItems();
-                    timer = null;
-                }, 100); // 0.1s ÄÚ£¬ÓÃ»§¸Ğ¾õÁ÷³©
-            }
-
-            // ¼ÓÔØÑÓ³ÙÏî
-            function loadItems() {
-                self._loadItems();
-
-                if (self._getItemsLength() === 0) {
-                    Event.remove(win, 'scroll', loader);
-                    Event.remove(win, 'resize', loader);
-                }
-            }
-        },
-
-        /**
-         * »ñÈ¡²¢³õÊ¼»¯ĞèÒªÑÓ³ÙµÄ img ºÍ textarea
-         * @protected
-         */
-        _filterItems: function() {
-            var self = this,
-                containers = self.containers,
-                threshold = self.threshold,
-                placeholder = self.config.placeholder,
-                isManualMod = self.config.mod === MOD.MANUAL,
-                n, N, imgs, areaes, i, len, img, area, data_src,
-                lazyImgs = [], lazyAreaes = [];
-
-            for (n = 0,N = containers.length; n < N; ++n) {
-                imgs = S.query('img', containers[n]);
-
-                for (i = 0,len = imgs.length; i < len; ++i) {
-                    img = imgs[i];
-                    data_src = img.getAttribute(IMG_DATA_SRC);
-
-                    if (isManualMod) { // ÊÖ¹¤Ä£Ê½£¬Ö»´¦ÀíÓĞ data-src µÄÍ¼Æ¬
-                        if (data_src) {
-                            img.src = placeholder;
-                            lazyImgs.push(img);
-                        }
-                    } else { // ×Ô¶¯Ä£Ê½£¬Ö»´¦Àí threshold ÍâÎŞ data-src µÄÍ¼Æ¬
-                        // ×¢Òâ£ºÒÑÓĞ data-src µÄÏî£¬¿ÉÄÜÒÑÓĞÆäËüÊµÀı´¦Àí¹ı£¬ÖØ¸´´¦Àí
-                        // »áµ¼ÖÂ data-src ±ä³É placeholder
-                        if (YDOM.getY(img) > threshold && !data_src) {
-                            img.setAttribute(IMG_DATA_SRC, img.src);
-                            img.src = placeholder;
-                            lazyImgs.push(img);
-                        }
-                    }
-                }
-
-                // ´¦Àí textarea
-                areaes = S.query('textarea', containers[n]);
-                for (i = 0,len = areaes.length; i < len; ++i) {
-                    area = areaes[i];
-                    if (DOM.hasClass(area, TEXTAREA_DATA_CLS)) {
-                        lazyAreaes.push(area);
-                    }
-                }
-            }
-
-            self.images = lazyImgs;
-            self.areaes = lazyAreaes;
-        },
-
-        /**
-         * ¼ÓÔØÑÓ³ÙÏî
-         */
-        _loadItems: function() {
-            var self = this;
-
-            self._loadImgs();
-            self._loadAreaes();
-            self._fireCallbacks();
-        },
-
-        /**
-         * ¼ÓÔØÍ¼Æ¬
-         * @protected
-         */
-        _loadImgs: function() {
-            var self = this,
-                imgs = self.images,
-                scrollTop = YDOM.getDocumentScrollTop(),
-                threshold = self.threshold + scrollTop,
-                i, img, data_src, remain = [];
-
-            for (i = 0; img = imgs[i++];) {
-                if (YDOM.getY(img) <= threshold) {
-                    self._loadImgSrc(img);
-                } else {
-                    remain.push(img);
-                }
-            }
-
-            self.images = remain;
-        },
-
-        /**
-         * ¼ÓÔØÍ¼Æ¬ src
-         * @static
-         */
-        _loadImgSrc: function(img, flag) {
-            flag = flag || IMG_DATA_SRC;
-            var data_src = img.getAttribute(flag);
-
-            if (data_src && img.src != data_src) {
-                img.src = data_src;
-                img.removeAttribute(flag);
-            }
-        },
-
-        /**
-         * ¼ÓÔØ textarea Êı¾İ
-         * @protected
-         */
-        _loadAreaes: function() {
-            var self = this,
-                areaes = self.areaes,
-                scrollTop = YDOM.getDocumentScrollTop(),
-                threshold = self.threshold + scrollTop,
-                i, area, el, remain = [];
-
-            for (i = 0; area = areaes[i++];) {
-                el = area;
-
-                // ×¢£ºarea ¿ÉÄÜ´¦ÓÚ display: none ×´Ì¬£¬Dom.getY(area) ·µ»Ø undefined
-                //    ÕâÖÖÇé¿öÏÂÓÃ area.parentNode µÄ Y ÖµÀ´ÅĞ¶Ï
-                if(YDOM.getY(el) === undefined) {
-                    el = area.parentNode;
-                }
-
-                if (YDOM.getY(el) <= threshold) {
-                    self._loadDataFromArea(area.parentNode, area);
-                } else {
-                    remain.push(area);
-                }
-            }
-
-            self.areaes = remain;
-        },
-
-        /**
-         * ´Ó textarea ÖĞ¼ÓÔØÊı¾İ
-         * @static
-         */
-        _loadDataFromArea: function(container, area) {
-            //container.innerHTML = area.value; // ÕâÖÖ·½Ê½»áµ¼ÖÂ chrome »º´æ bug
-
-            // ²ÉÓÃÒş²Ø²»È¥³ı·½Ê½
-            var content = DOM.create(area.value);
-            area.style.display = NONE;
-            //area.value = ''; // clear content  ²»ÄÜÇå¿Õ£¬·ñÔò F5 Ë¢ĞÂ£¬»á¶ªÄÚÈİ
-            area.className = ''; // clear hook
-            container.insertBefore(content, area);
-
-            // Ö´ĞĞÀïÃæµÄ½Å±¾
-            if(!S.UA.gecko) { // firefox »á×Ô¶¯Ö´ĞĞ TODO: feature test
-                // yuyin: µ± content Îª DocumentFragment Ê±£¬S.query ÓĞ´í
-                // ÏÂÃæÖ±½ÓÓÃ container
-                S.query('script', container).each(function(script) {
-                    S.globalEval(script.text);
-                });
-            }
-        },
-
-        /**
-         * ´¥·¢»Øµ÷
-         * @protected
-         */
-        _fireCallbacks: function() {
-            var self = this,
-                callbacks = self.callbacks,
-                els = callbacks.els, fns = callbacks.fns,
-                scrollTop = YDOM.getDocumentScrollTop(),
-                threshold = self.threshold + scrollTop,
-                i, el, fn, remainEls = [], remainFns = [];
-
-            for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
-                if (YDOM.getY(el) <= threshold) {
-                    fn.call(el);
-                } else {
-                    remainEls.push(el);
-                    remainFns.push(fn);
-                }
-
-            }
-
-            callbacks.els = remainEls;
-            callbacks.fns = remainFns;
-        },
-
-        /**
-         * Ìí¼Ó»Øµ÷º¯Êı¡£µ± el ¼´½«³öÏÖÔÚÊÓÍ¼ÖĞÊ±£¬´¥·¢ fn
-         */
-        addCallback: function(el, fn) {
-            el = S.get(el);
-            if (el && typeof fn === 'function') {
-                this.callbacks.els.push(el);
-                this.callbacks.fns.push(fn);
-            }
-        },
-
-        /**
-         * »ñÈ¡ãĞÖµ
-         * @protected
-         */
-        _getThreshold: function() {
-            var diff = this.config.diff,
-                ret = YDOM.getViewportHeight();
-
-            if (diff === DEFAULT) return 2 * ret; // diff Ä¬ÈÏÎªµ±Ç°ÊÓ´°¸ß¶È£¨Á½ÆÁÒÔÍâµÄ²ÅÑÓ³Ù¼ÓÔØ£©
-            else return ret + diff;
-        },
-
-        /**
-         * »ñÈ¡µ±Ç°ÑÓ³ÙÏîµÄÊıÁ¿
-         * @protected
-         */
-        _getItemsLength: function() {
-            var self = this;
-            return self.images.length + self.areaes.length + self.callbacks.els.length;
-        },
-
-        /**
-         * ¼ÓÔØ×Ô¶¨ÒåÑÓ³ÙÊı¾İ
-         * @static
-         */
-        loadCustomLazyData: function(containers, type, flag) {
-            var self = this, area, imgs;
-
-
-            // Ö§³ÖÊı×é
-            if (!S.isArray(containers)) {
-                containers = [S.get(containers)];
-            }
-
-            // ±éÀú´¦Àí
-            S.each(containers, function(container) {
-                switch (type) {
-                    case 'textarea-data':
-                        area = S.get('textarea', container);
-                        if (area && DOM.hasClass(area, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
-                            self._loadDataFromArea(container, area);
-                        }
-                        break;
-                    //case 'img-src':
-                    default:
-                        //S.log('loadCustomLazyData container = ' + container.src);
-                        if (container.nodeName === 'IMG') { // ±¾Éí¾ÍÊÇÍ¼Æ¬
-                            imgs = [container];
-                        } else {
-                            imgs = S.query('img', container);
-                        }
-                        for (var i = 0, len = imgs.length; i < len; i++) {
-                            self._loadImgSrc(imgs[i], flag || CUSTOM_IMG_DATA_SRC);
-                        }
-                }
-            });
-        }
-    });
-
-    // attach static methods
-    S.mix(DataLazyload, DP, true, ['loadCustomLazyData', '_loadImgSrc', '_loadDataFromArea']);
-
-    S.DataLazyload = DataLazyload;
-});
-
-/**
- * NOTES:
- *
- * Ä£Ê½Îª auto Ê±£º
- *  1. ÔÚ Firefox ÏÂ·Ç³£ÍêÃÀ¡£½Å±¾ÔËĞĞÊ±£¬»¹Ã»ÓĞÈÎºÎÍ¼Æ¬¿ªÊ¼ÏÂÔØ£¬ÄÜÕæÕı×öµ½ÑÓ³Ù¼ÓÔØ¡£
- *  2. ÔÚ IE ÏÂ²»¾¡ÍêÃÀ¡£½Å±¾ÔËĞĞÊ±£¬ÓĞ²¿·ÖÍ¼Æ¬ÒÑ¾­Óë·şÎñÆ÷½¨Á¢Á´½Ó£¬Õâ²¿·Ö abort µô£¬
- *     ÔÙÔÚ¹ö¶¯Ê±ÑÓ³Ù¼ÓÔØ£¬·´¶øÔö¼ÓÁËÁ´½ÓÊı¡£
- *  3. ÔÚ Safari ºÍ Chrome ÏÂ£¬ÒòÎª webkit ÄÚºË bug£¬µ¼ÖÂÎŞ·¨ abort µôÏÂÔØ¡£¸Ã
- *     ½Å±¾ÍêÈ«ÎŞÓÃ¡£
- *  4. ÔÚ Opera ÏÂ£¬ºÍ Firefox Ò»ÖÂ£¬ÍêÃÀ¡£
- *
- * Ä£Ê½Îª manual Ê±£º£¨ÒªÑÓ³Ù¼ÓÔØµÄÍ¼Æ¬£¬src ÊôĞÔÌæ»»Îª data-lazyload-src, ²¢½« src µÄÖµ¸³Îª placeholder £©
- *  1. ÔÚÈÎºÎä¯ÀÀÆ÷ÏÂ¶¼¿ÉÒÔÍêÃÀÊµÏÖ¡£
- *  2. È±µãÊÇ²»½¥½øÔöÇ¿£¬ÎŞ JS Ê±£¬Í¼Æ¬²»ÄÜÕ¹Ê¾¡£
- *
- * È±µã£º
- *  1. ¶ÔÓÚ´ó²¿·ÖÇé¿öÏÂ£¬ĞèÒªÍÏ¶¯²é¿´ÄÚÈİµÄÒ³Ãæ£¨±ÈÈçËÑË÷½á¹ûÒ³£©£¬¿ìËÙ¹ö¶¯Ê±¼ÓÔØÓĞËğÓÃ
- *     »§ÌåÑé£¨ÓÃ»§ÆÚÍûËù¹ö¼´ËùµÃ£©£¬ÌØ±ğÊÇÍøËÙ²»ºÃÊ±¡£
- *  2. auto Ä£Ê½²»Ö§³Ö Webkit ÄÚºËä¯ÀÀÆ÷£»IE ÏÂ£¬ÓĞ¿ÉÄÜµ¼ÖÂ HTTP Á´½ÓÊıµÄÔö¼Ó¡£
- *
- * ÓÅµã£º
- *  1. ¿ÉÒÔºÜºÃµÄÌá¸ßÒ³Ãæ³õÊ¼¼ÓÔØËÙ¶È¡£
- *  2. µÚÒ»ÆÁ¾ÍÌø×ª£¬ÑÓ³Ù¼ÓÔØÍ¼Æ¬¿ÉÒÔ¼õÉÙÁ÷Á¿¡£
- *
- * ²Î¿¼×ÊÁÏ£º
- *  1. http://davidwalsh.name/lazyload MooTools µÄÍ¼Æ¬ÑÓ³Ù²å¼ş
- *  2. http://vip.qq.com/ Ä£°åÊä³öÊ±£¬¾ÍÌæ»»µôÍ¼Æ¬µÄ src
- *  3. http://www.appelsiini.net/projects/lazyload jQuery Lazyload
- *  4. http://www.dynamixlabs.com/2008/01/17/a-quick-look-add-a-loading-icon-to-your-larger-images/
- *  5. http://www.nczonline.net/blog/2009/11/30/empty-image-src-can-destroy-your-site/
- *
- * ÌØ±ğÒª×¢ÒâµÄ²âÊÔÓÃÀı:
- *  1. ³õÊ¼´°¿ÚºÜĞ¡£¬À­´ó´°¿ÚÊ±£¬Í¼Æ¬¼ÓÔØÕı³£
- *  2. Ò³ÃæÓĞ¹ö¶¯Î»ÖÃÊ±£¬Ë¢ĞÂÒ³Ãæ£¬Í¼Æ¬¼ÓÔØÕı³£
- *  3. ÊÖ¶¯Ä£Ê½£¬µÚÒ»ÆÁÓĞÑÓ³ÙÍ¼Æ¬Ê±£¬¼ÓÔØÕı³£
- *
- * 2009-12-17 ²¹³ä£º
- *  1. textarea ÑÓ³Ù¼ÓÔØÔ¼¶¨£ºÒ³ÃæÖĞĞèÒªÑÓ³ÙµÄ dom ½Úµã£¬·ÅÔÚ
- *       <textarea class='ks-datalazysrc invisible'>dom code</textarea>
- *     Àï¡£¿ÉÒÔÌí¼Ó hidden µÈ class, µ«½¨ÒéÓÃ invisible, ²¢Éè¶¨ height = 'Êµ¼Ê¸ß¶È'.
- *     ÕâÑù¿ÉÒÔ±£Ö¤¹ö¶¯Ê±£¬diff ¸üÕæÊµÓĞĞ§¡£
- *     ×¢Òâ£ºtextarea ¼ÓÔØºó£¬»áÌæ»»µô¸¸ÈİÆ÷ÖĞµÄËùÓĞÄÚÈİ¡£
- *  2. ÑÓ³Ù callback Ô¼¶¨£ºdataLazyload.addCallback(el, fn) ±íÊ¾µ± el ¼´½«³öÏÖÊ±£¬´¥·¢ fn.
- *  3. ËùÓĞ²Ù×÷¶¼ÊÇ×î¶à´¥·¢Ò»´Î£¬±ÈÈç callback. À´»ØÍÏ¶¯¹ö¶¯ÌõÊ±£¬Ö»ÓĞ el µÚÒ»´Î³öÏÖÊ±»á´¥·¢ fn »Øµ÷¡£
- */
-
-/**
- * TODO:
- *   - [È¡Ïû] ±³¾°Í¼Æ¬µÄÑÓ³Ù¼ÓÔØ£¨¶ÔÓÚ css ÀïµÄ±³¾°Í¼Æ¬ºÍ sprite ºÜÄÑ´¦Àí£©
- *   - [È¡Ïû] ¼ÓÔØÊ±µÄ loading Í¼£¨¶ÔÓÚÎ´Éè¶¨´óĞ¡µÄÍ¼Æ¬£¬ºÜÄÑÍêÃÀ´¦Àí[²Î¿¼×ÊÁÏ 4]£©
- */
-
-/**
- * UPDATE LOG:
- *   - 2010-04-05 yubo ÖØ¹¹£¬Ê¹µÃ¶Ô YUI µÄÒÀÀµ½öÏŞÓÚ YDOM
- *   - 2009-12-17 yubo ½« imglazyload Éı¼¶Îª datalazyload, Ö§³Ö textarea ·½Ê½ÑÓ³ÙºÍÌØ¶¨ÔªËØ¼´½«³öÏÖÊ±µÄ»Øµ÷º¯Êı
- */
-/*
-Copyright 2010, KISSY UI Library v1.0.5
-MIT Licensed
-build: 557 Apr 12 19:51
-*/
-/**
- * ÌáÊ¾²¹È«×é¼ş
- * @module      suggest
- * @creator     Óñ²®<lifesinger@gmail.com>
- * @depends     kissy-core, yahoo-dom-event
- */
-KISSY.add("suggest", function(S, undefined) {
-
-    var YDOM = YAHOO.util.Dom, DOM = S.DOM, Event = S.Event,
-        win = window, doc = document,
-        head = doc.getElementsByTagName("head")[0],
-        ie = YAHOO.env.ua.ie, ie6 = (ie === 6),
-
-        CALLBACK_STR = "g_ks_suggest_callback", // Ô¼¶¨µÄÈ«¾Ö»Øµ÷º¯Êı
-        STYLE_ID = "ks-suggest-style", // ÑùÊ½ style ÔªËØµÄ id
-
-        CONTAINER_CLASS = "ks-suggest-container",
-        KEY_EL_CLASS = "ks-suggest-key", // ÌáÊ¾²ãÖĞ£¬key ÔªËØµÄ class
-        RESULT_EL_CLASS = "ks-suggest-result", // ÌáÊ¾²ãÖĞ£¬result ÔªËØµÄ class
-        SELECTED_ITEM_CLASS = "selected", // ÌáÊ¾²ãÖĞ£¬Ñ¡ÖĞÏîµÄ class
-        ODD_ITEM_CLASS = "odd", // ÌáÊ¾²ãÖĞ£¬ÆæÊıÏîµÄ class
-        EVEN_ITEM_CLASS = "even", // ÌáÊ¾²ãÖĞ£¬Å¼ÊıÏîµÄ class
-        BOTTOM_CLASS = "ks-suggest-bottom",
-        CLOSE_BTN_CLASS = "ks-suggest-close-btn",
-        SHIM_CLASS = "ks-suggest-shim", // iframe shim µÄ class
-
-        EVENT_DATA_REQUEST = "dataRequest",
-        EVENT_DATA_RETURN = "dataReturn",
-        EVENT_SHOW = "show",
-        EVENT_ITEM_SELECT = "itemSelect",
-
-        /**
-         * SuggestµÄÄ¬ÈÏÅäÖÃ
-         */
-        defaultConfig = {
-            /**
-             * ÓÃ»§¸½¼Ó¸øĞü¸¡ÌáÊ¾²ãµÄ class
-             *
-             * ÌáÊ¾²ãµÄÄ¬ÈÏ½á¹¹ÈçÏÂ£º
-             * <div class="suggest-container [container-class]">
-             *     <ol>
-             *         <li>
-             *             <span class="suggest-key">...</span>
-             *             <span class="suggest-result">...</span>
-             *         </li>
-             *     </ol>
-             *     <div class="suggest-bottom">
-             *         <a class="suggest-close-btn">...</a>
-             *     </div>
-             * </div>
-             * @type String
-             */
-            containerCls: "",
-
-            /**
-             * ÌáÊ¾²ãµÄ¿í¶È
-             * ×¢Òâ£ºÄ¬ÈÏÇé¿öÏÂ£¬ÌáÊ¾²ãµÄ¿í¶ÈºÍinputÊäÈë¿òµÄ¿í¶È±£³ÖÒ»ÖÂ
-             * Ê¾·¶È¡Öµ£º"200px", "10%"µÈ£¬±ØĞë´øµ¥Î»
-             * @type String
-             */
-            containerWidth: "auto",
-
-            /**
-             * resultµÄ¸ñÊ½
-             * @type String
-             */
-            resultFormat: "Ô¼%result%Ìõ½á¹û",
-
-            /**
-             * ÊÇ·ñÏÔÊ¾¹Ø±Õ°´Å¥
-             * @type Boolean
-             */
-            showCloseBtn: false,
-
-            /**
-             * ¹Ø±Õ°´Å¥ÉÏµÄÎÄ×Ö
-             * @type String
-             */
-            closeBtnText: "¹Ø±Õ",
-
-            /**
-             * ÊÇ·ñĞèÒªiframe shim
-             * @type Boolean
-             */
-            useShim: ie6,
-
-            /**
-             * ¶¨Ê±Æ÷µÄÑÓÊ±
-             * @type Number
-             */
-            timerDelay: 200,
-
-            /**
-             * ³õÊ¼»¯ºó£¬×Ô¶¯¼¤»î
-             * @type Boolean
-             */
-            autoFocus: false,
-
-            /**
-             * Êó±êµã»÷Íê³ÉÑ¡ÔñÊ±£¬ÊÇ·ñ×Ô¶¯Ìá½»±íµ¥
-             * @type Boolean
-             */
-            submitFormOnClickSelect: true
-        };
-
-    /**
-     * ÌáÊ¾²¹È«×é¼ş
-     * @class Suggest
-     * @constructor
-     * @param {String|HTMLElement} textInput
-     * @param {String} dataSource
-     * @param {Object} config
-     */
-    function Suggest(textInput, dataSource, config) {
-        var self = this;
-
-        // allow instantiation without the new operator
-        if (!(self instanceof Suggest)) {
-            return new Suggest(textInput, dataSource, config);
-        }
-
-        /**
-         * ÎÄ±¾ÊäÈë¿ò
-         * @type HTMLElement
-         */
-        self.textInput = S.get(textInput);
-
-        /**
-         * »ñÈ¡Êı¾İµÄURL »ò JSON¸ñÊ½µÄ¾²Ì¬Êı¾İ
-         * @type {String|Object}
-         */
-        self.dataSource = dataSource;
-
-        /**
-         * JSON¾²Ì¬Êı¾İÔ´
-         * @type Object ¸ñÊ½Îª {"query1" : [["key1", "result1"], []], "query2" : [[], []]}
-         */
-        self.JSONDataSource = S.isPlainObject(dataSource) ? dataSource : null;
-
-        /**
-         * Í¨¹ıjsonp·µ»ØµÄÊı¾İ
-         * @type Object
-         */
-        self.returnedData = null;
-
-        /**
-         * ÅäÖÃ²ÎÊı
-         * @type Object
-         */
-        self.config = S.merge(defaultConfig, config || { });
-
-        /**
-         * ´æ·ÅÌáÊ¾ĞÅÏ¢µÄÈİÆ÷
-         * @type HTMLElement
-         */
-        self.container = null;
-
-        /**
-         * ÊäÈë¿òµÄÖµ
-         * @type String
-         */
-        self.query = "";
-
-        /**
-         * »ñÈ¡Êı¾İÊ±µÄ²ÎÊı
-         * @type String
-         */
-        self.queryParams = "";
-
-        /**
-         * ÄÚ²¿¶¨Ê±Æ÷
-         * @private
-         * @type Object
-         */
-        self._timer = null;
-
-        /**
-         * ¼ÆÊ±Æ÷ÊÇ·ñ´¦ÓÚÔËĞĞ×´Ì¬
-         * @private
-         * @type Boolean
-         */
-        self._isRunning = false;
-
-        /**
-         * »ñÈ¡Êı¾İµÄscriptÔªËØ
-         * @type HTMLElement
-         */
-        self.dataScript = null;
-
-        /**
-         * Êı¾İ»º´æ
-         * @private
-         * @type Object
-         */
-        self._dataCache = {};
-
-        /**
-         * ×îĞÂscriptµÄÊ±¼ä´Á
-         * @type String
-         */
-        self._latestScriptTime = "";
-
-        /**
-         * script·µ»ØµÄÊı¾İÊÇ·ñÒÑ¾­¹ıÆÚ
-         * @type Boolean
-         */
-        self._scriptDataIsOut = false;
-
-        /**
-         * ÊÇ·ñ´¦ÓÚ¼üÅÌÑ¡Ôñ×´Ì¬
-         * @private
-         * @type Boolean
-         */
-        self._onKeyboardSelecting = false;
-
-        /**
-         * ÌáÊ¾²ãµÄµ±Ç°Ñ¡ÖĞÏî
-         * @type Boolean
-         */
-        self.selectedItem = null;
-
-        // init
-        self._init();
-    }
-
-    S.mix(Suggest.prototype, {
-        /**
-         * ³õÊ¼»¯·½·¨
-         * @protected
-         */
-        _init: function() {
-            var self = this;
-            
-            // init DOM
-            self._initTextInput();
-            self._initContainer();
-            if (self.config.useShim) self._initShim();
-            self._initStyle();
-
-            // window resize event
-            self._initResizeEvent();
-        },
-
-        /**
-         * ³õÊ¼»¯ÊäÈë¿ò
-         * @protected
-         */
-        _initTextInput: function() {
-            var self = this;
-
-            // turn off autocomplete
-            self.textInput.setAttribute("autocomplete", "off");
-
-            // focus
-            // 2009-12-10 yubo: ÑÓ³Ùµ½ keydown ÖĞ start
-            //            Event.on(this.textInput, "focus", function() {
-            //                instance.start();
-            //            });
-
-            // blur
-            Event.on(self.textInput, "blur", function() {
-                self.stop();
-                self.hide();
-            });
-
-            // auto focus
-            if (self.config.autoFocus) self.textInput.focus();
-
-            // keydown
-            // ×¢£º½ØÖÁÄ¿Ç°£¬ÔÚOpera9.64ÖĞ£¬ÊäÈë·¨¿ªÆôÊ±£¬ÒÀ¾É²»»á´¥·¢ÈÎºÎ¼üÅÌÊÂ¼ş
-            var pressingCount = 0; // ³ÖĞø°´×¡Ä³¼üÊ±£¬Á¬Ğø´¥·¢µÄkeydown´ÎÊı¡£×¢ÒâOperaÖ»»á´¥·¢Ò»´Î¡£
-            Event.on(self.textInput, "keydown", function(ev) {
-                var keyCode = ev.keyCode;
-                //console.log("keydown " + keyCode);
-
-                switch (keyCode) {
-                    case 27: // ESC¼ü£¬Òş²ØÌáÊ¾²ã²¢»¹Ô­³õÊ¼ÊäÈë
-                        self.hide();
-                        self.textInput.value = self.query;
-
-                        // µ±ÊäÈë¿òÎª¿ÕÊ±£¬°´ÏÂ ESC ¼ü£¬ÊäÈë¿òÊ§È¥½¹µã
-                        if(self.query.length === 0) {
-                            self.textInput.blur();
-                        }
-                        break;
-                    case 13: // ENTER¼ü
-                        // Ìá½»±íµ¥Ç°£¬ÏÈÒş²ØÌáÊ¾²ã²¢Í£Ö¹¼ÆÊ±Æ÷
-                        self.textInput.blur(); // ÕâÒ»¾ä»¹¿ÉÒÔ×èÖ¹µôä¯ÀÀÆ÷µÄÄ¬ÈÏÌá½»ÊÂ¼ş
-
-                        // Èç¹ûÊÇ¼üÅÌÑ¡ÖĞÄ³Ïîºó»Ø³µ£¬´¥·¢onItemSelectÊÂ¼ş
-                        if (self._onKeyboardSelecting) {
-                            if (self.textInput.value == self._getSelectedItemKey()) { // È·±£ÖµÆ¥Åä
-                                self.fire(EVENT_ITEM_SELECT);
-                            }
-                        }
-
-                        // Ìá½»±íµ¥
-                        self._submitForm();
-                        break;
-                    case 40: // DOWN¼ü
-                    case 38: // UP¼ü
-                        // °´×¡¼ü²»¶¯Ê±£¬ÑÓÊ±´¦Àí
-                        if (pressingCount++ == 0) {
-                            if (self._isRunning) self.stop();
-                            self._onKeyboardSelecting = true;
-                            self.selectItem(keyCode === 40);
-
-                        } else if (pressingCount == 3) {
-                            pressingCount = 0;
-                        }
-                        break;
-                }
-
-                // ·Ç DOWN/UP ¼üÊ±£¬¿ªÆô¼ÆÊ±Æ÷
-                if (keyCode != 40 && keyCode != 38) {
-                    if (!self._isRunning) {
-                        // 1. µ±ÍøËÙ½ÏÂı£¬js»¹Î´ÏÂÔØÍêÊ±£¬ÓÃ»§¿ÉÄÜ¾ÍÒÑ¾­¿ªÊ¼ÊäÈë
-                        //    ÕâÊ±£¬focusÊÂ¼şÒÑ¾­²»»á´¥·¢£¬ĞèÒªÔÚkeyupÀï´¥·¢¶¨Ê±Æ÷
-                        // 2. ·ÇDOWN/UP¼üÊ±£¬ĞèÒª¼¤»î¶¨Ê±Æ÷
-                        self.start();
-                    }
-                    self._onKeyboardSelecting = false;
-                }
-            });
-
-            // reset pressingCount
-            Event.on(self.textInput, "keyup", function() {
-                //console.log("keyup");
-                pressingCount = 0;
-            });
-        },
-
-        /**
-         * ³õÊ¼»¯ÌáÊ¾²ãÈİÆ÷
-         * @protected
-         */
-        _initContainer: function() {
-            // create
-            var container = doc.createElement("div"),
-                customContainerClass = this.config.containerCls;
-
-            container.className = CONTAINER_CLASS;
-            if (customContainerClass) {
-                container.className += " " + customContainerClass;
-            }
-            container.style.position = "absolute";
-            container.style.visibility = "hidden";
-            this.container = container;
-
-            this._setContainerRegion();
-            this._initContainerEvent();
-
-            // append
-            doc.body.insertBefore(container, doc.body.firstChild);
-        },
-
-        /**
-         * ÉèÖÃÈİÆ÷µÄleft, top, width
-         * @protected
-         */
-        _setContainerRegion: function() {
-            var self = this,
-                r = YDOM.getRegion(self.textInput),
-                left = r.left,
-                w = r.right - left - 2;  // ¼õÈ¥borderµÄ2px
-
-            // bug fix: w Ó¦¸ÃÅĞ¶ÏÏÂÊÇ·ñ´óÓÚ 0, ºó±ßÉèÖÃ width µÄÊ±ºòÈç¹ûĞ¡ÓÚ 0, ie ÏÂ»á±¨²ÎÊıÎŞĞ§µÄ´íÎó
-            w = w > 0 ? w : 0;
-
-            // ie8 ¼æÈİÄ£Ê½
-            // document.documentMode:
-            // 5 - Quirks Mode
-            // 7 - IE7 Standards
-            // 8 - IE8 Standards
-            var docMode = doc.documentMode;
-            if (docMode === 7 && (ie === 7 || ie === 8)) {
-                left -= 2;
-            } else if (S.UA.gecko) { // firefoxÏÂ×óÆ«Ò»ÏñËØ ×¢£ºµ± input ËùÔÚµÄ¸¸¼¶ÈİÆ÷ÓĞ margin: auto Ê±»á³öÏÖ
-                left++;
-            }
-
-            self.container.style.left = left + "px";
-            self.container.style.top = r.bottom + "px";
-
-            if (self.config.containerWidth == "auto") {
-                self.container.style.width = w + "px";
-            } else {
-                self.container.style.width = self.config.containerWidth;
-            }
-        },
-
-        /**
-         * ³õÊ¼»¯ÈİÆ÷ÊÂ¼ş
-         * ×ÓÔªËØ¶¼²»ÓÃÉèÖÃÊÂ¼ş£¬Ã°Åİµ½ÕâÀïÍ³Ò»´¦Àí
-         * @protected
-         */
-        _initContainerEvent: function() {
-            var self = this;
-
-            // Êó±êÊÂ¼ş
-            Event.on(self.container, "mousemove", function(ev) {
-                //console.log("mouse move");
-                var target = ev.target;
-
-                if (target.nodeName != "LI") {
-                    target = YDOM.getAncestorByTagName(target, "li");
-                }
-                if (YDOM.isAncestor(self.container, target)) {
-                    if (target != self.selectedItem) {
-                        // ÒÆ³ıÀÏµÄ
-                        self._removeSelectedItem();
-                        // ÉèÖÃĞÂµÄ
-                        self._setSelectedItem(target);
-                    }
-                }
-            });
-
-            var mouseDownItem = null;
-            Event.on(self.container, 'mousedown', function(e) {
-                // Êó±ê°´ÏÂ´¦µÄitem
-                mouseDownItem = e.target;
-
-                // Êó±ê°´ÏÂÊ±£¬ÈÃÊäÈë¿ò²»»áÊ§È¥½¹µã
-                // 1. for IE
-                self.textInput.onbeforedeactivate = function() {
-                    win.event.returnValue = false;
-                    self.textInput.onbeforedeactivate = null;
-                };
-                // 2. for W3C
-                return false;
-            });
-
-            // mouseupÊÂ¼ş
-            Event.on(self.container, "mouseup", function(ev) {
-                // µ±mousedownÔÚÌáÊ¾²ã£¬µ«mouseupÔÚÌáÊ¾²ãÍâÊ±£¬µã»÷ÎŞĞ§
-                if (!self._isInContainer([ev.pageX, ev.pageY])) return;
-
-                var target = ev.target;
-                // ÔÚÌáÊ¾²ãAÏî´¦°´ÏÂÊó±ê£¬ÒÆ¶¯µ½B´¦ÊÍ·Å£¬²»´¥·¢onItemSelect
-                if (target != mouseDownItem) return;
-
-                // µã»÷ÔÚ¹Ø±Õ°´Å¥ÉÏ
-                if (target.className == CLOSE_BTN_CLASS) {
-                    self.hide();
-                    return;
-                }
-
-                // ¿ÉÄÜµã»÷ÔÚliµÄ×ÓÔªËØÉÏ
-                if (target.nodeName != "LI") {
-                    target = YDOM.getAncestorByTagName(target, "li");
-                }
-                // ±ØĞëµã»÷ÔÚcontainerÄÚ²¿µÄliÉÏ
-                if (YDOM.isAncestor(self.container, target)) {
-                    self._updateInputFromSelectItem(target);
-
-                    // ´¥·¢Ñ¡ÖĞÊÂ¼ş
-                    //console.log("on item select");
-                    self.fire(EVENT_ITEM_SELECT);
-
-                    // Ìá½»±íµ¥Ç°£¬ÏÈÒş²ØÌáÊ¾²ã²¢Í£Ö¹¼ÆÊ±Æ÷
-                    self.textInput.blur();
-
-                    // Ìá½»±íµ¥
-                    self._submitForm();
-                }
-            });
-        },
-
-        /**
-         * clickÑ¡Ôñ or enterºó£¬Ìá½»±íµ¥
-         */
-        _submitForm: function() {
-            // ×¢£º¶ÔÓÚ¼üÅÌ¿ØÖÆenterÑ¡ÔñµÄÇé¿ö£¬ÓÉhtml×ÔÉí¾ö¶¨ÊÇ·ñÌá½»¡£·ñÔò»áµ¼ÖÂÄ³Ğ©ÊäÈë·¨ÏÂ£¬ÓÃenterÑ¡ÔñÓ¢ÎÄÊ±Ò²´¥·¢Ìá½»
-            if (this.config.submitFormOnClickSelect) {
-                var form = this.textInput.form;
-                if (!form) return;
-
-                // Í¨¹ıjsÌá½»±íµ¥Ê±£¬²»»á´¥·¢onsubmitÊÂ¼ş
-                // ĞèÒªjs×Ô¼º´¥·¢
-                if (doc.createEvent) { // w3c
-                    var evObj = doc.createEvent("MouseEvents");
-                    evObj.initEvent("submit", true, false);
-                    form.dispatchEvent(evObj);
-                }
-                else if (doc.createEventObject) { // ie
-                    form.fireEvent("onsubmit");
-                }
-
-                form.submit();
-            }
-        },
-
-        /**
-         * ÅĞ¶ÏpÊÇ·ñÔÚÌáÊ¾²ãÄÚ
-         * @param {Array} p [x, y]
-         */
-        _isInContainer: function(p) {
-            var r = YDOM.getRegion(this.container);
-            return p[0] >= r.left && p[0] <= r.right && p[1] >= r.top && p[1] <= r.bottom;
-        },
-
-        /**
-         * ¸øÈİÆ÷Ìí¼Óiframe shim²ã
-         * @protected
-         */
-        _initShim: function() {
-            var iframe = doc.createElement("iframe");
-            iframe.src = "about:blank";
-            iframe.className = SHIM_CLASS;
-            iframe.style.position = "absolute";
-            iframe.style.visibility = "hidden";
-            iframe.style.border = "none";
-            this.container.shim = iframe;
-
-            this._setShimRegion();
-            doc.body.insertBefore(iframe, doc.body.firstChild);
-        },
-
-        /**
-         * ÉèÖÃshimµÄleft, top, width
-         * @protected
-         */
-        _setShimRegion: function() {
-            var container = this.container, shim = container.shim;
-            if (shim) {
-                shim.style.left = (parseInt(container.style.left) - 2) + "px"; // ½â¾öÍÌ±ßÏßbug
-                shim.style.top = container.style.top;
-                shim.style.width = (parseInt(container.style.width) + 2) + "px";
-            }
-        },
-
-        /**
-         * ³õÊ¼»¯ÑùÊ½
-         * @protected
-         */
-        _initStyle: function() {
-            var styleEl = S.get('#' + STYLE_ID);
-            if (styleEl) return; // ·ÀÖ¹¶à¸öÊµÀıÊ±ÖØ¸´Ìí¼Ó
-
-            var style = ".ks-suggest-container{background:white;border:1px solid #999;z-index:99999}"
-                + ".ks-suggest-shim{z-index:99998}"
-                + ".ks-suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}"
-                + ".ks-suggest-container li.selected{background-color:#39F;cursor:default}"
-                + ".ks-suggest-key{float:left;text-align:left;padding-left:5px}"
-                + ".ks-suggest-result{float:right;text-align:right;padding-right:5px;color:green}"
-                + ".ks-suggest-container li.selected span{color:#FFF;cursor:default}"
-                // + ".ks-suggest-container li.selected .suggest-result{color:green}"
-                + ".ks-suggest-bottom{padding:0 5px 5px}"
-                + ".ks-suggest-close-btn{float:right}"
-                + ".ks-suggest-container li,.suggest-bottom{overflow:hidden;zoom:1;clear:both}"
-                /* hacks */
-                + ".ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}";
-
-            DOM.addStyleSheet(style, STYLE_ID);
-        },
-
-        /**
-         * window.onresizeÊ±£¬µ÷ÕûÌáÊ¾²ãµÄÎ»ÖÃ
-         * @protected
-         */
-        _initResizeEvent: function() {
-            var self = this, resizeTimer;
-
-            Event.on(win, "resize", function() {
-                if (resizeTimer) {
-                    clearTimeout(resizeTimer);
-                }
-
-                resizeTimer = setTimeout(function() {
-                    self._setContainerRegion();
-                    self._setShimRegion();
-                }, 50);
-            });
-        },
-
-        /**
-         * Æô¶¯¼ÆÊ±Æ÷£¬¿ªÊ¼¼àÌıÓÃ»§ÊäÈë
-         */
-        start: function() {
-            var self = this;
-            
-            Suggest.focusInstance = self;
-            self._timer = setTimeout(function() {
-                self.updateContent();
-                self._timer = setTimeout(arguments.callee, self.config.timerDelay);
-            }, self.config.timerDelay);
-
-            self._isRunning = true;
-        },
-
-        /**
-         * Í£Ö¹¼ÆÊ±Æ÷
-         */
-        stop: function() {
-            Suggest.focusInstance = null;
-            clearTimeout(this._timer);
-            this._isRunning = false;
-        },
-
-        /**
-         * ÏÔÊ¾ÌáÊ¾²ã
-         */
-        show: function() {
-            if (this.isVisible()) return;
-            var container = this.container, shim = container.shim;
-
-            container.style.visibility = "";
-
-            if (shim) {
-                if (!shim.style.height) { // µÚÒ»´ÎÏÔÊ¾Ê±£¬ĞèÒªÉè¶¨¸ß¶È
-                    var r = YDOM.getRegion(container);
-                    shim.style.height = (r.bottom - r.top - 2) + "px";
-                }
-                shim.style.visibility = "";
-            }
-        },
-
-        /**
-         * Òş²ØÌáÊ¾²ã
-         */
-        hide: function() {
-            if (!this.isVisible()) return;
-            var container = this.container, shim = container.shim;
-            //console.log("hide");
-
-            if (shim) shim.style.visibility = "hidden";
-            container.style.visibility = "hidden";
-        },
-
-        /**
-         * ÌáÊ¾²ãÊÇ·ñÏÔÊ¾
-         */
-        isVisible: function() {
-            return this.container.style.visibility != "hidden";
-        },
-
-        /**
-         * ¸üĞÂÌáÊ¾²ãµÄÊı¾İ
-         */
-        updateContent: function() {
-            var self = this;
-            if (!self._needUpdate()) return;
-            //console.log("update data");
-
-            self._updateQueryValueFromInput();
-            var q = self.query;
-
-            // 1. ÊäÈëÎª¿ÕÊ±£¬Òş²ØÌáÊ¾²ã
-            if (!S.trim(q).length) {
-                self._fillContainer("");
-                self.hide();
-                return;
-            }
-
-            if (self._dataCache[q] !== undefined) { // 2. Ê¹ÓÃ»º´æÊı¾İ
-                //console.log("use cache");
-                self.returnedData = "using cache";
-                self._fillContainer(self._dataCache[q]);
-                self._displayContainer();
-
-            } else if (self.JSONDataSource) { // 3. Ê¹ÓÃJSON¾²Ì¬Êı¾İÔ´
-                self.handleResponse(self.JSONDataSource[q]);
-
-            } else { // 4. ÇëÇó·şÎñÆ÷Êı¾İ
-                self.requestData();
-            }
-        },
-
-        /**
-         * ÊÇ·ñĞèÒª¸üĞÂÊı¾İ
-         * @protected
-         * @return Boolean
-         */
-        _needUpdate: function() {
-            // ×¢Òâ£º¼ÓÈë¿Õ¸ñÒ²ËãÓĞ±ä»¯
-            return this.textInput.value != this.query;
-        },
-
-        /**
-         * Í¨¹ıscriptÔªËØ¼ÓÔØÊı¾İ
-         */
-        requestData: function() {
-            var self = this;
-            
-            //console.log("request data via script");
-            if (!ie) self.dataScript = null; // IE²»ĞèÒªÖØĞÂ´´½¨scriptÔªËØ
-
-            if (!self.dataScript) {
-                var script = doc.createElement("script");
-                script.charset = "utf-8";
-
-                // jQuery ajax.js line 275:
-                // Use insertBefore instead of appendChild  to circumvent an IE6 bug.
-                // This arises when a base node is used.
-                head.insertBefore(script, head.firstChild);
-                self.dataScript = script;
-
-                if (!ie) {
-                    var t = new Date().getTime();
-                    self._latestScriptTime = t;
-                    script.setAttribute("time", t);
-
-                    Event.on(script, "load", function() {
-                        //console.log("on load");
-                        // ÅĞ¶Ï·µ»ØµÄÊı¾İÊÇ·ñÒÑ¾­¹ıÆÚ
-                        self._scriptDataIsOut = script.getAttribute("time") != self._latestScriptTime;
-                    });
-                }
-            }
-
-            // ×¢Òâ£ºÃ»±ØÒª¼ÓÊ±¼ä´Á£¬ÊÇ·ñ»º´æÓÉ·şÎñÆ÷·µ»ØµÄHeaderÍ·¿ØÖÆ
-            self.queryParams = "q=" + encodeURIComponent(self.query) + "&code=utf-8&callback=" + CALLBACK_STR;
-            self.fire(EVENT_DATA_REQUEST);
-            self.dataScript.src = self.dataSource + "?" + self.queryParams;
-        },
-
-        /**
-         * ´¦Àí»ñÈ¡µÄÊı¾İ
-         * @param {Object} data
-         */
-        handleResponse: function(data) {
-            var self = this;
-            
-            //console.log("handle response");
-            if (self._scriptDataIsOut) return; // Å×Æú¹ıÆÚÊı¾İ£¬·ñÔò»áµ¼ÖÂbug£º1. »º´ækeyÖµ²»¶Ô£» 2. ¹ıÆÚÊı¾İµ¼ÖÂµÄÉÁÆÁ
-
-            self.returnedData = data;
-            self.fire(EVENT_DATA_RETURN);
-
-            // ¸ñÊ½»¯Êı¾İ
-            self.returnedData = self.formatData(self.returnedData);
-
-            // Ìî³äÊı¾İ
-            var content = "";
-            var len = self.returnedData.length;
-            if (len > 0) {
-                var list = doc.createElement("ol");
-                for (var i = 0; i < len; ++i) {
-                    var itemData = self.returnedData[i];
-                    var li = self.formatItem(itemData["key"], itemData["result"]);
-                    // »º´ækeyÖµµ½attributeÉÏ
-                    li.setAttribute("key", itemData["key"]);
-                    // Ìí¼ÓÆæÅ¼ class
-                    DOM.addClass(li, i % 2 ? EVEN_ITEM_CLASS : ODD_ITEM_CLASS);
-                    list.appendChild(li);
-                }
-                content = list;
-            }
-            self._fillContainer(content);
-
-            // ÓĞÄÚÈİÊ±²ÅÌí¼Óµ×²¿
-            if (len > 0) self.appendBottom();
-
-            // fire event
-            if (S.trim(self.container.innerHTML)) {
-                // Êµ¼ÊÉÏÊÇbeforeCache£¬µ«´ÓÓÃ»§µÄ½Ç¶È¿´£¬ÊÇbeforeShow
-                self.fire(EVENT_SHOW);
-            }
-
-            // cache
-            self._dataCache[self.query] = self.container.innerHTML;
-
-            // ÏÔÊ¾ÈİÆ÷
-            self._displayContainer();
-        },
-
-        /**
-         * ¸ñÊ½»¯ÊäÈëµÄÊı¾İ¶ÔÏóÎª±ê×¼¸ñÊ½
-         * @param {Object} data ¸ñÊ½¿ÉÒÔÓĞ3ÖÖ£º
-         *  1. {"result" : [["key1", "result1"], ["key2", "result2"], ...]}
-         *  2. {"result" : ["key1", "key2", ...]}
-         *  3. 1ºÍ2µÄ×éºÏ
-         *  4. ±ê×¼¸ñÊ½
-         *  5. ÉÏÃæ1-4ÖĞ£¬Ö±½ÓÈ¡o["result"]µÄÖµ
-         * @return Object ±ê×¼¸ñÊ½µÄÊı¾İ£º
-         *  [{"key" : "key1", "result" : "result1"}, {"key" : "key2", "result" : "result2"}, ...]
-         */
-        formatData: function(data) {
-            var arr = [];
-            if (!data) return arr;
-            if (S.isArray(data["result"])) data = data["result"];
-            var len = data.length;
-            if (!len) return arr;
-
-            var item;
-            for (var i = 0; i < len; ++i) {
-                item = data[i];
-
-                if (typeof item === "string") { // Ö»ÓĞkeyÖµÊ±
-                    arr[i] = {"key" : item};
-                } else if (S.isArray(item) && item.length >= 2) { // ["key", "result"] È¡Êı×éÇ°2¸ö
-                    arr[i] = {"key" : item[0], "result" : item[1]};
-                } else {
-                    arr[i] = item;
-                }
-            }
-            return arr;
-        },
-
-        /**
-         * ¸ñÊ½»¯Êä³öÏî
-         * @param {String} key ²éÑ¯×Ö·û´®
-         * @param {Number} result ½á¹û ¿É²»Éè
-         * @return {HTMLElement}
-         */
-        formatItem: function(key, result) {
-            var li = doc.createElement("li");
-            var keyEl = doc.createElement("span");
-            keyEl.className = KEY_EL_CLASS;
-            keyEl.appendChild(doc.createTextNode(key));
-            li.appendChild(keyEl);
-
-            if (result !== undefined) { // ¿ÉÒÔÃ»ÓĞ
-                var resultText = this.config.resultFormat.replace("%result%", result);
-                if (S.trim(resultText)) { // ÓĞÖµÊ±²Å´´½¨
-                    var resultEl = doc.createElement("span");
-                    resultEl.className = RESULT_EL_CLASS;
-                    resultEl.appendChild(doc.createTextNode(resultText));
-                    li.appendChild(resultEl);
-                }
-            }
-
-            return li;
-        },
-
-        /**
-         * Ìí¼ÓÌáÊ¾²ãµ×²¿
-         */
-        appendBottom: function() {
-            var bottom = doc.createElement("div");
-            bottom.className = BOTTOM_CLASS;
-
-            if (this.config.showCloseBtn) {
-                var closeBtn = doc.createElement("a");
-                closeBtn.href = "javascript: void(0)";
-                closeBtn.setAttribute("target", "_self"); // bug fix: ¸²¸Ç<base target="_blank" />£¬·ñÔò»áµ¯³ö¿Õ°×Ò³Ãæ
-                closeBtn.className = CLOSE_BTN_CLASS;
-                closeBtn.appendChild(doc.createTextNode(this.config.closeBtnText));
-
-                bottom.appendChild(closeBtn);
-            }
-
-            // ½öµ±ÓĞÄÚÈİÊ±²ÅÌí¼Ó
-            if (S.trim(bottom.innerHTML)) {
-                this.container.appendChild(bottom);
-            }
-        },
-
-        /**
-         * Ìî³äÌáÊ¾²ã
-         * @protected
-         * @param {String|HTMLElement} content innerHTML or Child Node
-         */
-        _fillContainer: function(content) {
-            if (content.nodeType == 1) {
-                this.container.innerHTML = "";
-                this.container.appendChild(content);
-            } else {
-                this.container.innerHTML = content;
-            }
-
-            // Ò»µ©ÖØĞÂÌî³äÁË£¬selectedItem¾ÍÃ»ÁË£¬ĞèÒªÖØÖÃ
-            this.selectedItem = null;
-        },
-
-        /**
-         * ¸ù¾İcontanierµÄÄÚÈİ£¬ÏÔÊ¾»òÒş²ØÈİÆ÷
-         */
-        _displayContainer: function() {
-            if (S.trim(this.container.innerHTML)) {
-                this.show();
-            } else {
-                this.hide();
-            }
-        },
-
-        /**
-         * Ñ¡ÖĞÌáÊ¾²ãÖĞµÄÉÏ/ÏÂÒ»¸öÌõ
-         * @param {Boolean} down true±íÊ¾down£¬false±íÊ¾up
-         */
-        selectItem: function(down) {
-            var self = this;
-            
-            //console.log("select item " + down);
-            var items = self.container.getElementsByTagName("li");
-            if (items.length == 0) return;
-
-            // ÓĞ¿ÉÄÜÓÃESCÒş²ØÁË£¬Ö±½ÓÏÔÊ¾¼´¿É
-            if (!self.isVisible()) {
-                self.show();
-                return; // ±£ÁôÔ­À´µÄÑ¡ÖĞ×´Ì¬
-            }
-            var newSelectedItem;
-
-            // Ã»ÓĞÑ¡ÖĞÏîÊ±£¬Ñ¡ÖĞµÚÒ»/×îºóÏî
-            if (!self.selectedItem) {
-                newSelectedItem = items[down ? 0 : items.length - 1];
-            } else {
-                // Ñ¡ÖĞÏÂ/ÉÏÒ»Ïî
-                newSelectedItem = YDOM[down ? "getNextSibling" : "getPreviousSibling"](self.selectedItem);
-                // ÒÑ¾­µ½ÁË×îºó/Ç°Ò»ÏîÊ±£¬¹éÎ»µ½ÊäÈë¿ò£¬²¢»¹Ô­ÊäÈëÖµ
-                if (!newSelectedItem) {
-                    self.textInput.value = self.query;
-                }
-            }
-
-            // ÒÆ³ıµ±Ç°Ñ¡ÖĞÏî
-            self._removeSelectedItem();
-
-            // Ñ¡ÖĞĞÂÏî
-            if (newSelectedItem) {
-                self._setSelectedItem(newSelectedItem);
-                self._updateInputFromSelectItem();
-            }
-        },
-
-        /**
-         * ÒÆ³ıÑ¡ÖĞÏî
-         * @protected
-         */
-        _removeSelectedItem: function() {
-            //console.log("remove selected item");
-            DOM.removeClass(this.selectedItem, SELECTED_ITEM_CLASS);
-            this.selectedItem = null;
-        },
-
-        /**
-         * ÉèÖÃµ±Ç°Ñ¡ÖĞÏî
-         * @protected
-         * @param {HTMLElement} item
-         */
-        _setSelectedItem: function(item) {
-            //console.log("set selected item");
-            DOM.addClass(item, SELECTED_ITEM_CLASS);
-            this.selectedItem = item;
-        },
-
-        /**
-         * »ñÈ¡ÌáÊ¾²ãÖĞÑ¡ÖĞÏîµÄkey×Ö·û´®
-         * @protected
-         */
-        _getSelectedItemKey: function() {
-            if (!this.selectedItem) return "";
-
-            // getElementsByClassName±È½ÏËğºÄĞÔÄÜ£¬¸ÄÓÃ»º´æÊı¾İµ½attributeÉÏ·½·¨
-            //var keyEl = Dom.getElementsByClassName(KEY_EL_CLASS, "*", this.selectedItem)[0];
-            //return keyEl.innerHTML;
-
-            return this.selectedItem.getAttribute("key");
-        },
-
-        /**
-         * ½«textInputµÄÖµ¸üĞÂµ½this.query
-         * @protected
-         */
-        _updateQueryValueFromInput: function() {
-            this.query = this.textInput.value;
-        },
-
-        /**
-         * ½«Ñ¡ÖĞÏîµÄÖµ¸üĞÂµ½textInput
-         * @protected
-         */
-        _updateInputFromSelectItem: function() {
-            this.textInput.value = this._getSelectedItemKey(this.selectedItem);
-        }
-
-    });
-
-    S.mix(Suggest.prototype, S.EventTarget);
-
-    /**
-     * Ô¼¶¨µÄÈ«¾Ö»Øµ÷º¯Êı
-     */
-    win[CALLBACK_STR] = function(data) {
-        if (!Suggest.focusInstance) return;
-        // Ê¹µÃÏÈÔËĞĞ script.onload ÊÂ¼ş£¬È»ºóÔÙÖ´ĞĞ callback º¯Êı
-        setTimeout(function() {
-            Suggest.focusInstance.handleResponse(data);
-        }, 0);
-    };
-
-    S.Suggest = Suggest;
-});
-
-
-/**
- * Ğ¡½á£º
- *
- * Õû¸ö×é¼ş´úÂë£¬ÓÉÁ½´ó²¿·Ö×é³É£ºÊı¾İ´¦Àí + ÊÂ¼ş´¦Àí
- *
- * Ò»¡¢Êı¾İ´¦ÀíºÜcore£¬µ«Ïà¶ÔÀ´ËµÊÇ¼òµ¥µÄ£¬ÓÉ requestData + handleResponse + formatDataµÈ¸¨Öú·½·¨×é³É
- * ĞèÒª×¢ÒâÁ½µã£º
- *  a. IEÖĞ£¬¸Ä±äscript.src, »á×Ô¶¯È¡ÏûµôÖ®Ç°µÄÇëÇó£¬²¢·¢ËÍĞÂÇëÇó¡£·ÇIEÖĞ£¬±ØĞëĞÂ´´½¨script²ÅĞĞ¡£ÕâÊÇ
- *     requestData·½·¨ÖĞ´æÔÚÁ½ÖÖ´¦Àí·½Ê½µÄÔ­Òò¡£
- *  b. µ±ÍøËÙºÜÂı£¬Êı¾İ·µ»ØÊ±£¬ÓÃ»§µÄÊäÈë¿ÉÄÜÒÑ¸Ä±ä£¬ÒÑ¾­ÓĞÇëÇó·¢ËÍ³öÈ¥£¬ĞèÒªÅ×Æú¹ıÆÚÊı¾İ¡£Ä¿Ç°²ÉÓÃ¼ÓÊ±¼ä´Á
- *     µÄ½â¾ö·½°¸¡£¸üºÃµÄ½â¾ö·½°¸ÊÇ£¬µ÷ÕûAPI£¬Ê¹µÃ·µ»ØµÄÊı¾İÖĞ£¬´øÓĞqueryÖµ¡£
- *
- * ¶ş¡¢ÊÂ¼ş´¦Àí¿´ËÆ¼òµ¥£¬Êµ¼ÊÉÏÓĞ²»ÉÙÏİÚå£¬·Ö2²¿·Ö£º
- *  1. ÊäÈë¿òµÄfocus/blurÊÂ¼ş + ¼üÅÌ¿ØÖÆÊÂ¼ş
- *  2. ÌáÊ¾²ãÉÏµÄÊó±êĞü¸¡ºÍµã»÷ÊÂ¼ş
- * ĞèÒª×¢ÒâÒÔÏÂ¼¸µã£º
- *  a. ÒòÎªµã»÷ÌáÊ¾²ãÊ±£¬Ê×ÏÈ»á´¥·¢ÊäÈë¿òµÄblurÊÂ¼ş£¬blurÊÂ¼şÖĞµ÷ÓÃhide·½·¨£¬ÌáÊ¾²ãÒ»µ©Òş²Øºó£¬¾Í²¶»ñ²»µ½
- *     µã»÷ÊÂ¼şÁË¡£Òò´ËÓĞÁË this._mouseHovering À´ÅÅ³ıÕâÖÖÇé¿ö£¬Ê¹µÃblurÊ±²»»á´¥·¢hide£¬ÔÚÌáÊ¾²ãµÄµã»÷
- *     ÊÂ¼şÖĞ×ÔĞĞ´¦Àí¡££¨2009-06-18¸üĞÂ£º²ÉÓÃmouseupÀ´Ìæ´úclickÊÂ¼ş£¬´úÂëÇåÎú¼òµ¥ÁËºÜ¶à£©
- *  b. µ±Êó±êÒÆ¶¯µ½Ä³Ïî»òÍ¨¹ıÉÏÏÂ¼üÑ¡ÖĞÄ³ÏîÊ±£¬¸øthis.selectedItem¸³Öµ£»µ±ÌáÊ¾²ãµÄÊı¾İÖØĞÂÌî³äÊ±£¬ÖØÖÃ
- *     this.selectedItem. ÕâÖÖ´¦Àí·½Ê½ºÍgoogleµÄÒ»ÖÂ£¬¿ÉÒÔÊ¹µÃÑ¡ÖĞÄ³Ïî£¬Òş²Ø£¬ÔÙ´Î´ò¿ªÊ±£¬ÒÀ¾ÉÑ¡ÖĞÔ­À´
- *     µÄÑ¡ÖĞÏî¡£
- *  c. ÔÚieµÈä¯ÀÀÆ÷ÖĞ£¬ÊäÈë¿òÖĞÊäÈëENTER¼üÊ±£¬»á×Ô¶¯Ìá½»±íµ¥¡£Èç¹ûform.target="_blank", ×Ô¶¯Ìá½»ºÍJSÌá½»
- *     »á´ò¿ªÁ½¸öÌá½»Ò³Ãæ¡£Òò´ËÕâÀï²ÉÈ¡ÁËÔÚJSÖĞ²»Ìá½»µÄ²ßÂÔ£¬ENTER¼üÊÇ·ñÌá½»±íµ¥£¬ÍêÈ«ÓÉHTML´úÂë×ÔÉí¾ö¶¨¡£Õâ
- *     ÑùÒ²ÄÜÊ¹µÃ×é¼şºÜÈİÒ×Ó¦ÓÃÔÚ²»ĞèÒªÌá½»±íµ¥µÄ³¡¾°ÖĞ¡££¨2009-06-18¸üĞÂ£º¿ÉÒÔÍ¨¹ıblur()È¡Ïûµôä¯ÀÀÆ÷µÄÄ¬ÈÏ
- *     EnterÏìÓ¦£¬ÕâÑùÄÜÊ¹µÃ´úÂëÂß¼­ºÍmouseupµÄÒ»ÖÂ£©
- *  d. onItemSelect ½öÔÚÊó±êµã»÷Ñ¡ÔñÄ³Ïî ºÍ ¼üÅÌÑ¡ÖĞÄ³Ïî»Ø³µ ºó´¥·¢¡£
- *  e. µ±textInput»á´¥·¢±íµ¥Ìá½»Ê±£¬ÔÚenter keydown ºÍ keyupÖ®¼ä£¬¾Í»á´¥·¢Ìá½»¡£Òò´ËÔÚkeydownÖĞ²¶×½ÊÂ¼ş¡£
- *     ²¢ÇÒÔÚkeydownÖĞÄÜ²¶×½µ½³ÖĞøDOWN/UP£¬ÔÚkeyupÖĞ¾Í²»ĞĞÁË¡£
- *
- * ¡¾µÃµ½µÄÒ»Ğ©±à³Ì¾­Ñé¡¿£º
- *  1. Ö°Ôğµ¥Ò»Ô­Ôò¡£·½·¨µÄÖ°ÔğÒªµ¥Ò»£¬±ÈÈçhide·½·¨ºÍshow·½·¨£¬³ıÁË¸Ä±ävisibility, ¾Í²»ÒªÓµÓĞÆäËü¹¦ÄÜ¡£Õâ
- *     ¿´ËÆ¼òµ¥£¬ÕæÒª×öµ½È´²¢²»ÈİÒ×¡£±£³ÖÖ°Ôğµ¥Ò»£¬±£³Ö¼òµ¥µÄºÃ´¦ÊÇ£¬´úÂëµÄÕûÌåÂß¼­¸üÇåÎú£¬·½·¨µÄ¿É¸´ÓÃĞÔÒ²Ìá
- *     ¸ßÁË¡£
- *  2. Ğ¡ĞÄÊÂ¼ş´¦Àí¡£µ±ÊÂ¼şÖ®¼äÓĞ¹ØÁªÊ±£¬Òª×ĞÏ¸ÏëÇå³ş£¬Éè¼ÆºÃºóÔÙĞ´´úÂë¡£±ÈÈçÊäÈë¿òµÄblurºÍÌáÊ¾²ãµÄclickÊÂ¼ş¡£
- *  3. ²âÊÔµÄÖØÒªĞÔ¡£Ä¿Ç°ÊÇÁĞ³öTest Cases£¬ÒÔºóÒª³¢ÊÔ×Ô¶¯»¯¡£±£Ö¤Ã¿´Î¸Ä¶¯ºó£¬¶¼²»Ó°ÏìÔ­ÓĞ¹¦ÄÜ¡£
- *  4. ÌôÑ¡ÕıÈ·µÄÊÂ¼ş×öÕıÈ·µÄÊÂ£¬Ì«ÖØÒªÁË£¬ÄÜÊ¡È¥ºÜ¶àºÜ¶à·³ÄÕ¡£
- *
- */
-
-/**
- * 2009-08-05 ¸üĞÂ£º ½« class ´ÓÅäÖÃÏîÖĞÒÆ¶¯µ½³£Á¿£¬Ô­ÒòÊÇ£ºĞŞ¸ÄÄ¬ÈÏ className µÄ¿ÉÄÜĞÔºÜĞ¡£¬½ö±£ÁôÒ»¸ö
- *                  containerCls ×÷Îª¸öĞÔ»¯ÑùÊ½µÄ½Ó¿Ú¼´¿É
- *
- * 2009-12-10 ¸üĞÂ£º ²ÉÓÃ kissy module ×éÖ¯´úÂë¡£ÎªÁË±ÜÃâ¶à¸öÉ³ÏäÏÂ£¬¶ÔÈ«¾Ö»Øµ÷º¯Êı¸²¸Ç¶¨ÒåÒı·¢µÄÎÊÌâ£¬
- *                  ²ÉÓÃ¹²ÏíÄ£Ê½¡£
- *
- * 2010-03-10 ¸üĞÂ£º È¥³ı¹²ÏíÄ£Ê½£¬ÊÊÓ¦ kissy ĞÂµÄ´úÂë×éÖ¯·½Ê½¡£
- */
-/*
-Copyright 2010, KISSY UI Library v1.0.5
-MIT Licensed
-build: 654 May 12 17:27
-*/
-/**
- * Switchable
- * @creator     Óñ²®<lifesinger@gmail.com>
- * @depends     kissy-core, yui2-animation
- */
-KISSY.add('switchable', function(S, undefined) {
-
-    var DOM = S.DOM, Event = S.Event,
-        doc = document,
-        DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
-        FORWARD = 'forward', BACKWARD = 'backward',
-        DOT = '.',
-        EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
-        CLS_PREFIX = 'ks-switchable-',
-        SP = Switchable.prototype;
-
-    /**
-     * Switchable Widget
-     * attached members£º
-     *   - this.container
-     *   - this.config
-     *   - this.triggers  ¿ÉÒÔÎª¿ÕÖµ []
-     *   - this.panels    ¿Ï¶¨ÓĞÖµ£¬ÇÒ length > 1
-     *   - this.content
-     *   - this.length
-     *   - this.activeIndex
-     *   - this.switchTimer
-     */
-    function Switchable(container, config) {
-        var self = this;
-
-        // µ÷ÕûÅäÖÃĞÅÏ¢
-        config = config || {};
-        if (!('markupType' in config)) {
-            if (config.panelCls) {
-                config.markupType = 1;
-            } else if (config.panels) {
-                config.markupType = 2;
-            }
-        }
-        config = S.merge(Switchable.Config, config);
-
-        /**
-         * the container of widget
-         * @type HTMLElement
-         */
-        self.container = S.get(container);
-
-        /**
-         * ÅäÖÃ²ÎÊı
-         * @type Object
-         */
-        self.config = config;
-
-        /**
-         * triggers
-         * @type Array of HTMLElement
-         */
-        self.triggers = self.triggers || [];
-
-        /**
-         * panels
-         * @type Array of HTMLElement
-         */
-        self.panels = self.panels || [];
-
-        /**
-         * length = panels.length / steps
-         * @type number
-         */
-        //self.length
-
-        /**
-         * the parentNode of panels
-         * @type HTMLElement
-         */
-        //self.content
-
-        /**
-         * µ±Ç°¼¤»îµÄ index
-         * @type number
-         */
-        if (self.activeIndex === undefined) {
-            self.activeIndex = config.activeIndex;
-        }
-
-        self._init();
-    }
-
-    // Ä¬ÈÏÅäÖÃ
-    Switchable.Config = {
-        markupType: 0, // markup µÄÀàĞÍ£¬È¡ÖµÈçÏÂ£º
-
-        // 0 - Ä¬ÈÏ½á¹¹£ºÍ¨¹ı nav ºÍ content À´»ñÈ¡ triggers ºÍ panels
-        navCls: CLS_PREFIX + 'nav',
-        contentCls: CLS_PREFIX + 'content',
-
-        // 1 - ÊÊ¶ÈÁé»î£ºÍ¨¹ı cls À´»ñÈ¡ triggers ºÍ panels
-        triggerCls: CLS_PREFIX + 'trigger',
-        panelCls: CLS_PREFIX + 'panel',
-
-        // 2 - ÍêÈ«×ÔÓÉ£ºÖ±½Ó´«Èë triggers ºÍ panels
-        triggers: [],
-        panels: [],
-
-        // ÊÇ·ñÓĞ´¥µã
-        hasTriggers: true,
-
-        // ´¥·¢ÀàĞÍ
-        triggerType: 'mouse', // or 'click'
-        // ´¥·¢ÑÓ³Ù
-        delay: .1, // 100ms
-
-        activeIndex: 0, // markup µÄÄ¬ÈÏ¼¤»îÏî£¬Ó¦¸ÃÓë´Ë index Ò»ÖÂ
-        activeTriggerCls: 'active',
-
-        // ¿É¼ûÊÓÍ¼ÄÚÓĞ¶àÉÙ¸ö panels
-        steps: 1,
-
-        // ¿É¼ûÊÓÍ¼ÇøÓòµÄ´óĞ¡¡£Ò»°ã²»ĞèÒªÉè¶¨´ËÖµ£¬½öµ±»ñÈ¡Öµ²»ÕıÈ·Ê±£¬ÓÃÓÚÊÖ¹¤Ö¸¶¨´óĞ¡
-        viewSize: []
-    };
-
-    // ²å¼ş
-    Switchable.Plugins = [];
-
-    S.mix(SP, {
-
-        /**
-         * init switchable
-         */
-        _init: function() {
-            var self = this, cfg = self.config;
-
-            // parse markup
-            if (self.panels.length === 0) {
-                self._parseMarkup();
-            }
-
-            // bind triggers
-            if (cfg.hasTriggers) {
-                self._bindTriggers();
-            }
-
-            // init plugins
-            S.each(Switchable.Plugins, function(plugin) {
-                if(plugin.init) {
-                    plugin.init(self);
-                }
-            });
-        },
-
-        /**
-         * ½âÎö markup, »ñÈ¡ triggers, panels, content
-         */
-        _parseMarkup: function() {
-            var self = this, container = self.container,
-                cfg = self.config,
-                hasTriggers = cfg.hasTriggers,
-                nav, content, triggers = [], panels = [], i, n, m;
-
-            switch (cfg.markupType) {
-                case 0: // Ä¬ÈÏ½á¹¹
-                    nav = S.get(DOT + cfg.navCls, container);
-                    if (nav) {
-                        triggers = DOM.children(nav);
-                    }
-                    content = S.get(DOT + cfg.contentCls, container);
-                    panels = DOM.children(content);
-                    break;
-                case 1: // ÊÊ¶ÈÁé»î
-                    triggers = S.query(DOT + cfg.triggerCls, container);
-                    panels = S.query(DOT + cfg.panelCls, container);
-                    break;
-                case 2: // ÍêÈ«×ÔÓÉ
-                    triggers = cfg.triggers;
-                    panels = cfg.panels;
-                    break;
-            }
-
-
-            // get length
-            n = panels.length;
-            self.length = n / cfg.steps;
-
-            // ×Ô¶¯Éú³É triggers
-            if (hasTriggers && n > 0 && triggers.length === 0) {
-                triggers = self._generateTriggersMarkup(self.length);
-            }
-
-            // ½« triggers ºÍ panels ×ª»»ÎªÆÕÍ¨Êı×é
-            self.triggers = S.makeArray(triggers);
-            self.panels = S.makeArray(panels);
-
-            // get content
-            self.content = content || panels[0].parentNode;
-        },
-
-        /**
-         * ×Ô¶¯Éú³É triggers µÄ markup
-         */
-        _generateTriggersMarkup: function(len) {
-            var self = this, cfg = self.config,
-                ul = doc.createElement('UL'), li, i;
-
-            ul.className = cfg.navCls;
-            for (i = 0; i < len; i++) {
-                li = doc.createElement('LI');
-                if (i === self.activeIndex) {
-                    li.className = cfg.activeTriggerCls;
-                }
-                li.innerHTML = i + 1;
-                ul.appendChild(li);
-            }
-
-            self.container.appendChild(ul);
-            return DOM.children(ul);
-        },
-
-        /**
-         * ¸ø triggers Ìí¼ÓÊÂ¼ş
-         */
-        _bindTriggers: function() {
-            var self = this, cfg = self.config,
-                triggers = self.triggers, trigger,
-                i, len = triggers.length;
-
-            for (i = 0; i < len; i++) {
-                (function(index) {
-                    trigger = triggers[index];
-
-                    // ÏìÓ¦µã»÷ºÍ Tab ¼ü
-                    Event.on(trigger, 'click focus', function() {
-                        self._onFocusTrigger(index);
-                    });
-
-                    // ÏìÓ¦Êó±êĞü¸¡
-                    if (cfg.triggerType === 'mouse') {
-                        Event.on(trigger, 'mouseenter', function() {
-                            self._onMouseEnterTrigger(index);
-                        });
-                        Event.on(trigger, 'mouseleave', function() {
-                            self._onMouseLeaveTrigger(index);
-                        });
-                    }
-                })(i);
-            }
-        },
-
-        /**
-         * click or tab ¼ü¼¤»î trigger Ê±´¥·¢µÄÊÂ¼ş
-         */
-        _onFocusTrigger: function(index) {
-            var self = this;
-            if (self.activeIndex === index) return; // ÖØ¸´µã»÷
-            if (self.switchTimer) self.switchTimer.cancel(); // ±ÈÈç£ºÏÈĞü¸¡£¬ºóÁ¢¿Ìµã»÷¡£ÕâÊ±Ğü¸¡ÊÂ¼ş¿ÉÒÔÈ¡Ïûµô
-            self.switchTo(index);
-        },
-
-        /**
-         * Êó±êĞü¸¡ÔÚ trigger ÉÏÊ±´¥·¢µÄÊÂ¼ş
-         */
-        _onMouseEnterTrigger: function(index) {
-            var self = this;
-            //S.log('Triggerable._onMouseEnterTrigger: index = ' + index);
-
-            // ²»ÖØ¸´´¥·¢¡£±ÈÈç£ºÒÑÏÔÊ¾ÄÚÈİÊ±£¬½«Êó±ê¿ìËÙ»¬³öÔÙ»¬½øÀ´£¬²»±Ø´¥·¢
-            if (self.activeIndex !== index) {
-                self.switchTimer = S.later(function() {
-                    self.switchTo(index);
-                }, self.config.delay * 1000);
-            }
-        },
-
-        /**
-         * Êó±êÒÆ³ö trigger Ê±´¥·¢µÄÊÂ¼ş
-         */
-        _onMouseLeaveTrigger: function() {
-            var self = this;
-            if (self.switchTimer) self.switchTimer.cancel();
-        },
-
-        /**
-         * ÇĞ»»²Ù×÷
-         */
-        switchTo: function(index, direction) {
-            var self = this, cfg = self.config,
-                triggers = self.triggers, panels = self.panels,
-                activeIndex = self.activeIndex,
-                steps = cfg.steps,
-                fromIndex = activeIndex * steps, toIndex = index * steps;
-            //S.log('Triggerable.switchTo: index = ' + index);
-
-            if (index === activeIndex) return self;
-            if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
-
-            // switch active trigger
-            if (cfg.hasTriggers) {
-                self._switchTrigger(activeIndex > -1 ? triggers[activeIndex] : null, triggers[index]);
-            }
-
-            // switch active panels
-            if (direction === undefined) {
-                direction = index > activeIndex ? FORWARD : FORWARD;
-            }
-
-            self._switchView(
-                panels.slice(fromIndex, fromIndex + steps),
-                panels.slice(toIndex, toIndex + steps),
-                index,
-                direction);
-
-            // update activeIndex
-            self.activeIndex = index;
-
-            return self; // chain
-        },
-
-        /**
-         * ÇĞ»»µ±Ç°´¥µã
-         */
-        _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
-            var activeTriggerCls = this.config.activeTriggerCls;
-
-            if (fromTrigger) DOM.removeClass(fromTrigger, activeTriggerCls);
-            DOM.addClass(toTrigger, activeTriggerCls);
-        },
-
-        /**
-         * ÇĞ»»ÊÓÍ¼
-         */
-        _switchView: function(fromPanels, toPanels/*, index, direction*/) {
-            // ×î¼òµ¥µÄÇĞ»»Ğ§¹û£ºÖ±½ÓÒş²Ø/ÏÔÊ¾
-            DOM.css(fromPanels, DISPLAY, NONE);
-            DOM.css(toPanels, DISPLAY, BLOCK);
-
-            // fire onSwitch
-            this.fire(EVENT_SWITCH);
-        },
-
-        /**
-         * ÇĞ»»µ½ÉÏÒ»ÊÓÍ¼
-         */
-        prev: function() {
-            var self = this, activeIndex = self.activeIndex;
-            self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1, BACKWARD);
-        },
-
-        /**
-         * ÇĞ»»µ½ÏÂÒ»ÊÓÍ¼
-         */
-        next: function() {
-            var self = this, activeIndex = self.activeIndex;
-            self.switchTo(activeIndex < self.length - 1 ? activeIndex + 1 : 0, FORWARD);
-        }
-    });
-
-    S.mix(SP, S.EventTarget);
-    
-    S.Switchable = Switchable;
-});
-
-/**
- * NOTES:
- *
- * 2010.04
- *  - ÖØ¹¹£¬ÍÑÀë¶Ô yahoo-dom-event µÄÒÀÀµ
- *
- * 2010.03
- *  - ÖØ¹¹£¬È¥µô Widget, ²¿·Ö´úÂëÖ±½Ó²ÉÓÃ kissy »ù´¡¿â
- *  - ²å¼ş»úÖÆ´Ó weave Ö¯Èë·¨¸Ä³É hook ¹³×Ó·¨
- *
- * TODO:
- *  - http://malsup.com/jquery/cycle/
- *  - http://www.mall.taobao.com/go/chn/mall_chl/flagship.php
- * 
- * References:
- *  - jQuery Scrollable http://flowplayer.org/tools/scrollable.html
- *
- */
-/**
- * Switchable Autoplay Plugin
- * @creator     Óñ²®<lifesinger@gmail.com>
- */
-KISSY.add('switchable-autoplay', function(S) {
-
-    var Event = S.Event,
-        Switchable = S.Switchable;
-
-    /**
-     * Ìí¼ÓÄ¬ÈÏÅäÖÃ
-     */
-    S.mix(Switchable.Config, {
-        autoplay: false,
-        interval: 5, // ×Ô¶¯²¥·Å¼ä¸ôÊ±¼ä
-        pauseOnHover: true  // triggerType Îª mouse Ê±£¬Êó±êĞüÍ£ÔÚ slide ÉÏÊÇ·ñÔİÍ£×Ô¶¯²¥·Å
-    });
-
-    /**
-     * Ìí¼Ó²å¼ş
-     * attached members:
-     *   - this.paused
-     *   - this.autoplayTimer
-     */
-    Switchable.Plugins.push({
-        name: 'autoplay',
-
-        init: function(host) {
-            var cfg = host.config;
-            if (!cfg.autoplay) return;
-
-            // Êó±êĞüÍ££¬Í£Ö¹×Ô¶¯²¥·Å
-            if (cfg.pauseOnHover) {
-                Event.on(host.container, 'mouseenter', function() {
-                    host.paused = true;
-                });
-                Event.on(host.container, 'mouseleave', function() {
-                    // ¼ÙÉè interval Îª 10s
-                    // ÔÚ 8s Ê±£¬Í¨¹ı focus Ö÷¶¯´¥·¢ÇĞ»»£¬Í£Áô 1s ºó£¬Êó±êÒÆ³ö
-                    // ÕâÊ±Èç¹û²» setTimeout, ÔÙ¹ı 1s ºó£¬Ö÷¶¯´¥·¢µÄ panel ½«±»Ìæ»»µô
-                    // ÎªÁË±£Ö¤Ã¿¸ö panel µÄÏÔÊ¾Ê±¼ä¶¼²»Ğ¡ÓÚ interval, ´Ë´¦¼ÓÉÏ setTimeout
-                    setTimeout(function() {
-                        host.paused = false;
-                    }, cfg.interval * 1000);
-                });
-            }
-
-            // ÉèÖÃ×Ô¶¯²¥·Å
-            host.autoplayTimer = S.later(function() {
-                if (host.paused) return;
-                host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0);
-            }, cfg.interval * 1000, true);
-        }
-    });
-});
-
-/**
- * TODO:
- *  - ÊÇ·ñĞèÒªÌá¹© play / pause / stop API ?
- *  - autoplayTimer ºÍ switchTimer µÄ¹ØÁª£¿
- */
-/**
- * Switchable Effect Plugin
- * @creator     Óñ²®<lifesinger@gmail.com>
- */
-KISSY.add('switchable-effect', function(S) {
-
-    var Y = YAHOO.util, DOM = S.DOM, YDOM = Y.Dom,
-        DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
-        OPACITY = 'opacity', Z_INDEX = 'z-index',
-        RELATIVE = 'relative', ABSOLUTE = 'absolute',
-        SCROLLX = 'scrollx', SCROLLY = 'scrolly', FADE = 'fade',
-        Switchable = S.Switchable, Effects;
-
-    /**
-     * Ìí¼ÓÄ¬ÈÏÅäÖÃ
-     */
-    S.mix(Switchable.Config, {
-        effect: NONE, // 'scrollx', 'scrolly', 'fade' »òÕßÖ±½Ó´«Èë custom effect fn
-        duration: .5, // ¶¯»­µÄÊ±³¤
-        easing: Y.Easing.easeNone // easing method
-    });
-
-    /**
-     * ¶¨ÒåĞ§¹û¼¯
-     */
-    Switchable.Effects = {
-
-        // ×îÆÓËØµÄÏÔÊ¾/Òş²ØĞ§¹û
-        none: function(fromEls, toEls, callback) {
-            DOM.css(fromEls, DISPLAY, NONE);
-            DOM.css(toEls, DISPLAY, BLOCK);
-            callback();
-        },
-
-        // µ­Òşµ­ÏÖĞ§¹û
-        fade: function(fromEls, toEls, callback) {
-            if(fromEls.length !== 1) {
-                S.error('fade effect only supports steps == 1.');
-            }
-            var self = this, cfg = self.config,
-                fromEl = fromEls[0], toEl = toEls[0];
-            if (self.anim) self.anim.stop();
-
-            // Ê×ÏÈÏÔÊ¾ÏÂÒ»ÕÅ
-            YDOM.setStyle(toEl, OPACITY, 1);
-
-            // ¶¯»­ÇĞ»»
-            self.anim = new Y.Anim(fromEl, {opacity: {to: 0}}, cfg.duration, cfg.easing);
-            self.anim.onComplete.subscribe(function() {
-                self.anim = null; // free
-
-                // ÇĞ»» z-index
-                YDOM.setStyle(toEl, Z_INDEX, 9);
-                YDOM.setStyle(fromEl, Z_INDEX, 1);
-
-                callback();
-            });
-            self.anim.animate();
-        },
-
-        // Ë®Æ½/´¹Ö±¹ö¶¯Ğ§¹û
-        scroll: function(fromEls, toEls, callback, index) {
-            var self = this, cfg = self.config,
-                isX = cfg.effect === SCROLLX,
-                diff = self.viewSize[isX ? 0 : 1] * index,
-                attributes = {};
-
-            attributes[isX ? 'left' : 'top'] = { to: -diff };
-
-            if (self.anim) self.anim.stop();
-            self.anim = new Y.Anim(self.content, attributes, cfg.duration, cfg.easing);
-            self.anim.onComplete.subscribe(function() {
-                self.anim = null; // free
-                callback();
-            });
-            self.anim.animate();
-        }
-    };
-    Effects = Switchable.Effects;
-    Effects[SCROLLX] = Effects[SCROLLY] = Effects.scroll;
-
-    /**
-     * Ìí¼Ó²å¼ş
-     * attached members:
-     *   - this.viewSize
-     */
-    Switchable.Plugins.push({
-        name: 'effect',
-
-        /**
-         * ¸ù¾İ effect, µ÷Õû³õÊ¼×´Ì¬
-         */
-        init: function(host) {
-            var cfg = host.config,
-                effect = cfg.effect,
-                panels = host.panels,
-                steps = cfg.steps,
-                activeIndex = host.activeIndex,
-                fromIndex = activeIndex * steps,
-                toIndex = fromIndex + steps - 1,
-                i, len = panels.length;
-
-            // 1. »ñÈ¡¸ß¿í
-            host.viewSize = [
-                cfg.viewSize[0] || panels[0].offsetWidth * steps,
-                cfg.viewSize[0] || panels[0].offsetHeight * steps
-            ];
-            // ×¢£ºËùÓĞ panel µÄ³ß´çÓ¦¸ÃÏàÍ¬
-            //    ×îºÃÖ¸¶¨µÚÒ»¸ö panel µÄ width ºÍ height£¬ÒòÎª Safari ÏÂ£¬Í¼Æ¬Î´¼ÓÔØÊ±£¬¶ÁÈ¡µÄ offsetHeight µÈÖµ»á²»¶Ô
-
-            // 2. ³õÊ¼»¯ panels ÑùÊ½
-            if (effect !== NONE) { // effect = scrollx, scrolly, fade
-                // ÕâĞ©ÌØĞ§ĞèÒª½« panels ¶¼ÏÔÊ¾³öÀ´
-                for (i = 0; i < len; i++) {
-                    panels[i].style.display = BLOCK;
-                }
-
-                switch (effect) {
-                    // Èç¹ûÊÇ¹ö¶¯Ğ§¹û
-                    case SCROLLX:
-                    case SCROLLY:
-                        // ÉèÖÃ¶¨Î»ĞÅÏ¢£¬Îª¹ö¶¯Ğ§¹û×öÆÌµæ
-                        host.content.style.position = ABSOLUTE;
-                        host.content.parentNode.style.position = RELATIVE; // ×¢£ºcontent µÄ¸¸¼¶²»Ò»¶¨ÊÇ container
-
-                        // Ë®Æ½ÅÅÁĞ
-                        if (effect === SCROLLX) {
-                            YDOM.setStyle(panels, 'float', 'left');
-
-                            // ÉèÖÃ×î´ó¿í¶È£¬ÒÔ±£Ö¤ÓĞ¿Õ¼äÈÃ panels Ë®Æ½ÅÅ²¼
-                            host.content.style.width = host.viewSize[0] * (len / steps) + 'px';
-                        }
-                        break;
-
-                    // Èç¹ûÊÇÍ¸Ã÷Ğ§¹û£¬Ôò³õÊ¼»¯Í¸Ã÷
-                    case FADE:
-                        for (i = 0; i < len; i++) {
-                            YDOM.setStyle(panels[i], OPACITY, (i >= fromIndex && i <= toIndex) ? 1 : 0);
-                            panels[i].style.position = ABSOLUTE;
-                            panels[i].style.zIndex = (i >= fromIndex && i <= toIndex) ? 9 : 1;
-                        }
-                        break;
-                }
-            }
-
-            // 3. ÔÚ CSS Àï£¬ĞèÒª¸ø container Éè¶¨¸ß¿íºÍ overflow: hidden
-            //    nav µÄ cls ÓÉ CSS Ö¸¶¨
-        }
-    });
-
-    /**
-     * ¸²¸ÇÇĞ»»·½·¨
-     */
-    S.mix(Switchable.prototype, {
-        /**
-         * ÇĞ»»ÊÓÍ¼
-         */
-        _switchView: function(fromEls, toEls, index, direction) {
-            var self = this, cfg = self.config,
-                effect = cfg.effect,
-                fn = S.isFunction(effect) ? effect : Effects[effect];
-
-            fn.call(self, fromEls, toEls, function() {
-                self.fire('switch');
-            }, index, direction);
-        }
-    });
-});
-
-/**
- * TODO:
- *  - apple ·­Ò³Ğ§¹û
- */
-/**
- * Switchable Circular Plugin
- * @creator     Óñ²®<lifesinger@gmail.com>
- */
-KISSY.add('switchable-circular', function(S) {
-
-    var RELATIVE = 'relative',
-        LEFT = 'left', TOP = 'top',
-        PX = 'px', EMPTY = '',
-        FORWARD = 'forward', BACKWARD = 'backward',
-        SCROLLX = 'scrollx', SCROLLY = 'scrolly',
-        Switchable = S.Switchable;
-
-    /**
-     * Ìí¼ÓÄ¬ÈÏÅäÖÃ
-     */
-    S.mix(Switchable.Config, {
-        circular: false
-    });
-
-    /**
-     * Ñ­»·¹ö¶¯Ğ§¹ûº¯Êı
-     */
-    function circularScroll(fromEls, toEls, callback, index, direction) {
-        var self = this, cfg = self.config,
-            len = self.length,
-            activeIndex = self.activeIndex,
-            isX = cfg.scrollType === SCROLLX,
-            prop = isX ? LEFT : TOP,
-            viewDiff = self.viewSize[isX ? 0 : 1],
-            diff = -viewDiff * index,
-            attributes = {},
-            isCritical,
-            isBackward = direction === BACKWARD;
-
-        // ´ÓµÚÒ»¸ö·´Ïò¹ö¶¯µ½×îºóÒ»¸ö or ´Ó×îºóÒ»¸öÕıÏò¹ö¶¯µ½µÚÒ»¸ö
-        isCritical = (isBackward && activeIndex === 0 && index === len - 1)
-                     || (direction === FORWARD && activeIndex === len - 1 && index === 0);
-
-        if(isCritical) {
-            // µ÷ÕûÎ»ÖÃ²¢»ñÈ¡ diff
-            diff = adjustPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
-        }
-        attributes[prop] = { to: diff };
-
-        // ¿ªÊ¼¶¯»­
-        if (self.anim) self.anim.stop();
-        self.anim = new YAHOO.util.Anim(self.content, attributes, cfg.duration, cfg.easing);
-        self.anim.onComplete.subscribe(function() {
-            if(isCritical) {
-                // ¸´Ô­Î»ÖÃ
-                resetPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
-            }
-            // free
-            self.anim = null;
-            callback();
-        });
-        self.anim.animate();
-    }
-
-    /**
-     * µ÷ÕûÎ»ÖÃ
-     */
-    function adjustPosition(panels, index, isBackward, prop, viewDiff) {
-        var self = this, cfg = self.config,
-            steps = cfg.steps,
-            len = self.length,
-            start = isBackward ? len - 1 : 0,
-            from = start * steps,
-            to = (start + 1) * steps,
-            i;
-
-        // µ÷Õû panels µ½ÏÂÒ»¸öÊÓÍ¼ÖĞ
-        for (i = from; i < to; i++) {
-            panels[i].style.position = RELATIVE;
-            panels[i].style[prop] = (isBackward ? '-' : EMPTY) + viewDiff * len + PX;
-        }
-
-        // Æ«ÒÆÁ¿
-        return isBackward ? viewDiff : -viewDiff * len;
-    }
-
-    /**
-     * ¸´Ô­Î»ÖÃ
-     */
-    function resetPosition(panels, index, isBackward, prop, viewDiff) {
-        var self = this, cfg = self.config,
-            steps = cfg.steps,
-            len = self.length,
-            start = isBackward ? len - 1 : 0,
-            from = start * steps,
-            to = (start + 1) * steps,
-            i;
-
-        // ¹ö¶¯Íê³Éºó£¬¸´Î»µ½Õı³£×´Ì¬
-        for (i = from; i < to; i++) {
-            panels[i].style.position = EMPTY;
-            panels[i].style[prop] = EMPTY;
-        }
-
-        // Ë²ÒÆµ½Õı³£Î»ÖÃ
-        self.content.style[prop] = isBackward ? -viewDiff * (len - 1) + PX : EMPTY;
-    }
-
-    /**
-     * Ìí¼Ó²å¼ş
-     */
-    Switchable.Plugins.push({
-        name: 'circular',
-
-        /**
-         * ¸ù¾İ effect, µ÷Õû³õÊ¼×´Ì¬
-         */
-        init: function(host) {
-            var cfg = host.config;
-
-            // ½öÓĞ¹ö¶¯Ğ§¹ûĞèÒªÏÂÃæµÄµ÷Õû
-            if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
-                // ¸²¸Ç¹ö¶¯Ğ§¹ûº¯Êı
-                cfg.scrollType = cfg.effect; // ±£´æµ½ scrollType ÖĞ
-                cfg.effect = circularScroll;
-            }
-        }
-    });
-});
-
-/**
- * TODO:
- *   - ÊÇ·ñĞèÒª¿¼ÂÇ´Ó 0 µ½ 2£¨·Ç×îºóÒ»¸ö£© µÄ backward ¹ö¶¯£¿ĞèÒª¸üÁé»î
- */
-/**
- * Switchable Lazyload Plugin
- * @creator     Óñ²®<lifesinger@gmail.com>
- */
-KISSY.add('switchable-lazyload', function(S) {
-
-    var DOM = S.DOM,
-        EVENT_BEFORE_SWITCH = 'beforeSwitch',
-        IMG_SRC = 'img-src',
-        TEXTAREA_DATA = 'textarea-data',
-        FLAGS = { },
-        Switchable = S.Switchable,
-        DataLazyload = S.DataLazyload;
-
-    FLAGS[IMG_SRC] = 'data-lazyload-src-custom';
-    FLAGS[TEXTAREA_DATA] = 'ks-datalazyload-custom';
-
-    /**
-     * Ìí¼ÓÄ¬ÈÏÅäÖÃ
-     */
-    S.mix(Switchable.Config, {
-        lazyDataType: '', // 'img-src' or 'textarea-data'
-        lazyDataFlag: ''  // 'data-lazyload-src-custom' or 'ks-datalazyload-custom'
-    });
-
-    /**
-     * Ö¯Èë³õÊ¼»¯º¯Êı
-     */
-    Switchable.Plugins.push({
-        name: 'autoplay',
-
-        init: function(host) {
-            var cfg = host.config,
-                type = cfg.lazyDataType, flag = cfg.lazyDataFlag || FLAGS[type];
-            if (!DataLazyload || !type || !flag) return; // Ã»ÓĞÑÓ³ÙÏî
-
-            host.on(EVENT_BEFORE_SWITCH, loadLazyData);
-
-            /**
-             * ¼ÓÔØÑÓ³ÙÊı¾İ
-             */
-            function loadLazyData(ev) {
-                var steps = cfg.steps,
-                    from = ev.toIndex * steps ,
-                    to = from + steps;
-
-                DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type, flag);
-                if (isAllDone()) {
-                    host.detach(EVENT_BEFORE_SWITCH, loadLazyData);
-                }
-            }
-
-            /**
-             * ÊÇ·ñ¶¼ÒÑ¼ÓÔØÍê³É
-             */
-            function isAllDone() {
-                var imgs, textareas, i, len;
-
-                if (type === IMG_SRC) {
-                    imgs = S.query('img', host.container);
-                    for (i = 0,len = imgs.length; i < len; i++) {
-                        if (DOM.attr(imgs[i], flag)) return false;
-                    }
-                } else if (type === TEXTAREA_DATA) {
-                    textareas = S.query('textarea', host.container);
-                    for (i = 0,len = textareas.length; i < len; i++) {
-                        if (DOM.hasClass(textareas[i], flag)) return false;
-                    }
-                }
-
-                return true;
-            }
-
-        }
-    });
-});
-/**
- * Tabs Widget
- * @creator     Óñ²®<lifesinger@gmail.com>
- */
-KISSY.add('tabs', function(S) {
-
-    /**
-     * Tabs Class
-     * @constructor
-     */
-    function Tabs(container, config) {
-        var self = this;
-
-        // factory or constructor
-        if (!(self instanceof Tabs)) {
-            return new Tabs(container, config);
-        }
-
-        Tabs.superclass.constructor.call(self, container, config);
-    }
-
-    S.extend(Tabs, S.Switchable);
-    S.Tabs = Tabs;
-});
-/**
- * Tabs Widget
- * @creator     Óñ²®<lifesinger@gmail.com>
- */
-KISSY.add('slide', function(S) {
-
-    /**
-     * Ä¬ÈÏÅäÖÃ£¬ºÍ Switchable ÏàÍ¬µÄ²¿·Ö´Ë´¦Î´ÁĞ³ö
-     */
-    var defaultConfig = {
-        autoplay: true,
-        circular: true
-    };
-
-    /**
-     * Slide Class
-     * @constructor
-     */
-    function Slide(container, config) {
-        var self = this;
-
-        // factory or constructor
-        if (!(self instanceof Slide)) {
-            return new Slide(container, config);
-        }
-
-        config = S.merge(defaultConfig, config || { });
-        Slide.superclass.constructor.call(self, container, config);
-    }
-
-    S.extend(Slide, S.Switchable);
-    S.Slide = Slide;
-});
-/**
- * Carousel Widget
- * @creator     Óñ²®<lifesinger@gmail.com>
- */
-KISSY.add('carousel', function(S) {
-
-        /**
-         * Ä¬ÈÏÅäÖÃ£¬ºÍ Switchable ÏàÍ¬µÄ²¿·Ö´Ë´¦Î´ÁĞ³ö
-         */
-        var defaultConfig = {
-            circular: true
-        };
-
-    /**
-     * Carousel Class
-     * @constructor
-     */
-    function Carousel(container, config) {
-        var self = this;
-
-        // factory or constructor
-        if (!(self instanceof Carousel)) {
-            return new Carousel(container, config);
-        }
-
-        config = S.merge(defaultConfig, config || { });
-        Carousel.superclass.constructor.call(self, container, config);
-    }
-
-    S.extend(Carousel, S.Switchable);
-    S.Carousel = Carousel;
-});

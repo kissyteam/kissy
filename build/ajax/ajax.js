@@ -1,19 +1,17 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 792 Jul 1 19:44
 */
 /**
  * @module  ajax
  * @author  lifesinger@gmail.com
- * @depends kissy
  */
-
 KISSY.add('ajax', function(S) {
 
     var doc = document,
         UA = S.UA;
-    
+
     S.Ajax = {
 
         /**
@@ -56,11 +54,10 @@ KISSY.add('ajax', function(S) {
 });
 
 /**
- * Notes:
- *
+ * NOTES:
  *  2010.04
- *   - api ¿¼ÂÇ£ºjQuery µÄÈ«ñîºÏÔÚ jQuery ¶ÔÏóÉÏ£¬ajaxComplete µÈ·½·¨ÏÔµÃ²»ÓÅÑÅ¡£
- *         YUI2 µÄ YAHOO.util.Connect.Get.script ²ã¼¶Ì«Éî£¬YUI3 µÄ io ÔòÒ°ĞÄ
- *         ¹ı´ó£¬KISSY ½è¼ø ExtJS, ²¿·Ö·½·¨½è¼ø jQuery.
+ *   - api è€ƒè™‘ï¼šjQuery çš„å…¨è€¦åˆåœ¨ jQuery å¯¹è±¡ä¸Šï¼ŒajaxComplete ç­‰æ–¹æ³•ä¸ä¼˜é›…ã€‚
+ *         YUI2 çš„ YAHOO.util.Connect.Get.script å±‚çº§å¤ªæ·±ï¼ŒYUI3 çš„ io åˆ™
+ *         é‡å¿ƒè¿‡å¤§ï¼ŒKISSY å€Ÿé‰´ ExtJS, éƒ¨åˆ†æ–¹æ³•å€Ÿé‰´ jQuery.
  *
  */

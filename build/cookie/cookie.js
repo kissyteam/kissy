@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 676 May 23 14:43
+build: 792 Jul 1 19:45
 */
 /**
  * @module  cookie
@@ -16,8 +16,8 @@ KISSY.add('cookie', function(S) {
     S.Cookie = {
 
         /**
-         * »ñÈ¡ cookie Öµ
-         * @return {string} Èç¹û name ²»´æÔÚ£¬·µ»Ø undefined
+         * è·å– cookie å€¼
+         * @return {string} å¦‚æœ name ä¸å­˜åœ¨ï¼Œè¿”å› undefined
          */
         get: function(name) {
             var ret, m;
@@ -33,7 +33,7 @@ KISSY.add('cookie', function(S) {
         set: function(name, val, expires, domain, path, secure) {
             var text = encode(val), date = expires;
 
-            // ´Óµ±Ç°Ê±¼ä¿ªÊ¼£¬¶àÉÙÌìºó¹ıÆÚ
+            // ä»å½“å‰æ—¶é—´å¼€å§‹ï¼Œå¤šå°‘å¤©åè¿‡æœŸ
             if (typeof date === 'number') {
                 date = new Date();
                 date.setTime(date.getTime() + expires * 86400000);
@@ -62,7 +62,7 @@ KISSY.add('cookie', function(S) {
         },
 
         remove: function(name) {
-            // Á¢¿Ì¹ıÆÚ
+            // ç«‹åˆ»è¿‡æœŸ
             this.set(name, '', 0);
         }
     };
@@ -77,10 +77,10 @@ KISSY.add('cookie', function(S) {
  * NOTES:
  *
  *  2010.04
- *   - get ·½·¨Òª¿¼ÂÇ ie ÏÂ£¬
- *     ÖµÎª¿ÕµÄ cookie Îª 'test3; test3=3; test3tt=2; test1=t1test3; test3', Ã»ÓĞµÈÓÚºÅ¡£
- *     ³ıÁËÕıÔò»ñÈ¡£¬»¹¿ÉÒÔ split ×Ö·û´®µÄ·½Ê½À´»ñÈ¡¡£
- *   - api Éè¼ÆÉÏ£¬Ô­±¾Ïë½è¼ø jQuery µÄ¼òÃ÷·ç¸ñ£ºS.cookie(name, ...), µ«¿¼ÂÇµ½¿ÉÀ©Õ¹ĞÔ£¬Ä¿Ç°
- *     ¶ÀÁ¢³É¾²Ì¬¹¤¾ßÀàµÄ·½Ê½¸üÓÅ¡£
+ *   - get æ–¹æ³•è¦è€ƒè™‘ ie ä¸‹ï¼Œ
+ *     å€¼ä¸ºç©ºçš„ cookie ä¸º 'test3; test3=3; test3tt=2; test1=t1test3; test3', æ²¡æœ‰ç­‰äºå·ã€‚
+ *     é™¤äº†æ­£åˆ™è·å–ï¼Œè¿˜å¯ä»¥ split å­—ç¬¦ä¸²çš„æ–¹å¼æ¥è·å–ã€‚
+ *   - api è®¾è®¡ä¸Šï¼ŒåŸæœ¬æƒ³å€Ÿé‰´ jQuery çš„ç®€æ˜é£æ ¼ï¼šS.cookie(name, ...), ä½†è€ƒè™‘åˆ°å¯æ‰©å±•æ€§ï¼Œç›®å‰
+ *     ç‹¬ç«‹æˆé™æ€å·¥å…·ç±»çš„æ–¹å¼æ›´ä¼˜ã€‚
  *
  */

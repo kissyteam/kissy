@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 671 May 23 14:23
+build: 792 Jul 1 19:45
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -1067,8 +1067,10 @@ var posProcess = function(selector, context){
 };
 
 // EXPOSE
-
-//window.Sizzle = Sizzle;
-KISSY.externalSelector = Sizzle;
+KISSY.ExternalSelector = Sizzle;
+KISSY.ExternalSelector._filter = function(selector, filter) {
+    //Sizzle.matches( String selector, Array<DOMElement> set )
+    return Sizzle.matches(filter, KISSY.query(selector));
+};
 
 })();
