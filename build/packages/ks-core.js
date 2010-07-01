@@ -852,7 +852,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 748 Jun 29 23:18
+build: 791 Jul 1 18:49
 */
 /**
  * @module  dom
@@ -2143,7 +2143,8 @@ KISSY.add('dom-create', function(S, undefined) {
                 S.each(S.query(selector), function(el) {
                    if(isElementNode(el)) {
                        el.innerHTML = '';
-                       el.appendChild(DOM.create(val));
+                       // 排除掉 val == '' 的情况
+                       if(val) el.appendChild(DOM.create(val));
                    }
                 });
             }

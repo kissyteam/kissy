@@ -128,6 +128,11 @@
         if(!DOM.hasClass(t.firstChild, 'test-html')) test.fail();
         if(DOM.text(t) !== 'test p') test.fail();
 
+        try {
+            DOM.html(t, '');
+        } catch(ex) {
+            test.fail(ex);
+        }
     }
 
     // temp code

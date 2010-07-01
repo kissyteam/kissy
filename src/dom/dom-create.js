@@ -77,7 +77,8 @@ KISSY.add('dom-create', function(S, undefined) {
                 S.each(S.query(selector), function(el) {
                    if(isElementNode(el)) {
                        el.innerHTML = '';
-                       el.appendChild(DOM.create(val));
+                       // 排除掉 val == '' 的情况
+                       if(val) el.appendChild(DOM.create(val));
                    }
                 });
             }
