@@ -118,7 +118,7 @@ KISSY.add("digital-clock",function(S,undefined){
 		,4:N2("10110010")
 		,5:N2("11011010")
 		,6:N2("11011110")
-		,7:N2("01110000")
+		,7:N2("01110010")
 		,8:N2("11111111")
 		,9:N2("11111011")
 	};
@@ -184,7 +184,10 @@ KISSY.add("digital-clock",function(S,undefined){
 	            self._domNode.all(".ks-digitalclock-element").each(function (node) {
 	                node.css("background-color", "transparent");
 	            });
-	            self._domNode.all(".ks-digitalclock-first,.ks-digitalclock-last").each(function (node) {
+	            self._domNode.all(".ks-digitalclock-last").each(function (node) {
+	                node.css("border-width", Math.max(BORDER_L * z, NUM_LIMIT / 2) + "px");
+	            });
+	            self._domNode.all(".ks-digitalclock-first").each(function (node) {
 	                node.css("border-width", Math.max(BORDER_L * z, NUM_LIMIT / 2) + "px");
 	            });
 	            self._bars[0].one(".ks-digitalclock-first").css("border-width", Math.max(BORDER_L * z, NUM_LIMIT / 2) + "px");
@@ -216,17 +219,22 @@ KISSY.add("digital-clock",function(S,undefined){
 	    },
 	    //internal use ,synchronize data with ui
 	    repaint: function (e) {
-	        var self = this;
-	        var v = DIGITAL_CONFIG[e.newVal];
-	        //console.log(v.toString(2));
+	        var self = this
+	        , v = DIGITAL_CONFIG[e.newVal]
+	        , preV=DIGITAL_CONFIG[e.preVal]
+	        , diff=v ^ preV;
+	        //console.log(e.newVal,e.preVal,v.toString(2),preV.toString(2),diff.toString(2));
 	        for (var i = 0; i < self._bars.length; i++) {
-	            var node = self._bars[i];
-	            v = v >> 1;
-	            var b = v & 1;
-	            if (b) {
+	        		v = v >> 1;
+	            diff = diff >> 1;
+	            var node = self._bars[i]	            
+	            , b = v & 1,diffB=diff&1;
+	            if (b && diffB) {
 	                node.css("display", "");
-	            } else {
+	            } else if(diffB){
 	                node.css("display", "none");
+	            }else{
+	            	//console.log("unchanged");
 	            }
 	        }
 	    }
