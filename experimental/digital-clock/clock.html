@@ -29,6 +29,8 @@
 KISSY.ready(function (S) {
     var clock = new S.DigitalClock({
         container: S.one("#clock_con")[0],
+        //trangle will disappear when zoom < zoomLimit
+        zoomLimit:0.15,
         zoom:1
     });
     YUI().use("slider", function (Y) {
