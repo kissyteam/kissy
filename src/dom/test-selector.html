@@ -332,11 +332,11 @@
 <div><p id="foo"><span></span></p></div>
 <script>
     // Ref: http://ejohn.org/blog/thoughts-on-queryselectorall/
-    //    var foo = document.getElementById("foo");
-    //    // should return nothing
-    //    alert($('div span', foo).length);
-    //    // will return the SPAN (booo!)
-    //    alert(foo.querySelectorAll('div span').length);
+//        var foo = document.getElementById("foo");
+//        // should return nothing
+//        alert($('div span', foo).length);
+//        // will return the SPAN (booo!)
+//        alert(foo.querySelectorAll('div span').length);
 </script>
 
 <!-- Test Cases -->
@@ -581,6 +581,9 @@ function test_query_group_ks(test) {
 
     ret = S.query(s);
     if (ret.length !== 15) test.fail(ret.length);
+
+    if(S.query('div span', '#foo').length !== 0) test.fail();
+    if(S.query('div span, p span', '#foo').length !== 0) test.fail();
 }
 
 function test_query_group_jq(test) {

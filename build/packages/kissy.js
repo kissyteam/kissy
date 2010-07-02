@@ -852,7 +852,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 792 Jul 1 19:44
+build: 793 Jul 2 09:50
 */
 /**
  * @module  dom
@@ -889,7 +889,7 @@ KISSY.add('selector', function(S, undefined) {
      * @return {Array} The array of found HTMLElement
      */
     function query(selector, context) {
-        var match, t, ret = [], id, tag, cls, i, len;
+        var match, t, ret = [], id, tag, cls;
         context = tuneContext(context);
 
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
@@ -903,7 +903,6 @@ KISSY.add('selector', function(S, undefined) {
         // #id tag.cls
         // 注 1：REG_QUERY 还会匹配 #id.cls
         // 注 2：tag 可以为 * 字符
-        // 注 3：支持 , 号分组
         // 返回值为数组
         // 选择器不支持时，抛出异常
 
@@ -943,18 +942,6 @@ KISSY.add('selector', function(S, undefined) {
                     else if (tag) { // 排除空白字符串
                         ret = getElementsByTagName(context, tag);
                     }
-                }
-            }
-            // 分组选择器
-            else if (selector.indexOf(',') > -1) {
-                if (context.querySelectorAll) {
-                    ret = context.querySelectorAll(selector);
-                } else {
-                    var parts = selector.split(','), r = [];
-                    for (i = 0,len = parts.length; i < len; ++i) {
-                        r = r.concat(query(parts[i], context));
-                    }
-                    ret = uniqueSort(r);
                 }
             }
             // 采用外部选择器
@@ -1083,33 +1070,6 @@ KISSY.add('selector', function(S, undefined) {
         }
     }
 
-    // 对于分组选择器，需要进行去重和排序
-    function uniqueSort(results) {
-        var hasDuplicate = false;
-
-        // 按照 dom 位置排序
-        results.sort(function (a, b) {
-            // 该函数只在不支持 querySelectorAll 的 IE7- 浏览器中被调用，
-            // 因此只需考虑 sourceIndex 即可
-            var ret = a.sourceIndex - b.sourceIndex;
-            if (ret === 0) {
-                hasDuplicate = true;
-            }
-            return ret;
-        });
-
-        // 去重
-        if (hasDuplicate) {
-            for (var i = 1; i < results.length; i++) {
-                if (results[i] === results[i - 1]) {
-                    results.splice(i--, 1);
-                }
-            }
-        }
-
-        return results;
-    }
-
     // throw exception
     function error(msg) {
         S.error('Unsupported selector: ' + msg);
@@ -1202,6 +1162,9 @@ KISSY.add('selector', function(S, undefined) {
  *
  * 2010.06
  *  - 增加 filter 和 test 方法
+ * 
+ * 2010.07
+ *  - 取消对 , 分组的支持，group 直接用 Sizzle
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
