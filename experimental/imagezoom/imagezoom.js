@@ -21,6 +21,10 @@ KISSY.add("imagezoom", function(S, undefined) {
         DIV = '<div>',
         IMG = '<img>',
         B = '<b>',
+        HEIGHT = 'height',
+        WIDTH = 'width',
+        TOP = 'top',
+        LEFT = 'left',
         
         /**
          * imagezoom的默认设置
@@ -219,8 +223,8 @@ KISSY.add("imagezoom", function(S, undefined) {
                     g = DOM.create(DIV);
                     DOM.addClass(g, IMGZOOM_GLASS_CLS);
                     DOM.addClass(g, HIDDEN);
-                    g.style.height = cfg.glassSize.height+'px';
-                    g.style.width = cfg.glassSize.width+'px';
+                    DOM.css(g, HEIGHT, cfg.glassSize.height+'px');
+                    DOM.css(g, WIDTH, cfg.glassSize.width+'px');
                     o.appendChild(g);
                     self.glass = g;
                 }
@@ -233,7 +237,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                 }
                 
                 // 调整容器大小及位置
-                self.container.style.height = parseInt(self.getStyle(o, 'marginTop')) + parseInt(self.getStyle(o, 'marginBottom')) + self.getSize(o).height + 'px';
+                DOM.css(self.container, HEIGHT, parseInt(DOM.css(o, 'marginTop')) + parseInt(DOM.css(o, 'marginBottom')) + self.getSize(o).height + 'px');
             },
             
             /**
@@ -281,7 +285,8 @@ KISSY.add("imagezoom", function(S, undefined) {
             _zoom: function() {
                 var self = this,
                     cfg = self.config,
-                    g = self.glass;
+                    g = self.glass,
+                    v = self.viewer;
                 /**
                  * 移动鼠标时更新大图偏移量
                  */
@@ -289,8 +294,8 @@ KISSY.add("imagezoom", function(S, undefined) {
                     // 镜片偏移量并更新
                     var glassOffset = self.getGlassOffset(ev);
                     if (g) {
-                        g.style.left = glassOffset.left + 'px';
-                        g.style.top = glassOffset.top + 'px';
+                        DOM.css(g, LEFT, glassOffset.left + 'px');
+                        DOM.css(g, TOP, glassOffset.top + 'px');
                     }
                     // 计算大图偏移量并更新
                     var imageSize = self.getSize(self.image),
@@ -304,13 +309,13 @@ KISSY.add("imagezoom", function(S, undefined) {
                         i = glassSize.width/2;
                         j = glassSize.height/2
                     }
-                    self.viewer.scrollLeft = scrollx + i;
-                    self.viewer.scrollTop = scrolly + j;
+                    v.scrollLeft = scrollx + i;
+                    v.scrollTop = scrolly + j;
                     
                     // 跟随模式下更新显示区域位置
                     if (TYPE[2] == cfg.zType) {
-                        self.viewer.style.left = glassOffset.left + 'px';
-                        self.viewer.style.top = glassOffset.top + 'px';
+                        DOM.css(v, LEFT, glassOffset.left + 'px');
+                        DOM.css(v, TOP, glassOffset.top + 'px');
                     }
                 });
             },
@@ -325,6 +330,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                     self.hideMsg();
                 }
                 var i = self.image,
+                    v = self.viewer,
                     cfg = self.config,
                     imageOffset = DOM.offset(i),
                     glassSize = self.getSize(self.glass);
@@ -347,9 +353,8 @@ KISSY.add("imagezoom", function(S, undefined) {
                     var bigImageSize,
                         imageSize = self.getSize(i),
                         o = self.origin,
-                        v = self.viewer,
-                        btw = parseInt(self.getStyle(v, 'borderTopWidth')),
-                        blw = parseInt(self.getStyle(v, 'borderLeftWidth')),
+                        btw = parseInt(DOM.css(v, 'borderTopWidth')),
+                        blw = parseInt(DOM.css(v, 'borderLeftWidth')),
                         containerOffset = DOM.offset(self.container);
                     if (!ready) {
                         bigImageSize = cfg.bigImageSize;
@@ -357,14 +362,14 @@ KISSY.add("imagezoom", function(S, undefined) {
                         bigImageSize = self.getSize(self.bigImage);
                     }
                     if (POSITION[0] == cfg.position) {
-                        topPos = - (imageSize.height + btw + cfg.offset - parseInt(self.getStyle(o, 'marginTop'))*2);
+                        topPos = - (imageSize.height + btw + cfg.offset - parseInt(DOM.css(o, 'marginTop'))*2);
                         leftPos = imageOffset.left - containerOffset.left;
                     } else if (POSITION[2] == cfg.position) {
                         topPos = imageSize.height + imageOffset.top + cfg.offset - containerOffset.top;
                         leftPos = imageOffset.left - containerOffset.left;
                     } else if (POSITION[3] == cfg.position) {
                         topPos = imageOffset.top - containerOffset.top;
-                        leftPos = - (imageSize.width + blw + cfg.offset - parseInt(self.getStyle(o, 'marginLeft'))*2);
+                        leftPos = - (imageSize.width + blw + cfg.offset - parseInt(DOM.css(o, 'marginLeft'))*2);
                     } else {
                         topPos = imageOffset.top - containerOffset.top;
                         leftPos = imageOffset.left + imageSize.width + cfg.offset - containerOffset.left;
@@ -373,10 +378,10 @@ KISSY.add("imagezoom", function(S, undefined) {
                     vHeight = Math.round(bigImageSize.height*glassSize.height/imageSize.height);
                     vWidth = Math.round(bigImageSize.width*glassSize.width/imageSize.width);
                 }
-                self.viewer.style.height = vHeight + 'px';
-                self.viewer.style.width = vWidth + 'px';
-                self.viewer.style.top = topPos + 'px';
-                self.viewer.style.left = leftPos + 'px';
+                DOM.css(v, HEIGHT, vHeight + 'px');
+                DOM.css(v, WIDTH, vWidth + 'px');
+                DOM.css(v, TOP, topPos + 'px');
+                DOM.css(v, LEFT, leftPos + 'px');
             },
             
             /**
@@ -448,27 +453,7 @@ KISSY.add("imagezoom", function(S, undefined) {
             getMousePoint: function(ev) {
                 return {x: ev.pageX, y: ev.pageY}
             },
-            
-            /**
-             * 获取元素样式
-             * @param elm 目标元素
-             * @param p   样式名称
-             * @return 元素对应的样式
-             */
-            getStyle: function(elm, p){
-                if (typeof elm == 'string') {
-                    elm = S.get(elm);
-                }
-
-                if (window.getComputedStyle) {
-                    //document.defaultView 
-                    var y = window.getComputedStyle(elm, '');
-                } else if (elm.currentStyle) {
-                    var y = elm.currentStyle;
-                }
-                return y[p];
-            },
-            
+           
             /**
              * 大图片不可用时显示提示信息
              */
@@ -486,9 +471,7 @@ KISSY.add("imagezoom", function(S, undefined) {
                 DOM.html(b, '');
                 DOM.addClass(this.viewer, IMGZOOM_VIEWER_BK_CLS);
             }
-        });
-        
-        S.augment(ImageZoom, S.EventTarget);
+        }, S.EventTarget);
         
         S.ImageZoom = ImageZoom;
     
@@ -503,6 +486,8 @@ KISSY.add("imagezoom", function(S, undefined) {
  *      - 加入跟随模式
  *      - 加入Timeout
  *      - 6. 24  去除yahoo-dom-event依赖
+ *  2010.7
+ *      - 去除getStyle, 使用DOM.css()
  *  TODO:
  *      - 加入反转模式;
  *      - 
