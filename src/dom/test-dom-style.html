@@ -26,6 +26,7 @@
 
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
 <script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="../../third-party/yui3/yui-min.js"></script>
 <script src="../../third-party/ext-core/ext-core.js"></script>
 
 <div id="test-data">
@@ -95,12 +96,10 @@
     }
 
     function test_addStyleSheet(test) {
-
         DOM.addStyleSheet('#test-div { padding: 100px; color: blue }');
         if(UA.ie) if(DOM.css('#test-div', 'color') !== 'blue') test.fail();
         if(UA.opera) if(DOM.css('#test-div', 'color') !== '#0000ff') test.fail();
         if(!UA.ie && !UA.opera) if(DOM.css('#test-div', 'color') !== 'rgb(0, 0, 255)') test.fail();
-
     }
 
     // temp code
@@ -111,6 +110,12 @@
     //alert(jQuery(t).css('padding-left'));
     //alert(DOM.css(t, 'borderWidth'));
     //alert(jQuery(t).css('borderWidth'));
+
+    // kissy 会将 auto 转换为绝对数值，和 yui3 保持一致，让 ie 与其它浏览器一致
+    //alert(t.style.height);
+    //alert(DOM.css(t, 'height'));
+    //alert(jQuery(t).css('height'));
+    //alert(Ext.get(t).getStyle('height'));
 
 </script>
 

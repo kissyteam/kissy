@@ -17,7 +17,8 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         LEFT = 'left',
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
-	    RE_NUM = /^-?\d/;
+	    RE_NUM = /^-?\d/,
+        RE_SPECIAL = /^auto$/i;
 
     // use alpha filter for IE opacity
     try {
@@ -71,7 +72,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
-            if (!RE_NUMPX.test(ret) && RE_NUM.test(ret)) {
+            if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret)) || RE_SPECIAL.test(ret)) {
                 // Remember the original values
                 var left = style[LEFT];
 
