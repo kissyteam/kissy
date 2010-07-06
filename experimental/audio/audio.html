@@ -8,8 +8,22 @@
 
 <h2>SWFAudio Test using soundmanager2</h2>
 
+<div style="margin:20px">
+<button id="_stop"> 停止</button>
 
-使用举例:采用soundmanager2延迟初始化，消除全局污染
+<button id="_start">开始/继续</button>
+
+
+<button id="_pause">暂停</button>
+
+</div>
+
+
+使用举例:采用soundmanager2延迟初始化，消除全局污染<br/>
+简单使用可用 swfaudiolite.js，都具有 play（开始/继续）,stop（停止）,pause（暂停）
+
+
+<h2>代码：</h2>
 <pre>
 
 KISSY.ready(function(){
@@ -46,10 +60,32 @@ var S=KISSY;
                 autoLoad: true //开始下载
             });
   
-  //注意不能立即播放          
+  //注意不能立即播放 ，自定播放了         
   setTimeout(function(){
 		s.play();
 	},0);
+	
+	
+	
+	//停止
+		var _stop=S.one("#_stop");
+		_stop.on("click",function(){
+			s.stop();
+		});
+		
+		//开始/继续当前
+		var _start=S.one("#_start");
+		_start.on("click",function(){
+			s.play();
+		});
+		
+		//暂停
+		var _pause=S.one("#_pause");
+		_pause.on("click",function(){
+			s.pause();
+		});
+		
+		
 				
 	});
 
@@ -57,6 +93,7 @@ var S=KISSY;
 </pre>
 
 <script src="../../build/packages/ks-core.js"></script>
+<script src="../../build/node/node-pkg-min.js"></script>
 <script src="swfaudio.js"></script>
 
 
@@ -100,7 +137,27 @@ var S=KISSY;
   setTimeout(function(){
 		s.play();
 	},0);
-				
+			
+			
+			
+	//停止
+		var _stop=S.one("#_stop");
+		_stop.on("click",function(){
+			s.stop();
+		});
+		
+		//开始/继续当前
+		var _start=S.one("#_start");
+		_start.on("click",function(){
+			s.play();
+		});
+		
+		//暂停
+		var _pause=S.one("#_pause");
+		_pause.on("click",function(){
+			s.pause();
+		});
+			
 	});
 
 });
