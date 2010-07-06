@@ -1,30 +1,110 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf8"/>
 <title>SWFAudio Test</title>
 </head>
 <body>
 
-<h2>SWFAudio Test Data</h2>
+<h2>SWFAudio Test using soundmanager2</h2>
+
+
+使用举例:采用soundmanager2延迟初始化，消除全局污染
+<pre>
+
+KISSY.ready(function(){
+	
+var S=KISSY;
+	/**
+		统一使用延迟初始化，其他方式有问题
+		指定本地的swf地址
+	*/
+	var sm = new S.SoundManager("soundmanager2.swf");
+	sm.useFlashBlock = true;
+	//开始初始化
+	sm.beginDelayedInit();
+	sm.onready(function(){
+		//具体使用方法参见：http://www.schillmania.com/projects/soundmanager2/
+		
+		/*播放音乐方式1：
+			@param {String} music id
+			@param {String} music path
+		*/
+		//sm.play("test","waka.mp3");
+		
+		
+		
+		/*
+			播放音乐方式2：
+			createSound方法，可以播放前缓存
+			@param autoLoad 播放前缓存
+		*/
+		
+		var s=sm.createSound({
+                id: "music_1",
+                url: "waka.mp3",
+                autoLoad: true //开始下载
+            });
+  
+  //注意不能立即播放          
+  setTimeout(function(){
+		s.play();
+	},0);
+				
+	});
+
+});
+</pre>
 
 <script src="../../build/packages/ks-core.js"></script>
 <script src="swfaudio.js"></script>
 
 
 <script>
-KISSY.ready(function(S){
-	var sm = S.soundManager;
-	sm.url="./soundmanager2.swf";
+	//window.onload=function(){
+	KISSY.ready(function(){
+	
+var S=KISSY;
+	/**
+		统一使用延迟初始化，其他方式有问题
+		指定本地的swf地址
+	*/
+	var sm = new S.SoundManager("soundmanager2.swf");
 	sm.useFlashBlock = true;
+	//开始初始化
+	sm.beginDelayedInit();
 	sm.onready(function(){
-		/*��������
+		//具体使用方法参见：http://www.schillmania.com/projects/soundmanager2/
+		
+		/*播放音乐方式1：
 			@param {String} music id
 			@param {String} music path
 		*/
-		sm.play("test","music.mp3");		
+		//sm.play("test","waka.mp3");
+		
+		
+		
+		/*
+			播放音乐方式2：
+			createSound方法，可以播放前缓存
+			@param autoLoad 播放前缓存
+		*/
+		
+		var s=sm.createSound({
+                id: "music_1",
+                url: "waka.mp3",
+                autoLoad: true //开始下载
+            });
+  
+  //注意不能立即播放          
+  setTimeout(function(){
+		s.play();
+	},0);
+				
 	});
+
 });
+//});
 </script>
 </body>
 </html>
