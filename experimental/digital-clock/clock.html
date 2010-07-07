@@ -33,6 +33,13 @@ KISSY.ready(function (S) {
         zoomLimit:0.15,
         zoom:1
     });
+    
+    setInterval(function () {
+            clock.set("date", new Date());
+        },
+                1000);
+    
+    
     YUI().use("slider", function (Y) {
         var xSlider = new Y.Slider({
             value: clock.get("zoom")*100
