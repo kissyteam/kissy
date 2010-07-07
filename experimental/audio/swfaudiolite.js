@@ -9,9 +9,9 @@ KISSY.add("swfAudioLite", function(S) {
             version: 9.115,
             useExpressInstall: false
         },self = this;
-        // Èç¹ûÃ»ÓÐ´«Èë£¬¾Í×Ô¶¯Éú³É
+        // ï¿½ï¿½ï¿½Ã»ï¿½Ð´ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½
         if (!container) {
-            // ×¢£ºcontainer µÄ style ²»ÄÜÓÐ visibility:hidden or display: none, ·ñÔòÒì³£
+            // ×¢ï¿½ï¿½container ï¿½ï¿½ style ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ visibility:hidden or display: none, ï¿½ï¿½ï¿½ï¿½ï¿½ì³£
             container = document.body.appendChild(S.DOM.create('<div style="height:0;width:0;overflow:hidden"></div>'));
         }
         self.embeddedSWF = new S.SWF(container, swfUrl || 'niftyplayer.swf', params);
@@ -33,13 +33,13 @@ KISSY.add("swfAudioLite", function(S) {
     S.augment(SWFAudioLite, {
 
 
-        load : function (url) {
+        loadUrl : function (url) {
             this.embeddedSWF.callSWF("SetVariable", ["currentSong",url]);
-            this.nativeLoad();
+            this.load();
         },
 
         loadAndPlay : function (url) {
-            this.load(url);
+            this.loadUrl(url);
             this.play();
         },
 
@@ -90,7 +90,7 @@ KISSY.add("swfAudioLite", function(S) {
                 try {
                     return this.embeddedSWF.callSWF("SetVariable", arguments);
                 }
-                catch(e) { // µ± swf Òì³£Ê±£¬½øÒ»²½²¶»ñÐÅÏ¢
+                catch(e) { // ï¿½ï¿½ swf ï¿½ì³£Ê±ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 
                 }
             }
@@ -100,7 +100,7 @@ KISSY.add("swfAudioLite", function(S) {
 
     S.each([
         "play"
-        ,"nativeLoad"
+        ,"load"
         ,"stop"
         ,"pause"
         ,"playToggle"
@@ -110,7 +110,7 @@ KISSY.add("swfAudioLite", function(S) {
             try {
                 return this.embeddedSWF.callSWF("TCallLabel", ["/",methodName]);
             }
-            catch(e) { // µ± swf Òì³£Ê±£¬½øÒ»²½²¶»ñÐÅÏ¢
+            catch(e) { // ï¿½ï¿½ swf ï¿½ì³£Ê±ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 
             }
         }
@@ -126,7 +126,7 @@ KISSY.add("swfAudioLite", function(S) {
             try {
                 return this.embeddedSWF.callSWF("GetVariable", [methodName]);
             }
-            catch(e) { // µ± swf Òì³£Ê±£¬½øÒ»²½²¶»ñÐÅÏ¢
+            catch(e) { // ï¿½ï¿½ swf ï¿½ì³£Ê±ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
                 this.fire('error', { message: e });
             }
         }
