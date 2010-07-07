@@ -27,8 +27,9 @@
   nodelist - 20%
   anim
   ajax
-  draggable
+  require
 
+  draggable
   cssmodules 基础元素风格设计比稿
 
   switchable 需求征集（增加最后一张和最前一张的事件） & refactor
@@ -58,7 +59,6 @@
  2010 下半年
 
   drag & drop
-  require 对 combo 的支持
   基本底层组件思考：switchable, positionable, selectable( suggest 和 combobox 的下拉框)
 
   图片上传组件

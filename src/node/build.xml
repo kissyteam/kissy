@@ -10,6 +10,7 @@
         <concat destfile="node-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="node.js"/>
             <path path="nodelist.js"/>
+            <path path="node-attach.js"/>
         </concat>
     </target>
 

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf-8"/>
 <title>Node Test</title>
 </head>
 <body>
@@ -12,21 +12,13 @@
 
 <h2>Test Data</h2>
 
-<script src="../kissy/kissy.js"></script>
-<script src="../kissy/kissy-lang.js"></script>
-<script src="../kissy/kissy-ua.js"></script>
-
-<script src="../dom/selector.js"></script>
-<script src="../dom/dom.js"></script>
-<script src="../dom/dom-class.js"></script>
-
-<script src="../event/event.js"></script>
-<script src="../event/event-object.js"></script>
-<script src="../event/event-target.js"></script>
-<script src="../event/event-mouseenter.js"></script>
+<script src="../../build/kissy/kissy-pkg.js"></script>
+<script src="../../build/dom/dom-pkg.js"></script>
+<script src="../../build/event/event-pkg.js"></script>
 
 <script src="node.js"></script>
 <script src="nodelist.js"></script>
+<script src="node-attach.js"></script>
 
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
 
@@ -37,7 +29,7 @@
     function test_constructor(test) {
         var div, bd = document.body, el;
 
-        div = S.Node('div')[0];
+        div = S.Node('<div>')[0];
         div.id = 'test-create';
         bd.appendChild(div);
         if(!S.get('#test-create')) test.fail();
@@ -47,27 +39,6 @@
         el = S.get('#test-create2');
         if(!el) test.fail();
         if(S.DOM.text(el) !== 'create2') test.fail();
-    }
-
-    function test_attr(test) {
-        var node = S.one('#foo a');
-
-        // set attr
-        if (node.attr('title') !== 'test') test.fail();
-
-        // get attr
-        node.attr('data-set', 'test-xx');
-        if (node.attr('data-set') !== 'test-xx') test.fail();
-    }
-
-    function test_removeAttr(test) {
-        var node = S.one('#foo label');
-
-        node.attr('test-remove', 'xx');
-        if (node.attr('test-remove') !== 'xx') test.fail();
-        
-        node.removeAttr('test-remove');
-        if (node.attr('test-remove') !== undefined) test.fail();
     }
 
     function test_hasClass(test) {
@@ -92,7 +63,7 @@
         if (a.removeClass('link').hasClass(a, 'link') !== false) test.fail();
 
         a[0].className = 'link link2 link link linkrr';
-        a.removeClass('link').removeClass('linkrr');
+        a.removeClass('link linkrr');
         if (S.trim(a[0].className) !== 'link2') test.fail();
 
         // restore
@@ -102,11 +73,11 @@
     function test_replaceClass(test) {
         var a = S.one('#foo a');
 
-        // oldCls 有的话替换
+        // oldCls 鏈夌殑璇濇浛鎹�
         a.replaceClass('link', 'link2');
         if (S.trim(a[0].className) !== 'link2') test.fail();
 
-        // oldCls 没有的话，仅添加
+        // oldCls 娌℃湁鐨勮瘽锛屼粎娣诲姞
         a.replaceClass('link3', 'link');
         if (S.trim(a[0].className) !== 'link2 link') test.fail();
 
@@ -119,6 +90,27 @@
 
         if (a.toggleClass('link2').hasClass('link2') !== true) test.fail();
         if (a.toggleClass('link2').hasClass('link2') !== false) test.fail();
+    }
+    
+    function test_attr(test) {
+        var node = S.one('#foo a');
+
+        // set attr
+        if (node.attr('title') !== 'test') test.fail();
+
+        // get attr
+        node.attr('data-set', 'test-xx');
+        if (node.attr('data-set') !== 'test-xx') test.fail();
+    }
+
+    function test_removeAttr(test) {
+        var node = S.one('#foo label');
+
+        node.attr('test-remove', 'xx');
+        if (node.attr('test-remove') !== 'xx') test.fail();
+        
+        node.removeAttr('test-remove');
+        if (node.attr('test-remove') !== undefined) test.fail();
     }
 
     function test_val(test) {
@@ -137,6 +129,67 @@
     function test_text(test) {
         var div = S.one('#test-div');
         if(div.text('hello, are you ok?').text() !== 'hello, are you ok?') test.fail();
+    }
+
+    function test_css(test) {
+        var node = S.one('#test-div');
+
+        // getter
+        if(node.css('float') !== 'left') test.fail();
+        if(node.css('position') !== 'static') test.fail();
+        if(node.css('backgroundColor') !== 'transparent') test.fail();
+        if(node.css('backgroundPosition') !== '0% 0%') test.fail();
+        if(node.css('fontSize') !== '12px') test.fail();
+        if(!S.UA.ie) if(node.css('border-right-width') !== '5px') test.fail();
+        if(S.UA.ie) if(node.css('border-right-width') !== 'medium') test.fail();
+
+        if(node.css('paddingLeft') !== '2pt') test.fail();
+        if(node.css('padding-left') !== '2pt') test.fail();
+        if(node.css('padding-right') !== '0px') test.fail();
+
+        if(node.css('opacity') !== '1') test.fail();
+
+        // 褰撹繑鍥� auto 鏃讹紝瑕佸皢 auto 杞崲涓� pixel
+        if(DOM.css('#test-div', 'height') != '0px') test.fail();
+
+
+        // setter
+        try {
+            node.css('height', '-20px');
+        } catch(ex) {
+            test.fail();
+        }
+
+        node.css('float', 'right');
+        if(node.css('float') !== 'right') test.fail();
+
+        DOM.css(elem.parentNode, 'font-size', '100%');
+        if(node.css('font-size') !== '12px') test.fail();
+
+        node.css('opacity', '0.2');
+        if(node.css('opacity') !== '0.2') test.fail();
+
+        node.css('border', '2px dashed red');
+        if(node.css('borderWidth') !== '2px') test.fail();
+
+        node.css({
+            marginLeft: '20px',
+            opacity: '0.8',
+            border: '2px solid #ccc'
+        });
+        if(node.css('opacity') !== '0.8') test.fail();
+    }
+
+    function test_width(test) {
+        var elem = S.get('#test2');
+
+        if(DOM.width(elem) !== $(elem).width()) test.fail();
+    }
+
+    function test_height(test) {
+        var elem = S.get('#test2');
+
+        if(DOM.height(elem) !== $(elem).height()) test.fail();
     }
 
     function test_html(test) {
@@ -184,6 +237,15 @@
 </script>
 
 <div id="test-data">
+    <div id="test-div" style="padding-left: 2pt; background: transparent; float: left; border: 5px solid rgba(0,0,0,.201);"></div>
+    <style>
+        #test2 {
+            border: 1px solid #ccc;
+            width: 80%;
+            height: 20px;
+        }
+    </style>
+    <div id="test2"></div>
     <p id="foo">
         <a href="./" style="color:red" class="link" title="test" data-test="test">test link</a>
         <input type="text" id="test-input" readonly maxlength="20" value="hello"/>
@@ -195,7 +257,6 @@
             test
         </textarea>
     </p>
-    <div id="test-div"></div>
     <table id="test-table" cellspacing="10">
         <tbody>
         <tr>

@@ -82,6 +82,17 @@ KISSY.add('dom-create', function(S, undefined) {
                    }
                 });
             }
+        },
+
+        /**
+         * Remove the set of matched elements from the DOM.
+         */
+        remove: function(selector) {
+            S.each(S.query(selector), function(el) {
+                if (isElementNode(el) && el.parentNode) {
+                    el.parentNode.removeChild(el);
+                }
+            });
         }
     });
 

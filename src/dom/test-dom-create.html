@@ -135,6 +135,11 @@
         }
     }
 
+    function test_remove(test) {
+        DOM.remove('.test');
+        if(S.query('.test').length !== 0) test.fail();
+    }
+
     // temp code
 
 </script>

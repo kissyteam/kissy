@@ -5,34 +5,34 @@
 KISSY.add('event', function(S, undefined) {
 
     var win = window, doc = document,
-            simpleAdd = doc.addEventListener ?
-                    function(el, type, fn, capture) {
-                        if (el.addEventListener) {
-                            //boolean capture is better
-                            el.addEventListener(type, fn, !!capture);
-                        }
-                    } :
-                    function(el, type, fn) {
-                        if (el.attachEvent) {
-                            el.attachEvent('on' + type, fn);
-                        }
-                    },
-            simpleRemove = doc.removeEventListener ?
-                    function(el, type, fn, capture) {
-                        if (el.removeEventListener) {
-                            el.removeEventListener(type, fn, !!capture);
-                        }
-                    } :
-                    function(el, type, fn) {
-                        if (el.detachEvent) {
-                            el.detachEvent('on' + type, fn);
-                        }
-                    },
-            EVENT_GUID = 'ksEventTargetId',
-            SPACE = ' ',
-            guid = S.now(),
+        simpleAdd = doc.addEventListener ?
+            function(el, type, fn, capture) {
+                if (el.addEventListener) {
+                    //boolean capture is better
+                    el.addEventListener(type, fn, !!capture);
+                }
+            } :
+            function(el, type, fn) {
+                if (el.attachEvent) {
+                    el.attachEvent('on' + type, fn);
+                }
+            },
+        simpleRemove = doc.removeEventListener ?
+            function(el, type, fn, capture) {
+                if (el.removeEventListener) {
+                    el.removeEventListener(type, fn, !!capture);
+                }
+            } :
+            function(el, type, fn) {
+                if (el.detachEvent) {
+                    el.detachEvent('on' + type, fn);
+                }
+            },
+        EVENT_GUID = 'ksEventTargetId',
+        SPACE = ' ',
+        guid = S.now(),
         // { id: { target: el, events: { type: { handle: obj, listeners: [...] } } }, ... }
-            cache = { };
+        cache = { };
 
     var Event = {
 
@@ -52,7 +52,7 @@ KISSY.add('event', function(S, undefined) {
             if (batch('add', target, type, fn, scope)) return;
 
             var id = getID(target),
-                    special, events, eventHandle;
+                special, events, eventHandle;
 
             // 不是有效的 target 或 参数不对
             if (id === -1 || !type || !S.isFunction(fn)) return;
@@ -110,8 +110,8 @@ KISSY.add('event', function(S, undefined) {
             if (batch('remove', target, type, fn)) return;
 
             var id = getID(target),
-                    events, eventsType, listeners,
-                    i, len, c, t;
+                events, eventsType, listeners,
+                i, len, c, t;
 
             if (id === -1) return; // 不是有效的 target
             if (!id || !(c = cache[id])) return; // 无 cache
@@ -166,7 +166,7 @@ KISSY.add('event', function(S, undefined) {
                 // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡
                 // 目前没有实现自定义事件对象的冒泡，因此 return false 和 stopImmediatePropagation 效果是一样的
                 if ((ret === false && target.isCustomEventTarget) ||
-                        event.isImmediatePropagationStopped) {
+                    event.isImmediatePropagationStopped) {
                     break;
                 }
             }

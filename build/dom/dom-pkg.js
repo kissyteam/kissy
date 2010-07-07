@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 801 Jul 4 22:05
+build: 810 Jul 7 15:24
 */
 /**
  * @module  dom
@@ -102,13 +102,13 @@ KISSY.add('selector', function(S, undefined) {
                 error(selector);
             }
         }
+        // 传入的 selector 是 NodeList（包括 KISSY.Node/NodeList） 或已是 Array
+        else if (selector && (S.isArray(selector) || selector.item || selector.getDOMNode)) {
+            ret = selector;
+        }
         // 传入的 selector 是 Node
         else if (selector && selector.nodeType) {
             ret = [selector];
-        }
-        // 传入的 selector 是 NodeList 或已是 Array
-        else if (selector && (selector.item || S.isArray(selector))) {
-            ret = selector;
         }
         // 传入的 selector 是其它值时，返回空数组
 
@@ -397,9 +397,13 @@ KISSY.add('dom-class', function(S, undefined) {
                         elem.className = '';
                     }
                     else {
-                        var className = (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE), j = 0;
+                        var className = (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE), j = 0, needle;
                         for (; j < cl; j++) {
-                            className = className.replace(SPACE + classNames[j] + SPACE, SPACE);
+                            needle = SPACE + classNames[j] + SPACE;
+                            // 一个 cls 有可能多次出现：'link link2 link link3 link'
+                            while (className.indexOf(needle) >= 0) {
+                                className = className.replace(needle, SPACE);
+                            }
                         }
                         elem.className = S.trim(className);
                     }
@@ -634,6 +638,11 @@ KISSY.add('dom-attr', function(S, undefined) {
             // setter
             S.each(S.query(selector), function(el) {
                 if (nodeNameIs('select', el)) {
+                    // 强制转换数值为字符串，以保证下面的 inArray 正常工作
+                    if(S.isNumber(value)) {
+                        value += '';
+                    }
+
                     var vals = S.makeArray(value),
                         opts = el.options, opt;
 
@@ -708,6 +717,7 @@ KISSY.add('dom-style', function(S, undefined) {
         doc = document, docElem = doc.documentElement,
         STYLE = 'style', FLOAT = 'float',
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
+        WIDTH = 'width', HEIGHT = 'height',
         RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
         RE_DASH = /-([a-z])/ig,
         CAMELCASE_FN = function(all, letter) {
@@ -776,7 +786,7 @@ KISSY.add('dom-style', function(S, undefined) {
                 }
 
                 // ignore negative width and height values
-                if ((name === 'width' || name === 'height') && parseFloat(val) < 0) {
+                if ((name === WIDTH || name === HEIGHT) && parseFloat(val) < 0) {
                     return;
                 }
 
@@ -785,6 +795,36 @@ KISSY.add('dom-style', function(S, undefined) {
                         name.set ? name.set(elem, val) : (elem.style[name] = val);
                     }
                 });
+            }
+        },
+
+        /**
+         * Get the current computed width for the first element in the set of matched elements or
+         * set the CSS width of each element in the set of matched elements.
+         */
+        width: function(selector, value) {
+            // getter
+            if(value === undefined) {
+                return getWH(selector, WIDTH);
+            }
+            // setter
+            else {
+                DOM.css(selector, WIDTH, value);
+            }
+        },
+
+        /**
+         * Get the current computed height for the first element in the set of matched elements or
+         * set the CSS height of each element in the set of matched elements.
+         */
+        height: function(selector, value) {
+            // getter
+            if (value === undefined) {
+                return getWH(selector, HEIGHT);
+            }
+            // setter
+            else {
+                DOM.css(selector, HEIGHT, value);
             }
         },
 
@@ -818,6 +858,19 @@ KISSY.add('dom-style', function(S, undefined) {
     }
     else if(docElem[STYLE][STYLE_FLOAT] !== undefined) {
         CUSTOM_STYLES[FLOAT] = STYLE_FLOAT;
+    }
+
+    function getWH(selector, name) {
+        var elem = S.get(selector),
+            which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
+            val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
+
+        S.each(which, function(direction) {
+            val -= parseFloat(DOM._getComputedStyle(elem, 'padding' + direction)) || 0;
+            val -= parseFloat(DOM._getComputedStyle(elem, 'border' + direction + 'Width')) || 0;
+        });
+
+        return val;
     }
 });
 
@@ -1261,6 +1314,17 @@ KISSY.add('dom-create', function(S, undefined) {
                    }
                 });
             }
+        },
+
+        /**
+         * Remove the set of matched elements from the DOM.
+         */
+        remove: function(selector) {
+            S.each(S.query(selector), function(el) {
+                if (isElementNode(el) && el.parentNode) {
+                    el.parentNode.removeChild(el);
+                }
+            });
         }
     });
 

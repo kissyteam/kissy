@@ -39,6 +39,54 @@
 
                     <div class="member method">
                         <h4>
+                            <a name="method_width">width</a>
+                            <code>Number <em>width</em> ( selector )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>获取符合选择器的第一个元素的宽度值。</p>
+                            <p class="notice">该方法始终返回像素值。看例子：</p>
+<pre class="example-code"><code>
+&lt;div style="width: 100px;"&gt;
+    &lt;div id="test" style="width: 80%; height: 20px"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+var S = KISSY, DOM = S.DOM,
+    elem = S.get('#test');
+
+DOM.css(elem, 'width'); // 返回 80%
+DOM.css(elem, 'height'); // 返回 20px
+
+DOM.width(elem); // 返回 80
+DOM.height(elem); // 返回 20
+&lt;/script&gt;
+</code></pre>
+                        </div>
+                        <h4>
+                            <code>void <em>width</em> ( selector, value )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>给符合选择器的所有元素设置宽度值。等价为 <code>DOM.css(selector, 'width', value)</code></p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_height">height</a>
+                            <code>Number <em>height</em> ( selector )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>获取符合选择器的第一个元素的高度值。</p>
+                        </div>
+                        <h4>
+                            <code>void <em>height</em> ( selector, value )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>给符合选择器的所有元素设置高度值。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
                             <a name="method_addStyleSheet">addStyleSheet</a>
                             <code>void <em>addStyleSheet</em> ( cssText, id )</code>
                         </h4>
@@ -76,6 +124,8 @@
                     <h3>Methods</h3>
                     <ul>
                         <li><a href="#method_css">css</a></li>
+                        <li><a href="#method_width">width</a></li>
+                        <li><a href="#method_height">height</a></li>
                         <li><a href="#method_addStyleSheet">addStyleSheet</a></li>
                     </ul>
                 </div>

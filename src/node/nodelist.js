@@ -1,14 +1,10 @@
 /**
  * @module  nodelist
  * @author  lifesinger@gmail.com
- * @depends kissy, dom
  */
-
 KISSY.add('nodelist', function(S) {
 
-    var DOM = S.DOM,
-        push = Array.prototype.push,
-        NP = NodeList.prototype;
+    var AP = Array.prototype;
 
     /**
      * The NodeList class provides a wrapper for manipulating DOM NodeList.
@@ -20,18 +16,36 @@ KISSY.add('nodelist', function(S) {
         }
 
         // push nodes
-        push.apply(this, domNodes || []);
+        AP.push.apply(this, domNodes || []);
     }
 
-    S.mix(NP, {
+    S.mix(NodeList.prototype, {
 
         /**
-         * Ä¬ÈÏ³¤¶ÈÎª 0
+         * é»˜è®¤é•¿åº¦ä¸º 0
          */
         length: 0,
 
         /**
-         * Applies the given function to each Node in the NodeList. 
+         * Retrieves the Node instance at the given index
+         */
+        item: function(index) {
+            var ret = null;
+            if(DOM._isElementNode(this[index])) {
+                ret = new S.Node(this[index]);
+            }
+            return ret;
+        },
+
+        /**
+         * Retrieves the DOMNodes.
+         */
+        getDOMNodes: function() {
+            return AP.slice.call(this);
+        },
+
+        /**
+         * Applies the given function to each Node in the NodeList.
          * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
          * @param context An optional context to apply the function with Default context is the current Node instance
          */
@@ -57,12 +71,11 @@ KISSY.add('nodelist', function(S) {
  * Notes:
  *
  *  2010.04
- *   - each ·½·¨´«¸ø fn µÄ this, ÔÚ jQuery ÀïÖ¸ÏòÔ­Éú¶ÔÏó£¬ÕâÑù¿ÉÒÔ±ÜÃâĞÔÄÜÎÊÌâ¡£
- *     µ«´ÓÓÃ»§½Ç¶È½²£¬this µÄµÚÒ»Ö±¾õÊÇ $(this), kissy ºÍ yui3 ±£³ÖÒ»ÖÂ£¬ÎşÉü
- *     ĞÔÄÜ£¬Ò»ÇĞÒ×ÓÃÎªÊ×¡£
- *   - ÓĞÁË each ·½·¨£¬ËÆºõ²»ÔÙĞèÒª import ËùÓĞ dom ·½·¨£¬ÒâÒå²»´ó¡£
- *   - dom ÊÇµÍ¼¶ api, node ÊÇÖĞ¼¶ api, ÕâÊÇ·Ö²ãµÄÒ»¸öÔ­Òò¡£»¹ÓĞÒ»¸öÔ­ÒòÊÇ£¬Èç¹û
- *     Ö±½ÓÔÚ node ÀïÊµÏÖ dom ·½·¨£¬Ôò²»´óºÃ½« dom µÄ·½·¨ñîºÏµ½ nodelist Àï¡£¿É
- *     ÒÔËµ£¬¼¼Êõ³É±¾»áÖÆÔ¼ api Éè¼Æ¡£
- *
+ *   - each æ–¹æ³•ä¼ ç»™ fn çš„ this, åœ¨ jQuery é‡ŒæŒ‡å‘åŸç”Ÿå¯¹è±¡ï¼Œè¿™æ ·å¯ä»¥é¿å…æ€§èƒ½é—®é¢˜ã€‚
+ *     ä½†ä»ç”¨æˆ·è§’åº¦è®²ï¼Œthis çš„ç¬¬ä¸€ç›´è§‰æ˜¯ $(this), kissy å’Œ yui3 ä¿æŒä¸€è‡´ï¼Œç‰ºç‰²
+ *     æ€§èƒ½ï¼Œä»¥æ˜“ç”¨ä¸ºé¦–ã€‚
+ *   - æœ‰äº† each æ–¹æ³•ï¼Œä¼¼ä¹ä¸å†éœ€è¦ import æ‰€æœ‰ dom æ–¹æ³•ï¼Œæ„ä¹‰ä¸å¤§ã€‚
+ *   - dom æ˜¯ä½çº§ api, node æ˜¯ä¸­çº§ api, è¿™æ˜¯åˆ†å±‚çš„ä¸€ä¸ªåŸå› ã€‚è¿˜æœ‰ä¸€ä¸ªåŸå› æ˜¯ï¼Œå¦‚æœ
+ *     ç›´æ¥åœ¨ node é‡Œå®ç° dom æ–¹æ³•ï¼Œåˆ™ä¸å¤§å¥½å°† dom çš„æ–¹æ³•è€¦åˆåˆ° nodelist é‡Œã€‚å¯
+ *     ä»¥è¯´ï¼ŒæŠ€æœ¯æˆæœ¬ä¼šåˆ¶çº¦ api è®¾è®¡ã€‚
  */

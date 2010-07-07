@@ -64,6 +64,6 @@ KISSY.add('swf-ua', function(S) {
 /**
  * NOTES:
  *
- *  - getFlashVersion �����У����� new ActiveX �� try catch, �ȽϺķ����ܣ���Ҫ��һ�����Ժ��Ż���
+ *  - getFlashVersion 函数中，存在 new ActiveX 和 try catch, 比较耗费性能，需要进一步测试和优化。
  *
  */

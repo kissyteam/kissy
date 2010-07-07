@@ -8,6 +8,7 @@ KISSY.add('dom-style', function(S, undefined) {
         doc = document, docElem = doc.documentElement,
         STYLE = 'style', FLOAT = 'float',
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
+        WIDTH = 'width', HEIGHT = 'height',
         RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
         RE_DASH = /-([a-z])/ig,
         CAMELCASE_FN = function(all, letter) {
@@ -76,7 +77,7 @@ KISSY.add('dom-style', function(S, undefined) {
                 }
 
                 // ignore negative width and height values
-                if ((name === 'width' || name === 'height') && parseFloat(val) < 0) {
+                if ((name === WIDTH || name === HEIGHT) && parseFloat(val) < 0) {
                     return;
                 }
 
@@ -85,6 +86,36 @@ KISSY.add('dom-style', function(S, undefined) {
                         name.set ? name.set(elem, val) : (elem.style[name] = val);
                     }
                 });
+            }
+        },
+
+        /**
+         * Get the current computed width for the first element in the set of matched elements or
+         * set the CSS width of each element in the set of matched elements.
+         */
+        width: function(selector, value) {
+            // getter
+            if(value === undefined) {
+                return getWH(selector, WIDTH);
+            }
+            // setter
+            else {
+                DOM.css(selector, WIDTH, value);
+            }
+        },
+
+        /**
+         * Get the current computed height for the first element in the set of matched elements or
+         * set the CSS height of each element in the set of matched elements.
+         */
+        height: function(selector, value) {
+            // getter
+            if (value === undefined) {
+                return getWH(selector, HEIGHT);
+            }
+            // setter
+            else {
+                DOM.css(selector, HEIGHT, value);
             }
         },
 
@@ -118,6 +149,19 @@ KISSY.add('dom-style', function(S, undefined) {
     }
     else if(docElem[STYLE][STYLE_FLOAT] !== undefined) {
         CUSTOM_STYLES[FLOAT] = STYLE_FLOAT;
+    }
+
+    function getWH(selector, name) {
+        var elem = S.get(selector),
+            which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
+            val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
+
+        S.each(which, function(direction) {
+            val -= parseFloat(DOM._getComputedStyle(elem, 'padding' + direction)) || 0;
+            val -= parseFloat(DOM._getComputedStyle(elem, 'border' + direction + 'Width')) || 0;
+        });
+
+        return val;
     }
 });
 

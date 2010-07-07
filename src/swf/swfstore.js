@@ -52,14 +52,14 @@ KISSY.add('swfstore', function(S, undefined) {
             }
         };
 
-        // Èç¹ûÃ»ÓĞ´«Èë£¬¾Í×Ô¶¯Éú³É
+        // å¦‚æœæ²¡æœ‰ä¼ å…¥ï¼Œå°±è‡ªåŠ¨ç”Ÿæˆ
         if(!container) {
-            // ×¢£ºcontainer µÄ style ²»ÄÜÓĞ visibility:hidden or display: none, ·ñÔòÒì³£
+            // æ³¨ï¼šcontainer çš„ style ä¸èƒ½æœ‰ visibility:hidden or display: none, å¦åˆ™å¼‚å¸¸
             container = doc.body.appendChild(S.DOM.create('<div style="height:0;width:0;overflow:hidden"></div>'));
         }
         self.embeddedSWF = new S.SWF(container, swfUrl || 'swfstore.swf', params);
 
-        // ÈÃ flash fired events ÄÜÍ¨Öªµ½ swfstore
+        // è®© flash fired events èƒ½é€šçŸ¥åˆ° swfstore
         self.embeddedSWF._eventHandler = function(event) {
             S.SWF.prototype._eventHandler.call(self, event);
         }
@@ -80,20 +80,20 @@ KISSY.add('swfstore', function(S, undefined) {
          * @return {Boolean} Whether or not the save was successful
          */
         setItem: function(key, data) {
-            if (typeof data === 'string') { // ¿ìËÙÍ¨µÀ
+            if (typeof data === 'string') { // å¿«é€Ÿé€šé“
                 // double encode strings to prevent parsing error
                 // http://yuilibrary.com/projects/yui2/ticket/2528593
                 data = data.replace(/\\/g, '\\\\');
             } else {
-                data = S.JSON.stringify(data) + ''; // ±ÈÈç£ºstringify(undefined) = undefined, Ç¿ÖÆ×ª»»Îª×Ö·û´®
+                data = S.JSON.stringify(data) + ''; // æ¯”å¦‚ï¼šstringify(undefined) = undefined, å¼ºåˆ¶è½¬æ¢ä¸ºå­—ç¬¦ä¸²
             }
 
-            // µ± name Îª¿ÕÖµÊ±£¬Ä¿Ç°»á´¥·¢ swf µÄÄÚ²¿Òì³££¬´Ë´¦²»ÔÊĞí¿Õ¼üÖµ
+            // å½“ name ä¸ºç©ºå€¼æ—¶ï¼Œç›®å‰ä¼šè§¦å‘ swf çš„å†…éƒ¨å¼‚å¸¸ï¼Œæ­¤å¤„ä¸å…è®¸ç©ºé”®å€¼
             if ((key = S.trim(key + ''))) {
                 try {
                     return this.embeddedSWF.callSWF('setItem', [key, data]);
                 }
-                catch(e) { // µ± swf Òì³£Ê±£¬½øÒ»²½²¶»ñĞÅÏ¢
+                catch(e) { // å½“ swf å¼‚å¸¸æ—¶ï¼Œè¿›ä¸€æ­¥æ•è·ä¿¡æ¯
                     this.fire('error', { message: e });
                 }
             }
@@ -121,7 +121,7 @@ KISSY.add('swfstore', function(S, undefined) {
             try {
                 return this.embeddedSWF.callSWF(methodName, S.makeArray(arguments));
             }
-            catch(e) { // µ± swf Òì³£Ê±£¬½øÒ»²½²¶»ñĞÅÏ¢
+            catch(e) { // å½“ swf å¼‚å¸¸æ—¶ï¼Œè¿›ä¸€æ­¥æ•è·ä¿¡æ¯
                 this.fire('error', { message: e });
             }
         }
@@ -133,12 +133,12 @@ KISSY.add('swfstore', function(S, undefined) {
 /**
  * NOTES:
  *
- *  - [2010-04-09] yubo: È¥µô getTypeAt, getTypeOf, getShareData µÈÎŞÓÃºÍµ÷ÓÃ
- *     ¸ÅÂÊºÜĞ¡µÄ½Ó¿Ú£¬ÄşÔ¸ÉÙ¼¸¸ö½Ó¿Ú£¬Ò²²»ÎªÁË¹¦ÄÜ¶ø¹¦ÄÜ
+ *  - [2010-04-09] yubo: å»æ‰ getTypeAt, getTypeOf, getShareData ç­‰æ— ç”¨å’Œè°ƒç”¨
+ *     æ¦‚ç‡å¾ˆå°çš„æ¥å£ï¼Œå®æ„¿å°‘å‡ ä¸ªæ¥å£ï¼Œä¹Ÿä¸ä¸ºäº†åŠŸèƒ½è€ŒåŠŸèƒ½
  *
  * TODO:
- *   - ¹ã²¥¹¦ÄÜ£ºµ±Êı¾İÓĞ±ä»¯Ê±£¬×Ô¶¯Í¨Öª¸÷¸öÒ³Ãæ
- *   - Bug: shareData ¹Ø±ÕÊ±£¬Chrome ºÍ IE ÖØÆôºó£¬»áÇå¿ÕÊı¾İ¿â
- *   - Bug: µã»÷ Remove, µ± name ²»´æÔÚÊ±£¬»á½«×îºóÒ»ÌõÉ¾³ı
- *   - container µÄ overflow:hidden ÊÇ·ñÓĞ±ØÒª?
+ *   - å¹¿æ’­åŠŸèƒ½ï¼šå½“æ•°æ®æœ‰å˜åŒ–æ—¶ï¼Œè‡ªåŠ¨é€šçŸ¥å„ä¸ªé¡µé¢
+ *   - Bug: shareData å…³é—­æ—¶ï¼ŒChrome å’Œ IE é‡å¯åï¼Œä¼šæ¸…ç©ºæ•°æ®åº“
+ *   - Bug: ç‚¹å‡» Remove, å½“ name ä¸å­˜åœ¨æ—¶ï¼Œä¼šå°†æœ€åä¸€æ¡åˆ é™¤
+ *   - container çš„ overflow:hidden æ˜¯å¦æœ‰å¿…è¦?
  */

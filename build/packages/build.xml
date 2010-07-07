@@ -21,14 +21,15 @@
             <path path="../kissy/kissy-pkg.js"/>
             <path path="../dom/dom-pkg.js"/>
             <path path="../event/event-pkg.js"/>
+            <path path="../node/node-pkg.js"/>
+            <path path="../json/json.js"/>
+            <path path="../ajax/ajax.js"/>
+            <!--<path path="../anim/anim.js"/>-->
+            <path path="../cookie/cookie.js"/>
         </concat>
         <!-- ks-more: 常用 utils 和 widgets, 一般在页尾引入 -->
         <concat destfile="ks-more.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../cookie/cookie.js"/>
-            <path path="../json/json.js"/>
-            <path path="../ajax/ajax.js"/>
             <path path="../sizzle/sizzle.js"/>
-            <!--<path path="../node/node-pkg.js"/>-->
             <!--<path path="../swf/swf-pkg.js"/>-->
             <!--<path path="../datalazyload/datalazyload.js"/>-->
             <!--<path path="../suggest/suggest.js"/>-->

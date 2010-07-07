@@ -170,6 +170,11 @@ KISSY.add('dom-attr', function(S, undefined) {
             // setter
             S.each(S.query(selector), function(el) {
                 if (nodeNameIs('select', el)) {
+                    // 强制转换数值为字符串，以保证下面的 inArray 正常工作
+                    if(S.isNumber(value)) {
+                        value += '';
+                    }
+
                     var vals = S.makeArray(value),
                         opts = el.options, opt;
 

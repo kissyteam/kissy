@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf-8"/>
 <title>SWF Test</title>
 </head>
 <body>
@@ -90,14 +90,14 @@
     init_swfstore(S.Test);
     function init_swfstore(test) {
 
-        // ³õÊ¼»¯
+        // åˆå§‹åŒ–
         swfstore = new S.SWFStore();
         swfstore.on('contentReady', function() {
             test.echo('swfstore is ready!');
             updateList();
         });
 
-        // Êı¾İ¸üĞÂ£ºµ±Êı¾İÓĞ Ôö¼Ó¡¢É¾³ı¡¢ĞŞ¸Ä ²Ù×÷Ê±£¬¶¼»á´¥·¢ save ÊÂ¼ş
+        // æ•°æ®æ›´æ–°ï¼šå½“æ•°æ®æœ‰ å¢åŠ ã€åˆ é™¤ã€ä¿®æ”¹ æ“ä½œæ—¶ï¼Œéƒ½ä¼šè§¦å‘ save äº‹ä»¶
         swfstore.on('save', updateList);
         var dataList = S.get('#data-list'), items, i, len, html;
         function updateList(event) {
@@ -128,7 +128,7 @@
             }
         }
 
-        // ²Ù×÷°´Å¥
+        // æ“ä½œæŒ‰é’®
         var nameEl = S.get('#nameField'),
             valEl = S.get('#valueField'),
             indexEl = S.get('#indexField');
@@ -140,9 +140,9 @@
         Event.on('#settings-button', 'click', function() { swfstore.displaySettings(); });
         Event.on('#calcSize-button', 'click', function() { test.echo('currentSize = ' + swfstore.calculateCurrentSize() + ' KB'); });
 
-        // ÊÂ¼ş¼àÌı
+        // äº‹ä»¶ç›‘å¬
         swfstore.on('clear', function() {
-            // Êµ¼ÊÖ¤Ã÷¸ÃÊÂ¼ş²»»á´¥·¢£¬¿ÉÒÔÍ¨¹ı save ÊÂ¼ş¼àÌı( info === undefined )
+            // å®é™…è¯æ˜è¯¥äº‹ä»¶ä¸ä¼šè§¦å‘ï¼Œå¯ä»¥é€šè¿‡ save äº‹ä»¶ç›‘å¬( info === undefined )
         });
         swfstore.on('error', function(event) {
             dump(event);
@@ -187,7 +187,7 @@
         if(S.JSON.parse(swfstore.getValueOf('name1')).p1 !== 'v1') test.fail();
         //if(swfstore.getTypeOf('name4') !== 'string') test.fail();
 
-        // getTypeAt, getTypeOf Ê¼ÖÕ·µ»Ø 'string', ÕâÁ½¸ö·½·¨ÒâÒå²»´ó
+        // getTypeAt, getTypeOf å§‹ç»ˆè¿”å› 'string', è¿™ä¸¤ä¸ªæ–¹æ³•æ„ä¹‰ä¸å¤§
     }
 
     function test_remove(test) {
@@ -205,7 +205,7 @@
         swfstore.removeItemAt(1);
 
         if(swfstore.getLength() !== 3) test.fail();
-        if(swfstore.getValueAt(2) !== 'val4') test.fail();        
+        if(swfstore.getValueAt(2) !== 'val4') test.fail();
     }
 
     function test_misc(test) {

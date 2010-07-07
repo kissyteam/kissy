@@ -2,11 +2,9 @@
  * @module  node
  * @author  lifesinger@gmail.com
  */
-
 KISSY.add('node', function(S) {
 
-    var DOM = S.DOM,
-        NP = Node.prototype;
+    var DOM = S.DOM;
 
     /**
      * The Node class provides a wrapper for manipulating DOM Node.
@@ -25,99 +23,28 @@ KISSY.add('node', function(S) {
         }
 
         // handle Node(HTMLElement)
-        if (html.nodeType) {
+        if (DOM._isElementNode(html)) {
             domNode = html;
         }
         else if (typeof html === 'string') {
-            domNode = DOM.create(html, ownerDocument);
-        }
-
-        if (props) {
-            S.error('not implemented'); // TODO
+            domNode = DOM.create(html, props, ownerDocument);
         }
 
         self[0] = domNode;
     }
 
-    // import dom methods
-    S.each(['attr', 'removeAttr', 'css'],
-        function(methodName) {
-            NP[methodName] = function(name, val) {
-                var domNode = this[0];
-                if(val === undefined) {
-                    return DOM[methodName](domNode, name);
-                } else {
-                    DOM[methodName](domNode, name, val);
-                    return this;
-                }
-            }
-        });
-
-    S.each(['val', 'text', 'html'],
-            function(methodName) {
-                NP[methodName] = function(val) {
-                    var domNode = this[0];
-                    if(val === undefined) {
-                        return DOM[methodName](domNode);
-                    } else {
-                        DOM[methodName](domNode, val);
-                        return this;
-                    }
-                }
-            });
-
-    S.each(['children', 'siblings', 'next', 'prev', 'parent'],
-        function(methodName) {
-            NP[methodName] = function() {
-                var ret = DOM[methodName](this[0]);
-                return ret ? new S[ret.length ? 'NodeList' : 'Node'](ret) : null;
-            }
-        });
-
-    S.each(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'],
-        function(methodName) {
-            NP[methodName] = function() {
-                var ret = DOM[methodName].apply(DOM, [this[0]].concat(S.makeArray(arguments)));
-                // Ö»ÓÐ hasClass ÓÐ·µ»ØÖµ
-                return typeof ret === 'boolean' ? ret : this;
-            }
-        });
-
-    // import event methods
-    S.mix(NP, S.EventTarget);
-    NP._addEvent = function(type, handle) {
-        S.Event._simpleAdd(this[0], type, handle);
-    };
-    NP._removeEvent = function(type, handle) {
-        S.Event._simpleRemove(this[0], type, handle);
-    };
-    delete NP.fire;    
-
-    // add more methods
-    S.mix(NP, {
+    S.augment(Node, {
 
         /**
-         * Retrieves a node based on the given CSS selector.
+         * é•¿åº¦ä¸º 1
          */
-        one: function(selector) {
-            return S.one(selector, this[0]);
-        },
+        length: 1,
 
         /**
-         * Retrieves a nodeList based on the given CSS selector.
+         * Retrieves the DOMNode.
          */
-        all: function(selector) {
-            return S.all(selector, this[0]);
-        },
-
-        /**
-         * Insert the element to the end of the parent.
-         */
-        appendTo: function(parent) {
-            if((parent = S.get(parent)) && parent.appendChild) {
-                parent.appendChild(this[0]);
-            }
-            return this;
+        getDOMNode: function() {
+            return this[0];
         }
     });
 
@@ -128,8 +55,3 @@ KISSY.add('node', function(S) {
 
     S.Node = Node;
 });
-
-/**
- * TODO:
- *   - append/appendTo, insertBefore/insertAfter, after/before µÈ²Ù×÷µÄÊµÏÖºÍ²âÊÔ
- */

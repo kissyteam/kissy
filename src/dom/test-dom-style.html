@@ -31,6 +31,14 @@
 
 <div id="test-data">
     <div id="test-div" style="padding-left: 2pt; background: transparent; float: left; border: 5px solid rgba(0,0,0,.201);"></div>
+    <style>
+        #test2 {
+            border: 1px solid #ccc;
+            width: 80%;
+            height: 20px;
+        }
+    </style>
+    <div id="test2"></div>
     <img id="test-img" src="../../assets/kissy.png" alt="kissy" />
     <table id="test-table" cellspacing="10">
         <tbody>
@@ -68,6 +76,10 @@
 
         if(DOM.css(elem, 'opacity') !== '1') test.fail();
 
+        // 当返回 auto 时，要将 auto 转换为 pixel
+        if(DOM.css('#test-div', 'height') != '0px') test.fail();
+
+
         // setter
         try {
             DOM.css(elem, 'height', '-20px');
@@ -95,11 +107,23 @@
         if(DOM.css(elem, 'opacity') !== '0.8') test.fail();
     }
 
+    function test_width(test) {
+        var elem = S.get('#test2');
+
+        if(DOM.width(elem) !== $(elem).width()) test.fail();
+    }
+
+    function test_height(test) {
+        var elem = S.get('#test2');
+
+        if(DOM.height(elem) !== $(elem).height()) test.fail();
+    }
+
     function test_addStyleSheet(test) {
         DOM.addStyleSheet('#test-div { padding: 100px; color: blue }');
-        if(UA.ie) if(DOM.css('#test-div', 'color') !== 'blue') test.fail();
-        if(UA.opera) if(DOM.css('#test-div', 'color') !== '#0000ff') test.fail();
-        if(!UA.ie && !UA.opera) if(DOM.css('#test-div', 'color') !== 'rgb(0, 0, 255)') test.fail();
+        if (UA.ie) if (DOM.css('#test-div', 'color') !== 'blue') test.fail();
+        if (UA.opera) if (DOM.css('#test-div', 'color') !== '#0000ff') test.fail();
+        if (!UA.ie && !UA.opera) if (DOM.css('#test-div', 'color') !== 'rgb(0, 0, 255)') test.fail();
     }
 
     // temp code
@@ -116,6 +140,18 @@
     //alert(DOM.css(t, 'height'));
     //alert(jQuery(t).css('height'));
     //alert(Ext.get(t).getStyle('height'));
+
+    // 测试百分比
+    YUI().use('node', function(Y) {
+        t = S.get('#test2');
+
+        // 都返回 80%
+        //alert(t.style.width);
+        //alert(DOM.css(t, 'width'));
+        //alert(jQuery(t).css('width'));
+        //alert(Ext.get(t).getStyle('width'));
+        //alert(Y.one(t).getStyle('width'));
+    });
 
 </script>
 

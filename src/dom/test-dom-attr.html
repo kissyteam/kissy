@@ -202,6 +202,11 @@
         if(DOM.val(select) != 3) test.fail();
         DOM.val(select, 0); // restore
 
+        // select set value
+        DOM.val(select, 3);
+        if(DOM.val(select) != 3) test.fail();
+        DOM.val(select, 0); // restore
+
         DOM.val(select3, ['2','3']);
         if(DOM.val(select3).length != 2) test.fail();
     }

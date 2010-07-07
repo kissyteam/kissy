@@ -62,9 +62,13 @@ KISSY.add('dom-class', function(S, undefined) {
                         elem.className = '';
                     }
                     else {
-                        var className = (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE), j = 0;
+                        var className = (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE), j = 0, needle;
                         for (; j < cl; j++) {
-                            className = className.replace(SPACE + classNames[j] + SPACE, SPACE);
+                            needle = SPACE + classNames[j] + SPACE;
+                            // 一个 cls 有可能多次出现：'link link2 link link3 link'
+                            while (className.indexOf(needle) >= 0) {
+                                className = className.replace(needle, SPACE);
+                            }
                         }
                         elem.className = S.trim(className);
                     }
