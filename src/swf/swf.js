@@ -5,15 +5,15 @@
 KISSY.add('swf', function(S) {
 
     var UA = S.UA,
-        uid = S.now(),
+            uid = S.now(),
 
-        VERSION = 10.22,
-        CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
-        TYPE = 'application/x-shockwave-flash',
-        EXPRESS_INSTALL_URL = 'http://fpdownload.macromedia.com/pub/flashplayer/update/current/swf/autoUpdater.swf?' + uid,
-        EVENT_HANDLER = 'KISSY.SWF.eventHandler',
+            VERSION = 10.22,
+            CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
+            TYPE = 'application/x-shockwave-flash',
+            EXPRESS_INSTALL_URL = 'http://fpdownload.macromedia.com/pub/flashplayer/update/current/swf/autoUpdater.swf?' + uid,
+            EVENT_HANDLER = 'KISSY.SWF.eventHandler',
 
-        possibleAttributes = {align:'', allowNetworking:'', allowScriptAccess:'', base:'', bgcolor:'', menu:'', name:'', quality:'', salign:'', scale:'', tabindex:'', wmode:''};
+            possibleAttributes = {align:'', allowNetworking:'', allowScriptAccess:'', base:'', bgcolor:'', menu:'', name:'', quality:'', salign:'', scale:'', tabindex:'', wmode:''};
 
 
     /**
@@ -27,15 +27,15 @@ KISSY.add('swf', function(S) {
      */
     function SWF(el, swfUrl, params) {
         var self = this,
-            id = 'ks-swf-' + uid++,
-            flashVersion = parseFloat(params.version) || VERSION,
-            isFlashVersionRight = UA.flash >= flashVersion,
-            canExpressInstall = UA.flash >= 8.0,
-            shouldExpressInstall = canExpressInstall && params.useExpressInstall && !isFlashVersionRight,
-            flashUrl = (shouldExpressInstall) ? EXPRESS_INSTALL_URL : swfUrl,
+                id = 'ks-swf-' + uid++,
+                flashVersion = parseFloat(params.version) || VERSION,
+                isFlashVersionRight = UA.flash >= flashVersion,
+                canExpressInstall = UA.flash >= 8.0,
+                shouldExpressInstall = canExpressInstall && params.useExpressInstall && !isFlashVersionRight,
+                flashUrl = (shouldExpressInstall) ? EXPRESS_INSTALL_URL : swfUrl,
             // TODO: rename
-            flashvars = 'YUISwfId=' + id + '&YUIBridgeCallback=' + EVENT_HANDLER,
-            ret = '<object ';
+                flashvars = 'YUISwfId=' + id + '&YUIBridgeCallback=' + EVENT_HANDLER,
+                ret = '<object ';
 
         self.id = id;
         SWF.instances[id] = self;
@@ -95,11 +95,11 @@ KISSY.add('swf', function(S) {
 
         _eventHandler: function(event) {
             var self = this,
-                type = event.type;
+                    type = event.type;
 
             if (type === 'log') {
                 S.log(event.message);
-            } else if(type) {
+            } else if (type) {
                 self.fire(type, event);
             }
         },
@@ -111,9 +111,25 @@ KISSY.add('swf', function(S) {
          */
         callSWF: function (func, args) {
             var self = this;
-            if (self.swf[func]) {
-                return self.swf[func].apply(self.swf, args || []);
+            try {
+                if (self.swf[func]) {
+                    return self.swf[func].apply(self.swf, args || []);
+                }
+                //some version flash function is odd in ie :对象不支持此属性或方法   
+            } catch(e) {               
+                var arg_str = "";
+                if (args && args.length > 0) {
+                    for (var i = 0; i < args.length; i++) {
+                        var arg = args[i];
+                        if (typeof arg == "string")
+                            arg_str += ",'" + arg + "'"
+                    }
+                    arg_str = arg_str.substring(1);
+                }
+                return eval("self.swf." + func + "(" + arg_str + ")");
             }
+
+
         }
     });
 
