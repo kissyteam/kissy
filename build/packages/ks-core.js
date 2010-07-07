@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 808 Jul 7 10:12
+build: 811 Jul 7 23:02
 */
 /**
  * @module kissy
@@ -852,7 +852,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 808 Jul 7 10:12
+build: 811 Jul 7 23:02
 */
 /**
  * @module  dom
@@ -953,13 +953,13 @@ KISSY.add('selector', function(S, undefined) {
                 error(selector);
             }
         }
+        // 传入的 selector 是 NodeList（包括 KISSY.Node/NodeList） 或已是 Array
+        else if (selector && (S.isArray(selector) || selector.item || selector.getDOMNode)) {
+            ret = selector;
+        }
         // 传入的 selector 是 Node
         else if (selector && selector.nodeType) {
             ret = [selector];
-        }
-        // 传入的 selector 是 NodeList 或已是 Array
-        else if (selector && (selector.item || S.isArray(selector))) {
-            ret = selector;
         }
         // 传入的 selector 是其它值时，返回空数组
 
@@ -1248,9 +1248,13 @@ KISSY.add('dom-class', function(S, undefined) {
                         elem.className = '';
                     }
                     else {
-                        var className = (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE), j = 0;
+                        var className = (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE), j = 0, needle;
                         for (; j < cl; j++) {
-                            className = className.replace(SPACE + classNames[j] + SPACE, SPACE);
+                            needle = SPACE + classNames[j] + SPACE;
+                            // 一个 cls 有可能多次出现：'link link2 link link3 link'
+                            while (className.indexOf(needle) >= 0) {
+                                className = className.replace(needle, SPACE);
+                            }
                         }
                         elem.className = S.trim(className);
                     }
@@ -1485,6 +1489,11 @@ KISSY.add('dom-attr', function(S, undefined) {
             // setter
             S.each(S.query(selector), function(el) {
                 if (nodeNameIs('select', el)) {
+                    // 强制转换数值为字符串，以保证下面的 inArray 正常工作
+                    if(S.isNumber(value)) {
+                        value += '';
+                    }
+
                     var vals = S.makeArray(value),
                         opts = el.options, opt;
 
@@ -1559,6 +1568,7 @@ KISSY.add('dom-style', function(S, undefined) {
         doc = document, docElem = doc.documentElement,
         STYLE = 'style', FLOAT = 'float',
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
+        WIDTH = 'width', HEIGHT = 'height',
         RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
         RE_DASH = /-([a-z])/ig,
         CAMELCASE_FN = function(all, letter) {
@@ -1627,7 +1637,7 @@ KISSY.add('dom-style', function(S, undefined) {
                 }
 
                 // ignore negative width and height values
-                if ((name === 'width' || name === 'height') && parseFloat(val) < 0) {
+                if ((name === WIDTH || name === HEIGHT) && parseFloat(val) < 0) {
                     return;
                 }
 
@@ -1636,6 +1646,36 @@ KISSY.add('dom-style', function(S, undefined) {
                         name.set ? name.set(elem, val) : (elem.style[name] = val);
                     }
                 });
+            }
+        },
+
+        /**
+         * Get the current computed width for the first element in the set of matched elements or
+         * set the CSS width of each element in the set of matched elements.
+         */
+        width: function(selector, value) {
+            // getter
+            if(value === undefined) {
+                return getWH(selector, WIDTH);
+            }
+            // setter
+            else {
+                DOM.css(selector, WIDTH, value);
+            }
+        },
+
+        /**
+         * Get the current computed height for the first element in the set of matched elements or
+         * set the CSS height of each element in the set of matched elements.
+         */
+        height: function(selector, value) {
+            // getter
+            if (value === undefined) {
+                return getWH(selector, HEIGHT);
+            }
+            // setter
+            else {
+                DOM.css(selector, HEIGHT, value);
             }
         },
 
@@ -1669,6 +1709,19 @@ KISSY.add('dom-style', function(S, undefined) {
     }
     else if(docElem[STYLE][STYLE_FLOAT] !== undefined) {
         CUSTOM_STYLES[FLOAT] = STYLE_FLOAT;
+    }
+
+    function getWH(selector, name) {
+        var elem = S.get(selector),
+            which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
+            val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
+
+        S.each(which, function(direction) {
+            val -= parseFloat(DOM._getComputedStyle(elem, 'padding' + direction)) || 0;
+            val -= parseFloat(DOM._getComputedStyle(elem, 'border' + direction + 'Width')) || 0;
+        });
+
+        return val;
     }
 });
 
@@ -2112,6 +2165,17 @@ KISSY.add('dom-create', function(S, undefined) {
                    }
                 });
             }
+        },
+
+        /**
+         * Remove the set of matched elements from the DOM.
+         */
+        remove: function(selector) {
+            S.each(S.query(selector), function(el) {
+                if (isElementNode(el) && el.parentNode) {
+                    el.parentNode.removeChild(el);
+                }
+            });
         }
     });
 
@@ -2211,6 +2275,7 @@ KISSY.add('dom-create', function(S, undefined) {
  *  - 研究 jQuery 的 buildFragment 和 clean
  *  - 增加 cache, 完善 test cases
  *  - 支持更多 props
+ *  - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
  */
 /**
  * @module  dom-insertion
@@ -2270,7 +2335,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 808 Jul 7 10:12
+build: 811 Jul 7 23:02
 */
 /**
  * @module  event
@@ -2279,34 +2344,34 @@ build: 808 Jul 7 10:12
 KISSY.add('event', function(S, undefined) {
 
     var win = window, doc = document,
-            simpleAdd = doc.addEventListener ?
-                    function(el, type, fn, capture) {
-                        if (el.addEventListener) {
-                            //boolean capture is better
-                            el.addEventListener(type, fn, !!capture);
-                        }
-                    } :
-                    function(el, type, fn) {
-                        if (el.attachEvent) {
-                            el.attachEvent('on' + type, fn);
-                        }
-                    },
-            simpleRemove = doc.removeEventListener ?
-                    function(el, type, fn, capture) {
-                        if (el.removeEventListener) {
-                            el.removeEventListener(type, fn, !!capture);
-                        }
-                    } :
-                    function(el, type, fn) {
-                        if (el.detachEvent) {
-                            el.detachEvent('on' + type, fn);
-                        }
-                    },
-            EVENT_GUID = 'ksEventTargetId',
-            SPACE = ' ',
-            guid = S.now(),
+        simpleAdd = doc.addEventListener ?
+            function(el, type, fn, capture) {
+                if (el.addEventListener) {
+                    //boolean capture is better
+                    el.addEventListener(type, fn, !!capture);
+                }
+            } :
+            function(el, type, fn) {
+                if (el.attachEvent) {
+                    el.attachEvent('on' + type, fn);
+                }
+            },
+        simpleRemove = doc.removeEventListener ?
+            function(el, type, fn, capture) {
+                if (el.removeEventListener) {
+                    el.removeEventListener(type, fn, !!capture);
+                }
+            } :
+            function(el, type, fn) {
+                if (el.detachEvent) {
+                    el.detachEvent('on' + type, fn);
+                }
+            },
+        EVENT_GUID = 'ksEventTargetId',
+        SPACE = ' ',
+        guid = S.now(),
         // { id: { target: el, events: { type: { handle: obj, listeners: [...] } } }, ... }
-            cache = { };
+        cache = { };
 
     var Event = {
 
@@ -2326,7 +2391,7 @@ KISSY.add('event', function(S, undefined) {
             if (batch('add', target, type, fn, scope)) return;
 
             var id = getID(target),
-                    special, events, eventHandle;
+                special, events, eventHandle;
 
             // 不是有效的 target 或 参数不对
             if (id === -1 || !type || !S.isFunction(fn)) return;
@@ -2384,8 +2449,8 @@ KISSY.add('event', function(S, undefined) {
             if (batch('remove', target, type, fn)) return;
 
             var id = getID(target),
-                    events, eventsType, listeners,
-                    i, len, c, t;
+                events, eventsType, listeners,
+                i, len, c, t;
 
             if (id === -1) return; // 不是有效的 target
             if (!id || !(c = cache[id])) return; // 无 cache
@@ -2440,7 +2505,7 @@ KISSY.add('event', function(S, undefined) {
                 // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡
                 // 目前没有实现自定义事件对象的冒泡，因此 return false 和 stopImmediatePropagation 效果是一样的
                 if ((ret === false && target.isCustomEventTarget) ||
-                        event.isImmediatePropagationStopped) {
+                    event.isImmediatePropagationStopped) {
                     break;
                 }
             }
@@ -2536,7 +2601,6 @@ KISSY.add('event', function(S, undefined) {
 
 /**
  * TODO:
- *   - 研究 jq 的 expando cache 方式
  *   - event || window.event, 什么情况下取 window.event ? IE4 ?
  *   - 更详尽细致的 test cases
  *   - 内存泄漏测试
@@ -2842,4 +2906,772 @@ KISSY.add('event-focusin', function(S) {
 /**
  * NOTES:
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
+ */
+/*
+Copyright 2010, KISSY UI Library v1.0.8
+MIT Licensed
+build: 811 Jul 7 23:02
+*/
+/**
+ * @module  node
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('node', function(S) {
+
+    var DOM = S.DOM;
+
+    /**
+     * The Node class provides a wrapper for manipulating DOM Node.
+     */
+    function Node(html, props, ownerDocument) {
+        var self = this, domNode;
+
+        // factory or constructor
+        if (!(self instanceof Node)) {
+            return new Node(html, props, ownerDocument);
+        }
+
+        // handle Node(''), Node(null), or Node(undefined)
+        if (!html) {
+            return null;
+        }
+
+        // handle Node(HTMLElement)
+        if (DOM._isElementNode(html)) {
+            domNode = html;
+        }
+        else if (typeof html === 'string') {
+            domNode = DOM.create(html, props, ownerDocument);
+        }
+
+        self[0] = domNode;
+    }
+
+    S.augment(Node, {
+
+        /**
+         * 长度为 1
+         */
+        length: 1,
+
+        /**
+         * Retrieves the DOMNode.
+         */
+        getDOMNode: function() {
+            return this[0];
+        }
+    });
+
+    // query api
+    S.one = function(selector, context) {
+        return new Node(S.get(selector, context));
+    };
+
+    S.Node = Node;
+});
+/**
+ * @module  nodelist
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('nodelist', function(S) {
+
+    var DOM = S.DOM,
+        AP = Array.prototype;
+
+    /**
+     * The NodeList class provides a wrapper for manipulating DOM NodeList.
+     */
+    function NodeList(domNodes) {
+        // factory or constructor
+        if (!(this instanceof NodeList)) {
+            return new NodeList(domNodes);
+        }
+
+        // push nodes
+        AP.push.apply(this, domNodes || []);
+    }
+
+    S.mix(NodeList.prototype, {
+
+        /**
+         * 默认长度为 0
+         */
+        length: 0,
+
+        /**
+         * Retrieves the Node instance at the given index
+         */
+        item: function(index) {
+            var ret = null;
+            if(DOM._isElementNode(this[index])) {
+                ret = new S.Node(this[index]);
+            }
+            return ret;
+        },
+
+        /**
+         * Retrieves the DOMNodes.
+         */
+        getDOMNodes: function() {
+            return AP.slice.call(this);
+        },
+
+        /**
+         * Applies the given function to each Node in the NodeList.
+         * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
+         * @param context An optional context to apply the function with Default context is the current Node instance
+         */
+        each: function(fn, context) {
+            var len = this.length, i = 0, node;
+            for (; i < len; ++i) {
+                node = new S.Node(this[i]);
+                fn.call(context || node, node, i, this);
+            }
+            return this;
+        }
+    });
+
+    // query api
+    S.all = function(selector, context) {
+        return new NodeList(S.query(selector, context, true));
+    };
+
+    S.NodeList = NodeList;
+});
+
+/**
+ * Notes:
+ *
+ *  2010.04
+ *   - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。
+ *     但从用户角度讲，this 的第一直觉是 $(this), kissy 和 yui3 保持一致，牺牲
+ *     性能，以易用为首。
+ *   - 有了 each 方法，似乎不再需要 import 所有 dom 方法，意义不大。
+ *   - dom 是低级 api, node 是中级 api, 这是分层的一个原因。还有一个原因是，如果
+ *     直接在 node 里实现 dom 方法，则不大好将 dom 的方法耦合到 nodelist 里。可
+ *     以说，技术成本会制约 api 设计。
+ */
+/**
+ * @module  node-attach
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('node-attach', function(S, undefined) {
+
+    var DOM = S.DOM, Event = S.Event,
+        NP = S.Node.prototype,
+        NLP = S.NodeList.prototype,
+        GET_DOM_NODE = 'getDOMNode',
+        GET_DOM_NODES = GET_DOM_NODE + 's',
+        HAS_NAME = 1,
+        ONLY_VAL = 2,
+        ALWAYS_NODE = 4;
+
+    function attach(methodNames, type) {
+        S.each(methodNames, function(methodName) {
+            S.each([NP, NLP], function(P, isNodeList) {
+
+                P[methodName] = (function(fn) {
+                    switch (type) {
+                        // fn(selector, name, value): attr, css etc.
+                        case HAS_NAME:
+                            return function(name, val) {
+                                var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE]();
+                                if (val === undefined) {
+                                    return fn(elems, name);
+                                } else {
+                                    fn(elems, name, val);
+                                    return this;
+                                }
+                            };
+
+                        // fn(selector, value): text, html, val etc.
+                        case ONLY_VAL:
+                            return function(val) {
+                                var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE]();
+                                if (val === undefined) {
+                                    return fn(elems);
+                                } else {
+                                    fn(elems, val);
+                                    return this;
+                                }
+                            };
+
+                        // parent, next 等返回 Node/NodeList 的方法
+                        case ALWAYS_NODE:
+                            return function() {
+                                var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
+                                    ret = fn.apply(DOM, [elems].concat(S.makeArray(arguments)));
+                                return ret ? new S[ret.length ? 'NodeList' : 'Node'](ret) : null;
+                            };
+
+                        default:
+                            return function() {
+                                // 有非 undefined 返回值时，直接 return 返回值；没返回值时，return this, 以支持链式调用。
+                                var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
+                                    ret = fn.apply(DOM, [elems].concat(S.makeArray(arguments)));
+                                return ret === undefined ? this : ret;
+                            };
+                    }
+                })(DOM[methodName]);
+            });
+        });
+    }
+
+    // selector
+    S.mix(NP, {
+        /**
+         * Retrieves a node based on the given CSS selector.
+         */
+        one: function(selector) {
+            return S.one(selector, this[0]);
+        },
+
+        /**
+         * Retrieves a nodeList based on the given CSS selector.
+         */
+        all: function(selector) {
+            return S.all(selector, this[0]);
+        }
+    });
+
+    // dom-class
+    attach(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass']);
+
+    // dom-attr
+    attach(['attr', 'removeAttr'], HAS_NAME);
+    attach(['val', 'text'], ONLY_VAL);
+
+    // dom-style
+    attach(['css'], HAS_NAME);
+    attach(['width', 'height'], ONLY_VAL);
+
+    // dom-offset
+    attach(['offset'], ONLY_VAL);
+
+    // dom-traversal
+    attach(['parent', 'next', 'prev', 'siblings', 'children'], ALWAYS_NODE);
+    attach(['contains']);
+
+    // dom-create
+    attach(['html'], ONLY_VAL);
+    attach(['remove']);
+
+    // dom-insertion
+    attach(['insertBefore', 'insertAfter'], ALWAYS_NODE);
+    S.mix(NP, {
+        /**
+         *  Insert content to the end of the node.
+         */
+        append: function(html) {
+            if ((html = DOM.create(html))) {
+                this[0].appendChild(html);
+            }
+            return this;
+        },
+
+        /**
+         * Insert the element to the end of the parent.
+         */
+        appendTo: function(parent) {
+            if ((parent = S.get(parent)) && parent.appendChild) {
+                parent.appendChild(this[0]);
+            }
+            return this;
+        }
+    });
+
+
+    // event-target
+    S.each([NP, NLP], function(P) {
+        S.mix(P, S.EventTarget);
+        P._addEvent = function(type, handle) {
+            for (var i = 0, len = this.length; i < len; i++) {
+                Event._simpleAdd(this[i], type, handle);
+            }
+        };
+        P._removeEvent = function(type, handle) {
+            for (var i = 0, len = this.length; i < len; i++) {
+                Event._simpleRemove(this[i], type, handle);
+            }
+        };
+        delete P.fire;
+    });
+});
+/*
+Copyright 2010, KISSY UI Library v1.0.8
+MIT Licensed
+build: 811 Jul 7 23:03
+*/
+/**
+ * from http://www.JSON.org/json2.js
+ * 2010-03-20
+ */
+
+KISSY.add('json', function (S) {
+
+    var JSON = S.JSON = window.JSON || { };
+
+    function f(n) {
+        // Format integers to have at least two digits.
+        return n < 10 ? '0' + n : n;
+    }
+
+    if (typeof Date.prototype.toJSON !== 'function') {
+
+        Date.prototype.toJSON = function (key) {
+
+            return isFinite(this.valueOf()) ?
+                   this.getUTCFullYear() + '-' +
+                   f(this.getUTCMonth() + 1) + '-' +
+                   f(this.getUTCDate()) + 'T' +
+                   f(this.getUTCHours()) + ':' +
+                   f(this.getUTCMinutes()) + ':' +
+                   f(this.getUTCSeconds()) + 'Z' : null;
+        };
+
+        String.prototype.toJSON =
+        Number.prototype.toJSON =
+        Boolean.prototype.toJSON = function (key) {
+            return this.valueOf();
+        };
+    }
+
+    var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+        escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+        gap,
+        indent,
+        meta = {    // table of character substitutions
+            '\b': '\\b',
+            '\t': '\\t',
+            '\n': '\\n',
+            '\f': '\\f',
+            '\r': '\\r',
+            '"' : '\\"',
+            '\\': '\\\\'
+        },
+        rep;
+
+
+    function quote(string) {
+
+        // If the string contains no control characters, no quote characters, and no
+        // backslash characters, then we can safely slap some quotes around it.
+        // Otherwise we must also replace the offending characters with safe escape
+        // sequences.
+
+        escapable.lastIndex = 0;
+        return escapable.test(string) ?
+               '"' + string.replace(escapable, function (a) {
+                   var c = meta[a];
+                   return typeof c === 'string' ? c :
+                          '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+               }) + '"' :
+               '"' + string + '"';
+    }
+
+
+    function str(key, holder) {
+
+        // Produce a string from holder[key].
+
+        var i,          // The loop counter.
+            k,          // The member key.
+            v,          // The member value.
+            length,
+            mind = gap,
+            partial,
+            value = holder[key];
+
+        // If the value has a toJSON method, call it to obtain a replacement value.
+
+        if (value && typeof value === 'object' &&
+            typeof value.toJSON === 'function') {
+            value = value.toJSON(key);
+        }
+
+        // If we were called with a replacer function, then call the replacer to
+        // obtain a replacement value.
+
+        if (typeof rep === 'function') {
+            value = rep.call(holder, key, value);
+        }
+
+        // What happens next depends on the value's type.
+
+        switch (typeof value) {
+            case 'string':
+                return quote(value);
+
+            case 'number':
+
+                // JSON numbers must be finite. Encode non-finite numbers as null.
+
+                return isFinite(value) ? String(value) : 'null';
+
+            case 'boolean':
+            case 'null':
+
+                // If the value is a boolean or null, convert it to a string. Note:
+                // typeof null does not produce 'null'. The case is included here in
+                // the remote chance that this gets fixed someday.
+
+                return String(value);
+
+            // If the type is 'object', we might be dealing with an object or an array or
+            // null.
+
+            case 'object':
+
+                // Due to a specification blunder in ECMAScript, typeof null is 'object',
+                // so watch out for that case.
+
+                if (!value) {
+                    return 'null';
+                }
+
+                // Make an array to hold the partial results of stringifying this object value.
+
+                gap += indent;
+                partial = [];
+
+                // Is the value an array?
+
+                if (Object.prototype.toString.apply(value) === '[object Array]') {
+
+                    // The value is an array. Stringify every element. Use null as a placeholder
+                    // for non-JSON values.
+
+                    length = value.length;
+                    for (i = 0; i < length; i += 1) {
+                        partial[i] = str(i, value) || 'null';
+                    }
+
+                    // Join all of the elements together, separated with commas, and wrap them in
+                    // brackets.
+
+                    v = partial.length === 0 ? '[]' :
+                        gap ? '[\n' + gap +
+                              partial.join(',\n' + gap) + '\n' +
+                              mind + ']' :
+                        '[' + partial.join(',') + ']';
+                    gap = mind;
+                    return v;
+                }
+
+                // If the replacer is an array, use it to select the members to be stringified.
+
+                if (rep && typeof rep === 'object') {
+                    length = rep.length;
+                    for (i = 0; i < length; i += 1) {
+                        k = rep[i];
+                        if (typeof k === 'string') {
+                            v = str(k, value);
+                            if (v) {
+                                partial.push(quote(k) + (gap ? ': ' : ':') + v);
+                            }
+                        }
+                    }
+                } else {
+
+                    // Otherwise, iterate through all of the keys in the object.
+
+                    for (k in value) {
+                        if (Object.hasOwnProperty.call(value, k)) {
+                            v = str(k, value);
+                            if (v) {
+                                partial.push(quote(k) + (gap ? ': ' : ':') + v);
+                            }
+                        }
+                    }
+                }
+
+                // Join all of the member texts together, separated with commas,
+                // and wrap them in braces.
+
+                v = partial.length === 0 ? '{}' :
+                    gap ? '{\n' + gap + partial.join(',\n' + gap) + '\n' +
+                          mind + '}' : '{' + partial.join(',') + '}';
+                gap = mind;
+                return v;
+        }
+    }
+
+    // If the JSON object does not yet have a stringify method, give it one.
+
+    if (typeof JSON.stringify !== 'function') {
+        JSON.stringify = function (value, replacer, space) {
+
+            // The stringify method takes a value and an optional replacer, and an optional
+            // space parameter, and returns a JSON text. The replacer can be a function
+            // that can replace values, or an array of strings that will select the keys.
+            // A default replacer method can be provided. Use of the space parameter can
+            // produce text that is more easily readable.
+
+            var i;
+            gap = '';
+            indent = '';
+
+            // If the space parameter is a number, make an indent string containing that
+            // many spaces.
+
+            if (typeof space === 'number') {
+                for (i = 0; i < space; i += 1) {
+                    indent += ' ';
+                }
+
+                // If the space parameter is a string, it will be used as the indent string.
+
+            } else if (typeof space === 'string') {
+                indent = space;
+            }
+
+            // If there is a replacer, it must be a function or an array.
+            // Otherwise, throw an error.
+
+            rep = replacer;
+            if (replacer && typeof replacer !== 'function' &&
+                (typeof replacer !== 'object' ||
+                 typeof replacer.length !== 'number')) {
+                throw new Error('JSON.stringify');
+            }
+
+            // Make a fake root object containing our value under the key of ''.
+            // Return the result of stringifying the value.
+
+            return str('', {'': value});
+        };
+    }
+
+
+    // If the JSON object does not yet have a parse method, give it one.
+
+    if (typeof JSON.parse !== 'function') {
+        JSON.parse = function (text, reviver) {
+
+            // The parse method takes a text and an optional reviver function, and returns
+            // a JavaScript value if the text is a valid JSON text.
+
+            var j;
+
+            function walk(holder, key) {
+
+                // The walk method is used to recursively walk the resulting structure so
+                // that modifications can be made.
+
+                var k, v, value = holder[key];
+                if (value && typeof value === 'object') {
+                    for (k in value) {
+                        if (Object.hasOwnProperty.call(value, k)) {
+                            v = walk(value, k);
+                            if (v !== undefined) {
+                                value[k] = v;
+                            } else {
+                                delete value[k];
+                            }
+                        }
+                    }
+                }
+                return reviver.call(holder, key, value);
+            }
+
+
+            // Parsing happens in four stages. In the first stage, we replace certain
+            // Unicode characters with escape sequences. JavaScript handles many characters
+            // incorrectly, either silently deleting them, or treating them as line endings.
+
+            text = String(text);
+            cx.lastIndex = 0;
+            if (cx.test(text)) {
+                text = text.replace(cx, function (a) {
+                    return '\\u' +
+                           ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+                });
+            }
+
+            // In the second stage, we run the text against regular expressions that look
+            // for non-JSON patterns. We are especially concerned with '()' and 'new'
+            // because they can cause invocation, and '=' because it can cause mutation.
+            // But just to be safe, we want to reject all unexpected forms.
+
+            // We split the second stage into 4 regexp operations in order to work around
+            // crippling inefficiencies in IE's and Safari's regexp engines. First we
+            // replace the JSON backslash pairs with '@' (a non-JSON character). Second, we
+            // replace all simple value tokens with ']' characters. Third, we delete all
+            // open brackets that follow a colon or comma or that begin the text. Finally,
+            // we look to see that the remaining characters are only whitespace or ']' or
+            // ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
+
+            if (/^[\],:{}\s]*$/.
+                test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@').
+                replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+                replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+
+                // In the third stage we use the eval function to compile the text into a
+                // JavaScript structure. The '{' operator is subject to a syntactic ambiguity
+                // in JavaScript: it can begin a block or an object literal. We wrap the text
+                // in parens to eliminate the ambiguity.
+
+                j = eval('(' + text + ')');
+
+                // In the optional fourth stage, we recursively walk the new structure, passing
+                // each name/value pair to a reviver function for possible transformation.
+
+                return typeof reviver === 'function' ?
+                       walk({'': j}, '') : j;
+            }
+
+            // If the text is not JSON parseable, then a SyntaxError is thrown.
+
+            throw new SyntaxError('JSON.parse');
+        };
+    }
+});
+/*
+Copyright 2010, KISSY UI Library v1.0.8
+MIT Licensed
+build: 814 Jul 7 23:11
+*/
+/**
+ * @module  ajax
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('ajax', function(S) {
+
+    var doc = document,
+        UA = S.UA;
+
+    S.Ajax = {
+
+        /**
+         * Sends an HTTP request to a remote server.
+         */
+        request: function(/*url, options*/) {
+            S.error('not implemented'); // TODO
+        },
+
+        /**
+         * Load a JavaScript file from the server using a GET HTTP request, then execute it.
+         */
+        getScript: function(url, callback, charset) {
+            var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+                node = doc.createElement('script');
+
+            node.src = url;
+            if(charset) node.charset = charset;
+            node.async = true;
+
+            if (S.isFunction(callback)) {
+                if (UA.ie) {
+                    node.onreadystatechange = function() {
+                        var rs = node.readyState;
+                        if (rs === 'loaded' || rs === 'complete') {
+                            // handle memory leak in IE
+                            node.onreadystatechange = null;
+                            callback.call(this);
+                        }
+                    };
+                } else {
+                    node.onload = callback;
+                }
+            }
+
+            head.appendChild(node);
+        }
+    };
+
+});
+
+/**
+ * NOTES:
+ *  2010.04
+ *   - api 考虑：jQuery 的全耦合在 jQuery 对象上，ajaxComplete 等方法不优雅。
+ *         YUI2 的 YAHOO.util.Connect.Get.script 层级太深，YUI3 的 io 则
+ *         野心过大，KISSY 借鉴 ExtJS, 部分方法借鉴 jQuery.
+ *
+ */
+/*
+Copyright 2010, KISSY UI Library v1.0.8
+MIT Licensed
+build: 811 Jul 7 23:02
+*/
+/**
+ * @module  cookie
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('cookie', function(S) {
+
+    var doc = document,
+        encode = encodeURIComponent,
+        decode = decodeURIComponent;
+
+    S.Cookie = {
+
+        /**
+         * 获取 cookie 值
+         * @return {string} 如果 name 不存在，返回 undefined
+         */
+        get: function(name) {
+            var ret, m;
+
+            if (isNotEmptyString(name)) {
+                if ((m = doc.cookie.match('(?:^| )' + name + '(?:(?:=([^;]*))|;|$)'))) {
+                    ret = m[1] ? decode(m[1]) : '';
+                }
+            }
+            return ret;
+        },
+
+        set: function(name, val, expires, domain, path, secure) {
+            var text = encode(val), date = expires;
+
+            // 从当前时间开始，多少天后过期
+            if (typeof date === 'number') {
+                date = new Date();
+                date.setTime(date.getTime() + expires * 86400000);
+            }
+            // expiration date
+            if (date instanceof Date) {
+                text += '; expires=' + date.toUTCString();
+            }
+
+            // domain
+            if (isNotEmptyString(domain)) {
+                text += '; domain=' + domain;
+            }
+
+            // path
+            if (isNotEmptyString(path)) {
+                text += '; path=' + path;
+            }
+
+            // secure
+            if (secure) {
+                text += '; secure';
+            }
+
+            doc.cookie = name + '=' + text;
+        },
+
+        remove: function(name) {
+            // 立刻过期
+            this.set(name, '', 0);
+        }
+    };
+
+    function isNotEmptyString(val) {
+        return typeof val === 'string' && val !== '';
+    }
+
+});
+
+/**
+ * NOTES:
+ *
+ *  2010.04
+ *   - get 方法要考虑 ie 下，
+ *     值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
+ *     除了正则获取，还可以 split 字符串的方式来获取。
+ *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
+ *     独立成静态工具类的方式更优。
+ *
  */

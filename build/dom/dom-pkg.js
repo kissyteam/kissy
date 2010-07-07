@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 810 Jul 7 15:24
+build: 811 Jul 7 23:02
 */
 /**
  * @module  dom
@@ -1424,6 +1424,7 @@ KISSY.add('dom-create', function(S, undefined) {
  *  - 研究 jQuery 的 buildFragment 和 clean
  *  - 增加 cache, 完善 test cases
  *  - 支持更多 props
+ *  - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
  */
 /**
  * @module  dom-insertion

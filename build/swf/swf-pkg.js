@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 810 Jul 7 15:34
+build: 814 Jul 7 23:22
 */
 /**
  * SWF UA info
@@ -173,7 +173,7 @@ KISSY.add('swf', function(S) {
 
             if (type === 'log') {
                 S.log(event.message);
-            } else if(type) {
+            } else if (type) {
                 self.fire(type, event);
             }
         },
@@ -185,8 +185,16 @@ KISSY.add('swf', function(S) {
          */
         callSWF: function (func, args) {
             var self = this;
-            if (self.swf[func]) {
-                return self.swf[func].apply(self.swf, args || []);
+            args = args || [];
+
+            try {
+                if (self.swf[func]) {
+                    return self.swf[func].apply(self.swf, args);
+                }
+            }
+            // some version flash function is odd in ie: 对象不支持此属性或方法
+            catch(e) {
+                return (new Function('self.swf.' + func + '(' + args.join(',') + ')'))();
             }
         }
     });

@@ -1,3 +1,8 @@
+/*
+Copyright 2010, KISSY UI Library v1.0.8
+MIT Licensed
+build: 814 Jul 7 23:11
+*/
 /**
  * @module  ajax
  * @author  lifesinger@gmail.com
@@ -19,14 +24,13 @@ KISSY.add('ajax', function(S) {
         /**
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
          */
-        getScript: function(url, callback, charset,sync) {
+        getScript: function(url, callback, charset) {
             var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
                 node = doc.createElement('script');
 
             node.src = url;
-            
             if(charset) node.charset = charset;
-            node.async = !sync;
+            node.async = true;
 
             if (S.isFunction(callback)) {
                 if (UA.ie) {
@@ -35,7 +39,7 @@ KISSY.add('ajax', function(S) {
                         if (rs === 'loaded' || rs === 'complete') {
                             // handle memory leak in IE
                             node.onreadystatechange = null;
-                            callback();
+                            callback.call(this);
                         }
                     };
                 } else {

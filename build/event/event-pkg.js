@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 810 Jul 7 14:46
+build: 811 Jul 7 23:02
 */
 /**
  * @module  event
@@ -267,7 +267,6 @@ KISSY.add('event', function(S, undefined) {
 
 /**
  * TODO:
- *   - 研究 jq 的 expando cache 方式
  *   - event || window.event, 什么情况下取 window.event ? IE4 ?
  *   - 更详尽细致的 test cases
  *   - 内存泄漏测试

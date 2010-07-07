@@ -4,7 +4,8 @@
  */
 KISSY.add('nodelist', function(S) {
 
-    var AP = Array.prototype;
+    var DOM = S.DOM,
+        AP = Array.prototype;
 
     /**
      * The NodeList class provides a wrapper for manipulating DOM NodeList.

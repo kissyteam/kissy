@@ -192,4 +192,5 @@ KISSY.add('dom-create', function(S, undefined) {
  *  - 研究 jQuery 的 buildFragment 和 clean
  *  - 增加 cache, 完善 test cases
  *  - 支持更多 props
+ *  - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
  */

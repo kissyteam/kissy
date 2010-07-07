@@ -262,7 +262,6 @@ KISSY.add('event', function(S, undefined) {
 
 /**
  * TODO:
- *   - 研究 jq 的 expando cache 方式
  *   - event || window.event, 什么情况下取 window.event ? IE4 ?
  *   - 更详尽细致的 test cases
  *   - 内存泄漏测试

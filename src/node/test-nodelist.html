@@ -20,15 +20,26 @@
 <script src="nodelist.js"></script>
 <script src="node-attach.js"></script>
 
+<script src="../../third-party/jquery/jquery-1.4.2.js"></script>
+<script src="../../third-party/yui3/yui-min.js"></script>
+
 <!-- Test Cases -->
 <script>
     var S = KISSY;
 
     function test_constructor(test) {
-        if(S.all('#test-data div').length !== 1) test.fail();
+        if(S.all('#test-data div').length !== $('#test-data div').length) test.fail();
         if(S.all('#test-data input')[0].id !== 'test-input') test.fail();
         if(S.all('#test-data xx').length !== 0) test.fail();
         if(S.all().length !== 0) test.fail();
+    }
+
+    function test_item(test) {
+        if(S.all('#test-data div').item(0)[0] !== S.get('#test-data div')) test.fail();
+    }
+
+    function test_getDOMNodes(test) {
+        if(S.all('#test-data div').getDOMNodes().length !== $('#test-data div').length) test.fail();        
     }
 
     function test_each(test) {
@@ -46,11 +57,260 @@
         })
     }
 
+    function test_query_class_sep(test) {
+        test.status = 'sep';
+    }
+
+    function test_hasClass(test) {
+        var a = S.all('#foo a');
+
+        if (a.hasClass('link') !== true) test.fail();
+        if (a.hasClass('link2') !== false) test.fail();
+    }
+
+    function test_addClass(test) {
+        if (S.all('#foo a')
+                .addClass('link-added')
+                .hasClass('link-added') !== true) test.fail();
+
+        // clean up
+        S.all('#foo a').removeClass('link-added');
+    }
+
+    function test_removeClass(test) {
+        var a = S.all('#foo a');
+
+        if (a.removeClass('link').hasClass(a, 'link') !== false) test.fail();
+
+        // restore
+        a[0].className = 'link'
+    }
+
+    function test_replaceClass(test) {
+        var a = S.all('#foo a');
+
+        // oldCls 有的话替换
+        a.replaceClass('link', 'link2');
+        if (S.trim(a[0].className) !== 'link2') test.fail();
+
+        // oldCls 没有的话，仅添加
+        a.replaceClass('link3', 'link');
+        if (S.trim(a[0].className) !== 'link2 link') test.fail();
+
+        // restore
+        a[0].className = 'link';
+    }
+
+    function test_toggleClass(test) {
+        var a = S.all('#foo a');
+
+        if (a.toggleClass('link2').hasClass('link2') !== true) test.fail();
+    }
+
+    function test_query_attr_sep(test) {
+        test.status = 'sep';
+    }
+
+    function test_attr(test) {
+        var nodes = S.all('#foo a');
+
+        // set attr
+        if (nodes.attr('title') !== 'test') test.fail();
+
+        // get attr
+        nodes.attr('data-set', 'test-xx');
+        if (nodes.attr('data-set') !== 'test-xx') test.fail();
+    }
+
+    function test_removeAttr(test) {
+        var nodes = S.all('#foo label');
+
+        nodes.attr('test-remove', 'xx');
+        if (nodes.attr('test-remove') !== 'xx') test.fail();
+        
+        nodes.removeAttr('test-remove');
+        if (nodes.attr('test-remove') !== undefined) test.fail();
+    }
+
+    function test_val(test) {
+        // normal
+        if (S.all('#foo input').val() !== 'hello') test.fail();
+
+        // area
+        if (S.all('#foo textarea').val().length !== 25) test.fail();
+
+        // set value
+        var a = S.all('#foo a');
+        if(a.val('test').val() !== 'test') test.fail();
+        a.removeAttr('value');
+    }
+
+    function test_text(test) {
+        var div = S.all('#test-div');
+        if(div.text('hello, are you ok?').text() !== 'hello, are you ok?') test.fail();
+    }
+
+    function test_query_css_sep(test) {
+        test.status = 'sep';
+    }
+
+    function test_css(test) {
+        var nodes = S.all('#test-div');
+
+        // getter
+        if(nodes.css('float') !== 'left') test.fail();
+        if(nodes.css('position') !== 'static') test.fail();
+        if(nodes.css('backgroundColor') !== 'transparent') test.fail();
+        if(nodes.css('backgroundPosition') !== '0% 0%') test.fail();
+        if(nodes.css('fontSize') !== '12px') test.fail();
+        if(!S.UA.ie) if(nodes.css('border-right-width') !== '5px') test.fail();
+        if(S.UA.ie) if(nodes.css('border-right-width') !== 'medium') test.fail();
+
+        if(nodes.css('paddingLeft') !== '2pt') test.fail();
+        if(nodes.css('padding-left') !== '2pt') test.fail();
+        if(nodes.css('padding-right') !== '0px') test.fail();
+
+        if(nodes.css('opacity') !== '1') test.fail();
+
+        // setter
+        try {
+            nodes.css('height', '-20px');
+        } catch(ex) {
+            test.fail();
+        }
+
+        nodes.css('float', 'right');
+        if(nodes.css('float') !== 'right') test.fail();
+
+        nodes.css('opacity', '0.2');
+        if(nodes.css('opacity') !== '0.2') test.fail();
+
+        nodes.css('border', '2px dashed red');
+        if(nodes.css('borderWidth') !== '2px') test.fail();
+
+        nodes.css({
+            marginLeft: '20px',
+            opacity: '0.8',
+            border: '2px solid #ccc'
+        });
+        if(nodes.css('opacity') !== '0.8') test.fail();
+    }
+
+    function test_width(test) {
+        if(S.all('#test2').width() !== $('#test2').width()) test.fail();
+    }
+
+    function test_height(test) {
+        if(S.all('#test2').height() !== $('#test2').height()) test.fail();
+    }
+
+    function test_query_offset_sep(test) {
+        test.status = 'sep';
+    }
+
+    function test_offset(test) {
+        // getter
+        var ret = 15;
+        var t = S.all('#konsole').offset().left;
+        if (t !== ret) test.fail(t);
+
+        // setter
+        S.all('#inner').offset({ top: 600, left: 200 });
+    }
+
+    function test_query_traversal_sep(test) {
+        test.status = 'sep';
+    }
+
+    function test_parent(test) {
+        if (S.all('#foo input').parent()[0].id !== 'foo') test.fail();
+    }
+
+    function test_next(test) {
+        if (S.all('#foo a').next().prev()[0].nodeName !== 'A') test.fail();
+    }
+
+    function test_prev(test) {
+        if (S.all('#foo input').prev().next()[0].nodeName !== 'INPUT') test.fail();
+    }
+
+    function test_siblings(test) {
+        if (S.all('#foo a').siblings().length !== 7) test.fail();
+    }
+
+    function test_children(test) {
+        if (S.all('#foo').children().length !== 8) test.fail();
+        if (S.all('#foo').children()[0] !== S.get('#foo a')) test.fail();
+    }
+
+    function test_contains(test) {
+        if(S.all('#test-data').contains('#test-div') !== true) test.fail();
+    }
+
+    function test_query_create_sep(test) {
+        test.status = 'sep';
+    }
+
+    function test_html(test) {
+        var div = S.all('#test-div');
+        if(div.html('<p>hello, are you ok?</p>').text() !== 'hello, are you ok?') test.fail();
+    }
+
+    function test_remove(test) {
+        S.all('.test').remove();
+        if(S.all('.test').length !== 0) test.fail();
+    }
+
+    function test_query_insertion_sep(test) {
+        test.status = 'sep';
+    }
+
+    function test_insertBefore(test) {
+        S.Node('<p id="test-insert">inserted node</p>').insertBefore('#test-div');
+        if(S.all('#test-insert').next().attr('id') !== 'test-div') test.fail();
+    }
+
+    function test_insertAfter(test) {
+        S.Node('<p id="test-insert2">inserted node2</p>').insertAfter('#test-div');
+        if(S.all('#test-insert2').prev().attr('id') !== 'test-div') test.fail();
+    }
+
+//    function test_append(test) {
+//        if(S.all('#test-div').append('<p id="test-append">append node</p>').attr('id') !== 'test-div') test.fail();
+//    }
+//
+//    function test_appendTo(test) {
+//        if(S.Node('<p id="test-append2">append2 node</p>').appendTo('#test-div').attr('id') !== 'test-append2') test.fail();
+//    }
+
+    function test_query_event_sep(test) {
+        test.status = 'sep';
+    }
+
+    function test_on(test) {
+        S.all('#foo a').on('click', function(ev) {
+            ev.preventDefault();
+            //console.dir(ev);
+            test.echo('I am a nodelist. this instanceof NodeList = ' + (this instanceof S.NodeList));
+        });
+        test.extraMsg = '{click test link to invoke event}';
+    }
+    
 </script>
 
 <div id="test-data">
+    <div id="test-div" style="padding-left: 2pt; background: transparent; float: left; border: 5px solid rgba(0,0,0,.201);"></div>
+    <style>
+        #test2 {
+            border: 1px solid #ccc;
+            width: 80%;
+            height: 20px;
+        }
+    </style>
+    <div id="test2"></div>
     <p id="foo">
-        <a href="../kissy/" style="color:red" class="link" title="test" data-test="test">test link</a>
+        <a href="./" style="color:red" class="link" title="test" data-test="test">test link</a>
+        <a href="./" style="color:blue" title="test" data-test="test">test link2</a>
         <input type="text" id="test-input" readonly maxlength="20" value="hello"/>
         <input type="radio" id="test-radio" />
         <input type="radio" id="test-radio2" checked />
@@ -60,7 +320,6 @@
             test
         </textarea>
     </p>
-    <div id="test-div"></div>
     <table id="test-table" cellspacing="10">
         <tbody>
         <tr>
@@ -83,5 +342,14 @@
     </select>
 </div>
 
+<script>
+//    YUI().use('node', function(Y) {
+//        Y.all('#foo a').on('click', function(ev) {
+//            ev.preventDefault();
+//            console.dir(ev);
+//            alert('I am a nodelist. this instanceof NodeList = ' + (this instanceof Y.NodeList));
+//        });
+//    });
+</script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 810 Jul 7 15:24
+build: 811 Jul 7 23:02
 */
 KISSY.add("dom",function(c){c.DOM={_isElementNode:function(r){return r&&r.nodeType===1}}});
 KISSY.add("selector",function(c,r){function p(a,b){var j,d=[],f,n;b=o(b);if(c.isString(a)){a=c.trim(a);if(e.test(a)){if(a=s(a.slice(1)))d=[a]}else if(j=m.exec(a)){f=j[1];n=j[2];j=j[3];if(b=f?s(f):b)if(j)if(!f||a.indexOf(l)!==-1)d=i(j,n,b);else{if((a=s(f))&&q.hasClass(a,j))d=[a]}else if(n)d=u(b,n)}else if(c.ExternalSelector)return c.ExternalSelector(a,b);else g(a)}else if(a&&(c.isArray(a)||a.item||a.getDOMNode))d=a;else if(a&&a.nodeType)d=[a];if(d.item)d=c.makeArray(d);return d}function o(a){if(a===
