@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 801 Jul 4 22:04
+build: 808 Jul 7 10:12
 */
 /**
  * @module kissy
@@ -852,7 +852,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 801 Jul 4 22:05
+build: 808 Jul 7 10:12
 */
 /**
  * @module  dom
@@ -2270,7 +2270,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 801 Jul 4 22:05
+build: 808 Jul 7 10:12
 */
 /**
  * @module  event
@@ -2279,10 +2279,11 @@ build: 801 Jul 4 22:05
 KISSY.add('event', function(S, undefined) {
 
     var win = window, doc = document,
-        simpleAdd = doc.addEventListener ?
+            simpleAdd = doc.addEventListener ?
                     function(el, type, fn, capture) {
                         if (el.addEventListener) {
-                            el.addEventListener(type, fn, capture);
+                            //boolean capture is better
+                            el.addEventListener(type, fn, !!capture);
                         }
                     } :
                     function(el, type, fn) {
@@ -2290,22 +2291,22 @@ KISSY.add('event', function(S, undefined) {
                             el.attachEvent('on' + type, fn);
                         }
                     },
-        simpleRemove = doc.removeEventListener ?
-                       function(el, type, fn, capture) {
-                           if (el.removeEventListener) {
-                               el.removeEventListener(type, fn, capture);
-                           }
-                       } :
-                       function(el, type, fn) {
-                           if (el.detachEvent) {
-                               el.detachEvent('on' + type, fn);
-                           }
-                       },
-        EVENT_GUID = 'ksEventTargetId',
-        SPACE = ' ',
-        guid = S.now(),
+            simpleRemove = doc.removeEventListener ?
+                    function(el, type, fn, capture) {
+                        if (el.removeEventListener) {
+                            el.removeEventListener(type, fn, !!capture);
+                        }
+                    } :
+                    function(el, type, fn) {
+                        if (el.detachEvent) {
+                            el.detachEvent('on' + type, fn);
+                        }
+                    },
+            EVENT_GUID = 'ksEventTargetId',
+            SPACE = ' ',
+            guid = S.now(),
         // { id: { target: el, events: { type: { handle: obj, listeners: [...] } } }, ... }
-        cache = { };
+            cache = { };
 
     var Event = {
 
@@ -2322,13 +2323,13 @@ KISSY.add('event', function(S, undefined) {
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         add: function(target, type, fn, scope /* optional */) {
-            if(batch('add', target, type, fn, scope)) return;
+            if (batch('add', target, type, fn, scope)) return;
 
             var id = getID(target),
-                special, events, eventHandle;
+                    special, events, eventHandle;
 
             // 不是有效的 target 或 参数不对
-            if(id === -1 || !type || !S.isFunction(fn)) return;
+            if (id === -1 || !type || !S.isFunction(fn)) return;
 
             // 还没有添加过任何事件
             if (!id) {
@@ -2347,12 +2348,12 @@ KISSY.add('event', function(S, undefined) {
                     if (!event || !event.fixed) {
                         event = new S.EventObject(target, event, type);
 
-                        if(S.isPlainObject(eventData)) {
+                        if (S.isPlainObject(eventData)) {
                             S.mix(event, eventData);
                         }
                     }
 
-                    if(special.setup) {
+                    if (special.setup) {
                         special.setup(event);
                     }
 
@@ -2364,10 +2365,10 @@ KISSY.add('event', function(S, undefined) {
                     listeners: []
                 };
 
-                if(!target.isCustomEventTarget) {
+                if (!target.isCustomEventTarget) {
                     simpleAdd(target, special.fix || type, eventHandle, special.capture);
                 }
-                else if(target._addEvent) { // such as Node
+                else if (target._addEvent) { // such as Node
                     target._addEvent(type, eventHandle);
                 }
             }
@@ -2380,26 +2381,26 @@ KISSY.add('event', function(S, undefined) {
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */) {
-            if(batch('remove', target, type, fn)) return;
+            if (batch('remove', target, type, fn)) return;
 
             var id = getID(target),
-                events, eventsType, listeners,
-                i, len, c, t;
+                    events, eventsType, listeners,
+                    i, len, c, t;
 
             if (id === -1) return; // 不是有效的 target
-            if(!id || !(c = cache[id])) return; // 无 cache
-            if(c.target !== target) return; // target 不匹配
+            if (!id || !(c = cache[id])) return; // 无 cache
+            if (c.target !== target) return; // target 不匹配
             events = c.events || { };
 
-            if((eventsType = events[type])) {
+            if ((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
 
                 // 移除 fn
-                if(S.isFunction(fn) && len && S.inArray(fn, listeners)) {
+                if (S.isFunction(fn) && len && S.inArray(fn, listeners)) {
                     t = [];
-                    for(i = 0; i < len; ++i) {
-                        if(fn !== listeners[i]) {
+                    for (i = 0; i < len; ++i) {
+                        if (fn !== listeners[i]) {
                             t.push(listeners[i]);
                         }
                     }
@@ -2408,17 +2409,19 @@ KISSY.add('event', function(S, undefined) {
                 }
 
                 // remove(el, type) or fn 已移除光
-                if(fn === undefined || len === 0) {
-                    if(!target.isCustomEventTarget) {
+                if (fn === undefined || len === 0) {
+                    if (!target.isCustomEventTarget) {
                         simpleRemove(target, type, eventsType.handle);
+                    } else if (target._addEvent) { // such as Node
+                        target._removeEvent(type, eventsType.handle);
                     }
                     delete events[type];
                 }
             }
 
             // remove(el) or type 已移除光
-            if(type === undefined || S.isEmptyObject(events)) {
-                for(type in events) {
+            if (type === undefined || S.isEmptyObject(events)) {
+                for (type in events) {
                     Event.remove(target, type);
                 }
                 delete cache[id];
@@ -2437,7 +2440,7 @@ KISSY.add('event', function(S, undefined) {
                 // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡
                 // 目前没有实现自定义事件对象的冒泡，因此 return false 和 stopImmediatePropagation 效果是一样的
                 if ((ret === false && target.isCustomEventTarget) ||
-                    event.isImmediatePropagationStopped) {
+                        event.isImmediatePropagationStopped) {
                     break;
                 }
             }
@@ -2459,7 +2462,7 @@ KISSY.add('event', function(S, undefined) {
     function batch(methodName, targets, types, fn, scope) {
 
         // on('#id tag.className', type, fn)
-        if(S.isString(targets)) {
+        if (S.isString(targets)) {
             targets = S.query(targets);
         }
 

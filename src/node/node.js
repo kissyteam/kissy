@@ -88,6 +88,9 @@ KISSY.add('node', function(S) {
     NP._addEvent = function(type, handle) {
         S.Event._simpleAdd(this[0], type, handle);
     };
+    NP._removeEvent = function(type, handle) {
+        S.Event._simpleRemove(this[0], type, handle);
+    };
     delete NP.fire;    
 
     // add more methods

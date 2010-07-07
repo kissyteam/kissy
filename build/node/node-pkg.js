@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 548 Apr 9 23:53
+build: 808 Jul 7 10:12
 */
 /**
  * @module  node
@@ -83,7 +83,7 @@ KISSY.add('node', function(S) {
         function(methodName) {
             NP[methodName] = function() {
                 var ret = DOM[methodName].apply(DOM, [this[0]].concat(S.makeArray(arguments)));
-                // Ö»ÓÐ hasClass ÓÐ·µ»ØÖµ
+                // Ö»ï¿½ï¿½ hasClass ï¿½Ð·ï¿½ï¿½ï¿½Öµ
                 return typeof ret === 'boolean' ? ret : this;
             }
         });
@@ -92,6 +92,9 @@ KISSY.add('node', function(S) {
     S.mix(NP, S.EventTarget);
     NP._addEvent = function(type, handle) {
         S.Event._simpleAdd(this[0], type, handle);
+    };
+    NP._removeEvent = function(type, handle) {
+        S.Event._simpleRemove(this[0], type, handle);
     };
     delete NP.fire;    
 
@@ -133,7 +136,7 @@ KISSY.add('node', function(S) {
 
 /**
  * TODO:
- *   - append/appendTo, insertBefore/insertAfter, after/before µÈ²Ù×÷µÄÊµÏÖºÍ²âÊÔ
+ *   - append/appendTo, insertBefore/insertAfter, after/before ï¿½È²ï¿½ï¿½ï¿½ï¿½Êµï¿½ÖºÍ²ï¿½ï¿½ï¿½
  */
 /**
  * @module  nodelist
@@ -163,7 +166,7 @@ KISSY.add('nodelist', function(S) {
     S.mix(NP, {
 
         /**
-         * Ä¬ÈÏ³¤¶ÈÎª 0
+         * Ä¬ï¿½Ï³ï¿½ï¿½ï¿½Îª 0
          */
         length: 0,
 
@@ -194,12 +197,12 @@ KISSY.add('nodelist', function(S) {
  * Notes:
  *
  *  2010.04
- *   - each ·½·¨´«¸ø fn µÄ this, ÔÚ jQuery ÀïÖ¸ÏòÔ­Éú¶ÔÏó£¬ÕâÑù¿ÉÒÔ±ÜÃâÐÔÄÜÎÊÌâ¡£
- *     µ«´ÓÓÃ»§½Ç¶È½²£¬this µÄµÚÒ»Ö±¾õÊÇ $(this), kissy ºÍ yui3 ±£³ÖÒ»ÖÂ£¬ÎþÉü
- *     ÐÔÄÜ£¬Ò»ÇÐÒ×ÓÃÎªÊ×¡£
- *   - ÓÐÁË each ·½·¨£¬ËÆºõ²»ÔÙÐèÒª import ËùÓÐ dom ·½·¨£¬ÒâÒå²»´ó¡£
- *   - dom ÊÇµÍ¼¶ api, node ÊÇÖÐ¼¶ api, ÕâÊÇ·Ö²ãµÄÒ»¸öÔ­Òò¡£»¹ÓÐÒ»¸öÔ­ÒòÊÇ£¬Èç¹û
- *     Ö±½ÓÔÚ node ÀïÊµÏÖ dom ·½·¨£¬Ôò²»´óºÃ½« dom µÄ·½·¨ñîºÏµ½ nodelist Àï¡£¿É
- *     ÒÔËµ£¬¼¼Êõ³É±¾»áÖÆÔ¼ api Éè¼Æ¡£
+ *   - each ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ fn ï¿½ï¿½ this, ï¿½ï¿½ jQuery ï¿½ï¿½Ö¸ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â¡£
+ *     ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ç¶È½ï¿½ï¿½ï¿½this ï¿½Äµï¿½Ò»Ö±ï¿½ï¿½ï¿½ï¿½ $(this), kissy ï¿½ï¿½ yui3 ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½
+ *     ï¿½ï¿½ï¿½Ü£ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½×¡ï¿½
+ *   - ï¿½ï¿½ï¿½ï¿½ each ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æºï¿½ï¿½ï¿½ï¿½ï¿½Òª import ï¿½ï¿½ï¿½ï¿½ dom ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å²»ï¿½ï¿½
+ *   - dom ï¿½ÇµÍ¼ï¿½ api, node ï¿½ï¿½ï¿½Ð¼ï¿½ api, ï¿½ï¿½ï¿½Ç·Ö²ï¿½ï¿½Ò»ï¿½ï¿½Ô­ï¿½ò¡£»ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ô­ï¿½ï¿½ï¿½Ç£ï¿½ï¿½ï¿½ï¿½
+ *     Ö±ï¿½ï¿½ï¿½ï¿½ node ï¿½ï¿½Êµï¿½ï¿½ dom ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò²»´ï¿½Ã½ï¿½ dom ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ nodelist ï¿½ï¡£ï¿½ï¿½
+ *     ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É±ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ api ï¿½ï¿½Æ¡ï¿½
  *
  */
