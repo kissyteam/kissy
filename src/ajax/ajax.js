@@ -34,7 +34,7 @@ KISSY.add('ajax', function(S) {
                         if (rs === 'loaded' || rs === 'complete') {
                             // handle memory leak in IE
                             node.onreadystatechange = null;
-                            callback();
+                            callback.call(this);
                         }
                     };
                 } else {
