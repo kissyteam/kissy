@@ -5,123 +5,123 @@
 KISSY.add("digital-clock", function(S, undefined) {
 
     //clock number markup
-    var CLOCK_NUMBER = '<div class="ks-digitalclock-container">'
+    var CLOCK_NUMBER = ('<div class="Kcontainer">'
 
-            + '<div class="ks-digitalclock-element  ks-digitalclock-vertical ks-digitalclock-e1">'
-            + '<s class="ks-digitalclock-first"></s>'
-            + '<div class="ks-digitalclock-bar"></div>'
-            + '<b class="ks-digitalclock-last"></b>'
-            + '</div>'
+        + '<div class="Kelement  Kvertical Ke1">'
+        + '<s class="Kfirst"></s>'
+        + '<div class="Kbar"></div>'
+        + '<b class="Klast"></b>'
+        + '</div>'
 
-            + '<div class="ks-digitalclock-element ks-digitalclock-vertical ks-digitalclock-e2">'
-            + '<s class="ks-digitalclock-first"></s>'
-            + '<div class="ks-digitalclock-bar"></div>'
-            + '<b class="ks-digitalclock-last"></b>'
-            + '</div>'
+        + '<div class="Kelement Kvertical Ke2">'
+        + '<s class="Kfirst"></s>'
+        + '<div class="Kbar"></div>'
+        + '<b class="Klast"></b>'
+        + '</div>'
 
-            + '<div class="ks-digitalclock-element ks-digitalclock-horizonal ks-digitalclock-e3">'
-            + '<s class="ks-digitalclock-first"></s>'
-            + '<div class="ks-digitalclock-bar"></div>'
-            + '<b class="ks-digitalclock-last"></b>'
-            + '</div>'
+        + '<div class="Kelement Khorizonal Ke3">'
+        + '<s class="Kfirst"></s>'
+        + '<div class="Kbar"></div>'
+        + '<b class="Klast"></b>'
+        + '</div>'
 
-            + '<div class="ks-digitalclock-element  ks-digitalclock-vertical ks-digitalclock-e4">'
-            + '<s class="ks-digitalclock-first"></s>'
-            + '<div class="ks-digitalclock-bar"></div>'
-            + '<b class="ks-digitalclock-last"></b>'
-            + '</div>'
+        + '<div class="Kelement  Kvertical Ke4">'
+        + '<s class="Kfirst"></s>'
+        + '<div class="Kbar"></div>'
+        + '<b class="Klast"></b>'
+        + '</div>'
 
-            + '<div class="ks-digitalclock-element ks-digitalclock-vertical ks-digitalclock-e5">'
-            + '<s class="ks-digitalclock-first"></s>'
-            + '<div class="ks-digitalclock-bar"></div>'
-            + '<b class="ks-digitalclock-last"></b>'
-            + '</div>'
+        + '<div class="Kelement Kvertical Ke5">'
+        + '<s class="Kfirst"></s>'
+        + '<div class="Kbar"></div>'
+        + '<b class="Klast"></b>'
+        + '</div>'
 
-            + '<div class="ks-digitalclock-element ks-digitalclock-horizonal ks-digitalclock-e6">'
-            + '<s class="ks-digitalclock-first"></s>'
-            + '<div class="ks-digitalclock-bar"></div>'
-            + '<b class="ks-digitalclock-last"></b>'
-            + '</div>'
+        + '<div class="Kelement Khorizonal Ke6">'
+        + '<s class="Kfirst"></s>'
+        + '<div class="Kbar"></div>'
+        + '<b class="Klast"></b>'
+        + '</div>'
 
-            + '<div class="ks-digitalclock-element ks-digitalclock-horizonal ks-digitalclock-ex">'
-            + '<s class="ks-digitalclock-first"></s>'
-            + '<div class="ks-digitalclock-bar"></div>'
-            + '<b class="ks-digitalclock-last"></b>'
-            + '</div>'
+        + '<div class="Kelement Khorizonal Kex">'
+        + '<s class="Kfirst"></s>'
+        + '<div class="Kbar"></div>'
+        + '<b class="Klast"></b>'
+        + '</div>'
 
-            + '</div>'
+        + '</div>').replace(/K/g, "ks-digitalclock-")
 
-            ,N2 = function(str) {
+        ,N2 = function(str) {
         return parseInt(str, 2);
     }
 
         //colon markup
-            ,COLON = '<div class="ks-digitalclock-container">'
-            + '<div class="ks-digitalclock-colon1">'
-            + '<s class="ks-digitalclock-colon-top">'
-            + '</s>'
-            + '<b class="ks-digitalclock-colon-bottom">'
-            + '</b>'
-            + '</div>'
+        ,COLON = ('<div class="Kcontainer">'
+        + '<div class="Kcolon1">'
+        + '<s class="Kcolon-top">'
+        + '</s>'
+        + '<b class="Kcolon-bottom">'
+        + '</b>'
+        + '</div>'
 
-            + '<div class="ks-digitalclock-colon2">'
-            + '<s class="ks-digitalclock-colon-top">'
-            + '</s>'
-            + '<b class="ks-digitalclock-colon-bottom">'
-            + '</b>'
-            + '</div>'
+        + '<div class="Kcolon2">'
+        + '<s class="Kcolon-top">'
+        + '</s>'
+        + '<b class="Kcolon-bottom">'
+        + '</b>'
+        + '</div>'
 
-            + '</div>'
+        + '</div>').replace(/K/g, "ks-digitalclock-")
 
         //clock container markup
-            ,CLOCK_BORDER = "<div class='ks-digitalclock-border clearfix'>"
-            + "</div>"
+        ,CLOCK_BORDER = "<div class='ks-digitalclock-border clearfix'>"
+        + "</div>"
 
-            ,Node = S.Node
+        ,Node = S.Node
         //clock region
-            ,C_WIDTH = 120
-            ,C_HEIGHT = 200
-            ,C_MARGIN_LR = 10
-            ,VERTICAL_WIDTH = 20
-            ,D_HEIGHT = 97
-            ,BAR_HEIGHT = 67
-            ,E24_TOP = 104
-            ,BORDER_L = 10
-            ,BORDER_S = 5
-            ,E45_LEFT = 99
-            ,HORIZONAL_WIDTH = 107
-            ,HORIZONAL_HEIGHT = 20
-            ,HORIZONAL_LEFT = 6
-            ,HORIZONAL_BAR_WIDTH = 67
-            ,E3_LEFT = 6
-            ,E3_TOP = 180
-            ,EX_TOP = 90
-            ,COLON_WIDTH = 30
-            ,COLON_LEFT = 0
-            ,COLON1_TOP = 60
-            ,COLON2_TOP = 90
-            ,KS_WIDTH = 710
-            ,S_ZOOM = 0.4
-            ,BG_COLOR = "#565656"
+        ,C_WIDTH = 120
+        ,C_HEIGHT = 200
+        ,C_MARGIN_LR = 10
+        ,VERTICAL_WIDTH = 20
+        ,D_HEIGHT = 97
+        ,BAR_HEIGHT = 67
+        ,E24_TOP = 104
+        ,BORDER_L = 10
+        ,BORDER_S = 5
+        ,E45_LEFT = 99
+        ,HORIZONAL_WIDTH = 107
+        ,HORIZONAL_HEIGHT = 20
+        ,HORIZONAL_LEFT = 6
+        ,HORIZONAL_BAR_WIDTH = 67
+        ,E3_LEFT = 6
+        ,E3_TOP = 180
+        ,EX_TOP = 90
+        ,COLON_WIDTH = 30
+        ,COLON_LEFT = 0
+        ,COLON1_TOP = 60
+        ,COLON2_TOP = 90
+        ,KS_WIDTH = 710
+        ,S_ZOOM = 0.4
+        ,BG_COLOR = "#565656"
         //property shortcut for compression
-            ,ks_digitalclock_first = ".ks-digitalclock-first"
-            ,ks_digitalclock_last = ".ks-digitalclock-last"
-            ,ks_digitalclock_element = ".ks-digitalclock-element"
-            ,ks_digitalclock_bar = ".ks-digitalclock-bar"
-            ,border_width = "border-width"
-            ,ks_digitalclock_colon1 = ".ks-digitalclock-colon1"
-            ,ks_digitalclock_colon2 = ".ks-digitalclock-colon2"
-            ,WIDTH = "width"
-            ,HEIGHT = "height"
-            ,MARGIN = "margin"
-            ,TOP = "top"
-            ,LEFT = "left"
-            ,ks_digitalclock_colon_top = ".ks-digitalclock-colon-top"
-            ,ks_digitalclock_colon_bottom = ".ks-digitalclock-colon-bottom"
-            ,ks_digitalclock_vertical = ".ks-digitalclock-vertical"
-            ,VALUE = "value"
-        //µÁ◊”÷”◊È≥…≤ø∑÷∫Õœ‡”¶divµƒ∂‘’’
-            ,DIGITAL_CONFIG = {
+        ,ks_digitalclock_first = ".ks-digitalclock-first"
+        ,ks_digitalclock_last = ".ks-digitalclock-last"
+        ,ks_digitalclock_element = ".ks-digitalclock-element"
+        ,ks_digitalclock_bar = ".ks-digitalclock-bar"
+        ,border_width = "border-width"
+        ,ks_digitalclock_colon1 = ".ks-digitalclock-colon1"
+        ,ks_digitalclock_colon2 = ".ks-digitalclock-colon2"
+        ,WIDTH = "width"
+        ,HEIGHT = "height"
+        ,MARGIN = "margin"
+        ,TOP = "top"
+        ,LEFT = "left"
+        ,ks_digitalclock_colon_top = ".ks-digitalclock-colon-top"
+        ,ks_digitalclock_colon_bottom = ".ks-digitalclock-colon-bottom"
+        ,ks_digitalclock_vertical = ".ks-digitalclock-vertical"
+        ,VALUE = "value"
+        //ÁîµÂ≠êÈíüÁªÑÊàêÈÉ®ÂàÜÂíåÁõ∏Â∫îdivÁöÑÂØπÁÖß
+        ,DIGITAL_CONFIG = {
         0:N2("01111110")
         ,1:N2("0110000")
         ,2:N2("11101100")
@@ -235,15 +235,15 @@ KISSY.add("digital-clock", function(S, undefined) {
         //internal use ,synchronize data with ui
         repaint: function (e) {
             var self = this
-                    , v = DIGITAL_CONFIG[e.newVal]
-                    , preV = DIGITAL_CONFIG[e.preVal]
-                    , diff = v ^ preV;
+                , v = DIGITAL_CONFIG[e.newVal]
+                , preV = DIGITAL_CONFIG[e.preVal]
+                , diff = v ^ preV;
             //console.log(e.newVal,e.preVal,v.toString(2),preV.toString(2),diff.toString(2));
             for (var i = 0; i < self._bars.length; i++) {
                 v = v >> 1;
                 diff = diff >> 1;
                 var node = self._bars[i]
-                        , b = v & 1,diffB = diff & 1;
+                    , b = v & 1,diffB = diff & 1;
                 if (b && diffB) {
                     node.css("display", "");
                 } else if (diffB) {
@@ -283,19 +283,19 @@ KISSY.add("digital-clock", function(S, undefined) {
         }
     };
     function DigitalClock(cfg) {
-        var self = this;
+        var self = this,i;
         DigitalClock.superclass.constructor.call(self, cfg);
         self._ns = [];
         self._container = new Node(CLOCK_BORDER);
-        for (var i = 0; i < 2; i++) {
+        for (i = 0; i < 2; i++) {
             self._ns.push(new ClockNumber({zoomLimit:this.get("zoomLimit")}).appendTo(self._container));
         }
         self._colon = new Node(COLON).appendTo(self._container[0]);
         self._colonVisible = true;
-        for (var i = 0; i < 2; i++) {
+        for (i = 0; i < 2; i++) {
             self._ns.push(new ClockNumber({zoomLimit:this.get("zoomLimit")}).appendTo(self._container));
         }
-        for (var i = 0; i < 2; i++) {
+        for (i = 0; i < 2; i++) {
             self._ns.push(new ClockNumber({zoomLimit:this.get("zoomLimit")}).appendTo(self._container));
         }
         self._container.appendTo(self.get("container"));
@@ -312,10 +312,10 @@ KISSY.add("digital-clock", function(S, undefined) {
     S.extend(DigitalClock, S.Base, {
         zoom: function (e) {
             var self = this;
-            var z = e.newVal;
-            for (var i = 0; i < 4; i++)
+            var z = e.newVal,i;
+            for (i = 0; i < 4; i++)
                 self._ns[i].set("zoom", z);
-            for (var i = 4; i < 6; i++)
+            for (i = 4; i < 6; i++)
                 self._ns[i].set("zoom", z * S_ZOOM);
             self._colon.css(WIDTH, COLON_WIDTH * z + "px");
             self._colon.css(HEIGHT, C_HEIGHT * z + "px");
@@ -335,9 +335,9 @@ KISSY.add("digital-clock", function(S, undefined) {
         repaint: function (e) {
             var self = this;
             var d = e.newVal,
-                    h = d.getHours(),
-                    m = d.getMinutes(),
-                    s = d.getSeconds();
+                h = d.getHours(),
+                m = d.getMinutes(),
+                s = d.getSeconds();
             //console.log(h,m,s);
             //h = 88,
             //m = 88,
