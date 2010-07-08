@@ -1,23 +1,23 @@
 
 ----------------------
- 2010 ÉÏ°ëÄê
+ 2010 ä¸ŠåŠå¹´
 
-  API Ë¼¿¼ - Ï¸½ÚÉÏ£¬½è¼ø jQuery ºÍ YUI2 µÄ¼ò½àÒ×ÓÃ·ç¸ñ£»ÕûÌåÉè¼ÆÉÏ£¬¿¼ÂÇÀàËÆ YUI3 µÄÑÏ½÷×éÖ¯ - done
-  É³ÏäË¼¿¼ - ½è¼ø YUI3 µÄÉ³ÏäÌåÏµ£¬µ«È¥µôÉè¼Æ¹ı¶ÈµÄ²¿·Ö - done
-  ×é¼ş¼ÓÔØ - Ôİ²»¿¼ÂÇ×é¼şµÄ¶¯Ì¬¼ÓÔØ - done
+  API æ€è€ƒ - ç»†èŠ‚ä¸Šï¼Œå€Ÿé‰´ jQuery å’Œ YUI2 çš„ç®€æ´æ˜“ç”¨é£æ ¼ï¼›æ•´ä½“è®¾è®¡ä¸Šï¼Œè€ƒè™‘ç±»ä¼¼ YUI3 çš„ä¸¥è°¨ç»„ç»‡ - done
+  æ²™ç®±æ€è€ƒ - å€Ÿé‰´ YUI3 çš„æ²™ç®±ä½“ç³»ï¼Œä½†å»æ‰è®¾è®¡è¿‡åº¦çš„éƒ¨åˆ† - done
+  ç»„ä»¶åŠ è½½ - æš‚ä¸è€ƒè™‘ç»„ä»¶çš„åŠ¨æ€åŠ è½½ - done
 
-  ÖØ¹¹ kissy ºËĞÄ¼Ü¹¹ - done
-  css ÊáÀí - done
-  selector - ¸ú×Ù jquery ´úÂë£¬È·¶¨ Sizzle ·µ»ØºóµÄÊı×é½øĞĞÁËÄÄĞ©´¦Àí - done
-  ÖØĞÂË¼¿¼ kissy ºÍ tbra, tback µÄ¹ØÏµ - ¼ò»¯Îª lib ºÍ app µÄ¹ØÏµ - done
-  ÖØ¹¹ editor, fix ÉÙÁ¿¾­³£·´À¡µÄ bug + ÊÊÓ¦ĞÂµÄ´úÂë×éÖ¯·½Ê½ - done
-  ½« basic-util ¹¦ÄÜÔÚ¸÷¸ö×é¼şÖĞÊµÏÖ - done
+  é‡æ„ kissy æ ¸å¿ƒæ¶æ„ - done
+  css æ¢³ç† - done
+  selector - è·Ÿè¸ª jquery ä»£ç ï¼Œç¡®å®š Sizzle è¿”å›åçš„æ•°ç»„è¿›è¡Œäº†å“ªäº›å¤„ç† - done
+  é‡æ–°æ€è€ƒ kissy å’Œ tbra, tback çš„å…³ç³» - ç®€åŒ–ä¸º lib å’Œ app çš„å…³ç³» - done
+  é‡æ„ editor, fix å°‘é‡ç»å¸¸åé¦ˆçš„ bug + é€‚åº”æ–°çš„ä»£ç ç»„ç»‡æ–¹å¼ - done
+  å°† basic-util åŠŸèƒ½åœ¨å„ä¸ªç»„ä»¶ä¸­å®ç° - done
 
   kissy - done
   dom - done
   event - done
-  ´ò°ü ks-core, ²¢½«ÎÄ¼ş±àÂë¶¼¸Ä³É utf-8 - done
-  ºÍ YUI/jQuery/ExtJS µÄ DOM ¶Ô±È£¬¿´»¹È±ÉÙÄÄĞ©³£ÓÃ¹¦ÄÜ - done
+  æ‰“åŒ… ks-core, å¹¶å°†æ–‡ä»¶ç¼–ç éƒ½æ”¹æˆ utf-8 - done
+  å’Œ YUI/jQuery/ExtJS çš„ DOM å¯¹æ¯”ï¼Œçœ‹è¿˜ç¼ºå°‘å“ªäº›å¸¸ç”¨åŠŸèƒ½ - done
 
   cookie - done
   json - done
@@ -30,45 +30,44 @@
   require
 
   draggable
-  cssmodules »ù´¡ÔªËØ·ç¸ñÉè¼Æ±È¸å
+  cssmodules åŸºç¡€å…ƒç´ é£æ ¼è®¾è®¡æ¯”ç¨¿
 
-  switchable ĞèÇóÕ÷¼¯£¨Ôö¼Ó×îºóÒ»ÕÅºÍ×îÇ°Ò»ÕÅµÄÊÂ¼ş£© & refactor
+  switchable éœ€æ±‚å¾é›†ï¼ˆå¢åŠ æœ€åä¸€å¼ å’Œæœ€å‰ä¸€å¼ çš„äº‹ä»¶ï¼‰ & refactor
   swf 2
   imagezoom
   review and refactor calendar, Ref: jQuery calendar plugin
   overlay
   combobox
   refactor suggest, try to remove dependence of yui2
-  datalazyload bug in iPad + ÖØ¹¹ + ÏêÏ¸²âÊÔ
+  datalazyload bug in iPad + é‡æ„ + è¯¦ç»†æµ‹è¯•
 
-  augment ¶Ô constructor µÄ¸²¸ÇÎÊÌâ£¬¿É³¢ÊÔ yui3 µÄÎÊÌâ
-  ÑĞ¾¿ jQuery EasyUI - http://jquery-easyui.wikidot.com/document
-  Áú¸Õ·´À¡Í¼Æ¬ÑÓ³Ù¼ÓÔØ×é¼şµ¼ÖÂ²¿·ÖÆµµÀÒ³ÃæµÄÂÖ²¥Í¼Æ¬²»Õı³£
-  ie7 ÓĞÕâÑùµÄ bug£º µ± ua ×Ö½Ú³¬¹ı 260 Ê±£¬»á·µ»ØÎª IE6 http://jamiethompson.co.uk/web/2008/07/23/an-ie7-bug-that-returns-msie-60-user-agent-string/
-  ÓĞ½Å£ºreset.css ÀïÒª²»Òª¼Ó¸ö button{*visibility:visible} /* fix ie doulbe padding bug */ ²»È»ÀÏÒªÔÚÏîÄ¿ÀïÖØÖÃÕâ¸ö
-  ÊµÏÖ tmp/JSlide.rar ÖĞµÄÌØĞ§
+  augment å¯¹ constructor çš„è¦†ç›–é—®é¢˜ï¼Œå¯å°è¯• yui3 çš„é—®é¢˜
+  ç ”ç©¶ jQuery EasyUI - http://jquery-easyui.wikidot.com/document
+  é¾™åˆšåé¦ˆå›¾ç‰‡å»¶è¿ŸåŠ è½½ç»„ä»¶å¯¼è‡´éƒ¨åˆ†é¢‘é“é¡µé¢çš„è½®æ’­å›¾ç‰‡ä¸æ­£å¸¸
+  ie7 æœ‰è¿™æ ·çš„ bugï¼š å½“ ua å­—èŠ‚è¶…è¿‡ 260 æ—¶ï¼Œä¼šè¿”å›ä¸º IE6 http://jamiethompson.co.uk/web/2008/07/23/an-ie7-bug-that-returns-msie-60-user-agent-string/
+  æœ‰è„šï¼šreset.css é‡Œè¦ä¸è¦åŠ ä¸ª button{*visibility:visible} /* fix ie doulbe padding bug */ ä¸ç„¶è€è¦åœ¨é¡¹ç›®é‡Œé‡ç½®è¿™ä¸ª
+  å®ç° tmp/JSlide.rar ä¸­çš„ç‰¹æ•ˆ
 
-  ³ı editor Ö®ÍâµÄ×é¼ş¶¼È¥³ı¶Ô YUI µÄÒÀÀµ£¬Ê×Ò³ÖØ¹¹Îª½öÒÀÀµ kissy
+  é™¤ editor ä¹‹å¤–çš„ç»„ä»¶éƒ½å»é™¤å¯¹ YUI çš„ä¾èµ–ï¼Œé¦–é¡µé‡æ„ä¸ºä»…ä¾èµ– kissy
   check and test all components
   release 1.1.0
 
 ----------------------
- 2010 ÏÂ°ëÄê
+ 2010 ä¸‹åŠå¹´
 
   drag & drop
-  »ù±¾µ×²ã×é¼şË¼¿¼£ºswitchable, positionable, selectable( suggest ºÍ combobox µÄÏÂÀ­¿ò)
+  åŸºæœ¬åº•å±‚ç»„ä»¶æ€è€ƒï¼šswitchable, positionable, selectable( suggest å’Œ combobox çš„ä¸‹æ‹‰æ¡†)
 
-  Í¼Æ¬ÉÏ´«×é¼ş
-  ±à¼­Æ÷¶şÆÚ
-  ÍêÉÆ docs
+  å›¾ç‰‡ä¸Šä¼ ç»„ä»¶
+  ç¼–è¾‘å™¨äºŒæœŸ
+  å®Œå–„ docs
 
-  ÕûÀí TBra 1.0 ÖĞµÄ pickDomain µÈÊµÓÃ·½·¨
-  ÕûÀí TBra 2.1
-  ·ÅÈë code.taobao.com
+  æ•´ç† TBra 1.0 ä¸­çš„ pickDomain ç­‰å®ç”¨æ–¹æ³•
+  æ•´ç† TBra 2.1
+  æ”¾å…¥ code.taobao.com
 
 -----------------------
- ÁãÉ¢¼ÇÊÂ£º
-  - inputHint ×é¼ş
-  - Ë«·ÉÒí²¼¾ÖÉêÇë×¨Àû
-  - µ¹¼ÆÊ±×é¼ş
- 
+ é›¶æ•£è®°äº‹ï¼š
+  - inputHint ç»„ä»¶
+  - åŒé£ç¿¼å¸ƒå±€ç”³è¯·ä¸“åˆ©
+  - å€’è®¡æ—¶ç»„ä»¶
