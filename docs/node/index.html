@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>node - KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+<div id="page" class="w866">
+    <div id="header">
+        <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+        <p class="rel-nav">
+            <a href="../../src/node/">src files</a>
+        </p>
+    </div>
+    <div id="content" class="layout grid-s232m0">
+        <div class="col-main">
+            <div class="main-wrap">
+                <div class="section summary">
+                    <p>Node 模块对 DOM 操作和事件注册等方法做了进一步封装，能让你很方便快捷的用链式风格书写代码：</p>
+<pre style="padding: 0 0 10px"><code>
+    S.one('#test').parent()
+                  .next()
+                  .html('&lt;p&gt;new paragraph&lt;/p&gt;')
+                  .appendTo('#test2')
+                  .on('click', function(ev) {
+                      // your code
+                  });
+</code></pre>
+                </div>
+                <p>Node 模块包括：</p>
+                <ul>
+                    <li><span class="submod-key">node</span> Node</li>
+                    <li><span class="submod-key">nodelist</span> NodeLst</li>
+                </ul>
+                <p>Node 和 NodeList 都拥有以下方法：</p>
+<pre class="example-code"><code>
+hasClass addClass removeClass replaceClass toggleClass
+attr removeAttr text val
+css width height
+offset
+parent next prev siblings children contains
+insertBefore insertAfter append appendTo
+on detach
+</code></pre>
+                <p>所有方法和对应的 DOM 方法类似，请查看 <a href="../dom/index.html">dom docs</a></p>
+
+                <div class="section" id="node">
+                    <h3>Node Methods</h3>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_getDOMNode">getDOMNode</a>
+                            <code>HTMLElement <em>getDOMNode</em>()</code>
+                        </h4>
+                        <div class="detail">
+                            <p>获取相关联的 DOM 元素。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="nodelist">
+                    <h3>NodeList Methods</h3>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_getDOMNodes">getDOMNodes</a>
+                            <code>HTMLElement <em>getDOMNodes</em>()</code>
+                        </h4>
+                        <div class="detail">
+                            <p>获取相关联的 DOM 元素集合。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_item">item</a>
+                            <code>Node <em>item</em>(index)</code>
+                        </h4>
+                        <div class="detail">
+                            <p>获取第 index 个 Node 对象。</p>
+                        </div>
+                    </div>
+
+                    <div class="member method">
+                        <h4>
+                            <a name="method_each">each</a>
+                            <code>void <em>each</em>(fn, context)</code>
+                        </h4>
+                        <div class="detail">
+                            <p>遍历 NodeList 对象。</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="section">
+                    <h3>Node 和 NodeList 的共同特性</h3>
+<pre class="example-code"><code>
+var S = KISSY;
+
+var node = S.one('#test p'); // S.one 返回 Node
+var nodelist = S.all('.test'); // S.all 返回 NodeList
+
+// 可以通过下标获取与 Node/NodeList 相关联的 DOMElement
+alert(node[0].nodeType);
+alert(nodelist[0].nodeType);
+
+// 都有 length 属性，都是 array-like
+Array.prototype.slice.call(node);
+Array.prototype.slice.call(nodelist);
+
+// 都支持 dom, event 的通用方法
+node.next().val();
+nodelist.parent().attr('id');
+</code></pre>
+                    <p class="tips">特别注意：NodeList 支持的 DOM 方法，都遵循 Get-First-Set-All 原则。如果是 getter， 只会返回第一个 DOMNode 的对应值，而不是集合。</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="sub-wrap">
+                <div class="loc"><a href="../index.html">home</a> &rsaquo; node :</div>
+                <div class="toc">
+                    <h3>Sub modules</h3>
+                    <ul>
+                        <li><a href="#node">node</a></li>
+                        <li><a href="#nodelist">nodelist</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+    </div>
+</div>
+</body>
+</html>

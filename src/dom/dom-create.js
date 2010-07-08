@@ -74,12 +74,20 @@ KISSY.add('dom-create', function(S, undefined) {
             }
             // setter
             else {
-                S.each(S.query(selector), function(el) {
-                   if(isElementNode(el)) {
-                       el.innerHTML = '';
-                       // 排除掉 val == '' 的情况
-                       if(val) el.appendChild(DOM.create(val));
-                   }
+                S.each(S.query(selector), function(elem) {
+                    if (isElementNode(elem)) {
+                        try {
+                            elem.innerHTML = '';
+                        // 比如 table.innerHTML = '' 在 ie 下会抛错
+                        } catch(e) {
+                            // Remove any remaining nodes
+                            while (elem.firstChild) {
+                                elem.removeChild(elem.firstChild);
+                            }
+                        }
+                        // 排除掉 val == '' 的情况
+                        if (val) elem.appendChild(DOM.create(val));
+                    }
                 });
             }
         },
