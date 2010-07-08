@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 811 Jul 7 23:03
+build: 823 Jul 8 18:10
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -19,7 +19,7 @@ KISSY.add('json', function (S) {
 
     if (typeof Date.prototype.toJSON !== 'function') {
 
-        Date.prototype.toJSON = function (key) {
+        Date.prototype.toJSON = function () {
 
             return isFinite(this.valueOf()) ?
                    this.getUTCFullYear() + '-' +
@@ -32,7 +32,7 @@ KISSY.add('json', function (S) {
 
         String.prototype.toJSON =
         Number.prototype.toJSON =
-        Boolean.prototype.toJSON = function (key) {
+        Boolean.prototype.toJSON = function () {
             return this.valueOf();
         };
     }

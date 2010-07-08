@@ -14,7 +14,7 @@ KISSY.add('json', function (S) {
 
     if (typeof Date.prototype.toJSON !== 'function') {
 
-        Date.prototype.toJSON = function (key) {
+        Date.prototype.toJSON = function () {
 
             return isFinite(this.valueOf()) ?
                    this.getUTCFullYear() + '-' +
@@ -27,7 +27,7 @@ KISSY.add('json', function (S) {
 
         String.prototype.toJSON =
         Number.prototype.toJSON =
-        Boolean.prototype.toJSON = function (key) {
+        Boolean.prototype.toJSON = function () {
             return this.valueOf();
         };
     }
