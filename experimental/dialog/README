@@ -1,0 +1,18 @@
+这是一个非常简易的dialog
+========================
+1. 可订阅事件:
+
+CHANGE_HEADER = "changeHeader",		//修改hd
+CHANGE_BODY = "changeBody",		//修改bg
+CHANGE_FOOTER = "changeFooter",		//修改ft     @TODO 准备去掉
+CENTER = "center",			//center后
+BEFORE_SHOW = "beforeShow",		//show之前
+SHOW = "show",				//show
+BEFORE_HIDE = "beforeHide",		//hide之前
+HIDE = "hide"				//hide
+
+2. 目前存在S.Dialog和S.DialogManage.
+S.Dialog new一次,创建一次
+S.DialogManage.get 通过ID来获取某个dialog, 如果没有则创建.
+
+3. 目前没有对z-index管理, 也就是说根据css定义的, 也就是一个页面里, 同时show 多个dialog, 会有显示有点问题.
