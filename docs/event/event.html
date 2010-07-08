@@ -28,8 +28,8 @@
                     <div class="member method">
                         <h4>
                             <a name="method_add">add</a>
-                            <code>void <em>add</em> ( target, type, fn )</code>
-                            <code>void <em>on</em> ( target, type, fn )</code>
+                            <code>void <em>add</em> ( target, type, fn, scope )</code>
+                            <code>void <em>on</em> ( target, type, fn, scope )</code>
                         </h4>
                         <div class="detail">
                             <p>给目标对象指定类型的事件添加监听函数。</p>
@@ -50,6 +50,11 @@
                                     <code class="param-name">fn</code>
                                     <code class="param-type">&lt;Function&gt;</code>
                                     监听函数。执行时，接收 1 个参数：事件对象 ev.
+                                </dd>
+                                <dd>
+                                    <code class="param-name">scope</code>
+                                    <code class="param-type">&lt;Object&gt;</code>
+                                    监听函数的 this Object. 默认指向 target.
                                 </dd>
                             </dl>
 <pre class="example-code"><code>

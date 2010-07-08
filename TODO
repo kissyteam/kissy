@@ -23,26 +23,23 @@
   json - done
   swf - done
   sizzle - done
-  node - 20%
-  nodelist - 20%
+  node - done
+  nodelist - done
   ajax
-  require
   anim
+  require
 
   draggable
   cssmodules 基础元素风格设计比稿
 
   switchable 需求征集（增加最后一张和最前一张的事件） & refactor
-  swf 2.0
+  swf 2
   imagezoom
   review and refactor calendar, Ref: jQuery calendar plugin
   overlay
   combobox
   refactor suggest, try to remove dependence of yui2
   datalazyload bug in iPad + 重构 + 详细测试
-
-  docs - 20%
-   - event docs, 添加对 scope 和 return false 的理解
 
   augment 对 constructor 的覆盖问题，可尝试 yui3 的问题
   研究 jQuery EasyUI - http://jquery-easyui.wikidot.com/document
@@ -67,7 +64,6 @@
 
   整理 TBra 1.0 中的 pickDomain 等实用方法
   整理 TBra 2.1
-
   放入 code.taobao.com
 
 -----------------------
