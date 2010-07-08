@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gbk" />
+<title>Dialog Test</title>
+<link rel="stylesheet" href="../../build/cssreset/reset.css" />
+<link rel="stylesheet" href="dialog.css" />
+<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="http://a.tbcdn.cn/yui/2.7.0/build/dragdrop/dragdrop.js"></script>
+<script src="../../build/packages/ks-core.js"></script>
+<script src="dialog.js"></script>
+<style>
+#log {
+	height: 300px;
+	margin: 30px;
+	border: 1px solid #000;
+	overflow: auto;
+}
+#log p {
+	padding-left: 10px;
+	border-bottom: 1px solid #ddd;
+	line-height: 2;
+}
+</style>
+</head>
+<body>
+<div id="page">
+<h1>KISSY Dialog</h1>
+<button id="demo">创建对话层并显示</button><br/><br/>
+
+<button id="append">插入html</button>
+<button id="edit-hd">修改hd</button>
+<button id="center">center</button>
+<button id="demo-mask">创建带mask的, 并可拖拽的</button>
+
+<textarea id="text">
+这里是html, 可拖拽的基于YUI的DD
+</textarea>
+<div id="log">
+	<p>这里显示log:</p>
+</div>
+<script>
+(function() {
+	
+	var S = KISSY, DOM = S.DOM, Event = S.Event;
+
+	var logEl = DOM.get('#log');
+
+	Event.add( '#demo', 'click', function() {
+		var D = S.DialogManage.get(this.id);
+		if ( !DOM.attr( D.elem, 'data-inited' ) ) {
+			Event.add( '#append', 'click', function() {
+				D.setBody(DOM.get('#text').value);
+			});
+			Event.add( '#edit-hd', 'click', function() {
+				D.setHeader(this.innerHTML + S.now());
+			});
+			Event.add( '#center', 'click', function() {
+				D.center();
+			});
+
+			D.on('changeHeader', function() {
+				log('changeHeader');
+			});
+			D.on('changeBody', function() {
+				log('changeBody');
+			});
+			D.on('changeFooter', function() {
+				log('changeFooter');
+			});
+			D.on('show', function() {
+				log('show');
+			});
+			D.on('beforeShow', function() {
+				log('beforeShow');
+			});
+			D.on('hide', function() {
+				log('hide');
+			});
+			D.on('beforeHide', function() {
+				log('beforeHide');
+			});
+			D.on('center', function() {
+				log('center');
+			});
+
+			DOM.attr( D.elem, 'data-inited', 1);
+		}
+		D.show();
+	});
+
+	Event.add( '#demo-mask', 'click', function() {
+		var D = S.DialogManage.get(this.id, {mask: true,drag: true});
+		D.show();
+	});
+
+function log( s ) {	
+	logEl.innerHTML += '<p>' + s + '</p>';
+	logEl.scrollTop += 25;
+}
+
+})();
+</script>
+</body>
+</html>
