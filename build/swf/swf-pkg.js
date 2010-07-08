@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 814 Jul 7 23:22
+build: 820 Jul 8 14:10
 */
 /**
  * SWF UA info
@@ -79,15 +79,15 @@ KISSY.add('swf-ua', function(S) {
 KISSY.add('swf', function(S) {
 
     var UA = S.UA,
-        uid = S.now(),
+            uid = S.now(),
 
-        VERSION = 10.22,
-        CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
-        TYPE = 'application/x-shockwave-flash',
-        EXPRESS_INSTALL_URL = 'http://fpdownload.macromedia.com/pub/flashplayer/update/current/swf/autoUpdater.swf?' + uid,
-        EVENT_HANDLER = 'KISSY.SWF.eventHandler',
+            VERSION = 10.22,
+            CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
+            TYPE = 'application/x-shockwave-flash',
+            EXPRESS_INSTALL_URL = 'http://fpdownload.macromedia.com/pub/flashplayer/update/current/swf/autoUpdater.swf?' + uid,
+            EVENT_HANDLER = 'KISSY.SWF.eventHandler',
 
-        possibleAttributes = {align:'', allowNetworking:'', allowScriptAccess:'', base:'', bgcolor:'', menu:'', name:'', quality:'', salign:'', scale:'', tabindex:'', wmode:''};
+            possibleAttributes = {align:'', allowNetworking:'', allowScriptAccess:'', base:'', bgcolor:'', menu:'', name:'', quality:'', salign:'', scale:'', tabindex:'', wmode:''};
 
 
     /**
@@ -101,15 +101,15 @@ KISSY.add('swf', function(S) {
      */
     function SWF(el, swfUrl, params) {
         var self = this,
-            id = 'ks-swf-' + uid++,
-            flashVersion = parseFloat(params.version) || VERSION,
-            isFlashVersionRight = UA.flash >= flashVersion,
-            canExpressInstall = UA.flash >= 8.0,
-            shouldExpressInstall = canExpressInstall && params.useExpressInstall && !isFlashVersionRight,
-            flashUrl = (shouldExpressInstall) ? EXPRESS_INSTALL_URL : swfUrl,
+                id = 'ks-swf-' + uid++,
+                flashVersion = parseFloat(params.version) || VERSION,
+                isFlashVersionRight = UA.flash >= flashVersion,
+                canExpressInstall = UA.flash >= 8.0,
+                shouldExpressInstall = canExpressInstall && params.useExpressInstall && !isFlashVersionRight,
+                flashUrl = (shouldExpressInstall) ? EXPRESS_INSTALL_URL : swfUrl,
             // TODO: rename
-            flashvars = 'YUISwfId=' + id + '&YUIBridgeCallback=' + EVENT_HANDLER,
-            ret = '<object ';
+                flashvars = 'YUISwfId=' + id + '&YUIBridgeCallback=' + EVENT_HANDLER,
+                ret = '<object ';
 
         self.id = id;
         SWF.instances[id] = self;
@@ -169,7 +169,7 @@ KISSY.add('swf', function(S) {
 
         _eventHandler: function(event) {
             var self = this,
-                type = event.type;
+                    type = event.type;
 
             if (type === 'log') {
                 S.log(event.message);
@@ -192,10 +192,16 @@ KISSY.add('swf', function(S) {
                     return self.swf[func].apply(self.swf, args);
                 }
             }
-            // some version flash function is odd in ie: 对象不支持此属性或方法
+                // some version flash function is odd in ie: property or method not supported by object
             catch(e) {
-                return (new Function('self.swf.' + func + '(' + args.join(',') + ')'))();
+                var par = "",body = "";
+                if (args.length != 0)
+                    par = "'" + args.join("','") + "'";
+                body = 'return self.swf.' + func + '(' + par + ');';
+                //return eval(body);
+                return (new Function('self', body))(self);
             }
+
         }
     });
 
