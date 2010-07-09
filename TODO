@@ -25,28 +25,28 @@
   sizzle - done
   node - done
   nodelist - done
-  ajax
-  anim
-  require
+  
+  ajax - 玉伯
+  anim - 玉伯
+  S.require - 玉伯
 
-  draggable
-  cssmodules 基础元素风格设计比稿
-
-  switchable 需求征集（增加最后一张和最前一张的事件） & refactor
-  swf 2
-  imagezoom
-  review and refactor calendar, Ref: jQuery calendar plugin
-  overlay
-  combobox
-  refactor suggest, try to remove dependence of yui2
+  switchable 需求征集（增加最后一张和最前一张的事件） & 重构
+  suggest 重构
   datalazyload bug in iPad + 重构 + 详细测试
+  swf & swfstore 升级
 
-  augment 对 constructor 的覆盖问题，可尝试 yui3 的问题
-  研究 jQuery EasyUI - http://jquery-easyui.wikidot.com/document
-  龙刚反馈图片延迟加载组件导致部分频道页面的轮播图片不正常
-  ie7 有这样的 bug： 当 ua 字节超过 260 时，会返回为 IE6 http://jamiethompson.co.uk/web/2008/07/23/an-ie7-bug-that-returns-msie-60-user-agent-string/
-  有脚：reset.css 里要不要加个 button{*visibility:visible} /* fix ie doulbe padding bug */ 不然老要在项目里重置这个
-  实现 tmp/JSlide.rar 中的特效
+  cssmodules - 沉鱼
+  imagezoom - 乔花
+  calendar - 拔赤
+  draggable - 子涯
+  overlay - 玉伯
+  combobox - 清羽
+  kissyui.com - 明城
+
+  零散需求：
+   - augment 对 constructor 的覆盖问题，可尝试 yui3 的问题
+   - 龙刚反馈图片延迟加载组件导致部分频道页面的轮播图片不正常
+   - 实现 tmp/JSlide.rar 中的特效
 
   除 editor 之外的组件都去除对 YUI 的依赖，首页重构为仅依赖 kissy
   check and test all components
@@ -56,6 +56,9 @@
  2010 下半年
 
   drag & drop
+  研究 jQuery EasyUI - http://jquery-easyui.wikidot.com/document
+  研究 Sencha Touch - http://www.sencha.com/products/touch/
+
   基本底层组件思考：switchable, positionable, selectable( suggest 和 combobox 的下拉框)
 
   图片上传组件
