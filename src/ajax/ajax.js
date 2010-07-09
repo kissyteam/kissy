@@ -4,8 +4,21 @@
  */
 KISSY.add('ajax', function(S) {
 
-    var doc = document,
-        UA = S.UA;
+    var doc = document
+        ,testNode = doc.createElement("script")
+        //try branching
+        ,jsonP = testNode.readyState ? function(node, callback) {
+        node.onreadystatechange = function() {
+            var rs = node.readyState;
+            if (rs === 'loaded' || rs === 'complete') {
+                // handle memory leak in IE
+                node.onreadystatechange = null;
+                callback.call(this);
+            }
+        };
+    } : function(node, callback) {
+        node.onload = callback;
+    };
 
     S.Ajax = {
 
@@ -24,22 +37,11 @@ KISSY.add('ajax', function(S) {
                 node = doc.createElement('script');
 
             node.src = url;
-            if(charset) node.charset = charset;
+            if (charset) node.charset = charset;
             node.async = true;
 
             if (S.isFunction(callback)) {
-                if (UA.ie) {
-                    node.onreadystatechange = function() {
-                        var rs = node.readyState;
-                        if (rs === 'loaded' || rs === 'complete') {
-                            // handle memory leak in IE
-                            node.onreadystatechange = null;
-                            callback.call(this);
-                        }
-                    };
-                } else {
-                    node.onload = callback;
-                }
+                jsonP(node, callback);
             }
 
             head.appendChild(node);
