@@ -1,4 +1,4 @@
-/**
+﻿/**
  provides a swf based audio implementation
  **/
 KISSY.add("swfaudio", function (KS, undefined) {

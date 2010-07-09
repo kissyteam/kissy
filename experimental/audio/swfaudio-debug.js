@@ -1,4 +1,4 @@
-/**
+﻿/**
  provides a swf based audio implementation
  **/
 KISSY.add("swfaudio", function (S, undefined) {
@@ -1263,7 +1263,7 @@ KISSY.add("swfaudio", function (S, undefined) {
                 try {
                     sm2Debugger.handleEvent(sEventType, bSuccess, sMessage);
                 } catch(e) {
-                    // oh well  
+                    // oh well
                 }
             }
         };
@@ -1738,7 +1738,7 @@ KISSY.add("swfaudio", function (S, undefined) {
             this.isHTML5 = false;
             // --- public methods ---
             this.id3 = {
-                /* 
+                /*
         Name/value pairs eg. this.id3.songname set via Flash when available - download docs for reference
         http://livedocs.macromedia.com/flash/8/
       */

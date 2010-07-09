@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Provides a simple swf based audio implementation,for complex see swfaudio.js and audio.html
  *@author yiminghe@gmail.com(chengyu)
  */
