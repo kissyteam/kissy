@@ -232,7 +232,7 @@ KISSY.add("digital-clock", function (S, undefined) {
             var second = new ClockNumber({
                 zoomLimit: this.get("zoomLimit")
             });
-            second._domNode.addClass("ks-digitalclock-seconds").appendTo(self._container);
+            second._domNode.addClass("ks-digitalclock-seconds").appendTo(self._container[0]);
             self._ns.push(second);
         }
         self._container.appendTo(self.get("container"));
