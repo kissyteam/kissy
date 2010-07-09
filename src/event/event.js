@@ -156,6 +156,11 @@ KISSY.add('event', function(S, undefined) {
         },
 
         _handle: function(target, event, listeners, scope) {
+            /* As some listeners may remove themselves from the
+             event, the original array length is dynamic. So,
+             let's make a copy of all listeners, so we are
+             sure we'll call all of them.*/
+            listeners = listeners.slice(0);
             var ret, i = 0, len = listeners.length;
             scope = scope || target;
 
@@ -207,6 +212,8 @@ KISSY.add('event', function(S, undefined) {
             });
             return true;
         }
+        //for green
+        return false;
     }
 
     function getID(target) {
@@ -225,6 +232,8 @@ KISSY.add('event', function(S, undefined) {
             // iframe 跨域等情况会报错
             S.error(ex);
         }
+        //for green
+        return id;
     }
 
     function removeID(target) {
