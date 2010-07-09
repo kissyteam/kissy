@@ -31,7 +31,7 @@
 
   [紧急] switchable 需求征集（增加最后一张和最前一张的事件） & 重构
   [紧急] calendar 模块重构
-  suggest 重构
+  suggest 重构，更新首页搜索提示，添加 bts [0716]
   datalazyload bug in iPad + 重构 + 详细测试
   swf & swfstore 升级
 
@@ -50,6 +50,7 @@
    - augment 对 constructor 的覆盖问题，可尝试 yui3 的问题
    - 龙刚反馈图片延迟加载组件导致部分频道页面的轮播图片不正常
    - 实现 tmp/JSlide.rar 中的特效
+   - port 拔赤 cubee 中的组件
 
 ----------------------
  2010 下半年
