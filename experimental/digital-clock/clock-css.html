@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>电子时钟</title>
+<link href="digital-clock.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../build/packages/ks-core.js"></script>
+<script type="text/javascript" src="../../build/node/node-pkg.js"></script>
+<script type="text/javascript" src="../attribute/attribute.js"></script>
+<script type="text/javascript" src="digital-clock.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+
+</head>
+<body class="yui3-skin-sam  yui-skin-sam">
+<div>
+    <label for="horiz_value">
+        放大倍数：
+        <input id="horiz_value" readonly style="border:none;"/>
+
+    </label>
+    <p>
+        <span class="horiz_slider"></span>
+    </p>
+</div>
+<div id="clock_con">
+</div>
+
+<script type="text/javascript">
+    KISSY.ready(function (S) {
+        var clock = new S.DigitalClock({
+            container: S.one("#clock_con")[0],
+            //trangle will disappear when zoom < zoomLimit
+            zoomLimit: S.UA.ie == 6 ? 0.2 : 0.15,
+            zoom:1
+        });
+
+        setInterval(function () {
+            clock.set("date", new Date());
+        },
+                1000);
+
+
+        YUI().use("slider", function (Y) {
+            var xSlider = new Y.Slider({
+                value: clock.get("zoom") * 100
+            });
+            xSlider.render('.horiz_slider');
+            xSlider.after("valueChange", function (e) {
+                var z = e.newVal / 100;
+                //console.log("zoom : " + z);
+                clock.set("zoom", z);
+            });
+            // Link the input value to the Slider
+            var xInput = Y.one("#horiz_value");
+            xInput.setData({
+                slider: xSlider
+            });
+            xInput.set("value", clock.get("zoom") * 100);
+            // Pass the input as the 'this' object inside updateInput
+            xSlider.after("valueChange", updateInput, xInput);
+            function updateInput(e) {
+                this.set("value", e.newVal);
+            }
+        });
+    });
+</script>
+</body>
+
+</html>
+
+

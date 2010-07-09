@@ -1,0 +1,161 @@
+.ks-digitalclock-container {
+    position: relative;
+    float: left;
+    display: inline;
+    overflow: hidden;
+    /*width:110px;
+            height:200px;
+            margin:0 10px;*/
+}
+
+.ks-digitalclock-element {
+    position: absolute;
+    overflow: hidden;
+    top: 0px;
+    left: 0px;
+    /*width:20px;
+    height:97px;		*/
+}
+
+.ks-digitalclock-first, .ks-digitalclock-last {
+    display: block;
+    border-style: dashed;
+    width: 0;
+    height: 0;
+    overflow: hidden; /*border-width:10px;*/
+}
+
+.ks-digitalclock-bar {
+    background-color: #565656; /*height:67px;*/
+}
+
+.ks-digitalclock-e2, .ks-digitalclock-e4 {
+/*top:104px;*/
+}
+
+.ks-digitalclock-e1 .ks-digitalclock-first, .ks-digitalclock-e5 .ks-digitalclock-first {
+/*border-width:10px;*/
+    border-bottom-style: solid;
+    border-color: transparent transparent #565656 transparent;
+}
+
+.ks-digitalclock-e1 .ks-digitalclock-last {
+/*border-width:5px 10px;*/
+    border-top-style: solid;
+    border-left-style: solid;
+    border-color: #565656 transparent transparent #565656;
+}
+
+.ks-digitalclock-e2 .ks-digitalclock-first {
+/*border-width:5px 10px;*/
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-color: transparent transparent #565656 #565656;
+}
+
+.ks-digitalclock-e2 .ks-digitalclock-last, .ks-digitalclock-e4 .ks-digitalclock-last {
+/*border-width:10px 10px;*/
+    border-top-style: solid;
+    border-color: #565656 transparent transparent transparent;
+}
+
+.ks-digitalclock-e4, .ks-digitalclock-e5 {
+/*left:99px;*/
+}
+
+.ks-digitalclock-e4 .ks-digitalclock-first {
+/*border-width:5px 10px;*/
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-color: transparent #565656 #565656 transparent;
+}
+
+.ks-digitalclock-e5 .ks-digitalclock-last {
+/*border-width:5px 10px;*/
+    border-top-style: solid;
+    border-right-style: solid;
+    border-color: #565656 #565656 transparent transparent;
+}
+
+.ks-digitalclock-horizonal {
+    /*width:107px;
+      height:20px;
+      left:6px;*/
+}
+
+.ks-digitalclock-horizonal * {
+    float: left;
+}
+
+.ks-digitalclock-horizonal .ks-digitalclock-bar {
+    /*width:67px;
+      height:20px;*/
+}
+
+.ks-digitalclock-e3 {
+    /*left:6px;
+      top:180px;*/
+}
+
+.ks-digitalclock-horizonal .ks-digitalclock-first {
+    border-right-style: solid;
+    border-color: transparent #565656 transparent transparent;
+}
+
+.ks-digitalclock-horizonal .ks-digitalclock-last {
+    border-left-style: solid;
+    border-color: transparent transparent transparent #565656;
+}
+
+.ks-digitalclock-ex {
+    top: 90px;
+}
+
+.ks-digitalclock-colon-top, .ks-digitalclock-colon-bottom {
+    border-style: dashed;
+    overflow: hidden;
+    display: block;
+    height: 0;
+    width: 0; /*border-width:10px;*/
+}
+
+.ks-digitalclock-colon-top {
+    border-bottom-style: solid;
+    border-color: transparent transparent #565656 transparent;
+}
+
+.ks-digitalclock-colon-bottom {
+    border-top-style: solid;
+    border-color: #565656 transparent transparent transparent;
+}
+
+.ks-digitalclock-colon1, .ks-digitalclock-colon2 {
+    position: absolute; /*left:40px;*/
+}
+
+.ks-digitalclock-colon1 {
+/*top:60px;*/
+}
+
+.ks-digitalclock-colon2 {
+/*top:90px;*/
+}
+
+.ks-digitalclock-border {
+/*width:650px;*/
+    overflow: hidden;
+}
+.ks-digitalclock-seconds {
+    margin-top:15%;
+}
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    zoom: 1;
+}
