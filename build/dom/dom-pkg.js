@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 819 Jul 8 12:35
+build: 824 Jul 9 09:38
 */
 /**
  * @module  dom
@@ -910,10 +910,12 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         FILTERS = 'filters',
         CURRENT_STYLE = 'currentStyle',
         LEFT = 'left',
+        PX = 'px',
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
 	    RE_NUM = /^-?\d/,
-        RE_SPECIAL = /^auto$/i;
+        RE_SPECIAL = /^auto$/i,
+        RE_WH = /^width|height$/;
 
     // use alpha filter for IE opacity
     try {
@@ -963,17 +965,23 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             var style = elem.style,
                 ret = elem[CURRENT_STYLE][name];
 
+            // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
+            // 在 ie 下不对，需要直接用 offset 方式
+            // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
+            if(RE_WH.test(name)) {
+                ret = DOM[name](elem) + PX;
+            }
             // From the awesome hack by Dean Edwards
             // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
-            if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret)) || RE_SPECIAL.test(ret)) {
+            else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret)) || RE_SPECIAL.test(ret)) {
                 // Remember the original values
                 var left = style[LEFT];
 
                 // Put in the new values to get a computed value out
                 style[LEFT] = (name === 'fontSize') ? '1em' : (ret || 0);
-                ret = style['pixelLeft'] + 'px';
+                ret = style['pixelLeft'] + PX;
 
                 // Revert the changed values
                 style[LEFT] = left;

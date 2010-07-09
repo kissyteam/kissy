@@ -145,12 +145,16 @@
     YUI().use('node', function(Y) {
         t = S.get('#test2');
 
-        // 都返回 80%
-        //alert(t.style.width);
-        //alert(DOM.css(t, 'width'));
-        //alert(jQuery(t).css('width'));
-        //alert(Ext.get(t).getStyle('width'));
-        //alert(Y.one(t).getStyle('width'));
+        // ext 返回 80%
+        // jquery 多 4px
+        // yui3 是对的
+//        alert('kissy: ' + DOM.css(t, 'width') +
+//              ' jquery: ' + jQuery(t).css('width') +
+//              ' ext: ' + Ext.get(t).getStyle('width') +
+//              //' ext: ' + Ext.get(t).getWidth(true) +
+//              ' yui3: ' + Y.one(t).getStyle('width')
+//             );
+//        alert('KISSY.DOM.width = ' + DOM.width(t));
     });
 
 </script>

@@ -852,7 +852,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 819 Jul 8 12:35
+build: 824 Jul 9 09:38
 */
 /**
  * @module  dom
@@ -1761,10 +1761,12 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         FILTERS = 'filters',
         CURRENT_STYLE = 'currentStyle',
         LEFT = 'left',
+        PX = 'px',
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
 	    RE_NUM = /^-?\d/,
-        RE_SPECIAL = /^auto$/i;
+        RE_SPECIAL = /^auto$/i,
+        RE_WH = /^width|height$/;
 
     // use alpha filter for IE opacity
     try {
@@ -1814,17 +1816,23 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             var style = elem.style,
                 ret = elem[CURRENT_STYLE][name];
 
+            // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
+            // 在 ie 下不对，需要直接用 offset 方式
+            // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
+            if(RE_WH.test(name)) {
+                ret = DOM[name](elem) + PX;
+            }
             // From the awesome hack by Dean Edwards
             // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
-            if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret)) || RE_SPECIAL.test(ret)) {
+            else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret)) || RE_SPECIAL.test(ret)) {
                 // Remember the original values
                 var left = style[LEFT];
 
                 // Put in the new values to get a computed value out
                 style[LEFT] = (name === 'fontSize') ? '1em' : (ret || 0);
-                ret = style['pixelLeft'] + 'px';
+                ret = style['pixelLeft'] + PX;
 
                 // Revert the changed values
                 style[LEFT] = left;
@@ -3209,6 +3217,69 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
+build: 814 Jul 7 23:11
+*/
+/**
+ * @module  ajax
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('ajax', function(S) {
+
+    var doc = document,
+        UA = S.UA;
+
+    S.Ajax = {
+
+        /**
+         * Sends an HTTP request to a remote server.
+         */
+        request: function(/*url, options*/) {
+            S.error('not implemented'); // TODO
+        },
+
+        /**
+         * Load a JavaScript file from the server using a GET HTTP request, then execute it.
+         */
+        getScript: function(url, callback, charset) {
+            var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+                node = doc.createElement('script');
+
+            node.src = url;
+            if(charset) node.charset = charset;
+            node.async = true;
+
+            if (S.isFunction(callback)) {
+                if (UA.ie) {
+                    node.onreadystatechange = function() {
+                        var rs = node.readyState;
+                        if (rs === 'loaded' || rs === 'complete') {
+                            // handle memory leak in IE
+                            node.onreadystatechange = null;
+                            callback.call(this);
+                        }
+                    };
+                } else {
+                    node.onload = callback;
+                }
+            }
+
+            head.appendChild(node);
+        }
+    };
+
+});
+
+/**
+ * NOTES:
+ *  2010.04
+ *   - api 考虑：jQuery 的全耦合在 jQuery 对象上，ajaxComplete 等方法不优雅。
+ *         YUI2 的 YAHOO.util.Connect.Get.script 层级太深，YUI3 的 io 则
+ *         野心过大，KISSY 借鉴 ExtJS, 部分方法借鉴 jQuery.
+ *
+ */
+/*
+Copyright 2010, KISSY UI Library v1.0.8
+MIT Licensed
 build: 811 Jul 7 23:02
 */
 /**
@@ -3295,7 +3366,7 @@ KISSY.add('cookie', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 811 Jul 7 23:03
+build: 823 Jul 8 18:10
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -3313,7 +3384,7 @@ KISSY.add('json', function (S) {
 
     if (typeof Date.prototype.toJSON !== 'function') {
 
-        Date.prototype.toJSON = function (key) {
+        Date.prototype.toJSON = function () {
 
             return isFinite(this.valueOf()) ?
                    this.getUTCFullYear() + '-' +
@@ -3326,7 +3397,7 @@ KISSY.add('json', function (S) {
 
         String.prototype.toJSON =
         Number.prototype.toJSON =
-        Boolean.prototype.toJSON = function (key) {
+        Boolean.prototype.toJSON = function () {
             return this.valueOf();
         };
     }
@@ -3621,69 +3692,6 @@ KISSY.add('json', function (S) {
         };
     }
 });
-/*
-Copyright 2010, KISSY UI Library v1.0.8
-MIT Licensed
-build: 814 Jul 7 23:11
-*/
-/**
- * @module  ajax
- * @author  lifesinger@gmail.com
- */
-KISSY.add('ajax', function(S) {
-
-    var doc = document,
-        UA = S.UA;
-
-    S.Ajax = {
-
-        /**
-         * Sends an HTTP request to a remote server.
-         */
-        request: function(/*url, options*/) {
-            S.error('not implemented'); // TODO
-        },
-
-        /**
-         * Load a JavaScript file from the server using a GET HTTP request, then execute it.
-         */
-        getScript: function(url, callback, charset) {
-            var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-                node = doc.createElement('script');
-
-            node.src = url;
-            if(charset) node.charset = charset;
-            node.async = true;
-
-            if (S.isFunction(callback)) {
-                if (UA.ie) {
-                    node.onreadystatechange = function() {
-                        var rs = node.readyState;
-                        if (rs === 'loaded' || rs === 'complete') {
-                            // handle memory leak in IE
-                            node.onreadystatechange = null;
-                            callback.call(this);
-                        }
-                    };
-                } else {
-                    node.onload = callback;
-                }
-            }
-
-            head.appendChild(node);
-        }
-    };
-
-});
-
-/**
- * NOTES:
- *  2010.04
- *   - api 考虑：jQuery 的全耦合在 jQuery 对象上，ajaxComplete 等方法不优雅。
- *         YUI2 的 YAHOO.util.Connect.Get.script 层级太深，YUI3 的 io 则
- *         野心过大，KISSY 借鉴 ExtJS, 部分方法借鉴 jQuery.
- *
- */
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
