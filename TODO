@@ -26,21 +26,24 @@
   node - done
   nodelist - done
   
-  ajax - 玉伯
-  anim - 玉伯
-  S.require - 玉伯
+  ajax - 20%
+  anim - 10%
 
-  switchable 需求征集（增加最后一张和最前一张的事件） & 重构
+  [紧急] switchable 需求征集（增加最后一张和最前一张的事件） & 重构
+  [紧急] calendar 模块重构
   suggest 重构
   datalazyload bug in iPad + 重构 + 详细测试
   swf & swfstore 升级
 
-  cssmodules - 沉鱼
-  imagezoom - 乔花
+  loader - 拔赤        0716
+  cssmodules - 沉鱼    0730
+  imagezoom - 乔花     
   calendar - 拔赤
   draggable - 子涯
   overlay - 玉伯
   combobox - 清羽
+  template - 文河
+  form - 阿大
   kissyui.com - 明城
 
   零散需求：
@@ -48,29 +51,26 @@
    - 龙刚反馈图片延迟加载组件导致部分频道页面的轮播图片不正常
    - 实现 tmp/JSlide.rar 中的特效
 
-  除 editor 之外的组件都去除对 YUI 的依赖，首页重构为仅依赖 kissy
-  check and test all components
-  release 1.1.0
-
 ----------------------
  2010 下半年
 
-  drag & drop
+  editor - 承玉
+  datagrid - 沉鱼
+  tree - 沉鱼
+  button - 乔花
+  droppable - 渔隐
+  resizable - 云谦
+  uploader
+
   研究 jQuery EasyUI - http://jquery-easyui.wikidot.com/document
   研究 Sencha Touch - http://www.sencha.com/products/touch/
-
   基本底层组件思考：switchable, positionable, selectable( suggest 和 combobox 的下拉框)
 
-  图片上传组件
-  编辑器二期
   完善 docs
-
   整理 TBra 1.0 中的 pickDomain 等实用方法
-  整理 TBra 2.1
-  放入 code.taobao.com
+  放入 code.taobao.com, 推广
+  kissyui.com 站点的建设与推广
 
 -----------------------
  零散记事：
-  - inputHint 组件
   - 双飞翼布局申请专利
-  - 倒计时组件
