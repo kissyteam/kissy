@@ -2352,7 +2352,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 811 Jul 7 23:02
+build: 843 Jul 10 10:45
 */
 /**
  * @module  event
@@ -2512,6 +2512,12 @@ KISSY.add('event', function(S, undefined) {
         },
 
         _handle: function(target, event, listeners, scope) {
+            /* As some listeners may remove themselves from the
+             event, the original array length is dynamic. So,
+             let's make a copy of all listeners, so we are
+             sure we'll call all of them.*/
+            listeners = listeners.slice(0);
+
             var ret, i = 0, len = listeners.length;
             scope = scope || target;
 
@@ -2542,7 +2548,6 @@ KISSY.add('event', function(S, undefined) {
     Event.on = Event.add;
 
     function batch(methodName, targets, types, fn, scope) {
-
         // on('#id tag.className', type, fn)
         if (S.isString(targets)) {
             targets = S.query(targets);
@@ -3217,7 +3222,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 814 Jul 7 23:11
+build: 843 Jul 10 10:45
 */
 /**
  * @module  ajax
@@ -3226,7 +3231,20 @@ build: 814 Jul 7 23:11
 KISSY.add('ajax', function(S) {
 
     var doc = document,
-        UA = S.UA;
+        testNode = doc.createElement('script'),
+        // try branching
+        fn = testNode.readyState ? function(node, callback) {
+            node.onreadystatechange = function() {
+                var rs = node.readyState;
+                if (rs === 'loaded' || rs === 'complete') {
+                    // handle memory leak in IE
+                    node.onreadystatechange = null;
+                    callback.call(this);
+                }
+            };
+        } : function(node, callback) {
+            node.onload = callback;
+        };
 
     S.Ajax = {
 
@@ -3245,22 +3263,11 @@ KISSY.add('ajax', function(S) {
                 node = doc.createElement('script');
 
             node.src = url;
-            if(charset) node.charset = charset;
+            if (charset) node.charset = charset;
             node.async = true;
 
             if (S.isFunction(callback)) {
-                if (UA.ie) {
-                    node.onreadystatechange = function() {
-                        var rs = node.readyState;
-                        if (rs === 'loaded' || rs === 'complete') {
-                            // handle memory leak in IE
-                            node.onreadystatechange = null;
-                            callback.call(this);
-                        }
-                    };
-                } else {
-                    node.onload = callback;
-                }
+                fn(node, callback);
             }
 
             head.appendChild(node);

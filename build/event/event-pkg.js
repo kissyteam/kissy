@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 811 Jul 7 23:02
+build: 843 Jul 10 10:45
 */
 /**
  * @module  event
@@ -161,6 +161,12 @@ KISSY.add('event', function(S, undefined) {
         },
 
         _handle: function(target, event, listeners, scope) {
+            /* As some listeners may remove themselves from the
+             event, the original array length is dynamic. So,
+             let's make a copy of all listeners, so we are
+             sure we'll call all of them.*/
+            listeners = listeners.slice(0);
+
             var ret, i = 0, len = listeners.length;
             scope = scope || target;
 
@@ -191,7 +197,6 @@ KISSY.add('event', function(S, undefined) {
     Event.on = Event.add;
 
     function batch(methodName, targets, types, fn, scope) {
-
         // on('#id tag.className', type, fn)
         if (S.isString(targets)) {
             targets = S.query(targets);

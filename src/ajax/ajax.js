@@ -4,21 +4,21 @@
  */
 KISSY.add('ajax', function(S) {
 
-    var doc = document
-        ,testNode = doc.createElement("script")
-        //try branching
-        ,jsonP = testNode.readyState ? function(node, callback) {
-        node.onreadystatechange = function() {
-            var rs = node.readyState;
-            if (rs === 'loaded' || rs === 'complete') {
-                // handle memory leak in IE
-                node.onreadystatechange = null;
-                callback.call(this);
-            }
+    var doc = document,
+        testNode = doc.createElement('script'),
+        // try branching
+        fn = testNode.readyState ? function(node, callback) {
+            node.onreadystatechange = function() {
+                var rs = node.readyState;
+                if (rs === 'loaded' || rs === 'complete') {
+                    // handle memory leak in IE
+                    node.onreadystatechange = null;
+                    callback.call(this);
+                }
+            };
+        } : function(node, callback) {
+            node.onload = callback;
         };
-    } : function(node, callback) {
-        node.onload = callback;
-    };
 
     S.Ajax = {
 
@@ -41,7 +41,7 @@ KISSY.add('ajax', function(S) {
             node.async = true;
 
             if (S.isFunction(callback)) {
-                jsonP(node, callback);
+                fn(node, callback);
             }
 
             head.appendChild(node);

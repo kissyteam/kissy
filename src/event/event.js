@@ -161,6 +161,7 @@ KISSY.add('event', function(S, undefined) {
              let's make a copy of all listeners, so we are
              sure we'll call all of them.*/
             listeners = listeners.slice(0);
+
             var ret, i = 0, len = listeners.length;
             scope = scope || target;
 
@@ -191,7 +192,6 @@ KISSY.add('event', function(S, undefined) {
     Event.on = Event.add;
 
     function batch(methodName, targets, types, fn, scope) {
-
         // on('#id tag.className', type, fn)
         if (S.isString(targets)) {
             targets = S.query(targets);
@@ -212,8 +212,6 @@ KISSY.add('event', function(S, undefined) {
             });
             return true;
         }
-        //for green
-        return false;
     }
 
     function getID(target) {
@@ -232,8 +230,6 @@ KISSY.add('event', function(S, undefined) {
             // iframe 跨域等情况会报错
             S.error(ex);
         }
-        //for green
-        return id;
     }
 
     function removeID(target) {
