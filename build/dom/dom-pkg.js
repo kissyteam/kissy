@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 824 Jul 9 09:38
+build: 846 Jul 11 00:09
 */
 /**
  * @module  dom
@@ -1254,13 +1254,96 @@ KISSY.add('dom-create', function(S, undefined) {
         RE_TAG = /<(\w+)/,
         RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
 
+    /**
+     * call calbbakc when node of id is operable
+     * @param id node's id
+     * @param callback
+     */
+    function available(id, callback) {
+        var timer = setInterval(function() {
+            if (doc.getElementById(id)) {
+                clearInterval(timer);
+                callback && callback();
+            }
+        }, 100);
+    }
+
+    /**
+     * set html with script optional to dom node
+     * @param dom
+     * @param html
+     * @param loadScripts whether ignore the script in html
+     * @param callback after set html call callback
+     * @refer http://yiminghe.javaeye.com/blog/459087
+     */
+    function updateHtml(dom, html, loadScripts, callback) {
+
+        if (typeof html == "undefined") {
+            html = "";
+        }
+        //如果指明不包含脚本直接执行哦
+        if (loadScripts !== true) {
+            dom.innerHTML = html;
+            callback && callback();
+            return;
+        }
+        var id = "kissy_tmp_" + S.id();
+
+        html += '<span id="' + id + '"></span>';
+
+        //定时判断id span是否已经解析完毕，span 解析完了，那么html也解析完了，span在他前面么
+        //防止 html 脚本中引用到 html 中的元素
+        available(id, function() {
+            var hd = document.getElementsByTagName("head")[0],
+                //脚本识别
+                re = /(?:<script([^>]*)?>)((\n|\r|.)*?)(?:<\/script>)/ig,
+                //外部脚本识别
+                srcRe = /\ssrc=([\'\"])(.*?)\1/i,
+
+                typeRe = /\stype=([\'\"])(.*?)\1/i,
+
+                match;
+            //html中包含有脚本，提炼出来单独执行
+            while (match = re.exec(html)) {
+                var attrs = match[1];
+                var srcMatch = attrs ? attrs.match(srcRe) : false;
+
+                //外部脚本，在head中添加dom标签，动态载入脚本
+                if (srcMatch && srcMatch[2]) {
+                    var s = document.createElement("script");
+                    s.src = srcMatch[2];
+                    var typeMatch = attrs.match(typeRe);
+                    if (typeMatch && typeMatch[2]) {
+                        s.type = typeMatch[2];
+                    }
+                    hd.appendChild(s);
+
+                    // 内部脚本直接运行
+                } else if (match[2] && match[2].length > 0) {
+
+                    S.globalEval(match[2]);
+                }
+            }
+
+            //删除检测html节点载入完毕指示元素
+            var el = document.getElementById(id);
+            if (el) {
+                el.parentNode.removeChild(el);
+            }
+            callback && callback();
+        });
+
+        //只赋值html即可，脚本在html解析完毕后单独运行
+        dom.innerHTML = html.replace(/(?:<script.*?>)((\n|\r|.)*?)(?:<\/script>)/ig, "");
+    }
+
     S.mix(DOM, {
 
         /**
          * Creates a new HTMLElement using the provided html string.
          */
         create: function(html, props, ownerDoc) {
-            if(isElementNode(html)) return html;
+            if (isElementNode(html)) return html;
             if (!(html = S.trim(html))) return null;
 
             var ret = null, creators = DOM._creators,
@@ -1301,8 +1384,12 @@ KISSY.add('dom-create', function(S, undefined) {
 
         /**
          * Gets/Sets the HTML contents of the HTMLElement.
+         * @param selector{NodeList/String}
+         * @param val{String}
+         * @param loadScripts{Boolean} whether eval script in html
+         * @param callback{Function} after html set ,callback called
          */
-        html: function(selector, val) {
+        html: function(selector, val, loadScripts, callback) {
             // getter
             if (val === undefined) {
                 // supports css selector/Node/NodeList
@@ -1317,17 +1404,7 @@ KISSY.add('dom-create', function(S, undefined) {
             else {
                 S.each(S.query(selector), function(elem) {
                     if (isElementNode(elem)) {
-                        try {
-                            elem.innerHTML = '';
-                        // 比如 table.innerHTML = '' 在 ie 下会抛错
-                        } catch(e) {
-                            // Remove any remaining nodes
-                            while (elem.firstChild) {
-                                elem.removeChild(elem.firstChild);
-                            }
-                        }
-                        // 排除掉 val == '' 的情况
-                        if (val) elem.appendChild(DOM.create(val));
+                        updateHtml(elem, val, loadScripts, callback);
                     }
                 });
             }

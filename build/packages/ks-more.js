@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 811 Jul 7 23:02
+build: 846 Jul 11 00:09
 */
 /**
  * @module  cookie
@@ -87,7 +87,7 @@ KISSY.add('cookie', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 823 Jul 8 18:10
+build: 846 Jul 11 00:10
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -416,7 +416,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 811 Jul 7 23:03
+build: 846 Jul 11 00:10
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0

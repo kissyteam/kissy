@@ -1,11 +1,11 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 846 Jul 11 00:09
 */
 /*
 CSS Reset for Post
-Î¬»¤£ºÓñ²®(lifesinger@gmail.com)
+Î¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(lifesinger@gmail.com)
 */
 
 .ks-editor-post {
@@ -34,8 +34,8 @@ CSS Reset for Post
 	margin-left: 1em;
 }
 
-/* Ö»ÓÐÍ¨¹ý ks editor ´´½¨µÄ±í¸ñ²ÅÓÐÏÂÃæÕâÐ©ÑùÊ½
-   ÒòÎªÓÐ²»ÉÙÓÃ»§µÄÄ£°å»ùÓÚ table ²¼¾Ö */
+/* Ö»ï¿½ï¿½Í¨ï¿½ï¿½ ks editor ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð©ï¿½ï¿½Ê½
+   ï¿½ï¿½Îªï¿½Ð²ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ table ï¿½ï¿½ï¿½ï¿½ */
 .ks-editor-post-table {
     margin-bottom: 1em;
 }

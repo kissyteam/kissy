@@ -1,13 +1,12 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 846 Jul 11 00:09
 */
 /**
  * @module kissy
  * @author lifesinger@gmail.com
  */
-
 (function(win, S, undefined) {
 
     // If KISSY is already defined, the existing KISSY object will not
@@ -17,7 +16,7 @@ build: 524 Apr 6 09:10
 
     var doc = win.document,
 
-        // Copies all the properties of s to r.
+        // Copies all the properties of s to r
         mix = function(r, s, ov, wl) {
             if (!s || !r) return r;
             if (ov === undefined) ov = true;
@@ -49,37 +48,40 @@ build: 524 Apr 6 09:10
         readyList = [],
 
         // Has the ready events already been bound?
-        readyBound = false;
+        readyBound = false,
+
+        //global id control
+        _id=0;
 
     mix(S, {
-
+        /**
+         * return global unique id
+         */
+        id:function(){
+            return (_id++);
+        },
         /**
          * The version of the library.
-         * @type {string}
+         * @type {String}
          */
-        version: '1.0.5',
+        version: '1.0.8',
 
         /**
          * Initializes KISSY object.
          * @private
          */
         _init: function() {
-            this.Env = {
-                mods: {}
-            };
-
-            this.Config = {
-                debug: true
-            };
+            // Env å¯¹è±¡ç›®å‰ä»…ç”¨äºå†…éƒ¨ï¼Œä¸ºæ¨¡å—åŠ¨æ€åŠ è½½é¢„ç•™æ¥å£
+            this.Env = { mods: {} };
         },
 
         /**
          * Registers a module.
-         * @param {string} name module name
-         * @param {function} fn entry point into the module that is used to bind module to KISSY
-         * <pre>
+         * @param name {String} module name
+         * @param fn {Function} entry point into the module that is used to bind module to KISSY
+         * <code>
          * KISSY.add('module-name', function(S){ });
-         * </pre>
+         * </code>
          * @return {KISSY}
          */
         add: function(name, fn) {
@@ -100,10 +102,10 @@ build: 524 Apr 6 09:10
 
         /**
          * Specify a function to execute when the DOM is fully loaded.
-         * @param {function} fn A function to execute after the DOM is ready
-         * <pre>
+         * @param fn {Function} A function to execute after the DOM is ready
+         * <code>
          * KISSY.ready(function(S){ });
-         * </pre>
+         * </code>
          * @return {KISSY}
          */
         ready: function(fn) {
@@ -128,46 +130,56 @@ build: 524 Apr 6 09:10
         _bindReady: function() {
             var self = this,
                 doScroll = doc.documentElement.doScroll,
-                eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded';
+                eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
+                COMPLETE = 'complete',
+                fire = function() {
+                    self._fireReady();
+                };
 
             // Set to true once it runs
             readyBound = true;
 
+            // Catch cases where ready() is called after the
+            // browser event has already occurred.
+            if (doc.readyState === COMPLETE) {
+                return fire();
+            }
+
+            // w3c mode
+            if (doc.addEventListener) {
+                function domReady() {
+                    doc.removeEventListener(eventType, domReady, false);
+                    fire();
+                }
+                doc.addEventListener(eventType, domReady, false);
+            }
             // IE event model is used
-            if (doc.attachEvent) {
-                if (win != win.top) { // iframe
-                    function stateChange() {
-                        if (doc.readyState === 'complete') {
-                            // remove onreadystatechange listener
-                            doc.detachEvent(eventType, stateChange);
-                            self._fireReady();
-                        }
+            else {
+                function stateChange() {
+                    if (doc.readyState === COMPLETE) {
+                        doc.detachEvent(eventType, stateChange);
+                        fire();
                     }
-                    doc.attachEvent(eventType, stateChange);
-                } else {
+                }
+
+                // ensure firing before onload, maybe late but safe also for iframes
+                doc.attachEvent(eventType, stateChange);
+
+                // A fallback to window.onload, that will always work.
+                win.attachEvent('onload', fire);
+
+                if (win == win.top) { // not an iframe
                     function readyScroll() {
                         try {
                             // Ref: http://javascript.nwbox.com/IEContentLoaded/
                             doScroll('left');
-                            self._fireReady();
+                            fire();
                         } catch(ex) {
                             setTimeout(readyScroll, 1);
                         }
                     }
                     readyScroll();
                 }
-
-                // A fallback to window.onload, that will always work.
-                win.attachEvent('onload', function() {
-                    self._fireReady();
-                });
-                
-            } else { // w3c mode
-                function domReady() {
-                    doc.removeEventListener(eventType, domReady, false);
-                    self._fireReady();
-                }
-                doc.addEventListener(eventType, domReady, false);
             }
         },
 
@@ -195,7 +207,7 @@ build: 524 Apr 6 09:10
 
         /**
          * Copies all the properties of s to r.
-         * @return {object} the augmented object
+         * @return {Object} the augmented object
          */
         mix: mix,
 
@@ -204,37 +216,62 @@ build: 524 Apr 6 09:10
          * all the supplied objects. The properties from later objects
          * will overwrite those in earlier objects. Passing in a
          * single object will create a shallow copy of it.
-         * @return {object} the new merged object
+         * @return {Object} the new merged object
          */
         merge: function() {
-            var a = arguments, o = {}, i, l = a.length;
+            var o = {}, i, l = arguments.length;
             for (i = 0; i < l; ++i) {
-                mix(o, a[i]);
+                mix(o, arguments[i]);
             }
             return o;
+        },
+
+        /**
+         * Applies prototype properties from the supplier to the receiver.
+         * @return {Object} the augmented object
+         */
+        augment: function(/*r, s1, s2, ..., ov, wl*/) {
+            var args = arguments, len = args.length - 2,
+                r = args[0], ov = args[len], wl = args[len + 1],
+                i = 1;
+            
+            if(!S.isArray(wl)) {
+                ov = wl;
+                wl = undefined;
+                len++;
+            }
+
+            if(!S.isBoolean(ov)) {
+                ov = undefined;
+                len++;
+            }
+
+            for(; i < len; i++) {
+                mix(r.prototype, args[i].prototype || args[i], ov, wl);
+            }
+
+            return r;
         },
 
         /**
          * Utility to set up the prototype, constructor and superclass properties to
          * support an inheritance strategy that can chain constructors and methods.
          * Static members will not be inherited.
-         * @param {function} r the object to modify
-         * @param {function} s the object to inherit
-         * @param {object} px prototype properties to add/override
-         * @param {object} sx static properties to add/override
-         * @return {object} r
+         * @param r {Function} the object to modify
+         * @param s {Function} the object to inherit
+         * @param px {Object} prototype properties to add/override
+         * @param sx {Object} static properties to add/override
+         * @return r {Object}
          */
         extend: function(r, s, px, sx) {
             if (!s || !r) return r;
 
             var OP = Object.prototype,
                 O = function (o) {
-                    function F() {
-                    }
-
-                    F.prototype = o;
-                    return new F();
-                },
+                        function F() {}
+                        F.prototype = o;
+                        return new F();
+                    },
                 sp = s.prototype,
                 rp = O(sp);
 
@@ -261,69 +298,19 @@ build: 524 Apr 6 09:10
         },
 
         /**
-         * Applies prototype properties from the supplier to the receiver.
-         * @param {function} r  the object to receive the augmentation
-         * @param {function} s  the object that supplies the properties to augment
-         * @param {string[]} wl a whitelist
-         * @return {object} the augmented object
-         */
-        augment: function(r, s, ov, wl) {
-            return mix(r.prototype, s.prototype, ov, wl);
-        },
-
-        /**
-         * Execute the supplied method after the specified function.
-         * @param {function} fn the function to execute
-         * @param {string} when before or after
-         * @param {object} obj the object hosting the method to displace
-         * @param {string} sFn the name of the method to displace
-         */
-        weave: function(fn, when, obj, sFn) {
-            var arr = [obj[sFn], fn];
-            if (when === 'before') arr.reverse();
-
-            obj[sFn] = function() {
-                for (var i = 0, ret; i < 2; ++i) {
-                    ret = arr[i].apply(this, arguments);
-                }
-                return ret;
-            };
-            return this;
-        },
-
-        /**
-         * create app based on KISSY.
-         * <pre>
-         * S.app('TB');
-         * </pre>
-         * @return {object}  A reference to the app global object
-         */
-        app: function(name) {
-            var O = win[name] || {};
-
-            mix(O, this, true, ['_init', 'add', 'namespace']);
-            O._init();
-
-            return (win[name] = O);
-        },
-
-        /**
          * Returns the namespace specified and creates it if it doesn't exist. Be careful
          * when naming packages. Reserved words may work in some browsers and not others.
-         * <pre>
+         * <code>
          * S.namespace('KISSY.app'); // returns KISSY.app
          * S.namespace('app.Shop'); // returns KISSY.app.Shop
-         * S.app('TB');
-         * TB.namespace('TB.app'); // returns TB.app
-         * TB.namespace('app.Shop'); // returns TB.app.Shop
-         * </pre>
-         * @return {object}  A reference to the last namespace object created
+         * </code>
+         * @return {Object}  A reference to the last namespace object created
          */
         namespace: function() {
-            var a = arguments, l = a.length, o = null, i, j, p;
+            var l = arguments.length, o = null, i, j, p;
 
             for (i = 0; i < l; ++i) {
-                p = ('' + a[i]).split('.');
+                p = ('' + arguments[i]).split('.');
                 o = this;
                 for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
                     o = o[p[j]] = o[p[j]] || {};
@@ -333,63 +320,83 @@ build: 524 Apr 6 09:10
         },
 
         /**
+         * create app based on KISSY.
+         * @param name {String} the app name
+         * @param sx {Object} static properties to add/override
+         * <code>
+         * S.app('TB');
+         * TB.namespace('app'); // returns TB.app
+         * </code>
+         * @return {Object}  A reference to the app global object
+         */
+        app: function(name, sx) {
+            var O = win[name] || {};
+
+            mix(O, this, true, ['_init', 'add', 'namespace']);
+            O._init();
+
+            return mix((win[name] = O), typeof sx === 'function' ? sx() : sx);
+        },
+
+        /**
          * Prints debug info.
-         * @param {string} msg The message to log.
-         * @param {string} cat The log category for the message. Default
-         * categories are "info", "warn", "error", time" etc.
-         * @param {string} src The source of the the message (opt)
+         * @param msg {String} the message to log.
+         * @param cat {String} the log category for the message. Default
+         *        categories are "info", "warn", "error", "time" etc.
+         * @param src {String} the source of the the message (opt)
          * @return {KISSY}
          */
         log: function(msg, cat, src) {
-            var c = this.Config;
-
-            if (c.debug) {
-                src && (msg = src + ': ' + msg);
-                if (win.console !== undefined && console.log) {
+            if (this.Config.debug) {
+                if(src) {
+                    msg = src + ': ' + msg;
+                }
+                if (win['console'] !== undefined && console.log) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                 }
             }
-
             return this;
         },
 
         /**
          * Throws error message.
-         * @param msg
          */
         error: function(msg) {
-            throw msg;
-        },
-
-        /**
-         * get current timeStamp
-         */
-        now: function() {
-            return new Date().getTime();
+            if(this.Config.debug) {
+                throw msg;
+            }
         }
     });
 
     S._init();
 
+    // build æ—¶ï¼Œä¼šå°† @DEBUG@ æ›¿æ¢ä¸ºç©º
+    S.Config = { debug: '@DEBUG@' };
+
 })(window, 'KISSY');
 
 /**
- * Notes:
+ * NOTES:
+ *
+ * 2010.04
+ *  - ç§»é™¤æ‰ weave æ–¹æ³•ï¼Œå°šæœªè€ƒè™‘å‘¨å…¨ã€‚
  *
  * 2010.01
- *  - ¿¼ÂÇ¼òµ¥¹»ÓÃºÍ 2/8 Ô­Ôò£¬È¥µôÁË¶Ô YUI3 É³ÏäµÄÄ£Äâ£¨archives/2009 r402£©
+ *  - add æ–¹æ³•å†³å®šå†…éƒ¨ä»£ç çš„åŸºæœ¬ç»„ç»‡æ–¹å¼ï¼ˆç”¨ module å’Œ submodule æ¥ç»„ç»‡ä»£ç ï¼‰ã€‚
+ *  - ready æ–¹æ³•å†³å®šå¤–éƒ¨ä»£ç çš„åŸºæœ¬è°ƒç”¨æ–¹å¼ï¼Œæä¾›äº†ä¸€ä¸ªç®€å•çš„å¼±æ²™ç®±ã€‚
+ *  - mix, merge, augment, extend æ–¹æ³•ï¼Œå†³å®šäº†ç±»åº“ä»£ç çš„åŸºæœ¬å®ç°æ–¹å¼ï¼Œå……åˆ†åˆ©ç”¨ mixin ç‰¹æ€§å’Œ prototype æ–¹å¼æ¥å®ç°ä»£ç ã€‚
+ *  - namespace, app æ–¹æ³•ï¼Œå†³å®šå­åº“çš„å®ç°å’Œä»£ç çš„æ•´ä½“ç»„ç»‡ã€‚
+ *  - log, error æ–¹æ³•ï¼Œç®€å•çš„è°ƒè¯•å·¥å…·å’ŒæŠ¥é”™æœºåˆ¶ã€‚
+ *  - è€ƒè™‘ç®€å•å¤Ÿç”¨å’Œ 2/8 åŸåˆ™ï¼Œå»æ‰å¯¹ YUI3 æ²™ç®±çš„æ¨¡æ‹Ÿã€‚ï¼ˆarchives/2009 r402ï¼‰
  *
- *  - add ·½·¨¾ö¶¨ÄÚ²¿´úÂëµÄ»ù±¾×éÖ¯·½Ê½£¨ÓÃ module ºÍ submodule ×éÖ¯´úÂë£©¡£
- *  - ready ·½·¨¾ö¶¨Íâ²¿´úÂëµÄ»ù±¾µ÷ÓÃ·½Ê½£¬Ìá¹©ÁËÒ»¸ö¼òµ¥µÄÈõÉ³Ïä¡£
- *  - mix, merge, extend, augment, weave ·½·¨£¬¾ö¶¨ÁËÀà¿â´úÂëµÄ»ù±¾ÊµÏÖ·½Ê½£¬
- *    ³ä·ÖÀûÓÃ mixin ÌØĞÔºÍ prototype ·½Ê½À´ÊµÏÖ´úÂë¡£
- *  - app, namespace ·½·¨£¬¾ö¶¨×Ó¿âµÄÊµÏÖºÍ´úÂëµÄÕûÌå×éÖ¯¡£
- *  - log ·½·¨£¬¼òµ¥µÄµ÷ÊÔ¹¤¾ß¡£
+ * TODO:
+ *  - æ¨¡å—åŠ¨æ€åŠ è½½ require æ–¹æ³•çš„å®ç°ã€‚
+ * 
  */
 /**
- * KISSY.Editor ¸»ÎÄ±¾±à¼­Æ÷
+ * KISSY.Editor ï¿½ï¿½ï¿½Ä±ï¿½ï¿½à¼­ï¿½ï¿½
  * @module      editor
- * @creator     Óñ²®<lifesinger@gmail.com>
+ * @creator     ï¿½ï¿½<lifesinger@gmail.com>
  * @depends     kissy-core, yahoo-dom-event
  */
 KISSY.add("editor", function(S) {
@@ -414,34 +421,34 @@ KISSY.add("editor", function(S) {
 
     S.mix(Editor, {
         /**
-         * °æ±¾ºÅ
+         * ï¿½æ±¾ï¿½ï¿½
          */
         version: "1.0",
 
         /**
-         * ÓïÑÔÅäÖÃ£¬ÔÚ lang Ä¿Â¼Ìí¼Ó
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ lang Ä¿Â¼ï¿½ï¿½ï¿½
          */
         lang: {},
 
         /**
-         * ËùÓĞ×¢²áµÄ²å¼ş
-         * ×¢£ºplugin = { name: pluginName, type: pluginType, init: initFn, ... }
+         * ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½Ä²ï¿½ï¿½
+         * ×¢ï¿½ï¿½plugin = { name: pluginName, type: pluginType, init: initFn, ... }
          */
         plugins: {},
 
         /**
-         * È«¾Ö»·¾³±äÁ¿
+         * È«ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         Env: {
             /**
-             * ËùÓĞÌí¼ÓµÄÄ£¿é
-             * ×¢£ºmod = { name: modName, fn: initFn, details: {...} }
+             * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½Ä£ï¿½ï¿½
+             * ×¢ï¿½ï¿½mod = { name: modName, fn: initFn, details: {...} }
              */
             mods: { }
         },
 
         /**
-         * Ìí¼ÓÄ£¿é
+         * ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
          */
         add: function(name, fn, details) {
 
@@ -455,7 +462,7 @@ KISSY.add("editor", function(S) {
         },
 
         /**
-         * Ìí¼Ó²å¼ş
+         * ï¿½ï¿½Ó²ï¿½ï¿½
          * @param {string|Array} name
          */
         addPlugin: function(name, p) {
@@ -466,7 +473,7 @@ KISSY.add("editor", function(S) {
             for (i = 0,len = arr.length; i < len; ++i) {
                 key = arr[i];
 
-                if (!plugins[key]) { // ²»ÔÊĞí¸²¸Ç
+                if (!plugins[key]) { // ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½
                     plugins[key] = S.merge(p, {
                         name: key
                     });
@@ -475,7 +482,7 @@ KISSY.add("editor", function(S) {
         },
 
         /**
-         * ÊÇ·ñÒÑÍê³É setup
+         * ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ setup
          */
         _isReady: false,
 
@@ -488,12 +495,12 @@ KISSY.add("editor", function(S) {
         },
 
         /**
-         * ÒÑ¼ÓÔØµÄÄ£¿é
+         * ï¿½Ñ¼ï¿½ï¿½Øµï¿½Ä£ï¿½ï¿½
          */
         _attached: { },
 
         /**
-         * ¼ÓÔØ×¢²áµÄËùÓĞÄ£¿é
+         * ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
          */
         _loadModules: function() {
             var mods = KISSY.Editor.Env.mods,
@@ -508,11 +515,11 @@ KISSY.add("editor", function(S) {
                         m.fn(this);
                     }
                 }
-                // ×¢Òâ£ºm.details ÔİÊ±Ã»ÓÃµ½£¬½öÊÇÔ¤ÁôµÄÀ©Õ¹½Ó¿Ú
+                // ×¢ï¿½â£ºm.details ï¿½ï¿½Ê±Ã»ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½Ó¿ï¿½
             }
 
             // TODO
-            // lang µÄ¼ÓÔØ¿ÉÒÔÑÓ³Ùµ½ÊµÀı»¯Ê±£¬Ö»¼ÓÔØµ±Ç° lang
+            // lang ï¿½Ä¼ï¿½ï¿½Ø¿ï¿½ï¿½ï¿½ï¿½Ó³Ùµï¿½Êµï¿½ï¿½Ê±ï¿½ï¿½Ö»ï¿½ï¿½ï¿½Øµï¿½Ç° lang
         }
     });
 
@@ -520,28 +527,28 @@ KISSY.add("editor", function(S) {
 });
 
 // TODO
-// 1. ×Ô¶¯Ìæ»»Ò³ÃæÖĞµÄ textarea ? Ô¼¶¨ÓĞÌØÊâ class µÄ²»Ìæ»»
+// 1. ï¿½Ô¶ï¿½ï¿½æ»»Ò³ï¿½ï¿½ï¿½Ğµï¿½ textarea ? Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ class ï¿½Ä²ï¿½ï¿½æ»»
 
 KISSY.Editor.add("config", function(E) {
 
     E.config = {
         /**
-         * »ù±¾Â·¾¶
+         * ï¿½ï¿½Â·ï¿½ï¿½
          */
         base: "",
 
         /**
-         * ÓïÑÔ
+         * ï¿½ï¿½ï¿½ï¿½
          */
         language: "zh-cn",
 
         /**
-         * Ö÷Ìâ
+         * ï¿½ï¿½ï¿½ï¿½
          */
         theme: "default",
 
         /**
-         * Toolbar ÉÏ¹¦ÄÜ²å¼ş
+         * Toolbar ï¿½Ï¹ï¿½ï¿½Ü²ï¿½ï¿½
          */
         toolbar: [
             "source",
@@ -558,7 +565,7 @@ KISSY.Editor.add("config", function(E) {
         ],
 
         /**
-         * Statusbar ÉÏµÄ²å¼ş
+         * Statusbar ï¿½ÏµÄ²ï¿½ï¿½
          */
         statusbar: [
             "wordcount",
@@ -566,12 +573,12 @@ KISSY.Editor.add("config", function(E) {
         ],
 
         /**
-         * ²å¼şµÄÅäÖÃ
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         pluginsConfig: { }
 
         /**
-         * ×Ô¶¯¾Û½¹
+         * ï¿½Ô¶ï¿½ï¿½Û½ï¿½
          */
         // autoFocus: false
     };
@@ -740,27 +747,27 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
 
         // Toolbar buttons
         source: {
-          text            : "Ô´Âë",
-          title           : "Ô´Âë"
+          text            : "Ô´ï¿½ï¿½",
+          title           : "Ô´ï¿½ï¿½"
         },
         undo: {
-          text            : "³·Ïú",
-          title           : "³·Ïú"
+          text            : "ï¿½ï¿½ï¿½ï¿½",
+          title           : "ï¿½ï¿½ï¿½ï¿½"
         },
         redo: {
-          text            : "ÖØ×ö",
-          title           : "ÖØ×ö"
+          text            : "ï¿½ï¿½ï¿½ï¿½",
+          title           : "ï¿½ï¿½ï¿½ï¿½"
         },
         fontName: {
-          text            : "×ÖÌå",
-          title           : "×ÖÌå",
+          text            : "ï¿½ï¿½ï¿½ï¿½",
+          title           : "ï¿½ï¿½ï¿½ï¿½",
           options         : {
-              "ËÎÌå"             : "ËÎÌå",
-              "ºÚÌå"             : "ºÚÌå",
-              "Á¥Êé"             : "Á¥Êé",
-              "¿¬Ìå"             : "¿¬Ìå_GB2312",
-              //"Ó×Ô²"             : "Ó×Ô²",
-              "Î¢ÈíÑÅºÚ"          : "Î¢ÈíÑÅºÚ",
+              "ï¿½ï¿½ï¿½ï¿½"             : "ï¿½ï¿½ï¿½ï¿½",
+              "ï¿½ï¿½ï¿½ï¿½"             : "ï¿½ï¿½ï¿½ï¿½",
+              "ï¿½ï¿½ï¿½ï¿½"             : "ï¿½ï¿½ï¿½ï¿½",
+              "ï¿½ï¿½ï¿½ï¿½"             : "ï¿½ï¿½ï¿½ï¿½_GB2312",
+              //"ï¿½ï¿½Ô²"             : "ï¿½ï¿½Ô²",
+              "Î¢ï¿½ï¿½ï¿½Åºï¿½"          : "Î¢ï¿½ï¿½ï¿½Åºï¿½",
               "Georgia"         : "Georgia",
               //"Garamond"        : "Garamond",
               "Times New Roman" : "Times New Roman",
@@ -772,8 +779,8 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
           }
         },
         fontSize: {
-          text            : "´óĞ¡",
-          title           : "´óĞ¡",
+          text            : "ï¿½ï¿½Ğ¡",
+          title           : "ï¿½ï¿½Ğ¡",
           options         : {
               "8"               : "1",
               "10"              : "2",
@@ -785,109 +792,109 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
           }
         },
         bold: {
-            text          : "´ÖÌå",
-            title         : "´ÖÌå"
+            text          : "ï¿½ï¿½ï¿½ï¿½",
+            title         : "ï¿½ï¿½ï¿½ï¿½"
         },
         italic: {
-            text          : "Ğ±Ìå",
-            title         : "Ğ±Ìå"
+            text          : "Ğ±ï¿½ï¿½",
+            title         : "Ğ±ï¿½ï¿½"
         },
         underline: {
-            text          : "ÏÂ»®Ïß",
-            title         : "ÏÂ»®Ïß"
+            text          : "ï¿½Â»ï¿½ï¿½ï¿½",
+            title         : "ï¿½Â»ï¿½ï¿½ï¿½"
         },
         strikeThrough: {
-            text          : "É¾³ıÏß",
-            title         : "É¾³ıÏß"
+            text          : "É¾ï¿½ï¿½ï¿½ï¿½",
+            title         : "É¾ï¿½ï¿½ï¿½ï¿½"
         },
         link: {
-            text          : "Á´½Ó",
-            title         : "²åÈë/±à¼­Á´½Ó",
+            text          : "ï¿½ï¿½ï¿½ï¿½",
+            title         : "ï¿½ï¿½ï¿½ï¿½/ï¿½à¼­ï¿½ï¿½ï¿½ï¿½",
             href          : "URL:",
-            target        : "ÔÚĞÂ´°¿Ú´ò¿ªÁ´½Ó",
-            remove        : "ÒÆ³ıÁ´½Ó"
+            target        : "ï¿½ï¿½ï¿½Â´ï¿½ï¿½Ú´ï¿½ï¿½ï¿½ï¿½ï¿½",
+            remove        : "ï¿½Æ³ï¿½ï¿½ï¿½ï¿½ï¿½"
         },
         blockquote: {
-            text          : "ÒıÓÃ",
-            title         : "ÒıÓÃ"
+            text          : "ï¿½ï¿½ï¿½ï¿½",
+            title         : "ï¿½ï¿½ï¿½ï¿½"
         },
         smiley: {
-            text          : "±íÇé",
-            title         : "²åÈë±íÇé"
+            text          : "ï¿½ï¿½ï¿½ï¿½",
+            title         : "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
         },
         image: {
             text          : "Í¼Æ¬",
-            title         : "²åÈëÍ¼Æ¬",
-            tab_link      : "ÍøÂçÍ¼Æ¬",
-            tab_local     : "±¾µØÉÏ´«",
-            tab_album     : "ÎÒµÄÏà²á",
-            label_link    : "ÇëÊäÈëÍ¼Æ¬µØÖ·£º",
-            label_local   : "ÇëÑ¡Ôñ±¾µØÍ¼Æ¬£º",
-            label_album   : "ÇëÑ¡ÔñÏà²áÍ¼Æ¬£º",
-            uploading     : "ÕıÔÚÉÏ´«...",
-            upload_error  : "¶Ô²»Æğ£¬ÉÏ´«ÎÄ¼şÊ±·¢ÉúÁË´íÎó£º",
-            upload_filter : "½öÖ§³Ö JPG, PNG ºÍ GIF Í¼Æ¬£¬ÇëÖØĞÂÑ¡Ôñ¡£",
-            upload_linkFilter : "¶Ô²»Æğ£¬Í¼Æ¬ËùÔÚÍøÕ¾²»ÔÚÔÊĞí·¶Î§ÄÚ¡£\nÇëÏÂÔØµ½±¾µØ£¬ÔÙÍ¨¹ı\"±¾µØÉÏ´«\"ÉÏ´«Í¼Æ¬¡£",
-            ok            : "²åÈë"
+            title         : "ï¿½ï¿½ï¿½ï¿½Í¼Æ¬",
+            tab_link      : "ï¿½ï¿½ï¿½ï¿½Í¼Æ¬",
+            tab_local     : "ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½",
+            tab_album     : "ï¿½Òµï¿½ï¿½ï¿½ï¿½",
+            label_link    : "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½Ö·ï¿½ï¿½",
+            label_local   : "ï¿½ï¿½Ñ¡ï¿½ñ±¾µï¿½Í¼Æ¬ï¿½ï¿½",
+            label_album   : "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½",
+            uploading     : "ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½...",
+            upload_error  : "ï¿½Ô²ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½Ä¼ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ë´ï¿½ï¿½ï¿½",
+            upload_filter : "ï¿½ï¿½Ö§ï¿½ï¿½ JPG, PNG ï¿½ï¿½ GIF Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½",
+            upload_linkFilter : "ï¿½Ô²ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?Î§ï¿½Ú¡ï¿½\nï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½Ø£ï¿½ï¿½ï¿½Í¨ï¿½ï¿½\"ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½\"ï¿½Ï´ï¿½Í¼Æ¬ï¿½ï¿½",
+            ok            : "ï¿½ï¿½ï¿½ï¿½"
         },
         insertOrderedList: {
-            text          : "ÓĞĞòÁĞ±í",
-            title         : "ÓĞĞòÁĞ±í"
+            text          : "ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½",
+            title         : "ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½"
         },
         insertUnorderedList: {
-            text          : "ÎŞĞòÁĞ±í",
-            title         : "ÎŞĞòÁĞ±í"
+            text          : "ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½",
+            title         : "ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½"
         },
         outdent: {
-            text          : "¼õÉÙËõ½ø",
-            title         : "¼õÉÙËõ½ø"
+            text          : "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+            title         : "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
         },
         indent: {
-            text          : "Ôö¼ÓËõ½ø",
-            title         : "Ôö¼ÓËõ½ø"
+            text          : "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+            title         : "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
         },
         justifyLeft: {
-            text          : "×ó¶ÔÆë",
-            title         : "×ó¶ÔÆë"
+            text          : "ï¿½ï¿½ï¿½ï¿½ï¿½",
+            title         : "ï¿½ï¿½ï¿½ï¿½ï¿½"
         },
         justifyCenter: {
-            text          : "¾ÓÖĞ¶ÔÆë",
-            title         : "¾ÓÖĞ¶ÔÆë"
+            text          : "ï¿½ï¿½ï¿½Ğ¶ï¿½ï¿½ï¿½",
+            title         : "ï¿½ï¿½ï¿½Ğ¶ï¿½ï¿½ï¿½"
         },
         justifyRight: {
-            text          : "ÓÒ¶ÔÆë",
-            title         : "ÓÒ¶ÔÆë"
+            text          : "ï¿½Ò¶ï¿½ï¿½ï¿½",
+            title         : "ï¿½Ò¶ï¿½ï¿½ï¿½"
         },
         foreColor: {
-            text          : "ÎÄ±¾ÑÕÉ«",
-            title         : "ÎÄ±¾ÑÕÉ«"
+            text          : "ï¿½Ä±ï¿½ï¿½ï¿½É«",
+            title         : "ï¿½Ä±ï¿½ï¿½ï¿½É«"
         },
         backColor: {
-            text          : "±³¾°ÑÕÉ«",
-            title         : "±³¾°ÑÕÉ«"
+            text          : "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«",
+            title         : "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«"
         },
         maximize: {
-          text            : "È«ÆÁ±à¼­",
-          title           : "È«ÆÁ±à¼­"
+          text            : "È«ï¿½ï¿½ï¿½à¼­",
+          title           : "È«ï¿½ï¿½ï¿½à¼­"
         },
         removeformat: {
-          text            : "Çå³ı¸ñÊ½",
-          title           : "Çå³ı¸ñÊ½"
+          text            : "ï¿½ï¿½ï¿½ï¿½Ê½",
+          title           : "ï¿½ï¿½ï¿½ï¿½Ê½"
         },
         wordcount: {
-          tmpl            : "»¹¿ÉÒÔÊäÈë %remain% ×Ö£¨º¬ html ´úÂë£©"
+          tmpl            : "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ %remain% ï¿½Ö£ï¿½ï¿½ï¿½ html ï¿½ï¿½ï¿½ë£©"
         },
         resize: {
-            larger_text   : "Ôö´ó",
-            larger_title  : "Ôö´ó±à¼­ÇøÓò",
-            smaller_text  : "ËõĞ¡",
-            smaller_title : "ËõĞ¡±à¼­ÇøÓò"
+            larger_text   : "ï¿½ï¿½ï¿½ï¿½",
+            larger_title  : "ï¿½ï¿½ï¿½ï¿½à¼­ï¿½ï¿½ï¿½ï¿½",
+            smaller_text  : "ï¿½ï¿½Ğ¡",
+            smaller_title : "ï¿½ï¿½Ğ¡ï¿½à¼­ï¿½ï¿½ï¿½ï¿½"
         },
 
         // Common messages and labels
         common: {
-            ok            : "È·¶¨",
-            cancel        : "È¡Ïû"
+            ok            : "È·ï¿½ï¿½",
+            cancel        : "È¡ï¿½ï¿½"
         }
     };
 
@@ -896,7 +903,7 @@ KISSY.Editor.add("lang~zh-cn", function(E) {
 KISSY.Editor.add("core~plugin", function(E) {
 
     /**
-     * ²å¼şÖÖÀà
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     E.PLUGIN_TYPE = {
         CUSTOM: 0,
@@ -905,7 +912,7 @@ KISSY.Editor.add("core~plugin", function(E) {
         TOOLBAR_MENU_BUTTON: 4,
         TOOLBAR_SELECT: 8,
         STATUSBAR_ITEM: 16,
-        FUNC: 32 // ´¿¹¦ÄÜĞÔÖÊ²å¼ş£¬ÎŞ UI
+        FUNC: 32 // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UI
     };
 
 });
@@ -917,14 +924,14 @@ KISSY.Editor.add("core~dom", function(E) {
     E.Dom = {
 
         /**
-         * »ñÈ¡ÔªËØµÄÎÄ±¾ÄÚÈİ
+         * ï¿½ï¿½È¡Ôªï¿½Øµï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         getText: function(el) {
             return el ? (el.textContent || '') : '';
         },
 
         /**
-         * ÈÃÔªËØ²»¿ÉÑ¡£¬½â¾ö ie ÏÂ selection ¶ªÊ§µÄÎÊÌâ
+         * ï¿½ï¿½Ôªï¿½Ø²ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ ie ï¿½ï¿½ selection ï¿½ï¿½Ê§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         setItemUnselectable: function(el) {
             var arr, i, len, n, a;
@@ -945,29 +952,29 @@ KISSY.Editor.add("core~dom", function(E) {
         // Ref: CKEditor - core/dom/elementpath.js
         BLOCK_ELEMENTS: {
 
-            /* ½á¹¹ÔªËØ */
+            /* ï¿½á¹¹Ôªï¿½ï¿½ */
             blockquote:1,
             div:1,
             h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,
             hr:1,
             p:1,
 
-            /* ÎÄ±¾¸ñÊ½ÔªËØ */
+            /* ï¿½Ä±ï¿½ï¿½ï¿½Ê½Ôªï¿½ï¿½ */
             address:1,
             center:1,
             pre:1,
 
-            /* ±íµ¥ÔªËØ */
+            /* ï¿½?Ôªï¿½ï¿½ */
             form:1,
             fieldset:1,
             caption:1,
 
-            /* ±í¸ñÔªËØ */
+            /* ï¿½ï¿½ï¿½Ôªï¿½ï¿½ */
             table:1,
             tbody:1,
             tr:1, th:1, td:1,
 
-            /* ÁĞ±íÔªËØ */
+            /* ï¿½Ğ±ï¿½Ôªï¿½ï¿½ */
             ul:1, ol:1, dl:1,
             dt:1, dd:1, li:1
         }
@@ -1084,7 +1091,7 @@ KISSY.Editor.add("core~command", function(E) {
     E.Command = {
 
         /**
-         * Ö´ĞĞ doc.execCommand
+         * Ö´ï¿½ï¿½ doc.execCommand
          */
         exec: function(doc, cmdName, val, styleWithCSS) {
             cmdName = CUSTOM_COMMANDS[cmdName] || cmdName;
@@ -1095,7 +1102,7 @@ KISSY.Editor.add("core~command", function(E) {
 
         _preExec: function(doc, cmdName, styleWithCSS) {
 
-            // ¹Ø±Õ gecko ä¯ÀÀÆ÷µÄ styleWithCSS ÌØĞÔ£¬Ê¹µÃ²úÉúµÄÄÚÈİºÍ ie Ò»ÖÂ
+            // ï¿½Ø±ï¿½ gecko ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ styleWithCSS ï¿½ï¿½ï¿½Ô£ï¿½Ê¹ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İºï¿½ ie Ò»ï¿½ï¿½
             if (ua.gecko) {
                 var val = typeof styleWithCSS === "undefined" ? (TAG_COMMANDS.indexOf(cmdName) === -1) : styleWithCSS;
                 doc[EXEC_COMMAND](STYLE_WITH_CSS, false, val);
@@ -1111,7 +1118,7 @@ KISSY.Editor.add("core~range", function(E) {
     E.Range = {
 
         /**
-         * »ñÈ¡Ñ¡ÖĞÇøÓò¶ÔÏó
+         * ï¿½ï¿½È¡Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         getSelectionRange: function(win) {
             var doc = win.document,
@@ -1123,7 +1130,7 @@ KISSY.Editor.add("core~range", function(E) {
                 if (selection.getRangeAt) {
                     range = selection.getRangeAt(0);
 
-                } else { // for Old Webkit! ¸ß°æ±¾µÄÒÑ¾­Ö§³Ö getRangeAt
+                } else { // for Old Webkit! ï¿½ß°æ±¾ï¿½ï¿½ï¿½Ñ¾ï¿½Ö§ï¿½ï¿½ getRangeAt
                     range = doc.createRange();
                     range.setStart(selection.anchorNode, selection.anchorOffset);
                     range.setEnd(selection.focusNode, selection.focusOffset);
@@ -1137,7 +1144,7 @@ KISSY.Editor.add("core~range", function(E) {
         },
 
         /**
-         * »ñÈ¡ÈİÆ÷
+         * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
          */
         getCommonAncestor: function(range) {
             return range.startContainer || // w3c
@@ -1146,23 +1153,23 @@ KISSY.Editor.add("core~range", function(E) {
         },
 
         /**
-         * »ñÈ¡Ñ¡ÖĞÎÄ±¾
+         * ï¿½ï¿½È¡Ñ¡ï¿½ï¿½ï¿½Ä±ï¿½
          */
         getSelectedText: function(range) {
             if("text" in range) return range.text;
-            return range.toString ? range.toString() : ""; // ms IHTMLControlRange ÎŞ toString ·½·¨
+            return range.toString ? range.toString() : ""; // ms IHTMLControlRange ï¿½ï¿½ toString ï¿½ï¿½ï¿½ï¿½
         },
 
         /**
-         * ±£´æÑ¡Çø for ie
+         * ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ for ie
          */
         saveRange: function(editor) {
-            // 1. ±£´æ range, ÒÔ±ã»¹Ô­
-            isIE && editor.contentWin.focus(); // È·±£ÏÂÃæÕâĞĞ range ÊÇ±à¼­ÇøÓòµÄ£¬·ñÔò [Issue 39]
+            // 1. ï¿½ï¿½ï¿½ï¿½ range, ï¿½Ô±ã»¹Ô­
+            isIE && editor.contentWin.focus(); // È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ range ï¿½Ç±à¼­ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ [Issue 39]
 
-            // 2. ¾Û¼¯µ½°´Å¥ÉÏ£¬Òş²Ø¹â±ê£¬·ñÔò ie ÏÂ¹â±ê»áÏÔÊ¾ÔÚ²ãÉÏÃæ
-            // Í¨¹ı blur / focus µÈ·½Ê½ÔÚ ie7- ÏÂÎŞĞ§
-            // ×¢Òâ£º2 ºÍ 1 ³åÍ»¡£È¨ºâ¿¼ÂÇ£¬»¹ÊÇÈ¡Ïû2
+            // 2. ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ø¹ï¿½ê£¬ï¿½ï¿½ï¿½ï¿½ ie ï¿½Â¹ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½
+            // Í¨ï¿½ï¿½ blur / focus ï¿½È·ï¿½Ê½ï¿½ï¿½ ie7- ï¿½ï¿½ï¿½ï¿½Ğ§
+            // ×¢ï¿½â£º2 ï¿½ï¿½ 1 ï¿½ï¿½Í»ï¿½ï¿½È¨ï¿½â¿¼ï¿½Ç£ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½2
             //isIE && editor.contentDoc.selection.empty();
 
             return editor.getSelectionRange();
@@ -1195,21 +1202,21 @@ KISSY.Editor.add("core~instance", function(E) {
         THEMES_DIR = "themes";
 
     /**
-     * ±à¼­Æ÷µÄÊµÀıÀà
+     * ï¿½à¼­ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½
      */
     E.Instance = function(textarea, config) {
         /**
-         * Ïà¹ØÁªµÄ textarea ÔªËØ
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ textarea Ôªï¿½ï¿½
          */
         this.textarea = Dom.get(textarea);
 
         /**
-         * ÅäÖÃÏî
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         this.config = Lang.merge(E.config, config || {});
 
         /**
-         * ÒÔÏÂÔÚ renderUI ÖĞ¸³Öµ
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ renderUI ï¿½Ğ¸ï¿½Öµ
          * @property container
          * @property contentWin
          * @property contentDoc
@@ -1217,22 +1224,22 @@ KISSY.Editor.add("core~instance", function(E) {
          */
 
         /**
-         * Óë¸ÃÊµÀıÏà¹ØµÄ²å¼ş
+         * ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ØµÄ²ï¿½ï¿½
          */
         //this.plugins = [];
 
         /**
-         * ÊÇ·ñ´¦ÓÚÔ´Âë±à¼­×´Ì¬
+         * ï¿½Ç·ï¿½ï¿½ï¿½Ô´ï¿½ï¿½à¼­×´Ì¬
          */
         this.sourceMode = false;
 
         /**
-         * ¹¤¾ßÀ¸
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         this.toolbar = new E.Toolbar(this);
 
         /**
-         * ×´Ì¬À¸
+         * ×´Ì¬ï¿½ï¿½
          */
         this.statusbar = new E.Statusbar(this);
 
@@ -1242,7 +1249,7 @@ KISSY.Editor.add("core~instance", function(E) {
 
     Lang.augmentObject(E.Instance.prototype, {
         /**
-         * ³õÊ¼»¯·½·¨
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         _init: function() {
             this._renderUI();
@@ -1256,32 +1263,32 @@ KISSY.Editor.add("core~instance", function(E) {
         },
 
         /**
-         * ³õÊ¼»¯ËùÓĞ²å¼ş
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ğ²ï¿½ï¿½
          */
         _initPlugins: function() {
             var key, p,
                 staticPlugins = E.plugins,
                 plugins = [];
 
-            // Ã¿¸öÊµÀı£¬ÓµÓĞÒ»·İ×Ô¼ºµÄ plugins ÁĞ±í
+            // Ã¿ï¿½ï¿½Êµï¿½ï¿½Óµï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ plugins ï¿½Ğ±ï¿½
             for(key in staticPlugins) {
                 plugins[key] = Lang.merge(staticPlugins[key]);
             }
             this.plugins = plugins;
 
-            // ¹¤¾ßÀ¸ÉÏµÄ²å¼ş
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÄ²ï¿½ï¿½
             this.toolbar.init();
 
-            // ×´Ì¬À¸ÉÏµÄ²å¼ş
+            // ×´Ì¬ï¿½ï¿½ï¿½ÏµÄ²ï¿½ï¿½
             this.statusbar.init();
             
-            // ÆäËü¹¦ÄÜĞÔ²å¼ş
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½
             for (key in plugins) {
                 p = plugins[key];
                 if (p.inited) continue;
 
                 if (p.type === E.PLUGIN_TYPE.FUNC) {
-                    p.editor = this; // ¸ø p Ôö¼Ó editor ÊôĞÔ
+                    p.editor = this; // ï¿½ï¿½ p ï¿½ï¿½ï¿½ï¿½ editor ï¿½ï¿½ï¿½ï¿½
                     if (p.init) {
                         p.init();
                     }
@@ -1291,12 +1298,12 @@ KISSY.Editor.add("core~instance", function(E) {
         },
 
         /**
-         * Éú³É DOM ½á¹¹
+         * ï¿½ï¿½ï¿½ DOM ï¿½á¹¹
          */
         _renderContainer: function() {
             var textarea = this.textarea,
                 region = Dom.getRegion(textarea),
-                width = (region.right - region.left - 2) + "px", // YUI µÄ getRegion ÓĞ 2px Æ«²î
+                width = (region.right - region.left - 2) + "px", // YUI ï¿½ï¿½ getRegion ï¿½ï¿½ 2px Æ«ï¿½ï¿½
                 height = (region.bottom - region.top - 2) + "px",
                 container = document.createElement("div"),
                 content, iframe;
@@ -1311,7 +1318,7 @@ KISSY.Editor.add("core~instance", function(E) {
 
             iframe = content.childNodes[0];
             iframe.style.width = "100%";
-            iframe.style.height = "100%"; // Ê¹µÃ resize ²å¼şÄÜÕı³£¹¤×÷
+            iframe.style.height = "100%"; // Ê¹ï¿½ï¿½ resize ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             iframe.setAttribute("frameBorder", 0);
 
             textarea.style.display = "none";
@@ -1324,7 +1331,7 @@ KISSY.Editor.add("core~instance", function(E) {
 
             this.statusbar.domEl = container.childNodes[2];
 
-            // TODO Ä¿Ç°ÊÇ¸ù¾İ textatea µÄ¿í¶ÈÀ´Éè¶¨ editor µÄ¿í¶È¡£¿ÉÒÔ¿¼ÂÇ config ÀïÖ¸¶¨¿í¶È
+            // TODO Ä¿Ç°ï¿½Ç¸ï¿½ï¿½ textatea ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½è¶¨ editor ï¿½Ä¿ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½ config ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½
         },
 
         _setupContentPanel: function() {
@@ -1334,7 +1341,7 @@ KISSY.Editor.add("core~instance", function(E) {
                 contentCSSUrl = config.base + THEMES_DIR + "/" + config.theme + "/" + contentCSS,
                 self = this;
 
-            // ³õÊ¼»¯ iframe µÄÄÚÈİ
+            // ï¿½ï¿½Ê¼ï¿½ï¿½ iframe ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             doc.open();
             doc.write(CONTENT_TMPL
                     .replace("{CONTENT_CSS}", contentCSSUrl)
@@ -1342,24 +1349,24 @@ KISSY.Editor.add("core~instance", function(E) {
             doc.close();
 
             if (ie) {
-                // ÓÃ contentEditable ¿ªÆô£¬·ñÔò ie ÏÂÑ¡ÇøÎªºÚµ×°××Ö
+                // ï¿½ï¿½ contentEditable ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ie ï¿½ï¿½Ñ¡ï¿½ï¿½Îªï¿½Úµ×°ï¿½ï¿½ï¿½
                 doc.body.contentEditable = "true";
             } else {
-                // firefox ¶Ô designMode µÄÖ§³Ö¸üºÃ
+                // firefox ï¿½ï¿½ designMode ï¿½ï¿½Ö§ï¿½Ö¸ï¿½ï¿½
                 doc.designMode = "on";
             }
 
-            // ×¢1£ºÔÚ tinymce Àï£¬designMode = "on" ·ÅÔÚ try catch Àï¡£
-            //     Ô­ÒòÊÇÔÚ firefox ÏÂ£¬µ±iframe ÔÚ display: none µÄÈİÆ÷Àï£¬»áµ¼ÖÂ´íÎó¡£
-            //     µ«¾­¹ıÎÒ²âÊÔ£¬firefox 3+ ÒÔÉÏÒÑÎŞ´ËÏÖÏó¡£
-            // ×¢2£º ie ÓÃ contentEditable = true.
-            //     Ô­ÒòÊÇÔÚ ie ÏÂ£¬IE needs to use contentEditable or it will display non secure items for HTTPS
+            // ×¢1ï¿½ï¿½ï¿½ï¿½ tinymce ï¿½ï£¬designMode = "on" ï¿½ï¿½ï¿½ï¿½ try catch ï¿½ï¡£
+            //     Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ firefox ï¿½Â£ï¿½ï¿½ï¿½iframe ï¿½ï¿½ display: none ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï£¬ï¿½áµ¼ï¿½Â´ï¿½ï¿½ï¿½
+            //     ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½Ô£ï¿½firefox 3+ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ş´ï¿½ï¿½ï¿½ï¿½ï¿½
+            // ×¢2ï¿½ï¿½ ie ï¿½ï¿½ contentEditable = true.
+            //     Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ie ï¿½Â£ï¿½IE needs to use contentEditable or it will display non secure items for HTTPS
             // Ref:
             //   - Differences between designMode and contentEditable
             //     http://74.125.153.132/search?q=cache:5LveNs1yHyMJ:nagoon97.wordpress.com/2008/04/20/differences-between-designmode-and-contenteditable/+ie+contentEditable+designMode+different&cd=6&hl=en&ct=clnk
 
-            // TODO: ÈÃ³õÊ¼ÊäÈëÎÄ×ÖÊ¼ÖÕÔÚ p ±êÇ©ÄÚ
-            // ÏÂÃæµÄ´¦Àí°ì·¨²»Í×µ±
+            // TODO: ï¿½Ã³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ p ï¿½ï¿½Ç©ï¿½ï¿½
+            // ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ì·¨ï¿½ï¿½ï¿½×µï¿½
 //            if (Lang.trim(doc.body.innerHTML).length === 0) {
 //                if(UA.gecko) {
 //                    doc.body.innerHTML = '<p><br _moz_editor_bogus_node="TRUE" _moz_dirty=""/></p>';
@@ -1369,9 +1376,9 @@ KISSY.Editor.add("core~instance", function(E) {
 //            }
 
             if(ie) {
-                // µã»÷µÄ iframe doc ·Ç body ÇøÓòÊ±£¬»¹Ô­½¹µãÎ»ÖÃ
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ iframe doc ï¿½ï¿½ body ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
                 Event.on(doc, "click", function() {
-                    if (doc.activeElement.parentNode.nodeType === 9) { // µã»÷ÔÚ doc ÉÏ
+                    if (doc.activeElement.parentNode.nodeType === 9) { // ï¿½ï¿½ï¿½ï¿½ï¿½ doc ï¿½ï¿½
                         self._focusToEnd();
                     }
                 });
@@ -1385,7 +1392,7 @@ KISSY.Editor.add("core~instance", function(E) {
         },
 
         /**
-         * ½«¹â±ê¶¨Î»µ½×îºóÒ»¸öÔªËØ
+         * ï¿½ï¿½ï¿½ï¿½ê¶¨Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ôªï¿½ï¿½
          */
         _focusToEnd: function() {
             this.contentWin.focus();
@@ -1394,7 +1401,7 @@ KISSY.Editor.add("core~instance", function(E) {
                 range = E.Range.getSelectionRange(this.contentWin);
 
             if (UA.ie) {
-                try { // ÓĞÊ±»á±¨´í£º±à¼­Æ÷ ie ÏÂ£¬ÇĞ»»Ô´´úÂë£¬ÔÙÇĞ»»»ØÈ¥£¬µã»÷±à¼­Æ÷¿òÄÚ£¬ÓĞÎŞĞ§Ö¸ÕëµÄJS´íÎó
+                try { // ï¿½ï¿½Ê±ï¿½á±¨ï¿½?ï¿½à¼­ï¿½ï¿½ ie ï¿½Â£ï¿½ï¿½Ğ»ï¿½Ô´ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½Ğ»ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½à¼­ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½Ğ§Ö¸ï¿½ï¿½ï¿½JSï¿½ï¿½ï¿½ï¿½
                     range.moveToElementText(lastChild);
                 } catch(ex) { }
                 range.collapse(false);
@@ -1409,22 +1416,22 @@ KISSY.Editor.add("core~instance", function(E) {
         },
 
         /**
-         * »ñÈ¡½¹µã
+         * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
          */
         focus: function() {
           this._focusToEnd();
         },
 
         /**
-         * Ö´ĞĞ execCommand
+         * Ö´ï¿½ï¿½ execCommand
          */
         execCommand: function(commandName, val, styleWithCSS) {
-            this.contentWin.focus(); // »¹Ô­½¹µã
+            this.contentWin.focus(); // ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½
             E.Command.exec(this.contentDoc, commandName, val, styleWithCSS);
         },
 
         /**
-         * »ñÈ¡Êı¾İ
+         * ï¿½ï¿½È¡ï¿½ï¿½ï¿½
          */
         getData: function() {
             if(this.sourceMode) {
@@ -1434,17 +1441,17 @@ KISSY.Editor.add("core~instance", function(E) {
         },
 
         /**
-         * »ñÈ¡ contentDoc ÖĞµÄÊı¾İ
+         * ï¿½ï¿½È¡ contentDoc ï¿½Ğµï¿½ï¿½ï¿½ï¿½
          */
         getContentDocData: function() {
             var bd = this.contentDoc.body,
                 data = "", p = E.plugins["save"];
 
-            // Firefox ÏÂ£¬_moz_editor_bogus_node, _moz_dirty µÈÌØÓĞÊôĞÔ
-            // ÕâĞ©ÌØÓĞÊôĞÔ£¬ÔÚÓÃ innerHTML »ñÈ¡Ê±£¬×Ô¶¯¹ıÂËÁË
+            // Firefox ï¿½Â£ï¿½_moz_editor_bogus_node, _moz_dirty ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // ï¿½ï¿½Ğ©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô£ï¿½ï¿½ï¿½ï¿½ï¿½ innerHTML ï¿½ï¿½È¡Ê±ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
             data = bd.innerHTML;
-            if(data == "<br>") data = ""; // firefox ÏÂ»á×Ô¶¯Éú³ÉÒ»¸ö br
+            if(data == "<br>") data = ""; // firefox ï¿½Â»ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ br
 
             if(p && p.filterData) {
                 data = p.filterData(data);
@@ -1454,7 +1461,7 @@ KISSY.Editor.add("core~instance", function(E) {
         },
 
         /**
-         * »ñÈ¡Ñ¡ÖĞÇøÓòµÄ Range ¶ÔÏó
+         * ï¿½ï¿½È¡Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Range ï¿½ï¿½ï¿½ï¿½
          */
         getSelectionRange: function() {
             return E.Range.getSelectionRange(this.contentWin);
@@ -1464,8 +1471,8 @@ KISSY.Editor.add("core~instance", function(E) {
 });
 
 // TODO:
-//  - Ä¿Ç°Í¨¹ı html, body { height: 100% } Ê¹µÃ ie ÏÂËùÓĞ iframe ÇøÓòµÄÓÒ¼üÄÜÕıÈ·ÏÔÊ¾±à¼­²Ëµ¥£¬
-//    È±µãÊÇ±à¼­ÇøÓòµÄ padding ²»ÄÜÉèÖÃ£¬·ñÔò³öÏÖ¹ö¶¯Ìõ¡£ºóĞøĞèÒª´Ó²¼¾ÖÉÏ½øĞĞ¸Ä½ø£¬Áô×ÅºôÎü¿Õ°×¡£
+//  - Ä¿Ç°Í¨ï¿½ï¿½ html, body { height: 100% } Ê¹ï¿½ï¿½ ie ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ iframe ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½Ê¾ï¿½à¼­ï¿½Ëµï¿½ï¿½ï¿½
+//    È±ï¿½ï¿½ï¿½Ç±à¼­ï¿½ï¿½ï¿½ï¿½ï¿½ padding ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ó²ï¿½ï¿½ï¿½ï¿½Ï½ï¿½ï¿½Ğ¸Ä½ï¿½ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½Õ°×¡ï¿½
 
 KISSY.Editor.add("core~toolbar", function(E) {
 
@@ -1500,33 +1507,33 @@ KISSY.Editor.add("core~toolbar", function(E) {
                      + "insertOrderedList,insertUnorderedList"
                      + "justifyLeft,justifyCenter,justifyRight",
 
-        div = document.createElement("div"); // Í¨ÓÃ el ÈİÆ÷
+        div = document.createElement("div"); // Í¨ï¿½ï¿½ el ï¿½ï¿½ï¿½ï¿½
 
 
     E.Toolbar = function(editor) {
 
         /**
-         * Ïà¹ØÁªµÄ±à¼­Æ÷ÊµÀı
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±à¼­ï¿½ï¿½Êµï¿½ï¿½
          */
         this.editor = editor;
 
         /**
-         * Ïà¹ØÁªµÄÅäÖÃ
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         this.config = editor.config;
 
         /**
-         * µ±Ç°ÓïÑÔ
+         * ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
          */
         this.lang = E.lang[this.config.language];
 
         /**
-         * ËùÓĞ¼ÓÔØµÄ¹¤¾ßÀ¸²å¼ş
+         * ï¿½ï¿½ï¿½Ğ¼ï¿½ï¿½ØµÄ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         this.items = [];
 
         /**
-         * ËùÓĞĞèÒª¶¯Ì¬¸üĞÂ×´Ì¬µÄ¹¤¾ßÀ¸²å¼şÏî
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         this.stateItems = [];
     };
@@ -1534,20 +1541,20 @@ KISSY.Editor.add("core~toolbar", function(E) {
     Lang.augmentObject(E.Toolbar.prototype, {
 
         /**
-         * ³õÊ¼»¯¹¤¾ßÌõ
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         init: function() {
             var items = this.config.toolbar,
                 plugins = this.editor.plugins,
                 key, p;
 
-            // ±éÀúÅäÖÃÏî£¬ÕÒµ½Ïà¹Ø²å¼şÏî£¬²¢Ìí¼Óµ½¹¤¾ßÀ¸ÉÏ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î£¬ï¿½Òµï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½î£¬ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             for (var i = 0, len = items.length; i < len; ++i) {
                 key = items[i];
                 if (key) {
-                    if (!(key in plugins)) continue; // ÅäÖÃÏîÀïÓĞ£¬µ«¼ÓÔØµÄ²å¼şÀïÎŞ£¬Ö±½ÓºöÂÔ
+                    if (!(key in plugins)) continue; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ØµÄ²ï¿½ï¿½ï¿½ï¿½ï¿½Ş£ï¿½Ö±ï¿½Óºï¿½ï¿½ï¿½
 
-                    // Ìí¼Ó²å¼şÏî
+                    // ï¿½ï¿½Ó²ï¿½ï¿½ï¿½ï¿½
                     p = plugins[key];
                     this._addItem(p);
 
@@ -1556,26 +1563,26 @@ KISSY.Editor.add("core~toolbar", function(E) {
                         this.stateItems.push(p);
                     }
 
-                } else { // Ìí¼Ó·Ö¸ôÏß
+                } else { // ï¿½ï¿½Ó·Ö¸ï¿½ï¿½ï¿½
                     this._addSeparator();
                 }
             }
 
-            // ×´Ì¬¸üĞÂ
+            // ×´Ì¬ï¿½ï¿½ï¿½ï¿½
             this._initUpdateState();
         },
 
         /**
-         * Ìí¼Ó¹¤¾ßÀ¸Ïî
+         * ï¿½ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         _addItem: function(p) {
             var el, type = p.type, lang = this.lang, html;
 
-            // µ± plugin Ã»ÓĞÉèÖÃ lang Ê±£¬²ÉÓÃÄ¬ÈÏÓïÑÔÅäÖÃ
-            // TODO: ¿¼ÂÇÖØ¹¹µ½ instance Ä£¿éÀï£¬ÒòÎª lang ½ö¸úÊµÀıÏà¹Ø
+            // ï¿½ï¿½ plugin Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ lang Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // TODO: ï¿½ï¿½ï¿½ï¿½ï¿½Ø¹ï¿½ï¿½ï¿½ instance Ä£ï¿½ï¿½ï¿½ï£¬ï¿½ï¿½Îª lang ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½
             if (!p.lang) p.lang = Lang.merge(lang["common"], this.lang[p.name] || {});
 
-            // ¸ù¾İÄ£°å¹¹½¨ DOM
+            // ï¿½ï¿½ï¿½Ä£ï¿½å¹¹ï¿½ï¿½ DOM
             html = TOOLBAR_BUTTON_TMPL
                     .replace("{TITLE}", p.lang.title || "")
                     .replace("{NAME}", p.name)
@@ -1587,12 +1594,12 @@ KISSY.Editor.add("core~toolbar", function(E) {
             }
             div.innerHTML = html;
 
-            // µÃµ½ domEl
+            // ï¿½Ãµï¿½ domEl
             p.domEl = el = div.firstChild;
 
-            // ¸ù¾İ²å¼şÀàĞÍ£¬µ÷Õû DOM ½á¹¹
+            // ï¿½ï¿½İ²ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ DOM ï¿½á¹¹
             if (type == TYPE.TOOLBAR_MENU_BUTTON || type == TYPE.TOOLBAR_SELECT) {
-                // ×¢£ºselect ÊÇÒ»ÖÖÌØÊâµÄ menu button
+                // ×¢ï¿½ï¿½select ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ menu button
                 this._renderMenuButton(p);
 
                 if(type == TYPE.TOOLBAR_SELECT) {
@@ -1600,25 +1607,25 @@ KISSY.Editor.add("core~toolbar", function(E) {
                 }
             }
 
-            // °ó¶¨ÊÂ¼ş
+            // ï¿½ï¿½ï¿½Â¼ï¿½
             this._bindItemUI(p);
 
-            // Ìí¼Óµ½¹¤¾ßÀ¸
+            // ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             this._addToToolbar(el);
 
-            // µ÷ÓÃ²å¼ş×Ô¼ºµÄ³õÊ¼»¯º¯Êı£¬ÕâÊÇ²å¼şµÄ¸öĞÔ»¯½Ó¿Ú
-            // init ·ÅÔÚÌí¼Óµ½¹¤¾ßÀ¸ºóÃæ£¬¿ÉÒÔ±£Ö¤ DOM ²Ù×÷±ÈÈçÈ¡ region µÈ²Ù×÷µÄÕıÈ·ĞÔ
-            p.editor = this.editor; // ¸ø p Ôö¼Ó editor ÊôĞÔ
+            // ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Ä³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½Ô»ï¿½ï¿½Ó¿ï¿½
+            // init ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ£¬ï¿½ï¿½ï¿½Ô±ï¿½Ö¤ DOM ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ region ï¿½È²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½
+            p.editor = this.editor; // ï¿½ï¿½ p ï¿½ï¿½ï¿½ï¿½ editor ï¿½ï¿½ï¿½ï¿½
             if (p.init) {
                 p.init();
             }
 
-            // ±ê¼ÇÎªÒÑ³õÊ¼»¯Íê³É
+            // ï¿½ï¿½ï¿½Îªï¿½Ñ³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½
             p.inited = true;
         },
 
         /**
-         * ³õÊ¼»¯ÏÂÀ­°´Å¥µÄ DOM
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ DOM
          */
         _renderMenuButton: function(p) {
             var el = p.domEl,
@@ -1631,34 +1638,34 @@ KISSY.Editor.add("core~toolbar", function(E) {
         },
 
         /**
-         * ³õÊ¼»¯ selectBox µÄ DOM
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ selectBox ï¿½ï¿½ DOM
          */
         _renderSelect: function(p) {
             Dom.addClass(p.domEl, TOOLBAR_SELECT);
         },
 
         /**
-         * ¸ø¹¤¾ßÀ¸Ïî°ó¶¨ÊÂ¼ş
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
          */
         _bindItemUI: function(p) {
             var el = p.domEl;
 
-            // 1. ×¢²áµã»÷Ê±µÄÏìÓ¦º¯Êı
+            // 1. ×¢ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
             if (p.exec) {
                 Event.on(el, "click", function() {
                     p.exec();
                 });
             }
 
-            // 2. Ìí¼ÓÊó±êµã»÷Ê±£¬°´Å¥°´ÏÂµÄĞ§¹û
+            // 2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½Âµï¿½Ğ§ï¿½ï¿½
             Event.on(el, "mousedown", function() {
                 Dom.addClass(el, TOOLBAR_BUTTON_ACTIVE);
             });
             Event.on(el, "mouseup", function() {
                 Dom.removeClass(el, TOOLBAR_BUTTON_ACTIVE);
             });
-            // TODO ÍêÉÆĞ§¹û£ºÔÚÊó±ê×ó¼ü°´ÏÂ×´Ì¬£¬½«Êó±êÒÆ³öºÍÒÆÈë°´Å¥Ê±£¬°´Å¥×´Ì¬µÄÇĞ»»
-            // ×¢£ºfirefox ÏÂ£¬°´×¡×ó¼ü£¬½«Êó±êÒÆ³öºÍÒÆÈë°´Å¥Ê±£¬²»»á´¥·¢ mouseout. ĞèÒªÑĞ¾¿ÏÂ google ÊÇÈçºÎÊµÏÖµÄ
+            // TODO ï¿½ï¿½ï¿½ï¿½Ğ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë°´Å¥Ê±ï¿½ï¿½ï¿½ï¿½Å¥×´Ì¬ï¿½ï¿½ï¿½Ğ»ï¿½
+            // ×¢ï¿½ï¿½firefox ï¿½Â£ï¿½ï¿½ï¿½×¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë°´Å¥Ê±ï¿½ï¿½ï¿½ï¿½ï¿½á´¥ï¿½ï¿½ mouseout. ï¿½ï¿½Òªï¿½Ğ¾ï¿½ï¿½ï¿½ google ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½Öµï¿½
             Event.on(el, "mouseout", function(e) {
                 var toElement = Event.getRelatedTarget(e), isChild;
 
@@ -1669,14 +1676,14 @@ KISSY.Editor.add("core~toolbar", function(E) {
                         isChild = el.compareDocumentPosition(toElement) & 8;
                     }
                 } catch(e) {
-                    isChild = false; // ÒÑ¾­ÒÆ¶¯µ½ iframe Àï
+                    isChild = false; // ï¿½Ñ¾ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ iframe ï¿½ï¿½
                 }
                 if (isChild) return;
 
                 Dom.removeClass(el, TOOLBAR_BUTTON_ACTIVE);
             });
 
-            // 3. ie6 ÏÂ£¬Ä£Äâ hover
+            // 3. ie6 ï¿½Â£ï¿½Ä£ï¿½ï¿½ hover
             if(isIE6) {
                 Event.on(el, "mouseenter", function() {
                     Dom.addClass(el, TOOLBAR_BUTTON_HOVER);
@@ -1688,7 +1695,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
         },
 
         /**
-         * Ìí¼Ó·Ö¸ôÏß
+         * ï¿½ï¿½Ó·Ö¸ï¿½ï¿½ï¿½
          */
         _addSeparator: function() {
             div.innerHTML = TOOLBAR_SEPARATOR_TMPL;
@@ -1696,7 +1703,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
         },
 
         /**
-         * ½« item »ò ·Ö¸ôÏß Ìí¼Óµ½¹¤¾ßÀ¸
+         * ï¿½ï¿½ item ï¿½ï¿½ ï¿½Ö¸ï¿½ï¿½ï¿½ ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         _addToToolbar: function(el) {
             if(isIE) el = E.Dom.setItemUnselectable(el);
@@ -1704,7 +1711,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
         },
 
         /**
-         * ³õÊ¼»¯°´Å¥×´Ì¬µÄ¶¯Ì¬¸üĞÂ
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Å¥×´Ì¬ï¿½Ä¶ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½
          */
         _initUpdateState: function() {
             var doc = this.editor.contentDoc,
@@ -1715,7 +1722,7 @@ KISSY.Editor.add("core~toolbar", function(E) {
                 var keyCode = ev.keyCode;
 
                 // PGUP,PGDN,END,HOME: 33 - 36
-                // LEFT,UP,RIGHT,DOWN£º37 - 40
+                // LEFT,UP,RIGHT,DOWNï¿½ï¿½37 - 40
                 // BACKSPACE: 8
                 // ENTER: 13
                 // DEL: 46
@@ -1727,12 +1734,12 @@ KISSY.Editor.add("core~toolbar", function(E) {
                 }
             });
 
-            // TODO: ¼à¿ØÕ³ÌùÊ±µÄÊÂ¼ş£¬Õ³ÌùºóĞèÒª¸üĞÂ°´Å¥×´Ì¬
+            // TODO: ï¿½ï¿½ï¿½Õ³ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Â°ï¿½Å¥×´Ì¬
         },
 
         /**
-         * °´Å¥×´Ì¬µÄ¶¯Ì¬¸üĞÂ£¨°üÀ¨°´Å¥Ñ¡ÖĞ×´Ì¬µÄ¸üĞÂ¡¢×ÖÌå×ÖºÅµÄ¸üĞÂ¡¢ÑÕÉ«µÄ¶¯Ì¬¸üĞÂµÈ£©
-         * ×ñÊØ Google Docs µÄÔ­Ôò£¬ÈÃËùÓĞ°´Å¥Ê¼ÖÕ¿Éµã»÷£¬Ö»¸üĞÂ×´Ì¬£¬²»½ûÓÃ°´Å¥
+         * ï¿½ï¿½Å¥×´Ì¬ï¿½Ä¶ï¿½Ì¬ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥Ñ¡ï¿½ï¿½×´Ì¬ï¿½Ä¸ï¿½ï¿½Â¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖºÅµÄ¸ï¿½ï¿½Â¡ï¿½ï¿½ï¿½É«ï¿½Ä¶ï¿½Ì¬ï¿½ï¿½ï¿½ÂµÈ£ï¿½
+         * ï¿½ï¿½ï¿½ï¿½ Google Docs ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ°ï¿½Å¥Ê¼ï¿½Õ¿Éµï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½Å¥
          */
         updateState: function(filterNames) {
             var items = this.stateItems, p;
@@ -1744,23 +1751,23 @@ KISSY.Editor.add("core~toolbar", function(E) {
                 if(filterNames && filterNames.indexOf(p.name) === -1)
                     continue;
 
-                // µ÷ÓÃ²å¼ş×Ô¼ºµÄ×´Ì¬¸üĞÂº¯Êı
+                // ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½Âºï¿½ï¿½ï¿½
                 if(p.updateState) {
                     p.updateState();
                     continue;
                 }
 
-                // Ä¬ÈÏµÄ×´Ì¬¸üĞÂº¯Êı
+                // Ä¬ï¿½Ïµï¿½×´Ì¬ï¿½ï¿½ï¿½Âºï¿½ï¿½ï¿½
                 this.updateItemState(p);
             }
 
-            // TODO: webkit ÏÂ£¬¶ÔÆëµÄ×´Ì¬Ã»»ñÈ¡µ½
+            // TODO: webkit ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬Ã»ï¿½ï¿½È¡ï¿½ï¿½
         },
 
         updateItemState: function(p) {
             var doc = this.editor.contentDoc;
 
-            // Ä¬ÈÏµÄ×´Ì¬¸üĞÂº¯Êı
+            // Ä¬ï¿½Ïµï¿½×´Ì¬ï¿½ï¿½ï¿½Âºï¿½ï¿½ï¿½
             try {
                 if (doc.queryCommandEnabled(p.name)) {
                     if (doc.queryCommandState(p.name)) {
@@ -1784,22 +1791,22 @@ KISSY.Editor.add("core~statusbar", function(E) {
         SEP_TMPL = '<div class="ks-editor-stripbar-sep kissy-inline-block"></div>',
         ITEM_TMPL = '<div class="ks-editor-statusbar-item ks-editor-{NAME} ks-inline-block"></div>',
 
-        div = document.createElement("div"); // Í¨ÓÃ el ÈİÆ÷
+        div = document.createElement("div"); // Í¨ï¿½ï¿½ el ï¿½ï¿½ï¿½ï¿½
 
     E.Statusbar = function(editor) {
 
         /**
-         * Ïà¹ØÁªµÄ±à¼­Æ÷ÊµÀı
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±à¼­ï¿½ï¿½Êµï¿½ï¿½
          */
         this.editor = editor;
 
         /**
-         * Ïà¹ØÁªµÄÅäÖÃ
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         this.config = editor.config;
 
         /**
-         * µ±Ç°ÓïÑÔ
+         * ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
          */
         this.lang = E.lang[this.config.language];
     };
@@ -1807,60 +1814,60 @@ KISSY.Editor.add("core~statusbar", function(E) {
     Lang.augmentObject(E.Statusbar.prototype, {
 
         /**
-         * ³õÊ¼»¯
+         * ï¿½ï¿½Ê¼ï¿½ï¿½
          */
         init: function() {
             var items = this.config.statusbar,
                 plugins = this.editor.plugins,
                 key;
 
-            // ±éÀúÅäÖÃÏî£¬ÕÒµ½Ïà¹Ø²å¼şÏî£¬²¢Ìí¼Óµ½¹¤¾ßÀ¸ÉÏ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î£¬ï¿½Òµï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½î£¬ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             for (var i = 0, len = items.length; i < len; ++i) {
                 key = items[i];
                 if (key) {
-                    if (!(key in plugins)) continue; // ÅäÖÃÏîÀïÓĞ£¬µ«¼ÓÔØµÄ²å¼şÀïÎŞ£¬Ö±½ÓºöÂÔ
+                    if (!(key in plugins)) continue; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ØµÄ²ï¿½ï¿½ï¿½ï¿½ï¿½Ş£ï¿½Ö±ï¿½Óºï¿½ï¿½ï¿½
 
-                    // Ìí¼Ó²å¼şÏî
+                    // ï¿½ï¿½Ó²ï¿½ï¿½ï¿½ï¿½
                     this._addItem(plugins[key]);
 
-                } else { // Ìí¼Ó·Ö¸ôÏß
+                } else { // ï¿½ï¿½Ó·Ö¸ï¿½ï¿½ï¿½
                     this._addSep();
                 }
             }
         },
 
         /**
-         * Ìí¼Ó¹¤¾ßÀ¸Ïî
+         * ï¿½ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         _addItem: function(p) {
             var el, lang = this.lang;
 
-            // µ± plugin Ã»ÓĞÉèÖÃ lang Ê±£¬²ÉÓÃÄ¬ÈÏÓïÑÔÅäÖÃ
-            // TODO: ¿¼ÂÇÖØ¹¹µ½ instance Ä£¿éÀï£¬ÒòÎª lang ½ö¸úÊµÀıÏà¹Ø
+            // ï¿½ï¿½ plugin Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ lang Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // TODO: ï¿½ï¿½ï¿½ï¿½ï¿½Ø¹ï¿½ï¿½ï¿½ instance Ä£ï¿½ï¿½ï¿½ï£¬ï¿½ï¿½Îª lang ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½
             if (!p.lang) p.lang = Lang.merge(lang["common"], this.lang[p.name] || {});
 
-            // ¸ù¾İÄ£°å¹¹½¨ DOM
+            // ï¿½ï¿½ï¿½Ä£ï¿½å¹¹ï¿½ï¿½ DOM
             div.innerHTML = ITEM_TMPL.replace("{NAME}", p.name);
 
-            // µÃµ½ domEl
+            // ï¿½Ãµï¿½ domEl
             p.domEl = el = div.firstChild;
 
-            // Ìí¼Óµ½¹¤¾ßÀ¸
+            // ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             this._addToToolbar(el);
 
-            // µ÷ÓÃ²å¼ş×Ô¼ºµÄ³õÊ¼»¯º¯Êı£¬ÕâÊÇ²å¼şµÄ¸öĞÔ»¯½Ó¿Ú
-            // init ·ÅÔÚÌí¼Óµ½¹¤¾ßÀ¸ºóÃæ£¬¿ÉÒÔ±£Ö¤ DOM ²Ù×÷±ÈÈçÈ¡ region µÈ²Ù×÷µÄÕıÈ·ĞÔ
-            p.editor = this.editor; // ¸ø p Ôö¼Ó editor ÊôĞÔ
+            // ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Ä³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½Ô»ï¿½ï¿½Ó¿ï¿½
+            // init ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ£¬ï¿½ï¿½ï¿½Ô±ï¿½Ö¤ DOM ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ region ï¿½È²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½
+            p.editor = this.editor; // ï¿½ï¿½ p ï¿½ï¿½ï¿½ï¿½ editor ï¿½ï¿½ï¿½ï¿½
             if (p.init) {
                 p.init();
             }
 
-            // ±ê¼ÇÎªÒÑ³õÊ¼»¯Íê³É
+            // ï¿½ï¿½ï¿½Îªï¿½Ñ³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½
             p.inited = true;
         },
 
         /**
-         * Ìí¼Ó·Ö¸ôÏß
+         * ï¿½ï¿½Ó·Ö¸ï¿½ï¿½ï¿½
          */
         _addSep: function() {
             div.innerHTML = SEP_TMPL;
@@ -1868,7 +1875,7 @@ KISSY.Editor.add("core~statusbar", function(E) {
         },
 
         /**
-         * ½« item »ò ·Ö¸ôÏß Ìí¼Óµ½×´Ì¬À¸
+         * ï¿½ï¿½ item ï¿½ï¿½ ï¿½Ö¸ï¿½ï¿½ï¿½ ï¿½ï¿½Óµï¿½×´Ì¬ï¿½ï¿½
          */
         _addToToolbar: function(el) {
             if(isIE) el = E.Dom.setItemUnselectable(el);
@@ -1890,62 +1897,62 @@ KISSY.Editor.add("core~menu", function(E) {
         SHADOW_CLASS = "ks-editor-drop-menu-shadow",
         CONTENT_CLASS = "ks-editor-drop-menu-content",
         SELECTED_CLASS = "ks-editor-toolbar-button-selected",
-        SHIM_CLASS = DROP_MENU_CLASS + "-shim", //  // iframe shim µÄ class
-        shim; // ¹²ÓÃÒ»¸ö shim ¼´¿É
+        SHIM_CLASS = DROP_MENU_CLASS + "-shim", //  // iframe shim ï¿½ï¿½ class
+        shim; // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ shim ï¿½ï¿½ï¿½ï¿½
     
     E.Menu = {
 
         /**
-         * Éú³ÉÏÂÀ­¿ò
-         * @param {KISSY.Editor} editor dropMenu ËùÊôµÄ±à¼­Æ÷ÊµÀı
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+         * @param {KISSY.Editor} editor dropMenu ï¿½ï¿½ï¿½ï¿½ï¿½Ä±à¼­ï¿½ï¿½Êµï¿½ï¿½
          * @param {HTMLElement} trigger
-         * @param {Array} offset dropMenu Î»ÖÃµÄÆ«ÒÆÁ¿
+         * @param {Array} offset dropMenu Î»ï¿½Ãµï¿½Æ«ï¿½ï¿½ï¿½ï¿½
          * @return {HTMLElement} dropMenu
          */
         generateDropMenu: function(editor, trigger, offset) {
             var dropMenu = document.createElement("div"),
                  self = this;
 
-            // Ìí¼ÓÒõÓ°²ã
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½
             dropMenu.innerHTML = '<div class="' + SHADOW_CLASS + '"></div>'
                                + '<div class="' + CONTENT_CLASS + '"></div>';
             
-            // Éú³É DOM
+            // ï¿½ï¿½ï¿½ DOM
             dropMenu.className = DROP_MENU_CLASS;
             dropMenu.style[DISPLAY] = NONE;
             document.body.appendChild(dropMenu);
 
-            // µã»÷´¥µãÊ±£¬ÏÔÊ¾ÏÂÀ­¿ò
-            // ×¢£ºÒ»¸ö±à¼­Æ÷ÊµÀı£¬×î¶àÖ»ÄÜÓĞÒ»¸ö¼¤»îµÄÏÂÀ­¿ò
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // ×¢ï¿½ï¿½Ò»ï¿½ï¿½ï¿½à¼­ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Event.on(trigger, "click", function(ev) {
-                // ²»ÏòÉÏ´«²¥£¬×Ô¼º¿ØÖÆ
-                // ·ñÔò document ÉÏ¼à¿Øµã»÷ºó£¬»á¹Ø±Õ¸Õ´ò¿ªµÄ dropMenu
+                // ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½
+                // ï¿½ï¿½ï¿½ï¿½ document ï¿½Ï¼ï¿½Øµï¿½ï¿½ï¿½ó£¬»ï¿½Ø±Õ¸Õ´ò¿ªµï¿½ dropMenu
                 Event.stopPropagation(ev);
 
-                // Òş²Øµ±Ç°¼¤»îµÄÏÂÀ­¿ò
+                // ï¿½ï¿½ï¿½Øµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 editor.activeDropMenu && self._hide(editor);
 
-                // ´ò¿ªµ±Ç° trigger µÄ dropMenu
+                // ï¿½ò¿ªµï¿½Ç° trigger ï¿½ï¿½ dropMenu
                 if(editor.activeDropMenu != dropMenu) {
-                    self._setDropMenuPosition(trigger, dropMenu, offset); // ÑÓ³Ùµ½ÏÔÊ¾Ê±µ÷ÕûÎ»ÖÃ
+                    self._setDropMenuPosition(trigger, dropMenu, offset); // ï¿½Ó³Ùµï¿½ï¿½ï¿½Ê¾Ê±ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
                     editor.activeDropMenu = dropMenu;
                     editor.activeDropButton = trigger;
                     self._show(editor);
 
-                } else { // µÚ¶ş´Îµã»÷ÔÚ trigger ÉÏ£¬¹Ø±Õ activeDropMenu, ²¢ÖÃÎª null. ·ñÔò»áµ¼ÖÂµÚÈı´Îµã»÷´ò²»¿ª
+                } else { // ï¿½Ú¶ï¿½ï¿½Îµï¿½ï¿½ï¿½ï¿½ trigger ï¿½Ï£ï¿½ï¿½Ø±ï¿½ activeDropMenu, ï¿½ï¿½ï¿½ï¿½Îª null. ï¿½ï¿½ï¿½ï¿½áµ¼ï¿½Âµï¿½ï¿½ï¿½Îµï¿½ï¿½ï¿½ò²»¿ï¿½
                     editor.activeDropMenu = null;
                     editor.activeDropButton = null;
                 }
             });
 
-            // document ²¶»ñµ½µã»÷Ê±£¬¹Ø±Õµ±Ç°¼¤»îµÄÏÂÀ­¿ò
+            // document ï¿½ï¿½ï¿½ñµ½µï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ø±Õµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Event.on([document, editor.contentDoc], "click", function() {
                 if(editor.activeDropMenu) {
                     self.hideActiveDropMenu(editor);
 
-                    // »¹Ô­Ñ¡ÇøºÍ½¹µã
+                    // ï¿½ï¿½Ô­Ñ¡ï¿½ï¿½Í½ï¿½ï¿½ï¿½
                     if (this == editor.contentDoc) {
-                        // TODO: [bug 58]  ĞèÒªÖØĞ´Ò»¸ö focusmanager À´Í³Ò»¹ÜÀí½¹µã
+                        // TODO: [bug 58]  ï¿½ï¿½Òªï¿½ï¿½Ğ´Ò»ï¿½ï¿½ focusmanager ï¿½ï¿½Í³Ò»ï¿½ï¿½ï¿½?ï¿½ï¿½
 //                        if (UA.ie) {
 //                            var range = editor.getSelectionRange();
 //                            range.select();
@@ -1955,15 +1962,15 @@ KISSY.Editor.add("core~menu", function(E) {
                 }
             });
 
-            // ¸Ä±ä´°¿Ú´óĞ¡Ê±£¬¶¯Ì¬µ÷ÕûÎ»ÖÃ
+            // ï¿½Ä±ä´°ï¿½Ú´ï¿½Ğ¡Ê±ï¿½ï¿½ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
             this._initResizeEvent(trigger, dropMenu, offset);
 
-            // ·µ»Ø
-            return dropMenu.childNodes[1]; // ·µ»Ø content ²¿·Ö
+            // ï¿½ï¿½ï¿½ï¿½
+            return dropMenu.childNodes[1]; // ï¿½ï¿½ï¿½ï¿½ content ï¿½ï¿½ï¿½ï¿½
         },
 
         /**
-         * ÉèÖÃ dropMenu µÄÎ»ÖÃ
+         * ï¿½ï¿½ï¿½ï¿½ dropMenu ï¿½ï¿½Î»ï¿½ï¿½
          */
         _setDropMenuPosition: function(trigger, dropMenu, offset) {
             var r = Dom.getRegion(trigger),
@@ -1984,7 +1991,7 @@ KISSY.Editor.add("core~menu", function(E) {
         },
 
         /**
-         * Òş²Ø±à¼­Æ÷µ±Ç°´ò¿ªµÄÏÂÀ­¿ò
+         * ï¿½ï¿½ï¿½Ø±à¼­ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ò¿ªµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         hideActiveDropMenu: function(editor) {
             this._hide(editor);
@@ -2001,7 +2008,7 @@ KISSY.Editor.add("core~menu", function(E) {
 
                 dropMenu.style[DISPLAY] = NONE;
                 //dropMenu.style.visibility = "hidden";
-                // ×¢£ºvisibilty ·½Ê½»áµ¼ÖÂieÏÂ£¬ÉÏ´«²¢²åÈëÎÄ¼ş£¨Ñ¡ÔñÁËÑ¡È¡ÎÄ¼ş¿ò£©ºó£¬±à¼­ÇøÓò½¹µã¶ªÊ§
+                // ×¢ï¿½ï¿½visibilty ï¿½ï¿½Ê½ï¿½áµ¼ï¿½ï¿½ieï¿½Â£ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Ñ¡È¡ï¿½Ä¼ï¿½ï¿½ò£©ºó£¬±à¼­ï¿½ï¿½ï¿½ò½¹µã¶ªÊ§
             }
 
             dropButton && (Dom.removeClass(dropButton, SELECTED_CLASS));
@@ -2033,7 +2040,7 @@ KISSY.Editor.add("core~menu", function(E) {
         },
 
         /**
-         * window.onresize Ê±£¬ÖØĞÂµ÷Õû dropMenu µÄÎ»ÖÃ
+         * window.onresize Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ dropMenu ï¿½ï¿½Î»ï¿½ï¿½
          */
         _initResizeEvent: function(trigger, dropMenu, offset) {
             var self = this, resizeTimer;
@@ -2044,7 +2051,7 @@ KISSY.Editor.add("core~menu", function(E) {
                 }
 
                 resizeTimer = setTimeout(function() {
-                    if(self._isVisible(dropMenu)) { // ½öÔÚÏÔÊ¾Ê±£¬ĞèÒª¶¯Ì¬µ÷Õû
+                    if(self._isVisible(dropMenu)) { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Ê±ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½
                         self._setDropMenuPosition(trigger, dropMenu, offset);
                     }
                 }, 50);
@@ -2062,7 +2069,7 @@ KISSY.Editor.add("core~menu", function(E) {
         },
 
         /**
-         * ÉèÖÃ shim µÄ region
+         * ï¿½ï¿½ï¿½ï¿½ shim ï¿½ï¿½ region
          * @protected
          */
         _setShimRegion: function(el) {
@@ -2071,7 +2078,7 @@ KISSY.Editor.add("core~menu", function(E) {
                 if (r.width > 0) {
                     shim.style.left = r.left + "px";
                     shim.style.top = r.top + "px";
-                    shim.style.width = (r.width - 1) + "px"; // ÉÙÒ»ÏñËØ£¬·ñÔò ie6 ÏÂ»áÂ¶³öÒ»ÏñËØ
+                    shim.style.width = (r.width - 1) + "px"; // ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½ ie6 ï¿½Â»ï¿½Â¶ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½
                     shim.style.height = (r.height - 1) + "px";
                 }
             }
@@ -2140,18 +2147,18 @@ KISSY.Editor.add("plugins~base", function(E) {
 
     E.addPlugin(buttons.split(","), {
         /**
-         * ÖÖÀà£ºÆÕÍ¨°´Å¥
+         * ï¿½ï¿½ï¿½à£ºï¿½ï¿½Í¨ï¿½ï¿½Å¥
          */
         type: TYPE.TOOLBAR_BUTTON,
 
         /**
-         * ÏìÓ¦º¯Êı
+         * ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
          */
         exec: function() {
-            // Ö´ĞĞÃüÁî
+            // Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             this.editor.execCommand(this.name);
 
-            // ¸üĞÂ×´Ì¬
+            // ï¿½ï¿½ï¿½ï¿½×´Ì¬
             this.editor.toolbar.updateState();
         }
     });
@@ -2184,34 +2191,34 @@ KISSY.Editor.add("plugins~color", function(E) {
 
     E.addPlugin(["foreColor", "backColor"], {
         /**
-         * ÖÖÀà£º²Ëµ¥°´Å¥
+         * ï¿½ï¿½ï¿½à£ºï¿½Ëµï¿½ï¿½ï¿½Å¥
          */
         type: TYPE.TOOLBAR_MENU_BUTTON,
 
         /**
-         * µ±Ç°Ñ¡È¡É«
+         * ï¿½ï¿½Ç°Ñ¡È¡É«
          */
         color: "",
 
         /**
-         * µ±Ç°ÑÕÉ«Ö¸Ê¾Ìõ
+         * ï¿½ï¿½Ç°ï¿½ï¿½É«Ö¸Ê¾ï¿½ï¿½
          */
         _indicator: null,
 
         /**
-         * È¡É«¿é
+         * È¡É«ï¿½ï¿½
          */
         swatches: null,
 
         /**
-         * ¹ØÁªµÄÏÂÀ­²Ëµ¥¿ò
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½
          */
         dropMenu: null,
 
         range: null,
 
         /**
-         * ³õÊ¼»¯
+         * ï¿½ï¿½Ê¼ï¿½ï¿½
          */
         init: function() {
             var el = this.domEl,
@@ -2233,54 +2240,54 @@ KISSY.Editor.add("plugins~color", function(E) {
         },
 
         _renderUI: function() {
-            // ÓĞÁ½ÖÖ·½°¸£º
-            //  1. ·ÂÕÕ MS Office 2007, ½öµ±µã»÷ÏÂÀ­¼ıÍ·Ê±£¬²Åµ¯³öÏÂÀ­¿ò¡£µã»÷ caption Ê±£¬Ö±½ÓÉèÖÃÑÕÉ«¡£
-            //  2. ·ÂÕÕ Google Docs, ²»Çø·Ö caption ºÍ dropdown£¬ÈÃÃ¿´Îµã»÷¶¼µ¯³öÏÂÀ­¿ò¡£
-            // ´ÓÂß¼­ÉÏ½²£¬·½°¸1²»´í¡£µ«ÊÇ£¬¿¼ÂÇ web Ò³ÃæÉÏ£¬°´Å¥±È½ÏĞ¡£¬·½°¸2ÕâÑù·´¶øÄÜÔö¼ÓÒ×ÓÃĞÔ¡£
-            // ÕâÀï²ÉÓÃ·½°¸2
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½
+            //  1. ï¿½ï¿½ï¿½ï¿½ MS Office 2007, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·Ê±ï¿½ï¿½ï¿½Åµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¡£µï¿½ï¿½ caption Ê±ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½
+            //  2. ï¿½ï¿½ï¿½ï¿½ Google Docs, ï¿½ï¿½ï¿½ï¿½ï¿½ caption ï¿½ï¿½ dropdownï¿½ï¿½ï¿½ï¿½Ã¿ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // ï¿½ï¿½ï¿½ß¼ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½Ç£ï¿½ï¿½ï¿½ï¿½ï¿½ web Ò³ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½Å¥ï¿½È½ï¿½Ğ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¡ï¿½
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½2
 
             this.dropMenu = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]);
 
-            // Éú³ÉÏÂÀ­¿òÄÚµÄÄÚÈİ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½
             this._generatePalettes();
 
-            // Õë¶Ô ie£¬ÉèÖÃ²»¿ÉÑ¡Ôñ
+            // ï¿½ï¿½ï¿½ ieï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½
             if (isIE) E.Dom.setItemUnselectable(this.dropMenu);
         },
 
         _bindUI: function() {
-            // ×¢²áÑ¡È¡ÊÂ¼ş
+            // ×¢ï¿½ï¿½Ñ¡È¡ï¿½Â¼ï¿½
             this._bindPickEvent();
 
             Event.on(this.domEl, "click", function() {
-                // ±£´æ range, ÒÔ±ã»¹Ô­
+                // ï¿½ï¿½ï¿½ï¿½ range, ï¿½Ô±ã»¹Ô­
                 this.range = this.editor.getSelectionRange();
 
-                // ¾Û¼¯µ½°´Å¥ÉÏ£¬Òş²Ø¹â±ê£¬·ñÔò ie ÏÂ¹â±ê»áÏÔÊ¾ÔÚ²ãÉÏÃæ
-                // ×¢£ºÍ¨¹ı blur / focus µÈ·½Ê½ÔÚ ie7- ÏÂÎŞĞ§
+                // ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ø¹ï¿½ê£¬ï¿½ï¿½ï¿½ï¿½ ie ï¿½Â¹ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½
+                // ×¢ï¿½ï¿½Í¨ï¿½ï¿½ blur / focus ï¿½È·ï¿½Ê½ï¿½ï¿½ ie7- ï¿½ï¿½ï¿½ï¿½Ğ§
                 isIE && this.editor.contentDoc.selection.empty();
 
-                // ¸üĞÂÑ¡ÖĞÉ«
+                // ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½É«
                 this._updateSelectedColor(this.color);
             }, this, true);
         },
 
         /**
-         * Éú³ÉÈ¡É«°å
+         * ï¿½ï¿½ï¿½È¡É«ï¿½ï¿½
          */
         _generatePalettes: function() {
             var htmlCode = "";
 
-            // ºÚ°×É«°å
+            // ï¿½Ú°ï¿½É«ï¿½ï¿½
             htmlCode += this._getPaletteTable(COLOR_GRAY);
 
-            // ³£ÓÃÉ«°å
+            // ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½
             htmlCode += this._getPaletteTable(COLOR_NORMAL);
 
-            // ÏêÏ¸É«°å
+            // ï¿½ï¿½Ï¸É«ï¿½ï¿½
             htmlCode += this._getPaletteTable(COLOR_DETAIL);
 
-            // Ìí¼Óµ½ DOM ÖĞ
+            // ï¿½ï¿½Óµï¿½ DOM ï¿½ï¿½
             this.dropMenu.innerHTML = htmlCode;
         },
 
@@ -2303,7 +2310,7 @@ KISSY.Editor.add("plugins~color", function(E) {
         },
 
         /**
-         * °ó¶¨È¡É«ÊÂ¼ş
+         * ï¿½ï¿½È¡É«ï¿½Â¼ï¿½
          */
         _bindPickEvent: function() {
             var self = this;
@@ -2316,36 +2323,36 @@ KISSY.Editor.add("plugins~color", function(E) {
                     self._doAction(attr);
                 }
 
-                // ¹Ø±ÕĞü¸¡¿ò
+                // ï¿½Ø±ï¿½ï¿½ï¿½ï¿½
                 Event.stopPropagation(ev);
                 E.Menu.hideActiveDropMenu(self.editor);
-                // ×¢£ºÔÚÕâÀï×èÖ¹µôÊÂ¼şÃ°Åİ£¬×Ô¼º´¦Àí¶Ô»°¿òµÄ¹Ø±Õ£¬ÊÇÒòÎª
-                // ÔÚ Firefox ÏÂ£¬µ±Ö´ĞĞ doAction ºó£¬doc »ñÈ¡µ½ click
-                // ´¥·¢ updateState Ê±£¬»¹»ñÈ¡²»µ½µ±Ç°µÄÑÕÉ«Öµ¡£
-                // ÕâÑù×ö£¬¶ÔĞÔÄÜÒ²ÓĞºÃ´¦£¬ÕâÖÖÇé¿öÏÂ²»ĞèÒª¸üĞÂ updateState
+                // ×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½Â¼ï¿½Ã°ï¿½İ£ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½Ä¹Ø±Õ£ï¿½ï¿½ï¿½ï¿½ï¿½Îª
+                // ï¿½ï¿½ Firefox ï¿½Â£ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ doAction ï¿½ï¿½doc ï¿½ï¿½È¡ï¿½ï¿½ click
+                // ï¿½ï¿½ï¿½ï¿½ updateState Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½É«Öµï¿½ï¿½
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ĞºÃ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ updateState
             });
         },
 
         /**
-         * Ö´ĞĞ²Ù×÷
+         * Ö´ï¿½Ğ²ï¿½ï¿½ï¿½
          */
         _doAction: function(val) {
             if (!val) return;
 
-            // ¸üĞÂµ±Ç°Öµ
+            // ï¿½ï¿½ï¿½Âµï¿½Ç°Öµ
             this.setColor(E.Color.toHex(val));
 
-            // »¹Ô­Ñ¡Çø
+            // ï¿½ï¿½Ô­Ñ¡ï¿½ï¿½
             var range = this.range;
             if (isIE && range.select) range.select();
 
-            // Ö´ĞĞÃüÁî
+            // Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             this.editor.execCommand(this.name, this.color);
         },
         
         /**
-         * ÉèÖÃÑÕÉ«
-         * @param {string} val ¸ñÊ½ #RRGGBB or #RGB
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
+         * @param {string} val ï¿½ï¿½Ê½ #RRGGBB or #RGB
          */
         setColor: function(val) {
             this.color = val;
@@ -2355,17 +2362,17 @@ KISSY.Editor.add("plugins~color", function(E) {
         },
 
         /**
-         * ¸üĞÂÖ¸Ê¾Æ÷µÄÑÕÉ«
-         * @param val HEX ¸ñÊ½
+         * ï¿½ï¿½ï¿½ï¿½Ö¸Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
+         * @param val HEX ï¿½ï¿½Ê½
          */
         _updateIndicatorColor: function(val) {
-            // ¸üĞÂ indicator
+            // ï¿½ï¿½ï¿½ï¿½ indicator
             this._indicator.style.borderBottomColor = val;
         },
 
         /**
-         * ¸üĞÂÏÂÀ­²Ëµ¥ÖĞÑ¡ÖĞµÄÑÕÉ«
-         * @param {string} val ¸ñÊ½ #RRGGBB or #RGB
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½Ñ¡ï¿½Ğµï¿½ï¿½ï¿½É«
+         * @param {string} val ï¿½ï¿½Ê½ #RRGGBB or #RGB
          */
         _updateSelectedColor: function(val) {
             var i, len, swatch, swatches = this.swatches;
@@ -2373,7 +2380,7 @@ KISSY.Editor.add("plugins~color", function(E) {
             for(i = 0, len = swatches.length; i < len; ++i) {
                 swatch = swatches[i];
 
-                // »ñÈ¡µÄ backgroundColor ÔÚ²»Í¬ä¯ÀÀÆ÷ÏÂ£¬¸ñÊ½ÓĞ²îÒì£¬ĞèÒªÍ³Ò»×ª»»ºóÔÙ±È½Ï
+                // ï¿½ï¿½È¡ï¿½ï¿½ backgroundColor ï¿½Ú²ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½Ê½ï¿½Ğ²ï¿½ï¿½ì£¬ï¿½ï¿½ÒªÍ³Ò»×ªï¿½ï¿½ï¿½ï¿½ï¿½Ù±È½ï¿½
                 if(E.Color.toHex(swatch.style.backgroundColor) == val) {
                     Dom.addClass(swatch.parentNode, PALETTE_CELL_SELECTED);
                 } else {
@@ -2383,10 +2390,10 @@ KISSY.Editor.add("plugins~color", function(E) {
         },
 
         /**
-         * ¸üĞÂ°´Å¥×´Ì¬
+         * ï¿½ï¿½ï¿½Â°ï¿½Å¥×´Ì¬
          */
-        // ie ÏÂ£¬queryCommandValue ÎŞ·¨ÕıÈ·»ñÈ¡µ½ backColor µÄÖµ
-        // ¸É´à½ûÓÃ´Ë¹¦ÄÜ£¬Ä£·Â Office2007 µÄ´¦Àí£¬ÏÔÊ¾×îºóµÄÑ¡È¡É«
+        // ie ï¿½Â£ï¿½queryCommandValue ï¿½Ş·ï¿½ï¿½ï¿½È·ï¿½ï¿½È¡ï¿½ï¿½ backColor ï¿½ï¿½Öµ
+        // ï¿½É´ï¿½ï¿½ï¿½Ã´Ë¹ï¿½ï¿½Ü£ï¿½Ä£ï¿½ï¿½ Office2007 ï¿½Ä´ï¿½ï¿½?ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ñ¡È¡É«
 //        updateState: function() {
 //            var doc = this.editor.contentDoc,
 //                name = this.name, t, val;
@@ -2397,13 +2404,13 @@ KISSY.Editor.add("plugins~color", function(E) {
 //                if (doc.queryCommandEnabled(name)) {
 //                    t = doc.queryCommandValue(name);
 //
-//                    if(isIE && typeof t == "number") { // ieÏÂ£¬¶ÔÓÚ backColor, ÓĞÊ±·µ»Ø int ¸ñÊ½£¬ÓĞÊ±ÓÖ»áÖ±½Ó·µ»Ø hex ¸ñÊ½
+//                    if(isIE && typeof t == "number") { // ieï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ backColor, ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ int ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ö»ï¿½Ö±ï¿½Ó·ï¿½ï¿½ï¿½ hex ï¿½ï¿½Ê½
 //                        t = E.Color.int2hex(t);
 //                    }
-//                    if (t === "transparent") t = ""; // ±³¾°É«ÎªÍ¸Ã÷É«Ê±£¬È¡Ä¬ÈÏÉ«
-//                    if(t === "rgba(0, 0, 0, 0)") t = ""; // webkit µÄ±³¾°É«ÊÇ rgba µÄ
+//                    if (t === "transparent") t = ""; // ï¿½ï¿½ï¿½ï¿½É«ÎªÍ¸ï¿½ï¿½É«Ê±ï¿½ï¿½È¡Ä¬ï¿½ï¿½É«
+//                    if(t === "rgba(0, 0, 0, 0)") t = ""; // webkit ï¿½Ä±ï¿½ï¿½ï¿½É«ï¿½ï¿½ rgba ï¿½ï¿½
 //
-//                    val = t ? E.Color.toHex(t) : this._getDefaultColor(); // t Îª¿Õ×Ö·û´®Ê±£¬±íÊ¾µã»÷ÔÚ¿ÕĞĞ»òÉĞÎ´ÉèÖÃÑùÊ½µÄµØ·½
+//                    val = t ? E.Color.toHex(t) : this._getDefaultColor(); // t Îªï¿½ï¿½ï¿½Ö·ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½Ğ»ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ÄµØ·ï¿½
 //                    if (val && val != this.color) {
 //                        this.color = val;
 //                        this._updateIndicatorColor(val);
@@ -2421,7 +2428,7 @@ KISSY.Editor.add("plugins~color", function(E) {
 });
 
 // TODO
-//  1. ·Â google, ¶Ô¼üÅÌÊÂ¼şµÄÖ§³Ö
+//  1. ï¿½ï¿½ google, ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Ö§ï¿½ï¿½
 
 KISSY.Editor.add("plugins~font", function(E) {
 
@@ -2448,47 +2455,47 @@ KISSY.Editor.add("plugins~font", function(E) {
 
     E.addPlugin(["fontName", "fontSize"], {
         /**
-         * ÖÖÀà£º²Ëµ¥°´Å¥
+         * ï¿½ï¿½ï¿½à£ºï¿½Ëµï¿½ï¿½ï¿½Å¥
          */
         type: TYPE.TOOLBAR_SELECT,
 
         /**
-         * µ±Ç°Ñ¡ÖĞÖµ
+         * ï¿½ï¿½Ç°Ñ¡ï¿½ï¿½Öµ
          */
         selectedValue: "",
 
         /**
-         * Ñ¡Ôñ¿òÍ·²¿
+         * Ñ¡ï¿½ï¿½ï¿½Í·ï¿½ï¿½
          */
         selectHead: null,
 
         /**
-         * ¹ØÁªµÄÏÂÀ­Ñ¡ÔñÁĞ±í
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ğ±ï¿½
          */
         selectList: null,
 
         /**
-         * ÏÂÀ­¿òÀïµÄËùÓĞÑ¡ÏîÖµ
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Öµ
          */
         options: [],
 
         /**
-         * ÏÂÀ­ÁĞ±íÏî
+         * ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½ï¿½ï¿½
          */
         items: null,
 
         /**
-         * Ñ¡ÖĞµÄÏî
+         * Ñ¡ï¿½Ğµï¿½ï¿½ï¿½
          */
         selectedItem: null,
 
         /**
-         * Ñ¡ÖĞÇøÓò¶ÔÏó
+         * Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         range: null,
 
         /**
-         * ³õÊ¼»¯
+         * ï¿½ï¿½Ê¼ï¿½ï¿½
          */
         init: function() {
             this.options = this.lang.options;
@@ -2499,25 +2506,25 @@ KISSY.Editor.add("plugins~font", function(E) {
         },
 
         _renderUI: function() {
-            // ³õÊ¼»¯ÏÂÀ­¿ò DOM
+            // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DOM
             this.selectList = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]);
             this._renderSelectList();
             this.items = this.selectList.getElementsByTagName("li");
         },
 
         _bindUI: function() {
-            // ×¢²áÑ¡È¡ÊÂ¼ş
+            // ×¢ï¿½ï¿½Ñ¡È¡ï¿½Â¼ï¿½
             this._bindPickEvent();
 
             Event.on(this.domEl, "click", function() {
-                // ±£´æ range, ÒÔ±ã»¹Ô­
+                // ï¿½ï¿½ï¿½ï¿½ range, ï¿½Ô±ã»¹Ô­
                 this.range = this.editor.getSelectionRange();
 
-                // ¾Û¼¯µ½°´Å¥ÉÏ£¬Òş²Ø¹â±ê£¬·ñÔò ie ÏÂ¹â±ê»áÏÔÊ¾ÔÚ²ãÉÏÃæ
-                // ×¢£ºÍ¨¹ı blur / focus µÈ·½Ê½ÔÚ ie7- ÏÂÎŞĞ§
+                // ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ø¹ï¿½ê£¬ï¿½ï¿½ï¿½ï¿½ ie ï¿½Â¹ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½
+                // ×¢ï¿½ï¿½Í¨ï¿½ï¿½ blur / focus ï¿½È·ï¿½Ê½ï¿½ï¿½ ie7- ï¿½ï¿½ï¿½ï¿½Ğ§
                 UA.ie && this.editor.contentDoc.selection.empty();
 
-                // ¸üĞÂÏÂÀ­¿òÖĞµÄÑ¡ÖĞÏî
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğµï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½
                 if(this.selectedValue) {
                     this._updateSelectedOption(this.selectedValue);
                 } else if(this.selectedItem) {
@@ -2529,7 +2536,7 @@ KISSY.Editor.add("plugins~font", function(E) {
         },
 
         /**
-         * ³õÊ¼»¯ÏÂÀ­¿ò DOM
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DOM
          */
         _renderSelectList: function() {
             var htmlCode = "", options = this.options,
@@ -2544,15 +2551,15 @@ KISSY.Editor.add("plugins~font", function(E) {
                         .replace("{KEY}", key);
             }
 
-            // Ìí¼Óµ½ DOM ÖĞ
+            // ï¿½ï¿½Óµï¿½ DOM ï¿½ï¿½
             this.selectList.innerHTML = SELECT_TMPL.replace("{LI}", htmlCode);
 
-            // Ìí¼Ó¸öĞÔ»¯ class
+            // ï¿½ï¿½Ó¸ï¿½ï¿½Ô»ï¿½ class
             Dom.addClass(this.selectList, "ks-editor-drop-menu-" + this.name);
         },
 
         /**
-         * °ó¶¨È¡É«ÊÂ¼ş
+         * ï¿½ï¿½È¡É«ï¿½Â¼ï¿½
          */
         _bindPickEvent: function() {
             var self = this;
@@ -2567,16 +2574,16 @@ KISSY.Editor.add("plugins~font", function(E) {
 
                 self._doAction(target.getAttribute("data-value"));
 
-                // ¹Ø±ÕĞü¸¡¿ò
+                // ï¿½Ø±ï¿½ï¿½ï¿½ï¿½
                 Event.stopPropagation(ev);
                 E.Menu.hideActiveDropMenu(self.editor);
-                // ×¢£ºÔÚÕâÀï×èÖ¹µôÊÂ¼şÃ°Åİ£¬×Ô¼º´¦Àí¶Ô»°¿òµÄ¹Ø±Õ£¬ÊÇÒòÎª
-                // ÔÚ Firefox ÏÂ£¬µ±Ö´ĞĞ doAction ºó£¬doc »ñÈ¡µ½ click
-                // ´¥·¢ updateState Ê±£¬»¹»ñÈ¡²»µ½µ±Ç°µÄÑÕÉ«Öµ¡£
-                // ÕâÑù×ö£¬¶ÔĞÔÄÜÒ²ÓĞºÃ´¦£¬ÕâÖÖÇé¿öÏÂ²»ĞèÒª¸üĞÂ updateState
+                // ×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½Â¼ï¿½Ã°ï¿½İ£ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½Ä¹Ø±Õ£ï¿½ï¿½ï¿½ï¿½ï¿½Îª
+                // ï¿½ï¿½ Firefox ï¿½Â£ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ doAction ï¿½ï¿½doc ï¿½ï¿½È¡ï¿½ï¿½ click
+                // ï¿½ï¿½ï¿½ï¿½ updateState Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½É«Öµï¿½ï¿½
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ĞºÃ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ updateState
             });
 
-            // ie6 ÏÂ£¬Ä£Äâ hover
+            // ie6 ï¿½Â£ï¿½Ä£ï¿½ï¿½ hover
             if(UA.ie === 6) {
                 Event.on(this.items, "mouseenter", function() {
                     Dom.addClass(this, OPTION_ITEM_HOVER_CLS);
@@ -2588,32 +2595,32 @@ KISSY.Editor.add("plugins~font", function(E) {
         },
 
         /**
-         * Ö´ĞĞ²Ù×÷
+         * Ö´ï¿½Ğ²ï¿½ï¿½ï¿½
          */
         _doAction: function(val) {
             if(!val) return;
 
             this.selectedValue = val;
 
-            // ¸üĞÂµ±Ç°Öµ
+            // ï¿½ï¿½ï¿½Âµï¿½Ç°Öµ
             this._setOption(val);
 
-            // »¹Ô­Ñ¡Çø
+            // ï¿½ï¿½Ô­Ñ¡ï¿½ï¿½
             var range = this.range;
             if(UA.ie && range.select) range.select();
 
-            // Ö´ĞĞÃüÁî
+            // Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             this.editor.execCommand(this.name, this.selectedValue);
         },
 
         /**
-         * Ñ¡ÖĞÄ³Ò»Ïî
+         * Ñ¡ï¿½ï¿½Ä³Ò»ï¿½ï¿½
          */
         _setOption: function(val) {
-            // ¸üĞÂÍ·²¿
+            // ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½
             this._updateHeadText(this._getOptionKey(val));
 
-            // ¸üĞÂÁĞ±íÑ¡ÖĞÏî
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½
             this._updateSelectedOption(val);
         },
 
@@ -2641,7 +2648,7 @@ KISSY.Editor.add("plugins~font", function(E) {
         },
 
         /**
-         * ¸üĞÂÏÂÀ­¿òµÄÑ¡ÖĞÏî
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½
          */
         _updateSelectedOption: function(val) {
             var items = this.items,
@@ -2660,7 +2667,7 @@ KISSY.Editor.add("plugins~font", function(E) {
         },
 
         /**
-         * ¸üĞÂ°´Å¥×´Ì¬
+         * ï¿½ï¿½ï¿½Â°ï¿½Å¥×´Ì¬
          */
         updateState: function() {
             var doc = this.editor.contentDoc,
@@ -2702,8 +2709,8 @@ KISSY.Editor.add("plugins~font", function(E) {
 });
 
 // TODO
-//  1. ·Â google, ¶Ô¼üÅÌÊÂ¼şµÄÖ§³Ö
-//  3. ie ÏÂ½Ó¹Ü£¬·ñÔò¹â±ê´¦ÓÚÄ³±êÇ©ÄÚ£¬¸Ä±ä×ÖÌåÊ±£¬¸Ä±äµÄÊÇÕû¶Î±êÇ©µÄ×ÖÌå
+//  1. ï¿½ï¿½ google, ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Ö§ï¿½ï¿½
+//  3. ie ï¿½Â½Ó¹Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê´¦ï¿½ï¿½Ä³ï¿½ï¿½Ç©ï¿½Ú£ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î±ï¿½Ç©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 KISSY.Editor.add("plugins~image", function(E) {
 
@@ -2743,7 +2750,7 @@ KISSY.Editor.add("plugins~image", function(E) {
                           '</div>',
                           '<div class="', TAB_CONTENT_CLS, '" rel="album" style="display: none">',
                               '<label>{label_album}</label>',
-                              '<p style="width: 300px">ÉĞÎ´ÊµÏÖ...</p>', // TODO: ´ÓÏà²áÖĞÑ¡ÔñÍ¼Æ¬
+                              '<p style="width: 300px">ï¿½ï¿½Î´Êµï¿½ï¿½...</p>', // TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Í¼Æ¬
                           '</div>',
                           '<div class="', UPLOADING_CLS, '" style="display: none">',
                               '<p style="width: 300px">{uploading}</p>',
@@ -2759,9 +2766,9 @@ KISSY.Editor.add("plugins~image", function(E) {
             upload: {
                 actionUrl: "",
                 filter: "png|gif|jpg|jpeg",
-                filterMsg: "", // Ä¬ÈÏÎª this.lang.upload_filter
+                filterMsg: "", // Ä¬ï¿½ï¿½Îª this.lang.upload_filter
                 linkFilter: "",
-                linkFilterMsg: "", // Ä¬ÈÏÎª this.lang.upload_linkFilter
+                linkFilterMsg: "", // Ä¬ï¿½ï¿½Îª this.lang.upload_linkFilter
                 enableXdr: false,
                 connectionSwf: "http://a.tbcdn.cn/yui/2.8.0r4/build/connection/connection.swf",
                 formatResponse: function(data) {
@@ -2776,27 +2783,27 @@ KISSY.Editor.add("plugins~image", function(E) {
     E.addPlugin("image", {
 
         /**
-         * ÖÖÀà£º°´Å¥
+         * ï¿½ï¿½ï¿½à£ºï¿½ï¿½Å¥
          */
         type: TYPE.TOOLBAR_BUTTON,
 
         /**
-         * ÅäÖÃÏî
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         config: {},
 
         /**
-         * ¹ØÁªµÄ¶Ô»°¿ò
+         * ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶Ô»ï¿½ï¿½ï¿½
          */
         dialog: null,
 
         /**
-         * ¹ØÁªµÄ±íµ¥
+         * ï¿½ï¿½ï¿½ï¿½ï¿½Ä±?
          */
         form: null,
 
         /**
-         * ¹ØÁªµÄ range ¶ÔÏó
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ range ï¿½ï¿½ï¿½ï¿½
          */
         range: null,
 
@@ -2806,7 +2813,7 @@ KISSY.Editor.add("plugins~image", function(E) {
         actionsBar: null,
 
         /**
-         * ³õÊ¼»¯º¯Êı
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         init: function() {
             var pluginConfig = this.editor.config.pluginsConfig[this.name] || {};
@@ -2824,13 +2831,13 @@ KISSY.Editor.add("plugins~image", function(E) {
         },
 
         /**
-         * ³õÊ¼»¯¶Ô»°¿ò½çÃæ
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         _renderUI: function() {
             var dialog = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]),
                 lang = this.lang;
 
-            // Ìí¼Ó×Ô¶¨ÒåÏî
+            // ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
             lang["local_extraCode"] = this.config.upload.extraCode;
 
             dialog.className += " " + DIALOG_CLS;
@@ -2850,25 +2857,25 @@ KISSY.Editor.add("plugins~image", function(E) {
                 ul = Dom.getElementsByClassName(TAB_CLS, "ul", this.dialog)[0],
                 panels = Dom.getElementsByClassName(TAB_CONTENT_CLS, "div", this.dialog);
 
-            // ¸ù¾İÅäÖÃÌí¼Ó tabs
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ tabs
             var keys = this.config["tabs"], html = "";
             for(var k = 0, l = keys.length; k < l; k++) {
                 html += TABS_TMPL[keys[k]];
             }
 
-            // ÎÄ°¸
+            // ï¿½Ä°ï¿½
             ul.innerHTML = html.replace(/\{([^}]+)\}/g, function(match, key) {
                 return (key in lang) ? lang[key] : key;
             });
 
-            // Ö»ÓĞÒ»¸ö tabs Ê±²»ÏÔÊ¾
+            // Ö»ï¿½ï¿½Ò»ï¿½ï¿½ tabs Ê±ï¿½ï¿½ï¿½ï¿½Ê¾
             var tabs = ul.childNodes, len = panels.length;
             if(tabs.length === 1) {
                 Dom.addClass(this.dialog, NO_TAB_CLS);
             }
 
-            // ÇĞ»»
-            switchTab(tabs[0]); // Ä¬ÈÏÑ¡ÖĞµÚÒ»¸öTab
+            // ï¿½Ğ»ï¿½
+            switchTab(tabs[0]); // Ä¬ï¿½ï¿½Ñ¡ï¿½Ğµï¿½Ò»ï¿½ï¿½Tab
             Event.on(tabs, "click", function() {
                 switchTab(this);
             });
@@ -2884,7 +2891,7 @@ KISSY.Editor.add("plugins~image", function(E) {
                     }
                 }
 
-                // ie6 ÏÂ£¬Ğè¸üĞÂ iframe shim
+                // ie6 ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ iframe shim
                 if(UA.ie === 6) E.Menu._updateShimRegion(self.dialog);
 
                 Dom.addClass(trigger, SELECTED_TAB_CLS);
@@ -2896,20 +2903,20 @@ KISSY.Editor.add("plugins~image", function(E) {
         },
 
         /**
-         * °ó¶¨ÊÂ¼ş
+         * ï¿½ï¿½ï¿½Â¼ï¿½
          */
         _bindUI: function() {
             var self = this;
 
-            // ÏÔÊ¾/Òş²Ø¶Ô»°¿òÊ±µÄÊÂ¼ş
+            // ï¿½ï¿½Ê¾/ï¿½ï¿½ï¿½Ø¶Ô»ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Â¼ï¿½
             Event.on(this.domEl, "click", function() {
-                // ½öÔÚÏÔÊ¾Ê±¸üĞÂ
-                if (self.dialog.style.visibility === isIE ? "hidden" : "visible") { // ÊÂ¼şµÄ´¥·¢Ë³Ğò²»Í¬
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Ê±ï¿½ï¿½ï¿½ï¿½
+                if (self.dialog.style.visibility === isIE ? "hidden" : "visible") { // ï¿½Â¼ï¿½ï¿½Ä´ï¿½ï¿½ï¿½Ë³ï¿½ï¿½Í¬
                     self._syncUI();
                 }
             });
 
-            // ×¢²á±íµ¥°´Å¥µã»÷ÊÂ¼ş
+            // ×¢ï¿½ï¿½?ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
             Event.on(this.dialog, "click", function(ev) {
                 var target = Event.getTarget(ev),
                     currentTab = self.currentTab;
@@ -2923,22 +2930,22 @@ KISSY.Editor.add("plugins~image", function(E) {
                             self._insertWebImage();
                         }
                         break;
-                    case BTN_CANCEL_CLS: // Ö±½ÓÍùÉÏÃ°Åİ£¬¹Ø±Õ¶Ô»°¿ò
+                    case BTN_CANCEL_CLS: // Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½İ£ï¿½ï¿½Ø±Õ¶Ô»ï¿½ï¿½ï¿½
                         break;
-                    default: // µã»÷ÔÚ·Ç°´Å¥´¦£¬Í£Ö¹Ã°Åİ£¬±£Áô¶Ô»°¿ò
+                    default: // ï¿½ï¿½ï¿½ï¿½Ú·Ç°ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Í£Ö¹Ã°ï¿½İ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½
                         Event.stopPropagation(ev);
                 }
             });
         },
 
         /**
-         * ³õÊ¼»¯¿çÓòÉÏ´«
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½
          */
         _initXdrUpload: function() {
             var tabs = this.config["tabs"];
 
             for(var i = 0, len = tabs.length; i < len; i++) {
-                if(tabs[i] === "local") { // ÓĞÉÏ´« tab Ê±²Å½øĞĞÒÔÏÂ²Ù×÷
+                if(tabs[i] === "local") { // ï¿½ï¿½ï¿½Ï´ï¿½ tab Ê±ï¿½Å½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½
                     Connect.transport(this.config.upload.connectionSwf);
                     //Connect.xdrReadyEvent.subscribe(function(){ alert("xdr ready"); });
                     break;
@@ -2955,7 +2962,7 @@ KISSY.Editor.add("plugins~image", function(E) {
 
             if (imgFile && actionUrl) {
 
-                // ¼ì²éÎÄ¼şÀàĞÍÊÇ·ñÕıÈ·
+                // ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½È·
                 if(uploadConfig.filter !== "*") {
                     ext = imgFile.substring(imgFile.lastIndexOf(".") + 1).toLowerCase();
                     if(uploadConfig.filter.indexOf(ext) == -1) {
@@ -2965,20 +2972,20 @@ KISSY.Editor.add("plugins~image", function(E) {
                     }
                 }
 
-                // ÏÔÊ¾ÉÏ´«¹ö¶¯Ìõ
+                // ï¿½ï¿½Ê¾ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 this.uploadingPanel.style.display = "";
                 this.currentPanel.style.display = "none";
                 this.actionsBar.style.display = "none";
-                if(UA.ie === 6) E.Menu._updateShimRegion(this.dialog); // ie6 ÏÂ£¬»¹Ğè¸üĞÂ iframe shim
+                if(UA.ie === 6) E.Menu._updateShimRegion(this.dialog); // ie6 ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ iframe shim
 
-                // ·¢ËÍ XHR
+                // ï¿½ï¿½ï¿½ï¿½ XHR
                 Connect.setForm(form, true);
                 Connect.asyncRequest("post", actionUrl, {
                     upload: function(o) {
                         try {
-                            // ±ê×¼¸ñÊ½ÈçÏÂ£º
-                            // ³É¹¦Ê±£¬·µ»Ø ["0", "Í¼Æ¬µØÖ·"]
-                            // Ê§°ÜÊ±£¬·µ»Ø ["1", "´íÎóĞÅÏ¢"]
+                            // ï¿½ï¿½×¼ï¿½ï¿½Ê½ï¿½ï¿½ï¿½Â£ï¿½
+                            // ï¿½É¹ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ["0", "Í¼Æ¬ï¿½ï¿½Ö·"]
+                            // Ê§ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ["1", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢"]
                             var data = uploadConfig.formatResponse(Lang.JSON.parse(o.responseText));
                             if (data[0] == "0") {
                                 self._insertImage(data[1]);
@@ -3005,9 +3012,9 @@ KISSY.Editor.add("plugins~image", function(E) {
             alert(this.lang["upload_error"] + "\n\n" + msg);
             this._hideDialog();
 
-            // ²âÊÔÁËÒÔÏÂ´íÎóÀàĞÍ£º
-            //   - json parse Òì³££¬°üÀ¨ actionUrl ²»´æÔÚ¡¢Î´µÇÂ¼¡¢¿çÓòµÈ¸÷ÖÖÒòËØ
-            //   - ·şÎñÆ÷¶Ë·µ»Ø´íÎóĞÅÏ¢ ["1", "error msg"]
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½
+            //   - json parse ï¿½ì³£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ actionUrl ï¿½ï¿½ï¿½ï¿½ï¿½Ú¡ï¿½Î´ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            //   - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë·ï¿½ï¿½Ø´ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ ["1", "error msg"]
         },
 
         _insertWebImage: function() {
@@ -3017,13 +3024,13 @@ KISSY.Editor.add("plugins~image", function(E) {
                 SEP = '|',
                 match, hostname;
 
-            // »ñÈ¡ hostname
+            // ï¿½ï¿½È¡ hostname
             if(match = REG_LINK_FILTER.exec(imgUrl)) {
                hostname = match[1];
             }
             if(!imgUrl || !hostname) return;
 
-            // ¼ì²éÍøÖ·ÊÇ·ñÔÚ°×Ãûµ¥ÖĞ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½Ç·ï¿½ï¿½Ú°ï¿½ï¿½ï¿½ï¿½ï¿½
             if (filter && filter !== "*") {
                 if ((SEP + filter.toLowerCase() + SEP).indexOf(SEP + hostname.toLowerCase() + SEP) === -1) {
                     alert(cfg.linkFilterMsg);
@@ -3035,7 +3042,7 @@ KISSY.Editor.add("plugins~image", function(E) {
         },
 
         /**
-         * Òş²Ø¶Ô»°¿ò
+         * ï¿½ï¿½ï¿½Ø¶Ô»ï¿½ï¿½ï¿½
          */
         _hideDialog: function() {
             var activeDropMenu = this.editor.activeDropMenu;
@@ -3043,15 +3050,15 @@ KISSY.Editor.add("plugins~image", function(E) {
                 E.Menu.hideActiveDropMenu(this.editor);
             }
 
-            // »¹Ô­½¹µã
+            // ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½
             this.editor.contentWin.focus();
         },
 
         /**
-         * ¸üĞÂ½çÃæÉÏµÄ±íµ¥Öµ
+         * ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½ÏµÄ±?Öµ
          */
         _syncUI: function() {
-            // ±£´æ range, ÒÔ±ã»¹Ô­
+            // ï¿½ï¿½ï¿½ï¿½ range, ï¿½Ô±ã»¹Ô­
             this.range = E.Range.saveRange(this.editor);
 
             // reset
@@ -3064,12 +3071,12 @@ KISSY.Editor.add("plugins~image", function(E) {
         },
 
         /**
-         * ²åÈëÍ¼Æ¬
+         * ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
          */
         _insertImage: function(url, alt) {
             url = Lang.trim(url);
 
-            // url Îª¿ÕÊ±£¬²»´¦Àí
+            // url Îªï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (url.length === 0) {
                 return;
             }
@@ -3077,16 +3084,16 @@ KISSY.Editor.add("plugins~image", function(E) {
             var editor = this.editor,
                 range = this.range;
 
-            // ²åÈëÍ¼Æ¬
+            // ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
             if (window.getSelection) { // W3C
                 var img = editor.contentDoc.createElement("img");
                 img.src = url;
                 if(alt) img.setAttribute("alt", alt);
 
-                range.deleteContents(); // Çå¿ÕÑ¡ÖĞÄÚÈİ
-                range.insertNode(img); // ²åÈëÍ¼Æ¬
+                range.deleteContents(); // ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                range.insertNode(img); // ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 
-                // Ê¹µÃÁ¬Ğø²åÈëÍ¼Æ¬Ê±£¬Ìí¼ÓÔÚºóÃæ
+                // Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½
                 if(UA.webkit) {
                     var selection = editor.contentWin.getSelection();
                     selection.addRange(range);
@@ -3095,14 +3102,14 @@ KISSY.Editor.add("plugins~image", function(E) {
                     range.setStartAfter(img);
                 }
 
-                editor.contentWin.focus(); // ÏÔÊ¾¹â±ê
+                editor.contentWin.focus(); // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½
 
             } else if(document.selection) { // IE
-                // »¹Ô­½¹µã
+                // ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½
                 editor.contentWin.focus();
 
                 if("text" in range) { // TextRange
-                    range.select(); // »¹Ô­Ñ¡Çø
+                    range.select(); // ï¿½ï¿½Ô­Ñ¡ï¿½ï¿½
 
                     var html = '<img src="' + url + '"';
                     alt && (html += ' "alt="' + alt + '"');
@@ -3120,12 +3127,12 @@ KISSY.Editor.add("plugins~image", function(E) {
 
 /**
  * NOTES:
- *   - <input type="file" unselectable="on" /> ÕâÒ»ĞĞ£¬ÕÛÌÚÁËÒ»ÏÂÎç¡£Èç¹û²»¼Ó unselectable, »áµ¼ÖÂ IE ÏÂ
- *     ½¹µã¶ªÊ§£¨range.select() ºÍ contentDoc.focus() ²»¹ÜÓÃ£©¡£¼ÓÉÏºó£¬Ë³Àû½â¾ö¡£Í¬Ê±»¹×Ô¶¯Ê¹µÃ IE7- ÏÂ²»¿É
- *     ÊäÈë¡£
+ *   - <input type="file" unselectable="on" /> ï¿½ï¿½Ò»ï¿½Ğ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ç¡£ï¿½ï¿½ï¿½ï¿½ unselectable, ï¿½áµ¼ï¿½ï¿½ IE ï¿½ï¿½
+ *     ï¿½ï¿½ï¿½ã¶ªÊ§ï¿½ï¿½range.select() ï¿½ï¿½ contentDoc.focus() ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬Ê±ï¿½ï¿½ï¿½Ô¶ï¿½Ê¹ï¿½ï¿½ IE7- ï¿½Â²ï¿½ï¿½ï¿½
+ *     ï¿½ï¿½ï¿½ë¡£
  *
  * TODO:
- *   - ¿çÓòÖ§³Ö
+ *   - ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½
  */
 
 KISSY.Editor.add("plugins~indent", function(E) {
@@ -3135,33 +3142,33 @@ KISSY.Editor.add("plugins~indent", function(E) {
         //UA = YAHOO.env.ua,
 
 //        INDENT_ELEMENTS = Lang.merge(E.Dom.BLOCK_ELEMENTS, {
-//            li: 0 // È¡Ïû li ÔªËØµÄµ¥¶ÀËõ½ø£¬ÈÃ ol/ul ÕûÌåËõ½ø
+//            li: 0 // È¡ï¿½ï¿½ li Ôªï¿½ØµÄµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ol/ul ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //        }),
 //        INDENT_STEP = "40",
 //        INDENT_UNIT = "px",
 
         plugin = {
             /**
-             * ÖÖÀà£ºÆÕÍ¨°´Å¥
+             * ï¿½ï¿½ï¿½à£ºï¿½ï¿½Í¨ï¿½ï¿½Å¥
              */
             type: TYPE.TOOLBAR_BUTTON,
 
             /**
-             * ÏìÓ¦º¯Êı
+             * ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
              */
             exec: function() {
-                // Ö´ĞĞÃüÁî
+                // Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 this.editor.execCommand(this.name);
 
-                // ¸üĞÂ×´Ì¬
-                // Ëõ½øÊ±£¬¿ÉÄÜ»á¸Éµô list µÈ×´Ì¬
+                // ï¿½ï¿½ï¿½ï¿½×´Ì¬
+                // ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ü»ï¿½Éµï¿½ list ï¿½ï¿½×´Ì¬
                 this.editor.toolbar.updateState();
             }
         };
 
-    // ×¢£ºie ÏÂ£¬Ä¬ÈÏÊ¹ÓÃ blockquote ÔªËØÀ´ÊµÏÖËõ½ø
-    // ÏÂÃæ²ÉÓÃ×ÔÖ÷²Ù×÷ range µÄ·½Ê½À´ÊµÏÖ£¬ÒÔ±£³ÖºÍÆäËüä¯ÀÀÆ÷Ò»ÖÂ
-    // ie ÏÂ£¬ÔİÊ±ÒÀ¾ÉÓÃÄ¬ÈÏµÄ
+    // ×¢ï¿½ï¿½ie ï¿½Â£ï¿½Ä¬ï¿½ï¿½Ê¹ï¿½ï¿½ blockquote Ôªï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ range ï¿½Ä·ï¿½Ê½ï¿½ï¿½Êµï¿½Ö£ï¿½ï¿½Ô±ï¿½ï¿½Öºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
+    // ie ï¿½Â£ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½Ïµï¿½
 //    if (UA.ie) {
 //
 //        plugin.exec = function() {
@@ -3172,27 +3179,27 @@ KISSY.Editor.add("plugins~indent", function(E) {
 //                parentEl = range.parentElement();
 //            } else if(range.item) { // ControlRange
 //                parentEl = range.item(0);
-//            } else { // ²»×öÈÎºÎ´¦Àí
+//            } else { // ï¿½ï¿½ï¿½ï¿½ï¿½ÎºÎ´ï¿½ï¿½ï¿½
 //                return;
 //            }
 //
-//            // TODO: ºÍ CKEditor Ò»Ñù£¬ÍêÈ«ÊµÏÖ¶àÇøÓòµÄ iterator
-//            // ÏÂÃæÓÃ blockquote ÁÙÊ±½â¾ö×î³£¼ûµÄÑ¡ÇøµÄ¶à¸ö¿éµÄ¸¸¼¶ÔªËØ¸ÕºÃÊÇbodyµÄÇé¾°
-//            // ×¢Òâ£ºÒªÇó blockquote µÄÑùÊ½ÎªËõ½øÑùÊ½
+//            // TODO: ï¿½ï¿½ CKEditor Ò»ï¿½ï¿½ï¿½ï¿½È«Êµï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ iterator
+//            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ blockquote ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½î³£ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½Ôªï¿½Ø¸Õºï¿½ï¿½ï¿½bodyï¿½ï¿½ï¿½é¾°
+//            // ×¢ï¿½â£ºÒªï¿½ï¿½ blockquote ï¿½ï¿½ï¿½ï¿½Ê½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
 //            if(parentEl === this.editor.contentDoc.body) {
 //                this.editor.execCommand(this.name);
 //                return;
 //            }
-//            // end of ÁÙÊ±½â¾ö·½°¸
+//            // end of ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //
-//            // »ñÈ¡¿ÉËõ½øµÄ¸¸ÔªËØ
+//            // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½Ôªï¿½ï¿½
 //            if (isIndentableElement(parentEl)) {
 //                 indentableAncestor = parentEl;
 //            } else {
 //                 indentableAncestor = getIndentableAncestor(parentEl);
 //            }
 //
-//            // ÉèÖÃ margin-left
+//            // ï¿½ï¿½ï¿½ï¿½ margin-left
 //            if (indentableAncestor) {
 //                var val = parseInt(indentableAncestor.style.marginLeft) >> 0;
 //                val += (this.name === "indent" ? +1 : -1) * INDENT_STEP;
@@ -3201,7 +3208,7 @@ KISSY.Editor.add("plugins~indent", function(E) {
 //            }
 //
 //            /**
-//             * »ñÈ¡¿ÉËõ½øµÄ¸¸ÔªËØ
+//             * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½Ôªï¿½ï¿½
 //             */
 //            function getIndentableAncestor(el) {
 //                return Dom.getAncestorBy(el, function(elem) {
@@ -3210,7 +3217,7 @@ KISSY.Editor.add("plugins~indent", function(E) {
 //            }
 //
 //            /**
-//             * ÅĞ¶ÏÊÇ·ñ¿ÉËõ½øÔªËØ
+//             * ï¿½Ğ¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½
 //             */
 //            function isIndentableElement(el) {
 //                return INDENT_ELEMENTS[el.nodeName.toLowerCase()];
@@ -3218,17 +3225,17 @@ KISSY.Editor.add("plugins~indent", function(E) {
 //        };
 //    }
 
-    // ×¢²á²å¼ş
+    // ×¢ï¿½ï¿½ï¿½ï¿½
     E.addPlugin(["indent", "outdent"], plugin);
  });
 
 /**
  * NOTES:
  * 
- *  - ÒªÏëÍêÈ«½Ó¹Ü ie µÄÄ¬ÈÏÊµÏÖ£¬ĞèÒª¿¼ÂÇµÄÒòËØºÜ¶à¡£±ÈÈç£º
- *     1. range Ö»º¬ inline ÔªËØ£¬ÉÏÃæµÄ´úÂëÒÑÊµÏÖ
- *     2. range º¬¶à¸öÍêÕûµÄ¿éÔªËØ£¬Õâ¸öĞèÒªÊµÏÖÒ»¸ö blockIterator
- *     3. range º¬¿éÔªËØºÍÁíÒ»¸ö¿éÔªËØµÄ²¿·Ö£¬Õâ¸öµÃĞèÒªÊµÏÖÒ»¸ö html parser À´Ğ­Öú
+ *  - Òªï¿½ï¿½ï¿½ï¿½È«ï¿½Ó¹ï¿½ ie ï¿½ï¿½Ä¬ï¿½ï¿½Êµï¿½Ö£ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½ØºÜ¶à¡£ï¿½ï¿½ï¿½ç£º
+ *     1. range Ö»ï¿½ï¿½ inline Ôªï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
+ *     2. range ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½Ôªï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÊµï¿½ï¿½Ò»ï¿½ï¿½ blockIterator
+ *     3. range ï¿½ï¿½ï¿½ï¿½Ôªï¿½Øºï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ôªï¿½ØµÄ²ï¿½ï¿½Ö£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÊµï¿½ï¿½Ò»ï¿½ï¿½ html parser ï¿½ï¿½Ğ­ï¿½ï¿½
  *
  */
 
@@ -3243,26 +3250,26 @@ KISSY.Editor.add("plugins~justify", function(E) {
 
         plugin = {
             /**
-             * ÖÖÀà£ºÆÕÍ¨°´Å¥
+             * ï¿½ï¿½ï¿½à£ºï¿½ï¿½Í¨ï¿½ï¿½Å¥
              */
             type: TYPE.TOOLBAR_BUTTON,
 
             /**
-             * ÏìÓ¦º¯Êı
+             * ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
              */
             exec: function() {
-                // Ö´ĞĞÃüÁî
+                // Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 this.editor.execCommand(this.name);
 
-                // ¸üĞÂ×´Ì¬
+                // ï¿½ï¿½ï¿½ï¿½×´Ì¬
                 this.editor.toolbar.updateState(NAMES);
             }
         };
 
-    // ×¢£ºie ÏÂ£¬Ä¬ÈÏÊ¹ÓÃ align ÊôĞÔÀ´ÊµÏÖ¶ÔÆë
-    // ÏÂÃæ²ÉÓÃ×ÔÖ÷²Ù×÷ range µÄ·½Ê½À´ÊµÏÖ£¬ÒÔ±£³ÖºÍÆäËüä¯ÀÀÆ÷Ò»ÖÂ
-    // ×¢£ºÑ¡ÔñÇøÓòÓĞ¶à¸ö¿éÊ±£¬ÏÂÃæµÄ´úÂëÓĞÎÊÌâ [Issue 4]
-    // ÔİÊ±ÒÀ¾ÉÓÃÄ¬ÈÏµÄä¯ÀÀÆ÷ÃüÁî
+    // ×¢ï¿½ï¿½ie ï¿½Â£ï¿½Ä¬ï¿½ï¿½Ê¹ï¿½ï¿½ align ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½Ö¶ï¿½ï¿½ï¿½
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ range ï¿½Ä·ï¿½Ê½ï¿½ï¿½Êµï¿½Ö£ï¿½ï¿½Ô±ï¿½ï¿½Öºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
+    // ×¢ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ [Issue 4]
+    // ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //    if (UA.ie) {
 //
 //        plugin.exec = function() {
@@ -3273,24 +3280,24 @@ KISSY.Editor.add("plugins~justify", function(E) {
 //                parentEl = range.parentElement();
 //            } else if(range.item) { // ControlRange
 //                parentEl = range.item(0);
-//            } else { // ²»×öÈÎºÎ´¦Àí
+//            } else { // ï¿½ï¿½ï¿½ï¿½ï¿½ÎºÎ´ï¿½ï¿½ï¿½
 //                return;
 //            }
 //
-//            // »ñÈ¡¿É¶ÔÆëµÄ¸¸ÔªËØ
+//            // ï¿½ï¿½È¡ï¿½É¶ï¿½ï¿½ï¿½Ä¸ï¿½Ôªï¿½ï¿½
 //            if (isJustifyElement(parentEl)) {
 //                justifyAncestor = parentEl;
 //            } else {
 //                justifyAncestor = getJustifyAncestor(parentEl);
 //            }
 //
-//            // ÉèÖÃ text-align
+//            // ï¿½ï¿½ï¿½ï¿½ text-align
 //            if (justifyAncestor) {
 //                justifyAncestor.style.textAlign = this.name.substring(7).toLowerCase();
 //            }
 //
 //            /**
-//             * »ñÈ¡¿ÉÉèÖÃ¶ÔÆëµÄ¸¸ÔªËØ
+//             * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½Ä¸ï¿½Ôªï¿½ï¿½
 //             */
 //            function getJustifyAncestor(el) {
 //                return Dom.getAncestorBy(el, function(elem) {
@@ -3299,7 +3306,7 @@ KISSY.Editor.add("plugins~justify", function(E) {
 //            }
 //
 //            /**
-//             * ÅĞ¶ÏÊÇ·ñ¿É¶ÔÆëÔªËØ
+//             * ï¿½Ğ¶ï¿½ï¿½Ç·ï¿½É¶ï¿½ï¿½ï¿½Ôªï¿½ï¿½
 //             */
 //            function isJustifyElement(el) {
 //                return JUSTIFY_ELEMENTS[el.nodeName.toLowerCase()];
@@ -3308,7 +3315,7 @@ KISSY.Editor.add("plugins~justify", function(E) {
 //    }
 
 
-    // ×¢²á²å¼ş
+    // ×¢ï¿½ï¿½ï¿½ï¿½
     E.addPlugin(NAMES, plugin);
 
 });
@@ -3322,17 +3329,17 @@ KISSY.Editor.add("plugins~keystroke", function(E) {
 
     E.addPlugin("keystroke", {
         /**
-         * ÖÖÀà
+         * ï¿½ï¿½ï¿½ï¿½
          */
         type: TYPE.FUNC,
 
         /**
-         * ³õÊ¼»¯
+         * ï¿½ï¿½Ê¼ï¿½ï¿½
          */
         init: function() {
             var editor = this.editor;
 
-            // [bug fix] ie7- ÏÂ£¬°´ÏÂ Tab ¼üºó£¬¹â±ê»¹ÔÚ±à¼­Æ÷ÖĞÉÁË¸£¬²¢ÇÒ»Ø³µÌá½»ÎŞĞ§
+            // [bug fix] ie7- ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ Tab ï¿½ï¿½ó£¬¹ï¿½ê»¹ï¿½Ú±à¼­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¸ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ø³ï¿½ï¿½á½»ï¿½ï¿½Ğ§
             if (UA.ie && UA.ie < 8) {
                 Event.on(editor.contentDoc, "keydown", function(ev) {
                     if(ev.keyCode == 9) {
@@ -3341,7 +3348,7 @@ KISSY.Editor.add("plugins~keystroke", function(E) {
                 });
             }
 
-            // Ctrl + Enter Ìá½»
+            // Ctrl + Enter ï¿½á½»
             var form = editor.textarea.form;
             if (form) {
                 new YAHOO.util.KeyListener(
@@ -3389,27 +3396,27 @@ KISSY.Editor.add("plugins~link", function(E) {
 
     E.addPlugin("link", {
         /**
-         * ÖÖÀà£º°´Å¥
+         * ï¿½ï¿½ï¿½à£ºï¿½ï¿½Å¥
          */
         type: TYPE.TOOLBAR_BUTTON,
 
         /**
-         * ¹ØÁªµÄ¶Ô»°¿ò
+         * ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶Ô»ï¿½ï¿½ï¿½
          */
         dialog: null,
 
         /**
-         * ¹ØÁªµÄ±íµ¥
+         * ï¿½ï¿½ï¿½ï¿½ï¿½Ä±?
          */
         form: null,
 
         /**
-         * ¹ØÁªµÄ range ¶ÔÏó
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ range ï¿½ï¿½ï¿½ï¿½
          */
         range: null,
 
         /**
-         * ³õÊ¼»¯º¯Êı
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         init: function() {
             this._renderUI();
@@ -3417,7 +3424,7 @@ KISSY.Editor.add("plugins~link", function(E) {
         },
 
         /**
-         * ³õÊ¼»¯¶Ô»°¿ò½çÃæ
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         _renderUI: function() {
             var dialog = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]),
@@ -3431,27 +3438,27 @@ KISSY.Editor.add("plugins~link", function(E) {
             this.dialog = dialog;
             this.form = dialog.getElementsByTagName("form")[0];
 
-            // webkit µ÷ÓÃÄ¬ÈÏµÄ exeCommand, ĞèÒş²Ø target ÉèÖÃ
+            // webkit ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½Ïµï¿½ exeCommand, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ target ï¿½ï¿½ï¿½ï¿½
             UA.webkit && (this.form.target.parentNode.style.display = "none");
 
             isIE && E.Dom.setItemUnselectable(dialog);
         },
 
         /**
-         * °ó¶¨ÊÂ¼ş
+         * ï¿½ï¿½ï¿½Â¼ï¿½
          */
         _bindUI: function() {
             var form = this.form, self = this;
 
-            // ÏÔÊ¾/Òş²Ø¶Ô»°¿òÊ±µÄÊÂ¼ş
+            // ï¿½ï¿½Ê¾/ï¿½ï¿½ï¿½Ø¶Ô»ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Â¼ï¿½
             Event.on(this.domEl, "click", function() {
-                // ½öÔÚÏÔÊ¾Ê±¸üĞÂ
-                if(self.dialog.style.visibility === isIE ? "hidden" : "visible") { // ÊÂ¼şµÄ´¥·¢Ë³Ğò²»Í¬
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Ê±ï¿½ï¿½ï¿½ï¿½
+                if(self.dialog.style.visibility === isIE ? "hidden" : "visible") { // ï¿½Â¼ï¿½ï¿½Ä´ï¿½ï¿½ï¿½Ë³ï¿½ï¿½Í¬
                     self._syncUI();
                 }
             });
 
-            // ×¢²á±íµ¥°´Å¥µã»÷ÊÂ¼ş
+            // ×¢ï¿½ï¿½?ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
             Event.on(this.dialog, "click", function(ev) {
                 var target = Event.getTarget(ev);
 
@@ -3459,22 +3466,22 @@ KISSY.Editor.add("plugins~link", function(E) {
                     case BTN_OK_CLS:
                         self._createLink(form.href.value, form.target.checked);
                         break;
-                    case BTN_CANCEL_CLS: // Ö±½ÓÍùÉÏÃ°Åİ£¬¹Ø±Õ¶Ô»°¿ò
+                    case BTN_CANCEL_CLS: // Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½İ£ï¿½ï¿½Ø±Õ¶Ô»ï¿½ï¿½ï¿½
                         break;
                     case BTN_REMOVE_CLS:
                         self._unLink();
                         break;
-                    default: // µã»÷ÔÚ·Ç°´Å¥´¦£¬Í£Ö¹Ã°Åİ£¬±£Áô¶Ô»°¿ò
+                    default: // ï¿½ï¿½ï¿½ï¿½Ú·Ç°ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Í£Ö¹Ã°ï¿½İ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½
                         Event.stopPropagation(ev);
                 }
             });
         },
 
         /**
-         * ¸üĞÂ½çÃæÉÏµÄ±íµ¥Öµ
+         * ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½ÏµÄ±?Öµ
          */
         _syncUI: function() {
-            // ±£´æ range, ÒÔ±ã»¹Ô­
+            // ï¿½ï¿½ï¿½ï¿½ range, ï¿½Ô±ã»¹Ô­
             this.range = E.Range.saveRange(this.editor);
 
             var form = this.form, container, a;
@@ -3482,31 +3489,31 @@ KISSY.Editor.add("plugins~link", function(E) {
             container = Range.getCommonAncestor(this.range);
             a = (container.nodeName == "A") ? container : Dom.getAncestorByTagName(container, "A");
 
-            // ĞŞ¸ÄÁ´½Ó½çÃæ
+            // ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½
             if(a) {
                 form.href.value = a.href;
                 form.target.checked = a.target === "_blank";
                 Dom.removeClass(form, NEW_LINK_CLS);
 
-            } else { // ĞÂ½¨Á´½Ó½çÃæ
+            } else { // ï¿½Â½ï¿½ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½
                 form.href.value = DEFAULT_HREF;
                 form.target.checked = false;
                 Dom.addClass(form, NEW_LINK_CLS);
             }
 
-            // ·ÅÔÚ setTimout Àï£¬ÊÇ for ie
+            // ï¿½ï¿½ï¿½ï¿½ setTimout ï¿½ï£¬ï¿½ï¿½ for ie
             setTimeout(function() {
                 form.href.select();
             }, 50);
         },
 
         /**
-         * ´´½¨/ĞŞ¸ÄÁ´½Ó
+         * ï¿½ï¿½ï¿½ï¿½/ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         _createLink: function(href, target) {
             href = this._getValidHref(href);
 
-            // href Îª¿ÕÊ±£¬ÒÆ³ıÁ´½Ó
+            // href Îªï¿½ï¿½Ê±ï¿½ï¿½ï¿½Æ³ï¿½ï¿½ï¿½ï¿½ï¿½
             if (href.length === 0) {
                 this._unLink();
                 return;
@@ -3516,7 +3523,7 @@ KISSY.Editor.add("plugins~link", function(E) {
                 div = document.createElement("div"),
                 a, container, fragment;
 
-            // ĞŞ¸ÄÁ´½Ó
+            // ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½ï¿½
             container = Range.getCommonAncestor(range);
             a = (container.nodeName == "A") ? container : Dom.getAncestorByTagName(container, "A");
             if (a) {
@@ -3526,7 +3533,7 @@ KISSY.Editor.add("plugins~link", function(E) {
                 return;
             }
 
-            // ´´½¨Á´½Ó
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             a = document.createElement("a");
             a.href = href;
             if (target) a.setAttribute("target", "_blank");
@@ -3540,7 +3547,7 @@ KISSY.Editor.add("plugins~link", function(E) {
                     div.appendChild(a);
                     range.pasteHTML(div.innerHTML);
                 } else { // ControlRange
-                    // TODO: ControlRange Á´½ÓµÄ target ÊµÏÖ
+                    // TODO: ControlRange ï¿½ï¿½ï¿½Óµï¿½ target Êµï¿½ï¿½
                     this.editor.execCommand("createLink", href);
                 }
 
@@ -3556,22 +3563,22 @@ KISSY.Editor.add("plugins~link", function(E) {
                         a.appendChild(fragment.firstChild);
                     }
                 }
-                range.deleteContents(); // É¾³ıÔ­ÄÚÈİ
-                range.insertNode(a); // ²åÈëÁ´½Ó
-                range.selectNode(a); // Ñ¡ÖĞÁ´½Ó
+                range.deleteContents(); // É¾ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½
+                range.insertNode(a); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                range.selectNode(a); // Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             }
         },
 
         _getValidHref: function(href) {
             href = Lang.trim(href);
-            if(href && !HREF_REG.test(href)) { // ²»Îª¿Õ »ò ²»·ûºÏ±ê×¼Ä£Ê½ abcd://efg
-               href = DEFAULT_HREF + href; // Ìí¼ÓÄ¬ÈÏÇ°×º
+            if(href && !HREF_REG.test(href)) { // ï¿½ï¿½Îªï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½×¼Ä£Ê½ abcd://efg
+               href = DEFAULT_HREF + href; // ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Ç°×º
             }
             return href;
         },
 
         /**
-         * ÒÆ³ıÁ´½Ó
+         * ï¿½Æ³ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         _unLink: function() {
             var editor = this.editor,
@@ -3580,7 +3587,7 @@ KISSY.Editor.add("plugins~link", function(E) {
                 container = Range.getCommonAncestor(range),
                 parentEl;
 
-            // Ã»ÓĞÑ¡ÖĞÎÄ×ÖÊ±
+            // Ã»ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±
             if (!selectedText && container.nodeType == 3) {
                 parentEl = container.parentNode;
                 if (parentEl.nodeName == "A") {
@@ -3596,18 +3603,18 @@ KISSY.Editor.add("plugins~link", function(E) {
  });
 
 // TODO:
-// µ±Ñ¡Çø°üº¬Á´½Ó/Ò»²¿·Ö°üº¬Á´½ÓÊ±£¬Éú³ÉµÄÁ´½ÓÄÚÈİµÄµ÷ÓÅ´¦Àí¡£
-// Ä¿Ç°Ö»ÓĞ Google Docs ×öÁËÓÅ»¯£¬ÆäËü±à¼­Æ÷¶¼²ÉÓÃä¯ÀÀÆ÷Ä¬ÈÏµÄ´¦Àí·½Ê½¡£
-// ÏÈ¼ÇÓÚ´Ë£¬µÈÒÔºóÓÅ»¯¡£
+// ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/Ò»ï¿½ï¿½ï¿½Ö°ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İµÄµï¿½ï¿½Å´ï¿½ï¿½?
+// Ä¿Ç°Ö»ï¿½ï¿½ Google Docs ï¿½ï¿½ï¿½ï¿½ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½à¼­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ÏµÄ´ï¿½ï¿½?Ê½ï¿½ï¿½
+// ï¿½È¼ï¿½ï¿½Ú´Ë£ï¿½ï¿½ï¿½ï¿½Ôºï¿½ï¿½Å»ï¿½ï¿½ï¿½
 
 /**
  * Notes:
- *  1. ÔÚ ie ÏÂ£¬µã»÷¹¤¾ßÀ¸ÉÏµÄ°´Å¥Ê±£¬»áµ¼ÖÂ iframe ±à¼­ÇøÓòµÄ range Ñ¡Çø¶ªÊ§¡£½â¾ö°ì·¨ÊÇ£º
- *     ¶ÔËùÓĞÔªËØÌí¼Ó unselectable ÊôĞÔ¡£µ«ÊÇ£¬¶ÔÓÚ text input ¿ò£¬ÎªÁËÄÜÊäÈë£¬²»ÄÜÓĞ unselectable
- *     ÊôĞÔ¡£Õâ¾Íµ¼ÖÂÁËÃ¬¶Ü¡£Òò´Ë£¬È¨ºâÖ®ºóµÄ½â¾ö°ì·¨ÊÇ£ºÔÚ¶Ô»°¿òµ¯³öÇ°£¬½« range ¶ÔÏó±£´æÆğÀ´£¬
- *     ¶ªÊ§ºó£¬ÔÙÍ¨¹ı range.select() Ñ¡Ôñ»ØÀ´¡£Õâ»ù±¾ÉÏÒÑ¾­Âú×ãĞèÇó¡£
- *  2. Ä¿Ç°Ö»ÓĞ CKEditor ºÍ TinyMCE µÈÍêÈ«½Ó¹ÜÃüÃûµÄ±à¼­Æ÷´¦ÀíµÃºÜÍêÃÀ¡£µ« 1 µÄ½â¾ö·½°¸£¬Ä¿Ç°ÒÑ¾­
- *     ¹»ÓÃ£¬³É±¾Ò²ºÜµÍ¡£
+ *  1. ï¿½ï¿½ ie ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÄ°ï¿½Å¥Ê±ï¿½ï¿½ï¿½áµ¼ï¿½ï¿½ iframe ï¿½à¼­ï¿½ï¿½ï¿½ï¿½ï¿½ range Ñ¡ï¿½ï¿½Ê§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì·¨ï¿½Ç£ï¿½
+ *     ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½ï¿½ unselectable ï¿½ï¿½ï¿½Ô¡ï¿½ï¿½ï¿½ï¿½Ç£ï¿½ï¿½ï¿½ï¿½ï¿½ text input ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ unselectable
+ *     ï¿½ï¿½ï¿½Ô¡ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½Ã¬ï¿½Ü¡ï¿½ï¿½ï¿½Ë£ï¿½È¨ï¿½ï¿½Ö®ï¿½ï¿½Ä½ï¿½ï¿½ï¿½ì·¨ï¿½Ç£ï¿½ï¿½Ú¶Ô»ï¿½ï¿½òµ¯³ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ range ï¿½ï¿½ï¿½ó±£´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ *     ï¿½ï¿½Ê§ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ range.select() Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ *  2. Ä¿Ç°Ö»ï¿½ï¿½ CKEditor ï¿½ï¿½ TinyMCE ï¿½ï¿½ï¿½ï¿½È«ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½Ä±à¼­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1 ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Ç°ï¿½Ñ¾ï¿½
+ *     ï¿½ï¿½ï¿½Ã£ï¿½ï¿½É±ï¿½Ò²ï¿½ÜµÍ¡ï¿½
  */
 KISSY.Editor.add("plugins~resize", function(E) {
 
@@ -3622,7 +3629,7 @@ KISSY.Editor.add("plugins~resize", function(E) {
     E.addPlugin("resize", {
 
         /**
-         * ÖÖÀà£º×´Ì¬À¸²å¼ş
+         * ï¿½ï¿½ï¿½à£º×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         type: TYPE.STATUSBAR_ITEM,
 
@@ -3631,7 +3638,7 @@ KISSY.Editor.add("plugins~resize", function(E) {
         currentHeight: 0,
 
         /**
-         * ³õÊ¼»¯
+         * ï¿½ï¿½Ê¼ï¿½ï¿½
          */
         init: function() {
             this.contentEl = this.editor.container.childNodes[1];
@@ -3662,7 +3669,7 @@ KISSY.Editor.add("plugins~resize", function(E) {
 
             Event.on(smallerEl, "click", function() {
 
-                // ²»ÄÜĞ¡ÓÚ 0
+                // ï¿½ï¿½ï¿½ï¿½Ğ¡ï¿½ï¿½ 0
                 if (this.currentHeight < 100) {
                     this.currentHeight = 0;
                 } else {
@@ -3676,8 +3683,8 @@ KISSY.Editor.add("plugins~resize", function(E) {
         _doResize: function() {
             this.contentEl.style.height = this.currentHeight + "px";
 
-            // ±¾À´Í¨¹ıÉèÖÃ textarea µÄ height: 100% ×Ô¶¯¾ÍÊÊÓ¦¸ß¶ÈÁË
-            // µ« ie7- ´¿ css ·½°¸ÓĞÎÊÌâ£¬Òò´Ë¸É´àÓÃÏÂÃæÕâĞĞ js ¸ã¶¨
+            // ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ textarea ï¿½ï¿½ height: 100% ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ß¶ï¿½ï¿½ï¿½
+            // ï¿½ï¿½ ie7- ï¿½ï¿½ css ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£¬ï¿½ï¿½Ë¸É´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ js ï¿½ã¶¨
             this.editor.textarea.style.height = this.currentHeight + "px";
         }
 
@@ -3687,7 +3694,7 @@ KISSY.Editor.add("plugins~resize", function(E) {
 
 /**
  * TODO:
- *   - ½«È«ÆÁ±à¼­Ò²·ÅÈë´Ë´¦
+ *   - ï¿½ï¿½È«ï¿½ï¿½ï¿½à¼­Ò²ï¿½ï¿½ï¿½ï¿½Ë´ï¿½
  */
 KISSY.Editor.add("plugins~save", function(E) {
 
@@ -3704,12 +3711,12 @@ KISSY.Editor.add("plugins~save", function(E) {
 
     E.addPlugin("save", {
         /**
-         * ÖÖÀà
+         * ï¿½ï¿½ï¿½ï¿½
          */
         type: TYPE.FUNC,
 
         /**
-         * ³õÊ¼»¯
+         * ï¿½ï¿½Ê¼ï¿½ï¿½
          */
         init: function() {
             var editor = this.editor,
@@ -3720,7 +3727,7 @@ KISSY.Editor.add("plugins~save", function(E) {
                 Event.on(form, "submit", function() {
                     if(!editor.sourceMode) {
                         //var val = editor.getData();
-                        // Í³Ò»ÑùÊ½  ÓÉºóÌ¨¿ØÖÆ
+                        // Í³Ò»ï¿½ï¿½Ê½  ï¿½Éºï¿½Ì¨ï¿½ï¿½ï¿½ï¿½
 //                        if(val && val.indexOf('<div class="ks-editor-post">') !== 0) {
 //                            val = '<div class="ks-editor-post">' + val + '</div>';
 //                        }
@@ -3731,20 +3738,20 @@ KISSY.Editor.add("plugins~save", function(E) {
         },
 
         /**
-         * ¹ıÂËÊı¾İ
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         filterData: function(data) {
 
             data = data.replace(/<(\/?)([^>\s]+)([^>]*)>/g, function(m, slash, tag, attr) {
 
-                // ½« ie µÄ´óĞ´±êÇ©×ª»»ÎªĞ¡Ğ´
+                // ï¿½ï¿½ ie ï¿½Ä´ï¿½Ğ´ï¿½ï¿½Ç©×ªï¿½ï¿½ÎªĞ¡Ğ´
                 tag = tag.toLowerCase();
 
-                // ÈÃ±êÇ©ÓïÒå»¯
+                // ï¿½Ã±ï¿½Ç©ï¿½ï¿½ï¿½å»¯
                 var map = TAG_MAP[tag],
                     ret = tag;
 
-                // ½öÕë¶Ô <tag> ÕâÖÖ²»º¬ÊôĞÔµÄ±êÇ©×ö½øÒ»²½´¦Àí
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ <tag> ï¿½ï¿½ï¿½Ö²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÔµÄ±ï¿½Ç©ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 if(map && !attr) {
                     ret = map["tag"];
                     if(!slash && map["style"]) {
@@ -3755,7 +3762,7 @@ KISSY.Editor.add("plugins~save", function(E) {
                 return "<" + slash + ret + attr + ">";
             });
 
-            // ¹ıÂË word µÄÀ¬»øÊı¾İ
+            // ï¿½ï¿½ï¿½ï¿½ word ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if(data.indexOf("mso") > 0) {
                 data = this.filterWord(data);
             }
@@ -3763,19 +3770,19 @@ KISSY.Editor.add("plugins~save", function(E) {
             return data;
 
             // ×¢:
-            //  1. µ± data ºÜ´óÊ±£¬ÉÏÃæµÄ replace ¿ÉÄÜ»áÓĞĞÔÄÜÎÊÌâ¡£
-            //    £¨¸üĞÂ£ºÒÑ¾­½«¶à¸ö replace ºÏ²¢³ÉÁËÒ»¸ö£¬Õı³£Çé¿öÏÂ£¬²»»áÓĞĞÔÄÜÎÊÌâ£©
+            //  1. ï¿½ï¿½ data ï¿½Ü´ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ replace ï¿½ï¿½ï¿½Ü»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â¡£
+            //    ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ replace ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£©
             //
-            //  2. ¾¡Á¿ÓïÒå»¯£¬google µÄÊµÓÃ£¬µ«Î´±Ø¶Ô
-            // TODO: ½øÒ»²½ÓÅ»¯£¬±ÈÈç <span style="..."><span style="..."> Á½¸öspan¿ÉÒÔºÏ²¢ÎªÒ»¸ö
+            //  2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å»¯ï¿½ï¿½google ï¿½ï¿½Êµï¿½Ã£ï¿½ï¿½ï¿½Î´ï¿½Ø¶ï¿½
+            // TODO: ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ <span style="..."><span style="..."> ï¿½ï¿½ï¿½ï¿½spanï¿½ï¿½ï¿½ÔºÏ²ï¿½ÎªÒ»ï¿½ï¿½
 
-            // FCKEditor ÊµÏÖÁË²¿·ÖÓïÒå»¯
-            // Google Docs ²ÉÓÃÊÇÊµÓÃÖ÷Òå
-            // KISSY Editor µÄÔ­ÔòÊÇ£ºÔÚ±£Ö¤ÊµÓÃµÄ»ù´¡ÉÏ£¬¾¡Á¿ÓïÒå»¯
+            // FCKEditor Êµï¿½ï¿½ï¿½Ë²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å»¯
+            // Google Docs ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // KISSY Editor ï¿½ï¿½Ô­ï¿½ï¿½ï¿½Ç£ï¿½ï¿½Ú±ï¿½Ö¤Êµï¿½ÃµÄ»ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å»¯
         },
 
         /**
-         * ¹ıÂË word Õ³Ìù¹ıÀ´µÄÀ¬»øÊı¾İ
+         * ï¿½ï¿½ï¿½ï¿½ word Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          * Ref: CKEditor - pastefromword plugin
          */
         filterWord: function(html) {
@@ -3837,27 +3844,27 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
     E.addPlugin("smiley", {
         /**
-         * ÖÖÀà£º°´Å¥
+         * ï¿½ï¿½ï¿½à£ºï¿½ï¿½Å¥
          */
         type: TYPE.TOOLBAR_BUTTON,
 
         /**
-         * ÅäÖÃÏî
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         config: {},
 
         /**
-         * ¹ØÁªµÄ¶Ô»°¿ò
+         * ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶Ô»ï¿½ï¿½ï¿½
          */
         dialog: null,
 
         /**
-         * ¹ØÁªµÄ range ¶ÔÏó
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ range ï¿½ï¿½ï¿½ï¿½
          */
         range: null,
 
         /**
-         * ³õÊ¼»¯º¯Êı
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         init: function() {
             this.config = Lang.merge(defaultConfig, this.editor.config.pluginsConfig[this.name] || {});
@@ -3867,7 +3874,7 @@ KISSY.Editor.add("plugins~smiley", function(E) {
         },
 
         /**
-         * ³õÊ¼»¯¶Ô»°¿ò½çÃæ
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         _renderUI: function() {
             var dialog = E.Menu.generateDropMenu(this.editor, this.domEl, [1, 0]);
@@ -3880,7 +3887,7 @@ KISSY.Editor.add("plugins~smiley", function(E) {
         },
 
         _renderDialog: function() {
-            var smileyConfig = E.Smilies[this.config["tabs"][0]], // TODO: Ö§³Ö¶à¸ö tab
+            var smileyConfig = E.Smilies[this.config["tabs"][0]], // TODO: Ö§ï¿½Ö¶ï¿½ï¿½ tab
                 mode = smileyConfig["mode"];
 
             if(mode === "icons") this._renderIcons(smileyConfig);
@@ -3933,17 +3940,17 @@ KISSY.Editor.add("plugins~smiley", function(E) {
         },
 
         /**
-         * °ó¶¨ÊÂ¼ş
+         * ï¿½ï¿½ï¿½Â¼ï¿½
          */
         _bindUI: function() {
             var self = this;
 
-            // range ´¦Àí
+            // range ï¿½ï¿½ï¿½ï¿½
             Event.on(this.domEl, "click", function() {
                 self.range = E.Range.saveRange(self.editor);
             });
 
-            // ×¢²á±íµ¥°´Å¥µã»÷ÊÂ¼ş
+            // ×¢ï¿½ï¿½?ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
             Event.on(this.dialog, "click", function(ev) {
                 var target = Event.getTarget(ev);
 
@@ -3954,19 +3961,19 @@ KISSY.Editor.add("plugins~smiley", function(E) {
                     case "SPAN":
                         self._insertImage(target.getAttribute("data-icon"), "");
                         break;
-                    default: // µã»÷ÔÚ·Ç°´Å¥´¦£¬Í£Ö¹Ã°Åİ£¬±£Áô¶Ô»°¿ò
+                    default: // ï¿½ï¿½ï¿½ï¿½Ú·Ç°ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Í£Ö¹Ã°ï¿½İ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½
                         Event.stopPropagation(ev);
                 }
             });
         },
 
         /**
-         * ²åÈëÍ¼Æ¬
+         * ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
          */
         _insertImage: function(url, alt) {
             url = Lang.trim(url);
 
-            // url Îª¿ÕÊ±£¬²»´¦Àí
+            // url Îªï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (url.length === 0) {
                 return;
             }
@@ -3974,16 +3981,16 @@ KISSY.Editor.add("plugins~smiley", function(E) {
             var editor = this.editor,
                 range = this.range;
 
-            // ²åÈëÍ¼Æ¬
+            // ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
             if (window.getSelection) { // W3C
                 var img = editor.contentDoc.createElement("img");
                 img.src = url;
                 img.setAttribute("alt", alt);
 
-                range.deleteContents(); // Çå¿ÕÑ¡ÖĞÄÚÈİ
-                range.insertNode(img); // ²åÈëÍ¼Æ¬
+                range.deleteContents(); // ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                range.insertNode(img); // ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 
-                // Ê¹µÃÁ¬Ğø²åÈëÍ¼Æ¬Ê±£¬Ìí¼ÓÔÚºóÃæ
+                // Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½
                 if(UA.webkit) {
                     var selection = editor.contentWin.getSelection();
                     selection.addRange(range);
@@ -3992,7 +3999,7 @@ KISSY.Editor.add("plugins~smiley", function(E) {
                     range.setStartAfter(img);
                 }
 
-                editor.contentWin.focus(); // ÏÔÊ¾¹â±ê
+                editor.contentWin.focus(); // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½
 
             } else if(document.selection) { // IE
                 if("text" in range) { // TextRange
@@ -4009,12 +4016,12 @@ KISSY.Editor.add("plugins~smiley", function(E) {
 
 /**
  * NOTES:
- *   - Webkit ÏÂ£¬²»ÄÜ½«Ò»¸ö document ÄÚ´´½¨µÄ dom ½ÚµãÒÆ¶¯µ½ÁíÒ»¸ö document
+ *   - Webkit ï¿½Â£ï¿½ï¿½ï¿½ï¿½Ü½ï¿½Ò»ï¿½ï¿½ document ï¿½Ú´ï¿½ï¿½ï¿½ï¿½ï¿½ dom ï¿½Úµï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ document
  *     http://www.codingforums.com/archive/index.php/t-153219.html 
  */
 // TODO:
-//  1. ¶àÌ×±íÇéÖ§³Ö
-//  2. ±íÇéµÄ¶à¹úÓïÑÔÖ§³Ö£¬°üÀ¨ alt ºÍ title ĞÅÏ¢
+//  1. ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½Ö§ï¿½ï¿½
+//  2. ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½Ö£ï¿½ï¿½ï¿½ï¿½ï¿½ alt ï¿½ï¿½ title ï¿½ï¿½Ï¢
 
 KISSY.Editor.add("plugins~source", function(E) {
 
@@ -4026,16 +4033,16 @@ KISSY.Editor.add("plugins~source", function(E) {
         SRC_MODE_CLS = "ks-editor-src-mode";
 
     /**
-     * ²é¿´Ô´´úÂë²å¼ş
+     * ï¿½é¿´Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     E.addPlugin("source", {
         /**
-         * ÖÖÀà£ºÆÕÍ¨°´Å¥
+         * ï¿½ï¿½ï¿½à£ºï¿½ï¿½Í¨ï¿½ï¿½Å¥
          */
         type: TYPE.TOOLBAR_BUTTON,
 
         /**
-         * ³õÊ¼»¯º¯Êı
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         init: function() {
             var editor = this.editor;
@@ -4043,45 +4050,45 @@ KISSY.Editor.add("plugins~source", function(E) {
             this.iframe = editor.contentWin.frameElement;
             this.textarea = editor.textarea;
 
-            // ½« textarea ·ÅÈë iframe ÏÂÃæ
+            // ï¿½ï¿½ textarea ï¿½ï¿½ï¿½ï¿½ iframe ï¿½ï¿½ï¿½ï¿½
             this.iframe.parentNode.appendChild(editor.textarea);
 
-            // Ìí¼Ó class
+            // ï¿½ï¿½ï¿½ class
             Dom.addClass(this.domEl, "ks-editor-toolbar-source-button");
         },
 
         /**
-         * ÏìÓ¦º¯Êı
+         * ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
          */
         exec: function() {
             var editor = this.editor,
                 srcOn = editor.sourceMode;
 
-            // Í¬²½Êı¾İ
+            // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½
             if(srcOn) {
                 editor.contentDoc.body.innerHTML = this.textarea.value;
             } else {
                 this.textarea.value = editor.getContentDocData();
             }
 
-            // [bug fix] ie7-ÏÂ£¬ÇĞ»»µ½Ô´ÂëÊ±£¬iframe µÄ¹â±ê»¹¿É¼û£¬ĞèÒş²Øµô
+            // [bug fix] ie7-ï¿½Â£ï¿½ï¿½Ğ»ï¿½ï¿½ï¿½Ô´ï¿½ï¿½Ê±ï¿½ï¿½iframe ï¿½Ä¹ï¿½ê»¹ï¿½É¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½
             if(UA.ie && UA.ie < 8) {
                 editor.contentDoc.selection.empty();
             }
 
-            // ÇĞ»»ÏÔÊ¾
+            // ï¿½Ğ»ï¿½ï¿½ï¿½Ê¾
             this.textarea.style.display = srcOn ? "none" : "";
             this.iframe.style.display = srcOn ? "" : "none";
 
-            // ¸üĞÂ×´Ì¬
+            // ï¿½ï¿½ï¿½ï¿½×´Ì¬
             editor.sourceMode = !srcOn;
 
-            // ¸üĞÂ°´Å¥×´Ì¬
+            // ï¿½ï¿½ï¿½Â°ï¿½Å¥×´Ì¬
             this._updateButtonState();
         },
 
         /**
-         * ¸üĞÂ°´Å¥×´Ì¬
+         * ï¿½ï¿½ï¿½Â°ï¿½Å¥×´Ì¬
          */
         _updateButtonState: function() {
             var editor = this.editor,
@@ -4106,15 +4113,15 @@ KISSY.Editor.add("plugins~undo", function(E) {
 
     E.addPlugin(["undo", "redo"], {
         /**
-         * ÖÖÀà£ºÆÕÍ¨°´Å¥
+         * ï¿½ï¿½ï¿½à£ºï¿½ï¿½Í¨ï¿½ï¿½Å¥
          */
         type: TYPE.TOOLBAR_BUTTON,
 
         /**
-         * ÏìÓ¦º¯Êı
+         * ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
          */
         exec: function() {
-            // TODO ½Ó¹Ü
+            // TODO ï¿½Ó¹ï¿½
             this.editor.execCommand(this.name);
         }
     });
@@ -4123,7 +4130,7 @@ KISSY.Editor.add("plugins~undo", function(E) {
 
 /**
  * TODO:
- *   - ie ÏÂ£¬Ö»ÒªÓĞ dom ²Ù×÷£¬undo ºÍ redo ¾Í»áÊ§Ğ§¡£
+ *   - ie ï¿½Â£ï¿½Ö»Òªï¿½ï¿½ dom ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½undo ï¿½ï¿½ redo ï¿½Í»ï¿½Ê§Ğ§ï¿½ï¿½
  *     http://swik.net/qooxdoo/qooxdoo+news/Clashed+with+IE%E2%80%99s+execCommand/cj7g7
  */
 KISSY.Editor.add("plugins~wordcount", function(E) {
@@ -4140,7 +4147,7 @@ KISSY.Editor.add("plugins~wordcount", function(E) {
     E.addPlugin("wordcount", {
 
         /**
-         * ÖÖÀà£º×´Ì¬À¸²å¼ş
+         * ï¿½ï¿½ï¿½à£º×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         type: TYPE.STATUSBAR_ITEM,
 
@@ -4153,7 +4160,7 @@ KISSY.Editor.add("plugins~wordcount", function(E) {
         remainEl: null,
 
         /**
-         * ³õÊ¼»¯
+         * ï¿½ï¿½Ê¼ï¿½ï¿½
          */
         init: function() {
             var config = Lang.merge(defaultConfig, this.editor.config.pluginsConfig[this.name] || {});
@@ -4163,7 +4170,7 @@ KISSY.Editor.add("plugins~wordcount", function(E) {
             this.renderUI();
             this.bindUI();
 
-            // È·±£¸üĞÂ×ÖÊıÔÚÄÚÈİ¼ÓÔØÍê³Éºó
+            // È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ¼ï¿½ï¿½ï¿½ï¿½ï¿½Éºï¿½
             var self = this;
             setTimeout(function() {
                 self.syncUI();
@@ -4183,7 +4190,7 @@ KISSY.Editor.add("plugins~wordcount", function(E) {
             Event.on(editor.textarea, "keyup", this.syncUI, this, true);
 
             Event.on(editor.contentDoc, "keyup", this.syncUI, this, true);
-            // TODO: ²åÈëÁ´½Ó/±íÇéµÈÓĞÎÊÌâ
+            // TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Event.on(editor.container, "click", this.syncUI, this, true);
         },
 
@@ -4203,5 +4210,5 @@ KISSY.Editor.add("plugins~wordcount", function(E) {
 
 /**
  * TODO:
- *   - ¿¼ÂÇ GBK ±àÂëÏÂ£¬Ò»¸öÖĞÎÄ×Ö·û³¤¶ÈÎª 2
+ *   - ï¿½ï¿½ï¿½ï¿½ GBK ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½Îª 2
  */

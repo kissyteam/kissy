@@ -43,10 +43,18 @@
         readyList = [],
 
         // Has the ready events already been bound?
-        readyBound = false;
+        readyBound = false,
+
+        //global id control
+        _id=0;
 
     mix(S, {
-
+        /**
+         * return global unique id
+         */
+        id:function(){
+            return (_id++);
+        },
         /**
          * The version of the library.
          * @type {String}

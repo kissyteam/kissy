@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 524 Apr 6 09:10
+build: 846 Jul 11 00:09
 */
 /**
  * Styles for KISSY Editor
@@ -25,9 +25,9 @@ html>body .ks-inline-block {
     display: -moz-inline-box;
     display: inline-block;
 }
-/* TODO ×ÐÏ¸¼ì²éÉÏÃæµÄ hack ÊÇ·ñÓÐÐ©¿ÉÒÔÈ¥µô */
+/* TODO ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ hack ï¿½Ç·ï¿½ï¿½ï¿½Ð©ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ */
 
-/* Çå³ý¸¡¶¯ */
+/* ï¿½ï¿½ï¿½ */
 .ks-clearfix:after {
     content: '\0020';
     display: block;
@@ -39,7 +39,7 @@ html>body .ks-inline-block {
 /** editor **/
 .ks-editor {
     border: 1px solid #DFDFDF;
-    line-height: 1 !important; /* bug fix: ·ñÔò firefox µÈä¯ÀÀÆ÷ÏÂ£¬editor µÄ¸ß¶È»á¶àÓÚÒ»Ð© */
+    line-height: 1 !important; /* bug fix: ï¿½ï¿½ï¿½ï¿½ firefox ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½editor ï¿½Ä¸ß¶È»ï¿½ï¿½ï¿½ï¿½Ò»Ð© */
 }
 
 /** toolbar **/
@@ -49,9 +49,9 @@ html>body .ks-inline-block {
     *padding-bottom: 1px;
     border-bottom: 1px solid #DFDFDF;
     line-height: 1;
-    position: relative; overflow: hidden; /* ½â¾ö inner-box margin: 0 -1px µ¼ÖÂµÄºáÏò¹ö¶¯Ìõ bug */
+    position: relative; overflow: hidden; /* ï¿½ï¿½ï¿½ inner-box margin: 0 -1px ï¿½ï¿½ï¿½ÂµÄºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ bug */
     zoom: 1;
-    /* ¸ß¶È×ÔÊÊÓ¦£¬Õý³£Çé¿öÏÂ£¬µ¥ÐÐ¸ß¶È 23px */
+    /* ï¿½ß¶ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½Ð¸ß¶ï¿½ 23px */
 }
 
 .ks-editor-toolbar-button {
@@ -59,7 +59,7 @@ html>body .ks-inline-block {
     vertical-align: middle;
     cursor: default;
     white-space: nowrap;
-    /* ·ÀÖ¹Ë«»÷ link Àà±êÇ©Ê±£¬ÎÄ×Ö±»Ñ¡ÖÐ */
+    /* ï¿½ï¿½Ö¹Ë«ï¿½ï¿½ link ï¿½ï¿½ï¿½Ç©Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ñ¡ï¿½ï¿½ */
     -moz-user-select: none;
 }
 
@@ -73,7 +73,7 @@ html>body .ks-inline-block {
     _left: -1px;
 }
 
-/* Ðü¸¡±ß¿ò */
+/* ï¿½ï¿½ß¿ï¿½ */
 .ks-editor-toolbar-button:hover .ks-editor-toolbar-button-outer-box,
 .ks-editor-toolbar-button-hover .ks-editor-toolbar-button-outer-box,
 .ks-editor-toolbar-button-selected .ks-editor-toolbar-button-outer-box,
@@ -97,7 +97,7 @@ html>body .ks-inline-block {
     padding: 0;
 }
 
-/* °´Å¥Ñ¡ÖÐ×´Ì¬ */
+/* ï¿½ï¿½Å¥Ñ¡ï¿½ï¿½×´Ì¬ */
 .ks-editor-toolbar-button-selected {
     background-color: #DDE1EB;
 }
@@ -120,7 +120,7 @@ html>body .ks-inline-block {
 .ks-editor-toolbar-strikeThrough { background-position: -624px 50%; }
 
 .ks-editor-toolbar-link { background-position: -560px 50%; width: 16px; }
-/* ÎÄ×Ö°æ°´Å¥
+/* ï¿½ï¿½ï¿½Ö°æ°´Å¥
 .ks-editor-toolbar-link {
     background: none;
     text-indent: 0;
@@ -147,7 +147,7 @@ html>body .ks-inline-block {
 .ks-editor-toolbar-maximize { background-position:-996px 50%; }
 .ks-editor-toolbar-removeformat { background-position:-256px 50%; }
 
-/* ¹¤¾ßÌõµÄ·Ö¸ôÏß */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·Ö¸ï¿½ï¿½ï¿½ */
 .ks-editor-stripbar-sep {
     margin: 0 2px;
     width: 0;
@@ -157,13 +157,13 @@ html>body .ks-inline-block {
     vertical-align: middle;
 }
 
-/* ÏÂÀ­°´Å¥ caption */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ caption */
 .ks-editor-toolbar-menu-button-caption {
     padding: 0 4px 0 0;
     vertical-align: middle;
 }
 
-/* ÏÂÀ­°´Å¥ dropdown */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ dropdown */
 .ks-editor-toolbar-menu-button-dropdown {
     background: url(toolbar-sprite.png) no-repeat -388px 50%;
     width: 7px;
@@ -171,7 +171,7 @@ html>body .ks-inline-block {
     vertical-align: middle;
 }
 
-/* ÑÕÉ«°´Å¥ */
+/* ï¿½ï¿½É«ï¿½ï¿½Å¥ */
 .ks-editor-toolbar-color-button .ks-editor-toolbar-button-inner-box,
 .ks-editor-toolbar-color-button:hover .ks-editor-toolbar-button-inner-box,
 .ks-editor-toolbar-color-button-hover .ks-editor-toolbar-button-inner-box {
@@ -183,7 +183,7 @@ html>body .ks-inline-block {
     border-bottom: 4px solid #F0F0F0;
 }
 
-/* °´Å¥°´ÏÂÊ±µÄÑùÊ½ active */
+/* ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ê½ active */
 .ks-editor-toolbar-button-active {
     background-color: #DDE1EB;
 }
@@ -192,7 +192,7 @@ html>body .ks-inline-block {
     border-color: #729BD1;
 }
 
-/* ÏÂÀ­²Ëµ¥¿ò */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ */
 .ks-editor-drop-menu {
     position: absolute;
     top: 0;
@@ -224,9 +224,9 @@ html>body .ks-inline-block {
     z-index: 9001;
 }
 
-/* È¡É«°å */
+/* È¡É«ï¿½ï¿½ */
 .ks-editor-palette-table {
-    margin: 5px 8px 8px; /* ie7- ÏÂ£¬table µÄ margin ÎÞÐ§£¬Òò´ËÍâÃæÔÚ°ü¹üÒ»²ã div */
+    margin: 5px 8px 8px; /* ie7- ï¿½Â£ï¿½table ï¿½ï¿½ margin ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ï¿½Ò»ï¿½ï¿½ div */
 }
 .ks-editor-palette-table table {
     border: 1px solid #666;
@@ -238,7 +238,7 @@ html>body .ks-inline-block {
     height: 18px;
     width: 18px;
     cursor: pointer;
-    *position: relative; /* hack for ie7- ·ñÔò±ß¿òÒþ²Ø²»ÁË */
+    *position: relative; /* hack for ie7- ï¿½ï¿½ï¿½ï¿½ß¿ï¿½ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½ */
 }
 
 .ks-editor-palette-colorswatch {
@@ -485,7 +485,7 @@ li.ks-editor-image-tab-selected {
     height: 16px;
     line-height: 16px;
     zoom: 1;
-    /* ¸ß¶È×ÔÊÊÓ¦£¬Õý³£Çé¿öÏÂ£¬µ¥ÐÐ¸ß¶È 23px */
+    /* ï¿½ß¶ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½Ð¸ß¶ï¿½ 23px */
 }
 
 .ks-editor-statusbar-item {
@@ -526,7 +526,7 @@ li.ks-editor-image-tab-selected {
 
 /* textarea */
 .ks-editor-content textarea {
-    /*È¥µô webkit ä¯ÀÀÆ÷Ìí¼ÓµÄ resize ºÍ¾Û½¹Ê±µÄ outline*/
+    /*È¥ï¿½ï¿½ webkit ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ resize ï¿½Í¾Û½ï¿½Ê±ï¿½ï¿½ outline*/
     resize: none; outline: none;
     border: 0;
 }
@@ -546,7 +546,7 @@ li.ks-editor-image-tab-selected {
 
 /*
 CSS Reset for Post
-Î¬»¤£ºÓñ²®(lifesinger@gmail.com)
+Î¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(lifesinger@gmail.com)
 */
 
 .ks-editor-post {
@@ -575,8 +575,8 @@ CSS Reset for Post
 	margin-left: 1em;
 }
 
-/* Ö»ÓÐÍ¨¹ý ks editor ´´½¨µÄ±í¸ñ²ÅÓÐÏÂÃæÕâÐ©ÑùÊ½
-   ÒòÎªÓÐ²»ÉÙÓÃ»§µÄÄ£°å»ùÓÚ table ²¼¾Ö */
+/* Ö»ï¿½ï¿½Í¨ï¿½ï¿½ ks editor ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð©ï¿½ï¿½Ê½
+   ï¿½ï¿½Îªï¿½Ð²ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ table ï¿½ï¿½ï¿½ï¿½ */
 .ks-editor-post-table {
     margin-bottom: 1em;
 }

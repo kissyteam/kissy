@@ -1,12 +1,12 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.5
+Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 557 Apr 12 19:51
+build: 846 Jul 11 00:10
 */
 /**
- * ÌáÊ¾²¹È«×é¼þ
+ * ï¿½ï¿½Ê¾ï¿½ï¿½È«ï¿½ï¿½ï¿½
  * @module      suggest
- * @creator     Óñ²®<lifesinger@gmail.com>
+ * @creator     ï¿½ï¿½<lifesinger@gmail.com>
  * @depends     kissy-core, yahoo-dom-event
  */
 KISSY.add("suggest", function(S, undefined) {
@@ -16,18 +16,18 @@ KISSY.add("suggest", function(S, undefined) {
         head = doc.getElementsByTagName("head")[0],
         ie = YAHOO.env.ua.ie, ie6 = (ie === 6),
 
-        CALLBACK_STR = "g_ks_suggest_callback", // Ô¼¶¨µÄÈ«¾Ö»Øµ÷º¯Êý
-        STYLE_ID = "ks-suggest-style", // ÑùÊ½ style ÔªËØµÄ id
+        CALLBACK_STR = "g_ks_suggest_callback", // Ô¼ï¿½ï¿½ï¿½ï¿½È«ï¿½Ö»Øµï¿½ï¿½ï¿½ï¿½ï¿½
+        STYLE_ID = "ks-suggest-style", // ï¿½ï¿½Ê½ style Ôªï¿½Øµï¿½ id
 
         CONTAINER_CLASS = "ks-suggest-container",
-        KEY_EL_CLASS = "ks-suggest-key", // ÌáÊ¾²ãÖÐ£¬key ÔªËØµÄ class
-        RESULT_EL_CLASS = "ks-suggest-result", // ÌáÊ¾²ãÖÐ£¬result ÔªËØµÄ class
-        SELECTED_ITEM_CLASS = "selected", // ÌáÊ¾²ãÖÐ£¬Ñ¡ÖÐÏîµÄ class
-        ODD_ITEM_CLASS = "odd", // ÌáÊ¾²ãÖÐ£¬ÆæÊýÏîµÄ class
-        EVEN_ITEM_CLASS = "even", // ÌáÊ¾²ãÖÐ£¬Å¼ÊýÏîµÄ class
+        KEY_EL_CLASS = "ks-suggest-key", // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ð£ï¿½key Ôªï¿½Øµï¿½ class
+        RESULT_EL_CLASS = "ks-suggest-result", // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ð£ï¿½result Ôªï¿½Øµï¿½ class
+        SELECTED_ITEM_CLASS = "selected", // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ð£ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ class
+        ODD_ITEM_CLASS = "odd", // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ class
+        EVEN_ITEM_CLASS = "even", // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ð£ï¿½Å¼ï¿½ï¿½ï¿½ï¿½ï¿½ class
         BOTTOM_CLASS = "ks-suggest-bottom",
         CLOSE_BTN_CLASS = "ks-suggest-close-btn",
-        SHIM_CLASS = "ks-suggest-shim", // iframe shim µÄ class
+        SHIM_CLASS = "ks-suggest-shim", // iframe shim ï¿½ï¿½ class
 
         EVENT_DATA_REQUEST = "dataRequest",
         EVENT_DATA_RETURN = "dataReturn",
@@ -35,13 +35,13 @@ KISSY.add("suggest", function(S, undefined) {
         EVENT_ITEM_SELECT = "itemSelect",
 
         /**
-         * SuggestµÄÄ¬ÈÏÅäÖÃ
+         * Suggestï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         defaultConfig = {
             /**
-             * ÓÃ»§¸½¼Ó¸øÐü¸¡ÌáÊ¾²ãµÄ class
+             * ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ó¸ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ class
              *
-             * ÌáÊ¾²ãµÄÄ¬ÈÏ½á¹¹ÈçÏÂ£º
+             * ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ä¬ï¿½Ï½á¹¹ï¿½ï¿½ï¿½Â£ï¿½
              * <div class="suggest-container [container-class]">
              *     <ol>
              *         <li>
@@ -58,58 +58,58 @@ KISSY.add("suggest", function(S, undefined) {
             containerCls: "",
 
             /**
-             * ÌáÊ¾²ãµÄ¿í¶È
-             * ×¢Òâ£ºÄ¬ÈÏÇé¿öÏÂ£¬ÌáÊ¾²ãµÄ¿í¶ÈºÍinputÊäÈë¿òµÄ¿í¶È±£³ÖÒ»ÖÂ
-             * Ê¾·¶È¡Öµ£º"200px", "10%"µÈ£¬±ØÐë´øµ¥Î»
+             * ï¿½ï¿½Ê¾ï¿½ï¿½Ä¿ï¿½ï¿½
+             * ×¢ï¿½â£ºÄ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ä¿ï¿½Èºï¿½inputï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½È±ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
+             * Ê¾ï¿½ï¿½È¡Öµï¿½ï¿½"200px", "10%"ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»
              * @type String
              */
             containerWidth: "auto",
 
             /**
-             * resultµÄ¸ñÊ½
+             * resultï¿½Ä¸ï¿½Ê½
              * @type String
              */
-            resultFormat: "Ô¼%result%Ìõ½á¹û",
+            resultFormat: "Ô¼%result%ï¿½ï¿½ï¿½ï¿½ï¿½",
 
             /**
-             * ÊÇ·ñÏÔÊ¾¹Ø±Õ°´Å¥
+             * ï¿½Ç·ï¿½ï¿½ï¿½Ê¾ï¿½Ø±Õ°ï¿½Å¥
              * @type Boolean
              */
             showCloseBtn: false,
 
             /**
-             * ¹Ø±Õ°´Å¥ÉÏµÄÎÄ×Ö
+             * ï¿½Ø±Õ°ï¿½Å¥ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½
              * @type String
              */
-            closeBtnText: "¹Ø±Õ",
+            closeBtnText: "ï¿½Ø±ï¿½",
 
             /**
-             * ÊÇ·ñÐèÒªiframe shim
+             * ï¿½Ç·ï¿½ï¿½ï¿½Òªiframe shim
              * @type Boolean
              */
             useShim: ie6,
 
             /**
-             * ¶¨Ê±Æ÷µÄÑÓÊ±
+             * ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±
              * @type Number
              */
             timerDelay: 200,
 
             /**
-             * ³õÊ¼»¯ºó£¬×Ô¶¯¼¤»î
+             * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
              * @type Boolean
              */
             autoFocus: false,
 
             /**
-             * Êó±êµã»÷Íê³ÉÑ¡ÔñÊ±£¬ÊÇ·ñ×Ô¶¯Ìá½»±íµ¥
+             * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ô¶ï¿½ï¿½á½»ï¿½?
              * @type Boolean
              */
             submitFormOnClickSelect: true
         };
 
     /**
-     * ÌáÊ¾²¹È«×é¼þ
+     * ï¿½ï¿½Ê¾ï¿½ï¿½È«ï¿½ï¿½ï¿½
      * @class Suggest
      * @constructor
      * @param {String|HTMLElement} textInput
@@ -125,101 +125,101 @@ KISSY.add("suggest", function(S, undefined) {
         }
 
         /**
-         * ÎÄ±¾ÊäÈë¿ò
+         * ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          * @type HTMLElement
          */
         self.textInput = S.get(textInput);
 
         /**
-         * »ñÈ¡Êý¾ÝµÄURL »ò JSON¸ñÊ½µÄ¾²Ì¬Êý¾Ý
+         * ï¿½ï¿½È¡ï¿½ï¿½Ýµï¿½URL ï¿½ï¿½ JSONï¿½ï¿½Ê½ï¿½Ä¾ï¿½Ì¬ï¿½ï¿½ï¿½
          * @type {String|Object}
          */
         self.dataSource = dataSource;
 
         /**
-         * JSON¾²Ì¬Êý¾ÝÔ´
-         * @type Object ¸ñÊ½Îª {"query1" : [["key1", "result1"], []], "query2" : [[], []]}
+         * JSONï¿½ï¿½Ì¬ï¿½ï¿½ï¿½Ô´
+         * @type Object ï¿½ï¿½Ê½Îª {"query1" : [["key1", "result1"], []], "query2" : [[], []]}
          */
         self.JSONDataSource = S.isPlainObject(dataSource) ? dataSource : null;
 
         /**
-         * Í¨¹ýjsonp·µ»ØµÄÊý¾Ý
+         * Í¨ï¿½ï¿½jsonpï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½
          * @type Object
          */
         self.returnedData = null;
 
         /**
-         * ÅäÖÃ²ÎÊý
+         * ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½
          * @type Object
          */
         self.config = S.merge(defaultConfig, config || { });
 
         /**
-         * ´æ·ÅÌáÊ¾ÐÅÏ¢µÄÈÝÆ÷
+         * ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          * @type HTMLElement
          */
         self.container = null;
 
         /**
-         * ÊäÈë¿òµÄÖµ
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
          * @type String
          */
         self.query = "";
 
         /**
-         * »ñÈ¡Êý¾ÝÊ±µÄ²ÎÊý
+         * ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ê±ï¿½Ä²ï¿½ï¿½ï¿½
          * @type String
          */
         self.queryParams = "";
 
         /**
-         * ÄÚ²¿¶¨Ê±Æ÷
+         * ï¿½Ú²ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
          * @private
          * @type Object
          */
         self._timer = null;
 
         /**
-         * ¼ÆÊ±Æ÷ÊÇ·ñ´¦ÓÚÔËÐÐ×´Ì¬
+         * ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
          * @private
          * @type Boolean
          */
         self._isRunning = false;
 
         /**
-         * »ñÈ¡Êý¾ÝµÄscriptÔªËØ
+         * ï¿½ï¿½È¡ï¿½ï¿½Ýµï¿½scriptÔªï¿½ï¿½
          * @type HTMLElement
          */
         self.dataScript = null;
 
         /**
-         * Êý¾Ý»º´æ
+         * ï¿½ï¿½Ý»ï¿½ï¿½ï¿½
          * @private
          * @type Object
          */
         self._dataCache = {};
 
         /**
-         * ×îÐÂscriptµÄÊ±¼ä´Á
+         * ï¿½ï¿½ï¿½ï¿½scriptï¿½ï¿½Ê±ï¿½ï¿½ï¿½
          * @type String
          */
         self._latestScriptTime = "";
 
         /**
-         * script·µ»ØµÄÊý¾ÝÊÇ·ñÒÑ¾­¹ýÆÚ
+         * scriptï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½
          * @type Boolean
          */
         self._scriptDataIsOut = false;
 
         /**
-         * ÊÇ·ñ´¦ÓÚ¼üÅÌÑ¡Ôñ×´Ì¬
+         * ï¿½Ç·ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½×´Ì¬
          * @private
          * @type Boolean
          */
         self._onKeyboardSelecting = false;
 
         /**
-         * ÌáÊ¾²ãµÄµ±Ç°Ñ¡ÖÐÏî
+         * ï¿½ï¿½Ê¾ï¿½ï¿½Äµï¿½Ç°Ñ¡ï¿½ï¿½ï¿½ï¿½
          * @type Boolean
          */
         self.selectedItem = null;
@@ -230,7 +230,7 @@ KISSY.add("suggest", function(S, undefined) {
 
     S.mix(Suggest.prototype, {
         /**
-         * ³õÊ¼»¯·½·¨
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          * @protected
          */
         _init: function() {
@@ -247,7 +247,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ³õÊ¼»¯ÊäÈë¿ò
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          * @protected
          */
         _initTextInput: function() {
@@ -257,7 +257,7 @@ KISSY.add("suggest", function(S, undefined) {
             self.textInput.setAttribute("autocomplete", "off");
 
             // focus
-            // 2009-12-10 yubo: ÑÓ³Ùµ½ keydown ÖÐ start
+            // 2009-12-10 yubo: ï¿½Ó³Ùµï¿½ keydown ï¿½ï¿½ start
             //            Event.on(this.textInput, "focus", function() {
             //                instance.start();
             //            });
@@ -272,39 +272,39 @@ KISSY.add("suggest", function(S, undefined) {
             if (self.config.autoFocus) self.textInput.focus();
 
             // keydown
-            // ×¢£º½ØÖÁÄ¿Ç°£¬ÔÚOpera9.64ÖÐ£¬ÊäÈë·¨¿ªÆôÊ±£¬ÒÀ¾É²»»á´¥·¢ÈÎºÎ¼üÅÌÊÂ¼þ
-            var pressingCount = 0; // ³ÖÐø°´×¡Ä³¼üÊ±£¬Á¬Ðø´¥·¢µÄkeydown´ÎÊý¡£×¢ÒâOperaÖ»»á´¥·¢Ò»´Î¡£
+            // ×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Ç°ï¿½ï¿½ï¿½ï¿½Opera9.64ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ë·¨ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½É²ï¿½ï¿½á´¥ï¿½ï¿½ï¿½ÎºÎ¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
+            var pressingCount = 0; // ï¿½ï¿½ï¿½ï¿½×¡Ä³ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½keydownï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½OperaÖ»ï¿½á´¥ï¿½ï¿½Ò»ï¿½Î¡ï¿½
             Event.on(self.textInput, "keydown", function(ev) {
                 var keyCode = ev.keyCode;
                 //console.log("keydown " + keyCode);
 
                 switch (keyCode) {
-                    case 27: // ESC¼ü£¬Òþ²ØÌáÊ¾²ã²¢»¹Ô­³õÊ¼ÊäÈë
+                    case 27: // ESCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ã²¢ï¿½ï¿½Ô­ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
                         self.hide();
                         self.textInput.value = self.query;
 
-                        // µ±ÊäÈë¿òÎª¿ÕÊ±£¬°´ÏÂ ESC ¼ü£¬ÊäÈë¿òÊ§È¥½¹µã
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ESC ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§È¥ï¿½ï¿½ï¿½ï¿½
                         if(self.query.length === 0) {
                             self.textInput.blur();
                         }
                         break;
-                    case 13: // ENTER¼ü
-                        // Ìá½»±íµ¥Ç°£¬ÏÈÒþ²ØÌáÊ¾²ã²¢Í£Ö¹¼ÆÊ±Æ÷
-                        self.textInput.blur(); // ÕâÒ»¾ä»¹¿ÉÒÔ×èÖ¹µôä¯ÀÀÆ÷µÄÄ¬ÈÏÌá½»ÊÂ¼þ
+                    case 13: // ENTERï¿½ï¿½
+                        // ï¿½á½»ï¿½?Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ã²¢Í£Ö¹ï¿½ï¿½Ê±ï¿½ï¿½
+                        self.textInput.blur(); // ï¿½ï¿½Ò»ï¿½ä»¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½á½»ï¿½Â¼ï¿½
 
-                        // Èç¹ûÊÇ¼üÅÌÑ¡ÖÐÄ³Ïîºó»Ø³µ£¬´¥·¢onItemSelectÊÂ¼þ
+                        // ï¿½ï¿½ï¿½ï¿½Ç¼ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ä³ï¿½ï¿½ï¿½Ø³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½onItemSelectï¿½Â¼ï¿½
                         if (self._onKeyboardSelecting) {
-                            if (self.textInput.value == self._getSelectedItemKey()) { // È·±£ÖµÆ¥Åä
+                            if (self.textInput.value == self._getSelectedItemKey()) { // È·ï¿½ï¿½ÖµÆ¥ï¿½ï¿½
                                 self.fire(EVENT_ITEM_SELECT);
                             }
                         }
 
-                        // Ìá½»±íµ¥
+                        // ï¿½á½»ï¿½?
                         self._submitForm();
                         break;
-                    case 40: // DOWN¼ü
-                    case 38: // UP¼ü
-                        // °´×¡¼ü²»¶¯Ê±£¬ÑÓÊ±´¦Àí
+                    case 40: // DOWNï¿½ï¿½
+                    case 38: // UPï¿½ï¿½
+                        // ï¿½ï¿½×¡ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
                         if (pressingCount++ == 0) {
                             if (self._isRunning) self.stop();
                             self._onKeyboardSelecting = true;
@@ -316,12 +316,12 @@ KISSY.add("suggest", function(S, undefined) {
                         break;
                 }
 
-                // ·Ç DOWN/UP ¼üÊ±£¬¿ªÆô¼ÆÊ±Æ÷
+                // ï¿½ï¿½ DOWN/UP ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
                 if (keyCode != 40 && keyCode != 38) {
                     if (!self._isRunning) {
-                        // 1. µ±ÍøËÙ½ÏÂý£¬js»¹Î´ÏÂÔØÍêÊ±£¬ÓÃ»§¿ÉÄÜ¾ÍÒÑ¾­¿ªÊ¼ÊäÈë
-                        //    ÕâÊ±£¬focusÊÂ¼þÒÑ¾­²»»á´¥·¢£¬ÐèÒªÔÚkeyupÀï´¥·¢¶¨Ê±Æ÷
-                        // 2. ·ÇDOWN/UP¼üÊ±£¬ÐèÒª¼¤»î¶¨Ê±Æ÷
+                        // 1. ï¿½ï¿½ï¿½ï¿½ï¿½Ù½ï¿½ï¿½ï¿½jsï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ü¾ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
+                        //    ï¿½ï¿½Ê±ï¿½ï¿½focusï¿½Â¼ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½á´¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½keyupï¿½ï´¥ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+                        // 2. ï¿½ï¿½DOWN/UPï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½î¶¨Ê±ï¿½ï¿½
                         self.start();
                     }
                     self._onKeyboardSelecting = false;
@@ -336,7 +336,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ³õÊ¼»¯ÌáÊ¾²ãÈÝÆ÷
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          * @protected
          */
         _initContainer: function() {
@@ -360,19 +360,19 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ÉèÖÃÈÝÆ÷µÄleft, top, width
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½left, top, width
          * @protected
          */
         _setContainerRegion: function() {
             var self = this,
                 r = YDOM.getRegion(self.textInput),
                 left = r.left,
-                w = r.right - left - 2;  // ¼õÈ¥borderµÄ2px
+                w = r.right - left - 2;  // ï¿½ï¿½È¥borderï¿½ï¿½2px
 
-            // bug fix: w Ó¦¸ÃÅÐ¶ÏÏÂÊÇ·ñ´óÓÚ 0, ºó±ßÉèÖÃ width µÄÊ±ºòÈç¹ûÐ¡ÓÚ 0, ie ÏÂ»á±¨²ÎÊýÎÞÐ§µÄ´íÎó
+            // bug fix: w Ó¦ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ 0, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ width ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ 0, ie ï¿½Â»á±¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½Ä´ï¿½ï¿½ï¿½
             w = w > 0 ? w : 0;
 
-            // ie8 ¼æÈÝÄ£Ê½
+            // ie8 ï¿½ï¿½ï¿½ï¿½Ä£Ê½
             // document.documentMode:
             // 5 - Quirks Mode
             // 7 - IE7 Standards
@@ -380,7 +380,7 @@ KISSY.add("suggest", function(S, undefined) {
             var docMode = doc.documentMode;
             if (docMode === 7 && (ie === 7 || ie === 8)) {
                 left -= 2;
-            } else if (S.UA.gecko) { // firefoxÏÂ×óÆ«Ò»ÏñËØ ×¢£ºµ± input ËùÔÚµÄ¸¸¼¶ÈÝÆ÷ÓÐ margin: auto Ê±»á³öÏÖ
+            } else if (S.UA.gecko) { // firefoxï¿½ï¿½ï¿½ï¿½Æ«Ò»ï¿½ï¿½ï¿½ï¿½ ×¢ï¿½ï¿½ï¿½ï¿½ input ï¿½ï¿½ï¿½ÚµÄ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ margin: auto Ê±ï¿½ï¿½ï¿½ï¿½ï¿½
                 left++;
             }
 
@@ -395,14 +395,14 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ³õÊ¼»¯ÈÝÆ÷ÊÂ¼þ
-         * ×ÓÔªËØ¶¼²»ÓÃÉèÖÃÊÂ¼þ£¬Ã°ÅÝµ½ÕâÀïÍ³Ò»´¦Àí
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
+         * ï¿½ï¿½Ôªï¿½Ø¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Ã°ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½Í³Ò»ï¿½ï¿½ï¿½ï¿½
          * @protected
          */
         _initContainerEvent: function() {
             var self = this;
 
-            // Êó±êÊÂ¼þ
+            // ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
             Event.on(self.container, "mousemove", function(ev) {
                 //console.log("mouse move");
                 var target = ev.target;
@@ -412,9 +412,9 @@ KISSY.add("suggest", function(S, undefined) {
                 }
                 if (YDOM.isAncestor(self.container, target)) {
                     if (target != self.selectedItem) {
-                        // ÒÆ³ýÀÏµÄ
+                        // ï¿½Æ³ï¿½ï¿½Ïµï¿½
                         self._removeSelectedItem();
-                        // ÉèÖÃÐÂµÄ
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½
                         self._setSelectedItem(target);
                     }
                 }
@@ -422,10 +422,10 @@ KISSY.add("suggest", function(S, undefined) {
 
             var mouseDownItem = null;
             Event.on(self.container, 'mousedown', function(e) {
-                // Êó±ê°´ÏÂ´¦µÄitem
+                // ï¿½ï¿½ê°´ï¿½Â´ï¿½ï¿½ï¿½item
                 mouseDownItem = e.target;
 
-                // Êó±ê°´ÏÂÊ±£¬ÈÃÊäÈë¿ò²»»áÊ§È¥½¹µã
+                // ï¿½ï¿½ê°´ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò²»»ï¿½Ê§È¥ï¿½ï¿½ï¿½ï¿½
                 // 1. for IE
                 self.textInput.onbeforedeactivate = function() {
                     win.event.returnValue = false;
@@ -435,53 +435,53 @@ KISSY.add("suggest", function(S, undefined) {
                 return false;
             });
 
-            // mouseupÊÂ¼þ
+            // mouseupï¿½Â¼ï¿½
             Event.on(self.container, "mouseup", function(ev) {
-                // µ±mousedownÔÚÌáÊ¾²ã£¬µ«mouseupÔÚÌáÊ¾²ãÍâÊ±£¬µã»÷ÎÞÐ§
+                // ï¿½ï¿½mousedownï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ã£¬ï¿½ï¿½mouseupï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§
                 if (!self._isInContainer([ev.pageX, ev.pageY])) return;
 
                 var target = ev.target;
-                // ÔÚÌáÊ¾²ãAÏî´¦°´ÏÂÊó±ê£¬ÒÆ¶¯µ½B´¦ÊÍ·Å£¬²»´¥·¢onItemSelect
+                // ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Aï¿½î´¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£¬ï¿½Æ¶ï¿½ï¿½ï¿½Bï¿½ï¿½ï¿½Í·Å£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½onItemSelect
                 if (target != mouseDownItem) return;
 
-                // µã»÷ÔÚ¹Ø±Õ°´Å¥ÉÏ
+                // ï¿½ï¿½ï¿½ï¿½Ú¹Ø±Õ°ï¿½Å¥ï¿½ï¿½
                 if (target.className == CLOSE_BTN_CLASS) {
                     self.hide();
                     return;
                 }
 
-                // ¿ÉÄÜµã»÷ÔÚliµÄ×ÓÔªËØÉÏ
+                // ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½liï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½
                 if (target.nodeName != "LI") {
                     target = YDOM.getAncestorByTagName(target, "li");
                 }
-                // ±ØÐëµã»÷ÔÚcontainerÄÚ²¿µÄliÉÏ
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½containerï¿½Ú²ï¿½ï¿½ï¿½liï¿½ï¿½
                 if (YDOM.isAncestor(self.container, target)) {
                     self._updateInputFromSelectItem(target);
 
-                    // ´¥·¢Ñ¡ÖÐÊÂ¼þ
+                    // ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Â¼ï¿½
                     //console.log("on item select");
                     self.fire(EVENT_ITEM_SELECT);
 
-                    // Ìá½»±íµ¥Ç°£¬ÏÈÒþ²ØÌáÊ¾²ã²¢Í£Ö¹¼ÆÊ±Æ÷
+                    // ï¿½á½»ï¿½?Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ã²¢Í£Ö¹ï¿½ï¿½Ê±ï¿½ï¿½
                     self.textInput.blur();
 
-                    // Ìá½»±íµ¥
+                    // ï¿½á½»ï¿½?
                     self._submitForm();
                 }
             });
         },
 
         /**
-         * clickÑ¡Ôñ or enterºó£¬Ìá½»±íµ¥
+         * clickÑ¡ï¿½ï¿½ or enterï¿½ï¿½ï¿½á½»ï¿½?
          */
         _submitForm: function() {
-            // ×¢£º¶ÔÓÚ¼üÅÌ¿ØÖÆenterÑ¡ÔñµÄÇé¿ö£¬ÓÉhtml×ÔÉí¾ö¶¨ÊÇ·ñÌá½»¡£·ñÔò»áµ¼ÖÂÄ³Ð©ÊäÈë·¨ÏÂ£¬ÓÃenterÑ¡ÔñÓ¢ÎÄÊ±Ò²´¥·¢Ìá½»
+            // ×¢ï¿½ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½enterÑ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½htmlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½áµ¼ï¿½ï¿½Ä³Ð©ï¿½ï¿½ï¿½ë·¨ï¿½Â£ï¿½ï¿½ï¿½enterÑ¡ï¿½ï¿½Ó¢ï¿½ï¿½Ê±Ò²ï¿½ï¿½ï¿½ï¿½ï¿½á½»
             if (this.config.submitFormOnClickSelect) {
                 var form = this.textInput.form;
                 if (!form) return;
 
-                // Í¨¹ýjsÌá½»±íµ¥Ê±£¬²»»á´¥·¢onsubmitÊÂ¼þ
-                // ÐèÒªjs×Ô¼º´¥·¢
+                // Í¨ï¿½ï¿½jsï¿½á½»ï¿½?Ê±ï¿½ï¿½ï¿½ï¿½ï¿½á´¥ï¿½ï¿½onsubmitï¿½Â¼ï¿½
+                // ï¿½ï¿½Òªjsï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½
                 if (doc.createEvent) { // w3c
                     var evObj = doc.createEvent("MouseEvents");
                     evObj.initEvent("submit", true, false);
@@ -496,7 +496,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ÅÐ¶ÏpÊÇ·ñÔÚÌáÊ¾²ãÄÚ
+         * ï¿½Ð¶ï¿½pï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
          * @param {Array} p [x, y]
          */
         _isInContainer: function(p) {
@@ -505,7 +505,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ¸øÈÝÆ÷Ìí¼Óiframe shim²ã
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½iframe shimï¿½ï¿½
          * @protected
          */
         _initShim: function() {
@@ -522,25 +522,25 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ÉèÖÃshimµÄleft, top, width
+         * ï¿½ï¿½ï¿½ï¿½shimï¿½ï¿½left, top, width
          * @protected
          */
         _setShimRegion: function() {
             var container = this.container, shim = container.shim;
             if (shim) {
-                shim.style.left = (parseInt(container.style.left) - 2) + "px"; // ½â¾öÍÌ±ßÏßbug
+                shim.style.left = (parseInt(container.style.left) - 2) + "px"; // ï¿½ï¿½ï¿½ï¿½Ì±ï¿½ï¿½ï¿½bug
                 shim.style.top = container.style.top;
                 shim.style.width = (parseInt(container.style.width) + 2) + "px";
             }
         },
 
         /**
-         * ³õÊ¼»¯ÑùÊ½
+         * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ê½
          * @protected
          */
         _initStyle: function() {
             var styleEl = S.get('#' + STYLE_ID);
-            if (styleEl) return; // ·ÀÖ¹¶à¸öÊµÀýÊ±ÖØ¸´Ìí¼Ó
+            if (styleEl) return; // ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½Êµï¿½ï¿½Ê±ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½
 
             var style = ".ks-suggest-container{background:white;border:1px solid #999;z-index:99999}"
                 + ".ks-suggest-shim{z-index:99998}"
@@ -560,7 +560,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * window.onresizeÊ±£¬µ÷ÕûÌáÊ¾²ãµÄÎ»ÖÃ
+         * window.onresizeÊ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Î»ï¿½ï¿½
          * @protected
          */
         _initResizeEvent: function() {
@@ -579,7 +579,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * Æô¶¯¼ÆÊ±Æ÷£¬¿ªÊ¼¼àÌýÓÃ»§ÊäÈë
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         start: function() {
             var self = this;
@@ -594,7 +594,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * Í£Ö¹¼ÆÊ±Æ÷
+         * Í£Ö¹ï¿½ï¿½Ê±ï¿½ï¿½
          */
         stop: function() {
             Suggest.focusInstance = null;
@@ -603,7 +603,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ÏÔÊ¾ÌáÊ¾²ã
+         * ï¿½ï¿½Ê¾ï¿½ï¿½Ê¾ï¿½ï¿½
          */
         show: function() {
             if (this.isVisible()) return;
@@ -612,7 +612,7 @@ KISSY.add("suggest", function(S, undefined) {
             container.style.visibility = "";
 
             if (shim) {
-                if (!shim.style.height) { // µÚÒ»´ÎÏÔÊ¾Ê±£¬ÐèÒªÉè¶¨¸ß¶È
+                if (!shim.style.height) { // ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ê¾Ê±ï¿½ï¿½ï¿½ï¿½Òªï¿½è¶¨ï¿½ß¶ï¿½
                     var r = YDOM.getRegion(container);
                     shim.style.height = (r.bottom - r.top - 2) + "px";
                 }
@@ -621,7 +621,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * Òþ²ØÌáÊ¾²ã
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½
          */
         hide: function() {
             if (!this.isVisible()) return;
@@ -633,14 +633,14 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ÌáÊ¾²ãÊÇ·ñÏÔÊ¾
+         * ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ê¾
          */
         isVisible: function() {
             return this.container.style.visibility != "hidden";
         },
 
         /**
-         * ¸üÐÂÌáÊ¾²ãµÄÊý¾Ý
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         updateContent: function() {
             var self = this;
@@ -650,45 +650,45 @@ KISSY.add("suggest", function(S, undefined) {
             self._updateQueryValueFromInput();
             var q = self.query;
 
-            // 1. ÊäÈëÎª¿ÕÊ±£¬Òþ²ØÌáÊ¾²ã
+            // 1. ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½
             if (!S.trim(q).length) {
                 self._fillContainer("");
                 self.hide();
                 return;
             }
 
-            if (self._dataCache[q] !== undefined) { // 2. Ê¹ÓÃ»º´æÊý¾Ý
+            if (self._dataCache[q] !== undefined) { // 2. Ê¹ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 //console.log("use cache");
                 self.returnedData = "using cache";
                 self._fillContainer(self._dataCache[q]);
                 self._displayContainer();
 
-            } else if (self.JSONDataSource) { // 3. Ê¹ÓÃJSON¾²Ì¬Êý¾ÝÔ´
+            } else if (self.JSONDataSource) { // 3. Ê¹ï¿½ï¿½JSONï¿½ï¿½Ì¬ï¿½ï¿½ï¿½Ô´
                 self.handleResponse(self.JSONDataSource[q]);
 
-            } else { // 4. ÇëÇó·þÎñÆ÷Êý¾Ý
+            } else { // 4. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 self.requestData();
             }
         },
 
         /**
-         * ÊÇ·ñÐèÒª¸üÐÂÊý¾Ý
+         * ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          * @protected
          * @return Boolean
          */
         _needUpdate: function() {
-            // ×¢Òâ£º¼ÓÈë¿Õ¸ñÒ²ËãÓÐ±ä»¯
+            // ×¢ï¿½â£ºï¿½ï¿½ï¿½ï¿½Õ¸ï¿½Ò²ï¿½ï¿½ï¿½Ð±ä»¯
             return this.textInput.value != this.query;
         },
 
         /**
-         * Í¨¹ýscriptÔªËØ¼ÓÔØÊý¾Ý
+         * Í¨ï¿½ï¿½scriptÔªï¿½Ø¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         requestData: function() {
             var self = this;
             
             //console.log("request data via script");
-            if (!ie) self.dataScript = null; // IE²»ÐèÒªÖØÐÂ´´½¨scriptÔªËØ
+            if (!ie) self.dataScript = null; // IEï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Â´ï¿½ï¿½ï¿½scriptÔªï¿½ï¿½
 
             if (!self.dataScript) {
                 var script = doc.createElement("script");
@@ -707,35 +707,35 @@ KISSY.add("suggest", function(S, undefined) {
 
                     Event.on(script, "load", function() {
                         //console.log("on load");
-                        // ÅÐ¶Ï·µ»ØµÄÊý¾ÝÊÇ·ñÒÑ¾­¹ýÆÚ
+                        // ï¿½Ð¶Ï·ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½
                         self._scriptDataIsOut = script.getAttribute("time") != self._latestScriptTime;
                     });
                 }
             }
 
-            // ×¢Òâ£ºÃ»±ØÒª¼ÓÊ±¼ä´Á£¬ÊÇ·ñ»º´æÓÉ·þÎñÆ÷·µ»ØµÄHeaderÍ·¿ØÖÆ
+            // ×¢ï¿½â£ºÃ»ï¿½ï¿½Òªï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ñ»º´ï¿½ï¿½É·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½HeaderÍ·ï¿½ï¿½ï¿½ï¿½
             self.queryParams = "q=" + encodeURIComponent(self.query) + "&code=utf-8&callback=" + CALLBACK_STR;
             self.fire(EVENT_DATA_REQUEST);
             self.dataScript.src = self.dataSource + "?" + self.queryParams;
         },
 
         /**
-         * ´¦Àí»ñÈ¡µÄÊý¾Ý
+         * ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½
          * @param {Object} data
          */
         handleResponse: function(data) {
             var self = this;
             
             //console.log("handle response");
-            if (self._scriptDataIsOut) return; // Å×Æú¹ýÆÚÊý¾Ý£¬·ñÔò»áµ¼ÖÂbug£º1. »º´ækeyÖµ²»¶Ô£» 2. ¹ýÆÚÊý¾Ýµ¼ÖÂµÄÉÁÆÁ
+            if (self._scriptDataIsOut) return; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½áµ¼ï¿½ï¿½bugï¿½ï¿½1. ï¿½ï¿½ï¿½ï¿½keyÖµï¿½ï¿½ï¿½Ô£ï¿½ 2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½
 
             self.returnedData = data;
             self.fire(EVENT_DATA_RETURN);
 
-            // ¸ñÊ½»¯Êý¾Ý
+            // ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½
             self.returnedData = self.formatData(self.returnedData);
 
-            // Ìî³äÊý¾Ý
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             var content = "";
             var len = self.returnedData.length;
             if (len > 0) {
@@ -743,9 +743,9 @@ KISSY.add("suggest", function(S, undefined) {
                 for (var i = 0; i < len; ++i) {
                     var itemData = self.returnedData[i];
                     var li = self.formatItem(itemData["key"], itemData["result"]);
-                    // »º´ækeyÖµµ½attributeÉÏ
+                    // ï¿½ï¿½ï¿½ï¿½keyÖµï¿½ï¿½attributeï¿½ï¿½
                     li.setAttribute("key", itemData["key"]);
-                    // Ìí¼ÓÆæÅ¼ class
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½Å¼ class
                     DOM.addClass(li, i % 2 ? EVEN_ITEM_CLASS : ODD_ITEM_CLASS);
                     list.appendChild(li);
                 }
@@ -753,31 +753,31 @@ KISSY.add("suggest", function(S, undefined) {
             }
             self._fillContainer(content);
 
-            // ÓÐÄÚÈÝÊ±²ÅÌí¼Óµ×²¿
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Óµ×²ï¿½
             if (len > 0) self.appendBottom();
 
             // fire event
             if (S.trim(self.container.innerHTML)) {
-                // Êµ¼ÊÉÏÊÇbeforeCache£¬µ«´ÓÓÃ»§µÄ½Ç¶È¿´£¬ÊÇbeforeShow
+                // Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½beforeCacheï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ä½Ç¶È¿ï¿½ï¿½ï¿½ï¿½ï¿½beforeShow
                 self.fire(EVENT_SHOW);
             }
 
             // cache
             self._dataCache[self.query] = self.container.innerHTML;
 
-            // ÏÔÊ¾ÈÝÆ÷
+            // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
             self._displayContainer();
         },
 
         /**
-         * ¸ñÊ½»¯ÊäÈëµÄÊý¾Ý¶ÔÏóÎª±ê×¼¸ñÊ½
-         * @param {Object} data ¸ñÊ½¿ÉÒÔÓÐ3ÖÖ£º
+         * ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½ï¿½ï¿½Îªï¿½ï¿½×¼ï¿½ï¿½Ê½
+         * @param {Object} data ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½Ö£ï¿½
          *  1. {"result" : [["key1", "result1"], ["key2", "result2"], ...]}
          *  2. {"result" : ["key1", "key2", ...]}
-         *  3. 1ºÍ2µÄ×éºÏ
-         *  4. ±ê×¼¸ñÊ½
-         *  5. ÉÏÃæ1-4ÖÐ£¬Ö±½ÓÈ¡o["result"]µÄÖµ
-         * @return Object ±ê×¼¸ñÊ½µÄÊý¾Ý£º
+         *  3. 1ï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½
+         *  4. ï¿½ï¿½×¼ï¿½ï¿½Ê½
+         *  5. ï¿½ï¿½ï¿½ï¿½1-4ï¿½Ð£ï¿½Ö±ï¿½ï¿½È¡o["result"]ï¿½ï¿½Öµ
+         * @return Object ï¿½ï¿½×¼ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½
          *  [{"key" : "key1", "result" : "result1"}, {"key" : "key2", "result" : "result2"}, ...]
          */
         formatData: function(data) {
@@ -791,9 +791,9 @@ KISSY.add("suggest", function(S, undefined) {
             for (var i = 0; i < len; ++i) {
                 item = data[i];
 
-                if (typeof item === "string") { // Ö»ÓÐkeyÖµÊ±
+                if (typeof item === "string") { // Ö»ï¿½ï¿½keyÖµÊ±
                     arr[i] = {"key" : item};
-                } else if (S.isArray(item) && item.length >= 2) { // ["key", "result"] È¡Êý×éÇ°2¸ö
+                } else if (S.isArray(item) && item.length >= 2) { // ["key", "result"] È¡ï¿½ï¿½ï¿½ï¿½Ç°2ï¿½ï¿½
                     arr[i] = {"key" : item[0], "result" : item[1]};
                 } else {
                     arr[i] = item;
@@ -803,9 +803,9 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ¸ñÊ½»¯Êä³öÏî
-         * @param {String} key ²éÑ¯×Ö·û´®
-         * @param {Number} result ½á¹û ¿É²»Éè
+         * ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+         * @param {String} key ï¿½ï¿½Ñ¯ï¿½Ö·ï¿½
+         * @param {Number} result ï¿½ï¿½ï¿½ ï¿½É²ï¿½ï¿½ï¿½
          * @return {HTMLElement}
          */
         formatItem: function(key, result) {
@@ -815,9 +815,9 @@ KISSY.add("suggest", function(S, undefined) {
             keyEl.appendChild(doc.createTextNode(key));
             li.appendChild(keyEl);
 
-            if (result !== undefined) { // ¿ÉÒÔÃ»ÓÐ
+            if (result !== undefined) { // ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½
                 var resultText = this.config.resultFormat.replace("%result%", result);
-                if (S.trim(resultText)) { // ÓÐÖµÊ±²Å´´½¨
+                if (S.trim(resultText)) { // ï¿½ï¿½ÖµÊ±ï¿½Å´ï¿½ï¿½ï¿½
                     var resultEl = doc.createElement("span");
                     resultEl.className = RESULT_EL_CLASS;
                     resultEl.appendChild(doc.createTextNode(resultText));
@@ -829,7 +829,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * Ìí¼ÓÌáÊ¾²ãµ×²¿
+         * ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½×²ï¿½
          */
         appendBottom: function() {
             var bottom = doc.createElement("div");
@@ -838,21 +838,21 @@ KISSY.add("suggest", function(S, undefined) {
             if (this.config.showCloseBtn) {
                 var closeBtn = doc.createElement("a");
                 closeBtn.href = "javascript: void(0)";
-                closeBtn.setAttribute("target", "_self"); // bug fix: ¸²¸Ç<base target="_blank" />£¬·ñÔò»áµ¯³ö¿Õ°×Ò³Ãæ
+                closeBtn.setAttribute("target", "_self"); // bug fix: ï¿½ï¿½ï¿½ï¿½<base target="_blank" />ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½áµ¯ï¿½ï¿½ï¿½Õ°ï¿½Ò³ï¿½ï¿½
                 closeBtn.className = CLOSE_BTN_CLASS;
                 closeBtn.appendChild(doc.createTextNode(this.config.closeBtnText));
 
                 bottom.appendChild(closeBtn);
             }
 
-            // ½öµ±ÓÐÄÚÈÝÊ±²ÅÌí¼Ó
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½
             if (S.trim(bottom.innerHTML)) {
                 this.container.appendChild(bottom);
             }
         },
 
         /**
-         * Ìî³äÌáÊ¾²ã
+         * ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½
          * @protected
          * @param {String|HTMLElement} content innerHTML or Child Node
          */
@@ -864,12 +864,12 @@ KISSY.add("suggest", function(S, undefined) {
                 this.container.innerHTML = content;
             }
 
-            // Ò»µ©ÖØÐÂÌî³äÁË£¬selectedItem¾ÍÃ»ÁË£¬ÐèÒªÖØÖÃ
+            // Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½selectedItemï¿½ï¿½Ã»ï¿½Ë£ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
             this.selectedItem = null;
         },
 
         /**
-         * ¸ù¾ÝcontanierµÄÄÚÈÝ£¬ÏÔÊ¾»òÒþ²ØÈÝÆ÷
+         * ï¿½ï¿½ï¿½contanierï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         _displayContainer: function() {
             if (S.trim(this.container.innerHTML)) {
@@ -880,8 +880,8 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * Ñ¡ÖÐÌáÊ¾²ãÖÐµÄÉÏ/ÏÂÒ»¸öÌõ
-         * @param {Boolean} down true±íÊ¾down£¬false±íÊ¾up
+         * Ñ¡ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½/ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½
+         * @param {Boolean} down trueï¿½ï¿½Ê¾downï¿½ï¿½falseï¿½ï¿½Ê¾up
          */
         selectItem: function(down) {
             var self = this;
@@ -890,29 +890,29 @@ KISSY.add("suggest", function(S, undefined) {
             var items = self.container.getElementsByTagName("li");
             if (items.length == 0) return;
 
-            // ÓÐ¿ÉÄÜÓÃESCÒþ²ØÁË£¬Ö±½ÓÏÔÊ¾¼´¿É
+            // ï¿½Ð¿ï¿½ï¿½ï¿½ï¿½ï¿½ESCï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½Ö±ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
             if (!self.isVisible()) {
                 self.show();
-                return; // ±£ÁôÔ­À´µÄÑ¡ÖÐ×´Ì¬
+                return; // ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½×´Ì¬
             }
             var newSelectedItem;
 
-            // Ã»ÓÐÑ¡ÖÐÏîÊ±£¬Ñ¡ÖÐµÚÒ»/×îºóÏî
+            // Ã»ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ñ¡ï¿½Ðµï¿½Ò»/ï¿½ï¿½ï¿½ï¿½ï¿½
             if (!self.selectedItem) {
                 newSelectedItem = items[down ? 0 : items.length - 1];
             } else {
-                // Ñ¡ÖÐÏÂ/ÉÏÒ»Ïî
+                // Ñ¡ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½Ò»ï¿½ï¿½
                 newSelectedItem = YDOM[down ? "getNextSibling" : "getPreviousSibling"](self.selectedItem);
-                // ÒÑ¾­µ½ÁË×îºó/Ç°Ò»ÏîÊ±£¬¹éÎ»µ½ÊäÈë¿ò£¬²¢»¹Ô­ÊäÈëÖµ
+                // ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/Ç°Ò»ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò£¬²ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½Öµ
                 if (!newSelectedItem) {
                     self.textInput.value = self.query;
                 }
             }
 
-            // ÒÆ³ýµ±Ç°Ñ¡ÖÐÏî
+            // ï¿½Æ³ï¿½Ç°Ñ¡ï¿½ï¿½ï¿½ï¿½
             self._removeSelectedItem();
 
-            // Ñ¡ÖÐÐÂÏî
+            // Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (newSelectedItem) {
                 self._setSelectedItem(newSelectedItem);
                 self._updateInputFromSelectItem();
@@ -920,7 +920,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ÒÆ³ýÑ¡ÖÐÏî
+         * ï¿½Æ³ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½
          * @protected
          */
         _removeSelectedItem: function() {
@@ -930,7 +930,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ÉèÖÃµ±Ç°Ñ¡ÖÐÏî
+         * ï¿½ï¿½ï¿½Ãµï¿½Ç°Ñ¡ï¿½ï¿½ï¿½ï¿½
          * @protected
          * @param {HTMLElement} item
          */
@@ -941,13 +941,13 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * »ñÈ¡ÌáÊ¾²ãÖÐÑ¡ÖÐÏîµÄkey×Ö·û´®
+         * ï¿½ï¿½È¡ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½keyï¿½Ö·ï¿½
          * @protected
          */
         _getSelectedItemKey: function() {
             if (!this.selectedItem) return "";
 
-            // getElementsByClassName±È½ÏËðºÄÐÔÄÜ£¬¸ÄÓÃ»º´æÊý¾Ýµ½attributeÉÏ·½·¨
+            // getElementsByClassNameï¿½È½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½attributeï¿½Ï·ï¿½ï¿½ï¿½
             //var keyEl = Dom.getElementsByClassName(KEY_EL_CLASS, "*", this.selectedItem)[0];
             //return keyEl.innerHTML;
 
@@ -955,7 +955,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ½«textInputµÄÖµ¸üÐÂµ½this.query
+         * ï¿½ï¿½textInputï¿½ï¿½Öµï¿½ï¿½ï¿½Âµï¿½this.query
          * @protected
          */
         _updateQueryValueFromInput: function() {
@@ -963,7 +963,7 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * ½«Ñ¡ÖÐÏîµÄÖµ¸üÐÂµ½textInput
+         * ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Âµï¿½textInput
          * @protected
          */
         _updateInputFromSelectItem: function() {
@@ -975,11 +975,11 @@ KISSY.add("suggest", function(S, undefined) {
     S.mix(Suggest.prototype, S.EventTarget);
 
     /**
-     * Ô¼¶¨µÄÈ«¾Ö»Øµ÷º¯Êý
+     * Ô¼ï¿½ï¿½ï¿½ï¿½È«ï¿½Ö»Øµï¿½ï¿½ï¿½ï¿½ï¿½
      */
     win[CALLBACK_STR] = function(data) {
         if (!Suggest.focusInstance) return;
-        // Ê¹µÃÏÈÔËÐÐ script.onload ÊÂ¼þ£¬È»ºóÔÙÖ´ÐÐ callback º¯Êý
+        // Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ script.onload ï¿½Â¼ï¿½ï¿½ï¿½È»ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ callback ï¿½ï¿½ï¿½ï¿½
         setTimeout(function() {
             Suggest.focusInstance.handleResponse(data);
         }, 0);
@@ -990,51 +990,51 @@ KISSY.add("suggest", function(S, undefined) {
 
 
 /**
- * Ð¡½á£º
+ * Ð¡ï¿½á£º
  *
- * Õû¸ö×é¼þ´úÂë£¬ÓÉÁ½´ó²¿·Ö×é³É£ºÊý¾Ý´¦Àí + ÊÂ¼þ´¦Àí
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½ó²¿·ï¿½ï¿½ï¿½É£ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½ + ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * Ò»¡¢Êý¾Ý´¦ÀíºÜcore£¬µ«Ïà¶ÔÀ´ËµÊÇ¼òµ¥µÄ£¬ÓÉ requestData + handleResponse + formatDataµÈ¸¨Öú·½·¨×é³É
- * ÐèÒª×¢ÒâÁ½µã£º
- *  a. IEÖÐ£¬¸Ä±äscript.src, »á×Ô¶¯È¡ÏûµôÖ®Ç°µÄÇëÇó£¬²¢·¢ËÍÐÂÇëÇó¡£·ÇIEÖÐ£¬±ØÐëÐÂ´´½¨script²ÅÐÐ¡£ÕâÊÇ
- *     requestData·½·¨ÖÐ´æÔÚÁ½ÖÖ´¦Àí·½Ê½µÄÔ­Òò¡£
- *  b. µ±ÍøËÙºÜÂý£¬Êý¾Ý·µ»ØÊ±£¬ÓÃ»§µÄÊäÈë¿ÉÄÜÒÑ¸Ä±ä£¬ÒÑ¾­ÓÐÇëÇó·¢ËÍ³öÈ¥£¬ÐèÒªÅ×Æú¹ýÆÚÊý¾Ý¡£Ä¿Ç°²ÉÓÃ¼ÓÊ±¼ä´Á
- *     µÄ½â¾ö·½°¸¡£¸üºÃµÄ½â¾ö·½°¸ÊÇ£¬µ÷ÕûAPI£¬Ê¹µÃ·µ»ØµÄÊý¾ÝÖÐ£¬´øÓÐqueryÖµ¡£
+ * Ò»ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½ï¿½coreï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½Ç¼òµ¥µÄ£ï¿½ï¿½ï¿½ requestData + handleResponse + formatDataï¿½È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * ï¿½ï¿½Òª×¢ï¿½ï¿½ï¿½ï¿½ï¿½ã£º
+ *  a. IEï¿½Ð£ï¿½ï¿½Ä±ï¿½script.src, ï¿½ï¿½ï¿½Ô¶ï¿½È¡ï¿½ï¿½ï¿½Ö®Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó¡£·ï¿½IEï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½ï¿½ï¿½scriptï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½
+ *     requestDataï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½?Ê½ï¿½ï¿½Ô­ï¿½ï¿½
+ *  b. ï¿½ï¿½ï¿½ï¿½ï¿½Ùºï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¸Ä±ä£¬ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½È¥ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¡ï¿½Ä¿Ç°ï¿½ï¿½ï¿½Ã¼ï¿½Ê±ï¿½ï¿½ï¿½
+ *     ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÃµÄ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç£ï¿½ï¿½ï¿½ï¿½ï¿½APIï¿½ï¿½Ê¹ï¿½Ã·ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½queryÖµï¿½ï¿½
  *
- * ¶þ¡¢ÊÂ¼þ´¦Àí¿´ËÆ¼òµ¥£¬Êµ¼ÊÉÏÓÐ²»ÉÙÏÝÚå£¬·Ö2²¿·Ö£º
- *  1. ÊäÈë¿òµÄfocus/blurÊÂ¼þ + ¼üÅÌ¿ØÖÆÊÂ¼þ
- *  2. ÌáÊ¾²ãÉÏµÄÊó±êÐü¸¡ºÍµã»÷ÊÂ¼þ
- * ÐèÒª×¢ÒâÒÔÏÂ¼¸µã£º
- *  a. ÒòÎªµã»÷ÌáÊ¾²ãÊ±£¬Ê×ÏÈ»á´¥·¢ÊäÈë¿òµÄblurÊÂ¼þ£¬blurÊÂ¼þÖÐµ÷ÓÃhide·½·¨£¬ÌáÊ¾²ãÒ»µ©Òþ²Øºó£¬¾Í²¶»ñ²»µ½
- *     µã»÷ÊÂ¼þÁË¡£Òò´ËÓÐÁË this._mouseHovering À´ÅÅ³ýÕâÖÖÇé¿ö£¬Ê¹µÃblurÊ±²»»á´¥·¢hide£¬ÔÚÌáÊ¾²ãµÄµã»÷
- *     ÊÂ¼þÖÐ×ÔÐÐ´¦Àí¡££¨2009-06-18¸üÐÂ£º²ÉÓÃmouseupÀ´Ìæ´úclickÊÂ¼þ£¬´úÂëÇåÎú¼òµ¥ÁËºÜ¶à£©
- *  b. µ±Êó±êÒÆ¶¯µ½Ä³Ïî»òÍ¨¹ýÉÏÏÂ¼üÑ¡ÖÐÄ³ÏîÊ±£¬¸øthis.selectedItem¸³Öµ£»µ±ÌáÊ¾²ãµÄÊý¾ÝÖØÐÂÌî³äÊ±£¬ÖØÖÃ
- *     this.selectedItem. ÕâÖÖ´¦Àí·½Ê½ºÍgoogleµÄÒ»ÖÂ£¬¿ÉÒÔÊ¹µÃÑ¡ÖÐÄ³Ïî£¬Òþ²Ø£¬ÔÙ´Î´ò¿ªÊ±£¬ÒÀ¾ÉÑ¡ÖÐÔ­À´
- *     µÄÑ¡ÖÐÏî¡£
- *  c. ÔÚieµÈä¯ÀÀÆ÷ÖÐ£¬ÊäÈë¿òÖÐÊäÈëENTER¼üÊ±£¬»á×Ô¶¯Ìá½»±íµ¥¡£Èç¹ûform.target="_blank", ×Ô¶¯Ìá½»ºÍJSÌá½»
- *     »á´ò¿ªÁ½¸öÌá½»Ò³Ãæ¡£Òò´ËÕâÀï²ÉÈ¡ÁËÔÚJSÖÐ²»Ìá½»µÄ²ßÂÔ£¬ENTER¼üÊÇ·ñÌá½»±íµ¥£¬ÍêÈ«ÓÉHTML´úÂë×ÔÉí¾ö¶¨¡£Õâ
- *     ÑùÒ²ÄÜÊ¹µÃ×é¼þºÜÈÝÒ×Ó¦ÓÃÔÚ²»ÐèÒªÌá½»±íµ¥µÄ³¡¾°ÖÐ¡££¨2009-06-18¸üÐÂ£º¿ÉÒÔÍ¨¹ýblur()È¡Ïûµôä¯ÀÀÆ÷µÄÄ¬ÈÏ
- *     EnterÏìÓ¦£¬ÕâÑùÄÜÊ¹µÃ´úÂëÂß¼­ºÍmouseupµÄÒ»ÖÂ£©
- *  d. onItemSelect ½öÔÚÊó±êµã»÷Ñ¡ÔñÄ³Ïî ºÍ ¼üÅÌÑ¡ÖÐÄ³Ïî»Ø³µ ºó´¥·¢¡£
- *  e. µ±textInput»á´¥·¢±íµ¥Ìá½»Ê±£¬ÔÚenter keydown ºÍ keyupÖ®¼ä£¬¾Í»á´¥·¢Ìá½»¡£Òò´ËÔÚkeydownÖÐ²¶×½ÊÂ¼þ¡£
- *     ²¢ÇÒÔÚkeydownÖÐÄÜ²¶×½µ½³ÖÐøDOWN/UP£¬ÔÚkeyupÖÐ¾Í²»ÐÐÁË¡£
+ * ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½?ï¿½Æ¼òµ¥£ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å£¬ï¿½ï¿½2ï¿½ï¿½ï¿½Ö£ï¿½
+ *  1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½focus/blurï¿½Â¼ï¿½ + ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
+ *  2. ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½Â¼ï¿½
+ * ï¿½ï¿½Òª×¢ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ã£º
+ *  a. ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½È»á´¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½blurï¿½Â¼ï¿½ï¿½ï¿½blurï¿½Â¼ï¿½ï¿½Ðµï¿½ï¿½ï¿½hideï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Øºó£¬¾Í²ï¿½ï¿½ñ²»µï¿½
+ *     ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Ë¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ this._mouseHovering ï¿½ï¿½ï¿½Å³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½blurÊ±ï¿½ï¿½ï¿½á´¥ï¿½ï¿½hideï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Äµï¿½ï¿½
+ *     ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½?ï¿½ï¿½2009-06-18ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½mouseupï¿½ï¿½ï¿½ï¿½ï¿½clickï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ËºÜ¶à£©
+ *  b. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½Ñ¡ï¿½ï¿½Ä³ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½this.selectedItemï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ *     this.selectedItem. ï¿½ï¿½ï¿½Ö´ï¿½ï¿½?Ê½ï¿½ï¿½googleï¿½ï¿½Ò»ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½Ñ¡ï¿½ï¿½Ä³ï¿½î£¬ï¿½ï¿½ï¿½Ø£ï¿½ï¿½Ù´Î´ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ô­ï¿½ï¿½
+ *     ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½î¡£
+ *  c. ï¿½ï¿½ieï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ENTERï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½á½»ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½form.target="_blank", ï¿½Ô¶ï¿½ï¿½á½»ï¿½ï¿½JSï¿½á½»
+ *     ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á½»Ò³ï¿½æ¡£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½JSï¿½Ð²ï¿½ï¿½á½»ï¿½Ä²ï¿½ï¿½Ô£ï¿½ENTERï¿½ï¿½ï¿½Ç·ï¿½ï¿½á½»ï¿½?ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½HTMLï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ *     ï¿½ï¿½Ò²ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½Òªï¿½á½»ï¿½?ï¿½Ä³ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½2009-06-18ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½blur()È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½
+ *     Enterï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½mouseupï¿½ï¿½Ò»ï¿½Â£ï¿½
+ *  d. onItemSelect ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ä³ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ä³ï¿½ï¿½Ø³ï¿½ ï¿½ó´¥·ï¿½ï¿½ï¿½
+ *  e. ï¿½ï¿½textInputï¿½á´¥ï¿½ï¿½ï¿½?ï¿½á½»Ê±ï¿½ï¿½ï¿½ï¿½enter keydown ï¿½ï¿½ keyupÖ®ï¿½ä£¬ï¿½Í»á´¥ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½keydownï¿½Ð²ï¿½×½ï¿½Â¼ï¿½ï¿½ï¿½
+ *     ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½keydownï¿½ï¿½ï¿½Ü²ï¿½×½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½DOWN/UPï¿½ï¿½ï¿½ï¿½keyupï¿½Ð¾Í²ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½
  *
- * ¡¾µÃµ½µÄÒ»Ð©±à³Ì¾­Ñé¡¿£º
- *  1. Ö°Ôðµ¥Ò»Ô­Ôò¡£·½·¨µÄÖ°ÔðÒªµ¥Ò»£¬±ÈÈçhide·½·¨ºÍshow·½·¨£¬³ýÁË¸Ä±ävisibility, ¾Í²»ÒªÓµÓÐÆäËü¹¦ÄÜ¡£Õâ
- *     ¿´ËÆ¼òµ¥£¬ÕæÒª×öµ½È´²¢²»ÈÝÒ×¡£±£³ÖÖ°Ôðµ¥Ò»£¬±£³Ö¼òµ¥µÄºÃ´¦ÊÇ£¬´úÂëµÄÕûÌåÂß¼­¸üÇåÎú£¬·½·¨µÄ¿É¸´ÓÃÐÔÒ²Ìá
- *     ¸ßÁË¡£
- *  2. Ð¡ÐÄÊÂ¼þ´¦Àí¡£µ±ÊÂ¼þÖ®¼äÓÐ¹ØÁªÊ±£¬Òª×ÐÏ¸ÏëÇå³þ£¬Éè¼ÆºÃºóÔÙÐ´´úÂë¡£±ÈÈçÊäÈë¿òµÄblurºÍÌáÊ¾²ãµÄclickÊÂ¼þ¡£
- *  3. ²âÊÔµÄÖØÒªÐÔ¡£Ä¿Ç°ÊÇÁÐ³öTest Cases£¬ÒÔºóÒª³¢ÊÔ×Ô¶¯»¯¡£±£Ö¤Ã¿´Î¸Ä¶¯ºó£¬¶¼²»Ó°ÏìÔ­ÓÐ¹¦ÄÜ¡£
- *  4. ÌôÑ¡ÕýÈ·µÄÊÂ¼þ×öÕýÈ·µÄÊÂ£¬Ì«ÖØÒªÁË£¬ÄÜÊ¡È¥ºÜ¶àºÜ¶à·³ÄÕ¡£
+ * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½Ò»Ð©ï¿½ï¿½Ì¾ï¿½ï¿½é¡¿ï¿½ï¿½
+ *  1. Ö°ï¿½ï¿½Ò»Ô­ï¿½ò¡£·ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ï¿½Òªï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½hideï¿½ï¿½ï¿½ï¿½ï¿½ï¿½showï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¸Ä±ï¿½visibility, ï¿½Í²ï¿½ÒªÓµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¡ï¿½ï¿½ï¿½
+ *     ï¿½ï¿½ï¿½Æ¼òµ¥£ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¡ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼òµ¥µÄºÃ´ï¿½ï¿½Ç£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿É¸ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½
+ *     ï¿½ï¿½ï¿½Ë¡ï¿½
+ *  2. Ð¡ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½Â¼ï¿½Ö®ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Òªï¿½ï¿½Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÆºÃºï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ë¡£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½blurï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½clickï¿½Â¼ï¿½ï¿½ï¿½
+ *  3. ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½Òªï¿½Ô¡ï¿½Ä¿Ç°ï¿½ï¿½ï¿½Ð³ï¿½Test Casesï¿½ï¿½ï¿½Ôºï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤Ã¿ï¿½Î¸Ä¶ï¿½ï¿½ó£¬¶ï¿½ï¿½ï¿½Ó°ï¿½ï¿½Ô­ï¿½Ð¹ï¿½ï¿½Ü¡ï¿½
+ *  4. ï¿½ï¿½Ñ¡ï¿½ï¿½È·ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½Â£ï¿½Ì«ï¿½ï¿½Òªï¿½Ë£ï¿½ï¿½ï¿½Ê¡È¥ï¿½Ü¶ï¿½Ü¶à·³ï¿½Õ¡ï¿½
  *
  */
 
 /**
- * 2009-08-05 ¸üÐÂ£º ½« class ´ÓÅäÖÃÏîÖÐÒÆ¶¯µ½³£Á¿£¬Ô­ÒòÊÇ£ºÐÞ¸ÄÄ¬ÈÏ className µÄ¿ÉÄÜÐÔºÜÐ¡£¬½ö±£ÁôÒ»¸ö
- *                  containerCls ×÷Îª¸öÐÔ»¯ÑùÊ½µÄ½Ó¿Ú¼´¿É
+ * 2009-08-05 ï¿½ï¿½ï¿½Â£ï¿½ ï¿½ï¿½ class ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½Ç£ï¿½ï¿½Þ¸ï¿½Ä¬ï¿½ï¿½ className ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Ôºï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
+ *                  containerCls ï¿½ï¿½Îªï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½Ê½ï¿½Ä½Ó¿Ú¼ï¿½ï¿½ï¿½
  *
- * 2009-12-10 ¸üÐÂ£º ²ÉÓÃ kissy module ×éÖ¯´úÂë¡£ÎªÁË±ÜÃâ¶à¸öÉ³ÏäÏÂ£¬¶ÔÈ«¾Ö»Øµ÷º¯Êý¸²¸Ç¶¨ÒåÒý·¢µÄÎÊÌâ£¬
- *                  ²ÉÓÃ¹²ÏíÄ£Ê½¡£
+ * 2009-12-10 ï¿½ï¿½ï¿½Â£ï¿½ ï¿½ï¿½ï¿½ï¿½ kissy module ï¿½ï¿½Ö¯ï¿½ï¿½ï¿½ë¡£Îªï¿½Ë±ï¿½ï¿½ï¿½ï¿½ï¿½É³ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½È«ï¿½Ö»Øµï¿½ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£¬
+ *                  ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½
  *
- * 2010-03-10 ¸üÐÂ£º È¥³ý¹²ÏíÄ£Ê½£¬ÊÊÓ¦ kissy ÐÂµÄ´úÂë×éÖ¯·½Ê½¡£
+ * 2010-03-10 ï¿½ï¿½ï¿½Â£ï¿½ È¥ï¿½ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½ï¿½ï¿½Ó¦ kissy ï¿½ÂµÄ´ï¿½ï¿½ï¿½ï¿½ï¿½Ö¯ï¿½ï¿½Ê½ï¿½ï¿½
  */

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 811 Jul 7 23:02
+build: 846 Jul 11 00:10
 */
 /**
  * @module kissy
@@ -48,10 +48,18 @@ build: 811 Jul 7 23:02
         readyList = [],
 
         // Has the ready events already been bound?
-        readyBound = false;
+        readyBound = false,
+
+        //global id control
+        _id=0;
 
     mix(S, {
-
+        /**
+         * return global unique id
+         */
+        id:function(){
+            return (_id++);
+        },
         /**
          * The version of the library.
          * @type {String}

@@ -1,13 +1,15 @@
 /**
- * Êı¾İÑÓ³Ù¼ÓÔØ×é¼ş
- * °üÀ¨ img, textarea, ÒÔ¼°ÌØ¶¨ÔªËØ¼´½«³öÏÖÊ±µÄ»Øµ÷º¯Êı
+ * æ•°æ®å»¶è¿ŸåŠ è½½ç»„ä»¶
+ * åŒ…æ‹¬ img, textarea, ä»¥åŠç‰¹å®šå…ƒç´ å³å°†å‡ºç°æ—¶çš„å›è°ƒå‡½æ•°
  * @module      datalazyload
- * @creator     Óñ²®<lifesinger@gmail.com>
+ * @creator     ç‰ä¼¯<lifesinger@gmail.com>
  * @depends     kissy-core, yahoo-dom-event
  */
 KISSY.add('datalazyload', function(S, undefined) {
 
-    var DOM = S.DOM, Event = S.Event, YDOM = YAHOO.util.Dom,
+    var DOM = S.DOM,
+        Event = S.Event,
+        EventTarget = S.EventTarget,
         win = window, doc = document,
         IMG_DATA_SRC = 'data-lazyload-src',
         TEXTAREA_DATA_CLS = 'ks-datalazyload',
@@ -19,29 +21,29 @@ KISSY.add('datalazyload', function(S, undefined) {
         defaultConfig = {
 
             /**
-             * ÀÁ´¦ÀíÄ£Ê½
-             *   auto   - ×Ô¶¯»¯¡£html Êä³öÊ±£¬²»¶Ô img.src ×öÈÎºÎ´¦Àí
-             *   manual - Êä³ö html Ê±£¬ÒÑ¾­½«ĞèÒªÑÓ³Ù¼ÓÔØµÄÍ¼Æ¬µÄ src ÊôĞÔÌæ»»Îª IMG_DATA_SRC
-             * ×¢£º¶ÔÓÚ textarea Êı¾İ£¬Ö»ÓĞÊÖ¶¯Ä£Ê½
+             * æ‡’å¤„ç†æ¨¡å¼
+             *   auto   - è‡ªåŠ¨åŒ–ã€‚html è¾“å‡ºæ—¶ï¼Œä¸å¯¹ img.src åšä»»ä½•å¤„ç†
+             *   manual - è¾“å‡º html æ—¶ï¼Œå·²ç»å°†éœ€è¦å»¶è¿ŸåŠ è½½çš„å›¾ç‰‡çš„ src å±æ€§æ›¿æ¢ä¸º IMG_DATA_SRC
+             * æ³¨ï¼šå¯¹äº textarea æ•°æ®ï¼Œåªæœ‰æ‰‹åŠ¨æ¨¡å¼
              */
             mod: MOD.MANUAL,
 
             /**
-             * µ±Ç°ÊÓ´°ÍùÏÂ£¬diff px ÍâµÄ img/textarea ÑÓ³Ù¼ÓÔØ
-             * ÊÊµ±ÉèÖÃ´ËÖµ£¬¿ÉÒÔÈÃÓÃ»§ÔÚÍÏ¶¯Ê±¸Ğ¾õÊı¾İÒÑ¾­¼ÓÔØºÃ
-             * Ä¬ÈÏÎªµ±Ç°ÊÓ´°¸ß¶È£¨Á½ÆÁÒÔÍâµÄ²ÅÑÓ³Ù¼ÓÔØ£©
+             * å½“å‰è§†çª—å¾€ä¸‹ï¼Œdiff px å¤–çš„ img/textarea å»¶è¿ŸåŠ è½½
+             * é€‚å½“è®¾ç½®æ­¤å€¼ï¼Œå¯ä»¥è®©ç”¨æˆ·åœ¨æ‹–åŠ¨æ—¶æ„Ÿè§‰æ•°æ®å·²ç»åŠ è½½å¥½
+             * é»˜è®¤ä¸ºå½“å‰è§†çª—é«˜åº¦ï¼ˆä¸¤å±ä»¥å¤–çš„æ‰å»¶è¿ŸåŠ è½½ï¼‰
              */
             diff: DEFAULT,
 
             /**
-             * Í¼ÏñµÄÕ¼Î»Í¼£¬Ä¬ÈÏÎŞ
+             * å›¾åƒçš„å ä½å›¾ï¼Œé»˜è®¤æ— 
              */
             placeholder: NONE
         },
         DP = DataLazyload.prototype;
 
     /**
-     * ÑÓ³Ù¼ÓÔØ×é¼ş
+     * å»¶è¿ŸåŠ è½½ç»„ä»¶
      * @constructor
      */
     function DataLazyload(containers, config) {
@@ -52,49 +54,43 @@ KISSY.add('datalazyload', function(S, undefined) {
             return new DataLazyload(containers, config);
         }
 
-        // ÔÊĞí½ö´«µİ config Ò»¸ö²ÎÊı
+        // å…è®¸ä»…ä¼ é€’ config ä¸€ä¸ªå‚æ•°
         if (config === undefined) {
             config = containers;
             containers = [doc];
         }
 
-        // containers ÊÇÒ»¸ö HTMLElement Ê±
+        // containers æ˜¯ä¸€ä¸ª HTMLElement æ—¶
         if (!S.isArray(containers)) {
             containers = [S.get(containers) || doc];
         }
 
         /**
-         * Í¼Æ¬ËùÔÚÈİÆ÷£¨¿ÉÒÔ¶à¸ö£©£¬Ä¬ÈÏÎª [doc]
+         * å›¾ç‰‡æ‰€åœ¨å®¹å™¨ï¼ˆå¯ä»¥å¤šä¸ªï¼‰ï¼Œé»˜è®¤ä¸º [doc]
          * @type Array
          */
         self.containers = containers;
 
         /**
-         * ÅäÖÃ²ÎÊı
+         * é…ç½®å‚æ•°
          * @type Object
          */
         self.config = S.merge(defaultConfig, config || {});
 
         /**
-         * ĞèÒªÑÓ³ÙÏÂÔØµÄÍ¼Æ¬
+         * éœ€è¦å»¶è¿Ÿä¸‹è½½çš„å›¾ç‰‡
          * @type Array
          */
         //self.images
 
         /**
-         * ĞèÒªÑÓ³Ù´¦ÀíµÄ textarea
+         * éœ€è¦å»¶è¿Ÿå¤„ç†çš„ textarea
          * @type Array
          */
-        //self.areaes
+        //self.areas
 
         /**
-         * ºÍÑÓ³ÙÏî°ó¶¨µÄ»Øµ÷º¯Êı
-         * @type object
-         */
-        self.callbacks = {els: [], fns: []};
-
-        /**
-         * ¿ªÊ¼ÑÓ³ÙµÄ Y ×ø±ê
+         * å¼€å§‹å»¶è¿Ÿçš„ Y åæ ‡
          * @type number
          */
         //self.threshold
@@ -102,10 +98,10 @@ KISSY.add('datalazyload', function(S, undefined) {
         self._init();
     }
 
-    S.mix(DP, {
+    S.augment(DataLazyload, EventTarget, {
 
         /**
-         * ³õÊ¼»¯
+         * åˆå§‹åŒ–
          * @protected
          */
         _init: function() {
@@ -120,36 +116,36 @@ KISSY.add('datalazyload', function(S, undefined) {
         },
 
         /**
-         * ³õÊ¼»¯¼ÓÔØÊÂ¼ş
+         * åˆå§‹åŒ–åŠ è½½äº‹ä»¶
          * @protected
          */
         _initLoadEvent: function() {
             var timer, self = this;
 
-            // scroll ºÍ resize Ê±£¬¼ÓÔØÍ¼Æ¬
+            // scroll å’Œ resize æ—¶ï¼ŒåŠ è½½å›¾ç‰‡
             Event.on(win, 'scroll', loader);
             Event.on(win, 'resize', function() {
                 self.threshold = self._getThreshold();
                 loader();
             });
 
-            // ĞèÒªÁ¢¼´¼ÓÔØÒ»´Î£¬ÒÔ±£Ö¤µÚÒ»ÆÁµÄÑÓ³ÙÏî¿É¼û
+            // éœ€è¦ç«‹å³åŠ è½½ä¸€æ¬¡ï¼Œä»¥ä¿è¯ç¬¬ä¸€å±çš„å»¶è¿Ÿé¡¹å¯è§
             if (self._getItemsLength()) {
                 S.ready(function() {
                     loadItems();
                 });
             }
 
-            // ¼ÓÔØº¯Êı
+            // åŠ è½½å‡½æ•°
             function loader() {
                 if (timer) return;
                 timer = setTimeout(function() {
                     loadItems();
                     timer = null;
-                }, 100); // 0.1s ÄÚ£¬ÓÃ»§¸Ğ¾õÁ÷³©
+                }, 100); // 0.1s å†…ï¼Œç”¨æˆ·æ„Ÿè§‰æµç•…
             }
 
-            // ¼ÓÔØÑÓ³ÙÏî
+            // åŠ è½½å»¶è¿Ÿé¡¹
             function loadItems() {
                 self._loadItems();
 
@@ -161,233 +157,208 @@ KISSY.add('datalazyload', function(S, undefined) {
         },
 
         /**
-         * »ñÈ¡²¢³õÊ¼»¯ĞèÒªÑÓ³ÙµÄ img ºÍ textarea
+         * è·å–å¹¶åˆå§‹åŒ–éœ€è¦å»¶è¿Ÿçš„ img å’Œ textarea
          * @protected
          */
         _filterItems: function() {
             var self = this,
                 containers = self.containers,
-                threshold = self.threshold,
-                placeholder = self.config.placeholder,
-                isManualMod = self.config.mod === MOD.MANUAL,
-                n, N, imgs, areaes, i, len, img, area, data_src,
-                lazyImgs = [], lazyAreaes = [];
+                n, N, imgs, areas, i, len, img, area,
+                lazyImgs = [], lazyAreas = [];
 
             for (n = 0,N = containers.length; n < N; ++n) {
                 imgs = S.query('img', containers[n]);
+                lazyImgs = lazyImgs.concat(S.filter(imgs, self._filterInitialImg, self));
+                // å¤„ç† textarea
+                areas = S.query('textarea', containers[n]);
+                lazyAreas = lazyAreas.concat(S.filter(areas, self._filterArea, self));
 
-                for (i = 0,len = imgs.length; i < len; ++i) {
-                    img = imgs[i];
-                    data_src = img.getAttribute(IMG_DATA_SRC);
-
-                    if (isManualMod) { // ÊÖ¹¤Ä£Ê½£¬Ö»´¦ÀíÓĞ data-src µÄÍ¼Æ¬
-                        if (data_src) {
-                            if(placeholder !== NONE) {
-                                img.src = placeholder;
-                            }
-                            lazyImgs.push(img);
-                        }
-                    } else { // ×Ô¶¯Ä£Ê½£¬Ö»´¦Àí threshold ÍâÎŞ data-src µÄÍ¼Æ¬
-                        // ×¢Òâ£ºÒÑÓĞ data-src µÄÏî£¬¿ÉÄÜÒÑÓĞÆäËüÊµÀı´¦Àí¹ı£¬ÖØ¸´´¦Àí
-                        // »áµ¼ÖÂ data-src ±ä³É placeholder
-                        if (YDOM.getY(img) > threshold && !data_src) {
-                            img.setAttribute(IMG_DATA_SRC, img.src);
-
-                            if(placeholder !== NONE) {
-                                img.src = placeholder;
-                            }
-                            lazyImgs.push(img);
-                        }
-                    }
-                }
-
-                // ´¦Àí textarea
-                areaes = S.query('textarea', containers[n]);
-                for (i = 0,len = areaes.length; i < len; ++i) {
-                    area = areaes[i];
-                    if (DOM.hasClass(area, TEXTAREA_DATA_CLS)) {
-                        lazyAreaes.push(area);
-                    }
-                }
             }
 
             self.images = lazyImgs;
-            self.areaes = lazyAreaes;
+            self.areas = lazyAreas;
+
+        },
+        /**
+         * avoid create filter function every time
+         */
+        _filterArea:function(area) {
+            return DOM.hasClass(area, TEXTAREA_DATA_CLS);
+        },
+        /**
+         * avoid create filter function every time
+         */
+        _filterInitialImg:function(img) {
+            var self = this,
+                data_src = img.getAttribute(IMG_DATA_SRC),
+                threshold = self.threshold,
+                placeholder = self.config.placeholder,
+                isManualMod = self.config.mod === MOD.MANUAL;
+
+            if (isManualMod) { // æ‰‹å·¥æ¨¡å¼ï¼Œåªå¤„ç†æœ‰ data-src çš„å›¾ç‰‡
+                if (data_src) {
+                    if (placeholder !== NONE) {
+                        img.src = placeholder;
+                    }
+                    return true;
+                }
+            } else { // è‡ªåŠ¨æ¨¡å¼ï¼Œåªå¤„ç† threshold å¤–æ—  data-src çš„å›¾ç‰‡
+                // æ³¨æ„ï¼šå·²æœ‰ data-src çš„é¡¹ï¼Œå¯èƒ½å·²æœ‰å…¶å®ƒå®ä¾‹å¤„ç†è¿‡ï¼Œé‡å¤å¤„ç†
+                // ä¼šå¯¼è‡´ data-src å˜æˆ placeholder
+                var offset = DOM.offset(img);
+
+                if (offset.top > threshold && !data_src) {
+                    img.setAttribute(IMG_DATA_SRC, img.src);
+                    if (placeholder !== NONE) {
+                        img.src = placeholder;
+                    }
+                    return true;
+                }
+            }
         },
 
         /**
-         * ¼ÓÔØÑÓ³ÙÏî
+         * åŠ è½½å»¶è¿Ÿé¡¹
          */
         _loadItems: function() {
             var self = this;
-
             self._loadImgs();
-            self._loadAreaes();
-            self._fireCallbacks();
+            self._loadAreas();
         },
-
         /**
-         * ¼ÓÔØÍ¼Æ¬
+         * ç›‘æ§æ»šåŠ¨å¤„ç†å›¾ç‰‡
+         * @param img
+         */
+        _filterImg:function(img) {
+            var self = this
+                ,scrollTop = DOM.scrollTop(),
+                threshold = self.threshold + scrollTop,
+                offset = DOM.offset(img);
+            if (offset.top <= threshold) {
+                self._loadImgSrc(img);
+            } else
+                return true
+        },
+        /**
+         * åŠ è½½å›¾ç‰‡
          * @protected
          */
         _loadImgs: function() {
-            var self = this,
-                imgs = self.images,
-                scrollTop = YDOM.getDocumentScrollTop(),
-                threshold = self.threshold + scrollTop,
-                i, img, data_src, remain = [];
-
-            for (i = 0; img = imgs[i++];) {
-                if (YDOM.getY(img) <= threshold) {
-                    self._loadImgSrc(img);
-                } else {
-                    remain.push(img);
-                }
-            }
-
-            self.images = remain;
+            var self = this;
+            self.images = S.filter(self.images, self._filterImg, self);
         },
 
         /**
-         * ¼ÓÔØÍ¼Æ¬ src
+         * åŠ è½½å›¾ç‰‡ src
          * @static
          */
         _loadImgSrc: function(img, flag) {
             flag = flag || IMG_DATA_SRC;
             var data_src = img.getAttribute(flag);
-
             if (data_src && img.src != data_src) {
                 img.src = data_src;
                 img.removeAttribute(flag);
+                //å¼‚æ­¥è§¦å‘é˜²æ­¢ä¸€å¼€å§‹å°±è§¦å‘ç¨‹åºæ•æ‰ä¸åˆ°
+                setTimeout(function() {
+                    this.fire("render", {el:img});
+                }, 100);
             }
         },
-
         /**
-         * ¼ÓÔØ textarea Êı¾İ
+         * ç›‘æ§æ»šåŠ¨å¤„ç†æ–‡æœ¬æ¡†
+         * @param area
+         */
+        _filterAreas:function(area) {
+            var self = this,
+                el = area,
+                scrollTop = DOM.scrollTop(),
+                threshold = self.threshold + scrollTop,
+                y = DOM.offset(area).top;
+
+            // æ³¨ï¼šarea å¯èƒ½å¤„äº display: none çŠ¶æ€ï¼ŒDom.getY(area) è¿”å› undefined
+            //    è¿™ç§æƒ…å†µä¸‹ç”¨ area.parentNode çš„ Y å€¼æ¥åˆ¤æ–­
+            if (y === undefined) {
+                el = area.parentNode;
+                y = DOM.offset(el).top;
+            }
+
+            if (y <= threshold) {
+                self._loadDataFromArea(area.parentNode, area);
+            } else return true;
+        },
+        /**
+         * åŠ è½½ textarea æ•°æ®
          * @protected
          */
-        _loadAreaes: function() {
-            var self = this,
-                areaes = self.areaes,
-                scrollTop = YDOM.getDocumentScrollTop(),
-                threshold = self.threshold + scrollTop,
-                i, area, el, remain = [];
-
-            for (i = 0; area = areaes[i++];) {
-                el = area;
-
-                // ×¢£ºarea ¿ÉÄÜ´¦ÓÚ display: none ×´Ì¬£¬Dom.getY(area) ·µ»Ø undefined
-                //    ÕâÖÖÇé¿öÏÂÓÃ area.parentNode µÄ Y ÖµÀ´ÅĞ¶Ï
-                if(YDOM.getY(el) === undefined) {
-                    el = area.parentNode;
-                }
-
-                if (YDOM.getY(el) <= threshold) {
-                    self._loadDataFromArea(area.parentNode, area);
-                } else {
-                    remain.push(area);
-                }
-            }
-
-            self.areaes = remain;
+        _loadAreas: function() {
+            var self = this;
+            self.areas = S.filter(self.areas, self._filterAreas, self);
         },
 
         /**
-         * ´Ó textarea ÖĞ¼ÓÔØÊı¾İ
+         * ä» textarea ä¸­åŠ è½½æ•°æ®
          * @static
          */
         _loadDataFromArea: function(container, area) {
-            //container.innerHTML = area.value; // ÕâÖÖ·½Ê½»áµ¼ÖÂ chrome »º´æ bug
+            // yuyin: å½“ content ä¸º DocumentFragment æ—¶ï¼ŒS.query æœ‰é”™
+            // ä¸‹é¢ç›´æ¥ç”¨ container
+            //chengyu å¤§å¹…é‡æ„ï¼Œä½¿ç”¨æ­£åˆ™è¯†åˆ«scriptï¼Œä¸ºäº†é€šç”¨æ€§ï¼Œä¸è¦æ‰§è¡Œ container å†…çš„å…¨éƒ¨script
 
-            // ²ÉÓÃÒş²Ø²»È¥³ı·½Ê½
-            var content = DOM.create(area.value);
+            // é‡‡ç”¨éšè—ä¸å»é™¤æ–¹å¼
+
+            var self = this,content = DOM.create("<div></div>");
             area.style.display = NONE;
-            //area.value = ''; // clear content  ²»ÄÜÇå¿Õ£¬·ñÔò F5 Ë¢ĞÂ£¬»á¶ªÄÚÈİ
+            //area.value = ''; // clear content  ä¸èƒ½æ¸…ç©ºï¼Œå¦åˆ™ F5 åˆ·æ–°ï¼Œä¼šä¸¢å†…å®¹
             area.className = ''; // clear hook
+
             container.insertBefore(content, area);
-
-            // Ö´ĞĞÀïÃæµÄ½Å±¾
-            if(!S.UA.gecko) { // firefox »á×Ô¶¯Ö´ĞĞ TODO: feature test
-                // yuyin: µ± content Îª DocumentFragment Ê±£¬S.query ÓĞ´í
-                // ÏÂÃæÖ±½ÓÓÃ container
-                S.query('script', container).each(function(script) {
-                    S.globalEval(script.text);
+            //loadScript true :æ‰§è¡Œé‡Œé¢çš„è„šæœ¬
+            DOM.html(content, area.value, true);
+            //æ³¨æ„æ˜¯å¤–å±‚divï¼Œå¼‚æ­¥è§¦å‘é˜²æ­¢ä¸€å¼€å§‹å°±è§¦å‘ç¨‹åºæ•æ‰ä¸åˆ°
+            setTimeout(function() {
+                self.fire("render", {
+                    el:content,
+                    textarea:area
                 });
-            }
+            }, 100);
+
         },
 
         /**
-         * ´¥·¢»Øµ÷
-         * @protected
-         */
-        _fireCallbacks: function() {
-            var self = this,
-                callbacks = self.callbacks,
-                els = callbacks.els, fns = callbacks.fns,
-                scrollTop = YDOM.getDocumentScrollTop(),
-                threshold = self.threshold + scrollTop,
-                i, el, fn, remainEls = [], remainFns = [];
-
-            for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
-                if (YDOM.getY(el) <= threshold) {
-                    fn.call(el);
-                } else {
-                    remainEls.push(el);
-                    remainFns.push(fn);
-                }
-
-            }
-
-            callbacks.els = remainEls;
-            callbacks.fns = remainFns;
-        },
-
-        /**
-         * Ìí¼Ó»Øµ÷º¯Êı¡£µ± el ¼´½«³öÏÖÔÚÊÓÍ¼ÖĞÊ±£¬´¥·¢ fn
-         */
-        addCallback: function(el, fn) {
-            el = S.get(el);
-            if (el && typeof fn === 'function') {
-                this.callbacks.els.push(el);
-                this.callbacks.fns.push(fn);
-            }
-        },
-
-        /**
-         * »ñÈ¡ãĞÖµ
+         * è·å–é˜ˆå€¼
          * @protected
          */
         _getThreshold: function() {
             var diff = this.config.diff,
-                ret = YDOM.getViewportHeight();
+                ret = DOM.viewportHeight();
 
-            if (diff === DEFAULT) return 2 * ret; // diff Ä¬ÈÏÎªµ±Ç°ÊÓ´°¸ß¶È£¨Á½ÆÁÒÔÍâµÄ²ÅÑÓ³Ù¼ÓÔØ£©
+            if (diff === DEFAULT) return 2 * ret; // diff é»˜è®¤ä¸ºå½“å‰è§†çª—é«˜åº¦ï¼ˆä¸¤å±ä»¥å¤–çš„æ‰å»¶è¿ŸåŠ è½½ï¼‰
             else return ret + diff;
         },
 
         /**
-         * »ñÈ¡µ±Ç°ÑÓ³ÙÏîµÄÊıÁ¿
+         * è·å–å½“å‰å»¶è¿Ÿé¡¹çš„æ•°é‡
          * @protected
          */
         _getItemsLength: function() {
             var self = this;
-            return self.images.length + self.areaes.length + self.callbacks.els.length;
+            return self.images.length + self.areas.length;
         },
 
         /**
-         * ¼ÓÔØ×Ô¶¨ÒåÑÓ³ÙÊı¾İ
+         * åŠ è½½è‡ªå®šä¹‰å»¶è¿Ÿæ•°æ®
          * @static
          */
         loadCustomLazyData: function(containers, type, flag) {
             var self = this, area, imgs;
 
 
-            // Ö§³ÖÊı×é
+            // æ”¯æŒæ•°ç»„
             if (!S.isArray(containers)) {
                 containers = [S.get(containers)];
             }
 
-            // ±éÀú´¦Àí
+            // éå†å¤„ç†
             S.each(containers, function(container) {
                 switch (type) {
                     case 'textarea-data':
@@ -399,7 +370,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                     //case 'img-src':
                     default:
                         //S.log('loadCustomLazyData container = ' + container.src);
-                        if (container.nodeName === 'IMG') { // ±¾Éí¾ÍÊÇÍ¼Æ¬
+                        if (container.nodeName === 'IMG') { // æœ¬èº«å°±æ˜¯å›¾ç‰‡
                             imgs = [container];
                         } else {
                             imgs = S.query('img', container);
@@ -421,58 +392,59 @@ KISSY.add('datalazyload', function(S, undefined) {
 /**
  * NOTES:
  *
- * Ä£Ê½Îª auto Ê±£º
- *  1. ÔÚ Firefox ÏÂ·Ç³£ÍêÃÀ¡£½Å±¾ÔËĞĞÊ±£¬»¹Ã»ÓĞÈÎºÎÍ¼Æ¬¿ªÊ¼ÏÂÔØ£¬ÄÜÕæÕı×öµ½ÑÓ³Ù¼ÓÔØ¡£
- *  2. ÔÚ IE ÏÂ²»¾¡ÍêÃÀ¡£½Å±¾ÔËĞĞÊ±£¬ÓĞ²¿·ÖÍ¼Æ¬ÒÑ¾­Óë·şÎñÆ÷½¨Á¢Á´½Ó£¬Õâ²¿·Ö abort µô£¬
- *     ÔÙÔÚ¹ö¶¯Ê±ÑÓ³Ù¼ÓÔØ£¬·´¶øÔö¼ÓÁËÁ´½ÓÊı¡£
- *  3. ÔÚ Safari ºÍ Chrome ÏÂ£¬ÒòÎª webkit ÄÚºË bug£¬µ¼ÖÂÎŞ·¨ abort µôÏÂÔØ¡£¸Ã
- *     ½Å±¾ÍêÈ«ÎŞÓÃ¡£
- *  4. ÔÚ Opera ÏÂ£¬ºÍ Firefox Ò»ÖÂ£¬ÍêÃÀ¡£
+ * æ¨¡å¼ä¸º auto æ—¶ï¼š
+ *  1. åœ¨ Firefox ä¸‹éå¸¸å®Œç¾ã€‚è„šæœ¬è¿è¡Œæ—¶ï¼Œè¿˜æ²¡æœ‰ä»»ä½•å›¾ç‰‡å¼€å§‹ä¸‹è½½ï¼Œèƒ½çœŸæ­£åšåˆ°å»¶è¿ŸåŠ è½½ã€‚
+ *  2. åœ¨ IE ä¸‹ä¸å°½å®Œç¾ã€‚è„šæœ¬è¿è¡Œæ—¶ï¼Œæœ‰éƒ¨åˆ†å›¾ç‰‡å·²ç»ä¸æœåŠ¡å™¨å»ºç«‹é“¾æ¥ï¼Œè¿™éƒ¨åˆ† abort æ‰ï¼Œ
+ *     å†åœ¨æ»šåŠ¨æ—¶å»¶è¿ŸåŠ è½½ï¼Œåè€Œå¢åŠ äº†é“¾æ¥æ•°ã€‚
+ *  3. åœ¨ Safari å’Œ Chrome ä¸‹ï¼Œå› ä¸º webkit å†…æ ¸ bugï¼Œå¯¼è‡´æ— æ³• abort æ‰ä¸‹è½½ã€‚è¯¥
+ *     è„šæœ¬å®Œå…¨æ— ç”¨ã€‚
+ *  4. åœ¨ Opera ä¸‹ï¼Œå’Œ Firefox ä¸€è‡´ï¼Œå®Œç¾ã€‚
  *
- * Ä£Ê½Îª manual Ê±£º£¨ÒªÑÓ³Ù¼ÓÔØµÄÍ¼Æ¬£¬src ÊôĞÔÌæ»»Îª data-lazyload-src, ²¢½« src µÄÖµ¸³Îª placeholder £©
- *  1. ÔÚÈÎºÎä¯ÀÀÆ÷ÏÂ¶¼¿ÉÒÔÍêÃÀÊµÏÖ¡£
- *  2. È±µãÊÇ²»½¥½øÔöÇ¿£¬ÎŞ JS Ê±£¬Í¼Æ¬²»ÄÜÕ¹Ê¾¡£
+ * æ¨¡å¼ä¸º manual æ—¶ï¼šï¼ˆè¦å»¶è¿ŸåŠ è½½çš„å›¾ç‰‡ï¼Œsrc å±æ€§æ›¿æ¢ä¸º data-lazyload-src, å¹¶å°† src çš„å€¼èµ‹ä¸º placeholder ï¼‰
+ *  1. åœ¨ä»»ä½•æµè§ˆå™¨ä¸‹éƒ½å¯ä»¥å®Œç¾å®ç°ã€‚
+ *  2. ç¼ºç‚¹æ˜¯ä¸æ¸è¿›å¢å¼ºï¼Œæ—  JS æ—¶ï¼Œå›¾ç‰‡ä¸èƒ½å±•ç¤ºã€‚
  *
- * È±µã£º
- *  1. ¶ÔÓÚ´ó²¿·ÖÇé¿öÏÂ£¬ĞèÒªÍÏ¶¯²é¿´ÄÚÈİµÄÒ³Ãæ£¨±ÈÈçËÑË÷½á¹ûÒ³£©£¬¿ìËÙ¹ö¶¯Ê±¼ÓÔØÓĞËğÓÃ
- *     »§ÌåÑé£¨ÓÃ»§ÆÚÍûËù¹ö¼´ËùµÃ£©£¬ÌØ±ğÊÇÍøËÙ²»ºÃÊ±¡£
- *  2. auto Ä£Ê½²»Ö§³Ö Webkit ÄÚºËä¯ÀÀÆ÷£»IE ÏÂ£¬ÓĞ¿ÉÄÜµ¼ÖÂ HTTP Á´½ÓÊıµÄÔö¼Ó¡£
+ * ç¼ºç‚¹ï¼š
+ *  1. å¯¹äºå¤§éƒ¨åˆ†æƒ…å†µä¸‹ï¼Œéœ€è¦æ‹–åŠ¨æŸ¥çœ‹å†…å®¹çš„é¡µé¢ï¼ˆæ¯”å¦‚æœç´¢ç»“æœé¡µï¼‰ï¼Œå¿«é€Ÿæ»šåŠ¨æ—¶åŠ è½½æœ‰æŸç”¨
+ *     æˆ·ä½“éªŒï¼ˆç”¨æˆ·æœŸæœ›æ‰€æ»šå³æ‰€å¾—ï¼‰ï¼Œç‰¹åˆ«æ˜¯ç½‘é€Ÿä¸å¥½æ—¶ã€‚
+ *  2. auto æ¨¡å¼ä¸æ”¯æŒ Webkit å†…æ ¸æµè§ˆå™¨ï¼›IE ä¸‹ï¼Œæœ‰å¯èƒ½å¯¼è‡´ HTTP é“¾æ¥æ•°çš„å¢åŠ ã€‚
  *
- * ÓÅµã£º
- *  1. ¿ÉÒÔºÜºÃµÄÌá¸ßÒ³Ãæ³õÊ¼¼ÓÔØËÙ¶È¡£
- *  2. µÚÒ»ÆÁ¾ÍÌø×ª£¬ÑÓ³Ù¼ÓÔØÍ¼Æ¬¿ÉÒÔ¼õÉÙÁ÷Á¿¡£
+ * ä¼˜ç‚¹ï¼š
+ *  1. å¯ä»¥å¾ˆå¥½çš„æé«˜é¡µé¢åˆå§‹åŠ è½½é€Ÿåº¦ã€‚
+ *  2. ç¬¬ä¸€å±å°±è·³è½¬ï¼Œå»¶è¿ŸåŠ è½½å›¾ç‰‡å¯ä»¥å‡å°‘æµé‡ã€‚
  *
- * ²Î¿¼×ÊÁÏ£º
- *  1. http://davidwalsh.name/lazyload MooTools µÄÍ¼Æ¬ÑÓ³Ù²å¼ş
- *  2. http://vip.qq.com/ Ä£°åÊä³öÊ±£¬¾ÍÌæ»»µôÍ¼Æ¬µÄ src
+ * å‚è€ƒèµ„æ–™ï¼š
+ *  1. http://davidwalsh.name/lazyload MooTools çš„å›¾ç‰‡å»¶è¿Ÿæ’ä»¶
+ *  2. http://vip.qq.com/ æ¨¡æ¿è¾“å‡ºæ—¶ï¼Œå°±æ›¿æ¢æ‰å›¾ç‰‡çš„ src
  *  3. http://www.appelsiini.net/projects/lazyload jQuery Lazyload
  *  4. http://www.dynamixlabs.com/2008/01/17/a-quick-look-add-a-loading-icon-to-your-larger-images/
  *  5. http://www.nczonline.net/blog/2009/11/30/empty-image-src-can-destroy-your-site/
  *
- * ÌØ±ğÒª×¢ÒâµÄ²âÊÔÓÃÀı:
- *  1. ³õÊ¼´°¿ÚºÜĞ¡£¬À­´ó´°¿ÚÊ±£¬Í¼Æ¬¼ÓÔØÕı³£
- *  2. Ò³ÃæÓĞ¹ö¶¯Î»ÖÃÊ±£¬Ë¢ĞÂÒ³Ãæ£¬Í¼Æ¬¼ÓÔØÕı³£
- *  3. ÊÖ¶¯Ä£Ê½£¬µÚÒ»ÆÁÓĞÑÓ³ÙÍ¼Æ¬Ê±£¬¼ÓÔØÕı³£
+ * ç‰¹åˆ«è¦æ³¨æ„çš„æµ‹è¯•ç”¨ä¾‹:
+ *  1. åˆå§‹çª—å£å¾ˆå°ï¼Œæ‹‰å¤§çª—å£æ—¶ï¼Œå›¾ç‰‡åŠ è½½æ­£å¸¸
+ *  2. é¡µé¢æœ‰æ»šåŠ¨ä½ç½®æ—¶ï¼Œåˆ·æ–°é¡µé¢ï¼Œå›¾ç‰‡åŠ è½½æ­£å¸¸
+ *  3. æ‰‹åŠ¨æ¨¡å¼ï¼Œç¬¬ä¸€å±æœ‰å»¶è¿Ÿå›¾ç‰‡æ—¶ï¼ŒåŠ è½½æ­£å¸¸
  *
- * 2009-12-17 ²¹³ä£º
- *  1. textarea ÑÓ³Ù¼ÓÔØÔ¼¶¨£ºÒ³ÃæÖĞĞèÒªÑÓ³ÙµÄ dom ½Úµã£¬·ÅÔÚ
+ * 2009-12-17 è¡¥å……ï¼š
+ *  1. textarea å»¶è¿ŸåŠ è½½çº¦å®šï¼šé¡µé¢ä¸­éœ€è¦å»¶è¿Ÿçš„ dom èŠ‚ç‚¹ï¼Œæ”¾åœ¨
  *       <textarea class='ks-datalazysrc invisible'>dom code</textarea>
- *     Àï¡£¿ÉÒÔÌí¼Ó hidden µÈ class, µ«½¨ÒéÓÃ invisible, ²¢Éè¶¨ height = 'Êµ¼Ê¸ß¶È'.
- *     ÕâÑù¿ÉÒÔ±£Ö¤¹ö¶¯Ê±£¬diff ¸üÕæÊµÓĞĞ§¡£
- *     ×¢Òâ£ºtextarea ¼ÓÔØºó£¬»áÌæ»»µô¸¸ÈİÆ÷ÖĞµÄËùÓĞÄÚÈİ¡£
- *  2. ÑÓ³Ù callback Ô¼¶¨£ºdataLazyload.addCallback(el, fn) ±íÊ¾µ± el ¼´½«³öÏÖÊ±£¬´¥·¢ fn.
- *  3. ËùÓĞ²Ù×÷¶¼ÊÇ×î¶à´¥·¢Ò»´Î£¬±ÈÈç callback. À´»ØÍÏ¶¯¹ö¶¯ÌõÊ±£¬Ö»ÓĞ el µÚÒ»´Î³öÏÖÊ±»á´¥·¢ fn »Øµ÷¡£
+ *     é‡Œã€‚å¯ä»¥æ·»åŠ  hidden ç­‰ class, ä½†å»ºè®®ç”¨ invisible, å¹¶è®¾å®š height = 'å®é™…é«˜åº¦'.
+ *     è¿™æ ·å¯ä»¥ä¿è¯æ»šåŠ¨æ—¶ï¼Œdiff æ›´çœŸå®æœ‰æ•ˆã€‚
+ *     æ³¨æ„ï¼štextarea åŠ è½½åï¼Œä¼šæ›¿æ¢æ‰çˆ¶å®¹å™¨ä¸­çš„æ‰€æœ‰å†…å®¹ã€‚
+ *  2. å»¶è¿Ÿ callback çº¦å®šï¼šdataLazyload.addCallback(el, fn) è¡¨ç¤ºå½“ el å³å°†å‡ºç°æ—¶ï¼Œè§¦å‘ fn.
+ *  3. æ‰€æœ‰æ“ä½œéƒ½æ˜¯æœ€å¤šè§¦å‘ä¸€æ¬¡ï¼Œæ¯”å¦‚ callback. æ¥å›æ‹–åŠ¨æ»šåŠ¨æ¡æ—¶ï¼Œåªæœ‰ el ç¬¬ä¸€æ¬¡å‡ºç°æ—¶ä¼šè§¦å‘ fn å›è°ƒã€‚
  */
 
 /**
  * TODO:
- *   - [È¡Ïû] ±³¾°Í¼Æ¬µÄÑÓ³Ù¼ÓÔØ£¨¶ÔÓÚ css ÀïµÄ±³¾°Í¼Æ¬ºÍ sprite ºÜÄÑ´¦Àí£©
- *   - [È¡Ïû] ¼ÓÔØÊ±µÄ loading Í¼£¨¶ÔÓÚÎ´Éè¶¨´óĞ¡µÄÍ¼Æ¬£¬ºÜÄÑÍêÃÀ´¦Àí[²Î¿¼×ÊÁÏ 4]£©
+ *   - [å–æ¶ˆ] èƒŒæ™¯å›¾ç‰‡çš„å»¶è¿ŸåŠ è½½ï¼ˆå¯¹äº css é‡Œçš„èƒŒæ™¯å›¾ç‰‡å’Œ sprite å¾ˆéš¾å¤„ç†ï¼‰
+ *   - [å–æ¶ˆ] åŠ è½½æ—¶çš„ loading å›¾ï¼ˆå¯¹äºæœªè®¾å®šå¤§å°çš„å›¾ç‰‡ï¼Œå¾ˆéš¾å®Œç¾å¤„ç†[å‚è€ƒèµ„æ–™ 4]ï¼‰
  */
 
 /**
  * UPDATE LOG:
- *   - 2010-05-10 yubo ie6 ÏÂ£¬ÔÚ dom ready ºóÖ´ĞĞ£¬»áµ¼ÖÂ placeholder ÖØ¸´¼ÓÔØ£¬Îª±È±ÜÃâ´ËÎÊÌâ£¬Ä¬ÈÏÎª none, È¥µôÕ¼Î»Í¼
- *   - 2010-04-05 yubo ÖØ¹¹£¬Ê¹µÃ¶Ô YUI µÄÒÀÀµ½öÏŞÓÚ YDOM
- *   - 2009-12-17 yubo ½« imglazyload Éı¼¶Îª datalazyload, Ö§³Ö textarea ·½Ê½ÑÓ³ÙºÍÌØ¶¨ÔªËØ¼´½«³öÏÖÊ±µÄ»Øµ÷º¯Êı
+ *   -2010-07-10 yiminghe@gmail.com(chengyu)é‡æ„ï¼Œä½¿ç”¨æ­£åˆ™è¡¨è¾¾å¼è¯†åˆ«htmlä¸­çš„è„šæœ¬ï¼Œä½¿ç”¨EventTargetè‡ªå®šä¹‰äº‹ä»¶æœºåˆ¶æ¥å¤„ç†å›è°ƒ
+ *   - 2010-05-10 yubo ie6 ä¸‹ï¼Œåœ¨ dom ready åæ‰§è¡Œï¼Œä¼šå¯¼è‡´ placeholder é‡å¤åŠ è½½ï¼Œä¸ºæ¯”é¿å…æ­¤é—®é¢˜ï¼Œé»˜è®¤ä¸º none, å»æ‰å ä½å›¾
+ *   - 2010-04-05 yubo é‡æ„ï¼Œä½¿å¾—å¯¹ YUI çš„ä¾èµ–ä»…é™äº YDOM
+ *   - 2009-12-17 yubo å°† imglazyload å‡çº§ä¸º datalazyload, æ”¯æŒ textarea æ–¹å¼å»¶è¿Ÿå’Œç‰¹å®šå…ƒç´ å³å°†å‡ºç°æ—¶çš„å›è°ƒå‡½æ•°
  */
