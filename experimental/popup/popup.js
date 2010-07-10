@@ -182,15 +182,18 @@ KISSY.add("popup", function(S) {
         _bindCloseBtn:function(){
             var self = this;
             Event.on( self.popup , 'click' , function(e){
-                e.preventDefault();
                 var t = e.target;
                 if( DOM.hasClass( t , self.config.closeBtnCls ) ){
+					e.preventDefault();
                     self.hide();
                 }else{
                     t = YDOM.getAncestorBy(t,function(el){
                         return YDOM.hasClass(el,self.config.closeBtnCls) && YDOM.isAncestor(self.popup,el);
                     });
-                    if(t) self.hide();
+                    if(t){
+						e.preventDefault();
+						self.hide();
+					}
                 }
 			});
         }
