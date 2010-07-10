@@ -16,7 +16,7 @@
 .ks-form-field-cell{display:inline-block;padding:0 8px 4px 0;}
 .ks-form-input{width:100px;height:16px;}
 .ks-form-textarea{width:445px;height:4em;line-height:1.2em;}
-.ks-form-button-box{padding:5px 0;text-align:center;}
+.ks-form-button-box{*padding-top:6px;text-align:center;}
 .ks-form-button-box button{min-width:50px;margin-right:5px;padding:1px 6px;*padding:0;cursor:pointer;}
 .ks-form-button-box button[type="submit"]{font-weight:bold;}
 

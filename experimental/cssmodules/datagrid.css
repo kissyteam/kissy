@@ -8,7 +8,8 @@
  **********************************************************************************************************************/
 
 /*表格部分*/
-.ks-datagrid-table{width:100%;overflow:hidden;}
+.ks-datagrid{width:100%;overflow:hidden;}
+.ks-datagrid-table{width:100%;}
 .ks-datagrid th,
 .ks-datagrid td{padding:5px;text-align:left;}
 .ks-datagrid th{background:#f2f2f2 url(img/bar-repeatx.png) repeat-x 0 -110px;line-height:14px;vertical-align:bottom;border:1px solid #ccc;font-weight:bold;}
@@ -24,20 +25,20 @@
 .ks-datagrid-cell-desc .ks-datagrid-icon{background-position:-80px -20px;}
 
 /*特殊列*/
-.ks-datagrid .ks-datagrid-cell-extra{padding:5px 0;text-align:center;border-right:1px solid #ccc;background:#f9f9f9 url(img/bar-repeaty.png) repeat-y -110px 0;}
+.ks-datagrid .ks-datagrid-cell-extra{padding:5px 0;width:25px;text-align:center;border-right:1px solid #ccc;background:#f9f9f9 url(img/bar-repeaty.png) repeat-y -110px 0;}
 
 /*行*/
 .ks-datagrid-row td{border-top:1px dashed #ccc;}
 .ks-datagrid-row-even td{background:#f6f6f6;}
 .ks-datagrid-row-extra{display:none;}
 .ks-datagrid-row-expanded{display:table-row;*display:block;}
-.ks-datagrid-row-selected td{background:#e1edff!important;}
-.ks-datagrid-row-selected td.ks-datagrid-cell-extra{background:#cce1ff url(img/bar-repeaty.png) repeat-y -11px 0!important;}
 
 /*表格内icon*/
+.ks-datagrid-icon-holder,
 .ks-datagrid-icon-checkbox,
 .ks-datagrid-icon-radio,
 .ks-datagrid-icon-expand{display:inline-block;width:13px;height:13px;margin:0 6px;cursor:pointer;background:url(img/icon.png) no-repeat 1000px 1000px;}
+.ks-datagrid-icon-holder{cursor:default;}
 .ks-datagrid-icon-checkbox{background-position:0 -20px;}
 .ks-datagrid-icon-checkbox:hover{background-position:-20px -20px;}
 .ks-datagrid-row-selected  .ks-datagrid-icon-checkbox{background-position:-40px -20px;}
@@ -50,12 +51,21 @@
 .ks-datagrid-row-expanded .ks-datagrid-icon-expand{background-position:-60px 0;}
 
 /*loading*/
-.ks-datagrid-row-loading td{height:36px;border-bottom:1px solid #ccc;background:#fff url(http://assets.taobaocdn.com/app/lottery/v2/img/loading.gif) no-repeat 50% 50%;}
+.ks-datagrid-loading{position:absolute;z-index:100;}
+.ks-datagrid-loading-mask{position:absolute;left:0;top:0;width:100%;height:100%;background:#000;filter:alpha(opacity=20);opacity:0.2;}
+.ks-datagrid-loading-icon{position:absolute;left:50%;top:50%;margin:-10px 0 0 -110px;width:220px;height:19px;background:url(http://img02.taobaocdn.com/tps/i2/T1kyRBXhhfXXXXXXXX-220-19.gif) no-repeat;}
 
 /*预置特殊行样式*/
 .ks-datagrid-row-red td{background:#fec0c5;}
 .ks-datagrid-row-yellow td{background:#fcf7c5;}
 .ks-datagrid-row-green td{background:#e0f5c0;}
 .ks-datagrid-row-gray td{background:#ddd;}
+
+/*行选中样式*/
+.ks-datagrid-row-selected td{background:#e1edff!important;}
+.ks-datagrid-row-selected td.ks-datagrid-cell-extra{background:#cce1ff url(img/bar-repeaty.png) repeat-y -11px 0!important;}
+
+/*支持固定表头浏览时使用的table代理样式*/
+.ks-datagrid-proxy{position:fixed;_position:absolute;z-index:10;}
 
 
