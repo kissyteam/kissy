@@ -254,13 +254,13 @@ KISSY.add('datalazyload', function(S, undefined) {
          */
         _loadImgSrc: function(img, flag) {
             flag = flag || IMG_DATA_SRC;
-            var data_src = img.getAttribute(flag);
+            var self=this,data_src = img.getAttribute(flag);
             if (data_src && img.src != data_src) {
                 img.src = data_src;
                 img.removeAttribute(flag);
                 //异步触发防止一开始就触发程序捕捉不到
                 setTimeout(function() {
-                    this.fire("render", {el:img});
+                    self.fire("render", {el:img});
                 }, 100);
             }
         },
