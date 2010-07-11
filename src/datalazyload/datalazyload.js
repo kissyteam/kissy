@@ -172,7 +172,6 @@ KISSY.add('datalazyload', function(S, undefined) {
                 // 处理 textarea
                 areas = S.query('textarea', containers[n]);
                 lazyAreas = lazyAreas.concat(S.filter(areas, self._filterArea, self));
-
             }
 
             self.images = lazyImgs;
@@ -254,7 +253,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          */
         _loadImgSrc: function(img, flag) {
             flag = flag || IMG_DATA_SRC;
-            var self=this,data_src = img.getAttribute(flag);
+            var self = this,data_src = img.getAttribute(flag);
             if (data_src && img.src != data_src) {
                 img.src = data_src;
                 img.removeAttribute(flag);
@@ -300,12 +299,10 @@ KISSY.add('datalazyload', function(S, undefined) {
          * @static
          */
         _loadDataFromArea: function(container, area) {
-            // yuyin: 当 content 为 DocumentFragment 时，S.query 有错
-            // 下面直接用 container
-            //chengyu 大幅重构，使用正则识别script，为了通用性，不要执行 container 内的全部script
+            //chengyu 大幅重构，使用正则识别html字符串里的script，提高性能
+            // 为了通用性，不要搜索containerne内的全部 script dom 节点执行
 
             // 采用隐藏不去除方式
-
             var self = this,content = DOM.create("<div></div>");
             area.style.display = NONE;
             //area.value = ''; // clear content  不能清空，否则 F5 刷新，会丢内容
