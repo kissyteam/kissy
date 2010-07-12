@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 846 Jul 11 00:10
+build: 850 Jul 12 15:09
 */
 /**
  * @module kissy
@@ -50,16 +50,16 @@ build: 846 Jul 11 00:10
         // Has the ready events already been bound?
         readyBound = false,
 
-        //global id control
-        _id=0;
+        // The number of poll times.
+        POLL_RETRYS = 500,
+
+        // The poll interval in milliseconds.
+        POLL_INTERVAL = 40,
+
+        // #id or id
+        RE_IDSTR = /^#?([\w-]+)$/;
 
     mix(S, {
-        /**
-         * return global unique id
-         */
-        id:function(){
-            return (_id++);
-        },
         /**
          * The version of the library.
          * @type {String}
@@ -72,7 +72,10 @@ build: 846 Jul 11 00:10
          */
         _init: function() {
             // Env 对象目前仅用于内部，为模块动态加载预留接口
-            this.Env = { mods: {} };
+            this.Env = {
+                mods: { },
+                guid: 0
+            };
         },
 
         /**
@@ -151,6 +154,7 @@ build: 846 Jul 11 00:10
                     doc.removeEventListener(eventType, domReady, false);
                     fire();
                 }
+
                 doc.addEventListener(eventType, domReady, false);
             }
             // IE event model is used
@@ -178,6 +182,7 @@ build: 846 Jul 11 00:10
                             setTimeout(readyScroll, 1);
                         }
                     }
+
                     readyScroll();
                 }
             }
@@ -187,8 +192,8 @@ build: 846 Jul 11 00:10
          * Executes functions bound to ready event.
          */
         _fireReady: function() {
-            if(isReady) return;
-            
+            if (isReady) return;
+
             // Remember that the DOM is ready
             isReady = true;
 
@@ -203,6 +208,25 @@ build: 846 Jul 11 00:10
                 // Reset the list of functions
                 readyList = null;
             }
+        },
+
+        /**
+         * Executes the supplied callback when the item with the supplied id is found.
+         * @param id <String> The id of the element, or an array of ids to look for.
+         * @param fn <Function> What to execute when the element is found.
+         */
+        available: function(id, fn) {
+            id = (id + '').match(RE_IDSTR)[1];
+            if (!id || !S.isFunction(fn)) return;
+
+            var retryCount = 1,
+
+                timer = S.later(function() {
+                    if (doc.getElementById(id) && (fn() || 1) || ++retryCount > POLL_RETRYS) {
+                        timer.cancel();
+                    }
+
+                }, POLL_INTERVAL, true);
         },
 
         /**
@@ -234,19 +258,19 @@ build: 846 Jul 11 00:10
             var args = arguments, len = args.length - 2,
                 r = args[0], ov = args[len], wl = args[len + 1],
                 i = 1;
-            
-            if(!S.isArray(wl)) {
+
+            if (!S.isArray(wl)) {
                 ov = wl;
                 wl = undefined;
                 len++;
             }
 
-            if(!S.isBoolean(ov)) {
+            if (!S.isBoolean(ov)) {
                 ov = undefined;
                 len++;
             }
 
-            for(; i < len; i++) {
+            for (; i < len; i++) {
                 mix(r.prototype, args[i].prototype || args[i], ov, wl);
             }
 
@@ -268,10 +292,12 @@ build: 846 Jul 11 00:10
 
             var OP = Object.prototype,
                 O = function (o) {
-                        function F() {}
-                        F.prototype = o;
-                        return new F();
-                    },
+                    function F() {
+                    }
+
+                    F.prototype = o;
+                    return new F();
+                },
                 sp = s.prototype,
                 rp = O(sp);
 
@@ -348,7 +374,7 @@ build: 846 Jul 11 00:10
          */
         log: function(msg, cat, src) {
             if (this.Config.debug) {
-                if(src) {
+                if (src) {
                     msg = src + ': ' + msg;
                 }
                 if (win['console'] !== undefined && console.log) {
@@ -362,9 +388,19 @@ build: 846 Jul 11 00:10
          * Throws error message.
          */
         error: function(msg) {
-            if(this.Config.debug) {
+            if (this.Config.debug) {
                 throw msg;
             }
+        },
+
+        /*
+         * Generate a global unique id.
+         * @param pre {String} optional guid prefix
+         * @return {String} the guid
+         */
+        guid: function(pre) {
+            var id = this.Env.guid++ + '';
+            return pre ? pre + id : id;
         }
     });
 
@@ -378,20 +414,24 @@ build: 846 Jul 11 00:10
 /**
  * NOTES:
  *
+ * 2010.07
+ *  - 增加 available 和 guid 方法。
+ *
  * 2010.04
  *  - 移除掉 weave 方法，尚未考虑周全。
  *
  * 2010.01
  *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）。
- *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
+ *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
  *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码。
  *  - namespace, app 方法，决定子库的实现和代码的整体组织。
  *  - log, error 方法，简单的调试工具和报错机制。
+ *  - guid 方法，全局辅助方法。
  *  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
  *
  * TODO:
  *  - 模块动态加载 require 方法的实现。
- * 
+ *
  */
 /**
  * @module  kissy-lang
@@ -860,7 +900,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 846 Jul 11 00:09
+build: 850 Jul 12 15:09
 */
 /**
  * @module  dom
@@ -2111,90 +2151,10 @@ KISSY.add('dom-create', function(S, undefined) {
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc.createElement(DIV),
         RE_TAG = /<(\w+)/,
-        RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
-
-    /**
-     * call calbbakc when node of id is operable
-     * @param id node's id
-     * @param callback
-     */
-    function available(id, callback) {
-        var timer = setInterval(function() {
-            if (doc.getElementById(id)) {
-                clearInterval(timer);
-                callback && callback();
-            }
-        }, 100);
-    }
-
-    /**
-     * set html with script optional to dom node
-     * @param dom
-     * @param html
-     * @param loadScripts whether ignore the script in html
-     * @param callback after set html call callback
-     * @refer http://yiminghe.javaeye.com/blog/459087
-     */
-    function updateHtml(dom, html, loadScripts, callback) {
-
-        if (typeof html == "undefined") {
-            html = "";
-        }
-        //如果指明不包含脚本直接执行哦
-        if (loadScripts !== true) {
-            dom.innerHTML = html;
-            callback && callback();
-            return;
-        }
-        var id = "kissy_tmp_" + S.id();
-
-        html += '<span id="' + id + '"></span>';
-
-        //定时判断id span是否已经解析完毕，span 解析完了，那么html也解析完了，span在他前面么
-        //防止 html 脚本中引用到 html 中的元素
-        available(id, function() {
-            var hd = document.getElementsByTagName("head")[0],
-                //脚本识别
-                re = /(?:<script([^>]*)?>)((\n|\r|.)*?)(?:<\/script>)/ig,
-                //外部脚本识别
-                srcRe = /\ssrc=([\'\"])(.*?)\1/i,
-
-                typeRe = /\stype=([\'\"])(.*?)\1/i,
-
-                match;
-            //html中包含有脚本，提炼出来单独执行
-            while (match = re.exec(html)) {
-                var attrs = match[1];
-                var srcMatch = attrs ? attrs.match(srcRe) : false;
-
-                //外部脚本，在head中添加dom标签，动态载入脚本
-                if (srcMatch && srcMatch[2]) {
-                    var s = document.createElement("script");
-                    s.src = srcMatch[2];
-                    var typeMatch = attrs.match(typeRe);
-                    if (typeMatch && typeMatch[2]) {
-                        s.type = typeMatch[2];
-                    }
-                    hd.appendChild(s);
-
-                    // 内部脚本直接运行
-                } else if (match[2] && match[2].length > 0) {
-
-                    S.globalEval(match[2]);
-                }
-            }
-
-            //删除检测html节点载入完毕指示元素
-            var el = document.getElementById(id);
-            if (el) {
-                el.parentNode.removeChild(el);
-            }
-            callback && callback();
-        });
-
-        //只赋值html即可，脚本在html解析完毕后单独运行
-        dom.innerHTML = html.replace(/(?:<script.*?>)((\n|\r|.)*?)(?:<\/script>)/ig, "");
-    }
+        RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
+        RE_SCRIPT = /<script([^>]*)>([\s\S]*?)<\/script>/ig,
+        RE_SCRIPT_SRC = /\ssrc=(['"])(.*?)\1/i,
+        RE_SCRIPT_CHARSET = /\scharset=(['"])(.*?)\1/i;
 
     S.mix(DOM, {
 
@@ -2243,10 +2203,8 @@ KISSY.add('dom-create', function(S, undefined) {
 
         /**
          * Gets/Sets the HTML contents of the HTMLElement.
-         * @param selector{NodeList/String}
-         * @param val{String}
-         * @param loadScripts{Boolean} whether eval script in html
-         * @param callback{Function} after html set ,callback called
+         * @param {Boolean} loadScripts (optional) True to look for and process scripts (defaults to false).
+         * @param {Function} callback (optional) For async script loading you can be notified when the update completes.
          */
         html: function(selector, val, loadScripts, callback) {
             // getter
@@ -2263,7 +2221,7 @@ KISSY.add('dom-create', function(S, undefined) {
             else {
                 S.each(S.query(selector), function(elem) {
                     if (isElementNode(elem)) {
-                        updateHtml(elem, val, loadScripts, callback);
+                        setHTML(elem, val, loadScripts, callback);
                     }
                 });
             }
@@ -2314,22 +2272,92 @@ KISSY.add('dom-create', function(S, undefined) {
         return ret;
     }
 
-    // 定义 creators, 处理浏览器兼容
-    var creators = DOM._creators,
-        create = DOM.create,
-        TABLE_OPEN = '<table>',
-        TABLE_CLOSE = '</table>',
-        RE_TBODY = /(?:\/(?:thead|tfoot|caption|col|colgroup)>)+\s*<tbody/,
-        creatorsMap = {
-            option: 'select',
-            td: 'tr',
-            tr: 'tbody',
-            tbody: 'table',
-            col: 'colgroup',
-            legend: 'fieldset' // ie 支持，但 gecko 不支持
-        };
+    /**
+     * Update the innerHTML of this element, optionally searching for and processing scripts.
+     * @refer http://www.sencha.com/deploy/dev/docs/source/Element-more.html#method-Ext.Element-update
+     *        http://lifesinger.googlecode.com/svn/trunk/lab/2010/innerhtml-and-script-tags.html
+     */
+    function setHTML(elem, html, loadScripts, callback) {
+        if (!loadScripts) {
+            setHTMLSimple(elem, html);
+            S.isFunction(callback) && callback();
+            return;
+        }
 
+        var id = S.guid('ks-tmp-');
+        html += '<span id="' + id + '"></span>';
+
+        // 确保脚本执行时，相关联的 DOM 元素已经准备好
+        S.available(id, function() {
+            var hd = S.get('head'),
+                match, attrs, srcMatch, charsetMatch,
+                t, s, text;
+
+            RE_SCRIPT.lastIndex = 0;
+            while ((match = RE_SCRIPT.exec(html))) {
+                attrs = match[1];
+                srcMatch = attrs ? attrs.match(RE_SCRIPT_SRC) : false;
+
+                // script via src
+                if (srcMatch && srcMatch[2]) {
+                    s = doc.createElement('script');
+                    s.src = srcMatch[2];
+                    // set charset
+                    if ((charsetMatch = attrs.match(RE_SCRIPT_CHARSET)) && charsetMatch[2]) {
+                        s.charset = charsetMatch[2];
+                    }
+                    s.async = true; // make sure async in gecko
+                    hd.appendChild(s);
+                }
+                // inline script
+                else if ((text = match[2]) && text.length > 0) {
+                    S.globalEval(text);
+
+                }
+            }
+
+            // 删除探测节点
+            (t = doc.getElementById(id)) && DOM.remove(t);
+
+            // 回调
+            S.isFunction(callback) && callback();
+        });
+
+        setHTMLSimple(elem, html);
+    }
+
+    // 直接通过 innerHTML 设置 html
+    function setHTMLSimple(elem, html) {
+        html = html.replace(RE_SCRIPT, ''); // 过滤掉所有 script
+        try {
+            elem.innerHTML = html;
+        } catch(ex) { // table.innerHTML = html will throw error in ie.
+            // remove any remaining nodes
+            while (elem.firstChild) {
+                elem.removeChild(elem.firstChild);
+            }
+            // html == '' 时，无需再 appendChild
+            if (html) elem.appendChild(DOM.create(html));
+        }
+    }
+
+    // only for gecko and ie
     if (UA.gecko || ie) {
+        // 定义 creators, 处理浏览器兼容
+        var creators = DOM._creators,
+            create = DOM.create,
+            TABLE_OPEN = '<table>',
+            TABLE_CLOSE = '</table>',
+            RE_TBODY = /(?:\/(?:thead|tfoot|caption|col|colgroup)>)+\s*<tbody/,
+            creatorsMap = {
+                option: 'select',
+                td: 'tr',
+                tr: 'tbody',
+                tbody: 'table',
+                col: 'colgroup',
+                legend: 'fieldset' // ie 支持，但 gecko 不支持
+            };
+
         for (var p in creatorsMap) {
             (function(tag) {
                 creators[p] = function(html, ownerDoc) {
