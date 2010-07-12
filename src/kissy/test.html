@@ -38,6 +38,7 @@
     //alert(window == window.top);
 </script>
 <img src="../../assets/kissy.png" alt="test image" />
+<div id="test-available">test available</div>
 <iframe id="test-iframe" src="test-iframe.html"></iframe>
 
 <!-- Test Cases -->
@@ -70,6 +71,28 @@
         var ifr = get('test-iframe');
         diff = ifr.contentWindow.loadTime - ifr.contentWindow.readyTime;
         if(diff < 0) test.fail();
+    }
+
+    function test_available(test) {
+
+        S.available('#test-available', function() {
+           test.echo('#test-available is available now.');
+        });
+
+        S.later(function() {
+            var t = document.createElement('DIV');
+            t.id = 'test-available2';
+            document.body.appendChild(t);
+            test.echo('#test-available2 is created.')
+        }, 2000);
+
+        S.available('test-available2', function() {
+           test.echo('#test-available2 is available now.');
+        });
+
+        // 下面的语句不抛异常
+        S.available();
+        S.available('test-avaialble');
     }
 
     function test_mix(test) {
@@ -237,10 +260,15 @@
 
     function test_error(test) {
         try {
-            KISSY.error('wrong');
+            S.error('wrong');
         } catch(e) {
             if(e !== 'wrong') test.fail();
         }
+    }
+
+    function test_guid(test) {
+        if(typeof S.guid() !== 'string') test.fail();
+        if(S.guid() - S.guid() !== -1) test.fail();
     }
 
     function test_isBoolean(test) {

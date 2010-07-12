@@ -71,6 +71,9 @@
     <div id="test-html">
         <p class="test-p">test html</p>
     </div>
+    <div id="test-sethtml">initial html</div>
+    <div id="test-sethtml2">initial html</div>
+    <div id="test-sethtml3">initial html</div>
 </div>
 
 <!-- Test Cases -->
@@ -130,10 +133,31 @@
 
         try {
             DOM.html(t, '');
-            DOM.html('#test-table', '');
+            //S.get('#test-table').innerHTML = ''; // will throw error in ie
+            DOM.html('#test-table', '2');
         } catch(ex) {
             test.fail(ex);
         }
+
+        // loadScripts
+        DOM.html('#test-sethtml', '<script>KISSY.Test.echo("echo from loadScripts 1.");window.g_sethtml = 1;<\/script>', true);
+        S.later(function() {
+            if(window['g_sethtml'] !== 1) KISSY.Test.echo('html() is FAILED for loadScripts 1.');
+        }, 500);
+        
+        // callback
+        DOM.html('#test-sethtml2', '<script>KISSY.Test.echo("echo from loadScripts 2.");window.g_sethtml2 = 2;<\/script>', true, function() {
+            test.echo('loadScripts 2 callback is fired.')
+        });
+        S.later(function() {
+            if(window['g_sethtml2'] !== 2) KISSY.Test.echo('html() is FAILED for loadScripts 2.');
+        }, 500);
+
+        // src js
+        DOM.html('#test-sethtml3', '<script src="test-dom-create.js"><\/script>', true);
+        S.later(function() {
+            if(window['g_testLoadScriptViaInnerHTML']) KISSY.Test.echo('test-dom-create.js callback is fired.');
+        }, 500);
     }
 
     function test_remove(test) {
@@ -144,6 +168,5 @@
     // temp code
 
 </script>
-
 </body>
 </html>

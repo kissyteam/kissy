@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 846 Jul 11 00:10
+build: 848 Jul 11 21:43
 */
 /**
  * @module kissy
@@ -50,16 +50,16 @@ build: 846 Jul 11 00:10
         // Has the ready events already been bound?
         readyBound = false,
 
-        //global id control
-        _id=0;
+        // The number of poll times.
+        POLL_RETRYS = 500,
+
+        // The poll interval in milliseconds.
+        POLL_INTERVAL = 40,
+
+        // #id or id
+        RE_IDSTR = /^#?([\w-]+)$/;
 
     mix(S, {
-        /**
-         * return global unique id
-         */
-        id:function(){
-            return (_id++);
-        },
         /**
          * The version of the library.
          * @type {String}
@@ -72,7 +72,10 @@ build: 846 Jul 11 00:10
          */
         _init: function() {
             // Env 对象目前仅用于内部，为模块动态加载预留接口
-            this.Env = { mods: {} };
+            this.Env = {
+                mods: { },
+                guid: 0
+            };
         },
 
         /**
@@ -151,6 +154,7 @@ build: 846 Jul 11 00:10
                     doc.removeEventListener(eventType, domReady, false);
                     fire();
                 }
+
                 doc.addEventListener(eventType, domReady, false);
             }
             // IE event model is used
@@ -178,6 +182,7 @@ build: 846 Jul 11 00:10
                             setTimeout(readyScroll, 1);
                         }
                     }
+
                     readyScroll();
                 }
             }
@@ -187,8 +192,8 @@ build: 846 Jul 11 00:10
          * Executes functions bound to ready event.
          */
         _fireReady: function() {
-            if(isReady) return;
-            
+            if (isReady) return;
+
             // Remember that the DOM is ready
             isReady = true;
 
@@ -203,6 +208,25 @@ build: 846 Jul 11 00:10
                 // Reset the list of functions
                 readyList = null;
             }
+        },
+
+        /**
+         * Executes the supplied callback when the item with the supplied id is found.
+         * @param id <String> The id of the element, or an array of ids to look for.
+         * @param fn <Function> What to execute when the element is found.
+         */
+        available: function(id, fn) {
+            id = (id + '').match(RE_IDSTR)[1];
+            if (!id || !S.isFunction(fn)) return;
+
+            var retryCount = 1,
+
+                timer = S.later(function() {
+                    if (doc.getElementById(id) && (fn() || 1) || ++retryCount > POLL_RETRYS) {
+                        timer.cancel();
+                    }
+
+                }, POLL_INTERVAL, true);
         },
 
         /**
@@ -234,19 +258,19 @@ build: 846 Jul 11 00:10
             var args = arguments, len = args.length - 2,
                 r = args[0], ov = args[len], wl = args[len + 1],
                 i = 1;
-            
-            if(!S.isArray(wl)) {
+
+            if (!S.isArray(wl)) {
                 ov = wl;
                 wl = undefined;
                 len++;
             }
 
-            if(!S.isBoolean(ov)) {
+            if (!S.isBoolean(ov)) {
                 ov = undefined;
                 len++;
             }
 
-            for(; i < len; i++) {
+            for (; i < len; i++) {
                 mix(r.prototype, args[i].prototype || args[i], ov, wl);
             }
 
@@ -268,10 +292,12 @@ build: 846 Jul 11 00:10
 
             var OP = Object.prototype,
                 O = function (o) {
-                        function F() {}
-                        F.prototype = o;
-                        return new F();
-                    },
+                    function F() {
+                    }
+
+                    F.prototype = o;
+                    return new F();
+                },
                 sp = s.prototype,
                 rp = O(sp);
 
@@ -348,7 +374,7 @@ build: 846 Jul 11 00:10
          */
         log: function(msg, cat, src) {
             if (this.Config.debug) {
-                if(src) {
+                if (src) {
                     msg = src + ': ' + msg;
                 }
                 if (win['console'] !== undefined && console.log) {
@@ -362,9 +388,19 @@ build: 846 Jul 11 00:10
          * Throws error message.
          */
         error: function(msg) {
-            if(this.Config.debug) {
+            if (this.Config.debug) {
                 throw msg;
             }
+        },
+
+        /*
+         * Generate a global unique id.
+         * @param pre {String} optional guid prefix
+         * @return {String} the guid
+         */
+        guid: function(pre) {
+            var id = this.Env.guid++ + '';
+            return pre ? pre + id : id;
         }
     });
 
@@ -378,20 +414,24 @@ build: 846 Jul 11 00:10
 /**
  * NOTES:
  *
+ * 2010.07
+ *  - 增加 available 和 guid 方法。
+ *
  * 2010.04
  *  - 移除掉 weave 方法，尚未考虑周全。
  *
  * 2010.01
  *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）。
- *  - ready 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
+ *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
  *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码。
  *  - namespace, app 方法，决定子库的实现和代码的整体组织。
  *  - log, error 方法，简单的调试工具和报错机制。
+ *  - guid 方法，全局辅助方法。
  *  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
  *
  * TODO:
  *  - 模块动态加载 require 方法的实现。
- * 
+ *
  */
 /**
  * @module  kissy-lang

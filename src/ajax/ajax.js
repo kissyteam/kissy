@@ -33,7 +33,7 @@ KISSY.add('ajax', function(S) {
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
          */
         getScript: function(url, callback, charset) {
-            var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+            var head = S.get('head') || doc.documentElement,
                 node = doc.createElement('script');
 
             node.src = url;
