@@ -243,6 +243,11 @@
     function test_html(test) {
         var div = S.one('#test-div');
         if(div.html('<p>hello, are you ok?</p>').text() !== 'hello, are you ok?') test.fail();
+
+        div.html('<script>window.g_testSetScriptHTML = 1;<\/script>', true);
+        S.later(function() {
+            if(window['g_testSetScriptHTML'] !== 1) test.fail('' + window['g_testSetScriptHTML']);
+        }, 500);
     }
 
     function test_remove(test) {

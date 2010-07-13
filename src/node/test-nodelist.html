@@ -275,13 +275,15 @@
         if(S.all('#test-insert2').prev().attr('id') !== 'test-div') test.fail();
     }
 
-//    function test_append(test) {
-//        if(S.all('#test-div').append('<p id="test-append">append node</p>').attr('id') !== 'test-div') test.fail();
-//    }
-//
-//    function test_appendTo(test) {
-//        if(S.Node('<p id="test-append2">append2 node</p>').appendTo('#test-div').attr('id') !== 'test-append2') test.fail();
-//    }
+    function test_append(test) {
+        S.all('.test-div').append('<p class="test-append">append node</p>');
+        if(S.all('.test-append').length !== 5) test.fail();
+    }
+
+    function test_appendTo(test) {
+        S.all('.test-append').appendTo('#test-div2');
+        if(S.one('#test-div2').children().length !== 5) test.fail();
+    }
 
     function test_query_event_sep(test) {
         test.status = 'sep';
@@ -300,6 +302,12 @@
 
 <div id="test-data">
     <div id="test-div" style="padding-left: 2pt; background: transparent; float: left; border: 5px solid rgba(0,0,0,.201);"></div>
+    <div class="test-div"></div>
+    <div class="test-div"></div>
+    <div class="test-div"></div>
+    <div class="test-div"></div>
+    <div class="test-div"></div>
+    <div id="test-div2"></div>
     <style>
         #test2 {
             border: 1px solid #ccc;

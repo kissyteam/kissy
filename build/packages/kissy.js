@@ -3045,7 +3045,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 846 Jul 11 00:10
+build: 851 Jul 13 22:18
 */
 /**
  * @module  node
@@ -3201,34 +3201,34 @@ KISSY.add('node-attach', function(S, undefined) {
         ONLY_VAL = 2,
         ALWAYS_NODE = 4;
 
+    function normalGetterSetter(isNodeList, arguments, valIndex, fn) {
+        var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
+            args = [elems].concat(S.makeArray(arguments));
+
+        if (arguments[valIndex] === undefined) {
+            return fn.apply(DOM, args);
+        } else {
+            fn.apply(DOM, args);
+            return this;
+        }
+    }
+
     function attach(methodNames, type) {
         S.each(methodNames, function(methodName) {
             S.each([NP, NLP], function(P, isNodeList) {
 
                 P[methodName] = (function(fn) {
                     switch (type) {
-                        // fn(selector, name, value): attr, css etc.
+                        // fn(name, value, /* other arguments */): attr, css etc.
                         case HAS_NAME:
-                            return function(name, val) {
-                                var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE]();
-                                if (val === undefined) {
-                                    return fn(elems, name);
-                                } else {
-                                    fn(elems, name, val);
-                                    return this;
-                                }
+                            return function() {
+                                return normalGetterSetter.call(this, isNodeList, arguments, 1, fn);
                             };
 
-                        // fn(selector, value): text, html, val etc.
+                        // fn(value, /* other arguments */): text, html, val etc.
                         case ONLY_VAL:
-                            return function(val) {
-                                var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE]();
-                                if (val === undefined) {
-                                    return fn(elems);
-                                } else {
-                                    fn(elems, val);
-                                    return this;
-                                }
+                            return function() {
+                                return normalGetterSetter.call(this, isNodeList, arguments, 0, fn);
                             };
 
                         // parent, next 等返回 Node/NodeList 的方法
@@ -3293,26 +3293,33 @@ KISSY.add('node-attach', function(S, undefined) {
 
     // dom-insertion
     attach(['insertBefore', 'insertAfter'], ALWAYS_NODE);
-    S.mix(NP, {
-        /**
-         *  Insert content to the end of the node.
-         */
-        append: function(html) {
-            if ((html = DOM.create(html))) {
-                this[0].appendChild(html);
-            }
-            return this;
-        },
+    S.each([NP, NLP], function(P) {
+        S.mix(P, {
 
-        /**
-         * Insert the element to the end of the parent.
-         */
-        appendTo: function(parent) {
-            if ((parent = S.get(parent)) && parent.appendChild) {
-                parent.appendChild(this[0]);
+            /**
+             *  Insert content to the end of the node.
+             */
+            append: function(html) {
+                if (html) {
+                    S.each(this, function(elem) {
+                        elem.appendChild(DOM.create(html));
+                    });
+                }
+                return this;
+            },
+
+            /**
+             * Insert the element to the end of the parent.
+             */
+            appendTo: function(parent) {
+                if ((parent = S.get(parent)) && parent.appendChild) {
+                    S.each(this, function(elem) {
+                        parent.appendChild(elem);
+                    });
+                }
+                return this;
             }
-            return this;
-        }
+        });
     });
 
 
