@@ -6,7 +6,7 @@
 /***********************************************************************************************************************
  * @公共样式
  **********************************************************************************************************************/
-.ks-bar{min-height:19px;padding:3px 10px;border-top:1px solid #bad6ff;border-bottom:1px solid #bad6ff;background:#cce1ff url(img/bar-repeatx.png) repeat-x 0 -10px;}
+.ks-bar{clear:both;min-height:19px;_height:19px;padding:3px 10px;border-top:1px solid #bad6ff;border-bottom:1px solid #bad6ff;background:#cce1ff url(img/bar-repeatx.png) repeat-x 0 -10px;}
 
 /***********************************************************************************************************************
  * @强调样式
@@ -27,3 +27,6 @@
  * @裸样式
  **********************************************************************************************************************/
 .ks-bar-naked{border-color:#ddd;background:#fafafa;}
+
+.ks-operate-list{overflow:hidden;}
+.ks-operate-list li{float:left;margin-left:-1px;padding:1px 6px 1px 7px;border-left:1px solid #ccc;}

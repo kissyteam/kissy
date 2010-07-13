@@ -50,11 +50,6 @@
 .ks-datagrid-icon-expand{width:11px;height:11px;background-position:-40px 0;}
 .ks-datagrid-row-expanded .ks-datagrid-icon-expand{background-position:-60px 0;}
 
-/*loading*/
-.ks-datagrid-loading{position:absolute;z-index:100;}
-.ks-datagrid-loading-mask{position:absolute;left:0;top:0;width:100%;height:100%;background:#000;filter:alpha(opacity=20);opacity:0.2;}
-.ks-datagrid-loading-icon{position:absolute;left:50%;top:50%;margin:-10px 0 0 -110px;width:220px;height:19px;background:url(http://img02.taobaocdn.com/tps/i2/T1kyRBXhhfXXXXXXXX-220-19.gif) no-repeat;}
-
 /*预置特殊行样式*/
 .ks-datagrid-row-red td{background:#fec0c5;}
 .ks-datagrid-row-yellow td{background:#fcf7c5;}
@@ -67,5 +62,10 @@
 
 /*支持固定表头浏览时使用的table代理样式*/
 .ks-datagrid-proxy{position:fixed;_position:absolute;z-index:10;}
+
+/*loading*/
+.ks-loading{position:absolute;z-index:100;}
+.ks-loading-mask{position:absolute;left:0;top:0;width:100%;height:100%;background:#000;filter:alpha(opacity=20);opacity:0.2;}
+.ks-loading-icon{position:absolute;left:50%;top:50%;margin:-10px 0 0 -110px;width:220px;height:19px;background:url(http://img02.taobaocdn.com/tps/i2/T1kyRBXhhfXXXXXXXX-220-19.gif) no-repeat;}
 
 
