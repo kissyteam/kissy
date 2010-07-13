@@ -8,7 +8,7 @@
             html { margin: 3px; border: 4px solid #eee; padding: 5px; }
             body { margin: 6px; border: 7px solid #ccc; padding: 8px; }
             */
-    /*Ö»±£Ö¤ÒÔÏÂÉèÖÃÕı³£*/
+    /*åªä¿è¯ä»¥ä¸‹è®¾ç½®æ­£å¸¸*/
     html, body {
         margin: 0;
         padding: 0;
@@ -68,6 +68,9 @@
 <button class="test">
     click to see test in container
 </button>
+<button class="test2">
+    click to see container
+</button>
 <div style="width:200px;height:200px;overflow:auto;border:1px solid black;" id="container">
     <p>x</p>
     <p>x</p>
@@ -110,6 +113,9 @@
     <p>x</p>
     <p>x</p>
 </div>
+<button class="test2">
+    click to see container
+</button>
 <button class="test">
     click to see test in container
 </button>
@@ -178,12 +184,13 @@
                 ,container = S.one("#container")
                 ,el = S.one("#el");
         test.on("click", function() {
-            DOM.scrollIntoView(el[0], container[0]);
+            //topé»˜è®¤true
+            DOM.scrollIntoView(el[0], container[0], false);
         });
 
 
         test2.on("click", function() {
-            DOM.scrollIntoView(container[0]);
+            DOM.scrollIntoView(container[0], window, false);
         });
 
     });

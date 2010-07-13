@@ -83,16 +83,23 @@ KISSY.add('dom-offset', function(S, undefined) {
 
         /**
          * make elem visible in container
+         * @param elem
          * @param container
+         * @param top
+         *         compatible with native scrollIntoView:
+         *         http://www.w3.org/TR/2009/WD-html5-20090423/editing.html
          * @refer:http://yiminghe.javaeye.com/blog/390732
          */
-        scrollIntoView :function(elem, container) {
+        scrollIntoView :function(elem, container, top) {
+            top = top === undefined ? true : !!top;
             if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
             container = (
-                container !== doc.documentElement && container !== doc.body
+                container !== doc.documentElement
+                    && container !== doc.body
+                    && container !== win
                 ) ? container : null;
             //use native if exists
-            if(!container && elem.scrollIntoView){
+            if (!container && elem.scrollIntoView) {
                 elem.scrollIntoView();
                 return;
             }
@@ -105,8 +112,6 @@ KISSY.add('dom-offset', function(S, undefined) {
                     left:elemOffset.left - containerOffset.left  ,
                     top:elemOffset.top - containerOffset.top
                 },
-
-
                 eh = elem.offsetHeight,
                 ew = elem.offsetWidth,
                 //left
@@ -121,18 +126,18 @@ KISSY.add('dom-offset', function(S, undefined) {
                 cb = ct + ch,
                 //container视窗下doc右边限
                 cr = cl + cw;
-            //used if container is window 
+            //used if container is window
             var wl = 0,wt = 0;
-            if (eh > ch || t < ct) {
+            if (eh > ch || top) {
                 if (container)
                     container.scrollTop = t;
                 else
                     wt = t;
-            } else if (b > cb) {
+            } else {
                 if (container)
-                    container.scrollTop = t;
+                    container.scrollTop = t - (ch - eh);
                 else
-                    wt = t;
+                    wt = t - (ch - eh);
             }
 
             if (ew > cw || l < cl) {
