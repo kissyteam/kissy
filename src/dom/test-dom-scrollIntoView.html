@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>dom-offset Test</title>
+<style>
+        /*
+            html { margin: 3px; border: 4px solid #eee; padding: 5px; }
+            body { margin: 6px; border: 7px solid #ccc; padding: 8px; }
+            */
+    /*只保证以下设置正常*/
+    html, body {
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+</style>
+</head>
+<body>
+
+<button class="test2">
+    click to see container
+</button>
+
+<button class="test">
+    click to see test in container
+</button>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<button class="test">
+    click to see test in container
+</button>
+<div style="width:200px;height:200px;overflow:auto;border:1px solid black;" id="container">
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <div id="el" style="border:1px solid red;">
+        test
+    </div>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+</div>
+<button class="test">
+    click to see test in container
+</button>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<button class="test2">
+    click to see container
+</button>
+<button class="test">
+    click to see test in container
+</button>
+
+<script src="../kissy/kissy.js"></script>
+<script src="../kissy/kissy-lang.js"></script>
+<script src="../kissy/kissy-ua.js"></script>
+
+
+<script src="../../build/event/event-pkg.js"></script>
+
+
+<script src="dom.js"></script>
+<script src="selector.js"></script>
+<script src="dom-class.js"></script>
+<script src="dom-attr.js"></script>
+<script src="dom-style.js"></script>
+<script src="dom-style-ie.js"></script>
+<script src="dom-offset.js"></script>
+
+<script src="../../build/node/node-pkg.js"></script>
+<script type="text/javascript">
+    KISSY.ready(function(S) {
+        var DOM = S.DOM
+                ,test = S.all(".test")
+                ,test2 = S.all(".test2")
+                ,container = S.one("#container")
+                ,el = S.one("#el");
+        test.on("click", function() {
+            DOM.scrollIntoView(el[0], container[0]);
+        });
+
+
+        test2.on("click", function() {
+            DOM.scrollIntoView(container[0]);
+        });
+
+    });
+</script>
+</body>
+</html>

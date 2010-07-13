@@ -4,8 +4,16 @@
 <meta charset="utf-8"/>
 <title>dom-offset Test</title>
 <style>
-    html { margin: 3px; border: 4px solid #eee; padding: 5px; }
-    body { margin: 6px; border: 7px solid #ccc; padding: 8px; }
+        /*
+            html { margin: 3px; border: 4px solid #eee; padding: 5px; }
+            body { margin: 6px; border: 7px solid #ccc; padding: 8px; }
+            */
+    /*只保证以下设置正常*/
+    html, body {
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
 </style>
 </head>
 <body>
@@ -32,12 +40,22 @@
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
 <script src="../../third-party/ext-core/ext-core.js"></script>
 
-<div id="test-data">
-    <div id="inner" style="background-color: #ffe4c4; width: 100px; height: 100px"></div>
-    <div id="test3" style="display: none">
-        <div id="test4"></div>
+<div style="height:100px;width:100px;padding:20px;border:1px solid black;position:relative;">
+    <div id="testStatic" style="border:1px solid red;">static test</div>
+
+    <div style="position:absolute;border:1px solid green;margin:5px;" id="testAbsolute">
+        absolute test
     </div>
 </div>
+
+<iframe src="test-iframe-offset.html"
+        id="test_iframe"
+        style="border:1px solid black;position:absolute;top:100px;left:500px;background:white;"
+        width="200"
+        height="200"
+        frameborder="0"
+        scrolling="no"
+        ></iframe>
 
 <!-- Test Cases -->
 <script>
@@ -45,60 +63,56 @@
 
     function test_offset(test) {
 
-//        test.echo('docElem.clientLeft = ' + document.documentElement.clientLeft);
-//        test.echo('docElem.offsetLeft = ' + document.documentElement.offsetLeft);
-//        test.echo('body.clientLeft = ' + document.body.clientLeft);
-//        test.echo('body.offsetLeft = ' + document.body.offsetLeft);
-//        test.echo('box.offsetLeft = ' + S.get('#konsole').offsetLeft);
-//        test.echo('scrollLeft = ' + DOM.scrollLeft());
-//        test.echo('box.left = ' + S.get('#konsole').getBoundingClientRect().left);
-//        test.echo('jQuery offset.left = ' + jQuery('#konsole').offset().left);
-//        test.echo('KISSY offset.left = ' + DOM.offset('#konsole').left);
+        //        test.echo('docElem.clientLeft = ' + document.documentElement.clientLeft);
+        //        test.echo('docElem.offsetLeft = ' + document.documentElement.offsetLeft);
+        //        test.echo('body.clientLeft = ' + document.body.clientLeft);
+        //        test.echo('body.offsetLeft = ' + document.body.offsetLeft);
+        //        test.echo('box.offsetLeft = ' + S.get('#konsole').offsetLeft);
+        //        test.echo('scrollLeft = ' + DOM.scrollLeft());
+        //        test.echo('box.left = ' + S.get('#konsole').getBoundingClientRect().left);
+        //        test.echo('jQuery offset.left = ' + jQuery('#konsole').offset().left);
+        //        test.echo('KISSY offset.left = ' + DOM.offset('#konsole').left);
 
-        // getter
-        var ret = 33;
-        if(UA.ie === 6) ret = 30; // ie6 会忽略 html 的 margin
-        if(DOM.offset('#konsole').left !== ret) test.fail();
+        var t = S.get("#testAbsolute"),
+                t2 = S.get('#testStatic'),
+                before = DOM.offset('#testAbsolute').left,
+                iframe_t3 = S.get("#test_iframe").contentWindow.document.getElementById("test_inner");
+        //指定值
+        DOM.offset(t2, { left: 5 });
+        if (DOM.offset(t2).left != 5) test.fail();
+        //原地设置
+        DOM.offset(t, { left: before });
+        if (DOM.offset(t).left != before) test.fail();
 
-        // setter
-        var t = S.get('#inner');
-        //$(t).offset({ top: '600', left: '200' });
-        DOM.offset(t, { top: 600, left: 200 });
+        //iframe内元素整体坐标测试
+        if (DOM.offset(iframe_t3, document).top != 200) test.fail();
+        if (DOM.offset(iframe_t3, document).left != 550) test.fail();
+
     }
 
     function test_scrollLeft(test) {
-        if(DOM.scrollLeft() !== 0) test.fail();        
+        if (DOM.scrollLeft() !== 0) test.fail();
     }
 
     function test_scrollTop(test) {
-        if(DOM.scrollTop() !== 0) test.fail();
+        if (DOM.scrollTop() !== 0) test.fail();
     }
 
     function test_docHeight(test) {
-        if(DOM.docHeight() !== ExtDOM.getDocumentHeight()) test.fail();
+        if (DOM.docHeight() !== ExtDOM.getDocumentHeight()) test.fail();
     }
 
     function test_docWidth(test) {
-        if(DOM.docWidth() !== ExtDOM.getDocumentWidth()) test.fail();
+        if (DOM.docWidth() !== ExtDOM.getDocumentWidth()) test.fail();
     }
 
     function test_viewportHeight(test) {
-        if(DOM.viewportHeight() !== ExtDOM.getViewportHeight()) test.fail();
+        if (DOM.viewportHeight() !== ExtDOM.getViewportHeight()) test.fail();
     }
 
     function test_viewportWidth(test) {
-        if(DOM.viewportWidth() !== ExtDOM.getViewportWidth()) test.fail();
+        if (DOM.viewportWidth() !== ExtDOM.getViewportWidth()) test.fail();
     }
-
-    // temp code
-    //alert(document.documentElement.clientLeft);
-    //alert(document.documentElement.clientWidth);
-    //alert(document.compatMode);
-
-//    alert(DOM.offset('#test3').top);
-//    alert(DOM.css('#test3', 'display'));
-//    alert(DOM.css('#test4', 'display'));
-//    alert(DOM.offset('#test4').top);
 
 </script>
 

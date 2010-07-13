@@ -18,10 +18,11 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         PX = 'px',
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
-	    RE_NUM = /^-?\d/,
+        RE_NUM = /^-?\d/,
         RE_SPECIAL = /^auto$/i,
-        RE_WH = /^width|height$/;
-
+        RE_WH = /^width|height$/i,
+        RE_LEFT = /^left$/i,
+        POSITION = "position";
     // use alpha filter for IE opacity
     try {
         if (docElem.style[OPACITY] === undefined && docElem[FILTERS]) {
@@ -73,14 +74,25 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
             // 在 ie 下不对，需要直接用 offset 方式
             // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
-            if(RE_WH.test(name)) {
+            if (RE_WH.test(name)) {
                 ret = DOM[name](elem) + PX;
+            }
+            //chengyu:not work when left=auto (not set)
+            else if (RE_SPECIAL.test(ret) && RE_LEFT.test(name)) {
+                var position = DOM.css(elem, POSITION);
+                //absolute: auto == offsetLeft - margin-left
+                if (position == "absolute")
+                    ret = elem.offsetLeft - parseInt(DOM.css(elem, "margin-left"));
+                //relative: auto ==0
+                else
+                    ret = 0;
             }
             // From the awesome hack by Dean Edwards
             // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
             else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret)) || RE_SPECIAL.test(ret)) {
+
                 // Remember the original values
                 var left = style[LEFT];
 
