@@ -91,6 +91,11 @@ KISSY.add('dom-offset', function(S, undefined) {
             container = (
                 container !== doc.documentElement && container !== doc.body
                 ) ? container : null;
+            //use native if exists
+            if(!container && elem.scrollIntoView){
+                elem.scrollIntoView();
+                return;
+            }
             var elemOffset = DOM.offset(elem),
                 cl = container ? container.scrollLeft : DOM.scrollLeft(),
                 ct = container ? container.scrollTop : DOM.scrollTop(),
