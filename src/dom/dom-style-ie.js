@@ -14,14 +14,18 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         FILTER = 'filter',
         FILTERS = 'filters',
         CURRENT_STYLE = 'currentStyle',
+        AS = "absolute",
         LEFT = 'left',
+        TOP = "top",
+        ML = "margin-left",
+        MT = "margin-top",
         PX = 'px',
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
         RE_NUM = /^-?\d/,
         RE_SPECIAL = /^auto$/i,
         RE_WH = /^width|height$/i,
-        RE_LEFT = /^left$/i,
+        RE_LT = /^left|top$/i,
         POSITION = "position";
     // use alpha filter for IE opacity
     try {
@@ -78,11 +82,16 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                 ret = DOM[name](elem) + PX;
             }
             //chengyu:not work when left=auto (not set)
-            else if (RE_SPECIAL.test(ret) && RE_LEFT.test(name)) {
+            else if (RE_SPECIAL.test(ret) && RE_LT.test(name)) {
                 var position = DOM.css(elem, POSITION);
                 //absolute: auto == offsetLeft - margin-left
-                if (position == "absolute")
-                    ret = elem.offsetLeft - parseInt(DOM.css(elem, "margin-left"));
+                if (position === AS) {
+                    if (name === LEFT) {
+                        ret = elem.offsetLeft - parseInt(DOM.css(elem, ML));
+                    } else {
+                        ret = elem.offsetTop - parseInt(DOM.css(elem, MT));
+                    }
+                }
                 //relative: auto ==0
                 else
                     ret = 0;
