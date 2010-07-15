@@ -1,0 +1,20 @@
+
+
+  
+ 接口：
+
+  var zoom = new ImageZoom(selector, config);
+
+  事件：
+  // 第一次悬浮
+  zoom.on('firstHover', callback);
+  or 
+  zoom.on('loadBigImage', callback);
+
+  zoom.on('show', )
+  zoom.on('hide')
+
+  公共方法：
+  ?
+
+ Mobile 的支持

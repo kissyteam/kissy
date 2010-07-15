@@ -1,0 +1,77 @@
+* {
+    margin: 0;
+    padding: 0
+}
+img {
+    border: 0;
+}
+.ks-imagezoom-container img {
+    display: block;
+}
+.ks-imagezoom-container {
+    position: relative;
+}
+.ks-imagezoom-magnifier {
+    position:absolute;
+    margin:20px 20px;
+}
+.ks-imagezoom-magnifier img {
+    border: 1px solid #999;
+    cursor: pointer;
+}
+.ks-imagezoom-magnifier .ks-imagezoom-glass {
+    margin: 0 2px 2px 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    /*cursor:move;
+    border: 1px solid #999;
+    background: #FFF;
+    opacity: 0.65;
+    filter: alpha(opacity=65);*/
+    background:url("http://img04.taobaocdn.com/tps/i4/T12pdtXaldXXXXXXXX-2-2.png") repeat scroll left top transparent;
+    position:absolute;
+    z-index:1;
+}
+.ks-imagezoom-magnifier .ks-imagezoom-icon {
+    background: url("http://img02.taobaocdn.com/tps/i2/T1uJNuXX8tXXXXXXXX-23-23.png") no-repeat scroll left top transparent;
+    bottom: 0;
+    height: 23px;
+    position: absolute;
+    right: 0;
+    width: 23px;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+}
+.hidden {
+    display: none;
+    /*visibility: hidden;*/
+}
+.ks-imagezoom-viewer-bk {
+    background: url("loading.gif") no-repeat scroll center center #FFFFFF;
+}
+.ks-imagezoom-viewer {
+    border: 1px solid #CCCCCC;
+    left: 500px;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    z-index: 100;
+}
+
+#test-top {
+    margin-top: 300px;
+}
+#test-right {
+    margin-right: 40px;
+}
+#test-bottom {
+    margin-bottom: 40px;
+}
+#test-left {
+    margin-left: 300px;
+}
+#test-glass, #test-follow {
+    margin: 10px;
+}
