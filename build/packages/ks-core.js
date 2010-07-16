@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 850 Jul 12 15:09
+build: 863 Jul 16 10:14
 */
 /**
  * @module kissy
@@ -156,6 +156,9 @@ build: 850 Jul 12 15:09
                 }
 
                 doc.addEventListener(eventType, domReady, false);
+
+                // A fallback to window.onload, that will always work
+			    win.addEventListener('load', fire, false);
             }
             // IE event model is used
             else {
@@ -182,7 +185,6 @@ build: 850 Jul 12 15:09
                             setTimeout(readyScroll, 1);
                         }
                     }
-
                     readyScroll();
                 }
             }
@@ -520,12 +522,12 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * Removes the whitespace from the beginning and end of a string.
          */
         trim: trim ?
-              function(str) {
-                  return (str == undefined) ? '' : trim.call(str);
-              } :
-              function(str) {
-                  return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
-              },
+            function(str) {
+                return (str == undefined) ? '' : trim.call(str);
+            } :
+            function(str) {
+                return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
+            },
 
         /**
          * Executes the supplied function on each item in the array.
@@ -545,17 +547,17 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * Search for a specified value within an array.
          */
         indexOf: indexOf ?
-                 function(elem, arr) {
-                     return indexOf.call(arr, elem);
-                 } :
-                 function(elem, arr) {
-                     for (var i = 0, len = arr.length; i < len; ++i) {
-                         if (arr[i] === elem) {
-                             return i;
-                         }
-                     }
-                     return -1;
-                 },
+            function(elem, arr) {
+                return indexOf.call(arr, elem);
+            } :
+            function(elem, arr) {
+                for (var i = 0, len = arr.length; i < len; ++i) {
+                    if (arr[i] === elem) {
+                        return i;
+                    }
+                }
+                return -1;
+            },
 
         /**
          * Search for a specified value index within an array.
@@ -589,16 +591,16 @@ KISSY.add('kissy-lang', function(S, undefined) {
             return AP.slice.call(o);
         },
         /**
-        * Executes the supplied function on each item in the array.
-        * Returns a new array containing the items that the supplied
-        * function returned true for.
-        * @param arr {Array} the array to iterate
-        * @param fn {Function} the function to execute on each item
-        * @param context {Object} optional context object
-        * @return {Array} The items on which the supplied function
-        *         returned true. If no items matched an empty array is
-        *         returned.
-        */
+         * Executes the supplied function on each item in the array.
+         * Returns a new array containing the items that the supplied
+         * function returned true for.
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item
+         * @param context {Object} optional context object
+         * @return {Array} The items on which the supplied function
+         *         returned true. If no items matched an empty array is
+         *         returned.
+         */
         filter: filter ?
             function(arr, fn, context) {
                 return filter.call(arr, fn, context);
@@ -736,7 +738,40 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 }
             };
         },
-
+        /**
+         * Creates a deep copy of an object.
+		 * Attention: there is no support for recursive references.
+         * @param obj {Object} object to be cloned
+         * @return {Object} a deep copy of object
+         */
+        clone : function(obj) {
+            var clone;
+            // Array.
+            if (obj && S.isArray(obj)) {
+                clone = [];
+                for (var i = obj.length - 1; i >= 0; i--)
+                    clone[ i ] = this.clone(obj[ i ]);
+                return clone;
+            }
+            // "Static" types.
+            if (obj === null
+                || ( typeof( obj ) != 'object' )
+                || ( obj instanceof String )
+                || ( obj instanceof Number )
+                || ( obj instanceof Boolean )
+                || ( obj instanceof Date )
+                || ( obj instanceof RegExp)
+                || S.isFunction(obj)) {
+                return obj;
+            }
+            // Objects.
+            clone = new obj.constructor();
+            for (var propertyName in obj) {
+                var property = obj[ propertyName ];
+                clone[ propertyName ] = this.clone(property);
+            }
+            return clone;
+        },
         /**
          * Gets current date in milliseconds.
          */
@@ -772,7 +807,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
     }
 
     // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
-    if(loc && loc.search && loc.search.indexOf('ks-debug') !== -1){
+    if (loc && loc.search && loc.search.indexOf('ks-debug') !== -1) {
         S.Config.debug = true;
     }
 });
@@ -900,7 +935,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 850 Jul 12 15:09
+build: 863 Jul 16 10:14
 */
 /**
  * @module  dom
@@ -1808,14 +1843,19 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         FILTER = 'filter',
         FILTERS = 'filters',
         CURRENT_STYLE = 'currentStyle',
+        AS = "absolute",
         LEFT = 'left',
+        TOP = "top",
+        ML = "margin-left",
+        MT = "margin-top",
         PX = 'px',
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
-	    RE_NUM = /^-?\d/,
+        RE_NUM = /^-?\d/,
         RE_SPECIAL = /^auto$/i,
-        RE_WH = /^width|height$/;
-
+        RE_WH = /^width|height$/i,
+        RE_LT = /^left|top$/i,
+        POSITION = "position";
     // use alpha filter for IE opacity
     try {
         if (docElem.style[OPACITY] === undefined && docElem[FILTERS]) {
@@ -1867,14 +1907,30 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
             // 在 ie 下不对，需要直接用 offset 方式
             // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
-            if(RE_WH.test(name)) {
+            if (RE_WH.test(name)) {
                 ret = DOM[name](elem) + PX;
+            }
+            //chengyu:not work when left=auto (not set)
+            else if (RE_SPECIAL.test(ret) && RE_LT.test(name)) {
+                var position = DOM.css(elem, POSITION);
+                //absolute: auto == offsetLeft - margin-left
+                if (position === AS) {
+                    if (name === LEFT) {
+                        ret = elem.offsetLeft - parseInt(DOM.css(elem, ML));
+                    } else {
+                        ret = elem.offsetTop - parseInt(DOM.css(elem, MT));
+                    }
+                }
+                //relative: auto ==0
+                else
+                    ret = 0;
             }
             // From the awesome hack by Dean Edwards
             // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
             else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret)) || RE_SPECIAL.test(ret)) {
+
                 // Remember the original values
                 var left = style[LEFT];
 
@@ -1909,14 +1965,19 @@ KISSY.add('dom-offset', function(S, undefined) {
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
 
     S.mix(DOM, {
-
+        /**
+         * get elment's coordinate in page
+         * @param elem
+         * @param val/refDocument
+         */
         offset: function(elem, val) {
             // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
             if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
 
-            // getter
-            if (val === undefined) {
-                return getOffset(elem);
+            // getter and val is outside document
+            if (val === undefined || (val && val.writeln)) {
+                var refDocument = val;
+                return getOffset(elem, refDocument);
             }
 
             // setter
@@ -1927,14 +1988,14 @@ KISSY.add('dom-offset', function(S, undefined) {
          * Returns the left scroll value of the document.
          */
         scrollLeft: function() {
-            return win.pageXOffset || docElem.scrollLeft || doc.body.scrollLeft;
+            return _scrollLeft(win, docElem, doc);
         },
 
         /**
          * Returns the top scroll value of the document.
          */
         scrollTop: function() {
-            return win.pageYOffset || docElem.scrollTop || doc.body.scrollTop;
+            return _scrollTop(win, docElem, doc);
         },
 
         /**
@@ -1966,23 +2027,130 @@ KISSY.add('dom-offset', function(S, undefined) {
         viewportWidth: function() {
             return !isStrict && !UA.opera ? doc.body.clientWidth :
                 UA.ie ? docElem.clientWidth : win.innerWidth;
+        },
+
+        /**
+         * make elem visible in container
+         * @param elem
+         * @param container
+         * @param top
+         *         compatible with native scrollIntoView:
+         *         http://www.w3.org/TR/2009/WD-html5-20090423/editing.html
+         * @refer:http://yiminghe.javaeye.com/blog/390732
+         */
+        scrollIntoView :function(elem, container, top) {
+            top = top === undefined ? true : !!top;
+            if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
+            container = (
+                container !== doc.documentElement
+                    && container !== doc.body
+                    && container !== win
+                ) ? container : null;
+            //use native if exists
+            if (!container && elem.scrollIntoView) {
+                elem.scrollIntoView();
+                return;
+            }
+            var elemOffset = DOM.offset(elem),
+                cl = container ? container.scrollLeft : DOM.scrollLeft(),
+                ct = container ? container.scrollTop : DOM.scrollTop(),
+                //import! viewport should has
+                containerOffset = container ? DOM.offset(container) : {left:cl,top:ct},
+                diff = {
+                    left:elemOffset.left - containerOffset.left  ,
+                    top:elemOffset.top - containerOffset.top
+                },
+                eh = elem.offsetHeight,
+                ew = elem.offsetWidth,
+                //left
+                l = diff.left + cl,
+                //top
+                t = diff.top + ct,
+                b = t + elem.offsetHeight,
+                r = l + elem.offsetWidth,
+                ch = container ? container.clientHeight : DOM.viewportHeight(),
+                cw = container ? container.clientWidth : DOM.viewportWidth(),
+                //container视窗下doc高度下限
+                cb = ct + ch,
+                //container视窗下doc右边限
+                cr = cl + cw;
+            //used if container is window
+            var wl = 0,wt = 0;
+            if (eh > ch || top) {
+                if (container)
+                    container.scrollTop = t;
+                else
+                    wt = t;
+            } else {
+                if (container)
+                    container.scrollTop = t - (ch - eh);
+                else
+                    wt = t - (ch - eh);
+            }
+
+            if (ew > cw || l < cl) {
+                if (container)
+                    container.scrollLeft = l;
+                else
+                    wl = l;
+            } else if (r > cr) {
+                if (container)
+                    container.scrollLeft = l;
+                else
+                    wl = l;
+            }
+            if (wl || wt) {
+                win.scrollTo(wl, wt);
+            }
+
+            //TODO! show element properly
+
         }
     });
 
-    function getOffset(elem) {
-        var box, x = 0, y = 0;
+    function _scrollLeft(win, docElem, doc) {
+        return win.pageXOffset || docElem.scrollLeft || doc.body.scrollLeft;
+    }
+
+    function _scrollTop(win, docElem, doc) {
+        return win.pageYOffset || docElem.scrollTop || doc.body.scrollTop;
+    }
+
+    /**
+     * support elment in iframe
+     * @param elem
+     * @param refDocument
+     */
+    function getOffset(elem, refDocument) {
+        var box, x = 0,
+            y = 0,
+            currentWindow = elem.ownerDocument.defaultView || elem.ownerDocument.parentWindow,
+            currentDoc = elem.ownerDocument,
+            currentDocElem = currentDoc.documentElement;
 
         // 1. 对于 body 和 docElem, 直接返回 0, 绝大部分情况下，这都不会有问题
         // 2. 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
-        if (elem !== doc.body && elem !== docElem && elem[GET_BOUNDING_CLIENT_RECT]) {
-            box = elem[GET_BOUNDING_CLIENT_RECT]();
+        if (elem[GET_BOUNDING_CLIENT_RECT]) {
+            if (elem !== currentDoc.body && currentDocElem !== elem) {
+                box = elem[GET_BOUNDING_CLIENT_RECT]();
 
-            // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
-            // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
-            // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
+                // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
+                // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
+                // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
 
-            x = box.left + DOM.scrollLeft();
-            y = box.top + DOM.scrollTop();
+                x = box.left + _scrollLeft(currentWindow, currentDocElem, currentDoc);
+                y = box.top + _scrollTop(currentWindow, currentDocElem, currentDoc);
+            }
+            if (refDocument) {
+                var refWindow = refDocument.defaultView || refDocument.parentWindow;
+                if (currentWindow != refWindow && currentWindow.frameElement) {
+                    //note:when iframe is static ,still some mistake
+                    var iframePosition = DOM.offset(currentWindow.frameElement, refDocument);
+                    x += iframePosition.left;
+                    y += iframePosition.top;
+                }
+            }
+
         }
 
         return { left: x, top: y };
@@ -1997,14 +2165,17 @@ KISSY.add('dom-offset', function(S, undefined) {
         }
 
         var old = getOffset(elem),
-            relative = (position === RELATIVE),
-            left = PARSEINT(DOM.css(elem, 'left'), 10),
-            top = PARSEINT(DOM.css(elem, 'top'), 10);
+            relative = (position === RELATIVE),v = {};
 
-        left = S.isNumber(left) ? left : (relative ? 0 : elem.offsetLeft);
-        top = S.isNumber(top) ? top : (relative ? 0 : elem.offsetTop);
-
-        DOM.css(elem, {left: (left + offset.left - old.left), top: (top + offset.top - old.top)});
+        if ("left" in offset) {
+            var left = PARSEINT(DOM.css(elem, 'left'), 10);
+            v.left = left + offset.left - old.left;
+        }
+        if ("top" in offset) {
+            var top = PARSEINT(DOM.css(elem, 'top'), 10);
+            v.top = top + offset.top - old.top;
+        }
+        DOM.css(elem, v);
     }
 });
 
@@ -2013,8 +2184,7 @@ KISSY.add('dom-offset', function(S, undefined) {
  *  - 考虑是否实现 jQuery 的 position, offsetParent 等功能
  *  - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
  *
- */
-/**
+ *//**
  * @module  dom-traversal
  * @author  lifesinger@gmail.com
  */
@@ -2465,7 +2635,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 846 Jul 11 00:09
+build: 863 Jul 16 10:14
 */
 /**
  * @module  event
@@ -3045,7 +3215,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 851 Jul 13 22:18
+build: 863 Jul 16 10:14
 */
 /**
  * @module  node
@@ -3342,7 +3512,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 846 Jul 11 00:09
+build: 863 Jul 16 10:14
 */
 /**
  * @module  ajax
@@ -3379,7 +3549,7 @@ KISSY.add('ajax', function(S) {
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
          */
         getScript: function(url, callback, charset) {
-            var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+            var head = S.get('head') || doc.documentElement,
                 node = doc.createElement('script');
 
             node.src = url;

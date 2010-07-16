@@ -85,12 +85,12 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * Removes the whitespace from the beginning and end of a string.
          */
         trim: trim ?
-              function(str) {
-                  return (str == undefined) ? '' : trim.call(str);
-              } :
-              function(str) {
-                  return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
-              },
+            function(str) {
+                return (str == undefined) ? '' : trim.call(str);
+            } :
+            function(str) {
+                return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
+            },
 
         /**
          * Executes the supplied function on each item in the array.
@@ -110,17 +110,17 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * Search for a specified value within an array.
          */
         indexOf: indexOf ?
-                 function(elem, arr) {
-                     return indexOf.call(arr, elem);
-                 } :
-                 function(elem, arr) {
-                     for (var i = 0, len = arr.length; i < len; ++i) {
-                         if (arr[i] === elem) {
-                             return i;
-                         }
-                     }
-                     return -1;
-                 },
+            function(elem, arr) {
+                return indexOf.call(arr, elem);
+            } :
+            function(elem, arr) {
+                for (var i = 0, len = arr.length; i < len; ++i) {
+                    if (arr[i] === elem) {
+                        return i;
+                    }
+                }
+                return -1;
+            },
 
         /**
          * Search for a specified value index within an array.
@@ -154,16 +154,16 @@ KISSY.add('kissy-lang', function(S, undefined) {
             return AP.slice.call(o);
         },
         /**
-        * Executes the supplied function on each item in the array.
-        * Returns a new array containing the items that the supplied
-        * function returned true for.
-        * @param arr {Array} the array to iterate
-        * @param fn {Function} the function to execute on each item
-        * @param context {Object} optional context object
-        * @return {Array} The items on which the supplied function
-        *         returned true. If no items matched an empty array is
-        *         returned.
-        */
+         * Executes the supplied function on each item in the array.
+         * Returns a new array containing the items that the supplied
+         * function returned true for.
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item
+         * @param context {Object} optional context object
+         * @return {Array} The items on which the supplied function
+         *         returned true. If no items matched an empty array is
+         *         returned.
+         */
         filter: filter ?
             function(arr, fn, context) {
                 return filter.call(arr, fn, context);
@@ -301,7 +301,40 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 }
             };
         },
-
+        /**
+         * Creates a deep copy of an object.
+		 * Attention: there is no support for recursive references.
+         * @param obj {Object} object to be cloned
+         * @return {Object} a deep copy of object
+         */
+        clone : function(obj) {
+            var clone;
+            // Array.
+            if (obj && S.isArray(obj)) {
+                clone = [];
+                for (var i = obj.length - 1; i >= 0; i--)
+                    clone[ i ] = this.clone(obj[ i ]);
+                return clone;
+            }
+            // "Static" types.
+            if (obj === null
+                || ( typeof( obj ) != 'object' )
+                || ( obj instanceof String )
+                || ( obj instanceof Number )
+                || ( obj instanceof Boolean )
+                || ( obj instanceof Date )
+                || ( obj instanceof RegExp)
+                || S.isFunction(obj)) {
+                return obj;
+            }
+            // Objects.
+            clone = new obj.constructor();
+            for (var propertyName in obj) {
+                var property = obj[ propertyName ];
+                clone[ propertyName ] = this.clone(property);
+            }
+            return clone;
+        },
         /**
          * Gets current date in milliseconds.
          */
@@ -337,7 +370,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
     }
 
     // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
-    if(loc && loc.search && loc.search.indexOf('ks-debug') !== -1){
+    if (loc && loc.search && loc.search.indexOf('ks-debug') !== -1) {
         S.Config.debug = true;
     }
 });

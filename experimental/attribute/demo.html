@@ -4,10 +4,17 @@
 <meta http-equiv="expires" content="0" />
 </head>
 <body>
+
+<div style="margin:10px auto;padding:10px;width:500px;border:1px solid green;">
+    <h1>示例1：联动</h1>
 <p>
 数字(0到3)：<input id="v" value="0" readonly autocomplete="off"/> <br/>
 <input type="button" id="r" value="增加" />
 </p>
+
+
+
+
 
 <p>
 	<label>输入数字：<input id="v2" value="0" autocomplete="off"/></label> <br/>
@@ -17,15 +24,23 @@
 <p>
 <input type="button" id="r3" value="全部重置" />
 </p>
+
+</div>
+
+<div style="margin:10px auto;width:500px;padding:10px;border:1px solid green;">
+     <h1>示例2：多实例</h1>
+<p>
+数字(0到3)：<input id="vv" value="2" readonly autocomplete="off"/> <br/>
+<input type="button" id="rr" value="增加" />
+</p>
+</div>
+
 <p>
 	for more to see ,come <a href="http://yiminghe.javaeye.com/blog/696296" target="_blank">here</a>
 </p>
-<script src="../../src/kissy/kissy.js"></script>
-<script src="../../src/kissy/kissy-lang.js"></script>
-<script src="../../src/kissy/kissy-ua.js"></script>
-<script src="../../build/dom/dom-pkg-min.js"></script>
-<script src="../../build/event/event-pkg-min.js"></script>
-<script src="../../src/node/node.js"></script>
+
+<script src="../../build/packages/ks-core.js"></script>
+
 <script src="attribute.js"></script>
 
 <script>
@@ -167,9 +182,20 @@ KISSY.ready(function (S) {
         max: 3
     },
     S.one("#v"), S.one("#r"));
+
+    alert(attrIn.get("v"));
+     var attrIn2 = new AttributeIncreaser({
+        max: 3
+    },
+    S.one("#vv"), S.one("#rr"));
+
+    alert(attrIn2.get("v"));
+
+    alert(attrIn.get("v"));
+
     /*
      组件使用者，可以使用属性直观得和组件交互，同组件完全解耦分离，且组件开发者和使用者通过监控属性变化又达到了一定的统一协作。
-     
+
     */
     //通过输入框设置组件状态部分代码
     var v2 = S.one("#v2");
@@ -178,7 +204,7 @@ KISSY.ready(function (S) {
     r2.on("click", function () {
         attrIn.set("v", v2.val());
     });
-    //设置组件属性，通知组件更新自己的状态  
+    //设置组件属性，通知组件更新自己的状态
     attrIn.on("afterVChange", function () {
         v2.val(attrIn.get("v"));
     });
