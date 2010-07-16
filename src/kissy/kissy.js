@@ -151,6 +151,9 @@
                 }
 
                 doc.addEventListener(eventType, domReady, false);
+
+                // A fallback to window.onload, that will always work
+			    win.addEventListener('load', fire, false);
             }
             // IE event model is used
             else {
@@ -177,7 +180,6 @@
                             setTimeout(readyScroll, 1);
                         }
                     }
-
                     readyScroll();
                 }
             }

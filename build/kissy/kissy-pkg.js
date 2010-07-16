@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 850 Jul 12 15:09
+build: 862 Jul 16 09:55
 */
 /**
  * @module kissy
@@ -156,6 +156,9 @@ build: 850 Jul 12 15:09
                 }
 
                 doc.addEventListener(eventType, domReady, false);
+
+                // A fallback to window.onload, that will always work
+			    win.addEventListener('load', fire, false);
             }
             // IE event model is used
             else {
@@ -182,7 +185,6 @@ build: 850 Jul 12 15:09
                             setTimeout(readyScroll, 1);
                         }
                     }
-
                     readyScroll();
                 }
             }

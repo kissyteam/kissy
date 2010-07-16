@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 846 Jul 11 00:09
+build: 862 Jul 16 09:56
 */
 /**
  * @module  cookie
@@ -61,9 +61,9 @@ KISSY.add('cookie', function(S) {
             doc.cookie = name + '=' + text;
         },
 
-        remove: function(name) {
-            // 立刻过期
-            this.set(name, '', 0);
+        remove: function(name, domain, path, secure) {
+            // 置空，并立刻过期
+            this.set(name, '', 0, domain, path, secure);
         }
     };
 
