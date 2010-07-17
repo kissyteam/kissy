@@ -56,7 +56,9 @@ KISSY.add('imagezoom', function(S) {
              * 需要缩放的图片
              * @type HTMLElement
              */
-            self.image = S.get(img);
+            if (typeof(img) === typeof('')) self.image = S.get(img);
+            else self.image = img;
+            
             if (!self.image) {
                 return;
             }
@@ -167,6 +169,7 @@ KISSY.add('imagezoom', function(S) {
                     // 创建/显示大图
                     if (!self.viewer) {
                         self._createZoom(ev);
+                        self.fire('firstHover');
                     } else DOM.removeClass(self.viewer, HIDDEN);
                     // 设置大图加载超时定时器
                     self.timer = setTimeout(function(){
@@ -187,6 +190,13 @@ KISSY.add('imagezoom', function(S) {
                     if (self.viewer) DOM.addClass(self.viewer, HIDDEN);
                     if (self.timer) clearTimeout(self.timer);
                 });
+                
+                /**
+                 * 鼠标第一次移到大图上时
+                 */
+                EVENT.on(self, 'firstHover', function(){
+                    // do sth
+                });
             },
             
             /**
@@ -202,6 +212,8 @@ KISSY.add('imagezoom', function(S) {
                 // 构建整个容器
                 c = DOM.create(DIV);
                 DOM.addClass(c, IMGZOOM_CONTAINER_CLS);
+                // 如果img外层有a, 则选择a的parent
+                if (DOM.parent(i).nodeName.toLowerCase() === 'a')  i = DOM.parent(i);
                 DOM.parent(i).insertBefore(c, i);
                 self.container = c;
                 
@@ -435,7 +447,7 @@ KISSY.add('imagezoom', function(S) {
                 if (!elm) return this.config.glassSize;
                 return {
                     width: elm.clientWidth,
-                    height: elm.clientWidth
+                    height: elm.clientHeight
                 };
             },
             
@@ -482,6 +494,7 @@ KISSY.add('imagezoom', function(S) {
  *      - 6. 24  去除yahoo-dom-event依赖
  *  2010.7
  *      - 去除getStyle, 使用DOM.css()
+ *      - firstHover
  *  TODO:
  *      - 加入反转模式;
  *      - 
