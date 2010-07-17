@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 851 Jul 13 22:18
+build: 865 Jul 17 21:52
 */
 /**
  * @module  node
@@ -238,6 +238,7 @@ KISSY.add('node-attach', function(S, undefined) {
 
     // dom-offset
     attach(['offset'], ONLY_VAL);
+    attach(['scrollIntoView']);
 
     // dom-traversal
     attach(['parent', 'next', 'prev', 'siblings', 'children'], ALWAYS_NODE);

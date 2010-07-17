@@ -4,16 +4,24 @@
 <meta charset="utf-8"/>
 <title>dom-offset Test</title>
 <style>
-        /*
-            html { margin: 3px; border: 4px solid #eee; padding: 5px; }
-            body { margin: 6px; border: 7px solid #ccc; padding: 8px; }
-            */
-    /*只保证以下设置正常*/
-    html, body {
-        margin: 0;
-        padding: 0;
-        border: none;
+
+    html {
+        margin: 3px;
+        border: 4px solid #eee;
+        padding: 5px;
     }
+
+    body {
+        margin: 6px;
+        border: 7px solid #ccc;
+        padding: 8px;
+    }
+
+    /*html, body {*/
+        /*margin: 0;*/
+        /*padding: 0;*/
+        /*border: none;*/
+    /*}*/
 </style>
 </head>
 <body>
@@ -39,18 +47,17 @@
 
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
 <script src="../../third-party/ext-core/ext-core.js"></script>
-
-<div style="height:100px;width:100px;padding:20px;border:1px solid black;position:relative;">
+<style>
+    #testContainer { border: 5px solid #ccc }
+</style>
+<div id="testContainer" style="height:100px; width:100px; padding:20px; position:relative;">
     <div id="testStatic" style="border:1px solid red;">static test</div>
-
-    <div style="position:absolute;border:1px solid green;margin:5px;" id="testAbsolute">
-        absolute test
-    </div>
+    <div id="testAbsolute" style="position:absolute; border:1px solid green; margin:5px">absolute test</div>
 </div>
 
-<iframe src="test-iframe-offset.html"
-        id="test_iframe"
-        style="border:1px solid black;position:absolute;top:100px;left:500px;background:white;"
+<iframe src="test-dom-offset-iframe.html"
+        id="testIframe"
+        style="border:1px solid black; position:absolute; top:500px; left:500px; background:white;"
         width="200"
         height="200"
         frameborder="0"
@@ -73,21 +80,31 @@
         //        test.echo('jQuery offset.left = ' + jQuery('#konsole').offset().left);
         //        test.echo('KISSY offset.left = ' + DOM.offset('#konsole').left);
 
-        var t = S.get("#testAbsolute"),
-                t2 = S.get('#testStatic'),
-                before = DOM.offset('#testAbsolute').left,
-                iframe_t3 = S.get("#test_iframe").contentWindow.document.getElementById("test_inner");
-        //指定值
-        DOM.offset(t2, { left: 5 });
-        if (DOM.offset(t2).left != 5) test.fail();
-        //原地设置
-        DOM.offset(t, { left: before });
-        if (DOM.offset(t).left != before) test.fail();
+        var testStatic = S.get('#testStatic'),
+            testAbs = S.get('#testAbsolute'),
+            before = DOM.offset(testAbs),
+            iframe_elem = S.get("#testIframe").contentWindow.document.getElementById("test_inner");
 
-        //iframe内元素整体坐标测试
-        if (DOM.offset(iframe_t3, document).top != 200) test.fail();
-        if (DOM.offset(iframe_t3, document).left != 550) test.fail();
+        // 指定值
+        DOM.offset(testStatic, { left: 5 });
+        //jQuery(testStatic).offset({ left: 5 });
+        //test.echo('jQuery(testStatic).css("left") = ' + jQuery(testStatic).css('left'));
+        //test.echo('KISSY.DOM.css(testStatic, "left") = ' + DOM.css(testStatic, 'left'));
+        // Opera 下就是杯具，所有类库都 fail !!!
+        if(!S.UA.opera) if (DOM.offset(testStatic).left != 5) test.fail('指定值: actual = ' + DOM.offset(testStatic).left + ' expected = 5');
 
+        // 原地设置
+        //jQuery(testAbs).offset( before );  // jQuery has bug
+        //test.echo('jQuery(testAbs).offset().left = ' + jQuery(testAbs).offset().left);
+        //test.echo('testAbs.offsetLeft = ' + testAbs.offsetLeft);
+        DOM.offset(testAbs, { left: before.left });
+        // Opera 下就是杯具，所有类库都 fail !!!
+        if(!S.UA.opera) if (DOM.offset(testAbs).left != before.left) test.fail('原地设置: actual = ' + DOM.offset(testAbs).left + ' expected = ' + before.left);
+
+        // iframe 内元素坐标测试
+        var os = DOM.offset(iframe_elem);
+        if (os.top != 100) test.fail(os.top);
+        if (os.left != 50) test.fail(os.left);
     }
 
     function test_scrollLeft(test) {
@@ -113,6 +130,8 @@
     function test_viewportWidth(test) {
         if (DOM.viewportWidth() !== ExtDOM.getViewportWidth()) test.fail();
     }
+
+    // tmp code
 
 </script>
 

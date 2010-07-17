@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 863 Jul 16 10:14
+build: 865 Jul 17 21:52
 */
 /**
  * @module kissy
@@ -522,12 +522,12 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * Removes the whitespace from the beginning and end of a string.
          */
         trim: trim ?
-            function(str) {
-                return (str == undefined) ? '' : trim.call(str);
-            } :
-            function(str) {
-                return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
-            },
+              function(str) {
+                  return (str == undefined) ? '' : trim.call(str);
+              } :
+              function(str) {
+                  return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
+              },
 
         /**
          * Executes the supplied function on each item in the array.
@@ -547,17 +547,17 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * Search for a specified value within an array.
          */
         indexOf: indexOf ?
-            function(elem, arr) {
-                return indexOf.call(arr, elem);
-            } :
-            function(elem, arr) {
-                for (var i = 0, len = arr.length; i < len; ++i) {
-                    if (arr[i] === elem) {
-                        return i;
-                    }
-                }
-                return -1;
-            },
+                 function(elem, arr) {
+                     return indexOf.call(arr, elem);
+                 } :
+                 function(elem, arr) {
+                     for (var i = 0, len = arr.length; i < len; ++i) {
+                         if (arr[i] === elem) {
+                             return i;
+                         }
+                     }
+                     return -1;
+                 },
 
         /**
          * Search for a specified value index within an array.
@@ -591,16 +591,16 @@ KISSY.add('kissy-lang', function(S, undefined) {
             return AP.slice.call(o);
         },
         /**
-         * Executes the supplied function on each item in the array.
-         * Returns a new array containing the items that the supplied
-         * function returned true for.
-         * @param arr {Array} the array to iterate
-         * @param fn {Function} the function to execute on each item
-         * @param context {Object} optional context object
-         * @return {Array} The items on which the supplied function
-         *         returned true. If no items matched an empty array is
-         *         returned.
-         */
+        * Executes the supplied function on each item in the array.
+        * Returns a new array containing the items that the supplied
+        * function returned true for.
+        * @param arr {Array} the array to iterate
+        * @param fn {Function} the function to execute on each item
+        * @param context {Object} optional context object
+        * @return {Array} The items on which the supplied function
+        *         returned true. If no items matched an empty array is
+        *         returned.
+        */
         filter: filter ?
             function(arr, fn, context) {
                 return filter.call(arr, fn, context);
@@ -738,40 +738,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 }
             };
         },
-        /**
-         * Creates a deep copy of an object.
-		 * Attention: there is no support for recursive references.
-         * @param obj {Object} object to be cloned
-         * @return {Object} a deep copy of object
-         */
-        clone : function(obj) {
-            var clone;
-            // Array.
-            if (obj && S.isArray(obj)) {
-                clone = [];
-                for (var i = obj.length - 1; i >= 0; i--)
-                    clone[ i ] = this.clone(obj[ i ]);
-                return clone;
-            }
-            // "Static" types.
-            if (obj === null
-                || ( typeof( obj ) != 'object' )
-                || ( obj instanceof String )
-                || ( obj instanceof Number )
-                || ( obj instanceof Boolean )
-                || ( obj instanceof Date )
-                || ( obj instanceof RegExp)
-                || S.isFunction(obj)) {
-                return obj;
-            }
-            // Objects.
-            clone = new obj.constructor();
-            for (var propertyName in obj) {
-                var property = obj[ propertyName ];
-                clone[ propertyName ] = this.clone(property);
-            }
-            return clone;
-        },
+
         /**
          * Gets current date in milliseconds.
          */
@@ -807,7 +774,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
     }
 
     // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
-    if (loc && loc.search && loc.search.indexOf('ks-debug') !== -1) {
+    if(loc && loc.search && loc.search.indexOf('ks-debug') !== -1){
         S.Config.debug = true;
     }
 });
@@ -935,7 +902,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 863 Jul 16 10:14
+build: 865 Jul 17 21:52
 */
 /**
  * @module  dom
@@ -1041,7 +1008,6 @@ KISSY.add('selector', function(S, undefined) {
             ret = [selector];
         }
         // 传入的 selector 是 NodeList（包括 KISSY.Node/NodeList） 或已是 Array
-        // 注意：select 元素也有 item 属性，因此 Node else if 判断要放在前面
         else if (selector && (S.isArray(selector) || selector.item || selector.getDOMNode)) {
             ret = selector;
         }
@@ -1648,11 +1614,14 @@ KISSY.add('dom-attr', function(S, undefined) {
  */
 KISSY.add('dom-style', function(S, undefined) {
 
-    var DOM = S.DOM,
+    var DOM = S.DOM, UA = S.UA,
         doc = document, docElem = doc.documentElement,
         STYLE = 'style', FLOAT = 'float',
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width', HEIGHT = 'height',
+        AUTO = 'auto',
+        PARSEINT = parseInt,
+        RE_LT = /^left|top$/,
         RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
         RE_DASH = /-([a-z])/ig,
         CAMELCASE_FN = function(all, letter) {
@@ -1703,7 +1672,7 @@ KISSY.add('dom-style', function(S, undefined) {
 
                     // 有 get 的直接用自定义函数的返回值
                     if(ret === '' && !name.get) {
-                        ret = DOM._getComputedStyle(elem, name);
+                        ret = fixComputedStyle(elem, name, DOM._getComputedStyle(elem, name));
                     }
                 }
 
@@ -1807,6 +1776,35 @@ KISSY.add('dom-style', function(S, undefined) {
 
         return val;
     }
+
+    // 修正 getComputedStyle 返回值的部分浏览器兼容性问题
+    function fixComputedStyle(elem, name, val) {
+        var offset, ret = val;
+
+        // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
+        //    比如：firefox 返回 0, webkit/ie 返回 auto
+        // 2. style.left 设置为百分比时，返回值为百分比
+        // 对于第一种情况，如果是 relative 元素，值为 0. 如果是 absolute 元素，值为 offsetLeft - marginLeft
+        // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
+        if (val === AUTO && RE_LT.test(name)) {
+            ret = 0;
+
+            if (DOM.css(elem, 'position') === 'absolute') {
+                offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
+
+                // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
+                // TODO: 改成特性探测
+                if (UA.ie === 8 || UA.opera) {
+                    offset -= PARSEINT(DOM.css(elem.offsetParent, 'border-' + name + '-width')) || 0;
+                }
+
+                ret = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
+            }
+        }
+
+        return ret;
+    }
+
 });
 
 /**
@@ -1843,19 +1841,13 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         FILTER = 'filter',
         FILTERS = 'filters',
         CURRENT_STYLE = 'currentStyle',
-        AS = "absolute",
         LEFT = 'left',
-        TOP = "top",
-        ML = "margin-left",
-        MT = "margin-top",
         PX = 'px',
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
-        RE_NUM = /^-?\d/,
-        RE_SPECIAL = /^auto$/i,
-        RE_WH = /^width|height$/i,
-        RE_LT = /^left|top$/i,
-        POSITION = "position";
+	    RE_NUM = /^-?\d/,
+        RE_WH = /^width|height$/;
+
     // use alpha filter for IE opacity
     try {
         if (docElem.style[OPACITY] === undefined && docElem[FILTERS]) {
@@ -1907,30 +1899,14 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
             // 在 ie 下不对，需要直接用 offset 方式
             // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
-            if (RE_WH.test(name)) {
+            if(RE_WH.test(name)) {
                 ret = DOM[name](elem) + PX;
-            }
-            //chengyu:not work when left=auto (not set)
-            else if (RE_SPECIAL.test(ret) && RE_LT.test(name)) {
-                var position = DOM.css(elem, POSITION);
-                //absolute: auto == offsetLeft - margin-left
-                if (position === AS) {
-                    if (name === LEFT) {
-                        ret = elem.offsetLeft - parseInt(DOM.css(elem, ML));
-                    } else {
-                        ret = elem.offsetTop - parseInt(DOM.css(elem, MT));
-                    }
-                }
-                //relative: auto ==0
-                else
-                    ret = 0;
             }
             // From the awesome hack by Dean Edwards
             // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
-            else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret)) || RE_SPECIAL.test(ret)) {
-
+            else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret))) {
                 // Remember the original values
                 var left = style[LEFT];
 
@@ -1952,32 +1928,33 @@ KISSY.add('dom-style-ie', function(S, undefined) {
  */
 KISSY.add('dom-offset', function(S, undefined) {
 
-    var DOM = S.DOM, UA = S.UA,
-        win = window,
-        doc = document,
-        docElem = doc.documentElement,
+    var DOM = S.DOM,
+        win = window, doc = document,
+        isElementNode = DOM._isElementNode,
         isStrict = doc.compatMode === 'CSS1Compat',
-        MAX = Math.max,
-        PARSEINT = parseInt,
-        POSITION = 'position',
-        RELATIVE = 'relative',
+        MAX = Math.max, PARSEINT = parseInt,
+        POSITION = 'position', RELATIVE = 'relative',
+        DOCUMENT = 'document', BODY = 'body',
+        DOC_ELEMENT = 'documentElement',
         OWNER_DOCUMENT = 'ownerDocument',
+        VIEWPORT = 'viewport',
+        SCROLL = 'scroll', CLIENT = 'client',
+        LEFT = 'left', TOP = 'top',
+        SCROLL_LEFT = SCROLL + 'Left', SCROLL_TOP = SCROLL + 'Top',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
 
     S.mix(DOM, {
+
         /**
-         * get elment's coordinate in page
-         * @param elem
-         * @param val/refDocument
+         * Gets the current coordinates of the element, relative to the document.
          */
         offset: function(elem, val) {
             // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
             if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
 
-            // getter and val is outside document
-            if (val === undefined || (val && val.writeln)) {
-                var refDocument = val;
-                return getOffset(elem, refDocument);
+            // getter
+            if (val === undefined) {
+                return getOffset(elem);
             }
 
             // setter
@@ -1985,206 +1962,171 @@ KISSY.add('dom-offset', function(S, undefined) {
         },
 
         /**
-         * Returns the left scroll value of the document.
+         * Makes elem visible in the container
+         * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+         *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
+         *        http://yiminghe.javaeye.com/blog/390732
          */
-        scrollLeft: function() {
-            return _scrollLeft(win, docElem, doc);
-        },
+        scrollIntoView: function(elem, container, top, hscroll) {
+            if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return;
 
-        /**
-         * Returns the top scroll value of the document.
-         */
-        scrollTop: function() {
-            return _scrollTop(win, docElem, doc);
-        },
-
-        /**
-         * Returns the height of the document.
-         */
-        docHeight: function() {
-            return MAX(!isStrict ? doc.body.scrollHeight : docElem.scrollHeight, DOM.viewportHeight());
-        },
-
-        /**
-         * Returns the width of the document.
-         */
-        docWidth: function() {
-            return MAX(!isStrict ? doc.body.scrollWidth : docElem.scrollWidth, DOM.viewportWidth());
-        },
-
-        /**
-         * Returns the current height of the viewport.
-         */
-        viewportHeight: function() {
-            return UA.ie ?
-                (isStrict ? docElem.clientHeight : doc.body.clientHeight) :
-                win.innerHeight;
-        },
-
-        /**
-         * Returns the current width of the viewport.
-         */
-        viewportWidth: function() {
-            return !isStrict && !UA.opera ? doc.body.clientWidth :
-                UA.ie ? docElem.clientWidth : win.innerWidth;
-        },
-
-        /**
-         * make elem visible in container
-         * @param elem
-         * @param container
-         * @param top
-         *         compatible with native scrollIntoView:
-         *         http://www.w3.org/TR/2009/WD-html5-20090423/editing.html
-         * @refer:http://yiminghe.javaeye.com/blog/390732
-         */
-        scrollIntoView :function(elem, container, top) {
+            container = S.get(container);
+            hscroll = hscroll === undefined ? true : !!hscroll;
             top = top === undefined ? true : !!top;
-            if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
-            container = (
-                container !== doc.documentElement
-                    && container !== doc.body
-                    && container !== win
-                ) ? container : null;
-            //use native if exists
-            if (!container && elem.scrollIntoView) {
-                elem.scrollIntoView();
-                return;
+
+            // use native for scrollIntoView(elem, top)
+            if (!isElementNode(container)) {
+                // 注意：
+                // 1. Opera 不支持 top 参数
+                // 2. 当 container 已经在视窗中时，也会重新定位
+                return elem.scrollIntoView(top);
             }
+
             var elemOffset = DOM.offset(elem),
-                cl = container ? container.scrollLeft : DOM.scrollLeft(),
-                ct = container ? container.scrollTop : DOM.scrollTop(),
-                //import! viewport should has
-                containerOffset = container ? DOM.offset(container) : {left:cl,top:ct},
+                containerOffset = DOM.offset(container),
+
+                // elem 相对 container 视窗的坐标
                 diff = {
-                    left:elemOffset.left - containerOffset.left  ,
-                    top:elemOffset.top - containerOffset.top
+                    left: elemOffset[LEFT] - containerOffset[LEFT],
+                    top: elemOffset[TOP] - containerOffset[TOP]
                 },
+
+                // container 视窗的高宽
+                ch = container.clientHeight,
+                cw = container.clientWidth,
+
+                // container 视窗相对 container 元素的坐标
+                cl = DOM[SCROLL_LEFT](container),
+                ct = DOM[SCROLL_TOP](container),
+                cr = cl + cw,
+                cb = ct + ch,
+
+                // elem 的高宽
                 eh = elem.offsetHeight,
                 ew = elem.offsetWidth,
-                //left
-                l = diff.left + cl,
-                //top
-                t = diff.top + ct,
-                b = t + elem.offsetHeight,
-                r = l + elem.offsetWidth,
-                ch = container ? container.clientHeight : DOM.viewportHeight(),
-                cw = container ? container.clientWidth : DOM.viewportWidth(),
-                //container视窗下doc高度下限
-                cb = ct + ch,
-                //container视窗下doc右边限
-                cr = cl + cw;
-            //used if container is window
-            var wl = 0,wt = 0;
-            if (eh > ch || top) {
-                if (container)
-                    container.scrollTop = t;
-                else
-                    wt = t;
-            } else {
-                if (container)
-                    container.scrollTop = t - (ch - eh);
-                else
-                    wt = t - (ch - eh);
+
+                // elem 相对 container 元素的坐标
+                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
+                t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
+                r = l + ew,
+                b = t + eh;
+
+            // 根据情况将 elem 定位到 container 视窗中
+            // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
+            // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
+            // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
+            // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
+            if(eh > ch || t < ct || top) {
+                container[SCROLL_TOP] = t;
+            }
+            else if(b > cb) {
+                container[SCROLL_TOP] = b - ch;
             }
 
-            if (ew > cw || l < cl) {
-                if (container)
-                    container.scrollLeft = l;
-                else
-                    wl = l;
-            } else if (r > cr) {
-                if (container)
-                    container.scrollLeft = l;
-                else
-                    wl = l;
+            // 水平方向与上面同理
+            if (hscroll) {
+                if (ew > cw || l < cl || top) {
+                    container[SCROLL_LEFT] = l;
+                } else if (r > cr) {
+                    container[SCROLL_LEFT] = r - cw;
+                }
             }
-            if (wl || wt) {
-                win.scrollTo(wl, wt);
-            }
-
-            //TODO! show element properly
-
         }
     });
 
-    function _scrollLeft(win, docElem, doc) {
-        return win.pageXOffset || docElem.scrollLeft || doc.body.scrollLeft;
-    }
+    // add ScrollLeft/ScrollTop getter methods
+    S.each(['Left', 'Top'], function(name, i) {
+        var method = SCROLL + name;
 
-    function _scrollTop(win, docElem, doc) {
-        return win.pageYOffset || docElem.scrollTop || doc.body.scrollTop;
-    }
+        DOM[method] = function(elem) {
+            var ret = 0,
+                w = elem === undefined ? win : getWin(elem),
+                d;
 
-    /**
-     * support elment in iframe
-     * @param elem
-     * @param refDocument
-     */
-    function getOffset(elem, refDocument) {
-        var box, x = 0,
-            y = 0,
-            currentWindow = elem.ownerDocument.defaultView || elem.ownerDocument.parentWindow,
-            currentDoc = elem.ownerDocument,
-            currentDocElem = currentDoc.documentElement;
+			if(w && (d = w[DOCUMENT])) {
+                ret = w[i ? 'pageYOffset' : 'pageXOffset']
+                    || d[DOC_ELEMENT][method]
+                    || d[BODY][method]
+            }
+            else if(isElementNode((elem = S.get(elem)))) {
+                ret = elem[method];
+            }
+            return ret;
+        }
+    });
 
-        // 1. 对于 body 和 docElem, 直接返回 0, 绝大部分情况下，这都不会有问题
-        // 2. 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
+    // add docWidth/Height, viewportWidth/Height getter methods
+    S.each(['Width', 'Height'], function(name) {
+        DOM['doc' + name] = function(refDoc) {
+            var d = refDoc || doc;
+            return MAX(isStrict ? d[DOC_ELEMENT][SCROLL + name] : d[BODY][SCROLL + name],
+                DOM[VIEWPORT + name](d));
+        };
+
+        DOM[VIEWPORT + name] = function(refWin) {
+            var prop = 'inner' + name,
+                w = getWin(refWin) || win,
+                d = w[DOCUMENT];
+            return (prop in w) ? w[prop] :
+                (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
+        }
+    });
+
+    // 获取 elem 相对 elem.ownerDocument 的坐标
+    function getOffset(elem) {
+        var box, x = 0, y = 0,
+            w = getWin(elem[OWNER_DOCUMENT]);
+
+        // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
         if (elem[GET_BOUNDING_CLIENT_RECT]) {
-            if (elem !== currentDoc.body && currentDocElem !== elem) {
-                box = elem[GET_BOUNDING_CLIENT_RECT]();
+            box = elem[GET_BOUNDING_CLIENT_RECT]();
 
-                // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
-                // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
-                // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
+            // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
+            // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
+            // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
 
-                x = box.left + _scrollLeft(currentWindow, currentDocElem, currentDoc);
-                y = box.top + _scrollTop(currentWindow, currentDocElem, currentDoc);
-            }
-            if (refDocument) {
-                var refWindow = refDocument.defaultView || refDocument.parentWindow;
-                if (currentWindow != refWindow && currentWindow.frameElement) {
-                    //note:when iframe is static ,still some mistake
-                    var iframePosition = DOM.offset(currentWindow.frameElement, refDocument);
-                    x += iframePosition.left;
-                    y += iframePosition.top;
-                }
-            }
-
+            x = box[LEFT] + DOM[SCROLL_LEFT](w);
+            y = box[TOP] + DOM[SCROLL_TOP](w);
         }
 
         return { left: x, top: y };
     }
 
+    // 设置 elem 相对 elem.ownerDocument 的坐标
     function setOffset(elem, offset) {
-        var position = DOM.css(elem, POSITION);
-
         // set position first, in-case top/left are set even on static elem
-        if (position === 'static') {
-            position = elem.style[POSITION] = RELATIVE;
+        if (DOM.css(elem, POSITION) === 'static') {
+            elem.style[POSITION] = RELATIVE;
         }
+        var old = getOffset(elem), ret = { }, current, key;
 
-        var old = getOffset(elem),
-            relative = (position === RELATIVE),v = {};
-
-        if ("left" in offset) {
-            var left = PARSEINT(DOM.css(elem, 'left'), 10);
-            v.left = left + offset.left - old.left;
+        for(key in offset) {
+            current = PARSEINT(DOM.css(elem, key), 10) || 0;
+            ret[key] = current + offset[key] - old[key];
         }
-        if ("top" in offset) {
-            var top = PARSEINT(DOM.css(elem, 'top'), 10);
-            v.top = top + offset.top - old.top;
-        }
-        DOM.css(elem, v);
+        DOM.css(elem, ret);
     }
+
+    // elem 为 window 时，直接返回
+    // elem 为 document 时，返回关联的 window
+    // 其它值，返回 false
+    function getWin(elem) {
+        return (elem && ('scrollTo' in elem) && elem[DOCUMENT]) ?
+            elem :
+            elem && elem.nodeType === 9 ?
+                elem.defaultView || elem.parentWindow :
+                false;
+    }
+
 });
 
 /**
  * TODO:
  *  - 考虑是否实现 jQuery 的 position, offsetParent 等功能
  *  - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
- *
- *//**
+ */
+/**
  * @module  dom-traversal
  * @author  lifesinger@gmail.com
  */
@@ -2635,7 +2577,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 863 Jul 16 10:14
+build: 865 Jul 17 21:52
 */
 /**
  * @module  event
@@ -2854,12 +2796,11 @@ KISSY.add('event', function(S, undefined) {
     }
 
     function getID(target) {
-        return isTextOrCommentNode(target) ? -1 : target[EVENT_GUID];
+        return isValidTarget(target) ? target[EVENT_GUID] : -1;
     }
 
     function setID(target, id) {
-        // text and comment node
-        if (isTextOrCommentNode(target)) {
+        if (!isValidTarget(target)) {
             return S.error('Text or comment node is not valid event target.');
         }
 
@@ -2879,8 +2820,10 @@ KISSY.add('event', function(S, undefined) {
         }
     }
 
-    function isTextOrCommentNode(target) {
-        return target.nodeType === 3 || target.nodeType === 8;
+    function isValidTarget(target) {
+        // 3 - is text node
+        // 8 - is comment node
+        return target && target.nodeType !== 3 && target.nodeType !== 8;
     }
 
     S.Event = Event;
@@ -3215,7 +3158,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 863 Jul 16 10:14
+build: 865 Jul 17 21:52
 */
 /**
  * @module  node
@@ -3452,6 +3395,7 @@ KISSY.add('node-attach', function(S, undefined) {
 
     // dom-offset
     attach(['offset'], ONLY_VAL);
+    attach(['scrollIntoView']);
 
     // dom-traversal
     attach(['parent', 'next', 'prev', 'siblings', 'children'], ALWAYS_NODE);
@@ -3512,7 +3456,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 863 Jul 16 10:14
+build: 846 Jul 11 00:09
 */
 /**
  * @module  ajax
@@ -3549,7 +3493,7 @@ KISSY.add('ajax', function(S) {
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
          */
         getScript: function(url, callback, charset) {
-            var head = S.get('head') || doc.documentElement,
+            var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
                 node = doc.createElement('script');
 
             node.src = url;

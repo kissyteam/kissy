@@ -87,7 +87,6 @@ KISSY.add('selector', function(S, undefined) {
             ret = [selector];
         }
         // 传入的 selector 是 NodeList（包括 KISSY.Node/NodeList） 或已是 Array
-        // 注意：select 元素也有 item 属性，因此 Node else if 判断要放在前面
         else if (selector && (S.isArray(selector) || selector.item || selector.getDOMNode)) {
             ret = selector;
         }

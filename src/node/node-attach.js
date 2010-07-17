@@ -94,6 +94,7 @@ KISSY.add('node-attach', function(S, undefined) {
 
     // dom-offset
     attach(['offset'], ONLY_VAL);
+    attach(['scrollIntoView']);
 
     // dom-traversal
     attach(['parent', 'next', 'prev', 'siblings', 'children'], ALWAYS_NODE);

@@ -215,12 +215,11 @@ KISSY.add('event', function(S, undefined) {
     }
 
     function getID(target) {
-        return isTextOrCommentNode(target) ? -1 : target[EVENT_GUID];
+        return isValidTarget(target) ? target[EVENT_GUID] : -1;
     }
 
     function setID(target, id) {
-        // text and comment node
-        if (isTextOrCommentNode(target)) {
+        if (!isValidTarget(target)) {
             return S.error('Text or comment node is not valid event target.');
         }
 
@@ -240,8 +239,10 @@ KISSY.add('event', function(S, undefined) {
         }
     }
 
-    function isTextOrCommentNode(target) {
-        return target.nodeType === 3 || target.nodeType === 8;
+    function isValidTarget(target) {
+        // 3 - is text node
+        // 8 - is comment node
+        return target && target.nodeType !== 3 && target.nodeType !== 8;
     }
 
     S.Event = Event;

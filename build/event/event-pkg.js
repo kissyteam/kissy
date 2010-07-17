@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 846 Jul 11 00:09
+build: 865 Jul 17 21:52
 */
 /**
  * @module  event
@@ -220,12 +220,11 @@ KISSY.add('event', function(S, undefined) {
     }
 
     function getID(target) {
-        return isTextOrCommentNode(target) ? -1 : target[EVENT_GUID];
+        return isValidTarget(target) ? target[EVENT_GUID] : -1;
     }
 
     function setID(target, id) {
-        // text and comment node
-        if (isTextOrCommentNode(target)) {
+        if (!isValidTarget(target)) {
             return S.error('Text or comment node is not valid event target.');
         }
 
@@ -245,8 +244,10 @@ KISSY.add('event', function(S, undefined) {
         }
     }
 
-    function isTextOrCommentNode(target) {
-        return target.nodeType === 3 || target.nodeType === 8;
+    function isValidTarget(target) {
+        // 3 - is text node
+        // 8 - is comment node
+        return target && target.nodeType !== 3 && target.nodeType !== 8;
     }
 
     S.Event = Event;

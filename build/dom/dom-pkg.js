@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 850 Jul 12 15:09
+build: 865 Jul 17 21:52
 */
 /**
  * @module  dom
@@ -107,7 +107,6 @@ KISSY.add('selector', function(S, undefined) {
             ret = [selector];
         }
         // 传入的 selector 是 NodeList（包括 KISSY.Node/NodeList） 或已是 Array
-        // 注意：select 元素也有 item 属性，因此 Node else if 判断要放在前面
         else if (selector && (S.isArray(selector) || selector.item || selector.getDOMNode)) {
             ret = selector;
         }
@@ -714,11 +713,14 @@ KISSY.add('dom-attr', function(S, undefined) {
  */
 KISSY.add('dom-style', function(S, undefined) {
 
-    var DOM = S.DOM,
+    var DOM = S.DOM, UA = S.UA,
         doc = document, docElem = doc.documentElement,
         STYLE = 'style', FLOAT = 'float',
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width', HEIGHT = 'height',
+        AUTO = 'auto',
+        PARSEINT = parseInt,
+        RE_LT = /^left|top$/,
         RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
         RE_DASH = /-([a-z])/ig,
         CAMELCASE_FN = function(all, letter) {
@@ -769,7 +771,7 @@ KISSY.add('dom-style', function(S, undefined) {
 
                     // 有 get 的直接用自定义函数的返回值
                     if(ret === '' && !name.get) {
-                        ret = DOM._getComputedStyle(elem, name);
+                        ret = fixComputedStyle(elem, name, DOM._getComputedStyle(elem, name));
                     }
                 }
 
@@ -873,6 +875,35 @@ KISSY.add('dom-style', function(S, undefined) {
 
         return val;
     }
+
+    // 修正 getComputedStyle 返回值的部分浏览器兼容性问题
+    function fixComputedStyle(elem, name, val) {
+        var offset, ret = val;
+
+        // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
+        //    比如：firefox 返回 0, webkit/ie 返回 auto
+        // 2. style.left 设置为百分比时，返回值为百分比
+        // 对于第一种情况，如果是 relative 元素，值为 0. 如果是 absolute 元素，值为 offsetLeft - marginLeft
+        // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
+        if (val === AUTO && RE_LT.test(name)) {
+            ret = 0;
+
+            if (DOM.css(elem, 'position') === 'absolute') {
+                offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
+
+                // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
+                // TODO: 改成特性探测
+                if (UA.ie === 8 || UA.opera) {
+                    offset -= PARSEINT(DOM.css(elem.offsetParent, 'border-' + name + '-width')) || 0;
+                }
+
+                ret = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
+            }
+        }
+
+        return ret;
+    }
+
 });
 
 /**
@@ -914,7 +945,6 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
 	    RE_NUM = /^-?\d/,
-        RE_SPECIAL = /^auto$/i,
         RE_WH = /^width|height$/;
 
     // use alpha filter for IE opacity
@@ -975,7 +1005,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
-            else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret)) || RE_SPECIAL.test(ret)) {
+            else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret))) {
                 // Remember the original values
                 var left = style[LEFT];
 
@@ -997,20 +1027,26 @@ KISSY.add('dom-style-ie', function(S, undefined) {
  */
 KISSY.add('dom-offset', function(S, undefined) {
 
-    var DOM = S.DOM, UA = S.UA,
-        win = window,
-        doc = document,
-        docElem = doc.documentElement,
+    var DOM = S.DOM,
+        win = window, doc = document,
+        isElementNode = DOM._isElementNode,
         isStrict = doc.compatMode === 'CSS1Compat',
-        MAX = Math.max,
-        PARSEINT = parseInt,
-        POSITION = 'position',
-        RELATIVE = 'relative',
+        MAX = Math.max, PARSEINT = parseInt,
+        POSITION = 'position', RELATIVE = 'relative',
+        DOCUMENT = 'document', BODY = 'body',
+        DOC_ELEMENT = 'documentElement',
         OWNER_DOCUMENT = 'ownerDocument',
+        VIEWPORT = 'viewport',
+        SCROLL = 'scroll', CLIENT = 'client',
+        LEFT = 'left', TOP = 'top',
+        SCROLL_LEFT = SCROLL + 'Left', SCROLL_TOP = SCROLL + 'Top',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
 
     S.mix(DOM, {
 
+        /**
+         * Gets the current coordinates of the element, relative to the document.
+         */
         offset: function(elem, val) {
             // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
             if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
@@ -1025,95 +1061,169 @@ KISSY.add('dom-offset', function(S, undefined) {
         },
 
         /**
-         * Returns the left scroll value of the document.
+         * Makes elem visible in the container
+         * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+         *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
+         *        http://yiminghe.javaeye.com/blog/390732
          */
-        scrollLeft: function() {
-            return win.pageXOffset || docElem.scrollLeft || doc.body.scrollLeft;
-        },
+        scrollIntoView: function(elem, container, top, hscroll) {
+            if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return;
 
-        /**
-         * Returns the top scroll value of the document.
-         */
-        scrollTop: function() {
-            return win.pageYOffset || docElem.scrollTop || doc.body.scrollTop;
-        },
+            container = S.get(container);
+            hscroll = hscroll === undefined ? true : !!hscroll;
+            top = top === undefined ? true : !!top;
 
-        /**
-         * Returns the height of the document.
-         */
-        docHeight: function() {
-            return MAX(!isStrict ? doc.body.scrollHeight : docElem.scrollHeight, DOM.viewportHeight());
-        },
+            // use native for scrollIntoView(elem, top)
+            if (!isElementNode(container)) {
+                // 注意：
+                // 1. Opera 不支持 top 参数
+                // 2. 当 container 已经在视窗中时，也会重新定位
+                return elem.scrollIntoView(top);
+            }
 
-        /**
-         * Returns the width of the document.
-         */
-        docWidth: function() {
-            return MAX(!isStrict ? doc.body.scrollWidth : docElem.scrollWidth, DOM.viewportWidth());
-        },
+            var elemOffset = DOM.offset(elem),
+                containerOffset = DOM.offset(container),
 
-        /**
-         * Returns the current height of the viewport.
-         */
-        viewportHeight: function() {
-            return UA.ie ?
-                (isStrict ? docElem.clientHeight : doc.body.clientHeight) :
-                win.innerHeight;
-        },
+                // elem 相对 container 视窗的坐标
+                diff = {
+                    left: elemOffset[LEFT] - containerOffset[LEFT],
+                    top: elemOffset[TOP] - containerOffset[TOP]
+                },
 
-        /**
-         * Returns the current width of the viewport.
-         */
-        viewportWidth: function() {
-            return !isStrict && !UA.opera ? doc.body.clientWidth :
-                UA.ie ? docElem.clientWidth : win.innerWidth;
+                // container 视窗的高宽
+                ch = container.clientHeight,
+                cw = container.clientWidth,
+
+                // container 视窗相对 container 元素的坐标
+                cl = DOM[SCROLL_LEFT](container),
+                ct = DOM[SCROLL_TOP](container),
+                cr = cl + cw,
+                cb = ct + ch,
+
+                // elem 的高宽
+                eh = elem.offsetHeight,
+                ew = elem.offsetWidth,
+
+                // elem 相对 container 元素的坐标
+                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
+                t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
+                r = l + ew,
+                b = t + eh;
+
+            // 根据情况将 elem 定位到 container 视窗中
+            // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
+            // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
+            // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
+            // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
+            if(eh > ch || t < ct || top) {
+                container[SCROLL_TOP] = t;
+            }
+            else if(b > cb) {
+                container[SCROLL_TOP] = b - ch;
+            }
+
+            // 水平方向与上面同理
+            if (hscroll) {
+                if (ew > cw || l < cl || top) {
+                    container[SCROLL_LEFT] = l;
+                } else if (r > cr) {
+                    container[SCROLL_LEFT] = r - cw;
+                }
+            }
         }
     });
 
-    function getOffset(elem) {
-        var box, x = 0, y = 0;
+    // add ScrollLeft/ScrollTop getter methods
+    S.each(['Left', 'Top'], function(name, i) {
+        var method = SCROLL + name;
 
-        // 1. 对于 body 和 docElem, 直接返回 0, 绝大部分情况下，这都不会有问题
-        // 2. 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
-        if (elem !== doc.body && elem !== docElem && elem[GET_BOUNDING_CLIENT_RECT]) {
+        DOM[method] = function(elem) {
+            var ret = 0,
+                w = elem === undefined ? win : getWin(elem),
+                d;
+
+			if(w && (d = w[DOCUMENT])) {
+                ret = w[i ? 'pageYOffset' : 'pageXOffset']
+                    || d[DOC_ELEMENT][method]
+                    || d[BODY][method]
+            }
+            else if(isElementNode((elem = S.get(elem)))) {
+                ret = elem[method];
+            }
+            return ret;
+        }
+    });
+
+    // add docWidth/Height, viewportWidth/Height getter methods
+    S.each(['Width', 'Height'], function(name) {
+        DOM['doc' + name] = function(refDoc) {
+            var d = refDoc || doc;
+            return MAX(isStrict ? d[DOC_ELEMENT][SCROLL + name] : d[BODY][SCROLL + name],
+                DOM[VIEWPORT + name](d));
+        };
+
+        DOM[VIEWPORT + name] = function(refWin) {
+            var prop = 'inner' + name,
+                w = getWin(refWin) || win,
+                d = w[DOCUMENT];
+            return (prop in w) ? w[prop] :
+                (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
+        }
+    });
+
+    // 获取 elem 相对 elem.ownerDocument 的坐标
+    function getOffset(elem) {
+        var box, x = 0, y = 0,
+            w = getWin(elem[OWNER_DOCUMENT]);
+
+        // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
+        if (elem[GET_BOUNDING_CLIENT_RECT]) {
             box = elem[GET_BOUNDING_CLIENT_RECT]();
 
             // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
             // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
             // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
 
-            x = box.left + DOM.scrollLeft();
-            y = box.top + DOM.scrollTop();
+            x = box[LEFT] + DOM[SCROLL_LEFT](w);
+            y = box[TOP] + DOM[SCROLL_TOP](w);
         }
 
         return { left: x, top: y };
     }
 
+    // 设置 elem 相对 elem.ownerDocument 的坐标
     function setOffset(elem, offset) {
-        var position = DOM.css(elem, POSITION);
-
         // set position first, in-case top/left are set even on static elem
-        if (position === 'static') {
-            position = elem.style[POSITION] = RELATIVE;
+        if (DOM.css(elem, POSITION) === 'static') {
+            elem.style[POSITION] = RELATIVE;
         }
+        var old = getOffset(elem), ret = { }, current, key;
 
-        var old = getOffset(elem),
-            relative = (position === RELATIVE),
-            left = PARSEINT(DOM.css(elem, 'left'), 10),
-            top = PARSEINT(DOM.css(elem, 'top'), 10);
-
-        left = S.isNumber(left) ? left : (relative ? 0 : elem.offsetLeft);
-        top = S.isNumber(top) ? top : (relative ? 0 : elem.offsetTop);
-
-        DOM.css(elem, {left: (left + offset.left - old.left), top: (top + offset.top - old.top)});
+        for(key in offset) {
+            current = PARSEINT(DOM.css(elem, key), 10) || 0;
+            ret[key] = current + offset[key] - old[key];
+        }
+        DOM.css(elem, ret);
     }
+
+    // elem 为 window 时，直接返回
+    // elem 为 document 时，返回关联的 window
+    // 其它值，返回 false
+    function getWin(elem) {
+        return (elem && ('scrollTo' in elem) && elem[DOCUMENT]) ?
+            elem :
+            elem && elem.nodeType === 9 ?
+                elem.defaultView || elem.parentWindow :
+                false;
+    }
+
 });
 
 /**
  * TODO:
  *  - 考虑是否实现 jQuery 的 position, offsetParent 等功能
  *  - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
- *
  */
 /**
  * @module  dom-traversal

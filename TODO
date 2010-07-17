@@ -34,6 +34,7 @@
   suggest 重构，更新首页搜索提示，添加 bts [0716]
   datalazyload bug in iPad + 重构 + 详细测试
   swf & swfstore 升级
+  docs
 
   loader - 拔赤        0716
   cssmodules - 沉鱼    0730

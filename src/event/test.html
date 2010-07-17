@@ -250,6 +250,18 @@
         });
     }
 
+    function test_add_exception(test) {
+        try {
+            Event.add();
+            Event.add(null);
+            Event.add(document, null);
+            Event.add(document, 'click', null);
+        }
+        catch(ex) {
+            test.fail(ex);
+        }
+    }
+
 </script>
 
 </body>

@@ -4,11 +4,6 @@
 <meta charset="utf-8"/>
 <title>dom-offset Test</title>
 <style>
-        /*
-            html { margin: 3px; border: 4px solid #eee; padding: 5px; }
-            body { margin: 6px; border: 7px solid #ccc; padding: 8px; }
-            */
-    /*只保证以下设置正常*/
     html, body {
         margin: 0;
         padding: 0;
@@ -18,12 +13,12 @@
 </head>
 <body>
 
-<button class="test2">
+<button class="test3">
     click to see container
 </button>
 
-<button class="test">
-    click to see test in container
+<button class="test4">
+    click to see container (top == false)
 </button>
 <p>x</p>
 <p>x</p>
@@ -65,13 +60,16 @@
 <p>x</p>
 <p>x</p>
 <p>x</p>
-<button class="test">
-    click to see test in container
+<button class="test1">
+    click to see elem in container
 </button>
 <button class="test2">
+    click to see elem in container (top == false)
+</button>
+<button class="test3">
     click to see container
 </button>
-<div style="width:200px;height:200px;overflow:auto;border:1px solid black;" id="container">
+<div style="width:200px;height:200px;overflow:auto;border: 5px solid #ccc;" id="container">
     <p>x</p>
     <p>x</p>
     <p>x</p>
@@ -88,7 +86,7 @@
     <p>x</p>
     <p>x</p>
     <p>x</p>
-    <div id="el" style="border:1px solid red;">
+    <div id="el" style="border:5px solid #9f9;">
         test
     </div>
     <p>x</p>
@@ -113,59 +111,61 @@
     <p>x</p>
     <p>x</p>
 </div>
+<button class="test1">
+    click to see elem in container
+</button>
 <button class="test2">
+    click to see elem in container (top == false)
+</button>
+<button class="test4">
+    click to see container (top == false)
+</button>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<button class="test3">
     click to see container
 </button>
-<button class="test">
-    click to see test in container
-</button>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<p>x</p>
-<button class="test2">
-    click to see container
-</button>
-<button class="test">
-    click to see test in container
+
+<button class="test4">
+    click to see container (top == false)
 </button>
 
 <script src="../kissy/kissy.js"></script>
 <script src="../kissy/kissy-lang.js"></script>
 <script src="../kissy/kissy-ua.js"></script>
 
-
 <script src="../../build/event/event-pkg.js"></script>
-
 
 <script src="dom.js"></script>
 <script src="selector.js"></script>
@@ -176,21 +176,35 @@
 <script src="dom-offset.js"></script>
 
 <script src="../../build/node/node-pkg.js"></script>
-<script type="text/javascript">
+
+<script>
     KISSY.ready(function(S) {
-        var DOM = S.DOM
-                ,test = S.all(".test")
-                ,test2 = S.all(".test2")
-                ,container = S.one("#container")
-                ,el = S.one("#el");
-        test.on("click", function() {
-            //top默认true
-            DOM.scrollIntoView(el[0], container[0], false);
+        var DOM = S.DOM,
+            test1 = S.all('.test1'),
+            test2 = S.all('.test2'),
+            test3 = S.all('.test3'),
+            test4 = S.all('.test4'),
+            container = S.one('#container'),
+            node = S.one('#el');
+
+        // see elem in container
+        test1.on('click', function() {
+            node.scrollIntoView(container);
         });
 
+        // see elem in container (top == false)
+        test2.on('click', function() {
+            node.scrollIntoView(container, false);
+        });
 
-        test2.on("click", function() {
-            DOM.scrollIntoView(container[0], window, false);
+        // see container
+        test3.on('click', function() {
+            container.scrollIntoView();
+        });
+
+        // see container (top == false)
+        test4.on('click', function() {
+            container.scrollIntoView(window, false);
         });
 
     });

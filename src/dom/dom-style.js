@@ -4,11 +4,14 @@
  */
 KISSY.add('dom-style', function(S, undefined) {
 
-    var DOM = S.DOM,
+    var DOM = S.DOM, UA = S.UA,
         doc = document, docElem = doc.documentElement,
         STYLE = 'style', FLOAT = 'float',
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width', HEIGHT = 'height',
+        AUTO = 'auto',
+        PARSEINT = parseInt,
+        RE_LT = /^left|top$/,
         RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
         RE_DASH = /-([a-z])/ig,
         CAMELCASE_FN = function(all, letter) {
@@ -59,7 +62,7 @@ KISSY.add('dom-style', function(S, undefined) {
 
                     // 有 get 的直接用自定义函数的返回值
                     if(ret === '' && !name.get) {
-                        ret = DOM._getComputedStyle(elem, name);
+                        ret = fixComputedStyle(elem, name, DOM._getComputedStyle(elem, name));
                     }
                 }
 
@@ -163,6 +166,35 @@ KISSY.add('dom-style', function(S, undefined) {
 
         return val;
     }
+
+    // 修正 getComputedStyle 返回值的部分浏览器兼容性问题
+    function fixComputedStyle(elem, name, val) {
+        var offset, ret = val;
+
+        // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
+        //    比如：firefox 返回 0, webkit/ie 返回 auto
+        // 2. style.left 设置为百分比时，返回值为百分比
+        // 对于第一种情况，如果是 relative 元素，值为 0. 如果是 absolute 元素，值为 offsetLeft - marginLeft
+        // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
+        if (val === AUTO && RE_LT.test(name)) {
+            ret = 0;
+
+            if (DOM.css(elem, 'position') === 'absolute') {
+                offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
+
+                // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
+                // TODO: 改成特性探测
+                if (UA.ie === 8 || UA.opera) {
+                    offset -= PARSEINT(DOM.css(elem.offsetParent, 'border-' + name + '-width')) || 0;
+                }
+
+                ret = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
+            }
+        }
+
+        return ret;
+    }
+
 });
 
 /**

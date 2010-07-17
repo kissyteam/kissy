@@ -54,6 +54,14 @@
     </select>
 </div>
 
+<iframe src="test-dom-offset-iframe.html"
+        id="testIframe"
+        style="border:1px solid black; position:absolute; top:500px; left:500px; background:white;"
+        width="200"
+        frameborder="0"
+        scrolling="no"
+        ></iframe>
+
 <!-- Test Cases -->
 <script>
     var S = KISSY, DOM = S.DOM, UA = S.UA;
@@ -142,8 +150,8 @@
     //alert(Ext.get(t).getStyle('height'));
 
     // 测试百分比
-    YUI().use('node', function(Y) {
-        t = S.get('#test2');
+    //YUI().use('node', function(Y) {
+        //t = S.get('#test2');
 
         // ext 返回 80%
         // jquery 多 4px
@@ -155,7 +163,11 @@
 //              ' yui3: ' + Y.one(t).getStyle('width')
 //             );
 //        alert('KISSY.DOM.width = ' + DOM.width(t));
-    });
+    //});
+
+    // 测试 DOM.height(iframe)
+    //alert(jQuery('#testIframe').height());
+    //alert(DOM.height('#testIframe'));
 
 </script>
 
