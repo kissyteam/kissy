@@ -367,22 +367,25 @@ KISSY.add('imagezoom', function(S) {
                     } else {
                         bigImageSize = self.getSize(self.bigImage);
                     }
+                    
+                    // 其他模式下, 显示区域宽高度由大小图的比例来定
+                    vHeight = Math.round(bigImageSize.height*glassSize.height/imageSize.height);
+                    vWidth = Math.round(bigImageSize.width*glassSize.width/imageSize.width);
+                    
                     if (POSITION[0] == cfg.position) {
-                        topPos = - (imageSize.height + btw + cfg.offset - parseInt(DOM.css(o, 'marginTop'))*2);
+                        topPos = - (vHeight + btw + cfg.offset - parseInt(DOM.css(o, 'marginTop')));
                         leftPos = imageOffset.left - containerOffset.left;
                     } else if (POSITION[2] == cfg.position) {
                         topPos = imageSize.height + imageOffset.top + cfg.offset - containerOffset.top;
                         leftPos = imageOffset.left - containerOffset.left;
                     } else if (POSITION[3] == cfg.position) {
                         topPos = imageOffset.top - containerOffset.top;
-                        leftPos = - (imageSize.width + blw + cfg.offset - parseInt(DOM.css(o, 'marginLeft'))*2);
+                        //leftPos = - (imageSize.width + blw + cfg.offset - parseInt(DOM.css(o, 'marginLeft'))*2);
+                        leftPos = - (vWidth + blw + cfg.offset - parseInt(DOM.css(o, 'marginLeft')));
                     } else {
                         topPos = imageOffset.top - containerOffset.top;
                         leftPos = imageOffset.left + imageSize.width + cfg.offset - containerOffset.left;
                     }
-                    // 其他模式下, 显示区域宽高度由大小图的比例来定
-                    vHeight = Math.round(bigImageSize.height*glassSize.height/imageSize.height);
-                    vWidth = Math.round(bigImageSize.width*glassSize.width/imageSize.width);
                 }
                 DOM.css(v, HEIGHT, vHeight + 'px');
                 DOM.css(v, WIDTH, vWidth + 'px');
@@ -495,6 +498,7 @@ KISSY.add('imagezoom', function(S) {
  *  2010.7
  *      - 去除getStyle, 使用DOM.css()
  *      - firstHover
+ *      - 纠正显示区域位置计算错误
  *  TODO:
  *      - 加入反转模式;
  *      - 
