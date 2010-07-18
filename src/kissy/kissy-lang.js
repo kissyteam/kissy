@@ -11,9 +11,12 @@ KISSY.add('kissy-lang', function(S, undefined) {
         toString = Object.prototype.toString,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
+        HAS_OWN_PROPERTY = 'hasOwnProperty',
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
-        REG_NOT_WHITE = /\S/;
+        REG_NOT_WHITE = /\S/,
+        MAX_CLONE_DEEP = 50,
+        cloneDeep = 0;
 
     S.mix(S, {
 
@@ -153,6 +156,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
             // array-like
             return AP.slice.call(o);
         },
+
         /**
          * Executes the supplied function on each item in the array.
          * Returns a new array containing the items that the supplied
@@ -301,40 +305,34 @@ KISSY.add('kissy-lang', function(S, undefined) {
                 }
             };
         },
+
         /**
-         * Creates a deep copy of an object.
-		 * Attention: there is no support for recursive references.
-         * @param obj {Object} object to be cloned
-         * @return {Object} a deep copy of object
+         * Creates a deep copy of a plain object or array. Others are returned untouched.
          */
-        clone : function(obj) {
-            var clone;
-            // Array.
-            if (obj && S.isArray(obj)) {
-                clone = [];
-                for (var i = obj.length - 1; i >= 0; i--)
-                    clone[ i ] = this.clone(obj[ i ]);
-                return clone;
+        clone: function(o) {
+            var ret = o, b, k;
+
+            // array or plain object
+            if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
+
+                // 避免循环引用
+                if (cloneDeep++ > MAX_CLONE_DEEP) {
+                    S.error('too much recursion in S.clone');
+                    cloneDeep = 0;
+                    return;
+                }
+
+                ret = b ? [] : {};
+                for (k in o) {
+                    if (o[HAS_OWN_PROPERTY](k)) {
+                        ret[k] = S.clone(o[k]);
+                    }
+                }
             }
-            // "Static" types.
-            if (obj === null
-                || ( typeof( obj ) != 'object' )
-                || ( obj instanceof String )
-                || ( obj instanceof Number )
-                || ( obj instanceof Boolean )
-                || ( obj instanceof Date )
-                || ( obj instanceof RegExp)
-                || S.isFunction(obj)) {
-                return obj;
-            }
-            // Objects.
-            clone = new obj.constructor();
-            for (var propertyName in obj) {
-                var property = obj[ propertyName ];
-                clone[ propertyName ] = this.clone(property);
-            }
-            return clone;
+
+            return ret;
         },
+
         /**
          * Gets current date in milliseconds.
          */

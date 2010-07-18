@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 865 Jul 17 21:52
+build: 867 Jul 18 16:57
 */
 /**
  * @module kissy
@@ -448,9 +448,12 @@ KISSY.add('kissy-lang', function(S, undefined) {
         toString = Object.prototype.toString,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
+        HAS_OWN_PROPERTY = 'hasOwnProperty',
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
-        REG_NOT_WHITE = /\S/;
+        REG_NOT_WHITE = /\S/,
+        MAX_CLONE_DEEP = 50,
+        cloneDeep = 0;
 
     S.mix(S, {
 
@@ -522,12 +525,12 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * Removes the whitespace from the beginning and end of a string.
          */
         trim: trim ?
-              function(str) {
-                  return (str == undefined) ? '' : trim.call(str);
-              } :
-              function(str) {
-                  return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
-              },
+            function(str) {
+                return (str == undefined) ? '' : trim.call(str);
+            } :
+            function(str) {
+                return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
+            },
 
         /**
          * Executes the supplied function on each item in the array.
@@ -547,17 +550,17 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * Search for a specified value within an array.
          */
         indexOf: indexOf ?
-                 function(elem, arr) {
-                     return indexOf.call(arr, elem);
-                 } :
-                 function(elem, arr) {
-                     for (var i = 0, len = arr.length; i < len; ++i) {
-                         if (arr[i] === elem) {
-                             return i;
-                         }
-                     }
-                     return -1;
-                 },
+            function(elem, arr) {
+                return indexOf.call(arr, elem);
+            } :
+            function(elem, arr) {
+                for (var i = 0, len = arr.length; i < len; ++i) {
+                    if (arr[i] === elem) {
+                        return i;
+                    }
+                }
+                return -1;
+            },
 
         /**
          * Search for a specified value index within an array.
@@ -590,17 +593,18 @@ KISSY.add('kissy-lang', function(S, undefined) {
             // array-like
             return AP.slice.call(o);
         },
+
         /**
-        * Executes the supplied function on each item in the array.
-        * Returns a new array containing the items that the supplied
-        * function returned true for.
-        * @param arr {Array} the array to iterate
-        * @param fn {Function} the function to execute on each item
-        * @param context {Object} optional context object
-        * @return {Array} The items on which the supplied function
-        *         returned true. If no items matched an empty array is
-        *         returned.
-        */
+         * Executes the supplied function on each item in the array.
+         * Returns a new array containing the items that the supplied
+         * function returned true for.
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item
+         * @param context {Object} optional context object
+         * @return {Array} The items on which the supplied function
+         *         returned true. If no items matched an empty array is
+         *         returned.
+         */
         filter: filter ?
             function(arr, fn, context) {
                 return filter.call(arr, fn, context);
@@ -740,6 +744,33 @@ KISSY.add('kissy-lang', function(S, undefined) {
         },
 
         /**
+         * Creates a deep copy of a plain object or array. Others are returned untouched.
+         */
+        clone: function(o) {
+            var ret = o, b, k;
+
+            // array or plain object
+            if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
+
+                // 避免循环引用
+                if (cloneDeep++ > MAX_CLONE_DEEP) {
+                    S.error('too much recursion in S.clone');
+                    cloneDeep = 0;
+                    return;
+                }
+
+                ret = b ? [] : {};
+                for (k in o) {
+                    if (o[HAS_OWN_PROPERTY](k)) {
+                        ret[k] = S.clone(o[k]);
+                    }
+                }
+            }
+
+            return ret;
+        },
+
+        /**
          * Gets current date in milliseconds.
          */
         now: function() {
@@ -774,7 +805,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
     }
 
     // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
-    if(loc && loc.search && loc.search.indexOf('ks-debug') !== -1){
+    if (loc && loc.search && loc.search.indexOf('ks-debug') !== -1) {
         S.Config.debug = true;
     }
 });

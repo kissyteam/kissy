@@ -514,6 +514,40 @@
         test.extraMsg = out;
     }
 
+    function test_clone(test) {
+
+        if(S.clone() !== undefined) test.fail();
+        if(S.clone(null) !== null) test.fail();
+        if(S.clone(1) !== 1) test.fail();
+        if(S.clone(true) !== true) test.fail();
+        if(S.clone('a') !== 'a') test.fail();
+
+        var t = { a: 0, b: { b1: 1, b2: 'a' } };
+        var t2 = S.clone(t);
+        t.a = 1;
+        if(t2.a !== 0) test.fail();
+        if(t2.b.b1 !== 1) test.fail();
+        t2.b.b2 = 'b';
+        if(t.b.b2 === 'b') test.fail();
+
+        var t3 = ['a', 2, 3, t];
+        var t4 = S.clone(t3);
+        t3[1] = 1;
+        t3.push(5);
+        if(t4[1] !== 2) test.fail();
+        if(t4.length !== 4) test.fail();
+
+        var t5 = { a: 1 }, t6 = { b: t5};
+        t5.a = t6;
+        try {
+            S.clone(t6);
+            test.fail();
+        }
+        catch(ex) {
+            if(ex.toString().indexOf('S.clone') === -1) test.fail();
+        }
+    }
+
 </script>
 </body>
 </html>
