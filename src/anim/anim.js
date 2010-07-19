@@ -14,10 +14,15 @@ KISSY.add('anim', function(S, undefined) {
             'maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineWidth paddingBottom paddingLeft ' +
             'paddingRight paddingTop right textIndent top width wordSpacing zIndex').split(' '),
 
+        STEP_INTERVAL = 13,
+        EVENT_START = 'start',
+        EVENT_STEP = 'step',
+        EVENT_COMPLETE = 'complete',
+
         defaultConfig = {
             duration: 1,
-            easing: Easing.easeNone,
-            queue: true
+            easing: Easing.easeNone
+            //queue: true  TODO: 实现多个动画的 queue 机制
         };
 
     /**
@@ -25,12 +30,17 @@ KISSY.add('anim', function(S, undefined) {
      * @constructor
      */
     function Anim(elem, props, duration, easing, callback) {
+        // ignore non-exist element
+        if(!(elem = S.get(elem))) return;
+
+        // factory or constructor
+        if (!(this instanceof Anim)) {
+            return new Anim(elem, props, duration, easing, callback);
+        }
+
         var self = this,
             isConfig = S.isPlainObject(duration),
             style = props, config;
-
-        // ignore non-exist element
-        if(!(elem = S.get(elem))) return;
 
         /**
          * the related dom element
@@ -39,13 +49,18 @@ KISSY.add('anim', function(S, undefined) {
 
         /**
          * the transition properties
-         * 可以是："width: 200px; height: 500px" 字符串形式
-         * 也可以是: { width: '200px', height: '500px' } 对象形式
+         * 可以是 "width: 200px; color: #ccc" 字符串形式
+         * 也可以是 { width: '200px', color: '#ccc' } 对象形式
          */
         if(S.isPlainObject(style)) {
             style = S.param(style, ';').replace(/=/g, ':');
         }
         self.props = normalize(style);
+        // normalize 后：
+        // props = {
+        //          width: { v: 200, unit: 'px', f: interpolate }
+        //          color: { v: '#ccc', unit: '', f: color }
+        //         }
 
         /**
          * animation config
@@ -61,30 +76,57 @@ KISSY.add('anim', function(S, undefined) {
         }
         self.config = config;
 
-        var target = normalize(PROPS), comp = el.currentStyle ? el.currentStyle : getComputedStyle(el, null),
-            prop, current = {}, start = S.now(), dur = opts.duration || 200, finish = start + dur, interval,
-            easing = opts.easing || function(pos) {
-                return (-Math.cos(pos * Math.PI) / 2) + 0.5;
-            };
+        /**
+         * timer
+         */
+        //self.timer = undefined;
 
-        for (prop in target) current[prop] = parse(comp[prop]);
-
-        interval = setInterval(function() {
-            var time = +new Date, pos = time > finish ? 1 : (time - start) / dur;
-            for (prop in target)
-                el.style[prop] = target[prop].f(current[prop].v, target[prop].v, easing(pos)) + target[prop].u;
-            if (time > finish) {
-                clearInterval(interval);
-                opts.after && opts.after();
-                after && setTimeout(after, 1);
-            }
-        }, 10);
+        // register callback
+        if (S.isFunction(callback)) {
+            self.on(EVENT_COMPLETE, callback);
+        }
     }
 
     S.augment(Anim, S.EventTarget, {
 
-        _init: function() {
+        run: function() {
+            var self = this, config = self.config,
+                elem = self.domEl,
+                duration = config.duration * 1000,
+                easing = config.easing,
+                start = S.now(), finish = start + duration,
+                target = self.props,
+                source = {}, prop;
 
+            for(prop in target) source[prop] = parse(DOM.css(elem, prop));
+            if(self.fire(EVENT_START) === false) return;
+
+            self.timer = S.later(function() {
+                var time = S.now(),
+                    t = time > finish ? 1 : (time - start) / duration,
+                    sp, tp;
+
+                for (prop in target) {
+                    sp = source[prop];
+                    tp = target[prop];
+                    DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
+                }
+
+                if ((self.fire(EVENT_STEP) === false) || time > finish) {
+                    self.stop();
+                }
+
+            }, STEP_INTERVAL, true);
+        },
+
+        stop: function() {
+            var self = this;
+
+            if(self.timer) {
+                self.timer.cancel();
+                self.timer = undefined;
+                self.fire(EVENT_COMPLETE);
+            }
         }
     });
 
@@ -94,21 +136,17 @@ KISSY.add('anim', function(S, undefined) {
         var css, rules = { }, i = PROPS.length, v;
         parseEl.innerHTML = '<div style="' + style + '"></div>';
         css = parseEl.childNodes[0].style;
-        while (i--) if (v = css[PROPS[i]]) rules[PROPS[i]] = parse(v);
+        while (i--) if ((v = css[PROPS[i]])) rules[PROPS[i]] = parse(v);
         return rules;
     }
 
-    function parse(prop) {
-        var p = PARSE_FLOAT(prop), q = prop.replace(/^[\-\d\.]+/, '');
-        return isNaN(p) ? { v: q, f: color, u: ''} : { v: p, f: interpolate, u: q };
+    function parse(val) {
+        var num = PARSE_FLOAT(val), unit = val.replace(/^[-\d\.]+/, '');
+        return isNaN(num) ? { v: unit, u: '', f: color } : { v: num, u: unit, f: interpolate };
     }
 
     function interpolate(source, target, pos) {
         return (source + (target - source) * pos).toFixed(3);
-    }
-
-    function s(str, p, c) {
-        return str.substr(p, c || 1);
     }
 
     function color(source, target, pos) {
@@ -126,6 +164,10 @@ KISSY.add('anim', function(S, undefined) {
             r.push(tmp < 0 ? 0 : tmp > 255 ? 255 : tmp);
         }
         return 'rgb(' + r.join(',') + ')';
+    }
+
+    function s(str, p, c) {
+        return str.substr(p, c || 1);
     }
 });
 

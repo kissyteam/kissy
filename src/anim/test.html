@@ -20,11 +20,10 @@
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY, Anim = S.Anim;
+    var S = KISSY;
 
-    for(var p in S.get('#test').style) {
-        alert(p);
-    }
+    var anim = S.Anim('#test', 'width: 30px; height: 50px; border: 0');
+    debugger
 
 </script>
 

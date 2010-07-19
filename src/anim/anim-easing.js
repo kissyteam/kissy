@@ -1,226 +1,164 @@
 /**
  * @module anim-easing
  */
-KISSY.add('anim-easing', function(S, undefined) {
+KISSY.add('anim-easing', function(S) {
 
     // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
     // Preview: http://www.robertpenner.com/easing/easing_demo.html
 
+    /**
+     * 和 YUI 的 Easing 相比，S.Easing 进行了归一化处理，参数调整为：
+     * @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
+     * @param {Number} b Starting value  b = 0
+     * @param {Number} c Delta between start and end values  c = 1
+     * @param {Number} d Total length of animation d = 1
+     */
+
     var M = Math, PI = M.PI,
-        pow = M.pow, sin = M.sin, abs = M.abs, asin = M.asin,
+        pow = M.pow, sin = M.sin,
         BACK_CONST = 1.70158,
 
         Easing = {
 
             /**
              * Uniform speed between points.
-             * @param {Number} t Time value used to compute current value
-             * @param {Number} b Starting value
-             * @param {Number} c Delta between start and end values
-             * @param {Number} d Total length of animation
-             * @return {Number} The computed value for the current animation frame
              */
-            easeNone: function (t, b, c, d) {
-                return c * t / d + b;
+            easeNone: function (t) {
+                return t;
             },
 
             /**
              * Begins slowly and accelerates towards end. (quadratic)
              */
-            easeIn: function (t, b, c, d) {
-                return c * (t /= d) * t + b;
+            easeIn: function (t) {
+                return t * t;
             },
 
             /**
              * Begins quickly and decelerates towards end.  (quadratic)
              */
-            easeOut: function (t, b, c, d) {
-                return -c * (t /= d) * (t - 2) + b;
+            easeOut: function (t) {
+                return ( 2 - t) * t;
             },
 
             /**
              * Begins slowly and decelerates towards end. (quadratic)
              */
-            easeBoth: function (t, b, c, d) {
-                return (t /= d / 2) < 1 ?
-                    c / 2 * t * t + b :
-                    -c / 2 * ((--t) * (t - 2) - 1) + b;
+            easeBoth: function (t) {
+                return (t *= 2) < 1 ?
+                    .5 * t * t :
+                    .5 * (1 - (--t) * (t - 2));
             },
 
             /**
              * Begins slowly and accelerates towards end. (quartic)
              */
-            easeInStrong: function (t, b, c, d) {
-                return c * (t /= d) * t * t * t + b;
+            easeInStrong: function (t) {
+                return t * t * t * t;
             },
 
             /**
              * Begins quickly and decelerates towards end.  (quartic)
              */
-            easeOutStrong: function (t, b, c, d) {
-                return -c * ((t = t / d - 1) * t * t * t - 1) + b;
+            easeOutStrong: function (t) {
+                return 1 - (--t) * t * t * t;
             },
 
             /**
              * Begins slowly and decelerates towards end. (quartic)
              */
-            easeBothStrong: function (t, b, c, d) {
-                return (t /= d / 2) < 1 ?
-                    c / 2 * t * t * t * t + b :
-                    -c / 2 * ((t -= 2) * t * t * t - 2) + b;
+            easeBothStrong: function (t) {
+                return (t *= 2) < 1 ?
+                    .5 * t * t * t * t :
+                    .5 * (2 - (t -= 2) * t * t * t);
             },
 
             /**
              * Snap in elastic effect.
-             * @param {Number} a Amplitude (optional)
-             * @param {Number} p Period (optional)
              */
 
-            elasticIn: function (t, b, c, d, a, p) {
-                var s;
-                if (t === 0) {
-                    return b;
-                }
-                if ((t /= d) === 1) {
-                    return b + c;
-                }
-                if (!p) {
-                    p = d * 0.3;
-                }
-
-                if (!a || a < abs(c)) {
-                    a = c;
-                    s = p / 4;
-                }
-                else {
-                    s = p / (2 * PI) * asin(c / a);
-                }
-
-                return -(a * pow(2, 10 * (t -= 1)) * sin((t * d - s) * (2 * PI) / p)) + b;
+            elasticIn: function (t) {
+                var p = .3, s = p / 4;
+                if (t === 0 || t === 1) return t;
+                return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
             },
 
             /**
              * Snap out elastic effect.
              */
-            elasticOut: function (t, b, c, d, a, p) {
-                var s;
-                if (t === 0) {
-                    return b;
-                }
-                if ((t /= d) === 1) {
-                    return b + c;
-                }
-                if (!p) {
-                    p = d * 0.3;
-                }
-
-                if (!a || a < abs(c)) {
-                    a = c;
-                    s = p / 4;
-                }
-                else {
-                    s = p / (2 * PI) * asin(c / a);
-                }
-
-                return a * pow(2, -10 * t) * sin((t * d - s) * (2 * PI) / p) + c + b;
+            elasticOut: function (t) {
+                var p = .3, s = p / 4;
+                if (t === 0 || t === 1) return t;
+                return pow(2, -10 * t) * sin((t - s) * (2 * PI) / p) + 1;
             },
 
             /**
              * Snap both elastic effect.
              */
-            elasticBoth: function (t, b, c, d, a, p) {
-                var s;
-                if (t === 0) {
-                    return b;
-                }
-
-                if ((t /= d / 2) === 2) {
-                    return b + c;
-                }
-
-                if (!p) {
-                    p = d * (0.3 * 1.5);
-                }
-
-                if (!a || a < abs(c)) {
-                    a = c;
-                    s = p / 4;
-                }
-                else {
-                    s = p / (2 * PI) * asin(c / a);
-                }
+            elasticBoth: function (t) {
+                var p = .45, s = p / 4;
+                if (t === 0 || (t *= 2) === 2) return t;
 
                 if (t < 1) {
-                    return -0.5 * (a * pow(2, 10 * (t -= 1)) *
-                        sin((t * d - s) * (2 * PI) / p)) + b;
+                    return -.5 * (pow(2, 10 * (t -= 1)) *
+                        sin((t - s) * (2 * PI) / p));
                 }
-                return a * pow(2, -10 * (t -= 1)) *
-                    sin((t * d - s) * (2 * PI) / p) * 0.5 + c + b;
+                return pow(2, -10 * (t -= 1)) *
+                    sin((t - s) * (2 * PI) / p) * .5 + 1;
             },
 
             /**
              * Backtracks slightly, then reverses direction and moves to end.
-             * @param {Number} s Overshoot (optional)
              */
-            backIn: function (t, b, c, d, s) {
-                if (s === undefined) {
-                    s = BACK_CONST;
-                }
-                if (t === d) {
-                    t -= 0.001;
-                }
-                return c * (t /= d) * t * ((s + 1) * t - s) + b;
+            backIn: function (t) {
+                if (t === 1) t -= .001;
+                return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
             },
 
             /**
              * Overshoots end, then reverses and comes back to end.
              */
-            backOut: function (t, b, c, d, s) {
-                if (s === undefined) {
-                    s = BACK_CONST;
-                }
-                return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
+            backOut: function (t) {
+                return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
             },
 
             /**
              * Backtracks slightly, then reverses direction, overshoots end,
              * then reverses and comes back to end.
              */
-            backBoth: function (t, b, c, d, s) {
-                if (s === undefined) {
-                    s = BACK_CONST;
+            backBoth: function (t) {
+                if ((t *= 2 ) < 1) {
+                    return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
                 }
-
-                if ((t /= d / 2 ) < 1) {
-                    return c / 2 * (t * t * (((s *= (1.525)) + 1) * t - s)) + b;
-                }
-                return c / 2 * ((t -= 2) * t * (((s *= (1.525)) + 1) * t + s) + 2) + b;
+                return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
             },
 
             /**
              * Bounce off of start.
              */
-            bounceIn: function (t, b, c, d) {
-                return c - Easing.bounceOut(d - t, 0, c, d) + b;
+            bounceIn: function (t) {
+                return 1 - Easing.bounceOut(1 - t);
             },
 
             /**
              * Bounces off end.
              */
-            bounceOut: function (t, b, c, d) {
+            bounceOut: function (t) {
                 var s = 7.5625, r;
 
-                if ((t /= d) < (1 / 2.75)) {
-                    r = c * (s * t * t) + b;
+                if (t < (1 / 2.75)) {
+                    r = s * t * t;
                 }
                 else if (t < (2 / 2.75)) {
-                    r =  c * (s * (t -= (1.5 / 2.75)) * t + 0.75) + b;
+                    r =  s * (t -= (1.5 / 2.75)) * t + .75;
                 }
                 else if (t < (2.5 / 2.75)) {
-                    r =  c * (s * (t -= (2.25 / 2.75)) * t + 0.9375) + b;
+                    r =  s * (t -= (2.25 / 2.75)) * t + .9375;
                 }
-                r =  c * (s * (t -= (2.625 / 2.75)) * t + 0.984375) + b;
+                else {
+                    r =  s * (t -= (2.625 / 2.75)) * t + .984375;
+                }
 
                 return r;
             },
@@ -228,11 +166,11 @@ KISSY.add('anim-easing', function(S, undefined) {
             /**
              * Bounces off start and end.
              */
-            bounceBoth: function (t, b, c, d) {
-                if (t < d / 2) {
-                    return Easing.bounceIn(t * 2, 0, c, d) * 0.5 + b;
+            bounceBoth: function (t) {
+                if (t < .5) {
+                    return Easing.bounceIn(t * 2) * .5;
                 }
-                return Easing.bounceOut(t * 2 - d, 0, c, d) * 0.5 + c * 0.5 + b;
+                return Easing.bounceOut(t * 2 - 1) * .5 + .5;
             }
         };
 
