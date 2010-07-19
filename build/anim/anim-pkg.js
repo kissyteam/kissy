@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 875 Jul 19 16:13
+build: 877 Jul 19 17:41
 */
 /**
  * @module anim-easing
@@ -192,9 +192,9 @@ KISSY.add('anim-easing', function(S) {
  *
  */
 /**
- * @module  anim
- * @author  lifesinger@gmail.com
- * @depends ks-core
+ * @module   anim
+ * @author   lifesinger@gmail.com
+ * @depends  ks-core
  */
 KISSY.add('anim', function(S, undefined) {
 
@@ -208,12 +208,14 @@ KISSY.add('anim', function(S, undefined) {
             'paddingRight paddingTop right textIndent top width wordSpacing zIndex').split(' '),
 
         STEP_INTERVAL = 13,
+        EVENT_START = 'start',
+        EVENT_STEP = 'step',
         EVENT_COMPLETE = 'complete',
 
         defaultConfig = {
             duration: 1,
             easing: Easing.easeNone
-            //queue: true  TODO: 实现多个动画的 queue 机制
+            //queue: true
         };
 
     /**
@@ -287,11 +289,14 @@ KISSY.add('anim', function(S, undefined) {
                 easing = config.easing,
                 start = S.now(), finish = start + duration,
                 target = self.props,
-                source = {}, prop;
+                source = {}, prop, go;
 
             for (prop in target) source[prop] = parse(DOM.css(elem, prop));
+            if(self.fire(EVENT_START) === false) return;
 
-            self.timer = S.later(function() {
+            self.stop(); // 先停止掉正在运行的动画
+
+            self.timer = S.later((go = function () {
                 var time = S.now(),
                     t = time > finish ? 1 : (time - start) / duration,
                     sp, tp;
@@ -308,12 +313,16 @@ KISSY.add('anim', function(S, undefined) {
                     DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
                 }
 
-                if (time > finish) {
+                if ((self.fire(EVENT_STEP) === false) || time > finish) {
                     self.stop();
                     self.fire(EVENT_COMPLETE);
                 }
+            }), STEP_INTERVAL, true);
 
-            }, STEP_INTERVAL, true);
+            // 立刻执行
+            go();
+
+            return self;
         },
 
         stop: function() {
@@ -323,6 +332,8 @@ KISSY.add('anim', function(S, undefined) {
                 self.timer.cancel();
                 self.timer = undefined;
             }
+
+            return self;
         }
     });
 
@@ -332,7 +343,6 @@ KISSY.add('anim', function(S, undefined) {
         var css, rules = { }, i = PROPS.length, v;
         parseEl.innerHTML = '<div style="' + style + '"></div>';
         css = parseEl.childNodes[0].style;
-        S.log(css, 'dir');
         while (i--) if ((v = css[PROPS[i]])) rules[PROPS[i]] = parse(v);
         return rules;
     }
@@ -377,10 +387,42 @@ KISSY.add('anim', function(S, undefined) {
 });
 
 /**
+ * TODO:
+ *  - 实现 jQuery Effects 的 queue / specialEasing / += / toogle,show,hide 等特性
+ *  - 还有些情况就是动画不一定改变 CSS, 有可能是 scroll-left 等
  *
  * NOTES:
- *
  *  - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
  *  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
  *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile
+ */
+/**
+ * @module  anim-node-plugin
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('anim-node-plugin', function(S, undefined) {
+
+    var Anim = S.Anim,
+        NP = S.Node.prototype, NLP = S.NodeList.prototype;
+
+    S.each([NP, NLP], function(P) {
+
+        P.animate = function() {
+            var args = S.makeArray(arguments);
+
+            S.each(this, function(elem) {
+                Anim.apply(undefined, [elem].concat(args)).run();
+            });
+            
+            return this;
+        };
+    })
+
+});
+
+/**
+ * TODO:
+ *  - ����ֱ�Ӹ� Node ��� Node.addMethods ����
+ *  - �����Ƿ���� slideUp/slideDown/fadeIn/show/hide �ȿ�ݷ���
+ *
  */

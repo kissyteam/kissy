@@ -14,9 +14,17 @@
 
 <div id="test" style="width: 10px; height: 20px; position: absolute; top: 200px; left: 50px; text-align: center; color: #999">^o^</div>
 
+<div id="test2" style="width: 50px; height: 20px; text-align: center; position: relative; border: 1px solid green; background: #bca">test2</div>
+<button id="test2-btn">run #test2</button>
+
+<div class="test3" style="width: 50px; height: 20px; margin: 10px; text-align: center; position: relative; border: 1px solid #478F45; background: #BDE877">test3 a</div>
+<div class="test3" style="width: 50px; height: 20px; margin: 10px; text-align: center; position: relative; border: 1px solid #C18F5A; background: #F7CA9B">test3 b</div>
+<button id="test3-btn">run .test3</button>
+
 <script src="../../build/packages/ks-core.js"></script>
 <script src="anim-easing.js"></script>
 <script src="anim.js"></script>
+<script src="anim-node-plugin.js"></script>
 
 <!-- Test Cases -->
 <script>
@@ -40,6 +48,14 @@
     function test_anim() {
         anim.run();
     }
+
+    S.one('#test2-btn').on('click', function() {
+        S.one('#test2').animate('left: 500px', 3, S.Easing.backOut);
+    });
+
+    S.one('#test3-btn').on('click', function() {
+        S.all('.test3').animate('left: 800px', 5, S.Easing.elasticOut);
+    })
 
 </script>
 
