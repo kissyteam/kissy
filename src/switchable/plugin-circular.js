@@ -1,12 +1,12 @@
 /**
  * Switchable Circular Plugin
- * @creator     玉伯<lifesinger@gmail.com>
+ * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-circular', function(S) {
+KISSY.add('switchable-circular', function(S, undefined) {
 
-    var RELATIVE = 'relative',
+    var POSITION = 'position', RELATIVE = 'relative',
         LEFT = 'left', TOP = 'top',
-        PX = 'px', EMPTY = '',
+        EMPTY = '',
         FORWARD = 'forward', BACKWARD = 'backward',
         SCROLLX = 'scrollx', SCROLLY = 'scrolly',
         Switchable = S.Switchable;
@@ -29,33 +29,31 @@ KISSY.add('switchable-circular', function(S) {
             prop = isX ? LEFT : TOP,
             viewDiff = self.viewSize[isX ? 0 : 1],
             diff = -viewDiff * index,
-            attributes = {},
+            props = {},
             isCritical,
             isBackward = direction === BACKWARD;
 
         // 从第一个反向滚动到最后一个 or 从最后一个正向滚动到第一个
         isCritical = (isBackward && activeIndex === 0 && index === len - 1)
-                     || (direction === FORWARD && activeIndex === len - 1 && index === 0);
+            || (direction === FORWARD && activeIndex === len - 1 && index === 0);
 
-        if(isCritical) {
+        if (isCritical) {
             // 调整位置并获取 diff
             diff = adjustPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
         }
-        attributes[prop] = { to: diff };
+        props[prop] = diff;
 
         // 开始动画
         if (self.anim) self.anim.stop();
-        self.anim = new YAHOO.util.Anim(self.content, attributes, cfg.duration, cfg.easing);
-        self.anim.onComplete.subscribe(function() {
-            if(isCritical) {
+        self.anim = new S.Anim(self.content, props, cfg.duration, cfg.easing, function() {
+            if (isCritical) {
                 // 复原位置
                 resetPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
             }
             // free
-            self.anim = null;
+            self.anim = undefined;
             callback();
-        });
-        self.anim.animate();
+        }).run();
     }
 
     /**
@@ -72,8 +70,8 @@ KISSY.add('switchable-circular', function(S) {
 
         // 调整 panels 到下一个视图中
         for (i = from; i < to; i++) {
-            panels[i].style.position = RELATIVE;
-            panels[i].style[prop] = (isBackward ? '-' : EMPTY) + viewDiff * len + PX;
+            DOM.css(panels[i], POSITION, RELATIVE);
+            DOM.css(panels[i], prop, (isBackward ? -1 : 1) * viewDiff * len);
         }
 
         // 偏移量
@@ -94,18 +92,19 @@ KISSY.add('switchable-circular', function(S) {
 
         // 滚动完成后，复位到正常状态
         for (i = from; i < to; i++) {
-            panels[i].style.position = EMPTY;
-            panels[i].style[prop] = EMPTY;
+            DOM.css(panels[i], POSITION, EMPTY);
+            DOM.css(panels[i], prop, EMPTY);
         }
 
         // 瞬移到正常位置
-        self.content.style[prop] = isBackward ? -viewDiff * (len - 1) + PX : EMPTY;
+        DOM.css(self.content, prop, isBackward ? -viewDiff * (len - 1) : EMPTY);
     }
 
     /**
      * 添加插件
      */
     Switchable.Plugins.push({
+
         name: 'circular',
 
         /**

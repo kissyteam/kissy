@@ -1,6 +1,6 @@
 /**
  * Switchable Autoplay Plugin
- * @creator     玉伯<lifesinger@gmail.com>
+ * @creator  玉伯<lifesinger@gmail.com>
  */
 KISSY.add('switchable-autoplay', function(S) {
 
@@ -23,6 +23,7 @@ KISSY.add('switchable-autoplay', function(S) {
      *   - this.autoplayTimer
      */
     Switchable.Plugins.push({
+
         name: 'autoplay',
 
         init: function(host) {
@@ -39,7 +40,7 @@ KISSY.add('switchable-autoplay', function(S) {
                     // 在 8s 时，通过 focus 主动触发切换，停留 1s 后，鼠标移出
                     // 这时如果不 setTimeout, 再过 1s 后，主动触发的 panel 将被替换掉
                     // 为了保证每个 panel 的显示时间都不小于 interval, 此处加上 setTimeout
-                    setTimeout(function() {
+                    S.later(function() {
                         host.paused = false;
                     }, cfg.interval * 1000);
                 });

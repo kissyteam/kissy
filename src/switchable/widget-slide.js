@@ -24,8 +24,7 @@ KISSY.add('slide', function(S) {
             return new Slide(container, config);
         }
 
-        config = S.merge(defaultConfig, config || { });
-        Slide.superclass.constructor.call(self, container, config);
+        Slide.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
     }
 
     S.extend(Slide, S.Switchable);

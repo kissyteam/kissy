@@ -18,7 +18,7 @@
             <path path="widget-tabs.js"/>
             <path path="widget-slide.js"/>
             <path path="widget-carousel.js"/>
-            <path path="widget-accordion.js"/>
+            <!--<path path="widget-accordion.js"/>-->
         </concat>
     </target>
 

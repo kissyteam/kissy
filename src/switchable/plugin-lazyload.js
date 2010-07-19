@@ -1,6 +1,6 @@
 /**
  * Switchable Lazyload Plugin
- * @creator     玉伯<lifesinger@gmail.com>
+ * @creator  玉伯<lifesinger@gmail.com>
  */
 KISSY.add('switchable-lazyload', function(S) {
 
@@ -9,8 +9,7 @@ KISSY.add('switchable-lazyload', function(S) {
         IMG_SRC = 'img-src',
         TEXTAREA_DATA = 'textarea-data',
         FLAGS = { },
-        Switchable = S.Switchable,
-        DataLazyload = S.DataLazyload;
+        Switchable = S.Switchable;
 
     FLAGS[IMG_SRC] = 'data-lazyload-src-custom';
     FLAGS[TEXTAREA_DATA] = 'ks-datalazyload-custom';
@@ -27,11 +26,14 @@ KISSY.add('switchable-lazyload', function(S) {
      * 织入初始化函数
      */
     Switchable.Plugins.push({
-        name: 'autoplay',
+
+        name: 'lazyload',
 
         init: function(host) {
-            var cfg = host.config,
+            var DataLazyload = S.DataLazyload,
+                cfg = host.config,
                 type = cfg.lazyDataType, flag = cfg.lazyDataFlag || FLAGS[type];
+
             if (!DataLazyload || !type || !flag) return; // 没有延迟项
 
             host.on(EVENT_BEFORE_SWITCH, loadLazyData);
@@ -54,23 +56,17 @@ KISSY.add('switchable-lazyload', function(S) {
              * 是否都已加载完成
              */
             function isAllDone() {
-                var imgs, textareas, i, len;
+                var elems, i, len,
+                    tagName = (type === IMG_SRC) ? 'img' : (type === TEXTAREA_DATA ? 'textarea' : '');
 
-                if (type === IMG_SRC) {
-                    imgs = S.query('img', host.container);
-                    for (i = 0,len = imgs.length; i < len; i++) {
-                        if (DOM.attr(imgs[i], flag)) return false;
-                    }
-                } else if (type === TEXTAREA_DATA) {
-                    textareas = S.query('textarea', host.container);
-                    for (i = 0,len = textareas.length; i < len; i++) {
-                        if (DOM.hasClass(textareas[i], flag)) return false;
+                if (tagName) {
+                    elems = S.query(tagName, host.container);
+                    for (i = 0, len = elems.length; i < len; i++) {
+                        if (DOM.attr(elems[i], flag)) return false;
                     }
                 }
-
                 return true;
             }
-
         }
     });
 });

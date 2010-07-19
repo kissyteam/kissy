@@ -6,13 +6,11 @@
 KISSY.add('switchable', function(S, undefined) {
 
     var DOM = S.DOM, Event = S.Event,
-        doc = document,
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
         EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
-        CLS_PREFIX = 'ks-switchable-',
-        SP = Switchable.prototype;
+        CLS_PREFIX = 'ks-switchable-';
 
     /**
      * Switchable Widget
@@ -20,7 +18,7 @@ KISSY.add('switchable', function(S, undefined) {
      *   - this.container
      *   - this.config
      *   - this.triggers  可以为空值 []
-     *   - this.panels    肯定有值，且 length > 1
+     *   - this.panels    可以为空值 []
      *   - this.content
      *   - this.length
      *   - this.activeIndex
@@ -56,13 +54,13 @@ KISSY.add('switchable', function(S, undefined) {
          * triggers
          * @type Array of HTMLElement
          */
-        self.triggers = self.triggers || [];
+        //self.triggers
 
         /**
          * panels
          * @type Array of HTMLElement
          */
-        self.panels = self.panels || [];
+        //self.panels
 
         /**
          * length = panels.length / steps
@@ -78,11 +76,9 @@ KISSY.add('switchable', function(S, undefined) {
 
         /**
          * 当前激活的 index
-         * @type number
+         * @type Number
          */
-        if (self.activeIndex === undefined) {
-            self.activeIndex = config.activeIndex;
-        }
+        self.activeIndex = config.activeIndex;
 
         self._init();
     }
@@ -124,7 +120,7 @@ KISSY.add('switchable', function(S, undefined) {
     // 插件
     Switchable.Plugins = [];
 
-    S.mix(SP, {
+    S.augment(Switchable, S.EventTarget, {
 
         /**
          * init switchable
@@ -133,9 +129,7 @@ KISSY.add('switchable', function(S, undefined) {
             var self = this, cfg = self.config;
 
             // parse markup
-            if (self.panels.length === 0) {
-                self._parseMarkup();
-            }
+            self._parseMarkup();
 
             // bind triggers
             if (cfg.hasTriggers) {
@@ -156,15 +150,12 @@ KISSY.add('switchable', function(S, undefined) {
         _parseMarkup: function() {
             var self = this, container = self.container,
                 cfg = self.config,
-                hasTriggers = cfg.hasTriggers,
                 nav, content, triggers = [], panels = [], i, n, m;
 
             switch (cfg.markupType) {
                 case 0: // 默认结构
                     nav = S.get(DOT + cfg.navCls, container);
-                    if (nav) {
-                        triggers = DOM.children(nav);
-                    }
+                    if (nav) triggers = DOM.children(nav);
                     content = S.get(DOT + cfg.contentCls, container);
                     panels = DOM.children(content);
                     break;
@@ -184,7 +175,7 @@ KISSY.add('switchable', function(S, undefined) {
             self.length = n / cfg.steps;
 
             // 自动生成 triggers
-            if (hasTriggers && n > 0 && triggers.length === 0) {
+            if (cfg.hasTriggers && n > 0 && triggers.length === 0) {
                 triggers = self._generateTriggersMarkup(self.length);
             }
 
@@ -201,11 +192,11 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _generateTriggersMarkup: function(len) {
             var self = this, cfg = self.config,
-                ul = doc.createElement('UL'), li, i;
+                ul = DOM.create('<ul>'), li, i;
 
             ul.className = cfg.navCls;
             for (i = 0; i < len; i++) {
-                li = doc.createElement('LI');
+                li = DOM.create('<li>');
                 if (i === self.activeIndex) {
                     li.className = cfg.activeTriggerCls;
                 }
@@ -253,7 +244,8 @@ KISSY.add('switchable', function(S, undefined) {
         _onFocusTrigger: function(index) {
             var self = this;
             if (self.activeIndex === index) return; // 重复点击
-            if (self.switchTimer) self.switchTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
+            this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
+
             self.switchTo(index);
         },
 
@@ -262,22 +254,29 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onMouseEnterTrigger: function(index) {
             var self = this;
-            //S.log('Triggerable._onMouseEnterTrigger: index = ' + index);
+            if (self.activeIndex === index) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
 
-            // 不重复触发。比如：已显示内容时，将鼠标快速滑出再滑进来，不必触发
-            if (self.activeIndex !== index) {
-                self.switchTimer = S.later(function() {
-                    self.switchTo(index);
-                }, self.config.delay * 1000);
-            }
+            self.switchTimer = S.later(function() {
+                self.switchTo(index);
+            }, self.config.delay * 1000);
         },
 
         /**
          * 鼠标移出 trigger 时触发的事件
          */
         _onMouseLeaveTrigger: function() {
+            this._cancelSwitchTimer();
+        },
+
+        /**
+         * 取消切换定时器
+         */
+        _cancelSwitchTimer: function() {
             var self = this;
-            if (self.switchTimer) self.switchTimer.cancel();
+            if(self.switchTimer) {
+                self.switchTimer.cancel();
+                self.switchTimer = undefined;
+            }
         },
 
         /**
@@ -289,9 +288,8 @@ KISSY.add('switchable', function(S, undefined) {
                 activeIndex = self.activeIndex,
                 steps = cfg.steps,
                 fromIndex = activeIndex * steps, toIndex = index * steps;
-            //S.log('Triggerable.switchTo: index = ' + index);
 
-            if (index === activeIndex) return self;
+            if (index === activeIndex) return self; // 再次避免重复触发
             if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
 
             // switch active trigger
@@ -304,6 +302,7 @@ KISSY.add('switchable', function(S, undefined) {
                 direction = index > activeIndex ? FORWARD : BACKWARD;
             }
 
+            // switch view
             self._switchView(
                 panels.slice(fromIndex, fromIndex + steps),
                 panels.slice(toIndex, toIndex + steps),
@@ -355,8 +354,6 @@ KISSY.add('switchable', function(S, undefined) {
         }
     });
 
-    S.mix(SP, S.EventTarget);
-
     S.Switchable = Switchable;
 });
 
@@ -376,6 +373,7 @@ KISSY.add('switchable', function(S, undefined) {
  * TODO:
  *  - http://malsup.com/jquery/cycle/
  *  - http://www.mall.taobao.com/go/chn/mall_chl/flagship.php
+ *  - 对 touch 设备的支持
  *
  * References:
  *  - jQuery Scrollable http://flowplayer.org/tools/scrollable.html
