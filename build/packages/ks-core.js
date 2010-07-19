@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 867 Jul 18 16:57
+build: 869 Jul 18 22:53
 */
 /**
  * @module kissy
@@ -449,6 +449,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
         encode = encodeURIComponent,
         decode = decodeURIComponent,
         HAS_OWN_PROPERTY = 'hasOwnProperty',
+        SEP = '&',
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
         REG_NOT_WHITE = /\S/,
@@ -629,9 +630,10 @@ KISSY.add('kissy-lang', function(S, undefined) {
          * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
          * </code>
          */
-        param: function(o) {
+        param: function(o, sep) {
             // 非 plain object, 直接返回空
             if (!S.isPlainObject(o)) return '';
+            sep = sep || SEP;
 
             var buf = [], key, val;
             for (key in o) {
@@ -640,13 +642,13 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
                 // val 为有效的非数组值
                 if (isValidParamValue(val)) {
-                    buf.push(key, '=', encode(val + ''), '&');
+                    buf.push(key, '=', encode(val + ''), sep);
                 }
                 // val 为非空数组
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, '[]=', encode(val[i] + ''), '&');
+                            buf.push(key, '[]=', encode(val[i] + ''), sep);
                         }
                     }
                 }
@@ -669,7 +671,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
             if (typeof str !== 'string' || (str = S.trim(str)).length === 0) return {};
 
             var ret = {},
-                pairs = str.split(sep || '&'),
+                pairs = str.split(sep || SEP),
                 pair, key, val, m,
                 i = 0, len = pairs.length;
 
