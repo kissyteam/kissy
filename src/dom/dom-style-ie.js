@@ -14,6 +14,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         FILTER = 'filter',
         FILTERS = 'filters',
         CURRENT_STYLE = 'currentStyle',
+        RUNTIME_STYLE = 'runtimeStyle',
         LEFT = 'left',
         PX = 'px',
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
@@ -81,14 +82,16 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // but a number that has a weird ending, we need to convert it to pixels
             else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret))) {
                 // Remember the original values
-                var left = style[LEFT];
+				var left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
 
-                // Put in the new values to get a computed value out
-                style[LEFT] = (name === 'fontSize') ? '1em' : (ret || 0);
-                ret = style['pixelLeft'] + PX;
+				// Put in the new values to get a computed value out
+				elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
+				style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
+				ret = style['pixelLeft'] + PX;
 
-                // Revert the changed values
-                style[LEFT] = left;
+				// Revert the changed values
+				style[LEFT] = left;
+				elem[RUNTIME_STYLE][LEFT] = rsLeft;
             }
 
             return ret;
