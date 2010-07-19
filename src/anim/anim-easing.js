@@ -178,9 +178,11 @@ KISSY.add('anim-easing', function(S) {
 });
 
 /**
- * NOTES:
+ * TODO:
+ *  - test-easing.html 详细的测试 + 曲线可视化
  *
- *  - [20100719] 综合比较 jQuery UI/scripty2/YUI 的 easing 命名，还是觉得 YUI 的对用户
+ * NOTES:
+ *  - 综合比较 jQuery UI/scripty2/YUI 的 easing 命名，还是觉得 YUI 的对用户
  *    最友好。因此这次完全照搬 YUI 的 Easing, 只是代码上做了点压缩优化。
  *
  */

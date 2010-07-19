@@ -1,231 +1,169 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 871 Jul 19 08:51
+build: 875 Jul 19 16:13
 */
 /**
  * @module anim-easing
  */
-KISSY.add('anim-easing', function(S, undefined) {
+KISSY.add('anim-easing', function(S) {
 
     // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
     // Preview: http://www.robertpenner.com/easing/easing_demo.html
 
+    /**
+     * 和 YUI 的 Easing 相比，S.Easing 进行了归一化处理，参数调整为：
+     * @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
+     * @param {Number} b Starting value  b = 0
+     * @param {Number} c Delta between start and end values  c = 1
+     * @param {Number} d Total length of animation d = 1
+     */
+
     var M = Math, PI = M.PI,
-        pow = M.pow, sin = M.sin, abs = M.abs, asin = M.asin,
+        pow = M.pow, sin = M.sin,
         BACK_CONST = 1.70158,
 
         Easing = {
 
             /**
              * Uniform speed between points.
-             * @param {Number} t Time value used to compute current value
-             * @param {Number} b Starting value
-             * @param {Number} c Delta between start and end values
-             * @param {Number} d Total length of animation
-             * @return {Number} The computed value for the current animation frame
              */
-            easeNone: function (t, b, c, d) {
-                return c * t / d + b;
+            easeNone: function (t) {
+                return t;
             },
 
             /**
              * Begins slowly and accelerates towards end. (quadratic)
              */
-            easeIn: function (t, b, c, d) {
-                return c * (t /= d) * t + b;
+            easeIn: function (t) {
+                return t * t;
             },
 
             /**
              * Begins quickly and decelerates towards end.  (quadratic)
              */
-            easeOut: function (t, b, c, d) {
-                return -c * (t /= d) * (t - 2) + b;
+            easeOut: function (t) {
+                return ( 2 - t) * t;
             },
 
             /**
              * Begins slowly and decelerates towards end. (quadratic)
              */
-            easeBoth: function (t, b, c, d) {
-                return (t /= d / 2) < 1 ?
-                    c / 2 * t * t + b :
-                    -c / 2 * ((--t) * (t - 2) - 1) + b;
+            easeBoth: function (t) {
+                return (t *= 2) < 1 ?
+                    .5 * t * t :
+                    .5 * (1 - (--t) * (t - 2));
             },
 
             /**
              * Begins slowly and accelerates towards end. (quartic)
              */
-            easeInStrong: function (t, b, c, d) {
-                return c * (t /= d) * t * t * t + b;
+            easeInStrong: function (t) {
+                return t * t * t * t;
             },
 
             /**
              * Begins quickly and decelerates towards end.  (quartic)
              */
-            easeOutStrong: function (t, b, c, d) {
-                return -c * ((t = t / d - 1) * t * t * t - 1) + b;
+            easeOutStrong: function (t) {
+                return 1 - (--t) * t * t * t;
             },
 
             /**
              * Begins slowly and decelerates towards end. (quartic)
              */
-            easeBothStrong: function (t, b, c, d) {
-                return (t /= d / 2) < 1 ?
-                    c / 2 * t * t * t * t + b :
-                    -c / 2 * ((t -= 2) * t * t * t - 2) + b;
+            easeBothStrong: function (t) {
+                return (t *= 2) < 1 ?
+                    .5 * t * t * t * t :
+                    .5 * (2 - (t -= 2) * t * t * t);
             },
 
             /**
              * Snap in elastic effect.
-             * @param {Number} a Amplitude (optional)
-             * @param {Number} p Period (optional)
              */
 
-            elasticIn: function (t, b, c, d, a, p) {
-                var s;
-                if (t === 0) {
-                    return b;
-                }
-                if ((t /= d) === 1) {
-                    return b + c;
-                }
-                if (!p) {
-                    p = d * 0.3;
-                }
-
-                if (!a || a < abs(c)) {
-                    a = c;
-                    s = p / 4;
-                }
-                else {
-                    s = p / (2 * PI) * asin(c / a);
-                }
-
-                return -(a * pow(2, 10 * (t -= 1)) * sin((t * d - s) * (2 * PI) / p)) + b;
+            elasticIn: function (t) {
+                var p = .3, s = p / 4;
+                if (t === 0 || t === 1) return t;
+                return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
             },
 
             /**
              * Snap out elastic effect.
              */
-            elasticOut: function (t, b, c, d, a, p) {
-                var s;
-                if (t === 0) {
-                    return b;
-                }
-                if ((t /= d) === 1) {
-                    return b + c;
-                }
-                if (!p) {
-                    p = d * 0.3;
-                }
-
-                if (!a || a < abs(c)) {
-                    a = c;
-                    s = p / 4;
-                }
-                else {
-                    s = p / (2 * PI) * asin(c / a);
-                }
-
-                return a * pow(2, -10 * t) * sin((t * d - s) * (2 * PI) / p) + c + b;
+            elasticOut: function (t) {
+                var p = .3, s = p / 4;
+                if (t === 0 || t === 1) return t;
+                return pow(2, -10 * t) * sin((t - s) * (2 * PI) / p) + 1;
             },
 
             /**
              * Snap both elastic effect.
              */
-            elasticBoth: function (t, b, c, d, a, p) {
-                var s;
-                if (t === 0) {
-                    return b;
-                }
-
-                if ((t /= d / 2) === 2) {
-                    return b + c;
-                }
-
-                if (!p) {
-                    p = d * (0.3 * 1.5);
-                }
-
-                if (!a || a < abs(c)) {
-                    a = c;
-                    s = p / 4;
-                }
-                else {
-                    s = p / (2 * PI) * asin(c / a);
-                }
+            elasticBoth: function (t) {
+                var p = .45, s = p / 4;
+                if (t === 0 || (t *= 2) === 2) return t;
 
                 if (t < 1) {
-                    return -0.5 * (a * pow(2, 10 * (t -= 1)) *
-                        sin((t * d - s) * (2 * PI) / p)) + b;
+                    return -.5 * (pow(2, 10 * (t -= 1)) *
+                        sin((t - s) * (2 * PI) / p));
                 }
-                return a * pow(2, -10 * (t -= 1)) *
-                    sin((t * d - s) * (2 * PI) / p) * 0.5 + c + b;
+                return pow(2, -10 * (t -= 1)) *
+                    sin((t - s) * (2 * PI) / p) * .5 + 1;
             },
 
             /**
              * Backtracks slightly, then reverses direction and moves to end.
-             * @param {Number} s Overshoot (optional)
              */
-            backIn: function (t, b, c, d, s) {
-                if (s === undefined) {
-                    s = BACK_CONST;
-                }
-                if (t === d) {
-                    t -= 0.001;
-                }
-                return c * (t /= d) * t * ((s + 1) * t - s) + b;
+            backIn: function (t) {
+                if (t === 1) t -= .001;
+                return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
             },
 
             /**
              * Overshoots end, then reverses and comes back to end.
              */
-            backOut: function (t, b, c, d, s) {
-                if (s === undefined) {
-                    s = BACK_CONST;
-                }
-                return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
+            backOut: function (t) {
+                return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
             },
 
             /**
              * Backtracks slightly, then reverses direction, overshoots end,
              * then reverses and comes back to end.
              */
-            backBoth: function (t, b, c, d, s) {
-                if (s === undefined) {
-                    s = BACK_CONST;
+            backBoth: function (t) {
+                if ((t *= 2 ) < 1) {
+                    return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
                 }
-
-                if ((t /= d / 2 ) < 1) {
-                    return c / 2 * (t * t * (((s *= (1.525)) + 1) * t - s)) + b;
-                }
-                return c / 2 * ((t -= 2) * t * (((s *= (1.525)) + 1) * t + s) + 2) + b;
+                return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
             },
 
             /**
              * Bounce off of start.
              */
-            bounceIn: function (t, b, c, d) {
-                return c - Easing.bounceOut(d - t, 0, c, d) + b;
+            bounceIn: function (t) {
+                return 1 - Easing.bounceOut(1 - t);
             },
 
             /**
              * Bounces off end.
              */
-            bounceOut: function (t, b, c, d) {
+            bounceOut: function (t) {
                 var s = 7.5625, r;
 
-                if ((t /= d) < (1 / 2.75)) {
-                    r = c * (s * t * t) + b;
+                if (t < (1 / 2.75)) {
+                    r = s * t * t;
                 }
                 else if (t < (2 / 2.75)) {
-                    r =  c * (s * (t -= (1.5 / 2.75)) * t + 0.75) + b;
+                    r =  s * (t -= (1.5 / 2.75)) * t + .75;
                 }
                 else if (t < (2.5 / 2.75)) {
-                    r =  c * (s * (t -= (2.25 / 2.75)) * t + 0.9375) + b;
+                    r =  s * (t -= (2.25 / 2.75)) * t + .9375;
                 }
-                r =  c * (s * (t -= (2.625 / 2.75)) * t + 0.984375) + b;
+                else {
+                    r =  s * (t -= (2.625 / 2.75)) * t + .984375;
+                }
 
                 return r;
             },
@@ -233,11 +171,11 @@ KISSY.add('anim-easing', function(S, undefined) {
             /**
              * Bounces off start and end.
              */
-            bounceBoth: function (t, b, c, d) {
-                if (t < d / 2) {
-                    return Easing.bounceIn(t * 2, 0, c, d) * 0.5 + b;
+            bounceBoth: function (t) {
+                if (t < .5) {
+                    return Easing.bounceIn(t * 2) * .5;
                 }
-                return Easing.bounceOut(t * 2 - d, 0, c, d) * 0.5 + c * 0.5 + b;
+                return Easing.bounceOut(t * 2 - 1) * .5 + .5;
             }
         };
 
@@ -245,33 +183,37 @@ KISSY.add('anim-easing', function(S, undefined) {
 });
 
 /**
- * NOTES:
+ * TODO:
+ *  - test-easing.html 详细的测试 + 曲线可视化
  *
- *  - [20100719] 综合比较 jQuery UI/scripty2/YUI 的 easing 命名，还是觉得 YUI 的对用户
+ * NOTES:
+ *  - 综合比较 jQuery UI/scripty2/YUI 的 easing 命名，还是觉得 YUI 的对用户
  *    最友好。因此这次完全照搬 YUI 的 Easing, 只是代码上做了点压缩优化。
  *
  */
 /**
  * @module  anim
  * @author  lifesinger@gmail.com
+ * @depends ks-core
  */
 KISSY.add('anim', function(S, undefined) {
 
     var DOM = S.DOM, Easing = S.Easing,
         PARSE_FLOAT = parseFloat,
         parseEl = DOM.create('<div>'),
-        PROPS = ('backgroundColor borderBottomColor borderBottomWidth borderLeftColor borderLeftWidth ' +
-            'borderRightColor borderRightWidth borderSpacing borderTopColor borderTopWidth bottom color fontSize ' +
-            'fontWeight height left letterSpacing lineHeight marginBottom marginLeft marginRight marginTop maxHeight ' +
+        PROPS = ('backgroundColor borderBottomColor borderBottomWidth borderBottomStyle borderLeftColor borderLeftWidth borderLeftStyle ' +
+            'borderRightColor borderRightWidth borderRightStyle borderSpacing borderTopColor borderTopWidth borderTopStyle bottom color ' +
+            'font fontFamily fontSize fontWeight height left letterSpacing lineHeight marginBottom marginLeft marginRight marginTop maxHeight ' +
             'maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineWidth paddingBottom paddingLeft ' +
             'paddingRight paddingTop right textIndent top width wordSpacing zIndex').split(' '),
 
+        STEP_INTERVAL = 13,
+        EVENT_COMPLETE = 'complete',
+
         defaultConfig = {
             duration: 1,
-            easing: Easing.easeNone,
-            //complete: null,
-            //step: null,
-            queue: true
+            easing: Easing.easeNone
+            //queue: true  TODO: 实现多个动画的 queue 机制
         };
 
     /**
@@ -279,12 +221,17 @@ KISSY.add('anim', function(S, undefined) {
      * @constructor
      */
     function Anim(elem, props, duration, easing, callback) {
+        // ignore non-exist element
+        if (!(elem = S.get(elem))) return;
+
+        // factory or constructor
+        if (!(this instanceof Anim)) {
+            return new Anim(elem, props, duration, easing, callback);
+        }
+
         var self = this,
             isConfig = S.isPlainObject(duration),
             style = props, config;
-
-        // ignore non-exist element
-        if(!(elem = S.get(elem))) return;
 
         /**
          * the related dom element
@@ -293,18 +240,23 @@ KISSY.add('anim', function(S, undefined) {
 
         /**
          * the transition properties
-         * 可以是："width: 200px; height: 500px" 字符串形式
-         * 也可以是: { width: '200px', height: '500px' } 对象形式
+         * 可以是 "width: 200px; color: #ccc" 字符串形式
+         * 也可以是 { width: '200px', color: '#ccc' } 对象形式
          */
-        if(S.isPlainObject(style)) {
+        if (S.isPlainObject(style)) {
             style = S.param(style, ';').replace(/=/g, ':');
         }
         self.props = normalize(style);
+        // normalize 后：
+        // props = {
+        //          width: { v: 200, unit: 'px', f: interpolate }
+        //          color: { v: '#ccc', unit: '', f: color }
+        //         }
 
         /**
          * animation config
          */
-        if(isConfig) {
+        if (isConfig) {
             config = S.merge(defaultConfig, duration);
         } else {
             config = S.clone(defaultConfig);
@@ -315,30 +267,62 @@ KISSY.add('anim', function(S, undefined) {
         }
         self.config = config;
 
-        var target = normalize(PROPS), comp = el.currentStyle ? el.currentStyle : getComputedStyle(el, null),
-            prop, current = {}, start = +new Date, dur = opts.duration || 200, finish = start + dur, interval,
-            easing = opts.easing || function(pos) {
-                return (-Math.cos(pos * Math.PI) / 2) + 0.5;
-            };
+        /**
+         * timer
+         */
+        //self.timer = undefined;
 
-        for (prop in target) current[prop] = parse(comp[prop]);
-
-        interval = setInterval(function() {
-            var time = +new Date, pos = time > finish ? 1 : (time - start) / dur;
-            for (prop in target)
-                el.style[prop] = target[prop].f(current[prop].v, target[prop].v, easing(pos)) + target[prop].u;
-            if (time > finish) {
-                clearInterval(interval);
-                opts.after && opts.after();
-                after && setTimeout(after, 1);
-            }
-        }, 10);
+        // register callback
+        if (S.isFunction(callback)) {
+            self.on(EVENT_COMPLETE, callback);
+        }
     }
 
     S.augment(Anim, S.EventTarget, {
 
-        _init: function() {
+        run: function() {
+            var self = this, config = self.config,
+                elem = self.domEl,
+                duration = config.duration * 1000,
+                easing = config.easing,
+                start = S.now(), finish = start + duration,
+                target = self.props,
+                source = {}, prop;
 
+            for (prop in target) source[prop] = parse(DOM.css(elem, prop));
+
+            self.timer = S.later(function() {
+                var time = S.now(),
+                    t = time > finish ? 1 : (time - start) / duration,
+                    sp, tp;
+
+                for (prop in target) {
+                    sp = source[prop];
+                    tp = target[prop];
+
+                    // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
+                    // 比如：ie 下 border-width 默认为 medium
+                    if(sp.u !== tp.u) sp.v = 0;
+
+                    // go
+                    DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
+                }
+
+                if (time > finish) {
+                    self.stop();
+                    self.fire(EVENT_COMPLETE);
+                }
+
+            }, STEP_INTERVAL, true);
+        },
+
+        stop: function() {
+            var self = this;
+
+            if (self.timer) {
+                self.timer.cancel();
+                self.timer = undefined;
+            }
         }
     });
 
@@ -348,44 +332,55 @@ KISSY.add('anim', function(S, undefined) {
         var css, rules = { }, i = PROPS.length, v;
         parseEl.innerHTML = '<div style="' + style + '"></div>';
         css = parseEl.childNodes[0].style;
-        while (i--) if (v = css[PROPS[i]]) rules[PROPS[i]] = parse(v);
+        S.log(css, 'dir');
+        while (i--) if ((v = css[PROPS[i]])) rules[PROPS[i]] = parse(v);
         return rules;
     }
 
-    function parse(prop) {
-        var p = PARSE_FLOAT(prop), q = prop.replace(/^[\-\d\.]+/, '');
-        return isNaN(p) ? { v: q, f: color, u: ''} : { v: p, f: interpolate, u: q };
+    function parse(val) {
+        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d\.]+/, '');
+        return isNaN(num) ? { v: unit, u: '', f: colorEtc } : { v: num, u: unit, f: interpolate };
     }
 
     function interpolate(source, target, pos) {
         return (source + (target - source) * pos).toFixed(3);
     }
 
-    function s(str, p, c) {
-        return str.substr(p, c || 1);
-    }
-
-    function color(source, target, pos) {
+    function colorEtc(source, target, pos) {
         var i = 2, j, c, tmp, v = [], r = [];
-        while (j = 3,c = arguments[i - 1],i--)
-            if (s(c, 0) == 'r') {
+
+        while (j = 3, c = arguments[i - 1], i--) {
+            if (s(c, 0, 4) === 'rgb(') {
                 c = c.match(/\d+/g);
                 while (j--) v.push(~~c[j]);
-            } else {
-                if (c.length == 4) c = '#' + s(c, 1) + s(c, 1) + s(c, 2) + s(c, 2) + s(c, 3) + s(c, 3);
+            }
+            else if(s(c, 0) === '#') {
+                if (c.length === 4) c = '#' + s(c, 1) + s(c, 1) + s(c, 2) + s(c, 2) + s(c, 3) + s(c, 3);
                 while (j--) v.push(parseInt(s(c, 1 + j * 2, 2), 16));
             }
+            else { // red, black 等值，以及其它一切非颜色值，直接返回 target
+                return target;
+            }
+        }
+
         while (j--) {
             tmp = ~~(v[j + 3] + (v[j] - v[j + 3]) * pos);
             r.push(tmp < 0 ? 0 : tmp > 255 ? 255 : tmp);
         }
+
         return 'rgb(' + r.join(',') + ')';
+    }
+
+    function s(str, p, c) {
+        return str.substr(p, c || 1);
     }
 });
 
 /**
+ *
  * NOTES:
  *
+ *  - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
  *  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
  *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile
  */
