@@ -98,6 +98,8 @@ KISSY.add('anim', function(S, undefined) {
 
             for (prop in target) source[prop] = parse(DOM.css(elem, prop));
 
+            self.stop(); // 先停止掉正在运行的动画
+
             self.timer = S.later(function() {
                 var time = S.now(),
                     t = time > finish ? 1 : (time - start) / duration,
