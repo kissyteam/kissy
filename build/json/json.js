@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 846 Jul 11 00:10
+build: 871 Jul 19 08:51
 */
 /**
  * from http://www.JSON.org/json2.js

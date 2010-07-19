@@ -1,11 +1,11 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 846 Jul 11 00:10
+build: 871 Jul 19 08:51
 */
 /**
  * Switchable
- * @creator     ��<lifesinger@gmail.com>
+ * @creator     玉伯<lifesinger@gmail.com>
  * @depends     kissy-core, yui2-animation
  */
 KISSY.add('switchable', function(S, undefined) {
@@ -21,11 +21,11 @@ KISSY.add('switchable', function(S, undefined) {
 
     /**
      * Switchable Widget
-     * attached members��
+     * attached members：
      *   - this.container
      *   - this.config
-     *   - this.triggers  ����Ϊ��ֵ []
-     *   - this.panels    �϶���ֵ���� length > 1
+     *   - this.triggers  可以为空值 []
+     *   - this.panels    肯定有值，且 length > 1
      *   - this.content
      *   - this.length
      *   - this.activeIndex
@@ -34,7 +34,7 @@ KISSY.add('switchable', function(S, undefined) {
     function Switchable(container, config) {
         var self = this;
 
-        // ����������Ϣ
+        // 调整配置信息
         config = config || {};
         if (!('markupType' in config)) {
             if (config.panelCls) {
@@ -52,7 +52,7 @@ KISSY.add('switchable', function(S, undefined) {
         self.container = S.get(container);
 
         /**
-         * ���ò���
+         * 配置参数
          * @type Object
          */
         self.config = config;
@@ -82,7 +82,7 @@ KISSY.add('switchable', function(S, undefined) {
         //self.content
 
         /**
-         * ��ǰ����� index
+         * 当前激活的 index
          * @type number
          */
         if (self.activeIndex === undefined) {
@@ -92,41 +92,41 @@ KISSY.add('switchable', function(S, undefined) {
         self._init();
     }
 
-    // Ĭ������
+    // 默认配置
     Switchable.Config = {
-        markupType: 0, // markup �����ͣ�ȡֵ���£�
+        markupType: 0, // markup 的类型，取值如下：
 
-        // 0 - Ĭ�Ͻṹ��ͨ�� nav �� content ����ȡ triggers �� panels
+        // 0 - 默认结构：通过 nav 和 content 来获取 triggers 和 panels
         navCls: CLS_PREFIX + 'nav',
         contentCls: CLS_PREFIX + 'content',
 
-        // 1 - �ʶ���ͨ�� cls ����ȡ triggers �� panels
+        // 1 - 适度灵活：通过 cls 来获取 triggers 和 panels
         triggerCls: CLS_PREFIX + 'trigger',
         panelCls: CLS_PREFIX + 'panel',
 
-        // 2 - ��ȫ���ɣ�ֱ�Ӵ��� triggers �� panels
+        // 2 - 完全自由：直接传入 triggers 和 panels
         triggers: [],
         panels: [],
 
-        // �Ƿ��д���
+        // 是否有触点
         hasTriggers: true,
 
-        // ��������
+        // 触发类型
         triggerType: 'mouse', // or 'click'
-        // �����ӳ�
+        // 触发延迟
         delay: .1, // 100ms
 
-        activeIndex: 0, // markup ��Ĭ�ϼ����Ӧ����� index һ��
+        activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
         activeTriggerCls: 'active',
 
-        // �ɼ���ͼ���ж��ٸ� panels
+        // 可见视图内有多少个 panels
         steps: 1,
 
-        // �ɼ���ͼ����Ĵ�С��һ�㲻��Ҫ�趨��ֵ��������ȡֵ����ȷʱ�������ֹ�ָ����С
+        // 可见视图区域的大小。一般不需要设定此值，仅当获取值不正确时，用于手工指定大小
         viewSize: []
     };
 
-    // ���
+    // 插件
     Switchable.Plugins = [];
 
     S.mix(SP, {
@@ -156,7 +156,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * ���� markup, ��ȡ triggers, panels, content
+         * 解析 markup, 获取 triggers, panels, content
          */
         _parseMarkup: function() {
             var self = this, container = self.container,
@@ -165,7 +165,7 @@ KISSY.add('switchable', function(S, undefined) {
                 nav, content, triggers = [], panels = [], i, n, m;
 
             switch (cfg.markupType) {
-                case 0: // Ĭ�Ͻṹ
+                case 0: // 默认结构
                     nav = S.get(DOT + cfg.navCls, container);
                     if (nav) {
                         triggers = DOM.children(nav);
@@ -173,11 +173,11 @@ KISSY.add('switchable', function(S, undefined) {
                     content = S.get(DOT + cfg.contentCls, container);
                     panels = DOM.children(content);
                     break;
-                case 1: // �ʶ����
+                case 1: // 适度灵活
                     triggers = S.query(DOT + cfg.triggerCls, container);
                     panels = S.query(DOT + cfg.panelCls, container);
                     break;
-                case 2: // ��ȫ����
+                case 2: // 完全自由
                     triggers = cfg.triggers;
                     panels = cfg.panels;
                     break;
@@ -188,12 +188,12 @@ KISSY.add('switchable', function(S, undefined) {
             n = panels.length;
             self.length = n / cfg.steps;
 
-            // �Զ���� triggers
+            // 自动生成 triggers
             if (hasTriggers && n > 0 && triggers.length === 0) {
                 triggers = self._generateTriggersMarkup(self.length);
             }
 
-            // �� triggers �� panels ת��Ϊ��ͨ����
+            // 将 triggers 和 panels 转换为普通数组
             self.triggers = S.makeArray(triggers);
             self.panels = S.makeArray(panels);
 
@@ -202,7 +202,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * �Զ���� triggers �� markup
+         * 自动生成 triggers 的 markup
          */
         _generateTriggersMarkup: function(len) {
             var self = this, cfg = self.config,
@@ -223,7 +223,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * �� triggers ����¼�
+         * 给 triggers 添加事件
          */
         _bindTriggers: function() {
             var self = this, cfg = self.config,
@@ -234,12 +234,12 @@ KISSY.add('switchable', function(S, undefined) {
                 (function(index) {
                     trigger = triggers[index];
 
-                    // ��Ӧ����� Tab ��
+                    // 响应点击和 Tab 键
                     Event.on(trigger, 'click focus', function() {
                         self._onFocusTrigger(index);
                     });
 
-                    // ��Ӧ�����
+                    // 响应鼠标悬浮
                     if (cfg.triggerType === 'mouse') {
                         Event.on(trigger, 'mouseenter', function() {
                             self._onMouseEnterTrigger(index);
@@ -253,23 +253,23 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * click or tab ��� trigger ʱ�������¼�
+         * click or tab 键激活 trigger 时触发的事件
          */
         _onFocusTrigger: function(index) {
             var self = this;
-            if (self.activeIndex === index) return; // �ظ����
-            if (self.switchTimer) self.switchTimer.cancel(); // ���磺��������̵������ʱ���¼�����ȡ���
+            if (self.activeIndex === index) return; // 重复点击
+            if (self.switchTimer) self.switchTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
             self.switchTo(index);
         },
 
         /**
-         * ������� trigger ��ʱ�������¼�
+         * 鼠标悬浮在 trigger 上时触发的事件
          */
         _onMouseEnterTrigger: function(index) {
             var self = this;
             //S.log('Triggerable._onMouseEnterTrigger: index = ' + index);
 
-            // ���ظ����������磺����ʾ����ʱ���������ٻ����ٻ����������ش���
+            // 不重复触发。比如：已显示内容时，将鼠标快速滑出再滑进来，不必触发
             if (self.activeIndex !== index) {
                 self.switchTimer = S.later(function() {
                     self.switchTo(index);
@@ -278,7 +278,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * ����Ƴ� trigger ʱ�������¼�
+         * 鼠标移出 trigger 时触发的事件
          */
         _onMouseLeaveTrigger: function() {
             var self = this;
@@ -286,7 +286,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * �л�����
+         * 切换操作
          */
         switchTo: function(index, direction) {
             var self = this, cfg = self.config,
@@ -322,7 +322,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * �л���ǰ����
+         * 切换当前触点
          */
         _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
             var activeTriggerCls = this.config.activeTriggerCls;
@@ -332,10 +332,10 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * �л���ͼ
+         * 切换视图
          */
         _switchView: function(fromPanels, toPanels/*, index, direction*/) {
-            // ��򵥵��л�Ч��ֱ������/��ʾ
+            // 最简单的切换效果：直接隐藏/显示
             DOM.css(fromPanels, DISPLAY, NONE);
             DOM.css(toPanels, DISPLAY, BLOCK);
 
@@ -344,7 +344,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * �л�����һ��ͼ
+         * 切换到上一视图
          */
         prev: function() {
             var self = this, activeIndex = self.activeIndex;
@@ -352,7 +352,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * �л�����һ��ͼ
+         * 切换到下一视图
          */
         next: function() {
             var self = this, activeIndex = self.activeIndex;
@@ -361,7 +361,7 @@ KISSY.add('switchable', function(S, undefined) {
     });
 
     S.mix(SP, S.EventTarget);
-    
+
     S.Switchable = Switchable;
 });
 
@@ -369,23 +369,23 @@ KISSY.add('switchable', function(S, undefined) {
  * NOTES:
  *
  * 2010.04
- *  - �ع�������� yahoo-dom-event ������
+ *  - 重构，脱离对 yahoo-dom-event 的依赖
  *
  * 2010.03
- *  - �ع���ȥ�� Widget, ���ִ���ֱ�Ӳ��� kissy ���
- *  - ������ƴ� weave ֯�뷨�ĳ� hook ���ӷ�
+ *  - 重构，去掉 Widget, 部分代码直接采用 kissy 基础库
+ *  - 插件机制从 weave 织入法改成 hook 钩子法
  *
  * TODO:
  *  - http://malsup.com/jquery/cycle/
  *  - http://www.mall.taobao.com/go/chn/mall_chl/flagship.php
- * 
+ *
  * References:
  *  - jQuery Scrollable http://flowplayer.org/tools/scrollable.html
  *
  */
 /**
  * Switchable Autoplay Plugin
- * @creator     ��<lifesinger@gmail.com>
+ * @creator     玉伯<lifesinger@gmail.com>
  */
 KISSY.add('switchable-autoplay', function(S) {
 
@@ -393,16 +393,16 @@ KISSY.add('switchable-autoplay', function(S) {
         Switchable = S.Switchable;
 
     /**
-     * ���Ĭ������
+     * 添加默认配置
      */
     S.mix(Switchable.Config, {
         autoplay: false,
-        interval: 5, // �Զ����ż��ʱ��
-        pauseOnHover: true  // triggerType Ϊ mouse ʱ�������ͣ�� slide ���Ƿ���ͣ�Զ�����
+        interval: 5, // 自动播放间隔时间
+        pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
     });
 
     /**
-     * ��Ӳ��
+     * 添加插件
      * attached members:
      *   - this.paused
      *   - this.autoplayTimer
@@ -414,23 +414,23 @@ KISSY.add('switchable-autoplay', function(S) {
             var cfg = host.config;
             if (!cfg.autoplay) return;
 
-            // �����ͣ��ֹͣ�Զ�����
+            // 鼠标悬停，停止自动播放
             if (cfg.pauseOnHover) {
                 Event.on(host.container, 'mouseenter', function() {
                     host.paused = true;
                 });
                 Event.on(host.container, 'mouseleave', function() {
-                    // ���� interval Ϊ 10s
-                    // �� 8s ʱ��ͨ�� focus ���������л���ͣ�� 1s ������Ƴ�
-                    // ��ʱ��� setTimeout, �ٹ� 1s ������������ panel �����滻��
-                    // Ϊ�˱�֤ÿ�� panel ����ʾʱ�䶼��С�� interval, �˴����� setTimeout
+                    // 假设 interval 为 10s
+                    // 在 8s 时，通过 focus 主动触发切换，停留 1s 后，鼠标移出
+                    // 这时如果不 setTimeout, 再过 1s 后，主动触发的 panel 将被替换掉
+                    // 为了保证每个 panel 的显示时间都不小于 interval, 此处加上 setTimeout
                     setTimeout(function() {
                         host.paused = false;
                     }, cfg.interval * 1000);
                 });
             }
 
-            // �����Զ�����
+            // 设置自动播放
             host.autoplayTimer = S.later(function() {
                 if (host.paused) return;
                 host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0);
@@ -441,12 +441,12 @@ KISSY.add('switchable-autoplay', function(S) {
 
 /**
  * TODO:
- *  - �Ƿ���Ҫ�ṩ play / pause / stop API ?
- *  - autoplayTimer �� switchTimer �Ĺ�����
+ *  - 是否需要提供 play / pause / stop API ?
+ *  - autoplayTimer 和 switchTimer 的关联？
  */
 /**
  * Switchable Effect Plugin
- * @creator     ��<lifesinger@gmail.com>
+ * @creator     玉伯<lifesinger@gmail.com>
  */
 KISSY.add('switchable-effect', function(S) {
 
@@ -458,27 +458,27 @@ KISSY.add('switchable-effect', function(S) {
         Switchable = S.Switchable, Effects;
 
     /**
-     * ���Ĭ������
+     * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        effect: NONE, // 'scrollx', 'scrolly', 'fade' ����ֱ�Ӵ��� custom effect fn
-        duration: .5, // ������ʱ��
+        effect: NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
+        duration: .5, // 动画的时长
         easing: Y.Easing.easeNone // easing method
     });
 
     /**
-     * ����Ч��
+     * 定义效果集
      */
     Switchable.Effects = {
 
-        // �����ص���ʾ/����Ч��
+        // 最朴素的显示/隐藏效果
         none: function(fromEls, toEls, callback) {
             DOM.css(fromEls, DISPLAY, NONE);
             DOM.css(toEls, DISPLAY, BLOCK);
             callback();
         },
 
-        // ��������Ч��
+        // 淡隐淡现效果
         fade: function(fromEls, toEls, callback) {
             if(fromEls.length !== 1) {
                 S.error('fade effect only supports steps == 1.');
@@ -487,15 +487,15 @@ KISSY.add('switchable-effect', function(S) {
                 fromEl = fromEls[0], toEl = toEls[0];
             if (self.anim) self.anim.stop();
 
-            // ������ʾ��һ��
+            // 首先显示下一张
             YDOM.setStyle(toEl, OPACITY, 1);
 
-            // �����л�
+            // 动画切换
             self.anim = new Y.Anim(fromEl, {opacity: {to: 0}}, cfg.duration, cfg.easing);
             self.anim.onComplete.subscribe(function() {
                 self.anim = null; // free
 
-                // �л� z-index
+                // 切换 z-index
                 YDOM.setStyle(toEl, Z_INDEX, 9);
                 YDOM.setStyle(fromEl, Z_INDEX, 1);
 
@@ -504,7 +504,7 @@ KISSY.add('switchable-effect', function(S) {
             self.anim.animate();
         },
 
-        // ˮƽ/��ֱ����Ч��
+        // 水平/垂直滚动效果
         scroll: function(fromEls, toEls, callback, index) {
             var self = this, cfg = self.config,
                 isX = cfg.effect === SCROLLX,
@@ -526,7 +526,7 @@ KISSY.add('switchable-effect', function(S) {
     Effects[SCROLLX] = Effects[SCROLLY] = Effects.scroll;
 
     /**
-     * ��Ӳ��
+     * 添加插件
      * attached members:
      *   - this.viewSize
      */
@@ -534,7 +534,7 @@ KISSY.add('switchable-effect', function(S) {
         name: 'effect',
 
         /**
-         * ��� effect, �����ʼ״̬
+         * 根据 effect, 调整初始状态
          */
         init: function(host) {
             var cfg = host.config,
@@ -546,39 +546,39 @@ KISSY.add('switchable-effect', function(S) {
                 toIndex = fromIndex + steps - 1,
                 i, len = panels.length;
 
-            // 1. ��ȡ�߿�
+            // 1. 获取高宽
             host.viewSize = [
                 cfg.viewSize[0] || panels[0].offsetWidth * steps,
                 cfg.viewSize[0] || panels[0].offsetHeight * steps
             ];
-            // ע������ panel �ĳߴ�Ӧ����ͬ
-            //    ���ָ����һ�� panel �� width �� height����Ϊ Safari �£�ͼƬδ����ʱ����ȡ�� offsetHeight ��ֵ�᲻��
+            // 注：所有 panel 的尺寸应该相同
+            //    最好指定第一个 panel 的 width 和 height，因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
 
-            // 2. ��ʼ�� panels ��ʽ
+            // 2. 初始化 panels 样式
             if (effect !== NONE) { // effect = scrollx, scrolly, fade
-                // ��Щ��Ч��Ҫ�� panels ����ʾ����
+                // 这些特效需要将 panels 都显示出来
                 for (i = 0; i < len; i++) {
                     panels[i].style.display = BLOCK;
                 }
 
                 switch (effect) {
-                    // ����ǹ���Ч��
+                    // 如果是滚动效果
                     case SCROLLX:
                     case SCROLLY:
-                        // ���ö�λ��Ϣ��Ϊ����Ч�����̵�
+                        // 设置定位信息，为滚动效果做铺垫
                         host.content.style.position = ABSOLUTE;
-                        host.content.parentNode.style.position = RELATIVE; // ע��content �ĸ�����һ���� container
+                        host.content.parentNode.style.position = RELATIVE; // 注：content 的父级不一定是 container
 
-                        // ˮƽ����
+                        // 水平排列
                         if (effect === SCROLLX) {
                             YDOM.setStyle(panels, 'float', 'left');
 
-                            // ��������ȣ��Ա�֤�пռ��� panels ˮƽ�Ų�
+                            // 设置最大宽度，以保证有空间让 panels 水平排布
                             host.content.style.width = host.viewSize[0] * (len / steps) + 'px';
                         }
                         break;
 
-                    // �����͸��Ч�����ʼ��͸��
+                    // 如果是透明效果，则初始化透明
                     case FADE:
                         for (i = 0; i < len; i++) {
                             YDOM.setStyle(panels[i], OPACITY, (i >= fromIndex && i <= toIndex) ? 1 : 0);
@@ -589,17 +589,17 @@ KISSY.add('switchable-effect', function(S) {
                 }
             }
 
-            // 3. �� CSS ���Ҫ�� container �趨�߿�� overflow: hidden
-            //    nav �� cls �� CSS ָ��
+            // 3. 在 CSS 里，需要给 container 设定高宽和 overflow: hidden
+            //    nav 的 cls 由 CSS 指定
         }
     });
 
     /**
-     * �����л�����
+     * 覆盖切换方法
      */
     S.mix(Switchable.prototype, {
         /**
-         * �л���ͼ
+         * 切换视图
          */
         _switchView: function(fromEls, toEls, index, direction) {
             var self = this, cfg = self.config,
@@ -615,11 +615,11 @@ KISSY.add('switchable-effect', function(S) {
 
 /**
  * TODO:
- *  - apple ��ҳЧ��
+ *  - apple 翻页效果
  */
 /**
  * Switchable Circular Plugin
- * @creator     ��<lifesinger@gmail.com>
+ * @creator     玉伯<lifesinger@gmail.com>
  */
 KISSY.add('switchable-circular', function(S) {
 
@@ -631,14 +631,14 @@ KISSY.add('switchable-circular', function(S) {
         Switchable = S.Switchable;
 
     /**
-     * ���Ĭ������
+     * 添加默认配置
      */
     S.mix(Switchable.Config, {
         circular: false
     });
 
     /**
-     * ѭ������Ч����
+     * 循环滚动效果函数
      */
     function circularScroll(fromEls, toEls, callback, index, direction) {
         var self = this, cfg = self.config,
@@ -652,22 +652,22 @@ KISSY.add('switchable-circular', function(S) {
             isCritical,
             isBackward = direction === BACKWARD;
 
-        // �ӵ�һ��������������һ�� or �����һ�������������һ��
+        // 从第一个反向滚动到最后一个 or 从最后一个正向滚动到第一个
         isCritical = (isBackward && activeIndex === 0 && index === len - 1)
                      || (direction === FORWARD && activeIndex === len - 1 && index === 0);
 
         if(isCritical) {
-            // ����λ�ò���ȡ diff
+            // 调整位置并获取 diff
             diff = adjustPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
         }
         attributes[prop] = { to: diff };
 
-        // ��ʼ����
+        // 开始动画
         if (self.anim) self.anim.stop();
         self.anim = new YAHOO.util.Anim(self.content, attributes, cfg.duration, cfg.easing);
         self.anim.onComplete.subscribe(function() {
             if(isCritical) {
-                // ��ԭλ��
+                // 复原位置
                 resetPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
             }
             // free
@@ -678,7 +678,7 @@ KISSY.add('switchable-circular', function(S) {
     }
 
     /**
-     * ����λ��
+     * 调整位置
      */
     function adjustPosition(panels, index, isBackward, prop, viewDiff) {
         var self = this, cfg = self.config,
@@ -689,18 +689,18 @@ KISSY.add('switchable-circular', function(S) {
             to = (start + 1) * steps,
             i;
 
-        // ���� panels ����һ����ͼ��
+        // 调整 panels 到下一个视图中
         for (i = from; i < to; i++) {
             panels[i].style.position = RELATIVE;
             panels[i].style[prop] = (isBackward ? '-' : EMPTY) + viewDiff * len + PX;
         }
 
-        // ƫ����
+        // 偏移量
         return isBackward ? viewDiff : -viewDiff * len;
     }
 
     /**
-     * ��ԭλ��
+     * 复原位置
      */
     function resetPosition(panels, index, isBackward, prop, viewDiff) {
         var self = this, cfg = self.config,
@@ -711,32 +711,32 @@ KISSY.add('switchable-circular', function(S) {
             to = (start + 1) * steps,
             i;
 
-        // ������ɺ󣬸�λ����״̬
+        // 滚动完成后，复位到正常状态
         for (i = from; i < to; i++) {
             panels[i].style.position = EMPTY;
             panels[i].style[prop] = EMPTY;
         }
 
-        // ˲�Ƶ���λ��
+        // 瞬移到正常位置
         self.content.style[prop] = isBackward ? -viewDiff * (len - 1) + PX : EMPTY;
     }
 
     /**
-     * ��Ӳ��
+     * 添加插件
      */
     Switchable.Plugins.push({
         name: 'circular',
 
         /**
-         * ��� effect, �����ʼ״̬
+         * 根据 effect, 调整初始状态
          */
         init: function(host) {
             var cfg = host.config;
 
-            // ���й���Ч����Ҫ����ĵ���
+            // 仅有滚动效果需要下面的调整
             if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
-                // ���ǹ���Ч����
-                cfg.scrollType = cfg.effect; // ���浽 scrollType ��
+                // 覆盖滚动效果函数
+                cfg.scrollType = cfg.effect; // 保存到 scrollType 中
                 cfg.effect = circularScroll;
             }
         }
@@ -745,11 +745,11 @@ KISSY.add('switchable-circular', function(S) {
 
 /**
  * TODO:
- *   - �Ƿ���Ҫ���Ǵ� 0 �� 2�������һ���� �� backward ��������Ҫ�����
+ *   - 是否需要考虑从 0 到 2（非最后一个） 的 backward 滚动？需要更灵活
  */
 /**
  * Switchable Lazyload Plugin
- * @creator     ��<lifesinger@gmail.com>
+ * @creator     玉伯<lifesinger@gmail.com>
  */
 KISSY.add('switchable-lazyload', function(S) {
 
@@ -765,7 +765,7 @@ KISSY.add('switchable-lazyload', function(S) {
     FLAGS[TEXTAREA_DATA] = 'ks-datalazyload-custom';
 
     /**
-     * ���Ĭ������
+     * 添加默认配置
      */
     S.mix(Switchable.Config, {
         lazyDataType: '', // 'img-src' or 'textarea-data'
@@ -773,7 +773,7 @@ KISSY.add('switchable-lazyload', function(S) {
     });
 
     /**
-     * ֯���ʼ������
+     * 织入初始化函数
      */
     Switchable.Plugins.push({
         name: 'autoplay',
@@ -781,12 +781,12 @@ KISSY.add('switchable-lazyload', function(S) {
         init: function(host) {
             var cfg = host.config,
                 type = cfg.lazyDataType, flag = cfg.lazyDataFlag || FLAGS[type];
-            if (!DataLazyload || !type || !flag) return; // û���ӳ���
+            if (!DataLazyload || !type || !flag) return; // 没有延迟项
 
             host.on(EVENT_BEFORE_SWITCH, loadLazyData);
 
             /**
-             * �����ӳ����
+             * 加载延迟数据
              */
             function loadLazyData(ev) {
                 var steps = cfg.steps,
@@ -800,7 +800,7 @@ KISSY.add('switchable-lazyload', function(S) {
             }
 
             /**
-             * �Ƿ��Ѽ������
+             * 是否都已加载完成
              */
             function isAllDone() {
                 var imgs, textareas, i, len;
@@ -825,7 +825,7 @@ KISSY.add('switchable-lazyload', function(S) {
 });
 /**
  * Tabs Widget
- * @creator     ��<lifesinger@gmail.com>
+ * @creator     玉伯<lifesinger@gmail.com>
  */
 KISSY.add('tabs', function(S) {
 
@@ -849,12 +849,12 @@ KISSY.add('tabs', function(S) {
 });
 /**
  * Tabs Widget
- * @creator     ��<lifesinger@gmail.com>
+ * @creator     玉伯<lifesinger@gmail.com>
  */
 KISSY.add('slide', function(S) {
 
     /**
-     * Ĭ�����ã��� Switchable ��ͬ�Ĳ��ִ˴�δ�г�
+     * 默认配置，和 Switchable 相同的部分此处未列出
      */
     var defaultConfig = {
         autoplay: true,
@@ -882,12 +882,12 @@ KISSY.add('slide', function(S) {
 });
 /**
  * Carousel Widget
- * @creator     ��<lifesinger@gmail.com>
+ * @creator     玉伯<lifesinger@gmail.com>
  */
 KISSY.add('carousel', function(S) {
 
         /**
-         * Ĭ�����ã��� Switchable ��ͬ�Ĳ��ִ˴�δ�г�
+         * 默认配置，和 Switchable 相同的部分此处未列出
          */
         var defaultConfig = {
             circular: true

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 846 Jul 11 00:09
+build: 871 Jul 19 08:51
 */
 /**
  * @module  ajax
@@ -38,7 +38,7 @@ KISSY.add('ajax', function(S) {
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
          */
         getScript: function(url, callback, charset) {
-            var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+            var head = S.get('head') || doc.documentElement,
                 node = doc.createElement('script');
 
             node.src = url;

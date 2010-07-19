@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 869 Jul 18 22:53
+build: 871 Jul 19 08:51
 */
 /**
  * @module kissy
@@ -452,9 +452,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
         SEP = '&',
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
-        REG_NOT_WHITE = /\S/,
-        MAX_CLONE_DEEP = 50,
-        cloneDeep = 0;
+        REG_NOT_WHITE = /\S/;
 
     S.mix(S, {
 
@@ -753,14 +751,6 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
             // array or plain object
             if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
-
-                // 避免循环引用
-                if (cloneDeep++ > MAX_CLONE_DEEP) {
-                    S.error('too much recursion in S.clone');
-                    cloneDeep = 0;
-                    return;
-                }
-
                 ret = b ? [] : {};
                 for (k in o) {
                     if (o[HAS_OWN_PROPERTY](k)) {
@@ -935,7 +925,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 865 Jul 17 21:52
+build: 871 Jul 19 08:51
 */
 /**
  * @module  dom
@@ -2610,7 +2600,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 865 Jul 17 21:52
+build: 871 Jul 19 08:51
 */
 /**
  * @module  event
@@ -3191,7 +3181,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 865 Jul 17 21:52
+build: 871 Jul 19 08:51
 */
 /**
  * @module  node
@@ -3489,7 +3479,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 846 Jul 11 00:09
+build: 871 Jul 19 08:51
 */
 /**
  * @module  ajax
@@ -3526,7 +3516,7 @@ KISSY.add('ajax', function(S) {
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
          */
         getScript: function(url, callback, charset) {
-            var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+            var head = S.get('head') || doc.documentElement,
                 node = doc.createElement('script');
 
             node.src = url;
