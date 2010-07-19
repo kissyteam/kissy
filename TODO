@@ -25,9 +25,9 @@
   sizzle - done
   node - done
   nodelist - done
-  
+  anim - done
+
   ajax - 20%
-  anim - 10%
 
   [紧急] switchable 需求征集（增加最后一张和最前一张的事件） & 重构
   [紧急] calendar 模块重构

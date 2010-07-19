@@ -1,7 +1,7 @@
 /**
  * Switchable
- * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy-core, yui2-animation
+ * @creator  玉伯<lifesinger@gmail.com>
+ * @depends  ks-core
  */
 KISSY.add('switchable', function(S, undefined) {
 
@@ -362,6 +362,9 @@ KISSY.add('switchable', function(S, undefined) {
 
 /**
  * NOTES:
+ *
+ * 2010.07
+ *  - 重构，去掉对 YUI2-Animation 的依赖
  *
  * 2010.04
  *  - 重构，脱离对 yahoo-dom-event 的依赖
