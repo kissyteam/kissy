@@ -1,6 +1,7 @@
 /**
  * @module  anim
  * @author  lifesinger@gmail.com
+ * @depends ks-core
  */
 KISSY.add('anim', function(S, undefined) {
 
@@ -16,8 +17,6 @@ KISSY.add('anim', function(S, undefined) {
         defaultConfig = {
             duration: 1,
             easing: Easing.easeNone,
-            //complete: null,
-            //step: null,
             queue: true
         };
 
@@ -63,7 +62,7 @@ KISSY.add('anim', function(S, undefined) {
         self.config = config;
 
         var target = normalize(PROPS), comp = el.currentStyle ? el.currentStyle : getComputedStyle(el, null),
-            prop, current = {}, start = +new Date, dur = opts.duration || 200, finish = start + dur, interval,
+            prop, current = {}, start = S.now(), dur = opts.duration || 200, finish = start + dur, interval,
             easing = opts.easing || function(pos) {
                 return (-Math.cos(pos * Math.PI) / 2) + 0.5;
             };

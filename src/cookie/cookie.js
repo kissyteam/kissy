@@ -1,6 +1,7 @@
 /**
  * @module  cookie
  * @author  lifesinger@gmail.com
+ * @depends ks-core
  */
 KISSY.add('cookie', function(S) {
 
@@ -63,7 +64,7 @@ KISSY.add('cookie', function(S) {
     };
 
     function isNotEmptyString(val) {
-        return typeof val === 'string' && val !== '';
+        return S.isString(val) && val !== '';
     }
 
 });
