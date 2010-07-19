@@ -1,11 +1,11 @@
 /**
  * Tabs Widget
- * @creator     玉伯<lifesinger@gmail.com>
+ * @creator     鐜変集<lifesinger@gmail.com>
  */
 KISSY.add('slide', function(S) {
 
     /**
-     * 默认配置，和 Switchable 相同的部分此处未列出
+     * 榛樿閰嶇疆锛屽拰 Switchable 鐩稿悓鐨勯儴鍒嗘澶勬湭鍒楀嚭
      */
     var defaultConfig = {
         autoplay: true,

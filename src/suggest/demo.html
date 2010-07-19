@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk" />
+<meta charset="utf-8" />
 <title>Suggest Examples</title>
 
 <link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" />
@@ -25,7 +25,7 @@
 <body>
 <div id="page">
     <div class="section">
-        <h2>1. ÌÔ±¦Ê×Ò³µÄËÑË÷ÌáÊ¾£º</h2>
+        <h2>1. æ·˜å®é¦–é¡µçš„æœç´¢æç¤ºï¼š</h2>
         <form name="search" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
             <input type="hidden" value="" name="sort"/>
             <input type="hidden" value="D9_5_1" name="f"/>
@@ -39,23 +39,23 @@
 
             <input name="q" id="q" class="search-input"/>
 
-            <button type="submit" class="search-submit">ÌÔÎÒÏ²»¶</button>
+            <button type="submit" class="search-submit">æ·˜æˆ‘å–œæ¬¢</button>
         </form>
         <script>
             KISSY.ready(function(S) {
                 S.Suggest('#q', 'http://suggest.taobao.com/sug', {
                     autoFocus: true,
-                    resultFormat: 'Ô¼%result%¸ö±¦±´'
+                    resultFormat: 'çº¦%result%ä¸ªå®è´'
                 });
             });
         </script>
     </div>
 
     <div class="section">
-        <h2>2. ÓĞ°¡Ê×Ò³µÄËÑË÷ÌáÊ¾£º</h2>
+        <h2>2. æœ‰å•Šé¦–é¡µçš„æœç´¢æç¤ºï¼š</h2>
         <form name="search2" method="get" action="http://youa.baidu.com/search/s" target="_blank">
             <input class="search-input" name="keyword" id="q2" />
-            <button type="submit" class="search-submit">°Ù¶ÈÒ»ÏÂ</button>
+            <button type="submit" class="search-submit">ç™¾åº¦ä¸€ä¸‹</button>
         </form>
         <style>
             .youa-suggest-container { border-color: #5BA515 }
@@ -67,7 +67,7 @@
         </style>
         <script>
             KISSY.ready(function(S) {
-                // ÓĞ°¡
+                // æœ‰å•Š
                 var dataUrl = 'http://youa.baidu.com/suggest/se/s';
                 window["suggestCallback"] = window["g_ks_suggest_callback"];
 
@@ -80,8 +80,8 @@
                     this.queryParams = 'cmd=suggest&type=kwd&max_count=10&keyword=' + encodeURIComponent(this.query) + '&callback=suggestCallback';
                 });
 
-                // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nikeĞ¬", "val":119000}, {"key":"nike°åĞ¬", "val":44300}, {"key":"nikeÔË¶¯Ğ¬", "val":115000}, {"key":"nikeÕıÆ·", "val":47400}, {"key":"nike°ü", "val":8300}, {"key":"nikeÀºÇòĞ¬", "val":18400}, {"key":"nikeĞÂ¿î", "val":27600}, {"key":"nike ÄÍ¿Ë", "val":140000}, {"key":"nikeÅ®Ğ¬", "val":7850}], "num":10})
-                // taobao: g_ks_suggest_callback({"result": [["nike ÕıÆ·", "2170000"], ["nike ×¨¹ñ ÕıÆ·", "834000"], ["nike ¶ÌĞä", "242000"], ["nike °å Ğ¬", "989000"], ["nike Å®Ğ¬", "253000"], ["nike ÔË¶¯Ğ¬", "550000"], ["nike °ü", "295000"], ["nike Ğ¬", "3160000"], ["nike µ¥¼ç°ü", "38500"], ["nike 09", "786000"]]})
+                // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nikeé‹", "val":119000}, {"key":"nikeæ¿é‹", "val":44300}, {"key":"nikeè¿åŠ¨é‹", "val":115000}, {"key":"nikeæ­£å“", "val":47400}, {"key":"nikeåŒ…", "val":8300}, {"key":"nikeç¯®çƒé‹", "val":18400}, {"key":"nikeæ–°æ¬¾", "val":27600}, {"key":"nike è€å…‹", "val":140000}, {"key":"nikeå¥³é‹", "val":7850}], "num":10})
+                // taobao: g_ks_suggest_callback({"result": [["nike æ­£å“", "2170000"], ["nike ä¸“æŸœ æ­£å“", "834000"], ["nike çŸ­è¢–", "242000"], ["nike æ¿ é‹", "989000"], ["nike å¥³é‹", "253000"], ["nike è¿åŠ¨é‹", "550000"], ["nike åŒ…", "295000"], ["nike é‹", "3160000"], ["nike å•è‚©åŒ…", "38500"], ["nike 09", "786000"]]})
                 sug.on('dataReturn', function() {
                     var data = this.returnedData['r'] || [];
                     var result = [];
@@ -140,8 +140,8 @@
                     this.queryParams = 'hl=en&q=' + encodeURIComponent(this.query);
                 });
 
-                // google: window.google.ac.h(["ni",[["Å£²©Íø","73,248 ½á¹û","0z"],["Å£²©ÍøÊ×Ò³","12,200,617 ½á¹û","1z"],["ÄãÊÇ×¼±¸Ìæµ³Ëµ»° »¹ÊÇ×¼±¸ÌæÀÏ°ÙĞÕËµ»°","136,545 ½á¹û","2z"],["nike","117,000,000 ½á¹û","3"],["nikon","127,000,000 ½á¹û","4"],["nissan","135,000,000 ½á¹û","5"],["nine west","40,000,000 ½á¹û","6"],["nikeĞ¬","3,380,000 ½á¹û","7"],["ÄßÆ¼ ÔÙ»é","36,400 ½á¹û","8"],["Å£Äê×£¸£Óï","582,000 ½á¹û","9"]]])
-                // taobao: g_ks_suggest_callback({"result": [["nike ÕıÆ·", "2170000"], ["nike ×¨¹ñ ÕıÆ·", "834000"], ["nike ¶ÌĞä", "242000"], ["nike °å Ğ¬", "989000"], ["nike Å®Ğ¬", "253000"], ["nike ÔË¶¯Ğ¬", "550000"], ["nike °ü", "295000"], ["nike Ğ¬", "3160000"], ["nike µ¥¼ç°ü", "38500"], ["nike 09", "786000"]]})
+                // google: window.google.ac.h(["ni",[["ç‰›åšç½‘","73,248 ç»“æœ","0z"],["ç‰›åšç½‘é¦–é¡µ","12,200,617 ç»“æœ","1z"],["ä½ æ˜¯å‡†å¤‡æ›¿å…šè¯´è¯ è¿˜æ˜¯å‡†å¤‡æ›¿è€ç™¾å§“è¯´è¯","136,545 ç»“æœ","2z"],["nike","117,000,000 ç»“æœ","3"],["nikon","127,000,000 ç»“æœ","4"],["nissan","135,000,000 ç»“æœ","5"],["nine west","40,000,000 ç»“æœ","6"],["nikeé‹","3,380,000 ç»“æœ","7"],["å€ªè å†å©š","36,400 ç»“æœ","8"],["ç‰›å¹´ç¥ç¦è¯­","582,000 ç»“æœ","9"]]])
+                // taobao: g_ks_suggest_callback({"result": [["nike æ­£å“", "2170000"], ["nike ä¸“æŸœ æ­£å“", "834000"], ["nike çŸ­è¢–", "242000"], ["nike æ¿ é‹", "989000"], ["nike å¥³é‹", "253000"], ["nike è¿åŠ¨é‹", "550000"], ["nike åŒ…", "295000"], ["nike é‹", "3160000"], ["nike å•è‚©åŒ…", "38500"], ["nike 09", "786000"]]})
                 sug.on('dataReturn', function() {
                     this.returnedData = this.returnedData[1] || [];
                 });
@@ -150,14 +150,14 @@
     </div>
 
     <div class="section">
-        <h2>4. À´µã¹ã¸æ£º</h2>
+        <h2>4. æ¥ç‚¹å¹¿å‘Šï¼š</h2>
         <form name="search3" method="get" action="http://search1.taobao.com/browse/search_auction.htm" target="_blank">
             <input class="search-input" name="q" id="q3"/>
             <button type="submit" class="search-submit">Search</button>
         </form>
         <script>
             KISSY.ready(function(S) {
-                // ¹ã¸æ
+                // å¹¿å‘Š
                 var dataUrl = 'http://suggest.taobao.com/sug';
                 var sug = new S.Suggest('#q3', dataUrl,
                     { showCloseBtn: true

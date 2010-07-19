@@ -3,7 +3,7 @@
  * CoversFlow
  * @author mingcheng<i.feelinglucky#gmail.com> - http://www.gracecode.com/
  * @update log:
- *    [2010-04-08] yubo: ¾«¼ò & ÓÅ»¯²¿·Ö´úÂë
+ *    [2010-04-08] yubo: ç²¾ç®€ & ä¼˜åŒ–éƒ¨åˆ†ä»£ç 
  */
 
 KISSY.add('coversflow', function(S) {
@@ -17,18 +17,18 @@ KISSY.add('coversflow', function(S) {
         EVENT_FINISHED = 'finished',
 
         /**
-         * Ä¬ÈÏÅäÖÃ
+         * é»˜è®¤é…ç½®
          */
         defaultConfig = {
             flowLength: 4, // Max number of images on each side of the focused one
             aspectRatio: 1.964, // Aspect ratio of the ImageFlow container (width divided by height)
-            step: 150, // ²½³¤£¬Í¨³£²»ÓÃ¸ü¸Ä
-            width: 500, // ×î´ó·âÃæµÄ¿í
-            height: 350, // ×î´ó·âÃæµÄ¸ß
-            offset: 0, // Îó²î
-            animSpeed: 50,  // ¶¯»­¼ä¸ô£¨ºÁÃë£©
-            autoSwitchToMiddle: true, // ×Ô¶¯ÇĞ»»µ½ÖĞ¼ä
-            hasTriggers: false, // ´¥µã¾ÍÊÇ panels
+            step: 150, // æ­¥é•¿ï¼Œé€šå¸¸ä¸ç”¨æ›´æ”¹
+            width: 500, // æœ€å¤§å°é¢çš„å®½
+            height: 350, // æœ€å¤§å°é¢çš„é«˜
+            offset: 0, // è¯¯å·®
+            animSpeed: 50,  // åŠ¨ç”»é—´éš”ï¼ˆæ¯«ç§’ï¼‰
+            autoSwitchToMiddle: true, // è‡ªåŠ¨åˆ‡æ¢åˆ°ä¸­é—´
+            hasTriggers: false, // è§¦ç‚¹å°±æ˜¯ panels
             circular: true
         };
 
@@ -51,27 +51,27 @@ KISSY.add('coversflow', function(S) {
 
         _initFlow: function() {
             var self = this, config = self.config;
-            
-            self.busy = false;             // ÔËĞĞ×´Ì¬
-            self.curFrame = 0;             // µ±Ç°ÔËĞĞÖ¡
-            self.targetFrame = 0;          // Ä¿±ê¹ö¶¯Ö¡
-            self.zIndex = self.length;     // ×î´ó zIndex Öµ
-            self.region = YDOM.getRegion(self.container); // ÈİÆ÷µÄ×ø±êºÍ´óĞ¡
+
+            self.busy = false;             // è¿è¡ŒçŠ¶æ€
+            self.curFrame = 0;             // å½“å‰è¿è¡Œå¸§
+            self.targetFrame = 0;          // ç›®æ ‡æ»šåŠ¨å¸§
+            self.zIndex = self.length;     // æœ€å¤§ zIndex å€¼
+            self.region = YDOM.getRegion(self.container); // å®¹å™¨çš„åæ ‡å’Œå¤§å°
 
             self.maxFocus = config.flowLength * config.step;
-            self.maxHeight = self.region.height + Math.round(self.region.height / config.aspectRatio); // ×î´ó¸ß¶È
-            self.middleLine = self.region.width / 2; // ÖĞ¼äÏß
+            self.maxHeight = self.region.height + Math.round(self.region.height / config.aspectRatio); // æœ€å¤§é«˜åº¦
+            self.middleLine = self.region.width / 2; // ä¸­é—´çº¿
 
-            // ÊÂ¼ş×¢Èë
+            // äº‹ä»¶æ³¨å…¥
             self.on(EVENT_BEFORE_SWITCH, function(ev) {
                 var index = ev.toIndex;
 
-                self.perIndex = index; // Ô¤±£´æ¹ö¶¯Ä¿±ê
+                self.perIndex = index; // é¢„ä¿å­˜æ»šåŠ¨ç›®æ ‡
                 self.targetFrame = -index * self.config.step;
                 return !self.busy;
             });
 
-            // ×Ô¶¯ÇĞ»»µ½ÖĞ¼ä
+            // è‡ªåŠ¨åˆ‡æ¢åˆ°ä¸­é—´
             if (config.autoSwitchToMiddle) {
                 self.switchTo(Math.floor(self.length / 2));
             } else {
@@ -89,27 +89,27 @@ KISSY.add('coversflow', function(S) {
                 self.busy = true;
             } else {
                 self.fire(EVENT_FINISHED);
-                self.busy = false; // ¶¯»­Íê³É
+                self.busy = false; // åŠ¨ç”»å®Œæˆ
             }
         },
 
         /**
-         * ÔËĞĞÃ¿Ö¡¶¯»­
+         * è¿è¡Œæ¯å¸§åŠ¨ç”»
          */
         _frame: function(frame) {
             var self = this, cfg = self.config, panels = self.panels,
                 region = self.region, middleLine = self.middleLine - cfg.offset, curPanel, curImgPos;
 
-            self.curFrame = frame; // ±ê¼Çµ±Ç°Ö¡
+            self.curFrame = frame; // æ ‡è®°å½“å‰å¸§
 
             for (var index = 0, len = panels.length; index < len; index++) {
                 curPanel = self.panels[index];
                 curImgPos = index * -cfg.step;
                 if ((curImgPos + self.maxFocus) < self.targetFrame || (curImgPos - self.maxFocus) > self.targetFrame) {
-                    // Òş²Ø¶àÓàµÄ·âÃæ
+                    // éšè—å¤šä½™çš„å°é¢
                     DOM.css(curPanel, VISIBILITY, 'hidden');
                 } else {
-                    // ¶¯»­ÇúÏßÒò×Ó
+                    // åŠ¨ç”»æ›²çº¿å› å­
                     var x = (Math.sqrt(10000 + frame * frame) + 100), xs = frame / x * middleLine + middleLine;
                     var height = (cfg.width / cfg.height * MAGIC_NUMBER) / x * middleLine, width = 0;
 
@@ -118,7 +118,7 @@ KISSY.add('coversflow', function(S) {
                     }
                     width = cfg.width / cfg.height * height;
 
-                    // ¼ÆËã²¢ÉèÖÃµ±Ç°Î»ÖÃ
+                    // è®¡ç®—å¹¶è®¾ç½®å½“å‰ä½ç½®
                     DOM.css(curPanel, 'left', xs - (MAGIC_NUMBER / MAGIC_DIVISOR) / x * middleLine + 'px');
                     if (height && width) {
                         DOM.css(curPanel, 'height', height + 'px');
@@ -128,7 +128,7 @@ KISSY.add('coversflow', function(S) {
                     DOM.css(curPanel, 'zIndex', self.zIndex * 100 - Math.ceil(x));
                     DOM.css(curPanel, VISIBILITY, 'visible');
 
-                    // °ó¶¨µã»÷ÊÂ¼ş
+                    // ç»‘å®šç‚¹å‡»äº‹ä»¶
                     self._bindPanel(curPanel, index);
                 }
 
@@ -138,7 +138,7 @@ KISSY.add('coversflow', function(S) {
         },
 
         /**
-         * °ó¶¨ÊÂ¼ş
+         * ç»‘å®šäº‹ä»¶
          */
         _bindPanel: function(curPanel, index) {
             var self = this;
@@ -164,5 +164,5 @@ KISSY.add('coversflow', function(S) {
 
 /**
  * TODO:
- *   - ½øÒ»²½ÓÅ»¯Ëã·¨ºÍ²¿·Ö api
+ *   - è¿›ä¸€æ­¥ä¼˜åŒ–ç®—æ³•å’Œéƒ¨åˆ† api
  */

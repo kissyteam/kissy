@@ -1,6 +1,6 @@
 /**
  * Switchable Effect Plugin
- * @creator     Óñ²®<lifesinger@gmail.com>
+ * @creator     ç‰ä¼¯<lifesinger@gmail.com>
  */
 KISSY.add('switchable-effect', function(S) {
 
@@ -12,27 +12,27 @@ KISSY.add('switchable-effect', function(S) {
         Switchable = S.Switchable, Effects;
 
     /**
-     * Ìí¼ÓÄ¬ÈÏÅäÖÃ
+     * æ·»åŠ é»˜è®¤é…ç½®
      */
     S.mix(Switchable.Config, {
-        effect: NONE, // 'scrollx', 'scrolly', 'fade' »òÕßÖ±½Ó´«Èë custom effect fn
-        duration: .5, // ¶¯»­µÄÊ±³¤
+        effect: NONE, // 'scrollx', 'scrolly', 'fade' æˆ–è€…ç›´æ¥ä¼ å…¥ custom effect fn
+        duration: .5, // åŠ¨ç”»çš„æ—¶é•¿
         easing: Y.Easing.easeNone // easing method
     });
 
     /**
-     * ¶¨ÒåĞ§¹û¼¯
+     * å®šä¹‰æ•ˆæœé›†
      */
     Switchable.Effects = {
 
-        // ×îÆÓËØµÄÏÔÊ¾/Òş²ØĞ§¹û
+        // æœ€æœ´ç´ çš„æ˜¾ç¤º/éšè—æ•ˆæœ
         none: function(fromEls, toEls, callback) {
             DOM.css(fromEls, DISPLAY, NONE);
             DOM.css(toEls, DISPLAY, BLOCK);
             callback();
         },
 
-        // µ­Òşµ­ÏÖĞ§¹û
+        // æ·¡éšæ·¡ç°æ•ˆæœ
         fade: function(fromEls, toEls, callback) {
             if(fromEls.length !== 1) {
                 S.error('fade effect only supports steps == 1.');
@@ -41,15 +41,15 @@ KISSY.add('switchable-effect', function(S) {
                 fromEl = fromEls[0], toEl = toEls[0];
             if (self.anim) self.anim.stop();
 
-            // Ê×ÏÈÏÔÊ¾ÏÂÒ»ÕÅ
+            // é¦–å…ˆæ˜¾ç¤ºä¸‹ä¸€å¼ 
             YDOM.setStyle(toEl, OPACITY, 1);
 
-            // ¶¯»­ÇĞ»»
+            // åŠ¨ç”»åˆ‡æ¢
             self.anim = new Y.Anim(fromEl, {opacity: {to: 0}}, cfg.duration, cfg.easing);
             self.anim.onComplete.subscribe(function() {
                 self.anim = null; // free
 
-                // ÇĞ»» z-index
+                // åˆ‡æ¢ z-index
                 YDOM.setStyle(toEl, Z_INDEX, 9);
                 YDOM.setStyle(fromEl, Z_INDEX, 1);
 
@@ -58,7 +58,7 @@ KISSY.add('switchable-effect', function(S) {
             self.anim.animate();
         },
 
-        // Ë®Æ½/´¹Ö±¹ö¶¯Ğ§¹û
+        // æ°´å¹³/å‚ç›´æ»šåŠ¨æ•ˆæœ
         scroll: function(fromEls, toEls, callback, index) {
             var self = this, cfg = self.config,
                 isX = cfg.effect === SCROLLX,
@@ -80,7 +80,7 @@ KISSY.add('switchable-effect', function(S) {
     Effects[SCROLLX] = Effects[SCROLLY] = Effects.scroll;
 
     /**
-     * Ìí¼Ó²å¼ş
+     * æ·»åŠ æ’ä»¶
      * attached members:
      *   - this.viewSize
      */
@@ -88,7 +88,7 @@ KISSY.add('switchable-effect', function(S) {
         name: 'effect',
 
         /**
-         * ¸ù¾İ effect, µ÷Õû³õÊ¼×´Ì¬
+         * æ ¹æ® effect, è°ƒæ•´åˆå§‹çŠ¶æ€
          */
         init: function(host) {
             var cfg = host.config,
@@ -100,39 +100,39 @@ KISSY.add('switchable-effect', function(S) {
                 toIndex = fromIndex + steps - 1,
                 i, len = panels.length;
 
-            // 1. »ñÈ¡¸ß¿í
+            // 1. è·å–é«˜å®½
             host.viewSize = [
                 cfg.viewSize[0] || panels[0].offsetWidth * steps,
                 cfg.viewSize[0] || panels[0].offsetHeight * steps
             ];
-            // ×¢£ºËùÓĞ panel µÄ³ß´çÓ¦¸ÃÏàÍ¬
-            //    ×îºÃÖ¸¶¨µÚÒ»¸ö panel µÄ width ºÍ height£¬ÒòÎª Safari ÏÂ£¬Í¼Æ¬Î´¼ÓÔØÊ±£¬¶ÁÈ¡µÄ offsetHeight µÈÖµ»á²»¶Ô
+            // æ³¨ï¼šæ‰€æœ‰ panel çš„å°ºå¯¸åº”è¯¥ç›¸åŒ
+            //    æœ€å¥½æŒ‡å®šç¬¬ä¸€ä¸ª panel çš„ width å’Œ heightï¼Œå› ä¸º Safari ä¸‹ï¼Œå›¾ç‰‡æœªåŠ è½½æ—¶ï¼Œè¯»å–çš„ offsetHeight ç­‰å€¼ä¼šä¸å¯¹
 
-            // 2. ³õÊ¼»¯ panels ÑùÊ½
+            // 2. åˆå§‹åŒ– panels æ ·å¼
             if (effect !== NONE) { // effect = scrollx, scrolly, fade
-                // ÕâĞ©ÌØĞ§ĞèÒª½« panels ¶¼ÏÔÊ¾³öÀ´
+                // è¿™äº›ç‰¹æ•ˆéœ€è¦å°† panels éƒ½æ˜¾ç¤ºå‡ºæ¥
                 for (i = 0; i < len; i++) {
                     panels[i].style.display = BLOCK;
                 }
 
                 switch (effect) {
-                    // Èç¹ûÊÇ¹ö¶¯Ğ§¹û
+                    // å¦‚æœæ˜¯æ»šåŠ¨æ•ˆæœ
                     case SCROLLX:
                     case SCROLLY:
-                        // ÉèÖÃ¶¨Î»ĞÅÏ¢£¬Îª¹ö¶¯Ğ§¹û×öÆÌµæ
+                        // è®¾ç½®å®šä½ä¿¡æ¯ï¼Œä¸ºæ»šåŠ¨æ•ˆæœåšé“ºå«
                         host.content.style.position = ABSOLUTE;
-                        host.content.parentNode.style.position = RELATIVE; // ×¢£ºcontent µÄ¸¸¼¶²»Ò»¶¨ÊÇ container
+                        host.content.parentNode.style.position = RELATIVE; // æ³¨ï¼šcontent çš„çˆ¶çº§ä¸ä¸€å®šæ˜¯ container
 
-                        // Ë®Æ½ÅÅÁĞ
+                        // æ°´å¹³æ’åˆ—
                         if (effect === SCROLLX) {
                             YDOM.setStyle(panels, 'float', 'left');
 
-                            // ÉèÖÃ×î´ó¿í¶È£¬ÒÔ±£Ö¤ÓĞ¿Õ¼äÈÃ panels Ë®Æ½ÅÅ²¼
+                            // è®¾ç½®æœ€å¤§å®½åº¦ï¼Œä»¥ä¿è¯æœ‰ç©ºé—´è®© panels æ°´å¹³æ’å¸ƒ
                             host.content.style.width = host.viewSize[0] * (len / steps) + 'px';
                         }
                         break;
 
-                    // Èç¹ûÊÇÍ¸Ã÷Ğ§¹û£¬Ôò³õÊ¼»¯Í¸Ã÷
+                    // å¦‚æœæ˜¯é€æ˜æ•ˆæœï¼Œåˆ™åˆå§‹åŒ–é€æ˜
                     case FADE:
                         for (i = 0; i < len; i++) {
                             YDOM.setStyle(panels[i], OPACITY, (i >= fromIndex && i <= toIndex) ? 1 : 0);
@@ -143,17 +143,17 @@ KISSY.add('switchable-effect', function(S) {
                 }
             }
 
-            // 3. ÔÚ CSS Àï£¬ĞèÒª¸ø container Éè¶¨¸ß¿íºÍ overflow: hidden
-            //    nav µÄ cls ÓÉ CSS Ö¸¶¨
+            // 3. åœ¨ CSS é‡Œï¼Œéœ€è¦ç»™ container è®¾å®šé«˜å®½å’Œ overflow: hidden
+            //    nav çš„ cls ç”± CSS æŒ‡å®š
         }
     });
 
     /**
-     * ¸²¸ÇÇĞ»»·½·¨
+     * è¦†ç›–åˆ‡æ¢æ–¹æ³•
      */
     S.mix(Switchable.prototype, {
         /**
-         * ÇĞ»»ÊÓÍ¼
+         * åˆ‡æ¢è§†å›¾
          */
         _switchView: function(fromEls, toEls, index, direction) {
             var self = this, cfg = self.config,
@@ -169,5 +169,5 @@ KISSY.add('switchable-effect', function(S) {
 
 /**
  * TODO:
- *  - apple ·­Ò³Ğ§¹û
+ *  - apple ç¿»é¡µæ•ˆæœ
  */

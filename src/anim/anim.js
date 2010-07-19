@@ -1,7 +1,6 @@
 /**
  * @module  anim
  * @author  lifesinger@gmail.com
- * @refer   Thanks to emile.js (c) 2009 Thomas Fuchs http://github.com/madrobby/emile
  */
 KISSY.add('anim', function(S, undefined) {
 
@@ -41,8 +40,8 @@ KISSY.add('anim', function(S, undefined) {
 
         /**
          * the transition properties
-         * ¿ÉÒÔÊÇ£º"width: 200px; height: 500px" ×Ö·û´®ĞÎÊ½
-         * Ò²¿ÉÒÔÊÇ: { width: '200px', height: '500px' } ¶ÔÏóĞÎÊ½
+         * å¯ä»¥æ˜¯ï¼š"width: 200px; height: 500px" å­—ç¬¦ä¸²å½¢å¼
+         * ä¹Ÿå¯ä»¥æ˜¯: { width: '200px', height: '500px' } å¯¹è±¡å½¢å¼
          */
         if(S.isPlainObject(style)) {
             style = S.param(style, ';').replace(/=/g, ':');
@@ -57,7 +56,7 @@ KISSY.add('anim', function(S, undefined) {
         } else {
             config = S.clone(defaultConfig);
             duration && (config.duration = PARSE_FLOAT(duration, 10) || 1);
-            S.isString(easing) && (easing = Easing[easing]); // ¿ÉÒÔÊÇ×Ö·û´®, ±ÈÈç 'easingOut'
+            S.isString(easing) && (easing = Easing[easing]); // å¯ä»¥æ˜¯å­—ç¬¦ä¸², æ¯”å¦‚ 'easingOut'
             S.isFunction(easing) && (config.easing = easing);
             S.isFunction(callback) && (config.complete = callback);
         }
@@ -130,3 +129,10 @@ KISSY.add('anim', function(S, undefined) {
         return 'rgb(' + r.join(',') + ')';
     }
 });
+
+/**
+ * NOTES:
+ *
+ *  - api å€Ÿé‰´äº† YUI, jQuery ä»¥åŠ http://www.w3.org/TR/css3-transitions/
+ *  - ä»£ç å®ç°äº†å€Ÿé‰´äº† Emile.js: http://github.com/madrobby/emile
+ */

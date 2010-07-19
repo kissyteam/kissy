@@ -1,6 +1,6 @@
 /**
  * Switchable Circular Plugin
- * @creator     Óñ²®<lifesinger@gmail.com>
+ * @creator     ç‰ä¼¯<lifesinger@gmail.com>
  */
 KISSY.add('switchable-circular', function(S) {
 
@@ -12,14 +12,14 @@ KISSY.add('switchable-circular', function(S) {
         Switchable = S.Switchable;
 
     /**
-     * Ìí¼ÓÄ¬ÈÏÅäÖÃ
+     * æ·»åŠ é»˜è®¤é…ç½®
      */
     S.mix(Switchable.Config, {
         circular: false
     });
 
     /**
-     * Ñ­»·¹ö¶¯Ğ§¹ûº¯Êı
+     * å¾ªç¯æ»šåŠ¨æ•ˆæœå‡½æ•°
      */
     function circularScroll(fromEls, toEls, callback, index, direction) {
         var self = this, cfg = self.config,
@@ -33,22 +33,22 @@ KISSY.add('switchable-circular', function(S) {
             isCritical,
             isBackward = direction === BACKWARD;
 
-        // ´ÓµÚÒ»¸ö·´Ïò¹ö¶¯µ½×îºóÒ»¸ö or ´Ó×îºóÒ»¸öÕıÏò¹ö¶¯µ½µÚÒ»¸ö
+        // ä»ç¬¬ä¸€ä¸ªåå‘æ»šåŠ¨åˆ°æœ€åä¸€ä¸ª or ä»æœ€åä¸€ä¸ªæ­£å‘æ»šåŠ¨åˆ°ç¬¬ä¸€ä¸ª
         isCritical = (isBackward && activeIndex === 0 && index === len - 1)
                      || (direction === FORWARD && activeIndex === len - 1 && index === 0);
 
         if(isCritical) {
-            // µ÷ÕûÎ»ÖÃ²¢»ñÈ¡ diff
+            // è°ƒæ•´ä½ç½®å¹¶è·å– diff
             diff = adjustPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
         }
         attributes[prop] = { to: diff };
 
-        // ¿ªÊ¼¶¯»­
+        // å¼€å§‹åŠ¨ç”»
         if (self.anim) self.anim.stop();
         self.anim = new YAHOO.util.Anim(self.content, attributes, cfg.duration, cfg.easing);
         self.anim.onComplete.subscribe(function() {
             if(isCritical) {
-                // ¸´Ô­Î»ÖÃ
+                // å¤åŸä½ç½®
                 resetPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
             }
             // free
@@ -59,7 +59,7 @@ KISSY.add('switchable-circular', function(S) {
     }
 
     /**
-     * µ÷ÕûÎ»ÖÃ
+     * è°ƒæ•´ä½ç½®
      */
     function adjustPosition(panels, index, isBackward, prop, viewDiff) {
         var self = this, cfg = self.config,
@@ -70,18 +70,18 @@ KISSY.add('switchable-circular', function(S) {
             to = (start + 1) * steps,
             i;
 
-        // µ÷Õû panels µ½ÏÂÒ»¸öÊÓÍ¼ÖĞ
+        // è°ƒæ•´ panels åˆ°ä¸‹ä¸€ä¸ªè§†å›¾ä¸­
         for (i = from; i < to; i++) {
             panels[i].style.position = RELATIVE;
             panels[i].style[prop] = (isBackward ? '-' : EMPTY) + viewDiff * len + PX;
         }
 
-        // Æ«ÒÆÁ¿
+        // åç§»é‡
         return isBackward ? viewDiff : -viewDiff * len;
     }
 
     /**
-     * ¸´Ô­Î»ÖÃ
+     * å¤åŸä½ç½®
      */
     function resetPosition(panels, index, isBackward, prop, viewDiff) {
         var self = this, cfg = self.config,
@@ -92,32 +92,32 @@ KISSY.add('switchable-circular', function(S) {
             to = (start + 1) * steps,
             i;
 
-        // ¹ö¶¯Íê³Éºó£¬¸´Î»µ½Õı³£×´Ì¬
+        // æ»šåŠ¨å®Œæˆåï¼Œå¤ä½åˆ°æ­£å¸¸çŠ¶æ€
         for (i = from; i < to; i++) {
             panels[i].style.position = EMPTY;
             panels[i].style[prop] = EMPTY;
         }
 
-        // Ë²ÒÆµ½Õı³£Î»ÖÃ
+        // ç¬ç§»åˆ°æ­£å¸¸ä½ç½®
         self.content.style[prop] = isBackward ? -viewDiff * (len - 1) + PX : EMPTY;
     }
 
     /**
-     * Ìí¼Ó²å¼ş
+     * æ·»åŠ æ’ä»¶
      */
     Switchable.Plugins.push({
         name: 'circular',
 
         /**
-         * ¸ù¾İ effect, µ÷Õû³õÊ¼×´Ì¬
+         * æ ¹æ® effect, è°ƒæ•´åˆå§‹çŠ¶æ€
          */
         init: function(host) {
             var cfg = host.config;
 
-            // ½öÓĞ¹ö¶¯Ğ§¹ûĞèÒªÏÂÃæµÄµ÷Õû
+            // ä»…æœ‰æ»šåŠ¨æ•ˆæœéœ€è¦ä¸‹é¢çš„è°ƒæ•´
             if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
-                // ¸²¸Ç¹ö¶¯Ğ§¹ûº¯Êı
-                cfg.scrollType = cfg.effect; // ±£´æµ½ scrollType ÖĞ
+                // è¦†ç›–æ»šåŠ¨æ•ˆæœå‡½æ•°
+                cfg.scrollType = cfg.effect; // ä¿å­˜åˆ° scrollType ä¸­
                 cfg.effect = circularScroll;
             }
         }
@@ -126,5 +126,5 @@ KISSY.add('switchable-circular', function(S) {
 
 /**
  * TODO:
- *   - ÊÇ·ñĞèÒª¿¼ÂÇ´Ó 0 µ½ 2£¨·Ç×îºóÒ»¸ö£© µÄ backward ¹ö¶¯£¿ĞèÒª¸üÁé»î
+ *   - æ˜¯å¦éœ€è¦è€ƒè™‘ä» 0 åˆ° 2ï¼ˆéæœ€åä¸€ä¸ªï¼‰ çš„ backward æ»šåŠ¨ï¼Ÿéœ€è¦æ›´çµæ´»
  */

@@ -1,11 +1,11 @@
 /**
  * Album Widget
- * @creator     Óñ²®<lifesinger@gmail.com>
+ * @creator     ç‰ä¼¯<lifesinger@gmail.com>
  */
 KISSY.add('album', function(S) {
 
         /**
-         * Ä¬ÈÏÅäÖÃ£¬ºÍ Switchable ÏàÍ¬µÄ²¿·Ö´Ë´¦Î´ÁĞ³ö
+         * é»˜è®¤é…ç½®ï¼Œå’Œ Switchable ç›¸åŒçš„éƒ¨åˆ†æ­¤å¤„æœªåˆ—å‡º
          */
         var defaultConfig = {
             circular: true
@@ -33,6 +33,6 @@ KISSY.add('album', function(S) {
 
 /**
  * NOTES:
- *  - Ò»¸ö Album ¿ÉÒÔ·Ö½âÎª Carousel + Tabs, ÆäÖĞ Carousel µÄ panels ÊÇ Tabs µÄ trigggers 
+ *  - ä¸€ä¸ª Album å¯ä»¥åˆ†è§£ä¸º Carousel + Tabs, å…¶ä¸­ Carousel çš„ panels æ˜¯ Tabs çš„ trigggers
  *
  */

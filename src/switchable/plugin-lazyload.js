@@ -1,6 +1,6 @@
 /**
  * Switchable Lazyload Plugin
- * @creator     Óñ²®<lifesinger@gmail.com>
+ * @creator     ç‰ä¼¯<lifesinger@gmail.com>
  */
 KISSY.add('switchable-lazyload', function(S) {
 
@@ -16,7 +16,7 @@ KISSY.add('switchable-lazyload', function(S) {
     FLAGS[TEXTAREA_DATA] = 'ks-datalazyload-custom';
 
     /**
-     * Ìí¼ÓÄ¬ÈÏÅäÖÃ
+     * æ·»åŠ é»˜è®¤é…ç½®
      */
     S.mix(Switchable.Config, {
         lazyDataType: '', // 'img-src' or 'textarea-data'
@@ -24,7 +24,7 @@ KISSY.add('switchable-lazyload', function(S) {
     });
 
     /**
-     * Ö¯Èë³õÊ¼»¯º¯Êı
+     * ç»‡å…¥åˆå§‹åŒ–å‡½æ•°
      */
     Switchable.Plugins.push({
         name: 'autoplay',
@@ -32,12 +32,12 @@ KISSY.add('switchable-lazyload', function(S) {
         init: function(host) {
             var cfg = host.config,
                 type = cfg.lazyDataType, flag = cfg.lazyDataFlag || FLAGS[type];
-            if (!DataLazyload || !type || !flag) return; // Ã»ÓĞÑÓ³ÙÏî
+            if (!DataLazyload || !type || !flag) return; // æ²¡æœ‰å»¶è¿Ÿé¡¹
 
             host.on(EVENT_BEFORE_SWITCH, loadLazyData);
 
             /**
-             * ¼ÓÔØÑÓ³ÙÊı¾İ
+             * åŠ è½½å»¶è¿Ÿæ•°æ®
              */
             function loadLazyData(ev) {
                 var steps = cfg.steps,
@@ -51,7 +51,7 @@ KISSY.add('switchable-lazyload', function(S) {
             }
 
             /**
-             * ÊÇ·ñ¶¼ÒÑ¼ÓÔØÍê³É
+             * æ˜¯å¦éƒ½å·²åŠ è½½å®Œæˆ
              */
             function isAllDone() {
                 var imgs, textareas, i, len;

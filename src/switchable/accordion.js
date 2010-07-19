@@ -1,9 +1,9 @@
 /**
  * Accordion Widget
- * @creator     ³ÁÓã<fool2fish@gmail.com>
+ * @creator     æ²‰é±¼<fool2fish@gmail.com>
  */
 KISSY.add('accordion', function(S) {
-    
+
     var DOM = S.DOM, Event = S.Event,
         doc = document,
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
@@ -36,26 +36,26 @@ KISSY.add('accordion', function(S) {
 
     S.augment(Accordion,{
         /**
-         * click or tab ¼ü¼¤»î trigger Ê±´¥·¢µÄÊÂ¼ş
+         * click or tab é”®æ¿€æ´» trigger æ—¶è§¦å‘çš„äº‹ä»¶
          */
         _onFocusTrigger: function(index) {
             var self = this , cfg = self.config;
-            if (self.activeIndex === index && (!cfg.multiPanelExpandable)) return; // ÖØ¸´µã»÷
-            if (self.switchTimer) self.switchTimer.cancel(); // ±ÈÈç£ºÏÈĞü¸¡£¬ºóÁ¢¿Ìµã»÷¡£ÕâÊ±Ğü¸¡ÊÂ¼ş¿ÉÒÔÈ¡Ïûµô
+            if (self.activeIndex === index && (!cfg.multiPanelExpandable)) return; // é‡å¤ç‚¹å‡»
+            if (self.switchTimer) self.switchTimer.cancel(); // æ¯”å¦‚ï¼šå…ˆæ‚¬æµ®ï¼Œåç«‹åˆ»ç‚¹å‡»ã€‚è¿™æ—¶æ‚¬æµ®äº‹ä»¶å¯ä»¥å–æ¶ˆæ‰
             self.switchTo(index);
         },
         /**
-         * Êó±êĞü¸¡ÔÚ trigger ÉÏÊ±´¥·¢µÄÊÂ¼ş
+         * é¼ æ ‡æ‚¬æµ®åœ¨ trigger ä¸Šæ—¶è§¦å‘çš„äº‹ä»¶
          */
         _onMouseEnterTrigger: function(index) {
             var self = this, cfg = self.config;
-            // ²»ÖØ¸´´¥·¢¡£±ÈÈç£ºÒÑÏÔÊ¾ÄÚÈİÊ±£¬½«Êó±ê¿ìËÙ»¬³öÔÙ»¬½øÀ´£¬²»±Ø´¥·¢
+            // ä¸é‡å¤è§¦å‘ã€‚æ¯”å¦‚ï¼šå·²æ˜¾ç¤ºå†…å®¹æ—¶ï¼Œå°†é¼ æ ‡å¿«é€Ÿæ»‘å‡ºå†æ»‘è¿›æ¥ï¼Œä¸å¿…è§¦å‘
             if (cfg.multiPanelExpandable || self.activeIndex !== index) {
                 self.switchTimer = S.later(function() {
                     self.switchTo(index);
                 }, self.config.delay * 1000);
             }
-        },  
+        },
         switchTo: function(index, direction) {
             var self = this, cfg = self.config,
                 triggers = self.triggers, panels = self.panels,
@@ -87,7 +87,7 @@ KISSY.add('accordion', function(S) {
 
                 // update activeIndex
                 self.activeIndex = index;
-                
+
             // if only one panel allow to be expanded
             }else{
                 Accordion.superclass.switchTo.call(self , index, direction);
@@ -95,7 +95,7 @@ KISSY.add('accordion', function(S) {
             return self; // chain
         }
     });
-    
+
     S.Accordion = Accordion;
-    
+
 });

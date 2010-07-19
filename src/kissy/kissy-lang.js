@@ -15,9 +15,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
         SEP = '&',
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
-        REG_NOT_WHITE = /\S/,
-        MAX_CLONE_DEEP = 50,
-        cloneDeep = 0;
+        REG_NOT_WHITE = /\S/;
 
     S.mix(S, {
 
@@ -316,14 +314,6 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
             // array or plain object
             if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
-
-                // 避免循环引用
-                if (cloneDeep++ > MAX_CLONE_DEEP) {
-                    S.error('too much recursion in S.clone');
-                    cloneDeep = 0;
-                    return;
-                }
-
                 ret = b ? [] : {};
                 for (k in o) {
                     if (o[HAS_OWN_PROPERTY](k)) {

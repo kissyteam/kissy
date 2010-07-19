@@ -1,6 +1,6 @@
 /**
  * Tabs Widget
- * @creator     Óñ²®<lifesinger@gmail.com>
+ * @creator     çŽ‰ä¼¯<lifesinger@gmail.com>
  */
 KISSY.add('tabs', function(S) {
 

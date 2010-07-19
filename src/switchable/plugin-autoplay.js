@@ -1,6 +1,6 @@
 /**
  * Switchable Autoplay Plugin
- * @creator     Óñ²®<lifesinger@gmail.com>
+ * @creator     ç‰ä¼¯<lifesinger@gmail.com>
  */
 KISSY.add('switchable-autoplay', function(S) {
 
@@ -8,16 +8,16 @@ KISSY.add('switchable-autoplay', function(S) {
         Switchable = S.Switchable;
 
     /**
-     * Ìí¼ÓÄ¬ÈÏÅäÖÃ
+     * æ·»åŠ é»˜è®¤é…ç½®
      */
     S.mix(Switchable.Config, {
         autoplay: false,
-        interval: 5, // ×Ô¶¯²¥·Å¼ä¸ôÊ±¼ä
-        pauseOnHover: true  // triggerType Îª mouse Ê±£¬Êó±êĞüÍ£ÔÚ slide ÉÏÊÇ·ñÔİÍ£×Ô¶¯²¥·Å
+        interval: 5, // è‡ªåŠ¨æ’­æ”¾é—´éš”æ—¶é—´
+        pauseOnHover: true  // triggerType ä¸º mouse æ—¶ï¼Œé¼ æ ‡æ‚¬åœåœ¨ slide ä¸Šæ˜¯å¦æš‚åœè‡ªåŠ¨æ’­æ”¾
     });
 
     /**
-     * Ìí¼Ó²å¼ş
+     * æ·»åŠ æ’ä»¶
      * attached members:
      *   - this.paused
      *   - this.autoplayTimer
@@ -29,23 +29,23 @@ KISSY.add('switchable-autoplay', function(S) {
             var cfg = host.config;
             if (!cfg.autoplay) return;
 
-            // Êó±êĞüÍ££¬Í£Ö¹×Ô¶¯²¥·Å
+            // é¼ æ ‡æ‚¬åœï¼Œåœæ­¢è‡ªåŠ¨æ’­æ”¾
             if (cfg.pauseOnHover) {
                 Event.on(host.container, 'mouseenter', function() {
                     host.paused = true;
                 });
                 Event.on(host.container, 'mouseleave', function() {
-                    // ¼ÙÉè interval Îª 10s
-                    // ÔÚ 8s Ê±£¬Í¨¹ı focus Ö÷¶¯´¥·¢ÇĞ»»£¬Í£Áô 1s ºó£¬Êó±êÒÆ³ö
-                    // ÕâÊ±Èç¹û²» setTimeout, ÔÙ¹ı 1s ºó£¬Ö÷¶¯´¥·¢µÄ panel ½«±»Ìæ»»µô
-                    // ÎªÁË±£Ö¤Ã¿¸ö panel µÄÏÔÊ¾Ê±¼ä¶¼²»Ğ¡ÓÚ interval, ´Ë´¦¼ÓÉÏ setTimeout
+                    // å‡è®¾ interval ä¸º 10s
+                    // åœ¨ 8s æ—¶ï¼Œé€šè¿‡ focus ä¸»åŠ¨è§¦å‘åˆ‡æ¢ï¼Œåœç•™ 1s åï¼Œé¼ æ ‡ç§»å‡º
+                    // è¿™æ—¶å¦‚æœä¸ setTimeout, å†è¿‡ 1s åï¼Œä¸»åŠ¨è§¦å‘çš„ panel å°†è¢«æ›¿æ¢æ‰
+                    // ä¸ºäº†ä¿è¯æ¯ä¸ª panel çš„æ˜¾ç¤ºæ—¶é—´éƒ½ä¸å°äº interval, æ­¤å¤„åŠ ä¸Š setTimeout
                     setTimeout(function() {
                         host.paused = false;
                     }, cfg.interval * 1000);
                 });
             }
 
-            // ÉèÖÃ×Ô¶¯²¥·Å
+            // è®¾ç½®è‡ªåŠ¨æ’­æ”¾
             host.autoplayTimer = S.later(function() {
                 if (host.paused) return;
                 host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0);
@@ -56,6 +56,6 @@ KISSY.add('switchable-autoplay', function(S) {
 
 /**
  * TODO:
- *  - ÊÇ·ñĞèÒªÌá¹© play / pause / stop API ?
- *  - autoplayTimer ºÍ switchTimer µÄ¹ØÁª£¿
+ *  - æ˜¯å¦éœ€è¦æä¾› play / pause / stop API ?
+ *  - autoplayTimer å’Œ switchTimer çš„å…³è”ï¼Ÿ
  */

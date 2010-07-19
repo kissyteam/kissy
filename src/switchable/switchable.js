@@ -1,6 +1,6 @@
 /**
  * Switchable
- * @creator     Óñ²®<lifesinger@gmail.com>
+ * @creator     ç‰ä¼¯<lifesinger@gmail.com>
  * @depends     kissy-core, yui2-animation
  */
 KISSY.add('switchable', function(S, undefined) {
@@ -16,11 +16,11 @@ KISSY.add('switchable', function(S, undefined) {
 
     /**
      * Switchable Widget
-     * attached members£º
+     * attached membersï¼š
      *   - this.container
      *   - this.config
-     *   - this.triggers  ¿ÉÒÔÎª¿ÕÖµ []
-     *   - this.panels    ¿Ï¶¨ÓĞÖµ£¬ÇÒ length > 1
+     *   - this.triggers  å¯ä»¥ä¸ºç©ºå€¼ []
+     *   - this.panels    è‚¯å®šæœ‰å€¼ï¼Œä¸” length > 1
      *   - this.content
      *   - this.length
      *   - this.activeIndex
@@ -29,7 +29,7 @@ KISSY.add('switchable', function(S, undefined) {
     function Switchable(container, config) {
         var self = this;
 
-        // µ÷ÕûÅäÖÃĞÅÏ¢
+        // è°ƒæ•´é…ç½®ä¿¡æ¯
         config = config || {};
         if (!('markupType' in config)) {
             if (config.panelCls) {
@@ -47,7 +47,7 @@ KISSY.add('switchable', function(S, undefined) {
         self.container = S.get(container);
 
         /**
-         * ÅäÖÃ²ÎÊı
+         * é…ç½®å‚æ•°
          * @type Object
          */
         self.config = config;
@@ -77,7 +77,7 @@ KISSY.add('switchable', function(S, undefined) {
         //self.content
 
         /**
-         * µ±Ç°¼¤»îµÄ index
+         * å½“å‰æ¿€æ´»çš„ index
          * @type number
          */
         if (self.activeIndex === undefined) {
@@ -87,41 +87,41 @@ KISSY.add('switchable', function(S, undefined) {
         self._init();
     }
 
-    // Ä¬ÈÏÅäÖÃ
+    // é»˜è®¤é…ç½®
     Switchable.Config = {
-        markupType: 0, // markup µÄÀàĞÍ£¬È¡ÖµÈçÏÂ£º
+        markupType: 0, // markup çš„ç±»å‹ï¼Œå–å€¼å¦‚ä¸‹ï¼š
 
-        // 0 - Ä¬ÈÏ½á¹¹£ºÍ¨¹ı nav ºÍ content À´»ñÈ¡ triggers ºÍ panels
+        // 0 - é»˜è®¤ç»“æ„ï¼šé€šè¿‡ nav å’Œ content æ¥è·å– triggers å’Œ panels
         navCls: CLS_PREFIX + 'nav',
         contentCls: CLS_PREFIX + 'content',
 
-        // 1 - ÊÊ¶ÈÁé»î£ºÍ¨¹ı cls À´»ñÈ¡ triggers ºÍ panels
+        // 1 - é€‚åº¦çµæ´»ï¼šé€šè¿‡ cls æ¥è·å– triggers å’Œ panels
         triggerCls: CLS_PREFIX + 'trigger',
         panelCls: CLS_PREFIX + 'panel',
 
-        // 2 - ÍêÈ«×ÔÓÉ£ºÖ±½Ó´«Èë triggers ºÍ panels
+        // 2 - å®Œå…¨è‡ªç”±ï¼šç›´æ¥ä¼ å…¥ triggers å’Œ panels
         triggers: [],
         panels: [],
 
-        // ÊÇ·ñÓĞ´¥µã
+        // æ˜¯å¦æœ‰è§¦ç‚¹
         hasTriggers: true,
 
-        // ´¥·¢ÀàĞÍ
+        // è§¦å‘ç±»å‹
         triggerType: 'mouse', // or 'click'
-        // ´¥·¢ÑÓ³Ù
+        // è§¦å‘å»¶è¿Ÿ
         delay: .1, // 100ms
 
-        activeIndex: 0, // markup µÄÄ¬ÈÏ¼¤»îÏî£¬Ó¦¸ÃÓë´Ë index Ò»ÖÂ
+        activeIndex: 0, // markup çš„é»˜è®¤æ¿€æ´»é¡¹ï¼Œåº”è¯¥ä¸æ­¤ index ä¸€è‡´
         activeTriggerCls: 'active',
 
-        // ¿É¼ûÊÓÍ¼ÄÚÓĞ¶àÉÙ¸ö panels
+        // å¯è§è§†å›¾å†…æœ‰å¤šå°‘ä¸ª panels
         steps: 1,
 
-        // ¿É¼ûÊÓÍ¼ÇøÓòµÄ´óĞ¡¡£Ò»°ã²»ĞèÒªÉè¶¨´ËÖµ£¬½öµ±»ñÈ¡Öµ²»ÕıÈ·Ê±£¬ÓÃÓÚÊÖ¹¤Ö¸¶¨´óĞ¡
+        // å¯è§è§†å›¾åŒºåŸŸçš„å¤§å°ã€‚ä¸€èˆ¬ä¸éœ€è¦è®¾å®šæ­¤å€¼ï¼Œä»…å½“è·å–å€¼ä¸æ­£ç¡®æ—¶ï¼Œç”¨äºæ‰‹å·¥æŒ‡å®šå¤§å°
         viewSize: []
     };
 
-    // ²å¼ş
+    // æ’ä»¶
     Switchable.Plugins = [];
 
     S.mix(SP, {
@@ -151,7 +151,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * ½âÎö markup, »ñÈ¡ triggers, panels, content
+         * è§£æ markup, è·å– triggers, panels, content
          */
         _parseMarkup: function() {
             var self = this, container = self.container,
@@ -160,7 +160,7 @@ KISSY.add('switchable', function(S, undefined) {
                 nav, content, triggers = [], panels = [], i, n, m;
 
             switch (cfg.markupType) {
-                case 0: // Ä¬ÈÏ½á¹¹
+                case 0: // é»˜è®¤ç»“æ„
                     nav = S.get(DOT + cfg.navCls, container);
                     if (nav) {
                         triggers = DOM.children(nav);
@@ -168,11 +168,11 @@ KISSY.add('switchable', function(S, undefined) {
                     content = S.get(DOT + cfg.contentCls, container);
                     panels = DOM.children(content);
                     break;
-                case 1: // ÊÊ¶ÈÁé»î
+                case 1: // é€‚åº¦çµæ´»
                     triggers = S.query(DOT + cfg.triggerCls, container);
                     panels = S.query(DOT + cfg.panelCls, container);
                     break;
-                case 2: // ÍêÈ«×ÔÓÉ
+                case 2: // å®Œå…¨è‡ªç”±
                     triggers = cfg.triggers;
                     panels = cfg.panels;
                     break;
@@ -183,12 +183,12 @@ KISSY.add('switchable', function(S, undefined) {
             n = panels.length;
             self.length = n / cfg.steps;
 
-            // ×Ô¶¯Éú³É triggers
+            // è‡ªåŠ¨ç”Ÿæˆ triggers
             if (hasTriggers && n > 0 && triggers.length === 0) {
                 triggers = self._generateTriggersMarkup(self.length);
             }
 
-            // ½« triggers ºÍ panels ×ª»»ÎªÆÕÍ¨Êı×é
+            // å°† triggers å’Œ panels è½¬æ¢ä¸ºæ™®é€šæ•°ç»„
             self.triggers = S.makeArray(triggers);
             self.panels = S.makeArray(panels);
 
@@ -197,7 +197,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * ×Ô¶¯Éú³É triggers µÄ markup
+         * è‡ªåŠ¨ç”Ÿæˆ triggers çš„ markup
          */
         _generateTriggersMarkup: function(len) {
             var self = this, cfg = self.config,
@@ -218,7 +218,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * ¸ø triggers Ìí¼ÓÊÂ¼ş
+         * ç»™ triggers æ·»åŠ äº‹ä»¶
          */
         _bindTriggers: function() {
             var self = this, cfg = self.config,
@@ -229,12 +229,12 @@ KISSY.add('switchable', function(S, undefined) {
                 (function(index) {
                     trigger = triggers[index];
 
-                    // ÏìÓ¦µã»÷ºÍ Tab ¼ü
+                    // å“åº”ç‚¹å‡»å’Œ Tab é”®
                     Event.on(trigger, 'click focus', function() {
                         self._onFocusTrigger(index);
                     });
 
-                    // ÏìÓ¦Êó±êĞü¸¡
+                    // å“åº”é¼ æ ‡æ‚¬æµ®
                     if (cfg.triggerType === 'mouse') {
                         Event.on(trigger, 'mouseenter', function() {
                             self._onMouseEnterTrigger(index);
@@ -248,23 +248,23 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * click or tab ¼ü¼¤»î trigger Ê±´¥·¢µÄÊÂ¼ş
+         * click or tab é”®æ¿€æ´» trigger æ—¶è§¦å‘çš„äº‹ä»¶
          */
         _onFocusTrigger: function(index) {
             var self = this;
-            if (self.activeIndex === index) return; // ÖØ¸´µã»÷
-            if (self.switchTimer) self.switchTimer.cancel(); // ±ÈÈç£ºÏÈĞü¸¡£¬ºóÁ¢¿Ìµã»÷¡£ÕâÊ±Ğü¸¡ÊÂ¼ş¿ÉÒÔÈ¡Ïûµô
+            if (self.activeIndex === index) return; // é‡å¤ç‚¹å‡»
+            if (self.switchTimer) self.switchTimer.cancel(); // æ¯”å¦‚ï¼šå…ˆæ‚¬æµ®ï¼Œåç«‹åˆ»ç‚¹å‡»ã€‚è¿™æ—¶æ‚¬æµ®äº‹ä»¶å¯ä»¥å–æ¶ˆæ‰
             self.switchTo(index);
         },
 
         /**
-         * Êó±êĞü¸¡ÔÚ trigger ÉÏÊ±´¥·¢µÄÊÂ¼ş
+         * é¼ æ ‡æ‚¬æµ®åœ¨ trigger ä¸Šæ—¶è§¦å‘çš„äº‹ä»¶
          */
         _onMouseEnterTrigger: function(index) {
             var self = this;
             //S.log('Triggerable._onMouseEnterTrigger: index = ' + index);
 
-            // ²»ÖØ¸´´¥·¢¡£±ÈÈç£ºÒÑÏÔÊ¾ÄÚÈİÊ±£¬½«Êó±ê¿ìËÙ»¬³öÔÙ»¬½øÀ´£¬²»±Ø´¥·¢
+            // ä¸é‡å¤è§¦å‘ã€‚æ¯”å¦‚ï¼šå·²æ˜¾ç¤ºå†…å®¹æ—¶ï¼Œå°†é¼ æ ‡å¿«é€Ÿæ»‘å‡ºå†æ»‘è¿›æ¥ï¼Œä¸å¿…è§¦å‘
             if (self.activeIndex !== index) {
                 self.switchTimer = S.later(function() {
                     self.switchTo(index);
@@ -273,7 +273,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * Êó±êÒÆ³ö trigger Ê±´¥·¢µÄÊÂ¼ş
+         * é¼ æ ‡ç§»å‡º trigger æ—¶è§¦å‘çš„äº‹ä»¶
          */
         _onMouseLeaveTrigger: function() {
             var self = this;
@@ -281,7 +281,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * ÇĞ»»²Ù×÷
+         * åˆ‡æ¢æ“ä½œ
          */
         switchTo: function(index, direction) {
             var self = this, cfg = self.config,
@@ -317,7 +317,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * ÇĞ»»µ±Ç°´¥µã
+         * åˆ‡æ¢å½“å‰è§¦ç‚¹
          */
         _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
             var activeTriggerCls = this.config.activeTriggerCls;
@@ -327,10 +327,10 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * ÇĞ»»ÊÓÍ¼
+         * åˆ‡æ¢è§†å›¾
          */
         _switchView: function(fromPanels, toPanels/*, index, direction*/) {
-            // ×î¼òµ¥µÄÇĞ»»Ğ§¹û£ºÖ±½ÓÒş²Ø/ÏÔÊ¾
+            // æœ€ç®€å•çš„åˆ‡æ¢æ•ˆæœï¼šç›´æ¥éšè—/æ˜¾ç¤º
             DOM.css(fromPanels, DISPLAY, NONE);
             DOM.css(toPanels, DISPLAY, BLOCK);
 
@@ -339,7 +339,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * ÇĞ»»µ½ÉÏÒ»ÊÓÍ¼
+         * åˆ‡æ¢åˆ°ä¸Šä¸€è§†å›¾
          */
         prev: function() {
             var self = this, activeIndex = self.activeIndex;
@@ -347,7 +347,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * ÇĞ»»µ½ÏÂÒ»ÊÓÍ¼
+         * åˆ‡æ¢åˆ°ä¸‹ä¸€è§†å›¾
          */
         next: function() {
             var self = this, activeIndex = self.activeIndex;
@@ -356,7 +356,7 @@ KISSY.add('switchable', function(S, undefined) {
     });
 
     S.mix(SP, S.EventTarget);
-    
+
     S.Switchable = Switchable;
 });
 
@@ -364,16 +364,16 @@ KISSY.add('switchable', function(S, undefined) {
  * NOTES:
  *
  * 2010.04
- *  - ÖØ¹¹£¬ÍÑÀë¶Ô yahoo-dom-event µÄÒÀÀµ
+ *  - é‡æ„ï¼Œè„±ç¦»å¯¹ yahoo-dom-event çš„ä¾èµ–
  *
  * 2010.03
- *  - ÖØ¹¹£¬È¥µô Widget, ²¿·Ö´úÂëÖ±½Ó²ÉÓÃ kissy »ù´¡¿â
- *  - ²å¼ş»úÖÆ´Ó weave Ö¯Èë·¨¸Ä³É hook ¹³×Ó·¨
+ *  - é‡æ„ï¼Œå»æ‰ Widget, éƒ¨åˆ†ä»£ç ç›´æ¥é‡‡ç”¨ kissy åŸºç¡€åº“
+ *  - æ’ä»¶æœºåˆ¶ä» weave ç»‡å…¥æ³•æ”¹æˆ hook é’©å­æ³•
  *
  * TODO:
  *  - http://malsup.com/jquery/cycle/
  *  - http://www.mall.taobao.com/go/chn/mall_chl/flagship.php
- * 
+ *
  * References:
  *  - jQuery Scrollable http://flowplayer.org/tools/scrollable.html
  *

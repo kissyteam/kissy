@@ -17,6 +17,6 @@ while (!feof($handle)) {
 fclose($handle);
 
 if(!empty($callback)) $out = $callback.'('.$out.')';
-sleep(2);
+sleep(2); // 模拟低速
 echo $out;
 ?>

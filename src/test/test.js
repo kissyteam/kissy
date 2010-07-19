@@ -1,6 +1,6 @@
 /**
  * @module  单元测试
- * @author  lifesinger@gmail.com
+ * @author  玉伯<lifesinger@gmail.com>
  */
 var KISSY = window.KISSY || {};
 
