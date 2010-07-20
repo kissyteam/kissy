@@ -57,12 +57,13 @@ KISSY.add('switchable-lazyload', function(S) {
              */
             function isAllDone() {
                 var elems, i, len,
-                    tagName = (type === IMG_SRC) ? 'img' : (type === TEXTAREA_DATA ? 'textarea' : '');
+                    isImgSrc = type === IMG_SRC,
+                    tagName = isImgSrc ? 'img' : (type === TEXTAREA_DATA ? 'textarea' : '');
 
                 if (tagName) {
                     elems = S.query(tagName, host.container);
                     for (i = 0, len = elems.length; i < len; i++) {
-                        if (DOM.attr(elems[i], flag)) return false;
+                        if (isImgSrc ? DOM.attr(elems[i], flag) : DOM.hasClass(elems[i], flag)) return false;
                     }
                 }
                 return true;

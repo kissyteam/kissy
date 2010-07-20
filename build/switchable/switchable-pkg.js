@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 888 Jul 20 19:33
+build: 890 Jul 20 22:07
 */
 /**
  * Switchable
@@ -833,12 +833,13 @@ KISSY.add('switchable-lazyload', function(S) {
              */
             function isAllDone() {
                 var elems, i, len,
-                    tagName = (type === IMG_SRC) ? 'img' : (type === TEXTAREA_DATA ? 'textarea' : '');
+                    isImgSrc = type === IMG_SRC,
+                    tagName = isImgSrc ? 'img' : (type === TEXTAREA_DATA ? 'textarea' : '');
 
                 if (tagName) {
                     elems = S.query(tagName, host.container);
                     for (i = 0, len = elems.length; i < len; i++) {
-                        if (DOM.attr(elems[i], flag)) return false;
+                        if (isImgSrc ? DOM.attr(elems[i], flag) : DOM.hasClass(elems[i], flag)) return false;
                     }
                 }
                 return true;
