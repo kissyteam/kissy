@@ -4,9 +4,10 @@
  */
 KISSY.add('switchable-circular', function(S, undefined) {
 
-    var POSITION = 'position', RELATIVE = 'relative',
+    var DOM = S.DOM,
+        POSITION = 'position', RELATIVE = 'relative',
         LEFT = 'left', TOP = 'top',
-        EMPTY = '',
+        EMPTY = '', PX = 'px',
         FORWARD = 'forward', BACKWARD = 'backward',
         SCROLLX = 'scrollx', SCROLLY = 'scrolly',
         Switchable = S.Switchable;
@@ -41,7 +42,7 @@ KISSY.add('switchable-circular', function(S, undefined) {
             // 调整位置并获取 diff
             diff = adjustPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
         }
-        props[prop] = diff;
+        props[prop] = diff + PX;
 
         // 开始动画
         if (self.anim) self.anim.stop();

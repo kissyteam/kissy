@@ -12,7 +12,8 @@ KISSY.add('switchable-autoplay', function(S) {
      */
     S.mix(Switchable.Config, {
         autoplay: false,
-        interval: 5, // 自动播放间隔时间
+        autoPlayInterval: 5, // 自动播放间隔时间
+        autoPlayDirection: 'forward', // 默认正向自动播放
         pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
     });
 
@@ -27,7 +28,7 @@ KISSY.add('switchable-autoplay', function(S) {
         name: 'autoplay',
 
         init: function(host) {
-            var cfg = host.config;
+            var cfg = host.config, interval = cfg.autoPlayInterval * 1000;
             if (!cfg.autoplay) return;
 
             // 鼠标悬停，停止自动播放
@@ -42,15 +43,15 @@ KISSY.add('switchable-autoplay', function(S) {
                     // 为了保证每个 panel 的显示时间都不小于 interval, 此处加上 setTimeout
                     S.later(function() {
                         host.paused = false;
-                    }, cfg.interval * 1000);
+                    }, interval);
                 });
             }
 
             // 设置自动播放
             host.autoplayTimer = S.later(function() {
                 if (host.paused) return;
-                host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0);
-            }, cfg.interval * 1000, true);
+                host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, cfg.autoPlayDirection);
+            }, interval, true);
         }
     });
 });

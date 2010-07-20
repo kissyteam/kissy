@@ -9,7 +9,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
         OPACITY = 'opacity', Z_INDEX = 'z-index',
         POSITION = 'position', RELATIVE = 'relative', ABSOLUTE = 'absolute',
         SCROLLX = 'scrollx', SCROLLY = 'scrolly', FADE = 'fade',
-        LEFT = 'left', TOP = 'top', FLOAT = 'float',
+        LEFT = 'left', TOP = 'top', FLOAT = 'float', PX = 'px',
         Switchable = S.Switchable, Effects;
 
     /**
@@ -18,7 +18,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
     S.mix(Switchable.Config, {
         effect: NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
         duration: .5, // 动画的时长
-        easing: 'easeNone' // easing method
+        easing: 'easeOutStrong' // easing method
     });
 
     /**
@@ -65,7 +65,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
                 diff = self.viewSize[isX ? 0 : 1] * index,
                 props = { };
 
-            props[isX ? LEFT : TOP] = -diff;
+            props[isX ? LEFT : TOP] = -diff + PX;
             if (self.anim) self.anim.stop();
 
             self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
