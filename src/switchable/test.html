@@ -4,19 +4,21 @@
 <meta charset="utf-8"/>
 <title>Switchable Widgets Test</title>
 
-<script src="../../build/packages/ks-core-min.js"></script>
-<script src="../datalazyload/datalazyload.js"></script>
+<script src="../../build/packages/ks-core.js"></script>
+
+<script src="../../build/anim/anim-pkg.js"></script>
+<script src="../../build/datalazyload/datalazyload.js"></script>
 
 <script src="switchable.js"></script>
 
-<!--<script src="plugin-autoplay.js"></script>-->
-<!--<script src="plugin-effect.js"></script>-->
-<!--<script src="plugin-circular.js"></script>-->
-<!--<script src="plugin-lazyload.js"></script>-->
+<script src="plugin-autoplay.js"></script>
+<script src="plugin-effect.js"></script>
+<script src="plugin-circular.js"></script>
+<script src="plugin-lazyload.js"></script>
 
-<!--<script src="widget-tabs.js"></script>-->
-<!--<script src="widget-slide.js"></script>-->
-<!--<script src="widget-carousel.js"></script>-->
+<script src="widget-tabs.js"></script>
+<script src="widget-slide.js"></script>
+<script src="widget-carousel.js"></script>
 <!--<script src="widget-accordion.js"></script>-->
 
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
@@ -159,7 +161,7 @@
     (function() {
         KISSY.Slide('#demo2', {
             effect: 'scrolly',
-            easing: YAHOO.util.Easing.easeOutStrong
+            easing: KISSY.Easing.easeOutStrong
         });
     })();
 </script>
@@ -320,24 +322,25 @@
     </div>
 </div>
 <script>
-    (function() {
-        var Y = YAHOO.util, Event = Y.Event;
+    (function(S) {
 
-        var demo4 = new KISSY.Carousel('#demo4', {
+        var Event = S.Event,
+
+            demo4 = new S.Carousel('#demo4', {
             effect: 'scrollx',
-            easing: Y.Easing.easeOutStrong,
+            easing: S.Easing.easeOutStrong,
             steps: 5,
             viewSize: [680],
             lazyDataType: 'img-src'
         });
 
-        Event.on('scroller-prev', 'click', function() {
+        Event.on('#scroller-prev', 'click', function() {
             demo4.prev();
         });
-        Event.on('scroller-next', 'click', function() {
+        Event.on('#scroller-next', 'click', function() {
             demo4.next();
         });
-    })();
+    })(KISSY);
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -357,8 +360,8 @@
     </ul>
 </div>
 <script>
-    (function() {
-        KISSY.Carousel('#demo5', {
+    (function(S) {
+        S.Carousel('#demo5', {
             contentCls: 'news-items',
             hasTriggers: false,
             effect: 'scrolly',
@@ -366,7 +369,7 @@
             interval: 3,
             duration: .2
         });
-    })();
+    })(KISSY);
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -436,23 +439,23 @@
     </div>
 </div>
 <script>
-    (function() {
-        var S = KISSY, Y = YAHOO.util, Dom = Y.Dom,
-            descList = Dom.getChildren(S.get('#slideFocus ul.desc-list'));
+    (function(S) {
+        var DOM = S.DOM,
+            descList = DOM.children(S.get('#slideFocus ul.desc-list'));
 
-        KISSY.Slide('#slideFocus', {
+        S.Slide('#slideFocus', {
             contentCls: 'pic-list',
             navCls: 'thumbs-list',
             activeTriggerCls: 'current',
             effect: 'scrollx',
-            easing: YAHOO.util.Easing.easeOutStrong
+            easing: S.Easing.easeOutStrong
         })
         .on('beforeSwitch', function(ev) {
             S.each(descList, function(desc, i) {
                 desc.style.display = i === ev.toIndex ? 'block' : 'none';
             });
         });
-    })();
+    })(KISSY);
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -479,14 +482,13 @@
     <div class="ks-switchable-panel" style="display:none;">内容D<br/>内容D<br/>内容D</div>
 </div>
 <script>
-    (function() {
-        var S = KISSY, Y = YAHOO.util, Dom = Y.Dom;
-        var myAccordion = new S.Accordion('#accordion1', {
-                markupType:1,
-                triggerType:"click",
-                multiPanelExpandable:false
-            });
-    })();
+//    (function(S) {
+//        var myAccordion = new S.Accordion('#accordion1', {
+//                markupType:1,
+//                triggerType:"click",
+//                multiPanelExpandable:false
+//            });
+//    })(KISSY);
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -496,10 +498,11 @@
 
 <pre>
 
-    yui2/yahoo-dom-event/yahoo-dom-event.js
-    yui2/animation/animation-min.js
+    kissy/build/packages/ks-core-min.js
+    kissy/build/anim/anim-pkg-min.js （可选，需要动画时才需要加载）
+    kissy/build/datalazyload/datalazyload-min.js (可选，需要数据延迟时才需要加载)
 
-    kissy/build/packages/kissy-min.js
+    kissy/build/switachable/switachable-pkg-min.js
 </pre>
 
 <script>
@@ -513,7 +516,8 @@
                     pre = next;
 
                 if (next[0].nodeName !== 'PRE') {
-                    pre = S.Node('PRE');
+                    pre = S.Node('<pre>');
+
                     pre.attr('class', 'code')
                         .html(p.prev().html());
 
@@ -527,7 +531,6 @@
                 p.html(showing ? HIDE_CODE : SHOW_CODE);
             });
         });
-
     })();
 </script>
 </body>

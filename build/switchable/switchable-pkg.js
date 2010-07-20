@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 881 Jul 19 23:46
+build: 882 Jul 20 10:48
 */
 /**
  * Switchable
@@ -14,6 +14,7 @@ KISSY.add('switchable', function(S, undefined) {
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
+        EVENT_BEFORE_INIT = 'beforeInit', EVENT_INIT = 'init',
         EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
         CLS_PREFIX = 'ks-switchable-';
 
@@ -133,6 +134,9 @@ KISSY.add('switchable', function(S, undefined) {
         _init: function() {
             var self = this, cfg = self.config;
 
+            // fire event
+            if(self.fire(EVENT_BEFORE_INIT) === false) return;
+
             // parse markup
             self._parseMarkup();
 
@@ -147,6 +151,8 @@ KISSY.add('switchable', function(S, undefined) {
                     plugin.init(self);
                 }
             });
+            
+            self.fire(EVENT_INIT);
         },
 
         /**
@@ -333,13 +339,20 @@ KISSY.add('switchable', function(S, undefined) {
         /**
          * 切换视图
          */
-        _switchView: function(fromPanels, toPanels/*, index, direction*/) {
+        _switchView: function(fromPanels, toPanels, index/*, direction*/) {
             // 最简单的切换效果：直接隐藏/显示
             DOM.css(fromPanels, DISPLAY, NONE);
             DOM.css(toPanels, DISPLAY, BLOCK);
 
-            // fire onSwitch
-            this.fire(EVENT_SWITCH);
+            // fire onSwitch events
+            this._fireOnSwitch(index);
+        },
+
+        /**
+         * 触发 switch 相关事件
+         */
+        _fireOnSwitch: function(index) {
+            this.fire(EVENT_SWITCH, { currentIndex: index });
         },
 
         /**
@@ -610,7 +623,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
                 fn = S.isFunction(effect) ? effect : Effects[effect];
 
             fn.call(self, fromEls, toEls, function() {
-                self.fire('switch');
+                self._fireOnSwitch();
             }, index, direction);
         }
 
@@ -877,14 +890,21 @@ KISSY.add('slide', function(S) {
  * Carousel Widget
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('carousel', function(S) {
+KISSY.add('carousel', function(S, undefined) {
 
-    /**
-     * 默认配置，和 Switchable 相同的部分此处未列出
-     */
-    var defaultConfig = {
-        circular: true
-    };
+    var DOM = S.DOM, Event = S.Event,
+        CLS_PREFIX = 'ks-switchable-', DOT = '.',
+        PREV_BTN = 'prevBtn', NEXT_BTN = 'nextBtn',
+
+        /**
+         * 默认配置，和 Switchable 相同的部分此处未列出
+         */
+        defaultConfig = {
+            circular: true,
+            prevBtnCls: CLS_PREFIX + 'prev-btn',
+            nextBtnCls: CLS_PREFIX + 'next-btn',
+            disableBtnCls: CLS_PREFIX + 'disable-btn'
+        };
 
     /**
      * Carousel Class
@@ -898,9 +918,161 @@ KISSY.add('carousel', function(S) {
             return new Carousel(container, config);
         }
 
+        // 插入 carousel 的初始化逻辑
+        self.on('init', function() { init_carousel(self); });
+
+        // call super
         Carousel.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
     }
 
     S.extend(Carousel, S.Switchable);
     S.Carousel = Carousel;
+
+    /**
+     * Carousel 的初始化逻辑
+     * 增加了:
+     *   self.prevBtn
+     *   self.nextBtn
+     */
+    function init_carousel(self) {
+        var cfg = self.config;
+
+        // 获取 prev/next 按钮，并添加事件
+        S.each(['prev', 'next'], function(d) {
+            var btn = self[d + 'Btn'] = S.get(DOT + cfg[d + 'BtnCls'], self.container);
+
+            Event.on(btn, function(ev) {
+                ev.preventDefault();
+                self[d]();
+            });
+        });
+
+        // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
+        self.on('switch', function(ev) {
+            var i = ev.currentIndex, disableCls = cfg.disableBtnCls,
+                disableBtn = (i === 0) ? self[PREV_BTN]
+                    : (i === self.length - 1) ? self[NEXT_BTN]
+                    : undefined;
+
+            DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
+            if (disableBtn) DOM.addClass(disableBtn, disableCls);
+        });
+
+        // 触发 itemSelected 事件
+        Event.on(self.panels, 'click focus', function() {
+            self.fire('itemSelected', { item: this });
+        });
+    }
+});
+
+
+/**
+ * NOTES:
+ *
+ * 2010.07
+ *  - 添加对 prevBtn/nextBtn 的支持
+ *  - 添加 itemSelected 事件
+ *
+ * TODO:
+ *  - 对键盘事件的支持，比如 Up/Down 触发 prevItem/nextItem, PgDn/PgUp 触发 prev/next
+ *  - itemSelected 时，自动居中的特性
+ */
+/**
+ * Accordion Widget
+ * @creator  沉鱼<fool2fish@gmail.com>
+ */
+KISSY.add('accordion', function(S) {
+
+    var DOM = S.DOM,
+        DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
+        FORWARD = 'forward',
+        EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
+
+        defaultConfig = {
+            triggerType: 'click',
+            multiPanelExpandable:false
+        };
+
+    /**
+     * Accordion Class
+     * @constructor
+     */
+    function Accordion(container, config) {
+        var self = this;
+
+        // factory or constructor
+        if (!(self instanceof Accordion)) {
+            return new Accordion(container, config);
+        }
+
+        config = S.merge(defaultConfig, config || {});
+        Accordion.superclass.constructor.call(self, container, config);
+    }
+
+    S.extend(Accordion, S.Switchable);
+
+    S.augment(Accordion, {
+        /**
+         * click or tab 键激活 trigger 时触发的事件
+         */
+        _onFocusTrigger: function(index) {
+            var self = this , cfg = self.config;
+            if (self.activeIndex === index && (!cfg.multiPanelExpandable)) return; // 重复点击
+            if (self.switchTimer) self.switchTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
+            self.switchTo(index);
+        },
+        /**
+         * 鼠标悬浮在 trigger 上时触发的事件
+         */
+        _onMouseEnterTrigger: function(index) {
+            var self = this, cfg = self.config;
+            // 不重复触发。比如：已显示内容时，将鼠标快速滑出再滑进来，不必触发
+            if (cfg.multiPanelExpandable || self.activeIndex !== index) {
+                self.switchTimer = S.later(function() {
+                    self.switchTo(index);
+                }, self.config.delay * 1000);
+            }
+        },
+        switchTo: function(index, direction) {
+            var self = this, cfg = self.config,
+                triggers = self.triggers, panels = self.panels,
+                activeIndex = self.activeIndex,
+                steps = cfg.steps,
+                fromIndex = activeIndex * steps, toIndex = index * steps;
+            //S.log('Triggerable.switchTo: index = ' + index);
+
+            // if mutilple panels allow to be expanded
+            if (cfg.multiPanelExpandable) {
+                if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
+
+                // switch active panels
+                if (direction === undefined) {
+                    direction = index > activeIndex ? FORWARD : FORWARD;
+                }
+
+                var activeTriggerCls = cfg.activeTriggerCls;
+                if (panels[index].style.display == NONE) {
+                    DOM.addClass(triggers[index], activeTriggerCls);
+                    DOM.css(panels[index], DISPLAY, BLOCK);
+                } else {
+                    DOM.removeClass(triggers[index], activeTriggerCls);
+                    DOM.css(panels[index], DISPLAY, NONE);
+                }
+
+                // fire onSwitch
+                this.fire(EVENT_SWITCH);
+
+                // update activeIndex
+                self.activeIndex = index;
+
+                // if only one panel allow to be expanded
+            } else {
+                Accordion.superclass.switchTo.call(self, index, direction);
+            }
+            return self; // chain
+        }
+    });
+
+    S.Accordion = Accordion;
+
 });

@@ -116,7 +116,7 @@ KISSY.add('dom-class', function(S, undefined) {
 
         for (; i < len; i++) {
             elem = elems[i];
-            if (elem.nodeType === 1) {
+            if (DOM._isElementNode(elem)) {
                 ret = fn(elem, classNames, classNames.length);
                 if (ret !== undefined) return ret;
             }

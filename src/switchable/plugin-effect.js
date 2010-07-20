@@ -162,7 +162,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
                 fn = S.isFunction(effect) ? effect : Effects[effect];
 
             fn.call(self, fromEls, toEls, function() {
-                self.fire('switch');
+                self._fireOnSwitch();
             }, index, direction);
         }
 

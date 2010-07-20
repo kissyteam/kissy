@@ -1,20 +1,18 @@
 /**
  * Accordion Widget
- * @creator     沉鱼<fool2fish@gmail.com>
+ * @creator  沉鱼<fool2fish@gmail.com>
  */
 KISSY.add('accordion', function(S) {
 
-    var DOM = S.DOM, Event = S.Event,
-        doc = document,
+    var DOM = S.DOM,
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
-        FORWARD = 'forward', BACKWARD = 'backward',
-        DOT = '.',
+        FORWARD = 'forward',
         EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
 
         defaultConfig = {
-        triggerType:'click',
-        multiPanelExpandable:false
-    };
+            triggerType: 'click',
+            multiPanelExpandable:false
+        };
 
     /**
      * Accordion Class
@@ -34,7 +32,7 @@ KISSY.add('accordion', function(S) {
 
     S.extend(Accordion, S.Switchable);
 
-    S.augment(Accordion,{
+    S.augment(Accordion, {
         /**
          * click or tab 键激活 trigger 时触发的事件
          */
@@ -65,7 +63,7 @@ KISSY.add('accordion', function(S) {
             //S.log('Triggerable.switchTo: index = ' + index);
 
             // if mutilple panels allow to be expanded
-            if(cfg.multiPanelExpandable){
+            if (cfg.multiPanelExpandable) {
                 if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
 
                 // switch active panels
@@ -74,10 +72,10 @@ KISSY.add('accordion', function(S) {
                 }
 
                 var activeTriggerCls = cfg.activeTriggerCls;
-                if(panels[index].style.display == NONE){
+                if (panels[index].style.display == NONE) {
                     DOM.addClass(triggers[index], activeTriggerCls);
                     DOM.css(panels[index], DISPLAY, BLOCK);
-                }else{
+                } else {
                     DOM.removeClass(triggers[index], activeTriggerCls);
                     DOM.css(panels[index], DISPLAY, NONE);
                 }
@@ -88,9 +86,9 @@ KISSY.add('accordion', function(S) {
                 // update activeIndex
                 self.activeIndex = index;
 
-            // if only one panel allow to be expanded
-            }else{
-                Accordion.superclass.switchTo.call(self , index, direction);
+                // if only one panel allow to be expanded
+            } else {
+                Accordion.superclass.switchTo.call(self, index, direction);
             }
             return self; // chain
         }

@@ -9,6 +9,7 @@ KISSY.add('switchable', function(S, undefined) {
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
+        EVENT_BEFORE_INIT = 'beforeInit', EVENT_INIT = 'init',
         EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
         CLS_PREFIX = 'ks-switchable-';
 
@@ -128,6 +129,9 @@ KISSY.add('switchable', function(S, undefined) {
         _init: function() {
             var self = this, cfg = self.config;
 
+            // fire event
+            if(self.fire(EVENT_BEFORE_INIT) === false) return;
+
             // parse markup
             self._parseMarkup();
 
@@ -142,6 +146,8 @@ KISSY.add('switchable', function(S, undefined) {
                     plugin.init(self);
                 }
             });
+            
+            self.fire(EVENT_INIT);
         },
 
         /**
@@ -328,13 +334,20 @@ KISSY.add('switchable', function(S, undefined) {
         /**
          * 切换视图
          */
-        _switchView: function(fromPanels, toPanels/*, index, direction*/) {
+        _switchView: function(fromPanels, toPanels, index/*, direction*/) {
             // 最简单的切换效果：直接隐藏/显示
             DOM.css(fromPanels, DISPLAY, NONE);
             DOM.css(toPanels, DISPLAY, BLOCK);
 
-            // fire onSwitch
-            this.fire(EVENT_SWITCH);
+            // fire onSwitch events
+            this._fireOnSwitch(index);
+        },
+
+        /**
+         * 触发 switch 相关事件
+         */
+        _fireOnSwitch: function(index) {
+            this.fire(EVENT_SWITCH, { currentIndex: index });
         },
 
         /**

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 872 Jul 19 10:18
+build: 882 Jul 20 10:46
 */
 /**
  * @module  dom
@@ -451,7 +451,7 @@ KISSY.add('dom-class', function(S, undefined) {
 
         for (; i < len; i++) {
             elem = elems[i];
-            if (elem.nodeType === 1) {
+            if (DOM._isElementNode(elem)) {
                 ret = fn(elem, classNames, classNames.length);
                 if (ret !== undefined) return ret;
             }
