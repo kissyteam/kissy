@@ -101,7 +101,7 @@ KISSY.add('anim', function(S, undefined) {
             for (prop in target) source[prop] = parse(DOM.css(elem, prop));
             if(self.fire(EVENT_START) === false) return;
 
-            self.stop(); // 先停止掉正在运行的动画
+            self.pause(); // 先暂停掉正在运行的动画
 
             self.timer = S.later((go = function () {
                 var time = S.now(),
@@ -132,15 +132,32 @@ KISSY.add('anim', function(S, undefined) {
             return self;
         },
 
-        stop: function() {
-            var self = this;
+        stop: function(complete) {
+            var self = this, target = self.props, prop;
 
+            // 停止定时器
             if (self.timer) {
                 self.timer.cancel();
                 self.timer = undefined;
             }
 
+            if(complete) {
+
+            }
+
             return self;
+        },
+
+        stop: function() {
+            var self = this, target = self.props, prop;
+
+            // 先停止定时器
+            self.pause();
+
+            // 直接将样式设置到
+            for (prop in target) {
+
+            }
         }
     });
 

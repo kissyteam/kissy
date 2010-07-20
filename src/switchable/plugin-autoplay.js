@@ -2,7 +2,7 @@
  * Switchable Autoplay Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-autoplay', function(S) {
+KISSY.add('switchable-autoplay', function(S, undefined) {
 
     var Event = S.Event,
         Switchable = S.Switchable;
@@ -12,8 +12,7 @@ KISSY.add('switchable-autoplay', function(S) {
      */
     S.mix(Switchable.Config, {
         autoplay: false,
-        autoPlayInterval: 5, // 自动播放间隔时间
-        autoPlayDirection: 'forward', // 默认正向自动播放
+        interval: 5, // 自动播放间隔时间
         pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
     });
 
@@ -28,12 +27,18 @@ KISSY.add('switchable-autoplay', function(S) {
         name: 'autoplay',
 
         init: function(host) {
-            var cfg = host.config, interval = cfg.autoPlayInterval * 1000;
+            var cfg = host.config, interval = cfg.interval * 1000, leaveTimer;
             if (!cfg.autoplay) return;
 
             // 鼠标悬停，停止自动播放
             if (cfg.pauseOnHover) {
                 Event.on(host.container, 'mouseenter', function() {
+                    // 当鼠标移出后，又快速移动进来，这时要将 leaveTimer 取消掉
+                    // 否则 pauseOnHover 会失效
+                    if(leaveTimer) {
+                        leaveTimer.cancel();
+                        leaveTimer = undefined;
+                    }
                     host.paused = true;
                 });
                 Event.on(host.container, 'mouseleave', function() {
@@ -41,8 +46,9 @@ KISSY.add('switchable-autoplay', function(S) {
                     // 在 8s 时，通过 focus 主动触发切换，停留 1s 后，鼠标移出
                     // 这时如果不 setTimeout, 再过 1s 后，主动触发的 panel 将被替换掉
                     // 为了保证每个 panel 的显示时间都不小于 interval, 此处加上 setTimeout
-                    S.later(function() {
+                    leaveTimer = S.later(function() {
                         host.paused = false;
+                        leaveTimer = undefined;
                     }, interval);
                 });
             }
@@ -50,7 +56,8 @@ KISSY.add('switchable-autoplay', function(S) {
             // 设置自动播放
             host.autoplayTimer = S.later(function() {
                 if (host.paused) return;
-                host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, cfg.autoPlayDirection);
+                // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
+                host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, 'forward');
             }, interval, true);
         }
     });

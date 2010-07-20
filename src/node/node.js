@@ -22,7 +22,7 @@ KISSY.add('node', function(S) {
             return null;
         }
 
-        // handle Node(ElementNode/TextNode)
+        // handle supported node
         if (DOM._isSupportedNode(html)) {
             domNode = html;
         }

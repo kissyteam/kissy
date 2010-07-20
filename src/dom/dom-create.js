@@ -6,6 +6,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     var doc = document,
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
+        isSupportedNode = DOM._isSupportedNode,
         isElementNode = DOM._isElementNode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',
@@ -22,7 +23,7 @@ KISSY.add('dom-create', function(S, undefined) {
          * Creates a new HTMLElement using the provided html string.
          */
         create: function(html, props, ownerDoc) {
-            if (isElementNode(html)) return html;
+            if (isSupportedNode(html)) return html;
             if (!(html = S.trim(html))) return null;
 
             var ret = null, creators = DOM._creators,

@@ -5,6 +5,7 @@
 KISSY.add('dom', function(S) {
 
     var DOM = {
+
         /**
          * 是不是 element/text node
          */

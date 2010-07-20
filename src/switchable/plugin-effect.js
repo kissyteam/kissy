@@ -18,7 +18,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
     S.mix(Switchable.Config, {
         effect: NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
         duration: .5, // 动画的时长
-        easing: 'easeOutStrong' // easing method
+        easing: 'easeNone' // easing method
     });
 
     /**

@@ -15,6 +15,7 @@ KISSY.add('dom-attr', function(S, undefined) {
         DOM = S.DOM,
         isElementNode = DOM._isElementNode,
         isTextNode = DOM._isTextNode,
+        
         RE_SPECIAL_ATTRS = /href|src|style/,
         RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
         RE_RETURN = /\r/g,
@@ -203,10 +204,11 @@ KISSY.add('dom-attr', function(S, undefined) {
                 // supports css selector/Node/NodeList
                 var el = S.get(selector);
 
-                // only gets value on element nodes
+                // only gets value on supported nodes
                 if (isElementNode(el)) {
                     return el[TEXT] || '';
-                } else if (isTextNode(el)) {
+                }
+                else if (isTextNode(el)) {
                     return el.nodeValue;
                 }
             }
@@ -215,7 +217,8 @@ KISSY.add('dom-attr', function(S, undefined) {
                 S.each(S.query(selector), function(el) {
                     if (isElementNode(el)) {
                         el[TEXT] = val;
-                    } else if (isTextNode(el)) {
+                    }
+                    else if (isTextNode(el)) {
                         el.nodeValue = val;
                     }
                 });

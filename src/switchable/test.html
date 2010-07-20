@@ -161,7 +161,7 @@
     KISSY.ready(function(S) {
         S.Slide('#demo2', {
             effect: 'scrolly',
-            direction: 'backward'
+            easing: 'easeOutStrong'
         });
     });
 </script>
@@ -227,8 +227,8 @@
     </ul>
 </div>
 <script>
-    (function() {
-        KISSY.Slide('#demo3', {
+    KISSY.ready(function(S) {
+        S.Slide('#demo3', {
             navCls: 'yslider-stick',
             contentCls: 'yslider-stage',
             activeTriggerCls: 'selected',
