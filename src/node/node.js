@@ -22,8 +22,8 @@ KISSY.add('node', function(S) {
             return null;
         }
 
-        // handle Node(HTMLElement)
-        if (DOM._isElementNode(html)) {
+        // handle Node(ElementNode/TextNode)
+        if (DOM._isSupportedNode(html)) {
             domNode = html;
         }
         else if (typeof html === 'string') {
