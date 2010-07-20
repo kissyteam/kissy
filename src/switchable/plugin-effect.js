@@ -41,7 +41,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
             var self = this, cfg = self.config,
                 fromEl = fromEls[0], toEl = toEls[0];
 
-            if (self.anim) self.anim.stop();
+            if (self.anim) self.anim.stop(true);
 
             // 首先显示下一张
             DOM.css(toEl, OPACITY, 1);
@@ -162,7 +162,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
                 fn = S.isFunction(effect) ? effect : Effects[effect];
 
             fn.call(self, fromEls, toEls, function() {
-                self._fireOnSwitch();
+                self._fireOnSwitch(index);
             }, index, direction);
         }
 

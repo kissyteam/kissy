@@ -47,28 +47,31 @@ KISSY.add('carousel', function(S, undefined) {
      *   self.nextBtn
      */
     function init_carousel(self) {
-        var cfg = self.config;
+        var cfg = self.config, disableCls = cfg.disableBtnCls;
 
         // 获取 prev/next 按钮，并添加事件
         S.each(['prev', 'next'], function(d) {
             var btn = self[d + 'Btn'] = S.get(DOT + cfg[d + 'BtnCls'], self.container);
 
-            Event.on(btn, function(ev) {
+            Event.on(btn, 'click', function(ev) {
                 ev.preventDefault();
-                self[d]();
+                if(!DOM.hasClass(btn, disableCls)) self[d]();
             });
         });
 
         // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
-        self.on('switch', function(ev) {
-            var i = ev.currentIndex, disableCls = cfg.disableBtnCls,
-                disableBtn = (i === 0) ? self[PREV_BTN]
-                    : (i === self.length - 1) ? self[NEXT_BTN]
-                    : undefined;
+        // circular = true 时，无需处理
+        if (!cfg.circular) {
+            self.on('switch', function(ev) {
+                var i = ev.currentIndex,
+                    disableBtn = (i === 0) ? self[PREV_BTN]
+                        : (i === self.length - 1) ? self[NEXT_BTN]
+                        : undefined;
 
-            DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
-            if (disableBtn) DOM.addClass(disableBtn, disableCls);
-        });
+                DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
+                if (disableBtn) DOM.addClass(disableBtn, disableCls);
+            });
+        }
 
         // 触发 itemSelected 事件
         Event.on(self.panels, 'click focus', function() {

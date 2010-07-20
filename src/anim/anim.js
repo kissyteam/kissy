@@ -15,6 +15,7 @@ KISSY.add('anim', function(S, undefined) {
             'paddingRight paddingTop right textIndent top width wordSpacing zIndex').split(' '),
 
         STEP_INTERVAL = 13,
+        OPACITY = 'opacity',
         EVENT_START = 'start',
         EVENT_STEP = 'step',
         EVENT_COMPLETE = 'complete',
@@ -56,6 +57,7 @@ KISSY.add('anim', function(S, undefined) {
             style = S.param(style, ';').replace(/=/g, ':');
         }
         self.props = normalize(style);
+        self.targetStyle = style;
         // normalize 后：
         // props = {
         //          width: { v: 200, unit: 'px', f: interpolate }
@@ -101,12 +103,12 @@ KISSY.add('anim', function(S, undefined) {
             for (prop in target) source[prop] = parse(DOM.css(elem, prop));
             if(self.fire(EVENT_START) === false) return;
 
-            self.pause(); // 先暂停掉正在运行的动画
+            self.stop(); // 先停止掉正在运行的动画
 
             self.timer = S.later((go = function () {
                 var time = S.now(),
                     t = time > finish ? 1 : (time - start) / duration,
-                    sp, tp;
+                    sp, tp, b;
 
                 for (prop in target) {
                     sp = source[prop];
@@ -120,9 +122,10 @@ KISSY.add('anim', function(S, undefined) {
                     DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
                 }
 
-                if ((self.fire(EVENT_STEP) === false) || time > finish) {
+                if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
                     self.stop();
-                    self.fire(EVENT_COMPLETE);
+                    // complete 事件只在动画到达最后一帧时才触发
+                    if(b) self.fire(EVENT_COMPLETE);
                 }
             }), STEP_INTERVAL, true);
 
@@ -132,8 +135,9 @@ KISSY.add('anim', function(S, undefined) {
             return self;
         },
 
-        stop: function(complete) {
-            var self = this, target = self.props, prop;
+        stop: function(finish) {
+            var self = this, elem = self.domEl,
+                style = self.targetStyle;
 
             // 停止定时器
             if (self.timer) {
@@ -141,23 +145,16 @@ KISSY.add('anim', function(S, undefined) {
                 self.timer = undefined;
             }
 
-            if(complete) {
-
+            // 直接设置到最终样式
+            if(finish) {
+                if(S.UA.ie && style.indexOf(OPACITY) > -1) {
+                    DOM.css(elem, OPACITY, self.props[OPACITY].v);
+                }
+                elem.style.cssText += ';' + style;
+                self.fire(EVENT_COMPLETE);
             }
 
             return self;
-        },
-
-        stop: function() {
-            var self = this, target = self.props, prop;
-
-            // 先停止定时器
-            self.pause();
-
-            // 直接将样式设置到
-            for (prop in target) {
-
-            }
         }
     });
 

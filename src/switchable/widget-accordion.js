@@ -11,7 +11,7 @@ KISSY.add('accordion', function(S) {
 
         defaultConfig = {
             triggerType: 'click',
-            multiPanelExpandable:false
+            multiple: false
         };
 
     /**
@@ -26,13 +26,14 @@ KISSY.add('accordion', function(S) {
             return new Accordion(container, config);
         }
 
-        config = S.merge(defaultConfig, config || {});
-        Accordion.superclass.constructor.call(self, container, config);
+        Accordion.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
     }
 
     S.extend(Accordion, S.Switchable);
+    S.Accordion = Accordion;
 
     S.augment(Accordion, {
+
         /**
          * click or tab 键激活 trigger 时触发的事件
          */
@@ -42,6 +43,7 @@ KISSY.add('accordion', function(S) {
             if (self.switchTimer) self.switchTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
             self.switchTo(index);
         },
+
         /**
          * 鼠标悬浮在 trigger 上时触发的事件
          */
@@ -54,13 +56,11 @@ KISSY.add('accordion', function(S) {
                 }, self.config.delay * 1000);
             }
         },
+
         switchTo: function(index, direction) {
             var self = this, cfg = self.config,
                 triggers = self.triggers, panels = self.panels,
-                activeIndex = self.activeIndex,
-                steps = cfg.steps,
-                fromIndex = activeIndex * steps, toIndex = index * steps;
-            //S.log('Triggerable.switchTo: index = ' + index);
+                activeIndex = self.activeIndex;
 
             // if mutilple panels allow to be expanded
             if (cfg.multiPanelExpandable) {
@@ -93,7 +93,4 @@ KISSY.add('accordion', function(S) {
             return self; // chain
         }
     });
-
-    S.Accordion = Accordion;
-
 });

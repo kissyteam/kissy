@@ -19,7 +19,7 @@
 <script src="widget-tabs.js"></script>
 <script src="widget-slide.js"></script>
 <script src="widget-carousel.js"></script>
-<!--<script src="widget-accordion.js"></script>-->
+<script src="widget-accordion.js"></script>
 
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
 <style>
@@ -234,7 +234,9 @@
             activeTriggerCls: 'selected',
             delay: .2,
             effect: 'fade',
-            duration: .8
+            easing: 'easeBoth',
+            duration: .8,
+            autoplay: false
         });
     });
 </script>
@@ -249,11 +251,12 @@
     .scrollable .prev, .scrollable .next {
         position: absolute;
         top: 50px;
-        color: #5E6E84;
+        color: #666;
         cursor: pointer;
     }
     .scrollable .prev { left: 10px; }
     .scrollable .next { right: 10px; }
+    .scrollable .disable { color: #ddd; cursor: default; }
 
     .scrollable .ks-switchable-nav {
         position: absolute;
@@ -291,7 +294,7 @@
     }
 </style>
 <div id="demo4" class="section scrollable">
-    <span id="scroller-prev" class="prev">&lsaquo; 上一页</span>
+    <span id="scroller-prev" class="prev disable">&lsaquo; 上一页</span>
     <span id="scroller-next" class="next">下一页 &rsaquo;</span>
     <div class="scroller">
         <div class="ks-switchable-content">
@@ -322,29 +325,28 @@
     </div>
 </div>
 <script>
-    (function(S) {
+    KISSY.ready(function(S) {
 
-        var Event = S.Event,
-
-            demo4 = new S.Carousel('#demo4', {
+        var carousel = new S.Carousel('#demo4', {
             effect: 'scrollx',
-            easing: S.Easing.easeOutStrong,
+            easing: 'easeOutStrong',
             steps: 5,
             viewSize: [680],
+            circular: false,
+            prevBtnCls: 'prev',
+            nextBtnCls: 'next',
+            disableBtnCls: 'disable',
             lazyDataType: 'img-src'
         });
 
-        Event.on('#scroller-prev', 'click', function() {
-            demo4.prev();
-        });
-        Event.on('#scroller-next', 'click', function() {
-            demo4.next();
+        carousel.on('itemSelected', function(ev) {
+            alert('I am selected. src = ' + ev.item.src);
         });
     });
 </script>
 <p class="code-switch">显示源码</p>
 
-<h2>Carousel - 有啊滚动新闻条</h2>
+<h2>Slide - 有啊滚动新闻条</h2>
 <style>
     .scroll-news { height: 20px; overflow: hidden; }
     .scroll-news a { color: #FF7E00; }
@@ -360,12 +362,12 @@
     </ul>
 </div>
 <script>
-    (function(S) {
-        S.Carousel('#demo5', {
+    KISSY.ready(function(S) {
+        S.Slide('#demo5', {
             contentCls: 'news-items',
             hasTriggers: false,
             effect: 'scrolly',
-            autoplay: true,
+            easing: 'easeOutStrong',
             interval: 3,
             duration: .2
         });
@@ -439,18 +441,19 @@
     </div>
 </div>
 <script>
-    (function(S) {
+    KISSY.ready(function(S) {
         var DOM = S.DOM,
-            descList = DOM.children(S.get('#slideFocus ul.desc-list'));
+            descList = DOM.children('#slideFocus ul.desc-list');
 
-        S.Slide('#slideFocus', {
+        var slide = new S.Slide('#slideFocus', {
             contentCls: 'pic-list',
             navCls: 'thumbs-list',
             activeTriggerCls: 'current',
             effect: 'scrollx',
             easing: S.Easing.easeOutStrong
-        })
-        .on('beforeSwitch', function(ev) {
+        });
+
+        slide.on('beforeSwitch', function(ev) {
             S.each(descList, function(desc, i) {
                 desc.style.display = i === ev.toIndex ? 'block' : 'none';
             });
@@ -461,7 +464,7 @@
 
 <h2>Accordion - 手风琴</h2>
 <style>
-    #accordion1{width:300px;border:1px solid #ccc;}
+    #accordion1 {width:300px;border:1px solid #ccc;}
     #accordion1 .ks-switchable-trigger{padding:3px 10px;cursor:pointer;border-bottom:1px solid #ddd;background:#f3f3f3;}
     #accordion1 .ks-switchable-trigger h3{display:inline-block;}
     #accordion1 .ks-switchable-panel{height:150px;padding:3px 10px;}
@@ -482,13 +485,11 @@
     <div class="ks-switchable-panel" style="display:none;">内容D<br/>内容D<br/>内容D</div>
 </div>
 <script>
-//    (function(S) {
-//        var myAccordion = new S.Accordion('#accordion1', {
-//                markupType:1,
-//                triggerType:"click",
-//                multiPanelExpandable:false
-//            });
-//    })(KISSY);
+    KISSY.ready(function(S) {
+        S.Accordion('#accordion1', {
+            markupType: 1
+        });
+    });
 </script>
 <p class="code-switch">显示源码</p>
 
