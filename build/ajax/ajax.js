@@ -1,3 +1,8 @@
+/*
+Copyright 2010, KISSY UI Library v1.0.8
+MIT Licensed
+build: 888 Jul 20 19:32
+*/
 /**
  * @module  ajax
  * @author  lifesinger@gmail.com

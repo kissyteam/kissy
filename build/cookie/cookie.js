@@ -1,11 +1,12 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 871 Jul 19 08:51
+build: 888 Jul 20 19:32
 */
 /**
  * @module  cookie
  * @author  lifesinger@gmail.com
+ * @depends ks-core
  */
 KISSY.add('cookie', function(S) {
 
@@ -68,7 +69,7 @@ KISSY.add('cookie', function(S) {
     };
 
     function isNotEmptyString(val) {
-        return typeof val === 'string' && val !== '';
+        return S.isString(val) && val !== '';
     }
 
 });

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 883 Jul 20 11:05
+build: 888 Jul 20 19:33
 */
 /**
  * @module  node
@@ -27,8 +27,8 @@ KISSY.add('node', function(S) {
             return null;
         }
 
-        // handle Node(HTMLElement)
-        if (DOM._isElementNode(html)) {
+        // handle supported node
+        if (DOM._isSupportedNode(html)) {
             domNode = html;
         }
         else if (typeof html === 'string') {

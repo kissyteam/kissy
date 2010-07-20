@@ -32,7 +32,7 @@
             <path path="../sizzle/sizzle.js"/>
             <path path="../anim/anim.js"/>
             <path path="../datalazyload/datalazyload.js"/>
-            <!--<path path="../switchable/switchable-pkg.js"/>-->
+            <path path="../switchable/switchable-pkg.js"/>
             <!--<path path="../suggest/suggest.js"/>-->
             <!--<path path="../swf/swf-pkg.js"/>-->
         </concat>

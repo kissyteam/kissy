@@ -249,9 +249,9 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onFocusTrigger: function(index) {
             var self = this;
-            if (self.activeIndex === index) return; // 重复点击
-            this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
+            if (!self._triggerIsValid()) return; // 重复点击
 
+            this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
             self.switchTo(index);
         },
 
@@ -260,7 +260,7 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onMouseEnterTrigger: function(index) {
             var self = this;
-            if (self.activeIndex === index) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
+            if (!self._triggerIsValid()) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
 
             self.switchTimer = S.later(function() {
                 self.switchTo(index);
@@ -272,6 +272,13 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onMouseLeaveTrigger: function() {
             this._cancelSwitchTimer();
+        },
+
+        /**
+         * 重复触发时的有效判断
+         */
+        _triggerIsValid: function(index) {
+            return this.activeIndex !== index;
         },
 
         /**
@@ -295,7 +302,7 @@ KISSY.add('switchable', function(S, undefined) {
                 steps = cfg.steps,
                 fromIndex = activeIndex * steps, toIndex = index * steps;
 
-            if (index === activeIndex) return self; // 再次避免重复触发
+            if (!self._triggerIsValid()) return self; // 再次避免重复触发
             if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
 
             // switch active trigger

@@ -6,8 +6,6 @@ KISSY.add('accordion', function(S) {
 
     var DOM = S.DOM,
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
-        FORWARD = 'forward',
-        EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
 
         defaultConfig = {
             triggerType: 'click',
@@ -35,62 +33,35 @@ KISSY.add('accordion', function(S) {
     S.augment(Accordion, {
 
         /**
-         * click or tab 键激活 trigger 时触发的事件
+         * 重复触发时的有效判断
          */
-        _onFocusTrigger: function(index) {
-            var self = this , cfg = self.config;
-            if (self.activeIndex === index && (!cfg.multiPanelExpandable)) return; // 重复点击
-            if (self.switchTimer) self.switchTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
-            self.switchTo(index);
+        _triggerIsValid: function(index) {
+            // multiple 模式下，再次触发意味着切换展开/收缩状态
+            return this.activeIndex !== index || this.config.multiple;
         },
 
         /**
-         * 鼠标悬浮在 trigger 上时触发的事件
+         * 切换视图
          */
-        _onMouseEnterTrigger: function(index) {
-            var self = this, cfg = self.config;
-            // 不重复触发。比如：已显示内容时，将鼠标快速滑出再滑进来，不必触发
-            if (cfg.multiPanelExpandable || self.activeIndex !== index) {
-                self.switchTimer = S.later(function() {
-                    self.switchTo(index);
-                }, self.config.delay * 1000);
-            }
-        },
-
-        switchTo: function(index, direction) {
+        _switchView: function(fromPanels, toPanels, index) {
             var self = this, cfg = self.config,
-                triggers = self.triggers, panels = self.panels,
-                activeIndex = self.activeIndex;
+                panel = toPanels[0];
 
-            // if mutilple panels allow to be expanded
-            if (cfg.multiPanelExpandable) {
-                if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
-
-                // switch active panels
-                if (direction === undefined) {
-                    direction = index > activeIndex ? FORWARD : FORWARD;
-                }
-
-                var activeTriggerCls = cfg.activeTriggerCls;
-                if (panels[index].style.display == NONE) {
-                    DOM.addClass(triggers[index], activeTriggerCls);
-                    DOM.css(panels[index], DISPLAY, BLOCK);
-                } else {
-                    DOM.removeClass(triggers[index], activeTriggerCls);
-                    DOM.css(panels[index], DISPLAY, NONE);
-                }
-
-                // fire onSwitch
-                this.fire(EVENT_SWITCH);
-
-                // update activeIndex
-                self.activeIndex = index;
-
-                // if only one panel allow to be expanded
-            } else {
-                Accordion.superclass.switchTo.call(self, index, direction);
+            if (cfg.multiple) {
+                DOM.toggleClass(self.triggers[index], cfg.activeTriggerCls);
+                DOM.css(panel, DISPLAY, panel.style[DISPLAY] == NONE ? BLOCK : NONE);
+                this._fireOnSwitch(index);
             }
-            return self; // chain
+            else {
+                Accordion.superclass._switchView.call(self, fromPanels, toPanels, index);
+            }
         }
     });
 });
+
+/**
+ * TODO:
+ *
+ *  - 支持动画
+ *
+ */

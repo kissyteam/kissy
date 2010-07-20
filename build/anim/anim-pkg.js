@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 887 Jul 20 17:27
+build: 888 Jul 20 19:32
 */
 /**
  * @module anim-easing

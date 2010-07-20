@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 882 Jul 20 10:48
+build: 888 Jul 20 19:33
 */
 /**
  * Switchable
@@ -254,9 +254,9 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onFocusTrigger: function(index) {
             var self = this;
-            if (self.activeIndex === index) return; // 重复点击
-            this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
+            if (!self._triggerIsValid()) return; // 重复点击
 
+            this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
             self.switchTo(index);
         },
 
@@ -265,7 +265,7 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onMouseEnterTrigger: function(index) {
             var self = this;
-            if (self.activeIndex === index) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
+            if (!self._triggerIsValid()) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
 
             self.switchTimer = S.later(function() {
                 self.switchTo(index);
@@ -277,6 +277,13 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onMouseLeaveTrigger: function() {
             this._cancelSwitchTimer();
+        },
+
+        /**
+         * 重复触发时的有效判断
+         */
+        _triggerIsValid: function(index) {
+            return this.activeIndex !== index;
         },
 
         /**
@@ -300,7 +307,7 @@ KISSY.add('switchable', function(S, undefined) {
                 steps = cfg.steps,
                 fromIndex = activeIndex * steps, toIndex = index * steps;
 
-            if (index === activeIndex) return self; // 再次避免重复触发
+            if (!self._triggerIsValid()) return self; // 再次避免重复触发
             if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
 
             // switch active trigger
@@ -401,7 +408,7 @@ KISSY.add('switchable', function(S, undefined) {
  * Switchable Autoplay Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-autoplay', function(S) {
+KISSY.add('switchable-autoplay', function(S, undefined) {
 
     var Event = S.Event,
         Switchable = S.Switchable;
@@ -426,12 +433,18 @@ KISSY.add('switchable-autoplay', function(S) {
         name: 'autoplay',
 
         init: function(host) {
-            var cfg = host.config;
+            var cfg = host.config, interval = cfg.interval * 1000, leaveTimer;
             if (!cfg.autoplay) return;
 
             // 鼠标悬停，停止自动播放
             if (cfg.pauseOnHover) {
                 Event.on(host.container, 'mouseenter', function() {
+                    // 当鼠标移出后，又快速移动进来，这时要将 leaveTimer 取消掉
+                    // 否则 pauseOnHover 会失效
+                    if(leaveTimer) {
+                        leaveTimer.cancel();
+                        leaveTimer = undefined;
+                    }
                     host.paused = true;
                 });
                 Event.on(host.container, 'mouseleave', function() {
@@ -439,17 +452,19 @@ KISSY.add('switchable-autoplay', function(S) {
                     // 在 8s 时，通过 focus 主动触发切换，停留 1s 后，鼠标移出
                     // 这时如果不 setTimeout, 再过 1s 后，主动触发的 panel 将被替换掉
                     // 为了保证每个 panel 的显示时间都不小于 interval, 此处加上 setTimeout
-                    S.later(function() {
+                    leaveTimer = S.later(function() {
                         host.paused = false;
-                    }, cfg.interval * 1000);
+                        leaveTimer = undefined;
+                    }, interval);
                 });
             }
 
             // 设置自动播放
             host.autoplayTimer = S.later(function() {
                 if (host.paused) return;
-                host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0);
-            }, cfg.interval * 1000, true);
+                // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
+                host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, 'forward');
+            }, interval, true);
         }
     });
 });
@@ -470,7 +485,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
         OPACITY = 'opacity', Z_INDEX = 'z-index',
         POSITION = 'position', RELATIVE = 'relative', ABSOLUTE = 'absolute',
         SCROLLX = 'scrollx', SCROLLY = 'scrolly', FADE = 'fade',
-        LEFT = 'left', TOP = 'top', FLOAT = 'float',
+        LEFT = 'left', TOP = 'top', FLOAT = 'float', PX = 'px',
         Switchable = S.Switchable, Effects;
 
     /**
@@ -502,7 +517,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
             var self = this, cfg = self.config,
                 fromEl = fromEls[0], toEl = toEls[0];
 
-            if (self.anim) self.anim.stop();
+            if (self.anim) self.anim.stop(true);
 
             // 首先显示下一张
             DOM.css(toEl, OPACITY, 1);
@@ -526,7 +541,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
                 diff = self.viewSize[isX ? 0 : 1] * index,
                 props = { };
 
-            props[isX ? LEFT : TOP] = -diff;
+            props[isX ? LEFT : TOP] = -diff + PX;
             if (self.anim) self.anim.stop();
 
             self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
@@ -623,7 +638,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
                 fn = S.isFunction(effect) ? effect : Effects[effect];
 
             fn.call(self, fromEls, toEls, function() {
-                self._fireOnSwitch();
+                self._fireOnSwitch(index);
             }, index, direction);
         }
 
@@ -635,9 +650,10 @@ KISSY.add('switchable-effect', function(S, undefined) {
  */
 KISSY.add('switchable-circular', function(S, undefined) {
 
-    var POSITION = 'position', RELATIVE = 'relative',
+    var DOM = S.DOM,
+        POSITION = 'position', RELATIVE = 'relative',
         LEFT = 'left', TOP = 'top',
-        EMPTY = '',
+        EMPTY = '', PX = 'px',
         FORWARD = 'forward', BACKWARD = 'backward',
         SCROLLX = 'scrollx', SCROLLY = 'scrolly',
         Switchable = S.Switchable;
@@ -672,7 +688,7 @@ KISSY.add('switchable-circular', function(S, undefined) {
             // 调整位置并获取 diff
             diff = adjustPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
         }
-        props[prop] = diff;
+        props[prop] = diff + PX;
 
         // 开始动画
         if (self.anim) self.anim.stop();
@@ -935,28 +951,31 @@ KISSY.add('carousel', function(S, undefined) {
      *   self.nextBtn
      */
     function init_carousel(self) {
-        var cfg = self.config;
+        var cfg = self.config, disableCls = cfg.disableBtnCls;
 
         // 获取 prev/next 按钮，并添加事件
         S.each(['prev', 'next'], function(d) {
             var btn = self[d + 'Btn'] = S.get(DOT + cfg[d + 'BtnCls'], self.container);
 
-            Event.on(btn, function(ev) {
+            Event.on(btn, 'click', function(ev) {
                 ev.preventDefault();
-                self[d]();
+                if(!DOM.hasClass(btn, disableCls)) self[d]();
             });
         });
 
         // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
-        self.on('switch', function(ev) {
-            var i = ev.currentIndex, disableCls = cfg.disableBtnCls,
-                disableBtn = (i === 0) ? self[PREV_BTN]
-                    : (i === self.length - 1) ? self[NEXT_BTN]
-                    : undefined;
+        // circular = true 时，无需处理
+        if (!cfg.circular) {
+            self.on('switch', function(ev) {
+                var i = ev.currentIndex,
+                    disableBtn = (i === 0) ? self[PREV_BTN]
+                        : (i === self.length - 1) ? self[NEXT_BTN]
+                        : undefined;
 
-            DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
-            if (disableBtn) DOM.addClass(disableBtn, disableCls);
-        });
+                DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
+                if (disableBtn) DOM.addClass(disableBtn, disableCls);
+            });
+        }
 
         // 触发 itemSelected 事件
         Event.on(self.panels, 'click focus', function() {
@@ -985,12 +1004,10 @@ KISSY.add('accordion', function(S) {
 
     var DOM = S.DOM,
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
-        FORWARD = 'forward',
-        EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
 
         defaultConfig = {
             triggerType: 'click',
-            multiPanelExpandable:false
+            multiple: false
         };
 
     /**
@@ -1005,74 +1022,44 @@ KISSY.add('accordion', function(S) {
             return new Accordion(container, config);
         }
 
-        config = S.merge(defaultConfig, config || {});
-        Accordion.superclass.constructor.call(self, container, config);
+        Accordion.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
     }
 
     S.extend(Accordion, S.Switchable);
-
-    S.augment(Accordion, {
-        /**
-         * click or tab 键激活 trigger 时触发的事件
-         */
-        _onFocusTrigger: function(index) {
-            var self = this , cfg = self.config;
-            if (self.activeIndex === index && (!cfg.multiPanelExpandable)) return; // 重复点击
-            if (self.switchTimer) self.switchTimer.cancel(); // 比如：先悬浮，后立刻点击。这时悬浮事件可以取消掉
-            self.switchTo(index);
-        },
-        /**
-         * 鼠标悬浮在 trigger 上时触发的事件
-         */
-        _onMouseEnterTrigger: function(index) {
-            var self = this, cfg = self.config;
-            // 不重复触发。比如：已显示内容时，将鼠标快速滑出再滑进来，不必触发
-            if (cfg.multiPanelExpandable || self.activeIndex !== index) {
-                self.switchTimer = S.later(function() {
-                    self.switchTo(index);
-                }, self.config.delay * 1000);
-            }
-        },
-        switchTo: function(index, direction) {
-            var self = this, cfg = self.config,
-                triggers = self.triggers, panels = self.panels,
-                activeIndex = self.activeIndex,
-                steps = cfg.steps,
-                fromIndex = activeIndex * steps, toIndex = index * steps;
-            //S.log('Triggerable.switchTo: index = ' + index);
-
-            // if mutilple panels allow to be expanded
-            if (cfg.multiPanelExpandable) {
-                if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
-
-                // switch active panels
-                if (direction === undefined) {
-                    direction = index > activeIndex ? FORWARD : FORWARD;
-                }
-
-                var activeTriggerCls = cfg.activeTriggerCls;
-                if (panels[index].style.display == NONE) {
-                    DOM.addClass(triggers[index], activeTriggerCls);
-                    DOM.css(panels[index], DISPLAY, BLOCK);
-                } else {
-                    DOM.removeClass(triggers[index], activeTriggerCls);
-                    DOM.css(panels[index], DISPLAY, NONE);
-                }
-
-                // fire onSwitch
-                this.fire(EVENT_SWITCH);
-
-                // update activeIndex
-                self.activeIndex = index;
-
-                // if only one panel allow to be expanded
-            } else {
-                Accordion.superclass.switchTo.call(self, index, direction);
-            }
-            return self; // chain
-        }
-    });
-
     S.Accordion = Accordion;
 
+    S.augment(Accordion, {
+
+        /**
+         * 重复触发时的有效判断
+         */
+        _triggerIsValid: function(index) {
+            // multiple 模式下，再次触发意味着切换展开/收缩状态
+            return this.activeIndex !== index || this.config.multiple;
+        },
+
+        /**
+         * 切换视图
+         */
+        _switchView: function(fromPanels, toPanels, index) {
+            var self = this, cfg = self.config,
+                panel = toPanels[0];
+
+            if (cfg.multiple) {
+                DOM.toggleClass(self.triggers[index], cfg.activeTriggerCls);
+                DOM.css(panel, DISPLAY, panel.style[DISPLAY] == NONE ? BLOCK : NONE);
+                this._fireOnSwitch(index);
+            }
+            else {
+                Accordion.superclass._switchView.call(self, fromPanels, toPanels, index);
+            }
+        }
+    });
 });
+
+/**
+ * TODO:
+ *
+ *  - 支持动画
+ *
+ */

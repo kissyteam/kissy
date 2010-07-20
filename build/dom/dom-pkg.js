@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 882 Jul 20 10:46
+build: 888 Jul 20 19:32
 */
 /**
  * @module  dom
@@ -9,14 +9,31 @@ build: 882 Jul 20 10:46
  */
 KISSY.add('dom', function(S) {
 
-    S.DOM = {
+    var DOM = {
+
+        /**
+         * 是不是 element/text node
+         */
+        _isSupportedNode: function(elem) {
+            return DOM._isElementNode(elem) || DOM._isTextNode(elem);
+        },
+
         /**
          * 是不是 element node
          */
         _isElementNode: function(elem) {
             return elem && elem.nodeType === 1;
+        },
+
+        /**
+         * 是不是 text node
+         */
+        _isTextNode: function(elem) {
+            return elem && elem.nodeType === 3;
         }
     };
+
+    S.DOM = DOM;
 });
 /**
  * @module  selector
@@ -482,7 +499,8 @@ KISSY.add('dom-attr', function(S, undefined) {
 
         DOM = S.DOM,
         isElementNode = DOM._isElementNode,
-
+        isTextNode = DOM._isTextNode,
+        
         RE_SPECIAL_ATTRS = /href|src|style/,
         RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
         RE_RETURN = /\r/g,
@@ -492,7 +510,7 @@ KISSY.add('dom-attr', function(S, undefined) {
             readonly: 'readOnly'
         };
 
-    if(oldIE) {
+    if (oldIE) {
         S.mix(CUSTOM_ATTRS, {
             'for': 'htmlFor',
             'class': 'className'
@@ -506,7 +524,7 @@ KISSY.add('dom-attr', function(S, undefined) {
          * Sets an attribute for the set of matched elements.
          */
         attr: function(selector, name, val) {
-            if(!(name = S.trim(name))) return;
+            if (!(name = S.trim(name))) return;
 
             name = name.toLowerCase();
             name = CUSTOM_ATTRS[name] || name;
@@ -528,24 +546,24 @@ KISSY.add('dom-attr', function(S, undefined) {
                 //  - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
                 //  - href, src 直接获取的是 normalized 后的值，排除掉
                 //  - style 需要用 getAttribute 来获取字符串值，也排除掉
-                if(!RE_SPECIAL_ATTRS.test(name)) {
+                if (!RE_SPECIAL_ATTRS.test(name)) {
                     ret = el[name];
                 }
-                
+
                 // 用 getAttribute 获取非 mapping 属性和 href/src/style 的值：
-                if(ret === undefined) {
+                if (ret === undefined) {
                     ret = el.getAttribute(name);
                 }
 
                 // fix ie bugs
                 if (oldIE) {
                     // 不光是 href, src, 还有 rowspan 等非 mapping 属性，也需要用第 2 个参数来获取原始值
-                    if(RE_NORMALIZED_ATTRS.test(name)) {
+                    if (RE_NORMALIZED_ATTRS.test(name)) {
                         ret = el.getAttribute(name, 2);
                     }
                     // 在标准浏览器下，用 getAttribute 获取 style 值
                     // IE7- 下，需要用 cssText 来获取
-                    else if(name === 'style') {
+                    else if (name === 'style') {
                         ret = el.style.cssText;
                     }
                 }
@@ -588,7 +606,7 @@ KISSY.add('dom-attr', function(S, undefined) {
          */
         val: function(selector, value) {
             // getter
-            if(value === undefined) {
+            if (value === undefined) {
                 // supports css selector/Node/NodeList
                 var el = S.get(selector);
 
@@ -599,19 +617,19 @@ KISSY.add('dom-attr', function(S, undefined) {
 
                 // 当没有设定 value 时，标准浏览器 option.value === option.text
                 // ie7- 下，没有设定 value 时，option.value === '', 需要用 el.attributes.value 来判断是否有设定 value
-                if(nodeNameIs('option', el)) {
+                if (nodeNameIs('option', el)) {
                     return (el.attributes.value || {}).specified ? el.value : el.text;
                 }
 
                 // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
-                if(nodeNameIs('select', el)) {
+                if (nodeNameIs('select', el)) {
                     var index = el.selectedIndex,
                         options = el.options;
 
                     if (index < 0) {
                         return null;
                     }
-                    else if(el.type === 'select-one') {
+                    else if (el.type === 'select-one') {
                         return DOM.val(options[index]);
                     }
 
@@ -627,7 +645,7 @@ KISSY.add('dom-attr', function(S, undefined) {
                 }
 
                 // Handle the case where in Webkit "" is returned instead of "on" if a value isn't specified
-                if(UA.webkit && RE_RADIO_CHECK.test(el.type)) {
+                if (UA.webkit && RE_RADIO_CHECK.test(el.type)) {
                     return el.getAttribute('value') === null ? 'on' : el.value;
                 }
 
@@ -639,14 +657,14 @@ KISSY.add('dom-attr', function(S, undefined) {
             S.each(S.query(selector), function(el) {
                 if (nodeNameIs('select', el)) {
                     // 强制转换数值为字符串，以保证下面的 inArray 正常工作
-                    if(S.isNumber(value)) {
+                    if (S.isNumber(value)) {
                         value += '';
                     }
 
                     var vals = S.makeArray(value),
                         opts = el.options, opt;
 
-                    for (i = 0, len = opts.length; i < len; ++i) {
+                    for (i = 0,len = opts.length; i < len; ++i) {
                         opt = opts[i];
                         opt.selected = S.inArray(DOM.val(opt), vals);
                     }
@@ -655,7 +673,7 @@ KISSY.add('dom-attr', function(S, undefined) {
                         el.selectedIndex = -1;
                     }
                 }
-                else if(isElementNode(el)) {
+                else if (isElementNode(el)) {
                     el.value = value;
                 }
             });
@@ -671,17 +689,23 @@ KISSY.add('dom-attr', function(S, undefined) {
                 // supports css selector/Node/NodeList
                 var el = S.get(selector);
 
-                // only gets value on element nodes
+                // only gets value on supported nodes
                 if (isElementNode(el)) {
                     return el[TEXT] || '';
+                }
+                else if (isTextNode(el)) {
+                    return el.nodeValue;
                 }
             }
             // setter
             else {
                 S.each(S.query(selector), function(el) {
-                   if(isElementNode(el)) {
-                       el[TEXT] = val;
-                   }
+                    if (isElementNode(el)) {
+                        el[TEXT] = val;
+                    }
+                    else if (isTextNode(el)) {
+                        el.nodeValue = val;
+                    }
                 });
             }
         }
@@ -1360,6 +1384,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     var doc = document,
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
+        isSupportedNode = DOM._isSupportedNode,
         isElementNode = DOM._isElementNode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',
@@ -1376,7 +1401,7 @@ KISSY.add('dom-create', function(S, undefined) {
          * Creates a new HTMLElement using the provided html string.
          */
         create: function(html, props, ownerDoc) {
-            if (isElementNode(html)) return html;
+            if (isSupportedNode(html)) return html;
             if (!(html = S.trim(html))) return null;
 
             var ret = null, creators = DOM._creators,
