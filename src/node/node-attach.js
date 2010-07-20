@@ -105,7 +105,7 @@ KISSY.add('node-attach', function(S, undefined) {
     attach(['remove']);
 
     // dom-insertion
-    attach(['insertBefore', 'insertAfter'], ALWAYS_NODE);
+    //attach(['insertBefore', 'insertAfter'], ALWAYS_NODE); TODO: 目前参数传递有问题
     S.each([NP, NLP], function(P) {
         S.mix(P, {
 

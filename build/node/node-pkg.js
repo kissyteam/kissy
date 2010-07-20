@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 882 Jul 20 10:37
+build: 883 Jul 20 11:05
 */
 /**
  * @module  node
@@ -249,7 +249,7 @@ KISSY.add('node-attach', function(S, undefined) {
     attach(['remove']);
 
     // dom-insertion
-    attach(['insertBefore', 'insertAfter'], ALWAYS_NODE);
+    //attach(['insertBefore', 'insertAfter'], ALWAYS_NODE); TODO: 目前参数传递有问题
     S.each([NP, NLP], function(P) {
         S.mix(P, {
 

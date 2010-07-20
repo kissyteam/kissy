@@ -88,24 +88,24 @@
         <div style="display: none">
             <textarea class="ks-datalazyload-custom">
                 我是延迟内容
-                <script>alert('我是延迟脚本，仅在第一次加载时执行。');</script>
+                <script>alert('我是延迟内容中的脚本，仅在第一次加载时执行。');</script>
             </textarea>
         </div>
     </div>
 </div>
 <script>
-    (function() {
-        var S = KISSY,
-            tabs = new S.Tabs('#demo1', {
-                lazyDataType: 'textarea-data'
-            });
+    KISSY.ready(function(S) {
+        var tabs = new S.Tabs('#demo1', {
+            lazyDataType: 'textarea-data'
+        });
+
         tabs.on('beforeSwitch', function(ev) {
             var index = ev.toIndex;
             if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
                 this.panels[index].innerHTML = 'index = ' + index;
             }
         });
-    })();
+    });
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -158,12 +158,13 @@
     </ol>
 </div>
 <script>
-    (function() {
-        KISSY.Slide('#demo2', {
+    KISSY.ready(function(S) {
+        S.Slide('#demo2', {
             effect: 'scrolly',
-            easing: KISSY.Easing.easeOutStrong
+            easing: 'easeOutStrong',
+            circular: false
         });
-    })();
+    });
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -236,7 +237,7 @@
             effect: 'fade',
             duration: .8
         });
-    })();
+    });
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -340,7 +341,7 @@
         Event.on('#scroller-next', 'click', function() {
             demo4.next();
         });
-    })(KISSY);
+    });
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -369,7 +370,7 @@
             interval: 3,
             duration: .2
         });
-    })(KISSY);
+    });
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -455,7 +456,7 @@
                 desc.style.display = i === ev.toIndex ? 'block' : 'none';
             });
         });
-    })(KISSY);
+    });
 </script>
 <p class="code-switch">显示源码</p>
 
@@ -495,19 +496,17 @@
 <h2>引用文件说明</h2>
 
 <p>需要引用以下文件：</p>
-
 <pre>
-
     kissy/build/packages/ks-core-min.js
     kissy/build/anim/anim-pkg-min.js （可选，需要动画时才需要加载）
     kissy/build/datalazyload/datalazyload-min.js (可选，需要数据延迟时才需要加载)
-
     kissy/build/switachable/switachable-pkg-min.js
 </pre>
 
 <script>
     (function() {
-        var S = KISSY, SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+        var S = KISSY, DOM = S.DOM,
+            SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
 
         S.all('p.code-switch').each(function(p) {
             p.on('click', function() {
@@ -524,7 +523,8 @@
                     if (S.UA.ie) {
                         pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
                     }
-                    p.parent()[0].insertBefore(pre[0], p.next()[0]);
+
+                    DOM.insertAfter(pre[0], p[0]);
                 }
 
                 pre.css('display', showing ? 'block' : 'none');

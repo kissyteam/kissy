@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.0.8
 MIT Licensed
-build: 882 Jul 20 10:46
+build: 883 Jul 20 11:05
 */
 KISSY.add("cookie",function(o){function x(s){return typeof s==="string"&&s!==""}var v=document,u=encodeURIComponent,y=decodeURIComponent;o.Cookie={get:function(s){var q;if(x(s))if(s=v.cookie.match("(?:^| )"+s+"(?:(?:=([^;]*))|;|$)"))q=s[1]?y(s[1]):"";return q},set:function(s,q,j,k,w,m){q=u(q);var e=j;if(typeof e==="number"){e=new Date;e.setTime(e.getTime()+j*864E5)}if(e instanceof Date)q+="; expires="+e.toUTCString();if(x(k))q+="; domain="+k;if(x(w))q+="; path="+w;if(m)q+="; secure";v.cookie=s+"="+
 q},remove:function(s,q,j,k){this.set(s,"",0,q,j,k)}}});
