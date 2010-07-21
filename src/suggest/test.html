@@ -4,10 +4,8 @@
 <meta charset="utf-8" />
 <title>Suggest Test</title>
 
-<link rel="stylesheet" href="../../build/cssreset-grids/reset-grids-min.css" />
-<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
+<link rel="stylesheet" href="../../build/cssbase/base-min.css" />
 <script src="../../build/packages/ks-core.js"></script>
-
 <script src="suggest.js"></script>
 
 <style>
@@ -163,7 +161,7 @@
         });
         sug2.on('dataReturn', function() {
             if (this.query === 'dog') {
-                alert('返回的数据是：' + YAHOO.lang.dump(this.returnedData));
+                alert('返回的数据是：' + this.returnedData);
             }
         });
 

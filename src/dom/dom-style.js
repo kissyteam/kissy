@@ -57,8 +57,8 @@ KISSY.add('dom-style', function(S, undefined) {
                 // supports css selector/Node/NodeList
                 var elem = S.get(selector), ret = '';
 
-                if (elem && elem.style) {
-                    ret = name.get ? name.get(elem) : elem.style[name];
+                if (elem && elem[STYLE]) {
+                    ret = name.get ? name.get(elem) : elem[STYLE][name];
 
                     // 有 get 的直接用自定义函数的返回值
                     if (ret === '' && !name.get) {
@@ -85,10 +85,10 @@ KISSY.add('dom-style', function(S, undefined) {
                 }
 
                 S.each(S.query(selector), function(elem) {
-                    if (elem && elem.style) {
-                        name.set ? name.set(elem, val) : (elem.style[name] = val);
+                    if (elem && elem[STYLE]) {
+                        name.set ? name.set(elem, val) : (elem[STYLE][name] = val);
                         if (val === EMPTY) {
-                            if (!elem.style.cssText)
+                            if (!elem[STYLE].cssText)
                                 elem.removeAttribute(STYLE);
                         }
                     }

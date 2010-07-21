@@ -1,33 +1,33 @@
 /**
  * 提示补全组件
- * @module      suggest
- * @creator     玉伯<lifesinger@gmail.com>
- * @depends     kissy-core, yahoo-dom-event
+ * @module   suggest
+ * @creator  玉伯<lifesinger@gmail.com>
+ * @depends  ks-core
  */
-KISSY.add("suggest", function(S, undefined) {
+KISSY.add('suggest', function(S, undefined) {
 
-    var YDOM = YAHOO.util.Dom, DOM = S.DOM, Event = S.Event,
+    var DOM = S.DOM, Event = S.Event,
         win = window, doc = document,
-        head = doc.getElementsByTagName("head")[0],
-        ie = YAHOO.env.ua.ie, ie6 = (ie === 6),
+        head = doc.getElementsByTagName('head')[0],
+        ie = S.UA.ie, ie6 = (ie === 6),
 
-        CALLBACK_STR = "g_ks_suggest_callback", // 约定的全局回调函数
-        STYLE_ID = "ks-suggest-style", // 样式 style 元素的 id
+        CALLBACK_STR = 'g_ks_suggest_callback', // 约定的全局回调函数
+        STYLE_ID = 'ks-suggest-style', // 样式 style 元素的 id
 
-        CONTAINER_CLASS = "ks-suggest-container",
-        KEY_EL_CLASS = "ks-suggest-key", // 提示层中，key 元素的 class
-        RESULT_EL_CLASS = "ks-suggest-result", // 提示层中，result 元素的 class
-        SELECTED_ITEM_CLASS = "selected", // 提示层中，选中项的 class
-        ODD_ITEM_CLASS = "odd", // 提示层中，奇数项的 class
-        EVEN_ITEM_CLASS = "even", // 提示层中，偶数项的 class
-        BOTTOM_CLASS = "ks-suggest-bottom",
-        CLOSE_BTN_CLASS = "ks-suggest-close-btn",
-        SHIM_CLASS = "ks-suggest-shim", // iframe shim 的 class
+        CONTAINER_CLASS = 'ks-suggest-container',
+        KEY_EL_CLASS = 'ks-suggest-key', // 提示层中，key 元素的 class
+        RESULT_EL_CLASS = 'ks-suggest-result', // 提示层中，result 元素的 class
+        SELECTED_ITEM_CLASS = 'selected', // 提示层中，选中项的 class
+        ODD_ITEM_CLASS = 'odd', // 提示层中，奇数项的 class
+        EVEN_ITEM_CLASS = 'even', // 提示层中，偶数项的 class
+        BOTTOM_CLASS = 'ks-suggest-bottom',
+        CLOSE_BTN_CLASS = 'ks-suggest-close-btn',
+        SHIM_CLASS = 'ks-suggest-shim', // iframe shim 的 class
 
-        EVENT_DATA_REQUEST = "dataRequest",
-        EVENT_DATA_RETURN = "dataReturn",
-        EVENT_SHOW = "show",
-        EVENT_ITEM_SELECT = "itemSelect",
+        EVENT_DATA_REQUEST = 'dataRequest',
+        EVENT_DATA_RETURN = 'dataReturn',
+        EVENT_SHOW = 'show',
+        EVENT_ITEM_SELECT = 'itemSelect',
 
         /**
          * Suggest的默认配置
@@ -37,34 +37,34 @@ KISSY.add("suggest", function(S, undefined) {
              * 用户附加给悬浮提示层的 class
              *
              * 提示层的默认结构如下：
-             * <div class="suggest-container [container-class]">
+             * <div class='suggest-container [container-class]'>
              *     <ol>
              *         <li>
-             *             <span class="suggest-key">...</span>
-             *             <span class="suggest-result">...</span>
+             *             <span class='suggest-key'>...</span>
+             *             <span class='suggest-result'>...</span>
              *         </li>
              *     </ol>
-             *     <div class="suggest-bottom">
-             *         <a class="suggest-close-btn">...</a>
+             *     <div class='suggest-bottom'>
+             *         <a class='suggest-close-btn'>...</a>
              *     </div>
              * </div>
              * @type String
              */
-            containerCls: "",
+            containerCls: '',
 
             /**
              * 提示层的宽度
              * 注意：默认情况下，提示层的宽度和input输入框的宽度保持一致
-             * 示范取值："200px", "10%"等，必须带单位
+             * 示范取值：'200px', '10%'等，必须带单位
              * @type String
              */
-            containerWidth: "auto",
+            containerWidth: '',
 
             /**
              * result的格式
              * @type String
              */
-            resultFormat: "约%result%条结果",
+            resultFormat: '约%result%条结果',
 
             /**
              * 是否显示关闭按钮
@@ -76,7 +76,7 @@ KISSY.add("suggest", function(S, undefined) {
              * 关闭按钮上的文字
              * @type String
              */
-            closeBtnText: "关闭",
+            closeBtnText: '关闭',
 
             /**
              * 是否需要iframe shim
@@ -133,7 +133,7 @@ KISSY.add("suggest", function(S, undefined) {
 
         /**
          * JSON静态数据源
-         * @type Object 格式为 {"query1" : [["key1", "result1"], []], "query2" : [[], []]}
+         * @type Object 格式为 {'query1' : [['key1', 'result1'], []], 'query2' : [[], []]}
          */
         self.JSONDataSource = S.isPlainObject(dataSource) ? dataSource : null;
 
@@ -159,13 +159,13 @@ KISSY.add("suggest", function(S, undefined) {
          * 输入框的值
          * @type String
          */
-        self.query = "";
+        self.query = '';
 
         /**
          * 获取数据时的参数
          * @type String
          */
-        self.queryParams = "";
+        self.queryParams = '';
 
         /**
          * 内部定时器
@@ -198,7 +198,7 @@ KISSY.add("suggest", function(S, undefined) {
          * 最新script的时间戳
          * @type String
          */
-        self._latestScriptTime = "";
+        self._latestScriptTime = '';
 
         /**
          * script返回的数据是否已经过期
@@ -223,7 +223,7 @@ KISSY.add("suggest", function(S, undefined) {
         self._init();
     }
 
-    S.mix(Suggest.prototype, {
+    S.augment(Suggest, S.EventTarget, {
         /**
          * 初始化方法
          * @protected
@@ -249,16 +249,16 @@ KISSY.add("suggest", function(S, undefined) {
             var self = this;
 
             // turn off autocomplete
-            self.textInput.setAttribute("autocomplete", "off");
+            self.textInput.setAttribute('autocomplete', 'off');
 
             // focus
             // 2009-12-10 yubo: 延迟到 keydown 中 start
-            //            Event.on(this.textInput, "focus", function() {
+            //            Event.on(this.textInput, 'focus', function() {
             //                instance.start();
             //            });
 
             // blur
-            Event.on(self.textInput, "blur", function() {
+            Event.on(self.textInput, 'blur', function() {
                 self.stop();
                 self.hide();
             });
@@ -269,9 +269,9 @@ KISSY.add("suggest", function(S, undefined) {
             // keydown
             // 注：截至目前，在Opera9.64中，输入法开启时，依旧不会触发任何键盘事件
             var pressingCount = 0; // 持续按住某键时，连续触发的keydown次数。注意Opera只会触发一次。
-            Event.on(self.textInput, "keydown", function(ev) {
+            Event.on(self.textInput, 'keydown', function(ev) {
                 var keyCode = ev.keyCode;
-                //console.log("keydown " + keyCode);
+                //console.log('keydown ' + keyCode);
 
                 switch (keyCode) {
                     case 27: // ESC键，隐藏提示层并还原初始输入
@@ -324,8 +324,8 @@ KISSY.add("suggest", function(S, undefined) {
             });
 
             // reset pressingCount
-            Event.on(self.textInput, "keyup", function() {
-                //console.log("keyup");
+            Event.on(self.textInput, 'keyup', function() {
+                //console.log('keyup');
                 pressingCount = 0;
             });
         },
@@ -336,15 +336,15 @@ KISSY.add("suggest", function(S, undefined) {
          */
         _initContainer: function() {
             // create
-            var container = doc.createElement("div"),
+            var container = doc.createElement('div'),
                 customContainerClass = this.config.containerCls;
 
             container.className = CONTAINER_CLASS;
             if (customContainerClass) {
-                container.className += " " + customContainerClass;
+                container.className += ' ' + customContainerClass;
             }
-            container.style.position = "absolute";
-            container.style.visibility = "hidden";
+            container.style.position = 'absolute';
+            container.style.visibility = 'hidden';
             this.container = container;
 
             this._setContainerRegion();
@@ -355,38 +355,21 @@ KISSY.add("suggest", function(S, undefined) {
         },
 
         /**
-         * 设置容器的left, top, width
-         * @protected
+         * 设置容器的 left, top, width
          */
         _setContainerRegion: function() {
             var self = this,
-                r = YDOM.getRegion(self.textInput),
-                left = r.left,
-                w = r.right - left - 2;  // 减去border的2px
+                input = self.textInput,
+                pos = DOM.offset(input),
+                container = self.container;
 
-            // bug fix: w 应该判断下是否大于 0, 后边设置 width 的时候如果小于 0, ie 下会报参数无效的错误
-            w = w > 0 ? w : 0;
+            DOM.offset(container, {
+                left: pos.left,
+                top: pos.top + input.offsetHeight - 1 // 默认向上偏差 1, 以覆盖掉 input 的下边框
+            });
 
-            // ie8 兼容模式
-            // document.documentMode:
-            // 5 - Quirks Mode
-            // 7 - IE7 Standards
-            // 8 - IE8 Standards
-            var docMode = doc.documentMode;
-            if (docMode === 7 && (ie === 7 || ie === 8)) {
-                left -= 2;
-            } else if (S.UA.gecko) { // firefox下左偏一像素 注：当 input 所在的父级容器有 margin: auto 时会出现
-                left++;
-            }
-
-            self.container.style.left = left + "px";
-            self.container.style.top = r.bottom + "px";
-
-            if (self.config.containerWidth == "auto") {
-                self.container.style.width = w + "px";
-            } else {
-                self.container.style.width = self.config.containerWidth;
-            }
+            // 默认 container 的边框为 1, padding 为 0, 因此 width = offsetWidth - 2
+            DOM.width(container, self.config.containerWidth || input.offsetWidth - 2);
         },
 
         /**
@@ -398,15 +381,14 @@ KISSY.add("suggest", function(S, undefined) {
             var self = this;
 
             // 鼠标事件
-            Event.on(self.container, "mousemove", function(ev) {
-                //console.log("mouse move");
+            Event.on(self.container, 'mousemove', function(ev) {
                 var target = ev.target;
 
-                if (target.nodeName != "LI") {
-                    target = YDOM.getAncestorByTagName(target, "li");
+                if (target.nodeName !== 'LI') {
+                    target = DOM.parent(target, '.li');
                 }
-                if (YDOM.isAncestor(self.container, target)) {
-                    if (target != self.selectedItem) {
+                if (DOM.contains(self.container, target)) {
+                    if (target !== self.selectedItem) {
                         // 移除老的
                         self._removeSelectedItem();
                         // 设置新的
@@ -431,7 +413,7 @@ KISSY.add("suggest", function(S, undefined) {
             });
 
             // mouseup事件
-            Event.on(self.container, "mouseup", function(ev) {
+            Event.on(self.container, 'mouseup', function(ev) {
                 // 当mousedown在提示层，但mouseup在提示层外时，点击无效
                 if (!self._isInContainer([ev.pageX, ev.pageY])) return;
 
@@ -446,15 +428,15 @@ KISSY.add("suggest", function(S, undefined) {
                 }
 
                 // 可能点击在li的子元素上
-                if (target.nodeName != "LI") {
-                    target = YDOM.getAncestorByTagName(target, "li");
+                if (target.nodeName != 'LI') {
+                    target = DOM.parent(target, '.li');
                 }
                 // 必须点击在container内部的li上
-                if (YDOM.isAncestor(self.container, target)) {
+                if (DOM.contains(self.container, target)) {
                     self._updateInputFromSelectItem(target);
 
                     // 触发选中事件
-                    //console.log("on item select");
+                    //console.log('on item select');
                     self.fire(EVENT_ITEM_SELECT);
 
                     // 提交表单前，先隐藏提示层并停止计时器
@@ -478,12 +460,12 @@ KISSY.add("suggest", function(S, undefined) {
                 // 通过js提交表单时，不会触发onsubmit事件
                 // 需要js自己触发
                 if (doc.createEvent) { // w3c
-                    var evObj = doc.createEvent("MouseEvents");
-                    evObj.initEvent("submit", true, false);
+                    var evObj = doc.createEvent('MouseEvents');
+                    evObj.initEvent('submit', true, false);
                     form.dispatchEvent(evObj);
                 }
                 else if (doc.createEventObject) { // ie
-                    form.fireEvent("onsubmit");
+                    form.fireEvent('onsubmit');
                 }
 
                 form.submit();
@@ -495,7 +477,8 @@ KISSY.add("suggest", function(S, undefined) {
          * @param {Array} p [x, y]
          */
         _isInContainer: function(p) {
-            var r = YDOM.getRegion(this.container);
+            var r = this._getContainerRegion();
+
             return p[0] >= r.left && p[0] <= r.right && p[1] >= r.top && p[1] <= r.bottom;
         },
 
@@ -504,12 +487,12 @@ KISSY.add("suggest", function(S, undefined) {
          * @protected
          */
         _initShim: function() {
-            var iframe = doc.createElement("iframe");
-            iframe.src = "about:blank";
+            var iframe = doc.createElement('iframe');
+            iframe.src = 'about:blank';
             iframe.className = SHIM_CLASS;
-            iframe.style.position = "absolute";
-            iframe.style.visibility = "hidden";
-            iframe.style.border = "none";
+            iframe.style.position = 'absolute';
+            iframe.style.visibility = 'hidden';
+            iframe.style.border = 'none';
             this.container.shim = iframe;
 
             this._setShimRegion();
@@ -523,9 +506,9 @@ KISSY.add("suggest", function(S, undefined) {
         _setShimRegion: function() {
             var container = this.container, shim = container.shim;
             if (shim) {
-                shim.style.left = (parseInt(container.style.left) - 2) + "px"; // 解决吞边线bug
+                shim.style.left = (parseInt(container.style.left) - 2) + 'px'; // 解决吞边线bug
                 shim.style.top = container.style.top;
-                shim.style.width = (parseInt(container.style.width) + 2) + "px";
+                shim.style.width = (parseInt(container.style.width) + 2) + 'px';
             }
         },
 
@@ -537,19 +520,18 @@ KISSY.add("suggest", function(S, undefined) {
             var styleEl = S.get('#' + STYLE_ID);
             if (styleEl) return; // 防止多个实例时重复添加
 
-            var style = ".ks-suggest-container{background:white;border:1px solid #999;z-index:99999}"
-                + ".ks-suggest-shim{z-index:99998}"
-                + ".ks-suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}"
-                + ".ks-suggest-container li.selected{background-color:#39F;cursor:default}"
-                + ".ks-suggest-key{float:left;text-align:left;padding-left:5px}"
-                + ".ks-suggest-result{float:right;text-align:right;padding-right:5px;color:green}"
-                + ".ks-suggest-container li.selected span{color:#FFF;cursor:default}"
-                // + ".ks-suggest-container li.selected .suggest-result{color:green}"
-                + ".ks-suggest-bottom{padding:0 5px 5px}"
-                + ".ks-suggest-close-btn{float:right}"
-                + ".ks-suggest-container li,.suggest-bottom{overflow:hidden;zoom:1;clear:both}"
+            var style = '.ks-suggest-container{background:white;border:1px solid #999;z-index:99999}'
+                + '.ks-suggest-shim{z-index:99998}'
+                + '.ks-suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}'
+                + '.ks-suggest-container li.selected{background-color:#39F;cursor:default}'
+                + '.ks-suggest-key{float:left;text-align:left;padding-left:5px}'
+                + '.ks-suggest-result{float:right;text-align:right;padding-right:5px;color:green}'
+                + '.ks-suggest-container li.selected span{color:#FFF;cursor:default}'
+                + '.ks-suggest-bottom{padding:0 5px 5px}'
+                + '.ks-suggest-close-btn{float:right}'
+                + '.ks-suggest-container li,.suggest-bottom{overflow:hidden;zoom:1;clear:both}'
                 /* hacks */
-                + ".ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}";
+                + '.ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}';
 
             DOM.addStyleSheet(style, STYLE_ID);
         },
@@ -561,7 +543,7 @@ KISSY.add("suggest", function(S, undefined) {
         _initResizeEvent: function() {
             var self = this, resizeTimer;
 
-            Event.on(win, "resize", function() {
+            Event.on(win, 'resize', function() {
                 if (resizeTimer) {
                     clearTimeout(resizeTimer);
                 }
@@ -604,14 +586,13 @@ KISSY.add("suggest", function(S, undefined) {
             if (this.isVisible()) return;
             var container = this.container, shim = container.shim;
 
-            container.style.visibility = "";
+            container.style.visibility = '';
 
             if (shim) {
                 if (!shim.style.height) { // 第一次显示时，需要设定高度
-                    var r = YDOM.getRegion(container);
-                    shim.style.height = (r.bottom - r.top - 2) + "px";
+                    shim.style.height = (container.offsetHeight - 2) + 'px';
                 }
-                shim.style.visibility = "";
+                shim.style.visibility = '';
             }
         },
 
@@ -621,17 +602,17 @@ KISSY.add("suggest", function(S, undefined) {
         hide: function() {
             if (!this.isVisible()) return;
             var container = this.container, shim = container.shim;
-            //console.log("hide");
+            //console.log('hide');
 
-            if (shim) shim.style.visibility = "hidden";
-            container.style.visibility = "hidden";
+            if (shim) shim.style.visibility = 'hidden';
+            container.style.visibility = 'hidden';
         },
 
         /**
          * 提示层是否显示
          */
         isVisible: function() {
-            return this.container.style.visibility != "hidden";
+            return this.container.style.visibility != 'hidden';
         },
 
         /**
@@ -640,21 +621,21 @@ KISSY.add("suggest", function(S, undefined) {
         updateContent: function() {
             var self = this;
             if (!self._needUpdate()) return;
-            //console.log("update data");
+            //console.log('update data');
 
             self._updateQueryValueFromInput();
             var q = self.query;
 
             // 1. 输入为空时，隐藏提示层
             if (!S.trim(q).length) {
-                self._fillContainer("");
+                self._fillContainer('');
                 self.hide();
                 return;
             }
 
             if (self._dataCache[q] !== undefined) { // 2. 使用缓存数据
-                //console.log("use cache");
-                self.returnedData = "using cache";
+                //console.log('use cache');
+                self.returnedData = 'using cache';
                 self._fillContainer(self._dataCache[q]);
                 self._displayContainer();
 
@@ -682,12 +663,12 @@ KISSY.add("suggest", function(S, undefined) {
         requestData: function() {
             var self = this;
 
-            //console.log("request data via script");
+            //console.log('request data via script');
             if (!ie) self.dataScript = null; // IE不需要重新创建script元素
 
             if (!self.dataScript) {
-                var script = doc.createElement("script");
-                script.charset = "utf-8";
+                var script = doc.createElement('script');
+                script.charset = 'utf-8';
 
                 // jQuery ajax.js line 275:
                 // Use insertBefore instead of appendChild  to circumvent an IE6 bug.
@@ -698,20 +679,20 @@ KISSY.add("suggest", function(S, undefined) {
                 if (!ie) {
                     var t = new Date().getTime();
                     self._latestScriptTime = t;
-                    script.setAttribute("time", t);
+                    script.setAttribute('time', t);
 
-                    Event.on(script, "load", function() {
-                        //console.log("on load");
+                    Event.on(script, 'load', function() {
+                        //console.log('on load');
                         // 判断返回的数据是否已经过期
-                        self._scriptDataIsOut = script.getAttribute("time") != self._latestScriptTime;
+                        self._scriptDataIsOut = script.getAttribute('time') != self._latestScriptTime;
                     });
                 }
             }
 
             // 注意：没必要加时间戳，是否缓存由服务器返回的Header头控制
-            self.queryParams = "q=" + encodeURIComponent(self.query) + "&code=utf-8&callback=" + CALLBACK_STR;
+            self.queryParams = 'q=' + encodeURIComponent(self.query) + '&code=utf-8&callback=' + CALLBACK_STR;
             self.fire(EVENT_DATA_REQUEST);
-            self.dataScript.src = self.dataSource + "?" + self.queryParams;
+            self.dataScript.src = self.dataSource + '?' + self.queryParams;
         },
 
         /**
@@ -721,7 +702,7 @@ KISSY.add("suggest", function(S, undefined) {
         handleResponse: function(data) {
             var self = this;
 
-            //console.log("handle response");
+            //console.log('handle response');
             if (self._scriptDataIsOut) return; // 抛弃过期数据，否则会导致bug：1. 缓存key值不对； 2. 过期数据导致的闪屏
 
             self.returnedData = data;
@@ -731,15 +712,15 @@ KISSY.add("suggest", function(S, undefined) {
             self.returnedData = self.formatData(self.returnedData);
 
             // 填充数据
-            var content = "";
+            var content = '';
             var len = self.returnedData.length;
             if (len > 0) {
-                var list = doc.createElement("ol");
+                var list = doc.createElement('ol');
                 for (var i = 0; i < len; ++i) {
                     var itemData = self.returnedData[i];
-                    var li = self.formatItem(itemData["key"], itemData["result"]);
+                    var li = self.formatItem(itemData['key'], itemData['result']);
                     // 缓存key值到attribute上
-                    li.setAttribute("key", itemData["key"]);
+                    li.setAttribute('key', itemData['key']);
                     // 添加奇偶 class
                     DOM.addClass(li, i % 2 ? EVEN_ITEM_CLASS : ODD_ITEM_CLASS);
                     list.appendChild(li);
@@ -767,18 +748,18 @@ KISSY.add("suggest", function(S, undefined) {
         /**
          * 格式化输入的数据对象为标准格式
          * @param {Object} data 格式可以有3种：
-         *  1. {"result" : [["key1", "result1"], ["key2", "result2"], ...]}
-         *  2. {"result" : ["key1", "key2", ...]}
+         *  1. {'result' : [['key1', 'result1'], ['key2', 'result2'], ...]}
+         *  2. {'result' : ['key1', 'key2', ...]}
          *  3. 1和2的组合
          *  4. 标准格式
-         *  5. 上面1-4中，直接取o["result"]的值
+         *  5. 上面1-4中，直接取o['result']的值
          * @return Object 标准格式的数据：
-         *  [{"key" : "key1", "result" : "result1"}, {"key" : "key2", "result" : "result2"}, ...]
+         *  [{'key' : 'key1', 'result' : 'result1'}, {'key' : 'key2', 'result' : 'result2'}, ...]
          */
         formatData: function(data) {
             var arr = [];
             if (!data) return arr;
-            if (S.isArray(data["result"])) data = data["result"];
+            if (S.isArray(data['result'])) data = data['result'];
             var len = data.length;
             if (!len) return arr;
 
@@ -786,10 +767,10 @@ KISSY.add("suggest", function(S, undefined) {
             for (var i = 0; i < len; ++i) {
                 item = data[i];
 
-                if (typeof item === "string") { // 只有key值时
-                    arr[i] = {"key" : item};
-                } else if (S.isArray(item) && item.length >= 2) { // ["key", "result"] 取数组前2个
-                    arr[i] = {"key" : item[0], "result" : item[1]};
+                if (typeof item === 'string') { // 只有key值时
+                    arr[i] = {'key' : item};
+                } else if (S.isArray(item) && item.length >= 2) { // ['key', 'result'] 取数组前2个
+                    arr[i] = {'key' : item[0], 'result' : item[1]};
                 } else {
                     arr[i] = item;
                 }
@@ -804,16 +785,16 @@ KISSY.add("suggest", function(S, undefined) {
          * @return {HTMLElement}
          */
         formatItem: function(key, result) {
-            var li = doc.createElement("li");
-            var keyEl = doc.createElement("span");
+            var li = doc.createElement('li');
+            var keyEl = doc.createElement('span');
             keyEl.className = KEY_EL_CLASS;
             keyEl.appendChild(doc.createTextNode(key));
             li.appendChild(keyEl);
 
             if (result !== undefined) { // 可以没有
-                var resultText = this.config.resultFormat.replace("%result%", result);
+                var resultText = this.config.resultFormat.replace('%result%', result);
                 if (S.trim(resultText)) { // 有值时才创建
-                    var resultEl = doc.createElement("span");
+                    var resultEl = doc.createElement('span');
                     resultEl.className = RESULT_EL_CLASS;
                     resultEl.appendChild(doc.createTextNode(resultText));
                     li.appendChild(resultEl);
@@ -827,13 +808,13 @@ KISSY.add("suggest", function(S, undefined) {
          * 添加提示层底部
          */
         appendBottom: function() {
-            var bottom = doc.createElement("div");
+            var bottom = doc.createElement('div');
             bottom.className = BOTTOM_CLASS;
 
             if (this.config.showCloseBtn) {
-                var closeBtn = doc.createElement("a");
-                closeBtn.href = "javascript: void(0)";
-                closeBtn.setAttribute("target", "_self"); // bug fix: 覆盖<base target="_blank" />，否则会弹出空白页面
+                var closeBtn = doc.createElement('a');
+                closeBtn.href = 'javascript: void(0)';
+                closeBtn.setAttribute('target', '_self'); // bug fix: 覆盖<base target='_blank' />，否则会弹出空白页面
                 closeBtn.className = CLOSE_BTN_CLASS;
                 closeBtn.appendChild(doc.createTextNode(this.config.closeBtnText));
 
@@ -853,7 +834,7 @@ KISSY.add("suggest", function(S, undefined) {
          */
         _fillContainer: function(content) {
             if (content.nodeType == 1) {
-                this.container.innerHTML = "";
+                this.container.innerHTML = '';
                 this.container.appendChild(content);
             } else {
                 this.container.innerHTML = content;
@@ -881,8 +862,8 @@ KISSY.add("suggest", function(S, undefined) {
         selectItem: function(down) {
             var self = this;
 
-            //console.log("select item " + down);
-            var items = self.container.getElementsByTagName("li");
+            //console.log('select item ' + down);
+            var items = self.container.getElementsByTagName('li');
             if (items.length == 0) return;
 
             // 有可能用ESC隐藏了，直接显示即可
@@ -897,7 +878,7 @@ KISSY.add("suggest", function(S, undefined) {
                 newSelectedItem = items[down ? 0 : items.length - 1];
             } else {
                 // 选中下/上一项
-                newSelectedItem = YDOM[down ? "getNextSibling" : "getPreviousSibling"](self.selectedItem);
+                newSelectedItem = DOM[down ? 'next' : 'prev'](self.selectedItem);
                 // 已经到了最后/前一项时，归位到输入框，并还原输入值
                 if (!newSelectedItem) {
                     self.textInput.value = self.query;
@@ -919,7 +900,7 @@ KISSY.add("suggest", function(S, undefined) {
          * @protected
          */
         _removeSelectedItem: function() {
-            //console.log("remove selected item");
+            //console.log('remove selected item');
             DOM.removeClass(this.selectedItem, SELECTED_ITEM_CLASS);
             this.selectedItem = null;
         },
@@ -930,7 +911,7 @@ KISSY.add("suggest", function(S, undefined) {
          * @param {HTMLElement} item
          */
         _setSelectedItem: function(item) {
-            //console.log("set selected item");
+            //console.log('set selected item');
             DOM.addClass(item, SELECTED_ITEM_CLASS);
             this.selectedItem = item;
         },
@@ -940,13 +921,13 @@ KISSY.add("suggest", function(S, undefined) {
          * @protected
          */
         _getSelectedItemKey: function() {
-            if (!this.selectedItem) return "";
+            if (!this.selectedItem) return '';
 
             // getElementsByClassName比较损耗性能，改用缓存数据到attribute上方法
-            //var keyEl = Dom.getElementsByClassName(KEY_EL_CLASS, "*", this.selectedItem)[0];
+            //var keyEl = Dom.getElementsByClassName(KEY_EL_CLASS, '*', this.selectedItem)[0];
             //return keyEl.innerHTML;
 
-            return this.selectedItem.getAttribute("key");
+            return this.selectedItem.getAttribute('key');
         },
 
         /**
@@ -963,11 +944,22 @@ KISSY.add("suggest", function(S, undefined) {
          */
         _updateInputFromSelectItem: function() {
             this.textInput.value = this._getSelectedItemKey(this.selectedItem);
+        },
+
+        /**
+         * 获取 container 的 left, top, right, bottom
+         */
+        _getContainerRegion: function() {
+            var container = this.container,
+                offset = DOM.offset(container),
+                l = offset.left,
+                t = offset.top,
+                b = t + container.offsetHeight - 1,
+                r = l + container.offsetWidth - 1;
+
+            return { left: l, top: t, right: r, bottom: b };
         }
-
     });
-
-    S.mix(Suggest.prototype, S.EventTarget);
 
     /**
      * 约定的全局回调函数
@@ -1006,7 +998,7 @@ KISSY.add("suggest", function(S, undefined) {
  *  b. 当鼠标移动到某项或通过上下键选中某项时，给this.selectedItem赋值；当提示层的数据重新填充时，重置
  *     this.selectedItem. 这种处理方式和google的一致，可以使得选中某项，隐藏，再次打开时，依旧选中原来
  *     的选中项。
- *  c. 在ie等浏览器中，输入框中输入ENTER键时，会自动提交表单。如果form.target="_blank", 自动提交和JS提交
+ *  c. 在ie等浏览器中，输入框中输入ENTER键时，会自动提交表单。如果form.target='_blank', 自动提交和JS提交
  *     会打开两个提交页面。因此这里采取了在JS中不提交的策略，ENTER键是否提交表单，完全由HTML代码自身决定。这
  *     样也能使得组件很容易应用在不需要提交表单的场景中。（2009-06-18更新：可以通过blur()取消掉浏览器的默认
  *     Enter响应，这样能使得代码逻辑和mouseup的一致）
