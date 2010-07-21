@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>SWF Test</title>
+</head>
+<body>
+
+
+<h2>Flash-embed test</h2>
+
+
+
+<script src="ks-core.js"></script>
+
+<script src="../flash-ua/flash-ua.js"></script>
+
+<script src="../dom-flash.js"></script>
+<script src="flash-embed.js"></script>
+
+
+
+
+
+
+<div>
+	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="800" height="600" id="myFlashContent">
+		<param name="movie" value="test.swf" />
+		<!--[if !IE]>-->
+		<object type="application/x-shockwave-flash" data="test.swf" width="800" height="600">
+		<!--<![endif]-->
+			<a href="http://www.adobe.com/go/getflashplayer">
+				<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
+			</a>
+		<!--[if !IE]>-->
+		</object>
+		<!--<![endif]-->
+	</object>
+	<hr/>
+	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="800" height="600" id="myFlashContent2">
+		<param name="movie" value="test.swf" />
+		<!--[if !IE]>-->
+		<object type="application/x-shockwave-flash" data="test.swf" width="800" height="600">
+		<!--<![endif]-->
+			<a href="http://www.adobe.com/go/getflashplayer">
+				<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
+			</a>
+		<!--[if !IE]>-->
+		</object>
+		<!--<![endif]-->
+	</object>
+</div>
+
+<object width="100" height="200" id="myFlashContent" type="application/x-shockwave-flash" data="test.swf" name="myFlashContent"><param value="transparent" name="wmode"></object>
+
+
+
+
+
+
+
+<script>
+	
+	KISSY.Flash.register("myFlashContent","10.1.0",null,callback);
+	//KISSY.Flash.register("myFlashContent");
+	KISSY.Flash.register("myFlashContent2");
+	//KISSY.Flash.register("myFlashContent");
+	
+	KISSY.ready(function(S){
+		alert(KISSY.Flash.get("myFlashContent"));
+		alert(KISSY.Flash.get("myFlashContent2"));
+		alert(KISSY.Flash.length());
+		alert(KISSY.Flash.remove("myFlashContent2"));
+		alert(KISSY.Flash.length());
+	});
+	
+	
+	//KISSY.Flash.remove("myFlashContent2");
+	
+	function callback(o){
+		alert("callback:"+o.success+":"+o.id);
+		//if(o.success==0)KISSY.DOM.remove(o.ref);
+		
+	}
+	
+	
+  	//alert(KISSY)
+</script>
+</body>
+</html>

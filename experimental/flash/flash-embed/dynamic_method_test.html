@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title></title>
+    </head>
+    <body>
+        <h2>Flash-embed test</h2>
+        <script src="ks-core.js">
+        </script>
+        <script src="../flash-ua/flash-ua.js">
+        </script>
+        <script src="../dom-flash.js">
+        </script>
+        <script src="flash-embed.js">
+        </script>
+		
+		<div id="myFlashContent">
+			 <a href="http://www.adobe.com/go/getflashplayer"> 
+	         <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" /> 
+	         </a> 
+		</div>
+		
+		<hr/>
+		
+		<div id="myFlashContent2">
+			 <a href="http://www.adobe.com/go/getflashplayer"> 
+	         <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" /> 
+	         </a> 
+		</div>
+		
+		<script>
+			var version = "10.1.0"
+			var flashvars ={};
+			flashvars.name = "q";
+			flashvars.vd = "dddq";
+			flashvars.url = "http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif?t=1030%213&g=123";
+			flashvars.json = {a:10,b:false,c:"中En%",d:{a:10,b:false,c:"中En%"}}
+			var params = {};
+			params.wmode = "opaque";
+			params.menu = "false";
+			var attrs ={};
+			KISSY.Flash.embed("myFlashContent","test.swf",215,138,version,params,flashvars,attrs,"express-install/expressInstall.swf");
+			KISSY.Flash.embed("myFlashContent2","test.swf",800,600);
+			
+			function callback(o){
+				alert("callback:"+o.success+":"+o.id);
+				//if(o.success==0)KISSY.DOM.remove(o.ref);
+			}
+			
+		</script>
+		
+    </body>
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>kissyflash</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>ks-core.js</name>
+			<type>1</type>
+			<location>D:/Work_Data/Lab/Kissy/googlecode/build/packages/ks-core.js</location>
+		</link>
+		<link>
+			<name>flash-embed/ks-core.js</name>
+			<type>1</type>
+			<location>D:/Work_Data/Lab/Kissy/googlecode/build/packages/ks-core.js</location>
+		</link>
+		<link>
+			<name>flash-ua/ks-core.js</name>
+			<type>1</type>
+			<location>D:/Work_Data/Lab/Kissy/googlecode/build/packages/ks-core.js</location>
+		</link>
+	</linkedResources>
+</projectDescription>
