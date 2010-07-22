@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:32
+build: 896 Jul 22 10:02
 */
 /**
  * @module  dom
@@ -778,8 +778,8 @@ KISSY.add('dom-style', function(S, undefined) {
                 }
                 return;
             }
-            
-            if(name.indexOf('-') > 0) {
+
+            if (name.indexOf('-') > 0) {
                 // webkit 认识 camel-case, 其它内核只认识 cameCase
                 name = name.replace(RE_DASH, CAMELCASE_FN);
             }
@@ -790,11 +790,11 @@ KISSY.add('dom-style', function(S, undefined) {
                 // supports css selector/Node/NodeList
                 var elem = S.get(selector), ret = '';
 
-                if (elem && elem.style) {
-                    ret = name.get ? name.get(elem) : elem.style[name];
+                if (elem && elem[STYLE]) {
+                    ret = name.get ? name.get(elem) : elem[STYLE][name];
 
                     // 有 get 的直接用自定义函数的返回值
-                    if(ret === '' && !name.get) {
+                    if (ret === '' && !name.get) {
                         ret = fixComputedStyle(elem, name, DOM._getComputedStyle(elem, name));
                     }
                 }
@@ -818,8 +818,12 @@ KISSY.add('dom-style', function(S, undefined) {
                 }
 
                 S.each(S.query(selector), function(elem) {
-                    if (elem && elem.style) {
-                        name.set ? name.set(elem, val) : (elem.style[name] = val);
+                    if (elem && elem[STYLE]) {
+                        name.set ? name.set(elem, val) : (elem[STYLE][name] = val);
+                        if (val === EMPTY) {
+                            if (!elem[STYLE].cssText)
+                                elem.removeAttribute(STYLE);
+                        }
                     }
                 });
             }
@@ -831,7 +835,7 @@ KISSY.add('dom-style', function(S, undefined) {
          */
         width: function(selector, value) {
             // getter
-            if(value === undefined) {
+            if (value === undefined) {
                 return getWH(selector, WIDTH);
             }
             // setter
@@ -883,7 +887,7 @@ KISSY.add('dom-style', function(S, undefined) {
     if (docElem[STYLE][CSS_FLOAT] !== undefined) {
         CUSTOM_STYLES[FLOAT] = CSS_FLOAT;
     }
-    else if(docElem[STYLE][STYLE_FLOAT] !== undefined) {
+    else if (docElem[STYLE][STYLE_FLOAT] !== undefined) {
         CUSTOM_STYLES[FLOAT] = STYLE_FLOAT;
     }
 

@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:33
+build: 896 Jul 22 10:00
 */
 /**
  * @module kissy
@@ -64,7 +64,7 @@ build: 888 Jul 20 19:33
          * The version of the library.
          * @type {String}
          */
-        version: '1.0.8',
+        version: '1.1.0',
 
         /**
          * Initializes KISSY object.
@@ -923,9 +923,9 @@ KISSY.add('kissy-ua', function(S) {
  * 
  */
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:32
+build: 896 Jul 22 10:00
 */
 /**
  * @module  dom
@@ -1702,8 +1702,8 @@ KISSY.add('dom-style', function(S, undefined) {
                 }
                 return;
             }
-            
-            if(name.indexOf('-') > 0) {
+
+            if (name.indexOf('-') > 0) {
                 // webkit 认识 camel-case, 其它内核只认识 cameCase
                 name = name.replace(RE_DASH, CAMELCASE_FN);
             }
@@ -1714,11 +1714,11 @@ KISSY.add('dom-style', function(S, undefined) {
                 // supports css selector/Node/NodeList
                 var elem = S.get(selector), ret = '';
 
-                if (elem && elem.style) {
-                    ret = name.get ? name.get(elem) : elem.style[name];
+                if (elem && elem[STYLE]) {
+                    ret = name.get ? name.get(elem) : elem[STYLE][name];
 
                     // 有 get 的直接用自定义函数的返回值
-                    if(ret === '' && !name.get) {
+                    if (ret === '' && !name.get) {
                         ret = fixComputedStyle(elem, name, DOM._getComputedStyle(elem, name));
                     }
                 }
@@ -1742,8 +1742,12 @@ KISSY.add('dom-style', function(S, undefined) {
                 }
 
                 S.each(S.query(selector), function(elem) {
-                    if (elem && elem.style) {
-                        name.set ? name.set(elem, val) : (elem.style[name] = val);
+                    if (elem && elem[STYLE]) {
+                        name.set ? name.set(elem, val) : (elem[STYLE][name] = val);
+                        if (val === EMPTY) {
+                            if (!elem[STYLE].cssText)
+                                elem.removeAttribute(STYLE);
+                        }
                     }
                 });
             }
@@ -1755,7 +1759,7 @@ KISSY.add('dom-style', function(S, undefined) {
          */
         width: function(selector, value) {
             // getter
-            if(value === undefined) {
+            if (value === undefined) {
                 return getWH(selector, WIDTH);
             }
             // setter
@@ -1807,7 +1811,7 @@ KISSY.add('dom-style', function(S, undefined) {
     if (docElem[STYLE][CSS_FLOAT] !== undefined) {
         CUSTOM_STYLES[FLOAT] = CSS_FLOAT;
     }
-    else if(docElem[STYLE][STYLE_FLOAT] !== undefined) {
+    else if (docElem[STYLE][STYLE_FLOAT] !== undefined) {
         CUSTOM_STYLES[FLOAT] = STYLE_FLOAT;
     }
 
@@ -2626,9 +2630,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:33
+build: 896 Jul 22 10:00
 */
 /**
  * @module  event
@@ -3207,9 +3211,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:33
+build: 896 Jul 22 10:00
 */
 /**
  * @module  node
@@ -3505,9 +3509,9 @@ KISSY.add('node-attach', function(S, undefined) {
     });
 });
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:32
+build: 896 Jul 22 10:00
 */
 /**
  * @module  ajax
@@ -3517,6 +3521,7 @@ KISSY.add('ajax', function(S) {
 
     var doc = document,
         testNode = doc.createElement('script'),
+
         // try branching
         fn = testNode.readyState ? function(node, callback) {
             node.onreadystatechange = function() {
@@ -3558,7 +3563,6 @@ KISSY.add('ajax', function(S) {
             head.appendChild(node);
         }
     };
-
 });
 
 /**
@@ -3567,12 +3571,11 @@ KISSY.add('ajax', function(S) {
  *   - api 考虑：jQuery 的全耦合在 jQuery 对象上，ajaxComplete 等方法不优雅。
  *         YUI2 的 YAHOO.util.Connect.Get.script 层级太深，YUI3 的 io 则
  *         野心过大，KISSY 借鉴 ExtJS, 部分方法借鉴 jQuery.
- *
  */
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:32
+build: 896 Jul 22 10:00
 */
 /**
  * @module  cookie
@@ -3657,9 +3660,9 @@ KISSY.add('cookie', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:33
+build: 896 Jul 22 10:00
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -3986,9 +3989,9 @@ KISSY.add('json', function (S) {
     }
 });
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:33
+build: 896 Jul 22 10:00
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -5062,9 +5065,9 @@ KISSY.ExternalSelector._filter = function(selector, filter) {
 
 })();
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:32
+build: 896 Jul 22 10:00
 */
 /**
  * 数据延迟加载组件
@@ -5502,9 +5505,9 @@ KISSY.add('datalazyload', function(S, undefined) {
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 890 Jul 20 22:07
+build: 896 Jul 22 10:00
 */
 /**
  * Switchable

@@ -1,6 +1,6 @@
 @echo off
 pushd "%~dp0"
-set ANT="%~dp0ant\bin\ant.bat"
+set ANT="%~dp0..\..\kissy-tools\ant\bin\ant.bat"
 
 cd ../src
 for /F %%f in ('dir build.xml /b /s') do (

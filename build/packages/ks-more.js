@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:32
+build: 896 Jul 22 10:00
 */
 /**
  * @module  cookie
@@ -86,9 +86,9 @@ KISSY.add('cookie', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:33
+build: 896 Jul 22 10:00
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -415,9 +415,9 @@ KISSY.add('json', function (S) {
     }
 });
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:33
+build: 896 Jul 22 10:00
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -1491,9 +1491,9 @@ KISSY.ExternalSelector._filter = function(selector, filter) {
 
 })();
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 888 Jul 20 19:32
+build: 896 Jul 22 10:00
 */
 /**
  * 数据延迟加载组件
@@ -1931,9 +1931,9 @@ KISSY.add('datalazyload', function(S, undefined) {
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
 /*
-Copyright 2010, KISSY UI Library v1.0.8
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 890 Jul 20 22:07
+build: 896 Jul 22 10:00
 */
 /**
  * Switchable
