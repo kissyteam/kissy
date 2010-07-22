@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 896 Jul 22 10:00
+build time: Jul 22 22:54
 */
 /**
  * @module  cookie
@@ -88,7 +88,7 @@ KISSY.add('cookie', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 896 Jul 22 10:00
+build time: Jul 22 22:54
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -417,7 +417,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 896 Jul 22 10:00
+build time: Jul 22 22:54
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -1493,7 +1493,7 @@ KISSY.ExternalSelector._filter = function(selector, filter) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 896 Jul 22 10:00
+build time: Jul 22 22:54
 */
 /**
  * 数据延迟加载组件
@@ -1933,7 +1933,7 @@ KISSY.add('datalazyload', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 896 Jul 22 10:00
+build time: Jul 22 22:55
 */
 /**
  * Switchable

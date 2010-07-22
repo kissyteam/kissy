@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 896 Jul 22 10:00
+build time: Jul 22 22:54
 */
 KISSY.add("node",function(a){function e(b,c,h){var j;if(!(this instanceof e))return new e(b,c,h);if(!b)return null;if(o._isSupportedNode(b))j=b;else if(typeof b==="string")j=o.create(b,c,h);this[0]=j}var o=a.DOM;a.augment(e,{length:1,getDOMNode:function(){return this[0]}});a.one=function(b,c){return new e(a.get(b,c))};a.Node=e});
 KISSY.add("nodelist",function(a){function e(c){if(!(this instanceof e))return new e(c);b.push.apply(this,c||[])}var o=a.DOM,b=Array.prototype;a.mix(e.prototype,{length:0,item:function(c){var h=null;if(o._isElementNode(this[c]))h=new a.Node(this[c]);return h},getDOMNodes:function(){return b.slice.call(this)},each:function(c,h){for(var j=this.length,l=0,m;l<j;++l){m=new a.Node(this[l]);c.call(h||m,m,l,this)}return this}});a.all=function(c,h){return new e(a.query(c,h,true))};a.NodeList=e});

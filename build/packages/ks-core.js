@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 896 Jul 22 10:00
+build time: Jul 22 22:54
 */
 /**
  * @module kissy
@@ -925,7 +925,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 896 Jul 22 10:00
+build time: Jul 22 22:54
 */
 /**
  * @module  dom
@@ -2632,7 +2632,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 896 Jul 22 10:00
+build time: Jul 22 22:54
 */
 /**
  * @module  event
@@ -3213,7 +3213,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 896 Jul 22 10:00
+build time: Jul 22 22:54
 */
 /**
  * @module  node
@@ -3511,7 +3511,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 896 Jul 22 10:00
+build time: Jul 22 22:54
 */
 /**
  * @module  ajax

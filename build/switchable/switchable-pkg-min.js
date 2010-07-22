@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build: 896 Jul 22 10:00
+build time: Jul 22 22:55
 */
 KISSY.add("switchable",function(c,k){function h(a,b){b=b||{};if(!("markupType"in b))if(b.panelCls)b.markupType=1;else if(b.panels)b.markupType=2;b=c.merge(h.Config,b);this.container=c.get(a);this.config=b;this.activeIndex=b.activeIndex;this._init()}var l=c.DOM,i=c.Event;h.Config={markupType:0,navCls:"ks-switchable-nav",contentCls:"ks-switchable-content",triggerCls:"ks-switchable-trigger",panelCls:"ks-switchable-panel",triggers:[],panels:[],hasTriggers:true,triggerType:"mouse",delay:0.1,activeIndex:0,
 activeTriggerCls:"active",steps:1,viewSize:[]};h.Plugins=[];c.augment(h,c.EventTarget,{_init:function(){var a=this,b=a.config;if(a.fire("beforeInit")!==false){a._parseMarkup();b.hasTriggers&&a._bindTriggers();c.each(h.Plugins,function(d){d.init&&d.init(a)});a.fire("init")}},_parseMarkup:function(){var a=this.container,b=this.config,d,f=[],g=[];switch(b.markupType){case 0:if(d=c.get("."+b.navCls,a))f=l.children(d);d=c.get("."+b.contentCls,a);g=l.children(d);break;case 1:f=c.query("."+b.triggerCls,

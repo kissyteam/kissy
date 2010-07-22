@@ -12,7 +12,7 @@
 
     <!-- 引入第三方包 -->
     <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
-    <typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpath="svnant.jar"/> 
+    <!--<typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpath="svnant.jar"/>-->
 
     <!-- 清空与复制文件等准备工作 -->
     <target name="prepare">
@@ -73,9 +73,9 @@
             <format property="build.time" pattern="MMM d HH:mm" locale="en,UK"/>
             <format property="build.year" pattern="yyyy"/>
         </tstamp>
-        <svn>
-            <wcVersion path="${root.dir}" prefix="svn."/>
-        </svn>
+        <!--<svn>-->
+            <!--<wcVersion path="${root.dir}" prefix="svn."/>-->
+        <!--</svn>-->
         <mkdir dir="${build.dir}/${component.name}/tmp"/>
         <move todir="${build.dir}/${component.name}/tmp">
             <fileset dir="${build.dir}/${component.name}" includes="${copyright.files}"/>
@@ -90,7 +90,7 @@
                     <header filtering="no" trimleading="yes">/*
                         Copyright ${build.year}, KISSY UI Library v${version}
                         MIT Licensed
-                        build: ${svn.revision.max} ${build.time}
+                        build time: ${build.time}
                         */
                     </header>
                     <fileset file="@{file}" />
