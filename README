@@ -1,7 +1,7 @@
 KISSY - An Enjoyable JavaScript Library
 
- * Source: http://code.google.com/p/kissy/
- * License: http://kissy.googlecode.com/svn/trunk/LICENSE
+ * Source: http://github.com/kissyteam/kissy
+ * License: http://github.com/kissyteam/kissy/blob/master/LICENSE
 
 ==============
    使   命
@@ -20,16 +20,12 @@ Yeah!
 ==============
    目   录
 ==============
- - assets:        全局性资源文件
- - build:         根据 src 内容，用 Ant 构建出来的发布文件
- - docs:          API 文档，以及实例说明和使用教程等文档
- - experimental:  实验基地，存放开发中的组件。成熟后，经审核，再转入 src
- - gallery:       KISSY 展览馆，这些组件很好，但使用场景不多
- - src:           存放正式发布的组件，这些组件很好，使用场景也很多
+ - build:         构建好的发布文件
+ - docs:          API、实例、教程等文档
+ - src:           源码、测试等开发资源
  - thirtd-party:  第三方库
- - tools:         打包压缩等工具
- - archives:      打包存放特殊文件
-
+ - tools:         打包压缩等自动化工具
+ 
 ==============
    代码结构
 ==============
@@ -40,12 +36,11 @@ Yeah!
    命名约定
 ==============
 原则：尽量避免潜在冲突，同时力求精简短小和见名知意。
- - 全局变量：       g_ks_comp_xxx   比如： g_ks_monitor_st
- - class/id 命名：  ks-comp-xxx     比如： ks-editor-toolbar-item
- - data 属性命名：  data-comp-xxx   比如： data-lazyload-src
+ - 全局变量：       g_ks_comp_xxx      比如： g_ks_suggest_callback
+ - class/id 命名：  ks-comp-xxx        比如： ks-editor-toolbar-item
+ - data 属性命名：  data-ks-comp-xxx   比如： data-ks-lazyload-src
 
 ==============
    其   它
 ==============
 小版本规律：奇数开发，偶数发布
-
