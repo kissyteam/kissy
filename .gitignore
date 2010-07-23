@@ -1,0 +1,7 @@
+*.iml
+.idea
+*~
+*.diff
+*.patch
+.DS_Store
+Thumb.db
