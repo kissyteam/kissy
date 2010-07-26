@@ -8,6 +8,7 @@ KISSY.add('dom-create', function(S, undefined) {
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
         isSupportedNode = DOM._isSupportedNode,
         isElementNode = DOM._isElementNode,
+        isKSNode = DOM._isKSNode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc.createElement(DIV),
@@ -23,7 +24,8 @@ KISSY.add('dom-create', function(S, undefined) {
          * Creates a new HTMLElement using the provided html string.
          */
         create: function(html, props, ownerDoc) {
-            if (isSupportedNode(html)) return html;
+            if (isSupportedNode(html)) return cloneNode(html);
+            if (isKSNode(html)) return cloneNode(html[0]);
             if (!(html = S.trim(html))) return null;
 
             var ret = null, creators = DOM._creators,
@@ -130,6 +132,16 @@ KISSY.add('dom-create', function(S, undefined) {
             S.log('Unable to convert ' + nodes + ' to fragment.');
         }
 
+        return ret;
+    }
+
+    function cloneNode(elem) {
+        var ret = elem.cloneNode(true);
+        /*
+         * if this is MSIE 6/7, then we need to copy the innerHTML to
+         * fix a bug related to some form field elements
+         */
+        if (UA.ie < 8) ret.innerHTML = elem.innerHTML;
         return ret;
     }
 

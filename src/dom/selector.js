@@ -87,7 +87,7 @@ KISSY.add('selector', function(S, undefined) {
             ret = [selector];
         }
         // 传入的 selector 是 NodeList（包括 KISSY.Node/NodeList） 或已是 Array
-        else if (selector && (S.isArray(selector) || selector.item || selector.getDOMNode)) {
+        else if (selector && (S.isArray(selector) || selector.item || selector.nodeType === (S.Node || {}).TYPE)) {
             ret = selector;
         }
         // 传入的 selector 是其它值时，返回空数组

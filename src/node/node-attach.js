@@ -125,7 +125,10 @@ KISSY.add('node-attach', function(S, undefined) {
              * Insert the element to the end of the parent.
              */
             appendTo: function(parent) {
-                if ((parent = S.get(parent)) && parent.appendChild) {
+                parent = S.get(parent);
+                if(DOM._isKSNode(parent)) parent = parent[0];
+
+                if (parent && parent.appendChild) {
                     S.each(this, function(elem) {
                         parent.appendChild(elem);
                     });

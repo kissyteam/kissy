@@ -33,6 +33,8 @@ KISSY.add('node', function(S) {
         self[0] = domNode;
     }
 
+    Node.TYPE = '-ks-Node';
+
     S.augment(Node, {
 
         /**
@@ -45,7 +47,9 @@ KISSY.add('node', function(S) {
          */
         getDOMNode: function() {
             return this[0];
-        }
+        },
+
+        nodeType: Node.TYPE
     });
 
     // query api
