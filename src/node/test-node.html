@@ -230,6 +230,7 @@
     function test_children(test) {
         if (S.one('#foo').children().length !== 7) test.fail();
         if (S.one('#foo').children()[0] !== S.get('#foo a')) test.fail();
+        if(S.one('#test-children').children().length !== 0) test.fail();
     }
 
     function test_contains(test) {
@@ -313,6 +314,7 @@
         }
     </style>
     <div id="test2"></div>
+    <div id="test-children"></div>
     <p id="foo">
         <a href="./" style="color:red" class="link" title="test" data-test="test">test link</a>
         <input type="text" id="test-input" readonly maxlength="20" value="hello"/>

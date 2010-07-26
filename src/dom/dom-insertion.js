@@ -15,13 +15,9 @@ KISSY.add('dom-insertion', function(S) {
          * @return {HTMLElement} The node that was inserted (or null if insert fails)
          */
         insertBefore: function(newNode, refNode) {
-            newNode = DOM.create(newNode);
-            refNode = S.get(refNode);
-
-            if (newNode && refNode && refNode[PARENT_NODE]) {
+            if ((newNode = S.get(newNode)) && (refNode = S.get(refNode)) && refNode[PARENT_NODE]) {
                 refNode[PARENT_NODE].insertBefore(newNode, refNode);
             }
-
             return newNode;
         },
 
@@ -30,21 +26,16 @@ KISSY.add('dom-insertion', function(S) {
          * @return {HTMLElement} The node that was inserted (or null if insert fails)
          */
         insertAfter: function(newNode, refNode) {
-            newNode = DOM.create(newNode);
-            refNode = S.get(refNode);
-
-            if (newNode && refNode && refNode[PARENT_NODE]) {
+            if ((newNode = S.get(newNode)) && (refNode = S.get(refNode)) && refNode[PARENT_NODE]) {
                 if (refNode[NEXT_SIBLING]) {
                     refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
                 } else {
                     refNode[PARENT_NODE].appendChild(newNode);
                 }
             }
-
             return newNode;
         }
     });
-
 });
 
 /**
