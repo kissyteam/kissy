@@ -262,6 +262,21 @@
         }
     }
 
+    function test_scope(test) {
+        Event.on(document, 'click', handle, {id: 1});
+        Event.on(document, 'click', handle, {id: 2});
+
+        var r = [];
+        function handle() {
+            r.push(this.id);
+            if(r.length === 2) go();
+        }
+
+        function go() {
+            if(r[0] === r[1]) test.echo('**** test_scope is failed.');
+        }
+    }
+
 </script>
 
 </body>
