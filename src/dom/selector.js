@@ -41,7 +41,7 @@ KISSY.add('selector', function(S, undefined) {
 
             // selector 为 #id 是最常见的情况，特殊优化处理
             if (REG_ID.test(selector)) {
-                t = getElementById(selector.slice(1));
+                t = getElementById(selector.slice(1),context);
                 if (t) ret = [t]; // #id 无效时，返回空数组
             }
             // selector 为支持列表中的其它 6 种
@@ -51,7 +51,7 @@ KISSY.add('selector', function(S, undefined) {
                 tag = match[2];
                 cls = match[3];
 
-                if ((context = id ? getElementById(id) : context)) {
+                if ((context = id ? getElementById(id,context) : context)) {
 
                     // #id .cls | #id tag.cls | .cls | tag.cls
                     if (cls) {
@@ -60,7 +60,7 @@ KISSY.add('selector', function(S, undefined) {
                         }
                         // 处理 #id.cls
                         else {
-                            t = getElementById(id);
+                            t = getElementById(id,context);
                             if(t && DOM.hasClass(t, cls)) {
                                 ret = [t];
                             }
@@ -123,8 +123,8 @@ KISSY.add('selector', function(S, undefined) {
     }
 
     // query #id
-    function getElementById(id) {
-        return doc.getElementById(id);
+    function getElementById(id,context) {
+        return context.getElementById(id);
     }
 
     // query tag
