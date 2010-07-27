@@ -4,7 +4,9 @@
  */
 KISSY.add('dom', function(S) {
 
-    var DOM = {
+    var NODE_TYPE = 'nodeType',
+
+    DOM = {
 
         /**
          * 是不是 element/text node
@@ -17,14 +19,21 @@ KISSY.add('dom', function(S) {
          * 是不是 element node
          */
         _isElementNode: function(elem) {
-            return elem && elem.nodeType === 1;
+            return elem && elem[NODE_TYPE] === 1;
         },
 
         /**
          * 是不是 text node
          */
         _isTextNode: function(elem) {
-            return elem && elem.nodeType === 3;
+            return elem && elem[NODE_TYPE] === 3;
+        },
+
+        /**
+         * 是不是 KISSY.Node
+         */
+        _isKSNode: function(elem) {
+            return elem && S.Node && elem[NODE_TYPE] === S.Node.TYPE;
         }
     };
 

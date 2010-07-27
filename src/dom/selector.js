@@ -4,10 +4,9 @@
  */
 KISSY.add('selector', function(S, undefined) {
 
-    var doc = document,
-        DOM = S.DOM,
-        SPACE = ' ',
-        ANY = '*',
+    var doc = document, DOM = S.DOM,
+        SPACE = ' ', ANY = '*',
+        GET_DOM_NODE = 'getDOMNode', GET_DOM_NODES = GET_DOM_NODE + 's',
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
@@ -82,12 +81,16 @@ KISSY.add('selector', function(S, undefined) {
                 error(selector);
             }
         }
+        // 传入的 selector 是 KISSY.Node/NodeList. 始终返回原生 DOM Node
+        else if(selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
+            ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
+        }
         // 传入的 selector 是 Node
         else if (selector && selector.nodeType) {
             ret = [selector];
         }
-        // 传入的 selector 是 NodeList（包括 KISSY.Node/NodeList） 或已是 Array
-        else if (selector && (S.isArray(selector) || selector.item || selector.getDOMNode)) {
+        // 传入的 selector 是 NodeList 或已是 Array
+        else if (selector && (S.isArray(selector) || selector.item)) {
             ret = selector;
         }
         // 传入的 selector 是其它值时，返回空数组

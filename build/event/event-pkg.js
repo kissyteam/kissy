@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Jul 27 11:05
 */
 /**
  * @module  event
@@ -88,7 +88,7 @@ KISSY.add('event', function(S, undefined) {
                         special.setup(event);
                     }
 
-                    return (special.handle || Event._handle)(target, event, events[type].listeners, scope);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners);
                 };
 
                 events[type] = {
@@ -105,7 +105,7 @@ KISSY.add('event', function(S, undefined) {
             }
 
             // 增加 listener
-            events[type].listeners.push(fn);
+            events[type].listeners.push({fn: fn, scope: scope});
         },
 
         /**
@@ -160,18 +160,18 @@ KISSY.add('event', function(S, undefined) {
             }
         },
 
-        _handle: function(target, event, listeners, scope) {
+        _handle: function(target, event, listeners) {
             /* As some listeners may remove themselves from the
              event, the original array length is dynamic. So,
              let's make a copy of all listeners, so we are
              sure we'll call all of them.*/
             listeners = listeners.slice(0);
 
-            var ret, i = 0, len = listeners.length;
-            scope = scope || target;
+            var ret, i = 0, len = listeners.length, listener;
 
             for (; i < len; ++i) {
-                ret = listeners[i].call(scope, event);
+                listener = listeners[i];
+                ret = listener.fn.call(listener.scope || target, event);
 
                 // 自定义事件对象，可以用 return false 来立刻停止后续监听函数
                 // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡

@@ -74,13 +74,13 @@
     var S = KISSY, DOM = S.DOM;
 
     function test_insertBefore(test) {
-        var t = DOM.insertBefore('<p>inserted node</p>', '#test-next');
+        var t = DOM.insertBefore(DOM.create('<p>inserted node</p>'), '#test-next');
         if(DOM.children('#test-insert').length !== 5) test.fail();
         S.get('#test-insert').removeChild(t);
     }
 
     function test_insertAfter(test) {
-        var t = DOM.insertAfter('<p class="test-insert">inserted node2</p>', '#test-next');
+        var t = DOM.insertAfter(DOM.create('<p class="test-insert">inserted node2</p>'), '#test-next');
         if(DOM.children('#test-insert')[1].className !== 'test-insert') test.fail();
         S.get('#test-insert').removeChild(t);
     }

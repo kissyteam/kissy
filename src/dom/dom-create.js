@@ -8,6 +8,7 @@ KISSY.add('dom-create', function(S, undefined) {
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
         isSupportedNode = DOM._isSupportedNode,
         isElementNode = DOM._isElementNode,
+        isKSNode = DOM._isKSNode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc.createElement(DIV),
@@ -23,7 +24,8 @@ KISSY.add('dom-create', function(S, undefined) {
          * Creates a new HTMLElement using the provided html string.
          */
         create: function(html, props, ownerDoc) {
-            if (isSupportedNode(html)) return html;
+            if (isSupportedNode(html)) return cloneNode(html);
+            if (isKSNode(html)) return cloneNode(html[0]);
             if (!(html = S.trim(html))) return null;
 
             var ret = null, creators = DOM._creators,
@@ -133,6 +135,16 @@ KISSY.add('dom-create', function(S, undefined) {
         return ret;
     }
 
+    function cloneNode(elem) {
+        var ret = elem.cloneNode(true);
+        /*
+         * if this is MSIE 6/7, then we need to copy the innerHTML to
+         * fix a bug related to some form field elements
+         */
+        if (UA.ie < 8) ret.innerHTML = elem.innerHTML;
+        return ret;
+    }
+
     /**
      * Update the innerHTML of this element, optionally searching for and processing scripts.
      * @refer http://www.sencha.com/deploy/dev/docs/source/Element-more.html#method-Ext.Element-update
@@ -147,15 +159,18 @@ KISSY.add('dom-create', function(S, undefined) {
 
         var id = S.guid('ks-tmp-');
         html += '<span id="' + id + '"></span>';
-
+        //see S.globalEval(text);
+        //if text contains html() then will reset public shared RE_SCRIPT
+        //so dupliacate our own
+        var RE_SCRIPT_INNER = new RegExp(RE_SCRIPT);
         // 确保脚本执行时，相关联的 DOM 元素已经准备好
         S.available(id, function() {
             var hd = S.get('head'),
                 match, attrs, srcMatch, charsetMatch,
                 t, s, text;
-
-            RE_SCRIPT.lastIndex = 0;
-            while ((match = RE_SCRIPT.exec(html))) {
+            //share between intervals
+            RE_SCRIPT_INNER.lastIndex = 0;
+            while ((match = RE_SCRIPT_INNER.exec(html))) {
                 attrs = match[1];
                 srcMatch = attrs ? attrs.match(RE_SCRIPT_SRC) : false;
 
