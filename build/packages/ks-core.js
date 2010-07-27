@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 26 16:56
+build time: Jul 27 11:10
 */
 /**
  * @module kissy
@@ -925,7 +925,7 @@ KISSY.add('kissy-ua', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 26 16:56
+build time: Jul 27 11:10
 */
 /**
  * @module  dom
@@ -2477,15 +2477,18 @@ KISSY.add('dom-create', function(S, undefined) {
 
         var id = S.guid('ks-tmp-');
         html += '<span id="' + id + '"></span>';
-
+        //see S.globalEval(text);
+        //if text contains html() then will reset public shared RE_SCRIPT
+        //so dupliacate our own
+        var RE_SCRIPT_INNER = new RegExp(RE_SCRIPT);
         // 确保脚本执行时，相关联的 DOM 元素已经准备好
         S.available(id, function() {
             var hd = S.get('head'),
                 match, attrs, srcMatch, charsetMatch,
                 t, s, text;
-
-            RE_SCRIPT.lastIndex = 0;
-            while ((match = RE_SCRIPT.exec(html))) {
+            //share between intervals
+            RE_SCRIPT_INNER.lastIndex = 0;
+            while ((match = RE_SCRIPT_INNER.exec(html))) {
                 attrs = match[1];
                 srcMatch = attrs ? attrs.match(RE_SCRIPT_SRC) : false;
 
@@ -2647,7 +2650,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 26 16:56
+build time: Jul 27 11:10
 */
 /**
  * @module  event
@@ -3228,7 +3231,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 26 16:56
+build time: Jul 27 11:10
 */
 /**
  * @module  node
@@ -3536,7 +3539,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Jul 27 11:10
 */
 /**
  * @module  ajax

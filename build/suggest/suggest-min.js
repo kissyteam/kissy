@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Jul 27 11:10
 */
 KISSY.add("suggest",function(e,m){function h(a,b,c){if(!(this instanceof h))return new h(a,b,c);this.textInput=e.get(a);this.dataSource=b;this.JSONDataSource=e.isPlainObject(b)?b:null;this.returnedData=null;this.config=e.merge(o,c||{});this.container=null;this.queryParams=this.query="";this._timer=null;this._isRunning=false;this.dataScript=null;this._dataCache={};this._latestScriptTime="";this._onKeyboardSelecting=this._scriptDataIsOut=false;this.selectedItem=null;this._init()}var g=e.DOM,i=e.Event,
 k=window,d=document,n=d.getElementsByTagName("head")[0],l=e.UA.ie,o={containerCls:"",containerWidth:"",resultFormat:"\u7ea6%result%\u6761\u7ed3\u679c",showCloseBtn:false,closeBtnText:"\u5173\u95ed",useShim:l===6,timerDelay:200,autoFocus:false,submitFormOnClickSelect:true};e.augment(h,e.EventTarget,{_init:function(){this._initTextInput();this._initContainer();this.config.useShim&&this._initShim();this._initStyle();this._initResizeEvent()},_initTextInput:function(){var a=this;a.textInput.setAttribute("autocomplete",
