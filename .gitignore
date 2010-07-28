@@ -6,3 +6,5 @@
 *.bak
 .DS_Store
 Thumb.db
+.project
+.*proj
