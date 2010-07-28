@@ -157,7 +157,7 @@ KISSY.add('dom-create', function(S, undefined) {
             return;
         }
 
-        var id = S.guid('ks-tmp-');
+        var id = S.guid('ks-tmp-'),myLastIndex = 0;
         html += '<span id="' + id + '"></span>';
 
         // 确保脚本执行时，相关联的 DOM 元素已经准备好
@@ -170,7 +170,7 @@ KISSY.add('dom-create', function(S, undefined) {
             while ((match = RE_SCRIPT.exec(html))) {
                 attrs = match[1];
                 srcMatch = attrs ? attrs.match(RE_SCRIPT_SRC) : false;
-
+                myLastIndex = RE_SCRIPT.lastIndex;
                 // script via src
                 if (srcMatch && srcMatch[2]) {
                     s = doc.createElement('script');
@@ -184,9 +184,11 @@ KISSY.add('dom-create', function(S, undefined) {
                 }
                 // inline script
                 else if ((text = match[2]) && text.length > 0) {
+
                     S.globalEval(text);
 
                 }
+                RE_SCRIPT.lastIndex = myLastIndex;
             }
 
             // 删除探测节点
