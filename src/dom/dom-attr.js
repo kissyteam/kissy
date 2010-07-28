@@ -11,6 +11,9 @@ KISSY.add('dom-attr', function(S, undefined) {
         doc = document,
         docElement = doc.documentElement,
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
+        SELECT = 'select',
+        EMPTY = '',
+        CHECKED = 'checked',
 
         DOM = S.DOM,
         isElementNode = DOM._isElementNode,
@@ -98,8 +101,12 @@ KISSY.add('dom-attr', function(S, undefined) {
                     el.style.cssText = val;
                 }
                 else {
+                    // checked 属性值，需要通过直接设置才能生效
+                    if(name === CHECKED) {
+                        el[name] = !!val;
+                    }
                     // convert the value to a string (all browsers do this but IE)
-                    el.setAttribute(name, '' + val);
+                    el.setAttribute(name, EMPTY + val);
                 }
             });
         },
@@ -110,7 +117,8 @@ KISSY.add('dom-attr', function(S, undefined) {
         removeAttr: function(selector, name) {
             S.each(S.query(selector), function(el) {
                 if (isElementNode(el)) {
-                    el.removeAttribute(name);
+                    DOM.attr(el, name, EMPTY); // 先置空
+                    el.removeAttribute(name); // 再移除
                 }
             });
         },
@@ -137,7 +145,7 @@ KISSY.add('dom-attr', function(S, undefined) {
                 }
 
                 // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
-                if (nodeNameIs('select', el)) {
+                if (nodeNameIs(SELECT, el)) {
                     var index = el.selectedIndex,
                         options = el.options;
 
@@ -165,15 +173,15 @@ KISSY.add('dom-attr', function(S, undefined) {
                 }
 
                 // 普通元素的 value, 归一化掉 \r
-                return (el.value || '').replace(RE_RETURN, '');
+                return (el.value || EMPTY).replace(RE_RETURN, EMPTY);
             }
 
             // setter
             S.each(S.query(selector), function(el) {
-                if (nodeNameIs('select', el)) {
+                if (nodeNameIs(SELECT, el)) {
                     // 强制转换数值为字符串，以保证下面的 inArray 正常工作
                     if (S.isNumber(value)) {
-                        value += '';
+                        value += EMPTY;
                     }
 
                     var vals = S.makeArray(value),
@@ -206,7 +214,7 @@ KISSY.add('dom-attr', function(S, undefined) {
 
                 // only gets value on supported nodes
                 if (isElementNode(el)) {
-                    return el[TEXT] || '';
+                    return el[TEXT] || EMPTY;
                 }
                 else if (isTextNode(el)) {
                     return el.nodeValue;

@@ -57,6 +57,9 @@
         <option selected>2</option>
         <option>3</option>
     </select>
+    <br />
+    <br />
+    <input type="checkbox" id="test-20100728-checkbox" />test checked
 </div>
 
 <!-- Test Cases -->
@@ -91,14 +94,14 @@
 
         //////////////////////
         // 对于 mapping 属性：
-        //  1. readonly, checked 等属性只能通过 el[name] 才能正确获取
+        //  1. readonly, checked, selected 属性只能通过 el[name] 才能正确获取
         //  2. 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
         //alert(input.readonly);
         //alert(input.readOnly); // true, 这是预期值，其它方式都有兼容性问题
         //alert(input.getAttribute('readonly'));
         //alert(input.getAttribute('readOnly'));
-        if (DOM.attr(input, 'readonly') !== true) test.fail();
-        if (DOM.attr(a, 'readonly') !== undefined) test.fail();
+        if (DOM.attr(input, 'readonly') !== true) test.fail(DOM.attr(input, 'readonly'));
+        //if (DOM.attr(a, 'readonly') !== undefined) test.fail();
         if (DOM.attr(radio, 'checked') !== false) test.fail();
         if (DOM.attr(input, 'value') !== 'hello') test.fail();
         //alert(a.getAttribute('style'));
@@ -151,12 +154,24 @@
         DOM.attr(undefined,'name');
         DOM.attr(undefined,'name', '');
 
+
         ///////////////////
         // batch 测试：
         if(DOM.attr('input', 'id') !== 'hidepasses') test.fail();
         DOM.attr('#test-data div', 'data-test', 'test');
         if(DOM.attr('#test-data div', 'data-test') !== 'test') test.fail();
         DOM.attr([td], 'style', 'background: #eee; padding: 10px');
+
+
+        ////////////////////
+        // 测试 checked 的 setter
+        var checkbox2 = S.get('#test-20100728-checkbox');
+        checkbox2.checked = false;
+
+        DOM.attr(checkbox2, 'checked', true);
+        if(DOM.attr(checkbox2, 'checked') !== true) test.fail('attr checked');
+        DOM.removeAttr(checkbox2, 'checked');
+        if(DOM.attr(checkbox2, 'checked') !== false) test.fail('removeAttr checked');
     }
 
     function test_removeAttr(test) {
