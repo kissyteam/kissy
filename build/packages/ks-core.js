@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.0pre
 MIT Licensed
-build time: Jul 27 11:10
+build time: ${build.time}
 */
 /**
  * @module kissy
@@ -64,7 +64,7 @@ build time: Jul 27 11:10
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.0',
+        version: '1.1.0pre',
 
         /**
          * Initializes KISSY object.
@@ -923,9 +923,9 @@ KISSY.add('kissy-ua', function(S) {
  * 
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.0pre
 MIT Licensed
-build time: Jul 27 12:58
+build time: ${build.time}
 */
 /**
  * @module  dom
@@ -1011,7 +1011,7 @@ KISSY.add('selector', function(S, undefined) {
 
             // selector 为 #id 是最常见的情况，特殊优化处理
             if (REG_ID.test(selector)) {
-                t = getElementById(selector.slice(1));
+                t = getElementById(selector.slice(1), context);
                 if (t) ret = [t]; // #id 无效时，返回空数组
             }
             // selector 为支持列表中的其它 6 种
@@ -1021,8 +1021,7 @@ KISSY.add('selector', function(S, undefined) {
                 tag = match[2];
                 cls = match[3];
 
-                if ((context = id ? getElementById(id) : context)) {
-
+                if ((context = id ? getElementById(id, context) : context)) {
                     // #id .cls | #id tag.cls | .cls | tag.cls
                     if (cls) {
                         if (!id || selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
@@ -1030,7 +1029,7 @@ KISSY.add('selector', function(S, undefined) {
                         }
                         // 处理 #id.cls
                         else {
-                            t = getElementById(id);
+                            t = getElementById(id, context);
                             if(t && DOM.hasClass(t, cls)) {
                                 ret = [t];
                             }
@@ -1038,7 +1037,7 @@ KISSY.add('selector', function(S, undefined) {
                     }
                     // #id tag | tag
                     else if (tag) { // 排除空白字符串
-                        ret = getElementsByTagName(context, tag);
+                        ret = getElementsByTagName(tag, context);
                     }
                 }
             }
@@ -1093,13 +1092,13 @@ KISSY.add('selector', function(S, undefined) {
     }
 
     // query #id
-    function getElementById(id) {
-        return doc.getElementById(id);
+    function getElementById(id, context) {
+        return context.getElementById(id);
     }
 
     // query tag
-    function getElementsByTagName(el, tag) {
-        return el.getElementsByTagName(tag);
+    function getElementsByTagName(tag, context) {
+        return context.getElementsByTagName(tag);
     }
     (function() {
         // Check to see if the browser returns only elements
@@ -1111,8 +1110,8 @@ KISSY.add('selector', function(S, undefined) {
 
         // Make sure no comments are found
         if (div.getElementsByTagName(ANY).length > 0) {
-            getElementsByTagName = function(el, tag) {
-                var ret = el.getElementsByTagName(tag);
+            getElementsByTagName = function(tag, context) {
+                var ret = context.getElementsByTagName(tag);
 
                 if (tag === ANY) {
                     var t = [], i = 0, j = 0, node;
@@ -1432,6 +1431,9 @@ KISSY.add('dom-attr', function(S, undefined) {
         doc = document,
         docElement = doc.documentElement,
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
+        SELECT = 'select',
+        EMPTY = '',
+        CHECKED = 'checked',
 
         DOM = S.DOM,
         isElementNode = DOM._isElementNode,
@@ -1519,8 +1521,12 @@ KISSY.add('dom-attr', function(S, undefined) {
                     el.style.cssText = val;
                 }
                 else {
+                    // checked 属性值，需要通过直接设置才能生效
+                    if(name === CHECKED) {
+                        el[name] = !!val;
+                    }
                     // convert the value to a string (all browsers do this but IE)
-                    el.setAttribute(name, '' + val);
+                    el.setAttribute(name, EMPTY + val);
                 }
             });
         },
@@ -1531,7 +1537,8 @@ KISSY.add('dom-attr', function(S, undefined) {
         removeAttr: function(selector, name) {
             S.each(S.query(selector), function(el) {
                 if (isElementNode(el)) {
-                    el.removeAttribute(name);
+                    DOM.attr(el, name, EMPTY); // 先置空
+                    el.removeAttribute(name); // 再移除
                 }
             });
         },
@@ -1558,7 +1565,7 @@ KISSY.add('dom-attr', function(S, undefined) {
                 }
 
                 // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
-                if (nodeNameIs('select', el)) {
+                if (nodeNameIs(SELECT, el)) {
                     var index = el.selectedIndex,
                         options = el.options;
 
@@ -1586,15 +1593,15 @@ KISSY.add('dom-attr', function(S, undefined) {
                 }
 
                 // 普通元素的 value, 归一化掉 \r
-                return (el.value || '').replace(RE_RETURN, '');
+                return (el.value || EMPTY).replace(RE_RETURN, EMPTY);
             }
 
             // setter
             S.each(S.query(selector), function(el) {
-                if (nodeNameIs('select', el)) {
+                if (nodeNameIs(SELECT, el)) {
                     // 强制转换数值为字符串，以保证下面的 inArray 正常工作
                     if (S.isNumber(value)) {
-                        value += '';
+                        value += EMPTY;
                     }
 
                     var vals = S.makeArray(value),
@@ -1627,7 +1634,7 @@ KISSY.add('dom-attr', function(S, undefined) {
 
                 // only gets value on supported nodes
                 if (isElementNode(el)) {
-                    return el[TEXT] || '';
+                    return el[TEXT] || EMPTY;
                 }
                 else if (isTextNode(el)) {
                     return el.nodeValue;
@@ -2475,7 +2482,9 @@ KISSY.add('dom-create', function(S, undefined) {
             return;
         }
 
-        var id = S.guid('ks-tmp-');
+        var id = S.guid('ks-tmp-'),
+            re_script = new RegExp(RE_SCRIPT); // 防止
+
         html += '<span id="' + id + '"></span>';
 
         // 确保脚本执行时，相关联的 DOM 元素已经准备好
@@ -2484,11 +2493,10 @@ KISSY.add('dom-create', function(S, undefined) {
                 match, attrs, srcMatch, charsetMatch,
                 t, s, text;
 
-            RE_SCRIPT.lastIndex = 0;
-            while ((match = RE_SCRIPT.exec(html))) {
+            re_script.lastIndex = 0;
+            while ((match = re_script.exec(html))) {
                 attrs = match[1];
                 srcMatch = attrs ? attrs.match(RE_SCRIPT_SRC) : false;
-
                 // script via src
                 if (srcMatch && srcMatch[2]) {
                     s = doc.createElement('script');
@@ -2503,7 +2511,6 @@ KISSY.add('dom-create', function(S, undefined) {
                 // inline script
                 else if ((text = match[2]) && text.length > 0) {
                     S.globalEval(text);
-
                 }
             }
 
@@ -2519,7 +2526,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 直接通过 innerHTML 设置 html
     function setHTMLSimple(elem, html) {
-        html = html.replace(/<script([^>]*)>([\s\S]*?)<\/script>/ig, ''); // 过滤掉所有 script
+        html = html.replace(RE_SCRIPT, ''); // 过滤掉所有 script
         try {
             elem.innerHTML = html;
         } catch(ex) { // table.innerHTML = html will throw error in ie.
@@ -2645,9 +2652,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.0pre
 MIT Licensed
-build time: Jul 27 11:10
+build time: ${build.time}
 */
 /**
  * @module  event
@@ -3226,9 +3233,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.0pre
 MIT Licensed
-build time: Jul 27 11:10
+build time: ${build.time}
 */
 /**
  * @module  node
@@ -3251,7 +3258,8 @@ KISSY.add('node', function(S) {
 
         // handle Node(''), Node(null), or Node(undefined)
         if (!html) {
-            return null;
+            self.length = 0;
+            return;
         }
 
         // handle supported node
@@ -3286,7 +3294,8 @@ KISSY.add('node', function(S) {
 
     // query api
     S.one = function(selector, context) {
-        return new Node(S.get(selector, context));
+        var elem = S.get(selector, context);
+        return elem ? new Node(elem) : null;
     };
 
     S.Node = Node;
@@ -3534,9 +3543,9 @@ KISSY.add('node-attach', function(S, undefined) {
     });
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.0pre
 MIT Licensed
-build time: Jul 27 11:10
+build time: ${build.time}
 */
 /**
  * @module  ajax

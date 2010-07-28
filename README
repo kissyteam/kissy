@@ -35,7 +35,3 @@ Yeah!
  - class/id 命名：  ks-comp-xxx        比如： ks-editor-toolbar-item
  - data 属性命名：  data-ks-comp-xxx   比如： data-ks-lazyload-src
 
-==============
-   其   它
-==============
-小版本规律：奇数开发，偶数发布

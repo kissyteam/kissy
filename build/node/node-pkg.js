@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.0pre
 MIT Licensed
-build time: Jul 27 11:10
+build time: ${build.time}
 */
 /**
  * @module  node
@@ -24,7 +24,8 @@ KISSY.add('node', function(S) {
 
         // handle Node(''), Node(null), or Node(undefined)
         if (!html) {
-            return null;
+            self.length = 0;
+            return;
         }
 
         // handle supported node
@@ -59,7 +60,8 @@ KISSY.add('node', function(S) {
 
     // query api
     S.one = function(selector, context) {
-        return new Node(S.get(selector, context));
+        var elem = S.get(selector, context);
+        return elem ? new Node(elem) : null;
     };
 
     S.Node = Node;

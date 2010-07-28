@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.0pre
 MIT Licensed
-build time: Jul 27 11:10
+build time: ${build.time}
 */
 /**
  * @module kissy
@@ -64,7 +64,7 @@ build time: Jul 27 11:10
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.0',
+        version: '1.1.0pre',
 
         /**
          * Initializes KISSY object.
