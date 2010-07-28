@@ -39,6 +39,15 @@
         el = S.get('#test-create2');
         if(!el) test.fail();
         if(S.DOM.text(el) !== 'create2') test.fail();
+
+        // 对于不存在的 selector, S.one 返回 null
+        if(S.one('#zzzzzzzz') !== null) test.fail();
+        if(S.one('zzzzzzzz') !== null) test.fail();
+
+        // Node(''), Node(null), or Node(undefined), Node 的 length 需要为 0
+        if(S.Node('').length !== 0) test.fail();
+        if(S.Node(null).length !== 0) test.fail();
+        if(S.Node(undefined).length !== 0) test.fail();
     }
 
     function test_query_class_sep(test) {
@@ -204,7 +213,7 @@
         if (t !== ret) test.fail(t);
 
         // setter
-        S.one('#inner').offset({ top: 600, left: 200 });
+        //S.one('#inner').offset({ top: 600, left: 200 });
     }
 
     function test_query_traversal_sep(test) {

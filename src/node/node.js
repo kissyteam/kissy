@@ -19,7 +19,8 @@ KISSY.add('node', function(S) {
 
         // handle Node(''), Node(null), or Node(undefined)
         if (!html) {
-            return null;
+            self.length = 0;
+            return;
         }
 
         // handle supported node
@@ -54,7 +55,8 @@ KISSY.add('node', function(S) {
 
     // query api
     S.one = function(selector, context) {
-        return new Node(S.get(selector, context));
+        var elem = S.get(selector, context);
+        return elem ? new Node(elem) : null;
     };
 
     S.Node = Node;
