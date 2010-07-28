@@ -41,7 +41,7 @@ KISSY.add('selector', function(S, undefined) {
 
             // selector 为 #id 是最常见的情况，特殊优化处理
             if (REG_ID.test(selector)) {
-                t = getElementById(selector.slice(1),context);
+                t = getElementById(selector.slice(1), context);
                 if (t) ret = [t]; // #id 无效时，返回空数组
             }
             // selector 为支持列表中的其它 6 种
@@ -51,8 +51,7 @@ KISSY.add('selector', function(S, undefined) {
                 tag = match[2];
                 cls = match[3];
 
-                if ((context = id ? getElementById(id,context) : context)) {
-
+                if ((context = id ? getElementById(id, context) : context)) {
                     // #id .cls | #id tag.cls | .cls | tag.cls
                     if (cls) {
                         if (!id || selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
@@ -60,7 +59,7 @@ KISSY.add('selector', function(S, undefined) {
                         }
                         // 处理 #id.cls
                         else {
-                            t = getElementById(id,context);
+                            t = getElementById(id, context);
                             if(t && DOM.hasClass(t, cls)) {
                                 ret = [t];
                             }
@@ -68,7 +67,7 @@ KISSY.add('selector', function(S, undefined) {
                     }
                     // #id tag | tag
                     else if (tag) { // 排除空白字符串
-                        ret = getElementsByTagName(context, tag);
+                        ret = getElementsByTagName(tag, context);
                     }
                 }
             }
@@ -123,13 +122,13 @@ KISSY.add('selector', function(S, undefined) {
     }
 
     // query #id
-    function getElementById(id,context) {
+    function getElementById(id, context) {
         return context.getElementById(id);
     }
 
     // query tag
-    function getElementsByTagName(el, tag) {
-        return el.getElementsByTagName(tag);
+    function getElementsByTagName(tag, context) {
+        return context.getElementsByTagName(tag);
     }
     (function() {
         // Check to see if the browser returns only elements
@@ -141,8 +140,8 @@ KISSY.add('selector', function(S, undefined) {
 
         // Make sure no comments are found
         if (div.getElementsByTagName(ANY).length > 0) {
-            getElementsByTagName = function(el, tag) {
-                var ret = el.getElementsByTagName(tag);
+            getElementsByTagName = function(tag, context) {
+                var ret = context.getElementsByTagName(tag);
 
                 if (tag === ANY) {
                     var t = [], i = 0, j = 0, node;

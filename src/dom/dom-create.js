@@ -157,7 +157,9 @@ KISSY.add('dom-create', function(S, undefined) {
             return;
         }
 
-        var id = S.guid('ks-tmp-'),myLastIndex = 0;
+        var id = S.guid('ks-tmp-'),
+            re_script = new RegExp(RE_SCRIPT); // 防止
+
         html += '<span id="' + id + '"></span>';
 
         // 确保脚本执行时，相关联的 DOM 元素已经准备好
@@ -166,11 +168,10 @@ KISSY.add('dom-create', function(S, undefined) {
                 match, attrs, srcMatch, charsetMatch,
                 t, s, text;
 
-            RE_SCRIPT.lastIndex = 0;
-            while ((match = RE_SCRIPT.exec(html))) {
+            re_script.lastIndex = 0;
+            while ((match = re_script.exec(html))) {
                 attrs = match[1];
                 srcMatch = attrs ? attrs.match(RE_SCRIPT_SRC) : false;
-                myLastIndex = RE_SCRIPT.lastIndex;
                 // script via src
                 if (srcMatch && srcMatch[2]) {
                     s = doc.createElement('script');
@@ -184,11 +185,8 @@ KISSY.add('dom-create', function(S, undefined) {
                 }
                 // inline script
                 else if ((text = match[2]) && text.length > 0) {
-
                     S.globalEval(text);
-
                 }
-                RE_SCRIPT.lastIndex = myLastIndex;
             }
 
             // 删除探测节点
@@ -203,7 +201,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 直接通过 innerHTML 设置 html
     function setHTMLSimple(elem, html) {
-        html = html.replace(/<script([^>]*)>([\s\S]*?)<\/script>/ig, ''); // 过滤掉所有 script
+        html = html.replace(RE_SCRIPT, ''); // 过滤掉所有 script
         try {
             elem.innerHTML = html;
         } catch(ex) { // table.innerHTML = html will throw error in ie.
