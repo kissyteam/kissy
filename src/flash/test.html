@@ -9,22 +9,188 @@
 <script>KISSY.Test.Config.times = 1;</script>
 
 <h2>Test Data</h2>
+<div>
+	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="200" height="150" id="myFlashContent">
+		<param name="movie" value="assets/test.swf" />
+		<!--[if !IE]>-->
+		<object type="application/x-shockwave-flash" data="assets/test.swf" width="200" height="150">
+		<!--<![endif]-->
+			<a href="http://www.adobe.com/go/getflashplayer">
+				<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
+			</a>
+		<!--[if !IE]>-->
+		</object>
+		<!--<![endif]-->
+	</object>
+	<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="200" height="150" id="myFlashContent2">
+		<param name="movie" value="assets/test.swf" />
+		<!--[if !IE]>-->
+		<object type="application/x-shockwave-flash" data="assets/test.swf" width="200" height="150">
+		<!--<![endif]-->
+			<a href="http://www.adobe.com/go/getflashplayer">
+				<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
+			</a>
+		<!--[if !IE]>-->
+		</object>
+		<!--<![endif]-->
+	</object>
+</div>
+<div id="test-flash3"></div>
+<div id="test-flash4"></div>
 
 <script src="../../build/packages/ks-core.js"></script>
+<script src="../../build/json/json.js"></script>
 
-<script src="flash-ua.js"></script>
 <script src="flash.js"></script>
+<script src="flash-ua.js"></script>
+<script src="flash-embed.js"></script>
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY, UA = S.UA;
+    var S = KISSY, UA = S.UA, F = S.Flash;
 
     function test_ua(test) {
-        if (UA.fpv() === null) test.fail();
-        if(typeof UA.fpv()[0] !== 'string') test.fail();
 
-        test.extraMsg = 'S.UA.fpv = ' + S.UA.fpv();
+        if(UA.fpv() === undefined) test.fail();
+        if(!UA.fpvGEQ()) test.fail();
+        if(!UA.fpvGEQ('9.1')) test.fail();
+        if(!UA.fpvGEQ('9.9.1')) test.fail();
+        if(UA.fpvGEQ('18')) test.fail();
+
+        test.extraMsg = '当插件安装不正常时，该测试用例需要 FAILED';
+        test.echo('UA.fpv = ' + UA.fpv());
     }
+
+    function test_add_register(test) {
+
+        F.add('#myFlashContent', { version: '99' }, function(data) {
+            if(data.status !== 0) test.fail();
+            if(F.len() > 0) test.fail();
+        });
+
+         F.add('#myFlashContent2', { version: '9' }, function(data) {
+            if(data.status !== 1) test.fail(data.status);
+            if(F.len() !== 1) test.fail(F.len());
+        });
+    }
+
+    function test_len(test) {
+        if(F.len() !== 1) test.fail(F.len());
+    }
+
+    function test_add_embed(test) {
+        // target 不存在
+        F.add('#non-exist', null, function(data) {
+            if(data.status !== -2) test.fail();
+        });
+
+        // 无 src
+        F.add('#test-flash3', null, function(data) {
+            if(data.status !== -3) test.fail();
+        });
+
+        // 动态添加
+        F.add('#test-flash3', {
+            src: 'assets/test.swf',
+            version: 9,
+            attrs: {
+                width: 200,
+                height: 150
+            },
+            params: {
+                flashvars: {a: {c: 'http://taobao.com/?x=1&z=2'}, b: 2}
+                // a='{"c":"http://taobao.com/?x=1%26z=2"}&b=2'
+                // 字符串，encodeURIComponent
+            }
+        }, function(data) {
+            if (data.status !== 1) test.fail();
+        });
+
+        // 快速安装
+        F.add('#test-flash4', {
+            src: 'assets/test.swf',
+            xi: 'express-install/expressInstall.swf',
+            version: 12.2,
+            params: {
+                flashvars: 'a=1&b=2'
+            }
+        }, function(data) {
+            if (data.status !== 1) test.fail(data.status);
+        });
+    }
+
+    function test_get(test) {
+        if(F.get('#myFlashContent2').nodeName !== 'OBJECT') test.fail();
+    }
+
+    function test_contains(test) {
+        if(!F.contains('#myFlashContent2')) test.fail();
+        if(F.contains('#test-xxxxx')) test.fail();
+    }
+
+    function test_remove(test) {
+        F.remove('#test-flash4');
+        if(F.contains('#test-flash4')) test.fail();
+    }
+
+    // test flashvars
+    S.log(asString({a:{x:1, z: 'c=z&d=3'}, b: 'http://a.tbcdn.cn/?d=x&e=2'}));
+    S.log(stringify({a:{x:1, z: 'c=z&d=3'}, b: 'http://a.tbcdn.cn/?d=x&e=2'}));
+    S.log(asString([1, 2, { a: function() {}, b: null, c: {} }]));
+    S.log(stringify([1, 2, { a: function() {}, b: null , c: {} }]));
+    S.log(asString('a=1&b=2&c[]="a"&c[]="b"'));
+    S.log(stringify('a=1&b=2&c[]="a"&c[]="b"'));
+
+    // 利用 JSON.stringify
+    function stringify(o) {
+        var ret = '';
+        if (S.isString(o)) ret = encodeURIComponent(o);
+        else {
+            var str = S.JSON.stringify(o);
+            // str 为 {"a":{"x":1,"z":"c=z&d=3"},"b":"http://a.tbcdn.cn/?d=x&ff"}
+            // 还需要将字符串值 encodeURIComponent
+            ret = str.replace(/:"([^"]+)/g, function(m, val) {
+                return ':"' + encodeURIComponent(val);
+            })
+        }
+        return ret;
+    }
+
+    // 龙藏原版
+	function asString(obj){
+		var a = [];
+		switch (typeOf(obj)){
+			case 'string':
+				obj = obj.replace(new RegExp('(["\\\\])', 'g'), '\\$1');
+
+				return  '"' +encodeURIComponent(obj)+ '"';   //// 对值进行进一步过滤。
+
+			case 'array':
+				S.each(obj, function(el) {
+					a.push(asString(el));
+				});
+				return '['+ a.join(',') +']';
+			case 'function':
+				return '"function()"';
+			case 'object':
+				var str = [];
+				for (var prop in obj) {
+					if (obj.hasOwnProperty(prop)) {
+						str.push('"'+prop+'":'+ asString(obj[prop]));
+					}
+				}
+				return '{'+str.join(',')+'}';
+		}
+
+		// replace ' --> "  and remove spaces
+		return String(obj).replace(/\s/g, " ").replace(/\'/g, "\"");
+	}
+	function typeOf(obj) {
+		if (obj === null || obj === undefined) { return false; }
+		var type = typeof obj;
+		return (type == 'object' && obj.push) ? 'array' : type;
+	}
+
 
 </script>
 </body>

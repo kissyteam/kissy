@@ -1462,8 +1462,15 @@ KISSY.add('dom-attr', function(S, undefined) {
          * Sets an attribute for the set of matched elements.
          */
         attr: function(selector, name, val) {
-            if (!(name = S.trim(name))) return;
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.attr(selector, k, name[k]);
+                }
+                return;
+            }
 
+            if (!(name = S.trim(name))) return;
             name = name.toLowerCase();
             name = CUSTOM_ATTRS[name] || name;
 
@@ -2429,10 +2436,8 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 添加成员到元素中
     function attachProps(elem, props) {
-        if (isElementNode(elem) && props) {
-            for (var p in props) {
-                DOM.attr(elem, p, props[p]);
-            }
+        if (isElementNode(elem) && S.isPlainObject(props)) {
+            DOM.attr(elem, props);
         }
         return elem;
     }

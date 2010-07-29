@@ -7,15 +7,9 @@ KISSY.add('flash', function(S){
 	
 	S.Flash = {
 		/**
-		 * flash 实例 map, key 为 id
+		 * flash 实例 map { '#id': elem, ... }
          * @static
 		 */
-		swfs: {},
-
-		/**
-		 * 按序存储 flash id
-         * @static
-		 */
-		names: []
+		swfs: { length: 0 }
 	};
 });
