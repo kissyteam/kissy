@@ -104,10 +104,8 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 添加成员到元素中
     function attachProps(elem, props) {
-        if (isElementNode(elem) && props) {
-            for (var p in props) {
-                DOM.attr(elem, p, props[p]);
-            }
+        if (isElementNode(elem) && S.isPlainObject(props)) {
+            DOM.attr(elem, props);
         }
         return elem;
     }

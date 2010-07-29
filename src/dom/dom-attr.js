@@ -42,8 +42,15 @@ KISSY.add('dom-attr', function(S, undefined) {
          * Sets an attribute for the set of matched elements.
          */
         attr: function(selector, name, val) {
-            if (!(name = S.trim(name))) return;
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.attr(selector, k, name[k]);
+                }
+                return;
+            }
 
+            if (!(name = S.trim(name))) return;
             name = name.toLowerCase();
             name = CUSTOM_ATTRS[name] || name;
 
