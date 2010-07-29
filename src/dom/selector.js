@@ -110,7 +110,7 @@ KISSY.add('selector', function(S, undefined) {
         }
         // 2). context 的第二使用场景是传入 #id
         else if (S.isString(context) && REG_ID.test(context)) {
-            context = getElementById(context.slice(1));
+            context = getElementById(context.slice(1), doc);
             // 注：#id 可能无效，这时获取的 context 为 null
         }
         // 3). context 还可以传入 HTMLElement, 此时无需处理
@@ -123,6 +123,9 @@ KISSY.add('selector', function(S, undefined) {
 
     // query #id
     function getElementById(id, context) {
+        if(context.nodeType !== 9) {
+            context = context.ownerDocument;
+        }
         return context.getElementById(id);
     }
 

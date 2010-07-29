@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Flash Test</title>
+</head>
+<body>
+<script src="../test/test.js"></script>
+<script>KISSY.Test.Config.times = 1;</script>
+
+<h2>Test Data</h2>
+
+<script src="../../build/packages/ks-core.js"></script>
+
+<script src="flash-ua.js"></script>
+<script src="flash.js"></script>
+
+<!-- Test Cases -->
+<script>
+    var S = KISSY, UA = S.UA;
+
+    function test_ua(test) {
+        if (UA.fpv() === null) test.fail();
+        if(typeof UA.fpv()[0] !== 'string') test.fail();
+
+        test.extraMsg = 'S.UA.fpv = ' + S.UA.fpv();
+    }
+
+</script>
+</body>
+</html>
