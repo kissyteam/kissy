@@ -1,6 +1,6 @@
 /**
  * @module  ajax
- * @author  lifesinger@gmail.com lijing00333@163.com
+ * @author  拔赤<lijing00333@163.com>
  */
 KISSY.add('ajax', function(S) {
 
@@ -21,7 +21,7 @@ KISSY.add('ajax', function(S) {
             };
         } : function(node, callback) {
             node.onload = callback;
-        };
+        },
 
 	
 	//通讯序列号
@@ -45,7 +45,7 @@ KISSY.add('ajax', function(S) {
 
 	/**
 	 * S.Ajax.io(options) 基础方法,派生出S.Ajax.get,S.Ajax.post,
-	 * @param options 
+	 * @param o
 	 			type:get,GET,post,POST
 				url:
 				data:a=1&b=2
@@ -63,7 +63,7 @@ KISSY.add('ajax', function(S) {
 	S.Ajax.io = function(o){
 
 		//默认设置
-		_ajaxSettings = {
+		var _ajaxSettings = {
 
 			url: location.href,
 			global: true,
@@ -100,7 +100,7 @@ KISSY.add('ajax', function(S) {
 
 		S.mix(s,o);
 
-		var jsonp, status, data,
+		var jsonp, status,
 			jsre = /=\?(&|$)/,
 			rquery = /\?/,
 			type = s.type.toUpperCase();
@@ -191,7 +191,7 @@ KISSY.add('ajax', function(S) {
 		} catch(e) {}
 
 		// Wait for a response to come back
-		var onreadystatechange = xhr.onreadystatechange = function( isTimeout ) {
+		xhr.onreadystatechange = function( isTimeout ) {
 			//请求中止 
 			if ( !xhr || xhr.readyState === 0 || isTimeout === "abort" ) {
 				// Opera doesn't call onreadystatechange before this point
