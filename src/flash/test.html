@@ -120,10 +120,12 @@
     }
 
     function test_get(test) {
-        if(F.get('#myFlashContent2').nodeName !== 'OBJECT') test.fail();
+        if(!S.UA.safari) if((F.get('#myFlashContent2') || 0).nodeName !== 'OBJECT') test.fail();
     }
 
     function test_contains(test) {
+        if(S.UA.safari) return;
+        
         if(!F.contains('#myFlashContent2')) test.fail();
         if(F.contains('#test-xxxxx')) test.fail();
     }
