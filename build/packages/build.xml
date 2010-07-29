@@ -24,17 +24,17 @@
             <path path="../node/node-pkg.js"/>
             <path path="../ajax/ajax.js"/>
             <!--<path path="../loader/loader.js"/>-->
+            <path path="../anim/anim-pkg.js"/>
+            <path path="../cookie/cookie.js"/>
         </concat>
         <!-- ks-more: 常用 utils 和 widgets, 一般在页尾引入 -->
         <concat destfile="ks-more.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../cookie/cookie.js"/>
             <path path="../json/json.js"/>
             <path path="../sizzle/sizzle.js"/>
-            <path path="../anim/anim.js"/>
             <path path="../datalazyload/datalazyload.js"/>
             <path path="../switchable/switchable-pkg.js"/>
-            <!--<path path="../suggest/suggest.js"/>-->
-            <!--<path path="../swf/swf-pkg.js"/>-->
+            <path path="../suggest/suggest.js"/>
+            <path path="../flash/flash-pkg.js"/>
         </concat>
         <!-- kissy: 包含 core 和 more 两部分，在页头无 ks-core 时使用 -->
         <concat destfile="kissy.js" encoding="${charset}" outputencoding="${charset}">
