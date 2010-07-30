@@ -136,7 +136,7 @@ KISSY.add('flash', function(S){
 });
 /**
  * @module   将 swf 嵌入到页面中
- * @author   kingfo<oicuicu@gmail.com>
+ * @author   kingfo<oicuicu@gmail.com>, 射雕<lifesinger@gmail.com>
  * @depends  ks-core + json
  */
 KISSY.add('flash-embed', function(S) {
@@ -183,8 +183,8 @@ KISSY.add('flash-embed', function(S) {
             //src: '',       // swf 路径
             params: { },     // Flash Player 的配置参数
             attrs: {         // swf 对应 DOM 元素的属性
-                width: 215,
-                height: 138
+                width: 215,	 // 最小控制面板宽度,小于此数字将无法支持在线快速安装
+                height: 138  // 最小控制面板高度,小于此数字将无法支持在线快速安装
             },
             //xi: '',	     //	快速安装地址。全称 express install  // ? 默认路径
             version: 9       //	要求的 Flash Player 最低版本
@@ -207,6 +207,9 @@ KISSY.add('flash-embed', function(S) {
          */
         add: function(target, config, callback) {
             var self = this, xi, id;
+
+            // 标准化配置信息
+            config = Flash._normalize(config);
 
             // 合并配置信息
             config = S.merge(defaultConifg, config);
@@ -305,7 +308,7 @@ KISSY.add('flash-embed', function(S) {
 
         _embed: function (target, config, callback) {
             var o = Flash._createSWF(config.src, config.attrs, config.params);
-
+			
             if (UA.ie) {
                 // ie 下，通过纯 dom 操作插入的 object 会一直处于加载状态中
                 // 只能通过 innerHTML/outerHTML 嵌入
@@ -353,45 +356,88 @@ KISSY.add('flash-embed', function(S) {
                     name: attrs.id
                 });
             }
-
+			
             // 添加 params
             for (k in params) {
                 if (k in PARAMS) appendParam(o, k, params[k]);
             }
             if (params[FLASHVARS]) {
-                appendParam(o, FLASHVARS, stringify(params[FLASHVARS]));
+                appendParam(o, FLASHVARS,  Flash.toFlashVars(params[FLASHVARS]));
             }
 
             return o;
+        },
+
+        /**
+         * 将对象的 key 全部转为小写
+         * 一般用于配置选项 key 的标准化
+         */
+        _normalize: function(obj) {
+            var key, val, prop, ret = obj;
+
+            if (S.isPlainObject(obj)) {
+                ret = {};
+
+                for (prop in obj) {
+                    key = prop.toLowerCase();
+                    val = obj[prop];
+
+                    // 忽略自定义传参内容标准化
+                    if (key !== FLASHVARS) val = Flash._normalize(val);
+
+                    ret[key] = val;
+                }
+            }
+            return ret;
+        },
+
+        /**
+         * 将普通对象转换为 flashvars
+         * eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b={"x":2,"z":"s%3D1%26c%3D2"}
+         */
+        toFlashVars: function(obj) {
+            if (!S.isPlainObject(obj)) return EMPTY; // 仅支持 PlainOject
+            var prop, data, arr = [];
+
+            for (prop in obj) {
+                data = obj[prop];
+
+                // 字符串，用双引号括起来
+                if (S.isString(data)) {
+                    data = '"' + encode(data) + '"';
+                }
+                // 其它值，用 stringify 转换后，再转义掉字符串值
+                else {
+                    data = (S.JSON.stringify(data));
+                    if (!data) continue; // 忽略掉 undefined, fn 等值
+                    
+                    data = data.replace(/:"([^"]+)/g, function(m, val) {
+                        return ':"' + encode(val);
+                    });
+                }
+
+                arr.push(prop + '=' + data);
+            }
+
+            return arr.join('&');
         }
     });
 
-    function appendParam(o, name, src) {
+    function appendParam(o, name, val) {
         var param = DOM.create('<param>');
-        DOM.attr(param, { name: name, value: src });
+        DOM.attr(param, { name: name, value: val });
         o.appendChild(param);
     }
-
-    // 转换成 AS 能识别的 JSON 数据串
-    function stringify(o) {
-        if (S.isString(o)) return encode(o);
-
-        // stringify => {"a":{"x":1,"z":"c=z&d=3"},"b":"http://a.tbcdn.cn/?d=x&ff"}
-        // 接着还需要将字符串值 encodeURIComponent
-        return S.JSON.stringify(o).replace(/:"([^"]+)/g, function(m, val) {
-            return ':"' + encode(val);
-        });
-    }
-
 });
 
 /**
  * NOTES:
- * 2010/07/21    向 google code 提交了基础代码
- * 2010/07/22    修正了 embed 始终都有 callback 尝试性调用
- *               避免了未定义 el/id 或 swfurl 时无法获知错误
- * 2010/07/27    迁移至 github 做版本管理。向 kissy-sandbox 提交代码
- * 2010/07/28    合并了公开方法 Flash.register 和 Flash.embed 为 Flash.add()
- *               修改 Flash.length() 为 Flash.getLength(), 使其看上去更像方法而非属性方式获取
- * 2010/07/29    重构到 kissy 项目中 by yubo
+ * 2010/07/21   向 google code 提交了基础代码
+ * 2010/07/22   修正了 embed 始终都有 callback 尝试性调用
+ *              避免了未定义 el/id 或 swfurl 时无法获知错误
+ * 2010/07/27   迁移至 github 做版本管理。向 kissy-sandbox 提交代码
+ * 2010/07/28   合并了公开方法 Flash.register 和 Flash.embed 为 Flash.add()
+ *              修改 Flash.length() 为 Flash.getLength(), 使其看上去更像方法而非属性方式获取
+ * 2010/07/29   重构到 kissy 项目中
+ * 2010/07/30	增加了标准化配置项方法 _normalize(); 修正 flashvars 转 String 方式为 toFlashVars
  */

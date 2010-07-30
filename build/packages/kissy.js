@@ -3620,448 +3620,6 @@ MIT Licensed
 build time: ${build.time}
 */
 /**
- * @module anim-easing
- */
-KISSY.add('anim-easing', function(S) {
-
-    // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
-    // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
-    // Preview: http://www.robertpenner.com/easing/easing_demo.html
-
-    /**
-     * 和 YUI 的 Easing 相比，S.Easing 进行了归一化处理，参数调整为：
-     * @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
-     * @param {Number} b Starting value  b = 0
-     * @param {Number} c Delta between start and end values  c = 1
-     * @param {Number} d Total length of animation d = 1
-     */
-
-    var M = Math, PI = M.PI,
-        pow = M.pow, sin = M.sin,
-        BACK_CONST = 1.70158,
-
-        Easing = {
-
-            /**
-             * Uniform speed between points.
-             */
-            easeNone: function (t) {
-                return t;
-            },
-
-            /**
-             * Begins slowly and accelerates towards end. (quadratic)
-             */
-            easeIn: function (t) {
-                return t * t;
-            },
-
-            /**
-             * Begins quickly and decelerates towards end.  (quadratic)
-             */
-            easeOut: function (t) {
-                return ( 2 - t) * t;
-            },
-
-            /**
-             * Begins slowly and decelerates towards end. (quadratic)
-             */
-            easeBoth: function (t) {
-                return (t *= 2) < 1 ?
-                    .5 * t * t :
-                    .5 * (1 - (--t) * (t - 2));
-            },
-
-            /**
-             * Begins slowly and accelerates towards end. (quartic)
-             */
-            easeInStrong: function (t) {
-                return t * t * t * t;
-            },
-
-            /**
-             * Begins quickly and decelerates towards end.  (quartic)
-             */
-            easeOutStrong: function (t) {
-                return 1 - (--t) * t * t * t;
-            },
-
-            /**
-             * Begins slowly and decelerates towards end. (quartic)
-             */
-            easeBothStrong: function (t) {
-                return (t *= 2) < 1 ?
-                    .5 * t * t * t * t :
-                    .5 * (2 - (t -= 2) * t * t * t);
-            },
-
-            /**
-             * Snap in elastic effect.
-             */
-
-            elasticIn: function (t) {
-                var p = .3, s = p / 4;
-                if (t === 0 || t === 1) return t;
-                return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
-            },
-
-            /**
-             * Snap out elastic effect.
-             */
-            elasticOut: function (t) {
-                var p = .3, s = p / 4;
-                if (t === 0 || t === 1) return t;
-                return pow(2, -10 * t) * sin((t - s) * (2 * PI) / p) + 1;
-            },
-
-            /**
-             * Snap both elastic effect.
-             */
-            elasticBoth: function (t) {
-                var p = .45, s = p / 4;
-                if (t === 0 || (t *= 2) === 2) return t;
-
-                if (t < 1) {
-                    return -.5 * (pow(2, 10 * (t -= 1)) *
-                        sin((t - s) * (2 * PI) / p));
-                }
-                return pow(2, -10 * (t -= 1)) *
-                    sin((t - s) * (2 * PI) / p) * .5 + 1;
-            },
-
-            /**
-             * Backtracks slightly, then reverses direction and moves to end.
-             */
-            backIn: function (t) {
-                if (t === 1) t -= .001;
-                return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
-            },
-
-            /**
-             * Overshoots end, then reverses and comes back to end.
-             */
-            backOut: function (t) {
-                return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
-            },
-
-            /**
-             * Backtracks slightly, then reverses direction, overshoots end,
-             * then reverses and comes back to end.
-             */
-            backBoth: function (t) {
-                if ((t *= 2 ) < 1) {
-                    return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
-                }
-                return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
-            },
-
-            /**
-             * Bounce off of start.
-             */
-            bounceIn: function (t) {
-                return 1 - Easing.bounceOut(1 - t);
-            },
-
-            /**
-             * Bounces off end.
-             */
-            bounceOut: function (t) {
-                var s = 7.5625, r;
-
-                if (t < (1 / 2.75)) {
-                    r = s * t * t;
-                }
-                else if (t < (2 / 2.75)) {
-                    r =  s * (t -= (1.5 / 2.75)) * t + .75;
-                }
-                else if (t < (2.5 / 2.75)) {
-                    r =  s * (t -= (2.25 / 2.75)) * t + .9375;
-                }
-                else {
-                    r =  s * (t -= (2.625 / 2.75)) * t + .984375;
-                }
-
-                return r;
-            },
-
-            /**
-             * Bounces off start and end.
-             */
-            bounceBoth: function (t) {
-                if (t < .5) {
-                    return Easing.bounceIn(t * 2) * .5;
-                }
-                return Easing.bounceOut(t * 2 - 1) * .5 + .5;
-            }
-        };
-
-    S.Easing = Easing;
-});
-
-/**
- * TODO:
- *  - test-easing.html 详细的测试 + 曲线可视化
- *
- * NOTES:
- *  - 综合比较 jQuery UI/scripty2/YUI 的 easing 命名，还是觉得 YUI 的对用户
- *    最友好。因此这次完全照搬 YUI 的 Easing, 只是代码上做了点压缩优化。
- *
- */
-/**
- * @module   anim
- * @author   lifesinger@gmail.com
- * @depends  ks-core
- */
-KISSY.add('anim', function(S, undefined) {
-
-    var DOM = S.DOM, Easing = S.Easing,
-        PARSE_FLOAT = parseFloat,
-        parseEl = DOM.create('<div>'),
-        PROPS = ('backgroundColor borderBottomColor borderBottomWidth borderBottomStyle borderLeftColor borderLeftWidth borderLeftStyle ' +
-            'borderRightColor borderRightWidth borderRightStyle borderSpacing borderTopColor borderTopWidth borderTopStyle bottom color ' +
-            'font fontFamily fontSize fontWeight height left letterSpacing lineHeight marginBottom marginLeft marginRight marginTop maxHeight ' +
-            'maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineWidth paddingBottom paddingLeft ' +
-            'paddingRight paddingTop right textIndent top width wordSpacing zIndex').split(' '),
-
-        STEP_INTERVAL = 13,
-        OPACITY = 'opacity',
-        EVENT_START = 'start',
-        EVENT_STEP = 'step',
-        EVENT_COMPLETE = 'complete',
-
-        defaultConfig = {
-            duration: 1,
-            easing: Easing.easeNone
-            //queue: true
-        };
-
-    /**
-     * Anim Class
-     * @constructor
-     */
-    function Anim(elem, props, duration, easing, callback) {
-        // ignore non-exist element
-        if (!(elem = S.get(elem))) return;
-
-        // factory or constructor
-        if (!(this instanceof Anim)) {
-            return new Anim(elem, props, duration, easing, callback);
-        }
-
-        var self = this,
-            isConfig = S.isPlainObject(duration),
-            style = props, config;
-
-        /**
-         * the related dom element
-         */
-        self.domEl = elem;
-
-        /**
-         * the transition properties
-         * 可以是 "width: 200px; color: #ccc" 字符串形式
-         * 也可以是 { width: '200px', color: '#ccc' } 对象形式
-         */
-        if (S.isPlainObject(style)) {
-            style = S.param(style, ';').replace(/=/g, ':');
-        }
-        self.props = normalize(style);
-        self.targetStyle = style;
-        // normalize 后：
-        // props = {
-        //          width: { v: 200, unit: 'px', f: interpolate }
-        //          color: { v: '#ccc', unit: '', f: color }
-        //         }
-
-        /**
-         * animation config
-         */
-        if (isConfig) {
-            config = S.merge(defaultConfig, duration);
-        } else {
-            config = S.clone(defaultConfig);
-            duration && (config.duration = PARSE_FLOAT(duration, 10) || 1);
-            S.isString(easing) && (easing = Easing[easing]); // 可以是字符串, 比如 'easingOut'
-            S.isFunction(easing) && (config.easing = easing);
-            S.isFunction(callback) && (config.complete = callback);
-        }
-        self.config = config;
-
-        /**
-         * timer
-         */
-        //self.timer = undefined;
-
-        // register callback
-        if (S.isFunction(callback)) {
-            self.on(EVENT_COMPLETE, callback);
-        }
-    }
-
-    S.augment(Anim, S.EventTarget, {
-
-        run: function() {
-            var self = this, config = self.config,
-                elem = self.domEl,
-                duration = config.duration * 1000,
-                easing = config.easing,
-                start = S.now(), finish = start + duration,
-                target = self.props,
-                source = {}, prop, go;
-
-            for (prop in target) source[prop] = parse(DOM.css(elem, prop));
-            if(self.fire(EVENT_START) === false) return;
-
-            self.stop(); // 先停止掉正在运行的动画
-
-            self.timer = S.later((go = function () {
-                var time = S.now(),
-                    t = time > finish ? 1 : (time - start) / duration,
-                    sp, tp, b;
-
-                for (prop in target) {
-                    sp = source[prop];
-                    tp = target[prop];
-
-                    // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
-                    // 比如：ie 下 border-width 默认为 medium
-                    if(sp.u !== tp.u) sp.v = 0;
-
-                    // go
-                    DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
-                }
-
-                if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
-                    self.stop();
-                    // complete 事件只在动画到达最后一帧时才触发
-                    if(b) self.fire(EVENT_COMPLETE);
-                }
-            }), STEP_INTERVAL, true);
-
-            // 立刻执行
-            go();
-
-            return self;
-        },
-
-        stop: function(finish) {
-            var self = this, elem = self.domEl,
-                style = self.targetStyle;
-
-            // 停止定时器
-            if (self.timer) {
-                self.timer.cancel();
-                self.timer = undefined;
-            }
-
-            // 直接设置到最终样式
-            if(finish) {
-                if(S.UA.ie && style.indexOf(OPACITY) > -1) {
-                    DOM.css(elem, OPACITY, self.props[OPACITY].v);
-                }
-                elem.style.cssText += ';' + style;
-                self.fire(EVENT_COMPLETE);
-            }
-
-            return self;
-        }
-    });
-
-    S.Anim = Anim;
-
-    function normalize(style) {
-        var css, rules = { }, i = PROPS.length, v;
-        parseEl.innerHTML = '<div style="' + style + '"></div>';
-        css = parseEl.childNodes[0].style;
-        while (i--) if ((v = css[PROPS[i]])) rules[PROPS[i]] = parse(v);
-        return rules;
-    }
-
-    function parse(val) {
-        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d\.]+/, '');
-        return isNaN(num) ? { v: unit, u: '', f: colorEtc } : { v: num, u: unit, f: interpolate };
-    }
-
-    function interpolate(source, target, pos) {
-        return (source + (target - source) * pos).toFixed(3);
-    }
-
-    function colorEtc(source, target, pos) {
-        var i = 2, j, c, tmp, v = [], r = [];
-
-        while (j = 3, c = arguments[i - 1], i--) {
-            if (s(c, 0, 4) === 'rgb(') {
-                c = c.match(/\d+/g);
-                while (j--) v.push(~~c[j]);
-            }
-            else if(s(c, 0) === '#') {
-                if (c.length === 4) c = '#' + s(c, 1) + s(c, 1) + s(c, 2) + s(c, 2) + s(c, 3) + s(c, 3);
-                while (j--) v.push(parseInt(s(c, 1 + j * 2, 2), 16));
-            }
-            else { // red, black 等值，以及其它一切非颜色值，直接返回 target
-                return target;
-            }
-        }
-
-        while (j--) {
-            tmp = ~~(v[j + 3] + (v[j] - v[j + 3]) * pos);
-            r.push(tmp < 0 ? 0 : tmp > 255 ? 255 : tmp);
-        }
-
-        return 'rgb(' + r.join(',') + ')';
-    }
-
-    function s(str, p, c) {
-        return str.substr(p, c || 1);
-    }
-});
-
-/**
- * TODO:
- *  - 实现 jQuery Effects 的 queue / specialEasing / += / toogle,show,hide 等特性
- *  - 还有些情况就是动画不一定改变 CSS, 有可能是 scroll-left 等
- *
- * NOTES:
- *  - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
- *  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
- *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile
- */
-/**
- * @module  anim-node-plugin
- * @author  lifesinger@gmail.com
- */
-KISSY.add('anim-node-plugin', function(S, undefined) {
-
-    var Anim = S.Anim,
-        NP = S.Node.prototype, NLP = S.NodeList.prototype;
-
-    S.each([NP, NLP], function(P) {
-
-        P.animate = function() {
-            var args = S.makeArray(arguments);
-
-            S.each(this, function(elem) {
-                Anim.apply(undefined, [elem].concat(args)).run();
-            });
-            
-            return this;
-        };
-    })
-
-});
-
-/**
- * TODO:
- *  - ����ֱ�Ӹ� Node ��� Node.addMethods ����
- *  - �����Ƿ���� slideUp/slideDown/fadeIn/show/hide �ȿ�ݷ���
- *
- */
-/*
-Copyright 2010, KISSY UI Library v1.1.0pre
-MIT Licensed
-build time: ${build.time}
-*/
-/**
  * @module  cookie
  * @author  lifesinger@gmail.com
  * @depends ks-core
@@ -5548,6 +5106,448 @@ KISSY.ExternalSelector._filter = function(selector, filter) {
 };
 
 })();
+/*
+Copyright 2010, KISSY UI Library v1.1.0pre
+MIT Licensed
+build time: ${build.time}
+*/
+/**
+ * @module anim-easing
+ */
+KISSY.add('anim-easing', function(S) {
+
+    // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
+    // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
+    // Preview: http://www.robertpenner.com/easing/easing_demo.html
+
+    /**
+     * 和 YUI 的 Easing 相比，S.Easing 进行了归一化处理，参数调整为：
+     * @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
+     * @param {Number} b Starting value  b = 0
+     * @param {Number} c Delta between start and end values  c = 1
+     * @param {Number} d Total length of animation d = 1
+     */
+
+    var M = Math, PI = M.PI,
+        pow = M.pow, sin = M.sin,
+        BACK_CONST = 1.70158,
+
+        Easing = {
+
+            /**
+             * Uniform speed between points.
+             */
+            easeNone: function (t) {
+                return t;
+            },
+
+            /**
+             * Begins slowly and accelerates towards end. (quadratic)
+             */
+            easeIn: function (t) {
+                return t * t;
+            },
+
+            /**
+             * Begins quickly and decelerates towards end.  (quadratic)
+             */
+            easeOut: function (t) {
+                return ( 2 - t) * t;
+            },
+
+            /**
+             * Begins slowly and decelerates towards end. (quadratic)
+             */
+            easeBoth: function (t) {
+                return (t *= 2) < 1 ?
+                    .5 * t * t :
+                    .5 * (1 - (--t) * (t - 2));
+            },
+
+            /**
+             * Begins slowly and accelerates towards end. (quartic)
+             */
+            easeInStrong: function (t) {
+                return t * t * t * t;
+            },
+
+            /**
+             * Begins quickly and decelerates towards end.  (quartic)
+             */
+            easeOutStrong: function (t) {
+                return 1 - (--t) * t * t * t;
+            },
+
+            /**
+             * Begins slowly and decelerates towards end. (quartic)
+             */
+            easeBothStrong: function (t) {
+                return (t *= 2) < 1 ?
+                    .5 * t * t * t * t :
+                    .5 * (2 - (t -= 2) * t * t * t);
+            },
+
+            /**
+             * Snap in elastic effect.
+             */
+
+            elasticIn: function (t) {
+                var p = .3, s = p / 4;
+                if (t === 0 || t === 1) return t;
+                return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
+            },
+
+            /**
+             * Snap out elastic effect.
+             */
+            elasticOut: function (t) {
+                var p = .3, s = p / 4;
+                if (t === 0 || t === 1) return t;
+                return pow(2, -10 * t) * sin((t - s) * (2 * PI) / p) + 1;
+            },
+
+            /**
+             * Snap both elastic effect.
+             */
+            elasticBoth: function (t) {
+                var p = .45, s = p / 4;
+                if (t === 0 || (t *= 2) === 2) return t;
+
+                if (t < 1) {
+                    return -.5 * (pow(2, 10 * (t -= 1)) *
+                        sin((t - s) * (2 * PI) / p));
+                }
+                return pow(2, -10 * (t -= 1)) *
+                    sin((t - s) * (2 * PI) / p) * .5 + 1;
+            },
+
+            /**
+             * Backtracks slightly, then reverses direction and moves to end.
+             */
+            backIn: function (t) {
+                if (t === 1) t -= .001;
+                return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
+            },
+
+            /**
+             * Overshoots end, then reverses and comes back to end.
+             */
+            backOut: function (t) {
+                return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
+            },
+
+            /**
+             * Backtracks slightly, then reverses direction, overshoots end,
+             * then reverses and comes back to end.
+             */
+            backBoth: function (t) {
+                if ((t *= 2 ) < 1) {
+                    return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
+                }
+                return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
+            },
+
+            /**
+             * Bounce off of start.
+             */
+            bounceIn: function (t) {
+                return 1 - Easing.bounceOut(1 - t);
+            },
+
+            /**
+             * Bounces off end.
+             */
+            bounceOut: function (t) {
+                var s = 7.5625, r;
+
+                if (t < (1 / 2.75)) {
+                    r = s * t * t;
+                }
+                else if (t < (2 / 2.75)) {
+                    r =  s * (t -= (1.5 / 2.75)) * t + .75;
+                }
+                else if (t < (2.5 / 2.75)) {
+                    r =  s * (t -= (2.25 / 2.75)) * t + .9375;
+                }
+                else {
+                    r =  s * (t -= (2.625 / 2.75)) * t + .984375;
+                }
+
+                return r;
+            },
+
+            /**
+             * Bounces off start and end.
+             */
+            bounceBoth: function (t) {
+                if (t < .5) {
+                    return Easing.bounceIn(t * 2) * .5;
+                }
+                return Easing.bounceOut(t * 2 - 1) * .5 + .5;
+            }
+        };
+
+    S.Easing = Easing;
+});
+
+/**
+ * TODO:
+ *  - test-easing.html 详细的测试 + 曲线可视化
+ *
+ * NOTES:
+ *  - 综合比较 jQuery UI/scripty2/YUI 的 easing 命名，还是觉得 YUI 的对用户
+ *    最友好。因此这次完全照搬 YUI 的 Easing, 只是代码上做了点压缩优化。
+ *
+ */
+/**
+ * @module   anim
+ * @author   lifesinger@gmail.com
+ * @depends  ks-core
+ */
+KISSY.add('anim', function(S, undefined) {
+
+    var DOM = S.DOM, Easing = S.Easing,
+        PARSE_FLOAT = parseFloat,
+        parseEl = DOM.create('<div>'),
+        PROPS = ('backgroundColor borderBottomColor borderBottomWidth borderBottomStyle borderLeftColor borderLeftWidth borderLeftStyle ' +
+            'borderRightColor borderRightWidth borderRightStyle borderSpacing borderTopColor borderTopWidth borderTopStyle bottom color ' +
+            'font fontFamily fontSize fontWeight height left letterSpacing lineHeight marginBottom marginLeft marginRight marginTop maxHeight ' +
+            'maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineWidth paddingBottom paddingLeft ' +
+            'paddingRight paddingTop right textIndent top width wordSpacing zIndex').split(' '),
+
+        STEP_INTERVAL = 13,
+        OPACITY = 'opacity',
+        EVENT_START = 'start',
+        EVENT_STEP = 'step',
+        EVENT_COMPLETE = 'complete',
+
+        defaultConfig = {
+            duration: 1,
+            easing: Easing.easeNone
+            //queue: true
+        };
+
+    /**
+     * Anim Class
+     * @constructor
+     */
+    function Anim(elem, props, duration, easing, callback) {
+        // ignore non-exist element
+        if (!(elem = S.get(elem))) return;
+
+        // factory or constructor
+        if (!(this instanceof Anim)) {
+            return new Anim(elem, props, duration, easing, callback);
+        }
+
+        var self = this,
+            isConfig = S.isPlainObject(duration),
+            style = props, config;
+
+        /**
+         * the related dom element
+         */
+        self.domEl = elem;
+
+        /**
+         * the transition properties
+         * 可以是 "width: 200px; color: #ccc" 字符串形式
+         * 也可以是 { width: '200px', color: '#ccc' } 对象形式
+         */
+        if (S.isPlainObject(style)) {
+            style = S.param(style, ';').replace(/=/g, ':');
+        }
+        self.props = normalize(style);
+        self.targetStyle = style;
+        // normalize 后：
+        // props = {
+        //          width: { v: 200, unit: 'px', f: interpolate }
+        //          color: { v: '#ccc', unit: '', f: color }
+        //         }
+
+        /**
+         * animation config
+         */
+        if (isConfig) {
+            config = S.merge(defaultConfig, duration);
+        } else {
+            config = S.clone(defaultConfig);
+            duration && (config.duration = PARSE_FLOAT(duration, 10) || 1);
+            S.isString(easing) && (easing = Easing[easing]); // 可以是字符串, 比如 'easingOut'
+            S.isFunction(easing) && (config.easing = easing);
+            S.isFunction(callback) && (config.complete = callback);
+        }
+        self.config = config;
+
+        /**
+         * timer
+         */
+        //self.timer = undefined;
+
+        // register callback
+        if (S.isFunction(callback)) {
+            self.on(EVENT_COMPLETE, callback);
+        }
+    }
+
+    S.augment(Anim, S.EventTarget, {
+
+        run: function() {
+            var self = this, config = self.config,
+                elem = self.domEl,
+                duration = config.duration * 1000,
+                easing = config.easing,
+                start = S.now(), finish = start + duration,
+                target = self.props,
+                source = {}, prop, go;
+
+            for (prop in target) source[prop] = parse(DOM.css(elem, prop));
+            if(self.fire(EVENT_START) === false) return;
+
+            self.stop(); // 先停止掉正在运行的动画
+
+            self.timer = S.later((go = function () {
+                var time = S.now(),
+                    t = time > finish ? 1 : (time - start) / duration,
+                    sp, tp, b;
+
+                for (prop in target) {
+                    sp = source[prop];
+                    tp = target[prop];
+
+                    // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
+                    // 比如：ie 下 border-width 默认为 medium
+                    if(sp.u !== tp.u) sp.v = 0;
+
+                    // go
+                    DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
+                }
+
+                if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
+                    self.stop();
+                    // complete 事件只在动画到达最后一帧时才触发
+                    if(b) self.fire(EVENT_COMPLETE);
+                }
+            }), STEP_INTERVAL, true);
+
+            // 立刻执行
+            go();
+
+            return self;
+        },
+
+        stop: function(finish) {
+            var self = this, elem = self.domEl,
+                style = self.targetStyle;
+
+            // 停止定时器
+            if (self.timer) {
+                self.timer.cancel();
+                self.timer = undefined;
+            }
+
+            // 直接设置到最终样式
+            if(finish) {
+                if(S.UA.ie && style.indexOf(OPACITY) > -1) {
+                    DOM.css(elem, OPACITY, self.props[OPACITY].v);
+                }
+                elem.style.cssText += ';' + style;
+                self.fire(EVENT_COMPLETE);
+            }
+
+            return self;
+        }
+    });
+
+    S.Anim = Anim;
+
+    function normalize(style) {
+        var css, rules = { }, i = PROPS.length, v;
+        parseEl.innerHTML = '<div style="' + style + '"></div>';
+        css = parseEl.childNodes[0].style;
+        while (i--) if ((v = css[PROPS[i]])) rules[PROPS[i]] = parse(v);
+        return rules;
+    }
+
+    function parse(val) {
+        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d\.]+/, '');
+        return isNaN(num) ? { v: unit, u: '', f: colorEtc } : { v: num, u: unit, f: interpolate };
+    }
+
+    function interpolate(source, target, pos) {
+        return (source + (target - source) * pos).toFixed(3);
+    }
+
+    function colorEtc(source, target, pos) {
+        var i = 2, j, c, tmp, v = [], r = [];
+
+        while (j = 3, c = arguments[i - 1], i--) {
+            if (s(c, 0, 4) === 'rgb(') {
+                c = c.match(/\d+/g);
+                while (j--) v.push(~~c[j]);
+            }
+            else if(s(c, 0) === '#') {
+                if (c.length === 4) c = '#' + s(c, 1) + s(c, 1) + s(c, 2) + s(c, 2) + s(c, 3) + s(c, 3);
+                while (j--) v.push(parseInt(s(c, 1 + j * 2, 2), 16));
+            }
+            else { // red, black 等值，以及其它一切非颜色值，直接返回 target
+                return target;
+            }
+        }
+
+        while (j--) {
+            tmp = ~~(v[j + 3] + (v[j] - v[j + 3]) * pos);
+            r.push(tmp < 0 ? 0 : tmp > 255 ? 255 : tmp);
+        }
+
+        return 'rgb(' + r.join(',') + ')';
+    }
+
+    function s(str, p, c) {
+        return str.substr(p, c || 1);
+    }
+});
+
+/**
+ * TODO:
+ *  - 实现 jQuery Effects 的 queue / specialEasing / += / toogle,show,hide 等特性
+ *  - 还有些情况就是动画不一定改变 CSS, 有可能是 scroll-left 等
+ *
+ * NOTES:
+ *  - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
+ *  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
+ *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile
+ */
+/**
+ * @module  anim-node-plugin
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('anim-node-plugin', function(S, undefined) {
+
+    var Anim = S.Anim,
+        NP = S.Node.prototype, NLP = S.NodeList.prototype;
+
+    S.each([NP, NLP], function(P) {
+
+        P.animate = function() {
+            var args = S.makeArray(arguments);
+
+            S.each(this, function(elem) {
+                Anim.apply(undefined, [elem].concat(args)).run();
+            });
+            
+            return this;
+        };
+    })
+
+});
+
+/**
+ * TODO:
+ *  - ����ֱ�Ӹ� Node ��� Node.addMethods ����
+ *  - �����Ƿ���� slideUp/slideDown/fadeIn/show/hide �ȿ�ݷ���
+ *
+ */
 /*
 Copyright 2010, KISSY UI Library v1.1.0pre
 MIT Licensed
@@ -8224,7 +8224,7 @@ KISSY.add('flash', function(S){
 });
 /**
  * @module   将 swf 嵌入到页面中
- * @author   kingfo<oicuicu@gmail.com>
+ * @author   kingfo<oicuicu@gmail.com>, 射雕<lifesinger@gmail.com>
  * @depends  ks-core + json
  */
 KISSY.add('flash-embed', function(S) {
@@ -8271,8 +8271,8 @@ KISSY.add('flash-embed', function(S) {
             //src: '',       // swf 路径
             params: { },     // Flash Player 的配置参数
             attrs: {         // swf 对应 DOM 元素的属性
-                width: 215,
-                height: 138
+                width: 215,	 // 最小控制面板宽度,小于此数字将无法支持在线快速安装
+                height: 138  // 最小控制面板高度,小于此数字将无法支持在线快速安装
             },
             //xi: '',	     //	快速安装地址。全称 express install  // ? 默认路径
             version: 9       //	要求的 Flash Player 最低版本
@@ -8295,6 +8295,9 @@ KISSY.add('flash-embed', function(S) {
          */
         add: function(target, config, callback) {
             var self = this, xi, id;
+
+            // 标准化配置信息
+            config = Flash._normalize(config);
 
             // 合并配置信息
             config = S.merge(defaultConifg, config);
@@ -8393,7 +8396,7 @@ KISSY.add('flash-embed', function(S) {
 
         _embed: function (target, config, callback) {
             var o = Flash._createSWF(config.src, config.attrs, config.params);
-
+			
             if (UA.ie) {
                 // ie 下，通过纯 dom 操作插入的 object 会一直处于加载状态中
                 // 只能通过 innerHTML/outerHTML 嵌入
@@ -8441,45 +8444,88 @@ KISSY.add('flash-embed', function(S) {
                     name: attrs.id
                 });
             }
-
+			
             // 添加 params
             for (k in params) {
                 if (k in PARAMS) appendParam(o, k, params[k]);
             }
             if (params[FLASHVARS]) {
-                appendParam(o, FLASHVARS, stringify(params[FLASHVARS]));
+                appendParam(o, FLASHVARS,  Flash.toFlashVars(params[FLASHVARS]));
             }
 
             return o;
+        },
+
+        /**
+         * 将对象的 key 全部转为小写
+         * 一般用于配置选项 key 的标准化
+         */
+        _normalize: function(obj) {
+            var key, val, prop, ret = obj;
+
+            if (S.isPlainObject(obj)) {
+                ret = {};
+
+                for (prop in obj) {
+                    key = prop.toLowerCase();
+                    val = obj[prop];
+
+                    // 忽略自定义传参内容标准化
+                    if (key !== FLASHVARS) val = Flash._normalize(val);
+
+                    ret[key] = val;
+                }
+            }
+            return ret;
+        },
+
+        /**
+         * 将普通对象转换为 flashvars
+         * eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b={"x":2,"z":"s%3D1%26c%3D2"}
+         */
+        toFlashVars: function(obj) {
+            if (!S.isPlainObject(obj)) return EMPTY; // 仅支持 PlainOject
+            var prop, data, arr = [];
+
+            for (prop in obj) {
+                data = obj[prop];
+
+                // 字符串，用双引号括起来
+                if (S.isString(data)) {
+                    data = '"' + encode(data) + '"';
+                }
+                // 其它值，用 stringify 转换后，再转义掉字符串值
+                else {
+                    data = (S.JSON.stringify(data));
+                    if (!data) continue; // 忽略掉 undefined, fn 等值
+                    
+                    data = data.replace(/:"([^"]+)/g, function(m, val) {
+                        return ':"' + encode(val);
+                    });
+                }
+
+                arr.push(prop + '=' + data);
+            }
+
+            return arr.join('&');
         }
     });
 
-    function appendParam(o, name, src) {
+    function appendParam(o, name, val) {
         var param = DOM.create('<param>');
-        DOM.attr(param, { name: name, value: src });
+        DOM.attr(param, { name: name, value: val });
         o.appendChild(param);
     }
-
-    // 转换成 AS 能识别的 JSON 数据串
-    function stringify(o) {
-        if (S.isString(o)) return encode(o);
-
-        // stringify => {"a":{"x":1,"z":"c=z&d=3"},"b":"http://a.tbcdn.cn/?d=x&ff"}
-        // 接着还需要将字符串值 encodeURIComponent
-        return S.JSON.stringify(o).replace(/:"([^"]+)/g, function(m, val) {
-            return ':"' + encode(val);
-        });
-    }
-
 });
 
 /**
  * NOTES:
- * 2010/07/21    向 google code 提交了基础代码
- * 2010/07/22    修正了 embed 始终都有 callback 尝试性调用
- *               避免了未定义 el/id 或 swfurl 时无法获知错误
- * 2010/07/27    迁移至 github 做版本管理。向 kissy-sandbox 提交代码
- * 2010/07/28    合并了公开方法 Flash.register 和 Flash.embed 为 Flash.add()
- *               修改 Flash.length() 为 Flash.getLength(), 使其看上去更像方法而非属性方式获取
- * 2010/07/29    重构到 kissy 项目中 by yubo
+ * 2010/07/21   向 google code 提交了基础代码
+ * 2010/07/22   修正了 embed 始终都有 callback 尝试性调用
+ *              避免了未定义 el/id 或 swfurl 时无法获知错误
+ * 2010/07/27   迁移至 github 做版本管理。向 kissy-sandbox 提交代码
+ * 2010/07/28   合并了公开方法 Flash.register 和 Flash.embed 为 Flash.add()
+ *              修改 Flash.length() 为 Flash.getLength(), 使其看上去更像方法而非属性方式获取
+ * 2010/07/29   重构到 kissy 项目中
+ * 2010/07/30	增加了标准化配置项方法 _normalize(); 修正 flashvars 转 String 方式为 toFlashVars
  */
