@@ -98,7 +98,20 @@
                 height: 150
             },
             params: {
-                flashvars: {a: {c: 'http://taobao.com/?x=1&z=2'}, b: 2}
+                flashvars: {
+                    s: "string",
+                    b: false,
+                    n: 1,
+                    nul: null,
+                    und: undefined,
+                    url: "http://taobao.com/?x=1&z=2",
+                    o: {
+                        s: "string",
+                        b: false,
+                        n: 1,
+                        url: "http://taobao.com/?x=1&z=2"
+                    }
+                }
                 // a='{"c":"http://taobao.com/?x=1%26z=2"}&b=2'
                 // 字符串，encodeURIComponent
             }
@@ -185,7 +198,7 @@
 		}
 
 		// replace ' --> "  and remove spaces
-		return String(obj).replace(/\s/g, " ").replace(/\'/g, "\"");
+		return String(obj).replace(/\s/g, " ").replace(/'/g, "\"");
 	}
 	function typeOf(obj) {
 		if (obj === null || obj === undefined) { return false; }
