@@ -38,113 +38,113 @@
 
 	.col-main .col-width { display: none; }
 	.w950 .col-main .col-width { display: inline; }
+
+    .w950 #header, .w950 #content, .w950 #footer { width: 950px }
 </style>
 <script>
 	window.onload = function() {
 		var trigger = document.getElementById("togglePageWidth"),
-            page = document.getElementById("page"),
+            body = document.body,
             is950;
         trigger.onclick = function() {
-            is950 = page.className === "w950";
-			page.className = is950 ? "" : "w950";
+            is950 = body.className === "w950";
+			body.className = is950 ? "" : "w950";
             this.innerHTML = !is950 ? "自适应宽度" : "切换为950宽";
 			return false;
 		};
 	};
 </script>
 </head>
-<body>
-<div id="page" class="w950">
-	<div id="header">
-		<h1>Grids Layout for Taobao</h1>
-		<ul>
-			<li><a id="togglePageWidth" href="#" hidefocus="true">自适应宽度</a></li>
-		</ul>
-	</div>
-	<div id="content">
+<body class="w950">
+<div id="header">
+    <h1>Grids Layout for Taobao</h1>
+    <ul>
+        <li><a id="togglePageWidth" href="#" hidefocus="true">自适应宽度</a></li>
+    </ul>
+</div>
+<div id="content">
 
-		<h2>通栏：.grid-m</h2>
-		<div class="layout grid-m">
-			<div class="col-main">
-                <div class="test-box">main<span class="col-width">950px</span></div>
-			</div>
-		</div>
+    <h2>通栏：.grid-m</h2>
+    <div class="layout grid-m">
+        <div class="col-main">
+            <div class="test-box">main<span class="col-width">950px</span></div>
+        </div>
+    </div>
 
-		<h2>两栏：.grid-s5m0</h2>
-		<div class="layout grid-s5m0">
-			<div class="col-main">
-				<div class="main-wrap">
-					<div class="test-box">main<span class="col-width">750px</span></div>
-				</div>
-			</div>
-			<div class="col-sub">
-				<div class="test-box">sub<span class="col-width">190px</span></div>
-			</div>
-		</div>
+    <h2>两栏：.grid-s5m0</h2>
+    <div class="layout grid-s5m0">
+        <div class="col-main">
+            <div class="main-wrap">
+                <div class="test-box">main<span class="col-width">750px</span></div>
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="test-box">sub<span class="col-width">190px</span></div>
+        </div>
+    </div>
 
-		<h2>两栏：.grid-m0s5</h2>
-		<div class="layout grid-m0s5">
-			<div class="col-main">
-				<div class="main-wrap">
-					<div class="test-box">main<span class="col-width">750px</span></div>
-				</div>
-			</div>
-			<div class="col-sub">
-				<div class="test-box">sub<span class="col-width">190px</span></div>
-			</div>
-		</div>
+    <h2>两栏：.grid-m0s5</h2>
+    <div class="layout grid-m0s5">
+        <div class="col-main">
+            <div class="main-wrap">
+                <div class="test-box">main<span class="col-width">750px</span></div>
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="test-box">sub<span class="col-width">190px</span></div>
+        </div>
+    </div>
 
-		<h2>三栏：.grid-s5m0e6</h2>
-		<div class="layout grid-s5m0e6">
-			<div class="col-main">
-				<div class="main-wrap">
-					<div class="test-box">main<span class="col-width">510px</span></div>
-				</div>
-			</div>
-			<div class="col-sub">
-				<div class="test-box">sub<span class="col-width">190px</span></div>
-			</div>
-			<div class="col-extra">
-				<div class="test-box">extra<span class="col-width">230px</span></div>
-			</div>
-		</div>
+    <h2>三栏：.grid-s5m0e6</h2>
+    <div class="layout grid-s5m0e6">
+        <div class="col-main">
+            <div class="main-wrap">
+                <div class="test-box">main<span class="col-width">510px</span></div>
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="test-box">sub<span class="col-width">190px</span></div>
+        </div>
+        <div class="col-extra">
+            <div class="test-box">extra<span class="col-width">230px</span></div>
+        </div>
+    </div>
 
-		<h2>三栏：.grid-e6m0s5</h2>
-		<div class="layout grid-e6m0s5">
-			<div class="col-main">
-				<div class="main-wrap">
-					<div class="test-box">main<span class="col-width">510px</span></div>
-				</div>
-			</div>
-			<div class="col-sub">
-				<div class="test-box">sub<span class="col-width">190px</span></div>
-			</div>
-			<div class="col-extra">
-				<div class="test-box">extra<span class="col-width">230px</span></div>
-			</div>
-		</div>
+    <h2>三栏：.grid-e6m0s5</h2>
+    <div class="layout grid-e6m0s5">
+        <div class="col-main">
+            <div class="main-wrap">
+                <div class="test-box">main<span class="col-width">510px</span></div>
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="test-box">sub<span class="col-width">190px</span></div>
+        </div>
+        <div class="col-extra">
+            <div class="test-box">extra<span class="col-width">230px</span></div>
+        </div>
+    </div>
 
-		<h2>三栏：.grid-m0e6s5</h2>
-		<div class="layout grid-m0e6s5">
-			<div class="col-main">
-				<div class="main-wrap">
-					<div class="test-box">main<span class="col-width">510px</span></div>
-				</div>
-			</div>
-			<div class="col-sub">
-				<div class="test-box">sub<span class="col-width">190px</span></div>
-			</div>
-			<div class="col-extra">
-				<div class="test-box">extra<span class="col-width">230px</span></div>
-			</div>
-		</div>
+    <h2>三栏：.grid-m0e6s5</h2>
+    <div class="layout grid-m0e6s5">
+        <div class="col-main">
+            <div class="main-wrap">
+                <div class="test-box">main<span class="col-width">510px</span></div>
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="test-box">sub<span class="col-width">190px</span></div>
+        </div>
+        <div class="col-extra">
+            <div class="test-box">extra<span class="col-width">230px</span></div>
+        </div>
+    </div>
 
-		<h2>对照图</h2>
-		<p><img src="assets/grids-taobao.png" alt="淘宝常用栅格布局" /></p>
-	</div>
-	<div id="footer">
-		<a class="top" href="#header">返回页首</a>
-	</div>
+    <h2>对照图</h2>
+    <p><img src="assets/grids-taobao.png" alt="淘宝常用栅格布局" /></p>
+</div>
+<div id="footer">
+    <a class="top" href="#header">返回页首</a>
 </div>
 </body>
 </html>

@@ -10,14 +10,9 @@ build time: ${build.time}
 */
 
 /* 居中 */
-#page, #header, #content, #footer {
+#header, #content, #footer {
     margin-left: auto;
     margin-right: auto;
-}
-
-/* 950px 宽 */
-.w950 {
-    width: 950px;
 }
 
 /** 布局基础样式 **/
