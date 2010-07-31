@@ -39,7 +39,7 @@ a { color: #1F75CC; }
 .member h4 a:hover { text-decoration: none; }
 .member .detail { padding: 5px 20px; }
 .member .detail p { margin: 0.5em 0; }
-.method h4 code { display: block; color: #B84545; }
+.method h4 code, .widget h4 code { display: block; color: #B84545; }
 .method h4 em { font-weight: normal; }
 .example-code { background-color: #F4FAFF; border: 1px solid #AACCEE; padding: 0 20px 15px; margin-bottom: 5px; }
 .detail dt { font-weight: bold; }
