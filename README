@@ -31,7 +31,7 @@ Yeah!
    命名约定
 ==============
 原则：尽量避免潜在冲突，同时力求精简短小和见名知意。
- - 全局变量：       g_ks_comp_xxx      比如： g_ks_suggest_callback
- - class/id 命名：  ks-comp-xxx        比如： ks-editor-toolbar-item
- - data 属性命名：  data-ks-comp-xxx   比如： data-ks-lazyload-src
-
+ - 全局变量：       g_ks_comp_xxx        比如： g_ks_suggest_callback
+ - class/id 命名： ks-comp[-xxx]        比如： ks-editor-toolbar-item
+ - data 属性命名：  data-ks-comp[-xxx]   比如： data-ks-switchable
+ - hook 规范：     KS_Comp              比如： KS_Slide
