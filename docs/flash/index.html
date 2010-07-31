@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>event &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+<div id="page" class="w866">
+    <div id="header">
+        <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+        <p class="rel-nav">
+            <a href="http://github.com/kissyteam/kissy/blob/master/src/flash/flash.js"><code>flash.js</code></a>
+            <a href="http://github.com/kissyteam/kissy/blob/master/src/flash/flash-ua.js"><code>flash-ua.js</code></a>
+            <a href="http://github.com/kissyteam/kissy/blob/master/src/flash/flash-embed.js"><code>flash-embed.js</code></a>
+        </p>
+    </div>
+    <div id="content" class="layout grid-s232m0">
+        <div class="col-main">
+            <div class="main-wrap">
+                <div class="section summary">
+                    <p>Flash模块对 <code>KISSY.UA</code> 进行了扩展，规则与 <code>KISSY.UA</code> 类似，其中包括两个属性：</p>
+                    <ol>
+                        <li><code>KISSY.UA.fpv</code> 返回的是Flash版本号的字符串，例如 10.1.53。</li>
+                        <li><code>KISSY.UA.fpvGEQ</code> 用来检测当前客户端版本是否高于目标版本</li>
+                    </ol>
+                    <p>注意，fpv是Flash Player Version的简写。</p>
+                </div>
+                <div class="section">
+					<h3 id="properties">Properties</h3>
+					<div class="member prop">
+                        <h4><a name="prop_webkit">fpv</a> - <code>Number</code></h4>
+                        <div class="detail">
+                            <p>Flash 的版本号。</p>
+                        </div>
+                    </div>
+					<div class="member prop">
+                        <h4><a name="prop_webkit">fpvGEQ</a> - <code>Boolean</code></h4>
+                        <div class="detail">
+                            <p>当前Flash版本号是否高于目标版本。</p>
+                        </div>
+                    </div>
+				</div>
+
+                <div class="section summary">
+                    <p>Flash Embed组件提供了对Flash添加写入的支持。</p>
+                </div>
+                <div class="section">
+                    <h3>Examples</h3>
+                    <p>动态添加Flash到指定Dom：</p>
+<pre class="example-code"><code>
+var S = KISSY, F = S.Flash;
+
+F.add('#Foo', { //目标Dom节点，将会被替换为Flash对象
+    src: 'assets/test.swf', // swf 路径
+    version: 9, //要求的 Flash Player 最低版本
+    attrs: { // swf 对应 DOM 元素的属性
+        width: 200, // 最小控制面板宽度,小于此数字将无法支持在线快速安装
+        height: 150 // 最小控制面板高度,小于此数字将无法支持在线快速安装
+    },
+    params: {
+        flashvars: { // Flash Player 的配置参数
+            s: "string",
+            b: false,
+            n: 1,
+            nul: null,
+            und: undefined,
+            url: "http://taobao.com/?x=1&z=2",
+            o: {
+                s: "string",
+                b: false,
+                n: 1,
+                url: "http://taobao.com/?x=1&z=2"
+            }
+        }
+    }
+});
+</code></pre>
+
+                    <p>快速安装Flash player：</p>
+<pre class="example-code"><code>
+var S = KISSY, F = S.Flash;
+
+F.add('#Foo', { //目标Dom节点，将会被替换为Flash对象
+    src: 'assets/test.swf', // swf 路径
+    xi: 'express-install/expressInstall.swf', //快速安装地址。全称 express install
+    version: 12.2, //	要求的 Flash Player 最低版本
+    params: {
+        flashvars: 'a=1&b=2'
+    }
+});
+</code></pre>
+
+                    <p>范例：<a href=""><code>flash.html</code></a></p>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-sub">
+            <div class="sub-wrap">
+                <div class="loc">
+                    <a href="../index.html">home</a> &rsaquo;
+                    flash :
+                </div>
+                <div class="toc">
+                    <h3>Methods</h3>
+                    <ul>
+                        <li><a href="#">Flash-UA</a></li>
+                        <li><a href="#">Flash-Embed</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+    </div>
+</div>
+</body>
+</html>
