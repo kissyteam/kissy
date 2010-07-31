@@ -52,36 +52,12 @@ on detach
                     <div class="member prop">
                         <h4><a name="prop_node_length">length</a> - <code>Number</code></h4>
                         <div class="detail">
-                            <p>Node的个数, 默认为1. </p>
-                            <p class="tips">当<cod>var ne = S.one('#notexist')</code>没有取到符合条件的对象时, 该length仍是1, 所以若要判断对象是否存在, 可以判断ne[0]是否为undefined.</p>
+                            <p>Node 所包含的元素个数，始终为 1</p>
                         </div>
                     </div>
-                    
-                    <div class="member prop">
-                        <h4><a name="prop_nodeType">nodeType</a> - <code>固定字符串'-ks-Node'</code></h4>
-                        <div class="detail">
-                            <p>表示Node对像的标识类型</p>
-                        </div>
-                    </div>
-                    
+
                     <h3>Node Methods</h3>
 
-                    <div class="member method">
-                        <h4>
-                            <a name="method_one">one</a>
-                            <code>Node <em>one</em> ( selector, context )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>根据选择器获取满足过滤条件的元素, 取第一个元素并实例化为Node返回</p>
-                            <p class="tips">和<code>S.one</code>类似, 但区别在于, 后者返回的是一个Node对象, 即<code>S.one('#test')</code>等价于<code>new S.Node(DOM.get('#test'))</code></p>
-<pre class="example-code"><code>
-var S = KISSY;
-
-var node = S.one('#test'); // 返回选择器为#test的Node
-</code></pre>
-                        </div>
-                    </div>
-                    
                     <div class="member method">
                         <h4>
                             <a name="method_getDOMNode">getDOMNode</a>
@@ -99,27 +75,11 @@ var node = S.one('#test'); // 返回选择器为#test的Node
                     <div class="member prop">
                         <h4><a name="prop_nodelist_length">length</a> - <code>Number</code></h4>
                         <div class="detail">
-                            <p>NodeList中包含元素的个数, 默认为0. </p>
+                            <p>NodeList中所包含的元素个数，默认为 0</p>
                         </div>
                     </div>
                     
                     <h3>NodeList Methods</h3>
-
-                    <div class="member method">
-                        <h4>
-                            <a name="method_all">all</a>
-                            <code>NodeList <em>all</em> ( selector, context )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>根据选择器获取满足过滤条件的所有元素并实例化为NodeList返回</p>
-                            <p class="tips">和<code>S.query</code>类似, 但区别在于, 后者返回的是一个NodeList对象, 即, <code>S.all('.test')</code>等价于<code>new S.NodeList(DOM.query('.test'))</code></p>
-<pre class="example-code"><code>
-var S = KISSY;
-
-var nodelist = S.all('.test'); // 返回所有选择器为.test的NodeList
-</code></pre>
-                        </div>
-                    </div>
                     
                     <div class="member method">
                         <h4>
