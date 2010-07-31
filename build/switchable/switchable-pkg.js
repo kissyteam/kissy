@@ -967,7 +967,7 @@ KISSY.add('switchable-autorender', function(S) {
                     if(config) config = config.replace(/'/g, '"');
                     new S[name](elem, S.JSON.parse(config));
                 } catch(ex) {
-                    S.log('Error occurs in Switchable.autoRender! ex = ' + ex, 'warn');
+                    S.log('Switchable.autoRender: ' + ex, 'warn');
                 }
             });
         });
