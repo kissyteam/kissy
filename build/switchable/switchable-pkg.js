@@ -114,7 +114,7 @@ KISSY.add('switchable', function(S, undefined) {
         delay: .1, // 100ms
 
         activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
-        activeTriggerCls: 'active',
+        activeTriggerCls: 'ks-active',
 
         // 可见视图内有多少个 panels
         steps: 1,
@@ -783,19 +783,18 @@ KISSY.add('switchable-lazyload', function(S) {
     var DOM = S.DOM,
         EVENT_BEFORE_SWITCH = 'beforeSwitch',
         IMG_SRC = 'img-src',
-        TEXTAREA_DATA = 'textarea-data',
+        AREA_DATA = 'area-data',
         FLAGS = { },
         Switchable = S.Switchable;
 
-    FLAGS[IMG_SRC] = 'data-lazyload-src-custom';
-    FLAGS[TEXTAREA_DATA] = 'ks-datalazyload-custom';
+    FLAGS[IMG_SRC] = 'data-ks-lazyload-custom';
+    FLAGS[AREA_DATA] = 'ks-datalazyload-custom';
 
     /**
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        lazyDataType: '', // 'img-src' or 'textarea-data'
-        lazyDataFlag: ''  // 'data-lazyload-src-custom' or 'ks-datalazyload-custom'
+        lazyDataType: AREA_DATA // or IMG_SRC
     });
 
     /**
@@ -808,7 +807,7 @@ KISSY.add('switchable-lazyload', function(S) {
         init: function(host) {
             var DataLazyload = S.DataLazyload,
                 cfg = host.config,
-                type = cfg.lazyDataType, flag = cfg.lazyDataFlag || FLAGS[type];
+                type = cfg.lazyDataType, flag = FLAGS[type];
 
             if (!DataLazyload || !type || !flag) return; // 没有延迟项
 
@@ -822,7 +821,7 @@ KISSY.add('switchable-lazyload', function(S) {
                     from = ev.toIndex * steps ,
                     to = from + steps;
 
-                DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type, flag);
+                DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type);
                 if (isAllDone()) {
                     host.detach(EVENT_BEFORE_SWITCH, loadLazyData);
                 }
@@ -834,7 +833,7 @@ KISSY.add('switchable-lazyload', function(S) {
             function isAllDone() {
                 var elems, i, len,
                     isImgSrc = type === IMG_SRC,
-                    tagName = isImgSrc ? 'img' : (type === TEXTAREA_DATA ? 'textarea' : '');
+                    tagName = isImgSrc ? 'img' : (type === AREA_DATA ? 'textarea' : '');
 
                 if (tagName) {
                     elems = S.query(tagName, host.container);
@@ -846,6 +845,133 @@ KISSY.add('switchable-lazyload', function(S) {
             }
         }
     });
+});
+/**
+ * Switchable Countdown Plugin
+ * @creator  gonghao<gonghao@ghsky.com>
+ */
+KISSY.add('switchable-countdown', function(S, undefined) {
+
+    var DOM = S.DOM, Event = S.Event, Anim = S.Anim,
+        Switchable = S.Switchable,
+        CLS_PREFIX = 'ks-switchable-trigger-',
+        TRIGGER_MASK_CLS = CLS_PREFIX + 'mask',
+        TRIGGER_CONTENT_CLS = CLS_PREFIX + 'content';
+
+    /**
+     * 添加默认配置
+     */
+    S.mix(Switchable.Config, {
+        countdown: false,
+        countdownStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
+    });
+
+    /**
+     * 添加插件
+     */
+    Switchable.Plugins.push({
+
+        name: 'countdown',
+
+        init: function(host) {
+            var cfg = host.config, interval = cfg.interval,
+                triggers = host.triggers, masks = [], style = cfg.countdownStyle,
+                anim, hoverAnim;
+
+            // 必须保证开启 autoplay 以及有 trigger 时，才能开启倒计时动画
+            if (!cfg.autoplay || !cfg.hasTriggers || !cfg.countdown) return;
+
+            // 为每个 trigger 增加倒计时动画覆盖层
+            S.each(triggers, function(trigger, i) {
+                trigger.innerHTML = '<div class="' + TRIGGER_MASK_CLS + '"></div>' +
+                    '<div class="' + TRIGGER_CONTENT_CLS + '">' + trigger.innerHTML + '</div>';
+                masks[i] = trigger.firstChild;
+            });
+
+            // 鼠标悬停，停止自动播放
+            if (cfg.pauseOnHover) {
+                Event.on(host.container, 'mouseenter', function() {
+                    // 先停止未完成动画
+                    stopAnim();
+
+                    // 快速平滑关闭当前未完成动画效果
+                    hoverAnim = new Anim(masks[host.activeIndex], style, interval / 10, 'easeOut').run();
+                });
+            }
+
+            // panels 切换前，当前 trigger 完成善后工作以及下一 trigger 进行初始化
+            host.on('beforeSwitch', function(ev) {
+                // 恢复前，先结束未完成动画效果
+                stopAnim();
+
+                // 将当前 mask 恢复动画前状态
+                DOM.removeAttr(masks[host.activeIndex], 'style');
+
+                // 悬停状态时，不需要触发倒计时动画
+                if(host.paused) {
+                    // 将下一个 mask 隐藏，也就是没有动画效果
+                    DOM.css(masks[ev.toIndex], 'visibility', 'hidden');
+                }
+            });
+
+            // panel 切换完成时，开始 trigger 的倒计时动画
+            host.on('switch', function(ev) {
+                // 悬停状态，当用户主动触发切换时，不需要倒计时动画
+                if (!host.paused) {
+                    startAnim(ev.currentIndex);
+                }
+            });
+
+            // 开始第一次
+            startAnim(host.activeIndex);
+
+
+            // 开始倒计时动画
+            function startAnim(index) {
+                stopAnim(); // 开始之前，先确保停止掉之前的
+                anim = new Anim(masks[index], style, interval - 1).run(); // -1 是为了动画结束时停留一下，使得动画更自然
+            }
+
+            // 停止所有动画
+            function stopAnim() {
+                if (anim) {
+                    anim.stop();
+                    anim = undefined;
+                }
+                if (hoverAnim) {
+                    hoverAnim.stop();
+                    hoverAnim = undefined;
+                }
+            }
+        }
+    });
+});
+/**
+ * Switchable Autorender Plugin
+ * @creator  玉伯<lifesinger@gmail.com>
+ * @depends  ks-core, json
+ */
+KISSY.add('switchable-autorender', function(S) {
+
+    /**
+     * 自动渲染 container 元素内的所有 Switchable 组件
+     */
+    S.Switchable.autoRender = function(container, hookPrefix, dataAttrName) {
+        hookPrefix = '.' + (hookPrefix || 'KS_');
+        dataAttrName = dataAttrName || 'data-ks-switchable';
+
+        S.each(['Switchable', 'Tabs', 'Slide', 'Carousel', 'Accordion'], function(name) {
+            S.each(S.query(hookPrefix + name, container), function(elem) {
+                try {
+                    var config = elem.getAttribute(dataAttrName);
+                    if(config) config = config.replace(/'/g, '"');
+                    new S[name](elem, S.JSON.parse(config));
+                } catch(ex) {
+                    S.log('Error occurs in Switchable.autoRender! ex = ' + ex, 'warn');
+                }
+            });
+        });
+    }
 });
 /**
  * Tabs Widget
@@ -1007,6 +1133,7 @@ KISSY.add('accordion', function(S) {
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
 
         defaultConfig = {
+            markupType: 1,
             triggerType: 'click',
             multiple: false
         };

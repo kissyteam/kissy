@@ -5,8 +5,8 @@
 <title>Switchable Widgets Test</title>
 
 <script src="../../build/packages/ks-core.js"></script>
-
 <script src="../../build/anim/anim-pkg.js"></script>
+<script src="../../build/json/json.js"></script>
 <script src="../../build/datalazyload/datalazyload.js"></script>
 
 <script src="switchable.js"></script>
@@ -16,6 +16,7 @@
 <script src="plugin-circular.js"></script>
 <script src="plugin-lazyload.js"></script>
 <script src="plugin-countdown.js"></script>
+<script src="plugin-autorender.js"></script>
 
 <script src="widget-tabs.js"></script>
 <script src="widget-slide.js"></script>
@@ -64,7 +65,7 @@
         border: 1px solid #AEC7E5;
     }
 </style>
-<div id="demo1" class="section">
+<div id="demo1" class="KS_Tabs section">
     <ul class="ks-switchable-nav">
         <li class="ks-active">标题 A</li>
         <li>标题 B</li>
@@ -73,40 +74,13 @@
         <li>标题 E</li>
     </ul>
     <div class="ks-switchable-content">
-        <div>
-<pre>
-  - 在当前 trigger 中 mouseover/mouseout, click, focus, 不触发
-  - 鼠标快速滑过非当前 trigger, 不触发
-  - mouseover 到非当前 trigger, 停留时间到达延迟时，触发
-  - click 或 Tab 切换到 trigger, 立即触发
-  - beforeSwitch/onSwitch 事件的触发
-  - 延迟的内容能正确加载
-</pre>
-        </div>
+        <div>内容 A</div>
         <div style="display: none">内容 B</div>
         <div style="display: none">内容 C</div>
         <div style="display: none">内容 D</div>
-        <div style="display: none">
-            <textarea class="ks-datalazyload-custom">
-                我是延迟内容
-                <script>alert('我是延迟内容中的脚本，仅在第一次加载时执行。');</script>
-            </textarea>
-        </div>
+        <div style="display: none">内容 E</div>
     </div>
 </div>
-<script>
-    KISSY.ready(function(S) {
-        var tabs = new S.Tabs('#demo1');
-
-        tabs.on('beforeSwitch', function(ev) {
-            var index = ev.toIndex;
-            if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
-                this.panels[index].innerHTML = 'index = ' + index;
-            }
-        });
-    });
-</script>
-<p class="code-switch">显示源码</p>
 
 <h2>Slide - 淘宝首页卡盘</h2>
 <style>
@@ -151,7 +125,7 @@
         visibility: visible
     }
 </style>
-<div id="demo2" class="section loading">
+<div id="demo2" class="KS_Slide section loading" data-ks-switchable="{'effect':'scrolly','easing':'easeOutStrong','countdown':true}">
     <ol class="ks-switchable-content">
         <li><a href="http://ju.atpanel.com/?url=http://www.taobao.com/go/act/discount/hdfk091222.php?ad_id=&amp;am_id=&amp;cm_id=1400213687422f80dd4d&amp;pm_id=150021371293fce706af" target="_blank"><img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
         <li class="hidden"><a target="_blank" href="http://click.mz.simba.taobao.com/cc_mt?p=&amp;s=24760534&amp;e=%2FzU1KBMrzT1jMRVFtqDNyn1tgJqIJA3Hy9QloO7MbgHOIBqxgkWBGKUTW8JURsTh01ynhY4RKTMplHfnVnxiYajw5JHBVqSAXBrj%2Bf%2BTLVcq5t6PSe6eCT%2F8Tn1KGQ46A85BMYIsMXzYy8dzkPxQZCyLyt0ostjNaENU1Z0QCSZaXSgNYtb%2FwhYogN3jOrIE2Q9NE12H0Hk111VWqQddJzvjKwdymURFo%2BK2etf0wTrlhYBv%2B5sdunm4S3KBeGdooeLPkaQt4Mg4u3TgCNezGX1Mh9B64cCdF8VN3SsQNW%2BgArkM4F%2BFplGwl1UuyTCLtMOb3cgDCxBQldTmR3mwFhNV09QNPjZ2bUxM3CBHkfb2wyn42y1yjjwMVjNQnmpt4NEtPh%2F5PsbupFa6ZZ2sVQdCo%2FjLJ9sf&amp;ec=ffloYVIRbFZ%2BaahPJekdUQ%3D%3D&amp;c=17016"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></a></li>
@@ -172,16 +146,6 @@
         </li>
     </ol>
 </div>
-<script>
-    KISSY.ready(function(S) {
-        S.Slide('#demo2', {
-            effect: 'scrolly',
-            easing: 'easeOutStrong',
-            countdown: true
-        });
-    });
-</script>
-<p class="code-switch">显示源码</p>
 
 <h2>Slide - 有啊首页卡盘</h2>
 <style>
@@ -224,7 +188,7 @@
         width: 405px;
     }
 </style>
-<div id="demo3" class="section">
+<div id="demo3" class="KS_Slide section" data-ks-switchable="{'navCls':'yslider-stick','contentCls':'yslider-stage','activeTriggerCls':'selected','delay':0.2,'effect':'fade','easing':'easeBoth','duration':0.8,'autoplay':false}">
     <div class="yslider-stage">
         <p><a href="http://co.youa.baidu.com/content/promo/zhongjimiaoshazong/index.html" target="_blank"><img width="405" height="220" alt="终极秒杀场" src="http://co.youa.baidu.com/picture/r/image/2009-12-25/236d430f443d05925ad7291d9ad6b560.jpg"/></a></p>
         <p><a href="http://youa.baidu.com/zc" target="_blank"><img width="405" height="220" alt="9折话费" src="http://co.youa.baidu.com/picture/r/image/2009-12-25/4b2e801b6d174648ec77678d4a9f32e8.jpg"/></a></p>
@@ -242,21 +206,6 @@
         <li><a href="http://youa.baidu.com/shop/3710a13d15c375285841ef08/tab/0344b67328e77dc92132cad9" target="_blank">周末购</a></li>
     </ul>
 </div>
-<script>
-    KISSY.ready(function(S) {
-        S.Slide('#demo3', {
-            navCls: 'yslider-stick',
-            contentCls: 'yslider-stage',
-            activeTriggerCls: 'selected',
-            delay: .2,
-            effect: 'fade',
-            easing: 'easeBoth',
-            duration: .8,
-            autoplay: false
-        });
-    });
-</script>
-<p class="code-switch">显示源码</p>
 
 <h2>Carousel - 旋转木马</h2>
 <style>
@@ -309,7 +258,7 @@
         display: inline !important; /* fix ie6 双边距 bug */
     }
 </style>
-<div id="demo4" class="section scrollable">
+<div id="demo4" class="KS_Carousel section scrollable" data-ks-switchable="{'effect':'scrollx','easing':'easeOutStrong','steps':5,'viewSize':[680],'circular':false,'prevBtnCls':'prev','nextBtnCls':'next','disableBtnCls':'disable','lazyDataType':'img-src'}">
     <span id="scroller-prev" class="prev disable">&lsaquo; 上一页</span>
     <span id="scroller-next" class="next">下一页 &rsaquo;</span>
     <div class="scroller">
@@ -340,34 +289,13 @@
         </ul>
     </div>
 </div>
-<script>
-    KISSY.ready(function(S) {
-
-        var carousel = new S.Carousel('#demo4', {
-            effect: 'scrollx',
-            easing: 'easeOutStrong',
-            steps: 5,
-            viewSize: [680],
-            circular: false,
-            prevBtnCls: 'prev',
-            nextBtnCls: 'next',
-            disableBtnCls: 'disable',
-            lazyDataType: 'img-src'
-        });
-
-        carousel.on('itemSelected', function(ev) {
-            alert('I am selected. src = ' + ev.item.src);
-        });
-    });
-</script>
-<p class="code-switch">显示源码</p>
 
 <h2>Slide - 有啊滚动新闻条</h2>
 <style>
     .scroll-news { height: 20px; overflow: hidden; }
     .scroll-news a { color: #FF7E00; }
 </style>
-<div id="demo5" class="scroll-news">
+<div id="demo5" class="KS_Slide scroll-news" data-ks-switchable="{'contentCls':'news-items','hasTriggers':false,'effect':'scrolly','easing':'easeOutStrong','interval':3,'duration':0.2}">
     <ul class="news-items">
         <li><a target="_blank" href="http://youa.baidu.com/shop/72e01b38fb26b4ebc5db0136">“一分钱”轻松体验有啊网购流程</a></li>
         <li><a target="_blank" href="http://co.youa.baidu.com/content/payhelp/b12/zhaoshang/">开通网银，百付宝为您一路护航</a></li>
@@ -377,106 +305,6 @@
         <li><a target="_blank" href="http://co.youa.baidu.com/content/help/A3/2/2008-09-01/143723181295.html#10">收藏</a> + <a target="_blank" href="http://co.youa.baidu.com/content/help/A3/2009-01-08/112820209991.html">购物车</a>，逛街搜店更便捷</li>
     </ul>
 </div>
-<script>
-    KISSY.ready(function(S) {
-        S.Slide('#demo5', {
-            contentCls: 'news-items',
-            hasTriggers: false,
-            effect: 'scrolly',
-            easing: 'easeOutStrong',
-            interval: 3,
-            duration: .2
-        });
-    });
-</script>
-<p class="code-switch">显示源码</p>
-
-<h2>Slide - 土豆今日焦点</h2>
-<style>
-    #slideFocus { border: 1px solid #C2C2C2; height: 284px; width: 678px; overflow: hidden; }
-    #slideFocus .h { background: #f3f3f3; padding: 3px 0 7px 12px; }
-    #slideFocus .c { padding: 9px 10px 0; }
-    #slideFocus .pic { width: 379px; height: 233px; overflow: hidden; float: left; }
-    #slideFocus .txt { width: 270px; float: right; }
-    #slideFocus .desc-list h4 a { font-size: 14px; line-height: 25px; color: #f60; }
-    #slideFocus .desc-list p { height: 55px; line-height: 18px; color: #666; overflow: hidden; margin: 10px 0; }
-    #slideFocus .thumbs-list li { float: left; height: 62px; width: 84px; padding: 2px; margin: 1px; display: inline !important; }
-    #slideFocus .thumbs-list li.current { background-color: #f60; }
-</style>
-<div id="slideFocus">
-    <div class="h">
-        <h3>今日焦点视频</h3>
-    </div>
-    <div class="c">
-        <div class="pic loading">
-            <ul class="pic-list">
-                <li><a href="#"><img alt="" src="http://at-img4.tdimg.com/board/2010/1/2235.jpg"/></a></li>
-                <li><a href="#"><img alt="" src="http://at-img3.tdimg.com/board/2010/1/2_5.jpg"/></a></li>
-                <li><a href="#"><img alt="" src="http://at-img4.tdimg.com/board/2010/1/tt.jpg"/></a></li>
-                <li><a href="#"><img alt="" src="http://at-img2.tdimg.com/board/2009/12/avatarchina.jpg"/></a></li>
-                <li><a href="#"><img alt="" src="http://at-img1.tdimg.com/board/2009/12/0101jyu-daxue379.jpg"/></a></li>
-                <li><a href="#"><img alt="" src="http://at-img2.tdimg.com/board/2010/1/24_1.jpg"/></a></li>
-            </ul>
-        </div>
-        <div class="txt">
-            <ul class="desc-list">
-                <li style="display: block">
-                    <h4><a title="《神话》热播 第05集21:10分上线" target="_blank" href="http://www.tudou.com/home/_53991369">《神话》热播 第05集21:10分上线</a></h4>
-                    <p>秦代的刑场上，一个身着奇装异服的年轻人从天而降，众将士议论纷纷，不敢近前，不知是叛贼来劫法场，还是神仙妖孽下凡……</p>
-                </li>
-                <li style="display: none">
-                    <h4><a target="_blank" href="http://www.tudou.com/playlist/playindex.do?lid=7684460&amp;iid=44145734&amp;cid=3">2010年第一场强降雪飘落京城</a></h4>
-                    <p>继昨日凌晨降下新年首场小雪，今日首场强降雪飘落京城，据气象台预计雪后北京将降温至-16℃，这也将创下近40年来的最低温记录。</p>
-                </li>
-                <li style="display: none">
-                    <h4><a target="_blank" href="http://www.tudou.com/playlist/playindex.do?lid=7683893">娱乐圈丑闻 导演张一白吸毒被抓</a></h4>
-                    <p>正拍摄《杜拉拉升职记》的导演张一白因吸毒被抓，据传是其捧红的徐静蕾“告密”，衣食无忧、事业有成的明星，为何屡屡曝出吸毒丑闻？</p>
-                </li>
-                <li style="display: none">
-                    <h4><a target="_blank" href="http://www.tudou.com/home/avatar2010">詹姆斯-卡梅隆传奇巨制《阿凡达》</a></h4>
-                    <p>曾因《泰坦尼克号》创造过票房记录的好莱坞导演詹姆斯-卡梅隆，经过了14年的酝酿，耗资4亿美元拍制的科幻巨献《阿凡达》将于4日在中国上映！</p>
-                </li>
-                <li style="display: none">
-                    <h4><a target="_blank" href="http://www.tudou.com/playlist/playindex.do?lid=7637976">2009年大学生十大杯具事件</a></h4>
-                    <p>从70岁老教授潜规则艺校女生，到上海贫困女硕士自杀，09年发生在大学生身上的是非真是多得来令人惊诧，除了心酸就只有“杯具”了。</p>
-                </li>
-                <li style="display: none">
-                    <h4><a target="_blank" href="http://www.tudou.com/home/_52974690/">尚周刊 第三期</a></h4>
-                    <p>全新《尚周刊》在新年里与大家新鲜见面。简约是本周最IN的街头风！闪亮派对妆是每个潮女必备美妆术！想了解更多时尚资讯来《尚周刊》！</p>
-                </li>
-            </ul>
-            <ul class="thumbs-list">
-                <li class="current"><img alt="" width="84" height="62" src="http://at-img4.tdimg.com/board/2010/1/%CA%D7%D2%B3%BD%B9%B5%E3%CD%BCs.jpg"/></li>
-                <li><img alt="" width="84" height="62" src="http://at-img3.tdimg.com/board/2010/1/2_4.jpg"/></li>
-                <li><img alt="" width="84" height="62" src="http://at-img4.tdimg.com/board/2010/1/tt1.jpg"/></li>
-                <li><img alt="" width="84" height="62" src="http://at-img2.tdimg.com/board/2009/12/avatarchina-s.jpg"/></li>
-                <li><img alt="" width="84" height="62" src="http://at-img4.tdimg.com/board/2009/12/0101jyu-82641.jpg"/></li>
-                <li><img alt="" width="84" height="62" src="http://at-img1.tdimg.com/board/2010/1/4_1.jpg"/></li>
-            </ul>
-        </div>
-    </div>
-</div>
-<script>
-    KISSY.ready(function(S) {
-        var DOM = S.DOM,
-            descList = DOM.children('#slideFocus ul.desc-list');
-
-        var slide = new S.Slide('#slideFocus', {
-            contentCls: 'pic-list',
-            navCls: 'thumbs-list',
-            activeTriggerCls: 'current',
-            effect: 'scrollx',
-            easing: S.Easing.easeOutStrong
-        });
-
-        slide.on('beforeSwitch', function(ev) {
-            S.each(descList, function(desc, i) {
-                desc.style.display = i === ev.toIndex ? 'block' : 'none';
-            });
-        });
-    });
-</script>
-<p class="code-switch">显示源码</p>
 
 <h2>Accordion - 手风琴</h2>
 <style>
@@ -490,7 +318,7 @@
     #accordion1 .ks-active { border-bottom-width: 1px }
     #accordion1 .last-panel { border-bottom: none }
 </style>
-<div id="accordion1" class="section">
+<div id="accordion1" class="KS_Accordion section">
     <div class="ks-switchable-trigger ks-active"><i class="ks-icon"></i><h3>标题A</h3></div>
     <div class="ks-switchable-panel">
         1、支持鼠标滑过和点击触点两种方式<br/>
@@ -503,53 +331,19 @@
     <div class="ks-switchable-trigger last-trigger"><i class="ks-icon"></i><h3>标题D</h3></div>
     <div class="ks-switchable-panel last-panel" style="display:none;">内容D<br/>内容D<br/>内容D</div>
 </div>
-<script>
-    KISSY.ready(function(S) {
-        S.Accordion('#accordion1');
-    });
-</script>
-<p class="code-switch">显示源码</p>
 
-<h2>引用文件说明</h2>
+<h2>使用说明</h2>
 
-<p>需要引用以下文件：</p>
 <pre>
-    
-    kissy/build/packages/ks-core-min.js
-    kissy/build/anim/anim-pkg-min.js （可选，需要动画时才需要加载）
-    kissy/build/datalazyload/datalazyload-min.js (可选，需要数据延迟时才需要加载)
-    kissy/build/switachable/switachable-pkg-min.js
+    1. 先写好结构和样式
+    2. 选取适当的钩子：KS_Tabs, KS_Slide, KS_Carousel, KS_Accordion
+    3. 配置信息写在：以 JSON 格式写在 data-ks-switchable 属性中
 </pre>
 
 <script>
-    (function() {
-        var S = KISSY, DOM = S.DOM,
-            SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
-
-        S.all('p.code-switch').each(function(p) {
-            p.on('click', function() {
-                var showing = (p.text() === SHOW_CODE),
-                    next = p.next(),
-                    pre = next;
-
-                if (next[0].nodeName !== 'PRE') {
-                    pre = S.Node('<pre>');
-
-                    pre.attr('class', 'code')
-                        .html(p.prev().html());
-
-                    if (S.UA.ie) {
-                        pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
-                    }
-
-                    DOM.insertAfter(pre[0], p[0]);
-                }
-
-                pre.css('display', showing ? 'block' : 'none');
-                p.html(showing ? HIDE_CODE : SHOW_CODE);
-            });
-        });
-    })();
+KISSY.ready(function(S) {
+   S.Switchable.autoRender(); 
+});
 </script>
 </body>
 </html>

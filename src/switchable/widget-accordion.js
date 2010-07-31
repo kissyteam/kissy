@@ -8,6 +8,7 @@ KISSY.add('accordion', function(S) {
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
 
         defaultConfig = {
+            markupType: 1,
             triggerType: 'click',
             multiple: false
         };
