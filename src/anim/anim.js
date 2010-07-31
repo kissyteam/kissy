@@ -114,6 +114,10 @@ KISSY.add('anim', function(S, undefined) {
                     sp = source[prop];
                     tp = target[prop];
 
+                    // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
+                    // 这时要把 sp 的单位调整为和 tp 的一致
+                    if(tp.v == 0) tp.u = sp.u;
+
                     // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
                     // 比如：ie 下 border-width 默认为 medium
                     if(sp.u !== tp.u) sp.v = 0;
@@ -163,7 +167,7 @@ KISSY.add('anim', function(S, undefined) {
     function normalize(style) {
         var css, rules = { }, i = PROPS.length, v;
         parseEl.innerHTML = '<div style="' + style + '"></div>';
-        css = parseEl.childNodes[0].style;
+        css = parseEl.firstChild.style;
         while (i--) if ((v = css[PROPS[i]])) rules[PROPS[i]] = parse(v);
         return rules;
     }
