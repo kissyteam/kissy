@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>ImageZoom Research</title>
+<link rel="stylesheet" href="../../docs/assets/post.css" />
+</head>
+<body class="w1200 ks-post">
+
+<div id="header">
+    <h1>图片放大效果 ImageZoom 调研报告</h1>
+</div>
+
+<div id="content">
+    <h2>一、同类组件</h2>
+
+<pre>
+    1. JQZoom：<a href="http://www.mind-projects.it/projects/jqzoom/">http://www.mind-projects.it/projects/jqzoom/</a>
+        - 基于 jQuery 类库，大小 8.7k
+        - 支持 standard 和 reverse 两种显示类型；
+        - 提供 preload 功能，大图显示时支持特效；
+        - 配置丰富，调用方便。
+    
+    2. ImageZoom: <a href="http://www.cnblogs.com/cloudgamer/archive/2010/04/01/ImageZoom.html">http://www.cnblogs.com/cloudgamer/archive/2010/04/01/ImageZoom.html</a>
+        - 基于 CJL 类库，大小 6.1k
+        - 支持 standard, follow, reverse, handle 等多种显示类型；
+        - 支持使用原图放大。大图未加载前，使用原图放大，减少等待时间；
+        - 支持预加载、放大系数、自动隐藏、鼠标滚动缩放大图等功能；
+        - 功能是同类组件中最全的，两篇介绍博文也相当不错。
+
+    3. ImageScaler: <a href="http://yiminghe.javaeye.com/blog/388872">http://yiminghe.javaeye.com/blog/388872</a>
+        - 基于 Ext 类库，大小 6.9k
+        - 有缩放功能、支持拖拽、移动；
+        - 严格说来，这个组件的目的不是图片放大，而是图片裁剪功能，挺有意思。
+
+    4. AnythingZoomer: <a href="http://css-tricks.com/examples/AnythingZoomer/image.php">http://css-tricks.com/examples/AnythingZoomer/image.php</a>
+        - 基于 jQuery 类库，大小 1.2k
+        - 显示类型只有跟随模式；
+        - 强大之处在于，该组件可以放大任何区域，比如文本等等，不愧为 anything zoomer!
+
+</pre>
+
+    <h2>二、功能分析</h2>
+
+<pre>
+    1. 显示类型，可总结为以下 3 类：
+        - 标准模式 standard: 可参考 JQZoom 的默认显示，可设置 放大镜 lens 是否显示；
+        - 反转模式 reverse:  可参考 JQZoom 的反转模式，或 CJL ImageZoom 的 cropper 模式，该模式下，lens 必须显示；
+        - 跟随模式 follow:   可参考 CJL ImageZoom 的 follow 模式。
+
+    2. 
+</pre>
+
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

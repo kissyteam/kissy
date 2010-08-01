@@ -3557,9 +3557,11 @@ build time: ${build.time}
 */
 /**
  * @module  ajax
- * @author  lifesinger@gmail.com
+ * @author  拔赤<lijing00333@163.com>
  */
 KISSY.add('ajax', function(S) {
+
+	S.Ajax = S.Ajax || {};
 
     var doc = document,
         testNode = doc.createElement('script'),
@@ -3576,16 +3578,254 @@ KISSY.add('ajax', function(S) {
             };
         } : function(node, callback) {
             node.onload = callback;
-        };
+        },
 
-    S.Ajax = {
+	
+	//通讯序列号
+	_transactionid = 0;
 
+	var id = function(){
+		return _transactionid++;
+	};
+
+	//检测xhr是否成功
+	var _httpSuccess = function( xhr ) {
+		try {
+			return !xhr.status && location.protocol === "file:" ||
+				// Opera returns 0 when status is 304
+				( xhr.status >= 200 && xhr.status < 300 ) ||
+				xhr.status === 304 || xhr.status === 1223 || xhr.status === 0;
+		} catch(e) {}
+
+		return false;
+	};
+
+	/**
+	 * S.Ajax.io(options) 基础方法,派生出S.Ajax.get,S.Ajax.post,
+	 * @param o
+	 			type:get,GET,post,POST
+				url:
+				data:a=1&b=2
+				dataType:jsonp
+				complete:function
+				success:function
+				failure:function
+				async:true,false
+				headers:{
+					'Content-Type': 'application/json'
+				}
+				args:
+	 */
+
+	S.Ajax.io = function(o){
+
+		//默认设置
+		var _ajaxSettings = {
+
+			url: location.href,
+			global: true,
+			type: "GET",
+			contentType: "application/x-www-form-urlencoded",
+			async: true,
+			//data可以是对象，也可以是字符串
+			data:null,
+			xhr: window.XMLHttpRequest && (window.location.protocol !== "file:" || !window.ActiveXObject) ?
+				function() {
+					return new window.XMLHttpRequest();
+				} :
+				function() {
+					try {
+						return new window.ActiveXObject("Microsoft.XMLHTTP");
+					} catch(e) {}
+				},
+			//结果类型，来自jquery
+			accepts: {
+				xml: "application/xml, text/xml",
+				html: "text/html",
+				script: "text/javascript, application/javascript",
+				json: "application/json, text/javascript",
+				text: "text/plain",
+				_default: "*/*"
+			},
+			complete:new Function,
+			success:new Function,
+			failure:new Function,
+			args:null
+		};
+
+		var s = _ajaxSettings;
+
+		S.mix(s,o);
+
+		var jsonp, status,
+			jsre = /=\?(&|$)/,
+			rquery = /\?/,
+			type = s.type.toUpperCase();
+
+		// convert data if not already a string
+		if ( s.data && typeof s.data !== "string" ) {
+			var _str = '';
+			for(var i in s.data){
+				_str += '&'+ i+'='+s.data[i];
+			}
+			s.data = _str.replace(/^&/i,'');
+		}
+
+		// Handle JSONP Parameter Callbacks,参照jquery,保留callback=?的约定
+		if ( s.dataType === "jsonp") {
+			if ( type === "GET" ) {
+				if ( !jsre.test( s.url ) ) {
+					s.url += (rquery.test( s.url ) ? "&" : "?") + (s.jsonp || "callback") + "=?";
+				}
+			} else if ( !s.data || !jsre.test(s.data) ) {
+				s.data = (s.data ? s.data + "&" : "") + (s.jsonp || "callback") + "=?";
+			}
+			s.dataType = "json";
+
+			jsonp = "jsonp" + S.now();
+
+			// Replace the =? sequence both in the query string and the data
+			if ( s.data ) {
+				s.data = (s.data + "").replace(jsre, "=" + jsonp + "$1");
+			}
+
+			s.url = s.url.replace(jsre, "=" + jsonp + "$1");
+
+			s.dataType = "script";
+
+			// Handle JSONP-style loading
+			window[ jsonp ] = window[ jsonp ] || function( data ) {
+				s.success(id(),data,s.args);
+				s.complete(id(),data,s.args);
+				/*
+				//是否需要delete，需要经过测试
+				window[ jsonp ] = undefined;
+				try {
+					delete window[ jsonp ];
+				} catch(e) {}
+				*/
+			};
+		}
+
+
+		if ( s.data && type === "GET" ) {
+			s.url += (rquery.test(s.url) ? "&" : "?") + s.data;
+		}
+
+		//
+		if ( s.dataType === "script") {
+			if(!jsonp){
+				S.Ajax.getScript(s.url,function(){
+					s.complete(id(),s.args);
+					s.success(id(),s.args);
+				});
+
+			}else {
+				S.Ajax.getScript(s.url,new Function);
+			}
+
+			return undefined;
+		}
+
+
+		var requestDone = false;
+
+		var xhr = s.xhr();
+		
+		xhr.open(type, s.url, s.async);
+
+		// Need an extra try/catch for cross domain requests in Firefox 3
+		try {
+			// Set the correct header, if data is being sent
+			if ( s.data || s && s.contentType ) {
+				xhr.setRequestHeader("Content-Type", s.contentType);
+			}
+
+			// Set the Accepts header for the server, depending on the dataType
+			xhr.setRequestHeader("Accept", s.dataType && s.accepts[ s.dataType ] ?
+				s.accepts[ s.dataType ] + ", */*" :
+				s.accepts._default );
+		} catch(e) {}
+
+		// Wait for a response to come back
+		xhr.onreadystatechange = function( isTimeout ) {
+			//请求中止 
+			if ( !xhr || xhr.readyState === 0 || isTimeout === "abort" ) {
+				// Opera doesn't call onreadystatechange before this point
+				// so we simulate the call
+				if ( !requestDone ) {
+					s.complete(id(),xhr,s.args);
+				}
+
+				//请求完成，onreadystatechange值空
+				requestDone = true;
+				if ( xhr ) {
+					xhr.onreadystatechange = new Function;
+				}
+
+			//请求成功，数据可用，或者请求超时
+			} else if ( !requestDone && xhr && (xhr.readyState === 4 || isTimeout === "timeout") ) {
+				requestDone = true;
+				xhr.onreadystatechange = new Function;
+
+				status = isTimeout === "timeout" ?
+					"timeout" :
+					!_httpSuccess( xhr ) ?
+						"error" :
+						"success";
+
+				// Make sure that the request was successful or notmodified
+				if ( status === "success" ) {
+					// JSONP handles its own success callback
+					if ( !jsonp ) {
+						s.success(id(),xhr,s.args);
+					}
+				} else {
+					s.failure(id(),xhr,s.args);
+				}
+
+				// Fire the complete handlers
+				s.complete(id(),xhr,s.args);
+
+				if ( isTimeout === "timeout" ) {
+					xhr.abort();
+				}
+
+				// Stop memory leaks
+				if ( s.async ) {
+					xhr = null;
+				}
+			}
+		};
+
+		xhr.send( type === "POST" ? s.data : null );
+
+		// return XMLHttpRequest to allow aborting the request etc.
+		return xhr;
+
+
+
+	};
+
+
+	S.mix(S.Ajax,{
+		
         /**
          * Sends an HTTP request to a remote server.
          */
-        request: function(/*url, options*/) {
-            S.error('not implemented'); // TODO
+        get: function(url, options) {
+			var s = options;
+			s.type = 'get';
+			s.url = url;
+			S.Ajax(s);
         },
+
+		post: function(url,options){
+			var s = options;
+			s.type = 'post';
+			s.url = url;
+			S.Ajax(s);
+		},
 
         /**
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
@@ -3604,7 +3844,11 @@ KISSY.add('ajax', function(S) {
 
             head.appendChild(node);
         }
-    };
+			
+	});
+
+	S.io = S.Ajax.io;
+
 });
 
 /**
@@ -3613,6 +3857,12 @@ KISSY.add('ajax', function(S) {
  *   - api 考虑：jQuery 的全耦合在 jQuery 对象上，ajaxComplete 等方法不优雅。
  *         YUI2 的 YAHOO.util.Connect.Get.script 层级太深，YUI3 的 io 则
  *         野心过大，KISSY 借鉴 ExtJS, 部分方法借鉴 jQuery.
+ *  2010.07
+ *   - 实现常用功实现常用功实现常用功实现常用功,get,post以及类jquery的jsonp，
+ *			考虑是否继续实现iframe-upload和flash xdr，代码借鉴jquery-ajax，api形状借鉴yui3-io
+ *			基本格式依照 callback(id,xhr,args)
+ *   - 没有经过严格测试，包括jsonp里的内存泄漏的测试
+ *			对xml,json的格式的回调支持是否必要？
  */
 /*
 Copyright 2010, KISSY UI Library v1.1.0pre
@@ -5415,6 +5665,10 @@ KISSY.add('anim', function(S, undefined) {
                     sp = source[prop];
                     tp = target[prop];
 
+                    // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
+                    // 这时要把 sp 的单位调整为和 tp 的一致
+                    if(tp.v == 0) tp.u = sp.u;
+
                     // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
                     // 比如：ie 下 border-width 默认为 medium
                     if(sp.u !== tp.u) sp.v = 0;
@@ -5464,7 +5718,7 @@ KISSY.add('anim', function(S, undefined) {
     function normalize(style) {
         var css, rules = { }, i = PROPS.length, v;
         parseEl.innerHTML = '<div style="' + style + '"></div>';
-        css = parseEl.childNodes[0].style;
+        css = parseEl.firstChild.style;
         while (i--) if ((v = css[PROPS[i]])) rules[PROPS[i]] = parse(v);
         return rules;
     }
@@ -5564,11 +5818,10 @@ KISSY.add('datalazyload', function(S, undefined) {
     var DOM = S.DOM, Event = S.Event,
         win = window, doc = document,
 
-        IMG_DATA_SRC = 'data-lazyload-src',
-        TEXTAREA_DATA_CLS = 'ks-datalazyload',
-        CUSTOM_IMG_DATA_SRC = IMG_DATA_SRC + '-custom',
-        CUSTOM_TEXTAREA_DATA_CLS = TEXTAREA_DATA_CLS + '-custom',
-        MOD = { AUTO: 'auto', MANUAL: 'manual' },
+        IMG_SRC_DATA = 'data-ks-lazyload',
+        AREA_DATA_CLS = 'ks-datalazyload',
+        CUSTOM = '-custom',
+        MANUAL = 'manual',
         DISPLAY = 'none', DEFAULT = 'default', NONE = 'none',
         SCROLL = 'scroll', RESIZE = 'resize',
 
@@ -5577,10 +5830,10 @@ KISSY.add('datalazyload', function(S, undefined) {
             /**
              * 懒处理模式
              *   auto   - 自动化。html 输出时，不对 img.src 做任何处理
-             *   manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 IMG_DATA_SRC
+             *   manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 IMG_SRC_DATA
              * 注：对于 textarea 数据，只有手动模式
              */
-            mod: MOD.MANUAL,
+            mod: MANUAL,
 
             /**
              * 当前视窗往下，diff px 外的 img/textarea 延迟加载
@@ -5692,10 +5945,10 @@ KISSY.add('datalazyload', function(S, undefined) {
          */
         _filterImg: function(img) {
             var self = this,
-                dataSrc = img.getAttribute(IMG_DATA_SRC),
+                dataSrc = img.getAttribute(IMG_SRC_DATA),
                 threshold = self.threshold,
                 placeholder = self.config.placeholder,
-                isManualMod = self.config.mod === MOD.MANUAL;
+                isManualMod = self.config.mod === MANUAL;
 
             // 手工模式，只处理有 data-src 的图片
             if (isManualMod) {
@@ -5710,7 +5963,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             else {
                 // 注意：已有 data-src 的项，可能已有其它实例处理过，不用再次处理
                 if (DOM.offset(img).top > threshold && !dataSrc) {
-                    DOM.attr(img, IMG_DATA_SRC, img.src);
+                    DOM.attr(img, IMG_SRC_DATA, img.src);
                     if (placeholder !== NONE) {
                         img.src = placeholder;
                     } else {
@@ -5725,7 +5978,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          * filter for lazyload textarea
          */
         _filterArea: function(area) {
-            return DOM.hasClass(area, TEXTAREA_DATA_CLS);
+            return DOM.hasClass(area, AREA_DATA_CLS);
         },
 
         /**
@@ -5806,7 +6059,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          * @static
          */
         _loadImgSrc: function(img, flag) {
-            flag = flag || IMG_DATA_SRC;
+            flag = flag || IMG_SRC_DATA;
             var dataSrc = img.getAttribute(flag);
 
             if (dataSrc && img.src != dataSrc) {
@@ -5887,7 +6140,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 加载自定义延迟数据
          * @static
          */
-        loadCustomLazyData: function(containers, type, flag) {
+        loadCustomLazyData: function(containers, type) {
             var self = this, area, imgs;
 
             // 支持数组
@@ -5898,25 +6151,24 @@ KISSY.add('datalazyload', function(S, undefined) {
             // 遍历处理
             S.each(containers, function(container) {
                 switch (type) {
-
-                    case 'textarea-data':
-                        area = S.get('textarea', container);
-                        if (area && DOM.hasClass(area, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
-                            self._loadAreaData(container, area);
-                        }
-                        break;
-                    
-                    //case 'img-src':
-                    default:
+                    case 'img-src':
                         if (container.nodeName === 'IMG') { // 本身就是图片
                             imgs = [container];
                         } else {
                             imgs = S.query('img', container);
                         }
-
+                        
                         S.each(imgs, function(img) {
-                            self._loadImgSrc(img, flag || CUSTOM_IMG_DATA_SRC);
+                            self._loadImgSrc(img, IMG_SRC_DATA + CUSTOM);
                         });
+                        
+                        break;
+                    
+                    default:
+                        area = S.get('textarea', container);
+                        if (area && DOM.hasClass(area, AREA_DATA_CLS + CUSTOM)) {
+                            self._loadAreaData(container, area);
+                        }
                 }
             });
         }
@@ -5976,17 +6228,461 @@ KISSY.add('datalazyload', function(S, undefined) {
  */
 
 /**
- * TODO:
+ * zTODO:
  *   - [取消] 背景图片的延迟加载（对于 css 里的背景图片和 sprite 很难处理）
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  */
 
 /**
  * UPDATE LOG:
- *   - 2010-07-10 yiminghe@gmail.com(chengyu) 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调
+ *   - 2010-07-31 yubo IMG_SRC_DATA 由 data-lazyload-src 更名为 data-ks-lazyload + 支持 touch 设备
+ *   - 2010-07-10 chengyu 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调
  *   - 2010-05-10 yubo ie6 下，在 dom ready 后执行，会导致 placeholder 重复加载，为比避免此问题，默认为 none, 去掉占位图
  *   - 2010-04-05 yubo 重构，使得对 YUI 的依赖仅限于 YDOM
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
+ */
+/*
+Copyright 2010, KISSY UI Library v1.1.0pre
+MIT Licensed
+build time: ${build.time}
+*/
+/**
+ * @module   Flash UA 探测
+ * @author   kingfo<oicuicu@gmail.com>
+ * @depends  ks-core
+ */
+KISSY.add('flash-ua', function(S) {
+
+    var UA = S.UA, fpv, fpvF, firstRun = true;
+
+    /**
+     * 获取 Flash 版本号
+     * 返回数据 [M, S, R] 若未安装，则返回 undefined
+     */
+    function getFlashVersion() {
+        var ver, SF = 'ShockwaveFlash';
+
+        // for NPAPI see: http://en.wikipedia.org/wiki/NPAPI
+        if (navigator.plugins && navigator.mimeTypes.length) {
+            ver = (navigator.plugins['Shockwave Flash'] || 0).description;
+        }
+        // for ActiveX see:	http://en.wikipedia.org/wiki/ActiveX
+        else if (window.ActiveXObject) {
+            try {
+                ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
+            } catch(ex) {
+                //S.log('getFlashVersion failed via ActiveXObject');
+                // nothing to do, just return undefined
+            }
+        }
+
+        // 插件没安装或有问题时，ver 为 undefined
+        if(!ver) return;
+
+        // 插件安装正常时，ver 为 "Shockwave Flash 10.1 r53" or "WIN 10,1,53,64"
+        return arrify(ver);
+    }
+
+    /**
+     * arrify("10.1.r53") => ["10", "1", "53"]
+     */
+    function arrify(ver) {
+        return ver.match(/(\d)+/g);
+    }
+
+    /**
+     * 格式：主版本号Major.次版本号Minor(小数点后3位，占3位)修正版本号Revision(小数点后第4至第8位，占5位)
+     * ver 参数不符合预期时，返回 0
+     * numerify("10.1 r53") => 10.00100053
+     * numerify(["10", "1", "53"]) => 10.00100053
+     * numerify(12.2) => 12.2
+     */
+    function numerify(ver) {
+        var arr = S.isString(ver) ? arrify(ver) : ver, ret = ver;
+        if (S.isArray(arr)) {
+            ret = parseFloat(arr[0] + '.' + pad(arr[1], 3) + pad(arr[2], 5));
+        }
+        return ret || 0;
+    }
+
+    /**
+     * pad(12, 5) => "00012"
+     * ref: http://lifesinger.org/blog/2009/08/the-harm-of-tricky-code/
+     */
+    function pad(num, n) {
+        var len = (num + '').length;
+        while (len++ < n) {
+            num = '0' + num;
+        }
+        return num;
+    }
+
+    /**
+     * 返回数据 [M, S, R] 若未安装，则返回 undefined
+     * fpv 全称是 flash player version
+     */
+    UA.fpv = function(force) {
+        // 考虑 new ActiveX 和 try catch 的 性能损耗，延迟初始化到第一次调用时
+        if(force || firstRun) {
+            firstRun = false;
+            fpv = getFlashVersion();
+            fpvF = numerify(fpv);
+        }
+        return fpv;
+    };
+
+    /**
+     * Checks fpv is greater than or equal the specific version.
+     * 普通的 flash 版本检测推荐使用该方法
+     * @param ver eg. "10.1.53"
+     * <code>
+     *    if(S.UA.fpvGEQ('9.9.2')) { ... }
+     * </code>
+     */
+    UA.fpvGEQ = function(ver, force) {
+        if(firstRun) UA.fpv(force);
+        return !!fpvF && (fpvF >= numerify(ver));
+    };
+
+});
+
+/**
+ * NOTES:
+ *
+ -  ActiveXObject JS 小记
+ -    newObj = new ActiveXObject(ProgID:String[, location:String])
+ -    newObj      必需    用于部署 ActiveXObject  的变量
+ -    ProgID      必选    形式为 "serverName.typeName" 的字符串
+ -    serverName  必需    提供该对象的应用程序的名称
+ -    typeName    必需    创建对象的类型或者类
+ -    location    可选    创建该对象的网络服务器的名称
+
+ -  Google Chrome 比较特别：
+ -    即使对方未安装 flashplay 插件 也含最新的 Flashplayer
+ -    ref: http://googlechromereleases.blogspot.com/2010/03/dev-channel-update_30.html
+ *
+ */
+/**
+ * @module   Flash 全局静态类
+ * @author   kingfo<oicuicu@gmail.com>
+ * @depends  ks-core
+ */
+KISSY.add('flash', function(S){
+	
+	S.Flash = {
+		/**
+		 * flash 实例 map { '#id': elem, ... }
+         * @static
+		 */
+		swfs: { length: 0 }
+	};
+});
+/**
+ * @module   将 swf 嵌入到页面中
+ * @author   kingfo<oicuicu@gmail.com>, 射雕<lifesinger@gmail.com>
+ * @depends  ks-core + json
+ */
+KISSY.add('flash-embed', function(S) {
+
+    var UA = S.UA, DOM = S.DOM, Flash = S.Flash,
+
+        SWF_SUCCESS = 1,
+        FP_LOW = 0,
+        FP_UNINSTALL = -1,
+        TARGET_NOT_FOUND = -2,  // 指定 ID 的对象未找到
+        SWF_SRC_UNDEFINED = -3, // swf 的地址未指定
+
+        RE_FLASH_TAGS = /object|embed/i,
+        CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
+        TYPE = 'application/x-shockwave-flash',
+        FLASHVARS = 'flashvars', EMPTY = '',
+        PREFIX = 'ks-flash-', ID_PRE = '#',
+        encode = encodeURIComponent,
+
+        // flash player 的参数范围
+        PARAMS = {
+            ////////////////////////// 高频率使用的参数
+            //flashvars: EMPTY,     // swf 传入的第三方数据。支持复杂的 Object / XML 数据 / JSON 字符串
+            wmode: EMPTY,
+            allowscriptaccess: EMPTY,
+            allownetworking: EMPTY,
+            allowfullscreen: EMPTY,
+            ///////////////////////// 显示 控制 删除 
+            play: 'false',
+            loop: EMPTY,
+            menu: EMPTY,
+            quality: EMPTY,
+            scale: EMPTY,
+            salign: EMPTY,
+            bgcolor: EMPTY,
+            devicefont: EMPTY,
+            /////////////////////////	其他控制参数
+            base: EMPTY,
+            swliveconnect: EMPTY,
+            seamlesstabbing: EMPTY
+        },
+
+        defaultConifg = {
+            //src: '',       // swf 路径
+            params: { },     // Flash Player 的配置参数
+            attrs: {         // swf 对应 DOM 元素的属性
+                width: 215,	 // 最小控制面板宽度,小于此数字将无法支持在线快速安装
+                height: 138  // 最小控制面板高度,小于此数字将无法支持在线快速安装
+            },
+            //xi: '',	     //	快速安装地址。全称 express install  // ? 默认路径
+            version: 9       //	要求的 Flash Player 最低版本
+        };
+
+
+    S.mix(Flash, {
+
+        fpv: UA.fpv,
+
+        fpvGEQ: UA.fpvGEQ,
+
+        len: function () {
+            return Flash.swfs.length;
+        },
+
+        /**
+         * 添加 SWF 对象
+         * @param target {String|HTMLElement}  #id or element
+         */
+        add: function(target, config, callback) {
+            var self = this, xi, id;
+
+            // 标准化配置信息
+            config = Flash._normalize(config);
+
+            // 合并配置信息
+            config = S.merge(defaultConifg, config);
+            config.attrs = S.merge(defaultConifg.attrs, config.attrs);
+
+
+            // 1. target 元素未找到
+            if (!(target = S.get(target))) {
+                self._callback(callback, TARGET_NOT_FOUND);
+                return;
+            }
+
+            // 保存 id, 没有则自动生成
+            if (!target.id) target.id = S.guid(PREFIX);
+            id = config.attrs.id = ID_PRE + target.id;
+
+            // 2. flash 插件没有安装
+            if (!UA.fpv()) {
+                self._callback(callback, FP_UNINSTALL, id, target);
+                return;
+            }
+
+            // 3. 已安装，但当前客户端版本低于指定版本时
+            if (!UA.fpvGEQ(config.version)) {
+                self._callback(callback, FP_LOW, id, target);
+
+                // 有 xi 时，将 src 替换为快速安装
+                if (!((xi = config.xi) && S.isString(xi))) return;
+                config.src = xi;
+            }
+
+            // 对已有 HTML 结构的 SWF 进行注册使用
+            if (RE_FLASH_TAGS.test(target.nodeName)) {
+                self._register(target, config, callback);
+                return;
+            }
+
+            // src 未指定
+            if (!config.src) {
+                self._callback(callback, SWF_SRC_UNDEFINED, id, target);
+                return;
+            }
+
+            // 替换 target 为 SWF 嵌入对象
+            self._embed(target, config, callback);
+        },
+
+        /**
+         * 获得已注册到 S.Flash 的 SWF
+         * 注意，请不要混淆 DOM.get() 和 Flash.get()
+         * 只有成功执行过 S.Flash.add() 的 SWF 才可以被获取
+         * @return {HTMLElement}  返回 SWF 的 HTML 元素(object/embed). 未注册时，返回 undefined
+         */
+        get: function(id) {
+            return Flash.swfs[id];
+        },
+
+        /**
+         * 移除已注册到 S.Flash 的 SWF 和 DOM 中对应的 HTML 元素
+         */
+        remove: function(id) {
+            var swf = Flash.get(id);
+            if (swf) {
+                DOM.remove(swf);
+                delete Flash.swfs['#' + swf.id];
+                Flash.swfs.length -= 1;
+            }
+        },
+
+        /**
+         * 检测是否存在已注册的 swf
+         * 只有成功执行过 S.Flash.add() 的 SWF 才可以被获取到
+         * @return {Boolean}
+         */
+        contains: function(target) {
+            var swfs = Flash.swfs,
+                id, ret = false;
+
+            if (S.isString(target)) {
+                ret = (target in swfs);
+            } else {
+                for (id in swfs)
+                    if (swfs[id] === target) {
+                        ret = true;
+                        break;
+                    }
+            }
+            return ret;
+        },
+
+        _register: function(swf, config, callback) {
+            var id = config.attrs.id;
+            Flash._addSWF(id, swf);
+            Flash._callback(callback, SWF_SUCCESS, id, swf);
+        },
+
+        _embed: function (target, config, callback) {
+            var o = Flash._createSWF(config.src, config.attrs, config.params);
+			
+            if (UA.ie) {
+                // ie 下，通过纯 dom 操作插入的 object 会一直处于加载状态中
+                // 只能通过 innerHTML/outerHTML 嵌入
+                target.outerHTML = o.outerHTML;
+            }
+            else {
+                target.parentNode.replaceChild(o, target);
+            }
+
+            Flash._register(target, config, callback);
+        },
+
+        _callback: function(callback, type, id, swf) {
+            if (type && S.isFunction(callback)) {
+                callback({
+                    status: type,
+                    id: id,
+                    swf: swf
+                });
+            }
+        },
+
+        _addSWF: function(id, swf) {
+            if (id && swf) {
+                Flash.swfs[id] = swf;
+                Flash.swfs.length += 1;
+            }
+        },
+
+        _createSWF: function (src, attrs, params) {
+            var o = DOM.create('<object>'), k;
+
+            // 普通属性设置
+            DOM.attr(o, attrs);
+
+            // 特殊属性设置
+            if (UA.ie) {
+                DOM.attr(o, 'classid', CID);
+                appendParam(o, 'movie', src);
+            }
+            else {
+                DOM.attr(o, {
+                    type: TYPE,
+                    data: src,
+                    name: attrs.id
+                });
+            }
+			
+            // 添加 params
+            for (k in params) {
+                if (k in PARAMS) appendParam(o, k, params[k]);
+            }
+            if (params[FLASHVARS]) {
+                appendParam(o, FLASHVARS,  Flash.toFlashVars(params[FLASHVARS]));
+            }
+
+            return o;
+        },
+
+        /**
+         * 将对象的 key 全部转为小写
+         * 一般用于配置选项 key 的标准化
+         */
+        _normalize: function(obj) {
+            var key, val, prop, ret = obj;
+
+            if (S.isPlainObject(obj)) {
+                ret = {};
+
+                for (prop in obj) {
+                    key = prop.toLowerCase();
+                    val = obj[prop];
+
+                    // 忽略自定义传参内容标准化
+                    if (key !== FLASHVARS) val = Flash._normalize(val);
+
+                    ret[key] = val;
+                }
+            }
+            return ret;
+        },
+
+        /**
+         * 将普通对象转换为 flashvars
+         * eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b={"x":2,"z":"s%3D1%26c%3D2"}
+         */
+        toFlashVars: function(obj) {
+            if (!S.isPlainObject(obj)) return EMPTY; // 仅支持 PlainOject
+            var prop, data, arr = [];
+
+            for (prop in obj) {
+                data = obj[prop];
+
+                // 字符串，用双引号括起来
+                if (S.isString(data)) {
+                    data = '"' + encode(data) + '"';
+                }
+                // 其它值，用 stringify 转换后，再转义掉字符串值
+                else {
+                    data = (S.JSON.stringify(data));
+                    if (!data) continue; // 忽略掉 undefined, fn 等值
+                    
+                    data = data.replace(/:"([^"]+)/g, function(m, val) {
+                        return ':"' + encode(val);
+                    });
+                }
+
+                arr.push(prop + '=' + data);
+            }
+
+            return arr.join('&');
+        }
+    });
+
+    function appendParam(o, name, val) {
+        var param = DOM.create('<param>');
+        DOM.attr(param, { name: name, value: val });
+        o.appendChild(param);
+    }
+});
+
+/**
+ * NOTES:
+ * 2010/07/21   向 google code 提交了基础代码
+ * 2010/07/22   修正了 embed 始终都有 callback 尝试性调用
+ *              避免了未定义 el/id 或 swfurl 时无法获知错误
+ * 2010/07/27   迁移至 github 做版本管理。向 kissy-sandbox 提交代码
+ * 2010/07/28   合并了公开方法 Flash.register 和 Flash.embed 为 Flash.add()
+ *              修改 Flash.length() 为 Flash.getLength(), 使其看上去更像方法而非属性方式获取
+ * 2010/07/29   重构到 kissy 项目中
+ * 2010/07/30	增加了标准化配置项方法 _normalize(); 修正 flashvars 转 String 方式为 toFlashVars
  */
 /*
 Copyright 2010, KISSY UI Library v1.1.0pre
@@ -6104,7 +6800,7 @@ KISSY.add('switchable', function(S, undefined) {
         delay: .1, // 100ms
 
         activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
-        activeTriggerCls: 'active',
+        activeTriggerCls: 'ks-active',
 
         // 可见视图内有多少个 panels
         steps: 1,
@@ -6773,19 +7469,18 @@ KISSY.add('switchable-lazyload', function(S) {
     var DOM = S.DOM,
         EVENT_BEFORE_SWITCH = 'beforeSwitch',
         IMG_SRC = 'img-src',
-        TEXTAREA_DATA = 'textarea-data',
+        AREA_DATA = 'area-data',
         FLAGS = { },
         Switchable = S.Switchable;
 
-    FLAGS[IMG_SRC] = 'data-lazyload-src-custom';
-    FLAGS[TEXTAREA_DATA] = 'ks-datalazyload-custom';
+    FLAGS[IMG_SRC] = 'data-ks-lazyload-custom';
+    FLAGS[AREA_DATA] = 'ks-datalazyload-custom';
 
     /**
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        lazyDataType: '', // 'img-src' or 'textarea-data'
-        lazyDataFlag: ''  // 'data-lazyload-src-custom' or 'ks-datalazyload-custom'
+        lazyDataType: AREA_DATA // or IMG_SRC
     });
 
     /**
@@ -6798,7 +7493,7 @@ KISSY.add('switchable-lazyload', function(S) {
         init: function(host) {
             var DataLazyload = S.DataLazyload,
                 cfg = host.config,
-                type = cfg.lazyDataType, flag = cfg.lazyDataFlag || FLAGS[type];
+                type = cfg.lazyDataType, flag = FLAGS[type];
 
             if (!DataLazyload || !type || !flag) return; // 没有延迟项
 
@@ -6812,7 +7507,7 @@ KISSY.add('switchable-lazyload', function(S) {
                     from = ev.toIndex * steps ,
                     to = from + steps;
 
-                DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type, flag);
+                DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type);
                 if (isAllDone()) {
                     host.detach(EVENT_BEFORE_SWITCH, loadLazyData);
                 }
@@ -6824,7 +7519,7 @@ KISSY.add('switchable-lazyload', function(S) {
             function isAllDone() {
                 var elems, i, len,
                     isImgSrc = type === IMG_SRC,
-                    tagName = isImgSrc ? 'img' : (type === TEXTAREA_DATA ? 'textarea' : '');
+                    tagName = isImgSrc ? 'img' : (type === AREA_DATA ? 'textarea' : '');
 
                 if (tagName) {
                     elems = S.query(tagName, host.container);
@@ -6836,6 +7531,133 @@ KISSY.add('switchable-lazyload', function(S) {
             }
         }
     });
+});
+/**
+ * Switchable Countdown Plugin
+ * @creator  gonghao<gonghao@ghsky.com>
+ */
+KISSY.add('switchable-countdown', function(S, undefined) {
+
+    var DOM = S.DOM, Event = S.Event, Anim = S.Anim,
+        Switchable = S.Switchable,
+        CLS_PREFIX = 'ks-switchable-trigger-',
+        TRIGGER_MASK_CLS = CLS_PREFIX + 'mask',
+        TRIGGER_CONTENT_CLS = CLS_PREFIX + 'content';
+
+    /**
+     * 添加默认配置
+     */
+    S.mix(Switchable.Config, {
+        countdown: false,
+        countdownStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
+    });
+
+    /**
+     * 添加插件
+     */
+    Switchable.Plugins.push({
+
+        name: 'countdown',
+
+        init: function(host) {
+            var cfg = host.config, interval = cfg.interval,
+                triggers = host.triggers, masks = [], style = cfg.countdownStyle,
+                anim, hoverAnim;
+
+            // 必须保证开启 autoplay 以及有 trigger 时，才能开启倒计时动画
+            if (!cfg.autoplay || !cfg.hasTriggers || !cfg.countdown) return;
+
+            // 为每个 trigger 增加倒计时动画覆盖层
+            S.each(triggers, function(trigger, i) {
+                trigger.innerHTML = '<div class="' + TRIGGER_MASK_CLS + '"></div>' +
+                    '<div class="' + TRIGGER_CONTENT_CLS + '">' + trigger.innerHTML + '</div>';
+                masks[i] = trigger.firstChild;
+            });
+
+            // 鼠标悬停，停止自动播放
+            if (cfg.pauseOnHover) {
+                Event.on(host.container, 'mouseenter', function() {
+                    // 先停止未完成动画
+                    stopAnim();
+
+                    // 快速平滑关闭当前未完成动画效果
+                    hoverAnim = new Anim(masks[host.activeIndex], style, interval / 10, 'easeOut').run();
+                });
+            }
+
+            // panels 切换前，当前 trigger 完成善后工作以及下一 trigger 进行初始化
+            host.on('beforeSwitch', function(ev) {
+                // 恢复前，先结束未完成动画效果
+                stopAnim();
+
+                // 将当前 mask 恢复动画前状态
+                DOM.removeAttr(masks[host.activeIndex], 'style');
+
+                // 悬停状态时，不需要触发倒计时动画
+                if(host.paused) {
+                    // 将下一个 mask 隐藏，也就是没有动画效果
+                    DOM.css(masks[ev.toIndex], 'visibility', 'hidden');
+                }
+            });
+
+            // panel 切换完成时，开始 trigger 的倒计时动画
+            host.on('switch', function(ev) {
+                // 悬停状态，当用户主动触发切换时，不需要倒计时动画
+                if (!host.paused) {
+                    startAnim(ev.currentIndex);
+                }
+            });
+
+            // 开始第一次
+            startAnim(host.activeIndex);
+
+
+            // 开始倒计时动画
+            function startAnim(index) {
+                stopAnim(); // 开始之前，先确保停止掉之前的
+                anim = new Anim(masks[index], style, interval - 1).run(); // -1 是为了动画结束时停留一下，使得动画更自然
+            }
+
+            // 停止所有动画
+            function stopAnim() {
+                if (anim) {
+                    anim.stop();
+                    anim = undefined;
+                }
+                if (hoverAnim) {
+                    hoverAnim.stop();
+                    hoverAnim = undefined;
+                }
+            }
+        }
+    });
+});
+/**
+ * Switchable Autorender Plugin
+ * @creator  玉伯<lifesinger@gmail.com>
+ * @depends  ks-core, json
+ */
+KISSY.add('switchable-autorender', function(S) {
+
+    /**
+     * 自动渲染 container 元素内的所有 Switchable 组件
+     */
+    S.Switchable.autoRender = function(container, hookPrefix, dataAttrName) {
+        hookPrefix = '.' + (hookPrefix || 'KS_');
+        dataAttrName = dataAttrName || 'data-ks-switchable';
+
+        S.each(['Switchable', 'Tabs', 'Slide', 'Carousel', 'Accordion'], function(name) {
+            S.each(S.query(hookPrefix + name, container), function(elem) {
+                try {
+                    var config = elem.getAttribute(dataAttrName);
+                    if(config) config = config.replace(/'/g, '"');
+                    new S[name](elem, S.JSON.parse(config));
+                } catch(ex) {
+                    S.log('Switchable.autoRender: ' + ex, 'warn');
+                }
+            });
+        });
+    }
 });
 /**
  * Tabs Widget
@@ -6997,6 +7819,7 @@ KISSY.add('accordion', function(S) {
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
 
         defaultConfig = {
+            markupType: 1,
             triggerType: 'click',
             multiple: false
         };
@@ -8092,440 +8915,497 @@ MIT Licensed
 build time: ${build.time}
 */
 /**
- * @module   Flash UA 探测
- * @author   kingfo<oicuicu@gmail.com>
- * @depends  ks-core
+ * ͼƬ�Ŵ����
+ * @creater     qiaohua@taobao.com
+ * @depends     ks-core
  */
-KISSY.add('flash-ua', function(S) {
+KISSY.add('imagezoom', function(S) {
 
-    var UA = S.UA, fpv, fpvF, firstRun = true;
+    var DOM = S.DOM, EVENT = S.Event,
 
-    /**
-     * 获取 Flash 版本号
-     * 返回数据 [M, S, R] 若未安装，则返回 undefined
-     */
-    function getFlashVersion() {
-        var ver, SF = 'ShockwaveFlash';
+        IMGZOOM_MAGNIFIER_CLS = 'ks-imagezoom-magnifier',
+        IMGZOOM_VIEWER_CLS = 'ks-imagezoom-viewer',
+        IMGZOOM_GLASS_CLS = 'ks-imagezoom-glass',
+        IMGZOOM_ICON_CLS = 'ks-imagezoom-icon',
+        IMGZOOM_VIEWER_BK_CLS = 'ks-imagezoom-viewer-bk',
 
-        // for NPAPI see: http://en.wikipedia.org/wiki/NPAPI
-        if (navigator.plugins && navigator.mimeTypes.length) {
-            ver = (navigator.plugins['Shockwave Flash'] || 0).description;
-        }
-        // for ActiveX see:	http://en.wikipedia.org/wiki/ActiveX
-        else if (window.ActiveXObject) {
-            try {
-                ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
-            } catch(ex) {
-                //S.log('getFlashVersion failed via ActiveXObject');
-                // nothing to do, just return undefined
-            }
-        }
+        POSITION = ['top', 'right', 'bottom', 'left'],
+        TYPE = ['default', 'glass', 'follow'],
 
-        // 插件没安装或有问题时，ver 为 undefined
-        if(!ver) return;
+        DIV = '<div>', IMG = '<img>', B = '<b>',
 
-        // 插件安装正常时，ver 为 "Shockwave Flash 10.1 r53" or "WIN 10,1,53,64"
-        return arrify(ver);
-    }
+        HIDDEN = 'hidden',
+        HEIGHT = 'height', WIDTH = 'width',
+        TOP = 'top', LEFT = 'left',
+        
+        /**
+         * Ĭ������
+         */
+        defaultConfig = {
+            type: 'default',    // ��ʾģʽ, ��ѡֵ: TYPE
 
-    /**
-     * arrify("10.1.r53") => ["10", "1", "53"]
-     */
-    function arrify(ver) {
-        return ver.match(/(\d)+/g);
-    }
+            bigImageSrc: '',    // ��ͼ·��, Ϊ '' ʱȡԭͼ·��
+            bigImageSize: { height: 900, width:900 }, // ��ͼ�߿�
+            position: 'right',  // ��ͼ��ʾλ��, ��ѡֵ: POSITION
+            offset: 10,         // ��ͼλ�õ�ƫ����
+            preload: true,      // �Ƿ�Ԥ���ش�ͼ
+            timeout: 6000,      // �ȴ��ͼ���ص����ʱ��, ��λ: ms
 
-    /**
-     * 格式：主版本号Major.次版本号Minor(小数点后3位，占3位)修正版本号Revision(小数点后第4至第8位，占5位)
-     * ver 参数不符合预期时，返回 0
-     * numerify("10.1 r53") => 10.00100053
-     * numerify(["10", "1", "53"]) => 10.00100053
-     * numerify(12.2) => 12.2
-     */
-    function numerify(ver) {
-        var arr = S.isString(ver) ? arrify(ver) : ver, ret = ver;
-        if (S.isArray(arr)) {
-            ret = parseFloat(arr[0] + '.' + pad(arr[1], 3) + pad(arr[2], 5));
-        }
-        return ret || 0;
-    }
-
-    /**
-     * pad(12, 5) => "00012"
-     * ref: http://lifesinger.org/blog/2009/08/the-harm-of-tricky-code/
-     */
-    function pad(num, n) {
-        var len = (num + '').length;
-        while (len++ < n) {
-            num = '0' + num;
-        }
-        return num;
-    }
-
-    /**
-     * 返回数据 [M, S, R] 若未安装，则返回 undefined
-     * fpv 全称是 flash player version
-     */
-    UA.fpv = function(force) {
-        // 考虑 new ActiveX 和 try catch 的 性能损耗，延迟初始化到第一次调用时
-        if(force || firstRun) {
-            firstRun = false;
-            fpv = getFlashVersion();
-            fpvF = numerify(fpv);
-        }
-        return fpv;
-    };
-
-    /**
-     * Checks fpv is greater than or equal the specific version.
-     * 普通的 flash 版本检测推荐使用该方法
-     * @param ver eg. "10.1.53"
-     * <code>
-     *    if(S.UA.fpvGEQ('9.9.2')) { ... }
-     * </code>
-     */
-    UA.fpvGEQ = function(ver, force) {
-        if(firstRun) UA.fpv(force);
-        return !!fpvF && (fpvF >= numerify(ver));
-    };
-
-});
-
-/**
- * NOTES:
- *
- -  ActiveXObject JS 小记
- -    newObj = new ActiveXObject(ProgID:String[, location:String])
- -    newObj      必需    用于部署 ActiveXObject  的变量
- -    ProgID      必选    形式为 "serverName.typeName" 的字符串
- -    serverName  必需    提供该对象的应用程序的名称
- -    typeName    必需    创建对象的类型或者类
- -    location    可选    创建该对象的网络服务器的名称
-
- -  Google Chrome 比较特别：
- -    即使对方未安装 flashplay 插件 也含最新的 Flashplayer
- -    ref: http://googlechromereleases.blogspot.com/2010/03/dev-channel-update_30.html
- *
- */
-/**
- * @module   Flash 全局静态类
- * @author   kingfo<oicuicu@gmail.com>
- * @depends  ks-core
- */
-KISSY.add('flash', function(S){
-	
-	S.Flash = {
-		/**
-		 * flash 实例 map { '#id': elem, ... }
-         * @static
-		 */
-		swfs: { length: 0 }
-	};
-});
-/**
- * @module   将 swf 嵌入到页面中
- * @author   kingfo<oicuicu@gmail.com>, 射雕<lifesinger@gmail.com>
- * @depends  ks-core + json
- */
-KISSY.add('flash-embed', function(S) {
-
-    var UA = S.UA, DOM = S.DOM, Flash = S.Flash,
-
-        SWF_SUCCESS = 1,
-        FP_LOW = 0,
-        FP_UNINSTALL = -1,
-        TARGET_NOT_FOUND = -2,  // 指定 ID 的对象未找到
-        SWF_SRC_UNDEFINED = -3, // swf 的地址未指定
-
-        RE_FLASH_TAGS = /object|embed/i,
-        CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
-        TYPE = 'application/x-shockwave-flash',
-        FLASHVARS = 'flashvars', EMPTY = '',
-        PREFIX = 'ks-flash-', ID_PRE = '#',
-        encode = encodeURIComponent,
-
-        // flash player 的参数范围
-        PARAMS = {
-            ////////////////////////// 高频率使用的参数
-            //flashvars: EMPTY,     // swf 传入的第三方数据。支持复杂的 Object / XML 数据 / JSON 字符串
-            wmode: EMPTY,
-            allowscriptaccess: EMPTY,
-            allownetworking: EMPTY,
-            allowfullscreen: EMPTY,
-            ///////////////////////// 显示 控制 删除 
-            play: 'false',
-            loop: EMPTY,
-            menu: EMPTY,
-            quality: EMPTY,
-            scale: EMPTY,
-            salign: EMPTY,
-            bgcolor: EMPTY,
-            devicefont: EMPTY,
-            /////////////////////////	其他控制参数
-            base: EMPTY,
-            swliveconnect: EMPTY,
-            seamlesstabbing: EMPTY
-        },
-
-        defaultConifg = {
-            //src: '',       // swf 路径
-            params: { },     // Flash Player 的配置参数
-            attrs: {         // swf 对应 DOM 元素的属性
-                width: 215,	 // 最小控制面板宽度,小于此数字将无法支持在线快速安装
-                height: 138  // 最小控制面板高度,小于此数字将无法支持在线快速安装
-            },
-            //xi: '',	     //	快速安装地址。全称 express install  // ? 默认路径
-            version: 9       //	要求的 Flash Player 最低版本
+            glassSize: { height: 100, width: 100 }, // ��Ƭ�߿�
+            zoomIcon: true      // �Ƿ���ʾ�Ŵ���ʾͼ��
         };
-
-
-    S.mix(Flash, {
-
-        fpv: UA.fpv,
-
-        fpvGEQ: UA.fpvGEQ,
-
-        len: function () {
-            return Flash.swfs.length;
-        },
-
-        /**
-         * 添加 SWF 对象
-         * @param target {String|HTMLElement}  #id or element
+        
+        /** 
+         * ͼƬ�Ŵ����
+         * @class ImageZoom
+         * @constructor
          */
-        add: function(target, config, callback) {
-            var self = this, xi, id;
-
-            // 标准化配置信息
-            config = Flash._normalize(config);
-
-            // 合并配置信息
-            config = S.merge(defaultConifg, config);
-            config.attrs = S.merge(defaultConifg.attrs, config.attrs);
-
-
-            // 1. target 元素未找到
-            if (!(target = S.get(target))) {
-                self._callback(callback, TARGET_NOT_FOUND);
+        function ImageZoom(img, cfg) {
+            var self = this;
+            
+            if (!(self instanceof ImageZoom)) {
+                return new ImageZoom(img, cfg);
+            }
+            
+            /**
+             * ��Ҫ���ŵ�ͼƬ
+             * @type HTMLElement
+             */
+            if (typeof(img) === typeof('')) self.image = S.get(img);
+            else self.image = img;
+            
+            if (!self.image) {
                 return;
             }
-
-            // 保存 id, 没有则自动生成
-            if (!target.id) target.id = S.guid(PREFIX);
-            id = config.attrs.id = ID_PRE + target.id;
-
-            // 2. flash 插件没有安装
-            if (!UA.fpv()) {
-                self._callback(callback, FP_UNINSTALL, id, target);
-                return;
-            }
-
-            // 3. 已安装，但当前客户端版本低于指定版本时
-            if (!UA.fpvGEQ(config.version)) {
-                self._callback(callback, FP_LOW, id, target);
-
-                // 有 xi 时，将 src 替换为快速安装
-                if (!((xi = config.xi) && S.isString(xi))) return;
-                config.src = xi;
-            }
-
-            // 对已有 HTML 结构的 SWF 进行注册使用
-            if (RE_FLASH_TAGS.test(target.nodeName)) {
-                self._register(target, config, callback);
-                return;
-            }
-
-            // src 未指定
-            if (!config.src) {
-                self._callback(callback, SWF_SRC_UNDEFINED, id, target);
-                return;
-            }
-
-            // 替换 target 为 SWF 嵌入对象
-            self._embed(target, config, callback);
-        },
-
-        /**
-         * 获得已注册到 S.Flash 的 SWF
-         * 注意，请不要混淆 DOM.get() 和 Flash.get()
-         * 只有成功执行过 S.Flash.add() 的 SWF 才可以被获取
-         * @return {HTMLElement}  返回 SWF 的 HTML 元素(object/embed). 未注册时，返回 undefined
-         */
-        get: function(id) {
-            return Flash.swfs[id];
-        },
-
-        /**
-         * 移除已注册到 S.Flash 的 SWF 和 DOM 中对应的 HTML 元素
-         */
-        remove: function(id) {
-            var swf = Flash.get(id);
-            if (swf) {
-                DOM.remove(swf);
-                delete Flash.swfs['#' + swf.id];
-                Flash.swfs.length -= 1;
-            }
-        },
-
-        /**
-         * 检测是否存在已注册的 swf
-         * 只有成功执行过 S.Flash.add() 的 SWF 才可以被获取到
-         * @return {Boolean}
-         */
-        contains: function(target) {
-            var swfs = Flash.swfs,
-                id, ret = false;
-
-            if (S.isString(target)) {
-                ret = (target in swfs);
-            } else {
-                for (id in swfs)
-                    if (swfs[id] === target) {
-                        ret = true;
-                        break;
-                    }
-            }
-            return ret;
-        },
-
-        _register: function(swf, config, callback) {
-            var id = config.attrs.id;
-            Flash._addSWF(id, swf);
-            Flash._callback(callback, SWF_SUCCESS, id, swf);
-        },
-
-        _embed: function (target, config, callback) {
-            var o = Flash._createSWF(config.src, config.attrs, config.params);
-			
-            if (UA.ie) {
-                // ie 下，通过纯 dom 操作插入的 object 会一直处于加载状态中
-                // 只能通过 innerHTML/outerHTML 嵌入
-                target.outerHTML = o.outerHTML;
-            }
-            else {
-                target.parentNode.replaceChild(o, target);
-            }
-
-            Flash._register(target, config, callback);
-        },
-
-        _callback: function(callback, type, id, swf) {
-            if (type && S.isFunction(callback)) {
-                callback({
-                    status: type,
-                    id: id,
-                    swf: swf
-                });
-            }
-        },
-
-        _addSWF: function(id, swf) {
-            if (id && swf) {
-                Flash.swfs[id] = swf;
-                Flash.swfs.length += 1;
-            }
-        },
-
-        _createSWF: function (src, attrs, params) {
-            var o = DOM.create('<object>'), k;
-
-            // 普通属性设置
-            DOM.attr(o, attrs);
-
-            // 特殊属性设置
-            if (UA.ie) {
-                DOM.attr(o, 'classid', CID);
-                appendParam(o, 'movie', src);
-            }
-            else {
-                DOM.attr(o, {
-                    type: TYPE,
-                    data: src,
-                    name: attrs.id
-                });
-            }
-			
-            // 添加 params
-            for (k in params) {
-                if (k in PARAMS) appendParam(o, k, params[k]);
-            }
-            if (params[FLASHVARS]) {
-                appendParam(o, FLASHVARS,  Flash.toFlashVars(params[FLASHVARS]));
-            }
-
-            return o;
-        },
-
-        /**
-         * 将对象的 key 全部转为小写
-         * 一般用于配置选项 key 的标准化
-         */
-        _normalize: function(obj) {
-            var key, val, prop, ret = obj;
-
-            if (S.isPlainObject(obj)) {
-                ret = {};
-
-                for (prop in obj) {
-                    key = prop.toLowerCase();
-                    val = obj[prop];
-
-                    // 忽略自定义传参内容标准化
-                    if (key !== FLASHVARS) val = Flash._normalize(val);
-
-                    ret[key] = val;
+            
+            /**
+             * Сͼ���
+             * @type HTMLElement
+             */
+            self.origin = null;
+            
+            /**
+             * �Ŵ���ʾ��ͼƬ���
+             * @type HTMLElement
+             */
+            self.viewer = null;
+            
+            /**
+             * �Ŵ���ʾ��ͼƬ
+             * @type HTMLElement
+             */
+            self.bigImage = null;
+            
+            /**
+             * ���ò���
+             * @type Object
+             */
+            self.config = S.merge(defaultConfig, cfg);
+            
+            /**
+             * ��Ƭ
+             * @type HTMLElement
+             */
+            self.glass = null;
+            
+            /**
+             * �Ŵ�ͼ��
+             * @type HTMLElement
+             */
+            self.zoomIcon = null;
+            
+            /**
+             * Сͼ����״̬
+             */
+            self.imageReady = false;
+            
+            /**
+             * ��ͼ����״̬
+             */
+            self.bigImageReady = false;
+            
+            /**
+             * ��Ϣ��ʾ��ʱ
+             */
+            self.timer = null;
+            
+            // ��Сͼ�������֮��, ��ʼ��
+            self.image.onload = function(){
+                if (!self.imageReady) {
+                    self.imageReady = !self.imageReady;
+                    self._init();
                 }
+            };
+            if (!self.imageReady && self.image.complete && self.getSize(self.image).height) { 
+                self.imageReady = !self.imageReady;
+                self._init();
             }
-            return ret;
-        },
-
-        /**
-         * 将普通对象转换为 flashvars
-         * eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b={"x":2,"z":"s%3D1%26c%3D2"}
-         */
-        toFlashVars: function(obj) {
-            if (!S.isPlainObject(obj)) return EMPTY; // 仅支持 PlainOject
-            var prop, data, arr = [];
-
-            for (prop in obj) {
-                data = obj[prop];
-
-                // 字符串，用双引号括起来
-                if (S.isString(data)) {
-                    data = '"' + encode(data) + '"';
-                }
-                // 其它值，用 stringify 转换后，再转义掉字符串值
-                else {
-                    data = (S.JSON.stringify(data));
-                    if (!data) continue; // 忽略掉 undefined, fn 等值
-                    
-                    data = data.replace(/:"([^"]+)/g, function(m, val) {
-                        return ':"' + encode(val);
-                    });
-                }
-
-                arr.push(prop + '=' + data);
-            }
-
-            return arr.join('&');
         }
-    });
-
-    function appendParam(o, name, val) {
-        var param = DOM.create('<param>');
-        DOM.attr(param, { name: name, value: val });
-        o.appendChild(param);
-    }
+        
+        S.augment(ImageZoom, {
+            /**
+             * ��ʼ������
+             * @protected
+             */
+            _init: function() {
+                var self = this,
+                    i = self.image;
+                
+                self._initContainer();
+                
+                /**
+                 * ��������DOM
+                 */
+                var cfg = self.config,
+                    g = self.glass,
+                    z = self.zoomIcon;
+                
+                // ���ô�ͼ·��, ���û���趨��ͼͼƬ����ԭͼ·��
+                if (!cfg.bigImageSrc) cfg.bigImageSrc = DOM.attr(i, 'src');
+                else if (cfg.preload) {
+                    // Ԥ���ش�ͼ
+                    new Image().src = cfg.bigImageSrc;
+                }
+                
+                /**
+                 * ������Сͼʱ, ��ʾ��ͼ
+                 */
+                EVENT.on(self.origin, 'mouseenter', function(ev) {
+                    // ��ʾ��Ƭ
+                    if (g) DOM.removeClass(g, HIDDEN);
+                    // ���طŴ�ͼ��
+                    if (z) DOM.addClass(z, HIDDEN);
+                    
+                    // ����/��ʾ��ͼ
+                    if (!self.viewer) {
+                        self._createZoom(ev);
+                        self.fire('firstHover');
+                    } else DOM.removeClass(self.viewer, HIDDEN);
+                    // ���ô�ͼ���س�ʱ��ʱ��
+                    self.timer = setTimeout(function(){
+                        if (!self.bigImageReady) self.showMsg();
+                    }, self.config.timeout);
+                });
+                
+                /**
+                 * ����뿪Сͼʱ, ���ش�ͼ
+                 */
+                EVENT.on(self.origin, 'mouseleave', function(ev) {
+                    // ���ؾ�Ƭ
+                    if (g) DOM.addClass(g, HIDDEN);
+                    // ��ʾ�Ŵ�
+                    if (z) DOM.removeClass(z, HIDDEN);
+                    
+                    // ���ش�ͼ
+                    if (self.viewer) DOM.addClass(self.viewer, HIDDEN);
+                    if (self.timer) clearTimeout(self.timer);
+                });
+                
+                /**
+                 * ����һ���Ƶ���ͼ��ʱ
+                 */
+                EVENT.on(self, 'firstHover', function(){
+                    // do sth
+                });
+            },
+            
+            /**
+             * ���config��������DOM
+             */
+            _initContainer: function() {
+                var self = this,
+                    cfg = self.config,
+                    o,
+                    i = self.image,
+                    g, z;
+                
+                // ���img�����a, ��ѡ��a��parent
+                if (DOM.parent(i).nodeName.toLowerCase() === 'a')  i = DOM.parent(i);
+                
+                // ����Сͼ���
+                o = DOM.create(DIV);
+                DOM.addClass(o, IMGZOOM_MAGNIFIER_CLS);
+                DOM.parent(i).insertBefore(o, i);
+                o.appendChild(i);
+                self.origin = o;
+                
+                // ��Ƭģʽ��
+                if (TYPE[1] == cfg.type) {
+                    g = DOM.create(DIV);
+                    DOM.addClass(g, IMGZOOM_GLASS_CLS);
+                    DOM.addClass(g, HIDDEN);
+                    DOM.css(g, HEIGHT, cfg.glassSize.height+'px');
+                    DOM.css(g, WIDTH, cfg.glassSize.width+'px');
+                    o.appendChild(g);
+                    self.glass = g;
+                }
+                // ��Ҫ��ʾ�Ŵ�ͼ��
+                if (cfg.zoomIcon) {
+                    z = DOM.create(DIV);
+                    DOM.addClass(z, IMGZOOM_ICON_CLS);
+                    o.appendChild(z);
+                    self.zoomIcon = z;
+                }
+            },
+            
+            /**
+             * ������ͼ����ʾDOM
+             */
+            _createZoom: function(ev) {
+                var self = this,
+                    cfg = self.config,
+                    v;
+                
+                // ������ʾ�����DOM�ṹ
+                v = DOM.create(DIV);
+                DOM.addClass(v, IMGZOOM_VIEWER_CLS);
+                DOM.addClass(v, IMGZOOM_VIEWER_BK_CLS);
+                var bimg = DOM.create(IMG);
+                DOM.attr(bimg, 'src', cfg.bigImageSrc);
+                v.appendChild(bimg);
+                // �����ʾ����ԭ��DOM��, ����ģʽ�е����
+                if (TYPE[2] == cfg.type) {
+                    self.origin.appendChild(v);
+                } else {
+                    DOM.get('body').appendChild(v);
+                }
+                self.bigImage = bimg;
+                self.viewer = v;
+                
+                self._updateViewer(ev, false);
+                self._zoom();
+                // ��ͼ������Ϻ������ʾ����
+                self.bigImage.onload = function() {
+                    if (!self.bigImageReady) {
+                        self.bigImageReady = !self.bigImageReady;
+                        self._updateViewer(ev, true);
+                    }
+                }
+                if (!self.bigImageReady && self.bigImage.complete && self.getSize(self.bigImage).height) {
+                    self.bigImageReady = !self.bigImageReady;
+                    self._updateViewer(ev, true);
+                }
+            },
+            
+            /**
+             * ���÷Ŵ�ͼƬ��ʾ��ƫ����
+             */
+            _zoom: function() {
+                var self = this,
+                    cfg = self.config,
+                    g = self.glass,
+                    v = self.viewer;
+                /**
+                 * �ƶ����ʱ���´�ͼƫ����
+                 */
+                EVENT.on(self.origin, 'mousemove', function(ev) {
+                    // ��Ƭƫ����������
+                    var glassOffset = self.getGlassOffset(ev);
+                    if (g) {
+                        DOM.css(g, LEFT, glassOffset.left + 'px');
+                        DOM.css(g, TOP, glassOffset.top + 'px');
+                    }
+                    // �����ͼƫ����������
+                    var imageSize = self.getSize(self.image),
+                        zoom = self.getSize(self.bigImage),
+                        i = 0,
+                        j = 0,
+                        scrollx = Math.round(glassOffset.left*zoom.width/imageSize.width),
+                        scrolly = Math.round(glassOffset.top*zoom.height/imageSize.height);
+                    if (TYPE[2] == cfg.type) {
+                        var glassSize = self.getSize(g);
+                        i = glassSize.width/2;
+                        j = glassSize.height/2
+                    }
+                    v.scrollLeft = scrollx + i;
+                    v.scrollTop = scrolly + j;
+                    
+                    // ����ģʽ�¸�����ʾ����λ��
+                    if (TYPE[2] == cfg.type) {
+                        DOM.css(v, LEFT, glassOffset.left + 'px');
+                        DOM.css(v, TOP, glassOffset.top + 'px');
+                    }
+                });
+            },
+            
+            /**
+             * ������ʾ�����С��λ��
+             */
+            _updateViewer: function(ev, ready) {
+                var self = this;
+                if (ready) {
+                    if (self.timer) clearTimeout(self.timer);
+                    self.hideMsg();
+                }
+                var i = self.image,
+                    v = self.viewer,
+                    cfg = self.config,
+                    imageOffset = DOM.offset(i),
+                    glassSize = self.getSize(self.glass);
+                
+                
+                // ������ʾ����λ��
+                var leftPos, topPos, vHeight, vWidth;
+                if (TYPE[2] == cfg.type) {
+                    // ����ģʽ��, ������ʾ�����ʼλ��
+                    var mousePoint = self.getMousePoint(ev),
+                        cursorX = mousePoint.x - imageOffset.left,
+                        cursorY = mousePoint.y - imageOffset.top;
+                    topPos = cursorX - glassSize.width/2;
+                    leftPos = cursorY - glassSize.height/2;
+                    // ����ģʽ��, ��ʾ�����߶����û��趨��glass��߶Ⱦ���
+                    vHeight = glassSize.height;
+                    vWidth =  glassSize.width;
+                } else {
+                    // ������ʾ�ڲ�ͬλ���ϼ���left��topֵ
+                    var bigImageSize,
+                        imageSize = self.getSize(i),
+                        o = self.origin,
+                        btw = parseInt(DOM.css(v, 'borderTopWidth')),
+                        blw = parseInt(DOM.css(v, 'borderLeftWidth'));
+                    if (!ready) {
+                        bigImageSize = cfg.bigImageSize;
+                    } else {
+                        bigImageSize = self.getSize(self.bigImage);
+                    }
+                    
+                    // ����ģʽ��, ��ʾ�����߶��ɴ�Сͼ�ı�������
+                    vHeight = Math.round(bigImageSize.height*glassSize.height/imageSize.height);
+                    vWidth = Math.round(bigImageSize.width*glassSize.width/imageSize.width);
+                    
+                    if (POSITION[0] == cfg.position) {
+                        var mt = parseInt(DOM.css(o, 'marginTop'));
+                        if (!mt) mt = 0;
+                        topPos = imageOffset.top - vHeight - btw - cfg.offset + mt;
+                        leftPos = imageOffset.left;
+                    } else if (POSITION[2] == cfg.position) {
+                        topPos = imageSize.height + imageOffset.top + cfg.offset;
+                        leftPos = imageOffset.left;
+                    } else if (POSITION[3] == cfg.position) {
+                        var ml = parseInt(DOM.css(o, 'marginLeft'));
+                        if (!ml) ml = 0;
+                        topPos = imageOffset.top;
+                        leftPos = imageOffset.left - vWidth - blw - cfg.offset + ml;
+                    } else {
+                        topPos = imageOffset.top;
+                        leftPos = imageOffset.left + imageSize.width + cfg.offset;
+                    }
+                }
+                DOM.css(v, HEIGHT, vHeight + 'px');
+                DOM.css(v, WIDTH, vWidth + 'px');
+                DOM.offset(v, { left: leftPos, top: topPos });
+                //DOM.css(v, TOP, topPos + 'px');
+                //DOM.css(v, LEFT, leftPos + 'px');
+            },
+            
+            /**
+             * ��ȡ��Ƭ��ƫ����
+             * @param ev    �������¼�
+             * @return  offset ��Ƭ�ڷŴ�Ŀ��Ԫ���ϵĺ�����λ��
+             */
+            getGlassOffset: function(ev) {
+                var self = this,
+                    i = self.image,
+                    offset = {
+                        left: 0,
+                        top: 0
+                    };
+                // Сͼƫ����
+                var imageOffset = DOM.offset(i);
+                // �����ҳ���ϵ�λ��
+                var mousePoint = self.getMousePoint(ev);
+                // ��Ƭʵ�ʳߴ�
+                var glassSize = self.getSize(self.glass);
+                // Сͼʵ�ʳߴ�
+                var imageSize = self.getSize(i);
+                // ������λ��
+                var cursorX = mousePoint.x - imageOffset.left;
+                // ��Ƭ����ƫ����
+                offset.left = cursorX - glassSize.width/2;
+                var i = 0,
+                    j = 0;
+                // ����ģʽ��, ƫ�����Ʋ�ͬ
+                if (TYPE[2] == self.config.type) {
+                    i = glassSize.width/2;
+                    j = glassSize.height/2;
+                }
+                if (offset.left < -i) {
+                    offset.left = 0;
+                } else if (offset.left > imageSize.width - glassSize.width + i) {
+                    offset.left = imageSize.width - glassSize.width;
+                }
+                // �������λ��
+                var cursorY = mousePoint.y - imageOffset.top;
+                // ��Ƭ����ƫ����
+                offset.top = cursorY - glassSize.height/2;
+                if (offset.top < -j) {
+                    offset.top = 0;
+                } else if (offset.top > imageSize.height - glassSize.height + j) {
+                    offset.top = imageSize.height - glassSize.height;
+                }
+                return offset;
+            },
+            
+            /**
+             * ��ȡԪ�صĿ�߶�(���������ߺ͹�����)
+             * @param   HTMLElement
+             * @return  Ԫ�ؿɼ�ߴ�
+             */
+            getSize: function(elm) {
+                if (!elm) return this.config.glassSize;
+                return {
+                    width: elm.clientWidth,
+                    height: elm.clientHeight
+                };
+            },
+            
+            /**
+             * ��ȡ�����ҳ���ϵ�λ��
+             * @param ev        �����¼�
+             * @return offset   �����ҳ���ϵĺ�����λ��
+             */
+            getMousePoint: function(ev) {
+                return {x: ev.pageX, y: ev.pageY}
+            },
+           
+            /**
+             * ��ͼƬ������ʱ��ʾ��ʾ��Ϣ
+             */
+            showMsg: function(){
+                var b = S.get('b', this.viewer);
+                if (!b) {
+                    b = DOM.create(B);
+                    this.viewer.appendChild(b);
+                    DOM.removeClass(this.viewer, IMGZOOM_VIEWER_BK_CLS);
+                }
+                DOM.html(b, 'ͼƬ�ݲ�����');
+            },
+            hideMsg: function(){
+                var b = S.get('b', this.viewer);
+                DOM.html(b, '');
+                DOM.addClass(this.viewer, IMGZOOM_VIEWER_BK_CLS);
+            }
+        }, S.EventTarget);
+        
+        S.ImageZoom = ImageZoom;
+    
 });
 
 /**
  * NOTES:
- * 2010/07/21   向 google code 提交了基础代码
- * 2010/07/22   修正了 embed 始终都有 callback 尝试性调用
- *              避免了未定义 el/id 或 swfurl 时无法获知错误
- * 2010/07/27   迁移至 github 做版本管理。向 kissy-sandbox 提交代码
- * 2010/07/28   合并了公开方法 Flash.register 和 Flash.embed 为 Flash.add()
- *              修改 Flash.length() 为 Flash.getLength(), 使其看上去更像方法而非属性方式获取
- * 2010/07/29   重构到 kissy 项目中
- * 2010/07/30	增加了标准化配置项方法 _normalize(); 修正 flashvars 转 String 方式为 toFlashVars
+ *  2010.6
+ *      - ����positionѡ��, ��̬��������dom;
+ *      - Сͼ����;
+ *      - ��ͼ����֮�������ʾ;
+ *      - �������ģʽ
+ *      - ����Timeout
+ *      - 6. 24  ȥ��yahoo-dom-event����
+ *  2010.7
+ *      - ȥ��getStyle, ʹ��DOM.css()
+ *      - firstHover
+ *      - ������ʾ����λ�ü������
+ *      - ����DOM�ṹ, ȥ���Ҫ�Ĵ���
+ *  TODO:
+ *      - ���뷴תģʽ;
+ *      - 
  */
