@@ -6,42 +6,41 @@
 <link rel="stylesheet" href="../assets/base-min.css" />
 <link rel="stylesheet" href="../assets/docs.css" />
 </head>
-<body>
-<div id="page" class="w866">
-    <div id="header">
-        <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
-        <p class="rel-nav">
-            <a href="http://github.com/kissyteam/kissy/blob/master/src/imagezoom/">src files</a>
-        </p>
-    </div>
-    <div id="content" class="layout grid-s232m0">
-        <div class="col-main">
-            <div class="main-wrap">
-                <div class="section summary">
-                    <p>图片放大镜效果, 功能说明: </p>
-                    <ul>
-                        <li>镜片模式: 鼠标移到那里的一个特定范围内的图片被放大显示, 显示框在原图旁边;</li>
-                        <li>跟随模式: 显示框跟随鼠标移动, 即被放大的图片显示在原图上方, 并以鼠标为轴心;</li>
-                    </ul>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/blob/master/src/imagezoom/">src files</a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="section summary">
+                <p>图片放大镜效果, 功能说明: </p>
+                <ul>
+                    <li>镜片模式: 鼠标移到那里的一个特定范围内的图片被放大显示, 显示框在原图旁边;</li>
+                    <li>跟随模式: 显示框跟随鼠标移动, 即被放大的图片显示在原图上方, 并以鼠标为轴心;</li>
+                </ul>
+            </div>
+
+            <div class="section" id="imagezoom">
+                <h3>ImageZoom Method</h3>
+                <div class="member method">
+                    <h4>
+                        <a name="method_imagezoom"></a>
+                        <code>Object <em>ImageZoom(img, cfg)</em>()</code>
+                    </h4>
+                    <div class="detail">
+                        <p>根据给定的选择器img, 按照配置cfg, 返回ImageZoom对象</p>
+                    </div>
                 </div>
 
-                <div class="section" id="imagezoom">
-                    <h3>ImageZoom Method</h3>
-                    <div class="member method">
-                        <h4>
-                            <a name="method_imagezoom"></a>
-                            <code>Object <em>ImageZoom(img, cfg)</em>()</code>
-                        </h4>
-                        <div class="detail">
-                            <p>根据给定的选择器img, 按照配置cfg, 返回ImageZoom对象</p>
-                        </div>
-                    </div>
-                    
-                    <h3>ImageZoom Config</h3>
-                    
-                    <div class="member prop">
-                        <h4><a name="config">config</a> - <code>Object</code></h4>
-                        <div class="detail">
+                <h3>ImageZoom Config</h3>
+
+                <div class="member prop">
+                    <h4><a name="config">config</a> - <code>Object</code></h4>
+                <div class="detail">
 <pre class="example-code"><code>
 defaultConfig = {
     type: 'default',    // 显示模式, 可选值: TYPE
@@ -59,13 +58,13 @@ defaultConfig = {
     zoomIcon: true      // 是否显示放大镜提示图标
 };
 </code></pre>
-                        </div>
                     </div>
-                    
                 </div>
 
-                <div class="section">
-                    <h3 id="usage">使用示例: </h3>
+            </div>
+
+            <div class="section">
+                <h3 id="usage">使用示例: </h3>
 <pre class="example-code"><code>
 &lt;body&gt;
 &lt;div id="page"&gt;
@@ -96,26 +95,25 @@ KISSY.ready(function(S) {
 &lt;/body&gt;
 
 </code></pre>
-                    <p class="tips">特别注意：1. 跟随模式下生成的dom有点不同, 直接把ks-imagezoom-viewer这层放到ks-imagezoom-magnifier中; 2. 关于显示区域宽高, 显示区域宽=大图宽度*镜片宽度/小图宽度; </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sub">
-            <div class="sub-wrap">
-                <div class="loc"><a href="../index.html">home</a> &rsaquo; imagezoom :</div>
-                <div class="toc">
-                    <h3>Sub modules</h3>
-                    <ul>
-                        <li><a href="#config">config</a></li>
-                        <li><a href="#usage">usage</a></li>
-                    </ul>
-                </div>
+                <p class="tips">特别注意：1. 跟随模式下生成的dom有点不同, 直接把ks-imagezoom-viewer这层放到ks-imagezoom-magnifier中; 2. 关于显示区域宽高, 显示区域宽=大图宽度*镜片宽度/小图宽度; </p>
             </div>
         </div>
     </div>
-    <div id="footer">
-        <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc"><a href="../index.html">home</a> &rsaquo; imagezoom :</div>
+            <div class="toc">
+                <h3>Sub modules</h3>
+                <ul>
+                    <li><a href="#config">config</a></li>
+                    <li><a href="#usage">usage</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
 </div>
 </body>
 </html>

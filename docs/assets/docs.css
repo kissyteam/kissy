@@ -1,6 +1,6 @@
 /* docs 通用样式 */
 
-.w866 { width: 866px; }
+.w866 #header, .w866 #content, .w866 #footer { width: 866px; }
 .grid-s232m0 .main-wrap { margin-left: 232px; }
 .grid-s232m0 .col-sub { width: 232px; margin-left: -100%; }
 

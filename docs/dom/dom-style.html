@@ -6,135 +6,133 @@
 <link rel="stylesheet" href="../assets/base-min.css" />
 <link rel="stylesheet" href="../assets/docs.css" />
 </head>
-<body>
-<div id="page" class="w866">
-    <div id="header">
-        <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
-        <p class="rel-nav">
-            <a href="http://github.com/kissyteam/kissy/blob/master/src/dom/dom-style.js"><code>dom-style.js</code></a>
-        </p>
-    </div>
-    <div id="content" class="layout grid-s232m0">
-        <div class="col-main">
-            <div class="main-wrap">
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/blob/master/src/dom/dom-style.js"><code>dom-style.js</code></a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
 
-                <div class="section">
-                    <h3 id="methods">Methods</h3>
+            <div class="section">
+                <h3 id="methods">Methods</h3>
 
-                    <div class="member method">
-                        <h4>
-                            <a name="method_css">css</a>
-                            <code>String <em>css</em> ( selector, name )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>获取符合选择器的第一个元素的样式值。</p>
-                        </div>
-                        <h4>
-                            <code>void <em>css</em> ( selector, name, value )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>给符合选择器的所有元素设置样式值。</p>
-                        </div>
+                <div class="member method">
+                    <h4>
+                        <a name="method_css">css</a>
+                        <code>String <em>css</em> ( selector, name )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>获取符合选择器的第一个元素的样式值。</p>
                     </div>
+                    <h4>
+                        <code>void <em>css</em> ( selector, name, value )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>给符合选择器的所有元素设置样式值。</p>
+                    </div>
+                </div>
 
-                    <div class="member method">
-                        <h4>
-                            <a name="method_width">width</a>
-                            <code>Number <em>width</em> ( selector )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>获取符合选择器的第一个元素的宽度值。</p>
-                            <p class="notice">该方法始终返回像素值。看例子：</p>
+                <div class="member method">
+                    <h4>
+                        <a name="method_width">width</a>
+                        <code>Number <em>width</em> ( selector )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>获取符合选择器的第一个元素的宽度值。</p>
+                        <p class="notice">该方法始终返回像素值。看例子：</p>
 <pre class="example-code"><code>
 &lt;div style="width: 100px;"&gt;
     &lt;div id="test" style="width: 80%; height: 20px"&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;script&gt;
-var S = KISSY, DOM = S.DOM,
+    var S = KISSY, DOM = S.DOM,
     elem = S.get('#test');
 
-DOM.css(elem, 'width'); // 返回 80%
-DOM.css(elem, 'height'); // 返回 20px
+    DOM.css(elem, 'width'); // 返回 80%
+    DOM.css(elem, 'height'); // 返回 20px
 
-DOM.width(elem); // 返回 80
-DOM.height(elem); // 返回 20
+    DOM.width(elem); // 返回 80
+    DOM.height(elem); // 返回 20
 &lt;/script&gt;
 </code></pre>
-                        </div>
-                        <h4>
-                            <code>void <em>width</em> ( selector, value )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>给符合选择器的所有元素设置宽度值。等价为 <code>DOM.css(selector, 'width', value)</code></p>
-                        </div>
                     </div>
-
-                    <div class="member method">
-                        <h4>
-                            <a name="method_height">height</a>
-                            <code>Number <em>height</em> ( selector )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>获取符合选择器的第一个元素的高度值。</p>
-                        </div>
-                        <h4>
-                            <code>void <em>height</em> ( selector, value )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>给符合选择器的所有元素设置高度值。</p>
-                        </div>
+                    <h4>
+                        <code>void <em>width</em> ( selector, value )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>给符合选择器的所有元素设置宽度值。等价为 <code>DOM.css(selector, 'width', value)</code></p>
                     </div>
-
-                    <div class="member method">
-                        <h4>
-                            <a name="method_addStyleSheet">addStyleSheet</a>
-                            <code>void <em>addStyleSheet</em> ( cssText, id )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>将 cssText 字符串作为样式添加到文档中。</p>
-                        </div>
-                    </div>
-
                 </div>
 
-                <div class="section">
-                    <h3>Examples</h3>
-                    <p>测试页面：<a href="http://kissyteam.github.com/kissy/src/dom/test-dom-style.html"><code>test-dom-style.html</code></a></p>
+                <div class="member method">
+                    <h4>
+                        <a name="method_height">height</a>
+                        <code>Number <em>height</em> ( selector )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>获取符合选择器的第一个元素的高度值。</p>
+                    </div>
+                    <h4>
+                        <code>void <em>height</em> ( selector, value )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>给符合选择器的所有元素设置高度值。</p>
+                    </div>
+                </div>
 
-                    <div class="section notes">
-                        <p>dom-style 提供的所有方法：</p>
-                        <ol>
-                            <li>参数 selector 可以为数组：<code>DOM.css([elem1, elem2], 'display', 'none');</code></li>
-                            <li>参数 name 可以为 map 对象：<code>DOM.css('.widget', {position: 'absolute', top: '10px', left: '10px'});</code></li>
-                            <li>setter 和 getter 都遵循 get first, set all 原则：如果是获取，仅获取符合选择器的第一个元素的值；如果是设置，则操作符合选择器的所有元素。</li>
-                        </ol>
+                <div class="member method">
+                    <h4>
+                        <a name="method_addStyleSheet">addStyleSheet</a>
+                        <code>void <em>addStyleSheet</em> ( cssText, id )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>将 cssText 字符串作为样式添加到文档中。</p>
                     </div>
                 </div>
 
             </div>
+
+            <div class="section">
+                <h3>Examples</h3>
+                <p>测试页面：<a href="http://kissyteam.github.com/kissy/src/dom/test-dom-style.html"><code>test-dom-style.html</code></a></p>
+
+                <div class="section notes">
+                    <p>dom-style 提供的所有方法：</p>
+                    <ol>
+                        <li>参数 selector 可以为数组：<code>DOM.css([elem1, elem2], 'display', 'none');</code></li>
+                        <li>参数 name 可以为 map 对象：<code>DOM.css('.widget', {position: 'absolute', top: '10px', left: '10px'});</code></li>
+                        <li>setter 和 getter 都遵循 get first, set all 原则：如果是获取，仅获取符合选择器的第一个元素的值；如果是设置，则操作符合选择器的所有元素。</li>
+                    </ol>
+                </div>
+            </div>
+
         </div>
-        <div class="col-sub">
-            <div class="sub-wrap">
-                <div class="loc">
-                    <a href="../index.html">home</a> &rsaquo;
-                    <a href="index.html">dom</a> &rsaquo;
-                    dom-style :
-                </div>
-                <div class="toc">
-                    <h3>Methods</h3>
-                    <ul>
-                        <li><a href="#method_css">css</a></li>
-                        <li><a href="#method_width">width</a></li>
-                        <li><a href="#method_height">height</a></li>
-                        <li><a href="#method_addStyleSheet">addStyleSheet</a></li>
-                    </ul>
-                </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc">
+                <a href="../index.html">home</a> &rsaquo;
+                <a href="index.html">dom</a> &rsaquo;
+                dom-style :
+            </div>
+            <div class="toc">
+                <h3>Methods</h3>
+                <ul>
+                    <li><a href="#method_css">css</a></li>
+                    <li><a href="#method_width">width</a></li>
+                    <li><a href="#method_height">height</a></li>
+                    <li><a href="#method_addStyleSheet">addStyleSheet</a></li>
+                </ul>
             </div>
         </div>
     </div>
-    <div id="footer">
-        <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
-    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
 </div>
 </body>
 </html>

@@ -6,68 +6,66 @@
 <link rel="stylesheet" href="../assets/base-min.css" />
 <link rel="stylesheet" href="../assets/docs.css" />
 </head>
-<body>
-<div id="page" class="w866">
-    <div id="header">
-        <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
-        <p class="rel-nav">
-            <a href="http://github.com/kissyteam/kissy/blob/master/src/flash/flash-ua.js"><code>flash-ua.js</code></a>
-        </p>
-    </div>
-    <div id="content" class="layout grid-s232m0">
-        <div class="col-main">
-            <div class="main-wrap">
-                <div class="section summary">
-                    <p>flash-ua 模块给 S.UA 增加了获取客户端 Flash Player 版本信息的方法。</p>
-                </div>
-                <div class="section">
-					<h3 id="properties">Methods</h3>
-					<div class="member method">
-                        <h4>
-                            <a name="method_fpv">fpv</a>
-                            <code>Array fpv( force )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>返回当前客户端 Flash Player 的版本号数组，格式为 [ Major, Minor, Revision ]</p>
-                            <p>force 参数表示是否强制重新获取版本信息。</p>
-                            <p class="tips">fpv 是 Flash Player Version 的简写。</p>
-                        </div>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/blob/master/src/flash/flash-ua.js"><code>flash-ua.js</code></a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="section summary">
+                <p>flash-ua 模块给 S.UA 增加了获取客户端 Flash Player 版本信息的方法。</p>
+            </div>
+            <div class="section">
+                <h3 id="properties">Methods</h3>
+                <div class="member method">
+                    <h4>
+                        <a name="method_fpv">fpv</a>
+                        <code>Array fpv( force )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>返回当前客户端 Flash Player 的版本号数组，格式为 [ Major, Minor, Revision ]</p>
+                        <p>force 参数表示是否强制重新获取版本信息。</p>
+                        <p class="tips">fpv 是 Flash Player Version 的简写。</p>
                     </div>
-					<div class="member method">
-                        <h4>
-                            <a name="method_fpvGEQ">fpvGEQ</a>
-                            <code>Boolean fpv ( ver, force )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>判断当前 Flash Player 版本号是否高于指定版本。</p>
+                </div>
+                <div class="member method">
+                    <h4>
+                        <a name="method_fpvGEQ">fpvGEQ</a>
+                        <code>Boolean fpv ( ver, force )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>判断当前 Flash Player 版本号是否高于指定版本。</p>
 <pre class="example-code"><code>
 if(KISSY.UA.fpvGEQ('9.1.0') {
     // do sth.
 }</code></pre>
-                        </div>
                     </div>
-				</div>
-            </div>
-        </div>
-        <div class="col-sub">
-            <div class="sub-wrap">
-                <div class="loc">
-                    <a href="../index.html">home</a> &rsaquo;
-                    <a href="index.html">flash</a> &rsaquo; flash-ua:
-                </div>
-                <div class="toc">
-                    <h3>Methods</h3>
-                    <ul>
-                        <li><a href="#method_fpv">fpv</a></li>
-                        <li><a href="#method_fpvGEQ">fpvGEQ</a></li>
-                    </ul>
                 </div>
             </div>
         </div>
     </div>
-    <div id="footer">
-        <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc">
+                <a href="../index.html">home</a> &rsaquo;
+                <a href="index.html">flash</a> &rsaquo; flash-ua:
+            </div>
+            <div class="toc">
+                <h3>Methods</h3>
+                <ul>
+                    <li><a href="#method_fpv">fpv</a></li>
+                    <li><a href="#method_fpvGEQ">fpvGEQ</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
 </div>
 </body>
 </html>
