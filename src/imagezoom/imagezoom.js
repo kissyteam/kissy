@@ -1,5 +1,5 @@
 /**
- * Í¼Æ¬·Å´ó¾µ×é¼ş
+ * å›¾ç‰‡æ”¾å¤§é•œç»„ä»¶
  * @creater     qiaohua@taobao.com
  * @depends     ks-core
  */
@@ -23,24 +23,24 @@ KISSY.add('imagezoom', function(S) {
         TOP = 'top', LEFT = 'left',
         
         /**
-         * Ä¬ÈÏÉèÖÃ
+         * é»˜è®¤è®¾ç½®
          */
         defaultConfig = {
-            type: 'default',    // ÏÔÊ¾Ä£Ê½, ¿ÉÑ¡Öµ: TYPE
+            type: 'default',    // æ˜¾ç¤ºæ¨¡å¼, å¯é€‰å€¼: TYPE
 
-            bigImageSrc: '',    // ´óÍ¼Â·¾¶, Îª '' Ê±È¡Ô­Í¼Â·¾¶
-            bigImageSize: { height: 900, width:900 }, // ´óÍ¼¸ß¿í
-            position: 'right',  // ´óÍ¼ÏÔÊ¾Î»ÖÃ, ¿ÉÑ¡Öµ: POSITION
-            offset: 10,         // ´óÍ¼Î»ÖÃµÄÆ«ÒÆÁ¿
-            preload: true,      // ÊÇ·ñÔ¤¼ÓÔØ´óÍ¼
-            timeout: 6000,      // µÈ´ı´óÍ¼¼ÓÔØµÄ×î´óÊ±¼ä, µ¥Î»: ms
+            bigImageSrc: '',    // å¤§å›¾è·¯å¾„, ä¸º '' æ—¶å–åŸå›¾è·¯å¾„
+            bigImageSize: { height: 900, width:900 }, // å¤§å›¾é«˜å®½
+            position: 'right',  // å¤§å›¾æ˜¾ç¤ºä½ç½®, å¯é€‰å€¼: POSITION
+            offset: 10,         // å¤§å›¾ä½ç½®çš„åç§»é‡
+            preload: true,      // æ˜¯å¦é¢„åŠ è½½å¤§å›¾
+            timeout: 6000,      // ç­‰å¾…å¤§å›¾åŠ è½½çš„æœ€å¤§æ—¶é—´, å•ä½: ms
 
-            glassSize: { height: 100, width: 100 }, // ¾µÆ¬¸ß¿í
-            zoomIcon: true      // ÊÇ·ñÏÔÊ¾·Å´ó¾µÌáÊ¾Í¼±ê
+            glassSize: { height: 100, width: 100 }, // é•œç‰‡é«˜å®½
+            zoomIcon: true      // æ˜¯å¦æ˜¾ç¤ºæ”¾å¤§é•œæç¤ºå›¾æ ‡
         };
         
         /** 
-         * Í¼Æ¬·Å´ó¾µ×é¼ş
+         * å›¾ç‰‡æ”¾å¤§é•œç»„ä»¶
          * @class ImageZoom
          * @constructor
          */
@@ -52,7 +52,7 @@ KISSY.add('imagezoom', function(S) {
             }
             
             /**
-             * ĞèÒªËõ·ÅµÄÍ¼Æ¬
+             * éœ€è¦ç¼©æ”¾çš„å›¾ç‰‡
              * @type HTMLElement
              */
             if (typeof(img) === typeof('')) self.image = S.get(img);
@@ -63,57 +63,57 @@ KISSY.add('imagezoom', function(S) {
             }
             
             /**
-             * Ğ¡Í¼Íâ²ã
+             * å°å›¾å¤–å±‚
              * @type HTMLElement
              */
             self.origin = null;
             
             /**
-             * ·Å´óÏÔÊ¾µÄÍ¼Æ¬Íâ²ã
+             * æ”¾å¤§æ˜¾ç¤ºçš„å›¾ç‰‡å¤–å±‚
              * @type HTMLElement
              */
             self.viewer = null;
             
             /**
-             * ·Å´óÏÔÊ¾µÄÍ¼Æ¬
+             * æ”¾å¤§æ˜¾ç¤ºçš„å›¾ç‰‡
              * @type HTMLElement
              */
             self.bigImage = null;
             
             /**
-             * ÅäÖÃ²ÎÊı
+             * é…ç½®å‚æ•°
              * @type Object
              */
             self.config = S.merge(defaultConfig, cfg);
             
             /**
-             * ¾µÆ¬
+             * é•œç‰‡
              * @type HTMLElement
              */
             self.glass = null;
             
             /**
-             * ·Å´ó¾µÍ¼±ê
+             * æ”¾å¤§é•œå›¾æ ‡
              * @type HTMLElement
              */
             self.zoomIcon = null;
             
             /**
-             * Ğ¡Í¼¼ÓÔØ×´Ì¬
+             * å°å›¾åŠ è½½çŠ¶æ€
              */
             self.imageReady = false;
             
             /**
-             * ´óÍ¼¼ÓÔØ×´Ì¬
+             * å¤§å›¾åŠ è½½çŠ¶æ€
              */
             self.bigImageReady = false;
             
             /**
-             * ĞÅÏ¢ÌáÊ¾¶¨Ê±
+             * ä¿¡æ¯æç¤ºå®šæ—¶
              */
             self.timer = null;
             
-            // µ±Ğ¡Í¼¼ÓÔØÍê±ÏÖ®ºó, ³õÊ¼»¯
+            // å½“å°å›¾åŠ è½½å®Œæ¯•ä¹‹å, åˆå§‹åŒ–
             self.image.onload = function(){
                 if (!self.imageReady) {
                     self.imageReady = !self.imageReady;
@@ -128,7 +128,7 @@ KISSY.add('imagezoom', function(S) {
         
         S.augment(ImageZoom, {
             /**
-             * ³õÊ¼»¯·½·¨
+             * åˆå§‹åŒ–æ–¹æ³•
              * @protected
              */
             _init: function() {
@@ -138,55 +138,55 @@ KISSY.add('imagezoom', function(S) {
                 self._initContainer();
                 
                 /**
-                 * ¹¹½¨ËùĞèDOM
+                 * æ„å»ºæ‰€éœ€DOM
                  */
                 var cfg = self.config,
                     g = self.glass,
                     z = self.zoomIcon;
                 
-                // ÉèÖÃ´óÍ¼Â·¾¶, Èç¹ûÃ»ÓĞÉè¶¨´óÍ¼Í¼Æ¬ÔòÓÃÔ­Í¼Â·¾¶
+                // è®¾ç½®å¤§å›¾è·¯å¾„, å¦‚æœæ²¡æœ‰è®¾å®šå¤§å›¾å›¾ç‰‡åˆ™ç”¨åŸå›¾è·¯å¾„
                 if (!cfg.bigImageSrc) cfg.bigImageSrc = DOM.attr(i, 'src');
                 else if (cfg.preload) {
-                    // Ô¤¼ÓÔØ´óÍ¼
+                    // é¢„åŠ è½½å¤§å›¾
                     new Image().src = cfg.bigImageSrc;
                 }
                 
                 /**
-                 * Êó±ê½øÈëĞ¡Í¼Ê±, ÏÔÊ¾´óÍ¼
+                 * é¼ æ ‡è¿›å…¥å°å›¾æ—¶, æ˜¾ç¤ºå¤§å›¾
                  */
                 EVENT.on(self.origin, 'mouseenter', function(ev) {
-                    // ÏÔÊ¾¾µÆ¬
+                    // æ˜¾ç¤ºé•œç‰‡
                     if (g) DOM.removeClass(g, HIDDEN);
-                    // Òş²Ø·Å´ó¾µÍ¼±ê
+                    // éšè—æ”¾å¤§é•œå›¾æ ‡
                     if (z) DOM.addClass(z, HIDDEN);
                     
-                    // ´´½¨/ÏÔÊ¾´óÍ¼
+                    // åˆ›å»º/æ˜¾ç¤ºå¤§å›¾
                     if (!self.viewer) {
                         self._createZoom(ev);
                         self.fire('firstHover');
                     } else DOM.removeClass(self.viewer, HIDDEN);
-                    // ÉèÖÃ´óÍ¼¼ÓÔØ³¬Ê±¶¨Ê±Æ÷
+                    // è®¾ç½®å¤§å›¾åŠ è½½è¶…æ—¶å®šæ—¶å™¨
                     self.timer = setTimeout(function(){
                         if (!self.bigImageReady) self.showMsg();
                     }, self.config.timeout);
                 });
                 
                 /**
-                 * Êó±êÀë¿ªĞ¡Í¼Ê±, Òş²Ø´óÍ¼
+                 * é¼ æ ‡ç¦»å¼€å°å›¾æ—¶, éšè—å¤§å›¾
                  */
                 EVENT.on(self.origin, 'mouseleave', function(ev) {
-                    // Òş²Ø¾µÆ¬
+                    // éšè—é•œç‰‡
                     if (g) DOM.addClass(g, HIDDEN);
-                    // ÏÔÊ¾·Å´ó¾µ
+                    // æ˜¾ç¤ºæ”¾å¤§é•œ
                     if (z) DOM.removeClass(z, HIDDEN);
                     
-                    // Òş²Ø´óÍ¼
+                    // éšè—å¤§å›¾
                     if (self.viewer) DOM.addClass(self.viewer, HIDDEN);
                     if (self.timer) clearTimeout(self.timer);
                 });
                 
                 /**
-                 * Êó±êµÚÒ»´ÎÒÆµ½´óÍ¼ÉÏÊ±
+                 * é¼ æ ‡ç¬¬ä¸€æ¬¡ç§»åˆ°å¤§å›¾ä¸Šæ—¶
                  */
                 EVENT.on(self, 'firstHover', function(){
                     // do sth
@@ -194,7 +194,7 @@ KISSY.add('imagezoom', function(S) {
             },
             
             /**
-             * ¸ù¾İconfig´´½¨ËùĞèDOM
+             * æ ¹æ®configåˆ›å»ºæ‰€éœ€DOM
              */
             _initContainer: function() {
                 var self = this,
@@ -203,17 +203,17 @@ KISSY.add('imagezoom', function(S) {
                     i = self.image,
                     g, z;
                 
-                // Èç¹ûimgÍâ²ãÓĞa, ÔòÑ¡ÔñaµÄparent
+                // å¦‚æœimgå¤–å±‚æœ‰a, åˆ™é€‰æ‹©açš„parent
                 if (DOM.parent(i).nodeName.toLowerCase() === 'a')  i = DOM.parent(i);
                 
-                // ¹¹½¨Ğ¡Í¼Íâ²ã
+                // æ„å»ºå°å›¾å¤–å±‚
                 o = DOM.create(DIV);
                 DOM.addClass(o, IMGZOOM_MAGNIFIER_CLS);
                 DOM.parent(i).insertBefore(o, i);
                 o.appendChild(i);
                 self.origin = o;
                 
-                // ¾µÆ¬Ä£Ê½ÏÂ
+                // é•œç‰‡æ¨¡å¼ä¸‹
                 if (TYPE[1] == cfg.type) {
                     g = DOM.create(DIV);
                     DOM.addClass(g, IMGZOOM_GLASS_CLS);
@@ -223,7 +223,7 @@ KISSY.add('imagezoom', function(S) {
                     o.appendChild(g);
                     self.glass = g;
                 }
-                // ĞèÒªÏÔÊ¾·Å´óÍ¼±ê
+                // éœ€è¦æ˜¾ç¤ºæ”¾å¤§å›¾æ ‡
                 if (cfg.zoomIcon) {
                     z = DOM.create(DIV);
                     DOM.addClass(z, IMGZOOM_ICON_CLS);
@@ -233,21 +233,21 @@ KISSY.add('imagezoom', function(S) {
             },
             
             /**
-             * ´´½¨´óÍ¼µÄÏÔÊ¾DOM
+             * åˆ›å»ºå¤§å›¾çš„æ˜¾ç¤ºDOM
              */
             _createZoom: function(ev) {
                 var self = this,
                     cfg = self.config,
                     v;
                 
-                // ´´½¨ÏÔÊ¾ÇøÓòµÄDOM½á¹¹
+                // åˆ›å»ºæ˜¾ç¤ºåŒºåŸŸçš„DOMç»“æ„
                 v = DOM.create(DIV);
                 DOM.addClass(v, IMGZOOM_VIEWER_CLS);
                 DOM.addClass(v, IMGZOOM_VIEWER_BK_CLS);
                 var bimg = DOM.create(IMG);
                 DOM.attr(bimg, 'src', cfg.bigImageSrc);
                 v.appendChild(bimg);
-                // Ìí¼ÓÏÔÊ¾ÇøÓòµ½Ô­ÓĞDOMÖĞ, ¸úËæÄ£Ê½ÓĞµãÇø±ğ
+                // æ·»åŠ æ˜¾ç¤ºåŒºåŸŸåˆ°åŸæœ‰DOMä¸­, è·Ÿéšæ¨¡å¼æœ‰ç‚¹åŒºåˆ«
                 if (TYPE[2] == cfg.type) {
                     self.origin.appendChild(v);
                 } else {
@@ -258,7 +258,7 @@ KISSY.add('imagezoom', function(S) {
                 
                 self._updateViewer(ev, false);
                 self._zoom();
-                // ´óÍ¼¼ÓÔØÍê±Ïºó¸üĞÂÏÔÊ¾ÇøÓò
+                // å¤§å›¾åŠ è½½å®Œæ¯•åæ›´æ–°æ˜¾ç¤ºåŒºåŸŸ
                 self.bigImage.onload = function() {
                     if (!self.bigImageReady) {
                         self.bigImageReady = !self.bigImageReady;
@@ -272,7 +272,7 @@ KISSY.add('imagezoom', function(S) {
             },
             
             /**
-             * ÉèÖÃ·Å´óÍ¼Æ¬ÏÔÊ¾µÄÆ«ÒÆÁ¿
+             * è®¾ç½®æ”¾å¤§å›¾ç‰‡æ˜¾ç¤ºçš„åç§»é‡
              */
             _zoom: function() {
                 var self = this,
@@ -280,16 +280,16 @@ KISSY.add('imagezoom', function(S) {
                     g = self.glass,
                     v = self.viewer;
                 /**
-                 * ÒÆ¶¯Êó±êÊ±¸üĞÂ´óÍ¼Æ«ÒÆÁ¿
+                 * ç§»åŠ¨é¼ æ ‡æ—¶æ›´æ–°å¤§å›¾åç§»é‡
                  */
                 EVENT.on(self.origin, 'mousemove', function(ev) {
-                    // ¾µÆ¬Æ«ÒÆÁ¿²¢¸üĞÂ
+                    // é•œç‰‡åç§»é‡å¹¶æ›´æ–°
                     var glassOffset = self.getGlassOffset(ev);
                     if (g) {
                         DOM.css(g, LEFT, glassOffset.left + 'px');
                         DOM.css(g, TOP, glassOffset.top + 'px');
                     }
-                    // ¼ÆËã´óÍ¼Æ«ÒÆÁ¿²¢¸üĞÂ
+                    // è®¡ç®—å¤§å›¾åç§»é‡å¹¶æ›´æ–°
                     var imageSize = self.getSize(self.image),
                         zoom = self.getSize(self.bigImage),
                         i = 0,
@@ -304,7 +304,7 @@ KISSY.add('imagezoom', function(S) {
                     v.scrollLeft = scrollx + i;
                     v.scrollTop = scrolly + j;
                     
-                    // ¸úËæÄ£Ê½ÏÂ¸üĞÂÏÔÊ¾ÇøÓòÎ»ÖÃ
+                    // è·Ÿéšæ¨¡å¼ä¸‹æ›´æ–°æ˜¾ç¤ºåŒºåŸŸä½ç½®
                     if (TYPE[2] == cfg.type) {
                         DOM.css(v, LEFT, glassOffset.left + 'px');
                         DOM.css(v, TOP, glassOffset.top + 'px');
@@ -313,7 +313,7 @@ KISSY.add('imagezoom', function(S) {
             },
             
             /**
-             * ¸üĞÂÏÔÊ¾ÇøÓò´óĞ¡¼°Î»ÖÃ
+             * æ›´æ–°æ˜¾ç¤ºåŒºåŸŸå¤§å°åŠä½ç½®
              */
             _updateViewer: function(ev, ready) {
                 var self = this;
@@ -328,20 +328,20 @@ KISSY.add('imagezoom', function(S) {
                     glassSize = self.getSize(self.glass);
                 
                 
-                // ¼ÆËãÏÔÊ¾ÇøÓòÎ»ÖÃ
+                // è®¡ç®—æ˜¾ç¤ºåŒºåŸŸä½ç½®
                 var leftPos, topPos, vHeight, vWidth;
                 if (TYPE[2] == cfg.type) {
-                    // ¸úËæÄ£Ê½ÏÂ, ÉèÖÃÏÔÊ¾ÇøÓò³õÊ¼Î»ÖÃ
+                    // è·Ÿéšæ¨¡å¼ä¸‹, è®¾ç½®æ˜¾ç¤ºåŒºåŸŸåˆå§‹ä½ç½®
                     var mousePoint = self.getMousePoint(ev),
                         cursorX = mousePoint.x - imageOffset.left,
                         cursorY = mousePoint.y - imageOffset.top;
                     topPos = cursorX - glassSize.width/2;
                     leftPos = cursorY - glassSize.height/2;
-                    // ¸úËæÄ£Ê½ÏÂ, ÏÔÊ¾ÇøÓò¿í¸ß¶ÈÓÉÓÃ»§Éè¶¨µÄglass¿í¸ß¶È¾ö¶¨
+                    // è·Ÿéšæ¨¡å¼ä¸‹, æ˜¾ç¤ºåŒºåŸŸå®½é«˜åº¦ç”±ç”¨æˆ·è®¾å®šçš„glasså®½é«˜åº¦å†³å®š
                     vHeight = glassSize.height;
                     vWidth =  glassSize.width;
                 } else {
-                    // ÇøÓòÏÔÊ¾ÔÚ²»Í¬Î»ÖÃÉÏ¼ÆËãleftºÍtopÖµ
+                    // åŒºåŸŸæ˜¾ç¤ºåœ¨ä¸åŒä½ç½®ä¸Šè®¡ç®—leftå’Œtopå€¼
                     var bigImageSize,
                         imageSize = self.getSize(i),
                         o = self.origin,
@@ -353,7 +353,7 @@ KISSY.add('imagezoom', function(S) {
                         bigImageSize = self.getSize(self.bigImage);
                     }
                     
-                    // ÆäËûÄ£Ê½ÏÂ, ÏÔÊ¾ÇøÓò¿í¸ß¶ÈÓÉ´óĞ¡Í¼µÄ±ÈÀıÀ´¶¨
+                    // å…¶ä»–æ¨¡å¼ä¸‹, æ˜¾ç¤ºåŒºåŸŸå®½é«˜åº¦ç”±å¤§å°å›¾çš„æ¯”ä¾‹æ¥å®š
                     vHeight = Math.round(bigImageSize.height*glassSize.height/imageSize.height);
                     vWidth = Math.round(bigImageSize.width*glassSize.width/imageSize.width);
                     
@@ -383,9 +383,9 @@ KISSY.add('imagezoom', function(S) {
             },
             
             /**
-             * »ñÈ¡¾µÆ¬µÄÆ«ÒÆÁ¿
-             * @param ev    ´¥·¢µÄÊÂ¼ş
-             * @return  offset ¾µÆ¬ÔÚ·Å´óÄ¿±êÔªËØÉÏµÄºá×İÏòÎ»ÖÃ
+             * è·å–é•œç‰‡çš„åç§»é‡
+             * @param ev    è§¦å‘çš„äº‹ä»¶
+             * @return  offset é•œç‰‡åœ¨æ”¾å¤§ç›®æ ‡å…ƒç´ ä¸Šçš„æ¨ªçºµå‘ä½ç½®
              */
             getGlassOffset: function(ev) {
                 var self = this,
@@ -394,21 +394,21 @@ KISSY.add('imagezoom', function(S) {
                         left: 0,
                         top: 0
                     };
-                // Ğ¡Í¼Æ«ÒÆÁ¿
+                // å°å›¾åç§»é‡
                 var imageOffset = DOM.offset(i);
-                // Êó±êÔÚÒ³ÃæÉÏµÄÎ»ÖÃ
+                // é¼ æ ‡åœ¨é¡µé¢ä¸Šçš„ä½ç½®
                 var mousePoint = self.getMousePoint(ev);
-                // ¾µÆ¬Êµ¼Ê³ß´ç
+                // é•œç‰‡å®é™…å°ºå¯¸
                 var glassSize = self.getSize(self.glass);
-                // Ğ¡Í¼Êµ¼Ê³ß´ç
+                // å°å›¾å®é™…å°ºå¯¸
                 var imageSize = self.getSize(i);
-                // ¹â±êºáÏòÎ»ÖÃ
+                // å…‰æ ‡æ¨ªå‘ä½ç½®
                 var cursorX = mousePoint.x - imageOffset.left;
-                // ¾µÆ¬ºáÏòÆ«ÒÆÁ¿
+                // é•œç‰‡æ¨ªå‘åç§»é‡
                 offset.left = cursorX - glassSize.width/2;
                 var i = 0,
                     j = 0;
-                // ¸úËæÄ£Ê½ÏÂ, Æ«ÒÆÏŞÖÆ²»Í¬
+                // è·Ÿéšæ¨¡å¼ä¸‹, åç§»é™åˆ¶ä¸åŒ
                 if (TYPE[2] == self.config.type) {
                     i = glassSize.width/2;
                     j = glassSize.height/2;
@@ -418,9 +418,9 @@ KISSY.add('imagezoom', function(S) {
                 } else if (offset.left > imageSize.width - glassSize.width + i) {
                     offset.left = imageSize.width - glassSize.width;
                 }
-                // ¹â±ê×İÏòÎ»ÖÃ
+                // å…‰æ ‡çºµå‘ä½ç½®
                 var cursorY = mousePoint.y - imageOffset.top;
-                // ¾µÆ¬×İÏòÆ«ÒÆÁ¿
+                // é•œç‰‡çºµå‘åç§»é‡
                 offset.top = cursorY - glassSize.height/2;
                 if (offset.top < -j) {
                     offset.top = 0;
@@ -431,9 +431,9 @@ KISSY.add('imagezoom', function(S) {
             },
             
             /**
-             * »ñÈ¡ÔªËØµÄ¿í¸ß¶È(²»°üÀ¨±ßÏßºÍ¹ö¶¯Ìõ)
+             * è·å–å…ƒç´ çš„å®½é«˜åº¦(ä¸åŒ…æ‹¬è¾¹çº¿å’Œæ»šåŠ¨æ¡)
              * @param   HTMLElement
-             * @return  ÔªËØ¿É¼û³ß´ç
+             * @return  å…ƒç´ å¯è§å°ºå¯¸
              */
             getSize: function(elm) {
                 if (!elm) return this.config.glassSize;
@@ -444,16 +444,16 @@ KISSY.add('imagezoom', function(S) {
             },
             
             /**
-             * »ñÈ¡Êó±êÔÚÒ³ÃæÉÏµÄÎ»ÖÃ
-             * @param ev        ´¥·¢ÊÂ¼ş
-             * @return offset   Êó±êÔÚÒ³ÃæÉÏµÄºá×İÏòÎ»ÖÃ
+             * è·å–é¼ æ ‡åœ¨é¡µé¢ä¸Šçš„ä½ç½®
+             * @param ev        è§¦å‘äº‹ä»¶
+             * @return offset   é¼ æ ‡åœ¨é¡µé¢ä¸Šçš„æ¨ªçºµå‘ä½ç½®
              */
             getMousePoint: function(ev) {
                 return {x: ev.pageX, y: ev.pageY}
             },
            
             /**
-             * ´óÍ¼Æ¬²»¿ÉÓÃÊ±ÏÔÊ¾ÌáÊ¾ĞÅÏ¢
+             * å¤§å›¾ç‰‡ä¸å¯ç”¨æ—¶æ˜¾ç¤ºæç¤ºä¿¡æ¯
              */
             showMsg: function(){
                 var b = S.get('b', this.viewer);
@@ -462,7 +462,7 @@ KISSY.add('imagezoom', function(S) {
                     this.viewer.appendChild(b);
                     DOM.removeClass(this.viewer, IMGZOOM_VIEWER_BK_CLS);
                 }
-                DOM.html(b, 'Í¼Æ¬Ôİ²»¿ÉÓÃ');
+                DOM.html(b, 'å›¾ç‰‡æš‚ä¸å¯ç”¨');
             },
             hideMsg: function(){
                 var b = S.get('b', this.viewer);
@@ -478,18 +478,18 @@ KISSY.add('imagezoom', function(S) {
 /**
  * NOTES:
  *  2010.6
- *      - ¼ÓÈëpositionÑ¡Ïî, ¶¯Ì¬¹¹½¨ËùĞèdom;
- *      - Ğ¡Í¼¼ÓÔØ;
- *      - ´óÍ¼¼ÓÔØÖ®ºó²ÅÄÜÏÔÊ¾;
- *      - ¼ÓÈë¸úËæÄ£Ê½
- *      - ¼ÓÈëTimeout
- *      - 6. 24  È¥³ıyahoo-dom-eventÒÀÀµ
+ *      - åŠ å…¥positioné€‰é¡¹, åŠ¨æ€æ„å»ºæ‰€éœ€dom;
+ *      - å°å›¾åŠ è½½;
+ *      - å¤§å›¾åŠ è½½ä¹‹åæ‰èƒ½æ˜¾ç¤º;
+ *      - åŠ å…¥è·Ÿéšæ¨¡å¼
+ *      - åŠ å…¥Timeout
+ *      - 6. 24  å»é™¤yahoo-dom-eventä¾èµ–
  *  2010.7
- *      - È¥³ıgetStyle, Ê¹ÓÃDOM.css()
+ *      - å»é™¤getStyle, ä½¿ç”¨DOM.css()
  *      - firstHover
- *      - ¾ÀÕıÏÔÊ¾ÇøÓòÎ»ÖÃ¼ÆËã´íÎó
- *      - µ÷ÕûDOM½á¹¹, È¥³ı²»±ØÒªµÄ´úÂë
+ *      - çº æ­£æ˜¾ç¤ºåŒºåŸŸä½ç½®è®¡ç®—é”™è¯¯
+ *      - è°ƒæ•´DOMç»“æ„, å»é™¤ä¸å¿…è¦çš„ä»£ç 
  *  TODO:
- *      - ¼ÓÈë·´×ªÄ£Ê½;
+ *      - åŠ å…¥åè½¬æ¨¡å¼;
  *      - 
  */
