@@ -28,7 +28,7 @@ KISSY.add('switchable-countdown', function(S, undefined) {
         init: function(host) {
             var cfg = host.config, interval = cfg.interval,
                 triggers = host.triggers, masks = [], style = cfg.countdownStyle,
-                anim, hoverAnim;
+                anim;
 
             // 必须保证开启 autoplay 以及有 trigger 时，才能开启倒计时动画
             if (!cfg.autoplay || !cfg.hasTriggers || !cfg.countdown) return;
@@ -47,7 +47,7 @@ KISSY.add('switchable-countdown', function(S, undefined) {
                     stopAnim();
 
                     // 快速平滑关闭当前未完成动画效果
-                    hoverAnim = new Anim(masks[host.activeIndex], style, interval / 10, 'easeOut').run();
+                    anim = new Anim(masks[host.activeIndex], style, interval / 10, 'easeOut').run();
                 });
             }
 
@@ -60,7 +60,7 @@ KISSY.add('switchable-countdown', function(S, undefined) {
                 DOM.removeAttr(masks[host.activeIndex], 'style');
 
                 // 悬停状态时，不需要触发倒计时动画
-                if(host.paused) {
+                if (host.paused) {
                     // 将下一个 mask 隐藏，也就是没有动画效果
                     DOM.css(masks[ev.toIndex], 'visibility', 'hidden');
                 }
@@ -77,7 +77,6 @@ KISSY.add('switchable-countdown', function(S, undefined) {
             // 开始第一次
             startAnim(host.activeIndex);
 
-
             // 开始倒计时动画
             function startAnim(index) {
                 stopAnim(); // 开始之前，先确保停止掉之前的
@@ -89,10 +88,6 @@ KISSY.add('switchable-countdown', function(S, undefined) {
                 if (anim) {
                     anim.stop();
                     anim = undefined;
-                }
-                if (hoverAnim) {
-                    hoverAnim.stop();
-                    hoverAnim = undefined;
                 }
             }
         }
