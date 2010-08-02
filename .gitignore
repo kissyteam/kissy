@@ -1,6 +1,7 @@
 *.iml
 .idea/
 *~
+~*
 *.diff
 *.patch
 *.bak
