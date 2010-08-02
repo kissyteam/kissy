@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>ImageZoom Research</title>
+<title>ImageZoom 调研报告</title>
 <link rel="stylesheet" href="../../docs/assets/post.css" />
 </head>
 <body class="w1200 ks-post">
@@ -12,7 +12,13 @@
 </div>
 
 <div id="content">
-    <h2>一、同类组件</h2>
+
+    <h2>一、应用场景</h2>
+<pre>
+    具体请参考：<a href="assets/online.docx">图片放大效果应用场景</a> (docx 文档)
+</pre>
+
+    <h2>二、同类组件</h2>
 
 <pre>
     1. JQZoom：<a href="http://www.mind-projects.it/projects/jqzoom/">http://www.mind-projects.it/projects/jqzoom/</a>
@@ -37,10 +43,9 @@
         - 基于 jQuery 类库，大小 1.2k
         - 显示类型只有跟随模式；
         - 强大之处在于，该组件可以放大任何区域，比如文本等等，不愧为 anything zoomer!
-
 </pre>
 
-    <h2>二、功能分析</h2>
+    <h2>三、功能分析</h2>
 
 <pre>
     1. 显示类型，可总结为以下 3 类：
@@ -48,7 +53,25 @@
         - 反转模式 reverse:  可参考 JQZoom 的反转模式，或 CJL ImageZoom 的 cropper 模式，该模式下，lens 必须显示；
         - 跟随模式 follow:   可参考 CJL ImageZoom 的 follow 模式。
 
-    2. 
+       特有意思：Zazzle 上的 follow 模式非常值得仿效：<a href="http://www.zazzle.com/back+to+school+tshirts">Zazzle</a>
+       反转模式在调研的在线应用中，没有一家采用。很可能是因为反转效果很唐突，对用户体验无益。
+       无 lens 的标准模式，在在线应用中也很少看到。因为有 lens 的感觉更佳，组件实现时，可以不考虑无 lens 的标准模式。
+       综上考虑，KISSY 将实现以下两种显示类型：
+        - 标准模式 standard  显示 lens
+        - 跟随模式 follow    分 普通跟随模式 和 Zazzle 的跟随模式，具体参数实现时再定
+
+    2. 大图的预加载功能。基本是标配，KISSY 可以进一步做到：
+        - 仿照 Zazzle 的效果，在大图加载过程中显示进度条，以及相关提示文字
+
+    3. 放大系数、滚轮缩放、拖曳裁剪等功能，对用户用途不大，不支持
+
+    4. 放大镜提示小图片很不错，能引导用户主动悬浮，支持该功能
+</pre>
+
+    <h2>四、内部讨论</h2>
+
+<pre>
+    请移步到：<a href="slide.html">S.ImageZoom Slide</a>
 </pre>
 
 </div>

@@ -1,42 +1,39 @@
 /**
- * 图片放大镜组件
- * @creater     qiaohua@taobao.com
- * @depends     ks-core
+ * 图片放大效果 ImageZoom
+ * @creater  qiaohua@taobao.com
+ * @depends  ks-core
  */
 KISSY.add('imagezoom', function(S) {
 
     var DOM = S.DOM, EVENT = S.Event,
 
-        IMGZOOM_MAGNIFIER_CLS = 'ks-imagezoom-magnifier',
-        IMGZOOM_VIEWER_CLS = 'ks-imagezoom-viewer',
-        IMGZOOM_GLASS_CLS = 'ks-imagezoom-glass',
-        IMGZOOM_ICON_CLS = 'ks-imagezoom-icon',
-        IMGZOOM_VIEWER_BK_CLS = 'ks-imagezoom-viewer-bk',
-
-        POSITION = ['top', 'right', 'bottom', 'left'],
-        TYPE = ['default', 'glass', 'follow'],
+        CLS_PREFIX = 'ks-imagezoom-',
+        IMGZOOM_ORIGIN_CLS = CLS_PREFIX + 'origin',
+        IMGZOOM_VIEWER_CLS = CLS_PREFIX + 'viewer',
+        IMGZOOM_LENS_CLS = CLS_PREFIX + 'lens',
+        IMGZOOM_ICON_CLS = CLS_PREFIX + 'icon',
 
         DIV = '<div>', IMG = '<img>', B = '<b>',
-
-        HIDDEN = 'hidden',
+        STANDARD = 'standard', FOLLOW = 'follow',
         HEIGHT = 'height', WIDTH = 'width',
         TOP = 'top', LEFT = 'left',
-        
+        HIDDEN = 'hidden',
+
         /**
          * 默认设置
          */
         defaultConfig = {
-            type: 'default',    // 显示模式, 可选值: TYPE
+            type: STANDARD,            // 显示类型。可选值：follow
 
-            bigImageSrc: '',    // 大图路径, 为 '' 时取原图路径
-            bigImageSize: { height: 900, width:900 }, // 大图高宽
-            position: 'right',  // 大图显示位置, 可选值: POSITION
-            offset: 10,         // 大图位置的偏移量
-            preload: true,      // 是否预加载大图
-            timeout: 6000,      // 等待大图加载的最大时间, 单位: ms
+            bigImageSrc: '',           // 大图路径，为 '' 时，会先取原图上一级 a 的图片 src
+            bigImageSize: [900, 900],  // 大图高宽
+            //position: 'right',       // 大图显示位置。仅支持 right, 不开放其它值
+            offset: 10,                // 大图位置的偏移量。单一值或 [x, y]
+            preload: true,             // 是否预加载大图
+            timeout: 8000,             // 等待大图加载的最大时间, 单位: ms
 
-            glassSize: { height: 100, width: 100 }, // 镜片高宽
-            zoomIcon: true      // 是否显示放大镜提示图标
+            lensSize: [100, 100],      // 镜片高宽
+            showIcon: true             // 是否显示放大镜提示图标
         };
         
         /** 
@@ -44,76 +41,72 @@ KISSY.add('imagezoom', function(S) {
          * @class ImageZoom
          * @constructor
          */
-        function ImageZoom(img, cfg) {
+        function ImageZoom(img, config) {
             var self = this;
             
             if (!(self instanceof ImageZoom)) {
-                return new ImageZoom(img, cfg);
+                return new ImageZoom(img, config);
             }
             
             /**
              * 需要缩放的图片
              * @type HTMLElement
              */
-            if (typeof(img) === typeof('')) self.image = S.get(img);
-            else self.image = img;
-            
-            if (!self.image) {
-                return;
-            }
-            
+            self.image = S.get(img);
+            if (!self.image) return;
+
+            /**
+             * 大图
+             * @type HTMLElement
+             */
+            //self.bigImage = null;
+
             /**
              * 小图外层
              * @type HTMLElement
              */
-            self.origin = null;
+            //self.origin = null;
             
             /**
-             * 放大显示的图片外层
+             * 大图外层
              * @type HTMLElement
              */
-            self.viewer = null;
-            
-            /**
-             * 放大显示的图片
-             * @type HTMLElement
-             */
-            self.bigImage = null;
-            
+            //self.viewer = null;
+
             /**
              * 配置参数
              * @type Object
              */
-            self.config = S.merge(defaultConfig, cfg);
+            self.config = S.merge(defaultConfig, config);
             
             /**
              * 镜片
              * @type HTMLElement
              */
-            self.glass = null;
+            //self.lens = null;
             
             /**
              * 放大镜图标
              * @type HTMLElement
              */
-            self.zoomIcon = null;
+            //self.lensIcon = null;
             
             /**
              * 小图加载状态
              */
-            self.imageReady = false;
+            //self.imageReady = false;
             
             /**
              * 大图加载状态
              */
-            self.bigImageReady = false;
+            //self.bigImageReady = false;
             
             /**
-             * 信息提示定时
+             * 大图加载定时器
              */
-            self.timer = null;
+            //self.timer = null;
             
-            // 当小图加载完毕之后, 初始化
+            // 当小图加载完毕之后，初始化
             self.image.onload = function(){
                 if (!self.imageReady) {
                     self.imageReady = !self.imageReady;
@@ -174,7 +167,7 @@ KISSY.add('imagezoom', function(S) {
                 /**
                  * 鼠标离开小图时, 隐藏大图
                  */
-                EVENT.on(self.origin, 'mouseleave', function(ev) {
+                EVENT.on(self.origin, 'mouseleave', function() {
                     // 隐藏镜片
                     if (g) DOM.addClass(g, HIDDEN);
                     // 显示放大镜
@@ -208,7 +201,7 @@ KISSY.add('imagezoom', function(S) {
                 
                 // 构建小图外层
                 o = DOM.create(DIV);
-                DOM.addClass(o, IMGZOOM_MAGNIFIER_CLS);
+                DOM.addClass(o, IMGZOOM_ORIGIN_CLS);
                 DOM.parent(i).insertBefore(o, i);
                 o.appendChild(i);
                 self.origin = o;
@@ -216,7 +209,7 @@ KISSY.add('imagezoom', function(S) {
                 // 镜片模式下
                 if (TYPE[1] == cfg.type) {
                     g = DOM.create(DIV);
-                    DOM.addClass(g, IMGZOOM_GLASS_CLS);
+                    DOM.addClass(g, IMGZOOM_LENS_CLS);
                     DOM.addClass(g, HIDDEN);
                     DOM.css(g, HEIGHT, cfg.glassSize.height+'px');
                     DOM.css(g, WIDTH, cfg.glassSize.width+'px');
@@ -264,7 +257,7 @@ KISSY.add('imagezoom', function(S) {
                         self.bigImageReady = !self.bigImageReady;
                         self._updateViewer(ev, true);
                     }
-                }
+                };
                 if (!self.bigImageReady && self.bigImage.complete && self.getSize(self.bigImage).height) {
                     self.bigImageReady = !self.bigImageReady;
                     self._updateViewer(ev, true);
@@ -389,19 +382,19 @@ KISSY.add('imagezoom', function(S) {
              */
             getGlassOffset: function(ev) {
                 var self = this,
-                    i = self.image,
+                    img = self.image,
                     offset = {
                         left: 0,
                         top: 0
                     };
                 // 小图偏移量
-                var imageOffset = DOM.offset(i);
+                var imageOffset = DOM.offset(img);
                 // 鼠标在页面上的位置
                 var mousePoint = self.getMousePoint(ev);
                 // 镜片实际尺寸
                 var glassSize = self.getSize(self.glass);
                 // 小图实际尺寸
-                var imageSize = self.getSize(i);
+                var imageSize = self.getSize(img);
                 // 光标横向位置
                 var cursorX = mousePoint.x - imageOffset.left;
                 // 镜片横向偏移量
@@ -432,8 +425,6 @@ KISSY.add('imagezoom', function(S) {
             
             /**
              * 获取元素的宽高度(不包括边线和滚动条)
-             * @param   HTMLElement
-             * @return  元素可见尺寸
              */
             getSize: function(elm) {
                 if (!elm) return this.config.glassSize;
@@ -477,19 +468,18 @@ KISSY.add('imagezoom', function(S) {
 
 /**
  * NOTES:
- *  2010.6
- *      - 加入position选项, 动态构建所需dom;
- *      - 小图加载;
- *      - 大图加载之后才能显示;
+ *  201006
+ *      - 加入 position 选项，动态构建所需 dom
+ *      - 小图加载
+ *      - 大图加载之后才能显示
  *      - 加入跟随模式
- *      - 加入Timeout
- *      - 6. 24  去除yahoo-dom-event依赖
- *  2010.7
- *      - 去除getStyle, 使用DOM.css()
- *      - firstHover
+ *      - 0624 去除 yahoo-dom-event 的依赖
+ *  201007
+ *      - 去除 getStyle, 使用DOM.css()
+ *      - 增加 firstHover 事件
  *      - 纠正显示区域位置计算错误
- *      - 调整DOM结构, 去除不必要的代码
+ *      - 调整 DOM 结构，去除不必要的代码
  *  TODO:
- *      - 加入反转模式;
- *      - 
+ *      - 加入 Zazzle 的 follow 效果
+ *      - 仿照 Zazzle 的效果，在大图加载过程中显示进度条和提示文字
  */
