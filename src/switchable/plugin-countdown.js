@@ -1,21 +1,24 @@
 /**
  * Switchable Countdown Plugin
- * @creator  gonghao<gonghao@ghsky.com>
+ * @creator gonghao<gonghao@ghsky.com>
  */
 KISSY.add('switchable-countdown', function(S, undefined) {
 
-    var DOM = S.DOM, Event = S.Event, Anim = S.Anim,
+    var Event = S.Event, DOM = S.DOM, Anim = S.Anim,
         Switchable = S.Switchable,
-        CLS_PREFIX = 'ks-switchable-trigger-',
-        TRIGGER_MASK_CLS = CLS_PREFIX + 'mask',
-        TRIGGER_CONTENT_CLS = CLS_PREFIX + 'content';
+        CLS_PREFIX = 'ks-switchable-', DOT = '.',
+        // 倒计时基底层、遮盖层、内容层样式
+        BASE_CLS = CLS_PREFIX + 'nav-base', COVER_CLS = CLS_PREFIX + 'nav-cover',
+        NUM_CLS = CLS_PREFIX + 'nav-num';
 
     /**
      * 添加默认配置
+     * @member countdown
+     * @member countdownStyle
      */
     S.mix(Switchable.Config, {
         countdown: false,
-        countdownStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
+        countdownStyle: 'height:0px'
     });
 
     /**
@@ -26,73 +29,96 @@ KISSY.add('switchable-countdown', function(S, undefined) {
         name: 'countdown',
 
         init: function(host) {
-            var cfg = host.config, interval = cfg.interval,
-                triggers = host.triggers, masks = [], style = cfg.countdownStyle,
-                anim, hoverAnim;
-
-            // 必须保证开启 autoplay 以及有 trigger 时，才能开启倒计时动画
-            if (!cfg.autoplay || !cfg.hasTriggers || !cfg.countdown) return;
-
-            // 为每个 trigger 增加倒计时动画覆盖层
+            var cfg = host.config, interval = cfg.interval, pauseOnHover = cfg.pauseOnHover,
+                triggers = host.triggers, covers = [], style = cfg.countdownStyle, animControl;
+                
+            // 必须保证开启autoplay以及有trigger时，才能开启倒计时动画
+            if (!cfg.countdown || !cfg.autoplay || !cfg.hasTriggers) return;
+            
+            // 为每个trigger增加倒计时动画相关层
             S.each(triggers, function(trigger, i) {
-                trigger.innerHTML = '<div class="' + TRIGGER_MASK_CLS + '"></div>' +
-                    '<div class="' + TRIGGER_CONTENT_CLS + '">' + trigger.innerHTML + '</div>';
-                masks[i] = trigger.firstChild;
+                var base = DOM.create('<div class="' + BASE_CLS + '">'),
+                    cover = DOM.create('<div class="' + COVER_CLS + '">'),
+                    num = DOM.create('<div class="' + NUM_CLS + '">');
+                num.innerHTML = i + 1;
+                trigger.innerHTML = '';
+                trigger.appendChild(base);
+                trigger.appendChild(cover);
+                trigger.appendChild(num);
+                covers.push(cover);
             });
-
+            
+            // 必须保证每个trigger都有一个倒计时遮盖层
+            if (triggers.length !== covers.length) return;    
+            
             // 鼠标悬停，停止自动播放
-            if (cfg.pauseOnHover) {
+            if (pauseOnHover) {
                 Event.on(host.container, 'mouseenter', function() {
-                    // 先停止未完成动画
-                    stopAnim();
-
-                    // 快速平滑关闭当前未完成动画效果
-                    hoverAnim = new Anim(masks[host.activeIndex], style, interval / 10, 'easeOut').run();
+                    // 鼠标悬停时，动画效果自动失效
+                    closeAnim();
                 });
             }
-
-            // panels 切换前，当前 trigger 完成善后工作以及下一 trigger 进行初始化
-            host.on('beforeSwitch', function(ev) {
-                // 恢复前，先结束未完成动画效果
-                stopAnim();
-
-                // 将当前 mask 恢复动画前状态
-                DOM.removeAttr(masks[host.activeIndex], 'style');
-
-                // 悬停状态时，不需要触发倒计时动画
-                if(host.paused) {
-                    // 将下一个 mask 隐藏，也就是没有动画效果
-                    DOM.css(masks[ev.toIndex], 'visibility', 'hidden');
-                }
-            });
-
-            // panel 切换完成时，开始 trigger 的倒计时动画
-            host.on('switch', function(ev) {
-                // 悬停状态，当用户主动触发切换时，不需要倒计时动画
+            
+            
+            // panels切换前，当前trigger完成善后工作以及下一trigger进行初始化
+            host.on('beforeSwitch', function(e) {
+                // 完成切换前的清理工作
+                restoreCover();
+                
+                // 只在当用户以非主动方式触发triggers产生切换时才初始化动画设置
                 if (!host.paused) {
-                    startAnim(ev.currentIndex);
+                    DOM.css(covers[e.toIndex], 'visibility', 'visible');
                 }
             });
-
-            // 开始第一次
-            startAnim(host.activeIndex);
-
-
-            // 开始倒计时动画
-            function startAnim(index) {
-                stopAnim(); // 开始之前，先确保停止掉之前的
-                anim = new Anim(masks[index], style, interval - 1).run(); // -1 是为了动画结束时停留一下，使得动画更自然
-            }
-
-            // 停止所有动画
-            function stopAnim() {
-                if (anim) {
-                    anim.stop();
-                    anim = undefined;
+            
+            // panels切换时开始倒计时动画
+            host.on('switch', function(e) {
+                // 如果悬停关闭动画，且在悬停时产生了panel切换，即用户主动触发triggers产生切换
+                // 只在当用户以非主动方式触发triggers产生切换时才使用动画
+                if (!host.paused) {
+                    // 开始新一轮动画
+                    createAnim();
                 }
-                if (hoverAnim) {
-                    hoverAnim.stop();
-                    hoverAnim = undefined;
+            });
+            
+            // 初始化倒计时覆盖层样式
+            DOM.css(covers[0], 'visibility', 'visible');
+            
+            // 第一次开始，包括自动切换和动画效果
+            createAnim();
+            
+            // 恢复遮盖层初始设置
+            function restoreCover(index) {
+                index = index || host.activeIndex;
+                var cover = covers[index];
+                
+                // 恢复前，先结束未完成动画效果
+                stopAinm();
+                
+                // 恢复动画前状态
+                DOM.css(cover, 'visibility', 'hidden');
+                DOM.removeAttr(cover, 'style');
+            }
+            
+            // 创建倒计时动画计时器
+            function createAnim(index) {
+                index = index || host.activeIndex;
+                (animControl = new Anim(covers[index], style, interval, 'easeNone')).run();
+            }
+            
+            // 平滑关闭当前未完成动画效果
+            function closeAnim() {
+                // 先清理未完成动画
+                stopAinm();
+                // 动画恢复之前状态
+                (animControl = new Anim(covers[host.activeIndex], style, interval / 10, 'easeOut')).run();
+            }
+            
+            // 清理所有动画
+            function stopAinm() {
+                if (animControl) {
+                    animControl.stop();
+                    animControl = undefined;
                 }
             }
         }
