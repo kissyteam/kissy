@@ -52,8 +52,8 @@ KISSY.add('imagezoom', function(S) {
              * 需要缩放的图片
              * @type HTMLElement
              */
-            self.image = S.get(img);
-            if (!self.image) return;
+            self.image = img = S.get(img);
+            if (!img) return;
 
             /**
              * 大图
@@ -105,9 +105,10 @@ KISSY.add('imagezoom', function(S) {
              * 大图加载定时器
              */
             //self.timer = null;
-            
-            // 当小图加载完毕之后，初始化
-            self.image.onload = function(){
+
+            if(img.complete)
+            // 小图尚未加载完毕之后，初始化
+            self.image.onload = function() {
                 if (!self.imageReady) {
                     self.imageReady = !self.imageReady;
                     self._init();
