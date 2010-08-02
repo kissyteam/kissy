@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Aug 2 23:09
+build time: Aug 2 23:52
 */
 KISSY.add("node",function(a){function f(b,c,h){var j;if(!(this instanceof f))return new f(b,c,h);if(b){if(o._isSupportedNode(b))j=b;else if(typeof b==="string")j=o.create(b,c,h);this[0]=j}else this.length=0}var o=a.DOM;f.TYPE="-ks-Node";a.augment(f,{length:1,getDOMNode:function(){return this[0]},nodeType:f.TYPE});a.one=function(b,c){return(b=a.get(b,c))?new f(b):null};a.Node=f});
 KISSY.add("nodelist",function(a){function f(c){if(!(this instanceof f))return new f(c);b.push.apply(this,c||[])}var o=a.DOM,b=Array.prototype;a.mix(f.prototype,{length:0,item:function(c){var h=null;if(o._isElementNode(this[c]))h=new a.Node(this[c]);return h},getDOMNodes:function(){return b.slice.call(this)},each:function(c,h){for(var j=this.length,l=0,m;l<j;++l){m=new a.Node(this[l]);c.call(h||m,m,l,this)}return this}});a.all=function(c,h){return new f(a.query(c,h,true))};a.NodeList=f});

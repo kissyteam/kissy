@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Aug 2 23:09
+build time: Aug 2 23:52
 */
 /**
  * @module   Flash UA 探测
