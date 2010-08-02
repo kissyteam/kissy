@@ -73,18 +73,12 @@ KISSY.add('switchable-countdown', function(S, undefined) {
             }
 
             // panels 切换前，当前 trigger 完成善后工作以及下一 trigger 进行初始化
-            host.on('beforeSwitch', function(ev) {
+            host.on('beforeSwitch', function() {
                 // 恢复前，先结束未完成动画效果
                 stopAnim();
 
                 // 将当前 mask 恢复动画前状态
                 DOM.removeAttr(masks[host.activeIndex], STYLE);
-
-                // 悬停状态时，不需要触发倒计时动画
-                if (host.paused) {
-                    // 将下一个 mask 隐藏，也就是没有动画效果
-                    DOM.css(masks[ev.toIndex], 'visibility', 'hidden');
-                }
             });
 
             // panel 切换完成时，开始 trigger 的倒计时动画
