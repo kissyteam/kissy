@@ -20,22 +20,21 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
      * 添加插件
      * attached members:
      *   - this.paused
-     *   - this.autoplayTimer
      */
     Switchable.Plugins.push({
 
         name: 'autoplay',
 
         init: function(host) {
-            var cfg = host.config, interval = cfg.interval * 1000;
+            var cfg = host.config, interval = cfg.interval * 1000, timer;
             if (!cfg.autoplay) return;
 
             // 鼠标悬停，停止自动播放
             if (cfg.pauseOnHover) {
                 Event.on(host.container, 'mouseenter', function() {
-                    if(host.autoplayTimer) {
-                        host.autoplayTimer.cancel();
-                        host.autoplayTimer = undefined;
+                    if(timer) {
+                        timer.cancel();
+                        timer = undefined;
                     }
                     host.paused = true; // paused 可以让外部知道 autoplay 的当前状态
                 });
@@ -47,20 +46,16 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
 
             function startAutoplay() {
                 // 设置自动播放
-                host.autoplayTimer = S.later(function() {
+                timer = S.later(function() {
                     if (host.paused) return;
+
                     // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
                     host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, 'forward');
                 }, interval, true);
             }
 
+            // go
             startAutoplay();
         }
     });
 });
-
-/**
- * TODO:
- *  - 是否需要提供 play / pause / stop API ?
- *  - autoplayTimer 和 switchTimer 的关联？
- */
