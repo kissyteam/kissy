@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0pre
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 2 22:52
 */
 /**
  * @module kissy
@@ -64,7 +64,7 @@ build time: ${build.time}
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.0pre',
+        version: '1.1.0',
 
         /**
          * Initializes KISSY object.
@@ -818,6 +818,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
  *
  * TODO:
  *   - 分析 jq 的 isPlainObject 对 constructor 等细节处理
+ *   - unparam 对 false, null, undefined 等值的还原？需不需要？歧义性
  *
  */
 /**
