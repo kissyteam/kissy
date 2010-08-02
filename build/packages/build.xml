@@ -34,8 +34,8 @@
             <path path="../datalazyload/datalazyload.js"/>
             <path path="../flash/flash-pkg.js"/>
             <path path="../switchable/switchable-pkg.js"/>
-            <path path="../suggest/suggest.js"/>
-            <path path="../imagezoom/imagezoom.js"/>
+            <!--<path path="../suggest/suggest.js"/>-->
+            <!--<path path="../imagezoom/imagezoom.js"/>-->
             <!--<path path="../calendar/calendar.js"/>-->
         </concat>
         <!-- kissy: 包含 core 和 more 两部分，在页头无 ks-core 时使用 -->
