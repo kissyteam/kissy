@@ -7,27 +7,29 @@
 KISSY.add('suggest', function(S, undefined) {
 
     var DOM = S.DOM, Event = S.Event,
-        win = window, doc = document,
-        head = doc.getElementsByTagName('head')[0],
+        win = window, doc = document, head = S.get('head'),
         ie = S.UA.ie, ie6 = (ie === 6),
 
         CALLBACK_STR = 'g_ks_suggest_callback', // 约定的全局回调函数
-        STYLE_ID = 'ks-suggest-style', // 样式 style 元素的 id
+        PREFIX = 'ks-suggest-',
+        STYLE_ID = PREFIX + 'style', // 样式 style 元素的 id
 
-        CONTAINER_CLASS = 'ks-suggest-container',
-        KEY_EL_CLASS = 'ks-suggest-key', // 提示层中，key 元素的 class
-        RESULT_EL_CLASS = 'ks-suggest-result', // 提示层中，result 元素的 class
-        SELECTED_ITEM_CLASS = 'selected', // 提示层中，选中项的 class
-        ODD_ITEM_CLASS = 'odd', // 提示层中，奇数项的 class
-        EVEN_ITEM_CLASS = 'even', // 提示层中，偶数项的 class
-        BOTTOM_CLASS = 'ks-suggest-bottom',
-        CLOSE_BTN_CLASS = 'ks-suggest-close-btn',
-        SHIM_CLASS = 'ks-suggest-shim', // iframe shim 的 class
+        CONTAINER_CLS = PREFIX + 'container',
+        KEY_EL_CLS = PREFIX + 'key',
+        RESULT_EL_CLS = PREFIX + 'result',
+        SELECTED_ITEM_CLS = 'ks-selected', // 选中项
+        ODD_ITEM_CLS = 'ks-odd', // 奇数项
+        EVEN_ITEM_CLS = 'ks-even', // 偶数项
+        FOOTER_CLS = PREFIX + 'footer',
+        CLOSE_BTN_CLS = PREFIX + 'close-btn',
+        SHIM_CLS = PREFIX + 'shim', // iframe shim 的 class
 
         EVENT_DATA_REQUEST = 'dataRequest',
         EVENT_DATA_RETURN = 'dataReturn',
         EVENT_SHOW = 'show',
         EVENT_ITEM_SELECT = 'itemSelect',
+
+        TIMER_DELAY = 200,
 
         /**
          * Suggest的默认配置
@@ -37,15 +39,15 @@ KISSY.add('suggest', function(S, undefined) {
              * 用户附加给悬浮提示层的 class
              *
              * 提示层的默认结构如下：
-             * <div class='suggest-container [container-class]'>
+             * <div class='kssuggest-container {containerCls}'>
              *     <ol>
              *         <li>
-             *             <span class='suggest-key'>...</span>
-             *             <span class='suggest-result'>...</span>
+             *             <span class='ks-suggest-key'>...</span>
+             *             <span class='ks-suggest-result'>...</span>
              *         </li>
              *     </ol>
-             *     <div class='suggest-bottom'>
-             *         <a class='suggest-close-btn'>...</a>
+             *     <div class='ks-suggest-footer'>
+             *         <a class='ks-suggest-close-btn'>...</a>
              *     </div>
              * </div>
              * @type String
@@ -55,13 +57,13 @@ KISSY.add('suggest', function(S, undefined) {
             /**
              * 提示层的宽度
              * 注意：默认情况下，提示层的宽度和input输入框的宽度保持一致
-             * 示范取值：'200px', '10%'等，必须带单位
+             * 示范取值：'200px', '10%' 等，必须带单位
              * @type String
              */
-            containerWidth: '',
+            //containerWidth: '',
 
             /**
-             * result的格式
+             * result 的格式
              * @type String
              */
             resultFormat: '约%result%条结果',
@@ -70,7 +72,7 @@ KISSY.add('suggest', function(S, undefined) {
              * 是否显示关闭按钮
              * @type Boolean
              */
-            showCloseBtn: false,
+            //closeBtn: false,
 
             /**
              * 关闭按钮上的文字
@@ -79,28 +81,22 @@ KISSY.add('suggest', function(S, undefined) {
             closeBtnText: '关闭',
 
             /**
-             * 是否需要iframe shim
+             * 是否需要 iframe shim 默认只在 ie6 下显示
              * @type Boolean
              */
-            useShim: ie6,
-
-            /**
-             * 定时器的延时
-             * @type Number
-             */
-            timerDelay: 200,
+            shim: ie6,
 
             /**
              * 初始化后，自动激活
              * @type Boolean
              */
-            autoFocus: false,
+            //autoFocus: false,
 
             /**
-             * 鼠标点击完成选择时，是否自动提交表单
+             * 选择某项时，是否自动提交表单
              * @type Boolean
              */
-            submitFormOnClickSelect: true
+            submitOnSelect: true
         };
 
     /**
@@ -126,34 +122,34 @@ KISSY.add('suggest', function(S, undefined) {
         self.textInput = S.get(textInput);
 
         /**
-         * 获取数据的URL 或 JSON格式的静态数据
+         * 获取数据的URL 或 JSON 格式的静态数据
          * @type {String|Object}
          */
         self.dataSource = dataSource;
 
         /**
-         * JSON静态数据源
+         * JSON 静态数据源
          * @type Object 格式为 {'query1' : [['key1', 'result1'], []], 'query2' : [[], []]}
          */
-        self.JSONDataSource = S.isPlainObject(dataSource) ? dataSource : null;
+        self.JSONDataSource = S.isPlainObject(dataSource) ? dataSource : undefined;
 
         /**
-         * 通过jsonp返回的数据
+         * 通过 jsonp 返回的数据
          * @type Object
          */
-        self.returnedData = null;
+        //self.returnedData = undefined;
 
         /**
          * 配置参数
          * @type Object
          */
-        self.config = S.merge(defaultConfig, config || { });
+        self.config = S.merge(defaultConfig, config);
 
         /**
          * 存放提示信息的容器
          * @type HTMLElement
          */
-        self.container = null;
+        //self.container = null;
 
         /**
          * 输入框的值
@@ -172,58 +168,52 @@ KISSY.add('suggest', function(S, undefined) {
          * @private
          * @type Object
          */
-        self._timer = null;
+        //self._timer = null;
 
         /**
          * 计时器是否处于运行状态
          * @private
          * @type Boolean
          */
-        self._isRunning = false;
+        //self._isRunning = false;
 
         /**
-         * 获取数据的script元素
+         * 获取数据的 script 元素
          * @type HTMLElement
          */
-        self.dataScript = null;
+        //self.dataScript = null;
 
         /**
          * 数据缓存
          * @private
          * @type Object
          */
-        self._dataCache = {};
+        self._dataCache = { };
 
         /**
-         * 最新script的时间戳
+         * 最新 script 的时间戳
          * @type String
          */
-        self._latestScriptTime = '';
+        //self._latestScriptTime = '';
 
         /**
          * script返回的数据是否已经过期
          * @type Boolean
          */
-        self._scriptDataIsOut = false;
-
-        /**
-         * 是否处于键盘选择状态
-         * @private
-         * @type Boolean
-         */
-        self._onKeyboardSelecting = false;
+        //self._scriptDataIsOut = false;
 
         /**
          * 提示层的当前选中项
          * @type Boolean
          */
-        self.selectedItem = null;
+        //self.selectedItem = null;
 
         // init
         self._init();
     }
 
     S.augment(Suggest, S.EventTarget, {
+
         /**
          * 初始化方法
          * @protected
@@ -231,127 +221,109 @@ KISSY.add('suggest', function(S, undefined) {
         _init: function() {
             var self = this;
 
-            // init DOM
             self._initTextInput();
             self._initContainer();
-            if (self.config.useShim) self._initShim();
-            self._initStyle();
+            if (self.config.shim) self._initShim();
 
-            // window resize event
+            self._initStyle();
             self._initResizeEvent();
         },
 
         /**
          * 初始化输入框
-         * @protected
          */
         _initTextInput: function() {
-            var self = this;
+            var self = this,
+                input = self.textInput,
+                isDowningOrUping = false, // 是否持续按住 DOWN / UP 键
+                pressingCount = 0; // 持续按住某键时，连续触发的 keydown 次数。注意 Opera 只会触发一次
 
-            // turn off autocomplete
-            self.textInput.setAttribute('autocomplete', 'off');
+            input.setAttribute('autocomplete', 'off');
+            if (self.config.autoFocus) input.focus();
 
-            // focus
-            // 2009-12-10 yubo: 延迟到 keydown 中 start
-            //            Event.on(this.textInput, 'focus', function() {
-            //                instance.start();
-            //            });
-
-            // blur
-            Event.on(self.textInput, 'blur', function() {
-                self.stop();
-                self.hide();
-            });
-
-            // auto focus
-            if (self.config.autoFocus) self.textInput.focus();
-
-            // keydown
-            // 注：截至目前，在Opera9.64中，输入法开启时，依旧不会触发任何键盘事件
-            var pressingCount = 0; // 持续按住某键时，连续触发的keydown次数。注意Opera只会触发一次。
-            Event.on(self.textInput, 'keydown', function(ev) {
+            // 监控 keydown 事件
+            // 注：截至 2010/08/03, 在 Opera 10.60 中，输入法开启时，依旧不会触发任何键盘事件
+            Event.on(input, 'keydown', function(ev) {
                 var keyCode = ev.keyCode;
-                //console.log('keydown ' + keyCode);
+                //S.log('keydown ' + keyCode);
 
-                switch (keyCode) {
-                    case 27: // ESC键，隐藏提示层并还原初始输入
-                        self.hide();
-                        self.textInput.value = self.query;
-
-                        // 当输入框为空时，按下 ESC 键，输入框失去焦点
-                        if(self.query.length === 0) {
-                            self.textInput.blur();
-                        }
-                        break;
-                    case 13: // ENTER键
-                        // 提交表单前，先隐藏提示层并停止计时器
-                        self.textInput.blur(); // 这一句还可以阻止掉浏览器的默认提交事件
-
-                        // 如果是键盘选中某项后回车，触发onItemSelect事件
-                        if (self._onKeyboardSelecting) {
-                            if (self.textInput.value == self._getSelectedItemKey()) { // 确保值匹配
-                                self.fire(EVENT_ITEM_SELECT);
-                            }
-                        }
-
-                        // 提交表单
-                        self._submitForm();
-                        break;
-                    case 40: // DOWN键
-                    case 38: // UP键
-                        // 按住键不动时，延时处理
-                        if (pressingCount++ == 0) {
+                // ESC 键，隐藏提示层并还原初始输入
+                if (keyCode === 27) {
+                    self.hide();
+                    input.value = self.query;
+                }
+                // 方向键，包括 PgUp, PgDn, End, Home, Left, Up, Right, Down
+                else if (keyCode > 32 && keyCode < 41) {
+                    // 如果输入框无值，按下以上键时，将响应转移到页面上，以避免自动定焦导致的键盘导航问题
+                    if (!input.value) {
+                        input.blur();
+                    }
+                    // DOWN / UP 键
+                    else if (keyCode === 40 || keyCode === 38) {
+                        // 按住键不动时，延时处理。这样可以使操作看起来更自然，避免太快导致的体验不好
+                        if (pressingCount++ === 0) {
                             if (self._isRunning) self.stop();
-                            self._onKeyboardSelecting = true;
+                            isDowningOrUping = true;
                             self.selectItem(keyCode === 40);
-
-                        } else if (pressingCount == 3) {
+                        }
+                        else if (pressingCount == 3) {
                             pressingCount = 0;
                         }
-                        break;
+                    }
                 }
+                // ENTER 键
+                else if (keyCode === 13) {
+                    // 提交表单前，先隐藏提示层并停止计时器
+                    input.blur(); // 这一句还可以阻止掉浏览器的默认提交事件
 
-                // 非 DOWN/UP 键时，开启计时器
-                if (keyCode != 40 && keyCode != 38) {
+                    // 如果是键盘选中某项后回车，触发 onItemSelect 事件
+                    if (isDowningOrUping) {
+                        if (input.value == self._getSelectedItemKey()) { // 确保值匹配
+                            self.fire(EVENT_ITEM_SELECT);
+                        }
+                    }
+
+                    // 提交表单
+                    self._submitForm();
+                }
+                // 非以上控制键，开启计时器
+                else {
                     if (!self._isRunning) {
-                        // 1. 当网速较慢，js还未下载完时，用户可能就已经开始输入
-                        //    这时，focus事件已经不会触发，需要在keyup里触发定时器
-                        // 2. 非DOWN/UP键时，需要激活定时器
+                        // 1. 当网速较慢，suggest.js 还未下载和初始化完时，用户可能就已经开始输入
+                        //    这时，focus 事件已经不会触发，需要在 keydown 里触发定时器
+                        // 2. 非 DOWN/UP 等控制键时，需要激活定时器
                         self.start();
                     }
-                    self._onKeyboardSelecting = false;
+                    isDowningOrUping = false;
                 }
             });
 
             // reset pressingCount
-            Event.on(self.textInput, 'keyup', function() {
-                //console.log('keyup');
+            Event.on(input, 'keyup', function() {
                 pressingCount = 0;
+            });
+
+            // 失去焦点时，停止计时器，并隐藏提示层
+            Event.on(input, 'blur', function() {
+                self.stop();
+                self.hide();
             });
         },
 
         /**
          * 初始化提示层容器
-         * @protected
          */
         _initContainer: function() {
-            // create
-            var container = doc.createElement('div'),
-                customContainerClass = this.config.containerCls;
+            var self = this, bd = doc.body,
+                container = DOM.create('<div>', {
+                    'class': CONTAINER_CLS + ' ' + self.config.containerCls,
+                    style: 'position: absolute; visibility: hidden'
+                });
 
-            container.className = CONTAINER_CLASS;
-            if (customContainerClass) {
-                container.className += ' ' + customContainerClass;
-            }
-            container.style.position = 'absolute';
-            container.style.visibility = 'hidden';
-            this.container = container;
-
-            this._setContainerRegion();
-            this._initContainerEvent();
-
-            // append
-            doc.body.insertBefore(container, doc.body.firstChild);
+            bd.insertBefore(container, bd.firstChild);
+            self.container = container;
+            self._setContainerRegion();
+            self._initContainerEvent();
         },
 
         /**
@@ -360,12 +332,12 @@ KISSY.add('suggest', function(S, undefined) {
         _setContainerRegion: function() {
             var self = this,
                 input = self.textInput,
-                pos = DOM.offset(input),
+                p = DOM.offset(input),
                 container = self.container;
 
             DOM.offset(container, {
-                left: pos.left,
-                top: pos.top + input.offsetHeight - 1 // 默认向上偏差 1, 以覆盖掉 input 的下边框
+                left: p.left,
+                top: p.top + input.offsetHeight - 1 // 默认向上偏差 1, 以覆盖掉 input 的下边框
             });
 
             // 默认 container 的边框为 1, padding 为 0, 因此 width = offsetWidth - 2
@@ -375,7 +347,6 @@ KISSY.add('suggest', function(S, undefined) {
         /**
          * 初始化容器事件
          * 子元素都不用设置事件，冒泡到这里统一处理
-         * @protected
          */
         _initContainerEvent: function() {
             var self = this;
@@ -422,7 +393,7 @@ KISSY.add('suggest', function(S, undefined) {
                 if (target != mouseDownItem) return;
 
                 // 点击在关闭按钮上
-                if (target.className == CLOSE_BTN_CLASS) {
+                if (target.className == CLOSE_BTN_CLS) {
                     self.hide();
                     return;
                 }
@@ -453,7 +424,7 @@ KISSY.add('suggest', function(S, undefined) {
          */
         _submitForm: function() {
             // 注：对于键盘控制enter选择的情况，由html自身决定是否提交。否则会导致某些输入法下，用enter选择英文时也触发提交
-            if (this.config.submitFormOnClickSelect) {
+            if (this.config.submitOnSelect) {
                 var form = this.textInput.form;
                 if (!form) return;
 
@@ -489,7 +460,7 @@ KISSY.add('suggest', function(S, undefined) {
         _initShim: function() {
             var iframe = doc.createElement('iframe');
             iframe.src = 'about:blank';
-            iframe.className = SHIM_CLASS;
+            iframe.className = SHIM_CLS;
             iframe.style.position = 'absolute';
             iframe.style.visibility = 'hidden';
             iframe.style.border = 'none';
@@ -564,8 +535,8 @@ KISSY.add('suggest', function(S, undefined) {
             Suggest.focusInstance = self;
             self._timer = setTimeout(function() {
                 self.updateContent();
-                self._timer = setTimeout(arguments.callee, self.config.timerDelay);
-            }, self.config.timerDelay);
+                self._timer = setTimeout(arguments.callee, TIMER_DELAY);
+            }, TIMER_DELAY);
 
             self._isRunning = true;
         },
@@ -722,7 +693,7 @@ KISSY.add('suggest', function(S, undefined) {
                     // 缓存key值到attribute上
                     li.setAttribute('key', itemData['key']);
                     // 添加奇偶 class
-                    DOM.addClass(li, i % 2 ? EVEN_ITEM_CLASS : ODD_ITEM_CLASS);
+                    DOM.addClass(li, i % 2 ? EVEN_ITEM_CLS : ODD_ITEM_CLS);
                     list.appendChild(li);
                 }
                 content = list;
@@ -787,7 +758,7 @@ KISSY.add('suggest', function(S, undefined) {
         formatItem: function(key, result) {
             var li = doc.createElement('li');
             var keyEl = doc.createElement('span');
-            keyEl.className = KEY_EL_CLASS;
+            keyEl.className = KEY_EL_CLS;
             keyEl.appendChild(doc.createTextNode(key));
             li.appendChild(keyEl);
 
@@ -795,7 +766,7 @@ KISSY.add('suggest', function(S, undefined) {
                 var resultText = this.config.resultFormat.replace('%result%', result);
                 if (S.trim(resultText)) { // 有值时才创建
                     var resultEl = doc.createElement('span');
-                    resultEl.className = RESULT_EL_CLASS;
+                    resultEl.className = RESULT_EL_CLS;
                     resultEl.appendChild(doc.createTextNode(resultText));
                     li.appendChild(resultEl);
                 }
@@ -809,13 +780,13 @@ KISSY.add('suggest', function(S, undefined) {
          */
         appendBottom: function() {
             var bottom = doc.createElement('div');
-            bottom.className = BOTTOM_CLASS;
+            bottom.className = FOOTER_CLS;
 
-            if (this.config.showCloseBtn) {
+            if (this.config.closeBtn) {
                 var closeBtn = doc.createElement('a');
                 closeBtn.href = 'javascript: void(0)';
                 closeBtn.setAttribute('target', '_self'); // bug fix: 覆盖<base target='_blank' />，否则会弹出空白页面
-                closeBtn.className = CLOSE_BTN_CLASS;
+                closeBtn.className = CLOSE_BTN_CLS;
                 closeBtn.appendChild(doc.createTextNode(this.config.closeBtnText));
 
                 bottom.appendChild(closeBtn);
@@ -901,7 +872,7 @@ KISSY.add('suggest', function(S, undefined) {
          */
         _removeSelectedItem: function() {
             //console.log('remove selected item');
-            DOM.removeClass(this.selectedItem, SELECTED_ITEM_CLASS);
+            DOM.removeClass(this.selectedItem, SELECTED_ITEM_CLS);
             this.selectedItem = null;
         },
 
@@ -912,7 +883,7 @@ KISSY.add('suggest', function(S, undefined) {
          */
         _setSelectedItem: function(item) {
             //console.log('set selected item');
-            DOM.addClass(item, SELECTED_ITEM_CLASS);
+            DOM.addClass(item, SELECTED_ITEM_CLS);
             this.selectedItem = item;
         },
 
@@ -924,7 +895,7 @@ KISSY.add('suggest', function(S, undefined) {
             if (!this.selectedItem) return '';
 
             // getElementsByClassName比较损耗性能，改用缓存数据到attribute上方法
-            //var keyEl = Dom.getElementsByClassName(KEY_EL_CLASS, '*', this.selectedItem)[0];
+            //var keyEl = Dom.getElementsByClassName(KEY_EL_CLS, '*', this.selectedItem)[0];
             //return keyEl.innerHTML;
 
             return this.selectedItem.getAttribute('key');
