@@ -122,6 +122,23 @@ S.isEmptyObject({ a: 'a' }); // => false
 
                 <div class="member method">
                     <h4>
+                        <a name="method_substitute">substitute</a>
+                        <code>String <em>substitute</em> ( str, o, regexp )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>将字符串中的占位符替换为对应的键值。</p>
+<pre class="example-code"><code>
+var S = KISSY,
+    str = '{name} is {prop_1} and {prop_2}.',
+    obj = {name: 'Jack Bauer', prop_1: 'our lord', prop_2: 'savior'};
+
+S.substitute(str, obj); // => 'Jack Bauer is our lord and savior.'
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
                         <a name="method_each">each</a>
                         <code>void <em>each</em> ( arr, fn, context )</code>
                     </h4>
@@ -387,6 +404,7 @@ S.log(window['foo']); // => 1
                     <li><a href="#method_isFunction">isFunction</a></li>
                     <li><a href="#method_isArray">isArray</a></li>
                     <li><a href="#method_trim">trim</a></li>
+                    <li><a href="#method_substitute">substitute</a></li>
                     <li><a href="#method_each">each</a></li>
                     <li><a href="#method_indexOf">indexOf</a></li>
                     <li><a href="#method_inArray">inArray</a></li>
