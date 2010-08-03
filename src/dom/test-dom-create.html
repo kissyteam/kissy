@@ -158,6 +158,13 @@
         S.later(function() {
             if(window['g_testLoadScriptViaInnerHTML']) KISSY.Test.echo('test-dom-create.js callback is fired.');
         }, 500);
+
+        // exceptions
+        try {
+            DOM.html(t, 1);
+        } catch(ex) {
+            test.fail(ex);
+        }
     }
 
     function test_remove(test) {

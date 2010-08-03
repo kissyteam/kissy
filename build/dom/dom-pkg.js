@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.1dev
 MIT Licensed
-build time: Aug 2 23:52
+build time: ${build.time}
 */
 /**
  * @module  dom
@@ -1610,7 +1610,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 直接通过 innerHTML 设置 html
     function setHTMLSimple(elem, html) {
-        html = html.replace(RE_SCRIPT, ''); // 过滤掉所有 script
+        html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所有 script
         try {
             elem.innerHTML = html;
         } catch(ex) { // table.innerHTML = html will throw error in ie.
