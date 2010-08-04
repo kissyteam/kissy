@@ -21,7 +21,7 @@
 <body>
 <div id="page">
     <h1>Suggest: </h1>
-    <form name="search" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
+    <form name="search" method="get" action="http://s.taobao.com/search">
         <input type="hidden" value="" name="sort"/>
         <input type="hidden" value="D9_5_1" name="f"/>
         <input type="hidden" value="" name="promote"/>
@@ -42,12 +42,11 @@
         <ol>
             <li>提示补全基本功能</li>
             <li>完全跨域</li>
-            <li>小巧精简，仅依赖yui-dom-event, 压缩后不超过15k</li>
-            <li>支持所有A级浏览器</li>
-            <li>cache功能</li>
-            <li>支持键盘控制：上下选择及回车后直接提交，ESC键关闭</li>
+            <li>小巧精简，仅依赖 ks-core, 压缩后不超过 9k</li>
+            <li>支持所有 A 级浏览器</li>
+            <li>cache 功能</li>
+            <li>支持键盘控制：上下选择及回车后直接提交，ESC 键关闭</li>
             <li>支持鼠标控制：鼠标选择和点击提交功能</li>
-            <li>支持JSON静态数据源</li>
             <li>[DELAY] 支持匹配文字加亮</li>
             <li>[DELAY] 动画效果</li>
             <li>[DELAY] 在提示层中显示第一个搜索结果</li>
@@ -60,34 +59,35 @@
         <h2>Test Cases:</h2>
         <ol>
             <li>基本功能：输入时有提示，键盘操作，鼠标操作，点击提交按钮可正常提交</li>
-            <li>用Del或Backspace键将输入清空时，提示层隐藏</li>
+            <li>用 Del 或 Backspace 键将输入清空时，提示层隐藏</li>
             <li>当返回结果为空时，提示层隐藏</li>
             <li>点击提示层外面，能关闭提示层</li>
-            <li>ESC键能关闭提示层。并且当有选中项时，能还原输入值</li>
+            <li>ESC 键能关闭提示层。并且当有选中项时，再次打开能还原输入值</li>
             <li>鼠标悬浮在提示层，继续输入时，取消选中项</li>
             <li>服务器超慢的处理（抛弃旧请求，只显示最新结果）</li>
-            <li>鼠标选中某项+点击 or 键盘选中某项+回车 时，会触发onItemSelect</li>
-            <li>先用鼠标选中某项，然后从侧边绕过提示层移动到输入框，ENTER提交，不触发onItemSelect</li>
+            <li>鼠标选中某项 + 点击 or 键盘选中某项 + 回车 时，会触发 itemSelect</li>
+            <li>先用鼠标选中某项，然后从侧边绕过提示层移动到输入框，ENTER 提交，不触发 itemSelect</li>
             <li>服务器超时和返回错误数据时的容错</li>
-            <li>鼠标点击选中，提交表单时，能触发form的onsubmit事件</li>
-            <li>ie6下，能覆盖select</li>
+            <li>鼠标点击选中，触发表单提交时，能触发 form 的 onsubmit 事件</li>
+            <li>ie6 下，能覆盖 select</li>
             <li>在主流输入法开启时测试</li>
-            <li>在所有A级浏览器下测试</li>
-            <li>持续按下DOWN/UP键时，选中操作正常（注意Opera下无效）</li>
-            <li>在提示层任意处按下鼠标，保持按住状态，移动到提示层外释放鼠标，这时输入框应该保持focus状态</li>
-            <li>在提示层A项处按下鼠标，移动到B处释放，不触发onItemSelect</li>
-            <li>在提示层A项处按下鼠标，移动鼠标到其它地方，最后移动回A处释放，触发onItemSelect</li>
-            <li>输入法开启，通过enter键输入英文时，不会触发提交</li>
-            <li>选中某项，ESC键关闭，再次通过keydown打开时，能保持原来的选中项</li>
-            <li>没有选中项，ESC键关闭，再次通过keydown打开时，依旧没有选中项</li>
-            <li>当输入框为空时，按下 ESC 键，输入框失去焦点</li>
+            <li>在所有 A 级浏览器下测试</li>
+            <li>持续按下 DOWN/UP 键时，选中操作流畅自然（注意 Opera 下无效）</li>
+            <li>在提示层任意处按下鼠标，保持按住状态，移动到提示层外释放鼠标，这时输入框应该保持 focus 状态</li>
+            <li>在提示层 A 项处按下鼠标，移动到 B 处释放，不触发 itemSelect</li>
+            <li>在提示层 A 项处按下鼠标，移动鼠标到其它地方，最后移动回 A 处释放，触发 itemSelect</li>
+            <li>输入法开启，通过 enter 键输入英文时，不会触发提交</li>
+            <li>选中某项，ESC 键关闭，再次通过 keydown 打开时，能保持原来的选中项</li>
+            <li>没有选中项，ESC 键关闭，再次通过 keydown 打开时，依旧没有选中项</li>
+            <li>当输入框为空时，按下 PgDn/PgUp/Home/End/Down/Up 键，输入框失去焦点，页面正常响应控制键</li>
+            <li>onresize 时，位置能自动调整</li>
         </ol>
     </div>
 
     <div class="section">
         <h2>References:</h2>
         <ol>
-            <li><a href="http://www.cnbeta.com/articles/84703.htm">Google搜索建议升级</a></li>
+            <li><a href="http://www.cnbeta.com/articles/84703.htm">Google 搜索建议升级</a></li>
             <li><a href="http://developer.yahoo.com/yui/autocomplete/">YUI AutoComplete</a></li>
         </ol>
     </div>
@@ -130,16 +130,15 @@
 </div>
 
 <script>
-
     KISSY.ready(function(S) {
 
         var dataUrl = 'http://suggest.taobao.com/sug';
         //var dataUrl = 'http://t-yubo/work/lab/suggest/sug.php';
         //var dataUrl = 'http://192.168.208.18:8090/sug';
 
-        // 淘宝首页的情况
-        var sug = new S.Suggest('#q', dataUrl,
-        { autoFocus: true,
+        // 淘宝首页
+        var sug = new S.Suggest('#q', dataUrl, {
+            autoFocus: true,
             resultFormat: '约%result%个宝贝'
         });
 
@@ -151,7 +150,7 @@
             }
         });
         sug2.on('dataReturn', function() {
-            if (this.query === 'dog') {
+            if (this.query === 'pig') {
                 alert('返回的数据是：' + this.returnedData);
             }
         });

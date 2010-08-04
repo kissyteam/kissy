@@ -244,7 +244,7 @@ KISSY.add('suggest', function(S, undefined) {
             // 注：截至 2010/08/03, 在 Opera 10.60 中，输入法开启时，依旧不会触发任何键盘事件
             Event.on(input, 'keydown', function(ev) {
                 var keyCode = ev.keyCode;
-                S.log('keydown ' + keyCode);
+                //S.log('keydown ' + keyCode);
 
                 // ESC 键，隐藏提示层并还原初始输入
                 if (keyCode === 27) {
@@ -370,8 +370,14 @@ KISSY.add('suggest', function(S, undefined) {
             });
 
             Event.on(container, 'mousedown', function(ev) {
-                // 鼠标按下处的 item
-                mouseDownItem = ev.target;
+                var target = ev.target;
+
+               // 可能点击在 li 的子元素上
+                if (target.nodeName !== LI) {
+                    target = DOM.parent(target, li);
+                }
+
+                mouseDownItem = target;
 
                 // 鼠标按下时，让输入框不会失去焦点
                 // 1. for IE
@@ -380,13 +386,11 @@ KISSY.add('suggest', function(S, undefined) {
                     input.onbeforedeactivate = undefined;
                 };
                 // 2. for W3C
-                return false;
+                ev.preventDefault();
             });
 
             Event.on(container, 'mouseup', function(ev) {
                 var target = ev.target;
-                // 在提示层 A 项处按下鼠标，移动到 B 处释放，不触发 onItemSelect
-                if (target != mouseDownItem) return;
 
                 // 点击在关闭按钮上
                 if (DOM.hasClass(target, CLOSE_BTN_CLS)) {
@@ -398,6 +402,9 @@ KISSY.add('suggest', function(S, undefined) {
                 if (target.nodeName !== LI) {
                     target = DOM.parent(target, li);
                 }
+                
+                // 在提示层 A 项处按下鼠标，移动到 B 处释放，不触发 onItemSelect
+                if (target != mouseDownItem) return;
 
                 // 必须点击在 container 内部的 li 上
                 if (DOM.contains(container, target)) {
@@ -419,9 +426,11 @@ KISSY.add('suggest', function(S, undefined) {
          * click 选择 or enter 后，提交表单
          */
         _submitForm: function() {
+            var self = this;
+
             // 注：对于键盘控制 enter 选择的情况，由 html 自身决定是否提交。否则会导致某些输入法下，用 enter 选择英文时也触发提交
-            if (this.config.submitOnSelect) {
-                var form = this.textInput.form;
+            if (self.config.submitOnSelect) {
+                var form = self.textInput.form;
                 if (!form) return;
 
                 if(self.fire(EVENT_BEFORE_SUBMIT, { form: form }) === false) return;
@@ -498,17 +507,12 @@ KISSY.add('suggest', function(S, undefined) {
          * window.onresize 时，调整提示层的位置
          */
         _initResizeEvent: function() {
-            var self = this, resizeTimer;
+            var self = this;
 
+            // 2010-08-04: 为了保持连贯，取消了定时器
             Event.on(win, 'resize', function() {
-                if (resizeTimer) {
-                    resizeTimer.cancel();
-                }
-
-                resizeTimer = S.later(function() {
-                    self._setContainerRegion();
-                    self._setShimRegion();
-                }, 50);
+                self._setContainerRegion();
+                self._setShimRegion();
             });
         },
 
@@ -533,9 +537,11 @@ KISSY.add('suggest', function(S, undefined) {
          * 停止计时器
          */
         stop: function() {
+            var self = this;
+
             Suggest.focusInstance = undefined;
-            this._timer.cancel();
-            this._isRunning = false;
+            if(self._timer) self._timer.cancel();
+            self._isRunning = false;
         },
 
         /**
@@ -810,7 +816,7 @@ KISSY.add('suggest', function(S, undefined) {
          */
         _selectItem: function(down) {
             var self = this,
-                items = S.get(li, self.container),
+                items = S.query(li, self.container),
                 newSelectedItem;
             if (items.length === 0) return;
 
