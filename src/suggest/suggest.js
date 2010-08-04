@@ -244,7 +244,7 @@ KISSY.add('suggest', function(S, undefined) {
             // 注：截至 2010/08/03, 在 Opera 10.60 中，输入法开启时，依旧不会触发任何键盘事件
             Event.on(input, 'keydown', function(ev) {
                 var keyCode = ev.keyCode;
-                //S.log('keydown ' + keyCode);
+                S.log('keydown ' + keyCode);
 
                 // ESC 键，隐藏提示层并还原初始输入
                 if (keyCode === 27) {
