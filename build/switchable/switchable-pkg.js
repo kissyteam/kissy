@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0pre
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 2 23:52
 */
 /**
  * Switchable
@@ -426,54 +426,45 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
      * 添加插件
      * attached members:
      *   - this.paused
-     *   - this.autoplayTimer
      */
     Switchable.Plugins.push({
 
         name: 'autoplay',
 
         init: function(host) {
-            var cfg = host.config, interval = cfg.interval * 1000, leaveTimer;
+            var cfg = host.config, interval = cfg.interval * 1000, timer;
             if (!cfg.autoplay) return;
 
             // 鼠标悬停，停止自动播放
             if (cfg.pauseOnHover) {
                 Event.on(host.container, 'mouseenter', function() {
-                    // 当鼠标移出后，又快速移动进来，这时要将 leaveTimer 取消掉
-                    // 否则 pauseOnHover 会失效
-                    if(leaveTimer) {
-                        leaveTimer.cancel();
-                        leaveTimer = undefined;
+                    if(timer) {
+                        timer.cancel();
+                        timer = undefined;
                     }
-                    host.paused = true;
+                    host.paused = true; // paused 可以让外部知道 autoplay 的当前状态
                 });
                 Event.on(host.container, 'mouseleave', function() {
-                    // 假设 interval 为 10s
-                    // 在 8s 时，通过 focus 主动触发切换，停留 1s 后，鼠标移出
-                    // 这时如果不 setTimeout, 再过 1s 后，主动触发的 panel 将被替换掉
-                    // 为了保证每个 panel 的显示时间都不小于 interval, 此处加上 setTimeout
-                    leaveTimer = S.later(function() {
-                        host.paused = false;
-                        leaveTimer = undefined;
-                    }, interval);
+                    host.paused = false;
+                    startAutoplay();
                 });
             }
 
-            // 设置自动播放
-            host.autoplayTimer = S.later(function() {
-                if (host.paused) return;
-                // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
-                host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, 'forward');
-            }, interval, true);
+            function startAutoplay() {
+                // 设置自动播放
+                timer = S.later(function() {
+                    if (host.paused) return;
+
+                    // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
+                    host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, 'forward');
+                }, interval, true);
+            }
+
+            // go
+            startAutoplay();
         }
     });
 });
-
-/**
- * TODO:
- *  - 是否需要提供 play / pause / stop API ?
- *  - autoplayTimer 和 switchTimer 的关联？
- */
 /**
  * Switchable Effect Plugin
  * @creator  玉伯<lifesinger@gmail.com>
@@ -856,14 +847,16 @@ KISSY.add('switchable-countdown', function(S, undefined) {
         Switchable = S.Switchable,
         CLS_PREFIX = 'ks-switchable-trigger-',
         TRIGGER_MASK_CLS = CLS_PREFIX + 'mask',
-        TRIGGER_CONTENT_CLS = CLS_PREFIX + 'content';
+        TRIGGER_CONTENT_CLS = CLS_PREFIX + 'content',
+        STYLE = 'style';
 
     /**
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
         countdown: false,
-        countdownStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
+        countdownFromStyle: '',      // 倒计时的初始样式
+        countdownToStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
     });
 
     /**
@@ -875,8 +868,9 @@ KISSY.add('switchable-countdown', function(S, undefined) {
 
         init: function(host) {
             var cfg = host.config, interval = cfg.interval,
-                triggers = host.triggers, masks = [], style = cfg.countdownStyle,
-                anim, hoverAnim;
+                triggers = host.triggers, masks = [],
+                fromStyle = cfg.countdownFromStyle, toStyle = cfg.countdownToStyle,
+                anim;
 
             // 必须保证开启 autoplay 以及有 trigger 时，才能开启倒计时动画
             if (!cfg.autoplay || !cfg.hasTriggers || !cfg.countdown) return;
@@ -894,24 +888,36 @@ KISSY.add('switchable-countdown', function(S, undefined) {
                     // 先停止未完成动画
                     stopAnim();
 
-                    // 快速平滑关闭当前未完成动画效果
-                    hoverAnim = new Anim(masks[host.activeIndex], style, interval / 10, 'easeOut').run();
+                    // 快速平滑回退到初始状态
+                    var mask = masks[host.activeIndex];
+                    if (fromStyle) {
+                        anim = new Anim(mask, fromStyle, .2, 'easeOut').run();
+                    } else {
+                        DOM.removeAttr(mask, STYLE);
+                    }
+                });
+
+                Event.on(host.container, 'mouseleave', function() {
+                    // 鼠标离开时立即停止未完成动画
+                    stopAnim();
+
+                    // 初始化动画参数，准备开始新一轮动画
+                    DOM.removeAttr(masks[host.activeIndex], STYLE);
+
+                    // 重新开始倒计时动画
+                    setTimeout(function() {
+                        startAnim();
+                    }, 200);
                 });
             }
 
             // panels 切换前，当前 trigger 完成善后工作以及下一 trigger 进行初始化
-            host.on('beforeSwitch', function(ev) {
+            host.on('beforeSwitch', function() {
                 // 恢复前，先结束未完成动画效果
                 stopAnim();
 
                 // 将当前 mask 恢复动画前状态
-                DOM.removeAttr(masks[host.activeIndex], 'style');
-
-                // 悬停状态时，不需要触发倒计时动画
-                if(host.paused) {
-                    // 将下一个 mask 隐藏，也就是没有动画效果
-                    DOM.css(masks[ev.toIndex], 'visibility', 'hidden');
-                }
+                DOM.removeAttr(masks[host.activeIndex], STYLE);
             });
 
             // panel 切换完成时，开始 trigger 的倒计时动画
@@ -923,13 +929,13 @@ KISSY.add('switchable-countdown', function(S, undefined) {
             });
 
             // 开始第一次
-            startAnim(host.activeIndex);
-
+            startAnim();
 
             // 开始倒计时动画
             function startAnim(index) {
+                if (index === undefined) index = host.activeIndex;
                 stopAnim(); // 开始之前，先确保停止掉之前的
-                anim = new Anim(masks[index], style, interval - 1).run(); // -1 是为了动画结束时停留一下，使得动画更自然
+                anim = new Anim(masks[index], toStyle, interval - .5).run(); // -.5 是为了动画结束时停留一下，使得动画更自然
             }
 
             // 停止所有动画
@@ -937,10 +943,6 @@ KISSY.add('switchable-countdown', function(S, undefined) {
                 if (anim) {
                     anim.stop();
                     anim = undefined;
-                }
-                if (hoverAnim) {
-                    hoverAnim.stop();
-                    hoverAnim = undefined;
                 }
             }
         }

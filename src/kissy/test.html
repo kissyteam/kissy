@@ -363,6 +363,16 @@
         if(S.trim({}) !== {}.toString()) test.fail();
     }
 
+    function test_substitute(test) {
+        var myString = "{subject} is {property_1} and {property_2}.";
+        var myObject = {subject: 'Jack Bauer', property_1: 'our lord', property_2: 'savior'};
+        if(S.substitute(myString, myObject) !== 'Jack Bauer is our lord and savior.') test.fail();
+
+        if(S.substitute(1) !== 1) test.fail();
+        if(S.substitute() !== undefined) test.fail();
+        if(S.substitute('a', function(){}) !== 'a') test.fail();
+    }
+
     function test_indexOf(test) {
         var a, ret;
 

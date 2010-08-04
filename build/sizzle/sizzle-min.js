@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0pre
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 2 23:52
 */
 (function(){function x(a,b,c,d,e,f){e=0;for(var h=d.length;e<h;e++){var g=d[e];if(g){g=g[a];for(var k=false;g;){if(g.sizcache===c){k=d[g.sizset];break}if(g.nodeType===1&&!f){g.sizcache=c;g.sizset=e}if(g.nodeName.toLowerCase()===b){k=g;break}g=g[a]}d[e]=k}}}function y(a,b,c,d,e,f){e=0;for(var h=d.length;e<h;e++){var g=d[e];if(g){g=g[a];for(var k=false;g;){if(g.sizcache===c){k=d[g.sizset];break}if(g.nodeType===1){if(!f){g.sizcache=c;g.sizset=e}if(typeof b!=="string"){if(g===b){k=true;break}}else if(j.filter(b,
 [g]).length>0){k=g;break}}g=g[a]}d[e]=k}}}var v=/((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^\[\]]*\]|['"][^'"]*['"]|[^\[\]'"]+)+\]|\\.|[^ >+~,(\[\\]+)+|[>+~])(\s*,\s*)?((?:.|\r|\n)*)/g,w=0,z=Object.prototype.toString,m=false,A=true;[0,0].sort(function(){A=false;return 0});var j=function(a,b,c,d){c=c||[];var e=b=b||document;if(b.nodeType!==1&&b.nodeType!==9)return[];if(!a||typeof a!=="string")return c;var f=[],h,g,k,q,n=true,p=j.isXML(b),o=a,l;do{v.exec("");if(h=v.exec(o)){o=h[3];f.push(h[1]);if(h[2]){q=

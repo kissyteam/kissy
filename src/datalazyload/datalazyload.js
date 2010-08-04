@@ -13,7 +13,7 @@ KISSY.add('datalazyload', function(S, undefined) {
         AREA_DATA_CLS = 'ks-datalazyload',
         CUSTOM = '-custom',
         MANUAL = 'manual',
-        DISPLAY = 'none', DEFAULT = 'default', NONE = 'none',
+        DISPLAY = 'display', DEFAULT = 'default', NONE = 'none',
         SCROLL = 'scroll', RESIZE = 'resize',
 
         defaultConfig = {
@@ -272,14 +272,12 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 监控滚动，处理 textarea
          */
         _loadArea: function(area) {
-            var self = this,
-                top = DOM.offset(area).top;
+            var self = this, top,
+                isHidden = DOM.css(area, DISPLAY) === NONE;
 
-            // 注：area 可能处于 display: none 状态，top 返回 0
-            // 这种情况下用 area.parentNode 的 Y 值来判断
-            if (!top && DOM.css(area, DISPLAY) == NONE) {
-                top = DOM.offset(area.parentNode).top;
-            }
+            // 注：area 可能处于 display: none 状态，DOM.offset(area).top 返回 0
+            // 这种情况下用 area.parentNode 的 Y 值来替代
+            top = DOM.offset(isHidden ? area.parentNode : area).top;
 
             if (top <= self.threshold + DOM.scrollTop()) {
                 self._loadAreaData(area.parentNode, area);

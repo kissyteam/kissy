@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0pre
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 2 23:52
 */
 /*
 KISSY CSS Reset
@@ -51,9 +51,9 @@ button, input, select, textarea { font-size: 100%; } /* 使得表单元素在 ie
 /** 重置表格元素 **/
 table { border-collapse: collapse; border-spacing: 0; }
 /*
-Copyright 2010, KISSY UI Library v1.1.0pre
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 2 23:52
 */
 /*
 双飞翼栅格布局 Flying Swing Grids Layout
@@ -62,14 +62,9 @@ build time: ${build.time}
 */
 
 /* 居中 */
-#page, #header, #content, #footer {
+#header, #content, #footer {
     margin-left: auto;
     margin-right: auto;
-}
-
-/* 950px 宽 */
-.w950 {
-    width: 950px;
 }
 
 /** 布局基础样式 **/
@@ -95,9 +90,9 @@ build time: ${build.time}
     *zoom: 1;
 }
 /*
-Copyright 2010, KISSY UI Library v1.1.0pre
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 2 23:52
 */
 /*
 常用的通用样式 Common Style
@@ -106,9 +101,12 @@ build time: ${build.time}
 */
 
 /* 隐藏 */
-.hidden { display: none; }
-.invisible { visibility: hidden; }
+.ks-hidden { display: none; }
+.ks-invisible { visibility: hidden; }
 
 /* 清除浮动 */
-.clear:after { content: '\20'; display: block; height: 0; clear: both; }
-.clear { *zoom: 1; }
+.ks-clear:after { content: '\20'; display: block; height: 0; clear: both; }
+.ks-clear { *zoom: 1; }
+
+/* inline block */
+.ks-inline-block { display: inline-block; *display: inline; }
