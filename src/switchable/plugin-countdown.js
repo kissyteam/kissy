@@ -66,9 +66,7 @@ KISSY.add('switchable-countdown', function(S, undefined) {
                     DOM.removeAttr(masks[host.activeIndex], STYLE);
 
                     // 重新开始倒计时动画
-                    setTimeout(function() {
-                        startAnim();
-                    }, 200);
+                    setTimeout(startAnim, 200);
                 });
             }
 
@@ -82,21 +80,20 @@ KISSY.add('switchable-countdown', function(S, undefined) {
             });
 
             // panel 切换完成时，开始 trigger 的倒计时动画
-            host.on('switch', function(ev) {
+            host.on('switch', function() {
                 // 悬停状态，当用户主动触发切换时，不需要倒计时动画
                 if (!host.paused) {
-                    startAnim(ev.currentIndex);
+                    startAnim();
                 }
             });
 
             // 开始第一次
-            startAnim();
+            startAnim(host.activeIndex);
 
             // 开始倒计时动画
-            function startAnim(index) {
-                if (index === undefined) index = host.activeIndex;
+            function startAnim() {
                 stopAnim(); // 开始之前，先确保停止掉之前的
-                anim = new Anim(masks[index], toStyle, interval - .5).run(); // -.5 是为了动画结束时停留一下，使得动画更自然
+                anim = new Anim(masks[host.activeIndex], toStyle, interval - .5).run(); // -.5 是为了动画结束时停留一下，使得动画更自然
             }
 
             // 停止所有动画
