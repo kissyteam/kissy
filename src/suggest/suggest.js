@@ -7,12 +7,12 @@
 KISSY.add('suggest', function(S, undefined) {
 
     var DOM = S.DOM, Event = S.Event,
-        win = window, doc = document, head = S.get('head'),
+        win = window, doc = document, bd, head = S.get('head'),
         ie = S.UA.ie, ie6 = (ie === 6),
 
         CALLBACK_STR = 'g_ks_suggest_callback', // 约定的全局回调函数
         PREFIX = 'ks-suggest-',
-        STYLE_ID = PREFIX + 'style', // 样式 style 元素的 id
+        STYLE_ID = '#' + PREFIX + 'style', // 样式 style 元素的 id
 
         CONTAINER_CLS = PREFIX + 'container',
         KEY_EL_CLS = PREFIX + 'key',
@@ -21,15 +21,23 @@ KISSY.add('suggest', function(S, undefined) {
         ODD_ITEM_CLS = 'ks-odd', // 奇数项
         EVEN_ITEM_CLS = 'ks-even', // 偶数项
         FOOTER_CLS = PREFIX + 'footer',
-        CLOSE_BTN_CLS = PREFIX + 'close-btn',
+        CLOSE_BTN_CLS = PREFIX + 'closebtn',
         SHIM_CLS = PREFIX + 'shim', // iframe shim 的 class
 
-        EVENT_DATA_REQUEST = 'dataRequest',
-        EVENT_DATA_RETURN = 'dataReturn',
-        EVENT_SHOW = 'show',
-        EVENT_ITEM_SELECT = 'itemSelect',
+        EVENT_BEFORE_START = 'beforeStart', // 监控计时器开始前触发，可以用来做条件触发
+        EVENT_ITEM_SELECT = 'itemSelect', // 选中某项时触发，可以用来添加监控埋点等参数
+        EVENT_BEFORE_SUBMIT = 'beforeSubmit', // 表单提交前触发，可以用来取消提交或添加特定参数
+        EVENT_BEFORE_DATA_REQUEST = 'beforeDataRequest', // 请求数据前触发，可以用来动态修改请求 url 和参数
+        EVENT_DATA_RETURN = 'dataReturn', // 获得返回数据时触发，可以用来动态修正数据
+        EVENT_UPDATE_FOOTER = 'updateFooter', // 更新底部内容时触发，可以用来动态添加自定义内容
+        EVENT_BEFORE_SHOW = 'beforeShow', // 显示提示层前触发，可以用来动态修改提示层数据
 
         TIMER_DELAY = 200,
+        EMPTY = '', HIDDEN = 'hidden',
+        LI = 'LI', li = 'li',
+        RESULT = 'result', KEY = 'key',
+        DATA_TIME = 'data-time',
+        PARSEINT = parseInt,
 
         /**
          * Suggest的默认配置
@@ -52,7 +60,7 @@ KISSY.add('suggest', function(S, undefined) {
              * </div>
              * @type String
              */
-            containerCls: '',
+            containerCls: EMPTY,
 
             /**
              * 提示层的宽度
@@ -60,7 +68,7 @@ KISSY.add('suggest', function(S, undefined) {
              * 示范取值：'200px', '10%' 等，必须带单位
              * @type String
              */
-            //containerWidth: '',
+            //containerWidth: EMPTY,
 
             /**
              * result 的格式
@@ -122,16 +130,12 @@ KISSY.add('suggest', function(S, undefined) {
         self.textInput = S.get(textInput);
 
         /**
-         * 获取数据的URL 或 JSON 格式的静态数据
+         * 获取数据的 URL
          * @type {String|Object}
          */
-        self.dataSource = dataSource;
-
-        /**
-         * JSON 静态数据源
-         * @type Object 格式为 {'query1' : [['key1', 'result1'], []], 'query2' : [[], []]}
-         */
-        self.JSONDataSource = S.isPlainObject(dataSource) ? dataSource : undefined;
+        // 归一化为：http://path/to/suggest.do? or http://path/to/suggest.do?p=1&
+        dataSource += (dataSource.indexOf('?') === -1) ? '?' : '&';
+        self.dataSource = dataSource + 'code=utf-8&callback=' + CALLBACK_STR;
 
         /**
          * 通过 jsonp 返回的数据
@@ -149,26 +153,20 @@ KISSY.add('suggest', function(S, undefined) {
          * 存放提示信息的容器
          * @type HTMLElement
          */
-        //self.container = null;
+        //self.container = undefined;
 
         /**
          * 输入框的值
          * @type String
          */
-        self.query = '';
-
-        /**
-         * 获取数据时的参数
-         * @type String
-         */
-        self.queryParams = '';
+        self.query = EMPTY;
 
         /**
          * 内部定时器
          * @private
          * @type Object
          */
-        //self._timer = null;
+        //self._timer = undefined;
 
         /**
          * 计时器是否处于运行状态
@@ -181,7 +179,7 @@ KISSY.add('suggest', function(S, undefined) {
          * 获取数据的 script 元素
          * @type HTMLElement
          */
-        //self.dataScript = null;
+        //self.dataScript = undefined;
 
         /**
          * 数据缓存
@@ -194,7 +192,7 @@ KISSY.add('suggest', function(S, undefined) {
          * 最新 script 的时间戳
          * @type String
          */
-        //self._latestScriptTime = '';
+        //self._latestScriptTime = EMPTY;
 
         /**
          * script返回的数据是否已经过期
@@ -206,7 +204,7 @@ KISSY.add('suggest', function(S, undefined) {
          * 提示层的当前选中项
          * @type Boolean
          */
-        //self.selectedItem = null;
+        //self.selectedItem = undefined;
 
         // init
         self._init();
@@ -220,6 +218,7 @@ KISSY.add('suggest', function(S, undefined) {
          */
         _init: function() {
             var self = this;
+            bd = doc.body;
 
             self._initTextInput();
             self._initContainer();
@@ -238,8 +237,8 @@ KISSY.add('suggest', function(S, undefined) {
                 isDowningOrUping = false, // 是否持续按住 DOWN / UP 键
                 pressingCount = 0; // 持续按住某键时，连续触发的 keydown 次数。注意 Opera 只会触发一次
 
-            input.setAttribute('autocomplete', 'off');
-            if (self.config.autoFocus) input.focus();
+            DOM.attr(input, 'autocomplete', 'off');
+            if (self.config['autoFocus']) input.focus();
 
             // 监控 keydown 事件
             // 注：截至 2010/08/03, 在 Opera 10.60 中，输入法开启时，依旧不会触发任何键盘事件
@@ -264,7 +263,7 @@ KISSY.add('suggest', function(S, undefined) {
                         if (pressingCount++ === 0) {
                             if (self._isRunning) self.stop();
                             isDowningOrUping = true;
-                            self.selectItem(keyCode === 40);
+                            self._selectItem(keyCode === 40);
                         }
                         else if (pressingCount == 3) {
                             pressingCount = 0;
@@ -279,7 +278,7 @@ KISSY.add('suggest', function(S, undefined) {
                     // 如果是键盘选中某项后回车，触发 onItemSelect 事件
                     if (isDowningOrUping) {
                         if (input.value == self._getSelectedItemKey()) { // 确保值匹配
-                            self.fire(EVENT_ITEM_SELECT);
+                            if(self.fire(EVENT_ITEM_SELECT) === false) return;
                         }
                     }
 
@@ -314,7 +313,7 @@ KISSY.add('suggest', function(S, undefined) {
          * 初始化提示层容器
          */
         _initContainer: function() {
-            var self = this, bd = doc.body,
+            var self = this,
                 container = DOM.create('<div>', {
                     'class': CONTAINER_CLS + ' ' + self.config.containerCls,
                     style: 'position: absolute; visibility: hidden'
@@ -341,7 +340,7 @@ KISSY.add('suggest', function(S, undefined) {
             });
 
             // 默认 container 的边框为 1, padding 为 0, 因此 width = offsetWidth - 2
-            DOM.width(container, self.config.containerWidth || input.offsetWidth - 2);
+            DOM.width(container, self.config['containerWidth'] || input.offsetWidth - 2);
         },
 
         /**
@@ -349,16 +348,18 @@ KISSY.add('suggest', function(S, undefined) {
          * 子元素都不用设置事件，冒泡到这里统一处理
          */
         _initContainerEvent: function() {
-            var self = this;
+            var self = this,
+                input = self.textInput, container = self.container,
+                mouseDownItem;
 
-            // 鼠标事件
-            Event.on(self.container, 'mousemove', function(ev) {
+            Event.on(container, 'mousemove', function(ev) {
                 var target = ev.target;
 
-                if (target.nodeName !== 'LI') {
-                    target = DOM.parent(target, '.li');
+                if (target.nodeName !== LI) {
+                    target = DOM.parent(target, li);
                 }
-                if (DOM.contains(self.container, target)) {
+
+                if (DOM.contains(container, target)) {
                     if (target !== self.selectedItem) {
                         // 移除老的
                         self._removeSelectedItem();
@@ -368,50 +369,45 @@ KISSY.add('suggest', function(S, undefined) {
                 }
             });
 
-            var mouseDownItem = null;
-            Event.on(self.container, 'mousedown', function(e) {
-                // 鼠标按下处的item
-                mouseDownItem = e.target;
+            Event.on(container, 'mousedown', function(ev) {
+                // 鼠标按下处的 item
+                mouseDownItem = ev.target;
 
                 // 鼠标按下时，让输入框不会失去焦点
                 // 1. for IE
-                self.textInput.onbeforedeactivate = function() {
+                input.onbeforedeactivate = function() {
                     win.event.returnValue = false;
-                    self.textInput.onbeforedeactivate = null;
+                    input.onbeforedeactivate = undefined;
                 };
                 // 2. for W3C
                 return false;
             });
 
-            // mouseup事件
-            Event.on(self.container, 'mouseup', function(ev) {
-                // 当mousedown在提示层，但mouseup在提示层外时，点击无效
-                if (!self._isInContainer([ev.pageX, ev.pageY])) return;
-
+            Event.on(container, 'mouseup', function(ev) {
                 var target = ev.target;
-                // 在提示层A项处按下鼠标，移动到B处释放，不触发onItemSelect
+                // 在提示层 A 项处按下鼠标，移动到 B 处释放，不触发 onItemSelect
                 if (target != mouseDownItem) return;
 
                 // 点击在关闭按钮上
-                if (target.className == CLOSE_BTN_CLS) {
+                if (DOM.hasClass(target, CLOSE_BTN_CLS)) {
                     self.hide();
                     return;
                 }
 
-                // 可能点击在li的子元素上
-                if (target.nodeName != 'LI') {
-                    target = DOM.parent(target, '.li');
+                // 可能点击在 li 的子元素上
+                if (target.nodeName !== LI) {
+                    target = DOM.parent(target, li);
                 }
-                // 必须点击在container内部的li上
-                if (DOM.contains(self.container, target)) {
+
+                // 必须点击在 container 内部的 li 上
+                if (DOM.contains(container, target)) {
                     self._updateInputFromSelectItem(target);
 
                     // 触发选中事件
-                    //console.log('on item select');
-                    self.fire(EVENT_ITEM_SELECT);
+                    if(self.fire(EVENT_ITEM_SELECT) === false) return;
 
                     // 提交表单前，先隐藏提示层并停止计时器
-                    self.textInput.blur();
+                    input.blur();
 
                     // 提交表单
                     self._submitForm();
@@ -420,16 +416,19 @@ KISSY.add('suggest', function(S, undefined) {
         },
 
         /**
-         * click选择 or enter后，提交表单
+         * click 选择 or enter 后，提交表单
          */
         _submitForm: function() {
-            // 注：对于键盘控制enter选择的情况，由html自身决定是否提交。否则会导致某些输入法下，用enter选择英文时也触发提交
+            // 注：对于键盘控制 enter 选择的情况，由 html 自身决定是否提交。否则会导致某些输入法下，用 enter 选择英文时也触发提交
             if (this.config.submitOnSelect) {
                 var form = this.textInput.form;
                 if (!form) return;
 
-                // 通过js提交表单时，不会触发onsubmit事件
-                // 需要js自己触发
+                if(self.fire(EVENT_BEFORE_SUBMIT, { form: form }) === false) return;
+
+                // 通过 js 提交表单时，不会触发 onsubmit 事件
+                // 需要 js 自己触发
+                // 这里触发的目的是，使得其它脚本中给 form 注册的 onsubmit 事件可以正常触发
                 if (doc.createEvent) { // w3c
                     var evObj = doc.createEvent('MouseEvents');
                     evObj.initEvent('submit', true, false);
@@ -444,82 +443,69 @@ KISSY.add('suggest', function(S, undefined) {
         },
 
         /**
-         * 判断p是否在提示层内
-         * @param {Array} p [x, y]
-         */
-        _isInContainer: function(p) {
-            var r = this._getContainerRegion();
-
-            return p[0] >= r.left && p[0] <= r.right && p[1] >= r.top && p[1] <= r.bottom;
-        },
-
-        /**
-         * 给容器添加iframe shim层
-         * @protected
+         * 给容器添加 iframe shim 层
          */
         _initShim: function() {
-            var iframe = doc.createElement('iframe');
-            iframe.src = 'about:blank';
-            iframe.className = SHIM_CLS;
-            iframe.style.position = 'absolute';
-            iframe.style.visibility = 'hidden';
-            iframe.style.border = 'none';
+            var iframe = DOM.create('<iframe>', {
+                src: 'about:blank',
+                'class': SHIM_CLS,
+                style: 'position:absolute;visibility:hidden;border:none'
+            });
             this.container.shim = iframe;
 
             this._setShimRegion();
-            doc.body.insertBefore(iframe, doc.body.firstChild);
+            bd.insertBefore(iframe, bd.firstChild);
         },
 
         /**
-         * 设置shim的left, top, width
-         * @protected
+         * 设置 shim 的 left, top, width
          */
         _setShimRegion: function() {
-            var container = this.container, shim = container.shim;
+            var style = this.container.style, shim = this.container.shim;
             if (shim) {
-                shim.style.left = (parseInt(container.style.left) - 2) + 'px'; // 解决吞边线bug
-                shim.style.top = container.style.top;
-                shim.style.width = (parseInt(container.style.width) + 2) + 'px';
+                DOM.css(shim, {
+                    left: PARSEINT(style.left) - 2, // -2 可以解决吞边线的 bug
+                    top: style.top,
+                    width: PARSEINT(style.width) + 2
+                });
             }
         },
 
         /**
          * 初始化样式
-         * @protected
          */
         _initStyle: function() {
-            var styleEl = S.get('#' + STYLE_ID);
+            var styleEl = S.get(STYLE_ID);
             if (styleEl) return; // 防止多个实例时重复添加
 
-            var style = '.ks-suggest-container{background:white;border:1px solid #999;z-index:99999}'
+            DOM.addStyleSheet(
+                '.ks-suggest-container{background:white;border:1px solid #999;z-index:99999}'
                 + '.ks-suggest-shim{z-index:99998}'
                 + '.ks-suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}'
-                + '.ks-suggest-container li.selected{background-color:#39F;cursor:default}'
+                + '.ks-suggest-container .ks-selected{background-color:#39F;cursor:default}'
                 + '.ks-suggest-key{float:left;text-align:left;padding-left:5px}'
                 + '.ks-suggest-result{float:right;text-align:right;padding-right:5px;color:green}'
-                + '.ks-suggest-container li.selected span{color:#FFF;cursor:default}'
-                + '.ks-suggest-bottom{padding:0 5px 5px}'
-                + '.ks-suggest-close-btn{float:right}'
-                + '.ks-suggest-container li,.suggest-bottom{overflow:hidden;zoom:1;clear:both}'
+                + '.ks-suggest-container .ks-selected span{color:#FFF;cursor:default}'
+                + '.ks-suggest-footer{padding:0 5px 5px}'
+                + '.ks-suggest-closebtn{float:right}'
+                + '.ks-suggest-container li,.ks-suggest-footer{overflow:hidden;zoom:1;clear:both}'
                 /* hacks */
-                + '.ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}';
-
-            DOM.addStyleSheet(style, STYLE_ID);
+                + '.ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}',
+                styleEl);
         },
 
         /**
-         * window.onresize时，调整提示层的位置
-         * @protected
+         * window.onresize 时，调整提示层的位置
          */
         _initResizeEvent: function() {
             var self = this, resizeTimer;
 
             Event.on(win, 'resize', function() {
                 if (resizeTimer) {
-                    clearTimeout(resizeTimer);
+                    resizeTimer.cancel();
                 }
 
-                resizeTimer = setTimeout(function() {
+                resizeTimer = S.later(function() {
                     self._setContainerRegion();
                     self._setShimRegion();
                 }, 50);
@@ -531,11 +517,13 @@ KISSY.add('suggest', function(S, undefined) {
          */
         start: function() {
             var self = this;
+            if(self.fire(EVENT_BEFORE_START) === false) return;
 
             Suggest.focusInstance = self;
-            self._timer = setTimeout(function() {
-                self.updateContent();
-                self._timer = setTimeout(arguments.callee, TIMER_DELAY);
+
+            self._timer = S.later(function() {
+                self._updateContent();
+                self._timer = S.later(arguments.callee, TIMER_DELAY);
             }, TIMER_DELAY);
 
             self._isRunning = true;
@@ -545,8 +533,8 @@ KISSY.add('suggest', function(S, undefined) {
          * 停止计时器
          */
         stop: function() {
-            Suggest.focusInstance = null;
-            clearTimeout(this._timer);
+            Suggest.focusInstance = undefined;
+            this._timer.cancel();
             this._isRunning = false;
         },
 
@@ -557,13 +545,13 @@ KISSY.add('suggest', function(S, undefined) {
             if (this.isVisible()) return;
             var container = this.container, shim = container.shim;
 
-            container.style.visibility = '';
+            visible(container);
 
             if (shim) {
                 if (!shim.style.height) { // 第一次显示时，需要设定高度
-                    shim.style.height = (container.offsetHeight - 2) + 'px';
+                    DOM.height(shim, container.offsetHeight - 2);
                 }
-                shim.style.visibility = '';
+                visible(shim);
             }
         },
 
@@ -573,125 +561,107 @@ KISSY.add('suggest', function(S, undefined) {
         hide: function() {
             if (!this.isVisible()) return;
             var container = this.container, shim = container.shim;
-            //console.log('hide');
 
-            if (shim) shim.style.visibility = 'hidden';
-            container.style.visibility = 'hidden';
+            if (shim) invisible(shim);
+            invisible(container);
         },
 
         /**
          * 提示层是否显示
          */
         isVisible: function() {
-            return this.container.style.visibility != 'hidden';
+            return this.container.style.visibility != HIDDEN;
         },
 
         /**
          * 更新提示层的数据
          */
-        updateContent: function() {
-            var self = this;
-            if (!self._needUpdate()) return;
-            //console.log('update data');
+        _updateContent: function() {
+            var self = this, input = self.textInput, q;
 
-            self._updateQueryValueFromInput();
-            var q = self.query;
+            // 检测是否需要更新。注意：加入空格也算有变化
+            if (input.value == self.query) return;
+            q = self.query = input.value;
 
             // 1. 输入为空时，隐藏提示层
-            if (!S.trim(q).length) {
-                self._fillContainer('');
+            if (!S.trim(q)) {
+                self._fillContainer(EMPTY);
                 self.hide();
                 return;
             }
 
-            if (self._dataCache[q] !== undefined) { // 2. 使用缓存数据
-                //console.log('use cache');
-                self.returnedData = 'using cache';
+            if (self._dataCache[q] !== undefined) { // 1. 使用缓存数据
+                // S.log('use cache');
                 self._fillContainer(self._dataCache[q]);
                 self._displayContainer();
 
-            } else if (self.JSONDataSource) { // 3. 使用JSON静态数据源
-                self.handleResponse(self.JSONDataSource[q]);
-
-            } else { // 4. 请求服务器数据
-                self.requestData();
+            } else { // 2. 请求服务器数据
+                self._requestData();
             }
         },
 
         /**
-         * 是否需要更新数据
-         * @protected
-         * @return Boolean
+         * 通过 script 元素异步加载数据
          */
-        _needUpdate: function() {
-            // 注意：加入空格也算有变化
-            return this.textInput.value != this.query;
-        },
+        _requestData: function() {
+            var self = this, script;
+            //S.log('request data via script');
 
-        /**
-         * 通过script元素加载数据
-         */
-        requestData: function() {
-            var self = this;
-
-            //console.log('request data via script');
-            if (!ie) self.dataScript = null; // IE不需要重新创建script元素
+            if (!ie) self.dataScript = undefined; // IE不需要重新创建 script 元素
 
             if (!self.dataScript) {
-                var script = doc.createElement('script');
+                script = doc.createElement('script');
                 script.charset = 'utf-8';
+                script.async = true;
 
-                // jQuery ajax.js line 275:
-                // Use insertBefore instead of appendChild  to circumvent an IE6 bug.
-                // This arises when a base node is used.
                 head.insertBefore(script, head.firstChild);
                 self.dataScript = script;
 
                 if (!ie) {
-                    var t = new Date().getTime();
+                    var t = S.now();
                     self._latestScriptTime = t;
-                    script.setAttribute('time', t);
+                    DOM.attr(script, DATA_TIME, t);
 
                     Event.on(script, 'load', function() {
-                        //console.log('on load');
                         // 判断返回的数据是否已经过期
-                        self._scriptDataIsOut = script.getAttribute('time') != self._latestScriptTime;
+                        self._scriptDataIsOut = DOM.attr(script, DATA_TIME) != self._latestScriptTime;
                     });
                 }
             }
 
+            if(self.fire(EVENT_BEFORE_DATA_REQUEST) === false) return;
+
             // 注意：没必要加时间戳，是否缓存由服务器返回的Header头控制
-            self.queryParams = 'q=' + encodeURIComponent(self.query) + '&code=utf-8&callback=' + CALLBACK_STR;
-            self.fire(EVENT_DATA_REQUEST);
-            self.dataScript.src = self.dataSource + '?' + self.queryParams;
+            self.dataScript.src = self.dataSource + '&q=' + encodeURIComponent(self.query);
         },
 
         /**
          * 处理获取的数据
          * @param {Object} data
          */
-        handleResponse: function(data) {
-            var self = this;
-
-            //console.log('handle response');
-            if (self._scriptDataIsOut) return; // 抛弃过期数据，否则会导致bug：1. 缓存key值不对； 2. 过期数据导致的闪屏
+        _handleResponse: function(data) {
+            var self = this, container = self.container, formattedData,
+                content = EMPTY, i, len, list, li, key, itemData;
+            //S.log('handle response');
+            
+            if (self._scriptDataIsOut) return; // 抛弃过期数据，否则会导致 bug：1. 缓存 key 值不对； 2. 过期数据导致的闪屏
 
             self.returnedData = data;
-            self.fire(EVENT_DATA_RETURN);
+            if(self.fire(EVENT_DATA_RETURN, { data: data }) === false) return;
 
             // 格式化数据
-            self.returnedData = self.formatData(self.returnedData);
+            formattedData = self._formatData(self.returnedData);
 
             // 填充数据
-            var content = '';
-            var len = self.returnedData.length;
-            if (len > 0) {
-                var list = doc.createElement('ol');
-                for (var i = 0; i < len; ++i) {
-                    var itemData = self.returnedData[i];
-                    var li = self.formatItem(itemData['key'], itemData['result']);
-                    // 缓存key值到attribute上
-                    li.setAttribute('key', itemData['key']);
+            if ((len = formattedData.length) > 0) {
+                list = DOM.create('<ol>');
+                for (i = 0; i < len; ++i) {
+                    itemData = formattedData[i];
+                    li = self._formatItem((key = itemData[KEY]), itemData[RESULT]);
+
+                    // 缓存 key 值到 attribute 上
+                    DOM.attr(li, KEY, key);
+
                     // 添加奇偶 class
                     DOM.addClass(li, i % 2 ? EVEN_ITEM_CLS : ODD_ITEM_CLS);
                     list.appendChild(li);
@@ -700,17 +670,16 @@ KISSY.add('suggest', function(S, undefined) {
             }
             self._fillContainer(content);
 
-            // 有内容时才添加底部
-            if (len > 0) self.appendBottom();
+            // 更新底部
+            self._updateFooter();
 
             // fire event
-            if (S.trim(self.container.innerHTML)) {
-                // 实际上是beforeCache，但从用户的角度看，是beforeShow
-                self.fire(EVENT_SHOW);
-            }
+            // 实际上是 beforeCache，但从用户的角度看，是 beforeShow
+            // 这样可以保证重复内容不用重新生成，直接用缓存
+            if (self.fire(EVENT_BEFORE_SHOW) === false) return;
 
             // cache
-            self._dataCache[self.query] = self.container.innerHTML;
+            self._dataCache[self.query] = S.trim(DOM.html(container));
 
             // 显示容器
             self._displayContainer();
@@ -718,33 +687,30 @@ KISSY.add('suggest', function(S, undefined) {
 
         /**
          * 格式化输入的数据对象为标准格式
-         * @param {Object} data 格式可以有3种：
+         * @param {Object} data 格式可以有 3 种：
          *  1. {'result' : [['key1', 'result1'], ['key2', 'result2'], ...]}
          *  2. {'result' : ['key1', 'key2', ...]}
-         *  3. 1和2的组合
+         *  3. 1 和 2 的组合
          *  4. 标准格式
-         *  5. 上面1-4中，直接取o['result']的值
+         *  5. 上面 1 - 4 中，直接取 o['result'] 的值
          * @return Object 标准格式的数据：
          *  [{'key' : 'key1', 'result' : 'result1'}, {'key' : 'key2', 'result' : 'result2'}, ...]
          */
-        formatData: function(data) {
-            var arr = [];
+        _formatData: function(data) {
+            var arr = [], len, item, i, j = 0;
             if (!data) return arr;
-            if (S.isArray(data['result'])) data = data['result'];
-            var len = data.length;
-            if (!len) return arr;
+            if (S.isArray(data[RESULT])) data = data[RESULT];
+            if (!(len = data.length)) return arr;
 
-            var item;
-            for (var i = 0; i < len; ++i) {
+            for (i = 0; i < len; ++i) {
                 item = data[i];
 
-                if (typeof item === 'string') { // 只有key值时
-                    arr[i] = {'key' : item};
-                } else if (S.isArray(item) && item.length >= 2) { // ['key', 'result'] 取数组前2个
-                    arr[i] = {'key' : item[0], 'result' : item[1]};
-                } else {
-                    arr[i] = item;
+                if (S.isString(item)) { // 只有 key 值时
+                    arr[j++] = { 'key' : item };
+                } else if (S.isArray(item) && item.length > 1) { // ['key', 'result'] 取数组前2个
+                    arr[j++] = {'key' : item[0], 'result' : item[1]};
                 }
+                // 不能识别的，直接忽略掉
             }
             return arr;
         },
@@ -755,19 +721,23 @@ KISSY.add('suggest', function(S, undefined) {
          * @param {Number} result 结果 可不设
          * @return {HTMLElement}
          */
-        formatItem: function(key, result) {
-            var li = doc.createElement('li');
-            var keyEl = doc.createElement('span');
-            keyEl.className = KEY_EL_CLS;
-            keyEl.appendChild(doc.createTextNode(key));
+        _formatItem: function(key, result) {
+            var li = DOM.create('<li>'),
+                keyEl = DOM.create('<span>', {
+                    'class': KEY_EL_CLS
+                }),
+                resultText, resultEl;
+
+            DOM.html(keyEl, key);
             li.appendChild(keyEl);
 
-            if (result !== undefined) { // 可以没有
-                var resultText = this.config.resultFormat.replace('%result%', result);
+            if (result) {
+                resultText = this.config.resultFormat.replace('%result%', result);
                 if (S.trim(resultText)) { // 有值时才创建
-                    var resultEl = doc.createElement('span');
-                    resultEl.className = RESULT_EL_CLS;
-                    resultEl.appendChild(doc.createTextNode(resultText));
+                    resultEl = DOM.create('<span>', {
+                        'class': RESULT_EL_CLS
+                    });
+                    DOM.html(resultEl, resultText);
                     li.appendChild(resultEl);
                 }
             }
@@ -776,73 +746,79 @@ KISSY.add('suggest', function(S, undefined) {
         },
 
         /**
-         * 添加提示层底部
+         * 更新提示层底部
          */
-        appendBottom: function() {
-            var bottom = doc.createElement('div');
-            bottom.className = FOOTER_CLS;
+        _updateFooter: function() {
+            var self = this, cfg = self.config,
+                footer = DOM.create('<div>', {
+                    'class': FOOTER_CLS
+                }),
+                closeBtn;
 
-            if (this.config.closeBtn) {
-                var closeBtn = doc.createElement('a');
-                closeBtn.href = 'javascript: void(0)';
-                closeBtn.setAttribute('target', '_self'); // bug fix: 覆盖<base target='_blank' />，否则会弹出空白页面
-                closeBtn.className = CLOSE_BTN_CLS;
-                closeBtn.appendChild(doc.createTextNode(this.config.closeBtnText));
-
-                bottom.appendChild(closeBtn);
+            if (cfg['closeBtn']) {
+                closeBtn = DOM.create('<a>', {
+                    'class': CLOSE_BTN_CLS,
+                    href: 'javascript: void(0)',
+                    target: '_self' // bug fix: 覆盖<base target='_blank' />，否则会弹出空白页面
+                });
+                DOM.html(closeBtn, cfg.closeBtnText);
+                footer.appendChild(closeBtn);
             }
 
+            self.fire(EVENT_UPDATE_FOOTER);
+
             // 仅当有内容时才添加
-            if (S.trim(bottom.innerHTML)) {
-                this.container.appendChild(bottom);
+            if (S.trim(DOM.html(footer))) {
+                self.container.appendChild(footer);
             }
         },
 
         /**
          * 填充提示层
-         * @protected
          * @param {String|HTMLElement} content innerHTML or Child Node
          */
         _fillContainer: function(content) {
-            if (content.nodeType == 1) {
-                this.container.innerHTML = '';
-                this.container.appendChild(content);
+            var self = this, container = self.container;
+
+            if (content.nodeType === 1) {
+                DOM.html(container, EMPTY);
+                container.appendChild(content);
             } else {
-                this.container.innerHTML = content;
+                DOM.html(container, content);
             }
 
-            // 一旦重新填充了，selectedItem就没了，需要重置
-            this.selectedItem = null;
+            // 一旦重新填充了，selectedItem 就没了，需要重置
+            self.selectedItem = undefined;
         },
 
         /**
-         * 根据contanier的内容，显示或隐藏容器
+         * 根据 contanier 的内容，显示或隐藏容器
          */
         _displayContainer: function() {
-            if (S.trim(this.container.innerHTML)) {
-                this.show();
+            var self = this;
+
+            if (S.trim(DOM.html(self.container))) {
+                self.show();
             } else {
-                this.hide();
+                self.hide();
             }
         },
 
         /**
          * 选中提示层中的上/下一个条
-         * @param {Boolean} down true表示down，false表示up
+         * @param {Boolean} down true 表示 down, false 表示 up
          */
-        selectItem: function(down) {
-            var self = this;
+        _selectItem: function(down) {
+            var self = this,
+                items = S.get(li, self.container),
+                newSelectedItem;
+            if (items.length === 0) return;
 
-            //console.log('select item ' + down);
-            var items = self.container.getElementsByTagName('li');
-            if (items.length == 0) return;
-
-            // 有可能用ESC隐藏了，直接显示即可
+            // 有可能用 ESC 隐藏了，直接显示即可
             if (!self.isVisible()) {
                 self.show();
                 return; // 保留原来的选中状态
             }
-            var newSelectedItem;
 
             // 没有选中项时，选中第一/最后项
             if (!self.selectedItem) {
@@ -868,78 +844,57 @@ KISSY.add('suggest', function(S, undefined) {
 
         /**
          * 移除选中项
-         * @protected
          */
         _removeSelectedItem: function() {
-            //console.log('remove selected item');
             DOM.removeClass(this.selectedItem, SELECTED_ITEM_CLS);
-            this.selectedItem = null;
+            this.selectedItem = undefined;
         },
 
         /**
          * 设置当前选中项
-         * @protected
-         * @param {HTMLElement} item
          */
         _setSelectedItem: function(item) {
-            //console.log('set selected item');
             DOM.addClass(item, SELECTED_ITEM_CLS);
             this.selectedItem = item;
         },
 
         /**
-         * 获取提示层中选中项的key字符串
-         * @protected
+         * 获取提示层中选中项的 key 字符串
          */
         _getSelectedItemKey: function() {
-            if (!this.selectedItem) return '';
+            if (!this.selectedItem) return EMPTY;
 
-            // getElementsByClassName比较损耗性能，改用缓存数据到attribute上方法
+            // getElementsByClassName 比较损耗性能，改用缓存数据到 attribute 上方法
             //var keyEl = Dom.getElementsByClassName(KEY_EL_CLS, '*', this.selectedItem)[0];
             //return keyEl.innerHTML;
 
-            return this.selectedItem.getAttribute('key');
+            return DOM.attr(this.selectedItem, KEY);
         },
 
         /**
-         * 将textInput的值更新到this.query
-         * @protected
-         */
-        _updateQueryValueFromInput: function() {
-            this.query = this.textInput.value;
-        },
-
-        /**
-         * 将选中项的值更新到textInput
-         * @protected
+         * 将选中项的 key 值更新到 textInput
          */
         _updateInputFromSelectItem: function() {
             this.textInput.value = this._getSelectedItemKey(this.selectedItem);
-        },
-
-        /**
-         * 获取 container 的 left, top, right, bottom
-         */
-        _getContainerRegion: function() {
-            var container = this.container,
-                offset = DOM.offset(container),
-                l = offset.left,
-                t = offset.top,
-                b = t + container.offsetHeight - 1,
-                r = l + container.offsetWidth - 1;
-
-            return { left: l, top: t, right: r, bottom: b };
         }
     });
+
+    function visible(elem) {
+        elem.style.visibility = EMPTY;
+    }
+
+    function invisible(elem) {
+        elem.style.visibility = HIDDEN;
+    }
 
     /**
      * 约定的全局回调函数
      */
     win[CALLBACK_STR] = function(data) {
         if (!Suggest.focusInstance) return;
-        // 使得先运行 script.onload 事件，然后再执行 callback 函数
-        setTimeout(function() {
-            Suggest.focusInstance.handleResponse(data);
+        // 保证先运行 script.onload 事件，然后再执行 callback 函数
+        S.later(function() {
+            Suggest.focusInstance._handleResponse(data);
         }, 0);
     };
 

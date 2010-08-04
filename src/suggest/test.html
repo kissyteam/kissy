@@ -95,19 +95,19 @@
     <div class="section">
         <h2>Crazy Test:</h2>
 
-        <h3>1. dataRequest 和 dataReturn 事件：( 请输入 pig 和 dog )</h3>
+        <h3>dataBeforeRequest 和 dataReturn 事件：( 请输入 pig 和 dog )</h3>
         <form name="search2" method="get" action="http://search1.taobao.com/browse/search_auction.htm" target="_blank">
             <input class="search-input" name="q" id="q2"/>
             <button type="submit" class="search-submit">Search</button>
         </form>
 
-        <h3>2. show 和 itemSelect 事件：</h3>
+        <h3>beforeShow 和 itemSelect 事件：</h3>
         <form name="search3" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
             <input class="search-input" name="q" id="q3"/>
             <button type="submit" class="search-submit">Search</button>
         </form>
 
-        <h3>3. 测试提示层宽度和遮罩：</h3>
+        <h3>测试提示层宽度和遮罩：</h3>
         <form name="search4" method="get" action="http://search1.taobao.com/browse/search_auction.htm" target="_blank">
             <input name="q" id="q4" style="margin-left: 100px" />
             <button type="submit">Search</button>
@@ -120,18 +120,9 @@
         <br>
         <iframe src="../../"></iframe>
 
-        <h3>4. 测试JSON数据源：（请输入 nike 或 nokia ）</h3>
-        <form name="search4" method="get" action="http://search1.taobao.com/browse/search_auction.htm" target="_blank">
-            <input class="search-input" name="q" id="q5"/>
-            <button type="submit" class="search-submit">Search</button>
-        </form>
-
-        <h3>5. 输入框的提示：（请输入 nike 或 nokia）</h3>
-        <input class="search-input" id="q6" />
-
-        <h3>6. 有啊有啊哈哈哈：</h3>
+        <h3>有啊有啊哈哈哈：</h3>
         <form name="search7" method="get" action="http://youa.baidu.com/search/s" target="_blank">
-            <input class="search-input" name="keyword" id="q7" />
+            <input class="search-input" name="keyword" id="q5" />
             <button type="submit" class="search-submit">百度一下</button>
         </form>
     </div>
@@ -154,7 +145,7 @@
 
         // 测试事件
         var sug2 = new S.Suggest('#q2', dataUrl);
-        sug2.on('dataRequest', function() {
+        sug2.on('beforeDataRequest', function() {
             if (this.query === 'pig') {
                 alert('你输入的是：' + this.query);
             }
@@ -167,7 +158,7 @@
 
         // 测试事件2
         var sug3 = new S.Suggest('#q3', dataUrl);
-        sug3.on('show', function() {
+        sug3.on('beforeShow', function() {
             var container = this.container,
                 list = S.get('ol', container);
 
@@ -192,68 +183,14 @@
             showCloseBtn: true
         });
 
-        // 测试JSON数据源
-        var jsonData = {};
-        jsonData['nike'] = [
-            ["nike 正品", "2170000"],
-            ["nike 专柜 正品", "834000"],
-            ["nike 短袖", "242000"],
-            ["nike 板 鞋", "989000"],
-            ["nike 女鞋", "253000"],
-            ["nike 运动鞋", "550000"],
-            ["nike 包", "295000"],
-            ["nike 鞋", "3160000"],
-            ["nike 单肩包", "38500"],
-            ["nike 09", "786000"]
-        ];
-        jsonData['nokia'] = [
-            ["nokia 手机", "17900"],
-            ["nokia 5800", "3040"],
-            ["nokia e71", "3520"],
-            ["nokia 8800", "1850"],
-            ["nokia n95", "5890"],
-            ["nokia n97", "237"],
-            ["nokia n78", "2200"],
-            ["nokia n85", "2880"],
-            ["nokia n81", "2620"],
-            ["nokia e66", "1740"]
-        ];
-        new S.Suggest('#q5', jsonData);
 
-        // 测试JSON数据源
-        var jsonData2 = {};
-        jsonData2['nike'] = [
-            "nike 正品",
-            "nike 专柜 正品",
-            "nike 短袖",
-            "nike 板 鞋",
-            "nike 女鞋",
-            "nike 运动鞋",
-            "nike 包",
-            "nike 鞋",
-            "nike 单肩包",
-            "nike 09"
-        ];
-        jsonData2['nokia'] = [
-            "nokia 手机",
-            "nokia 5800",
-            "nokia e71",
-            "nokia 8800",
-            "nokia n95",
-            "nokia n97",
-            "nokia n78",
-            "nokia n85",
-            "nokia n81",
-            "nokia e66"
-        ];
-        new S.Suggest('#q6', jsonData2);
 
         // 有啊有啊哈哈哈
         dataUrl = 'http://youa.baidu.com/suggest/se/s';
         window["suggestCallback"] = window["g_ks_suggest_callback"];
         // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
-        var sug7 = new S.Suggest('#q7', dataUrl);
-        sug7.on('dataRequest', function() {
+        var sug7 = new S.Suggest('#q5', dataUrl);
+        sug7.on('beforeDataRequest', function() {
             this.dataScript.charset = 'GBK';
             this.queryParams = 'cmd=suggest&type=kwd&max_count=10&keyword=' + encodeURIComponent(this.query) + '&callback=suggestCallback';
         });
