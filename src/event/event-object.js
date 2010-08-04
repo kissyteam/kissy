@@ -30,12 +30,13 @@ KISSY.add('event-object', function(S, undefined) {
         self.fixed = true;
     }
 
-    S.mix(EventObject.prototype, {
+    S.augment(EventObject, {
 
         _fix: function() {
             var self = this,
                 originalEvent = self.originalEvent,
-                l = props.length, prop;
+                l = props.length, prop,
+                ownerDoc = self.currentTarget.ownerDocument || doc; // support iframe
 
             // clone properties of the original event object
             while (l) {
@@ -48,7 +49,7 @@ KISSY.add('event-object', function(S, undefined) {
                 self.target = self.srcElement || doc; // srcElement might not be defined either
             }
 
-        // check if target is a textnode (safari)
+            // check if target is a textnode (safari)
             if (self.target.nodeType === 3) {
                 self.target = self.target.parentNode;
             }
@@ -60,7 +61,7 @@ KISSY.add('event-object', function(S, undefined) {
 
             // calculate pageX/Y if missing and clientX/Y available
             if (self.pageX === undefined && self.clientX !== undefined) {
-                var docEl = doc.documentElement, bd = doc.body;
+                var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
                 self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
                 self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
             }
