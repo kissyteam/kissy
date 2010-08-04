@@ -1,0 +1,28 @@
+<project name="cssbase.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <property name="copyright.files" value="*-min.css, *-min.js"/>
+        
+    <import file="../../tools/build.xml"/>
+
+    <property name="component.name" value="cssbase"/>
+    <property name="component.files" value="*.css, *.js"/>
+    <property name="src.dir" location="."/>
+
+    <target name="pre-clean">
+        <delete>
+            <fileset dir="." includes="${component.files}"/>
+        </delete>
+    </target>
+
+    <target name="concat">
+        <concat destfile="base.css" encoding="${charset}" outputencoding="${charset}">
+            <path path="../cssreset/reset.css"/>
+            <path path="../cssgrids/grids.css"/>
+            <path path="../csscommon/common.css"/>
+        </concat>
+    </target>
+
+    <target name="build" depends="pre-clean,concat,compress,copyright">
+    </target>
+</project>
