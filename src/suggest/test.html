@@ -81,6 +81,10 @@
             <li>没有选中项，ESC 键关闭，再次通过 keydown 打开时，依旧没有选中项</li>
             <li>当输入框为空时，按下 PgDn/PgUp/Home/End/Down/Up 键，输入框失去焦点，页面正常响应控制键</li>
             <li>onresize 时，位置能自动调整</li>
+            <li>输入框处于焦点，点击 footer 区域，比如 同店购 三个字，提示层不会关闭</li>
+            <li>输入框处于焦点，点击 footer 区域的输入框，提示层不会关闭</li>
+            <li>切花 footer 区域的输入框焦点，提示层不会关闭</li>
+            <li>footer 区域的输入框聚焦时，点击提示层外面，提示层关闭</li>
         </ol>
     </div>
 
@@ -105,6 +109,14 @@
         <form name="search3" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
             <input class="search-input" name="q" id="q3"/>
             <button type="submit" class="search-submit">Search</button>
+        </form>
+
+        <h3>beforeStart 事件 和 beforeSubmit 事件：</h3>
+        <form id="form6" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
+            <input class="search-input" name="q" id="q6"/>
+            <button type="submit" class="search-submit">Search</button>
+            <input type="radio" name="rel" checked value="1" /> 开启提示
+            <input type="radio" name="rel" value="0" /> 关闭提示
         </form>
 
         <h3>测试提示层宽度和遮罩：</h3>
@@ -136,10 +148,18 @@
         //var dataUrl = 'http://t-yubo/work/lab/suggest/sug.php';
         //var dataUrl = 'http://192.168.208.18:8090/sug';
 
-        // 淘宝首页
+        // 淘宝搜索
         var sug = new S.Suggest('#q', dataUrl, {
             autoFocus: true,
             resultFormat: '约%result%个宝贝'
+        });
+
+        sug.on('updateFooter', function() {
+            this.footer.innerHTML = '<form _fieldname="q" method="get" action="/search" style="padding: 5px 0">' +
+                    '<input type="hidden" name="q">' +
+                    '<input type="hidden" value="tdg1" name="from">' +
+                    '同店购：<input type="text" _default="第一件宝贝" class="input" style="width: 60px" index="0"><em>+</em><input type="text" style="width: 60px" _default="另一宝贝" class="input blur" index="1"><em>+</em><input type="text"  style="width: 60px" _default="另一宝贝" class="input blur" index="2"> <button class="ms-btn" type="submit">搜索</button>' +
+                    '</form>';
         });
 
         // 测试事件
@@ -150,7 +170,7 @@
             }
         });
         sug2.on('dataReturn', function() {
-            if (this.query === 'pig') {
+            if (this.query === 'dog') {
                 alert('返回的数据是：' + this.returnedData);
             }
         });
@@ -161,41 +181,57 @@
             var container = this.container,
                 list = S.get('ol', container);
 
-            list.insertBefore(
-                    S.DOM.create('<li class="even"><span class="ks-suggest-key">含 "' + this.query +'" 的商品</span></li>'),
-                    S.get('li', list)
-                 );
-            list.insertBefore(
-                    S.DOM.create('<li class="odd"><span class="ks-suggest-key">含 "' + this.query +'" 的店铺</span></li>'),
-                    S.get('li', list)
-                 );
-
+            if (list) {
+                list.insertBefore(
+                        S.DOM.create('<li class="even"><span class="ks-suggest-key">含 "' + this.query + '" 的商品</span></li>'),
+                        S.get('li', list)
+                        );
+                list.insertBefore(
+                        S.DOM.create('<li class="odd"><span class="ks-suggest-key">含 "' + this.query + '" 的店铺</span></li>'),
+                        S.get('li', list)
+                        );
+            }
+            
             container.appendChild(document.createTextNode('我是天下无敌的广告'));
         });
         sug3.on('itemSelect', function() {
             alert('你选中了：' + this.textInput.value);
         });
 
+        
+        // 测试 beforeStart / beforeSubmit 事件
+        var sug6 = new S.Suggest('#q6', dataUrl), form6 = S.get('#form6');
+        sug6.on('beforeStart', function() {
+            if(form6.rel[1].checked) {
+                return false;
+            }
+        });
+        sug6.on('beforeSubmit', function() {
+            return false;
+        });
+
         // 测试配置参数
         new S.Suggest('#q4', dataUrl, {
             containerWidth: '200px',
-            showCloseBtn: true
+            closeBtn: true
         });
-
 
 
         // 有啊有啊哈哈哈
-        dataUrl = 'http://youa.baidu.com/suggest/se/s';
-        window["suggestCallback"] = window["g_ks_suggest_callback"];
         // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
-        var sug7 = new S.Suggest('#q5', dataUrl);
-        sug7.on('beforeDataRequest', function() {
+        window["suggestCallback"] = window["g_ks_suggest_callback"];
+        dataUrl = 'http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10';
+
+        var sug5 = new S.Suggest('#q5', dataUrl);
+
+        sug5.on('beforeDataRequest', function() {
             this.dataScript.charset = 'GBK';
-            this.queryParams = 'cmd=suggest&type=kwd&max_count=10&keyword=' + encodeURIComponent(this.query) + '&callback=suggestCallback';
+            this.queryParams = 'keyword=' + encodeURIComponent(this.query);
         });
+
         // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
         // taobao: g_ks_suggest_callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
-        sug7.on('dataReturn', function() {
+        sug5.on('dataReturn', function() {
             var data = this.returnedData['r'] || [];
             var result = [];
 

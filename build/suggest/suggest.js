@@ -1,3 +1,8 @@
+/*
+Copyright 2010, KISSY UI Library v1.1.1dev
+MIT Licensed
+build time: ${build.time}
+*/
 /**
  * 提示补全组件
  * @module   suggest
