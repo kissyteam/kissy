@@ -34,7 +34,7 @@
             <path path="../datalazyload/datalazyload.js"/>
             <path path="../flash/flash-pkg.js"/>
             <path path="../switchable/switchable-pkg.js"/>
-            <!--<path path="../suggest/suggest.js"/>-->
+            <path path="../suggest/suggest.js"/>
             <!--<path path="../imagezoom/imagezoom.js"/>-->
             <!--<path path="../calendar/calendar.js"/>-->
         </concat>
