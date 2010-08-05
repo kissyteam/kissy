@@ -1438,6 +1438,7 @@ KISSY.add('dom-attr', function(S, undefined) {
         SELECT = 'select',
         EMPTY = '',
         CHECKED = 'checked',
+        STYLE = 'style',
 
         DOM = S.DOM,
         isElementNode = DOM._isElementNode,
@@ -1512,8 +1513,8 @@ KISSY.add('dom-attr', function(S, undefined) {
                     }
                     // 在标准浏览器下，用 getAttribute 获取 style 值
                     // IE7- 下，需要用 cssText 来获取
-                    else if (name === 'style') {
-                        ret = el.style.cssText;
+                    else if (name === STYLE) {
+                        ret = el[STYLE].cssText;
                     }
                 }
 
@@ -1528,8 +1529,8 @@ KISSY.add('dom-attr', function(S, undefined) {
                     return;
                 }
 
-                if (oldIE && name === 'style') {
-                    el.style.cssText = val;
+                if (name === STYLE) {
+                    el[STYLE].cssText = val;
                 }
                 else {
                     // checked 属性值，需要通过直接设置才能生效
