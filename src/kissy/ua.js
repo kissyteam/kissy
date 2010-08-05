@@ -1,8 +1,8 @@
 /**
- * @module  kissy-ua
+ * @module  ua
  * @author  lifesinger@gmail.com
  */
-KISSY.add('kissy-ua', function(S) {
+KISSY.add('ua', function(S) {
 
     var ua = navigator.userAgent,
         m,
@@ -81,6 +81,7 @@ KISSY.add('kissy-ua', function(S) {
         }
     }
 
+    o._numberify = numberify;
     S.UA = o;
 });
 
@@ -97,6 +98,5 @@ KISSY.add('kissy-ua', function(S) {
  *
  * TODO:
  *  - test mobile
- *  - 是否需要加入 maxthon 等国内浏览器嗅探？
- * 
+ *
  */

@@ -1,3 +1,8 @@
+/*
+Copyright 2010, KISSY UI Library v1.1.1dev
+MIT Licensed
+build time: ${build.time}
+*/
 /**
  * @module  ua-extra
  * @author  gonghao<gonghao@ghsky.com>

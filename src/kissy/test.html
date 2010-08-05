@@ -9,8 +9,9 @@
 
 <h2>Test Data</h2>
 <script src="kissy.js"></script>
-<script src="kissy-lang.js"></script>
-<script src="kissy-ua.js"></script>
+<script src="lang.js"></script>
+<script src="ua.js"></script>
+<script src="ua-extra.js"></script>
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
 
 <script>
@@ -510,16 +511,13 @@
     }
 
     function test_ua(test) {
-        var ua = KISSY.UA, out = '';
+        var UA = S.UA, out = '', p;
 
-        out += 'ie = ' + ua.ie + ', ';
-        out += 'gecko = ' + ua.gecko + ', ';
-        out += 'firefox = ' + ua.firefox + ', ';
-        out += 'webkit = ' + ua.webkit + ', ';
-        out += 'chrome = ' + ua.chrome + ', ';
-        out += 'safari = ' + ua.safari + ', ';
-        out += 'mobile = ' + ua.mobile + ', ';
-        out += 'opera = ' + ua.opera;
+        for(p in UA) {
+            if(p.indexOf('_') !== 0) {
+                out += p + ' = ' + UA[p] + ', '
+            }
+        }
 
         test.extraMsg = out;
     }
@@ -548,15 +546,16 @@
         if(t4.length !== 4) test.fail();
 
         // 循环引用
-        var t5 = { a: 1 }, t6 = { b: t5};
-        t5.a = t6;
-        try {
-            S.clone(t6);
-            test.fail();
-        }
-        catch(ex) {
-            //test.fail(ex);
-        }
+        // safari 下 catch 无效，注释掉
+//        var t5 = { a: 1 }, t6 = { b: t5};
+//        t5.a = t6;
+//        try {
+//            S.clone(t6);
+//            test.fail();
+//        }
+//        catch(ex) {
+//            //test.fail(ex);
+//        }
     }
 
 </script>

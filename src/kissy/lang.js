@@ -1,8 +1,8 @@
 /**
- * @module  kissy-lang
+ * @module  lang
  * @author  lifesinger@gmail.com
  */
-KISSY.add('kissy-lang', function(S, undefined) {
+KISSY.add('lang', function(S, undefined) {
 
     var win = window, doc = document, loc = location,
         AP = Array.prototype,
