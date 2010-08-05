@@ -905,7 +905,7 @@ KISSY.add('switchable-countdown', function(S, undefined) {
                     DOM.removeAttr(masks[host.activeIndex], STYLE);
 
                     // 重新开始倒计时动画
-                    setTimeout(startAnim, 200);
+                    S.later(startAnim, 200);
                 });
             }
 
