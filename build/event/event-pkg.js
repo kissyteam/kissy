@@ -317,7 +317,8 @@ KISSY.add('event-object', function(S, undefined) {
             var self = this,
                 originalEvent = self.originalEvent,
                 l = props.length, prop,
-                ownerDoc = self.currentTarget.ownerDocument || doc; // support iframe
+                ct = self.currentTarget,
+                ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
 
             // clone properties of the original event object
             while (l) {

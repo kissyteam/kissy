@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.1dev
 MIT Licensed
-build time: Aug 2 23:52
+build time: ${build.time}
 */
 /**
  * @module kissy
@@ -64,7 +64,7 @@ build time: Aug 2 23:52
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.0',
+        version: '1.1.1dev',
 
         /**
          * Initializes KISSY object.
@@ -436,10 +436,10 @@ build time: Aug 2 23:52
  *
  */
 /**
- * @module  kissy-lang
+ * @module  lang
  * @author  lifesinger@gmail.com
  */
-KISSY.add('kissy-lang', function(S, undefined) {
+KISSY.add('lang', function(S, undefined) {
 
     var win = window, doc = document, loc = location,
         AP = Array.prototype,
@@ -449,7 +449,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
         encode = encodeURIComponent,
         decode = decodeURIComponent,
         HAS_OWN_PROPERTY = 'hasOwnProperty',
-        SEP = '&',
+        EMPTY = '', SEP = '&',
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
         REG_NOT_WHITE = /\S/;
@@ -525,11 +525,24 @@ KISSY.add('kissy-lang', function(S, undefined) {
          */
         trim: trim ?
             function(str) {
-                return (str == undefined) ? '' : trim.call(str);
+                return (str == undefined) ? EMPTY : trim.call(str);
             } :
             function(str) {
-                return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
+                return (str == undefined) ? EMPTY : str.toString().replace(REG_TRIM, EMPTY);
             },
+
+        /**
+         * Substitutes keywords in a string using an object/array.
+         * Removes undefined keywords and ignores escaped keywords.
+         */
+        substitute: function(str, o, regexp) {
+            if(!S.isString(str) || !S.isPlainObject(o)) return str;
+
+            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
+                if (match.charAt(0) === '\\') return match.slice(1);
+                return (o[name] !== undefined) ? o[name] : EMPTY;
+            });
+        },
 
         /**
          * Executes the supplied function on each item in the array.
@@ -630,7 +643,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          */
         param: function(o, sep) {
             // 非 plain object, 直接返回空
-            if (!S.isPlainObject(o)) return '';
+            if (!S.isPlainObject(o)) return EMPTY;
             sep = sep || SEP;
 
             var buf = [], key, val;
@@ -640,20 +653,20 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
                 // val 为有效的非数组值
                 if (isValidParamValue(val)) {
-                    buf.push(key, '=', encode(val + ''), sep);
+                    buf.push(key, '=', encode(val + EMPTY), sep);
                 }
                 // val 为非空数组
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, '[]=', encode(val[i] + ''), sep);
+                            buf.push(key, '[]=', encode(val[i] + EMPTY), sep);
                         }
                     }
                 }
                 // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
             }
             buf.pop();
-            return buf.join('');
+            return buf.join(EMPTY);
         },
 
         /**
@@ -679,9 +692,9 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
                 // pair[1] 可能包含 gbk 编码的中文，而 decodeURIComponent 仅能处理 utf-8 编码的中文，否则报错
                 try {
-                    val = decode(pair[1] || '');
+                    val = decode(pair[1] || EMPTY);
                 } catch (ex) {
-                    val = pair[1] || '';
+                    val = pair[1] || EMPTY;
                 }
 
                 if ((m = key.match(REG_ARR_KEY)) && m[1]) {
@@ -822,10 +835,10 @@ KISSY.add('kissy-lang', function(S, undefined) {
  *
  */
 /**
- * @module  kissy-ua
+ * @module  ua
  * @author  lifesinger@gmail.com
  */
-KISSY.add('kissy-ua', function(S) {
+KISSY.add('ua', function(S) {
 
     var ua = navigator.userAgent,
         m,
@@ -904,6 +917,7 @@ KISSY.add('kissy-ua', function(S) {
         }
     }
 
+    o._numberify = numberify;
     S.UA = o;
 });
 
@@ -920,8 +934,7 @@ KISSY.add('kissy-ua', function(S) {
  *
  * TODO:
  *  - test mobile
- *  - 是否需要加入 maxthon 等国内浏览器嗅探？
- * 
+ *
  */
 /*
 Copyright 2010, KISSY UI Library v1.1.1dev
@@ -1529,6 +1542,7 @@ KISSY.add('dom-attr', function(S, undefined) {
                     return;
                 }
 
+                // 不需要加 oldIE 判断，否则 IE8 的 IE7 兼容模式有问题
                 if (name === STYLE) {
                     el[STYLE].cssText = val;
                 }
@@ -2980,7 +2994,8 @@ KISSY.add('event-object', function(S, undefined) {
             var self = this,
                 originalEvent = self.originalEvent,
                 l = props.length, prop,
-                ownerDoc = self.currentTarget.ownerDocument || doc; // support iframe
+                ct = self.currentTarget,
+                ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
 
             // clone properties of the original event object
             while (l) {
@@ -7334,7 +7349,7 @@ KISSY.add('switchable-countdown', function(S, undefined) {
                     DOM.removeAttr(masks[host.activeIndex], STYLE);
 
                     // 重新开始倒计时动画
-                    setTimeout(startAnim, 200);
+                    S.later(startAnim, 200);
                 });
             }
 
@@ -7660,10 +7675,12 @@ KISSY.add('suggest', function(S, undefined) {
 
         TIMER_DELAY = 200,
         EMPTY = '', HIDDEN = 'hidden',
+        DISPLAY = 'display', NONE = 'none',
         LI = 'LI', li = 'li', DIV = '<div>',
         RESULT = 'result', KEY = 'key',
         DATA_TIME = 'data-time',
         PARSEINT = parseInt,
+        RE_FOCUS_ELEMS = /input|button|a/i,
 
         /**
          * Suggest 的默认配置
@@ -7700,7 +7717,7 @@ KISSY.add('suggest', function(S, undefined) {
              * result 的格式
              * @type String
              */
-            resultFormat: '约%result%条结果',
+            resultFormat: '%result%',
 
             /**
              * 是否显示关闭按钮
@@ -7962,7 +7979,7 @@ KISSY.add('suggest', function(S, undefined) {
             var self = this,
                 container = DOM.create(DIV, {
                     'class': CONTAINER_CLS + ' ' + self.config.containerCls,
-                    style: 'position: absolute; visibility: hidden'
+                    style: 'position:absolute;visibility:hidden'
                 }),
                 content = DOM.create(DIV, {
                     'class': CONTENT_CLS
@@ -7978,7 +7995,7 @@ KISSY.add('suggest', function(S, undefined) {
             self.container = container;
             self.content = content;
             self.footer = footer;
-            self._setContainerRegion();
+
             self._initContainerEvent();
         },
 
@@ -8002,7 +8019,6 @@ KISSY.add('suggest', function(S, undefined) {
 
         /**
          * 初始化容器事件
-         * 子元素都不用设置事件，冒泡到这里统一处理
          */
         _initContainerEvent: function() {
             var self = this,
@@ -8041,7 +8057,7 @@ KISSY.add('suggest', function(S, undefined) {
 
             // 鼠标按下时，让输入框不会失去焦点
             Event.on(container, 'mousedown', function(ev) {
-                if (ev.target.nodeName !== 'INPUT') { // footer 区域的 input 不阻止
+                if (!RE_FOCUS_ELEMS.test(ev.target.nodeName)) { // footer 区域的 input 等元素不阻止
                     // 1. for IE
                     input.onbeforedeactivate = function() {
                         win.event.returnValue = false;
@@ -8054,7 +8070,7 @@ KISSY.add('suggest', function(S, undefined) {
 
             Event.on(content, 'mouseup', function(ev) {
                 var target = ev.target;
-                if(!DOM.parent(target, '.' + CONTENT_CLS)) return; // 在 footer 区域
+                if(ev.which > 2) return; // 非左键和中键点击
 
                 // 可能点击在 li 的子元素上
                 if (target.nodeName !== LI) {
@@ -8156,20 +8172,21 @@ KISSY.add('suggest', function(S, undefined) {
             });
             this.container.shim = iframe;
 
-            this._setShimRegion();
             bd.insertBefore(iframe, bd.firstChild);
         },
 
         /**
-         * 设置 shim 的 left, top, width
+         * 设置 shim 的 left, top, width, height
          */
         _setShimRegion: function() {
-            var style = this.container.style, shim = this.container.shim;
+            var self = this, container = self.container,
+                style = container.style, shim = container.shim;
             if (shim) {
                 DOM.css(shim, {
                     left: PARSEINT(style.left) - 2, // -2 可以解决吞边线的 bug
                     top: style.top,
-                    width: PARSEINT(style.width) + 2
+                    width: PARSEINT(style.width) + 2,
+                    height: DOM.height(container) - 2
                 });
             }
         },
@@ -8243,15 +8260,16 @@ KISSY.add('suggest', function(S, undefined) {
          * 显示提示层
          */
         show: function() {
-            if (this.isVisible()) return;
-            var container = this.container, shim = container.shim;
+            var self = this;
+            if (self.isVisible()) return;
+            var container = self.container, shim = container.shim;
 
+            // 每次显示前，都重新计算位置，这样能自适应 input 的变化（牺牲少量性能，满足更普适的需求）
+            self._setContainerRegion();
             visible(container);
 
             if (shim) {
-                if (!shim.style.height) { // 第一次显示时，需要设定高度
-                    DOM.height(shim, container.offsetHeight - 2);
-                }
+                self._setShimRegion();
                 visible(shim);
             }
         },
@@ -8286,14 +8304,14 @@ KISSY.add('suggest', function(S, undefined) {
 
             // 1. 输入为空时，隐藏提示层
             if (!S.trim(q)) {
-                self._fillContent(EMPTY);
+                self._fillContainer();
                 self.hide();
                 return;
             }
 
             if (self._dataCache[q] !== undefined) { // 1. 使用缓存数据
-                // S.log('use cache');
-                self._fillContent(self._dataCache[q]);
+                //S.log('use cache');
+                self._fillContainer(self._dataCache[q]);
                 self._displayContainer();
 
             } else { // 2. 请求服务器数据
@@ -8370,10 +8388,7 @@ KISSY.add('suggest', function(S, undefined) {
                 }
                 content = list;
             }
-            self._fillContent(content);
-
-            // 填充底部
-            self._fillFooter();
+            self._fillContainer(content);
 
             // fire event
             // 实际上是 beforeCache，但从用户的角度看，是 beforeShow
@@ -8381,7 +8396,7 @@ KISSY.add('suggest', function(S, undefined) {
             if (self.fire(EVENT_BEFORE_SHOW) === false) return;
 
             // cache
-            self._dataCache[self.query] = content;
+            self._dataCache[self.query] = DOM.html(self.content);
 
             // 显示容器
             self._displayContainer();
@@ -8448,12 +8463,32 @@ KISSY.add('suggest', function(S, undefined) {
         },
 
         /**
+         * 填充提示层容器
+         */
+        _fillContainer: function(content, footer) {
+            this._fillContent(content || EMPTY);
+            this._fillFooter(footer || EMPTY);
+        },
+
+        /**
+         * 填充提示层内容层
+         * @param {String|HTMLElement} html innerHTML or Child Node
+         */
+        _fillContent: function(html) {
+            replaceContent(this.content, html);
+            this.selectedItem = undefined; // 一旦重新填充了，selectedItem 就没了，需要重置
+        },
+
+        /**
          * 填充提示层底部
          */
-        _fillFooter: function() {
+        _fillFooter: function(html) {
             var self = this, cfg = self.config,
                 footer = self.footer, closeBtn;
 
+            replaceContent(footer, html);
+
+            // 关闭按钮
             if (cfg['closeBtn']) {
                 closeBtn = DOM.create('<a>', {
                     'class': CLOSE_BTN_CLS,
@@ -8464,25 +8499,11 @@ KISSY.add('suggest', function(S, undefined) {
                 footer.appendChild(closeBtn);
             }
 
-            self.fire(EVENT_UPDATE_FOOTER);
-        },
+            // 根据 query 参数，有可能填充不同的内容到 footer
+            self.fire(EVENT_UPDATE_FOOTER, { footer: footer, query: self.query });
 
-        /**
-         * 填充提示层内容层
-         * @param {String|HTMLElement} html innerHTML or Child Node
-         */
-        _fillContent: function(html) {
-            var self = this, content = self.content;
-
-            if (html.nodeType === 1) {
-                DOM.html(content, EMPTY);
-                content.appendChild(html);
-            } else {
-                DOM.html(content, html);
-            }
-
-            // 一旦重新填充了，selectedItem 就没了，需要重置
-            self.selectedItem = undefined;
+            // 无内容时，隐藏掉
+            DOM.css(footer, DISPLAY, DOM.text(footer) ? EMPTY : NONE);
         },
 
         /**
@@ -8491,7 +8512,7 @@ KISSY.add('suggest', function(S, undefined) {
         _displayContainer: function() {
             var self = this;
 
-            if (S.trim(DOM.html(self.container))) {
+            if (S.trim(DOM.text(self.container))) {
                 self.show();
             } else {
                 self.hide();
@@ -8584,6 +8605,15 @@ KISSY.add('suggest', function(S, undefined) {
         elem.style.visibility = HIDDEN;
     }
 
+    function replaceContent(elem, html) {
+        if (html.nodeType === 1) {
+            DOM.html(elem, EMPTY);
+            elem.appendChild(html);
+        } else {
+            DOM.html(elem, html);
+        }
+    }
+
     /**
      * 约定的全局回调函数
      */
@@ -8605,47 +8635,50 @@ KISSY.add('suggest', function(S, undefined) {
  *
  * 整个组件代码，由两大部分组成：数据处理 + 事件处理
  *
- * 一、数据处理很core，但相对来说是简单的，由 requestData + handleResponse + formatData等辅助方法组成
+ * 一、数据处理很 core，但相对来说是简单的，由 requestData + handleResponse + formatData 等辅助方法组成
  * 需要注意两点：
- *  a. IE中，改变script.src, 会自动取消掉之前的请求，并发送新请求。非IE中，必须新创建script才行。这是
- *     requestData方法中存在两种处理方式的原因。
- *  b. 当网速很慢，数据返回时，用户的输入可能已改变，已经有请求发送出去，需要抛弃过期数据。目前采用加时间戳
- *     的解决方案。更好的解决方案是，调整API，使得返回的数据中，带有query值。
+ *  a. IE 中，改变 script.src, 会自动取消掉之前的请求，并发送新请求。非 IE 中，必须新创建 script 才行。这是
+ *     requestData 方法中存在两种处理方式的原因。
+ *  b. 当网速很慢，数据返回时，用户的输入可能已改变，已经有请求发送出去，需要抛弃过期数据。目前采用加 data-time
+ *     的解决方案。更好的解决方案是，调整 API，使得返回的数据中，带有 query 值。
  *
- * 二、事件处理看似简单，实际上有不少陷阱，分2部分：
- *  1. 输入框的focus/blur事件 + 键盘控制事件
+ * 二、事件处理看似简单，实际上有不少陷阱，分 2 部分：
+ *  1. 输入框的 focus/blur 事件 + 键盘控制事件
  *  2. 提示层上的鼠标悬浮和点击事件
  * 需要注意以下几点：
- *  a. 因为点击提示层时，首先会触发输入框的blur事件，blur事件中调用hide方法，提示层一旦隐藏后，就捕获不到
- *     点击事件了。因此有了 this._mouseHovering 来排除这种情况，使得blur时不会触发hide，在提示层的点击
- *     事件中自行处理。（2009-06-18更新：采用mouseup来替代click事件，代码清晰简单了很多）
- *  b. 当鼠标移动到某项或通过上下键选中某项时，给this.selectedItem赋值；当提示层的数据重新填充时，重置
- *     this.selectedItem. 这种处理方式和google的一致，可以使得选中某项，隐藏，再次打开时，依旧选中原来
+ *  a. 因为点击提示层时，首先会触发输入框的 blur 事件，blur 事件中调用 hide 方法，提示层一旦隐藏后，就捕获不到
+ *     点击事件了。因此有了 this._mouseHovering 来排除这种情况，使得 blur 时不会触发 hide, 在提示层的点击
+ *     事件中自行处理。（2009-06-18 更新：采用 mouseup 来替代 click 事件，代码清晰简单了很多）（注：后来发现
+ *     用 beforedeactive 方法可以阻止掉输入框的焦点丢失，逻辑更简单了）
+ *  b. 当鼠标移动到某项或通过上下键选中某项时，给 this.selectedItem 赋值；当提示层的数据重新填充时，重置
+ *     this.selectedItem. 这种处理方式和 google 的一致，可以使得选中某项，隐藏，再次打开时，依旧选中原来
  *     的选中项。
- *  c. 在ie等浏览器中，输入框中输入ENTER键时，会自动提交表单。如果form.target='_blank', 自动提交和JS提交
- *     会打开两个提交页面。因此这里采取了在JS中不提交的策略，ENTER键是否提交表单，完全由HTML代码自身决定。这
- *     样也能使得组件很容易应用在不需要提交表单的场景中。（2009-06-18更新：可以通过blur()取消掉浏览器的默认
- *     Enter响应，这样能使得代码逻辑和mouseup的一致）
+ *  c. 在 ie 等浏览器中，输入框中输入 ENTER 键时，会自动提交表单。如果 form.target='_blank', 自动提交和 JS 提交
+ *     会打开两个提交页面。因此这里采取了在 JS 中不提交的策略，ENTER 键是否提交表单，完全由 HTML 代码自身决定。这
+ *     样也能使得组件很容易应用在不需要提交表单的场景中。（2009-06-18 更新：可以通过 blur() 取消掉浏览器的默认
+ *     Enter 响应，这样能使得代码逻辑和 mouseup 的一致）
  *  d. onItemSelect 仅在鼠标点击选择某项 和 键盘选中某项回车 后触发。
- *  e. 当textInput会触发表单提交时，在enter keydown 和 keyup之间，就会触发提交。因此在keydown中捕捉事件。
- *     并且在keydown中能捕捉到持续DOWN/UP，在keyup中就不行了。
+ *  e. 当 textInput 会触发表单提交时，在 enter keydown 和 keyup 之间，就会触发提交。因此在 keydown 中捕捉事件。
+ *     并且在 keydown 中能捕捉到持续 DOWN/UP, 在 keyup 中就不行了。
  *
  * 【得到的一些编程经验】：
- *  1. 职责单一原则。方法的职责要单一，比如hide方法和show方法，除了改变visibility, 就不要拥有其它功能。这
+ *  1. 职责单一原则。方法的职责要单一，比如 hide 方法和 show 方法，除了改变 visibility, 就不要拥有其它功能。这
  *     看似简单，真要做到却并不容易。保持职责单一，保持简单的好处是，代码的整体逻辑更清晰，方法的可复用性也提
  *     高了。
- *  2. 小心事件处理。当事件之间有关联时，要仔细想清楚，设计好后再写代码。比如输入框的blur和提示层的click事件。
- *  3. 测试的重要性。目前是列出Test Cases，以后要尝试自动化。保证每次改动后，都不影响原有功能。
+ *  2. 小心事件处理。当事件之间有关联时，要仔细想清楚，设计好后再写代码。比如输入框的 blur 和提示层的 click 事件。
+ *  3. 测试的重要性。目前是列出 Test Cases，以后要尝试自动化。保证每次改动后，都不影响原有功能。
  *  4. 挑选正确的事件做正确的事，太重要了，能省去很多很多烦恼。
  *
  */
 
 /**
  * 2009-08-05 更新： 将 class 从配置项中移动到常量，原因是：修改默认 className 的可能性很小，仅保留一个
- *                  containerCls 作为个性化样式的接口即可
+ *                  containerCls 作为个性化样式的接口即可。
  *
  * 2009-12-10 更新： 采用 kissy module 组织代码。为了避免多个沙箱下，对全局回调函数覆盖定义引发的问题，
  *                  采用共享模式。
  *
  * 2010-03-10 更新： 去除共享模式，适应 kissy 新的代码组织方式。
+ *
+ * 2010-08-04 更新： 去掉对 yahoo-dom-event 的依赖，仅依赖 ks-core. 调整了部分 public api, 扩展更容易了。
  */
