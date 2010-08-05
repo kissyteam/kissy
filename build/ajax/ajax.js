@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Aug 2 23:52
+build time: Aug 5 16:06
 */
 /**
  * @module  ajax
@@ -42,7 +42,7 @@ KISSY.add('ajax', function(S) {
                 fn(node, callback);
             }
 
-            head.appendChild(node);
+            head.insertBefore(node, head.firstChild);
         }
     });
 });

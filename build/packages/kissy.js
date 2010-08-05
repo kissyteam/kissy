@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.1dev
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 5 16:06
 */
 /**
  * @module kissy
@@ -64,7 +64,7 @@ build time: ${build.time}
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.1dev',
+        version: '1.1.0',
 
         /**
          * Initializes KISSY object.
@@ -937,9 +937,9 @@ KISSY.add('ua', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.1dev
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 5 16:06
 */
 /**
  * @module  dom
@@ -2676,9 +2676,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.1dev
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 5 16:06
 */
 /**
  * @module  event
@@ -3261,7 +3261,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Aug 2 23:52
+build time: Aug 5 16:06
 */
 /**
  * @module  node
@@ -3571,7 +3571,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Aug 2 23:52
+build time: Aug 5 16:06
 */
 /**
  * @module  ajax
@@ -3612,7 +3612,7 @@ KISSY.add('ajax', function(S) {
                 fn(node, callback);
             }
 
-            head.appendChild(node);
+            head.insertBefore(node, head.firstChild);
         }
     });
 });
@@ -3627,7 +3627,7 @@ KISSY.add('ajax', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Aug 2 23:52
+build time: Aug 5 16:06
 */
 /**
  * @module  cookie
@@ -3714,7 +3714,7 @@ KISSY.add('cookie', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Aug 2 23:52
+build time: Aug 5 16:06
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -4043,7 +4043,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Aug 2 23:52
+build time: Aug 5 16:06
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -5119,7 +5119,7 @@ KISSY.ExternalSelector._filter = function(selector, filter) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Aug 2 23:52
+build time: Aug 5 16:06
 */
 /**
  * @module anim-easing
@@ -5563,9 +5563,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.1dev
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 5 16:06
 */
 /**
  * 数据延迟加载组件
@@ -6002,7 +6002,7 @@ KISSY.add('datalazyload', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Aug 2 23:52
+build time: Aug 5 16:06
 */
 /**
  * @module   Flash UA 探测
@@ -6132,7 +6132,8 @@ KISSY.add('flash', function(S){
 		 * flash 实例 map { '#id': elem, ... }
          * @static
 		 */
-		swfs: { length: 0 }
+		swfs: { },
+		length: 0
 	};
 });
 /**
@@ -6198,9 +6199,6 @@ KISSY.add('flash-embed', function(S) {
 
         fpvGEQ: UA.fpvGEQ,
 
-        len: function () {
-            return Flash.swfs.length;
-        },
 
         /**
          * 添加 SWF 对象
@@ -6225,7 +6223,9 @@ KISSY.add('flash-embed', function(S) {
 
             // 保存 id, 没有则自动生成
             if (!target.id) target.id = S.guid(PREFIX);
-            id = config.attrs.id = ID_PRE + target.id;
+            //id = config.attrs.id = ID_PRE + target.id; 	//bugfix:	会改变DOM已被命名的ID 造成失效   longzang 2010/8/4
+			id = config.attrs.id = target.id;
+			
 
             // 2. flash 插件没有安装
             if (!UA.fpv()) {
@@ -6272,11 +6272,11 @@ KISSY.add('flash-embed', function(S) {
          * 移除已注册到 S.Flash 的 SWF 和 DOM 中对应的 HTML 元素
          */
         remove: function(id) {
-            var swf = Flash.get(id);
+            var swf = Flash.get(ID_PRE + id);
             if (swf) {
                 DOM.remove(swf);
-                delete Flash.swfs['#' + swf.id];
-                Flash.swfs.length -= 1;
+                delete Flash.swfs[swf.id];
+                Flash.length -= 1;
             }
         },
 
@@ -6335,7 +6335,7 @@ KISSY.add('flash-embed', function(S) {
         _addSWF: function(id, swf) {
             if (id && swf) {
                 Flash.swfs[id] = swf;
-                Flash.swfs.length += 1;
+                Flash.length += 1;
             }
         },
 
@@ -6403,9 +6403,10 @@ KISSY.add('flash-embed', function(S) {
             for (prop in obj) {
                 data = obj[prop];
 
-                // 字符串，用双引号括起来
+                // 字符串，用双引号括起来 		 [bug]不需要	longzang
                 if (S.isString(data)) {
-                    data = '"' + encode(data) + '"';
+                   //data = '"' + encode(data) + '"';     
+				   data = encode(data);  	//bugfix:	有些值事实上不需要双引号   longzang 2010/8/4
                 }
                 // 其它值，用 stringify 转换后，再转义掉字符串值
                 else {
@@ -6441,11 +6442,16 @@ KISSY.add('flash-embed', function(S) {
  *              修改 Flash.length() 为 Flash.getLength(), 使其看上去更像方法而非属性方式获取
  * 2010/07/29   重构到 kissy 项目中
  * 2010/07/30	增加了标准化配置项方法 _normalize(); 修正 flashvars 转 String 方式为 toFlashVars
+ * 2010/08/04	取消了对内部SWF存储以 "#" 开头。并且修正了会自动替换修改入口在无#时添加其前缀，造成后续应用失效。
+ * 				取消了 F.swfs 的 length属性和 F.len()属性。
+ * 				增加了 F.length，以保证 F.swfs 是个纯池
+ * 				修正了Flashvars 参数中强制字符串带引号造成传入参数不纯粹的bug。
+ * 				
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.1dev
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 5 16:06
 */
 /**
  * Switchable
@@ -7634,9 +7640,9 @@ KISSY.add('accordion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.1dev
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 5 16:06
 */
 /**
  * 提示补全组件

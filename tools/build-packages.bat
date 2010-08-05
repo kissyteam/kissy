@@ -9,6 +9,5 @@ popd
 cd ../build/packages
 call %ANT%
 
-popd
 pause
 exit

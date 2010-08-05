@@ -13,14 +13,12 @@ cd build-xml
 copy /y "cssbase-build.xml" "../../build/cssbase/build.xml"
 copy /y "cssreset-grids-build.xml" "../../build/cssreset-grids/build.xml"
 copy /y "packages-build.xml" "../../build/packages/build.xml"
-popd
 
-cd ../build
+cd ../../build
 for /F %%f in ('dir build.xml /b /s') do (
     cd %%~pf
     call %ANT%
 )
-popd
 
 pause
 exit

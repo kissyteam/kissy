@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.1dev
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 5 16:06
 */
 /**
  * @module kissy
@@ -64,7 +64,7 @@ build time: ${build.time}
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.1dev',
+        version: '1.1.0',
 
         /**
          * Initializes KISSY object.
@@ -937,9 +937,9 @@ KISSY.add('ua', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.1dev
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 5 16:06
 */
 /**
  * @module  dom
@@ -2676,9 +2676,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.1dev
+Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: ${build.time}
+build time: Aug 5 16:06
 */
 /**
  * @module  event
@@ -3261,7 +3261,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Aug 2 23:52
+build time: Aug 5 16:06
 */
 /**
  * @module  node
@@ -3571,7 +3571,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Aug 2 23:52
+build time: Aug 5 16:06
 */
 /**
  * @module  ajax
@@ -3612,7 +3612,7 @@ KISSY.add('ajax', function(S) {
                 fn(node, callback);
             }
 
-            head.appendChild(node);
+            head.insertBefore(node, head.firstChild);
         }
     });
 });
@@ -3627,7 +3627,7 @@ KISSY.add('ajax', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Aug 2 23:52
+build time: Aug 5 16:06
 */
 /**
  * @module  cookie
