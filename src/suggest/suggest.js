@@ -430,6 +430,7 @@ KISSY.add('suggest', function(S, undefined) {
 
             Event.on(content, 'mouseup', function(ev) {
                 var target = ev.target;
+                if(ev.which > 2) return; // 非左键和中键点击
 
                 // 可能点击在 li 的子元素上
                 if (target.nodeName !== LI) {
