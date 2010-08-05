@@ -37,7 +37,7 @@ KISSY.add('ajax', function(S) {
                 fn(node, callback);
             }
 
-            head.appendChild(node);
+            head.insertBefore(node, head.firstChild);
         }
     });
 });

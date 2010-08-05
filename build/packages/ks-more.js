@@ -1850,9 +1850,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.1dev
 MIT Licensed
-build time: Aug 2 23:52
+build time: ${build.time}
 */
 /**
  * 数据延迟加载组件
@@ -1869,7 +1869,7 @@ KISSY.add('datalazyload', function(S, undefined) {
         AREA_DATA_CLS = 'ks-datalazyload',
         CUSTOM = '-custom',
         MANUAL = 'manual',
-        DISPLAY = 'none', DEFAULT = 'default', NONE = 'none',
+        DISPLAY = 'display', DEFAULT = 'default', NONE = 'none',
         SCROLL = 'scroll', RESIZE = 'resize',
 
         defaultConfig = {
@@ -2128,14 +2128,12 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 监控滚动，处理 textarea
          */
         _loadArea: function(area) {
-            var self = this,
-                top = DOM.offset(area).top;
+            var self = this, top,
+                isHidden = DOM.css(area, DISPLAY) === NONE;
 
-            // 注：area 可能处于 display: none 状态，top 返回 0
-            // 这种情况下用 area.parentNode 的 Y 值来判断
-            if (!top && DOM.css(area, DISPLAY) == NONE) {
-                top = DOM.offset(area.parentNode).top;
-            }
+            // 注：area 可能处于 display: none 状态，DOM.offset(area).top 返回 0
+            // 这种情况下用 area.parentNode 的 Y 值来替代
+            top = DOM.offset(isHidden ? area.parentNode : area).top;
 
             if (top <= self.threshold + DOM.scrollTop()) {
                 self._loadAreaData(area.parentNode, area);
@@ -2732,9 +2730,9 @@ KISSY.add('flash-embed', function(S) {
  * 2010/07/30	增加了标准化配置项方法 _normalize(); 修正 flashvars 转 String 方式为 toFlashVars
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.1dev
 MIT Licensed
-build time: Aug 2 23:52
+build time: ${build.time}
 */
 /**
  * Switchable
@@ -3638,9 +3636,7 @@ KISSY.add('switchable-countdown', function(S, undefined) {
                     DOM.removeAttr(masks[host.activeIndex], STYLE);
 
                     // 重新开始倒计时动画
-                    setTimeout(function() {
-                        startAnim();
-                    }, 200);
+                    setTimeout(startAnim, 200);
                 });
             }
 
@@ -3654,21 +3650,20 @@ KISSY.add('switchable-countdown', function(S, undefined) {
             });
 
             // panel 切换完成时，开始 trigger 的倒计时动画
-            host.on('switch', function(ev) {
+            host.on('switch', function() {
                 // 悬停状态，当用户主动触发切换时，不需要倒计时动画
                 if (!host.paused) {
-                    startAnim(ev.currentIndex);
+                    startAnim();
                 }
             });
 
             // 开始第一次
-            startAnim();
+            startAnim(host.activeIndex);
 
             // 开始倒计时动画
-            function startAnim(index) {
-                if (index === undefined) index = host.activeIndex;
+            function startAnim() {
                 stopAnim(); // 开始之前，先确保停止掉之前的
-                anim = new Anim(masks[index], toStyle, interval - .5).run(); // -.5 是为了动画结束时停留一下，使得动画更自然
+                anim = new Anim(masks[host.activeIndex], toStyle, interval - .5).run(); // -.5 是为了动画结束时停留一下，使得动画更自然
             }
 
             // 停止所有动画
@@ -3680,8 +3675,7 @@ KISSY.add('switchable-countdown', function(S, undefined) {
             }
         }
     });
-});
-/**
+});/**
  * Switchable Autorender Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  * @depends  ks-core, json
