@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Aug 5 16:06
 */
 /**
  * @module  dom
@@ -9,7 +9,9 @@ build time: Jul 22 22:54
  */
 KISSY.add('dom', function(S) {
 
-    var DOM = {
+    var NODE_TYPE = 'nodeType',
+
+    DOM = {
 
         /**
          * 是不是 element/text node
@@ -22,14 +24,21 @@ KISSY.add('dom', function(S) {
          * 是不是 element node
          */
         _isElementNode: function(elem) {
-            return elem && elem.nodeType === 1;
+            return elem && elem[NODE_TYPE] === 1;
         },
 
         /**
          * 是不是 text node
          */
         _isTextNode: function(elem) {
-            return elem && elem.nodeType === 3;
+            return elem && elem[NODE_TYPE] === 3;
+        },
+
+        /**
+         * 是不是 KISSY.Node
+         */
+        _isKSNode: function(elem) {
+            return elem && S.Node && elem[NODE_TYPE] === S.Node.TYPE;
         }
     };
 
@@ -41,10 +50,9 @@ KISSY.add('dom', function(S) {
  */
 KISSY.add('selector', function(S, undefined) {
 
-    var doc = document,
-        DOM = S.DOM,
-        SPACE = ' ',
-        ANY = '*',
+    var doc = document, DOM = S.DOM,
+        SPACE = ' ', ANY = '*',
+        GET_DOM_NODE = 'getDOMNode', GET_DOM_NODES = GET_DOM_NODE + 's',
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
@@ -79,7 +87,7 @@ KISSY.add('selector', function(S, undefined) {
 
             // selector 为 #id 是最常见的情况，特殊优化处理
             if (REG_ID.test(selector)) {
-                t = getElementById(selector.slice(1));
+                t = getElementById(selector.slice(1), context);
                 if (t) ret = [t]; // #id 无效时，返回空数组
             }
             // selector 为支持列表中的其它 6 种
@@ -89,8 +97,7 @@ KISSY.add('selector', function(S, undefined) {
                 tag = match[2];
                 cls = match[3];
 
-                if ((context = id ? getElementById(id) : context)) {
-
+                if ((context = id ? getElementById(id, context) : context)) {
                     // #id .cls | #id tag.cls | .cls | tag.cls
                     if (cls) {
                         if (!id || selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
@@ -98,7 +105,7 @@ KISSY.add('selector', function(S, undefined) {
                         }
                         // 处理 #id.cls
                         else {
-                            t = getElementById(id);
+                            t = getElementById(id, context);
                             if(t && DOM.hasClass(t, cls)) {
                                 ret = [t];
                             }
@@ -106,7 +113,7 @@ KISSY.add('selector', function(S, undefined) {
                     }
                     // #id tag | tag
                     else if (tag) { // 排除空白字符串
-                        ret = getElementsByTagName(context, tag);
+                        ret = getElementsByTagName(tag, context);
                     }
                 }
             }
@@ -119,12 +126,16 @@ KISSY.add('selector', function(S, undefined) {
                 error(selector);
             }
         }
+        // 传入的 selector 是 KISSY.Node/NodeList. 始终返回原生 DOM Node
+        else if(selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
+            ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
+        }
         // 传入的 selector 是 Node
         else if (selector && selector.nodeType) {
             ret = [selector];
         }
-        // 传入的 selector 是 NodeList（包括 KISSY.Node/NodeList） 或已是 Array
-        else if (selector && (S.isArray(selector) || selector.item || selector.getDOMNode)) {
+        // 传入的 selector 是 NodeList 或已是 Array
+        else if (selector && (S.isArray(selector) || selector.item)) {
             ret = selector;
         }
         // 传入的 selector 是其它值时，返回空数组
@@ -145,7 +156,7 @@ KISSY.add('selector', function(S, undefined) {
         }
         // 2). context 的第二使用场景是传入 #id
         else if (S.isString(context) && REG_ID.test(context)) {
-            context = getElementById(context.slice(1));
+            context = getElementById(context.slice(1), doc);
             // 注：#id 可能无效，这时获取的 context 为 null
         }
         // 3). context 还可以传入 HTMLElement, 此时无需处理
@@ -157,13 +168,16 @@ KISSY.add('selector', function(S, undefined) {
     }
 
     // query #id
-    function getElementById(id) {
-        return doc.getElementById(id);
+    function getElementById(id, context) {
+        if(context.nodeType !== 9) {
+            context = context.ownerDocument;
+        }
+        return context.getElementById(id);
     }
 
     // query tag
-    function getElementsByTagName(el, tag) {
-        return el.getElementsByTagName(tag);
+    function getElementsByTagName(tag, context) {
+        return context.getElementsByTagName(tag);
     }
     (function() {
         // Check to see if the browser returns only elements
@@ -175,8 +189,8 @@ KISSY.add('selector', function(S, undefined) {
 
         // Make sure no comments are found
         if (div.getElementsByTagName(ANY).length > 0) {
-            getElementsByTagName = function(el, tag) {
-                var ret = el.getElementsByTagName(tag);
+            getElementsByTagName = function(tag, context) {
+                var ret = context.getElementsByTagName(tag);
 
                 if (tag === ANY) {
                     var t = [], i = 0, j = 0, node;
@@ -496,6 +510,10 @@ KISSY.add('dom-attr', function(S, undefined) {
         doc = document,
         docElement = doc.documentElement,
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
+        SELECT = 'select',
+        EMPTY = '',
+        CHECKED = 'checked',
+        STYLE = 'style',
 
         DOM = S.DOM,
         isElementNode = DOM._isElementNode,
@@ -524,8 +542,15 @@ KISSY.add('dom-attr', function(S, undefined) {
          * Sets an attribute for the set of matched elements.
          */
         attr: function(selector, name, val) {
-            if (!(name = S.trim(name))) return;
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.attr(selector, k, name[k]);
+                }
+                return;
+            }
 
+            if (!(name = S.trim(name))) return;
             name = name.toLowerCase();
             name = CUSTOM_ATTRS[name] || name;
 
@@ -563,8 +588,8 @@ KISSY.add('dom-attr', function(S, undefined) {
                     }
                     // 在标准浏览器下，用 getAttribute 获取 style 值
                     // IE7- 下，需要用 cssText 来获取
-                    else if (name === 'style') {
-                        ret = el.style.cssText;
+                    else if (name === STYLE) {
+                        ret = el[STYLE].cssText;
                     }
                 }
 
@@ -579,12 +604,17 @@ KISSY.add('dom-attr', function(S, undefined) {
                     return;
                 }
 
-                if (oldIE && name === 'style') {
-                    el.style.cssText = val;
+                // 不需要加 oldIE 判断，否则 IE8 的 IE7 兼容模式有问题
+                if (name === STYLE) {
+                    el[STYLE].cssText = val;
                 }
                 else {
+                    // checked 属性值，需要通过直接设置才能生效
+                    if(name === CHECKED) {
+                        el[name] = !!val;
+                    }
                     // convert the value to a string (all browsers do this but IE)
-                    el.setAttribute(name, '' + val);
+                    el.setAttribute(name, EMPTY + val);
                 }
             });
         },
@@ -595,7 +625,8 @@ KISSY.add('dom-attr', function(S, undefined) {
         removeAttr: function(selector, name) {
             S.each(S.query(selector), function(el) {
                 if (isElementNode(el)) {
-                    el.removeAttribute(name);
+                    DOM.attr(el, name, EMPTY); // 先置空
+                    el.removeAttribute(name); // 再移除
                 }
             });
         },
@@ -622,7 +653,7 @@ KISSY.add('dom-attr', function(S, undefined) {
                 }
 
                 // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
-                if (nodeNameIs('select', el)) {
+                if (nodeNameIs(SELECT, el)) {
                     var index = el.selectedIndex,
                         options = el.options;
 
@@ -650,15 +681,15 @@ KISSY.add('dom-attr', function(S, undefined) {
                 }
 
                 // 普通元素的 value, 归一化掉 \r
-                return (el.value || '').replace(RE_RETURN, '');
+                return (el.value || EMPTY).replace(RE_RETURN, EMPTY);
             }
 
             // setter
             S.each(S.query(selector), function(el) {
-                if (nodeNameIs('select', el)) {
+                if (nodeNameIs(SELECT, el)) {
                     // 强制转换数值为字符串，以保证下面的 inArray 正常工作
                     if (S.isNumber(value)) {
-                        value += '';
+                        value += EMPTY;
                     }
 
                     var vals = S.makeArray(value),
@@ -691,7 +722,7 @@ KISSY.add('dom-attr', function(S, undefined) {
 
                 // only gets value on supported nodes
                 if (isElementNode(el)) {
-                    return el[TEXT] || '';
+                    return el[TEXT] || EMPTY;
                 }
                 else if (isTextNode(el)) {
                     return el.nodeValue;
@@ -1390,12 +1421,13 @@ KISSY.add('dom-create', function(S, undefined) {
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
         isSupportedNode = DOM._isSupportedNode,
         isElementNode = DOM._isElementNode,
+        isKSNode = DOM._isKSNode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc.createElement(DIV),
         RE_TAG = /<(\w+)/,
-        RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
         RE_SCRIPT = /<script([^>]*)>([\s\S]*?)<\/script>/ig,
+        RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
         RE_SCRIPT_SRC = /\ssrc=(['"])(.*?)\1/i,
         RE_SCRIPT_CHARSET = /\scharset=(['"])(.*?)\1/i;
 
@@ -1405,7 +1437,8 @@ KISSY.add('dom-create', function(S, undefined) {
          * Creates a new HTMLElement using the provided html string.
          */
         create: function(html, props, ownerDoc) {
-            if (isSupportedNode(html)) return html;
+            if (isSupportedNode(html)) return cloneNode(html);
+            if (isKSNode(html)) return cloneNode(html[0]);
             if (!(html = S.trim(html))) return null;
 
             var ret = null, creators = DOM._creators,
@@ -1484,10 +1517,8 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 添加成员到元素中
     function attachProps(elem, props) {
-        if (isElementNode(elem) && props) {
-            for (var p in props) {
-                DOM.attr(elem, p, props[p]);
-            }
+        if (isElementNode(elem) && S.isPlainObject(props)) {
+            DOM.attr(elem, props);
         }
         return elem;
     }
@@ -1515,6 +1546,16 @@ KISSY.add('dom-create', function(S, undefined) {
         return ret;
     }
 
+    function cloneNode(elem) {
+        var ret = elem.cloneNode(true);
+        /*
+         * if this is MSIE 6/7, then we need to copy the innerHTML to
+         * fix a bug related to some form field elements
+         */
+        if (UA.ie < 8) ret.innerHTML = elem.innerHTML;
+        return ret;
+    }
+
     /**
      * Update the innerHTML of this element, optionally searching for and processing scripts.
      * @refer http://www.sencha.com/deploy/dev/docs/source/Element-more.html#method-Ext.Element-update
@@ -1527,7 +1568,9 @@ KISSY.add('dom-create', function(S, undefined) {
             return;
         }
 
-        var id = S.guid('ks-tmp-');
+        var id = S.guid('ks-tmp-'),
+            re_script = new RegExp(RE_SCRIPT); // 防止
+
         html += '<span id="' + id + '"></span>';
 
         // 确保脚本执行时，相关联的 DOM 元素已经准备好
@@ -1536,11 +1579,10 @@ KISSY.add('dom-create', function(S, undefined) {
                 match, attrs, srcMatch, charsetMatch,
                 t, s, text;
 
-            RE_SCRIPT.lastIndex = 0;
-            while ((match = RE_SCRIPT.exec(html))) {
+            re_script.lastIndex = 0;
+            while ((match = re_script.exec(html))) {
                 attrs = match[1];
                 srcMatch = attrs ? attrs.match(RE_SCRIPT_SRC) : false;
-
                 // script via src
                 if (srcMatch && srcMatch[2]) {
                     s = doc.createElement('script');
@@ -1555,7 +1597,6 @@ KISSY.add('dom-create', function(S, undefined) {
                 // inline script
                 else if ((text = match[2]) && text.length > 0) {
                     S.globalEval(text);
-
                 }
             }
 
@@ -1571,7 +1612,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 直接通过 innerHTML 设置 html
     function setHTMLSimple(elem, html) {
-        html = html.replace(RE_SCRIPT, ''); // 过滤掉所有 script
+        html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所有 script
         try {
             elem.innerHTML = html;
         } catch(ex) { // table.innerHTML = html will throw error in ie.
@@ -1667,13 +1708,9 @@ KISSY.add('dom-insertion', function(S) {
          * @return {HTMLElement} The node that was inserted (or null if insert fails)
          */
         insertBefore: function(newNode, refNode) {
-            newNode = DOM.create(newNode);
-            refNode = S.get(refNode);
-
-            if (newNode && refNode && refNode[PARENT_NODE]) {
+            if ((newNode = S.get(newNode)) && (refNode = S.get(refNode)) && refNode[PARENT_NODE]) {
                 refNode[PARENT_NODE].insertBefore(newNode, refNode);
             }
-
             return newNode;
         },
 
@@ -1682,21 +1719,16 @@ KISSY.add('dom-insertion', function(S) {
          * @return {HTMLElement} The node that was inserted (or null if insert fails)
          */
         insertAfter: function(newNode, refNode) {
-            newNode = DOM.create(newNode);
-            refNode = S.get(refNode);
-
-            if (newNode && refNode && refNode[PARENT_NODE]) {
+            if ((newNode = S.get(newNode)) && (refNode = S.get(refNode)) && refNode[PARENT_NODE]) {
                 if (refNode[NEXT_SIBLING]) {
                     refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
                 } else {
                     refNode[PARENT_NODE].appendChild(newNode);
                 }
             }
-
             return newNode;
         }
     });
-
 });
 
 /**

@@ -109,7 +109,7 @@ KISSY.add('switchable', function(S, undefined) {
         delay: .1, // 100ms
 
         activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
-        activeTriggerCls: 'active',
+        activeTriggerCls: 'ks-active',
 
         // 可见视图内有多少个 panels
         steps: 1,

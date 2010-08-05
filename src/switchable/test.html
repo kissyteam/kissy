@@ -15,6 +15,7 @@
 <script src="plugin-effect.js"></script>
 <script src="plugin-circular.js"></script>
 <script src="plugin-lazyload.js"></script>
+<script src="plugin-countdown.js"></script>
 
 <script src="widget-tabs.js"></script>
 <script src="widget-slide.js"></script>
@@ -55,7 +56,7 @@
         padding-top: 8px;
         cursor: pointer;
     }
-    #demo1 .ks-switchable-nav li.active { background-position: 0 -40px; cursor: default; }
+    #demo1 .ks-switchable-nav li.ks-active { background-position: 0 -40px; cursor: default; }
     #demo1 .ks-switchable-content {
         position: relative;
         height: 120px;
@@ -65,7 +66,7 @@
 </style>
 <div id="demo1" class="section">
     <ul class="ks-switchable-nav">
-        <li class="active">标题 A</li>
+        <li class="ks-active">标题 A</li>
         <li>标题 B</li>
         <li>标题 C</li>
         <li>标题 D</li>
@@ -95,9 +96,7 @@
 </div>
 <script>
     KISSY.ready(function(S) {
-        var tabs = new S.Tabs('#demo1', {
-            lazyDataType: 'textarea-data'
-        });
+        var tabs = new S.Tabs('#demo1');
 
         tabs.on('beforeSwitch', function(ev) {
             var index = ev.toIndex;
@@ -125,16 +124,32 @@
         text-align: center;
         cursor: pointer;
     }
-    #demo2 .ks-switchable-nav li.active {
+    #demo2 .ks-switchable-nav li.ks-active {
         width: 18px;
         height: 18px;
         line-height: 18px;
         margin-top: -1px;
         color: #FFF;
-        background-color: #FF9415;
+        background-color: #FFB442;
         font-weight: bold;
     }
     #demo2 .ks-switchable-content li { height: 150px; width: 470px; overflow: hidden; }
+    /* for countdown plugin */
+    #demo2 .ks-switchable-nav li,
+    #demo2 .ks-switchable-trigger-content {
+        position: relative;
+    }
+    #demo2 .ks-switchable-trigger-mask {
+        position: absolute;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background-color: #FF9415;
+        visibility: hidden
+    }
+    #demo2 .ks-active .ks-switchable-trigger-mask {
+        visibility: visible
+    }
 </style>
 <div id="demo2" class="section loading">
     <ol class="ks-switchable-content">
@@ -161,7 +176,9 @@
     KISSY.ready(function(S) {
         S.Slide('#demo2', {
             effect: 'scrolly',
-            easing: 'easeOutStrong'
+            easing: 'easeOutStrong',
+            countdown: true,
+            countdownFromStyle: 'width:18px'
         });
     });
 </script>
@@ -269,7 +286,7 @@
         font-size: 18px;
         cursor: pointer;
     }
-    .scrollable .ks-switchable-nav li.active {
+    .scrollable .ks-switchable-nav li.ks-active {
         color: #C8282B;
     }
 
@@ -305,20 +322,20 @@
             <img alt="" src="http://farm1.static.flickr.com/28/66523124_b468cf4978_t.jpg"/>
             <img alt="" src="http://farm1.static.flickr.com/164/399223606_b875ddf797_t.jpg"/>
             <!-- 5-10 -->
-            <img alt="" data-lazyload-src-custom="http://farm1.static.flickr.com/163/399223609_db47d35b7c_t.jpg"/>
-            <img alt="" data-lazyload-src-custom="http://farm1.static.flickr.com/135/321464104_c010dbf34c_t.jpg"/>
-            <img alt="" data-lazyload-src-custom="http://farm1.static.flickr.com/40/117346184_9760f3aabc_t.jpg"/>
-            <img alt="" data-lazyload-src-custom="http://farm1.static.flickr.com/153/399232237_6928a527c1_t.jpg"/>
-            <img alt="" data-lazyload-src-custom="http://farm1.static.flickr.com/50/117346182_1fded507fa_t.jpg"/>
+            <img alt="" data-ks-lazyload-custom="http://farm1.static.flickr.com/163/399223609_db47d35b7c_t.jpg"/>
+            <img alt="" data-ks-lazyload-custom="http://farm1.static.flickr.com/135/321464104_c010dbf34c_t.jpg"/>
+            <img alt="" data-ks-lazyload-custom="http://farm1.static.flickr.com/40/117346184_9760f3aabc_t.jpg"/>
+            <img alt="" data-ks-lazyload-custom="http://farm1.static.flickr.com/153/399232237_6928a527c1_t.jpg"/>
+            <img alt="" data-ks-lazyload-custom="http://farm1.static.flickr.com/50/117346182_1fded507fa_t.jpg"/>
             <!-- 10-15 -->
-            <img alt="" data-lazyload-src-custom="http://farm4.static.flickr.com/3629/3323896446_3b87a8bf75_t.jpg"/>
-            <img alt="" data-lazyload-src-custom="http://farm4.static.flickr.com/3023/3323897466_e61624f6de_t.jpg"/>
-            <img alt="" data-lazyload-src-custom="http://farm4.static.flickr.com/3650/3323058611_d35c894fab_t.jpg"/>
-            <img alt="" data-lazyload-src-custom="http://farm4.static.flickr.com/3635/3323893254_3183671257_t.jpg"/>
-            <img alt="" data-lazyload-src-custom="http://farm4.static.flickr.com/3624/3323893148_8318838fbd_t.jpg"/>
+            <img alt="" data-ks-lazyload-custom="http://farm4.static.flickr.com/3629/3323896446_3b87a8bf75_t.jpg"/>
+            <img alt="" data-ks-lazyload-custom="http://farm4.static.flickr.com/3023/3323897466_e61624f6de_t.jpg"/>
+            <img alt="" data-ks-lazyload-custom="http://farm4.static.flickr.com/3650/3323058611_d35c894fab_t.jpg"/>
+            <img alt="" data-ks-lazyload-custom="http://farm4.static.flickr.com/3635/3323893254_3183671257_t.jpg"/>
+            <img alt="" data-ks-lazyload-custom="http://farm4.static.flickr.com/3624/3323893148_8318838fbd_t.jpg"/>
         </div>
         <ul class="ks-switchable-nav">
-            <li class="active">&bull;</li>
+            <li class="ks-active">&bull;</li>
             <li>&bull;</li>
             <li>&bull;</li>
         </ul>
@@ -469,13 +486,13 @@
     #accordion1 .ks-switchable-trigger h3{float: left; width: 100px; margin-left: 5px; }
     #accordion1 .ks-switchable-panel{height:150px;padding:3px 10px;border-bottom:1px solid #ddd;}
     #accordion1 .ks-icon{float:left;width:12px;height:12px;overflow:hidden;margin-top:2px;font-size:0;vertical-align:middle;background:url(assets/accordion-sprite.png) no-repeat 0 0;}
-    #accordion1 .active .ks-icon{background-position:-20px 0;}
+    #accordion1 .ks-active .ks-icon{background-position:-20px 0;}
     #accordion1 .last-trigger { border-bottom-width: 0 }
-    #accordion1 .active { border-bottom-width: 1px }
+    #accordion1 .ks-active { border-bottom-width: 1px }
     #accordion1 .last-panel { border-bottom: none }
 </style>
 <div id="accordion1" class="section">
-    <div class="ks-switchable-trigger active"><i class="ks-icon"></i><h3>标题A</h3></div>
+    <div class="ks-switchable-trigger ks-active"><i class="ks-icon"></i><h3>标题A</h3></div>
     <div class="ks-switchable-panel">
         1、支持鼠标滑过和点击触点两种方式<br/>
         2、支持同时展开多个面板
@@ -489,10 +506,7 @@
 </div>
 <script>
     KISSY.ready(function(S) {
-        S.Accordion('#accordion1', {
-            markupType: 1,
-            multiple: false
-        });
+        S.Accordion('#accordion1');
     });
 </script>
 <p class="code-switch">显示源码</p>

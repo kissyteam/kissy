@@ -10,14 +10,13 @@
     pre { padding: 5px 20px; }
 </style>
 </head>
-<body>
-<div id="page" class="w866">
-    <div id="header">
-        <a class="logo" href="index.html"><img src="assets/logo.png" alt="KISSY" width="138" height="74" /></a>
-    </div>
-    <div id="content" class="layout">
-        <h3>组件开发流程</h3>
-    <pre>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="index.html"><img src="assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+</div>
+<div id="content" class="layout">
+<h3>组件开发流程</h3>
+<pre>
 为了让大家都能尽快参与到 kissy 的开发中来，下面总结一下组件开发流程：
 
 1. 当你看到某些重复代码而导致胃里不舒服，抑或想到某个好点子，想整理开发成一个通用组件时，请继续往下看。
@@ -34,49 +33,48 @@
 
 
 6. 将调研文档通过 all@kissyui.com 告诉整个团队，团队会就你的调研和 public api 给出建议，甚至会召
-   开会议来讨论。
+开会议来讨论。
 
 7. 讨论确定好功能和 public api 后，开始写代码。建议的文件列表：
-      filename.js
-      filename.css
-      test.html
-      build.properties
-      build.xml
+  filename.js
+  filename.css
+  test.html
+  build.properties
+  build.xml
 
 8. 写代码时，建议从 test.html 开始，测试驱动能帮助我们写出更健壮的代码。
 
 9. 完成后，赶紧发邮件到 all@kissyui.com, 让大家都和你一块高兴，分享喜悦，同时让大家帮你 review code.
 
 10. code review + 修改后（一般要经过几个轮回），就可以根据组件本身的通用性，决定放入 kissy-gallery
-    或 kissy 的 src 目录正式发布了。
+或 kissy 的 src 目录正式发布了。
 
 啰啰嗦嗦，希望大家认可这种开发方式，或者提出更好的方式。最后总结下：
 
-    第一阶段（预研）：想法 -> 取名 -> 建目录 -> 调研  -> 讨论
-    第二阶段（开发）：写代码  -> 测试驱动  -> review -> 重构 -> 正式发布
+第一阶段（预研）：想法 -> 取名 -> 建目录 -> 调研  -> 讨论
+第二阶段（开发）：写代码  -> 测试驱动  -> review -> 重构 -> 正式发布
 
 请大家尽量遵循以上流程来开发组件。
 
-        
+
 对组件的要求：
 
-    1. 功能上，遵循8/2原则，用 20% 的代码，开发出 80% 的常用功能即可
-    2. 代码上，精简小巧，越小越好
-    3. 扩展上，适度灵活，提供扩展接口，让用户可以通过扩展，完成不常用的 20% 功能
+1. 功能上，遵循8/2原则，用 20% 的代码，开发出 80% 的常用功能即可
+2. 代码上，精简小巧，越小越好
+3. 扩展上，适度灵活，提供扩展接口，让用户可以通过扩展，完成不常用的 20% 功能
 
 调研的目的是：
 
-    1. 确定市面上同类组件都有哪些功能，列表出来
-    2. 分析同类组件的优势和不足，比较 public api
-    3. 确定组件要实现的功能
+1. 确定市面上同类组件都有哪些功能，列表出来
+2. 分析同类组件的优势和不足，比较 public api
+3. 确定组件要实现的功能
 
 调研结束后，就能确定好 what to do
 接下来，解决  how to do, 然后 do it
-    </pre>
-    </div>
-    <div id="footer">
-        <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
-    </div>
+</pre>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
 </div>
 </body>
 </html>

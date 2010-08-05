@@ -21,15 +21,7 @@ KISSY.add('ajax', function(S) {
             node.onload = callback;
         };
 
-    S.Ajax = {
-
-        /**
-         * Sends an HTTP request to a remote server.
-         */
-        request: function(/*url, options*/) {
-            S.error('not implemented'); // TODO
-        },
-
+    S.mix(S, {
         /**
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
          */
@@ -45,9 +37,9 @@ KISSY.add('ajax', function(S) {
                 fn(node, callback);
             }
 
-            head.appendChild(node);
+            head.insertBefore(node, head.firstChild);
         }
-    };
+    });
 });
 
 /**

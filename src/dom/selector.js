@@ -4,10 +4,9 @@
  */
 KISSY.add('selector', function(S, undefined) {
 
-    var doc = document,
-        DOM = S.DOM,
-        SPACE = ' ',
-        ANY = '*',
+    var doc = document, DOM = S.DOM,
+        SPACE = ' ', ANY = '*',
+        GET_DOM_NODE = 'getDOMNode', GET_DOM_NODES = GET_DOM_NODE + 's',
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
@@ -42,7 +41,7 @@ KISSY.add('selector', function(S, undefined) {
 
             // selector 为 #id 是最常见的情况，特殊优化处理
             if (REG_ID.test(selector)) {
-                t = getElementById(selector.slice(1));
+                t = getElementById(selector.slice(1), context);
                 if (t) ret = [t]; // #id 无效时，返回空数组
             }
             // selector 为支持列表中的其它 6 种
@@ -52,8 +51,7 @@ KISSY.add('selector', function(S, undefined) {
                 tag = match[2];
                 cls = match[3];
 
-                if ((context = id ? getElementById(id) : context)) {
-
+                if ((context = id ? getElementById(id, context) : context)) {
                     // #id .cls | #id tag.cls | .cls | tag.cls
                     if (cls) {
                         if (!id || selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
@@ -61,7 +59,7 @@ KISSY.add('selector', function(S, undefined) {
                         }
                         // 处理 #id.cls
                         else {
-                            t = getElementById(id);
+                            t = getElementById(id, context);
                             if(t && DOM.hasClass(t, cls)) {
                                 ret = [t];
                             }
@@ -69,7 +67,7 @@ KISSY.add('selector', function(S, undefined) {
                     }
                     // #id tag | tag
                     else if (tag) { // 排除空白字符串
-                        ret = getElementsByTagName(context, tag);
+                        ret = getElementsByTagName(tag, context);
                     }
                 }
             }
@@ -82,12 +80,16 @@ KISSY.add('selector', function(S, undefined) {
                 error(selector);
             }
         }
+        // 传入的 selector 是 KISSY.Node/NodeList. 始终返回原生 DOM Node
+        else if(selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
+            ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
+        }
         // 传入的 selector 是 Node
         else if (selector && selector.nodeType) {
             ret = [selector];
         }
-        // 传入的 selector 是 NodeList（包括 KISSY.Node/NodeList） 或已是 Array
-        else if (selector && (S.isArray(selector) || selector.item || selector.getDOMNode)) {
+        // 传入的 selector 是 NodeList 或已是 Array
+        else if (selector && (S.isArray(selector) || selector.item)) {
             ret = selector;
         }
         // 传入的 selector 是其它值时，返回空数组
@@ -108,7 +110,7 @@ KISSY.add('selector', function(S, undefined) {
         }
         // 2). context 的第二使用场景是传入 #id
         else if (S.isString(context) && REG_ID.test(context)) {
-            context = getElementById(context.slice(1));
+            context = getElementById(context.slice(1), doc);
             // 注：#id 可能无效，这时获取的 context 为 null
         }
         // 3). context 还可以传入 HTMLElement, 此时无需处理
@@ -120,13 +122,16 @@ KISSY.add('selector', function(S, undefined) {
     }
 
     // query #id
-    function getElementById(id) {
-        return doc.getElementById(id);
+    function getElementById(id, context) {
+        if(context.nodeType !== 9) {
+            context = context.ownerDocument;
+        }
+        return context.getElementById(id);
     }
 
     // query tag
-    function getElementsByTagName(el, tag) {
-        return el.getElementsByTagName(tag);
+    function getElementsByTagName(tag, context) {
+        return context.getElementsByTagName(tag);
     }
     (function() {
         // Check to see if the browser returns only elements
@@ -138,8 +143,8 @@ KISSY.add('selector', function(S, undefined) {
 
         // Make sure no comments are found
         if (div.getElementsByTagName(ANY).length > 0) {
-            getElementsByTagName = function(el, tag) {
-                var ret = el.getElementsByTagName(tag);
+            getElementsByTagName = function(tag, context) {
+                var ret = context.getElementsByTagName(tag);
 
                 if (tag === ANY) {
                     var t = [], i = 0, j = 0, node;

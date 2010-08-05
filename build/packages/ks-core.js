@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Aug 5 16:06
 */
 /**
  * @module kissy
@@ -436,10 +436,10 @@ build time: Jul 22 22:54
  *
  */
 /**
- * @module  kissy-lang
+ * @module  lang
  * @author  lifesinger@gmail.com
  */
-KISSY.add('kissy-lang', function(S, undefined) {
+KISSY.add('lang', function(S, undefined) {
 
     var win = window, doc = document, loc = location,
         AP = Array.prototype,
@@ -449,7 +449,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
         encode = encodeURIComponent,
         decode = decodeURIComponent,
         HAS_OWN_PROPERTY = 'hasOwnProperty',
-        SEP = '&',
+        EMPTY = '', SEP = '&',
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
         REG_NOT_WHITE = /\S/;
@@ -525,11 +525,24 @@ KISSY.add('kissy-lang', function(S, undefined) {
          */
         trim: trim ?
             function(str) {
-                return (str == undefined) ? '' : trim.call(str);
+                return (str == undefined) ? EMPTY : trim.call(str);
             } :
             function(str) {
-                return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
+                return (str == undefined) ? EMPTY : str.toString().replace(REG_TRIM, EMPTY);
             },
+
+        /**
+         * Substitutes keywords in a string using an object/array.
+         * Removes undefined keywords and ignores escaped keywords.
+         */
+        substitute: function(str, o, regexp) {
+            if(!S.isString(str) || !S.isPlainObject(o)) return str;
+
+            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
+                if (match.charAt(0) === '\\') return match.slice(1);
+                return (o[name] !== undefined) ? o[name] : EMPTY;
+            });
+        },
 
         /**
          * Executes the supplied function on each item in the array.
@@ -630,7 +643,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          */
         param: function(o, sep) {
             // 非 plain object, 直接返回空
-            if (!S.isPlainObject(o)) return '';
+            if (!S.isPlainObject(o)) return EMPTY;
             sep = sep || SEP;
 
             var buf = [], key, val;
@@ -640,20 +653,20 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
                 // val 为有效的非数组值
                 if (isValidParamValue(val)) {
-                    buf.push(key, '=', encode(val + ''), sep);
+                    buf.push(key, '=', encode(val + EMPTY), sep);
                 }
                 // val 为非空数组
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, '[]=', encode(val[i] + ''), sep);
+                            buf.push(key, '[]=', encode(val[i] + EMPTY), sep);
                         }
                     }
                 }
                 // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
             }
             buf.pop();
-            return buf.join('');
+            return buf.join(EMPTY);
         },
 
         /**
@@ -679,9 +692,9 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
                 // pair[1] 可能包含 gbk 编码的中文，而 decodeURIComponent 仅能处理 utf-8 编码的中文，否则报错
                 try {
-                    val = decode(pair[1] || '');
+                    val = decode(pair[1] || EMPTY);
                 } catch (ex) {
-                    val = pair[1] || '';
+                    val = pair[1] || EMPTY;
                 }
 
                 if ((m = key.match(REG_ARR_KEY)) && m[1]) {
@@ -818,13 +831,14 @@ KISSY.add('kissy-lang', function(S, undefined) {
  *
  * TODO:
  *   - 分析 jq 的 isPlainObject 对 constructor 等细节处理
+ *   - unparam 对 false, null, undefined 等值的还原？需不需要？歧义性
  *
  */
 /**
- * @module  kissy-ua
+ * @module  ua
  * @author  lifesinger@gmail.com
  */
-KISSY.add('kissy-ua', function(S) {
+KISSY.add('ua', function(S) {
 
     var ua = navigator.userAgent,
         m,
@@ -903,6 +917,7 @@ KISSY.add('kissy-ua', function(S) {
         }
     }
 
+    o._numberify = numberify;
     S.UA = o;
 });
 
@@ -919,13 +934,12 @@ KISSY.add('kissy-ua', function(S) {
  *
  * TODO:
  *  - test mobile
- *  - 是否需要加入 maxthon 等国内浏览器嗅探？
- * 
+ *
  */
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Aug 5 16:06
 */
 /**
  * @module  dom
@@ -933,7 +947,9 @@ build time: Jul 22 22:54
  */
 KISSY.add('dom', function(S) {
 
-    var DOM = {
+    var NODE_TYPE = 'nodeType',
+
+    DOM = {
 
         /**
          * 是不是 element/text node
@@ -946,14 +962,21 @@ KISSY.add('dom', function(S) {
          * 是不是 element node
          */
         _isElementNode: function(elem) {
-            return elem && elem.nodeType === 1;
+            return elem && elem[NODE_TYPE] === 1;
         },
 
         /**
          * 是不是 text node
          */
         _isTextNode: function(elem) {
-            return elem && elem.nodeType === 3;
+            return elem && elem[NODE_TYPE] === 3;
+        },
+
+        /**
+         * 是不是 KISSY.Node
+         */
+        _isKSNode: function(elem) {
+            return elem && S.Node && elem[NODE_TYPE] === S.Node.TYPE;
         }
     };
 
@@ -965,10 +988,9 @@ KISSY.add('dom', function(S) {
  */
 KISSY.add('selector', function(S, undefined) {
 
-    var doc = document,
-        DOM = S.DOM,
-        SPACE = ' ',
-        ANY = '*',
+    var doc = document, DOM = S.DOM,
+        SPACE = ' ', ANY = '*',
+        GET_DOM_NODE = 'getDOMNode', GET_DOM_NODES = GET_DOM_NODE + 's',
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
@@ -1003,7 +1025,7 @@ KISSY.add('selector', function(S, undefined) {
 
             // selector 为 #id 是最常见的情况，特殊优化处理
             if (REG_ID.test(selector)) {
-                t = getElementById(selector.slice(1));
+                t = getElementById(selector.slice(1), context);
                 if (t) ret = [t]; // #id 无效时，返回空数组
             }
             // selector 为支持列表中的其它 6 种
@@ -1013,8 +1035,7 @@ KISSY.add('selector', function(S, undefined) {
                 tag = match[2];
                 cls = match[3];
 
-                if ((context = id ? getElementById(id) : context)) {
-
+                if ((context = id ? getElementById(id, context) : context)) {
                     // #id .cls | #id tag.cls | .cls | tag.cls
                     if (cls) {
                         if (!id || selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
@@ -1022,7 +1043,7 @@ KISSY.add('selector', function(S, undefined) {
                         }
                         // 处理 #id.cls
                         else {
-                            t = getElementById(id);
+                            t = getElementById(id, context);
                             if(t && DOM.hasClass(t, cls)) {
                                 ret = [t];
                             }
@@ -1030,7 +1051,7 @@ KISSY.add('selector', function(S, undefined) {
                     }
                     // #id tag | tag
                     else if (tag) { // 排除空白字符串
-                        ret = getElementsByTagName(context, tag);
+                        ret = getElementsByTagName(tag, context);
                     }
                 }
             }
@@ -1043,12 +1064,16 @@ KISSY.add('selector', function(S, undefined) {
                 error(selector);
             }
         }
+        // 传入的 selector 是 KISSY.Node/NodeList. 始终返回原生 DOM Node
+        else if(selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
+            ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
+        }
         // 传入的 selector 是 Node
         else if (selector && selector.nodeType) {
             ret = [selector];
         }
-        // 传入的 selector 是 NodeList（包括 KISSY.Node/NodeList） 或已是 Array
-        else if (selector && (S.isArray(selector) || selector.item || selector.getDOMNode)) {
+        // 传入的 selector 是 NodeList 或已是 Array
+        else if (selector && (S.isArray(selector) || selector.item)) {
             ret = selector;
         }
         // 传入的 selector 是其它值时，返回空数组
@@ -1069,7 +1094,7 @@ KISSY.add('selector', function(S, undefined) {
         }
         // 2). context 的第二使用场景是传入 #id
         else if (S.isString(context) && REG_ID.test(context)) {
-            context = getElementById(context.slice(1));
+            context = getElementById(context.slice(1), doc);
             // 注：#id 可能无效，这时获取的 context 为 null
         }
         // 3). context 还可以传入 HTMLElement, 此时无需处理
@@ -1081,13 +1106,16 @@ KISSY.add('selector', function(S, undefined) {
     }
 
     // query #id
-    function getElementById(id) {
-        return doc.getElementById(id);
+    function getElementById(id, context) {
+        if(context.nodeType !== 9) {
+            context = context.ownerDocument;
+        }
+        return context.getElementById(id);
     }
 
     // query tag
-    function getElementsByTagName(el, tag) {
-        return el.getElementsByTagName(tag);
+    function getElementsByTagName(tag, context) {
+        return context.getElementsByTagName(tag);
     }
     (function() {
         // Check to see if the browser returns only elements
@@ -1099,8 +1127,8 @@ KISSY.add('selector', function(S, undefined) {
 
         // Make sure no comments are found
         if (div.getElementsByTagName(ANY).length > 0) {
-            getElementsByTagName = function(el, tag) {
-                var ret = el.getElementsByTagName(tag);
+            getElementsByTagName = function(tag, context) {
+                var ret = context.getElementsByTagName(tag);
 
                 if (tag === ANY) {
                     var t = [], i = 0, j = 0, node;
@@ -1420,6 +1448,10 @@ KISSY.add('dom-attr', function(S, undefined) {
         doc = document,
         docElement = doc.documentElement,
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
+        SELECT = 'select',
+        EMPTY = '',
+        CHECKED = 'checked',
+        STYLE = 'style',
 
         DOM = S.DOM,
         isElementNode = DOM._isElementNode,
@@ -1448,8 +1480,15 @@ KISSY.add('dom-attr', function(S, undefined) {
          * Sets an attribute for the set of matched elements.
          */
         attr: function(selector, name, val) {
-            if (!(name = S.trim(name))) return;
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.attr(selector, k, name[k]);
+                }
+                return;
+            }
 
+            if (!(name = S.trim(name))) return;
             name = name.toLowerCase();
             name = CUSTOM_ATTRS[name] || name;
 
@@ -1487,8 +1526,8 @@ KISSY.add('dom-attr', function(S, undefined) {
                     }
                     // 在标准浏览器下，用 getAttribute 获取 style 值
                     // IE7- 下，需要用 cssText 来获取
-                    else if (name === 'style') {
-                        ret = el.style.cssText;
+                    else if (name === STYLE) {
+                        ret = el[STYLE].cssText;
                     }
                 }
 
@@ -1503,12 +1542,17 @@ KISSY.add('dom-attr', function(S, undefined) {
                     return;
                 }
 
-                if (oldIE && name === 'style') {
-                    el.style.cssText = val;
+                // 不需要加 oldIE 判断，否则 IE8 的 IE7 兼容模式有问题
+                if (name === STYLE) {
+                    el[STYLE].cssText = val;
                 }
                 else {
+                    // checked 属性值，需要通过直接设置才能生效
+                    if(name === CHECKED) {
+                        el[name] = !!val;
+                    }
                     // convert the value to a string (all browsers do this but IE)
-                    el.setAttribute(name, '' + val);
+                    el.setAttribute(name, EMPTY + val);
                 }
             });
         },
@@ -1519,7 +1563,8 @@ KISSY.add('dom-attr', function(S, undefined) {
         removeAttr: function(selector, name) {
             S.each(S.query(selector), function(el) {
                 if (isElementNode(el)) {
-                    el.removeAttribute(name);
+                    DOM.attr(el, name, EMPTY); // 先置空
+                    el.removeAttribute(name); // 再移除
                 }
             });
         },
@@ -1546,7 +1591,7 @@ KISSY.add('dom-attr', function(S, undefined) {
                 }
 
                 // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
-                if (nodeNameIs('select', el)) {
+                if (nodeNameIs(SELECT, el)) {
                     var index = el.selectedIndex,
                         options = el.options;
 
@@ -1574,15 +1619,15 @@ KISSY.add('dom-attr', function(S, undefined) {
                 }
 
                 // 普通元素的 value, 归一化掉 \r
-                return (el.value || '').replace(RE_RETURN, '');
+                return (el.value || EMPTY).replace(RE_RETURN, EMPTY);
             }
 
             // setter
             S.each(S.query(selector), function(el) {
-                if (nodeNameIs('select', el)) {
+                if (nodeNameIs(SELECT, el)) {
                     // 强制转换数值为字符串，以保证下面的 inArray 正常工作
                     if (S.isNumber(value)) {
-                        value += '';
+                        value += EMPTY;
                     }
 
                     var vals = S.makeArray(value),
@@ -1615,7 +1660,7 @@ KISSY.add('dom-attr', function(S, undefined) {
 
                 // only gets value on supported nodes
                 if (isElementNode(el)) {
-                    return el[TEXT] || '';
+                    return el[TEXT] || EMPTY;
                 }
                 else if (isTextNode(el)) {
                     return el.nodeValue;
@@ -2314,12 +2359,13 @@ KISSY.add('dom-create', function(S, undefined) {
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
         isSupportedNode = DOM._isSupportedNode,
         isElementNode = DOM._isElementNode,
+        isKSNode = DOM._isKSNode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc.createElement(DIV),
         RE_TAG = /<(\w+)/,
-        RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
         RE_SCRIPT = /<script([^>]*)>([\s\S]*?)<\/script>/ig,
+        RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
         RE_SCRIPT_SRC = /\ssrc=(['"])(.*?)\1/i,
         RE_SCRIPT_CHARSET = /\scharset=(['"])(.*?)\1/i;
 
@@ -2329,7 +2375,8 @@ KISSY.add('dom-create', function(S, undefined) {
          * Creates a new HTMLElement using the provided html string.
          */
         create: function(html, props, ownerDoc) {
-            if (isSupportedNode(html)) return html;
+            if (isSupportedNode(html)) return cloneNode(html);
+            if (isKSNode(html)) return cloneNode(html[0]);
             if (!(html = S.trim(html))) return null;
 
             var ret = null, creators = DOM._creators,
@@ -2408,10 +2455,8 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 添加成员到元素中
     function attachProps(elem, props) {
-        if (isElementNode(elem) && props) {
-            for (var p in props) {
-                DOM.attr(elem, p, props[p]);
-            }
+        if (isElementNode(elem) && S.isPlainObject(props)) {
+            DOM.attr(elem, props);
         }
         return elem;
     }
@@ -2439,6 +2484,16 @@ KISSY.add('dom-create', function(S, undefined) {
         return ret;
     }
 
+    function cloneNode(elem) {
+        var ret = elem.cloneNode(true);
+        /*
+         * if this is MSIE 6/7, then we need to copy the innerHTML to
+         * fix a bug related to some form field elements
+         */
+        if (UA.ie < 8) ret.innerHTML = elem.innerHTML;
+        return ret;
+    }
+
     /**
      * Update the innerHTML of this element, optionally searching for and processing scripts.
      * @refer http://www.sencha.com/deploy/dev/docs/source/Element-more.html#method-Ext.Element-update
@@ -2451,7 +2506,9 @@ KISSY.add('dom-create', function(S, undefined) {
             return;
         }
 
-        var id = S.guid('ks-tmp-');
+        var id = S.guid('ks-tmp-'),
+            re_script = new RegExp(RE_SCRIPT); // 防止
+
         html += '<span id="' + id + '"></span>';
 
         // 确保脚本执行时，相关联的 DOM 元素已经准备好
@@ -2460,11 +2517,10 @@ KISSY.add('dom-create', function(S, undefined) {
                 match, attrs, srcMatch, charsetMatch,
                 t, s, text;
 
-            RE_SCRIPT.lastIndex = 0;
-            while ((match = RE_SCRIPT.exec(html))) {
+            re_script.lastIndex = 0;
+            while ((match = re_script.exec(html))) {
                 attrs = match[1];
                 srcMatch = attrs ? attrs.match(RE_SCRIPT_SRC) : false;
-
                 // script via src
                 if (srcMatch && srcMatch[2]) {
                     s = doc.createElement('script');
@@ -2479,7 +2535,6 @@ KISSY.add('dom-create', function(S, undefined) {
                 // inline script
                 else if ((text = match[2]) && text.length > 0) {
                     S.globalEval(text);
-
                 }
             }
 
@@ -2495,7 +2550,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 直接通过 innerHTML 设置 html
     function setHTMLSimple(elem, html) {
-        html = html.replace(RE_SCRIPT, ''); // 过滤掉所有 script
+        html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所有 script
         try {
             elem.innerHTML = html;
         } catch(ex) { // table.innerHTML = html will throw error in ie.
@@ -2591,13 +2646,9 @@ KISSY.add('dom-insertion', function(S) {
          * @return {HTMLElement} The node that was inserted (or null if insert fails)
          */
         insertBefore: function(newNode, refNode) {
-            newNode = DOM.create(newNode);
-            refNode = S.get(refNode);
-
-            if (newNode && refNode && refNode[PARENT_NODE]) {
+            if ((newNode = S.get(newNode)) && (refNode = S.get(refNode)) && refNode[PARENT_NODE]) {
                 refNode[PARENT_NODE].insertBefore(newNode, refNode);
             }
-
             return newNode;
         },
 
@@ -2606,21 +2657,16 @@ KISSY.add('dom-insertion', function(S) {
          * @return {HTMLElement} The node that was inserted (or null if insert fails)
          */
         insertAfter: function(newNode, refNode) {
-            newNode = DOM.create(newNode);
-            refNode = S.get(refNode);
-
-            if (newNode && refNode && refNode[PARENT_NODE]) {
+            if ((newNode = S.get(newNode)) && (refNode = S.get(refNode)) && refNode[PARENT_NODE]) {
                 if (refNode[NEXT_SIBLING]) {
                     refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
                 } else {
                     refNode[PARENT_NODE].appendChild(newNode);
                 }
             }
-
             return newNode;
         }
     });
-
 });
 
 /**
@@ -2630,9 +2676,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Jul 22 22:54
+build time: ${build.time}
 */
 /**
  * @module  event
@@ -2719,7 +2765,7 @@ KISSY.add('event', function(S, undefined) {
                         special.setup(event);
                     }
 
-                    return (special.handle || Event._handle)(target, event, events[type].listeners, scope);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners);
                 };
 
                 events[type] = {
@@ -2736,7 +2782,7 @@ KISSY.add('event', function(S, undefined) {
             }
 
             // 增加 listener
-            events[type].listeners.push(fn);
+            events[type].listeners.push({fn: fn, scope: scope});
         },
 
         /**
@@ -2791,18 +2837,18 @@ KISSY.add('event', function(S, undefined) {
             }
         },
 
-        _handle: function(target, event, listeners, scope) {
+        _handle: function(target, event, listeners) {
             /* As some listeners may remove themselves from the
              event, the original array length is dynamic. So,
              let's make a copy of all listeners, so we are
              sure we'll call all of them.*/
             listeners = listeners.slice(0);
 
-            var ret, i = 0, len = listeners.length;
-            scope = scope || target;
+            var ret, i = 0, len = listeners.length, listener;
 
             for (; i < len; ++i) {
-                ret = listeners[i].call(scope, event);
+                listener = listeners[i];
+                ret = listener.fn.call(listener.scope || target, event);
 
                 // 自定义事件对象，可以用 return false 来立刻停止后续监听函数
                 // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡
@@ -2942,12 +2988,14 @@ KISSY.add('event-object', function(S, undefined) {
         self.fixed = true;
     }
 
-    S.mix(EventObject.prototype, {
+    S.augment(EventObject, {
 
         _fix: function() {
             var self = this,
                 originalEvent = self.originalEvent,
-                l = props.length, prop;
+                l = props.length, prop,
+                ct = self.currentTarget,
+                ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
 
             // clone properties of the original event object
             while (l) {
@@ -2960,7 +3008,7 @@ KISSY.add('event-object', function(S, undefined) {
                 self.target = self.srcElement || doc; // srcElement might not be defined either
             }
 
-        // check if target is a textnode (safari)
+            // check if target is a textnode (safari)
             if (self.target.nodeType === 3) {
                 self.target = self.target.parentNode;
             }
@@ -2972,7 +3020,7 @@ KISSY.add('event-object', function(S, undefined) {
 
             // calculate pageX/Y if missing and clientX/Y available
             if (self.pageX === undefined && self.clientX !== undefined) {
-                var docEl = doc.documentElement, bd = doc.body;
+                var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
                 self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
                 self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
             }
@@ -3105,14 +3153,18 @@ KISSY.add('event-target', function(S, undefined) {
             if(t && S.isFunction(t.handle)) {
                 return t.handle(undefined, eventData);
             }
+
+            return this; // chain
         },
 
         on: function(type, fn, scope) {
             Event.add(this, type, fn, scope);
+            return this; // chain
         },
 
         detach: function(type, fn) {
             Event.remove(this, type, fn);
+            return this; // chain
         }
     };
 });
@@ -3213,7 +3265,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Aug 5 16:06
 */
 /**
  * @module  node
@@ -3236,7 +3288,8 @@ KISSY.add('node', function(S) {
 
         // handle Node(''), Node(null), or Node(undefined)
         if (!html) {
-            return null;
+            self.length = 0;
+            return;
         }
 
         // handle supported node
@@ -3250,6 +3303,8 @@ KISSY.add('node', function(S) {
         self[0] = domNode;
     }
 
+    Node.TYPE = '-ks-Node';
+
     S.augment(Node, {
 
         /**
@@ -3262,12 +3317,15 @@ KISSY.add('node', function(S) {
          */
         getDOMNode: function() {
             return this[0];
-        }
+        },
+
+        nodeType: Node.TYPE
     });
 
     // query api
     S.one = function(selector, context) {
-        return new Node(S.get(selector, context));
+        var elem = S.get(selector, context);
+        return elem ? new Node(elem) : null;
     };
 
     S.Node = Node;
@@ -3404,7 +3462,7 @@ KISSY.add('node-attach', function(S, undefined) {
                             return function() {
                                 var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
                                     ret = fn.apply(DOM, [elems].concat(S.makeArray(arguments)));
-                                return ret ? new S[ret.length ? 'NodeList' : 'Node'](ret) : null;
+                                return ret ? new S[S.isArray(ret) ? 'NodeList' : 'Node'](ret) : null;
                             };
 
                         default:
@@ -3461,7 +3519,13 @@ KISSY.add('node-attach', function(S, undefined) {
     attach(['remove']);
 
     // dom-insertion
-    //attach(['insertBefore', 'insertAfter'], ALWAYS_NODE); TODO: 目前参数传递有问题
+    S.each(['insertBefore', 'insertAfter'], function(methodName) {
+        // 目前只给 Node 添加，不考虑 NodeList（含义太复杂）
+        NP[methodName] = function(refNode) {
+            DOM[methodName].call(DOM, this[0], refNode);
+            return this;
+        };
+    });
     S.each([NP, NLP], function(P) {
         S.mix(P, {
 
@@ -3511,7 +3575,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Aug 5 16:06
 */
 /**
  * @module  ajax
@@ -3536,15 +3600,7 @@ KISSY.add('ajax', function(S) {
             node.onload = callback;
         };
 
-    S.Ajax = {
-
-        /**
-         * Sends an HTTP request to a remote server.
-         */
-        request: function(/*url, options*/) {
-            S.error('not implemented'); // TODO
-        },
-
+    S.mix(S, {
         /**
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
          */
@@ -3560,9 +3616,9 @@ KISSY.add('ajax', function(S) {
                 fn(node, callback);
             }
 
-            head.appendChild(node);
+            head.insertBefore(node, head.firstChild);
         }
-    };
+    });
 });
 
 /**
@@ -3571,4 +3627,91 @@ KISSY.add('ajax', function(S) {
  *   - api 考虑：jQuery 的全耦合在 jQuery 对象上，ajaxComplete 等方法不优雅。
  *         YUI2 的 YAHOO.util.Connect.Get.script 层级太深，YUI3 的 io 则
  *         野心过大，KISSY 借鉴 ExtJS, 部分方法借鉴 jQuery.
+ */
+/*
+Copyright 2010, KISSY UI Library v1.1.0
+MIT Licensed
+build time: Aug 5 16:06
+*/
+/**
+ * @module  cookie
+ * @author  lifesinger@gmail.com
+ * @depends ks-core
+ */
+KISSY.add('cookie', function(S) {
+
+    var doc = document,
+        encode = encodeURIComponent,
+        decode = decodeURIComponent;
+
+    S.Cookie = {
+
+        /**
+         * 获取 cookie 值
+         * @return {string} 如果 name 不存在，返回 undefined
+         */
+        get: function(name) {
+            var ret, m;
+
+            if (isNotEmptyString(name)) {
+                if ((m = doc.cookie.match('(?:^| )' + name + '(?:(?:=([^;]*))|;|$)'))) {
+                    ret = m[1] ? decode(m[1]) : '';
+                }
+            }
+            return ret;
+        },
+
+        set: function(name, val, expires, domain, path, secure) {
+            var text = encode(val), date = expires;
+
+            // 从当前时间开始，多少天后过期
+            if (typeof date === 'number') {
+                date = new Date();
+                date.setTime(date.getTime() + expires * 86400000);
+            }
+            // expiration date
+            if (date instanceof Date) {
+                text += '; expires=' + date.toUTCString();
+            }
+
+            // domain
+            if (isNotEmptyString(domain)) {
+                text += '; domain=' + domain;
+            }
+
+            // path
+            if (isNotEmptyString(path)) {
+                text += '; path=' + path;
+            }
+
+            // secure
+            if (secure) {
+                text += '; secure';
+            }
+
+            doc.cookie = name + '=' + text;
+        },
+
+        remove: function(name, domain, path, secure) {
+            // 置空，并立刻过期
+            this.set(name, '', 0, domain, path, secure);
+        }
+    };
+
+    function isNotEmptyString(val) {
+        return S.isString(val) && val !== '';
+    }
+
+});
+
+/**
+ * NOTES:
+ *
+ *  2010.04
+ *   - get 方法要考虑 ie 下，
+ *     值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
+ *     除了正则获取，还可以 split 字符串的方式来获取。
+ *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
+ *     独立成静态工具类的方式更优。
+ *
  */

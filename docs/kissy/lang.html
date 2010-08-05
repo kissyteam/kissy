@@ -1,0 +1,428 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>lang &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/tree/master/src/kissy/lang.js"><code>lang.js</code></a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+
+            <div class="section">
+                <h3 id="methods">Methods</h3>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_isUndefined">isUndefined</a>
+                        <code>Boolean <em>isUndefined</em> ( o )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>判断是否 undefined</p>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_isBoolean">isBoolean</a>
+                        <code>Boolean <em>isBoolean</em> ( o )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>判断是否布尔值。</p>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_isString">isString</a>
+                        <code>Boolean <em>isString</em> ( o )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>判断是否字符串。</p>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_isNumber">isNumber</a>
+                        <code>Boolean <em>isNumber</em> ( o )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>判断是否有效数值。</p>
+                        <p class="tips">Infinity 和 NaN 返回 false.</p>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_isPlainObject">isPlainObject</a>
+                        <code>Boolean <em>isPlainObject</em> ( o )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>判断是否普通对象（用 { } 或 new Object 创建的对象）。</p>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_isEmptyObject">isEmptyObject</a>
+                        <code>Boolean <em>isEmptyObject</em> ( o )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>判断是否空对象（没有任何可遍历的属性）。</p>
+<pre class="example-code"><code>
+var S = KISSY;
+
+S.isEmptyObject({}); // => true
+S.isEmptyObject([]); // => true
+S.isEmptyObject({ a: 'a' }); // => false
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_isFunction">isFunction</a>
+                        <code>Boolean <em>isFunction</em> ( o )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>判断是否函数。</p>
+                        <p class="notice">IE 中，DOM 方法和 window 对象的部分方法比如 alert, 返回 false.</p>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_isArray">isArray</a>
+                        <code>Boolean <em>isArray</em> ( o )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>判断是否数组。</p>
+                        <p class="tips">arguments 和 NodeList 不是数组，返回 false.</p>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_trim">trim</a>
+                        <code>String <em>trim</em> ( str )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>去除字符串两端的空白字符。</p>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_substitute">substitute</a>
+                        <code>String <em>substitute</em> ( str, o, regexp )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>将字符串中的占位符替换为对应的键值。</p>
+<pre class="example-code"><code>
+var S = KISSY,
+    str = '{name} is {prop_1} and {prop_2}.',
+    obj = {name: 'Jack Bauer', prop_1: 'our lord', prop_2: 'savior'};
+
+S.substitute(str, obj); // => 'Jack Bauer is our lord and savior.'
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_each">each</a>
+                        <code>void <em>each</em> ( arr, fn, context )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>遍历数组中的每一项，执行指定方法。</p>
+                        <dl class="parameters">
+                            <dt>Parameters:</dt>
+                            <dd>
+                                <code class="param-name">arr</code>
+                                <code class="param-type">&lt;Array&gt;</code>
+                                需要遍历的数组。
+                            </dd>
+                            <dd>
+                                <code class="param-name">fn</code>
+                                <code class="param-type">&lt;Function&gt;</code>
+                                执行函数。执行时，接收 3 个参数：当前项、当前 index, 数组。
+                            </dd>
+                            <dd>
+                                <code class="param-name">context</code>
+                                <code class="param-type">&lt;Object&gt;</code>
+                                环境对象。
+                            </dd>
+                        </dl>
+<pre class="example-code"><code>
+var S = KISSY,
+    arr = [1, 2, 3, 4, 5],
+    sum = 0;
+
+S.each(arr, function(item) {
+    sum += item;
+});
+S.log(sum); // => 15
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_indexOf">indexOf</a>
+                        <code>Number <em>indexOf</em> ( elem, arr )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>返回元素 elem 在数组 arr 中的序号。找不到时返回 -1.</p>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_inArray">inArray</a>
+                        <code>Boolean <em>inArray</em> ( elem, arr )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>判断元素 elem 是否在数组 arr 中。</p>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_makeArray">makeArray</a>
+                        <code>Array <em>makeArray</em> ( o )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>将对象 o 转换为数组。</p>
+                        <p class="tips">可以利用此方法将 arguments, NodeList 等 array-like 对象转换为真实数组。</p>
+<pre class="example-code"><code>
+var S = KISSY;
+
+S.makeArray('str'); // => ['str']
+S.makeArray(S.query('.div')); // => 由所有 div 元素组成的数组
+S.makeArray(null); // => []
+</code></pre>
+                        <p>makeArray 方法永远返回数组。</p>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_filter">filter</a>
+                        <code>Array <em>filter</em> ( arr, fn, context )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>遍历数组，过滤出符和条件的数组项。</p>
+                        <dl class="parameters">
+                            <dt>Parameters:</dt>
+                            <dd>
+                                <code class="param-name">arr</code>
+                                <code class="param-type">&lt;Array&gt;</code>
+                                需要遍历的数组。
+                            </dd>
+                            <dd>
+                                <code class="param-name">fn</code>
+                                <code class="param-type">&lt;Function&gt;</code>
+                                过滤函数。执行时，接收 3 个参数：当前项、当前 index, 数组。
+                            </dd>
+                            <dd>
+                                <code class="param-name">context</code>
+                                <code class="param-type">&lt;Object&gt;</code>
+                                环境对象。
+                            </dd>
+                        </dl>
+<pre class="example-code"><code>
+var S = KISSY,
+    arr = [1, 2, 3, 4, 5];
+
+var ret = S.filter(arr, function(item) {
+    return item % 2 === 0;
+});
+S.log(ret); // => [2, 4]
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_param">param</a>
+                        <code>String <em>param</em> ( o )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>将对象 o 转换为参数字符串。</p>
+<pre class="example-code"><code>
+var S = KISSY;
+
+S.param({ foo: 1, bar: 2 }); // => foo=1&bar=2
+S.param({ foo: 1, bar: [2, 3] }); // => foo=1&bar%5B%5D=2&bar%5B%5D=3
+S.param({ foo: '', bar: 2 }); // => foo=&bar=2
+S.param({ foo: undefined, bar: 2 }); // => foo=undefined&bar=2
+</code></pre>
+                        <p class="notice">返回的字符串经过了 encodeURI 编码。比如 <code>foo=1&bar%5B%5D=2&bar%5B%5D=3</code>, 解码后是 <code>foo=1&bar[]=2&bar[]=3</code></p>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_unparam">unparam</a>
+                        <code>Object <em>unparam</em> ( str )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>将参数字符串 str 还原为对象。</p>
+<pre class="example-code"><code>
+var S = KISSY;
+
+S.unparam('foo=1&bar=2'); // => { foo: 1, bar: 2 }
+S.unparam('foo=1&bar[]=2&bar[]=3'); // => { foo: 1, bar: [2, 3] }
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_later">later</a>
+                        <code>Object <em>later</em> ( fn, when, periodic, o, data )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>延迟执行指定函数。</p>
+                        <dl class="parameters">
+                            <dt>Parameters:</dt>
+                            <dd>
+                                <code class="param-name">fn</code>
+                                <code class="param-type">&lt;Function&gt;</code>
+                                延迟执行的函数。
+                            </dd>
+                            <dd>
+                                <code class="param-name">when</code>
+                                <code class="param-type">&lt;Number&gt;</code>
+                                延迟时间，单位是毫秒。
+                            </dd>
+                            <dd>
+                                <code class="param-name">periodic</code>
+                                <code class="param-type">&lt;Boolean&gt;</code>
+                                是不是周期性执行。默认为 false.
+                            </dd>
+                            <dd>
+                                <code class="param-name">o</code>
+                                <code class="param-type">&lt;Object&gt;</code>
+                                环境对象。
+                            </dd>
+                            <dd>
+                                <code class="param-name">data</code>
+                                <code class="param-type">&lt;Array&gt;</code>
+                                传递的参数。可以为单个对象，最后会转换成数组，依次传递给执行函数。
+                            </dd>
+                        </dl>
+                        <dl class="return">
+                            <dt>Returns: <code>Object</code></dt>
+                            <dd>timer 对象。拥有 id 和 interval 属性，还有 cancel 方法，用于取消定时器。</dd>
+                        </dl>
+<pre class="example-code"><code>
+var S = KISSY;
+
+S.later(function(data) {
+    S.log(data);
+}, 0, false, null, 'I am later data.');
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_clone">clone</a>
+                        <code>Object|Array <em>clone</em> ( o ) </code>
+                    </h4>
+                    <div class="detail">
+                        <p>创建一个普通对象或数组的深拷贝, 并且返回。</p>
+                        <p class="tips">其他类型原样返回。</p>
+                        <dl class="parameters">
+                            <dt>Parameters:</dt>
+                            <dd>
+                                <code class="param-name">o</code>
+                                <code class="param-type">&lt;Object|Array&gt;</code>
+                                待深拷贝的对象或数组。
+                            </dd>
+                        </dl>
+                        <dl class="return">
+                            <dt>Returns: <code>Object|Array</code></dt>
+                        </dl>
+                    </div>
+                </div>
+                <div class="member method">
+                    <h4>
+                        <a name="method_now">now</a>
+                        <code>Number <em>now</em> ( )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>返回 new Date().getTime()</p>
+                    </div>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_globalEval">globalEval</a>
+                        <code>void <em>globalEval</em> ( data )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>在全局环境里执行代码片段。</p>
+<pre class="example-code"><code>
+var S = KISSY;
+
+S.globalEval('var foo = 1;');
+S.log(window['foo']); // => 1
+</code></pre>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc">
+                <a href="../index.html">home</a> &rsaquo;
+                <a href="index.html">kissy</a> &rsaquo;
+                lang :
+            </div>
+            <div class="toc">
+                <h3>Methods</h3>
+                <ul>
+                    <li><a href="#method_isUndefined">isUndefined</a></li>
+                    <li><a href="#method_isBoolean">isBoolean</a></li>
+                    <li><a href="#method_isString">isString</a></li>
+                    <li><a href="#method_isNumber">isNumber</a></li>
+                    <li><a href="#method_isPlainObject">isPlainObject</a></li>
+                    <li><a href="#method_isEmptyObject">isEmptyObject</a></li>
+                    <li><a href="#method_isFunction">isFunction</a></li>
+                    <li><a href="#method_isArray">isArray</a></li>
+                    <li><a href="#method_trim">trim</a></li>
+                    <li><a href="#method_substitute">substitute</a></li>
+                    <li><a href="#method_each">each</a></li>
+                    <li><a href="#method_indexOf">indexOf</a></li>
+                    <li><a href="#method_inArray">inArray</a></li>
+                    <li><a href="#method_makeArray">makeArray</a></li>
+                    <li><a href="#method_filter">filter</a></li>
+                    <li><a href="#method_param">param</a></li>
+                    <li><a href="#method_unparam">unparam</a></li>
+                    <li><a href="#method_later">later</a></li>
+                    <li><a href="#method_clone">clone</a></li>
+                    <li><a href="#method_now">now</a></li>
+                    <li><a href="#method_globalEval">globalEval</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

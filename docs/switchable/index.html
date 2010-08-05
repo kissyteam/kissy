@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>switchable - KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/blob/master/src/switchable/">src files</a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="section summary">
+                <p>开始之前，先来看看 Switchable 能做什么：<a href="../../src/switchable/test.html">demo</a></p>
+                <p>该模块由 Switchable 基础类、插件和 Widget 类组成。Switchable 基础类抽象了切换的基本操作，通过插件机制实现了自动播放、循环、切换效果、延迟加载、倒计时动画等扩展功能，最后封装成各个 Widget 类，让用户能简明快速地调用。</p>
+            </div>
+
+            <div class="section">
+                <h3 id="properties">Properties</h3>
+
+                <div class="member prop">
+                    <h4><a name="prop_container">container</a> - <code>String | HTMLElement</code></h4>
+                    <div class="detail">
+                        <p>容器</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_config">config</a> - <code>Object</code></h4>
+                    <div class="detail">
+                        <p>Switchable 的配置信息。具体配置项请参考 <a href="http://github.com/kissyteam/kissy/blob/master/src/switchable/">源码</a></p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_triggers">triggers</a> - <code>Array</code></h4>
+                    <div class="detail">
+                        <p>触点集合</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_panels">panels</a> - <code>Array</code></h4>
+                    <div class="detail">
+                        <p>面板集合</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_content">content</a> - <code>HTMLElement</code></h4>
+                    <div class="detail">
+                        <p>存放面板的容器</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_length">length</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>触点的个数</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_activeIndex">activeIndex</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>被激活的触点序号</p>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="section">
+                <h3 id="Events">Events</h3>
+                <div class="member event">
+                    <h4><a name="event_beforeSwitch">beforeSwitch</a></h4>
+                    <div class="detail">
+                        切换前事件
+                    </div>
+                </div>
+                <div class="member event">
+                    <h4><a name="event_switch">switch</a></h4>
+                    <div class="detail">
+                        切换事件
+<pre class="example-code"><code>
+KISSY.ready(function(S) {
+    var tabs = new S.Tabs('#demo1');
+
+    tabs.on('switch', function(ev) {
+        if (ev.toIndex === 0) {
+            alert('下一张是第一张');
+        }
+    });
+});
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 id="Widgets">Widgets</h3>
+                <div class="member widget">
+                    <h4>
+                        <a name="widget_tabs">Tabs - 标签页</a>
+                        <code>Tabs( selector, config )</code>
+                    </h4>
+                </div>
+                <div class="member widget">
+                    <h4>
+                        <a name="widget_slide">Slide - 卡盘</a>
+                        <code>Slide( selector, config )</code>
+                    </h4>
+                </div>
+                <div class="member widget">
+                    <h4>
+                        <a name="widget_carousel">Carousel - 旋转木马</a>
+                        <code>Carousel( selector, config )</code>
+                    </h4>
+                </div>
+                <div class="member widget">
+                    <h4>
+                        <a name="widget_accordion">Accordion - 手风琴</a>
+                        <code>Accordion( selector, config )</code>
+                    </h4>
+                </div>
+                <div class="summary">
+                    <p>以上 Widget 类的调用方法请参考：<a href="../../src/switchable/test.html">demo</a><br/>
+                    还可以通过 class hook 和 data-ks-switchable 实现自动实例化：<a href="../../src/switchable/test-autorender.html">autorender demo</a></p>
+                </div>
+            </div>
+
+            <div class="section notes">
+                <p>看了上面的文档，是否觉得平淡无奇？但请你一定相信，Switchable 能做的事情远比上面丰富。<strong>一定程度上，只要组件的核心是可切换的，Switchable 就能帮你实现。</strong>请静心等待更详细的 Getting Started 系列，精彩才刚上映。</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc"><a href="../index.html">home</a> &rsaquo; switchable :</div>
+            <div class="toc">
+                <h3>Properties</h3>
+                <ul>
+                    <li><a href="#prop_container">container</a></li>
+                    <li><a href="#prop_config">config</a></li>
+                    <li><a href="#prop_triggers">triggers</a></li>
+                    <li><a href="#prop_panels">panels</a></li>
+                    <li><a href="#prop_content">content</a></li>
+                    <li><a href="#prop_length">length</a></li>
+                    <li><a href="#prop_activeIndex">activeIndex</a></li>
+                </ul>
+                <h3>Events</h3>
+                <ul>
+                    <li><a href="#event_beforeSwitch">beforeSwitch</a></li>
+                    <li><a href="#event_switch">switch</a></li>
+                </ul>
+                <h3>Widgets</h3>
+                <ul>
+                    <li><a href="#widget_tabs">Tabs - 标签页</a></li>
+                    <li><a href="#widget_slide">Slide - 卡盘</a></li>
+                    <li><a href="#widget_carousel">Carousel - 旋转木马</a></li>
+                    <li><a href="#widget_accordion">Accordion - 手风琴</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

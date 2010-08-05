@@ -12,9 +12,7 @@
 
 <h2>Test Data</h2>
 
-<script src="../kissy/kissy.js"></script>
-<script src="../kissy/kissy-lang.js"></script>
-<script src="../kissy/kissy-ua.js"></script>
+<script src="../../build/kissy/kissy-pkg.js"></script>
 
 <script src="dom.js"></script>
 <script src="selector.js"></script>
@@ -139,6 +137,7 @@
         if(DOM.children(t).length !== 4) test.fail();
         if(DOM.children(t, '.test-next,.test-next-p').length !== 2) test.fail();
         if(DOM.children(t, 'p:first')[0].id !== 'test-next') test.fail();
+        if(DOM.children('#test-div').length !== 0) test.fail();
     }
 
     function test_contains(test) {

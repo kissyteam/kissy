@@ -6,113 +6,112 @@
 <link rel="stylesheet" href="../assets/base-min.css" />
 <link rel="stylesheet" href="../assets/docs.css" />
 </head>
-<body>
-<div id="page" class="w866">
-    <div id="header">
-        <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
-        <p class="rel-nav">
-            <a href="http://github.com/kissyteam/kissy/tree/master/src/kissy/kissy.js"><code>kissy.js</code></a>
-        </p>
-    </div>
-    <div id="content" class="layout grid-s232m0">
-        <div class="col-main">
-            <div class="main-wrap">
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/tree/master/src/kissy/kissy.js"><code>kissy.js</code></a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
 
-                <div class="section">
-                    <h3 id="properties">Properties</h3>
+            <div class="section">
+                <h3 id="properties">Properties</h3>
 
-                    <div class="member prop">
-                        <h4><a name="prop_version">version</a> - <code>String</code></h4>
-                        <div class="detail">
-                            <p>KISSY 类库的版本号。</p>
-                        </div>
-                    </div>
-
-                    <div class="member prop">
-                        <h4><a name="prop_config">Config</a> - <code>KISSY.Config</code></h4>
-                        <div class="detail">
-                            <p>KISSY 的配置信息。目前 Config 对象含有 debug 属性，可以通过设置 <code>KISSY.Config.debug = true</code> 来开启 debug 模式。</p>
-                            <p>debug 模式默认关闭，但在以下情况下会自动开启：</p>
-                            <ol>
-                                <li>引入的 js 文件是未压缩版本，比如 <code>&lt;script src="ks-core.js"&gt;&lt;/script&gt;</code></li>
-                                <li>访问的 url 路径中，带有 ks-debug 参数，比如 <code>http://localhost/kissy.html?ks-debug</code></li>
-                            </ol>
-                            <p>debug 模式开启时，源码中的 S.log 会利用浏览器的 console 对象输出调试信息。debug 模式关闭时，不会输出调试信息。</p>
-                        </div>
+                <div class="member prop">
+                    <h4><a name="prop_version">version</a> - <code>String</code></h4>
+                    <div class="detail">
+                        <p>KISSY 类库的版本号。</p>
                     </div>
                 </div>
 
-                <div class="section">
-                    <h3 id="methods">Methods</h3>
+                <div class="member prop">
+                    <h4><a name="prop_config">Config</a> - <code>KISSY.Config</code></h4>
+                    <div class="detail">
+                        <p>KISSY 的配置信息。目前 Config 对象含有 debug 属性，可以通过设置 <code>KISSY.Config.debug = true</code> 来开启 debug 模式。</p>
+                        <p>debug 模式默认关闭，但在以下情况下会自动开启：</p>
+                        <ol>
+                            <li>引入的 js 文件是未压缩版本，比如 <code>&lt;script src="ks-core.js"&gt;&lt;/script&gt;</code></li>
+                            <li>访问的 url 路径中，带有 ks-debug 参数，比如 <code>http://localhost/kissy.html?ks-debug</code></li>
+                        </ol>
+                        <p>debug 模式开启时，源码中的 S.log 会利用浏览器的 console 对象输出调试信息。debug 模式关闭时，不会输出调试信息。</p>
+                    </div>
+                </div>
+            </div>
 
-                    <div class="member method">
-                        <h4>
-                            <a name="method_add">add</a>
-                            <code>KISSY <em>add</em> ( name, fn )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>添加模块到 KISSY 对象。</p>
+            <div class="section">
+                <h3 id="methods">Methods</h3>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_add">add</a>
+                        <code>KISSY <em>add</em> ( name, fn )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>添加模块到 KISSY 对象。</p>
 <pre class="example-code"><code>
 KISSY.add('module-name', function(S) {
     // module code
     // 注：参数 S 就是 KISSY 本身。
 });
 </code></pre>
-                            <p>这是 KISSY 内部代码的基本组织方式。当你想扩展 KISSY 时，推荐通过 add 方法来组织代码。</p>
-                        </div>
+                        <p>这是 KISSY 内部代码的基本组织方式。当你想扩展 KISSY 时，推荐通过 add 方法来组织代码。</p>
                     </div>
+                </div>
 
-                    <div class="member method">
-                        <h4>
-                            <a name="method_ready">ready</a>
-                            <code>KISSY <em>ready</em> ( fn )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>添加函数，在 DOM 加载完毕时执行。</p>
+                <div class="member method">
+                    <h4>
+                        <a name="method_ready">ready</a>
+                        <code>KISSY <em>ready</em> ( fn )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>添加函数，在 DOM 加载完毕时执行。</p>
 <pre class="example-code"><code>
 KISSY.ready(function(S) {
     // code
 });
 </code></pre>
-                            <p>这是 KISSY 外部代码的基本调用方式。为了保证代码执行时，依赖的 DOM 结构已准备好，推荐尽可能的将代码写在通过 ready 注册的函数里。</p>
-                            <p class="tips">注意：在 DOM 加载完毕后，依旧可以通过 ready 添加函数，此时会立刻执行。</p>
-                        </div>
+                        <p>这是 KISSY 外部代码的基本调用方式。为了保证代码执行时，依赖的 DOM 结构已准备好，推荐尽可能的将代码写在通过 ready 注册的函数里。</p>
+                        <p class="tips">注意：在 DOM 加载完毕后，依旧可以通过 ready 添加函数，此时会立刻执行。</p>
                     </div>
+                </div>
 
-                    <div class="member method">
-                        <h4>
-                            <a name="method_available">available</a>
-                            <code>void <em>available</em> ( id, fn )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>添加函数，在 id 元素可用时立刻执行。</p>
-                        </div>
+                <div class="member method">
+                    <h4>
+                        <a name="method_available">available</a>
+                        <code>void <em>available</em> ( id, fn )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>添加函数，在 id 元素可用时立刻执行。</p>
                     </div>
+                </div>
 
-                    <div class="member method">
-                        <h4>
-                            <a name="method_mix">mix</a>
-                            <code>Object <em>mix</em> ( r, s, ov, wl )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>将 s(upplier) 对象的成员复制到 r(eceiver) 对象上。</p>
-                            <dl class="parameters">
-                                <dt>Parameters:</dt>
-                                <dd>
-                                    <code class="param-name">ov</code>
-                                    <code class="param-type">&lt;Boolean&gt;</code>
-                                    override, 表示复制时是否采用覆盖模式。默认为 true.
-                                </dd>
-                                <dd>
-                                    <code class="param-name">wl</code>
-                                    <code class="param-type">&lt;Array&gt;</code>
-                                    whitelist, 非空时，表示仅添加该列表中的成员。
-                                </dd>
-                            </dl>
-                            <dl class="return">
-                                <dt>Returns: <code>Object</code></dt>
-                                <dd>r 对象</dd>
-                            </dl>
+                <div class="member method">
+                    <h4>
+                        <a name="method_mix">mix</a>
+                        <code>Object <em>mix</em> ( r, s, ov, wl )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>将 s(upplier) 对象的成员复制到 r(eceiver) 对象上。</p>
+                        <dl class="parameters">
+                            <dt>Parameters:</dt>
+                            <dd>
+                                <code class="param-name">ov</code>
+                                <code class="param-type">&lt;Boolean&gt;</code>
+                                override, 表示复制时是否采用覆盖模式。默认为 true.
+                            </dd>
+                            <dd>
+                                <code class="param-name">wl</code>
+                                <code class="param-type">&lt;Array&gt;</code>
+                                whitelist, 非空时，表示仅添加该列表中的成员。
+                            </dd>
+                        </dl>
+                        <dl class="return">
+                            <dt>Returns: <code>Object</code></dt>
+                            <dd>r 对象</dd>
+                        </dl>
 <pre class="example-code"><code>
 var S = KISSY,
     r = { a: 'a', b: 'b' };
@@ -127,21 +126,21 @@ S.mix(r, { e: 'e', f: 'f' }, true, ['f']);
 S.log(r.e); // => undefined
 S.log(r.f); // => 'f'
 </code></pre>
-                            <p>该方法在 KISSY 里具有非常重要的地位。JavaScript 是一门动态语言，利用 mixin 特性，可以很方便的实现特性的静态复制和动态修改。</p>
-                        </div>
+                        <p>该方法在 KISSY 里具有非常重要的地位。JavaScript 是一门动态语言，利用 mixin 特性，可以很方便的实现特性的静态复制和动态修改。</p>
                     </div>
+                </div>
 
-                    <div class="member method">
-                        <h4>
-                            <a name="method_merge">merge</a>
-                            <code>Object <em>merge</em> ( arguments/* Object* */ )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>将多个对象的成员合并到一个新对象上。参数中，后面的对象成员会覆盖前面的。</p>
-                            <dl class="return">
-                                <dt>Returns: <code>Object</code></dt>
-                                <dd>合并后的新对象</dd>
-                            </dl>
+                <div class="member method">
+                    <h4>
+                        <a name="method_merge">merge</a>
+                        <code>Object <em>merge</em> ( arguments/* Object* */ )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>将多个对象的成员合并到一个新对象上。参数中，后面的对象成员会覆盖前面的。</p>
+                        <dl class="return">
+                            <dt>Returns: <code>Object</code></dt>
+                            <dd>合并后的新对象</dd>
+                        </dl>
 <pre class="example-code"><code>
 var S = KISSY,
     a = { a: 'a' },
@@ -162,23 +161,23 @@ function ClassA(config) {
     config = S.merge(defaultConfig, config);
 }
 </code></pre>
-                            <p>merge 方法常用来合并配置信息。</p>
-                        </div>
+                        <p>merge 方法常用来合并配置信息。</p>
                     </div>
+                </div>
 
-                    <div class="member method">
-                        <h4>
-                            <a name="method_augment">augment</a>
-                            <code>Object <em>augment</em> ( r, s, ov, wl )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>将 s.prototype 的成员复制到 r.prototype 上。</p>
-                            <p class="tips">s 可以是非函数对象，此时复制的就是 s 的成员。</p>
-                            <p class="tips">可以一次传入多个 s, 比如 <code>S.augment(r, s1, s2, s3, ov, wl)</code></p>
-                            <dl class="return">
-                                <dt>Returns: <code>Object</code></dt>
-                                <dd>r 对象</dd>
-                            </dl>
+                <div class="member method">
+                    <h4>
+                        <a name="method_augment">augment</a>
+                        <code>Object <em>augment</em> ( r, s, ov, wl )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>将 s.prototype 的成员复制到 r.prototype 上。</p>
+                        <p class="tips">s 可以是非函数对象，此时复制的就是 s 的成员。</p>
+                        <p class="tips">可以一次传入多个 s, 比如 <code>S.augment(r, s1, s2, s3, ov, wl)</code></p>
+                        <dl class="return">
+                            <dt>Returns: <code>Object</code></dt>
+                            <dd>r 对象</dd>
+                        </dl>
 <pre class="example-code"><code>
 var S = KISSY,
     Shoutable = {
@@ -194,44 +193,44 @@ S.augment(Pig, Shoutable);
 new Dog('Jack').shout(); // => I am Dog Jack.
 new Pig('Mary').shout(); // => I am Pig Mary.
 </code></pre>
-                            <p> augment 方法在 KISSY 里非常基础非常重要。传统 OO 语言里，可以通过继承或接口来实现共性方法。在 JavaScript 里，通过 mixin 特性，一切变得更简单。augment 是动态语言 mixin 特性的体现，灵活运用，能让代码非常优雅简洁。</p>
-                        </div>
+                        <p> augment 方法在 KISSY 里非常基础非常重要。传统 OO 语言里，可以通过继承或接口来实现共性方法。在 JavaScript 里，通过 mixin 特性，一切变得更简单。augment 是动态语言 mixin 特性的体现，灵活运用，能让代码非常优雅简洁。</p>
                     </div>
+                </div>
 
-                    <div class="member method">
-                        <h4>
-                            <a name="method_extend">extend</a>
-                            <code>Object <em>extend</em> ( r, s, px, sx )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>让函数对象 r 继承函数对象 s.</p>
-                            <dl class="parameters">
-                                <dt>Parameters:</dt>
-                                <dd>
-                                    <code class="param-name">r</code>
-                                    <code class="param-type">&lt;Function&gt;</code>
-                                    receiver, 子类
-                                </dd>
-                                <dd>
-                                    <code class="param-name">s</code>
-                                    <code class="param-type">&lt;Function&gt;</code>
-                                    supplier, 父类
-                                </dd>
-                                <dd>
-                                    <code class="param-name">px</code>
-                                    <code class="param-type">&lt;Object&gt;</code>
-                                    extra prototype members, 需要添加/覆盖的原型成员。
-                                </dd>
-                                <dd>
-                                    <code class="param-name">sx</code>
-                                    <code class="param-type">&lt;Object&gt;</code>
-                                    extra static members, 需要添加/覆盖的静态成员。
-                                </dd>
-                            </dl>
-                            <dl class="return">
-                                <dt>Returns: <code>Object</code></dt>
-                                <dd>扩展后的子类 r</dd>
-                            </dl>
+                <div class="member method">
+                    <h4>
+                        <a name="method_extend">extend</a>
+                        <code>Object <em>extend</em> ( r, s, px, sx )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>让函数对象 r 继承函数对象 s.</p>
+                        <dl class="parameters">
+                            <dt>Parameters:</dt>
+                            <dd>
+                                <code class="param-name">r</code>
+                                <code class="param-type">&lt;Function&gt;</code>
+                                receiver, 子类
+                            </dd>
+                            <dd>
+                                <code class="param-name">s</code>
+                                <code class="param-type">&lt;Function&gt;</code>
+                                supplier, 父类
+                            </dd>
+                            <dd>
+                                <code class="param-name">px</code>
+                                <code class="param-type">&lt;Object&gt;</code>
+                                extra prototype members, 需要添加/覆盖的原型成员。
+                            </dd>
+                            <dd>
+                                <code class="param-name">sx</code>
+                                <code class="param-type">&lt;Object&gt;</code>
+                                extra static members, 需要添加/覆盖的静态成员。
+                            </dd>
+                        </dl>
+                        <dl class="return">
+                            <dt>Returns: <code>Object</code></dt>
+                            <dd>扩展后的子类 r</dd>
+                        </dl>
 <pre class="example-code"><code>
 var S = KISSY;
 
@@ -245,55 +244,55 @@ S.extend(Chicken, Bird);
 
 new Chicken('Frank').fly();
 </code></pre>
-                            <p>extend 方法是 KISSY 里类继承的实现方式。书写 JavaScript 代码时，请忘记传统 OO 里的继承体系。还 JavaScript 本色，给代码一身轻松。</p>
-                        </div>
+                        <p>extend 方法是 KISSY 里类继承的实现方式。书写 JavaScript 代码时，请忘记传统 OO 里的继承体系。还 JavaScript 本色，给代码一身轻松。</p>
                     </div>
+                </div>
 
-                    <div class="member method">
-                        <h4>
-                            <a name="method_namespace">namespace</a>
-                            <code>Object <em>namespace</em> ( arguments/* String* */ )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>创建命名空间。</p>
-                            <dl class="return">
-                                <dt>Returns: <code>Object</code></dt>
-                                <dd>创建的最后一个对象。</dd>
-                            </dl>
+                <div class="member method">
+                    <h4>
+                        <a name="method_namespace">namespace</a>
+                        <code>Object <em>namespace</em> ( arguments/* String* */ )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>创建命名空间。</p>
+                        <dl class="return">
+                            <dt>Returns: <code>Object</code></dt>
+                            <dd>创建的最后一个对象。</dd>
+                        </dl>
 <pre class="example-code"><code>
 var S = KISSY;
 
 S.namespace('app', 'test'); // 创建 KISSY.app 和 KISSY.test 对象
 S.namespace('app.Shop'); // 创建 KISSY.app.Shop 对象
 </code></pre>
-                            <p>namespace 方法提供了最基本的命名空间管理。</p>
-                        </div>
+                        <p>namespace 方法提供了最基本的命名空间管理。</p>
                     </div>
+                </div>
 
-                    <div class="member method">
-                        <h4>
-                            <a name="method_app">app</a>
-                            <code>Object <em>app</em> ( name, sx )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>创建应用对象。</p>
-                            <dl class="parameters">
-                                <dt>Parameters:</dt>
-                                <dd>
-                                    <code class="param-name">name</code>
-                                    <code class="param-type">&lt;String&gt;</code>
-                                    应用的名称。
-                                </dd>
-                                <dd>
-                                    <code class="param-name">sx</code>
-                                    <code class="param-type">&lt;Object&gt;</code>
-                                    extra static members, 需要添加/覆盖的静态成员。
-                                </dd>
-                            </dl>
-                            <dl class="return">
-                                <dt>Returns: <code>Object</code></dt>
-                                <dd>创建的应用对象。</dd>
-                            </dl>
+                <div class="member method">
+                    <h4>
+                        <a name="method_app">app</a>
+                        <code>Object <em>app</em> ( name, sx )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>创建应用对象。</p>
+                        <dl class="parameters">
+                            <dt>Parameters:</dt>
+                            <dd>
+                                <code class="param-name">name</code>
+                                <code class="param-type">&lt;String&gt;</code>
+                                应用的名称。
+                            </dd>
+                            <dd>
+                                <code class="param-name">sx</code>
+                                <code class="param-type">&lt;Object&gt;</code>
+                                extra static members, 需要添加/覆盖的静态成员。
+                            </dd>
+                        </dl>
+                        <dl class="return">
+                            <dt>Returns: <code>Object</code></dt>
+                            <dd>创建的应用对象。</dd>
+                        </dl>
 <pre class="example-code"><code>
 KISSY.app('FrontPage');
 FrontPage.namespace('app'); // 创建 FrontPage.app 对象
@@ -302,98 +301,97 @@ FrontPage.add('slide', function(FP) {
     // 注：FP 指向 FrontPage
 });
 </code></pre>
-                            <p>app 方法为基于 KISSY 的应用提供了最基本的代码组织方式。通过 app 创建的应用对象，自动具有了 add 和 namespace 方法。</p>
-                        </div>
+                        <p>app 方法为基于 KISSY 的应用提供了最基本的代码组织方式。通过 app 创建的应用对象，自动具有了 add 和 namespace 方法。</p>
                     </div>
-
-                    <div class="member method">
-                        <h4>
-                            <a name="method_log">log</a>
-                            <code>KISSY <em>log</em> ( msg, cat, src )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>输出调试信息。</p>
-                            <dl class="parameters">
-                                <dt>Parameters:</dt>
-                                <dd>
-                                    <code class="param-name">msg</code>
-                                    <code class="param-type">&lt;String&gt;</code>
-                                    调试信息。
-                                </dd>
-                                <dd>
-                                    <code class="param-name">cat</code>
-                                    <code class="param-type">&lt;String&gt;</code>
-                                    类别，可以取 info, warn, error, dir, time 等 console 对象的方法名，默认为 log.
-                                </dd>
-                                <dd>
-                                    <code class="param-name">src</code>
-                                    <code class="param-type">&lt;String&gt;</code>
-                                    调试代码所在的源信息。
-                                </dd>
-                            </dl>
-                            <p class="notice">只有在 debug 模式下，才会输出调试信息。debug 模式的说明请参考 <a href="#prop_config">Config</a></p>
-                        </div>
-                    </div>
-
-                    <div class="member method">
-                        <h4>
-                            <a name="method_error">error</a>
-                            <code>void <em>error</em> ( msg )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>抛出错误异常。</p>
-                            <p class="notice">只有在 debug 模式下，才会抛出异常。debug 模式的说明请参考 <a href="#prop_config">Config</a></p>
-                        </div>
-                    </div>
-
-                    <div class="member method">
-                        <h4>
-                            <a name="method_guid">guid</a>
-                            <code>String <em>guid</em> ( pre )</code>
-                        </h4>
-                        <div class="detail">
-                            <p>返回全局唯一 id.</p>
-                        </div>
-                    </div>
-
                 </div>
-            </div>
-        </div>
-        <div class="col-sub">
-            <div class="sub-wrap">
-                <div class="loc">
-                    <a href="../index.html">home</a> &rsaquo;
-                    <a href="index.html">kissy</a> &rsaquo;
-                    kissy :
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_log">log</a>
+                        <code>KISSY <em>log</em> ( msg, cat, src )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>输出调试信息。</p>
+                        <dl class="parameters">
+                            <dt>Parameters:</dt>
+                            <dd>
+                                <code class="param-name">msg</code>
+                                <code class="param-type">&lt;String&gt;</code>
+                                调试信息。
+                            </dd>
+                            <dd>
+                                <code class="param-name">cat</code>
+                                <code class="param-type">&lt;String&gt;</code>
+                                类别，可以取 info, warn, error, dir, time 等 console 对象的方法名，默认为 log.
+                            </dd>
+                            <dd>
+                                <code class="param-name">src</code>
+                                <code class="param-type">&lt;String&gt;</code>
+                                调试代码所在的源信息。
+                            </dd>
+                        </dl>
+                        <p class="notice">只有在 debug 模式下，才会输出调试信息。debug 模式的说明请参考 <a href="#prop_config">Config</a></p>
+                    </div>
                 </div>
-                <div class="toc">
-                    <h3>Properties</h3>
-                    <ul>
-                        <li><a href="#prop_version">version</a></li>
-                        <li><a href="#prop_config">Config</a></li>
-                    </ul>
-                    <h3>Methods</h3>
-                    <ul>
-                        <li><a href="#method_add">add</a></li>
-                        <li><a href="#method_ready">ready</a></li>
-                        <li><a href="#method_available">available</a></li>
-                        <li><a href="#method_mix">mix</a></li>
-                        <li><a href="#method_merge">merge</a></li>
-                        <li><a href="#method_augment">augment</a></li>
-                        <li><a href="#method_extend">extend</a></li>
-                        <li><a href="#method_namespace">namespace</a></li>
-                        <li><a href="#method_app">app</a></li>
-                        <li><a href="#method_log">log</a></li>
-                        <li><a href="#method_error">error</a></li>
-                        <li><a href="#method_guid">guid</a></li>
-                    </ul>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_error">error</a>
+                        <code>void <em>error</em> ( msg )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>抛出错误异常。</p>
+                        <p class="notice">只有在 debug 模式下，才会抛出异常。debug 模式的说明请参考 <a href="#prop_config">Config</a></p>
+                    </div>
                 </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_guid">guid</a>
+                        <code>String <em>guid</em> ( pre )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>返回全局唯一 id.</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-    <div id="footer">
-        <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc">
+                <a href="../index.html">home</a> &rsaquo;
+                <a href="index.html">kissy</a> &rsaquo;
+                kissy :
+            </div>
+            <div class="toc">
+                <h3>Properties</h3>
+                <ul>
+                    <li><a href="#prop_version">version</a></li>
+                    <li><a href="#prop_config">Config</a></li>
+                </ul>
+                <h3>Methods</h3>
+                <ul>
+                    <li><a href="#method_add">add</a></li>
+                    <li><a href="#method_ready">ready</a></li>
+                    <li><a href="#method_available">available</a></li>
+                    <li><a href="#method_mix">mix</a></li>
+                    <li><a href="#method_merge">merge</a></li>
+                    <li><a href="#method_augment">augment</a></li>
+                    <li><a href="#method_extend">extend</a></li>
+                    <li><a href="#method_namespace">namespace</a></li>
+                    <li><a href="#method_app">app</a></li>
+                    <li><a href="#method_log">log</a></li>
+                    <li><a href="#method_error">error</a></li>
+                    <li><a href="#method_guid">guid</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
 </div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Aug 5 16:06
 */
 /*
 KISSY CSS Reset
@@ -53,7 +53,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Aug 5 16:06
 */
 /*
 双飞翼栅格布局 Flying Swing Grids Layout
@@ -62,14 +62,9 @@ build time: Jul 22 22:54
 */
 
 /* 居中 */
-#page, #header, #content, #footer {
+#header, #content, #footer {
     margin-left: auto;
     margin-right: auto;
-}
-
-/* 950px 宽 */
-.w950 {
-    width: 950px;
 }
 
 /** 布局基础样式 **/

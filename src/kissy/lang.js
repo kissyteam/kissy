@@ -1,8 +1,8 @@
 /**
- * @module  kissy-lang
+ * @module  lang
  * @author  lifesinger@gmail.com
  */
-KISSY.add('kissy-lang', function(S, undefined) {
+KISSY.add('lang', function(S, undefined) {
 
     var win = window, doc = document, loc = location,
         AP = Array.prototype,
@@ -12,7 +12,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
         encode = encodeURIComponent,
         decode = decodeURIComponent,
         HAS_OWN_PROPERTY = 'hasOwnProperty',
-        SEP = '&',
+        EMPTY = '', SEP = '&',
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
         REG_NOT_WHITE = /\S/;
@@ -88,11 +88,24 @@ KISSY.add('kissy-lang', function(S, undefined) {
          */
         trim: trim ?
             function(str) {
-                return (str == undefined) ? '' : trim.call(str);
+                return (str == undefined) ? EMPTY : trim.call(str);
             } :
             function(str) {
-                return (str == undefined) ? '' : str.toString().replace(REG_TRIM, '');
+                return (str == undefined) ? EMPTY : str.toString().replace(REG_TRIM, EMPTY);
             },
+
+        /**
+         * Substitutes keywords in a string using an object/array.
+         * Removes undefined keywords and ignores escaped keywords.
+         */
+        substitute: function(str, o, regexp) {
+            if(!S.isString(str) || !S.isPlainObject(o)) return str;
+
+            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
+                if (match.charAt(0) === '\\') return match.slice(1);
+                return (o[name] !== undefined) ? o[name] : EMPTY;
+            });
+        },
 
         /**
          * Executes the supplied function on each item in the array.
@@ -193,7 +206,7 @@ KISSY.add('kissy-lang', function(S, undefined) {
          */
         param: function(o, sep) {
             // 非 plain object, 直接返回空
-            if (!S.isPlainObject(o)) return '';
+            if (!S.isPlainObject(o)) return EMPTY;
             sep = sep || SEP;
 
             var buf = [], key, val;
@@ -203,20 +216,20 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
                 // val 为有效的非数组值
                 if (isValidParamValue(val)) {
-                    buf.push(key, '=', encode(val + ''), sep);
+                    buf.push(key, '=', encode(val + EMPTY), sep);
                 }
                 // val 为非空数组
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, '[]=', encode(val[i] + ''), sep);
+                            buf.push(key, '[]=', encode(val[i] + EMPTY), sep);
                         }
                     }
                 }
                 // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
             }
             buf.pop();
-            return buf.join('');
+            return buf.join(EMPTY);
         },
 
         /**
@@ -242,9 +255,9 @@ KISSY.add('kissy-lang', function(S, undefined) {
 
                 // pair[1] 可能包含 gbk 编码的中文，而 decodeURIComponent 仅能处理 utf-8 编码的中文，否则报错
                 try {
-                    val = decode(pair[1] || '');
+                    val = decode(pair[1] || EMPTY);
                 } catch (ex) {
-                    val = pair[1] || '';
+                    val = pair[1] || EMPTY;
                 }
 
                 if ((m = key.match(REG_ARR_KEY)) && m[1]) {
@@ -381,5 +394,6 @@ KISSY.add('kissy-lang', function(S, undefined) {
  *
  * TODO:
  *   - 分析 jq 的 isPlainObject 对 constructor 等细节处理
+ *   - unparam 对 false, null, undefined 等值的还原？需不需要？歧义性
  *
  */

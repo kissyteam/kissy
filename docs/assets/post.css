@@ -1,0 +1,10 @@
+/* post 通用样式，用于 src 目录下 research.html 等文件 */
+@import url('base-min.css');
+@import url('../../src/cssreset/reset-post.css');
+
+.w1200 #header, .w1200 #content, .w1200 #footer { width: 1200px; }
+
+#header { padding: 25px 0; }
+
+#footer { background: url(dotted_line.gif) repeat-x 0 0; padding: 15px 10px; margin-top: 20px; }
+.copyright { color: #AAA; text-align: center; }

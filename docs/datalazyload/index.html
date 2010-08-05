@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>datalazyload - KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/tree/master/src/datalazyload/">src files</a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="section summary">
+                <p>很多时候，用户在第一屏就发生了跳转，大量“未曾露面”的图片下载对用户来说是无意义的。DataLazyload 可以“揣测”用户的行为，当用户想看某个区域时，才开始下载这个区域的图片。</p>
+                <p>除了延迟图片下载，DataLazyload 还可以延迟某个区域的所有 html 的渲染，这对 Tabs 等 UI 组件很有裨益，能提高整个页面的性能。</p>
+            </div>
+
+            <div class="section">
+                <p>如何调用呢，只需要如下简单的代码：</p>
+<pre class="example-code"><code>
+KISSY.ready(function(S) {
+    S.DataLazyload( { mod: 'auto' } );
+});</code></pre>
+                <p>这样，页面加载时就会自动延迟所有图片的下载，以及延迟特定 textarea 里的 html 渲染。</p>
+                <p class="tips">具体配置参数，推荐看下源码的开头部分：<a href="http://github.com/kissyteam/kissy/blob/master/src/datalazyload/datalazyload.js">datalazyload.js</a>. 相关注意事项，推荐阅读源码最后的注释。推荐采用 manual 模式，这样获得的效果最好。</p>
+            </div>
+            
+            <div class="section notes">
+                <p>讲起来有些枯燥，来看下示例吧，相信你一看就能明白：
+                <br>manual 模式：<a href="../../src/datalazyload/test.html">test.html</a>
+                <br>auto 模式：<a href="../../src/datalazyload/test-auto.html">test-auto.html</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc"><a href="../index.html">home</a> &rsaquo; datalazyload :</div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

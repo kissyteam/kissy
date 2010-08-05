@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>ImageZoom Test</title>
+<link href="../../build/cssreset-grids/reset-grids-min.css" rel="stylesheet"/>
+<link href="imagezoom.css" rel="stylesheet"/>
+<script src="../../build/packages/ks-core.js"></script>
+<script src="imagezoom.js"></script>
+<style>
+    body { padding: 20px; }
+</style>
+</head>
+
+<body>
+
+<h2>标准模式</h2>
+
+<div id="test-standard">
+    <img id="standard" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+</div>
+
+<p>跟随模式</p>
+<div id="test-follow">
+    <img id="follow" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+</div>
+
+<h2>小图不能访问</h2>
+<div id="test-bad-small">
+    <img id="bad-small" src="http://google.com/non-exist.jpg"/>
+</div>
+
+<h2>大图不能访问</h2>
+<div id="test-bad-big">
+    <img id="bad-big" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+</div>
+
+<h2>超级大图加载</h2>
+<div id="test-big-big">
+    <img id="big-big" src="http://pic.yupoo.com/comgeo/75753981a667/ibqyran4.jpg"/>
+</div>
+
+<script>
+    KISSY.ready(function(S) {
+
+        new S.ImageZoom("#standard", {
+                            bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg"
+                        });
+
+        new S.ImageZoom("#follow", {
+                            bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
+                            type: 'follow'
+                        }); 
+    });
+
+</script>
+</body>
+</html>

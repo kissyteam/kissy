@@ -11,7 +11,6 @@
 </script>
 
 <h2>Test Data</h2>
-
 <div id="test" style="width: 10px; height: 20px; position: absolute; top: 200px; left: 50px; text-align: center; color: #999">^o^</div>
 
 <div id="test2" style="width: 50px; height: 20px; text-align: center; position: relative; border: 1px solid green; background: #bca">test2</div>
@@ -20,6 +19,9 @@
 <div class="test3" style="width: 50px; height: 20px; margin: 10px; text-align: center; position: relative; border: 1px solid #478F45; background: #BDE877">test3 a</div>
 <div class="test3" style="width: 50px; height: 20px; margin: 10px; text-align: center; position: relative; border: 1px solid #C18F5A; background: #F7CA9B">test3 b</div>
 <button id="test3-btn">run .test3</button>
+
+<div id="test4" style="width: 200px; height: 80px; text-align: center; overflow: hidden; background: #bca">test4</div>
+<button id="test4-btn">run #test4</button>
 
 <script src="../../build/packages/ks-core.js"></script>
 <script src="anim-easing.js"></script>
@@ -55,7 +57,12 @@
 
     S.one('#test3-btn').on('click', function() {
         S.all('.test3').animate('left: 800px', 5, S.Easing.elasticOut);
-    })
+    });
+
+    // test for 0
+    S.one('#test4-btn').on('click', function() {
+        S.one('#test4').animate('width: 0', 3);
+    });
 
 </script>
 

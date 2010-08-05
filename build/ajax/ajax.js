@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Aug 5 16:06
 */
 /**
  * @module  ajax
@@ -26,15 +26,7 @@ KISSY.add('ajax', function(S) {
             node.onload = callback;
         };
 
-    S.Ajax = {
-
-        /**
-         * Sends an HTTP request to a remote server.
-         */
-        request: function(/*url, options*/) {
-            S.error('not implemented'); // TODO
-        },
-
+    S.mix(S, {
         /**
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
          */
@@ -50,9 +42,9 @@ KISSY.add('ajax', function(S) {
                 fn(node, callback);
             }
 
-            head.appendChild(node);
+            head.insertBefore(node, head.firstChild);
         }
-    };
+    });
 });
 
 /**

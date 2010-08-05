@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>kissy - KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css"/>
+<link rel="stylesheet" href="../assets/docs.css"/>
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74"/></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/tree/master/src/anim/anim.js">anim.js</a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="section summary">
+                <p>KISSY Anim 小巧玲珑，实现思路借鉴自 <a href="http://github.com/madrobby/emile">Emile</a>, 但比 Emile 更健壮，更易用。赶快来看看吧。</p>
+            </div>
+
+            <div class="section">
+                <h3 id="constructor">Constructor</h3>
+                <div class="method member">
+                    <h4>
+                        <code>
+                            new <em>Anim</em> ( elem, props, duration, easing, callback )
+                        </code>
+                    </h4>
+                    <div class="detail">
+                        <dl class="parameters">
+                            <dt>Parameters:</dt>
+                            <dd>
+                                <code class="param-name">elem</code>
+                                <code class="param-type">&lt;HTMLElement|String&gt;</code>
+                                动画元素，元素或选择器。
+                            </dd>
+                            <dd>
+                                <code class="param-name">props</code>
+                                <code class="param-type">&lt;String|Object&gt;</code>
+                                动画属性，字符串或普通对象。
+                            </dd>
+                            <dd>
+                                <code class="param-name">duration</code>
+                                <code class="param-type">&lt;Number&gt;</code>
+                                动画时长。
+                            </dd>
+                            <dd>
+                                <code class="param-name">easing</code>
+                                <code class="param-type">&lt;String|Function&gt;</code>
+                                平滑函数。
+                            </dd>
+                            <dd>
+                                <code class="param-name">callback</code>
+                                <code class="param-type">&lt;Function&gt;</code>
+                                回调函数。
+                            </dd>
+                        </dl>
+                        <p>范例：</p>
+<pre class="example-code"><code>
+KISSY.ready(function(S) {
+
+// 让 #test 元素的宽度在 5s 内从当前值变化到 100px
+var anim = new S.Anim('#test', 'width: 100px', 5, 'bounceOut');
+
+// props 可以是 map 对象
+// easing 可以是字符串，也可以是 S.Easing 函数
+// new 可以省略
+var anim2 = S.Anim(
+        '#test2',
+        { background: '#000', color: '#fff' },
+        5,
+        S.Easing.bounceOut);
+});</code></pre>
+                        <p id="support-style">props 支持的 CSS 属性有：</p>
+<pre class="example-code"><code>
+backgroundColor borderBottomColor borderBottomWidth borderBottomStyle
+borderLeftColor borderLeftWidth borderLeftStyle
+borderRightColor borderRightWidth borderRightStyle borderSpacing
+borderTopColor borderTopWidth borderTopStyle bottom color
+font fontFamily fontSize fontWeight height left letterSpacing lineHeight
+marginBottom marginLeft marginRight marginTop maxHeight
+maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineWidth
+paddingBottom paddingLeft
+paddingRight paddingTop right textIndent top width wordSpacing zIndex</code></pre>
+                        <p>虽然数量有限，但在实际应用中你根本不必担心想要设置的属性是否被支持，你大可“随心所欲”。</p>
+                        <p>easing 内置了 16 种，详见 <a href="anim-easing.html">anim-easing.js</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 id="methods">Methods</h3>
+                <p>Anim 还有两个方法：run 和 stop. 顾名思义，run 用来运行动画，stop 用来停止动画。</p>
+                <div class="method member">
+                    <h4>
+                        <a name="method_run">run</a>
+                        <code>
+                            Anim <em>run</em> ()
+                        </code>
+                    </h4>
+                    <div class="detail">
+                        <p>运行实例化的 Anim 对象，如：</p>
+<pre class="example-code"><code>
+KISSY.ready(function(S) {
+    var anim = S.Anim('#test', 'width: 100px', 5, 'backIn');
+    anim.run();
+});</code></pre>
+                    </div>
+                </div>
+                <div class="method member">
+                    <h4>
+                        <a name="method_stop">stop</a>
+                        <code>
+                            Anim <em>stop</em> (finish)
+                        </code>
+                    </h4>
+                    <div class="detail">
+                        <p>停止运行中的 Anim 对象。它有一个 <em>finish</em> 参数，为 falsy 值时，动画会在当前帧直接停止；为 true 值时，动画停止时会立刻跳到最后一帧。</p>
+<pre class="example-code"><code>
+KISSY.ready(function(S) {
+    var anim = S.Anim('#test', 'opacity: 0.6', 3, 'backIn').run();
+    // ...
+    anim.stop();
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section notes">
+                <p>看起来是否很简单呢，看了例子你会觉得更简单：<a href="../../src/anim/test.html">test.html</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc">
+                <a href="../index.html">home</a> &rsaquo;
+                <a href="index.html">anim</a> &rsaquo;
+                anim :
+            </div>
+            <div class="toc">
+                <h3>Methods</h3>
+                <ul>
+                    <li><a href="#method_run">run</a></li>
+                    <li><a href="#method_stop">stop</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

@@ -12,9 +12,7 @@
 
 <h2>Test Data</h2>
 
-<script src="../kissy/kissy.js"></script>
-<script src="../kissy/kissy-lang.js"></script>
-<script src="../kissy/kissy-ua.js"></script>
+<script src="../../build/kissy/kissy-pkg.js"></script>
 
 <script src="dom.js"></script>
 <script src="selector.js"></script>
@@ -158,6 +156,13 @@
         S.later(function() {
             if(window['g_testLoadScriptViaInnerHTML']) KISSY.Test.echo('test-dom-create.js callback is fired.');
         }, 500);
+
+        // exceptions
+        try {
+            DOM.html(t, 1);
+        } catch(ex) {
+            test.fail(ex);
+        }
     }
 
     function test_remove(test) {

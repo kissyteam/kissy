@@ -8,12 +8,13 @@ KISSY.add('dom-create', function(S, undefined) {
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
         isSupportedNode = DOM._isSupportedNode,
         isElementNode = DOM._isElementNode,
+        isKSNode = DOM._isKSNode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc.createElement(DIV),
         RE_TAG = /<(\w+)/,
-        RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
         RE_SCRIPT = /<script([^>]*)>([\s\S]*?)<\/script>/ig,
+        RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
         RE_SCRIPT_SRC = /\ssrc=(['"])(.*?)\1/i,
         RE_SCRIPT_CHARSET = /\scharset=(['"])(.*?)\1/i;
 
@@ -23,7 +24,8 @@ KISSY.add('dom-create', function(S, undefined) {
          * Creates a new HTMLElement using the provided html string.
          */
         create: function(html, props, ownerDoc) {
-            if (isSupportedNode(html)) return html;
+            if (isSupportedNode(html)) return cloneNode(html);
+            if (isKSNode(html)) return cloneNode(html[0]);
             if (!(html = S.trim(html))) return null;
 
             var ret = null, creators = DOM._creators,
@@ -102,10 +104,8 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 添加成员到元素中
     function attachProps(elem, props) {
-        if (isElementNode(elem) && props) {
-            for (var p in props) {
-                DOM.attr(elem, p, props[p]);
-            }
+        if (isElementNode(elem) && S.isPlainObject(props)) {
+            DOM.attr(elem, props);
         }
         return elem;
     }
@@ -133,6 +133,16 @@ KISSY.add('dom-create', function(S, undefined) {
         return ret;
     }
 
+    function cloneNode(elem) {
+        var ret = elem.cloneNode(true);
+        /*
+         * if this is MSIE 6/7, then we need to copy the innerHTML to
+         * fix a bug related to some form field elements
+         */
+        if (UA.ie < 8) ret.innerHTML = elem.innerHTML;
+        return ret;
+    }
+
     /**
      * Update the innerHTML of this element, optionally searching for and processing scripts.
      * @refer http://www.sencha.com/deploy/dev/docs/source/Element-more.html#method-Ext.Element-update
@@ -145,7 +155,9 @@ KISSY.add('dom-create', function(S, undefined) {
             return;
         }
 
-        var id = S.guid('ks-tmp-');
+        var id = S.guid('ks-tmp-'),
+            re_script = new RegExp(RE_SCRIPT); // 防止
+
         html += '<span id="' + id + '"></span>';
 
         // 确保脚本执行时，相关联的 DOM 元素已经准备好
@@ -154,11 +166,10 @@ KISSY.add('dom-create', function(S, undefined) {
                 match, attrs, srcMatch, charsetMatch,
                 t, s, text;
 
-            RE_SCRIPT.lastIndex = 0;
-            while ((match = RE_SCRIPT.exec(html))) {
+            re_script.lastIndex = 0;
+            while ((match = re_script.exec(html))) {
                 attrs = match[1];
                 srcMatch = attrs ? attrs.match(RE_SCRIPT_SRC) : false;
-
                 // script via src
                 if (srcMatch && srcMatch[2]) {
                     s = doc.createElement('script');
@@ -173,7 +184,6 @@ KISSY.add('dom-create', function(S, undefined) {
                 // inline script
                 else if ((text = match[2]) && text.length > 0) {
                     S.globalEval(text);
-
                 }
             }
 
@@ -189,7 +199,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 直接通过 innerHTML 设置 html
     function setHTMLSimple(elem, html) {
-        html = html.replace(RE_SCRIPT, ''); // 过滤掉所有 script
+        html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所有 script
         try {
             elem.innerHTML = html;
         } catch(ex) { // table.innerHTML = html will throw error in ie.

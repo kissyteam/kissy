@@ -265,15 +265,15 @@
         test.status = 'sep';
     }
 
-    function test_insertBefore(test) {
-        S.Node('<p id="test-insert">inserted node</p>').insertBefore('#test-div');
-        if(S.all('#test-insert').next().attr('id') !== 'test-div') test.fail();
-    }
-
-    function test_insertAfter(test) {
-        S.Node('<p id="test-insert2">inserted node2</p>').insertAfter('#test-div');
-        if(S.all('#test-insert2').prev().attr('id') !== 'test-div') test.fail();
-    }
+//    function test_insertBefore(test) {
+//        S.Node('<p id="test-insert">inserted node</p>').insertBefore('#test-div');
+//        if(S.all('#test-insert').next().attr('id') !== 'test-div') test.fail();
+//    }
+//
+//    function test_insertAfter(test) {
+//        S.Node('<p id="test-insert2">inserted node2</p>').insertAfter('#test-div');
+//        if(S.all('#test-insert2').prev().attr('id') !== 'test-div') test.fail();
+//    }
 
     function test_append(test) {
         S.all('.test-div').append('<p class="test-append">append node</p>');

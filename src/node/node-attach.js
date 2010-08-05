@@ -48,7 +48,7 @@ KISSY.add('node-attach', function(S, undefined) {
                             return function() {
                                 var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
                                     ret = fn.apply(DOM, [elems].concat(S.makeArray(arguments)));
-                                return ret ? new S[ret.length ? 'NodeList' : 'Node'](ret) : null;
+                                return ret ? new S[S.isArray(ret) ? 'NodeList' : 'Node'](ret) : null;
                             };
 
                         default:
@@ -105,7 +105,13 @@ KISSY.add('node-attach', function(S, undefined) {
     attach(['remove']);
 
     // dom-insertion
-    //attach(['insertBefore', 'insertAfter'], ALWAYS_NODE); TODO: 目前参数传递有问题
+    S.each(['insertBefore', 'insertAfter'], function(methodName) {
+        // 目前只给 Node 添加，不考虑 NodeList（含义太复杂）
+        NP[methodName] = function(refNode) {
+            DOM[methodName].call(DOM, this[0], refNode);
+            return this;
+        };
+    });
     S.each([NP, NLP], function(P) {
         S.mix(P, {
 

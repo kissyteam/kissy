@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Aug 5 16:06
 */
 /**
  * 数据延迟加载组件
@@ -14,12 +14,11 @@ KISSY.add('datalazyload', function(S, undefined) {
     var DOM = S.DOM, Event = S.Event,
         win = window, doc = document,
 
-        IMG_DATA_SRC = 'data-lazyload-src',
-        TEXTAREA_DATA_CLS = 'ks-datalazyload',
-        CUSTOM_IMG_DATA_SRC = IMG_DATA_SRC + '-custom',
-        CUSTOM_TEXTAREA_DATA_CLS = TEXTAREA_DATA_CLS + '-custom',
-        MOD = { AUTO: 'auto', MANUAL: 'manual' },
-        DISPLAY = 'none', DEFAULT = 'default', NONE = 'none',
+        IMG_SRC_DATA = 'data-ks-lazyload',
+        AREA_DATA_CLS = 'ks-datalazyload',
+        CUSTOM = '-custom',
+        MANUAL = 'manual',
+        DISPLAY = 'display', DEFAULT = 'default', NONE = 'none',
         SCROLL = 'scroll', RESIZE = 'resize',
 
         defaultConfig = {
@@ -27,10 +26,10 @@ KISSY.add('datalazyload', function(S, undefined) {
             /**
              * 懒处理模式
              *   auto   - 自动化。html 输出时，不对 img.src 做任何处理
-             *   manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 IMG_DATA_SRC
+             *   manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 IMG_SRC_DATA
              * 注：对于 textarea 数据，只有手动模式
              */
-            mod: MOD.MANUAL,
+            mod: MANUAL,
 
             /**
              * 当前视窗往下，diff px 外的 img/textarea 延迟加载
@@ -142,10 +141,10 @@ KISSY.add('datalazyload', function(S, undefined) {
          */
         _filterImg: function(img) {
             var self = this,
-                dataSrc = img.getAttribute(IMG_DATA_SRC),
+                dataSrc = img.getAttribute(IMG_SRC_DATA),
                 threshold = self.threshold,
                 placeholder = self.config.placeholder,
-                isManualMod = self.config.mod === MOD.MANUAL;
+                isManualMod = self.config.mod === MANUAL;
 
             // 手工模式，只处理有 data-src 的图片
             if (isManualMod) {
@@ -160,7 +159,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             else {
                 // 注意：已有 data-src 的项，可能已有其它实例处理过，不用再次处理
                 if (DOM.offset(img).top > threshold && !dataSrc) {
-                    DOM.attr(img, IMG_DATA_SRC, img.src);
+                    DOM.attr(img, IMG_SRC_DATA, img.src);
                     if (placeholder !== NONE) {
                         img.src = placeholder;
                     } else {
@@ -175,7 +174,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          * filter for lazyload textarea
          */
         _filterArea: function(area) {
-            return DOM.hasClass(area, TEXTAREA_DATA_CLS);
+            return DOM.hasClass(area, AREA_DATA_CLS);
         },
 
         /**
@@ -256,7 +255,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          * @static
          */
         _loadImgSrc: function(img, flag) {
-            flag = flag || IMG_DATA_SRC;
+            flag = flag || IMG_SRC_DATA;
             var dataSrc = img.getAttribute(flag);
 
             if (dataSrc && img.src != dataSrc) {
@@ -278,14 +277,12 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 监控滚动，处理 textarea
          */
         _loadArea: function(area) {
-            var self = this,
-                top = DOM.offset(area).top;
+            var self = this, top,
+                isHidden = DOM.css(area, DISPLAY) === NONE;
 
-            // 注：area 可能处于 display: none 状态，top 返回 0
-            // 这种情况下用 area.parentNode 的 Y 值来判断
-            if (!top && DOM.css(area, DISPLAY) == NONE) {
-                top = DOM.offset(area.parentNode).top;
-            }
+            // 注：area 可能处于 display: none 状态，DOM.offset(area).top 返回 0
+            // 这种情况下用 area.parentNode 的 Y 值来替代
+            top = DOM.offset(isHidden ? area.parentNode : area).top;
 
             if (top <= self.threshold + DOM.scrollTop()) {
                 self._loadAreaData(area.parentNode, area);
@@ -337,7 +334,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 加载自定义延迟数据
          * @static
          */
-        loadCustomLazyData: function(containers, type, flag) {
+        loadCustomLazyData: function(containers, type) {
             var self = this, area, imgs;
 
             // 支持数组
@@ -348,25 +345,24 @@ KISSY.add('datalazyload', function(S, undefined) {
             // 遍历处理
             S.each(containers, function(container) {
                 switch (type) {
-
-                    case 'textarea-data':
-                        area = S.get('textarea', container);
-                        if (area && DOM.hasClass(area, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
-                            self._loadAreaData(container, area);
-                        }
-                        break;
-                    
-                    //case 'img-src':
-                    default:
+                    case 'img-src':
                         if (container.nodeName === 'IMG') { // 本身就是图片
                             imgs = [container];
                         } else {
                             imgs = S.query('img', container);
                         }
-
+                        
                         S.each(imgs, function(img) {
-                            self._loadImgSrc(img, flag || CUSTOM_IMG_DATA_SRC);
+                            self._loadImgSrc(img, IMG_SRC_DATA + CUSTOM);
                         });
+                        
+                        break;
+                    
+                    default:
+                        area = S.get('textarea', container);
+                        if (area && DOM.hasClass(area, AREA_DATA_CLS + CUSTOM)) {
+                            self._loadAreaData(container, area);
+                        }
                 }
             });
         }
@@ -426,14 +422,15 @@ KISSY.add('datalazyload', function(S, undefined) {
  */
 
 /**
- * TODO:
+ * zTODO:
  *   - [取消] 背景图片的延迟加载（对于 css 里的背景图片和 sprite 很难处理）
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  */
 
 /**
  * UPDATE LOG:
- *   - 2010-07-10 yiminghe@gmail.com(chengyu) 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调
+ *   - 2010-07-31 yubo IMG_SRC_DATA 由 data-lazyload-src 更名为 data-ks-lazyload + 支持 touch 设备
+ *   - 2010-07-10 chengyu 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调
  *   - 2010-05-10 yubo ie6 下，在 dom ready 后执行，会导致 placeholder 重复加载，为比避免此问题，默认为 none, 去掉占位图
  *   - 2010-04-05 yubo 重构，使得对 YUI 的依赖仅限于 YDOM
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数

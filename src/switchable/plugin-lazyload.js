@@ -7,19 +7,18 @@ KISSY.add('switchable-lazyload', function(S) {
     var DOM = S.DOM,
         EVENT_BEFORE_SWITCH = 'beforeSwitch',
         IMG_SRC = 'img-src',
-        TEXTAREA_DATA = 'textarea-data',
+        AREA_DATA = 'area-data',
         FLAGS = { },
         Switchable = S.Switchable;
 
-    FLAGS[IMG_SRC] = 'data-lazyload-src-custom';
-    FLAGS[TEXTAREA_DATA] = 'ks-datalazyload-custom';
+    FLAGS[IMG_SRC] = 'data-ks-lazyload-custom';
+    FLAGS[AREA_DATA] = 'ks-datalazyload-custom';
 
     /**
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        lazyDataType: '', // 'img-src' or 'textarea-data'
-        lazyDataFlag: ''  // 'data-lazyload-src-custom' or 'ks-datalazyload-custom'
+        lazyDataType: AREA_DATA // or IMG_SRC
     });
 
     /**
@@ -32,7 +31,7 @@ KISSY.add('switchable-lazyload', function(S) {
         init: function(host) {
             var DataLazyload = S.DataLazyload,
                 cfg = host.config,
-                type = cfg.lazyDataType, flag = cfg.lazyDataFlag || FLAGS[type];
+                type = cfg.lazyDataType, flag = FLAGS[type];
 
             if (!DataLazyload || !type || !flag) return; // 没有延迟项
 
@@ -46,7 +45,7 @@ KISSY.add('switchable-lazyload', function(S) {
                     from = ev.toIndex * steps ,
                     to = from + steps;
 
-                DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type, flag);
+                DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type);
                 if (isAllDone()) {
                     host.detach(EVENT_BEFORE_SWITCH, loadLazyData);
                 }
@@ -58,7 +57,7 @@ KISSY.add('switchable-lazyload', function(S) {
             function isAllDone() {
                 var elems, i, len,
                     isImgSrc = type === IMG_SRC,
-                    tagName = isImgSrc ? 'img' : (type === TEXTAREA_DATA ? 'textarea' : '');
+                    tagName = isImgSrc ? 'img' : (type === AREA_DATA ? 'textarea' : '');
 
                 if (tagName) {
                     elems = S.query(tagName, host.container);

@@ -1,94 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
-*/
-/**
- * @module  cookie
- * @author  lifesinger@gmail.com
- * @depends ks-core
- */
-KISSY.add('cookie', function(S) {
-
-    var doc = document,
-        encode = encodeURIComponent,
-        decode = decodeURIComponent;
-
-    S.Cookie = {
-
-        /**
-         * 获取 cookie 值
-         * @return {string} 如果 name 不存在，返回 undefined
-         */
-        get: function(name) {
-            var ret, m;
-
-            if (isNotEmptyString(name)) {
-                if ((m = doc.cookie.match('(?:^| )' + name + '(?:(?:=([^;]*))|;|$)'))) {
-                    ret = m[1] ? decode(m[1]) : '';
-                }
-            }
-            return ret;
-        },
-
-        set: function(name, val, expires, domain, path, secure) {
-            var text = encode(val), date = expires;
-
-            // 从当前时间开始，多少天后过期
-            if (typeof date === 'number') {
-                date = new Date();
-                date.setTime(date.getTime() + expires * 86400000);
-            }
-            // expiration date
-            if (date instanceof Date) {
-                text += '; expires=' + date.toUTCString();
-            }
-
-            // domain
-            if (isNotEmptyString(domain)) {
-                text += '; domain=' + domain;
-            }
-
-            // path
-            if (isNotEmptyString(path)) {
-                text += '; path=' + path;
-            }
-
-            // secure
-            if (secure) {
-                text += '; secure';
-            }
-
-            doc.cookie = name + '=' + text;
-        },
-
-        remove: function(name, domain, path, secure) {
-            // 置空，并立刻过期
-            this.set(name, '', 0, domain, path, secure);
-        }
-    };
-
-    function isNotEmptyString(val) {
-        return S.isString(val) && val !== '';
-    }
-
-});
-
-/**
- * NOTES:
- *
- *  2010.04
- *   - get 方法要考虑 ie 下，
- *     值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
- *     除了正则获取，还可以 split 字符串的方式来获取。
- *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
- *     独立成静态工具类的方式更优。
- *
- */
-/*
-Copyright 2010, KISSY UI Library v1.1.0
-MIT Licensed
-build time: Jul 22 22:54
+build time: Aug 5 16:06
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -417,7 +330,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Aug 5 16:06
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -1493,7 +1406,453 @@ KISSY.ExternalSelector._filter = function(selector, filter) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:54
+build time: Aug 5 16:06
+*/
+/**
+ * @module anim-easing
+ */
+KISSY.add('anim-easing', function(S) {
+
+    // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
+    // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
+    // Preview: http://www.robertpenner.com/easing/easing_demo.html
+
+    /**
+     * 和 YUI 的 Easing 相比，S.Easing 进行了归一化处理，参数调整为：
+     * @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
+     * @param {Number} b Starting value  b = 0
+     * @param {Number} c Delta between start and end values  c = 1
+     * @param {Number} d Total length of animation d = 1
+     */
+
+    var M = Math, PI = M.PI,
+        pow = M.pow, sin = M.sin,
+        BACK_CONST = 1.70158,
+
+        Easing = {
+
+            /**
+             * Uniform speed between points.
+             */
+            easeNone: function (t) {
+                return t;
+            },
+
+            /**
+             * Begins slowly and accelerates towards end. (quadratic)
+             */
+            easeIn: function (t) {
+                return t * t;
+            },
+
+            /**
+             * Begins quickly and decelerates towards end.  (quadratic)
+             */
+            easeOut: function (t) {
+                return ( 2 - t) * t;
+            },
+
+            /**
+             * Begins slowly and decelerates towards end. (quadratic)
+             */
+            easeBoth: function (t) {
+                return (t *= 2) < 1 ?
+                    .5 * t * t :
+                    .5 * (1 - (--t) * (t - 2));
+            },
+
+            /**
+             * Begins slowly and accelerates towards end. (quartic)
+             */
+            easeInStrong: function (t) {
+                return t * t * t * t;
+            },
+
+            /**
+             * Begins quickly and decelerates towards end.  (quartic)
+             */
+            easeOutStrong: function (t) {
+                return 1 - (--t) * t * t * t;
+            },
+
+            /**
+             * Begins slowly and decelerates towards end. (quartic)
+             */
+            easeBothStrong: function (t) {
+                return (t *= 2) < 1 ?
+                    .5 * t * t * t * t :
+                    .5 * (2 - (t -= 2) * t * t * t);
+            },
+
+            /**
+             * Snap in elastic effect.
+             */
+
+            elasticIn: function (t) {
+                var p = .3, s = p / 4;
+                if (t === 0 || t === 1) return t;
+                return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
+            },
+
+            /**
+             * Snap out elastic effect.
+             */
+            elasticOut: function (t) {
+                var p = .3, s = p / 4;
+                if (t === 0 || t === 1) return t;
+                return pow(2, -10 * t) * sin((t - s) * (2 * PI) / p) + 1;
+            },
+
+            /**
+             * Snap both elastic effect.
+             */
+            elasticBoth: function (t) {
+                var p = .45, s = p / 4;
+                if (t === 0 || (t *= 2) === 2) return t;
+
+                if (t < 1) {
+                    return -.5 * (pow(2, 10 * (t -= 1)) *
+                        sin((t - s) * (2 * PI) / p));
+                }
+                return pow(2, -10 * (t -= 1)) *
+                    sin((t - s) * (2 * PI) / p) * .5 + 1;
+            },
+
+            /**
+             * Backtracks slightly, then reverses direction and moves to end.
+             */
+            backIn: function (t) {
+                if (t === 1) t -= .001;
+                return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
+            },
+
+            /**
+             * Overshoots end, then reverses and comes back to end.
+             */
+            backOut: function (t) {
+                return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
+            },
+
+            /**
+             * Backtracks slightly, then reverses direction, overshoots end,
+             * then reverses and comes back to end.
+             */
+            backBoth: function (t) {
+                if ((t *= 2 ) < 1) {
+                    return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
+                }
+                return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
+            },
+
+            /**
+             * Bounce off of start.
+             */
+            bounceIn: function (t) {
+                return 1 - Easing.bounceOut(1 - t);
+            },
+
+            /**
+             * Bounces off end.
+             */
+            bounceOut: function (t) {
+                var s = 7.5625, r;
+
+                if (t < (1 / 2.75)) {
+                    r = s * t * t;
+                }
+                else if (t < (2 / 2.75)) {
+                    r =  s * (t -= (1.5 / 2.75)) * t + .75;
+                }
+                else if (t < (2.5 / 2.75)) {
+                    r =  s * (t -= (2.25 / 2.75)) * t + .9375;
+                }
+                else {
+                    r =  s * (t -= (2.625 / 2.75)) * t + .984375;
+                }
+
+                return r;
+            },
+
+            /**
+             * Bounces off start and end.
+             */
+            bounceBoth: function (t) {
+                if (t < .5) {
+                    return Easing.bounceIn(t * 2) * .5;
+                }
+                return Easing.bounceOut(t * 2 - 1) * .5 + .5;
+            }
+        };
+
+    S.Easing = Easing;
+});
+
+/**
+ * TODO:
+ *  - test-easing.html 详细的测试 + 曲线可视化
+ *
+ * NOTES:
+ *  - 综合比较 jQuery UI/scripty2/YUI 的 easing 命名，还是觉得 YUI 的对用户
+ *    最友好。因此这次完全照搬 YUI 的 Easing, 只是代码上做了点压缩优化。
+ *
+ */
+/**
+ * @module   anim
+ * @author   lifesinger@gmail.com
+ * @depends  ks-core
+ */
+KISSY.add('anim', function(S, undefined) {
+
+    var DOM = S.DOM, Easing = S.Easing,
+        PARSE_FLOAT = parseFloat,
+        parseEl = DOM.create('<div>'),
+        PROPS = ('backgroundColor borderBottomColor borderBottomWidth borderBottomStyle borderLeftColor borderLeftWidth borderLeftStyle ' +
+            'borderRightColor borderRightWidth borderRightStyle borderSpacing borderTopColor borderTopWidth borderTopStyle bottom color ' +
+            'font fontFamily fontSize fontWeight height left letterSpacing lineHeight marginBottom marginLeft marginRight marginTop maxHeight ' +
+            'maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineWidth paddingBottom paddingLeft ' +
+            'paddingRight paddingTop right textIndent top width wordSpacing zIndex').split(' '),
+
+        STEP_INTERVAL = 13,
+        OPACITY = 'opacity',
+        EVENT_START = 'start',
+        EVENT_STEP = 'step',
+        EVENT_COMPLETE = 'complete',
+
+        defaultConfig = {
+            duration: 1,
+            easing: Easing.easeNone
+            //queue: true
+        };
+
+    /**
+     * Anim Class
+     * @constructor
+     */
+    function Anim(elem, props, duration, easing, callback) {
+        // ignore non-exist element
+        if (!(elem = S.get(elem))) return;
+
+        // factory or constructor
+        if (!(this instanceof Anim)) {
+            return new Anim(elem, props, duration, easing, callback);
+        }
+
+        var self = this,
+            isConfig = S.isPlainObject(duration),
+            style = props, config;
+
+        /**
+         * the related dom element
+         */
+        self.domEl = elem;
+
+        /**
+         * the transition properties
+         * 可以是 "width: 200px; color: #ccc" 字符串形式
+         * 也可以是 { width: '200px', color: '#ccc' } 对象形式
+         */
+        if (S.isPlainObject(style)) {
+            style = S.param(style, ';').replace(/=/g, ':');
+        }
+        self.props = normalize(style);
+        self.targetStyle = style;
+        // normalize 后：
+        // props = {
+        //          width: { v: 200, unit: 'px', f: interpolate }
+        //          color: { v: '#ccc', unit: '', f: color }
+        //         }
+
+        /**
+         * animation config
+         */
+        if (isConfig) {
+            config = S.merge(defaultConfig, duration);
+        } else {
+            config = S.clone(defaultConfig);
+            duration && (config.duration = PARSE_FLOAT(duration, 10) || 1);
+            S.isString(easing) && (easing = Easing[easing]); // 可以是字符串, 比如 'easingOut'
+            S.isFunction(easing) && (config.easing = easing);
+            S.isFunction(callback) && (config.complete = callback);
+        }
+        self.config = config;
+
+        /**
+         * timer
+         */
+        //self.timer = undefined;
+
+        // register callback
+        if (S.isFunction(callback)) {
+            self.on(EVENT_COMPLETE, callback);
+        }
+    }
+
+    S.augment(Anim, S.EventTarget, {
+
+        run: function() {
+            var self = this, config = self.config,
+                elem = self.domEl,
+                duration = config.duration * 1000,
+                easing = config.easing,
+                start = S.now(), finish = start + duration,
+                target = self.props,
+                source = {}, prop, go;
+
+            for (prop in target) source[prop] = parse(DOM.css(elem, prop));
+            if(self.fire(EVENT_START) === false) return;
+
+            self.stop(); // 先停止掉正在运行的动画
+
+            self.timer = S.later((go = function () {
+                var time = S.now(),
+                    t = time > finish ? 1 : (time - start) / duration,
+                    sp, tp, b;
+
+                for (prop in target) {
+                    sp = source[prop];
+                    tp = target[prop];
+
+                    // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
+                    // 这时要把 sp 的单位调整为和 tp 的一致
+                    if(tp.v == 0) tp.u = sp.u;
+
+                    // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
+                    // 比如：ie 下 border-width 默认为 medium
+                    if(sp.u !== tp.u) sp.v = 0;
+
+                    // go
+                    DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
+                }
+
+                if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
+                    self.stop();
+                    // complete 事件只在动画到达最后一帧时才触发
+                    if(b) self.fire(EVENT_COMPLETE);
+                }
+            }), STEP_INTERVAL, true);
+
+            // 立刻执行
+            go();
+
+            return self;
+        },
+
+        stop: function(finish) {
+            var self = this, elem = self.domEl,
+                style = self.targetStyle;
+
+            // 停止定时器
+            if (self.timer) {
+                self.timer.cancel();
+                self.timer = undefined;
+            }
+
+            // 直接设置到最终样式
+            if(finish) {
+                if(S.UA.ie && style.indexOf(OPACITY) > -1) {
+                    DOM.css(elem, OPACITY, self.props[OPACITY].v);
+                }
+                elem.style.cssText += ';' + style;
+                self.fire(EVENT_COMPLETE);
+            }
+
+            return self;
+        }
+    });
+
+    S.Anim = Anim;
+
+    function normalize(style) {
+        var css, rules = { }, i = PROPS.length, v;
+        parseEl.innerHTML = '<div style="' + style + '"></div>';
+        css = parseEl.firstChild.style;
+        while (i--) if ((v = css[PROPS[i]])) rules[PROPS[i]] = parse(v);
+        return rules;
+    }
+
+    function parse(val) {
+        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d\.]+/, '');
+        return isNaN(num) ? { v: unit, u: '', f: colorEtc } : { v: num, u: unit, f: interpolate };
+    }
+
+    function interpolate(source, target, pos) {
+        return (source + (target - source) * pos).toFixed(3);
+    }
+
+    function colorEtc(source, target, pos) {
+        var i = 2, j, c, tmp, v = [], r = [];
+
+        while (j = 3, c = arguments[i - 1], i--) {
+            if (s(c, 0, 4) === 'rgb(') {
+                c = c.match(/\d+/g);
+                while (j--) v.push(~~c[j]);
+            }
+            else if(s(c, 0) === '#') {
+                if (c.length === 4) c = '#' + s(c, 1) + s(c, 1) + s(c, 2) + s(c, 2) + s(c, 3) + s(c, 3);
+                while (j--) v.push(parseInt(s(c, 1 + j * 2, 2), 16));
+            }
+            else { // red, black 等值，以及其它一切非颜色值，直接返回 target
+                return target;
+            }
+        }
+
+        while (j--) {
+            tmp = ~~(v[j + 3] + (v[j] - v[j + 3]) * pos);
+            r.push(tmp < 0 ? 0 : tmp > 255 ? 255 : tmp);
+        }
+
+        return 'rgb(' + r.join(',') + ')';
+    }
+
+    function s(str, p, c) {
+        return str.substr(p, c || 1);
+    }
+});
+
+/**
+ * TODO:
+ *  - 实现 jQuery Effects 的 queue / specialEasing / += / toogle,show,hide 等特性
+ *  - 还有些情况就是动画不一定改变 CSS, 有可能是 scroll-left 等
+ *
+ * NOTES:
+ *  - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
+ *  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
+ *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile
+ */
+/**
+ * @module  anim-node-plugin
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('anim-node-plugin', function(S, undefined) {
+
+    var Anim = S.Anim,
+        NP = S.Node.prototype, NLP = S.NodeList.prototype;
+
+    S.each([NP, NLP], function(P) {
+
+        P.animate = function() {
+            var args = S.makeArray(arguments);
+
+            S.each(this, function(elem) {
+                Anim.apply(undefined, [elem].concat(args)).run();
+            });
+            
+            return this;
+        };
+    })
+
+});
+
+/**
+ * TODO:
+ *  - ����ֱ�Ӹ� Node ��� Node.addMethods ����
+ *  - �����Ƿ���� slideUp/slideDown/fadeIn/show/hide �ȿ�ݷ���
+ *
+ */
+/*
+Copyright 2010, KISSY UI Library v1.1.0
+MIT Licensed
+build time: Aug 5 16:06
 */
 /**
  * 数据延迟加载组件
@@ -1506,12 +1865,11 @@ KISSY.add('datalazyload', function(S, undefined) {
     var DOM = S.DOM, Event = S.Event,
         win = window, doc = document,
 
-        IMG_DATA_SRC = 'data-lazyload-src',
-        TEXTAREA_DATA_CLS = 'ks-datalazyload',
-        CUSTOM_IMG_DATA_SRC = IMG_DATA_SRC + '-custom',
-        CUSTOM_TEXTAREA_DATA_CLS = TEXTAREA_DATA_CLS + '-custom',
-        MOD = { AUTO: 'auto', MANUAL: 'manual' },
-        DISPLAY = 'none', DEFAULT = 'default', NONE = 'none',
+        IMG_SRC_DATA = 'data-ks-lazyload',
+        AREA_DATA_CLS = 'ks-datalazyload',
+        CUSTOM = '-custom',
+        MANUAL = 'manual',
+        DISPLAY = 'display', DEFAULT = 'default', NONE = 'none',
         SCROLL = 'scroll', RESIZE = 'resize',
 
         defaultConfig = {
@@ -1519,10 +1877,10 @@ KISSY.add('datalazyload', function(S, undefined) {
             /**
              * 懒处理模式
              *   auto   - 自动化。html 输出时，不对 img.src 做任何处理
-             *   manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 IMG_DATA_SRC
+             *   manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 IMG_SRC_DATA
              * 注：对于 textarea 数据，只有手动模式
              */
-            mod: MOD.MANUAL,
+            mod: MANUAL,
 
             /**
              * 当前视窗往下，diff px 外的 img/textarea 延迟加载
@@ -1634,10 +1992,10 @@ KISSY.add('datalazyload', function(S, undefined) {
          */
         _filterImg: function(img) {
             var self = this,
-                dataSrc = img.getAttribute(IMG_DATA_SRC),
+                dataSrc = img.getAttribute(IMG_SRC_DATA),
                 threshold = self.threshold,
                 placeholder = self.config.placeholder,
-                isManualMod = self.config.mod === MOD.MANUAL;
+                isManualMod = self.config.mod === MANUAL;
 
             // 手工模式，只处理有 data-src 的图片
             if (isManualMod) {
@@ -1652,7 +2010,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             else {
                 // 注意：已有 data-src 的项，可能已有其它实例处理过，不用再次处理
                 if (DOM.offset(img).top > threshold && !dataSrc) {
-                    DOM.attr(img, IMG_DATA_SRC, img.src);
+                    DOM.attr(img, IMG_SRC_DATA, img.src);
                     if (placeholder !== NONE) {
                         img.src = placeholder;
                     } else {
@@ -1667,7 +2025,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          * filter for lazyload textarea
          */
         _filterArea: function(area) {
-            return DOM.hasClass(area, TEXTAREA_DATA_CLS);
+            return DOM.hasClass(area, AREA_DATA_CLS);
         },
 
         /**
@@ -1748,7 +2106,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          * @static
          */
         _loadImgSrc: function(img, flag) {
-            flag = flag || IMG_DATA_SRC;
+            flag = flag || IMG_SRC_DATA;
             var dataSrc = img.getAttribute(flag);
 
             if (dataSrc && img.src != dataSrc) {
@@ -1770,14 +2128,12 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 监控滚动，处理 textarea
          */
         _loadArea: function(area) {
-            var self = this,
-                top = DOM.offset(area).top;
+            var self = this, top,
+                isHidden = DOM.css(area, DISPLAY) === NONE;
 
-            // 注：area 可能处于 display: none 状态，top 返回 0
-            // 这种情况下用 area.parentNode 的 Y 值来判断
-            if (!top && DOM.css(area, DISPLAY) == NONE) {
-                top = DOM.offset(area.parentNode).top;
-            }
+            // 注：area 可能处于 display: none 状态，DOM.offset(area).top 返回 0
+            // 这种情况下用 area.parentNode 的 Y 值来替代
+            top = DOM.offset(isHidden ? area.parentNode : area).top;
 
             if (top <= self.threshold + DOM.scrollTop()) {
                 self._loadAreaData(area.parentNode, area);
@@ -1829,7 +2185,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 加载自定义延迟数据
          * @static
          */
-        loadCustomLazyData: function(containers, type, flag) {
+        loadCustomLazyData: function(containers, type) {
             var self = this, area, imgs;
 
             // 支持数组
@@ -1840,25 +2196,24 @@ KISSY.add('datalazyload', function(S, undefined) {
             // 遍历处理
             S.each(containers, function(container) {
                 switch (type) {
-
-                    case 'textarea-data':
-                        area = S.get('textarea', container);
-                        if (area && DOM.hasClass(area, flag || CUSTOM_TEXTAREA_DATA_CLS)) {
-                            self._loadAreaData(container, area);
-                        }
-                        break;
-                    
-                    //case 'img-src':
-                    default:
+                    case 'img-src':
                         if (container.nodeName === 'IMG') { // 本身就是图片
                             imgs = [container];
                         } else {
                             imgs = S.query('img', container);
                         }
-
+                        
                         S.each(imgs, function(img) {
-                            self._loadImgSrc(img, flag || CUSTOM_IMG_DATA_SRC);
+                            self._loadImgSrc(img, IMG_SRC_DATA + CUSTOM);
                         });
+                        
+                        break;
+                    
+                    default:
+                        area = S.get('textarea', container);
+                        if (area && DOM.hasClass(area, AREA_DATA_CLS + CUSTOM)) {
+                            self._loadAreaData(container, area);
+                        }
                 }
             });
         }
@@ -1918,14 +2273,15 @@ KISSY.add('datalazyload', function(S, undefined) {
  */
 
 /**
- * TODO:
+ * zTODO:
  *   - [取消] 背景图片的延迟加载（对于 css 里的背景图片和 sprite 很难处理）
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  */
 
 /**
  * UPDATE LOG:
- *   - 2010-07-10 yiminghe@gmail.com(chengyu) 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调
+ *   - 2010-07-31 yubo IMG_SRC_DATA 由 data-lazyload-src 更名为 data-ks-lazyload + 支持 touch 设备
+ *   - 2010-07-10 chengyu 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调
  *   - 2010-05-10 yubo ie6 下，在 dom ready 后执行，会导致 placeholder 重复加载，为比避免此问题，默认为 none, 去掉占位图
  *   - 2010-04-05 yubo 重构，使得对 YUI 的依赖仅限于 YDOM
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
@@ -1933,7 +2289,456 @@ KISSY.add('datalazyload', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.0
 MIT Licensed
-build time: Jul 22 22:55
+build time: Aug 5 16:06
+*/
+/**
+ * @module   Flash UA 探测
+ * @author   kingfo<oicuicu@gmail.com>
+ * @depends  ks-core
+ */
+KISSY.add('flash-ua', function(S) {
+
+    var UA = S.UA, fpv, fpvF, firstRun = true;
+
+    /**
+     * 获取 Flash 版本号
+     * 返回数据 [M, S, R] 若未安装，则返回 undefined
+     */
+    function getFlashVersion() {
+        var ver, SF = 'ShockwaveFlash';
+
+        // for NPAPI see: http://en.wikipedia.org/wiki/NPAPI
+        if (navigator.plugins && navigator.mimeTypes.length) {
+            ver = (navigator.plugins['Shockwave Flash'] || 0).description;
+        }
+        // for ActiveX see:	http://en.wikipedia.org/wiki/ActiveX
+        else if (window.ActiveXObject) {
+            try {
+                ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
+            } catch(ex) {
+                //S.log('getFlashVersion failed via ActiveXObject');
+                // nothing to do, just return undefined
+            }
+        }
+
+        // 插件没安装或有问题时，ver 为 undefined
+        if(!ver) return;
+
+        // 插件安装正常时，ver 为 "Shockwave Flash 10.1 r53" or "WIN 10,1,53,64"
+        return arrify(ver);
+    }
+
+    /**
+     * arrify("10.1.r53") => ["10", "1", "53"]
+     */
+    function arrify(ver) {
+        return ver.match(/(\d)+/g);
+    }
+
+    /**
+     * 格式：主版本号Major.次版本号Minor(小数点后3位，占3位)修正版本号Revision(小数点后第4至第8位，占5位)
+     * ver 参数不符合预期时，返回 0
+     * numerify("10.1 r53") => 10.00100053
+     * numerify(["10", "1", "53"]) => 10.00100053
+     * numerify(12.2) => 12.2
+     */
+    function numerify(ver) {
+        var arr = S.isString(ver) ? arrify(ver) : ver, ret = ver;
+        if (S.isArray(arr)) {
+            ret = parseFloat(arr[0] + '.' + pad(arr[1], 3) + pad(arr[2], 5));
+        }
+        return ret || 0;
+    }
+
+    /**
+     * pad(12, 5) => "00012"
+     * ref: http://lifesinger.org/blog/2009/08/the-harm-of-tricky-code/
+     */
+    function pad(num, n) {
+        var len = (num + '').length;
+        while (len++ < n) {
+            num = '0' + num;
+        }
+        return num;
+    }
+
+    /**
+     * 返回数据 [M, S, R] 若未安装，则返回 undefined
+     * fpv 全称是 flash player version
+     */
+    UA.fpv = function(force) {
+        // 考虑 new ActiveX 和 try catch 的 性能损耗，延迟初始化到第一次调用时
+        if(force || firstRun) {
+            firstRun = false;
+            fpv = getFlashVersion();
+            fpvF = numerify(fpv);
+        }
+        return fpv;
+    };
+
+    /**
+     * Checks fpv is greater than or equal the specific version.
+     * 普通的 flash 版本检测推荐使用该方法
+     * @param ver eg. "10.1.53"
+     * <code>
+     *    if(S.UA.fpvGEQ('9.9.2')) { ... }
+     * </code>
+     */
+    UA.fpvGEQ = function(ver, force) {
+        if(firstRun) UA.fpv(force);
+        return !!fpvF && (fpvF >= numerify(ver));
+    };
+
+});
+
+/**
+ * NOTES:
+ *
+ -  ActiveXObject JS 小记
+ -    newObj = new ActiveXObject(ProgID:String[, location:String])
+ -    newObj      必需    用于部署 ActiveXObject  的变量
+ -    ProgID      必选    形式为 "serverName.typeName" 的字符串
+ -    serverName  必需    提供该对象的应用程序的名称
+ -    typeName    必需    创建对象的类型或者类
+ -    location    可选    创建该对象的网络服务器的名称
+
+ -  Google Chrome 比较特别：
+ -    即使对方未安装 flashplay 插件 也含最新的 Flashplayer
+ -    ref: http://googlechromereleases.blogspot.com/2010/03/dev-channel-update_30.html
+ *
+ */
+/**
+ * @module   Flash 全局静态类
+ * @author   kingfo<oicuicu@gmail.com>
+ * @depends  ks-core
+ */
+KISSY.add('flash', function(S){
+	
+	S.Flash = {
+		/**
+		 * flash 实例 map { '#id': elem, ... }
+         * @static
+		 */
+		swfs: { },
+		length: 0
+	};
+});
+/**
+ * @module   将 swf 嵌入到页面中
+ * @author   kingfo<oicuicu@gmail.com>, 射雕<lifesinger@gmail.com>
+ * @depends  ks-core + json
+ */
+KISSY.add('flash-embed', function(S) {
+
+    var UA = S.UA, DOM = S.DOM, Flash = S.Flash,
+
+        SWF_SUCCESS = 1,
+        FP_LOW = 0,
+        FP_UNINSTALL = -1,
+        TARGET_NOT_FOUND = -2,  // 指定 ID 的对象未找到
+        SWF_SRC_UNDEFINED = -3, // swf 的地址未指定
+
+        RE_FLASH_TAGS = /object|embed/i,
+        CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
+        TYPE = 'application/x-shockwave-flash',
+        FLASHVARS = 'flashvars', EMPTY = '',
+        PREFIX = 'ks-flash-', ID_PRE = '#',
+        encode = encodeURIComponent,
+
+        // flash player 的参数范围
+        PARAMS = {
+            ////////////////////////// 高频率使用的参数
+            //flashvars: EMPTY,     // swf 传入的第三方数据。支持复杂的 Object / XML 数据 / JSON 字符串
+            wmode: EMPTY,
+            allowscriptaccess: EMPTY,
+            allownetworking: EMPTY,
+            allowfullscreen: EMPTY,
+            ///////////////////////// 显示 控制 删除 
+            play: 'false',
+            loop: EMPTY,
+            menu: EMPTY,
+            quality: EMPTY,
+            scale: EMPTY,
+            salign: EMPTY,
+            bgcolor: EMPTY,
+            devicefont: EMPTY,
+            /////////////////////////	其他控制参数
+            base: EMPTY,
+            swliveconnect: EMPTY,
+            seamlesstabbing: EMPTY
+        },
+
+        defaultConifg = {
+            //src: '',       // swf 路径
+            params: { },     // Flash Player 的配置参数
+            attrs: {         // swf 对应 DOM 元素的属性
+                width: 215,	 // 最小控制面板宽度,小于此数字将无法支持在线快速安装
+                height: 138  // 最小控制面板高度,小于此数字将无法支持在线快速安装
+            },
+            //xi: '',	     //	快速安装地址。全称 express install  // ? 默认路径
+            version: 9       //	要求的 Flash Player 最低版本
+        };
+
+
+    S.mix(Flash, {
+
+        fpv: UA.fpv,
+
+        fpvGEQ: UA.fpvGEQ,
+
+
+        /**
+         * 添加 SWF 对象
+         * @param target {String|HTMLElement}  #id or element
+         */
+        add: function(target, config, callback) {
+            var self = this, xi, id;
+
+            // 标准化配置信息
+            config = Flash._normalize(config);
+
+            // 合并配置信息
+            config = S.merge(defaultConifg, config);
+            config.attrs = S.merge(defaultConifg.attrs, config.attrs);
+
+
+            // 1. target 元素未找到
+            if (!(target = S.get(target))) {
+                self._callback(callback, TARGET_NOT_FOUND);
+                return;
+            }
+
+            // 保存 id, 没有则自动生成
+            if (!target.id) target.id = S.guid(PREFIX);
+            //id = config.attrs.id = ID_PRE + target.id; 	//bugfix:	会改变DOM已被命名的ID 造成失效   longzang 2010/8/4
+			id = config.attrs.id = target.id;
+			
+
+            // 2. flash 插件没有安装
+            if (!UA.fpv()) {
+                self._callback(callback, FP_UNINSTALL, id, target);
+                return;
+            }
+
+            // 3. 已安装，但当前客户端版本低于指定版本时
+            if (!UA.fpvGEQ(config.version)) {
+                self._callback(callback, FP_LOW, id, target);
+
+                // 有 xi 时，将 src 替换为快速安装
+                if (!((xi = config.xi) && S.isString(xi))) return;
+                config.src = xi;
+            }
+
+            // 对已有 HTML 结构的 SWF 进行注册使用
+            if (RE_FLASH_TAGS.test(target.nodeName)) {
+                self._register(target, config, callback);
+                return;
+            }
+
+            // src 未指定
+            if (!config.src) {
+                self._callback(callback, SWF_SRC_UNDEFINED, id, target);
+                return;
+            }
+
+            // 替换 target 为 SWF 嵌入对象
+            self._embed(target, config, callback);
+        },
+
+        /**
+         * 获得已注册到 S.Flash 的 SWF
+         * 注意，请不要混淆 DOM.get() 和 Flash.get()
+         * 只有成功执行过 S.Flash.add() 的 SWF 才可以被获取
+         * @return {HTMLElement}  返回 SWF 的 HTML 元素(object/embed). 未注册时，返回 undefined
+         */
+        get: function(id) {
+            return Flash.swfs[id];
+        },
+
+        /**
+         * 移除已注册到 S.Flash 的 SWF 和 DOM 中对应的 HTML 元素
+         */
+        remove: function(id) {
+            var swf = Flash.get(ID_PRE + id);
+            if (swf) {
+                DOM.remove(swf);
+                delete Flash.swfs[swf.id];
+                Flash.length -= 1;
+            }
+        },
+
+        /**
+         * 检测是否存在已注册的 swf
+         * 只有成功执行过 S.Flash.add() 的 SWF 才可以被获取到
+         * @return {Boolean}
+         */
+        contains: function(target) {
+            var swfs = Flash.swfs,
+                id, ret = false;
+
+            if (S.isString(target)) {
+                ret = (target in swfs);
+            } else {
+                for (id in swfs)
+                    if (swfs[id] === target) {
+                        ret = true;
+                        break;
+                    }
+            }
+            return ret;
+        },
+
+        _register: function(swf, config, callback) {
+            var id = config.attrs.id;
+            Flash._addSWF(id, swf);
+            Flash._callback(callback, SWF_SUCCESS, id, swf);
+        },
+
+        _embed: function (target, config, callback) {
+            var o = Flash._createSWF(config.src, config.attrs, config.params);
+			
+            if (UA.ie) {
+                // ie 下，通过纯 dom 操作插入的 object 会一直处于加载状态中
+                // 只能通过 innerHTML/outerHTML 嵌入
+                target.outerHTML = o.outerHTML;
+            }
+            else {
+                target.parentNode.replaceChild(o, target);
+            }
+
+            Flash._register(target, config, callback);
+        },
+
+        _callback: function(callback, type, id, swf) {
+            if (type && S.isFunction(callback)) {
+                callback({
+                    status: type,
+                    id: id,
+                    swf: swf
+                });
+            }
+        },
+
+        _addSWF: function(id, swf) {
+            if (id && swf) {
+                Flash.swfs[id] = swf;
+                Flash.length += 1;
+            }
+        },
+
+        _createSWF: function (src, attrs, params) {
+            var o = DOM.create('<object>'), k;
+
+            // 普通属性设置
+            DOM.attr(o, attrs);
+
+            // 特殊属性设置
+            if (UA.ie) {
+                DOM.attr(o, 'classid', CID);
+                appendParam(o, 'movie', src);
+            }
+            else {
+                DOM.attr(o, {
+                    type: TYPE,
+                    data: src,
+                    name: attrs.id
+                });
+            }
+			
+            // 添加 params
+            for (k in params) {
+                if (k in PARAMS) appendParam(o, k, params[k]);
+            }
+            if (params[FLASHVARS]) {
+                appendParam(o, FLASHVARS,  Flash.toFlashVars(params[FLASHVARS]));
+            }
+
+            return o;
+        },
+
+        /**
+         * 将对象的 key 全部转为小写
+         * 一般用于配置选项 key 的标准化
+         */
+        _normalize: function(obj) {
+            var key, val, prop, ret = obj;
+
+            if (S.isPlainObject(obj)) {
+                ret = {};
+
+                for (prop in obj) {
+                    key = prop.toLowerCase();
+                    val = obj[prop];
+
+                    // 忽略自定义传参内容标准化
+                    if (key !== FLASHVARS) val = Flash._normalize(val);
+
+                    ret[key] = val;
+                }
+            }
+            return ret;
+        },
+
+        /**
+         * 将普通对象转换为 flashvars
+         * eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b={"x":2,"z":"s%3D1%26c%3D2"}
+         */
+        toFlashVars: function(obj) {
+            if (!S.isPlainObject(obj)) return EMPTY; // 仅支持 PlainOject
+            var prop, data, arr = [];
+
+            for (prop in obj) {
+                data = obj[prop];
+
+                // 字符串，用双引号括起来 		 [bug]不需要	longzang
+                if (S.isString(data)) {
+                   //data = '"' + encode(data) + '"';     
+				   data = encode(data);  	//bugfix:	有些值事实上不需要双引号   longzang 2010/8/4
+                }
+                // 其它值，用 stringify 转换后，再转义掉字符串值
+                else {
+                    data = (S.JSON.stringify(data));
+                    if (!data) continue; // 忽略掉 undefined, fn 等值
+                    
+                    data = data.replace(/:"([^"]+)/g, function(m, val) {
+                        return ':"' + encode(val);
+                    });
+                }
+
+                arr.push(prop + '=' + data);
+            }
+
+            return arr.join('&');
+        }
+    });
+
+    function appendParam(o, name, val) {
+        var param = DOM.create('<param>');
+        DOM.attr(param, { name: name, value: val });
+        o.appendChild(param);
+    }
+});
+
+/**
+ * NOTES:
+ * 2010/07/21   向 google code 提交了基础代码
+ * 2010/07/22   修正了 embed 始终都有 callback 尝试性调用
+ *              避免了未定义 el/id 或 swfurl 时无法获知错误
+ * 2010/07/27   迁移至 github 做版本管理。向 kissy-sandbox 提交代码
+ * 2010/07/28   合并了公开方法 Flash.register 和 Flash.embed 为 Flash.add()
+ *              修改 Flash.length() 为 Flash.getLength(), 使其看上去更像方法而非属性方式获取
+ * 2010/07/29   重构到 kissy 项目中
+ * 2010/07/30	增加了标准化配置项方法 _normalize(); 修正 flashvars 转 String 方式为 toFlashVars
+ * 2010/08/04	取消了对内部SWF存储以 "#" 开头。并且修正了会自动替换修改入口在无#时添加其前缀，造成后续应用失效。
+ * 				取消了 F.swfs 的 length属性和 F.len()属性。
+ * 				增加了 F.length，以保证 F.swfs 是个纯池
+ * 				修正了Flashvars 参数中强制字符串带引号造成传入参数不纯粹的bug。
+ * 				
+ */
+/*
+Copyright 2010, KISSY UI Library v1.1.0
+MIT Licensed
+build time: Aug 5 16:06
 */
 /**
  * Switchable
@@ -2046,7 +2851,7 @@ KISSY.add('switchable', function(S, undefined) {
         delay: .1, // 100ms
 
         activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
-        activeTriggerCls: 'active',
+        activeTriggerCls: 'ks-active',
 
         // 可见视图内有多少个 panels
         steps: 1,
@@ -2358,54 +3163,45 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
      * 添加插件
      * attached members:
      *   - this.paused
-     *   - this.autoplayTimer
      */
     Switchable.Plugins.push({
 
         name: 'autoplay',
 
         init: function(host) {
-            var cfg = host.config, interval = cfg.interval * 1000, leaveTimer;
+            var cfg = host.config, interval = cfg.interval * 1000, timer;
             if (!cfg.autoplay) return;
 
             // 鼠标悬停，停止自动播放
             if (cfg.pauseOnHover) {
                 Event.on(host.container, 'mouseenter', function() {
-                    // 当鼠标移出后，又快速移动进来，这时要将 leaveTimer 取消掉
-                    // 否则 pauseOnHover 会失效
-                    if(leaveTimer) {
-                        leaveTimer.cancel();
-                        leaveTimer = undefined;
+                    if(timer) {
+                        timer.cancel();
+                        timer = undefined;
                     }
-                    host.paused = true;
+                    host.paused = true; // paused 可以让外部知道 autoplay 的当前状态
                 });
                 Event.on(host.container, 'mouseleave', function() {
-                    // 假设 interval 为 10s
-                    // 在 8s 时，通过 focus 主动触发切换，停留 1s 后，鼠标移出
-                    // 这时如果不 setTimeout, 再过 1s 后，主动触发的 panel 将被替换掉
-                    // 为了保证每个 panel 的显示时间都不小于 interval, 此处加上 setTimeout
-                    leaveTimer = S.later(function() {
-                        host.paused = false;
-                        leaveTimer = undefined;
-                    }, interval);
+                    host.paused = false;
+                    startAutoplay();
                 });
             }
 
-            // 设置自动播放
-            host.autoplayTimer = S.later(function() {
-                if (host.paused) return;
-                // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
-                host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, 'forward');
-            }, interval, true);
+            function startAutoplay() {
+                // 设置自动播放
+                timer = S.later(function() {
+                    if (host.paused) return;
+
+                    // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
+                    host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, 'forward');
+                }, interval, true);
+            }
+
+            // go
+            startAutoplay();
         }
     });
 });
-
-/**
- * TODO:
- *  - 是否需要提供 play / pause / stop API ?
- *  - autoplayTimer 和 switchTimer 的关联？
- */
 /**
  * Switchable Effect Plugin
  * @creator  玉伯<lifesinger@gmail.com>
@@ -2715,19 +3511,18 @@ KISSY.add('switchable-lazyload', function(S) {
     var DOM = S.DOM,
         EVENT_BEFORE_SWITCH = 'beforeSwitch',
         IMG_SRC = 'img-src',
-        TEXTAREA_DATA = 'textarea-data',
+        AREA_DATA = 'area-data',
         FLAGS = { },
         Switchable = S.Switchable;
 
-    FLAGS[IMG_SRC] = 'data-lazyload-src-custom';
-    FLAGS[TEXTAREA_DATA] = 'ks-datalazyload-custom';
+    FLAGS[IMG_SRC] = 'data-ks-lazyload-custom';
+    FLAGS[AREA_DATA] = 'ks-datalazyload-custom';
 
     /**
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        lazyDataType: '', // 'img-src' or 'textarea-data'
-        lazyDataFlag: ''  // 'data-lazyload-src-custom' or 'ks-datalazyload-custom'
+        lazyDataType: AREA_DATA // or IMG_SRC
     });
 
     /**
@@ -2740,7 +3535,7 @@ KISSY.add('switchable-lazyload', function(S) {
         init: function(host) {
             var DataLazyload = S.DataLazyload,
                 cfg = host.config,
-                type = cfg.lazyDataType, flag = cfg.lazyDataFlag || FLAGS[type];
+                type = cfg.lazyDataType, flag = FLAGS[type];
 
             if (!DataLazyload || !type || !flag) return; // 没有延迟项
 
@@ -2754,7 +3549,7 @@ KISSY.add('switchable-lazyload', function(S) {
                     from = ev.toIndex * steps ,
                     to = from + steps;
 
-                DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type, flag);
+                DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type);
                 if (isAllDone()) {
                     host.detach(EVENT_BEFORE_SWITCH, loadLazyData);
                 }
@@ -2766,7 +3561,7 @@ KISSY.add('switchable-lazyload', function(S) {
             function isAllDone() {
                 var elems, i, len,
                     isImgSrc = type === IMG_SRC,
-                    tagName = isImgSrc ? 'img' : (type === TEXTAREA_DATA ? 'textarea' : '');
+                    tagName = isImgSrc ? 'img' : (type === AREA_DATA ? 'textarea' : '');
 
                 if (tagName) {
                     elems = S.query(tagName, host.container);
@@ -2778,6 +3573,140 @@ KISSY.add('switchable-lazyload', function(S) {
             }
         }
     });
+});
+/**
+ * Switchable Countdown Plugin
+ * @creator  gonghao<gonghao@ghsky.com>
+ */
+KISSY.add('switchable-countdown', function(S, undefined) {
+
+    var DOM = S.DOM, Event = S.Event, Anim = S.Anim,
+        Switchable = S.Switchable,
+        CLS_PREFIX = 'ks-switchable-trigger-',
+        TRIGGER_MASK_CLS = CLS_PREFIX + 'mask',
+        TRIGGER_CONTENT_CLS = CLS_PREFIX + 'content',
+        STYLE = 'style';
+
+    /**
+     * 添加默认配置
+     */
+    S.mix(Switchable.Config, {
+        countdown: false,
+        countdownFromStyle: '',      // 倒计时的初始样式
+        countdownToStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
+    });
+
+    /**
+     * 添加插件
+     */
+    Switchable.Plugins.push({
+
+        name: 'countdown',
+
+        init: function(host) {
+            var cfg = host.config, interval = cfg.interval,
+                triggers = host.triggers, masks = [],
+                fromStyle = cfg.countdownFromStyle, toStyle = cfg.countdownToStyle,
+                anim;
+
+            // 必须保证开启 autoplay 以及有 trigger 时，才能开启倒计时动画
+            if (!cfg.autoplay || !cfg.hasTriggers || !cfg.countdown) return;
+
+            // 为每个 trigger 增加倒计时动画覆盖层
+            S.each(triggers, function(trigger, i) {
+                trigger.innerHTML = '<div class="' + TRIGGER_MASK_CLS + '"></div>' +
+                    '<div class="' + TRIGGER_CONTENT_CLS + '">' + trigger.innerHTML + '</div>';
+                masks[i] = trigger.firstChild;
+            });
+
+            // 鼠标悬停，停止自动播放
+            if (cfg.pauseOnHover) {
+                Event.on(host.container, 'mouseenter', function() {
+                    // 先停止未完成动画
+                    stopAnim();
+
+                    // 快速平滑回退到初始状态
+                    var mask = masks[host.activeIndex];
+                    if (fromStyle) {
+                        anim = new Anim(mask, fromStyle, .2, 'easeOut').run();
+                    } else {
+                        DOM.removeAttr(mask, STYLE);
+                    }
+                });
+
+                Event.on(host.container, 'mouseleave', function() {
+                    // 鼠标离开时立即停止未完成动画
+                    stopAnim();
+
+                    // 初始化动画参数，准备开始新一轮动画
+                    DOM.removeAttr(masks[host.activeIndex], STYLE);
+
+                    // 重新开始倒计时动画
+                    S.later(startAnim, 200);
+                });
+            }
+
+            // panels 切换前，当前 trigger 完成善后工作以及下一 trigger 进行初始化
+            host.on('beforeSwitch', function() {
+                // 恢复前，先结束未完成动画效果
+                stopAnim();
+
+                // 将当前 mask 恢复动画前状态
+                DOM.removeAttr(masks[host.activeIndex], STYLE);
+            });
+
+            // panel 切换完成时，开始 trigger 的倒计时动画
+            host.on('switch', function() {
+                // 悬停状态，当用户主动触发切换时，不需要倒计时动画
+                if (!host.paused) {
+                    startAnim();
+                }
+            });
+
+            // 开始第一次
+            startAnim(host.activeIndex);
+
+            // 开始倒计时动画
+            function startAnim() {
+                stopAnim(); // 开始之前，先确保停止掉之前的
+                anim = new Anim(masks[host.activeIndex], toStyle, interval - .5).run(); // -.5 是为了动画结束时停留一下，使得动画更自然
+            }
+
+            // 停止所有动画
+            function stopAnim() {
+                if (anim) {
+                    anim.stop();
+                    anim = undefined;
+                }
+            }
+        }
+    });
+});/**
+ * Switchable Autorender Plugin
+ * @creator  玉伯<lifesinger@gmail.com>
+ * @depends  ks-core, json
+ */
+KISSY.add('switchable-autorender', function(S) {
+
+    /**
+     * 自动渲染 container 元素内的所有 Switchable 组件
+     */
+    S.Switchable.autoRender = function(container, hookPrefix, dataAttrName) {
+        hookPrefix = '.' + (hookPrefix || 'KS_');
+        dataAttrName = dataAttrName || 'data-ks-switchable';
+
+        S.each(['Switchable', 'Tabs', 'Slide', 'Carousel', 'Accordion'], function(name) {
+            S.each(S.query(hookPrefix + name, container), function(elem) {
+                try {
+                    var config = elem.getAttribute(dataAttrName);
+                    if(config) config = config.replace(/'/g, '"');
+                    new S[name](elem, S.JSON.parse(config));
+                } catch(ex) {
+                    S.log('Switchable.autoRender: ' + ex, 'warn');
+                }
+            });
+        });
+    }
 });
 /**
  * Tabs Widget
@@ -2939,6 +3868,7 @@ KISSY.add('accordion', function(S) {
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
 
         defaultConfig = {
+            markupType: 1,
             triggerType: 'click',
             multiple: false
         };
@@ -2995,4 +3925,1053 @@ KISSY.add('accordion', function(S) {
  *
  *  - 支持动画
  *
+ */
+/*
+Copyright 2010, KISSY UI Library v1.1.0
+MIT Licensed
+build time: Aug 5 16:06
+*/
+/**
+ * 提示补全组件
+ * @module   suggest
+ * @creator  玉伯<lifesinger@gmail.com>
+ * @depends  ks-core
+ */
+KISSY.add('suggest', function(S, undefined) {
+
+    var DOM = S.DOM, Event = S.Event,
+        win = window, doc = document, bd, head = S.get('head'),
+        ie = S.UA.ie, ie6 = (ie === 6),
+
+        CALLBACK_STR = 'g_ks_suggest_callback', // 约定的全局回调函数
+        PREFIX = 'ks-suggest-',
+        STYLE_ID = PREFIX + 'style', // 样式 style 元素的 id
+
+        CONTAINER_CLS = PREFIX + 'container',
+        KEY_EL_CLS = PREFIX + 'key',
+        RESULT_EL_CLS = PREFIX + 'result',
+        SELECTED_ITEM_CLS = 'ks-selected', // 选中项
+        ODD_ITEM_CLS = 'ks-odd', // 奇数项
+        EVEN_ITEM_CLS = 'ks-even', // 偶数项
+        CONTENT_CLS = PREFIX + 'content',
+        FOOTER_CLS = PREFIX + 'footer',
+        CLOSE_BTN_CLS = PREFIX + 'closebtn',
+        SHIM_CLS = PREFIX + 'shim', // iframe shim 的 class
+
+        EVENT_BEFORE_START = 'beforeStart', // 监控计时器开始前触发，可以用来做条件触发
+        EVENT_ITEM_SELECT = 'itemSelect', // 选中某项时触发，可以用来添加监控埋点等参数
+        EVENT_BEFORE_SUBMIT = 'beforeSubmit', // 表单提交前触发，可以用来取消提交或添加特定参数
+        EVENT_BEFORE_DATA_REQUEST = 'beforeDataRequest', // 请求数据前触发，可以用来动态修改请求 url 和参数
+        EVENT_DATA_RETURN = 'dataReturn', // 获得返回数据时触发，可以用来动态修正数据
+        EVENT_UPDATE_FOOTER = 'updateFooter', // 更新底部内容时触发，可以用来动态添加自定义内容
+        EVENT_BEFORE_SHOW = 'beforeShow', // 显示提示层前触发，可以用来动态修改提示层数据
+
+        TIMER_DELAY = 200,
+        EMPTY = '', HIDDEN = 'hidden',
+        DISPLAY = 'display', NONE = 'none',
+        LI = 'LI', li = 'li', DIV = '<div>',
+        RESULT = 'result', KEY = 'key',
+        DATA_TIME = 'data-time',
+        PARSEINT = parseInt,
+        RE_FOCUS_ELEMS = /input|button|a/i,
+
+        /**
+         * Suggest 的默认配置
+         */
+        defaultConfig = {
+            /**
+             * 用户附加给悬浮提示层的 class
+             *
+             * 提示层的默认结构如下：
+             * <div class='kssuggest-container {containerCls}'>
+             *     <ol class="ks-suggest-content">
+             *         <li>
+             *             <span class='ks-suggest-key'>...</span>
+             *             <span class='ks-suggest-result'>...</span>
+             *         </li>
+             *     </ol>
+             *     <div class='ks-suggest-footer'>
+             *         <a class='ks-suggest-close-btn'>...</a>
+             *     </div>
+             * </div>
+             * @type String
+             */
+            containerCls: EMPTY,
+
+            /**
+             * 提示层的宽度
+             * 注意：默认情况下，提示层的宽度和input输入框的宽度保持一致
+             * 示范取值：'200px', '10%' 等，必须带单位
+             * @type String
+             */
+            //containerWidth: EMPTY,
+
+            /**
+             * result 的格式
+             * @type String
+             */
+            resultFormat: '%result%',
+
+            /**
+             * 是否显示关闭按钮
+             * @type Boolean
+             */
+            //closeBtn: false,
+
+            /**
+             * 关闭按钮上的文字
+             * @type String
+             */
+            closeBtnText: '关闭',
+
+            /**
+             * 是否需要 iframe shim 默认只在 ie6 下显示
+             * @type Boolean
+             */
+            shim: ie6,
+
+            /**
+             * 初始化后，自动激活
+             * @type Boolean
+             */
+            //autoFocus: false,
+
+            /**
+             * 选择某项时，是否自动提交表单
+             * @type Boolean
+             */
+            submitOnSelect: true
+        };
+
+    /**
+     * 提示补全组件
+     * @class Suggest
+     * @constructor
+     * @param {String|HTMLElement} textInput
+     * @param {String} dataSource
+     * @param {Object} config
+     */
+    function Suggest(textInput, dataSource, config) {
+        var self = this;
+
+        // allow instantiation without the new operator
+        if (!(self instanceof Suggest)) {
+            return new Suggest(textInput, dataSource, config);
+        }
+
+        /**
+         * 文本输入框
+         * @type HTMLElement
+         */
+        self.textInput = S.get(textInput);
+
+        /**
+         * 获取数据的 URL
+         * @type {String|Object}
+         */
+        // 归一化为：http://path/to/suggest.do? or http://path/to/suggest.do?p=1&
+        dataSource += (dataSource.indexOf('?') === -1) ? '?' : '&';
+        self.dataSource = dataSource + 'code=utf-8&callback=' + CALLBACK_STR;
+
+        /**
+         * 通过 jsonp 返回的数据
+         * @type Object
+         */
+        //self.returnedData = undefined;
+
+        /**
+         * 配置参数
+         * @type Object
+         */
+        self.config = S.merge(defaultConfig, config);
+
+        /**
+         * 存放提示信息的容器
+         * @type HTMLElement
+         */
+        //self.container = undefined;
+        //self.content = undefined;
+        //self.footer = undefined;
+
+        /**
+         * 输入框的值
+         * @type String
+         */
+        self.query = EMPTY;
+
+        /**
+         * 获取数据时的参数
+         * @type String
+         */
+        self.queryParams = EMPTY;
+
+        /**
+         * 内部定时器
+         * @private
+         * @type Object
+         */
+        //self._timer = undefined;
+
+        /**
+         * 计时器是否处于运行状态
+         * @private
+         * @type Boolean
+         */
+        //self._isRunning = false;
+
+        /**
+         * 获取数据的 script 元素
+         * @type HTMLElement
+         */
+        //self.dataScript = undefined;
+
+        /**
+         * 数据缓存
+         * @private
+         * @type Object
+         */
+        self._dataCache = { };
+
+        /**
+         * 最新 script 的时间戳
+         * @type String
+         */
+        //self._latestScriptTime = EMPTY;
+
+        /**
+         * script返回的数据是否已经过期
+         * @type Boolean
+         */
+        //self._scriptDataIsOut = false;
+
+        /**
+         * 提示层的当前选中项
+         * @type Boolean
+         */
+        //self.selectedItem = undefined;
+
+        /**
+         * 焦点是否在提示层
+         */
+        //self._focusing = false;
+
+        // init
+        self._init();
+    }
+
+    S.augment(Suggest, S.EventTarget, {
+
+        /**
+         * 初始化方法
+         * @protected
+         */
+        _init: function() {
+            var self = this;
+            bd = doc.body;
+
+            self._initTextInput();
+            self._initContainer();
+            if (self.config.shim) self._initShim();
+
+            self._initStyle();
+            self._initEvent();
+        },
+
+        /**
+         * 初始化输入框
+         */
+        _initTextInput: function() {
+            var self = this,
+                input = self.textInput,
+                isDowningOrUping = false, // 是否持续按住 DOWN / UP 键
+                pressingCount = 0; // 持续按住某键时，连续触发的 keydown 次数。注意 Opera 只会触发一次
+
+            DOM.attr(input, 'autocomplete', 'off');
+            if (self.config['autoFocus']) input.focus();
+
+            // 监控 keydown 事件
+            // 注：截至 2010/08/03, 在 Opera 10.60 中，输入法开启时，依旧不会触发任何键盘事件
+            Event.on(input, 'keydown', function(ev) {
+                var keyCode = ev.keyCode;
+                //S.log('keydown ' + keyCode);
+
+                // ESC 键，隐藏提示层并还原初始输入
+                if (keyCode === 27) {
+                    self.hide();
+                    input.value = self.query;
+                }
+                // 方向键，包括 PgUp, PgDn, End, Home, Left, Up, Right, Down
+                else if (keyCode > 32 && keyCode < 41) {
+                    // 如果输入框无值，按下以上键时，将响应转移到页面上，以避免自动定焦导致的键盘导航问题
+                    if (!input.value) {
+                        input.blur();
+                    }
+                    // DOWN / UP 键
+                    else if (keyCode === 40 || keyCode === 38) {
+                        // 按住键不动时，延时处理。这样可以使操作看起来更自然，避免太快导致的体验不好
+                        if (pressingCount++ === 0) {
+                            if (self._isRunning) self.stop();
+                            isDowningOrUping = true;
+                            self._selectItem(keyCode === 40);
+                        }
+                        else if (pressingCount == 3) {
+                            pressingCount = 0;
+                        }
+                    }
+                }
+                // ENTER 键
+                else if (keyCode === 13) {
+                    // 提交表单前，先隐藏提示层并停止计时器
+                    input.blur(); // 这一句还可以阻止掉浏览器的默认提交事件
+
+                    // 如果是键盘选中某项后回车，触发 onItemSelect 事件
+                    if (isDowningOrUping) {
+                        if (input.value == self._getSelectedItemKey()) { // 确保值匹配
+                            if(self.fire(EVENT_ITEM_SELECT) === false) return;
+                        }
+                    }
+
+                    // 提交表单
+                    self._submitForm();
+                }
+                // 非以上控制键，开启计时器
+                else {
+                    if (!self._isRunning) {
+                        // 1. 当网速较慢，suggest.js 还未下载和初始化完时，用户可能就已经开始输入
+                        //    这时，focus 事件已经不会触发，需要在 keydown 里触发定时器
+                        // 2. 非 DOWN/UP 等控制键时，需要激活定时器
+                        self.start();
+                    }
+                    isDowningOrUping = false;
+                }
+            });
+
+            // reset pressingCount
+            Event.on(input, 'keyup', function() {
+                pressingCount = 0;
+            });
+
+            // 失去焦点时，停止计时器，并隐藏提示层
+            Event.on(input, 'blur', function() {
+                self.stop();
+
+                // 点击提示层中的 input 输入框时，首先会输发这里的 blur 事件，之后才是 focusin
+                // 因此需要 setTimeout 一下，更换顺序
+                S.later(function() {
+                    if (!self._focusing) { // 焦点在提示层时，不关闭
+                        self.hide();
+                    }
+                }, 0);
+            });
+        },
+
+        /**
+         * 初始化提示层容器
+         */
+        _initContainer: function() {
+            var self = this,
+                container = DOM.create(DIV, {
+                    'class': CONTAINER_CLS + ' ' + self.config.containerCls,
+                    style: 'position:absolute;visibility:hidden'
+                }),
+                content = DOM.create(DIV, {
+                    'class': CONTENT_CLS
+                }),
+                footer = DOM.create(DIV, {
+                    'class': FOOTER_CLS
+                });
+
+            container.appendChild(content);
+            container.appendChild(footer);
+            bd.insertBefore(container, bd.firstChild);
+
+            self.container = container;
+            self.content = content;
+            self.footer = footer;
+
+            self._initContainerEvent();
+        },
+
+        /**
+         * 设置容器的 left, top, width
+         */
+        _setContainerRegion: function() {
+            var self = this,
+                input = self.textInput,
+                p = DOM.offset(input),
+                container = self.container;
+
+            DOM.offset(container, {
+                left: p.left,
+                top: p.top + input.offsetHeight - 1 // 默认向上偏差 1, 以覆盖掉 input 的下边框
+            });
+
+            // 默认 container 的边框为 1, padding 为 0, 因此 width = offsetWidth - 2
+            DOM.width(container, self.config['containerWidth'] || input.offsetWidth - 2);
+        },
+
+        /**
+         * 初始化容器事件
+         */
+        _initContainerEvent: function() {
+            var self = this,
+                input = self.textInput,
+                container = self.container,
+                content = self.content,
+                footer = self.footer,
+                mouseDownItem, mouseLeaveFooter;
+
+            Event.on(content, 'mousemove', function(ev) {
+                var target = ev.target;
+
+                if (target.nodeName !== LI) {
+                    target = DOM.parent(target, li);
+                }
+
+                if (DOM.contains(content, target)) {
+                    if (target !== self.selectedItem) {
+                        // 移除老的
+                        self._removeSelectedItem();
+                        // 设置新的
+                        self._setSelectedItem(target);
+                    }
+                }
+            });
+
+            Event.on(content, 'mousedown', function(ev) {
+                var target = ev.target;
+
+               // 可能点击在 li 的子元素上
+                if (target.nodeName !== LI) {
+                    target = DOM.parent(target, li);
+                }
+                mouseDownItem = target;
+            });
+
+            // 鼠标按下时，让输入框不会失去焦点
+            Event.on(container, 'mousedown', function(ev) {
+                if (!RE_FOCUS_ELEMS.test(ev.target.nodeName)) { // footer 区域的 input 等元素不阻止
+                    // 1. for IE
+                    input.onbeforedeactivate = function() {
+                        win.event.returnValue = false;
+                        input.onbeforedeactivate = null;
+                    };
+                    // 2. for W3C
+                    ev.preventDefault();
+                }
+            });
+
+            Event.on(content, 'mouseup', function(ev) {
+                var target = ev.target;
+                if(ev.which > 2) return; // 非左键和中键点击
+
+                // 可能点击在 li 的子元素上
+                if (target.nodeName !== LI) {
+                    target = DOM.parent(target, li);
+                }
+                
+                // 在提示层 A 项处按下鼠标，移动到 B 处释放，不触发 onItemSelect
+                if (target != mouseDownItem) return;
+
+                // 必须点击在 content 内部的 li 上
+                if (DOM.contains(content, target)) {
+                    self._updateInputFromSelectItem(target);
+
+                    // 触发选中事件
+                    if(self.fire(EVENT_ITEM_SELECT) === false) return;
+
+                    // 提交表单前，先隐藏提示层并停止计时器
+                    input.blur();
+
+                    // 提交表单
+                    self._submitForm();
+                }
+            });
+
+            // footer 获取到焦点，比如同店购的输入框
+            Event.on(footer, 'focusin', function() {
+                self._focusing = true;
+                self._removeSelectedItem();
+                mouseLeaveFooter = false; // 在这里还原为 false 即可
+            });
+
+            Event.on(footer, 'focusout', function() {
+                self._focusing = false;
+
+                // 如果立刻 focus textInput 的话，无法从 footer 的一个输入框切换到另一个
+                // 因此需要等待另一个输入框 focusin 触发后，再执行下面的逻辑
+                S.later(function() {
+                    // 鼠标已移开 footer 区域
+                    if(mouseLeaveFooter) {
+                        self.hide();
+                    }
+                    // 不是转移到另一个输入框，而是在 footer 非输入框处点击
+                    else if (!self._focusing) {
+                        self.textInput.focus();
+                    }
+                }, 0);
+            });
+
+            // 使得在 footer 的输入框获取焦点后，点击提示层外面，能关闭提示层
+            Event.on(self.container, 'mouseleave', function() {
+                mouseLeaveFooter = true;
+            });
+
+            // 点击在关闭按钮上
+            Event.on(footer, 'click', function(ev) {
+                if (DOM.hasClass(ev.target, CLOSE_BTN_CLS)) {
+                    self.hide();
+                }
+            })
+        },
+
+        /**
+         * click 选择 or enter 后，提交表单
+         */
+        _submitForm: function() {
+            var self = this;
+
+            // 注：对于键盘控制 enter 选择的情况，由 html 自身决定是否提交。否则会导致某些输入法下，用 enter 选择英文时也触发提交
+            if (self.config.submitOnSelect) {
+                var form = self.textInput.form;
+                if (!form) return;
+
+                if(self.fire(EVENT_BEFORE_SUBMIT, { form: form }) === false) return;
+
+                // 通过 js 提交表单时，不会触发 onsubmit 事件
+                // 需要 js 自己触发
+                // 这里触发的目的是，使得其它脚本中给 form 注册的 onsubmit 事件可以正常触发
+                if (doc.createEvent) { // w3c
+                    var evObj = doc.createEvent('MouseEvents');
+                    evObj.initEvent('submit', true, false);
+                    form.dispatchEvent(evObj);
+                }
+                else if (doc.createEventObject) { // ie
+                    form.fireEvent('onsubmit');
+                }
+
+                form.submit();
+            }
+        },
+
+        /**
+         * 给容器添加 iframe shim 层
+         */
+        _initShim: function() {
+            var iframe = DOM.create('<iframe>', {
+                src: 'about:blank',
+                'class': SHIM_CLS,
+                style: 'position:absolute;visibility:hidden;border:none'
+            });
+            this.container.shim = iframe;
+
+            bd.insertBefore(iframe, bd.firstChild);
+        },
+
+        /**
+         * 设置 shim 的 left, top, width, height
+         */
+        _setShimRegion: function() {
+            var self = this, container = self.container,
+                style = container.style, shim = container.shim;
+            if (shim) {
+                DOM.css(shim, {
+                    left: PARSEINT(style.left) - 2, // -2 可以解决吞边线的 bug
+                    top: style.top,
+                    width: PARSEINT(style.width) + 2,
+                    height: DOM.height(container) - 2
+                });
+            }
+        },
+
+        /**
+         * 初始化样式
+         */
+        _initStyle: function() {
+            var styleEl = S.get('#' + STYLE_ID);
+            if (styleEl) return; // 防止多个实例时重复添加
+
+            DOM.addStyleSheet(
+                '.ks-suggest-container{background:white;border:1px solid #999;z-index:99999}'
+                + '.ks-suggest-shim{z-index:99998}'
+                + '.ks-suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}'
+                + '.ks-suggest-container .ks-selected{background-color:#39F;cursor:default}'
+                + '.ks-suggest-key{float:left;text-align:left;padding-left:5px}'
+                + '.ks-suggest-result{float:right;text-align:right;padding-right:5px;color:green}'
+                + '.ks-suggest-container .ks-selected span{color:#FFF;cursor:default}'
+                + '.ks-suggest-footer{padding:0 5px 5px}'
+                + '.ks-suggest-closebtn{float:right}'
+                + '.ks-suggest-container li,.ks-suggest-footer{overflow:hidden;zoom:1;clear:both}'
+                /* hacks */
+                + '.ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}',
+                STYLE_ID);
+        },
+
+        /**
+         * 初始化事件
+         */
+        _initEvent: function() {
+            var self = this;
+
+            // onresize 时，调整提示层的位置
+            Event.on(win, 'resize', function() {
+                self._setContainerRegion();
+                self._setShimRegion();
+                // 2010-08-04: 为了保持连贯，取消了定时器
+            });
+        },
+
+        /**
+         * 启动计时器，开始监听用户输入
+         */
+        start: function() {
+            var self = this;
+            if(self.fire(EVENT_BEFORE_START) === false) return;
+
+            Suggest.focusInstance = self;
+
+            self._timer = S.later(function() {
+                self._updateContent();
+                self._timer = S.later(arguments.callee, TIMER_DELAY);
+            }, TIMER_DELAY);
+
+            self._isRunning = true;
+        },
+
+        /**
+         * 停止计时器
+         */
+        stop: function() {
+            var self = this;
+
+            Suggest.focusInstance = undefined;
+            if(self._timer) self._timer.cancel();
+            self._isRunning = false;
+        },
+
+        /**
+         * 显示提示层
+         */
+        show: function() {
+            var self = this;
+            if (self.isVisible()) return;
+            var container = self.container, shim = container.shim;
+
+            // 每次显示前，都重新计算位置，这样能自适应 input 的变化（牺牲少量性能，满足更普适的需求）
+            self._setContainerRegion();
+            visible(container);
+
+            if (shim) {
+                self._setShimRegion();
+                visible(shim);
+            }
+        },
+
+        /**
+         * 隐藏提示层
+         */
+        hide: function() {
+            if (!this.isVisible()) return;
+            var container = this.container, shim = container.shim;
+
+            if (shim) invisible(shim);
+            invisible(container);
+        },
+
+        /**
+         * 提示层是否显示
+         */
+        isVisible: function() {
+            return this.container.style.visibility != HIDDEN;
+        },
+
+        /**
+         * 更新提示层的数据
+         */
+        _updateContent: function() {
+            var self = this, input = self.textInput, q;
+
+            // 检测是否需要更新。注意：加入空格也算有变化
+            if (input.value == self.query) return;
+            q = self.query = input.value;
+
+            // 1. 输入为空时，隐藏提示层
+            if (!S.trim(q)) {
+                self._fillContainer();
+                self.hide();
+                return;
+            }
+
+            if (self._dataCache[q] !== undefined) { // 1. 使用缓存数据
+                //S.log('use cache');
+                self._fillContainer(self._dataCache[q]);
+                self._displayContainer();
+
+            } else { // 2. 请求服务器数据
+                self._requestData();
+            }
+        },
+
+        /**
+         * 通过 script 元素异步加载数据
+         */
+        _requestData: function() {
+            var self = this, script;
+            //S.log('request data via script');
+
+            if (!ie) self.dataScript = undefined; // IE不需要重新创建 script 元素
+
+            if (!self.dataScript) {
+                script = doc.createElement('script');
+                script.charset = 'utf-8';
+                script.async = true;
+
+                head.insertBefore(script, head.firstChild);
+                self.dataScript = script;
+
+                if (!ie) {
+                    var t = S.now();
+                    self._latestScriptTime = t;
+                    DOM.attr(script, DATA_TIME, t);
+
+                    Event.on(script, 'load', function() {
+                        // 判断返回的数据是否已经过期
+                        self._scriptDataIsOut = DOM.attr(script, DATA_TIME) != self._latestScriptTime;
+                    });
+                }
+            }
+
+            self.queryParams = 'q=' + encodeURIComponent(self.query);
+            if(self.fire(EVENT_BEFORE_DATA_REQUEST) === false) return;
+
+            // 注意：没必要加时间戳，是否缓存由服务器返回的Header头控制
+            self.dataScript.src = self.dataSource + '&' + self.queryParams;
+        },
+
+        /**
+         * 处理获取的数据
+         * @param {Object} data
+         */
+        _handleResponse: function(data) {
+            var self = this, formattedData,
+                content = EMPTY, i, len, list, li, key, itemData;
+            //S.log('handle response');
+            
+            if (self._scriptDataIsOut) return; // 抛弃过期数据，否则会导致 bug：1. 缓存 key 值不对； 2. 过期数据导致的闪屏
+
+            self.returnedData = data;
+            if(self.fire(EVENT_DATA_RETURN, { data: data }) === false) return;
+
+            // 格式化数据
+            formattedData = self._formatData(self.returnedData);
+
+            // 填充数据
+            if ((len = formattedData.length) > 0) {
+                list = DOM.create('<ol>');
+                for (i = 0; i < len; ++i) {
+                    itemData = formattedData[i];
+                    li = self._formatItem((key = itemData[KEY]), itemData[RESULT]);
+
+                    // 缓存 key 值到 attribute 上
+                    DOM.attr(li, KEY, key);
+
+                    // 添加奇偶 class
+                    DOM.addClass(li, i % 2 ? EVEN_ITEM_CLS : ODD_ITEM_CLS);
+                    list.appendChild(li);
+                }
+                content = list;
+            }
+            self._fillContainer(content);
+
+            // fire event
+            // 实际上是 beforeCache，但从用户的角度看，是 beforeShow
+            // 这样可以保证重复内容不用重新生成，直接用缓存
+            if (self.fire(EVENT_BEFORE_SHOW) === false) return;
+
+            // cache
+            self._dataCache[self.query] = DOM.html(self.content);
+
+            // 显示容器
+            self._displayContainer();
+        },
+
+        /**
+         * 格式化输入的数据对象为标准格式
+         * @param {Object} data 格式可以有 3 种：
+         *  1. {'result' : [['key1', 'result1'], ['key2', 'result2'], ...]}
+         *  2. {'result' : ['key1', 'key2', ...]}
+         *  3. 1 和 2 的组合
+         *  4. 标准格式
+         *  5. 上面 1 - 4 中，直接取 o['result'] 的值
+         * @return Object 标准格式的数据：
+         *  [{'key' : 'key1', 'result' : 'result1'}, {'key' : 'key2', 'result' : 'result2'}, ...]
+         */
+        _formatData: function(data) {
+            var arr = [], len, item, i, j = 0;
+            if (!data) return arr;
+            if (S.isArray(data[RESULT])) data = data[RESULT];
+            if (!(len = data.length)) return arr;
+
+            for (i = 0; i < len; ++i) {
+                item = data[i];
+
+                if (S.isString(item)) { // 只有 key 值时
+                    arr[j++] = { 'key' : item };
+                } else if (S.isArray(item) && item.length > 1) { // ['key', 'result'] 取数组前2个
+                    arr[j++] = {'key' : item[0], 'result' : item[1]};
+                }
+                // 不能识别的，直接忽略掉
+            }
+            return arr;
+        },
+
+        /**
+         * 格式化输出项
+         * @param {String} key 查询字符串
+         * @param {Number} result 结果 可不设
+         * @return {HTMLElement}
+         */
+        _formatItem: function(key, result) {
+            var li = DOM.create('<li>'),
+                keyEl = DOM.create('<span>', {
+                    'class': KEY_EL_CLS
+                }),
+                resultText, resultEl;
+
+            DOM.html(keyEl, key);
+            li.appendChild(keyEl);
+
+            if (result) {
+                resultText = this.config.resultFormat.replace('%result%', result);
+                if (S.trim(resultText)) { // 有值时才创建
+                    resultEl = DOM.create('<span>', {
+                        'class': RESULT_EL_CLS
+                    });
+                    DOM.html(resultEl, resultText);
+                    li.appendChild(resultEl);
+                }
+            }
+
+            return li;
+        },
+
+        /**
+         * 填充提示层容器
+         */
+        _fillContainer: function(content, footer) {
+            this._fillContent(content || EMPTY);
+            this._fillFooter(footer || EMPTY);
+        },
+
+        /**
+         * 填充提示层内容层
+         * @param {String|HTMLElement} html innerHTML or Child Node
+         */
+        _fillContent: function(html) {
+            replaceContent(this.content, html);
+            this.selectedItem = undefined; // 一旦重新填充了，selectedItem 就没了，需要重置
+        },
+
+        /**
+         * 填充提示层底部
+         */
+        _fillFooter: function(html) {
+            var self = this, cfg = self.config,
+                footer = self.footer, closeBtn;
+
+            replaceContent(footer, html);
+
+            // 关闭按钮
+            if (cfg['closeBtn']) {
+                closeBtn = DOM.create('<a>', {
+                    'class': CLOSE_BTN_CLS,
+                    href: 'javascript: void(0)',
+                    target: '_self' // bug fix: 覆盖<base target='_blank' />，否则会弹出空白页面
+                });
+                DOM.html(closeBtn, cfg.closeBtnText);
+                footer.appendChild(closeBtn);
+            }
+
+            // 根据 query 参数，有可能填充不同的内容到 footer
+            self.fire(EVENT_UPDATE_FOOTER, { footer: footer, query: self.query });
+
+            // 无内容时，隐藏掉
+            DOM.css(footer, DISPLAY, DOM.text(footer) ? EMPTY : NONE);
+        },
+
+        /**
+         * 根据 contanier 的内容，显示或隐藏容器
+         */
+        _displayContainer: function() {
+            var self = this;
+
+            if (S.trim(DOM.text(self.container))) {
+                self.show();
+            } else {
+                self.hide();
+            }
+        },
+
+        /**
+         * 选中提示层中的上/下一个条
+         * @param {Boolean} down true 表示 down, false 表示 up
+         */
+        _selectItem: function(down) {
+            var self = this,
+                items = S.query(li, self.container),
+                newSelectedItem;
+            if (items.length === 0) return;
+
+            // 有可能用 ESC 隐藏了，直接显示即可
+            if (!self.isVisible()) {
+                self.show();
+                return; // 保留原来的选中状态
+            }
+
+            // 没有选中项时，选中第一/最后项
+            if (!self.selectedItem) {
+                newSelectedItem = items[down ? 0 : items.length - 1];
+            } else {
+                // 选中下/上一项
+                newSelectedItem = DOM[down ? 'next' : 'prev'](self.selectedItem);
+                // 已经到了最后/前一项时，归位到输入框，并还原输入值
+                if (!newSelectedItem) {
+                    self.textInput.value = self.query;
+                }
+            }
+
+            // 移除当前选中项
+            self._removeSelectedItem();
+
+            // 选中新项
+            if (newSelectedItem) {
+                self._setSelectedItem(newSelectedItem);
+                self._updateInputFromSelectItem();
+            }
+        },
+
+        /**
+         * 移除选中项
+         */
+        _removeSelectedItem: function() {
+            DOM.removeClass(this.selectedItem, SELECTED_ITEM_CLS);
+            this.selectedItem = undefined;
+        },
+
+        /**
+         * 设置当前选中项
+         */
+        _setSelectedItem: function(item) {
+            DOM.addClass(item, SELECTED_ITEM_CLS);
+            this.selectedItem = item;
+            this.textInput.focus(); // 考虑从 footer 移动到 content 区域，需要重新聚焦
+        },
+
+        /**
+         * 获取提示层中选中项的 key 字符串
+         */
+        _getSelectedItemKey: function() {
+            var self = this;
+            if (!self.selectedItem) return EMPTY;
+
+            // getElementsByClassName 比较损耗性能，改用缓存数据到 attribute 上方法
+            //var keyEl = Dom.getElementsByClassName(KEY_EL_CLS, '*', this.selectedItem)[0];
+            //return keyEl.innerHTML;
+
+            return DOM.attr(self.selectedItem, KEY);
+        },
+
+        /**
+         * 将选中项的 key 值更新到 textInput
+         */
+        _updateInputFromSelectItem: function() {
+            var self = this;
+            self.textInput.value = self._getSelectedItemKey(self.selectedItem) || self.query; // 如果没有 key, 就用输入值
+        }
+    });
+
+    function visible(elem) {
+        elem.style.visibility = EMPTY;
+    }
+
+    function invisible(elem) {
+        elem.style.visibility = HIDDEN;
+    }
+
+    function replaceContent(elem, html) {
+        if (html.nodeType === 1) {
+            DOM.html(elem, EMPTY);
+            elem.appendChild(html);
+        } else {
+            DOM.html(elem, html);
+        }
+    }
+
+    /**
+     * 约定的全局回调函数
+     */
+    win[CALLBACK_STR] = function(data) {
+        if (!Suggest.focusInstance) return;
+        // 保证先运行 script.onload 事件，然后再执行 callback 函数
+        S.later(function() {
+            Suggest.focusInstance._handleResponse(data);
+        }, 0);
+    };
+
+    Suggest.version = 1.1;
+    S.Suggest = Suggest;
+});
+
+
+/**
+ * 小结：
+ *
+ * 整个组件代码，由两大部分组成：数据处理 + 事件处理
+ *
+ * 一、数据处理很 core，但相对来说是简单的，由 requestData + handleResponse + formatData 等辅助方法组成
+ * 需要注意两点：
+ *  a. IE 中，改变 script.src, 会自动取消掉之前的请求，并发送新请求。非 IE 中，必须新创建 script 才行。这是
+ *     requestData 方法中存在两种处理方式的原因。
+ *  b. 当网速很慢，数据返回时，用户的输入可能已改变，已经有请求发送出去，需要抛弃过期数据。目前采用加 data-time
+ *     的解决方案。更好的解决方案是，调整 API，使得返回的数据中，带有 query 值。
+ *
+ * 二、事件处理看似简单，实际上有不少陷阱，分 2 部分：
+ *  1. 输入框的 focus/blur 事件 + 键盘控制事件
+ *  2. 提示层上的鼠标悬浮和点击事件
+ * 需要注意以下几点：
+ *  a. 因为点击提示层时，首先会触发输入框的 blur 事件，blur 事件中调用 hide 方法，提示层一旦隐藏后，就捕获不到
+ *     点击事件了。因此有了 this._mouseHovering 来排除这种情况，使得 blur 时不会触发 hide, 在提示层的点击
+ *     事件中自行处理。（2009-06-18 更新：采用 mouseup 来替代 click 事件，代码清晰简单了很多）（注：后来发现
+ *     用 beforedeactive 方法可以阻止掉输入框的焦点丢失，逻辑更简单了）
+ *  b. 当鼠标移动到某项或通过上下键选中某项时，给 this.selectedItem 赋值；当提示层的数据重新填充时，重置
+ *     this.selectedItem. 这种处理方式和 google 的一致，可以使得选中某项，隐藏，再次打开时，依旧选中原来
+ *     的选中项。
+ *  c. 在 ie 等浏览器中，输入框中输入 ENTER 键时，会自动提交表单。如果 form.target='_blank', 自动提交和 JS 提交
+ *     会打开两个提交页面。因此这里采取了在 JS 中不提交的策略，ENTER 键是否提交表单，完全由 HTML 代码自身决定。这
+ *     样也能使得组件很容易应用在不需要提交表单的场景中。（2009-06-18 更新：可以通过 blur() 取消掉浏览器的默认
+ *     Enter 响应，这样能使得代码逻辑和 mouseup 的一致）
+ *  d. onItemSelect 仅在鼠标点击选择某项 和 键盘选中某项回车 后触发。
+ *  e. 当 textInput 会触发表单提交时，在 enter keydown 和 keyup 之间，就会触发提交。因此在 keydown 中捕捉事件。
+ *     并且在 keydown 中能捕捉到持续 DOWN/UP, 在 keyup 中就不行了。
+ *
+ * 【得到的一些编程经验】：
+ *  1. 职责单一原则。方法的职责要单一，比如 hide 方法和 show 方法，除了改变 visibility, 就不要拥有其它功能。这
+ *     看似简单，真要做到却并不容易。保持职责单一，保持简单的好处是，代码的整体逻辑更清晰，方法的可复用性也提
+ *     高了。
+ *  2. 小心事件处理。当事件之间有关联时，要仔细想清楚，设计好后再写代码。比如输入框的 blur 和提示层的 click 事件。
+ *  3. 测试的重要性。目前是列出 Test Cases，以后要尝试自动化。保证每次改动后，都不影响原有功能。
+ *  4. 挑选正确的事件做正确的事，太重要了，能省去很多很多烦恼。
+ *
+ */
+
+/**
+ * 2009-08-05 更新： 将 class 从配置项中移动到常量，原因是：修改默认 className 的可能性很小，仅保留一个
+ *                  containerCls 作为个性化样式的接口即可。
+ *
+ * 2009-12-10 更新： 采用 kissy module 组织代码。为了避免多个沙箱下，对全局回调函数覆盖定义引发的问题，
+ *                  采用共享模式。
+ *
+ * 2010-03-10 更新： 去除共享模式，适应 kissy 新的代码组织方式。
+ *
+ * 2010-08-04 更新： 去掉对 yahoo-dom-event 的依赖，仅依赖 ks-core. 调整了部分 public api, 扩展更容易了。
  */
