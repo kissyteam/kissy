@@ -10,6 +10,7 @@ KISSY.add('flash', function(S){
 		 * flash 实例 map { '#id': elem, ... }
          * @static
 		 */
-		swfs: { length: 0 }
+		swfs: { },
+		length: 0
 	};
 });
