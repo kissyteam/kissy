@@ -68,22 +68,20 @@ KISSY.add('event', function(S, undefined) {
 
             // 没有添加过该类型事件
             events = cache[id].events;
-            special = (!target.isCustomEventTarget && Event.special[type]) || { }; // special 仅针对 element
             if (!events[type]) {
+                special = ((target._addEvent || !target.isCustomEventTarget) && Event.special[type]) || { }; // special 仅针对 element
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
                         event = new S.EventObject(target, event, type);
-
                         if (S.isPlainObject(eventData)) {
                             S.mix(event, eventData);
                         }
                     }
-
                     if (special.setup) {
                         special.setup(event);
                     }
 
-                    return (special.handle || Event._handle)(target, event, events[type].listeners);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners, scope);
                 };
 
                 events[type] = {
@@ -95,7 +93,7 @@ KISSY.add('event', function(S, undefined) {
                     simpleAdd(target, special.fix || type, eventHandle, special.capture);
                 }
                 else if (target._addEvent) { // such as Node
-                    target._addEvent(type, eventHandle);
+                    target._addEvent(special.fix || type, eventHandle);
                 }
             }
 
