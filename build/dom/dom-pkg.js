@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * @module  dom
@@ -1089,7 +1089,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
  */
 KISSY.add('dom-offset', function(S, undefined) {
 
-    var DOM = S.DOM,
+    var DOM = S.DOM, UA = S.UA,
         win = window, doc = document,
         isElementNode = DOM._isElementNode,
         isStrict = doc.compatMode === 'CSS1Compat',
@@ -1247,8 +1247,14 @@ KISSY.add('dom-offset', function(S, undefined) {
             // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
             // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
 
-            x = box[LEFT] + DOM[SCROLL_LEFT](w);
-            y = box[TOP] + DOM[SCROLL_TOP](w);
+            x = box[LEFT];
+            y = box[TOP];
+
+            // iphone/ipad/itouch 下的 Safari 获取 getBoundingClientRect 时，已经加入 scrollTop
+            if (UA.mobile !== 'Apple') {
+                x += DOM[SCROLL_LEFT](w);
+                y += DOM[SCROLL_TOP](w);
+            }
         }
 
         return { left: x, top: y };
