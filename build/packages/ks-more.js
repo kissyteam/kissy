@@ -1850,9 +1850,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * 数据延迟加载组件
@@ -2052,7 +2052,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             // 加载函数
             function loader() {
                 if (timer) return;
-                timer = setTimeout(function() {
+                timer = S.later(function() {
                     loadItems();
                     timer = null;
                 }, 100); // 0.1s 内，用户感觉流畅
@@ -2167,7 +2167,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          */
         _getThreshold: function() {
             var diff = this.config.diff,
-                vh = DOM.viewportHeight();
+                vh = DOM['viewportHeight']();
 
             if (diff === DEFAULT) return 2 * vh; // diff 默认为当前视窗高度（两屏以外的才延迟加载）
             else return vh + diff;
