@@ -100,7 +100,7 @@ KISSY.add('event', function(S, undefined) {
                     simpleAdd(target, special.fix || type, eventHandle, special.capture);
                 }
                 else if (target._addEvent) { // such as Node
-                    target._addEvent(type, eventHandle);
+                    target._addEvent(special.fix || type, eventHandle);
                 }
             }
 
