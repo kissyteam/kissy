@@ -9,8 +9,8 @@
     <target name="concat">
         <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="kissy.js"/>
-            <path path="kissy-lang.js"/>
-            <path path="kissy-ua.js"/>
+            <path path="lang.js"/>
+            <path path="ua.js"/>
         </concat>
     </target>
 

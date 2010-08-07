@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>ajax - KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/blob/master/src/ajax/">src files</a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="section summary">
+                <p>首先说声抱歉，ajax 模块没来得及在 8 月 2 日完成所有预期功能，并进行充分测试。为了保证发布质量，目前该模块仅包含 getScript 方法。</p>
+                <p>我们会很快完善并充分测试这个模块，同时提供 loader 功能，敬请期待。相关 public api, 也期望听到您的建议。</p>
+            </div>
+
+            <div class="section" id="node">
+                <div class="member method">
+                    <h4>
+                        <a name="method_getScript">getScript</a>
+                        <code>void <em>getScript</em>()</code>
+                    </h4>
+                    <div class="detail">
+                        <p>动态加载 js 脚本。</p>
+<pre class="example-code"><code>
+var S = KISSY;
+S.getScript('http://path/to/filename.js', function() {
+    alert('filename.js is loaded.');
+}, 'utf-8');
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc"><a href="../index.html">home</a> &rsaquo; ajax :</div>
+            <div class="toc">
+                <h3>Sub modules</h3>
+                <ul>
+                    <li><a href="#method_getScript">getScript</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

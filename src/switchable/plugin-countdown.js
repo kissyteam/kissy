@@ -8,14 +8,16 @@ KISSY.add('switchable-countdown', function(S, undefined) {
         Switchable = S.Switchable,
         CLS_PREFIX = 'ks-switchable-trigger-',
         TRIGGER_MASK_CLS = CLS_PREFIX + 'mask',
-        TRIGGER_CONTENT_CLS = CLS_PREFIX + 'content';
+        TRIGGER_CONTENT_CLS = CLS_PREFIX + 'content',
+        STYLE = 'style';
 
     /**
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
         countdown: false,
-        countdownStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
+        countdownFromStyle: '',      // 倒计时的初始样式
+        countdownToStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
     });
 
     /**
@@ -27,7 +29,8 @@ KISSY.add('switchable-countdown', function(S, undefined) {
 
         init: function(host) {
             var cfg = host.config, interval = cfg.interval,
-                triggers = host.triggers, masks = [], style = cfg.countdownStyle,
+                triggers = host.triggers, masks = [],
+                fromStyle = cfg.countdownFromStyle, toStyle = cfg.countdownToStyle,
                 anim;
 
             // 必须保证开启 autoplay 以及有 trigger 时，才能开启倒计时动画
@@ -46,31 +49,41 @@ KISSY.add('switchable-countdown', function(S, undefined) {
                     // 先停止未完成动画
                     stopAnim();
 
-                    // 快速平滑关闭当前未完成动画效果
-                    anim = new Anim(masks[host.activeIndex], style, interval / 10, 'easeOut').run();
+                    // 快速平滑回退到初始状态
+                    var mask = masks[host.activeIndex];
+                    if (fromStyle) {
+                        anim = new Anim(mask, fromStyle, .2, 'easeOut').run();
+                    } else {
+                        DOM.removeAttr(mask, STYLE);
+                    }
+                });
+
+                Event.on(host.container, 'mouseleave', function() {
+                    // 鼠标离开时立即停止未完成动画
+                    stopAnim();
+
+                    // 初始化动画参数，准备开始新一轮动画
+                    DOM.removeAttr(masks[host.activeIndex], STYLE);
+
+                    // 重新开始倒计时动画
+                    S.later(startAnim, 200);
                 });
             }
 
             // panels 切换前，当前 trigger 完成善后工作以及下一 trigger 进行初始化
-            host.on('beforeSwitch', function(ev) {
+            host.on('beforeSwitch', function() {
                 // 恢复前，先结束未完成动画效果
                 stopAnim();
 
                 // 将当前 mask 恢复动画前状态
-                DOM.removeAttr(masks[host.activeIndex], 'style');
-
-                // 悬停状态时，不需要触发倒计时动画
-                if (host.paused) {
-                    // 将下一个 mask 隐藏，也就是没有动画效果
-                    DOM.css(masks[ev.toIndex], 'visibility', 'hidden');
-                }
+                DOM.removeAttr(masks[host.activeIndex], STYLE);
             });
 
             // panel 切换完成时，开始 trigger 的倒计时动画
-            host.on('switch', function(ev) {
+            host.on('switch', function() {
                 // 悬停状态，当用户主动触发切换时，不需要倒计时动画
                 if (!host.paused) {
-                    startAnim(ev.currentIndex);
+                    startAnim();
                 }
             });
 
@@ -78,9 +91,9 @@ KISSY.add('switchable-countdown', function(S, undefined) {
             startAnim(host.activeIndex);
 
             // 开始倒计时动画
-            function startAnim(index) {
+            function startAnim() {
                 stopAnim(); // 开始之前，先确保停止掉之前的
-                anim = new Anim(masks[index], style, interval - 1).run(); // -1 是为了动画结束时停留一下，使得动画更自然
+                anim = new Anim(masks[host.activeIndex], toStyle, interval - .5).run(); // -.5 是为了动画结束时停留一下，使得动画更自然
             }
 
             // 停止所有动画

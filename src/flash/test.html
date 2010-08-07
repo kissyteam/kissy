@@ -65,17 +65,17 @@
 
         F.add('#myFlashContent', { version: '99' }, function(data) {
             if (data.status !== 0) test.fail();
-            if (F.len() > 0) test.fail();
+            if (F.length > 0) test.fail();
         });
 
         F.add('#myFlashContent2', { version: '9' }, function(data) {
             if (data.status !== 1) test.fail(data.status);
-            if (F.len() !== 1) test.fail(F.len());
+            if (F.length !== 1) test.fail(F.length);
         });
     }
 
     function test_len(test) {
-        if (F.len() !== 1) test.fail(F.len());
+        if (F.length !== 1) test.fail(F.length);
     }
 
     function test_add_embed(test) {
@@ -131,13 +131,13 @@
     }
 
     function test_get(test) {
-        if (!S.UA.safari) if ((F.get('#myFlashContent2') || 0).nodeName !== 'OBJECT') test.fail();
+        if (!S.UA.safari) if ((F.get('myFlashContent2') || 0).nodeName !== 'OBJECT') test.fail();
     }
 
     function test_contains(test) {
         if (S.UA.safari) return;
 
-        if (!F.contains('#myFlashContent2')) test.fail();
+        if (!F.contains('myFlashContent2')) test.fail();
         if (F.contains('#test-xxxxx')) test.fail();
     }
 

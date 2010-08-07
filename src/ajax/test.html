@@ -12,104 +12,24 @@
 
 <h2>Test Data</h2>
 
-<script src="../kissy/kissy.js"></script>
-<script src="../kissy/kissy-lang.js"></script>
-<script src="../kissy/kissy-ua.js"></script>
+<script src="../../build/kissy/kissy-pkg.js"></script>
 <script src="../../build/dom/dom-pkg.js"></script>
-<script src="../json/json.js"></script>
+<script src="../../build/event/event-pkg.js"></script>
 
 <script src="ajax.js"></script>
 
+<script src="../../third-party/jquery/jquery-1.4.2.js"></script>
+
 <!-- Test Cases -->
 <script>
+    var S = KISSY;
 
-var S = KISSY;
+    function test_getScript(test) {
+        S.getScript('../cookie/cookie.js', function() {
+            test.echo('cookie.js is loaded.');
+        });
+    }
 
-var test_log = function(test,log){
-	test.extraMsg = log;
-};
-
-//普通get请求
-var test_get = function(test){
-	S.io({
-		type:'get',
-		url:'interface.php?t=get',
-		complete:function(id,o,args){
-			test.echo('GET '+o.responseText);
-		}
-	});
-	test_log(test,'GET interface.php?t=get');
-};
-
-//普通post请求
-var test_post = function(test){
-	S.io({
-		type:'post',
-		data:{
-			type:'post',
-			name:'jayli',
-			company:'cn.yahoo.com',
-			countru:'china'
-		},
-		url:'interface.php?t=post',
-		complete:function(id,o,args){
-			test.echo('POST '+o.responseText);
-		}
-	});
-	test_log(test,'POST interface.php?t=get');
-};
-
-//jsonp
-var test_jsonp = function(test){
-	S.io({
-		url:'interface.php?callback=?',
-		dataType:'jsonp',
-		complete:function(id,data,args){
-			test.echo(data.toString() + 'Simple Jsonp callback');
-		}
-	});
-	test_log(test,'JSONP interface.php');
-};
-
-//自定义callback写法的jsonp
-var test_jsonp_1 = function(test){
-	S.io({
-		url:'interface.php',
-		dataType:'jsonp',
-		jsonp:'my_callback',
-		complete:function(id,data,args){
-			test.echo(data.toString() + 'Custom Jsonp callback');
-		}
-	});
-	test_log(test,'JSONP interface.php');
-};
-
-//请求失败的回调
-var test_failure= function(test){
-	S.io({
-		type:'get',
-		url:'xxx',
-		failure:function(id,o,args){
-			test.echo(o.responseText);
-		}
-	});
-	test_log(test,'FAILED interface.php?t=get');
-};
-
-
-//同步请求
-var test_sync = function(test){
-	var str = S.io({
-		type:'get',
-		url:'interface.php?t=get',
-		async:false,
-		complete:function(id,o,args){
-			//this will not exec in firefox
-			test.echo('ASYN Callback '+o.responseText);
-		}
-	}).responseText;
-	test_log(test,'ASYN block the thread :'+ str);
-};
 </script>
 
 </body>

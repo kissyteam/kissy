@@ -1,5 +1,5 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0pre
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -513,6 +513,7 @@ KISSY.add('dom-attr', function(S, undefined) {
         SELECT = 'select',
         EMPTY = '',
         CHECKED = 'checked',
+        STYLE = 'style',
 
         DOM = S.DOM,
         isElementNode = DOM._isElementNode,
@@ -587,8 +588,8 @@ KISSY.add('dom-attr', function(S, undefined) {
                     }
                     // 在标准浏览器下，用 getAttribute 获取 style 值
                     // IE7- 下，需要用 cssText 来获取
-                    else if (name === 'style') {
-                        ret = el.style.cssText;
+                    else if (name === STYLE) {
+                        ret = el[STYLE].cssText;
                     }
                 }
 
@@ -603,8 +604,9 @@ KISSY.add('dom-attr', function(S, undefined) {
                     return;
                 }
 
-                if (oldIE && name === 'style') {
-                    el.style.cssText = val;
+                // 不需要加 oldIE 判断，否则 IE8 的 IE7 兼容模式有问题
+                if (name === STYLE) {
+                    el[STYLE].cssText = val;
                 }
                 else {
                     // checked 属性值，需要通过直接设置才能生效
@@ -1087,7 +1089,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
  */
 KISSY.add('dom-offset', function(S, undefined) {
 
-    var DOM = S.DOM,
+    var DOM = S.DOM, UA = S.UA,
         win = window, doc = document,
         isElementNode = DOM._isElementNode,
         isStrict = doc.compatMode === 'CSS1Compat',
@@ -1245,8 +1247,14 @@ KISSY.add('dom-offset', function(S, undefined) {
             // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
             // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
 
-            x = box[LEFT] + DOM[SCROLL_LEFT](w);
-            y = box[TOP] + DOM[SCROLL_TOP](w);
+            x = box[LEFT];
+            y = box[TOP];
+
+            // iphone/ipad/itouch 下的 Safari 获取 getBoundingClientRect 时，已经加入 scrollTop
+            if (UA.mobile !== 'Apple') {
+                x += DOM[SCROLL_LEFT](w);
+                y += DOM[SCROLL_TOP](w);
+            }
         }
 
         return { left: x, top: y };
@@ -1610,7 +1618,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 直接通过 innerHTML 设置 html
     function setHTMLSimple(elem, html) {
-        html = html.replace(RE_SCRIPT, ''); // 过滤掉所有 script
+        html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所有 script
         try {
             elem.innerHTML = html;
         } catch(ex) { // table.innerHTML = html will throw error in ie.

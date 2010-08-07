@@ -1,6 +1,7 @@
 *.iml
 .idea/
 *~
+~*
 *.diff
 *.patch
 *.bak
@@ -8,3 +9,4 @@
 Thumb.db
 .project
 .*proj
+index.php

@@ -1,5 +1,5 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0pre
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -18,7 +18,7 @@ KISSY.add('datalazyload', function(S, undefined) {
         AREA_DATA_CLS = 'ks-datalazyload',
         CUSTOM = '-custom',
         MANUAL = 'manual',
-        DISPLAY = 'none', DEFAULT = 'default', NONE = 'none',
+        DISPLAY = 'display', DEFAULT = 'default', NONE = 'none',
         SCROLL = 'scroll', RESIZE = 'resize',
 
         defaultConfig = {
@@ -201,7 +201,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             // 加载函数
             function loader() {
                 if (timer) return;
-                timer = setTimeout(function() {
+                timer = S.later(function() {
                     loadItems();
                     timer = null;
                 }, 100); // 0.1s 内，用户感觉流畅
@@ -277,14 +277,12 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 监控滚动，处理 textarea
          */
         _loadArea: function(area) {
-            var self = this,
-                top = DOM.offset(area).top;
+            var self = this, top,
+                isHidden = DOM.css(area, DISPLAY) === NONE;
 
-            // 注：area 可能处于 display: none 状态，top 返回 0
-            // 这种情况下用 area.parentNode 的 Y 值来判断
-            if (!top && DOM.css(area, DISPLAY) == NONE) {
-                top = DOM.offset(area.parentNode).top;
-            }
+            // 注：area 可能处于 display: none 状态，DOM.offset(area).top 返回 0
+            // 这种情况下用 area.parentNode 的 Y 值来替代
+            top = DOM.offset(isHidden ? area.parentNode : area).top;
 
             if (top <= self.threshold + DOM.scrollTop()) {
                 self._loadAreaData(area.parentNode, area);
@@ -318,7 +316,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          */
         _getThreshold: function() {
             var diff = this.config.diff,
-                vh = DOM.viewportHeight();
+                vh = DOM['viewportHeight']();
 
             if (diff === DEFAULT) return 2 * vh; // diff 默认为当前视窗高度（两屏以外的才延迟加载）
             else return vh + diff;
