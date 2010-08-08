@@ -27,7 +27,7 @@ KISSY.add('node', function(S) {
         if (DOM._isSupportedNode(html)) {
             domNode = html;
         }
-        else if (typeof html === 'string') {
+        else if (S.isString(html)) {
             domNode = DOM.create(html, props, ownerDocument);
         }
 

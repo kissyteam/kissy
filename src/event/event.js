@@ -4,7 +4,7 @@
  */
 KISSY.add('event', function(S, undefined) {
 
-    var win = window, doc = document,
+    var doc = document,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -51,8 +51,8 @@ KISSY.add('event', function(S, undefined) {
         add: function(target, type, fn, scope /* optional */) {
             if (batch('add', target, type, fn, scope)) return;
 
-            var id = getID(target),
-                special, events, eventHandle;
+            var id = getID(target), isNativeEventTarget,
+                special, events, eventHandle, fixedType, capture;
 
             // 不是有效的 target 或 参数不对
             if (id === -1 || !type || !S.isFunction(fn)) return;
@@ -69,7 +69,9 @@ KISSY.add('event', function(S, undefined) {
             // 没有添加过该类型事件
             events = cache[id].events;
             if (!events[type]) {
-                special = ((target._addEvent || !target.isCustomEventTarget) && Event.special[type]) || { }; // special 仅针对 element
+                isNativeEventTarget = !target.isCustomEventTarget;
+                special = ((isNativeEventTarget || target._supportSpecialEvent) && Event.special[type]) || { };
+
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
                         event = new S.EventObject(target, event, type);
@@ -80,7 +82,6 @@ KISSY.add('event', function(S, undefined) {
                     if (special.setup) {
                         special.setup(event);
                     }
-
                     return (special.handle || Event._handle)(target, event, events[type].listeners, scope);
                 };
 
@@ -89,11 +90,12 @@ KISSY.add('event', function(S, undefined) {
                     listeners: []
                 };
 
-                if (!target.isCustomEventTarget) {
-                    simpleAdd(target, special.fix || type, eventHandle, special.capture);
-                }
-                else if (target._addEvent) { // such as Node
-                    target._addEvent(special.fix || type, eventHandle);
+                fixedType = special.fix || type;
+                capture = special['capture'];
+                if (isNativeEventTarget) {
+                    simpleAdd(target, fixedType, eventHandle, capture);
+                } else if (target._addEvent) { // such as Node
+                    target._addEvent(fixedType, eventHandle, capture);
                 }
             }
 
@@ -244,24 +246,6 @@ KISSY.add('event', function(S, undefined) {
     }
 
     S.Event = Event;
-
-    // Prevent memory leaks in IE
-    // Window isn't included so as not to unbind existing unload events
-    // More info: http://isaacschlueter.com/2006/10/msie-memory-leaks/
-    if (win.attachEvent && !win.addEventListener) {
-        win.attachEvent('onunload', function() {
-            var id, target;
-            for (id in cache) {
-                if ((target = cache[id].target)) {
-                    // try/catch is to handle iframes being unloaded
-                    try {
-                        Event.remove(target);
-                    } catch(ex) {
-                    }
-                }
-            }
-        });
-    }
 });
 
 /**

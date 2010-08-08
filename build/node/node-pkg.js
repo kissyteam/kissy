@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * @module  node
@@ -32,7 +32,7 @@ KISSY.add('node', function(S) {
         if (DOM._isSupportedNode(html)) {
             domNode = html;
         }
-        else if (typeof html === 'string') {
+        else if (S.isString(html)) {
             domNode = DOM.create(html, props, ownerDocument);
         }
 
@@ -294,15 +294,15 @@ KISSY.add('node-attach', function(S, undefined) {
 
     // event-target
     S.each([NP, NLP], function(P) {
-        S.mix(P, S.EventTarget);
-        P._addEvent = function(type, handle) {
+        S.mix(P, S.EventTarget, { _supportSpecialEvent: true });
+        P._addEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
-                Event._simpleAdd(this[i], type, handle);
+                Event._simpleAdd(this[i], type, handle, capture);
             }
         };
-        P._removeEvent = function(type, handle) {
+        P._removeEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
-                Event._simpleRemove(this[i], type, handle);
+                Event._simpleRemove(this[i], type, handle, capture);
             }
         };
         delete P.fire;
