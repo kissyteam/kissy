@@ -93,7 +93,7 @@ KISSY.add('switchable-countdown', function(S, undefined) {
             // 开始倒计时动画
             function startAnim() {
                 stopAnim(); // 开始之前，先确保停止掉之前的
-                anim = new Anim(masks[host.activeIndex], toStyle, interval - .5).run(); // -.5 是为了动画结束时停留一下，使得动画更自然
+                anim = new Anim(masks[host.activeIndex], toStyle, interval - 1).run(); // -1 是为了动画结束时停留一下，使得动画更自然
             }
 
             // 停止所有动画
