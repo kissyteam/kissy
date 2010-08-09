@@ -5,7 +5,7 @@
 KISSY.add('ua-extra', function(S) {
     var UA = S.UA,
         ua = navigator.userAgent,
-        m, external, ie,
+        m, external, ie, shell,
         o = { },
         numberify = UA._numberify;
 
@@ -20,6 +20,7 @@ KISSY.add('ua-extra', function(S) {
     // 360Browser
     if (m = ua.match(/360SE/)) {
         o.se360 = 3; // issue: 360Browser 2.x cannot be recognised, so if recognised default set verstion number to 3
+        shell = 'se360';
     }
     // Maxthon
     else if ((m = ua.match(/Maxthon/)) && (external = window.external)) {
@@ -29,19 +30,24 @@ KISSY.add('ua-extra', function(S) {
             o.maxthon = numberify(external['max_version']);
         } catch(ex) {
             o.maxthon = 0.1;
+        } finally {
+            shell = 'maxthon';
         }
     }
     // TT
     else if (m = ua.match(/TencentTraveler\s([\d.]*)/)) {
         o.tt = m[1] ? numberify(m[1]) : 0.1;
+        shell = 'tt';
     }
     // TheWorld
     else if (m = ua.match(/TheWorld/)) {
         o.theworld = 3; // issue: TheWorld 2.x cannot be recognised, so if recognised default set verstion number to 3
+        shell = 'theworld';
     }
     // Sougou
     else if (m = ua.match(/SE\s([\d.]*)/)) {
         o.sougou = m[1] ? numberify(m[1]) : 0.1;
+        shell = 'sougou';
     }
     // Raw IE detection
     else if ((ie = UA.ie)) {
@@ -52,6 +58,9 @@ KISSY.add('ua-extra', function(S) {
             o.rawie = ie;
         }
     }
+
+    // If the browser has shell(no matter IE-core or Webkit-core or others), set the shell key
+    shell && (o.shell = shell);
 
     S.mix(UA, o);
 });
