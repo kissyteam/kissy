@@ -14,7 +14,7 @@
             <path path="plugin-effect.js"/>
             <path path="plugin-circular.js"/>
             <path path="plugin-lazyload.js"/>
-            <path path="plugin-countdown.js"/>
+            <!--<path path="plugin-countdown.js"/>-->
             <path path="plugin-autorender.js"/>
 
             <path path="widget-tabs.js"/>

@@ -106,3 +106,9 @@ KISSY.add('switchable-countdown', function(S, undefined) {
         }
     });
 });
+
+/**
+ * NOTES:
+ *
+ *  - 2010/08/09: [yubo] 在 firefox 下 cpu 占用较高，暂不考虑。等 CSS3 普及了，再用 CSS3 来改造。
+ */
