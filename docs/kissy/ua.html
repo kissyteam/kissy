@@ -93,7 +93,7 @@
                     <h4><a name="prop_se360">se360</a> - <code>Number</code></h4>
                     <div class="detail">
                         <p>360 安全浏览器的版本号。</p>
-                        <p class="notice">目前360安全浏览器2.x系列的版本无法识别，只有3.x系列的才能正常识别，因此目前只要识别为360安全浏览器，都返回3.0版本号。此返回值可能不正确。</p>
+                        <p class="notice">目前360安全浏览器2.x系列无法识别，只有3.x系列的才能正常识别，因此返回值可能不准确。</p>
                     </div>
                 </div>
 
@@ -101,7 +101,7 @@
                     <h4><a name="prop_maxthon">maxthon</a> - <code>Number</code></h4>
                     <div class="detail">
                         <p>maxthon 的版本号。</p>
-                        <p class="notice">目前最新的傲游浏览器（3.x系列）采用双核技术，因此在版本号识别上可能导致错误，因此若返回值为0.1则表示当前傲游浏览器的版本号无法确定，其余版本则不存此问题。</p>
+                        <p class="notice">目前最新的傲游浏览器（3.x系列）采用双核技术，因此版本号可能无法识别。其余版本则不存此问题。</p>
                     </div>
                 </div>
                 
@@ -116,7 +116,7 @@
                     <h4><a name="prop_theworld">theworld</a> - <code>Number</code></h4>
                     <div class="detail">
                         <p>世界之窗浏览器的版本号。</p>
-                        <p class="notice">目前世界之窗浏览器2.x系列的版本无法识别，只有3.x系列的才能正常识别，因此目前只要识别为世界之窗浏览器，都返回3.0版本号。此返回值可能不正确。</p>
+                        <p class="notice">目前世界之窗浏览器2.x系列无法识别，只有3.x系列的才能正常识别，因此返回值可能不准确。</p>
                     </div>
                 </div>
 
@@ -131,8 +131,8 @@
                     <h4><a name="prop_rawie">rawie</a> - <code>Number or undefined</code></h4>
                     <div class="detail">
                         <p>原生IE的版本号。</p>
-                        <p class="tips">如果用户使用的原生IE浏览器，则返回此IE浏览器的版本号，若没有使用原生IE浏览器，则返回undefined。</p>
-                        <p class="notice">返回值可能无法完全保证当前浏览器一定为原生IE。</p>
+                        <p class="tips">如果用户使用的原生IE浏览器，则返回此IE浏览器的版本号；否则，返回undefined。</p>
+                        <p class="notice">返回值可能无法完全保证准确性。</p>
                     </div>
                 </div>
 
