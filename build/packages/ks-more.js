@@ -2287,9 +2287,9 @@ KISSY.add('datalazyload', function(S, undefined) {
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * @module   Flash UA 探测
@@ -2590,6 +2590,7 @@ KISSY.add('flash-embed', function(S) {
 
         _register: function(swf, config, callback) {
             var id = config.attrs.id;
+			swf = (DOM.query("object",swf) || [])[0] || swf;		//bugfix:  静态双 object 获取问题。双Object 外层有id 但内部才有效。
             Flash._addSWF(id, swf);
             Flash._callback(callback, SWF_SUCCESS, id, swf);
         },
@@ -2605,8 +2606,11 @@ KISSY.add('flash-embed', function(S) {
             else {
                 target.parentNode.replaceChild(o, target);
             }
-
-            Flash._register(target, config, callback);
+			
+			target = S.get("#"+target.id);				// bugfix:  重新获取对象,否则还是老对象. 如 入口为  div 如果不重新获取则仍然是 div	longzang | 2010/8/9
+			
+			
+			Flash._register(target, config, callback);
         },
 
         _callback: function(callback, type, id, swf) {
@@ -2685,7 +2689,7 @@ KISSY.add('flash-embed', function(S) {
          */
         toFlashVars: function(obj) {
             if (!S.isPlainObject(obj)) return EMPTY; // 仅支持 PlainOject
-            var prop, data, arr = [];
+            var prop, data, arr = [],ret;
 
             for (prop in obj) {
                 data = obj[prop];
@@ -2707,8 +2711,8 @@ KISSY.add('flash-embed', function(S) {
 
                 arr.push(prop + '=' + data);
             }
-
-            return arr.join('&');
+			ret = arr.join('&');
+            return ret.replace(/"/g,"'"); // bugfix: 将 " 替换为 ', 以免取值产生问题。但注意自转换为 JSON 时，需要进行还原处理。
         }
     });
 
@@ -2733,12 +2737,14 @@ KISSY.add('flash-embed', function(S) {
  * 				取消了 F.swfs 的 length属性和 F.len()属性。
  * 				增加了 F.length，以保证 F.swfs 是个纯池
  * 				修正了Flashvars 参数中强制字符串带引号造成传入参数不纯粹的bug。
- * 				
+ * 2010/08/09	修正了在动态添加_embed() target 指向不正确，造成获取 swf 不正确问题。（test 中也针对这点有了测试）
+ * 				修正了在 flashvars 存在的双引号隐患。将所有 flashvars 中的双引号替换为单引号。但此后所有应用都需要进行过滤。
+ * 								
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * Switchable
@@ -3575,113 +3581,6 @@ KISSY.add('switchable-lazyload', function(S) {
     });
 });
 /**
- * Switchable Countdown Plugin
- * @creator  gonghao<gonghao@ghsky.com>
- */
-KISSY.add('switchable-countdown', function(S, undefined) {
-
-    var DOM = S.DOM, Event = S.Event, Anim = S.Anim,
-        Switchable = S.Switchable,
-        CLS_PREFIX = 'ks-switchable-trigger-',
-        TRIGGER_MASK_CLS = CLS_PREFIX + 'mask',
-        TRIGGER_CONTENT_CLS = CLS_PREFIX + 'content',
-        STYLE = 'style';
-
-    /**
-     * 添加默认配置
-     */
-    S.mix(Switchable.Config, {
-        countdown: false,
-        countdownFromStyle: '',      // 倒计时的初始样式
-        countdownToStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
-    });
-
-    /**
-     * 添加插件
-     */
-    Switchable.Plugins.push({
-
-        name: 'countdown',
-
-        init: function(host) {
-            var cfg = host.config, interval = cfg.interval,
-                triggers = host.triggers, masks = [],
-                fromStyle = cfg.countdownFromStyle, toStyle = cfg.countdownToStyle,
-                anim;
-
-            // 必须保证开启 autoplay 以及有 trigger 时，才能开启倒计时动画
-            if (!cfg.autoplay || !cfg.hasTriggers || !cfg.countdown) return;
-
-            // 为每个 trigger 增加倒计时动画覆盖层
-            S.each(triggers, function(trigger, i) {
-                trigger.innerHTML = '<div class="' + TRIGGER_MASK_CLS + '"></div>' +
-                    '<div class="' + TRIGGER_CONTENT_CLS + '">' + trigger.innerHTML + '</div>';
-                masks[i] = trigger.firstChild;
-            });
-
-            // 鼠标悬停，停止自动播放
-            if (cfg.pauseOnHover) {
-                Event.on(host.container, 'mouseenter', function() {
-                    // 先停止未完成动画
-                    stopAnim();
-
-                    // 快速平滑回退到初始状态
-                    var mask = masks[host.activeIndex];
-                    if (fromStyle) {
-                        anim = new Anim(mask, fromStyle, .2, 'easeOut').run();
-                    } else {
-                        DOM.removeAttr(mask, STYLE);
-                    }
-                });
-
-                Event.on(host.container, 'mouseleave', function() {
-                    // 鼠标离开时立即停止未完成动画
-                    stopAnim();
-
-                    // 初始化动画参数，准备开始新一轮动画
-                    DOM.removeAttr(masks[host.activeIndex], STYLE);
-
-                    // 重新开始倒计时动画
-                    S.later(startAnim, 200);
-                });
-            }
-
-            // panels 切换前，当前 trigger 完成善后工作以及下一 trigger 进行初始化
-            host.on('beforeSwitch', function() {
-                // 恢复前，先结束未完成动画效果
-                stopAnim();
-
-                // 将当前 mask 恢复动画前状态
-                DOM.removeAttr(masks[host.activeIndex], STYLE);
-            });
-
-            // panel 切换完成时，开始 trigger 的倒计时动画
-            host.on('switch', function() {
-                // 悬停状态，当用户主动触发切换时，不需要倒计时动画
-                if (!host.paused) {
-                    startAnim();
-                }
-            });
-
-            // 开始第一次
-            startAnim(host.activeIndex);
-
-            // 开始倒计时动画
-            function startAnim() {
-                stopAnim(); // 开始之前，先确保停止掉之前的
-                anim = new Anim(masks[host.activeIndex], toStyle, interval - .5).run(); // -.5 是为了动画结束时停留一下，使得动画更自然
-            }
-
-            // 停止所有动画
-            function stopAnim() {
-                if (anim) {
-                    anim.stop();
-                    anim = undefined;
-                }
-            }
-        }
-    });
-});/**
  * Switchable Autorender Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  * @depends  ks-core, json
@@ -3927,9 +3826,9 @@ KISSY.add('accordion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * 提示补全组件
@@ -3973,7 +3872,7 @@ KISSY.add('suggest', function(S, undefined) {
         RESULT = 'result', KEY = 'key',
         DATA_TIME = 'data-time',
         PARSEINT = parseInt,
-        RE_FOCUS_ELEMS = /input|button|a/i,
+        RE_FOCUS_ELEMS = /^(input|button|a)$/i,
 
         /**
          * Suggest 的默认配置
