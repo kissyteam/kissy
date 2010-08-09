@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * 提示补全组件
@@ -45,7 +45,7 @@ KISSY.add('suggest', function(S, undefined) {
         RESULT = 'result', KEY = 'key',
         DATA_TIME = 'data-time',
         PARSEINT = parseInt,
-        RE_FOCUS_ELEMS = /input|button|a/i,
+        RE_FOCUS_ELEMS = /^(input|button|a)$/i,
 
         /**
          * Suggest 的默认配置

@@ -40,7 +40,7 @@ KISSY.add('suggest', function(S, undefined) {
         RESULT = 'result', KEY = 'key',
         DATA_TIME = 'data-time',
         PARSEINT = parseInt,
-        RE_FOCUS_ELEMS = /input|button|a/i,
+        RE_FOCUS_ELEMS = /^(input|button|a)$/i,
 
         /**
          * Suggest 的默认配置
