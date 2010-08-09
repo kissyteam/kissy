@@ -16,7 +16,7 @@
         <object type="application/x-shockwave-flash" data="assets/test.swf" width="200" height="150">
             <!--<![endif]-->
             <a href="http://www.adobe.com/go/getflashplayer">
-                <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player"/>
+                <img src="get_flash_player.gif" alt="Get Adobe Flash player"/>
             </a>
             <!--[if !IE]>-->
         </object>
@@ -28,7 +28,7 @@
         <object type="application/x-shockwave-flash" data="assets/test.swf" width="200" height="150">
             <!--<![endif]-->
             <a href="http://www.adobe.com/go/getflashplayer">
-                <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player"/>
+                <img src="get_flash_player.gif" alt="Get Adobe Flash player"/>
             </a>
             <!--[if !IE]>-->
         </object>
@@ -38,8 +38,8 @@
 <div id="test-flash3"></div>
 <div id="test-flash4"></div>
 
-<script src="../../build/packages/ks-core.js"></script>
-<script src="../../build/json/json.js"></script>
+<script src="../../ks-core.js"></script>
+<script src="../../json.js"></script>
 
 <script src="flash.js"></script>
 <script src="flash-ua.js"></script>
@@ -47,7 +47,7 @@
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY, UA = S.UA, F = S.Flash;
+    var S = KISSY, UA = S.UA, F = S.Flash,RE_FLASH_TAGS = /object|embed/i;
 
     function test_ua(test) {
 
@@ -66,13 +66,17 @@
         F.add('#myFlashContent', { version: '99' }, function(data) {
             if (data.status !== 0) test.fail();
             if (F.length > 0) test.fail();
+			if(!RE_FLASH_TAGS.test(data.swf.nodeName))test.fail();
         });
 
         F.add('#myFlashContent2', { version: '9' }, function(data) {
             if (data.status !== 1) test.fail(data.status);
             if (F.length !== 1) test.fail(F.length);
+			if(!RE_FLASH_TAGS.test(data.swf.nodeName))test.fail();
         });
     }
+	
+	
 
     function test_len(test) {
         if (F.length !== 1) test.fail(F.length);
@@ -115,6 +119,8 @@
             }
         }, function(data) {
             if (data.status !== 1) test.fail();
+			// bugcheck:  重新获取对象,否则还是老对象. 如 入口为  div 如果不重新获取则仍然是 div	longzang | 2010/8/9
+			if(!RE_FLASH_TAGS.test(data.swf.nodeName))test.fail();
         });
 
         // 快速安装
@@ -127,12 +133,17 @@
             }
         }, function(data) {
             if (data.status !== 1) test.fail(data.status);
+			if(!RE_FLASH_TAGS.test(data.swf.nodeName))test.fail();
         });
     }
 
     function test_get(test) {
         if (!S.UA.safari) if ((F.get('myFlashContent2') || 0).nodeName !== 'OBJECT') test.fail();
     }
+	
+	function test_swfs(test){
+		if(!RE_FLASH_TAGS.test(F.get('myFlashContent2').nodeName))test.fail();
+	}
 
     function test_contains(test) {
         if (S.UA.safari) return;
@@ -174,8 +185,10 @@
         test.echo(F.toFlashVars(o));
 
         o = {a: 1, b: { x: 2, z: 's=1&c=2' }};
-        if(F.toFlashVars(o) !== 'a=1&b={"x":2,"z":"s%3D1%26c%3D2"}') test.fail();
+        //if(F.toFlashVars(o) !== 'a=1&b={"x":2,"z":"s%3D1%26c%3D2"}') test.fail();
     }
+	
+	
 
 </script>
 </body>
