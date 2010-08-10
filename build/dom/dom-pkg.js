@@ -145,6 +145,11 @@ KISSY.add('selector', function(S, undefined) {
             ret = S.makeArray(ret);
         }
 
+        // attach each method
+        ret.each = function(fn, context) {
+            return S.each(ret, fn, context);
+        };
+
         return ret;
     }
 
@@ -345,6 +350,9 @@ KISSY.add('selector', function(S, undefined) {
  * 
  * 2010.07
  *  - 取消对 , 分组的支持，group 直接用 Sizzle
+ *
+ * 2010.08
+ *  - 给 S.query 的结果 attach each 方法
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
