@@ -52,10 +52,11 @@ KISSY.add('nodelist', function(S) {
          */
         each: function(fn, context) {
             var len = this.length, i = 0, node;
-            for (; i < len; ++i) {
-                node = new S.Node(this[i]);
-                fn.call(context || node, node, i, this);
+
+            for (node = new S.Node(this[0]);
+                 i < len && fn.call(context || node, node, i, this) !== false; node = new S.Node(this[++i])) {
             }
+
             return this;
         }
     });
