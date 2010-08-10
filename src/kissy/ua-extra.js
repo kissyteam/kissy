@@ -5,7 +5,7 @@
 KISSY.add('ua-extra', function(S) {
     var UA = S.UA,
         ua = navigator.userAgent,
-        m, external, ie, shell,
+        m, external, shell,
         o = { },
         numberify = UA._numberify;
 
@@ -44,18 +44,9 @@ KISSY.add('ua-extra', function(S) {
     else if (m = ua.match(/SE\s([\d.]*)/)) {
         o[shell = 'sougou'] = m[1] ? numberify(m[1]) : 0.1;
     }
-    // Raw IE detection
-    else if ((ie = UA.ie)) {
-        // hack: documentMode is only supported in IE 8 so we know if its here its really IE 8
-        if (ie < 8 && document['documentMode']) {
-            o.rawie = 8;
-        } else {
-            o.rawie = ie;
-        }
-    }
 
     // If the browser has shell(no matter IE-core or Webkit-core or others), set the shell key
     shell && (o.shell = shell);
 
-    S.mix(UA, o);
+    S.mix(UA, o, true);
 });
