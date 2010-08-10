@@ -7,42 +7,45 @@ build time: ${build.time}
  * @module  dom
  * @author  lifesinger@gmail.com
  */
-KISSY.add('dom', function(S) {
+KISSY.add('dom', function(S, undefined) {
 
-    var NODE_TYPE = 'nodeType',
-
-    DOM = {
-
-        /**
-         * 是不是 element/text node
-         */
-        _isSupportedNode: function(elem) {
-            return DOM._isElementNode(elem) || DOM._isTextNode(elem);
-        },
+    S.DOM = {
 
         /**
          * 是不是 element node
          */
         _isElementNode: function(elem) {
-            return elem && elem[NODE_TYPE] === 1;
-        },
-
-        /**
-         * 是不是 text node
-         */
-        _isTextNode: function(elem) {
-            return elem && elem[NODE_TYPE] === 3;
+            return nodeTypeIs(elem, 1);
         },
 
         /**
          * 是不是 KISSY.Node
          */
         _isKSNode: function(elem) {
-            return elem && S.Node && elem[NODE_TYPE] === S.Node.TYPE;
-        }
+            return S.Node && nodeTypeIs(elem, S.Node.TYPE);
+        },
+
+        /**
+         * elem 为 window 时，直接返回
+         * elem 为 document 时，返回关联的 window
+         * elem 为 undefined 时，返回当前 window
+         * 其它值，返回 false
+         */
+        _getWin: function(elem) {
+            return (elem && ('scrollTo' in elem) && elem['document']) ?
+                elem :
+                nodeTypeIs(elem, 9) ?
+                    elem.defaultView || elem.parentWindow :
+                    elem === undefined ?
+                        window : false;
+        },
+
+        _nodeTypeIs: nodeTypeIs
     };
 
-    S.DOM = DOM;
+    function nodeTypeIs(node, val) {
+        return node && node.nodeType === val;
+    }
 });
 /**
  * @module  selector
@@ -525,8 +528,8 @@ KISSY.add('dom-attr', function(S, undefined) {
 
         DOM = S.DOM,
         isElementNode = DOM._isElementNode,
-        isTextNode = DOM._isTextNode,
-        
+        isTextNode = function(elem) { return DOM._nodeTypeIs(elem, 3); },
+
         RE_SPECIAL_ATTRS = /href|src|style/,
         RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
         RE_RETURN = /\r/g,
@@ -1100,6 +1103,8 @@ KISSY.add('dom-offset', function(S, undefined) {
     var DOM = S.DOM, UA = S.UA,
         win = window, doc = document,
         isElementNode = DOM._isElementNode,
+        nodeTypeIs = DOM._nodeTypeIs,
+        getWin = DOM._getWin,
         isStrict = doc.compatMode === 'CSS1Compat',
         MAX = Math.max, PARSEINT = parseInt,
         POSITION = 'position', RELATIVE = 'relative',
@@ -1143,12 +1148,17 @@ KISSY.add('dom-offset', function(S, undefined) {
             hscroll = hscroll === undefined ? true : !!hscroll;
             top = top === undefined ? true : !!top;
 
-            // use native for scrollIntoView(elem, top)
-            if (!isElementNode(container)) {
+            // default current window, use native for scrollIntoView(elem, top)
+            if (!container || container === win) {
                 // 注意：
                 // 1. Opera 不支持 top 参数
                 // 2. 当 container 已经在视窗中时，也会重新定位
                 return elem.scrollIntoView(top);
+            }
+
+            // document 归一化到 window
+            if (nodeTypeIs(container, 9)) {
+                container = getWin(container);
             }
 
             var elemOffset = DOM.offset(elem),
@@ -1186,10 +1196,10 @@ KISSY.add('dom-offset', function(S, undefined) {
             // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
             // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
             // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
-            if(eh > ch || t < ct || top) {
+            if (eh > ch || t < ct || top) {
                 container[SCROLL_TOP] = t;
             }
-            else if(b > cb) {
+            else if (b > cb) {
                 container[SCROLL_TOP] = b - ch;
             }
 
@@ -1209,16 +1219,14 @@ KISSY.add('dom-offset', function(S, undefined) {
         var method = SCROLL + name;
 
         DOM[method] = function(elem) {
-            var ret = 0,
-                w = elem === undefined ? win : getWin(elem),
-                d;
+            var ret = 0, w = getWin(elem), d;
 
-			if(w && (d = w[DOCUMENT])) {
+            if (w && (d = w[DOCUMENT])) {
                 ret = w[i ? 'pageYOffset' : 'pageXOffset']
                     || d[DOC_ELEMENT][method]
                     || d[BODY][method]
             }
-            else if(isElementNode((elem = S.get(elem)))) {
+            else if (isElementNode((elem = S.get(elem)))) {
                 ret = elem[method];
             }
             return ret;
@@ -1235,7 +1243,7 @@ KISSY.add('dom-offset', function(S, undefined) {
 
         DOM[VIEWPORT + name] = function(refWin) {
             var prop = 'inner' + name,
-                w = getWin(refWin) || win,
+                w = getWin(refWin),
                 d = w[DOCUMENT];
             return (prop in w) ? w[prop] :
                 (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
@@ -1276,24 +1284,12 @@ KISSY.add('dom-offset', function(S, undefined) {
         }
         var old = getOffset(elem), ret = { }, current, key;
 
-        for(key in offset) {
+        for (key in offset) {
             current = PARSEINT(DOM.css(elem, key), 10) || 0;
             ret[key] = current + offset[key] - old[key];
         }
         DOM.css(elem, ret);
     }
-
-    // elem 为 window 时，直接返回
-    // elem 为 document 时，返回关联的 window
-    // 其它值，返回 false
-    function getWin(elem) {
-        return (elem && ('scrollTo' in elem) && elem[DOCUMENT]) ?
-            elem :
-            elem && elem.nodeType === 9 ?
-                elem.defaultView || elem.parentWindow :
-                false;
-    }
-
 });
 
 /**
@@ -1433,7 +1429,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     var doc = document,
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
-        isSupportedNode = DOM._isSupportedNode,
+        nodeTypeIs = DOM._nodeTypeIs,
         isElementNode = DOM._isElementNode,
         isKSNode = DOM._isKSNode,
         DIV = 'div',
@@ -1451,7 +1447,7 @@ KISSY.add('dom-create', function(S, undefined) {
          * Creates a new HTMLElement using the provided html string.
          */
         create: function(html, props, ownerDoc) {
-            if (isSupportedNode(html)) return cloneNode(html);
+            if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) return cloneNode(html);
             if (isKSNode(html)) return cloneNode(html[0]);
             if (!(html = S.trim(html))) return null;
 
