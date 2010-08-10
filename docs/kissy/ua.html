@@ -21,7 +21,8 @@
                 <p>通过 <code>KISSY.UA</code> 的属性，你可以获取浏览器等用户代理的信息。属性值遵循以下规则：</p>
                 <ol>
                     <li>表示当前引擎或浏览器的版本。版本号 1.2.3.4 会转换为数值 1.234</li>
-                    <li>如果不是当前引擎或浏览器，返回 0</li>
+                    <li>如果不是当前引擎或浏览器，返回 0 或者 undefined</li>
+                    <li>如果当前浏览器版本号无法准确判定，均返回 0.1</li>
                 </ol>
                 <p class="tips">特别注意：</p>
                 <ol>
@@ -87,6 +88,60 @@
                         <p>mobile 的标志符。</p>
                     </div>
                 </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_se360">se360</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>360 安全浏览器的版本号。</p>
+                        <p class="notice">目前360安全浏览器2.x系列无法识别，只有3.x系列的才能正常识别，因此返回值可能不准确。</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_maxthon">maxthon</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>maxthon 的版本号。</p>
+                        <p class="notice">目前最新的傲游浏览器（3.x系列）采用双核技术，因此版本号可能无法识别。其余版本则不存此问题。</p>
+                    </div>
+                </div>
+                
+                <div class="member prop">
+                    <h4><a name="prop_tt">tt</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>腾讯TT浏览器的版本号。</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_theworld">theworld</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>世界之窗浏览器的版本号。</p>
+                        <p class="notice">目前世界之窗浏览器2.x系列无法识别，只有3.x系列的才能正常识别，因此返回值可能不准确。</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_sougou">sougou</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>搜狗浏览器的版本号。</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_rawie">rawie</a> - <code>Number or undefined</code></h4>
+                    <div class="detail">
+                        <p>原生IE的版本号。</p>
+                        <p class="tips">如果用户使用的原生IE浏览器，则返回此IE浏览器的版本号；否则，返回undefined。</p>
+                        <p class="notice">返回值可能无法完全保证准确性。</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_shell">shell</a> - <code>String or undefined</code></h4>
+                    <div class="detail">
+                        <p>如果用户浏览器使用的是国产第三方浏览器，无论是IE内核或者Webkit内核，均可识别，并返回浏览器的字符串形式，与上面的第三方国产浏览器接口保持了一致。在无法确定是否为国产第三方浏览器时，返回undefined</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -108,6 +163,13 @@
                     <li><a href="#prop_ie">ie</a></li>
                     <li><a href="#prop_opera">opera</a></li>
                     <li><a href="#prop_mobile">mobile</a></li>
+                    <li><a href="#prop_se360">se360</a></li>
+                    <li><a href="#prop_maxthon">maxthon</a></li>
+                    <li><a href="#prop_tt">tt</a></li>
+                    <li><a href="#prop_theworld">theworld</a></li>
+                    <li><a href="#prop_sougou">sougou</a></li>
+                    <li><a href="#prop_rawie">rawie</a></li>
+                    <li><a href="#prop_shell">shell</a></li>
                 </ul>
             </div>
         </div>

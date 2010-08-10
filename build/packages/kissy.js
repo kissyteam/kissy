@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * @module kissy
@@ -64,7 +64,7 @@ build time: Aug 5 16:06
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.0',
+        version: '1.1.2dev',
 
         /**
          * Initializes KISSY object.
@@ -2692,7 +2692,7 @@ build time: ${build.time}
  */
 KISSY.add('event', function(S, undefined) {
 
-    var win = window, doc = document,
+    var doc = document,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -2739,8 +2739,8 @@ KISSY.add('event', function(S, undefined) {
         add: function(target, type, fn, scope /* optional */) {
             if (batch('add', target, type, fn, scope)) return;
 
-            var id = getID(target),
-                special, events, eventHandle;
+            var id = getID(target), isNativeEventTarget,
+                special, events, eventHandle, fixedType, capture;
 
             // 不是有效的 target 或 参数不对
             if (id === -1 || !type || !S.isFunction(fn)) return;
@@ -2756,22 +2756,21 @@ KISSY.add('event', function(S, undefined) {
 
             // 没有添加过该类型事件
             events = cache[id].events;
-            special = (!target.isCustomEventTarget && Event.special[type]) || { }; // special 仅针对 element
             if (!events[type]) {
+                isNativeEventTarget = !target.isCustomEventTarget;
+                special = ((isNativeEventTarget || target._supportSpecialEvent) && Event.special[type]) || { };
+
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
                         event = new S.EventObject(target, event, type);
-
                         if (S.isPlainObject(eventData)) {
                             S.mix(event, eventData);
                         }
                     }
-
                     if (special.setup) {
                         special.setup(event);
                     }
-
-                    return (special.handle || Event._handle)(target, event, events[type].listeners);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners, scope);
                 };
 
                 events[type] = {
@@ -2779,11 +2778,12 @@ KISSY.add('event', function(S, undefined) {
                     listeners: []
                 };
 
-                if (!target.isCustomEventTarget) {
-                    simpleAdd(target, special.fix || type, eventHandle, special.capture);
-                }
-                else if (target._addEvent) { // such as Node
-                    target._addEvent(special.fix || type, eventHandle);
+                fixedType = special.fix || type;
+                capture = special['capture'];
+                if (isNativeEventTarget) {
+                    simpleAdd(target, fixedType, eventHandle, capture);
+                } else if (target._addEvent) { // such as Node
+                    target._addEvent(fixedType, eventHandle, capture);
                 }
             }
 
@@ -2799,7 +2799,7 @@ KISSY.add('event', function(S, undefined) {
 
             var id = getID(target),
                 events, eventsType, listeners,
-                i, len, c, t;
+                i, j, len, c, t;
 
             if (id === -1) return; // 不是有效的 target
             if (!id || !(c = cache[id])) return; // 无 cache
@@ -2811,14 +2811,13 @@ KISSY.add('event', function(S, undefined) {
                 len = listeners.length;
 
                 // 移除 fn
-                if (S.isFunction(fn) && len && S.inArray(fn, listeners)) {
-                    t = [];
-                    for (i = 0; i < len; ++i) {
-                        if (fn !== listeners[i]) {
-                            t.push(listeners[i]);
+                if (S.isFunction(fn) && len) {
+                    for (i = 0, j = 0, t = []; i < len; ++i) {
+                        if (fn !== listeners[i].fn) {
+                            t[j++] = listeners[i];
                         }
                     }
-                    listeners = t;
+                    eventsType.listeners = t;
                     len = t.length;
                 }
 
@@ -2934,24 +2933,6 @@ KISSY.add('event', function(S, undefined) {
     }
 
     S.Event = Event;
-
-    // Prevent memory leaks in IE
-    // Window isn't included so as not to unbind existing unload events
-    // More info: http://isaacschlueter.com/2006/10/msie-memory-leaks/
-    if (win.attachEvent && !win.addEventListener) {
-        win.attachEvent('onunload', function() {
-            var id, target;
-            for (id in cache) {
-                if ((target = cache[id].target)) {
-                    // try/catch is to handle iframes being unloaded
-                    try {
-                        Event.remove(target);
-                    } catch(ex) {
-                    }
-                }
-            }
-        });
-    }
 });
 
 /**
@@ -2991,6 +2972,8 @@ KISSY.add('event-object', function(S, undefined) {
             self.target = currentTarget;
         }
 
+        // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
+        self.currentTarget = currentTarget;
         self.fixed = true;
     }
 
@@ -3269,9 +3252,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * @module  node
@@ -3302,7 +3285,7 @@ KISSY.add('node', function(S) {
         if (DOM._isSupportedNode(html)) {
             domNode = html;
         }
-        else if (typeof html === 'string') {
+        else if (S.isString(html)) {
             domNode = DOM.create(html, props, ownerDocument);
         }
 
@@ -3564,15 +3547,15 @@ KISSY.add('node-attach', function(S, undefined) {
 
     // event-target
     S.each([NP, NLP], function(P) {
-        S.mix(P, S.EventTarget);
-        P._addEvent = function(type, handle) {
+        S.mix(P, S.EventTarget, { _supportSpecialEvent: true });
+        P._addEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
-                Event._simpleAdd(this[i], type, handle);
+                Event._simpleAdd(this[i], type, handle, capture);
             }
         };
-        P._removeEvent = function(type, handle) {
+        P._removeEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
-                Event._simpleRemove(this[i], type, handle);
+                Event._simpleRemove(this[i], type, handle, capture);
             }
         };
         delete P.fire;
@@ -6010,9 +5993,9 @@ KISSY.add('datalazyload', function(S, undefined) {
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * @module   Flash UA 探测
@@ -6313,6 +6296,7 @@ KISSY.add('flash-embed', function(S) {
 
         _register: function(swf, config, callback) {
             var id = config.attrs.id;
+			swf = (DOM.query("object",swf) || [])[0] || swf;		//bugfix:  静态双 object 获取问题。双Object 外层有id 但内部才有效。
             Flash._addSWF(id, swf);
             Flash._callback(callback, SWF_SUCCESS, id, swf);
         },
@@ -6328,8 +6312,11 @@ KISSY.add('flash-embed', function(S) {
             else {
                 target.parentNode.replaceChild(o, target);
             }
-
-            Flash._register(target, config, callback);
+			
+			target = S.get("#"+target.id);				// bugfix:  重新获取对象,否则还是老对象. 如 入口为  div 如果不重新获取则仍然是 div	longzang | 2010/8/9
+			
+			
+			Flash._register(target, config, callback);
         },
 
         _callback: function(callback, type, id, swf) {
@@ -6408,7 +6395,7 @@ KISSY.add('flash-embed', function(S) {
          */
         toFlashVars: function(obj) {
             if (!S.isPlainObject(obj)) return EMPTY; // 仅支持 PlainOject
-            var prop, data, arr = [];
+            var prop, data, arr = [],ret;
 
             for (prop in obj) {
                 data = obj[prop];
@@ -6430,8 +6417,8 @@ KISSY.add('flash-embed', function(S) {
 
                 arr.push(prop + '=' + data);
             }
-
-            return arr.join('&');
+			ret = arr.join('&');
+            return ret.replace(/"/g,"'"); // bugfix: 将 " 替换为 ', 以免取值产生问题。但注意自转换为 JSON 时，需要进行还原处理。
         }
     });
 
@@ -6456,12 +6443,14 @@ KISSY.add('flash-embed', function(S) {
  * 				取消了 F.swfs 的 length属性和 F.len()属性。
  * 				增加了 F.length，以保证 F.swfs 是个纯池
  * 				修正了Flashvars 参数中强制字符串带引号造成传入参数不纯粹的bug。
- * 				
+ * 2010/08/09	修正了在动态添加_embed() target 指向不正确，造成获取 swf 不正确问题。（test 中也针对这点有了测试）
+ * 				修正了在 flashvars 存在的双引号隐患。将所有 flashvars 中的双引号替换为单引号。但此后所有应用都需要进行过滤。
+ * 								
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * Switchable
@@ -7298,113 +7287,6 @@ KISSY.add('switchable-lazyload', function(S) {
     });
 });
 /**
- * Switchable Countdown Plugin
- * @creator  gonghao<gonghao@ghsky.com>
- */
-KISSY.add('switchable-countdown', function(S, undefined) {
-
-    var DOM = S.DOM, Event = S.Event, Anim = S.Anim,
-        Switchable = S.Switchable,
-        CLS_PREFIX = 'ks-switchable-trigger-',
-        TRIGGER_MASK_CLS = CLS_PREFIX + 'mask',
-        TRIGGER_CONTENT_CLS = CLS_PREFIX + 'content',
-        STYLE = 'style';
-
-    /**
-     * 添加默认配置
-     */
-    S.mix(Switchable.Config, {
-        countdown: false,
-        countdownFromStyle: '',      // 倒计时的初始样式
-        countdownToStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
-    });
-
-    /**
-     * 添加插件
-     */
-    Switchable.Plugins.push({
-
-        name: 'countdown',
-
-        init: function(host) {
-            var cfg = host.config, interval = cfg.interval,
-                triggers = host.triggers, masks = [],
-                fromStyle = cfg.countdownFromStyle, toStyle = cfg.countdownToStyle,
-                anim;
-
-            // 必须保证开启 autoplay 以及有 trigger 时，才能开启倒计时动画
-            if (!cfg.autoplay || !cfg.hasTriggers || !cfg.countdown) return;
-
-            // 为每个 trigger 增加倒计时动画覆盖层
-            S.each(triggers, function(trigger, i) {
-                trigger.innerHTML = '<div class="' + TRIGGER_MASK_CLS + '"></div>' +
-                    '<div class="' + TRIGGER_CONTENT_CLS + '">' + trigger.innerHTML + '</div>';
-                masks[i] = trigger.firstChild;
-            });
-
-            // 鼠标悬停，停止自动播放
-            if (cfg.pauseOnHover) {
-                Event.on(host.container, 'mouseenter', function() {
-                    // 先停止未完成动画
-                    stopAnim();
-
-                    // 快速平滑回退到初始状态
-                    var mask = masks[host.activeIndex];
-                    if (fromStyle) {
-                        anim = new Anim(mask, fromStyle, .2, 'easeOut').run();
-                    } else {
-                        DOM.removeAttr(mask, STYLE);
-                    }
-                });
-
-                Event.on(host.container, 'mouseleave', function() {
-                    // 鼠标离开时立即停止未完成动画
-                    stopAnim();
-
-                    // 初始化动画参数，准备开始新一轮动画
-                    DOM.removeAttr(masks[host.activeIndex], STYLE);
-
-                    // 重新开始倒计时动画
-                    S.later(startAnim, 200);
-                });
-            }
-
-            // panels 切换前，当前 trigger 完成善后工作以及下一 trigger 进行初始化
-            host.on('beforeSwitch', function() {
-                // 恢复前，先结束未完成动画效果
-                stopAnim();
-
-                // 将当前 mask 恢复动画前状态
-                DOM.removeAttr(masks[host.activeIndex], STYLE);
-            });
-
-            // panel 切换完成时，开始 trigger 的倒计时动画
-            host.on('switch', function() {
-                // 悬停状态，当用户主动触发切换时，不需要倒计时动画
-                if (!host.paused) {
-                    startAnim();
-                }
-            });
-
-            // 开始第一次
-            startAnim(host.activeIndex);
-
-            // 开始倒计时动画
-            function startAnim() {
-                stopAnim(); // 开始之前，先确保停止掉之前的
-                anim = new Anim(masks[host.activeIndex], toStyle, interval - .5).run(); // -.5 是为了动画结束时停留一下，使得动画更自然
-            }
-
-            // 停止所有动画
-            function stopAnim() {
-                if (anim) {
-                    anim.stop();
-                    anim = undefined;
-                }
-            }
-        }
-    });
-});/**
  * Switchable Autorender Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  * @depends  ks-core, json
@@ -7650,9 +7532,9 @@ KISSY.add('accordion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * 提示补全组件
@@ -7696,7 +7578,7 @@ KISSY.add('suggest', function(S, undefined) {
         RESULT = 'result', KEY = 'key',
         DATA_TIME = 'data-time',
         PARSEINT = parseInt,
-        RE_FOCUS_ELEMS = /input|button|a/i,
+        RE_FOCUS_ELEMS = /^(input|button|a)$/i,
 
         /**
          * Suggest 的默认配置

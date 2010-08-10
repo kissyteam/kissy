@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * @module kissy
@@ -64,7 +64,7 @@ build time: Aug 5 16:06
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.0',
+        version: '1.1.2dev',
 
         /**
          * Initializes KISSY object.
@@ -2692,7 +2692,7 @@ build time: ${build.time}
  */
 KISSY.add('event', function(S, undefined) {
 
-    var win = window, doc = document,
+    var doc = document,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -2739,8 +2739,8 @@ KISSY.add('event', function(S, undefined) {
         add: function(target, type, fn, scope /* optional */) {
             if (batch('add', target, type, fn, scope)) return;
 
-            var id = getID(target),
-                special, events, eventHandle;
+            var id = getID(target), isNativeEventTarget,
+                special, events, eventHandle, fixedType, capture;
 
             // 不是有效的 target 或 参数不对
             if (id === -1 || !type || !S.isFunction(fn)) return;
@@ -2756,22 +2756,21 @@ KISSY.add('event', function(S, undefined) {
 
             // 没有添加过该类型事件
             events = cache[id].events;
-            special = (!target.isCustomEventTarget && Event.special[type]) || { }; // special 仅针对 element
             if (!events[type]) {
+                isNativeEventTarget = !target.isCustomEventTarget;
+                special = ((isNativeEventTarget || target._supportSpecialEvent) && Event.special[type]) || { };
+
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
                         event = new S.EventObject(target, event, type);
-
                         if (S.isPlainObject(eventData)) {
                             S.mix(event, eventData);
                         }
                     }
-
                     if (special.setup) {
                         special.setup(event);
                     }
-
-                    return (special.handle || Event._handle)(target, event, events[type].listeners);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners, scope);
                 };
 
                 events[type] = {
@@ -2779,11 +2778,12 @@ KISSY.add('event', function(S, undefined) {
                     listeners: []
                 };
 
-                if (!target.isCustomEventTarget) {
-                    simpleAdd(target, special.fix || type, eventHandle, special.capture);
-                }
-                else if (target._addEvent) { // such as Node
-                    target._addEvent(special.fix || type, eventHandle);
+                fixedType = special.fix || type;
+                capture = special['capture'];
+                if (isNativeEventTarget) {
+                    simpleAdd(target, fixedType, eventHandle, capture);
+                } else if (target._addEvent) { // such as Node
+                    target._addEvent(fixedType, eventHandle, capture);
                 }
             }
 
@@ -2799,7 +2799,7 @@ KISSY.add('event', function(S, undefined) {
 
             var id = getID(target),
                 events, eventsType, listeners,
-                i, len, c, t;
+                i, j, len, c, t;
 
             if (id === -1) return; // 不是有效的 target
             if (!id || !(c = cache[id])) return; // 无 cache
@@ -2811,14 +2811,13 @@ KISSY.add('event', function(S, undefined) {
                 len = listeners.length;
 
                 // 移除 fn
-                if (S.isFunction(fn) && len && S.inArray(fn, listeners)) {
-                    t = [];
-                    for (i = 0; i < len; ++i) {
-                        if (fn !== listeners[i]) {
-                            t.push(listeners[i]);
+                if (S.isFunction(fn) && len) {
+                    for (i = 0, j = 0, t = []; i < len; ++i) {
+                        if (fn !== listeners[i].fn) {
+                            t[j++] = listeners[i];
                         }
                     }
-                    listeners = t;
+                    eventsType.listeners = t;
                     len = t.length;
                 }
 
@@ -2934,24 +2933,6 @@ KISSY.add('event', function(S, undefined) {
     }
 
     S.Event = Event;
-
-    // Prevent memory leaks in IE
-    // Window isn't included so as not to unbind existing unload events
-    // More info: http://isaacschlueter.com/2006/10/msie-memory-leaks/
-    if (win.attachEvent && !win.addEventListener) {
-        win.attachEvent('onunload', function() {
-            var id, target;
-            for (id in cache) {
-                if ((target = cache[id].target)) {
-                    // try/catch is to handle iframes being unloaded
-                    try {
-                        Event.remove(target);
-                    } catch(ex) {
-                    }
-                }
-            }
-        });
-    }
 });
 
 /**
@@ -2991,6 +2972,8 @@ KISSY.add('event-object', function(S, undefined) {
             self.target = currentTarget;
         }
 
+        // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
+        self.currentTarget = currentTarget;
         self.fixed = true;
     }
 
@@ -3269,9 +3252,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 5 16:06
+build time: ${build.time}
 */
 /**
  * @module  node
@@ -3302,7 +3285,7 @@ KISSY.add('node', function(S) {
         if (DOM._isSupportedNode(html)) {
             domNode = html;
         }
-        else if (typeof html === 'string') {
+        else if (S.isString(html)) {
             domNode = DOM.create(html, props, ownerDocument);
         }
 
@@ -3564,15 +3547,15 @@ KISSY.add('node-attach', function(S, undefined) {
 
     // event-target
     S.each([NP, NLP], function(P) {
-        S.mix(P, S.EventTarget);
-        P._addEvent = function(type, handle) {
+        S.mix(P, S.EventTarget, { _supportSpecialEvent: true });
+        P._addEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
-                Event._simpleAdd(this[i], type, handle);
+                Event._simpleAdd(this[i], type, handle, capture);
             }
         };
-        P._removeEvent = function(type, handle) {
+        P._removeEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
-                Event._simpleRemove(this[i], type, handle);
+                Event._simpleRemove(this[i], type, handle, capture);
             }
         };
         delete P.fire;

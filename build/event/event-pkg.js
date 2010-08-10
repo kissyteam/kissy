@@ -116,7 +116,7 @@ KISSY.add('event', function(S, undefined) {
 
             var id = getID(target),
                 events, eventsType, listeners,
-                i, len, c, t;
+                i, j, len, c, t;
 
             if (id === -1) return; // 不是有效的 target
             if (!id || !(c = cache[id])) return; // 无 cache
@@ -128,14 +128,13 @@ KISSY.add('event', function(S, undefined) {
                 len = listeners.length;
 
                 // 移除 fn
-                if (S.isFunction(fn) && len && S.inArray(fn, listeners)) {
-                    t = [];
-                    for (i = 0; i < len; ++i) {
-                        if (fn !== listeners[i]) {
-                            t.push(listeners[i]);
+                if (S.isFunction(fn) && len) {
+                    for (i = 0, j = 0, t = []; i < len; ++i) {
+                        if (fn !== listeners[i].fn) {
+                            t[j++] = listeners[i];
                         }
                     }
-                    listeners = t;
+                    eventsType.listeners = t;
                     len = t.length;
                 }
 
@@ -290,6 +289,8 @@ KISSY.add('event-object', function(S, undefined) {
             self.target = currentTarget;
         }
 
+        // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
+        self.currentTarget = currentTarget;
         self.fixed = true;
     }
 
