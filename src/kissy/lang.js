@@ -109,16 +109,29 @@ KISSY.add('lang', function(S, undefined) {
 
         /**
          * Executes the supplied function on each item in the array.
-         * @param arr {Array} the array to iterate
+         * @param object {Object} the object to iterate
          * @param fn {Function} the function to execute on each item. The function
          *        receives three arguments: the value, the index, the full array.
          * @param context {Object} (opt)
          */
-        each: function(arr, fn, context) {
-            var l = (arr && arr.length) || 0, i = 0;
-            for (; i < l; ++i) {
-                fn.call(context || win, arr[i], i, arr);
+        each: function(object, fn, context) {
+            var key, val, i = 0, length = object.length,
+                isObj = length === undefined || S.isFunction(object);
+            context = context || win;
+            
+            if (isObj) {
+                for (key in object) {
+                    if (fn.call(context, object[key], key, object) === false) {
+                        break;
+                    }
+                }
+            } else {
+                for (val = object[0];
+                     i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
+                }
             }
+
+            return object;
         },
 
         /**
