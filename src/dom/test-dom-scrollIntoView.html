@@ -20,6 +20,13 @@
 <button class="test4">
     click to see container (top == false)
 </button>
+
+<button class="test5">
+    click to see container's el natively
+</button>
+<button class="test6">
+    click to see container's el emulated
+</button>
 <p>x</p>
 <p>x</p>
 <p>x</p>
@@ -177,14 +184,22 @@
 <script>
     KISSY.ready(function(S) {
         var test1 = S.all('.test1'),
-            test2 = S.all('.test2'),
-            test3 = S.all('.test3'),
-            test4 = S.all('.test4'),
-            container = S.one('#container'),
-            node = S.one('#el');
+                test2 = S.all('.test2'),
+                test3 = S.all('.test3'),
+                test4 = S.all('.test4'),
+                test5 = S.all('.test5'),
+                test6 = S.all('.test6'),
+                container = S.one('#container'),
+                node = S.one('#el');
 
         // see elem in container
         test1.on('click', function() {
+            node.scrollIntoView(container);
+        });
+        test5.on('click', function() {
+            node.scrollIntoView();
+        });
+        test6.on('click', function() {
             node.scrollIntoView(container);
         });
 
