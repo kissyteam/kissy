@@ -6,7 +6,7 @@ KISSY.add('event', function(S, undefined) {
 
     var doc = document,
         win = window,
-        getWin = S.DOM._getOwnerWin,
+        getWin = S.DOM._getWin,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
