@@ -121,7 +121,6 @@ KISSY.add('event', function(S, undefined) {
         remove: function(target, type /* optional */, fn /* optional */, scope) {
             scope = scope || target;
             if (batch('remove', target, type, fn, scope)) return;
-
             var id = getID(target),
                 events, eventsType, listeners,
                 i, j, len, c, t;
