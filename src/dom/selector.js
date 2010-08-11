@@ -84,13 +84,13 @@ KISSY.add('selector', function(S, undefined) {
         else if(selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
             ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
         }
-        // 传入的 selector 是 Node
-        else if (selector && selector.nodeType) {
-            ret = [selector];
-        }
         // 传入的 selector 是 NodeList 或已是 Array
         else if (selector && (S.isArray(selector) || selector.item)) {
             ret = selector;
+        }
+        // 传入的 selector 是 Node 等非字符串对象，原样返回
+        else if (selector) {
+            ret = [selector];
         }
         // 传入的 selector 是其它值时，返回空数组
 
