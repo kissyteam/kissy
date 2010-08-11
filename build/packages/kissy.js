@@ -2073,64 +2073,71 @@ KISSY.add('dom-offset', function(S, undefined) {
             hscroll = hscroll === undefined ? true : !!hscroll;
             top = top === undefined ? true : !!top;
 
-            // use native for scrollIntoView(elem, top)
-            if (!isElementNode(container)) {
+            // default current window,use native for scrollIntoView(elem, top)
+            if (!container || container === win) {
                 // 注意：
                 // 1. Opera 不支持 top 参数
                 // 2. 当 container 已经在视窗中时，也会重新定位
                 return elem.scrollIntoView(top);
             }
-
-            var elemOffset = DOM.offset(elem),
-                containerOffset = DOM.offset(container),
-
-                // elem 相对 container 视窗的坐标
+            //document 归一化到 window
+            if (container.nodeType && container.nodeType == 9) {
+                container = getWin(container);
+            }
+            //support iframe's win    
+            var notWin = !('scrollTo' in container && container[DOCUMENT]),
+                elemOffset = DOM.offset(elem),
+                cl = notWin ? container.scrollLeft : DOM.scrollLeft(container),
+                ct = notWin ? container.scrollTop : DOM.scrollTop(container),
+                //import! viewport should has
+                containerOffset = notWin ? DOM.offset(container) : {left:cl,top:ct},
                 diff = {
-                    left: elemOffset[LEFT] - containerOffset[LEFT],
-                    top: elemOffset[TOP] - containerOffset[TOP]
+                    left:elemOffset.left - containerOffset.left  ,
+                    top:elemOffset.top - containerOffset.top
                 },
-
-                // container 视窗的高宽
-                ch = container.clientHeight,
-                cw = container.clientWidth,
-
-                // container 视窗相对 container 元素的坐标
-                cl = DOM[SCROLL_LEFT](container),
-                ct = DOM[SCROLL_TOP](container),
-                cr = cl + cw,
-                cb = ct + ch,
-
-                // elem 的高宽
                 eh = elem.offsetHeight,
                 ew = elem.offsetWidth,
-
-                // elem 相对 container 元素的坐标
-                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
-                l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
-                t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
-                r = l + ew,
-                b = t + eh;
-
-            // 根据情况将 elem 定位到 container 视窗中
-            // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
-            // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
-            // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
-            // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
-            if(eh > ch || t < ct || top) {
-                container[SCROLL_TOP] = t;
+                //left
+                l = diff.left + cl,
+                //top
+                t = diff.top + ct,
+                b = t + elem.offsetHeight,
+                r = l + elem.offsetWidth,
+                ch = notWin ? container.clientHeight : DOM.viewportHeight(container),
+                cw = notWin ? container.clientWidth : DOM.viewportWidth(container),
+                //container视窗下doc高度下限
+                cb = ct + ch,
+                //container视窗下doc右边限
+                cr = cl + cw;
+            //used if container is window
+            var wl = 0,wt = 0;
+            if (eh > ch || top) {
+                if (notWin)
+                    container.scrollTop = t;
+                else
+                    wt = t;
+            } else {
+                if (notWin)
+                    container.scrollTop = t - (ch - eh);
+                else
+                    wt = t - (ch - eh);
             }
-            else if(b > cb) {
-                container[SCROLL_TOP] = b - ch;
+
+            if (ew > cw || l < cl) {
+                if (notWin)
+                    container.scrollLeft = l;
+                else
+                    wl = l;
+            } else if (r > cr) {
+                if (notWin)
+                    container.scrollLeft = l;
+                else
+                    wl = l;
+            }
+            if (!notWin && (wl || wt)) {
+                container.scrollTo(wl, wt);
             }
 
-            // 水平方向与上面同理
-            if (hscroll) {
-                if (ew > cw || l < cl || top) {
-                    container[SCROLL_LEFT] = l;
-                } else if (r > cr) {
-                    container[SCROLL_LEFT] = r - cw;
-                }
-            }
         }
     });
 
@@ -2143,12 +2150,12 @@ KISSY.add('dom-offset', function(S, undefined) {
                 w = elem === undefined ? win : getWin(elem),
                 d;
 
-			if(w && (d = w[DOCUMENT])) {
+            if (w && (d = w[DOCUMENT])) {
                 ret = w[i ? 'pageYOffset' : 'pageXOffset']
                     || d[DOC_ELEMENT][method]
                     || d[BODY][method]
             }
-            else if(isElementNode((elem = S.get(elem)))) {
+            else if (isElementNode((elem = S.get(elem)))) {
                 ret = elem[method];
             }
             return ret;
@@ -2206,7 +2213,7 @@ KISSY.add('dom-offset', function(S, undefined) {
         }
         var old = getOffset(elem), ret = { }, current, key;
 
-        for(key in offset) {
+        for (key in offset) {
             current = PARSEINT(DOM.css(elem, key), 10) || 0;
             ret[key] = current + offset[key] - old[key];
         }
@@ -2691,8 +2698,19 @@ build time: ${build.time}
  * @author  lifesinger@gmail.com
  */
 KISSY.add('event', function(S, undefined) {
+    // elem 为 window 时，直接返回
+    // elem 为 document 时，返回关联的 window
+    // 其它值，返回 false
+    function getWin(elem) {
+        return (elem && ('scrollTo' in elem) && elem["document"]) ?
+            elem :
+            elem && elem.nodeType === 9 ?
+                elem.defaultView || elem.parentWindow :
+                false;
+    }
 
     var doc = document,
+        win = window,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -2738,7 +2756,7 @@ KISSY.add('event', function(S, undefined) {
          */
         add: function(target, type, fn, scope /* optional */) {
             if (batch('add', target, type, fn, scope)) return;
-
+            scope = scope || getWin(target) || win;
             var id = getID(target), isNativeEventTarget,
                 special, events, eventHandle, fixedType, capture;
 
@@ -2770,7 +2788,7 @@ KISSY.add('event', function(S, undefined) {
                     if (special.setup) {
                         special.setup(event);
                     }
-                    return (special.handle || Event._handle)(target, event, events[type].listeners, scope);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners);
                 };
 
                 events[type] = {
@@ -2794,8 +2812,9 @@ KISSY.add('event', function(S, undefined) {
         /**
          * Detach an event or set of events from an element.
          */
-        remove: function(target, type /* optional */, fn /* optional */) {
-            if (batch('remove', target, type, fn)) return;
+        remove: function(target, type /* optional */, fn /* optional */, scope) {
+            scope = scope || getWin(target) || win;
+            if (batch('remove', target, type, fn, scope)) return;
 
             var id = getID(target),
                 events, eventsType, listeners,
@@ -2812,8 +2831,9 @@ KISSY.add('event', function(S, undefined) {
 
                 // 移除 fn
                 if (S.isFunction(fn) && len) {
-                    for (i = 0, j = 0, t = []; i < len; ++i) {
-                        if (fn !== listeners[i].fn) {
+                    for (i = 0,j = 0,t = []; i < len; ++i) {
+                        if (fn !== listeners[i].fn
+                            || scope !== listeners[i].scope) {
                             t[j++] = listeners[i];
                         }
                     }

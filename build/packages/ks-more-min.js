@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 9 16:50
+build time: ${build.time}
 */
 KISSY.add("json",function(g){function w(e){return e<10?"0"+e:e}function q(e){m.lastIndex=0;return m.test(e)?'"'+e.replace(m,function(k){var o=n[k];return typeof o==="string"?o:"\\u"+("0000"+k.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+e+'"'}function u(e,k){var o,v,y=j,s,a=k[e];if(a&&typeof a==="object"&&typeof a.toJSON==="function")a=a.toJSON(e);if(typeof l==="function")a=l.call(k,e,a);switch(typeof a){case "string":return q(a);case "number":return isFinite(a)?String(a):"null";case "boolean":case "null":return String(a);
 case "object":if(!a)return"null";j+=d;s=[];if(Object.prototype.toString.apply(a)==="[object Array]"){v=a.length;for(e=0;e<v;e+=1)s[e]=u(e,a)||"null";k=s.length===0?"[]":j?"[\n"+j+s.join(",\n"+j)+"\n"+y+"]":"["+s.join(",")+"]";j=y;return k}if(l&&typeof l==="object"){v=l.length;for(e=0;e<v;e+=1){o=l[e];if(typeof o==="string")if(k=u(o,a))s.push(q(o)+(j?": ":":")+k)}}else for(o in a)if(Object.hasOwnProperty.call(a,o))if(k=u(o,a))s.push(q(o)+(j?": ":":")+k);k=s.length===0?"{}":j?"{\n"+j+s.join(",\n"+j)+
