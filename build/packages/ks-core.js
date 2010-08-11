@@ -854,7 +854,8 @@ KISSY.add('lang', function(S, undefined) {
 KISSY.add('ua', function(S) {
 
     var ua = navigator.userAgent,
-        m, core, shell, v,
+        EMPTY = '', MOBILE = 'mobile',
+        core = EMPTY, shell = EMPTY, m, v,
         o = {
             // browser core type
             webkit: 0,
@@ -896,11 +897,11 @@ KISSY.add('ua', function(S) {
 
         // Apple Mobile
         if (/ Mobile\//.test(ua)) {
-            o.mobile = 'apple'; // iPad, iPhone or iPod Touch
+            o[MOBILE] = 'apple'; // iPad, iPhone or iPod Touch
         }
         // Other WebKit Mobile Browsers
         else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
-            o.mobile = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
+            o[MOBILE] = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
         }
     }
     // NOT WebKit
@@ -920,13 +921,13 @@ KISSY.add('ua', function(S) {
 
                 // Opera Mini
                 if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
-                    o.mobile = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
+                    o[MOBILE] = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
                 }
                 // Opera Mobile
                 // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
-                // issue: 由于Opera Mobile有Version/字段，可能会与Opera混淆，同时对于Opera Mobile的版本号也比较混乱
+                // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
                 else if ((m = ua.match(/Opera Mobi[^;]*/)) && m){
-                    o[shell = 'mobile'] = m[0];    
+                    o[MOBILE] = m[0];
                 }
             }
             
@@ -1093,7 +1094,7 @@ KISSY.add('selector', function(S, undefined) {
                         // 处理 #id.cls
                         else {
                             t = getElementById(id, context);
-                            if (t && DOM.hasClass(t, cls)) {
+                            if(t && DOM.hasClass(t, cls)) {
                                 ret = [t];
                             }
                         }
@@ -1105,7 +1106,7 @@ KISSY.add('selector', function(S, undefined) {
                 }
             }
             // 采用外部选择器
-            else if (S.ExternalSelector) {
+            else if(S.ExternalSelector) {
                 return S.ExternalSelector(selector, context);
             }
             // 依旧不支持，抛异常
@@ -1114,10 +1115,10 @@ KISSY.add('selector', function(S, undefined) {
             }
         }
         // 传入的 selector 是 KISSY.Node/NodeList. 始终返回原生 DOM Node
-        else if (selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
+        else if(selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
             ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
         }
-        // 传入的 selector 是 NodeList 或已是 Array,fix select
+        // 传入的 selector 是 NodeList 或已是 Array
         else if (selector && (S.isArray(selector) || (selector.item && !selector.nodeType))) {
             ret = selector;
         }
@@ -1128,7 +1129,7 @@ KISSY.add('selector', function(S, undefined) {
         // 传入的 selector 是其它值时，返回空数组
 
         // 将 NodeList 转换为普通数组
-        if (ret.item) {
+        if(ret.item) {
             ret = S.makeArray(ret);
         }
 
@@ -1161,7 +1162,7 @@ KISSY.add('selector', function(S, undefined) {
 
     // query #id
     function getElementById(id, context) {
-        if (context.nodeType !== 9) {
+        if(context.nodeType !== 9) {
             context = context.ownerDocument;
         }
         return context.getElementById(id);
@@ -1171,7 +1172,6 @@ KISSY.add('selector', function(S, undefined) {
     function getElementsByTagName(tag, context) {
         return context.getElementsByTagName(tag);
     }
-
     (function() {
         // Check to see if the browser returns only elements
         // when doing getElementsByTagName('*')
@@ -1217,7 +1217,6 @@ KISSY.add('selector', function(S, undefined) {
         }
         return ret;
     }
-
     if (!doc.getElementsByClassName) {
         // 降级使用 querySelectorAll
         if (doc.querySelectorAll) {
