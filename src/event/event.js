@@ -60,8 +60,9 @@ KISSY.add('event', function(S, undefined) {
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         add: function(target, type, fn, scope /* optional */) {
+            scope = scope || target;
             if (batch('add', target, type, fn, scope)) return;
-            scope = scope || getWin(target) || win;
+
             var id = getID(target), isNativeEventTarget,
                 special, events, eventHandle, fixedType, capture;
 
@@ -118,7 +119,7 @@ KISSY.add('event', function(S, undefined) {
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */, scope) {
-            scope = scope || getWin(target) || win;
+            scope = scope || target;
             if (batch('remove', target, type, fn, scope)) return;
 
             var id = getID(target),
