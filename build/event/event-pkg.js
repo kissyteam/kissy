@@ -10,8 +10,6 @@ build time: ${build.time}
 KISSY.add('event', function(S, undefined) {
 
     var doc = document,
-        win = window,
-        getWin = S.DOM._getWin,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -55,7 +53,7 @@ KISSY.add('event', function(S, undefined) {
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         add: function(target, type, fn, scope /* optional */) {
-            scope = scope || getWin(target) || win;
+            scope = scope || target;
             if (batch('add', target, type, fn, scope)) return;
 
             var id = getID(target), isNativeEventTarget,
@@ -114,7 +112,7 @@ KISSY.add('event', function(S, undefined) {
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */, scope /* optional */) {
-            scope = scope || getWin(target) || win;
+            scope = scope || target;
             if (batch('remove', target, type, fn, scope)) return;
 
             var id = getID(target),
