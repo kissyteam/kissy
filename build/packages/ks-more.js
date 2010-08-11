@@ -2590,7 +2590,10 @@ KISSY.add('flash-embed', function(S) {
 
         _register: function(swf, config, callback) {
             var id = config.attrs.id;
-			swf = (DOM.query("object",swf) || [])[0] || swf;		//bugfix:  静态双 object 获取问题。双Object 外层有id 但内部才有效。
+            if (UA.gecko || UA.opera) {
+                swf = S.query('object', swf)[0] || swf; // bugfix: 静态双 object 获取问题。双 Object 外层有 id 但内部才有效。  longzang 2010/8/9
+            }
+			
             Flash._addSWF(id, swf);
             Flash._callback(callback, SWF_SUCCESS, id, swf);
         },
@@ -2712,7 +2715,7 @@ KISSY.add('flash-embed', function(S) {
                 arr.push(prop + '=' + data);
             }
 			ret = arr.join('&');
-            return ret.replace(/"/g,"'"); // bugfix: 将 " 替换为 ', 以免取值产生问题。但注意自转换为 JSON 时，需要进行还原处理。
+            return ret.replace(/\"/g,"'"); //bugfix: 将 " 替换为 ',以免取值产生问题。  但注意自转换为JSON时，需要进行还原处理。  
         }
     });
 
@@ -2737,9 +2740,9 @@ KISSY.add('flash-embed', function(S) {
  * 				取消了 F.swfs 的 length属性和 F.len()属性。
  * 				增加了 F.length，以保证 F.swfs 是个纯池
  * 				修正了Flashvars 参数中强制字符串带引号造成传入参数不纯粹的bug。
- * 2010/08/09	修正了在动态添加_embed() target 指向不正确，造成获取 swf 不正确问题。（test 中也针对这点有了测试）
- * 				修正了在 flashvars 存在的双引号隐患。将所有 flashvars 中的双引号替换为单引号。但此后所有应用都需要进行过滤。
- * 								
+ * 2010/08/09	修正了在动态添加_embed() target 指向不正确，造成获取swf不正确问题。（test中也针对这点有了测试）
+ * 				修正了在flashvars存在的 双引号隐患。 将所有flashvars中的双引号替换为单引号。但此后所有应用都需要进行过滤。
+ * 2010/08/10	修复了sarfari/chrome （webkit）下失效的问题。								
  */
 /*
 Copyright 2010, KISSY UI Library v1.1.2dev
