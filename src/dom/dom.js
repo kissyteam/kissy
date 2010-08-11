@@ -2,40 +2,43 @@
  * @module  dom
  * @author  lifesinger@gmail.com
  */
-KISSY.add('dom', function(S) {
+KISSY.add('dom', function(S, undefined) {
 
-    var NODE_TYPE = 'nodeType',
-
-    DOM = {
-
-        /**
-         * 是不是 element/text node
-         */
-        _isSupportedNode: function(elem) {
-            return DOM._isElementNode(elem) || DOM._isTextNode(elem);
-        },
+    S.DOM = {
 
         /**
          * 是不是 element node
          */
         _isElementNode: function(elem) {
-            return elem && elem[NODE_TYPE] === 1;
-        },
-
-        /**
-         * 是不是 text node
-         */
-        _isTextNode: function(elem) {
-            return elem && elem[NODE_TYPE] === 3;
+            return nodeTypeIs(elem, 1);
         },
 
         /**
          * 是不是 KISSY.Node
          */
         _isKSNode: function(elem) {
-            return elem && S.Node && elem[NODE_TYPE] === S.Node.TYPE;
-        }
+            return S.Node && nodeTypeIs(elem, S.Node.TYPE);
+        },
+
+        /**
+         * elem 为 window 时，直接返回
+         * elem 为 document 时，返回关联的 window
+         * elem 为 undefined 时，返回当前 window
+         * 其它值，返回 false
+         */
+        _getWin: function(elem) {
+            return (elem && ('scrollTo' in elem) && elem['document']) ?
+                elem :
+                nodeTypeIs(elem, 9) ?
+                    elem.defaultView || elem.parentWindow :
+                    elem === undefined ?
+                        window : false;
+        },
+
+        _nodeTypeIs: nodeTypeIs
     };
 
-    S.DOM = DOM;
+    function nodeTypeIs(node, val) {
+        return node && node.nodeType === val;
+    }
 });

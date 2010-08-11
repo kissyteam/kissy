@@ -680,6 +680,15 @@ function test_dom_test(test) {
     })) test.fail();
 }
 
+function test_query_each(test) {
+    var sum = 0;
+    S.query('.date').each(function() {
+        sum++;
+        if(sum == 7) return false;
+    });
+    if(sum !== 7) test.fail(sum);
+}
+
 </script>
 </body>
 </html>

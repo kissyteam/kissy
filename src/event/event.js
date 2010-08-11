@@ -5,10 +5,11 @@
 KISSY.add('event', function(S, undefined) {
 
     var doc = document,
+        win = window,
+        getWin = S.DOM._getOwnerWin,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
-                    //boolean capture is better
                     el.addEventListener(type, fn, !!capture);
                 }
             } :
@@ -49,6 +50,7 @@ KISSY.add('event', function(S, undefined) {
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         add: function(target, type, fn, scope /* optional */) {
+            scope = scope || getWin(target) || win;
             if (batch('add', target, type, fn, scope)) return;
 
             var id = getID(target), isNativeEventTarget,
@@ -79,10 +81,10 @@ KISSY.add('event', function(S, undefined) {
                             S.mix(event, eventData);
                         }
                     }
-                    if (special.setup) {
-                        special.setup(event);
+                    if (special['setup']) {
+                        special['setup'](event);
                     }
-                    return (special.handle || Event._handle)(target, event, events[type].listeners, scope);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners);
                 };
 
                 events[type] = {
@@ -106,8 +108,9 @@ KISSY.add('event', function(S, undefined) {
         /**
          * Detach an event or set of events from an element.
          */
-        remove: function(target, type /* optional */, fn /* optional */) {
-            if (batch('remove', target, type, fn)) return;
+        remove: function(target, type /* optional */, fn /* optional */, scope /* optional */) {
+            scope = scope || getWin(target) || win;
+            if (batch('remove', target, type, fn, scope)) return;
 
             var id = getID(target),
                 events, eventsType, listeners,
@@ -125,7 +128,8 @@ KISSY.add('event', function(S, undefined) {
                 // 移除 fn
                 if (S.isFunction(fn) && len) {
                     for (i = 0, j = 0, t = []; i < len; ++i) {
-                        if (fn !== listeners[i].fn) {
+                        if (fn !== listeners[i].fn
+                            || scope !== listeners[i].scope) {
                             t[j++] = listeners[i];
                         }
                     }
