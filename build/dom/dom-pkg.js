@@ -133,13 +133,13 @@ KISSY.add('selector', function(S, undefined) {
         else if(selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
             ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
         }
-        // 传入的 selector 是 Node
-        else if (selector && selector.nodeType) {
-            ret = [selector];
-        }
         // 传入的 selector 是 NodeList 或已是 Array
         else if (selector && (S.isArray(selector) || selector.item)) {
             ret = selector;
+        }
+        // 传入的 selector 是 Node 等非字符串对象，原样返回
+        else if (selector) {
+            ret = [selector];
         }
         // 传入的 selector 是其它值时，返回空数组
 
@@ -1114,6 +1114,7 @@ KISSY.add('dom-offset', function(S, undefined) {
         VIEWPORT = 'viewport',
         SCROLL = 'scroll', CLIENT = 'client',
         LEFT = 'left', TOP = 'top',
+        SCROLL_TO = 'scrollTo',
         SCROLL_LEFT = SCROLL + 'Left', SCROLL_TOP = SCROLL + 'Top',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
 
@@ -1144,7 +1145,6 @@ KISSY.add('dom-offset', function(S, undefined) {
         scrollIntoView: function(elem, container, top, hscroll) {
             if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return;
 
-            container = S.get(container);
             hscroll = hscroll === undefined ? true : !!hscroll;
             top = top === undefined ? true : !!top;
 
@@ -1155,14 +1155,19 @@ KISSY.add('dom-offset', function(S, undefined) {
                 // 2. 当 container 已经在视窗中时，也会重新定位
                 return elem.scrollIntoView(top);
             }
+            container = S.get(container);
 
             // document 归一化到 window
             if (nodeTypeIs(container, 9)) {
                 container = getWin(container);
             }
 
-            var elemOffset = DOM.offset(elem),
-                containerOffset = DOM.offset(container),
+            var isWin = container && (SCROLL_TO in container) && container[DOCUMENT],
+                elemOffset = DOM.offset(elem),
+                containerOffset = isWin ? {
+                    left: DOM.scrollLeft(container),
+                    top: DOM.scrollTop(container) }
+                    : DOM.offset(container),
 
                 // elem 相对 container 视窗的坐标
                 diff = {
@@ -1171,8 +1176,8 @@ KISSY.add('dom-offset', function(S, undefined) {
                 },
 
                 // container 视窗的高宽
-                ch = container.clientHeight,
-                cw = container.clientWidth,
+                ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
+                cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
 
                 // container 视窗相对 container 元素的坐标
                 cl = DOM[SCROLL_LEFT](container),
@@ -1189,7 +1194,9 @@ KISSY.add('dom-offset', function(S, undefined) {
                 l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
                 t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
                 r = l + ew,
-                b = t + eh;
+                b = t + eh,
+
+                t2, l2;
 
             // 根据情况将 elem 定位到 container 视窗中
             // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
@@ -1197,18 +1204,31 @@ KISSY.add('dom-offset', function(S, undefined) {
             // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
             // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
             if (eh > ch || t < ct || top) {
-                container[SCROLL_TOP] = t;
-            }
-            else if (b > cb) {
-                container[SCROLL_TOP] = b - ch;
+                t2 = t;
+            } else if (b > cb) {
+                t2 = b - ch;
             }
 
             // 水平方向与上面同理
             if (hscroll) {
                 if (ew > cw || l < cl || top) {
-                    container[SCROLL_LEFT] = l;
+                    l2 = l;
                 } else if (r > cr) {
-                    container[SCROLL_LEFT] = r - cw;
+                    l2 = r - cw;
+                }
+            }
+
+            // go
+            if (isWin) {
+                if (t2 !== undefined || l2 !== undefined) {
+                    container[SCROLL_TO](l2, t2);
+                }
+            } else {
+                if (t2 !== undefined) {
+                    container[SCROLL_TOP] = t2;
+                }
+                if (l2 !== undefined) {
+                    container[SCROLL_LEFT] = l2;
                 }
             }
         }
