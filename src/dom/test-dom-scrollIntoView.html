@@ -24,9 +24,6 @@
 <button class="test5">
     click to see container's el natively
 </button>
-<button class="test6">
-    click to see container's el emulated
-</button>
 <p>x</p>
 <p>x</p>
 <p>x</p>
@@ -139,6 +136,17 @@
 <p>x</p>
 <p>x</p>
 <p>x</p>
+<iframe src="test-dom-offset-iframe.html"
+        id="test-iframe"
+        style="border:1px solid black; "
+        width="200"
+        height="200"
+        frameborder="0"
+        scrolling="no"
+        ></iframe>
+<button class="test6">
+    click to see elem in iframe
+</button>
 <p>x</p>
 <p>x</p>
 <p>x</p>
@@ -200,7 +208,10 @@
             node.scrollIntoView();
         });
         test6.on('click', function() {
-            node.scrollIntoView(container);
+            var iframe = S.get('#test-iframe'),
+                inner = S.get('#test-inner', iframe.contentDocument);
+
+            S.DOM.scrollIntoView(inner, iframe.contentWindow);
         });
 
         // see elem in container (top == false)

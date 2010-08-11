@@ -48,5 +48,5 @@ KISSY.add('ua-extra', function(S) {
     // If the browser has shell(no matter IE-core or Webkit-core or others), set the shell key
     shell && (o.shell = shell);
 
-    S.mix(UA, o, true);
+    S.mix(UA, o);
 });

@@ -12,15 +12,17 @@ KISSY.add('ua', function(S) {
             trident: 0,
             gecko: 0,
             presto: 0,
+
             // browser type
             chrome: 0,
             safari: 0,
             firefox:  0,
             ie: 0,
-            opera: 0,
-            mobile: '',
-            core: '',
-            shell: ''
+            opera: 0
+
+            //mobile: '',
+            //core: '',
+            //shell: ''
         },
         numberify = function(s) {
             var c = 0;
@@ -45,11 +47,11 @@ KISSY.add('ua', function(S) {
 
         // Apple Mobile
         if (/ Mobile\//.test(ua)) {
-            o[shell = 'mobile'] = 'Apple'; // iPad, iPhone or iPod Touch
+            o.mobile = 'apple'; // iPad, iPhone or iPod Touch
         }
         // Other WebKit Mobile Browsers
         else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
-            o[shell = 'mobile'] = m[0]; // Nokia N-series, Android, webOS, ex: NokiaN95
+            o.mobile = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
         }
     }
     // NOT WebKit
@@ -69,7 +71,7 @@ KISSY.add('ua', function(S) {
 
                 // Opera Mini
                 if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
-                    o[shell = 'mobile'] = m[0]; // ex: Opera Mini/2.0.4509/1316
+                    o.mobile = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
                 }
                 // Opera Mobile
                 // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
@@ -110,8 +112,8 @@ KISSY.add('ua', function(S) {
         }
     }
 
-    o['core'] = core;
-    o['shell'] = shell;
+    o.core = core;
+    o.shell = shell;
     o._numberify = numberify;
     S.UA = o;
 });

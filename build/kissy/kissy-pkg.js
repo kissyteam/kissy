@@ -14,7 +14,7 @@ build time: ${build.time}
     if (win[S] === undefined) win[S] = {};
     S = win[S]; // shortcut
 
-    var doc = win.document,
+    var doc = win['document'],
 
         // Copies all the properties of s to r
         mix = function(r, s, ov, wl) {
@@ -854,16 +854,24 @@ KISSY.add('lang', function(S, undefined) {
 KISSY.add('ua', function(S) {
 
     var ua = navigator.userAgent,
-        m,
+        m, core, shell, v,
         o = {
+            // browser core type
             webkit: 0,
+            trident: 0,
+            gecko: 0,
+            presto: 0,
+
+            // browser type
             chrome: 0,
             safari: 0,
-            gecko: 0,
             firefox:  0,
             ie: 0,
-            opera: 0,
-            mobile: ''
+            opera: 0
+
+            //mobile: '',
+            //core: '',
+            //shell: ''
         },
         numberify = function(s) {
             var c = 0;
@@ -875,61 +883,86 @@ KISSY.add('ua', function(S) {
 
     // WebKit
     if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
-        o.webkit = numberify(m[1]);
+        o[core = 'webkit'] = numberify(m[1]);
 
         // Chrome
         if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
-            o.chrome = numberify(m[1]);
+            o[shell = 'chrome'] = numberify(m[1]);
         }
         // Safari
         else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
-            o.safari = numberify(m[1]);
+            o[shell = 'safari'] = numberify(m[1]);
         }
 
         // Apple Mobile
         if (/ Mobile\//.test(ua)) {
-            o.mobile = 'Apple'; // iPad, iPhone or iPod Touch
+            o.mobile = 'apple'; // iPad, iPhone or iPod Touch
         }
         // Other WebKit Mobile Browsers
         else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
-            o.mobile = m[0]; // Nokia N-series, Android, webOS, ex: NokiaN95
+            o.mobile = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
         }
     }
     // NOT WebKit
     else {
-        // Opera
-        if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
-            o.opera = numberify(m[1]);
+        // Presto
+        // ref: http://www.useragentstring.com/pages/useragentstring.php
+        if ((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
+            o[core = 'presto'] = numberify(m[1]);
+            
+            // Opera
+            if ((m = ua.match(/Opera\/([\d.]*)/)) && m[1]) {
+                o[shell = 'opera'] = numberify(m[1]); // Opera detected, look for revision
 
-            // Opera Mini
-            if ((ua.match(/Opera Mini[^;]*/))) {
-                o.mobile = m[0]; // ex: Opera Mini/2.0.4509/1316
+                if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
+                    o[shell] = numberify(m[1]);
+                }
+
+                // Opera Mini
+                if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
+                    o.mobile = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
+                }
+                // Opera Mobile
+                // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
+                // issue: 由于Opera Mobile有Version/字段，可能会与Opera混淆，同时对于Opera Mobile的版本号也比较混乱
+                else if ((m = ua.match(/Opera Mobi[^;]*/)) && m){
+                    o[shell = 'mobile'] = m[0];    
+                }
             }
-
-        // NOT WebKit or Opera
+            
+        // NOT WebKit or Presto
         } else {
             // MSIE
-            if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
-                o.ie = numberify(m[1]);
+            if ((m = ua.match(/MSIE\s([^;]*)/)) && (v = m[1])) {
+                o[core = 'trident'] = 0.1; // Trident detected, look for revision
+                // hack: documentMode is only supported in IE 8 so we know if its here its really IE 8
+                o[shell = 'ie'] = v < 8 && document['documentMode'] ? 8 : v;
 
-            // NOT WebKit, Opera or IE
+                // Get the Trident's accurate version
+                if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
+                    o[core] = numberify(m[1]);
+                }
+
+            // NOT WebKit, Presto or IE
             } else {
                 // Gecko
                 if ((m = ua.match(/Gecko/))) {
-                    o.gecko = 1; // Gecko detected, look for revision
+                    o[core = 'gecko'] = 0.1; // Gecko detected, look for revision
                     if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
-                        o.gecko = numberify(m[1]);
+                        o[core] = numberify(m[1]);
                     }
 
                     // Firefox
                     if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
-                        o.firefox = numberify(m[1]);
+                        o[shell = 'firefox'] = numberify(m[1]);
                     }
                 }
             }
         }
     }
 
+    o.core = core;
+    o.shell = shell;
     o._numberify = numberify;
     S.UA = o;
 });

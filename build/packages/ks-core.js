@@ -14,7 +14,7 @@ build time: ${build.time}
     if (win[S] === undefined) win[S] = {};
     S = win[S]; // shortcut
 
-    var doc = win.document,
+    var doc = win['document'],
 
         // Copies all the properties of s to r
         mix = function(r, s, ov, wl) {
@@ -546,16 +546,29 @@ KISSY.add('lang', function(S, undefined) {
 
         /**
          * Executes the supplied function on each item in the array.
-         * @param arr {Array} the array to iterate
+         * @param object {Object} the object to iterate
          * @param fn {Function} the function to execute on each item. The function
          *        receives three arguments: the value, the index, the full array.
          * @param context {Object} (opt)
          */
-        each: function(arr, fn, context) {
-            var l = (arr && arr.length) || 0, i = 0;
-            for (; i < l; ++i) {
-                fn.call(context || win, arr[i], i, arr);
+        each: function(object, fn, context) {
+            var key, val, i = 0, length = object.length,
+                isObj = length === undefined || S.isFunction(object);
+            context = context || win;
+            
+            if (isObj) {
+                for (key in object) {
+                    if (fn.call(context, object[key], key, object) === false) {
+                        break;
+                    }
+                }
+            } else {
+                for (val = object[0];
+                     i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
+                }
             }
+
+            return object;
         },
 
         /**
@@ -841,16 +854,24 @@ KISSY.add('lang', function(S, undefined) {
 KISSY.add('ua', function(S) {
 
     var ua = navigator.userAgent,
-        m,
+        m, core, shell, v,
         o = {
+            // browser core type
             webkit: 0,
+            trident: 0,
+            gecko: 0,
+            presto: 0,
+
+            // browser type
             chrome: 0,
             safari: 0,
-            gecko: 0,
             firefox:  0,
             ie: 0,
-            opera: 0,
-            mobile: ''
+            opera: 0
+
+            //mobile: '',
+            //core: '',
+            //shell: ''
         },
         numberify = function(s) {
             var c = 0;
@@ -862,61 +883,86 @@ KISSY.add('ua', function(S) {
 
     // WebKit
     if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
-        o.webkit = numberify(m[1]);
+        o[core = 'webkit'] = numberify(m[1]);
 
         // Chrome
         if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
-            o.chrome = numberify(m[1]);
+            o[shell = 'chrome'] = numberify(m[1]);
         }
         // Safari
         else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
-            o.safari = numberify(m[1]);
+            o[shell = 'safari'] = numberify(m[1]);
         }
 
         // Apple Mobile
         if (/ Mobile\//.test(ua)) {
-            o.mobile = 'Apple'; // iPad, iPhone or iPod Touch
+            o.mobile = 'apple'; // iPad, iPhone or iPod Touch
         }
         // Other WebKit Mobile Browsers
         else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
-            o.mobile = m[0]; // Nokia N-series, Android, webOS, ex: NokiaN95
+            o.mobile = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
         }
     }
     // NOT WebKit
     else {
-        // Opera
-        if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
-            o.opera = numberify(m[1]);
+        // Presto
+        // ref: http://www.useragentstring.com/pages/useragentstring.php
+        if ((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
+            o[core = 'presto'] = numberify(m[1]);
+            
+            // Opera
+            if ((m = ua.match(/Opera\/([\d.]*)/)) && m[1]) {
+                o[shell = 'opera'] = numberify(m[1]); // Opera detected, look for revision
 
-            // Opera Mini
-            if ((ua.match(/Opera Mini[^;]*/))) {
-                o.mobile = m[0]; // ex: Opera Mini/2.0.4509/1316
+                if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
+                    o[shell] = numberify(m[1]);
+                }
+
+                // Opera Mini
+                if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
+                    o.mobile = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
+                }
+                // Opera Mobile
+                // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
+                // issue: 由于Opera Mobile有Version/字段，可能会与Opera混淆，同时对于Opera Mobile的版本号也比较混乱
+                else if ((m = ua.match(/Opera Mobi[^;]*/)) && m){
+                    o[shell = 'mobile'] = m[0];    
+                }
             }
-
-        // NOT WebKit or Opera
+            
+        // NOT WebKit or Presto
         } else {
             // MSIE
-            if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
-                o.ie = numberify(m[1]);
+            if ((m = ua.match(/MSIE\s([^;]*)/)) && (v = m[1])) {
+                o[core = 'trident'] = 0.1; // Trident detected, look for revision
+                // hack: documentMode is only supported in IE 8 so we know if its here its really IE 8
+                o[shell = 'ie'] = v < 8 && document['documentMode'] ? 8 : v;
 
-            // NOT WebKit, Opera or IE
+                // Get the Trident's accurate version
+                if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
+                    o[core] = numberify(m[1]);
+                }
+
+            // NOT WebKit, Presto or IE
             } else {
                 // Gecko
                 if ((m = ua.match(/Gecko/))) {
-                    o.gecko = 1; // Gecko detected, look for revision
+                    o[core = 'gecko'] = 0.1; // Gecko detected, look for revision
                     if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
-                        o.gecko = numberify(m[1]);
+                        o[core] = numberify(m[1]);
                     }
 
                     // Firefox
                     if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
-                        o.firefox = numberify(m[1]);
+                        o[shell = 'firefox'] = numberify(m[1]);
                     }
                 }
             }
         }
     }
 
+    o.core = core;
+    o.shell = shell;
     o._numberify = numberify;
     S.UA = o;
 });
@@ -945,42 +991,45 @@ build time: ${build.time}
  * @module  dom
  * @author  lifesinger@gmail.com
  */
-KISSY.add('dom', function(S) {
+KISSY.add('dom', function(S, undefined) {
 
-    var NODE_TYPE = 'nodeType',
-
-    DOM = {
-
-        /**
-         * 是不是 element/text node
-         */
-        _isSupportedNode: function(elem) {
-            return DOM._isElementNode(elem) || DOM._isTextNode(elem);
-        },
+    S.DOM = {
 
         /**
          * 是不是 element node
          */
         _isElementNode: function(elem) {
-            return elem && elem[NODE_TYPE] === 1;
-        },
-
-        /**
-         * 是不是 text node
-         */
-        _isTextNode: function(elem) {
-            return elem && elem[NODE_TYPE] === 3;
+            return nodeTypeIs(elem, 1);
         },
 
         /**
          * 是不是 KISSY.Node
          */
         _isKSNode: function(elem) {
-            return elem && S.Node && elem[NODE_TYPE] === S.Node.TYPE;
-        }
+            return S.Node && nodeTypeIs(elem, S.Node.TYPE);
+        },
+
+        /**
+         * elem 为 window 时，直接返回
+         * elem 为 document 时，返回关联的 window
+         * elem 为 undefined 时，返回当前 window
+         * 其它值，返回 false
+         */
+        _getWin: function(elem) {
+            return (elem && ('scrollTo' in elem) && elem['document']) ?
+                elem :
+                nodeTypeIs(elem, 9) ?
+                    elem.defaultView || elem.parentWindow :
+                    elem === undefined ?
+                        window : false;
+        },
+
+        _nodeTypeIs: nodeTypeIs
     };
 
-    S.DOM = DOM;
+    function nodeTypeIs(node, val) {
+        return node && node.nodeType === val;
+    }
 });
 /**
  * @module  selector
@@ -1068,13 +1117,13 @@ KISSY.add('selector', function(S, undefined) {
         else if(selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
             ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
         }
-        // 传入的 selector 是 Node
-        else if (selector && selector.nodeType) {
-            ret = [selector];
-        }
         // 传入的 selector 是 NodeList 或已是 Array
         else if (selector && (S.isArray(selector) || selector.item)) {
             ret = selector;
+        }
+        // 传入的 selector 是 Node 等非字符串对象，原样返回
+        else if (selector) {
+            ret = [selector];
         }
         // 传入的 selector 是其它值时，返回空数组
 
@@ -1082,6 +1131,11 @@ KISSY.add('selector', function(S, undefined) {
         if(ret.item) {
             ret = S.makeArray(ret);
         }
+
+        // attach each method
+        ret.each = function(fn, context) {
+            return S.each(ret, fn, context);
+        };
 
         return ret;
     }
@@ -1284,6 +1338,9 @@ KISSY.add('selector', function(S, undefined) {
  * 2010.07
  *  - 取消对 , 分组的支持，group 直接用 Sizzle
  *
+ * 2010.08
+ *  - 给 S.query 的结果 attach each 方法
+ *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
  *
@@ -1455,8 +1512,8 @@ KISSY.add('dom-attr', function(S, undefined) {
 
         DOM = S.DOM,
         isElementNode = DOM._isElementNode,
-        isTextNode = DOM._isTextNode,
-        
+        isTextNode = function(elem) { return DOM._nodeTypeIs(elem, 3); },
+
         RE_SPECIAL_ATTRS = /href|src|style/,
         RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
         RE_RETURN = /\r/g,
@@ -2030,6 +2087,8 @@ KISSY.add('dom-offset', function(S, undefined) {
     var DOM = S.DOM, UA = S.UA,
         win = window, doc = document,
         isElementNode = DOM._isElementNode,
+        nodeTypeIs = DOM._nodeTypeIs,
+        getWin = DOM._getWin,
         isStrict = doc.compatMode === 'CSS1Compat',
         MAX = Math.max, PARSEINT = parseInt,
         POSITION = 'position', RELATIVE = 'relative',
@@ -2039,6 +2098,7 @@ KISSY.add('dom-offset', function(S, undefined) {
         VIEWPORT = 'viewport',
         SCROLL = 'scroll', CLIENT = 'client',
         LEFT = 'left', TOP = 'top',
+        SCROLL_TO = 'scrollTo',
         SCROLL_LEFT = SCROLL + 'Left', SCROLL_TOP = SCROLL + 'Top',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
 
@@ -2069,20 +2129,29 @@ KISSY.add('dom-offset', function(S, undefined) {
         scrollIntoView: function(elem, container, top, hscroll) {
             if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return;
 
-            container = S.get(container);
             hscroll = hscroll === undefined ? true : !!hscroll;
             top = top === undefined ? true : !!top;
 
-            // use native for scrollIntoView(elem, top)
-            if (!isElementNode(container)) {
+            // default current window, use native for scrollIntoView(elem, top)
+            if (!container || container === win) {
                 // 注意：
                 // 1. Opera 不支持 top 参数
                 // 2. 当 container 已经在视窗中时，也会重新定位
                 return elem.scrollIntoView(top);
             }
+            container = S.get(container);
 
-            var elemOffset = DOM.offset(elem),
-                containerOffset = DOM.offset(container),
+            // document 归一化到 window
+            if (nodeTypeIs(container, 9)) {
+                container = getWin(container);
+            }
+
+            var isWin = container && (SCROLL_TO in container) && container[DOCUMENT],
+                elemOffset = DOM.offset(elem),
+                containerOffset = isWin ? {
+                    left: DOM.scrollLeft(container),
+                    top: DOM.scrollTop(container) }
+                    : DOM.offset(container),
 
                 // elem 相对 container 视窗的坐标
                 diff = {
@@ -2091,8 +2160,8 @@ KISSY.add('dom-offset', function(S, undefined) {
                 },
 
                 // container 视窗的高宽
-                ch = container.clientHeight,
-                cw = container.clientWidth,
+                ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
+                cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
 
                 // container 视窗相对 container 元素的坐标
                 cl = DOM[SCROLL_LEFT](container),
@@ -2109,26 +2178,41 @@ KISSY.add('dom-offset', function(S, undefined) {
                 l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
                 t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
                 r = l + ew,
-                b = t + eh;
+                b = t + eh,
+
+                t2, l2;
 
             // 根据情况将 elem 定位到 container 视窗中
             // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
             // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
             // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
             // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
-            if(eh > ch || t < ct || top) {
-                container[SCROLL_TOP] = t;
-            }
-            else if(b > cb) {
-                container[SCROLL_TOP] = b - ch;
+            if (eh > ch || t < ct || top) {
+                t2 = t;
+            } else if (b > cb) {
+                t2 = b - ch;
             }
 
             // 水平方向与上面同理
             if (hscroll) {
                 if (ew > cw || l < cl || top) {
-                    container[SCROLL_LEFT] = l;
+                    l2 = l;
                 } else if (r > cr) {
-                    container[SCROLL_LEFT] = r - cw;
+                    l2 = r - cw;
+                }
+            }
+
+            // go
+            if (isWin) {
+                if (t2 !== undefined || l2 !== undefined) {
+                    container[SCROLL_TO](l2, t2);
+                }
+            } else {
+                if (t2 !== undefined) {
+                    container[SCROLL_TOP] = t2;
+                }
+                if (l2 !== undefined) {
+                    container[SCROLL_LEFT] = l2;
                 }
             }
         }
@@ -2139,16 +2223,14 @@ KISSY.add('dom-offset', function(S, undefined) {
         var method = SCROLL + name;
 
         DOM[method] = function(elem) {
-            var ret = 0,
-                w = elem === undefined ? win : getWin(elem),
-                d;
+            var ret = 0, w = getWin(elem), d;
 
-			if(w && (d = w[DOCUMENT])) {
+            if (w && (d = w[DOCUMENT])) {
                 ret = w[i ? 'pageYOffset' : 'pageXOffset']
                     || d[DOC_ELEMENT][method]
                     || d[BODY][method]
             }
-            else if(isElementNode((elem = S.get(elem)))) {
+            else if (isElementNode((elem = S.get(elem)))) {
                 ret = elem[method];
             }
             return ret;
@@ -2165,7 +2247,7 @@ KISSY.add('dom-offset', function(S, undefined) {
 
         DOM[VIEWPORT + name] = function(refWin) {
             var prop = 'inner' + name,
-                w = getWin(refWin) || win,
+                w = getWin(refWin),
                 d = w[DOCUMENT];
             return (prop in w) ? w[prop] :
                 (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
@@ -2189,7 +2271,7 @@ KISSY.add('dom-offset', function(S, undefined) {
             y = box[TOP];
 
             // iphone/ipad/itouch 下的 Safari 获取 getBoundingClientRect 时，已经加入 scrollTop
-            if (UA.mobile !== 'Apple') {
+            if (UA.mobile !== 'apple') {
                 x += DOM[SCROLL_LEFT](w);
                 y += DOM[SCROLL_TOP](w);
             }
@@ -2206,24 +2288,12 @@ KISSY.add('dom-offset', function(S, undefined) {
         }
         var old = getOffset(elem), ret = { }, current, key;
 
-        for(key in offset) {
+        for (key in offset) {
             current = PARSEINT(DOM.css(elem, key), 10) || 0;
             ret[key] = current + offset[key] - old[key];
         }
         DOM.css(elem, ret);
     }
-
-    // elem 为 window 时，直接返回
-    // elem 为 document 时，返回关联的 window
-    // 其它值，返回 false
-    function getWin(elem) {
-        return (elem && ('scrollTo' in elem) && elem[DOCUMENT]) ?
-            elem :
-            elem && elem.nodeType === 9 ?
-                elem.defaultView || elem.parentWindow :
-                false;
-    }
-
 });
 
 /**
@@ -2363,7 +2433,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     var doc = document,
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
-        isSupportedNode = DOM._isSupportedNode,
+        nodeTypeIs = DOM._nodeTypeIs,
         isElementNode = DOM._isElementNode,
         isKSNode = DOM._isKSNode,
         DIV = 'div',
@@ -2381,7 +2451,7 @@ KISSY.add('dom-create', function(S, undefined) {
          * Creates a new HTMLElement using the provided html string.
          */
         create: function(html, props, ownerDoc) {
-            if (isSupportedNode(html)) return cloneNode(html);
+            if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) return cloneNode(html);
             if (isKSNode(html)) return cloneNode(html[0]);
             if (!(html = S.trim(html))) return null;
 
@@ -2696,7 +2766,6 @@ KISSY.add('event', function(S, undefined) {
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
-                    //boolean capture is better
                     el.addEventListener(type, fn, !!capture);
                 }
             } :
@@ -2737,6 +2806,7 @@ KISSY.add('event', function(S, undefined) {
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         add: function(target, type, fn, scope /* optional */) {
+            scope = scope || target;
             if (batch('add', target, type, fn, scope)) return;
 
             var id = getID(target), isNativeEventTarget,
@@ -2767,10 +2837,10 @@ KISSY.add('event', function(S, undefined) {
                             S.mix(event, eventData);
                         }
                     }
-                    if (special.setup) {
-                        special.setup(event);
+                    if (special['setup']) {
+                        special['setup'](event);
                     }
-                    return (special.handle || Event._handle)(target, event, events[type].listeners, scope);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners);
                 };
 
                 events[type] = {
@@ -2794,8 +2864,9 @@ KISSY.add('event', function(S, undefined) {
         /**
          * Detach an event or set of events from an element.
          */
-        remove: function(target, type /* optional */, fn /* optional */) {
-            if (batch('remove', target, type, fn)) return;
+        remove: function(target, type /* optional */, fn /* optional */, scope /* optional */) {
+            scope = scope || target;
+            if (batch('remove', target, type, fn, scope)) return;
 
             var id = getID(target),
                 events, eventsType, listeners,
@@ -2813,7 +2884,8 @@ KISSY.add('event', function(S, undefined) {
                 // 移除 fn
                 if (S.isFunction(fn) && len) {
                     for (i = 0, j = 0, t = []; i < len; ++i) {
-                        if (fn !== listeners[i].fn) {
+                        if (fn !== listeners[i].fn
+                            || scope !== listeners[i].scope) {
                             t[j++] = listeners[i];
                         }
                     }
@@ -3262,7 +3334,7 @@ build time: ${build.time}
  */
 KISSY.add('node', function(S) {
 
-    var DOM = S.DOM;
+    var DOM = S.DOM, nodeTypeIs = DOM._nodeTypeIs;
 
     /**
      * The Node class provides a wrapper for manipulating DOM Node.
@@ -3281,8 +3353,8 @@ KISSY.add('node', function(S) {
             return;
         }
 
-        // handle supported node
-        if (DOM._isSupportedNode(html)) {
+        // handle element or text node
+        if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
             domNode = html;
         }
         else if (S.isString(html)) {
@@ -3373,10 +3445,11 @@ KISSY.add('nodelist', function(S) {
          */
         each: function(fn, context) {
             var len = this.length, i = 0, node;
-            for (; i < len; ++i) {
-                node = new S.Node(this[i]);
-                fn.call(context || node, node, i, this);
+
+            for (node = new S.Node(this[0]);
+                 i < len && fn.call(context || node, node, i, this) !== false; node = new S.Node(this[++i])) {
             }
+
             return this;
         }
     });
