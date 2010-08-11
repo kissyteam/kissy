@@ -165,9 +165,9 @@ KISSY.add('flash-embed', function(S) {
 
         _register: function(swf, config, callback) {
             var id = config.attrs.id;
-			if(UA.firefox  || UA.opera || UA.gecko ){
-				swf = (DOM.query("object",swf) || [])[0] || swf;		//bugfix:  静态双 object 获取问题。双Object 外层有id 但内部才有效。  longzang 2010/8/9
-			}
+            if (UA.gecko || UA.opera) {
+                swf = S.query('object', swf)[0] || swf; // bugfix: 静态双 object 获取问题。双 Object 外层有 id 但内部才有效。  longzang 2010/8/9
+            }
 			
             Flash._addSWF(id, swf);
             Flash._callback(callback, SWF_SUCCESS, id, swf);
