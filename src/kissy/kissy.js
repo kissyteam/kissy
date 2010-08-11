@@ -86,10 +86,15 @@
             var self = this;
 
             // override mode
-            self.Env.mods[name] = {
-                name: name,
-                fn: fn
-            };
+			if(typeof self.Env.mods[name] != 'undefined'){
+				self.Env.mods[name].name = name;
+				self.Env.mods[name].fn = fn;
+			}else{
+				self.Env.mods[name] = {
+					name: name,
+					fn: fn
+				};
+			}
 
             // call entry point immediately
             fn(self);
@@ -189,21 +194,30 @@
          * Executes functions bound to ready event.
          */
         _fireReady: function() {
+			var that = this;
             if (isReady) return;
 
             // Remember that the DOM is ready
             isReady = true;
 
+
             // If there are functions bound, to execute
             if (readyList) {
                 // Execute all of them
-                var fn, i = 0;
-                while (fn = readyList[i++]) {
-                    fn.call(win, this);
-                }
 
-                // Reset the list of functions
-                readyList = null;
+				//load mods first
+				this._load_mods(function(){
+					
+					var fn, i = 0;
+					while (fn = readyList[i++]) {
+						fn.call(win, that);
+					}
+
+					// Reset the list of functions
+					readyList = null;
+					
+				});
+
             }
         },
 
@@ -398,7 +412,171 @@
         guid: function(pre) {
             var id = this.Env.guid++ + '';
             return pre ? pre + id : id;
-        }
+        },
+
+		/*
+		 * added by jayli
+		 * use('mod1','mod2')
+		 */
+		use : function(){
+			var that = this;
+			that.Env._uses = that.Env._uses || [];
+			for(var i = 0;i<arguments.length;i++){
+				that.Env._uses.push(arguments[i]);
+			}
+			return this;
+		},
+		/**
+		 * 单独处理一个mod
+		 */
+		_mods_stack:function(mod){
+			var that = this;
+			that.Env._loadQueue = that.Env._loadQueue || [];
+			if(that.inArray(mod,that.Env._loadQueue))return;
+			if(mod in that.Env.mods){
+				that.Env._loadQueue.push(mod);
+				if(typeof that.Env.mods[mod].requires != 'undefined'){
+					for(var i = 0;i< that.Env.mods[mod].requires.length;i++){
+						arguments.callee.call(that,that.Env.mods[mod].requires[i]);
+					}
+				}
+			}
+		},
+		addmojo:function(o){
+			var that = this;
+			mix(that.Env.mods,o);
+			return this;
+		},
+		/**
+		 * 根据uses来判断加载模块的顺序
+		 */
+		_buildMods:function(){
+			var that = this;
+			that.Env._loaded_mods = [];
+			that.Env._uses = that.Env._uses || [];
+			that.Env._uses = that.distinct(that.Env._uses);
+			that.Env._loadQueue = [];
+			for(var i = 0;i< that.Env._uses.length;i++){
+				that._mods_stack(that.Env._uses[i]);
+			}
+			that.Env._loadQueue.reverse();
+		},
+		/**
+		 * 一次性加载所有script，所有script都加载完毕后执行fn
+		 */
+		_load_mods:function(fn){
+			var that = this;
+			that._buildMods();
+			for(var i = 0 ;i<that.Env._loadQueue.length;i++){
+				var mod = that.Env._loadQueue[i];
+				that.loadScript(that.Env.mods[mod].fullpath,function(){
+					that.Env._loaded_mods.push(mod);
+					if(that.Env._loaded_mods.length == that.Env._loadQueue.length){
+						fn.call(win,that);
+					}
+				});
+			}
+
+
+		},
+		loadScript:function(url,fn,charset){
+			var that = this;
+
+			//如果是css
+			if(/\.css$/i.test(url) || /\.css\?/i.test(url)){
+				that.loadCSS(url);
+				fn();
+				return false;
+			}
+			that.getScript(url,fn,charset);
+		},
+		/**
+		 * alias of S.Ajax.getScript
+		 */
+        getScript: function(url, callback, charset) {
+            var head = S.get('head') || document.documentElement,
+                node = doc.createElement('script'),
+				testNode = doc.createElement('script'),
+				fn = testNode.readyState ? function(node, callback) {
+				node.onreadystatechange = function() {
+					var rs = node.readyState;
+					if (rs === 'loaded' || rs === 'complete') {
+						// handle memory leak in IE
+						node.onreadystatechange = null;
+						callback.call(this);
+					}
+				};
+			} : function(node, callback) {
+				node.onload = callback;
+			};
+
+            node.src = url;
+            if (charset) node.charset = charset;
+            node.async = true;
+
+            if (S.isFunction(callback)) {
+                fn(node, callback);
+            }
+
+            head.insertBefore(node, head.firstChild);
+        },
+		/**
+		 * load样式
+		 * @method loadCSS
+		 * @param url 脚本fullpath
+		 * @private
+		 */
+		loadCSS:function(url){   
+			var cssLink = document.createElement("link");   
+            var head = S.get('head') || document.documentElement;
+			cssLink.rel = "stylesheet";   
+			cssLink.rev = "stylesheet";   
+			cssLink.type = "text/css";   
+			cssLink.media = "screen";   
+			cssLink.href = url;   
+            head.insertBefore(cssLink, head.firstChild);
+		},
+		/** 
+		 * 给数组去重,前向去重，若有重复，去掉前面的重复值,保留后面的
+		 * @method  distinct  
+		 * @param { array } 需要执行去重操作的数组
+		 * @return { array } 返回去重后的数组
+		 */  
+		distinct:function(A){
+			var that = this;
+			if(!(A instanceof Array) || A.length <=1 )return A;
+			var a = [],b=[];
+			for(var i = 1;i<A.length;i++){
+				for(var j = 0;j<i;j++){
+					if(that.inArray(j,b))continue;
+					if(A[j] == A[i]){
+						b.push(j);
+					}
+				}
+			}
+			for(var i = 0;i<A.length;i++){
+				if(that.inArray(i,b))continue;
+				a.push(A[i]);
+			}
+			return a;
+		},
+		/**
+		* 判断数值是否存在数组中
+		* @param { value } v : 要匹配的数值
+		* @param { array } a : 存在的数组
+		*/
+		inArray : function(v, a){
+			var o = false;
+			for(var i=0,m=a.length; i<m; i++){
+				if(a[i] == v){
+					o = true;
+					break;
+				}
+			}
+			return o;
+		}
+
+		//modified end
     });
 
     S._init();
