@@ -109,7 +109,7 @@ KISSY.add('selector', function(S, undefined) {
                         // 处理 #id.cls
                         else {
                             t = getElementById(id, context);
-                            if(t && DOM.hasClass(t, cls)) {
+                            if (t && DOM.hasClass(t, cls)) {
                                 ret = [t];
                             }
                         }
@@ -121,7 +121,7 @@ KISSY.add('selector', function(S, undefined) {
                 }
             }
             // 采用外部选择器
-            else if(S.ExternalSelector) {
+            else if (S.ExternalSelector) {
                 return S.ExternalSelector(selector, context);
             }
             // 依旧不支持，抛异常
@@ -130,11 +130,11 @@ KISSY.add('selector', function(S, undefined) {
             }
         }
         // 传入的 selector 是 KISSY.Node/NodeList. 始终返回原生 DOM Node
-        else if(selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
+        else if (selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
             ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
         }
-        // 传入的 selector 是 NodeList 或已是 Array
-        else if (selector && (S.isArray(selector) || selector.item)) {
+        // 传入的 selector 是 NodeList 或已是 Array,fix select
+        else if (selector && (S.isArray(selector) || (selector.item && !selector.nodeType))) {
             ret = selector;
         }
         // 传入的 selector 是 Node 等非字符串对象，原样返回
@@ -144,7 +144,7 @@ KISSY.add('selector', function(S, undefined) {
         // 传入的 selector 是其它值时，返回空数组
 
         // 将 NodeList 转换为普通数组
-        if(ret.item) {
+        if (ret.item) {
             ret = S.makeArray(ret);
         }
 
@@ -177,7 +177,7 @@ KISSY.add('selector', function(S, undefined) {
 
     // query #id
     function getElementById(id, context) {
-        if(context.nodeType !== 9) {
+        if (context.nodeType !== 9) {
             context = context.ownerDocument;
         }
         return context.getElementById(id);
@@ -187,6 +187,7 @@ KISSY.add('selector', function(S, undefined) {
     function getElementsByTagName(tag, context) {
         return context.getElementsByTagName(tag);
     }
+
     (function() {
         // Check to see if the browser returns only elements
         // when doing getElementsByTagName('*')
@@ -232,6 +233,7 @@ KISSY.add('selector', function(S, undefined) {
         }
         return ret;
     }
+
     if (!doc.getElementsByClassName) {
         // 降级使用 querySelectorAll
         if (doc.querySelectorAll) {
@@ -350,7 +352,7 @@ KISSY.add('selector', function(S, undefined) {
  *
  * 2010.06
  *  - 增加 filter 和 test 方法
- * 
+ *
  * 2010.07
  *  - 取消对 , 分组的支持，group 直接用 Sizzle
  *

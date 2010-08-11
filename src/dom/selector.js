@@ -85,7 +85,7 @@ KISSY.add('selector', function(S, undefined) {
             ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
         }
         // 传入的 selector 是 NodeList 或已是 Array
-        else if (selector && (S.isArray(selector) || selector.item)) {
+        else if (selector && (S.isArray(selector) || (selector.item && !selector.nodeType))) {
             ret = selector;
         }
         // 传入的 selector 是 Node 等非字符串对象，原样返回
@@ -301,7 +301,7 @@ KISSY.add('selector', function(S, undefined) {
  *
  * 2010.06
  *  - 增加 filter 和 test 方法
- * 
+ *
  * 2010.07
  *  - 取消对 , 分组的支持，group 直接用 Sizzle
  *
