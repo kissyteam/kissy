@@ -1287,7 +1287,7 @@ KISSY.add('dom-offset', function(S, undefined) {
             y = box[TOP];
 
             // iphone/ipad/itouch 下的 Safari 获取 getBoundingClientRect 时，已经加入 scrollTop
-            if (UA.mobile !== 'Apple') {
+            if (UA.mobile !== 'apple') {
                 x += DOM[SCROLL_LEFT](w);
                 y += DOM[SCROLL_TOP](w);
             }

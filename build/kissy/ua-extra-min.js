@@ -3,4 +3,4 @@ Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
 build time: ${build.time}
 */
-KISSY.add("ua-extra",function(g){var e=g.UA,c=navigator.userAgent,d,a,b={},f=e._numberify;if(c.match(/360SE/))b[a="se360"]=3;else if(c.match(/Maxthon/)&&(d=window.external)){a="maxthon";try{b[a]=f(d.max_version)}catch(h){b[a]=0.1}}else if(d=c.match(/TencentTraveler\s([\d.]*)/))b[a="tt"]=d[1]?f(d[1]):0.1;else if(c.match(/TheWorld/))b[a="theworld"]=3;else if(d=c.match(/SE\s([\d.]*)/))b[a="sougou"]=d[1]?f(d[1]):0.1;else if(c=e.ie)b.rawie=c<8&&document.documentMode?8:c;a&&(b.shell=a);g.mix(e,b)});
+KISSY.add("ua-extra",function(f){var g=f.UA,d=navigator.userAgent,b,a,c={},e=g._numberify;if(d.match(/360SE/))c[a="se360"]=3;else if(d.match(/Maxthon/)&&(b=window.external)){a="maxthon";try{c[a]=e(b.max_version)}catch(h){c[a]=0.1}}else if(b=d.match(/TencentTraveler\s([\d.]*)/))c[a="tt"]=b[1]?e(b[1]):0.1;else if(d.match(/TheWorld/))c[a="theworld"]=3;else if(b=d.match(/SE\s([\d.]*)/))c[a="sougou"]=b[1]?e(b[1]):0.1;a&&(c.shell=a);f.mix(g,c)});
