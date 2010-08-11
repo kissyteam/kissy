@@ -9,7 +9,7 @@
     if (win[S] === undefined) win[S] = {};
     S = win[S]; // shortcut
 
-    var doc = win.document,
+    var doc = win['document'],
 
         // Copies all the properties of s to r
         mix = function(r, s, ov, wl) {

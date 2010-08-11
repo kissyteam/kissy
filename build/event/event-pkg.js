@@ -8,23 +8,11 @@ build time: ${build.time}
  * @author  lifesinger@gmail.com
  */
 KISSY.add('event', function(S, undefined) {
-    // elem 为 window 时，直接返回
-    // elem 为 document 时，返回关联的 window
-    // 其它值，返回 false
-    function getWin(elem) {
-        return (elem && ('scrollTo' in elem) && elem["document"]) ?
-            elem :
-            elem && elem.nodeType === 9 ?
-                elem.defaultView || elem.parentWindow :
-                false;
-    }
 
     var doc = document,
-        win = window,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
-                    //boolean capture is better
                     el.addEventListener(type, fn, !!capture);
                 }
             } :
@@ -65,8 +53,9 @@ KISSY.add('event', function(S, undefined) {
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         add: function(target, type, fn, scope /* optional */) {
+            scope = scope || target;
             if (batch('add', target, type, fn, scope)) return;
-            scope = scope || getWin(target) || win;
+
             var id = getID(target), isNativeEventTarget,
                 special, events, eventHandle, fixedType, capture;
 
@@ -95,8 +84,8 @@ KISSY.add('event', function(S, undefined) {
                             S.mix(event, eventData);
                         }
                     }
-                    if (special.setup) {
-                        special.setup(event);
+                    if (special['setup']) {
+                        special['setup'](event);
                     }
                     return (special.handle || Event._handle)(target, event, events[type].listeners);
                 };
@@ -122,8 +111,8 @@ KISSY.add('event', function(S, undefined) {
         /**
          * Detach an event or set of events from an element.
          */
-        remove: function(target, type /* optional */, fn /* optional */, scope) {
-            scope = scope || getWin(target) || win;
+        remove: function(target, type /* optional */, fn /* optional */, scope /* optional */) {
+            scope = scope || target;
             if (batch('remove', target, type, fn, scope)) return;
 
             var id = getID(target),
@@ -141,7 +130,7 @@ KISSY.add('event', function(S, undefined) {
 
                 // 移除 fn
                 if (S.isFunction(fn) && len) {
-                    for (i = 0,j = 0,t = []; i < len; ++i) {
+                    for (i = 0, j = 0, t = []; i < len; ++i) {
                         if (fn !== listeners[i].fn
                             || scope !== listeners[i].scope) {
                             t[j++] = listeners[i];

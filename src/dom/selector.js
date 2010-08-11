@@ -84,13 +84,13 @@ KISSY.add('selector', function(S, undefined) {
         else if(selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
             ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
         }
-        // 传入的 selector 是 Node
-        else if (selector && selector.nodeType) {
-            ret = [selector];
-        }
         // 传入的 selector 是 NodeList 或已是 Array
         else if (selector && (S.isArray(selector) || selector.item)) {
             ret = selector;
+        }
+        // 传入的 selector 是 Node 等非字符串对象，原样返回
+        else if (selector) {
+            ret = [selector];
         }
         // 传入的 selector 是其它值时，返回空数组
 
@@ -98,6 +98,11 @@ KISSY.add('selector', function(S, undefined) {
         if(ret.item) {
             ret = S.makeArray(ret);
         }
+
+        // attach each method
+        ret.each = function(fn, context) {
+            return S.each(ret, fn, context);
+        };
 
         return ret;
     }
@@ -296,9 +301,12 @@ KISSY.add('selector', function(S, undefined) {
  *
  * 2010.06
  *  - 增加 filter 和 test 方法
- * 
+ *
  * 2010.07
  *  - 取消对 , 分组的支持，group 直接用 Sizzle
+ *
+ * 2010.08
+ *  - 给 S.query 的结果 attach each 方法
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。

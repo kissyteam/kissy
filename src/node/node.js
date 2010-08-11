@@ -4,7 +4,7 @@
  */
 KISSY.add('node', function(S) {
 
-    var DOM = S.DOM;
+    var DOM = S.DOM, nodeTypeIs = DOM._nodeTypeIs;
 
     /**
      * The Node class provides a wrapper for manipulating DOM Node.
@@ -23,8 +23,8 @@ KISSY.add('node', function(S) {
             return;
         }
 
-        // handle supported node
-        if (DOM._isSupportedNode(html)) {
+        // handle element or text node
+        if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
             domNode = html;
         }
         else if (S.isString(html)) {
