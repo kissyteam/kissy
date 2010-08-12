@@ -113,7 +113,7 @@
 			//when a module is add to KISSY via S.add() after "domReady" event,
 			//its callback function should be exec immediately
 			if(!(isReady && !afterReady)){
-				console.log('=======' + name + ' ' + isReady);
+				console.log('============'+name + isReady + ' '+ afterReady);
 				fn(self);
 			}
 
@@ -258,9 +258,9 @@
 
 					// Reset the list of functions
 					readyList = null;
+					afterReady = true;
 					
 				});
-				afterReady = true;
 
             }
         },

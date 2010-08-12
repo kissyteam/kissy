@@ -58,7 +58,8 @@ S.add({
 		fullpath:'lang.js'
 	},
 	'ua-extra':{
-		fullpath:'ua-extra.js'
+		fullpath:'ua-extra.js',
+		requires:['ua']
 	}
 });
 
@@ -78,7 +79,7 @@ S.ready(function(S){
 });
 
 //sync load kissy build-in modules and exec callback after all modules are ready
-S.use('ua','lang','ua-extra').ready(function(S){
+S.use('lang','ua-extra').ready(function(S){
 	var win = window;
 	win['test_preserve'] = function(test) {
 		if (!KISSY.Test) test.fail();
