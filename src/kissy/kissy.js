@@ -114,6 +114,8 @@
 			//its callback function should be exec immediately
 			if(!(isReady && !afterReady)){
 				fn(self);
+				self.Env._anti_uses = self.Env._anti_uses || [];
+				self.Env._anti_uses.push(name);
 			}
 
             // chain support
@@ -124,7 +126,9 @@
 			var self = this;
 			//
 			//exec preloaded mojos
+			self.Env._anti_uses = self.Env._anti_uses || [];
 			for(var i in self.Env.mods){
+				if(self.inArray(i,self.Env._anti_uses))continue;
 				if(typeof self.Env.mods[i].fn != 'undefined' 
 					&& !self.inArray(i,self.Env._loadQueue)){
 					self.Env.mods[i].fn(self);
@@ -133,6 +137,7 @@
 			//exec lazyloaded mojos
 			for(var i = 0 ;i<self.Env._loadQueue.length;i++){
 				var mod = self.Env._loadQueue[i];
+				if(self.inArray(mod,self.Env._anti_uses))continue;
 				if(typeof self.Env.mods[mod].fn != 'undefined'){
 					self.Env.mods[mod].fn(self);
 				}
