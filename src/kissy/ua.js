@@ -6,7 +6,7 @@ KISSY.add('ua', function(S) {
 
     var ua = navigator.userAgent,
         EMPTY = '', MOBILE = 'mobile',
-        core = EMPTY, shell = EMPTY, m, v,
+        core = EMPTY, shell = EMPTY, m,
         o = {
             // browser core type
             webkit: 0,
@@ -85,10 +85,14 @@ KISSY.add('ua', function(S) {
         // NOT WebKit or Presto
         } else {
             // MSIE
-            if ((m = ua.match(/MSIE\s([^;]*)/)) && (v = m[1])) {
+            if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
                 o[core = 'trident'] = 0.1; // Trident detected, look for revision
-                // hack: documentMode is only supported in IE 8 so we know if its here its really IE 8
-                o[shell = 'ie'] = v < 8 && document['documentMode'] ? 8 : v;
+                // 注意：
+                //  o.shell = ie, 表示外壳是 ie
+                //  但 o.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
+                //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 o.ie = 8, 否则
+                //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
+                o[shell = 'ie'] = numberify(m[1]);
 
                 // Get the Trident's accurate version
                 if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
