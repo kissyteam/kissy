@@ -39,6 +39,9 @@
         // Is the DOM ready to be used? Set to true once it occurs.
         isReady = false,
 
+		// Is "ready" Fired ? Set to true after "ready" event fired;
+		afterReady = false;
+
         // The functions to execute on DOM ready.
         readyList = [],
 
@@ -77,24 +80,67 @@
          * Registers a module.
          * @param name {String} module name
          * @param fn {Function} entry point into the module that is used to bind module to KISSY
+		 * @param config {Object}
          * <code>
          * KISSY.add('module-name', function(S){ });
          * </code>
          * @return {KISSY}
          */
-        add: function(name, fn) {
+        add: function(name, fn, config) {
             var self = this;
+
+			if(typeof name == 'object'){
+				self.addmojo(name);
+				return self;
+			}
 
             // override mode
 			self.Env.mods[name] = self.Env.mods[name] || {};
 			mix(self.Env.mods[name], { name: name, fn: fn });
+			mix(self.Env.mods[name],config);
 
-            // call entry point immediately
-            fn(self);
+            // must not call entry point immediately before "domReady" event,
+			// "S.add" method should protect logics (callbacks) in lazy-loded js
+            //fn(self);
+
+			//when a module is added to KISSY via S.add(),
+			//u do not need use "S.use" to exec its callback function
+			self.Env._uses = self.Env._uses || [];
+			self.Env._uses.reverse();	
+			self.Env._uses.push(name);
+			self.Env._uses.reverse();
+
+			//when a module is add to KISSY via S.add() after "domReady" event,
+			//its callback function should be exec immediately
+			if(!(isReady && !afterReady)){
+				console.log('=======' + name + ' ' + isReady);
+				fn(self);
+			}
 
             // chain support
             return self;
         },
+
+		_exec_mojo_queue:function(){
+			var self = this;
+			//
+			//exec preloaded mojos
+			for(var i in self.Env.mods){
+				if(typeof self.Env.mods[i].fn != 'undefined' 
+					&& !self.inArray(i,self.Env._loadQueue)){
+					self.Env.mods[i].fn(self);
+				}
+			}
+			//exec lazyloaded mojos
+			for(var i = 0 ;i<self.Env._loadQueue.length;i++){
+				var mod = self.Env._loadQueue[i];
+				if(typeof self.Env.mods[mod].fn != 'undefined'){
+					self.Env.mods[mod].fn(self);
+				}
+			}
+
+			return self;
+		},
 
         /**
          * Specify a function to execute when the DOM is fully loaded.
@@ -188,8 +234,11 @@
          */
         _fireReady: function() {
 			var self = this;
+
+
             if (isReady) return;
 
+			console.log('domready');
             // Remember that the DOM is ready
             isReady = true;
 
@@ -200,6 +249,7 @@
 
 				//load mods first
 				this._load_mods(function(){
+					self._exec_mojo_queue();
 					
 					var fn, i = 0;
 					while (fn = readyList[i++]) {
@@ -210,6 +260,7 @@
 					readyList = null;
 					
 				});
+				afterReady = true;
 
             }
         },
@@ -482,14 +533,25 @@
 		_load_mods:function(fn){
 			var self = this;
 			self._build_mods();
+			if(self.Env._loadQueue.length == 0){
+				fn.call(win,self);
+				return self;
+			}
 			for(var i = 0 ;i<self.Env._loadQueue.length;i++){
 				var mod = self.Env._loadQueue[i];
-				self.loadScript(self.Env.mods[mod].fullpath,function(){
+				if(typeof self.Env.mods[mod].fn == 'function'){
 					self.Env._loaded_mods.push(mod);
 					if(self.Env._loaded_mods.length == self.Env._loadQueue.length){
 						fn.call(win,self);
 					}
-				});
+				}else{
+					self.loadScript(self.Env.mods[mod].fullpath,function(){
+						self.Env._loaded_mods.push(mod);
+						if(self.Env._loaded_mods.length == self.Env._loadQueue.length){
+							fn.call(win,self);
+						}
+					});
+				}
 			}
 
 
@@ -530,8 +592,8 @@
             node.src = url;
             if (charset) node.charset = charset;
             node.async = true;
-
-            if (S.isFunction(callback)) {
+			
+            if (typeof callback == 'function') {
                 fn(node, callback);
             }
 

@@ -10,27 +10,10 @@
 <h2>Test Data</h2>
 <script src="kissy.js"></script>
 <script src="lang.js"></script>
+
 <script src="ua.js"></script>
 <script src="ua-extra.js"></script>
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
-<!--added by jayli-->
-<script>
-var S = KISSY;
-S.addmojo({
-	'jquery':{
-		fullpath:'http://tbexample.googlecode.com/svn/trunk/sandbox/jquery-1.4.2.js'
-	},
-	'test':{
-		fullpath:'jayli-test.js',
-		requires:['jquery']
-	}
-});
-S.use('test').ready(function(S){
-	S.log('all ready');
-	alert(typeof $ + ' $ is '+ S.jay);
-});
-
-</script>
 
 <script>
     var S = KISSY,
@@ -575,6 +558,7 @@ S.use('test').ready(function(S){
 //            //test.fail(ex);
 //        }
     }
+
 
 </script>
 </body>

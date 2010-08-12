@@ -1,0 +1,581 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Core Test</title>
+</head>
+<body>
+<script src="../test/test.js"></script>
+
+<h2>Test Data</h2>
+<script src="kissy.js"></script>
+
+<script>
+var S = KISSY,
+	doc = document,
+	now = function() {
+		return new Date().getTime();
+	},
+	get = function(id) {
+		return typeof id === 'string' ? doc.getElementById(id) : id;
+	},
+	readyTime, loadTime;
+	window.onload = function() {
+		loadTime = now();
+		S.log('loadTime = ' + loadTime);
+	};
+</script>
+<img src="../../docs/assets/logo.png" alt="test image" />
+<div id="test-available">test available</div>
+<iframe id="test-iframe" src="test-iframe.html"></iframe>
+<script>
+
+//directly exec my logic without using any other sub-modules
+S.ready(function() {
+	readyTime = now();
+	S.log('readyTime = ' + readyTime);
+});
+
+//add modules
+S.add({
+	//dependence of these modules
+	'sub-sub-test':{
+		fullpath:'http://yui.yahooapis.com/2.8.1/build/yahoo/yahoo.js'
+	},
+	'sub-test':{
+		fullpath:'jayli-sub-test.js',
+		requires:['sub-sub-test']
+	},
+	'test':{
+		fullpath:'jayli-test.js',
+		requires:['sub-test']
+	},
+	//kissy build-in modules
+	'ua':{
+		fullpath:'ua.js'
+	},
+	'lang':{
+		fullpath:'lang.js'
+	},
+	'ua-extra':{
+		fullpath:'ua-extra.js'
+	}
+});
+
+//add a module and exec its callbacks after "domready"
+//KISSY now is aware of "inline-test"'s sub-modules
+//and its sub-modules will be sync loaded after "domready" && before this callback execs' moment
+S.add('inline-test',function(S){
+	S.inline = 'ok';
+},{requires:['test']});
+
+//KISSY will import 'inline-test'.
+//If 'inline-test' has sub-module,load its sub-modules first
+S.ready(function(S){
+	S.log('S.sub '+S.sub);
+	S.log('S.inline '+S.inline);
+	//alert(typeof $ + ' $ is '+ S.jay);
+});
+
+//sync load kissy build-in modules and exec callback after all modules are ready
+S.use('ua','lang','ua-extra').ready(function(S){
+	var win = window;
+	win['test_preserve'] = function(test) {
+		if (!KISSY.Test) test.fail();
+	};
+
+	win['test_add'] = function(test) {
+		KISSY.add('test-ks-mod', function(S) {
+		   S.TestMod = { prop: 1 };
+		});
+
+		if(!KISSY.TestMod.prop) test.fail();
+		if(KISSY.Env.mods['test-ks-mod'].name !== 'test-ks-mod') test.fail();
+
+		// clear
+		delete KISSY.TestMod;
+		delete KISSY.Env.mods['test-ks-mod'];
+	};
+
+	win['test_ready'] = function(test) {
+		// normal
+		var diff = loadTime - readyTime;
+		test.extraMsg = 'loadTime - readyTime = ' + diff + 'ms';
+		if(diff < 0) test.fail();
+
+		// iframe
+		var ifr = get('test-iframe');
+		diff = ifr.contentWindow.loadTime - ifr.contentWindow.readyTime;
+		if(diff < 0) test.fail();
+	};
+
+	win['test_available'] = function(test) {
+
+		S.available('#test-available', function() {
+		   test.echo('#test-available is available now.');
+		});
+
+		S.later(function() {
+			var t = document.createElement('DIV');
+			t.id = 'test-available2';
+			document.body.appendChild(t);
+			test.echo('#test-available2 is created.')
+		}, 2000);
+
+		S.available('test-available2', function() {
+		   test.echo('#test-available2 is available now.');
+		});
+
+		// 下面的语句不抛异常
+		S.available();
+		S.available('test-avaialble');
+	};
+
+	win['test_mix'] = function(test) {
+		var o1 = { a: 1, b: 2 },
+			o3 = { a: 1, b: 2 },
+			o4 = { a: 1, b: 2 },
+			o2 = { a: 'a', c: true };
+
+		S.mix(o1, o2);
+		S.mix(o3, o2, false);
+		S.mix(o4, o2, true, ['c']);
+
+		if(o1.a !== 'a') test.fail();
+		if(o3.a !== 1) test.fail();
+		if(o4.a !== 1) test.fail();
+	};
+
+	win['test_merge'] = function(test) {
+		var a = {
+				'bool' : false,
+				'num'  : 0,
+				'nul'  : null,
+				'undef': undefined,
+				'T'    : 'blabber'
+			},
+			b = {
+				'bool' : 'oops',
+				'num'  : 'oops',
+				'nul'  : 'oops',
+				'undef': 'oops',
+				'T'    : 'oops'
+			};
+
+		var c = S.merge(a, b);
+
+		if(c.bool !== 'oops') test.fail();
+		if(c.num !== 'oops') test.fail();
+		if(c.nul !== 'oops') test.fail();
+		if(c.undef !== 'oops') test.fail();
+		if(c.T !== 'oops') test.fail();
+	};
+
+	win['test_augment'] = function(test) {
+		function Bird(name) {
+			this.name = name;
+		}
+		Bird.prototype = {
+			getName: function() {
+				return this.name;
+			},
+			fly: function() {
+			}
+		};
+
+		function Pig(name) {
+			this.name = name;
+		}
+		S.augment(Pig, Bird, { prop: 'test prop' });
+
+		var pig = new Pig('Babi');
+
+		if(!pig.fly) test.fail();
+		if(pig.prop !== 'test prop') test.fail();
+	};
+
+	win['test_extend'] = function(test) {
+		function Bird(name) {
+			this.name = name;
+		}
+		Bird.prototype = {
+			getName: function() {
+				return this.name;
+			}
+		};
+
+		function Chicken(name) {
+			Chicken.superclass.constructor.call(this, name);
+		}
+		S.extend(Chicken, Bird);
+
+		var chicken = new Chicken('Tom');
+
+		if(chicken.getName() !== 'Tom') test.fail();
+	};
+
+
+	win['test_namespace'] = function(test) {
+		var ns;
+
+		// normal
+		ns = S.namespace('app1.Test');
+		ns.name = 'foo1';
+		if(S['app1'].Test.name !== 'foo1') test.fail();
+
+		// first part of argument is the global object
+		ns = S.namespace('KISSY.app2.Test2');
+		ns.name = 'foo2';
+		if(S.app2.Test2.name !== 'foo2') test.fail();
+
+		// via cloned global object
+		S.app('TB');
+		ns = TB.namespace('app3.Test3');
+		ns.name = 'foo3';
+		if(TB.app3.Test3.name !== 'foo3') test.fail();
+
+		// empty arguments
+		if(S.namespace() !== null) test.fail();
+
+		// clear
+		delete S.app1;
+		delete S.app2;
+		window.TB = undefined;
+	};
+
+	win['test_app'] = function(test) {
+		S.app('TB');
+
+		// check Env
+		if(!TB.Env.mods) test.fail();
+
+		// check independence
+		TB.test = 2;
+		if(S.test === 2) test.fail();
+
+		// test add modules
+		TB.add('test-tb-mod', function() { });
+		if(!TB.Env.mods['test-tb-mod']) test.fail();
+		if(S.Env.mods['test-tb-mod']) test.fail();
+
+		// clear
+		window.TB = undefined;
+	};
+
+	win['test_log'] = function(test) {
+		S.add('test-ks-mod', function() { });
+		S.log(S, 'dir');
+
+		S.app('TB');
+		TB.add('test-tb-mod', function() { });
+		S.log(TB, 'dir');
+
+		// clear
+		//delete S.Env.mods['test-ks-mod'];
+		//window.TB = undefined;
+	};
+
+	win['test_error'] = function(test) {
+		try {
+			S.error('wrong');
+		} catch(e) {
+			if(e !== 'wrong') test.fail();
+		}
+	};
+
+	win['test_guid'] = function(test) {
+		if(typeof S.guid() !== 'string') test.fail();
+		if(S.guid() - S.guid() !== -1) test.fail();
+	};
+
+	win['test_isBoolean'] = function(test) {
+		if(S.isBoolean(true) !== true) test.fail();
+		if(S.isBoolean(false) !== true) test.fail();
+		if(S.isBoolean(!1) !== true) test.fail();
+		if(S.isBoolean() === true) test.fail();
+		if(S.isBoolean(null) === true) test.fail();
+		if(S.isBoolean({}) === true) test.fail();
+	};
+
+	win['test_isString'] = function(test) {
+		if(S.isString('') !== true) test.fail();
+		if(S.isString('aaa') !== true) test.fail();
+		if(S.isString() === true) test.fail();
+		if(S.isString({}) === true) test.fail();
+		if(S.isString(null) === true) test.fail();
+		if(S.isString(window) === true) test.fail();
+	};
+
+	win['test_isNumber'] = function(test) {
+		if(S.isNumber(1) !== true) test.fail();
+		if(S.isNumber(0) !== true) test.fail();
+		if(S.isNumber(-1) !== true) test.fail();
+		if(S.isNumber(Infinity) === true) test.fail();
+		if(S.isNumber(-Infinity) === true) test.fail();
+		if(S.isNumber(NaN) === true) test.fail();
+	};
+	
+	win['test_isPlainObject'] = function(test) {
+		if(S.isPlainObject({}) !== true) test.fail();
+		if(S.isPlainObject([]) === true) test.fail();
+		if(S.isPlainObject(function(){ }) === true) test.fail();
+		if(S.isPlainObject(window) === true) test.fail();
+		if(S.isPlainObject(document.documentElement) === true) test.fail();
+	};
+
+	win['test_isEmptyObject'] = function(test) {
+		if(S.isEmptyObject({}) !== true) test.fail();
+		if(S.isEmptyObject([]) !== true) test.fail();
+
+		// Opera 10 下，下面这个 tc 会 fail
+		// jQuery 也有这个问题
+		//if(S.isEmptyObject(function() { }) !== true) test.fail();
+		//var fn = function() { };
+		//for(var p in fn) { alert(p); }
+
+		if(S.isEmptyObject({a:1}) === true) test.fail();
+	};
+
+	win['test_isFunction'] = function(test) {
+		if(S.isFunction(function(){}) !== true) test.fail();
+		if(S.UA.ie && S.isFunction(window.alert) !== false) test.fail();
+		if(S.isFunction(parseFloat) !== true) test.fail();
+		
+		if(S.isFunction(document.getElementsByTagName('div')) === true) test.fail();
+	};
+
+	win['test_isArray'] = function(test) {
+		if(S.isArray([]) !== true) test.fail();
+		if(S.isArray(arguments) !== false) test.fail();
+		if(S.isArray(document.getElementsByTagName('body')) !== false) test.fail();
+	};
+
+	win['test_each'] = function(test) {
+		var ret = 0;
+
+		S.each([1,2,3,4,5], function(num) {
+			ret += num;
+		});
+
+		if(ret !== 15) test.fail();
+
+		// test context
+		S.each([1], function() {
+			if (this !== window) test.fail();
+		});
+	};
+
+	win['test_trim'] = function(test) {
+		var str = '    lots of spaces before and after    ';
+		if(S.trim(str) !== 'lots of spaces before and after') test.fail();
+
+		// special
+		if(S.trim(false) !== 'false') test.fail();
+		if(S.trim(0) !== '0') test.fail();
+		if(S.trim('') !== '') test.fail();
+		if(S.trim(NaN) !== 'NaN') test.fail();
+		if(S.trim(null) !== '') test.fail();
+		if(S.trim() !== '') test.fail();
+		
+		if(S.trim({}) !== {}.toString()) test.fail();
+	};
+
+	win['test_substitute'] = function(test) {
+		var myString = "{subject} is {property_1} and {property_2}.";
+		var myObject = {subject: 'Jack Bauer', property_1: 'our lord', property_2: 'savior'};
+		if(S.substitute(myString, myObject) !== 'Jack Bauer is our lord and savior.') test.fail();
+
+		if(S.substitute(1) !== 1) test.fail();
+		if(S.substitute() !== undefined) test.fail();
+		if(S.substitute('a', function(){}) !== 'a') test.fail();
+	};
+
+	win['test_indexOf'] = function(test) {
+		var a, ret;
+
+		ret = S.indexOf(6, [1, 2, 3, 4, 5]);
+		if(ret !== -1) test.fail('S.indexOf(6, [1, 2, 3, 4, 5]) = ' + ret);
+
+		ret = S.indexOf(a, [1, 2, 3, 4, undefined]);
+		if(ret !== 4) test.fail('S.indexOf(a, [1, 2, 3, 4, undefined]) = ' + ret);
+
+		ret = S.indexOf(2, [1, 2, 3, 4, 5]);
+		if(ret !== 1) test.fail('S.indexOf(2, [1, 2, 3, 4, 5]) = ' + ret);
+
+		ret = S.indexOf({}, [1, 2, {}, 4, 5]);
+		if(ret !== -1) test.fail('S.indexOf({}, [1, 2, {}, 4, 5]) = ' + ret);
+	};
+
+	win['test_inArray'] = function(test) {
+		var a, ret;
+
+		ret = S.inArray(6, [1, 2, 3, 4, 5]);
+		if(ret) test.fail('S.indexOf(6, [1, 2, 3, 4, 5]) = ' + ret);
+
+		ret = S.inArray(a, [1, 2, 3, 4, undefined]);
+		if(!ret) test.fail('S.indexOf(a, [1, 2, 3, 4, undefined]) = ' + ret);
+
+		ret = S.inArray(2, [1, 2, 3, 4, 5]);
+		if(!ret) test.fail('S.indexOf(2, [1, 2, 3, 4, 5]) = ' + ret);
+
+		ret = S.inArray({}, [1, 2, {}, 4, 5]);
+		if(ret) test.fail('S.indexOf({}, [1, 2, {}, 4, 5]) = ' + ret);
+	}
+
+	win['test_makeArray'] = function(test) {
+		var o;
+
+		// 普通对象(无 length 属性)转换为 [obj]
+		o = {a:1};
+		if(S.makeArray(o)[0] !== o) test.fail();
+
+		// string 转换为 [str]
+		if(S.makeArray('test')[0] !== 'test') test.fail();
+
+		// function 转换为 [fn]
+		o = function() {};
+		if(S.makeArray(o)[0] !== o) test.fail();
+
+		// array-like 对象，转换为数组
+		if(S.makeArray({'0':0, '1':1, length:2}).length !== 2) test.fail();
+		if(S.makeArray({'0':0, '1':1, length:2})[1] !== 1) test.fail();
+
+		// nodeList 转换为普通数组
+		o = document.getElementsByTagName('body');
+		if(S.makeArray(o).length !== 1) test.fail();
+		if(S.makeArray(o)[0] !== o[0]) test.fail();
+		if(!S.makeArray(o).slice) test.fail();
+
+		// arguments 转换为普通数组
+		o = arguments;
+		if(S.makeArray(o).length !== 1) test.fail();
+		if(S.makeArray(o)[0] !== test) test.fail();
+		if(!S.makeArray(o).slice) test.fail();
+
+		// 伪 array-like 对象
+		o = S.makeArray({a:1,b:2,length:2});
+		if(o.length !== 2) test.fail();
+		if(o[0] !== undefined) test.fail();
+		if(o[1] !== undefined) test.fail();
+	}
+
+	win['test_filter'] = function(test) {
+		var ret = S.filter([1, 2, 3, 4, 5], function(item) {
+			return item % 2 === 0;
+		});
+		if(ret.length !== 2) test.fail();
+	};
+
+	win['test_param'] = function(test) {
+		if(S.param({foo:1, bar:2}) !== 'foo=1&bar=2') test.fail();
+		if(S.param({foo:1, bar:[2,3]}) !== 'foo=1&bar[]=2&bar[]=3') test.fail();
+
+		if(S.param({'&#': '!#='}) !== '%26%23=!%23%3D') test.fail();
+
+		if(S.param({foo:1, bar:[]}) !== 'foo=1') test.fail();
+		if(S.param({foo:{}, bar:2}) !== 'bar=2') test.fail();
+		if(S.param({foo:function() {}, bar:2}) !== 'bar=2') test.fail();
+
+		if(S.param({foo:undefined, bar:2}) !== 'foo=undefined&bar=2') test.fail();
+		if(S.param({foo:null, bar:2}) !== 'foo=null&bar=2') test.fail();
+		if(S.param({foo:true, bar:2}) !== 'foo=true&bar=2') test.fail();
+		if(S.param({foo:false, bar:2}) !== 'foo=false&bar=2') test.fail();
+		if(S.param({foo:'', bar:2}) !== 'foo=&bar=2') test.fail();
+		if(S.param({foo:NaN, bar:2}) !== 'foo=NaN&bar=2') test.fail();
+	};
+
+	win['test_unparam'] = function(test) {
+		if(S.unparam('foo=1&bar=2').foo !== '1') test.fail();
+		if(S.unparam('foo=1&bar=2').bar !== '2') test.fail();
+
+		if(S.unparam('foo').foo !== '') test.fail();
+		if(S.unparam('foo=').foo !== '') test.fail();
+
+		if(S.unparam('foo=1&bar[]=2&bar[]=3').bar[0] !== '2') test.fail();
+		if(S.unparam('foo=1&bar[]=2&bar[]=3').bar[1] !== '3') test.fail();
+
+		if(S.unparam('foo=null&bar=2').foo !== 'null') test.fail();
+		if(S.unparam('foo=&bar=2').foo !== '') test.fail();
+		if(S.unparam('foo&bar=2').foo !== '') test.fail();
+
+		if(S.unparam('foo=1&bar=2&foo=3').foo !== '3') test.fail();        
+	};
+
+	win['test_later'] = function(test) {
+		S.later(function(data) {
+			test.echo(data);
+		}, 0, false, null, 'I am later data.');
+
+		var i = 0;
+		var timer = S.later(function(data) {
+						test.echo(data + ' ' + ++i);
+						if(i === 3) {
+							timer.cancel();
+							test.echo('later test done.');
+						}
+					  },
+					  500, true, null, 'I am periodic later data.');
+	};
+
+	win['test_globalEval'] = function(test) {
+		S.globalEval('var globalEvalTest = 1;');
+		if(window['globalEvalTest'] !== 1) test.fail();
+	};
+
+	win['test_userAgent'] = function(test) {
+		test.extraMsg = navigator.userAgent;
+	};
+
+	win['test_ua'] = function(test) {
+		var UA = S.UA, out = '', p;
+
+		for(p in UA) {
+			if(p.indexOf('_') !== 0) {
+				out += p + ' = ' + UA[p] + ', '
+			}
+		}
+
+		test.extraMsg = out;
+	};
+
+	win['test_clone'] = function(test) {
+
+		if(S.clone() !== undefined) test.fail();
+		if(S.clone(null) !== null) test.fail();
+		if(S.clone(1) !== 1) test.fail();
+		if(S.clone(true) !== true) test.fail();
+		if(S.clone('a') !== 'a') test.fail();
+
+		var t = { a: 0, b: { b1: 1, b2: 'a' } };
+		var t2 = S.clone(t);
+		t.a = 1;
+		if(t2.a !== 0) test.fail();
+		if(t2.b.b1 !== 1) test.fail();
+		t2.b.b2 = 'b';
+		if(t.b.b2 === 'b') test.fail();
+
+		var t3 = ['a', 2, 3, t];
+		var t4 = S.clone(t3);
+		t3[1] = 1;
+		t3.push(5);
+		if(t4[1] !== 2) test.fail();
+		if(t4.length !== 4) test.fail();
+
+		// 循环引用
+		// safari 下 catch 无效，注释掉
+//        var t5 = { a: 1 }, t6 = { b: t5};
+//        t5.a = t6;
+//        try {
+//            S.clone(t6);
+//            test.fail();
+//        }
+//        catch(ex) {
+//            //test.fail(ex);
+//        }
+	};
+});
+
+
+</script>
+</body>
+</html>
