@@ -1,9 +1,6 @@
-KISSY.add('test',function(Y){
-	
-	if(typeof $ != 'undefined'){
-		S.log('加载成功jquery');
-	}else {
-		S.log('没有加载jquery');
-	}
+KISSY.add('test',function(S){
+
+	S.k = YAHOO;
+	S.jay = 'ok';
 	
 });
