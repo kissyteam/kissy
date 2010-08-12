@@ -86,15 +86,8 @@
             var self = this;
 
             // override mode
-			if(typeof self.Env.mods[name] != 'undefined'){
-				self.Env.mods[name].name = name;
-				self.Env.mods[name].fn = fn;
-			}else{
-				self.Env.mods[name] = {
-					name: name,
-					fn: fn
-				};
-			}
+			self.Env.mods[name] = self.Env.mods[name] || {};
+			mix(self.Env.mods[name], { name: name, fn: fn });
 
             // call entry point immediately
             fn(self);
@@ -194,7 +187,7 @@
          * Executes functions bound to ready event.
          */
         _fireReady: function() {
-			var that = this;
+			var self = this;
             if (isReady) return;
 
             // Remember that the DOM is ready
@@ -210,7 +203,7 @@
 					
 					var fn, i = 0;
 					while (fn = readyList[i++]) {
-						fn.call(win, that);
+						fn.call(win, self);
 					}
 
 					// Reset the list of functions
@@ -415,86 +408,110 @@
         },
 
 		/*
-		 * added by jayli
-		 * use('mod1','mod2')
+		 * lazy load modules , added by jayli
+		 * @param mod1 {String} module name
+		 * @return {KISSY}
+		 * <code>
+		 * S.use('mod1','mod2').ready(callback) //load 'mod1' and 'mod2'
+		 * </code>
 		 */
 		use : function(){
-			var that = this;
-			that.Env._uses = that.Env._uses || [];
+			var self = this;
+			self.Env._uses = self.Env._uses || [];
 			for(var i = 0;i<arguments.length;i++){
-				that.Env._uses.push(arguments[i]);
+				self.Env._uses.push(arguments[i]);
 			}
 			return this;
 		},
 		/**
-		 * 单独处理一个mod
+		 * push one mod into a tmp stack
+		 * @param mod {Object} the module object
+		 * <code>
+		 * self._mods_stack({mod:{requires:['submod1','submod2']}})
+		 * </code>
 		 */
 		_mods_stack:function(mod){
-			var that = this;
-			that.Env._loadQueue = that.Env._loadQueue || [];
-			if(that.inArray(mod,that.Env._loadQueue))return;
-			if(mod in that.Env.mods){
-				that.Env._loadQueue.push(mod);
-				if(typeof that.Env.mods[mod].requires != 'undefined'){
-					for(var i = 0;i< that.Env.mods[mod].requires.length;i++){
-						arguments.callee.call(that,that.Env.mods[mod].requires[i]);
+			var self = this;
+			self.Env._loadQueue = self.Env._loadQueue || [];
+			if(self.inArray(mod,self.Env._loadQueue))return;
+			if(mod in self.Env.mods){
+				self.Env._loadQueue.push(mod);
+				if(typeof self.Env.mods[mod].requires != 'undefined'){
+					for(var i = 0;i< self.Env.mods[mod].requires.length;i++){
+						arguments.callee.call(self,self.Env.mods[mod].requires[i]);
 					}
 				}
 			}
 		},
+		/**
+		 * add modules to KISSY
+		 * alias fo addModule
+		 * @param o {Object} added modules
+		 * @return {KISSY}
+		 * <code>
+		 * KISSY.addmojo({
+		 *		"mod-name":{
+		 *			fullpath:'url',
+		 *			requires:['sub-mod1','sub-mod2']
+		 *		}
+		 *	});
+		 * </code>
+		 */
 		addmojo:function(o){
-			var that = this;
-			mix(that.Env.mods,o);
+			var self = this;
+			mix(self.Env.mods,o);
 			return this;
 		},
 		/**
-		 * 根据uses来判断加载模块的顺序
+		 * reorder the loaded Modules' queue
 		 */
-		_buildMods:function(){
-			var that = this;
-			that.Env._loaded_mods = [];
-			that.Env._uses = that.Env._uses || [];
-			that.Env._uses = that.distinct(that.Env._uses);
-			that.Env._loadQueue = [];
-			for(var i = 0;i< that.Env._uses.length;i++){
-				that._mods_stack(that.Env._uses[i]);
+		_build_mods:function(){
+			var self = this;
+			self.Env._loaded_mods = [];
+			self.Env._uses = self.Env._uses || [];
+			self.Env._uses = self.distinct(self.Env._uses);
+			self.Env._loadQueue = [];
+			for(var i = 0;i< self.Env._uses.length;i++){
+				self._mods_stack(self.Env._uses[i]);
 			}
-			that.Env._loadQueue.reverse();
+			self.Env._loadQueue.reverse();
 		},
 		/**
-		 * 一次性加载所有script，所有script都加载完毕后执行fn
+		 * load all modules before the "ready" Event fired
 		 */
 		_load_mods:function(fn){
-			var that = this;
-			that._buildMods();
-			for(var i = 0 ;i<that.Env._loadQueue.length;i++){
-				var mod = that.Env._loadQueue[i];
-				that.loadScript(that.Env.mods[mod].fullpath,function(){
-					that.Env._loaded_mods.push(mod);
-					if(that.Env._loaded_mods.length == that.Env._loadQueue.length){
-						fn.call(win,that);
+			var self = this;
+			self._build_mods();
+			for(var i = 0 ;i<self.Env._loadQueue.length;i++){
+				var mod = self.Env._loadQueue[i];
+				self.loadScript(self.Env.mods[mod].fullpath,function(){
+					self.Env._loaded_mods.push(mod);
+					if(self.Env._loaded_mods.length == self.Env._loadQueue.length){
+						fn.call(win,self);
 					}
 				});
 			}
 
 
 		},
+		/*
+		 * load a js or css file
+		 */
 		loadScript:function(url,fn,charset){
-			var that = this;
+			var self = this;
 
-			//如果是css
 			if(/\.css$/i.test(url) || /\.css\?/i.test(url)){
-				that.loadCSS(url);
+				self.loadCSS(url);
 				fn();
 				return false;
 			}
-			that.getScript(url,fn,charset);
+			self.getScript(url,fn,charset);
 		},
 		/**
 		 * alias of S.Ajax.getScript
 		 */
         getScript: function(url, callback, charset) {
-            var head = S.get('head') || document.documentElement,
+            var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
                 node = doc.createElement('script'),
 				testNode = doc.createElement('script'),
 				fn = testNode.readyState ? function(node, callback) {
@@ -521,14 +538,14 @@
             head.insertBefore(node, head.firstChild);
         },
 		/**
-		 * load样式
+		 * load css
 		 * @method loadCSS
-		 * @param url 脚本fullpath
+		 * @param url {String} fullpath of css
 		 * @private
 		 */
 		loadCSS:function(url){   
-			var cssLink = document.createElement("link");   
-            var head = S.get('head') || document.documentElement;
+			var cssLink = doc.createElement("link"), 
+            	head = doc.getElementsByTagName('head')[0] || doc.documentElement;
 			cssLink.rel = "stylesheet";   
 			cssLink.rev = "stylesheet";   
 			cssLink.type = "text/css";   
@@ -537,34 +554,35 @@
             head.insertBefore(cssLink, head.firstChild);
 		},
 		/** 
-		 * 给数组去重,前向去重，若有重复，去掉前面的重复值,保留后面的
+		 * eliminate repetition of a Array
 		 * @method  distinct  
-		 * @param { array } 需要执行去重操作的数组
-		 * @return { array } 返回去重后的数组
+		 * @param A { Array }
+		 * @return { Array } 
 		 */  
 		distinct:function(A){
-			var that = this;
+			var self = this;
 			if(!(A instanceof Array) || A.length <=1 )return A;
 			var a = [],b=[];
 			for(var i = 1;i<A.length;i++){
 				for(var j = 0;j<i;j++){
-					if(that.inArray(j,b))continue;
+					if(self.inArray(j,b))continue;
 					if(A[j] == A[i]){
 						b.push(j);
 					}
 				}
 			}
 			for(var i = 0;i<A.length;i++){
-				if(that.inArray(i,b))continue;
+				if(self.inArray(i,b))continue;
 				a.push(A[i]);
 			}
 			return a;
 		},
 		/**
-		* 判断数值是否存在数组中
-		* @param { value } v : 要匹配的数值
-		* @param { array } a : 存在的数组
-		*/
+		 * inArray 
+		 * @method inArray
+		 * @param  v { value } value
+		 * @param a { Array } array
+		 */
 		inArray : function(v, a){
 			var o = false;
 			for(var i=0,m=a.length; i<m; i++){
