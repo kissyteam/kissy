@@ -6,7 +6,7 @@ KISSY.add('lang', function(S, undefined) {
 
     var win = window, doc = document, loc = location,
         AP = Array.prototype,
-        indexOf = AP.indexOf, filter = AP.filter,
+        indexOf = AP.indexOf, lastIndexOf = AP.lastIndexOf, filter = AP.filter,
         trim = String.prototype.trim,
         toString = Object.prototype.toString,
         encode = encodeURIComponent,
@@ -138,12 +138,12 @@ KISSY.add('lang', function(S, undefined) {
          * Search for a specified value within an array.
          */
         indexOf: indexOf ?
-            function(elem, arr) {
-                return indexOf.call(arr, elem);
+            function(item, arr) {
+                return indexOf.call(arr, item);
             } :
-            function(elem, arr) {
+            function(item, arr) {
                 for (var i = 0, len = arr.length; i < len; ++i) {
-                    if (arr[i] === elem) {
+                    if (arr[i] === item) {
                         return i;
                     }
                 }
@@ -151,10 +151,47 @@ KISSY.add('lang', function(S, undefined) {
             },
 
         /**
+         * Returns the index of the last item in the array
+         * that contains the specified value, -1 if the
+         * value isn't found.
+         */
+        lastIndexOf: (lastIndexOf) ?
+            function(item, arr) {
+                return lastIndexOf.call(arr, item);
+            } :
+            function(item, arr) {
+                for (var i = arr.length - 1; i >= 0; i--) {
+                    if (arr[i] === item) {
+                        break;
+                    }
+                }
+                return i;
+            },
+
+        /**
+         * Returns a copy of the array with the duplicate entries removed
+         * @param a {Array} the array to find the subset of uniques for
+         * @return {Array} a copy of the array with duplicate entries removed
+         */
+        unique: function(a) {
+            var b = a.slice(), i = 0, n, item;
+
+            while (i < b.length) {
+                item = b[i];
+                while ((n = S.lastIndexOf(item, b)) !== i) {
+                    b.splice(n, 1);
+                }
+                i += 1;
+            }
+
+            return b;
+        },
+        
+        /**
          * Search for a specified value index within an array.
          */
-        inArray: function(elem, arr) {
-            return S.indexOf(elem, arr) > -1;
+        inArray: function(item, arr) {
+            return S.indexOf(item, arr) > -1;
         },
 
         /**

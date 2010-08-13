@@ -10,6 +10,21 @@
     S = win[S]; // shortcut
 
     var doc = win['document'],
+        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+
+        scriptCallback = doc.createElement('script').readyState ?
+            function(node, callback) {
+                node.onreadystatechange = function() {
+                    var rs = node.readyState;
+                    if (rs === 'loaded' || rs === 'complete') {
+                        node.onreadystatechange = null;
+                        callback.call(this);
+                    }
+                };
+            } :
+            function(node, callback) {
+                node.onload = callback;
+            },
 
         // Copies all the properties of s to r
         mix = function(r, s, ov, wl) {
@@ -39,8 +54,8 @@
         // Is the DOM ready to be used? Set to true once it occurs.
         isReady = false,
 
-		// Is "ready" Fired ? Set to true after "ready" event fired;
-		afterReady = false;
+		// Is "ready" Fired ? Set to true after "ready" event fired.
+		afterReady = false,
 
         // The functions to execute on DOM ready.
         readyList = [],
@@ -55,7 +70,10 @@
         POLL_INTERVAL = 40,
 
         // #id or id
-        RE_IDSTR = /^#?([\w-]+)$/;
+        RE_IDSTR = /^#?([\w-]+)$/,
+
+        // css file
+        RE_CSS = /\.css(?:\?|$)/i;
 
     mix(S, {
         /**
@@ -123,11 +141,11 @@
         },
 
 		_exec_mojo_queue:function(){
-			var self = this;
+			var self = this, i;
 			//
 			//exec preloaded mojos
 			self.Env._anti_uses = self.Env._anti_uses || [];
-			for(var i in self.Env.mods){
+			for(i in self.Env.mods){
 				if(self.inArray(i,self.Env._anti_uses))continue;
 				if(typeof self.Env.mods[i].fn != 'undefined' 
 					&& !self.inArray(i,self.Env._loadQueue)){
@@ -135,7 +153,7 @@
 				}
 			}
 			//exec lazyloaded mojos
-			for(var i = 0 ;i<self.Env._loadQueue.length;i++){
+			for(i = 0 ;i<self.Env._loadQueue.length;i++){
 				var mod = self.Env._loadQueue[i];
 				if(self.inArray(mod,self.Env._anti_uses))continue;
 				if(typeof self.Env.mods[mod].fn != 'undefined'){
@@ -523,7 +541,7 @@
 			var self = this;
 			self.Env._loaded_mods = [];
 			self.Env._uses = self.Env._uses || [];
-			self.Env._uses = self.distinct(self.Env._uses);
+			self.Env._uses = self.unique(self.Env._uses);
 			self.Env._loadQueue = [];
 			for(var i = 0;i< self.Env._uses.length;i++){
 				self._mods_stack(self.Env._uses[i]);
@@ -548,7 +566,7 @@
 						fn.call(win,self);
 					}
 				}else{
-					self.loadScript(self.Env.mods[mod].fullpath,function(){
+					self._loadRes(self.Env.mods[mod].fullpath,function(){
 						self.Env._loaded_mods.push(mod);
 						if(self.Env._loaded_mods.length == self.Env._loadQueue.length){
 							fn.call(win,self);
@@ -559,107 +577,52 @@
 
 
 		},
-		/*
-		 * load a js or css file
-		 */
-		loadScript:function(url,fn,charset){
-			var self = this;
 
-			if(/\.css$/i.test(url) || /\.css\?/i.test(url)){
-				self.loadCSS(url);
-				fn();
-				return false;
-			}
-			self.getScript(url,fn,charset);
-		},
+        /*
+         * Load a js or css file
+         * @private
+         */
+        _loadRes: function(url, callback, charset) {
+            var self = this;
+
+            if (RE_CSS.test(url)) {
+                self.getCSS(url);
+                callback();
+                return;
+            }
+
+            self.getScript(url, callback, charset);
+        },
+
 		/**
-		 * alias of S.Ajax.getScript
+		 * Load a JavaScript file from the server using a GET HTTP request, then execute it.
 		 */
         getScript: function(url, callback, charset) {
-            var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-                node = doc.createElement('script'),
-				testNode = doc.createElement('script'),
-				fn = testNode.readyState ? function(node, callback) {
-				node.onreadystatechange = function() {
-					var rs = node.readyState;
-					if (rs === 'loaded' || rs === 'complete') {
-						// handle memory leak in IE
-						node.onreadystatechange = null;
-						callback.call(this);
-					}
-				};
-			} : function(node, callback) {
-				node.onload = callback;
-			};
+            var node = doc.createElement('script');
 
             node.src = url;
             if (charset) node.charset = charset;
             node.async = true;
-			
-            if (typeof callback == 'function') {
-                fn(node, callback);
+
+            if (S.isFunction(callback)) {
+                scriptCallback(node, callback);
             }
 
             head.insertBefore(node, head.firstChild);
         },
-		/**
-		 * load css
-		 * @method loadCSS
-		 * @param url {String} fullpath of css
-		 * @private
-		 */
-		loadCSS:function(url){   
-			var cssLink = doc.createElement("link"), 
-            	head = doc.getElementsByTagName('head')[0] || doc.documentElement;
-			cssLink.rel = "stylesheet";   
-			cssLink.rev = "stylesheet";   
-			cssLink.type = "text/css";   
-			cssLink.media = "screen";   
-			cssLink.href = url;   
-            head.insertBefore(cssLink, head.firstChild);
-		},
-		/** 
-		 * eliminate repetition of a Array
-		 * @method  distinct  
-		 * @param A { Array }
-		 * @return { Array } 
-		 */  
-		distinct:function(A){
-			var self = this;
-			if(!(A instanceof Array) || A.length <=1 )return A;
-			var a = [],b=[];
-			for(var i = 1;i<A.length;i++){
-				for(var j = 0;j<i;j++){
-					if(self.inArray(j,b))continue;
-					if(A[j] == A[i]){
-						b.push(j);
-					}
-				}
-			}
-			for(var i = 0;i<A.length;i++){
-				if(self.inArray(i,b))continue;
-				a.push(A[i]);
-			}
-			return a;
-		},
-		/**
-		 * inArray 
-		 * @method inArray
-		 * @param  v { value } value
-		 * @param a { Array } array
-		 */
-		inArray : function(v, a){
-			var o = false;
-			for(var i=0,m=a.length; i<m; i++){
-				if(a[i] == v){
-					o = true;
-					break;
-				}
-			}
-			return o;
-		}
 
-		//modified end
+        /**
+         * Load a CSS file.
+         * @param url {String} fullpath of css
+         */
+        getCSS: function(url) {
+            var node = doc.createElement('link');
+
+            node.rel = 'stylesheet';
+            node.href = url;
+
+            head.insertBefore(node, head.firstChild);
+        }
     });
 
     S._init();
@@ -686,8 +649,5 @@
  *  - log, error 方法，简单的调试工具和报错机制。
  *  - guid 方法，全局辅助方法。
  *  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
- *
- * TODO:
- *  - 模块动态加载 require 方法的实现。
  *
  */
