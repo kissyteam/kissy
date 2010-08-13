@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: ${build.time}
+build time: Aug 13 13:48
 */
 /**
  * @module kissy
@@ -64,7 +64,7 @@ build time: ${build.time}
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.2dev',
+        version: '1.1.1',
 
         /**
          * Initializes KISSY object.
@@ -441,9 +441,9 @@ build time: ${build.time}
  */
 KISSY.add('lang', function(S, undefined) {
 
-    var win = window, doc = document, loc = location,
+    var win = window, doc = document, docElem = doc.documentElement, loc = location,
         AP = Array.prototype,
-        indexOf = AP.indexOf, filter = AP.filter,
+        indexOf = AP.indexOf, lastIndexOf = AP.lastIndexOf, filter = AP.filter,
         trim = String.prototype.trim,
         toString = Object.prototype.toString,
         encode = encodeURIComponent,
@@ -575,12 +575,12 @@ KISSY.add('lang', function(S, undefined) {
          * Search for a specified value within an array.
          */
         indexOf: indexOf ?
-            function(elem, arr) {
-                return indexOf.call(arr, elem);
+            function(item, arr) {
+                return indexOf.call(arr, item);
             } :
-            function(elem, arr) {
+            function(item, arr) {
                 for (var i = 0, len = arr.length; i < len; ++i) {
-                    if (arr[i] === elem) {
+                    if (arr[i] === item) {
                         return i;
                     }
                 }
@@ -588,10 +588,49 @@ KISSY.add('lang', function(S, undefined) {
             },
 
         /**
+         * Returns the index of the last item in the array
+         * that contains the specified value, -1 if the
+         * value isn't found.
+         */
+        lastIndexOf: (lastIndexOf) ?
+            function(item, arr) {
+                return lastIndexOf.call(arr, item);
+            } :
+            function(item, arr) {
+                for (var i = arr.length - 1; i >= 0; i--) {
+                    if (arr[i] === item) {
+                        break;
+                    }
+                }
+                return i;
+            },
+
+        /**
+         * Returns a copy of the array with the duplicate entries removed
+         * @param a {Array} the array to find the subset of uniques for
+         * @return {Array} a copy of the array with duplicate entries removed
+         */
+        unique: function(a, override) {
+            if(override) a.reverse(); // 默认是后置删除，如果 override 为 true, 则前置删除
+            var b = a.slice(), i = 0, n, item;
+
+            while (i < b.length) {
+                item = b[i];
+                while ((n = S.lastIndexOf(item, b)) !== i) {
+                    b.splice(n, 1);
+                }
+                i += 1;
+            }
+
+            if(override) b.reverse(); // 将顺序转回来
+            return b;
+        },
+        
+        /**
          * Search for a specified value index within an array.
          */
-        inArray: function(elem, arr) {
-            return S.indexOf(elem, arr) > -1;
+        inArray: function(item, arr) {
+            return S.indexOf(item, arr) > -1;
         },
 
         /**
@@ -602,21 +641,11 @@ KISSY.add('lang', function(S, undefined) {
             if (S.isArray(o)) return o;
 
             // The strings and functions also have 'length'
-            if (typeof o.length !== 'number' || typeof o === 'string' || S.isFunction(o)) {
+            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
                 return [o];
             }
 
-            // ie 不支持用 slice 转换 NodeList, 降级到普通方法
-            if (o.item && S.UA.ie) {
-                var ret = [], i = 0, len = o.length;
-                for (; i < len; ++i) {
-                    ret[i] = o[i];
-                }
-                return ret;
-            }
-
-            // array-like
-            return AP.slice.call(o);
+            return slice2Arr(o);
         },
 
         /**
@@ -802,7 +831,7 @@ KISSY.add('lang', function(S, undefined) {
             if (data && REG_NOT_WHITE.test(data)) {
                 // Inspired by code by Andrea Giammarchi
                 // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
-                var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+                var head = doc.getElementsByTagName('head')[0] || docElem,
                     script = doc.createElement('script');
 
                 // It works! All browsers support!
@@ -820,6 +849,23 @@ KISSY.add('lang', function(S, undefined) {
         var t = typeof val;
         // val 为 null, undefined, number, string, boolean 时，返回 true
         return val === null || (t !== 'object' && t !== 'function');
+    }
+
+    // 将 NodeList 等集合转换为普通数组
+    function slice2Arr(arr) {
+        return AP.slice.call(arr);
+    }
+    // ie 不支持用 slice 转换 NodeList, 降级到普通方法
+    try {
+        slice2Arr(docElem.childNodes);
+    }
+    catch(e) {
+        slice2Arr = function(arr) {
+            for (var ret = [], i = arr.length - 1; i >= 0; i--) {
+                ret[i] = arr[i];
+            }
+            return ret;
+        }
     }
 
     // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
@@ -847,6 +893,11 @@ KISSY.add('lang', function(S, undefined) {
  *   - unparam 对 false, null, undefined 等值的还原？需不需要？歧义性
  *
  */
+/*
+Copyright 2010, KISSY UI Library v1.1.1
+MIT Licensed
+build time: Aug 13 13:48
+*/
 /**
  * @module  ua
  * @author  lifesinger@gmail.com
@@ -855,7 +906,7 @@ KISSY.add('ua', function(S) {
 
     var ua = navigator.userAgent,
         EMPTY = '', MOBILE = 'mobile',
-        core = EMPTY, shell = EMPTY, m, v,
+        core = EMPTY, shell = EMPTY, m,
         o = {
             // browser core type
             webkit: 0,
@@ -934,10 +985,14 @@ KISSY.add('ua', function(S) {
         // NOT WebKit or Presto
         } else {
             // MSIE
-            if ((m = ua.match(/MSIE\s([^;]*)/)) && (v = m[1])) {
+            if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
                 o[core = 'trident'] = 0.1; // Trident detected, look for revision
-                // hack: documentMode is only supported in IE 8 so we know if its here its really IE 8
-                o[shell = 'ie'] = v < 8 && document['documentMode'] ? 8 : v;
+                // 注意：
+                //  o.shell = ie, 表示外壳是 ie
+                //  但 o.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
+                //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 o.ie = 8, 否则
+                //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
+                o[shell = 'ie'] = numberify(m[1]);
 
                 // Get the Trident's accurate version
                 if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
@@ -983,10 +1038,62 @@ KISSY.add('ua', function(S) {
  *  - test mobile
  *
  */
+/**
+ * @module  ua-extra
+ * @author  gonghao<gonghao@ghsky.com>
+ */
+KISSY.add('ua-extra', function(S) {
+    var UA = S.UA,
+        ua = navigator.userAgent,
+        m, external, shell,
+        o = { },
+        numberify = UA._numberify;
+
+    /**
+     * 说明：
+     * @子涯总结的各国产浏览器的判断依据: http://spreadsheets0.google.com/ccc?key=tluod2VGe60_ceDrAaMrfMw&hl=zh_CN#gid=0
+     * 根据 CNZZ 2009 年度浏览器占用率报告，优化了判断顺序：http://www.tanmi360.com/post/230.htm
+     * 如果检测出浏览器，但是具体版本号未知用 0.1 作为标识
+     * 世界之窗 & 360 浏览器，在 3.x 以下的版本都无法通过 UA 或者特性检测进行判断，所以目前只要检测到 UA 关键字就认为起版本号为 3
+     */
+
+    // 360Browser
+    if (m = ua.match(/360SE/)) {
+        o[shell = 'se360'] = 3; // issue: 360Browser 2.x cannot be recognised, so if recognised default set verstion number to 3
+    }
+    // Maxthon
+    else if ((m = ua.match(/Maxthon/)) && (external = window.external)) {
+        // issue: Maxthon 3.x in IE-Core cannot be recognised and it doesn't have exact version number
+        // but other maxthon versions all have exact version number
+        shell = 'maxthon';
+        try {
+            o[shell] = numberify(external['max_version']);
+        } catch(ex) {
+            o[shell] = 0.1;
+        }
+    }
+    // TT
+    else if (m = ua.match(/TencentTraveler\s([\d.]*)/)) {
+        o[shell = 'tt'] = m[1] ? numberify(m[1]) : 0.1;
+    }
+    // TheWorld
+    else if (m = ua.match(/TheWorld/)) {
+        o[shell = 'theworld'] = 3; // issue: TheWorld 2.x cannot be recognised, so if recognised default set verstion number to 3
+    }
+    // Sougou
+    else if (m = ua.match(/SE\s([\d.]*)/)) {
+        o[shell = 'sougou'] = m[1] ? numberify(m[1]) : 0.1;
+    }
+
+    // If the browser has shell(no matter IE-core or Webkit-core or others), set the shell key
+    shell && (o.shell = shell);
+
+    S.mix(UA, o);
+});
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: ${build.time}
+build time: Aug 13 13:48
 */
 /**
  * @module  dom
@@ -2753,9 +2860,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: ${build.time}
+build time: Aug 13 13:48
 */
 /**
  * @module  event
@@ -3224,8 +3331,8 @@ KISSY.add('event-target', function(S, undefined) {
             return this; // chain
         },
 
-        detach: function(type, fn) {
-            Event.remove(this, type, fn);
+        detach: function(type, fn, scope) {
+            Event.remove(this, type, fn, scope);
             return this; // chain
         }
     };
@@ -3325,9 +3432,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: ${build.time}
+build time: Aug 13 13:48
 */
 /**
  * @module  node
@@ -3636,9 +3743,9 @@ KISSY.add('node-attach', function(S, undefined) {
     });
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: Aug 5 16:06
+build time: Aug 13 13:47
 */
 /**
  * @module  ajax
@@ -3692,9 +3799,9 @@ KISSY.add('ajax', function(S) {
  *         野心过大，KISSY 借鉴 ExtJS, 部分方法借鉴 jQuery.
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: Aug 5 16:06
+build time: Aug 13 13:47
 */
 /**
  * @module  cookie

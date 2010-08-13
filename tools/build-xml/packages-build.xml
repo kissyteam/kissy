@@ -16,14 +16,18 @@
     </target>
 
     <target name="concat">
-        <!-- ks-core: 核心文件，只含关键组件，一般在页头引入 -->
+        <!-- ks-seed: 种子文件 -->
+        <concat destfile="ks-seed.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="../kissy/kissy-pkg.js"/>
+        </concat>
+        <!-- ks-core: 核心文件，包括关键组件，一般在页头引入 -->
         <concat destfile="ks-core.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../kissy/kissy-pkg.js"/>
+            <path path="../ua/ua-pkg.js"/>
             <path path="../dom/dom-pkg.js"/>
             <path path="../event/event-pkg.js"/>
             <path path="../node/node-pkg.js"/>
             <path path="../ajax/ajax.js"/>
-            <!--<path path="../loader/loader.js"/>-->
             <path path="../cookie/cookie.js"/>
         </concat>
         <!-- ks-more: 常用 utils 和 widgets, 一般在页尾引入 -->
