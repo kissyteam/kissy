@@ -17,11 +17,18 @@ var S = KISSY;
 
 S.log = function(msg,style){
 
-	var scope = window.parent.S;
-	if(typeof style == 'undefined'){
-		var style = '';
-	}
+	try{
+		var scope = window.parent.S;
+		if(typeof style == 'undefined'){
+			var style = '';
+		}
+
+
+
 	scope.log.call(scope,'[Iframe] ' +msg,style);
+	}catch(e){
+		
+	}
 };
 
 //add modules

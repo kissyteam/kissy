@@ -90,6 +90,33 @@ S.ready(function(S){
 
 	S.log(S.lazyloadMod);
 
+
+	//after domReady fired, loader is prohibited to load any other extra files
+	S.add({
+		'jquery':{
+			fullpath:'http://tbexample.googlecode.com/svn/trunk/sandbox/jquery-1.4.2.js'
+		}
+	});
+	S.add('after-ready',function(S){
+		if(typeof $ != 'undefined'){
+			S.log('jquery is ok');
+		}
+		S.afterReady = {a:1};
+	}/*,{requires:['jquery']}*/);
+	S.ready(function(S){
+		S.log(S.afterReady);
+		//we recommand u to use S.getScript and S.getCSS to load extra js and css files
+		var prototype = 'http://prototypejs.org/assets/2010/5/13/prototype.js';
+		S.getScript(prototype,function(){
+			if(typeof $ != 'undefined'){
+				S.log('prototype is ok','orange');
+			}
+		});
+	});
+
+});
+
+S.ready(function(S){
 });
 
 

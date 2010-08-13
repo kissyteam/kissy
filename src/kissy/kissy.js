@@ -1,6 +1,6 @@
 /**
  * @module kissy
- * @author lifesinger@gmail.com
+ * @author lifesinger@gmail.com,lijing00333@163.com
  */
 (function(win, S, undefined) {
 
@@ -94,7 +94,8 @@
 				_loadQueue:[],//所有需要加载的模块的队列
 				_uses:[],//use的模块列表
 				_anti_uses:[],//use已经加载过的的模块列表
-				_loaded_mods:[],//已经加载的模块
+				_loaded_mods:[],//用于存储已经加载的模块
+				_loaded_array:[],//用于存储加载模块的个数，判断是否加载完毕
 				_ks_combine:''//combine url
             };
         },
@@ -203,12 +204,15 @@
          * @return {KISSY}
          */
         ready: function(fn) {
+			var self = this;
             // Attach the listeners
             if (!readyBound) this._bindReady();
 
             // If the DOM is already ready
             if (isReady) {
                 // Execute the function immediately
+				// after domReady fired, loader is prohibited to load any other extra files
+				//arguments.callee(self,fn);
                 fn.call(win, this);
             } else {
                 // Remember the function for later
@@ -579,9 +583,8 @@
 				if(typeof self.Env.mods[mod].path != 'undefined' 
 					&& self.Env.mods[mod].path != '' ){
 						
-						//self.Env._loaded_mods.push(mod);
 						_combo_mods.push(mod);
-						url += self.Env.mods[mod].path + '&'
+						url += self.Env.mods[mod].path + '&';
 
 
 				}
@@ -605,7 +608,7 @@
 		 */
 		_build_mods:function(){
 			var self = this;
-			self.Env._loaded_mods = [];
+			self.Env._loaded_array= [];
 			self.Env._uses = self.unique(self.Env._uses,true);
 			self.Env._loadQueue = [];
 			for(var i = 0;i< self.Env._uses.length;i++){
@@ -619,7 +622,7 @@
 		_load_mods:function(fn){
 			var self = this;
 			var run_callback = function(fn){
-				if(self.Env._loaded_mods.length == self.Env._loadQueue.length){
+				if(self.Env._loaded_array.length == self.Env._loadQueue.length){
 					fn.call(win,self);
 					self.log('End of loader');
 				}
@@ -641,7 +644,10 @@
 				self._loadRes(url,function(){
 					for(var i = 0;i<combine.mods.length ;i++){
 						var mod = combine.mods[i];
+						if(self.inArray(mod,self.Env._loaded_mods))continue;//
+						self.Env._loaded_array.push(mod);
 						self.Env._loaded_mods.push(mod);
+						//S.log(mod,'red');
 					}
 					run_callback(fn);
 				});
@@ -651,9 +657,12 @@
 
 			for(var i = 0 ;i<self.Env._loadQueue.length;i++){
 				var mod = self.Env._loadQueue[i];
+				if(self.inArray(mod,self.Env._loaded_mods))continue;
 				if(typeof self.Env.mods[mod].fn == 'function'){
 					self.log('load '+ mod +' and Exec its callback');
+					self.Env._loaded_array.push(mod);
 					self.Env._loaded_mods.push(mod);
+					//S.log(mod,'red');
 					run_callback(fn);
 				}else{
 					if(self.inArray(mod,self.Env._loaded_mods) 
@@ -661,8 +670,10 @@
 						continue;
 					}
 					self.log('load '+ mod +' via '+ self.Env.mods[mod].fullpath,'yellow');
+					self.Env._loaded_mods.push(mod);
+					//S.log(mod,'red');
 					self._loadRes(self.Env.mods[mod].fullpath,function(){
-						self.Env._loaded_mods.push(mod);
+						self.Env._loaded_array.push(mod);
 						run_callback(fn);
 					});
 				}
@@ -670,7 +681,6 @@
 
 
 		},
-
         /*
          * Load a js or css file
          * @private

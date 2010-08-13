@@ -74,9 +74,12 @@ S.add({
 	'ajax':{
 		path:'ajax/ajax-min.js'
 	},
+	'sizzle':{
+		path:'sizzle/sizzle.js'
+	},
 	'json':{
 		path:'json/json-min.js',
-		requires:['ajax']
+		requires:['sizzle']
 	},
 	'dom':{
 		path:'dom/dom-pkg-min.js'
@@ -98,7 +101,19 @@ S.add('inline-test',function(S){
 
 S.use('json').ready(function(S){
 	S.log('combo request ok');
+		var prototype = 'http://prototypejs.org/assets/2010/5/13/prototype.js';
+		S.getScript(prototype,function(){
+			if(typeof $ != 'undefined'){
+				S.log('prototype is ok','orange');
+			}
+		});
 });
+
+	
+	S.ready(function(S){
+		//we recommand u to use S.getScript and S.getCSS to load extra js and css files
+	});
+	
 
 
 
