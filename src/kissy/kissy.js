@@ -541,7 +541,7 @@
 			var self = this;
 			self.Env._loaded_mods = [];
 			self.Env._uses = self.Env._uses || [];
-			self.Env._uses = self.unique(self.Env._uses);
+			self.Env._uses = self.unique(self.Env._uses,true);
 			self.Env._loadQueue = [];
 			for(var i = 0;i< self.Env._uses.length;i++){
 				self._mods_stack(self.Env._uses[i]);
