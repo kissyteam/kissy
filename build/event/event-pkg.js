@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: ${build.time}
+build time: Aug 13 13:48
 */
 /**
  * @module  event
@@ -470,8 +470,8 @@ KISSY.add('event-target', function(S, undefined) {
             return this; // chain
         },
 
-        detach: function(type, fn) {
-            Event.remove(this, type, fn);
+        detach: function(type, fn, scope) {
+            Event.remove(this, type, fn, scope);
             return this; // chain
         }
     };

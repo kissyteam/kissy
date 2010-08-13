@@ -4,7 +4,7 @@
  */
 KISSY.add('lang', function(S, undefined) {
 
-    var win = window, doc = document, loc = location,
+    var win = window, doc = document, docElem = doc.documentElement, loc = location,
         AP = Array.prototype,
         indexOf = AP.indexOf, lastIndexOf = AP.lastIndexOf, filter = AP.filter,
         trim = String.prototype.trim,
@@ -204,21 +204,11 @@ KISSY.add('lang', function(S, undefined) {
             if (S.isArray(o)) return o;
 
             // The strings and functions also have 'length'
-            if (typeof o.length !== 'number' || typeof o === 'string' || S.isFunction(o)) {
+            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
                 return [o];
             }
 
-            // ie 不支持用 slice 转换 NodeList, 降级到普通方法
-            if (o.item && S.UA.ie) {
-                var ret = [], i = 0, len = o.length;
-                for (; i < len; ++i) {
-                    ret[i] = o[i];
-                }
-                return ret;
-            }
-
-            // array-like
-            return AP.slice.call(o);
+            return slice2Arr(o);
         },
 
         /**
@@ -404,7 +394,7 @@ KISSY.add('lang', function(S, undefined) {
             if (data && REG_NOT_WHITE.test(data)) {
                 // Inspired by code by Andrea Giammarchi
                 // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
-                var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+                var head = doc.getElementsByTagName('head')[0] || docElem,
                     script = doc.createElement('script');
 
                 // It works! All browsers support!
@@ -422,6 +412,23 @@ KISSY.add('lang', function(S, undefined) {
         var t = typeof val;
         // val 为 null, undefined, number, string, boolean 时，返回 true
         return val === null || (t !== 'object' && t !== 'function');
+    }
+
+    // 将 NodeList 等集合转换为普通数组
+    function slice2Arr(arr) {
+        return AP.slice.call(arr);
+    }
+    // ie 不支持用 slice 转换 NodeList, 降级到普通方法
+    try {
+        slice2Arr(docElem.childNodes);
+    }
+    catch(e) {
+        slice2Arr = function(arr) {
+            for (var ret = [], i = arr.length - 1; i >= 0; i--) {
+                ret[i] = arr[i];
+            }
+            return ret;
+        }
     }
 
     // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
