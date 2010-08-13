@@ -11,8 +11,6 @@
 <script src="kissy.js"></script>
 <script src="lang.js"></script>
 
-<script src="ua.js"></script>
-<script src="ua-extra.js"></script>
 <script src="../../third-party/jquery/jquery-1.4.2.js"></script>
 
 <script>
@@ -323,7 +321,6 @@
 
     function test_isFunction(test) {
         if(S.isFunction(function(){}) !== true) test.fail();
-        if(S.UA.ie && S.isFunction(window.alert) !== false) test.fail();
         if(S.isFunction(parseFloat) !== true) test.fail();
         
         if(S.isFunction(document.getElementsByTagName('div')) === true) test.fail();
@@ -505,22 +502,6 @@
     function test_globalEval(test) {
         S.globalEval('var globalEvalTest = 1;');
         if(window['globalEvalTest'] !== 1) test.fail();
-    }
-
-    function test_userAgent(test) {
-        test.extraMsg = navigator.userAgent;
-    }
-
-    function test_ua(test) {
-        var UA = S.UA, out = '', p;
-
-        for(p in UA) {
-            if(p.indexOf('_') !== 0) {
-                out += p + ' = ' + UA[p] + ', '
-            }
-        }
-
-        test.extraMsg = out;
     }
 
     function test_clone(test) {
