@@ -1,0 +1,19 @@
+#console {
+	width:500px;
+	height:92%;
+	padding:10px;
+	position:fixed;
+	*position:absolute;
+	right:10px;
+	top:10px;
+	font-size:14px;
+	border:1px solid gray;
+	overflow:scroll;
+	font-family:'comic Sans MS','黑体'
+}
+#console .red {background-color:red;}
+#console .green {background-color:green;}
+#console .blue{background-color:blue;}
+#console .gray{background-color:black;color:white;}
+#console .yellow{background-color:yellow;}
+#console p {border-bottom:1px solid gray;margin:0px;}
