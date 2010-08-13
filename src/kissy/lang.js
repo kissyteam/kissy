@@ -173,7 +173,8 @@ KISSY.add('lang', function(S, undefined) {
          * @param a {Array} the array to find the subset of uniques for
          * @return {Array} a copy of the array with duplicate entries removed
          */
-        unique: function(a) {
+        unique: function(a, override) {
+            if(override) a.reverse(); // 默认是后置删除，如果 override 为 true, 则前置删除
             var b = a.slice(), i = 0, n, item;
 
             while (i < b.length) {
@@ -184,6 +185,7 @@ KISSY.add('lang', function(S, undefined) {
                 i += 1;
             }
 
+            if(override) b.reverse(); // 将顺序转回来
             return b;
         },
         
