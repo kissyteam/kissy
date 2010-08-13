@@ -143,7 +143,10 @@
             return self;
         },
 
-		//判断mod的字模块是否ready
+		/**
+		 * if 'mod's sub-modules are ready,return true
+		 * else return false
+		 */
 		_submod_ready : function(mod){
 			var self = this,flag = true;
 			if(self.Env.mods[mod].requires == undefined 
@@ -164,7 +167,9 @@
 
 		},
 
-
+		/**
+		 * exec loaded modules' callbacks
+		 */
 		_exec_mojo_queue:function(){
 			var self = this, i;
 			//
@@ -291,13 +296,14 @@
 
             // If there are functions bound, to execute
             if (readyList) {
-                // Execute all of them
+                // Execute all of the readyList
 
 				//load mods first
 				this.log('domReady','green');
 				this._load_mods(function(){
 					self.log('sync scripts loaded over','green');
 					self._exec_mojo_queue();
+					//afterReady must be set to true before readyList's callbacks exec
 					afterReady = true;
 					self.log('begin exec readys {{ ','gray');
 					
@@ -562,6 +568,9 @@
 			mix(self.Env.mods,o);
 			return this;
 		},
+		/**
+		 * combine
+		 */
 		_combine:function(){
 			var self = this,url,_combo_mods = [];
 			url = self.Env._ks_combine;
@@ -714,6 +723,7 @@
     // build 时，会将 @DEBUG@ 替换为空
     S.Config = { 
 		debug: '@DEBUG@',
+		//default config of combo
 		combo:true,
 		base:'http://a.tbcdn.cn/s/kissy/1.1.0/build/??',
 		filter:null
@@ -723,6 +733,14 @@
 
 /**
  * NOTES:
+ *
+ * 2010.08
+ *  - 重写add,use,ready，重新组织add的工作模式，添加loader功能
+ *  - 借鉴YUI3原生支持loader，但YUI的loader使用场景复杂，且多loader共存的场景在越复杂的程序中越推荐使用，在中等规模的webpage中，形同鸡肋，因此将KISSY全局对象包装成一个loader，来统一管理页面所有的modules
+ *  - loader的使用一定要用add来配合，加载脚本过程中的三个状态（before domready,after domready & before KISSY callbacks' ready,after KISSY callbacks' ready）要明确区分
+ *  - 使用add和ready的基本思路和之前保持一致，即只要执行add('mod-name',callback)，就会执行其中的callback，callback执行的时机由loader统一控制
+ *  - 支持combo，通过KISSY.Config.combo = true来开启，模块的fullpath用path代替
+ *  - kissy内部组件和开发者文件当做地位平等的模块处理,包括combo
  *
  * 2010.07
  *  - 增加 available 和 guid 方法。
