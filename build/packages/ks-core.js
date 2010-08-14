@@ -2914,7 +2914,6 @@ KISSY.add('event', function(S, undefined) {
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         add: function(target, type, fn, scope /* optional */) {
-            scope = scope || target;
             if (batch('add', target, type, fn, scope)) return;
 
             var id = getID(target), isNativeEventTarget,
