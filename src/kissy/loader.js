@@ -1,5 +1,5 @@
 /**
- * @module kissy
+ * @module loader
  * @author lifesinger@gmail.com, lijing00333@163.com
  */
 (function(win, S, undefined) {
@@ -30,7 +30,7 @@
 
         _initLoader: function() {
             mix(this.Env, {
-                mods: { },
+                mods: {},
                 _loadQueue: [], // 所有需要加载的模块队列
                 _uses: [], // use 的模块列表
                 _used: [], // use 已经加载过的的模块列表

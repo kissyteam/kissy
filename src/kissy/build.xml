@@ -10,6 +10,7 @@
         <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="kissy.js"/>
             <path path="lang.js"/>
+            <path path="loader.js"/>
         </concat>
     </target>
 
