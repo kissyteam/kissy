@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Core Test</title>
+</head>
+<body>
+<h2>test combo</h2>
+<script src="../kissy.js"></script>
+<script src="../lang.js"></script>
+
+<img src="http://kissyteam.github.com/kissy/docs/assets/logo.png" alt="test image" />
+<div id="test-available">test available</div>
+<link rel="stylesheet" href="console.css" />
+<div id="console"></div>
+<iframe id="test-iframe" src="loader-iframe.html"></iframe>
+<script>
+
+var S = KISSY,
+	doc = document,
+	now = function() {
+		return new Date().getTime();
+	},
+	get = function(id) {
+		return typeof id === 'string' ? doc.getElementById(id) : id;
+	};
+S._log = S.log;
+S.log = function(msg,color){
+	var con = get('console');
+	S._log(msg);
+	if(typeof color == 'undefined'){
+		var color = '';
+	}
+	if(!con)return;
+	con.innerHTML += '<p class="'+color+'">' +msg +'</p>';
+};
+S.log('Begin');
+</script>
+<script>
+	
+//combine config
+S.mix(S.Config,{
+	combo:true,
+	base:'http://a.tbcdn.cn/s/kissy/1.1.0/build/??',
+	filter:{
+		searchExp:'&',
+		replaceStr:','
+	}
+});
+
+//directly exec my logic without using any other sub-modules
+S.ready(function() {
+	readyTime = now();
+	S.log('readyTime = ' + readyTime);
+});
+
+//add modules
+S.add({
+	//install dependence of these modules
+	//use "fullpath" to avoid combining files
+	'yui':{
+		fullpath:'http://yui.yahooapis.com/2.8.1/build/yahoo/yahoo.js'
+	},
+	'sub-sub':{
+		fullpath:'sub-sub.js',
+		requires:['yui']
+	},
+	'sub':{
+		fullpath:'sub.js',
+		requires:['sub-sub']
+	},
+	//lazyload with combo
+	//use "path" to combine files
+	'ajax':{
+		path:'ajax/ajax-min.js'
+	},
+	'sizzle':{
+		path:'sizzle/sizzle.js'
+	},
+	'json':{
+		path:'json/json-min.js',
+		requires:['sizzle']
+	},
+	'dom':{
+		path:'dom/dom-pkg-min.js'
+	}
+});
+
+//add a module and exec its callbacks after "domready"
+//KISSY now is aware of "inline-test"'s sub-modules
+//and its sub-modules will be sync loaded after "domready" && before this callback execs' moment
+S.add('inline-test',function(S){
+	S.inline = 'ok';
+	if(typeof YAHOO != 'undefined'){
+		S.log('yui is ok');
+	}
+},{requires:['sub']}).ready(function(S){
+	S.log('S.sub '+S.sub);
+	S.log('S.inline '+S.inline);
+});
+
+S.use('json').ready(function(S){
+	S.log('combo request ok');
+		var prototype = 'http://prototypejs.org/assets/2010/5/13/prototype.js';
+		S.getScript(prototype,function(){
+			if(typeof $ != 'undefined'){
+				S.log('prototype is ok','orange');
+			}
+		});
+});
+
+	
+	S.ready(function(S){
+		//we recommand u to use S.getScript and S.getCSS to load extra js and css files
+	});
+	
+
+
+
+</script>
+</body>
+</html>
