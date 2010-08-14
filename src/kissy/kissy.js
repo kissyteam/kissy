@@ -74,6 +74,9 @@
         RE_IDSTR = /^#?([\w-]+)$/,
 
         // css file
+        RE_JS = /\.js(?:\?|$)/i,
+
+        // css file
         RE_CSS = /\.css(?:\?|$)/i;
 
     mix(S, {
@@ -96,7 +99,8 @@
 				_anti_uses: [], // use 已经加载过的的模块列表
 				_loaded_mods: [], // 用于存储已经加载的模块
 				_loaded_array: [], // 用于存储加载模块的个数，判断是否加载完毕
-				_ks_combine: EMPTY // combine url
+				_combo_js: EMPTY, // combine js url
+				_combo_css: EMPTY // combine css url
             };
         },
 
@@ -113,7 +117,7 @@
         add: function(name, fn, config) {
             var self = this;
 
-			if(S.isPlainObject(name)){
+			if(typeof name === 'object'){
 				self.addmojo(name);
 				return self;
 			}
@@ -573,30 +577,43 @@
 		 * combine
 		 */
 		_combine:function(){
-			var self = this,url,_combo_mods = [];
-			url = self.Env._ks_combine;
+			var self = this,js_url,_combo_mods = [];
+			js_url = self.Env._combo_js;
+			css_url =self.Env._combo_css; 
+			
 			for(var i = 0 ;i<self.Env._loadQueue.length;i++){
 				var mod = self.Env._loadQueue[i];
 				if(typeof self.Env.mods[mod].path != 'undefined' 
 					&& self.Env.mods[mod].path != EMPTY ){
 						
 						_combo_mods.push(mod);
-						url += self.Env.mods[mod].path + '&';
+						var path = self.Env.mods[mod].path;
+						if (RE_CSS.test(path)) {
+							css_url += path + '&';
+						}else{
+							js_url += path + '&';
+						}
 
 
 				}
 			}
-			url = url.replace(/&$/i, EMPTY);
+
+			js_url = js_url.replace(/&$/i, EMPTY);
+			css_url = css_url.replace(/&$/i, EMPTY);
+
 			if(typeof self.Config.filter != 'undefined' 
 				&& self.Config.filter != null){
 				var filter = self.Config.filter;
 				try{
-					eval("url = url.replace(/"+filter.searchExp+"/ig,'"+filter.replaceStr+"');");
+					eval("js_url = js_url.replace(/"+filter.searchExp+"/ig,'"+filter.replaceStr+"');");
+					eval("css_url = css_url.replace(/"+filter.searchExp+"/ig,'"+filter.replaceStr+"');");
 				}catch(e){}
 			}
-			self.Env._ks_combine = url;
+			self.Env._combo_js = js_url;
+			self.Env._combo_css= css_url;
 			return {
-				url:url,
+				js_url:js_url,
+				css_url:css_url,
 				mods:_combo_mods
 			};
 		},
@@ -625,6 +642,24 @@
 				}
 			};
 
+			var loadCombo = function(url,fn,exp){
+
+				self._loadRes(url,function(){
+					for(var i = 0;i<combine.mods.length ;i++){
+						var mod = combine.mods[i];
+						var tmp_path = self.Env.mods[mod].path || '';
+						if(self.inArray(mod,self.Env._loaded_mods))continue;//
+						if(!exp.test(tmp_path))continue;
+						self.Env._loaded_array.push(mod);
+						self.Env._loaded_mods.push(mod);
+						//S.log(mod,'red');
+					}
+					run_callback(fn);
+				});
+				self.log('load '+combine.mods.toString()+' via '+url,'yellow');
+
+			};
+
 			self._build_mods();
 			if(self.Env._loadQueue.length == 0){
 				fn.call(win,self);
@@ -634,22 +669,15 @@
 			var combine = self._combine();
 
 			//combine urls first
-			if(self.Config.combo && combine.url!= EMPTY){
-
-				var url = self.Config.base + combine.url;
-
-				self._loadRes(url,function(){
-					for(var i = 0;i<combine.mods.length ;i++){
-						var mod = combine.mods[i];
-						if(self.inArray(mod,self.Env._loaded_mods))continue;//
-						self.Env._loaded_array.push(mod);
-						self.Env._loaded_mods.push(mod);
-						//S.log(mod,'red');
-					}
-					run_callback(fn);
-				});
-				self.log('load '+combine.mods.toString()+' via '+combine.url,'yellow');
-
+			//load css combo
+			if(self.Config.combo && combine.css_url != ''){
+				var url = self.Config.base + combine.css_url;
+				loadCombo(url,fn,RE_CSS);
+			}
+			//load js combo
+			if(self.Config.combo && combine.js_url!= ''){
+				url = self.Config.base + combine.js_url;
+				loadCombo(url,fn,RE_JS);
 			}
 
 			for(var i = 0 ;i<self.Env._loadQueue.length;i++){
