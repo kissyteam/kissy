@@ -2,9 +2,9 @@
  * @module  lang
  * @author  lifesinger@gmail.com
  */
-KISSY.add('lang', function(S, undefined) {
+(function(win, S, undefined) {
 
-    var win = window, doc = document, docElem = doc.documentElement, loc = location,
+    var doc = document, docElem = doc.documentElement,
         AP = Array.prototype,
         indexOf = AP.indexOf, lastIndexOf = AP.lastIndexOf, filter = AP.filter,
         trim = String.prototype.trim,
@@ -334,7 +334,7 @@ KISSY.add('lang', function(S, undefined) {
             o = o || { };
             var m = fn, d = S.makeArray(data), f, r;
 
-            if (typeof fn === 'string') {
+            if (S.isString(fn)) {
                 m = o[fn];
             }
 
@@ -431,28 +431,23 @@ KISSY.add('lang', function(S, undefined) {
         }
     }
 
-    // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
-    if (loc && loc.search && loc.search.indexOf('ks-debug') !== -1) {
-        S.Config.debug = true;
-    }
-});
+})(window, KISSY);
 
 /**
  * NOTES:
  *
- *  2010.06
+ *  2010/08
+ *   - 增加 lastIndexOf 和 unique 方法。
+ *
+ *  2010/06
  *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着。
  *
- *  2010.05
+ *  2010/05
  *   - 增加 filter 方法。
  *   - globalEval 中，直接采用 text 赋值，去掉 appendChild 方式。
  *
- *  2010.04
+ *  2010/04
  *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
  *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
- *
- * TODO:
- *   - 分析 jq 的 isPlainObject 对 constructor 等细节处理
- *   - unparam 对 false, null, undefined 等值的还原？需不需要？歧义性
  *
  */

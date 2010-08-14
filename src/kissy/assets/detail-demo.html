@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<script src="ks-seed.js"></script>
+<script>
+    var S = KISSY;
+    S.Config.base = 'http://a.tbcdn.cn/s/';
+    S.add({
+        'ks-core': {
+            path: 'kissy/1.1.2/ks-core-min.js'
+        },
+        'header': {
+            path: 'header/header-v9-min.js',
+            requires: ['ks-core']
+        }
+    }).use('*');
+
+    // 说明：
+    //  1. use 的命名。 use 表示加载模块，或者用 load('*') or require('*') ?
+    //
+    //  2. S.add 表示添加模块，上面添加了两个外部模块 ks-core 和  header
+    //
+    //  3. S.use 表示使用/加载特定模块。use('*') 执行后，立刻发起
+    //     ks-core-min.js 和 header-v9-min.js 的异步下载请求。
+    //
+    //  4. header-v9-min.js 里的组织为：
+    //       KISSY.add('header', fn);
+    //     这样，mods['header'] = { name: 'header', fn: fn, path: '...', requires: ['ks-core'] }
+    //
+    //  5. 假设 header-v9-min.js 先下载完成，由于依赖关系，mods['header'].fn 不会立刻执行
+    //
+    //  6. S.add({'ks-core': ...}) 时，会自动补上一个 fn, add 后，
+    //     mods['ks-core'] = { path: '...', fn: function(S) {
+    //         S.add('ks-core')
+    //     }};
+
+</script>
+</head>
+<body>
+</body>
+</html>

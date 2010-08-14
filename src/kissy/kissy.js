@@ -9,23 +9,8 @@
     if (win[S] === undefined) win[S] = {};
     S = win[S]; // shortcut
 
-    var doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-        EMPTY = '',
-
-        scriptOnload = doc.createElement('script').readyState ?
-            function(node, callback) {
-                node.onreadystatechange = function() {
-                    var rs = node.readyState;
-                    if (rs === 'loaded' || rs === 'complete') {
-                        node.onreadystatechange = null;
-                        callback.call(this);
-                    }
-                };
-            } :
-            function(node, callback) {
-                node.onload = callback;
-            },
+    var doc = win['document'], loc = location,
+        debug = '@DEBUG@', EMPTY = '',
 
         // Copies all the properties of s to r
         mix = function(r, s, ov, wl) {
@@ -55,9 +40,6 @@
         // Is the DOM ready to be used? Set to true once it occurs.
         isReady = false,
 
-		// Is "ready" Fired ? Set to true after "ready" event fired.
-		afterReady = false,
-
         // The functions to execute on DOM ready.
         readyList = [],
 
@@ -71,13 +53,7 @@
         POLL_INTERVAL = 40,
 
         // #id or id
-        RE_IDSTR = /^#?([\w-]+)$/,
-
-        // css file
-        RE_JS = /\.js(?:\?|$)/i,
-
-        // css file
-        RE_CSS = /\.css(?:\?|$)/i;
+        RE_IDSTR = /^#?([\w-]+)$/;
 
     mix(S, {
         /**
@@ -88,115 +64,14 @@
 
         /**
          * Initializes KISSY object.
-         * @private
          */
         _init: function() {
             this.Env = {
-                mods: { },
-                guid: 0,
-				_loadQueue: [], // 所有需要加载的模块队列
-				_uses: [], // use 的模块列表
-				_anti_uses: [], // use 已经加载过的的模块列表
-				_loaded_mods: [], // 用于存储已经加载的模块
-				_loaded_array: [], // 用于存储加载模块的个数，判断是否加载完毕
-				_combo_js: EMPTY, // combine js url
-				_combo_css: EMPTY // combine css url
+                guid: 0
             };
+            this._initLoader();
         },
 
-        /**
-         * Registers a module.
-         * @param name {String} module name
-         * @param fn {Function} entry point into the module that is used to bind module to KISSY
-		 * @param config {Object}
-         * <code>
-         * KISSY.add('module-name', function(S){ });
-         * </code>
-         * @return {KISSY}
-         */
-        add: function(name, fn, config) {
-            var self = this;
-
-			if(typeof name === 'object'){
-				self.addmojo(name);
-				return self;
-			}
-
-            // override mode
-			self.Env.mods[name] = self.Env.mods[name] || {};
-			mix(self.Env.mods[name], { name: name, fn: fn });
-			mix(self.Env.mods[name],config);
-
-            // must not call entry point immediately before "domReady" event,
-			// "S.add" method should protect logics (callbacks) in lazy-loded js
-            //fn(self);
-
-			//when a module is added to KISSY via S.add(),
-			//u do not need use "S.use" to exec its callback function
-			self.Env._uses.reverse();	
-			self.Env._uses.push(name);
-			self.Env._uses.reverse();
-
-			//when a module is add to KISSY via S.add() after "domReady" event,
-			//its callback function should be exec immediately
-			if(!(isReady && !afterReady) && self._submod_ready(name)){
-				fn(self);
-				self.Env._anti_uses.push(name);
-			}
-
-            // chain support
-            return self;
-        },
-
-		/**
-		 * if 'mod's sub-modules are ready,return true
-		 * else return false
-		 */
-		_submod_ready : function(mod){
-			var self = this,flag = true;
-			if(self.Env.mods[mod].requires == undefined 
-				|| self.Env.mods[mod].requires.length == 0){
-				return true;
-			}
-			for(var i = 0;i<self.Env.mods[mod].requires.length;i++){
-				var _sub_mod = self.Env.mods[mod].requires[i];
-
-				if(!self.inArray(_sub_mod,self.Env._loaded_mods)){
-					flag = false;
-					break;
-				}
-			}
-			return flag;
-
-		},
-
-		/**
-		 * exec loaded modules' callbacks
-		 */
-		_exec_mojo_queue:function(){
-			var self = this, i;
-			//
-			//exec preloaded mojos
-			for(i in self.Env.mods){
-				if(self.inArray(i,self.Env._anti_uses))continue;
-				if(typeof self.Env.mods[i].fn != 'undefined' 
-					&& !self.inArray(i,self.Env._loadQueue)){
-					self.Env.mods[i].fn(self);
-					self.log('exec '+i+'\'s callback');
-				}
-			}
-			//exec lazyloaded mojos
-			for(i = 0 ;i<self.Env._loadQueue.length;i++){
-				var mod = self.Env._loadQueue[i];
-				if(self.inArray(mod,self.Env._anti_uses))continue;
-				if(typeof self.Env.mods[mod].fn != 'undefined'){
-					self.Env.mods[mod].fn(self);
-					self.log('exec '+mod+'\'s callback');
-				}
-			}
-
-			return self;
-		},
         /**
          * Specify a function to execute when the DOM is fully loaded.
          * @param fn {Function} A function to execute after the DOM is ready
@@ -206,7 +81,7 @@
          * @return {KISSY}
          */
         ready: function(fn) {
-			var self = this;
+            var self = this;
 
             // Attach the listeners
             if (!readyBound) self._bindReady();
@@ -214,8 +89,6 @@
             // If the DOM is already ready
             if (isReady) {
                 // Execute the function immediately
-				// after domReady fired, loader is prohibited to load any other extra files
-				//arguments.callee(self,fn);
                 fn.call(win, self);
             } else {
                 // Remember the function for later
@@ -256,7 +129,7 @@
                 doc.addEventListener(eventType, domReady, false);
 
                 // A fallback to window.onload, that will always work
-			    win.addEventListener('load', fire, false);
+                win.addEventListener('load', fire, false);
             }
             // IE event model is used
             else {
@@ -283,6 +156,7 @@
                             setTimeout(readyScroll, 1);
                         }
                     }
+
                     readyScroll();
                 }
             }
@@ -292,36 +166,21 @@
          * Executes functions bound to ready event.
          */
         _fireReady: function() {
-			var self = this;
-
             if (isReady) return;
+
             // Remember that the DOM is ready
             isReady = true;
 
             // If there are functions bound, to execute
             if (readyList) {
-                // Execute all of the readyList
+                // Execute all of them
+                var fn, i = 0;
+                while (fn = readyList[i++]) {
+                    fn.call(win, this);
+                }
 
-				//load mods first
-				this.log('domReady','green');
-				this._load_mods(function(){
-					self.log('sync scripts loaded over','green');
-					self._exec_mojo_queue();
-					//afterReady must be set to true before readyList's callbacks exec
-					afterReady = true;
-					self.log('begin exec readys {{ ','gray');
-					
-					var fn, i = 0;
-					while (fn = readyList[i++]) {
-						fn.call(win, self);
-					}
-					self.log('exec readys over }}','gray');
-
-					// Reset the list of functions
-					readyList = null;
-					
-				});
-
+                // Reset the list of functions
+                readyList = null;
             }
         },
 
@@ -473,7 +332,7 @@
         app: function(name, sx) {
             var O = win[name] || {};
 
-            mix(O, this, true, ['_init', 'add', 'namespace']);
+            mix(O, this, true, ['_init', '_initLoader', 'add', 'namespace']);
             O._init();
 
             return mix((win[name] = O), typeof sx === 'function' ? sx() : sx);
@@ -516,251 +375,17 @@
         guid: function(pre) {
             var id = this.Env.guid++ + EMPTY;
             return pre ? pre + id : id;
-        },
-
-		/*
-		 * lazy load modules , added by jayli
-		 * @param mod1 {String} module name
-		 * @return {KISSY}
-		 * <code>
-		 * S.use('mod1','mod2').ready(callback) //load 'mod1' and 'mod2'
-		 * </code>
-		 */
-		use: function () {
-			var self = this;
-			for(var i = 0;i<arguments.length;i++){
-				self.Env._uses.push(arguments[i]);
-			}
-			self.log('exec S.use()');
-			return this;
-		},
-
-		/**
-		 * push one mod into a tmp stack
-		 * @param mod {Object} the module object
-		 * <code>
-		 * self._mods_stack({mod:{requires:['submod1','submod2']}})
-		 * </code>
-		 */
-		_mods_stack:function(mod){
-			var self = this;
-			if(self.inArray(mod,self.Env._loadQueue))return;
-			if(mod in self.Env.mods){
-				self.Env._loadQueue.push(mod);
-				if(typeof self.Env.mods[mod].requires != 'undefined'){
-					for(var i = 0;i< self.Env.mods[mod].requires.length;i++){
-						arguments.callee.call(self,self.Env.mods[mod].requires[i]);
-					}
-				}
-			}
-		},
-		/**
-		 * add modules to KISSY
-		 * alias fo addModule
-		 * @param o {Object} added modules
-		 * @return {KISSY}
-		 * <code>
-		 * KISSY.addmojo({
-		 *		"mod-name":{
-		 *			fullpath:'url',
-		 *			requires:['sub-mod1','sub-mod2']
-		 *		}
-		 *	});
-		 * </code>
-		 */
-		addmojo:function(o){
-			var self = this;
-			mix(self.Env.mods,o);
-			return this;
-		},
-		/**
-		 * combine
-		 */
-		_combine:function(){
-			var self = this,js_url,_combo_mods = [];
-			js_url = self.Env._combo_js;
-			css_url =self.Env._combo_css; 
-			
-			for(var i = 0 ;i<self.Env._loadQueue.length;i++){
-				var mod = self.Env._loadQueue[i];
-				if(typeof self.Env.mods[mod].path != 'undefined' 
-					&& self.Env.mods[mod].path != EMPTY ){
-						
-						_combo_mods.push(mod);
-						var path = self.Env.mods[mod].path;
-						if (RE_CSS.test(path)) {
-							css_url += path + '&';
-						}else{
-							js_url += path + '&';
-						}
-
-
-				}
-			}
-
-			js_url = js_url.replace(/&$/i, EMPTY);
-			css_url = css_url.replace(/&$/i, EMPTY);
-
-			if(typeof self.Config.filter != 'undefined' 
-				&& self.Config.filter != null){
-				var filter = self.Config.filter;
-				try{
-					eval("js_url = js_url.replace(/"+filter.searchExp+"/ig,'"+filter.replaceStr+"');");
-					eval("css_url = css_url.replace(/"+filter.searchExp+"/ig,'"+filter.replaceStr+"');");
-				}catch(e){}
-			}
-			self.Env._combo_js = js_url;
-			self.Env._combo_css= css_url;
-			return {
-				js_url:js_url,
-				css_url:css_url,
-				mods:_combo_mods
-			};
-		},
-		/**
-		 * reorder the loaded Modules' queue
-		 */
-		_build_mods:function(){
-			var self = this;
-			self.Env._loaded_array= [];
-			self.Env._uses = self.unique(self.Env._uses,true);
-			self.Env._loadQueue = [];
-			for(var i = 0;i< self.Env._uses.length;i++){
-				self._mods_stack(self.Env._uses[i]);
-			}
-			self.Env._loadQueue.reverse();
-		},
-		/**
-		 * load all modules before the "ready" Event fired
-		 */
-		_load_mods:function(fn){
-			var self = this;
-			var run_callback = function(fn){
-				if(self.Env._loaded_array.length == self.Env._loadQueue.length){
-					fn.call(win,self);
-					self.log('End of loader');
-				}
-			};
-
-			var loadCombo = function(url,fn,exp){
-
-				self._loadRes(url,function(){
-					for(var i = 0;i<combine.mods.length ;i++){
-						var mod = combine.mods[i];
-						var tmp_path = self.Env.mods[mod].path || '';
-						if(self.inArray(mod,self.Env._loaded_mods))continue;//
-						if(!exp.test(tmp_path))continue;
-						self.Env._loaded_array.push(mod);
-						self.Env._loaded_mods.push(mod);
-						//S.log(mod,'red');
-					}
-					run_callback(fn);
-				});
-				self.log('load '+combine.mods.toString()+' via '+url,'yellow');
-
-			};
-
-			self._build_mods();
-			if(self.Env._loadQueue.length == 0){
-				fn.call(win,self);
-				return self;
-			}
-
-			var combine = self._combine();
-
-			//combine urls first
-			//load css combo
-			if(self.Config.combo && combine.css_url != ''){
-				var url = self.Config.base + combine.css_url;
-				loadCombo(url,fn,RE_CSS);
-			}
-			//load js combo
-			if(self.Config.combo && combine.js_url!= ''){
-				url = self.Config.base + combine.js_url;
-				loadCombo(url,fn,RE_JS);
-			}
-
-			for(var i = 0 ;i<self.Env._loadQueue.length;i++){
-				var mod = self.Env._loadQueue[i];
-				if(self.inArray(mod,self.Env._loaded_mods))continue;
-				if(typeof self.Env.mods[mod].fn == 'function'){
-					self.log('load '+ mod +' and Exec its callback');
-					self.Env._loaded_array.push(mod);
-					self.Env._loaded_mods.push(mod);
-					//S.log(mod,'red');
-					run_callback(fn);
-				}else{
-					if(self.inArray(mod,self.Env._loaded_mods) 
-						|| typeof self.Env.mods[mod].fullpath == 'undefined'){
-						continue;
-					}
-					self.log('load '+ mod +' via '+ self.Env.mods[mod].fullpath,'yellow');
-					self.Env._loaded_mods.push(mod);
-					//S.log(mod,'red');
-					self._loadRes(self.Env.mods[mod].fullpath,function(){
-						self.Env._loaded_array.push(mod);
-						run_callback(fn);
-					});
-				}
-			}
-
-
-		},
-        /*
-         * Load a js or css file
-         * @private
-         */
-        _loadRes: function(url, callback, charset) {
-            var self = this;
-
-            if (RE_CSS.test(url)) {
-                self.getCSS(url);
-                callback();
-                return;
-            }
-
-            self.getScript(url, callback, charset);
-        },
-
-		/**
-		 * Load a JavaScript file from the server using a GET HTTP request, then execute it.
-		 */
-        getScript: function(url, callback, charset) {
-            var node = doc.createElement('script');
-
-            node.src = url;
-            if (charset) node.charset = charset;
-            node.async = true;
-
-            if (S.isFunction(callback)) {
-                scriptOnload(node, callback);
-            }
-
-            head.insertBefore(node, head.firstChild);
-        },
-
-        /**
-         * Load a CSS file.
-         * @param url {String} fullpath of css
-         */
-        getCSS: function(url) {
-            var node = doc.createElement('link');
-
-            node.rel = 'stylesheet';
-            node.href = url;
-
-            head.insertBefore(node, head.firstChild);
         }
     });
 
-    S._init();
-
-    S.Config = { 
-		debug: '@DEBUG@', // build 时，会将 @DEBUG@ 替换为空
-		combo: true,
-		base: 'http://a.tbcdn.cn/s/kissy/@VERSION@/build/??',
-		filter: null
-	};
+    // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
+    if (((loc || 0).search || EMPTY).indexOf('ks-debug') !== -1) {
+        debug = true;
+    }
+    
+    S.Config = {
+        debug: debug // build 时，会将 @DEBUG@ 替换为空
+    };
 
 })(window, 'KISSY');
 
@@ -768,16 +393,7 @@
  * NOTES:
  *
  * 2010/08
- *  - 重写 add, use, ready, 重新组织 add 的工作模式，添加 loader 功能。
- *  - 借鉴 YUI3 原生支持 loader, 但 YUI 的 loader 使用场景复杂，且多 loader 共存的场景
- *    在越复杂的程序中越推荐使用，在中等规模的 webpage 中，形同鸡肋，因此将 KISSY 全局对象
- *    包装成一个 loader，来统一管理页面所有的 modules.
- *  - loader 的使用一定要用 add 来配合，加载脚本过程中的三个状态（before domready,
- *    after domready & before KISSY callbacks' ready, after KISSY callbacks' ready）要明确区分。
- *  - 使用 add 和 ready 的基本思路和之前保持一致，即只要执行 add('mod-name', callback)，就
- *    会执行其中的 callback. callback 执行的时机由 loader 统一控制。
- *  - 支持 combo, 通过 KISSY.Config.combo = true 来开启，模块的 fullpath 用 path 代替。
- *  - KISSY 内部组件和开发者文件当做地位平等的模块处理，包括 combo.
+ *  - 将 loader 功能独立到 loader.js 中。
  *
  * 2010/07
  *  - 增加 available 和 guid 方法。
