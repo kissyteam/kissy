@@ -1,6 +1,6 @@
 /**
  * @module kissy
- * @author lifesinger@gmail.com,lijing00333@163.com
+ * @author lifesinger@gmail.com, lijing00333@163.com
  */
 (function(win, S, undefined) {
 
@@ -11,8 +11,9 @@
 
     var doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+        EMPTY = '',
 
-        scriptCallback = doc.createElement('script').readyState ?
+        scriptOnload = doc.createElement('script').readyState ?
             function(node, callback) {
                 node.onreadystatechange = function() {
                     var rs = node.readyState;
@@ -87,16 +88,15 @@
          * @private
          */
         _init: function() {
-            // Env 对象目前仅用于内部，为模块动态加载预留接口
             this.Env = {
                 mods: { },
                 guid: 0,
-				_loadQueue:[],//所有需要加载的模块的队列
-				_uses:[],//use的模块列表
-				_anti_uses:[],//use已经加载过的的模块列表
-				_loaded_mods:[],//用于存储已经加载的模块
-				_loaded_array:[],//用于存储加载模块的个数，判断是否加载完毕
-				_ks_combine:''//combine url
+				_loadQueue: [], // 所有需要加载的模块队列
+				_uses: [], // use 的模块列表
+				_anti_uses: [], // use 已经加载过的的模块列表
+				_loaded_mods: [], // 用于存储已经加载的模块
+				_loaded_array: [], // 用于存储加载模块的个数，判断是否加载完毕
+				_ks_combine: EMPTY // combine url
             };
         },
 
@@ -113,7 +113,7 @@
         add: function(name, fn, config) {
             var self = this;
 
-			if(typeof name == 'object'){
+			if(S.isPlainObject(name)){
 				self.addmojo(name);
 				return self;
 			}
@@ -157,9 +157,7 @@
 			for(var i = 0;i<self.Env.mods[mod].requires.length;i++){
 				var _sub_mod = self.Env.mods[mod].requires[i];
 
-				if(self.inArray(_sub_mod,self.Env._loaded_mods)){
-					continue;
-				}else{
+				if(!self.inArray(_sub_mod,self.Env._loaded_mods)){
 					flag = false;
 					break;
 				}
@@ -205,21 +203,22 @@
          */
         ready: function(fn) {
 			var self = this;
+
             // Attach the listeners
-            if (!readyBound) this._bindReady();
+            if (!readyBound) self._bindReady();
 
             // If the DOM is already ready
             if (isReady) {
                 // Execute the function immediately
 				// after domReady fired, loader is prohibited to load any other extra files
 				//arguments.callee(self,fn);
-                fn.call(win, this);
+                fn.call(win, self);
             } else {
                 // Remember the function for later
                 readyList.push(fn);
             }
 
-            return this;
+            return self;
         },
 
         /**
@@ -291,12 +290,9 @@
         _fireReady: function() {
 			var self = this;
 
-
             if (isReady) return;
-
             // Remember that the DOM is ready
             isReady = true;
-
 
             // If there are functions bound, to execute
             if (readyList) {
@@ -331,7 +327,7 @@
          * @param fn <Function> What to execute when the element is found.
          */
         available: function(id, fn) {
-            id = (id + '').match(RE_IDSTR)[1];
+            id = (id + EMPTY).match(RE_IDSTR)[1];
             if (!id || !S.isFunction(fn)) return;
 
             var retryCount = 1,
@@ -451,7 +447,7 @@
             var l = arguments.length, o = null, i, j, p;
 
             for (i = 0; i < l; ++i) {
-                p = ('' + arguments[i]).split('.');
+                p = (EMPTY + arguments[i]).split('.');
                 o = this;
                 for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
                     o = o[p[j]] = o[p[j]] || {};
@@ -514,7 +510,7 @@
          * @return {String} the guid
          */
         guid: function(pre) {
-            var id = this.Env.guid++ + '';
+            var id = this.Env.guid++ + EMPTY;
             return pre ? pre + id : id;
         },
 
@@ -526,7 +522,7 @@
 		 * S.use('mod1','mod2').ready(callback) //load 'mod1' and 'mod2'
 		 * </code>
 		 */
-		use : function(){
+		use: function () {
 			var self = this;
 			for(var i = 0;i<arguments.length;i++){
 				self.Env._uses.push(arguments[i]);
@@ -534,6 +530,7 @@
 			self.log('exec S.use()');
 			return this;
 		},
+
 		/**
 		 * push one mod into a tmp stack
 		 * @param mod {Object} the module object
@@ -581,7 +578,7 @@
 			for(var i = 0 ;i<self.Env._loadQueue.length;i++){
 				var mod = self.Env._loadQueue[i];
 				if(typeof self.Env.mods[mod].path != 'undefined' 
-					&& self.Env.mods[mod].path != '' ){
+					&& self.Env.mods[mod].path != EMPTY ){
 						
 						_combo_mods.push(mod);
 						url += self.Env.mods[mod].path + '&';
@@ -589,7 +586,7 @@
 
 				}
 			}
-			url = url.replace(/&$/i,'');
+			url = url.replace(/&$/i, EMPTY);
 			if(typeof self.Config.filter != 'undefined' 
 				&& self.Config.filter != null){
 				var filter = self.Config.filter;
@@ -637,7 +634,7 @@
 			var combine = self._combine();
 
 			//combine urls first
-			if(self.Config.combo == true && combine.url!= ''){
+			if(self.Config.combo && combine.url!= EMPTY){
 
 				var url = self.Config.base + combine.url;
 
@@ -708,7 +705,7 @@
             node.async = true;
 
             if (S.isFunction(callback)) {
-                scriptCallback(node, callback);
+                scriptOnload(node, callback);
             }
 
             head.insertBefore(node, head.firstChild);
@@ -730,13 +727,11 @@
 
     S._init();
 
-    // build 时，会将 @DEBUG@ 替换为空
     S.Config = { 
-		debug: '@DEBUG@',
-		//default config of combo
-		combo:true,
-		base:'http://a.tbcdn.cn/s/kissy/1.1.0/build/??',
-		filter:null
+		debug: '@DEBUG@', // build 时，会将 @DEBUG@ 替换为空
+		combo: true,
+		base: 'http://a.tbcdn.cn/s/kissy/@VERSION@/build/??',
+		filter: null
 	};
 
 })(window, 'KISSY');
@@ -744,21 +739,25 @@
 /**
  * NOTES:
  *
- * 2010.08
- *  - 重写add,use,ready，重新组织add的工作模式，添加loader功能
- *  - 借鉴YUI3原生支持loader，但YUI的loader使用场景复杂，且多loader共存的场景在越复杂的程序中越推荐使用，在中等规模的webpage中，形同鸡肋，因此将KISSY全局对象包装成一个loader，来统一管理页面所有的modules
- *  - loader的使用一定要用add来配合，加载脚本过程中的三个状态（before domready,after domready & before KISSY callbacks' ready,after KISSY callbacks' ready）要明确区分
- *  - 使用add和ready的基本思路和之前保持一致，即只要执行add('mod-name',callback)，就会执行其中的callback，callback执行的时机由loader统一控制
- *  - 支持combo，通过KISSY.Config.combo = true来开启，模块的fullpath用path代替
- *  - kissy内部组件和开发者文件当做地位平等的模块处理,包括combo
+ * 2010/08
+ *  - 重写 add, use, ready, 重新组织 add 的工作模式，添加 loader 功能。
+ *  - 借鉴 YUI3 原生支持 loader, 但 YUI 的 loader 使用场景复杂，且多 loader 共存的场景
+ *    在越复杂的程序中越推荐使用，在中等规模的 webpage 中，形同鸡肋，因此将 KISSY 全局对象
+ *    包装成一个 loader，来统一管理页面所有的 modules.
+ *  - loader 的使用一定要用 add 来配合，加载脚本过程中的三个状态（before domready,
+ *    after domready & before KISSY callbacks' ready, after KISSY callbacks' ready）要明确区分。
+ *  - 使用 add 和 ready 的基本思路和之前保持一致，即只要执行 add('mod-name', callback)，就
+ *    会执行其中的 callback. callback 执行的时机由 loader 统一控制。
+ *  - 支持 combo, 通过 KISSY.Config.combo = true 来开启，模块的 fullpath 用 path 代替。
+ *  - KISSY 内部组件和开发者文件当做地位平等的模块处理，包括 combo.
  *
- * 2010.07
+ * 2010/07
  *  - 增加 available 和 guid 方法。
  *
- * 2010.04
- *  - 移除掉 weave 方法，尚未考虑周全。
+ * 2010/04
+ *  - 移除掉 weave 方法，鸡肋。
  *
- * 2010.01
+ * 2010/01
  *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）。
  *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
  *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码。

@@ -6,13 +6,13 @@
 </head>
 <body>
 <h2>lazyload without combo</h2>
-<script src="../kissy.js"></script>
-<script src="../lang.js"></script>
+<script src="kissy.js"></script>
+<script src="lang.js"></script>
 
-<img src="http://kissyteam.github.com/kissy/docs/assets/logo.png" alt="test image" />
+<img src="../../docs/assets/logo.png" alt="test image" />
 <div id="test-available">test available</div>
-<iframe id="test-iframe" src="loader-iframe.html"></iframe>
-<link rel="stylesheet" href="console.css" />
+<iframe id="test-iframe" src="assets/loader-iframe.html"></iframe>
+<link rel="stylesheet" href="assets/console.css" />
 <div id="console"></div>
 <script>
 
@@ -29,7 +29,7 @@ S.log = function(msg,color){
 	var con = get('console');
 	S._log(msg);
 	if(typeof color == 'undefined'){
-		var color = '';
+		color = '';
 	}
 	if(!con)return;
 	con.innerHTML += '<p class="'+color+'">' +msg +'</p>';
@@ -38,6 +38,7 @@ S.log = function(msg,color){
 <script>
 
 S.log('Begin');
+var readyTime;
 
 //exec my logic immediately without using any sub-modules
 S.ready(function() {
@@ -81,7 +82,6 @@ S.ready(function(S){
 
 //sync load kissy build-in modules and exec callback after all modules are ready
 S.ready(function(S){
-	var win = window;
 
 	KISSY.add('test-ks-mod', function(S) {
 		S.lazyloadMod = {proto:1};
@@ -115,10 +115,6 @@ S.ready(function(S){
 	});
 
 });
-
-S.ready(function(S){
-});
-
 
 </script>
 </body>
