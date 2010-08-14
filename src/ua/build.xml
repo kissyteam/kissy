@@ -13,6 +13,10 @@
         </concat>
     </target>
 
-    <target name="build" depends="concat,common.build">
+    <target name="clean">
+        <delete file="ua-pkg.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
     </target>
 </project>
