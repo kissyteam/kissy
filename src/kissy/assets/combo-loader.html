@@ -1,7 +1,8 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="zh">
 <head>
-<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
 <title>KISSY Core Test</title>
 </head>
 <body>
@@ -107,35 +108,31 @@ S.add('inline-test',function(S){
 
 S.use('json').ready(function(S){
 	S.log('combo request ok');
-		var prototype = 'http://prototypejs.org/assets/2010/5/13/prototype.js';
-		S.getScript(prototype,function(){
+		var p = 'http://tbexample.googlecode.com/svn/trunk/sandbox/jquery-1.4.2.js';
+		S.getScript(p,function(){
 			if(typeof $ != 'undefined'){
-				S.log('prototype is ok','orange');
+				S.log('jquery is ok','orange');
 			}
 		});
 });
-
-	
-	S.ready(function(S){
-		//we recommand u to use S.getScript and S.getCSS to load extra js and css files
-	});
 
 S.use('yui3','box-skin').ready(function(S){
 	YUI({
 		modules:{
 			'box':{
-				fullpath:'http://a.tbcdn.cn/apps/lottery/00001/index-v2/combo/index-page.js',
-				requires:['node','overlay','dd']
+				fullpath:'http://cubee.github.com/src/box/box.js',
+				requires:['node','overlay','dd-plugin']
 			}
 		},
-		charset:'gbk'
+		charset:'utf-8'
 
 	}).use('box',function(Y){
-		new Y.Box.alert('everything is ok');
+		Y.Box.alert('everything is ok');
 	});
 	
 	
 });
+
 	
 
 
