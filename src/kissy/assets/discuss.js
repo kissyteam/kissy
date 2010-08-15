@@ -1,7 +1,7 @@
 
 var S = KISSY;
 
-// 默认内置模块调用场景:
+// 一、默认内置模块调用场景:
 // 页面只需引入 ks-seed.js, 然后
 S.use('switchable', function() {
    // init code
@@ -9,7 +9,7 @@ S.use('switchable', function() {
 // 内部模块仅支持大粒度，如：ks-core, sizzle, flash, switchable, suggest
 
 
-// 自定义模块调用场景：
+// 二、自定义模块调用场景：
 // 引入 seed.js
 S.add({
    'mod-xx': {
@@ -22,7 +22,7 @@ S.use('mod-xx', function() {
 });
 
 
-// 目前的传统方式：
+// 三、目前的传统方式：
 // 页面引入 mod-xx.js, 文件里面用 KISSY.add('mod-xx', fn) 组织
 (function() {
     // 直接调用 mod-xx
@@ -33,12 +33,21 @@ S.ready(function() {
 });
 
 
-// insert 方式：
+// 四、insert/import/include 匿名模块：
 // 页面引入 seed.js
-S.insert({
+S.use({
     fullpath: 'url',
     requires: ['xx']
 });
+
+
+// 五、everyThingIsReady 模式：
+S.use('mod1','mod2');
+//html code
+S.everyThingIsReady(callback1);
+//html code
+S.everyThingIsReady(callback2);
+
 
 
 // 非 combo 方式：在 use 或 insert 处，立刻发起请求
