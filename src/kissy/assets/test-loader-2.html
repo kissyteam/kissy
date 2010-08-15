@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Core Test</title>
+</head>
+<body>
+<h2>lazyload without combo</h2>
+<script src="../kissy.js"></script>
+<script src="../lang.js"></script>
+<script src="../loader.js"></script> 
+
+
+<div id="J_calendar"></div>
+<link rel="stylesheet" href="console.css" />
+<div id="console"></div>
+<script>
+
+var S = KISSY,
+	doc = document,
+	now = function() {
+		return new Date().getTime();
+	},
+	get = function(id) {
+		return typeof id === 'string' ? doc.getElementById(id) : id;
+	};
+S._log = S.log;
+S.log = function(msg,color){
+	var con = get('console');
+	S._log(msg);
+	if(typeof color == 'undefined'){
+		var color = '';
+	}
+	if(!con)return;
+	con.innerHTML += '<p class="'+color+'">' +msg +'</p>';
+};
+</script>
+<script>
+
+S.log('Begin');
+
+//add modules
+S.add({
+	//dependence of these modules
+	'yui':{
+		fullpath:'http://yui.yahooapis.com/2.8.1/build/yahoo/yahoo.js'
+	},
+	'yui3':{
+		fullpath:'http://cn.yimg.com/i/yui/3.0.0/build/yui/yui-min.js'
+	},
+	'calendar-skin':{
+		fullpath:'http://cubee.github.com/src/calendar/skin/default.css'
+	},
+
+	'sub-sub':{
+		fullpath:'sub-sub.js',
+		requires:['yui']
+	},
+	'sub':{
+		fullpath:'sub.js',
+		requires:['sub-sub']
+	},
+	'calendar-skin':{
+		fullpath:'http://cubee.github.com/src/calendar/skin/default.css'
+	}
+});
+
+
+S.add({'insert': {
+
+	fullpath:'insert.js',
+	requires:['yui3','calendar-skin']
+}});
+
+S.use('insert');
+
+S.ready(function(S){
+	S.log('dom ready');
+});
+
+
+</script>
+</body>
+</html>

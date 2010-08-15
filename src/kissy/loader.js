@@ -2,12 +2,13 @@
  * @module loader
  * @author lifesinger@gmail.com, lijing00333@163.com
  */
-(function(win, S) {
+(function(win, S, undefined) {
 
     var doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+        KSConfig = S.Config,
         EMPTY = '',
-        LOADING = 1, LOADED = 2, ATTACHED = 3,
+        LOADING = 1, LOADED = 2, ERROR = 3, ATTACHED = 4,
         mix = S.mix,
 
         scriptOnload = doc.createElement('script').readyState ?
@@ -57,9 +58,15 @@
             var self = this, mods = self.Env.mods;
 
             if (S.isPlainObject(name)) {
+                S.each(name, function(v, k) {
+                    v.name = k;
+                });
                 mix(mods, name);
-            } else {
-                mods[name] = S.merge(mods[name], { name: name, fn: fn }, config);
+            }
+            else {
+                mods[name] = mods[name] || {};
+                mix(mods[name], { name: name, fn: fn });
+                mix(mods[name], config);
             }
 
             return self;
@@ -70,9 +77,9 @@
          * <code>
          * S.use('mod-name', callback);
          * S.use('mod1,mod2', callback);
-         * S.use('mod1+mod2,mod3', callback); // TODO
+         * S.use('mod1+mod2,mod3', callback); 暂未实现
          * S.use('*', callback);
-         * S.use('*+', callback);
+         * S.use('*+', callback); 暂未实现
          * </code>
          */
         use: function(modNames, callback) {
@@ -85,7 +92,7 @@
                 self._attach(mod, function() {
                     if (!fired && self._isAttached(modNames)) {
                         fired = true;
-                        callback(self);
+                        callback && callback(self);
                     }
                 });
             }
@@ -95,24 +102,35 @@
          * Attach a module and all required modules.
          */
         _attach: function(mod, callback) {
-            var self = this, requires = mod.requires || [],
+            var self = this, requires = mod['requires'] || [],
                 i = 0, len = requires.length;
 
             // attach all required modules
             for (; i < len; i++) {
-                self._attach(requires[i], fn);
+                self._attach(self.Env.mods[requires[i]], fn);
             }
 
-            // load this module
-            S._load(mod, fn);
+            // load and attach this module
+            self._buildPath(mod);
+            if (mod.fullpath) {
+                self._load(mod, fn);
+            }
+            // 没有 fullpath, 无需加载
+            else {
+                mod.status = LOADED;
+                fn();
+            }
 
             function fn() {
                 if (self._isAttached(requires)) {
-                    if (mod.status != ATTACHED) {
-                        if (mod.fn) mod.fn();
+                    if (mod.status === LOADED) {
+                        if (mod.fn) mod.fn(self);
                         mod.status = ATTACHED;
+                        S.log(mod.name + '.status = attached');
                     }
-                    callback();
+                    if (mod.status === ATTACHED) {
+                        callback();
+                    }
                 }
             }
         },
@@ -132,27 +150,56 @@
          * Load a single module.
          */
         _load: function(mod, callback) {
-            var self = this;
+            var self = this, url;
 
-            if ((mod.status || 0) < LOADING) {
-                self.getScript(self._buildPath(mod), function() {
-                    mod.status = LOADED;
-                    callback();
+            if ((mod.status || 0) < LOADING && (url = mod.fullpath)) {
+                mod.status = LOADING;
+
+                self.getScript(url, {
+                    success: function() {
+                        if (mod.status === LOADING) { // 可能已 timeout, status 为 ERROR, 忽略掉
+                            S.log(mod.name + ' onload fired.');
+                            mod.status = LOADED;
+                            callback();
+                        }
+                    },
+                    error: function() {
+                        mod.status = ERROR;
+                    }
                 });
             }
         },
 
         _buildPath: function(mod) {
-            return mod.fullpath;
-            // TODO: base + path
+            if(!mod.fullpath && mod['path']) {
+                mod.fullpath = KSConfig.base + mod['path'];
+            }
         },
 
         /**
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
+         * <code>
+         *  getScript(url, success, charset);
+         *  or
+         *  getScript(url, {
+         *      charset: string
+         *      success: fn,
+         *      error: fn,
+         *      timeout: number
+         *  });
+         * </code>
          */
-        getScript: function(url, callback, charset) {
+        getScript: function(url, success, charset) {
             var isCSS = RE_CSS.test(url),
-                node = doc.createElement(isCSS ? 'link' : 'script');
+                node = doc.createElement(isCSS ? 'link' : 'script'),
+                config = success, error, timeout, timer;
+
+            if (S.isPlainObject(config)) {
+                success = config.success;
+                error = config.error;
+                timeout = config.timeout;
+                charset = config.charset;
+            }
 
             if (isCSS) {
                 node.href = url;
@@ -163,9 +210,25 @@
             }
             if (charset) node.charset = charset;
 
-            // TODO: timeout
-            if (!isCSS && S.isFunction(callback)) {
-                scriptOnload(node, callback);
+            if (S.isFunction(success)) {
+                if (isCSS) {
+                    success.call(node);
+                } else {
+                    scriptOnload(node, function() {
+                        if (timer) {
+                            timer.cancel();
+                            timer = undefined;
+                        }
+                        success.call(node);
+                    });
+                }
+            }
+
+            if (S.isFunction(error)) {
+                timer = S.later(function() {
+                    timer = undefined;
+                    error();
+                }, (timeout || KSConfig.timeout) * 1000);
             }
 
             head.insertBefore(node, head.firstChild);
@@ -181,7 +244,12 @@
 /**
  * NOTES:
  *
- * 2010/08
+ * 2010/08/15 玉伯：
+ *  - 基于拔赤的实现，重构。解耦 add/use 和 ready 的关系，简化实现代码。
+ *  - 去除 combo 支持，combo 由用户手工控制。
+ *  - TODO: 由 app 产生的多 loader 测试。
+ * 
+ * 2010/08/13 拔赤：
  *  - 重写 add, use, ready, 重新组织 add 的工作模式，添加 loader 功能。
  *  - 借鉴 YUI3 原生支持 loader, 但 YUI 的 loader 使用场景复杂，且多 loader 共存的场景
  *    在越复杂的程序中越推荐使用，在中等规模的 webpage 中，形同鸡肋，因此将 KISSY 全局对象

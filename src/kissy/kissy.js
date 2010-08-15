@@ -384,7 +384,9 @@
     }
     
     S.Config = {
-        debug: debug // build 时，会将 @DEBUG@ 替换为空
+        debug: debug, // build 时，会将 @DEBUG@ 替换为空
+        base: 'http://a.tbcdn.cn/s/kissy/@VERSION@/build/',
+        timeout: 10   // getScript 的默认 timeout 时间
     };
 
 })(window, 'KISSY');
