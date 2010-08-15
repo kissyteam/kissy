@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+<meta charset="=utf-8" />
 <script src="ks-seed.js"></script>
 <script>
     var S = KISSY;
@@ -15,24 +16,34 @@
         }
     }).use('*');
 
-    // ËµÃ÷£º
-    //  1. use µÄÃüÃû¡£ use ±íÊ¾¼ÓÔØÄ£¿é£¬»òÕßÓÃ load('*') or require('*') ?
+    // è¯´æ˜ï¼š
+    //  1. use çš„å‘½åã€‚ use è¡¨ç¤ºåŠ è½½æ¨¡å—ï¼Œæˆ–è€…ç”¨ load('*') or require('*') ?
     //
-    //  2. S.add ±íÊ¾Ìí¼ÓÄ£¿é£¬ÉÏÃæÌí¼ÓÁËÁ½¸öÍâ²¿Ä£¿é ks-core ºÍ  header
+    //  2. S.add è¡¨ç¤ºæ·»åŠ æ¨¡å—ï¼Œä¸Šé¢æ·»åŠ äº†ä¸¤ä¸ªæ¨¡å— ks-core å’Œ  header
     //
-    //  3. S.use ±íÊ¾Ê¹ÓÃ/¼ÓÔØÌØ¶¨Ä£¿é¡£use('*') Ö´ĞĞºó£¬Á¢¿Ì·¢Æğ
-    //     ks-core-min.js ºÍ header-v9-min.js µÄÒì²½ÏÂÔØÇëÇó¡£
+    //  3. S.use è¡¨ç¤ºä½¿ç”¨/åŠ è½½ç‰¹å®šæ¨¡å—ã€‚use('*') æ‰§è¡Œåï¼Œç«‹åˆ»å‘èµ·
+    //     ks-core-min.js å’Œ header-v9-min.js çš„å¼‚æ­¥ä¸‹è½½è¯·æ±‚ã€‚
     //
-    //  4. header-v9-min.js ÀïµÄ×éÖ¯Îª£º
+    //  4. header-v9-min.js é‡Œçš„ç»„ç»‡ä¸ºï¼š
     //       KISSY.add('header', fn);
-    //     ÕâÑù£¬mods['header'] = { name: 'header', fn: fn, path: '...', requires: ['ks-core'] }
+    //     è¿™æ ·ï¼Œmods['header'] = { name: 'header', fn: fn, path: '...', requires: ['ks-core'] }
     //
-    //  5. ¼ÙÉè header-v9-min.js ÏÈÏÂÔØÍê³É£¬ÓÉÓÚÒÀÀµ¹ØÏµ£¬mods['header'].fn ²»»áÁ¢¿ÌÖ´ĞĞ
+    //  5. å‡è®¾ header-v9-min.js å…ˆä¸‹è½½å®Œæˆï¼Œç”±äºä¾èµ–å…³ç³»ï¼Œmods['header'].fn ä¸ä¼šç«‹åˆ»æ‰§è¡Œ
     //
-    //  6. S.add({'ks-core': ...}) Ê±£¬»á×Ô¶¯²¹ÉÏÒ»¸ö fn, add ºó£¬
+    //  6. S.add({'ks-core': ...}) æ—¶ï¼Œä¼šè‡ªåŠ¨è¡¥ä¸Šä¸€ä¸ª fn, add åï¼Œ
     //     mods['ks-core'] = { path: '...', fn: function(S) {
     //         S.add('ks-core')
     //     }};
+
+    /**
+     * æ¨¡å—çŠ¶æ€ï¼š
+     *   - untracked   æœªé€šè¿‡ add æ·»åŠ 
+     *   - tracked     å·²é€šè¿‡ add æ·»åŠ 
+     *   - loading     å·²é€šè¿‡ use è§¦å‘ä¸‹è½½
+     *   - loaded      å·²ä¸‹è½½å®Œæˆ
+     *   - attached    å…¥å£å‡½æ•°å·²æ‰§è¡Œ
+     *
+     */
 
 </script>
 </head>

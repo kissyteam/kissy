@@ -2,11 +2,12 @@
  * @module loader
  * @author lifesinger@gmail.com, lijing00333@163.com
  */
-(function(win, S, undefined) {
+(function(win, S) {
 
     var doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
         EMPTY = '',
+        LOADING = 1, LOADED = 2, ATTACHED = 3,
         mix = S.mix,
 
         scriptOnload = doc.createElement('script').readyState ?
@@ -30,14 +31,7 @@
 
         _initLoader: function() {
             mix(this.Env, {
-                mods: {},
-                _loadQueue: [], // 所有需要加载的模块队列
-                _uses: [], // use 的模块列表
-                _used: [], // use 已经加载过的的模块列表
-                _loaded_mods: [], // 用于存储已经加载的模块
-                _loaded_array: [], // 用于存储加载模块的个数，判断是否加载完毕
-                _combo_js: EMPTY, // combine js url
-                _combo_css: EMPTY // combine css url
+                mods: {}
             });
         },
 
@@ -52,7 +46,7 @@
          * <code>
          * KISSY.add({
          *     'mod-name': {
-         *         path: 'url',
+         *         fullpath: 'url',
          *         requires: ['mod1','mod2']
          *     }
          * });
@@ -60,47 +54,97 @@
          * @return {KISSY}
          */
         add: function(name, fn, config) {
-            var self = this, Env = self.Env;
+            var self = this, mods = self.Env.mods;
 
             if (S.isPlainObject(name)) {
-                mix(Env.mods, name);
-                return self;
+                mix(mods, name);
+            } else {
+                mods[name] = S.merge(mods[name], { name: name, fn: fn }, config);
             }
 
-            // override mode
-            Env.mods[name] = S.merge(Env.mods[name], { name: name, fn: fn }, config);
-
-            // when a module is added to KISSY via S.add(),
-            // u do not need use "S.use" to exec its callback function
-            Env._uses.reverse().push(name); // TODO: 一定要 reverse ?
-            Env._uses.reverse();
-
-            // when a module is add to KISSY via S.add() after "domReady" event,
-            // its callback function should be exec immediately
-            //if (!(isReady && !afterReady) && self._requiresIsReady(name)) {
-            fn(self);
-            Env._used.push(name);
-            //}
-
-            // chain support
             return self;
         },
 
         /**
-         * if all requires mods are loaded, return true
-         * else return false
+         * Start load specific mods, and fire callback when these mods and requires are attached.
+         * <code>
+         * S.use('mod-name', callback);
+         * S.use('mod1,mod2', callback);
+         * S.use('mod1+mod2,mod3', callback); // TODO
+         * S.use('*', callback);
+         * S.use('*+', callback);
+         * </code>
          */
-        _requiresIsReady: function(mod) {
-            var self = this, Env = self.Env,
-                requires = Env.mods[mod].requires || [],
-                i;
+        use: function(modNames, callback) {
+            modNames = modNames.replace(/\s+/g, EMPTY).split(',');
 
-            for (i = requires.length - 1; i >= 0; i--) {
-                if (!S.inArray(requires[i], Env._loaded_mods)) {
-                    return false;
+            var self = this, mods = self.Env.mods,
+                i = 0, len = modNames.length, mod, fired;
+
+            for (; i < len && (mod = mods[modNames[i++]]);) {
+                self._attach(mod, function() {
+                    if (!fired && self._isAttached(modNames)) {
+                        fired = true;
+                        callback(self);
+                    }
+                });
+            }
+        },
+
+        /**
+         * Attach a module and all required modules.
+         */
+        _attach: function(mod, callback) {
+            var self = this, requires = mod.requires || [],
+                i = 0, len = requires.length;
+
+            // attach all required modules
+            for (; i < len; i++) {
+                self._attach(requires[i], fn);
+            }
+
+            // load this module
+            S._load(mod, fn);
+
+            function fn() {
+                if (self._isAttached(requires)) {
+                    if (mod.status != ATTACHED) {
+                        if (mod.fn) mod.fn();
+                        mod.status = ATTACHED;
+                    }
+                    callback();
                 }
             }
+        },
+
+        _isAttached: function(modNames) {
+            var mods = this.Env.mods, mod,
+                i = (modNames = S.makeArray(modNames)).length - 1;
+
+            for (; i >= 0 && (mod = mods[modNames[i]]); i--) {
+                if (mod.status !== ATTACHED) return false;
+            }
+
             return true;
+        },
+
+        /**
+         * Load a single module.
+         */
+        _load: function(mod, callback) {
+            var self = this;
+
+            if ((mod.status || 0) < LOADING) {
+                self.getScript(self._buildPath(mod), function() {
+                    mod.status = LOADED;
+                    callback();
+                });
+            }
+        },
+
+        _buildPath: function(mod) {
+            return mod.fullpath;
+            // TODO: base + path
         },
 
         /**
@@ -119,6 +163,7 @@
             }
             if (charset) node.charset = charset;
 
+            // TODO: timeout
             if (!isCSS && S.isFunction(callback)) {
                 scriptOnload(node, callback);
             }
