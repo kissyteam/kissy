@@ -41,12 +41,12 @@ S.use({
 });
 
 
-// 五、everyThingIsReady 模式：
+// 五、everyThingIsReady 模式： loaderReady ?
 S.use('mod1','mod2');
 //html code
-S.everyThingIsReady(callback1);
-//html code
-S.everyThingIsReady(callback2);
+S.allReady(function(){
+   // loader 的 modules 都加载完毕 + dom 已 ready 时才执行
+});
 
 
 
