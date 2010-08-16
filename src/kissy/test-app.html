@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY App Test</title>
+</head>
+<body>
+
+<h1>KISSY App Test</h1>
+
+<script src="kissy.js"></script>
+<script src="lang.js"></script>
+<script src="loader.js"></script>
+<script src="mods.js"></script>
+
+<link rel="stylesheet" href="assets/console.css"/>
+<div id="console"></div>
+<script>
+    var S = KISSY,
+        doc = document,
+        now = function() {
+            return new Date().getTime();
+        },
+        get = function(id) {
+            return typeof id === 'string' ? doc.getElementById(id) : id;
+        };
+
+    S._log = S.log;
+    S.log = function(msg, color) {
+        var console = get('console');
+        S._log(msg);
+
+        if (typeof color == 'undefined') {
+            color = '';
+        }
+        if (color == 'info') color = 'green';
+        else if (color == 'warn') color = 'yellow';
+
+        if (!console) return;
+        console.innerHTML += '<p class="' + color + '">' + msg + '</p>';
+    };
+</script>
+
+<!-- Test Cases -->
+<script>
+
+    var Detail = S.app('Detail');
+
+    Detail.add('detail-a', function(DT) {
+       Detail.A = { };
+    });
+    
+    S.log('Detail.A = ' + Detail.A, 'gray');
+
+    Detail.add({
+        'ks-core': {
+            fullpath: '../../build/packages/core.js'
+        },
+        'first-screen': {
+            fullpath: 'assets/detail-first-screen.js',
+            requires: ['ks-core']
+        },
+        'second-screen': {
+            fullpath: 'assets/detail-second-screen.js',
+            requires: ['ks-core']
+        }
+    });
+
+    Detail.use('first-screen', function(DT) {
+        S.log('Detail.FirstScreen = ' + DT.FirstScreen, 'gray');
+        S.log('first-screen use callback is fired.', 'info');
+    });
+
+    Detail.use('second-screen', function(DT) {
+        S.log('Detail.SecondScreen = ' + DT.SecondScreen, 'gray');
+        S.log('second-screen use callback is fired.', 'info');
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: ${build.time}
+build time: Aug 16 16:50
 */
 /**
  * @module  dom
@@ -12,23 +12,23 @@ KISSY.add('dom', function(S, undefined) {
     S.DOM = {
 
         /**
-         * 是不是 element node
+         * 是不�?element node
          */
         _isElementNode: function(elem) {
             return nodeTypeIs(elem, 1);
         },
 
         /**
-         * 是不是 KISSY.Node
+         * 是不�?KISSY.Node
          */
         _isKSNode: function(elem) {
             return S.Node && nodeTypeIs(elem, S.Node.TYPE);
         },
 
         /**
-         * elem 为 window 时，直接返回
-         * elem 为 document 时，返回关联的 window
-         * elem 为 undefined 时，返回当前 window
+         * elem �?window 时，直接返回
+         * elem �?document 时，返回关联�?window
+         * elem �?undefined 时，返回当前 window
          * 其它值，返回 false
          */
         _getWin: function(elem) {
@@ -78,22 +78,22 @@ KISSY.add('selector', function(S, undefined) {
         // #id .cls
         // tag.cls
         // #id tag.cls
-        // 注 1：REG_QUERY 还会匹配 #id.cls
-        // 注 2：tag 可以为 * 字符
+        // �?1：REG_QUERY 还会匹配 #id.cls
+        // �?2：tag 可以�?* 字符
         // 返回值为数组
         // 选择器不支持时，抛出异常
 
         // selector 为字符串是最常见的情况，优先考虑
-        // 注：空白字符串无需判断，运行下去自动能返回空数组
+        // 注：空白字符串无�?��断，运行下去自动能返回空数组
         if (S.isString(selector)) {
             selector = S.trim(selector);
 
-            // selector 为 #id 是最常见的情况，特殊优化处理
+            // selector �?#id 是最常见的情况，特殊优化处理
             if (REG_ID.test(selector)) {
                 t = getElementById(selector.slice(1), context);
-                if (t) ret = [t]; // #id 无效时，返回空数组
+                if (t) ret = [t]; // #id 无效时，返回空数�?
             }
-            // selector 为支持列表中的其它 6 种
+            // selector 为支持列表中的其�?6 �?
             else if ((match = REG_QUERY.exec(selector))) {
                 // 获取匹配出的信息
                 id = match[1];
@@ -115,35 +115,35 @@ KISSY.add('selector', function(S, undefined) {
                         }
                     }
                     // #id tag | tag
-                    else if (tag) { // 排除空白字符串
+                    else if (tag) { // 排除空白字符�?
                         ret = getElementsByTagName(tag, context);
                     }
                 }
             }
-            // 采用外部选择器
+            // 采用外部选择�?
             else if(S.ExternalSelector) {
                 return S.ExternalSelector(selector, context);
             }
-            // 依旧不支持，抛异常
+            // 依旧不支持，抛异�?
             else {
                 error(selector);
             }
         }
-        // 传入的 selector 是 KISSY.Node/NodeList. 始终返回原生 DOM Node
+        // 传入�?selector �?KISSY.Node/NodeList. 始终返回原生 DOM Node
         else if(selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
             ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
         }
-        // 传入的 selector 是 NodeList 或已是 Array
+        // 传入�?selector �?NodeList 或已�?Array
         else if (selector && (S.isArray(selector) || (selector.item && !selector.nodeType))) {
             ret = selector;
         }
-        // 传入的 selector 是 Node 等非字符串对象，原样返回
+        // 传入�?selector �?Node 等非字符串对象，原样返回
         else if (selector) {
             ret = [selector];
         }
-        // 传入的 selector 是其它值时，返回空数组
+        // 传入�?selector 是其它�?时，返回空数�?
 
-        // 将 NodeList 转换为普通数组
+        // �?NodeList 转换为普通数�?
         if(ret.item) {
             ret = S.makeArray(ret);
         }
@@ -156,19 +156,19 @@ KISSY.add('selector', function(S, undefined) {
         return ret;
     }
 
-    // 调整 context 为合理值
+    // 调整 context 为合理�?
     function tuneContext(context) {
-        // 1). context 为 undefined 是最常见的情况，优先考虑
+        // 1). context �?undefined 是最常见的情况，优先考虑
         if (context === undefined) {
             context = doc;
         }
         // 2). context 的第二使用场景是传入 #id
         else if (S.isString(context) && REG_ID.test(context)) {
             context = getElementById(context.slice(1), doc);
-            // 注：#id 可能无效，这时获取的 context 为 null
+            // 注：#id 可能无效，这时获取的 context �?null
         }
-        // 3). context 还可以传入 HTMLElement, 此时无需处理
-        // 4). 经历 1 - 3, 如果 context 还不是 HTMLElement, 赋值为 null
+        // 3). context 还可以传�?HTMLElement, 此时无需处理
+        // 4). 经历 1 - 3, 如果 context 还不�?HTMLElement, 赋�?�?null
         else if (context && context.nodeType !== 1 && context.nodeType !== 9) {
             context = null;
         }
@@ -239,7 +239,7 @@ KISSY.add('selector', function(S, undefined) {
                 return context.querySelectorAll((tag ? tag : '') + '.' + cls);
             }
         }
-        // 降级到普通方法
+        // 降级到普通方�?
         else {
             getElementsByClassName = function(cls, tag, context) {
                 var els = context.getElementsByTagName(tag || ANY),
@@ -282,7 +282,7 @@ KISSY.add('selector', function(S, undefined) {
         filter: function(selector, filter) {
             var elems = query(selector), match, tag, cls, ret = [];
 
-            // 默认仅支持最简单的 tag.cls 形式
+            // 默认仅支持最�?���?tag.cls 形式
             if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
                 tag = match[2];
                 cls = match[3];
@@ -294,11 +294,11 @@ KISSY.add('selector', function(S, undefined) {
             if (S.isFunction(filter)) {
                 ret = S.filter(elems, filter);
             }
-            // 其它复杂 filter, 采用外部选择器
+            // 其它复杂 filter, 采用外部选择�?
             else if (filter && S.ExternalSelector) {
                 ret = S.ExternalSelector._filter(selector, filter);
             }
-            // filter 为空或不支持的 selector
+            // filter 为空或不支持�?selector
             else {
                 error(filter);
             }
@@ -321,44 +321,44 @@ KISSY.add('selector', function(S, undefined) {
  * NOTES:
  *
  * 2010.01
- *  - 对 reg exec 的结果(id, tag, className)做 cache, 发现对性能影响很小，去掉。
- *  - getElementById 使用频率最高，使用直达通道优化。
- *  - getElementsByClassName 性能优于 querySelectorAll, 但 IE 系列不支持。
- *  - instanceof 对性能有影响。
- *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无需冗余“防卫”。
- *  - query 方法中的条件判断考虑了“频率优先”原则。最有可能出现的情况放在前面。
- *  - Array 的 push 方法可以用 j++ 来替代，性能有提升。
- *  - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组。
+ *  - �?reg exec 的结�?id, tag, className)�?cache, 发现对�?能影响很小，去掉�?
+ *  - getElementById 使用频率�?��，使用直达�?道优化�?
+ *  - getElementsByClassName 性能优于 querySelectorAll, �?IE 系列不支持�?
+ *  - instanceof 对�?能有影响�?
+ *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无�?��余�?防卫”�?
+ *  - query 方法中的条件判断考虑了�?频率优先”原则�?�?��可能出现的情况放在前面�?
+ *  - Array �?push 方法可以�?j++ 来替代，性能有提升�?
+ *  - 返回值策略和 Sizzle �?��，正常时，返回数组；其它�?��情况，返回空数组�?
  *
- *  - 从压缩角度考虑，还可以将 getElmentsByTagName 和 getElementsByClassName 定义为常量，
- *    不过感觉这样做太“压缩控”，还是保留不替换的好。
+ *  - 从压缩角度�?虑，还可以将 getElmentsByTagName �?getElementsByClassName 定义为常量，
+ *    不过感觉这样做太“压缩控”，还是保留不替换的好�?
  *
- *  - 调整 getElementsByClassName 的降级写法，性能最差的放最后。
+ *  - 调整 getElementsByClassName 的降级写法，性能�?��的放�?���?
  *
  * 2010.02
- *  - 添加对分组选择器的支持（主要参考 Sizzle 的代码，代去除了对非 Grade A 级浏览器的支持）
+ *  - 添加对分组�?择器的支持（主要参�? Sizzle 的代码，代去除了对非 Grade A 级浏览器的支持）
  *
  * 2010.03
- *  - 基于原生 dom 的两个 api: S.query 返回数组; S.get 返回第一个。
- *    基于 Node 的 api: S.one, 在 Node 中实现。
- *    基于 NodeList 的 api: S.all, 在 NodeList 中实现。
- *    通过 api 的分层，同时满足初级用户和高级用户的需求。
+ *  - 基于原生 dom 的两�?api: S.query 返回数组; S.get 返回第一个�?
+ *    基于 Node �?api: S.one, �?Node 中实现�?
+ *    基于 NodeList �?api: S.all, �?NodeList 中实现�?
+ *    通过 api 的分层，同时满足初级用户和高级用户的�?���?
  *
  * 2010.05
- *  - 去掉给 S.query 返回值默认添加的 each 方法，保持纯净。
- *  - 对于不支持的 selector, 采用外部耦合进来的 Selector.
+ *  - 去掉�?S.query 返回值默认添加的 each 方法，保持纯�??
+ *  - 对于不支持的 selector, 采用外部耦合进来�?Selector.
  *
  * 2010.06
- *  - 增加 filter 和 test 方法
+ *  - 增加 filter �?test 方法
  *
  * 2010.07
- *  - 取消对 , 分组的支持，group 直接用 Sizzle
+ *  - 取消�?, 分组的支持，group 直接�?Sizzle
  *
  * 2010.08
- *  - 给 S.query 的结果 attach each 方法
+ *  - �?S.query 的结�?attach each 方法
  *
  * Bugs:
- *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
+ *  - S.query('#test-data *') 等带 * 号的选择器，�?IE6 下返回的值不对�?jQuery 等类库也有此 bug, 诡异�?
  *
  * References:
  *  - http://ejohn.org/blog/selectors-that-people-actually-use/
@@ -442,7 +442,7 @@ KISSY.add('dom-class', function(S, undefined) {
                         var className = (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE), j = 0, needle;
                         for (; j < cl; j++) {
                             needle = SPACE + classNames[j] + SPACE;
-                            // 一个 cls 有可能多次出现：'link link2 link link3 link'
+                            // �?�� cls 有可能多次出现：'link link2 link link3 link'
                             while (className.indexOf(needle) >= 0) {
                                 className = className.replace(needle, SPACE);
                             }
@@ -505,8 +505,8 @@ KISSY.add('dom-class', function(S, undefined) {
 
 /**
  * NOTES:
- *   - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
- *   - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
+ *   - hasClass/addClass/removeClass 的�?辑和 jQuery 保持�?��
+ *   - toggleClass 不支�?value �?undefined 的情形（jQuery 支持�?
  */
 /**
  * @module  dom-attr
@@ -577,34 +577,34 @@ KISSY.add('dom-attr', function(S, undefined) {
 
                 var ret;
 
-                // 优先用 el[name] 获取 mapping 属性值：
-                //  - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
-                //  - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
-                //  - href, src 直接获取的是 normalized 后的值，排除掉
-                //  - style 需要用 getAttribute 来获取字符串值，也排除掉
+                // 优先�?el[name] 获取 mapping 属�?值：
+                //  - 可以正确获取 readonly, checked, selected 等特�?mapping 属�?�?
+                //  - 可以获取�?getAttribute 不一定能获取到的值，比如 tabindex 默认�?
+                //  - href, src 直接获取的是 normalized 后的值，排除�?
+                //  - style �?���?getAttribute 来获取字符串值，也排除掉
                 if (!RE_SPECIAL_ATTRS.test(name)) {
                     ret = el[name];
                 }
 
-                // 用 getAttribute 获取非 mapping 属性和 href/src/style 的值：
+                // �?getAttribute 获取�?mapping 属�?�?href/src/style 的�?�?
                 if (ret === undefined) {
                     ret = el.getAttribute(name);
                 }
 
                 // fix ie bugs
                 if (oldIE) {
-                    // 不光是 href, src, 还有 rowspan 等非 mapping 属性，也需要用第 2 个参数来获取原始值
+                    // 不光�?href, src, 还有 rowspan 等非 mapping 属�?，也�?��用第 2 个参数来获取原始�?
                     if (RE_NORMALIZED_ATTRS.test(name)) {
                         ret = el.getAttribute(name, 2);
                     }
-                    // 在标准浏览器下，用 getAttribute 获取 style 值
-                    // IE7- 下，需要用 cssText 来获取
+                    // 在标准浏览器下，�?getAttribute 获取 style �?
+                    // IE7- 下，�?���?cssText 来获�?
                     else if (name === STYLE) {
                         ret = el[STYLE].cssText;
                     }
                 }
 
-                // 对于不存在的属性，统一返回 undefined
+                // 对于不存在的属�?，统�?���?undefined
                 return ret === null ? undefined : ret;
             }
 
@@ -615,12 +615,12 @@ KISSY.add('dom-attr', function(S, undefined) {
                     return;
                 }
 
-                // 不需要加 oldIE 判断，否则 IE8 的 IE7 兼容模式有问题
+                // 不需要加 oldIE 判断，否�?IE8 �?IE7 兼容模式有问�?
                 if (name === STYLE) {
                     el[STYLE].cssText = val;
                 }
                 else {
-                    // checked 属性值，需要通过直接设置才能生效
+                    // checked 属�?值，�?��通过直接设置才能生效
                     if(name === CHECKED) {
                         el[name] = !!val;
                     }
@@ -636,8 +636,8 @@ KISSY.add('dom-attr', function(S, undefined) {
         removeAttr: function(selector, name) {
             S.each(S.query(selector), function(el) {
                 if (isElementNode(el)) {
-                    DOM.attr(el, name, EMPTY); // 先置空
-                    el.removeAttribute(name); // 再移除
+                    DOM.attr(el, name, EMPTY); // 先置�?
+                    el.removeAttribute(name); // 再移�?
                 }
             });
         },
@@ -657,13 +657,13 @@ KISSY.add('dom-attr', function(S, undefined) {
                     return undefined;
                 }
 
-                // 当没有设定 value 时，标准浏览器 option.value === option.text
-                // ie7- 下，没有设定 value 时，option.value === '', 需要用 el.attributes.value 来判断是否有设定 value
+                // 当没有设�?value 时，标准浏览�?option.value === option.text
+                // ie7- 下，没有设定 value 时，option.value === '', �?���?el.attributes.value 来判断是否有设定 value
                 if (nodeNameIs('option', el)) {
                     return (el.attributes.value || {}).specified ? el.value : el.text;
                 }
 
-                // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
+                // 对于 select, 特别�?multiple type, 存在很严重的兼容性问�?
                 if (nodeNameIs(SELECT, el)) {
                     var index = el.selectedIndex,
                         options = el.options;
@@ -691,14 +691,14 @@ KISSY.add('dom-attr', function(S, undefined) {
                     return el.getAttribute('value') === null ? 'on' : el.value;
                 }
 
-                // 普通元素的 value, 归一化掉 \r
+                // 普�?元素�?value, 归一化掉 \r
                 return (el.value || EMPTY).replace(RE_RETURN, EMPTY);
             }
 
             // setter
             S.each(S.query(selector), function(el) {
                 if (nodeNameIs(SELECT, el)) {
-                    // 强制转换数值为字符串，以保证下面的 inArray 正常工作
+                    // 强制转换数�?为字符串，以保证下面�?inArray 正常工作
                     if (S.isNumber(value)) {
                         value += EMPTY;
                     }
@@ -753,7 +753,7 @@ KISSY.add('dom-attr', function(S, undefined) {
         }
     });
 
-    // 判断 el 的 nodeName 是否指定值
+    // 判断 el �?nodeName 是否指定�?
     function nodeNameIs(val, el) {
         return el && el.nodeName.toUpperCase() === val.toUpperCase();
     }
@@ -763,14 +763,14 @@ KISSY.add('dom-attr', function(S, undefined) {
  * NOTES:
  *
  * 2010.03
- *  - 在 jquery/support.js 中，special attrs 里还有 maxlength, cellspacing,
- *    rowspan, colspan, useap, frameboder, 但测试发现，在 Grade-A 级浏览器中
- *    并无兼容性问题。
- *  - 当 colspan/rowspan 属性值设置有误时，ie7- 会自动纠正，和 href 一样，需要传递
- *    第 2 个参数来解决。jQuery 未考虑，存在兼容性 bug.
+ *  - �?jquery/support.js 中，special attrs 里还�?maxlength, cellspacing,
+ *    rowspan, colspan, useap, frameboder, 但测试发现，�?Grade-A 级浏览器�?
+ *    并无兼容性问题�?
+ *  - �?colspan/rowspan 属�?值设置有误时，ie7- 会自动纠正，�?href �?��，需要传�?
+ *    �?2 个参数来解决。jQuery 未�?虑，存在兼容�?bug.
  *  - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
  *  - jquery/attributes.js: Safari mis-reports the default selected
- *    property of an option 在 Safari 4 中已修复。
+ *    property of an option �?Safari 4 中已修复�?
  *
  */
 /**
@@ -822,7 +822,7 @@ KISSY.add('dom-style', function(S, undefined) {
             }
 
             if (name.indexOf('-') > 0) {
-                // webkit 认识 camel-case, 其它内核只认识 cameCase
+                // webkit 认识 camel-case, 其它内核只认�?cameCase
                 name = name.replace(RE_DASH, CAMELCASE_FN);
             }
             name = CUSTOM_STYLES[name] || name;
@@ -835,7 +835,7 @@ KISSY.add('dom-style', function(S, undefined) {
                 if (elem && elem[STYLE]) {
                     ret = name.get ? name.get(elem) : elem[STYLE][name];
 
-                    // 有 get 的直接用自定义函数的返回值
+                    // �?get 的直接用自定义函数的返回�?
                     if (ret === '' && !name.get) {
                         ret = fixComputedStyle(elem, name, DOM._getComputedStyle(elem, name));
                     }
@@ -914,7 +914,7 @@ KISSY.add('dom-style', function(S, undefined) {
             if (id) elem = S.get(id);
             if (!elem) elem = DOM.create('<style>', { id: id });
 
-            // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
+            // 先添加到 DOM 树中，再�?cssText 赋�?，否�?css hack 会失�?
             S.get('head').appendChild(elem);
 
             if (elem.styleSheet) { // IE
@@ -946,23 +946,23 @@ KISSY.add('dom-style', function(S, undefined) {
         return val;
     }
 
-    // 修正 getComputedStyle 返回值的部分浏览器兼容性问题
+    // 修正 getComputedStyle 返回值的部分浏览器兼容�?问题
     function fixComputedStyle(elem, name, val) {
         var offset, ret = val;
 
-        // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
+        // 1. 当没有设�?style.left 时，getComputedStyle 在不同浏览器下，返回值不�?
         //    比如：firefox 返回 0, webkit/ie 返回 auto
-        // 2. style.left 设置为百分比时，返回值为百分比
-        // 对于第一种情况，如果是 relative 元素，值为 0. 如果是 absolute 元素，值为 offsetLeft - marginLeft
-        // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
+        // 2. style.left 设置为百分比时，返回值为百分�?
+        // 对于第一种情况，如果�?relative 元素，�?�?0. 如果�?absolute 元素，�?�?offsetLeft - marginLeft
+        // 对于第二种情况，大部分类库都未做处理，属于�?明之而不 fix”的保留 bug
         if (val === AUTO && RE_LT.test(name)) {
             ret = 0;
 
             if (DOM.css(elem, 'position') === 'absolute') {
                 offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
-                // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                // TODO: 改成特性探测
+                // ie8 下，elem.offsetLeft 包含 offsetParent �?border 宽度，需要减�?
+                // TODO: 改成特�?探测
                 if (UA.ie === 8 || UA.opera) {
                     offset -= PARSEINT(DOM.css(elem.offsetParent, 'border-' + name + '-width')) || 0;
                 }
@@ -978,21 +978,21 @@ KISSY.add('dom-style', function(S, undefined) {
 
 /**
  * NOTES:
- *  - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
- *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
+ *  - Opera 下，color 默认返回 #XXYYZZ, �?rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略�?
+ *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略�?
  *
- *  - 非 webkit 下，jQuery.css paddingLeft 返回 style 值， padding-left 返回 computedStyle 值，
- *    返回的值不同。KISSY 做了统一，更符合预期。
+ *  - �?webkit 下，jQuery.css paddingLeft 返回 style 值， padding-left 返回 computedStyle 值，
+ *    返回的�?不同。KISSY 做了统一，更符合预期�?
  *
- *  - getComputedStyle 在 webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输出 float 值。
+ *  - getComputedStyle �?webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输�?float 值�?
  *
- *  - color: blue 继承值，getComputedStyle, 在 ie 下返回 blue, opera 返回 #0000ff, 其它浏览器
+ *  - color: blue 继承值，getComputedStyle, �?ie 下返�?blue, opera 返回 #0000ff, 其它浏览�?
  *    返回 rgb(0, 0, 255)
  *
- *  - border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值。
+ *  - border-width 值，ie 下有可能返回 medium/thin/thick 等�?，其它浏览器返回 px 值�?
  *
- *  - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未“追求完美”。YUI3 做了部分完美处理，但
- *    依旧存在浏览器差异。
+ *  - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未�?追求完美”�?YUI3 做了部分完美处理，但
+ *    依旧存在浏览器差异�?
  */
 /**
  * @module  dom
@@ -1034,11 +1034,11 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                         try {
                             val = elem[FILTERS]('alpha')[OPACITY];
                         } catch(ex) {
-                            // 没有设置过 opacity 时会报错，这时返回 1 即可
+                            // 没有设置�?opacity 时会报错，这时返�?1 即可
                         }
                     }
 
-                    // 和其他浏览器保持一致，转换为字符串类型
+                    // 和其他浏览器保持�?��，转换为字符串类�?
                     return val / 100 + '';
                 },
 
@@ -1056,7 +1056,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         }
     }
     catch(ex) {
-        S.log('IE filters ActiveX is disabled. ex = ' + ex);
+
     }
 
     // getComputedStyle for IE
@@ -1066,9 +1066,9 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             var style = elem.style,
                 ret = elem[CURRENT_STYLE][name];
 
-            // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
-            // 在 ie 下不对，需要直接用 offset 方式
-            // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
+            // �?width/height 设置为百分比时，通过 pixelLeft 方式转换�?width/height �?
+            // �?ie 下不对，�?��直接�?offset 方式
+            // borderWidth 等�?也有问题，但考虑�?borderWidth 设为百分比的概率很小，这里就不�?虑了
             if(RE_WH.test(name)) {
                 ret = DOM[name](elem) + PX;
             }
@@ -1124,7 +1124,7 @@ KISSY.add('dom-offset', function(S, undefined) {
          * Gets the current coordinates of the element, relative to the document.
          */
         offset: function(elem, val) {
-            // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
+            // ownerDocument 的判断可以保�?elem 没有游离�?document 之外（比�?fragment�?
             if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
 
             // getter
@@ -1150,9 +1150,9 @@ KISSY.add('dom-offset', function(S, undefined) {
 
             // default current window, use native for scrollIntoView(elem, top)
             if (!container || container === win) {
-                // 注意：
-                // 1. Opera 不支持 top 参数
-                // 2. 当 container 已经在视窗中时，也会重新定位
+                // 注意�?
+                // 1. Opera 不支�?top 参数
+                // 2. �?container 已经在视窗中时，也会重新定位
                 return elem.scrollIntoView(top);
             }
             container = S.get(container);
@@ -1169,28 +1169,28 @@ KISSY.add('dom-offset', function(S, undefined) {
                     top: DOM.scrollTop(container) }
                     : DOM.offset(container),
 
-                // elem 相对 container 视窗的坐标
+                // elem 相对 container 视窗的坐�?
                 diff = {
                     left: elemOffset[LEFT] - containerOffset[LEFT],
                     top: elemOffset[TOP] - containerOffset[TOP]
                 },
 
-                // container 视窗的高宽
+                // container 视窗的高�?
                 ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
                 cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
 
-                // container 视窗相对 container 元素的坐标
+                // container 视窗相对 container 元素的坐�?
                 cl = DOM[SCROLL_LEFT](container),
                 ct = DOM[SCROLL_TOP](container),
                 cr = cl + cw,
                 cb = ct + ch,
 
-                // elem 的高宽
+                // elem 的高�?
                 eh = elem.offsetHeight,
                 ew = elem.offsetWidth,
 
-                // elem 相对 container 元素的坐标
-                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                // elem 相对 container 元素的坐�?
+                // 注：diff.left �?border, cl 也含 border, 因此要减去一�?
                 l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
                 t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
                 r = l + ew,
@@ -1198,18 +1198,18 @@ KISSY.add('dom-offset', function(S, undefined) {
 
                 t2, l2;
 
-            // 根据情况将 elem 定位到 container 视窗中
-            // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
-            // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
-            // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
-            // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
+            // 根据情况�?elem 定位�?container 视窗�?
+            // 1. �?eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合�?
+            // 2. �?t < ct 时，elem �?container 视窗上方，优先顶部对�?
+            // 3. �?b > cb 时，elem �?container 视窗下方，优先底部对�?
+            // 4. 其它情况下，elem 已经�?container 视窗中，无需任何操作
             if (eh > ch || t < ct || top) {
                 t2 = t;
             } else if (b > cb) {
                 t2 = b - ch;
             }
 
-            // 水平方向与上面同理
+            // 水平方向与上面同�?
             if (hscroll) {
                 if (ew > cw || l < cl || top) {
                     l2 = l;
@@ -1270,18 +1270,18 @@ KISSY.add('dom-offset', function(S, undefined) {
         }
     });
 
-    // 获取 elem 相对 elem.ownerDocument 的坐标
+    // 获取 elem 相对 elem.ownerDocument 的坐�?
     function getOffset(elem) {
         var box, x = 0, y = 0,
             w = getWin(elem[OWNER_DOCUMENT]);
 
-        // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
+        // 根据 GBS �?��数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方�?
         if (elem[GET_BOUNDING_CLIENT_RECT]) {
             box = elem[GET_BOUNDING_CLIENT_RECT]();
 
-            // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
-            // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
-            // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
+            // 注：jQuery 还�?虑减�?docElem.clientLeft/clientTop
+            // 但测试发现，这样反�?会导致当 html �?body 有边�?边框样式时，获取的�?不正�?
+            // 此外，ie6 会忽�?html �?margin 值，幸运地是没有谁会去设�?html �?margin
 
             x = box[LEFT];
             y = box[TOP];
@@ -1296,7 +1296,7 @@ KISSY.add('dom-offset', function(S, undefined) {
         return { left: x, top: y };
     }
 
-    // 设置 elem 相对 elem.ownerDocument 的坐标
+    // 设置 elem 相对 elem.ownerDocument 的坐�?
     function setOffset(elem, offset) {
         // set position first, in-case top/left are set even on static elem
         if (DOM.css(elem, POSITION) === 'static') {
@@ -1314,8 +1314,8 @@ KISSY.add('dom-offset', function(S, undefined) {
 
 /**
  * TODO:
- *  - 考虑是否实现 jQuery 的 position, offsetParent 等功能
- *  - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
+ *  - 考虑是否实现 jQuery �?position, offsetParent 等功�?
+ *  - 更详细的测试用例（比如：测试 position �?fixed 的情况）
  */
 /**
  * @module  dom-traversal
@@ -1389,12 +1389,12 @@ KISSY.add('dom-traversal', function(S, undefined) {
         }
     });
 
-    // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
+    // 获取元素 elem �?direction 方向上满�?filter 的第�?��元素
     // filter 可为 number, selector, fn
     // direction 可为 parentNode, nextSibling, previousSibling
     function nth(elem, filter, direction, extraFilter) {
         if (!(elem = S.get(elem))) return null;
-        if(filter === undefined) filter = 1; // 默认取 1
+        if(filter === undefined) filter = 1; // 默认�?1
         var ret = null, fi, flen;
 
         if(S.isNumber(filter) && filter >= 0) {
@@ -1416,7 +1416,7 @@ KISSY.add('dom-traversal', function(S, undefined) {
         return ret;
     }
 
-    // 获取元素 elem 的 siblings, 不包括自身
+    // 获取元素 elem �?siblings, 不包括自�?
     function getSiblings(selector, filter, parent) {
         var ret = [], elem = S.get(selector), j, parentNode = elem, next;
         if (elem && parent) parentNode = elem.parentNode;
@@ -1437,8 +1437,8 @@ KISSY.add('dom-traversal', function(S, undefined) {
 /**
  * NOTES:
  *
- *  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
- *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
+ *  - api 的设计上，没有跟�?jQuery. �?��为了和其�?api �?��，保�?first-all 原则。二�?
+ *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能�?
  *
  */
 /**
@@ -1474,11 +1474,11 @@ KISSY.add('dom-create', function(S, undefined) {
             var ret = null, creators = DOM._creators,
                 m, tag = DIV, k, nodes;
 
-            // 简单 tag, 比如 DOM.create('<p>')
+            // �?�� tag, 比如 DOM.create('<p>')
             if ((m = RE_SIMPLE_TAG.exec(html))) {
                 ret = (ownerDoc || doc).createElement(m[1]);
             }
-            // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
+            // 复杂情况，比�?DOM.create('<img src="sprite.png" />')
             else {
                 if ((m = RE_TAG.exec(html)) && (k = m[1]) && S.isFunction(creators[(k = k.toLowerCase())])) {
                     tag = k;
@@ -1553,7 +1553,7 @@ KISSY.add('dom-create', function(S, undefined) {
         return elem;
     }
 
-    // 将 nodeList 转换为 fragment
+    // �?nodeList 转换�?fragment
     function nl2frag(nodes, ownerDoc) {
         var ret = null, i, len;
 
@@ -1570,7 +1570,7 @@ KISSY.add('dom-create', function(S, undefined) {
             }
         }
         else {
-            S.log('Unable to convert ' + nodes + ' to fragment.');
+
         }
 
         return ret;
@@ -1603,7 +1603,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
         html += '<span id="' + id + '"></span>';
 
-        // 确保脚本执行时，相关联的 DOM 元素已经准备好
+        // 确保脚本执行时，相关联的 DOM 元素已经准备�?
         S.available(id, function() {
             var hd = S.get('head'),
                 match, attrs, srcMatch, charsetMatch,
@@ -1642,7 +1642,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 直接通过 innerHTML 设置 html
     function setHTMLSimple(elem, html) {
-        html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所有 script
+        html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所�?script
         try {
             elem.innerHTML = html;
         } catch(ex) { // table.innerHTML = html will throw error in ie.
@@ -1650,14 +1650,14 @@ KISSY.add('dom-create', function(S, undefined) {
             while (elem.firstChild) {
                 elem.removeChild(elem.firstChild);
             }
-            // html == '' 时，无需再 appendChild
+            // html == '' 时，无需�?appendChild
             if (html) elem.appendChild(DOM.create(html));
         }
     }
 
     // only for gecko and ie
     if (UA.gecko || ie) {
-        // 定义 creators, 处理浏览器兼容
+        // 定义 creators, 处理浏览器兼�?
         var creators = DOM._creators,
             create = DOM.create,
             TABLE_OPEN = '<table>',
@@ -1669,7 +1669,7 @@ KISSY.add('dom-create', function(S, undefined) {
                 tr: 'tbody',
                 tbody: 'table',
                 col: 'colgroup',
-                legend: 'fieldset' // ie 支持，但 gecko 不支持
+                legend: 'fieldset' // ie 支持，但 gecko 不支�?
             };
 
         for (var p in creatorsMap) {
@@ -1681,7 +1681,7 @@ KISSY.add('dom-create', function(S, undefined) {
         }
 
         if (ie) {
-            // IE 下不能单独添加 script 元素
+            // IE 下不能单独添�?script 元素
             creators.script = function(html, ownerDoc) {
                 var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
                 frag.innerHTML = '-' + html;
@@ -1704,7 +1704,7 @@ KISSY.add('dom-create', function(S, undefined) {
         }
 
         S.mix(creators, {
-            optgroup: creators.option, // gecko 支持，但 ie 不支持
+            optgroup: creators.option, // gecko 支持，但 ie 不支�?
             th: creators.td,
             thead: creators.tbody,
             tfoot: creators.tbody,
@@ -1716,10 +1716,10 @@ KISSY.add('dom-create', function(S, undefined) {
 
 /**
  * TODO:
- *  - 研究 jQuery 的 buildFragment 和 clean
+ *  - 研究 jQuery �?buildFragment �?clean
  *  - 增加 cache, 完善 test cases
  *  - 支持更多 props
- *  - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
+ *  - remove 时，是否�?��移除事件，以避免内存泄漏？需要详细的测试�?
  */
 /**
  * @module  dom-insertion
@@ -1764,6 +1764,6 @@ KISSY.add('dom-insertion', function(S) {
 /**
  * NOTES:
  *  - appendChild/removeChild/replaceChild 直接用原生的
- *  - append/appendTo, prepend/prependTo, wrap/unwrap 放在 Node 里
+ *  - append/appendTo, prepend/prependTo, wrap/unwrap 放在 Node �?
  *
  */

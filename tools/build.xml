@@ -6,7 +6,7 @@
     <property name="ks-tools.dir" location="${root.dir}/../kissy-tools/"/>
     <property name="build.dir" location="${root.dir}/build/"/>
 
-    <property name="version" value="1.1.2dev"/>
+    <property name="version" value="1.1.2"/>
     <property name="charset" value="utf-8"/>
     <property name="copyright.files" value="*.css, *.js"/>
 
@@ -23,6 +23,9 @@
         <copy todir="${build.dir}/${component.name}">
             <fileset dir="${src.dir}" includes="${component.files}"/>
         </copy>
+        <replaceregexp match="^\s*S\.log\(.+$" replace="" flags="g" byline="true">
+            <fileset dir="${build.dir}/${component.name}" includes="*-pkg.js"/>
+        </replaceregexp>
     </target>
 
     <!-- 压缩代码 -->

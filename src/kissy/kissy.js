@@ -59,11 +59,30 @@
         guid = 0;
 
     mix(S, {
+
         /**
          * The version of the library.
          * @type {String}
          */
         version: '@VERSION@',
+
+        /**
+         * Initializes KISSY object.
+         */
+        _init: function() {
+            // 环境信息
+            this.Env = {
+                mods: { }, // 所有模块列表
+                _loadingQueue: { } // 正在加载中的模块信息
+            };
+
+            // 配置信息
+            this.Config = {
+                debug: '@DEBUG@', // build 时，会将 @DEBUG@ 替换为空
+                base: 'http://a.tbcdn.cn/s/kissy/@VERSION@/build/',
+                timeout: 10   // getScript 的默认 timeout 时间
+            };
+        },
 
         /**
          * Specify a function to execute when the DOM is fully loaded.
@@ -325,7 +344,7 @@
         app: function(name, sx) {
             var O = win[name] || {};
 
-            mix(O, this, true, S.Config.appMembers);
+            mix(O, this, true, S._APP_MEMBERS);
             O._init();
 
             return mix((win[name] = O), S.isFunction(sx) ? sx() : sx);
@@ -369,10 +388,10 @@
         }
     });
 
-    S.Config = {
-        debug: '@DEBUG@', // build 时，会将 @DEBUG@ 替换为空
-        appMembers: ['namespace'] // S.app() 时，需要动态复制的成员列表
-    };
+    S._init();
+
+    // S.app() 时，需要动态复制的成员列表
+    S._APP_MEMBERS = ['_init', 'namespace'];
 
     // 可以通过在 url 上加 ?ks-debug 参数来强制开启 debug 模式
     if (loc && (loc.search || EMPTY).indexOf('ks-debug') !== -1) {

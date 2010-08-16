@@ -6,37 +6,34 @@
 
     var doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-        Config = S.Config,
         EMPTY = '',
         LOADING = 1, LOADED = 2, ERROR = 3, ATTACHED = 4,
         mix = S.mix,
 
         scriptOnload = doc.createElement('script').readyState ?
             function(node, callback) {
+                var oldCallback = node.onreadystatechange;
                 node.onreadystatechange = function() {
                     var rs = node.readyState;
                     if (rs === 'loaded' || rs === 'complete') {
                         node.onreadystatechange = null;
+                        oldCallback && oldCallback();
                         callback.call(this);
                     }
                 };
             } :
             function(node, callback) {
-                node.onload = callback;
+                var oldCallback = node.onload;
+                node.onload = function() {
+                    oldCallback && oldCallback();
+                    callback();
+                };
             },
 
-        RE_CSS = /\.css(?:\?|$)/i;
+        RE_CSS = /\.css(?:\?|$)/i,
+        loader;
 
-    mix(S, {
-
-        /**
-         * Initializes KISSY object.
-         */
-        _init: function() {
-            this.Env = {
-                mods: { }
-            };
-        },
+    loader = {
 
         /**
          * Registers a module.
@@ -72,7 +69,7 @@
                 mix((mods[name] = mod), config);
 
                 // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
-                if(self._isAttached(mod.requires)) {
+                if (self._isAttached(mod.requires)) {
                     self._attachMod(mod);
                 }
             }
@@ -97,14 +94,14 @@
                 i = 0, len = modNames.length, mod, fired;
 
             // 已经全部 attached, 直接执行回调即可
-            if(self._isAttached(modNames)) {
+            if (self._isAttached(modNames)) {
                 callback && callback(self);
                 return;
             }
 
             // 有尚未 attached 的模块
             for (; i < len && (mod = mods[modNames[i++]]);) {
-                if(mod.status === ATTACHED) continue;
+                if (mod.status === ATTACHED) continue;
 
                 self._attach(mod, function() {
                     if (!fired && self._isAttached(modNames)) {
@@ -113,7 +110,7 @@
                     }
                 });
             }
-            
+
             return self;
         },
 
@@ -166,34 +163,50 @@
          * Load a single module.
          */
         _load: function(mod, callback) {
-            var self = this, url;
+            var self = this, url = mod.fullpath,
+                loadingQueque = self.Env._loadingQueue,
+                node;
 
-            if ((mod.status || 0) < LOADING && (url = mod.fullpath)) {
+            if ((mod.status || 0) < LOADING && url) {
                 mod.status = LOADING;
 
-                self.getScript(url, {
-                    success: function() {
-                        if (mod.status !== ERROR) {
-                            S.log(mod.name + ' onload fired.', 'info');
-                            mod.status = LOADED;
-                            callback();
-                        }
-                    },
+                loadingQueque[url] = self.getScript(url, {
+                    success: _success,
                     error: function() {
                         mod.status = ERROR;
+                        _final();
                     }
                 });
+            }
+            // 已经在加载中，需要添加回调到 script onload 中
+            // 注意：没有考虑 error 情形
+            else if (mod.status === LOADING && (node = loadingQueque[url])) {
+                scriptOnload(node, _success);
             }
             // 是内嵌代码，或者已经 loaded
             else {
                 mod.status = LOADED;
                 callback();
             }
+
+            function _success() {
+                if (mod.status !== ERROR) {
+                    S.log(mod.name + ' onload fired.', 'info');
+                    mod.status = LOADED;
+                    callback();
+                }
+                _final();
+            }
+            
+            function _final() {
+                loadingQueque[url] = undefined;
+                delete loadingQueque.url;
+            }
         },
 
         _buildPath: function(mod) {
-            if(!mod.fullpath && mod['path']) {
-                mod.fullpath = Config.base + mod['path'];
+            if (!mod.fullpath && mod['path']) {
+                mod.fullpath = this.Config.base + mod['path'];
             }
         },
 
@@ -249,35 +262,33 @@
                 timer = S.later(function() {
                     timer = undefined;
                     error();
-                }, (timeout || Config.timeout) * 1000);
+                }, (timeout || this.Config.timeout) * 1000);
             }
 
             head.insertBefore(node, head.firstChild);
-            return S;
+            return node;
         }
-    });
+    };
 
-    S._init();
-    Config.appMembers.push('_init', 'add', 'use', '_attach', '_attachMod', '_isAttached');
+    mix(S, loader);
 
-    mix(Config, {
-        base: 'http://a.tbcdn.cn/s/kissy/@VERSION@/build/',
-        timeout: 10   // getScript 的默认 timeout 时间
+    S.each(loader, function(v, k) {
+        S._APP_MEMBERS.push(k);
     });
 
 })(window, KISSY);
 
 /**
  * TODO:
- *  - 由 app 生成的多 loader 测试
  *  - combo 实现
  *
  *
  * NOTES:
  *
- * 2010/08/15 玉伯：
+ * 2010/08/16 玉伯：
  *  - 基于拔赤的实现，重构。解耦 add/use 和 ready 的关系，简化实现代码。
  *  - 暂时去除 combo 支持，combo 由用户手工控制。
+ *  - 支持 app 生成的多 loader.
  *
  * 2010/08/13 拔赤：
  *  - 重写 add, use, ready, 重新组织 add 的工作模式，添加 loader 功能。
@@ -288,7 +299,7 @@
  *    after domready & before KISSY callbacks' ready, after KISSY callbacks' ready）要明确区分。
  *  - 使用 add 和 ready 的基本思路和之前保持一致，即只要执行 add('mod-name', callback)，就
  *    会执行其中的 callback. callback 执行的时机由 loader 统一控制。
- *  - 支持 combo, 通过 KISSY.Config.combo = true 来开启，模块的 fullpath 用 path 代替。
+ *  - 支持 combo, 通过 Config.combo = true 来开启，模块的 fullpath 用 path 代替。
  *  - KISSY 内部组件和开发者文件当做地位平等的模块处理，包括 combo.
  *
  */

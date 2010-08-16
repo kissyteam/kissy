@@ -30,6 +30,9 @@
             <path path="../cookie/cookie-pkg.js"/>
             <path path="../json/json-pkg.js"/>
             <path path="../anim/anim-pkg.js"/>
+            <footer filtering="no" trimleading="yes">
+                KISSY.add('core');
+            </footer>
         </concat>
         <!-- kissy: seed + core, 独立单文件 -->
         <concat destfile="kissy.js" encoding="${charset}" outputencoding="${charset}">
