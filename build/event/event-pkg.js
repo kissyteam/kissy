@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.1
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 13 13:48
+build time: ${build.time}
 */
 /**
  * @module  event
@@ -53,7 +53,6 @@ KISSY.add('event', function(S, undefined) {
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         add: function(target, type, fn, scope /* optional */) {
-            scope = scope || target;
             if (batch('add', target, type, fn, scope)) return;
 
             var id = getID(target), isNativeEventTarget,
@@ -105,14 +104,13 @@ KISSY.add('event', function(S, undefined) {
             }
 
             // 增加 listener
-            events[type].listeners.push({fn: fn, scope: scope});
+            events[type].listeners.push({fn: fn, scope: scope || target});
         },
 
         /**
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */, scope /* optional */) {
-            scope = scope || target;
             if (batch('remove', target, type, fn, scope)) return;
 
             var id = getID(target),
@@ -122,6 +120,7 @@ KISSY.add('event', function(S, undefined) {
             if (id === -1) return; // 不是有效的 target
             if (!id || !(c = cache[id])) return; // 无 cache
             if (c.target !== target) return; // target 不匹配
+            scope = scope || target;
             events = c.events || { };
 
             if ((eventsType = events[type])) {

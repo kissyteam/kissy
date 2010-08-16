@@ -1,12 +1,27 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.1
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 13 13:48
+build time: ${build.time}
 */
+/**
+ * @module   Flash 全局静态类
+ * @author   kingfo<oicuicu@gmail.com>
+ */
+KISSY.add('flash', function(S){
+	
+	S.Flash = {
+		/**
+		 * flash 实例 map { '#id': elem, ... }
+         * @static
+		 */
+		swfs: { },
+		length: 0
+	};
+
+}, { requires: ['core'] });
 /**
  * @module   Flash UA 探测
  * @author   kingfo<oicuicu@gmail.com>
- * @depends  ks-core
  */
 KISSY.add('flash-ua', function(S) {
 
@@ -120,25 +135,8 @@ KISSY.add('flash-ua', function(S) {
  *
  */
 /**
- * @module   Flash 全局静态类
- * @author   kingfo<oicuicu@gmail.com>
- * @depends  ks-core
- */
-KISSY.add('flash', function(S){
-	
-	S.Flash = {
-		/**
-		 * flash 实例 map { '#id': elem, ... }
-         * @static
-		 */
-		swfs: { },
-		length: 0
-	};
-});
-/**
  * @module   将 swf 嵌入到页面中
  * @author   kingfo<oicuicu@gmail.com>, 射雕<lifesinger@gmail.com>
- * @depends  ks-core + json
  */
 KISSY.add('flash-embed', function(S) {
 

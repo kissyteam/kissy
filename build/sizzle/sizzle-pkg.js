@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.1
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 13 13:48
+build time: ${build.time}
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -1067,10 +1067,14 @@ var posProcess = function(selector, context){
 };
 
 // EXPOSE
-KISSY.ExternalSelector = Sizzle;
-KISSY.ExternalSelector._filter = function(selector, filter) {
-    //Sizzle.matches( String selector, Array<DOMElement> set )
-    return Sizzle.matches(filter, KISSY.query(selector));
-};
+KISSY.add('sizzle', function(S) {
+
+    S.ExternalSelector = Sizzle;
+    S.ExternalSelector._filter = function(selector, filter) {
+        return Sizzle.matches(filter, S.query(selector));
+    };
+
+}, { requires: ['core'] });
 
 })();
+

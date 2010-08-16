@@ -16,42 +16,43 @@
     </target>
 
     <target name="concat">
-        <!-- ks-seed: 种子文件 -->
-        <concat destfile="ks-seed.js" encoding="${charset}" outputencoding="${charset}">
+        <!-- seed: 种子 -->
+        <concat destfile="seed.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../kissy/kissy-pkg.js"/>
         </concat>
-        <!-- ks-core: 核心文件，包括关键组件，一般在页头引入 -->
-        <concat destfile="ks-core.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../kissy/kissy-pkg.js"/>
+        <!-- core: 核心，提供基础服务 -->
+        <concat destfile="core.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../ua/ua-pkg.js"/>
             <path path="../dom/dom-pkg.js"/>
             <path path="../event/event-pkg.js"/>
             <path path="../node/node-pkg.js"/>
-            <path path="../ajax/ajax.js"/>
-            <path path="../cookie/cookie.js"/>
-        </concat>
-        <!-- ks-more: 常用 utils 和 widgets, 一般在页尾引入 -->
-        <concat destfile="ks-more.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../json/json.js"/>
-            <path path="../sizzle/sizzle.js"/>
+            <!--<path path="../ajax/ajax-pkg.js"/>-->
+            <path path="../cookie/cookie-pkg.js"/>
+            <path path="../json/json-pkg.js"/>
             <path path="../anim/anim-pkg.js"/>
-            <path path="../datalazyload/datalazyload.js"/>
+        </concat>
+        <!-- kissy: seed + core, 独立单文件 -->
+        <concat destfile="kissy.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="seed.js"/>
+            <path path="core.js"/>
+        </concat>
+        <!-- kissy-aio: 所有文件 -->
+        <concat destfile="kissy-aio.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="kissy.js"/>
+            <path path="../sizzle/sizzle-pkg.js"/>
+            <path path="../datalazyload/datalazyload-pkg.js"/>
             <path path="../flash/flash-pkg.js"/>
             <path path="../switchable/switchable-pkg.js"/>
-            <path path="../suggest/suggest.js"/>
-            <!--<path path="../imagezoom/imagezoom.js"/>-->
-            <!--<path path="../calendar/calendar.js"/>-->
-        </concat>
-        <!-- kissy: 包含 core 和 more 两部分，在页头无 ks-core 时使用 -->
-        <concat destfile="kissy.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="ks-core.js"/>
-            <path path="ks-more.js"/>
+            <path path="../suggest/suggest-pkg.js"/>
+            <!--<path path="../imagezoom/imagezoom-pkg.js"/>-->
+            <!--<path path="../calendar/calendar-pkg.js"/>-->
         </concat>
     </target>
 
     <target name="clean">
+        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="seed-min.js" />
         <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="kissy-min.js" />
-        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="ks-core-min.js" />
+        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="kissy-aio-min.js" />
     </target>
 
     <target name="build" depends="pre-clean,concat,compress,copyright,clean">

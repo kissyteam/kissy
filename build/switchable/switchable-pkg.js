@@ -1,12 +1,11 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.1
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 13 13:48
+build time: ${build.time}
 */
 /**
  * Switchable
  * @creator  玉伯<lifesinger@gmail.com>
- * @depends  ks-core
  */
 KISSY.add('switchable', function(S, undefined) {
 
@@ -380,7 +379,8 @@ KISSY.add('switchable', function(S, undefined) {
     });
 
     S.Switchable = Switchable;
-});
+
+}, { requires: ['core'] } );
 
 /**
  * NOTES:

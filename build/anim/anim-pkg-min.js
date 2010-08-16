@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.1
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 13 13:47
+build time: ${build.time}
 */
 KISSY.add("anim-easing",function(c){var n=Math,j=n.PI,l=n.pow,k=n.sin,i=1.70158,q={easeNone:function(a){return a},easeIn:function(a){return a*a},easeOut:function(a){return(2-a)*a},easeBoth:function(a){return(a*=2)<1?0.5*a*a:0.5*(1- --a*(a-2))},easeInStrong:function(a){return a*a*a*a},easeOutStrong:function(a){return 1- --a*a*a*a},easeBothStrong:function(a){return(a*=2)<1?0.5*a*a*a*a:0.5*(2-(a-=2)*a*a*a)},elasticIn:function(a){if(a===0||a===1)return a;return-(l(2,10*(a-=1))*k((a-0.075)*2*j/0.3))},
 elasticOut:function(a){if(a===0||a===1)return a;return l(2,-10*a)*k((a-0.075)*2*j/0.3)+1},elasticBoth:function(a){if(a===0||(a*=2)===2)return a;if(a<1)return-0.5*l(2,10*(a-=1))*k((a-0.1125)*2*j/0.45);return l(2,-10*(a-=1))*k((a-0.1125)*2*j/0.45)*0.5+1},backIn:function(a){if(a===1)a-=0.0010;return a*a*((i+1)*a-i)},backOut:function(a){return(a-=1)*a*((i+1)*a+i)+1},backBoth:function(a){if((a*=2)<1)return 0.5*a*a*(((i*=1.525)+1)*a-i);return 0.5*((a-=2)*a*(((i*=1.525)+1)*a+i)+2)},bounceIn:function(a){return 1-

@@ -6,6 +6,16 @@
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
-    <target name="build" depends="common.build">
+    <target name="concat">
+        <concat destfile="imagezoom-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="imagezoom.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="imagezoom-pkg.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
     </target>
 </project>

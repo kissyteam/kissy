@@ -6,7 +6,7 @@
 
     var doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-        KSConfig = S.Config,
+        Config = S.Config,
         EMPTY = '',
         LOADING = 1, LOADED = 2, ERROR = 3, ATTACHED = 4,
         mix = S.mix,
@@ -25,15 +25,17 @@
                 node.onload = callback;
             },
 
-        // css file
         RE_CSS = /\.css(?:\?|$)/i;
 
-    S.mix(S, {
+    mix(S, {
 
-        _initLoader: function() {
-            mix(this.Env, {
-                mods: {}
-            });
+        /**
+         * Initializes KISSY object.
+         */
+        _init: function() {
+            this.Env = {
+                mods: { }
+            };
         },
 
         /**
@@ -55,7 +57,7 @@
          * @return {KISSY}
          */
         add: function(name, fn, config) {
-            var self = this, mods = self.Env.mods;
+            var self = this, mods = self.Env.mods, mod;
 
             if (S.isPlainObject(name)) {
                 S.each(name, function(v, k) {
@@ -64,9 +66,15 @@
                 mix(mods, name);
             }
             else {
-                mods[name] = mods[name] || {};
-                mix(mods[name], { name: name, fn: fn });
-                mix(mods[name], config);
+                // 注意：通过 add(name, fn) 注册的代码，无论是页面中的代码，还是 js 文件里的代码，add 执行时，
+                //      都意味着该模块已经 LOADED
+                mix((mod = mods[name] || { }), { name: name, fn: fn, status: LOADED });
+                mix((mods[name] = mod), config);
+
+                // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
+                if(self._isAttached(mod.requires)) {
+                    self._attachMod(mod);
+                }
             }
 
             return self;
@@ -77,9 +85,9 @@
          * <code>
          * S.use('mod-name', callback);
          * S.use('mod1,mod2', callback);
-         * S.use('mod1+mod2,mod3', callback); 暂未实现
-         * S.use('*', callback);
-         * S.use('*+', callback); 暂未实现
+         * S.use('mod1+mod2,mod3', callback); 暂不实现
+         * S.use('*', callback);  暂不实现
+         * S.use('*+', callback); 暂不实现
          * </code>
          */
         use: function(modNames, callback) {
@@ -88,7 +96,16 @@
             var self = this, mods = self.Env.mods,
                 i = 0, len = modNames.length, mod, fired;
 
+            // 已经全部 attached, 直接执行回调即可
+            if(self._isAttached(modNames)) {
+                callback && callback(self);
+                return;
+            }
+
+            // 有尚未 attached 的模块
             for (; i < len && (mod = mods[modNames[i++]]);) {
+                if(mod.status === ATTACHED) continue;
+
                 self._attach(mod, function() {
                     if (!fired && self._isAttached(modNames)) {
                         fired = true;
@@ -96,6 +113,8 @@
                     }
                 });
             }
+            
+            return self;
         },
 
         /**
@@ -112,27 +131,24 @@
 
             // load and attach this module
             self._buildPath(mod);
-            if (mod.fullpath) {
-                self._load(mod, fn);
-            }
-            // 没有 fullpath, 无需加载
-            else {
-                mod.status = LOADED;
-                fn();
-            }
+            self._load(mod, fn);
 
             function fn() {
                 if (self._isAttached(requires)) {
                     if (mod.status === LOADED) {
-                        if (mod.fn) mod.fn(self);
-                        mod.status = ATTACHED;
-                        S.log(mod.name + '.status = attached');
+                        self._attachMod(mod);
                     }
                     if (mod.status === ATTACHED) {
                         callback();
                     }
                 }
             }
+        },
+
+        _attachMod: function(mod) {
+            if (mod.fn) mod.fn(this);
+            mod.status = ATTACHED;
+            S.log(mod.name + '.status = attached');
         },
 
         _isAttached: function(modNames) {
@@ -157,8 +173,8 @@
 
                 self.getScript(url, {
                     success: function() {
-                        if (mod.status === LOADING) { // 可能已 timeout, status 为 ERROR, 忽略掉
-                            S.log(mod.name + ' onload fired.');
+                        if (mod.status !== ERROR) {
+                            S.log(mod.name + ' onload fired.', 'info');
                             mod.status = LOADED;
                             callback();
                         }
@@ -168,11 +184,16 @@
                     }
                 });
             }
+            // 是内嵌代码，或者已经 loaded
+            else {
+                mod.status = LOADED;
+                callback();
+            }
         },
 
         _buildPath: function(mod) {
             if(!mod.fullpath && mod['path']) {
-                mod.fullpath = KSConfig.base + mod['path'];
+                mod.fullpath = Config.base + mod['path'];
             }
         },
 
@@ -228,7 +249,7 @@
                 timer = S.later(function() {
                     timer = undefined;
                     error();
-                }, (timeout || KSConfig.timeout) * 1000);
+                }, (timeout || Config.timeout) * 1000);
             }
 
             head.insertBefore(node, head.firstChild);
@@ -236,19 +257,28 @@
         }
     });
 
-    // init KISSY
     S._init();
+    Config.appMembers.push('_init', 'add', 'use', '_attach', '_attachMod', '_isAttached');
+
+    mix(Config, {
+        base: 'http://a.tbcdn.cn/s/kissy/@VERSION@/build/',
+        timeout: 10   // getScript 的默认 timeout 时间
+    });
 
 })(window, KISSY);
 
 /**
+ * TODO:
+ *  - 由 app 生成的多 loader 测试
+ *  - combo 实现
+ *
+ *
  * NOTES:
  *
  * 2010/08/15 玉伯：
  *  - 基于拔赤的实现，重构。解耦 add/use 和 ready 的关系，简化实现代码。
- *  - 去除 combo 支持，combo 由用户手工控制。
- *  - TODO: 由 app 产生的多 loader 测试。
- * 
+ *  - 暂时去除 combo 支持，combo 由用户手工控制。
+ *
  * 2010/08/13 拔赤：
  *  - 重写 add, use, ready, 重新组织 add 的工作模式，添加 loader 功能。
  *  - 借鉴 YUI3 原生支持 loader, 但 YUI 的 loader 使用场景复杂，且多 loader 共存的场景

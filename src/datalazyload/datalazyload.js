@@ -2,7 +2,6 @@
  * 数据延迟加载组件
  * @module   datalazyload
  * @creator  玉伯<lifesinger@gmail.com>
- * @depends  ks-core
  */
 KISSY.add('datalazyload', function(S, undefined) {
 
@@ -367,7 +366,8 @@ KISSY.add('datalazyload', function(S, undefined) {
     S.mix(DataLazyload, DataLazyload.prototype, true, ['loadCustomLazyData', '_loadImgSrc', '_loadAreaData']);
 
     S.DataLazyload = DataLazyload;
-});
+
+}, { requires: ['core'] });
 
 /**
  * NOTES:

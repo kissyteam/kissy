@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.1
+Copyright 2010, KISSY UI Library v1.1.2dev
 MIT Licensed
-build time: Aug 13 13:47
+build time: ${build.time}
 */
 /**
  * @module anim-easing
@@ -194,7 +194,6 @@ KISSY.add('anim-easing', function(S) {
 /**
  * @module   anim
  * @author   lifesinger@gmail.com
- * @depends  ks-core
  */
 KISSY.add('anim', function(S, undefined) {
 
