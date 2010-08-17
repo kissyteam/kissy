@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 16 16:51
+build time: Aug 17 13:31
 */
 /**
  * Switchable
@@ -840,27 +840,27 @@ KISSY.add('switchable-lazyload', function(S) {
 /**
  * Switchable Autorender Plugin
  * @creator  玉伯<lifesinger@gmail.com>
- * @depends  ks-core, json
  */
 KISSY.add('switchable-autorender', function(S) {
 
     /**
      * 自动渲染 container 元素内的�?�� Switchable 组件
+     * 默认钩子�?div class="KS_Widget" data-widget-type="Tabs" data-widget-config="{...}">
      */
-    S.Switchable.autoRender = function(container, hookPrefix, dataAttrName) {
-        hookPrefix = '.' + (hookPrefix || 'KS_');
-        dataAttrName = dataAttrName || 'data-ks-switchable';
+    S.Switchable.autoRender = function(hook, container) {
+        hook = '.' + (hook || 'KS_Widget');
 
-        S.each(['Switchable', 'Tabs', 'Slide', 'Carousel', 'Accordion'], function(name) {
-            S.each(S.query(hookPrefix + name, container), function(elem) {
+        S.query(hook, container).each(function(elem) {
+            var type = elem.getAttribute('data-widget-type'), config;
+            if (type && ('Switchable Tabs Slide Carousel Accordion'.indexOf(type) > -1)) {
                 try {
-                    var config = elem.getAttribute(dataAttrName);
-                    if(config) config = config.replace(/'/g, '"');
-                    new S[name](elem, S.JSON.parse(config));
+                    config = elem.getAttribute('data-widget-config');
+                    if (config) config = config.replace(/'/g, '"');
+                    new S[type](elem, S.JSON.parse(config));
                 } catch(ex) {
 
                 }
-            });
+            }
         });
     }
 });
