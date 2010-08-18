@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 18 10:33
+build time: Aug 18 17:35
 */
 /**
  * Switchable
@@ -19,11 +19,11 @@ KISSY.add('switchable', function(S, undefined) {
 
     /**
      * Switchable Widget
-     * attached members�?
+     * attached members：
      *   - this.container
      *   - this.config
-     *   - this.triggers  可以为空�?[]
-     *   - this.panels    可以为空�?[]
+     *   - this.triggers  可以为空值 []
+     *   - this.panels    可以为空值 []
      *   - this.content
      *   - this.length
      *   - this.activeIndex
@@ -80,7 +80,7 @@ KISSY.add('switchable', function(S, undefined) {
         //self.content
 
         /**
-         * 当前�?���?index
+         * 当前激活的 index
          * @type Number
          */
         self.activeIndex = config.activeIndex;
@@ -90,21 +90,21 @@ KISSY.add('switchable', function(S, undefined) {
 
     // 默认配置
     Switchable.Config = {
-        markupType: 0, // markup 的类型，取�?如下�?
+        markupType: 0, // markup 的类型，取值如下：
 
-        // 0 - 默认结构：�?�?nav �?content 来获�?triggers �?panels
+        // 0 - 默认结构：通过 nav 和 content 来获取 triggers 和 panels
         navCls: CLS_PREFIX + 'nav',
         contentCls: CLS_PREFIX + 'content',
 
-        // 1 - 适度灵活：�?�?cls 来获�?triggers �?panels
+        // 1 - 适度灵活：通过 cls 来获取 triggers 和 panels
         triggerCls: CLS_PREFIX + 'trigger',
         panelCls: CLS_PREFIX + 'panel',
 
-        // 2 - 完全自由：直接传�?triggers �?panels
+        // 2 - 完全自由：直接传入 triggers 和 panels
         triggers: [],
         panels: [],
 
-        // 是否有触�?
+        // 是否有触点
         hasTriggers: true,
 
         // 触发类型
@@ -112,13 +112,13 @@ KISSY.add('switchable', function(S, undefined) {
         // 触发延迟
         delay: .1, // 100ms
 
-        activeIndex: 0, // markup 的默认激活项，应该与�?index �?��
+        activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
         activeTriggerCls: 'ks-active',
 
-        // 可见视图内有多少�?panels
+        // 可见视图内有多少个 panels
         steps: 1,
 
-        // 可见视图区域的大小�?�?��不需要设定此值，仅当获取值不正确时，用于手工指定大小
+        // 可见视图区域的大小。一般不需要设定此值，仅当获取值不正确时，用于手工指定大小
         viewSize: []
     };
 
@@ -189,7 +189,7 @@ KISSY.add('switchable', function(S, undefined) {
                 triggers = self._generateTriggersMarkup(self.length);
             }
 
-            // �?triggers �?panels 转换为普通数�?
+            // 将 triggers 和 panels 转换为普通数组
             self.triggers = S.makeArray(triggers);
             self.panels = S.makeArray(panels);
 
@@ -198,7 +198,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * 自动生成 triggers �?markup
+         * 自动生成 triggers 的 markup
          */
         _generateTriggersMarkup: function(len) {
             var self = this, cfg = self.config,
@@ -219,7 +219,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * �?triggers 添加事件
+         * 给 triggers 添加事件
          */
         _bindTriggers: function() {
             var self = this, cfg = self.config,
@@ -230,7 +230,7 @@ KISSY.add('switchable', function(S, undefined) {
                 (function(index) {
                     trigger = triggers[index];
 
-                    // 响应点击�?Tab �?
+                    // 响应点击和 Tab 键
                     Event.on(trigger, 'click focus', function() {
                         self._onFocusTrigger(index);
                     });
@@ -249,22 +249,22 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * click or tab 键激�?trigger 时触发的事件
+         * click or tab 键激活 trigger 时触发的事件
          */
         _onFocusTrigger: function(index) {
             var self = this;
             if (!self._triggerIsValid()) return; // 重复点击
 
-            this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉�?
+            this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
             self.switchTo(index);
         },
 
         /**
-         * 鼠标悬浮�?trigger 上时触发的事�?
+         * 鼠标悬浮在 trigger 上时触发的事件
          */
         _onMouseEnterTrigger: function(index) {
             var self = this;
-            if (!self._triggerIsValid()) return; // 重复悬浮。比如：已显示内容时，将鼠标快�?滑出再滑进来，不必再次触发�?
+            if (!self._triggerIsValid()) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
 
             self.switchTimer = S.later(function() {
                 self.switchTo(index);
@@ -286,7 +286,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * 取消切换定时�?
+         * 取消切换定时器
          */
         _cancelSwitchTimer: function() {
             var self = this;
@@ -346,7 +346,7 @@ KISSY.add('switchable', function(S, undefined) {
          * 切换视图
          */
         _switchView: function(fromPanels, toPanels, index/*, direction*/) {
-            // �?��单的切换效果：直接隐�?显示
+            // 最简单的切换效果：直接隐藏/显示
             DOM.css(fromPanels, DISPLAY, NONE);
             DOM.css(toPanels, DISPLAY, BLOCK);
 
@@ -362,7 +362,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * 切换到上�?���?
+         * 切换到上一视图
          */
         prev: function() {
             var self = this, activeIndex = self.activeIndex;
@@ -370,7 +370,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * 切换到下�?���?
+         * 切换到下一视图
          */
         next: function() {
             var self = this, activeIndex = self.activeIndex;
@@ -386,19 +386,19 @@ KISSY.add('switchable', function(S, undefined) {
  * NOTES:
  *
  * 2010.07
- *  - 重构，去掉对 YUI2-Animation 的依�?
+ *  - 重构，去掉对 YUI2-Animation 的依赖
  *
  * 2010.04
- *  - 重构，脱离对 yahoo-dom-event 的依�?
+ *  - 重构，脱离对 yahoo-dom-event 的依赖
  *
  * 2010.03
- *  - 重构，去�?Widget, 部分代码直接采用 kissy 基础�?
- *  - 插件机制�?weave 织入法改�?hook 钩子�?
+ *  - 重构，去掉 Widget, 部分代码直接采用 kissy 基础库
+ *  - 插件机制从 weave 织入法改成 hook 钩子法
  *
  * TODO:
  *  - http://malsup.com/jquery/cycle/
  *  - http://www.mall.taobao.com/go/chn/mall_chl/flagship.php
- *  - �?touch 设备的支�?
+ *  - 对 touch 设备的支持
  *
  * References:
  *  - jQuery Scrollable http://flowplayer.org/tools/scrollable.html
@@ -408,7 +408,7 @@ KISSY.add('switchable', function(S, undefined) {
  * Switchable Autoplay Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-autoplay', function(S, undefined) {
+KISSY.add('autoplay', function(S, undefined) {
 
     var Event = S.Event,
         Switchable = S.Switchable;
@@ -419,7 +419,7 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
     S.mix(Switchable.Config, {
         autoplay: false,
         interval: 5, // 自动播放间隔时间
-        pauseOnHover: true  // triggerType �?mouse 时，鼠标悬停�?slide 上是否暂停自动播�?
+        pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
     });
 
     /**
@@ -435,14 +435,14 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
             var cfg = host.config, interval = cfg.interval * 1000, timer;
             if (!cfg.autoplay) return;
 
-            // 鼠标悬停，停止自动播�?
+            // 鼠标悬停，停止自动播放
             if (cfg.pauseOnHover) {
                 Event.on(host.container, 'mouseenter', function() {
                     if(timer) {
                         timer.cancel();
                         timer = undefined;
                     }
-                    host.paused = true; // paused 可以让外部知�?autoplay 的当前状�?
+                    host.paused = true; // paused 可以让外部知道 autoplay 的当前状态
                 });
                 Event.on(host.container, 'mouseleave', function() {
                     host.paused = false;
@@ -465,12 +465,12 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
         }
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 /**
  * Switchable Effect Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-effect', function(S, undefined) {
+KISSY.add('effect', function(S, undefined) {
 
     var DOM = S.DOM, Anim = S.Anim,
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
@@ -484,17 +484,17 @@ KISSY.add('switchable-effect', function(S, undefined) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        effect: NONE, // 'scrollx', 'scrolly', 'fade' 或�?直接传入 custom effect fn
-        duration: .5, // 动画的时�?
+        effect: NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
+        duration: .5, // 动画的时长
         easing: 'easeNone' // easing method
     });
 
     /**
-     * 定义效果�?
+     * 定义效果集
      */
     Switchable.Effects = {
 
-        // �?��素的显示/隐藏效果
+        // 最朴素的显示/隐藏效果
         none: function(fromEls, toEls, callback) {
             DOM.css(fromEls, DISPLAY, NONE);
             DOM.css(toEls, DISPLAY, BLOCK);
@@ -511,7 +511,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
 
             if (self.anim) self.anim.stop(true);
 
-            // 首先显示下一�?
+            // 首先显示下一张
             DOM.css(toEl, OPACITY, 1);
 
             // 动画切换
@@ -555,7 +555,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
         name: 'effect',
 
         /**
-         * 根据 effect, 调整初始状�?
+         * 根据 effect, 调整初始状态
          */
         init: function(host) {
             var cfg = host.config, effect = cfg.effect,
@@ -569,35 +569,35 @@ KISSY.add('switchable-effect', function(S, undefined) {
                 cfg.viewSize[0] || panels[0].offsetWidth * steps,
                 cfg.viewSize[1] || panels[0].offsetHeight * steps
             ];
-            // 注：�?�� panel 的尺寸应该相�?
-            //    �?��指定第一�?panel �?width �?height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等�?会不�?
+            // 注：所有 panel 的尺寸应该相同
+            //    最好指定第一个 panel 的 width 和 height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
 
-            // 2. 初始�?panels 样式
+            // 2. 初始化 panels 样式
             if (effect !== NONE) { // effect = scrollx, scrolly, fade
 
-                // 这些特效�?���?panels 都显示出�?
+                // 这些特效需要将 panels 都显示出来
                 S.each(panels, function(panel) {
                     DOM.css(panel, DISPLAY, BLOCK);
                 });
 
                 switch (effect) {
-                    // 如果是滚动效�?
+                    // 如果是滚动效果
                     case SCROLLX:
                     case SCROLLY:
-                        // 设置定位信息，为滚动效果做铺�?
+                        // 设置定位信息，为滚动效果做铺垫
                         DOM.css(content, POSITION, ABSOLUTE);
-                        DOM.css(content.parentNode, POSITION, RELATIVE); // 注：content 的父级不�?���?container
+                        DOM.css(content.parentNode, POSITION, RELATIVE); // 注：content 的父级不一定是 container
 
                         // 水平排列
                         if (effect === SCROLLX) {
                             DOM.css(panels, FLOAT, LEFT);
 
-                            // 设置�?��宽度，以保证有空间让 panels 水平排布
+                            // 设置最大宽度，以保证有空间让 panels 水平排布
                             DOM.width(content, host.viewSize[0] * (len / steps));
                         }
                         break;
 
-                    // 如果是�?明效果，则初始化透明
+                    // 如果是透明效果，则初始化透明
                     case FADE:
                         var min = activeIndex * steps,
                             max = min + steps - 1,
@@ -615,7 +615,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
                 }
             }
 
-            // 3. �?CSS 里，�?���?container 设定高宽�?overflow: hidden
+            // 3. 在 CSS 里，需要给 container 设定高宽和 overflow: hidden
         }
     });
 
@@ -636,12 +636,12 @@ KISSY.add('switchable-effect', function(S, undefined) {
 
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 /**
  * Switchable Circular Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-circular', function(S, undefined) {
+KISSY.add('circular', function(S, undefined) {
 
     var DOM = S.DOM,
         POSITION = 'position', RELATIVE = 'relative',
@@ -673,17 +673,17 @@ KISSY.add('switchable-circular', function(S, undefined) {
             isCritical,
             isBackward = direction === BACKWARD;
 
-        // 从第�?��反向滚动到最后一�?or 从最后一个正向滚动到第一�?
+        // 从第一个反向滚动到最后一个 or 从最后一个正向滚动到第一个
         isCritical = (isBackward && activeIndex === 0 && index === len - 1)
             || (direction === FORWARD && activeIndex === len - 1 && index === 0);
 
         if (isCritical) {
-            // 调整位置并获�?diff
+            // 调整位置并获取 diff
             diff = adjustPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
         }
         props[prop] = diff + PX;
 
-        // �?��动画
+        // 开始动画
         if (self.anim) self.anim.stop();
         self.anim = new S.Anim(self.content, props, cfg.duration, cfg.easing, function() {
             if (isCritical) {
@@ -708,13 +708,13 @@ KISSY.add('switchable-circular', function(S, undefined) {
             to = (start + 1) * steps,
             i;
 
-        // 调整 panels 到下�?��视图�?
+        // 调整 panels 到下一个视图中
         for (i = from; i < to; i++) {
             DOM.css(panels[i], POSITION, RELATIVE);
             DOM.css(panels[i], prop, (isBackward ? -1 : 1) * viewDiff * len);
         }
 
-        // 偏移�?
+        // 偏移量
         return isBackward ? viewDiff : -viewDiff * len;
     }
 
@@ -730,13 +730,13 @@ KISSY.add('switchable-circular', function(S, undefined) {
             to = (start + 1) * steps,
             i;
 
-        // 滚动完成后，复位到正常状�?
+        // 滚动完成后，复位到正常状态
         for (i = from; i < to; i++) {
             DOM.css(panels[i], POSITION, EMPTY);
             DOM.css(panels[i], prop, EMPTY);
         }
 
-        // 瞬移到正常位�?
+        // 瞬移到正常位置
         DOM.css(self.content, prop, isBackward ? -viewDiff * (len - 1) : EMPTY);
     }
 
@@ -748,31 +748,31 @@ KISSY.add('switchable-circular', function(S, undefined) {
         name: 'circular',
 
         /**
-         * 根据 effect, 调整初始状�?
+         * 根据 effect, 调整初始状态
          */
         init: function(host) {
             var cfg = host.config;
 
-            // 仅有滚动效果�?��下面的调�?
+            // 仅有滚动效果需要下面的调整
             if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
                 // 覆盖滚动效果函数
-                cfg.scrollType = cfg.effect; // 保存�?scrollType �?
+                cfg.scrollType = cfg.effect; // 保存到 scrollType 中
                 cfg.effect = circularScroll;
             }
         }
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 
 /**
  * TODO:
- *   - 是否�?��考虑�?0 �?2（非�?���?���?�?backward 滚动？需要更灵活
+ *   - 是否需要考虑从 0 到 2（非最后一个） 的 backward 滚动？需要更灵活
  */
 /**
  * Switchable Lazyload Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-lazyload', function(S) {
+KISSY.add('lazyload', function(S) {
 
     var DOM = S.DOM,
         EVENT_BEFORE_SWITCH = 'beforeSwitch',
@@ -792,7 +792,7 @@ KISSY.add('switchable-lazyload', function(S) {
     });
 
     /**
-     * 织入初始化函�?
+     * 织入初始化函数
      */
     Switchable.Plugins.push({
 
@@ -803,7 +803,7 @@ KISSY.add('switchable-lazyload', function(S) {
                 cfg = host.config,
                 type = cfg.lazyDataType, flag = FLAGS[type];
 
-            if (!DataLazyload || !type || !flag) return; // 没有延迟�?
+            if (!DataLazyload || !type || !flag) return; // 没有延迟项
 
             host.on(EVENT_BEFORE_SWITCH, loadLazyData);
 
@@ -840,16 +840,16 @@ KISSY.add('switchable-lazyload', function(S) {
         }
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 /**
  * Switchable Autorender Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-autorender', function(S) {
+KISSY.add('autorender', function(S) {
 
     /**
-     * 自动渲染 container 元素内的�?�� Switchable 组件
-     * 默认钩子�?div class="KS_Widget" data-widget-type="Tabs" data-widget-config="{...}">
+     * 自动渲染 container 元素内的所有 Switchable 组件
+     * 默认钩子：<div class="KS_Widget" data-widget-type="Tabs" data-widget-config="{...}">
      */
     S.Switchable.autoRender = function(hook, container) {
         hook = '.' + (hook || 'KS_Widget');
@@ -868,7 +868,7 @@ KISSY.add('switchable-autorender', function(S) {
         });
     }
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 /**
  * Tabs Widget
  * @creator  玉伯<lifesinger@gmail.com>
@@ -893,7 +893,7 @@ KISSY.add('tabs', function(S) {
     S.extend(Tabs, S.Switchable);
     S.Tabs = Tabs;
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 /**
  * Tabs Widget
  * @creator     玉伯<lifesinger@gmail.com>
@@ -926,7 +926,7 @@ KISSY.add('slide', function(S) {
     S.extend(Slide, S.Switchable);
     S.Slide = Slide;
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 /**
  * Carousel Widget
  * @creator  玉伯<lifesinger@gmail.com>
@@ -971,7 +971,7 @@ KISSY.add('carousel', function(S, undefined) {
 
     /**
      * Carousel 的初始化逻辑
-     * 增加�?
+     * 增加了:
      *   self.prevBtn
      *   self.nextBtn
      */
@@ -988,7 +988,7 @@ KISSY.add('carousel', function(S, undefined) {
             });
         });
 
-        // 注册 switch 事件，处�?prevBtn/nextBtn �?disable 状�?
+        // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
         // circular = true 时，无需处理
         if (!cfg.circular) {
             self.on('switch', function(ev) {
@@ -1008,19 +1008,19 @@ KISSY.add('carousel', function(S, undefined) {
         });
     }
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 
 
 /**
  * NOTES:
  *
  * 2010.07
- *  - 添加�?prevBtn/nextBtn 的支�?
+ *  - 添加对 prevBtn/nextBtn 的支持
  *  - 添加 itemSelected 事件
  *
  * TODO:
- *  - 对键盘事件的支持，比�?Up/Down 触发 prevItem/nextItem, PgDn/PgUp 触发 prev/next
- *  - itemSelected 时，自动居中的特�?
+ *  - 对键盘事件的支持，比如 Up/Down 触发 prevItem/nextItem, PgDn/PgUp 触发 prev/next
+ *  - itemSelected 时，自动居中的特性
  */
 /**
  * Accordion Widget
@@ -1061,7 +1061,7 @@ KISSY.add('accordion', function(S) {
          * 重复触发时的有效判断
          */
         _triggerIsValid: function(index) {
-            // multiple 模式下，再次触发意味�?��换展�?收缩状�?
+            // multiple 模式下，再次触发意味着切换展开/收缩状态
             return this.activeIndex !== index || this.config.multiple;
         },
 
@@ -1083,7 +1083,7 @@ KISSY.add('accordion', function(S) {
         }
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 
 /**
  * TODO:

@@ -2,7 +2,7 @@
  * Switchable Autorender Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-autorender', function(S) {
+KISSY.add('autorender', function(S) {
 
     /**
      * 自动渲染 container 元素内的所有 Switchable 组件
@@ -25,4 +25,4 @@ KISSY.add('switchable-autorender', function(S) {
         });
     }
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );

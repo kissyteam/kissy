@@ -59,7 +59,7 @@ KISSY.add('accordion', function(S) {
         }
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 
 /**
  * TODO:

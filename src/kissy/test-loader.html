@@ -31,7 +31,7 @@ S.log = function(msg,color){
 	S._log(msg);
 
 	if(typeof color == 'undefined'){
-		var color = '';
+		color = '';
 	}
     if(color == 'info') color = 'green';
     else if(color == 'warn') color = 'yellow';
@@ -222,11 +222,11 @@ S.log = function(msg,color){
     });
     S.use('insert');
 
-    S.add('jquery', {
-        fullpath: 'http://code.jquery.com/jquery-1.4.2.min.js'
-    }).use('jquery', function() {
-        S.log('typeof jQuery = ' + typeof jQuery);
-    });
+//    S.add('jquery', {
+//        fullpath: 'http://code.jquery.com/jquery-1.4.2.min.js'
+//    }).use('jquery', function() {
+//        S.log('typeof jQuery = ' + typeof jQuery, 'warn');
+//    });
 
 </script>
 

@@ -2,7 +2,7 @@
  * Switchable Lazyload Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-lazyload', function(S) {
+KISSY.add('lazyload', function(S) {
 
     var DOM = S.DOM,
         EVENT_BEFORE_SWITCH = 'beforeSwitch',
@@ -70,4 +70,4 @@ KISSY.add('switchable-lazyload', function(S) {
         }
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );

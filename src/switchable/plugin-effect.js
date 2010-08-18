@@ -2,7 +2,7 @@
  * Switchable Effect Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-effect', function(S, undefined) {
+KISSY.add('effect', function(S, undefined) {
 
     var DOM = S.DOM, Anim = S.Anim,
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
@@ -168,4 +168,4 @@ KISSY.add('switchable-effect', function(S, undefined) {
 
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );

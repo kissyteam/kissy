@@ -79,7 +79,7 @@ KISSY.add('carousel', function(S, undefined) {
         });
     }
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 
 
 /**

@@ -72,9 +72,16 @@
             }
             // S.add(name[, fn[, config]])
             else {
+                // 处理子模块
+                if(config && config.host) {
+                    name = config.host;
+                }
+
                 // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
                 //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-                mix((mod = mods[name] || { }), { name: name, fn: fn, status: LOADED });
+                mix((mod = mods[name] || { }), { name: name, status: LOADED });
+                if(!mod.fns) mod.fns = [];
+                fn && mod.fns.push(fn);
                 mix((mods[name] = mod), config);
 
                 // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
@@ -152,9 +159,15 @@
         },
 
         _attachMod: function(mod) {
-            if (mod.fn) mod.fn(this);
+            var self = this;
+            if (mod.fns) {
+                S.each(mod.fns, function(fn) {
+                    fn && fn(self);
+                });
+                mod.fns = undefined; // 保证 attach 过的方法只执行一次
+                S.log(mod.name + '.status = attached');
+            }
             mod.status = ATTACHED;
-            S.log(mod.name + '.status = attached');
         },
 
         _isAttached: function(modNames) {
@@ -180,7 +193,10 @@
                 mod.status = LOADING;
 
                 loadingQueque[url] = self.getScript(url, {
-                    success: _success,
+                    success: function() {
+                        S.log(mod.name + ' onload fired.', 'info');
+                        _success();
+                    },
                     error: function() {
                         mod.status = ERROR;
                         _final();
@@ -201,7 +217,6 @@
 
             function _success() {
                 if (mod.status !== ERROR) {
-                    S.log(mod.name + ' onload fired.', 'info');
                     mod.status = LOADED;
                     callback();
                 }

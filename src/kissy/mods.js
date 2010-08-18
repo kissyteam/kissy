@@ -6,16 +6,14 @@
 
     var map = {
         core: {
-            path: 'packages/core-min.js',
-            charset: 'utf-8'
+            path: 'packages/core-min.js'
         }
     };
 
     S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
-            requires: ['core'],
-            charset: 'utf-8'
+            requires: ['core']
         };
     });
 

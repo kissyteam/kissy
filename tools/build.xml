@@ -23,7 +23,7 @@
         <copy todir="${build.dir}/${component.name}">
             <fileset dir="${src.dir}" includes="${component.files}"/>
         </copy>
-        <replaceregexp match="^\s*S\.log\(.+$" replace="" flags="g" byline="true">
+        <replaceregexp match="^\s*S\.log\(.+$" replace="" flags="g" byline="true" encoding="${charset}">
             <fileset dir="${build.dir}/${component.name}" includes="*-pkg.js"/>
         </replaceregexp>
     </target>

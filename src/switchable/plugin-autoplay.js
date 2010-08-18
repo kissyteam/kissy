@@ -2,7 +2,7 @@
  * Switchable Autoplay Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-autoplay', function(S, undefined) {
+KISSY.add('autoplay', function(S, undefined) {
 
     var Event = S.Event,
         Switchable = S.Switchable;
@@ -59,4 +59,4 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
         }
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );

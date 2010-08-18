@@ -2,7 +2,7 @@
  * Switchable Circular Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-circular', function(S, undefined) {
+KISSY.add('circular', function(S, undefined) {
 
     var DOM = S.DOM,
         POSITION = 'position', RELATIVE = 'relative',
@@ -123,7 +123,7 @@ KISSY.add('switchable-circular', function(S, undefined) {
         }
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 
 /**
  * TODO:

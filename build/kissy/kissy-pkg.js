@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 18 12:10
+build time: Aug 18 17:35
 */
 /**
  * @module kissy
@@ -77,7 +77,7 @@ build time: Aug 18 12:10
         _init: function() {
             // 环境信息
             this.Env = {
-                mods: { }, // �?��模块列表
+                mods: { }, // 所有模块列表
                 _loadingQueue: { } // 正在加载中的模块信息
             };
 
@@ -85,7 +85,7 @@ build time: Aug 18 12:10
             this.Config = {
                 debug: '@DEBUG@', // build 时，会将 @DEBUG@ 替换为空
                 base: 'http://a.tbcdn.cn/s/kissy/1.1.2/build/',
-                timeout: 10   // getScript 的默�?timeout 时间
+                timeout: 10   // getScript 的默认 timeout 时间
             };
         },
 
@@ -395,10 +395,10 @@ build time: Aug 18 12:10
 
     S._init();
 
-    // S.app() 时，�?��动�?复制的成员列�?
+    // S.app() 时，需要动态复制的成员列表
     S._APP_MEMBERS = ['_init', 'namespace'];
 
-    // 可以通过�?url 上加 ?ks-debug 参数来强制开�?debug 模式
+    // 可以通过在 url 上加 ?ks-debug 参数来强制开启 debug 模式
     if (loc && (loc.search || EMPTY).indexOf('ks-debug') !== -1) {
         S.Config.debug = true;
     }
@@ -409,22 +409,22 @@ build time: Aug 18 12:10
  * NOTES:
  *
  * 2010/08
- *  - �?loader 功能独立�?loader.js �?
+ *  - 将 loader 功能独立到 loader.js 中
  *
  * 2010/07
- *  - 增加 available �?guid 方法
+ *  - 增加 available 和 guid 方法
  *
  * 2010/04
- *  - 移除�?weave 方法，鸡�?
+ *  - 移除掉 weave 方法，鸡肋
  *
  * 2010/01
- *  - add 方法决定内部代码的基本组织方式（�?module �?submodule 来组织代码）
- *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙�?
- *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特�?�?prototype 方式来实现代�?
+ *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）
+ *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱
+ *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码
  *  - namespace, app 方法，决定子库的实现和代码的整体组织
- *  - log, error 方法，简单的调试工具和报错机�?
- *  - guid 方法，全�?��助方�?
- *  - 考虑�?��够用�?2/8 原则，去掉对 YUI3 沙箱的模拟�?（archives/2009 r402�?
+ *  - log, error 方法，简单的调试工具和报错机制
+ *  - guid 方法，全局辅助方法
+ *  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
  *
  */
 /**
@@ -501,7 +501,7 @@ build time: Aug 18 12:10
          */
         isFunction: function(o) {
             //return typeof o === 'function';
-            // Safari 下，typeof NodeList 也返�?function
+            // Safari 下，typeof NodeList 也返回 function
             return toString.call(o) === '[object Function]';
         },
 
@@ -603,7 +603,7 @@ build time: Aug 18 12:10
          * @return {Array} a copy of the array with duplicate entries removed
          */
         unique: function(a, override) {
-            if(override) a.reverse(); // 默认是后置删除，如果 override �?true, 则前置删�?
+            if(override) a.reverse(); // 默认是后置删除，如果 override 为 true, 则前置删除
             var b = a.slice(), i = 0, n, item;
 
             while (i < b.length) {
@@ -676,7 +676,7 @@ build time: Aug 18 12:10
          * </code>
          */
         param: function(o, sep) {
-            // �?plain object, 直接返回�?
+            // 非 plain object, 直接返回空
             if (!S.isPlainObject(o)) return EMPTY;
             sep = sep || SEP;
 
@@ -685,11 +685,11 @@ build time: Aug 18 12:10
                 val = o[key];
                 key = encode(key);
 
-                // val 为有效的非数组�?
+                // val 为有效的非数组值
                 if (isValidParamValue(val)) {
                     buf.push(key, '=', encode(val + EMPTY), sep);
                 }
-                // val 为非空数�?
+                // val 为非空数组
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
@@ -697,7 +697,7 @@ build time: Aug 18 12:10
                         }
                     }
                 }
-                // 其它情况：包括空数组、不是数组的 object（包�?Function, RegExp, Date etc.），直接丢弃
+                // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
             }
             buf.pop();
             return buf.join(EMPTY);
@@ -724,7 +724,7 @@ build time: Aug 18 12:10
                 pair = pairs[i].split('=');
                 key = decode(pair[0]);
 
-                // pair[1] 可能包含 gbk 编码的中文，�?decodeURIComponent 仅能处理 utf-8 编码的中文，否则报错
+                // pair[1] 可能包含 gbk 编码的中文，而 decodeURIComponent 仅能处理 utf-8 编码的中文，否则报错
                 try {
                     val = decode(pair[1] || EMPTY);
                 } catch (ex) {
@@ -839,15 +839,15 @@ build time: Aug 18 12:10
 
     function isValidParamValue(val) {
         var t = typeof val;
-        // val �?null, undefined, number, string, boolean 时，返回 true
+        // val 为 null, undefined, number, string, boolean 时，返回 true
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // �?NodeList 等集合转换为普�?数组
+    // 将 NodeList 等集合转换为普通数组
     function slice2Arr(arr) {
         return AP.slice.call(arr);
     }
-    // ie 不支持用 slice 转换 NodeList, 降级到普通方�?
+    // ie 不支持用 slice 转换 NodeList, 降级到普通方法
     try {
         slice2Arr(docElem.childNodes);
     }
@@ -866,18 +866,18 @@ build time: Aug 18 12:10
  * NOTES:
  *
  *  2010/08
- *   - 增加 lastIndexOf �?unique 方法�?
+ *   - 增加 lastIndexOf 和 unique 方法。
  *
  *  2010/06
- *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着�?
+ *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着。
  *
  *  2010/05
- *   - 增加 filter 方法�?
- *   - globalEval 中，直接采用 text 赋�?，去�?appendChild 方式�?
+ *   - 增加 filter 方法。
+ *   - globalEval 中，直接采用 text 赋值，去掉 appendChild 方式。
  *
  *  2010/04
- *   - param �?unparam 应该放在�?��地方合�?？有点纠结，目前暂放此处�?
- *   - param �?unparam 是不完全可�?的�?对空值的处理�?cookie 保持�?���?
+ *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
+ *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
  *
  */
 /**
@@ -954,12 +954,19 @@ build time: Aug 18 12:10
             }
             // S.add(name[, fn[, config]])
             else {
-                // 注意：�?�?S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，�?
-                //      �?js 文件里的代码，add 执行时，都意味着该模块已�?LOADED
-                mix((mod = mods[name] || { }), { name: name, fn: fn, status: LOADED });
+                // 处理子模块
+                if(config && config.host) {
+                    name = config.host;
+                }
+
+                // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
+                //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
+                mix((mod = mods[name] || { }), { name: name, status: LOADED });
+                if(!mod.fns) mod.fns = [];
+                fn && mod.fns.push(fn);
                 mix((mods[name] = mod), config);
 
-                // 对于 requires 都已 attached 的模块，比如 core 中的模块，直�?attach
+                // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
                 if (self._isAttached(mod.requires)) {
                     self._attachMod(mod);
                 }
@@ -990,7 +997,7 @@ build time: Aug 18 12:10
                 return;
             }
 
-            // 有尚�?attached 的模�?
+            // 有尚未 attached 的模块
             for (; i < len && (mod = mods[modNames[i++]]);) {
                 if (mod.status === ATTACHED) continue;
 
@@ -1034,9 +1041,15 @@ build time: Aug 18 12:10
         },
 
         _attachMod: function(mod) {
-            if (mod.fn) mod.fn(this);
-            mod.status = ATTACHED;
+            var self = this;
+            if (mod.fns) {
+                S.each(mod.fns, function(fn) {
+                    fn && fn(self);
+                });
+                mod.fns = undefined; // 保证 attach 过的方法只执行一次
 
+            }
+            mod.status = ATTACHED;
         },
 
         _isAttached: function(modNames) {
@@ -1062,7 +1075,10 @@ build time: Aug 18 12:10
                 mod.status = LOADING;
 
                 loadingQueque[url] = self.getScript(url, {
-                    success: _success,
+                    success: function() {
+
+                        _success();
+                    },
                     error: function() {
                         mod.status = ERROR;
                         _final();
@@ -1070,12 +1086,12 @@ build time: Aug 18 12:10
                     charset: mod.charset
                 });
             }
-            // 已经在加载中，需要添加回调到 script onload �?
-            // 注意：没有�?�?error 情形
+            // 已经在加载中，需要添加回调到 script onload 中
+            // 注意：没有考虑 error 情形
             else if (mod.status === LOADING && (node = loadingQueque[url])) {
                 scriptOnload(node, _success);
             }
-            // 是内嵌代码，或�?已经 loaded
+            // 是内嵌代码，或者已经 loaded
             else {
                 mod.status = LOADED;
                 callback();
@@ -1083,7 +1099,6 @@ build time: Aug 18 12:10
 
             function _success() {
                 if (mod.status !== ERROR) {
-
                     mod.status = LOADED;
                     callback();
                 }
@@ -1100,7 +1115,7 @@ build time: Aug 18 12:10
             if (!mod.fullpath && mod['path']) {
                 mod.fullpath = this.Config.base + mod['path'];
             }
-            // debug 模式下，加载�?min �?
+            // debug 模式下，加载非 min 版
             if(mod.fullpath && this.Config.debug) {
                 mod.fullpath = mod.fullpath.replace(/-min/g, '');
             }
@@ -1177,27 +1192,27 @@ build time: Aug 18 12:10
 /**
  * TODO:
  *  - combo 实现
- *  - 使用场景和测试用例整�?
+ *  - 使用场景和测试用例整理
  *
  *
  * NOTES:
  *
- * 2010/08/16 玉伯�?
- *  - 基于拔赤的实现，重构。解�?add/use �?ready 的关系，�?��实现代码�?
- *  - 暂时去除 combo 支持，combo 由用户手工控制�?
+ * 2010/08/16 玉伯：
+ *  - 基于拔赤的实现，重构。解耦 add/use 和 ready 的关系，简化实现代码。
+ *  - 暂时去除 combo 支持，combo 由用户手工控制。
  *  - 支持 app 生成的多 loader.
  *
- * 2010/08/13 拔赤�?
- *  - 重写 add, use, ready, 重新组织 add 的工作模式，添加 loader 功能�?
- *  - 借鉴 YUI3 原生支持 loader, �?YUI �?loader 使用场景复杂，且�?loader 共存的场�?
+ * 2010/08/13 拔赤：
+ *  - 重写 add, use, ready, 重新组织 add 的工作模式，添加 loader 功能。
+ *  - 借鉴 YUI3 原生支持 loader, 但 YUI 的 loader 使用场景复杂，且多 loader 共存的场景
  *    在越复杂的程序中越推荐使用，在中等规模的 webpage 中，形同鸡肋，因此将 KISSY 全局对象
- *    包装成一�?loader，来统一管理页面�?���?modules.
- *  - loader 的使用一定要�?add 来配合，加载脚本过程中的三个状�?（before domready,
- *    after domready & before KISSY callbacks' ready, after KISSY callbacks' ready）要明确区分�?
- *  - 使用 add �?ready 的基本�?路和之前保持�?��，即只要执行 add('mod-name', callback)，就
- *    会执行其中的 callback. callback 执行的时机由 loader 统一控制�?
- *  - 支持 combo, 通过 Config.combo = true 来开启，模块�?fullpath �?path 代替�?
- *  - KISSY 内部组件和开发�?文件当做地位平等的模块处理，包括 combo.
+ *    包装成一个 loader，来统一管理页面所有的 modules.
+ *  - loader 的使用一定要用 add 来配合，加载脚本过程中的三个状态（before domready,
+ *    after domready & before KISSY callbacks' ready, after KISSY callbacks' ready）要明确区分。
+ *  - 使用 add 和 ready 的基本思路和之前保持一致，即只要执行 add('mod-name', callback)，就
+ *    会执行其中的 callback. callback 执行的时机由 loader 统一控制。
+ *  - 支持 combo, 通过 Config.combo = true 来开启，模块的 fullpath 用 path 代替。
+ *  - KISSY 内部组件和开发者文件当做地位平等的模块处理，包括 combo.
  *
  */
 /**
@@ -1208,16 +1223,14 @@ build time: Aug 18 12:10
 
     var map = {
         core: {
-            path: 'packages/core-min.js',
-            charset: 'utf-8'
+            path: 'packages/core-min.js'
         }
     };
 
     S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
-            requires: ['core'],
-            charset: 'utf-8'
+            requires: ['core']
         };
     });
 
