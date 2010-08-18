@@ -299,7 +299,7 @@ KISSY.add('flash-embed', function(S) {
         o.appendChild(param);
     }
 
-}, { requires: ['flash'] });
+}, { host: 'flash' });
 
 /**
  * NOTES:
