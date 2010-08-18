@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 18 18:19
+build time: Aug 18 18:36
 */
 /**
  * @module kissy
@@ -1223,14 +1223,16 @@ build time: Aug 18 18:19
 
     var map = {
         core: {
-            path: 'packages/core-min.js'
+            path: 'packages/core-min.js',
+            charset: 'utf-8'
         }
     };
 
     S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
-            requires: ['core']
+            requires: ['core'],
+            charset: 'utf-8'
         };
     });
 
