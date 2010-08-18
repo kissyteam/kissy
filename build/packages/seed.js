@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 18 17:35
+build time: Aug 18 18:19
 */
 /**
  * @module kissy
@@ -1047,7 +1047,7 @@ build time: Aug 18 17:35
                     fn && fn(self);
                 });
                 mod.fns = undefined; // 保证 attach 过的方法只执行一次
-
+                S.log(mod.name + '.status = attached');
             }
             mod.status = ATTACHED;
         },
@@ -1076,7 +1076,7 @@ build time: Aug 18 17:35
 
                 loadingQueque[url] = self.getScript(url, {
                     success: function() {
-
+                        S.log(mod.name + ' onload fired.', 'info');
                         _success();
                     },
                     error: function() {
@@ -1241,7 +1241,7 @@ build time: Aug 18 17:35
 /**
  * NOTES:
  *
- *  2010/08/16 �񲮣�
- *   - ����ʵ�������ȣ���ֹ������С���û������Ĳ����㡣
+ *  2010/08/16 玉伯：
+ *   - 采用实用性粒度，防止颗粒过小给用户带来的不方便。
  *
  */

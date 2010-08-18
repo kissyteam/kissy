@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 18 17:35
+build time: Aug 18 18:19
 */
 /**
  * Switchable
@@ -862,7 +862,7 @@ KISSY.add('autorender', function(S) {
                     if (config) config = config.replace(/'/g, '"');
                     new S[type](elem, S.JSON.parse(config));
                 } catch(ex) {
-
+                    S.log('Switchable.autoRender: ' + ex, 'warn');
                 }
             }
         });

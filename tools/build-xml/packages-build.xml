@@ -17,11 +17,11 @@
 
     <target name="concat">
         <!-- seed: 种子 -->
-        <concat destfile="seed.js" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../kissy/kissy-pkg.js"/>
         </concat>
         <!-- core: 核心，提供基础服务 -->
-        <concat destfile="core.js" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="core-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../ua/ua-pkg.js"/>
             <path path="../dom/dom-pkg.js"/>
             <path path="../event/event-pkg.js"/>
@@ -35,13 +35,13 @@
             </footer>
         </concat>
         <!-- kissy: seed + core, 独立单文件 -->
-        <concat destfile="kissy.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="seed.js"/>
-            <path path="core.js"/>
+        <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="seed-pkg.js"/>
+            <path path="core-pkg.js"/>
         </concat>
         <!-- kissy-aio: 所有文件 -->
-        <concat destfile="kissy-aio.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="kissy.js"/>
+        <concat destfile="kissy-aio-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="kissy-pkg.js"/>
             <path path="../sizzle/sizzle-pkg.js"/>
             <path path="../datalazyload/datalazyload-pkg.js"/>
             <path path="../flash/flash-pkg.js"/>
@@ -53,11 +53,15 @@
     </target>
 
     <target name="clean">
+        <move todir="${src.dir}">
+            <fileset dir="${src.dir}" includes="*.js"/>
+            <regexpmapper from="(.+)-pkg(.+)" to="\1\2" />
+        </move>
         <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="seed-min.js" />
         <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="kissy-min.js" />
         <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="kissy-aio-min.js" />
     </target>
 
-    <target name="build" depends="pre-clean,concat,compress,copyright,clean">
+    <target name="build" depends="pre-clean,concat,compress,native2ascii,copyright,clean">
     </target>
 </project>

@@ -23,13 +23,19 @@
         <copy todir="${build.dir}/${component.name}">
             <fileset dir="${src.dir}" includes="${component.files}"/>
         </copy>
-        <replaceregexp match="^\s*S\.log\(.+$" replace="" flags="g" byline="true" encoding="${charset}">
-            <fileset dir="${build.dir}/${component.name}" includes="*-pkg.js"/>
-        </replaceregexp>
     </target>
 
     <!-- 压缩代码 -->
     <target name="compress">
+        <!-- 去除 S.log -->
+        <mkdir dir="${build.dir}/${component.name}/debug"/>
+        <copy todir="${build.dir}/${component.name}/debug">
+            <fileset dir="${build.dir}/${component.name}" includes="*-pkg.js"/>
+        </copy>
+        <replaceregexp match="^\s*S\.log\(.+$" replace="" flags="g" byline="true" encoding="${charset}">
+            <fileset dir="${build.dir}/${component.name}" includes="*-pkg.js"/>
+        </replaceregexp>
+
         <!-- 用 YUICompressor 压缩 CSS -->
         <apply executable="java" verbose="true" dest="${build.dir}/${component.name}">
             <fileset dir="${build.dir}/${component.name}" includes="*.css"/>
@@ -41,6 +47,7 @@
             <targetfile/>
             <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-min.\2"/>
         </apply>
+
         <!-- 用 Closure Compiler 压缩 JS -->
         <apply executable="java" verbose="true" dest="${build.dir}/${component.name}">
             <fileset dir="${build.dir}/${component.name}" includes="*.js"/>
@@ -55,19 +62,25 @@
             <targetfile/>
             <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-min.\2"/>
         </apply>
+
+        <!-- 还原 debug 版本 -->
+        <move todir="${build.dir}/${component.name}">
+            <fileset dir="${build.dir}/${component.name}/debug" includes="*-pkg.js"/>
+        </move>
+        <delete dir="${build.dir}/${component.name}/debug"/>
     </target>
 
     <!-- 对 JS 文件 ASCII 化 -->
     <target name="native2ascii" depends="compress">
-        <mkdir dir="${build.dir}/${component.name}/tmp"/>
-        <move todir="${build.dir}/${component.name}/tmp">
+        <mkdir dir="${build.dir}/${component.name}/ascii"/>
+        <move todir="${build.dir}/${component.name}/ascii">
             <fileset dir="${build.dir}/${component.name}" includes="*-min.js"/>
         </move>
         <native2ascii encoding="${charset}"
-                      src="${build.dir}/${component.name}/tmp"
+                      src="${build.dir}/${component.name}/ascii"
                       dest="${build.dir}/${component.name}"
                       includes="*.js"/>
-        <delete dir="${build.dir}/${component.name}/tmp"/>
+        <delete dir="${build.dir}/${component.name}/ascii"/>
     </target>
 
     <!-- 替换版本信息以及给文件加上版权信息 -->
@@ -112,7 +125,7 @@
         </move>
         <delete dir="${build.dir}/${component.name}/tmp"/>
     </target>
-
+    
     <target name="common.build" depends="prepare,compress,native2ascii,copyright">
     </target>
 </project>
