@@ -222,6 +222,12 @@ S.log = function(msg,color){
     });
     S.use('insert');
 
+    S.add('jquery', {
+        fullpath: 'http://code.jquery.com/jquery-1.4.2.min.js'
+    }).use('jquery', function() {
+        S.log('typeof jQuery = ' + typeof jQuery);
+    });
+
 </script>
 
 <script src="assets/large-block.js.php"></script>

@@ -21,4 +21,5 @@ KISSY.add('tabs', function(S) {
 
     S.extend(Tabs, S.Switchable);
     S.Tabs = Tabs;
-});
+
+}, { requires: ['switchable'] } );

@@ -95,7 +95,7 @@ KISSY.add('flash-ua', function(S) {
         return !!fpvF && (fpvF >= numerify(ver));
     };
 
-});
+}, { requires: ['flash'] });
 
 /**
  * NOTES:

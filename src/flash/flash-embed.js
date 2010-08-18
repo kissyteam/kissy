@@ -298,7 +298,8 @@ KISSY.add('flash-embed', function(S) {
         DOM.attr(param, { name: name, value: val });
         o.appendChild(param);
     }
-});
+
+}, { requires: ['flash'] });
 
 /**
  * NOTES:

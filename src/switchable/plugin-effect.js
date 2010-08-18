@@ -167,4 +167,5 @@ KISSY.add('switchable-effect', function(S, undefined) {
         }
 
     });
-});
+
+}, { requires: ['switchable'] } );

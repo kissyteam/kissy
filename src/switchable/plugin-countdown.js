@@ -105,7 +105,8 @@ KISSY.add('switchable-countdown', function(S, undefined) {
             }
         }
     });
-});
+
+}, { requires: ['switchable'] } );
 
 /**
  * NOTES:

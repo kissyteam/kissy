@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 16 16:50
+build time: Aug 18 10:42
 */
 /**
  * @module   Flash 全局静态类
@@ -116,7 +116,7 @@ KISSY.add('flash-ua', function(S) {
         return !!fpvF && (fpvF >= numerify(ver));
     };
 
-});
+}, { requires: ['flash'] });
 
 /**
  * NOTES:
@@ -434,7 +434,8 @@ KISSY.add('flash-embed', function(S) {
         DOM.attr(param, { name: name, value: val });
         o.appendChild(param);
     }
-});
+
+}, { requires: ['flash'] });
 
 /**
  * NOTES:

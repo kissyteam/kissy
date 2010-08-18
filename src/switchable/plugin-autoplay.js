@@ -58,4 +58,5 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
             startAutoplay();
         }
     });
-});
+
+}, { requires: ['switchable'] } );

@@ -24,4 +24,5 @@ KISSY.add('switchable-autorender', function(S) {
             }
         });
     }
-});
+
+}, { requires: ['switchable'] } );

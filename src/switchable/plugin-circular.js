@@ -122,7 +122,8 @@ KISSY.add('switchable-circular', function(S, undefined) {
             }
         }
     });
-});
+
+}, { requires: ['switchable'] } );
 
 /**
  * TODO:

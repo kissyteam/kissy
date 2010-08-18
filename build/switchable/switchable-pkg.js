@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 17 13:31
+build time: Aug 18 10:33
 */
 /**
  * Switchable
@@ -464,7 +464,8 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
             startAutoplay();
         }
     });
-});
+
+}, { requires: ['switchable'] } );
 /**
  * Switchable Effect Plugin
  * @creator  玉伯<lifesinger@gmail.com>
@@ -634,7 +635,8 @@ KISSY.add('switchable-effect', function(S, undefined) {
         }
 
     });
-});
+
+}, { requires: ['switchable'] } );
 /**
  * Switchable Circular Plugin
  * @creator  玉伯<lifesinger@gmail.com>
@@ -759,7 +761,8 @@ KISSY.add('switchable-circular', function(S, undefined) {
             }
         }
     });
-});
+
+}, { requires: ['switchable'] } );
 
 /**
  * TODO:
@@ -836,7 +839,8 @@ KISSY.add('switchable-lazyload', function(S) {
             }
         }
     });
-});
+
+}, { requires: ['switchable'] } );
 /**
  * Switchable Autorender Plugin
  * @creator  玉伯<lifesinger@gmail.com>
@@ -863,7 +867,8 @@ KISSY.add('switchable-autorender', function(S) {
             }
         });
     }
-});
+
+}, { requires: ['switchable'] } );
 /**
  * Tabs Widget
  * @creator  玉伯<lifesinger@gmail.com>
@@ -887,7 +892,8 @@ KISSY.add('tabs', function(S) {
 
     S.extend(Tabs, S.Switchable);
     S.Tabs = Tabs;
-});
+
+}, { requires: ['switchable'] } );
 /**
  * Tabs Widget
  * @creator     玉伯<lifesinger@gmail.com>
@@ -919,7 +925,8 @@ KISSY.add('slide', function(S) {
 
     S.extend(Slide, S.Switchable);
     S.Slide = Slide;
-});
+
+}, { requires: ['switchable'] } );
 /**
  * Carousel Widget
  * @creator  玉伯<lifesinger@gmail.com>
@@ -1000,7 +1007,8 @@ KISSY.add('carousel', function(S, undefined) {
             self.fire('itemSelected', { item: this });
         });
     }
-});
+
+}, { requires: ['switchable'] } );
 
 
 /**
@@ -1074,7 +1082,8 @@ KISSY.add('accordion', function(S) {
             }
         }
     });
-});
+
+}, { requires: ['switchable'] } );
 
 /**
  * TODO:

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 16 16:51
+build time: Aug 18 12:10
 */
 /**
  * @module kissy
@@ -936,17 +936,26 @@ build time: Aug 16 16:51
          * @return {KISSY}
          */
         add: function(name, fn, config) {
-            var self = this, mods = self.Env.mods, mod;
+            var self = this, mods = self.Env.mods, mod, o;
 
+            // S.add(name, config) => S.add( { name: config } )
+            if (S.isString(name) && !config && S.isPlainObject(fn)) {
+                o = {};
+                o[name] = fn;
+                name = o;
+            }
+
+            // S.add( { name: config } )
             if (S.isPlainObject(name)) {
                 S.each(name, function(v, k) {
                     v.name = k;
                 });
                 mix(mods, name);
             }
+            // S.add(name[, fn[, config]])
             else {
-                // 注意：�?�?add(name, fn) 注册的代码，无论是页面中的代码，还是 js 文件里的代码，add 执行时，
-                //      都意味着该模块已�?LOADED
+                // 注意：�?�?S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，�?
+                //      �?js 文件里的代码，add 执行时，都意味着该模块已�?LOADED
                 mix((mod = mods[name] || { }), { name: name, fn: fn, status: LOADED });
                 mix((mods[name] = mod), config);
 
@@ -1057,7 +1066,8 @@ build time: Aug 16 16:51
                     error: function() {
                         mod.status = ERROR;
                         _final();
-                    }
+                    },
+                    charset: mod.charset
                 });
             }
             // 已经在加载中，需要添加回调到 script onload �?
@@ -1089,6 +1099,10 @@ build time: Aug 16 16:51
         _buildPath: function(mod) {
             if (!mod.fullpath && mod['path']) {
                 mod.fullpath = this.Config.base + mod['path'];
+            }
+            // debug 模式下，加载�?min �?
+            if(mod.fullpath && this.Config.debug) {
+                mod.fullpath = mod.fullpath.replace(/-min/g, '');
             }
         },
 
@@ -1163,6 +1177,7 @@ build time: Aug 16 16:51
 /**
  * TODO:
  *  - combo 实现
+ *  - 使用场景和测试用例整�?
  *
  *
  * NOTES:
@@ -1193,14 +1208,16 @@ build time: Aug 16 16:51
 
     var map = {
         core: {
-            path: 'packages/core-min.js'
+            path: 'packages/core-min.js',
+            charset: 'utf-8'
         }
     };
 
     S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
-            requires: ['core']
+            requires: ['core'],
+            charset: 'utf-8'
         };
     });
 
