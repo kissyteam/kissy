@@ -83,7 +83,13 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 需要延迟处理的 textarea
          * @type Array
          */
-        //self.areas
+        //self.areaes
+
+        /**
+         * 和延迟项绑定的回调函数
+         * @type object
+         */
+        self.callbacks = {els: [], fns: []};
 
         /**
          * 开始延迟的 Y 坐标
@@ -109,25 +115,25 @@ KISSY.add('datalazyload', function(S, undefined) {
         },
 
         /**
-         * 获取并初始化需要延迟的 images 和 areas
+         * 获取并初始化需要延迟的 images 和 areaes
          * @protected
          */
         _filterItems: function() {
             var self = this,
                 containers = self.containers,
-                n, N, imgs, areas, i, len, img, area,
+                n, N, imgs, areaes, i, len, img, area,
                 lazyImgs = [], lazyAreas = [];
 
             for (n = 0,N = containers.length; n < N; ++n) {
                 imgs = S.query('img', containers[n]);
                 lazyImgs = lazyImgs.concat(S.filter(imgs, self._filterImg, self));
 
-                areas = S.query('textarea', containers[n]);
-                lazyAreas = lazyAreas.concat(S.filter(areas, self._filterArea, self));
+                areaes = S.query('textarea', containers[n]);
+                lazyAreas = lazyAreas.concat(S.filter(areaes, self._filterArea, self));
             }
 
             self.images = lazyImgs;
-            self.areas = lazyAreas;
+            self.areaes = lazyAreas;
         },
 
         /**
@@ -215,8 +221,10 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 加载延迟项
          */
         _loadItems: function() {
-            this._loadImgs();
-            this._loadAreas();
+            var self = this;
+            self._loadImgs();
+            self._loadAreas();
+            self._fireCallbacks();
         },
 
         /**
@@ -264,7 +272,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          */
         _loadAreas: function() {
             var self = this;
-            self.areas = S.filter(self.areas, self._loadArea, self);
+            self.areaes = S.filter(self.areaes, self._loadArea, self);
         },
 
         /**
@@ -305,6 +313,43 @@ KISSY.add('datalazyload', function(S, undefined) {
         },
 
         /**
+         * 触发回调
+         */
+        _fireCallbacks: function() {
+            var self = this,
+                callbacks = self.callbacks,
+                els = callbacks.els, fns = callbacks.fns,
+                scrollTop = DOM.scrollTop(),
+                threshold = self.threshold + scrollTop,
+                i, el, fn, remainEls = [], remainFns = [];
+
+            for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
+                if (DOM.offset(el).top <= threshold) {
+                    fn.call(el);
+                } else {
+                    remainEls.push(el);
+                    remainFns.push(fn);
+                }
+
+            }
+            callbacks.els = remainEls;
+            callbacks.fns = remainFns;
+        },
+
+        /**
+         * 添加回调函数。当 el 即将出现在视图中时，触发 fn
+         */
+        addCallback: function(el, fn) {
+            var callbacks = this.callbacks;
+            el = S.get(el);
+
+            if (el && S.isFunction(fn)) {
+                callbacks.els.push(el);
+                callbacks.fns.push(fn);
+            }
+        },
+
+        /**
          * 获取阈值
          * @protected
          */
@@ -321,7 +366,8 @@ KISSY.add('datalazyload', function(S, undefined) {
          * @protected
          */
         _getItemsLength: function() {
-            return this.images.length + this.areas.length;
+            var self = this;
+            return self.images.length + self.areaes.length + self.callbacks.els.length;
         },
 
         /**

@@ -3329,6 +3329,7 @@
                 </div>
 
             </div>
+            <div id="test-callback"></div>
 
 
             <div class="ListThings">
@@ -4488,7 +4489,10 @@
 
 <script>
 KISSY.ready(function(S) {
-    S.DataLazyload();
+    var dl = S.DataLazyload();
+    dl.addCallback('#test-callback', function() {
+        alert('#test-callback will come!');
+    });
 });
 </script>
 </body>
