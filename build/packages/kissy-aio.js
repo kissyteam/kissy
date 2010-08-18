@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 18 12:10
+build time: Aug 18 17:35
 */
 /**
  * @module kissy
@@ -77,7 +77,7 @@ build time: Aug 18 12:10
         _init: function() {
             // 环境信息
             this.Env = {
-                mods: { }, // �?��模块列表
+                mods: { }, // 所有模块列表
                 _loadingQueue: { } // 正在加载中的模块信息
             };
 
@@ -85,7 +85,7 @@ build time: Aug 18 12:10
             this.Config = {
                 debug: '@DEBUG@', // build 时，会将 @DEBUG@ 替换为空
                 base: 'http://a.tbcdn.cn/s/kissy/1.1.2/build/',
-                timeout: 10   // getScript 的默�?timeout 时间
+                timeout: 10   // getScript 的默认 timeout 时间
             };
         },
 
@@ -395,10 +395,10 @@ build time: Aug 18 12:10
 
     S._init();
 
-    // S.app() 时，�?��动�?复制的成员列�?
+    // S.app() 时，需要动态复制的成员列表
     S._APP_MEMBERS = ['_init', 'namespace'];
 
-    // 可以通过�?url 上加 ?ks-debug 参数来强制开�?debug 模式
+    // 可以通过在 url 上加 ?ks-debug 参数来强制开启 debug 模式
     if (loc && (loc.search || EMPTY).indexOf('ks-debug') !== -1) {
         S.Config.debug = true;
     }
@@ -409,22 +409,22 @@ build time: Aug 18 12:10
  * NOTES:
  *
  * 2010/08
- *  - �?loader 功能独立�?loader.js �?
+ *  - 将 loader 功能独立到 loader.js 中
  *
  * 2010/07
- *  - 增加 available �?guid 方法
+ *  - 增加 available 和 guid 方法
  *
  * 2010/04
- *  - 移除�?weave 方法，鸡�?
+ *  - 移除掉 weave 方法，鸡肋
  *
  * 2010/01
- *  - add 方法决定内部代码的基本组织方式（�?module �?submodule 来组织代码）
- *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙�?
- *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特�?�?prototype 方式来实现代�?
+ *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）
+ *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱
+ *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码
  *  - namespace, app 方法，决定子库的实现和代码的整体组织
- *  - log, error 方法，简单的调试工具和报错机�?
- *  - guid 方法，全�?��助方�?
- *  - 考虑�?��够用�?2/8 原则，去掉对 YUI3 沙箱的模拟�?（archives/2009 r402�?
+ *  - log, error 方法，简单的调试工具和报错机制
+ *  - guid 方法，全局辅助方法
+ *  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
  *
  */
 /**
@@ -501,7 +501,7 @@ build time: Aug 18 12:10
          */
         isFunction: function(o) {
             //return typeof o === 'function';
-            // Safari 下，typeof NodeList 也返�?function
+            // Safari 下，typeof NodeList 也返回 function
             return toString.call(o) === '[object Function]';
         },
 
@@ -603,7 +603,7 @@ build time: Aug 18 12:10
          * @return {Array} a copy of the array with duplicate entries removed
          */
         unique: function(a, override) {
-            if(override) a.reverse(); // 默认是后置删除，如果 override �?true, 则前置删�?
+            if(override) a.reverse(); // 默认是后置删除，如果 override 为 true, 则前置删除
             var b = a.slice(), i = 0, n, item;
 
             while (i < b.length) {
@@ -676,7 +676,7 @@ build time: Aug 18 12:10
          * </code>
          */
         param: function(o, sep) {
-            // �?plain object, 直接返回�?
+            // 非 plain object, 直接返回空
             if (!S.isPlainObject(o)) return EMPTY;
             sep = sep || SEP;
 
@@ -685,11 +685,11 @@ build time: Aug 18 12:10
                 val = o[key];
                 key = encode(key);
 
-                // val 为有效的非数组�?
+                // val 为有效的非数组值
                 if (isValidParamValue(val)) {
                     buf.push(key, '=', encode(val + EMPTY), sep);
                 }
-                // val 为非空数�?
+                // val 为非空数组
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
@@ -697,7 +697,7 @@ build time: Aug 18 12:10
                         }
                     }
                 }
-                // 其它情况：包括空数组、不是数组的 object（包�?Function, RegExp, Date etc.），直接丢弃
+                // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
             }
             buf.pop();
             return buf.join(EMPTY);
@@ -724,7 +724,7 @@ build time: Aug 18 12:10
                 pair = pairs[i].split('=');
                 key = decode(pair[0]);
 
-                // pair[1] 可能包含 gbk 编码的中文，�?decodeURIComponent 仅能处理 utf-8 编码的中文，否则报错
+                // pair[1] 可能包含 gbk 编码的中文，而 decodeURIComponent 仅能处理 utf-8 编码的中文，否则报错
                 try {
                     val = decode(pair[1] || EMPTY);
                 } catch (ex) {
@@ -839,15 +839,15 @@ build time: Aug 18 12:10
 
     function isValidParamValue(val) {
         var t = typeof val;
-        // val �?null, undefined, number, string, boolean 时，返回 true
+        // val 为 null, undefined, number, string, boolean 时，返回 true
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // �?NodeList 等集合转换为普�?数组
+    // 将 NodeList 等集合转换为普通数组
     function slice2Arr(arr) {
         return AP.slice.call(arr);
     }
-    // ie 不支持用 slice 转换 NodeList, 降级到普通方�?
+    // ie 不支持用 slice 转换 NodeList, 降级到普通方法
     try {
         slice2Arr(docElem.childNodes);
     }
@@ -866,18 +866,18 @@ build time: Aug 18 12:10
  * NOTES:
  *
  *  2010/08
- *   - 增加 lastIndexOf �?unique 方法�?
+ *   - 增加 lastIndexOf 和 unique 方法。
  *
  *  2010/06
- *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着�?
+ *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着。
  *
  *  2010/05
- *   - 增加 filter 方法�?
- *   - globalEval 中，直接采用 text 赋�?，去�?appendChild 方式�?
+ *   - 增加 filter 方法。
+ *   - globalEval 中，直接采用 text 赋值，去掉 appendChild 方式。
  *
  *  2010/04
- *   - param �?unparam 应该放在�?��地方合�?？有点纠结，目前暂放此处�?
- *   - param �?unparam 是不完全可�?的�?对空值的处理�?cookie 保持�?���?
+ *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
+ *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
  *
  */
 /**
@@ -954,12 +954,19 @@ build time: Aug 18 12:10
             }
             // S.add(name[, fn[, config]])
             else {
-                // 注意：�?�?S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，�?
-                //      �?js 文件里的代码，add 执行时，都意味着该模块已�?LOADED
-                mix((mod = mods[name] || { }), { name: name, fn: fn, status: LOADED });
+                // 处理子模块
+                if(config && config.host) {
+                    name = config.host;
+                }
+
+                // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
+                //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
+                mix((mod = mods[name] || { }), { name: name, status: LOADED });
+                if(!mod.fns) mod.fns = [];
+                fn && mod.fns.push(fn);
                 mix((mods[name] = mod), config);
 
-                // 对于 requires 都已 attached 的模块，比如 core 中的模块，直�?attach
+                // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
                 if (self._isAttached(mod.requires)) {
                     self._attachMod(mod);
                 }
@@ -990,7 +997,7 @@ build time: Aug 18 12:10
                 return;
             }
 
-            // 有尚�?attached 的模�?
+            // 有尚未 attached 的模块
             for (; i < len && (mod = mods[modNames[i++]]);) {
                 if (mod.status === ATTACHED) continue;
 
@@ -1034,9 +1041,15 @@ build time: Aug 18 12:10
         },
 
         _attachMod: function(mod) {
-            if (mod.fn) mod.fn(this);
-            mod.status = ATTACHED;
+            var self = this;
+            if (mod.fns) {
+                S.each(mod.fns, function(fn) {
+                    fn && fn(self);
+                });
+                mod.fns = undefined; // 保证 attach 过的方法只执行一次
 
+            }
+            mod.status = ATTACHED;
         },
 
         _isAttached: function(modNames) {
@@ -1062,7 +1075,10 @@ build time: Aug 18 12:10
                 mod.status = LOADING;
 
                 loadingQueque[url] = self.getScript(url, {
-                    success: _success,
+                    success: function() {
+
+                        _success();
+                    },
                     error: function() {
                         mod.status = ERROR;
                         _final();
@@ -1070,12 +1086,12 @@ build time: Aug 18 12:10
                     charset: mod.charset
                 });
             }
-            // 已经在加载中，需要添加回调到 script onload �?
-            // 注意：没有�?�?error 情形
+            // 已经在加载中，需要添加回调到 script onload 中
+            // 注意：没有考虑 error 情形
             else if (mod.status === LOADING && (node = loadingQueque[url])) {
                 scriptOnload(node, _success);
             }
-            // 是内嵌代码，或�?已经 loaded
+            // 是内嵌代码，或者已经 loaded
             else {
                 mod.status = LOADED;
                 callback();
@@ -1083,7 +1099,6 @@ build time: Aug 18 12:10
 
             function _success() {
                 if (mod.status !== ERROR) {
-
                     mod.status = LOADED;
                     callback();
                 }
@@ -1100,7 +1115,7 @@ build time: Aug 18 12:10
             if (!mod.fullpath && mod['path']) {
                 mod.fullpath = this.Config.base + mod['path'];
             }
-            // debug 模式下，加载�?min �?
+            // debug 模式下，加载非 min 版
             if(mod.fullpath && this.Config.debug) {
                 mod.fullpath = mod.fullpath.replace(/-min/g, '');
             }
@@ -1177,27 +1192,27 @@ build time: Aug 18 12:10
 /**
  * TODO:
  *  - combo 实现
- *  - 使用场景和测试用例整�?
+ *  - 使用场景和测试用例整理
  *
  *
  * NOTES:
  *
- * 2010/08/16 玉伯�?
- *  - 基于拔赤的实现，重构。解�?add/use �?ready 的关系，�?��实现代码�?
- *  - 暂时去除 combo 支持，combo 由用户手工控制�?
+ * 2010/08/16 玉伯：
+ *  - 基于拔赤的实现，重构。解耦 add/use 和 ready 的关系，简化实现代码。
+ *  - 暂时去除 combo 支持，combo 由用户手工控制。
  *  - 支持 app 生成的多 loader.
  *
- * 2010/08/13 拔赤�?
- *  - 重写 add, use, ready, 重新组织 add 的工作模式，添加 loader 功能�?
- *  - 借鉴 YUI3 原生支持 loader, �?YUI �?loader 使用场景复杂，且�?loader 共存的场�?
+ * 2010/08/13 拔赤：
+ *  - 重写 add, use, ready, 重新组织 add 的工作模式，添加 loader 功能。
+ *  - 借鉴 YUI3 原生支持 loader, 但 YUI 的 loader 使用场景复杂，且多 loader 共存的场景
  *    在越复杂的程序中越推荐使用，在中等规模的 webpage 中，形同鸡肋，因此将 KISSY 全局对象
- *    包装成一�?loader，来统一管理页面�?���?modules.
- *  - loader 的使用一定要�?add 来配合，加载脚本过程中的三个状�?（before domready,
- *    after domready & before KISSY callbacks' ready, after KISSY callbacks' ready）要明确区分�?
- *  - 使用 add �?ready 的基本�?路和之前保持�?��，即只要执行 add('mod-name', callback)，就
- *    会执行其中的 callback. callback 执行的时机由 loader 统一控制�?
- *  - 支持 combo, 通过 Config.combo = true 来开启，模块�?fullpath �?path 代替�?
- *  - KISSY 内部组件和开发�?文件当做地位平等的模块处理，包括 combo.
+ *    包装成一个 loader，来统一管理页面所有的 modules.
+ *  - loader 的使用一定要用 add 来配合，加载脚本过程中的三个状态（before domready,
+ *    after domready & before KISSY callbacks' ready, after KISSY callbacks' ready）要明确区分。
+ *  - 使用 add 和 ready 的基本思路和之前保持一致，即只要执行 add('mod-name', callback)，就
+ *    会执行其中的 callback. callback 执行的时机由 loader 统一控制。
+ *  - 支持 combo, 通过 Config.combo = true 来开启，模块的 fullpath 用 path 代替。
+ *  - KISSY 内部组件和开发者文件当做地位平等的模块处理，包括 combo.
  *
  */
 /**
@@ -1208,16 +1223,14 @@ build time: Aug 18 12:10
 
     var map = {
         core: {
-            path: 'packages/core-min.js',
-            charset: 'utf-8'
+            path: 'packages/core-min.js'
         }
     };
 
     S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
-            requires: ['core'],
-            charset: 'utf-8'
+            requires: ['core']
         };
     });
 
@@ -6507,7 +6520,7 @@ KISSY.add('datalazyload', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 18 10:42
+build time: Aug 18 17:37
 */
 /**
  * @module   Flash 全局静态类
@@ -6622,7 +6635,7 @@ KISSY.add('flash-ua', function(S) {
         return !!fpvF && (fpvF >= numerify(ver));
     };
 
-}, { requires: ['flash'] });
+}, { host: 'flash' });
 
 /**
  * NOTES:
@@ -6941,7 +6954,7 @@ KISSY.add('flash-embed', function(S) {
         o.appendChild(param);
     }
 
-}, { requires: ['flash'] });
+}, { host: 'flash' });
 
 /**
  * NOTES:
@@ -6964,7 +6977,7 @@ KISSY.add('flash-embed', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 18 10:33
+build time: Aug 18 17:35
 */
 /**
  * Switchable
@@ -6982,11 +6995,11 @@ KISSY.add('switchable', function(S, undefined) {
 
     /**
      * Switchable Widget
-     * attached members�?
+     * attached members：
      *   - this.container
      *   - this.config
-     *   - this.triggers  可以为空�?[]
-     *   - this.panels    可以为空�?[]
+     *   - this.triggers  可以为空值 []
+     *   - this.panels    可以为空值 []
      *   - this.content
      *   - this.length
      *   - this.activeIndex
@@ -7043,7 +7056,7 @@ KISSY.add('switchable', function(S, undefined) {
         //self.content
 
         /**
-         * 当前�?���?index
+         * 当前激活的 index
          * @type Number
          */
         self.activeIndex = config.activeIndex;
@@ -7053,21 +7066,21 @@ KISSY.add('switchable', function(S, undefined) {
 
     // 默认配置
     Switchable.Config = {
-        markupType: 0, // markup 的类型，取�?如下�?
+        markupType: 0, // markup 的类型，取值如下：
 
-        // 0 - 默认结构：�?�?nav �?content 来获�?triggers �?panels
+        // 0 - 默认结构：通过 nav 和 content 来获取 triggers 和 panels
         navCls: CLS_PREFIX + 'nav',
         contentCls: CLS_PREFIX + 'content',
 
-        // 1 - 适度灵活：�?�?cls 来获�?triggers �?panels
+        // 1 - 适度灵活：通过 cls 来获取 triggers 和 panels
         triggerCls: CLS_PREFIX + 'trigger',
         panelCls: CLS_PREFIX + 'panel',
 
-        // 2 - 完全自由：直接传�?triggers �?panels
+        // 2 - 完全自由：直接传入 triggers 和 panels
         triggers: [],
         panels: [],
 
-        // 是否有触�?
+        // 是否有触点
         hasTriggers: true,
 
         // 触发类型
@@ -7075,13 +7088,13 @@ KISSY.add('switchable', function(S, undefined) {
         // 触发延迟
         delay: .1, // 100ms
 
-        activeIndex: 0, // markup 的默认激活项，应该与�?index �?��
+        activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
         activeTriggerCls: 'ks-active',
 
-        // 可见视图内有多少�?panels
+        // 可见视图内有多少个 panels
         steps: 1,
 
-        // 可见视图区域的大小�?�?��不需要设定此值，仅当获取值不正确时，用于手工指定大小
+        // 可见视图区域的大小。一般不需要设定此值，仅当获取值不正确时，用于手工指定大小
         viewSize: []
     };
 
@@ -7152,7 +7165,7 @@ KISSY.add('switchable', function(S, undefined) {
                 triggers = self._generateTriggersMarkup(self.length);
             }
 
-            // �?triggers �?panels 转换为普通数�?
+            // 将 triggers 和 panels 转换为普通数组
             self.triggers = S.makeArray(triggers);
             self.panels = S.makeArray(panels);
 
@@ -7161,7 +7174,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * 自动生成 triggers �?markup
+         * 自动生成 triggers 的 markup
          */
         _generateTriggersMarkup: function(len) {
             var self = this, cfg = self.config,
@@ -7182,7 +7195,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * �?triggers 添加事件
+         * 给 triggers 添加事件
          */
         _bindTriggers: function() {
             var self = this, cfg = self.config,
@@ -7193,7 +7206,7 @@ KISSY.add('switchable', function(S, undefined) {
                 (function(index) {
                     trigger = triggers[index];
 
-                    // 响应点击�?Tab �?
+                    // 响应点击和 Tab 键
                     Event.on(trigger, 'click focus', function() {
                         self._onFocusTrigger(index);
                     });
@@ -7212,22 +7225,22 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * click or tab 键激�?trigger 时触发的事件
+         * click or tab 键激活 trigger 时触发的事件
          */
         _onFocusTrigger: function(index) {
             var self = this;
             if (!self._triggerIsValid()) return; // 重复点击
 
-            this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉�?
+            this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
             self.switchTo(index);
         },
 
         /**
-         * 鼠标悬浮�?trigger 上时触发的事�?
+         * 鼠标悬浮在 trigger 上时触发的事件
          */
         _onMouseEnterTrigger: function(index) {
             var self = this;
-            if (!self._triggerIsValid()) return; // 重复悬浮。比如：已显示内容时，将鼠标快�?滑出再滑进来，不必再次触发�?
+            if (!self._triggerIsValid()) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
 
             self.switchTimer = S.later(function() {
                 self.switchTo(index);
@@ -7249,7 +7262,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * 取消切换定时�?
+         * 取消切换定时器
          */
         _cancelSwitchTimer: function() {
             var self = this;
@@ -7309,7 +7322,7 @@ KISSY.add('switchable', function(S, undefined) {
          * 切换视图
          */
         _switchView: function(fromPanels, toPanels, index/*, direction*/) {
-            // �?��单的切换效果：直接隐�?显示
+            // 最简单的切换效果：直接隐藏/显示
             DOM.css(fromPanels, DISPLAY, NONE);
             DOM.css(toPanels, DISPLAY, BLOCK);
 
@@ -7325,7 +7338,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * 切换到上�?���?
+         * 切换到上一视图
          */
         prev: function() {
             var self = this, activeIndex = self.activeIndex;
@@ -7333,7 +7346,7 @@ KISSY.add('switchable', function(S, undefined) {
         },
 
         /**
-         * 切换到下�?���?
+         * 切换到下一视图
          */
         next: function() {
             var self = this, activeIndex = self.activeIndex;
@@ -7349,19 +7362,19 @@ KISSY.add('switchable', function(S, undefined) {
  * NOTES:
  *
  * 2010.07
- *  - 重构，去掉对 YUI2-Animation 的依�?
+ *  - 重构，去掉对 YUI2-Animation 的依赖
  *
  * 2010.04
- *  - 重构，脱离对 yahoo-dom-event 的依�?
+ *  - 重构，脱离对 yahoo-dom-event 的依赖
  *
  * 2010.03
- *  - 重构，去�?Widget, 部分代码直接采用 kissy 基础�?
- *  - 插件机制�?weave 织入法改�?hook 钩子�?
+ *  - 重构，去掉 Widget, 部分代码直接采用 kissy 基础库
+ *  - 插件机制从 weave 织入法改成 hook 钩子法
  *
  * TODO:
  *  - http://malsup.com/jquery/cycle/
  *  - http://www.mall.taobao.com/go/chn/mall_chl/flagship.php
- *  - �?touch 设备的支�?
+ *  - 对 touch 设备的支持
  *
  * References:
  *  - jQuery Scrollable http://flowplayer.org/tools/scrollable.html
@@ -7371,7 +7384,7 @@ KISSY.add('switchable', function(S, undefined) {
  * Switchable Autoplay Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-autoplay', function(S, undefined) {
+KISSY.add('autoplay', function(S, undefined) {
 
     var Event = S.Event,
         Switchable = S.Switchable;
@@ -7382,7 +7395,7 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
     S.mix(Switchable.Config, {
         autoplay: false,
         interval: 5, // 自动播放间隔时间
-        pauseOnHover: true  // triggerType �?mouse 时，鼠标悬停�?slide 上是否暂停自动播�?
+        pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
     });
 
     /**
@@ -7398,14 +7411,14 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
             var cfg = host.config, interval = cfg.interval * 1000, timer;
             if (!cfg.autoplay) return;
 
-            // 鼠标悬停，停止自动播�?
+            // 鼠标悬停，停止自动播放
             if (cfg.pauseOnHover) {
                 Event.on(host.container, 'mouseenter', function() {
                     if(timer) {
                         timer.cancel();
                         timer = undefined;
                     }
-                    host.paused = true; // paused 可以让外部知�?autoplay 的当前状�?
+                    host.paused = true; // paused 可以让外部知道 autoplay 的当前状态
                 });
                 Event.on(host.container, 'mouseleave', function() {
                     host.paused = false;
@@ -7428,12 +7441,12 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
         }
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 /**
  * Switchable Effect Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-effect', function(S, undefined) {
+KISSY.add('effect', function(S, undefined) {
 
     var DOM = S.DOM, Anim = S.Anim,
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
@@ -7447,17 +7460,17 @@ KISSY.add('switchable-effect', function(S, undefined) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        effect: NONE, // 'scrollx', 'scrolly', 'fade' 或�?直接传入 custom effect fn
-        duration: .5, // 动画的时�?
+        effect: NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
+        duration: .5, // 动画的时长
         easing: 'easeNone' // easing method
     });
 
     /**
-     * 定义效果�?
+     * 定义效果集
      */
     Switchable.Effects = {
 
-        // �?��素的显示/隐藏效果
+        // 最朴素的显示/隐藏效果
         none: function(fromEls, toEls, callback) {
             DOM.css(fromEls, DISPLAY, NONE);
             DOM.css(toEls, DISPLAY, BLOCK);
@@ -7474,7 +7487,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
 
             if (self.anim) self.anim.stop(true);
 
-            // 首先显示下一�?
+            // 首先显示下一张
             DOM.css(toEl, OPACITY, 1);
 
             // 动画切换
@@ -7518,7 +7531,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
         name: 'effect',
 
         /**
-         * 根据 effect, 调整初始状�?
+         * 根据 effect, 调整初始状态
          */
         init: function(host) {
             var cfg = host.config, effect = cfg.effect,
@@ -7532,35 +7545,35 @@ KISSY.add('switchable-effect', function(S, undefined) {
                 cfg.viewSize[0] || panels[0].offsetWidth * steps,
                 cfg.viewSize[1] || panels[0].offsetHeight * steps
             ];
-            // 注：�?�� panel 的尺寸应该相�?
-            //    �?��指定第一�?panel �?width �?height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等�?会不�?
+            // 注：所有 panel 的尺寸应该相同
+            //    最好指定第一个 panel 的 width 和 height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
 
-            // 2. 初始�?panels 样式
+            // 2. 初始化 panels 样式
             if (effect !== NONE) { // effect = scrollx, scrolly, fade
 
-                // 这些特效�?���?panels 都显示出�?
+                // 这些特效需要将 panels 都显示出来
                 S.each(panels, function(panel) {
                     DOM.css(panel, DISPLAY, BLOCK);
                 });
 
                 switch (effect) {
-                    // 如果是滚动效�?
+                    // 如果是滚动效果
                     case SCROLLX:
                     case SCROLLY:
-                        // 设置定位信息，为滚动效果做铺�?
+                        // 设置定位信息，为滚动效果做铺垫
                         DOM.css(content, POSITION, ABSOLUTE);
-                        DOM.css(content.parentNode, POSITION, RELATIVE); // 注：content 的父级不�?���?container
+                        DOM.css(content.parentNode, POSITION, RELATIVE); // 注：content 的父级不一定是 container
 
                         // 水平排列
                         if (effect === SCROLLX) {
                             DOM.css(panels, FLOAT, LEFT);
 
-                            // 设置�?��宽度，以保证有空间让 panels 水平排布
+                            // 设置最大宽度，以保证有空间让 panels 水平排布
                             DOM.width(content, host.viewSize[0] * (len / steps));
                         }
                         break;
 
-                    // 如果是�?明效果，则初始化透明
+                    // 如果是透明效果，则初始化透明
                     case FADE:
                         var min = activeIndex * steps,
                             max = min + steps - 1,
@@ -7578,7 +7591,7 @@ KISSY.add('switchable-effect', function(S, undefined) {
                 }
             }
 
-            // 3. �?CSS 里，�?���?container 设定高宽�?overflow: hidden
+            // 3. 在 CSS 里，需要给 container 设定高宽和 overflow: hidden
         }
     });
 
@@ -7599,12 +7612,12 @@ KISSY.add('switchable-effect', function(S, undefined) {
 
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 /**
  * Switchable Circular Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-circular', function(S, undefined) {
+KISSY.add('circular', function(S, undefined) {
 
     var DOM = S.DOM,
         POSITION = 'position', RELATIVE = 'relative',
@@ -7636,17 +7649,17 @@ KISSY.add('switchable-circular', function(S, undefined) {
             isCritical,
             isBackward = direction === BACKWARD;
 
-        // 从第�?��反向滚动到最后一�?or 从最后一个正向滚动到第一�?
+        // 从第一个反向滚动到最后一个 or 从最后一个正向滚动到第一个
         isCritical = (isBackward && activeIndex === 0 && index === len - 1)
             || (direction === FORWARD && activeIndex === len - 1 && index === 0);
 
         if (isCritical) {
-            // 调整位置并获�?diff
+            // 调整位置并获取 diff
             diff = adjustPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
         }
         props[prop] = diff + PX;
 
-        // �?��动画
+        // 开始动画
         if (self.anim) self.anim.stop();
         self.anim = new S.Anim(self.content, props, cfg.duration, cfg.easing, function() {
             if (isCritical) {
@@ -7671,13 +7684,13 @@ KISSY.add('switchable-circular', function(S, undefined) {
             to = (start + 1) * steps,
             i;
 
-        // 调整 panels 到下�?��视图�?
+        // 调整 panels 到下一个视图中
         for (i = from; i < to; i++) {
             DOM.css(panels[i], POSITION, RELATIVE);
             DOM.css(panels[i], prop, (isBackward ? -1 : 1) * viewDiff * len);
         }
 
-        // 偏移�?
+        // 偏移量
         return isBackward ? viewDiff : -viewDiff * len;
     }
 
@@ -7693,13 +7706,13 @@ KISSY.add('switchable-circular', function(S, undefined) {
             to = (start + 1) * steps,
             i;
 
-        // 滚动完成后，复位到正常状�?
+        // 滚动完成后，复位到正常状态
         for (i = from; i < to; i++) {
             DOM.css(panels[i], POSITION, EMPTY);
             DOM.css(panels[i], prop, EMPTY);
         }
 
-        // 瞬移到正常位�?
+        // 瞬移到正常位置
         DOM.css(self.content, prop, isBackward ? -viewDiff * (len - 1) : EMPTY);
     }
 
@@ -7711,31 +7724,31 @@ KISSY.add('switchable-circular', function(S, undefined) {
         name: 'circular',
 
         /**
-         * 根据 effect, 调整初始状�?
+         * 根据 effect, 调整初始状态
          */
         init: function(host) {
             var cfg = host.config;
 
-            // 仅有滚动效果�?��下面的调�?
+            // 仅有滚动效果需要下面的调整
             if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
                 // 覆盖滚动效果函数
-                cfg.scrollType = cfg.effect; // 保存�?scrollType �?
+                cfg.scrollType = cfg.effect; // 保存到 scrollType 中
                 cfg.effect = circularScroll;
             }
         }
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 
 /**
  * TODO:
- *   - 是否�?��考虑�?0 �?2（非�?���?���?�?backward 滚动？需要更灵活
+ *   - 是否需要考虑从 0 到 2（非最后一个） 的 backward 滚动？需要更灵活
  */
 /**
  * Switchable Lazyload Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-lazyload', function(S) {
+KISSY.add('lazyload', function(S) {
 
     var DOM = S.DOM,
         EVENT_BEFORE_SWITCH = 'beforeSwitch',
@@ -7755,7 +7768,7 @@ KISSY.add('switchable-lazyload', function(S) {
     });
 
     /**
-     * 织入初始化函�?
+     * 织入初始化函数
      */
     Switchable.Plugins.push({
 
@@ -7766,7 +7779,7 @@ KISSY.add('switchable-lazyload', function(S) {
                 cfg = host.config,
                 type = cfg.lazyDataType, flag = FLAGS[type];
 
-            if (!DataLazyload || !type || !flag) return; // 没有延迟�?
+            if (!DataLazyload || !type || !flag) return; // 没有延迟项
 
             host.on(EVENT_BEFORE_SWITCH, loadLazyData);
 
@@ -7803,16 +7816,16 @@ KISSY.add('switchable-lazyload', function(S) {
         }
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 /**
  * Switchable Autorender Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-autorender', function(S) {
+KISSY.add('autorender', function(S) {
 
     /**
-     * 自动渲染 container 元素内的�?�� Switchable 组件
-     * 默认钩子�?div class="KS_Widget" data-widget-type="Tabs" data-widget-config="{...}">
+     * 自动渲染 container 元素内的所有 Switchable 组件
+     * 默认钩子：<div class="KS_Widget" data-widget-type="Tabs" data-widget-config="{...}">
      */
     S.Switchable.autoRender = function(hook, container) {
         hook = '.' + (hook || 'KS_Widget');
@@ -7831,7 +7844,7 @@ KISSY.add('switchable-autorender', function(S) {
         });
     }
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 /**
  * Tabs Widget
  * @creator  玉伯<lifesinger@gmail.com>
@@ -7856,7 +7869,7 @@ KISSY.add('tabs', function(S) {
     S.extend(Tabs, S.Switchable);
     S.Tabs = Tabs;
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 /**
  * Tabs Widget
  * @creator     玉伯<lifesinger@gmail.com>
@@ -7889,7 +7902,7 @@ KISSY.add('slide', function(S) {
     S.extend(Slide, S.Switchable);
     S.Slide = Slide;
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 /**
  * Carousel Widget
  * @creator  玉伯<lifesinger@gmail.com>
@@ -7934,7 +7947,7 @@ KISSY.add('carousel', function(S, undefined) {
 
     /**
      * Carousel 的初始化逻辑
-     * 增加�?
+     * 增加了:
      *   self.prevBtn
      *   self.nextBtn
      */
@@ -7951,7 +7964,7 @@ KISSY.add('carousel', function(S, undefined) {
             });
         });
 
-        // 注册 switch 事件，处�?prevBtn/nextBtn �?disable 状�?
+        // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
         // circular = true 时，无需处理
         if (!cfg.circular) {
             self.on('switch', function(ev) {
@@ -7971,19 +7984,19 @@ KISSY.add('carousel', function(S, undefined) {
         });
     }
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 
 
 /**
  * NOTES:
  *
  * 2010.07
- *  - 添加�?prevBtn/nextBtn 的支�?
+ *  - 添加对 prevBtn/nextBtn 的支持
  *  - 添加 itemSelected 事件
  *
  * TODO:
- *  - 对键盘事件的支持，比�?Up/Down 触发 prevItem/nextItem, PgDn/PgUp 触发 prev/next
- *  - itemSelected 时，自动居中的特�?
+ *  - 对键盘事件的支持，比如 Up/Down 触发 prevItem/nextItem, PgDn/PgUp 触发 prev/next
+ *  - itemSelected 时，自动居中的特性
  */
 /**
  * Accordion Widget
@@ -8024,7 +8037,7 @@ KISSY.add('accordion', function(S) {
          * 重复触发时的有效判断
          */
         _triggerIsValid: function(index) {
-            // multiple 模式下，再次触发意味�?��换展�?收缩状�?
+            // multiple 模式下，再次触发意味着切换展开/收缩状态
             return this.activeIndex !== index || this.config.multiple;
         },
 
@@ -8046,7 +8059,7 @@ KISSY.add('accordion', function(S) {
         }
     });
 
-}, { requires: ['switchable'] } );
+}, { host: 'switchable' } );
 
 /**
  * TODO:
