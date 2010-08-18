@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 16 16:51
+build time: Aug 18 12:10
 */
 /**
  * @module kissy
@@ -936,17 +936,26 @@ build time: Aug 16 16:51
          * @return {KISSY}
          */
         add: function(name, fn, config) {
-            var self = this, mods = self.Env.mods, mod;
+            var self = this, mods = self.Env.mods, mod, o;
 
+            // S.add(name, config) => S.add( { name: config } )
+            if (S.isString(name) && !config && S.isPlainObject(fn)) {
+                o = {};
+                o[name] = fn;
+                name = o;
+            }
+
+            // S.add( { name: config } )
             if (S.isPlainObject(name)) {
                 S.each(name, function(v, k) {
                     v.name = k;
                 });
                 mix(mods, name);
             }
+            // S.add(name[, fn[, config]])
             else {
-                // 注意：�?�?add(name, fn) 注册的代码，无论是页面中的代码，还是 js 文件里的代码，add 执行时，
-                //      都意味着该模块已�?LOADED
+                // 注意：�?�?S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，�?
+                //      �?js 文件里的代码，add 执行时，都意味着该模块已�?LOADED
                 mix((mod = mods[name] || { }), { name: name, fn: fn, status: LOADED });
                 mix((mods[name] = mod), config);
 
@@ -1057,7 +1066,8 @@ build time: Aug 16 16:51
                     error: function() {
                         mod.status = ERROR;
                         _final();
-                    }
+                    },
+                    charset: mod.charset
                 });
             }
             // 已经在加载中，需要添加回调到 script onload �?
@@ -1089,6 +1099,10 @@ build time: Aug 16 16:51
         _buildPath: function(mod) {
             if (!mod.fullpath && mod['path']) {
                 mod.fullpath = this.Config.base + mod['path'];
+            }
+            // debug 模式下，加载�?min �?
+            if(mod.fullpath && this.Config.debug) {
+                mod.fullpath = mod.fullpath.replace(/-min/g, '');
             }
         },
 
@@ -1163,6 +1177,7 @@ build time: Aug 16 16:51
 /**
  * TODO:
  *  - combo 实现
+ *  - 使用场景和测试用例整�?
  *
  *
  * NOTES:
@@ -1193,14 +1208,16 @@ build time: Aug 16 16:51
 
     var map = {
         core: {
-            path: 'packages/core-min.js'
+            path: 'packages/core-min.js',
+            charset: 'utf-8'
         }
     };
 
     S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
-            requires: ['core']
+            requires: ['core'],
+            charset: 'utf-8'
         };
     });
 
@@ -6007,7 +6024,7 @@ KISSY.add('sizzle', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 16 16:50
+build time: Aug 18 12:42
 */
 /**
  * 数据延迟加载组件
@@ -6094,7 +6111,13 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 需要延迟处理的 textarea
          * @type Array
          */
-        //self.areas
+        //self.areaes
+
+        /**
+         * 和延迟项绑定的回调函数
+         * @type object
+         */
+        self.callbacks = {els: [], fns: []};
 
         /**
          * 开始延迟的 Y 坐标
@@ -6120,25 +6143,25 @@ KISSY.add('datalazyload', function(S, undefined) {
         },
 
         /**
-         * 获取并初始化需要延迟的 images 和 areas
+         * 获取并初始化需要延迟的 images 和 areaes
          * @protected
          */
         _filterItems: function() {
             var self = this,
                 containers = self.containers,
-                n, N, imgs, areas, i, len, img, area,
+                n, N, imgs, areaes, i, len, img, area,
                 lazyImgs = [], lazyAreas = [];
 
             for (n = 0,N = containers.length; n < N; ++n) {
                 imgs = S.query('img', containers[n]);
                 lazyImgs = lazyImgs.concat(S.filter(imgs, self._filterImg, self));
 
-                areas = S.query('textarea', containers[n]);
-                lazyAreas = lazyAreas.concat(S.filter(areas, self._filterArea, self));
+                areaes = S.query('textarea', containers[n]);
+                lazyAreas = lazyAreas.concat(S.filter(areaes, self._filterArea, self));
             }
 
             self.images = lazyImgs;
-            self.areas = lazyAreas;
+            self.areaes = lazyAreas;
         },
 
         /**
@@ -6226,8 +6249,10 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 加载延迟项
          */
         _loadItems: function() {
-            this._loadImgs();
-            this._loadAreas();
+            var self = this;
+            self._loadImgs();
+            self._loadAreas();
+            self._fireCallbacks();
         },
 
         /**
@@ -6275,7 +6300,7 @@ KISSY.add('datalazyload', function(S, undefined) {
          */
         _loadAreas: function() {
             var self = this;
-            self.areas = S.filter(self.areas, self._loadArea, self);
+            self.areaes = S.filter(self.areaes, self._loadArea, self);
         },
 
         /**
@@ -6316,6 +6341,43 @@ KISSY.add('datalazyload', function(S, undefined) {
         },
 
         /**
+         * 触发回调
+         */
+        _fireCallbacks: function() {
+            var self = this,
+                callbacks = self.callbacks,
+                els = callbacks.els, fns = callbacks.fns,
+                scrollTop = DOM.scrollTop(),
+                threshold = self.threshold + scrollTop,
+                i, el, fn, remainEls = [], remainFns = [];
+
+            for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
+                if (DOM.offset(el).top <= threshold) {
+                    fn.call(el);
+                } else {
+                    remainEls.push(el);
+                    remainFns.push(fn);
+                }
+
+            }
+            callbacks.els = remainEls;
+            callbacks.fns = remainFns;
+        },
+
+        /**
+         * 添加回调函数。当 el 即将出现在视图中时，触发 fn
+         */
+        addCallback: function(el, fn) {
+            var callbacks = this.callbacks;
+            el = S.get(el);
+
+            if (el && S.isFunction(fn)) {
+                callbacks.els.push(el);
+                callbacks.fns.push(fn);
+            }
+        },
+
+        /**
          * 获取阈值
          * @protected
          */
@@ -6332,7 +6394,8 @@ KISSY.add('datalazyload', function(S, undefined) {
          * @protected
          */
         _getItemsLength: function() {
-            return this.images.length + this.areas.length;
+            var self = this;
+            return self.images.length + self.areaes.length + self.callbacks.els.length;
         },
 
         /**
@@ -6444,7 +6507,7 @@ KISSY.add('datalazyload', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 16 16:50
+build time: Aug 18 10:42
 */
 /**
  * @module   Flash 全局静态类
@@ -6559,7 +6622,7 @@ KISSY.add('flash-ua', function(S) {
         return !!fpvF && (fpvF >= numerify(ver));
     };
 
-});
+}, { requires: ['flash'] });
 
 /**
  * NOTES:
@@ -6877,7 +6940,8 @@ KISSY.add('flash-embed', function(S) {
         DOM.attr(param, { name: name, value: val });
         o.appendChild(param);
     }
-});
+
+}, { requires: ['flash'] });
 
 /**
  * NOTES:
@@ -6900,7 +6964,7 @@ KISSY.add('flash-embed', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 16 16:51
+build time: Aug 18 10:33
 */
 /**
  * Switchable
@@ -7363,7 +7427,8 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
             startAutoplay();
         }
     });
-});
+
+}, { requires: ['switchable'] } );
 /**
  * Switchable Effect Plugin
  * @creator  玉伯<lifesinger@gmail.com>
@@ -7533,7 +7598,8 @@ KISSY.add('switchable-effect', function(S, undefined) {
         }
 
     });
-});
+
+}, { requires: ['switchable'] } );
 /**
  * Switchable Circular Plugin
  * @creator  玉伯<lifesinger@gmail.com>
@@ -7658,7 +7724,8 @@ KISSY.add('switchable-circular', function(S, undefined) {
             }
         }
     });
-});
+
+}, { requires: ['switchable'] } );
 
 /**
  * TODO:
@@ -7735,34 +7802,36 @@ KISSY.add('switchable-lazyload', function(S) {
             }
         }
     });
-});
+
+}, { requires: ['switchable'] } );
 /**
  * Switchable Autorender Plugin
  * @creator  玉伯<lifesinger@gmail.com>
- * @depends  ks-core, json
  */
 KISSY.add('switchable-autorender', function(S) {
 
     /**
      * 自动渲染 container 元素内的�?�� Switchable 组件
+     * 默认钩子�?div class="KS_Widget" data-widget-type="Tabs" data-widget-config="{...}">
      */
-    S.Switchable.autoRender = function(container, hookPrefix, dataAttrName) {
-        hookPrefix = '.' + (hookPrefix || 'KS_');
-        dataAttrName = dataAttrName || 'data-ks-switchable';
+    S.Switchable.autoRender = function(hook, container) {
+        hook = '.' + (hook || 'KS_Widget');
 
-        S.each(['Switchable', 'Tabs', 'Slide', 'Carousel', 'Accordion'], function(name) {
-            S.each(S.query(hookPrefix + name, container), function(elem) {
+        S.query(hook, container).each(function(elem) {
+            var type = elem.getAttribute('data-widget-type'), config;
+            if (type && ('Switchable Tabs Slide Carousel Accordion'.indexOf(type) > -1)) {
                 try {
-                    var config = elem.getAttribute(dataAttrName);
-                    if(config) config = config.replace(/'/g, '"');
-                    new S[name](elem, S.JSON.parse(config));
+                    config = elem.getAttribute('data-widget-config');
+                    if (config) config = config.replace(/'/g, '"');
+                    new S[type](elem, S.JSON.parse(config));
                 } catch(ex) {
 
                 }
-            });
+            }
         });
     }
-});
+
+}, { requires: ['switchable'] } );
 /**
  * Tabs Widget
  * @creator  玉伯<lifesinger@gmail.com>
@@ -7786,7 +7855,8 @@ KISSY.add('tabs', function(S) {
 
     S.extend(Tabs, S.Switchable);
     S.Tabs = Tabs;
-});
+
+}, { requires: ['switchable'] } );
 /**
  * Tabs Widget
  * @creator     玉伯<lifesinger@gmail.com>
@@ -7818,7 +7888,8 @@ KISSY.add('slide', function(S) {
 
     S.extend(Slide, S.Switchable);
     S.Slide = Slide;
-});
+
+}, { requires: ['switchable'] } );
 /**
  * Carousel Widget
  * @creator  玉伯<lifesinger@gmail.com>
@@ -7899,7 +7970,8 @@ KISSY.add('carousel', function(S, undefined) {
             self.fire('itemSelected', { item: this });
         });
     }
-});
+
+}, { requires: ['switchable'] } );
 
 
 /**
@@ -7973,7 +8045,8 @@ KISSY.add('accordion', function(S) {
             }
         }
     });
-});
+
+}, { requires: ['switchable'] } );
 
 /**
  * TODO:
