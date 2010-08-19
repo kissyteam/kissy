@@ -76,10 +76,15 @@
                 _loadingQueue: { } // 正在加载中的模块信息
             };
 
+            // 从当前引用文件路径中提取 base
+            var scripts = doc.getElementsByTagName('script'),
+                currentScript = scripts[scripts.length - 1],
+                base = currentScript.src.replace(/^(.*)(seed|kissy).*$/i, '$1');
+            
             // 配置信息
             this.Config = {
                 debug: '@DEBUG@', // build 时，会将 @DEBUG@ 替换为空
-                base: 'http://a.tbcdn.cn/s/kissy/@VERSION@/build/',
+                base: base,
                 timeout: 10   // getScript 的默认 timeout 时间
             };
         },

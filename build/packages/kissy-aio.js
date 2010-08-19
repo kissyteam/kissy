@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 19 13:36
+build time: Aug 19 18:51
 */
 /**
  * @module kissy
@@ -81,10 +81,15 @@ build time: Aug 19 13:36
                 _loadingQueue: { } // 正在加载中的模块信息
             };
 
+            // 从当前引用文件路径中提取 base
+            var scripts = doc.getElementsByTagName('script'),
+                currentScript = scripts[scripts.length - 1],
+                base = currentScript.src.replace(/^(.*)(seed|kissy).*$/i, '$1');
+            
             // 配置信息
             this.Config = {
                 debug: '@DEBUG@', // build 时，会将 @DEBUG@ 替换为空
-                base: 'http://a.tbcdn.cn/s/kissy/1.1.2/build/',
+                base: base,
                 timeout: 10   // getScript 的默认 timeout 时间
             };
         },
@@ -905,11 +910,7 @@ build time: Aug 19 13:36
                 };
             } :
             function(node, callback) {
-                var oldCallback = node.onload;
-                node.onload = function() {
-                    oldCallback && oldCallback();
-                    callback();
-                };
+                node.addEventListener('load', callback, false);
             },
 
         RE_CSS = /\.css(?:\?|$)/i,
@@ -929,7 +930,8 @@ build time: Aug 19 13:36
          * KISSY.add({
          *     'mod-name': {
          *         fullpath: 'url',
-         *         requires: ['mod1','mod2']
+         *         requires: ['mod1','mod2'],
+         *         attach: false // 默认为 true
          *     }
          * });
          * </code>
@@ -967,7 +969,7 @@ build time: Aug 19 13:36
                 mix((mods[name] = mod), config);
 
                 // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
-                if (self._isAttached(mod.requires)) {
+                if ((mod['attach'] !== false) && self._isAttached(mod.requires)) {
                     self._attachMod(mod);
                 }
             }
@@ -978,18 +980,20 @@ build time: Aug 19 13:36
         /**
          * Start load specific mods, and fire callback when these mods and requires are attached.
          * <code>
-         * S.use('mod-name', callback);
-         * S.use('mod1,mod2', callback);
-         * S.use('mod1+mod2,mod3', callback); 暂不实现
-         * S.use('*', callback);  暂不实现
-         * S.use('*+', callback); 暂不实现
+         * S.use('mod-name', callback, config);
+         * S.use('mod1,mod2', callback, config);
          * </code>
+         * config = {
+         *   order: true, // 默认为 false. 是否严格按照 modNames 的排列顺序来回调入口函数
+         *   scope: KISSY // 默认为 KISSY. 当在 this.Env.mods 上找不到某个 mod 的属性时，会到 SCOPE.Env.mods 上去找
+         * }
          */
-        use: function(modNames, callback) {
+        use: function(modNames, callback, config) {
             modNames = modNames.replace(/\s+/g, EMPTY).split(',');
 
             var self = this, mods = self.Env.mods,
-                i = 0, len = modNames.length, mod, fired;
+                i, len = modNames.length, mod, fired;
+            config = config || { };
 
             // 已经全部 attached, 直接执行回调即可
             if (self._isAttached(modNames)) {
@@ -998,15 +1002,25 @@ build time: Aug 19 13:36
             }
 
             // 有尚未 attached 的模块
-            for (; i < len && (mod = mods[modNames[i++]]);) {
+            for (i = 0; i < len && (mod = mods[modNames[i]]); i++) {
                 if (mod.status === ATTACHED) continue;
+
+                // 通过添加依赖，来保证调用顺序
+                if (config.order && i > 0) {
+                    if (!mod.requires) mod.requires = [];
+                    mod._requires = mod.requires.concat(); // 保留，以便还原
+                    if (!S.inArray(modNames[i - 1], mod.requires)) {
+                        mod.requires.push(modNames[i - 1]);
+                    }
+                }
 
                 self._attach(mod, function() {
                     if (!fired && self._isAttached(modNames)) {
                         fired = true;
+                        if(mod._requires) mod.requires = mod._requires; // restore requires
                         callback && callback(self);
                     }
-                });
+                }, config);
             }
 
             return self;
@@ -1015,13 +1029,13 @@ build time: Aug 19 13:36
         /**
          * Attach a module and all required modules.
          */
-        _attach: function(mod, callback) {
+        _attach: function(mod, callback, config) {
             var self = this, requires = mod['requires'] || [],
                 i = 0, len = requires.length;
 
             // attach all required modules
             for (; i < len; i++) {
-                self._attach(self.Env.mods[requires[i]], fn);
+                self._attach(self.Env.mods[requires[i]], fn, config);
             }
 
             // load and attach this module
@@ -1031,7 +1045,7 @@ build time: Aug 19 13:36
             function fn() {
                 if (self._isAttached(requires)) {
                     if (mod.status === LOADED) {
-                        self._attachMod(mod);
+                        self._attachMod(mod, config.scope);
                     }
                     if (mod.status === ATTACHED) {
                         callback();
@@ -1040,8 +1054,10 @@ build time: Aug 19 13:36
             }
         },
 
-        _attachMod: function(mod) {
+        _attachMod: function(mod, scope) {
             var self = this;
+            if(scope) mod.fns = scope.Env.mods[mod.name].fns;
+
             if (mod.fns) {
                 S.each(mod.fns, function(fn) {
                     fn && fn(self);
@@ -1049,6 +1065,7 @@ build time: Aug 19 13:36
                 mod.fns = undefined; // 保证 attach 过的方法只执行一次
                 S.log(mod.name + '.status = attached');
             }
+
             mod.status = ATTACHED;
         },
 
