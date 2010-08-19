@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 19 18:51
+build time: Aug 19 19:08
 */
 /**
  * @module kissy
@@ -352,12 +352,16 @@ build time: Aug 19 18:51
          * @return {Object}  A reference to the app global object
          */
         app: function(name, sx) {
-            var O = win[name] || {};
+            var isStr = S.isString(name),
+                O = isStr ? win[name] || { } : name;
 
             mix(O, this, true, S._APP_MEMBERS);
             O._init();
 
-            return mix((win[name] = O), S.isFunction(sx) ? sx() : sx);
+            mix(O, S.isFunction(sx) ? sx() : sx);
+            isStr && (win[name] = O);
+
+            return O;
         },
 
         /**

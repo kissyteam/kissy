@@ -347,12 +347,16 @@
          * @return {Object}  A reference to the app global object
          */
         app: function(name, sx) {
-            var O = win[name] || {};
+            var isStr = S.isString(name),
+                O = isStr ? win[name] || { } : name;
 
             mix(O, this, true, S._APP_MEMBERS);
             O._init();
 
-            return mix((win[name] = O), S.isFunction(sx) ? sx() : sx);
+            mix(O, S.isFunction(sx) ? sx() : sx);
+            isStr && (win[name] = O);
+
+            return O;
         },
 
         /**
