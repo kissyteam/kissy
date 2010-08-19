@@ -1,12 +1,11 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.1
+Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 13 13:48
+build time: Aug 16 16:50
 */
 /**
  * 图片放大效果 ImageZoom
  * @creater  qiaohua@taobao.com
- * @depends  ks-core
  */
 KISSY.add('imagezoom', function(S, undefined) {
 
@@ -333,7 +332,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         return { width: elem.clientWidth, height: elem.clientHeight };
     }
 
-});
+}, { requires: ['core'] } );
 
 /**
  * NOTES:

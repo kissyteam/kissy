@@ -2,7 +2,6 @@
  * 提示补全组件
  * @module   suggest
  * @creator  玉伯<lifesinger@gmail.com>
- * @depends  ks-core
  */
 KISSY.add('suggest', function(S, undefined) {
 
@@ -987,7 +986,8 @@ KISSY.add('suggest', function(S, undefined) {
 
     Suggest.version = 1.1;
     S.Suggest = Suggest;
-});
+
+}, { requires: ['core'] } );
 
 
 /**

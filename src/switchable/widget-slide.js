@@ -29,4 +29,5 @@ KISSY.add('slide', function(S) {
 
     S.extend(Slide, S.Switchable);
     S.Slide = Slide;
-});
+
+}, { host: 'switchable' } );

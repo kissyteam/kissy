@@ -1,13 +1,12 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.1
+Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 13 13:48
+build time: Aug 16 16:51
 */
 /**
  * from http://www.JSON.org/json2.js
  * 2010-03-20
  */
-
 KISSY.add('json', function (S) {
 
     var JSON = S.JSON = window.JSON || { };

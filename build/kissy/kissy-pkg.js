@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.1
+Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 13 13:48
+build time: Aug 19 13:36
 */
 /**
  * @module kissy
@@ -14,7 +14,8 @@ build time: Aug 13 13:48
     if (win[S] === undefined) win[S] = {};
     S = win[S]; // shortcut
 
-    var doc = win['document'],
+    var doc = win['document'], loc = location,
+        EMPTY = '',
 
         // Copies all the properties of s to r
         mix = function(r, s, ov, wl) {
@@ -57,50 +58,35 @@ build time: Aug 13 13:48
         POLL_INTERVAL = 40,
 
         // #id or id
-        RE_IDSTR = /^#?([\w-]+)$/;
+        RE_IDSTR = /^#?([\w-]+)$/,
+
+        // global unique id
+        guid = 0;
 
     mix(S, {
+
         /**
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.1',
+        version: '1.1.2',
 
         /**
          * Initializes KISSY object.
-         * @private
          */
         _init: function() {
-            // Env 对象目前仅用于内部，为模块动态加载预留接口
+            // 环境信息
             this.Env = {
-                mods: { },
-                guid: 0
-            };
-        },
-
-        /**
-         * Registers a module.
-         * @param name {String} module name
-         * @param fn {Function} entry point into the module that is used to bind module to KISSY
-         * <code>
-         * KISSY.add('module-name', function(S){ });
-         * </code>
-         * @return {KISSY}
-         */
-        add: function(name, fn) {
-            var self = this;
-
-            // override mode
-            self.Env.mods[name] = {
-                name: name,
-                fn: fn
+                mods: { }, // 所有模块列表
+                _loadingQueue: { } // 正在加载中的模块信息
             };
 
-            // call entry point immediately
-            fn(self);
-
-            // chain support
-            return self;
+            // 配置信息
+            this.Config = {
+                debug: '@DEBUG@', // build 时，会将 @DEBUG@ 替换为空
+                base: 'http://a.tbcdn.cn/s/kissy/1.1.2/build/',
+                timeout: 10   // getScript 的默认 timeout 时间
+            };
         },
 
         /**
@@ -112,19 +98,21 @@ build time: Aug 13 13:48
          * @return {KISSY}
          */
         ready: function(fn) {
+            var self = this;
+
             // Attach the listeners
-            if (!readyBound) this._bindReady();
+            if (!readyBound) self._bindReady();
 
             // If the DOM is already ready
             if (isReady) {
                 // Execute the function immediately
-                fn.call(win, this);
+                fn.call(win, self);
             } else {
                 // Remember the function for later
                 readyList.push(fn);
             }
 
-            return this;
+            return self;
         },
 
         /**
@@ -158,7 +146,7 @@ build time: Aug 13 13:48
                 doc.addEventListener(eventType, domReady, false);
 
                 // A fallback to window.onload, that will always work
-			    win.addEventListener('load', fire, false);
+                win.addEventListener('load', fire, false);
             }
             // IE event model is used
             else {
@@ -185,6 +173,7 @@ build time: Aug 13 13:48
                             setTimeout(readyScroll, 1);
                         }
                     }
+
                     readyScroll();
                 }
             }
@@ -218,7 +207,7 @@ build time: Aug 13 13:48
          * @param fn <Function> What to execute when the element is found.
          */
         available: function(id, fn) {
-            id = (id + '').match(RE_IDSTR)[1];
+            id = (id + EMPTY).match(RE_IDSTR)[1];
             if (!id || !S.isFunction(fn)) return;
 
             var retryCount = 1,
@@ -338,7 +327,7 @@ build time: Aug 13 13:48
             var l = arguments.length, o = null, i, j, p;
 
             for (i = 0; i < l; ++i) {
-                p = ('' + arguments[i]).split('.');
+                p = (EMPTY + arguments[i]).split('.');
                 o = this;
                 for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
                     o = o[p[j]] = o[p[j]] || {};
@@ -360,10 +349,10 @@ build time: Aug 13 13:48
         app: function(name, sx) {
             var O = win[name] || {};
 
-            mix(O, this, true, ['_init', 'add', 'namespace']);
+            mix(O, this, true, S._APP_MEMBERS);
             O._init();
 
-            return mix((win[name] = O), typeof sx === 'function' ? sx() : sx);
+            return mix((win[name] = O), S.isFunction(sx) ? sx() : sx);
         },
 
         /**
@@ -372,10 +361,9 @@ build time: Aug 13 13:48
          * @param cat {String} the log category for the message. Default
          *        categories are "info", "warn", "error", "time" etc.
          * @param src {String} the source of the the message (opt)
-         * @return {KISSY}
          */
         log: function(msg, cat, src) {
-            if (this.Config.debug) {
+            if (S.Config.debug) {
                 if (src) {
                     msg = src + ': ' + msg;
                 }
@@ -383,14 +371,13 @@ build time: Aug 13 13:48
                     console[cat && console[cat] ? cat : 'log'](msg);
                 }
             }
-            return this;
         },
 
         /**
          * Throws error message.
          */
         error: function(msg) {
-            if (this.Config.debug) {
+            if (S.Config.debug) {
                 throw msg;
             }
         },
@@ -401,47 +388,52 @@ build time: Aug 13 13:48
          * @return {String} the guid
          */
         guid: function(pre) {
-            var id = this.Env.guid++ + '';
+            var id = guid++ + EMPTY;
             return pre ? pre + id : id;
         }
     });
 
     S._init();
 
-    // build 时，会将 @DEBUG@ 替换为空
-    S.Config = { debug: '@DEBUG@' };
+    // S.app() 时，需要动态复制的成员列表
+    S._APP_MEMBERS = ['_init', 'namespace'];
+
+    // 可以通过在 url 上加 ?ks-debug 参数来强制开启 debug 模式
+    if (loc && (loc.search || EMPTY).indexOf('ks-debug') !== -1) {
+        S.Config.debug = true;
+    }
 
 })(window, 'KISSY');
 
 /**
  * NOTES:
  *
- * 2010.07
- *  - 增加 available 和 guid 方法。
+ * 2010/08
+ *  - 将 loader 功能独立到 loader.js 中
  *
- * 2010.04
- *  - 移除掉 weave 方法，尚未考虑周全。
+ * 2010/07
+ *  - 增加 available 和 guid 方法
  *
- * 2010.01
- *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）。
- *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
- *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码。
- *  - namespace, app 方法，决定子库的实现和代码的整体组织。
- *  - log, error 方法，简单的调试工具和报错机制。
- *  - guid 方法，全局辅助方法。
+ * 2010/04
+ *  - 移除掉 weave 方法，鸡肋
+ *
+ * 2010/01
+ *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）
+ *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱
+ *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码
+ *  - namespace, app 方法，决定子库的实现和代码的整体组织
+ *  - log, error 方法，简单的调试工具和报错机制
+ *  - guid 方法，全局辅助方法
  *  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
- *
- * TODO:
- *  - 模块动态加载 require 方法的实现。
  *
  */
 /**
  * @module  lang
  * @author  lifesinger@gmail.com
  */
-KISSY.add('lang', function(S, undefined) {
+(function(win, S, undefined) {
 
-    var win = window, doc = document, docElem = doc.documentElement, loc = location,
+    var doc = document, docElem = doc.documentElement,
         AP = Array.prototype,
         indexOf = AP.indexOf, lastIndexOf = AP.lastIndexOf, filter = AP.filter,
         trim = String.prototype.trim,
@@ -771,7 +763,7 @@ KISSY.add('lang', function(S, undefined) {
             o = o || { };
             var m = fn, d = S.makeArray(data), f, r;
 
-            if (typeof fn === 'string') {
+            if (S.isString(fn)) {
                 m = o[fn];
             }
 
@@ -868,28 +860,393 @@ KISSY.add('lang', function(S, undefined) {
         }
     }
 
-    // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
-    if (loc && loc.search && loc.search.indexOf('ks-debug') !== -1) {
-        S.Config.debug = true;
-    }
-});
+})(window, KISSY);
 
 /**
  * NOTES:
  *
- *  2010.06
+ *  2010/08
+ *   - 增加 lastIndexOf 和 unique 方法。
+ *
+ *  2010/06
  *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着。
  *
- *  2010.05
+ *  2010/05
  *   - 增加 filter 方法。
  *   - globalEval 中，直接采用 text 赋值，去掉 appendChild 方式。
  *
- *  2010.04
+ *  2010/04
  *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
  *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
  *
+ */
+/**
+ * @module loader
+ * @author lifesinger@gmail.com, lijing00333@163.com
+ */
+(function(win, S, undefined) {
+
+    var doc = win['document'],
+        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+        EMPTY = '',
+        LOADING = 1, LOADED = 2, ERROR = 3, ATTACHED = 4,
+        mix = S.mix,
+
+        scriptOnload = doc.createElement('script').readyState ?
+            function(node, callback) {
+                var oldCallback = node.onreadystatechange;
+                node.onreadystatechange = function() {
+                    var rs = node.readyState;
+                    if (rs === 'loaded' || rs === 'complete') {
+                        node.onreadystatechange = null;
+                        oldCallback && oldCallback();
+                        callback.call(this);
+                    }
+                };
+            } :
+            function(node, callback) {
+                var oldCallback = node.onload;
+                node.onload = function() {
+                    oldCallback && oldCallback();
+                    callback();
+                };
+            },
+
+        RE_CSS = /\.css(?:\?|$)/i,
+        loader;
+
+    loader = {
+
+        /**
+         * Registers a module.
+         * @param name {String} module name
+         * @param fn {Function} entry point into the module that is used to bind module to KISSY
+         * @param config {Object}
+         * <code>
+         * KISSY.add('module-name', function(S){ }, requires: ['mod1']);
+         * </code>
+         * <code>
+         * KISSY.add({
+         *     'mod-name': {
+         *         fullpath: 'url',
+         *         requires: ['mod1','mod2']
+         *     }
+         * });
+         * </code>
+         * @return {KISSY}
+         */
+        add: function(name, fn, config) {
+            var self = this, mods = self.Env.mods, mod, o;
+
+            // S.add(name, config) => S.add( { name: config } )
+            if (S.isString(name) && !config && S.isPlainObject(fn)) {
+                o = {};
+                o[name] = fn;
+                name = o;
+            }
+
+            // S.add( { name: config } )
+            if (S.isPlainObject(name)) {
+                S.each(name, function(v, k) {
+                    v.name = k;
+                });
+                mix(mods, name);
+            }
+            // S.add(name[, fn[, config]])
+            else {
+                // 处理子模块
+                if(config && config.host) {
+                    name = config.host;
+                }
+
+                // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
+                //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
+                mix((mod = mods[name] || { }), { name: name, status: LOADED });
+                if(!mod.fns) mod.fns = [];
+                fn && mod.fns.push(fn);
+                mix((mods[name] = mod), config);
+
+                // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
+                if (self._isAttached(mod.requires)) {
+                    self._attachMod(mod);
+                }
+            }
+
+            return self;
+        },
+
+        /**
+         * Start load specific mods, and fire callback when these mods and requires are attached.
+         * <code>
+         * S.use('mod-name', callback);
+         * S.use('mod1,mod2', callback);
+         * S.use('mod1+mod2,mod3', callback); 暂不实现
+         * S.use('*', callback);  暂不实现
+         * S.use('*+', callback); 暂不实现
+         * </code>
+         */
+        use: function(modNames, callback) {
+            modNames = modNames.replace(/\s+/g, EMPTY).split(',');
+
+            var self = this, mods = self.Env.mods,
+                i = 0, len = modNames.length, mod, fired;
+
+            // 已经全部 attached, 直接执行回调即可
+            if (self._isAttached(modNames)) {
+                callback && callback(self);
+                return;
+            }
+
+            // 有尚未 attached 的模块
+            for (; i < len && (mod = mods[modNames[i++]]);) {
+                if (mod.status === ATTACHED) continue;
+
+                self._attach(mod, function() {
+                    if (!fired && self._isAttached(modNames)) {
+                        fired = true;
+                        callback && callback(self);
+                    }
+                });
+            }
+
+            return self;
+        },
+
+        /**
+         * Attach a module and all required modules.
+         */
+        _attach: function(mod, callback) {
+            var self = this, requires = mod['requires'] || [],
+                i = 0, len = requires.length;
+
+            // attach all required modules
+            for (; i < len; i++) {
+                self._attach(self.Env.mods[requires[i]], fn);
+            }
+
+            // load and attach this module
+            self._buildPath(mod);
+            self._load(mod, fn);
+
+            function fn() {
+                if (self._isAttached(requires)) {
+                    if (mod.status === LOADED) {
+                        self._attachMod(mod);
+                    }
+                    if (mod.status === ATTACHED) {
+                        callback();
+                    }
+                }
+            }
+        },
+
+        _attachMod: function(mod) {
+            var self = this;
+            if (mod.fns) {
+                S.each(mod.fns, function(fn) {
+                    fn && fn(self);
+                });
+                mod.fns = undefined; // 保证 attach 过的方法只执行一次
+                S.log(mod.name + '.status = attached');
+            }
+            mod.status = ATTACHED;
+        },
+
+        _isAttached: function(modNames) {
+            var mods = this.Env.mods, mod,
+                i = (modNames = S.makeArray(modNames)).length - 1;
+
+            for (; i >= 0 && (mod = mods[modNames[i]]); i--) {
+                if (mod.status !== ATTACHED) return false;
+            }
+
+            return true;
+        },
+
+        /**
+         * Load a single module.
+         */
+        _load: function(mod, callback) {
+            var self = this, url = mod.fullpath,
+                loadingQueque = self.Env._loadingQueue,
+                node = loadingQueque[url];
+
+            // 可能已经由其它模块触发加载
+            if(node) mod.status = LOADING;
+
+            if ((mod.status || 0) < LOADING && url) {
+                mod.status = LOADING;
+
+                loadingQueque[url] = self.getScript(url, {
+                    success: function() {
+                        KISSY.log(mod.name + ' onload fired.', 'info'); // 压缩时不过滤该句，以方便线上调试
+                        _success();
+                    },
+                    error: function() {
+                        mod.status = ERROR;
+                        _final();
+                    },
+                    charset: mod.charset
+                });
+            }
+            // 已经在加载中，需要添加回调到 script onload 中
+            // 注意：没有考虑 error 情形
+            else if (mod.status === LOADING && node) {
+                scriptOnload(node, _success);
+            }
+            // 是内嵌代码，或者已经 loaded
+            else {
+                mod.status = LOADED;
+                callback();
+            }
+
+            function _success() {
+                if (mod.status !== ERROR) {
+                    mod.status = LOADED;
+                    callback();
+                }
+                _final();
+            }
+            
+            function _final() {
+                loadingQueque[url] = undefined;
+                delete loadingQueque.url;
+            }
+        },
+
+        _buildPath: function(mod) {
+            if (!mod.fullpath && mod['path']) {
+                mod.fullpath = this.Config.base + mod['path'];
+            }
+            // debug 模式下，加载非 min 版
+            if(mod.fullpath && this.Config.debug) {
+                mod.fullpath = mod.fullpath.replace(/-min/g, '');
+            }
+        },
+
+        /**
+         * Load a JavaScript file from the server using a GET HTTP request, then execute it.
+         * <code>
+         *  getScript(url, success, charset);
+         *  or
+         *  getScript(url, {
+         *      charset: string
+         *      success: fn,
+         *      error: fn,
+         *      timeout: number
+         *  });
+         * </code>
+         */
+        getScript: function(url, success, charset) {
+            var isCSS = RE_CSS.test(url),
+                node = doc.createElement(isCSS ? 'link' : 'script'),
+                config = success, error, timeout, timer;
+
+            if (S.isPlainObject(config)) {
+                success = config.success;
+                error = config.error;
+                timeout = config.timeout;
+                charset = config.charset;
+            }
+
+            if (isCSS) {
+                node.href = url;
+                node.rel = 'stylesheet';
+            } else {
+                node.src = url;
+                node.async = true;
+            }
+            if (charset) node.charset = charset;
+
+            if (S.isFunction(success)) {
+                if (isCSS) {
+                    success.call(node);
+                } else {
+                    scriptOnload(node, function() {
+                        if (timer) {
+                            timer.cancel();
+                            timer = undefined;
+                        }
+                        success.call(node);
+                    });
+                }
+            }
+
+            if (S.isFunction(error)) {
+                timer = S.later(function() {
+                    timer = undefined;
+                    error();
+                }, (timeout || this.Config.timeout) * 1000);
+            }
+
+            head.insertBefore(node, head.firstChild);
+            return node;
+        }
+    };
+
+    mix(S, loader);
+
+    S.each(loader, function(v, k) {
+        S._APP_MEMBERS.push(k);
+    });
+
+})(window, KISSY);
+
+/**
  * TODO:
- *   - 分析 jq 的 isPlainObject 对 constructor 等细节处理
- *   - unparam 对 false, null, undefined 等值的还原？需不需要？歧义性
+ *  - combo 实现
+ *  - 使用场景和测试用例整理
+ *
+ *
+ * NOTES:
+ *
+ * 2010/08/16 玉伯：
+ *  - 基于拔赤的实现，重构。解耦 add/use 和 ready 的关系，简化实现代码。
+ *  - 暂时去除 combo 支持，combo 由用户手工控制。
+ *  - 支持 app 生成的多 loader.
+ *
+ * 2010/08/13 拔赤：
+ *  - 重写 add, use, ready, 重新组织 add 的工作模式，添加 loader 功能。
+ *  - 借鉴 YUI3 原生支持 loader, 但 YUI 的 loader 使用场景复杂，且多 loader 共存的场景
+ *    在越复杂的程序中越推荐使用，在中等规模的 webpage 中，形同鸡肋，因此将 KISSY 全局对象
+ *    包装成一个 loader，来统一管理页面所有的 modules.
+ *  - loader 的使用一定要用 add 来配合，加载脚本过程中的三个状态（before domready,
+ *    after domready & before KISSY callbacks' ready, after KISSY callbacks' ready）要明确区分。
+ *  - 使用 add 和 ready 的基本思路和之前保持一致，即只要执行 add('mod-name', callback)，就
+ *    会执行其中的 callback. callback 执行的时机由 loader 统一控制。
+ *  - 支持 combo, 通过 Config.combo = true 来开启，模块的 fullpath 用 path 代替。
+ *  - KISSY 内部组件和开发者文件当做地位平等的模块处理，包括 combo.
+ *
+ */
+/**
+ * @module mods
+ * @author lifesinger@gmail.com
+ */
+(function(S) {
+
+    var map = {
+        core: {
+            path: 'packages/core-min.js',
+            charset: 'utf-8'
+        }
+    };
+
+    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
+        map[modName] = {
+            path: modName + '/' + modName + '-pkg-min.js',
+            requires: ['core'],
+            charset: 'utf-8'
+        };
+    });
+
+    S.add(map);
+
+})(KISSY);
+
+/**
+ * NOTES:
+ *
+ *  2010/08/16 玉伯：
+ *   - 采用实用性粒度，防止颗粒过小给用户带来的不方便。
  *
  */

@@ -1,7 +1,6 @@
 /**
  * @module   anim
  * @author   lifesinger@gmail.com
- * @depends  ks-core
  */
 KISSY.add('anim', function(S, undefined) {
 

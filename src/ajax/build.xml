@@ -6,7 +6,17 @@
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
-    <target name="build" depends="common.build">
+    <target name="concat">
+        <concat destfile="ajax-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="ajax.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="ajax-pkg.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
     </target>
 </project>
 

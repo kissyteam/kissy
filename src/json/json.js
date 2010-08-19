@@ -2,7 +2,6 @@
  * from http://www.JSON.org/json2.js
  * 2010-03-20
  */
-
 KISSY.add('json', function (S) {
 
     var JSON = S.JSON = window.JSON || { };

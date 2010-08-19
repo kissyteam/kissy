@@ -1,7 +1,6 @@
 /**
  * Switchable
  * @creator  玉伯<lifesinger@gmail.com>
- * @depends  ks-core
  */
 KISSY.add('switchable', function(S, undefined) {
 
@@ -375,7 +374,8 @@ KISSY.add('switchable', function(S, undefined) {
     });
 
     S.Switchable = Switchable;
-});
+
+}, { requires: ['core'] } );
 
 /**
  * NOTES:

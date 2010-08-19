@@ -1,5 +1,5 @@
-KISSY.add('insert',function(S){
-	S.log('11111111111111111');
+KISSY.add('insert', function(S){
+	S.log('insert is attached');
 	YUI({
 		charset:'utf-8',
 		modules:{
@@ -13,6 +13,3 @@ KISSY.add('insert',function(S){
 	});
 });
 
-KISSY.ready(function(S){
-	S.log('dom ready 2');
-});

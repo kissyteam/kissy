@@ -58,7 +58,8 @@ KISSY.add('accordion', function(S) {
             }
         }
     });
-});
+
+}, { host: 'switchable' } );
 
 /**
  * TODO:

@@ -1,7 +1,6 @@
 /**
  * @module   将 swf 嵌入到页面中
  * @author   kingfo<oicuicu@gmail.com>, 射雕<lifesinger@gmail.com>
- * @depends  ks-core + json
  */
 KISSY.add('flash-embed', function(S) {
 
@@ -299,7 +298,8 @@ KISSY.add('flash-embed', function(S) {
         DOM.attr(param, { name: name, value: val });
         o.appendChild(param);
     }
-});
+
+}, { host: 'flash' });
 
 /**
  * NOTES:

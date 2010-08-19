@@ -11,12 +11,13 @@
             <path path="kissy.js"/>
             <path path="lang.js"/>
             <path path="loader.js"/>
+            <path path="mods.js"/>
         </concat>
     </target>
 
     <target name="clean">
         <delete file="kissy-pkg.js"/>
-        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="${build.dir}/${component.name}/kissy-pkg-min.js" />
+        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="${build.dir}/${component.name}/kissy-pkg-min.js"  encoding="${charset}"/>
     </target>
 
     <target name="build" depends="concat,common.build,clean">
