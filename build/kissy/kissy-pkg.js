@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 19 19:08
+build time: Aug 19 19:35
 */
 /**
  * @module kissy
@@ -1000,7 +1000,7 @@ build time: Aug 19 19:08
             config = config || { };
 
             // 已经全部 attached, 直接执行回调即可
-            if (self._isAttached(modNames)) {
+            if (self._isAttached(modNames, config.scope)) {
                 callback && callback(self);
                 return;
             }
@@ -1073,8 +1073,8 @@ build time: Aug 19 19:08
             mod.status = ATTACHED;
         },
 
-        _isAttached: function(modNames) {
-            var mods = this.Env.mods, mod,
+        _isAttached: function(modNames, scope) {
+            var mods = (scope || this).Env.mods, mod,
                 i = (modNames = S.makeArray(modNames)).length - 1;
 
             for (; i >= 0 && (mod = mods[modNames[i]]); i--) {

@@ -109,7 +109,7 @@
             config = config || { };
 
             // 已经全部 attached, 直接执行回调即可
-            if (self._isAttached(modNames)) {
+            if (self._isAttached(modNames, config.scope)) {
                 callback && callback(self);
                 return;
             }
@@ -182,8 +182,8 @@
             mod.status = ATTACHED;
         },
 
-        _isAttached: function(modNames) {
-            var mods = this.Env.mods, mod,
+        _isAttached: function(modNames, scope) {
+            var mods = (scope || this).Env.mods, mod,
                 i = (modNames = S.makeArray(modNames)).length - 1;
 
             for (; i >= 0 && (mod = mods[modNames[i]]); i--) {
