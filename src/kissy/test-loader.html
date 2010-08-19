@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Loader Test</title>
+</head>
+<body>
+
+<h2>Test Data</h2>
+<script src="kissy.js"></script>
+<script src="lang.js"></script>
+<script src="loader.js"></script>
+
+<script src="../../third-party/jquery/jquery-1.4.2.min.js"></script>
+<script>
+
+    var S = KISSY;
+
+    S.ready(function() {
+        S.log('dom is ready!', 'info');
+    });
+
+    //add modules
+    S.add({
+        'large-async': {
+            fullpath: 'assets/large-async.js.php'
+        },
+        '1': {
+            fullpath: 'assets/1.js.php',
+            requires: ['1-1', '1-2', '1-3']
+        },
+        '2': {
+            fullpath: 'assets/2.js.php'
+        },
+        '1-1': {
+            fullpath: 'assets/1-1.js.php',
+            requires: ['1-1-1', '1-1-2']
+        },
+        '1-1-1': {
+            fullpath: 'assets/1-1-1.js.php'
+        },
+        '1-1-2': {
+            fullpath: 'assets/1-1-2.js.php'
+        },
+        '1-2': {
+            fullpath: 'assets/1-2.js.php'
+        },
+        '1-3': {
+            fullpath: 'assets/1-3.js.php'
+        },
+        'not-found': {
+            fullpath: 'assets/not-found.js.php'
+        },
+        'timeout': {
+            fullpath: 'assets/timeout.js.php'
+        },
+        'timeout2': {
+            fullpath: 'assets/timeout2.js.php',
+            requires: ['timeout']
+        }
+    });
+
+    // 最简单的场景
+//    S.use('large-async', function() {
+//       S.log('large-async callback is fired.', 'info');
+//    });
+
+    // 无 requires 的两个模块
+//    S.use('1-2,1-3', function() {
+//        S.log('1-2,1-3 callback is fired.', 'info');
+//    });
+
+    // 有 requires 的一个模块
+//    S.use('1-1', function() {
+//        S.log('1-1 callback is fired.', 'info');
+//    });
+
+    // 多重 requires 的一个模块
+//    S.use('1', function() {
+//        S.log('1 callback is fired.', 'info');
+//    });
+
+    // 多个模块
+//    S.use('1,2', function() {
+//        S.log('1,2 callback is fired.', 'info');
+//    });
+
+    // not-found
+//    S.use('not-found', function() {
+//        S.log('not-found callback is fired.', 'info');
+//    });
+
+    // timeout
+//    S.use('timeout', function() {
+//        S.log('timeout callback is fired.', 'info');
+//    });
+//    jQuery.ajax({
+//        url: 'http://test.taobao.com/kissy/src/kissy/assets/timeout.js.php',
+//        error: function() {
+//            S.log('load timeout.js.php failed via jQuery');
+//        },
+//        timeout: 5000
+//    });
+
+    // timeout requires
+//    S.use('timeout2', function() {
+//        S.log('timeout2 callback is fired.', 'info');
+//    });
+
+    // 去重测试
+//    S.use('1-2,1-2', function() {
+//        S.log('1-2,1-2 callback is fired', 'info');
+//    });
+
+    // 依赖去重
+//    S.use('1-1-2,1-1', function() {
+//        S.log('1-1-2,1-1 callback is fired', 'info');
+//    });
+
+    // 依赖去重2
+//    S.use('1-1-2,1,1-1', function() {
+//        S.log('1-1-2,1,1-1 callback is fired', 'info');
+//    });
+
+    S.add('3-1', function(S) {
+        S.log('3-1 is attached');
+    });
+
+    S.add({
+        '3': {
+            fullpath: 'assets/3.js.php',
+            requires: ['3-1']
+        }
+    });
+
+    S.add('0-3', function(S) {
+        S.log('0-3 is attached');
+    }, { requires: ['3'] });
+
+//    S.use('3', function() {
+//        S.log('3 callback is fired', 'info');
+//    });
+
+//    S.use('0-3', function() {
+//        S.log('0-3 callback is fired', 'info');
+//    });
+    
+    
+
+</script>
+
+<script src="assets/large-block.js.php"></script>
+
+</body>
+</html>

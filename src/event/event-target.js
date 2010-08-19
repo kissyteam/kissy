@@ -35,7 +35,7 @@ KISSY.add('event-target', function(S, undefined) {
             return this; // chain
         },
 
-        detach: function(type, fn,scope) {
+        detach: function(type, fn, scope) {
             Event.remove(this, type, fn, scope);
             return this; // chain
         }

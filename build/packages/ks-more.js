@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: Aug 5 16:06
+build time: Aug 13 13:48
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -328,9 +328,9 @@ KISSY.add('json', function (S) {
     }
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: Aug 5 16:06
+build time: Aug 13 13:48
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -1404,9 +1404,9 @@ KISSY.ExternalSelector._filter = function(selector, filter) {
 
 })();
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: Aug 5 16:06
+build time: Aug 13 13:47
 */
 /**
  * @module anim-easing
@@ -1850,9 +1850,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: ${build.time}
+build time: Aug 13 13:47
 */
 /**
  * 数据延迟加载组件
@@ -2287,9 +2287,9 @@ KISSY.add('datalazyload', function(S, undefined) {
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: ${build.time}
+build time: Aug 13 13:48
 */
 /**
  * @module   Flash UA 探测
@@ -2745,9 +2745,9 @@ KISSY.add('flash-embed', function(S) {
  * 2010/08/10	修复了sarfari/chrome （webkit）下失效的问题。								
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: ${build.time}
+build time: Aug 13 13:48
 */
 /**
  * Switchable
@@ -3829,9 +3829,9 @@ KISSY.add('accordion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.1
 MIT Licensed
-build time: ${build.time}
+build time: Aug 13 13:48
 */
 /**
  * 提示补全组件

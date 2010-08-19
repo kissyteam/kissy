@@ -1,6 +1,6 @@
 /**
  * @module kissy
- * @author lifesinger@gmail.com
+ * @author lifesinger@gmail.com, lijing00333@163.com
  */
 (function(win, S, undefined) {
 
@@ -9,7 +9,8 @@
     if (win[S] === undefined) win[S] = {};
     S = win[S]; // shortcut
 
-    var doc = win['document'],
+    var doc = win['document'], loc = location,
+        debug = '@DEBUG@', EMPTY = '',
 
         // Copies all the properties of s to r
         mix = function(r, s, ov, wl) {
@@ -63,39 +64,12 @@
 
         /**
          * Initializes KISSY object.
-         * @private
          */
         _init: function() {
-            // Env 对象目前仅用于内部，为模块动态加载预留接口
             this.Env = {
-                mods: { },
                 guid: 0
             };
-        },
-
-        /**
-         * Registers a module.
-         * @param name {String} module name
-         * @param fn {Function} entry point into the module that is used to bind module to KISSY
-         * <code>
-         * KISSY.add('module-name', function(S){ });
-         * </code>
-         * @return {KISSY}
-         */
-        add: function(name, fn) {
-            var self = this;
-
-            // override mode
-            self.Env.mods[name] = {
-                name: name,
-                fn: fn
-            };
-
-            // call entry point immediately
-            fn(self);
-
-            // chain support
-            return self;
+            this._initLoader();
         },
 
         /**
@@ -107,19 +81,21 @@
          * @return {KISSY}
          */
         ready: function(fn) {
+            var self = this;
+
             // Attach the listeners
-            if (!readyBound) this._bindReady();
+            if (!readyBound) self._bindReady();
 
             // If the DOM is already ready
             if (isReady) {
                 // Execute the function immediately
-                fn.call(win, this);
+                fn.call(win, self);
             } else {
                 // Remember the function for later
                 readyList.push(fn);
             }
 
-            return this;
+            return self;
         },
 
         /**
@@ -153,7 +129,7 @@
                 doc.addEventListener(eventType, domReady, false);
 
                 // A fallback to window.onload, that will always work
-			    win.addEventListener('load', fire, false);
+                win.addEventListener('load', fire, false);
             }
             // IE event model is used
             else {
@@ -180,6 +156,7 @@
                             setTimeout(readyScroll, 1);
                         }
                     }
+
                     readyScroll();
                 }
             }
@@ -213,7 +190,7 @@
          * @param fn <Function> What to execute when the element is found.
          */
         available: function(id, fn) {
-            id = (id + '').match(RE_IDSTR)[1];
+            id = (id + EMPTY).match(RE_IDSTR)[1];
             if (!id || !S.isFunction(fn)) return;
 
             var retryCount = 1,
@@ -333,7 +310,7 @@
             var l = arguments.length, o = null, i, j, p;
 
             for (i = 0; i < l; ++i) {
-                p = ('' + arguments[i]).split('.');
+                p = (EMPTY + arguments[i]).split('.');
                 o = this;
                 for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
                     o = o[p[j]] = o[p[j]] || {};
@@ -355,7 +332,7 @@
         app: function(name, sx) {
             var O = win[name] || {};
 
-            mix(O, this, true, ['_init', 'add', 'namespace']);
+            mix(O, this, true, ['_init', '_initLoader', 'add', 'namespace']);
             O._init();
 
             return mix((win[name] = O), typeof sx === 'function' ? sx() : sx);
@@ -396,28 +373,37 @@
          * @return {String} the guid
          */
         guid: function(pre) {
-            var id = this.Env.guid++ + '';
+            var id = this.Env.guid++ + EMPTY;
             return pre ? pre + id : id;
         }
     });
 
-    S._init();
-
-    // build 时，会将 @DEBUG@ 替换为空
-    S.Config = { debug: '@DEBUG@' };
+    // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
+    if (((loc || 0).search || EMPTY).indexOf('ks-debug') !== -1) {
+        debug = true;
+    }
+    
+    S.Config = {
+        debug: debug, // build 时，会将 @DEBUG@ 替换为空
+        base: 'http://a.tbcdn.cn/s/kissy/@VERSION@/build/',
+        timeout: 10   // getScript 的默认 timeout 时间
+    };
 
 })(window, 'KISSY');
 
 /**
  * NOTES:
  *
- * 2010.07
+ * 2010/08
+ *  - 将 loader 功能独立到 loader.js 中。
+ *
+ * 2010/07
  *  - 增加 available 和 guid 方法。
  *
- * 2010.04
- *  - 移除掉 weave 方法，尚未考虑周全。
+ * 2010/04
+ *  - 移除掉 weave 方法，鸡肋。
  *
- * 2010.01
+ * 2010/01
  *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）。
  *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
  *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码。
@@ -425,8 +411,5 @@
  *  - log, error 方法，简单的调试工具和报错机制。
  *  - guid 方法，全局辅助方法。
  *  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
- *
- * TODO:
- *  - 模块动态加载 require 方法的实现。
  *
  */

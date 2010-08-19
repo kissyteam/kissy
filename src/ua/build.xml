@@ -1,0 +1,22 @@
+<project name="ua.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../../tools/build.xml"/>
+
+    <property file="build.properties"/>
+    <property name="src.dir" location="."/>
+
+    <target name="concat">
+        <concat destfile="ua-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="ua.js"/>
+            <path path="ua-extra.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="ua-pkg.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
+    </target>
+</project>
