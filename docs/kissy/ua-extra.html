@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>ua &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/tree/master/src/kissy/ua-extra.js"><code>ua-extra.js</code></a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+
+            <div class="section summary">
+                <p>若你需要更详细的浏览器外壳判断（包括国产第三方浏览器探测），你必须单独引入 <code>ua-extra.js</code>，这样，更加丰富的浏览器信息将会被添加到 <code>KISSY.UA</code> 的属性中。</p>
+                <p>通过 <code>KISSY.UA</code> 的属性，你可以获取浏览器等用户代理的信息。属性值遵循以下规则：</p>
+                <ol>
+                    <li>表示当前引擎或浏览器的版本。版本号 1.2.3.4 会转换为数值 1.234</li>
+                    <li>如果不是当前引擎或浏览器，返回 0 或者 undefined</li>
+                    <li>如果当前浏览器版本号无法准确判定，均返回 0.1</li>
+                </ol>
+                <p class="tips">此时通过 <code>KISSY.UA.shell</code> 可以获得更详细的浏览器外壳信息，包括5大国产第三方浏览器（双核模式依然支持）。</p>
+            </div>
+
+            <div class="section">
+                <h3 id="methods">Properties</h3>
+
+                <div class="member prop">
+                    <h4><a name="prop_se360">se360</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>360 安全浏览器的版本号。</p>
+                        <p class="notice">目前360安全浏览器2.x系列无法识别，只有3.x系列的才能正常识别，因此返回值可能不准确。</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_maxthon">maxthon</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>maxthon 的版本号。</p>
+                        <p class="notice">目前最新的傲游浏览器（3.x系列）采用双核技术，IE内核模式下，maxthon 可能无法识别。其余版本则不存此问题。</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_tt">tt</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>腾讯TT浏览器的版本号。</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_theworld">theworld</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>世界之窗浏览器的版本号。</p>
+                        <p class="notice">目前世界之窗浏览器2.x系列无法识别，只有3.x系列的才能正常识别，因此返回值可能不准确。</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="prop_sougou">sougou</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>搜狗浏览器的版本号。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc">
+                <a href="../index.html">home</a> &rsaquo;
+                <a href="index.html">kissy</a> &rsaquo;
+                ua-extra :
+            </div>
+            <div class="toc">
+                <h3>Properties</h3>
+                <ul>
+                    <li><a href="#prop_se360">se360</a></li>
+                    <li><a href="#prop_maxthon">maxthon</a></li>
+                    <li><a href="#prop_tt">tt</a></li>
+                    <li><a href="#prop_theworld">theworld</a></li>
+                    <li><a href="#prop_sougou">sougou</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

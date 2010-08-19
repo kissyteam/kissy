@@ -1,12 +1,11 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: ${build.time}
+build time: Aug 18 18:19
 */
 /**
  * Switchable
  * @creator  玉伯<lifesinger@gmail.com>
- * @depends  ks-core
  */
 KISSY.add('switchable', function(S, undefined) {
 
@@ -380,7 +379,8 @@ KISSY.add('switchable', function(S, undefined) {
     });
 
     S.Switchable = Switchable;
-});
+
+}, { requires: ['core'] } );
 
 /**
  * NOTES:
@@ -408,7 +408,7 @@ KISSY.add('switchable', function(S, undefined) {
  * Switchable Autoplay Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-autoplay', function(S, undefined) {
+KISSY.add('autoplay', function(S, undefined) {
 
     var Event = S.Event,
         Switchable = S.Switchable;
@@ -464,12 +464,13 @@ KISSY.add('switchable-autoplay', function(S, undefined) {
             startAutoplay();
         }
     });
-});
+
+}, { host: 'switchable' } );
 /**
  * Switchable Effect Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-effect', function(S, undefined) {
+KISSY.add('effect', function(S, undefined) {
 
     var DOM = S.DOM, Anim = S.Anim,
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
@@ -634,12 +635,13 @@ KISSY.add('switchable-effect', function(S, undefined) {
         }
 
     });
-});
+
+}, { host: 'switchable' } );
 /**
  * Switchable Circular Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-circular', function(S, undefined) {
+KISSY.add('circular', function(S, undefined) {
 
     var DOM = S.DOM,
         POSITION = 'position', RELATIVE = 'relative',
@@ -759,7 +761,8 @@ KISSY.add('switchable-circular', function(S, undefined) {
             }
         }
     });
-});
+
+}, { host: 'switchable' } );
 
 /**
  * TODO:
@@ -769,7 +772,7 @@ KISSY.add('switchable-circular', function(S, undefined) {
  * Switchable Lazyload Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable-lazyload', function(S) {
+KISSY.add('lazyload', function(S) {
 
     var DOM = S.DOM,
         EVENT_BEFORE_SWITCH = 'beforeSwitch',
@@ -836,34 +839,36 @@ KISSY.add('switchable-lazyload', function(S) {
             }
         }
     });
-});
+
+}, { host: 'switchable' } );
 /**
  * Switchable Autorender Plugin
  * @creator  玉伯<lifesinger@gmail.com>
- * @depends  ks-core, json
  */
-KISSY.add('switchable-autorender', function(S) {
+KISSY.add('autorender', function(S) {
 
     /**
      * 自动渲染 container 元素内的所有 Switchable 组件
+     * 默认钩子：<div class="KS_Widget" data-widget-type="Tabs" data-widget-config="{...}">
      */
-    S.Switchable.autoRender = function(container, hookPrefix, dataAttrName) {
-        hookPrefix = '.' + (hookPrefix || 'KS_');
-        dataAttrName = dataAttrName || 'data-ks-switchable';
+    S.Switchable.autoRender = function(hook, container) {
+        hook = '.' + (hook || 'KS_Widget');
 
-        S.each(['Switchable', 'Tabs', 'Slide', 'Carousel', 'Accordion'], function(name) {
-            S.each(S.query(hookPrefix + name, container), function(elem) {
+        S.query(hook, container).each(function(elem) {
+            var type = elem.getAttribute('data-widget-type'), config;
+            if (type && ('Switchable Tabs Slide Carousel Accordion'.indexOf(type) > -1)) {
                 try {
-                    var config = elem.getAttribute(dataAttrName);
-                    if(config) config = config.replace(/'/g, '"');
-                    new S[name](elem, S.JSON.parse(config));
+                    config = elem.getAttribute('data-widget-config');
+                    if (config) config = config.replace(/'/g, '"');
+                    new S[type](elem, S.JSON.parse(config));
                 } catch(ex) {
                     S.log('Switchable.autoRender: ' + ex, 'warn');
                 }
-            });
+            }
         });
     }
-});
+
+}, { host: 'switchable' } );
 /**
  * Tabs Widget
  * @creator  玉伯<lifesinger@gmail.com>
@@ -887,7 +892,8 @@ KISSY.add('tabs', function(S) {
 
     S.extend(Tabs, S.Switchable);
     S.Tabs = Tabs;
-});
+
+}, { host: 'switchable' } );
 /**
  * Tabs Widget
  * @creator     玉伯<lifesinger@gmail.com>
@@ -919,7 +925,8 @@ KISSY.add('slide', function(S) {
 
     S.extend(Slide, S.Switchable);
     S.Slide = Slide;
-});
+
+}, { host: 'switchable' } );
 /**
  * Carousel Widget
  * @creator  玉伯<lifesinger@gmail.com>
@@ -1000,7 +1007,8 @@ KISSY.add('carousel', function(S, undefined) {
             self.fire('itemSelected', { item: this });
         });
     }
-});
+
+}, { host: 'switchable' } );
 
 
 /**
@@ -1074,7 +1082,8 @@ KISSY.add('accordion', function(S) {
             }
         }
     });
-});
+
+}, { host: 'switchable' } );
 
 /**
  * TODO:

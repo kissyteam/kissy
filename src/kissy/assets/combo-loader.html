@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<title>KISSY Core Test</title>
+</head>
+<body>
+<h2>test combo</h2>
+<script src="../kissy.js"></script>
+<script src="../lang.js"></script>
+
+<img src="http://kissyteam.github.com/kissy/docs/assets/logo.png" alt="test image" />
+<div id="test-available">test available</div>
+<link rel="stylesheet" href="console.css" />
+<div id="console"></div>
+<iframe id="test-iframe" src="loader-iframe.html"></iframe>
+<script>
+
+var S = KISSY,
+	doc = document,
+	now = function() {
+		return new Date().getTime();
+	},
+	get = function(id) {
+		return typeof id === 'string' ? doc.getElementById(id) : id;
+	};
+S._log = S.log;
+S.log = function(msg,color){
+	var con = get('console');
+	S._log(msg);
+	if(typeof color == 'undefined'){
+		var color = '';
+	}
+	if(!con)return;
+	con.innerHTML += '<p class="'+color+'">' +msg +'</p>';
+};
+S.log('Begin');
+</script>
+<script>
+	
+//combine config
+S.mix(S.Config,{
+	combo:true,
+	base:'http://a.tbcdn.cn/??',
+	filter:{
+		searchExp:'&',
+		replaceStr:','
+	}
+});
+
+//directly exec my logic without using any other sub-modules
+S.ready(function() {
+	readyTime = now();
+	S.log('readyTime = ' + readyTime);
+});
+
+//add modules
+S.add({
+	//install dependence of these modules
+	//use "fullpath" to avoid combining files
+	'yui3':{
+		fullpath:'http://cn.yimg.com/i/yui/3.0.0/build/yui/yui-min.js'
+	},
+	'yui':{
+		fullpath:'http://yui.yahooapis.com/2.8.1/build/yahoo/yahoo.js'
+	},
+	'sub-sub':{
+		fullpath:'sub-sub.js',
+		requires:['yui']
+	},
+	'sub':{
+		fullpath:'sub.js',
+		requires:['sub-sub']
+	},
+	//lazyload with combo
+	//use "path" to combine files
+	'ajax':{
+		path:'s/kissy/1.1.0/build/ajax/ajax-min.js'
+	},
+	'sizzle':{
+		path:'s/kissy/1.1.0/build/sizzle/sizzle.js'
+	},
+	'json':{
+		path:'s/kissy/1.1.0/build/json/json-min.js',
+		requires:['sizzle']
+	},
+	'dom':{
+		path:'s/kissy/1.1.0/build/dom/dom-pkg-min.js'
+	},
+	'box-skin':{
+		path:'apps/lottery/00001/index-v2/combo/index-page.css'
+	}
+});
+
+//add a module and exec its callbacks after "domready"
+//KISSY now is aware of "inline-test"'s sub-modules
+//and its sub-modules will be sync loaded after "domready" && before this callback execs' moment
+S.add('inline-test',function(S){
+	S.inline = 'ok';
+	if(typeof YAHOO != 'undefined'){
+		S.log('yui is ok');
+	}
+},{requires:['sub']}).ready(function(S){
+	S.log('S.sub '+S.sub);
+	S.log('S.inline '+S.inline);
+});
+
+S.use('json').ready(function(S){
+	S.log('combo request ok');
+		var p = 'http://tbexample.googlecode.com/svn/trunk/sandbox/jquery-1.4.2.js';
+		S.getScript(p,function(){
+			if(typeof $ != 'undefined'){
+				S.log('jquery is ok','orange');
+			}
+		});
+});
+
+S.use('yui3','box-skin').ready(function(S){
+	YUI({
+		modules:{
+			'box':{
+				fullpath:'http://cubee.github.com/src/box/box.js',
+				requires:['node','overlay','dd-plugin']
+			}
+		},
+		charset:'utf-8'
+
+	}).use('box',function(Y){
+		Y.Box.alert('everything is ok');
+	});
+	
+	
+});
+
+	
+
+
+
+</script>
+</body>
+</html>

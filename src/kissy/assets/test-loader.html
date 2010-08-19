@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Core Test</title>
+</head>
+<body>
+<h2>lazyload without combo</h2>
+<script src="../kissy.js"></script>
+<script src="../lang.js"></script>
+
+<img src="../../../docs/assets/logo.png" alt="test image" />
+<div id="test-available">test available</div>
+<iframe id="test-iframe" src="loader-iframe.html"></iframe>
+<link rel="stylesheet" href="console.css" />
+<div id="J_calendar"></div>
+<div id="console"></div>
+
+<script>
+
+var S = KISSY,
+	doc = document,
+	now = function() {
+		return new Date().getTime();
+	},
+	get = function(id) {
+		return typeof id === 'string' ? doc.getElementById(id) : id;
+	};
+S._log = S.log;
+S.log = function(msg,color){
+	var con = get('console');
+	S._log(msg);
+	if(typeof color == 'undefined'){
+		color = '';
+	}
+	if(!con)return;
+	con.innerHTML += '<p class="'+color+'">' +msg +'</p>';
+};
+</script>
+<script>
+
+S.log('Begin');
+var readyTime;
+
+//exec my logic immediately without using any sub-modules
+S.ready(function() {
+	readyTime = now();
+	S.log('readyTime = ' + readyTime);
+});
+
+//add modules
+S.add({
+	//dependence of these modules
+	'yui':{
+		fullpath:'http://yui.yahooapis.com/2.8.1/build/yahoo/yahoo.js'
+	},
+	'yui3':{
+		fullpath:'http://cn.yimg.com/i/yui/3.0.0/build/yui/yui-min.js'
+	},
+	'calendar-skin':{
+		fullpath:'http://cubee.github.com/src/calendar/skin/default.css'
+	},
+	
+	'sub-sub':{
+		fullpath:'sub-sub.js',
+		requires:['yui']
+	},
+	'sub':{
+		fullpath:'sub.js',
+		requires:['sub-sub']
+	}
+});
+
+//add a module and exec its callbacks after "domready"
+//KISSY now is aware of "inline-test"'s sub-modules
+//and its sub-modules will be sync loaded after "domready" && before this callback execs' moment
+//this callback execs before 'readyList's fire moment 
+S.add('inline-test',function(S){
+	S.inline = 'ok';
+	if(typeof YAHOO != 'undefined'){
+		S.log('yui is ok');
+	}
+},{requires:['sub']});
+
+//KISSY will import 'inline-test'.
+//If 'inline-test' has sub-module,load its sub-modules first
+S.ready(function(S){
+	S.log('module S.sub '+S.sub);
+	S.log('module S.inline '+S.inline);
+});
+
+//sync load kissy build-in modules and exec callback after all modules are ready
+S.ready(function(S){
+
+	KISSY.add('test-ks-mod', function(S) {
+		S.lazyloadMod = {proto:1};
+		S.log('exec S.add() afterReady');
+	});
+
+	S.log(S.lazyloadMod);
+
+
+	//after domReady fired, loader is prohibited to load any other extra files
+	S.add({
+		'jquery':{
+			fullpath:'http://tbexample.googlecode.com/svn/trunk/sandbox/jquery-1.4.2.js'
+		}
+	});
+
+    S.add('after-ready',function(S){
+		if(typeof $ != 'undefined'){
+			S.log('jquery is ok');
+		}
+		S.afterReady = {a:1};
+	}/*,{requires:['jquery']}*/);
+
+	S.ready(function(S){
+		S.log(S.afterReady);
+		//we recommand u to use S.getScript and S.getCSS to load extra js and css files
+		var p = 'http://tbexample.googlecode.com/svn/trunk/sandbox/jquery-1.4.2.js';
+		S.getScript(p,function(){
+			if(typeof $ != 'undefined'){
+				S.log('jquery is ok','orange');
+			}
+		});
+	});
+
+});
+
+S.use('yui3','calendar-skin').ready(function(S){
+	YUI({
+		charset:'utf-8',
+		modules:{
+			'calendar':{
+				fullpath:'http://cubee.github.com/src/calendar/calendar.js',
+				requires:['node']
+			}
+		}
+	}).use('calendar',function(Y){
+		new Y.Calendar('J_calendar');
+	});
+});
+
+</script>
+</body>
+</html>

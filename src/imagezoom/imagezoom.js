@@ -1,7 +1,6 @@
 /**
  * 图片放大效果 ImageZoom
  * @creater  qiaohua@taobao.com
- * @depends  ks-core
  */
 KISSY.add('imagezoom', function(S, undefined) {
 
@@ -328,7 +327,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         return { width: elem.clientWidth, height: elem.clientHeight };
     }
 
-});
+}, { requires: ['core'] } );
 
 /**
  * NOTES:

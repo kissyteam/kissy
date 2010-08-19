@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Core Test</title>
+</head>
+<body>
+<h2>Test Data</h2>
+<script src="../kissy.js"></script>
+<script src="../lang.js"></script>
+
+<img src="http://kissyteam.github.com/kissy/docs/assets/logo.png" alt="test image" />
+
+<script>
+
+var S = KISSY;
+
+S.log = function(msg,style){
+
+	try{
+		var scope = window.parent.S;
+		if(typeof style == 'undefined'){
+			var style = '';
+		}
+
+
+
+	scope.log.call(scope,'[Iframe] ' +msg,style);
+	}catch(e){
+		
+	}
+};
+
+//add modules
+S.add({
+	//dependence of these modules
+	'jquery':{
+		fullpath:'http://tbexample.googlecode.com/svn/trunk/sandbox/jquery-1.4.2.js'
+	}
+});
+
+//sync load kissy build-in modules and exec callback after all modules are ready
+S.use('jquery').ready(function(S){
+	S.log('iframe is ok');
+	if(typeof $ == 'function'){
+		S.log('jquery is ok');
+	}
+});
+
+
+</script>
+</body>
+</html>

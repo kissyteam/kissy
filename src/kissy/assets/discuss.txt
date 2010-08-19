@@ -1,0 +1,71 @@
+
+ =============================================
+ loader 的 public api 设想：
+
+  添加内部模块：
+  S.add('mod-name', fn, { requires: [] });
+
+  添加外部模块：
+  S.add({
+      'mod-name': {
+          fullpath: 'url',
+          requires: []
+      },
+      'mod2-name': {
+          fullpath: 'url'
+      }
+  });
+
+  在任意时刻调用：
+  S.use('mod-name', callback);
+  S.use('mod-name, mod2-name', callback); // 非 combo
+  S.use('mod-name + mod2-name', callback); // combo
+  S.use('mod-name + mod2-name, mod3-name', callback); // 复合
+
+  S.use('*', callback);
+  S.use('*+', callback); // combo
+
+  在 dom ready 后调用：
+  S.ready(callback);
+
+  在特定模块加载 以及 dom ready 后调用：
+  S.ready('mod-name', callback);
+  等价：
+  S.ready(function(S) {
+     S.use('mod-name', function(S) {
+         // code
+     });
+  });
+
+  S.use 表示加载特定模块，在加载完成后，立刻执行回调，和 ready 事件无关
+  S.ready 表示 ready 后立刻执行回调，和特定模块无关
+  S.ready('mod-name', callback) 要同时满足 特定模块已加载 + ready 后，才执行回调
+
+  S.add 中，内部模块的 fn 和外部模块的 js 加载，需等到 requires 的模块都执行后才
+  执行。当无 requires 时，立刻执行
+
+========================================
+ loader 要处理的事情：
+   - 异步加载资源 js/css
+   - 依赖关系处理
+   - combo
+   - 沙箱 + 回调
+
+=========================================
+ loader 的使用场景：
+
+ loader 原理虽然很简单，但 loader 的使用场景很复杂，概括起来有这些种类：
+
+   1，一个页面至多有一个loader
+   2，一个页面有多个loader
+   3，必须预先定义好模块依赖关系，使用loader一次加载所有脚本
+   4，不必预先定义好模块以来关系，在每个module中由作者给出其依赖，由loader边加载脚本边动态构建依赖树
+
+ 关于KISSY的使用场景，推荐使用一个页面一个loader，即KISSY全局对象即为一个loader，关于模块树是预先定义好还是动态构建，差别是相当大的，第三条很容易实现，却必然不如动态构建模块树对代码的解耦充分，而第四条动态构建模块树则很难合并输出http请求，这一点是需要做一些取舍的，是用use/add/ready的哪种写法其实不重要。
+
+=========================================
+2010/8/15 讨论
+
+   S.use
+
+

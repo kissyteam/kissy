@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Loader Test</title>
+</head>
+<body>
+
+<h2>Test Data</h2>
+<script src="kissy.js"></script>
+<script src="lang.js"></script>
+<script src="loader.js"></script>
+<script src="mods.js"></script>
+
+<div id="J_calendar"></div>
+<link rel="stylesheet" href="assets/console.css" />
+<div id="console"></div>
+<script>
+
+var S = KISSY,
+	doc = document,
+	now = function() {
+		return new Date().getTime();
+	},
+	get = function(id) {
+		return typeof id === 'string' ? doc.getElementById(id) : id;
+	};
+S._log = S.log;
+S.log = function(msg,color){
+	var con = get('console');
+	S._log(msg);
+
+	if(typeof color == 'undefined'){
+		color = '';
+	}
+    if(color == 'info') color = 'green';
+    else if(color == 'warn') color = 'yellow';
+
+	if(!con)return;
+	con.innerHTML += '<p class="'+color+'">' +msg +'</p>';
+};
+</script>
+
+<script>
+
+    var S = KISSY;
+
+    S.ready(function() {
+        S.log('dom is ready!', 'gray');
+    });
+
+    //add modules
+    S.add({
+        'large-async': {
+            fullpath: 'assets/large-async.js.php'
+        },
+        '1': {
+            fullpath: 'assets/1.js.php',
+            requires: ['1-1', '1-2', '1-3']
+        },
+        '2': {
+            fullpath: 'assets/2.js.php'
+        },
+        '1-1': {
+            fullpath: 'assets/1-1.js.php',
+            requires: ['1-1-1', '1-1-2']
+        },
+        '1-1-1': {
+            fullpath: 'assets/1-1-1.js.php'
+        },
+        '1-1-2': {
+            fullpath: 'assets/1-1-2.js.php'
+        },
+        '1-2': {
+            fullpath: 'assets/1-2.js.php'
+        },
+        '1-3': {
+            fullpath: 'assets/1-3.js.php'
+        },
+        'not-found': {
+            fullpath: 'assets/not-found.js.php'
+        },
+        'timeout': {
+            fullpath: 'assets/timeout.js.php'
+        },
+        'timeout2': {
+            fullpath: 'assets/timeout2.js.php',
+            requires: ['timeout']
+        }
+    });
+
+    // 最简单的场景
+//    S.use('large-async', function() {
+//       S.log('large-async callback is fired.', 'info');
+//    });
+
+    // 无 requires 的两个模块
+//    S.use('1-2,1-3', function() {
+//        S.log('1-2,1-3 callback is fired.', 'info');
+//    });
+
+    // 有 requires 的一个模块
+//    S.use('1-1', function() {
+//        S.log('1-1 callback is fired.', 'info');
+//    });
+
+    // 多重 requires 的一个模块
+//    S.use('1', function() {
+//        S.log('1 callback is fired.', 'info');
+//    });
+
+    // 多个模块
+//    S.use('1,2', function() {
+//        S.log('1,2 callback is fired.', 'info');
+//    });
+
+    // not-found
+//    S.use('not-found', function() {
+//        S.log('not-found callback is fired.', 'info');
+//    });
+
+    // timeout
+//    S.use('timeout', function() {
+//        S.log('timeout callback is fired.', 'info');
+//    });
+
+    // timeout requires
+//    S.use('timeout2', function() {
+//        S.log('timeout2 callback is fired.', 'info');
+//    });
+
+    // 去重测试
+//    S.use('1-2,1-2', function() {
+//        S.log('1-2,1-2 callback is fired', 'info');
+//    });
+
+    // 依赖去重
+//    S.use('1-1-2,1-1', function() {
+//        S.log('1-1-2,1-1 callback is fired', 'info');
+//    });
+
+    // 依赖去重2
+//    S.use('1-1-2,1,1-1', function() {
+//        S.log('1-1-2,1,1-1 callback is fired', 'info');
+//    });
+
+//    S.add('3-1', function(S) {
+//        S.log('3-1 is attached');
+//    });
+//
+//    S.add({
+//        '3': {
+//            fullpath: 'assets/3.js.php',
+//            requires: ['3-1']
+//        }
+//    });
+//
+//    S.add('0-3', function(S) {
+//        S.log('0-3 is attached');
+//    }, { requires: ['3'] });
+
+//    S.use('3', function() {
+//        S.log('3 callback is fired', 'info');
+//    });
+
+//    S.use('0-3', function() {
+//        S.log('0-3 callback is fired', 'info');
+//    });
+
+    // 场景 1：调用默认模块
+    S.Config.base = '../../build/';
+    S.use('switchable', function() {
+        S.log('switchable use callback is fired. typeof S.Switchable = ' + (typeof S.Switchable), 'warn');
+    });
+    // 场景 1.1: 重复 use 某个组件，不会重复下载：
+    S.use('switchable,datalazyload', function() {
+        S.log('switchable,datalazyload use callback is fired.', 'warn');
+    });
+
+    // 对于 switchable, 能测试 switchable.js 里的 add 和 上面代码的 use 配合使用的场景
+    // switchable.js 执行时，有 S.add('switchable', fn), 先执行
+
+</script>
+
+<script src="../../build/cookie/cookie-pkg-min.js"></script>
+<script>
+    var S = KISSY;
+
+    // 场景 2: 某个组件通过 src 下载，直接使用或通过 ready 使用：
+    S.log('typeof S.Cookie = ' + typeof S.Cookie);
+    S.ready(function() {
+        S.log('domready: S.Cookie = ' + S.Cookie, 'warn');
+    });
+
+    // 场景 1.2: 某个组件通过 src 下载，通过 use 使用
+    S.use('cookie', function() {
+        S.log('cookie use callback is fired.', 'warn');
+    });
+
+    // 场景 3： 调用自定义模块
+    S.add({
+        'yui':{
+            fullpath:'http://yui.yahooapis.com/2.8.1/build/yahoo/yahoo.js'
+        }
+    });
+    S.use('yui', function(S) {
+        S.log('yui use callback is fired. typeof YAHOO = ' + typeof YAHOO, 'warn');
+    });
+
+    // 场景 3.1： 复杂一点的自定义模块，有依赖关系
+    S.add({
+        'yui3':{
+            fullpath:'http://cn.yimg.com/i/yui/3.0.0/build/yui/yui-min.js'
+        },
+        'calendar-skin':{
+            fullpath:'http://cubee.github.com/src/calendar/skin/default.css'
+        },
+        'insert': {
+            fullpath:'assets/insert.js',
+            requires:['yui3','calendar-skin']
+        }
+    });
+    S.use('insert');
+
+//    S.add('jquery', {
+//        fullpath: 'http://code.jquery.com/jquery-1.4.2.min.js'
+//    }).use('jquery', function() {
+//        S.log('typeof jQuery = ' + typeof jQuery, 'warn');
+//    });
+
+</script>
+
+<script src="assets/large-block.js.php"></script>
+
+</body>
+</html>

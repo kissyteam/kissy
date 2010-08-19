@@ -2,11 +2,11 @@
  * @module  lang
  * @author  lifesinger@gmail.com
  */
-KISSY.add('lang', function(S, undefined) {
+(function(win, S, undefined) {
 
-    var win = window, doc = document, loc = location,
+    var doc = document, docElem = doc.documentElement,
         AP = Array.prototype,
-        indexOf = AP.indexOf, filter = AP.filter,
+        indexOf = AP.indexOf, lastIndexOf = AP.lastIndexOf, filter = AP.filter,
         trim = String.prototype.trim,
         toString = Object.prototype.toString,
         encode = encodeURIComponent,
@@ -138,12 +138,12 @@ KISSY.add('lang', function(S, undefined) {
          * Search for a specified value within an array.
          */
         indexOf: indexOf ?
-            function(elem, arr) {
-                return indexOf.call(arr, elem);
+            function(item, arr) {
+                return indexOf.call(arr, item);
             } :
-            function(elem, arr) {
+            function(item, arr) {
                 for (var i = 0, len = arr.length; i < len; ++i) {
-                    if (arr[i] === elem) {
+                    if (arr[i] === item) {
                         return i;
                     }
                 }
@@ -151,10 +151,49 @@ KISSY.add('lang', function(S, undefined) {
             },
 
         /**
+         * Returns the index of the last item in the array
+         * that contains the specified value, -1 if the
+         * value isn't found.
+         */
+        lastIndexOf: (lastIndexOf) ?
+            function(item, arr) {
+                return lastIndexOf.call(arr, item);
+            } :
+            function(item, arr) {
+                for (var i = arr.length - 1; i >= 0; i--) {
+                    if (arr[i] === item) {
+                        break;
+                    }
+                }
+                return i;
+            },
+
+        /**
+         * Returns a copy of the array with the duplicate entries removed
+         * @param a {Array} the array to find the subset of uniques for
+         * @return {Array} a copy of the array with duplicate entries removed
+         */
+        unique: function(a, override) {
+            if(override) a.reverse(); // 默认是后置删除，如果 override 为 true, 则前置删除
+            var b = a.slice(), i = 0, n, item;
+
+            while (i < b.length) {
+                item = b[i];
+                while ((n = S.lastIndexOf(item, b)) !== i) {
+                    b.splice(n, 1);
+                }
+                i += 1;
+            }
+
+            if(override) b.reverse(); // 将顺序转回来
+            return b;
+        },
+        
+        /**
          * Search for a specified value index within an array.
          */
-        inArray: function(elem, arr) {
-            return S.indexOf(elem, arr) > -1;
+        inArray: function(item, arr) {
+            return S.indexOf(item, arr) > -1;
         },
 
         /**
@@ -165,21 +204,11 @@ KISSY.add('lang', function(S, undefined) {
             if (S.isArray(o)) return o;
 
             // The strings and functions also have 'length'
-            if (typeof o.length !== 'number' || typeof o === 'string' || S.isFunction(o)) {
+            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
                 return [o];
             }
 
-            // ie 不支持用 slice 转换 NodeList, 降级到普通方法
-            if (o.item && S.UA.ie) {
-                var ret = [], i = 0, len = o.length;
-                for (; i < len; ++i) {
-                    ret[i] = o[i];
-                }
-                return ret;
-            }
-
-            // array-like
-            return AP.slice.call(o);
+            return slice2Arr(o);
         },
 
         /**
@@ -305,7 +334,7 @@ KISSY.add('lang', function(S, undefined) {
             o = o || { };
             var m = fn, d = S.makeArray(data), f, r;
 
-            if (typeof fn === 'string') {
+            if (S.isString(fn)) {
                 m = o[fn];
             }
 
@@ -365,7 +394,7 @@ KISSY.add('lang', function(S, undefined) {
             if (data && REG_NOT_WHITE.test(data)) {
                 // Inspired by code by Andrea Giammarchi
                 // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
-                var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+                var head = doc.getElementsByTagName('head')[0] || docElem,
                     script = doc.createElement('script');
 
                 // It works! All browsers support!
@@ -385,28 +414,40 @@ KISSY.add('lang', function(S, undefined) {
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
-    if (loc && loc.search && loc.search.indexOf('ks-debug') !== -1) {
-        S.Config.debug = true;
+    // 将 NodeList 等集合转换为普通数组
+    function slice2Arr(arr) {
+        return AP.slice.call(arr);
     }
-});
+    // ie 不支持用 slice 转换 NodeList, 降级到普通方法
+    try {
+        slice2Arr(docElem.childNodes);
+    }
+    catch(e) {
+        slice2Arr = function(arr) {
+            for (var ret = [], i = arr.length - 1; i >= 0; i--) {
+                ret[i] = arr[i];
+            }
+            return ret;
+        }
+    }
+
+})(window, KISSY);
 
 /**
  * NOTES:
  *
- *  2010.06
+ *  2010/08
+ *   - 增加 lastIndexOf 和 unique 方法。
+ *
+ *  2010/06
  *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着。
  *
- *  2010.05
+ *  2010/05
  *   - 增加 filter 方法。
  *   - globalEval 中，直接采用 text 赋值，去掉 appendChild 方式。
  *
- *  2010.04
+ *  2010/04
  *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
  *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
- *
- * TODO:
- *   - 分析 jq 的 isPlainObject 对 constructor 等细节处理
- *   - unparam 对 false, null, undefined 等值的还原？需不需要？歧义性
  *
  */

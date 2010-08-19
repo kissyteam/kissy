@@ -6,7 +6,17 @@
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
-    <target name="build" depends="common.build">
+    <target name="concat">
+        <concat destfile="cookie-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="cookie.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="cookie-pkg.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
     </target>
 </project>
 

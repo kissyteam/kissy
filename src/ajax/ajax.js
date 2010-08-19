@@ -4,42 +4,6 @@
  */
 KISSY.add('ajax', function(S) {
 
-    var doc = document,
-        testNode = doc.createElement('script'),
-
-        // try branching
-        fn = testNode.readyState ? function(node, callback) {
-            node.onreadystatechange = function() {
-                var rs = node.readyState;
-                if (rs === 'loaded' || rs === 'complete') {
-                    // handle memory leak in IE
-                    node.onreadystatechange = null;
-                    callback.call(this);
-                }
-            };
-        } : function(node, callback) {
-            node.onload = callback;
-        };
-
-    S.mix(S, {
-        /**
-         * Load a JavaScript file from the server using a GET HTTP request, then execute it.
-         */
-        getScript: function(url, callback, charset) {
-            var head = S.get('head') || doc.documentElement,
-                node = doc.createElement('script');
-
-            node.src = url;
-            if (charset) node.charset = charset;
-            node.async = true;
-
-            if (S.isFunction(callback)) {
-                fn(node, callback);
-            }
-
-            head.insertBefore(node, head.firstChild);
-        }
-    });
 });
 
 /**

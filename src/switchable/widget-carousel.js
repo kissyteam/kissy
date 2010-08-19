@@ -78,7 +78,8 @@ KISSY.add('carousel', function(S, undefined) {
             self.fire('itemSelected', { item: this });
         });
     }
-});
+
+}, { host: 'switchable' } );
 
 
 /**

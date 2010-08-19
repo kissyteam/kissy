@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: ${build.time}
+build time: Aug 19 13:36
 */
 /**
  * @module kissy
@@ -14,7 +14,8 @@ build time: ${build.time}
     if (win[S] === undefined) win[S] = {};
     S = win[S]; // shortcut
 
-    var doc = win['document'],
+    var doc = win['document'], loc = location,
+        EMPTY = '',
 
         // Copies all the properties of s to r
         mix = function(r, s, ov, wl) {
@@ -57,50 +58,35 @@ build time: ${build.time}
         POLL_INTERVAL = 40,
 
         // #id or id
-        RE_IDSTR = /^#?([\w-]+)$/;
+        RE_IDSTR = /^#?([\w-]+)$/,
+
+        // global unique id
+        guid = 0;
 
     mix(S, {
+
         /**
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.2dev',
+        version: '1.1.2',
 
         /**
          * Initializes KISSY object.
-         * @private
          */
         _init: function() {
-            // Env 对象目前仅用于内部，为模块动态加载预留接口
+            // 环境信息
             this.Env = {
-                mods: { },
-                guid: 0
-            };
-        },
-
-        /**
-         * Registers a module.
-         * @param name {String} module name
-         * @param fn {Function} entry point into the module that is used to bind module to KISSY
-         * <code>
-         * KISSY.add('module-name', function(S){ });
-         * </code>
-         * @return {KISSY}
-         */
-        add: function(name, fn) {
-            var self = this;
-
-            // override mode
-            self.Env.mods[name] = {
-                name: name,
-                fn: fn
+                mods: { }, // 所有模块列表
+                _loadingQueue: { } // 正在加载中的模块信息
             };
 
-            // call entry point immediately
-            fn(self);
-
-            // chain support
-            return self;
+            // 配置信息
+            this.Config = {
+                debug: '@DEBUG@', // build 时，会将 @DEBUG@ 替换为空
+                base: 'http://a.tbcdn.cn/s/kissy/1.1.2/build/',
+                timeout: 10   // getScript 的默认 timeout 时间
+            };
         },
 
         /**
@@ -112,19 +98,21 @@ build time: ${build.time}
          * @return {KISSY}
          */
         ready: function(fn) {
+            var self = this;
+
             // Attach the listeners
-            if (!readyBound) this._bindReady();
+            if (!readyBound) self._bindReady();
 
             // If the DOM is already ready
             if (isReady) {
                 // Execute the function immediately
-                fn.call(win, this);
+                fn.call(win, self);
             } else {
                 // Remember the function for later
                 readyList.push(fn);
             }
 
-            return this;
+            return self;
         },
 
         /**
@@ -158,7 +146,7 @@ build time: ${build.time}
                 doc.addEventListener(eventType, domReady, false);
 
                 // A fallback to window.onload, that will always work
-			    win.addEventListener('load', fire, false);
+                win.addEventListener('load', fire, false);
             }
             // IE event model is used
             else {
@@ -185,6 +173,7 @@ build time: ${build.time}
                             setTimeout(readyScroll, 1);
                         }
                     }
+
                     readyScroll();
                 }
             }
@@ -218,7 +207,7 @@ build time: ${build.time}
          * @param fn <Function> What to execute when the element is found.
          */
         available: function(id, fn) {
-            id = (id + '').match(RE_IDSTR)[1];
+            id = (id + EMPTY).match(RE_IDSTR)[1];
             if (!id || !S.isFunction(fn)) return;
 
             var retryCount = 1,
@@ -338,7 +327,7 @@ build time: ${build.time}
             var l = arguments.length, o = null, i, j, p;
 
             for (i = 0; i < l; ++i) {
-                p = ('' + arguments[i]).split('.');
+                p = (EMPTY + arguments[i]).split('.');
                 o = this;
                 for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
                     o = o[p[j]] = o[p[j]] || {};
@@ -360,10 +349,10 @@ build time: ${build.time}
         app: function(name, sx) {
             var O = win[name] || {};
 
-            mix(O, this, true, ['_init', 'add', 'namespace']);
+            mix(O, this, true, S._APP_MEMBERS);
             O._init();
 
-            return mix((win[name] = O), typeof sx === 'function' ? sx() : sx);
+            return mix((win[name] = O), S.isFunction(sx) ? sx() : sx);
         },
 
         /**
@@ -372,10 +361,9 @@ build time: ${build.time}
          * @param cat {String} the log category for the message. Default
          *        categories are "info", "warn", "error", "time" etc.
          * @param src {String} the source of the the message (opt)
-         * @return {KISSY}
          */
         log: function(msg, cat, src) {
-            if (this.Config.debug) {
+            if (S.Config.debug) {
                 if (src) {
                     msg = src + ': ' + msg;
                 }
@@ -383,14 +371,13 @@ build time: ${build.time}
                     console[cat && console[cat] ? cat : 'log'](msg);
                 }
             }
-            return this;
         },
 
         /**
          * Throws error message.
          */
         error: function(msg) {
-            if (this.Config.debug) {
+            if (S.Config.debug) {
                 throw msg;
             }
         },
@@ -401,49 +388,54 @@ build time: ${build.time}
          * @return {String} the guid
          */
         guid: function(pre) {
-            var id = this.Env.guid++ + '';
+            var id = guid++ + EMPTY;
             return pre ? pre + id : id;
         }
     });
 
     S._init();
 
-    // build 时，会将 @DEBUG@ 替换为空
-    S.Config = { debug: '@DEBUG@' };
+    // S.app() 时，需要动态复制的成员列表
+    S._APP_MEMBERS = ['_init', 'namespace'];
+
+    // 可以通过在 url 上加 ?ks-debug 参数来强制开启 debug 模式
+    if (loc && (loc.search || EMPTY).indexOf('ks-debug') !== -1) {
+        S.Config.debug = true;
+    }
 
 })(window, 'KISSY');
 
 /**
  * NOTES:
  *
- * 2010.07
- *  - 增加 available 和 guid 方法。
+ * 2010/08
+ *  - 将 loader 功能独立到 loader.js 中
  *
- * 2010.04
- *  - 移除掉 weave 方法，尚未考虑周全。
+ * 2010/07
+ *  - 增加 available 和 guid 方法
  *
- * 2010.01
- *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）。
- *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱。
- *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码。
- *  - namespace, app 方法，决定子库的实现和代码的整体组织。
- *  - log, error 方法，简单的调试工具和报错机制。
- *  - guid 方法，全局辅助方法。
+ * 2010/04
+ *  - 移除掉 weave 方法，鸡肋
+ *
+ * 2010/01
+ *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）
+ *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱
+ *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码
+ *  - namespace, app 方法，决定子库的实现和代码的整体组织
+ *  - log, error 方法，简单的调试工具和报错机制
+ *  - guid 方法，全局辅助方法
  *  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
- *
- * TODO:
- *  - 模块动态加载 require 方法的实现。
  *
  */
 /**
  * @module  lang
  * @author  lifesinger@gmail.com
  */
-KISSY.add('lang', function(S, undefined) {
+(function(win, S, undefined) {
 
-    var win = window, doc = document, loc = location,
+    var doc = document, docElem = doc.documentElement,
         AP = Array.prototype,
-        indexOf = AP.indexOf, filter = AP.filter,
+        indexOf = AP.indexOf, lastIndexOf = AP.lastIndexOf, filter = AP.filter,
         trim = String.prototype.trim,
         toString = Object.prototype.toString,
         encode = encodeURIComponent,
@@ -575,12 +567,12 @@ KISSY.add('lang', function(S, undefined) {
          * Search for a specified value within an array.
          */
         indexOf: indexOf ?
-            function(elem, arr) {
-                return indexOf.call(arr, elem);
+            function(item, arr) {
+                return indexOf.call(arr, item);
             } :
-            function(elem, arr) {
+            function(item, arr) {
                 for (var i = 0, len = arr.length; i < len; ++i) {
-                    if (arr[i] === elem) {
+                    if (arr[i] === item) {
                         return i;
                     }
                 }
@@ -588,10 +580,49 @@ KISSY.add('lang', function(S, undefined) {
             },
 
         /**
+         * Returns the index of the last item in the array
+         * that contains the specified value, -1 if the
+         * value isn't found.
+         */
+        lastIndexOf: (lastIndexOf) ?
+            function(item, arr) {
+                return lastIndexOf.call(arr, item);
+            } :
+            function(item, arr) {
+                for (var i = arr.length - 1; i >= 0; i--) {
+                    if (arr[i] === item) {
+                        break;
+                    }
+                }
+                return i;
+            },
+
+        /**
+         * Returns a copy of the array with the duplicate entries removed
+         * @param a {Array} the array to find the subset of uniques for
+         * @return {Array} a copy of the array with duplicate entries removed
+         */
+        unique: function(a, override) {
+            if(override) a.reverse(); // 默认是后置删除，如果 override 为 true, 则前置删除
+            var b = a.slice(), i = 0, n, item;
+
+            while (i < b.length) {
+                item = b[i];
+                while ((n = S.lastIndexOf(item, b)) !== i) {
+                    b.splice(n, 1);
+                }
+                i += 1;
+            }
+
+            if(override) b.reverse(); // 将顺序转回来
+            return b;
+        },
+        
+        /**
          * Search for a specified value index within an array.
          */
-        inArray: function(elem, arr) {
-            return S.indexOf(elem, arr) > -1;
+        inArray: function(item, arr) {
+            return S.indexOf(item, arr) > -1;
         },
 
         /**
@@ -602,21 +633,11 @@ KISSY.add('lang', function(S, undefined) {
             if (S.isArray(o)) return o;
 
             // The strings and functions also have 'length'
-            if (typeof o.length !== 'number' || typeof o === 'string' || S.isFunction(o)) {
+            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
                 return [o];
             }
 
-            // ie 不支持用 slice 转换 NodeList, 降级到普通方法
-            if (o.item && S.UA.ie) {
-                var ret = [], i = 0, len = o.length;
-                for (; i < len; ++i) {
-                    ret[i] = o[i];
-                }
-                return ret;
-            }
-
-            // array-like
-            return AP.slice.call(o);
+            return slice2Arr(o);
         },
 
         /**
@@ -742,7 +763,7 @@ KISSY.add('lang', function(S, undefined) {
             o = o || { };
             var m = fn, d = S.makeArray(data), f, r;
 
-            if (typeof fn === 'string') {
+            if (S.isString(fn)) {
                 m = o[fn];
             }
 
@@ -802,7 +823,7 @@ KISSY.add('lang', function(S, undefined) {
             if (data && REG_NOT_WHITE.test(data)) {
                 // Inspired by code by Andrea Giammarchi
                 // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
-                var head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+                var head = doc.getElementsByTagName('head')[0] || docElem,
                     script = doc.createElement('script');
 
                 // It works! All browsers support!
@@ -822,31 +843,418 @@ KISSY.add('lang', function(S, undefined) {
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // 可以通过在 url 上加 ?ks-debug 来开启 debug 模式
-    if (loc && loc.search && loc.search.indexOf('ks-debug') !== -1) {
-        S.Config.debug = true;
+    // 将 NodeList 等集合转换为普通数组
+    function slice2Arr(arr) {
+        return AP.slice.call(arr);
     }
-});
+    // ie 不支持用 slice 转换 NodeList, 降级到普通方法
+    try {
+        slice2Arr(docElem.childNodes);
+    }
+    catch(e) {
+        slice2Arr = function(arr) {
+            for (var ret = [], i = arr.length - 1; i >= 0; i--) {
+                ret[i] = arr[i];
+            }
+            return ret;
+        }
+    }
+
+})(window, KISSY);
 
 /**
  * NOTES:
  *
- *  2010.06
+ *  2010/08
+ *   - 增加 lastIndexOf 和 unique 方法。
+ *
+ *  2010/06
  *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着。
  *
- *  2010.05
+ *  2010/05
  *   - 增加 filter 方法。
  *   - globalEval 中，直接采用 text 赋值，去掉 appendChild 方式。
  *
- *  2010.04
+ *  2010/04
  *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
  *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
  *
+ */
+/**
+ * @module loader
+ * @author lifesinger@gmail.com, lijing00333@163.com
+ */
+(function(win, S, undefined) {
+
+    var doc = win['document'],
+        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+        EMPTY = '',
+        LOADING = 1, LOADED = 2, ERROR = 3, ATTACHED = 4,
+        mix = S.mix,
+
+        scriptOnload = doc.createElement('script').readyState ?
+            function(node, callback) {
+                var oldCallback = node.onreadystatechange;
+                node.onreadystatechange = function() {
+                    var rs = node.readyState;
+                    if (rs === 'loaded' || rs === 'complete') {
+                        node.onreadystatechange = null;
+                        oldCallback && oldCallback();
+                        callback.call(this);
+                    }
+                };
+            } :
+            function(node, callback) {
+                var oldCallback = node.onload;
+                node.onload = function() {
+                    oldCallback && oldCallback();
+                    callback();
+                };
+            },
+
+        RE_CSS = /\.css(?:\?|$)/i,
+        loader;
+
+    loader = {
+
+        /**
+         * Registers a module.
+         * @param name {String} module name
+         * @param fn {Function} entry point into the module that is used to bind module to KISSY
+         * @param config {Object}
+         * <code>
+         * KISSY.add('module-name', function(S){ }, requires: ['mod1']);
+         * </code>
+         * <code>
+         * KISSY.add({
+         *     'mod-name': {
+         *         fullpath: 'url',
+         *         requires: ['mod1','mod2']
+         *     }
+         * });
+         * </code>
+         * @return {KISSY}
+         */
+        add: function(name, fn, config) {
+            var self = this, mods = self.Env.mods, mod, o;
+
+            // S.add(name, config) => S.add( { name: config } )
+            if (S.isString(name) && !config && S.isPlainObject(fn)) {
+                o = {};
+                o[name] = fn;
+                name = o;
+            }
+
+            // S.add( { name: config } )
+            if (S.isPlainObject(name)) {
+                S.each(name, function(v, k) {
+                    v.name = k;
+                });
+                mix(mods, name);
+            }
+            // S.add(name[, fn[, config]])
+            else {
+                // 处理子模块
+                if(config && config.host) {
+                    name = config.host;
+                }
+
+                // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
+                //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
+                mix((mod = mods[name] || { }), { name: name, status: LOADED });
+                if(!mod.fns) mod.fns = [];
+                fn && mod.fns.push(fn);
+                mix((mods[name] = mod), config);
+
+                // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
+                if (self._isAttached(mod.requires)) {
+                    self._attachMod(mod);
+                }
+            }
+
+            return self;
+        },
+
+        /**
+         * Start load specific mods, and fire callback when these mods and requires are attached.
+         * <code>
+         * S.use('mod-name', callback);
+         * S.use('mod1,mod2', callback);
+         * S.use('mod1+mod2,mod3', callback); 暂不实现
+         * S.use('*', callback);  暂不实现
+         * S.use('*+', callback); 暂不实现
+         * </code>
+         */
+        use: function(modNames, callback) {
+            modNames = modNames.replace(/\s+/g, EMPTY).split(',');
+
+            var self = this, mods = self.Env.mods,
+                i = 0, len = modNames.length, mod, fired;
+
+            // 已经全部 attached, 直接执行回调即可
+            if (self._isAttached(modNames)) {
+                callback && callback(self);
+                return;
+            }
+
+            // 有尚未 attached 的模块
+            for (; i < len && (mod = mods[modNames[i++]]);) {
+                if (mod.status === ATTACHED) continue;
+
+                self._attach(mod, function() {
+                    if (!fired && self._isAttached(modNames)) {
+                        fired = true;
+                        callback && callback(self);
+                    }
+                });
+            }
+
+            return self;
+        },
+
+        /**
+         * Attach a module and all required modules.
+         */
+        _attach: function(mod, callback) {
+            var self = this, requires = mod['requires'] || [],
+                i = 0, len = requires.length;
+
+            // attach all required modules
+            for (; i < len; i++) {
+                self._attach(self.Env.mods[requires[i]], fn);
+            }
+
+            // load and attach this module
+            self._buildPath(mod);
+            self._load(mod, fn);
+
+            function fn() {
+                if (self._isAttached(requires)) {
+                    if (mod.status === LOADED) {
+                        self._attachMod(mod);
+                    }
+                    if (mod.status === ATTACHED) {
+                        callback();
+                    }
+                }
+            }
+        },
+
+        _attachMod: function(mod) {
+            var self = this;
+            if (mod.fns) {
+                S.each(mod.fns, function(fn) {
+                    fn && fn(self);
+                });
+                mod.fns = undefined; // 保证 attach 过的方法只执行一次
+                S.log(mod.name + '.status = attached');
+            }
+            mod.status = ATTACHED;
+        },
+
+        _isAttached: function(modNames) {
+            var mods = this.Env.mods, mod,
+                i = (modNames = S.makeArray(modNames)).length - 1;
+
+            for (; i >= 0 && (mod = mods[modNames[i]]); i--) {
+                if (mod.status !== ATTACHED) return false;
+            }
+
+            return true;
+        },
+
+        /**
+         * Load a single module.
+         */
+        _load: function(mod, callback) {
+            var self = this, url = mod.fullpath,
+                loadingQueque = self.Env._loadingQueue,
+                node = loadingQueque[url];
+
+            // 可能已经由其它模块触发加载
+            if(node) mod.status = LOADING;
+
+            if ((mod.status || 0) < LOADING && url) {
+                mod.status = LOADING;
+
+                loadingQueque[url] = self.getScript(url, {
+                    success: function() {
+                        KISSY.log(mod.name + ' onload fired.', 'info'); // 压缩时不过滤该句，以方便线上调试
+                        _success();
+                    },
+                    error: function() {
+                        mod.status = ERROR;
+                        _final();
+                    },
+                    charset: mod.charset
+                });
+            }
+            // 已经在加载中，需要添加回调到 script onload 中
+            // 注意：没有考虑 error 情形
+            else if (mod.status === LOADING && node) {
+                scriptOnload(node, _success);
+            }
+            // 是内嵌代码，或者已经 loaded
+            else {
+                mod.status = LOADED;
+                callback();
+            }
+
+            function _success() {
+                if (mod.status !== ERROR) {
+                    mod.status = LOADED;
+                    callback();
+                }
+                _final();
+            }
+            
+            function _final() {
+                loadingQueque[url] = undefined;
+                delete loadingQueque.url;
+            }
+        },
+
+        _buildPath: function(mod) {
+            if (!mod.fullpath && mod['path']) {
+                mod.fullpath = this.Config.base + mod['path'];
+            }
+            // debug 模式下，加载非 min 版
+            if(mod.fullpath && this.Config.debug) {
+                mod.fullpath = mod.fullpath.replace(/-min/g, '');
+            }
+        },
+
+        /**
+         * Load a JavaScript file from the server using a GET HTTP request, then execute it.
+         * <code>
+         *  getScript(url, success, charset);
+         *  or
+         *  getScript(url, {
+         *      charset: string
+         *      success: fn,
+         *      error: fn,
+         *      timeout: number
+         *  });
+         * </code>
+         */
+        getScript: function(url, success, charset) {
+            var isCSS = RE_CSS.test(url),
+                node = doc.createElement(isCSS ? 'link' : 'script'),
+                config = success, error, timeout, timer;
+
+            if (S.isPlainObject(config)) {
+                success = config.success;
+                error = config.error;
+                timeout = config.timeout;
+                charset = config.charset;
+            }
+
+            if (isCSS) {
+                node.href = url;
+                node.rel = 'stylesheet';
+            } else {
+                node.src = url;
+                node.async = true;
+            }
+            if (charset) node.charset = charset;
+
+            if (S.isFunction(success)) {
+                if (isCSS) {
+                    success.call(node);
+                } else {
+                    scriptOnload(node, function() {
+                        if (timer) {
+                            timer.cancel();
+                            timer = undefined;
+                        }
+                        success.call(node);
+                    });
+                }
+            }
+
+            if (S.isFunction(error)) {
+                timer = S.later(function() {
+                    timer = undefined;
+                    error();
+                }, (timeout || this.Config.timeout) * 1000);
+            }
+
+            head.insertBefore(node, head.firstChild);
+            return node;
+        }
+    };
+
+    mix(S, loader);
+
+    S.each(loader, function(v, k) {
+        S._APP_MEMBERS.push(k);
+    });
+
+})(window, KISSY);
+
+/**
  * TODO:
- *   - 分析 jq 的 isPlainObject 对 constructor 等细节处理
- *   - unparam 对 false, null, undefined 等值的还原？需不需要？歧义性
+ *  - combo 实现
+ *  - 使用场景和测试用例整理
+ *
+ *
+ * NOTES:
+ *
+ * 2010/08/16 玉伯：
+ *  - 基于拔赤的实现，重构。解耦 add/use 和 ready 的关系，简化实现代码。
+ *  - 暂时去除 combo 支持，combo 由用户手工控制。
+ *  - 支持 app 生成的多 loader.
+ *
+ * 2010/08/13 拔赤：
+ *  - 重写 add, use, ready, 重新组织 add 的工作模式，添加 loader 功能。
+ *  - 借鉴 YUI3 原生支持 loader, 但 YUI 的 loader 使用场景复杂，且多 loader 共存的场景
+ *    在越复杂的程序中越推荐使用，在中等规模的 webpage 中，形同鸡肋，因此将 KISSY 全局对象
+ *    包装成一个 loader，来统一管理页面所有的 modules.
+ *  - loader 的使用一定要用 add 来配合，加载脚本过程中的三个状态（before domready,
+ *    after domready & before KISSY callbacks' ready, after KISSY callbacks' ready）要明确区分。
+ *  - 使用 add 和 ready 的基本思路和之前保持一致，即只要执行 add('mod-name', callback)，就
+ *    会执行其中的 callback. callback 执行的时机由 loader 统一控制。
+ *  - 支持 combo, 通过 Config.combo = true 来开启，模块的 fullpath 用 path 代替。
+ *  - KISSY 内部组件和开发者文件当做地位平等的模块处理，包括 combo.
  *
  */
+/**
+ * @module mods
+ * @author lifesinger@gmail.com
+ */
+(function(S) {
+
+    var map = {
+        core: {
+            path: 'packages/core-min.js',
+            charset: 'utf-8'
+        }
+    };
+
+    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
+        map[modName] = {
+            path: modName + '/' + modName + '-pkg-min.js',
+            requires: ['core'],
+            charset: 'utf-8'
+        };
+    });
+
+    S.add(map);
+
+})(KISSY);
+
+/**
+ * NOTES:
+ *
+ *  2010/08/16 玉伯：
+ *   - 采用实用性粒度，防止颗粒过小给用户带来的不方便。
+ *
+ */
+/*
+Copyright 2010, KISSY UI Library v1.1.2
+MIT Licensed
+build time: Aug 16 16:51
+*/
 /**
  * @module  ua
  * @author  lifesinger@gmail.com
@@ -854,7 +1262,8 @@ KISSY.add('lang', function(S, undefined) {
 KISSY.add('ua', function(S) {
 
     var ua = navigator.userAgent,
-        m, core, shell, v,
+        EMPTY = '', MOBILE = 'mobile',
+        core = EMPTY, shell = EMPTY, m,
         o = {
             // browser core type
             webkit: 0,
@@ -896,11 +1305,11 @@ KISSY.add('ua', function(S) {
 
         // Apple Mobile
         if (/ Mobile\//.test(ua)) {
-            o.mobile = 'apple'; // iPad, iPhone or iPod Touch
+            o[MOBILE] = 'apple'; // iPad, iPhone or iPod Touch
         }
         // Other WebKit Mobile Browsers
         else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
-            o.mobile = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
+            o[MOBILE] = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
         }
     }
     // NOT WebKit
@@ -920,23 +1329,27 @@ KISSY.add('ua', function(S) {
 
                 // Opera Mini
                 if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
-                    o.mobile = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
+                    o[MOBILE] = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
                 }
                 // Opera Mobile
                 // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
-                // issue: 由于Opera Mobile有Version/字段，可能会与Opera混淆，同时对于Opera Mobile的版本号也比较混乱
+                // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
                 else if ((m = ua.match(/Opera Mobi[^;]*/)) && m){
-                    o[shell = 'mobile'] = m[0];    
+                    o[MOBILE] = m[0];
                 }
             }
             
         // NOT WebKit or Presto
         } else {
             // MSIE
-            if ((m = ua.match(/MSIE\s([^;]*)/)) && (v = m[1])) {
+            if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
                 o[core = 'trident'] = 0.1; // Trident detected, look for revision
-                // hack: documentMode is only supported in IE 8 so we know if its here its really IE 8
-                o[shell = 'ie'] = v < 8 && document['documentMode'] ? 8 : v;
+                // 注意：
+                //  o.shell = ie, 表示外壳是 ie
+                //  但 o.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
+                //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 o.ie = 8, 否则
+                //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
+                o[shell = 'ie'] = numberify(m[1]);
 
                 // Get the Trident's accurate version
                 if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
@@ -982,10 +1395,62 @@ KISSY.add('ua', function(S) {
  *  - test mobile
  *
  */
+/**
+ * @module  ua-extra
+ * @author  gonghao<gonghao@ghsky.com>
+ */
+KISSY.add('ua-extra', function(S) {
+    var UA = S.UA,
+        ua = navigator.userAgent,
+        m, external, shell,
+        o = { },
+        numberify = UA._numberify;
+
+    /**
+     * 说明：
+     * @子涯总结的各国产浏览器的判断依据: http://spreadsheets0.google.com/ccc?key=tluod2VGe60_ceDrAaMrfMw&hl=zh_CN#gid=0
+     * 根据 CNZZ 2009 年度浏览器占用率报告，优化了判断顺序：http://www.tanmi360.com/post/230.htm
+     * 如果检测出浏览器，但是具体版本号未知用 0.1 作为标识
+     * 世界之窗 & 360 浏览器，在 3.x 以下的版本都无法通过 UA 或者特性检测进行判断，所以目前只要检测到 UA 关键字就认为起版本号为 3
+     */
+
+    // 360Browser
+    if (m = ua.match(/360SE/)) {
+        o[shell = 'se360'] = 3; // issue: 360Browser 2.x cannot be recognised, so if recognised default set verstion number to 3
+    }
+    // Maxthon
+    else if ((m = ua.match(/Maxthon/)) && (external = window.external)) {
+        // issue: Maxthon 3.x in IE-Core cannot be recognised and it doesn't have exact version number
+        // but other maxthon versions all have exact version number
+        shell = 'maxthon';
+        try {
+            o[shell] = numberify(external['max_version']);
+        } catch(ex) {
+            o[shell] = 0.1;
+        }
+    }
+    // TT
+    else if (m = ua.match(/TencentTraveler\s([\d.]*)/)) {
+        o[shell = 'tt'] = m[1] ? numberify(m[1]) : 0.1;
+    }
+    // TheWorld
+    else if (m = ua.match(/TheWorld/)) {
+        o[shell = 'theworld'] = 3; // issue: TheWorld 2.x cannot be recognised, so if recognised default set verstion number to 3
+    }
+    // Sougou
+    else if (m = ua.match(/SE\s([\d.]*)/)) {
+        o[shell = 'sougou'] = m[1] ? numberify(m[1]) : 0.1;
+    }
+
+    // If the browser has shell(no matter IE-core or Webkit-core or others), set the shell key
+    shell && (o.shell = shell);
+
+    S.mix(UA, o);
+});
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: ${build.time}
+build time: Aug 16 16:50
 */
 /**
  * @module  dom
@@ -996,23 +1461,23 @@ KISSY.add('dom', function(S, undefined) {
     S.DOM = {
 
         /**
-         * 是不是 element node
+         * 是不�?element node
          */
         _isElementNode: function(elem) {
             return nodeTypeIs(elem, 1);
         },
 
         /**
-         * 是不是 KISSY.Node
+         * 是不�?KISSY.Node
          */
         _isKSNode: function(elem) {
             return S.Node && nodeTypeIs(elem, S.Node.TYPE);
         },
 
         /**
-         * elem 为 window 时，直接返回
-         * elem 为 document 时，返回关联的 window
-         * elem 为 undefined 时，返回当前 window
+         * elem �?window 时，直接返回
+         * elem �?document 时，返回关联�?window
+         * elem �?undefined 时，返回当前 window
          * 其它值，返回 false
          */
         _getWin: function(elem) {
@@ -1062,22 +1527,22 @@ KISSY.add('selector', function(S, undefined) {
         // #id .cls
         // tag.cls
         // #id tag.cls
-        // 注 1：REG_QUERY 还会匹配 #id.cls
-        // 注 2：tag 可以为 * 字符
+        // �?1：REG_QUERY 还会匹配 #id.cls
+        // �?2：tag 可以�?* 字符
         // 返回值为数组
         // 选择器不支持时，抛出异常
 
         // selector 为字符串是最常见的情况，优先考虑
-        // 注：空白字符串无需判断，运行下去自动能返回空数组
+        // 注：空白字符串无�?��断，运行下去自动能返回空数组
         if (S.isString(selector)) {
             selector = S.trim(selector);
 
-            // selector 为 #id 是最常见的情况，特殊优化处理
+            // selector �?#id 是最常见的情况，特殊优化处理
             if (REG_ID.test(selector)) {
                 t = getElementById(selector.slice(1), context);
-                if (t) ret = [t]; // #id 无效时，返回空数组
+                if (t) ret = [t]; // #id 无效时，返回空数�?
             }
-            // selector 为支持列表中的其它 6 种
+            // selector 为支持列表中的其�?6 �?
             else if ((match = REG_QUERY.exec(selector))) {
                 // 获取匹配出的信息
                 id = match[1];
@@ -1099,35 +1564,35 @@ KISSY.add('selector', function(S, undefined) {
                         }
                     }
                     // #id tag | tag
-                    else if (tag) { // 排除空白字符串
+                    else if (tag) { // 排除空白字符�?
                         ret = getElementsByTagName(tag, context);
                     }
                 }
             }
-            // 采用外部选择器
+            // 采用外部选择�?
             else if(S.ExternalSelector) {
                 return S.ExternalSelector(selector, context);
             }
-            // 依旧不支持，抛异常
+            // 依旧不支持，抛异�?
             else {
                 error(selector);
             }
         }
-        // 传入的 selector 是 KISSY.Node/NodeList. 始终返回原生 DOM Node
+        // 传入�?selector �?KISSY.Node/NodeList. 始终返回原生 DOM Node
         else if(selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
             ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
         }
-        // 传入的 selector 是 NodeList 或已是 Array
-        else if (selector && (S.isArray(selector) || selector.item)) {
+        // 传入�?selector �?NodeList 或已�?Array
+        else if (selector && (S.isArray(selector) || (selector.item && !selector.nodeType))) {
             ret = selector;
         }
-        // 传入的 selector 是 Node 等非字符串对象，原样返回
+        // 传入�?selector �?Node 等非字符串对象，原样返回
         else if (selector) {
             ret = [selector];
         }
-        // 传入的 selector 是其它值时，返回空数组
+        // 传入�?selector 是其它�?时，返回空数�?
 
-        // 将 NodeList 转换为普通数组
+        // �?NodeList 转换为普通数�?
         if(ret.item) {
             ret = S.makeArray(ret);
         }
@@ -1140,19 +1605,19 @@ KISSY.add('selector', function(S, undefined) {
         return ret;
     }
 
-    // 调整 context 为合理值
+    // 调整 context 为合理�?
     function tuneContext(context) {
-        // 1). context 为 undefined 是最常见的情况，优先考虑
+        // 1). context �?undefined 是最常见的情况，优先考虑
         if (context === undefined) {
             context = doc;
         }
         // 2). context 的第二使用场景是传入 #id
         else if (S.isString(context) && REG_ID.test(context)) {
             context = getElementById(context.slice(1), doc);
-            // 注：#id 可能无效，这时获取的 context 为 null
+            // 注：#id 可能无效，这时获取的 context �?null
         }
-        // 3). context 还可以传入 HTMLElement, 此时无需处理
-        // 4). 经历 1 - 3, 如果 context 还不是 HTMLElement, 赋值为 null
+        // 3). context 还可以传�?HTMLElement, 此时无需处理
+        // 4). 经历 1 - 3, 如果 context 还不�?HTMLElement, 赋�?�?null
         else if (context && context.nodeType !== 1 && context.nodeType !== 9) {
             context = null;
         }
@@ -1223,7 +1688,7 @@ KISSY.add('selector', function(S, undefined) {
                 return context.querySelectorAll((tag ? tag : '') + '.' + cls);
             }
         }
-        // 降级到普通方法
+        // 降级到普通方�?
         else {
             getElementsByClassName = function(cls, tag, context) {
                 var els = context.getElementsByTagName(tag || ANY),
@@ -1266,7 +1731,7 @@ KISSY.add('selector', function(S, undefined) {
         filter: function(selector, filter) {
             var elems = query(selector), match, tag, cls, ret = [];
 
-            // 默认仅支持最简单的 tag.cls 形式
+            // 默认仅支持最�?���?tag.cls 形式
             if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
                 tag = match[2];
                 cls = match[3];
@@ -1278,11 +1743,11 @@ KISSY.add('selector', function(S, undefined) {
             if (S.isFunction(filter)) {
                 ret = S.filter(elems, filter);
             }
-            // 其它复杂 filter, 采用外部选择器
+            // 其它复杂 filter, 采用外部选择�?
             else if (filter && S.ExternalSelector) {
                 ret = S.ExternalSelector._filter(selector, filter);
             }
-            // filter 为空或不支持的 selector
+            // filter 为空或不支持�?selector
             else {
                 error(filter);
             }
@@ -1305,44 +1770,44 @@ KISSY.add('selector', function(S, undefined) {
  * NOTES:
  *
  * 2010.01
- *  - 对 reg exec 的结果(id, tag, className)做 cache, 发现对性能影响很小，去掉。
- *  - getElementById 使用频率最高，使用直达通道优化。
- *  - getElementsByClassName 性能优于 querySelectorAll, 但 IE 系列不支持。
- *  - instanceof 对性能有影响。
- *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无需冗余“防卫”。
- *  - query 方法中的条件判断考虑了“频率优先”原则。最有可能出现的情况放在前面。
- *  - Array 的 push 方法可以用 j++ 来替代，性能有提升。
- *  - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组。
+ *  - �?reg exec 的结�?id, tag, className)�?cache, 发现对�?能影响很小，去掉�?
+ *  - getElementById 使用频率�?��，使用直达�?道优化�?
+ *  - getElementsByClassName 性能优于 querySelectorAll, �?IE 系列不支持�?
+ *  - instanceof 对�?能有影响�?
+ *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无�?��余�?防卫”�?
+ *  - query 方法中的条件判断考虑了�?频率优先”原则�?�?��可能出现的情况放在前面�?
+ *  - Array �?push 方法可以�?j++ 来替代，性能有提升�?
+ *  - 返回值策略和 Sizzle �?��，正常时，返回数组；其它�?��情况，返回空数组�?
  *
- *  - 从压缩角度考虑，还可以将 getElmentsByTagName 和 getElementsByClassName 定义为常量，
- *    不过感觉这样做太“压缩控”，还是保留不替换的好。
+ *  - 从压缩角度�?虑，还可以将 getElmentsByTagName �?getElementsByClassName 定义为常量，
+ *    不过感觉这样做太“压缩控”，还是保留不替换的好�?
  *
- *  - 调整 getElementsByClassName 的降级写法，性能最差的放最后。
+ *  - 调整 getElementsByClassName 的降级写法，性能�?��的放�?���?
  *
  * 2010.02
- *  - 添加对分组选择器的支持（主要参考 Sizzle 的代码，代去除了对非 Grade A 级浏览器的支持）
+ *  - 添加对分组�?择器的支持（主要参�? Sizzle 的代码，代去除了对非 Grade A 级浏览器的支持）
  *
  * 2010.03
- *  - 基于原生 dom 的两个 api: S.query 返回数组; S.get 返回第一个。
- *    基于 Node 的 api: S.one, 在 Node 中实现。
- *    基于 NodeList 的 api: S.all, 在 NodeList 中实现。
- *    通过 api 的分层，同时满足初级用户和高级用户的需求。
+ *  - 基于原生 dom 的两�?api: S.query 返回数组; S.get 返回第一个�?
+ *    基于 Node �?api: S.one, �?Node 中实现�?
+ *    基于 NodeList �?api: S.all, �?NodeList 中实现�?
+ *    通过 api 的分层，同时满足初级用户和高级用户的�?���?
  *
  * 2010.05
- *  - 去掉给 S.query 返回值默认添加的 each 方法，保持纯净。
- *  - 对于不支持的 selector, 采用外部耦合进来的 Selector.
+ *  - 去掉�?S.query 返回值默认添加的 each 方法，保持纯�??
+ *  - 对于不支持的 selector, 采用外部耦合进来�?Selector.
  *
  * 2010.06
- *  - 增加 filter 和 test 方法
- * 
+ *  - 增加 filter �?test 方法
+ *
  * 2010.07
- *  - 取消对 , 分组的支持，group 直接用 Sizzle
+ *  - 取消�?, 分组的支持，group 直接�?Sizzle
  *
  * 2010.08
- *  - 给 S.query 的结果 attach each 方法
+ *  - �?S.query 的结�?attach each 方法
  *
  * Bugs:
- *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
+ *  - S.query('#test-data *') 等带 * 号的选择器，�?IE6 下返回的值不对�?jQuery 等类库也有此 bug, 诡异�?
  *
  * References:
  *  - http://ejohn.org/blog/selectors-that-people-actually-use/
@@ -1426,7 +1891,7 @@ KISSY.add('dom-class', function(S, undefined) {
                         var className = (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE), j = 0, needle;
                         for (; j < cl; j++) {
                             needle = SPACE + classNames[j] + SPACE;
-                            // 一个 cls 有可能多次出现：'link link2 link link3 link'
+                            // �?�� cls 有可能多次出现：'link link2 link link3 link'
                             while (className.indexOf(needle) >= 0) {
                                 className = className.replace(needle, SPACE);
                             }
@@ -1489,8 +1954,8 @@ KISSY.add('dom-class', function(S, undefined) {
 
 /**
  * NOTES:
- *   - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
- *   - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
+ *   - hasClass/addClass/removeClass 的�?辑和 jQuery 保持�?��
+ *   - toggleClass 不支�?value �?undefined 的情形（jQuery 支持�?
  */
 /**
  * @module  dom-attr
@@ -1561,34 +2026,34 @@ KISSY.add('dom-attr', function(S, undefined) {
 
                 var ret;
 
-                // 优先用 el[name] 获取 mapping 属性值：
-                //  - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
-                //  - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
-                //  - href, src 直接获取的是 normalized 后的值，排除掉
-                //  - style 需要用 getAttribute 来获取字符串值，也排除掉
+                // 优先�?el[name] 获取 mapping 属�?值：
+                //  - 可以正确获取 readonly, checked, selected 等特�?mapping 属�?�?
+                //  - 可以获取�?getAttribute 不一定能获取到的值，比如 tabindex 默认�?
+                //  - href, src 直接获取的是 normalized 后的值，排除�?
+                //  - style �?���?getAttribute 来获取字符串值，也排除掉
                 if (!RE_SPECIAL_ATTRS.test(name)) {
                     ret = el[name];
                 }
 
-                // 用 getAttribute 获取非 mapping 属性和 href/src/style 的值：
+                // �?getAttribute 获取�?mapping 属�?�?href/src/style 的�?�?
                 if (ret === undefined) {
                     ret = el.getAttribute(name);
                 }
 
                 // fix ie bugs
                 if (oldIE) {
-                    // 不光是 href, src, 还有 rowspan 等非 mapping 属性，也需要用第 2 个参数来获取原始值
+                    // 不光�?href, src, 还有 rowspan 等非 mapping 属�?，也�?��用第 2 个参数来获取原始�?
                     if (RE_NORMALIZED_ATTRS.test(name)) {
                         ret = el.getAttribute(name, 2);
                     }
-                    // 在标准浏览器下，用 getAttribute 获取 style 值
-                    // IE7- 下，需要用 cssText 来获取
+                    // 在标准浏览器下，�?getAttribute 获取 style �?
+                    // IE7- 下，�?���?cssText 来获�?
                     else if (name === STYLE) {
                         ret = el[STYLE].cssText;
                     }
                 }
 
-                // 对于不存在的属性，统一返回 undefined
+                // 对于不存在的属�?，统�?���?undefined
                 return ret === null ? undefined : ret;
             }
 
@@ -1599,12 +2064,12 @@ KISSY.add('dom-attr', function(S, undefined) {
                     return;
                 }
 
-                // 不需要加 oldIE 判断，否则 IE8 的 IE7 兼容模式有问题
+                // 不需要加 oldIE 判断，否�?IE8 �?IE7 兼容模式有问�?
                 if (name === STYLE) {
                     el[STYLE].cssText = val;
                 }
                 else {
-                    // checked 属性值，需要通过直接设置才能生效
+                    // checked 属�?值，�?��通过直接设置才能生效
                     if(name === CHECKED) {
                         el[name] = !!val;
                     }
@@ -1620,8 +2085,8 @@ KISSY.add('dom-attr', function(S, undefined) {
         removeAttr: function(selector, name) {
             S.each(S.query(selector), function(el) {
                 if (isElementNode(el)) {
-                    DOM.attr(el, name, EMPTY); // 先置空
-                    el.removeAttribute(name); // 再移除
+                    DOM.attr(el, name, EMPTY); // 先置�?
+                    el.removeAttribute(name); // 再移�?
                 }
             });
         },
@@ -1641,13 +2106,13 @@ KISSY.add('dom-attr', function(S, undefined) {
                     return undefined;
                 }
 
-                // 当没有设定 value 时，标准浏览器 option.value === option.text
-                // ie7- 下，没有设定 value 时，option.value === '', 需要用 el.attributes.value 来判断是否有设定 value
+                // 当没有设�?value 时，标准浏览�?option.value === option.text
+                // ie7- 下，没有设定 value 时，option.value === '', �?���?el.attributes.value 来判断是否有设定 value
                 if (nodeNameIs('option', el)) {
                     return (el.attributes.value || {}).specified ? el.value : el.text;
                 }
 
-                // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
+                // 对于 select, 特别�?multiple type, 存在很严重的兼容性问�?
                 if (nodeNameIs(SELECT, el)) {
                     var index = el.selectedIndex,
                         options = el.options;
@@ -1675,14 +2140,14 @@ KISSY.add('dom-attr', function(S, undefined) {
                     return el.getAttribute('value') === null ? 'on' : el.value;
                 }
 
-                // 普通元素的 value, 归一化掉 \r
+                // 普�?元素�?value, 归一化掉 \r
                 return (el.value || EMPTY).replace(RE_RETURN, EMPTY);
             }
 
             // setter
             S.each(S.query(selector), function(el) {
                 if (nodeNameIs(SELECT, el)) {
-                    // 强制转换数值为字符串，以保证下面的 inArray 正常工作
+                    // 强制转换数�?为字符串，以保证下面�?inArray 正常工作
                     if (S.isNumber(value)) {
                         value += EMPTY;
                     }
@@ -1737,7 +2202,7 @@ KISSY.add('dom-attr', function(S, undefined) {
         }
     });
 
-    // 判断 el 的 nodeName 是否指定值
+    // 判断 el �?nodeName 是否指定�?
     function nodeNameIs(val, el) {
         return el && el.nodeName.toUpperCase() === val.toUpperCase();
     }
@@ -1747,14 +2212,14 @@ KISSY.add('dom-attr', function(S, undefined) {
  * NOTES:
  *
  * 2010.03
- *  - 在 jquery/support.js 中，special attrs 里还有 maxlength, cellspacing,
- *    rowspan, colspan, useap, frameboder, 但测试发现，在 Grade-A 级浏览器中
- *    并无兼容性问题。
- *  - 当 colspan/rowspan 属性值设置有误时，ie7- 会自动纠正，和 href 一样，需要传递
- *    第 2 个参数来解决。jQuery 未考虑，存在兼容性 bug.
+ *  - �?jquery/support.js 中，special attrs 里还�?maxlength, cellspacing,
+ *    rowspan, colspan, useap, frameboder, 但测试发现，�?Grade-A 级浏览器�?
+ *    并无兼容性问题�?
+ *  - �?colspan/rowspan 属�?值设置有误时，ie7- 会自动纠正，�?href �?��，需要传�?
+ *    �?2 个参数来解决。jQuery 未�?虑，存在兼容�?bug.
  *  - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
  *  - jquery/attributes.js: Safari mis-reports the default selected
- *    property of an option 在 Safari 4 中已修复。
+ *    property of an option �?Safari 4 中已修复�?
  *
  */
 /**
@@ -1806,7 +2271,7 @@ KISSY.add('dom-style', function(S, undefined) {
             }
 
             if (name.indexOf('-') > 0) {
-                // webkit 认识 camel-case, 其它内核只认识 cameCase
+                // webkit 认识 camel-case, 其它内核只认�?cameCase
                 name = name.replace(RE_DASH, CAMELCASE_FN);
             }
             name = CUSTOM_STYLES[name] || name;
@@ -1819,7 +2284,7 @@ KISSY.add('dom-style', function(S, undefined) {
                 if (elem && elem[STYLE]) {
                     ret = name.get ? name.get(elem) : elem[STYLE][name];
 
-                    // 有 get 的直接用自定义函数的返回值
+                    // �?get 的直接用自定义函数的返回�?
                     if (ret === '' && !name.get) {
                         ret = fixComputedStyle(elem, name, DOM._getComputedStyle(elem, name));
                     }
@@ -1898,7 +2363,7 @@ KISSY.add('dom-style', function(S, undefined) {
             if (id) elem = S.get(id);
             if (!elem) elem = DOM.create('<style>', { id: id });
 
-            // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
+            // 先添加到 DOM 树中，再�?cssText 赋�?，否�?css hack 会失�?
             S.get('head').appendChild(elem);
 
             if (elem.styleSheet) { // IE
@@ -1930,23 +2395,23 @@ KISSY.add('dom-style', function(S, undefined) {
         return val;
     }
 
-    // 修正 getComputedStyle 返回值的部分浏览器兼容性问题
+    // 修正 getComputedStyle 返回值的部分浏览器兼容�?问题
     function fixComputedStyle(elem, name, val) {
         var offset, ret = val;
 
-        // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
+        // 1. 当没有设�?style.left 时，getComputedStyle 在不同浏览器下，返回值不�?
         //    比如：firefox 返回 0, webkit/ie 返回 auto
-        // 2. style.left 设置为百分比时，返回值为百分比
-        // 对于第一种情况，如果是 relative 元素，值为 0. 如果是 absolute 元素，值为 offsetLeft - marginLeft
-        // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
+        // 2. style.left 设置为百分比时，返回值为百分�?
+        // 对于第一种情况，如果�?relative 元素，�?�?0. 如果�?absolute 元素，�?�?offsetLeft - marginLeft
+        // 对于第二种情况，大部分类库都未做处理，属于�?明之而不 fix”的保留 bug
         if (val === AUTO && RE_LT.test(name)) {
             ret = 0;
 
             if (DOM.css(elem, 'position') === 'absolute') {
                 offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
-                // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                // TODO: 改成特性探测
+                // ie8 下，elem.offsetLeft 包含 offsetParent �?border 宽度，需要减�?
+                // TODO: 改成特�?探测
                 if (UA.ie === 8 || UA.opera) {
                     offset -= PARSEINT(DOM.css(elem.offsetParent, 'border-' + name + '-width')) || 0;
                 }
@@ -1962,21 +2427,21 @@ KISSY.add('dom-style', function(S, undefined) {
 
 /**
  * NOTES:
- *  - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
- *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
+ *  - Opera 下，color 默认返回 #XXYYZZ, �?rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略�?
+ *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略�?
  *
- *  - 非 webkit 下，jQuery.css paddingLeft 返回 style 值， padding-left 返回 computedStyle 值，
- *    返回的值不同。KISSY 做了统一，更符合预期。
+ *  - �?webkit 下，jQuery.css paddingLeft 返回 style 值， padding-left 返回 computedStyle 值，
+ *    返回的�?不同。KISSY 做了统一，更符合预期�?
  *
- *  - getComputedStyle 在 webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输出 float 值。
+ *  - getComputedStyle �?webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输�?float 值�?
  *
- *  - color: blue 继承值，getComputedStyle, 在 ie 下返回 blue, opera 返回 #0000ff, 其它浏览器
+ *  - color: blue 继承值，getComputedStyle, �?ie 下返�?blue, opera 返回 #0000ff, 其它浏览�?
  *    返回 rgb(0, 0, 255)
  *
- *  - border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值。
+ *  - border-width 值，ie 下有可能返回 medium/thin/thick 等�?，其它浏览器返回 px 值�?
  *
- *  - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未“追求完美”。YUI3 做了部分完美处理，但
- *    依旧存在浏览器差异。
+ *  - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未�?追求完美”�?YUI3 做了部分完美处理，但
+ *    依旧存在浏览器差异�?
  */
 /**
  * @module  dom
@@ -2018,11 +2483,11 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                         try {
                             val = elem[FILTERS]('alpha')[OPACITY];
                         } catch(ex) {
-                            // 没有设置过 opacity 时会报错，这时返回 1 即可
+                            // 没有设置�?opacity 时会报错，这时返�?1 即可
                         }
                     }
 
-                    // 和其他浏览器保持一致，转换为字符串类型
+                    // 和其他浏览器保持�?��，转换为字符串类�?
                     return val / 100 + '';
                 },
 
@@ -2040,7 +2505,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         }
     }
     catch(ex) {
-        S.log('IE filters ActiveX is disabled. ex = ' + ex);
+
     }
 
     // getComputedStyle for IE
@@ -2050,9 +2515,9 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             var style = elem.style,
                 ret = elem[CURRENT_STYLE][name];
 
-            // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
-            // 在 ie 下不对，需要直接用 offset 方式
-            // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
+            // �?width/height 设置为百分比时，通过 pixelLeft 方式转换�?width/height �?
+            // �?ie 下不对，�?��直接�?offset 方式
+            // borderWidth 等�?也有问题，但考虑�?borderWidth 设为百分比的概率很小，这里就不�?虑了
             if(RE_WH.test(name)) {
                 ret = DOM[name](elem) + PX;
             }
@@ -2108,7 +2573,7 @@ KISSY.add('dom-offset', function(S, undefined) {
          * Gets the current coordinates of the element, relative to the document.
          */
         offset: function(elem, val) {
-            // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
+            // ownerDocument 的判断可以保�?elem 没有游离�?document 之外（比�?fragment�?
             if (!(elem = S.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
 
             // getter
@@ -2134,9 +2599,9 @@ KISSY.add('dom-offset', function(S, undefined) {
 
             // default current window, use native for scrollIntoView(elem, top)
             if (!container || container === win) {
-                // 注意：
-                // 1. Opera 不支持 top 参数
-                // 2. 当 container 已经在视窗中时，也会重新定位
+                // 注意�?
+                // 1. Opera 不支�?top 参数
+                // 2. �?container 已经在视窗中时，也会重新定位
                 return elem.scrollIntoView(top);
             }
             container = S.get(container);
@@ -2153,28 +2618,28 @@ KISSY.add('dom-offset', function(S, undefined) {
                     top: DOM.scrollTop(container) }
                     : DOM.offset(container),
 
-                // elem 相对 container 视窗的坐标
+                // elem 相对 container 视窗的坐�?
                 diff = {
                     left: elemOffset[LEFT] - containerOffset[LEFT],
                     top: elemOffset[TOP] - containerOffset[TOP]
                 },
 
-                // container 视窗的高宽
+                // container 视窗的高�?
                 ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
                 cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
 
-                // container 视窗相对 container 元素的坐标
+                // container 视窗相对 container 元素的坐�?
                 cl = DOM[SCROLL_LEFT](container),
                 ct = DOM[SCROLL_TOP](container),
                 cr = cl + cw,
                 cb = ct + ch,
 
-                // elem 的高宽
+                // elem 的高�?
                 eh = elem.offsetHeight,
                 ew = elem.offsetWidth,
 
-                // elem 相对 container 元素的坐标
-                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                // elem 相对 container 元素的坐�?
+                // 注：diff.left �?border, cl 也含 border, 因此要减去一�?
                 l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
                 t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
                 r = l + ew,
@@ -2182,18 +2647,18 @@ KISSY.add('dom-offset', function(S, undefined) {
 
                 t2, l2;
 
-            // 根据情况将 elem 定位到 container 视窗中
-            // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
-            // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
-            // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
-            // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
+            // 根据情况�?elem 定位�?container 视窗�?
+            // 1. �?eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合�?
+            // 2. �?t < ct 时，elem �?container 视窗上方，优先顶部对�?
+            // 3. �?b > cb 时，elem �?container 视窗下方，优先底部对�?
+            // 4. 其它情况下，elem 已经�?container 视窗中，无需任何操作
             if (eh > ch || t < ct || top) {
                 t2 = t;
             } else if (b > cb) {
                 t2 = b - ch;
             }
 
-            // 水平方向与上面同理
+            // 水平方向与上面同�?
             if (hscroll) {
                 if (ew > cw || l < cl || top) {
                     l2 = l;
@@ -2254,18 +2719,18 @@ KISSY.add('dom-offset', function(S, undefined) {
         }
     });
 
-    // 获取 elem 相对 elem.ownerDocument 的坐标
+    // 获取 elem 相对 elem.ownerDocument 的坐�?
     function getOffset(elem) {
         var box, x = 0, y = 0,
             w = getWin(elem[OWNER_DOCUMENT]);
 
-        // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
+        // 根据 GBS �?��数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方�?
         if (elem[GET_BOUNDING_CLIENT_RECT]) {
             box = elem[GET_BOUNDING_CLIENT_RECT]();
 
-            // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
-            // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
-            // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
+            // 注：jQuery 还�?虑减�?docElem.clientLeft/clientTop
+            // 但测试发现，这样反�?会导致当 html �?body 有边�?边框样式时，获取的�?不正�?
+            // 此外，ie6 会忽�?html �?margin 值，幸运地是没有谁会去设�?html �?margin
 
             x = box[LEFT];
             y = box[TOP];
@@ -2280,7 +2745,7 @@ KISSY.add('dom-offset', function(S, undefined) {
         return { left: x, top: y };
     }
 
-    // 设置 elem 相对 elem.ownerDocument 的坐标
+    // 设置 elem 相对 elem.ownerDocument 的坐�?
     function setOffset(elem, offset) {
         // set position first, in-case top/left are set even on static elem
         if (DOM.css(elem, POSITION) === 'static') {
@@ -2298,8 +2763,8 @@ KISSY.add('dom-offset', function(S, undefined) {
 
 /**
  * TODO:
- *  - 考虑是否实现 jQuery 的 position, offsetParent 等功能
- *  - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
+ *  - 考虑是否实现 jQuery �?position, offsetParent 等功�?
+ *  - 更详细的测试用例（比如：测试 position �?fixed 的情况）
  */
 /**
  * @module  dom-traversal
@@ -2373,12 +2838,12 @@ KISSY.add('dom-traversal', function(S, undefined) {
         }
     });
 
-    // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
+    // 获取元素 elem �?direction 方向上满�?filter 的第�?��元素
     // filter 可为 number, selector, fn
     // direction 可为 parentNode, nextSibling, previousSibling
     function nth(elem, filter, direction, extraFilter) {
         if (!(elem = S.get(elem))) return null;
-        if(filter === undefined) filter = 1; // 默认取 1
+        if(filter === undefined) filter = 1; // 默认�?1
         var ret = null, fi, flen;
 
         if(S.isNumber(filter) && filter >= 0) {
@@ -2400,7 +2865,7 @@ KISSY.add('dom-traversal', function(S, undefined) {
         return ret;
     }
 
-    // 获取元素 elem 的 siblings, 不包括自身
+    // 获取元素 elem �?siblings, 不包括自�?
     function getSiblings(selector, filter, parent) {
         var ret = [], elem = S.get(selector), j, parentNode = elem, next;
         if (elem && parent) parentNode = elem.parentNode;
@@ -2421,8 +2886,8 @@ KISSY.add('dom-traversal', function(S, undefined) {
 /**
  * NOTES:
  *
- *  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
- *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
+ *  - api 的设计上，没有跟�?jQuery. �?��为了和其�?api �?��，保�?first-all 原则。二�?
+ *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能�?
  *
  */
 /**
@@ -2458,11 +2923,11 @@ KISSY.add('dom-create', function(S, undefined) {
             var ret = null, creators = DOM._creators,
                 m, tag = DIV, k, nodes;
 
-            // 简单 tag, 比如 DOM.create('<p>')
+            // �?�� tag, 比如 DOM.create('<p>')
             if ((m = RE_SIMPLE_TAG.exec(html))) {
                 ret = (ownerDoc || doc).createElement(m[1]);
             }
-            // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
+            // 复杂情况，比�?DOM.create('<img src="sprite.png" />')
             else {
                 if ((m = RE_TAG.exec(html)) && (k = m[1]) && S.isFunction(creators[(k = k.toLowerCase())])) {
                     tag = k;
@@ -2537,7 +3002,7 @@ KISSY.add('dom-create', function(S, undefined) {
         return elem;
     }
 
-    // 将 nodeList 转换为 fragment
+    // �?nodeList 转换�?fragment
     function nl2frag(nodes, ownerDoc) {
         var ret = null, i, len;
 
@@ -2554,7 +3019,7 @@ KISSY.add('dom-create', function(S, undefined) {
             }
         }
         else {
-            S.log('Unable to convert ' + nodes + ' to fragment.');
+
         }
 
         return ret;
@@ -2587,7 +3052,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
         html += '<span id="' + id + '"></span>';
 
-        // 确保脚本执行时，相关联的 DOM 元素已经准备好
+        // 确保脚本执行时，相关联的 DOM 元素已经准备�?
         S.available(id, function() {
             var hd = S.get('head'),
                 match, attrs, srcMatch, charsetMatch,
@@ -2626,7 +3091,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     // 直接通过 innerHTML 设置 html
     function setHTMLSimple(elem, html) {
-        html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所有 script
+        html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所�?script
         try {
             elem.innerHTML = html;
         } catch(ex) { // table.innerHTML = html will throw error in ie.
@@ -2634,14 +3099,14 @@ KISSY.add('dom-create', function(S, undefined) {
             while (elem.firstChild) {
                 elem.removeChild(elem.firstChild);
             }
-            // html == '' 时，无需再 appendChild
+            // html == '' 时，无需�?appendChild
             if (html) elem.appendChild(DOM.create(html));
         }
     }
 
     // only for gecko and ie
     if (UA.gecko || ie) {
-        // 定义 creators, 处理浏览器兼容
+        // 定义 creators, 处理浏览器兼�?
         var creators = DOM._creators,
             create = DOM.create,
             TABLE_OPEN = '<table>',
@@ -2653,7 +3118,7 @@ KISSY.add('dom-create', function(S, undefined) {
                 tr: 'tbody',
                 tbody: 'table',
                 col: 'colgroup',
-                legend: 'fieldset' // ie 支持，但 gecko 不支持
+                legend: 'fieldset' // ie 支持，但 gecko 不支�?
             };
 
         for (var p in creatorsMap) {
@@ -2665,7 +3130,7 @@ KISSY.add('dom-create', function(S, undefined) {
         }
 
         if (ie) {
-            // IE 下不能单独添加 script 元素
+            // IE 下不能单独添�?script 元素
             creators.script = function(html, ownerDoc) {
                 var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
                 frag.innerHTML = '-' + html;
@@ -2688,7 +3153,7 @@ KISSY.add('dom-create', function(S, undefined) {
         }
 
         S.mix(creators, {
-            optgroup: creators.option, // gecko 支持，但 ie 不支持
+            optgroup: creators.option, // gecko 支持，但 ie 不支�?
             th: creators.td,
             thead: creators.tbody,
             tfoot: creators.tbody,
@@ -2700,10 +3165,10 @@ KISSY.add('dom-create', function(S, undefined) {
 
 /**
  * TODO:
- *  - 研究 jQuery 的 buildFragment 和 clean
+ *  - 研究 jQuery �?buildFragment �?clean
  *  - 增加 cache, 完善 test cases
  *  - 支持更多 props
- *  - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
+ *  - remove 时，是否�?��移除事件，以避免内存泄漏？需要详细的测试�?
  */
 /**
  * @module  dom-insertion
@@ -2748,13 +3213,13 @@ KISSY.add('dom-insertion', function(S) {
 /**
  * NOTES:
  *  - appendChild/removeChild/replaceChild 直接用原生的
- *  - append/appendTo, prepend/prependTo, wrap/unwrap 放在 Node 里
+ *  - append/appendTo, prepend/prependTo, wrap/unwrap 放在 Node �?
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: ${build.time}
+build time: Aug 16 16:50
 */
 /**
  * @module  event
@@ -2806,7 +3271,6 @@ KISSY.add('event', function(S, undefined) {
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         add: function(target, type, fn, scope /* optional */) {
-            scope = scope || target;
             if (batch('add', target, type, fn, scope)) return;
 
             var id = getID(target), isNativeEventTarget,
@@ -2858,14 +3322,13 @@ KISSY.add('event', function(S, undefined) {
             }
 
             // 增加 listener
-            events[type].listeners.push({fn: fn, scope: scope});
+            events[type].listeners.push({fn: fn, scope: scope || target});
         },
 
         /**
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */, scope /* optional */) {
-            scope = scope || target;
             if (batch('remove', target, type, fn, scope)) return;
 
             var id = getID(target),
@@ -2875,6 +3338,7 @@ KISSY.add('event', function(S, undefined) {
             if (id === -1) return; // 不是有效的 target
             if (!id || !(c = cache[id])) return; // 无 cache
             if (c.target !== target) return; // target 不匹配
+            scope = scope || target;
             events = c.events || { };
 
             if ((eventsType = events[type])) {
@@ -3223,8 +3687,8 @@ KISSY.add('event-target', function(S, undefined) {
             return this; // chain
         },
 
-        detach: function(type, fn) {
-            Event.remove(this, type, fn);
+        detach: function(type, fn, scope) {
+            Event.remove(this, type, fn, scope);
             return this; // chain
         }
     };
@@ -3324,9 +3788,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.2dev
+Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: ${build.time}
+build time: Aug 16 16:51
 */
 /**
  * @module  node
@@ -3635,70 +4099,13 @@ KISSY.add('node-attach', function(S, undefined) {
     });
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 5 16:06
-*/
-/**
- * @module  ajax
- * @author  lifesinger@gmail.com
- */
-KISSY.add('ajax', function(S) {
-
-    var doc = document,
-        testNode = doc.createElement('script'),
-
-        // try branching
-        fn = testNode.readyState ? function(node, callback) {
-            node.onreadystatechange = function() {
-                var rs = node.readyState;
-                if (rs === 'loaded' || rs === 'complete') {
-                    // handle memory leak in IE
-                    node.onreadystatechange = null;
-                    callback.call(this);
-                }
-            };
-        } : function(node, callback) {
-            node.onload = callback;
-        };
-
-    S.mix(S, {
-        /**
-         * Load a JavaScript file from the server using a GET HTTP request, then execute it.
-         */
-        getScript: function(url, callback, charset) {
-            var head = S.get('head') || doc.documentElement,
-                node = doc.createElement('script');
-
-            node.src = url;
-            if (charset) node.charset = charset;
-            node.async = true;
-
-            if (S.isFunction(callback)) {
-                fn(node, callback);
-            }
-
-            head.insertBefore(node, head.firstChild);
-        }
-    });
-});
-
-/**
- * NOTES:
- *  2010.04
- *   - api 考虑：jQuery 的全耦合在 jQuery 对象上，ajaxComplete 等方法不优雅。
- *         YUI2 的 YAHOO.util.Connect.Get.script 层级太深，YUI3 的 io 则
- *         野心过大，KISSY 借鉴 ExtJS, 部分方法借鉴 jQuery.
- */
-/*
-Copyright 2010, KISSY UI Library v1.1.0
-MIT Licensed
-build time: Aug 5 16:06
+build time: Aug 16 16:50
 */
 /**
  * @module  cookie
  * @author  lifesinger@gmail.com
- * @depends ks-core
  */
 KISSY.add('cookie', function(S) {
 
@@ -3778,15 +4185,14 @@ KISSY.add('cookie', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 5 16:06
+build time: Aug 16 16:51
 */
 /**
  * from http://www.JSON.org/json2.js
  * 2010-03-20
  */
-
 KISSY.add('json', function (S) {
 
     var JSON = S.JSON = window.JSON || { };
@@ -4107,1085 +4513,9 @@ KISSY.add('json', function (S) {
     }
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.0
+Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 5 16:06
-*/
-/*!
- * Sizzle CSS Selector Engine - v1.0
- *  Copyright 2009, The Dojo Foundation
- *  Released under the MIT, BSD, and GPL Licenses.
- *  More information: http://sizzlejs.com/
- */
-(function(){
-
-var chunker = /((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^\[\]]*\]|['"][^'"]*['"]|[^\[\]'"]+)+\]|\\.|[^ >+~,(\[\\]+)+|[>+~])(\s*,\s*)?((?:.|\r|\n)*)/g,
-	done = 0,
-	toString = Object.prototype.toString,
-	hasDuplicate = false,
-	baseHasDuplicate = true;
-
-// Here we check if the JavaScript engine is using some sort of
-// optimization where it does not always call our comparision
-// function. If that is the case, discard the hasDuplicate value.
-//   Thus far that includes Google Chrome.
-[0, 0].sort(function(){
-	baseHasDuplicate = false;
-	return 0;
-});
-
-var Sizzle = function(selector, context, results, seed) {
-	results = results || [];
-	context = context || document;
-
-	var origContext = context;
-
-	if ( context.nodeType !== 1 && context.nodeType !== 9 ) {
-		return [];
-	}
-	
-	if ( !selector || typeof selector !== "string" ) {
-		return results;
-	}
-
-	var parts = [], m, set, checkSet, extra, prune = true, contextXML = Sizzle.isXML(context),
-		soFar = selector, ret, cur, pop, i;
-	
-	// Reset the position of the chunker regexp (start from head)
-	do {
-		chunker.exec("");
-		m = chunker.exec(soFar);
-
-		if ( m ) {
-			soFar = m[3];
-		
-			parts.push( m[1] );
-		
-			if ( m[2] ) {
-				extra = m[3];
-				break;
-			}
-		}
-	} while ( m );
-
-	if ( parts.length > 1 && origPOS.exec( selector ) ) {
-		if ( parts.length === 2 && Expr.relative[ parts[0] ] ) {
-			set = posProcess( parts[0] + parts[1], context );
-		} else {
-			set = Expr.relative[ parts[0] ] ?
-				[ context ] :
-				Sizzle( parts.shift(), context );
-
-			while ( parts.length ) {
-				selector = parts.shift();
-
-				if ( Expr.relative[ selector ] ) {
-					selector += parts.shift();
-				}
-				
-				set = posProcess( selector, set );
-			}
-		}
-	} else {
-		// Take a shortcut and set the context if the root selector is an ID
-		// (but not if it'll be faster if the inner selector is an ID)
-		if ( !seed && parts.length > 1 && context.nodeType === 9 && !contextXML &&
-				Expr.match.ID.test(parts[0]) && !Expr.match.ID.test(parts[parts.length - 1]) ) {
-			ret = Sizzle.find( parts.shift(), context, contextXML );
-			context = ret.expr ? Sizzle.filter( ret.expr, ret.set )[0] : ret.set[0];
-		}
-
-		if ( context ) {
-			ret = seed ?
-				{ expr: parts.pop(), set: makeArray(seed) } :
-				Sizzle.find( parts.pop(), parts.length === 1 && (parts[0] === "~" || parts[0] === "+") && context.parentNode ? context.parentNode : context, contextXML );
-			set = ret.expr ? Sizzle.filter( ret.expr, ret.set ) : ret.set;
-
-			if ( parts.length > 0 ) {
-				checkSet = makeArray(set);
-			} else {
-				prune = false;
-			}
-
-			while ( parts.length ) {
-				cur = parts.pop();
-				pop = cur;
-
-				if ( !Expr.relative[ cur ] ) {
-					cur = "";
-				} else {
-					pop = parts.pop();
-				}
-
-				if ( pop == null ) {
-					pop = context;
-				}
-
-				Expr.relative[ cur ]( checkSet, pop, contextXML );
-			}
-		} else {
-			checkSet = parts = [];
-		}
-	}
-
-	if ( !checkSet ) {
-		checkSet = set;
-	}
-
-	if ( !checkSet ) {
-		Sizzle.error( cur || selector );
-	}
-
-	if ( toString.call(checkSet) === "[object Array]" ) {
-		if ( !prune ) {
-			results.push.apply( results, checkSet );
-		} else if ( context && context.nodeType === 1 ) {
-			for ( i = 0; checkSet[i] != null; i++ ) {
-				if ( checkSet[i] && (checkSet[i] === true || checkSet[i].nodeType === 1 && Sizzle.contains(context, checkSet[i])) ) {
-					results.push( set[i] );
-				}
-			}
-		} else {
-			for ( i = 0; checkSet[i] != null; i++ ) {
-				if ( checkSet[i] && checkSet[i].nodeType === 1 ) {
-					results.push( set[i] );
-				}
-			}
-		}
-	} else {
-		makeArray( checkSet, results );
-	}
-
-	if ( extra ) {
-		Sizzle( extra, origContext, results, seed );
-		Sizzle.uniqueSort( results );
-	}
-
-	return results;
-};
-
-Sizzle.uniqueSort = function(results){
-	if ( sortOrder ) {
-		hasDuplicate = baseHasDuplicate;
-		results.sort(sortOrder);
-
-		if ( hasDuplicate ) {
-			for ( var i = 1; i < results.length; i++ ) {
-				if ( results[i] === results[i-1] ) {
-					results.splice(i--, 1);
-				}
-			}
-		}
-	}
-
-	return results;
-};
-
-Sizzle.matches = function(expr, set){
-	return Sizzle(expr, null, null, set);
-};
-
-Sizzle.find = function(expr, context, isXML){
-	var set;
-
-	if ( !expr ) {
-		return [];
-	}
-
-	for ( var i = 0, l = Expr.order.length; i < l; i++ ) {
-		var type = Expr.order[i], match;
-		
-		if ( (match = Expr.leftMatch[ type ].exec( expr )) ) {
-			var left = match[1];
-			match.splice(1,1);
-
-			if ( left.substr( left.length - 1 ) !== "\\" ) {
-				match[1] = (match[1] || "").replace(/\\/g, "");
-				set = Expr.find[ type ]( match, context, isXML );
-				if ( set != null ) {
-					expr = expr.replace( Expr.match[ type ], "" );
-					break;
-				}
-			}
-		}
-	}
-
-	if ( !set ) {
-		set = context.getElementsByTagName("*");
-	}
-
-	return {set: set, expr: expr};
-};
-
-Sizzle.filter = function(expr, set, inplace, not){
-	var old = expr, result = [], curLoop = set, match, anyFound,
-		isXMLFilter = set && set[0] && Sizzle.isXML(set[0]);
-
-	while ( expr && set.length ) {
-		for ( var type in Expr.filter ) {
-			if ( (match = Expr.leftMatch[ type ].exec( expr )) != null && match[2] ) {
-				var filter = Expr.filter[ type ], found, item, left = match[1];
-				anyFound = false;
-
-				match.splice(1,1);
-
-				if ( left.substr( left.length - 1 ) === "\\" ) {
-					continue;
-				}
-
-				if ( curLoop === result ) {
-					result = [];
-				}
-
-				if ( Expr.preFilter[ type ] ) {
-					match = Expr.preFilter[ type ]( match, curLoop, inplace, result, not, isXMLFilter );
-
-					if ( !match ) {
-						anyFound = found = true;
-					} else if ( match === true ) {
-						continue;
-					}
-				}
-
-				if ( match ) {
-					for ( var i = 0; (item = curLoop[i]) != null; i++ ) {
-						if ( item ) {
-							found = filter( item, match, i, curLoop );
-							var pass = not ^ !!found;
-
-							if ( inplace && found != null ) {
-								if ( pass ) {
-									anyFound = true;
-								} else {
-									curLoop[i] = false;
-								}
-							} else if ( pass ) {
-								result.push( item );
-								anyFound = true;
-							}
-						}
-					}
-				}
-
-				if ( found !== undefined ) {
-					if ( !inplace ) {
-						curLoop = result;
-					}
-
-					expr = expr.replace( Expr.match[ type ], "" );
-
-					if ( !anyFound ) {
-						return [];
-					}
-
-					break;
-				}
-			}
-		}
-
-		// Improper expression
-		if ( expr === old ) {
-			if ( anyFound == null ) {
-				Sizzle.error( expr );
-			} else {
-				break;
-			}
-		}
-
-		old = expr;
-	}
-
-	return curLoop;
-};
-
-Sizzle.error = function( msg ) {
-	throw "Syntax error, unrecognized expression: " + msg;
-};
-
-var Expr = Sizzle.selectors = {
-	order: [ "ID", "NAME", "TAG" ],
-	match: {
-		ID: /#((?:[\w\u00c0-\uFFFF\-]|\\.)+)/,
-		CLASS: /\.((?:[\w\u00c0-\uFFFF\-]|\\.)+)/,
-		NAME: /\[name=['"]*((?:[\w\u00c0-\uFFFF\-]|\\.)+)['"]*\]/,
-		ATTR: /\[\s*((?:[\w\u00c0-\uFFFF\-]|\\.)+)\s*(?:(\S?=)\s*(['"]*)(.*?)\3|)\s*\]/,
-		TAG: /^((?:[\w\u00c0-\uFFFF\*\-]|\\.)+)/,
-		CHILD: /:(only|nth|last|first)-child(?:\((even|odd|[\dn+\-]*)\))?/,
-		POS: /:(nth|eq|gt|lt|first|last|even|odd)(?:\((\d*)\))?(?=[^\-]|$)/,
-		PSEUDO: /:((?:[\w\u00c0-\uFFFF\-]|\\.)+)(?:\((['"]?)((?:\([^\)]+\)|[^\(\)]*)+)\2\))?/
-	},
-	leftMatch: {},
-	attrMap: {
-		"class": "className",
-		"for": "htmlFor"
-	},
-	attrHandle: {
-		href: function(elem){
-			return elem.getAttribute("href");
-		}
-	},
-	relative: {
-		"+": function(checkSet, part){
-			var isPartStr = typeof part === "string",
-				isTag = isPartStr && !/\W/.test(part),
-				isPartStrNotTag = isPartStr && !isTag;
-
-			if ( isTag ) {
-				part = part.toLowerCase();
-			}
-
-			for ( var i = 0, l = checkSet.length, elem; i < l; i++ ) {
-				if ( (elem = checkSet[i]) ) {
-					while ( (elem = elem.previousSibling) && elem.nodeType !== 1 ) {}
-
-					checkSet[i] = isPartStrNotTag || elem && elem.nodeName.toLowerCase() === part ?
-						elem || false :
-						elem === part;
-				}
-			}
-
-			if ( isPartStrNotTag ) {
-				Sizzle.filter( part, checkSet, true );
-			}
-		},
-		">": function(checkSet, part){
-			var isPartStr = typeof part === "string",
-				elem, i = 0, l = checkSet.length;
-
-			if ( isPartStr && !/\W/.test(part) ) {
-				part = part.toLowerCase();
-
-				for ( ; i < l; i++ ) {
-					elem = checkSet[i];
-					if ( elem ) {
-						var parent = elem.parentNode;
-						checkSet[i] = parent.nodeName.toLowerCase() === part ? parent : false;
-					}
-				}
-			} else {
-				for ( ; i < l; i++ ) {
-					elem = checkSet[i];
-					if ( elem ) {
-						checkSet[i] = isPartStr ?
-							elem.parentNode :
-							elem.parentNode === part;
-					}
-				}
-
-				if ( isPartStr ) {
-					Sizzle.filter( part, checkSet, true );
-				}
-			}
-		},
-		"": function(checkSet, part, isXML){
-			var doneName = done++, checkFn = dirCheck, nodeCheck;
-
-			if ( typeof part === "string" && !/\W/.test(part) ) {
-				part = part.toLowerCase();
-				nodeCheck = part;
-				checkFn = dirNodeCheck;
-			}
-
-			checkFn("parentNode", part, doneName, checkSet, nodeCheck, isXML);
-		},
-		"~": function(checkSet, part, isXML){
-			var doneName = done++, checkFn = dirCheck, nodeCheck;
-
-			if ( typeof part === "string" && !/\W/.test(part) ) {
-				part = part.toLowerCase();
-				nodeCheck = part;
-				checkFn = dirNodeCheck;
-			}
-
-			checkFn("previousSibling", part, doneName, checkSet, nodeCheck, isXML);
-		}
-	},
-	find: {
-		ID: function(match, context, isXML){
-			if ( typeof context.getElementById !== "undefined" && !isXML ) {
-				var m = context.getElementById(match[1]);
-				return m ? [m] : [];
-			}
-		},
-		NAME: function(match, context){
-			if ( typeof context.getElementsByName !== "undefined" ) {
-				var ret = [], results = context.getElementsByName(match[1]);
-
-				for ( var i = 0, l = results.length; i < l; i++ ) {
-					if ( results[i].getAttribute("name") === match[1] ) {
-						ret.push( results[i] );
-					}
-				}
-
-				return ret.length === 0 ? null : ret;
-			}
-		},
-		TAG: function(match, context){
-			return context.getElementsByTagName(match[1]);
-		}
-	},
-	preFilter: {
-		CLASS: function(match, curLoop, inplace, result, not, isXML){
-			match = " " + match[1].replace(/\\/g, "") + " ";
-
-			if ( isXML ) {
-				return match;
-			}
-
-			for ( var i = 0, elem; (elem = curLoop[i]) != null; i++ ) {
-				if ( elem ) {
-					if ( not ^ (elem.className && (" " + elem.className + " ").replace(/[\t\n]/g, " ").indexOf(match) >= 0) ) {
-						if ( !inplace ) {
-							result.push( elem );
-						}
-					} else if ( inplace ) {
-						curLoop[i] = false;
-					}
-				}
-			}
-
-			return false;
-		},
-		ID: function(match){
-			return match[1].replace(/\\/g, "");
-		},
-		TAG: function(match, curLoop){
-			return match[1].toLowerCase();
-		},
-		CHILD: function(match){
-			if ( match[1] === "nth" ) {
-				// parse equations like 'even', 'odd', '5', '2n', '3n+2', '4n-1', '-n+6'
-				var test = /(-?)(\d*)n((?:\+|-)?\d*)/.exec(
-					match[2] === "even" && "2n" || match[2] === "odd" && "2n+1" ||
-					!/\D/.test( match[2] ) && "0n+" + match[2] || match[2]);
-
-				// calculate the numbers (first)n+(last) including if they are negative
-				match[2] = (test[1] + (test[2] || 1)) - 0;
-				match[3] = test[3] - 0;
-			}
-
-			// TODO: Move to normal caching system
-			match[0] = done++;
-
-			return match;
-		},
-		ATTR: function(match, curLoop, inplace, result, not, isXML){
-			var name = match[1].replace(/\\/g, "");
-			
-			if ( !isXML && Expr.attrMap[name] ) {
-				match[1] = Expr.attrMap[name];
-			}
-
-			if ( match[2] === "~=" ) {
-				match[4] = " " + match[4] + " ";
-			}
-
-			return match;
-		},
-		PSEUDO: function(match, curLoop, inplace, result, not){
-			if ( match[1] === "not" ) {
-				// If we're dealing with a complex expression, or a simple one
-				if ( ( chunker.exec(match[3]) || "" ).length > 1 || /^\w/.test(match[3]) ) {
-					match[3] = Sizzle(match[3], null, null, curLoop);
-				} else {
-					var ret = Sizzle.filter(match[3], curLoop, inplace, true ^ not);
-					if ( !inplace ) {
-						result.push.apply( result, ret );
-					}
-					return false;
-				}
-			} else if ( Expr.match.POS.test( match[0] ) || Expr.match.CHILD.test( match[0] ) ) {
-				return true;
-			}
-			
-			return match;
-		},
-		POS: function(match){
-			match.unshift( true );
-			return match;
-		}
-	},
-	filters: {
-		enabled: function(elem){
-			return elem.disabled === false && elem.type !== "hidden";
-		},
-		disabled: function(elem){
-			return elem.disabled === true;
-		},
-		checked: function(elem){
-			return elem.checked === true;
-		},
-		selected: function(elem){
-			// Accessing this property makes selected-by-default
-			// options in Safari work properly
-			elem.parentNode.selectedIndex;
-			return elem.selected === true;
-		},
-		parent: function(elem){
-			return !!elem.firstChild;
-		},
-		empty: function(elem){
-			return !elem.firstChild;
-		},
-		has: function(elem, i, match){
-			return !!Sizzle( match[3], elem ).length;
-		},
-		header: function(elem){
-			return (/h\d/i).test( elem.nodeName );
-		},
-		text: function(elem){
-			return "text" === elem.type;
-		},
-		radio: function(elem){
-			return "radio" === elem.type;
-		},
-		checkbox: function(elem){
-			return "checkbox" === elem.type;
-		},
-		file: function(elem){
-			return "file" === elem.type;
-		},
-		password: function(elem){
-			return "password" === elem.type;
-		},
-		submit: function(elem){
-			return "submit" === elem.type;
-		},
-		image: function(elem){
-			return "image" === elem.type;
-		},
-		reset: function(elem){
-			return "reset" === elem.type;
-		},
-		button: function(elem){
-			return "button" === elem.type || elem.nodeName.toLowerCase() === "button";
-		},
-		input: function(elem){
-			return (/input|select|textarea|button/i).test(elem.nodeName);
-		}
-	},
-	setFilters: {
-		first: function(elem, i){
-			return i === 0;
-		},
-		last: function(elem, i, match, array){
-			return i === array.length - 1;
-		},
-		even: function(elem, i){
-			return i % 2 === 0;
-		},
-		odd: function(elem, i){
-			return i % 2 === 1;
-		},
-		lt: function(elem, i, match){
-			return i < match[3] - 0;
-		},
-		gt: function(elem, i, match){
-			return i > match[3] - 0;
-		},
-		nth: function(elem, i, match){
-			return match[3] - 0 === i;
-		},
-		eq: function(elem, i, match){
-			return match[3] - 0 === i;
-		}
-	},
-	filter: {
-		PSEUDO: function(elem, match, i, array){
-			var name = match[1], filter = Expr.filters[ name ];
-
-			if ( filter ) {
-				return filter( elem, i, match, array );
-			} else if ( name === "contains" ) {
-				return (elem.textContent || elem.innerText || Sizzle.getText([ elem ]) || "").indexOf(match[3]) >= 0;
-			} else if ( name === "not" ) {
-				var not = match[3];
-
-				for ( var j = 0, l = not.length; j < l; j++ ) {
-					if ( not[j] === elem ) {
-						return false;
-					}
-				}
-
-				return true;
-			} else {
-				Sizzle.error( "Syntax error, unrecognized expression: " + name );
-			}
-		},
-		CHILD: function(elem, match){
-			var type = match[1], node = elem;
-			switch (type) {
-				case 'only':
-				case 'first':
-					while ( (node = node.previousSibling) )	 {
-						if ( node.nodeType === 1 ) { 
-							return false; 
-						}
-					}
-					if ( type === "first" ) { 
-						return true; 
-					}
-					node = elem;
-				case 'last':
-					while ( (node = node.nextSibling) )	 {
-						if ( node.nodeType === 1 ) { 
-							return false; 
-						}
-					}
-					return true;
-				case 'nth':
-					var first = match[2], last = match[3];
-
-					if ( first === 1 && last === 0 ) {
-						return true;
-					}
-					
-					var doneName = match[0],
-						parent = elem.parentNode;
-	
-					if ( parent && (parent.sizcache !== doneName || !elem.nodeIndex) ) {
-						var count = 0;
-						for ( node = parent.firstChild; node; node = node.nextSibling ) {
-							if ( node.nodeType === 1 ) {
-								node.nodeIndex = ++count;
-							}
-						} 
-						parent.sizcache = doneName;
-					}
-					
-					var diff = elem.nodeIndex - last;
-					if ( first === 0 ) {
-						return diff === 0;
-					} else {
-						return ( diff % first === 0 && diff / first >= 0 );
-					}
-			}
-		},
-		ID: function(elem, match){
-			return elem.nodeType === 1 && elem.getAttribute("id") === match;
-		},
-		TAG: function(elem, match){
-			return (match === "*" && elem.nodeType === 1) || elem.nodeName.toLowerCase() === match;
-		},
-		CLASS: function(elem, match){
-			return (" " + (elem.className || elem.getAttribute("class")) + " ")
-				.indexOf( match ) > -1;
-		},
-		ATTR: function(elem, match){
-			var name = match[1],
-				result = Expr.attrHandle[ name ] ?
-					Expr.attrHandle[ name ]( elem ) :
-					elem[ name ] != null ?
-						elem[ name ] :
-						elem.getAttribute( name ),
-				value = result + "",
-				type = match[2],
-				check = match[4];
-
-			return result == null ?
-				type === "!=" :
-				type === "=" ?
-				value === check :
-				type === "*=" ?
-				value.indexOf(check) >= 0 :
-				type === "~=" ?
-				(" " + value + " ").indexOf(check) >= 0 :
-				!check ?
-				value && result !== false :
-				type === "!=" ?
-				value !== check :
-				type === "^=" ?
-				value.indexOf(check) === 0 :
-				type === "$=" ?
-				value.substr(value.length - check.length) === check :
-				type === "|=" ?
-				value === check || value.substr(0, check.length + 1) === check + "-" :
-				false;
-		},
-		POS: function(elem, match, i, array){
-			var name = match[2], filter = Expr.setFilters[ name ];
-
-			if ( filter ) {
-				return filter( elem, i, match, array );
-			}
-		}
-	}
-};
-
-var origPOS = Expr.match.POS,
-	fescape = function(all, num){
-		return "\\" + (num - 0 + 1);
-	};
-
-for ( var type in Expr.match ) {
-	Expr.match[ type ] = new RegExp( Expr.match[ type ].source + (/(?![^\[]*\])(?![^\(]*\))/.source) );
-	Expr.leftMatch[ type ] = new RegExp( /(^(?:.|\r|\n)*?)/.source + Expr.match[ type ].source.replace(/\\(\d+)/g, fescape) );
-}
-
-var makeArray = function(array, results) {
-	array = Array.prototype.slice.call( array, 0 );
-
-	if ( results ) {
-		results.push.apply( results, array );
-		return results;
-	}
-	
-	return array;
-};
-
-// Perform a simple check to determine if the browser is capable of
-// converting a NodeList to an array using builtin methods.
-// Also verifies that the returned array holds DOM nodes
-// (which is not the case in the Blackberry browser)
-try {
-	Array.prototype.slice.call( document.documentElement.childNodes, 0 )[0].nodeType;
-
-// Provide a fallback method if it does not work
-} catch(e){
-	makeArray = function(array, results) {
-		var ret = results || [], i = 0;
-
-		if ( toString.call(array) === "[object Array]" ) {
-			Array.prototype.push.apply( ret, array );
-		} else {
-			if ( typeof array.length === "number" ) {
-				for ( var l = array.length; i < l; i++ ) {
-					ret.push( array[i] );
-				}
-			} else {
-				for ( ; array[i]; i++ ) {
-					ret.push( array[i] );
-				}
-			}
-		}
-
-		return ret;
-	};
-}
-
-var sortOrder;
-
-if ( document.documentElement.compareDocumentPosition ) {
-	sortOrder = function( a, b ) {
-		if ( !a.compareDocumentPosition || !b.compareDocumentPosition ) {
-			if ( a == b ) {
-				hasDuplicate = true;
-			}
-			return a.compareDocumentPosition ? -1 : 1;
-		}
-
-		var ret = a.compareDocumentPosition(b) & 4 ? -1 : a === b ? 0 : 1;
-		if ( ret === 0 ) {
-			hasDuplicate = true;
-		}
-		return ret;
-	};
-} else if ( "sourceIndex" in document.documentElement ) {
-	sortOrder = function( a, b ) {
-		if ( !a.sourceIndex || !b.sourceIndex ) {
-			if ( a == b ) {
-				hasDuplicate = true;
-			}
-			return a.sourceIndex ? -1 : 1;
-		}
-
-		var ret = a.sourceIndex - b.sourceIndex;
-		if ( ret === 0 ) {
-			hasDuplicate = true;
-		}
-		return ret;
-	};
-} else if ( document.createRange ) {
-	sortOrder = function( a, b ) {
-		if ( !a.ownerDocument || !b.ownerDocument ) {
-			if ( a == b ) {
-				hasDuplicate = true;
-			}
-			return a.ownerDocument ? -1 : 1;
-		}
-
-		var aRange = a.ownerDocument.createRange(), bRange = b.ownerDocument.createRange();
-		aRange.setStart(a, 0);
-		aRange.setEnd(a, 0);
-		bRange.setStart(b, 0);
-		bRange.setEnd(b, 0);
-		var ret = aRange.compareBoundaryPoints(Range.START_TO_END, bRange);
-		if ( ret === 0 ) {
-			hasDuplicate = true;
-		}
-		return ret;
-	};
-}
-
-// Utility function for retreiving the text value of an array of DOM nodes
-Sizzle.getText = function( elems ) {
-	var ret = "", elem;
-
-	for ( var i = 0; elems[i]; i++ ) {
-		elem = elems[i];
-
-		// Get the text from text nodes and CDATA nodes
-		if ( elem.nodeType === 3 || elem.nodeType === 4 ) {
-			ret += elem.nodeValue;
-
-		// Traverse everything else, except comment nodes
-		} else if ( elem.nodeType !== 8 ) {
-			ret += Sizzle.getText( elem.childNodes );
-		}
-	}
-
-	return ret;
-};
-
-// Check to see if the browser returns elements by name when
-// querying by getElementById (and provide a workaround)
-(function(){
-	// We're going to inject a fake input element with a specified name
-	var form = document.createElement("div"),
-		id = "script" + (new Date()).getTime();
-	form.innerHTML = "<a name='" + id + "'/>";
-
-	// Inject it into the root element, check its status, and remove it quickly
-	var root = document.documentElement;
-	root.insertBefore( form, root.firstChild );
-
-	// The workaround has to do additional checks after a getElementById
-	// Which slows things down for other browsers (hence the branching)
-	if ( document.getElementById( id ) ) {
-		Expr.find.ID = function(match, context, isXML){
-			if ( typeof context.getElementById !== "undefined" && !isXML ) {
-				var m = context.getElementById(match[1]);
-				return m ? m.id === match[1] || typeof m.getAttributeNode !== "undefined" && m.getAttributeNode("id").nodeValue === match[1] ? [m] : undefined : [];
-			}
-		};
-
-		Expr.filter.ID = function(elem, match){
-			var node = typeof elem.getAttributeNode !== "undefined" && elem.getAttributeNode("id");
-			return elem.nodeType === 1 && node && node.nodeValue === match;
-		};
-	}
-
-	root.removeChild( form );
-	root = form = null; // release memory in IE
-})();
-
-(function(){
-	// Check to see if the browser returns only elements
-	// when doing getElementsByTagName("*")
-
-	// Create a fake element
-	var div = document.createElement("div");
-	div.appendChild( document.createComment("") );
-
-	// Make sure no comments are found
-	if ( div.getElementsByTagName("*").length > 0 ) {
-		Expr.find.TAG = function(match, context){
-			var results = context.getElementsByTagName(match[1]);
-
-			// Filter out possible comments
-			if ( match[1] === "*" ) {
-				var tmp = [];
-
-				for ( var i = 0; results[i]; i++ ) {
-					if ( results[i].nodeType === 1 ) {
-						tmp.push( results[i] );
-					}
-				}
-
-				results = tmp;
-			}
-
-			return results;
-		};
-	}
-
-	// Check to see if an attribute returns normalized href attributes
-	div.innerHTML = "<a href='#'></a>";
-	if ( div.firstChild && typeof div.firstChild.getAttribute !== "undefined" &&
-			div.firstChild.getAttribute("href") !== "#" ) {
-		Expr.attrHandle.href = function(elem){
-			return elem.getAttribute("href", 2);
-		};
-	}
-
-	div = null; // release memory in IE
-})();
-
-if ( document.querySelectorAll ) {
-	(function(){
-		var oldSizzle = Sizzle, div = document.createElement("div");
-		div.innerHTML = "<p class='TEST'></p>";
-
-		// Safari can't handle uppercase or unicode characters when
-		// in quirks mode.
-		if ( div.querySelectorAll && div.querySelectorAll(".TEST").length === 0 ) {
-			return;
-		}
-	
-		Sizzle = function(query, context, extra, seed){
-			context = context || document;
-
-			// Only use querySelectorAll on non-XML documents
-			// (ID selectors don't work in non-HTML documents)
-			if ( !seed && context.nodeType === 9 && !Sizzle.isXML(context) ) {
-				try {
-					return makeArray( context.querySelectorAll(query), extra );
-				} catch(e){}
-			}
-		
-			return oldSizzle(query, context, extra, seed);
-		};
-
-		for ( var prop in oldSizzle ) {
-			Sizzle[ prop ] = oldSizzle[ prop ];
-		}
-
-		div = null; // release memory in IE
-	})();
-}
-
-(function(){
-	var div = document.createElement("div");
-
-	div.innerHTML = "<div class='test e'></div><div class='test'></div>";
-
-	// Opera can't find a second classname (in 9.6)
-	// Also, make sure that getElementsByClassName actually exists
-	if ( !div.getElementsByClassName || div.getElementsByClassName("e").length === 0 ) {
-		return;
-	}
-
-	// Safari caches class attributes, doesn't catch changes (in 3.2)
-	div.lastChild.className = "e";
-
-	if ( div.getElementsByClassName("e").length === 1 ) {
-		return;
-	}
-	
-	Expr.order.splice(1, 0, "CLASS");
-	Expr.find.CLASS = function(match, context, isXML) {
-		if ( typeof context.getElementsByClassName !== "undefined" && !isXML ) {
-			return context.getElementsByClassName(match[1]);
-		}
-	};
-
-	div = null; // release memory in IE
-})();
-
-function dirNodeCheck( dir, cur, doneName, checkSet, nodeCheck, isXML ) {
-	for ( var i = 0, l = checkSet.length; i < l; i++ ) {
-		var elem = checkSet[i];
-		if ( elem ) {
-			elem = elem[dir];
-			var match = false;
-
-			while ( elem ) {
-				if ( elem.sizcache === doneName ) {
-					match = checkSet[elem.sizset];
-					break;
-				}
-
-				if ( elem.nodeType === 1 && !isXML ){
-					elem.sizcache = doneName;
-					elem.sizset = i;
-				}
-
-				if ( elem.nodeName.toLowerCase() === cur ) {
-					match = elem;
-					break;
-				}
-
-				elem = elem[dir];
-			}
-
-			checkSet[i] = match;
-		}
-	}
-}
-
-function dirCheck( dir, cur, doneName, checkSet, nodeCheck, isXML ) {
-	for ( var i = 0, l = checkSet.length; i < l; i++ ) {
-		var elem = checkSet[i];
-		if ( elem ) {
-			elem = elem[dir];
-			var match = false;
-
-			while ( elem ) {
-				if ( elem.sizcache === doneName ) {
-					match = checkSet[elem.sizset];
-					break;
-				}
-
-				if ( elem.nodeType === 1 ) {
-					if ( !isXML ) {
-						elem.sizcache = doneName;
-						elem.sizset = i;
-					}
-					if ( typeof cur !== "string" ) {
-						if ( elem === cur ) {
-							match = true;
-							break;
-						}
-
-					} else if ( Sizzle.filter( cur, [elem] ).length > 0 ) {
-						match = elem;
-						break;
-					}
-				}
-
-				elem = elem[dir];
-			}
-
-			checkSet[i] = match;
-		}
-	}
-}
-
-Sizzle.contains = document.compareDocumentPosition ? function(a, b){
-	return !!(a.compareDocumentPosition(b) & 16);
-} : function(a, b){
-	return a !== b && (a.contains ? a.contains(b) : true);
-};
-
-Sizzle.isXML = function(elem){
-	// documentElement is verified for cases where it doesn't yet exist
-	// (such as loading iframes in IE - #4833) 
-	var documentElement = (elem ? elem.ownerDocument || elem : 0).documentElement;
-	return documentElement ? documentElement.nodeName !== "HTML" : false;
-};
-
-var posProcess = function(selector, context){
-	var tmpSet = [], later = "", match,
-		root = context.nodeType ? [context] : context;
-
-	// Position selectors must be done after the filter
-	// And so must :not(positional) so we move all PSEUDOs to the end
-	while ( (match = Expr.match.PSEUDO.exec( selector )) ) {
-		later += match[0];
-		selector = selector.replace( Expr.match.PSEUDO, "" );
-	}
-
-	selector = Expr.relative[selector] ? selector + "*" : selector;
-
-	for ( var i = 0, l = root.length; i < l; i++ ) {
-		Sizzle( selector, root[i], tmpSet );
-	}
-
-	return Sizzle.filter( later, tmpSet );
-};
-
-// EXPOSE
-KISSY.ExternalSelector = Sizzle;
-KISSY.ExternalSelector._filter = function(selector, filter) {
-    //Sizzle.matches( String selector, Array<DOMElement> set )
-    return Sizzle.matches(filter, KISSY.query(selector));
-};
-
-})();
-/*
-Copyright 2010, KISSY UI Library v1.1.0
-MIT Licensed
-build time: Aug 5 16:06
+build time: Aug 16 16:50
 */
 /**
  * @module anim-easing
@@ -5378,7 +4708,6 @@ KISSY.add('anim-easing', function(S) {
 /**
  * @module   anim
  * @author   lifesinger@gmail.com
- * @depends  ks-core
  */
 KISSY.add('anim', function(S, undefined) {
 
@@ -5628,3031 +4957,5 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
  *  - �����Ƿ���� slideUp/slideDown/fadeIn/show/hide �ȿ�ݷ���
  *
  */
-/*
-Copyright 2010, KISSY UI Library v1.1.2dev
-MIT Licensed
-build time: ${build.time}
-*/
-/**
- * 数据延迟加载组件
- * @module   datalazyload
- * @creator  玉伯<lifesinger@gmail.com>
- * @depends  ks-core
- */
-KISSY.add('datalazyload', function(S, undefined) {
 
-    var DOM = S.DOM, Event = S.Event,
-        win = window, doc = document,
-
-        IMG_SRC_DATA = 'data-ks-lazyload',
-        AREA_DATA_CLS = 'ks-datalazyload',
-        CUSTOM = '-custom',
-        MANUAL = 'manual',
-        DISPLAY = 'display', DEFAULT = 'default', NONE = 'none',
-        SCROLL = 'scroll', RESIZE = 'resize',
-
-        defaultConfig = {
-
-            /**
-             * 懒处理模式
-             *   auto   - 自动化。html 输出时，不对 img.src 做任何处理
-             *   manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 IMG_SRC_DATA
-             * 注：对于 textarea 数据，只有手动模式
-             */
-            mod: MANUAL,
-
-            /**
-             * 当前视窗往下，diff px 外的 img/textarea 延迟加载
-             * 适当设置此值，可以让用户在拖动时感觉数据已经加载好
-             * 默认为当前视窗高度（两屏以外的才延迟加载）
-             */
-            diff: DEFAULT,
-
-            /**
-             * 图像的占位图，默认无
-             */
-            placeholder: NONE
-        };
-
-    /**
-     * 延迟加载组件
-     * @constructor
-     */
-    function DataLazyload(containers, config) {
-        var self = this;
-
-        // factory or constructor
-        if (!(self instanceof DataLazyload)) {
-            return new DataLazyload(containers, config);
-        }
-
-        // 允许仅传递 config 一个参数
-        if (config === undefined) {
-            config = containers;
-            containers = [doc];
-        }
-
-        // containers 是一个 HTMLElement 时
-        if (!S.isArray(containers)) {
-            containers = [S.get(containers) || doc];
-        }
-
-        /**
-         * 图片所在容器（可以多个），默认为 [doc]
-         * @type Array
-         */
-        self.containers = containers;
-
-        /**
-         * 配置参数
-         * @type Object
-         */
-        self.config = S.merge(defaultConfig, config);
-
-        /**
-         * 需要延迟下载的图片
-         * @type Array
-         */
-        //self.images
-
-        /**
-         * 需要延迟处理的 textarea
-         * @type Array
-         */
-        //self.areas
-
-        /**
-         * 开始延迟的 Y 坐标
-         * @type number
-         */
-        //self.threshold
-
-        self._init();
-    }
-
-    S.augment(DataLazyload, {
-
-        /**
-         * 初始化
-         * @protected
-         */
-        _init: function() {
-            var self = this;
-            self.threshold = self._getThreshold();
-
-            self._filterItems();
-            self._getItemsLength() && self._initLoadEvent();
-        },
-
-        /**
-         * 获取并初始化需要延迟的 images 和 areas
-         * @protected
-         */
-        _filterItems: function() {
-            var self = this,
-                containers = self.containers,
-                n, N, imgs, areas, i, len, img, area,
-                lazyImgs = [], lazyAreas = [];
-
-            for (n = 0,N = containers.length; n < N; ++n) {
-                imgs = S.query('img', containers[n]);
-                lazyImgs = lazyImgs.concat(S.filter(imgs, self._filterImg, self));
-
-                areas = S.query('textarea', containers[n]);
-                lazyAreas = lazyAreas.concat(S.filter(areas, self._filterArea, self));
-            }
-
-            self.images = lazyImgs;
-            self.areas = lazyAreas;
-        },
-
-        /**
-         * filter for lazyload image
-         */
-        _filterImg: function(img) {
-            var self = this,
-                dataSrc = img.getAttribute(IMG_SRC_DATA),
-                threshold = self.threshold,
-                placeholder = self.config.placeholder,
-                isManualMod = self.config.mod === MANUAL;
-
-            // 手工模式，只处理有 data-src 的图片
-            if (isManualMod) {
-                if (dataSrc) {
-                    if (placeholder !== NONE) {
-                        img.src = placeholder;
-                    }
-                    return true;
-                }
-            }
-            // 自动模式，只处理 threshold 外无 data-src 的图片
-            else {
-                // 注意：已有 data-src 的项，可能已有其它实例处理过，不用再次处理
-                if (DOM.offset(img).top > threshold && !dataSrc) {
-                    DOM.attr(img, IMG_SRC_DATA, img.src);
-                    if (placeholder !== NONE) {
-                        img.src = placeholder;
-                    } else {
-                        img.removeAttribute('src');
-                    }
-                    return true;
-                }
-            }
-        },
-
-        /**
-         * filter for lazyload textarea
-         */
-        _filterArea: function(area) {
-            return DOM.hasClass(area, AREA_DATA_CLS);
-        },
-
-        /**
-         * 初始化加载事件
-         * @protected
-         */
-        _initLoadEvent: function() {
-            var timer, self = this;
-
-            // scroll 和 resize 时，加载图片
-            Event.on(win, SCROLL, loader);
-            Event.on(win, RESIZE, function() {
-                self.threshold = self._getThreshold();
-                loader();
-            });
-
-            // 需要立即加载一次，以保证第一屏的延迟项可见
-            if (self._getItemsLength()) {
-                S.ready(function() {
-                    loadItems();
-                });
-            }
-
-            // 加载函数
-            function loader() {
-                if (timer) return;
-                timer = S.later(function() {
-                    loadItems();
-                    timer = null;
-                }, 100); // 0.1s 内，用户感觉流畅
-            }
-
-            // 加载延迟项
-            function loadItems() {
-                self._loadItems();
-                if (self._getItemsLength() === 0) {
-                    Event.remove(win, SCROLL, loader);
-                    Event.remove(win, RESIZE, loader);
-                }
-            }
-        },
-
-        /**
-         * 加载延迟项
-         */
-        _loadItems: function() {
-            this._loadImgs();
-            this._loadAreas();
-        },
-
-        /**
-         * 加载图片
-         * @protected
-         */
-        _loadImgs: function() {
-            var self = this;
-            self.images = S.filter(self.images, self._loadImg, self);
-        },
-
-        /**
-         * 监控滚动，处理图片
-         */
-        _loadImg: function(img) {
-            var self = this,
-                scrollTop = DOM.scrollTop(),
-                threshold = self.threshold + scrollTop,
-                offset = DOM.offset(img);
-
-            if (offset.top <= threshold) {
-                self._loadImgSrc(img);
-            } else {
-                return true;
-            }
-        },
-
-        /**
-         * 加载图片 src
-         * @static
-         */
-        _loadImgSrc: function(img, flag) {
-            flag = flag || IMG_SRC_DATA;
-            var dataSrc = img.getAttribute(flag);
-
-            if (dataSrc && img.src != dataSrc) {
-                img.src = dataSrc;
-                img.removeAttribute(flag);
-            }
-        },
-
-        /**
-         * 加载 textarea 数据
-         * @protected
-         */
-        _loadAreas: function() {
-            var self = this;
-            self.areas = S.filter(self.areas, self._loadArea, self);
-        },
-
-        /**
-         * 监控滚动，处理 textarea
-         */
-        _loadArea: function(area) {
-            var self = this, top,
-                isHidden = DOM.css(area, DISPLAY) === NONE;
-
-            // 注：area 可能处于 display: none 状态，DOM.offset(area).top 返回 0
-            // 这种情况下用 area.parentNode 的 Y 值来替代
-            top = DOM.offset(isHidden ? area.parentNode : area).top;
-
-            if (top <= self.threshold + DOM.scrollTop()) {
-                self._loadAreaData(area.parentNode, area);
-            } else {
-                return true;
-            }
-        },
-
-        /**
-         * 从 textarea 中加载数据
-         * @static
-         */
-        _loadAreaData: function(container, area) {
-            //chengyu 大幅重构，使用正则识别 html 字符串里的 script，提高性能
-            // 为了通用性，不要搜索 container 内的全部 script dom 节点执行
-
-            // 采用隐藏 textarea 但不去除方式，去除会引发 Chrome 下错乱
-            area.style.display = NONE;
-            area.className = ''; // clear hook
-
-            var content = DOM.create('<div>');
-            container.insertBefore(content, area);
-            DOM.html(content, area.value, true);
-
-            //area.value = ''; // bug fix: 注释掉，不能清空，否则 F5 刷新，会丢内容
-        },
-
-        /**
-         * 获取阈值
-         * @protected
-         */
-        _getThreshold: function() {
-            var diff = this.config.diff,
-                vh = DOM['viewportHeight']();
-
-            if (diff === DEFAULT) return 2 * vh; // diff 默认为当前视窗高度（两屏以外的才延迟加载）
-            else return vh + diff;
-        },
-
-        /**
-         * 获取当前延迟项的数量
-         * @protected
-         */
-        _getItemsLength: function() {
-            return this.images.length + this.areas.length;
-        },
-
-        /**
-         * 加载自定义延迟数据
-         * @static
-         */
-        loadCustomLazyData: function(containers, type) {
-            var self = this, area, imgs;
-
-            // 支持数组
-            if (!S.isArray(containers)) {
-                containers = [S.get(containers)];
-            }
-
-            // 遍历处理
-            S.each(containers, function(container) {
-                switch (type) {
-                    case 'img-src':
-                        if (container.nodeName === 'IMG') { // 本身就是图片
-                            imgs = [container];
-                        } else {
-                            imgs = S.query('img', container);
-                        }
-                        
-                        S.each(imgs, function(img) {
-                            self._loadImgSrc(img, IMG_SRC_DATA + CUSTOM);
-                        });
-                        
-                        break;
-                    
-                    default:
-                        area = S.get('textarea', container);
-                        if (area && DOM.hasClass(area, AREA_DATA_CLS + CUSTOM)) {
-                            self._loadAreaData(container, area);
-                        }
-                }
-            });
-        }
-    });
-
-    // attach static methods
-    S.mix(DataLazyload, DataLazyload.prototype, true, ['loadCustomLazyData', '_loadImgSrc', '_loadAreaData']);
-
-    S.DataLazyload = DataLazyload;
-});
-
-/**
- * NOTES:
- *
- * 模式为 auto 时：
- *  1. 在 Firefox 下非常完美。脚本运行时，还没有任何图片开始下载，能真正做到延迟加载。
- *  2. 在 IE 下不尽完美。脚本运行时，有部分图片已经与服务器建立链接，这部分 abort 掉，
- *     再在滚动时延迟加载，反而增加了链接数。
- *  3. 在 Safari 和 Chrome 下，因为 webkit 内核 bug，导致无法 abort 掉下载。该
- *     脚本完全无用。
- *  4. 在 Opera 下，和 Firefox 一致，完美。
- *  5. 2010-07-12: 发现在 Firefox 下，也有导致部分 Aborted 链接。
- *
- * 模式为 manual 时：（要延迟加载的图片，src 属性替换为 data-lazyload-src, 并将 src 的值赋为 placeholder ）
- *  1. 在任何浏览器下都可以完美实现。
- *  2. 缺点是不渐进增强，无 JS 时，图片不能展示。
- *
- * 缺点：
- *  1. 对于大部分情况下，需要拖动查看内容的页面（比如搜索结果页），快速滚动时加载有损用
- *     户体验（用户期望所滚即所得），特别是网速不好时。
- *  2. auto 模式不支持 Webkit 内核浏览器；IE 下，有可能导致 HTTP 链接数的增加。
- *
- * 优点：
- *  1. 可以很好的提高页面初始加载速度。
- *  2. 第一屏就跳转，延迟加载图片可以减少流量。
- *
- * 参考资料：
- *  1. http://davidwalsh.name/lazyload MooTools 的图片延迟插件
- *  2. http://vip.qq.com/ 模板输出时，就替换掉图片的 src
- *  3. http://www.appelsiini.net/projects/lazyload jQuery Lazyload
- *  4. http://www.dynamixlabs.com/2008/01/17/a-quick-look-add-a-loading-icon-to-your-larger-images/
- *  5. http://www.nczonline.net/blog/2009/11/30/empty-image-src-can-destroy-your-site/
- *
- * 特别要注意的测试用例:
- *  1. 初始窗口很小，拉大窗口时，图片加载正常
- *  2. 页面有滚动位置时，刷新页面，图片加载正常
- *  3. 手动模式，第一屏有延迟图片时，加载正常
- *
- * 2009-12-17 补充：
- *  1. textarea 延迟加载约定：页面中需要延迟的 dom 节点，放在
- *       <textarea class='ks-datalazysrc invisible'>dom code</textarea>
- *     里。可以添加 hidden 等 class, 但建议用 invisible, 并设定 height = '实际高度'，这样可以保证
- *     滚动时，diff 更真实有效。
- *     注意：textarea 加载后，会替换掉父容器中的所有内容。
- *  2. 延迟 callback 约定：dataLazyload.addCallback(el, fn) 表示当 el 即将出现时，触发 fn.
- *  3. 所有操作都是最多触发一次，比如 callback. 来回拖动滚动条时，只有 el 第一次出现时会触发 fn 回调。
- */
-
-/**
- * zTODO:
- *   - [取消] 背景图片的延迟加载（对于 css 里的背景图片和 sprite 很难处理）
- *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
- */
-
-/**
- * UPDATE LOG:
- *   - 2010-07-31 yubo IMG_SRC_DATA 由 data-lazyload-src 更名为 data-ks-lazyload + 支持 touch 设备
- *   - 2010-07-10 chengyu 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调
- *   - 2010-05-10 yubo ie6 下，在 dom ready 后执行，会导致 placeholder 重复加载，为比避免此问题，默认为 none, 去掉占位图
- *   - 2010-04-05 yubo 重构，使得对 YUI 的依赖仅限于 YDOM
- *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
- */
-/*
-Copyright 2010, KISSY UI Library v1.1.2dev
-MIT Licensed
-build time: ${build.time}
-*/
-/**
- * @module   Flash UA 探测
- * @author   kingfo<oicuicu@gmail.com>
- * @depends  ks-core
- */
-KISSY.add('flash-ua', function(S) {
-
-    var UA = S.UA, fpv, fpvF, firstRun = true;
-
-    /**
-     * 获取 Flash 版本号
-     * 返回数据 [M, S, R] 若未安装，则返回 undefined
-     */
-    function getFlashVersion() {
-        var ver, SF = 'ShockwaveFlash';
-
-        // for NPAPI see: http://en.wikipedia.org/wiki/NPAPI
-        if (navigator.plugins && navigator.mimeTypes.length) {
-            ver = (navigator.plugins['Shockwave Flash'] || 0).description;
-        }
-        // for ActiveX see:	http://en.wikipedia.org/wiki/ActiveX
-        else if (window.ActiveXObject) {
-            try {
-                ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
-            } catch(ex) {
-                //S.log('getFlashVersion failed via ActiveXObject');
-                // nothing to do, just return undefined
-            }
-        }
-
-        // 插件没安装或有问题时，ver 为 undefined
-        if(!ver) return;
-
-        // 插件安装正常时，ver 为 "Shockwave Flash 10.1 r53" or "WIN 10,1,53,64"
-        return arrify(ver);
-    }
-
-    /**
-     * arrify("10.1.r53") => ["10", "1", "53"]
-     */
-    function arrify(ver) {
-        return ver.match(/(\d)+/g);
-    }
-
-    /**
-     * 格式：主版本号Major.次版本号Minor(小数点后3位，占3位)修正版本号Revision(小数点后第4至第8位，占5位)
-     * ver 参数不符合预期时，返回 0
-     * numerify("10.1 r53") => 10.00100053
-     * numerify(["10", "1", "53"]) => 10.00100053
-     * numerify(12.2) => 12.2
-     */
-    function numerify(ver) {
-        var arr = S.isString(ver) ? arrify(ver) : ver, ret = ver;
-        if (S.isArray(arr)) {
-            ret = parseFloat(arr[0] + '.' + pad(arr[1], 3) + pad(arr[2], 5));
-        }
-        return ret || 0;
-    }
-
-    /**
-     * pad(12, 5) => "00012"
-     * ref: http://lifesinger.org/blog/2009/08/the-harm-of-tricky-code/
-     */
-    function pad(num, n) {
-        var len = (num + '').length;
-        while (len++ < n) {
-            num = '0' + num;
-        }
-        return num;
-    }
-
-    /**
-     * 返回数据 [M, S, R] 若未安装，则返回 undefined
-     * fpv 全称是 flash player version
-     */
-    UA.fpv = function(force) {
-        // 考虑 new ActiveX 和 try catch 的 性能损耗，延迟初始化到第一次调用时
-        if(force || firstRun) {
-            firstRun = false;
-            fpv = getFlashVersion();
-            fpvF = numerify(fpv);
-        }
-        return fpv;
-    };
-
-    /**
-     * Checks fpv is greater than or equal the specific version.
-     * 普通的 flash 版本检测推荐使用该方法
-     * @param ver eg. "10.1.53"
-     * <code>
-     *    if(S.UA.fpvGEQ('9.9.2')) { ... }
-     * </code>
-     */
-    UA.fpvGEQ = function(ver, force) {
-        if(firstRun) UA.fpv(force);
-        return !!fpvF && (fpvF >= numerify(ver));
-    };
-
-});
-
-/**
- * NOTES:
- *
- -  ActiveXObject JS 小记
- -    newObj = new ActiveXObject(ProgID:String[, location:String])
- -    newObj      必需    用于部署 ActiveXObject  的变量
- -    ProgID      必选    形式为 "serverName.typeName" 的字符串
- -    serverName  必需    提供该对象的应用程序的名称
- -    typeName    必需    创建对象的类型或者类
- -    location    可选    创建该对象的网络服务器的名称
-
- -  Google Chrome 比较特别：
- -    即使对方未安装 flashplay 插件 也含最新的 Flashplayer
- -    ref: http://googlechromereleases.blogspot.com/2010/03/dev-channel-update_30.html
- *
- */
-/**
- * @module   Flash 全局静态类
- * @author   kingfo<oicuicu@gmail.com>
- * @depends  ks-core
- */
-KISSY.add('flash', function(S){
-	
-	S.Flash = {
-		/**
-		 * flash 实例 map { '#id': elem, ... }
-         * @static
-		 */
-		swfs: { },
-		length: 0
-	};
-});
-/**
- * @module   将 swf 嵌入到页面中
- * @author   kingfo<oicuicu@gmail.com>, 射雕<lifesinger@gmail.com>
- * @depends  ks-core + json
- */
-KISSY.add('flash-embed', function(S) {
-
-    var UA = S.UA, DOM = S.DOM, Flash = S.Flash,
-
-        SWF_SUCCESS = 1,
-        FP_LOW = 0,
-        FP_UNINSTALL = -1,
-        TARGET_NOT_FOUND = -2,  // 指定 ID 的对象未找到
-        SWF_SRC_UNDEFINED = -3, // swf 的地址未指定
-
-        RE_FLASH_TAGS = /object|embed/i,
-        CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
-        TYPE = 'application/x-shockwave-flash',
-        FLASHVARS = 'flashvars', EMPTY = '',
-        PREFIX = 'ks-flash-', ID_PRE = '#',
-        encode = encodeURIComponent,
-
-        // flash player 的参数范围
-        PARAMS = {
-            ////////////////////////// 高频率使用的参数
-            //flashvars: EMPTY,     // swf 传入的第三方数据。支持复杂的 Object / XML 数据 / JSON 字符串
-            wmode: EMPTY,
-            allowscriptaccess: EMPTY,
-            allownetworking: EMPTY,
-            allowfullscreen: EMPTY,
-            ///////////////////////// 显示 控制 删除 
-            play: 'false',
-            loop: EMPTY,
-            menu: EMPTY,
-            quality: EMPTY,
-            scale: EMPTY,
-            salign: EMPTY,
-            bgcolor: EMPTY,
-            devicefont: EMPTY,
-            /////////////////////////	其他控制参数
-            base: EMPTY,
-            swliveconnect: EMPTY,
-            seamlesstabbing: EMPTY
-        },
-
-        defaultConifg = {
-            //src: '',       // swf 路径
-            params: { },     // Flash Player 的配置参数
-            attrs: {         // swf 对应 DOM 元素的属性
-                width: 215,	 // 最小控制面板宽度,小于此数字将无法支持在线快速安装
-                height: 138  // 最小控制面板高度,小于此数字将无法支持在线快速安装
-            },
-            //xi: '',	     //	快速安装地址。全称 express install  // ? 默认路径
-            version: 9       //	要求的 Flash Player 最低版本
-        };
-
-
-    S.mix(Flash, {
-
-        fpv: UA.fpv,
-
-        fpvGEQ: UA.fpvGEQ,
-
-
-        /**
-         * 添加 SWF 对象
-         * @param target {String|HTMLElement}  #id or element
-         */
-        add: function(target, config, callback) {
-            var self = this, xi, id;
-
-            // 标准化配置信息
-            config = Flash._normalize(config);
-
-            // 合并配置信息
-            config = S.merge(defaultConifg, config);
-            config.attrs = S.merge(defaultConifg.attrs, config.attrs);
-
-
-            // 1. target 元素未找到
-            if (!(target = S.get(target))) {
-                self._callback(callback, TARGET_NOT_FOUND);
-                return;
-            }
-
-            // 保存 id, 没有则自动生成
-            if (!target.id) target.id = S.guid(PREFIX);
-            //id = config.attrs.id = ID_PRE + target.id; 	//bugfix:	会改变DOM已被命名的ID 造成失效   longzang 2010/8/4
-			id = config.attrs.id = target.id;
-			
-
-            // 2. flash 插件没有安装
-            if (!UA.fpv()) {
-                self._callback(callback, FP_UNINSTALL, id, target);
-                return;
-            }
-
-            // 3. 已安装，但当前客户端版本低于指定版本时
-            if (!UA.fpvGEQ(config.version)) {
-                self._callback(callback, FP_LOW, id, target);
-
-                // 有 xi 时，将 src 替换为快速安装
-                if (!((xi = config.xi) && S.isString(xi))) return;
-                config.src = xi;
-            }
-
-            // 对已有 HTML 结构的 SWF 进行注册使用
-            if (RE_FLASH_TAGS.test(target.nodeName)) {
-                self._register(target, config, callback);
-                return;
-            }
-
-            // src 未指定
-            if (!config.src) {
-                self._callback(callback, SWF_SRC_UNDEFINED, id, target);
-                return;
-            }
-
-            // 替换 target 为 SWF 嵌入对象
-            self._embed(target, config, callback);
-        },
-
-        /**
-         * 获得已注册到 S.Flash 的 SWF
-         * 注意，请不要混淆 DOM.get() 和 Flash.get()
-         * 只有成功执行过 S.Flash.add() 的 SWF 才可以被获取
-         * @return {HTMLElement}  返回 SWF 的 HTML 元素(object/embed). 未注册时，返回 undefined
-         */
-        get: function(id) {
-            return Flash.swfs[id];
-        },
-
-        /**
-         * 移除已注册到 S.Flash 的 SWF 和 DOM 中对应的 HTML 元素
-         */
-        remove: function(id) {
-            var swf = Flash.get(ID_PRE + id);
-            if (swf) {
-                DOM.remove(swf);
-                delete Flash.swfs[swf.id];
-                Flash.length -= 1;
-            }
-        },
-
-        /**
-         * 检测是否存在已注册的 swf
-         * 只有成功执行过 S.Flash.add() 的 SWF 才可以被获取到
-         * @return {Boolean}
-         */
-        contains: function(target) {
-            var swfs = Flash.swfs,
-                id, ret = false;
-
-            if (S.isString(target)) {
-                ret = (target in swfs);
-            } else {
-                for (id in swfs)
-                    if (swfs[id] === target) {
-                        ret = true;
-                        break;
-                    }
-            }
-            return ret;
-        },
-
-        _register: function(swf, config, callback) {
-            var id = config.attrs.id;
-            if (UA.gecko || UA.opera) {
-                swf = S.query('object', swf)[0] || swf; // bugfix: 静态双 object 获取问题。双 Object 外层有 id 但内部才有效。  longzang 2010/8/9
-            }
-			
-            Flash._addSWF(id, swf);
-            Flash._callback(callback, SWF_SUCCESS, id, swf);
-        },
-
-        _embed: function (target, config, callback) {
-            var o = Flash._createSWF(config.src, config.attrs, config.params);
-			
-            if (UA.ie) {
-                // ie 下，通过纯 dom 操作插入的 object 会一直处于加载状态中
-                // 只能通过 innerHTML/outerHTML 嵌入
-                target.outerHTML = o.outerHTML;
-            }
-            else {
-                target.parentNode.replaceChild(o, target);
-            }
-			
-			target = S.get("#"+target.id);				// bugfix:  重新获取对象,否则还是老对象. 如 入口为  div 如果不重新获取则仍然是 div	longzang | 2010/8/9
-			
-			
-			Flash._register(target, config, callback);
-        },
-
-        _callback: function(callback, type, id, swf) {
-            if (type && S.isFunction(callback)) {
-                callback({
-                    status: type,
-                    id: id,
-                    swf: swf
-                });
-            }
-        },
-
-        _addSWF: function(id, swf) {
-            if (id && swf) {
-                Flash.swfs[id] = swf;
-                Flash.length += 1;
-            }
-        },
-
-        _createSWF: function (src, attrs, params) {
-            var o = DOM.create('<object>'), k;
-
-            // 普通属性设置
-            DOM.attr(o, attrs);
-
-            // 特殊属性设置
-            if (UA.ie) {
-                DOM.attr(o, 'classid', CID);
-                appendParam(o, 'movie', src);
-            }
-            else {
-                DOM.attr(o, {
-                    type: TYPE,
-                    data: src,
-                    name: attrs.id
-                });
-            }
-			
-            // 添加 params
-            for (k in params) {
-                if (k in PARAMS) appendParam(o, k, params[k]);
-            }
-            if (params[FLASHVARS]) {
-                appendParam(o, FLASHVARS,  Flash.toFlashVars(params[FLASHVARS]));
-            }
-
-            return o;
-        },
-
-        /**
-         * 将对象的 key 全部转为小写
-         * 一般用于配置选项 key 的标准化
-         */
-        _normalize: function(obj) {
-            var key, val, prop, ret = obj;
-
-            if (S.isPlainObject(obj)) {
-                ret = {};
-
-                for (prop in obj) {
-                    key = prop.toLowerCase();
-                    val = obj[prop];
-
-                    // 忽略自定义传参内容标准化
-                    if (key !== FLASHVARS) val = Flash._normalize(val);
-
-                    ret[key] = val;
-                }
-            }
-            return ret;
-        },
-
-        /**
-         * 将普通对象转换为 flashvars
-         * eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b={"x":2,"z":"s%3D1%26c%3D2"}
-         */
-        toFlashVars: function(obj) {
-            if (!S.isPlainObject(obj)) return EMPTY; // 仅支持 PlainOject
-            var prop, data, arr = [],ret;
-
-            for (prop in obj) {
-                data = obj[prop];
-
-                // 字符串，用双引号括起来 		 [bug]不需要	longzang
-                if (S.isString(data)) {
-                   //data = '"' + encode(data) + '"';     
-				   data = encode(data);  	//bugfix:	有些值事实上不需要双引号   longzang 2010/8/4
-                }
-                // 其它值，用 stringify 转换后，再转义掉字符串值
-                else {
-                    data = (S.JSON.stringify(data));
-                    if (!data) continue; // 忽略掉 undefined, fn 等值
-                    
-                    data = data.replace(/:"([^"]+)/g, function(m, val) {
-                        return ':"' + encode(val);
-                    });
-                }
-
-                arr.push(prop + '=' + data);
-            }
-			ret = arr.join('&');
-            return ret.replace(/\"/g,"'"); //bugfix: 将 " 替换为 ',以免取值产生问题。  但注意自转换为JSON时，需要进行还原处理。  
-        }
-    });
-
-    function appendParam(o, name, val) {
-        var param = DOM.create('<param>');
-        DOM.attr(param, { name: name, value: val });
-        o.appendChild(param);
-    }
-});
-
-/**
- * NOTES:
- * 2010/07/21   向 google code 提交了基础代码
- * 2010/07/22   修正了 embed 始终都有 callback 尝试性调用
- *              避免了未定义 el/id 或 swfurl 时无法获知错误
- * 2010/07/27   迁移至 github 做版本管理。向 kissy-sandbox 提交代码
- * 2010/07/28   合并了公开方法 Flash.register 和 Flash.embed 为 Flash.add()
- *              修改 Flash.length() 为 Flash.getLength(), 使其看上去更像方法而非属性方式获取
- * 2010/07/29   重构到 kissy 项目中
- * 2010/07/30	增加了标准化配置项方法 _normalize(); 修正 flashvars 转 String 方式为 toFlashVars
- * 2010/08/04	取消了对内部SWF存储以 "#" 开头。并且修正了会自动替换修改入口在无#时添加其前缀，造成后续应用失效。
- * 				取消了 F.swfs 的 length属性和 F.len()属性。
- * 				增加了 F.length，以保证 F.swfs 是个纯池
- * 				修正了Flashvars 参数中强制字符串带引号造成传入参数不纯粹的bug。
- * 2010/08/09	修正了在动态添加_embed() target 指向不正确，造成获取swf不正确问题。（test中也针对这点有了测试）
- * 				修正了在flashvars存在的 双引号隐患。 将所有flashvars中的双引号替换为单引号。但此后所有应用都需要进行过滤。
- * 2010/08/10	修复了sarfari/chrome （webkit）下失效的问题。								
- */
-/*
-Copyright 2010, KISSY UI Library v1.1.2dev
-MIT Licensed
-build time: ${build.time}
-*/
-/**
- * Switchable
- * @creator  玉伯<lifesinger@gmail.com>
- * @depends  ks-core
- */
-KISSY.add('switchable', function(S, undefined) {
-
-    var DOM = S.DOM, Event = S.Event,
-        DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
-        FORWARD = 'forward', BACKWARD = 'backward',
-        DOT = '.',
-        EVENT_BEFORE_INIT = 'beforeInit', EVENT_INIT = 'init',
-        EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
-        CLS_PREFIX = 'ks-switchable-';
-
-    /**
-     * Switchable Widget
-     * attached members：
-     *   - this.container
-     *   - this.config
-     *   - this.triggers  可以为空值 []
-     *   - this.panels    可以为空值 []
-     *   - this.content
-     *   - this.length
-     *   - this.activeIndex
-     *   - this.switchTimer
-     */
-    function Switchable(container, config) {
-        var self = this;
-
-        // 调整配置信息
-        config = config || {};
-        if (!('markupType' in config)) {
-            if (config.panelCls) {
-                config.markupType = 1;
-            } else if (config.panels) {
-                config.markupType = 2;
-            }
-        }
-        config = S.merge(Switchable.Config, config);
-
-        /**
-         * the container of widget
-         * @type HTMLElement
-         */
-        self.container = S.get(container);
-
-        /**
-         * 配置参数
-         * @type Object
-         */
-        self.config = config;
-
-        /**
-         * triggers
-         * @type Array of HTMLElement
-         */
-        //self.triggers
-
-        /**
-         * panels
-         * @type Array of HTMLElement
-         */
-        //self.panels
-
-        /**
-         * length = panels.length / steps
-         * @type number
-         */
-        //self.length
-
-        /**
-         * the parentNode of panels
-         * @type HTMLElement
-         */
-        //self.content
-
-        /**
-         * 当前激活的 index
-         * @type Number
-         */
-        self.activeIndex = config.activeIndex;
-
-        self._init();
-    }
-
-    // 默认配置
-    Switchable.Config = {
-        markupType: 0, // markup 的类型，取值如下：
-
-        // 0 - 默认结构：通过 nav 和 content 来获取 triggers 和 panels
-        navCls: CLS_PREFIX + 'nav',
-        contentCls: CLS_PREFIX + 'content',
-
-        // 1 - 适度灵活：通过 cls 来获取 triggers 和 panels
-        triggerCls: CLS_PREFIX + 'trigger',
-        panelCls: CLS_PREFIX + 'panel',
-
-        // 2 - 完全自由：直接传入 triggers 和 panels
-        triggers: [],
-        panels: [],
-
-        // 是否有触点
-        hasTriggers: true,
-
-        // 触发类型
-        triggerType: 'mouse', // or 'click'
-        // 触发延迟
-        delay: .1, // 100ms
-
-        activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
-        activeTriggerCls: 'ks-active',
-
-        // 可见视图内有多少个 panels
-        steps: 1,
-
-        // 可见视图区域的大小。一般不需要设定此值，仅当获取值不正确时，用于手工指定大小
-        viewSize: []
-    };
-
-    // 插件
-    Switchable.Plugins = [];
-
-    S.augment(Switchable, S.EventTarget, {
-
-        /**
-         * init switchable
-         */
-        _init: function() {
-            var self = this, cfg = self.config;
-
-            // fire event
-            if(self.fire(EVENT_BEFORE_INIT) === false) return;
-
-            // parse markup
-            self._parseMarkup();
-
-            // bind triggers
-            if (cfg.hasTriggers) {
-                self._bindTriggers();
-            }
-
-            // init plugins
-            S.each(Switchable.Plugins, function(plugin) {
-                if(plugin.init) {
-                    plugin.init(self);
-                }
-            });
-            
-            self.fire(EVENT_INIT);
-        },
-
-        /**
-         * 解析 markup, 获取 triggers, panels, content
-         */
-        _parseMarkup: function() {
-            var self = this, container = self.container,
-                cfg = self.config,
-                nav, content, triggers = [], panels = [], i, n, m;
-
-            switch (cfg.markupType) {
-                case 0: // 默认结构
-                    nav = S.get(DOT + cfg.navCls, container);
-                    if (nav) triggers = DOM.children(nav);
-                    content = S.get(DOT + cfg.contentCls, container);
-                    panels = DOM.children(content);
-                    break;
-                case 1: // 适度灵活
-                    triggers = S.query(DOT + cfg.triggerCls, container);
-                    panels = S.query(DOT + cfg.panelCls, container);
-                    break;
-                case 2: // 完全自由
-                    triggers = cfg.triggers;
-                    panels = cfg.panels;
-                    break;
-            }
-
-
-            // get length
-            n = panels.length;
-            self.length = n / cfg.steps;
-
-            // 自动生成 triggers
-            if (cfg.hasTriggers && n > 0 && triggers.length === 0) {
-                triggers = self._generateTriggersMarkup(self.length);
-            }
-
-            // 将 triggers 和 panels 转换为普通数组
-            self.triggers = S.makeArray(triggers);
-            self.panels = S.makeArray(panels);
-
-            // get content
-            self.content = content || panels[0].parentNode;
-        },
-
-        /**
-         * 自动生成 triggers 的 markup
-         */
-        _generateTriggersMarkup: function(len) {
-            var self = this, cfg = self.config,
-                ul = DOM.create('<ul>'), li, i;
-
-            ul.className = cfg.navCls;
-            for (i = 0; i < len; i++) {
-                li = DOM.create('<li>');
-                if (i === self.activeIndex) {
-                    li.className = cfg.activeTriggerCls;
-                }
-                li.innerHTML = i + 1;
-                ul.appendChild(li);
-            }
-
-            self.container.appendChild(ul);
-            return DOM.children(ul);
-        },
-
-        /**
-         * 给 triggers 添加事件
-         */
-        _bindTriggers: function() {
-            var self = this, cfg = self.config,
-                triggers = self.triggers, trigger,
-                i, len = triggers.length;
-
-            for (i = 0; i < len; i++) {
-                (function(index) {
-                    trigger = triggers[index];
-
-                    // 响应点击和 Tab 键
-                    Event.on(trigger, 'click focus', function() {
-                        self._onFocusTrigger(index);
-                    });
-
-                    // 响应鼠标悬浮
-                    if (cfg.triggerType === 'mouse') {
-                        Event.on(trigger, 'mouseenter', function() {
-                            self._onMouseEnterTrigger(index);
-                        });
-                        Event.on(trigger, 'mouseleave', function() {
-                            self._onMouseLeaveTrigger(index);
-                        });
-                    }
-                })(i);
-            }
-        },
-
-        /**
-         * click or tab 键激活 trigger 时触发的事件
-         */
-        _onFocusTrigger: function(index) {
-            var self = this;
-            if (!self._triggerIsValid()) return; // 重复点击
-
-            this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
-            self.switchTo(index);
-        },
-
-        /**
-         * 鼠标悬浮在 trigger 上时触发的事件
-         */
-        _onMouseEnterTrigger: function(index) {
-            var self = this;
-            if (!self._triggerIsValid()) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
-
-            self.switchTimer = S.later(function() {
-                self.switchTo(index);
-            }, self.config.delay * 1000);
-        },
-
-        /**
-         * 鼠标移出 trigger 时触发的事件
-         */
-        _onMouseLeaveTrigger: function() {
-            this._cancelSwitchTimer();
-        },
-
-        /**
-         * 重复触发时的有效判断
-         */
-        _triggerIsValid: function(index) {
-            return this.activeIndex !== index;
-        },
-
-        /**
-         * 取消切换定时器
-         */
-        _cancelSwitchTimer: function() {
-            var self = this;
-            if(self.switchTimer) {
-                self.switchTimer.cancel();
-                self.switchTimer = undefined;
-            }
-        },
-
-        /**
-         * 切换操作
-         */
-        switchTo: function(index, direction) {
-            var self = this, cfg = self.config,
-                triggers = self.triggers, panels = self.panels,
-                activeIndex = self.activeIndex,
-                steps = cfg.steps,
-                fromIndex = activeIndex * steps, toIndex = index * steps;
-
-            if (!self._triggerIsValid()) return self; // 再次避免重复触发
-            if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
-
-            // switch active trigger
-            if (cfg.hasTriggers) {
-                self._switchTrigger(activeIndex > -1 ? triggers[activeIndex] : null, triggers[index]);
-            }
-
-            // switch active panels
-            if (direction === undefined) {
-                direction = index > activeIndex ? FORWARD : BACKWARD;
-            }
-
-            // switch view
-            self._switchView(
-                panels.slice(fromIndex, fromIndex + steps),
-                panels.slice(toIndex, toIndex + steps),
-                index,
-                direction);
-
-            // update activeIndex
-            self.activeIndex = index;
-
-            return self; // chain
-        },
-
-        /**
-         * 切换当前触点
-         */
-        _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
-            var activeTriggerCls = this.config.activeTriggerCls;
-
-            if (fromTrigger) DOM.removeClass(fromTrigger, activeTriggerCls);
-            DOM.addClass(toTrigger, activeTriggerCls);
-        },
-
-        /**
-         * 切换视图
-         */
-        _switchView: function(fromPanels, toPanels, index/*, direction*/) {
-            // 最简单的切换效果：直接隐藏/显示
-            DOM.css(fromPanels, DISPLAY, NONE);
-            DOM.css(toPanels, DISPLAY, BLOCK);
-
-            // fire onSwitch events
-            this._fireOnSwitch(index);
-        },
-
-        /**
-         * 触发 switch 相关事件
-         */
-        _fireOnSwitch: function(index) {
-            this.fire(EVENT_SWITCH, { currentIndex: index });
-        },
-
-        /**
-         * 切换到上一视图
-         */
-        prev: function() {
-            var self = this, activeIndex = self.activeIndex;
-            self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1, BACKWARD);
-        },
-
-        /**
-         * 切换到下一视图
-         */
-        next: function() {
-            var self = this, activeIndex = self.activeIndex;
-            self.switchTo(activeIndex < self.length - 1 ? activeIndex + 1 : 0, FORWARD);
-        }
-    });
-
-    S.Switchable = Switchable;
-});
-
-/**
- * NOTES:
- *
- * 2010.07
- *  - 重构，去掉对 YUI2-Animation 的依赖
- *
- * 2010.04
- *  - 重构，脱离对 yahoo-dom-event 的依赖
- *
- * 2010.03
- *  - 重构，去掉 Widget, 部分代码直接采用 kissy 基础库
- *  - 插件机制从 weave 织入法改成 hook 钩子法
- *
- * TODO:
- *  - http://malsup.com/jquery/cycle/
- *  - http://www.mall.taobao.com/go/chn/mall_chl/flagship.php
- *  - 对 touch 设备的支持
- *
- * References:
- *  - jQuery Scrollable http://flowplayer.org/tools/scrollable.html
- *
- */
-/**
- * Switchable Autoplay Plugin
- * @creator  玉伯<lifesinger@gmail.com>
- */
-KISSY.add('switchable-autoplay', function(S, undefined) {
-
-    var Event = S.Event,
-        Switchable = S.Switchable;
-
-    /**
-     * 添加默认配置
-     */
-    S.mix(Switchable.Config, {
-        autoplay: false,
-        interval: 5, // 自动播放间隔时间
-        pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
-    });
-
-    /**
-     * 添加插件
-     * attached members:
-     *   - this.paused
-     */
-    Switchable.Plugins.push({
-
-        name: 'autoplay',
-
-        init: function(host) {
-            var cfg = host.config, interval = cfg.interval * 1000, timer;
-            if (!cfg.autoplay) return;
-
-            // 鼠标悬停，停止自动播放
-            if (cfg.pauseOnHover) {
-                Event.on(host.container, 'mouseenter', function() {
-                    if(timer) {
-                        timer.cancel();
-                        timer = undefined;
-                    }
-                    host.paused = true; // paused 可以让外部知道 autoplay 的当前状态
-                });
-                Event.on(host.container, 'mouseleave', function() {
-                    host.paused = false;
-                    startAutoplay();
-                });
-            }
-
-            function startAutoplay() {
-                // 设置自动播放
-                timer = S.later(function() {
-                    if (host.paused) return;
-
-                    // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
-                    host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, 'forward');
-                }, interval, true);
-            }
-
-            // go
-            startAutoplay();
-        }
-    });
-});
-/**
- * Switchable Effect Plugin
- * @creator  玉伯<lifesinger@gmail.com>
- */
-KISSY.add('switchable-effect', function(S, undefined) {
-
-    var DOM = S.DOM, Anim = S.Anim,
-        DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
-        OPACITY = 'opacity', Z_INDEX = 'z-index',
-        POSITION = 'position', RELATIVE = 'relative', ABSOLUTE = 'absolute',
-        SCROLLX = 'scrollx', SCROLLY = 'scrolly', FADE = 'fade',
-        LEFT = 'left', TOP = 'top', FLOAT = 'float', PX = 'px',
-        Switchable = S.Switchable, Effects;
-
-    /**
-     * 添加默认配置
-     */
-    S.mix(Switchable.Config, {
-        effect: NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
-        duration: .5, // 动画的时长
-        easing: 'easeNone' // easing method
-    });
-
-    /**
-     * 定义效果集
-     */
-    Switchable.Effects = {
-
-        // 最朴素的显示/隐藏效果
-        none: function(fromEls, toEls, callback) {
-            DOM.css(fromEls, DISPLAY, NONE);
-            DOM.css(toEls, DISPLAY, BLOCK);
-            callback();
-        },
-
-        // 淡隐淡现效果
-        fade: function(fromEls, toEls, callback) {
-            if (fromEls.length !== 1) {
-                S.error('fade effect only supports steps == 1.');
-            }
-            var self = this, cfg = self.config,
-                fromEl = fromEls[0], toEl = toEls[0];
-
-            if (self.anim) self.anim.stop(true);
-
-            // 首先显示下一张
-            DOM.css(toEl, OPACITY, 1);
-
-            // 动画切换
-            self.anim = new Anim(fromEl, { opacity: 0 }, cfg.duration, cfg.easing, function() {
-                self.anim = undefined; // free
-
-                // 切换 z-index
-                DOM.css(toEl, Z_INDEX, 9);
-                DOM.css(fromEl, Z_INDEX, 1);
-
-                callback();
-            }).run();
-        },
-
-        // 水平/垂直滚动效果
-        scroll: function(fromEls, toEls, callback, index) {
-            var self = this, cfg = self.config,
-                isX = cfg.effect === SCROLLX,
-                diff = self.viewSize[isX ? 0 : 1] * index,
-                props = { };
-
-            props[isX ? LEFT : TOP] = -diff + PX;
-            if (self.anim) self.anim.stop();
-
-            self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
-                self.anim = undefined; // free
-                callback();
-            }).run();
-        }
-    };
-    Effects = Switchable.Effects;
-    Effects[SCROLLX] = Effects[SCROLLY] = Effects.scroll;
-
-    /**
-     * 添加插件
-     * attached members:
-     *   - this.viewSize
-     */
-    Switchable.Plugins.push({
-
-        name: 'effect',
-
-        /**
-         * 根据 effect, 调整初始状态
-         */
-        init: function(host) {
-            var cfg = host.config, effect = cfg.effect,
-                panels = host.panels, content = host.content,
-                steps = cfg.steps,
-                activeIndex = host.activeIndex,
-                len = panels.length;
-
-            // 1. 获取高宽
-            host.viewSize = [
-                cfg.viewSize[0] || panels[0].offsetWidth * steps,
-                cfg.viewSize[1] || panels[0].offsetHeight * steps
-            ];
-            // 注：所有 panel 的尺寸应该相同
-            //    最好指定第一个 panel 的 width 和 height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
-
-            // 2. 初始化 panels 样式
-            if (effect !== NONE) { // effect = scrollx, scrolly, fade
-
-                // 这些特效需要将 panels 都显示出来
-                S.each(panels, function(panel) {
-                    DOM.css(panel, DISPLAY, BLOCK);
-                });
-
-                switch (effect) {
-                    // 如果是滚动效果
-                    case SCROLLX:
-                    case SCROLLY:
-                        // 设置定位信息，为滚动效果做铺垫
-                        DOM.css(content, POSITION, ABSOLUTE);
-                        DOM.css(content.parentNode, POSITION, RELATIVE); // 注：content 的父级不一定是 container
-
-                        // 水平排列
-                        if (effect === SCROLLX) {
-                            DOM.css(panels, FLOAT, LEFT);
-
-                            // 设置最大宽度，以保证有空间让 panels 水平排布
-                            DOM.width(content, host.viewSize[0] * (len / steps));
-                        }
-                        break;
-
-                    // 如果是透明效果，则初始化透明
-                    case FADE:
-                        var min = activeIndex * steps,
-                            max = min + steps - 1,
-                            isActivePanel;
-
-                        S.each(panels, function(panel, i) {
-                            isActivePanel = i >= min && i <= max;
-                            DOM.css(panel, {
-                                opacity: isActivePanel ? 1 : 0,
-                                position: ABSOLUTE,
-                                zIndex: isActivePanel ? 9 : 1
-                            });
-                        });
-                        break;
-                }
-            }
-
-            // 3. 在 CSS 里，需要给 container 设定高宽和 overflow: hidden
-        }
-    });
-
-    /**
-     * 覆盖切换方法
-     */
-    S.augment(Switchable, {
-
-        _switchView: function(fromEls, toEls, index, direction) {
-            var self = this, cfg = self.config,
-                effect = cfg.effect,
-                fn = S.isFunction(effect) ? effect : Effects[effect];
-
-            fn.call(self, fromEls, toEls, function() {
-                self._fireOnSwitch(index);
-            }, index, direction);
-        }
-
-    });
-});
-/**
- * Switchable Circular Plugin
- * @creator  玉伯<lifesinger@gmail.com>
- */
-KISSY.add('switchable-circular', function(S, undefined) {
-
-    var DOM = S.DOM,
-        POSITION = 'position', RELATIVE = 'relative',
-        LEFT = 'left', TOP = 'top',
-        EMPTY = '', PX = 'px',
-        FORWARD = 'forward', BACKWARD = 'backward',
-        SCROLLX = 'scrollx', SCROLLY = 'scrolly',
-        Switchable = S.Switchable;
-
-    /**
-     * 添加默认配置
-     */
-    S.mix(Switchable.Config, {
-        circular: false
-    });
-
-    /**
-     * 循环滚动效果函数
-     */
-    function circularScroll(fromEls, toEls, callback, index, direction) {
-        var self = this, cfg = self.config,
-            len = self.length,
-            activeIndex = self.activeIndex,
-            isX = cfg.scrollType === SCROLLX,
-            prop = isX ? LEFT : TOP,
-            viewDiff = self.viewSize[isX ? 0 : 1],
-            diff = -viewDiff * index,
-            props = {},
-            isCritical,
-            isBackward = direction === BACKWARD;
-
-        // 从第一个反向滚动到最后一个 or 从最后一个正向滚动到第一个
-        isCritical = (isBackward && activeIndex === 0 && index === len - 1)
-            || (direction === FORWARD && activeIndex === len - 1 && index === 0);
-
-        if (isCritical) {
-            // 调整位置并获取 diff
-            diff = adjustPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
-        }
-        props[prop] = diff + PX;
-
-        // 开始动画
-        if (self.anim) self.anim.stop();
-        self.anim = new S.Anim(self.content, props, cfg.duration, cfg.easing, function() {
-            if (isCritical) {
-                // 复原位置
-                resetPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
-            }
-            // free
-            self.anim = undefined;
-            callback();
-        }).run();
-    }
-
-    /**
-     * 调整位置
-     */
-    function adjustPosition(panels, index, isBackward, prop, viewDiff) {
-        var self = this, cfg = self.config,
-            steps = cfg.steps,
-            len = self.length,
-            start = isBackward ? len - 1 : 0,
-            from = start * steps,
-            to = (start + 1) * steps,
-            i;
-
-        // 调整 panels 到下一个视图中
-        for (i = from; i < to; i++) {
-            DOM.css(panels[i], POSITION, RELATIVE);
-            DOM.css(panels[i], prop, (isBackward ? -1 : 1) * viewDiff * len);
-        }
-
-        // 偏移量
-        return isBackward ? viewDiff : -viewDiff * len;
-    }
-
-    /**
-     * 复原位置
-     */
-    function resetPosition(panels, index, isBackward, prop, viewDiff) {
-        var self = this, cfg = self.config,
-            steps = cfg.steps,
-            len = self.length,
-            start = isBackward ? len - 1 : 0,
-            from = start * steps,
-            to = (start + 1) * steps,
-            i;
-
-        // 滚动完成后，复位到正常状态
-        for (i = from; i < to; i++) {
-            DOM.css(panels[i], POSITION, EMPTY);
-            DOM.css(panels[i], prop, EMPTY);
-        }
-
-        // 瞬移到正常位置
-        DOM.css(self.content, prop, isBackward ? -viewDiff * (len - 1) : EMPTY);
-    }
-
-    /**
-     * 添加插件
-     */
-    Switchable.Plugins.push({
-
-        name: 'circular',
-
-        /**
-         * 根据 effect, 调整初始状态
-         */
-        init: function(host) {
-            var cfg = host.config;
-
-            // 仅有滚动效果需要下面的调整
-            if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
-                // 覆盖滚动效果函数
-                cfg.scrollType = cfg.effect; // 保存到 scrollType 中
-                cfg.effect = circularScroll;
-            }
-        }
-    });
-});
-
-/**
- * TODO:
- *   - 是否需要考虑从 0 到 2（非最后一个） 的 backward 滚动？需要更灵活
- */
-/**
- * Switchable Lazyload Plugin
- * @creator  玉伯<lifesinger@gmail.com>
- */
-KISSY.add('switchable-lazyload', function(S) {
-
-    var DOM = S.DOM,
-        EVENT_BEFORE_SWITCH = 'beforeSwitch',
-        IMG_SRC = 'img-src',
-        AREA_DATA = 'area-data',
-        FLAGS = { },
-        Switchable = S.Switchable;
-
-    FLAGS[IMG_SRC] = 'data-ks-lazyload-custom';
-    FLAGS[AREA_DATA] = 'ks-datalazyload-custom';
-
-    /**
-     * 添加默认配置
-     */
-    S.mix(Switchable.Config, {
-        lazyDataType: AREA_DATA // or IMG_SRC
-    });
-
-    /**
-     * 织入初始化函数
-     */
-    Switchable.Plugins.push({
-
-        name: 'lazyload',
-
-        init: function(host) {
-            var DataLazyload = S.DataLazyload,
-                cfg = host.config,
-                type = cfg.lazyDataType, flag = FLAGS[type];
-
-            if (!DataLazyload || !type || !flag) return; // 没有延迟项
-
-            host.on(EVENT_BEFORE_SWITCH, loadLazyData);
-
-            /**
-             * 加载延迟数据
-             */
-            function loadLazyData(ev) {
-                var steps = cfg.steps,
-                    from = ev.toIndex * steps ,
-                    to = from + steps;
-
-                DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type);
-                if (isAllDone()) {
-                    host.detach(EVENT_BEFORE_SWITCH, loadLazyData);
-                }
-            }
-
-            /**
-             * 是否都已加载完成
-             */
-            function isAllDone() {
-                var elems, i, len,
-                    isImgSrc = type === IMG_SRC,
-                    tagName = isImgSrc ? 'img' : (type === AREA_DATA ? 'textarea' : '');
-
-                if (tagName) {
-                    elems = S.query(tagName, host.container);
-                    for (i = 0, len = elems.length; i < len; i++) {
-                        if (isImgSrc ? DOM.attr(elems[i], flag) : DOM.hasClass(elems[i], flag)) return false;
-                    }
-                }
-                return true;
-            }
-        }
-    });
-});
-/**
- * Switchable Autorender Plugin
- * @creator  玉伯<lifesinger@gmail.com>
- * @depends  ks-core, json
- */
-KISSY.add('switchable-autorender', function(S) {
-
-    /**
-     * 自动渲染 container 元素内的所有 Switchable 组件
-     */
-    S.Switchable.autoRender = function(container, hookPrefix, dataAttrName) {
-        hookPrefix = '.' + (hookPrefix || 'KS_');
-        dataAttrName = dataAttrName || 'data-ks-switchable';
-
-        S.each(['Switchable', 'Tabs', 'Slide', 'Carousel', 'Accordion'], function(name) {
-            S.each(S.query(hookPrefix + name, container), function(elem) {
-                try {
-                    var config = elem.getAttribute(dataAttrName);
-                    if(config) config = config.replace(/'/g, '"');
-                    new S[name](elem, S.JSON.parse(config));
-                } catch(ex) {
-                    S.log('Switchable.autoRender: ' + ex, 'warn');
-                }
-            });
-        });
-    }
-});
-/**
- * Tabs Widget
- * @creator  玉伯<lifesinger@gmail.com>
- */
-KISSY.add('tabs', function(S) {
-
-    /**
-     * Tabs Class
-     * @constructor
-     */
-    function Tabs(container, config) {
-        var self = this;
-
-        // factory or constructor
-        if (!(self instanceof Tabs)) {
-            return new Tabs(container, config);
-        }
-
-        Tabs.superclass.constructor.call(self, container, config);
-    }
-
-    S.extend(Tabs, S.Switchable);
-    S.Tabs = Tabs;
-});
-/**
- * Tabs Widget
- * @creator     玉伯<lifesinger@gmail.com>
- */
-KISSY.add('slide', function(S) {
-
-    /**
-     * 默认配置，和 Switchable 相同的部分此处未列出
-     */
-    var defaultConfig = {
-        autoplay: true,
-        circular: true
-    };
-
-    /**
-     * Slide Class
-     * @constructor
-     */
-    function Slide(container, config) {
-        var self = this;
-
-        // factory or constructor
-        if (!(self instanceof Slide)) {
-            return new Slide(container, config);
-        }
-
-        Slide.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
-    }
-
-    S.extend(Slide, S.Switchable);
-    S.Slide = Slide;
-});
-/**
- * Carousel Widget
- * @creator  玉伯<lifesinger@gmail.com>
- */
-KISSY.add('carousel', function(S, undefined) {
-
-    var DOM = S.DOM, Event = S.Event,
-        CLS_PREFIX = 'ks-switchable-', DOT = '.',
-        PREV_BTN = 'prevBtn', NEXT_BTN = 'nextBtn',
-
-        /**
-         * 默认配置，和 Switchable 相同的部分此处未列出
-         */
-        defaultConfig = {
-            circular: true,
-            prevBtnCls: CLS_PREFIX + 'prev-btn',
-            nextBtnCls: CLS_PREFIX + 'next-btn',
-            disableBtnCls: CLS_PREFIX + 'disable-btn'
-        };
-
-    /**
-     * Carousel Class
-     * @constructor
-     */
-    function Carousel(container, config) {
-        var self = this;
-
-        // factory or constructor
-        if (!(self instanceof Carousel)) {
-            return new Carousel(container, config);
-        }
-
-        // 插入 carousel 的初始化逻辑
-        self.on('init', function() { init_carousel(self); });
-
-        // call super
-        Carousel.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
-    }
-
-    S.extend(Carousel, S.Switchable);
-    S.Carousel = Carousel;
-
-    /**
-     * Carousel 的初始化逻辑
-     * 增加了:
-     *   self.prevBtn
-     *   self.nextBtn
-     */
-    function init_carousel(self) {
-        var cfg = self.config, disableCls = cfg.disableBtnCls;
-
-        // 获取 prev/next 按钮，并添加事件
-        S.each(['prev', 'next'], function(d) {
-            var btn = self[d + 'Btn'] = S.get(DOT + cfg[d + 'BtnCls'], self.container);
-
-            Event.on(btn, 'click', function(ev) {
-                ev.preventDefault();
-                if(!DOM.hasClass(btn, disableCls)) self[d]();
-            });
-        });
-
-        // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
-        // circular = true 时，无需处理
-        if (!cfg.circular) {
-            self.on('switch', function(ev) {
-                var i = ev.currentIndex,
-                    disableBtn = (i === 0) ? self[PREV_BTN]
-                        : (i === self.length - 1) ? self[NEXT_BTN]
-                        : undefined;
-
-                DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
-                if (disableBtn) DOM.addClass(disableBtn, disableCls);
-            });
-        }
-
-        // 触发 itemSelected 事件
-        Event.on(self.panels, 'click focus', function() {
-            self.fire('itemSelected', { item: this });
-        });
-    }
-});
-
-
-/**
- * NOTES:
- *
- * 2010.07
- *  - 添加对 prevBtn/nextBtn 的支持
- *  - 添加 itemSelected 事件
- *
- * TODO:
- *  - 对键盘事件的支持，比如 Up/Down 触发 prevItem/nextItem, PgDn/PgUp 触发 prev/next
- *  - itemSelected 时，自动居中的特性
- */
-/**
- * Accordion Widget
- * @creator  沉鱼<fool2fish@gmail.com>
- */
-KISSY.add('accordion', function(S) {
-
-    var DOM = S.DOM,
-        DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
-
-        defaultConfig = {
-            markupType: 1,
-            triggerType: 'click',
-            multiple: false
-        };
-
-    /**
-     * Accordion Class
-     * @constructor
-     */
-    function Accordion(container, config) {
-        var self = this;
-
-        // factory or constructor
-        if (!(self instanceof Accordion)) {
-            return new Accordion(container, config);
-        }
-
-        Accordion.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
-    }
-
-    S.extend(Accordion, S.Switchable);
-    S.Accordion = Accordion;
-
-    S.augment(Accordion, {
-
-        /**
-         * 重复触发时的有效判断
-         */
-        _triggerIsValid: function(index) {
-            // multiple 模式下，再次触发意味着切换展开/收缩状态
-            return this.activeIndex !== index || this.config.multiple;
-        },
-
-        /**
-         * 切换视图
-         */
-        _switchView: function(fromPanels, toPanels, index) {
-            var self = this, cfg = self.config,
-                panel = toPanels[0];
-
-            if (cfg.multiple) {
-                DOM.toggleClass(self.triggers[index], cfg.activeTriggerCls);
-                DOM.css(panel, DISPLAY, panel.style[DISPLAY] == NONE ? BLOCK : NONE);
-                this._fireOnSwitch(index);
-            }
-            else {
-                Accordion.superclass._switchView.call(self, fromPanels, toPanels, index);
-            }
-        }
-    });
-});
-
-/**
- * TODO:
- *
- *  - 支持动画
- *
- */
-/*
-Copyright 2010, KISSY UI Library v1.1.2dev
-MIT Licensed
-build time: ${build.time}
-*/
-/**
- * 提示补全组件
- * @module   suggest
- * @creator  玉伯<lifesinger@gmail.com>
- * @depends  ks-core
- */
-KISSY.add('suggest', function(S, undefined) {
-
-    var DOM = S.DOM, Event = S.Event,
-        win = window, doc = document, bd, head = S.get('head'),
-        ie = S.UA.ie, ie6 = (ie === 6),
-
-        CALLBACK_STR = 'g_ks_suggest_callback', // 约定的全局回调函数
-        PREFIX = 'ks-suggest-',
-        STYLE_ID = PREFIX + 'style', // 样式 style 元素的 id
-
-        CONTAINER_CLS = PREFIX + 'container',
-        KEY_EL_CLS = PREFIX + 'key',
-        RESULT_EL_CLS = PREFIX + 'result',
-        SELECTED_ITEM_CLS = 'ks-selected', // 选中项
-        ODD_ITEM_CLS = 'ks-odd', // 奇数项
-        EVEN_ITEM_CLS = 'ks-even', // 偶数项
-        CONTENT_CLS = PREFIX + 'content',
-        FOOTER_CLS = PREFIX + 'footer',
-        CLOSE_BTN_CLS = PREFIX + 'closebtn',
-        SHIM_CLS = PREFIX + 'shim', // iframe shim 的 class
-
-        EVENT_BEFORE_START = 'beforeStart', // 监控计时器开始前触发，可以用来做条件触发
-        EVENT_ITEM_SELECT = 'itemSelect', // 选中某项时触发，可以用来添加监控埋点等参数
-        EVENT_BEFORE_SUBMIT = 'beforeSubmit', // 表单提交前触发，可以用来取消提交或添加特定参数
-        EVENT_BEFORE_DATA_REQUEST = 'beforeDataRequest', // 请求数据前触发，可以用来动态修改请求 url 和参数
-        EVENT_DATA_RETURN = 'dataReturn', // 获得返回数据时触发，可以用来动态修正数据
-        EVENT_UPDATE_FOOTER = 'updateFooter', // 更新底部内容时触发，可以用来动态添加自定义内容
-        EVENT_BEFORE_SHOW = 'beforeShow', // 显示提示层前触发，可以用来动态修改提示层数据
-
-        TIMER_DELAY = 200,
-        EMPTY = '', HIDDEN = 'hidden',
-        DISPLAY = 'display', NONE = 'none',
-        LI = 'LI', li = 'li', DIV = '<div>',
-        RESULT = 'result', KEY = 'key',
-        DATA_TIME = 'data-time',
-        PARSEINT = parseInt,
-        RE_FOCUS_ELEMS = /^(input|button|a)$/i,
-
-        /**
-         * Suggest 的默认配置
-         */
-        defaultConfig = {
-            /**
-             * 用户附加给悬浮提示层的 class
-             *
-             * 提示层的默认结构如下：
-             * <div class='kssuggest-container {containerCls}'>
-             *     <ol class="ks-suggest-content">
-             *         <li>
-             *             <span class='ks-suggest-key'>...</span>
-             *             <span class='ks-suggest-result'>...</span>
-             *         </li>
-             *     </ol>
-             *     <div class='ks-suggest-footer'>
-             *         <a class='ks-suggest-close-btn'>...</a>
-             *     </div>
-             * </div>
-             * @type String
-             */
-            containerCls: EMPTY,
-
-            /**
-             * 提示层的宽度
-             * 注意：默认情况下，提示层的宽度和input输入框的宽度保持一致
-             * 示范取值：'200px', '10%' 等，必须带单位
-             * @type String
-             */
-            //containerWidth: EMPTY,
-
-            /**
-             * result 的格式
-             * @type String
-             */
-            resultFormat: '%result%',
-
-            /**
-             * 是否显示关闭按钮
-             * @type Boolean
-             */
-            //closeBtn: false,
-
-            /**
-             * 关闭按钮上的文字
-             * @type String
-             */
-            closeBtnText: '关闭',
-
-            /**
-             * 是否需要 iframe shim 默认只在 ie6 下显示
-             * @type Boolean
-             */
-            shim: ie6,
-
-            /**
-             * 初始化后，自动激活
-             * @type Boolean
-             */
-            //autoFocus: false,
-
-            /**
-             * 选择某项时，是否自动提交表单
-             * @type Boolean
-             */
-            submitOnSelect: true
-        };
-
-    /**
-     * 提示补全组件
-     * @class Suggest
-     * @constructor
-     * @param {String|HTMLElement} textInput
-     * @param {String} dataSource
-     * @param {Object} config
-     */
-    function Suggest(textInput, dataSource, config) {
-        var self = this;
-
-        // allow instantiation without the new operator
-        if (!(self instanceof Suggest)) {
-            return new Suggest(textInput, dataSource, config);
-        }
-
-        /**
-         * 文本输入框
-         * @type HTMLElement
-         */
-        self.textInput = S.get(textInput);
-
-        /**
-         * 获取数据的 URL
-         * @type {String|Object}
-         */
-        // 归一化为：http://path/to/suggest.do? or http://path/to/suggest.do?p=1&
-        dataSource += (dataSource.indexOf('?') === -1) ? '?' : '&';
-        self.dataSource = dataSource + 'code=utf-8&callback=' + CALLBACK_STR;
-
-        /**
-         * 通过 jsonp 返回的数据
-         * @type Object
-         */
-        //self.returnedData = undefined;
-
-        /**
-         * 配置参数
-         * @type Object
-         */
-        self.config = S.merge(defaultConfig, config);
-
-        /**
-         * 存放提示信息的容器
-         * @type HTMLElement
-         */
-        //self.container = undefined;
-        //self.content = undefined;
-        //self.footer = undefined;
-
-        /**
-         * 输入框的值
-         * @type String
-         */
-        self.query = EMPTY;
-
-        /**
-         * 获取数据时的参数
-         * @type String
-         */
-        self.queryParams = EMPTY;
-
-        /**
-         * 内部定时器
-         * @private
-         * @type Object
-         */
-        //self._timer = undefined;
-
-        /**
-         * 计时器是否处于运行状态
-         * @private
-         * @type Boolean
-         */
-        //self._isRunning = false;
-
-        /**
-         * 获取数据的 script 元素
-         * @type HTMLElement
-         */
-        //self.dataScript = undefined;
-
-        /**
-         * 数据缓存
-         * @private
-         * @type Object
-         */
-        self._dataCache = { };
-
-        /**
-         * 最新 script 的时间戳
-         * @type String
-         */
-        //self._latestScriptTime = EMPTY;
-
-        /**
-         * script返回的数据是否已经过期
-         * @type Boolean
-         */
-        //self._scriptDataIsOut = false;
-
-        /**
-         * 提示层的当前选中项
-         * @type Boolean
-         */
-        //self.selectedItem = undefined;
-
-        /**
-         * 焦点是否在提示层
-         */
-        //self._focusing = false;
-
-        // init
-        self._init();
-    }
-
-    S.augment(Suggest, S.EventTarget, {
-
-        /**
-         * 初始化方法
-         * @protected
-         */
-        _init: function() {
-            var self = this;
-            bd = doc.body;
-
-            self._initTextInput();
-            self._initContainer();
-            if (self.config.shim) self._initShim();
-
-            self._initStyle();
-            self._initEvent();
-        },
-
-        /**
-         * 初始化输入框
-         */
-        _initTextInput: function() {
-            var self = this,
-                input = self.textInput,
-                isDowningOrUping = false, // 是否持续按住 DOWN / UP 键
-                pressingCount = 0; // 持续按住某键时，连续触发的 keydown 次数。注意 Opera 只会触发一次
-
-            DOM.attr(input, 'autocomplete', 'off');
-            if (self.config['autoFocus']) input.focus();
-
-            // 监控 keydown 事件
-            // 注：截至 2010/08/03, 在 Opera 10.60 中，输入法开启时，依旧不会触发任何键盘事件
-            Event.on(input, 'keydown', function(ev) {
-                var keyCode = ev.keyCode;
-                //S.log('keydown ' + keyCode);
-
-                // ESC 键，隐藏提示层并还原初始输入
-                if (keyCode === 27) {
-                    self.hide();
-                    input.value = self.query;
-                }
-                // 方向键，包括 PgUp, PgDn, End, Home, Left, Up, Right, Down
-                else if (keyCode > 32 && keyCode < 41) {
-                    // 如果输入框无值，按下以上键时，将响应转移到页面上，以避免自动定焦导致的键盘导航问题
-                    if (!input.value) {
-                        input.blur();
-                    }
-                    // DOWN / UP 键
-                    else if (keyCode === 40 || keyCode === 38) {
-                        // 按住键不动时，延时处理。这样可以使操作看起来更自然，避免太快导致的体验不好
-                        if (pressingCount++ === 0) {
-                            if (self._isRunning) self.stop();
-                            isDowningOrUping = true;
-                            self._selectItem(keyCode === 40);
-                        }
-                        else if (pressingCount == 3) {
-                            pressingCount = 0;
-                        }
-                    }
-                }
-                // ENTER 键
-                else if (keyCode === 13) {
-                    // 提交表单前，先隐藏提示层并停止计时器
-                    input.blur(); // 这一句还可以阻止掉浏览器的默认提交事件
-
-                    // 如果是键盘选中某项后回车，触发 onItemSelect 事件
-                    if (isDowningOrUping) {
-                        if (input.value == self._getSelectedItemKey()) { // 确保值匹配
-                            if(self.fire(EVENT_ITEM_SELECT) === false) return;
-                        }
-                    }
-
-                    // 提交表单
-                    self._submitForm();
-                }
-                // 非以上控制键，开启计时器
-                else {
-                    if (!self._isRunning) {
-                        // 1. 当网速较慢，suggest.js 还未下载和初始化完时，用户可能就已经开始输入
-                        //    这时，focus 事件已经不会触发，需要在 keydown 里触发定时器
-                        // 2. 非 DOWN/UP 等控制键时，需要激活定时器
-                        self.start();
-                    }
-                    isDowningOrUping = false;
-                }
-            });
-
-            // reset pressingCount
-            Event.on(input, 'keyup', function() {
-                pressingCount = 0;
-            });
-
-            // 失去焦点时，停止计时器，并隐藏提示层
-            Event.on(input, 'blur', function() {
-                self.stop();
-
-                // 点击提示层中的 input 输入框时，首先会输发这里的 blur 事件，之后才是 focusin
-                // 因此需要 setTimeout 一下，更换顺序
-                S.later(function() {
-                    if (!self._focusing) { // 焦点在提示层时，不关闭
-                        self.hide();
-                    }
-                }, 0);
-            });
-        },
-
-        /**
-         * 初始化提示层容器
-         */
-        _initContainer: function() {
-            var self = this,
-                container = DOM.create(DIV, {
-                    'class': CONTAINER_CLS + ' ' + self.config.containerCls,
-                    style: 'position:absolute;visibility:hidden'
-                }),
-                content = DOM.create(DIV, {
-                    'class': CONTENT_CLS
-                }),
-                footer = DOM.create(DIV, {
-                    'class': FOOTER_CLS
-                });
-
-            container.appendChild(content);
-            container.appendChild(footer);
-            bd.insertBefore(container, bd.firstChild);
-
-            self.container = container;
-            self.content = content;
-            self.footer = footer;
-
-            self._initContainerEvent();
-        },
-
-        /**
-         * 设置容器的 left, top, width
-         */
-        _setContainerRegion: function() {
-            var self = this,
-                input = self.textInput,
-                p = DOM.offset(input),
-                container = self.container;
-
-            DOM.offset(container, {
-                left: p.left,
-                top: p.top + input.offsetHeight - 1 // 默认向上偏差 1, 以覆盖掉 input 的下边框
-            });
-
-            // 默认 container 的边框为 1, padding 为 0, 因此 width = offsetWidth - 2
-            DOM.width(container, self.config['containerWidth'] || input.offsetWidth - 2);
-        },
-
-        /**
-         * 初始化容器事件
-         */
-        _initContainerEvent: function() {
-            var self = this,
-                input = self.textInput,
-                container = self.container,
-                content = self.content,
-                footer = self.footer,
-                mouseDownItem, mouseLeaveFooter;
-
-            Event.on(content, 'mousemove', function(ev) {
-                var target = ev.target;
-
-                if (target.nodeName !== LI) {
-                    target = DOM.parent(target, li);
-                }
-
-                if (DOM.contains(content, target)) {
-                    if (target !== self.selectedItem) {
-                        // 移除老的
-                        self._removeSelectedItem();
-                        // 设置新的
-                        self._setSelectedItem(target);
-                    }
-                }
-            });
-
-            Event.on(content, 'mousedown', function(ev) {
-                var target = ev.target;
-
-               // 可能点击在 li 的子元素上
-                if (target.nodeName !== LI) {
-                    target = DOM.parent(target, li);
-                }
-                mouseDownItem = target;
-            });
-
-            // 鼠标按下时，让输入框不会失去焦点
-            Event.on(container, 'mousedown', function(ev) {
-                if (!RE_FOCUS_ELEMS.test(ev.target.nodeName)) { // footer 区域的 input 等元素不阻止
-                    // 1. for IE
-                    input.onbeforedeactivate = function() {
-                        win.event.returnValue = false;
-                        input.onbeforedeactivate = null;
-                    };
-                    // 2. for W3C
-                    ev.preventDefault();
-                }
-            });
-
-            Event.on(content, 'mouseup', function(ev) {
-                var target = ev.target;
-                if(ev.which > 2) return; // 非左键和中键点击
-
-                // 可能点击在 li 的子元素上
-                if (target.nodeName !== LI) {
-                    target = DOM.parent(target, li);
-                }
-                
-                // 在提示层 A 项处按下鼠标，移动到 B 处释放，不触发 onItemSelect
-                if (target != mouseDownItem) return;
-
-                // 必须点击在 content 内部的 li 上
-                if (DOM.contains(content, target)) {
-                    self._updateInputFromSelectItem(target);
-
-                    // 触发选中事件
-                    if(self.fire(EVENT_ITEM_SELECT) === false) return;
-
-                    // 提交表单前，先隐藏提示层并停止计时器
-                    input.blur();
-
-                    // 提交表单
-                    self._submitForm();
-                }
-            });
-
-            // footer 获取到焦点，比如同店购的输入框
-            Event.on(footer, 'focusin', function() {
-                self._focusing = true;
-                self._removeSelectedItem();
-                mouseLeaveFooter = false; // 在这里还原为 false 即可
-            });
-
-            Event.on(footer, 'focusout', function() {
-                self._focusing = false;
-
-                // 如果立刻 focus textInput 的话，无法从 footer 的一个输入框切换到另一个
-                // 因此需要等待另一个输入框 focusin 触发后，再执行下面的逻辑
-                S.later(function() {
-                    // 鼠标已移开 footer 区域
-                    if(mouseLeaveFooter) {
-                        self.hide();
-                    }
-                    // 不是转移到另一个输入框，而是在 footer 非输入框处点击
-                    else if (!self._focusing) {
-                        self.textInput.focus();
-                    }
-                }, 0);
-            });
-
-            // 使得在 footer 的输入框获取焦点后，点击提示层外面，能关闭提示层
-            Event.on(self.container, 'mouseleave', function() {
-                mouseLeaveFooter = true;
-            });
-
-            // 点击在关闭按钮上
-            Event.on(footer, 'click', function(ev) {
-                if (DOM.hasClass(ev.target, CLOSE_BTN_CLS)) {
-                    self.hide();
-                }
-            })
-        },
-
-        /**
-         * click 选择 or enter 后，提交表单
-         */
-        _submitForm: function() {
-            var self = this;
-
-            // 注：对于键盘控制 enter 选择的情况，由 html 自身决定是否提交。否则会导致某些输入法下，用 enter 选择英文时也触发提交
-            if (self.config.submitOnSelect) {
-                var form = self.textInput.form;
-                if (!form) return;
-
-                if(self.fire(EVENT_BEFORE_SUBMIT, { form: form }) === false) return;
-
-                // 通过 js 提交表单时，不会触发 onsubmit 事件
-                // 需要 js 自己触发
-                // 这里触发的目的是，使得其它脚本中给 form 注册的 onsubmit 事件可以正常触发
-                if (doc.createEvent) { // w3c
-                    var evObj = doc.createEvent('MouseEvents');
-                    evObj.initEvent('submit', true, false);
-                    form.dispatchEvent(evObj);
-                }
-                else if (doc.createEventObject) { // ie
-                    form.fireEvent('onsubmit');
-                }
-
-                form.submit();
-            }
-        },
-
-        /**
-         * 给容器添加 iframe shim 层
-         */
-        _initShim: function() {
-            var iframe = DOM.create('<iframe>', {
-                src: 'about:blank',
-                'class': SHIM_CLS,
-                style: 'position:absolute;visibility:hidden;border:none'
-            });
-            this.container.shim = iframe;
-
-            bd.insertBefore(iframe, bd.firstChild);
-        },
-
-        /**
-         * 设置 shim 的 left, top, width, height
-         */
-        _setShimRegion: function() {
-            var self = this, container = self.container,
-                style = container.style, shim = container.shim;
-            if (shim) {
-                DOM.css(shim, {
-                    left: PARSEINT(style.left) - 2, // -2 可以解决吞边线的 bug
-                    top: style.top,
-                    width: PARSEINT(style.width) + 2,
-                    height: DOM.height(container) - 2
-                });
-            }
-        },
-
-        /**
-         * 初始化样式
-         */
-        _initStyle: function() {
-            var styleEl = S.get('#' + STYLE_ID);
-            if (styleEl) return; // 防止多个实例时重复添加
-
-            DOM.addStyleSheet(
-                '.ks-suggest-container{background:white;border:1px solid #999;z-index:99999}'
-                + '.ks-suggest-shim{z-index:99998}'
-                + '.ks-suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}'
-                + '.ks-suggest-container .ks-selected{background-color:#39F;cursor:default}'
-                + '.ks-suggest-key{float:left;text-align:left;padding-left:5px}'
-                + '.ks-suggest-result{float:right;text-align:right;padding-right:5px;color:green}'
-                + '.ks-suggest-container .ks-selected span{color:#FFF;cursor:default}'
-                + '.ks-suggest-footer{padding:0 5px 5px}'
-                + '.ks-suggest-closebtn{float:right}'
-                + '.ks-suggest-container li,.ks-suggest-footer{overflow:hidden;zoom:1;clear:both}'
-                /* hacks */
-                + '.ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}',
-                STYLE_ID);
-        },
-
-        /**
-         * 初始化事件
-         */
-        _initEvent: function() {
-            var self = this;
-
-            // onresize 时，调整提示层的位置
-            Event.on(win, 'resize', function() {
-                self._setContainerRegion();
-                self._setShimRegion();
-                // 2010-08-04: 为了保持连贯，取消了定时器
-            });
-        },
-
-        /**
-         * 启动计时器，开始监听用户输入
-         */
-        start: function() {
-            var self = this;
-            if(self.fire(EVENT_BEFORE_START) === false) return;
-
-            Suggest.focusInstance = self;
-
-            self._timer = S.later(function() {
-                self._updateContent();
-                self._timer = S.later(arguments.callee, TIMER_DELAY);
-            }, TIMER_DELAY);
-
-            self._isRunning = true;
-        },
-
-        /**
-         * 停止计时器
-         */
-        stop: function() {
-            var self = this;
-
-            Suggest.focusInstance = undefined;
-            if(self._timer) self._timer.cancel();
-            self._isRunning = false;
-        },
-
-        /**
-         * 显示提示层
-         */
-        show: function() {
-            var self = this;
-            if (self.isVisible()) return;
-            var container = self.container, shim = container.shim;
-
-            // 每次显示前，都重新计算位置，这样能自适应 input 的变化（牺牲少量性能，满足更普适的需求）
-            self._setContainerRegion();
-            visible(container);
-
-            if (shim) {
-                self._setShimRegion();
-                visible(shim);
-            }
-        },
-
-        /**
-         * 隐藏提示层
-         */
-        hide: function() {
-            if (!this.isVisible()) return;
-            var container = this.container, shim = container.shim;
-
-            if (shim) invisible(shim);
-            invisible(container);
-        },
-
-        /**
-         * 提示层是否显示
-         */
-        isVisible: function() {
-            return this.container.style.visibility != HIDDEN;
-        },
-
-        /**
-         * 更新提示层的数据
-         */
-        _updateContent: function() {
-            var self = this, input = self.textInput, q;
-
-            // 检测是否需要更新。注意：加入空格也算有变化
-            if (input.value == self.query) return;
-            q = self.query = input.value;
-
-            // 1. 输入为空时，隐藏提示层
-            if (!S.trim(q)) {
-                self._fillContainer();
-                self.hide();
-                return;
-            }
-
-            if (self._dataCache[q] !== undefined) { // 1. 使用缓存数据
-                //S.log('use cache');
-                self._fillContainer(self._dataCache[q]);
-                self._displayContainer();
-
-            } else { // 2. 请求服务器数据
-                self._requestData();
-            }
-        },
-
-        /**
-         * 通过 script 元素异步加载数据
-         */
-        _requestData: function() {
-            var self = this, script;
-            //S.log('request data via script');
-
-            if (!ie) self.dataScript = undefined; // IE不需要重新创建 script 元素
-
-            if (!self.dataScript) {
-                script = doc.createElement('script');
-                script.charset = 'utf-8';
-                script.async = true;
-
-                head.insertBefore(script, head.firstChild);
-                self.dataScript = script;
-
-                if (!ie) {
-                    var t = S.now();
-                    self._latestScriptTime = t;
-                    DOM.attr(script, DATA_TIME, t);
-
-                    Event.on(script, 'load', function() {
-                        // 判断返回的数据是否已经过期
-                        self._scriptDataIsOut = DOM.attr(script, DATA_TIME) != self._latestScriptTime;
-                    });
-                }
-            }
-
-            self.queryParams = 'q=' + encodeURIComponent(self.query);
-            if(self.fire(EVENT_BEFORE_DATA_REQUEST) === false) return;
-
-            // 注意：没必要加时间戳，是否缓存由服务器返回的Header头控制
-            self.dataScript.src = self.dataSource + '&' + self.queryParams;
-        },
-
-        /**
-         * 处理获取的数据
-         * @param {Object} data
-         */
-        _handleResponse: function(data) {
-            var self = this, formattedData,
-                content = EMPTY, i, len, list, li, key, itemData;
-            //S.log('handle response');
-            
-            if (self._scriptDataIsOut) return; // 抛弃过期数据，否则会导致 bug：1. 缓存 key 值不对； 2. 过期数据导致的闪屏
-
-            self.returnedData = data;
-            if(self.fire(EVENT_DATA_RETURN, { data: data }) === false) return;
-
-            // 格式化数据
-            formattedData = self._formatData(self.returnedData);
-
-            // 填充数据
-            if ((len = formattedData.length) > 0) {
-                list = DOM.create('<ol>');
-                for (i = 0; i < len; ++i) {
-                    itemData = formattedData[i];
-                    li = self._formatItem((key = itemData[KEY]), itemData[RESULT]);
-
-                    // 缓存 key 值到 attribute 上
-                    DOM.attr(li, KEY, key);
-
-                    // 添加奇偶 class
-                    DOM.addClass(li, i % 2 ? EVEN_ITEM_CLS : ODD_ITEM_CLS);
-                    list.appendChild(li);
-                }
-                content = list;
-            }
-            self._fillContainer(content);
-
-            // fire event
-            // 实际上是 beforeCache，但从用户的角度看，是 beforeShow
-            // 这样可以保证重复内容不用重新生成，直接用缓存
-            if (self.fire(EVENT_BEFORE_SHOW) === false) return;
-
-            // cache
-            self._dataCache[self.query] = DOM.html(self.content);
-
-            // 显示容器
-            self._displayContainer();
-        },
-
-        /**
-         * 格式化输入的数据对象为标准格式
-         * @param {Object} data 格式可以有 3 种：
-         *  1. {'result' : [['key1', 'result1'], ['key2', 'result2'], ...]}
-         *  2. {'result' : ['key1', 'key2', ...]}
-         *  3. 1 和 2 的组合
-         *  4. 标准格式
-         *  5. 上面 1 - 4 中，直接取 o['result'] 的值
-         * @return Object 标准格式的数据：
-         *  [{'key' : 'key1', 'result' : 'result1'}, {'key' : 'key2', 'result' : 'result2'}, ...]
-         */
-        _formatData: function(data) {
-            var arr = [], len, item, i, j = 0;
-            if (!data) return arr;
-            if (S.isArray(data[RESULT])) data = data[RESULT];
-            if (!(len = data.length)) return arr;
-
-            for (i = 0; i < len; ++i) {
-                item = data[i];
-
-                if (S.isString(item)) { // 只有 key 值时
-                    arr[j++] = { 'key' : item };
-                } else if (S.isArray(item) && item.length > 1) { // ['key', 'result'] 取数组前2个
-                    arr[j++] = {'key' : item[0], 'result' : item[1]};
-                }
-                // 不能识别的，直接忽略掉
-            }
-            return arr;
-        },
-
-        /**
-         * 格式化输出项
-         * @param {String} key 查询字符串
-         * @param {Number} result 结果 可不设
-         * @return {HTMLElement}
-         */
-        _formatItem: function(key, result) {
-            var li = DOM.create('<li>'),
-                keyEl = DOM.create('<span>', {
-                    'class': KEY_EL_CLS
-                }),
-                resultText, resultEl;
-
-            DOM.html(keyEl, key);
-            li.appendChild(keyEl);
-
-            if (result) {
-                resultText = this.config.resultFormat.replace('%result%', result);
-                if (S.trim(resultText)) { // 有值时才创建
-                    resultEl = DOM.create('<span>', {
-                        'class': RESULT_EL_CLS
-                    });
-                    DOM.html(resultEl, resultText);
-                    li.appendChild(resultEl);
-                }
-            }
-
-            return li;
-        },
-
-        /**
-         * 填充提示层容器
-         */
-        _fillContainer: function(content, footer) {
-            this._fillContent(content || EMPTY);
-            this._fillFooter(footer || EMPTY);
-        },
-
-        /**
-         * 填充提示层内容层
-         * @param {String|HTMLElement} html innerHTML or Child Node
-         */
-        _fillContent: function(html) {
-            replaceContent(this.content, html);
-            this.selectedItem = undefined; // 一旦重新填充了，selectedItem 就没了，需要重置
-        },
-
-        /**
-         * 填充提示层底部
-         */
-        _fillFooter: function(html) {
-            var self = this, cfg = self.config,
-                footer = self.footer, closeBtn;
-
-            replaceContent(footer, html);
-
-            // 关闭按钮
-            if (cfg['closeBtn']) {
-                closeBtn = DOM.create('<a>', {
-                    'class': CLOSE_BTN_CLS,
-                    href: 'javascript: void(0)',
-                    target: '_self' // bug fix: 覆盖<base target='_blank' />，否则会弹出空白页面
-                });
-                DOM.html(closeBtn, cfg.closeBtnText);
-                footer.appendChild(closeBtn);
-            }
-
-            // 根据 query 参数，有可能填充不同的内容到 footer
-            self.fire(EVENT_UPDATE_FOOTER, { footer: footer, query: self.query });
-
-            // 无内容时，隐藏掉
-            DOM.css(footer, DISPLAY, DOM.text(footer) ? EMPTY : NONE);
-        },
-
-        /**
-         * 根据 contanier 的内容，显示或隐藏容器
-         */
-        _displayContainer: function() {
-            var self = this;
-
-            if (S.trim(DOM.text(self.container))) {
-                self.show();
-            } else {
-                self.hide();
-            }
-        },
-
-        /**
-         * 选中提示层中的上/下一个条
-         * @param {Boolean} down true 表示 down, false 表示 up
-         */
-        _selectItem: function(down) {
-            var self = this,
-                items = S.query(li, self.container),
-                newSelectedItem;
-            if (items.length === 0) return;
-
-            // 有可能用 ESC 隐藏了，直接显示即可
-            if (!self.isVisible()) {
-                self.show();
-                return; // 保留原来的选中状态
-            }
-
-            // 没有选中项时，选中第一/最后项
-            if (!self.selectedItem) {
-                newSelectedItem = items[down ? 0 : items.length - 1];
-            } else {
-                // 选中下/上一项
-                newSelectedItem = DOM[down ? 'next' : 'prev'](self.selectedItem);
-                // 已经到了最后/前一项时，归位到输入框，并还原输入值
-                if (!newSelectedItem) {
-                    self.textInput.value = self.query;
-                }
-            }
-
-            // 移除当前选中项
-            self._removeSelectedItem();
-
-            // 选中新项
-            if (newSelectedItem) {
-                self._setSelectedItem(newSelectedItem);
-                self._updateInputFromSelectItem();
-            }
-        },
-
-        /**
-         * 移除选中项
-         */
-        _removeSelectedItem: function() {
-            DOM.removeClass(this.selectedItem, SELECTED_ITEM_CLS);
-            this.selectedItem = undefined;
-        },
-
-        /**
-         * 设置当前选中项
-         */
-        _setSelectedItem: function(item) {
-            DOM.addClass(item, SELECTED_ITEM_CLS);
-            this.selectedItem = item;
-            this.textInput.focus(); // 考虑从 footer 移动到 content 区域，需要重新聚焦
-        },
-
-        /**
-         * 获取提示层中选中项的 key 字符串
-         */
-        _getSelectedItemKey: function() {
-            var self = this;
-            if (!self.selectedItem) return EMPTY;
-
-            // getElementsByClassName 比较损耗性能，改用缓存数据到 attribute 上方法
-            //var keyEl = Dom.getElementsByClassName(KEY_EL_CLS, '*', this.selectedItem)[0];
-            //return keyEl.innerHTML;
-
-            return DOM.attr(self.selectedItem, KEY);
-        },
-
-        /**
-         * 将选中项的 key 值更新到 textInput
-         */
-        _updateInputFromSelectItem: function() {
-            var self = this;
-            self.textInput.value = self._getSelectedItemKey(self.selectedItem) || self.query; // 如果没有 key, 就用输入值
-        }
-    });
-
-    function visible(elem) {
-        elem.style.visibility = EMPTY;
-    }
-
-    function invisible(elem) {
-        elem.style.visibility = HIDDEN;
-    }
-
-    function replaceContent(elem, html) {
-        if (html.nodeType === 1) {
-            DOM.html(elem, EMPTY);
-            elem.appendChild(html);
-        } else {
-            DOM.html(elem, html);
-        }
-    }
-
-    /**
-     * 约定的全局回调函数
-     */
-    win[CALLBACK_STR] = function(data) {
-        if (!Suggest.focusInstance) return;
-        // 保证先运行 script.onload 事件，然后再执行 callback 函数
-        S.later(function() {
-            Suggest.focusInstance._handleResponse(data);
-        }, 0);
-    };
-
-    Suggest.version = 1.1;
-    S.Suggest = Suggest;
-});
-
-
-/**
- * 小结：
- *
- * 整个组件代码，由两大部分组成：数据处理 + 事件处理
- *
- * 一、数据处理很 core，但相对来说是简单的，由 requestData + handleResponse + formatData 等辅助方法组成
- * 需要注意两点：
- *  a. IE 中，改变 script.src, 会自动取消掉之前的请求，并发送新请求。非 IE 中，必须新创建 script 才行。这是
- *     requestData 方法中存在两种处理方式的原因。
- *  b. 当网速很慢，数据返回时，用户的输入可能已改变，已经有请求发送出去，需要抛弃过期数据。目前采用加 data-time
- *     的解决方案。更好的解决方案是，调整 API，使得返回的数据中，带有 query 值。
- *
- * 二、事件处理看似简单，实际上有不少陷阱，分 2 部分：
- *  1. 输入框的 focus/blur 事件 + 键盘控制事件
- *  2. 提示层上的鼠标悬浮和点击事件
- * 需要注意以下几点：
- *  a. 因为点击提示层时，首先会触发输入框的 blur 事件，blur 事件中调用 hide 方法，提示层一旦隐藏后，就捕获不到
- *     点击事件了。因此有了 this._mouseHovering 来排除这种情况，使得 blur 时不会触发 hide, 在提示层的点击
- *     事件中自行处理。（2009-06-18 更新：采用 mouseup 来替代 click 事件，代码清晰简单了很多）（注：后来发现
- *     用 beforedeactive 方法可以阻止掉输入框的焦点丢失，逻辑更简单了）
- *  b. 当鼠标移动到某项或通过上下键选中某项时，给 this.selectedItem 赋值；当提示层的数据重新填充时，重置
- *     this.selectedItem. 这种处理方式和 google 的一致，可以使得选中某项，隐藏，再次打开时，依旧选中原来
- *     的选中项。
- *  c. 在 ie 等浏览器中，输入框中输入 ENTER 键时，会自动提交表单。如果 form.target='_blank', 自动提交和 JS 提交
- *     会打开两个提交页面。因此这里采取了在 JS 中不提交的策略，ENTER 键是否提交表单，完全由 HTML 代码自身决定。这
- *     样也能使得组件很容易应用在不需要提交表单的场景中。（2009-06-18 更新：可以通过 blur() 取消掉浏览器的默认
- *     Enter 响应，这样能使得代码逻辑和 mouseup 的一致）
- *  d. onItemSelect 仅在鼠标点击选择某项 和 键盘选中某项回车 后触发。
- *  e. 当 textInput 会触发表单提交时，在 enter keydown 和 keyup 之间，就会触发提交。因此在 keydown 中捕捉事件。
- *     并且在 keydown 中能捕捉到持续 DOWN/UP, 在 keyup 中就不行了。
- *
- * 【得到的一些编程经验】：
- *  1. 职责单一原则。方法的职责要单一，比如 hide 方法和 show 方法，除了改变 visibility, 就不要拥有其它功能。这
- *     看似简单，真要做到却并不容易。保持职责单一，保持简单的好处是，代码的整体逻辑更清晰，方法的可复用性也提
- *     高了。
- *  2. 小心事件处理。当事件之间有关联时，要仔细想清楚，设计好后再写代码。比如输入框的 blur 和提示层的 click 事件。
- *  3. 测试的重要性。目前是列出 Test Cases，以后要尝试自动化。保证每次改动后，都不影响原有功能。
- *  4. 挑选正确的事件做正确的事，太重要了，能省去很多很多烦恼。
- *
- */
-
-/**
- * 2009-08-05 更新： 将 class 从配置项中移动到常量，原因是：修改默认 className 的可能性很小，仅保留一个
- *                  containerCls 作为个性化样式的接口即可。
- *
- * 2009-12-10 更新： 采用 kissy module 组织代码。为了避免多个沙箱下，对全局回调函数覆盖定义引发的问题，
- *                  采用共享模式。
- *
- * 2010-03-10 更新： 去除共享模式，适应 kissy 新的代码组织方式。
- *
- * 2010-08-04 更新： 去掉对 yahoo-dom-event 的依赖，仅依赖 ks-core. 调整了部分 public api, 扩展更容易了。
- */
+KISSY.add('core');

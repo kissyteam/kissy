@@ -2,7 +2,7 @@
  * Switchable Countdown Plugin
  * @creator  gonghao<gonghao@ghsky.com>
  */
-KISSY.add('switchable-countdown', function(S, undefined) {
+KISSY.add('countdown', function(S, undefined) {
 
     var DOM = S.DOM, Event = S.Event, Anim = S.Anim,
         Switchable = S.Switchable,
@@ -105,7 +105,8 @@ KISSY.add('switchable-countdown', function(S, undefined) {
             }
         }
     });
-});
+
+}, { requires: 'switchable' } );
 
 /**
  * NOTES:

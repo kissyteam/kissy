@@ -1,7 +1,6 @@
 /**
  * @module   Flash UA 探测
  * @author   kingfo<oicuicu@gmail.com>
- * @depends  ks-core
  */
 KISSY.add('flash-ua', function(S) {
 
@@ -96,7 +95,7 @@ KISSY.add('flash-ua', function(S) {
         return !!fpvF && (fpvF >= numerify(ver));
     };
 
-});
+}, { host: 'flash' });
 
 /**
  * NOTES:

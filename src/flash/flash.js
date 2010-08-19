@@ -1,7 +1,6 @@
 /**
  * @module   Flash 全局静态类
  * @author   kingfo<oicuicu@gmail.com>
- * @depends  ks-core
  */
 KISSY.add('flash', function(S){
 	
@@ -13,4 +12,5 @@ KISSY.add('flash', function(S){
 		swfs: { },
 		length: 0
 	};
-});
+
+}, { requires: ['core'] });

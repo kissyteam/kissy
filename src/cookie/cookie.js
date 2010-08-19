@@ -1,7 +1,6 @@
 /**
  * @module  cookie
  * @author  lifesinger@gmail.com
- * @depends ks-core
  */
 KISSY.add('cookie', function(S) {
 

@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY UA Test</title>
+</head>
+<body>
+<script src="../test/test.js"></script>
+
+<h2>Test Data</h2>
+<script src="../kissy/kissy.js"></script>
+<script src="../kissy/lang.js"></script>
+<script src="../kissy/loader.js"></script>
+<script src="ua.js"></script>
+<script src="ua-extra.js"></script>
+
+<!-- Test Cases -->
+<script>
+
+    var S = KISSY, UA = S.UA;
+
+    function test_userAgent(test) {
+        test.extraMsg = navigator.userAgent;
+    }
+
+    function test_ua(test) {
+        var out = '', p;
+
+        for(p in UA) {
+            if(p.indexOf('_') !== 0) {
+                out += p + ' = ' + UA[p] + ', '
+            }
+        }
+
+        test.extraMsg = out;
+    }
+
+</script>
+</body>
+</html>
