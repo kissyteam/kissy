@@ -187,14 +187,17 @@
         _load: function(mod, callback) {
             var self = this, url = mod.fullpath,
                 loadingQueque = self.Env._loadingQueue,
-                node;
+                node = loadingQueque[url];
+
+            // 可能已经由其它模块触发加载
+            if(node) mod.status = LOADING;
 
             if ((mod.status || 0) < LOADING && url) {
                 mod.status = LOADING;
 
                 loadingQueque[url] = self.getScript(url, {
                     success: function() {
-                        S.log(mod.name + ' onload fired.', 'info');
+                        KISSY.log(mod.name + ' onload fired.', 'info'); // 压缩时不过滤该句，以方便线上调试
                         _success();
                     },
                     error: function() {
@@ -206,7 +209,7 @@
             }
             // 已经在加载中，需要添加回调到 script onload 中
             // 注意：没有考虑 error 情形
-            else if (mod.status === LOADING && (node = loadingQueque[url])) {
+            else if (mod.status === LOADING && node) {
                 scriptOnload(node, _success);
             }
             // 是内嵌代码，或者已经 loaded
