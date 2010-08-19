@@ -52,6 +52,7 @@
          */
         add: function(name, fn, config) {
             var self = this, mods = self.Env.mods, mod, o;
+            config = config || { };
 
             // S.add(name, config) => S.add( { name: config } )
             if (S.isString(name) && !config && S.isPlainObject(fn)) {
@@ -69,14 +70,13 @@
             }
             // S.add(name[, fn[, config]])
             else {
-                // 处理子模块
-                if(config && config.host) {
-                    name = config.host;
-                }
+                mod = mods[name] || { };
+                name = config.host || mod.host || name;
+                mod = mods[name] || { };
 
                 // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
                 //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-                mix((mod = mods[name] || { }), { name: name, status: LOADED });
+                mix(mod, { name: name, status: LOADED });
                 if(!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
                 mix((mods[name] = mod), config);
@@ -103,13 +103,14 @@
          */
         use: function(modNames, callback, config) {
             modNames = modNames.replace(/\s+/g, EMPTY).split(',');
-
-            var self = this, mods = self.Env.mods,
-                i, len = modNames.length, mod, fired;
             config = config || { };
 
+            var self = this, scope = config.scope || self,
+                mods = scope.Env.mods,
+                i, len = modNames.length, mod, fired;
+
             // 已经全部 attached, 直接执行回调即可
-            if (self._isAttached(modNames, config.scope)) {
+            if (self._isAttached(modNames, scope)) {
                 callback && callback(self);
                 return;
             }
@@ -133,7 +134,7 @@
                         if(mod._requires) mod.requires = mod._requires; // restore requires
                         callback && callback(self);
                     }
-                }, config);
+                }, scope);
             }
 
             return self;
@@ -142,23 +143,23 @@
         /**
          * Attach a module and all required modules.
          */
-        _attach: function(mod, callback, config) {
+        _attach: function(mod, callback, scope) {
             var self = this, requires = mod['requires'] || [],
                 i = 0, len = requires.length;
 
             // attach all required modules
             for (; i < len; i++) {
-                self._attach(self.Env.mods[requires[i]], fn, config);
+                self._attach(scope.Env.mods[requires[i]], fn, scope);
             }
 
             // load and attach this module
-            self._buildPath(mod);
+            self._buildPath(mod, scope);
             self._load(mod, fn);
 
             function fn() {
                 if (self._isAttached(requires)) {
                     if (mod.status === LOADED) {
-                        self._attachMod(mod, config.scope);
+                        self._attachMod(mod, scope);
                     }
                     if (mod.status === ATTACHED) {
                         callback();
@@ -244,9 +245,9 @@
             }
         },
 
-        _buildPath: function(mod) {
+        _buildPath: function(mod, scope) {
             if (!mod.fullpath && mod['path']) {
-                mod.fullpath = this.Config.base + mod['path'];
+                mod.fullpath = (scope || this).Config.base + mod['path'];
             }
             // debug 模式下，加载非 min 版
             if(mod.fullpath && this.Config.debug) {
