@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 20 13:45
+build time: Aug 20 14:38
 */
 /**
  * @module kissy
@@ -1066,7 +1066,7 @@ build time: Aug 20 13:45
             var mods = instance.Env.mods, gMods = global.Env.mods, k, m;
             for (k in gMods) {
                 m = mods[k] || {};
-                S.mix(m, gMods[k]);
+                S.mix(m, S.clone(gMods[k]));
                 instance.__buildPath(m, global.Config.base); // 来自 global 的 mod, path 应该基于 global
                 mods[k] = m;
             }
@@ -1150,7 +1150,7 @@ build time: Aug 20 13:45
                     // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
                     var gMod;
                     if (global && (gMod = global.Env.mods[mod.name])) {
-                        S.mix(mod, gMod);
+                        S.mix(mod, S.clone(gMod));
                     }
 
                     mod.status = LOADED;
