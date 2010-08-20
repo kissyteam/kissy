@@ -6,7 +6,7 @@
 
     var doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-        EMPTY = '',
+        EMPTY = '', CSSFULLPATH = 'cssfullpath',
         LOADING = 1, LOADED = 2, ERROR = 3, ATTACHED = 4,
         mix = S.mix,
 
@@ -241,6 +241,11 @@
                 if(!RE_CSS.test(url)) {
                     loadQueque[url] = ret;
                 }
+
+                // 加载 css, 仅发出请求，不做任何其它处理
+                if(mod[CSSFULLPATH]) {
+                    self.getScript(mod[CSSFULLPATH]);
+                }
             }
             // 已经在加载中，需要添加回调到 script onload 中
             // 注意：没有考虑 error 情形
@@ -273,12 +278,19 @@
         },
 
         __buildPath: function(mod, base) {
-            if (!mod.fullpath && mod['path']) {
-                mod.fullpath = (base || this.Config.base) + mod['path'];
-            }
-            // debug 模式下，加载非 min 版
-            if(mod.fullpath && this.Config.debug) {
-                mod.fullpath = mod.fullpath.replace(/-min/g, '');
+            var Config = this.Config;
+
+            build('path', 'fullpath');
+            build('csspath', CSSFULLPATH);
+
+            function build(path, fullpath) {
+                if (!mod[fullpath] && mod[path]) {
+                    mod[fullpath] = (base || Config.base) + mod[path];
+                }
+                // debug 模式下，加载非 min 版
+                if (mod[fullpath] && Config.debug) {
+                    mod[fullpath] = mod[fullpath].replace(/-min/g, '');
+                }
             }
         },
 
