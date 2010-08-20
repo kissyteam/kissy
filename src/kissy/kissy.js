@@ -69,11 +69,11 @@
         /**
          * Initializes KISSY object.
          */
-        _init: function() {
+        __init: function() {
             // 环境信息
             this.Env = {
                 mods: { }, // 所有模块列表
-                _loadingQueue: { } // 正在加载中的模块信息
+                _loadQueue: { } // 加载的模块信息
             };
 
             // 从当前引用文件路径中提取 base
@@ -350,8 +350,8 @@
             var isStr = S.isString(name),
                 O = isStr ? win[name] || { } : name;
 
-            mix(O, this, true, S._APP_MEMBERS);
-            O._init();
+            mix(O, this, true, S.__APP_MEMBERS);
+            O.__init();
 
             mix(O, S.isFunction(sx) ? sx() : sx);
             isStr && (win[name] = O);
@@ -397,10 +397,10 @@
         }
     });
 
-    S._init();
+    S.__init();
 
     // S.app() 时，需要动态复制的成员列表
-    S._APP_MEMBERS = ['_init', 'namespace'];
+    S.__APP_MEMBERS = ['__init', 'namespace'];
 
     // 可以通过在 url 上加 ?ks-debug 参数来强制开启 debug 模式
     if (loc && (loc.search || EMPTY).indexOf('ks-debug') !== -1) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 19 20:21
+build time: Aug 20 12:35
 */
 /**
  * @module kissy
@@ -74,11 +74,11 @@ build time: Aug 19 20:21
         /**
          * Initializes KISSY object.
          */
-        _init: function() {
+        __init: function() {
             // 环境信息
             this.Env = {
                 mods: { }, // 所有模块列表
-                _loadingQueue: { } // 正在加载中的模块信息
+                _loadQueue: { } // 加载的模块信息
             };
 
             // 从当前引用文件路径中提取 base
@@ -355,8 +355,8 @@ build time: Aug 19 20:21
             var isStr = S.isString(name),
                 O = isStr ? win[name] || { } : name;
 
-            mix(O, this, true, S._APP_MEMBERS);
-            O._init();
+            mix(O, this, true, S.__APP_MEMBERS);
+            O.__init();
 
             mix(O, S.isFunction(sx) ? sx() : sx);
             isStr && (win[name] = O);
@@ -402,10 +402,10 @@ build time: Aug 19 20:21
         }
     });
 
-    S._init();
+    S.__init();
 
     // S.app() 时，需要动态复制的成员列表
-    S._APP_MEMBERS = ['_init', 'namespace'];
+    S.__APP_MEMBERS = ['__init', 'namespace'];
 
     // 可以通过在 url 上加 ?ks-debug 参数来强制开启 debug 模式
     if (loc && (loc.search || EMPTY).indexOf('ks-debug') !== -1) {
@@ -973,8 +973,8 @@ build time: Aug 19 20:21
                 mix((mods[name] = mod), config);
 
                 // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
-                if ((mod['attach'] !== false) && self._isAttached(mod.requires)) {
-                    self._attachMod(mod);
+                if ((mod['attach'] !== false) && self.__isAttached(mod.requires)) {
+                    self.__attachMod(mod);
                 }
             }
 
@@ -989,19 +989,22 @@ build time: Aug 19 20:21
          * </code>
          * config = {
          *   order: true, // 默认为 false. 是否严格按照 modNames 的排列顺序来回调入口函数
-         *   scope: KISSY // 默认为 KISSY. 当在 this.Env.mods 上找不到某个 mod 的属性时，会到 SCOPE.Env.mods 上去找
+         *   global: KISSY // 默认为 KISSY. 当在 this.Env.mods 上找不到某个 mod 的属性时，会到 global.Env.mods 上去找
          * }
          */
         use: function(modNames, callback, config) {
             modNames = modNames.replace(/\s+/g, EMPTY).split(',');
             config = config || { };
 
-            var self = this, scope = config.scope || self,
-                mods = scope.Env.mods,
+            var self = this, mods = self.Env.mods,
+                global = (config || 0).global,
                 i, len = modNames.length, mod, fired;
 
+            // 将 global 上的 mods, 移动到 instance 上
+            if(global) self.__mixMods(self, global);
+
             // 已经全部 attached, 直接执行回调即可
-            if (self._isAttached(modNames, scope)) {
+            if (self.__isAttached(modNames)) {
                 callback && callback(self);
                 return;
             }
@@ -1019,13 +1022,13 @@ build time: Aug 19 20:21
                     }
                 }
 
-                self._attach(mod, function() {
-                    if (!fired && self._isAttached(modNames)) {
+                self.__attach(mod, function() {
+                    if (!fired && self.__isAttached(modNames)) {
                         fired = true;
                         if(mod._requires) mod.requires = mod._requires; // restore requires
                         callback && callback(self);
                     }
-                }, scope);
+                }, global);
             }
 
             return self;
@@ -1034,23 +1037,23 @@ build time: Aug 19 20:21
         /**
          * Attach a module and all required modules.
          */
-        _attach: function(mod, callback, scope) {
+        __attach: function(mod, callback, global) {
             var self = this, requires = mod['requires'] || [],
                 i = 0, len = requires.length;
 
             // attach all required modules
             for (; i < len; i++) {
-                self._attach(scope.Env.mods[requires[i]], fn, scope);
+                self.__attach(self.Env.mods[requires[i]], fn, global);
             }
 
             // load and attach this module
-            self._buildPath(mod, scope);
-            self._load(mod, fn);
+            self.__buildPath(mod);
+            self.__load(mod, fn, global);
 
             function fn() {
-                if (self._isAttached(requires)) {
+                if (self.__isAttached(requires)) {
                     if (mod.status === LOADED) {
-                        self._attachMod(mod, scope);
+                        self.__attachMod(mod);
                     }
                     if (mod.status === ATTACHED) {
                         callback();
@@ -1059,9 +1062,18 @@ build time: Aug 19 20:21
             }
         },
 
-        _attachMod: function(mod, scope) {
+        __mixMods: function(instance, global) {
+            var mods = instance.Env.mods, gMods = global.Env.mods, k, m;
+            for (k in gMods) {
+                m = mods[k] || {};
+                S.mix(m, gMods[k]);
+                instance.__buildPath(m, global); // 来自 global 的 mod, path 应该基于 global
+                mods[k] = m;
+            }
+        },
+
+        __attachMod: function(mod) {
             var self = this;
-            if(scope) mod.fns = scope.Env.mods[mod.name].fns;
 
             if (mod.fns) {
                 S.each(mod.fns, function(fn) {
@@ -1074,8 +1086,8 @@ build time: Aug 19 20:21
             mod.status = ATTACHED;
         },
 
-        _isAttached: function(modNames, scope) {
-            var mods = (scope || this).Env.mods, mod,
+        __isAttached: function(modNames) {
+            var mods = this.Env.mods, mod,
                 i = (modNames = S.makeArray(modNames)).length - 1;
 
             for (; i >= 0 && (mod = mods[modNames[i]]); i--) {
@@ -1088,18 +1100,23 @@ build time: Aug 19 20:21
         /**
          * Load a single module.
          */
-        _load: function(mod, callback) {
+        __load: function(mod, callback, global) {
             var self = this, url = mod.fullpath,
-                loadingQueque = self.Env._loadingQueue,
-                node = loadingQueque[url];
+                loadQueque = self.Env._loadQueue,
+                node = loadQueque[url];
+
+            mod.status = mod.status || 0;
 
             // 可能已经由其它模块触发加载
-            if(node) mod.status = LOADING;
-
-            if ((mod.status || 0) < LOADING && url) {
+            if (node === LOADED && mod.status < LOADED) {
+                mod.status = LOADED;
+            } else if (node) {
                 mod.status = LOADING;
+            }
 
-                loadingQueque[url] = self.getScript(url, {
+            if (mod.status < LOADING && url) {
+                mod.status = LOADING;
+                loadQueque[url] = self.getScript(url, {
                     success: function() {
                         KISSY.log(mod.name + ' onload fired.', 'info'); // 压缩时不过滤该句，以方便线上调试
                         _success();
@@ -1118,12 +1135,19 @@ build time: Aug 19 20:21
             }
             // 是内嵌代码，或者已经 loaded
             else {
-                mod.status = LOADED;
                 callback();
             }
 
             function _success() {
                 if (mod.status !== ERROR) {
+
+                    // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息，需要同步到 instance 上去
+                    // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
+                    var gMod;
+                    if (global && (gMod = global.Env.mods[mod.name])) {
+                        S.mix(mod, gMod);
+                    }
+
                     mod.status = LOADED;
                     callback();
                 }
@@ -1131,14 +1155,13 @@ build time: Aug 19 20:21
             }
             
             function _final() {
-                loadingQueque[url] = undefined;
-                delete loadingQueque.url;
+                loadQueque[url] = LOADED;
             }
         },
 
-        _buildPath: function(mod, scope) {
+        __buildPath: function(mod, base) {
             if (!mod.fullpath && mod['path']) {
-                mod.fullpath = (scope || this).Config.base + mod['path'];
+                mod.fullpath = (base || this.Config.base) + mod['path'];
             }
             // debug 模式下，加载非 min 版
             if(mod.fullpath && this.Config.debug) {
@@ -1209,7 +1232,7 @@ build time: Aug 19 20:21
     mix(S, loader);
 
     S.each(loader, function(v, k) {
-        S._APP_MEMBERS.push(k);
+        S.__APP_MEMBERS.push(k);
     });
 
 })(window, KISSY);
@@ -1218,6 +1241,7 @@ build time: Aug 19 20:21
  * TODO:
  *  - combo 实现
  *  - 使用场景和测试用例整理
+ *  - 一个模块里，对 js 和 css 的同时支持
  *
  *
  * NOTES:
