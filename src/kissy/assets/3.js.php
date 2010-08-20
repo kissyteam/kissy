@@ -3,7 +3,5 @@
 ?>
 
 KISSY.add('3', function(S) {
-    S.log('3.js is attached.');
-});
-
-S.log('3.js is loaded, parsed and executed.')
+    S.log('3.fn is executed.');
+}, { attach: false });

@@ -107,7 +107,7 @@
 
             var self = this, mods = self.Env.mods,
                 global = (config || 0).global,
-                i, len = modNames.length, mod, fired;
+                i, len = modNames.length, mod, name, fired;
 
             // 将 global 上的 mods, 移动到 instance 上
             if(global) self.__mixMods(self, global);
@@ -126,8 +126,11 @@
                 if (config.order && i > 0) {
                     if (!mod.requires) mod.requires = [];
                     mod._requires = mod.requires.concat(); // 保留，以便还原
-                    if (!S.inArray(modNames[i - 1], mod.requires)) {
-                        mod.requires.push(modNames[i - 1]);
+                    name = modNames[i - 1];
+
+                    if (!S.inArray(name, mod.requires)
+                        && !(S.inArray(mod.name, mods[name].requires || []))) { // 避免循环依赖
+                        mod.requires.push(name);
                     }
                 }
 
@@ -221,6 +224,12 @@
                 mod.status = node.nodeName ? LOADING : LOADED;
             }
 
+            // 加载 css, 仅发出请求，不做任何其它处理
+            if (S.isString(mod[CSSFULLPATH])) {
+                self.getScript(mod[CSSFULLPATH]);
+                mod[CSSFULLPATH] = LOADED;
+            }
+
             if (mod.status < LOADING && url) {
                 mod.status = LOADING;
 
@@ -240,11 +249,6 @@
                 // 不需要再置成节点，否则有问题
                 if(!RE_CSS.test(url)) {
                     loadQueque[url] = ret;
-                }
-
-                // 加载 css, 仅发出请求，不做任何其它处理
-                if(mod[CSSFULLPATH]) {
-                    self.getScript(mod[CSSFULLPATH]);
                 }
             }
             // 已经在加载中，需要添加回调到 script onload 中
@@ -281,7 +285,7 @@
             var Config = this.Config;
 
             build('path', 'fullpath');
-            build('csspath', CSSFULLPATH);
+            if(mod[CSSFULLPATH] !== LOADED) build('csspath', CSSFULLPATH);
 
             function build(path, fullpath) {
                 if (!mod[fullpath] && mod[path]) {

@@ -13,32 +13,32 @@
 <script src="mods.js"></script>
 
 <div id="J_calendar"></div>
-<link rel="stylesheet" href="assets/console.css" />
+<link rel="stylesheet" href="assets/console.css"/>
 <div id="console"></div>
 <script>
 
-var S = KISSY,
-	doc = document,
-	now = function() {
-		return new Date().getTime();
-	},
-	get = function(id) {
-		return typeof id === 'string' ? doc.getElementById(id) : id;
-	};
-S._log = S.log;
-S.log = function(msg,color){
-	var con = get('console');
-	S._log(msg);
+    var S = KISSY,
+            doc = document,
+            now = function() {
+                return new Date().getTime();
+            },
+            get = function(id) {
+                return typeof id === 'string' ? doc.getElementById(id) : id;
+            };
+    S._log = S.log;
+    S.log = function(msg, color) {
+        var con = get('console');
+        S._log(msg);
 
-	if(typeof color == 'undefined'){
-		color = '';
-	}
-    if(color == 'info') color = 'green';
-    else if(color == 'warn') color = 'yellow';
+        if (typeof color == 'undefined') {
+            color = '';
+        }
+        if (color == 'info') color = 'green';
+        else if (color == 'warn') color = 'yellow';
 
-	if(!con)return;
-	con.innerHTML += '<p class="'+color+'">' +msg +'</p>';
-};
+        if (!con)return;
+        con.innerHTML += '<p class="' + color + '">' + msg + '</p>';
+    };
 </script>
 
 <script>
@@ -47,23 +47,21 @@ S.log = function(msg,color){
 
     S.add({
         '1': {
-            fullpath: 'assets/1.js.php'
+            fullpath: 'assets/1.js.php',
+            cssfullpath: 'assets/console.css'
         },
         '2': {
-            fullpath: 'assets/2.js.php'
+            fullpath: 'assets/2.js.php',
+            requires: ['1', '3']
         },
-        'css': {
-            fllpath: 'assets/console.css'
-        },
-        'css1': {
-            requires: ['css']
+        '3': {
+            fullpath: 'assets/3.js.php'
         }
     });
 
-    S.use('2,1', function() {
-        S.log('2,1 is used.', 'gray');
-    }, { order: true });
-
+        S.use('1,2,3', function() {
+            S.log('1,2,3 is used.', 'gray');
+        }, { order: true });
 
 </script>
 
