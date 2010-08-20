@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 20 12:35
+build time: Aug 20 13:45
 */
 /**
  * @module kissy
@@ -1067,7 +1067,7 @@ build time: Aug 20 12:35
             for (k in gMods) {
                 m = mods[k] || {};
                 S.mix(m, gMods[k]);
-                instance.__buildPath(m, global); // 来自 global 的 mod, path 应该基于 global
+                instance.__buildPath(m, global.Config.base); // 来自 global 的 mod, path 应该基于 global
                 mods[k] = m;
             }
         },
@@ -1103,20 +1103,19 @@ build time: Aug 20 12:35
         __load: function(mod, callback, global) {
             var self = this, url = mod.fullpath,
                 loadQueque = self.Env._loadQueue,
-                node = loadQueque[url];
+                node = loadQueque[url], ret;
 
             mod.status = mod.status || 0;
 
             // 可能已经由其它模块触发加载
-            if (node === LOADED && mod.status < LOADED) {
-                mod.status = LOADED;
-            } else if (node) {
-                mod.status = LOADING;
+            if (mod.status < LOADING && node) {
+                mod.status = node.nodeName ? LOADING : LOADED;
             }
 
             if (mod.status < LOADING && url) {
                 mod.status = LOADING;
-                loadQueque[url] = self.getScript(url, {
+
+                ret = self.getScript(url, {
                     success: function() {
                         KISSY.log(mod.name + ' onload fired.', 'info'); // 压缩时不过滤该句，以方便线上调试
                         _success();
@@ -1127,10 +1126,16 @@ build time: Aug 20 12:35
                     },
                     charset: mod.charset
                 });
+
+                // css 是同步的，在 success 回调里，已经将 loadQueque[url] 置成 LOADED
+                // 不需要再置成节点，否则有问题
+                if(!RE_CSS.test(url)) {
+                    loadQueque[url] = ret;
+                }
             }
             // 已经在加载中，需要添加回调到 script onload 中
             // 注意：没有考虑 error 情形
-            else if (mod.status === LOADING && node) {
+            else if (mod.status === LOADING) {
                 scriptOnload(node, _success);
             }
             // 是内嵌代码，或者已经 loaded
@@ -1139,8 +1144,8 @@ build time: Aug 20 12:35
             }
 
             function _success() {
+                _final();
                 if (mod.status !== ERROR) {
-
                     // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息，需要同步到 instance 上去
                     // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
                     var gMod;
@@ -1151,7 +1156,6 @@ build time: Aug 20 12:35
                     mod.status = LOADED;
                     callback();
                 }
-                _final();
             }
             
             function _final() {
