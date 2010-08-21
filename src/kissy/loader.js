@@ -182,9 +182,8 @@
         },
 
         __mixMod: function(mods, gMods, name, global) {
-            var mod = mods[name] || { }, status = mod.status;
+            var mod = mods[name] || { };
             S.mix(mod, S.clone(gMods[name]));
-            mod.status = status; // status 属于实例，不能被覆盖
             if(global) this.__buildPath(mod, global.Config.base); // 来自 global 的 mod, path 应该基于 global
             mods[name] = mod;
         },

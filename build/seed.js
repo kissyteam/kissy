@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 21 09:14
+build time: Aug 21 10:38
 */
 /**
  * @module kissy
@@ -1073,9 +1073,8 @@ build time: Aug 21 09:14
         },
 
         __mixMod: function(mods, gMods, name, global) {
-            var mod = mods[name] || { }, status = mod.status;
+            var mod = mods[name] || { };
             S.mix(mod, S.clone(gMods[name]));
-            mod.status = status; // status 属于实例，不能被覆盖
             if(global) this.__buildPath(mod, global.Config.base); // 来自 global 的 mod, path 应该基于 global
             mods[name] = mod;
         },
