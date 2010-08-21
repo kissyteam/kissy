@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 20 17:21
+build time: Aug 21 09:14
 */
 /**
  * @module kissy
@@ -1001,7 +1001,7 @@ build time: Aug 20 17:21
                 i, len = modNames.length, mod, name, fired;
 
             // 将 global 上的 mods, 移动到 instance 上
-            if(global) self.__mixMods(self, global);
+            if(global) self.__mixMods(global);
 
             // 已经全部 attached, 直接执行回调即可
             if (self.__isAttached(modNames)) {
@@ -1065,14 +1065,19 @@ build time: Aug 20 17:21
             }
         },
 
-        __mixMods: function(instance, global) {
-            var mods = instance.Env.mods, gMods = global.Env.mods, k, m;
-            for (k in gMods) {
-                m = mods[k] || {};
-                S.mix(m, S.clone(gMods[k]));
-                instance.__buildPath(m, global.Config.base); // 来自 global 的 mod, path 应该基于 global
-                mods[k] = m;
+        __mixMods: function(global) {
+            var mods = this.Env.mods, gMods = global.Env.mods, name;
+            for (name in gMods) {
+                this.__mixMod(mods, gMods, name, global);
             }
+        },
+
+        __mixMod: function(mods, gMods, name, global) {
+            var mod = mods[name] || { }, status = mod.status;
+            S.mix(mod, S.clone(gMods[name]));
+            mod.status = status; // status 属于实例，不能被覆盖
+            if(global) this.__buildPath(mod, global.Config.base); // 来自 global 的 mod, path 应该基于 global
+            mods[name] = mod;
         },
 
         __attachMod: function(mod) {
@@ -1105,7 +1110,7 @@ build time: Aug 20 17:21
          */
         __load: function(mod, callback, global) {
             var self = this, url = mod.fullpath,
-                loadQueque = self.Env._loadQueue,
+                loadQueque = S.Env._loadQueue, // 这个是全局的，防止多实例对同一模块的重复下载
                 node = loadQueque[url], ret;
 
             mod.status = mod.status || 0;
@@ -1155,14 +1160,15 @@ build time: Aug 20 17:21
             function _success() {
                 _final();
                 if (mod.status !== ERROR) {
+
                     // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息，需要同步到 instance 上去
                     // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
-                    var gMod;
-                    if (global && (gMod = global.Env.mods[mod.name])) {
-                        S.mix(mod, S.clone(gMod));
-                    }
+                    if(global) self.__mixMod(self.Env.mods, global.Env.mods, mod.name, global);
 
-                    mod.status = LOADED;
+                    // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
+                    // 因此要加上下面的 !== 判断，否则会出现重复 attach, 比如编辑器里动态加载时，被依赖的模块会重复
+                    if(mod.status !== ATTACHED) mod.status = LOADED;
+
                     callback();
                 }
             }

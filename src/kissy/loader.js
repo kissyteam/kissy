@@ -219,7 +219,7 @@
          */
         __load: function(mod, callback, global) {
             var self = this, url = mod.fullpath,
-                loadQueque = self.Env._loadQueue,
+                loadQueque = S.Env._loadQueue, // 这个是全局的，防止多实例对同一模块的重复下载
                 node = loadQueque[url], ret;
 
             mod.status = mod.status || 0;
@@ -269,10 +269,15 @@
             function _success() {
                 _final();
                 if (mod.status !== ERROR) {
+
                     // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息，需要同步到 instance 上去
                     // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
                     if(global) self.__mixMod(self.Env.mods, global.Env.mods, mod.name, global);
-                    mod.status = LOADED;
+
+                    // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
+                    // 因此要加上下面的 !== 判断，否则会出现重复 attach, 比如编辑器里动态加载时，被依赖的模块会重复
+                    if(mod.status !== ATTACHED) mod.status = LOADED;
+
                     callback();
                 }
             }
