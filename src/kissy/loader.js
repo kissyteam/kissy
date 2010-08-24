@@ -52,11 +52,10 @@
          */
         add: function(name, fn, config) {
             var self = this, mods = self.Env.mods, mod, o;
-            config = config || { };
 
             // S.add(name, config) => S.add( { name: config } )
             if (S.isString(name) && !config && S.isPlainObject(fn)) {
-                o = {};
+                o = { };
                 o[name] = fn;
                 name = o;
             }
@@ -70,6 +69,8 @@
             }
             // S.add(name[, fn[, config]])
             else {
+                config = config || { };
+
                 mod = mods[name] || { };
                 name = config.host || mod.host || name;
                 mod = mods[name] || { };

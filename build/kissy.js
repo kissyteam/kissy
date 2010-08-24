@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 21 11:03
+build time: Aug 24 22:09
 */
 /**
  * @module kissy
@@ -943,11 +943,10 @@ build time: Aug 21 11:03
          */
         add: function(name, fn, config) {
             var self = this, mods = self.Env.mods, mod, o;
-            config = config || { };
 
             // S.add(name, config) => S.add( { name: config } )
             if (S.isString(name) && !config && S.isPlainObject(fn)) {
-                o = {};
+                o = { };
                 o[name] = fn;
                 name = o;
             }
@@ -961,6 +960,8 @@ build time: Aug 21 11:03
             }
             // S.add(name[, fn[, config]])
             else {
+                config = config || { };
+
                 mod = mods[name] || { };
                 name = config.host || mod.host || name;
                 mod = mods[name] || { };
@@ -1331,7 +1332,7 @@ build time: Aug 21 11:03
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 16 16:51
+build time: Aug 24 22:09
 */
 /**
  * @module  ua
@@ -1344,17 +1345,17 @@ KISSY.add('ua', function(S) {
         core = EMPTY, shell = EMPTY, m,
         o = {
             // browser core type
-            webkit: 0,
-            trident: 0,
-            gecko: 0,
-            presto: 0,
+            //webkit: 0,
+            //trident: 0,
+            //gecko: 0,
+            //presto: 0,
 
             // browser type
-            chrome: 0,
-            safari: 0,
-            firefox:  0,
-            ie: 0,
-            opera: 0
+            //chrome: 0,
+            //safari: 0,
+            //firefox:  0,
+            //ie: 0,
+            //opera: 0
 
             //mobile: '',
             //core: '',
