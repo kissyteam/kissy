@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>处理Flash播放器版本 &lsaquo; KISSY Docs</title>
+<title>动态发布方式 &lsaquo; KISSY Docs</title>
 <link rel="stylesheet" href="../../../assets/base-min.css" />
 <link rel="stylesheet" href="../../../assets/docs.css" />
 </head>
@@ -19,8 +19,8 @@
 			<div class="section summary">
 				<dl>
 					<dt>本章节将假设您已了解以下内容：</dt>
-					<dd><a href="../references/alternative-content.html" target="_blank">alternative content</a></dd>
-					<dd><a href="publishing-static.html" target="_blank">静态发布方式</a></dd>
+					<dd><a href="../references/embed-swf-onto-webpage.html">嵌入SWF的几种方式</a></dd>
+					<dd><a href="../references/flashplayer-parameters.html">Flash播放器参数</a></dd>
 					<dt>Requested:</dt>
 					<dd><a href="http://github.com/kissyteam/kissy/blob/master/build/packages/core.js">KISSY CORE</a></dd>
 					<dd><a href="http://github.com/kissyteam/kissy/blob/master/build/json/json-pkg.js" target="_blank">JSON package</a></dd>
@@ -105,13 +105,13 @@ Flash.add('#myFlashContent',
 </code></pre>							
 						</li>
 						<li>
-							如果希望CSS来控制，则请将高宽置 100%:
+							如果希望仅由CSS来控制高宽变化，则请将高宽置 100%:
 <pre class="example-code"><code>
 Flash.add('#myFlashContent',
 	{
 	 src: 'PATH2YOURSWF.swf',
 	 attrs: {
-                'class':"swfstyle",
+                'class':"swfstyle",  // 指定样式名 ，多个请由英文半角逗号隔开。
                 width: "100%",
                 height: "100%"
             }
@@ -132,7 +132,11 @@ Flash.add('#myFlashContent',
         	<div class="section">
         		<a name="section_3"></a>
 				<h3>使用flashvars配置flash对象</h3>
-				<p>本部分描述将假设您已了解"<a href="#section_1">最小限度的动态发布</a>"和"<a href="#section_2">套用CSS</a>"</p>
+				<dl>
+					<dt>本部分描述将假设您已了解以下内容：</dt>
+					<dd><a href="#section_1">最小限度的动态发布</a></dd>
+					<dd><a href="#section_2">套用CSS</a></dd>
+				</dl>
 				<pre class="example-code"><code>
 var flashvars = {
 	// 以下为传递给 flash 对象的参数
@@ -154,7 +158,11 @@ Flash.add('#myFlashContent',
 			<div class="section">
         		<a name="section_4"></a>
 				<h3>使用 JSON 配置flash对象</h3>
-				<p>本部分描述将假设您已了解"<a href="#section_1">最小限度的动态发布</a>"和"<a href="#section_2">套用CSS</a>"</p>
+				<dl>
+					<dt>本部分描述将假设您已了解以下内容：</dt>
+					<dd><a href="#section_1">最小限度的动态发布</a></dd>
+					<dd><a href="#section_2">套用CSS</a></dd>
+				</dl>
 				<pre class="example-code"><code>
 var flashvars = {
 	// 以下为传递给 flash 对象的参数 
@@ -169,7 +177,8 @@ var flashvars = {
 			      'http://movie_c.flv'
 				  ]
 		}
-	}
+	},
+	array:[1,2,3,4,5,6,7]
 }
 
 Flash.add('#myFlashContent',
@@ -182,6 +191,33 @@ Flash.add('#myFlashContent',
 ); 
 </code></pre>	
 			</div>
+			<div class="section">
+        		<a name="section_5"></a>
+				<h3>使用快速安装(express install)</h3>
+				<dl>
+					<dt>本部分描述将假设您已了解以下内容：</dt>
+					<dd><a href="#section_1">最小限度的动态发布</a></dd>
+					<dd><a href="#section_2">套用CSS</a></dd>
+					<dd><a href="http://www.adobe.com/devnet/flashplayer/articles/express_install.html" target="_blank">Flash快速安装(express install)</a></dd>
+				</dl>
+				
+				<pre class="example-code"><code>
+ F.add('#myFlashContent', {
+            src: 'assets/test.swf',
+            xi: 'express-install/expressInstall.swf',
+            version: 20.2   // 强行观摩 :p
+        });
+
+</code></pre>
+			 <p class="notice">需要flash player 8 版本以上。</p>	
+			</div>
+		
+		
+		 <div class="section notes">
+		 	<p>
+		 		<a href="http://github.com/kissyteam/kissy/issues">更多意见和建议？</a>
+		 	</p>
+		 </div>
 		</div>
     </div>
     <div class="col-sub">
@@ -189,7 +225,7 @@ Flash.add('#myFlashContent',
             <div class="loc">
                 <a href="../../../index.html">home</a> &rsaquo;
                 <a href="../../index.html">flash</a> &rsaquo; 
-                <a href="../index.html">start</a> &rsaquo; handling-flash-versions:
+                <a href="../index.html">start</a> &rsaquo; publishing-dynamic:
             </div>
             <div class="toc">
             	<ul>
@@ -197,6 +233,7 @@ Flash.add('#myFlashContent',
             		<li><a href="#section_2">套用CSS</a></li>
             		<li><a href="#section_3">使用flashvars配置flash对象</a></li>
             		<li><a href="#section_4">使用 JSON 配置flash对象</a></li>
+            		<li><a href="#section_5">使用快速安装(express install)</a></li>
             	</ul>
             </div>
         </div>

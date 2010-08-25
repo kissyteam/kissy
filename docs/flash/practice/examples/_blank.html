@@ -20,10 +20,9 @@
 				<dl>
 					<dt>本章节将假设您已了解以下内容：</dt>
 					<dd><a href="../references/alternative-content.html" target="_blank">alternative content</a></dd>
-					<dd><a href="publishing-dynamic.html" target="_blank">动态发布方式</a></dd>
-					<dd><a href="publishing-static.html" target="_blank">静态发布方式</a></dd>
 					<dt>Requested:</dt>
 					<dd><a href="http://github.com/kissyteam/kissy/blob/master/build/packages/core.js">KISSY CORE</a></dd>
+					<dd><a href="http://github.com/kissyteam/kissy/blob/master/build/json/json-pkg.js" target="_blank">JSON package</a></dd>
 					<dd><a href="http://github.com/kissyteam/kissy/blob/master/src/flash/flash-ua.js">Flash UA</a></dd>
 					<dt>Editors:</dt>
 					<dd><a href="mailto:longzang@taobao.com">龙藏</a>,Taobao,Inc</p></dd>
@@ -31,37 +30,22 @@
 			</div>
 			<div class="section">
 				<a name="section_1"></a>
-				<h3>满足期望的版本</h3>
+				<h3></h3>
 				<div class="detail">
-					<p>即使存在alternative content也不会显示。</p>
-<pre class="example-code"><code>
-if(KISSY.UA.fpvGEQ('9.1.0') {
-    // 符合浏览SWF内容版本
-}</code></pre>
-当然如果想了解客户端细节可以使用
-<pre class="example-code"><code>
-var ver = KISSY.UA.fpv();
-if(ver){
-	// 对ver做细节判断
-	// 格式:[ Major, Minor, Revision ]
-}
-// 如果 未安装则 ver 为  undefined
-</code></pre>
+
 				</div>
 			</div>
 			<div class="section">
 				<a name="section_2"></a>
-				<h3>较旧的版本</h3>
+				<h3></h3>
 				<div class="detail">
-					<p>对于使用KISSY.Flash动态方式发布的swf,则会先尝试调用快速安装，如果未指定则不作任何操作。保留原入口显示</p>
-					<p>对于静态方式发布的SWF，如果有显示区域，则显示无内容的Flash播放器。即，播放器已实例化，而内容无法运行。</p>
+					
 				</div>
 			</div>
 			<div class="section">
 				<a name="section_3"></a>
-				<h3>未安装</h3>
-				<p>对于使用KISSY.Flash动态方式发布不作任何操作。保留原入口显示</p>
-				<p>如果有设置alternative content，则将显示该部分的内容。</p>
+				<h3></h3>
+				
 			</div>
 			<div class="section notes">
 		 	<p>
@@ -75,14 +59,10 @@ if(ver){
             <div class="loc">
                 <a href="../../../index.html">home</a> &rsaquo;
                 <a href="../../index.html">flash</a> &rsaquo; 
-                <a href="../index.html">start</a> &rsaquo; handling-flash-versions:
+                <a href="../index.html">start</a> &rsaquo; publishing-static:
             </div>
             <div class="toc">
-            	 <ul>
-                    <li><a href="#section_1">满足期望的版本</a></li>
-                    <li><a href="#section_2">较旧的版本</a></li>
-                    <li><a href="#section_3">未安装</a></li>
-                </ul>
+            	
             </div>
         </div>
     </div>
