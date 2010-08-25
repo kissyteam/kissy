@@ -60,6 +60,9 @@
         <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="seed-min.js" />
         <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="kissy-min.js" />
         <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="kissy-aio-min.js" />
+        <copy todir="${src.dir}/..">
+            <fileset dir="${src.dir}" includes="seed.js,seed-min.js,kissy.js,kissy-min.js"/>
+        </copy>
     </target>
 
     <target name="build" depends="pre-clean,concat,compress,native2ascii,copyright,clean">

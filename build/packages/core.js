@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.2
 MIT Licensed
-build time: Aug 16 16:51
+build time: Aug 24 22:09
 */
 /**
  * @module  ua
@@ -14,17 +14,17 @@ KISSY.add('ua', function(S) {
         core = EMPTY, shell = EMPTY, m,
         o = {
             // browser core type
-            webkit: 0,
-            trident: 0,
-            gecko: 0,
-            presto: 0,
+            //webkit: 0,
+            //trident: 0,
+            //gecko: 0,
+            //presto: 0,
 
             // browser type
-            chrome: 0,
-            safari: 0,
-            firefox:  0,
-            ie: 0,
-            opera: 0
+            //chrome: 0,
+            //safari: 0,
+            //firefox:  0,
+            //ie: 0,
+            //opera: 0
 
             //mobile: '',
             //core: '',
