@@ -69,17 +69,22 @@
         /**
          * Initializes KISSY object.
          */
-        _init: function() {
+        __init: function() {
             // 环境信息
             this.Env = {
                 mods: { }, // 所有模块列表
-                _loadingQueue: { } // 正在加载中的模块信息
+                _loadQueue: { } // 加载的模块信息
             };
 
+            // 从当前引用文件路径中提取 base
+            var scripts = doc.getElementsByTagName('script'),
+                currentScript = scripts[scripts.length - 1],
+                base = currentScript.src.replace(/^(.*)(seed|kissy).*$/i, '$1');
+            
             // 配置信息
             this.Config = {
                 debug: '@DEBUG@', // build 时，会将 @DEBUG@ 替换为空
-                base: 'http://a.tbcdn.cn/s/kissy/@VERSION@/build/',
+                base: base,
                 timeout: 10   // getScript 的默认 timeout 时间
             };
         },
@@ -342,12 +347,16 @@
          * @return {Object}  A reference to the app global object
          */
         app: function(name, sx) {
-            var O = win[name] || {};
+            var isStr = S.isString(name),
+                O = isStr ? win[name] || { } : name;
 
-            mix(O, this, true, S._APP_MEMBERS);
-            O._init();
+            mix(O, this, true, S.__APP_MEMBERS);
+            O.__init();
 
-            return mix((win[name] = O), S.isFunction(sx) ? sx() : sx);
+            mix(O, S.isFunction(sx) ? sx() : sx);
+            isStr && (win[name] = O);
+
+            return O;
         },
 
         /**
@@ -388,10 +397,10 @@
         }
     });
 
-    S._init();
+    S.__init();
 
     // S.app() 时，需要动态复制的成员列表
-    S._APP_MEMBERS = ['_init', 'namespace'];
+    S.__APP_MEMBERS = ['__init', 'namespace'];
 
     // 可以通过在 url 上加 ?ks-debug 参数来强制开启 debug 模式
     if (loc && (loc.search || EMPTY).indexOf('ks-debug') !== -1) {
