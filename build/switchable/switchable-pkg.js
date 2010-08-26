@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.2
+Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 18 18:19
+build time: Aug 26 22:49
 */
 /**
  * Switchable
@@ -230,12 +230,10 @@ KISSY.add('switchable', function(S, undefined) {
                 (function(index) {
                     trigger = triggers[index];
 
-                    // 响应点击和 Tab 键
-                    Event.on(trigger, 'click focus', function() {
+                    Event.on(trigger, 'click', function() {
                         self._onFocusTrigger(index);
                     });
 
-                    // 响应鼠标悬浮
                     if (cfg.triggerType === 'mouse') {
                         Event.on(trigger, 'mouseenter', function() {
                             self._onMouseEnterTrigger(index);
@@ -1050,6 +1048,11 @@ KISSY.add('accordion', function(S) {
         }
 
         Accordion.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
+
+        // multiple 模式时，switchTrigger 在 switchView 时已经实现
+        if(self.config.multiple) {
+            self._switchTrigger = function() { }
+        }
     }
 
     S.extend(Accordion, S.Switchable);
