@@ -42,14 +42,25 @@ KISSY.add('accordion', function(S) {
         },
 
         /**
+         * 切换当前触点
+         */
+        _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
+            var self = this, cfg = self.config, activeTriggerCls = this.config.activeTriggerCls;
+            if (cfg.multiple) {
+                DOM.toggleClass(toTrigger, activeTriggerCls);
+            }
+            else {
+                Accordion.superclass._switchTrigger.call(self, fromTrigger, toTrigger);
+            }
+        },
+
+        /**
          * 切换视图
          */
         _switchView: function(fromPanels, toPanels, index) {
             var self = this, cfg = self.config,
                 panel = toPanels[0];
-
             if (cfg.multiple) {
-                DOM.toggleClass(self.triggers[index], cfg.activeTriggerCls);
                 DOM.css(panel, DISPLAY, panel.style[DISPLAY] == NONE ? BLOCK : NONE);
                 this._fireOnSwitch(index);
             }
