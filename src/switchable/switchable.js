@@ -226,7 +226,7 @@ KISSY.add('switchable', function(S, undefined) {
                     trigger = triggers[index];
 
                     // 响应点击和 Tab 键
-                    Event.on(trigger, 'click focus', function() {
+                    Event.on(trigger, 'click', function() {
                         self._onFocusTrigger(index);
                     });
 
