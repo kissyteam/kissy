@@ -1,0 +1,77 @@
+.ks-overlay-container {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    border: 2px solid #97A5B0;
+    -moz-border-radius: 2px; 
+    -webkit-border-radius: 2px; 
+    -border-radius: 2px;
+    background-color: white;
+    z-index: 9999;
+}
+
+
+
+.ks-overlay-bd {
+}
+
+.ks-overlay-loading {
+    background: url('http://img05.taobaocdn.com/tps/i5/T1wjBGXe4CXXXXXXXX-66-66.gif') center center;
+}
+.ks-overlay-fixed {
+    position: fixed;
+}
+.ks-overlay-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 0;
+    background-color: black;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    z-index: 9998;
+}
+.ks-overlay-iframe {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    z-index: 9997;
+    border: none;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.ks-overlay-mask-iframe {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    width: 100%;
+    height: 0;
+    border: none;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    z-index: 9997;
+    zoom: 1;
+}
+
+.ks-dialog-hd {
+    position: relative;
+    background: #97A5B0;
+    background: -webkit-gradient(linear, left top, left bottom, from(#97A5B0), to(white));
+    background: -moz-linear-gradient(top, #97A5B0, white);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#97A5B0', endColorstr = 'white');
+    _background: none;
+}
+.ks-dialog-ft {
+}
+
+.ks-dialog-close {
+    cursor: pointer;
+    background: transparent url('http://cdn.iconfinder.net/data/icons/lynx/16x16/actions/dialog-close.png') no-repeat center center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+}

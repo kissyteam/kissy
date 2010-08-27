@@ -24,7 +24,7 @@ KISSY.add('imagezoom', function(S, undefined) {
          * 默认设置
          */
         defaultConfig = {
-            type: STANDARD,            // 显示类型。可选值：follow
+            type: STANDARD,            // 显示类型
 
             bigImageSrc: '',           // 大图路径，为 '' 时，会先取原图上一级 a 的图片 src
             bigImageSize: [900, 900],  // 大图高宽
@@ -327,7 +327,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         return { width: elem.clientWidth, height: elem.clientHeight };
     }
 
-}, { requires: ['core'] } );
+});
 
 /**
  * NOTES:

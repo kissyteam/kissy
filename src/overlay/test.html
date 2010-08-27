@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Test</title>
+    <!-- <script type="text/javascript" charset="utf-8" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+    <script>
+    YUI().use('overlay', function(Y) {
+        var overlay = new Y.Overlay({
+            srcNode: ".myContent",
+            width: "20em",
+            bodyContent: "ttt"
+        });
+        
+        overlay.render();
+    });
+    
+    </script> -->
+    <link href="http://a.tbcdn.cn/s/kissy/1.1.0/build/cssbase/base-min.css" rel="stylesheet" type="text/css" />
+    <link href="overlay.css" rel="stylesheet" type="text/css" />
+    <style>
+        h2 {
+            background: #F2F2F2;
+        }
+        .test {
+            margin: 20px;
+            padding: 10px;
+            position: relative;
+        }
+        #menu {
+            border:1px solid orange;
+            width:200px;
+        }
+        #menu li {
+            background:none repeat scroll 0 0 #EEEEEE;
+            cursor:pointer;
+            margin:5px 0
+        }
+        #J_hover {
+            cursor:pointer;
+        }
+        #popup2 {
+            position: absolute;
+            left: 240px;
+            top: 30px;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+    <!-- <script src="http://github.com/kissyteam/kissy/raw/master/build/packages/kissy.js"></script> -->
+    <script src="../github/new/kissy/build/packages/kissy.js"></script>
+    <script src="overlay.js"></script>
+    <script src="dialog.js"></script>
+    <script src="popup.js"></script>
+</head>
+<body>
+    <!-- <div class="myContent">
+        <div class="yui3-widget-hd">Overlay Header</div>
+        <div class="yui3-widget-bd">Overlay Body</div>
+        <div class="yui3-widget-ft">Overlay Footer</div>
+    </div>
+    
+    <div class="myContent">
+        <div class="yui3-widget-hd">Overlay Header1</div>
+        <div class="yui3-widget-bd">Overlay Body2</div>
+        <div class="yui3-widget-ft">Overlay Footer3</div>
+    </div> -->
+    
+    <div class="test">
+        <h2>Dialog+Mask+center</h2>
+        <button id="J_show">show</button>
+    </div>
+   
+   <div class="test">
+       <h2>Popup+align</h2>
+       <span id="J_hover">鼠标移过来~~~~~~~~~~~~~~~~</span>
+       
+       <p><select title="格式"><option value="p" style="">标题 / 清除</option><option value="h1" style="font-size: 2em;">标题1</option><option value="h2" style="font-size: 1.5em;">标题2</option><option value="h3" style="font-size: 1.17em;">标题3</option><option value="h4" style="font-size: 1em;">标题4</option><option value="h5" style="font-size: 0.83em;">标题5</option><option value="h6" style="font-size: 0.67em;">标题6</option></select></p>
+       <p>
+           <object height="50%" width="50%" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" >
+               <param value="http://www.jolam.cn/flash/ss-all-14.swf" name="movie">
+               <param value="high" name="quality">
+               <param value="opaque" name="wmode">
+               <embed height="50%" width="50%" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" wmode="opaque" src="http://www.jolam.cn/flash/ss-all-14.swf">
+           </object>
+           
+       </p>
+       
+   </div>
+   
+    <div class="test">
+        <h2>PopUp2+利用现有div</h2>
+        <ul id="menu">
+            <li>Title 1</li>
+            <li>Title 2</li>
+            <li>Title 3</li>
+            <li>Title 4</li>
+        </ul>
+        
+        <div id="popup2" class="ks-overlay-container ks-hidden">
+            <div class="ks-overlay-bd">Popup2...</div>
+        </div>
+    </div>
+    
+    <!--<div class="test" style="margin: 250px auto; text-align: center;">
+        <h2>Position, 相对于容器外部</h2>
+        <button id="J_outer" style="height: 100px; width: 100px;">Click</button>
+    </div>  -->
+    
+    
+    <div class="test" style="margin: 250px auto; text-align: center;">
+        <h2>Position</h2>
+        <div id="J_inner" style="height: 500px; width: 500px; cursor:pointer; background-color: #FEEFD7;margin:0 auto;">Click Me</div>
+    </div>
+    
+    <script>
+        KISSY.ready(function(S){
+            var DOM = S.DOM,
+                Event = S.Event;
+            
+            new S.Dialog('#J_show', {head: '标题'});
+            
+            new S.Popup('#J_hover', {body: 'context here................', align: {node:'', y: 'b'}});
+
+            
+            var pp2 = new S.Popup(null, {srcNode: '#popup2'});
+            S.each(DOM.query('#menu li'), function(t){
+                //new S.Popup(t, {body: 'context here', width:100, height: 100} );
+                Event.on(t, 'mouseenter', function(e){
+                    pp2.show();
+                });
+                Event.on(t, 'mouseleave', function(e){
+                    pp2.hide();
+                });
+                
+            });
+            
+            /*S.each(['r', 'c', 'l'], function(ll) {
+                S.each(['t', 'c', 'b'], function(tt) {
+                    var ol = new S.Dialog('#J_outer', {width: 50, height: 50, mask: false, align: {node:'', x: ll, y: tt}, scroll: false});
+                    ol.on('afterFirstRender', function(){
+                        this.setBody(tt+','+ll);
+                    });
+                });
+            });*/
+            S.each([true, false], function(inn){
+                S.each(['r', 'c', 'l'], function(ll) {
+                    S.each(['t', 'c', 'b'], function(tt) {
+                        var ol = new S.Dialog('#J_inner', {width: 100, height: 100, mask: false, align: {node:'', x: ll, y: tt, inner: inn}, scroll: false, close: false});
+                        ol.on('afterFirstRender', function(){
+                            this.setBody(tt+','+ll+','+inn);
+                        });
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
