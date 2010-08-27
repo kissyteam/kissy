@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.2
+Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 16 16:50
+build time: Aug 26 22:48
 */
 KISSY.add("dom",function(c,r){function o(v,n){return v&&v.nodeType===n}c.DOM={_isElementNode:function(v){return o(v,1)},_isKSNode:function(v){return c.Node&&o(v,c.Node.TYPE)},_getWin:function(v){return v&&"scrollTo"in v&&v.document?v:o(v,9)?v.defaultView||v.parentWindow:v===r?window:false},_nodeTypeIs:o}});
 KISSY.add("selector",function(c,r){function o(a,b){var e,g=[],p,x;b=v(b);if(c.isString(a)){a=c.trim(a);if(B.test(a)){if(a=n(a.slice(1),b))g=[a]}else if(e=s.exec(a)){p=e[1];x=e[2];e=e[3];if(b=p?n(p,b):b)if(e)if(!p||a.indexOf(l)!==-1)g=j(e,x,b);else{if((a=n(p,b))&&q.hasClass(a,e))g=[a]}else if(x)g=C(x,b)}else if(c.ExternalSelector)return c.ExternalSelector(a,b);else f(a)}else if(a&&(a[u]||a[A]))g=a[u]?[a[u]()]:a[A]();else if(a&&(c.isArray(a)||a.item&&!a.nodeType))g=a;else if(a)g=[a];if(g.item)g=c.makeArray(g);

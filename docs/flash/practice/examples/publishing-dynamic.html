@@ -1,0 +1,246 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>动态发布方式 &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../../../assets/base-min.css" />
+<link rel="stylesheet" href="../../../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../../../index.html"><img src="../../../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/blob/master/src/flash/flash-embed.js"><code>flash-embed.js</code></a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+			<div class="section summary">
+				<dl>
+					<dt>本章节将假设您已了解以下内容：</dt>
+					<dd><a href="../references/embed-swf-onto-webpage.html">嵌入SWF的几种方式</a></dd>
+					<dd><a href="../references/flashplayer-parameters.html">Flash播放器参数</a></dd>
+					<dt>Requested:</dt>
+					<dd><a href="http://github.com/kissyteam/kissy/blob/master/build/packages/core.js">KISSY CORE</a></dd>
+					<dd><a href="http://github.com/kissyteam/kissy/blob/master/build/json/json-pkg.js" target="_blank">JSON package</a></dd>
+					<dd><a href="http://github.com/kissyteam/kissy/blob/master/build/flash/flash-pkg.js" target="_blank">Flash package</a></dd>
+					<dt>Editors:</dt>
+					<dd><a href="mailto:longzang@taobao.com">龙藏</a>,Taobao,Inc</p></dd>
+				</dl>
+			</div>
+			<div class="section">
+				<a name="section_1"></a>
+				<h3>最小限度的动态发布</h3>
+				<div class="detail">
+					<h4>HTML步骤:</h4>
+					<ol>
+						<li>
+							在SWF内容前，至少引入以下JS：
+<pre class="example-code"><code>
+&lt;script src="ks-core.js"&gt;&lt;/script&gt;
+&lt;script src="json.js"&gt;&lt;/script&gt;
+&lt;script src="flash-pkg.js"&gt;&lt;/script&gt;	
+</code></pre>
+						</li>
+						<li>
+							在期望插入SWF写上HTML钩子.如命名钩子为 
+<pre class="example-code"><code>
+&lt;div id="myFlashContent"&gt;&lt;/div&gt;
+</code></pre>
+<p class="notice">请不要在此入口HTML上写上其他HTML属性,此处内容将会被替换。</p>
+<p class="notice">尽可能减少针对此ID的CSS样式。</p>								
+						</li>
+					</ol>
+					<h4>Javascript步骤:</h4>
+					<ol>
+						<li>
+							期望插入的SWF对象之后，插入操作SWF的相关JS代码：
+<pre class="example-code"><code>
+&lt;script src="PATH2YOURSCRIPT.js"&gt;&lt;/script&gt;
+</code></pre>
+						</li>
+						<li>
+							或在SCRIPT标签中写上相关操作SWF的JS代码 
+<pre class="example-code"><code>
+&lt;script&gt;
+	//do sth.
+&lt;/script&gt;
+</code></pre>							
+						</li>
+						<li>
+							在代码中可以这么写：
+<pre class="example-code"><code>
+Flash.add('#myFlashContent',
+	{
+	 src: 'PATH2YOURSWF.swf'
+	}
+);  //注意  "#" 号.
+</code></pre>							
+						</li>
+					</ol>
+				</div>
+			</div>
+			<div class="section">
+				<a name="section_2"></a>
+				<h3>套用CSS</h3>
+				<div class="detail">
+					<h4>HTML步骤:</h4>
+					<p>同"<a href="#section_1">最小限度的动态发布</a>"</p>
+					<h4>Javascript步骤:</h4>
+					<ol>
+						<li>
+							仅需要修改"最小限度的动态发布"第3步:
+<pre class="example-code"><code>
+Flash.add('#myFlashContent',
+	{
+	 src: 'PATH2YOURSWF.swf',
+	 attrs: {
+                'class':"swfstyle",
+                width: 800,
+                height: 600
+            }
+	}
+); 
+</code></pre>							
+						</li>
+						<li>
+							如果希望仅由CSS来控制高宽变化，则请将高宽置 100%:
+<pre class="example-code"><code>
+Flash.add('#myFlashContent',
+	{
+	 src: 'PATH2YOURSWF.swf',
+	 attrs: {
+                'class':"swfstyle",  // 指定样式名 ，多个请由英文半角逗号隔开。
+                width: "100%",
+                height: "100%"
+            }
+	}
+); 
+</code></pre>							
+						</li>
+					</ol>
+					<h4>CSS步骤:</h4>
+<pre class="example-code"><code>
+.swfstyle {
+	width: 250px;
+	height: 250px;
+}
+</code></pre>						
+				</div>
+			</div>
+        	<div class="section">
+        		<a name="section_3"></a>
+				<h3>使用flashvars配置flash对象</h3>
+				<dl>
+					<dt>本部分描述将假设您已了解以下内容：</dt>
+					<dd><a href="#section_1">最小限度的动态发布</a></dd>
+					<dd><a href="#section_2">套用CSS</a></dd>
+				</dl>
+				<pre class="example-code"><code>
+var flashvars = {
+	// 以下为传递给 flash 对象的参数
+	name1: 'configuration value #1',
+	name2: 'configuration value #2',
+	name3: 'Hello World! I am changing'
+}
+
+Flash.add('#myFlashContent',
+	{
+	 src: 'PATH2YOURSWF.swf',
+	 params:{
+           flashvars : flashvars
+	 }
+	}
+); 
+</code></pre>	
+			</div>
+			<div class="section">
+        		<a name="section_4"></a>
+				<h3>使用 JSON 配置flash对象</h3>
+				<dl>
+					<dt>本部分描述将假设您已了解以下内容：</dt>
+					<dd><a href="#section_1">最小限度的动态发布</a></dd>
+					<dd><a href="#section_2">套用CSS</a></dd>
+				</dl>
+				<pre class="example-code"><code>
+var flashvars = {
+	// 以下为传递给 flash 对象的参数 
+	// config 对象将被自动JSON字符串化
+	config: {
+		clip:  {
+			autoPlay: false,
+			autoBuffering: true,
+			source: [
+			      'http://movie_a.flv',
+			      'http://movie_b.flv',
+			      'http://movie_c.flv'
+				  ]
+		}
+	},
+	array:[1,2,3,4,5,6,7]
+}
+
+Flash.add('#myFlashContent',
+	{
+	 src: 'PATH2YOURSWF.swf',
+	 params:{
+           flashvars : flashvars
+	 }
+	}
+); 
+</code></pre>	
+			</div>
+			<div class="section">
+        		<a name="section_5"></a>
+				<h3>使用快速安装(express install)</h3>
+				<dl>
+					<dt>本部分描述将假设您已了解以下内容：</dt>
+					<dd><a href="#section_1">最小限度的动态发布</a></dd>
+					<dd><a href="#section_2">套用CSS</a></dd>
+					<dd><a href="http://www.adobe.com/devnet/flashplayer/articles/express_install.html" target="_blank">Flash快速安装(express install)</a></dd>
+				</dl>
+				
+				<pre class="example-code"><code>
+ F.add('#myFlashContent', {
+            src: 'assets/test.swf',
+            xi: 'express-install/expressInstall.swf',
+            version: 20.2   // 强行观摩 :p
+        });
+
+</code></pre>
+			 <p class="notice">需要flash player 8 版本以上。</p>	
+			</div>
+		
+		
+		 <div class="section notes">
+		 	<p>
+		 		<a href="http://github.com/kissyteam/kissy/issues">更多意见和建议？</a>
+		 	</p>
+		 </div>
+		</div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc">
+                <a href="../../../index.html">home</a> &rsaquo;
+                <a href="../../index.html">flash</a> &rsaquo; 
+                <a href="../index.html">start</a> &rsaquo; publishing-dynamic:
+            </div>
+            <div class="toc">
+            	<ul>
+            		<li><a href="#section_1">最小限度的动态发布</a></li>
+            		<li><a href="#section_2">套用CSS</a></li>
+            		<li><a href="#section_3">使用flashvars配置flash对象</a></li>
+            		<li><a href="#section_4">使用 JSON 配置flash对象</a></li>
+            		<li><a href="#section_5">使用快速安装(express install)</a></li>
+            	</ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

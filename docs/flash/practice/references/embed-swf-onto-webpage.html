@@ -1,0 +1,323 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>嵌入SWF的几种方式 &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../../../assets/base-min.css" />
+<link rel="stylesheet" href="../../../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../../../index.html"><img src="../../../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/blob/master/src/flash/flash-embed.js"><code>flash-embed.js</code></a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+			<div class="section summary">
+				<dl>
+					<dt>本章节将假设您已了解以下内容：</dt>
+					<dd><a href="../references/alternative-content.html" target="_blank">alternative content</a></dd>
+					<dt>Editors:</dt>
+					<dd><a href="mailto:longzang@taobao.com">龙藏</a>,Taobao,Inc</p></dd>
+				</dl>
+			</div>
+			<div class="section">
+				<a name="section_1"></a>
+				<h3>注意</h3>
+				<div class="detail">
+					<p>一般来说，仅仅插入SWF不需要任何 JS代码。</p>
+					<p>当一个页面需要借助JS插入SWF,通常出于以下1个或多个情况:</p>
+					<ul>
+						<li>消除某些浏览器存在的“点击激活(click-to-activate)”机制 。</li>
+						<li>当前页面和SWF间通讯。</li>
+						<li>Flash player 版本向导及客户端版本控制。</li>
+						<li>动态增删改SWF及其涉及的元素属性及内容。</li>
+					</ul>
+					<p class="notice">使用动态方式插入 SWF 时，代码会自行判断浏览器并以最恰当的方式进行插入。</p>
+					<p class="tips">代码差异性：指设定同样内容时，需要通过2种方式共同指定。</p>
+				</div>
+			</div>
+			<div class="section">
+				<a name="section_2"></a>
+				<h3>O-E静态方式</h3>
+				<div class="detail">
+					<h4>关于:</h4>
+					<ol>
+						<li>由 OBEJCT 和 EMBED 两个标签组合而成</li>
+						<li>Adobe Flash Pro 等官方工具产出的页面中  NOSCRIPT 标签间包含的内容</li>
+						<li>通常附带名为 AC_RunActiveContent 的 javascript 文件</li>
+					</ol>
+					<h4>优点:</h4>
+					<ol>
+						<li>最强兼容性</li>
+						<li>遵从“优雅降级”(Gracefuldegradation)方式</li>
+						<li>官方代码,具有官方技术人员负责维护核心部分代码。如 AC_RunActiveContent.js</li>
+					</ol>
+					<h4>缺点:</h4>
+					<ol>
+						<li>最具差异性代码，不便于统一维护。</li>
+						<li>无法自定义替换内容Alternative content。即不满足可用性(usable)。</li>
+						<li>官方代码,具有官方技术人员负责维护核心部分代码。如 AC_RunActiveContent.js</li>
+						<li>代码冗余</li>
+					</ol>
+					<h4>其他:</h4>
+					<ol>
+						<li>默认官方代码主要依靠JS动态加载。可能会受限于页面控制权限。如第三方平台不允许用户使用。</li>
+						<li>仅静态嵌入,需要用户从自动生成代码的 NOSCRIPT 标签中剥离。</li>
+						<li>AC_RunActiveContent是document.write()方式写入object或embed标签。</li>
+					</ol>
+					<h4>适用:</h4>
+					<ol>
+						<li>自己的站点，或不需要考虑太多问题的地方。因为官方都已做好，傻瓜式。</li>
+						<li>需要最强兼容但不需要自定义替换内容Alternative content的应用。</li>
+					</ol>
+					<h4>示例代码:</h4>
+<pre class="example-code"><code>
+&lt;script language="javascript"&gt;AC_FL_RunContent = 0;&lt;/script&gt;
+&lt;script src="AC_RunActiveContent.js" language="javascript"&gt;&lt;/script&gt;
+&lt;script language="javascript"&gt;
+if (AC_FL_RunContent == 0) {
+	alert("此页需要 AC_RunActiveContent.js");
+} else {
+	AC_FL_RunContent(
+		'codebase', '/swflash.cab#version=9,0,0,0',
+		'width', '950',
+		'height', '203',
+		'src', 'SWF.swf',
+		'quality', 'high',
+		'pluginspage', 'http://www.macromedia.com/go/getflashplayer',
+		'align', 'middle',
+		'play', 'true',
+		'loop', 'true',
+		'scale', 'showall',
+		'wmode', 'window',
+		'devicefont', 'false',
+		'id', 'movie',
+		'bgcolor', '#ffffff',
+		'name', 'movie',
+		'menu', 'true',
+		'allowFullScreen', 'false',
+		'allowScriptAccess','sameDomain',
+		'movie', 'SWF.swf',
+		'salign', ''
+		); //end AC code
+}
+&lt;/script&gt;
+&lt;noscript&gt;
+
+&lt;object 
+	classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"  
+	codebase="/swflash.cab#version=6,0,0,0" 
+	width="950" 
+	height="203" 
+	id="movie" 
+&gt;
+
+	&lt;param name="movie" value="SWF.swf" /&gt;
+	&lt;param name="allowfullscreen" value="true" /&gt;
+	&lt;param name="allowscriptaccess" value="always" /&gt;
+	&lt;param name="allownetworking" value="all" /&gt;
+	&lt;param name="wmode" value="transparent" /&gt;
+	
+    &lt;embed src="SWF.swf" 				   		
+			width="950" 
+			height="203" 
+			allowfullscreen="true" 
+			allowscriptaccess="always" 
+			allownetworking="all" 
+			wmode="transparent" 
+			name="movie" 
+			type="application/x-shockwave-flash" 
+			pluginspage="http://www.macromedia.com/go/getflashplayer"
+	/&gt;  
+   
+&lt;/object&gt;    
+&lt;/noscript&gt;
+
+
+</code></pre>					
+				</div>
+			</div>
+			<div class="section">
+				<a name="section_3"></a>
+				<h3>O-O静态方式</h3>
+				<div class="detail">
+					<h4>关于:</h4>
+					<ol>
+						<li>由 2 个OBEJCT 标签组合而成</li>
+						<li> <a href="http://code.google.com/p/swfobject/" target="_blank">SWObject</a> 作者推荐的静态潜入方式</li>
+						<li>通常附带名为 AC_RunActiveContent 的 javascript 文件</li>
+					</ol>
+					<h4>优点:</h4>
+					<ol>
+						<li>PC主流浏览器兼容。</li>
+						<li>较少代码差异性，利于维护。</li>
+						<li>可以自定义替换内容Alternative content。</li>
+					</ol>
+					<h4>缺点:</h4>
+					<ol>
+						<li>在某些浏览器下会多一次自定义替换内容Alternative content的请求。</li>
+						<li>在某些浏览器下多一次 SWF 请求，且不会从缓存取该内容。</li>
+						<li>IE条件注释标签作可能在非IE浏览器下存在潜在问题</li>
+						<li>代码部分冗余</li>
+					</ol>
+					<h4>其他:</h4>
+					<ol>
+						<li>有<a href="http://code.google.com/p/swfobject/wiki/generator" target="_blank">在线生成器</a>。</li>
+						<li>SWFOject生成动态代码都是替换指定的 HTML 元素为一个 OBJECT 元素。</li>
+					</ol>
+					<h4>适用:</h4>
+					<ol>
+						<li>所有PC上。</li>
+						<li>当用户播放器可能没有安装或版本过低时，期望出现可替换内容的Alternative content。</li>
+						<li>可能需要通过期望出现可替换内容的 Alternative content 面向SEO的。</li>
+					</ol>
+					<h4>示例代码:</h4>
+<pre class="example-code"><code>
+&lt;object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="950" 
+height="203" id="myFlashContent"&gt;
+
+	&lt;param name="movie" value="SWF.swf" /&gt;
+	&lt;param name="allowfullscreen" value="true" /&gt;
+	&lt;param name="allowscriptaccess" value="always" /&gt;
+	&lt;param name="allownetworking" value="all" /&gt;
+	&lt;param name="wmode" value="transparent" /&gt;
+	&lt;!--[if !IE]&gt;-->
+	&lt;object type="application/x-shockwave-flash" data="SWF.swf" 
+	width="950" height="203"&gt;
+		&lt;param name="allowfullscreen" value="true" /&gt;
+	
+		&lt;param name="allowscriptaccess" value="always" /&gt;
+		&lt;param name="allownetworking" value="all" /&gt;
+		&lt;param name="scale" value="exactfit" /&gt;
+		&lt;param name="wmode" value="transparent" /&gt;
+	&lt;!--&lt;![endif]--&gt;
+	&lt;a href="http://www.adobe.com/go/getflashplayer"&gt;
+		&lt;img src="get_flash_player.gif" alt="Get Adobe Flash player" /&gt;
+	&lt;/a&gt;
+	&lt;!--[if !IE]&gt;--&gt;						
+	&lt;/object&gt;								
+	&lt;!--&lt;![endif]--&gt;						
+&lt;/object&gt;
+
+</code></pre>						
+				</div>
+			</div>
+			<div class="section">
+				<a name="section_4"></a>
+				<h3>L-O静态方式</h3>
+				<div class="detail">
+					<h4>关于:</h4>
+					<ol>
+						<li>L-O即  Lazy Object。</li>
+						<li>仅有一个 OBJECT 标签。 </li>
+						<li>是O-O方式的偷懒写法。</li>
+					</ol>
+					<h4>优点:</h4>
+					<ol>
+						<li>PC上所有主流浏览器兼容。</li>
+						<li>代码差异性很小。</li>
+						<li>代码量较少。</li>
+						<li>可以自定义替换内容Alternative content。</li>
+					</ol>
+					<h4>缺点:</h4>
+					<ol>
+						<li>由于是O-O方式的偷懒法，故拥有O-O方式全部缺点。</li>
+						<li>在部分浏览器下，SWF将不能被缓存。</li>
+					</ol>
+					<h4>适用:</h4>
+					<ol>
+						<li>对页面请求数要求不高的页面。</li>
+						<li>想偷懒又想能自定义替换内容Alternative content的页面。</li>
+					</ol>
+					<h4>示例代码:</h4>
+<pre class="example-code"><code>
+&lt;object  type="application/x-shockwave-flash"  data="SWF.swf"  
+width="950" height="203" id="myFlashContent"&gt;
+	&lt;param name="movie" value="SWF.swf" /&gt;
+	&lt;param name="allowfullscreen" value="true" /&gt;
+	&lt;param name="allowscriptaccess" value="always" /&gt;
+	&lt;param name="allownetworking" value="all" /&gt;
+	&lt;param name="wmode" value="transparent" /&gt;
+	&lt;a href="http://www.adobe.com/go/getflashplayer"&gt;
+		&lt;img src="get_flash_player.gif" alt="Get Adobe Flash player" /&gt;
+	&lt;/a&gt;
+&lt;/object&gt;
+	
+</code></pre>			
+				</div>
+			</div>
+			<div class="section">
+				<a name="section_5"></a>
+				<h3>L-E静态方式</h3>
+				<div class="detail">
+					<h4>关于:</h4>
+					<ol>
+						<li>L-E即  Lazy Embed</li>
+						<li>仅有一个 EMBED 标签。 </li>
+					</ol>
+					<h4>优点:</h4>
+					<ol>
+						<li>兼容当前所有主流浏览器。</li>
+						<li>代码量最少。</li>
+						<li>代码无差异性。</li>
+						<li>无多余请求。</li>
+					</ol>
+					<h4>缺点:</h4>
+					<ol>
+						<li>无法自定义替换内容Alternative content。</li>
+						<li>非XHTML1.0规范(HTML5才正式纳入规范)。</li>
+						<li>可能某些版本浏览器解析有问题。</li>
+					</ol>
+					<h4>适用:</h4>
+					<ol>
+						<li>希望使用最少代码的页面</li>
+						<li>不需要自定义替换内容Alternative content的页面</li>
+					</ol>
+					<h4>示例代码:</h4>
+<pre class="example-code"><code>
+&lt;embed src="SWF.swf"  width="950" height="203" 
+		allowfullscreen="true" 
+		allowscriptaccess="always" 
+		allownetworking="all" 
+		wmode="transparent" 
+		name="movie" 
+		pluginspage="http://www.macromedia.com/go/getflashplayer"
+/&gt;   
+</code></pre>
+				</div>
+			</div>
+			<div class="section notes">
+		 	<p>
+		 		<a href="http://github.com/kissyteam/kissy/issues">更多意见和建议？</a>
+		 	</p>
+		 </div>
+        </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc">
+                <a href="../../../index.html">home</a> &rsaquo;
+                <a href="../../index.html">flash</a> &rsaquo; 
+                <a href="../index.html">start</a> &rsaquo; embed-swf-onto-webpage:
+            </div>
+            <div class="toc">
+            	<ul>
+            		<li><a href="#section_1">注意</a></li>
+            		<li><a href="#section_2">O-E静态方式</a></li>
+            		<li><a href="#section_3">O-O静态方式</a></li>
+            		<li><a href="#section_4">L-O静态方式</a></li>
+            		<li><a href="#section_5">L-E静态方式</a></li>
+            	</ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

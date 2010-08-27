@@ -1,0 +1,355 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>FlashPlayer参数 &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../../../assets/base-min.css" />
+<link rel="stylesheet" href="../../../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../../../index.html"><img src="../../../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/blob/master/src/flash/flash-embed.js"><code>flash-embed.js</code></a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+			<div class="section summary">
+			    <p>这里仅阐述允许在S.Flash配置项中的一些播放器参数。</p>
+				<dl>
+					<dt>Editors:</dt>
+					<dd><a href="mailto:longzang@taobao.com">龙藏</a>,Taobao,Inc</p></dd>
+				</dl>
+			</div>
+			<div class="section">
+				  <h3>最常用参数</h3>
+				  <div class="member">
+				  	<h4>
+				  		<a name="parameter_movie">movie</a>
+				  	</h4>
+					<div class="detail">
+						<p>SWF 对象路径。</p>
+						<ul>
+							<li>必选</li>
+							<li><code class="param-type">&lt;URL&gt;</code></li>
+						</ul>
+						<p class="notice">IE only,因此在S.Flash中将自动完成，不需要写入配置项。</p>
+					</div>
+				  </div>
+				  <div class="member">
+				  	<h4>
+				  		<a name="parameter_wmode">wmode</a>
+				  	</h4>
+					<div class="detail">
+						<p>播放器插件窗口模式。</p>
+						<ul>
+							<li>可选</li>
+							<li><code class="param-type">&lt;window&gt;</code> 独立窗口模式 <b>缺省</b> </li>
+							<li><code class="param-type">&lt;opaque&gt;</code> 带背景色,非窗口模式</li>
+							<li><code class="param-type">&lt;transparent&gt;</code> 透明背景,非窗口模式</li>
+						</ul>
+					</div>
+				  </div>
+				  
+				  <div class="member">
+				  	<h4>
+				  		<a name="parameter_flashvars">flashvars</a>
+				  	</h4>
+					<div class="detail">
+						<p>自定义参数。</p>
+						<ul>
+							<li>可选</li>
+							<li>发送根级变量(root level variables)给Flash对象。</li>
+							<li>最大<b>64KB</b>字符串容量</li>
+							<li><b>&</b>分隔开的<b> name = variable </b>的组合 （variable 的值可能 需要 encodeURIComponent）</li>
+							<li>特殊或 <b>/</b>、 <b>&amp;</b> 和不可打印字符需要转换。(单一一个空格可以用 + 表示)</li>
+						</ul>
+						<p class="notice">为避免冲突，JSON数据需要将双引号“ 改为单引号' 。因此需要在 Flash对象内进行还原。</p>
+					</div>
+				  </div>
+				  
+				  <div class="member">
+				  	<h4>
+				  		<a name="parameter_allowscriptaccess">allowscriptaccess</a>
+				  	</h4>
+					<div class="detail">
+						<p>SWF的脚本访问授权标记。</p>
+						<ul>
+							<li>可选</li>
+							<li><code class="param-type">&lt;sameDomain&gt;</code> 只允许访问和SWF来源域相同的页面API及脚本 <b>缺省</b> </li>
+							<li><code class="param-type">&lt;always&gt;</code> 允许任何域的SWF访问当前承载页API及脚本</li>
+							<li><code class="param-type">&lt;never&gt;</code> 不允许访问当前承载页脚本</li>
+						</ul>
+						<p class="notice">Flash player 9.0.115.0以上版本从always 变更至 sameDomain。</p>
+						<p class="notice">承载页API:如页面跳转。</p>
+					</div>
+				  </div>
+				  
+				  <div class="member">
+				  	<h4>
+				  		<a name="parameter_allownetworking">allownetworking</a>
+				  	</h4>
+					<div class="detail">
+						<p>SWF的网络访问授权标记。</p>
+						<ul>
+							<li>可选</li>
+							<li><code class="param-type">&lt;all&gt;</code> 允许SWF使用所有网络访问 <b>缺省</b> </li>
+							<li><code class="param-type">&lt;internal&gt;</code> 仅允许SWF内建的网络访问，不能调用浏览器导航或浏览器交互 API</li>
+							<li><code class="param-type">&lt;none&gt;</code> 不允许访问当前承载页脚本</li>
+						</ul>
+						<p class="notice">Flash player 9.0.115.0以上版本从always 变更至 sameDomain。</p>
+						<p class="notice">当为 internal，则将视 allowscriptaccess为nerver。</p>
+					</div>
+				  </div>
+				  
+				  <div class="member">
+				  	<h4>
+				  		<a name="parameter_allowfullscreen">allowfullscreen</a>
+				  	</h4>
+					<div class="detail">
+						<p>SWF的页面全屏模式授权标记。</p>
+						<ul>
+							<li>可选</li>
+							<li><code class="param-type">&lt;false&gt;</code> 不允许全屏模式 <b>缺省</b> </li>
+							<li><code class="param-type">&lt;true&gt;</code> 允许全屏显示</li>
+						</ul>
+						<p class="notice">需要Flash Player 9.0.27.0以上版本。</p>
+					</div>
+				  </div>
+				  
+				  
+				<h3>显示控制参数</h3>
+				<div class="member">
+				  	<h4>
+				  		<a name="parameter_play">play</a>
+				  	</h4>
+					<div class="detail">
+						<p>SWF自动播放标记。</p>
+						<ul>
+							<li>可选</li>
+							<li>加载SWF后是否立刻开始播放 </li>
+							<li><code class="param-type">&lt;false&gt;</code> 不允许自动播放 <b>缺省</b> </li>
+							<li><code class="param-type">&lt;true&gt;</code> 允许自动播放 </li>
+						</ul>
+						<p class="notice">需要Flash Player 9.0.27.0以上版本。</p>
+					</div>
+				 </div>
+				
+				<div class="member">
+				  	<h4>
+				  		<a name="parameter_loop">loop</a>
+				  	</h4>
+					<div class="detail">
+						<p>SWF循环播放标记。</p>
+						<ul>
+							<li>可选</li>
+							<li>播放到最后一帧时是否重新开始播放 </li>
+							<li><code class="param-type">&lt;false&gt;</code> 不允许循环播放 <b>缺省</b> </li>
+							<li><code class="param-type">&lt;true&gt;</code> 允许循环播放 </li>
+						</ul>
+					</div>
+				 </div>
+				
+				<div class="member">
+				  	<h4>
+				  		<a name="parameter_menu">menu</a>
+				  	</h4>
+					<div class="detail">
+						<p>显示完整右键菜单标记 。</p>
+						<ul>
+							<li>可选</li>
+							<li><code class="param-type">&lt;true&gt;</code> 显示完整的菜单 <b>缺省</b> </li>
+							<li><code class="param-type">&lt;false&gt;</code> 仅仅显示'设置'选项和'about'选项 </li>
+						</ul>
+					</div>
+				 </div>
+				
+				<div class="member">
+				  	<h4>
+				  		<a name="parameter_quality">quality</a>
+				  	</h4>
+					<div class="detail">
+						<p>显示品质标记 。</p>
+						<ul>
+							<li>可选</li>
+							<li>回放期间使用的消除锯齿级别，是显示质量和运行速率间的权衡值</li>
+							<li><code class="param-type">&lt;high&gt;</code> 使外观优先于回放速度，它始终应用消除锯齿功能。 <b>缺省</b> </li>
+							<li><code class="param-type">&lt;best&gt;</code> 提供最佳的显示品质，而不考虑回放速度。 </li>
+							<li><code class="param-type">&lt;autohigh&gt;</code> 在开始时是回放速度和外观两者并重，但在必要时会牺牲外观来保证回放速度。 </li>
+							<li><code class="param-type">&lt;medium&gt;</code> 会应用一些消除锯齿功能，但并不会平滑位图。 </li>
+							<li><code class="param-type">&lt;autolow&gt;</code> 优先考虑速度，但是也会尽可能改善外观。 </li>
+							<li><code class="param-type">&lt;low&gt;</code> 使回放速度优先于外观，而且从不使用消除锯齿功能。 </li>
+						</ul>
+					</div>
+				 </div>
+				
+				<div class="member">
+				  	<h4>
+				  		<a name="parameter_scale">scale</a>
+				  	</h4>
+					<div class="detail">
+						<p>可视区域的缩放模式标记 。</p>
+						<ul>
+							<li>可选</li>
+							<li><code class="param-type">&lt;showall&gt;</code> 显示全部并保持原始宽高比 <b>缺省</b> </li>
+							<li><code class="param-type">&lt;noborder&gt;</code> 无边界并保持原始宽高比 </li>
+							<li><code class="param-type">&lt;exactfit&gt;</code> 适应性填充，不保持原始宽高比 </li>
+							<li><code class="param-type">&lt;noscale&gt;</code> 不缩放，保持原始宽高比 </li>
+						</ul>
+					</div>
+				 </div>
+				
+				<div class="member">
+				  	<h4>
+				  		<a name="parameter_salign">salign</a>
+				  	</h4>
+					<div class="detail">
+						<p>缩放对齐方式标记 。</p>
+						<ul>
+							<li>可选</li>
+							<li>默认为空</li>
+							<li><code class="param-type">&lt;l&gt;</code> 按左边对齐</li>
+							<li><code class="param-type">&lt;t&gt;</code> 按上边对齐 </li>
+							<li><code class="param-type">&lt;r&gt;</code> 按右边对齐 </li>
+							<li><code class="param-type">&lt;b&gt;</code> 按下边对齐 </li>
+							<li><code class="param-type">&lt;tl&gt;</code> 按左上边对齐 </li>
+							<li><code class="param-type">&lt;tr&gt;</code> 按右上边对齐 </li>
+							<li><code class="param-type">&lt;bl&gt;</code> 按左下边对齐 </li>
+							<li><code class="param-type">&lt;br&gt;</code> 按右下边对齐 </li>
+						</ul>
+					</div>
+				 </div>
+				 
+				 <div class="member">
+				  	<h4>
+				  		<a name="parameter_bgcolor">bgcolor</a>
+				  	</h4>
+					<div class="detail">
+						<p>缩放对齐方式标记 。</p>
+						<ul>
+							<li>可选</li>
+							<li><code class="param-type">&lt;#RRGGBB&gt;</code> 带#号的十六进制 RGB 值</li>
+						</ul>
+						<p class="notice">当wmode为非 transparent时有效。</p>
+					</div>
+				 </div>
+				
+				 <div class="member">
+				  	<h4>
+				  		<a name="parameter_devicefont">devicefont</a>
+				  	</h4>
+					<div class="detail">
+						<p>对于未选定“设备字体”选项的静态文本对象是否仍使用设备字体进行绘制 。</p>
+						<ul>
+							<li>可选</li>
+							<li><code class="param-type">&lt;false&gt;</code> <b>缺省</b></li>
+							<li><code class="param-type">&lt;true&gt;</code> </li>
+						</ul>
+						<dl>
+							<dt>Flash包含了3种设备字体：</dt>
+							<dd>_sans (类似 Helvetica 或 Arial) </dd>
+							<dd>_serif (类似 Times Roman)  </dd>
+							<dd>_typewriter (类似 Courier)  </dd>
+						</dl>
+					</div>
+				 </div>
+				
+				<h3>其它参数</h3>
+				<div class="member">
+				  	<h4>
+				  		<a name="parameter_base">base</a>
+				  	</h4>
+					<div class="detail">
+						<p>SWF内相对路径基址标记。</p>
+						<ul>
+							<li>可选</li>
+							<li>默认为空</li>
+							<li><code class="param-type">&lt;URL&gt;|&lt;PATH&gt;</code></li>
+						</ul>
+					</div>
+				 </div>  
+				
+				<div class="member">
+				  	<h4>
+				  		<a name="parameter_swliveconnect">swliveconnect</a>
+				  	</h4>
+					<div class="detail">
+						<p>选择启动Flash时是否先启动JAVA标记 。</p>
+						<ul>
+							<li>可选</li>
+							<li><code class="param-type">&lt;false&gt;</code> <b>缺省</b></li>
+							<li><code class="param-type">&lt;true&gt;</code> </li>
+						</ul>
+						<p class="notice">启动 Java 会显着增加 SWF 文件的启动时间；因此，只有在必要时才应将此标签设置为 true。</p>
+						<p class="notice">使用 fscommand() 动作可从独立的SWF中自动启用 Java。</p>
+					</div>
+				 </div> 
+				
+				
+				<div class="member">
+				  	<h4>
+				  		<a name="parameter_seamlesstabbing">seamlesstabbing</a>
+				  	</h4>
+					<div class="detail">
+						<p>启动无缝Table选择标记 。</p>
+						<ul>
+							<li>可选</li>
+							<li><code class="param-type">&lt;false&gt;</code> <b>缺省</b></li>
+							<li><code class="param-type">&lt;true&gt;</code> </li>
+						</ul>
+						<p class="notice">在使用Table键时，焦点是否可以移入移出Flash对象。当wmode为 window时可能失效。</p>
+					</div>
+				 </div> 
+			</div>
+        	<div class="section notes">
+			 	<p>
+			 		<a href="http://github.com/kissyteam/kissy/issues">更多意见和建议？</a>
+			 	</p>
+			 </div>
+		</div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc">
+                <a href="../../../index.html">home</a> &rsaquo;
+                <a href="../../index.html">flash</a> &rsaquo; 
+                <a href="../index.html">start</a> &rsaquo; flashplayer-parameters:
+            </div>
+            <div class="toc">
+            	 <h3>最常用参数</h3>
+				 <ul>
+                    <li><a href="#parameter_movie">movie</a></li>
+                    <li><a href="#parameter_wmode">wmode</a></li>
+                    <li><a href="#parameter_flashvars">flashvars</a></li>
+                    <li><a href="#parameter_allowscriptaccess">allowscriptaccess</a></li>
+                    <li><a href="#parameter_allownetworking">allownetworking</a></li>
+                    <li><a href="#parameter_allowfullscreen">allowfullscreen</a></li>
+                </ul>
+            	 <h3>显示控制参数</h3>
+				 <ul>
+                    <li><a href="#parameter_play">play</a></li>
+                    <li><a href="#parameter_loop">loop</a></li>
+                    <li><a href="#parameter_menu">menu</a></li>
+                    <li><a href="#parameter_quality">quality</a></li>
+                    <li><a href="#parameter_scale">scale</a></li>
+                    <li><a href="#parameter_salign">salign</a></li>
+                    <li><a href="#parameter_bgcolor">bgcolor</a></li>
+                    <li><a href="#parameter_devicefont">devicefont</a></li>
+                </ul>
+            	 <h3>其它参数</h3>
+				 <ul>
+                    <li><a href="#parameter_base">base</a></li>
+                    <li><a href="#parameter_swliveconnect">swliveconnect</a></li>
+                    <li><a href="#parameter_seamlesstabbing">seamlesstabbing</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

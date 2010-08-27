@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>关于alternative content &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../../../assets/base-min.css" />
+<link rel="stylesheet" href="../../../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../../../index.html"><img src="../../../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/blob/master/src/flash/flash-embed.js"><code>flash-embed.js</code></a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+			<div class="section summary">
+				<dl>
+					<dt>Editors:</dt>
+					<dd><a href="mailto:longzang@taobao.com">龙藏</a>,Taobao,Inc</p></dd>
+				</dl>
+			</div>
+			<div class="section">
+				<a name="section_about"></a>
+				<h3>什么是 alternative content</h3>
+				<div class="detail">
+					<p>替换内容(alternative content)。</p>
+					<p>如果Flash插件没有安装或者不被支持(版本过低)那么这些替换内容就会被显示出来。</p>
+					
+					<p class="notice">OBJECT tag only。参考 OBJECT fallback</p>
+				</div>
+示例：
+<pre class="example-code"><code>
+< object  type="application/x-shockwave-flash"  
+data="http://img01.taobaocdn.com/tps/i1/T1S1tkXgliy0NtxVjX.swf"  
+width="950" height="203" id="myFlashContent">
+	< param name="movie" value="PATH2SWF.swf" / >
+	< a href="http://www.adobe.com/go/getflashplayer" >
+		< img src="get_flash_player.gif" alt="Get Adobe Flash player" / >
+	< / a >
+< / object>
+</code></pre>
+			</div>
+			<div class="section">
+				<a name="section_faq"></a>
+				<h3>FAQ</h3>
+				<div class="detail">
+					<dl>
+						<dt>当Flash 对象(SWF)请求为404时是否被启用？</dt>
+						<dd>否，只有Flashplayer版本过低或未安装调用。</dd>
+						<dt>fallback在非IE下内容是否会被请求？</dt>
+						<dd>是，部分浏览器会请求此处内容，无论是否被满足条件。</dd>
+					</dl>
+				</div>	
+			</div>
+			<div class="section notes">
+			 	<p>
+			 		<a href="http://github.com/kissyteam/kissy/issues">更多意见和建议？</a>
+			 	</p>
+			 </div>
+        </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc">
+                <a href="../../../index.html">home</a> &rsaquo;
+                <a href="../../index.html">flash</a> &rsaquo; 
+                <a href="../index.html">start</a> &rsaquo; alternative-content:
+            </div>
+            <div class="toc">
+               <ul>
+                 <li><a href="#section_about">什么是 alternative content</a></li>
+                 <li><a href="#section_faq">FAQ</a></li>
+               </ul>
+              	
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

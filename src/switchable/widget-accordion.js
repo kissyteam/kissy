@@ -26,6 +26,11 @@ KISSY.add('accordion', function(S) {
         }
 
         Accordion.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
+
+        // multiple 模式时，switchTrigger 在 switchView 时已经实现
+        if(self.config.multiple) {
+            self._switchTrigger = function() { }
+        }
     }
 
     S.extend(Accordion, S.Switchable);

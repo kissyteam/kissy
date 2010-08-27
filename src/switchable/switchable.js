@@ -225,12 +225,10 @@ KISSY.add('switchable', function(S, undefined) {
                 (function(index) {
                     trigger = triggers[index];
 
-                    // 响应点击和 Tab 键
-                    Event.on(trigger, 'click focus', function() {
+                    Event.on(trigger, 'click', function() {
                         self._onFocusTrigger(index);
                     });
 
-                    // 响应鼠标悬浮
                     if (cfg.triggerType === 'mouse') {
                         Event.on(trigger, 'mouseenter', function() {
                             self._onMouseEnterTrigger(index);

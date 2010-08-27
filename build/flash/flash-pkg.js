@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.2
+Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 18 18:19
+build time: Aug 26 22:48
 */
 /**
  * @module   Flash 全局静态类

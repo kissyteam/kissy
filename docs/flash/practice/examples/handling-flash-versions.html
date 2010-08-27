@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>处理Flash播放器版本 &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../../../assets/base-min.css" />
+<link rel="stylesheet" href="../../../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../../../index.html"><img src="../../../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/blob/master/src/flash/flash-embed.js"><code>flash-embed.js</code></a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+			<div class="section summary">
+				<dl>
+					<dt>本章节将假设您已了解以下内容：</dt>
+					<dd><a href="../references/alternative-content.html" target="_blank">alternative content</a></dd>
+					<dd><a href="publishing-dynamic.html" target="_blank">动态发布方式</a></dd>
+					<dd><a href="publishing-static.html" target="_blank">静态发布方式</a></dd>
+					<dt>Requested:</dt>
+					<dd><a href="http://github.com/kissyteam/kissy/blob/master/build/packages/core.js">KISSY CORE</a></dd>
+					<dd><a href="http://github.com/kissyteam/kissy/blob/master/src/flash/flash-ua.js">Flash UA</a></dd>
+					<dt>Editors:</dt>
+					<dd><a href="mailto:longzang@taobao.com">龙藏</a>,Taobao,Inc</p></dd>
+				</dl>
+			</div>
+			<div class="section">
+				<a name="section_1"></a>
+				<h3>满足期望的版本</h3>
+				<div class="detail">
+					<p>即使存在alternative content也不会显示。</p>
+<pre class="example-code"><code>
+if(KISSY.UA.fpvGEQ('9.1.0') {
+    // 符合浏览SWF内容版本
+}</code></pre>
+当然如果想了解客户端细节可以使用
+<pre class="example-code"><code>
+var ver = KISSY.UA.fpv();
+if(ver){
+	// 对ver做细节判断
+	// 格式:[ Major, Minor, Revision ]
+}
+// 如果 未安装则 ver 为  undefined
+</code></pre>
+				</div>
+			</div>
+			<div class="section">
+				<a name="section_2"></a>
+				<h3>较旧的版本</h3>
+				<div class="detail">
+					<p>对于使用KISSY.Flash动态方式发布的swf,则会先尝试调用快速安装，如果未指定则不作任何操作。保留原入口显示</p>
+					<p>对于静态方式发布的SWF，如果有显示区域，则显示无内容的Flash播放器。即，播放器已实例化，而内容无法运行。</p>
+				</div>
+			</div>
+			<div class="section">
+				<a name="section_3"></a>
+				<h3>未安装</h3>
+				<p>对于使用KISSY.Flash动态方式发布不作任何操作。保留原入口显示</p>
+				<p>如果有设置alternative content，则将显示该部分的内容。</p>
+			</div>
+			<div class="section notes">
+		 	<p>
+		 		<a href="http://github.com/kissyteam/kissy/issues">更多意见和建议？</a>
+		 	</p>
+		 </div>
+        </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc">
+                <a href="../../../index.html">home</a> &rsaquo;
+                <a href="../../index.html">flash</a> &rsaquo; 
+                <a href="../index.html">start</a> &rsaquo; handling-flash-versions:
+            </div>
+            <div class="toc">
+            	 <ul>
+                    <li><a href="#section_1">满足期望的版本</a></li>
+                    <li><a href="#section_2">较旧的版本</a></li>
+                    <li><a href="#section_3">未安装</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

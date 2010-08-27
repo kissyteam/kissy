@@ -1,5 +1,7 @@
 *.iml
 .idea/
+.ipr
+.iws
 *~
 ~*
 *.diff
@@ -9,5 +11,4 @@
 Thumb.db
 .project
 .*proj
-index.php
 .svn/
