@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Aug 31 11:19
 */
 /**
  * @module kissy
@@ -450,7 +450,7 @@ build time: Aug 26 22:48
         encode = encodeURIComponent,
         decode = decodeURIComponent,
         HAS_OWN_PROPERTY = 'hasOwnProperty',
-        EMPTY = '', SEP = '&',
+        EMPTY = '', SEP = '&', BRACKET = encode('[]'),
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
         REG_NOT_WHITE = /\S/;
@@ -702,7 +702,7 @@ build time: Aug 26 22:48
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, '[]=', encode(val[i] + EMPTY), sep);
+                            buf.push(key, BRACKET + '=', encode(val[i] + EMPTY), sep);
                         }
                     }
                 }
@@ -6121,7 +6121,7 @@ KISSY.add('sizzle', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Aug 31 11:19
 */
 /**
  * 数据延迟加载组件
@@ -6236,7 +6236,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             self.threshold = self._getThreshold();
 
             self._filterItems();
-            self._getItemsLength() && self._initLoadEvent();
+            self._initLoadEvent();
         },
 
         /**
@@ -6483,7 +6483,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                 vh = DOM['viewportHeight']();
 
             if (diff === DEFAULT) return 2 * vh; // diff 默认为当前视窗高度（两屏以外的才延迟加载）
-            else return vh + diff;
+            else return vh + (+diff); // 将 diff 转换成数值
         },
 
         /**
