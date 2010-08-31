@@ -20,10 +20,8 @@ KISSY.add('dialog', function(S) {
         /**
          * 自定义事件列表
          */
-        EVENTS = {
-            CHANGE_HEADER       : "changeHeader",     // 修改hd
-            CHANGE_FOOTER       : "changeFooter"     // 修改ft
-        },
+        EVENTS_CHANGE_HEADER    = "changeHeader",     // 修改hd
+        EVENTS_CHANGE_FOOTER    = "changeFooter",     // 修改ft
         
         /**
          * Dialog 默认配置: 含有head, ft 包含关闭按钮, 在可视区域居中对齐, 显示背景层, 固定滚动
@@ -33,14 +31,12 @@ KISSY.add('dialog', function(S) {
             body: '正在加载...', 
             foot: '',               // 尾部, 为空时, 表示不需要这部分
             
-            triggerType: 'click',   // 触发事件
-            
             width: 400,
             height: 300,
             close: true,            // 显示关闭按钮
             closeCls: KS_OVERLAY_CLOSE,
-            headCls: KS_OVERLAY_HEAD_CLS,
-            footCls: KS_OVERLAY_FOOT_CLS,
+            hdCls: KS_OVERLAY_HEAD_CLS,
+            ftCls: KS_OVERLAY_FOOT_CLS,
             //align: {
             //    inner: true 
             //},
@@ -86,12 +82,12 @@ KISSY.add('dialog', function(S) {
             
             Dialog.superclass._preShow.call(self);
             
-            self.head = DOM.get(DOT+cfg.headCls, self.overlay);
-            self.foot = DOM.get(DOT+cfg.footCls, self.overlay);
+            self.head = DOM.get(DOT+cfg.hdCls, self.overlay);
+            self.foot = DOM.get(DOT+cfg.ftCls, self.overlay);
             
             if (cfg.head||cfg.close) {
                 if (!self.head) {
-                    self.head = DOM.create(DIV, { 'class': cfg.headCls });
+                    self.head = DOM.create(DIV, { 'class': cfg.hdCls });
                 }
                 DOM.insertBefore(self.head, self.body);
                 
@@ -101,7 +97,7 @@ KISSY.add('dialog', function(S) {
             
             if (cfg.foot) {
                 if (!self.foot) {
-                    self.foot = DOM.create(DIV, { 'class': cfg.footCls });
+                    self.foot = DOM.create(DIV, { 'class': cfg.ftCls });
                 }
                 self.overlay.appendChild(self.foot);
             }
@@ -122,14 +118,20 @@ KISSY.add('dialog', function(S) {
          * 
          */ 
         setHeader: function(content) {
-            if (this.head) Dialog.superclass._setContent(this.head, content, EVENTS.CHANGE_HEADER);
+            if (this.head) {
+                DOM.html(this.head, content);
+                this.fire(EVENTS_CHANGE_HEADER);
+            }
         },
         
         /*
          * 
          */ 
         setFooter: function(content) {
-            if (this.foot) Dialog.superclass._setContent(this.foot, content, EVENTS.CHANGE_FOOTER);
+            if (this.foot) {
+                DOM.html(this.foot, content);
+                this.fire(EVENTS_CHANGE_FOOTER);
+            }
         }
     });
 }, { host: 'overlay' } );

@@ -5,10 +5,14 @@
 <title>ImageZoom Test</title>
 <link href="../../build/cssreset-grids/reset-grids-min.css" rel="stylesheet"/>
 <link href="imagezoom.css" rel="stylesheet"/>
-<script src="../../build/packages/ks-core.js"></script>
+<script src="../../build/packages/kissy.js"></script>
 <script src="imagezoom.js"></script>
 <style>
     body { padding: 20px; }
+    #test-standard {
+        width: 310px;
+        height: 310px;
+    }
 </style>
 </head>
 
@@ -20,10 +24,10 @@
     <img id="standard" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
 </div>
 
-<p>跟随模式</p>
+<!-- <p>跟随模式</p>
 <div id="test-follow">
     <img id="follow" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
-</div>
+</div> -->
 
 <h2>小图不能访问</h2>
 <div id="test-bad-small">
@@ -37,9 +41,9 @@
 
 <h2>超级大图加载</h2>
 <div id="test-big-big">
-    <img id="big-big" src="http://pic.yupoo.com/comgeo/75753981a667/ibqyran4.jpg"/>
+    <a href="#" data-src="http://pic.yupoo.com/comgeo/75753981a667/ibqyran4.jpg"><img id="big-big" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+    </a>
 </div>
-
 <script>
     KISSY.ready(function(S) {
 
@@ -47,10 +51,13 @@
                             bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg"
                         });
 
-        new S.ImageZoom("#follow", {
+        /*new S.ImageZoom("#follow", {
                             bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
                             type: 'follow'
                         }); 
+                        
+        new S.ImageZoom("#big-big");*/
+        
     });
 
 </script>

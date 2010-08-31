@@ -15,12 +15,6 @@
 .ks-overlay-bd {
 }
 
-.ks-overlay-loading {
-    background: url('http://img05.taobaocdn.com/tps/i5/T1wjBGXe4CXXXXXXXX-66-66.gif') center center;
-}
-.ks-overlay-fixed {
-    position: fixed;
-}
 .ks-overlay-mask {
     position: absolute;
     left: 0;
@@ -32,6 +26,13 @@
     filter: alpha(opacity=60);
     z-index: 9998;
 }
+.ks-overlay-loading {
+    background: url('http://img05.taobaocdn.com/tps/i5/T1wjBGXe4CXXXXXXXX-66-66.gif') center center;
+}
+.ks-overlay-fixed {
+    position: fixed;
+}
+
 .ks-overlay-iframe {
     position: absolute;
     left: -9999px;
@@ -41,6 +42,7 @@
     opacity: 0;
     filter: alpha(opacity=0);
 }
+
 
 .ks-overlay-mask-iframe {
     position: absolute;

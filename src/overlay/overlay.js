@@ -18,8 +18,6 @@ KISSY.add('overlay', function(S, undefined) {
         CLS_PREFIX = 'ks-overlay-',
         KS_OVERLAY_CLS = CLS_PREFIX+'container',
         KS_OVERLAY_BODY_CLS = CLS_PREFIX+'bd',
-        KS_OVERLAY_MASK_CLS = CLS_PREFIX+'mask',
-        KS_OVERLAY_MASK_IFM_CLS = CLS_PREFIX+'mask-iframe',
         KS_OVERLAY_IFM_CLS = CLS_PREFIX+'iframe',
         KS_OVERLAY_FIXED = CLS_PREFIX+'fixed',
         KS_OVERLAY_LOADING = CLS_PREFIX+'loading',
@@ -41,15 +39,13 @@ KISSY.add('overlay', function(S, undefined) {
         /**
          * 所有自定义事件列表
          */
-        EVENTS = {
-            AFTER_INIT          : "afterInit",        // 初始化之后
-            AFTER_FIRST_RENDER  : "afterFirstRender", // 第一次填充内容后
-            CHANGE_BODY         : "changeBody",       // 修改bg
-            CENTER              : "center",           // center后
-            CHANGE_POSITION     : "changePosition",   // 位置改变之后
-            SHOW                : "onShow",           // show
-            HIDE                : "onHide"            // hide
-        },
+        EVENTS_AFTER_INIT          = "afterInit",        // 初始化之后
+        EVENTS_AFTER_FIRST_RENDER  = "afterFirstRender", // 第一次填充内容后
+        EVENTS_CHANGE_BODY         = "changeBody",       // 修改bg
+        EVENTS_CENTER              = "center",           // center后
+        EVENTS_CHANGE_POSITION     = "changePosition",   // 位置改变之后
+        EVENTS_SHOW                = "onShow",           // show
+        EVENTS_HIDE                = "onHide",            // hide
         /**
          * 默认设置
          */
@@ -59,14 +55,14 @@ KISSY.add('overlay', function(S, undefined) {
             body: '',               // 主体
             
             // 内容, 数据
-            url: '',                // 不设置时为静态数据, 设置时请求数据后替换body
+            //url: '',                // 不设置时为静态数据, 设置时请求数据后替换body
             
             // 其他
             triggerType: 'click',   // 触发事件
             
             // 样式
             overlayCls: KS_OVERLAY_CLS,
-            bodyCls: KS_OVERLAY_BODY_CLS,
+            bdCls: KS_OVERLAY_BODY_CLS,
             width: 0,             // 宽度
             height: 0,            // 高度
             align: DEFAULT_ALIGN, // 对齐
@@ -81,8 +77,6 @@ KISSY.add('overlay', function(S, undefined) {
      *  <div class="{{KS_OVERLAY_CLS}}">
      *      <div class="{{KS_OVERLAY_BODY_CLS}}"></div>
      *  </div>
-     *  <div class="{{KS_OVERLAY_MASK_CLS}}"></div>
-     *  <div class="{{KS_OVERLAY_MASK_IFM_CLS}}"></div>
      *  <div class="{{KS_OVERLAY_IFM_CLS}}"></div>
      * </body>
      */
@@ -96,61 +90,6 @@ KISSY.add('overlay', function(S, undefined) {
             obj[before] = obj[after];
         };
     }
-
-    /**
-     * Mask 
-     * 只有页面上需要覆盖层时才生成
-     */
-    function Mask(){
-        this._init();
-    }
-    S.augment(Mask, {
-        _init: function(){
-            lazyRun(this, '_preShow', '_realShow');
-        },
-        _preShow: function(){
-            var self = this,
-                bd = document.body,
-                mask = DOM.get(DOT+KS_OVERLAY_MASK_CLS, bd),
-                maskIfm = DOM.get(DOT+KS_OVERLAY_MASK_IFM_CLS, bd),
-                docHeight = DOM.docHeight();
-            if (!mask) {
-                mask = DOM.create(DIV, { 'class':  KS_OVERLAY_MASK_CLS});
-                bd.appendChild(mask);
-            }
-            self.mask = mask;
-            DOM.css(self.mask, {
-                'height': docHeight + 'px',
-                'left':'0px',
-                'top':'0px'
-            });
-            
-            if (isIe6) {
-                maskIfm = DOM.create(IFRAME, { 'class':  KS_OVERLAY_MASK_IFM_CLS});
-                bd.appendChild(maskIfm);
-                self.maskIfm = maskIfm;
-                DOM.css(self.maskIfm, {
-                    'height': docHeight + 'px',
-                    'left':'0px',
-                    'top':'0px'
-                });
-            }
-        },
-        _toggelShow: function(fn) {
-            fn(this.mask, KS_HIDE_CLS);
-            if (this.maskIfm) fn(this.maskIfm, KS_HIDE_CLS);
-            
-        },
-        _realShow: function(){
-            this._toggelShow(DOM.removeClass);
-        },
-        show: function(){
-            this._preShow();
-        },
-        hide: function(){
-            this._toggelShow(DOM.addClass);
-        }
-    });
     
     var mask;
     
@@ -175,32 +114,33 @@ KISSY.add('overlay', function(S, undefined) {
          * overlay
          * @type HTMLElement
          */
-        self.overlay = null;
+        //self.overlay = null;
         
         /**
          * body
          * @type HTMLElement
          */
-        self.body = null;
+        //self.body = null;
         self._init();
         
     }
     
     S.augment(Overlay, S.EventTarget, {
         _init: function(){
-            var self = this;
+            var self = this, timer;
             lazyRun(self, '_preShow', '_realShow');
+            
             // 处理不同的触发类型
-            if (self.trigger){
+            if (self.trigger) {
                 if (self.config.triggerType === 'mouse') {
-                    self.timer = null;
                     Event.on(self.trigger, 'mouseenter', function(e){
-                        self.timer = setTimeout(function(){
+                        timer = S.later(function(){
                             self.show();
+                            timer.cancel();
                         }, 300);
                     });
                     Event.on(self.trigger, 'mouseleave', function(e){
-                        clearTimeout(self.timer);
+                        if (timer) timer.cancel();
                         if (self.overlay&&!DOM.hasClass(self.overlay, KS_HIDE_CLS)) self.hide();
                     });
                     
@@ -210,13 +150,13 @@ KISSY.add('overlay', function(S, undefined) {
                     });
                 }
             }
-            self.fire(EVENTS.AFTER_INIT, {});
+            self.fire(EVENTS_AFTER_INIT);
         },
         _preShow: function() {
             var self = this,
                 cfg = self.config,
-                bd = document.body,
-                tmp;
+                tmp,
+                bd = document.body;
             
             // 现有节点 或 已有 DOM 结构基础上
             if (S.isPlainObject(cfg.srcNode)) {
@@ -225,11 +165,11 @@ KISSY.add('overlay', function(S, undefined) {
                 self.overlay = DOM.get(cfg.srcNode);
             }
             if (self.overlay) {
-                self.body = DOM.get(DOT+cfg.bodyCls, self.overlay);
+                self.body = DOM.get(DOT+cfg.bdCls, self.overlay);
                 DOM.removeClass(self.overlay, KS_HIDE_CLS);
             } else {
                 // 构建基本 DOM 
-                tmp = [['overlay', cfg.overlayCls], ['body', cfg.bodyCls]];
+                tmp = [['overlay', cfg.overlayCls], ['body', cfg.bdCls]];
                 S.each(tmp, function(t,i){
                     self[t[0]] = DOM.create(DIV, { 'class': t[1] });
                     DOM.html(self[t[0]], cfg[t[0]]||'');
@@ -239,73 +179,58 @@ KISSY.add('overlay', function(S, undefined) {
                 
                 bd.appendChild(self.overlay);
                 
-                
                 // 设置大小
-                if (cfg.width) {
-                    DOM.width(self.overlay, cfg.width+'px');
-                }
-                if (cfg.height) {
-                    DOM.height(self.overlay, cfg.height+'px');
-                }
+                if (cfg.width) DOM.width(self.overlay, cfg.width);
+                if (cfg.height) DOM.height(self.overlay, cfg.height);
                 // 调整位置
                 self.setPosition();
             }
             
-            
-            
             // IE6或者需要shim时 增加对应iframe
-            if (cfg.shim) {
-                var overlayIfm = DOM.get(DOT+KS_OVERLAY_IFM_CLS, bd),
-                    oft = DOM.offset(self.overlay);
-                
-                if (!overlayIfm) {
-                    overlayIfm = DOM.create(IFRAME, { 'class': KS_OVERLAY_IFM_CLS });
-                    bd.appendChild(overlayIfm);
-                }
-                self.overlayIfm = overlayIfm;
-                // set overlay iframe height and position
-                DOM.css(self.overlayIfm, {
-                    'width': DOM.width(self.overlay) + 'px',
-                    'height': DOM.height(self.overlay) + 'px',
-                    'left': oft.left + 'px',
-                    'top': oft.top + 'px'
-                });
-            }
+            if (cfg.shim) self._shim();
             
-            // 滚动和窗口变化时
-            if (cfg.scroll) {
-                tmp = 'resize';
-                if (isIe6) {
-                    tmp += ' scroll'
-                } else {
-                    DOM.addClass(self.overlay, KS_OVERLAY_FIXED);
-                }
-                Event.on(window, tmp, function(e){
-                    self.setPosition();
-                });
-            }
+            if (cfg.scroll) self._scrollOrResize();
             
             // Esc
             Event.on(document, 'keydown', function(e) {
-                if (e.keyCode === 27) {
-                    self.hide();
-                }
-            });
-            
-            // todo
-            Event.on(self.overlay, 'click', function(e) {
-                var t = e.target;
-            
-                switch (true) {
-                    case false:
-                        break;
-                }
+                if (e.keyCode === 27)  self.hide();
             });
             
             // 生成mask
-            if (self.config.mask&&!mask) mask = new Mask();
+            if (cfg.mask&&!mask) try{mask = new S.Mask();}catch(e){S.log('need S.Mask');}
             
-            self.fire(EVENTS.AFTER_FIRST_RENDER, {});
+            self.fire(EVENTS_AFTER_FIRST_RENDER);
+        },
+        
+        /**
+         * 滚动和窗口变化时
+         */
+        _scrollOrResize: function(){
+            var self = this, tmp = 'resize';
+            if (isIe6) {
+                tmp += ' scroll'
+            } else {
+                DOM.addClass(self.overlay, KS_OVERLAY_FIXED);
+            }
+            Event.on(window, tmp, function(e){
+                self.setPosition();
+            });
+        },
+        /**
+         *  Add Shim Layer
+         */
+        _shim: function(){
+            var self = this,
+                overlayIfm;
+            
+            overlayIfm = DOM.create(IFRAME, { 'class': KS_OVERLAY_IFM_CLS });
+            document.body.appendChild(overlayIfm);
+            
+            self.overlayIfm = overlayIfm;
+            // set overlay iframe height and position
+            DOM.width(self.overlayIfm, DOM.width(self.overlay));
+            DOM.height(self.overlayIfm, DOM.height(self.overlay));
+            DOM.offset(self.overlayIfm, DOM.offset(self.overlay));
         },
         
         _realShow: function() {
@@ -320,13 +245,6 @@ KISSY.add('overlay', function(S, undefined) {
             fn(self.overlay, KS_HIDE_CLS);
             if (self.overlayIfm) fn(self.overlayIfm, KS_HIDE_CLS);
         },
-        _setContent: function(obj, content, ev) {
-            if (obj) {
-                // todo: remove sth
-                DOM.html(obj, content);
-                this.fire(ev, {});
-            }
-        },
         
         /*
          * 调整位置
@@ -334,111 +252,78 @@ KISSY.add('overlay', function(S, undefined) {
          */
         setPosition: function() {
             var self = this,
-                cfg = self.config,
-                leftTop = arguments[0],
-                l = 0,
-                t = 0,
-                vW = DOM.viewportWidth(),
-                vH = DOM.viewportHeight(),
-                w = DOM.width(self.overlay),
-                h = DOM.height(self.overlay);
-            if (leftTop) {
-                l = leftTop.left;
-                t = leftTop.top;
-            } else {
-                var offset,tw,th;
+                leftTop = arguments[0];
+            if (!leftTop) {
+                var align = self.config.align,
+                    align_node = align.node,
+                    align_offset = align.offset,
+                    align_inner = align.inner,
+                    w = DOM.width(self.overlay),
+                    h = DOM.height(self.overlay),
+                    offset, tw, th, l = 0, t = 0,
+                    tmp;
                 
-                if (S.isPlainObject(cfg.align.node)) {
+                if (S.isPlainObject(align_node)) {
                     // 节点元素
-                    offset = DOM.offset(cfg.align.node);
-                    tw = DOM.width(cfg.align.node);
-                    th = DOM.height(cfg.align.node);
-                } else if (S.isString(cfg.align.node)) {
+                    tmp = align_node;
+                } else if (S.isString(align_node)) {
                     // 容器元素, 如果不存在, 使用触发元素
-                    var trigger = DOM.get(cfg.align.node) || self.trigger;
-                    offset = DOM.offset(trigger);
-                    tw = DOM.width(trigger);
-                    th = DOM.height(trigger);
+                    tmp = DOM.get(align_node) || self.trigger;
+                }
+                if (tmp) {
+                    offset = DOM.offset(tmp);
+                    tw = DOM.width(tmp);//tmp.clientWidth;
+                    th = DOM.height(tmp);//tmp.clientHeight;
                 } else {
                     // 可视区域
                     offset = {left:0, top:0};
-                    tw = vW;
-                    th = vH;
+                    tw = DOM.viewportWidth();//document.body.clientWidth;
+                    th = DOM.viewportHeight();
                 }
-                switch (true) {
-                    case cfg.align.x === POSITION.x[0]:
-                        l = offset.left - w - cfg.align.offset;
-                        if (cfg.align.inner) l += w + cfg.align.offset;
-                        break;
-                    case cfg.align.x === POSITION.x[1]:
-                        l = offset.left + (tw-w)/2;
-                        break;
-                    case cfg.align.x === POSITION.x[2]:
-                        l = offset.left + tw + cfg.align.offset;
-                        if (cfg.align.inner) l -= w - cfg.align.offset;
-                        break;
-                    case S.isNumber(cfg.align.x):
-                        if (cfg.align.inner) l = offset.left + cfg.align.x + cfg.align.offset;
-                        else l = offset.left - w - cfg.align.x - cfg.align.offset;
-                        break;
+                if (align.x === POSITION.x[0]) {
+                    l = offset.left - w - align_offset;
+                    if (align_inner) l += w + align_offset;
+                } else if (align.x === POSITION.x[1]) {
+                    l = offset.left + (tw-w)/2;
+                } else if (align.x === POSITION.x[2]) {
+                    l = offset.left + tw + align_offset;
+                    if (align_inner) l -= w - align_offset;
+                } else if (S.isNumber(align.x)) {
+                    if (align_inner) l = offset.left + align.x + align_offset;
+                    else l = offset.left - w - align.x - align_offset;
                 }
-                switch (true) {
-                    case cfg.align.y === POSITION.y[0]:
-                        t = offset.top - h - cfg.align.offset;
-                        if (cfg.align.inner) t += h + cfg.align.offset;
-                        break;
-                    case cfg.align.y === POSITION.y[1]:
-                        t = offset.top + (th-h)/2;
-                        break;
-                    case cfg.align.y === POSITION.y[2]:
-                        t = offset.top + th + cfg.align.offset;
-                        if (cfg.align.inner) t -= h - cfg.align.offset;
-                        break;
-                    case S.isNumber(cfg.align.y):
-                        if (cfg.align.inner) t = offset.top + cfg.align.y + cfg.align.offset;
-                        else t = offset.top - h - cfg.align.y - cfg.align.offset;
-                        break;
+                if (align.y === POSITION.y[0]) {
+                    t = offset.top - h - align_offset;
+                    if (align_inner) t += h + align_offset;
+                } else if (align.y === POSITION.y[1]) {
+                    t = offset.top + (th-h)/2;
+                } else if (align.y === POSITION.y[2]) {
+                    t = offset.top + th + align_offset;
+                    if (align_inner) t -= h - align_offset;
+                } else if (S.isNumber(align.y)) {
+                    if (align_inner) t = offset.top + align.y + align_offset;
+                    else t = offset.top - h - align.y - align_offset;
                 }
+                // 当可视区域宽高小于元素宽高时或者其他情况导致left, top为负值时, 取0
+                //if (l<0) l = 0; if (t<0) t = 0;
+                leftTop = {left: l+DOM.scrollLeft(), top: t+DOM.scrollTop()};
             }
-            //if (l<0) l = 0;
-            //if (l>vW-w) l = vW-w;
-            //if (t<0) t = 0;
-            //if (t>vH-h) t = vH-h;
-            DOM.css(self.overlay, {
-                    left: l + 'px',
-                    top: t + 'px'
-                    });
-            if (self.overlayIfm) {
-                DOM.css(this.overlayIfm, {
-                    left: l + 'px',
-                    top: t + 'px'
-                });
-            }
-            self.fire(EVENTS.CHANGE_POSITION, {});
+            DOM.offset(self.overlay, leftTop);
+            if (self.overlayIfm) DOM.offset(self.overlayIfm, leftTop);
+            self.fire(EVENTS_CHANGE_POSITION);
         },
         /*
          * 居中Overlay, 相对于可视区域
          */
         center: function(){
-            var w = DOM.width(this.overlay),
-                h = DOM.width(this.overlay),
-                vw = DOM.viewportWidth(),
-                vh = DOM.viewportHeight(),
-                bl = (vw - w) / 2 + DOM.scrollLeft(),
-                bt = (vh - w) / 2 + DOM.scrollTop();
-            if (bt<0) bt = 0;
-            if (bl<0) bl = 0;
-            DOM.css(this.overlay, {
-                left: bl + 'px',
-                top: bt + 'px'
-            });
-            if (this.overlayIfm) {
-                DOM.css(this.overlayIfm, {
-                    left: bl + 'px',
-                    top: bt + 'px'
-                });
-            }
-            this.fire(EVENTS.CENTER, {});
+            var self = this,
+                oft = {
+                    left: (DOM.viewportWidth() - DOM.width(self.overlay)) / 2 + DOM.scrollLeft(),
+                    top: (DOM.viewportHeight() - DOM.width(self.overlay)) / 2 + DOM.scrollTop()
+                };
+            DOM.offset(self.overlay, oft);
+            if (self.overlayIfm) DOM.css(self.overlayIfm, oft);
+            self.fire(EVENTS_CENTER);
         },
 
         /*
@@ -446,8 +331,8 @@ KISSY.add('overlay', function(S, undefined) {
          */ 
         show: function() {
             this._preShow();
-            if (this.config.mask) mask.show();
-            this.fire(EVENTS.AFTER_SHOW, {});
+            if (this.config.mask&&mask) mask.show();
+            this.fire(EVENTS_SHOW);
         },
         
         /*
@@ -455,8 +340,8 @@ KISSY.add('overlay', function(S, undefined) {
          */ 
         hide: function() {
             this._toggle(DOM.addClass);
-            if (this.config.mask) mask.hide();
-            this.fire(EVENTS.AFTER_HIDE, {});
+            if (this.config.mask&&mask) mask.hide();
+            this.fire(EVENTS_HIDE);
         },
         
 
@@ -464,7 +349,10 @@ KISSY.add('overlay', function(S, undefined) {
          * 
          */ 
         setBody: function(content) {
-            this._setContent(this.body, content, EVENTS.CHANGE_BODY);
+            if (this.body) {
+                DOM.html(this.body, content);
+                this.fire(EVENTS_CHANGE_BODY);
+            }
         },
         
         /*
@@ -477,5 +365,15 @@ KISSY.add('overlay', function(S, undefined) {
     });
     S.Overlay = Overlay;
     
-
+    S.Overlay.all = function(trigger, cfg, type) {
+        var ret = [];
+        if (S.isString(trigger)) {
+            trigger = DOM.query(trigger);
+        }
+        if (!type) type = 'Overlay';
+        S.each(trigger, function(t) {
+            ret.push(new S[type](t, cfg));
+        });
+        return ret;
+    }
 });
