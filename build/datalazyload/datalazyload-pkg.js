@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Aug 30 14:55
 */
 /**
  * 数据延迟加载组件
@@ -116,7 +116,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             self.threshold = self._getThreshold();
 
             self._filterItems();
-            self._getItemsLength() && self._initLoadEvent();
+            self._initLoadEvent();
         },
 
         /**

@@ -111,7 +111,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             self.threshold = self._getThreshold();
 
             self._filterItems();
-            self._getItemsLength() && self._initLoadEvent();
+            self._initLoadEvent();
         },
 
         /**

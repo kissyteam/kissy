@@ -12,7 +12,7 @@
         encode = encodeURIComponent,
         decode = decodeURIComponent,
         HAS_OWN_PROPERTY = 'hasOwnProperty',
-        EMPTY = '', SEP = '&',
+        EMPTY = '', SEP = '&', BRACKET = encode('[]'),
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
         REG_NOT_WHITE = /\S/;
@@ -264,7 +264,7 @@
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, '[]=', encode(val[i] + EMPTY), sep);
+                            buf.push(key, BRACKET + '=', encode(val[i] + EMPTY), sep);
                         }
                     }
                 }
