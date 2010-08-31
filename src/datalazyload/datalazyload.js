@@ -358,7 +358,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                 vh = DOM['viewportHeight']();
 
             if (diff === DEFAULT) return 2 * vh; // diff 默认为当前视窗高度（两屏以外的才延迟加载）
-            else return vh + diff;
+            else return vh + (+diff); // 将 diff 转换成数值
         },
 
         /**
