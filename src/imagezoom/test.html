@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8"/>
 <title>ImageZoom Test</title>
-<link href="../../build/cssreset-grids/reset-grids-min.css" rel="stylesheet"/>
+<link href="http://a.tbcdn.cn/s/kissy/1.1.0/build/cssbase/base-min.css" rel="stylesheet" type="text/css" />
 <link href="imagezoom.css" rel="stylesheet"/>
 <script src="../../build/packages/kissy.js"></script>
+<script src="../overlay/overlay.js"></script>
 <script src="imagezoom.js"></script>
 <style>
     body { padding: 20px; }
     #test-standard {
         width: 310px;
         height: 310px;
+        border: 1px solid grey;
     }
 </style>
 </head>
@@ -36,12 +38,12 @@
 
 <h2>大图不能访问</h2>
 <div id="test-bad-big">
-    <img id="bad-big" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+    <img id="bad-big" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" data-src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg1"/>
 </div>
 
 <h2>超级大图加载</h2>
 <div id="test-big-big">
-    <a href="#" data-src="http://pic.yupoo.com/comgeo/75753981a667/ibqyran4.jpg"><img id="big-big" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+    <a href="#"><img id="big-big" data-src="http://pic.yupoo.com/comgeo/75753981a667/ibqyran4.jpg" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
     </a>
 </div>
 <script>
@@ -51,11 +53,7 @@
                             bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg"
                         });
 
-        /*new S.ImageZoom("#follow", {
-                            bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
-                            type: 'follow'
-                        }); 
-                        
+        /*new S.ImageZoom("#bad-big");
         new S.ImageZoom("#big-big");*/
         
     });

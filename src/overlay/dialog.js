@@ -4,7 +4,7 @@
  * @date        2010.08.25
  * @version     1.0
  */
-KISSY.add('dialog', function(S) {
+KISSY.add('dialog', function(S, undefined) {
 
     var DOM = S.DOM,
         Event = S.Event,
@@ -52,9 +52,6 @@ KISSY.add('dialog', function(S) {
      *      <div class="{{KS_OVERLAY_BODY_CLS}}"></div>
      *      <div class="{{KS_OVERLAY_FOOT_CLS}}"></div>
      *  </div>
-     *  <div class="{{KS_OVERLAY_MASK_CLS}}"></div>
-     *  <div class="{{KS_OVERLAY_MASK_IFM_CLS}}"></div>
-     *  <div class="{{KS_OVERLAY_IFM_CLS}}"></div>
      * </body>
      */
     

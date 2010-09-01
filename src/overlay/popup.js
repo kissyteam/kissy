@@ -4,7 +4,7 @@
  * @date        2010.08.25
  * @version     1.0
  */
-KISSY.add('popup', function(S) {
+KISSY.add('popup', function(S, undefined) {
 
     var defaultConfig = {
         triggerType: 'mouse',

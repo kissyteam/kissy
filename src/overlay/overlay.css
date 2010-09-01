@@ -32,7 +32,6 @@
 .ks-overlay-fixed {
     position: fixed;
 }
-
 .ks-overlay-iframe {
     position: absolute;
     left: -9999px;

@@ -29,11 +29,11 @@ KISSY.add('overlay', function(S, undefined) {
             y:['t', 'c', 'b']
         },
         DEFAULT_ALIGN = {
-            node: null, 
-            x: POSITION.x[1], 
-            y: POSITION.y[1], 
-            inner: false, 
-            offset: 0
+            node: null,         // 参考元素, null为可视区域, ''为触发元素, 其他为指定元素
+            x: POSITION.x[1],   // l, c, r, or interger
+            y: POSITION.y[1],   // t, c, b, or interger
+            inner: false,       // 参照容器内部还是外部
+            offset: 0           // x,y方向上的偏移, 单一值或 [x, y]
         },
         
         /**
@@ -61,7 +61,7 @@ KISSY.add('overlay', function(S, undefined) {
             triggerType: 'click',   // 触发事件
             
             // 样式
-            overlayCls: KS_OVERLAY_CLS,
+            containerCls: KS_OVERLAY_CLS,
             bdCls: KS_OVERLAY_BODY_CLS,
             width: 0,             // 宽度
             height: 0,            // 高度
@@ -103,54 +103,42 @@ KISSY.add('overlay', function(S, undefined) {
         if (S.isString(trigger)) self.trigger = DOM.get(trigger);
         else self.trigger = trigger;
         
-        //if (!self.trigger) return;
-        
-        
         // 配置信息
         if (cfg) cfg.align = S.merge(DEFAULT_ALIGN, cfg.align);
         self.config = S.merge(defaultConfig, cfg);
+        // 支持 [x, y] or x  
+        cfg.align.offset = S.makeArray(cfg.align.offset);
         
-        /**
-         * overlay
-         * @type HTMLElement
-         */
-        //self.overlay = null;
-        
-        /**
-         * body
-         * @type HTMLElement
-         */
-        //self.body = null;
         self._init();
-        
     }
     
     S.augment(Overlay, S.EventTarget, {
         _init: function(){
-            var self = this, timer;
+            var self = this;
             lazyRun(self, '_preShow', '_realShow');
             
             // 处理不同的触发类型
             if (self.trigger) {
-                if (self.config.triggerType === 'mouse') {
-                    Event.on(self.trigger, 'mouseenter', function(e){
-                        timer = S.later(function(){
-                            self.show();
-                            timer.cancel();
-                        }, 300);
-                    });
-                    Event.on(self.trigger, 'mouseleave', function(e){
-                        if (timer) timer.cancel();
-                        if (self.overlay&&!DOM.hasClass(self.overlay, KS_HIDE_CLS)) self.hide();
-                    });
-                    
-                } else {
-                    Event.on(self.trigger, 'click', function(e){
-                        self.show();
-                    });
-                }
+                var tt = self.config.triggerType;
+                self['_trigger'+tt.charAt(0).toUpperCase()+tt.substring(1,tt.length)]();
             }
             self.fire(EVENTS_AFTER_INIT);
+        },
+        _triggerMouse: function(){
+            var self = this, timer;
+            Event.on(self.trigger, 'mouseenter', function(e){
+                timer = S.later(function(){
+                    self.show();
+                    timer.cancel();
+                }, 300);
+            });
+            Event.on(self.trigger, 'mouseleave', function(e){
+                if (timer) timer.cancel();
+                if (self.overlay&&!DOM.hasClass(self.overlay, KS_HIDE_CLS)) self.hide();
+            });
+        },
+        _triggerClick: function(){
+            Event.on(this.trigger, 'click', this.show);
         },
         _preShow: function() {
             var self = this,
@@ -169,7 +157,7 @@ KISSY.add('overlay', function(S, undefined) {
                 DOM.removeClass(self.overlay, KS_HIDE_CLS);
             } else {
                 // 构建基本 DOM 
-                tmp = [['overlay', cfg.overlayCls], ['body', cfg.bdCls]];
+                tmp = [['overlay', cfg.containerCls], ['body', cfg.bdCls]];
                 S.each(tmp, function(t,i){
                     self[t[0]] = DOM.create(DIV, { 'class': t[1] });
                     DOM.html(self[t[0]], cfg[t[0]]||'');
@@ -189,13 +177,6 @@ KISSY.add('overlay', function(S, undefined) {
             // IE6或者需要shim时 增加对应iframe
             if (cfg.shim) self._shim();
             
-            if (cfg.scroll) self._scrollOrResize();
-            
-            // Esc
-            Event.on(document, 'keydown', function(e) {
-                if (e.keyCode === 27)  self.hide();
-            });
-            
             // 生成mask
             if (cfg.mask&&!mask) try{mask = new S.Mask();}catch(e){S.log('need S.Mask');}
             
@@ -203,18 +184,35 @@ KISSY.add('overlay', function(S, undefined) {
         },
         
         /**
-         * 滚动和窗口变化时
+         * 绑定Overlay上的事件, 包含ESC, 滚动和窗口变化时
          */
-        _scrollOrResize: function(){
-            var self = this, tmp = 'resize';
-            if (isIe6) {
-                tmp += ' scroll'
-            } else {
-                DOM.addClass(self.overlay, KS_OVERLAY_FIXED);
+        _bindUI: function(){
+            var self = this,
+                cfg = self.config;
+            
+            if (cfg.scroll) {
+                if (isIe6) Event.on(window, 'scroll', self._position, self);
+                else DOM.addClass(self.overlay, KS_OVERLAY_FIXED);
             }
-            Event.on(window, tmp, function(e){
-                self.setPosition();
-            });
+            //Event.on(window, 'resize', self._position, self); 暂时去掉resize
+            Event.on(document, 'keydown', self._esc, self);
+        },
+        _esc: function(e){
+            if (e.keyCode === 27)  this.hide();
+        },
+        _position: function(e){
+            this.setPosition();
+        },
+        /**
+         * 窗口隐藏时删除事件
+         */
+        _unbindUI: function(){
+            var self = this,
+                cfg = self.config;
+            
+            if (cfg.scroll&&isIe6) Event.remove(window, 'scroll', self._position, self);
+            //Event.remove(window, 'resize', self._position, self);
+            Event.remove(document, 'keydown', self._esc, self);
         },
         /**
          *  Add Shim Layer
@@ -256,20 +254,15 @@ KISSY.add('overlay', function(S, undefined) {
             if (!leftTop) {
                 var align = self.config.align,
                     align_node = align.node,
-                    align_offset = align.offset,
+                    align_offset_x = align.offset[0]||0,
+                    align_offset_y = align.offset[1]||0,
                     align_inner = align.inner,
                     w = DOM.width(self.overlay),
                     h = DOM.height(self.overlay),
-                    offset, tw, th, l = 0, t = 0,
-                    tmp;
+                    offset, tw, th, l = 0, t = 0, tmp;
                 
-                if (S.isPlainObject(align_node)) {
-                    // 节点元素
-                    tmp = align_node;
-                } else if (S.isString(align_node)) {
-                    // 容器元素, 如果不存在, 使用触发元素
-                    tmp = DOM.get(align_node) || self.trigger;
-                }
+                if (S.isPlainObject(align_node)) tmp = align_node; // 节点元素
+                else if (S.isString(align_node)) tmp = DOM.get(align_node) || self.trigger; // 容器元素, 如果不存在, 使用触发元素
                 if (tmp) {
                     offset = DOM.offset(tmp);
                     tw = DOM.width(tmp);//tmp.clientWidth;
@@ -281,32 +274,37 @@ KISSY.add('overlay', function(S, undefined) {
                     th = DOM.viewportHeight();
                 }
                 if (align.x === POSITION.x[0]) {
-                    l = offset.left - w - align_offset;
-                    if (align_inner) l += w + align_offset;
+                    l = offset.left - w - align_offset_x;
+                    if (align_inner) l += w + align_offset_x;
                 } else if (align.x === POSITION.x[1]) {
                     l = offset.left + (tw-w)/2;
                 } else if (align.x === POSITION.x[2]) {
-                    l = offset.left + tw + align_offset;
-                    if (align_inner) l -= w - align_offset;
+                    l = offset.left + tw + align_offset_x;
+                    if (align_inner) l -= w - align_offset_x;
                 } else if (S.isNumber(align.x)) {
-                    if (align_inner) l = offset.left + align.x + align_offset;
-                    else l = offset.left - w - align.x - align_offset;
+                    if (align_inner) l = offset.left + align.x + align_offset_x;
+                    else l = offset.left - w - align.x - align_offset_x;
                 }
                 if (align.y === POSITION.y[0]) {
-                    t = offset.top - h - align_offset;
-                    if (align_inner) t += h + align_offset;
+                    t = offset.top - h - align_offset_y;
+                    if (align_inner) t += h + align_offset_y;
                 } else if (align.y === POSITION.y[1]) {
                     t = offset.top + (th-h)/2;
                 } else if (align.y === POSITION.y[2]) {
-                    t = offset.top + th + align_offset;
-                    if (align_inner) t -= h - align_offset;
+                    t = offset.top + th + align_offset_y;
+                    if (align_inner) t -= h - align_offset_y;
                 } else if (S.isNumber(align.y)) {
-                    if (align_inner) t = offset.top + align.y + align_offset;
-                    else t = offset.top - h - align.y - align_offset;
+                    if (align_inner) t = offset.top + align.y + align_offset_y;
+                    else t = offset.top - h - align.y - align_offset_y;
                 }
                 // 当可视区域宽高小于元素宽高时或者其他情况导致left, top为负值时, 取0
-                //if (l<0) l = 0; if (t<0) t = 0;
-                leftTop = {left: l+DOM.scrollLeft(), top: t+DOM.scrollTop()};
+                if (l<0) l = 0; if (t<0) t = 0;
+                // 如果是相对于可视区域, 滚动时加上滚动的距离
+                if (!tmp) {
+                    l += DOM.scrollLeft();
+                    t += DOM.scrollTop();
+                }
+                leftTop = {left: l, top: t};
             }
             DOM.offset(self.overlay, leftTop);
             if (self.overlayIfm) DOM.offset(self.overlayIfm, leftTop);
@@ -318,9 +316,13 @@ KISSY.add('overlay', function(S, undefined) {
         center: function(){
             var self = this,
                 oft = {
-                    left: (DOM.viewportWidth() - DOM.width(self.overlay)) / 2 + DOM.scrollLeft(),
-                    top: (DOM.viewportHeight() - DOM.width(self.overlay)) / 2 + DOM.scrollTop()
+                    left: (DOM.viewportWidth() - DOM.width(self.overlay)) / 2,
+                    top: (DOM.viewportHeight() - DOM.width(self.overlay)) / 2
                 };
+            if (oft.left<0) oft.left = 0;
+            if (oft.top<0) oft.top = 0;
+            oft.left += DOM.scrollLeft(); 
+            oft.top += DOM.scrollTop();
             DOM.offset(self.overlay, oft);
             if (self.overlayIfm) DOM.css(self.overlayIfm, oft);
             self.fire(EVENTS_CENTER);
@@ -332,6 +334,7 @@ KISSY.add('overlay', function(S, undefined) {
         show: function() {
             this._preShow();
             if (this.config.mask&&mask) mask.show();
+            this._bindUI();
             this.fire(EVENTS_SHOW);
         },
         
@@ -341,6 +344,7 @@ KISSY.add('overlay', function(S, undefined) {
         hide: function() {
             this._toggle(DOM.addClass);
             if (this.config.mask&&mask) mask.hide();
+            this._unbindUI();
             this.fire(EVENTS_HIDE);
         },
         

@@ -17,7 +17,7 @@ KISSY.add('mask', function(S, undefined) {
          */
         defaultConfig = {
             // ÑשÊ½
-            overlayCls: KS_OVERLAY_MASK_CLS,
+            containerCls: KS_OVERLAY_MASK_CLS,
             mask: false
         };
     
@@ -41,7 +41,6 @@ KISSY.add('mask', function(S, undefined) {
         }
         self.on('afterInit', function(){
             //this.config.width = DOM.docWidth();
-            alert([DOM.docHeight(), document.body.clientHeight]);
             this.config.height = DOM.docHeight(); //docHeight
         });
         Mask.superclass.constructor.call(self, null, S.merge(defaultConfig, cfg));
@@ -52,8 +51,7 @@ KISSY.add('mask', function(S, undefined) {
     
     S.augment(Mask, S.EventTarget, {
         setPosition: function() {
-            var self = this;
-            Mask.superclass.setPosition.call(self, {left:0, top:0});
+            Mask.superclass.setPosition.call(this, {left:0, top:0});
         }
     });
     

@@ -1,17 +1,10 @@
-
-.ks-imagezoom-container { 
-    position: relative; 
-    cursor: pointer;  
-    border:1px solid #999999;
-}
-
 .ks-imagezoom-lens {
     position: absolute; left: 0; top: 0;
     background: url(http://img04.taobaocdn.com/tps/i4/T12pdtXaldXXXXXXXX-2-2.png) repeat;
 }
 
 .ks-imagezoom-icon {
-    position: absolute; bottom: -1px; right: -1px;
+    position: absolute; left: 0; top: 0;
     height: 23px; width: 23px;
     border-right: 1px solid #999;
     border-bottom: 1px solid #999;

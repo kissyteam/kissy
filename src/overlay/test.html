@@ -48,7 +48,7 @@
         }
     </style>
     <!-- <script src="http://github.com/kissyteam/kissy/raw/master/build/packages/kissy.js"></script> -->
-    <script src="http://github.com/kissyteam/kissy/raw/master/build/packages/kissy.js"></script>
+    <script src="../../build/packages/kissy.js"></script>
     <script src="overlay.js"></script>
     <script src="dialog.js"></script>
     <script src="popup.js"></script>
@@ -69,7 +69,7 @@
     
     <div class="test">
         <h2>Dialog+Mask+center</h2>
-        <button id="J_show">show</button>
+        <button id="J_show">show</button><button id="J_show2">show2</button>
     </div>
    
    <div class="test">
@@ -120,10 +120,11 @@
                 Event = S.Event;
             
             new S.Dialog('#J_show', {head: '标题'});
+            new S.Dialog('#J_show2', {head: '标题2'});
             
             new S.Popup('#J_hover', {body: 'context here................', align: {node:'', y: 'b'}});
 
-            /* var mask = new S.Mask();
+            /*var mask = new S.Mask();
             mask.show();*/
             
             /*var pp2 = new S.Popup(null, {srcNode: '#popup2'});
@@ -137,12 +138,12 @@
                 });
             });*/
             
-            /*var pp2 = S.Overlay.all('#menu li', {srcNode: '#popup2'}, 'Popup');
+            var pp2 = S.Overlay.all('#menu li', {srcNode: '#popup2'}, 'Popup');
             S.each(pp2, function(p, i){
                 p.on('onShow', function(){
                     this.setBody('this is '+i);
                 });
-            });*/
+            });
 
             
             /*S.each(['r', 'c', 'l'], function(ll) {
@@ -153,7 +154,7 @@
                     });
                 });
             });*/
-            /*S.each([true, false], function(inn){
+            S.each([true, false], function(inn){
                 S.each(['r', 'c', 'l'], function(ll) {
                     S.each(['t', 'c', 'b'], function(tt) {
                         var ol = new S.Dialog('#J_inner', {width: 100, height: 100, mask: false, align: {node:'', x: ll, y: tt, inner: inn}, scroll: false, close: false});
@@ -162,7 +163,7 @@
                         });
                     });
                 });
-            });*/
+            });
         });
     </script>
 </body>
