@@ -38,9 +38,9 @@ KISSY.add('imagezoom', function(S, undefined) {
             triggerType: 'mouse',      // Overlay配置参数
             align: {
                 node: '', 
-                x: 'l', 
-                y: 'b', 
-                inner: [true, false], 
+                x: 'r', 
+                y: 't', 
+                inner: [false, true], 
                 offset: 10
             }
         };
@@ -143,7 +143,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             DOM.width(lens, cfg.lensSize[0]);
             DOM.height(lens,cfg.lensSize[1]);
             // 第一次镜片显示在小图中间
-            DOM.offset(lens, {left:is.left+is.width/2-cfg.lenSize[0]/2, top:is.top+is.height/2-cfg.lenSize[1]/2});
+            DOM.offset(lens, {left:is.left+is.width/2-cfg.lensSize[0]/2, top:is.top+is.height/2-cfg.lensSize[1]/2});
             self.lens = lens;
             hide(lens);
         },
@@ -180,7 +180,9 @@ KISSY.add('imagezoom', function(S, undefined) {
             // set it
             ImageZoom.superclass.setSize.call(self, width, height);
         },
-        
+        /**
+         * 覆盖父类的mouse触发事件
+         */
         _triggerMouse: function() {
             var self = this, timer;
             Event.on(self.trigger, 'mouseenter', function(e){
@@ -294,6 +296,9 @@ KISSY.add('imagezoom', function(S, undefined) {
  *      - yubo: refactor to kissy src
  *      - 保留 标准模式+right, 镜片DOM移至
  *      - 扩展 Overlay
+ *  201009
+ *      - 删除 _preShow , 增加_extraContent
+ *
  *  TODO:
  *      - 加入 Zazzle 的 follow 效果
  *      - 仿照 Zazzle 的效果，在大图加载过程中显示进度条和提示文字

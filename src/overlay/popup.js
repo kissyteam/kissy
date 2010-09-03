@@ -34,3 +34,12 @@ KISSY.add('popup', function(S, undefined) {
     S.Popup = Popup;
 
 }, { host: 'overlay' } );
+
+/**
+ * NOTES:
+ *  201008
+ *      - 在Overlay基础上扩展Popup
+ *  TODO:
+ *      - 
+ */
+

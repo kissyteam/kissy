@@ -195,7 +195,7 @@ KISSY.add('overlay', function(S, undefined) {
             }
             self.fire(EVENTS_AFTER_FIRST_RENDER);
         },
-        /** 如果需要添加其他内容的话, 这里加入, 并且根据内容设置大小
+        /** 在设施大小之前, 如果需要添加其他内容的话, 这里加入, 然后再设置大小
          */
         _extraContent: function(){
             // 设置大小
@@ -268,8 +268,9 @@ KISSY.add('overlay', function(S, undefined) {
                     if (align_inner_y) t = offset.top + align.y + align_offset_y;
                     else t = offset.top - h - align.y - align_offset_y;
                 }
-                // 当可视区域宽高小于元素宽高时或者其他情况导致left, top为负值时, 取0
-                //if (l<0) l = 0; if (t<0) t = 0;
+                // 当可视区域宽高小于元素宽高时或者其他情况导致left, top为负值时, 取0 ? 是否需要置0还是保持原样
+                //if (l<0) l = 0;
+                //if (t<0) t = 0;
                 // 如果是相对于可视区域, 滚动时加上滚动的距离
                 if (!tmp) {
                     l += DOM.scrollLeft();
@@ -406,6 +407,9 @@ KISSY.add('overlay', function(S, undefined) {
     });
     S.Overlay = Overlay;
     
+    /**
+     * 提供批量生成
+     */
     S.Overlay.all = function(trigger, cfg, type) {
         var ret = [];
         if (S.isString(trigger)) {
@@ -418,3 +422,16 @@ KISSY.add('overlay', function(S, undefined) {
         return ret;
     }
 });
+
+/**
+ * NOTES:
+ *  201008
+ *      - 基本功能完成
+ *  201009
+ *      - 分离不同逻辑
+ *      - 完善位置计算
+ *      - 
+ *  TODO:
+ *      - resize加入
+ *      - 
+ */

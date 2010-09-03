@@ -73,6 +73,9 @@ KISSY.add('dialog', function(S, undefined) {
     S.Dialog = Dialog;
     
     S.augment(Dialog, S.EventTarget, {
+        /**
+         *
+         */
         _preShow: function(){
             var self = this,
                 cfg = self.config;
@@ -132,3 +135,13 @@ KISSY.add('dialog', function(S, undefined) {
         }
     });
 }, { host: 'overlay' } );
+
+
+/**
+ * NOTES:
+ *  201008
+ *      - 在Overlay基础上扩展Dialog
+ *  TODO:
+ *      - 
+ */
+
