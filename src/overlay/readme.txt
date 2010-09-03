@@ -64,7 +64,7 @@ Overlay 调研报告
 - 展现层: 
     * 大小:
         # 设置宽度/高度;X
-        # resize;X
+        # resize;
     * 位置:
         # 绝对位置;X
         # 相对于元素的位置;X
@@ -84,8 +84,8 @@ Overlay 调研报告
 初步想法
 1) S.Overlay(参考自ds中的dialog.js/dialogable.js)
 - Constructor, new S.Overlay(cfg)
-    * cfg: 配置信息;
-    * 返回 Overlay 实例;
+    * cfg: 配置信息; X
+    * 返回 Overlay 实例; X
 
 - Config
     * srcNode: 元素节点, 默认为null, 新建一个节点;X
@@ -95,25 +95,25 @@ Overlay 调研报告
     * url: 不设置时为静态数据, 设置时请求数据后替换body;
 
     * width/height: 宽度/高度信息;X
-    * align: {};X
-        # node 触发元素'', 指定元素isString, 可视区域null;
-        # x: l, c, r, or interger
-        # y: t, c, b, or interger
-        # inner: false
-    * mask: 显示低层;X
-    * shim: 针对IE6必备;X
+    * align: {}; X
+        # node 触发元素'', 指定元素isString, 可视区域null; X
+        # x: l, c, r, or interger    X
+        # y: t, c, b, or interger    X
+        # inner: [x, y]              X
+        # offset: [x, y]             X
+    * mask: 显示低层;                X
+    * shim: 针对IE6必备;             X
     * zIndex: 多个层时叠放次序;
-    * scroll: 是否固定在可视区域中;X
+    * scroll: 是否固定在可视区域中;  X
     
 - Method
-    * setHeader;X
-    * setBody;X
-    * setFooter;X
-    * setPosition;X
-
-    * show;X
-    * hide;X
-    * center;X
+    * setBody;      X
+    * setPosition;  X
+    * setSize;      X
+    
+    * show;         X
+    * hide;         X
+    * center;       X
     * bringToTop;
 
 - Event X
@@ -129,7 +129,22 @@ Overlay 调研报告
 
 2) S.Overlay.Effect
 3) S.Overlay.Request
-4) Dialog/Popup
+4) S.Dialog
+    * setHeader;    X
+    * setBody;      X
+5) S.Popup: 和Overlay一致
+6) S.Mask:  和Overlay一致
+
+
+
+
+
+
+
+
+
+
+
 
 
 
