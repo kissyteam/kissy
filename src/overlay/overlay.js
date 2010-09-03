@@ -32,7 +32,7 @@ KISSY.add('overlay', function(S, undefined) {
             node: null,         // 参考元素, null为可视区域, ''为触发元素, 其他为指定元素
             x: POSITION.x[1],   // l, c, r, or interger
             y: POSITION.y[1],   // t, c, b, or interger
-            inner: false,       // 参照容器内部还是外部
+            inner: false,       // x,y参照容器内部还是外部, 单一值或 [x, y]
             offset: 0           // x,y方向上的偏移, 单一值或 [x, y]
         },
         
@@ -44,8 +44,9 @@ KISSY.add('overlay', function(S, undefined) {
         EVENTS_CHANGE_BODY         = "changeBody",       // 修改bg
         EVENTS_CENTER              = "center",           // center后
         EVENTS_CHANGE_POSITION     = "changePosition",   // 位置改变之后
+        EVENTS_CHANGE_SIZE         = "changeSize",       // 大小改变之后
         EVENTS_SHOW                = "onShow",           // show
-        EVENTS_HIDE                = "onHide",            // hide
+        EVENTS_HIDE                = "onHide",           // hide
         /**
          * 默认设置
          */
@@ -106,13 +107,17 @@ KISSY.add('overlay', function(S, undefined) {
         // 配置信息
         if (cfg) cfg.align = S.merge(DEFAULT_ALIGN, cfg.align);
         self.config = S.merge(defaultConfig, cfg);
-        // 支持 [x, y] or x  
+        // x,y轴方向上偏移, 支持 [x, y] or x  
         cfg.align.offset = S.makeArray(cfg.align.offset);
+        cfg.align.inner = S.makeArray(cfg.align.inner);
         
         self._init();
     }
     
     S.augment(Overlay, S.EventTarget, {
+        /**
+         * Constructor
+         */
         _init: function(){
             var self = this;
             lazyRun(self, '_preShow', '_realShow');
@@ -124,6 +129,9 @@ KISSY.add('overlay', function(S, undefined) {
             }
             self.fire(EVENTS_AFTER_INIT);
         },
+        /**
+         * 触发事件为mouse时
+         */
         _triggerMouse: function(){
             var self = this, timer;
             Event.on(self.trigger, 'mouseenter', function(e){
@@ -137,14 +145,28 @@ KISSY.add('overlay', function(S, undefined) {
                 if (self.overlay&&!DOM.hasClass(self.overlay, KS_HIDE_CLS)) self.hide();
             });
         },
+        /**
+         * 触发事件为点击
+         */
         _triggerClick: function(){
-            Event.on(this.trigger, 'click', this.show);
+            var self = this;
+            Event.on(this.trigger, 'click', function(){
+                self.show();
+            });
         },
+        /**
+         * 初次显示时, 构建DOM
+         */
         _preShow: function() {
             var self = this,
                 cfg = self.config,
                 tmp,
                 bd = document.body;
+            
+            // IE6或者需要shim时 增加对应iframe
+            if (cfg.shim) self._shim();
+            // 生成mask
+            if (cfg.mask&&!mask) try{mask = new S.Mask();}catch(e){S.log('need S.Mask');}
             
             // 现有节点 或 已有 DOM 结构基础上
             if (S.isPlainObject(cfg.srcNode)) {
@@ -167,21 +189,150 @@ KISSY.add('overlay', function(S, undefined) {
                 
                 bd.appendChild(self.overlay);
                 
-                // 设置大小
-                if (cfg.width) DOM.width(self.overlay, cfg.width);
-                if (cfg.height) DOM.height(self.overlay, cfg.height);
+                self._extraContent();
                 // 调整位置
                 self.setPosition();
             }
-            
-            // IE6或者需要shim时 增加对应iframe
-            if (cfg.shim) self._shim();
-            
-            // 生成mask
-            if (cfg.mask&&!mask) try{mask = new S.Mask();}catch(e){S.log('need S.Mask');}
-            
             self.fire(EVENTS_AFTER_FIRST_RENDER);
         },
+        /** 如果需要添加其他内容的话, 这里加入, 并且根据内容设置大小
+         */
+        _extraContent: function(){
+            // 设置大小
+            this.setSize();
+        },
+        /**
+         *  Add Shim Layer
+         */
+        _shim: function(){
+            var self = this,
+                overlayIfm;
+            
+            overlayIfm = DOM.create(IFRAME, { 'class': KS_OVERLAY_IFM_CLS });
+            document.body.appendChild(overlayIfm);
+            
+            self.overlayIfm = overlayIfm;
+        },
+        
+        /*
+         * 调整Overlay位置
+         * 优先级 传递参数 {left: 10, top: 10} > cfg.align.x, cfg.align.y
+         */
+        setPosition: function() {
+            var self = this,
+                leftTop = arguments[0];
+            if (!leftTop) {
+                var align = self.config.align,
+                    align_node = align.node,
+                    align_offset_x = align.offset[0]||0,
+                    align_offset_y = align.offset[1]||0,
+                    align_inner_x = align.inner[0]||false,
+                    align_inner_y = align.inner[1]||false,
+                    w = DOM.width(self.overlay),
+                    h = DOM.height(self.overlay),
+                    offset, tw, th, l = 0, t = 0, tmp;
+                
+                if (S.isPlainObject(align_node)) tmp = align_node; // 节点元素
+                else if (S.isString(align_node)) tmp = DOM.get(align_node) || self.trigger; // 容器元素, 如果不存在, 使用触发元素
+                if (tmp) {
+                    offset = DOM.offset(tmp);
+                    tw = DOM.width(tmp);//tmp.clientWidth;
+                    th = DOM.height(tmp);//tmp.clientHeight;
+                } else {
+                    // 可视区域
+                    offset = {left:0, top:0};
+                    tw = DOM.viewportWidth();//document.body.clientWidth;
+                    th = DOM.viewportHeight();
+                }
+                if (align.x === POSITION.x[0]) {
+                    l = offset.left - w - align_offset_x;
+                    if (align_inner_x) l += w + align_offset_x;
+                } else if (align.x === POSITION.x[1]) {
+                    l = offset.left + (tw-w)/2;
+                } else if (align.x === POSITION.x[2]) {
+                    l = offset.left + tw + align_offset_x;
+                    if (align_inner_x) l -= w - align_offset_x;
+                } else if (S.isNumber(align.x)) {
+                    if (align_inner_x) l = offset.left + align.x + align_offset_x;
+                    else l = offset.left - w - align.x - align_offset_x;
+                }
+                if (align.y === POSITION.y[0]) {
+                    t = offset.top - h - align_offset_y;
+                    if (align_inner_y) t += h + align_offset_y;
+                } else if (align.y === POSITION.y[1]) {
+                    t = offset.top + (th-h)/2;
+                } else if (align.y === POSITION.y[2]) {
+                    t = offset.top + th + align_offset_y;
+                    if (align_inner_y) t -= h - align_offset_y;
+                } else if (S.isNumber(align.y)) {
+                    if (align_inner_y) t = offset.top + align.y + align_offset_y;
+                    else t = offset.top - h - align.y - align_offset_y;
+                }
+                // 当可视区域宽高小于元素宽高时或者其他情况导致left, top为负值时, 取0
+                //if (l<0) l = 0; if (t<0) t = 0;
+                // 如果是相对于可视区域, 滚动时加上滚动的距离
+                if (!tmp) {
+                    l += DOM.scrollLeft();
+                    t += DOM.scrollTop();
+                }
+                leftTop = {left: l, top: t};
+            }
+            DOM.offset(self.overlay, leftTop);
+            // 改变overlay位置时, 同时改变overlayIfm的位置
+            if (self.overlayIfm) DOM.offset(self.overlayIfm, leftTop);
+            
+            self.fire(EVENTS_CHANGE_POSITION);
+        },
+        
+        /*
+         * 居中Overlay, 相对于可视区域
+         */
+        center: function(){
+            var self = this,
+                oft = {
+                    left: (DOM.viewportWidth() - DOM.width(self.overlay)) / 2,
+                    top: (DOM.viewportHeight() - DOM.width(self.overlay)) / 2
+                };
+            //if (oft.left<0) oft.left = 0;
+            //if (oft.top<0) oft.top = 0;
+            oft.left += DOM.scrollLeft(); 
+            oft.top += DOM.scrollTop();
+            self.setPosition(oft);
+            self.fire(EVENTS_CENTER);
+        },
+        
+        /*
+         * 设置overlay宽高时, 同时改变overlayIfm的宽高
+         * 优先级 传递参数 w, h > cfg.width, cfg.height
+         */
+        setSize: function(w, h) {
+            var self = this,
+                cfg = self.config,
+                w = arguments[0]||cfg.width,
+                h = arguments[1]||cfg.height;
+            if (w) DOM.width(self.overlay, w);
+            if (h) DOM.height(self.overlay, h);
+            
+            if (self.overlayIfm) {
+                DOM.width(self.overlayIfm, w);
+                DOM.height(self.overlayIfm, h);
+            }
+            self.fire(EVENTS_CHANGE_SIZE);
+        },
+        
+        _realShow: function() {
+            this._toggle(DOM.removeClass);
+        },
+        
+        /*
+         * show or hide
+         */ 
+        _toggle: function(fn) {
+            var self = this;
+            fn(self.overlay, KS_HIDE_CLS);
+            if (self.overlayIfm) fn(self.overlayIfm, KS_HIDE_CLS);
+        },
+        
         
         /**
          * 绑定Overlay上的事件, 包含ESC, 滚动和窗口变化时
@@ -214,119 +365,6 @@ KISSY.add('overlay', function(S, undefined) {
             //Event.remove(window, 'resize', self._position, self);
             Event.remove(document, 'keydown', self._esc, self);
         },
-        /**
-         *  Add Shim Layer
-         */
-        _shim: function(){
-            var self = this,
-                overlayIfm;
-            
-            overlayIfm = DOM.create(IFRAME, { 'class': KS_OVERLAY_IFM_CLS });
-            document.body.appendChild(overlayIfm);
-            
-            self.overlayIfm = overlayIfm;
-            // set overlay iframe height and position
-            DOM.width(self.overlayIfm, DOM.width(self.overlay));
-            DOM.height(self.overlayIfm, DOM.height(self.overlay));
-            DOM.offset(self.overlayIfm, DOM.offset(self.overlay));
-        },
-        
-        _realShow: function() {
-            this._toggle(DOM.removeClass);
-        },
-        
-        /*
-         * show or hide
-         */ 
-        _toggle: function(fn) {
-            var self = this;
-            fn(self.overlay, KS_HIDE_CLS);
-            if (self.overlayIfm) fn(self.overlayIfm, KS_HIDE_CLS);
-        },
-        
-        /*
-         * 调整位置
-         * 优先级 传递参数 {left: 10, top: 10} > cfg.align
-         */
-        setPosition: function() {
-            var self = this,
-                leftTop = arguments[0];
-            if (!leftTop) {
-                var align = self.config.align,
-                    align_node = align.node,
-                    align_offset_x = align.offset[0]||0,
-                    align_offset_y = align.offset[1]||0,
-                    align_inner = align.inner,
-                    w = DOM.width(self.overlay),
-                    h = DOM.height(self.overlay),
-                    offset, tw, th, l = 0, t = 0, tmp;
-                
-                if (S.isPlainObject(align_node)) tmp = align_node; // 节点元素
-                else if (S.isString(align_node)) tmp = DOM.get(align_node) || self.trigger; // 容器元素, 如果不存在, 使用触发元素
-                if (tmp) {
-                    offset = DOM.offset(tmp);
-                    tw = DOM.width(tmp);//tmp.clientWidth;
-                    th = DOM.height(tmp);//tmp.clientHeight;
-                } else {
-                    // 可视区域
-                    offset = {left:0, top:0};
-                    tw = DOM.viewportWidth();//document.body.clientWidth;
-                    th = DOM.viewportHeight();
-                }
-                if (align.x === POSITION.x[0]) {
-                    l = offset.left - w - align_offset_x;
-                    if (align_inner) l += w + align_offset_x;
-                } else if (align.x === POSITION.x[1]) {
-                    l = offset.left + (tw-w)/2;
-                } else if (align.x === POSITION.x[2]) {
-                    l = offset.left + tw + align_offset_x;
-                    if (align_inner) l -= w - align_offset_x;
-                } else if (S.isNumber(align.x)) {
-                    if (align_inner) l = offset.left + align.x + align_offset_x;
-                    else l = offset.left - w - align.x - align_offset_x;
-                }
-                if (align.y === POSITION.y[0]) {
-                    t = offset.top - h - align_offset_y;
-                    if (align_inner) t += h + align_offset_y;
-                } else if (align.y === POSITION.y[1]) {
-                    t = offset.top + (th-h)/2;
-                } else if (align.y === POSITION.y[2]) {
-                    t = offset.top + th + align_offset_y;
-                    if (align_inner) t -= h - align_offset_y;
-                } else if (S.isNumber(align.y)) {
-                    if (align_inner) t = offset.top + align.y + align_offset_y;
-                    else t = offset.top - h - align.y - align_offset_y;
-                }
-                // 当可视区域宽高小于元素宽高时或者其他情况导致left, top为负值时, 取0
-                if (l<0) l = 0; if (t<0) t = 0;
-                // 如果是相对于可视区域, 滚动时加上滚动的距离
-                if (!tmp) {
-                    l += DOM.scrollLeft();
-                    t += DOM.scrollTop();
-                }
-                leftTop = {left: l, top: t};
-            }
-            DOM.offset(self.overlay, leftTop);
-            if (self.overlayIfm) DOM.offset(self.overlayIfm, leftTop);
-            self.fire(EVENTS_CHANGE_POSITION);
-        },
-        /*
-         * 居中Overlay, 相对于可视区域
-         */
-        center: function(){
-            var self = this,
-                oft = {
-                    left: (DOM.viewportWidth() - DOM.width(self.overlay)) / 2,
-                    top: (DOM.viewportHeight() - DOM.width(self.overlay)) / 2
-                };
-            if (oft.left<0) oft.left = 0;
-            if (oft.top<0) oft.top = 0;
-            oft.left += DOM.scrollLeft(); 
-            oft.top += DOM.scrollTop();
-            DOM.offset(self.overlay, oft);
-            if (self.overlayIfm) DOM.css(self.overlayIfm, oft);
-            self.fire(EVENTS_CENTER);
-        },
 
         /*
          * 
@@ -348,7 +386,6 @@ KISSY.add('overlay', function(S, undefined) {
             this.fire(EVENTS_HIDE);
         },
         
-
         /*
          * 
          */ 

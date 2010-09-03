@@ -154,12 +154,14 @@
                     });
                 });
             });*/
-            S.each([true, false], function(inn){
-                S.each(['r', 'c', 'l'], function(ll) {
-                    S.each(['t', 'c', 'b'], function(tt) {
-                        var ol = new S.Dialog('#J_inner', {width: 100, height: 100, mask: false, align: {node:'', x: ll, y: tt, inner: inn}, scroll: false, close: false});
-                        ol.on('afterFirstRender', function(){
-                            this.setBody(tt+','+ll+','+inn);
+            S.each([true, false], function(inn_x){
+                S.each([true, false], function(inn_y){
+                    S.each(['r', 'c', 'l'], function(ll) {
+                        S.each(['t', 'c', 'b'], function(tt) {
+                            var ol = new S.Dialog('#J_inner', {width: 100, height: 100, mask: false, align: {node:'', x: ll, y: tt, inner: [inn_x, inn_y]}, scroll: false, close: false});
+                            ol.on('afterFirstRender', function(){
+                                this.setBody(tt+','+ll+','+inn_x+','+inn_y);
+                            });
                         });
                     });
                 });
