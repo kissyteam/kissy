@@ -1,982 +1,301 @@
-<!DOCTYPE html>
-<!-- 
-  Copyright 2010 Google Inc.
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-     http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-
-  Original slides: Marcin Wichary (mwichary@google.com)
-  Modifications: Ernest Delgado (ernestd@google.com)
-                 Alex Russell (slightlyoff@chromium.org)
-                 Brad Neuberg
--->
-<html manifest="/html5/src/slides_manifest.php">
+<!doctype html>
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta charset="utf-8">
+<title>ImageZoom 调研文档</title>
+<style>
+body{position:absolute;left:0;top:0;width:100%;height:100%;padding:0;margin:0;font:14px Candara,\5FAE\8F6F\96C5\9ED1,Verdana,sans-serif;}.presentation{position:absolute;left:0;top:0;height:100%;width:100%;overflow:hidden;background:#778;}.slides{position:absolute;left:0;top:0;width:100%;height:100%;-webkit-transition:-webkit-transform 1s ease-in-out;-moz-transition:-moz-transform 1s ease-in-out;-o-transition:-o-transform 1s ease-in-out;}.slide{display:none;width:900px;height:700px;overflow:hidden;position:absolute;left:50%;top:50%;margin-top:-350px;opacity:0;background:-webkit-gradient(linear,left bottom,left top,from(#bbd),to(#fff));background:-moz-linear-gradient(bottom,#bbd,#fff);-webkit-transition:margin .25s ease-in-out;-moz-transition:margin .25s ease-in-out;-o-transition:margin .25s ease-in-out;}.slide.far-past{display:block;margin-left:-2400px;}.slide.past{display:block;margin-left:-1400px;}.slide.current{display:block;margin-left:-450px;opacity:1;}.slide.future{display:block;margin-left:500px;}.slide.far-future{display:block;margin-left:1500px;}.slide header,.slide section{display:none;}.slide.current header,.slide.current section{display:block;}.slide:nth-child(even){border-top-left-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomright:20px;}.slide:nth-child(odd){border-top-right-radius:20px;border-bottom-left-radius:20px;-webkit-border-top-right-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomleft:20px;}.slide .counter{position:absolute;left:20px;bottom:20px;display:block;color:#999;}header{position:absolute;left:30px;top:25px;margin:0;padding:0;font-size:50px;letter-spacing:-.05em;text-shadow:rgba(0,0,0,0.2) 0 2px 5px;}section{margin-left:30px;margin-right:30px;margin-top:100px;display:block;overflow:hidden;font-size:50px;color:#3f3f3f;text-shadow:rgba(0,0,0,0.2) 0 2px 5px;line-height:1.5;}p{font-size:25px;margin:10px 0;}h1{padding:0;margin:0;letter-spacing:-2px;font-size:60px;}h2{padding:0;margin:15px 0 5px 0;font-size:50px;font-weight:normal;}a{text-decoration:none;line-height:110%;}button{font-size:20px;}blockquote,ul,ol,dl{margin:1em;}ul,ol,dl{margin-left:2em;font-size:40px;}li{list-style:none;}.small li{font-size:25px;}ul li:before{content:'· ';}dl dd{margin-left:1em;}th,td{padding:.5em;}caption{margin-bottom:.5em;}hr{visibility:hidden;padding:0;margin:0 0 -20px 0;}section.intro h1{margin-top:80px;}section.intro p{font-size:35px;}section.intro .author{margin-top:120px;margin-bottom:-40px;}.notes{display:none;}section.center{line-height:180%;text-align:center;display:table-cell;vertical-align:middle;height:700px;width:900px;}blockquote{font-size:20px;white-space:pre;padding:10px 20px;background:rgba(0,0,255,0.05);border-radius:8px;border:1px solid rgba(0,0,255,0.2);text-shadow:none;}pre,.pre{display:block;white-space:pre;text-align:left;font-size:16px;font-family:'Bitstream Vera Sans Mono',Courier,monospace;padding:10px 20px;background:rgba(255,0,0,0.05);border-radius:8px;border:1px solid rgba(255,0,0,0.2);text-shadow:none;}pre b{font-weight:normal;color:#c61800;text-shadow:#c61800 0 0 1px;}pre em{font-weight:normal;font-style:normal;color:#18a600;text-shadow:#18a600 0 0 1px;}.css,.js,.html{color:black;display:inline-block;padding:6px 10px 3px 10px;font-size:25px;line-height:30px;text-shadow:none;letter-spacing:0;bottom:10px;position:relative;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;background:white;box-shadow:rgba(0,0,0,0.1) 0 2px 5px;-webkit-box-shadow:rgba(0,0,0,0.1) 0 2px 5px;-moz-box-shadow:rgba(0,0,0,0.1) 0 2px 5px;}.css{background:-webkit-gradient(linear,left top,left bottom,from(#ff4),to(#ffa));background:-moz-linear-gradient(left top,#ff4,#ffa);background-color:#ff4;}.js{background:-webkit-gradient(linear,left top,left bottom,from(#4f4),to(#afa));background:-moz-linear-gradient(left top,#4f4,#afa);background:#4f4;}.html{background:-webkit-gradient(linear,left top,left bottom,from(#e88),to(#fee));background:-moz-linear-gradient(left top,#e88,#fee);background:#e88;}
+</style>
+</head>
+<body>
+<div class="presentation">
+    <div class="slides">
 
-    <title>ImageZoom</title>
-    <link href=' http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
-    
-    <!-- <link type="text/css" href="./src/scrollbar.css" rel="stylesheet"> -->
-    
-    <style>
-      .notes { display: none; }
-      .stroke {
-        -webkit-text-stroke-color: red;
-        -webkit-text-stroke-width: 1px;
-        -moz-text-stroke-color: red;
-        -moz-text-stroke-width: 1px;
-      }
-      
-      body {
-        font: 14px "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
-        padding: 0;
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0px; top: 0px;
-      }
-      
-      .presentation {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        left: 0px;
-        top: 0px;
-        display: block;
-        overflow: hidden;
-        background: #778;
-      }
-      
-      .slides {
-        width: 100%;
-        height: 100%;
-        /*
-        overflow: hidden;
-        */
-        left: 0;
-        top: 0;
-        position: absolute;
-        display: block;  
-        -webkit-transition: -webkit-transform 1s ease-in-out; 
-        -moz-transition: -moz-transform 1s ease-in-out;
-        -o-transition: -o-transform 1s ease-in-out;
-      }
-
-      .slide {
-        display: none;
-        position: absolute;
-        overflow: hidden;
-        width: 900px;
-        height: 700px;
-        left: 50%;
-        top: 50%;
-        margin-top: -350px;
-        background: -webkit-gradient(linear, left bottom, left top, from(#bbd), to(#fff));
-        -webkit-transition: margin 0.25s ease-in-out; 
-        background-color: #eee;
-        background: -moz-linear-gradient(bottom, #bbd, #fff);
-        -moz-transition: margin 0.25s ease-in-out;
-        -o-transition: margin 0.25s ease-in-out;
-      }
-      
-      .slide:nth-child(even) {
-        border-top-left-radius: 20px;
-        -moz-border-radius-topleft: 20px;
-        -webkit-border-top-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-        -moz-border-radius-bottomright: 20px;
-        -webkit-border-bottom-right-radius: 20px;
-      }
-      
-      .slide:nth-child(odd) {
-        border-top-right-radius: 20px;
-        -moz-border-radius-topright: 20px;
-        -webkit-border-top-right-radius: 20px;
-        border-bottom-left-radius: 20px;
-        -moz-border-radius-bottomleft: 20px;
-        -webkit-border-bottom-left-radius: 20px;
-      }
-
-      .slide p, .slide li {
-        font-size: 20px;
-        margin: 10px 0;
-      }
-
-      .slide .counter {
-        color: #999999;
-        position: absolute;
-        left: 20px;
-        bottom: 20px;
-        display: block;
-        font-size: 12px;
-      }
-
-      .slide.title > .counter,
-      .slide.segue > .counter,
-      .slide.mainTitle > .counter {
-        display: none;
-      }
-
-      .force-render {
-        display: block;
-        margin-top: -10000px;
-      }
-
-      section.intro p {
-        font-size: 35px;
-      }
-
-      button {
-        font-size: 20px;
-      }
-      
-      .summary {
-       font-size: 30px;
-      }
-
-      .bullets {
-       font-size: 40px;
-      }
-      
-      .slide.far-past {
-        display: block;
-        margin-left: -2400px;
-      }
-      
-      .slide.past {
-        display: block;
-        margin-left: -1400px;
-      }
-      
-      .slide.current {
-        display: block;
-        margin-left: -450px;
-      }
-      
-      .slide.future {
-        display: block;
-        margin-left: 500px;
-      }
-      
-      .slide.far-future {
-        display: block;
-        margin-left: 1500px;
-      }
-
-      body.three-d div.presentation {
-        /*background: -webkit-gradient(radial, 50% 50%, 10, 50% 50%, 1000, from(#333), to(#000));        */        
-      }
-      
-      body.three-d div.slides {
-        -webkit-transform: translateX(50px) scale(0.8) rotateY(10deg);        
-        -moz-transform: translateX(50px) scale(0.8) rotateY(10deg);
-        -o-transform: translateX(50px) scale(0.8) rotateY(10deg);
-      }
-      
-      
-      /* Content */
-      
-      @font-face { font-family: 'Junction',serif; src: url(src/Junction02.otf); }
-      @font-face { font-family: 'LeagueGothic',serif; src: url(src/LeagueGothic.otf); }
-      
-      header {
-        font-family: 'Droid Sans';
-        font-weight: normal;
-        font-size: 50px;
-        letter-spacing: -.05em;
-        color: white;        
-        color: black;
-        text-shadow: rgba(0, 0, 0, 0.2) 0 2px 5px;  
-        position: absolute;
-        left: 30px;
-        top: 25px;
-        margin: 0;
-        padding: 0;
-      }
-      
-      .intro h1 {
-        color: black;
-        padding: 0;
-        margin: 0;
-        letter-spacing: -2px;
-        font-size: 96px;
-      }
-      
-      .intro h2 {
-        color: black;
-        padding: 0;
-        margin: 0;
-        margin-top: -5px;
-        font-size: 40px;
-        letter-spacing: -1px;  
-      }
-      
-      h1 {
-        display: inline;
-        font-size: 100%;
-      	font-weight: normal;
-      	padding: 0;
-      	margin: 0;
-      }
-      
-      h2 {
-        font-family: 'Droid Sans';
-        color: black;
-        font-size: 20px;
-        margin-left: 20px;
-        margin-top: 50px;
-      }
-      
-      h2:first-child {
-        margin-top: 0;
-      }
-
-      section {
-        font-family: 'Droid Sans';
-        font-size: 50px;
-        color: #3f3f3f;
-        text-shadow: rgba(0, 0, 0, 0.2) 0 2px 5px;         
-        margin-left: 30px;
-        margin-right: 30px;
-        margin-top: 100px;
-        display: block;
-        overflow: hidden;
-        line-height:1.5;
-      }
-
-      a {
-        color: inherit;
-        display: inline-block;
-        text-decoration: none;
-        line-height: 110%;
-        border-bottom: 2px solid #3f3f3f;
-      }
-
-      #wmap a {
-        line-height: 100%;
-        border-bottom: none;
-      }
-      
-      section.left {
-        float: left;
-        width: 390px;
-      }
-      
-      section.small {
-        font-size: 24px;
-      }
-      
-      section.small ul {
-        margin: 0 0 0 15px;
-        padding: 0;
-      }
-      
-      section.small li {
-        padding-bottom: 0;
-      }
-      
-      h2 {
-        padding: 0;
-        margin: 15px 0 5px 0;
-/*        font-family: GG240;*/
-      }
-      
-      section.center {
-        line-height: 180%;
-        text-align: center;
-        display: table-cell;
-        vertical-align: middle;
-        height: 700px;
-        width: 900px;
-      }
-      
-      pre {
-        text-align: left;
-        font-size: 16px;
-        font-family: 'Droid Sans Mono', Courier;
-        padding-bottom: 10px;
-        
-        padding: 10px 20px;
-        background: rgba(255, 0, 0, 0.05);
-        border-radius: 8px;
-        border: 1px solid rgba(255, 0, 0, 0.2);
-      }
-      .two-column {
-        -webkit-column-count: 2;
-        -moz-column-count: 2;
-      }
-      
-      pre select {
-        font-size: 16px;
-        font-family: Monaco, Courier;
-        border: 1px solid #c61800;        
-      }
-        
-      input {
-        font-size: 16px;
-        font-family: Helvetica;
-        padding: 3px;
-      }
-      input[type="range"] {
-        width: 100%;
-      }
-      
-      button {
-        font-family: Verdana;
-      }
-      
-      button.large {
-        font-size: 32px;        
-      }
-        
-      pre b {
-        font-weight: normal;
-        color: #c61800;
-        text-shadow: #c61800 0 0 1px; 
-        /*letter-spacing: -1px;*/
-      }
-      pre em {
-        font-weight: normal;
-        font-style: normal;
-        color: #18a600;
-        text-shadow: #18a600 0 0 1px; 
-      }
-      pre input[type="range"] {
-        height: 6px;
-        cursor: pointer;
-        width: auto;
-      }      
-      example {
-        font-size: 16px;
-        display: block;
-        padding: 10px 20px;
-        color: black;
-        background: rgba(255, 255, 255, 0.4);
-        border-radius: 8px;
-        margin-bottom: 10px;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-      }
-      video {
-        border-radius: 8px;
-        border: 1px solid rgba(0, 0, 0, 0.2);        
-      }
-      
-      .css,
-      .js,
-      .html,
-      .key {
-        font-family: 'Droid Sans';
-        color: black;
-        display: inline-block;
-        padding: 6px 10px 3px 10px;
-        font-size: 25px;
-        line-height: 30px;
-        text-shadow: none;
-        letter-spacing: 0;
-        bottom: 10px;
-        position: relative;
-        border-radius: 10px;
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
-        background: white;
-        box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px; 
-        -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px; 
-        -moz-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px; 
-      }
-      
-      .key { font-family: Arial; }
-      
-      :not(header) > .css,
-      :not(header) > .js,
-      :not(header) > .html,
-      :not(header) > .key {
-        margin: 0 5px;
-        bottom: 4px;
-      }
-      
-      .css {
-        background: -webkit-gradient(linear, left top, left bottom, from(#ff4), to(#ffa));
-        background-color: #ff4;
-        background: -moz-linear-gradient(left top, #ff4, #ffa);        
-      }
-      .js {
-        background: -webkit-gradient(linear, left top, left bottom, from(#4f4), to(#afa));        
-        background-color: #4f4;
-        background: -moz-linear-gradient(left top, #4f4, #afa);
-      }
-      .html {
-        background: -webkit-gradient(linear, left top, left bottom, from(#e88), to(#fee));
-        background-color: #e88;
-        background: -moz-linear-gradient(left top, #e88, #fee);
-      }
-      
-      li {
-        list-style: none;
-        padding: 10px 0;
-      }
-      
-      .summary li::before, .bullets li::before {
-        content: '· ';
-      }
-      
-      info {
-        display: block;
-        font-size: 50%;
-        text-align: center;
-      }
-      
-      
-      span.year {
-        display: inline-block;
-        text-align: right;
-        width: 120px;
-        letter-spacing: -2px;
-        padding-right: 10px;
-      }
-      hr {
-        visibility: hidden;
-        padding: 0;
-        margin: 0 0 -20px 0;
-      }
-      #timeline li {
-        padding: 0;
-      }
-      
-    </style>
-    
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script> 
-  </head><body>
-    <div class="presentation">
-      <div class="slides">
         <div class="slide">
-          <section class="center intro">
-            <p>S.ImageZoom</p>
-            <p>乔花</p>
-            <p class="year">2010.07</p>
-          </section>
-        </div>
-                
-        <div class="slide">
-            <header>应用场景</header>
-            <section>
-                <ol>
-                    <li>淘宝、京东等电子商务网站的宝贝图片细节显示</li>
-                    <li>图片墙的细节展现</li>
-                </ol>
-                <p>详细内容：<a href="assets/online.docx">online.docx</a>
+            <section class="center intro">
+                <h1>S.ImageZoom</h1>
+                <p class="author">乔花</p>
+                <p class="year">2010.07</p>
             </section>
         </div>
 
         <div class="slide">
-            <header>问题描述</header>
+            <header>Outline</header>
             <section>
-                <p>给定一张小图及大图，需要将小图上某个区域内的图像，映射到大图上的某个显示区域，实现图片的放大效果。</p>
-                <p>同类组件：</p>
-                <ol>
-                    <li>JQZoom</li>
-                    <li>CJL ImageZoom</li>
-                    <li>ImageScaler</li>
-                    <li>AnythingZoomer</li>
-                </ol>
-                <p>详细比较：<a href="report.html">report.html</a>
+                <p>一. 应用场景 </p>
+                <p>二. 同类组件 </p>
+                <p>三. 功能分析 </p>
+                <p>四. 技术方案 </p>
+                <p>五. Public API </p>
+                <p>六. 开发计划 </p>
+                <p>七. 其它 </p>
             </section>
         </div>
 
         <div class="slide">
-            <header>显示类型</header>
+            <header>一. 应用场景</header>
             <section>
-                <p>标准模式：<br/>
-                   鼠标在原图中移动时，相关区域在大图中显示。可设置大图显示位置，以及镜片是否显示。
-                   <img src="assets/type-standard.gif" />
+                <p>淘宝、京东等电子商务网站的宝贝图片细节显示</p>
+                <p>
+                    1) 凡客: 大图, 小图高度不相等.<br />
+                    <img src="assets/fanke.png" style="height: 200px;"/>
+                </p>
+                <p>
+                    2) 京东: 黄色的镜片遮罩影响了色度. 透明的效果好些.<br />
+                    <img src="assets/jingdong.png" style="height: 200px;"/>
                 </p>
             </section>
         </div>
         
         <div class="slide">
-            <header>显示类型</header>
             <section>
-                <p>跟随模式：<br/>
-                    显示框跟随鼠标移动，被放大的图片显示在原图上方，并以鼠标为轴心。<br/>
-                    <img src="assets/type-follow.gif" />
+                <p>
+                    3) 淘宝: 默认有一个放大镜在小图右下角, 提醒用户有放大的功能, 用户引导性比较好. 鼠标移至小图上方, 放大镜消失; 小图上没有镜片效果.<br />
+                    <img src="assets/taobao.png" style="height: 200px;"/>
+                </p>
+                <p>
+                    4) Zazzle: 大图和小图的高度有点偏差, 不知道是不是故意这么设计的.<br />
+                    <img src="assets/zazzle.png" style="height: 200px;"/>
                 </p>
             </section>
         </div>
         
         <div class="slide">
-            <header>显示类型</header>
             <section>
-                <p>反转模式：<br/>
-                    同标准模式类似，只是原图变成半透明，镜片覆盖区域清晰显示。<br/>
-                    <img src="assets/type-reverse.gif" />
+                <p>
+                    5) Apple: <br />
+                    * 标移至上方显示放大镜, 点击, 以鼠标点击的位置为轴心放大图片, 鼠标变成手型, 单击鼠标不放可拖动大图. 只能单独显示小图或者大图, 没有整体和局部的对比;
+                    <br />*用户增加了点击鼠标拖动的操作;
+                    <br />*在大图上移动, 用户鼠标的移动范围要大些, 影响效率;
+                    <br />*用户不能直接定位到自己想看的位置. 
+                    <br />*小图放大到大图, 过渡很自然. 
+                    <br /><img src="assets/apple.png" style="height: 200px;"/>
                 </p>
             </section>
         </div>
         
         <div class="slide">
-            <header>关键问题</header>
+            <header>二. 同类组件</header>
             <section>
-                <p> - 假定：小图和大图的尺寸都已知</p>
-                <p> - 小图上某个区域的尺寸也给定</p>
-                <p><img src="assets/m1.png" /></p>
-                <p> - 1) 目标显示区域如何计算</p>
-                <p> - 2) 如何将小图上的显示区域映射到大图上的显示区域</p>
-            </section>
-        </div>      
-        
-        <div class="slide">
-            <header>目标显示区域计算</header>
-            <section>
-                <p><img src="assets/m2.png" /></p>
-            </section>
-        </div>      
-
-        <div class="slide">
-            <header>镜片位置</header>
-            <section>
-                <p><img src="assets/m4.png" /></p>
-                <p>边界处理</p>
-            </section>
-        </div> 
-        
-        <div class="slide">
-            <header>鼠标移动时，小区域映射到大区域</header>
-            <section>
-                <p><img src="assets/m3.png" /></p>
-            </section>
-        </div>      
-        
-        <div class="slide">
-            <header>一些细节</header>
-            <section>
-                <p>- 边框: 扣除上下左右边框宽度</p>
-                <p>- 跟随模式下：1) 镜片边界超过小图宽度有镜片宽度的一半； 2) 显示区域应该是以鼠标为中心的，所以大图偏移应加镜片宽度的一半。</p>
-                <p>- 大小图尺寸：当小图加载完才继续初始化。大图加载设置定时器，没有加载完成前，使用 config 中设定的大图尺寸大小；当加载完之后重新计算显示区域大小；如果超时就给出无法加载提示。</p>
-            </section>
-        </div>      
-
-        <div class="slide">
-            <header>Public API</header>
-            <section>
-                <p>很简单!</p>
                 <pre>
-KISSY.ready(function(S) {
-    var zm = S.ImageZoom('#small-img', {
-                          bigImageSrc: 'path/to/big_pic.jpg'
-                         });
-});</pre>
-                <p>config: </p>
-                <pre>
-    type: 'stardard',         // 显示类型，可选值：follow
+1. JQZoom：<a href="http://www.mind-projects.it/projects/jqzoom/">http://www.mind-projects.it/projects/jqzoom/</a>
+    - 基于 jQuery 类库，大小 8.7k
+    - 支持 standard 和 reverse 两种显示类型；
+    - 提供 preload 功能，大图显示时支持特效；
+    - 配置丰富，调用方便。
 
-    bigImageSrc: '',          // 大图路径，为 '' 时取原图路径
-    bigImageSize: [900, 900], // 大图高宽 [width, height]
-    position: 'right',        // 大图显示位置，可选值：left | top | bottom
-    offset: 10,               // 大图位置偏移量，可以为 单一数值 或 [x, y]
-    preload: true,            // 是否预加载大图
-    timeout: 8000,            // 等待大图加载的最大时间，单位：ms
+2. ImageZoom: <a href="http://www.cnblogs.com/cloudgamer/archive/2010/04/01/ImageZoom.html">http://www.cnblogs.com/cloudgamer/archive/2010/04/01/ImageZoom.html</a>
+    - 基于 CJL 类库，大小 6.1k
+    - 支持 standard, follow, reverse, handle 等多种显示类型；
+    - 支持使用原图放大。大图未加载前，使用原图放大，减少等待时间；
+    - 支持预加载、放大系数、自动隐藏、鼠标滚动缩放大图等功能；
+    - 功能是同类组件中最全的，两篇介绍博文也相当不错。
 
-    lensSize: [100, 100],     // 镜片高宽
-    showIndicator: true       // 是否显示放大镜提示图标
+3. ImageScaler: <a href="http://yiminghe.javaeye.com/blog/388872">http://yiminghe.javaeye.com/blog/388872</a>
+    - 基于 Ext 类库，大小 6.9k
+    - 有缩放功能、支持拖拽、移动；
+    - 严格说来，这个组件的目的不是图片放大，而是图片裁剪功能，挺有意思。
                 </pre>
             </section>
         </div>
 
         <div class="slide">
-            <header>期待讨论的问题</header>
             <section>
                 <pre>
- 接口是否足够 KISS：
- S.ImageZoom(selector, config);
+4. AnythingZoomer: <a href="http://css-tricks.com/examples/AnythingZoomer/image.php">http://css-tricks.com/examples/AnythingZoomer/image.php</a>
+    - 基于 jQuery 类库，大小 1.2k
+    - 显示类型只有跟随模式；
+    - 强大之处在于，该组件可以放大任何区域，比如文本等等，不愧为 anything zoomer!
+    
+5. CloudZoom: <a href="http://www.professorcloud.com/mainsite/cloud-zoom.htm">http://www.professorcloud.com/mainsite/cloud-zoom.htm</a>
+    - 做的很漂亮, 细节处理...
 
- 第一次悬浮事件的命名?
- zoom.on('firstHover', ...);
- or
- zoom.on('loadBigImage', ...);
+                </pre>
+            </section>
+        </div>
 
- 需不需要下面这些事件：
- zoom.on('show', ...);
- zoom.on('hide', ...);
+        <div class="slide">
+            <header>三. 功能分析</header>
+            <section>
+                <pre>
+1. 显示类型，可总结为以下 3 类：
+    - 标准模式 standard: 可参考 JQZoom 的默认显示，可设置 放大镜 lens 是否显示；
+    - 反转模式 reverse:  可参考 JQZoom 的反转模式，或 CJL ImageZoom 的 cropper 模式，该模式下，lens 必须显示；
+    - 跟随模式 follow:   可参考 CJL ImageZoom 的 follow 模式。
 
- 要暴露哪些公共方法：
- ?
+   特有意思：Zazzle 上的 follow 模式非常值得仿效：<a href="http://www.zazzle.com/back+to+school+tshirts">Zazzle</a>
+   反转模式在调研的在线应用中，没有一家采用。很可能是因为反转效果很唐突，对用户体验无益。
+   无 lens 的标准模式，在在线应用中也很少看到。因为有 lens 的感觉更佳，组件实现时，可以不考虑无 lens 的标准模式。
+   综上考虑，KISSY 将实现以下两种显示类型：
+    - 标准模式 standard  显示 lens
+    - 跟随模式 follow    分 普通跟随模式 和 Zazzle 的跟随模式，具体参数实现时再定
 
- 已有功能是否已满足 8/2 原则?
- 已有功能是否都需要? 有什么可以砍掉的鸡肋吗?
- 通过扩展可以实现不常用的那 20% 吗?
+2. 大图的预加载功能。基本是标配，KISSY 可以进一步做到：
+    - 仿照 Zazzle 的效果，在大图加载过程中显示进度条，以及相关提示文字
 
- 支持 touch 设备?</pre>
+3. 放大系数、滚轮缩放、拖曳裁剪等功能，对用户用途不大，不支持
+
+4. 放大镜提示小图片很不错，能引导用户主动悬浮，支持该功能
+                </pre>
+            </section>
+        </div>
+        
+        <div class="slide">
+            <header>四. 技术方案</header>
+            <section>
+                <p> - 假定：小图和大图的尺寸都已知</p>
+                <p> - 小图上某个区域的尺寸也给定</p>
+                <p><img src="assets/m1.png" style="height:400px;" /></p>
+                <p> - 1) 目标显示区域如何计算</p>
+                <p> - 2) 如何将小图上的显示区域映射到大图上的显示区域</p>
+            </section>
+        </div>
+        
+        
+        <div class="slide">
+            <section>
+                <p>目标显示区域计算</p>
+                <p><img src="assets/m2.png" style="height:400px;" /></p>
             </section>
         </div>      
         
-        <div class="slide"> 
-          <section class='center'> 
-            <h1> 
-              Thank you~
-            </h1> 
-          </section> 
+        <div class="slide">
+            <section>
+                <p>镜片位置</p>
+                <p><img src="assets/m4.png" style="height:400px;" /></p>
+                <p>边界处理</p>
+            </section>
+        </div> 
+        
+        <div class="slide">
+            <section>
+                <p>鼠标移动时，小区域映射到大区域</p>
+                <p><img src="assets/m3.png" style="height:400px;" /></p>
+            </section>
+        </div>      
+        
+        <div class="slide">
+            <section>
+                <p>一些细节</p>
+                <p>- 边框: 扣除上下左右边框宽度</p>
+                <p>- 跟随模式下：<br />
+                    * 1) 镜片边界超过小图宽度有镜片宽度的一半； <br />
+                    * 2) 显示区域应该是以鼠标为中心的，所以大图偏移应加镜片宽度的一半。
+                </p>
+                <p>- 大小图尺寸：当小图加载完才继续初始化。大图加载设置定时器，没有加载完成前，使用 config 中设定的大图尺寸大小；当加载完之后重新计算显示区域大小；如果超时就给出无法加载提示。</p>
+            </section>
+        </div>      
+        
+        <div class="slide">
+            <header>五. Public API</header>
+            <section>
+                <p>简单使用</p>
+                <pre>
+KISSY.ready(function(S) {
+    var zm = S.ImageZoom('#small-img', {
+                          bigImageSrc: 'path/to/big_pic.jpg'
+                         });
+});
+</pre>
+            </section>
         </div>
         
-      </div> <!-- slides -->
-       
-    </div> <!-- presentation -->
-    
-    <script> 
-      (function() {
-        // bail in IE
-        var doc = document;
-        if (doc.all) { return; }
+        
+        <div class="slide">
+            <section>
+            <pre>
+config: (有变更!!!!!!!)
+        //type: STANDARD,            // 显示类型
 
-        var disableBuilds = true; //true;
+        bigImageSrc: '',           // 大图路径，为 '' 时，会先取原图上一级 a 的图片 src
+        bigImageSize: [900, 900],  // 大图高宽
+        preload: true,             // 是否预加载大图
+        timeout: 120,              // 等待大图加载的最大时间, 单位: s  默认 2 min
+        timeoutMsg: '图片暂不可用',
 
-        var ctr = 0;
-        var spaces = /\s+/, a1 = [""];
+        lensSize: [200, 200],      // 镜片高宽
+        lensIcon: true,            // 是否显示放大镜提示图标
 
-        var toArray = function(list) {
-          return Array.prototype.slice.call(list||[], 0);
-        };
+        // Overlay 中的选项
+        containerCls:  IMGZOOM_VIEWER_CLS,
+        triggerType: 'mouse',      // Overlay配置参数
+        align: {
+            node: '', 
+            x: 'r', 
+            y: 't', 
+            inner: [false, true], 
+            offset: 10
+        }
 
-        var byId = function(id) {
-          if (typeof id == "string") { return doc.getElementById(id); }
-          return id;
-        };
+Method:
+        show()                      // 显示
+        hide()                      // 隐藏
 
-        var query = function(query, root) {
-          if (!query) { return []; }
-          if (typeof query != "string") { return toArray(query); }
-          if (typeof root == "string"){
-            root = byId(root);
-            if(!root){ return []; }
-          }
+</pre>
+<p>需要更加详细的示例及在一些场景下的使用</p>
+            </section>
+        </div>
+        
 
-          root = root||document;
-          var rootIsDoc = (root.nodeType == 9);
-          var doc = rootIsDoc ? root : (root.ownerDocument||document);
+        <div class="slide">
+            <header>六. 开发计划</header>
+            <section>
+                <p>7月完成初稿; <span class="html">--version 0.1</span></p>
+                <p>8月第一次重构, 去除不必要功能; <span class="html">--version 1.0</span></p>
+                <p>9月第二次重构, 基于 Overlay 扩展; <span class="html">--version 1.0</span></p>
+                <p>9月实现Follow模式, 类似于 zazzle 上的效果; <span class="html">--version 1.1</span></p>
+            </section>
+        </div>
 
-          // rewrite the query to be ID rooted
-          if (!rootIsDoc || (">~+".indexOf(query.charAt(0)) >= 0)) {
-            root.id = root.id||("qUnique"+(ctr++));
-            query = "#"+root.id+" "+query;
-          }
-          // don't choke on something like ".yada.yada >"
-          if (">~+".indexOf(query.slice(-1)) >= 0) { query += " *"; }
+        <div class="slide">
+            <header>七. 其他</header>
+            <section>
+               <pre>
+接口是否足够 KISS：
+S.ImageZoom(selector, config);
 
-          return toArray(doc.querySelectorAll(query));
-        };
+第一次悬浮事件的命名?
+zoom.on('firstHover', ...);
+or
+zoom.on('loadBigImage', ...);
 
-        var strToArray = function(s) {
-          if (typeof s == "string" || s instanceof String) {
-            if (s.indexOf(" ") < 0) {
-              a1[0] = s;
-              return a1;
-            } else {
-              return s.split(spaces);
-            }
-          }
-          return s;
-        };
+需不需要下面这些事件：
+zoom.on('show', ...);
+zoom.on('hide', ...);
 
-        var trim = function(str) {
-          return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-        };
+要暴露哪些公共方法：
+?
 
-        var addClass = function(node, classStr) {
-          classStr = strToArray(classStr);
-          var cls = " " + node.className + " ";
-          for (var i = 0, len = classStr.length, c; i < len; ++i) {
-            c = classStr[i];
-            if (c && cls.indexOf(" " + c + " ") < 0) {
-              cls += c + " ";
-            }
-          }
-          node.className = trim(cls);
-        };
+已有功能是否已满足 8/2 原则?
+已有功能是否都需要? 有什么可以砍掉的鸡肋吗?
+通过扩展可以实现不常用的那 20% 吗?
 
-        var removeClass = function(node, classStr) {
-          var cls;
-          if (classStr !== undefined) {
-            classStr = strToArray(classStr);
-            cls = " " + node.className + " ";
-            for (var i = 0, len = classStr.length; i < len; ++i) {
-              cls = cls.replace(" " + classStr[i] + " ", " ");
-            }
-            cls = trim(cls);
-          } else {
-            cls = "";
-          }
-          if (node.className != cls) {
-            node.className = cls;
-          }
-        };
+支持 touch 设备?</pre>
+            </section>
+        </div>
+        
+        <div class="slide">
+            <header>资源</header>
+            <section>
+                <p>使用文档： http://kissyteam.github.com/kissy/docs/imagezoom/index.html</p>
+                <p>测试页面： http://kissyteam.github.com/kissy/src/imagezoom/test.html</p>
+            </section>
+        </div>
+    </div>
+    <!-- slides -->
 
-        var toggleClass = function(node, classStr) {
-          var cls = " " + node.className + " ";
-          if (cls.indexOf(" " + trim(classStr) + " ") >= 0) {
-            removeClass(node, classStr);
-          } else {
-            addClass(node, classStr);
-          }
-        };
-
-        var ua = navigator.userAgent;
-        var isFF = parseFloat(ua.split("Firefox/")[1]) || undefined;
-        var isWK = parseFloat(ua.split("WebKit/")[1]) || undefined;
-        var isOpera = parseFloat(ua.split("Opera/")[1]) || undefined;
-
-        var canTransition = (function() {
-          var ver = parseFloat(ua.split("Version/")[1]) || undefined;
-          // test to determine if this browser can handle CSS transitions.
-          var cachedCanTransition = 
-            (isWK || (isFF && isFF > 3.6 ) || (isOpera && ver >= 10.5));
-          return function() { return cachedCanTransition; }
-        })();
-
-        //
-        // Slide class
-        //
-        var Slide = function(node, idx) {
-          this._node = node;
-          if (idx >= 0) {
-            this._count = idx+1;
-          }
-          if (this._node) {
-            addClass(this._node, "slide distant-future");
-          }
-          this._makeCounter();
-          this._makeBuildList();
-        };
-
-        Slide.prototype = {
-          _node: null,
-          _count: 0,
-          _buildList: [],
-          _visited: false,
-          _currentState: "",
-          _states: [ "distant-past", "far-past",
-                     "past", "current", "future",
-                     "far-future", "distant-future" ],
-          setState: function(state) {
-            if (typeof state != "string") {
-              state = this._states[state];
-            }
-            if (state == "current" && !this._visited) {
-              this._visited = true;
-              this._makeBuildList();
-            }
-            removeClass(this._node, this._states);
-            addClass(this._node, state);
-            this._currentState = state;
-
-            // delay first auto run. Really wish this were in CSS.
-            /*
-            this._runAutos();
-            */
-            var _t = this;
-            setTimeout(function(){ _t._runAutos(); } , 400);
-          },
-          _makeCounter: function() {
-            if(!this._count || !this._node) { return; }
-            var c = doc.createElement("span");
-            c.innerHTML = this._count;
-            c.className = "counter";
-            this._node.appendChild(c);
-          },
-          _makeBuildList: function() {
-            this._buildList = [];
-            if (disableBuilds) { return; }
-            if (this._node) {
-              this._buildList = query("[data-build] > *", this._node);
-            }
-            this._buildList.forEach(function(el) {
-              addClass(el, "to-build");
-            });
-          },
-          _runAutos: function() {
-            if (this._currentState != "current") {
-              return;
-            }
-            // find the next auto, slice it out of the list, and run it
-            var idx = -1;
-            this._buildList.some(function(n, i) {
-              if (n.hasAttribute("data-auto")) {
-                idx = i;
-                return true;
-              }
-              return false;
-            });
-            if (idx >= 0) {
-              var elem = this._buildList.splice(idx, 1)[0];
-              var transitionEnd = isWK ? "webkitTransitionEnd" : (isFF ? "mozTransitionEnd" : "oTransitionEnd");
-              var _t = this;
-              if (canTransition()) {
-                var l = function(evt) {
-                  elem.parentNode.removeEventListener(transitionEnd, l, false);
-                  _t._runAutos();
-                };
-                elem.parentNode.addEventListener(transitionEnd, l, false);
-                removeClass(elem, "to-build");
-              } else {
-                setTimeout(function() {
-                  removeClass(elem, "to-build");
-                  _t._runAutos();
-                }, 400);
-              }
-            }
-          },
-          buildNext: function() {
-            if (!this._buildList.length) {
-              return false;
-            }
-            removeClass(this._buildList.shift(), "to-build");
-            return true;
-          }
-        };
-
-        //
-        // SlideShow class
-        //
-        var SlideShow = function(slides) {
-          this._slides = (slides||[]).map(function(el, idx) {
-            return new Slide(el, idx);
-          });
-
-          var h = window.location.hash;
-          try {
-            this.current = parseInt(h.split('#slide')[1], 10);
-          }catch (e) { /* squeltch */ }
-          this.current = isNaN(this.current) ? 1 : this.current;
-          var _t = this;
-          doc.addEventListener('keydown', 
-              function(e) { _t.handleKeys(e); }, false);
-          doc.addEventListener('mousewheel', 
-              function(e) { _t.handleWheel(e); }, false);
-          doc.addEventListener('DOMMouseScroll', 
-              function(e) { _t.handleWheel(e); }, false);
-          doc.addEventListener('touchstart', 
-              function(e) { _t.handleTouchStart(e); }, false);
-          doc.addEventListener('touchend', 
-              function(e) { _t.handleTouchEnd(e); }, false);
-          window.addEventListener('popstate', 
-              function(e) { _t.go(e.state); }, false);
-          this._update();
-          
-          // hide those slides we forced to render on load time for positioning purposes
-          [].forEach.call(document.querySelectorAll('.force-render'), function(elem,i){
-            setTimeout(function() {
-              removeClass(elem, 'force-render');
-            }, 2000);
-          });
-        };
-
-        SlideShow.prototype = {
-          _slides: [],
-          _update: function(dontPush) {
-            if (history.pushState) {
-              if (!dontPush) {
-                history.pushState(this.current, "Slide " + this.current, "#slide" + this.current);
-              }
-            } else {
-              window.location.hash = "slide" + this.current;
-            }
-            for (var x = this.current-1; x < this.current+7; x++) {
-              if (this._slides[x-4]) {
-                this._slides[x-4].setState(Math.max(0, x-this.current));
-              }
-            }
-          },
-
-          current: 0,
-          next: function() {
-            if (!this._slides[this.current-1].buildNext()) {
-              this.current = Math.min(this.current+1, this._slides.length);
-              this._update();
-            }
-          },
-          prev: function() {
-            this.current = Math.max(this.current-1, 1);
-            this._update();
-          },
-          go: function(num) {
-            if (history.pushState && this.current != num) {
-              history.replaceState(this.current, "Slide " + this.current, "#slide" + this.current);
-            }
-            this.current = num;
-            this._update(true);
-          },
-
-          _notesOn: false,
-          showNotes: function() {
-            var isOn = this._notesOn = !this._notesOn;
-            query(".notes").forEach(function(el) {
-              el.style.display = (notesOn) ? "block" : "none";
-            });
-          },
-          switch3D: function() {
-            toggleClass(document.body, "three-d");
-          },
-          handleWheel: function(e) {
-            var delta = 0;
-            if (e.wheelDelta) {
-              delta = e.wheelDelta/120;
-              if (isOpera) {
-                delta = -delta; 
-              }
-            } else if (e.detail) { 
-              delta = -e.detail/3;
-            }
-
-            if (delta > 0 ) {
-              this.prev();
-              return;
-            }
-            if (delta < 0 ) {
-              this.next();
-              return;
-            }
-          },
-          handleKeys: function(e) {
-            switch (e.keyCode) {
-              case 37: // left arrow
-                this.prev(); break;
-              case 39: // right arrow
-              // case 32: // space
-                this.next(); break;
-              case 50: // 2
-                this.showNotes(); break;
-              case 51: // 3
-                this.switch3D(); break;
-            }
-          },
-          _touchStartX: 0,
-          handleTouchStart: function(e) {
-            this._touchStartX = e.touches[0].pageX;
-          },
-          handleTouchEnd: function(e) {
-            var delta = this._touchStartX - e.changedTouches[0].pageX;
-            var SWIPE_SIZE = 150;
-            if (delta > SWIPE_SIZE) {
-              this.next();
-            } else if (delta< -SWIPE_SIZE) {
-              this.prev();
-            }
-          }
-        };
-
-        // Initialize
-        var slideshow = new SlideShow(query(".slide"));
-      })();
-    </script> 
-
+</div>
+<script>
+(function(){var e=document;if(!e.all){var u=0,v=/\s+/,m=[""],n=function(a){return Array.prototype.slice.call(a||[],0)},w=function(a){if(typeof a=="string")return e.getElementById(a);return a},o=function(a,b){if(!a)return[];if(typeof a!="string")return n(a);if(typeof b=="string"){b=w(b);if(!b)return[]}b=b||document;var d=b.nodeType==9,c=d?b:b.ownerDocument||document;if(!d||">~+".indexOf(a.charAt(0))>=0){b.id=b.id||"qUnique"+u++;a="#"+b.id+" "+a}if(">~+".indexOf(a.slice(-1))>=0)a+=" *";return n(c.querySelectorAll(a))},
+p=function(a){if(typeof a=="string"||a instanceof String)if(a.indexOf(" ")<0){m[0]=a;return m}else return a.split(v);return a},j=function(a){return a.replace(/^\s\s*/,"").replace(/\s\s*$/,"")},k=function(a,b){b=p(b);for(var d=" "+a.className+" ",c=0,f=b.length,h;c<f;++c)if((h=b[c])&&d.indexOf(" "+h+" ")<0)d+=h+" ";a.className=j(d)},g=function(a,b){var d;if(b!==undefined){b=p(b);d=" "+a.className+" ";for(var c=0,f=b.length;c<f;++c)d=d.replace(" "+b[c]+" "," ");d=j(d)}else d="";if(a.className!=d)a.className=
+d},x=function(a,b){(" "+a.className+" ").indexOf(" "+j(b)+" ")>=0?g(a,b):k(a,b)},i=navigator.userAgent,l=parseFloat(i.split("Firefox/")[1])||undefined,q=parseFloat(i.split("WebKit/")[1])||undefined,r=parseFloat(i.split("Opera/")[1])||undefined,y=function(){var a=parseFloat(i.split("Version/")[1])||undefined,b=q||l&&l>3.6||r&&a>=10.5;return function(){return b}}(),z=document.getElementsByClassName("slide").length,s=function(a,b){this._node=a;if(b>=0)this._count=b+1;this._node&&k(this._node,"slide distant-future");
+this._makeCounter();this._makeBuildList()};s.prototype={_node:null,_count:0,_buildList:[],_visited:false,_currentState:"",_states:["distant-past","far-past","past","current","future","far-future","distant-future"],setState:function(a){if(typeof a!="string")a=this._states[a];if(a=="current"&&!this._visited){this._visited=true;this._makeBuildList()}g(this._node,this._states);k(this._node,a);this._currentState=a;var b=this;setTimeout(function(){b._runAutos()},400)},_makeCounter:function(){if(this._count&&
+this._node){var a=e.createElement("span");a.innerHTML=this._count+" / "+z;a.className="counter";this._node.appendChild(a)}},_makeBuildList:function(){this._buildList=[]},_runAutos:function(){if(this._currentState=="current"){var a=-1;this._buildList.some(function(h,A){if(h.hasAttribute("data-auto")){a=A;return true}return false});if(a>=0){var b=this._buildList.splice(a,1)[0],d=q?"webkitTransitionEnd":l?"mozTransitionEnd":"oTransitionEnd",c=this;if(y()){var f=function(){b.parentNode.removeEventListener(d,
+f,false);c._runAutos()};b.parentNode.addEventListener(d,f,false);g(b,"to-build")}else setTimeout(function(){g(b,"to-build");c._runAutos()},400)}}},buildNext:function(){if(!this._buildList.length)return false;g(this._buildList.shift(),"to-build");return true}};var t=function(a){this._slides=(a||[]).map(function(c,f){return new s(c,f)});a=window.location.hash;try{this.current=parseInt(a.split("#slide")[1],10)}catch(b){}this.current=isNaN(this.current)?1:this.current;var d=this;e.addEventListener("keydown",
+function(c){d.handleKeys(c)},false);e.addEventListener("mousewheel",function(c){d.handleWheel(c)},false);e.addEventListener("DOMMouseScroll",function(c){d.handleWheel(c)},false);e.addEventListener("touchstart",function(c){d.handleTouchStart(c)},false);e.addEventListener("touchend",function(c){d.handleTouchEnd(c)},false);window.addEventListener("popstate",function(c){d.go(c.state)},false);this._update();[].forEach.call(document.querySelectorAll(".force-render"),function(c){setTimeout(function(){g(c,
+"force-render")},2E3)})};t.prototype={_slides:[],_update:function(a){if(history.pushState)a||history.pushState(this.current,"Slide "+this.current,"#slide"+this.current);else window.location.hash="slide"+this.current;for(a=this.current-1;a<this.current+7;a++)this._slides[a-4]&&this._slides[a-4].setState(Math.max(0,a-this.current))},current:0,next:function(){if(!this._slides[this.current-1].buildNext()){this.current=Math.min(this.current+1,this._slides.length);this._update()}},prev:function(){this.current=
+Math.max(this.current-1,1);this._update()},go:function(a){history.pushState&&this.current!=a&&history.replaceState(this.current,"Slide "+this.current,"#slide"+this.current);this.current=a;this._update(true)},_notesOn:false,showNotes:function(){this._notesOn=!this._notesOn;o(".notes").forEach(function(a){a.style.display=notesOn?"block":"none"})},switch3D:function(){x(document.body,"three-d")},handleWheel:function(a){var b=0;if(a.wheelDelta){b=a.wheelDelta/120;if(r)b=-b}else if(a.detail)b=-a.detail/
+3;if(b>0)this.prev();else b<0&&this.next()},handleKeys:function(a){switch(a.keyCode){case 37:this.prev();break;case 39:this.next();break;case 50:this.showNotes();break;case 51:this.switch3D();break}},_touchStartX:0,handleTouchStart:function(a){this._touchStartX=a.touches[0].pageX},handleTouchEnd:function(a){a=this._touchStartX-a.changedTouches[0].pageX;if(a>150)this.next();else a<-150&&this.prev()}};new t(o(".slide"))}})();
+</script>
 </body>
 </html>
