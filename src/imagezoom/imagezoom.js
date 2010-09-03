@@ -23,7 +23,7 @@ KISSY.add('imagezoom', function(S, undefined) {
          * 默认设置
          */
         defaultConfig = {
-            type: STANDARD,            // 显示类型
+            //type: STANDARD,            // 显示类型
 
             bigImageSrc: '',           // 大图路径，为 '' 时，会先取原图上一级 a 的图片 src
             bigImageSize: [900, 900],  // 大图高宽
@@ -38,9 +38,9 @@ KISSY.add('imagezoom', function(S, undefined) {
             triggerType: 'mouse',      // Overlay配置参数
             align: {
                 node: '', 
-                x: 'r', 
-                y: 't', 
-                inner: false, 
+                x: 'l', 
+                y: 'b', 
+                inner: [true, false], 
                 offset: 10
             }
         };
@@ -65,6 +65,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         if (!img) return;
         
         config = S.merge(defaultConfig, config);
+        // 设置大图路径, 默认去取img上的data-src
         if (!config.bigImageSrc) {
             tmp = DOM.attr(img, 'data-src');
             if (tmp && RE_IMG_SRC.test(tmp)) config.bigImageSrc = tmp;
@@ -77,7 +78,6 @@ KISSY.add('imagezoom', function(S, undefined) {
         // 在小图加载完毕时初始化
         imgOnLoad(img, function() {
             self.on('afterInit', function() { 
-                
                 /**
                  * 小图宽高及位置, 用到多次, 先保存起来
                  */
@@ -93,15 +93,22 @@ KISSY.add('imagezoom', function(S, undefined) {
     S.ImageZoom = ImageZoom;
     
     S.augment(ImageZoom, {
+        /**
+         * 
+         
         _preShow: function() {
-            var self = this, bImg, cfg = self.config, timer;
+            var self = this;
+            
             ImageZoom.superclass._preShow.call(self);
             
+        },*/
+        _extraContent: function(){
+            var self = this, bImg, cfg = self.config, timer;
             // 标准模式，添加镜片   
             //if (cfg.type === STANDARD) {
             self._renderLens();
             
-            // 创建 viewer 的 DOM 结构
+            // 创建 img 的 DOM 结构
             bImg = DOM.create(IMG, { src: cfg.bigImageSrc });
             self.body.appendChild(bImg);
             
@@ -124,16 +131,24 @@ KISSY.add('imagezoom', function(S, undefined) {
             }
             self._setViewerRegion();
         },
+        
+        /** 创建镜片
+         */
         _renderLens: function() {
             var self = this,
                 lens = DOM.create(DIV, { 'class': IMGZOOM_LENS_CLS }),
-                cfg = self.config;
+                cfg = self.config,
+                is = self.imgSize;
             document.body.appendChild(lens);
-            DOM.css(lens, { width: cfg.lensSize[0], height: cfg.lensSize[1] });
-            DOM.offset(lens, DOM.offset(self.image));
+            DOM.width(lens, cfg.lensSize[0]);
+            DOM.height(lens,cfg.lensSize[1]);
+            // 第一次镜片显示在小图中间
+            DOM.offset(lens, {left:is.left+is.width/2-cfg.lenSize[0]/2, top:is.top+is.height/2-cfg.lenSize[1]/2});
             self.lens = lens;
             hide(lens);
         },
+        /** 创建放大镜图标
+         */
         _renderIcon: function() {
             var self = this,
                 is = self.imgSize,
@@ -145,9 +160,11 @@ KISSY.add('imagezoom', function(S, undefined) {
             self.lensIcon = icon;
         },
         
+        /**
+         * 设置显示区域大小
+         */
         _setViewerRegion: function() {
             var self = this, cfg = self.config,
-                v = self.viewer,
                 is = self.imgSize,
                 lensSize = cfg.lensSize,
                 width, height,
@@ -161,7 +178,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             width = round(bigImageSize.width * lensSize[0] / is.width);
             
             // set it
-            if (width) DOM.css(v, { width: width, height: height });
+            ImageZoom.superclass.setSize.call(self, width, height);
         },
         
         _triggerMouse: function() {
@@ -177,6 +194,8 @@ KISSY.add('imagezoom', function(S, undefined) {
             });
         },
         
+        /** 鼠标移动时, 更改显示区域
+         */
         _onMouseMove: function(ev) {
             var self = this,
                 is = self.imgSize;
@@ -215,7 +234,7 @@ KISSY.add('imagezoom', function(S, undefined) {
          */
         _showTimeoutMsg: function() {
             var self = this, cfg = self.config,
-                v = this.viewer, p = S.get('p', v);
+                v = self.viewer, p = S.get('p', v);
 
             if (!p) {
                 p = DOM.create('<p>');
