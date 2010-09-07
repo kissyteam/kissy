@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 6 14:56
+build time: Sep 7 13:37
 */
 /**
  * @module kissy
@@ -1096,7 +1096,7 @@ build time: Sep 6 14:56
                     fn && fn(self);
                 });
                 mod.fns = undefined; // 保证 attach 过的方法只执行一次
-                S.log(mod.name + '.status = attached');
+                //S.log(mod.name + '.status = attached');
             }
 
             mod.status = ATTACHED;
@@ -1139,7 +1139,7 @@ build time: Sep 6 14:56
 
                 ret = self.getScript(url, {
                     success: function() {
-                        KISSY.log(mod.name + ' onload fired.', 'info'); // 压缩时不过滤该句，以方便线上调试
+                        KISSY.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
                         _success();
                     },
                     error: function() {
