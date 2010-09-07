@@ -3,12 +3,18 @@
 <head>
 <meta charset="utf-8"/>
 <title>ImageZoom Test</title>
-<link href="../../build/cssreset-grids/reset-grids-min.css" rel="stylesheet"/>
+<link href="http://a.tbcdn.cn/s/kissy/1.1.0/build/cssbase/base-min.css" rel="stylesheet" type="text/css" />
 <link href="imagezoom.css" rel="stylesheet"/>
-<script src="../../build/packages/ks-core.js"></script>
+<script src="../../build/packages/kissy.js"></script>
+<script src="../overlay/overlay.js"></script>
 <script src="imagezoom.js"></script>
 <style>
     body { padding: 20px; }
+    .demo {
+        width: 310px;
+        height: 310px;
+        border: 1px solid grey;
+    }
 </style>
 </head>
 
@@ -16,30 +22,30 @@
 
 <h2>标准模式</h2>
 
-<div id="test-standard">
+<div class="demo">
     <img id="standard" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
 </div>
 
-<p>跟随模式</p>
-<div id="test-follow">
+<!-- <p>跟随模式</p>
+<div>
     <img id="follow" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
-</div>
+</div> -->
 
 <h2>小图不能访问</h2>
-<div id="test-bad-small">
+<div class="demo">
     <img id="bad-small" src="http://google.com/non-exist.jpg"/>
 </div>
 
 <h2>大图不能访问</h2>
-<div id="test-bad-big">
-    <img id="bad-big" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+<div class="demo">
+    <img id="bad-big" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" data-src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg1"/>
 </div>
 
 <h2>超级大图加载</h2>
-<div id="test-big-big">
-    <img id="big-big" src="http://pic.yupoo.com/comgeo/75753981a667/ibqyran4.jpg"/>
+<div class="demo">
+    <a href="#"><img id="big-big" data-src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+    </a>
 </div>
-
 <script>
     KISSY.ready(function(S) {
 
@@ -47,12 +53,64 @@
                             bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg"
                         });
 
-        new S.ImageZoom("#follow", {
-                            bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
-                            type: 'follow'
-                        }); 
+        new S.ImageZoom("#bad-big");
+        new S.ImageZoom("#big-big");
+        
     });
 
 </script>
 </body>
 </html>
+
+
+<style>
+    .fp .docs {
+        margin: 10px auto;
+        
+    }
+    .fp .docs li {
+        display: inline-block;
+        width: 240px;
+        height: 120px;
+        text-align: center;
+        font-size: 28px;
+        line-height: 120px;
+    }
+    .fp .docs .gt {
+        background: url("http://cdn.iconfinder.net/data/icons/bagbox/png/Falcon.png") no-repeat scroll 0 0 transparent;
+    }
+    .fp .docs .ref {
+        background: url("http://cdn.iconfinder.net/data/icons/bagbox/png/graphik%20box.png") no-repeat scroll 0 0 transparent;
+    }
+    .fp .docs .api {
+        background: url("http://cdn.iconfinder.net/data/icons/bagbox/png/firefox%20Baggs.png") no-repeat scroll 0 0 transparent;
+    }
+    .fp .linklist ul {
+        float: left;
+        margin-right: 10px;
+        padding: 10px;
+    }
+    .fp .linklist .left, .fp .linklist .center {
+        border-right: 1px solid grey;
+    }
+</style>
+<div class="fp">
+    <ul class="docs">
+        <li class="gt"><a href="#">Quick Start Guide</a></li>
+        <li class="ref"><a href="#">Reference Guide</a></li>
+        <li class="api"><a href="#">API Docs</a></li>
+    </ul>
+    
+    
+    <div class="linklist">
+        <ul class="left">
+            <li><a href="#">docs</a></li>
+        </ul>
+        <ul class="center">
+            <li><a href="#">docs</a></li>
+        </ul>
+        <ul>
+            <li><a href="#">docs</a></li>
+        </ul>
+    </div>
+</div>

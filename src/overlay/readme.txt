@@ -1,119 +1,119 @@
-Overlay µ÷ÑĞ±¨¸æ
+Overlay è°ƒç ”æŠ¥å‘Š
 
 
-Ó¦ÓÃ³¡¾°
- - Ò³ÃæÉÏµÄ¸²¸Ç²ã, Èç, ÆÕÍ¨ÕÚÕÖ²ã;
- - µ¯³ö¶Ô»°¿ò²ã; 
+åº”ç”¨åœºæ™¯
+ - é¡µé¢ä¸Šçš„è¦†ç›–å±‚, å¦‚, æ™®é€šé®ç½©å±‚;
+ - å¼¹å‡ºå¯¹è¯æ¡†å±‚; 
 
 
-Í¬Àà×é¼ş
+åŒç±»ç»„ä»¶
 1. YUI3 , `Overlay <http://developer.yahoo.com/yui/3/overlay/>`_
  * new Y.Overlay(cfg);
- * À©Õ¹ÓÚWidget, DOM»ù±¾½á¹¹°üº¬hd,bd,ft;
- * Ìá¹© Î»ÖÃÏà¹ØÊôĞÔ(x, y, xy, centered), zIndex, align, shim(¼Óiframe, IE6ÏÂÄ¬ÈÏtrue), constrain(¹Ì¶¨ÔÚ¿ÉÊÓÇøÓòÖĞ¼ä);
- * Ìá¹© ÓëĞŞ¸Ä¶ÔÓ¦ Attributes µÄ·½·¨, Ö÷ÒªÓĞ ÄÚÈİ(WidgetStdMod), Î»ÖÃ(WidgetPosition, WidgetPositionConstrain), ´óĞ¡Õâ¼¸¸ö·½ÃæµÄ·½·¨;
- * WidgetPositionAlign, Ìá¹© Align, Ö§³Ö¶ÔÆëµ½Ä³¸öÔªËØ, Õû¸ö¿ÉÊÓÇøÓò, ÌØ¶¨Î»ÖÃÉÏ;
- * WidgetStack, Ìá¹© Stacking, ĞèÒªzIndexºÍshimÖ§³Ö, µ±ÓĞ¶à¸ö Overlay Ê±, Ä³¸ö²ã»ñµÃ½¹µãÊ±, ½«ÆäÖÃÓÚ¶¥²ã(¶ÔÓ¦·½·¨ bringToTop )
- * ×Ô¶¨ÒåÊÂ¼ş xyChange, bodyContentChange, 
- * OverlayÏà¹ØµÄPlugin, Í¨¹ı overlay.plug(XXX, cfg)/ overlay.unplug(XXX) Ê¹ÓÃ:
-    # StdModIO, Ìá¹©±ê×¼µÄÊäÈëÊä³ö, °üº¬initializer, destructor, formator, ÔÚOverlyÖĞÊµÀı»¯Îªoverlay.io;
-    # Animation, Ìá¹©OverlyµÄ¶¯»­Õ¹ÏÖĞ§¹û, animHidden/animVisible¶¨ÒåÈçºÎÕ¹ÏÖ;
+ * æ‰©å±•äºWidget, DOMåŸºæœ¬ç»“æ„åŒ…å«hd,bd,ft;
+ * æä¾› ä½ç½®ç›¸å…³å±æ€§(x, y, xy, centered), zIndex, align, shim(åŠ iframe, IE6ä¸‹é»˜è®¤true), constrain(å›ºå®šåœ¨å¯è§†åŒºåŸŸä¸­é—´);
+ * æä¾› ä¸ä¿®æ”¹å¯¹åº” Attributes çš„æ–¹æ³•, ä¸»è¦æœ‰ å†…å®¹(WidgetStdMod), ä½ç½®(WidgetPosition, WidgetPositionConstrain), å¤§å°è¿™å‡ ä¸ªæ–¹é¢çš„æ–¹æ³•;
+ * WidgetPositionAlign, æä¾› Align, æ”¯æŒå¯¹é½åˆ°æŸä¸ªå…ƒç´ , æ•´ä¸ªå¯è§†åŒºåŸŸ, ç‰¹å®šä½ç½®ä¸Š;
+ * WidgetStack, æä¾› Stacking, éœ€è¦zIndexå’Œshimæ”¯æŒ, å½“æœ‰å¤šä¸ª Overlay æ—¶, æŸä¸ªå±‚è·å¾—ç„¦ç‚¹æ—¶, å°†å…¶ç½®äºé¡¶å±‚(å¯¹åº”æ–¹æ³• bringToTop )
+ * è‡ªå®šä¹‰äº‹ä»¶ xyChange, bodyContentChange, 
+ * Overlayç›¸å…³çš„Plugin, é€šè¿‡ overlay.plug(XXX, cfg)/ overlay.unplug(XXX) ä½¿ç”¨:
+    # StdModIO, æä¾›æ ‡å‡†çš„è¾“å…¥è¾“å‡º, åŒ…å«initializer, destructor, formator, åœ¨Overlyä¸­å®ä¾‹åŒ–ä¸ºoverlay.io;
+    # Animation, æä¾›Overlyçš„åŠ¨ç”»å±•ç°æ•ˆæœ, animHidden/animVisibleå®šä¹‰å¦‚ä½•å±•ç°;
 
 
-2. JQuery UI, Ã»ÓĞÌá¹© Overlay , µ«Ìá¹©ÁËËùÓĞ×é¼şµÄ»ùÀà Widget, À©Õ¹³ö `Dialog <http://docs.jquery.com/UI/Dialog>`_ , ºÍÏà¹Ø×é¼ş, Èç Draggable(ÍÏ×§), Droppable, Resizable.
- * JQuery Core + Widget + Position + Dialog, Ñ¹Ëõºó21K;
- * `Widget <http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.js>`_ , ËùÓĞ×é¼şµÄ»ùÀà, Ìá¹© create, destroy, enable, disableµÈÍ¨ÓÃ·½·¨;
- * Ê¹ÓÃ $(id).dialog();
-   # Ìá¹© ¶¨ÖÆ¿í¸ß¶È, resize, Î»ÖÃ, ÊÇ·ñÄ£Ì¬´°¿Ú, ¿ÉÍÏ×§, Ö§³Ö °´Å¥;
-   # Ìá¹©µÄ·½·¨ÓĞ destroy, open, close, enable, disable, moveToTop, stack, ÕâĞ©¶¼ÊÇÀàËÆ´°¿Ú×î»ù±¾µÄ·½·¨;
-   # ×Ô¶¨ÒåÊÂ¼şÓĞ open, close, beforeClose, focus, drag µÈ;
-
-
-
-3. Mootools, ÓÉ moord Ìá¹©µÄ `overlay.js <http://www.moord.it/documentation/constructors>`_ 
- * 77.3K (Î´Ñ¹Ëõ, °üº¬ÒÀÀµÎÄ¼ş), µ«´¿ Overlay ½ö100¶àĞĞ;
- * new Overlay() ´´½¨ overlay ¶ÔÏó;
- * Ìá¹© ´´½¨, É¾³ı Overlay, ÉèÖÃ ÑÕÉ«ÉîÇ³ Í¸Ã÷¶È, ¹¦ÄÜ±È½Ï¼òµ¥;
- * »ùÓÚOverlayÀ©Õ¹µÄ×é¼şÓĞ virtual box , µ¯³ö²ã¹¦ÄÜ:
-   # virtual-base Îª»ùÀà;
-   # À©Õ¹ÓĞ virtual-box (»ù±¾µÄbox),  virtual-ajax (ÇëÇóÖ®ºóÏÔÊ¾ÄÚÈİ), virtual-html (¶¯Ì¬ÉèÖÃhtmlÄÚÈİ);
-   # virtual box ÏµÁĞ Ìá¹© ÉèÖÃ¶¯»­Ğ§¹û, ×Ô¶¨ÒåÑùÊ½, Î»ÖÃ¾ÓÖĞµÈÑ¡Ïî, Ìá¹© onShow, onClose, onNext, onPrev ×Ô¶¨ÒåÊÂ¼ş;
+2. JQuery UI, æ²¡æœ‰æä¾› Overlay , ä½†æä¾›äº†æ‰€æœ‰ç»„ä»¶çš„åŸºç±» Widget, æ‰©å±•å‡º `Dialog <http://docs.jquery.com/UI/Dialog>`_ , å’Œç›¸å…³ç»„ä»¶, å¦‚ Draggable(æ‹–æ‹½), Droppable, Resizable.
+ * JQuery Core + Widget + Position + Dialog, å‹ç¼©å21K;
+ * `Widget <http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.js>`_ , æ‰€æœ‰ç»„ä»¶çš„åŸºç±», æä¾› create, destroy, enable, disableç­‰é€šç”¨æ–¹æ³•;
+ * ä½¿ç”¨ $(id).dialog();
+   # æä¾› å®šåˆ¶å®½é«˜åº¦, resize, ä½ç½®, æ˜¯å¦æ¨¡æ€çª—å£, å¯æ‹–æ‹½, æ”¯æŒ æŒ‰é’®;
+   # æä¾›çš„æ–¹æ³•æœ‰ destroy, open, close, enable, disable, moveToTop, stack, è¿™äº›éƒ½æ˜¯ç±»ä¼¼çª—å£æœ€åŸºæœ¬çš„æ–¹æ³•;
+   # è‡ªå®šä¹‰äº‹ä»¶æœ‰ open, close, beforeClose, focus, drag ç­‰;
 
 
 
-4. Dojo µÄ Dijit Ìá¹©ÁË `digit.Dialog <http://dojotoolkit.org/reference-guide/dijit/Dialog.html>`_ .
- * Dialog+DialogUnderlay ¹²22K, ²»°üº¬Ò»Ğ©ÒÀÀµ¿â.
+3. Mootools, ç”± moord æä¾›çš„ `overlay.js <http://www.moord.it/documentation/constructors>`_ 
+ * 77.3K (æœªå‹ç¼©, åŒ…å«ä¾èµ–æ–‡ä»¶), ä½†çº¯ Overlay ä»…100å¤šè¡Œ;
+ * new Overlay() åˆ›å»º overlay å¯¹è±¡;
+ * æä¾› åˆ›å»º, åˆ é™¤ Overlay, è®¾ç½® é¢œè‰²æ·±æµ… é€æ˜åº¦, åŠŸèƒ½æ¯”è¾ƒç®€å•;
+ * åŸºäºOverlayæ‰©å±•çš„ç»„ä»¶æœ‰ virtual box , å¼¹å‡ºå±‚åŠŸèƒ½:
+   # virtual-base ä¸ºåŸºç±»;
+   # æ‰©å±•æœ‰ virtual-box (åŸºæœ¬çš„box),  virtual-ajax (è¯·æ±‚ä¹‹åæ˜¾ç¤ºå†…å®¹), virtual-html (åŠ¨æ€è®¾ç½®htmlå†…å®¹);
+   # virtual box ç³»åˆ— æä¾› è®¾ç½®åŠ¨ç”»æ•ˆæœ, è‡ªå®šä¹‰æ ·å¼, ä½ç½®å±…ä¸­ç­‰é€‰é¡¹, æä¾› onShow, onClose, onNext, onPrev è‡ªå®šä¹‰äº‹ä»¶;
+
+
+
+4. Dojo çš„ Dijit æä¾›äº† `digit.Dialog <http://dojotoolkit.org/reference-guide/dijit/Dialog.html>`_ .
+ * Dialog+DialogUnderlay å…±22K, ä¸åŒ…å«ä¸€äº›ä¾èµ–åº“.
  * new dijit.Dialog(cfg);
- * Ö§³Öresize, ÍÏ×§, ±íµ¥²Ù×÷, ºÍÆäËûÀàËÆ, ²»ÖØ¸´½²ÁË;
- * ½¹µãµÄ´¦Àí;
+ * æ”¯æŒresize, æ‹–æ‹½, è¡¨å•æ“ä½œ, å’Œå…¶ä»–ç±»ä¼¼, ä¸é‡å¤è®²äº†;
+ * ç„¦ç‚¹çš„å¤„ç†;
 
 
 
-¹¦ÄÜµã·ÖÎö
-- Êı¾İ²ã: 
-    * ÄÚÈİµÄ¿É×Ô¶¨ÒåÉèÖÃ:
-        # ¶ÀÁ¢ÉèÖÃ hd, bd, ft Èı²¿·ÖÄÚÈİ;X
+åŠŸèƒ½ç‚¹åˆ†æ
+- æ•°æ®å±‚: 
+    * å†…å®¹çš„å¯è‡ªå®šä¹‰è®¾ç½®:
+        # ç‹¬ç«‹è®¾ç½® hd, bd, ft ä¸‰éƒ¨åˆ†å†…å®¹;X
         # 
-    * ºóÌ¨ÇëÇó¹ıÀ´µÄ¶¯Ì¬Êı¾İ;
-        # ±íµ¥Êı¾İ;
+    * åå°è¯·æ±‚è¿‡æ¥çš„åŠ¨æ€æ•°æ®;
+        # è¡¨å•æ•°æ®;
         # iframe;
         # ajax;
-    * Êı¾İ½âÎö¼°¸ñÊ½»¯:
+    * æ•°æ®è§£æåŠæ ¼å¼åŒ–:
         # json;
         # formator;
-- Õ¹ÏÖ²ã: 
-    * ´óĞ¡:
-        # ÉèÖÃ¿í¶È/¸ß¶È;X
-        # resize;X
-    * Î»ÖÃ:
-        # ¾ø¶ÔÎ»ÖÃ;X
-        # Ïà¶ÔÓÚÔªËØµÄÎ»ÖÃ;X
+- å±•ç°å±‚: 
+    * å¤§å°:
+        # è®¾ç½®å®½åº¦/é«˜åº¦;X
+        # resize;
+    * ä½ç½®:
+        # ç»å¯¹ä½ç½®;X
+        # ç›¸å¯¹äºå…ƒç´ çš„ä½ç½®;X
         # zIndex, shim X, stack;
-    * ¶ÔÆë:
-        # Ïà¶ÔÓÚÔªËØµÄ¶ÔÆë;X
-        # ÔÚÈİÆ÷»ò¿ÉÊÓÇøÓòÄÚµÄ¶ÔÆë;X
-    * ¶¯»­:
-        # Ö÷ÒªÊÇÔÚÏÔÊ¾/Òş²ØOverlayÊ±µÄ¶¯»­Ğ§¹û, Ö±½ÓÀûÓÃkissy/anim, ÀàËÆ switchable µÄ plugin-effect;
+    * å¯¹é½:
+        # ç›¸å¯¹äºå…ƒç´ çš„å¯¹é½;X
+        # åœ¨å®¹å™¨æˆ–å¯è§†åŒºåŸŸå†…çš„å¯¹é½;X
+    * åŠ¨ç”»:
+        # ä¸»è¦æ˜¯åœ¨æ˜¾ç¤º/éšè—Overlayæ—¶çš„åŠ¨ç”»æ•ˆæœ, ç›´æ¥åˆ©ç”¨kissy/anim, ç±»ä¼¼ switchable çš„ plugin-effect;
 
-- ÆäËû:
-    * Ö§³Ö°´Å¥?
+- å…¶ä»–:
+    * æ”¯æŒæŒ‰é’®?
     * Drag + Drop?
 
 
 
-³õ²½Ïë·¨
-1) S.Overlay(²Î¿¼×ÔdsÖĞµÄdialog.js/dialogable.js)
+åˆæ­¥æƒ³æ³•
+1) S.Overlay(å‚è€ƒè‡ªdsä¸­çš„dialog.js/dialogable.js)
 - Constructor, new S.Overlay(cfg)
-    * cfg: ÅäÖÃĞÅÏ¢;
-    * ·µ»Ø Overlay ÊµÀı;
+    * cfg: é…ç½®ä¿¡æ¯; X
+    * è¿”å› Overlay å®ä¾‹; X
 
 - Config
-    * srcNode: ÔªËØ½Úµã, Ä¬ÈÏÎªnull, ĞÂ½¨Ò»¸ö½Úµã;X
+    * srcNode: å…ƒç´ èŠ‚ç‚¹, é»˜è®¤ä¸ºnull, æ–°å»ºä¸€ä¸ªèŠ‚ç‚¹;X
     * head: 'header';X
     * body: 'body';X
     * foot: 'footer';X
-    * url: ²»ÉèÖÃÊ±Îª¾²Ì¬Êı¾İ, ÉèÖÃÊ±ÇëÇóÊı¾İºóÌæ»»body;
+    * url: ä¸è®¾ç½®æ—¶ä¸ºé™æ€æ•°æ®, è®¾ç½®æ—¶è¯·æ±‚æ•°æ®åæ›¿æ¢body;
 
-    * width/height: ¿í¶È/¸ß¶ÈĞÅÏ¢;X
-    * align: {};X
-        # node ´¥·¢ÔªËØ'', Ö¸¶¨ÔªËØisString, ¿ÉÊÓÇøÓònull;
-        # x: l, c, r, or interger
-        # y: t, c, b, or interger
-        # inner: false
-    * mask: ÏÔÊ¾µÍ²ã;X
-    * shim: Õë¶ÔIE6±Ø±¸;X
-    * zIndex: ¶à¸ö²ãÊ±µş·Å´ÎĞò;
-    * scroll: ÊÇ·ñ¹Ì¶¨ÔÚ¿ÉÊÓÇøÓòÖĞ;X
+    * width/height: å®½åº¦/é«˜åº¦ä¿¡æ¯;X
+    * align: {}; X
+        # node è§¦å‘å…ƒç´ '', æŒ‡å®šå…ƒç´ isString, å¯è§†åŒºåŸŸnull; X
+        # x: l, c, r, or interger    X
+        # y: t, c, b, or interger    X
+        # inner: [x, y]              X
+        # offset: [x, y]             X
+    * mask: æ˜¾ç¤ºä½å±‚;                X
+    * shim: é’ˆå¯¹IE6å¿…å¤‡;             X
+    * zIndex: å¤šä¸ªå±‚æ—¶å æ”¾æ¬¡åº;
+    * scroll: æ˜¯å¦å›ºå®šåœ¨å¯è§†åŒºåŸŸä¸­;  X
     
 - Method
-    * setHeader;X
-    * setBody;X
-    * setFooter;X
-    * setPosition;X
-
-    * show;X
-    * hide;X
-    * center;X
+    * setBody;      X
+    * setPosition;  X
+    * setSize;      X
+    
+    * show;         X
+    * hide;         X
+    * center;       X
     * bringToTop;
 
 - Event X
@@ -129,7 +129,22 @@ Overlay µ÷ÑĞ±¨¸æ
 
 2) S.Overlay.Effect
 3) S.Overlay.Request
-4) Dialog/Popup
+4) S.Dialog
+    * setHeader;    X
+    * setBody;      X
+5) S.Popup: å’ŒOverlayä¸€è‡´
+6) S.Mask:  å’ŒOverlayä¸€è‡´
+
+
+
+
+
+
+
+
+
+
+
 
 
 

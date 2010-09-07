@@ -4,7 +4,7 @@
  * @date        2010.08.25
  * @version     1.0
  */
-KISSY.add('popup', function(S) {
+KISSY.add('popup', function(S, undefined) {
 
     var defaultConfig = {
         triggerType: 'mouse',
@@ -34,3 +34,12 @@ KISSY.add('popup', function(S) {
     S.Popup = Popup;
 
 }, { host: 'overlay' } );
+
+/**
+ * NOTES:
+ *  201008
+ *      - 在Overlay基础上扩展Popup
+ *  TODO:
+ *      - 
+ */
+
