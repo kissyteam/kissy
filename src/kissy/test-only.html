@@ -45,24 +45,6 @@
 
     var S = KISSY;
 
-    S.add({
-        '1': {
-            fullpath: 'assets/1.js.php',
-            cssfullpath: 'assets/console.css'
-        },
-        '2': {
-            fullpath: 'assets/2.js.php',
-            requires: ['1', '3']
-        },
-        '3': {
-            fullpath: 'assets/3.js.php'
-        }
-    });
-
-        S.use('1,2,3', function() {
-            S.log('1,2,3 is used.', 'gray');
-        }, { order: true });
-
 </script>
 
 </body>
