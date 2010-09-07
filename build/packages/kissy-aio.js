@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 31 11:19
+build time: Sep 7 13:37
 */
 /**
  * @module kissy
@@ -955,6 +955,7 @@ build time: Aug 31 11:19
             if (S.isPlainObject(name)) {
                 S.each(name, function(v, k) {
                     v.name = k;
+                    if(mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
                 });
                 mix(mods, name);
             }
@@ -1095,7 +1096,7 @@ build time: Aug 31 11:19
                     fn && fn(self);
                 });
                 mod.fns = undefined; // 保证 attach 过的方法只执行一次
-                S.log(mod.name + '.status = attached');
+                //S.log(mod.name + '.status = attached');
             }
 
             mod.status = ATTACHED;
@@ -1138,7 +1139,7 @@ build time: Aug 31 11:19
 
                 ret = self.getScript(url, {
                     success: function() {
-                        KISSY.log(mod.name + ' onload fired.', 'info'); // 压缩时不过滤该句，以方便线上调试
+                        KISSY.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
                         _success();
                     },
                     error: function() {
@@ -1529,7 +1530,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 7 13:35
 */
 /**
  * @module  dom
@@ -2571,14 +2572,20 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                 },
 
                 set: function(elem, val) {
-                    var style = elem.style;
+                    var style = elem.style, currentFilter = elem.currentStyle.filter;
 
                     // IE has trouble with opacity if it does not have layout
                     // Force it by setting the zoom level
                     style.zoom = 1;
 
+                    // keep existed filters, and remove opacity filter
+                    if(currentFilter) {
+                        currentFilter = currentFilter.replace(/alpha\(opacity=.+\)/ig, '');
+                        if(currentFilter) currentFilter += ', ';
+                    }
+
                     // Set the alpha filter to set the opacity
-                    style[FILTER] = 'alpha(' + OPACITY + '=' + val * 100 + ')';
+                    style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
                 }
             };
         }
@@ -3298,7 +3305,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 7 10:47
 */
 /**
  * @module  event
@@ -3412,14 +3419,14 @@ KISSY.add('event', function(S, undefined) {
 
             var id = getID(target),
                 events, eventsType, listeners,
-                i, j, len, c, t;
+                i, j, len, c, t, special;
 
             if (id === -1) return; // 不是有效的 target
             if (!id || !(c = cache[id])) return; // 无 cache
             if (c.target !== target) return; // target 不匹配
             scope = scope || target;
             events = c.events || { };
-
+            
             if ((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
@@ -3439,8 +3446,10 @@ KISSY.add('event', function(S, undefined) {
                 // remove(el, type) or fn 已移除光
                 if (fn === undefined || len === 0) {
                     if (!target.isCustomEventTarget) {
-                        simpleRemove(target, type, eventsType.handle);
-                    } else if (target._addEvent) { // such as Node
+                        special = Event.special[type] || { };
+                        simpleRemove(target, special.fix || type, eventsType.handle);
+                    }
+                    else if (target._addEvent) { // such as Node
                         target._removeEvent(type, eventsType.handle);
                     }
                     delete events[type];
@@ -3777,7 +3786,7 @@ KISSY.add('event-target', function(S, undefined) {
  * NOTES:
  *
  *  2010.04
- *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 是不需要
+ *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 不是必须
  *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
  *
  *   - detach 命名是因为 removeEventListener 太长，remove 则太容易冲突
@@ -7061,7 +7070,7 @@ KISSY.add('flash-embed', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:49
+build time: Sep 7 10:10
 */
 /**
  * Switchable
@@ -7073,7 +7082,6 @@ KISSY.add('switchable', function(S, undefined) {
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
-        EVENT_BEFORE_INIT = 'beforeInit', EVENT_INIT = 'init',
         EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
         CLS_PREFIX = 'ks-switchable-';
 
@@ -7172,8 +7180,9 @@ KISSY.add('switchable', function(S, undefined) {
         // 触发延迟
         delay: .1, // 100ms
 
-        activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
+        activeIndex: 0, // markup 的默认激活项应与 activeIndex 保持一致
         activeTriggerCls: 'ks-active',
+        //switchTo: 0,
 
         // 可见视图内有多少个 panels
         steps: 1,
@@ -7193,11 +7202,13 @@ KISSY.add('switchable', function(S, undefined) {
         _init: function() {
             var self = this, cfg = self.config;
 
-            // fire event
-            if(self.fire(EVENT_BEFORE_INIT) === false) return;
-
             // parse markup
             self._parseMarkup();
+
+            // 切换到指定项
+            if(cfg.switchTo) {
+                self.switchTo(cfg.switchTo);
+            }
 
             // bind triggers
             if (cfg.hasTriggers) {
@@ -7210,8 +7221,6 @@ KISSY.add('switchable', function(S, undefined) {
                     plugin.init(self);
                 }
             });
-            
-            self.fire(EVENT_INIT);
         },
 
         /**
@@ -7311,7 +7320,7 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onFocusTrigger: function(index) {
             var self = this;
-            if (!self._triggerIsValid()) return; // 重复点击
+            if (!self._triggerIsValid(index)) return; // 重复点击
 
             this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
             self.switchTo(index);
@@ -7322,7 +7331,7 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onMouseEnterTrigger: function(index) {
             var self = this;
-            if (!self._triggerIsValid()) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
+            if (!self._triggerIsValid(index)) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
 
             self.switchTimer = S.later(function() {
                 self.switchTo(index);
@@ -7364,7 +7373,7 @@ KISSY.add('switchable', function(S, undefined) {
                 steps = cfg.steps,
                 fromIndex = activeIndex * steps, toIndex = index * steps;
 
-            if (!self._triggerIsValid()) return self; // 再次避免重复触发
+            if (!self._triggerIsValid(index)) return self; // 再次避免重复触发
             if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
 
             // switch active trigger

@@ -198,7 +198,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 7 13:35
 */
 /**
  * @module  dom
@@ -1240,14 +1240,20 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                 },
 
                 set: function(elem, val) {
-                    var style = elem.style;
+                    var style = elem.style, currentFilter = elem.currentStyle.filter;
 
                     // IE has trouble with opacity if it does not have layout
                     // Force it by setting the zoom level
                     style.zoom = 1;
 
+                    // keep existed filters, and remove opacity filter
+                    if(currentFilter) {
+                        currentFilter = currentFilter.replace(/alpha\(opacity=.+\)/ig, '');
+                        if(currentFilter) currentFilter += ', ';
+                    }
+
                     // Set the alpha filter to set the opacity
-                    style[FILTER] = 'alpha(' + OPACITY + '=' + val * 100 + ')';
+                    style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
                 }
             };
         }
@@ -1967,7 +1973,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 7 10:47
 */
 /**
  * @module  event
@@ -2081,14 +2087,14 @@ KISSY.add('event', function(S, undefined) {
 
             var id = getID(target),
                 events, eventsType, listeners,
-                i, j, len, c, t;
+                i, j, len, c, t, special;
 
             if (id === -1) return; // 不是有效的 target
             if (!id || !(c = cache[id])) return; // 无 cache
             if (c.target !== target) return; // target 不匹配
             scope = scope || target;
             events = c.events || { };
-
+            
             if ((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
@@ -2108,8 +2114,10 @@ KISSY.add('event', function(S, undefined) {
                 // remove(el, type) or fn 已移除光
                 if (fn === undefined || len === 0) {
                     if (!target.isCustomEventTarget) {
-                        simpleRemove(target, type, eventsType.handle);
-                    } else if (target._addEvent) { // such as Node
+                        special = Event.special[type] || { };
+                        simpleRemove(target, special.fix || type, eventsType.handle);
+                    }
+                    else if (target._addEvent) { // such as Node
                         target._removeEvent(type, eventsType.handle);
                     }
                     delete events[type];
@@ -2446,7 +2454,7 @@ KISSY.add('event-target', function(S, undefined) {
  * NOTES:
  *
  *  2010.04
- *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 是不需要
+ *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 不是必须
  *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
  *
  *   - detach 命名是因为 removeEventListener 太长，remove 则太容易冲突
