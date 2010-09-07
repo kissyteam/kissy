@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 7 13:37
+build time: Sep 7 14:11
 */
 /**
  * @module kissy
@@ -468,14 +468,14 @@ build time: Sep 7 13:37
          * Determines whether or not the provided object is a boolean.
          */
         isBoolean: function(o) {
-            return typeof o === 'boolean';
+            return toString.call(o) === '[object Boolean]';
         },
 
         /**
          * Determines whether or not the provided object is a string.
          */
         isString: function(o) {
-            return typeof o === 'string';
+            return toString.call(o) === '[object String]';
         },
 
         /**
@@ -483,7 +483,7 @@ build time: Sep 7 13:37
          * NOTICE: Infinity and NaN return false.
          */
         isNumber: function(o) {
-            return typeof o === 'number' && isFinite(o);
+            return toString.call(o) === '[object Number]' && isFinite(o);
         },
 
         /**

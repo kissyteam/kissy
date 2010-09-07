@@ -30,14 +30,14 @@
          * Determines whether or not the provided object is a boolean.
          */
         isBoolean: function(o) {
-            return typeof o === 'boolean';
+            return toString.call(o) === '[object Boolean]';
         },
 
         /**
          * Determines whether or not the provided object is a string.
          */
         isString: function(o) {
-            return typeof o === 'string';
+            return toString.call(o) === '[object String]';
         },
 
         /**
@@ -45,7 +45,7 @@
          * NOTICE: Infinity and NaN return false.
          */
         isNumber: function(o) {
-            return typeof o === 'number' && isFinite(o);
+            return toString.call(o) === '[object Number]' && isFinite(o);
         },
 
         /**
