@@ -107,8 +107,9 @@ KISSY.add('switchable', function(S, undefined) {
         // 触发延迟
         delay: .1, // 100ms
 
-        activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
+        activeIndex: 0, // markup 的默认激活项应与 activeIndex 保持一致
         activeTriggerCls: 'ks-active',
+        //switchTo: 0,
 
         // 可见视图内有多少个 panels
         steps: 1,
@@ -133,6 +134,11 @@ KISSY.add('switchable', function(S, undefined) {
 
             // parse markup
             self._parseMarkup();
+
+            // 切换到指定项
+            if(cfg.switchTo) {
+                self.switchTo(cfg.switchTo);
+            }
 
             // bind triggers
             if (cfg.hasTriggers) {
