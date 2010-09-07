@@ -1,7 +1,7 @@
 /**
  * Mask 
  *
- * @creator     乔花<qiaohua@taobao.com>
+ * @creator     涔旇姳<qiaohua@taobao.com>
  * @date        2010.08.25
  * @version     1.0
  */
@@ -13,16 +13,16 @@ KISSY.add('mask', function(S, undefined) {
         KS_OVERLAY_MASK_CLS = CLS_PREFIX+'mask',
         
         /**
-         * 默认设置
+         * 榛樿璁剧疆
          */
         defaultConfig = {
-            // 样式
+            // 鏍峰紡
             containerCls: KS_OVERLAY_MASK_CLS,
             mask: false
         };
     
     /*
-     * DOM 结构
+     * DOM 缁撴瀯
      * <body>
      *  <div class="{{KS_OVERLAY_MASK_CLS}}">...</div>
      *  <div class="{{KS_OVERLAY_MASK_IFM_CLS}}"></div>
@@ -31,7 +31,7 @@ KISSY.add('mask', function(S, undefined) {
     
     /**
      * Mask 
-     * 只有页面上需要覆盖层时才生成
+     * 鍙湁椤甸潰涓婇渶瑕佽鐩栧眰鏃舵墠鐢熸垚
      */
     function Mask(cfg){
         var self = this;

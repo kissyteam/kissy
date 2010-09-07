@@ -292,7 +292,7 @@ KISSY.add('overlay', function(S, undefined) {
             var self = this,
                 oft = {
                     left: (DOM.viewportWidth() - DOM.width(self.overlay)) / 2,
-                    top: (DOM.viewportHeight() - DOM.width(self.overlay)) / 2
+                    top: (DOM.viewportHeight() - DOM.height(self.overlay)) / 2
                 };
             //if (oft.left<0) oft.left = 0;
             //if (oft.top<0) oft.top = 0;
