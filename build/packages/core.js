@@ -198,7 +198,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 7 13:35
+build time: Sep 7 14:43
 */
 /**
  * @module  dom
@@ -1240,7 +1240,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                 },
 
                 set: function(elem, val) {
-                    var style = elem.style, currentFilter = elem.currentStyle.filter;
+                    var style = elem.style, currentFilter = (elem.currentStyle || 0).filter;
 
                     // IE has trouble with opacity if it does not have layout
                     // Force it by setting the zoom level

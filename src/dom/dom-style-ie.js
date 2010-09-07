@@ -47,7 +47,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                 },
 
                 set: function(elem, val) {
-                    var style = elem.style, currentFilter = elem.currentStyle.filter;
+                    var style = elem.style, currentFilter = (elem.currentStyle || 0).filter;
 
                     // IE has trouble with opacity if it does not have layout
                     // Force it by setting the zoom level
