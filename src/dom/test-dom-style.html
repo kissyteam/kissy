@@ -36,9 +36,17 @@
             width: 80%;
             height: 20px;
         }
+
+        .shadow {
+            background-color: #fff;
+            -moz-box-shadow: rgba(0, 0, 0, 0.2) 2px 3px 3px;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.2) 2px 3px 3px;
+            filter: progid:DXImageTransform.Microsoft.Shadow(direction = 155, Color = #dadada, Strength = 3), progid:DXImageTransform.Microsoft.DropShadow(Color = #22aaaaaa, OffX = -2, OffY = -2);
+        }
     </style>
     <div id="test2"></div>
     <img id="test-img" src="../../docs/assets/logo.png" alt="kissy" />
+    <div id="test-filter" class="shadow" style="height: 80px; width: 120px; border:1px solid #ccc;"></div>
     <table id="test-table" cellspacing="10">
         <tbody>
         <tr>
@@ -81,10 +89,10 @@
         if(DOM.css(elem, 'padding-left') !== '2pt') test.fail();
         if(DOM.css(elem, 'padding-right') !== '0px') test.fail();
 
-        if(DOM.css(elem, 'opacity') !== '1') test.fail();
+        if(DOM.css(elem, 'opacity') !== '1') test.fail('opacity');
 
         // 当返回 auto 时，要将 auto 转换为 pixel
-        if(DOM.css('#test-div', 'height') != '0px') test.fail();
+        if(DOM.css('#test-div', 'height') != '0px') test.fail('auto height');
 
 
         // setter
@@ -101,7 +109,7 @@
         if(DOM.css(elem, 'font-size') !== '12px') test.fail();
 
         DOM.css(elem, 'opacity', '0.2');
-        if(DOM.css(elem, 'opacity') !== '0.2') test.fail();
+        if(DOM.css(elem, 'opacity') !== '0.2') test.fail('opacity 0.2');
 
         DOM.css(elem, 'border', '2px dashed red');
         if(DOM.css(elem, 'borderWidth') !== '2px') test.fail();
@@ -111,7 +119,12 @@
             opacity: '0.8',
             border: '2px solid #ccc'
         });
-        if(DOM.css(elem, 'opacity') !== '0.8') test.fail();
+        if(DOM.css(elem, 'opacity') !== '0.8') test.fail('opacity 0.8');
+
+        // test filter  #issue5
+        //jQuery('#test-filter').css('opacity', .5);
+        DOM.css('#test-filter', 'opacity', .5);
+        S.log(S.get('#test-filter').style.filter);
     }
 
     function test_width(test) {
