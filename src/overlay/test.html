@@ -166,22 +166,22 @@
 
 
 
-        //S.each(['tl', 'tc', 'tr', 'cl', 'cc', 'cr', 'bl', 'bc', 'br'], function(x) {
-        //    S.each(['tl', 'tc', 'tr', 'cl', 'cc', 'cr', 'bl', 'bc', 'br'], function(y) {
-                
+        S.each(['tl', 'tc', 'tr', 'cl', 'cc', 'cr', 'bl', 'bc', 'br'], function(x) {
+            S.each(['tl', 'tc', 'tr', 'cl', 'cc', 'cr', 'bl', 'bc', 'br'], function(y) {
+
                 var ol = new S.Overlay({
-                    trigger: '#J_inner', 
+                    trigger: '#J_inner',
                     bdContent: 'test',
-                    width: 100, 
-                    height: 100, 
-                    mask: false, 
+                    width: 100,
+                    height: 100,
+                    mask: false,
                     align: {
-                        node:'trigger', 
-                        points: ['cc', 'cc']
+                        //node:'trigger',
+                        points: [x, y]
                     }
                 });
-        //    });
-        //});
+            });
+        });
         
     });
 </script>

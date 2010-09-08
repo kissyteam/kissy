@@ -6,7 +6,9 @@
  * @version     1.0
  */
 
-KISSY.add('mask', function(S, undefined) {
+KISSY.add('mask', function(S) {
+
+
     var DOM = S.DOM,
         Event = S.Event,
         CLS_PREFIX = 'ks-overlay-',
