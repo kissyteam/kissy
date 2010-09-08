@@ -1,10 +1,8 @@
 /**
- * Dialog
+ * KISSY.Dialog
  * @creator     乔花<qiaohua@taobao.com>
- * @date        2010.08.25
- * @version     1.0
  */
-KISSY.add('dialog', function(S, undefined) {
+KISSY.add('dialog', function(S) {
 
     var DOM = S.DOM,
         Event = S.Event,
@@ -12,35 +10,35 @@ KISSY.add('dialog', function(S, undefined) {
         DOT = '.',
         DIV = '<div>',
         CLS_PREFIX = 'ks-dialog-',
-        CLOSE_CLS = CLS_PREFIX+'close',
-        HEAD_CLS = CLS_PREFIX+'hd',
-        FOOT_CLS = CLS_PREFIX+'fd',
+        CLS_CLOSE = CLS_PREFIX + 'close',
+        CLS_HEAD = CLS_PREFIX + 'hd',
+        CLS_FOOT = CLS_PREFIX + 'fd',
 
         /**
          * Dialog 默认配置: 含有head, ft 包含关闭按钮, 在可视区域居中对齐, 显示背景层, 固定滚动
          */
         defaultConfig = {
-            hdContent: 'header',                  // 头部内容, 为空时, 表示不需要这部分
-            bdContent: '正在加载...',
+            hdContent: '',                  // 头部内容, 为空时, 表示不需要这部分
+            bdContent: '',
             ftContent: '',                  // 尾部, 为空时, 表示不需要这部分
 
             width: 400,
             height: 300,
-            close: true,            // 显示关闭按钮
-            closeCls: CLOSE_CLS,
-            hdCls: HEAD_CLS,
-            ftCls: FOOT_CLS
+
+            closable: true,            // 显示关闭按钮
+            closeBtnCls: CLS_CLOSE,
+
+            hdCls: CLS_HEAD,
+            ftCls: CLS_FOOT
         };
 
     /*
      * DOM
-     * <body>
      *  <div class="{{KS_OVERLAY_CLS}}">
      *      <div class="{{HEAD_CLS}}"></div>
-     *      <div class="{{BODYY_CLS}}"></div>
+     *      <div class="{{BODY_CLS}}"></div>
      *      <div class="{{FOOT_CLS}}"></div>
      *  </div>
-     * </body>
      */
 
     /**
@@ -60,33 +58,27 @@ KISSY.add('dialog', function(S, undefined) {
         Dialog.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
     }
 
-    S.extend(Dialog, S.Overlay);
+    S.extend(Dialog, Overlay);
     S.Dialog = Dialog;
 
     S.augment(Dialog, S.EventTarget, {
-        _prepareMarkup: function(){
+
+        _prepareMarkup: function() {
             var self = this,
                 config = self.config;
 
             Dialog.superclass._prepareMarkup.call(self);
 
-            self.head = S.get(DOT+config.hdCls, self.container);
-            self.foot = S.get(DOT+config.ftCls, self.container);
+            self.head = S.get(DOT + config.hdCls, self.container);
+            self.foot = S.get(DOT + config.ftCls, self.container);
 
-            if (config.hdContent||config.close) {
+            if (config.hdContent || config.close) {
                 if (!self.head) {
                     self.head = DOM.create(DIV, { 'class': config.hdCls });
                     DOM.insertBefore(self.head, self.body);
                 }
                 self.setHdContent(config.hdContent);
-
-                var close = DOM.create(DIV, { 'class': config.closeCls });
-                if (config.close) self.head.appendChild(close);
-
-                Event.on(close, 'click', function(e) {
-                    e.halt();
-                    self.hide();
-                });
+                if(config.closable) self._initClose();
             }
 
             if (config.ftContent) {
@@ -94,8 +86,22 @@ KISSY.add('dialog', function(S, undefined) {
                     self.foot = DOM.create(DIV, { 'class': config.ftCls });
                     self.container.appendChild(self.foot);
                 }
-                self.setFdContent(config.ftContent);
+                self.setFtContent(config.ftContent);
             }
+        },
+
+        _initClose: function() {
+            var self = this, config = self.config,
+                elem = DOM.create(DIV, { 'class': config.closeBtnCls });
+
+            DOM.html(elem, 'close');
+            
+            Event.on(elem, 'click', function(e) {
+                e.halt();
+                self.hide();
+            });
+
+            self.head.appendChild(elem);
         },
 
         setHdContent: function(head) {
@@ -106,14 +112,6 @@ KISSY.add('dialog', function(S, undefined) {
             DOM.html(this.foot, foot);
         }
     });
-}, { host: 'overlay' } );
 
-
-/**
- * NOTES:
- *  201008
- *      - 在Overlay基础上扩展Dialog
- *  TODO:
- *      -
- */
+}, { host: 'overlay' });
 

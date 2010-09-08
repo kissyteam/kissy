@@ -13,7 +13,6 @@ KISSY.add('overlay', function(S, undefined) {
         CLS_PREFIX = 'ks-overlay-',
         CLS_CONTAINER = CLS_PREFIX + 'container',
         CLS_BODY = CLS_PREFIX + 'bd',
-        CLS_SHIM = CLS_PREFIX + 'shim',
 
         POSITION_ALIGN = {
             TL: 'tl',
@@ -41,7 +40,6 @@ KISSY.add('overlay', function(S, undefined) {
              *  <div class="ks-overlay-container">
              *      <div class="ks-overlay-bd"></div>
              *  </div>
-             *  <div class="ks-overlay-shim"></div>
              */
             container: null,
             containerCls: CLS_CONTAINER,
@@ -99,12 +97,19 @@ KISSY.add('overlay', function(S, undefined) {
         self.config = S.merge(defaultConfig, config);
 
         self._init();
-
     }
 
     S.augment(Overlay, S.EventTarget, {
 
         _init: function() {
+
+            // 共用 css
+            if(!S.get('#ks-overlay-style')) {
+                DOM.addStyleSheet(
+                    '.ks-overlay-container{position:absolute;z-index:9999}',
+                    'ks-overlay-style');
+            }
+
             if (this.trigger) {
                 this._bindTrigger();
             }
@@ -166,7 +171,8 @@ KISSY.add('overlay', function(S, undefined) {
         _toggle: function(isVisible) {
             var self = this;
 
-            DOM.toggleClass([self.container, self.shim], CLS_HIDDEN);
+            DOM.toggleClass(self.container, CLS_HIDDEN);
+            if(self.shim) self.shim.toggle();
             if (self.config.mask) mask[isVisible ? 'hide' : 'show']();
             self[isVisible ? '_unbindUI' : '_bindUI']();
             self.fire(isVisible ? EVT_HIDE : EVT_SHOW);
@@ -183,7 +189,9 @@ KISSY.add('overlay', function(S, undefined) {
             if (config.mask && !mask) {
                 mask = new S.Mask();
             }
-            if (config.shim) self._shim();
+            if (config.shim) {
+                self.shim = new S.Mask({ shim: true });
+            }
 
             // 已有 Markup
             if (self.container) {
@@ -193,21 +201,12 @@ KISSY.add('overlay', function(S, undefined) {
             else {
                 self.container = DOM.create(S.substitute(TMPL, config));
                 self.body = DOM.children(self.container)[0];
-                DOM.html(self.body, self.config.bdContent);
                 doc.body.appendChild(self.container);
-                
             }
 
+            DOM.html(self.body, config.bdContent);
             self._setSize();
             self._setPosition();
-        },
-
-        _shim: function() {
-            var self = this, ifr;
-
-            ifr = DOM.create('<iframe>', { 'class': CLS_SHIM });
-            doc.body.appendChild(ifr);
-            self.shim = ifr;
         },
 
         _setSize: function(w, h) {
@@ -219,10 +218,7 @@ KISSY.add('overlay', function(S, undefined) {
 
             if (w) DOM.width(self.container, w);
             if (h) DOM.height(self.container, h);
-            if (self.shim) {
-                DOM.width(self.shim, w);
-                DOM.height(self.shim, h);
-            }
+            if (self.shim) self.shim.setSize(w, h);
         },
 
         _setPosition: function() {
@@ -236,14 +232,16 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         move: function(x, y) {
-            var self = this;
+            var self = this, offset;
 
             if (S.isArray(x)) {
                 y = x[1];
                 x = x[0];
             }
+            offset = { left: x, top: y };
 
-            DOM.offset([self.container, self.shim], { left: x, top: y });
+            DOM.offset(self.container, offset);
+            if(self.shim) self.shim.setOffset(offset);
         },
 
         align: function(node, points, offset) {

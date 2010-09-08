@@ -56,14 +56,14 @@
 
 <script src="../../build/kissy.js"></script>
 <script src="overlay.js"></script>
+<script src="mask.js"></script>
 <script src="dialog.js"></script>
 <script src="popup.js"></script>
-<!--<script src="mask.js"></script>-->
 </head>
 
 <body>
 
-<div id="test1" class="ks-overlay-container ks-invisible">
+<div id="test1" class="ks-overlay-container ks-invisible" style="background:white;border: 1px solid #666">
     <div class="ks-overlay-bd">Overlay Body</div>
 </div>
 
@@ -118,6 +118,8 @@
         
         new S.Dialog('#test1', {
             trigger: '#J_show',
+            mask: true,
+            bdContent: 'test1'
         });
         
         new S.Popup('#popup2', {
