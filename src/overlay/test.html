@@ -63,35 +63,11 @@
 
 <body>
 
-<div id="test1" class="ks-overlay-container">
+<div id="test1" class="ks-overlay-container ks-hidden">
     <div class="ks-overlay-bd">Overlay Body</div>
 </div>
 
-<script>
-    var S = KISSY;
 
-    var lay1 = new S.Overlay('#test1', {
-        align: {
-            node: 'trigger',
-            points: ['tl', 'br']
-        }
-    });
-
-
-    var lay2 = new S.Overlay({
-        bodyContent: 'content',
-        headerContent: 'xxxxx'
-    });
-
-    var lay3 = new S.Overlay({
-        container: '#test1',
-        width: 23
-    });
-
-    lay3.setSize()
-
-  
-</script>
 
 
 <div class="test">
@@ -99,6 +75,22 @@
     <button id="J_show">show</button>
     <button id="J_show2">show2</button>
 </div>
+
+<script>
+    var S = KISSY;
+
+    var lay1 = new S.Overlay({
+        trigger: '#J_show',
+        bdContent: 'test',
+        width: 100,
+        height: 100,
+        align: {
+            node: 'trigger',
+            points: ['cc', 'cc']
+        }
+    });
+
+</script>
 
 <div class="test">
     <h2>Popup+align</h2>
@@ -139,12 +131,6 @@
     </div>
 </div>
 
-<!--<div class="test" style="margin: 250px auto; text-align: center;">
-        <h2>Position, 相对于容器外部</h2>
-        <button id="J_outer" style="height: 100px; width: 100px;">Click</button>
-    </div>  -->
-
-
 <div class="test" style="margin: 250px auto; text-align: center;">
     <h2>Position</h2>
     <div id="J_inner" style="height: 500px; width: 500px; cursor:pointer; background-color: #FEEFD7;margin:0 auto;">Click Me</div>
@@ -152,7 +138,6 @@
 
 <script>
     KISSY.ready(function(S) {
-
 //        new S.Dialog('#J_show', {head: '标题'});
 //        new S.Dialog('#J_show2', {head: '标题2'});
 //
@@ -180,26 +165,24 @@
 //        });
 
 
-        /*S.each(['r', 'c', 'l'], function(ll) {
-         S.each(['t', 'c', 'b'], function(tt) {
-         var ol = new S.Dialog('#J_outer', {width: 50, height: 50, mask: false, align: {node:'', x: ll, y: tt}, scroll: false});
-         ol.on('afterFirstRender', function(){
-         this.setBody(tt+','+ll);
-         });
-         });
-         });*/
-//        S.each([true, false], function(inn_x) {
-//            S.each([true, false], function(inn_y) {
-//                S.each(['r', 'c', 'l'], function(ll) {
-//                    S.each(['t', 'c', 'b'], function(tt) {
-//                        var ol = new S.Dialog('#J_inner', {width: 100, height: 100, mask: false, align: {node:'', x: ll, y: tt, inner: [inn_x, inn_y]}, scroll: false, close: false});
-//                        ol.on('afterFirstRender', function() {
-//                            this.setBody(tt + ',' + ll + ',' + inn_x + ',' + inn_y);
-//                        });
-//                    });
-//                });
-//            });
-//        });
+
+        //S.each(['tl', 'tc', 'tr', 'cl', 'cc', 'cr', 'bl', 'bc', 'br'], function(x) {
+        //    S.each(['tl', 'tc', 'tr', 'cl', 'cc', 'cr', 'bl', 'bc', 'br'], function(y) {
+                
+                var ol = new S.Overlay({
+                    trigger: '#J_inner', 
+                    bdContent: 'test',
+                    width: 100, 
+                    height: 100, 
+                    mask: false, 
+                    align: {
+                        node:'trigger', 
+                        points: ['cc', 'cc']
+                    }
+                });
+        //    });
+        //});
+        
     });
 </script>
 </body>
