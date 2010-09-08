@@ -11,127 +11,99 @@ KISSY.add('dialog', function(S, undefined) {
         Overlay = S.Overlay,
         DOT = '.',
         DIV = '<div>',
-        KS_CLEAR_CLS = 'ks-clear',
         CLS_PREFIX = 'ks-dialog-',
-        KS_OVERLAY_CLOSE = CLS_PREFIX+'close',
-        KS_OVERLAY_HEAD_CLS = CLS_PREFIX+'hd',
-        KS_OVERLAY_FOOT_CLS = CLS_PREFIX+'fd',
-        
-        /**
-         * 自定义事件列表
-         */
-        EVENTS_CHANGE_HEADER    = "changeHeader",     // 修改hd
-        EVENTS_CHANGE_FOOTER    = "changeFooter",     // 修改ft
-        
+        CLOSE_CLS = CLS_PREFIX+'close',
+        HEAD_CLS = CLS_PREFIX+'hd',
+        FOOT_CLS = CLS_PREFIX+'fd',
+
         /**
          * Dialog 默认配置: 含有head, ft 包含关闭按钮, 在可视区域居中对齐, 显示背景层, 固定滚动
          */
         defaultConfig = {
-            head: '',         // 头部内容, 为空时, 表示不需要这部分
-            body: '正在加载...', 
-            foot: '',               // 尾部, 为空时, 表示不需要这部分
-            
+            hdContent: 'header',                  // 头部内容, 为空时, 表示不需要这部分
+            bdContent: '正在加载...',
+            ftContent: '',                  // 尾部, 为空时, 表示不需要这部分
+
             width: 400,
             height: 300,
             close: true,            // 显示关闭按钮
-            closeCls: KS_OVERLAY_CLOSE,
-            hdCls: KS_OVERLAY_HEAD_CLS,
-            ftCls: KS_OVERLAY_FOOT_CLS,
-            //align: {
-            //    inner: true 
-            //},
-            mask: true,
-            scroll: true
+            closeCls: CLOSE_CLS,
+            hdCls: HEAD_CLS,
+            ftCls: FOOT_CLS
         };
-    
+
     /*
-     * DOM 
+     * DOM
      * <body>
      *  <div class="{{KS_OVERLAY_CLS}}">
-     *      <div class="{{KS_OVERLAY_HEAD_CLS}}"></div>
-     *      <div class="{{KS_OVERLAY_BODY_CLS}}"></div>
-     *      <div class="{{KS_OVERLAY_FOOT_CLS}}"></div>
+     *      <div class="{{HEAD_CLS}}"></div>
+     *      <div class="{{BODYY_CLS}}"></div>
+     *      <div class="{{FOOT_CLS}}"></div>
      *  </div>
      * </body>
      */
-    
+
     /**
      * Dialog Class
      * @constructor
+     * attached members：
+     *  - this.head
+     *  - this.foot
      */
-    function Dialog(trigger, cfg) {
+    function Dialog(container, config) {
         var self = this;
 
         // factory or constructor
         if (!(self instanceof Dialog)) {
-            return new Dialog(trigger, cfg);
+            return new Dialog(container, config);
         }
-        Dialog.superclass.constructor.call(self, trigger, S.merge(defaultConfig, cfg));
+        Dialog.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
     }
-    
+
     S.extend(Dialog, S.Overlay);
     S.Dialog = Dialog;
-    
+
     S.augment(Dialog, S.EventTarget, {
-        /**
-         *
-         */
-        _preShow: function(){
+        _prepareMarkup: function(){
             var self = this,
-                cfg = self.config;
-            
-            Dialog.superclass._preShow.call(self);
-            
-            self.head = DOM.get(DOT+cfg.hdCls, self.overlay);
-            self.foot = DOM.get(DOT+cfg.ftCls, self.overlay);
-            
-            if (cfg.head||cfg.close) {
+                config = self.config;
+
+            Dialog.superclass._prepareMarkup.call(self);
+
+            self.head = S.get(DOT+config.hdCls, self.container);
+            self.foot = S.get(DOT+config.ftCls, self.container);
+
+            if (config.hdContent||config.close) {
                 if (!self.head) {
-                    self.head = DOM.create(DIV, { 'class': cfg.hdCls });
+                    self.head = DOM.create(DIV, { 'class': config.hdCls });
+                    DOM.insertBefore(self.head, self.body);
                 }
-                DOM.insertBefore(self.head, self.body);
-                
-                if (cfg.head) self.setHeader(cfg.head);
-                if (cfg.close) self.head.appendChild(DOM.create(DIV, { 'class': cfg.closeCls }));
+                self.setHdContent(config.hdContent);
+
+                var close = DOM.create(DIV, { 'class': config.closeCls });
+                if (config.close) self.head.appendChild(close);
+
+                Event.on(close, 'click', function(e) {
+                    e.halt();
+                    self.hide();
+                });
             }
-            
-            if (cfg.foot) {
+
+            if (config.ftContent) {
                 if (!self.foot) {
-                    self.foot = DOM.create(DIV, { 'class': cfg.ftCls });
+                    self.foot = DOM.create(DIV, { 'class': config.ftCls });
+                    self.container.appendChild(self.foot);
                 }
-                self.overlay.appendChild(self.foot);
-            }
-            
-            Event.on(self.overlay, 'click', function(e) {
-                var t = e.target;
-            
-                switch (true) {
-                    case DOM.hasClass(t, cfg.closeCls):
-                        e.halt();
-                        self.hide();
-                        break;
-                }
-            });
-        },
-        
-        /*
-         * 
-         */ 
-        setHeader: function(content) {
-            if (this.head) {
-                DOM.html(this.head, content);
-                this.fire(EVENTS_CHANGE_HEADER);
+                self.setFdContent(config.ftContent);
             }
         },
-        
-        /*
-         * 
-         */ 
-        setFooter: function(content) {
-            if (this.foot) {
-                DOM.html(this.foot, content);
-                this.fire(EVENTS_CHANGE_FOOTER);
-            }
+
+        setHdContent: function(head) {
+            DOM.html(this.head, head);
+        },
+
+        setFtContent: function(foot) {
+            DOM.html(this.foot, foot);
         }
     });
 }, { host: 'overlay' } );
@@ -142,6 +114,6 @@ KISSY.add('dialog', function(S, undefined) {
  *  201008
  *      - 在Overlay基础上扩展Dialog
  *  TODO:
- *      - 
+ *      -
  */
 

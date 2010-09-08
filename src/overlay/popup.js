@@ -4,15 +4,12 @@
  * @date        2010.08.25
  * @version     1.0
  */
-KISSY.add('popup', function(S, undefined) {
+KISSY.add('popup', function(S) {
 
     var defaultConfig = {
-        triggerType: 'mouse',
         align: {
-            node: '', 
-            x: 'r', 
-            y: 'c', 
-            inner: false, 
+            node: 'trigger',
+            points: ['cr', 'ct'],
             offset: 10
         }
     };
@@ -21,13 +18,13 @@ KISSY.add('popup', function(S, undefined) {
      * Popup Class
      * @constructor
      */
-    function Popup(trigger, cfg) {
+    function Popup(container, config) {
         var self = this;
 
         if (!(self instanceof Popup)) {
-            return new Popup(trigger, cfg);
+            return new Popup(container, config);
         }
-        Popup.superclass.constructor.call(self, trigger, S.merge(defaultConfig, cfg));
+        Popup.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
     }
 
     S.extend(Popup, S.Overlay);
@@ -40,6 +37,7 @@ KISSY.add('popup', function(S, undefined) {
  *  201008
  *      - 在Overlay基础上扩展Popup
  *  TODO:
- *      - 
+ *      -
  */
+
 
