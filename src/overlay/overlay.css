@@ -32,7 +32,7 @@
 .ks-overlay-fixed {
     position: fixed;
 }
-.ks-overlay-iframe {
+.ks-overlay-shim {
     position: absolute;
     left: -9999px;
     top: -9999px;
@@ -43,7 +43,7 @@
 }
 
 
-.ks-overlay-mask-iframe {
+.ks-overlay-mask-shim {
     position: absolute;
     left: -9999px;
     top: -9999px;
