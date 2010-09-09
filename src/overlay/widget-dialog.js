@@ -34,20 +34,19 @@ KISSY.add('dialog', function(S) {
      *  - this.footer
      */
     function Dialog(container, config) {
-        var self = this, f;
+        var self = this;
 
         // factory or constructor
         if (!(self instanceof Dialog)) {
             return new Dialog(container, config);
         }
-        if (S.isPlainObject(container)) {
-            config = container;
-            f = 1;
-        }
-        config.align = S.merge(S.clone(defaultConfig.align), config.align);
-        config = S.merge(defaultConfig, config);
-        Dialog.superclass.constructor.call(self, f?config:container, f?{}:config);
 
+        config = config || { };
+        if (S.isPlainObject(container)) config = container;
+        else config.container = container;
+        config.align = S.merge(S.clone(defaultConfig.align), config.align);
+        
+        Dialog.superclass.constructor.call(self, S.merge(defaultConfig, config));
     }
 
     S.extend(Dialog, S.Overlay);

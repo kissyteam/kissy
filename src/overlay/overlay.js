@@ -200,7 +200,7 @@ KISSY.add('overlay', function(S, undefined) {
             }
 
             DOM.css(container, 'zIndex', config.zIndex);
-            DOM.css(container, 'display', ''); // 强制去除内联 style 中的 display: none
+            DOM.css(container, 'display', 'block'); // 强制去除内联 style 中的 display: none
 
             self.setBody(config.content);
             self._setSize();
