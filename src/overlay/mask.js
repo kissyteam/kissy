@@ -64,12 +64,12 @@ KISSY.add('mask', function(S, undefined) {
 
         show: function() {
             DOM.css(this.iframe, DISPLAY, 'block');
-            if (this.div) DOM.css(this.div, DISPLAY, 'block');
+            if (ie) DOM.css(this.div, DISPLAY, 'block');
         },
 
         hide: function() {
             DOM.css(this.iframe, DISPLAY, 'none');
-            if (this.div) DOM.css(this.div, DISPLAY, 'none');
+            if (ie) DOM.css(this.div, DISPLAY, 'none');
         },
 
         toggle: function() {
@@ -80,7 +80,7 @@ KISSY.add('mask', function(S, undefined) {
         setSize: function(w, h) {
             DOM.width(this.iframe, w);
             DOM.height(this.iframe, h);
-            if (this.div) {
+            if (ie) {
                 DOM.width(this.div, w);
                 DOM.height(this.div, h);
             }
@@ -96,7 +96,7 @@ KISSY.add('mask', function(S, undefined) {
                 }
             }
             DOM.offset(this.iframe, offset);
-            if (this.div) {
+            if (ie) {
                 DOM.offset(this.div, offset);
             }
         }
