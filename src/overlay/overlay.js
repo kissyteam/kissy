@@ -156,6 +156,7 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         _realShow: function() {
+            this._setPosition();
             this._toggle(false);
         },
 
@@ -204,7 +205,6 @@ KISSY.add('overlay', function(S, undefined) {
 
             self.setBody(config.content);
             self._setSize();
-            self._setPosition();
         },
 
         _setSize: function(w, h) {
