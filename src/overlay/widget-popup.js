@@ -18,14 +18,20 @@ KISSY.add('popup', function(S) {
      * @constructor
      */
     function Popup(container, config) {
-        var self = this;
+        var self = this, f;
 
         if (!(self instanceof Popup)) {
             return new Popup(container, config);
         }
 
+        if (S.isPlainObject(container)) {
+            config = container;
+            f = 1;
+        }
+
         config.align = S.merge(S.clone(defaultConfig.align), config.align);
-        Popup.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
+        config = S.merge(defaultConfig, config);
+        Popup.superclass.constructor.call(self, f?config:container, f?{}:config);
     }
 
     S.extend(Popup, S.Overlay);
