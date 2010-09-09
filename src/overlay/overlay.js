@@ -61,7 +61,7 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         DEFAULT_STYLE = 'position:absolute;visibility:hidden',
-        TMPL = '<div class="{containerCls}" style="' + DEFAULT_STYLE + '"><div class="{bdCls}">{bdContent}</div></div>',
+        TMPL = '<div class="{containerCls}" style="' + DEFAULT_STYLE + '"><div class="{bdCls}">{content}</div></div>',
 
         mask;
 
