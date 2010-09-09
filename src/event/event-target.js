@@ -46,7 +46,7 @@ KISSY.add('event-target', function(S, undefined) {
  * NOTES:
  *
  *  2010.04
- *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 是不需要
+ *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 不是必须
  *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
  *
  *   - detach 命名是因为 removeEventListener 太长，remove 则太容易冲突

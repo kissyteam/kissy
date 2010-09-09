@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Overlay Widgets Test</title>
+
+<script src="../../build/kissy.js"></script>
+
+<script src="mask.js"></script>
+<script src="overlay.js"></script>
+<script src="widget-popup.js"></script>
+<script src="widget-dialog.js"></script>
+
+<link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
+<style>
+    body { padding: 20px 50px 50px; }
+    h2 { margin: 10px 0 10px -20px; padding: 5px 10px; font-size: 14px; font-weight: normal; background: #F2F2F2; }
+
+    p.code-switch { color: #09f; cursor: pointer; margin-top: 10px; }
+    pre.code {
+        color: #444;
+        cursor: auto;
+        border-left: 2px solid #7F96AA;
+        margin-top: 5px;
+        padding: 0 10px 20px 10px;
+        font-size: 14px;
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Popup - 从 Markup 中构建</h2>
+
+<button id="btn1">Show</button><button id="btn2">Hide</button>
+<div id="popup1" style="display:none;border:1px solid #ccc;background:#F6F9FD">Popup content</div>
+<script>
+    KISSY.ready(function(S) {
+
+        var popup = S.Popup('#popup1', {
+            trigger: '#btn1',
+            triggerType: 'click',
+            width: 300,
+            height: 200,
+            align: {
+                node: 'trigger',
+                points: ['tr', 'tl'],
+                offset: [50, 0]
+            }
+        });
+
+        S.one('#btn2').on('click', function() {
+            popup.hide();
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+<h2>Popup - 从 Markup 中构建</h2>
+
+<a id="link1">hover me</a>
+<div id="popup2" style="display:none;border:1px solid #ccc;background:#F6F9FD">Popup content</div>
+<script>
+    KISSY.ready(function(S) {
+
+        var popup = S.Popup('#popup2', {
+            trigger: '#link1',
+            width: 300,
+            height: 200,
+            align: {
+                node: 'trigger',
+                points: ['tr', 'tl']
+            }
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+<script>
+    (function() {
+        var S = KISSY, DOM = S.DOM,
+            SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+
+        S.all('p.code-switch').each(function(p) {
+            p.on('click', function() {
+                var showing = (p.text() === SHOW_CODE),
+                    next = p.next(),
+                    pre = next;
+
+                if (next[0].nodeName !== 'PRE') {
+                    pre = S.Node('<pre>');
+
+                    pre.attr('class', 'code')
+                        .html(p.prev().html());
+
+                    if (S.UA.ie) {
+                        pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
+                    }
+
+                    DOM.insertAfter(pre[0], p[0]);
+                }
+
+                pre.css('display', showing ? 'block' : 'none');
+                p.html(showing ? HIDE_CODE : SHOW_CODE);
+            });
+        });
+    })();
+</script>
+</body>
+</html>

@@ -110,14 +110,14 @@ KISSY.add('event', function(S, undefined) {
 
             var id = getID(target),
                 events, eventsType, listeners,
-                i, j, len, c, t;
+                i, j, len, c, t, special;
 
             if (id === -1) return; // 不是有效的 target
             if (!id || !(c = cache[id])) return; // 无 cache
             if (c.target !== target) return; // target 不匹配
             scope = scope || target;
             events = c.events || { };
-
+            
             if ((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
@@ -137,8 +137,10 @@ KISSY.add('event', function(S, undefined) {
                 // remove(el, type) or fn 已移除光
                 if (fn === undefined || len === 0) {
                     if (!target.isCustomEventTarget) {
-                        simpleRemove(target, type, eventsType.handle);
-                    } else if (target._addEvent) { // such as Node
+                        special = Event.special[type] || { };
+                        simpleRemove(target, special.fix || type, eventsType.handle);
+                    }
+                    else if (target._addEvent) { // such as Node
                         target._removeEvent(type, eventsType.handle);
                     }
                     delete events[type];

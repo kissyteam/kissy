@@ -64,6 +64,7 @@
             if (S.isPlainObject(name)) {
                 S.each(name, function(v, k) {
                     v.name = k;
+                    if(mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
                 });
                 mix(mods, name);
             }
@@ -204,7 +205,7 @@
                     fn && fn(self);
                 });
                 mod.fns = undefined; // 保证 attach 过的方法只执行一次
-                S.log(mod.name + '.status = attached');
+                //S.log(mod.name + '.status = attached');
             }
 
             mod.status = ATTACHED;
@@ -247,7 +248,7 @@
 
                 ret = self.getScript(url, {
                     success: function() {
-                        KISSY.log(mod.name + ' onload fired.', 'info'); // 压缩时不过滤该句，以方便线上调试
+                        KISSY.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
                         _success();
                     },
                     error: function() {

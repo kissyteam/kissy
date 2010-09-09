@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 9 09:32
 */
 /**
  * @module kissy
@@ -450,7 +450,7 @@ build time: Aug 26 22:48
         encode = encodeURIComponent,
         decode = decodeURIComponent,
         HAS_OWN_PROPERTY = 'hasOwnProperty',
-        EMPTY = '', SEP = '&',
+        EMPTY = '', SEP = '&', BRACKET = encode('[]'),
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
         REG_NOT_WHITE = /\S/;
@@ -468,14 +468,14 @@ build time: Aug 26 22:48
          * Determines whether or not the provided object is a boolean.
          */
         isBoolean: function(o) {
-            return typeof o === 'boolean';
+            return toString.call(o) === '[object Boolean]';
         },
 
         /**
          * Determines whether or not the provided object is a string.
          */
         isString: function(o) {
-            return typeof o === 'string';
+            return toString.call(o) === '[object String]';
         },
 
         /**
@@ -483,7 +483,7 @@ build time: Aug 26 22:48
          * NOTICE: Infinity and NaN return false.
          */
         isNumber: function(o) {
-            return typeof o === 'number' && isFinite(o);
+            return toString.call(o) === '[object Number]' && isFinite(o);
         },
 
         /**
@@ -702,7 +702,7 @@ build time: Aug 26 22:48
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, '[]=', encode(val[i] + EMPTY), sep);
+                            buf.push(key, BRACKET + '=', encode(val[i] + EMPTY), sep);
                         }
                     }
                 }
@@ -955,6 +955,7 @@ build time: Aug 26 22:48
             if (S.isPlainObject(name)) {
                 S.each(name, function(v, k) {
                     v.name = k;
+                    if(mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
                 });
                 mix(mods, name);
             }
@@ -1095,7 +1096,7 @@ build time: Aug 26 22:48
                     fn && fn(self);
                 });
                 mod.fns = undefined; // 保证 attach 过的方法只执行一次
-                S.log(mod.name + '.status = attached');
+                //S.log(mod.name + '.status = attached');
             }
 
             mod.status = ATTACHED;
@@ -1138,7 +1139,7 @@ build time: Aug 26 22:48
 
                 ret = self.getScript(url, {
                     success: function() {
-                        KISSY.log(mod.name + ' onload fired.', 'info'); // 压缩时不过滤该句，以方便线上调试
+                        KISSY.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
                         _success();
                     },
                     error: function() {
@@ -1310,7 +1311,7 @@ build time: Aug 26 22:48
         }
     };
 
-    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
+    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest', 'overlay'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
             requires: ['core'],
@@ -1529,7 +1530,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 8 22:13
 */
 /**
  * @module  dom
@@ -2437,10 +2438,11 @@ KISSY.add('dom-style', function(S, undefined) {
          */
         addStyleSheet: function(cssText, id) {
             var elem;
+            
+            if (id) elem = S.get('#' + id);
+            if(elem) return; // 仅添加一次，不重复添加
 
-            // 有的话，直接获取
-            if (id) elem = S.get(id);
-            if (!elem) elem = DOM.create('<style>', { id: id });
+            elem = DOM.create('<style>', { id: id });
 
             // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
             S.get('head').appendChild(elem);
@@ -2571,14 +2573,20 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                 },
 
                 set: function(elem, val) {
-                    var style = elem.style;
+                    var style = elem.style, currentFilter = (elem.currentStyle || 0).filter || '';
 
                     // IE has trouble with opacity if it does not have layout
                     // Force it by setting the zoom level
                     style.zoom = 1;
 
+                    // keep existed filters, and remove opacity filter
+                    if(currentFilter) {
+                        currentFilter = currentFilter.replace(/alpha\(opacity=.+\)/ig, '');
+                        if(currentFilter) currentFilter += ', ';
+                    }
+
                     // Set the alpha filter to set the opacity
-                    style[FILTER] = 'alpha(' + OPACITY + '=' + val * 100 + ')';
+                    style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
                 }
             };
         }
@@ -3106,7 +3114,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     function cloneNode(elem) {
         var ret = elem.cloneNode(true);
-        /*
+        /**
          * if this is MSIE 6/7, then we need to copy the innerHTML to
          * fix a bug related to some form field elements
          */
@@ -3298,7 +3306,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 7 10:47
 */
 /**
  * @module  event
@@ -3412,14 +3420,14 @@ KISSY.add('event', function(S, undefined) {
 
             var id = getID(target),
                 events, eventsType, listeners,
-                i, j, len, c, t;
+                i, j, len, c, t, special;
 
             if (id === -1) return; // 不是有效的 target
             if (!id || !(c = cache[id])) return; // 无 cache
             if (c.target !== target) return; // target 不匹配
             scope = scope || target;
             events = c.events || { };
-
+            
             if ((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
@@ -3439,8 +3447,10 @@ KISSY.add('event', function(S, undefined) {
                 // remove(el, type) or fn 已移除光
                 if (fn === undefined || len === 0) {
                     if (!target.isCustomEventTarget) {
-                        simpleRemove(target, type, eventsType.handle);
-                    } else if (target._addEvent) { // such as Node
+                        special = Event.special[type] || { };
+                        simpleRemove(target, special.fix || type, eventsType.handle);
+                    }
+                    else if (target._addEvent) { // such as Node
                         target._removeEvent(type, eventsType.handle);
                     }
                     delete events[type];
@@ -3777,7 +3787,7 @@ KISSY.add('event-target', function(S, undefined) {
  * NOTES:
  *
  *  2010.04
- *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 是不需要
+ *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 不是必须
  *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
  *
  *   - detach 命名是因为 removeEventListener 太长，remove 则太容易冲突
@@ -3869,7 +3879,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 8 14:13
 */
 /**
  * @module  node
@@ -4024,6 +4034,8 @@ KISSY.add('nodelist', function(S) {
 KISSY.add('node-attach', function(S, undefined) {
 
     var DOM = S.DOM, Event = S.Event,
+        nodeTypeIs = DOM._nodeTypeIs,
+        isKSNode = DOM._isKSNode,
         NP = S.Node.prototype,
         NLP = S.NodeList.prototype,
         GET_DOM_NODE = 'getDOMNode',
@@ -4131,7 +4143,7 @@ KISSY.add('node-attach', function(S, undefined) {
             return this;
         };
     });
-    S.each([NP, NLP], function(P) {
+    S.each([NP, NLP], function(P, isNodeList) {
         S.mix(P, {
 
             /**
@@ -4140,7 +4152,17 @@ KISSY.add('node-attach', function(S, undefined) {
             append: function(html) {
                 if (html) {
                     S.each(this, function(elem) {
-                        elem.appendChild(DOM.create(html));
+                        var domNode;
+
+                        // 对于 NodeList, 需要 cloneNode, 因此直接调用 create
+                        if (isNodeList || S.isString(html)) {
+                            domNode = DOM.create(html);
+                        } else {
+                            if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) domNode = html;
+                            if (isKSNode(html)) domNode = html[0];
+                        }
+
+                        elem.appendChild(domNode);
                     });
                 }
                 return this;
@@ -6121,7 +6143,7 @@ KISSY.add('sizzle', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Aug 31 11:19
 */
 /**
  * 数据延迟加载组件
@@ -6236,7 +6258,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             self.threshold = self._getThreshold();
 
             self._filterItems();
-            self._getItemsLength() && self._initLoadEvent();
+            self._initLoadEvent();
         },
 
         /**
@@ -6483,7 +6505,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                 vh = DOM['viewportHeight']();
 
             if (diff === DEFAULT) return 2 * vh; // diff 默认为当前视窗高度（两屏以外的才延迟加载）
-            else return vh + diff;
+            else return vh + (+diff); // 将 diff 转换成数值
         },
 
         /**
@@ -7061,7 +7083,7 @@ KISSY.add('flash-embed', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:49
+build time: Sep 7 10:10
 */
 /**
  * Switchable
@@ -7073,7 +7095,6 @@ KISSY.add('switchable', function(S, undefined) {
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
-        EVENT_BEFORE_INIT = 'beforeInit', EVENT_INIT = 'init',
         EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
         CLS_PREFIX = 'ks-switchable-';
 
@@ -7172,8 +7193,9 @@ KISSY.add('switchable', function(S, undefined) {
         // 触发延迟
         delay: .1, // 100ms
 
-        activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
+        activeIndex: 0, // markup 的默认激活项应与 activeIndex 保持一致
         activeTriggerCls: 'ks-active',
+        //switchTo: 0,
 
         // 可见视图内有多少个 panels
         steps: 1,
@@ -7193,11 +7215,13 @@ KISSY.add('switchable', function(S, undefined) {
         _init: function() {
             var self = this, cfg = self.config;
 
-            // fire event
-            if(self.fire(EVENT_BEFORE_INIT) === false) return;
-
             // parse markup
             self._parseMarkup();
+
+            // 切换到指定项
+            if(cfg.switchTo) {
+                self.switchTo(cfg.switchTo);
+            }
 
             // bind triggers
             if (cfg.hasTriggers) {
@@ -7210,8 +7234,6 @@ KISSY.add('switchable', function(S, undefined) {
                     plugin.init(self);
                 }
             });
-            
-            self.fire(EVENT_INIT);
         },
 
         /**
@@ -7311,7 +7333,7 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onFocusTrigger: function(index) {
             var self = this;
-            if (!self._triggerIsValid()) return; // 重复点击
+            if (!self._triggerIsValid(index)) return; // 重复点击
 
             this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
             self.switchTo(index);
@@ -7322,7 +7344,7 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onMouseEnterTrigger: function(index) {
             var self = this;
-            if (!self._triggerIsValid()) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
+            if (!self._triggerIsValid(index)) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
 
             self.switchTimer = S.later(function() {
                 self.switchTo(index);
@@ -7364,7 +7386,7 @@ KISSY.add('switchable', function(S, undefined) {
                 steps = cfg.steps,
                 fromIndex = activeIndex * steps, toIndex = index * steps;
 
-            if (!self._triggerIsValid()) return self; // 再次避免重复触发
+            if (!self._triggerIsValid(index)) return self; // 再次避免重复触发
             if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
 
             // switch active trigger
@@ -9203,3 +9225,456 @@ KISSY.add('suggest', function(S, undefined) {
  *
  * 2010-08-04 更新： 去掉对 yahoo-dom-event 的依赖，仅依赖 ks-core. 调整了部分 public api, 扩展更容易了。
  */
+/*
+Copyright 2010, KISSY UI Library v1.1.3
+MIT Licensed
+build time: Sep 9 09:32
+*/
+/**
+ * KISSY Mask
+ * @creator     乔花<qiaohua@taobao.com>
+ */
+KISSY.add('mask', function(S, undefined) {
+
+    var DOM = S.DOM,
+        DISPLAY = 'display',
+
+        defaultConfig = {
+            shim: false,
+            opacity: .6,
+            extraCls: ''
+        };
+
+    function Mask(config){
+        if (!(this instanceof Mask)) {
+            return new Mask(config);
+        }
+
+        config = S.merge(defaultConfig, config);
+
+        DOM.addStyleSheet(
+            '.ks-mask{position:absolute;left:0;top:0;width:100%;border:0;background:black;z-index:9998;display:none}' +
+                '.ks-shim{position:absolute;z-index:9997;border:0;display:none}',
+            'ks-mask-style');
+
+        var isShim = config.shim,
+            ifr = DOM.create('<iframe>', { 'class': isShim ? 'ks-shim' : 'ks-mask' + ' ' + config.extraCls });
+
+        if(isShim) config.opacity = 0;
+        else DOM.height(ifr, DOM.docHeight());
+
+        DOM.css(ifr, 'opacity', config.opacity);
+
+        document.body.appendChild(ifr);
+
+        this.config = config;
+        this.iframe = ifr;
+    }
+
+    S.augment(Mask, {
+
+        show: function() {
+            DOM.css(this.iframe, DISPLAY, 'block');
+        },
+
+        hide: function() {
+            DOM.css(this.iframe, DISPLAY, 'none');
+        },
+
+        toggle: function() {
+            var isVisible = DOM.css(this.iframe, DISPLAY) !== 'none';
+            this[isVisible ? 'hide' : 'show']();
+        },
+
+        setSize: function(w, h) {
+            DOM.width(this.iframe, w);
+            DOM.height(this.iframe, h);
+        },
+
+        setOffset: function(x, y) {
+            var offset = x;
+
+            if (y !== undefined) {
+                offset = {
+                    left: x,
+                    top: y
+                }
+            }
+            DOM.offset(this.iframe, offset);
+        }
+    });
+
+    S.Mask = Mask;
+});
+/**
+ * KISSY Overlay
+ * @creator     乔花<qiaohua@taobao.com>
+ */
+KISSY.add('overlay', function(S, undefined) {
+
+    var doc = document,
+        DOM = S.DOM, Event = S.Event,
+        ie6 = S.UA.ie === 6,
+
+        DOT = '.', KEYDOWN = 'keydown',
+        POSITION_ALIGN = {
+            TL: 'tl',
+            TC: 'tc',
+            TR: 'tr',
+            LC: 'cl',
+            CC: 'cc',
+            RC: 'cr',
+            BL: 'bl',
+            BC: 'bc',
+            BR: 'br'
+        },
+
+        CLS_CONTAINER = 'ks-overlay',
+        CLS_PREFIX = CLS_CONTAINER + '-',
+
+        EVT_SHOW = 'show',
+        EVT_HIDE = 'hide',
+
+        /**
+         * 默认设置
+         */
+        defaultConfig = {
+            /*
+             * DOM 结构
+             *  <div class="ks-overlay-container">
+             *      <div class="ks-overlay-bd"></div>
+             *  </div>
+             */
+            container: null,
+            containerCls: CLS_CONTAINER,
+            //content: undefined,      // 默认为 undefined, 不设置
+            bdCls: CLS_PREFIX + 'bd',
+
+            trigger: null,
+            triggerType: 'click',   // 触发类型
+
+            width: 0,
+            height: 0,
+            zIndex: 9999,
+
+            xy: null,               // 相对 page 定位，有效值为 [n, m]
+            align: {                // 相对指定 node or viewport 定位
+                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+                points: [POSITION_ALIGN.CC, POSITION_ALIGN.CC], // ['tl', 'tr'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+                offset: [0,0]       // 有效值为 [n, m]
+            },
+
+            mask: false,            // 是否显示蒙层, 默认不显示
+            shim: ie6
+        },
+
+        DEFAULT_STYLE = 'position:absolute;visibility:hidden',
+        TMPL = '<div class="{containerCls}" style="' + DEFAULT_STYLE + '"><div class="{bdCls}">{bdContent}</div></div>',
+
+        mask;
+
+    /*
+     * Overlay Class
+     * @constructor
+     * attached members：
+     *   - this.container
+     *   - this.trigger
+     *   - this.config
+     *   - this.body
+     *   - this.shim
+     */
+    function Overlay(container, config) {
+        var self = this;
+        config = config || { };
+
+        // 支持 Overlay(config)
+        if (S.isPlainObject(container)) {
+            config = container;
+        } else {
+            config.container = container;
+        }
+
+        // 获取相关联的 DOM 节点
+        self.container = S.get(config.container);
+        
+        self.trigger = S.get(config.trigger);
+
+        // 合并配置信息
+        config.align = S.merge(S.clone(defaultConfig.align), config.align);
+        self.config = S.merge(defaultConfig, config);
+
+        self._init();
+    }
+
+    S.augment(Overlay, S.EventTarget, {
+
+        _init: function() {
+            if (this.trigger) {
+                this._bindTrigger();
+            }
+        },
+
+        _bindTrigger: function() {
+            var self = this;
+
+            if (self.config.triggerType === 'mouse') {
+                self._bindTriggerMouse();
+            } else {
+                self._bindTriggerClick();
+            }
+        },
+
+        _bindTriggerMouse: function() {
+            var self = this, trigger = self.trigger, timer;
+
+            Event.on(trigger, 'mouseenter', function() {
+                timer = S.later(function() {
+                    self.show();
+                    timer = undefined;
+                }, 100);
+            });
+
+            Event.on(trigger, 'mouseleave', function() {
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
+                }
+                self.hide();
+            });
+        },
+
+        _bindTriggerClick: function() {
+            var self = this;
+
+            Event.on(self.trigger, 'click', function() {
+                self.show();
+            });
+        },
+
+        show: function() {
+            this._firstShow();
+        },
+
+        _firstShow: function() {
+            var self = this;
+
+            self._prepareMarkup();
+            self._realShow();
+            self._firstShow = self._realShow;
+        },
+
+        _realShow: function() {
+            this._toggle(false);
+        },
+
+        _toggle: function(isVisible) {
+            var self = this;
+
+            DOM.css(self.container, 'visibility', isVisible ? 'hidden' : '');
+            if(self.shim) self.shim.toggle();
+            if (self.config.mask) mask[isVisible ? 'hide' : 'show']();
+
+            self[isVisible ? '_unbindUI' : '_bindUI']();
+            self.fire(isVisible ? EVT_HIDE : EVT_SHOW);
+        },
+
+
+        hide: function() {
+            this._toggle(true);
+        },
+
+        _prepareMarkup: function() {
+            var self = this, config = self.config, container = self.container;
+
+            // 多个 Overlay 实例共用一个 mask
+            if (config.mask && !mask) {
+                mask = new S.Mask();
+            }
+            if (config.shim) {
+                self.shim = new S.Mask({ shim: true });
+            }
+
+            // 已有 Markup
+            if (container) {
+                // 已有 markup 可以很灵活，如果没有 bdCls, 就让 body 指向 container
+                self.body = S.get(DOT + config.bdCls, container) || container;
+                container.style.cssText += DEFAULT_STYLE;
+            }
+            // 构建 DOM
+            else {
+                container = self.container = DOM.create(S.substitute(TMPL, config));
+                self.body = DOM.children(container)[0];
+                doc.body.appendChild(container);
+            }
+
+            DOM.css(container, 'zIndex', config.zIndex);
+            DOM.css(container, 'display', ''); // 强制去除内联 style 中的 display: none
+
+            self.setBody(config.content);
+            self._setSize();
+            self._setPosition();
+        },
+
+        _setSize: function(w, h) {
+            var self = this,
+                config = self.config;
+
+            w = w || config.width;
+            h = h || config.height;
+
+            if (w) DOM.width(self.container, w);
+            if (h) DOM.height(self.container, h);
+            if (self.shim) self.shim.setSize(w, h);
+        },
+
+        _setPosition: function() {
+            var self = this, xy = self.config.xy;
+
+            if (xy) {
+                self.move(xy);
+            } else {
+                self.align();
+            }
+        },
+
+        move: function(x, y) {
+            var self = this, offset;
+
+            if (S.isArray(x)) {
+                y = x[1];
+                x = x[0];
+            }
+            offset = { left: x, top: y };
+
+            DOM.offset(self.container, offset);
+            if(self.shim) self.shim.setOffset(offset);
+        },
+
+        align: function(node, points, offset) {
+            var self = this, alignConfig = self.config.align, xy, diff, p1, p2;
+
+            node = node || alignConfig.node;
+            if (node === 'trigger') node = self.trigger;
+            else node = S.get(node);
+
+            points = points || alignConfig.points;
+
+            offset = offset === undefined ? alignConfig.offset : offset;
+            xy = DOM.offset(self.container);
+
+            // p1 是 node 上 points[0] 的 offset
+            // p2 是 overlay 上 points[1] 的 offset
+            p1 = self._getAlignOffset(node, points[0]);
+            p2 = self._getAlignOffset(self.container, points[1]);
+            diff = [p2.left - p1.left, p2.top - p1.top];
+
+            self.move(xy.left - diff[0] + (+offset[0]), xy.top - diff[1] + (+offset[1]));
+        },
+
+        /**
+         * 获取 node 上的 align 对齐点 相对 page 的坐标
+         */
+        _getAlignOffset: function(node, align) {
+            var V = align.charAt(0),
+                H = align.charAt(1),
+                offset, w, h, x, y;
+
+            if (node) {
+                offset = DOM.offset(node);
+                w = node.offsetWidth;
+                h = node.offsetHeight;
+            } else {
+                offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
+                w = DOM.viewportWidth();
+                h = DOM.viewportHeight();
+            }
+
+            x = offset.left;
+            y = offset.top;
+
+            if (V === 'c') {
+                y += h / 2;
+            } else if (V === 'b') {
+                y += h;
+            }
+
+            if (H === 'c') {
+                x += w / 2;
+            } else if (H === 'r') {
+                x += w;
+            }
+
+            return { left: x, top: y };
+        },
+
+        center: function() {
+            var self = this;
+
+            self.move(
+                (DOM.viewportWidth() - DOM.width(self.container)) / 2 + DOM.scrollLeft(),
+                (DOM.viewportHeight() - DOM.height(self.container)) / 2 + DOM.scrollTop()
+                );
+        },
+
+        _bindUI: function() {
+            Event.on(doc, KEYDOWN, this._esc, this);
+        },
+
+        _unbindUI: function() {
+            Event.remove(doc, KEYDOWN, this._esc, this);
+        },
+        
+        _esc: function(e) {
+            if (e.keyCode === 27) this.hide();
+        },
+
+        setBody: function(html) {
+            if(S.isString(html)) DOM.html(this.body, html);
+        }
+    });
+
+    S.Overlay = Overlay;
+
+});
+
+/**
+ * TODO:
+ *  - stackable ?
+ *  - constrain 支持可视区域或指定区域 ?
+ *  - effect
+ *  - draggable
+ */
+/**
+ * KISSY Popup
+ * @creator     乔花<qiaohua@taobao.com>
+ */
+KISSY.add('popup', function(S) {
+
+    var defaultConfig = {
+        triggerType: 'mouse',
+        align: {
+            node: 'trigger',
+            points: ['cr', 'ct'],
+            offset: [10, 0]
+        }
+    };
+
+    /**
+     * Popup Class
+     * @constructor
+     */
+    function Popup(container, config) {
+        var self = this;
+
+        if (!(self instanceof Popup)) {
+            return new Popup(container, config);
+        }
+
+        config.align = S.merge(S.clone(defaultConfig.align), config.align);
+        Popup.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
+    }
+
+    S.extend(Popup, S.Overlay);
+    S.Popup = Popup;
+
+}, { host: 'overlay' });

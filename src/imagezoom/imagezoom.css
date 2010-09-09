@@ -1,25 +1,16 @@
-
-.ks-imagezoom-origin { position: relative; }
-.ks-imagezoom-origin img { border: 1px solid #999; cursor: pointer; }
-
 .ks-imagezoom-lens {
-    margin: 0 2px 2px 0;
     position: absolute; left: 0; top: 0;
-    background:url(http://img04.taobaocdn.com/tps/i4/T12pdtXaldXXXXXXXX-2-2.png) repeat;
+    background: url(http://img04.taobaocdn.com/tps/i4/T12pdtXaldXXXXXXXX-2-2.png) repeat;
 }
 
-.ks-imagezoom-origin .ks-imagezoom-icon {
-    background: url("http://img02.taobaocdn.com/tps/i2/T1uJNuXX8tXXXXXXXX-23-23.png") no-repeat scroll left top transparent;
-    bottom: 4px;
-    height: 23px;
-    position: absolute;
-    right: 0;
-    width: 23px;
+.ks-imagezoom-icon {
+    position: absolute; left: 0; top: 0;
+    height: 23px; width: 23px;
     border-right: 1px solid #999;
     border-bottom: 1px solid #999;
+    background: url("http://img02.taobaocdn.com/tps/i2/T1uJNuXX8tXXXXXXXX-23-23.png") no-repeat scroll left top transparent;
 }
 
-.ks-imagezoom-loading { background: #fff url(loading.gif) no-repeat center center; }
 
 .ks-imagezoom-viewer {
     border: 1px solid #CCCCCC;
@@ -27,4 +18,5 @@
     position: absolute;
     text-align: center;
     z-index: 999;
+    background: #fff url(loading.gif) no-repeat center center;
 }

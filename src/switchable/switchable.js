@@ -8,7 +8,6 @@ KISSY.add('switchable', function(S, undefined) {
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
-        EVENT_BEFORE_INIT = 'beforeInit', EVENT_INIT = 'init',
         EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
         CLS_PREFIX = 'ks-switchable-';
 
@@ -107,8 +106,9 @@ KISSY.add('switchable', function(S, undefined) {
         // 触发延迟
         delay: .1, // 100ms
 
-        activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
+        activeIndex: 0, // markup 的默认激活项应与 activeIndex 保持一致
         activeTriggerCls: 'ks-active',
+        //switchTo: 0,
 
         // 可见视图内有多少个 panels
         steps: 1,
@@ -128,11 +128,13 @@ KISSY.add('switchable', function(S, undefined) {
         _init: function() {
             var self = this, cfg = self.config;
 
-            // fire event
-            if(self.fire(EVENT_BEFORE_INIT) === false) return;
-
             // parse markup
             self._parseMarkup();
+
+            // 切换到指定项
+            if(cfg.switchTo) {
+                self.switchTo(cfg.switchTo);
+            }
 
             // bind triggers
             if (cfg.hasTriggers) {
@@ -145,8 +147,6 @@ KISSY.add('switchable', function(S, undefined) {
                     plugin.init(self);
                 }
             });
-            
-            self.fire(EVENT_INIT);
         },
 
         /**
@@ -246,7 +246,7 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onFocusTrigger: function(index) {
             var self = this;
-            if (!self._triggerIsValid()) return; // 重复点击
+            if (!self._triggerIsValid(index)) return; // 重复点击
 
             this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
             self.switchTo(index);
@@ -257,7 +257,7 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onMouseEnterTrigger: function(index) {
             var self = this;
-            if (!self._triggerIsValid()) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
+            if (!self._triggerIsValid(index)) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
 
             self.switchTimer = S.later(function() {
                 self.switchTo(index);
@@ -299,7 +299,7 @@ KISSY.add('switchable', function(S, undefined) {
                 steps = cfg.steps,
                 fromIndex = activeIndex * steps, toIndex = index * steps;
 
-            if (!self._triggerIsValid()) return self; // 再次避免重复触发
+            if (!self._triggerIsValid(index)) return self; // 再次避免重复触发
             if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
 
             // switch active trigger

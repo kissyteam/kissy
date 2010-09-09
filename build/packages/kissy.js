@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 9 09:32
 */
 /**
  * @module kissy
@@ -450,7 +450,7 @@ build time: Aug 26 22:48
         encode = encodeURIComponent,
         decode = decodeURIComponent,
         HAS_OWN_PROPERTY = 'hasOwnProperty',
-        EMPTY = '', SEP = '&',
+        EMPTY = '', SEP = '&', BRACKET = encode('[]'),
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
         REG_NOT_WHITE = /\S/;
@@ -468,14 +468,14 @@ build time: Aug 26 22:48
          * Determines whether or not the provided object is a boolean.
          */
         isBoolean: function(o) {
-            return typeof o === 'boolean';
+            return toString.call(o) === '[object Boolean]';
         },
 
         /**
          * Determines whether or not the provided object is a string.
          */
         isString: function(o) {
-            return typeof o === 'string';
+            return toString.call(o) === '[object String]';
         },
 
         /**
@@ -483,7 +483,7 @@ build time: Aug 26 22:48
          * NOTICE: Infinity and NaN return false.
          */
         isNumber: function(o) {
-            return typeof o === 'number' && isFinite(o);
+            return toString.call(o) === '[object Number]' && isFinite(o);
         },
 
         /**
@@ -702,7 +702,7 @@ build time: Aug 26 22:48
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, '[]=', encode(val[i] + EMPTY), sep);
+                            buf.push(key, BRACKET + '=', encode(val[i] + EMPTY), sep);
                         }
                     }
                 }
@@ -955,6 +955,7 @@ build time: Aug 26 22:48
             if (S.isPlainObject(name)) {
                 S.each(name, function(v, k) {
                     v.name = k;
+                    if(mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
                 });
                 mix(mods, name);
             }
@@ -1095,7 +1096,7 @@ build time: Aug 26 22:48
                     fn && fn(self);
                 });
                 mod.fns = undefined; // 保证 attach 过的方法只执行一次
-                S.log(mod.name + '.status = attached');
+                //S.log(mod.name + '.status = attached');
             }
 
             mod.status = ATTACHED;
@@ -1138,7 +1139,7 @@ build time: Aug 26 22:48
 
                 ret = self.getScript(url, {
                     success: function() {
-                        KISSY.log(mod.name + ' onload fired.', 'info'); // 压缩时不过滤该句，以方便线上调试
+                        KISSY.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
                         _success();
                     },
                     error: function() {
@@ -1310,7 +1311,7 @@ build time: Aug 26 22:48
         }
     };
 
-    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
+    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest', 'overlay'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
             requires: ['core'],
@@ -1529,7 +1530,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 8 22:13
 */
 /**
  * @module  dom
@@ -2437,10 +2438,11 @@ KISSY.add('dom-style', function(S, undefined) {
          */
         addStyleSheet: function(cssText, id) {
             var elem;
+            
+            if (id) elem = S.get('#' + id);
+            if(elem) return; // 仅添加一次，不重复添加
 
-            // 有的话，直接获取
-            if (id) elem = S.get(id);
-            if (!elem) elem = DOM.create('<style>', { id: id });
+            elem = DOM.create('<style>', { id: id });
 
             // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
             S.get('head').appendChild(elem);
@@ -2571,14 +2573,20 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                 },
 
                 set: function(elem, val) {
-                    var style = elem.style;
+                    var style = elem.style, currentFilter = (elem.currentStyle || 0).filter || '';
 
                     // IE has trouble with opacity if it does not have layout
                     // Force it by setting the zoom level
                     style.zoom = 1;
 
+                    // keep existed filters, and remove opacity filter
+                    if(currentFilter) {
+                        currentFilter = currentFilter.replace(/alpha\(opacity=.+\)/ig, '');
+                        if(currentFilter) currentFilter += ', ';
+                    }
+
                     // Set the alpha filter to set the opacity
-                    style[FILTER] = 'alpha(' + OPACITY + '=' + val * 100 + ')';
+                    style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
                 }
             };
         }
@@ -3106,7 +3114,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     function cloneNode(elem) {
         var ret = elem.cloneNode(true);
-        /*
+        /**
          * if this is MSIE 6/7, then we need to copy the innerHTML to
          * fix a bug related to some form field elements
          */
@@ -3298,7 +3306,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 7 10:47
 */
 /**
  * @module  event
@@ -3412,14 +3420,14 @@ KISSY.add('event', function(S, undefined) {
 
             var id = getID(target),
                 events, eventsType, listeners,
-                i, j, len, c, t;
+                i, j, len, c, t, special;
 
             if (id === -1) return; // 不是有效的 target
             if (!id || !(c = cache[id])) return; // 无 cache
             if (c.target !== target) return; // target 不匹配
             scope = scope || target;
             events = c.events || { };
-
+            
             if ((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
@@ -3439,8 +3447,10 @@ KISSY.add('event', function(S, undefined) {
                 // remove(el, type) or fn 已移除光
                 if (fn === undefined || len === 0) {
                     if (!target.isCustomEventTarget) {
-                        simpleRemove(target, type, eventsType.handle);
-                    } else if (target._addEvent) { // such as Node
+                        special = Event.special[type] || { };
+                        simpleRemove(target, special.fix || type, eventsType.handle);
+                    }
+                    else if (target._addEvent) { // such as Node
                         target._removeEvent(type, eventsType.handle);
                     }
                     delete events[type];
@@ -3777,7 +3787,7 @@ KISSY.add('event-target', function(S, undefined) {
  * NOTES:
  *
  *  2010.04
- *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 是不需要
+ *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 不是必须
  *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
  *
  *   - detach 命名是因为 removeEventListener 太长，remove 则太容易冲突
@@ -3869,7 +3879,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 8 14:13
 */
 /**
  * @module  node
@@ -4024,6 +4034,8 @@ KISSY.add('nodelist', function(S) {
 KISSY.add('node-attach', function(S, undefined) {
 
     var DOM = S.DOM, Event = S.Event,
+        nodeTypeIs = DOM._nodeTypeIs,
+        isKSNode = DOM._isKSNode,
         NP = S.Node.prototype,
         NLP = S.NodeList.prototype,
         GET_DOM_NODE = 'getDOMNode',
@@ -4131,7 +4143,7 @@ KISSY.add('node-attach', function(S, undefined) {
             return this;
         };
     });
-    S.each([NP, NLP], function(P) {
+    S.each([NP, NLP], function(P, isNodeList) {
         S.mix(P, {
 
             /**
@@ -4140,7 +4152,17 @@ KISSY.add('node-attach', function(S, undefined) {
             append: function(html) {
                 if (html) {
                     S.each(this, function(elem) {
-                        elem.appendChild(DOM.create(html));
+                        var domNode;
+
+                        // 对于 NodeList, 需要 cloneNode, 因此直接调用 create
+                        if (isNodeList || S.isString(html)) {
+                            domNode = DOM.create(html);
+                        } else {
+                            if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) domNode = html;
+                            if (isKSNode(html)) domNode = html[0];
+                        }
+
+                        elem.appendChild(domNode);
                     });
                 }
                 return this;
