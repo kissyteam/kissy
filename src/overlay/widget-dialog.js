@@ -4,49 +4,31 @@
  */
 KISSY.add('dialog', function(S) {
 
-    var DOM = S.DOM,
-        Event = S.Event,
-        Overlay = S.Overlay,
-        DOT = '.',
-        DIV = '<div>',
+    var DOM = S.DOM, Event = S.Event,
+
+        DOT = '.', DIV = '<div>',
+
+        CLS_CONTAINER = 'ks-overlay ks-dialog',
         CLS_PREFIX = 'ks-dialog-',
-        CLS_CLOSE = CLS_PREFIX + 'close',
-        CLS_HEAD = CLS_PREFIX + 'hd',
-        CLS_FOOT = CLS_PREFIX + 'fd',
 
-        /**
-         * Dialog 默认配置: 含有head, ft 包含关闭按钮, 在可视区域居中对齐, 显示背景层, 固定滚动
-         */
         defaultConfig = {
-            hdContent: '',                  // 头部内容, 为空时, 表示不需要这部分
-            bdContent: '',
-            ftContent: '',                  // 尾部, 为空时, 表示不需要这部分
-
+            title: '',
+            containerCls: CLS_CONTAINER,
+            hdCls: CLS_PREFIX + 'hd',
+            bdCls: CLS_PREFIX + 'bd',
+            ftCls: CLS_PREFIX + 'ft',
+            closeBtnCls: CLS_PREFIX + 'close',
             width: 400,
             height: 300,
-
-            closable: true,            // 显示关闭按钮
-            closeBtnCls: CLS_CLOSE,
-
-            hdCls: CLS_HEAD,
-            ftCls: CLS_FOOT
+            closable: true
         };
-
-    /*
-     * DOM
-     *  <div class="{{KS_OVERLAY_CLS}}">
-     *      <div class="{{HEAD_CLS}}"></div>
-     *      <div class="{{BODY_CLS}}"></div>
-     *      <div class="{{FOOT_CLS}}"></div>
-     *  </div>
-     */
 
     /**
      * Dialog Class
      * @constructor
      * attached members：
-     *  - this.head
-     *  - this.foot
+     *  - this.header
+     *  - this.footer
      */
     function Dialog(container, config) {
         var self = this;
@@ -58,7 +40,7 @@ KISSY.add('dialog', function(S) {
         Dialog.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
     }
 
-    S.extend(Dialog, Overlay);
+    S.extend(Dialog, S.Overlay);
     S.Dialog = Dialog;
 
     S.augment(Dialog, S.EventTarget, {
@@ -86,7 +68,7 @@ KISSY.add('dialog', function(S) {
                     self.foot = DOM.create(DIV, { 'class': config.ftCls });
                     self.container.appendChild(self.foot);
                 }
-                self.setFtContent(config.ftContent);
+                self.setFooter(config.ftContent);
             }
         },
 
@@ -104,12 +86,12 @@ KISSY.add('dialog', function(S) {
             self.head.appendChild(elem);
         },
 
-        setHdContent: function(head) {
-            DOM.html(this.head, head);
+        setHeader: function(html) {
+            DOM.html(this.header, html);
         },
 
-        setFtContent: function(foot) {
-            DOM.html(this.foot, foot);
+        setFooter: function(html) {
+            DOM.html(this.footer, html);
         }
     });
 

@@ -47,6 +47,7 @@
             <path path="../flash/flash-pkg.js"/>
             <path path="../switchable/switchable-pkg.js"/>
             <path path="../suggest/suggest-pkg.js"/>
+            <path path="../overlay/overlay-pkg.js"/>
             <!--<path path="../imagezoom/imagezoom-pkg.js"/>-->
             <!--<path path="../calendar/calendar-pkg.js"/>-->
         </concat>

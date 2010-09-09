@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 7 14:11
+build time: Sep 9 09:32
 */
 /**
  * @module kissy
@@ -1311,7 +1311,7 @@ build time: Sep 7 14:11
         }
     };
 
-    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
+    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest', 'overlay'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
             requires: ['core'],
@@ -1530,7 +1530,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 8 14:13
+build time: Sep 8 22:13
 */
 /**
  * @module  dom
@@ -2438,10 +2438,11 @@ KISSY.add('dom-style', function(S, undefined) {
          */
         addStyleSheet: function(cssText, id) {
             var elem;
+            
+            if (id) elem = S.get('#' + id);
+            if(elem) return; // 仅添加一次，不重复添加
 
-            // 有的话，直接获取
-            if (id) elem = S.get(id);
-            if (!elem) elem = DOM.create('<style>', { id: id });
+            elem = DOM.create('<style>', { id: id });
 
             // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
             S.get('head').appendChild(elem);

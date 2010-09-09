@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 7 14:11
+build time: Sep 9 09:32
 */
 /**
  * @module kissy
@@ -1311,7 +1311,7 @@ build time: Sep 7 14:11
         }
     };
 
-    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
+    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest', 'overlay'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
             requires: ['core'],

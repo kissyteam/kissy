@@ -1,5 +1,5 @@
 /**
- * KISSY.Mask
+ * KISSY Mask
  * @creator     乔花<qiaohua@taobao.com>
  */
 KISSY.add('mask', function(S, undefined) {
@@ -8,9 +8,9 @@ KISSY.add('mask', function(S, undefined) {
         DISPLAY = 'display',
 
         defaultConfig = {
-            extraCls: '',
+            shim: false,
             opacity: .6,
-            shim: false
+            extraCls: ''
         };
 
     function Mask(config){
@@ -20,13 +20,10 @@ KISSY.add('mask', function(S, undefined) {
 
         config = S.merge(defaultConfig, config);
 
-        // 共用 css
-        if (!S.get('#ks-mask-style')) {
-            DOM.addStyleSheet(
-                '.ks-mask{position:absolute;left:0;top:0;width:100%;border:0;background:black;z-index:9998;display:none}' +
-                    '.ks-shim{position:absolute;z-index:9997;border:0;display:none}',
-                'ks-mask-style');
-        }
+        DOM.addStyleSheet(
+            '.ks-mask{position:absolute;left:0;top:0;width:100%;border:0;background:black;z-index:9998;display:none}' +
+                '.ks-shim{position:absolute;z-index:9997;border:0;display:none}',
+            'ks-mask-style');
 
         var isShim = config.shim,
             ifr = DOM.create('<iframe>', { 'class': isShim ? 'ks-shim' : 'ks-mask' + ' ' + config.extraCls });

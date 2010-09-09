@@ -136,25 +136,6 @@ Overlay 调研报告
 6) S.Mask:  和Overlay一致
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 http://10.1.6.138:8080/qcbin/start_a.htm
 
 S.Overlay.create = function(trigger, cfg) {
