@@ -118,6 +118,13 @@
         background: orange;
         margin: 6px;
     }
+    #popup3 {
+        display: none;
+        background: white;
+        border: 1px solid orange;
+        width: 100px;
+        height: 100px;
+    }
 </style>
 <ul id="multi">
     <li>test1</li>
@@ -130,7 +137,8 @@
         S.each(S.query('#multi li'), function(t){
             var popup = S.Popup('#popup3', {
                 trigger: t,
-                triggerType: 'mouse'
+                triggerType: 'mouse',
+                triggerLater: true
             });
             popup.on('show',function(){
                popup.setBody(S.DOM.html(t)); 
@@ -180,7 +188,6 @@
         });
     });
 </script>
-
 
 <script>
     (function() {
