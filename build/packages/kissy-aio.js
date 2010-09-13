@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 9 09:32
+build time: Sep 13 10:15
 */
 /**
  * @module kissy
@@ -1333,7 +1333,7 @@ build time: Sep 9 09:32
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:49
+build time: Sep 13 10:15
 */
 /**
  * @module  ua
@@ -1530,7 +1530,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 9 12:58
+build time: Sep 13 10:15
 */
 /**
  * @module  dom
@@ -3306,7 +3306,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 7 10:47
+build time: Sep 13 10:15
 */
 /**
  * @module  event
@@ -3879,7 +3879,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 8 14:13
+build time: Sep 13 10:15
 */
 /**
  * @module  node
@@ -4202,7 +4202,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 13 10:15
 */
 /**
  * @module  cookie
@@ -4288,7 +4288,7 @@ KISSY.add('cookie', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 13 10:15
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -4616,7 +4616,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 13 10:15
 */
 /**
  * @module anim-easing
@@ -5063,7 +5063,7 @@ KISSY.add('core');
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 13 10:15
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -6143,7 +6143,7 @@ KISSY.add('sizzle', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 31 11:19
+build time: Sep 13 10:15
 */
 /**
  * 数据延迟加载组件
@@ -6626,7 +6626,7 @@ KISSY.add('datalazyload', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 13 10:15
 */
 /**
  * @module   Flash 全局静态类
@@ -7083,7 +7083,7 @@ KISSY.add('flash-embed', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 9 12:39
+build time: Sep 13 10:15
 */
 /**
  * Switchable
@@ -8183,7 +8183,7 @@ KISSY.add('accordion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:49
+build time: Sep 13 10:15
 */
 /**
  * 提示补全组件
@@ -9232,7 +9232,7 @@ KISSY.add('suggest', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 9 13:07
+build time: Sep 13 10:15
 */
 /**
  * KISSY Mask
@@ -9242,6 +9242,8 @@ KISSY.add('mask', function(S, undefined) {
 
     var DOM = S.DOM,
         DISPLAY = 'display',
+        ie = S.UA.ie,
+        ie6 = ie === 6,
 
         MASK_STYLE = 'position:absolute;left:0;top:0;width:100%;border:0;background:black;z-index:9998;display:none;',
         SHIM_STYLE = 'position:absolute;z-index:9997;border:0;display:none;',
@@ -9263,13 +9265,32 @@ KISSY.add('mask', function(S, undefined) {
         var isShim = config.shim,
             ifr = DOM.create('<iframe>');
 
-        if(isShim) config.opacity = 0;
-        else DOM.height(ifr, DOM.docHeight());
-
         DOM.attr(ifr, 'style', isShim ? SHIM_STYLE : MASK_STYLE + config.style);
-        DOM.css(ifr, 'opacity', config.opacity);
 
+        var tmp;
+        if(isShim) config.opacity = 0;
+        else {
+            DOM.height(ifr, DOM.docHeight());
+            if (ie6) {
+                DOM.width(ifr, DOM.docWidth());
+            }
+            if (ie){
+                tmp = DOM.create('<div>');
+                DOM.attr(tmp, 'style', MASK_STYLE + config.style);
+                DOM.height(tmp, DOM.docHeight());
+                if (ie6) {
+                    DOM.width(tmp, DOM.docWidth());
+                }
+            }
+        }
+        DOM.css(ifr, 'opacity', config.opacity);
         document.body.appendChild(ifr);
+
+        if (tmp) {
+            DOM.css(tmp, 'opacity', config.opacity);
+            document.body.appendChild(tmp);
+            this.div = tmp;
+        }
 
         this.config = config;
         this.iframe = ifr;
@@ -9279,10 +9300,12 @@ KISSY.add('mask', function(S, undefined) {
 
         show: function() {
             DOM.css(this.iframe, DISPLAY, 'block');
+            if (ie) DOM.css(this.div, DISPLAY, 'block');
         },
 
         hide: function() {
             DOM.css(this.iframe, DISPLAY, 'none');
+            if (ie) DOM.css(this.div, DISPLAY, 'none');
         },
 
         toggle: function() {
@@ -9293,6 +9316,10 @@ KISSY.add('mask', function(S, undefined) {
         setSize: function(w, h) {
             DOM.width(this.iframe, w);
             DOM.height(this.iframe, h);
+            if (ie) {
+                DOM.width(this.div, w);
+                DOM.height(this.div, h);
+            }
         },
 
         setOffset: function(x, y) {
@@ -9305,6 +9332,9 @@ KISSY.add('mask', function(S, undefined) {
                 }
             }
             DOM.offset(this.iframe, offset);
+            if (ie) {
+                DOM.offset(this.div, offset);
+            }
         }
     });
 
@@ -9468,6 +9498,7 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         _realShow: function() {
+            this._setPosition();
             this._toggle(false);
         },
 
@@ -9516,7 +9547,6 @@ KISSY.add('overlay', function(S, undefined) {
 
             self.setBody(config.content);
             self._setSize();
-            self._setPosition();
         },
 
         _setSize: function(w, h) {

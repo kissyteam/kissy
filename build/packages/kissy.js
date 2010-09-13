@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 9 09:32
+build time: Sep 13 10:15
 */
 /**
  * @module kissy
@@ -1333,7 +1333,7 @@ build time: Sep 9 09:32
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:49
+build time: Sep 13 10:15
 */
 /**
  * @module  ua
@@ -1530,7 +1530,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 9 12:58
+build time: Sep 13 10:15
 */
 /**
  * @module  dom
@@ -3306,7 +3306,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 7 10:47
+build time: Sep 13 10:15
 */
 /**
  * @module  event
@@ -3879,7 +3879,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 8 14:13
+build time: Sep 13 10:15
 */
 /**
  * @module  node
@@ -4202,7 +4202,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 13 10:15
 */
 /**
  * @module  cookie
@@ -4288,7 +4288,7 @@ KISSY.add('cookie', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 13 10:15
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -4616,7 +4616,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 13 10:15
 */
 /**
  * @module anim-easing
