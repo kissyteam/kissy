@@ -168,7 +168,7 @@
             height: 300,
             title: 'this is title',
             content: 'content',
-            mask: true
+            mask: false
         });
     });
 </script>
@@ -198,7 +198,7 @@
     }
 </style>
 <h2>Dialog - 新建 + Mask </h2>
-<button id="btn4">Show</button>
+<button id="btn4">Show</button> <button id="btn5">Hide All</button>
 <script>
     KISSY.ready(function(S){
         var dialog = S.Dialog({
@@ -209,11 +209,15 @@
             title: 'this is title',
             footer: 'footer',
             content: 'content',
-            mask: true
+            mask: false
         });
         var times = 1;
         dialog.on('show', function(){
             dialog.setBody('show'+(times++));
+        });
+
+        S.Event.on('#btn5', 'click', function(e){
+            dialog.manager.hideAll();
         });
     });
 </script>

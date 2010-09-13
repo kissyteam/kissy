@@ -189,22 +189,8 @@ body{position:absolute;left:0;top:0;width:100%;height:100%;padding:0;margin:0;fo
         <div class="slide">
             <header>五. Public API</header>
             <section>
-                <p>简单使用</p>
-                <pre>
-KISSY.ready(function(S) {
-    var zm = S.ImageZoom('#small-img', {
-             bigImageSrc: 'path/to/big_pic.jpg'
-        });
-});
-</pre>
-            </section>
-        </div>
-        
-        
-        <div class="slide">
-            <section>
             <pre>
-config: (有变更!!!!!!!)
+config:
                 type: STANDARD,            // 显示类型, 目前只实现标准形式, 即出现镜片, 在小图右侧出现大图
 
                 bigImageSrc: '',           // 大图路径，为 '' 时，会先取 data-src
@@ -223,10 +209,20 @@ Method:
                 hide()                      // 隐藏
 
 </pre>
-<p>需要更加详细的示例及在一些场景下的使用</p>
             </section>
         </div>
-        
+
+        <div class="slide">
+            <section>
+                <p>基本使用</p>
+                <pre>
+1) 出现镜片, 大图位置在小图右边, 如宝贝详情页上:
+        new S.ImageZoom("#standard", {
+                            bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg"
+                        });
+                </pre>
+            </section>
+        </div>
 
         <div class="slide">
             <header>六. 开发计划</header>
