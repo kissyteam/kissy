@@ -118,6 +118,13 @@
         background: orange;
         margin: 6px;
     }
+    #popup3 {
+        display: none;
+        background: white;
+        border: 1px solid orange;
+        width: 100px;
+        height: 100px;
+    }
 </style>
 <ul id="multi">
     <li>test1</li>
@@ -130,7 +137,8 @@
         S.each(S.query('#multi li'), function(t){
             var popup = S.Popup('#popup3', {
                 trigger: t,
-                triggerType: 'mouse'
+                triggerType: 'mouse',
+                triggerLater: true
             });
             popup.on('show',function(){
                popup.setBody(S.DOM.html(t)); 
@@ -164,13 +172,38 @@
         });
     });
 </script>
-
+<style>
+    .dialog4 {
+        background: white;
+        border: 2px solid green;
+    }
+    .dialog4 .ks-dialog-close {
+        position: absolute;
+        right: 0;
+        top: 0;
+        text-indent: 9999em;
+        width: 16px;
+        height: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        background: transparent url(http://cdn.iconfinder.net/data/icons/bwpx/icons/symbol_multiplication.gif)
+    }
+    .dialog4 .ks-dialog-hd, .dialog4 .ks-dialog-ft {
+        position: relative;
+        text-align: center;
+        background: #eee;
+    }
+    .dialog4 .ks-dialog-bd {
+        padding: 10px;
+    }
+</style>
 <h2>Dialog - 新建 + Mask </h2>
 <button id="btn4">Show</button>
 <script>
     KISSY.ready(function(S){
         var dialog = S.Dialog({
             trigger: '#btn4',
+            containerCls: 'dialog4',
             width: 400,
             height: 300,
             title: 'this is title',
@@ -178,9 +211,12 @@
             content: 'content',
             mask: true
         });
+        var times = 1;
+        dialog.on('show', function(){
+            dialog.setBody('show'+(times++));
+        });
     });
 </script>
-
 
 <script>
     (function() {

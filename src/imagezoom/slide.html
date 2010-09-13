@@ -193,8 +193,8 @@ body{position:absolute;left:0;top:0;width:100%;height:100%;padding:0;margin:0;fo
                 <pre>
 KISSY.ready(function(S) {
     var zm = S.ImageZoom('#small-img', {
-                          bigImageSrc: 'path/to/big_pic.jpg'
-                         });
+             bigImageSrc: 'path/to/big_pic.jpg'
+        });
 });
 </pre>
             </section>
@@ -205,31 +205,22 @@ KISSY.ready(function(S) {
             <section>
             <pre>
 config: (有变更!!!!!!!)
-        //type: STANDARD,            // 显示类型
+                type: STANDARD,            // 显示类型, 目前只实现标准形式, 即出现镜片, 在小图右侧出现大图
 
-        bigImageSrc: '',           // 大图路径，为 '' 时，会先取原图上一级 a 的图片 src
-        bigImageSize: [900, 900],  // 大图高宽
-        preload: true,             // 是否预加载大图
-        timeout: 120,              // 等待大图加载的最大时间, 单位: s  默认 2 min
-        timeoutMsg: '图片暂不可用',
+                bigImageSrc: '',           // 大图路径，为 '' 时，会先取 data-src
+                bigImageSize: [900, 900],  // 大图高宽
+                //position: 'right',       // 大图显示位置。仅支持 right, 不开放其它值
+                offset: 10,                // 大图位置的偏移量。单一值或 [x, y]
+                preload: true,             // 是否预加载大图
+                timeout: 120,              // 等待大图加载的最大时间, 单位: s  默认 2 min
+                timeoutMsg: '图片暂不可用',
 
-        lensSize: [200, 200],      // 镜片高宽
-        lensIcon: true,            // 是否显示放大镜提示图标
-
-        // Overlay 中的选项
-        containerCls:  IMGZOOM_VIEWER_CLS,
-        triggerType: 'mouse',      // Overlay配置参数
-        align: {
-            node: '', 
-            x: 'r', 
-            y: 't', 
-            inner: [false, true], 
-            offset: 10
-        }
+                lensSize: [200, 200],      // 镜片高宽
+                lensIcon: true             // 是否显示放大镜提示图标
 
 Method:
-        show()                      // 显示
-        hide()                      // 隐藏
+                show()                      // 显示
+                hide()                      // 隐藏
 
 </pre>
 <p>需要更加详细的示例及在一些场景下的使用</p>

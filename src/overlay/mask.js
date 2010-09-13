@@ -53,7 +53,7 @@ KISSY.add('mask', function(S, undefined) {
         if (tmp) {
             DOM.css(tmp, 'opacity', config.opacity);
             document.body.appendChild(tmp);
-            this.div = tmp;
+            this.layer = tmp;
         }
 
         this.config = config;
@@ -64,12 +64,12 @@ KISSY.add('mask', function(S, undefined) {
 
         show: function() {
             DOM.css(this.iframe, DISPLAY, 'block');
-            if (ie) DOM.css(this.div, DISPLAY, 'block');
+            if (this.layer) DOM.css(this.layer, DISPLAY, 'block');
         },
 
         hide: function() {
             DOM.css(this.iframe, DISPLAY, 'none');
-            if (ie) DOM.css(this.div, DISPLAY, 'none');
+            if (this.layer) DOM.css(this.layer, DISPLAY, 'none');
         },
 
         toggle: function() {
@@ -80,9 +80,9 @@ KISSY.add('mask', function(S, undefined) {
         setSize: function(w, h) {
             DOM.width(this.iframe, w);
             DOM.height(this.iframe, h);
-            if (ie) {
-                DOM.width(this.div, w);
-                DOM.height(this.div, h);
+            if (this.layer) {
+                DOM.width(this.layer, w);
+                DOM.height(this.layer, h);
             }
         },
 
@@ -96,8 +96,8 @@ KISSY.add('mask', function(S, undefined) {
                 }
             }
             DOM.offset(this.iframe, offset);
-            if (ie) {
-                DOM.offset(this.div, offset);
+            if (this.layer) {
+                DOM.offset(this.layer, offset);
             }
         }
     });
