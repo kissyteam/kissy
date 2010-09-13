@@ -1,6 +1,4 @@
-<project name="common-build" basedir="."
-         xmlns:ac="antlib:net.sf.antcontrib"
-        >
+<project name="common-build" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
     <description>Common Build File</description>
 
     <dirname property="current.dir" file="${ant.file.common-build}"/>
