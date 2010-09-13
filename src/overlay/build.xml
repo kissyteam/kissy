@@ -12,7 +12,7 @@
             <path path="overlay.js"/>
 
             <path path="widget-popup.js"/>
-            <!--<path path="widget-dialog.js"/>-->
+            <path path="widget-dialog.js"/>
         </concat>
     </target>
 

@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 10:15
+build time: Sep 13 17:31
 */
 KISSY.add("node",function(a){function g(b,h,o){var l;if(!(this instanceof g))return new g(b,h,o);if(b){if(d(b,1)||d(b,3))l=b;else if(a.isString(b))l=p.create(b,h,o);this[0]=l}else this.length=0}var p=a.DOM,d=p._nodeTypeIs;g.TYPE="-ks-Node";a.augment(g,{length:1,getDOMNode:function(){return this[0]},nodeType:g.TYPE});a.one=function(b,h){return(b=a.get(b,h))?new g(b):null};a.Node=g});
 KISSY.add("nodelist",function(a){function g(b){if(!(this instanceof g))return new g(b);d.push.apply(this,b||[])}var p=a.DOM,d=Array.prototype;a.mix(g.prototype,{length:0,item:function(b){var h=null;if(p._isElementNode(this[b]))h=new a.Node(this[b]);return h},getDOMNodes:function(){return d.slice.call(this)},each:function(b,h){var o=this.length,l=0,k;for(k=new a.Node(this[0]);l<o&&b.call(h||k,k,l,this)!==false;k=new a.Node(this[++l]));return this}});a.all=function(b,h){return new g(a.query(b,h,true))};

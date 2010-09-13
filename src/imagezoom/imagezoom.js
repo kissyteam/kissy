@@ -4,17 +4,16 @@
  */
 KISSY.add('imagezoom', function(S, undefined) {
 
-    var DOM = S.DOM, Event = S.Event,
+    var doc = document,
+        DOM = S.DOM, Event = S.Event,
 
-        KS_HIDE_CLS = 'ks-hidden',
         CLS_PREFIX = 'ks-imagezoom-',
         CLS_VIEWER = CLS_PREFIX + 'viewer',
         CLS_LENS = CLS_PREFIX + 'lens',
         CLS_ICON = CLS_PREFIX + 'icon',
 
         DIV = '<div>', IMG = '<img>',
-        STANDARD = 'standard', FOLLOW = 'follow',
-        HEIGHT = 'height', WIDTH = 'width',
+        STANDARD = 'standard',
         RE_IMG_SRC = /^.+\.(jpg|png|gif)$/i,
         round = Math.round,
 
@@ -42,26 +41,28 @@ KISSY.add('imagezoom', function(S, undefined) {
      * @constructor
      * attached members：
      *   - this.image       需要缩放的图片      @type HTMLElement
-     *   - this.config      配置参数   @type Object
-     *   - this.lens        镜片      @type HTMLElement
-     *   - this.lensIcon    放大镜图标 @type HTMLElement
-     *   - this.bigImage    大图      @type HTMLElement
+     *   - this.config      配置参数           @type Object
+     *   - this.lens        镜片              @type HTMLElement
+     *   - this.lensIcon    放大镜图标         @type HTMLElement
+     *   - this.bigImage    大图              @type HTMLElement
      */
-    function ImageZoom(img, config) {
-        var self = this, tmp;
+    function ImageZoom(image, config) {
+        var self = this, data;
 
         if (!(self instanceof ImageZoom)) {
-            return new ImageZoom(img, config);
+            return new ImageZoom(image, config);
         }
 
-        self.image = img = S.get(img);
-        if (!img) return;
+        self.image = image = S.get(image);
+        if (!image) return;
 
         self.config = config = S.merge(defaultConfig, config);
+
         if (!config.bigImageSrc) {
-            tmp = DOM.attr(img, 'data-src');
-            if (tmp && RE_IMG_SRC.test(tmp)) config.bigImageSrc = tmp;
+            data = DOM.attr(image, 'data-ks-imagezoom');
+            if (data && RE_IMG_SRC.test(data)) config.bigImageSrc = data;
         }
+
         // 支持 [x, y] or x  <-- 只考虑 position 为 right
         config.offset = S.makeArray(config.offset);
 
@@ -71,73 +72,75 @@ KISSY.add('imagezoom', function(S, undefined) {
         }
 
         // 在小图加载完毕时初始化
-        imgOnLoad(img, function() {
+        imgOnLoad(image, function() {
             self._init();
         });
     }
 
     S.augment(ImageZoom, S.EventTarget, {
+
         _init: function() {
             this._renderUI();
             this._bindUI();
         },
 
         _renderUI: function() {
-            var self = this,
-                img = self.image,
-                cfg = self.config;
+            var self = this, config = self.config,
+                image = self.image;
 
-            /**
-             * 小图宽高及位置, 用到多次, 先保存起来
-             */
-            self.imgSize = S.merge(DOM.offset(img), getSize(img));
-            
+            // 小图宽高及位置, 用到多次, 先保存起来
+            self.imgRegion = S.merge(DOM.offset(image), getSize(image));
+
             // 标准模式，添加镜片
-            //if (cfg.type === STANDARD) {
             self._renderLens();
+
             // 放大镜图标
-            if (cfg.lensIcon) self._renderIcon();
-            
+            if (config.lensIcon) self._renderIcon();
+
         },
 
         _renderLens: function() {
-            var self = this,
-                lens = DOM.create(DIV, { 'class': CLS_LENS }),
-                cfg = self.config;
-            DOM.width(lens, cfg.lensSize[0]);
-            DOM.height(lens, cfg.lensSize[1]);
-            document.body.appendChild(lens);
+            var self = this, config = self.config,
+                lens = createAbsElem(CLS_LENS);
+
+            DOM.width(lens, config.lensSize[0]);
+            DOM.height(lens, config.lensSize[1]);
+
+            DOM.hide(lens);
+            doc.body.appendChild(lens);
+
             self.lens = lens;
-            // 添加之后先隐藏起来
-            hide(lens);
         },
 
         _renderIcon: function() {
             var self = this,
-                is = self.imgSize,
-                icon = DOM.create(DIV, { 'class': CLS_ICON });
-            document.body.appendChild(icon);
-            
+                region = self.imgRegion,
+                icon = createAbsElem(CLS_ICON);
+
+            doc.body.appendChild(icon);
             DOM.offset(icon, {
-                left: is.left + is.width - DOM.width(icon),
-                top: is.top + is.height - DOM.height(icon)
+                left: region.left + region.width - DOM.width(icon),
+                top: region.top + region.height - DOM.height(icon)
             });
+
             self.lensIcon = icon;
         },
-        
-        _bindUI: function() {
-            var self = this,
-                timer;
 
-            Event.on(self.image, 'mouseenter', function(ev) {
-                timer = S.later(function(){
+        _bindUI: function() {
+            var self = this, timer;
+
+            Event.on(self.image, 'mouseenter', function() {
+                timer = S.later(function() {
                     if (!self.viewer) self._createViewer();
                     self.show();
-                    timer.cancel();
                 }, 100);
             });
-            Event.on(self.image, 'mouseleave', function(){
-                if (timer) timer.cancel();
+
+            Event.on(self.image, 'mouseleave', function() {
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
+                }
             });
         },
 
@@ -145,12 +148,12 @@ KISSY.add('imagezoom', function(S, undefined) {
             var self = this, cfg = self.config, v, bImg, timer;
 
             // 创建 viewer 的 DOM 结构
-            v = DOM.create(DIV, { 'class': CLS_VIEWER });
+            v = createAbsElem(CLS_VIEWER);
             bImg = DOM.create(IMG, { src: cfg.bigImageSrc });
             v.appendChild(bImg);
 
             // 将 viewer 添加到 DOM 中
-            document.body.appendChild(v);
+            doc.body.appendChild(v);
 
             // 添加引用
             self.bigImage = bImg;
@@ -160,12 +163,16 @@ KISSY.add('imagezoom', function(S, undefined) {
                 // 设置大图加载的超时定时器
                 timer = S.later(function() {
                     if (!bImg.complete) self._showTimeoutMsg();
-                    timer.cancel();
+                    timer = undefined;
+
                 }, cfg.timeout * 1000);
 
                 // 大图加载完毕后更新显示区域
                 imgOnLoad(bImg, function() {
-                    if (timer) timer.cancel();
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
                     self._setViewerRegion();
                 });
             }
@@ -177,25 +184,24 @@ KISSY.add('imagezoom', function(S, undefined) {
         _setViewerRegion: function() {
             var self = this, cfg = self.config,
                 v = self.viewer,
-                is = self.imgSize,
+                region = self.imgRegion,
                 lensSize = cfg.lensSize,
                 left, top, width, height,
                 bigImage = self.bigImage, bigImageSize;
 
             // 标准模式
             bigImageSize = bigImage ? {width:cfg.bigImageSize[0], height: cfg.bigImageSize[1]} : getSize(bigImage);
-            
+
             // vH / bigImageH = lensH / imageH
-            height = round(bigImageSize.height * lensSize[1] / is.height);
-            width = round(bigImageSize.width * lensSize[0] / is.width);
-            
+            height = round(bigImageSize.height * lensSize[1] / region.height);
+            width = round(bigImageSize.width * lensSize[0] / region.width);
+
             // 只考虑 position 为 right 的情形
             if (bigImage) {
-                left = is.left + is.width + (cfg.offset[0]||0);
-                top = is.top + (cfg.offset[1]||0);
+                left = region.left + region.width + (cfg.offset[0] || 0);
+                top = region.top + (cfg.offset[1] || 0);
             }
-            
-            // set it
+
             if (width) {
                 DOM.width(v, width);
                 DOM.height(v, height);
@@ -204,39 +210,46 @@ KISSY.add('imagezoom', function(S, undefined) {
         },
 
         _onMouseMove: function(ev) {
-            var self = this,
-                is = self.imgSize;
-            
-            if ( ev.pageX>is.left && ev.pageX<is.left+is.width &&
-                ev.pageY>is.top && ev.pageY<is.top+is.height ) {
-                var cfg = self.config,
-                    viewer = self.viewer, lens = self.lens,
-                    is = self.imgSize,
-                    lensSize = cfg.lensSize,
-                    lensOffset = {
-                        left: ev.pageX - lensSize[0]/2,
-                        top: ev.pageY - lensSize[1]/2
-                    };
-                
-                if (lensOffset.left <= is.left) lensOffset.left = is.left;
-                else if (lensOffset.left >= is.width + is.left - lensSize[0])
-                    lensOffset.left = is.width + is.left - lensSize[0];
-                
-                if (lensOffset.top <= is.top) lensOffset.top = is.top;
-                else if (lensOffset.top >= is.height + is.top - lensSize[1])
-                    lensOffset.top = is.height + is.top - lensSize[1];
-                
+            var self = this, config = self.config,
+                viewer = self.viewer, lens = self.lens,
+                region = self.imgRegion,
+                rl = region.left, rt = region.top,
+                rw = region.width, rh = region.height,
+                lensSize = config.lensSize,
+                lensLeft, lensTop,
+                lensW = lensSize[0], lensH = lensSize[1];
+
+            if (ev.pageX > rl && ev.pageX < rl + rw &&
+                ev.pageY > rt && ev.pageY < rt + rh) {
+
+                lensLeft = ev.pageX - lensW / 2;
+                lensTop = ev.pageY - lensH / 2;
+
+                if (lensLeft <= rl) {
+                    lensLeft = rl;
+                } else if (lensLeft >= rw + rl - lensW) {
+                    lensLeft = rw + rl - lensW;
+                }
+
+                if (lensTop <= rt) {
+                    lensTop = rt;
+                } else if (lensTop >= rh + rt - lensH) {
+                    lensTop = rh + rt - lensH;
+                }
+
                 // 更新 lens 位置
-                if (lens) DOM.offset(lens, lensOffset);
-                
+                if (lens) DOM.offset(lens, { left: lensLeft, top: lensTop });
+
                 // 计算大图偏移量
                 var bigImgSize = getSize(self.bigImage);
-                
+
                 // 设置大图偏移
-                viewer.scrollLeft = round((lensOffset.left - is.left) * bigImgSize.width / is.width);
-                viewer.scrollTop = round((lensOffset.top - is.top) * bigImgSize.height / is.height);
-                
-            } else self.hide();
+                viewer.scrollLeft = round((lensLeft - rl) * bigImgSize.width / rw);
+                viewer.scrollTop = round((lensTop - rt) * bigImgSize.height / rh);
+
+            } else {
+                self.hide();
+            }
         },
 
         /**
@@ -250,19 +263,26 @@ KISSY.add('imagezoom', function(S, undefined) {
                 p = DOM.create('<p>');
                 v.appendChild(p);
             }
+
             DOM.html(p, cfg.timeoutMsg);
         },
-        show: function(){
-            show(this.lens);
-            hide(this.lensIcon);
-            show(this.viewer);
-            Event.on(document.body, 'mousemove', this._onMouseMove, this);
+
+        show: function() {
+            var self = this;
+
+            DOM.show([self.lens, self.viewer]);
+            DOM.hide(self.lensIcon);
+
+            Event.on(doc.body, 'mousemove', self._onMouseMove, self);
         },
-        hide: function(){
-            hide(this.lens);
-            show(this.lensIcon);
-            hide(this.viewer);
-            Event.remove(document.body, 'mousemove', this._onMouseMove, this);
+
+        hide: function() {
+            var self = this;
+
+            DOM.hide([self.lens, self.viewer]);
+            DOM.show(self.lensIcon);
+
+            Event.remove(doc.body, 'mousemove', self._onMouseMove, self);
         }
     });
 
@@ -278,16 +298,12 @@ KISSY.add('imagezoom', function(S, undefined) {
         }
     }
 
-    function hide(elem) {
-        if (elem) DOM.addClass(elem, KS_HIDE_CLS);
-    }
-
-    function show(elem) {
-        if (elem) DOM.removeClass(elem, KS_HIDE_CLS);
-    }
-
     function getSize(elem) {
         return { width: elem.clientWidth, height: elem.clientHeight };
+    }
+
+    function createAbsElem(cls) {
+        return DOM.create(DIV, { 'class': cls, 'style': 'position:absolute' });
     }
 
 });
@@ -308,7 +324,9 @@ KISSY.add('imagezoom', function(S, undefined) {
  *  201008
  *      - yubo: refactor to kissy src
  *      - 保留 标准模式+right, 镜片DOM移至body
+ *
  *  TODO:
  *      - 加入 Zazzle 的 follow 效果
  *      - 仿照 Zazzle 的效果，在大图加载过程中显示进度条和提示文字
+ *      - http://www.apple.com/iphone/features/retina-display.html
  */

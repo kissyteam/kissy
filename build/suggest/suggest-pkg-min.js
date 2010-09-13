@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 10:15
+build time: Sep 13 17:31
 */
 KISSY.add("suggest",function(g,n){function j(a,b,d){if(!(this instanceof j))return new j(a,b,d);this.textInput=g.get(a);b+=b.indexOf("?")===-1?"?":"&";this.dataSource=b+"code=utf-8&callback="+t;this.config=g.merge(A,d);this.queryParams=this.query=k;this._dataCache={};this._init()}function u(a){a.style.visibility=k}function v(a){a.style.visibility=w}function x(a,b){if(b.nodeType===1){c.html(a,k);a.appendChild(b)}else c.html(a,b)}var c=g.DOM,i=g.Event,q=window,o=document,p,y=g.get("head"),r=g.UA.ie,
 t="g_ks_suggest_callback",k="",w="hidden",z=parseInt,B=/^(input|button|a)$/i,A={containerCls:k,resultFormat:"%result%",closeBtnText:"\u5173\u95ed",shim:r===6,submitOnSelect:true};g.augment(j,g.EventTarget,{_init:function(){p=o.body;this._initTextInput();this._initContainer();this.config.shim&&this._initShim();this._initStyle();this._initEvent()},_initTextInput:function(){var a=this,b=a.textInput,d=false,f=0;c.attr(b,"autocomplete","off");a.config.autoFocus&&b.focus();i.on(b,"keydown",function(e){e=

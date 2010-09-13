@@ -11,7 +11,7 @@
         }
     };
 
-    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest', 'overlay'], function(modName) {
+    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest', 'overlay', 'imagezoom'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
             requires: ['core'],

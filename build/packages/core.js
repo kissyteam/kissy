@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 10:15
+build time: Sep 13 17:31
 */
 /**
  * @module  ua
@@ -196,9 +196,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 10:15
+build time: Sep 13 17:31
 */
 /**
  * @module  dom
@@ -982,6 +982,8 @@ KISSY.add('dom-style', function(S, undefined) {
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width', HEIGHT = 'height',
         AUTO = 'auto',
+        KS_CACHE = '_ks_cache',
+        DISPLAY = 'display', NONE = 'none',
         PARSEINT = parseInt,
         RE_LT = /^left|top$/,
         RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
@@ -1096,6 +1098,32 @@ KISSY.add('dom-style', function(S, undefined) {
             else {
                 DOM.css(selector, HEIGHT, value);
             }
+        },
+
+        /**
+         * Show the matched elements.
+         */
+        show: function(selector) {
+            S.query(selector).each(function(elem) {
+                elem.style[DISPLAY] = (elem[KS_CACHE] || 0)[DISPLAY] || EMPTY;
+            })
+        },
+
+        /**
+         * Hide the matched elements.
+         */
+        hide: function(selector) {
+            S.query(selector).each(function(elem) {
+                var style = elem.style, oldVal = style[DISPLAY];
+                
+                if (oldVal !== NONE) {
+                    if (oldVal) {
+                        elem[KS_CACHE] = elem[KS_CACHE] || { };
+                        elem[KS_CACHE][DISPLAY] = oldVal;
+                    }
+                    style[DISPLAY] = NONE;
+                }
+            })
         },
 
         /**
@@ -1972,9 +2000,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 10:15
+build time: Sep 13 17:31
 */
 /**
  * @module  event
@@ -2545,9 +2573,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 10:15
+build time: Sep 13 17:31
 */
 /**
  * @module  node
@@ -2868,9 +2896,9 @@ KISSY.add('node-attach', function(S, undefined) {
     });
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 10:15
+build time: Sep 13 17:31
 */
 /**
  * @module  cookie
@@ -2954,9 +2982,9 @@ KISSY.add('cookie', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 10:15
+build time: Sep 13 17:31
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -3282,9 +3310,9 @@ KISSY.add('json', function (S) {
     }
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 10:15
+build time: Sep 13 17:31
 */
 /**
  * @module anim-easing

@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 10:15
+build time: Sep 13 17:31
 */
 /**
  * @module kissy
@@ -69,7 +69,7 @@ build time: Sep 13 10:15
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.3',
+        version: '1.1.4',
 
         /**
          * Initializes KISSY object.
@@ -1311,7 +1311,7 @@ build time: Sep 13 10:15
         }
     };
 
-    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest', 'overlay'], function(modName) {
+    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest', 'overlay', 'imagezoom'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
             requires: ['core'],

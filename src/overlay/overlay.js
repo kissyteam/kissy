@@ -121,10 +121,8 @@ KISSY.add('overlay', function(S, undefined) {
                 trigger = self.trigger, timer;
 
             Event.on(trigger, 'mouseenter', function() {
-                if (self.hiddenTimer) {
-                    self.hiddenTimer.cancel();
-                    self.hiddenTimer = undefined;
-                }
+                self._clearHiddenTimer();
+
                 timer = S.later(function() {
                     self.show();
                     timer = undefined;
@@ -136,9 +134,8 @@ KISSY.add('overlay', function(S, undefined) {
                     timer.cancel();
                     timer = undefined;
                 }
-                self.hiddenTimer = S.later(function() {
-                    self.hide();
-                }, 120);
+
+                self._setHiddenTimer();
             });
         },
 
@@ -146,16 +143,27 @@ KISSY.add('overlay', function(S, undefined) {
             var self = this;
 
             Event.on(self.container, 'mouseleave', function() {
-                self.hiddenTimer = S.later(function() {
-                    self.hide();
-                }, 120);
+                self._setHiddenTimer();
             });
+
             Event.on(self.container, 'mouseenter', function() {
-                if (self.hiddenTimer) {
-                    self.hiddenTimer.cancel();
-                    self.hiddenTimer = undefined;
-                }
+                self._clearHiddenTimer();
             });
+        },
+
+        _setHiddenTimer: function() {
+            var self = this;
+            self._hiddenTimer = S.later(function() {
+                self.hide();
+            }, 120);
+        },
+
+        _clearHiddenTimer: function() {
+            var self = this;
+            if (self._hiddenTimer) {
+                self._hiddenTimer.cancel();
+                self._hiddenTimer = undefined;
+            }
         },
 
         _bindTriggerClick: function() {
@@ -180,7 +188,6 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         _realShow: function() {
-            DOM.css(this.container, 'display', 'block'); // 防止其他地方设置 display: none 后, 无法再次显示
             this._toggle(false);
             this._setPosition();
         },
@@ -188,7 +195,10 @@ KISSY.add('overlay', function(S, undefined) {
         _toggle: function(isVisible) {
             var self = this;
 
+            // 防止其他地方设置 display: none 后, 无法再次显示
+            if(!isVisible) DOM.css(self.container, 'display', 'block');
             DOM.css(self.container, 'visibility', isVisible ? 'hidden' : '');
+
             if(self.shim) self.shim.toggle();
             if (self.config.mask) mask[isVisible ? 'hide' : 'show']();
 
@@ -227,7 +237,6 @@ KISSY.add('overlay', function(S, undefined) {
             }
 
             DOM.css(container, 'zIndex', config.zIndex);
-            DOM.css(container, 'display', 'block'); // 强制去除内联 style 中的 display: none
 
             self.setBody(config.content);
             self._setSize();
@@ -349,7 +358,11 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         setBody: function(html) {
-            if(S.isString(html)) DOM.html(this.body, html);
+            this._setContent('body', html);
+        },
+
+        _setContent: function(where, html) {
+            if(S.isString(html)) DOM.html(this[where], html);
         }
     });
 

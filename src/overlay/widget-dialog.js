@@ -12,7 +12,7 @@ KISSY.add('dialog', function(S) {
         CLS_PREFIX = 'ks-dialog-',
 
         defaultConfig = {
-            title: '',
+            header: '',
             footer: '',
 
             containerCls: CLS_CONTAINER,
@@ -64,30 +64,22 @@ KISSY.add('dialog', function(S) {
             Dialog.superclass._prepareMarkup.call(self);
 
             self.header = S.get(DOT + config.hdCls, self.container);
-            self.footer = S.get(DOT + config.ftCls, self.container);
-
-            if (config.title || config.closable) {
-                if (!self.header) {
-                    self.header = DOM.create(DIV, { 'class': config.hdCls });
-                    if (self.body === self.container){
-                        self.setBody('');
-                        self.body = DOM.create(DIV, { 'class': config.bdCls });
-                        self.setBody(config.content);
-                        self.container.appendChild(self.body);
-                    }
-                    DOM.insertBefore(self.header, self.body);
-                }
-                self.setHeader(config.title);
-                if(config.closable) self._initClose();
+            if (!self.header) {
+                self.header = DOM.create(DIV, { 'class': config.hdCls });
+                DOM.insertBefore(self.header, self.body);
             }
+            self.setHeader(config.header);
 
             if (config.footer) {
+                self.footer = S.get(DOT + config.ftCls, self.container);
                 if (!self.footer) {
                     self.footer = DOM.create(DIV, { 'class': config.ftCls });
                     self.container.appendChild(self.footer);
                 }
                 self.setFooter(config.footer);
             }
+
+            if (config.closable) self._initClose();
         },
 
         _initClose: function() {
@@ -105,23 +97,27 @@ KISSY.add('dialog', function(S) {
         },
 
         setHeader: function(html) {
-            if(S.isString(html)) DOM.html(this.header, html);
+            this._setContent('header', html);
         },
 
         setFooter: function(html) {
-            if(S.isString(html)) DOM.html(this.footer, html);
+            this._setContent('footer', html);
         }
     });
 
-
     S.DialogManager = {
+
         register: function(dlg) {
-            this._dialog.push(dlg);
+            if (dlg instanceof Dialog) {
+                this._dialog.push(dlg);
+            }
         },
+
         _dialog: [],
-        hideAll: function(){
-            S.each(this._dialog, function(dlg){
-                dlg.hide();
+
+        hideAll: function() {
+            S.each(this._dialog, function(dlg) {
+                dlg && dlg.hide();
             })
         }
     };

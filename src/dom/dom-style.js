@@ -10,6 +10,8 @@ KISSY.add('dom-style', function(S, undefined) {
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width', HEIGHT = 'height',
         AUTO = 'auto',
+        KS_CACHE = '_ks_cache',
+        DISPLAY = 'display', NONE = 'none',
         PARSEINT = parseInt,
         RE_LT = /^left|top$/,
         RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
@@ -124,6 +126,32 @@ KISSY.add('dom-style', function(S, undefined) {
             else {
                 DOM.css(selector, HEIGHT, value);
             }
+        },
+
+        /**
+         * Show the matched elements.
+         */
+        show: function(selector) {
+            S.query(selector).each(function(elem) {
+                elem.style[DISPLAY] = (elem[KS_CACHE] || 0)[DISPLAY] || EMPTY;
+            })
+        },
+
+        /**
+         * Hide the matched elements.
+         */
+        hide: function(selector) {
+            S.query(selector).each(function(elem) {
+                var style = elem.style, oldVal = style[DISPLAY];
+                
+                if (oldVal !== NONE) {
+                    if (oldVal) {
+                        elem[KS_CACHE] = elem[KS_CACHE] || { };
+                        elem[KS_CACHE][DISPLAY] = oldVal;
+                    }
+                    style[DISPLAY] = NONE;
+                }
+            })
         },
 
         /**

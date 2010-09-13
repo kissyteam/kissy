@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>ImageZoom Test</title>
-<link href="http://a.tbcdn.cn/s/kissy/1.1.0/build/cssbase/base-min.css" rel="stylesheet" type="text/css" />
-<link href="imagezoom.css" rel="stylesheet"/>
+<link href="../../build/cssbase/base-min.css" rel="stylesheet"/>
 <script src="../../build/packages/kissy.js"></script>
 <script src="imagezoom.js"></script>
 <style>
@@ -14,6 +13,28 @@
         height: 310px;
         border: 1px solid grey;
     }
+
+    .ks-imagezoom-lens {
+        background: url(http://img04.taobaocdn.com/tps/i4/T12pdtXaldXXXXXXXX-2-2.png) repeat;
+        cursor: move;
+    }
+
+    .ks-imagezoom-icon {
+        height: 23px;
+        width: 23px;
+        border-right: 1px solid #999;
+        border-bottom: 1px solid #999;
+        background: url(http://img02.taobaocdn.com/tps/i2/T1uJNuXX8tXXXXXXXX-23-23.png) no-repeat scroll left top transparent;
+    }
+
+    .ks-imagezoom-viewer {
+        border: 1px solid #CCCCCC;
+        overflow: hidden;
+        text-align: center;
+        z-index: 999;
+        background: #fff url(assets/loading.gif) no-repeat center center;
+    }
+
 </style>
 </head>
 
@@ -42,7 +63,7 @@
 
 <h2>超级大图加载</h2>
 <div class="demo">
-    <a href="#"><img id="big-big" data-src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+    <a href="#"><img id="big-big" data-ks-imagezoom="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
     </a>
 </div>
 <script>

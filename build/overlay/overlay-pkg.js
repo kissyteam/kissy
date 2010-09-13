@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 10:15
+build time: Sep 13 17:31
 */
 /**
  * KISSY Mask
@@ -32,34 +32,11 @@ KISSY.add('mask', function(S, undefined) {
         config = S.merge(defaultConfig, config);
 
         var isShim = config.shim,
-            ifr = DOM.create('<iframe>');
+            style = isShim ? SHIM_STYLE : MASK_STYLE + config.style,
+            opacity = isShim ? 0 : config.opacity,
+            ifr = createMaskElem('<iframe>', style, opacity, !isShim);
 
-        DOM.attr(ifr, 'style', isShim ? SHIM_STYLE : MASK_STYLE + config.style);
-
-        var tmp;
-        if(isShim) config.opacity = 0;
-        else {
-            DOM.height(ifr, DOM.docHeight());
-            if (ie6) {
-                DOM.width(ifr, DOM.docWidth());
-            }
-            if (ie){
-                tmp = DOM.create('<div>');
-                DOM.attr(tmp, 'style', MASK_STYLE + config.style);
-                DOM.height(tmp, DOM.docHeight());
-                if (ie6) {
-                    DOM.width(tmp, DOM.docWidth());
-                }
-            }
-        }
-        DOM.css(ifr, 'opacity', config.opacity);
-        document.body.appendChild(ifr);
-
-        if (tmp) {
-            DOM.css(tmp, 'opacity', config.opacity);
-            document.body.appendChild(tmp);
-            this.div = tmp;
-        }
+        if (!isShim && ie) this.layer = createMaskElem('<div>', style, opacity, true);
 
         this.config = config;
         this.iframe = ifr;
@@ -68,13 +45,11 @@ KISSY.add('mask', function(S, undefined) {
     S.augment(Mask, {
 
         show: function() {
-            DOM.css(this.iframe, DISPLAY, 'block');
-            if (ie) DOM.css(this.div, DISPLAY, 'block');
+            DOM.show([this.iframe, this.layer]);
         },
 
         hide: function() {
-            DOM.css(this.iframe, DISPLAY, 'none');
-            if (ie) DOM.css(this.div, DISPLAY, 'none');
+            DOM.hide([this.iframe, this.layer]);
         },
 
         toggle: function() {
@@ -83,12 +58,8 @@ KISSY.add('mask', function(S, undefined) {
         },
 
         setSize: function(w, h) {
-            DOM.width(this.iframe, w);
-            DOM.height(this.iframe, h);
-            if (ie) {
-                DOM.width(this.div, w);
-                DOM.height(this.div, h);
-            }
+            setSize(this.iframe, w, h);
+            setSize(this.layer, w, h);
         },
 
         setOffset: function(x, y) {
@@ -100,12 +71,33 @@ KISSY.add('mask', function(S, undefined) {
                     top: y
                 }
             }
-            DOM.offset(this.iframe, offset);
-            if (ie) {
-                DOM.offset(this.div, offset);
-            }
+            DOM.offset([this.iframe, this.layer], offset);
         }
     });
+
+    function createMaskElem(tag, style, opacity, setWH) {
+        var elem = DOM.create(tag);
+
+        DOM.attr(elem, 'style', style);
+        DOM.css(elem, 'opacity', opacity);
+
+        if (setWH) {
+            DOM.height(elem, DOM.docHeight());
+            if (ie6) {
+                DOM.width(elem, DOM.docWidth());
+            }
+        }
+
+        document.body.appendChild(elem);
+        return elem;
+    }
+
+    function setSize(elem, w, h) {
+        if (elem) {
+            DOM.width(elem, w);
+            DOM.height(elem, h);
+        }
+    }
 
     S.Mask = Mask;
 });
@@ -171,7 +163,7 @@ KISSY.add('overlay', function(S, undefined) {
             shim: ie6
         },
 
-        DEFAULT_STYLE = 'position:absolute;visibility:hidden',
+        DEFAULT_STYLE = 'visibility:hidden;position:absolute;',
         TMPL = '<div class="{containerCls}" style="' + DEFAULT_STYLE + '"><div class="{bdCls}">{content}</div></div>',
 
         mask;
@@ -228,9 +220,12 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         _bindTriggerMouse: function() {
-            var self = this, trigger = self.trigger, timer;
+            var self = this,
+                trigger = self.trigger, timer;
 
             Event.on(trigger, 'mouseenter', function() {
+                self._clearHiddenTimer();
+
                 timer = S.later(function() {
                     self.show();
                     timer = undefined;
@@ -242,14 +237,43 @@ KISSY.add('overlay', function(S, undefined) {
                     timer.cancel();
                     timer = undefined;
                 }
-                self.hide();
+
+                self._setHiddenTimer();
             });
+        },
+
+        _bindContainerMouse: function() {
+            var self = this;
+
+            Event.on(self.container, 'mouseleave', function() {
+                self._setHiddenTimer();
+            });
+
+            Event.on(self.container, 'mouseenter', function() {
+                self._clearHiddenTimer();
+            });
+        },
+
+        _setHiddenTimer: function() {
+            var self = this;
+            self._hiddenTimer = S.later(function() {
+                self.hide();
+            }, 120);
+        },
+
+        _clearHiddenTimer: function() {
+            var self = this;
+            if (self._hiddenTimer) {
+                self._hiddenTimer.cancel();
+                self._hiddenTimer = undefined;
+            }
         },
 
         _bindTriggerClick: function() {
             var self = this;
 
-            Event.on(self.trigger, 'click', function() {
+            Event.on(self.trigger, 'click', function(e) {
+                e.halt();
                 self.show();
             });
         },
@@ -267,14 +291,17 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         _realShow: function() {
-            this._setPosition();
             this._toggle(false);
+            this._setPosition();
         },
 
         _toggle: function(isVisible) {
             var self = this;
 
+            // 防止其他地方设置 display: none 后, 无法再次显示
+            if(!isVisible) DOM.css(self.container, 'display', 'block');
             DOM.css(self.container, 'visibility', isVisible ? 'hidden' : '');
+
             if(self.shim) self.shim.toggle();
             if (self.config.mask) mask[isVisible ? 'hide' : 'show']();
 
@@ -302,6 +329,7 @@ KISSY.add('overlay', function(S, undefined) {
             if (container) {
                 // 已有 markup 可以很灵活，如果没有 bdCls, 就让 body 指向 container
                 self.body = S.get(DOT + config.bdCls, container) || container;
+
                 container.style.cssText += DEFAULT_STYLE;
             }
             // 构建 DOM
@@ -312,10 +340,11 @@ KISSY.add('overlay', function(S, undefined) {
             }
 
             DOM.css(container, 'zIndex', config.zIndex);
-            DOM.css(container, 'display', 'block'); // 强制去除内联 style 中的 display: none
 
             self.setBody(config.content);
             self._setSize();
+
+            if (config.triggerType === 'mouse') self._bindContainerMouse();
         },
 
         _setSize: function(w, h) {
@@ -432,7 +461,11 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         setBody: function(html) {
-            if(S.isString(html)) DOM.html(this.body, html);
+            this._setContent('body', html);
+        },
+
+        _setContent: function(where, html) {
+            if(S.isString(html)) DOM.html(this[where], html);
         }
     });
 
@@ -454,7 +487,7 @@ KISSY.add('overlay', function(S, undefined) {
 KISSY.add('popup', function(S) {
 
     var defaultConfig = {
-        triggerType: 'mouse',
+        triggerType: 'mouse', // 触发类型, click, mouse
         align: {
             node: 'trigger',
             points: ['cr', 'ct'],
@@ -485,3 +518,129 @@ KISSY.add('popup', function(S) {
     S.Popup = Popup;
 
 }, { host: 'overlay' });
+/**
+ * KISSY.Dialog
+ * @creator     乔花<qiaohua@taobao.com>
+ */
+KISSY.add('dialog', function(S) {
+
+    var DOM = S.DOM, Event = S.Event,
+
+        DOT = '.', DIV = '<div>',
+
+        CLS_CONTAINER = 'ks-overlay ks-dialog',
+        CLS_PREFIX = 'ks-dialog-',
+
+        defaultConfig = {
+            header: '',
+            footer: '',
+
+            containerCls: CLS_CONTAINER,
+            hdCls: CLS_PREFIX + 'hd',
+            bdCls: CLS_PREFIX + 'bd',
+            ftCls: CLS_PREFIX + 'ft',
+            closeBtnCls: CLS_PREFIX + 'close',
+
+            width: 400,
+            height: 300,
+            closable: true
+        };
+
+    /**
+     * Dialog Class
+     * @constructor
+     * attached members：
+     *  - this.header
+     *  - this.footer
+     */
+    function Dialog(container, config) {
+        var self = this;
+
+        // factory or constructor
+        if (!(self instanceof Dialog)) {
+            return new Dialog(container, config);
+        }
+
+        config = config || { };
+        if (S.isPlainObject(container)) config = container;
+        else config.container = container;
+        config.align = S.merge(S.clone(defaultConfig.align), config.align);
+        
+        Dialog.superclass.constructor.call(self, S.merge(defaultConfig, config));
+
+        self.manager = S.DialogManager;
+        self.manager.register(self);
+    }
+
+    S.extend(Dialog, S.Overlay);
+    S.Dialog = Dialog;
+
+    S.augment(Dialog, S.EventTarget, {
+
+        _prepareMarkup: function() {
+            var self = this,
+                config = self.config;
+
+            Dialog.superclass._prepareMarkup.call(self);
+
+            self.header = S.get(DOT + config.hdCls, self.container);
+            if (!self.header) {
+                self.header = DOM.create(DIV, { 'class': config.hdCls });
+                DOM.insertBefore(self.header, self.body);
+            }
+            self.setHeader(config.header);
+
+            if (config.footer) {
+                self.footer = S.get(DOT + config.ftCls, self.container);
+                if (!self.footer) {
+                    self.footer = DOM.create(DIV, { 'class': config.ftCls });
+                    self.container.appendChild(self.footer);
+                }
+                self.setFooter(config.footer);
+            }
+
+            if (config.closable) self._initClose();
+        },
+
+        _initClose: function() {
+            var self = this, config = self.config,
+                elem = DOM.create(DIV, { 'class': config.closeBtnCls });
+
+            DOM.html(elem, 'close');
+            
+            Event.on(elem, 'click', function(e) {
+                e.halt();
+                self.hide();
+            });
+
+            self.header.appendChild(elem);
+        },
+
+        setHeader: function(html) {
+            this._setContent('header', html);
+        },
+
+        setFooter: function(html) {
+            this._setContent('footer', html);
+        }
+    });
+
+    S.DialogManager = {
+
+        register: function(dlg) {
+            if (dlg instanceof Dialog) {
+                this._dialog.push(dlg);
+            }
+        },
+
+        _dialog: [],
+
+        hideAll: function() {
+            S.each(this._dialog, function(dlg) {
+                dlg && dlg.hide();
+            })
+        }
+    };
+
+}, { host: 'overlay' });
+

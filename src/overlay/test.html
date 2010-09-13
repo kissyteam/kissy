@@ -159,14 +159,14 @@
 </style>
 <h2>Dialog - 已有 DOM + Mask </h2>
 <button id="btn3">Show</button>
-<div class="dialog1"></div>
+<div class="dialog1"><div class="ks-dialog-bd"></div></div>
 <script>
     KISSY.ready(function(S){
         var dialog = S.Dialog('.dialog1',{
             trigger: '#btn3',
             width: 400,
             height: 300,
-            title: 'this is title',
+            header: 'this is title',
             content: 'content',
             mask: false
         });

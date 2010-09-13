@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 10:15
+build time: Sep 13 17:31
 */
 KISSY.add("event",function(e,k){function j(a,b,d,g,i){if(e.isString(b))b=e.query(b);if(e.isArray(b)){e.each(b,function(h){r[a](h,d,g,i)});return true}if((d=e.trim(d))&&d.indexOf(y)>0){e.each(d.split(y),function(h){r[a](b,h,g,i)});return true}}function m(a){return f(a)?a[w]:-1}function l(a,b){if(!f(a))return e.error("Text or comment node is not valid event target.");try{a[w]=b}catch(d){e.error(d)}}function c(a){try{a[w]=k;delete a[w]}catch(b){}}function f(a){return a&&a.nodeType!==3&&a.nodeType!==
 8}var s=document,t=s.addEventListener?function(a,b,d,g){a.addEventListener&&a.addEventListener(b,d,!!g)}:function(a,b,d){a.attachEvent&&a.attachEvent("on"+b,d)},z=s.removeEventListener?function(a,b,d,g){a.removeEventListener&&a.removeEventListener(b,d,!!g)}:function(a,b,d){a.detachEvent&&a.detachEvent("on"+b,d)},w="ksEventTargetId",y=" ",A=e.now(),x={},r={EVENT_GUID:w,special:{},add:function(a,b,d,g){if(!j("add",a,b,d,g)){var i=m(a),h,o,p,q,v;if(!(i===-1||!b||!e.isFunction(d))){if(!i){l(a,i=A++);

@@ -27,34 +27,11 @@ KISSY.add('mask', function(S, undefined) {
         config = S.merge(defaultConfig, config);
 
         var isShim = config.shim,
-            ifr = DOM.create('<iframe>');
+            style = isShim ? SHIM_STYLE : MASK_STYLE + config.style,
+            opacity = isShim ? 0 : config.opacity,
+            ifr = createMaskElem('<iframe>', style, opacity, !isShim);
 
-        DOM.attr(ifr, 'style', isShim ? SHIM_STYLE : MASK_STYLE + config.style);
-
-        var tmp;
-        if(isShim) config.opacity = 0;
-        else {
-            DOM.height(ifr, DOM.docHeight());
-            if (ie6) {
-                DOM.width(ifr, DOM.docWidth());
-            }
-            if (ie){
-                tmp = DOM.create('<div>');
-                DOM.attr(tmp, 'style', MASK_STYLE + config.style);
-                DOM.height(tmp, DOM.docHeight());
-                if (ie6) {
-                    DOM.width(tmp, DOM.docWidth());
-                }
-            }
-        }
-        DOM.css(ifr, 'opacity', config.opacity);
-        document.body.appendChild(ifr);
-
-        if (tmp) {
-            DOM.css(tmp, 'opacity', config.opacity);
-            document.body.appendChild(tmp);
-            this.layer = tmp;
-        }
+        if (!isShim && ie) this.layer = createMaskElem('<div>', style, opacity, true);
 
         this.config = config;
         this.iframe = ifr;
@@ -63,13 +40,11 @@ KISSY.add('mask', function(S, undefined) {
     S.augment(Mask, {
 
         show: function() {
-            DOM.css(this.iframe, DISPLAY, 'block');
-            if (this.layer) DOM.css(this.layer, DISPLAY, 'block');
+            DOM.show([this.iframe, this.layer]);
         },
 
         hide: function() {
-            DOM.css(this.iframe, DISPLAY, 'none');
-            if (this.layer) DOM.css(this.layer, DISPLAY, 'none');
+            DOM.hide([this.iframe, this.layer]);
         },
 
         toggle: function() {
@@ -78,12 +53,8 @@ KISSY.add('mask', function(S, undefined) {
         },
 
         setSize: function(w, h) {
-            DOM.width(this.iframe, w);
-            DOM.height(this.iframe, h);
-            if (this.layer) {
-                DOM.width(this.layer, w);
-                DOM.height(this.layer, h);
-            }
+            setSize(this.iframe, w, h);
+            setSize(this.layer, w, h);
         },
 
         setOffset: function(x, y) {
@@ -95,12 +66,33 @@ KISSY.add('mask', function(S, undefined) {
                     top: y
                 }
             }
-            DOM.offset(this.iframe, offset);
-            if (this.layer) {
-                DOM.offset(this.layer, offset);
-            }
+            DOM.offset([this.iframe, this.layer], offset);
         }
     });
+
+    function createMaskElem(tag, style, opacity, setWH) {
+        var elem = DOM.create(tag);
+
+        DOM.attr(elem, 'style', style);
+        DOM.css(elem, 'opacity', opacity);
+
+        if (setWH) {
+            DOM.height(elem, DOM.docHeight());
+            if (ie6) {
+                DOM.width(elem, DOM.docWidth());
+            }
+        }
+
+        document.body.appendChild(elem);
+        return elem;
+    }
+
+    function setSize(elem, w, h) {
+        if (elem) {
+            DOM.width(elem, w);
+            DOM.height(elem, h);
+        }
+    }
 
     S.Mask = Mask;
 });
