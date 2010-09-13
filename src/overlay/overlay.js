@@ -180,6 +180,7 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         _realShow: function() {
+            DOM.css(this.container, 'display', 'block'); // 防止其他地方设置 display: none 后, 无法再次显示
             this._toggle(false);
             this._setPosition();
         },

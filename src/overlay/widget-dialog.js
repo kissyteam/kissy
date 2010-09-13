@@ -47,6 +47,9 @@ KISSY.add('dialog', function(S) {
         config.align = S.merge(S.clone(defaultConfig.align), config.align);
         
         Dialog.superclass.constructor.call(self, S.merge(defaultConfig, config));
+
+        self.manager = S.DialogManager;
+        self.manager.register(self);
     }
 
     S.extend(Dialog, S.Overlay);
@@ -109,6 +112,19 @@ KISSY.add('dialog', function(S) {
             if(S.isString(html)) DOM.html(this.footer, html);
         }
     });
+
+
+    S.DialogManager = {
+        register: function(dlg) {
+            this._dialog.push(dlg);
+        },
+        _dialog: [],
+        hideAll: function(){
+            S.each(this._dialog, function(dlg){
+                dlg.hide();
+            })
+        }
+    };
 
 }, { host: 'overlay' });
 
