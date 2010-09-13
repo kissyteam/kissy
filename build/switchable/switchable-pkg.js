@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 7 10:10
+build time: Sep 9 12:39
 */
 /**
  * Switchable
@@ -13,6 +13,8 @@ KISSY.add('switchable', function(S, undefined) {
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
+
+        EVENT_INIT = 'init',
         EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
         CLS_PREFIX = 'ks-switchable-';
 
@@ -152,6 +154,8 @@ KISSY.add('switchable', function(S, undefined) {
                     plugin.init(self);
                 }
             });
+            
+            self.fire(EVENT_INIT);
         },
 
         /**

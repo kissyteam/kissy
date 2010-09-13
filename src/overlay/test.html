@@ -59,6 +59,10 @@
 <h2>Popup - 从 Markup 中构建</h2>
 
 <a id="link1">hover me</a>
+<select>
+    <option>aaaa</option>
+    <option>bbb</option>
+</select>
 <div id="popup2" style="display:none;border:1px solid #ccc;background:#F6F9FD">Popup content</div>
 <script>
     KISSY.ready(function(S) {
@@ -75,6 +79,108 @@
     });
 </script>
 <p class="code-switch">显示源码</p>
+
+
+<style>
+    .popup2 {
+        border: 1px solid green; 
+        background: none repeat scroll 0 0 rgb(246, 249, 253);
+    }
+</style>
+<h2>Popup - 新建Popup</h2>
+<a id="link2">hover me</a>
+<script>
+    KISSY.ready(function(S) {
+
+        var popup = S.Popup({
+            trigger: '#link2',
+            triggerType: 'mouse',
+            width: 300,
+            height: 200,
+            containerCls: 'popup2',
+            content: 'test popup',
+            align: {
+                node: 'trigger',
+                points: ['tr', 'tl']
+            }
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+
+<h2>多个Popup</h2>
+<style>
+    #multi {
+        width: 60px;
+    }
+    #multi li {
+        background: orange;
+        margin: 6px;
+    }
+</style>
+<ul id="multi">
+    <li>test1</li>
+    <li>test2</li>
+    <li>test3</li>
+</ul>
+<div id="popup3"></div>
+<script>
+    KISSY.ready(function(S){
+        S.each(S.query('#multi li'), function(t){
+            var popup = S.Popup('#popup3', {
+                trigger: t,
+                triggerType: 'mouse'
+            });
+            popup.on('show',function(){
+               popup.setBody(S.DOM.html(t)); 
+            });
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+<style>
+    .dialog1 {
+        display: none;
+        background: #ffffff;
+        border: 2px solid green;
+        text-align: center;
+        padding: 6px;
+    }
+</style>
+<h2>Dialog - 已有 DOM + Mask </h2>
+<button id="btn3">Show</button>
+<div class="dialog1"></div>
+<script>
+    KISSY.ready(function(S){
+        var dialog = S.Dialog('.dialog1',{
+            trigger: '#btn3',
+            width: 400,
+            height: 300,
+            title: 'this is title',
+            content: 'content',
+            mask: true
+        });
+    });
+</script>
+
+<h2>Dialog - 新建 + Mask </h2>
+<button id="btn4">Show</button>
+<script>
+    KISSY.ready(function(S){
+        var dialog = S.Dialog({
+            trigger: '#btn4',
+            width: 400,
+            height: 300,
+            title: 'this is title',
+            footer: 'footer',
+            content: 'content',
+            mask: true
+        });
+    });
+</script>
+
 
 <script>
     (function() {

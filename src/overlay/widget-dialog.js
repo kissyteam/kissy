@@ -13,11 +13,14 @@ KISSY.add('dialog', function(S) {
 
         defaultConfig = {
             title: '',
+            footer: '',
+
             containerCls: CLS_CONTAINER,
             hdCls: CLS_PREFIX + 'hd',
             bdCls: CLS_PREFIX + 'bd',
             ftCls: CLS_PREFIX + 'ft',
             closeBtnCls: CLS_PREFIX + 'close',
+
             width: 400,
             height: 300,
             closable: true
@@ -37,7 +40,13 @@ KISSY.add('dialog', function(S) {
         if (!(self instanceof Dialog)) {
             return new Dialog(container, config);
         }
-        Dialog.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
+
+        config = config || { };
+        if (S.isPlainObject(container)) config = container;
+        else config.container = container;
+        config.align = S.merge(S.clone(defaultConfig.align), config.align);
+        
+        Dialog.superclass.constructor.call(self, S.merge(defaultConfig, config));
     }
 
     S.extend(Dialog, S.Overlay);
@@ -51,24 +60,30 @@ KISSY.add('dialog', function(S) {
 
             Dialog.superclass._prepareMarkup.call(self);
 
-            self.head = S.get(DOT + config.hdCls, self.container);
-            self.foot = S.get(DOT + config.ftCls, self.container);
+            self.header = S.get(DOT + config.hdCls, self.container);
+            self.footer = S.get(DOT + config.ftCls, self.container);
 
-            if (config.hdContent || config.close) {
-                if (!self.head) {
-                    self.head = DOM.create(DIV, { 'class': config.hdCls });
-                    DOM.insertBefore(self.head, self.body);
+            if (config.title || config.closable) {
+                if (!self.header) {
+                    self.header = DOM.create(DIV, { 'class': config.hdCls });
+                    if (self.body === self.container){
+                        self.setBody('');
+                        self.body = DOM.create(DIV, { 'class': config.bdCls });
+                        self.setBody(config.content);
+                        self.container.appendChild(self.body);
+                    }
+                    DOM.insertBefore(self.header, self.body);
                 }
-                self.setHdContent(config.hdContent);
+                self.setHeader(config.title);
                 if(config.closable) self._initClose();
             }
 
-            if (config.ftContent) {
-                if (!self.foot) {
-                    self.foot = DOM.create(DIV, { 'class': config.ftCls });
-                    self.container.appendChild(self.foot);
+            if (config.footer) {
+                if (!self.footer) {
+                    self.footer = DOM.create(DIV, { 'class': config.ftCls });
+                    self.container.appendChild(self.footer);
                 }
-                self.setFooter(config.ftContent);
+                self.setFooter(config.footer);
             }
         },
 
@@ -83,15 +98,15 @@ KISSY.add('dialog', function(S) {
                 self.hide();
             });
 
-            self.head.appendChild(elem);
+            self.header.appendChild(elem);
         },
 
         setHeader: function(html) {
-            DOM.html(this.header, html);
+            if(S.isString(html)) DOM.html(this.header, html);
         },
 
         setFooter: function(html) {
-            DOM.html(this.footer, html);
+            if(S.isString(html)) DOM.html(this.footer, html);
         }
     });
 

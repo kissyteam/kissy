@@ -24,8 +24,12 @@ KISSY.add('popup', function(S) {
             return new Popup(container, config);
         }
 
+        config = config || { };
+        if (S.isPlainObject(container)) config = container;
+        else config.container = container;
         config.align = S.merge(S.clone(defaultConfig.align), config.align);
-        Popup.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
+
+        Popup.superclass.constructor.call(self, S.merge(defaultConfig, config));
     }
 
     S.extend(Popup, S.Overlay);

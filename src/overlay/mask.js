@@ -6,34 +6,55 @@ KISSY.add('mask', function(S, undefined) {
 
     var DOM = S.DOM,
         DISPLAY = 'display',
+        ie = S.UA.ie,
+        ie6 = ie === 6,
+
+        MASK_STYLE = 'position:absolute;left:0;top:0;width:100%;border:0;background:black;z-index:9998;display:none;',
+        SHIM_STYLE = 'position:absolute;z-index:9997;border:0;display:none;',
 
         defaultConfig = {
             shim: false,
             opacity: .6,
-            extraCls: ''
+            style: ''
         };
 
     function Mask(config){
+
         if (!(this instanceof Mask)) {
             return new Mask(config);
         }
 
         config = S.merge(defaultConfig, config);
 
-        DOM.addStyleSheet(
-            '.ks-mask{position:absolute;left:0;top:0;width:100%;border:0;background:black;z-index:9998;display:none}' +
-                '.ks-shim{position:absolute;z-index:9997;border:0;display:none}',
-            'ks-mask-style');
-
         var isShim = config.shim,
-            ifr = DOM.create('<iframe>', { 'class': isShim ? 'ks-shim' : 'ks-mask' + ' ' + config.extraCls });
+            ifr = DOM.create('<iframe>');
 
+        DOM.attr(ifr, 'style', isShim ? SHIM_STYLE : MASK_STYLE + config.style);
+
+        var tmp;
         if(isShim) config.opacity = 0;
-        else DOM.height(ifr, DOM.docHeight());
-
+        else {
+            DOM.height(ifr, DOM.docHeight());
+            if (ie6) {
+                DOM.width(ifr, DOM.docWidth());
+            }
+            if (ie){
+                tmp = DOM.create('<div>');
+                DOM.attr(tmp, 'style', MASK_STYLE + config.style);
+                DOM.height(tmp, DOM.docHeight());
+                if (ie6) {
+                    DOM.width(tmp, DOM.docWidth());
+                }
+            }
+        }
         DOM.css(ifr, 'opacity', config.opacity);
-
         document.body.appendChild(ifr);
+
+        if (tmp) {
+            DOM.css(tmp, 'opacity', config.opacity);
+            document.body.appendChild(tmp);
+            this.div = tmp;
+        }
 
         this.config = config;
         this.iframe = ifr;
@@ -43,10 +64,12 @@ KISSY.add('mask', function(S, undefined) {
 
         show: function() {
             DOM.css(this.iframe, DISPLAY, 'block');
+            if (ie) DOM.css(this.div, DISPLAY, 'block');
         },
 
         hide: function() {
             DOM.css(this.iframe, DISPLAY, 'none');
+            if (ie) DOM.css(this.div, DISPLAY, 'none');
         },
 
         toggle: function() {
@@ -57,6 +80,10 @@ KISSY.add('mask', function(S, undefined) {
         setSize: function(w, h) {
             DOM.width(this.iframe, w);
             DOM.height(this.iframe, h);
+            if (ie) {
+                DOM.width(this.div, w);
+                DOM.height(this.div, h);
+            }
         },
 
         setOffset: function(x, y) {
@@ -69,6 +96,9 @@ KISSY.add('mask', function(S, undefined) {
                 }
             }
             DOM.offset(this.iframe, offset);
+            if (ie) {
+                DOM.offset(this.div, offset);
+            }
         }
     });
 

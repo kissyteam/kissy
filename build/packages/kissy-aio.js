@@ -1530,7 +1530,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 8 22:13
+build time: Sep 9 12:58
 */
 /**
  * @module  dom
@@ -7083,7 +7083,7 @@ KISSY.add('flash-embed', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 7 10:10
+build time: Sep 9 12:39
 */
 /**
  * Switchable
@@ -7095,6 +7095,8 @@ KISSY.add('switchable', function(S, undefined) {
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
+
+        EVENT_INIT = 'init',
         EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
         CLS_PREFIX = 'ks-switchable-';
 
@@ -7234,6 +7236,8 @@ KISSY.add('switchable', function(S, undefined) {
                     plugin.init(self);
                 }
             });
+            
+            self.fire(EVENT_INIT);
         },
 
         /**
@@ -9228,7 +9232,7 @@ KISSY.add('suggest', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.3
 MIT Licensed
-build time: Sep 9 09:32
+build time: Sep 9 13:07
 */
 /**
  * KISSY Mask
@@ -9239,30 +9243,30 @@ KISSY.add('mask', function(S, undefined) {
     var DOM = S.DOM,
         DISPLAY = 'display',
 
+        MASK_STYLE = 'position:absolute;left:0;top:0;width:100%;border:0;background:black;z-index:9998;display:none;',
+        SHIM_STYLE = 'position:absolute;z-index:9997;border:0;display:none;',
+
         defaultConfig = {
             shim: false,
             opacity: .6,
-            extraCls: ''
+            style: ''
         };
 
     function Mask(config){
+
         if (!(this instanceof Mask)) {
             return new Mask(config);
         }
 
         config = S.merge(defaultConfig, config);
 
-        DOM.addStyleSheet(
-            '.ks-mask{position:absolute;left:0;top:0;width:100%;border:0;background:black;z-index:9998;display:none}' +
-                '.ks-shim{position:absolute;z-index:9997;border:0;display:none}',
-            'ks-mask-style');
-
         var isShim = config.shim,
-            ifr = DOM.create('<iframe>', { 'class': isShim ? 'ks-shim' : 'ks-mask' + ' ' + config.extraCls });
+            ifr = DOM.create('<iframe>');
 
         if(isShim) config.opacity = 0;
         else DOM.height(ifr, DOM.docHeight());
 
+        DOM.attr(ifr, 'style', isShim ? SHIM_STYLE : MASK_STYLE + config.style);
         DOM.css(ifr, 'opacity', config.opacity);
 
         document.body.appendChild(ifr);
@@ -9369,7 +9373,7 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         DEFAULT_STYLE = 'position:absolute;visibility:hidden',
-        TMPL = '<div class="{containerCls}" style="' + DEFAULT_STYLE + '"><div class="{bdCls}">{bdContent}</div></div>',
+        TMPL = '<div class="{containerCls}" style="' + DEFAULT_STYLE + '"><div class="{bdCls}">{content}</div></div>',
 
         mask;
 
@@ -9508,7 +9512,7 @@ KISSY.add('overlay', function(S, undefined) {
             }
 
             DOM.css(container, 'zIndex', config.zIndex);
-            DOM.css(container, 'display', ''); // 强制去除内联 style 中的 display: none
+            DOM.css(container, 'display', 'block'); // 强制去除内联 style 中的 display: none
 
             self.setBody(config.content);
             self._setSize();
@@ -9670,8 +9674,12 @@ KISSY.add('popup', function(S) {
             return new Popup(container, config);
         }
 
+        config = config || { };
+        if (S.isPlainObject(container)) config = container;
+        else config.container = container;
         config.align = S.merge(S.clone(defaultConfig.align), config.align);
-        Popup.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
+
+        Popup.superclass.constructor.call(self, S.merge(defaultConfig, config));
     }
 
     S.extend(Popup, S.Overlay);

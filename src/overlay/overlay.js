@@ -61,7 +61,7 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         DEFAULT_STYLE = 'position:absolute;visibility:hidden',
-        TMPL = '<div class="{containerCls}" style="' + DEFAULT_STYLE + '"><div class="{bdCls}">{bdContent}</div></div>',
+        TMPL = '<div class="{containerCls}" style="' + DEFAULT_STYLE + '"><div class="{bdCls}">{content}</div></div>',
 
         mask;
 
@@ -156,6 +156,7 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         _realShow: function() {
+            this._setPosition();
             this._toggle(false);
         },
 
@@ -200,11 +201,10 @@ KISSY.add('overlay', function(S, undefined) {
             }
 
             DOM.css(container, 'zIndex', config.zIndex);
-            DOM.css(container, 'display', ''); // 强制去除内联 style 中的 display: none
+            DOM.css(container, 'display', 'block'); // 强制去除内联 style 中的 display: none
 
             self.setBody(config.content);
             self._setSize();
-            self._setPosition();
         },
 
         _setSize: function(w, h) {
