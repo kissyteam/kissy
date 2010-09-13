@@ -44,7 +44,6 @@ KISSY.add('overlay', function(S, undefined) {
 
             trigger: null,
             triggerType: 'click',   // 触发类型
-            triggerLater: false,    // 触发延迟隐藏
 
             width: 0,
             height: 0,
@@ -139,11 +138,11 @@ KISSY.add('overlay', function(S, undefined) {
                 }
                 self.hiddenTimer = S.later(function() {
                     self.hide();
-                }, self.config.triggerLater ? 120 : 0);
+                }, 120);
             });
         },
 
-        _bindContainerMouse: function(){
+        _bindContainerMouse: function() {
             var self = this;
 
             Event.on(self.container, 'mouseleave', function() {
@@ -229,9 +228,10 @@ KISSY.add('overlay', function(S, undefined) {
             DOM.css(container, 'zIndex', config.zIndex);
             DOM.css(container, 'display', 'block'); // 强制去除内联 style 中的 display: none
 
-            if (self.config.triggerLater) self._bindContainerMouse();
             self.setBody(config.content);
             self._setSize();
+
+            if (config.triggerType === 'mouse') self._bindContainerMouse();
         },
 
         _setSize: function(w, h) {
