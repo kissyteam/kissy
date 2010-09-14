@@ -83,6 +83,9 @@ KISSY.add('node-attach', function(S, undefined) {
         }
     });
 
+    // dom-data
+    attach(['data', 'removeData'], HAS_NAME);
+
     // dom-class
     attach(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass']);
 
@@ -93,6 +96,7 @@ KISSY.add('node-attach', function(S, undefined) {
     // dom-style
     attach(['css'], HAS_NAME);
     attach(['width', 'height'], ONLY_VAL);
+    attach(['show', 'hide', 'toggle']);
 
     // dom-offset
     attach(['offset'], ONLY_VAL);

@@ -244,9 +244,6 @@ KISSY.add('dom-style', function(S, undefined) {
 });
 
 /**
- * TODO:
- *  - 将 ks-cache 机制独立成类 jQuery 的 data
- * 
  * NOTES:
  *  - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
  *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。

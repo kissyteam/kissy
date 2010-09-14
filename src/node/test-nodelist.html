@@ -58,6 +58,25 @@
         })
     }
 
+    function test_data(test) {
+        var nodes = S.all('#test-data2');
+
+        nodes.data('data-1', 'val-1');
+        if(nodes.data('data-1') !== 'val-1') test.fail();
+
+        nodes.data('data-1', 'val-2');
+        if(nodes.data('data-1') !== 'val-2') test.fail();
+    }
+
+    function test_removeData(test) {
+        var nodes = S.all('#test-data3');
+
+        nodes.data('data', 'val');
+        nodes.removeData('data');
+        if(nodes.data('data') === 'val') test.fail();
+        if(nodes.data()) test.fail();
+    }
+
     function test_query_class_sep(test) {
         test.status = 'sep';
     }
@@ -205,6 +224,37 @@
         if(S.all('#test2').height() !== $('#test2').height()) test.fail();
     }
 
+    function test_show(test) {
+        var nodes = S.all('#test-display');
+
+        nodes.css('display', 'none');
+        nodes.show();
+        if(nodes.css('display') === 'none') test.fail();
+
+        nodes.removeAttr('style');
+    }
+
+    function test_hide(test) {
+        var nodes = S.all('#test-display');
+
+        nodes.hide();
+        if(nodes.css('display') !== 'none') test.fail();
+
+        nodes.removeAttr('style');
+    }
+
+    function test_toggle(test) {
+        var nodes = S.all('#test-display');
+
+        nodes.toggle();
+        if(nodes.css('display') !== 'none') test.fail();
+
+        nodes.toggle();
+        if(nodes.css('display') === 'none') test.fail();
+
+        nodes.removeAttr('style');
+    }
+
     function test_query_offset_sep(test) {
         test.status = 'sep';
     }
@@ -349,6 +399,9 @@
         <option selected>2</option>
         <option>3</option>
     </select>
+    <p id="test-data2"></p>
+    <p id="test-data3"></p>
+    <p id="test-display"></p>
 </div>
 
 <script>

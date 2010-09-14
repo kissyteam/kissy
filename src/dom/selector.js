@@ -107,12 +107,12 @@ KISSY.add('selector', function(S, undefined) {
         return ret;
     }
 
-    function isNodeList(node) {
-        // 非 webkit 下，直接用 namedItem 判断
-        // 在 webkit 下，用 node.item 判断
+    function isNodeList(o) {
         // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
-        // 注2：select 等元素也有 namedItem, 要用 !node.nodeType 排除掉
-        return node && !node.nodeType && (node.namedItem || S.isFunction(node.item));
+        // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
+        // 注3：通过 namedItem 来判断不可靠
+        // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
+        return o && !o.nodeType && o.item && (o != window);
     }
 
     // 调整 context 为合理值

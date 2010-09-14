@@ -55,6 +55,25 @@
         test.status = 'sep';
     }
 
+    function test_data(test) {
+        var node = S.one('#test-data2');
+
+        node.data('data-1', 'val-1');
+        if(node.data('data-1') !== 'val-1') test.fail();
+
+        node.data('data-1', 'val-2');
+        if(node.data('data-1') !== 'val-2') test.fail();
+    }
+
+    function test_removeData(test) {
+        var node = S.one('#test-data3');
+
+        node.data('data', 'val');
+        node.removeData('data');
+        if(node.data('data') === 'val') test.fail();
+        if(node.data()) test.fail();
+    }
+
     function test_hasClass(test) {
         var a = S.one('#foo a');
 
@@ -203,6 +222,37 @@
         if(S.one('#test2').height() !== $('#test2').height()) test.fail();
     }
 
+    function test_show(test) {
+        var node = S.one('#test-display');
+
+        node.css('display', 'none');
+        node.show();
+        if(node.css('display') === 'none') test.fail();
+
+        node.removeAttr('style');
+    }
+
+    function test_hide(test) {
+        var node = S.one('#test-display');
+
+        node.hide();
+        if(node.css('display') !== 'none') test.fail();
+
+        node.removeAttr('style');
+    }
+
+    function test_toggle(test) {
+        var node = S.one('#test-display');
+
+        node.toggle();
+        if(node.css('display') !== 'none') test.fail();
+
+        node.toggle();
+        if(node.css('display') === 'none') test.fail();
+
+        node.removeAttr('style');
+    }
+
     function test_query_offset_sep(test) {
         test.status = 'sep';
     }
@@ -262,6 +312,7 @@
     }
 
     function test_remove(test) {
+        debugger
         S.all('.test').remove();
         if(S.all('.test').length !== 0) test.fail();
     }
@@ -356,6 +407,9 @@
         <option selected>2</option>
         <option>3</option>
     </select>
+    <p id="test-data2"></p>
+    <p id="test-data3"></p>
+    <p id="test-display"></p>
 </div>
 
 </body>
