@@ -2,7 +2,7 @@
  * @module  日历
  * @author  lijing00333@163.com 拔赤
  */
-KISSY.add('calendar', function(S) {
+KISSY.add('calendar', function(S, undefined) {
 
     function Calendar(trigger, config) {
         this._init(trigger, config);
@@ -47,12 +47,12 @@ KISSY.add('calendar', function(S) {
             return this;
         },
 
-        render:function(o) {
+        render: function(o) {
             var self = this,
-                o = o || {},
                 i = 0,
                 _prev,_next,_oym;
 
+            o = o || {};
             self._parseParam(o);
             self.ca = [];
 
@@ -66,11 +66,7 @@ KISSY.add('calendar', function(S) {
                     _prev = false;
                     _oym = self._computeNextMonth(_oym);
                 }
-                if (i == (self.pages - 1)) {
-                    _next = true;
-                } else {
-                    _next = false;
-                }
+                _next = i == (self.pages - 1);
                 self.ca.push(new self.Page({
                     year:_oym[0],
                     month:_oym[1],
@@ -85,24 +81,26 @@ KISSY.add('calendar', function(S) {
             return this;
 
         },
+
         /**
          * 计算d天的前几天或者后几天，返回date
          */
-        _showdate:function(n, d) {
+        _showdate: function(n, d) {
             var uom = new Date(d - 0 + n * 86400000);
             uom = uom.getFullYear() + "/" + (uom.getMonth() + 1) + "/" + uom.getDate();
             return new Date(uom);
         },
+
         /**
          * 创建日历外框的事件
          */
-        _buildEvent:function() {
+        _buildEvent: function() {
             var self = this;
             if (!self.popup)return this;
             //点击空白
             //flush event
             for (var i = 0; i < self.EV.length; i++) {
-                if (typeof self.EV[i] != 'undefined') {
+                if (self.EV[i] !== undefined) {
                     self.EV[i].detach();
                 }
             }
@@ -120,7 +118,7 @@ KISSY.add('calendar', function(S) {
                 }
             });
             //点击触点
-            for (var i = 0; i < self.triggerType.length; i++) {
+            for (i = 0; i < self.triggerType.length; i++) {
 
                 self.EV[1] = S.one('#' + self.id).on(self.triggerType[i], function(e) {
                     e.target = S.Node(e.target);
@@ -149,7 +147,8 @@ KISSY.add('calendar', function(S) {
             }
             return this;
         },
-        toggle:function() {
+
+        toggle: function() {
             var self = this;
             if (self.con.css('visibility') == 'hidden') {
                 self.show();
@@ -158,11 +157,10 @@ KISSY.add('calendar', function(S) {
             }
         },
 
-
         /**
          * 显示
          */
-        show:function() {
+        show: function() {
             var self = this;
             self.con.css('visibility', '');
             var _x = self.trigger.offset().left,
@@ -177,7 +175,7 @@ KISSY.add('calendar', function(S) {
         /**
          * 隐藏
          */
-        hide:function() {
+        hide: function() {
             var self = this;
             self.con.css('visibility', 'hidden');
             return this;
@@ -186,28 +184,39 @@ KISSY.add('calendar', function(S) {
         /**
          * 创建参数列表
          */
-        _buildParam:function(o) {
+        _buildParam: function(o) {
             var self = this;
-            if (typeof o == 'undefined' || o == null) {
-                var o = {};
+            if (o === undefined || o == null) {
+                o = { };
             }
-            //null在这里是“占位符”，用来清除参数的一个道具
-            self.date = (typeof o.date == 'undefined' || o.date == null) ? new Date() : o.date;
-            self.selected = (typeof o.selected == 'undefined' || o.selected == null) ? self.date : o.selected;
-            self.startDay = (typeof o.startDay == 'undefined' || o.startDay == null) ? (7 - 7) : (7 - o.startDay) % 7;//1,2,3,4,5,6,7
-            self.pages = (typeof o.pages == 'undefined' || o.pages == null) ? 1 : o.pages;
-            self.closable = (typeof o.closable == 'undefined' || o.closable == null) ? false : o.closable;
-            self.rangeSelect = (typeof o.rangeSelect == 'undefined' || o.rangeSelect == null) ? false : o.rangeSelect;
-            self.minDate = (typeof o.minDate == 'undefined' || o.minDate == null) ? false : o.minDate;
-            self.maxDate = (typeof o.maxDate == 'undefined' || o.maxDate == null) ? false : o.maxDate;
-            self.multiSelect = (typeof o.multiSelect == 'undefined' || o.multiSelect == null) ? false : o.multiSelect;
-            self.navigator = (typeof o.navigator == 'undefined' || o.navigator == null) ? true : o.navigator;
-            self.arrow_left = (typeof o.arrow_left == 'undefined' || o.arrow_left == null) ? false : o.arrow_left;
-            self.arrow_right = (typeof o.arrow_right == 'undefined' || o.arrow_right == null) ? false : o.arrow_right;
-            self.popup = (typeof o.popup == 'undefined' || o.popup == null) ? false : o.popup;
-            self.showTime = (typeof o.showTime == 'undefined' || o.showTime == null) ? false : o.showTime;
-            self.triggerType = (typeof o.triggerType == 'undefined' || o.triggerType == null) ? ['click'] : o.triggerType;
-            if (typeof o.range != 'undefined' && o.range != null) {
+
+            function setParam(def, key) {
+                var v = o[key];
+                // null在这里是“占位符”，用来清除参数的一个道具
+                self[key] = (v === undefined || v == null) ? def : v;
+            }
+
+            S.each({
+                date:        new Date(),
+                startDay:    0,
+                pages:       1,
+                closable:    false,
+                rangeSelect: false,
+                minDate:     false,
+                maxDate:     false,
+                multiSelect: false,
+                navigator:   true,
+                arrow_left:  false,
+                arrow_right: false,
+                popup:       false,
+                showTime:    false,
+                triggerType: ['click']
+            }, setParam);
+
+            setParam(self.date, 'selected');
+            if(o.startDay) self.startDay = (7 - o.startDay) % 7;
+
+            if (o.range !== undefined && o.range != null) {
                 var s = self._showdate(1, new Date(o.range.start.getFullYear() + '/' + (o.range.start.getMonth() + 1) + '/' + (o.range.start.getDate())));
                 var e = self._showdate(1, new Date(o.range.end.getFullYear() + '/' + (o.range.end.getMonth() + 1) + '/' + (o.range.end.getDate())));
                 self.range = {
@@ -227,10 +236,10 @@ KISSY.add('calendar', function(S) {
         /**
          * 过滤参数列表
          */
-        _parseParam:function(o) {
+        _parseParam: function(o) {
             var self = this,i;
-            if (typeof o == 'undefined' || o == null) {
-                var o = {};
+            if (o === undefined || o == null) {
+                o = {};
             }
             for (i in o) {
                 self[i] = o[i];
@@ -242,11 +251,11 @@ KISSY.add('calendar', function(S) {
         /**
          * 模板函数
          */
-        _templetShow : function(templet, data) {
-            var self = this,str_in,value_s,i,par;
+        _templetShow: function(templet, data) {
+            var str_in,value_s,i,m,value,par;
             if (data instanceof Array) {
                 str_in = '';
-                for (var i = 0; i < data.length; i++) {
+                for (i = 0; i < data.length; i++) {
                     str_in += arguments.callee(templet, data[i]);
                 }
                 templet = str_in;
@@ -262,11 +271,12 @@ KISSY.add('calendar', function(S) {
             }
             return templet;
         },
+
         /**
          * 处理日期
          */
-        _handleDate:function() {
-            var self = this
+        _handleDate: function() {
+            var self = this,
             date = self.date;
             self.weekday = date.getDay() + 1;//星期几 //指定日期是星期几
             self.day = date.getDate();//几号
@@ -274,12 +284,14 @@ KISSY.add('calendar', function(S) {
             self.year = date.getFullYear();//年份
             return this;
         },
+
         //get标题
-        _getHeadStr:function(year, month) {
+        _getHeadStr: function(year, month) {
             return year.toString() + '年' + (Number(month) + 1).toString() + '月';
         },
+
         //月加
-        _monthAdd:function() {
+        _monthAdd: function() {
             var self = this;
             if (self.month == 11) {
                 self.year++;
@@ -290,8 +302,9 @@ KISSY.add('calendar', function(S) {
             self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
             return this;
         },
+
         //月减
-        _monthMinus:function() {
+        _monthMinus: function() {
             var self = this;
             if (self.month == 0) {
                 self.year--;
@@ -302,10 +315,10 @@ KISSY.add('calendar', function(S) {
             self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
             return this;
         },
+
         //裸算下一个月的年月,[2009,11],年:fullYear，月:从0开始计数
-        _computeNextMonth:function(a) {
-            var self = this,
-                _year = a[0],
+        _computeNextMonth: function(a) {
+            var _year = a[0],
                 _month = a[1];
             if (_month == 11) {
                 _year++;
@@ -317,7 +330,7 @@ KISSY.add('calendar', function(S) {
         },
 
         //处理日期的偏移量
-        _handleOffset:function() {
+        _handleOffset: function() {
             var self = this,
                 data = ['日','一','二','三','四','五','六'],
                 temp = '<span>{$day}</span>',
@@ -335,8 +348,9 @@ KISSY.add('calendar', function(S) {
                 day_html:day_html
             };
         },
+
         //处理起始日期,d:Date类型
-        _handleRange : function(d) {
+        _handleRange: function(d) {
             var self = this,t;
             if ((self.range.start == null && self.range.end == null ) || (self.range.start != null && self.range.end != null)) {
                 self.range.start = d;
@@ -354,14 +368,11 @@ KISSY.add('calendar', function(S) {
             }
             return this;
         }
-        //constructor
-
-        //Page:S._cPage
-
     });
 
     S.Calendar = Calendar;
-});
+}, { requires: ['core'] } );
+
 /**
  * 2010-09-09 by lijing00333@163.com - 拔赤
  *     - 将基于YUI2/3的Calendar改为基于KISSY

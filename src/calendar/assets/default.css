@@ -13,7 +13,15 @@
 .ks-cal-call.multi-1 {width:189px !important;}
 .ks-cal-call.multi-2 {width:380px !important;_width:373px}
 .ks-cal-call.multi-3 {width:568px !important;_width:560px}
-.ks-cal-call {-moz-box-shadow: 2px 2px 0px #ccc;-webkit-box-shadow:2px 2px 0px #ccc;-khtml-box-shadow:2px 2px 0px #ccc;-ms-box-shadow:2px 2px 0px #ccc;}
+
+.ks-cal-call {
+    -moz-box-shadow: 2px 2px 0px #ccc;
+    -webkit-box-shadow: 2px 2px 0px #ccc;
+    -khtml-box-shadow: 2px 2px 0px #ccc;
+    -ms-box-shadow: 2px 2px 0px #ccc;
+    filter: progid:DXImageTransform.Microsoft.Shadow(direction = 155, Color = #dadada, Strength = 3), progid:DXImageTransform.Microsoft.DropShadow(Color = #22aaaaaa, OffX = 0, OffY = 0);    
+}
+
 .ks-cal-call .ks-cal-box {margin:4px;_margin:4px 2px;height:auto;width:auto;float:left;*padding-bottom:5px;_padding-bottom:3px;position:relative;}
 .ks-cal-call .ks-cal-hd {background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') repeat-x 0 -41px; width:181px;height:24px;background-color:#40a6ff;position:relative;}
 .ks-cal-call .ks-cal-hd a {}

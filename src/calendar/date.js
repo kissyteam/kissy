@@ -17,7 +17,7 @@
  */
 KISSY.add('date', function(S) {
 
-    var dateParse = function(data) {
+    function dateParse(data) {
 
         var date = null;
 
@@ -37,7 +37,7 @@ KISSY.add('date', function(S) {
             return null;
         }
 
-    };
+    }
 
 
     var dateFormat = function () {
@@ -157,18 +157,14 @@ KISSY.add('date', function(S) {
         };
     }();
 
-
-    S.namespace('S.Date');
-
-    S.Date.format = function(date, mask, utc) {
-        return dateFormat(date, mask, utc);
-    };
-
-    S.Date.parse = function(date) {
-        return dateParse(date);
-    };
-
-
+    S.Date = {
+        format: function(date, mask, utc) {
+            return dateFormat(date, mask, utc);
+        },
+        parse: function(date) {
+            return dateParse(date);
+        }
+    }
 });
 
 /**

@@ -1,11 +1,11 @@
 /**
- * @author - lijing00333@163.com 拔赤
+ * @author  lijing00333@163.com 拔赤
  */
 KISSY.add('calendar-page', function(S) {
-    S.Calendar = S.Calendar || new Function;
 
-    S.mix(S.Calendar.prototype, {
-        Page:function(config, fathor) {
+    S.augment(S.Calendar, {
+
+        Page: function(config, fathor) {
             /**
              * 子日历构造器
              * @constructor S.Calendar.prototype.Page
@@ -86,7 +86,7 @@ KISSY.add('calendar-page', function(S) {
                 '</p>',
                 '<p>',
                 '年',
-                '<input type="text" value="{$the_year}" onfocus="this.select()"></input>',
+                '<input type="text" value="{$the_year}" onfocus="this.select()"/>',
                 '</p>',
                 '<p>',
                 '<button class="ok">确定</button><button class="cancel">取消</button>',
@@ -101,26 +101,20 @@ KISSY.add('calendar-page', function(S) {
                 var isDay = function(n) {
                     if (!/\d+/i.test(n))return false;
                     n = Number(n);
-                    if (n < 1 || n > 31) {
-                        return false;
-                    }
-                    return true;
+                    return !(n < 1 || n > 31);
+
                 },
                     isYear = function(n) {
                         if (!/\d+/i.test(n))return false;
                         n = Number(n);
-                        if (n < 100 || n > 10000) {
-                            return false;
-                        }
-                        return true;
+                        return !(n < 100 || n > 10000);
+
                     },
                     isMonth = function(n) {
                         if (!/\d+/i.test(n))return false;
                         n = Number(n);
-                        if (n < 1 || n > 12) {
-                            return false;
-                        }
-                        return true;
+                        return !(n < 1 || n > 12);
+
 
                     };
 
@@ -255,7 +249,7 @@ KISSY.add('calendar-page', function(S) {
                                 if (!cc.Verify().isMonth(_month))return;
                                 cc.fathor.render({
                                     date:new Date(_year + '/' + _month + '/01')
-                                })
+                                });
                                 cc.fathor.fire('monthChange', {
                                     date:new Date(_year + '/' + _month + '/01')
                                 });
@@ -273,7 +267,7 @@ KISSY.add('calendar-page', function(S) {
                             if (!cc.Verify().isMonth(_month))return;
                             cc.fathor.render({
                                 date:new Date(_year + '/' + _month + '/01')
-                            })
+                            });
                             cc.fathor.fire('monthChange', {
                                 date:new Date(_year + '/' + _month + '/01')
                             });
@@ -302,18 +296,18 @@ KISSY.add('calendar-page', function(S) {
              * 生成日期的html
              */
             this.createDS = function() {
-                var cc = this;
+                var cc = this,
+                    s = '',
+                    startweekday = (new Date(cc.year + '/' + (cc.month + 1) + '/01').getDay() + cc.fathor.startDay + 7) % 7,//当月第一天是星期几
+                    k = cc._getNumOfDays(cc.year, cc.month + 1) + startweekday,
+                    i, _td_s;
 
-                var s = '';
-                var startweekday = (new Date(cc.year + '/' + (cc.month + 1) + '/01').getDay() + cc.fathor.startDay + 7) % 7;//当月第一天是星期几
-                var k = cc._getNumOfDays(cc.year, cc.month + 1) + startweekday;
-
-                for (var i = 0; i < k; i++) {
+                for (i = 0; i < k; i++) {
                     //prepare data {{
                     if (/532/.test(S.UA.webkit)) {//hack for chrome
-                        var _td_s = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 1 - startweekday).toString());
+                        _td_s = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 1 - startweekday).toString());
                     } else {
-                        var _td_s = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 2 - startweekday).toString());
+                        _td_s = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 2 - startweekday).toString());
                     }
                     var _td_e = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 1 - startweekday).toString());
                     //prepare data }}
@@ -356,7 +350,7 @@ KISSY.add('calendar-page', function(S) {
                     }
                 }
                 if (k % 7 != 0) {
-                    for (var i = 0; i < (7 - k % 7); i++) {
+                    for (i = 0; i < (7 - k % 7); i++) {
                         s += '<a href="javascript:void(0);" class="null">0</a>';
                     }
                 }
@@ -377,4 +371,4 @@ KISSY.add('calendar-page', function(S) {
         }//Page constructor over
     });
 
-});
+}, { host: 'calendar' });

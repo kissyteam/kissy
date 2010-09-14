@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>KISSS.Calendar</title>
-<script type="text/javascript" src="http://kissyteam.github.com/kissy/build/kissy.js"></script>
+
+<script src="../../build/kissy.js"></script>
+
+<script src="date.js"></script>
+<script src="calendar.js"></script>
+<script src="calendar-page.js"></script>
+<script src="calendar-time.js"></script>
+
+<link href="assets/default.css" rel="stylesheet" />
+
 <style>
 	body { font: 14px Georgia,"Times New Roman",Times,sans-serif; color: #444; }
 	h1 { font-size: 26px; color: #00859D; font-family: Constantia,serif; }
 	h3 { font-size: 14px; color: #555; margin: 15px 0 5px; }
-	code {font-family:"Courier New"}
+	code {font-family: Courier New monospace;}
 </style>
 </head>
 <body  class="yui-skin-sam">
@@ -92,8 +100,6 @@ author:bachi@taobao.com（拔赤）<br />
 </p>
 
 <script>
-<!--
-
 
 var c = {};
 var showdate = function(n,d){//计算d天的前几天或者后几天，返回date,注：chrome下不支持date构造时的天溢出
@@ -103,27 +109,7 @@ var showdate = function(n,d){//计算d天的前几天或者后几天，返回dat
 };
 
 
-
-var S = KISSY;
-S.add({
-	'date':{
-		fullpath:'../date/date.js?t='+new Date().getTime()
-	},
-	'calendar-page':{
-		fullpath:'calendar-page.js?t='+new Date().getTime(),
-		requires:['core']
-	},
-	'calendar-timer':{
-		fullpath:'calendar-timer.js?t='+new Date().getTime(),
-		requires:['core']
-	},
-	'calendar':{
-		fullpath:'calendar.js?t='+new Date().getTime(),
-		cssfullpath:'assets/default.css',
-		requires:['core','date','calendar-page','calendar-timer']
-	}
-});
-S.use('calendar',function(S){
+KISSY.use('calendar',function(S){
 
 	//静态日历,单击回调
 	c = new S.Calendar('J_calendar').on('select',function(e){
@@ -223,10 +209,6 @@ S.use('calendar',function(S){
 	});
 	
 });
-
-
-
-//-->
 </script>
 
 </body>
