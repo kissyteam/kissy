@@ -7,7 +7,20 @@
 <script src="../../build/packages/kissy.js"></script>
 <script src="imagezoom.js"></script>
 <style>
-    body { padding: 20px; }
+    body { padding: 20px 50px 50px; }
+    h2 { margin: 10px 0 10px -20px; padding: 5px 10px; font-size: 14px; font-weight: normal; background: #F2F2F2; }
+
+    p.code-switch { color: #09f; cursor: pointer; margin-top: 10px; }
+    pre.code {
+        color: #444;
+        cursor: auto;
+        border-left: 2px solid #7F96AA;
+        margin-top: 5px;
+        padding: 0 10px 20px 10px;
+        font-size: 14px;
+    }
+</style>
+<style>
     .demo {
         width: 310px;
         height: 310px;
@@ -46,11 +59,6 @@
     <img id="standard" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
 </div>
 
-<!-- <p>跟随模式</p>
-<div>
-    <img id="follow" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
-</div> -->
-
 <h2>小图不能访问</h2>
 <div class="demo">
     <img id="bad-small" src="http://google.com/non-exist.jpg"/>
@@ -61,11 +69,36 @@
     <img id="bad-big" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" data-src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg1"/>
 </div>
 
-<h2>超级大图加载</h2>
+<style>
+    #imgList img {
+        cursor: pointer;
+        border: 1px solid grey;
+        padding: 4px;
+    }
+</style>
+<h2>多图加载</h2>
 <div class="demo">
-    <a href="#"><img id="big-big" data-ks-imagezoom="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
-    </a>
+    <a href="#"><img id="multi" data-ks-imagezoom="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/></a>
 </div>
+<ul id="imgList">
+    <li>
+        <img src="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg_40x40.jpg" data-ks-imagezom="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg" />
+    </li>
+    <li>
+        <img src="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg_40x40.jpg" data-ks-imagezom="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg"/>
+    </li>
+</ul>
+
+<h2>inner</h2>
+<style>
+    .inner {
+        border: none;
+    }
+</style>
+<div class="demo">
+    <img id="inner" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+</div>
+
 <script>
     KISSY.ready(function(S) {
 
@@ -74,11 +107,57 @@
                         });
 
         new S.ImageZoom("#bad-big");
-        new S.ImageZoom("#big-big");
-        
+
+        var m = new S.ImageZoom("#multi");
+        S.Event.on("#imgList img", 'click', function() {
+            var data = S.DOM.attr(this, 'data-ks-imagezom');
+            S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
+            m.set('bigImageSrc', data);
+        });
+
+
+        new S.ImageZoom("#inner", {
+            bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
+            position: 'inner',
+            offset: 0,
+            zoomCls: 'inner'
+        });
     });
 
 </script>
+<p class="code-switch">显示源码</p>
+
+<script>
+    (function() {
+        var S = KISSY, DOM = S.DOM,
+            SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+
+        S.all('p.code-switch').each(function(p) {
+            p.on('click', function() {
+                var showing = (p.text() === SHOW_CODE),
+                    next = p.next(),
+                    pre = next;
+
+                if (next[0].nodeName !== 'PRE') {
+                    pre = S.Node('<pre>');
+
+                    pre.attr('class', 'code')
+                        .html(p.prev().html());
+
+                    if (S.UA.ie) {
+                        pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
+                    }
+
+                    DOM.insertAfter(pre[0], p[0]);
+                }
+
+                pre.css('display', showing ? 'block' : 'none');
+                p.html(showing ? HIDE_CODE : SHOW_CODE);
+            });
+        });
+    })();
+</script>
+
 </body>
 </html>
 
