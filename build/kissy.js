@@ -1530,7 +1530,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 14 17:24
+build time: Sep 14 18:56
 */
 /**
  * @module  dom
@@ -1685,12 +1685,12 @@ KISSY.add('selector', function(S, undefined) {
         return ret;
     }
 
-    function isNodeList(node) {
-        // 非 webkit 下，直接用 namedItem 判断
-        // 在 webkit 下，用 node.item 判断
+    function isNodeList(o) {
         // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
-        // 注2：select 等元素也有 namedItem, 要用 !node.nodeType 排除掉
-        return node && !node.nodeType && (node.namedItem || S.isFunction(node.item));
+        // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
+        // 注3：通过 namedItem 来判断不可靠
+        // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
+        return o && !o.nodeType && o.item && (o != window);
     }
 
     // 调整 context 为合理值
@@ -2689,9 +2689,6 @@ KISSY.add('dom-style', function(S, undefined) {
 });
 
 /**
- * TODO:
- *  - 将 ks-cache 机制独立成类 jQuery 的 data
- * 
  * NOTES:
  *  - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
  *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
