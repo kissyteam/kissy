@@ -117,12 +117,17 @@ KISSY.add('imagezoom', function(S, undefined) {
 
             Event.on(self.image, 'mouseenter', function() {
                 timer = S.later(function() {
-                    if (!self.viewer) self._createViewer();
-                    else if (self._cacheBigImageSrc && (self._cacheBigImageSrc !== self.config.bigImageSrc)) {
-                        DOM.attr(self.bigImage, 'src', self.config.bigImageSrc);
-                        self._cacheBigImageSrc = self.config.bigImageSrc;
+                    var bigImageSrc = self.config.bigImageSrc;
+
+                    if (!self.viewer) {
+                        self._createViewer();
+                    }
+                    else if (self._cacheBigImageSrc && (self._cacheBigImageSrc !== bigImageSrc)) {
+                        DOM.attr(self.bigImage, 'src', bigImageSrc);
+                        self._cacheBigImageSrc = bigImageSrc;
+
                         // 更改大图后, 待加载完后, 更新 self._bigImageSize,  self._lensSize
-                        self._updateBigImage();
+                        self._updateViewerOnLoad();
                     }
                     self.show();
                 }, 100);
@@ -154,14 +159,16 @@ KISSY.add('imagezoom', function(S, undefined) {
             self.bigImage = bImg;
             self.viewer = v;
 
-            self._updateBigImage();
             // 立刻显示大图区域
             self._setViewerRegion();
+
+            self._updateViewerOnLoad();
         },
 
-        _updateBigImage: function(){
+        _updateViewerOnLoad: function(){
             var self = this, cfg = self.config, timer,
                 bImg = self.bigImage;
+
             if (!bImg.complete) {
                 // 设置大图加载的超时定时器
                 timer = S.later(function() {
@@ -236,6 +243,11 @@ KISSY.add('imagezoom', function(S, undefined) {
                 // left
                 case POSITION[3]:
                     left -= width;
+                    break;
+                // inner
+                case POSITION[4]:
+                    width = region.width;
+                    height = region.height;
                     break;
             }
 
@@ -317,17 +329,15 @@ KISSY.add('imagezoom', function(S, undefined) {
             Event.remove(doc.body, 'mousemove', self._onMouseMove, self);
         },
 
-        /**
-         * 更换大图 src
-         * @param src
-         */
-        changeImageSrc: function(src) {
+        // TODO: use ATTR
+        set: function(name, val) {
             var self = this;
 
-            if (src && RE_IMG_SRC.test(src) ){
-                self._cacheBigImageSrc = self.config.bigImageSrc;
-                self.config.bigImageSrc = src;
-                console.log([self._cacheBigImageSrc, self.config.bigImageSrc]);
+            if (name === 'bigImageSrc') {
+                if (val && RE_IMG_SRC.test(val)) {
+                    self._cacheBigImageSrc = self.config.bigImageSrc;
+                    self.config.bigImageSrc = val;
+                }
             }
         }
     });

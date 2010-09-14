@@ -101,7 +101,7 @@
         S.Event.on("#imgList img", 'click', function() {
             var data = S.DOM.attr(this, 'data-ks-imagezom');
             S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
-            m.changeImageSrc(data);
+            m.set('bigImageSrc', data);
         });
     });
 
