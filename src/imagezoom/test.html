@@ -88,6 +88,12 @@
         <img src="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg_40x40.jpg" data-ks-imagezom="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg"/>
     </li>
 </ul>
+
+<h2>inner</h2>
+<div class="demo">
+    <img id="inner" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+</div>
+
 <script>
     KISSY.ready(function(S) {
 
@@ -102,6 +108,13 @@
             var data = S.DOM.attr(this, 'data-ks-imagezom');
             S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
             m.set('bigImageSrc', data);
+        });
+
+
+        new S.ImageZoom("#inner", {
+            bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
+            position: 'inner',
+            offset: 0
         });
     });
 

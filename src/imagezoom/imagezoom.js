@@ -248,6 +248,7 @@ KISSY.add('imagezoom', function(S, undefined) {
                 case POSITION[4]:
                     width = region.width;
                     height = region.height;
+                    DOM.css(v, 'cursor', 'move');
                     break;
             }
 
@@ -314,7 +315,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         show: function() {
             var self = this;
 
-            DOM.show([self.lens, self.viewer]);
+            DOM.show(self.config.position !== POSITION[4] ? [self.lens, self.viewer]: self.viewer);
             DOM.hide(self.lensIcon);
 
             Event.on(doc.body, 'mousemove', self._onMouseMove, self);
