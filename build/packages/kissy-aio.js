@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 14 22:39
 */
 /**
  * @module kissy
@@ -1311,13 +1311,16 @@ build time: Sep 13 17:31
         }
     };
 
-    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest', 'overlay', 'imagezoom'], function(modName) {
+    S.each(['sizzle', 'datalazyload', 'flash', 'switchable',
+        'suggest', 'overlay', 'imagezoom', 'calendar'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
             requires: ['core'],
             charset: 'utf-8'
         };
     });
+
+    map['calendar'].csspath = 'calendar/default-min.css';
 
     S.add(map);
 
@@ -8355,6 +8358,652 @@ MIT Licensed
 build time: Sep 13 17:31
 */
 /**
+ * KISSY Mask
+ * @creator     乔花<qiaohua@taobao.com>
+ */
+KISSY.add('mask', function(S, undefined) {
+
+    var DOM = S.DOM,
+        DISPLAY = 'display',
+        ie = S.UA.ie,
+        ie6 = ie === 6,
+
+        MASK_STYLE = 'position:absolute;left:0;top:0;width:100%;border:0;background:black;z-index:9998;display:none;',
+        SHIM_STYLE = 'position:absolute;z-index:9997;border:0;display:none;',
+
+        defaultConfig = {
+            shim: false,
+            opacity: .6,
+            style: ''
+        };
+
+    function Mask(config){
+
+        if (!(this instanceof Mask)) {
+            return new Mask(config);
+        }
+
+        config = S.merge(defaultConfig, config);
+
+        var isShim = config.shim,
+            style = isShim ? SHIM_STYLE : MASK_STYLE + config.style,
+            opacity = isShim ? 0 : config.opacity,
+            ifr = createMaskElem('<iframe>', style, opacity, !isShim);
+
+        if (!isShim && ie) this.layer = createMaskElem('<div>', style, opacity, true);
+
+        this.config = config;
+        this.iframe = ifr;
+    }
+
+    S.augment(Mask, {
+
+        show: function() {
+            DOM.show([this.iframe, this.layer]);
+        },
+
+        hide: function() {
+            DOM.hide([this.iframe, this.layer]);
+        },
+
+        toggle: function() {
+            var isVisible = DOM.css(this.iframe, DISPLAY) !== 'none';
+            this[isVisible ? 'hide' : 'show']();
+        },
+
+        setSize: function(w, h) {
+            setSize(this.iframe, w, h);
+            setSize(this.layer, w, h);
+        },
+
+        setOffset: function(x, y) {
+            var offset = x;
+
+            if (y !== undefined) {
+                offset = {
+                    left: x,
+                    top: y
+                }
+            }
+            DOM.offset([this.iframe, this.layer], offset);
+        }
+    });
+
+    function createMaskElem(tag, style, opacity, setWH) {
+        var elem = DOM.create(tag);
+
+        DOM.attr(elem, 'style', style);
+        DOM.css(elem, 'opacity', opacity);
+
+        if (setWH) {
+            DOM.height(elem, DOM.docHeight());
+            if (ie6) {
+                DOM.width(elem, DOM.docWidth());
+            }
+        }
+
+        document.body.appendChild(elem);
+        return elem;
+    }
+
+    function setSize(elem, w, h) {
+        if (elem) {
+            DOM.width(elem, w);
+            DOM.height(elem, h);
+        }
+    }
+
+    S.Mask = Mask;
+});
+/**
+ * KISSY Overlay
+ * @creator     乔花<qiaohua@taobao.com>
+ */
+KISSY.add('overlay', function(S, undefined) {
+
+    var doc = document,
+        DOM = S.DOM, Event = S.Event,
+        ie6 = S.UA.ie === 6,
+
+        DOT = '.', KEYDOWN = 'keydown',
+        POSITION_ALIGN = {
+            TL: 'tl',
+            TC: 'tc',
+            TR: 'tr',
+            LC: 'cl',
+            CC: 'cc',
+            RC: 'cr',
+            BL: 'bl',
+            BC: 'bc',
+            BR: 'br'
+        },
+
+        CLS_CONTAINER = 'ks-overlay',
+        CLS_PREFIX = CLS_CONTAINER + '-',
+
+        EVT_SHOW = 'show',
+        EVT_HIDE = 'hide',
+
+        /**
+         * 默认设置
+         */
+        defaultConfig = {
+            /*
+             * DOM 结构
+             *  <div class="ks-overlay-container">
+             *      <div class="ks-overlay-bd"></div>
+             *  </div>
+             */
+            container: null,
+            containerCls: CLS_CONTAINER,
+            //content: undefined,      // 默认为 undefined, 不设置
+            bdCls: CLS_PREFIX + 'bd',
+
+            trigger: null,
+            triggerType: 'click',   // 触发类型
+
+            width: 0,
+            height: 0,
+            zIndex: 9999,
+
+            xy: null,               // 相对 page 定位，有效值为 [n, m]
+            align: {                // 相对指定 node or viewport 定位
+                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+                points: [POSITION_ALIGN.CC, POSITION_ALIGN.CC], // ['tl', 'tr'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+                offset: [0,0]       // 有效值为 [n, m]
+            },
+
+            mask: false,            // 是否显示蒙层, 默认不显示
+            shim: ie6
+        },
+
+        DEFAULT_STYLE = 'visibility:hidden;position:absolute;',
+        TMPL = '<div class="{containerCls}" style="' + DEFAULT_STYLE + '"><div class="{bdCls}">{content}</div></div>',
+
+        mask;
+
+    /*
+     * Overlay Class
+     * @constructor
+     * attached members：
+     *   - this.container
+     *   - this.trigger
+     *   - this.config
+     *   - this.body
+     *   - this.shim
+     */
+    function Overlay(container, config) {
+        var self = this;
+        config = config || { };
+
+        // 支持 Overlay(config)
+        if (S.isPlainObject(container)) {
+            config = container;
+        } else {
+            config.container = container;
+        }
+
+        // 获取相关联的 DOM 节点
+        self.container = S.get(config.container);
+        
+        self.trigger = S.get(config.trigger);
+
+        // 合并配置信息
+        config.align = S.merge(S.clone(defaultConfig.align), config.align);
+        self.config = S.merge(defaultConfig, config);
+
+        self._init();
+    }
+
+    S.augment(Overlay, S.EventTarget, {
+
+        _init: function() {
+            if (this.trigger) {
+                this._bindTrigger();
+            }
+        },
+
+        _bindTrigger: function() {
+            var self = this;
+
+            if (self.config.triggerType === 'mouse') {
+                self._bindTriggerMouse();
+            } else {
+                self._bindTriggerClick();
+            }
+        },
+
+        _bindTriggerMouse: function() {
+            var self = this,
+                trigger = self.trigger, timer;
+
+            Event.on(trigger, 'mouseenter', function() {
+                self._clearHiddenTimer();
+
+                timer = S.later(function() {
+                    self.show();
+                    timer = undefined;
+                }, 100);
+            });
+
+            Event.on(trigger, 'mouseleave', function() {
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
+                }
+
+                self._setHiddenTimer();
+            });
+        },
+
+        _bindContainerMouse: function() {
+            var self = this;
+
+            Event.on(self.container, 'mouseleave', function() {
+                self._setHiddenTimer();
+            });
+
+            Event.on(self.container, 'mouseenter', function() {
+                self._clearHiddenTimer();
+            });
+        },
+
+        _setHiddenTimer: function() {
+            var self = this;
+            self._hiddenTimer = S.later(function() {
+                self.hide();
+            }, 120);
+        },
+
+        _clearHiddenTimer: function() {
+            var self = this;
+            if (self._hiddenTimer) {
+                self._hiddenTimer.cancel();
+                self._hiddenTimer = undefined;
+            }
+        },
+
+        _bindTriggerClick: function() {
+            var self = this;
+
+            Event.on(self.trigger, 'click', function(e) {
+                e.halt();
+                self.show();
+            });
+        },
+
+        show: function() {
+            this._firstShow();
+        },
+
+        _firstShow: function() {
+            var self = this;
+
+            self._prepareMarkup();
+            self._realShow();
+            self._firstShow = self._realShow;
+        },
+
+        _realShow: function() {
+            this._toggle(false);
+            this._setPosition();
+        },
+
+        _toggle: function(isVisible) {
+            var self = this;
+
+            // 防止其他地方设置 display: none 后, 无法再次显示
+            if(!isVisible) DOM.css(self.container, 'display', 'block');
+            DOM.css(self.container, 'visibility', isVisible ? 'hidden' : '');
+
+            if(self.shim) self.shim.toggle();
+            if (self.config.mask) mask[isVisible ? 'hide' : 'show']();
+
+            self[isVisible ? '_unbindUI' : '_bindUI']();
+            self.fire(isVisible ? EVT_HIDE : EVT_SHOW);
+        },
+
+
+        hide: function() {
+            this._toggle(true);
+        },
+
+        _prepareMarkup: function() {
+            var self = this, config = self.config, container = self.container;
+
+            // 多个 Overlay 实例共用一个 mask
+            if (config.mask && !mask) {
+                mask = new S.Mask();
+            }
+            if (config.shim) {
+                self.shim = new S.Mask({ shim: true });
+            }
+
+            // 已有 Markup
+            if (container) {
+                // 已有 markup 可以很灵活，如果没有 bdCls, 就让 body 指向 container
+                self.body = S.get(DOT + config.bdCls, container) || container;
+
+                container.style.cssText += DEFAULT_STYLE;
+            }
+            // 构建 DOM
+            else {
+                container = self.container = DOM.create(S.substitute(TMPL, config));
+                self.body = DOM.children(container)[0];
+                doc.body.appendChild(container);
+            }
+
+            DOM.css(container, 'zIndex', config.zIndex);
+
+            self.setBody(config.content);
+            self._setSize();
+
+            if (config.triggerType === 'mouse') self._bindContainerMouse();
+        },
+
+        _setSize: function(w, h) {
+            var self = this,
+                config = self.config;
+
+            w = w || config.width;
+            h = h || config.height;
+
+            if (w) DOM.width(self.container, w);
+            if (h) DOM.height(self.container, h);
+            if (self.shim) self.shim.setSize(w, h);
+        },
+
+        _setPosition: function() {
+            var self = this, xy = self.config.xy;
+
+            if (xy) {
+                self.move(xy);
+            } else {
+                self.align();
+            }
+        },
+
+        move: function(x, y) {
+            var self = this, offset;
+
+            if (S.isArray(x)) {
+                y = x[1];
+                x = x[0];
+            }
+            offset = { left: x, top: y };
+
+            DOM.offset(self.container, offset);
+            if(self.shim) self.shim.setOffset(offset);
+        },
+
+        align: function(node, points, offset) {
+            var self = this, alignConfig = self.config.align, xy, diff, p1, p2;
+
+            node = node || alignConfig.node;
+            if (node === 'trigger') node = self.trigger;
+            else node = S.get(node);
+
+            points = points || alignConfig.points;
+
+            offset = offset === undefined ? alignConfig.offset : offset;
+            xy = DOM.offset(self.container);
+
+            // p1 是 node 上 points[0] 的 offset
+            // p2 是 overlay 上 points[1] 的 offset
+            p1 = self._getAlignOffset(node, points[0]);
+            p2 = self._getAlignOffset(self.container, points[1]);
+            diff = [p2.left - p1.left, p2.top - p1.top];
+
+            self.move(xy.left - diff[0] + (+offset[0]), xy.top - diff[1] + (+offset[1]));
+        },
+
+        /**
+         * 获取 node 上的 align 对齐点 相对 page 的坐标
+         */
+        _getAlignOffset: function(node, align) {
+            var V = align.charAt(0),
+                H = align.charAt(1),
+                offset, w, h, x, y;
+
+            if (node) {
+                offset = DOM.offset(node);
+                w = node.offsetWidth;
+                h = node.offsetHeight;
+            } else {
+                offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
+                w = DOM.viewportWidth();
+                h = DOM.viewportHeight();
+            }
+
+            x = offset.left;
+            y = offset.top;
+
+            if (V === 'c') {
+                y += h / 2;
+            } else if (V === 'b') {
+                y += h;
+            }
+
+            if (H === 'c') {
+                x += w / 2;
+            } else if (H === 'r') {
+                x += w;
+            }
+
+            return { left: x, top: y };
+        },
+
+        center: function() {
+            var self = this;
+
+            self.move(
+                (DOM.viewportWidth() - DOM.width(self.container)) / 2 + DOM.scrollLeft(),
+                (DOM.viewportHeight() - DOM.height(self.container)) / 2 + DOM.scrollTop()
+                );
+        },
+
+        _bindUI: function() {
+            Event.on(doc, KEYDOWN, this._esc, this);
+        },
+
+        _unbindUI: function() {
+            Event.remove(doc, KEYDOWN, this._esc, this);
+        },
+        
+        _esc: function(e) {
+            if (e.keyCode === 27) this.hide();
+        },
+
+        setBody: function(html) {
+            this._setContent('body', html);
+        },
+
+        _setContent: function(where, html) {
+            if(S.isString(html)) DOM.html(this[where], html);
+        }
+    });
+
+    S.Overlay = Overlay;
+
+});
+
+/**
+ * TODO:
+ *  - stackable ?
+ *  - constrain 支持可视区域或指定区域 ?
+ *  - effect
+ *  - draggable
+ */
+/**
+ * KISSY Popup
+ * @creator     乔花<qiaohua@taobao.com>
+ */
+KISSY.add('popup', function(S) {
+
+    var defaultConfig = {
+        triggerType: 'mouse', // 触发类型, click, mouse
+        align: {
+            node: 'trigger',
+            points: ['cr', 'ct'],
+            offset: [10, 0]
+        }
+    };
+
+    /**
+     * Popup Class
+     * @constructor
+     */
+    function Popup(container, config) {
+        var self = this;
+
+        if (!(self instanceof Popup)) {
+            return new Popup(container, config);
+        }
+
+        config = config || { };
+        if (S.isPlainObject(container)) config = container;
+        else config.container = container;
+        config.align = S.merge(S.clone(defaultConfig.align), config.align);
+
+        Popup.superclass.constructor.call(self, S.merge(defaultConfig, config));
+    }
+
+    S.extend(Popup, S.Overlay);
+    S.Popup = Popup;
+
+}, { host: 'overlay' });
+/**
+ * KISSY.Dialog
+ * @creator     乔花<qiaohua@taobao.com>
+ */
+KISSY.add('dialog', function(S) {
+
+    var DOM = S.DOM, Event = S.Event,
+
+        DOT = '.', DIV = '<div>',
+
+        CLS_CONTAINER = 'ks-overlay ks-dialog',
+        CLS_PREFIX = 'ks-dialog-',
+
+        defaultConfig = {
+            header: '',
+            footer: '',
+
+            containerCls: CLS_CONTAINER,
+            hdCls: CLS_PREFIX + 'hd',
+            bdCls: CLS_PREFIX + 'bd',
+            ftCls: CLS_PREFIX + 'ft',
+            closeBtnCls: CLS_PREFIX + 'close',
+
+            width: 400,
+            height: 300,
+            closable: true
+        };
+
+    /**
+     * Dialog Class
+     * @constructor
+     * attached members：
+     *  - this.header
+     *  - this.footer
+     */
+    function Dialog(container, config) {
+        var self = this;
+
+        // factory or constructor
+        if (!(self instanceof Dialog)) {
+            return new Dialog(container, config);
+        }
+
+        config = config || { };
+        if (S.isPlainObject(container)) config = container;
+        else config.container = container;
+        config.align = S.merge(S.clone(defaultConfig.align), config.align);
+        
+        Dialog.superclass.constructor.call(self, S.merge(defaultConfig, config));
+
+        self.manager = S.DialogManager;
+        self.manager.register(self);
+    }
+
+    S.extend(Dialog, S.Overlay);
+    S.Dialog = Dialog;
+
+    S.augment(Dialog, S.EventTarget, {
+
+        _prepareMarkup: function() {
+            var self = this,
+                config = self.config;
+
+            Dialog.superclass._prepareMarkup.call(self);
+
+            self.header = S.get(DOT + config.hdCls, self.container);
+            if (!self.header) {
+                self.header = DOM.create(DIV, { 'class': config.hdCls });
+                DOM.insertBefore(self.header, self.body);
+            }
+            self.setHeader(config.header);
+
+            if (config.footer) {
+                self.footer = S.get(DOT + config.ftCls, self.container);
+                if (!self.footer) {
+                    self.footer = DOM.create(DIV, { 'class': config.ftCls });
+                    self.container.appendChild(self.footer);
+                }
+                self.setFooter(config.footer);
+            }
+
+            if (config.closable) self._initClose();
+        },
+
+        _initClose: function() {
+            var self = this, config = self.config,
+                elem = DOM.create(DIV, { 'class': config.closeBtnCls });
+
+            DOM.html(elem, 'close');
+            
+            Event.on(elem, 'click', function(e) {
+                e.halt();
+                self.hide();
+            });
+
+            self.header.appendChild(elem);
+        },
+
+        setHeader: function(html) {
+            this._setContent('header', html);
+        },
+
+        setFooter: function(html) {
+            this._setContent('footer', html);
+        }
+    });
+
+    S.DialogManager = {
+
+        register: function(dlg) {
+            if (dlg instanceof Dialog) {
+                this._dialog.push(dlg);
+            }
+        },
+
+        _dialog: [],
+
+        hideAll: function() {
+            S.each(this._dialog, function(dlg) {
+                dlg && dlg.hide();
+            })
+        }
+    };
+
+}, { host: 'overlay' });
+
+/*
+Copyright 2010, KISSY UI Library v1.1.4
+MIT Licensed
+build time: Sep 13 17:31
+*/
+/**
  * 提示补全组件
  * @module   suggest
  * @creator  玉伯<lifesinger@gmail.com>
@@ -9401,652 +10050,6 @@ KISSY.add('suggest', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 17:31
-*/
-/**
- * KISSY Mask
- * @creator     乔花<qiaohua@taobao.com>
- */
-KISSY.add('mask', function(S, undefined) {
-
-    var DOM = S.DOM,
-        DISPLAY = 'display',
-        ie = S.UA.ie,
-        ie6 = ie === 6,
-
-        MASK_STYLE = 'position:absolute;left:0;top:0;width:100%;border:0;background:black;z-index:9998;display:none;',
-        SHIM_STYLE = 'position:absolute;z-index:9997;border:0;display:none;',
-
-        defaultConfig = {
-            shim: false,
-            opacity: .6,
-            style: ''
-        };
-
-    function Mask(config){
-
-        if (!(this instanceof Mask)) {
-            return new Mask(config);
-        }
-
-        config = S.merge(defaultConfig, config);
-
-        var isShim = config.shim,
-            style = isShim ? SHIM_STYLE : MASK_STYLE + config.style,
-            opacity = isShim ? 0 : config.opacity,
-            ifr = createMaskElem('<iframe>', style, opacity, !isShim);
-
-        if (!isShim && ie) this.layer = createMaskElem('<div>', style, opacity, true);
-
-        this.config = config;
-        this.iframe = ifr;
-    }
-
-    S.augment(Mask, {
-
-        show: function() {
-            DOM.show([this.iframe, this.layer]);
-        },
-
-        hide: function() {
-            DOM.hide([this.iframe, this.layer]);
-        },
-
-        toggle: function() {
-            var isVisible = DOM.css(this.iframe, DISPLAY) !== 'none';
-            this[isVisible ? 'hide' : 'show']();
-        },
-
-        setSize: function(w, h) {
-            setSize(this.iframe, w, h);
-            setSize(this.layer, w, h);
-        },
-
-        setOffset: function(x, y) {
-            var offset = x;
-
-            if (y !== undefined) {
-                offset = {
-                    left: x,
-                    top: y
-                }
-            }
-            DOM.offset([this.iframe, this.layer], offset);
-        }
-    });
-
-    function createMaskElem(tag, style, opacity, setWH) {
-        var elem = DOM.create(tag);
-
-        DOM.attr(elem, 'style', style);
-        DOM.css(elem, 'opacity', opacity);
-
-        if (setWH) {
-            DOM.height(elem, DOM.docHeight());
-            if (ie6) {
-                DOM.width(elem, DOM.docWidth());
-            }
-        }
-
-        document.body.appendChild(elem);
-        return elem;
-    }
-
-    function setSize(elem, w, h) {
-        if (elem) {
-            DOM.width(elem, w);
-            DOM.height(elem, h);
-        }
-    }
-
-    S.Mask = Mask;
-});
-/**
- * KISSY Overlay
- * @creator     乔花<qiaohua@taobao.com>
- */
-KISSY.add('overlay', function(S, undefined) {
-
-    var doc = document,
-        DOM = S.DOM, Event = S.Event,
-        ie6 = S.UA.ie === 6,
-
-        DOT = '.', KEYDOWN = 'keydown',
-        POSITION_ALIGN = {
-            TL: 'tl',
-            TC: 'tc',
-            TR: 'tr',
-            LC: 'cl',
-            CC: 'cc',
-            RC: 'cr',
-            BL: 'bl',
-            BC: 'bc',
-            BR: 'br'
-        },
-
-        CLS_CONTAINER = 'ks-overlay',
-        CLS_PREFIX = CLS_CONTAINER + '-',
-
-        EVT_SHOW = 'show',
-        EVT_HIDE = 'hide',
-
-        /**
-         * 默认设置
-         */
-        defaultConfig = {
-            /*
-             * DOM 结构
-             *  <div class="ks-overlay-container">
-             *      <div class="ks-overlay-bd"></div>
-             *  </div>
-             */
-            container: null,
-            containerCls: CLS_CONTAINER,
-            //content: undefined,      // 默认为 undefined, 不设置
-            bdCls: CLS_PREFIX + 'bd',
-
-            trigger: null,
-            triggerType: 'click',   // 触发类型
-
-            width: 0,
-            height: 0,
-            zIndex: 9999,
-
-            xy: null,               // 相对 page 定位，有效值为 [n, m]
-            align: {                // 相对指定 node or viewport 定位
-                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
-                points: [POSITION_ALIGN.CC, POSITION_ALIGN.CC], // ['tl', 'tr'] 表示 overlay 的 tl 与参考节点的 tr 对齐
-                offset: [0,0]       // 有效值为 [n, m]
-            },
-
-            mask: false,            // 是否显示蒙层, 默认不显示
-            shim: ie6
-        },
-
-        DEFAULT_STYLE = 'visibility:hidden;position:absolute;',
-        TMPL = '<div class="{containerCls}" style="' + DEFAULT_STYLE + '"><div class="{bdCls}">{content}</div></div>',
-
-        mask;
-
-    /*
-     * Overlay Class
-     * @constructor
-     * attached members：
-     *   - this.container
-     *   - this.trigger
-     *   - this.config
-     *   - this.body
-     *   - this.shim
-     */
-    function Overlay(container, config) {
-        var self = this;
-        config = config || { };
-
-        // 支持 Overlay(config)
-        if (S.isPlainObject(container)) {
-            config = container;
-        } else {
-            config.container = container;
-        }
-
-        // 获取相关联的 DOM 节点
-        self.container = S.get(config.container);
-        
-        self.trigger = S.get(config.trigger);
-
-        // 合并配置信息
-        config.align = S.merge(S.clone(defaultConfig.align), config.align);
-        self.config = S.merge(defaultConfig, config);
-
-        self._init();
-    }
-
-    S.augment(Overlay, S.EventTarget, {
-
-        _init: function() {
-            if (this.trigger) {
-                this._bindTrigger();
-            }
-        },
-
-        _bindTrigger: function() {
-            var self = this;
-
-            if (self.config.triggerType === 'mouse') {
-                self._bindTriggerMouse();
-            } else {
-                self._bindTriggerClick();
-            }
-        },
-
-        _bindTriggerMouse: function() {
-            var self = this,
-                trigger = self.trigger, timer;
-
-            Event.on(trigger, 'mouseenter', function() {
-                self._clearHiddenTimer();
-
-                timer = S.later(function() {
-                    self.show();
-                    timer = undefined;
-                }, 100);
-            });
-
-            Event.on(trigger, 'mouseleave', function() {
-                if (timer) {
-                    timer.cancel();
-                    timer = undefined;
-                }
-
-                self._setHiddenTimer();
-            });
-        },
-
-        _bindContainerMouse: function() {
-            var self = this;
-
-            Event.on(self.container, 'mouseleave', function() {
-                self._setHiddenTimer();
-            });
-
-            Event.on(self.container, 'mouseenter', function() {
-                self._clearHiddenTimer();
-            });
-        },
-
-        _setHiddenTimer: function() {
-            var self = this;
-            self._hiddenTimer = S.later(function() {
-                self.hide();
-            }, 120);
-        },
-
-        _clearHiddenTimer: function() {
-            var self = this;
-            if (self._hiddenTimer) {
-                self._hiddenTimer.cancel();
-                self._hiddenTimer = undefined;
-            }
-        },
-
-        _bindTriggerClick: function() {
-            var self = this;
-
-            Event.on(self.trigger, 'click', function(e) {
-                e.halt();
-                self.show();
-            });
-        },
-
-        show: function() {
-            this._firstShow();
-        },
-
-        _firstShow: function() {
-            var self = this;
-
-            self._prepareMarkup();
-            self._realShow();
-            self._firstShow = self._realShow;
-        },
-
-        _realShow: function() {
-            this._toggle(false);
-            this._setPosition();
-        },
-
-        _toggle: function(isVisible) {
-            var self = this;
-
-            // 防止其他地方设置 display: none 后, 无法再次显示
-            if(!isVisible) DOM.css(self.container, 'display', 'block');
-            DOM.css(self.container, 'visibility', isVisible ? 'hidden' : '');
-
-            if(self.shim) self.shim.toggle();
-            if (self.config.mask) mask[isVisible ? 'hide' : 'show']();
-
-            self[isVisible ? '_unbindUI' : '_bindUI']();
-            self.fire(isVisible ? EVT_HIDE : EVT_SHOW);
-        },
-
-
-        hide: function() {
-            this._toggle(true);
-        },
-
-        _prepareMarkup: function() {
-            var self = this, config = self.config, container = self.container;
-
-            // 多个 Overlay 实例共用一个 mask
-            if (config.mask && !mask) {
-                mask = new S.Mask();
-            }
-            if (config.shim) {
-                self.shim = new S.Mask({ shim: true });
-            }
-
-            // 已有 Markup
-            if (container) {
-                // 已有 markup 可以很灵活，如果没有 bdCls, 就让 body 指向 container
-                self.body = S.get(DOT + config.bdCls, container) || container;
-
-                container.style.cssText += DEFAULT_STYLE;
-            }
-            // 构建 DOM
-            else {
-                container = self.container = DOM.create(S.substitute(TMPL, config));
-                self.body = DOM.children(container)[0];
-                doc.body.appendChild(container);
-            }
-
-            DOM.css(container, 'zIndex', config.zIndex);
-
-            self.setBody(config.content);
-            self._setSize();
-
-            if (config.triggerType === 'mouse') self._bindContainerMouse();
-        },
-
-        _setSize: function(w, h) {
-            var self = this,
-                config = self.config;
-
-            w = w || config.width;
-            h = h || config.height;
-
-            if (w) DOM.width(self.container, w);
-            if (h) DOM.height(self.container, h);
-            if (self.shim) self.shim.setSize(w, h);
-        },
-
-        _setPosition: function() {
-            var self = this, xy = self.config.xy;
-
-            if (xy) {
-                self.move(xy);
-            } else {
-                self.align();
-            }
-        },
-
-        move: function(x, y) {
-            var self = this, offset;
-
-            if (S.isArray(x)) {
-                y = x[1];
-                x = x[0];
-            }
-            offset = { left: x, top: y };
-
-            DOM.offset(self.container, offset);
-            if(self.shim) self.shim.setOffset(offset);
-        },
-
-        align: function(node, points, offset) {
-            var self = this, alignConfig = self.config.align, xy, diff, p1, p2;
-
-            node = node || alignConfig.node;
-            if (node === 'trigger') node = self.trigger;
-            else node = S.get(node);
-
-            points = points || alignConfig.points;
-
-            offset = offset === undefined ? alignConfig.offset : offset;
-            xy = DOM.offset(self.container);
-
-            // p1 是 node 上 points[0] 的 offset
-            // p2 是 overlay 上 points[1] 的 offset
-            p1 = self._getAlignOffset(node, points[0]);
-            p2 = self._getAlignOffset(self.container, points[1]);
-            diff = [p2.left - p1.left, p2.top - p1.top];
-
-            self.move(xy.left - diff[0] + (+offset[0]), xy.top - diff[1] + (+offset[1]));
-        },
-
-        /**
-         * 获取 node 上的 align 对齐点 相对 page 的坐标
-         */
-        _getAlignOffset: function(node, align) {
-            var V = align.charAt(0),
-                H = align.charAt(1),
-                offset, w, h, x, y;
-
-            if (node) {
-                offset = DOM.offset(node);
-                w = node.offsetWidth;
-                h = node.offsetHeight;
-            } else {
-                offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
-                w = DOM.viewportWidth();
-                h = DOM.viewportHeight();
-            }
-
-            x = offset.left;
-            y = offset.top;
-
-            if (V === 'c') {
-                y += h / 2;
-            } else if (V === 'b') {
-                y += h;
-            }
-
-            if (H === 'c') {
-                x += w / 2;
-            } else if (H === 'r') {
-                x += w;
-            }
-
-            return { left: x, top: y };
-        },
-
-        center: function() {
-            var self = this;
-
-            self.move(
-                (DOM.viewportWidth() - DOM.width(self.container)) / 2 + DOM.scrollLeft(),
-                (DOM.viewportHeight() - DOM.height(self.container)) / 2 + DOM.scrollTop()
-                );
-        },
-
-        _bindUI: function() {
-            Event.on(doc, KEYDOWN, this._esc, this);
-        },
-
-        _unbindUI: function() {
-            Event.remove(doc, KEYDOWN, this._esc, this);
-        },
-        
-        _esc: function(e) {
-            if (e.keyCode === 27) this.hide();
-        },
-
-        setBody: function(html) {
-            this._setContent('body', html);
-        },
-
-        _setContent: function(where, html) {
-            if(S.isString(html)) DOM.html(this[where], html);
-        }
-    });
-
-    S.Overlay = Overlay;
-
-});
-
-/**
- * TODO:
- *  - stackable ?
- *  - constrain 支持可视区域或指定区域 ?
- *  - effect
- *  - draggable
- */
-/**
- * KISSY Popup
- * @creator     乔花<qiaohua@taobao.com>
- */
-KISSY.add('popup', function(S) {
-
-    var defaultConfig = {
-        triggerType: 'mouse', // 触发类型, click, mouse
-        align: {
-            node: 'trigger',
-            points: ['cr', 'ct'],
-            offset: [10, 0]
-        }
-    };
-
-    /**
-     * Popup Class
-     * @constructor
-     */
-    function Popup(container, config) {
-        var self = this;
-
-        if (!(self instanceof Popup)) {
-            return new Popup(container, config);
-        }
-
-        config = config || { };
-        if (S.isPlainObject(container)) config = container;
-        else config.container = container;
-        config.align = S.merge(S.clone(defaultConfig.align), config.align);
-
-        Popup.superclass.constructor.call(self, S.merge(defaultConfig, config));
-    }
-
-    S.extend(Popup, S.Overlay);
-    S.Popup = Popup;
-
-}, { host: 'overlay' });
-/**
- * KISSY.Dialog
- * @creator     乔花<qiaohua@taobao.com>
- */
-KISSY.add('dialog', function(S) {
-
-    var DOM = S.DOM, Event = S.Event,
-
-        DOT = '.', DIV = '<div>',
-
-        CLS_CONTAINER = 'ks-overlay ks-dialog',
-        CLS_PREFIX = 'ks-dialog-',
-
-        defaultConfig = {
-            header: '',
-            footer: '',
-
-            containerCls: CLS_CONTAINER,
-            hdCls: CLS_PREFIX + 'hd',
-            bdCls: CLS_PREFIX + 'bd',
-            ftCls: CLS_PREFIX + 'ft',
-            closeBtnCls: CLS_PREFIX + 'close',
-
-            width: 400,
-            height: 300,
-            closable: true
-        };
-
-    /**
-     * Dialog Class
-     * @constructor
-     * attached members：
-     *  - this.header
-     *  - this.footer
-     */
-    function Dialog(container, config) {
-        var self = this;
-
-        // factory or constructor
-        if (!(self instanceof Dialog)) {
-            return new Dialog(container, config);
-        }
-
-        config = config || { };
-        if (S.isPlainObject(container)) config = container;
-        else config.container = container;
-        config.align = S.merge(S.clone(defaultConfig.align), config.align);
-        
-        Dialog.superclass.constructor.call(self, S.merge(defaultConfig, config));
-
-        self.manager = S.DialogManager;
-        self.manager.register(self);
-    }
-
-    S.extend(Dialog, S.Overlay);
-    S.Dialog = Dialog;
-
-    S.augment(Dialog, S.EventTarget, {
-
-        _prepareMarkup: function() {
-            var self = this,
-                config = self.config;
-
-            Dialog.superclass._prepareMarkup.call(self);
-
-            self.header = S.get(DOT + config.hdCls, self.container);
-            if (!self.header) {
-                self.header = DOM.create(DIV, { 'class': config.hdCls });
-                DOM.insertBefore(self.header, self.body);
-            }
-            self.setHeader(config.header);
-
-            if (config.footer) {
-                self.footer = S.get(DOT + config.ftCls, self.container);
-                if (!self.footer) {
-                    self.footer = DOM.create(DIV, { 'class': config.ftCls });
-                    self.container.appendChild(self.footer);
-                }
-                self.setFooter(config.footer);
-            }
-
-            if (config.closable) self._initClose();
-        },
-
-        _initClose: function() {
-            var self = this, config = self.config,
-                elem = DOM.create(DIV, { 'class': config.closeBtnCls });
-
-            DOM.html(elem, 'close');
-            
-            Event.on(elem, 'click', function(e) {
-                e.halt();
-                self.hide();
-            });
-
-            self.header.appendChild(elem);
-        },
-
-        setHeader: function(html) {
-            this._setContent('header', html);
-        },
-
-        setFooter: function(html) {
-            this._setContent('footer', html);
-        }
-    });
-
-    S.DialogManager = {
-
-        register: function(dlg) {
-            if (dlg instanceof Dialog) {
-                this._dialog.push(dlg);
-            }
-        },
-
-        _dialog: [],
-
-        hideAll: function() {
-            S.each(this._dialog, function(dlg) {
-                dlg && dlg.hide();
-            })
-        }
-    };
-
-}, { host: 'overlay' });
-
-/*
-Copyright 2010, KISSY UI Library v1.1.4
-MIT Licensed
 build time: Sep 14 19:07
 */
 /**
@@ -10445,3 +10448,1181 @@ KISSY.add('imagezoom', function(S, undefined) {
  *      - 仿照 Zazzle 的效果，在大图加载过程中显示进度条和提示文字
  *      - http://www.apple.com/iphone/features/retina-display.html
  */
+/*
+Copyright 2010, KISSY UI Library v1.1.4
+MIT Licensed
+build time: Sep 14 22:46
+*/
+/*
+ * Date Format 1.2.3
+ * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
+ * MIT license
+ *
+ * Includes enhancements by Scott Trenda <scott.trenda.net>
+ * and Kris Kowal <cixar.com/~kris.kowal/>
+ *
+ * Accepts a date, a mask, or a date and a mask.
+ * Returns a formatted version of the given date.
+ * The date defaults to the current date/time.
+ * The mask defaults to dateFormat.masks.default.
+ *
+ * Last modified by jayli 拔赤 2010-09-09
+ * - 增加中文的支持
+ * - 简单的本地化，对w（星期x）的支持
+ */
+KISSY.add('date', function(S) {
+
+    function dateParse(data) {
+
+        var date = null;
+
+        //Convert to date
+        if (!(date instanceof Date)) {
+            date = new Date(data);
+        }
+        else {
+            return date;
+        }
+
+        // Validate
+        if (date instanceof Date && (date != "Invalid Date") && !isNaN(date)) {
+            return date;
+        }
+        else {
+            return null;
+        }
+
+    }
+
+
+    var dateFormat = function () {
+        var token = /w{1}|d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
+            timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
+            timezoneClip = /[^-+\dA-Z]/g,
+            pad = function (val, len) {
+                val = String(val);
+                len = len || 2;
+                while (val.length < len) val = "0" + val;
+                return val;
+            },
+            // Some common format strings
+            masks = {
+                "default":      "ddd mmm dd yyyy HH:MM:ss",
+                shortDate:      "m/d/yy",
+                mediumDate:     "mmm d, yyyy",
+                longDate:       "mmmm d, yyyy",
+                fullDate:       "dddd, mmmm d, yyyy",
+                shortTime:      "h:MM TT",
+                mediumTime:     "h:MM:ss TT",
+                longTime:       "h:MM:ss TT Z",
+                isoDate:        "yyyy-mm-dd",
+                isoTime:        "HH:MM:ss",
+                isoDateTime:    "yyyy-mm-dd'T'HH:MM:ss",
+                isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'",
+
+                //added by jayli
+                localShortDate:    "yy年mm月dd日",
+                localShortDateTime:"yy年mm月dd日 hh:MM:ss TT",
+                localLongDate:    "yyyy年mm月dd日",
+                localLangDateTime:"yyyy年mm月dd日 hh:MM:ss TT",
+                localFullDate:    "yyyy年mm月dd日 w",
+                localFullDateTime:"yyyy年mm月dd日 w hh:MM:ss TT"
+
+            },
+
+            // Internationalization strings
+            i18n = {
+                dayNames: [
+                    "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
+                    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
+                    "星期日","星期一","星期二","星期三","星期四","星期五","星期六"
+                ],
+                monthNames: [
+                    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+                    "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+                ]
+            };
+
+        // Regexes and supporting functions are cached through closure
+        return function (date, mask, utc) {
+            var dF = dateFormat;
+
+            // You can't provide utc if you skip other args (use the "UTC:" mask prefix)
+            if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
+                mask = date;
+                date = undefined;
+            }
+
+            // Passing date through Date applies Date.parse, if necessary
+            date = date ? new Date(date) : new Date;
+            if (isNaN(date)) throw SyntaxError("invalid date");
+
+            mask = String(masks[mask] || mask || masks["default"]);
+
+            // Allow setting the utc argument via the mask
+            if (mask.slice(0, 4) == "UTC:") {
+                mask = mask.slice(4);
+                utc = true;
+            }
+
+            var _ = utc ? "getUTC" : "get",
+                d = date[_ + "Date"](),
+                D = date[_ + "Day"](),
+                m = date[_ + "Month"](),
+                y = date[_ + "FullYear"](),
+                H = date[_ + "Hours"](),
+                M = date[_ + "Minutes"](),
+                s = date[_ + "Seconds"](),
+                L = date[_ + "Milliseconds"](),
+                o = utc ? 0 : date.getTimezoneOffset(),
+                flags = {
+                    d:    d,
+                    dd:   pad(d),
+                    ddd:  i18n.dayNames[D],
+                    dddd: i18n.dayNames[D + 7],
+                    w:     i18n.dayNames[D + 14],
+                    m:    m + 1,
+                    mm:   pad(m + 1),
+                    mmm:  i18n.monthNames[m],
+                    mmmm: i18n.monthNames[m + 12],
+                    yy:   String(y).slice(2),
+                    yyyy: y,
+                    h:    H % 12 || 12,
+                    hh:   pad(H % 12 || 12),
+                    H:    H,
+                    HH:   pad(H),
+                    M:    M,
+                    MM:   pad(M),
+                    s:    s,
+                    ss:   pad(s),
+                    l:    pad(L, 3),
+                    L:    pad(L > 99 ? Math.round(L / 10) : L),
+                    t:    H < 12 ? "a" : "p",
+                    tt:   H < 12 ? "am" : "pm",
+                    T:    H < 12 ? "A" : "P",
+                    TT:   H < 12 ? "AM" : "PM",
+                    Z:    utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
+                    o:    (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
+                    S:    ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
+                };
+
+            return mask.replace(token, function ($0) {
+                return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
+            });
+        };
+    }();
+
+    S.Date = {
+        format: function(date, mask, utc) {
+            return dateFormat(date, mask, utc);
+        },
+        parse: function(date) {
+            return dateParse(date);
+        }
+    }
+});
+
+/**
+ * 2010-09-14 拔赤
+ *        - 仅支持S.Date.format和S.Date.parse，format仅对常用格式进行支持（不超过10个），也可以自定义
+ *        - kissy-lang中是否应当增加Lang.type(o)?或者isDate(d)?
+ *        - 模块名称取为datetype还是直接用date? 我更倾向于用date
+ *        - YUI的datetype花了大量精力对全球语种进行hack，似乎KISSY是不必要的，KISSY只对中文做hack即可
+ */
+/**
+ * @module  日历
+ * @author  lijing00333@163.com 拔赤
+ */
+KISSY.add('calendar', function(S, undefined) {
+
+    function Calendar(trigger, config) {
+        this._init(trigger, config);
+    }
+
+    S.augment(Calendar, {
+
+        _init: function(id, config) {
+            var self = this;
+            self.id = self.C_Id = id;
+            self._buildParam(config);
+
+            /*
+             self.con  日历的容器
+             self.id   传进来的id
+             self.C_Id 永远代表日历容器的ID
+             */
+            if (!self.popup) {
+                self.con = S.one('#' + id);
+            } else {
+                self.trigger = S.one('#' + id);
+                self.C_Id = 'C_' + Math.random().toString().replace(/.\./i, '');
+                self.con = S.Node('<div id="' + self.C_Id + '"></div>');
+                S.one('body').append(self.con);
+                self.con.css({
+                    'top':'0px',
+                    'position':'absolute',
+                    'background':'white',
+                    'visibility':'hidden'
+                });
+            }
+
+            //创建事件中心
+            //事件中心已经和Calendar合并
+            var EventFactory = new Function;
+            S.augment(EventFactory, S.EventTarget);
+            var eventCenter = new EventFactory();
+            S.mix(self, eventCenter);
+
+            self.render();
+            self._buildEvent();
+            return this;
+        },
+
+        render: function(o) {
+            var self = this,
+                i = 0,
+                _prev,_next,_oym;
+
+            o = o || {};
+            self._parseParam(o);
+            self.ca = [];
+
+            self.con.addClass('ks-cal-call ks-clearfix multi-' + self.pages);
+            self.con.html('');
+
+            for (i = 0,_oym = [self.year,self.month]; i < self.pages; i++) {
+                if (i == 0) {
+                    _prev = true;
+                } else {
+                    _prev = false;
+                    _oym = self._computeNextMonth(_oym);
+                }
+                _next = i == (self.pages - 1);
+                self.ca.push(new self.Page({
+                    year:_oym[0],
+                    month:_oym[1],
+                    prev_arrow:_prev,
+                    next_arrow:_next,
+                    showTime:self.showTime
+                }, self));
+
+
+                self.ca[i].render();
+            }
+            return this;
+
+        },
+
+        /**
+         * 计算d天的前几天或者后几天，返回date
+         */
+        _showdate: function(n, d) {
+            var uom = new Date(d - 0 + n * 86400000);
+            uom = uom.getFullYear() + "/" + (uom.getMonth() + 1) + "/" + uom.getDate();
+            return new Date(uom);
+        },
+
+        /**
+         * 创建日历外框的事件
+         */
+        _buildEvent: function() {
+            var self = this;
+            if (!self.popup)return this;
+            //点击空白
+            //flush event
+            for (var i = 0; i < self.EV.length; i++) {
+                if (self.EV[i] !== undefined) {
+                    self.EV[i].detach();
+                }
+            }
+            self.EV[0] = S.one('body').on('click', function(e) {
+                //TODO e.target是裸的节点，这句不得不加，虽然在逻辑上并无特殊语义
+                e.target = S.Node(e.target);
+                //点击到日历上
+                if (e.target.attr('id') == self.C_Id)return;
+                if ((e.target.hasClass('next') || e.target.hasClass('prev'))
+                    && e.target[0].tagName == 'A')    return;
+                //点击在trigger上
+                if (e.target.attr('id') == self.id)return;
+                if (!S.DOM.contains(S.one('#' + self.C_Id), e.target)) {
+                    self.hide();
+                }
+            });
+            //点击触点
+            for (i = 0; i < self.triggerType.length; i++) {
+
+                self.EV[1] = S.one('#' + self.id).on(self.triggerType[i], function(e) {
+                    e.target = S.Node(e.target);
+                    e.preventDefault();
+                    //如果focus和click同时存在的hack
+                    S.log(e.type);
+                    var a = self.triggerType;
+                    if (S.inArray('click', a) && S.inArray('focus', a)) {//同时含有
+                        if (e.type == 'focus') {
+                            self.toggle();
+                        }
+                    } else if (S.inArray('click', a) && !S.inArray('focus', a)) {//只有click
+                        if (e.type == 'click') {
+                            self.toggle();
+                        }
+                    } else if (!S.inArray('click', a) && S.inArray('focus', a)) {//只有focus
+                        setTimeout(function() {//为了跳过document.onclick事件
+                            self.toggle();
+                        }, 170);
+                    } else {
+                        self.toggle();
+                    }
+
+                });
+
+            }
+            return this;
+        },
+
+        toggle: function() {
+            var self = this;
+            if (self.con.css('visibility') == 'hidden') {
+                self.show();
+            } else {
+                self.hide();
+            }
+        },
+
+        /**
+         * 显示
+         */
+        show: function() {
+            var self = this;
+            self.con.css('visibility', '');
+            var _x = self.trigger.offset().left,
+                //KISSY得到DOM的width是innerWidth，这里期望得到outterWidth
+                height = self.trigger[0].offsetHeight || self.trigger.height(),
+                _y = self.trigger.offset().top + height;
+            self.con.css('left', _x.toString() + 'px');
+            self.con.css('top', _y.toString() + 'px');
+            return this;
+        },
+
+        /**
+         * 隐藏
+         */
+        hide: function() {
+            var self = this;
+            self.con.css('visibility', 'hidden');
+            return this;
+        },
+
+        /**
+         * 创建参数列表
+         */
+        _buildParam: function(o) {
+            var self = this;
+            if (o === undefined || o == null) {
+                o = { };
+            }
+
+            function setParam(def, key) {
+                var v = o[key];
+                // null在这里是“占位符”，用来清除参数的一个道具
+                self[key] = (v === undefined || v == null) ? def : v;
+            }
+
+            S.each({
+                date:        new Date(),
+                startDay:    0,
+                pages:       1,
+                closable:    false,
+                rangeSelect: false,
+                minDate:     false,
+                maxDate:     false,
+                multiSelect: false,
+                navigator:   true,
+                arrow_left:  false,
+                arrow_right: false,
+                popup:       false,
+                showTime:    false,
+                triggerType: ['click']
+            }, setParam);
+
+            setParam(self.date, 'selected');
+            if(o.startDay) self.startDay = (7 - o.startDay) % 7;
+
+            if (o.range !== undefined && o.range != null) {
+                var s = self._showdate(1, new Date(o.range.start.getFullYear() + '/' + (o.range.start.getMonth() + 1) + '/' + (o.range.start.getDate())));
+                var e = self._showdate(1, new Date(o.range.end.getFullYear() + '/' + (o.range.end.getMonth() + 1) + '/' + (o.range.end.getDate())));
+                self.range = {
+                    start:s,
+                    end:e
+                };
+            } else {
+                self.range = {
+                    start:null,
+                    end:null
+                };
+            }
+            self.EV = [];
+            return this;
+        },
+
+        /**
+         * 过滤参数列表
+         */
+        _parseParam: function(o) {
+            var self = this,i;
+            if (o === undefined || o == null) {
+                o = {};
+            }
+            for (i in o) {
+                self[i] = o[i];
+            }
+            self._handleDate();
+            return this;
+        },
+
+        /**
+         * 模板函数
+         */
+        _templetShow: function(templet, data) {
+            var str_in,value_s,i,m,value,par;
+            if (data instanceof Array) {
+                str_in = '';
+                for (i = 0; i < data.length; i++) {
+                    str_in += arguments.callee(templet, data[i]);
+                }
+                templet = str_in;
+            } else {
+                value_s = templet.match(/{\$(.*?)}/g);
+                if (data !== undefined && value_s != null) {
+                    for (i = 0,m = value_s.length; i < m; i++) {
+                        par = value_s[i].replace(/({\$)|}/g, '');
+                        value = (data[par] !== undefined) ? data[par] : '';
+                        templet = templet.replace(value_s[i], value);
+                    }
+                }
+            }
+            return templet;
+        },
+
+        /**
+         * 处理日期
+         */
+        _handleDate: function() {
+            var self = this,
+            date = self.date;
+            self.weekday = date.getDay() + 1;//星期几 //指定日期是星期几
+            self.day = date.getDate();//几号
+            self.month = date.getMonth();//月份
+            self.year = date.getFullYear();//年份
+            return this;
+        },
+
+        //get标题
+        _getHeadStr: function(year, month) {
+            return year.toString() + '年' + (Number(month) + 1).toString() + '月';
+        },
+
+        //月加
+        _monthAdd: function() {
+            var self = this;
+            if (self.month == 11) {
+                self.year++;
+                self.month = 0;
+            } else {
+                self.month++;
+            }
+            self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
+            return this;
+        },
+
+        //月减
+        _monthMinus: function() {
+            var self = this;
+            if (self.month == 0) {
+                self.year--;
+                self.month = 11;
+            } else {
+                self.month--;
+            }
+            self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
+            return this;
+        },
+
+        //裸算下一个月的年月,[2009,11],年:fullYear，月:从0开始计数
+        _computeNextMonth: function(a) {
+            var _year = a[0],
+                _month = a[1];
+            if (_month == 11) {
+                _year++;
+                _month = 0;
+            } else {
+                _month++;
+            }
+            return [_year,_month];
+        },
+
+        //处理日期的偏移量
+        _handleOffset: function() {
+            var self = this,
+                data = ['日','一','二','三','四','五','六'],
+                temp = '<span>{$day}</span>',
+                offset = self.startDay,
+                day_html = '',
+                a = [];
+            for (var i = 0; i < 7; i++) {
+                a[i] = {
+                    day:data[(i - offset + 7) % 7]
+                };
+            }
+            day_html = self._templetShow(temp, a);
+
+            return {
+                day_html:day_html
+            };
+        },
+
+        //处理起始日期,d:Date类型
+        _handleRange: function(d) {
+            var self = this,t;
+            if ((self.range.start == null && self.range.end == null ) || (self.range.start != null && self.range.end != null)) {
+                self.range.start = d;
+                self.range.end = null;
+                self.render();
+            } else if (self.range.start != null && self.range.end == null) {
+                self.range.end = d;
+                if (self.range.start.getTime() > self.range.end.getTime()) {
+                    t = self.range.start;
+                    self.range.start = self.range.end;
+                    self.range.end = t;
+                }
+                self.fire('rangeSelect', self.range);
+                self.render();
+            }
+            return this;
+        }
+    });
+
+    S.Calendar = Calendar;
+}, { requires: ['core'] } );
+
+/**
+ * 2010-09-09 by lijing00333@163.com - 拔赤
+ *     - 将基于YUI2/3的Calendar改为基于KISSY
+ *     - 增加起始日期（星期x）的自定义
+ *      - 常见浮层的bugfix
+ *
+ * TODO:
+ *   - 日历日期的输出格式的定制
+ *   - 多选日期的场景的交互设计
+ */
+/**
+ * @author  lijing00333@163.com 拔赤
+ */
+KISSY.add('calendar-page', function(S) {
+
+    S.augment(S.Calendar, {
+
+        Page: function(config, fathor) {
+            /**
+             * 子日历构造器
+             * @constructor S.Calendar.prototype.Page
+             * @param {object} config ,参数列表，需要指定子日历所需的年月
+             * @param {object} fathor,指向Y.Calendar实例的指针，需要共享父框的参数
+             * @return 子日历的实例
+             */
+
+            //属性
+            this.fathor = fathor;
+            this.month = Number(config.month);
+            this.year = Number(config.year);
+            this.prev_arrow = config.prev_arrow;
+            this.next_arrow = config.next_arrow;
+            this.node = null;
+            this.timmer = null;//时间选择的实例
+            this.id = '';
+            this.EV = [];
+            this.html = [
+                '<div class="ks-cal-box" id="{$id}">',
+                '<div class="ks-cal-hd">',
+                '<a href="javascript:void(0);" class="prev {$prev}"><</a>',
+                '<a href="javascript:void(0);" class="title">{$title}</a>',
+                '<a href="javascript:void(0);" class="next {$next}">></a>',
+                '</div>',
+                '<div class="ks-cal-bd">',
+                '<div class="whd">',
+                /*
+                 '<span>日</span>',
+                 '<span>一</span>',
+                 '<span>二</span>',
+                 '<span>三</span>',
+                 '<span>四</span>',
+                 '<span>五</span>',
+                 '<span>六</span>',
+                 */
+                fathor._handleOffset().day_html,
+                '</div>',
+                '<div class="dbd ks-clearfix">',
+                '{$ds}',
+                /*
+                 <a href="" class="null">1</a>
+                 <a href="" class="disabled">3</a>
+                 <a href="" class="selected">1</a>
+                 <a href="" class="today">1</a>
+                 <a href="">1</a>
+                 */
+                '</div>',
+                '</div>',
+                '<div class="ks-setime hidden">',
+                '</div>',
+                '<div class="ks-cal-ft {$showtime}">',
+                '<div class="ks-cal-time">',
+                '时间：00:00 	&hearts;',
+                '</div>',
+                '</div>',
+                '<div class="ks-selectime hidden"><!--用以存放点选时间的一些关键值-->',
+                '</div>',
+                '</div><!--#ks-cal-box-->'
+            ].join("");
+            this.nav_html = [
+                '<p>',
+                '月',
+                '<select value="{$the_month}">',
+                '<option class="m1" value="1">01</option>',
+                '<option class="m2" value="2">02</option>',
+                '<option class="m3" value="3">03</option>',
+                '<option class="m4" value="4">04</option>',
+                '<option class="m5" value="5">05</option>',
+                '<option class="m6" value="6">06</option>',
+                '<option class="m7" value="7">07</option>',
+                '<option class="m8" value="8">08</option>',
+                '<option class="m9" value="9">09</option>',
+                '<option class="m10" value="10">10</option>',
+                '<option class="m11" value="11">11</option>',
+                '<option class="m12" value="12">12</option>',
+                '</select>',
+                '</p>',
+                '<p>',
+                '年',
+                '<input type="text" value="{$the_year}" onfocus="this.select()"/>',
+                '</p>',
+                '<p>',
+                '<button class="ok">确定</button><button class="cancel">取消</button>',
+                '</p>'
+            ].join("");
+
+
+            //方法
+            //常用的数据格式的验证
+            this.Verify = function() {
+
+                var isDay = function(n) {
+                    if (!/\d+/i.test(n))return false;
+                    n = Number(n);
+                    return !(n < 1 || n > 31);
+
+                },
+                    isYear = function(n) {
+                        if (!/\d+/i.test(n))return false;
+                        n = Number(n);
+                        return !(n < 100 || n > 10000);
+
+                    },
+                    isMonth = function(n) {
+                        if (!/\d+/i.test(n))return false;
+                        n = Number(n);
+                        return !(n < 1 || n > 12);
+
+
+                    };
+
+                return {
+                    isDay:isDay,
+                    isYear:isYear,
+                    isMonth:isMonth
+
+                };
+
+
+            };
+
+            /**
+             * 渲染子日历的UI
+             */
+            this._renderUI = function() {
+                var cc = this,_o = {},ft;
+                cc.HTML = '';
+                _o.prev = '';
+                _o.next = '';
+                _o.title = '';
+                _o.ds = '';
+                if (!cc.prev_arrow) {
+                    _o.prev = 'hidden';
+                }
+                if (!cc.next_arrow) {
+                    _o.next = 'hidden';
+                }
+                if (!cc.fathor.showtime) {
+                    _o.showtime = 'hidden';
+                }
+                _o.id = cc.id = 'ks-cal-' + Math.random().toString().replace(/.\./i, '');
+                _o.title = cc.fathor._getHeadStr(cc.year, cc.month);
+                cc.createDS();
+                _o.ds = cc.ds;
+                cc.fathor.con.append(cc.fathor._templetShow(cc.html, _o));
+                cc.node = S.one('#' + cc.id);
+                if (cc.fathor.showTime) {
+                    ft = cc.node.one('.ks-cal-ft');
+                    ft.removeClass('hidden');
+                    cc.timmer = new cc.fathor.TimeSelector(ft, cc.fathor);
+                }
+                return this;
+            };
+            /**
+             * 创建子日历的事件
+             */
+            this._buildEvent = function() {
+                var cc = this,i,
+                    con = S.one('#' + cc.id);
+                //flush event
+                for (i = 0; i < cc.EV.length; i++) {
+                    if (typeof cc.EV[i] != 'undefined') {
+                        cc.EV[i].detach();
+                    }
+                }
+
+                cc.EV[0] = con.one('div.dbd').on('click', function(e) {
+                    e.preventDefault();
+                    e.target = S.Node(e.target);
+                    if (e.target.hasClass('null'))return;
+                    if (e.target.hasClass('disabled'))return;
+                    var selectedd = Number(e.target.html());
+                    var d = new Date();
+                    d.setDate(selectedd);
+                    d.setMonth(cc.month);
+                    d.setYear(cc.year);
+                    //self.callback(d);
+                    //datetime的date
+                    cc.fathor.dt_date = d;
+                    cc.fathor.fire('select', {
+                        date:d
+                    });
+                    if (cc.fathor.popup && cc.fathor.closable) {
+                        cc.fathor.hide();
+                    }
+                    if (cc.fathor.rangeSelect) {
+                        cc.fathor._handleRange(d);
+                    }
+                    cc.fathor.render({selected:d});
+                });
+                //向前
+                cc.EV[1] = con.one('a.prev').on('click', function(e) {
+                    e.preventDefault();
+                    cc.fathor._monthMinus().render();
+                    cc.fathor.fire('monthChange', {
+                        date:new Date(cc.fathor.year + '/' + (cc.fathor.month + 1) + '/01')
+                    });
+
+                });
+                //向后
+                cc.EV[2] = con.one('a.next').on('click', function(e) {
+                    e.preventDefault();
+                    cc.fathor._monthAdd().render();
+                    cc.fathor.fire('monthChange', {
+                        date:new Date(cc.fathor.year + '/' + (cc.fathor.month + 1) + '/01')
+                    });
+                });
+                if (cc.fathor.navigator) {
+                    cc.EV[3] = con.one('a.title').on('click', function(e) {
+                        try {
+                            cc.timmer.hidePopup();
+                            e.preventDefault();
+                        } catch(e) {
+                        }
+                        e.target = S.Node(e.target);
+                        var setime_node = con.one('.ks-setime');
+                        setime_node.html('');
+                        var in_str = cc.fathor._templetShow(cc.nav_html, {
+                            the_month:cc.month + 1,
+                            the_year:cc.year
+                        });
+                        setime_node.html(in_str);
+                        setime_node.removeClass('hidden');
+                        con.one('input').on('keydown', function(e) {
+                            e.target = S.Node(e.target);
+                            if (e.keyCode == 38) {//up
+                                e.target.val(Number(e.target.val()) + 1);
+                                //TODO 我期望直接调用e.target.select
+                                e.target[0].select();
+                            }
+                            if (e.keyCode == 40) {//down
+                                e.target.val(Number(e.target.val()) - 1);
+                                e.target[0].select();
+                            }
+                            if (e.keyCode == 13) {//enter
+                                var _month = con.one('.ks-setime').one('select').val();
+                                var _year = con.one('.ks-setime').one('input').val();
+                                con.one('.ks-setime').addClass('hidden');
+                                if (!cc.Verify().isYear(_year))return;
+                                if (!cc.Verify().isMonth(_month))return;
+                                cc.fathor.render({
+                                    date:new Date(_year + '/' + _month + '/01')
+                                });
+                                cc.fathor.fire('monthChange', {
+                                    date:new Date(_year + '/' + _month + '/01')
+                                });
+                            }
+                        });
+                    });
+                    cc.EV[4] = con.one('.ks-setime').on('click', function(e) {
+                        e.preventDefault();
+                        e.target = S.Node(e.target);
+                        if (e.target.hasClass('ok')) {
+                            var _month = con.one('.ks-setime').one('select').val(),
+                                _year = con.one('.ks-setime').one('input').val();
+                            con.one('.ks-setime').addClass('hidden');
+                            if (!cc.Verify().isYear(_year))return;
+                            if (!cc.Verify().isMonth(_month))return;
+                            cc.fathor.render({
+                                date:new Date(_year + '/' + _month + '/01')
+                            });
+                            cc.fathor.fire('monthChange', {
+                                date:new Date(_year + '/' + _month + '/01')
+                            });
+                        } else if (e.target.hasClass('cancel')) {
+                            con.one('.ks-setime').addClass('hidden');
+                        }
+                    });
+                }
+                return this;
+
+            };
+            /**
+             * 得到当前子日历的node引用
+             */
+            this._getNode = function() {
+                var cc = this;
+                return cc.node;
+            };
+            /**
+             * 得到某月有多少天,需要给定年来判断闰年
+             */
+            this._getNumOfDays = function(year, month) {
+                return 32 - new Date(year, month - 1, 32).getDate();
+            };
+            /**
+             * 生成日期的html
+             */
+            this.createDS = function() {
+                var cc = this,
+                    s = '',
+                    startweekday = (new Date(cc.year + '/' + (cc.month + 1) + '/01').getDay() + cc.fathor.startDay + 7) % 7,//当月第一天是星期几
+                    k = cc._getNumOfDays(cc.year, cc.month + 1) + startweekday,
+                    i, _td_s;
+
+                for (i = 0; i < k; i++) {
+                    //prepare data {{
+                    if (/532/.test(S.UA.webkit)) {//hack for chrome
+                        _td_s = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 1 - startweekday).toString());
+                    } else {
+                        _td_s = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 2 - startweekday).toString());
+                    }
+                    var _td_e = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 1 - startweekday).toString());
+                    //prepare data }}
+                    if (i < startweekday) {//null
+                        s += '<a href="javascript:void(0);" class="null">0</a>';
+                    } else if (cc.fathor.minDate instanceof Date
+                        && new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 2 - startweekday)).getTime() < (cc.fathor.minDate.getTime() + 1)) {//disabled
+                        s += '<a href="javascript:void(0);" class="disabled">' + (i - startweekday + 1) + '</a>';
+
+                    } else if (cc.fathor.maxDate instanceof Date
+                        && new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 1 - startweekday)).getTime() > cc.fathor.maxDate.getTime()) {//disabled
+                        s += '<a href="javascript:void(0);" class="disabled">' + (i - startweekday + 1) + '</a>';
+
+
+                    } else if ((cc.fathor.range.start != null && cc.fathor.range.end != null) //日期选择范围
+                        && (
+                        _td_s.getTime() >= cc.fathor.range.start.getTime() && _td_e.getTime() < cc.fathor.range.end.getTime())) {
+
+                        //alert(Y.dump(_td_s.getDate()));
+
+                        if (i == (startweekday + (new Date()).getDate() - 1)
+                            && (new Date()).getFullYear() == cc.year
+                            && (new Date()).getMonth() == cc.month) {//今天并被选择
+                            s += '<a href="javascript:void(0);" class="range today">' + (i - startweekday + 1) + '</a>';
+                        } else {
+                            s += '<a href="javascript:void(0);" class="range">' + (i - startweekday + 1) + '</a>';
+                        }
+
+                    } else if (i == (startweekday + (new Date()).getDate() - 1)
+                        && (new Date()).getFullYear() == cc.year
+                        && (new Date()).getMonth() == cc.month) {//today
+                        s += '<a href="javascript:void(0);" class="today">' + (i - startweekday + 1) + '</a>';
+
+                    } else if (i == (startweekday + cc.fathor.selected.getDate() - 1)
+                        && cc.month == cc.fathor.selected.getMonth()
+                        && cc.year == cc.fathor.selected.getFullYear()) {//selected
+                        s += '<a href="javascript:void(0);" class="selected">' + (i - startweekday + 1) + '</a>';
+                    } else {//other
+                        s += '<a href="javascript:void(0);">' + (i - startweekday + 1) + '</a>';
+                    }
+                }
+                if (k % 7 != 0) {
+                    for (i = 0; i < (7 - k % 7); i++) {
+                        s += '<a href="javascript:void(0);" class="null">0</a>';
+                    }
+                }
+                cc.ds = s;
+                return this;
+            };
+            /**
+             * 渲染
+             */
+            this.render = function() {
+                var cc = this;
+                cc._renderUI();
+                cc._buildEvent();
+                return this;
+            };
+
+
+        }//Page constructor over
+    });
+
+}, { host: 'calendar' });
+/**
+ * @author  lijing00333@163.com 拔赤
+ */
+KISSY.add('calendar-time', function(S) {
+
+    S.augment(S.Calendar, {
+
+        /**
+         * 时间选择构造器
+         * @constructor S.Calendar.prototype.TimerSelector
+         * @param {object} ft ,timer所在的容器
+         * @param {object} fathor 指向S.Calendar实例的指针，需要共享父框的参数
+         */
+        TimeSelector:function(ft, fathor) {
+            //属性
+            this.fathor = fathor;
+            this.fcon = ft.parent('.ks-cal-box');
+            this.popupannel = this.fcon.one('.ks-selectime');//点选时间的弹出层
+            if (typeof fathor._time == 'undefined') {//确保初始值和当前时间一致
+                fathor._time = new Date();
+            }
+            this.time = fathor._time;
+            this.status = 's';//当前选择的状态，'h','m','s'依次判断更新哪个值
+            this.ctime = S.Node('<div class="ks-cal-time">时间：<span class="h">h</span>:<span class="m">m</span>:<span class="s">s</span><!--{{arrow--><div class="cta"><button class="u"></button><button class="d"></button></div><!--arrow}}--></div>');
+            this.button = S.Node('<button class="ct-ok">确定</button>');
+            //小时
+            this.h_a = ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
+            //分钟
+            this.m_a = ['00','10','20','30','40','50'];
+            //秒
+            this.s_a = ['00','10','20','30','40','50'];
+
+
+            //方法
+            /**
+             * 创建相应的容器html，值均包含在a中
+             * 参数：要拼装的数组
+             * 返回：拼好的innerHTML,结尾还要带一个关闭的a
+             *
+             */
+            this.parseSubHtml = function(a) {
+                var in_str = '';
+                for (var i = 0; i < a.length; i++) {
+                    in_str += '<a href="javascript:void(0);" class="item">' + a[i] + '</a>';
+                }
+                in_str += '<a href="javascript:void(0);" class="x">x</a>';
+                return in_str;
+            };
+            /**
+             * 显示ks-selectime容器
+             * 参数，构造好的innerHTML
+             */
+            this.showPopup = function(instr) {
+                var self = this;
+                this.popupannel.html(instr);
+                this.popupannel.removeClass('hidden');
+                var status = self.status;
+                self.ctime.all('span').removeClass('on');
+                switch (status) {
+                    case 'h':
+                        self.ctime.all('.h').addClass('on');
+                        break;
+                    case 'm':
+                        self.ctime.all('.m').addClass('on');
+                        break;
+                    case 's':
+                        self.ctime.all('.s').addClass('on');
+                        break;
+                }
+            };
+            /**
+             * 隐藏ks-selectime容器
+             */
+            this.hidePopup = function() {
+                this.popupannel.addClass('hidden');
+            };
+            /**
+             * 不对其做更多的上下文假设，仅仅根据time显示出来
+             */
+            this.render = function() {
+                var self = this;
+                var h = self.get('h');
+                var m = self.get('m');
+                var s = self.get('s');
+                self.fathor._time = self.time;
+                self.ctime.all('.h').html(h);
+                self.ctime.all('.m').html(m);
+                self.ctime.all('.s').html(s);
+                return self;
+            };
+            //这里的set和get都只是对time的操作，并不对上下文做过多假设
+            /**
+             * set(status,v)
+             * h:2,'2'
+             */
+            this.set = function(status, v) {
+                var self = this;
+                v = Number(v);
+                switch (status) {
+                    case 'h':
+                        self.time.setHours(v);
+                        break;
+                    case 'm':
+                        self.time.setMinutes(v);
+                        break;
+                    case 's':
+                        self.time.setSeconds(v);
+                        break;
+                }
+                self.render();
+            };
+            /**
+             * get(status)
+             */
+            this.get = function(status) {
+                var self = this;
+                var time = self.time;
+                switch (status) {
+                    case 'h':
+                        return time.getHours();
+                        break;
+                    case 'm':
+                        return time.getMinutes();
+                        break;
+                    case 's':
+                        return time.getSeconds();
+                        break;
+                }
+            };
+
+            /**
+             * add()
+             * 状态值代表的变量增1
+             */
+            this.add = function() {
+                var self = this;
+                var status = self.status;
+                var v = self.get(status);
+                v++;
+                self.set(status, v);
+            };
+            /**
+             * minus()
+             * 状态值代表的变量增1
+             */
+            this.minus = function() {
+                var self = this;
+                var status = self.status;
+                var v = self.get(status);
+                v--;
+                self.set(status, v);
+            };
+
+
+            //构造
+            this._init = function() {
+                var self = this;
+                ft.html('').append(self.ctime);
+                ft.append(self.button);
+                self.render();
+                self.popupannel.on('click', function(e) {
+                    var el = S.Node(e.target);
+                    if (el.hasClass('x')) {//关闭
+                        self.hidePopup();
+                    } else if (el.hasClass('item')) {//点选一个值
+                        var v = Number(el.html());
+                        self.set(self.status, v);
+                        self.hidePopup();
+                    }
+                });
+                //确定的动作
+                self.button.on('click', function() {
+                    //初始化读取父框的date
+                    var d = typeof self.fathor.dt_date == 'undefined' ? self.fathor.date : self.fathor.dt_date;
+                    d.setHours(self.get('h'));
+                    d.setMinutes(self.get('m'));
+                    d.setSeconds(self.get('s'));
+                    self.fathor.fire('timeSelect', {
+                        date:d
+                    });
+                    if (self.fathor.popup && self.fathor.closable) {
+                        self.fathor.hide();
+                    }
+                });
+                //ctime上的键盘事件，上下键，左右键的监听
+                //TODO 考虑是否去掉
+                self.ctime.on('keyup', function(e) {
+                    if (e.keyCode == 38 || e.keyCode == 37) {//up or left
+                        //e.stopPropagation();
+                        e.preventDefault();
+                        self.add();
+                    }
+                    if (e.keyCode == 40 || e.keyCode == 39) {//down or right
+                        //e.stopPropagation();
+                        e.preventDefault();
+                        self.minus();
+                    }
+                });
+                //上的箭头动作
+                self.ctime.one('.u').on('click', function() {
+                    self.hidePopup();
+                    self.add();
+                });
+                //下的箭头动作
+                self.ctime.one('.d').on('click', function() {
+                    self.hidePopup();
+                    self.minus();
+                });
+                //弹出选择小时
+                self.ctime.one('.h').on('click', function() {
+                    var in_str = self.parseSubHtml(self.h_a);
+                    self.status = 'h';
+                    self.showPopup(in_str);
+                });
+                //弹出选择分钟
+                self.ctime.one('.m').on('click', function() {
+                    var in_str = self.parseSubHtml(self.m_a);
+                    self.status = 'm';
+                    self.showPopup(in_str);
+                });
+                //弹出选择秒
+                self.ctime.one('.s').on('click', function() {
+                    var in_str = self.parseSubHtml(self.s_a);
+                    self.status = 's';
+                    self.showPopup(in_str);
+                });
+
+
+            };
+            this._init();
+
+
+        }
+
+    });
+
+
+},  { host: 'calendar' } );

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 14 22:39
 */
 /**
  * @module kissy
@@ -1311,13 +1311,16 @@ build time: Sep 13 17:31
         }
     };
 
-    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest', 'overlay', 'imagezoom'], function(modName) {
+    S.each(['sizzle', 'datalazyload', 'flash', 'switchable',
+        'suggest', 'overlay', 'imagezoom', 'calendar'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
             requires: ['core'],
             charset: 'utf-8'
         };
     });
+
+    map['calendar'].csspath = 'calendar/default-min.css';
 
     S.add(map);
 
