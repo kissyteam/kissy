@@ -90,6 +90,11 @@
 </ul>
 
 <h2>inner</h2>
+<style>
+    .inner {
+        border: none;
+    }
+</style>
 <div class="demo">
     <img id="inner" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
 </div>
@@ -114,7 +119,8 @@
         new S.ImageZoom("#inner", {
             bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
             position: 'inner',
-            offset: 0
+            offset: 0,
+            zoomCls: 'inner'
         });
     });
 

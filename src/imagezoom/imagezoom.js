@@ -34,7 +34,9 @@ KISSY.add('imagezoom', function(S, undefined) {
             timeoutMsg: '图片暂不可用',
 
             zoomSize: [400, 310],      // 放大区域宽高
-            lensIcon: true             // 是否显示放大镜提示图标
+            lensIcon: true,            // 是否显示放大镜提示图标
+
+            zoomCls: ''                // 放大区域额外样式
         };
 
     /**
@@ -148,7 +150,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             self._renderLens();
 
             // 创建 viewer 的 DOM 结构
-            v = createAbsElem(CLS_VIEWER);
+            v = createAbsElem(CLS_VIEWER + ' ' + cfg.zoomCls);
             bImg = DOM.create(IMG, { src: cfg.bigImageSrc });
             v.appendChild(bImg);
 
