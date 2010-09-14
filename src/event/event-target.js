@@ -4,8 +4,7 @@
  */
 KISSY.add('event-target', function(S, undefined) {
 
-    var Event = S.Event,
-        EVENT_GUID = Event.EVENT_GUID;
+    var Event = S.Event;
 
     /**
      * EventTarget provides the implementation for any object to publish,
@@ -13,12 +12,10 @@ KISSY.add('event-target', function(S, undefined) {
      */
     S.EventTarget = {
 
-        //ksEventTargetId: undefined,
-
         isCustomEventTarget: true,
 
         fire: function(type, eventData) {
-            var id = this[EVENT_GUID] || -1,
+            var id = S.DOM.data(this, Event.EVENT_GUID) || -1,
                 cache = Event._getCache(id) || { },
                 events = cache.events || { },
                 t = events[type];

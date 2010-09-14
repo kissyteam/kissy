@@ -5,6 +5,7 @@
 KISSY.add('event', function(S, undefined) {
 
     var doc = document,
+        DOM = S.DOM,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -217,28 +218,17 @@ KISSY.add('event', function(S, undefined) {
     }
 
     function getID(target) {
-        return isValidTarget(target) ? target[EVENT_GUID] : -1;
+        return isValidTarget(target) ? DOM.data(target, EVENT_GUID) : -1;
     }
 
     function setID(target, id) {
-        if (!isValidTarget(target)) {
-            return S.error('Text or comment node is not valid event target.');
-        }
-
-        try {
-            target[EVENT_GUID] = id;
-        } catch(ex) {
-            // iframe 跨域等情况会报错
-            S.error(ex);
+        if (isValidTarget(target)) {
+            DOM.data(target, EVENT_GUID, id);
         }
     }
 
     function removeID(target) {
-        try {
-            target[EVENT_GUID] = undefined;
-            delete target[EVENT_GUID];
-        } catch(ex) {
-        }
+        DOM.removeData(target, EVENT_GUID);
     }
 
     function isValidTarget(target) {

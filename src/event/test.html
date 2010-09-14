@@ -252,8 +252,15 @@
         try {
             Event.add();
             Event.add(null);
+
             Event.add(document, null);
             Event.add(document, 'click', null);
+
+            Event.add(window, null);
+            Event.add(window, 'click', null);
+            Event.add(window, 'blur', function() {
+                test.echo('window blur');
+            });
         }
         catch(ex) {
             test.fail(ex);

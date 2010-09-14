@@ -10,7 +10,6 @@ KISSY.add('dom-style', function(S, undefined) {
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width', HEIGHT = 'height',
         AUTO = 'auto',
-        KS_CACHE = '_ks_cache',
         DISPLAY = 'display', NONE = 'none',
         PARSEINT = parseInt,
         RE_LT = /^left|top$/,
@@ -133,7 +132,7 @@ KISSY.add('dom-style', function(S, undefined) {
          */
         show: function(selector) {
             S.query(selector).each(function(elem) {
-                elem.style[DISPLAY] = (elem[KS_CACHE] || 0)[DISPLAY] || EMPTY;
+                elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
             })
         },
 
@@ -146,12 +145,26 @@ KISSY.add('dom-style', function(S, undefined) {
                 
                 if (oldVal !== NONE) {
                     if (oldVal) {
-                        elem[KS_CACHE] = elem[KS_CACHE] || { };
-                        elem[KS_CACHE][DISPLAY] = oldVal;
+                        DOM.data(elem, DISPLAY, oldVal);
                     }
                     style[DISPLAY] = NONE;
                 }
-            })
+            });
+        },
+
+        /**
+         * Display or hide the matched elements.
+         */
+        toggle: function(selector) {
+            S.query(selector).each(function(elem) {
+                if (elem) {
+                    if (elem.style[DISPLAY] === NONE) {
+                        DOM.show(elem);
+                    } else {
+                        DOM.hide(elem);
+                    }
+                }
+            });
         },
 
         /**
@@ -231,6 +244,9 @@ KISSY.add('dom-style', function(S, undefined) {
 });
 
 /**
+ * TODO:
+ *  - 将 ks-cache 机制独立成类 jQuery 的 data
+ * 
  * NOTES:
  *  - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
  *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。

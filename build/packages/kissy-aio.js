@@ -1530,7 +1530,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 14 17:24
 */
 /**
  * @module  dom
@@ -1663,7 +1663,7 @@ KISSY.add('selector', function(S, undefined) {
             ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
         }
         // 传入的 selector 是 NodeList 或已是 Array
-        else if (selector && (S.isArray(selector) || (selector.item && !selector.nodeType))) {
+        else if (selector && (S.isArray(selector) || isNodeList(selector))) {
             ret = selector;
         }
         // 传入的 selector 是 Node 等非字符串对象，原样返回
@@ -1673,7 +1673,7 @@ KISSY.add('selector', function(S, undefined) {
         // 传入的 selector 是其它值时，返回空数组
 
         // 将 NodeList 转换为普通数组
-        if(ret.item) {
+        if(isNodeList(ret)) {
             ret = S.makeArray(ret);
         }
 
@@ -1683,6 +1683,14 @@ KISSY.add('selector', function(S, undefined) {
         };
 
         return ret;
+    }
+
+    function isNodeList(node) {
+        // 非 webkit 下，直接用 namedItem 判断
+        // 在 webkit 下，用 node.item 判断
+        // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
+        // 注2：select 等元素也有 namedItem, 要用 !node.nodeType 排除掉
+        return node && !node.nodeType && (node.namedItem || S.isFunction(node.item));
     }
 
     // 调整 context 为合理值
@@ -1904,6 +1912,139 @@ KISSY.add('selector', function(S, undefined) {
  *  - http://ejohn.org/blog/comparing-document-position/
  *  - http://github.com/jeresig/sizzle/blob/master/sizzle.js
  */
+/**
+ * @module  dom-data
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-data', function(S, undefined) {
+
+    var win = window,
+        DOM = S.DOM,
+
+        expando = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
+        dataCache = { },       // 存储 node 节点的 data
+        winDataCache = { },    // 避免污染全局
+
+        // The following elements throw uncatchable exceptions if you
+        // attempt to add expando properties to them.
+        noData = {
+            EMBED: 1,
+            OBJECT: 1,
+            APPLET: 1
+        };
+
+    S.mix(DOM, {
+
+        /**
+         * Store arbitrary data associated with the matched elements.
+         */
+        data: function(selector, name, data) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.data(selector, k, name[k]);
+                }
+                return;
+            }
+
+            // getter
+            if (data === undefined) {
+                var elem = S.get(selector), isNode,
+                    cache, key, thisCache;
+
+                if (elem == win) elem = winDataCache;
+                isNode = checkIsNode(elem);
+
+                cache = isNode ? dataCache : elem;
+                key = isNode ? elem[expando] : expando;
+                thisCache = cache[key];
+
+                if(S.isString(name) && thisCache) {
+                    return thisCache[name];
+                }
+                return thisCache;
+            }
+            // setter
+            else {
+                S.query(selector).each(function(elem) {
+                    if (!elem || noData[elem.nodeName]) return;
+                    if (elem == win) elem = winDataCache;
+
+                    var cache = dataCache, key;
+
+                    if (!checkIsNode(elem)) {
+                        key = expando;
+                        cache = elem;
+                    }
+                    else if (!(key = elem[expando])) {
+                        key = elem[expando] = S.guid();
+                    }
+
+                    if (name && data !== undefined) {
+                        if (!cache[key]) cache[key] = { };
+                        cache[key][name] = data;
+                    }
+                });
+            }
+        },
+
+        /**
+         * Remove a previously-stored piece of data.
+         */
+        removeData: function(selector, name) {
+            S.query(selector).each(function(elem) {
+                if (!elem) return;
+                if (elem == win) elem = winDataCache;
+
+                var key, cache = dataCache, thisCache,
+                    isNode = checkIsNode(elem);
+
+                if (!isNode) {
+                    cache = elem;
+                    key = expando;
+                } else {
+                    key = elem[expando];
+                }
+
+                if (!key) return;
+                thisCache = cache[key];
+
+                // If we want to remove a specific section of the element's data
+                if (name) {
+                    if (thisCache) {
+                        delete thisCache[name];
+
+                        // If we've removed all the data, remove the element's cache
+                        if (S.isEmptyObject(thisCache)) {
+                            DOM.removeData(elem);
+                        }
+                    }
+                }
+                // Otherwise, we want to remove all of the element's data
+                else {
+                    if (!isNode) {
+                        try {
+                            delete elem[expando];
+                        } catch(ex) {
+                        }
+                    } else if (elem.removeAttribute) {
+                        elem.removeAttribute(expando);
+                    }
+
+                    // Completely remove the data cache
+                    if (isNode) {
+                        delete cache[key];
+                    }
+                }
+            });
+        }
+    });
+
+    function checkIsNode(elem) {
+        return elem && elem.nodeType;
+    }
+
+});
 /**
  * @module  dom-class
  * @author  lifesinger@gmail.com
@@ -2314,7 +2455,6 @@ KISSY.add('dom-style', function(S, undefined) {
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width', HEIGHT = 'height',
         AUTO = 'auto',
-        KS_CACHE = '_ks_cache',
         DISPLAY = 'display', NONE = 'none',
         PARSEINT = parseInt,
         RE_LT = /^left|top$/,
@@ -2437,7 +2577,7 @@ KISSY.add('dom-style', function(S, undefined) {
          */
         show: function(selector) {
             S.query(selector).each(function(elem) {
-                elem.style[DISPLAY] = (elem[KS_CACHE] || 0)[DISPLAY] || EMPTY;
+                elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
             })
         },
 
@@ -2450,12 +2590,26 @@ KISSY.add('dom-style', function(S, undefined) {
                 
                 if (oldVal !== NONE) {
                     if (oldVal) {
-                        elem[KS_CACHE] = elem[KS_CACHE] || { };
-                        elem[KS_CACHE][DISPLAY] = oldVal;
+                        DOM.data(elem, DISPLAY, oldVal);
                     }
                     style[DISPLAY] = NONE;
                 }
-            })
+            });
+        },
+
+        /**
+         * Display or hide the matched elements.
+         */
+        toggle: function(selector) {
+            S.query(selector).each(function(elem) {
+                if (elem) {
+                    if (elem.style[DISPLAY] === NONE) {
+                        DOM.show(elem);
+                    } else {
+                        DOM.hide(elem);
+                    }
+                }
+            });
         },
 
         /**
@@ -2535,6 +2689,9 @@ KISSY.add('dom-style', function(S, undefined) {
 });
 
 /**
+ * TODO:
+ *  - 将 ks-cache 机制独立成类 jQuery 的 data
+ * 
  * NOTES:
  *  - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
  *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
@@ -3334,7 +3491,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 14 17:56
 */
 /**
  * @module  event
@@ -3343,6 +3500,7 @@ build time: Sep 13 17:31
 KISSY.add('event', function(S, undefined) {
 
     var doc = document,
+        DOM = S.DOM,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -3555,28 +3713,17 @@ KISSY.add('event', function(S, undefined) {
     }
 
     function getID(target) {
-        return isValidTarget(target) ? target[EVENT_GUID] : -1;
+        return isValidTarget(target) ? DOM.data(target, EVENT_GUID) : -1;
     }
 
     function setID(target, id) {
-        if (!isValidTarget(target)) {
-            return S.error('Text or comment node is not valid event target.');
-        }
-
-        try {
-            target[EVENT_GUID] = id;
-        } catch(ex) {
-            // iframe 跨域等情况会报错
-            S.error(ex);
+        if (isValidTarget(target)) {
+            DOM.data(target, EVENT_GUID, id);
         }
     }
 
     function removeID(target) {
-        try {
-            target[EVENT_GUID] = undefined;
-            delete target[EVENT_GUID];
-        } catch(ex) {
-        }
+        DOM.removeData(target, EVENT_GUID);
     }
 
     function isValidTarget(target) {
@@ -3773,8 +3920,7 @@ KISSY.add('event-object', function(S, undefined) {
  */
 KISSY.add('event-target', function(S, undefined) {
 
-    var Event = S.Event,
-        EVENT_GUID = Event.EVENT_GUID;
+    var Event = S.Event;
 
     /**
      * EventTarget provides the implementation for any object to publish,
@@ -3782,12 +3928,10 @@ KISSY.add('event-target', function(S, undefined) {
      */
     S.EventTarget = {
 
-        //ksEventTargetId: undefined,
-
         isCustomEventTarget: true,
 
         fire: function(type, eventData) {
-            var id = this[EVENT_GUID] || -1,
+            var id = S.DOM.data(this, Event.EVENT_GUID) || -1,
                 cache = Event._getCache(id) || { },
                 events = cache.events || { },
                 t = events[type];

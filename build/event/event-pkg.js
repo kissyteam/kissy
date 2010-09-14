@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 14 17:56
 */
 /**
  * @module  event
@@ -10,6 +10,7 @@ build time: Sep 13 17:31
 KISSY.add('event', function(S, undefined) {
 
     var doc = document,
+        DOM = S.DOM,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -222,28 +223,17 @@ KISSY.add('event', function(S, undefined) {
     }
 
     function getID(target) {
-        return isValidTarget(target) ? target[EVENT_GUID] : -1;
+        return isValidTarget(target) ? DOM.data(target, EVENT_GUID) : -1;
     }
 
     function setID(target, id) {
-        if (!isValidTarget(target)) {
-            return S.error('Text or comment node is not valid event target.');
-        }
-
-        try {
-            target[EVENT_GUID] = id;
-        } catch(ex) {
-            // iframe 跨域等情况会报错
-            S.error(ex);
+        if (isValidTarget(target)) {
+            DOM.data(target, EVENT_GUID, id);
         }
     }
 
     function removeID(target) {
-        try {
-            target[EVENT_GUID] = undefined;
-            delete target[EVENT_GUID];
-        } catch(ex) {
-        }
+        DOM.removeData(target, EVENT_GUID);
     }
 
     function isValidTarget(target) {
@@ -440,8 +430,7 @@ KISSY.add('event-object', function(S, undefined) {
  */
 KISSY.add('event-target', function(S, undefined) {
 
-    var Event = S.Event,
-        EVENT_GUID = Event.EVENT_GUID;
+    var Event = S.Event;
 
     /**
      * EventTarget provides the implementation for any object to publish,
@@ -449,12 +438,10 @@ KISSY.add('event-target', function(S, undefined) {
      */
     S.EventTarget = {
 
-        //ksEventTargetId: undefined,
-
         isCustomEventTarget: true,
 
         fire: function(type, eventData) {
-            var id = this[EVENT_GUID] || -1,
+            var id = S.DOM.data(this, Event.EVENT_GUID) || -1,
                 cache = Event._getCache(id) || { },
                 events = cache.events || { },
                 t = events[type];
