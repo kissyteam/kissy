@@ -260,7 +260,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         },
 
         _onMouseMove: function(ev) {
-            var self = this, config = self.config,
+            var self = this,
                 viewer = self.viewer, lens = self.lens,
                 region = self._imgRegion,
                 rl = region.left, rt = region.top,
