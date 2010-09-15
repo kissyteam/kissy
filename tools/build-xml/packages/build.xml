@@ -41,9 +41,11 @@
         <!-- kissy-aio: 所有文件 -->
         <concat destfile="kissy-aio-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="kissy-pkg.js"/>
+
             <path path="../sizzle/sizzle-pkg.js"/>
             <path path="../datalazyload/datalazyload-pkg.js"/>
             <path path="../flash/flash-pkg.js"/>
+
             <path path="../switchable/switchable-pkg.js"/>
             <path path="../overlay/overlay-pkg.js"/>
             <path path="../suggest/suggest-pkg.js"/>

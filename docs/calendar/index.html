@@ -22,7 +22,7 @@
             </div>
 
             <div class="section">
-                <h3 id="properties">Useage</h3>
+                <h3 id="usage">Usage</h3>
                 <div class="member prop">
                     <h4><a name="Constructor">new S.Calendar(trigger,config)</a> </h4>
                     <div class="detail">
@@ -31,7 +31,7 @@
 <pre class="example-code"><code>
 KISSY.use('calendar',function(S) {
 	//静态日历,单击回调
-	var c = new S.Calendar('#J_calendar').on('select',function(e){
+	var c = new S.Calendar('#J_Calendar').on('select',function(e){
 		alert(e.date);
 	});
 });
@@ -147,7 +147,7 @@ KISSY.use('calendar',function(S) {
 <pre class="example-code"><code>
 KISSY.use('calendar',function(S) {
 	//月份切换事件
-	new S.Calendar('J_all_events').on('switch',function(e){
+	new S.Calendar('J_AllEvents').on('switch',function(e){
 		alert('切换事件,月份切换到'+(e.date.getMonth()+1));
 	});
 });
@@ -165,7 +165,7 @@ KISSY.use('calendar',function(S) {
 <pre class="example-code"><code>
 KISSY.use('calendar',function(S) {
 	//选择范围,并绑定范围回调
-	new S.Calendar('J_range',{
+	new S.Calendar('J_Range',{
 		multi_page:2,
 		range_select:true
 	}).on('rangeselect',function(e){
@@ -184,7 +184,7 @@ KISSY.use('calendar',function(S) {
 <pre class="example-code"><code>
 KISSY.use('calendar',function(S) {
 	//日历可选择time
-	c = new S.Calendar('#J_with_time',{
+	c = new S.Calendar('#J_WithTime',{
 		showTime:true
 	}).on('timeSelect',function(e){
 		alert(e.date);	
@@ -201,7 +201,7 @@ KISSY.use('calendar',function(S) {
 
 
             <div class="section">
-                <h3 id="properties">Methods</h3>
+                <h3 id="methods">Methods</h3>
                 <div class="member prop">
                     <h4><a name="init">toggle</a> </h4>
                     <div class="detail">
@@ -215,7 +215,7 @@ KISSY.use('calendar',function(S) {
                         <p>通过render可以带入如上任意参数并重新渲染日历</p>
 <pre class="example-code"><code>
 KISSY.use('calendar',function(S) {
-	c = new S.Calendar('#J_with_time');
+	c = new S.Calendar('#J_WithTime');
 	c.render({maxDate:new Date()});
 });
 </code></pre>
@@ -254,7 +254,7 @@ KISSY.use('calendar',function(S) {
         <div class="sub-wrap">
             <div class="loc"><a href="../index.html">home</a> &rsaquo; calendar :</div>
             <div class="toc">
-				<h3>Useage</h3>
+				<h3>Usage</h3>
                 <ul>
                     <li><a href="#Constructor">Constructor</a></li>
 				</ul>

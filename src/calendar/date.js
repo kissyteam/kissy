@@ -54,22 +54,22 @@ KISSY.add('date', function(S) {
             masks = {
                 "default":      "ddd mmm dd yyyy HH:MM:ss",
                 shortDate:      "m/d/yy",
-                mediumDate:     "mmm d, yyyy",
+                //mediumDate:     "mmm d, yyyy",
                 longDate:       "mmmm d, yyyy",
                 fullDate:       "dddd, mmmm d, yyyy",
                 shortTime:      "h:MM TT",
-                mediumTime:     "h:MM:ss TT",
+                //mediumTime:     "h:MM:ss TT",
                 longTime:       "h:MM:ss TT Z",
                 isoDate:        "yyyy-mm-dd",
                 isoTime:        "HH:MM:ss",
                 isoDateTime:    "yyyy-mm-dd'T'HH:MM:ss",
-                isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'",
+                isoUTCDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'",
 
                 //added by jayli
                 localShortDate:    "yy年mm月dd日",
                 localShortDateTime:"yy年mm月dd日 hh:MM:ss TT",
                 localLongDate:    "yyyy年mm月dd日",
-                localLangDateTime:"yyyy年mm月dd日 hh:MM:ss TT",
+                localLongDateTime:"yyyy年mm月dd日 hh:MM:ss TT",
                 localFullDate:    "yyyy年mm月dd日 w",
                 localFullDateTime:"yyyy年mm月dd日 w hh:MM:ss TT"
 

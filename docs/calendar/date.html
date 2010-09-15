@@ -28,7 +28,7 @@
             </div>
 
             <div class="section">
-                <h3 id="properties">Useage</h3>
+                <h3 id="usage">Usage</h3>
                 <div class="member prop">
                     <h4><a name="parse">S.Date.parse</a> </h4>
                     <div class="detail">
@@ -64,8 +64,8 @@ KISSY.use('date',function(S) {
 
 <pre class="example-code"><code>
 KISSY.use('date',function(S) {
-	//这里'formate-type'替换成下表的关键字
-	var str = S.Date.format(new Date(),'formate-type');
+	//这里'format-type'替换成下表的关键字
+	var str = S.Date.format(new Date(),'format-type');
 });
 </code></pre>
                         <p>以类型关键字为参数输出格式化日期字符串</p>
@@ -81,92 +81,92 @@ KISSY.use('date',function(S) {
 							</thead>
 							<tbody>
 							<tr>
-								<th>default</td>
+								<th>default</th>
 								<td class="des">ddd mmm dd yyyy HH:MM:ss</td>
 								<td class="des">Wed Sep 15 2010 16:15:34</td>
 							</tr>
 							<tr>
-								<th>shortDate</td>
+								<th>shortDate</th>
 								<td class="des">m/d/yy</td>
 								<td class="des">10/1/10</td>
 							</tr>
 							<tr>
-								<th>mediumDate</td>
+								<th>mediumDate</th>
 								<td class="des">mmm d, yyyy</td>
 								<td class="des">Oct 1, 2010</td>
 							</tr>
 							<tr>
-								<th>longDate</td>
+								<th>longDate</th>
 								<td class="des">mmmm d, yyyy</td>
 								<td class="des">October 1, 2010</td>
 							</tr>
 							<tr>
-								<th>fullDate</td>
+								<th>fullDate</th>
 								<td class="des">dddd, mmmm d, yyyy</td>
 								<td class="des">Friday, October 1, 2010</td>
 							</tr>
 							<tr>
-								<th>shortTime</td>
+								<th>shortTime</th>
 								<td class="des">h:MM TT</td>
 								<td class="des">4:15 PM</td>
 							</tr>
 							<tr>
-								<th>mediumTime</td>
+								<th>mediumTime</th>
 								<td class="des">h:MM:ss TT</td>
 								<td class="des">4:15:34 PM</td>
 							</tr>
 							<tr>
-								<th>longTime</td>
+								<th>longTime</th>
 								<td class="des">h:MM:ss TT Z</td>
 								<td class="des">4:15:34 PM GMT+0800</td>
 							</tr>
 							<tr>
-								<th>isoDate</td>
+								<th>isoDate</th>
 								<td class="des">yyyy-mm-dd</td>
 								<td class="des">2010-10-01</td>
 							</tr>
 							<tr>
-								<th>soTime</td>
+								<th>soTime</th>
 								<td class="des">HH:MM:ss</td>
 								<td class="des">16:15:34</td>
 							</tr>
 							<tr>
-								<th>isoDateTime</td>
+								<th>isoDateTime</th>
 								<td class="des">yyyy-mm-dd'T'HH:MM:ss</td>
 								<td class="des">2010-09-15T16:15:34</td>
 							</tr>
 							<tr>
-								<th>soUtcDateTime</td>
+								<th>soUtcDateTime</th>
 								<td class="des">UTC:yyyy-mm-dd'T'HH:MM:ss'Z'</td>
 								<td class="des">2010-09-15T08:15:34Z</td>
 							</tr>
 							<tr>
-								<th>localShortDate</td>
+								<th>localShortDate</th>
 								<td class="des">yy年mm月dd日</td>
 								<td class="des">10年09月15日</td>
 							</tr>
 							<tr>
-								<th>localShortDateTime</td>
+								<th>localShortDateTime</th>
 								<td class="des">yy年mm月dd日 hh:MM:ss TT</td>
 								<td class="des">10年09月15日 04:15:34 PM</td>
 							</tr>
 							<tr>
-								<th>localLongDate</td>
+								<th>localLongDate</th>
 								<td class="des">yyyy年mm月dd日</td>
 								<td class="des">2010年09月15日</td>
 							</tr>
 							<tr>
-								<th>localLangDateTime</td>
+								<th>localLangDateTime</th>
 								<td class="des">yyyy年mm月dd日 hh:MM:ss TT</td>
 								<td class="des">2010年09月15日 04:15:34 PM</td>
 							</tr>
 							<tr>
-								<th>localFullDate</td>
+								<th>localFullDate</th>
 								<td class="des">yyyy年mm月dd日 w</td>
 								<td class="des">2010年09月15日 星期三</td>
 							</tr>
 							<tr>
-								<th>localFullDateTime</td>
+								<th>localFullDateTime</th>
 								<td class="des">yyyy年mm月dd日 w hh:MM:ss TT</td>
 								<td class="des">2010年09月15日 星期三 04:15:34 PM</td>
 							</tr>
@@ -200,141 +200,134 @@ KISSY.use('date',function(S) {
 							</thead>
 							<tbody>
 							<tr>
-								<th>d</td>
+								<th>d</th>
 								<td class="des">日期，个位时不填充0；例如：4</td>
 							</tr>
 							<tr>
-								<th>dd</td>
+								<th>dd</th>
 								<td class="des">日期，个位时填充0，例如：04</td>
 							</tr>
 							<tr>
-								<th>ddd</td>
+								<th>ddd</th>
 								<td class="des">以英文前三个字母显示日期，例如：Mon</td>
 							</tr>
 							<tr>
-								<th>dddd</td>
+								<th>dddd</th>
 								<td class="des">以英文全称显示日期，例如：Monday</td>
 							</tr>
 							<tr>
-								<th>w</td>
+								<th>w</th>
 								<td class="des">以中文显示"星期x"</td>
 							</tr>
 							<tr>
-								<th>m</td>
+								<th>m</th>
 								<td class="des">月份，个位不填充</td>
 							</tr>
 							<tr>
-								<th>mm</td>
+								<th>mm</th>
 								<td class="des">月份，个位填充</td>
 							</tr>
 							<tr>
-								<th>mmm</td>
+								<th>mmm</th>
 								<td class="des">以英文前三个字母显示月份</td>
 							</tr>
 							<tr>
-								<th>mmmm</td>
+								<th>mmmm</th>
 								<td class="des">以英文全称显示月份</td>
 							</tr>
 							<tr>
-								<th>yy</td>
+								<th>yy</th>
 								<td class="des">显示2位年份</td>
 							</tr>
 							<tr>
-								<th>yyyy</td>
+								<th>yyyy</th>
 								<td class="des">显示四位年份</td>
 							</tr>
 							<tr>
-								<th>h</td>
+								<th>h</th>
 								<td class="des">显示小时(12小时制),不填充0</td>
 							</tr>
 							<tr>
-								<th>hh</td>
+								<th>hh</th>
 								<td class="des">显示小时(12小时制),填充0</td>
 							</tr>
 							<tr>
-								<th>H</td>
+								<th>H</th>
 								<td class="des">显示小时(24小时制),不填充0</td>
 							</tr>
 							<tr>
-								<th>HH</td>
+								<th>HH</th>
 								<td class="des">显示小时(24小时制),填充0</td>
 							</tr>
 							<tr>
-								<th>M</td>
+								<th>M</th>
 								<td class="des">显示分钟,不填充0</td>
 							</tr>
 							<tr>
-								<th>MM</td>
+								<th>MM</th>
 								<td class="des">显示分钟,填充0</td>
 							</tr>
 							<tr>
-								<th>s</td>
+								<th>s</th>
 								<td class="des">显示秒，不填充0</td>
 							</tr>
 							<tr>
-								<th>ss</td>
+								<th>ss</th>
 								<td class="des">显示秒,填充0</td>
 							</tr>
 							<tr>
-								<th>l 和 L</td>
+								<th>l 和 L</th>
 								<td class="des">显示毫秒，l输出三位，L输出2位</td>
 							</tr>
 							<tr>
-								<th>t</td>
+								<th>t</th>
 								<td class="des">显示a和p</td>
 							</tr>
 							<tr>
-								<th>tt</td>
+								<th>tt</th>
 								<td class="des">显示am和pm</td>
 							</tr>
 							<tr>
-								<th>T</td>
+								<th>T</th>
 								<td class="des">显示A和P</td>
 							</tr>
 							<tr>
-								<th>TT</td>
+								<th>TT</th>
 								<td class="des">显示AM和PM</td>
 							</tr>
 							<tr>
-								<th>Z</td>
+								<th>Z</th>
 								<td class="des">显示时区</td>
 							</tr>
 							<tr>
-								<th>o</td>
+								<th>o</th>
 								<td class="des">显示时区偏移量</td>
 							</tr>
 							<tr>
-								<th>S</td>
+								<th>S</th>
 								<td class="des">显示日期的顺序，和d配合使用</td>
 							</tr>
 							<tr>
-								<th>'...'和"..."</td>
+								<th>'...'和"..."</th>
 								<td class="des">直接输出引号内的部分</td>
 							</tr>
 							<tr>
-								<th>UTC</td>
+								<th>UTC</th>
 								<td class="des">显示UTC时区</td>
 							</tr>
 							</tbody>
 						</table>
 						<!--table}}-->
-
-
                     </div>
                 </div>
-
-
-
             </div>
-
-
         </div>
     </div>
     <div class="col-sub">
         <div class="sub-wrap">
             <div class="loc"><a href="../index.html">home</a> &rsaquo; <a href='index.html'>calendar</a> &rsaquo; date:</div>
             <div class="toc">
-				<h3>Useage</h3>
+				<h3>Usage</h3>
                 <ul>
                     <li><a href="#parse">S.Date.parse</a></li>
                     <li><a href="#format">S.Date.format</a></li>

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 14 22:46
+build time: Sep 15 22:02
 */
 /* 清除浮动 */
 .ks-clearfix:after {
@@ -30,55 +30,55 @@ build time: Sep 14 22:46
 .ks-cal-call .ks-cal-box {margin:4px;_margin:4px 2px;height:auto;width:auto;float:left;*padding-bottom:5px;_padding-bottom:3px;position:relative;}
 .ks-cal-call .ks-cal-hd {background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') repeat-x 0 -41px; width:181px;height:24px;background-color:#40a6ff;position:relative;}
 .ks-cal-call .ks-cal-hd a {}
-.ks-cal-call .ks-cal-hd a.prev {overflow:hidden;text-indent:-100em;background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') no-repeat 0 4px; height:1;width:10px;float:left;position:absolute;left:3px;top:3px;/*background-color:red;*/font-size:10px;text-decoration:none;color:white;}
-.ks-cal-call .ks-cal-hd a.next {overflow:hidden;text-indent:-100em;background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') no-repeat 0 -15px; height:1;width:10px;position:absolute;right:3px;top:3px;/*background-color:red;*/font-size:10px;text-decoration:none;color:white;}
+.ks-cal-call .ks-cal-hd a.ks-prev {overflow:hidden;text-indent:-100em;background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') no-repeat 0 4px; height:1;width:10px;float:left;position:absolute;left:3px;top:3px;/*background-color:red;*/font-size:10px;text-decoration:none;color:white;}
+.ks-cal-call .ks-cal-hd a.ks-next {overflow:hidden;text-indent:-100em;background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') no-repeat 0 -15px; height:1;width:10px;position:absolute;right:3px;top:3px;/*background-color:red;*/font-size:10px;text-decoration:none;color:white;}
 
-.ks-cal-call .ks-cal-hd a.title,
-.ks-cal-call .ks-cal-hd a.title:link,
-.ks-cal-call .ks-cal-hd a.title:visited {color:white;text-decoration:none;position:relative;margin-left:auto;margin-right:auto;width:77px;height:17px;line-height:17px;display:block;top:3px;text-align:center;}
-.ks-cal-call .ks-cal-hd a.title:hover {border:1px solid #8cc6ff;top:2px;color:#f0ff00;background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') repeat-x 0 -75px;}
+.ks-cal-call .ks-cal-hd a.ks-title,
+.ks-cal-call .ks-cal-hd a.ks-title:link,
+.ks-cal-call .ks-cal-hd a.ks-title:visited {color:white;text-decoration:none;position:relative;margin-left:auto;margin-right:auto;width:77px;height:17px;line-height:17px;display:block;top:3px;text-align:center;}
+.ks-cal-call .ks-cal-hd a.ks-title:hover {border:1px solid #8cc6ff;top:2px;color:#f0ff00;background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') repeat-x 0 -75px;}
 
 
 .ks-cal-call .ks-cal-bd {width:181px;}
-.ks-cal-call .ks-cal-bd .whd {width:auto;height:19px;overflow:hidden;background-color:#cce7ff;margin-top:4px;*padding-left:2px;*width:179px;}
-.ks-cal-call .ks-cal-bd .whd span {float:left;width:25.857px;text-align:center;line-height:19px;}
+.ks-cal-call .ks-cal-bd .ks-whd {width:auto;height:19px;overflow:hidden;background-color:#cce7ff;margin-top:4px;*padding-left:2px;*width:179px;}
+.ks-cal-call .ks-cal-bd .ks-whd span {float:left;width:25.857px;text-align:center;line-height:19px;}
 
 /*--hack for ff2 {{ --*/
-.ks-cal-call .ks-cal-bd .whd span, x:-moz-any-link {width:25px;}
-.ks-cal-call .ks-cal-bd .whd span, x:-moz-any-link, x:default {width:25.857px;}
+.ks-cal-call .ks-cal-bd .ks-whd span, x:-moz-any-link {width:25px;}
+.ks-cal-call .ks-cal-bd .ks-whd span, x:-moz-any-link, x:default {width:25.857px;}
 /*--hack for ff2 }} --*/
 
-.ks-cal-call .ks-cal-bd .dbd {width:181px;height:auto;background-color:white;margin-top:4px;*padding-left:2px;*width:179px;}
-.ks-cal-call .ks-cal-bd .dbd a,
-.ks-cal-call .ks-cal-bd .dbd a:link,
-.ks-cal-call .ks-cal-bd .dbd a:visited {color:#004499;float:left;width:25.857px;text-align:center;line-height:22px;text-decoration:none;}
-.ks-cal-call .ks-cal-bd .dbd a:hover {background-color:#ebf4fc;}
+.ks-cal-call .ks-cal-bd .ks-dbd {width:181px;height:auto;background-color:white;margin-top:4px;*padding-left:2px;*width:179px;}
+.ks-cal-call .ks-cal-bd .ks-dbd a,
+.ks-cal-call .ks-cal-bd .ks-dbd a:link,
+.ks-cal-call .ks-cal-bd .ks-dbd a:visited {color:#004499;float:left;width:25.857px;text-align:center;line-height:22px;text-decoration:none;}
+.ks-cal-call .ks-cal-bd .ks-dbd a:hover {background-color:#ebf4fc;}
 
 /*--hack for ff2 {{ --*/
-.ks-cal-call .ks-cal-bd .dbd a, x:-moz-any-link {width:25px;}
-.ks-cal-call .ks-cal-bd .dbd a:link, x:-moz-any-link {width:25px;}
-.ks-cal-call .ks-cal-bd .dbd a:visited, x:-moz-any-link {width:25px;}
-.ks-cal-call .ks-cal-bd .dbd a,
-.ks-cal-call .ks-cal-bd .dbd a:link,
-.ks-cal-call .ks-cal-bd .dbd a:visited, x:-moz-any-link, x:default {width:25.857px;}
+.ks-cal-call .ks-cal-bd .ks-dbd a, x:-moz-any-link {width:25px;}
+.ks-cal-call .ks-cal-bd .ks-dbd a:link, x:-moz-any-link {width:25px;}
+.ks-cal-call .ks-cal-bd .ks-dbd a:visited, x:-moz-any-link {width:25px;}
+.ks-cal-call .ks-cal-bd .ks-dbd a,
+.ks-cal-call .ks-cal-bd .ks-dbd a:link,
+.ks-cal-call .ks-cal-bd .ks-dbd a:visited, x:-moz-any-link, x:default {width:25.857px;}
 /*--hack for ff2 }} --*/
 
 /*--日期的状态--*/
-.ks-cal-call .ks-cal-bd .dbd a.null,
-.ks-cal-call .ks-cal-bd .dbd a.null:link,
-.ks-cal-call .ks-cal-bd .dbd a.null:visited {background:white;color:white;cursor:default;}
-.ks-cal-call .ks-cal-bd .dbd a.today,
-.ks-cal-call .ks-cal-bd .dbd a.today:link,
-.ks-cal-call .ks-cal-bd .dbd a.today:visited {color:#ff6600;font-weight:bold;}
-.ks-cal-call .ks-cal-bd .dbd a.selected,
-.ks-cal-call .ks-cal-bd .dbd a.selected:link,
-.ks-cal-call .ks-cal-bd .dbd a.selected:visited {background-color:#cce7ff;}
-.ks-cal-call .ks-cal-bd .dbd a.disabled,
-.ks-cal-call .ks-cal-bd .dbd a.disabled:link,
-.ks-cal-call .ks-cal-bd .dbd a.disabled:visited{color:#8c8c8c;cursor:default;background-color:white;}
-.ks-cal-call .ks-cal-bd .dbd a.range,
-.ks-cal-call .ks-cal-bd .dbd a.range:link,
-.ks-cal-call .ks-cal-bd .dbd a.range:visited {background-color:#cce7ff;}
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-null,
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-null:link,
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-null:visited {background:white;color:white;cursor:default;}
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-today,
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-today:link,
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-today:visited {color:#ff6600;font-weight:bold;}
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-selected,
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-selected:link,
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-selected:visited {background-color:#cce7ff;}
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-disabled,
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-disabled:link,
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-disabled:visited{color:#8c8c8c;cursor:default;background-color:white;}
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-range,
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-range:link,
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-range:visited {background-color:#cce7ff;}
 
 .ks-cal-call .ks-cal-ft {text-align:center;width:181px;}
 
