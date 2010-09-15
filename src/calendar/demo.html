@@ -112,27 +112,27 @@ var showdate = function(n,d){//计算d天的前几天或者后几天，返回dat
 KISSY.use('calendar',function(S){
 
 	//静态日历,单击回调
-	c = new S.Calendar('J_calendar').on('select',function(e){
+	c = new S.Calendar('#J_calendar').on('select',function(e){
 		alert(e.date);
 	},{
 		popup:false
 	});
 
 	//静态双月日历,默认选中某日
-	c = new S.Calendar('J_multipage_1',{
+	c = new S.Calendar('#J_multipage_1',{
 		pages:2,
 		selected:showdate(-2,new Date()),
 		popup:false
 	});
 
 	//静态三月日历
-	new S.Calendar('J_multipage_2',{
+	new S.Calendar('#J_multipage_2',{
 		pages:3,
 		popup:false
 	});
 
 	//选择范围,并绑定范围回调
-	new S.Calendar('J_range',{
+	new S.Calendar('#J_range',{
 		pages:2,
 		rangeSelect:true,
 		popup:false
@@ -141,7 +141,7 @@ KISSY.use('calendar',function(S){
 	});
 
 	//选择范围,指定默认范围
-	new S.Calendar('J_default_range',{
+	new S.Calendar('#J_default_range',{
 		pages:2,
 		rangeSelect:true,
 		popup:false,
@@ -152,14 +152,14 @@ KISSY.use('calendar',function(S){
 	});
 
 	//月份切换事件
-	new S.Calendar('J_all_events',{
+	new S.Calendar('#J_all_events',{
 		popup:false
 	}).on('monthChange',function(e){
 		alert('切换事件,月份切换到'+(e.date.getMonth()+1));
 	});
 
 	//Popup日历,默认点击触发
-	new S.Calendar('J_popup',{
+	new S.Calendar('#J_popup',{
 		popup:true,
 		triggerType:['click']
 	}).on('select',function(e){
@@ -167,7 +167,7 @@ KISSY.use('calendar',function(S){
 	});
 
 	//Popup日历,单选关闭
-	new S.Calendar('J_popup_closable',{
+	new S.Calendar('#J_popup_closable',{
 		popup:true,
 		closable:true,
 		triggerType:['focus']
@@ -176,14 +176,14 @@ KISSY.use('calendar',function(S){
 	});
 
 	//日历可操作范围
-	c = new S.Calendar('J_minDate_maxDate',{
+	c = new S.Calendar('#J_minDate_maxDate',{
 		minDate:new Date(),
 		maxDate:showdate(10,new Date()),
 		popup:false
 	});
 
 	//日历可选择time
-	c = new S.Calendar('J_with_time',{
+	c = new S.Calendar('#J_with_time',{
 		showTime:true,
 		popup:false
 	}).on('timeSelect',function(e){
@@ -191,13 +191,13 @@ KISSY.use('calendar',function(S){
 	});
 
 	//可以自定义起始日期
-	c = new S.Calendar('J_custom_day',{
+	c = new S.Calendar('#J_custom_day',{
 		startDay:1,
 		popup:false
 	});
 
 	//格式化时间类型
-	c = new S.Calendar('J_dateformat',{
+	c = new S.Calendar('#J_dateformat',{
 		showTime:true,
 		popup:false
 	}).on('timeSelect',function(e){

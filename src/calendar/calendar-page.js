@@ -1,25 +1,26 @@
 /**
- * @author  lijing00333@163.com 拔赤
+ * @module	 日历 
+ * @creator  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar-page', function(S) {
 
     S.augment(S.Calendar, {
 
-        Page: function(config, fathor) {
+        Page: function(config, father) {
             /**
              * 子日历构造器
-             * @constructor S.Calendar.prototype.Page
+             * @constructor S.Calendar.Page
              * @param {object} config ,参数列表，需要指定子日历所需的年月
-             * @param {object} fathor,指向Y.Calendar实例的指针，需要共享父框的参数
+             * @param {object} father,指向Y.Calendar实例的指针，需要共享父框的参数
              * @return 子日历的实例
              */
 
             //属性
-            this.fathor = fathor;
+            this.father = father;
             this.month = Number(config.month);
             this.year = Number(config.year);
-            this.prev_arrow = config.prev_arrow;
-            this.next_arrow = config.next_arrow;
+            this.prevArrow = config.prevArrow;
+            this.nextArrow = config.nextArrow;
             this.node = null;
             this.timmer = null;//时间选择的实例
             this.id = '';
@@ -27,12 +28,12 @@ KISSY.add('calendar-page', function(S) {
             this.html = [
                 '<div class="ks-cal-box" id="{$id}">',
                 '<div class="ks-cal-hd">',
-                '<a href="javascript:void(0);" class="prev {$prev}"><</a>',
-                '<a href="javascript:void(0);" class="title">{$title}</a>',
-                '<a href="javascript:void(0);" class="next {$next}">></a>',
+                '<a href="javascript:void(0);" class="ks-prev {$prev}"><</a>',
+                '<a href="javascript:void(0);" class="ks-title">{$title}</a>',
+                '<a href="javascript:void(0);" class="ks-next {$next}">></a>',
                 '</div>',
                 '<div class="ks-cal-bd">',
-                '<div class="whd">',
+                '<div class="ks-whd">',
                 /*
                  '<span>日</span>',
                  '<span>一</span>',
@@ -42,15 +43,15 @@ KISSY.add('calendar-page', function(S) {
                  '<span>五</span>',
                  '<span>六</span>',
                  */
-                fathor._handleOffset().day_html,
+                father._handleOffset().day_html,
                 '</div>',
-                '<div class="dbd ks-clearfix">',
+                '<div class="ks-dbd ks-clearfix">',
                 '{$ds}',
                 /*
-                 <a href="" class="null">1</a>
-                 <a href="" class="disabled">3</a>
-                 <a href="" class="selected">1</a>
-                 <a href="" class="today">1</a>
+                 <a href="" class="ks-null">1</a>
+                 <a href="" class="ks-disabled">3</a>
+                 <a href="" class="ks-selected">1</a>
+                 <a href="" class="ks-today">1</a>
                  <a href="">1</a>
                  */
                 '</div>',
@@ -59,10 +60,10 @@ KISSY.add('calendar-page', function(S) {
                 '</div>',
                 '<div class="ks-cal-ft {$showtime}">',
                 '<div class="ks-cal-time">',
-                '时间：00:00 	&hearts;',
+                '时间：00:00 &hearts;',
                 '</div>',
                 '</div>',
-                '<div class="ks-selectime hidden"><!--用以存放点选时间的一些关键值-->',
+                '<div class="ks-selectime hidden">',//<!--用以存放点选时间的一些关键值-->',
                 '</div>',
                 '</div><!--#ks-cal-box-->'
             ].join("");
@@ -138,25 +139,25 @@ KISSY.add('calendar-page', function(S) {
                 _o.next = '';
                 _o.title = '';
                 _o.ds = '';
-                if (!cc.prev_arrow) {
+                if (!cc.prevArrow) {
                     _o.prev = 'hidden';
                 }
-                if (!cc.next_arrow) {
+                if (!cc.nextArrow) {
                     _o.next = 'hidden';
                 }
-                if (!cc.fathor.showtime) {
+                if (!cc.father.showtime) {
                     _o.showtime = 'hidden';
                 }
                 _o.id = cc.id = 'ks-cal-' + Math.random().toString().replace(/.\./i, '');
-                _o.title = cc.fathor._getHeadStr(cc.year, cc.month);
+                _o.title = cc.father._getHeadStr(cc.year, cc.month);
                 cc.createDS();
                 _o.ds = cc.ds;
-                cc.fathor.con.append(cc.fathor._templetShow(cc.html, _o));
+                cc.father.con.append(cc.father._templetShow(cc.html, _o));
                 cc.node = S.one('#' + cc.id);
-                if (cc.fathor.showTime) {
+                if (cc.father.showTime) {
                     ft = cc.node.one('.ks-cal-ft');
                     ft.removeClass('hidden');
-                    cc.timmer = new cc.fathor.TimeSelector(ft, cc.fathor);
+                    cc.timmer = new cc.father.TimeSelector(ft, cc.father);
                 }
                 return this;
             };
@@ -173,7 +174,7 @@ KISSY.add('calendar-page', function(S) {
                     }
                 }
 
-                cc.EV[0] = con.one('div.dbd').on('click', function(e) {
+                cc.EV[0] = con.one('div.ks-dbd').on('click', function(e) {
                     e.preventDefault();
                     e.target = S.Node(e.target);
                     if (e.target.hasClass('null'))return;
@@ -185,37 +186,37 @@ KISSY.add('calendar-page', function(S) {
                     d.setYear(cc.year);
                     //self.callback(d);
                     //datetime的date
-                    cc.fathor.dt_date = d;
-                    cc.fathor.fire('select', {
+                    cc.father.dt_date = d;
+                    cc.father.fire('select', {
                         date:d
                     });
-                    if (cc.fathor.popup && cc.fathor.closable) {
-                        cc.fathor.hide();
+                    if (cc.father.popup && cc.father.closable) {
+                        cc.father.hide();
                     }
-                    if (cc.fathor.rangeSelect) {
-                        cc.fathor._handleRange(d);
+                    if (cc.father.rangeSelect) {
+                        cc.father._handleRange(d);
                     }
-                    cc.fathor.render({selected:d});
+                    cc.father.render({selected:d});
                 });
                 //向前
-                cc.EV[1] = con.one('a.prev').on('click', function(e) {
+                cc.EV[1] = con.one('a.ks-prev').on('click', function(e) {
                     e.preventDefault();
-                    cc.fathor._monthMinus().render();
-                    cc.fathor.fire('monthChange', {
-                        date:new Date(cc.fathor.year + '/' + (cc.fathor.month + 1) + '/01')
+                    cc.father._monthMinus().render();
+                    cc.father.fire('monthChange', {
+                        date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
                     });
 
                 });
                 //向后
-                cc.EV[2] = con.one('a.next').on('click', function(e) {
+                cc.EV[2] = con.one('a.ks-next').on('click', function(e) {
                     e.preventDefault();
-                    cc.fathor._monthAdd().render();
-                    cc.fathor.fire('monthChange', {
-                        date:new Date(cc.fathor.year + '/' + (cc.fathor.month + 1) + '/01')
+                    cc.father._monthAdd().render();
+                    cc.father.fire('monthChange', {
+                        date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
                     });
                 });
-                if (cc.fathor.navigator) {
-                    cc.EV[3] = con.one('a.title').on('click', function(e) {
+                if (cc.father.navigator) {
+                    cc.EV[3] = con.one('a.ks-title').on('click', function(e) {
                         try {
                             cc.timmer.hidePopup();
                             e.preventDefault();
@@ -224,7 +225,7 @@ KISSY.add('calendar-page', function(S) {
                         e.target = S.Node(e.target);
                         var setime_node = con.one('.ks-setime');
                         setime_node.html('');
-                        var in_str = cc.fathor._templetShow(cc.nav_html, {
+                        var in_str = cc.father._templetShow(cc.nav_html, {
                             the_month:cc.month + 1,
                             the_year:cc.year
                         });
@@ -234,7 +235,6 @@ KISSY.add('calendar-page', function(S) {
                             e.target = S.Node(e.target);
                             if (e.keyCode == 38) {//up
                                 e.target.val(Number(e.target.val()) + 1);
-                                //TODO 我期望直接调用e.target.select
                                 e.target[0].select();
                             }
                             if (e.keyCode == 40) {//down
@@ -247,10 +247,10 @@ KISSY.add('calendar-page', function(S) {
                                 con.one('.ks-setime').addClass('hidden');
                                 if (!cc.Verify().isYear(_year))return;
                                 if (!cc.Verify().isMonth(_month))return;
-                                cc.fathor.render({
+                                cc.father.render({
                                     date:new Date(_year + '/' + _month + '/01')
                                 });
-                                cc.fathor.fire('monthChange', {
+                                cc.father.fire('monthChange', {
                                     date:new Date(_year + '/' + _month + '/01')
                                 });
                             }
@@ -265,10 +265,10 @@ KISSY.add('calendar-page', function(S) {
                             con.one('.ks-setime').addClass('hidden');
                             if (!cc.Verify().isYear(_year))return;
                             if (!cc.Verify().isMonth(_month))return;
-                            cc.fathor.render({
+                            cc.father.render({
                                 date:new Date(_year + '/' + _month + '/01')
                             });
-                            cc.fathor.fire('monthChange', {
+                            cc.father.fire('monthChange', {
                                 date:new Date(_year + '/' + _month + '/01')
                             });
                         } else if (e.target.hasClass('cancel')) {
@@ -298,7 +298,7 @@ KISSY.add('calendar-page', function(S) {
             this.createDS = function() {
                 var cc = this,
                     s = '',
-                    startweekday = (new Date(cc.year + '/' + (cc.month + 1) + '/01').getDay() + cc.fathor.startDay + 7) % 7,//当月第一天是星期几
+                    startweekday = (new Date(cc.year + '/' + (cc.month + 1) + '/01').getDay() + cc.father.startDay + 7) % 7,//当月第一天是星期几
                     k = cc._getNumOfDays(cc.year, cc.month + 1) + startweekday,
                     i, _td_s;
 
@@ -312,46 +312,44 @@ KISSY.add('calendar-page', function(S) {
                     var _td_e = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 1 - startweekday).toString());
                     //prepare data }}
                     if (i < startweekday) {//null
-                        s += '<a href="javascript:void(0);" class="null">0</a>';
-                    } else if (cc.fathor.minDate instanceof Date
-                        && new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 2 - startweekday)).getTime() < (cc.fathor.minDate.getTime() + 1)) {//disabled
-                        s += '<a href="javascript:void(0);" class="disabled">' + (i - startweekday + 1) + '</a>';
+                        s += '<a href="javascript:void(0);" class="ks-null">0</a>';
+                    } else if (cc.father.minDate instanceof Date
+                        && new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 2 - startweekday)).getTime() < (cc.father.minDate.getTime() + 1)) {//disabled
+                        s += '<a href="javascript:void(0);" class="ks-disabled">' + (i - startweekday + 1) + '</a>';
 
-                    } else if (cc.fathor.maxDate instanceof Date
-                        && new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 1 - startweekday)).getTime() > cc.fathor.maxDate.getTime()) {//disabled
-                        s += '<a href="javascript:void(0);" class="disabled">' + (i - startweekday + 1) + '</a>';
+                    } else if (cc.father.maxDate instanceof Date
+                        && new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 1 - startweekday)).getTime() > cc.father.maxDate.getTime()) {//disabled
+                        s += '<a href="javascript:void(0);" class="ks-disabled">' + (i - startweekday + 1) + '</a>';
 
 
-                    } else if ((cc.fathor.range.start != null && cc.fathor.range.end != null) //日期选择范围
+                    } else if ((cc.father.range.start != null && cc.father.range.end != null) //日期选择范围
                         && (
-                        _td_s.getTime() >= cc.fathor.range.start.getTime() && _td_e.getTime() < cc.fathor.range.end.getTime())) {
-
-                        //alert(Y.dump(_td_s.getDate()));
+                        _td_s.getTime() >= cc.father.range.start.getTime() && _td_e.getTime() < cc.father.range.end.getTime())) {
 
                         if (i == (startweekday + (new Date()).getDate() - 1)
                             && (new Date()).getFullYear() == cc.year
                             && (new Date()).getMonth() == cc.month) {//今天并被选择
-                            s += '<a href="javascript:void(0);" class="range today">' + (i - startweekday + 1) + '</a>';
+                            s += '<a href="javascript:void(0);" class="ks-range ks-today">' + (i - startweekday + 1) + '</a>';
                         } else {
-                            s += '<a href="javascript:void(0);" class="range">' + (i - startweekday + 1) + '</a>';
+                            s += '<a href="javascript:void(0);" class="ks-range">' + (i - startweekday + 1) + '</a>';
                         }
 
                     } else if (i == (startweekday + (new Date()).getDate() - 1)
                         && (new Date()).getFullYear() == cc.year
                         && (new Date()).getMonth() == cc.month) {//today
-                        s += '<a href="javascript:void(0);" class="today">' + (i - startweekday + 1) + '</a>';
+                        s += '<a href="javascript:void(0);" class="ks-today">' + (i - startweekday + 1) + '</a>';
 
-                    } else if (i == (startweekday + cc.fathor.selected.getDate() - 1)
-                        && cc.month == cc.fathor.selected.getMonth()
-                        && cc.year == cc.fathor.selected.getFullYear()) {//selected
-                        s += '<a href="javascript:void(0);" class="selected">' + (i - startweekday + 1) + '</a>';
+                    } else if (i == (startweekday + cc.father.selected.getDate() - 1)
+                        && cc.month == cc.father.selected.getMonth()
+                        && cc.year == cc.father.selected.getFullYear()) {//selected
+                        s += '<a href="javascript:void(0);" class="ks-selected">' + (i - startweekday + 1) + '</a>';
                     } else {//other
                         s += '<a href="javascript:void(0);">' + (i - startweekday + 1) + '</a>';
                     }
                 }
                 if (k % 7 != 0) {
                     for (i = 0; i < (7 - k % 7); i++) {
-                        s += '<a href="javascript:void(0);" class="null">0</a>';
+                        s += '<a href="javascript:void(0);" class="ks-null">0</a>';
                     }
                 }
                 cc.ds = s;

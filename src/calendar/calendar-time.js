@@ -1,5 +1,6 @@
 /**
- * @author  lijing00333@163.com 拔赤
+ * @module	 日历 
+ * @creator  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar-time', function(S) {
 
@@ -7,19 +8,19 @@ KISSY.add('calendar-time', function(S) {
 
         /**
          * 时间选择构造器
-         * @constructor S.Calendar.prototype.TimerSelector
+         * @constructor S.Calendar.TimerSelector
          * @param {object} ft ,timer所在的容器
-         * @param {object} fathor 指向S.Calendar实例的指针，需要共享父框的参数
+         * @param {object} father 指向S.Calendar实例的指针，需要共享父框的参数
          */
-        TimeSelector:function(ft, fathor) {
+        TimeSelector:function(ft, father) {
             //属性
-            this.fathor = fathor;
+            this.father = father;
             this.fcon = ft.parent('.ks-cal-box');
             this.popupannel = this.fcon.one('.ks-selectime');//点选时间的弹出层
-            if (typeof fathor._time == 'undefined') {//确保初始值和当前时间一致
-                fathor._time = new Date();
+            if (typeof father._time == 'undefined') {//确保初始值和当前时间一致
+                father._time = new Date();
             }
-            this.time = fathor._time;
+            this.time = father._time;
             this.status = 's';//当前选择的状态，'h','m','s'依次判断更新哪个值
             this.ctime = S.Node('<div class="ks-cal-time">时间：<span class="h">h</span>:<span class="m">m</span>:<span class="s">s</span><!--{{arrow--><div class="cta"><button class="u"></button><button class="d"></button></div><!--arrow}}--></div>');
             this.button = S.Node('<button class="ct-ok">确定</button>');
@@ -82,7 +83,7 @@ KISSY.add('calendar-time', function(S) {
                 var h = self.get('h');
                 var m = self.get('m');
                 var s = self.get('s');
-                self.fathor._time = self.time;
+                self.father._time = self.time;
                 self.ctime.all('.h').html(h);
                 self.ctime.all('.m').html(m);
                 self.ctime.all('.s').html(s);
@@ -171,15 +172,15 @@ KISSY.add('calendar-time', function(S) {
                 //确定的动作
                 self.button.on('click', function() {
                     //初始化读取父框的date
-                    var d = typeof self.fathor.dt_date == 'undefined' ? self.fathor.date : self.fathor.dt_date;
+                    var d = typeof self.father.dt_date == 'undefined' ? self.father.date : self.father.dt_date;
                     d.setHours(self.get('h'));
                     d.setMinutes(self.get('m'));
                     d.setSeconds(self.get('s'));
-                    self.fathor.fire('timeSelect', {
+                    self.father.fire('timeSelect', {
                         date:d
                     });
-                    if (self.fathor.popup && self.fathor.closable) {
-                        self.fathor.hide();
+                    if (self.father.popup && self.father.closable) {
+                        self.father.hide();
                     }
                 });
                 //ctime上的键盘事件，上下键，左右键的监听

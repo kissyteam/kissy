@@ -1,6 +1,6 @@
 /**
- * @module  日历
- * @author  lijing00333@163.com 拔赤
+ * @module	 日历 
+ * @creator  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar', function(S, undefined) {
 
@@ -10,9 +10,16 @@ KISSY.add('calendar', function(S, undefined) {
 
     S.augment(Calendar, {
 
-        _init: function(id, config) {
-            var self = this;
-            self.id = self.C_Id = id;
+		/**
+		 * 日历构造函数
+		 * @method 	_init
+		 * @param { string }	selector
+		 * @param { string }	config
+		 * @private
+		 */
+        _init: function(selector, config) {
+            var self = this,con = S.one(selector);
+            self.id = self.C_Id = self._stamp(con);
             self._buildParam(config);
 
             /*
@@ -21,12 +28,12 @@ KISSY.add('calendar', function(S, undefined) {
              self.C_Id 永远代表日历容器的ID
              */
             if (!self.popup) {
-                self.con = S.one('#' + id);
+                self.con = con;
             } else {
-                self.trigger = S.one('#' + id);
-                self.C_Id = 'C_' + Math.random().toString().replace(/.\./i, '');
-                self.con = S.Node('<div id="' + self.C_Id + '"></div>');
+                self.trigger = con;
+                self.con = S.Node('<div></div>');
                 S.one('body').append(self.con);
+				self.C_Id = self._stamp(self.con);
                 self.con.css({
                     'top':'0px',
                     'position':'absolute',
@@ -70,8 +77,8 @@ KISSY.add('calendar', function(S, undefined) {
                 self.ca.push(new self.Page({
                     year:_oym[0],
                     month:_oym[1],
-                    prev_arrow:_prev,
-                    next_arrow:_next,
+                    prevArrow:_prev,
+                    nextArrow:_next,
                     showTime:self.showTime
                 }, self));
 
@@ -82,8 +89,24 @@ KISSY.add('calendar', function(S, undefined) {
 
         },
 
+		/**
+		 * 用以给容器打上id的标记,容器有id则返回
+		 * @method _stamp
+		 * @param { Kissy-Node }
+		 * @return { string }
+		 * @private
+		 */
+		_stamp: function(el){
+			if(el.attr('id') == undefined || el.attr('id')==''){
+				el.attr('id','K_'+S.now());
+			}
+			return el.attr('id');
+		},
+
         /**
          * 计算d天的前几天或者后几天，返回date
+		 * @method _showdate
+		 * @private
          */
         _showdate: function(n, d) {
             var uom = new Date(d - 0 + n * 86400000);
@@ -93,6 +116,8 @@ KISSY.add('calendar', function(S, undefined) {
 
         /**
          * 创建日历外框的事件
+		 * @method _buildEvent
+		 * @private
          */
         _buildEvent: function() {
             var self = this;
@@ -109,7 +134,7 @@ KISSY.add('calendar', function(S, undefined) {
                 e.target = S.Node(e.target);
                 //点击到日历上
                 if (e.target.attr('id') == self.C_Id)return;
-                if ((e.target.hasClass('next') || e.target.hasClass('prev'))
+                if ((e.target.hasClass('ks-next') || e.target.hasClass('ks-prev'))
                     && e.target[0].tagName == 'A')    return;
                 //点击在trigger上
                 if (e.target.attr('id') == self.id)return;
@@ -148,6 +173,10 @@ KISSY.add('calendar', function(S, undefined) {
             return this;
         },
 
+		/**
+		 * 改变日历是否显示的状态
+		 * @mathod toggle
+		 */
         toggle: function() {
             var self = this;
             if (self.con.css('visibility') == 'hidden') {
@@ -158,7 +187,8 @@ KISSY.add('calendar', function(S, undefined) {
         },
 
         /**
-         * 显示
+         * 显示日历
+		 * @method show
          */
         show: function() {
             var self = this;
@@ -173,7 +203,8 @@ KISSY.add('calendar', function(S, undefined) {
         },
 
         /**
-         * 隐藏
+         * 隐藏日历
+		 * @method hide
          */
         hide: function() {
             var self = this;
@@ -183,6 +214,8 @@ KISSY.add('calendar', function(S, undefined) {
 
         /**
          * 创建参数列表
+		 * @method _buildParam
+		 * @private
          */
         _buildParam: function(o) {
             var self = this;
@@ -196,6 +229,7 @@ KISSY.add('calendar', function(S, undefined) {
                 self[key] = (v === undefined || v == null) ? def : v;
             }
 
+			//这种处理方式不错
             S.each({
                 date:        new Date(),
                 startDay:    0,
@@ -212,6 +246,11 @@ KISSY.add('calendar', function(S, undefined) {
                 showTime:    false,
                 triggerType: ['click']
             }, setParam);
+
+			// 支持用户传进来一个string
+			if(typeof o.triggerType === 'string'){
+				o.triggerType = [o.triggerType];
+			}
 
             setParam(self.date, 'selected');
             if(o.startDay) self.startDay = (7 - o.startDay) % 7;
@@ -235,6 +274,8 @@ KISSY.add('calendar', function(S, undefined) {
 
         /**
          * 过滤参数列表
+		 * @method _parseParam
+		 * @private
          */
         _parseParam: function(o) {
             var self = this,i;
@@ -250,6 +291,8 @@ KISSY.add('calendar', function(S, undefined) {
 
         /**
          * 模板函数
+		 * @method _templetShow
+		 * @private
          */
         _templetShow: function(templet, data) {
             var str_in,value_s,i,m,value,par;
@@ -274,6 +317,8 @@ KISSY.add('calendar', function(S, undefined) {
 
         /**
          * 处理日期
+		 * @method _handleDate
+		 * @private
          */
         _handleDate: function() {
             var self = this,
