@@ -38,6 +38,8 @@ KISSY.add('dom-data', function(S, undefined) {
                 var elem = S.get(selector), isNode,
                     cache, key, thisCache;
 
+                if (!elem || noData[elem.nodeName]) return;
+
                 if (elem == win) elem = winDataCache;
                 isNode = checkIsNode(elem);
 

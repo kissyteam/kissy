@@ -1533,7 +1533,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 14 18:56
+build time: Sep 15 16:35
 */
 /**
  * @module  dom
@@ -1954,6 +1954,8 @@ KISSY.add('dom-data', function(S, undefined) {
             if (data === undefined) {
                 var elem = S.get(selector), isNode,
                     cache, key, thisCache;
+
+                if (!elem || noData[elem.nodeName]) return;
 
                 if (elem == win) elem = winDataCache;
                 isNode = checkIsNode(elem);
