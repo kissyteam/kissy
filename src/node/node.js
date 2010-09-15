@@ -23,12 +23,17 @@ KISSY.add('node', function(S) {
             return;
         }
 
+        // create from html
+        if (S.isString(html)) {
+            domNode = DOM.create(html, props, ownerDocument);
+        }
         // handle element or text node
-        if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
+        else if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
             domNode = html;
         }
-        else if (S.isString(html)) {
-            domNode = DOM.create(html, props, ownerDocument);
+        // handle Node
+        else if(html instanceof Node) {
+            return html;
         }
 
         self[0] = domNode;

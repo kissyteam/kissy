@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 14 22:39
+build time: Sep 15 16:54
 */
 /**
  * @module kissy
@@ -1273,10 +1273,8 @@ build time: Sep 14 22:39
 
 /**
  * TODO:
- *  - combo 实现
+ *  - 自动 combo 的实现，目前是手动
  *  - 使用场景和测试用例整理
- *  - 一个模块里，对 js 和 css 的同时支持
- *
  *
  * NOTES:
  *
@@ -4053,7 +4051,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 15 16:53
 */
 /**
  * @module  node
@@ -4080,12 +4078,17 @@ KISSY.add('node', function(S) {
             return;
         }
 
+        // create from html
+        if (S.isString(html)) {
+            domNode = DOM.create(html, props, ownerDocument);
+        }
         // handle element or text node
-        if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
+        else if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
             domNode = html;
         }
-        else if (S.isString(html)) {
-            domNode = DOM.create(html, props, ownerDocument);
+        // handle Node
+        else if(html instanceof Node) {
+            return html;
         }
 
         self[0] = domNode;
@@ -4286,6 +4289,9 @@ KISSY.add('node-attach', function(S, undefined) {
         }
     });
 
+    // dom-data
+    attach(['data', 'removeData'], HAS_NAME);
+
     // dom-class
     attach(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass']);
 
@@ -4296,6 +4302,7 @@ KISSY.add('node-attach', function(S, undefined) {
     // dom-style
     attach(['css'], HAS_NAME);
     attach(['width', 'height'], ONLY_VAL);
+    attach(['show', 'hide', 'toggle']);
 
     // dom-offset
     attach(['offset'], ONLY_VAL);

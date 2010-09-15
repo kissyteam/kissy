@@ -49,6 +49,9 @@
         if(S.Node('').length !== 0) test.fail();
         if(S.Node(null).length !== 0) test.fail();
         if(S.Node(undefined).length !== 0) test.fail();
+
+        var t = S.Node('p');
+        if(S.Node(t) !== t) test.fail();
     }
 
     function test_query_class_sep(test) {
@@ -312,7 +315,6 @@
     }
 
     function test_remove(test) {
-        debugger
         S.all('.test').remove();
         if(S.all('.test').length !== 0) test.fail();
     }
@@ -345,6 +347,7 @@
 
     function test_one(test) {
         if(S.one('#foo').one('input').attr('id') !== 'test-input') test.fail();
+        if(S.one('#feature-2').html('feature 2').html() !== 'feature 2') test.fail();
     }
 
     function test_all(test) {
@@ -362,7 +365,7 @@
         });
         test.extraMsg = '{click test link to invoke event}';
     }
-    
+
 </script>
 
 <div id="test-data">
@@ -410,6 +413,7 @@
     <p id="test-data2"></p>
     <p id="test-data3"></p>
     <p id="test-display"></p>
+    <div id="feature-2"></div>
 </div>
 
 </body>

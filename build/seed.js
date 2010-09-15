@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 14 22:39
+build time: Sep 15 16:54
 */
 /**
  * @module kissy
@@ -1273,10 +1273,8 @@ build time: Sep 14 22:39
 
 /**
  * TODO:
- *  - combo 实现
+ *  - 自动 combo 的实现，目前是手动
  *  - 使用场景和测试用例整理
- *  - 一个模块里，对 js 和 css 的同时支持
- *
  *
  * NOTES:
  *

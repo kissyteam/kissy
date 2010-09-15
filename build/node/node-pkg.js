@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 15 16:53
 */
 /**
  * @module  node
@@ -28,12 +28,17 @@ KISSY.add('node', function(S) {
             return;
         }
 
+        // create from html
+        if (S.isString(html)) {
+            domNode = DOM.create(html, props, ownerDocument);
+        }
         // handle element or text node
-        if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
+        else if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
             domNode = html;
         }
-        else if (S.isString(html)) {
-            domNode = DOM.create(html, props, ownerDocument);
+        // handle Node
+        else if(html instanceof Node) {
+            return html;
         }
 
         self[0] = domNode;
@@ -234,6 +239,9 @@ KISSY.add('node-attach', function(S, undefined) {
         }
     });
 
+    // dom-data
+    attach(['data', 'removeData'], HAS_NAME);
+
     // dom-class
     attach(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass']);
 
@@ -244,6 +252,7 @@ KISSY.add('node-attach', function(S, undefined) {
     // dom-style
     attach(['css'], HAS_NAME);
     attach(['width', 'height'], ONLY_VAL);
+    attach(['show', 'hide', 'toggle']);
 
     // dom-offset
     attach(['offset'], ONLY_VAL);
