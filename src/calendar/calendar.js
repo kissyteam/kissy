@@ -240,8 +240,6 @@ KISSY.add('calendar', function(S, undefined) {
                 maxDate:     false,
                 multiSelect: false,
                 navigator:   true,
-                arrow_left:  false,
-                arrow_right: false,
                 popup:       false,
                 showTime:    false,
                 triggerType: ['click']
