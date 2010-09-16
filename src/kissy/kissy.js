@@ -320,17 +320,20 @@
          * <code>
          * S.namespace('KISSY.app'); // returns KISSY.app
          * S.namespace('app.Shop'); // returns KISSY.app.Shop
+         * S.namespace('TB.app.Shop', true); // returns TB.app.Shop
          * </code>
          * @return {Object}  A reference to the last namespace object created
          */
         namespace: function() {
-            var l = arguments.length, o = null, i, j, p;
+            var args = arguments, l = args.length,
+                o = null, i, j, p,
+                global = (args[l - 1] === true && l--);
 
             for (i = 0; i < l; ++i) {
-                p = (EMPTY + arguments[i]).split('.');
-                o = this;
+                p = (EMPTY + args[i]).split('.');
+                o = global ? win : this;
                 for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                    o = o[p[j]] = o[p[j]] || {};
+                    o = o[p[j]] = o[p[j]] || { };
                 }
             }
             return o;
