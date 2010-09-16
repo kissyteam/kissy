@@ -283,6 +283,8 @@ KISSY.add('suggest', function(S, undefined) {
                         else if (pressingCount == 3) {
                             pressingCount = 0;
                         }
+                        // webkit 内核下，input 中按 UP 键，默认会导致光标定位到最前
+                        ev.preventDefault();
                     }
                 }
                 // ENTER 键
