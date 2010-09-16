@@ -88,6 +88,7 @@
             <li>提示层打开时，点击 iframe 区域，提示层关闭</li>
             <li>在提示层点击右键，不会触发关闭或表单提交等操作</li>
             <li>input 框的宽度动态改变时，提示层显示时宽度自动自适应</li>
+            <li>webkit 下，在输入框中输入文字，按下 UP 键，光标不会跳动到最前面去</li>
         </ol>
     </div>
 
@@ -222,14 +223,12 @@
 
         // 有啊有啊哈哈哈
         // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
-        window["suggestCallback"] = window["g_ks_suggest_callback"];
         dataUrl = 'http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10';
 
-        var sug5 = new S.Suggest('#q5', dataUrl);
-
-        sug5.on('beforeDataRequest', function() {
-            this.dataScript.charset = 'GBK';
-            this.queryParams = 'keyword=' + encodeURIComponent(this.query);
+        var sug5 = new S.Suggest('#q5', dataUrl, {
+            charset: 'gbk',
+            callbackFn: 'suggestCallback',
+            queryName: 'keyword'
         });
 
         // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
