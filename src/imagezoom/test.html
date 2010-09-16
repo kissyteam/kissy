@@ -82,10 +82,10 @@
 </div>
 <ul id="imgList">
     <li>
-        <img src="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg_40x40.jpg" data-ks-imagezom="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg" />
+        <img src="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg_40x40.jpg" data-ks-imagezoom="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg" />
     </li>
     <li>
-        <img src="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg_40x40.jpg" data-ks-imagezom="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg"/>
+        <img src="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg_40x40.jpg" data-ks-imagezoom="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg"/>
     </li>
 </ul>
 
@@ -110,7 +110,7 @@
 
         var m = new S.ImageZoom("#multi");
         S.Event.on("#imgList img", 'click', function() {
-            var data = S.DOM.attr(this, 'data-ks-imagezom');
+            var data = S.DOM.attr(this, 'data-ks-imagezoom');
             S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
             m.set('bigImageSrc', data);
         });

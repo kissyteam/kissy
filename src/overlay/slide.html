@@ -1,0 +1,416 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Overlay 调研文档</title>
+<style>
+body{position:absolute;left:0;top:0;width:100%;height:100%;padding:0;margin:0;font:14px Candara,\5FAE\8F6F\96C5\9ED1,Verdana,sans-serif;}.presentation{position:absolute;left:0;top:0;height:100%;width:100%;overflow:hidden;background:#778;}.slides{position:absolute;left:0;top:0;width:100%;height:100%;-webkit-transition:-webkit-transform 1s ease-in-out;-moz-transition:-moz-transform 1s ease-in-out;-o-transition:-o-transform 1s ease-in-out;}.slide{display:none;width:900px;height:700px;overflow:hidden;position:absolute;left:50%;top:50%;margin-top:-350px;opacity:0;background:-webkit-gradient(linear,left bottom,left top,from(#bbd),to(#fff));background:-moz-linear-gradient(bottom,#bbd,#fff);-webkit-transition:margin .25s ease-in-out;-moz-transition:margin .25s ease-in-out;-o-transition:margin .25s ease-in-out;}.slide.far-past{display:block;margin-left:-2400px;}.slide.past{display:block;margin-left:-1400px;}.slide.current{display:block;margin-left:-450px;opacity:1;}.slide.future{display:block;margin-left:500px;}.slide.far-future{display:block;margin-left:1500px;}.slide header,.slide section{display:none;}.slide.current header,.slide.current section{display:block;}.slide:nth-child(even){border-top-left-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomright:20px;}.slide:nth-child(odd){border-top-right-radius:20px;border-bottom-left-radius:20px;-webkit-border-top-right-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomleft:20px;}.slide .counter{position:absolute;left:20px;bottom:20px;display:block;color:#999;}header{position:absolute;left:30px;top:25px;margin:0;padding:0;font-size:50px;letter-spacing:-.05em;text-shadow:rgba(0,0,0,0.2) 0 2px 5px;}section{margin-left:30px;margin-right:30px;margin-top:100px;display:block;overflow:hidden;font-size:50px;color:#3f3f3f;text-shadow:rgba(0,0,0,0.2) 0 2px 5px;line-height:1.5;}p{font-size:25px;margin:10px 0;}h1{padding:0;margin:0;letter-spacing:-2px;font-size:60px;}h2{padding:0;margin:15px 0 5px 0;font-size:50px;font-weight:normal;}a{text-decoration:none;line-height:110%;}button{font-size:20px;}blockquote,ul,ol,dl{margin:1em;}ul,ol,dl{margin-left:2em;font-size:40px;}li{list-style:none;}.small li{font-size:25px;}ul li:before{content:'· ';}dl dd{margin-left:1em;}th,td{padding:.5em;}caption{margin-bottom:.5em;}hr{visibility:hidden;padding:0;margin:0 0 -20px 0;}section.intro h1{margin-top:80px;}section.intro p{font-size:35px;}section.intro .author{margin-top:120px;margin-bottom:-40px;}.notes{display:none;}section.center{line-height:180%;text-align:center;display:table-cell;vertical-align:middle;height:700px;width:900px;}blockquote{font-size:20px;white-space:pre;padding:10px 20px;background:rgba(0,0,255,0.05);border-radius:8px;border:1px solid rgba(0,0,255,0.2);text-shadow:none;}pre,.pre{display:block;white-space:pre;text-align:left;font-size:16px;font-family:'Bitstream Vera Sans Mono',Courier,monospace;padding:10px 20px;background:rgba(255,0,0,0.05);border-radius:8px;border:1px solid rgba(255,0,0,0.2);text-shadow:none;}pre b{font-weight:normal;color:#c61800;text-shadow:#c61800 0 0 1px;}pre em{font-weight:normal;font-style:normal;color:#18a600;text-shadow:#18a600 0 0 1px;}.css,.js,.html{color:black;display:inline-block;padding:6px 10px 3px 10px;font-size:25px;line-height:30px;text-shadow:none;letter-spacing:0;bottom:10px;position:relative;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;background:white;box-shadow:rgba(0,0,0,0.1) 0 2px 5px;-webkit-box-shadow:rgba(0,0,0,0.1) 0 2px 5px;-moz-box-shadow:rgba(0,0,0,0.1) 0 2px 5px;}.css{background:-webkit-gradient(linear,left top,left bottom,from(#ff4),to(#ffa));background:-moz-linear-gradient(left top,#ff4,#ffa);background-color:#ff4;}.js{background:-webkit-gradient(linear,left top,left bottom,from(#4f4),to(#afa));background:-moz-linear-gradient(left top,#4f4,#afa);background:#4f4;}.html{background:-webkit-gradient(linear,left top,left bottom,from(#e88),to(#fee));background:-moz-linear-gradient(left top,#e88,#fee);background:#e88;}
+pre {
+    font-size: 14px;
+}
+</style>
+</head>
+<body>
+<div class="presentation">
+    <div class="slides">
+
+        <div class="slide">
+            <section class="center intro">
+                <h1>S.Overlay</h1>
+                <p class="author">乔花</p>
+                <p class="year">2010.09</p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>Outline</header>
+            <section>
+                <p>一. 应用场景 </p>
+                <p>二. 同类组件 </p>
+                <p>三. 功能分析 </p>
+                <p>四. 技术方案 </p>
+                <p>五. Public API </p>
+                <p>六. 开发计划 </p>
+                <p>七. 其它 </p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>一. 应用场景</header>
+            <section>
+                <p>页面上的覆盖层;</p>
+                <p>对话框层; </p>
+                <p>Popup 层;</p>
+                <p>很多很多网站上都有这类似的覆盖层效果;</p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>二. 同类组件</header>
+            <section>
+                <pre>
+1. YUI3：<a href="http://developer.yahoo.com/yui/3/overlay/">http://developer.yahoo.com/yui/3/overlay/</a>
+ * new Y.Overlay(cfg);
+ * 扩展于Widget, DOM基本结构包含hd,bd,ft;
+ * 提供 位置相关属性(x, y, xy, centered), zIndex, align, shim(加iframe, IE6下默认true),
+   constrain(固定在可视区域中间);
+ * 提供 与修改对应 Attributes 的方法, 主要有 内容(WidgetStdMod),
+   位置(WidgetPosition, WidgetPositionConstrain), 大小这几个方面的方法;
+ * WidgetPositionAlign, 提供 Align, 支持对齐到某个元素, 整个可视区域, 特定位置上;
+ * WidgetStack, 提供 Stacking, 需要zIndex和shim支持, 当有多个 Overlay 时,
+   某个层获得焦点时, 将其置于顶层(对应方法 bringToTop )
+ * 自定义事件 xyChange, bodyContentChange,
+ * Overlay相关的Plugin, 通过 overlay.plug(XXX, cfg)/ overlay.unplug(XXX) 使用:
+    # StdModIO, 提供标准的输入输出, 包含initializer, destructor, formator,
+      在Overly中实例化为overlay.io;
+    # Animation, 提供Overly的动画展现效果, animHidden/animVisible定义如何展现;
+
+
+2. JQuery UI, 没有提供 Overlay , 但提供了所有组件的基类 Widget, 扩展出 <a href="http://docs.jquery.com/UI/Dialog">Dialog</a> , 和相关组件,
+   如 Draggable(拖拽), Droppable, Resizable.
+ * JQuery Core + Widget + Position + Dialog, 压缩后21K;
+ * <a href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.js">Widget</a>, 所有组件的基类, 提供 create, destroy, enable, disable等通用方法;
+ * 使用 $(id).dialog();
+   # 提供 定制宽高度, resize, 位置, 是否模态窗口, 可拖拽, 支持 按钮;
+   # 提供的方法有 destroy, open, close, enable, disable, moveToTop, stack, 这些都是类似窗口最基本的方法;
+   # 自定义事件有 open, close, beforeClose, focus, drag 等;
+                </pre>
+            </section>
+        </div>
+        <div class="slide">
+            <section>
+                <pre>
+3. Mootools, 由 moord 提供的 <a href="http://www.moord.it/documentation/constructors">overlay.js </a>
+ * 77.3K (未压缩, 包含依赖文件), 但纯 Overlay 仅100多行;
+ * new Overlay() 创建 overlay 对象;
+ * 提供 创建, 删除 Overlay, 设置 颜色深浅 透明度, 功能比较简单;
+ * 基于Overlay扩展的组件有 virtual box , 弹出层功能:
+   # virtual-base 为基类;
+   # 扩展有 virtual-box (基本的box),  virtual-ajax (请求之后显示内容), virtual-html (动态设置html内容);
+   # virtual box 系列 提供 设置动画效果, 自定义样式, 位置居中等选项, 提供
+     onShow, onClose, onNext, onPrev 自定义事件;
+
+
+4. Dojo 的 Dijit 提供了 <a href="http://dojotoolkit.org/reference-guide/dijit/Dialog.html">digit.Dialog</a>.
+ * Dialog+DialogUnderlay 共22K, 不包含一些依赖库.
+ * new dijit.Dialog(cfg);
+ * 支持resize, 拖拽, 表单操作, 和其他类似, 不重复讲了;
+ * 焦点的处理;
+                </pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>三. 功能分析</header>
+            <section>
+                <pre>
+- 数据层:
+    * 内容的可自定义设置:
+        # 独立设置 hd, bd, ft 三部分内容;
+    * 后台请求过来的动态数据;
+        # 表单数据;
+        # iframe;
+        # ajax;
+    * 数据解析及格式化:
+        # json;
+        # formator;
+- 展现层:
+    * 大小:
+        # 设置宽度/高度;
+        # resize;
+    * 位置:
+        # 绝对位置;
+        # 相对于元素的位置;
+        # zIndex, shim , stack;
+    * 对齐:
+        # 相对于元素的对齐;
+        # 在容器或可视区域内的对齐;
+    * 动画:
+        # 主要是在显示/隐藏Overlay时的动画效果, 直接利用 kissy/anim, 类似 switchable 的 plugin-effect;
+- 其他:
+    * 支持按钮?
+    * Drag + Drop?
+</pre>
+            </section>
+        </div>
+        
+        <div class="slide">
+            <header>四. 技术方案</header>
+            <section>
+                <p>本质: 弹出一个层, 并且可以动态设定层位置;</p>
+                <p> - 将 Overlay 抽象处理, 只处理上面这句话的功能;</p>
+                <p> - Dialog, Popup 在 Overlay 基础上扩展, 加入自己特点;</p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <section>
+                <p>DOM 结构</p>
+                <p>分为两种情况, 一个是已有 DOM, 一个是新建. 两者统一起来, 最终生成的 DOM 结构 如下:</p>
+                <pre>
+/*
+ *  &lt;div class="ks-overlay-container"&gt;
+ *      &lt;div class="ks-overlay-bd"&gt;&lt;/div&gt;
+ *  &lt;/div&gt;
+ */
+                </pre>
+                <p>当没有内容时, 不会创建 body 层;</p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <section>
+                <p>位置计算</p>
+                <p>采用YUI3的组织方式, 利用容器元素及参考元素上各自的九个不同位置点('tl', 'tc', 'tr', 'cl', 'cc', 'cr', 'bl', 'bc', 'br')进行组合定位, 如下图所示:</p>
+                <p><img src="assets/align.png" height="400px"/></p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <section>
+                <p>Shim 和 Mask</p>
+                <p>Shim, 在 IE6 下是必备; 而 Mask 覆盖层, 通过选项设置;</p>
+                <p>Shim 和 Mask 本质上也是一致的, 都是新建一个层( div 或者 iframe ), 放在 Overlay 层 下方; 所以我们也把 Shim 和 Mask 合并起来; </p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <section>
+                <p>S.Dialog</p>
+                <p>固定的DOM结构, 在 Overlay 基础上 增加 header, footer, close 按钮(is closeable)</p>
+                <pre>
+/*
+ *  &lt;div class="ks-overlay-container"&gt;
+ *      &lt;div class="ks-overlay-hd"&gt;
+ *          &lt;div class="ks-dialog-close"&gt;&lt;/div&gt;
+ *      &lt;/div&gt;
+ *      &lt;div class="ks-overlay-bd"&gt;&lt;/div&gt;
+ *      &lt;div class="ks-overlay-ft"&gt;&lt;/div&gt;
+ *  &lt;/div&gt;
+ */
+                </pre>
+                <p>另外, 增加 DialogManager 提供管理页面上 Dialog 的方法; </p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <section>
+                <p>S.Popup</p>
+                <p>基本上同 Overlay, 但触发类型默认为 'mouse', 弹出层位置默认为触发元素的右侧</p>
+                <pre>
+var defaultConfig = {
+    triggerType: 'mouse', // 触发类型, click, mouse
+    align: {
+        node: 'trigger',
+        points: ['cr', 'ct'],
+        offset: [10, 0]
+    }
+};
+                </pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>五. Public API</header>
+            <section>
+                <p>S.Overlay</p>
+                <pre>
+config:
+    container: null,            // Overlay 容器, 默认为 null 时, 表示新建 DOM;
+    containerCls: CLS_CONTAINER,// 容器 class , 默认 class 为 'ks-overlay'
+    content: undefined,         // 默认为 undefined, 不设置
+    bdCls: CLS_PREFIX + 'bd',   // body class, 默认为 'ks-overlay-bd'
+
+    trigger: null,          // 触发元素, 默认为 null 时, Overlay 动作需要另外 js 指定
+    triggerType: 'click',   // 触发类型, 'mouse' or 'click', 默认为 'click'
+
+    width: 0,               // 容器宽度
+    height: 0,              // 容器高度
+    zIndex: 9999,           // z-index 值
+
+    xy: null,               // 相对 page 定位, 有效值为 [n, m]
+    align: {                // 相对指定 node or viewport 定位
+        node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+        points: [POSITION_ALIGN.CC, POSITION_ALIGN.CC],
+                            // ['tl', 'tr'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+        offset: [0,0]       // 水平, 垂直方向上的偏移, 有效值为 [n, m]
+    },
+    mask: false,            // 是否显示蒙层, 默认不显示
+    shim: ie6               // 是否需要垫片, IE6下默认需要
+</pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <section>
+                <pre>
+Member:
+    container               // 指向容器元素
+    trigger                 // 触发元素
+    config                  // 配置选项
+    body                    // 容器 body 元素, 当 content 为空时,
+                            //不创建 ks-overlay-bd 层, 且 body 直接指向 container
+    shim                    // 垫片层, 如果选项中 shim 设置为 true
+
+Method:
+    show()                  // 显示
+    hide()                  // 隐藏
+    move(x, y)              // 将 overlay 移动到指定位置上, 绝对位置
+    align(node, points, offset)  // 将 overlay 定位到指定节点的特定位置上,
+                                 // 如果没有指定 node, 会默认使用 config 中的 align 设置
+    center()                // 将 overlay 居中到当前可视区域上
+    setBody()               // 设置 body 内容
+
+</pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <section>
+                <!--<p>S.Popup 同 S.Overlay 一致, 没有额外的 config 和 method</p>-->
+                <p>S.Dialog 增加了 header 和 footer, config 和 method 做了对应调整</p>
+                <pre>
+config:
+    header: '',                     // header 内容
+    footer: '',                     // footer 内容
+
+    containerCls: CLS_CONTAINER,    // 设置 containerCls , 默认为 'ks-overlay ks-dialog'
+    hdCls: CLS_PREFIX + 'hd',       // 设置 header 的 class , 默认为 ks-dialog-hd
+    bdCls: CLS_PREFIX + 'bd',       // 设置 body 的 class , 默认为 ks-dialog-bd
+    ftCls: CLS_PREFIX + 'ft',       // 设置 footer 的 class , 默认为 ks-dialog-ft
+    closeBtnCls: CLS_PREFIX + 'close',      // 设置关闭按钮的 class, 默认为 ks-dialog-close
+
+    width: 400,                     // 设置容器宽度, 默认为 400
+    height: 300,                    // 设置容器高度, 默认为 300
+    closable: true                  // 是否需要关闭按钮, 默认需要
+Member:
+    header                          // 对话框头部的HTML元素
+    footer                          // 对话框尾部的HTML元素
+    manager                         // 当前 DialogManager
+Method:
+    setHeader()                     // 设置 header 内容
+    setFooter()                     // 设置 footer 内容
+                        </pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <section>
+                <p>S.DialogManager</p>
+                <p>用于管理页面上所有的 Dialog , 目前提供功能较少</p>
+                <pre>
+Method:
+    register()                    // 将 dialog 实例注册到 DialogManager 中
+    hideAll()                     // 隐藏页面上所有的 dialog
+                </pre>
+            </section>
+        </div>
+
+
+        <div class="slide">
+            <section>
+                <p>S.Mask</p>
+                <p>统一了 shim 和 mask , 会在 body 最后加入 shim 层或 mask 层</p>
+                <pre>
+Config:
+    shim: false,        // 是 shim 层还是 mask 层
+    opacity: .6,        // 指定 mask 的透明度
+    style: ''           // 指定样式
+
+Member:
+    iframe              // shim 和 mask 下都会有, mask 时, 标准浏览器也用 iframe 元素生成mask
+    config              // 配置选项
+    layer               // mask时, 且在IE下才会有这个成员, 由于 iframe 不能设置 background,
+                        // 所以添加了一 div 作为 layer , 设置透明度及背景颜色
+Method:
+    show()              // 显示
+    hide()              // 隐藏
+    toggle()            // 切换显示/隐藏
+    setSize()           // 设置宽高
+    setOffset()         // 设置位置, 绝对位置
+                </pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <section>
+                <p>基本使用, Popup</p>
+                <pre>
+KISSY.ready(function(S) {
+
+    var popup = S.Popup({
+        trigger: '#link2',
+        triggerType: 'mouse',
+        width: 300,
+        height: 200,
+        containerCls: 'popup2',
+        content: 'test popup',
+        align: {
+            node: 'trigger',
+            points: ['tr', 'tl']
+        }
+    });
+                </pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <section>
+                <p>基本使用, Dialog</p>
+                <pre>
+KISSY.ready(function(S){
+    var dialog = S.Dialog({
+        trigger: '#btn4',
+        containerCls: 'dialog4',
+        width: 400,
+        height: 300,
+        title: 'this is title',
+        footer: 'footer',
+        content: 'content',
+        mask: false
+    });
+    var times = 1;
+    dialog.on('show', function(){
+        dialog.setBody('show'+(times++));
+    });
+
+    S.Event.on('#btn5', 'click', function(e){
+        dialog.manager.hideAll();
+    });
+});
+                </pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>六. 开发计划</header>
+            <section>
+                <p>9月, 实现基本功能.</p>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>资源</header>
+            <section>
+                <p>使用文档： http://kissyteam.github.com/kissy/docs/overlay/index.html</p>
+                <p>测试页面： http://kissyteam.github.com/kissy/src/overlay/test.html</p>
+            </section>
+        </div>
+    </div>
+    <!-- slides -->
+
+</div>
+<script>
+(function(){var e=document;if(!e.all){var u=0,v=/\s+/,m=[""],n=function(a){return Array.prototype.slice.call(a||[],0)},w=function(a){if(typeof a=="string")return e.getElementById(a);return a},o=function(a,b){if(!a)return[];if(typeof a!="string")return n(a);if(typeof b=="string"){b=w(b);if(!b)return[]}b=b||document;var d=b.nodeType==9,c=d?b:b.ownerDocument||document;if(!d||">~+".indexOf(a.charAt(0))>=0){b.id=b.id||"qUnique"+u++;a="#"+b.id+" "+a}if(">~+".indexOf(a.slice(-1))>=0)a+=" *";return n(c.querySelectorAll(a))},
+p=function(a){if(typeof a=="string"||a instanceof String)if(a.indexOf(" ")<0){m[0]=a;return m}else return a.split(v);return a},j=function(a){return a.replace(/^\s\s*/,"").replace(/\s\s*$/,"")},k=function(a,b){b=p(b);for(var d=" "+a.className+" ",c=0,f=b.length,h;c<f;++c)if((h=b[c])&&d.indexOf(" "+h+" ")<0)d+=h+" ";a.className=j(d)},g=function(a,b){var d;if(b!==undefined){b=p(b);d=" "+a.className+" ";for(var c=0,f=b.length;c<f;++c)d=d.replace(" "+b[c]+" "," ");d=j(d)}else d="";if(a.className!=d)a.className=
+d},x=function(a,b){(" "+a.className+" ").indexOf(" "+j(b)+" ")>=0?g(a,b):k(a,b)},i=navigator.userAgent,l=parseFloat(i.split("Firefox/")[1])||undefined,q=parseFloat(i.split("WebKit/")[1])||undefined,r=parseFloat(i.split("Opera/")[1])||undefined,y=function(){var a=parseFloat(i.split("Version/")[1])||undefined,b=q||l&&l>3.6||r&&a>=10.5;return function(){return b}}(),z=document.getElementsByClassName("slide").length,s=function(a,b){this._node=a;if(b>=0)this._count=b+1;this._node&&k(this._node,"slide distant-future");
+this._makeCounter();this._makeBuildList()};s.prototype={_node:null,_count:0,_buildList:[],_visited:false,_currentState:"",_states:["distant-past","far-past","past","current","future","far-future","distant-future"],setState:function(a){if(typeof a!="string")a=this._states[a];if(a=="current"&&!this._visited){this._visited=true;this._makeBuildList()}g(this._node,this._states);k(this._node,a);this._currentState=a;var b=this;setTimeout(function(){b._runAutos()},400)},_makeCounter:function(){if(this._count&&
+this._node){var a=e.createElement("span");a.innerHTML=this._count+" / "+z;a.className="counter";this._node.appendChild(a)}},_makeBuildList:function(){this._buildList=[]},_runAutos:function(){if(this._currentState=="current"){var a=-1;this._buildList.some(function(h,A){if(h.hasAttribute("data-auto")){a=A;return true}return false});if(a>=0){var b=this._buildList.splice(a,1)[0],d=q?"webkitTransitionEnd":l?"mozTransitionEnd":"oTransitionEnd",c=this;if(y()){var f=function(){b.parentNode.removeEventListener(d,
+f,false);c._runAutos()};b.parentNode.addEventListener(d,f,false);g(b,"to-build")}else setTimeout(function(){g(b,"to-build");c._runAutos()},400)}}},buildNext:function(){if(!this._buildList.length)return false;g(this._buildList.shift(),"to-build");return true}};var t=function(a){this._slides=(a||[]).map(function(c,f){return new s(c,f)});a=window.location.hash;try{this.current=parseInt(a.split("#slide")[1],10)}catch(b){}this.current=isNaN(this.current)?1:this.current;var d=this;e.addEventListener("keydown",
+function(c){d.handleKeys(c)},false);e.addEventListener("mousewheel",function(c){d.handleWheel(c)},false);e.addEventListener("DOMMouseScroll",function(c){d.handleWheel(c)},false);e.addEventListener("touchstart",function(c){d.handleTouchStart(c)},false);e.addEventListener("touchend",function(c){d.handleTouchEnd(c)},false);window.addEventListener("popstate",function(c){d.go(c.state)},false);this._update();[].forEach.call(document.querySelectorAll(".force-render"),function(c){setTimeout(function(){g(c,
+"force-render")},2E3)})};t.prototype={_slides:[],_update:function(a){if(history.pushState)a||history.pushState(this.current,"Slide "+this.current,"#slide"+this.current);else window.location.hash="slide"+this.current;for(a=this.current-1;a<this.current+7;a++)this._slides[a-4]&&this._slides[a-4].setState(Math.max(0,a-this.current))},current:0,next:function(){if(!this._slides[this.current-1].buildNext()){this.current=Math.min(this.current+1,this._slides.length);this._update()}},prev:function(){this.current=
+Math.max(this.current-1,1);this._update()},go:function(a){history.pushState&&this.current!=a&&history.replaceState(this.current,"Slide "+this.current,"#slide"+this.current);this.current=a;this._update(true)},_notesOn:false,showNotes:function(){this._notesOn=!this._notesOn;o(".notes").forEach(function(a){a.style.display=notesOn?"block":"none"})},switch3D:function(){x(document.body,"three-d")},handleWheel:function(a){var b=0;if(a.wheelDelta){b=a.wheelDelta/120;if(r)b=-b}else if(a.detail)b=-a.detail/
+3;if(b>0)this.prev();else b<0&&this.next()},handleKeys:function(a){switch(a.keyCode){case 37:this.prev();break;case 39:this.next();break;case 50:this.showNotes();break;case 51:this.switch3D();break}},_touchStartX:0,handleTouchStart:function(a){this._touchStartX=a.touches[0].pageX},handleTouchEnd:function(a){a=this._touchStartX-a.changedTouches[0].pageX;if(a>150)this.next();else a<-150&&this.prev()}};new t(o(".slide"))}})();
+</script>
+</body>
+</html>
