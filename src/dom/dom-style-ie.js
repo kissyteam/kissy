@@ -104,3 +104,10 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         }
     }
 });
+/**
+ * NOTES:
+ *
+ *  - opacity 的实现，还可以用 progid:DXImageTransform.Microsoft.BasicImage(opacity=.2) 来实现，但考虑
+ *    主流类库都是用 DXImageTransform.Microsoft.Alpha 来实现的，为了保证多类库混合使用时不会出现问题，kissy 里
+ *    依旧采用 Alpha 来实现。
+ */
