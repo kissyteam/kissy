@@ -8395,7 +8395,7 @@ KISSY.add('accordion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 16 16:33
 */
 /**
  * KISSY Mask
@@ -8416,7 +8416,14 @@ KISSY.add('mask', function(S, undefined) {
             opacity: .6,
             style: ''
         };
-
+    /*
+     * Mask Class
+     * @constructor
+     * attached members：
+     *   - this.iframe
+     *   - this.config
+     *   - this.layer
+     */
     function Mask(config){
 
         if (!(this instanceof Mask)) {
@@ -8546,7 +8553,7 @@ KISSY.add('overlay', function(S, undefined) {
             height: 0,
             zIndex: 9999,
 
-            xy: null,               // 相对 page 定位，有效值为 [n, m]
+            xy: null,               // 相对 page 定位, 有效值为 [n, m]
             align: {                // 相对指定 node or viewport 定位
                 node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
                 points: [POSITION_ALIGN.CC, POSITION_ALIGN.CC], // ['tl', 'tr'] 表示 overlay 的 tl 与参考节点的 tr 对齐
@@ -8869,7 +8876,7 @@ KISSY.add('overlay', function(S, undefined) {
 
 /**
  * TODO:
- *  - stackable ?
+ *  - stackable ? 
  *  - constrain 支持可视区域或指定区域 ?
  *  - effect
  *  - draggable
@@ -8926,6 +8933,16 @@ KISSY.add('dialog', function(S) {
         CLS_PREFIX = 'ks-dialog-',
 
         defaultConfig = {
+            /*
+             * DOM 结构
+             *  <div class="ks-overlay ks-dialog">
+             *      <div class="ks-dialog-hd">
+             *          <div class="ks-dialog-close"></div>
+             *      </div>
+             *      <div class="ks-dialog-bd"></div>
+             *      <div class="ks-dialog-ft"></div>
+             *  </div>
+             */
             header: '',
             footer: '',
 
@@ -8946,6 +8963,7 @@ KISSY.add('dialog', function(S) {
      * attached members：
      *  - this.header
      *  - this.footer
+     *  - this.manager
      */
     function Dialog(container, config) {
         var self = this;
@@ -9037,6 +9055,12 @@ KISSY.add('dialog', function(S) {
     };
 
 }, { host: 'overlay' });
+
+/**
+ * TODO:
+ *  - S.guid() 唯一标识
+ * /
+
 
 /*
 Copyright 2010, KISSY UI Library v1.1.4
@@ -10132,7 +10156,7 @@ KISSY.add('suggest', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 14 19:07
+build time: Sep 16 16:33
 */
 /**
  * 图片放大效果 ImageZoom
@@ -10161,15 +10185,15 @@ KISSY.add('imagezoom', function(S, undefined) {
         defaultConfig = {
             type: STANDARD,            // 显示类型
 
-            bigImageSrc: '',           // 大图路径，为 '' 时，会取 data-src
-            bigImageSize: [900, 900],  // 大图高宽
-            position: 'right',         // 大图显示位置。仅支持 right, 不开放其它值
-            offset: 10,                // 大图位置的偏移量。单一值或 [x, y]
+            bigImageSrc: '',           // 大图路径, 默认为 '', 会取触点上的 data-ks-imagezoom 属性值.
+            bigImageSize: [800, 800],  // 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值.
+            position: 'right',         // 大图显示位置
+            offset: 10,                // 大图位置的偏移量. 单一值或 [x, y]
             preload: true,             // 是否预加载大图
             timeout: 120,              // 等待大图加载的最大时间, 单位: s  默认 2 min
             timeoutMsg: '图片暂不可用',
 
-            zoomSize: [400, 310],      // 放大区域宽高
+            zoomSize: [AUTO, AUTO],    // 放大区域宽高
             lensIcon: true,            // 是否显示放大镜提示图标
 
             zoomCls: ''                // 放大区域额外样式
@@ -10203,7 +10227,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             if (data && RE_IMG_SRC.test(data)) config.bigImageSrc = data;
         }
 
-        // 支持 [x, y] or x  <-- 只考虑 position 为 right
+        // 支持 [x, y] or x
         config.offset = S.makeArray(config.offset);
 
         // 预加载大图

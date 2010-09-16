@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 14 19:07
+build time: Sep 16 16:33
 */
 /**
  * 图片放大效果 ImageZoom
@@ -30,15 +30,15 @@ KISSY.add('imagezoom', function(S, undefined) {
         defaultConfig = {
             type: STANDARD,            // 显示类型
 
-            bigImageSrc: '',           // 大图路径，为 '' 时，会取 data-src
-            bigImageSize: [900, 900],  // 大图高宽
-            position: 'right',         // 大图显示位置。仅支持 right, 不开放其它值
-            offset: 10,                // 大图位置的偏移量。单一值或 [x, y]
+            bigImageSrc: '',           // 大图路径, 默认为 '', 会取触点上的 data-ks-imagezoom 属性值.
+            bigImageSize: [800, 800],  // 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值.
+            position: 'right',         // 大图显示位置
+            offset: 10,                // 大图位置的偏移量. 单一值或 [x, y]
             preload: true,             // 是否预加载大图
             timeout: 120,              // 等待大图加载的最大时间, 单位: s  默认 2 min
             timeoutMsg: '图片暂不可用',
 
-            zoomSize: [400, 310],      // 放大区域宽高
+            zoomSize: [AUTO, AUTO],    // 放大区域宽高
             lensIcon: true,            // 是否显示放大镜提示图标
 
             zoomCls: ''                // 放大区域额外样式
@@ -72,7 +72,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             if (data && RE_IMG_SRC.test(data)) config.bigImageSrc = data;
         }
 
-        // 支持 [x, y] or x  <-- 只考虑 position 为 right
+        // 支持 [x, y] or x
         config.offset = S.makeArray(config.offset);
 
         // 预加载大图

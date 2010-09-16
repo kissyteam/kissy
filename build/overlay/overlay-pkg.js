@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 16 16:33
 */
 /**
  * KISSY Mask
@@ -22,7 +22,14 @@ KISSY.add('mask', function(S, undefined) {
             opacity: .6,
             style: ''
         };
-
+    /*
+     * Mask Class
+     * @constructor
+     * attached members：
+     *   - this.iframe
+     *   - this.config
+     *   - this.layer
+     */
     function Mask(config){
 
         if (!(this instanceof Mask)) {
@@ -152,7 +159,7 @@ KISSY.add('overlay', function(S, undefined) {
             height: 0,
             zIndex: 9999,
 
-            xy: null,               // 相对 page 定位，有效值为 [n, m]
+            xy: null,               // 相对 page 定位, 有效值为 [n, m]
             align: {                // 相对指定 node or viewport 定位
                 node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
                 points: [POSITION_ALIGN.CC, POSITION_ALIGN.CC], // ['tl', 'tr'] 表示 overlay 的 tl 与参考节点的 tr 对齐
@@ -475,7 +482,7 @@ KISSY.add('overlay', function(S, undefined) {
 
 /**
  * TODO:
- *  - stackable ?
+ *  - stackable ? 
  *  - constrain 支持可视区域或指定区域 ?
  *  - effect
  *  - draggable
@@ -532,6 +539,16 @@ KISSY.add('dialog', function(S) {
         CLS_PREFIX = 'ks-dialog-',
 
         defaultConfig = {
+            /*
+             * DOM 结构
+             *  <div class="ks-overlay ks-dialog">
+             *      <div class="ks-dialog-hd">
+             *          <div class="ks-dialog-close"></div>
+             *      </div>
+             *      <div class="ks-dialog-bd"></div>
+             *      <div class="ks-dialog-ft"></div>
+             *  </div>
+             */
             header: '',
             footer: '',
 
@@ -552,6 +569,7 @@ KISSY.add('dialog', function(S) {
      * attached members：
      *  - this.header
      *  - this.footer
+     *  - this.manager
      */
     function Dialog(container, config) {
         var self = this;
@@ -643,4 +661,10 @@ KISSY.add('dialog', function(S) {
     };
 
 }, { host: 'overlay' });
+
+/**
+ * TODO:
+ *  - S.guid() 唯一标识
+ * /
+
 
