@@ -5,6 +5,9 @@
 <title>ImageZoom 调研文档</title>
 <style>
 body{position:absolute;left:0;top:0;width:100%;height:100%;padding:0;margin:0;font:14px Candara,\5FAE\8F6F\96C5\9ED1,Verdana,sans-serif;}.presentation{position:absolute;left:0;top:0;height:100%;width:100%;overflow:hidden;background:#778;}.slides{position:absolute;left:0;top:0;width:100%;height:100%;-webkit-transition:-webkit-transform 1s ease-in-out;-moz-transition:-moz-transform 1s ease-in-out;-o-transition:-o-transform 1s ease-in-out;}.slide{display:none;width:900px;height:700px;overflow:hidden;position:absolute;left:50%;top:50%;margin-top:-350px;opacity:0;background:-webkit-gradient(linear,left bottom,left top,from(#bbd),to(#fff));background:-moz-linear-gradient(bottom,#bbd,#fff);-webkit-transition:margin .25s ease-in-out;-moz-transition:margin .25s ease-in-out;-o-transition:margin .25s ease-in-out;}.slide.far-past{display:block;margin-left:-2400px;}.slide.past{display:block;margin-left:-1400px;}.slide.current{display:block;margin-left:-450px;opacity:1;}.slide.future{display:block;margin-left:500px;}.slide.far-future{display:block;margin-left:1500px;}.slide header,.slide section{display:none;}.slide.current header,.slide.current section{display:block;}.slide:nth-child(even){border-top-left-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomright:20px;}.slide:nth-child(odd){border-top-right-radius:20px;border-bottom-left-radius:20px;-webkit-border-top-right-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomleft:20px;}.slide .counter{position:absolute;left:20px;bottom:20px;display:block;color:#999;}header{position:absolute;left:30px;top:25px;margin:0;padding:0;font-size:50px;letter-spacing:-.05em;text-shadow:rgba(0,0,0,0.2) 0 2px 5px;}section{margin-left:30px;margin-right:30px;margin-top:100px;display:block;overflow:hidden;font-size:50px;color:#3f3f3f;text-shadow:rgba(0,0,0,0.2) 0 2px 5px;line-height:1.5;}p{font-size:25px;margin:10px 0;}h1{padding:0;margin:0;letter-spacing:-2px;font-size:60px;}h2{padding:0;margin:15px 0 5px 0;font-size:50px;font-weight:normal;}a{text-decoration:none;line-height:110%;}button{font-size:20px;}blockquote,ul,ol,dl{margin:1em;}ul,ol,dl{margin-left:2em;font-size:40px;}li{list-style:none;}.small li{font-size:25px;}ul li:before{content:'· ';}dl dd{margin-left:1em;}th,td{padding:.5em;}caption{margin-bottom:.5em;}hr{visibility:hidden;padding:0;margin:0 0 -20px 0;}section.intro h1{margin-top:80px;}section.intro p{font-size:35px;}section.intro .author{margin-top:120px;margin-bottom:-40px;}.notes{display:none;}section.center{line-height:180%;text-align:center;display:table-cell;vertical-align:middle;height:700px;width:900px;}blockquote{font-size:20px;white-space:pre;padding:10px 20px;background:rgba(0,0,255,0.05);border-radius:8px;border:1px solid rgba(0,0,255,0.2);text-shadow:none;}pre,.pre{display:block;white-space:pre;text-align:left;font-size:16px;font-family:'Bitstream Vera Sans Mono',Courier,monospace;padding:10px 20px;background:rgba(255,0,0,0.05);border-radius:8px;border:1px solid rgba(255,0,0,0.2);text-shadow:none;}pre b{font-weight:normal;color:#c61800;text-shadow:#c61800 0 0 1px;}pre em{font-weight:normal;font-style:normal;color:#18a600;text-shadow:#18a600 0 0 1px;}.css,.js,.html{color:black;display:inline-block;padding:6px 10px 3px 10px;font-size:25px;line-height:30px;text-shadow:none;letter-spacing:0;bottom:10px;position:relative;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;background:white;box-shadow:rgba(0,0,0,0.1) 0 2px 5px;-webkit-box-shadow:rgba(0,0,0,0.1) 0 2px 5px;-moz-box-shadow:rgba(0,0,0,0.1) 0 2px 5px;}.css{background:-webkit-gradient(linear,left top,left bottom,from(#ff4),to(#ffa));background:-moz-linear-gradient(left top,#ff4,#ffa);background-color:#ff4;}.js{background:-webkit-gradient(linear,left top,left bottom,from(#4f4),to(#afa));background:-moz-linear-gradient(left top,#4f4,#afa);background:#4f4;}.html{background:-webkit-gradient(linear,left top,left bottom,from(#e88),to(#fee));background:-moz-linear-gradient(left top,#e88,#fee);background:#e88;}
+pre {
+    font-size: 14px;
+}
 </style>
 </head>
 <body>
@@ -191,23 +194,31 @@ body{position:absolute;left:0;top:0;width:100%;height:100%;padding:0;margin:0;fo
             <section>
             <pre>
 config:
-                type: STANDARD,            // 显示类型, 目前只实现标准形式, 即出现镜片, 在小图右侧出现大图
+    type: STANDARD,            // 显示类型
 
-                bigImageSrc: '',           // 大图路径，为 '' 时，会先取 data-src
-                bigImageSize: [900, 900],  // 大图高宽
-                //position: 'right',       // 大图显示位置。仅支持 right, 不开放其它值
-                offset: 10,                // 大图位置的偏移量。单一值或 [x, y]
-                preload: true,             // 是否预加载大图
-                timeout: 120,              // 等待大图加载的最大时间, 单位: s  默认 2 min
-                timeoutMsg: '图片暂不可用',
+    bigImageSrc: '',           // 大图路径，为 '' 时，会取 data-src
+    bigImageSize: [900, 900],  // 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算,
+                               // 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值.
+    position: 'right',         // 大图显示位置。仅支持 right, 不开放其它值
+    offset: 10,                // 大图位置的偏移量。单一值或 [x, y]
+    preload: true,             // 是否预加载大图
+    timeout: 120,              // 等待大图加载的最大时间, 单位: s  默认 2 min
+    timeoutMsg: '图片暂不可用',
 
-                lensSize: [200, 200],      // 镜片高宽
-                lensIcon: true             // 是否显示放大镜提示图标
+    zoomSize: [AUTO, AUTO],    // 放大区域宽高
+    lensIcon: true,            // 是否显示放大镜提示图标
 
+    zoomCls: ''                // 放大区域额外样式
+Member:
+    image       // 需要缩放的图片
+    config      // 配置参数
+    lens        // 镜片
+    lensIcon    // 放大镜图标
+    bigImage    // 大图
 Method:
-                show()                      // 显示
-                hide()                      // 隐藏
-
+    show()      // 显示
+    hide()      // 隐藏
+    set(name, val) // 重新设置某些值
 </pre>
             </section>
         </div>

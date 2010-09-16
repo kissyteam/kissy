@@ -12,6 +12,16 @@ KISSY.add('dialog', function(S) {
         CLS_PREFIX = 'ks-dialog-',
 
         defaultConfig = {
+            /*
+             * DOM 结构
+             *  <div class="ks-overlay ks-dialog">
+             *      <div class="ks-dialog-hd">
+             *          <div class="ks-dialog-close"></div>
+             *      </div>
+             *      <div class="ks-dialog-bd"></div>
+             *      <div class="ks-dialog-ft"></div>
+             *  </div>
+             */
             header: '',
             footer: '',
 
@@ -32,6 +42,7 @@ KISSY.add('dialog', function(S) {
      * attached members：
      *  - this.header
      *  - this.footer
+     *  - this.manager
      */
     function Dialog(container, config) {
         var self = this;
@@ -123,4 +134,10 @@ KISSY.add('dialog', function(S) {
     };
 
 }, { host: 'overlay' });
+
+/**
+ * TODO:
+ *  - S.guid() 唯一标识
+ * /
+
 

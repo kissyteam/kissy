@@ -49,7 +49,7 @@ KISSY.add('overlay', function(S, undefined) {
             height: 0,
             zIndex: 9999,
 
-            xy: null,               // 相对 page 定位，有效值为 [n, m]
+            xy: null,               // 相对 page 定位, 有效值为 [n, m]
             align: {                // 相对指定 node or viewport 定位
                 node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
                 points: [POSITION_ALIGN.CC, POSITION_ALIGN.CC], // ['tl', 'tr'] 表示 overlay 的 tl 与参考节点的 tr 对齐
@@ -372,7 +372,7 @@ KISSY.add('overlay', function(S, undefined) {
 
 /**
  * TODO:
- *  - stackable ?
+ *  - stackable ? 
  *  - constrain 支持可视区域或指定区域 ?
  *  - effect
  *  - draggable

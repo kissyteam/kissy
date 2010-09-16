@@ -37,7 +37,7 @@
 <script>
     KISSY.ready(function(S) {
 
-        var popup = S.Popup('#popup1', {
+        var popup = new S.Popup('#popup1', {
             trigger: '#btn1',
             triggerType: 'click',
             width: 300,
@@ -67,7 +67,7 @@
 <script>
     KISSY.ready(function(S) {
 
-        var popup = S.Popup('#popup2', {
+        var popup = new S.Popup('#popup2', {
             trigger: '#link1',
             width: 300,
             height: 200,
@@ -92,7 +92,7 @@
 <script>
     KISSY.ready(function(S) {
 
-        var popup = S.Popup({
+        var popup = new S.Popup({
             trigger: '#link2',
             triggerType: 'mouse',
             width: 300,
@@ -135,7 +135,7 @@
 <script>
     KISSY.ready(function(S){
         S.each(S.query('#multi li'), function(t){
-            var popup = S.Popup('#popup3', {
+            var popup = new S.Popup('#popup3', {
                 trigger: t,
                 triggerType: 'mouse',
                 triggerLater: true
@@ -162,7 +162,7 @@
 <div class="dialog1"><div class="ks-dialog-bd"></div></div>
 <script>
     KISSY.ready(function(S){
-        var dialog = S.Dialog('.dialog1',{
+        var dialog = new S.Dialog('.dialog1',{
             trigger: '#btn3',
             width: 400,
             height: 300,
@@ -172,6 +172,9 @@
         });
     });
 </script>
+<p class="code-switch">显示源码</p>
+
+
 <style>
     .dialog4 {
         background: white;
@@ -201,7 +204,7 @@
 <button id="btn4">Show</button> <button id="btn5">Hide All</button>
 <script>
     KISSY.ready(function(S){
-        var dialog = S.Dialog({
+        var dialog = new S.Dialog({
             trigger: '#btn4',
             containerCls: 'dialog4',
             width: 400,
@@ -221,6 +224,11 @@
         });
     });
 </script>
+<p class="code-switch">显示源码</p>
+
+
+
+
 
 <script>
     (function() {

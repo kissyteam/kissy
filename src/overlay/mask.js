@@ -17,7 +17,14 @@ KISSY.add('mask', function(S, undefined) {
             opacity: .6,
             style: ''
         };
-
+    /*
+     * Mask Class
+     * @constructor
+     * attached members：
+     *   - this.iframe
+     *   - this.config
+     *   - this.layer
+     */
     function Mask(config){
 
         if (!(this instanceof Mask)) {
