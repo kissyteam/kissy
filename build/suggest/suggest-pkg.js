@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 16 15:29
+build time: Sep 16 16:18
 */
 /**
  * 提示补全组件
@@ -835,22 +835,20 @@ KISSY.add('suggest', function(S, undefined) {
          */
         _formatItem: function(key, result) {
             var li = DOM.create('<li>'),
-                keyEl = DOM.create('<span>', {
-                    'class': KEY_EL_CLS
-                }),
-                resultText, resultEl;
+                resultText;
 
-            DOM.html(keyEl, key);
-            li.appendChild(keyEl);
+            li.appendChild(DOM.create('<span>', {
+                'class': KEY_EL_CLS,
+                html: key
+            }));
 
             if (result) {
                 resultText = this.config.resultFormat.replace('%result%', result);
                 if (S.trim(resultText)) { // 有值时才创建
-                    resultEl = DOM.create('<span>', {
-                        'class': RESULT_EL_CLS
-                    });
-                    DOM.html(resultEl, resultText);
-                    li.appendChild(resultEl);
+                    li.appendChild(DOM.create('<span>', {
+                        'class': RESULT_EL_CLS,
+                        html: resultText
+                    }));
                 }
             }
 
@@ -885,13 +883,12 @@ KISSY.add('suggest', function(S, undefined) {
 
             // 关闭按钮
             if (cfg['closeBtn']) {
-                closeBtn = DOM.create('<a>', {
+                footer.appendChild(DOM.create('<a>', {
                     'class': CLOSE_BTN_CLS,
+                    text: cfg.closeBtnText,
                     href: 'javascript: void(0)',
                     target: '_self' // bug fix: 覆盖<base target='_blank' />，否则会弹出空白页面
-                });
-                DOM.html(closeBtn, cfg.closeBtnText);
-                footer.appendChild(closeBtn);
+                }));
             }
 
             // 根据 query 参数，有可能填充不同的内容到 footer
