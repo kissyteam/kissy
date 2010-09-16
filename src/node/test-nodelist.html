@@ -183,8 +183,9 @@
         if(nodes.css('backgroundColor') !== 'transparent') test.fail();
         if(nodes.css('backgroundPosition') !== '0% 0%') test.fail();
         if(nodes.css('fontSize') !== '12px') test.fail();
-        if(!S.UA.ie) if(nodes.css('border-right-width') !== '5px') test.fail();
-        if(S.UA.ie) if(nodes.css('border-right-width') !== 'medium') test.fail();
+
+        if(S.UA.ie < 9) if(nodes.css('border-right-width') !== 'medium') test.fail(DOM.css(elem, 'border-right-width'));
+        else if(nodes.css('border-right-width') !== '5px') test.fail();
 
         if(nodes.css('paddingLeft') !== '2pt') test.fail();
         if(nodes.css('padding-left') !== '2pt') test.fail();

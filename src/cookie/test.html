@@ -46,8 +46,9 @@
         Cookie.set('set-test2', 'xx', 0);
         if(Cookie.get('set-test2') !== undefined) test.fail();
 
-        Cookie.set('set-test3', 'xx', new Date(2099, 1, 1), '', '/');
-        if(Cookie.get('set-test3') !== 'xx') test.fail();
+        Cookie.set('set-test3', '1', new Date(2099, 1, 1), '', '/');
+        Cookie.set('set-test3', '2', new Date(2099, 1, 1), '', '/');
+        if(Cookie.get('set-test3') !== '2') test.fail(Cookie.get('set-test3'));
     }
 
     function test_remove(test) {
@@ -56,8 +57,9 @@
         if(Cookie.get('set-test') != undefined) test.fail();
 
         // path 不同
+        Cookie.set('set-test3', '3', new Date(2099, 1, 1), '', '/');
         Cookie.remove('set-test3', '', '/');
-        if(Cookie.get('set-test3') != undefined) test.fail();
+        if(Cookie.get('set-test3') != undefined) test.fail(Cookie.get('set-test3'));
     }
 
     function test_cookie(test) {

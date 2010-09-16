@@ -84,8 +84,9 @@
         if(DOM.css(elem, 'backgroundColor') !== 'transparent') test.fail();
         if(DOM.css(elem, 'backgroundPosition') !== '0% 0%') test.fail();
         if(DOM.css(elem, 'fontSize') !== '12px') test.fail();
-        if(!UA.ie) if(DOM.css(elem, 'border-right-width') !== '5px') test.fail();
-        if(UA.ie) if(DOM.css(elem, 'border-right-width') !== 'medium') test.fail();
+
+        if(UA.ie < 9) if(DOM.css(elem, 'border-right-width') !== 'medium') test.fail(DOM.css(elem, 'border-right-width'));
+        else if(DOM.css(elem, 'border-right-width') !== '5px') test.fail();
 
         if(DOM.css(elem, 'paddingLeft') !== '2pt') test.fail();
         if(DOM.css(elem, 'padding-left') !== '2pt') test.fail();
@@ -126,7 +127,7 @@
         // test filter  #issue5
         //jQuery('#test-filter').css('opacity', .5);
         DOM.css('#test-filter', 'opacity', .5);
-        S.log(S.get('#test-filter').style.filter);
+        //S.log(S.get('#test-filter').style.filter);
     }
 
     function test_width(test) {
@@ -174,9 +175,16 @@
 
     function test_addStyleSheet(test) {
         DOM.addStyleSheet('#test-div { padding: 100px; color: blue }');
-        if (UA.ie) if (DOM.css('#test-div', 'color') !== 'blue') test.fail();
-        if (UA.opera) if (DOM.css('#test-div', 'color') !== '#0000ff') test.fail();
-        if (!UA.ie && !UA.opera) if (DOM.css('#test-div', 'color') !== 'rgb(0, 0, 255)') test.fail();
+
+        if (UA.opera) {
+            if (DOM.css('#test-div', 'color') !== '#0000ff') test.fail();
+        } else {
+            if (UA.ie < 9) {
+                if (DOM.css('#test-div', 'color') !== 'blue') test.fail();
+            } else {
+                if (DOM.css('#test-div', 'color') !== 'rgb(0, 0, 255)') test.fail();
+            }
+        }
     }
 
     // temp code

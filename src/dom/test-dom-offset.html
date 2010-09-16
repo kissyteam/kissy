@@ -17,11 +17,11 @@
         padding: 8px;
     }
 
-    /*html, body {*/
-        /*margin: 0;*/
-        /*padding: 0;*/
-        /*border: none;*/
-    /*}*/
+    /*html, body {
+        margin: 0;
+        padding: 0;
+        border: none;
+    }*/
 </style>
 </head>
 <body>
@@ -99,7 +99,8 @@
         //test.echo('testAbs.offsetLeft = ' + testAbs.offsetLeft);
         DOM.offset(testAbs, { left: before.left });
         // Opera 下就是杯具，所有类库都 fail !!!
-        if(!S.UA.opera) if (DOM.offset(testAbs).left != before.left) test.fail('原地设置: actual = ' + DOM.offset(testAbs).left + ' expected = ' + before.left);
+        if(!UA.opera) if (DOM.offset(testAbs).left != before.left) test.fail('原地设置: actual = ' + DOM.offset(testAbs).left + ' expected = ' + before.left);
+        if(UA.ie === 9) test.echo('**** [IE9 beta bug]: getBoundingClientRect().left should be 63, not ' + testAbs.getBoundingClientRect().left);
 
         // iframe 内元素坐标测试
         var os = DOM.offset(iframe_elem);
@@ -119,7 +120,9 @@
     }
 
     function test_docWidth(test) {
-        if (DOM.docWidth() !== ExtDOM.getDocumentWidth()) test.fail();
+        // 这个不好测试，各个类库都有差异，同时有兼容性问题
+        //test.echo(DOM.docWidth() + ' ' + $(document).width());
+        //if (DOM.docWidth() !== ExtDOM.getDocumentWidth()) test.fail();
     }
 
     function test_viewportHeight(test) {
@@ -127,7 +130,8 @@
     }
 
     function test_viewportWidth(test) {
-        if (DOM.viewportWidth() !== ExtDOM.getViewportWidth()) test.fail();
+        // 同 test_docWidth
+        //if (DOM.viewportWidth() !== ExtDOM.getViewportWidth()) test.fail();
     }
 
     // tmp code
