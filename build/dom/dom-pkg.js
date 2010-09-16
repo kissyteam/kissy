@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 15 16:35
+build time: Sep 16 16:10
 */
 /**
  * @module  dom
@@ -680,6 +680,17 @@ KISSY.add('dom-attr', function(S, undefined) {
 
         CUSTOM_ATTRS = {
             readonly: 'readOnly'
+        },
+
+        attrFn = {
+            val: 1,
+            css: 1,
+            html: 1,
+            text: 1,
+            data: 1,
+            width: 1,
+            height: 1,
+            offset: 1
         };
 
     if (oldIE) {
@@ -695,17 +706,25 @@ KISSY.add('dom-attr', function(S, undefined) {
          * Gets the value of an attribute for the first element in the set of matched elements or
          * Sets an attribute for the set of matched elements.
          */
-        attr: function(selector, name, val) {
+        attr: function(selector, name, val, pass) {
             // suports hash
             if (S.isPlainObject(name)) {
+                pass = val; // 塌缩参数
                 for (var k in name) {
-                    DOM.attr(selector, k, name[k]);
+                    DOM.attr(selector, k, name[k], pass);
                 }
                 return;
             }
 
             if (!(name = S.trim(name))) return;
             name = name.toLowerCase();
+
+            // attr functions
+            if (pass && attrFn[name]) {
+                return DOM[name](selector, val);
+            }
+
+            // custom attrs
             name = CUSTOM_ATTRS[name] || name;
 
             // getter
@@ -1286,6 +1305,13 @@ KISSY.add('dom-style-ie', function(S, undefined) {
     }
 });
 /**
+ * NOTES:
+ *
+ *  - opacity 的实现，还可以用 progid:DXImageTransform.Microsoft.BasicImage(opacity=.2) 来实现，但考虑
+ *    主流类库都是用 DXImageTransform.Microsoft.Alpha 来实现的，为了保证多类库混合使用时不会出现问题，kissy 里
+ *    依旧采用 Alpha 来实现。
+ */
+/**
  * @module  dom-offset
  * @author  lifesinger@gmail.com
  */
@@ -1640,12 +1666,14 @@ KISSY.add('dom-create', function(S, undefined) {
 
     var doc = document,
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
+
         nodeTypeIs = DOM._nodeTypeIs,
         isElementNode = DOM._isElementNode,
         isKSNode = DOM._isKSNode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc.createElement(DIV),
+
         RE_TAG = /<(\w+)/,
         RE_SCRIPT = /<script([^>]*)>([\s\S]*?)<\/script>/ig,
         RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
@@ -1739,7 +1767,7 @@ KISSY.add('dom-create', function(S, undefined) {
     // 添加成员到元素中
     function attachProps(elem, props) {
         if (isElementNode(elem) && S.isPlainObject(props)) {
-            DOM.attr(elem, props);
+            DOM.attr(elem, props, true);
         }
         return elem;
     }

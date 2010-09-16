@@ -27,6 +27,17 @@ KISSY.add('dom-attr', function(S, undefined) {
 
         CUSTOM_ATTRS = {
             readonly: 'readOnly'
+        },
+
+        attrFn = {
+            val: 1,
+            css: 1,
+            html: 1,
+            text: 1,
+            data: 1,
+            width: 1,
+            height: 1,
+            offset: 1
         };
 
     if (oldIE) {
@@ -42,17 +53,25 @@ KISSY.add('dom-attr', function(S, undefined) {
          * Gets the value of an attribute for the first element in the set of matched elements or
          * Sets an attribute for the set of matched elements.
          */
-        attr: function(selector, name, val) {
+        attr: function(selector, name, val, pass) {
             // suports hash
             if (S.isPlainObject(name)) {
+                pass = val; // 塌缩参数
                 for (var k in name) {
-                    DOM.attr(selector, k, name[k]);
+                    DOM.attr(selector, k, name[k], pass);
                 }
                 return;
             }
 
             if (!(name = S.trim(name))) return;
             name = name.toLowerCase();
+
+            // attr functions
+            if (pass && attrFn[name]) {
+                return DOM[name](selector, val);
+            }
+
+            // custom attrs
             name = CUSTOM_ATTRS[name] || name;
 
             // getter

@@ -6,12 +6,14 @@ KISSY.add('dom-create', function(S, undefined) {
 
     var doc = document,
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
+
         nodeTypeIs = DOM._nodeTypeIs,
         isElementNode = DOM._isElementNode,
         isKSNode = DOM._isKSNode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc.createElement(DIV),
+
         RE_TAG = /<(\w+)/,
         RE_SCRIPT = /<script([^>]*)>([\s\S]*?)<\/script>/ig,
         RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
@@ -105,7 +107,7 @@ KISSY.add('dom-create', function(S, undefined) {
     // 添加成员到元素中
     function attachProps(elem, props) {
         if (isElementNode(elem) && S.isPlainObject(props)) {
-            DOM.attr(elem, props);
+            DOM.attr(elem, props, true);
         }
         return elem;
     }

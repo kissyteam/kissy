@@ -52,6 +52,17 @@
 
         var t = S.Node('p');
         if(S.Node(t) !== t) test.fail();
+
+        // props 设置
+        S.Node('<div>', {
+            'class': 'test-div',
+            css: {
+                width: '100px',
+                height: '100px',
+                border: '1px solid red'
+            },
+            html: 'test div'
+        }).appendTo(document.body);
     }
 
     function test_query_class_sep(test) {
@@ -366,6 +377,8 @@
         });
         test.extraMsg = '{click test link to invoke event}';
     }
+
+    // temp code
 
 </script>
 
