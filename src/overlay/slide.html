@@ -216,12 +216,12 @@ var defaultConfig = {
                 <p>S.Overlay</p>
                 <pre>
 config:
-    container: null,            // 层容器, 默认为 null, 表示新建 DOM;
+    container: null,            // Overlay 容器, 默认为 null 时, 表示新建 DOM;
     containerCls: CLS_CONTAINER,// 容器 class , 默认 class 为 'ks-overlay'
     content: undefined,         // 默认为 undefined, 不设置
     bdCls: CLS_PREFIX + 'bd',   // body class, 默认为 'ks-overlay-bd'
 
-    trigger: null,          // 触发元素, 默认为 null, overlay 动作需要另外 js 指定
+    trigger: null,          // 触发元素, 默认为 null 时, Overlay 动作需要另外 js 指定
     triggerType: 'click',   // 触发类型, 'mouse' or 'click', 默认为 'click'
 
     width: 0,               // 容器宽度

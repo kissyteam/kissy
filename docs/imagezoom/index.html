@@ -48,29 +48,29 @@ KISSY.ready(function(S) {
                 <div class="member prop">
                     <h4><a name="type">type</a> - <code>String</code></h4>
                     <div class="detail">
-                        <p>缩放显示类型, 默认是标准模式 'standard', 目前仅支持此模式</p>
+                        <p>缩放显示类型, 默认是标准模式 'standard', 目前仅支持此模式. </p>
                     </div>
                 </div>
 
                 <div class="member prop">
                     <h4><a name="bigImageSrc">bitImageSrc</a> - <code>String</code></h4>
                     <div class="detail">
-                        <p>大图路径, 为 '' 时, 取触点上的 data-ks-imagezoom 属性值. 默认为 ''.</p>
+                        <p>大图路径, 为 '' 时, 取触点上的 data-ks-imagezoom 属性值. 默认为 ''. </p>
                     </div>
                 </div>
 
                 <div class="member prop">
                     <h4><a name="bigImageSize">bigImageSize</a> - <code>Array</code></h4>
                     <div class="detail">
-                        <p>大图高宽, 如 [800, 800];</p>
-                        <p>是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 请设置个更合适的值.</p>
+                        <p>大图高宽, 如 [800, 800]; </p>
+                        <p>是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 请设置个更合适的值. </p>
                     </div>
                 </div>
 
                 <div class="member prop">
                     <h4><a name="position">position</a> - <code>String</code></h4>
                     <div class="detail">
-                        <p>大图显示在小图的哪个位置.</p>
+                        <p>大图显示在小图的哪个位置. </p>
                         <p>可取 'top', 'right', 'bottom', 'left', 'inner', 当为 'inner' 时, 会覆盖显示在小图上. 默认为 'right'. </p>
 
                     </div>
@@ -79,7 +79,7 @@ KISSY.ready(function(S) {
                 <div class="member prop">
                     <h4><a name="offset">offset</a> - <code>Number | Array</code></h4>
                     <div class="detail">
-                        <p>大图相对于小图位置的偏移量. 单一值或 [x, y]. 默认为 10.</p>
+                        <p>大图相对于小图位置的偏移量. 单一值或 [x, y]. 默认为 10. </p>
                         <p>x 值对应于水平方向上的偏移, y值对应于垂直方向上的偏移. 当 offset 为一个 Number 或 [Number] 时, 仅指水平方向上的偏移, 垂直方向上偏移为 0; 如果 position 设置 'top'/'bottom', 则需要通过 offset 为 [0, 10]来设置. </p>
                     </div>
                 </div>
@@ -87,25 +87,25 @@ KISSY.ready(function(S) {
                 <div class="member prop">
                     <h4><a name="preload">preload</a> - <code>Boolean</code></h4>
                     <div class="detail">
-                        <p>是否预加载大图. 默认为 true</p>
+                        <p>是否预加载大图. 默认为 true. </p>
                     </div>
                 </div>
                 <div class="member prop">
                     <h4><a name="timeout">timeout</a> - <code>Number</code></h4>
                     <div class="detail">
-                        <p>等待大图加载的最大时间, 单位: s.  默认 2 min.</p>
+                        <p>等待大图加载的最大时间, 单位: s.  默认 2 min. </p>
                     </div>
                 </div>
                 <div class="member prop">
                     <h4><a name="timeoutMsg">timeoutMsg</a> - <code>String</code></h4>
                     <div class="detail">
-                        <p>大图无法加载超时时, 显示的提示文字. 默认为 "图片暂不可用".</p>
+                        <p>大图无法加载超时时, 显示的提示文字. 默认为 "图片暂不可用". </p>
                     </div>
                 </div>
                 <div class="member prop">
                     <h4><a name="zoomSize">zoomSize</a> - <code>Array</code></h4>
                     <div class="detail">
-                        <p>放大区域宽高. 默认为 ['auto', 'auto'], 当取 'auto' 时, 宽/高 取小图的高/宽.</p>
+                        <p>放大区域宽高. 默认为 ['auto', 'auto'], 当取 'auto' 时, 宽/高 取小图的高/宽. </p>
                     </div>
                 </div>
 
@@ -130,31 +130,31 @@ KISSY.ready(function(S) {
                 <div class="member members">
                     <h4><a name="mem_image">image</a> - <code>HTMLElement</code></h4>
                     <div class="detail">
-                        <p>需要缩放的小图元素</p>
+                        <p>需要缩放的小图元素. </p>
                     </div>
                 </div>
                 <div class="member members">
                     <h4><a name="mem_config">config</a> - <code>Object</code></h4>
                     <div class="detail">
-                        <p>配置选项, 具体参见上述 <a href="#config">Config</a></p>
+                        <p>配置选项, 具体参见上述 <a href="#config">Config</a>. </p>
                     </div>
                 </div>
                 <div class="member members">
                     <h4><a name="mem_lens">lens</a> - <code>HTMLElement</code></h4>
                     <div class="detail">
-                        <p>镜片元素</p>
+                        <p>镜片元素. </p>
                     </div>
                 </div>
                 <div class="member members">
                     <h4><a name="mem_lensIcon">lensIcon</a> - <code>HTMLElement</code></h4>
                     <div class="detail">
-                        <p>放大镜图标元素</p>
+                        <p>放大镜图标元素. </p>
                     </div>
                 </div>
                 <div class="member members">
                     <h4><a name="mem_bigImage">bigImage</a> - <code>HTMLElement</code></h4>
                     <div class="detail">
-                        <p>大图元素</p>
+                        <p>大图元素. </p>
                     </div>
                 </div>
             </div>
@@ -163,21 +163,21 @@ KISSY.ready(function(S) {
                 <h3 id="methods">Methods</h3>
 
                 <div class="member prop">
-                    <h4><a name="show">show</a></h4>
+                    <h4><a name="show">show()</a></h4>
                     <div class="detail">
                         <p>显示放大区域. </p>
                     </div>
                 </div>
 
                 <div class="member prop">
-                    <h4><a name="hide">hide</a></h4>
+                    <h4><a name="hide">hide()</a></h4>
                     <div class="detail">
                         <p>隐藏放大区域. </p>
                     </div>
                 </div>
 
                 <div class="member prop">
-                    <h4><a name="set">set</a></h4>
+                    <h4><a name="set">set(name, val)</a></h4>
                     <div class="detail">
                         <p>设置配置信息, 目前只可动态设置 bigImageSrc 这个值. </p>
                         <p>如果有多张图片切换时, 需要修改 大图src, 如: </p>
