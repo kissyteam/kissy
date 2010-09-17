@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 16 16:10
+build time: Sep 17 10:11
 */
 /**
  * @module  dom
@@ -1069,7 +1069,9 @@ KISSY.add('dom-style', function(S, undefined) {
          */
         show: function(selector) {
             S.query(selector).each(function(elem) {
-                elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
+                if(elem) {
+                    elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
+                }
             })
         },
 
@@ -1078,8 +1080,9 @@ KISSY.add('dom-style', function(S, undefined) {
          */
         hide: function(selector) {
             S.query(selector).each(function(elem) {
+                if(!elem) return;
+
                 var style = elem.style, oldVal = style[DISPLAY];
-                
                 if (oldVal !== NONE) {
                     if (oldVal) {
                         DOM.data(elem, DISPLAY, oldVal);
