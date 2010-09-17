@@ -1534,7 +1534,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 16 16:10
+build time: Sep 17 10:11
 */
 /**
  * @module  dom
@@ -2602,7 +2602,9 @@ KISSY.add('dom-style', function(S, undefined) {
          */
         show: function(selector) {
             S.query(selector).each(function(elem) {
-                elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
+                if(elem) {
+                    elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
+                }
             })
         },
 
@@ -2611,8 +2613,9 @@ KISSY.add('dom-style', function(S, undefined) {
          */
         hide: function(selector) {
             S.query(selector).each(function(elem) {
+                if(!elem) return;
+
                 var style = elem.style, oldVal = style[DISPLAY];
-                
                 if (oldVal !== NONE) {
                     if (oldVal) {
                         DOM.data(elem, DISPLAY, oldVal);
@@ -4082,7 +4085,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 15 16:53
+build time: Sep 17 10:20
 */
 /**
  * @module  node
@@ -4252,14 +4255,14 @@ KISSY.add('node-attach', function(S, undefined) {
         ONLY_VAL = 2,
         ALWAYS_NODE = 4;
 
-    function normalGetterSetter(isNodeList, arguments, valIndex, fn) {
+    function normalGetterSetter(isNodeList, args, valIndex, fn) {
         var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
-            args = [elems].concat(S.makeArray(arguments));
+            args2 = [elems].concat(S.makeArray(args));
 
-        if (arguments[valIndex] === undefined) {
-            return fn.apply(DOM, args);
+        if (args[valIndex] === undefined) {
+            return fn.apply(DOM, args2);
         } else {
-            fn.apply(DOM, args);
+            fn.apply(DOM, args2);
             return this;
         }
     }
