@@ -138,6 +138,6 @@ KISSY.add('dialog', function(S) {
 /**
  * TODO:
  *  - S.guid() 唯一标识
- * /
+ */
 
 
