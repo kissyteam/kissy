@@ -10,7 +10,7 @@
     <property name="charset" value="utf-8"/>
     <property name="copyright.files" value="*.css, *.js"/>
 
-    <!-- 清空与复制文件等准备工作 -->
+    <!-- 清空与复制等准备工作 -->
     <target name="prepare">
         <mkdir dir="${build.dir}/${component.name}"/>        
         <delete>
