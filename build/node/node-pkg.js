@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 15 16:53
+build time: Sep 17 10:20
 */
 /**
  * @module  node
@@ -171,14 +171,14 @@ KISSY.add('node-attach', function(S, undefined) {
         ONLY_VAL = 2,
         ALWAYS_NODE = 4;
 
-    function normalGetterSetter(isNodeList, arguments, valIndex, fn) {
+    function normalGetterSetter(isNodeList, args, valIndex, fn) {
         var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
-            args = [elems].concat(S.makeArray(arguments));
+            args2 = [elems].concat(S.makeArray(args));
 
-        if (arguments[valIndex] === undefined) {
-            return fn.apply(DOM, args);
+        if (args[valIndex] === undefined) {
+            return fn.apply(DOM, args2);
         } else {
-            fn.apply(DOM, args);
+            fn.apply(DOM, args2);
             return this;
         }
     }

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.4
 MIT Licensed
-build time: Sep 16 16:33
+build time: Sep 17 10:22
 */
 /**
  * KISSY Mask
@@ -298,15 +298,13 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         _realShow: function() {
-            this._toggle(false);
             this._setPosition();
+            this._toggle(false);
         },
 
         _toggle: function(isVisible) {
             var self = this;
 
-            // 防止其他地方设置 display: none 后, 无法再次显示
-            if(!isVisible) DOM.css(self.container, 'display', 'block');
             DOM.css(self.container, 'visibility', isVisible ? 'hidden' : '');
 
             if(self.shim) self.shim.toggle();
@@ -366,12 +364,21 @@ KISSY.add('overlay', function(S, undefined) {
             if (self.shim) self.shim.setSize(w, h);
         },
 
+        _setDisplay: function(){
+            var self = this;
+            // 防止其他地方设置 display: none 后, 无法再次显示
+            if (DOM.css(self.container, 'display') === 'none') {
+                DOM.css(self.container, 'display', 'block');
+            }
+        },
+
         _setPosition: function() {
             var self = this, xy = self.config.xy;
 
             if (xy) {
                 self.move(xy);
             } else {
+                self._setDisplay();
                 self.align();
             }
         },
@@ -665,6 +672,6 @@ KISSY.add('dialog', function(S) {
 /**
  * TODO:
  *  - S.guid() 唯一标识
- * /
+ */
 
 
