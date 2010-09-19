@@ -15,6 +15,7 @@ v1.1.0 -> v1.1.5 (2009/09/19)
  [+] 增加 Overlay / ImageZoom / Calendar 组件
  [+] 增加 dom-data 模块
  [+] 增加 DOM.show/hide/toggle 三个方法
+ [+] 增加 Node 的 show/slideUp/FadeIn 等动画方法
  [+] 加入 kissy-editor 子品牌
  [+] 增加 Gettings Start with KISSY 文档
  [+] 从 core 中分拆出 ua 模块，增加 shell 和 core 属性

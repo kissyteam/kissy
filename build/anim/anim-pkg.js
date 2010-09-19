@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 13:19
+build time: Sep 19 13:49
 */
 /**
  * @module anim-easing
@@ -422,7 +422,7 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
     var DOM = S.DOM, Anim = S.Anim,
         NP = S.Node.prototype, NLP = S.NodeList.prototype,
 
-        DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
+        DISPLAY = 'display', NONE = 'none',
         OVERFLOW = 'overflow', HIDDEN = 'hidden',
         OPCACITY = 'opacity',
         HEIGHT = 'height', WIDTH = 'width', AUTO = 'auto',
@@ -475,7 +475,7 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
             which = display ? 'show' : 'hide';
         }
 
-        if (display) DOM.css(elem, DISPLAY, BLOCK);
+        if (display) DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
 
         // 根据不同类型设置初始 css 属性, 并设置动画参数
         var style = { };
@@ -501,8 +501,17 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
         new S.Anim(elem, style, speed, 'easeOut', function() {
             // 如果是隐藏, 需要还原一些 css 属性
             if (!display) {
+                // 保留原有值
+                var style = elem.style, oldVal = style[DISPLAY];
+                if (oldVal !== NONE) {
+                    if (oldVal) {
+                        DOM.data(elem, DISPLAY, oldVal);
+                    }
+                    style[DISPLAY] = NONE;
+                }
+
+                // 还原部分样式
                 DOM.css(elem, {
-                    display: NONE,
                     height: AUTO,
                     width: AUTO,
                     overflow: AUTO,
