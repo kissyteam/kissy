@@ -160,17 +160,22 @@ KISSY.add('node-attach', function(S, undefined) {
 
     // event-target
     S.each([NP, NLP], function(P) {
-        S.mix(P, S.EventTarget, { _supportSpecialEvent: true });
+
+        S.mix(P, S.EventTarget);
+        P._supportSpecialEvent = true;
+
         P._addEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
                 Event._simpleAdd(this[i], type, handle, capture);
             }
         };
+
         P._removeEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
                 Event._simpleRemove(this[i], type, handle, capture);
             }
         };
+
         delete P.fire;
     });
 });

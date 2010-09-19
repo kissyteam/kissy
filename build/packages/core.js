@@ -2187,9 +2187,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 14 17:56
+build time: Sep 19 10:25
 */
 /**
  * @module  event
@@ -2685,6 +2685,11 @@ KISSY.add('event-mouseenter', function(S) {
                 },
 
                 handle: function(el, event, listeners) {
+                    // 保证 el 为原生 DOMNode
+                    if(S.DOM._isKSNode(el)) {
+                        el = el[0];
+                    }
+                    
                     // Check if mouse(over|out) are still within the same parent element
                     var parent = event.relatedTarget;
 
@@ -2747,9 +2752,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 17 10:20
+build time: Sep 19 10:26
 */
 /**
  * @module  node
@@ -3064,17 +3069,22 @@ KISSY.add('node-attach', function(S, undefined) {
 
     // event-target
     S.each([NP, NLP], function(P) {
-        S.mix(P, S.EventTarget, { _supportSpecialEvent: true });
+
+        S.mix(P, S.EventTarget);
+        P._supportSpecialEvent = true;
+
         P._addEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
                 Event._simpleAdd(this[i], type, handle, capture);
             }
         };
+
         P._removeEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
                 Event._simpleRemove(this[i], type, handle, capture);
             }
         };
+
         delete P.fire;
     });
 });

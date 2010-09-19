@@ -378,6 +378,18 @@
         test.extraMsg = '{click test link to invoke event}';
     }
 
+    function test_mouseenter(test) {
+        S.Event.on(S.one('#test-mouseenter'), 'mouseenter mouseleave', function(ev) {
+            S.log('ev.type = ' + ev.type);
+            test.echo('ev.type = ' + ev.type);
+        });
+//        S.one('#test-mouseenter').on('mouseenter mouseleave', function(ev) {
+//            S.log('ev.type = ' + ev.type);
+//            test.log('ev.type = ' + ev.type);
+//        });
+        test.extraMsg = '{mouse enter/leave #test-mouseenter to test test_mouseenter case}';
+    }
+
     // temp code
 
 </script>
@@ -428,6 +440,9 @@
     <p id="test-data3"></p>
     <p id="test-display"></p>
     <div id="feature-2"></div>
+    <div id="test-mouseenter" style="width:200px;height:200px;border:1px solid blue">
+        <div style="width: 100px; height: 100px; margin: 50px; border: 1px solid red">#test-mouseenter</div>
+    </div>
 </div>
 
 </body>

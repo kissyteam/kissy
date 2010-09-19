@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 14 17:56
+build time: Sep 19 10:25
 */
 /**
  * @module  event
@@ -497,6 +497,11 @@ KISSY.add('event-mouseenter', function(S) {
                 },
 
                 handle: function(el, event, listeners) {
+                    // 保证 el 为原生 DOMNode
+                    if(S.DOM._isKSNode(el)) {
+                        el = el[0];
+                    }
+                    
                     // Check if mouse(over|out) are still within the same parent element
                     var parent = event.relatedTarget;
 
