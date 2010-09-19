@@ -9,6 +9,7 @@
     <target name="concat">
         <concat destfile="imagezoom-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="imagezoom.js"/>
+            <path path="mod-autorender.js"/>
         </concat>
     </target>
 

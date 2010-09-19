@@ -20,7 +20,6 @@ v1.1.0 -> v1.1.5 (2009/09/19)
  [+] 增加 Gettings Start with KISSY 文档
  [+] 从 core 中分拆出 ua 模块，增加 shell 和 core 属性
  [+] kissy-ajbridge 完成基础构建
- [+] 增加 ajax 组件
  [*] DOM.create 方法对 props 参数的增强
  [*] 重构 Suggest 组件，增加更多配置参数
  [*] 在 IE9 beta 中的测试

@@ -13,6 +13,8 @@
 
             <path path="widget-popup.js"/>
             <path path="widget-dialog.js"/>
+
+            <path path="mod-autorender.js"/>
         </concat>
     </target>
 

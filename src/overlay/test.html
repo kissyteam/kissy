@@ -10,6 +10,7 @@
 <script src="overlay.js"></script>
 <script src="widget-popup.js"></script>
 <script src="widget-dialog.js"></script>
+<script src="mod-autorender.js"></script>
 
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
 <style>
@@ -157,19 +158,12 @@
         padding: 6px;
     }
 </style>
-<h2>Dialog - 已有 DOM + Mask </h2>
+<h2>Dialog - auto render</h2>
 <button id="btn3">Show</button>
-<div class="dialog1"><div class="ks-dialog-bd"></div></div>
+<div class="dialog1 KS_Widget" data-widget-type="Dialog" data-widget-config="{ 'trigger': '#btn3', 'width': '400px', 'height': '300px', 'header': 'this is a title', 'content': 'this is content' }"><div class="ks-dialog-bd"></div></div>
 <script>
     KISSY.ready(function(S){
-        var dialog = S.Dialog('.dialog1',{
-            trigger: '#btn3',
-            width: 400,
-            height: 300,
-            header: 'this is title',
-            content: 'content',
-            mask: false
-        });
+        S.Overlay.autoRender();
     });
 </script>
 <p class="code-switch">显示源码</p>

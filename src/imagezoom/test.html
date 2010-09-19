@@ -6,6 +6,7 @@
 <link href="../../build/cssbase/base-min.css" rel="stylesheet"/>
 <script src="../../build/packages/kissy.js"></script>
 <script src="imagezoom.js"></script>
+<script src="mod-autorender.js"></script>
 <style>
     body { padding: 20px 50px 50px; }
     h2 { margin: 10px 0 10px -20px; padding: 5px 10px; font-size: 14px; font-weight: normal; background: #F2F2F2; }
@@ -89,6 +90,12 @@
     </li>
 </ul>
 
+<h2>auto render</h2>
+
+<div class="demo">
+    <img class="KS_Widget" data-widget-type="ImageZoom" data-widget-config="{ 'bigImageSrc': 'http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg' }" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+</div>
+
 <h2>inner</h2>
 <style>
     .inner {
@@ -122,6 +129,8 @@
             offset: 0,
             zoomCls: 'inner'
         });
+
+        S.ImageZoom.autoRender();
     });
 
 </script>
