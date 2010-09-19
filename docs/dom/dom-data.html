@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>dom-data &lsaquo; KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/blob/master/src/dom/dom-data.js"><code>dom-data.js</code></a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+
+            <div class="section">
+                <h3 id="methods">Methods</h3>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_data">data</a>
+                        <code>void | Object <em>data</em> ( selector, name )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>获取符合选择器的元素的 expando 。</p>
+                        <p>如果指定 name，则返回该元素 expando 中名为 name 的值。如果不存在，返回 undefined。</p>
+                        <p>如果没有指定 name，则返回该元素的整个  expando 对象。</p>
+                        <p class="tips">embed，object，applet 这三个标签不能设置 expando 。</p>
+                    </div>
+                    <h4>
+                        <code>void <em>data</em> ( selector, name, data )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>给符合选择器的所有元素的 expando ，设置 name 为 data。</p>
+                    </div>
+<pre class="example-code"><code>
+var S = KISSY, DOM = S.DOM;
+
+// 获取所有 img 的名为 data-size 的 expando , 值为 400;
+DOM.data('img', 'data-size', 400);
+
+// 获取第一个 img 元素中, 名为 data-size 的 expando 值;
+DOM.data('img', 'data-size');
+</code></pre>
+                </div>
+
+                <div class="member method">
+                    <h4>
+                        <a name="method_remove">removeData</a>
+                        <code>void <em>removeData</em> ( selector, name )</code>
+                    </h4>
+                    <div class="detail">
+                        <p>将符合选择器的所有元素的 expando 删除。</p>
+                        <p>如果指定 name，则只删除名 name 的 expando 。</p>
+                        <p>如果不指定 name，则删除元素的整个 expando 。</p>
+                    </div>
+<pre class="example-code"><code>
+var S = KISSY, DOM = S.DOM;
+
+// 删除 img 元素的名为 data-size 的 expando;
+DOM.removeData('img', 'data-size');
+
+// 删除 img 元素的 expando;
+DOM.removeData('img');
+</code></pre>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h3>Examples</h3>
+                <p>测试页面：<a href="http://kissyteam.github.com/kissy/src/dom/test-dom-data.html"><code>test-dom-data.html</code></a></p>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc">
+                <a href="../index.html">home</a> &rsaquo;
+                <a href="index.html">dom</a> &rsaquo;
+                dom-data :
+            </div>
+            <div class="toc">
+                <h3>Methods</h3>
+                <ul>
+                    <li><a href="#method_data">data</a></li>
+                    <li><a href="#method_removeData">removeData</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>
