@@ -170,11 +170,6 @@
             content: 'content',
             mask: false
         });
-
-        dialog.on('show', function() {
-            dialog.setBody('<input id="testInput" type="text" />');
-            S.DOM.get('#testInput').focus();
-        });
     });
 </script>
 <p class="code-switch">显示源码</p>
@@ -221,8 +216,7 @@
         });
         var times = 1;
         dialog.on('show', function(){
-            dialog.setBody('<input id="testInput" type="text" />');
-            S.DOM.get('#testInput').focus();
+            alert('hi');
         });
 
         S.Event.on('#btn5', 'click', function(e){
@@ -231,23 +225,6 @@
     });
 </script>
 <p class="code-switch">显示源码</p>
-
-
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/><br/>
 
 <script>
     (function() {
