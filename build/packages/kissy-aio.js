@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 16 14:55
+build time: Sep 19 17:41
 */
 /**
  * @module kissy
@@ -69,7 +69,7 @@ build time: Sep 16 14:55
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.4',
+        version: '1.1.5',
 
         /**
          * Initializes KISSY object.
@@ -1335,9 +1335,9 @@ build time: Sep 16 14:55
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 19 17:41
 */
 /**
  * @module  ua
@@ -1532,9 +1532,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 17 10:11
+build time: Sep 19 17:41
 */
 /**
  * @module  dom
@@ -3525,7 +3525,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 10:25
+build time: Sep 19 17:41
 */
 /**
  * @module  event
@@ -4090,7 +4090,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 13:19
+build time: Sep 19 17:41
 */
 /**
  * @module  node
@@ -4424,9 +4424,9 @@ KISSY.add('node-attach', function(S, undefined) {
     });
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 19 17:41
 */
 /**
  * @module  cookie
@@ -4510,9 +4510,9 @@ KISSY.add('cookie', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 19 17:41
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -4840,7 +4840,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 13:49
+build time: Sep 19 17:41
 */
 /**
  * @module anim-easing
@@ -5365,9 +5365,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
 KISSY.add('core');
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 19 17:41
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -6445,9 +6445,9 @@ KISSY.add('sizzle', function(S) {
 })();
 
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 19 17:41
 */
 /**
  * 数据延迟加载组件
@@ -6928,9 +6928,9 @@ KISSY.add('datalazyload', function(S, undefined) {
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 19 17:41
 */
 /**
  * @module   Flash 全局静态类
@@ -7385,9 +7385,9 @@ KISSY.add('flash-embed', function(S) {
  * 2010/08/10	修复了sarfari/chrome （webkit）下失效的问题。								
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 14 22:53
+build time: Sep 19 17:41
 */
 /**
  * Switchable
@@ -8485,9 +8485,9 @@ KISSY.add('accordion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 17 10:22
+build time: Sep 19 17:41
 */
 /**
  * KISSY Mask
@@ -9161,10 +9161,39 @@ KISSY.add('dialog', function(S) {
  */
 
 
+/**
+ *  auto render
+ * @creator  玉伯<lifesinger@gmail.com>
+ */
+KISSY.add('autorender', function(S) {
+
+    /**
+     * 自动渲染 container 元素内的所有 Overlay 组件
+     * 默认钩子：<div class="KS_Widget" data-widget-type="Popup" data-widget-config="{...}">
+     */
+    S.Overlay.autoRender = function(hook, container) {
+        hook = '.' + (hook || 'KS_Widget');
+
+        S.query(hook, container).each(function(elem) {
+            var type = elem.getAttribute('data-widget-type'), config;
+
+            if (type && ('Dialog Popup'.indexOf(type) > -1)) {
+                try {
+                    config = elem.getAttribute('data-widget-config');
+                    if (config) config = config.replace(/'/g, '"');
+                    new S[type](elem, S.JSON.parse(config));
+                } catch(ex) {
+                    S.log('Overlay.autoRender: ' + ex, 'warn');
+                }
+            }
+        });
+    }
+
+}, { host: 'overlay' } );
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 16 16:18
+build time: Sep 19 17:41
 */
 /**
  * 提示补全组件
@@ -10253,9 +10282,9 @@ KISSY.add('suggest', function(S, undefined) {
  * 2010-08-04 更新： 去掉对 yahoo-dom-event 的依赖，仅依赖 ks-core. 调整了部分 public api, 扩展更容易了。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 16 16:33
+build time: Sep 19 17:41
 */
 /**
  * 图片放大效果 ImageZoom
@@ -10653,10 +10682,40 @@ KISSY.add('imagezoom', function(S, undefined) {
  *      - 仿照 Zazzle 的效果，在大图加载过程中显示进度条和提示文字
  *      - http://www.apple.com/iphone/features/retina-display.html
  */
+/**
+ * auto render
+ * @creator  玉伯<lifesinger@gmail.com>
+ */
+KISSY.add('autorender', function(S) {
+
+    /**
+     * 自动渲染 container 元素内的所有 ImageZoom 组件
+     * 默认钩子：<div class="KS_Widget" data-widget-type="ImageZoom" data-widget-config="{...}">
+     */
+    S.ImageZoom.autoRender = function(hook, container) {
+        hook = '.' + (hook || 'KS_Widget');
+
+        S.query(hook, container).each(function(elem) {
+            var type = elem.getAttribute('data-widget-type'), config;
+
+            if (type === 'ImageZoom') {
+                try {
+                    config = elem.getAttribute('data-widget-config');
+                    if (config) config = config.replace(/'/g, '"');
+                    new S[type](elem, S.JSON.parse(config));
+                }
+                catch(ex) {
+                    S.log('ImageZoom.autoRender: ' + ex, 'warn');
+                }
+            }
+        });
+    }
+
+}, { host: 'imagezoom' } );
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 15 22:02
+build time: Sep 19 17:41
 */
 /*
  * Date Format 1.2.3
