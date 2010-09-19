@@ -2754,7 +2754,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 10:26
+build time: Sep 19 13:19
 */
 /**
  * @module  node
@@ -3005,7 +3005,6 @@ KISSY.add('node-attach', function(S, undefined) {
     // dom-style
     attach(['css'], HAS_NAME);
     attach(['width', 'height'], ONLY_VAL);
-    attach(['show', 'hide', 'toggle']);
 
     // dom-offset
     attach(['offset'], ONLY_VAL);
@@ -3503,9 +3502,9 @@ KISSY.add('json', function (S) {
     }
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.4
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 13 17:31
+build time: Sep 19 13:19
 */
 /**
  * @module anim-easing
@@ -3919,33 +3918,104 @@ KISSY.add('anim', function(S, undefined) {
  */
 /**
  * @module  anim-node-plugin
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com, qiaohua@taobao.com
  */
 KISSY.add('anim-node-plugin', function(S, undefined) {
 
-    var Anim = S.Anim,
-        NP = S.Node.prototype, NLP = S.NodeList.prototype;
+    var DOM = S.DOM, Anim = S.Anim,
+        NP = S.Node.prototype, NLP = S.NodeList.prototype,
+
+        DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
+        OVERFLOW = 'overflow', HIDDEN = 'hidden',
+        OPCACITY = 'opacity',
+        HEIGHT = 'height', WIDTH = 'width', AUTO = 'auto',
+
+        FX = {
+            show: [OVERFLOW, OPCACITY, HEIGHT, WIDTH],
+            fade: [OPCACITY],
+            slide: [OVERFLOW, HEIGHT]
+        };
 
     S.each([NP, NLP], function(P) {
-
         P.animate = function() {
             var args = S.makeArray(arguments);
 
             S.each(this, function(elem) {
                 Anim.apply(undefined, [elem].concat(args)).run();
             });
-            
             return this;
         };
-    })
+
+        S.each({
+            show: ['show', 1],
+            hide: ['hide', 0],
+            toggle: ['toggle'],
+            fadeIn: ['fade', 1],
+            fadeOut: ['fade', 0],
+            slideDown: ['slide', 1],
+            slideUp: ['slide', 0]
+        },
+            function(v, k) {
+
+                P[k] = function(speed, callback) {
+                    // 没有参数时，调用 DOM 中的对应方法
+                    if (DOM[k] && arguments.length === 0) {
+                        DOM[k](this);
+                    }
+                    else {
+                        S.each(this, function(elem) {
+                            fx(elem, v[0], speed, callback, v[1]);
+                        });
+                    }
+                    return this;
+                };
+            });
+    });
+
+    function fx(elem, which, speed, callback, display) {
+        if (which === 'toggle') {
+            display = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
+            which = display ? 'show' : 'hide';
+        }
+
+        if (display) DOM.css(elem, DISPLAY, BLOCK);
+
+        // 根据不同类型设置初始 css 属性, 并设置动画参数
+        var style = { };
+        S.each(FX[which], function(prop) {
+            if (prop === OVERFLOW) {
+                DOM.css(elem, OVERFLOW, HIDDEN);
+            }
+            else if (prop === OPCACITY) {
+                style.opacity = display ? 1 : 0;
+                if (display) DOM.css(elem, OPCACITY, 0);
+            }
+            else if (prop === HEIGHT) {
+                style.height = (display ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
+                if (display) DOM.css(elem, HEIGHT, 0);
+            }
+            else if (prop === WIDTH) {
+                style.width = (display ? DOM.css(elem, WIDTH) || elem.naturalWidth : 0);
+                if (display) DOM.css(elem, WIDTH, 0);
+            }
+        });
+
+        // 开始动画
+        new S.Anim(elem, style, speed, 'easeOut', function() {
+            // 如果是隐藏, 需要还原一些 css 属性
+            if (!display) {
+                DOM.css(elem, {
+                    display: NONE,
+                    height: AUTO,
+                    width: AUTO,
+                    overflow: AUTO,
+                    opacity: 1
+                });
+            }
+            if (callback && S.isFunction(callback)) callback();
+        }).run();
+    }
 
 });
-
-/**
- * TODO:
- *  - ����ֱ�Ӹ� Node ��� Node.addMethods ����
- *  - �����Ƿ���� slideUp/slideDown/fadeIn/show/hide �ȿ�ݷ���
- *
- */
 
 KISSY.add('core');

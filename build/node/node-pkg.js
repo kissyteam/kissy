@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 10:26
+build time: Sep 19 13:19
 */
 /**
  * @module  node
@@ -252,7 +252,6 @@ KISSY.add('node-attach', function(S, undefined) {
     // dom-style
     attach(['css'], HAS_NAME);
     attach(['width', 'height'], ONLY_VAL);
-    attach(['show', 'hide', 'toggle']);
 
     // dom-offset
     attach(['offset'], ONLY_VAL);
