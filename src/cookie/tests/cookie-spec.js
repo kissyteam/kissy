@@ -4,14 +4,11 @@ describe("Cookie", function() {
         get = Cookie.get,
         set = Cookie.set;
 
-    beforeEach(function(){
-        document.cookie = 'test0';
-        document.cookie = 'test1=1test0';
-        document.cookie = 'test02=2';
-        document.cookie = 'xtest0=x';
-        document.cookie = 'test3 t   =   ';
-    });
-
+    document.cookie = 'test0';
+    document.cookie = 'test1=1test0';
+    document.cookie = 'test02=2';
+    document.cookie = 'xtest0=x';
+    document.cookie = 'test3 t   =   ';
     it("should get cookies properly", function() {
         expect(get('test0')).toBe('');
         expect(get('test1')).toBe('1test0');
