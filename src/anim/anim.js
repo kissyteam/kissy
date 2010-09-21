@@ -70,7 +70,7 @@ KISSY.add('anim', function(S, undefined) {
             config = S.merge(defaultConfig, duration);
         } else {
             config = S.clone(defaultConfig);
-            duration && (config.duration = PARSE_FLOAT(duration, 10) || 1);
+            duration && (config.duration = PARSE_FLOAT(duration) || 1);
             S.isString(easing) && (easing = Easing[easing]); // 可以是字符串, 比如 'easingOut'
             S.isFunction(easing) && (config.easing = easing);
             S.isFunction(callback) && (config.complete = callback);
