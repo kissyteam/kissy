@@ -164,3 +164,9 @@ body {
   margin: 5px 0;
   padding: 2px 0 2px 10px;
 }
+
+
+/* hacked by lifesinger */
+.stackTrace {
+    font-size: 1em;
+}
