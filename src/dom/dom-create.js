@@ -203,8 +203,20 @@ KISSY.add('dom-create', function(S, undefined) {
     function setHTMLSimple(elem, html) {
         html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所有 script
         try {
+            //if(UA.ie) {
             elem.innerHTML = html;
-        } catch(ex) { // table.innerHTML = html will throw error in ie.
+            //} else {
+            // Ref:
+            //  - http://blog.stevenlevithan.com/archives/faster-than-innerhtml
+            //  - http://fins.javaeye.com/blog/183373
+            //var tEl = elem.cloneNode(false);
+            //tEl.innerHTML = html;
+            //elem.parentNode.replaceChild(elem, tEl);
+            // 注：上面的方式会丢失掉 elem 上注册的事件，放类库里不妥当
+            //}
+        }
+            // table.innerHTML = html will throw error in ie.
+        catch(ex) {
             // remove any remaining nodes
             while (elem.firstChild) {
                 elem.removeChild(elem.firstChild);
