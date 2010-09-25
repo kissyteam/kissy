@@ -261,7 +261,7 @@ KISSY.add('anim', function(S, undefined) {
     }
 
     function parse(val) {
-        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d\.]+/, '');
+        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d.]+/, '');
         return isNaN(num) ? { v: unit, u: '', f: colorEtc } : { v: num, u: unit, f: interpolate };
     }
 

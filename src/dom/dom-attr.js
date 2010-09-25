@@ -20,10 +20,10 @@ KISSY.add('dom-attr', function(S, undefined) {
         isElementNode = DOM._isElementNode,
         isTextNode = function(elem) { return DOM._nodeTypeIs(elem, 3); },
 
-        RE_SPECIAL_ATTRS = /href|src|style/,
-        RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
+        RE_SPECIAL_ATTRS = /^(?:href|src|style)/,
+        RE_NORMALIZED_ATTRS = /^(?:href|src|colspan|rowspan)/,
         RE_RETURN = /\r/g,
-        RE_RADIO_CHECK = /radio|checkbox/,
+        RE_RADIO_CHECK = /^(?:radio|checkbox)/,
 
         CUSTOM_ATTRS = {
             readonly: 'readOnly'

@@ -14,7 +14,7 @@ KISSY.add('imagezoom', function(S, undefined) {
 
         DIV = '<div>', IMG = '<img>',
         STANDARD = 'standard',
-        RE_IMG_SRC = /^.+\.(jpg|png|gif)$/i,
+        RE_IMG_SRC = /^.+\.(?:jpg|png|gif)$/i,
         round = Math.round,
         AUTO = 'auto',
         POSITION = ['top', 'right', 'bottom', 'left', 'inner'],

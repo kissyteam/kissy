@@ -20,7 +20,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
 	    RE_NUM = /^-?\d/,
-        RE_WH = /^width|height$/;
+        RE_WH = /^(?:width|height)$/;
 
     // use alpha filter for IE opacity
     try {
