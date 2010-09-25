@@ -1,5 +1,9 @@
 describe('cookie', function() {
 
+    if(location.protocol === 'file:') {
+        return;
+    }
+
     var Cookie = KISSY.Cookie,
         get = Cookie.get,
         set = Cookie.set;
