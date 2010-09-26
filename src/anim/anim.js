@@ -13,25 +13,10 @@ KISSY.add('anim', function(S, undefined) {
             'maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineWidth paddingBottom paddingLeft ' +
             'paddingRight paddingTop right textIndent top width wordSpacing zIndex').split(' '),
 
-        NATIVE_EASING = {
-            easeNone: 'linear',
-            ease: 'ease',
-            easeIn: 'ease-in',
-            easeOut: 'ease-out',
-            easeBoth: 'ease-in-out'
-        },
-        NATIVE_PROPERTY_DEFAULT = 'all',
-        NATIVE_EASING_DEFAULT = 'ease',
-        NATIVE_DURATION_DEFAULT_UNIT = 'ms',
-        NATIVE_CUSTOM_EASING_REG = /cubic-bezier\([\s\d.,]+\)/,
-        NATIVE_SUPPORT = ['Webkit', 'Moz', 'O', ''],
-
         STEP_INTERVAL = 13,
         OPACITY = 'opacity',
-        PROPERTY = 'Property',
-        DURATION = 'Duration',
-        TIMING_FUNCTION = 'TimingFunction',
         NONE = 'none',
+        PROPERTY = 'Property',
 
         EVENT_START = 'start',
         EVENT_STEP = 'step',
@@ -39,8 +24,8 @@ KISSY.add('anim', function(S, undefined) {
 
         defaultConfig = {
             duration: 1,
-            easing: Easing.easeNone,
-            nativeAnim: true
+            easing: 'easeNone',
+            nativeSupport: true // 优先使用原生 css3 transition
             //queue: true
         };
 
@@ -48,7 +33,7 @@ KISSY.add('anim', function(S, undefined) {
      * Anim Class
      * @constructor
      */
-    function Anim(elem, props, duration, easing, callback) {
+    function Anim(elem, props, duration, easing, callback, nativeSupport) {
         // ignore non-exist element
         if (!(elem = S.get(elem))) return;
 
@@ -59,7 +44,7 @@ KISSY.add('anim', function(S, undefined) {
 
         var self = this,
             isConfig = S.isPlainObject(duration),
-            style = props, config, support;
+            style = props, config, support, name;
 
         /**
          * the related dom element
@@ -89,34 +74,35 @@ KISSY.add('anim', function(S, undefined) {
             config = S.merge(defaultConfig, duration);
         } else {
             config = S.clone(defaultConfig);
-            duration && (config.duration = PARSE_FLOAT(duration) || 1);
-            S.isString(easing) && (easing = Easing[easing]); // 可以是字符串, 比如 'easingOut'
-            S.isFunction(easing) && (config.easing = easing);
-            S.isFunction(callback) && (config.complete = callback);
+            if (duration) (config.duration = PARSE_FLOAT(duration) || 1);
+            if (S.isString(easing) || S.isFunction(easing)) config.easing = easing;
+            if (S.isFunction(callback)) config.complete = callback;
+            if(nativeSupport !== undefined) config.nativeSupport = nativeSupport;
         }
         self.config = config;
 
         /**
          * detect browser native animation(CSS3 transition) support
          */
-        if (config.nativeAnim) {
-            S.each(NATIVE_SUPPORT, function(item) {
-                console.log('Transition' + parseEl.style[item + 'Transition']);
-                if (item !== '' && !S.isUndefined(parseEl.style[item + 'Transition'])) {
-                    support = item + 'Transition';
-                    return false;
-                } else if (item === '' && !S.isUndefined(parseEl.style['transition'])) {
-                    support = 'transition';
-                    return false;
-                }
-            });
+        if (config.nativeSupport) {
+            if (parseEl.style[(name = 'transition')] !== undefined) {
+                support = name;
+            } else {
+                S.each(['Webkit', 'Moz', 'O'], function(item) {
+                    if (parseEl.style[(name = item + 'Transition')] !== undefined) {
+                        support = name;
+                        return false;
+                    }
+                });
+            }
 
-            if (support) {
-                self.nativeSupport = support;
+            // 当 easing 是支持的字串时，才激活 native transition
+            if (support && S.isString((easing = config.easing))) {
 
-                // if using native transition, adjust the easing
-                if (S.isString(easing)) {
-                    config.easing = NATIVE_EASING[easing] || NATIVE_CUSTOM_EASING_REG.test(easing) ? easing : NATIVE_EASING_DEFAULT;
+                if (/cubic-bezier\([\s\d.,]+\)/.test(easing) ||
+                    (easing = Easing.NativeTimeFunction[easing])) {
+                    config.easing = easing;
+                    self.transitionKey = support;
                 }
             }
         }
@@ -137,21 +123,25 @@ KISSY.add('anim', function(S, undefined) {
         run: function() {
             var self = this, config = self.config,
                 elem = self.domEl,
-                duration = config.duration * 1000,
-                easing = config.easing,
-                support = self.nativeSupport,
-                nativeTransition = {},
-                start = S.now(), finish = start + duration,
+                duration, easing, start, finish,
                 target = self.props,
                 source = {}, prop, go;
 
             for (prop in target) source[prop] = parse(DOM.css(elem, prop));
             if (self.fire(EVENT_START) === false) return;
-
             self.stop(); // 先停止掉正在运行的动画
 
-            // using traditional method to process transition
-            if (!support) {
+            if (self.transitionKey) {
+                self._nativeRun();
+            } else {
+                duration = config.duration * 1000;
+                start = S.now();
+                finish = start + duration;
+
+                easing = config.easing;
+                if(S.isString(easing)) {
+                    easing = Easing[easing] || Easing.easeNone;
+                }
 
                 self.timer = S.later((go = function () {
                     var time = S.now(),
@@ -183,64 +173,82 @@ KISSY.add('anim', function(S, undefined) {
 
                 // 立刻执行
                 go();
-
-            } else {
-                // using CSS transition process
-                nativeTransition[support + PROPERTY] = NATIVE_PROPERTY_DEFAULT;
-                nativeTransition[support + DURATION] = duration + NATIVE_DURATION_DEFAULT_UNIT;
-                nativeTransition[support + TIMING_FUNCTION] = easing;
-                // set the CSS transition style
-                DOM.css(elem, nativeTransition);
-                // set the final style value (need some hack for opera)
-                S.later(function() {
-                    setToFinal(elem, target, self.targetStyle);
-                }, 0);
-
-                // after duration time, fire the stop function
-                S.later(function() {
-                    self.stop(true);
-                }, duration);
             }
 
             return self;
         },
 
+        _nativeRun: function() {
+            var self = this, config = self.config,
+                elem = self.domEl,
+                target = self.props,
+                duration = config.duration * 1000,
+                easing = config.easing,
+                prefix = self.transitionKey,
+                transition = {};
+
+            S.log('Amin uses native transition.');
+
+            // using CSS transition process
+            transition[prefix + 'Property'] = 'all';
+            transition[prefix + 'Duration'] = duration + 'ms';
+            transition[prefix + 'TimingFunction'] = easing;
+
+            // set the CSS transition style
+            DOM.css(elem, transition);
+
+            // set the final style value (need some hack for opera)
+            S.later(function() {
+                setToFinal(elem, target, self.targetStyle);
+            }, 0);
+
+            // after duration time, fire the stop function
+            S.later(function() {
+                self.stop(true);
+            }, duration);
+        },
+
         stop: function(finish) {
-            var self = this, elem = self.domEl,
-                support = this.nativeSupport,
-                props = self.props, prop,
-                style = self.targetStyle;
+            var self = this;
 
-            // 停止定时器
-            if (self.timer) {
-                self.timer.cancel();
-                self.timer = undefined;
+            if (self.transitionKey) {
+                self._nativeStop(finish);
             }
-
-            if (!support) {
-                // 直接设置到最终样式
-                if (finish) {
-                    setToFinal(elem, props, style);
-                    self.fire(EVENT_COMPLETE);
+            else {
+                // 停止定时器
+                if (self.timer) {
+                    self.timer.cancel();
+                    self.timer = undefined;
                 }
 
-            } else {
-                // handle for the CSS transition
+                // 直接设置到最终样式
                 if (finish) {
-                    // CSS transition value remove should come first
-                    DOM.css(elem, support + PROPERTY, NONE);
+                    setToFinal(self.domEl, self.props, self.targetStyle);
                     self.fire(EVENT_COMPLETE);
-                } else {
-                    // if want to stop the CSS transition, should set the current computed style value to the final CSS value
-                    for (prop in props) {
-                        DOM.css(elem, prop, DOM._getComputedStyle(elem, prop));
-                    }
-                    // CSS transition value remove should come last
-                    DOM.css(elem, support + PROPERTY, NONE);
                 }
             }
 
             return self;
+        },
+
+        _nativeStop: function(finish) {
+            var self = this, elem = self.domEl,
+                prefix = self.transitionKey,
+                props = self.props, prop;
+
+            // handle for the CSS transition
+            if (finish) {
+                // CSS transition value remove should come first
+                DOM.css(elem, prefix + PROPERTY, NONE);
+                self.fire(EVENT_COMPLETE);
+            } else {
+                // if want to stop the CSS transition, should set the current computed style value to the final CSS value
+                for (prop in props) {
+                    DOM.css(elem, prop, DOM._getComputedStyle(elem, prop));
+                }
+                // CSS transition value remove should come last
+                DOM.css(elem, prefix + PROPERTY, NONE);
+            }
         }
     });
 
@@ -298,7 +306,8 @@ KISSY.add('anim', function(S, undefined) {
     function s(str, p, c) {
         return str.substr(p, c || 1);
     }
-});
+})
+    ;
 
 /**
  * TODO:

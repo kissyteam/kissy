@@ -198,7 +198,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 17:41
+build time: Sep 26 17:48
 */
 /**
  * @module  dom
@@ -870,10 +870,10 @@ KISSY.add('dom-attr', function(S, undefined) {
         isElementNode = DOM._isElementNode,
         isTextNode = function(elem) { return DOM._nodeTypeIs(elem, 3); },
 
-        RE_SPECIAL_ATTRS = /href|src|style/,
-        RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
+        RE_SPECIAL_ATTRS = /^(?:href|src|style)/,
+        RE_NORMALIZED_ATTRS = /^(?:href|src|colspan|rowspan)/,
         RE_RETURN = /\r/g,
-        RE_RADIO_CHECK = /radio|checkbox/,
+        RE_RADIO_CHECK = /^(?:radio|checkbox)/,
 
         CUSTOM_ATTRS = {
             readonly: 'readOnly'
@@ -1146,8 +1146,8 @@ KISSY.add('dom-style', function(S, undefined) {
         AUTO = 'auto',
         DISPLAY = 'display', NONE = 'none',
         PARSEINT = parseInt,
-        RE_LT = /^left|top$/,
-        RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
+        RE_LT = /^(?:left|top)/,
+        RE_NEED_UNIT = /^(?:width|height|top|left|right|bottom|margin|padding)/i,
         RE_DASH = /-([a-z])/ig,
         CAMELCASE_FN = function(all, letter) {
             return letter.toUpperCase();
@@ -1420,7 +1420,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
 	    RE_NUM = /^-?\d/,
-        RE_WH = /^width|height$/;
+        RE_WH = /^(?:width|height)$/;
 
     // use alpha filter for IE opacity
     try {
@@ -1875,7 +1875,8 @@ KISSY.add('dom-create', function(S, undefined) {
         DEFAULT_DIV = doc.createElement(DIV),
 
         RE_TAG = /<(\w+)/,
-        RE_SCRIPT = /<script([^>]*)>([\s\S]*?)<\/script>/ig,
+        // Ref: http://jmrware.com/articles/2010/jqueryregex/jQueryRegexes.html#note_05
+        RE_SCRIPT = /<script([^>]*)>([^<]*(?:(?!<\/script>)<[^<]*)*)<\/script>/ig,
         RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
         RE_SCRIPT_SRC = /\ssrc=(['"])(.*?)\1/i,
         RE_SCRIPT_CHARSET = /\scharset=(['"])(.*?)\1/i;
@@ -2063,8 +2064,20 @@ KISSY.add('dom-create', function(S, undefined) {
     function setHTMLSimple(elem, html) {
         html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所有 script
         try {
+            //if(UA.ie) {
             elem.innerHTML = html;
-        } catch(ex) { // table.innerHTML = html will throw error in ie.
+            //} else {
+            // Ref:
+            //  - http://blog.stevenlevithan.com/archives/faster-than-innerhtml
+            //  - http://fins.javaeye.com/blog/183373
+            //var tEl = elem.cloneNode(false);
+            //tEl.innerHTML = html;
+            //elem.parentNode.replaceChild(elem, tEl);
+            // 注：上面的方式会丢失掉 elem 上注册的事件，放类库里不妥当
+            //}
+        }
+            // table.innerHTML = html will throw error in ie.
+        catch(ex) {
             // remove any remaining nodes
             while (elem.firstChild) {
                 elem.removeChild(elem.firstChild);
@@ -2754,7 +2767,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 17:41
+build time: Sep 26 17:48
 */
 /**
  * @module  node
@@ -3504,7 +3517,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 17:41
+build time: Sep 26 18:29
 */
 /**
  * @module anim-easing
@@ -3535,7 +3548,7 @@ KISSY.add('anim-easing', function(S) {
             easeNone: function (t) {
                 return t;
             },
-
+            
             /**
              * Begins slowly and accelerates towards end. (quadratic)
              */
@@ -3659,13 +3672,13 @@ KISSY.add('anim-easing', function(S) {
                     r = s * t * t;
                 }
                 else if (t < (2 / 2.75)) {
-                    r =  s * (t -= (1.5 / 2.75)) * t + .75;
+                    r = s * (t -= (1.5 / 2.75)) * t + .75;
                 }
                 else if (t < (2.5 / 2.75)) {
-                    r =  s * (t -= (2.25 / 2.75)) * t + .9375;
+                    r = s * (t -= (2.25 / 2.75)) * t + .9375;
                 }
                 else {
-                    r =  s * (t -= (2.625 / 2.75)) * t + .984375;
+                    r = s * (t -= (2.625 / 2.75)) * t + .984375;
                 }
 
                 return r;
@@ -3681,6 +3694,24 @@ KISSY.add('anim-easing', function(S) {
                 return Easing.bounceOut(t * 2 - 1) * .5 + .5;
             }
         };
+
+    Easing.NativeTimeFunction = {
+        easeNone: 'linear',
+        ease: 'ease',
+
+        easeIn: 'ease-in',
+        easeOut: 'ease-out',
+        easeBoth: 'ease-in-out',
+
+        // Ref:
+        //  1. http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
+        //  2. http://www.robertpenner.com/easing/easing_demo.html
+        //  3. assets/cubic-bezier-timing-function.html
+        // 注：是模拟值，非精确推导值
+        easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
+        easeOutStrong: 'cubic-bezier(0.1, 0.5, 0.1, 1.0)',
+        easeBothStrong: 'cubic-bezier(0.9, 0.0, 0.1, 1.0)'
+    };
 
     S.Easing = Easing;
 });
@@ -3711,13 +3742,17 @@ KISSY.add('anim', function(S, undefined) {
 
         STEP_INTERVAL = 13,
         OPACITY = 'opacity',
+        NONE = 'none',
+        PROPERTY = 'Property',
+
         EVENT_START = 'start',
         EVENT_STEP = 'step',
         EVENT_COMPLETE = 'complete',
 
         defaultConfig = {
             duration: 1,
-            easing: Easing.easeNone
+            easing: 'easeNone',
+            nativeSupport: true // 优先使用原生 css3 transition
             //queue: true
         };
 
@@ -3725,7 +3760,7 @@ KISSY.add('anim', function(S, undefined) {
      * Anim Class
      * @constructor
      */
-    function Anim(elem, props, duration, easing, callback) {
+    function Anim(elem, props, duration, easing, callback, nativeSupport) {
         // ignore non-exist element
         if (!(elem = S.get(elem))) return;
 
@@ -3736,7 +3771,7 @@ KISSY.add('anim', function(S, undefined) {
 
         var self = this,
             isConfig = S.isPlainObject(duration),
-            style = props, config;
+            style = props, config, support, name;
 
         /**
          * the related dom element
@@ -3766,12 +3801,38 @@ KISSY.add('anim', function(S, undefined) {
             config = S.merge(defaultConfig, duration);
         } else {
             config = S.clone(defaultConfig);
-            duration && (config.duration = PARSE_FLOAT(duration, 10) || 1);
-            S.isString(easing) && (easing = Easing[easing]); // 可以是字符串, 比如 'easingOut'
-            S.isFunction(easing) && (config.easing = easing);
-            S.isFunction(callback) && (config.complete = callback);
+            if (duration) (config.duration = PARSE_FLOAT(duration) || 1);
+            if (S.isString(easing) || S.isFunction(easing)) config.easing = easing;
+            if (S.isFunction(callback)) config.complete = callback;
+            if(nativeSupport !== undefined) config.nativeSupport = nativeSupport;
         }
         self.config = config;
+
+        /**
+         * detect browser native animation(CSS3 transition) support
+         */
+        if (config.nativeSupport) {
+            if (parseEl.style[(name = 'transition')] !== undefined) {
+                support = name;
+            } else {
+                S.each(['Webkit', 'Moz', 'O'], function(item) {
+                    if (parseEl.style[(name = item + 'Transition')] !== undefined) {
+                        support = name;
+                        return false;
+                    }
+                });
+            }
+
+            // 当 easing 是支持的字串时，才激活 native transition
+            if (support && S.isString((easing = config.easing))) {
+
+                if (/cubic-bezier\([\s\d.,]+\)/.test(easing) ||
+                    (easing = Easing.NativeTimeFunction[easing])) {
+                    config.easing = easing;
+                    self.transitionKey = support;
+                }
+            }
+        }
 
         /**
          * timer
@@ -3789,75 +3850,143 @@ KISSY.add('anim', function(S, undefined) {
         run: function() {
             var self = this, config = self.config,
                 elem = self.domEl,
-                duration = config.duration * 1000,
-                easing = config.easing,
-                start = S.now(), finish = start + duration,
+                duration, easing, start, finish,
                 target = self.props,
                 source = {}, prop, go;
 
             for (prop in target) source[prop] = parse(DOM.css(elem, prop));
-            if(self.fire(EVENT_START) === false) return;
-
+            if (self.fire(EVENT_START) === false) return;
             self.stop(); // 先停止掉正在运行的动画
 
-            self.timer = S.later((go = function () {
-                var time = S.now(),
-                    t = time > finish ? 1 : (time - start) / duration,
-                    sp, tp, b;
+            if (self.transitionKey) {
+                self._nativeRun();
+            } else {
+                duration = config.duration * 1000;
+                start = S.now();
+                finish = start + duration;
 
-                for (prop in target) {
-                    sp = source[prop];
-                    tp = target[prop];
-
-                    // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
-                    // 这时要把 sp 的单位调整为和 tp 的一致
-                    if(tp.v == 0) tp.u = sp.u;
-
-                    // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
-                    // 比如：ie 下 border-width 默认为 medium
-                    if(sp.u !== tp.u) sp.v = 0;
-
-                    // go
-                    DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
+                easing = config.easing;
+                if(S.isString(easing)) {
+                    easing = Easing[easing] || Easing.easeNone;
                 }
 
-                if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
-                    self.stop();
-                    // complete 事件只在动画到达最后一帧时才触发
-                    if(b) self.fire(EVENT_COMPLETE);
-                }
-            }), STEP_INTERVAL, true);
+                self.timer = S.later((go = function () {
+                    var time = S.now(),
+                        t = time > finish ? 1 : (time - start) / duration,
+                        sp, tp, b;
 
-            // 立刻执行
-            go();
+                    for (prop in target) {
+                        sp = source[prop];
+                        tp = target[prop];
+
+                        // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
+                        // 这时要把 sp 的单位调整为和 tp 的一致
+                        if (tp.v == 0) tp.u = sp.u;
+
+                        // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
+                        // 比如：ie 下 border-width 默认为 medium
+                        if (sp.u !== tp.u) sp.v = 0;
+
+                        // go
+                        DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
+                    }
+
+                    if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
+                        self.stop();
+                        // complete 事件只在动画到达最后一帧时才触发
+                        if (b) self.fire(EVENT_COMPLETE);
+                    }
+                }), STEP_INTERVAL, true);
+
+                // 立刻执行
+                go();
+            }
 
             return self;
         },
 
+        _nativeRun: function() {
+            var self = this, config = self.config,
+                elem = self.domEl,
+                target = self.props,
+                duration = config.duration * 1000,
+                easing = config.easing,
+                prefix = self.transitionKey,
+                transition = {};
+
+            S.log('Amin uses native transition.');
+
+            // using CSS transition process
+            transition[prefix + 'Property'] = 'all';
+            transition[prefix + 'Duration'] = duration + 'ms';
+            transition[prefix + 'TimingFunction'] = easing;
+
+            // set the CSS transition style
+            DOM.css(elem, transition);
+
+            // set the final style value (need some hack for opera)
+            S.later(function() {
+                setToFinal(elem, target, self.targetStyle);
+            }, 0);
+
+            // after duration time, fire the stop function
+            S.later(function() {
+                self.stop(true);
+            }, duration);
+        },
+
         stop: function(finish) {
-            var self = this, elem = self.domEl,
-                style = self.targetStyle;
+            var self = this;
 
-            // 停止定时器
-            if (self.timer) {
-                self.timer.cancel();
-                self.timer = undefined;
+            if (self.transitionKey) {
+                self._nativeStop(finish);
             }
-
-            // 直接设置到最终样式
-            if(finish) {
-                if(S.UA.ie && style.indexOf(OPACITY) > -1) {
-                    DOM.css(elem, OPACITY, self.props[OPACITY].v);
+            else {
+                // 停止定时器
+                if (self.timer) {
+                    self.timer.cancel();
+                    self.timer = undefined;
                 }
-                elem.style.cssText += ';' + style;
-                self.fire(EVENT_COMPLETE);
+
+                // 直接设置到最终样式
+                if (finish) {
+                    setToFinal(self.domEl, self.props, self.targetStyle);
+                    self.fire(EVENT_COMPLETE);
+                }
             }
 
             return self;
+        },
+
+        _nativeStop: function(finish) {
+            var self = this, elem = self.domEl,
+                prefix = self.transitionKey,
+                props = self.props, prop;
+
+            // handle for the CSS transition
+            if (finish) {
+                // CSS transition value remove should come first
+                DOM.css(elem, prefix + PROPERTY, NONE);
+                self.fire(EVENT_COMPLETE);
+            } else {
+                // if want to stop the CSS transition, should set the current computed style value to the final CSS value
+                for (prop in props) {
+                    DOM.css(elem, prop, DOM._getComputedStyle(elem, prop));
+                }
+                // CSS transition value remove should come last
+                DOM.css(elem, prefix + PROPERTY, NONE);
+            }
         }
     });
 
     S.Anim = Anim;
+
+    function setToFinal(elem, props, style) {
+        if (S.UA.ie && style.indexOf(OPACITY) > -1) {
+            DOM.css(elem, OPACITY, props[OPACITY].v);
+        }
+        elem.style.cssText += ';' + style;
+    }
 
     function normalize(style) {
         var css, rules = { }, i = PROPS.length, v;
@@ -3868,7 +3997,7 @@ KISSY.add('anim', function(S, undefined) {
     }
 
     function parse(val) {
-        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d\.]+/, '');
+        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d.]+/, '');
         return isNaN(num) ? { v: unit, u: '', f: colorEtc } : { v: num, u: unit, f: interpolate };
     }
 
@@ -3879,12 +4008,12 @@ KISSY.add('anim', function(S, undefined) {
     function colorEtc(source, target, pos) {
         var i = 2, j, c, tmp, v = [], r = [];
 
-        while (j = 3, c = arguments[i - 1], i--) {
+        while (j = 3,c = arguments[i - 1],i--) {
             if (s(c, 0, 4) === 'rgb(') {
                 c = c.match(/\d+/g);
                 while (j--) v.push(~~c[j]);
             }
-            else if(s(c, 0) === '#') {
+            else if (s(c, 0) === '#') {
                 if (c.length === 4) c = '#' + s(c, 1) + s(c, 1) + s(c, 2) + s(c, 2) + s(c, 3) + s(c, 3);
                 while (j--) v.push(parseInt(s(c, 1 + j * 2, 2), 16));
             }
@@ -3904,7 +4033,8 @@ KISSY.add('anim', function(S, undefined) {
     function s(str, p, c) {
         return str.substr(p, c || 1);
     }
-});
+})
+    ;
 
 /**
  * TODO:

@@ -54,7 +54,7 @@ KISSY.add('circular', function(S, undefined) {
             // free
             self.anim = undefined;
             callback();
-        }).run();
+        }, cfg.nativeAnim).run();
     }
 
     /**
