@@ -12,8 +12,8 @@ KISSY.add('dom-style', function(S, undefined) {
         AUTO = 'auto',
         DISPLAY = 'display', NONE = 'none',
         PARSEINT = parseInt,
-        RE_LT = /^left|top$/,
-        RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
+        RE_LT = /^(?:left|top)/,
+        RE_NEED_UNIT = /^(?:width|height|top|left|right|bottom|margin|padding)/i,
         RE_DASH = /-([a-z])/ig,
         CAMELCASE_FN = function(all, letter) {
             return letter.toUpperCase();

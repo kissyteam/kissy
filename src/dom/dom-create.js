@@ -15,7 +15,8 @@ KISSY.add('dom-create', function(S, undefined) {
         DEFAULT_DIV = doc.createElement(DIV),
 
         RE_TAG = /<(\w+)/,
-        RE_SCRIPT = /<script([^>]*)>([\s\S]*?)<\/script>/ig,
+        // Ref: http://jmrware.com/articles/2010/jqueryregex/jQueryRegexes.html#note_05
+        RE_SCRIPT = /<script([^>]*)>([^<]*(?:(?!<\/script>)<[^<]*)*)<\/script>/ig,
         RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
         RE_SCRIPT_SRC = /\ssrc=(['"])(.*?)\1/i,
         RE_SCRIPT_CHARSET = /\scharset=(['"])(.*?)\1/i;

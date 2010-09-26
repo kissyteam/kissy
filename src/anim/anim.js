@@ -5,44 +5,44 @@
 KISSY.add('anim', function(S, undefined) {
 
     var DOM = S.DOM, Easing = S.Easing,
-            PARSE_FLOAT = parseFloat,
-            parseEl = DOM.create('<div>'),
-            PROPS = ('backgroundColor borderBottomColor borderBottomWidth borderBottomStyle borderLeftColor borderLeftWidth borderLeftStyle ' +
-                    'borderRightColor borderRightWidth borderRightStyle borderSpacing borderTopColor borderTopWidth borderTopStyle bottom color ' +
-                    'font fontFamily fontSize fontWeight height left letterSpacing lineHeight marginBottom marginLeft marginRight marginTop maxHeight ' +
-                    'maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineWidth paddingBottom paddingLeft ' +
-                    'paddingRight paddingTop right textIndent top width wordSpacing zIndex').split(' '),
+        PARSE_FLOAT = parseFloat,
+        parseEl = DOM.create('<div>'),
+        PROPS = ('backgroundColor borderBottomColor borderBottomWidth borderBottomStyle borderLeftColor borderLeftWidth borderLeftStyle ' +
+            'borderRightColor borderRightWidth borderRightStyle borderSpacing borderTopColor borderTopWidth borderTopStyle bottom color ' +
+            'font fontFamily fontSize fontWeight height left letterSpacing lineHeight marginBottom marginLeft marginRight marginTop maxHeight ' +
+            'maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineWidth paddingBottom paddingLeft ' +
+            'paddingRight paddingTop right textIndent top width wordSpacing zIndex').split(' '),
 
-            NATIVE_EASING = {
-                easeNone: 'linear',
-                ease: 'ease',
-                easeIn: 'ease-in',
-                easeOut: 'ease-out',
-                easeBoth: 'ease-in-out'
-            },
-            NATIVE_PROPERTY_DEFAULT = 'all',
-            NATIVE_EASING_DEFAULT = 'ease',
-            NATIVE_DURATION_DEFAULT_UNIT = 'ms',
-            NATIVE_CUSTOM_EASING_REG = /cubic-bezier\([\s\d.,]+\)/,
-            NATIVE_SUPPORT = ['Webkit', 'Moz', 'O', ''],
+        NATIVE_EASING = {
+            easeNone: 'linear',
+            ease: 'ease',
+            easeIn: 'ease-in',
+            easeOut: 'ease-out',
+            easeBoth: 'ease-in-out'
+        },
+        NATIVE_PROPERTY_DEFAULT = 'all',
+        NATIVE_EASING_DEFAULT = 'ease',
+        NATIVE_DURATION_DEFAULT_UNIT = 'ms',
+        NATIVE_CUSTOM_EASING_REG = /cubic-bezier\([\s\d.,]+\)/,
+        NATIVE_SUPPORT = ['Webkit', 'Moz', 'O', ''],
 
-            STEP_INTERVAL = 13,
-            OPACITY = 'opacity',
-            EVENT_START = 'start',
-            EVENT_STEP = 'step',
-            EVENT_COMPLETE = 'complete',
-            PROPERTY = 'Property',
-            DURATION = 'Duration',
-            TIMING_FUNCTION = 'TimingFunction',
-            NONE = 'none',
+        STEP_INTERVAL = 13,
+        OPACITY = 'opacity',
+        PROPERTY = 'Property',
+        DURATION = 'Duration',
+        TIMING_FUNCTION = 'TimingFunction',
+        NONE = 'none',
 
+        EVENT_START = 'start',
+        EVENT_STEP = 'step',
+        EVENT_COMPLETE = 'complete',
 
-            defaultConfig = {
-                duration: 1,
-                easing: Easing.easeNone,
-                nativeAnim: true
-                //queue: true
-            };
+        defaultConfig = {
+            duration: 1,
+            easing: Easing.easeNone,
+            nativeAnim: true
+            //queue: true
+        };
 
     /**
      * Anim Class
@@ -58,8 +58,8 @@ KISSY.add('anim', function(S, undefined) {
         }
 
         var self = this,
-                isConfig = S.isPlainObject(duration),
-                style = props, config, support;
+            isConfig = S.isPlainObject(duration),
+            style = props, config, support;
 
         /**
          * the related dom element
@@ -99,8 +99,9 @@ KISSY.add('anim', function(S, undefined) {
         /**
          * detect browser native animation(CSS3 transition) support
          */
-        if (self.config.nativeAnim) {
+        if (config.nativeAnim) {
             S.each(NATIVE_SUPPORT, function(item) {
+                console.log('Transition' + parseEl.style[item + 'Transition']);
                 if (item !== '' && !S.isUndefined(parseEl.style[item + 'Transition'])) {
                     support = item + 'Transition';
                     return false;
@@ -135,14 +136,14 @@ KISSY.add('anim', function(S, undefined) {
 
         run: function() {
             var self = this, config = self.config,
-                    elem = self.domEl,
-                    duration = config.duration * 1000,
-                    easing = config.easing,
-                    support = self.nativeSupport,
-                    nativeTransition = {},
-                    start = S.now(), finish = start + duration,
-                    target = self.props,
-                    source = {}, prop, go;
+                elem = self.domEl,
+                duration = config.duration * 1000,
+                easing = config.easing,
+                support = self.nativeSupport,
+                nativeTransition = {},
+                start = S.now(), finish = start + duration,
+                target = self.props,
+                source = {}, prop, go;
 
             for (prop in target) source[prop] = parse(DOM.css(elem, prop));
             if (self.fire(EVENT_START) === false) return;
@@ -154,8 +155,8 @@ KISSY.add('anim', function(S, undefined) {
 
                 self.timer = S.later((go = function () {
                     var time = S.now(),
-                            t = time > finish ? 1 : (time - start) / duration,
-                            sp, tp, b;
+                        t = time > finish ? 1 : (time - start) / duration,
+                        sp, tp, b;
 
                     for (prop in target) {
                         sp = source[prop];
@@ -206,9 +207,9 @@ KISSY.add('anim', function(S, undefined) {
 
         stop: function(finish) {
             var self = this, elem = self.domEl,
-                    support = this.nativeSupport,
-                    props = self.props, prop,
-                    style = self.targetStyle;
+                support = this.nativeSupport,
+                props = self.props, prop,
+                style = self.targetStyle;
 
             // 停止定时器
             if (self.timer) {
@@ -261,7 +262,7 @@ KISSY.add('anim', function(S, undefined) {
     }
 
     function parse(val) {
-        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d\.]+/, '');
+        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d.]+/, '');
         return isNaN(num) ? { v: unit, u: '', f: colorEtc } : { v: num, u: unit, f: interpolate };
     }
 
