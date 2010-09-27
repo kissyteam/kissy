@@ -48,6 +48,10 @@
         z-index: 999;
         background: #fff url(assets/loading.gif) no-repeat center center;
     }
+    .ks-imagezoom-msg {
+        width: 100%;
+        text-align: center;
+    }
 
 </style>
 </head>
@@ -67,7 +71,7 @@
 
 <h2>大图不能访问</h2>
 <div class="demo">
-    <img id="bad-big" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" data-src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg1"/>
+    <img id="bad-big" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" data-ks-imagezoom="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg1"/>
 </div>
 
 <style>
@@ -106,6 +110,17 @@
     <img id="inner" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
 </div>
 
+<br />
+<ul id="imgGallery">
+    <li>
+        <img src="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg_120x120.jpg" data-ks-imagezoom="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg"/>
+    </li>
+    <li>
+        <img src="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg_120x120.jpg" data-ks-imagezoom="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg"/>
+    </li>
+</ul>
+
+
 <script>
     KISSY.ready(function(S) {
 
@@ -115,7 +130,11 @@
 
         new S.ImageZoom("#bad-big");
 
-        var m = new S.ImageZoom("#multi");
+        var m = new S.ImageZoom("#multi", {
+            position: 'inner',
+            offset: 0,
+            zoomCls: 'inner'
+        });
         S.Event.on("#imgList img", 'click', function() {
             var data = S.DOM.attr(this, 'data-ks-imagezoom');
             S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
@@ -131,6 +150,17 @@
         });
 
         S.ImageZoom.autoRender();
+
+        S.each(S.query("#imgGallery img"), function(img) {
+            new S.ImageZoom(img, {
+                bigImageSrc: S.DOM.attr(img, 'data-ks-imagezoom'),
+                position: 'inner',
+                offset: 0,
+                zoomCls: 'inner',
+                lensIcon: false
+            });
+        });
+
     });
 
 </script>
