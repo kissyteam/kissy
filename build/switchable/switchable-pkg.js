@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 17:41
+build time: Sep 26 18:29
 */
 /**
  * Switchable
@@ -488,7 +488,8 @@ KISSY.add('effect', function(S, undefined) {
     S.mix(Switchable.Config, {
         effect: NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
         duration: .5, // 动画的时长
-        easing: 'easeNone' // easing method
+        easing: 'easeNone', // easing method
+        nativeAnim: true
     });
 
     /**
@@ -525,7 +526,7 @@ KISSY.add('effect', function(S, undefined) {
                 DOM.css(fromEl, Z_INDEX, 1);
 
                 callback();
-            }).run();
+            }, cfg.nativeAnim).run();
         },
 
         // 水平/垂直滚动效果
@@ -541,7 +542,7 @@ KISSY.add('effect', function(S, undefined) {
             self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
                 self.anim = undefined; // free
                 callback();
-            }).run();
+            }, cfg.nativeAnim).run();
         }
     };
     Effects = Switchable.Effects;
@@ -695,7 +696,7 @@ KISSY.add('circular', function(S, undefined) {
             // free
             self.anim = undefined;
             callback();
-        }).run();
+        }, cfg.nativeAnim).run();
     }
 
     /**

@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Native Transition Test</title>
+
+<script src="../../../build/kissy.js"></script>
+<link rel="stylesheet" href="../../../build/cssbase/base-min.css"/>
+<style>
+    body { padding: 20px 50px 50px; }
+    h2 { margin: 30px 0 10px; font-size: 17px; }
+
+    p.code-switch { color: #09f; cursor: pointer; margin-top: 10px; }
+    pre.code {
+        color: #444;
+        cursor: auto;
+        border-left: 2px solid #7F96AA;
+        margin-top: 5px;
+        padding: 0 10px 20px 10px;
+        font-size: 14px;
+    }
+</style>
+</head>
+
+<body>
+
+
+<h2>Slide - 淘宝首页卡盘</h2>
+<style>
+    #demo2 { position: relative; width: 470px; height: 150px; border: 1px solid #B6D1E6; overflow: hidden; }
+    #demo2 .ks-switchable-nav { position: absolute; bottom: 5px; right: 5px; z-index: 99; }
+    #demo2 .ks-switchable-nav li {
+        float: left;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        margin-left: 3px;
+        background-color: #FCF2CF;
+        border: 1px solid #F47500;
+        color: #D94B01;
+        text-align: center;
+        cursor: pointer;
+    }
+    #demo2 .ks-switchable-nav li.ks-active {
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        margin-top: -1px;
+        color: #FFF;
+        background-color: #FFB442;
+        font-weight: bold;
+    }
+    #demo2 .ks-switchable-content li { height: 150px; width: 470px; overflow: hidden; }
+    /* for countdown plugin */
+    #demo2 .ks-switchable-nav li,
+    #demo2 .ks-switchable-trigger-content {
+        position: relative;
+    }
+    #demo2 .ks-switchable-trigger-mask {
+        position: absolute;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background-color: #FF9415;
+        visibility: hidden
+    }
+    #demo2 .ks-active .ks-switchable-trigger-mask {
+        visibility: visible
+    }
+</style>
+<div id="demo2" class="section loading">
+    <ol class="ks-switchable-content">
+        <li><a href="http://ju.atpanel.com/?url=http://www.taobao.com/go/act/discount/hdfk091222.php?ad_id=&amp;am_id=&amp;cm_id=1400213687422f80dd4d&amp;pm_id=150021371293fce706af" target="_blank"><img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
+        <li class="hidden"><a target="_blank" href="http://click.mz.simba.taobao.com/cc_mt?p=&amp;s=24760534&amp;e=%2FzU1KBMrzT1jMRVFtqDNyn1tgJqIJA3Hy9QloO7MbgHOIBqxgkWBGKUTW8JURsTh01ynhY4RKTMplHfnVnxiYajw5JHBVqSAXBrj%2Bf%2BTLVcq5t6PSe6eCT%2F8Tn1KGQ46A85BMYIsMXzYy8dzkPxQZCyLyt0ostjNaENU1Z0QCSZaXSgNYtb%2FwhYogN3jOrIE2Q9NE12H0Hk111VWqQddJzvjKwdymURFo%2BK2etf0wTrlhYBv%2B5sdunm4S3KBeGdooeLPkaQt4Mg4u3TgCNezGX1Mh9B64cCdF8VN3SsQNW%2BgArkM4F%2BFplGwl1UuyTCLtMOb3cgDCxBQldTmR3mwFhNV09QNPjZ2bUxM3CBHkfb2wyn42y1yjjwMVjNQnmpt4NEtPh%2F5PsbupFa6ZZ2sVQdCo%2FjLJ9sf&amp;ec=ffloYVIRbFZ%2BaahPJekdUQ%3D%3D&amp;c=17016"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></a></li>
+        <li class="hidden"><a target="_blank" href="http://click.mz.simba.taobao.com/cc_mt?p=&amp;s=24760534&amp;e=%2FzU1KBMrzT1jMRVFtqDNyn1tgJqIJA3Hy9QloO7MbgHOIBqxgkWBGKUTW8JURsTh01ynhY4RKTMplHfnVnxiYajw5JHBVqSAXBrj%2Bf%2BTLVcq5t6PSe6eCT%2F8Tn1KGQ46A85BMYIsMXzYy8dzkPxQZCyLyt0ostjNaENU1Z0QCSZaXSgNYtb%2FwhYogN3jOrIE2Q9NE12H0Hk111VWqQddJzvjKwdymURFo%2BK2etf0wTrlhYBv%2B5sdunm4S3KBeGdooeLPkaQt4Mg4u3TgCNezGX1Mh9B64cCdF8VN3SsQNW%2BgArkM4F%2BFplGwl1UuyTCLtMOb3cgDCxBQldTmR3mwFhNV09QNPjZ2bUxM3CBHkfb2wyn42y1yjjwMVjNQnmpt4NEtPh%2F5PsbupFa6ZZ2sVQdCo%2FjLJ9sf&amp;ec=ffloYVIRbFZ%2BaahPJekdUQ%3D%3D&amp;c=17016"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-29/091229160359.jpg"/></a></li>
+        <li class="hidden"><a href="http://ju.atpanel.com/?url=http://www.taobao.com/go/act/focus/nzdc_qqg2.php?TBG=7285.module-1.4&amp;ad_id=&amp;am_id=&amp;cm_id=140021305131ef184707&amp;pm_id=15002137139b40e4bba3" target="_blank"><img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
+        <li class="hidden"><a href="http://ju.atpanel.com/?url=http://www.taobao.com/go/act/focus/nzdc_qqg2.php?TBG=7285.module-1.4&amp;ad_id=&amp;am_id=&amp;cm_id=140021305131ef184707&amp;pm_id=15002137139b40e4bba3" target="_blank"><img alt="" src="http://img03.taobaocdn.com/tps/i3/T1t1RMXhXBXXXXXXXX-470-150.jpg"/></a></li>
+    </ol>
+</div>
+<script>
+
+    KISSY.use('switchable', function(S) {
+
+        var slide = S.Slide('#demo2', {
+            effect: 'scrolly',
+            easing: 'easeOutStrong',
+            interval: 1,
+            nativeAnim: true
+        });
+
+        document.onclick = function() {
+            slide.paused = true;
+        }
+    });
+    
+</script>
+<p class="code-switch">显示源码</p>
+
+<script>
+    (function() {
+        var S = KISSY, DOM = S.DOM,
+            SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+
+        S.all('p.code-switch').each(function(p) {
+            p.on('click', function() {
+                var showing = (p.text() === SHOW_CODE),
+                    next = p.next(),
+                    pre = next;
+
+                if (next[0].nodeName !== 'PRE') {
+                    pre = S.Node('<pre>');
+
+                    pre.attr('class', 'code')
+                        .html(p.prev().html());
+
+                    if (S.UA.ie) {
+                        pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
+                    }
+
+                    DOM.insertAfter(pre[0], p[0]);
+                }
+
+                pre.css('display', showing ? 'block' : 'none');
+                p.html(showing ? HIDE_CODE : SHOW_CODE);
+            });
+        });
+    })();
+</script>
+</body>
+</html>

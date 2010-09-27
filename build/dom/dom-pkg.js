@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 17:41
+build time: Sep 26 17:48
 */
 /**
  * @module  dom
@@ -673,10 +673,10 @@ KISSY.add('dom-attr', function(S, undefined) {
         isElementNode = DOM._isElementNode,
         isTextNode = function(elem) { return DOM._nodeTypeIs(elem, 3); },
 
-        RE_SPECIAL_ATTRS = /href|src|style/,
-        RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
+        RE_SPECIAL_ATTRS = /^(?:href|src|style)/,
+        RE_NORMALIZED_ATTRS = /^(?:href|src|colspan|rowspan)/,
         RE_RETURN = /\r/g,
-        RE_RADIO_CHECK = /radio|checkbox/,
+        RE_RADIO_CHECK = /^(?:radio|checkbox)/,
 
         CUSTOM_ATTRS = {
             readonly: 'readOnly'
@@ -949,8 +949,8 @@ KISSY.add('dom-style', function(S, undefined) {
         AUTO = 'auto',
         DISPLAY = 'display', NONE = 'none',
         PARSEINT = parseInt,
-        RE_LT = /^left|top$/,
-        RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
+        RE_LT = /^(?:left|top)/,
+        RE_NEED_UNIT = /^(?:width|height|top|left|right|bottom|margin|padding)/i,
         RE_DASH = /-([a-z])/ig,
         CAMELCASE_FN = function(all, letter) {
             return letter.toUpperCase();
@@ -1223,7 +1223,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
 	    RE_NUM = /^-?\d/,
-        RE_WH = /^width|height$/;
+        RE_WH = /^(?:width|height)$/;
 
     // use alpha filter for IE opacity
     try {
@@ -1678,7 +1678,8 @@ KISSY.add('dom-create', function(S, undefined) {
         DEFAULT_DIV = doc.createElement(DIV),
 
         RE_TAG = /<(\w+)/,
-        RE_SCRIPT = /<script([^>]*)>([\s\S]*?)<\/script>/ig,
+        // Ref: http://jmrware.com/articles/2010/jqueryregex/jQueryRegexes.html#note_05
+        RE_SCRIPT = /<script([^>]*)>([^<]*(?:(?!<\/script>)<[^<]*)*)<\/script>/ig,
         RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
         RE_SCRIPT_SRC = /\ssrc=(['"])(.*?)\1/i,
         RE_SCRIPT_CHARSET = /\scharset=(['"])(.*?)\1/i;
@@ -1866,8 +1867,20 @@ KISSY.add('dom-create', function(S, undefined) {
     function setHTMLSimple(elem, html) {
         html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所有 script
         try {
+            //if(UA.ie) {
             elem.innerHTML = html;
-        } catch(ex) { // table.innerHTML = html will throw error in ie.
+            //} else {
+            // Ref:
+            //  - http://blog.stevenlevithan.com/archives/faster-than-innerhtml
+            //  - http://fins.javaeye.com/blog/183373
+            //var tEl = elem.cloneNode(false);
+            //tEl.innerHTML = html;
+            //elem.parentNode.replaceChild(elem, tEl);
+            // 注：上面的方式会丢失掉 elem 上注册的事件，放类库里不妥当
+            //}
+        }
+            // table.innerHTML = html will throw error in ie.
+        catch(ex) {
             // remove any remaining nodes
             while (elem.firstChild) {
                 elem.removeChild(elem.firstChild);

@@ -1,0 +1,370 @@
+<!doctype html>
+<html>
+<head>
+<title>Cubic Bezier Timing Function</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="bookmark" type="text/html" title="Quickchoice" href="http://www.netzgesta.de/dev/quickchoice.html">
+<meta name="Author" lang="en" content="dev.netzgesta.de - Christian Effenberger">
+<meta name="Publisher" lang="en" content="www.netzgesta.de - Christian Effenberger">
+<meta name="Copyright" lang="en" content="public domain">
+<meta name="Description" lang="en" content="A Cubic Bezier timing function compatible with -webkit-transition-timing-function">
+<meta name="Keywords" lang="en" content="cubic-bezier, easing, compatible, timing, function, unobtrusive javascript, Mozilla, Safari, Chrome, Gecko, Webkit">
+<meta name="DC.date.created" content="2009-01-29 12:00:00">
+<style>
+    html, body {
+        background-color: white;
+        margin: 20px;
+        margin-top: 10px;
+        padding: 0;
+        font-family: arial, helvetica, sans-serif;
+        font-size: 14px;
+    }
+
+    #wrapper {
+        position: relative;
+        display: block;
+        left: 0;
+        top: 0;
+        width: 400px;
+        height: 400px;
+        margin-top: 8px;
+        float: left;
+        overflow: hidden;
+    }
+
+    #output {
+        position: relative;
+        display: block;
+        width: 200px;
+        height: 384px;
+        left: 10px;
+        top: 0;
+        padding: 8px;
+        margin-top: 8px;
+        overflow: hidden;
+        background: yellow;
+        font-family: monospace;
+        font-size: 13px;
+        outline: 1px solid silver;
+    }
+
+    #demo {
+        position: absolute;
+        display: block;
+        left: 0;
+        top: 0;
+        width: 400px;
+        height: 400px;
+    }
+
+    #cp2y {
+        position: absolute;
+        display: block;
+        right: 0;
+        top: 40px;
+        width: 40px;
+        height: auto;
+        text-align: center;
+    }
+
+    #cp1y {
+        position: absolute;
+        display: block;
+        left: 0;
+        bottom: 40px;
+        width: 40px;
+        height: auto;
+        text-align: center;
+    }
+
+    #cp1x {
+        position: absolute;
+        display: block;
+        left: 0;
+        bottom: 5px;
+        width: 400px;
+        height: 30px;
+        vertical-align: middle;
+    }
+
+    #cp2x {
+        position: absolute;
+        display: block;
+        right: 0;
+        top: 5px;
+        width: 400px;
+        height: 30px;
+        text-align: right;
+        vertical-align: middle;
+    }
+</style>
+
+<script>
+    // Ref: http://www.netzgesta.de/dev/cubic-bezier-timing-function.html -->
+
+    // currently used function to determine position
+    function CubicBezierAtPosition(t, P1x, P1y, P2x, P2y) {
+        var x,y,k = ((1 - t) * (1 - t) * (1 - t));
+        x = P1x * (3 * t * t * (1 - t)) + P2x * (3 * t * (1 - t) * (1 - t)) + k;
+        y = P1y * (3 * t * t * (1 - t)) + P2y * (3 * t * (1 - t) * (1 - t)) + k;
+        return {x:Math.abs(x),y:Math.abs(y)};
+    }
+
+    // currently used function to determine time
+    // 1:1 conversion to js from webkit source files
+    // UnitBezier.h, WebCore_animation_AnimationBase.cpp
+    function CubicBezierAtTime(t, p1x, p1y, p2x, p2y, duration) {
+        var ax = 0,bx = 0,cx = 0,ay = 0,by = 0,cy = 0;
+
+        // `ax t^3 + bx t^2 + cx t' expanded using Horner's rule.
+        function sampleCurveX(t) {
+            return ((ax * t + bx) * t + cx) * t;
+        }
+
+        function sampleCurveY(t) {
+            return ((ay * t + by) * t + cy) * t;
+        }
+
+        function sampleCurveDerivativeX(t) {
+            return (3.0 * ax * t + 2.0 * bx) * t + cx;
+        }
+
+        // The epsilon value to pass given that the animation is going to run over |dur| seconds. The longer the
+        // animation, the more precision is needed in the timing function result to avoid ugly discontinuities.
+        function solveEpsilon(duration) {
+            return 1.0 / (200.0 * duration);
+        }
+
+        function solve(x, epsilon) {
+            return sampleCurveY(solveCurveX(x, epsilon));
+        }
+
+        // Given an x value, find a parametric value it came from.
+        function solveCurveX(x, epsilon) {
+            var t0,t1,t2,x2,d2,i;
+
+            function fabs(n) {
+                if (n >= 0) {
+                    return n;
+                } else {
+                    return 0 - n;
+                }
+            }
+
+            // First try a few iterations of Newton's method -- normally very fast.
+            for (t2 = x,i = 0; i < 8; i++) {
+                x2 = sampleCurveX(t2) - x;
+                if (fabs(x2) < epsilon) {
+                    return t2;
+                }
+                d2 = sampleCurveDerivativeX(t2);
+                if (fabs(d2) < 1e-6) {
+                    break;
+                }
+                t2 = t2 - x2 / d2;
+            }
+            // Fall back to the bisection method for reliability.
+            t0 = 0.0;
+            t1 = 1.0;
+            t2 = x;
+            if (t2 < t0) {
+                return t0;
+            }
+            if (t2 > t1) {
+                return t1;
+            }
+            while (t0 < t1) {
+                x2 = sampleCurveX(t2);
+                if (fabs(x2 - x) < epsilon) {
+                    return t2;
+                }
+                if (x > x2) {
+                    t0 = t2;
+                } else {
+                    t1 = t2;
+                }
+                t2 = (t1 - t0) * .5 + t0;
+            }
+            return t2; // Failure.
+        }
+
+        // Calculate the polynomial coefficients, implicit first and last control points are (0,0) and (1,1).
+        cx = 3.0 * p1x;
+        bx = 3.0 * (p2x - p1x) - cx;
+        ax = 1.0 - cx - bx;
+        cy = 3.0 * p1y;
+        by = 3.0 * (p2y - p1y) - cy;
+        ay = 1.0 - cy - by;
+        // Convert from input time to parametric value in curve, then from that to output time.
+        return solve(t, solveEpsilon(duration));
+    }
+
+    if (typeof $ == 'undefined') {
+        function $(v) {
+            return(document.getElementById(v));
+        }
+    }
+
+    function format(v) {
+        if (Math.abs(parseInt(v)) < 10) {
+            return "0" + Math.abs(v);
+        } else {
+            return parseInt(v);
+        }
+    }
+
+    function getInput(ele) {
+        $(ele.id + "v").innerHTML = (ele.value * 0.01).toFixed(2);
+        draw_bezier($("cp1x_s").value * 0.01, $("cp1y_s").value * 0.01, $("cp2x_s").value * 0.01, $("cp2y_s").value * 0.01);
+    }
+
+    function getOption(ele) {
+        var v = ele.options[ele.selectedIndex].value;
+        if (!v) {
+            ele.selectedIndex = 1;
+            v = ele.options[ele.selectedIndex].value;
+        }
+        var a = v.split(",");
+        $(ele.id + "v").innerHTML = v;
+        setBezier(parseFloat(a[0]), parseFloat(a[1]), parseFloat(a[2]), parseFloat(a[3]));
+    }
+
+    function setBezier(cp1x, cp1y, cp2x, cp2y) {
+        $("cp1x_s").value = cp1x * 100;
+        $("cp1x_sv").innerHTML = cp1x.toFixed(2);
+        $("cp1y_s").value = cp1y * 100;
+        $("cp1y_sv").innerHTML = cp1y.toFixed(2);
+        $("cp2x_s").value = cp2x * 100;
+        $("cp2x_sv").innerHTML = cp2x.toFixed(2);
+        $("cp2y_s").value = cp2y * 100;
+        $("cp2y_sv").innerHTML = cp2y.toFixed(2);
+        draw_bezier(cp1x, cp1y, cp2x, cp2y);
+    }
+
+    function draw_bezier(cp1x, cp1y, cp2x, cp2y) {
+        var canvas = document.getElementById('demo');
+        if (!canvas.getContext) return;
+        var i,t,st,ct,xy,xo,yo,cw,ch,c1x,c1y,c2x,c2y,ctx = canvas.getContext('2d');
+        xo = canvas.width / 10;
+        yo = canvas.height / 10;
+        cw = canvas.width * .8;
+        ch = canvas.height * .8;
+        ct = 10;
+        st = parseInt(cw / ct);
+        c1x = xo + (Math.max(0, Math.min(1, parseFloat(cp1x))) * cw);
+        c1y = yo + (Math.max(0, Math.min(1, 1 - parseFloat(cp1y))) * ch);
+        c2x = xo + (Math.max(0, Math.min(1, parseFloat(cp2x))) * cw);
+        c2y = yo + (Math.max(0, Math.min(1, 1 - parseFloat(cp2y))) * ch);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(240,240,240,1)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(220,220,220,1)";
+        ctx.fillRect(xo, yo, cw, ch);
+        ctx.strokeStyle = "rgba(80,80,80,1)";
+        ctx.beginPath();
+        ctx.rect(0, 0, canvas.width, canvas.height);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.rect(xo, yo, cw, ch);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.lineWidth = 0.5;
+        ctx.strokeStyle = "rgba(180,180,180,1)";
+        for (i = 0; i < ct; i++) {
+            ctx.beginPath();
+            ctx.moveTo(xo, yo + (i * st));
+            ctx.lineTo(xo + cw, yo + (i * st));
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(xo + (i * st), yo);
+            ctx.lineTo(xo + (i * st), yo + ch);
+            ctx.stroke();
+        }
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "rgba(0,0,0,1)";
+        ctx.beginPath();
+        ctx.moveTo(xo, yo + cw);
+        ctx.bezierCurveTo(c1x, c1y, c2x, c2y, xo + cw, yo);
+        ctx.stroke();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "rgba(0,0,255,1)";
+        ctx.beginPath();
+        ctx.moveTo(xo, yo + cw);
+        ctx.lineTo(c1x, c1y);
+        ctx.stroke();
+        ctx.fillStyle = "rgba(255,0,0,1)";
+        ctx.beginPath();
+        ctx.arc(c1x, c1y, 5, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = "rgba(0,0,255,1)";
+        ctx.beginPath();
+        ctx.moveTo(xo + cw, yo);
+        ctx.lineTo(c2x, c2y);
+        ctx.stroke();
+        ctx.fillStyle = "rgba(255,0,0,1)";
+        ctx.beginPath();
+        ctx.arc(c2x, c2y, 5, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = "rgba(0,255,0,0.75)";
+        var posi = 'Position Values: (green)' + '<br>', time = 'Timing Values: (yellow)' + '<br>', output = $("output");
+        for (i = 0; i < (ct + 1); i++) {
+            xy = CubicBezierAtPosition(i * 0.1, cp1x, cp1y, cp2x, cp2y);
+            t = CubicBezierAtTime(i * 0.1, cp1x, cp1y, cp2x, cp2y, 100);
+            time += format(ct - i) + '&nbsp; i: ' + ((ct - i) * 0.1).toFixed(4) + '&nbsp; o: ' + Math.abs(1 - t).toFixed(4) + '<br>';
+            posi += format(ct - i) + '&nbsp; x: ' + xy.x.toFixed(4) + '&nbsp; y: ' + xy.y.toFixed(4) + '<br>';
+            ctx.fillStyle = "rgba(0,255,0,0.75)";
+            ctx.beginPath();
+            ctx.arc(xo + (xy.x * cw), yo + ch - (xy.y * ch), 4, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+            ctx.fillStyle = "rgba(255,255,0,0.75)";
+            ctx.beginPath();
+            ctx.arc(xo + ((i * 0.1) * cw), yo + ch - ((t) * ch), 4, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+        }
+        output.innerHTML = posi + '<br>' + time;
+    }
+
+</script>
+</head>
+<body onload="setBezier(0.25, 0.1, 0.25, 1.0);">
+<strong>Cubic Bezier timing function compatible with</strong> <tt>-webkit-transition-timing-function</tt><br/>
+<small>In addition to the -webkit-transition-timing-function cubic-bezier(), support for a 100% compatible easing
+    defined by a cubic bezier function as a public domain javascript would be welcome.
+</small>
+<br/>
+<div id="wrapper">
+    <canvas id="demo" width="400" height="400"></canvas>
+    <div id="cp2x"><span id="cp2x_sv">1.0</span>&nbsp;<input onclick="getInput(this);" onmousemove="getInput(this);" onmouseup="getInput(this);" id="cp2x_s" type="range" min="0" max="100" value="100" style="margin-top: 4px; height: 20px; width: 320px;">&nbsp;<span>cp2<sub>x</sub></span>&nbsp;</div>
+    <div id="cp2y"><span>cp2<sub>y</sub></span><br/><input onclick="getInput(this);" onmousemove="getInput(this);" onmouseup="getInput(this);" id="cp2y_s" type="range" min="0" max="100" value="100" style="-webkit-appearance: slider-vertical; width: 20px; height: 280px;"><br/><span id="cp2y_sv">1.0</span></div>
+    <div id="cp1y"><span id="cp1y_sv">0.0</span><br/><input onclick="getInput(this);" onmousemove="getInput(this);" onmouseup="getInput(this);" id="cp1y_s" type="range" min="0" max="100" value="0" style="-webkit-appearance: slider-vertical; width: 20px; height: 280px;"><br/><span>cp1<sub>y</sub></span></div>
+    <div id="cp1x">&nbsp;<span>cp1<sub>x</sub></span>&nbsp;<input onclick="getInput(this);" onmousemove="getInput(this);" onmouseup="getInput(this);" id="cp1x_s" type="range" min="0" max="100" value="0" style="margin-top: 4px; height: 20px; width: 320px;">&nbsp;<span id="cp1x_sv">0.0</span></div>
+</div>
+<div id="output"></div>
+<br/>
+<select id="ease_s" size="1" onchange="getOption(this);">
+    <option value="">custom</option>
+    <option value="0.25, 0.1,  0.25, 1.0" selected="selected">default</option>
+    <option value="0.0,  0.0,  1.0,  1.0">linear</option>
+    <!-- option value="0.333333, 0.333333, 0.666666, 0.666666">linear (fake)</option -->
+    <!-- option value="0.0,  0.0,  1.0,  1.0">linear-in-out</option -->
+    <!-- option value="0.75, 0.75, 0.25, 0.25">linear-out-in</option -->
+    <option value="0.42, 0.0,  1.0,  1.0">ease-in</option>
+    <option value="0.0,  0.0,  0.58, 1.0">ease-out</option>
+    <option value="0.42, 0.0,  0.58, 1.0">ease-in-out</option>
+    <option value="0.0,  0.42, 1.0,  0.58">ease-out-in</option>
+</select>&nbsp;<span id="ease_sv">0.25, 0.1, 0.25, 1.0</span>
+<p>
+    The timing function is specified using a cubic Bezier curve, which is defined by four control points.
+    The first and last control points are always set to (0,0) and (1,1), so you just need to specify the
+    two in-between control points. The points are specified as a percentage of the overall duration
+    <em>(percentage: interpolated as a real number between 0 and 1)</em>.
+    The timing function takes as its input the current elapsed percentage of the transition duration and
+    outputs a percentage that determines how close the transition is to its goal state.
+</p>
+</body>
+</html>

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 17:41
+build time: Sep 26 17:48
 */
 KISSY.add("node",function(a){function f(b,h,k){var m;if(!(this instanceof f))return new f(b,h,k);if(b){if(a.isString(b))m=p.create(b,h,k);else if(e(b,1)||e(b,3))m=b;else if(b instanceof f)return b;this[0]=m}else this.length=0}var p=a.DOM,e=p._nodeTypeIs;f.TYPE="-ks-Node";a.augment(f,{length:1,getDOMNode:function(){return this[0]},nodeType:f.TYPE});a.one=function(b,h){var k=a.get(b,h);return k?new f(k):null};a.Node=f});
 KISSY.add("nodelist",function(a){function f(b){if(!(this instanceof f))return new f(b);e.push.apply(this,b||[])}var p=a.DOM,e=Array.prototype;a.mix(f.prototype,{length:0,item:function(b){var h=null;if(p._isElementNode(this[b]))h=new a.Node(this[b]);return h},getDOMNodes:function(){return e.slice.call(this)},each:function(b,h){var k=this.length,m=0,l;for(l=new a.Node(this[0]);m<k&&b.call(h||l,l,m,this)!==false;l=new a.Node(this[++m]));return this}});a.all=function(b,h){return new f(a.query(b,h,true))};
