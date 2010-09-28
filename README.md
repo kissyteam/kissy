@@ -36,4 +36,12 @@ KISSY - An Enjoyable JavaScript Library
  - hook 规范：     KS_Comp              比如：KS_Switchable
 
 注意：为了避免太冗长，在保持清晰和无潜在冲突的情况下，可以打破原则，比如：
-    <div class="KS_Widget" data-widget-type="Tabs" data-widget-config="{...}">
+    &lt;div class="KS_Widget" data-widget-type="Tabs" data-widget-config="{...}">
+
+
+Questions?
+----------
+
+Bug：<http://github.com/kissyteam/kissy/issues>
+邮件：<kissyteam@gmail.com>
+讨论：<http://kissyui.com/forum/>
