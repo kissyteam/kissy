@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 26 17:48
+build time: Sep 28 12:57
 */
 /**
  * @module  node
@@ -31,6 +31,11 @@ KISSY.add('node', function(S) {
         // create from html
         if (S.isString(html)) {
             domNode = DOM.create(html, props, ownerDocument);
+            
+            // 将 S.Node('<p>1</p><p>2</p>') 转换为 NodeList 
+            if(domNode.nodeType === 11) { // fragment
+                return new S.NodeList(domNode.childNodes);
+            }
         }
         // handle element or text node
         else if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
@@ -90,7 +95,7 @@ KISSY.add('nodelist', function(S) {
         }
 
         // push nodes
-        AP.push.apply(this, domNodes || []);
+        AP.push.apply(this, S.makeArray(domNodes) || []);
     }
 
     S.mix(NodeList.prototype, {
