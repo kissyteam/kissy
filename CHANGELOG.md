@@ -4,19 +4,23 @@ Update History
 
 Legend of version history:
 ---------------------------
-(date format: YYYY/MM/DD)
 
  - [+]	this is a new feature
  - [*]	this is an improvement
  - [!]	this is a change
  - [x]	this is a bug fix
 
+
 History:
 --------
+
 v1.1.5 -> v1.x.x (2010/MM/DD)  latest dev code
+
  - [+] anim 增加原生 CSS3 Transitions 支持
 
+
 v1.1.0 -> v1.1.5 (2010/09/19)
+
  - [+] 从 core 中分拆出 seed, 增加 loader 功能
  - [+] 增加 Overlay / ImageZoom / Calendar 组件
  - [+] 增加 dom-data 模块
@@ -35,12 +39,16 @@ v1.1.0 -> v1.1.5 (2010/09/19)
  - [!] S.Ajax.getScript 变更到 S.getScript
  - [x] 已知 bugs 的修正
 
+
 v1.0.0 -> v1.1.0 (2010/08/03)
+
  - [+] 完成编辑器到前端类库的转换，脱离对 YUI2 的依赖
  - [+] 完成 core/utils/css 三大部分
  - [+] Switchable /Suggest 组件的正式化
  - [+] 增加 kissy-ajbridge 子品牌
  - [+] 增加 kissy-tools 子项目
 
+
 Initial Version 1.0.0 (2009/10/26)
+
  - [+] KISSY 从一片黑色的土壤中，伸出一叶嫩绿的芽: KISSY Editor ^o^

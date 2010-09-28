@@ -7,6 +7,7 @@ KISSY - An Enjoyable JavaScript Library
  * Changelog: <http://github.com/kissyteam/kissy/blob/master/CHANGELOG.md>
  * License: <http://github.com/kissyteam/kissy/blob/master/LICENSE.md>
 
+
  Vision
 --------
 小巧灵活，简洁实用，使用起来让人感觉愉悦。
@@ -15,6 +16,7 @@ KISSY - An Enjoyable JavaScript Library
         Simple & Stupid, Short & Sweet, Slim & Sexy...
     Yeah!
 
+
  Structure
 -----------
  - build:         构建好的发布文件
@@ -22,6 +24,7 @@ KISSY - An Enjoyable JavaScript Library
  - src:           源码、测试等开发资源
  - tests:         测试相关资源
  - tools:         打包压缩等自动化工具
+
 
  Convention
 ------------
