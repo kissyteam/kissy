@@ -16,9 +16,15 @@ History:
 
 ### v1.1.5 -> v1.x.x (2010/MM/DD)
 
- - [+] anim 增加原生 CSS3 Transitions 支持 [原理](http://lifesinger.org/blog/2010/09/anim-using-css3-transitions/)
- - [+] imagezoom 增加 Zazzle 内部放大效果
- - [+] 单元测试框架改用 Jasmine
+ - [+] 单元测试框架改用 Jasmine 20% [tests](http://kissyteam.github.com/kissy/tests/)
+ - [+] imagezoom 增加 Zazzle 内部放大效果 90%
+ - [*] anim 增加原生 CSS3 Transitions 支持 [原理](http://lifesinger.org/blog/2010/09/anim-using-css3-transitions/)
+ - [+] 组件开发规范整理 20%
+ - [*] 组件开发流程整理 80%
+ - [+] 社区建设 [Blog](http://kissyui.com/blog/) [Forum](http://kissyui.com/forum/)
+ - [*] 正则优化 [小结](http://lifesinger.org/blog/2010/09/regular-expression-improvement-for-kissy/)
+ - [*] README / CHANGELOG 等细节改进
+ - [x] 已知 bugs 的修复
 
 
 ### v1.1.0 -> v1.1.5 (2010/09/19)
@@ -39,7 +45,7 @@ History:
  - [*] kissy docs 的整理和完善
  - [*] 升级 kissy-tools 中的第三方工具到最新稳定版
  - [!] S.Ajax.getScript 变更到 S.getScript
- - [x] 已知 bugs 的修正
+ - [x] 已知 bugs 的修复
 
 
 ### v1.0.0 -> v1.1.0 (2010/08/03)
