@@ -11,13 +11,13 @@ KISSY.add('imagezoom', function(S, undefined) {
         CLS_VIEWER = CLS_PREFIX + 'viewer',
         CLS_LENS = CLS_PREFIX + 'lens',
         CLS_ICON = CLS_PREFIX + 'icon',
-        CLS_MSG = CLS_PREFIX + 'msg',
+        CLS_LOADING = CLS_PREFIX + 'loading',
 
         DIV = '<div>', IMG = '<img>',
         STANDARD = 'standard',
         RE_IMG_SRC = /^.+\.(?:jpg|png|gif)$/i,
         round = Math.round, max = Math.max,
-        AUTO = 'auto',
+        AUTO = 'auto', LOAD = 'load',
         POSITION = ['top', 'right', 'bottom', 'left', 'inner'],
         SRC = 'src', DOT = '.',
 
@@ -32,11 +32,12 @@ KISSY.add('imagezoom', function(S, undefined) {
             position: 'right',         // 大图显示位置
             offset: 10,                // 大图位置的偏移量. 单一值或 [x, y]
             preload: true,             // 是否预加载大图
-            timeout: 120,              // 等待大图加载的最大时间, 单位: s  默认 2 min
             timeoutMsg: '图片暂不可用',
 
             zoomSize: [AUTO, AUTO],    // 放大区域宽高
             lensIcon: true,            // 是否显示放大镜提示图标
+
+            //loader: null,
 
             zoomCls: ''                // 放大区域额外样式
         };
@@ -74,18 +75,23 @@ KISSY.add('imagezoom', function(S, undefined) {
 
         // 预加载大图
         if (config.preload) {
-            self._bigImageCopy = createTmpImage(config.bigImageSrc);
+            new Image().src = config.bigImageSrc;
         }
 
+        self._isInner = config.position === POSITION[4];
+        self._loadingBar = config.loader;
+        self._showLoader();
         // 在小图加载完毕时初始化
         imgOnLoad(image, function() {
-            self._isInner = config.position === POSITION[4];
-            self._init();
+            if (!self._imgRegion) self._init();
+        });
+        // 防止从缓存进来的小图, 没有碰到 onload 事件而不能隐藏 load 
+        Event.on(image, LOAD, function(){
+            self._hideLoader();
         });
     }
 
     S.augment(ImageZoom, S.EventTarget, {
-
         _init: function() {
             this._renderUI();
             this._bindUI();
@@ -97,26 +103,25 @@ KISSY.add('imagezoom', function(S, undefined) {
 
             // 小图宽高及位置, 用到多次, 先保存起来
             self._imgRegion = S.merge(DOM.offset(image), getSize(image));
-
+            
             // 大图高宽, 默认使用配置信息中, 当加载大图之后, 更新该值
             self._bigImageSize = { width: config.bigImageSize[0], height: config.bigImageSize[1] };
 
             // 放大镜图标
             if (config.lensIcon) self._renderIcon();
-
         },
 
         _renderIcon: function() {
             var self = this,
                 region = self._imgRegion,
-                icon = createAbsElem(CLS_ICON);
+                icon;
 
+            icon = createAbsElem(CLS_ICON);
             doc.body.appendChild(icon);
             DOM.offset(icon, {
                 left: region.left + region.width - DOM.width(icon),
                 top: region.top + region.height - DOM.height(icon)
             });
-
             self.lensIcon = icon;
         },
 
@@ -132,16 +137,13 @@ KISSY.add('imagezoom', function(S, undefined) {
                         self._createViewer();
                     }
                     else if (self._cacheBigImageSrc && (self._cacheBigImageSrc !== bigImageSrc)) {
-                        self._updateBigImageSrcAndSize(self.image);
-
+                        DOM.attr(bigImage, SRC, bigImageSrc);
                         self._cacheBigImageSrc = bigImageSrc;
-
-                        Event.remove(self._bigImageCopy);
-                        delete self._bigImageCopy;
-                        self._bigImageCopy = createTmpImage(bigImageSrc);
-
-                        // 更改大图后, 待加载完后, 更新 self._bigImageSize,  self._lensSize
-                        self._updateViewerOnLoad(true);
+                        if (self._isInner) DOM.attr(self._bigImageCopy, SRC, DOM.attr(self.image, SRC));
+                        else {
+                            // 更改大图后, 待加载完后, 更新 self._bigImageSize,  self._lensSize
+                            self._updateViewerOnLoad(true);
+                        }
                     }
                     self.show(ev);
                 }, 100);
@@ -156,26 +158,23 @@ KISSY.add('imagezoom', function(S, undefined) {
         },
 
         _createViewer: function() {
-            var self = this, config = self.config, v, bigImage;
+            var self = this, config = self.config, v, bigImage, bigImageCopy;
 
             // 标准模式，添加镜片
-            self._renderLens();
+            if (!self._isInner) self._renderLens();
 
             // 创建 viewer 的 DOM 结构
             v = createAbsElem(CLS_VIEWER + ' ' + config.zoomCls);
-            if (config.bigImageSrc && !self._bigImageCopy) {
-                self._bigImageCopy = createTmpImage(config.bigImageSrc);
+
+            if (self._isInner) {
+                bigImageCopy = createImage(DOM.attr(self.image, SRC), v);
+                self._bigImageCopy = bigImageCopy;
             }
-            bigImage = DOM.create(IMG, { src: DOM.attr(self.image, SRC), css: {
-                                            position: 'absolute',
-                                            top: 0,
-                                            left: 0
-                                        }});
 
-            setWidthHeight(bigImage, self._bigImageSize.width, self._bigImageSize.height);
-            v.appendChild(bigImage);
-            self.bigImage = bigImage;
-
+            if (config.bigImageSrc) {
+                bigImage = createImage(config.bigImageSrc, v);
+                self.bigImage = bigImage;
+            }
             // 将 viewer 添加到 DOM 中
             doc.body.appendChild(v);
             self.viewer = v;
@@ -183,38 +182,18 @@ KISSY.add('imagezoom', function(S, undefined) {
             // 立刻显示大图区域
             self._setViewerRegion();
 
-            self._updateViewerOnLoad();
+            if (!self._isInner) self._updateViewerOnLoad();
         },
 
         _updateViewerOnLoad: function(partical) {
-            var self = this, config = self.config, timer,
-                bigImageCopy = self._bigImageCopy;
-
-            // 设置大图加载的超时定时器
-            timer = S.later(function() {
-                if (!checkImageReady(bigImageCopy)) self._showTimeoutMsg();
-                timer = undefined;
-            }, config.timeout * 1000);
-
-            // 大图加载完毕后更新显示区域
-            imgOnLoad(bigImageCopy, function() {
-                if (timer) {
-                    timer.cancel();
-                    timer = undefined;
-                }
-                self._updateBigImageSrcAndSize(self._bigImageCopy, getSize(self._bigImageCopy));
-
-                self._setViewerRegion(partical);
-            });
-        },
-
-        _updateBigImageSrcAndSize: function(src, size) {
             var self = this, config = self.config,
                 bigImage = self.bigImage;
 
-            DOM.attr(bigImage, SRC, DOM.attr(src, SRC));
-            self._bigImageSize = size || { width: config.bigImageSize[0], height: config.bigImageSize[1] };
-            setWidthHeight(bigImage, self._bigImageSize.width, self._bigImageSize.height);
+            // 大图加载完毕后更新显示区域
+            imgOnLoad(bigImage, function() {
+                self._bigImageSize = getSize(bigImage);
+                self._setViewerRegion(partical);
+            });
         },
 
         _renderLens: function() {
@@ -233,6 +212,8 @@ KISSY.add('imagezoom', function(S, undefined) {
                 region = self._imgRegion,
                 zoomSize = config.zoomSize,
                 left, top, lensWidth, lensHeight, width, height,
+                bigImage = self.bigImage,
+                bigImageCopy = self._bigImageCopy,
                 bigImageSize = self._bigImageSize;
 
             width = zoomSize[0];
@@ -249,6 +230,8 @@ KISSY.add('imagezoom', function(S, undefined) {
                 setWidthHeight(self.lens, lensWidth, lensHeight);
                 DOM.offset(self.lens, { left: round( region.left + ( region.width - lensWidth ) / 2 ),
                                         top: round( region.top + ( region.height - lensHeight ) / 2 ) });
+            } else {
+                setWidthHeight(bigImageCopy, bigImageSize.width, bigImageSize.height);
             }
 
             if (!partical) {
@@ -305,7 +288,7 @@ KISSY.add('imagezoom', function(S, undefined) {
                 if (!self._isInner && lens) DOM.offset(lens, lensOffset);
 
                 // 设置大图偏移
-                DOM.css(self.bigImage, {
+                DOM.css([self._bigImageCopy, self.bigImage], {
                     marginLeft: - round((lensOffset.left - rl) * self._bigImageSize.width / rw),
                     marginTop: - round((lensOffset.top - rt) * self._bigImageSize.height / rh)
                 });
@@ -339,31 +322,13 @@ KISSY.add('imagezoom', function(S, undefined) {
             return { left: lensLeft, top: lensTop };
         },
 
-        /**
-         * 大图片不可用时显示提示信息
-         */
-        _showTimeoutMsg: function() {
-            var self = this, config = self.config,
-                viewer = this.viewer, msg = S.get(DOT+CLS_MSG, viewer);
-
-            if (!msg) {
-                msg = createAbsElem(CLS_MSG);
-                viewer.appendChild(msg);
-            }
-
-            DOM.html(msg, config.timeoutMsg);
-            
-            ///////////////////////////?DOM.hide(self.bigImage);
-        },
-
-
         _anim: function(ev, seconds, times) {
             var self = this,
                 go, t = 1,
                 region = self._imgRegion,
                 rl = region.left, rt = region.top,
                 rw = region.width, rh = region.height,
-                img = self.bigImage,
+                img = [self.bigImage, self._bigImageCopy],
                 x = ev.pageX - rl, y = ev.pageY - rt;
 
             if (self._animTimer) self._animTimer.cancel();
@@ -425,6 +390,18 @@ KISSY.add('imagezoom', function(S, undefined) {
                     self.config.bigImageSrc = val;
                 }
             }
+        },
+
+        _showLoader: function(){
+            DOM.show(this._loadingBar);
+        },
+        _hideLoader: function() {
+            DOM.hide(this._loadingBar);
+        },
+        changeImageSrc: function(src) {
+            var self = this;
+            DOM.attr(self.image, SRC, src);
+            self._showLoader();
         }
     });
 
@@ -436,31 +413,33 @@ KISSY.add('imagezoom', function(S, undefined) {
         }
         // 图尚未加载完毕，等待 onload 时再初始化
         else {
-            Event.on(img, 'load', callback);
+            Event.on(img, LOAD, callback);
         }
     }
 
     function getSize(elem) {
-        return { width: elem.width, height: elem.height };
+        return { width: elem.clientWidth, height: elem.clientHeight };
     }
 
     function createAbsElem(cls) {
-        return DOM.create(DIV, { 'class': cls, 'style': 'position:absolute' });
+        return DOM.create(DIV, { 'class': cls, 'style': 'position:absolute;top:0;left:0' });
     }
 
     function  setWidthHeight(elem, w, h){
-        DOM.width(elem, w);
-        DOM.height(elem, h);
+        S.each(S.makeArray(elem), function(e){
+            DOM.width(e, w);
+            DOM.height(e, h);
+        });
     }
 
     function checkImageReady(imgElem) {
-        if (imgElem && imgElem.complete && imgElem.height) return true;
+        if (imgElem && imgElem.complete && imgElem.clientWidth) return true;
         return false;
     }
 
-    function createTmpImage(src) {
-        var img = new Image();
-        img.src = src;
+    function createImage(s, p) {
+        var img = DOM.create(IMG, { 'src': s, 'style': 'position:absolute;top:0;left:0' });
+        if (p) p.appendChild(img);
         return img;
     }
 });

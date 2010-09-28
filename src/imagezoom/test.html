@@ -23,6 +23,7 @@
 </style>
 <style>
     .demo {
+        position: relative;
         width: 310px;
         height: 310px;
         border: 1px solid grey;
@@ -48,9 +49,13 @@
         z-index: 999;
         background: #fff url(assets/loading.gif) no-repeat center center;
     }
-    .ks-imagezoom-msg {
-        width: 100%;
-        text-align: center;
+    #loading {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 16px;
+        height: 16px;
+        background: transparent url(assets/loading.gif) no-repeat center center;
     }
 
 </style>
@@ -69,11 +74,6 @@
     <img id="bad-small" src="http://google.com/non-exist.jpg"/>
 </div>
 
-<h2>大图不能访问</h2>
-<div class="demo">
-    <img id="bad-big" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg" data-ks-imagezoom="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg1"/>
-</div>
-
 <style>
     #imgList img {
         cursor: pointer;
@@ -84,6 +84,7 @@
 <h2>多图加载</h2>
 <div class="demo">
     <a href="#"><img id="multi" data-ks-imagezoom="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/></a>
+    <div id="loading"></div>
 </div>
 <ul id="imgList">
     <li>
@@ -120,7 +121,15 @@
     </li>
 </ul>
 
+<h2>GIF</h2>
+<div>
+    <img id="innerGIF" src="http://t1.gstatic.com/images?q=tbn:ANd9GcQ2vnXhnmkMfCAIxmWCk30RMkCEQzCuZqiBW2A31f0IlnpTKrk&t=1&usg=__SgHRt2YpoMzLSom2RwryLZ9h-b0=" data-ks-imagezoom="http://spiff.rit.edu/classes/phys235/badrock/kt_impact.gif" />
+</div>
 
+<h2>PNG</h2>
+<div>
+    <img id="innerPNG" src="http://t2.gstatic.com/images?q=tbn:ANd9GcRh4hSB5hJrHqBhqg_qMbxWIaFHAIrcHl_5Eh3hkWIx67ARSUs&t=1&usg=__qWOTgiUVJAxh66euWNsLiXm_NYw=" data-ks-imagezoom="http://d.lanrentuku.com/down/png/0904/Mario_Galaxy/Mario_Galaxy_002.png" />
+</div>
 <script>
     KISSY.ready(function(S) {
 
@@ -128,16 +137,13 @@
                             bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg"
                         });
 
-        new S.ImageZoom("#bad-big");
-
         var m = new S.ImageZoom("#multi", {
-            position: 'inner',
-            offset: 0,
-            zoomCls: 'inner'
+            loader: S.DOM.get('#loading')
         });
         S.Event.on("#imgList img", 'click', function() {
             var data = S.DOM.attr(this, 'data-ks-imagezoom');
-            S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
+            m.changeImageSrc(data+'_310x310.jpg');
+            //S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
             m.set('bigImageSrc', data);
         });
 
@@ -148,6 +154,20 @@
             offset: 0,
             zoomCls: 'inner'
         });
+
+        new S.ImageZoom("#innerGIF", {
+            position: 'inner',
+            bigImageSize: [512, 512],
+            offset: 0,
+            lensIcon: false
+        });
+        new S.ImageZoom("#innerPNG", {
+            position: 'inner',
+            bigImageSize: [650, 487],
+            offset: 0,
+            lensIcon: false
+        });
+
 
         S.ImageZoom.autoRender();
 

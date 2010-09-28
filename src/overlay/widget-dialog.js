@@ -1,6 +1,6 @@
 /**
  * KISSY.Dialog
- * @creator     乔花<qiaohua@taobao.com>
+ * @creator  玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('dialog', function(S) {
 
