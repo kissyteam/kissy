@@ -16,7 +16,9 @@ History:
 
 ### v1.1.5 -> v1.x.x (2010/MM/DD)
 
- - [+] anim 增加原生 CSS3 Transitions 支持
+ - [+] anim 增加原生 CSS3 Transitions 支持 [原理](http://lifesinger.org/blog/2010/09/anim-using-css3-transitions/)
+ - [+] imagezoom 增加 Zazzle 内部放大效果
+ - [+] 单元测试框架改用 Jasmine
 
 
 ### v1.1.0 -> v1.1.5 (2010/09/19)
