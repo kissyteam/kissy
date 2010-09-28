@@ -1,5 +1,6 @@
 
 Update History (date format: YYYY/MM/DD)
+========================================
 
 Legend of version history :
 ---------------------------
@@ -10,6 +11,9 @@ Legend of version history :
 
 History:
 --------
+v1.1.5 -> v1.x.x (2010/MM/DD)  latest dev code
+ [+] anim 增加原生 CSS3 Transitions 支持 
+
 v1.1.0 -> v1.1.5 (2010/09/19)
  [+] 从 core 中分拆出 seed, 增加 loader 功能
  [+] 增加 Overlay / ImageZoom / Calendar 组件
