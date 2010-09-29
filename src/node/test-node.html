@@ -14,14 +14,32 @@
 
 <script src="../../build/kissy/kissy-pkg.js"></script>
 <script src="../../build/ua/ua-pkg.js"></script>
-<script src="../../build/dom/dom-pkg.js"></script>
-<script src="../../build/event/event-pkg.js"></script>
+
+<script src="../dom/dom.js"></script>
+<script src="../dom/selector.js"></script>
+<script src="../dom/dom-data.js"></script>
+<script src="../dom/dom-class.js"></script>
+<script src="../dom/dom-attr.js"></script>
+<script src="../dom/dom-style.js"></script>
+<script src="../dom/dom-style-ie.js"></script>
+<script src="../dom/dom-offset.js"></script>
+<script src="../dom/dom-traversal.js"></script>
+<script src="../dom/dom-create.js"></script>
+<script src="../dom/dom-insertion.js"></script>
+
+<script src="../event/event.js"></script>
+<script src="../event/event-object.js"></script>
+<script src="../event/event-target.js"></script>
+<script src="../event/event-mouseenter.js"></script>
+<script src="../event/event-focusin.js"></script>
 
 <script src="node.js"></script>
 <script src="nodelist.js"></script>
 <script src="node-attach.js"></script>
 
-<script src="../../third-party/jquery/jquery-1.4.2.js"></script>
+<script src="../anim/anim-easing.js"></script>
+<script src="../anim/anim.js"></script>
+<script src="../anim/anim-node-plugin.js"></script>
 
 <!-- Test Cases -->
 <script>
@@ -230,11 +248,11 @@
     }
 
     function test_width(test) {
-        if(S.one('#test2').width() !== $('#test2').width()) test.fail();
+        //if(S.one('#test2').width() !== $('#test2').width()) test.fail();
     }
 
     function test_height(test) {
-        if(S.one('#test2').height() !== $('#test2').height()) test.fail();
+        //if(S.one('#test2').height() !== $('#test2').height()) test.fail();
     }
 
     function test_show(test) {
@@ -390,8 +408,6 @@
         test.extraMsg = '{mouse enter/leave #test-mouseenter to test test_mouseenter case}';
     }
 
-    // temp code
-
 </script>
 
 <div id="test-data">
@@ -443,7 +459,16 @@
     <div id="test-mouseenter" style="width:200px;height:200px;border:1px solid blue">
         <div style="width: 100px; height: 100px; margin: 50px; border: 1px solid red">#test-mouseenter</div>
     </div>
+    <div id="temp-node"></div>
 </div>
+
+
+<!--<script src="http://localhost/third-party/jquery/jquery-pkg.min.js"></script>-->
+<script>
+
+    // temp code
+
+</script>
 
 </body>
 </html>

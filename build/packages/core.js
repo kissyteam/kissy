@@ -2767,7 +2767,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 26 17:48
+build time: Sep 28 13:24
 */
 /**
  * @module  node
@@ -2775,7 +2775,7 @@ build time: Sep 26 17:48
  */
 KISSY.add('node', function(S) {
 
-    var DOM = S.DOM, nodeTypeIs = DOM._nodeTypeIs;
+    var DOM = S.DOM;
 
     /**
      * The Node class provides a wrapper for manipulating DOM Node.
@@ -2797,14 +2797,18 @@ KISSY.add('node', function(S) {
         // create from html
         if (S.isString(html)) {
             domNode = DOM.create(html, props, ownerDocument);
-        }
-        // handle element or text node
-        else if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
-            domNode = html;
+            // 将 S.Node('<p>1</p><p>2</p>') 转换为 NodeList
+            if(domNode.nodeType === 11) { // fragment
+                return new S.NodeList(domNode.childNodes);
+            }
         }
         // handle Node
         else if(html instanceof Node) {
             return html;
+        }
+        // node, document, window 等等，由使用者保证正确性
+        else {
+            domNode = html;
         }
 
         self[0] = domNode;
@@ -2856,7 +2860,7 @@ KISSY.add('nodelist', function(S) {
         }
 
         // push nodes
-        AP.push.apply(this, domNodes || []);
+        AP.push.apply(this, S.makeArray(domNodes) || []);
     }
 
     S.mix(NodeList.prototype, {
@@ -3517,7 +3521,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 26 18:29
+build time: Sep 27 16:43
 */
 /**
  * @module anim-easing
@@ -3766,12 +3770,12 @@ KISSY.add('anim', function(S, undefined) {
 
         // factory or constructor
         if (!(this instanceof Anim)) {
-            return new Anim(elem, props, duration, easing, callback);
+            return new Anim(elem, props, duration, easing, callback, nativeSupport);
         }
 
         var self = this,
             isConfig = S.isPlainObject(duration),
-            style = props, config, support, name;
+            style = props, config;
 
         /**
          * the related dom element
@@ -3811,28 +3815,17 @@ KISSY.add('anim', function(S, undefined) {
         /**
          * detect browser native animation(CSS3 transition) support
          */
-        if (config.nativeSupport) {
-            if (parseEl.style[(name = 'transition')] !== undefined) {
-                support = name;
-            } else {
-                S.each(['Webkit', 'Moz', 'O'], function(item) {
-                    if (parseEl.style[(name = item + 'Transition')] !== undefined) {
-                        support = name;
-                        return false;
-                    }
-                });
-            }
+        if (config.nativeSupport && getNativeTransitionName()
+            && S.isString((easing = config.easing))) {
 
             // 当 easing 是支持的字串时，才激活 native transition
-            if (support && S.isString((easing = config.easing))) {
-
-                if (/cubic-bezier\([\s\d.,]+\)/.test(easing) ||
-                    (easing = Easing.NativeTimeFunction[easing])) {
-                    config.easing = easing;
-                    self.transitionKey = support;
-                }
+            if (/cubic-bezier\([\s\d.,]+\)/.test(easing) ||
+                (easing = Easing.NativeTimeFunction[easing])) {
+                config.easing = easing;
+                self.transitionName = getNativeTransitionName();
             }
         }
+
 
         /**
          * timer
@@ -3858,7 +3851,7 @@ KISSY.add('anim', function(S, undefined) {
             if (self.fire(EVENT_START) === false) return;
             self.stop(); // 先停止掉正在运行的动画
 
-            if (self.transitionKey) {
+            if (self.transitionName) {
                 self._nativeRun();
             } else {
                 duration = config.duration * 1000;
@@ -3911,7 +3904,7 @@ KISSY.add('anim', function(S, undefined) {
                 target = self.props,
                 duration = config.duration * 1000,
                 easing = config.easing,
-                prefix = self.transitionKey,
+                prefix = self.transitionName,
                 transition = {};
 
             S.log('Amin uses native transition.');
@@ -3938,7 +3931,7 @@ KISSY.add('anim', function(S, undefined) {
         stop: function(finish) {
             var self = this;
 
-            if (self.transitionKey) {
+            if (self.transitionName) {
                 self._nativeStop(finish);
             }
             else {
@@ -3960,7 +3953,7 @@ KISSY.add('anim', function(S, undefined) {
 
         _nativeStop: function(finish) {
             var self = this, elem = self.domEl,
-                prefix = self.transitionKey,
+                prefix = self.transitionName,
                 props = self.props, prop;
 
             // handle for the CSS transition
@@ -3979,7 +3972,28 @@ KISSY.add('anim', function(S, undefined) {
         }
     });
 
+    Anim.supportTransition = function() { return !!getNativeTransitionName(); };
+
     S.Anim = Anim;
+
+    function getNativeTransitionName() {
+        var name = 'transition', transitionName;
+
+        if (parseEl.style[name] !== undefined) {
+            transitionName = name;
+        } else {
+            S.each(['Webkit', 'Moz', 'O'], function(item) {
+                if (parseEl.style[(name = item + 'Transition')] !== undefined) {
+                    transitionName = name;
+                    return false;
+                }
+            });
+        }
+        getNativeTransitionName = function() {
+            return transitionName;
+        };
+        return transitionName;
+    }
 
     function setToFinal(elem, props, style) {
         if (S.UA.ie && style.indexOf(OPACITY) > -1) {
