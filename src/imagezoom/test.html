@@ -51,11 +51,13 @@
     }
     #loading {
         position: absolute;
+        display: none;
         top: 0;
         right: 0;
         width: 16px;
         height: 16px;
         background: transparent url(assets/loading.gif) no-repeat center center;
+        z-index: 9999;
     }
 
 </style>
@@ -138,6 +140,8 @@
                         });
 
         var m = new S.ImageZoom("#multi", {
+            position: 'inner',
+            offset: 0,
             loader: S.DOM.get('#loading')
         });
         S.Event.on("#imgList img", 'click', function() {

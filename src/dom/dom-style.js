@@ -20,7 +20,8 @@ KISSY.add('dom-style', function(S, undefined) {
         },
         EMPTY = '',
         DEFAULT_UNIT = 'px',
-        CUSTOM_STYLES = { };
+        CUSTOM_STYLES = { },
+        elemDisplay = { };
 
     S.mix(DOM, {
 
@@ -131,17 +132,37 @@ KISSY.add('dom-style', function(S, undefined) {
          * Show the matched elements.
          */
         show: function(selector) {
+            var rest = [];
             S.query(selector).each(function(elem) {
-                if(elem) {
+                if (elem) {
                     elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
+
+                    if (DOM.css(elem, DISPLAY) === NONE) {
+                        var tagName = elem.tagName,
+                            oldVal = elemDisplay[tagName], tmp;
+                        if (!oldVal) {
+                            tmp = DOM.create('<' + tagName + '>', { STYLE: 'visiblity: hidden' });
+                            doc.body.appendChild(tmp);
+                            oldVal = DOM.css(tmp, DISPLAY);
+                            DOM.remove(tmp);
+                            if (oldVal === NONE) oldVal = 'block';
+                            elemDisplay[tagName] = oldVal;
+                        }
+                        DOM.data(elem, DISPLAY, oldVal);
+                        rest.push(elem);
+                    }
                 }
-            })
+            });
+            S.each(rest, function(elem) {
+                elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
+            });
         },
 
         /**
          * Hide the matched elements.
          */
         hide: function(selector) {
+            var rest = [];
             S.query(selector).each(function(elem) {
                 if(!elem) return;
 
@@ -150,8 +171,11 @@ KISSY.add('dom-style', function(S, undefined) {
                     if (oldVal) {
                         DOM.data(elem, DISPLAY, oldVal);
                     }
-                    style[DISPLAY] = NONE;
+                    rest.push(elem);
                 }
+            });
+            S.each(rest, function(elem){
+                elem.style[DISPLAY] = NONE;
             });
         },
 

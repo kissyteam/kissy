@@ -78,7 +78,6 @@ KISSY.add('imagezoom', function(S, undefined) {
         // 在小图加载完毕时初始化
         imgOnLoad(image, function() {
             self._init();
-            Event.remove(image, 'load');
         });
     }
 
@@ -356,7 +355,10 @@ KISSY.add('imagezoom', function(S, undefined) {
         }
         // 小图尚未加载完毕，等待 onload 时再初始化
         else {
-            Event.on(img, 'load', callback);
+            Event.on(img, 'load', function(){
+                callback();
+                Event.remove(img, 'load');
+            });
         }
     }
 
