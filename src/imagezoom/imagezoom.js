@@ -265,7 +265,7 @@ KISSY.add('imagezoom', function(S, undefined) {
                 region = self._imgRegion,
                 rl = region.left, rt = region.top,
                 rw = region.width, rh = region.height,
-                lensOffset;
+                bigImageSize = self._bigImageSize, lensOffset;
 
             if (ev.pageX > rl && ev.pageX < rl + rw &&
                 ev.pageY > rt && ev.pageY < rt + rh) {
@@ -279,8 +279,8 @@ KISSY.add('imagezoom', function(S, undefined) {
 
                 // 设置大图偏移
                 DOM.css([self._bigImageCopy, self.bigImage], {
-                    marginLeft: - round((lensOffset.left - rl) * self._bigImageSize.width / rw),
-                    marginTop: - round((lensOffset.top - rt) * self._bigImageSize.height / rh)
+                    marginLeft: - round((lensOffset.left - rl) * bigImageSize.width / rw),
+                    marginTop: - round((lensOffset.top - rt) * bigImageSize.height / rh)
                 });
             } else {
                 self.hide();
@@ -319,21 +319,21 @@ KISSY.add('imagezoom', function(S, undefined) {
                 rl = region.left, rt = region.top,
                 rw = region.width, rh = region.height,
                 img = [self.bigImage, self._bigImageCopy],
-                x = ev.pageX - rl, y = ev.pageY - rt;
+                x = ev.pageX - rl, y = ev.pageY - rt, bigImageSize = self._bigImageSize;
 
             if (self._animTimer) self._animTimer.cancel();
 
             // set min width and height
             setWidthHeight(img, rw, rh);
             self._animTimer = S.later((go = function () {
-                var tmpW = rw + (self._bigImageSize.width - rw)/times*t,
-                    tmpH = rh + (self._bigImageSize.height - rh)/times*t;
+                var tmpW = rw + (bigImageSize.width - rw)/times*t,
+                    tmpH = rh + (bigImageSize.height - rh)/times*t;
 
                 setWidthHeight(img, tmpW, tmpH);
                 // 定位到鼠标点
                 DOM.css(img, {
-                    marginLeft: round( x - x*tmpW/rw),
-                    marginTop: round(y - y*tmpH/rh)
+                    marginLeft: Math.max(Math.min(round( rw/2 - x*tmpW/rw ), 0), rw - tmpW),
+                    marginTop: Math.max(Math.min(round( rh/2 - y*tmpH/rh ), 0), rh - tmpH)
                 });
 
                 if ( ++t > times) {
@@ -355,7 +355,7 @@ KISSY.add('imagezoom', function(S, undefined) {
                 self._anim(ev, 0.5, 30);
             } else {
                 DOM.show([lens, viewer]);
-                if (lens) DOM.offset(lens, self._getLensOffset(ev));
+                self._onMouseMove(ev);
             }
 
             Event.on(doc.body, 'mousemove', self._onMouseMove, self);
