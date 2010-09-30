@@ -18,7 +18,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         round = Math.round,
         AUTO = 'auto', LOAD = 'load',
         POSITION = ['top', 'right', 'bottom', 'left', 'inner'],
-        SRC = 'src',
+        SRC = 'src', MOUSEMOVE = 'mousemove',
 
         /**
          * 默认设置
@@ -130,7 +130,9 @@ KISSY.add('imagezoom', function(S, undefined) {
         _bindUI: function() {
             var self = this, timer, config = self.config;
 
-            Event.on(self.image, 'mouseenter', function(ev) {
+            Event.on(self.image, 'mouseenter', function() {
+                Event.on(doc.body, MOUSEMOVE, self._getEv, self);
+
                 timer = S.later(function() {
                     var bigImageSrc = self.config.bigImageSrc,
                         bigImage = self.bigImage;
@@ -145,16 +147,21 @@ KISSY.add('imagezoom', function(S, undefined) {
                         self._cacheBigImageSrc = bigImageSrc;
                         if (self._isInner) DOM.attr(self._bigImageCopy, SRC, DOM.attr(self.image, SRC));
                     }
-                    self.show(ev);
+                    self.show();
                 }, 100);
             });
 
             Event.on(self.image, 'mouseleave', function() {
+                Event.on(doc.body, MOUSEMOVE, self._getEv);
+
                 if (timer) {
                     timer.cancel();
                     timer = undefined;
                 }
             });
+        },
+        _getEv: function(ev) {
+            this._ev = ev;
         },
 
         _createViewer: function() {
@@ -259,9 +266,9 @@ KISSY.add('imagezoom', function(S, undefined) {
             }
         },
 
-        _onMouseMove: function(ev) {
+        _onMouseMove: function() {
             var self = this,
-                lens = self.lens,
+                lens = self.lens, ev = self._ev,
                 region = self._imgRegion,
                 rl = region.left, rt = region.top,
                 rw = region.width, rh = region.height,
@@ -272,7 +279,7 @@ KISSY.add('imagezoom', function(S, undefined) {
 
                 if (self._isInner && self._animTimer) return;
 
-                lensOffset = self._getLensOffset(ev);
+                lensOffset = self._getLensOffset();
 
                 // 更新 lens 位置
                 if (!self._isInner && lens) DOM.offset(lens, lensOffset);
@@ -288,9 +295,9 @@ KISSY.add('imagezoom', function(S, undefined) {
         },
 
         // 获取镜片的位置
-        _getLensOffset: function(ev) {
+        _getLensOffset: function() {
             var self = this,
-                region = self._imgRegion,
+                region = self._imgRegion, ev = self._ev,
                 rl = region.left, rt = region.top,
                 rw = region.width, rh = region.height,
                 lensSize = self._lensSize,
@@ -312,9 +319,9 @@ KISSY.add('imagezoom', function(S, undefined) {
             return { left: lensLeft, top: lensTop };
         },
 
-        _anim: function(ev, seconds, times) {
+        _anim: function(seconds, times) {
             var self = this,
-                go, t = 1,
+                go, t = 1, ev = self._ev,
                 region = self._imgRegion,
                 rl = region.left, rt = region.top,
                 rw = region.width, rh = region.height,
@@ -345,20 +352,20 @@ KISSY.add('imagezoom', function(S, undefined) {
             go();
         },
 
-        show: function(ev) {
+        show: function() {
             var self = this,
                 lens = self.lens, viewer = self.viewer;
 
             DOM.hide(self.lensIcon);
             if (self._isInner) {
                 DOM.show(viewer);
-                self._anim(ev, 0.5, 30);
+                self._anim(0.5, 30);
             } else {
                 DOM.show([lens, viewer]);
-                self._onMouseMove(ev);
+                self._onMouseMove();
             }
 
-            Event.on(doc.body, 'mousemove', self._onMouseMove, self);
+            Event.on(doc.body, MOUSEMOVE, self._onMouseMove, self);
         },
 
         hide: function() {
@@ -367,7 +374,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             DOM.hide([self.lens, self.viewer]);
             DOM.show(self.lensIcon);
 
-            Event.remove(doc.body, 'mousemove', self._onMouseMove, self);
+            Event.remove(doc.body, MOUSEMOVE, self._onMouseMove, self);
         },
 
         // TODO: use ATTR
