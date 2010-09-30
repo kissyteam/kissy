@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 17:41
+build time: Sep 30 18:00
 */
 /**
  * @module kissy
@@ -855,11 +855,11 @@ build time: Sep 19 17:41
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // 将 NodeList 等集合转换为普通数组
+    // 将 LiveNodeList 等 array-like 集合转换为普通数组
     function slice2Arr(arr) {
         return AP.slice.call(arr);
     }
-    // ie 不支持用 slice 转换 NodeList, 降级到普通方法
+    // ie 不支持用 slice 转换 LiveNodeList, 降级到普通方法
     try {
         slice2Arr(docElem.childNodes);
     }
@@ -1337,7 +1337,7 @@ build time: Sep 19 17:41
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 17:41
+build time: Sep 30 18:00
 */
 /**
  * @module  ua
@@ -1534,7 +1534,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 26 17:48
+build time: Sep 30 17:59
 */
 /**
  * @module  dom
@@ -1689,6 +1689,7 @@ KISSY.add('selector', function(S, undefined) {
         return ret;
     }
 
+    // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
     function isNodeList(o) {
         // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
         // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
@@ -2480,7 +2481,7 @@ KISSY.add('dom-style', function(S, undefined) {
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width', HEIGHT = 'height',
         AUTO = 'auto',
-        DISPLAY = 'display', NONE = 'none',
+        DISPLAY = 'display', NONE = 'none', BLOCK = 'block',
         PARSEINT = parseInt,
         RE_LT = /^(?:left|top)/,
         RE_NEED_UNIT = /^(?:width|height|top|left|right|bottom|margin|padding)/i,
@@ -2490,7 +2491,8 @@ KISSY.add('dom-style', function(S, undefined) {
         },
         EMPTY = '',
         DEFAULT_UNIT = 'px',
-        CUSTOM_STYLES = { };
+        CUSTOM_STYLES = { },
+        defaultDisplay = { };
 
     S.mix(DOM, {
 
@@ -2601,11 +2603,29 @@ KISSY.add('dom-style', function(S, undefined) {
          * Show the matched elements.
          */
         show: function(selector) {
+
             S.query(selector).each(function(elem) {
-                if(elem) {
-                    elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
+                if (!elem) return;
+
+                elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
+
+                // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
+                if (DOM.css(elem, DISPLAY) === NONE) {
+                    var tagName = elem.tagName,
+                        old = defaultDisplay[tagName], tmp;
+
+                    if (!old) {
+                        tmp = doc.createElement(tagName);
+                        doc.body.appendChild(tmp);
+                        old = DOM.css(tmp, DISPLAY);
+                        DOM.remove(tmp);
+                        defaultDisplay[tagName] = old;
+                    }
+
+                    DOM.data(elem, DISPLAY, old);
+                    elem.style[DISPLAY] = old;
                 }
-            })
+            });
         },
 
         /**
@@ -2613,12 +2633,12 @@ KISSY.add('dom-style', function(S, undefined) {
          */
         hide: function(selector) {
             S.query(selector).each(function(elem) {
-                if(!elem) return;
+                if (!elem) return;
 
-                var style = elem.style, oldVal = style[DISPLAY];
-                if (oldVal !== NONE) {
-                    if (oldVal) {
-                        DOM.data(elem, DISPLAY, oldVal);
+                var style = elem.style, old = style[DISPLAY];
+                if (old !== NONE) {
+                    if (old) {
+                        DOM.data(elem, DISPLAY, old);
                     }
                     style[DISPLAY] = NONE;
                 }
@@ -2648,9 +2668,9 @@ KISSY.add('dom-style', function(S, undefined) {
          */
         addStyleSheet: function(cssText, id) {
             var elem;
-            
+
             if (id) elem = S.get('#' + id);
-            if(elem) return; // 仅添加一次，不重复添加
+            if (elem) return; // 仅添加一次，不重复添加
 
             elem = DOM.create('<style>', { id: id });
 
@@ -3538,7 +3558,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 17:41
+build time: Sep 30 18:00
 */
 /**
  * @module  event
@@ -4103,7 +4123,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 28 13:24
+build time: Sep 30 18:00
 */
 /**
  * @module  node
@@ -4443,7 +4463,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 17:41
+build time: Sep 30 17:59
 */
 /**
  * @module  cookie
@@ -4529,7 +4549,7 @@ KISSY.add('cookie', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 17:41
+build time: Sep 30 18:00
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -4857,7 +4877,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 27 16:43
+build time: Sep 30 17:59
 */
 /**
  * @module anim-easing
@@ -5428,7 +5448,7 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
         S.each({
             show: ['show', 1],
-            hide: ['hide', 0],
+            hide: ['show', 0],
             toggle: ['toggle'],
             fadeIn: ['fade', 1],
             fadeOut: ['fade', 0],
@@ -5455,7 +5475,7 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
     function fx(elem, which, speed, callback, display) {
         if (which === 'toggle') {
             display = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
-            which = display ? 'show' : 'hide';
+            which = 'show';
         }
 
         if (display) DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');

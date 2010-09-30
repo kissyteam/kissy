@@ -107,6 +107,7 @@ KISSY.add('selector', function(S, undefined) {
         return ret;
     }
 
+    // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
     function isNodeList(o) {
         // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
         // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉

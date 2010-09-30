@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 27 16:43
+build time: Sep 30 17:59
 */
 /**
  * @module anim-easing
@@ -572,7 +572,7 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
         S.each({
             show: ['show', 1],
-            hide: ['hide', 0],
+            hide: ['show', 0],
             toggle: ['toggle'],
             fadeIn: ['fade', 1],
             fadeOut: ['fade', 0],
@@ -599,7 +599,7 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
     function fx(elem, which, speed, callback, display) {
         if (which === 'toggle') {
             display = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
-            which = display ? 'show' : 'hide';
+            which = 'show';
         }
 
         if (display) DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');

@@ -1,11 +1,11 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 19 17:41
+build time: Sep 30 18:00
 */
 /**
  * KISSY Mask
- * @creator     乔花<qiaohua@taobao.com>
+ * @creator   玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('mask', function(S, undefined) {
 
@@ -110,7 +110,7 @@ KISSY.add('mask', function(S, undefined) {
 });
 /**
  * KISSY Overlay
- * @creator     乔花<qiaohua@taobao.com>
+ * @creator   玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('overlay', function(S, undefined) {
 
@@ -496,7 +496,7 @@ KISSY.add('overlay', function(S, undefined) {
  */
 /**
  * KISSY Popup
- * @creator     乔花<qiaohua@taobao.com>
+ * @creator   玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('popup', function(S) {
 
@@ -534,7 +534,7 @@ KISSY.add('popup', function(S) {
 }, { host: 'overlay' });
 /**
  * KISSY.Dialog
- * @creator     乔花<qiaohua@taobao.com>
+ * @creator  玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('dialog', function(S) {
 

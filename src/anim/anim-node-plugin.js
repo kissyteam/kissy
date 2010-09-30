@@ -30,7 +30,7 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
         S.each({
             show: ['show', 1],
-            hide: ['hide', 0],
+            hide: ['show', 0],
             toggle: ['toggle'],
             fadeIn: ['fade', 1],
             fadeOut: ['fade', 0],
@@ -57,7 +57,7 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
     function fx(elem, which, speed, callback, display) {
         if (which === 'toggle') {
             display = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
-            which = display ? 'show' : 'hide';
+            which = 'show';
         }
 
         if (display) DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');

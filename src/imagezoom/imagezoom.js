@@ -11,6 +11,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         CLS_VIEWER = CLS_PREFIX + 'viewer',
         CLS_LENS = CLS_PREFIX + 'lens',
         CLS_ICON = CLS_PREFIX + 'icon',
+        CLS_LOADING = CLS_PREFIX + 'loading',
 
         DIV = '<div>', IMG = '<img>',
         STANDARD = 'standard',
@@ -36,8 +37,6 @@ KISSY.add('imagezoom', function(S, undefined) {
             zoomSize: [AUTO, AUTO],    // 放大区域宽高
             lensIcon: true,            // 是否显示放大镜提示图标
 
-            //loader: null,             // loader 对象, 外部传入
-
             zoomCls: ''                // 放大区域额外样式
         };
 
@@ -51,6 +50,7 @@ KISSY.add('imagezoom', function(S, undefined) {
      *   - this.lens        镜片              @type HTMLElement
      *   - this.lensIcon    放大镜图标         @type HTMLElement
      *   - this.bigImage    大图              @type HTMLElement
+     *   - this.viewer      大图显示区域        @type HTMLElement
      */
     function ImageZoom(image, config) {
         var self = this, data;
@@ -78,13 +78,12 @@ KISSY.add('imagezoom', function(S, undefined) {
         }
 
         self._isInner = config.position === POSITION[4];
-        self._loadingBar = config.loader;
 
-        // 首次加载小图从缓存读取或在绑定load事件之前已经加载完小图时, 不显示 loader (ff 下诡异)
-        !image.complete && self._showLoader();
+        // 首次加载小图从缓存读取或在绑定load事件之前已经加载完小图时, 不显示 loading (ff 下诡异)
+        !image.complete && self._startLoading();
         // 保证非首张小图切换时也能正确隐藏, 不管是否来自缓存
         Event.on(image, LOAD, function(){
-            self._hideLoader();
+            self._finishLoading();
         });
 
         // 在小图加载完毕时初始化
@@ -148,11 +147,11 @@ KISSY.add('imagezoom', function(S, undefined) {
                         if (self._isInner) DOM.attr(self._bigImageCopy, SRC, DOM.attr(self.image, SRC));
                     }
                     self.show();
-                }, 100);
+                }, 300); // 300 是感觉值，不立刻触发，同时要尽量让动画流畅
             });
 
             Event.on(self.image, 'mouseleave', function() {
-                Event.on(doc.body, MOUSEMOVE, self._getEv);
+                Event.remove(doc.body, MOUSEMOVE, self._getEv);
 
                 if (timer) {
                     timer.cancel();
@@ -160,6 +159,7 @@ KISSY.add('imagezoom', function(S, undefined) {
                 }
             });
         },
+
         _getEv: function(ev) {
             this._ev = ev;
         },
@@ -389,16 +389,18 @@ KISSY.add('imagezoom', function(S, undefined) {
             }
         },
 
-        _showLoader: function(){
-            DOM.show(this._loadingBar);
+        _startLoading: function() {
+            DOM.addClass(this.viewer, CLS_LOADING);
         },
-        _hideLoader: function() {
-            DOM.hide(this._loadingBar);
+
+        _finishLoading: function() {
+            DOM.removeClass(this.viewer, CLS_LOADING);
         },
+
         changeImageSrc: function(src) {
             var self = this;
             DOM.attr(self.image, SRC, src);
-            self._showLoader();
+            self._startLoading();
         }
     });
 
