@@ -27,7 +27,7 @@ KISSY.add('anim-easing', function(S) {
             easeNone: function (t) {
                 return t;
             },
-
+            
             /**
              * Begins slowly and accelerates towards end. (quadratic)
              */
@@ -151,13 +151,13 @@ KISSY.add('anim-easing', function(S) {
                     r = s * t * t;
                 }
                 else if (t < (2 / 2.75)) {
-                    r =  s * (t -= (1.5 / 2.75)) * t + .75;
+                    r = s * (t -= (1.5 / 2.75)) * t + .75;
                 }
                 else if (t < (2.5 / 2.75)) {
-                    r =  s * (t -= (2.25 / 2.75)) * t + .9375;
+                    r = s * (t -= (2.25 / 2.75)) * t + .9375;
                 }
                 else {
-                    r =  s * (t -= (2.625 / 2.75)) * t + .984375;
+                    r = s * (t -= (2.625 / 2.75)) * t + .984375;
                 }
 
                 return r;
@@ -173,6 +173,24 @@ KISSY.add('anim-easing', function(S) {
                 return Easing.bounceOut(t * 2 - 1) * .5 + .5;
             }
         };
+
+    Easing.NativeTimeFunction = {
+        easeNone: 'linear',
+        ease: 'ease',
+
+        easeIn: 'ease-in',
+        easeOut: 'ease-out',
+        easeBoth: 'ease-in-out',
+
+        // Ref:
+        //  1. http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
+        //  2. http://www.robertpenner.com/easing/easing_demo.html
+        //  3. assets/cubic-bezier-timing-function.html
+        // 注：是模拟值，非精确推导值
+        easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
+        easeOutStrong: 'cubic-bezier(0.1, 0.5, 0.1, 1.0)',
+        easeBothStrong: 'cubic-bezier(0.9, 0.0, 0.1, 1.0)'
+    };
 
     S.Easing = Easing;
 });

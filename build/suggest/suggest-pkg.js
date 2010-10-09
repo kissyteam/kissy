@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:49
+build time: Sep 30 18:00
 */
 /**
  * 提示补全组件
@@ -14,7 +14,7 @@ KISSY.add('suggest', function(S, undefined) {
         win = window, doc = document, bd, head = S.get('head'),
         ie = S.UA.ie, ie6 = (ie === 6),
 
-        CALLBACK_STR = 'g_ks_suggest_callback', // 约定的全局回调函数
+        CALLBACK_FN = 'KISSY.Suggest.callback', // 约定的全局回调函数
         PREFIX = 'ks-suggest-',
         STYLE_ID = PREFIX + 'style', // 样式 style 元素的 id
 
@@ -44,7 +44,7 @@ KISSY.add('suggest', function(S, undefined) {
         RESULT = 'result', KEY = 'key',
         DATA_TIME = 'data-time',
         PARSEINT = parseInt,
-        RE_FOCUS_ELEMS = /^(input|button|a)$/i,
+        RE_FOCUS_ELEMS = /^(?:input|button|a)$/i,
 
         /**
          * Suggest 的默认配置
@@ -111,7 +111,34 @@ KISSY.add('suggest', function(S, undefined) {
              * 选择某项时，是否自动提交表单
              * @type Boolean
              */
-            submitOnSelect: true
+            submitOnSelect: true,
+
+            /**
+             * 提示悬浮层和输入框的垂直偏离
+             * 默认向上偏差 1px, 使得悬浮层刚好覆盖输入框的下边框
+             * @type Boolean
+             */
+            offset: -1,
+
+            /**
+             * 数据接口返回数据的编码
+             */
+            charset: 'utf-8',
+
+            /**
+             * 回调函数的参数名
+             */
+            callbackName: 'callback',
+
+            /**
+             * 回调函数的函数名
+             */
+            callbackFn: CALLBACK_FN,
+
+            /**
+             * 查询的参数名
+             */
+            queryName: 'q'
         };
 
     /**
@@ -123,7 +150,7 @@ KISSY.add('suggest', function(S, undefined) {
      * @param {Object} config
      */
     function Suggest(textInput, dataSource, config) {
-        var self = this;
+        var self = this, cbFn;
 
         // allow instantiation without the new operator
         if (!(self instanceof Suggest)) {
@@ -137,24 +164,26 @@ KISSY.add('suggest', function(S, undefined) {
         self.textInput = S.get(textInput);
 
         /**
+         * 配置参数
+         * @type Object
+         */
+        self.config = config = S.merge(defaultConfig, config);
+
+        /**
          * 获取数据的 URL
          * @type {String|Object}
          */
         // 归一化为：http://path/to/suggest.do? or http://path/to/suggest.do?p=1&
         dataSource += (dataSource.indexOf('?') === -1) ? '?' : '&';
-        self.dataSource = dataSource + 'code=utf-8&callback=' + CALLBACK_STR;
+        self.dataSource = dataSource + config.callbackName + '=' + (cbFn = config.callbackFn);
+        // 回调函数名不是默认值时，需要指向默认回调函数
+        if (cbFn !== CALLBACK_FN) initCallback(cbFn);
 
         /**
          * 通过 jsonp 返回的数据
          * @type Object
          */
         //self.returnedData = undefined;
-
-        /**
-         * 配置参数
-         * @type Object
-         */
-        self.config = S.merge(defaultConfig, config);
 
         /**
          * 存放提示信息的容器
@@ -288,6 +317,8 @@ KISSY.add('suggest', function(S, undefined) {
                         else if (pressingCount == 3) {
                             pressingCount = 0;
                         }
+                        // webkit 内核下，input 中按 UP 键，默认会导致光标定位到最前
+                        ev.preventDefault();
                     }
                 }
                 // ENTER 键
@@ -367,18 +398,18 @@ KISSY.add('suggest', function(S, undefined) {
          * 设置容器的 left, top, width
          */
         _setContainerRegion: function() {
-            var self = this,
+            var self = this, config = self.config,
                 input = self.textInput,
                 p = DOM.offset(input),
                 container = self.container;
 
             DOM.offset(container, {
                 left: p.left,
-                top: p.top + input.offsetHeight - 1 // 默认向上偏差 1, 以覆盖掉 input 的下边框
+                top: p.top + input.offsetHeight + config.offset
             });
 
             // 默认 container 的边框为 1, padding 为 0, 因此 width = offsetWidth - 2
-            DOM.width(container, self.config['containerWidth'] || input.offsetWidth - 2);
+            DOM.width(container, config['containerWidth'] || input.offsetWidth - 2);
         },
 
         /**
@@ -687,14 +718,14 @@ KISSY.add('suggest', function(S, undefined) {
          * 通过 script 元素异步加载数据
          */
         _requestData: function() {
-            var self = this, script;
+            var self = this, config = self.config, script;
             //S.log('request data via script');
 
             if (!ie) self.dataScript = undefined; // IE不需要重新创建 script 元素
 
             if (!self.dataScript) {
                 script = doc.createElement('script');
-                script.charset = 'utf-8';
+                script.charset = config.charset;
                 script.async = true;
 
                 head.insertBefore(script, head.firstChild);
@@ -712,7 +743,7 @@ KISSY.add('suggest', function(S, undefined) {
                 }
             }
 
-            self.queryParams = 'q=' + encodeURIComponent(self.query);
+            self.queryParams = config.queryName + '=' + encodeURIComponent(self.query);
             if(self.fire(EVENT_BEFORE_DATA_REQUEST) === false) return;
 
             // 注意：没必要加时间戳，是否缓存由服务器返回的Header头控制
@@ -804,22 +835,20 @@ KISSY.add('suggest', function(S, undefined) {
          */
         _formatItem: function(key, result) {
             var li = DOM.create('<li>'),
-                keyEl = DOM.create('<span>', {
-                    'class': KEY_EL_CLS
-                }),
-                resultText, resultEl;
+                resultText;
 
-            DOM.html(keyEl, key);
-            li.appendChild(keyEl);
+            li.appendChild(DOM.create('<span>', {
+                'class': KEY_EL_CLS,
+                html: key
+            }));
 
             if (result) {
                 resultText = this.config.resultFormat.replace('%result%', result);
                 if (S.trim(resultText)) { // 有值时才创建
-                    resultEl = DOM.create('<span>', {
-                        'class': RESULT_EL_CLS
-                    });
-                    DOM.html(resultEl, resultText);
-                    li.appendChild(resultEl);
+                    li.appendChild(DOM.create('<span>', {
+                        'class': RESULT_EL_CLS,
+                        html: resultText
+                    }));
                 }
             }
 
@@ -854,13 +883,12 @@ KISSY.add('suggest', function(S, undefined) {
 
             // 关闭按钮
             if (cfg['closeBtn']) {
-                closeBtn = DOM.create('<a>', {
+                footer.appendChild(DOM.create('<a>', {
                     'class': CLOSE_BTN_CLS,
+                    text: cfg.closeBtnText,
                     href: 'javascript: void(0)',
                     target: '_self' // bug fix: 覆盖<base target='_blank' />，否则会弹出空白页面
-                });
-                DOM.html(closeBtn, cfg.closeBtnText);
-                footer.appendChild(closeBtn);
+                }));
             }
 
             // 根据 query 参数，有可能填充不同的内容到 footer
@@ -978,18 +1006,32 @@ KISSY.add('suggest', function(S, undefined) {
         }
     }
 
+    function initCallback(cbFn) {
+        var parts = cbFn.split('.'), len = parts.length, o;
+
+        // cbFn 有可能为 'goog.ac.h'
+        if (len > 1) {
+            cbFn = cbFn.replace(/^(.*)\..+$/, '$1');
+            o = S.namespace(cbFn, true);
+            o[parts[len - 1]] = callback;
+        } else {
+            win[cbFn] = callback;
+        }
+    }
+
     /**
      * 约定的全局回调函数
      */
-    win[CALLBACK_STR] = function(data) {
+    function callback(data) {
         if (!Suggest.focusInstance) return;
         // 保证先运行 script.onload 事件，然后再执行 callback 函数
         S.later(function() {
             Suggest.focusInstance._handleResponse(data);
         }, 0);
-    };
+    }
 
     Suggest.version = 1.1;
+    Suggest.callback = callback;
     S.Suggest = Suggest;
 
 }, { requires: ['core'] } );

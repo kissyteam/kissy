@@ -20,7 +20,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
 	    RE_NUM = /^-?\d/,
-        RE_WH = /^width|height$/;
+        RE_WH = /^(?:width|height)$/;
 
     // use alpha filter for IE opacity
     try {
@@ -47,14 +47,20 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                 },
 
                 set: function(elem, val) {
-                    var style = elem.style;
+                    var style = elem.style, currentFilter = (elem.currentStyle || 0).filter || '';
 
                     // IE has trouble with opacity if it does not have layout
                     // Force it by setting the zoom level
                     style.zoom = 1;
 
+                    // keep existed filters, and remove opacity filter
+                    if(currentFilter) {
+                        currentFilter = currentFilter.replace(/alpha\(opacity=.+\)/ig, '');
+                        if(currentFilter) currentFilter += ', ';
+                    }
+
                     // Set the alpha filter to set the opacity
-                    style[FILTER] = 'alpha(' + OPACITY + '=' + val * 100 + ')';
+                    style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
                 }
             };
         }
@@ -98,3 +104,10 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         }
     }
 });
+/**
+ * NOTES:
+ *
+ *  - opacity 的实现，还可以用 progid:DXImageTransform.Microsoft.BasicImage(opacity=.2) 来实现，但考虑
+ *    主流类库都是用 DXImageTransform.Microsoft.Alpha 来实现的，为了保证多类库混合使用时不会出现问题，kissy 里
+ *    依旧采用 Alpha 来实现。
+ */

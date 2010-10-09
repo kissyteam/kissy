@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 30 18:00
 */
 /**
  * @module kissy
@@ -69,7 +69,7 @@ build time: Aug 26 22:48
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.3',
+        version: '1.1.5',
 
         /**
          * Initializes KISSY object.
@@ -325,17 +325,20 @@ build time: Aug 26 22:48
          * <code>
          * S.namespace('KISSY.app'); // returns KISSY.app
          * S.namespace('app.Shop'); // returns KISSY.app.Shop
+         * S.namespace('TB.app.Shop', true); // returns TB.app.Shop
          * </code>
          * @return {Object}  A reference to the last namespace object created
          */
         namespace: function() {
-            var l = arguments.length, o = null, i, j, p;
+            var args = arguments, l = args.length,
+                o = null, i, j, p,
+                global = (args[l - 1] === true && l--);
 
             for (i = 0; i < l; ++i) {
-                p = (EMPTY + arguments[i]).split('.');
-                o = this;
+                p = (EMPTY + args[i]).split('.');
+                o = global ? win : this;
                 for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                    o = o[p[j]] = o[p[j]] || {};
+                    o = o[p[j]] = o[p[j]] || { };
                 }
             }
             return o;
@@ -450,7 +453,7 @@ build time: Aug 26 22:48
         encode = encodeURIComponent,
         decode = decodeURIComponent,
         HAS_OWN_PROPERTY = 'hasOwnProperty',
-        EMPTY = '', SEP = '&',
+        EMPTY = '', SEP = '&', BRACKET = encode('[]'),
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
         REG_NOT_WHITE = /\S/;
@@ -468,14 +471,14 @@ build time: Aug 26 22:48
          * Determines whether or not the provided object is a boolean.
          */
         isBoolean: function(o) {
-            return typeof o === 'boolean';
+            return toString.call(o) === '[object Boolean]';
         },
 
         /**
          * Determines whether or not the provided object is a string.
          */
         isString: function(o) {
-            return typeof o === 'string';
+            return toString.call(o) === '[object String]';
         },
 
         /**
@@ -483,7 +486,7 @@ build time: Aug 26 22:48
          * NOTICE: Infinity and NaN return false.
          */
         isNumber: function(o) {
-            return typeof o === 'number' && isFinite(o);
+            return toString.call(o) === '[object Number]' && isFinite(o);
         },
 
         /**
@@ -702,7 +705,7 @@ build time: Aug 26 22:48
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, '[]=', encode(val[i] + EMPTY), sep);
+                            buf.push(key, BRACKET + '=', encode(val[i] + EMPTY), sep);
                         }
                     }
                 }
@@ -852,11 +855,11 @@ build time: Aug 26 22:48
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // 将 NodeList 等集合转换为普通数组
+    // 将 LiveNodeList 等 array-like 集合转换为普通数组
     function slice2Arr(arr) {
         return AP.slice.call(arr);
     }
-    // ie 不支持用 slice 转换 NodeList, 降级到普通方法
+    // ie 不支持用 slice 转换 LiveNodeList, 降级到普通方法
     try {
         slice2Arr(docElem.childNodes);
     }
@@ -955,6 +958,7 @@ build time: Aug 26 22:48
             if (S.isPlainObject(name)) {
                 S.each(name, function(v, k) {
                     v.name = k;
+                    if(mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
                 });
                 mix(mods, name);
             }
@@ -1095,7 +1099,7 @@ build time: Aug 26 22:48
                     fn && fn(self);
                 });
                 mod.fns = undefined; // 保证 attach 过的方法只执行一次
-                S.log(mod.name + '.status = attached');
+                //S.log(mod.name + '.status = attached');
             }
 
             mod.status = ATTACHED;
@@ -1138,7 +1142,7 @@ build time: Aug 26 22:48
 
                 ret = self.getScript(url, {
                     success: function() {
-                        KISSY.log(mod.name + ' onload fired.', 'info'); // 压缩时不过滤该句，以方便线上调试
+                        KISSY.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
                         _success();
                     },
                     error: function() {
@@ -1272,10 +1276,8 @@ build time: Aug 26 22:48
 
 /**
  * TODO:
- *  - combo 实现
+ *  - 自动 combo 的实现，目前是手动
  *  - 使用场景和测试用例整理
- *  - 一个模块里，对 js 和 css 的同时支持
- *
  *
  * NOTES:
  *
@@ -1310,13 +1312,16 @@ build time: Aug 26 22:48
         }
     };
 
-    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
+    S.each(['sizzle', 'datalazyload', 'flash', 'switchable',
+        'suggest', 'overlay', 'imagezoom', 'calendar'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
             requires: ['core'],
             charset: 'utf-8'
         };
     });
+
+    map['calendar'].csspath = 'calendar/default-min.css';
 
     S.add(map);
 
@@ -1330,9 +1335,9 @@ build time: Aug 26 22:48
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:49
+build time: Sep 30 18:00
 */
 /**
  * @module  ua
@@ -1527,9 +1532,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 30 17:59
 */
 /**
  * @module  dom
@@ -1662,7 +1667,7 @@ KISSY.add('selector', function(S, undefined) {
             ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
         }
         // 传入的 selector 是 NodeList 或已是 Array
-        else if (selector && (S.isArray(selector) || (selector.item && !selector.nodeType))) {
+        else if (selector && (S.isArray(selector) || isNodeList(selector))) {
             ret = selector;
         }
         // 传入的 selector 是 Node 等非字符串对象，原样返回
@@ -1672,7 +1677,7 @@ KISSY.add('selector', function(S, undefined) {
         // 传入的 selector 是其它值时，返回空数组
 
         // 将 NodeList 转换为普通数组
-        if(ret.item) {
+        if(isNodeList(ret)) {
             ret = S.makeArray(ret);
         }
 
@@ -1682,6 +1687,15 @@ KISSY.add('selector', function(S, undefined) {
         };
 
         return ret;
+    }
+
+    // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
+    function isNodeList(o) {
+        // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
+        // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
+        // 注3：通过 namedItem 来判断不可靠
+        // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
+        return o && !o.nodeType && o.item && (o != window);
     }
 
     // 调整 context 为合理值
@@ -1904,6 +1918,141 @@ KISSY.add('selector', function(S, undefined) {
  *  - http://github.com/jeresig/sizzle/blob/master/sizzle.js
  */
 /**
+ * @module  dom-data
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom-data', function(S, undefined) {
+
+    var win = window,
+        DOM = S.DOM,
+
+        expando = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
+        dataCache = { },       // 存储 node 节点的 data
+        winDataCache = { },    // 避免污染全局
+
+        // The following elements throw uncatchable exceptions if you
+        // attempt to add expando properties to them.
+        noData = {
+            EMBED: 1,
+            OBJECT: 1,
+            APPLET: 1
+        };
+
+    S.mix(DOM, {
+
+        /**
+         * Store arbitrary data associated with the matched elements.
+         */
+        data: function(selector, name, data) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.data(selector, k, name[k]);
+                }
+                return;
+            }
+
+            // getter
+            if (data === undefined) {
+                var elem = S.get(selector), isNode,
+                    cache, key, thisCache;
+
+                if (!elem || noData[elem.nodeName]) return;
+
+                if (elem == win) elem = winDataCache;
+                isNode = checkIsNode(elem);
+
+                cache = isNode ? dataCache : elem;
+                key = isNode ? elem[expando] : expando;
+                thisCache = cache[key];
+
+                if(S.isString(name) && thisCache) {
+                    return thisCache[name];
+                }
+                return thisCache;
+            }
+            // setter
+            else {
+                S.query(selector).each(function(elem) {
+                    if (!elem || noData[elem.nodeName]) return;
+                    if (elem == win) elem = winDataCache;
+
+                    var cache = dataCache, key;
+
+                    if (!checkIsNode(elem)) {
+                        key = expando;
+                        cache = elem;
+                    }
+                    else if (!(key = elem[expando])) {
+                        key = elem[expando] = S.guid();
+                    }
+
+                    if (name && data !== undefined) {
+                        if (!cache[key]) cache[key] = { };
+                        cache[key][name] = data;
+                    }
+                });
+            }
+        },
+
+        /**
+         * Remove a previously-stored piece of data.
+         */
+        removeData: function(selector, name) {
+            S.query(selector).each(function(elem) {
+                if (!elem) return;
+                if (elem == win) elem = winDataCache;
+
+                var key, cache = dataCache, thisCache,
+                    isNode = checkIsNode(elem);
+
+                if (!isNode) {
+                    cache = elem;
+                    key = expando;
+                } else {
+                    key = elem[expando];
+                }
+
+                if (!key) return;
+                thisCache = cache[key];
+
+                // If we want to remove a specific section of the element's data
+                if (name) {
+                    if (thisCache) {
+                        delete thisCache[name];
+
+                        // If we've removed all the data, remove the element's cache
+                        if (S.isEmptyObject(thisCache)) {
+                            DOM.removeData(elem);
+                        }
+                    }
+                }
+                // Otherwise, we want to remove all of the element's data
+                else {
+                    if (!isNode) {
+                        try {
+                            delete elem[expando];
+                        } catch(ex) {
+                        }
+                    } else if (elem.removeAttribute) {
+                        elem.removeAttribute(expando);
+                    }
+
+                    // Completely remove the data cache
+                    if (isNode) {
+                        delete cache[key];
+                    }
+                }
+            });
+        }
+    });
+
+    function checkIsNode(elem) {
+        return elem && elem.nodeType;
+    }
+
+});
+/**
  * @module  dom-class
  * @author  lifesinger@gmail.com
  */
@@ -2058,13 +2207,24 @@ KISSY.add('dom-attr', function(S, undefined) {
         isElementNode = DOM._isElementNode,
         isTextNode = function(elem) { return DOM._nodeTypeIs(elem, 3); },
 
-        RE_SPECIAL_ATTRS = /href|src|style/,
-        RE_NORMALIZED_ATTRS = /href|src|colspan|rowspan/,
+        RE_SPECIAL_ATTRS = /^(?:href|src|style)/,
+        RE_NORMALIZED_ATTRS = /^(?:href|src|colspan|rowspan)/,
         RE_RETURN = /\r/g,
-        RE_RADIO_CHECK = /radio|checkbox/,
+        RE_RADIO_CHECK = /^(?:radio|checkbox)/,
 
         CUSTOM_ATTRS = {
             readonly: 'readOnly'
+        },
+
+        attrFn = {
+            val: 1,
+            css: 1,
+            html: 1,
+            text: 1,
+            data: 1,
+            width: 1,
+            height: 1,
+            offset: 1
         };
 
     if (oldIE) {
@@ -2080,17 +2240,25 @@ KISSY.add('dom-attr', function(S, undefined) {
          * Gets the value of an attribute for the first element in the set of matched elements or
          * Sets an attribute for the set of matched elements.
          */
-        attr: function(selector, name, val) {
+        attr: function(selector, name, val, pass) {
             // suports hash
             if (S.isPlainObject(name)) {
+                pass = val; // 塌缩参数
                 for (var k in name) {
-                    DOM.attr(selector, k, name[k]);
+                    DOM.attr(selector, k, name[k], pass);
                 }
                 return;
             }
 
             if (!(name = S.trim(name))) return;
             name = name.toLowerCase();
+
+            // attr functions
+            if (pass && attrFn[name]) {
+                return DOM[name](selector, val);
+            }
+
+            // custom attrs
             name = CUSTOM_ATTRS[name] || name;
 
             // getter
@@ -2313,16 +2481,18 @@ KISSY.add('dom-style', function(S, undefined) {
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width', HEIGHT = 'height',
         AUTO = 'auto',
+        DISPLAY = 'display', NONE = 'none', BLOCK = 'block',
         PARSEINT = parseInt,
-        RE_LT = /^left|top$/,
-        RE_NEED_UNIT = /width|height|top|left|right|bottom|margin|padding/i,
+        RE_LT = /^(?:left|top)/,
+        RE_NEED_UNIT = /^(?:width|height|top|left|right|bottom|margin|padding)/i,
         RE_DASH = /-([a-z])/ig,
         CAMELCASE_FN = function(all, letter) {
             return letter.toUpperCase();
         },
         EMPTY = '',
         DEFAULT_UNIT = 'px',
-        CUSTOM_STYLES = { };
+        CUSTOM_STYLES = { },
+        defaultDisplay = { };
 
     S.mix(DOM, {
 
@@ -2430,6 +2600,67 @@ KISSY.add('dom-style', function(S, undefined) {
         },
 
         /**
+         * Show the matched elements.
+         */
+        show: function(selector) {
+
+            S.query(selector).each(function(elem) {
+                if (!elem) return;
+
+                elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
+
+                // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
+                if (DOM.css(elem, DISPLAY) === NONE) {
+                    var tagName = elem.tagName,
+                        old = defaultDisplay[tagName], tmp;
+
+                    if (!old) {
+                        tmp = doc.createElement(tagName);
+                        doc.body.appendChild(tmp);
+                        old = DOM.css(tmp, DISPLAY);
+                        DOM.remove(tmp);
+                        defaultDisplay[tagName] = old;
+                    }
+
+                    DOM.data(elem, DISPLAY, old);
+                    elem.style[DISPLAY] = old;
+                }
+            });
+        },
+
+        /**
+         * Hide the matched elements.
+         */
+        hide: function(selector) {
+            S.query(selector).each(function(elem) {
+                if (!elem) return;
+
+                var style = elem.style, old = style[DISPLAY];
+                if (old !== NONE) {
+                    if (old) {
+                        DOM.data(elem, DISPLAY, old);
+                    }
+                    style[DISPLAY] = NONE;
+                }
+            });
+        },
+
+        /**
+         * Display or hide the matched elements.
+         */
+        toggle: function(selector) {
+            S.query(selector).each(function(elem) {
+                if (elem) {
+                    if (elem.style[DISPLAY] === NONE) {
+                        DOM.show(elem);
+                    } else {
+                        DOM.hide(elem);
+                    }
+                }
+            });
+        },
+
+        /**
          * Creates a stylesheet from a text blob of rules.
          * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
          * @param {String} cssText The text containing the css rules
@@ -2438,9 +2669,10 @@ KISSY.add('dom-style', function(S, undefined) {
         addStyleSheet: function(cssText, id) {
             var elem;
 
-            // 有的话，直接获取
-            if (id) elem = S.get(id);
-            if (!elem) elem = DOM.create('<style>', { id: id });
+            if (id) elem = S.get('#' + id);
+            if (elem) return; // 仅添加一次，不重复添加
+
+            elem = DOM.create('<style>', { id: id });
 
             // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
             S.get('head').appendChild(elem);
@@ -2544,7 +2776,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
 	    RE_NUM = /^-?\d/,
-        RE_WH = /^width|height$/;
+        RE_WH = /^(?:width|height)$/;
 
     // use alpha filter for IE opacity
     try {
@@ -2571,14 +2803,20 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                 },
 
                 set: function(elem, val) {
-                    var style = elem.style;
+                    var style = elem.style, currentFilter = (elem.currentStyle || 0).filter || '';
 
                     // IE has trouble with opacity if it does not have layout
                     // Force it by setting the zoom level
                     style.zoom = 1;
 
+                    // keep existed filters, and remove opacity filter
+                    if(currentFilter) {
+                        currentFilter = currentFilter.replace(/alpha\(opacity=.+\)/ig, '');
+                        if(currentFilter) currentFilter += ', ';
+                    }
+
                     // Set the alpha filter to set the opacity
-                    style[FILTER] = 'alpha(' + OPACITY + '=' + val * 100 + ')';
+                    style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
                 }
             };
         }
@@ -2622,6 +2860,13 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         }
     }
 });
+/**
+ * NOTES:
+ *
+ *  - opacity 的实现，还可以用 progid:DXImageTransform.Microsoft.BasicImage(opacity=.2) 来实现，但考虑
+ *    主流类库都是用 DXImageTransform.Microsoft.Alpha 来实现的，为了保证多类库混合使用时不会出现问题，kissy 里
+ *    依旧采用 Alpha 来实现。
+ */
 /**
  * @module  dom-offset
  * @author  lifesinger@gmail.com
@@ -2977,14 +3222,17 @@ KISSY.add('dom-create', function(S, undefined) {
 
     var doc = document,
         DOM = S.DOM, UA = S.UA, ie = UA.ie,
+
         nodeTypeIs = DOM._nodeTypeIs,
         isElementNode = DOM._isElementNode,
         isKSNode = DOM._isKSNode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc.createElement(DIV),
+
         RE_TAG = /<(\w+)/,
-        RE_SCRIPT = /<script([^>]*)>([\s\S]*?)<\/script>/ig,
+        // Ref: http://jmrware.com/articles/2010/jqueryregex/jQueryRegexes.html#note_05
+        RE_SCRIPT = /<script([^>]*)>([^<]*(?:(?!<\/script>)<[^<]*)*)<\/script>/ig,
         RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
         RE_SCRIPT_SRC = /\ssrc=(['"])(.*?)\1/i,
         RE_SCRIPT_CHARSET = /\scharset=(['"])(.*?)\1/i;
@@ -3076,7 +3324,7 @@ KISSY.add('dom-create', function(S, undefined) {
     // 添加成员到元素中
     function attachProps(elem, props) {
         if (isElementNode(elem) && S.isPlainObject(props)) {
-            DOM.attr(elem, props);
+            DOM.attr(elem, props, true);
         }
         return elem;
     }
@@ -3106,7 +3354,7 @@ KISSY.add('dom-create', function(S, undefined) {
 
     function cloneNode(elem) {
         var ret = elem.cloneNode(true);
-        /*
+        /**
          * if this is MSIE 6/7, then we need to copy the innerHTML to
          * fix a bug related to some form field elements
          */
@@ -3172,8 +3420,20 @@ KISSY.add('dom-create', function(S, undefined) {
     function setHTMLSimple(elem, html) {
         html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所有 script
         try {
+            //if(UA.ie) {
             elem.innerHTML = html;
-        } catch(ex) { // table.innerHTML = html will throw error in ie.
+            //} else {
+            // Ref:
+            //  - http://blog.stevenlevithan.com/archives/faster-than-innerhtml
+            //  - http://fins.javaeye.com/blog/183373
+            //var tEl = elem.cloneNode(false);
+            //tEl.innerHTML = html;
+            //elem.parentNode.replaceChild(elem, tEl);
+            // 注：上面的方式会丢失掉 elem 上注册的事件，放类库里不妥当
+            //}
+        }
+            // table.innerHTML = html will throw error in ie.
+        catch(ex) {
             // remove any remaining nodes
             while (elem.firstChild) {
                 elem.removeChild(elem.firstChild);
@@ -3296,9 +3556,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 30 18:00
 */
 /**
  * @module  event
@@ -3307,6 +3567,7 @@ build time: Aug 26 22:48
 KISSY.add('event', function(S, undefined) {
 
     var doc = document,
+        DOM = S.DOM,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -3412,14 +3673,14 @@ KISSY.add('event', function(S, undefined) {
 
             var id = getID(target),
                 events, eventsType, listeners,
-                i, j, len, c, t;
+                i, j, len, c, t, special;
 
             if (id === -1) return; // 不是有效的 target
             if (!id || !(c = cache[id])) return; // 无 cache
             if (c.target !== target) return; // target 不匹配
             scope = scope || target;
             events = c.events || { };
-
+            
             if ((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
@@ -3439,8 +3700,10 @@ KISSY.add('event', function(S, undefined) {
                 // remove(el, type) or fn 已移除光
                 if (fn === undefined || len === 0) {
                     if (!target.isCustomEventTarget) {
-                        simpleRemove(target, type, eventsType.handle);
-                    } else if (target._addEvent) { // such as Node
+                        special = Event.special[type] || { };
+                        simpleRemove(target, special.fix || type, eventsType.handle);
+                    }
+                    else if (target._addEvent) { // such as Node
                         target._removeEvent(type, eventsType.handle);
                     }
                     delete events[type];
@@ -3517,28 +3780,17 @@ KISSY.add('event', function(S, undefined) {
     }
 
     function getID(target) {
-        return isValidTarget(target) ? target[EVENT_GUID] : -1;
+        return isValidTarget(target) ? DOM.data(target, EVENT_GUID) : -1;
     }
 
     function setID(target, id) {
-        if (!isValidTarget(target)) {
-            return S.error('Text or comment node is not valid event target.');
-        }
-
-        try {
-            target[EVENT_GUID] = id;
-        } catch(ex) {
-            // iframe 跨域等情况会报错
-            S.error(ex);
+        if (isValidTarget(target)) {
+            DOM.data(target, EVENT_GUID, id);
         }
     }
 
     function removeID(target) {
-        try {
-            target[EVENT_GUID] = undefined;
-            delete target[EVENT_GUID];
-        } catch(ex) {
-        }
+        DOM.removeData(target, EVENT_GUID);
     }
 
     function isValidTarget(target) {
@@ -3735,8 +3987,7 @@ KISSY.add('event-object', function(S, undefined) {
  */
 KISSY.add('event-target', function(S, undefined) {
 
-    var Event = S.Event,
-        EVENT_GUID = Event.EVENT_GUID;
+    var Event = S.Event;
 
     /**
      * EventTarget provides the implementation for any object to publish,
@@ -3744,12 +3995,10 @@ KISSY.add('event-target', function(S, undefined) {
      */
     S.EventTarget = {
 
-        //ksEventTargetId: undefined,
-
         isCustomEventTarget: true,
 
         fire: function(type, eventData) {
-            var id = this[EVENT_GUID] || -1,
+            var id = S.DOM.data(this, Event.EVENT_GUID) || -1,
                 cache = Event._getCache(id) || { },
                 events = cache.events || { },
                 t = events[type];
@@ -3777,7 +4026,7 @@ KISSY.add('event-target', function(S, undefined) {
  * NOTES:
  *
  *  2010.04
- *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 是不需要
+ *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 不是必须
  *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
  *
  *   - detach 命名是因为 removeEventListener 太长，remove 则太容易冲突
@@ -3805,6 +4054,11 @@ KISSY.add('event-mouseenter', function(S) {
                 },
 
                 handle: function(el, event, listeners) {
+                    // 保证 el 为原生 DOMNode
+                    if(S.DOM._isKSNode(el)) {
+                        el = el[0];
+                    }
+                    
                     // Check if mouse(over|out) are still within the same parent element
                     var parent = event.relatedTarget;
 
@@ -3867,9 +4121,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 30 18:00
 */
 /**
  * @module  node
@@ -3877,7 +4131,7 @@ build time: Aug 26 22:48
  */
 KISSY.add('node', function(S) {
 
-    var DOM = S.DOM, nodeTypeIs = DOM._nodeTypeIs;
+    var DOM = S.DOM;
 
     /**
      * The Node class provides a wrapper for manipulating DOM Node.
@@ -3896,12 +4150,21 @@ KISSY.add('node', function(S) {
             return;
         }
 
-        // handle element or text node
-        if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
-            domNode = html;
-        }
-        else if (S.isString(html)) {
+        // create from html
+        if (S.isString(html)) {
             domNode = DOM.create(html, props, ownerDocument);
+            // 将 S.Node('<p>1</p><p>2</p>') 转换为 NodeList
+            if(domNode.nodeType === 11) { // fragment
+                return new S.NodeList(domNode.childNodes);
+            }
+        }
+        // handle Node
+        else if(html instanceof Node) {
+            return html;
+        }
+        // node, document, window 等等，由使用者保证正确性
+        else {
+            domNode = html;
         }
 
         self[0] = domNode;
@@ -3953,7 +4216,7 @@ KISSY.add('nodelist', function(S) {
         }
 
         // push nodes
-        AP.push.apply(this, domNodes || []);
+        AP.push.apply(this, S.makeArray(domNodes) || []);
     }
 
     S.mix(NodeList.prototype, {
@@ -4024,6 +4287,8 @@ KISSY.add('nodelist', function(S) {
 KISSY.add('node-attach', function(S, undefined) {
 
     var DOM = S.DOM, Event = S.Event,
+        nodeTypeIs = DOM._nodeTypeIs,
+        isKSNode = DOM._isKSNode,
         NP = S.Node.prototype,
         NLP = S.NodeList.prototype,
         GET_DOM_NODE = 'getDOMNode',
@@ -4032,14 +4297,14 @@ KISSY.add('node-attach', function(S, undefined) {
         ONLY_VAL = 2,
         ALWAYS_NODE = 4;
 
-    function normalGetterSetter(isNodeList, arguments, valIndex, fn) {
+    function normalGetterSetter(isNodeList, args, valIndex, fn) {
         var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
-            args = [elems].concat(S.makeArray(arguments));
+            args2 = [elems].concat(S.makeArray(args));
 
-        if (arguments[valIndex] === undefined) {
-            return fn.apply(DOM, args);
+        if (args[valIndex] === undefined) {
+            return fn.apply(DOM, args2);
         } else {
-            fn.apply(DOM, args);
+            fn.apply(DOM, args2);
             return this;
         }
     }
@@ -4100,6 +4365,9 @@ KISSY.add('node-attach', function(S, undefined) {
         }
     });
 
+    // dom-data
+    attach(['data', 'removeData'], HAS_NAME);
+
     // dom-class
     attach(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass']);
 
@@ -4131,7 +4399,7 @@ KISSY.add('node-attach', function(S, undefined) {
             return this;
         };
     });
-    S.each([NP, NLP], function(P) {
+    S.each([NP, NLP], function(P, isNodeList) {
         S.mix(P, {
 
             /**
@@ -4140,7 +4408,17 @@ KISSY.add('node-attach', function(S, undefined) {
             append: function(html) {
                 if (html) {
                     S.each(this, function(elem) {
-                        elem.appendChild(DOM.create(html));
+                        var domNode;
+
+                        // 对于 NodeList, 需要 cloneNode, 因此直接调用 create
+                        if (isNodeList || S.isString(html)) {
+                            domNode = DOM.create(html);
+                        } else {
+                            if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) domNode = html;
+                            if (isKSNode(html)) domNode = html[0];
+                        }
+
+                        elem.appendChild(domNode);
                     });
                 }
                 return this;
@@ -4163,24 +4441,29 @@ KISSY.add('node-attach', function(S, undefined) {
 
     // event-target
     S.each([NP, NLP], function(P) {
-        S.mix(P, S.EventTarget, { _supportSpecialEvent: true });
+
+        S.mix(P, S.EventTarget);
+        P._supportSpecialEvent = true;
+
         P._addEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
                 Event._simpleAdd(this[i], type, handle, capture);
             }
         };
+
         P._removeEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
                 Event._simpleRemove(this[i], type, handle, capture);
             }
         };
+
         delete P.fire;
     });
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 30 17:59
 */
 /**
  * @module  cookie
@@ -4264,9 +4547,9 @@ KISSY.add('cookie', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 30 18:00
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -4592,9 +4875,9 @@ KISSY.add('json', function (S) {
     }
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 30 17:59
 */
 /**
  * @module anim-easing
@@ -4625,7 +4908,7 @@ KISSY.add('anim-easing', function(S) {
             easeNone: function (t) {
                 return t;
             },
-
+            
             /**
              * Begins slowly and accelerates towards end. (quadratic)
              */
@@ -4749,13 +5032,13 @@ KISSY.add('anim-easing', function(S) {
                     r = s * t * t;
                 }
                 else if (t < (2 / 2.75)) {
-                    r =  s * (t -= (1.5 / 2.75)) * t + .75;
+                    r = s * (t -= (1.5 / 2.75)) * t + .75;
                 }
                 else if (t < (2.5 / 2.75)) {
-                    r =  s * (t -= (2.25 / 2.75)) * t + .9375;
+                    r = s * (t -= (2.25 / 2.75)) * t + .9375;
                 }
                 else {
-                    r =  s * (t -= (2.625 / 2.75)) * t + .984375;
+                    r = s * (t -= (2.625 / 2.75)) * t + .984375;
                 }
 
                 return r;
@@ -4771,6 +5054,24 @@ KISSY.add('anim-easing', function(S) {
                 return Easing.bounceOut(t * 2 - 1) * .5 + .5;
             }
         };
+
+    Easing.NativeTimeFunction = {
+        easeNone: 'linear',
+        ease: 'ease',
+
+        easeIn: 'ease-in',
+        easeOut: 'ease-out',
+        easeBoth: 'ease-in-out',
+
+        // Ref:
+        //  1. http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
+        //  2. http://www.robertpenner.com/easing/easing_demo.html
+        //  3. assets/cubic-bezier-timing-function.html
+        // 注：是模拟值，非精确推导值
+        easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
+        easeOutStrong: 'cubic-bezier(0.1, 0.5, 0.1, 1.0)',
+        easeBothStrong: 'cubic-bezier(0.9, 0.0, 0.1, 1.0)'
+    };
 
     S.Easing = Easing;
 });
@@ -4801,13 +5102,17 @@ KISSY.add('anim', function(S, undefined) {
 
         STEP_INTERVAL = 13,
         OPACITY = 'opacity',
+        NONE = 'none',
+        PROPERTY = 'Property',
+
         EVENT_START = 'start',
         EVENT_STEP = 'step',
         EVENT_COMPLETE = 'complete',
 
         defaultConfig = {
             duration: 1,
-            easing: Easing.easeNone
+            easing: 'easeNone',
+            nativeSupport: true // 优先使用原生 css3 transition
             //queue: true
         };
 
@@ -4815,13 +5120,13 @@ KISSY.add('anim', function(S, undefined) {
      * Anim Class
      * @constructor
      */
-    function Anim(elem, props, duration, easing, callback) {
+    function Anim(elem, props, duration, easing, callback, nativeSupport) {
         // ignore non-exist element
         if (!(elem = S.get(elem))) return;
 
         // factory or constructor
         if (!(this instanceof Anim)) {
-            return new Anim(elem, props, duration, easing, callback);
+            return new Anim(elem, props, duration, easing, callback, nativeSupport);
         }
 
         var self = this,
@@ -4856,12 +5161,27 @@ KISSY.add('anim', function(S, undefined) {
             config = S.merge(defaultConfig, duration);
         } else {
             config = S.clone(defaultConfig);
-            duration && (config.duration = PARSE_FLOAT(duration, 10) || 1);
-            S.isString(easing) && (easing = Easing[easing]); // 可以是字符串, 比如 'easingOut'
-            S.isFunction(easing) && (config.easing = easing);
-            S.isFunction(callback) && (config.complete = callback);
+            if (duration) (config.duration = PARSE_FLOAT(duration) || 1);
+            if (S.isString(easing) || S.isFunction(easing)) config.easing = easing;
+            if (S.isFunction(callback)) config.complete = callback;
+            if(nativeSupport !== undefined) config.nativeSupport = nativeSupport;
         }
         self.config = config;
+
+        /**
+         * detect browser native animation(CSS3 transition) support
+         */
+        if (config.nativeSupport && getNativeTransitionName()
+            && S.isString((easing = config.easing))) {
+
+            // 当 easing 是支持的字串时，才激活 native transition
+            if (/cubic-bezier\([\s\d.,]+\)/.test(easing) ||
+                (easing = Easing.NativeTimeFunction[easing])) {
+                config.easing = easing;
+                self.transitionName = getNativeTransitionName();
+            }
+        }
+
 
         /**
          * timer
@@ -4879,75 +5199,164 @@ KISSY.add('anim', function(S, undefined) {
         run: function() {
             var self = this, config = self.config,
                 elem = self.domEl,
-                duration = config.duration * 1000,
-                easing = config.easing,
-                start = S.now(), finish = start + duration,
+                duration, easing, start, finish,
                 target = self.props,
                 source = {}, prop, go;
 
             for (prop in target) source[prop] = parse(DOM.css(elem, prop));
-            if(self.fire(EVENT_START) === false) return;
-
+            if (self.fire(EVENT_START) === false) return;
             self.stop(); // 先停止掉正在运行的动画
 
-            self.timer = S.later((go = function () {
-                var time = S.now(),
-                    t = time > finish ? 1 : (time - start) / duration,
-                    sp, tp, b;
+            if (self.transitionName) {
+                self._nativeRun();
+            } else {
+                duration = config.duration * 1000;
+                start = S.now();
+                finish = start + duration;
 
-                for (prop in target) {
-                    sp = source[prop];
-                    tp = target[prop];
-
-                    // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
-                    // 这时要把 sp 的单位调整为和 tp 的一致
-                    if(tp.v == 0) tp.u = sp.u;
-
-                    // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
-                    // 比如：ie 下 border-width 默认为 medium
-                    if(sp.u !== tp.u) sp.v = 0;
-
-                    // go
-                    DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
+                easing = config.easing;
+                if(S.isString(easing)) {
+                    easing = Easing[easing] || Easing.easeNone;
                 }
 
-                if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
-                    self.stop();
-                    // complete 事件只在动画到达最后一帧时才触发
-                    if(b) self.fire(EVENT_COMPLETE);
-                }
-            }), STEP_INTERVAL, true);
+                self.timer = S.later((go = function () {
+                    var time = S.now(),
+                        t = time > finish ? 1 : (time - start) / duration,
+                        sp, tp, b;
 
-            // 立刻执行
-            go();
+                    for (prop in target) {
+                        sp = source[prop];
+                        tp = target[prop];
+
+                        // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
+                        // 这时要把 sp 的单位调整为和 tp 的一致
+                        if (tp.v == 0) tp.u = sp.u;
+
+                        // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
+                        // 比如：ie 下 border-width 默认为 medium
+                        if (sp.u !== tp.u) sp.v = 0;
+
+                        // go
+                        DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
+                    }
+
+                    if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
+                        self.stop();
+                        // complete 事件只在动画到达最后一帧时才触发
+                        if (b) self.fire(EVENT_COMPLETE);
+                    }
+                }), STEP_INTERVAL, true);
+
+                // 立刻执行
+                go();
+            }
 
             return self;
         },
 
+        _nativeRun: function() {
+            var self = this, config = self.config,
+                elem = self.domEl,
+                target = self.props,
+                duration = config.duration * 1000,
+                easing = config.easing,
+                prefix = self.transitionName,
+                transition = {};
+
+            S.log('Amin uses native transition.');
+
+            // using CSS transition process
+            transition[prefix + 'Property'] = 'all';
+            transition[prefix + 'Duration'] = duration + 'ms';
+            transition[prefix + 'TimingFunction'] = easing;
+
+            // set the CSS transition style
+            DOM.css(elem, transition);
+
+            // set the final style value (need some hack for opera)
+            S.later(function() {
+                setToFinal(elem, target, self.targetStyle);
+            }, 0);
+
+            // after duration time, fire the stop function
+            S.later(function() {
+                self.stop(true);
+            }, duration);
+        },
+
         stop: function(finish) {
-            var self = this, elem = self.domEl,
-                style = self.targetStyle;
+            var self = this;
 
-            // 停止定时器
-            if (self.timer) {
-                self.timer.cancel();
-                self.timer = undefined;
+            if (self.transitionName) {
+                self._nativeStop(finish);
             }
-
-            // 直接设置到最终样式
-            if(finish) {
-                if(S.UA.ie && style.indexOf(OPACITY) > -1) {
-                    DOM.css(elem, OPACITY, self.props[OPACITY].v);
+            else {
+                // 停止定时器
+                if (self.timer) {
+                    self.timer.cancel();
+                    self.timer = undefined;
                 }
-                elem.style.cssText += ';' + style;
-                self.fire(EVENT_COMPLETE);
+
+                // 直接设置到最终样式
+                if (finish) {
+                    setToFinal(self.domEl, self.props, self.targetStyle);
+                    self.fire(EVENT_COMPLETE);
+                }
             }
 
             return self;
+        },
+
+        _nativeStop: function(finish) {
+            var self = this, elem = self.domEl,
+                prefix = self.transitionName,
+                props = self.props, prop;
+
+            // handle for the CSS transition
+            if (finish) {
+                // CSS transition value remove should come first
+                DOM.css(elem, prefix + PROPERTY, NONE);
+                self.fire(EVENT_COMPLETE);
+            } else {
+                // if want to stop the CSS transition, should set the current computed style value to the final CSS value
+                for (prop in props) {
+                    DOM.css(elem, prop, DOM._getComputedStyle(elem, prop));
+                }
+                // CSS transition value remove should come last
+                DOM.css(elem, prefix + PROPERTY, NONE);
+            }
         }
     });
 
+    Anim.supportTransition = function() { return !!getNativeTransitionName(); };
+
     S.Anim = Anim;
+
+    function getNativeTransitionName() {
+        var name = 'transition', transitionName;
+
+        if (parseEl.style[name] !== undefined) {
+            transitionName = name;
+        } else {
+            S.each(['Webkit', 'Moz', 'O'], function(item) {
+                if (parseEl.style[(name = item + 'Transition')] !== undefined) {
+                    transitionName = name;
+                    return false;
+                }
+            });
+        }
+        getNativeTransitionName = function() {
+            return transitionName;
+        };
+        return transitionName;
+    }
+
+    function setToFinal(elem, props, style) {
+        if (S.UA.ie && style.indexOf(OPACITY) > -1) {
+            DOM.css(elem, OPACITY, props[OPACITY].v);
+        }
+        elem.style.cssText += ';' + style;
+    }
 
     function normalize(style) {
         var css, rules = { }, i = PROPS.length, v;
@@ -4958,7 +5367,7 @@ KISSY.add('anim', function(S, undefined) {
     }
 
     function parse(val) {
-        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d\.]+/, '');
+        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d.]+/, '');
         return isNaN(num) ? { v: unit, u: '', f: colorEtc } : { v: num, u: unit, f: interpolate };
     }
 
@@ -4969,12 +5378,12 @@ KISSY.add('anim', function(S, undefined) {
     function colorEtc(source, target, pos) {
         var i = 2, j, c, tmp, v = [], r = [];
 
-        while (j = 3, c = arguments[i - 1], i--) {
+        while (j = 3,c = arguments[i - 1],i--) {
             if (s(c, 0, 4) === 'rgb(') {
                 c = c.match(/\d+/g);
                 while (j--) v.push(~~c[j]);
             }
-            else if(s(c, 0) === '#') {
+            else if (s(c, 0) === '#') {
                 if (c.length === 4) c = '#' + s(c, 1) + s(c, 1) + s(c, 2) + s(c, 2) + s(c, 3) + s(c, 3);
                 while (j--) v.push(parseInt(s(c, 1 + j * 2, 2), 16));
             }
@@ -4994,7 +5403,8 @@ KISSY.add('anim', function(S, undefined) {
     function s(str, p, c) {
         return str.substr(p, c || 1);
     }
-});
+})
+    ;
 
 /**
  * TODO:
@@ -5008,40 +5418,120 @@ KISSY.add('anim', function(S, undefined) {
  */
 /**
  * @module  anim-node-plugin
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com, qiaohua@taobao.com
  */
 KISSY.add('anim-node-plugin', function(S, undefined) {
 
-    var Anim = S.Anim,
-        NP = S.Node.prototype, NLP = S.NodeList.prototype;
+    var DOM = S.DOM, Anim = S.Anim,
+        NP = S.Node.prototype, NLP = S.NodeList.prototype,
+
+        DISPLAY = 'display', NONE = 'none',
+        OVERFLOW = 'overflow', HIDDEN = 'hidden',
+        OPCACITY = 'opacity',
+        HEIGHT = 'height', WIDTH = 'width', AUTO = 'auto',
+
+        FX = {
+            show: [OVERFLOW, OPCACITY, HEIGHT, WIDTH],
+            fade: [OPCACITY],
+            slide: [OVERFLOW, HEIGHT]
+        };
 
     S.each([NP, NLP], function(P) {
-
         P.animate = function() {
             var args = S.makeArray(arguments);
 
             S.each(this, function(elem) {
                 Anim.apply(undefined, [elem].concat(args)).run();
             });
-            
             return this;
         };
-    })
+
+        S.each({
+            show: ['show', 1],
+            hide: ['show', 0],
+            toggle: ['toggle'],
+            fadeIn: ['fade', 1],
+            fadeOut: ['fade', 0],
+            slideDown: ['slide', 1],
+            slideUp: ['slide', 0]
+        },
+            function(v, k) {
+
+                P[k] = function(speed, callback) {
+                    // 没有参数时，调用 DOM 中的对应方法
+                    if (DOM[k] && arguments.length === 0) {
+                        DOM[k](this);
+                    }
+                    else {
+                        S.each(this, function(elem) {
+                            fx(elem, v[0], speed, callback, v[1]);
+                        });
+                    }
+                    return this;
+                };
+            });
+    });
+
+    function fx(elem, which, speed, callback, display) {
+        if (which === 'toggle') {
+            display = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
+            which = 'show';
+        }
+
+        if (display) DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
+
+        // 根据不同类型设置初始 css 属性, 并设置动画参数
+        var style = { };
+        S.each(FX[which], function(prop) {
+            if (prop === OVERFLOW) {
+                DOM.css(elem, OVERFLOW, HIDDEN);
+            }
+            else if (prop === OPCACITY) {
+                style.opacity = display ? 1 : 0;
+                if (display) DOM.css(elem, OPCACITY, 0);
+            }
+            else if (prop === HEIGHT) {
+                style.height = (display ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
+                if (display) DOM.css(elem, HEIGHT, 0);
+            }
+            else if (prop === WIDTH) {
+                style.width = (display ? DOM.css(elem, WIDTH) || elem.naturalWidth : 0);
+                if (display) DOM.css(elem, WIDTH, 0);
+            }
+        });
+
+        // 开始动画
+        new S.Anim(elem, style, speed, 'easeOut', function() {
+            // 如果是隐藏, 需要还原一些 css 属性
+            if (!display) {
+                // 保留原有值
+                var style = elem.style, oldVal = style[DISPLAY];
+                if (oldVal !== NONE) {
+                    if (oldVal) {
+                        DOM.data(elem, DISPLAY, oldVal);
+                    }
+                    style[DISPLAY] = NONE;
+                }
+
+                // 还原部分样式
+                DOM.css(elem, {
+                    height: AUTO,
+                    width: AUTO,
+                    overflow: AUTO,
+                    opacity: 1
+                });
+            }
+            if (callback && S.isFunction(callback)) callback();
+        }).run();
+    }
 
 });
 
-/**
- * TODO:
- *  - ����ֱ�Ӹ� Node ��� Node.addMethods ����
- *  - �����Ƿ���� slideUp/slideDown/fadeIn/show/hide �ȿ�ݷ���
- *
- */
-
 KISSY.add('core');
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 30 18:00
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -6119,9 +6609,9 @@ KISSY.add('sizzle', function(S) {
 })();
 
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 30 17:59
 */
 /**
  * 数据延迟加载组件
@@ -6236,7 +6726,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             self.threshold = self._getThreshold();
 
             self._filterItems();
-            self._getItemsLength() && self._initLoadEvent();
+            self._initLoadEvent();
         },
 
         /**
@@ -6483,7 +6973,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                 vh = DOM['viewportHeight']();
 
             if (diff === DEFAULT) return 2 * vh; // diff 默认为当前视窗高度（两屏以外的才延迟加载）
-            else return vh + diff;
+            else return vh + (+diff); // 将 diff 转换成数值
         },
 
         /**
@@ -6602,9 +7092,9 @@ KISSY.add('datalazyload', function(S, undefined) {
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 30 18:00
 */
 /**
  * @module   Flash 全局静态类
@@ -6751,7 +7241,7 @@ KISSY.add('flash-embed', function(S) {
         TARGET_NOT_FOUND = -2,  // 指定 ID 的对象未找到
         SWF_SRC_UNDEFINED = -3, // swf 的地址未指定
 
-        RE_FLASH_TAGS = /object|embed/i,
+        RE_FLASH_TAGS = /^(?:object|embed)/i,
         CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
         TYPE = 'application/x-shockwave-flash',
         FLASHVARS = 'flashvars', EMPTY = '',
@@ -7059,9 +7549,9 @@ KISSY.add('flash-embed', function(S) {
  * 2010/08/10	修复了sarfari/chrome （webkit）下失效的问题。								
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:49
+build time: Sep 30 18:00
 */
 /**
  * Switchable
@@ -7073,7 +7563,8 @@ KISSY.add('switchable', function(S, undefined) {
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
-        EVENT_BEFORE_INIT = 'beforeInit', EVENT_INIT = 'init',
+
+        EVENT_INIT = 'init',
         EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
         CLS_PREFIX = 'ks-switchable-';
 
@@ -7172,8 +7663,9 @@ KISSY.add('switchable', function(S, undefined) {
         // 触发延迟
         delay: .1, // 100ms
 
-        activeIndex: 0, // markup 的默认激活项，应该与此 index 一致
+        activeIndex: 0, // markup 的默认激活项应与 activeIndex 保持一致
         activeTriggerCls: 'ks-active',
+        //switchTo: 0,
 
         // 可见视图内有多少个 panels
         steps: 1,
@@ -7193,11 +7685,13 @@ KISSY.add('switchable', function(S, undefined) {
         _init: function() {
             var self = this, cfg = self.config;
 
-            // fire event
-            if(self.fire(EVENT_BEFORE_INIT) === false) return;
-
             // parse markup
             self._parseMarkup();
+
+            // 切换到指定项
+            if(cfg.switchTo) {
+                self.switchTo(cfg.switchTo);
+            }
 
             // bind triggers
             if (cfg.hasTriggers) {
@@ -7311,7 +7805,7 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onFocusTrigger: function(index) {
             var self = this;
-            if (!self._triggerIsValid()) return; // 重复点击
+            if (!self._triggerIsValid(index)) return; // 重复点击
 
             this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
             self.switchTo(index);
@@ -7322,7 +7816,7 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _onMouseEnterTrigger: function(index) {
             var self = this;
-            if (!self._triggerIsValid()) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
+            if (!self._triggerIsValid(index)) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
 
             self.switchTimer = S.later(function() {
                 self.switchTo(index);
@@ -7364,7 +7858,7 @@ KISSY.add('switchable', function(S, undefined) {
                 steps = cfg.steps,
                 fromIndex = activeIndex * steps, toIndex = index * steps;
 
-            if (!self._triggerIsValid()) return self; // 再次避免重复触发
+            if (!self._triggerIsValid(index)) return self; // 再次避免重复触发
             if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
 
             // switch active trigger
@@ -7544,7 +8038,8 @@ KISSY.add('effect', function(S, undefined) {
     S.mix(Switchable.Config, {
         effect: NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
         duration: .5, // 动画的时长
-        easing: 'easeNone' // easing method
+        easing: 'easeNone', // easing method
+        nativeAnim: true
     });
 
     /**
@@ -7581,7 +8076,7 @@ KISSY.add('effect', function(S, undefined) {
                 DOM.css(fromEl, Z_INDEX, 1);
 
                 callback();
-            }).run();
+            }, cfg.nativeAnim).run();
         },
 
         // 水平/垂直滚动效果
@@ -7597,7 +8092,7 @@ KISSY.add('effect', function(S, undefined) {
             self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
                 self.anim = undefined; // free
                 callback();
-            }).run();
+            }, cfg.nativeAnim).run();
         }
     };
     Effects = Switchable.Effects;
@@ -7751,7 +8246,7 @@ KISSY.add('circular', function(S, undefined) {
             // free
             self.anim = undefined;
             callback();
-        }).run();
+        }, cfg.nativeAnim).run();
     }
 
     /**
@@ -8155,9 +8650,715 @@ KISSY.add('accordion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:49
+build time: Sep 30 18:00
+*/
+/**
+ * KISSY Mask
+ * @creator   玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
+ */
+KISSY.add('mask', function(S, undefined) {
+
+    var DOM = S.DOM,
+        DISPLAY = 'display',
+        ie = S.UA.ie,
+        ie6 = ie === 6,
+
+        MASK_STYLE = 'position:absolute;left:0;top:0;width:100%;border:0;background:black;z-index:9998;display:none;',
+        SHIM_STYLE = 'position:absolute;z-index:9997;border:0;display:none;',
+
+        defaultConfig = {
+            shim: false,
+            opacity: .6,
+            style: ''
+        };
+    /*
+     * Mask Class
+     * @constructor
+     * attached members：
+     *   - this.iframe
+     *   - this.config
+     *   - this.layer
+     */
+    function Mask(config){
+
+        if (!(this instanceof Mask)) {
+            return new Mask(config);
+        }
+
+        config = S.merge(defaultConfig, config);
+
+        var isShim = config.shim,
+            style = isShim ? SHIM_STYLE : MASK_STYLE + config.style,
+            opacity = isShim ? 0 : config.opacity,
+            ifr = createMaskElem('<iframe>', style, opacity, !isShim);
+
+        if (!isShim && ie) this.layer = createMaskElem('<div>', style, opacity, true);
+
+        this.config = config;
+        this.iframe = ifr;
+    }
+
+    S.augment(Mask, {
+
+        show: function() {
+            DOM.show([this.iframe, this.layer]);
+        },
+
+        hide: function() {
+            DOM.hide([this.iframe, this.layer]);
+        },
+
+        toggle: function() {
+            var isVisible = DOM.css(this.iframe, DISPLAY) !== 'none';
+            this[isVisible ? 'hide' : 'show']();
+        },
+
+        setSize: function(w, h) {
+            setSize(this.iframe, w, h);
+            setSize(this.layer, w, h);
+        },
+
+        setOffset: function(x, y) {
+            var offset = x;
+
+            if (y !== undefined) {
+                offset = {
+                    left: x,
+                    top: y
+                }
+            }
+            DOM.offset([this.iframe, this.layer], offset);
+        }
+    });
+
+    function createMaskElem(tag, style, opacity, setWH) {
+        var elem = DOM.create(tag);
+
+        DOM.attr(elem, 'style', style);
+        DOM.css(elem, 'opacity', opacity);
+
+        if (setWH) {
+            DOM.height(elem, DOM.docHeight());
+            if (ie6) {
+                DOM.width(elem, DOM.docWidth());
+            }
+        }
+
+        document.body.appendChild(elem);
+        return elem;
+    }
+
+    function setSize(elem, w, h) {
+        if (elem) {
+            DOM.width(elem, w);
+            DOM.height(elem, h);
+        }
+    }
+
+    S.Mask = Mask;
+});
+/**
+ * KISSY Overlay
+ * @creator   玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
+ */
+KISSY.add('overlay', function(S, undefined) {
+
+    var doc = document,
+        DOM = S.DOM, Event = S.Event,
+        ie6 = S.UA.ie === 6,
+
+        DOT = '.', KEYDOWN = 'keydown',
+        POSITION_ALIGN = {
+            TL: 'tl',
+            TC: 'tc',
+            TR: 'tr',
+            LC: 'cl',
+            CC: 'cc',
+            RC: 'cr',
+            BL: 'bl',
+            BC: 'bc',
+            BR: 'br'
+        },
+
+        CLS_CONTAINER = 'ks-overlay',
+        CLS_PREFIX = CLS_CONTAINER + '-',
+
+        EVT_SHOW = 'show',
+        EVT_HIDE = 'hide',
+
+        /**
+         * 默认设置
+         */
+        defaultConfig = {
+            /*
+             * DOM 结构
+             *  <div class="ks-overlay-container">
+             *      <div class="ks-overlay-bd"></div>
+             *  </div>
+             */
+            container: null,
+            containerCls: CLS_CONTAINER,
+            //content: undefined,      // 默认为 undefined, 不设置
+            bdCls: CLS_PREFIX + 'bd',
+
+            trigger: null,
+            triggerType: 'click',   // 触发类型
+
+            width: 0,
+            height: 0,
+            zIndex: 9999,
+
+            xy: null,               // 相对 page 定位, 有效值为 [n, m]
+            align: {                // 相对指定 node or viewport 定位
+                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+                points: [POSITION_ALIGN.CC, POSITION_ALIGN.CC], // ['tl', 'tr'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+                offset: [0,0]       // 有效值为 [n, m]
+            },
+
+            mask: false,            // 是否显示蒙层, 默认不显示
+            shim: ie6
+        },
+
+        DEFAULT_STYLE = 'visibility:hidden;position:absolute;',
+        TMPL = '<div class="{containerCls}" style="' + DEFAULT_STYLE + '"><div class="{bdCls}">{content}</div></div>',
+
+        mask;
+
+    /*
+     * Overlay Class
+     * @constructor
+     * attached members：
+     *   - this.container
+     *   - this.trigger
+     *   - this.config
+     *   - this.body
+     *   - this.shim
+     */
+    function Overlay(container, config) {
+        var self = this;
+        config = config || { };
+
+        // 支持 Overlay(config)
+        if (S.isPlainObject(container)) {
+            config = container;
+        } else {
+            config.container = container;
+        }
+
+        // 获取相关联的 DOM 节点
+        self.container = S.get(config.container);
+        
+        self.trigger = S.get(config.trigger);
+
+        // 合并配置信息
+        config.align = S.merge(S.clone(defaultConfig.align), config.align);
+        self.config = S.merge(defaultConfig, config);
+
+        self._init();
+    }
+
+    S.augment(Overlay, S.EventTarget, {
+
+        _init: function() {
+            if (this.trigger) {
+                this._bindTrigger();
+            }
+        },
+
+        _bindTrigger: function() {
+            var self = this;
+
+            if (self.config.triggerType === 'mouse') {
+                self._bindTriggerMouse();
+            } else {
+                self._bindTriggerClick();
+            }
+        },
+
+        _bindTriggerMouse: function() {
+            var self = this,
+                trigger = self.trigger, timer;
+
+            Event.on(trigger, 'mouseenter', function() {
+                self._clearHiddenTimer();
+
+                timer = S.later(function() {
+                    self.show();
+                    timer = undefined;
+                }, 100);
+            });
+
+            Event.on(trigger, 'mouseleave', function() {
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
+                }
+
+                self._setHiddenTimer();
+            });
+        },
+
+        _bindContainerMouse: function() {
+            var self = this;
+
+            Event.on(self.container, 'mouseleave', function() {
+                self._setHiddenTimer();
+            });
+
+            Event.on(self.container, 'mouseenter', function() {
+                self._clearHiddenTimer();
+            });
+        },
+
+        _setHiddenTimer: function() {
+            var self = this;
+            self._hiddenTimer = S.later(function() {
+                self.hide();
+            }, 120);
+        },
+
+        _clearHiddenTimer: function() {
+            var self = this;
+            if (self._hiddenTimer) {
+                self._hiddenTimer.cancel();
+                self._hiddenTimer = undefined;
+            }
+        },
+
+        _bindTriggerClick: function() {
+            var self = this;
+
+            Event.on(self.trigger, 'click', function(e) {
+                e.halt();
+                self.show();
+            });
+        },
+
+        show: function() {
+            this._firstShow();
+        },
+
+        _firstShow: function() {
+            var self = this;
+
+            self._prepareMarkup();
+            self._realShow();
+            self._firstShow = self._realShow;
+        },
+
+        _realShow: function() {
+            this._setPosition();
+            this._toggle(false);
+        },
+
+        _toggle: function(isVisible) {
+            var self = this;
+
+            DOM.css(self.container, 'visibility', isVisible ? 'hidden' : '');
+
+            if(self.shim) self.shim.toggle();
+            if (self.config.mask) mask[isVisible ? 'hide' : 'show']();
+
+            self[isVisible ? '_unbindUI' : '_bindUI']();
+            self.fire(isVisible ? EVT_HIDE : EVT_SHOW);
+        },
+
+
+        hide: function() {
+            this._toggle(true);
+        },
+
+        _prepareMarkup: function() {
+            var self = this, config = self.config, container = self.container;
+
+            // 多个 Overlay 实例共用一个 mask
+            if (config.mask && !mask) {
+                mask = new S.Mask();
+            }
+            if (config.shim) {
+                self.shim = new S.Mask({ shim: true });
+            }
+
+            // 已有 Markup
+            if (container) {
+                // 已有 markup 可以很灵活，如果没有 bdCls, 就让 body 指向 container
+                self.body = S.get(DOT + config.bdCls, container) || container;
+
+                container.style.cssText += DEFAULT_STYLE;
+            }
+            // 构建 DOM
+            else {
+                container = self.container = DOM.create(S.substitute(TMPL, config));
+                self.body = DOM.children(container)[0];
+                doc.body.appendChild(container);
+            }
+
+            DOM.css(container, 'zIndex', config.zIndex);
+
+            self.setBody(config.content);
+            self._setSize();
+
+            if (config.triggerType === 'mouse') self._bindContainerMouse();
+        },
+
+        _setSize: function(w, h) {
+            var self = this,
+                config = self.config;
+
+            w = w || config.width;
+            h = h || config.height;
+
+            if (w) DOM.width(self.container, w);
+            if (h) DOM.height(self.container, h);
+            if (self.shim) self.shim.setSize(w, h);
+        },
+
+        _setDisplay: function(){
+            var self = this;
+            // 防止其他地方设置 display: none 后, 无法再次显示
+            if (DOM.css(self.container, 'display') === 'none') {
+                DOM.css(self.container, 'display', 'block');
+            }
+        },
+
+        _setPosition: function() {
+            var self = this, xy = self.config.xy;
+
+            if (xy) {
+                self.move(xy);
+            } else {
+                self._setDisplay();
+                self.align();
+            }
+        },
+
+        move: function(x, y) {
+            var self = this, offset;
+
+            if (S.isArray(x)) {
+                y = x[1];
+                x = x[0];
+            }
+            offset = { left: x, top: y };
+
+            DOM.offset(self.container, offset);
+            if(self.shim) self.shim.setOffset(offset);
+        },
+
+        align: function(node, points, offset) {
+            var self = this, alignConfig = self.config.align, xy, diff, p1, p2;
+
+            node = node || alignConfig.node;
+            if (node === 'trigger') node = self.trigger;
+            else node = S.get(node);
+
+            points = points || alignConfig.points;
+
+            offset = offset === undefined ? alignConfig.offset : offset;
+            xy = DOM.offset(self.container);
+
+            // p1 是 node 上 points[0] 的 offset
+            // p2 是 overlay 上 points[1] 的 offset
+            p1 = self._getAlignOffset(node, points[0]);
+            p2 = self._getAlignOffset(self.container, points[1]);
+            diff = [p2.left - p1.left, p2.top - p1.top];
+
+            self.move(xy.left - diff[0] + (+offset[0]), xy.top - diff[1] + (+offset[1]));
+        },
+
+        /**
+         * 获取 node 上的 align 对齐点 相对 page 的坐标
+         */
+        _getAlignOffset: function(node, align) {
+            var V = align.charAt(0),
+                H = align.charAt(1),
+                offset, w, h, x, y;
+
+            if (node) {
+                offset = DOM.offset(node);
+                w = node.offsetWidth;
+                h = node.offsetHeight;
+            } else {
+                offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
+                w = DOM.viewportWidth();
+                h = DOM.viewportHeight();
+            }
+
+            x = offset.left;
+            y = offset.top;
+
+            if (V === 'c') {
+                y += h / 2;
+            } else if (V === 'b') {
+                y += h;
+            }
+
+            if (H === 'c') {
+                x += w / 2;
+            } else if (H === 'r') {
+                x += w;
+            }
+
+            return { left: x, top: y };
+        },
+
+        center: function() {
+            var self = this;
+
+            self.move(
+                (DOM.viewportWidth() - DOM.width(self.container)) / 2 + DOM.scrollLeft(),
+                (DOM.viewportHeight() - DOM.height(self.container)) / 2 + DOM.scrollTop()
+                );
+        },
+
+        _bindUI: function() {
+            Event.on(doc, KEYDOWN, this._esc, this);
+        },
+
+        _unbindUI: function() {
+            Event.remove(doc, KEYDOWN, this._esc, this);
+        },
+        
+        _esc: function(e) {
+            if (e.keyCode === 27) this.hide();
+        },
+
+        setBody: function(html) {
+            this._setContent('body', html);
+        },
+
+        _setContent: function(where, html) {
+            if(S.isString(html)) DOM.html(this[where], html);
+        }
+    });
+
+    S.Overlay = Overlay;
+
+});
+
+/**
+ * TODO:
+ *  - stackable ? 
+ *  - constrain 支持可视区域或指定区域 ?
+ *  - effect
+ *  - draggable
+ */
+/**
+ * KISSY Popup
+ * @creator   玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
+ */
+KISSY.add('popup', function(S) {
+
+    var defaultConfig = {
+        triggerType: 'mouse', // 触发类型, click, mouse
+        align: {
+            node: 'trigger',
+            points: ['cr', 'ct'],
+            offset: [10, 0]
+        }
+    };
+
+    /**
+     * Popup Class
+     * @constructor
+     */
+    function Popup(container, config) {
+        var self = this;
+
+        if (!(self instanceof Popup)) {
+            return new Popup(container, config);
+        }
+
+        config = config || { };
+        if (S.isPlainObject(container)) config = container;
+        else config.container = container;
+        config.align = S.merge(S.clone(defaultConfig.align), config.align);
+
+        Popup.superclass.constructor.call(self, S.merge(defaultConfig, config));
+    }
+
+    S.extend(Popup, S.Overlay);
+    S.Popup = Popup;
+
+}, { host: 'overlay' });
+/**
+ * KISSY.Dialog
+ * @creator  玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
+ */
+KISSY.add('dialog', function(S) {
+
+    var DOM = S.DOM, Event = S.Event,
+
+        DOT = '.', DIV = '<div>',
+
+        CLS_CONTAINER = 'ks-overlay ks-dialog',
+        CLS_PREFIX = 'ks-dialog-',
+
+        defaultConfig = {
+            /*
+             * DOM 结构
+             *  <div class="ks-overlay ks-dialog">
+             *      <div class="ks-dialog-hd">
+             *          <div class="ks-dialog-close"></div>
+             *      </div>
+             *      <div class="ks-dialog-bd"></div>
+             *      <div class="ks-dialog-ft"></div>
+             *  </div>
+             */
+            header: '',
+            footer: '',
+
+            containerCls: CLS_CONTAINER,
+            hdCls: CLS_PREFIX + 'hd',
+            bdCls: CLS_PREFIX + 'bd',
+            ftCls: CLS_PREFIX + 'ft',
+            closeBtnCls: CLS_PREFIX + 'close',
+
+            width: 400,
+            height: 300,
+            closable: true
+        };
+
+    /**
+     * Dialog Class
+     * @constructor
+     * attached members：
+     *  - this.header
+     *  - this.footer
+     *  - this.manager
+     */
+    function Dialog(container, config) {
+        var self = this;
+
+        // factory or constructor
+        if (!(self instanceof Dialog)) {
+            return new Dialog(container, config);
+        }
+
+        config = config || { };
+        if (S.isPlainObject(container)) config = container;
+        else config.container = container;
+        config.align = S.merge(S.clone(defaultConfig.align), config.align);
+        
+        Dialog.superclass.constructor.call(self, S.merge(defaultConfig, config));
+
+        self.manager = S.DialogManager;
+        self.manager.register(self);
+    }
+
+    S.extend(Dialog, S.Overlay);
+    S.Dialog = Dialog;
+
+    S.augment(Dialog, S.EventTarget, {
+
+        _prepareMarkup: function() {
+            var self = this,
+                config = self.config;
+
+            Dialog.superclass._prepareMarkup.call(self);
+
+            self.header = S.get(DOT + config.hdCls, self.container);
+            if (!self.header) {
+                self.header = DOM.create(DIV, { 'class': config.hdCls });
+                DOM.insertBefore(self.header, self.body);
+            }
+            self.setHeader(config.header);
+
+            if (config.footer) {
+                self.footer = S.get(DOT + config.ftCls, self.container);
+                if (!self.footer) {
+                    self.footer = DOM.create(DIV, { 'class': config.ftCls });
+                    self.container.appendChild(self.footer);
+                }
+                self.setFooter(config.footer);
+            }
+
+            if (config.closable) self._initClose();
+        },
+
+        _initClose: function() {
+            var self = this, config = self.config,
+                elem = DOM.create(DIV, { 'class': config.closeBtnCls });
+
+            DOM.html(elem, 'close');
+            
+            Event.on(elem, 'click', function(e) {
+                e.halt();
+                self.hide();
+            });
+
+            self.header.appendChild(elem);
+        },
+
+        setHeader: function(html) {
+            this._setContent('header', html);
+        },
+
+        setFooter: function(html) {
+            this._setContent('footer', html);
+        }
+    });
+
+    S.DialogManager = {
+
+        register: function(dlg) {
+            if (dlg instanceof Dialog) {
+                this._dialog.push(dlg);
+            }
+        },
+
+        _dialog: [],
+
+        hideAll: function() {
+            S.each(this._dialog, function(dlg) {
+                dlg && dlg.hide();
+            })
+        }
+    };
+
+}, { host: 'overlay' });
+
+/**
+ * TODO:
+ *  - S.guid() 唯一标识
+ */
+
+
+/**
+ *  auto render
+ * @creator  玉伯<lifesinger@gmail.com>
+ */
+KISSY.add('autorender', function(S) {
+
+    /**
+     * 自动渲染 container 元素内的所有 Overlay 组件
+     * 默认钩子：<div class="KS_Widget" data-widget-type="Popup" data-widget-config="{...}">
+     */
+    S.Overlay.autoRender = function(hook, container) {
+        hook = '.' + (hook || 'KS_Widget');
+
+        S.query(hook, container).each(function(elem) {
+            var type = elem.getAttribute('data-widget-type'), config;
+
+            if (type && ('Dialog Popup'.indexOf(type) > -1)) {
+                try {
+                    config = elem.getAttribute('data-widget-config');
+                    if (config) config = config.replace(/'/g, '"');
+                    new S[type](elem, S.JSON.parse(config));
+                } catch(ex) {
+                    S.log('Overlay.autoRender: ' + ex, 'warn');
+                }
+            }
+        });
+    }
+
+}, { host: 'overlay' } );
+/*
+Copyright 2010, KISSY UI Library v1.1.5
+MIT Licensed
+build time: Sep 30 18:00
 */
 /**
  * 提示补全组件
@@ -8170,7 +9371,7 @@ KISSY.add('suggest', function(S, undefined) {
         win = window, doc = document, bd, head = S.get('head'),
         ie = S.UA.ie, ie6 = (ie === 6),
 
-        CALLBACK_STR = 'g_ks_suggest_callback', // 约定的全局回调函数
+        CALLBACK_FN = 'KISSY.Suggest.callback', // 约定的全局回调函数
         PREFIX = 'ks-suggest-',
         STYLE_ID = PREFIX + 'style', // 样式 style 元素的 id
 
@@ -8200,7 +9401,7 @@ KISSY.add('suggest', function(S, undefined) {
         RESULT = 'result', KEY = 'key',
         DATA_TIME = 'data-time',
         PARSEINT = parseInt,
-        RE_FOCUS_ELEMS = /^(input|button|a)$/i,
+        RE_FOCUS_ELEMS = /^(?:input|button|a)$/i,
 
         /**
          * Suggest 的默认配置
@@ -8267,7 +9468,34 @@ KISSY.add('suggest', function(S, undefined) {
              * 选择某项时，是否自动提交表单
              * @type Boolean
              */
-            submitOnSelect: true
+            submitOnSelect: true,
+
+            /**
+             * 提示悬浮层和输入框的垂直偏离
+             * 默认向上偏差 1px, 使得悬浮层刚好覆盖输入框的下边框
+             * @type Boolean
+             */
+            offset: -1,
+
+            /**
+             * 数据接口返回数据的编码
+             */
+            charset: 'utf-8',
+
+            /**
+             * 回调函数的参数名
+             */
+            callbackName: 'callback',
+
+            /**
+             * 回调函数的函数名
+             */
+            callbackFn: CALLBACK_FN,
+
+            /**
+             * 查询的参数名
+             */
+            queryName: 'q'
         };
 
     /**
@@ -8279,7 +9507,7 @@ KISSY.add('suggest', function(S, undefined) {
      * @param {Object} config
      */
     function Suggest(textInput, dataSource, config) {
-        var self = this;
+        var self = this, cbFn;
 
         // allow instantiation without the new operator
         if (!(self instanceof Suggest)) {
@@ -8293,24 +9521,26 @@ KISSY.add('suggest', function(S, undefined) {
         self.textInput = S.get(textInput);
 
         /**
+         * 配置参数
+         * @type Object
+         */
+        self.config = config = S.merge(defaultConfig, config);
+
+        /**
          * 获取数据的 URL
          * @type {String|Object}
          */
         // 归一化为：http://path/to/suggest.do? or http://path/to/suggest.do?p=1&
         dataSource += (dataSource.indexOf('?') === -1) ? '?' : '&';
-        self.dataSource = dataSource + 'code=utf-8&callback=' + CALLBACK_STR;
+        self.dataSource = dataSource + config.callbackName + '=' + (cbFn = config.callbackFn);
+        // 回调函数名不是默认值时，需要指向默认回调函数
+        if (cbFn !== CALLBACK_FN) initCallback(cbFn);
 
         /**
          * 通过 jsonp 返回的数据
          * @type Object
          */
         //self.returnedData = undefined;
-
-        /**
-         * 配置参数
-         * @type Object
-         */
-        self.config = S.merge(defaultConfig, config);
 
         /**
          * 存放提示信息的容器
@@ -8444,6 +9674,8 @@ KISSY.add('suggest', function(S, undefined) {
                         else if (pressingCount == 3) {
                             pressingCount = 0;
                         }
+                        // webkit 内核下，input 中按 UP 键，默认会导致光标定位到最前
+                        ev.preventDefault();
                     }
                 }
                 // ENTER 键
@@ -8523,18 +9755,18 @@ KISSY.add('suggest', function(S, undefined) {
          * 设置容器的 left, top, width
          */
         _setContainerRegion: function() {
-            var self = this,
+            var self = this, config = self.config,
                 input = self.textInput,
                 p = DOM.offset(input),
                 container = self.container;
 
             DOM.offset(container, {
                 left: p.left,
-                top: p.top + input.offsetHeight - 1 // 默认向上偏差 1, 以覆盖掉 input 的下边框
+                top: p.top + input.offsetHeight + config.offset
             });
 
             // 默认 container 的边框为 1, padding 为 0, 因此 width = offsetWidth - 2
-            DOM.width(container, self.config['containerWidth'] || input.offsetWidth - 2);
+            DOM.width(container, config['containerWidth'] || input.offsetWidth - 2);
         },
 
         /**
@@ -8843,14 +10075,14 @@ KISSY.add('suggest', function(S, undefined) {
          * 通过 script 元素异步加载数据
          */
         _requestData: function() {
-            var self = this, script;
+            var self = this, config = self.config, script;
             //S.log('request data via script');
 
             if (!ie) self.dataScript = undefined; // IE不需要重新创建 script 元素
 
             if (!self.dataScript) {
                 script = doc.createElement('script');
-                script.charset = 'utf-8';
+                script.charset = config.charset;
                 script.async = true;
 
                 head.insertBefore(script, head.firstChild);
@@ -8868,7 +10100,7 @@ KISSY.add('suggest', function(S, undefined) {
                 }
             }
 
-            self.queryParams = 'q=' + encodeURIComponent(self.query);
+            self.queryParams = config.queryName + '=' + encodeURIComponent(self.query);
             if(self.fire(EVENT_BEFORE_DATA_REQUEST) === false) return;
 
             // 注意：没必要加时间戳，是否缓存由服务器返回的Header头控制
@@ -8960,22 +10192,20 @@ KISSY.add('suggest', function(S, undefined) {
          */
         _formatItem: function(key, result) {
             var li = DOM.create('<li>'),
-                keyEl = DOM.create('<span>', {
-                    'class': KEY_EL_CLS
-                }),
-                resultText, resultEl;
+                resultText;
 
-            DOM.html(keyEl, key);
-            li.appendChild(keyEl);
+            li.appendChild(DOM.create('<span>', {
+                'class': KEY_EL_CLS,
+                html: key
+            }));
 
             if (result) {
                 resultText = this.config.resultFormat.replace('%result%', result);
                 if (S.trim(resultText)) { // 有值时才创建
-                    resultEl = DOM.create('<span>', {
-                        'class': RESULT_EL_CLS
-                    });
-                    DOM.html(resultEl, resultText);
-                    li.appendChild(resultEl);
+                    li.appendChild(DOM.create('<span>', {
+                        'class': RESULT_EL_CLS,
+                        html: resultText
+                    }));
                 }
             }
 
@@ -9010,13 +10240,12 @@ KISSY.add('suggest', function(S, undefined) {
 
             // 关闭按钮
             if (cfg['closeBtn']) {
-                closeBtn = DOM.create('<a>', {
+                footer.appendChild(DOM.create('<a>', {
                     'class': CLOSE_BTN_CLS,
+                    text: cfg.closeBtnText,
                     href: 'javascript: void(0)',
                     target: '_self' // bug fix: 覆盖<base target='_blank' />，否则会弹出空白页面
-                });
-                DOM.html(closeBtn, cfg.closeBtnText);
-                footer.appendChild(closeBtn);
+                }));
             }
 
             // 根据 query 参数，有可能填充不同的内容到 footer
@@ -9134,18 +10363,32 @@ KISSY.add('suggest', function(S, undefined) {
         }
     }
 
+    function initCallback(cbFn) {
+        var parts = cbFn.split('.'), len = parts.length, o;
+
+        // cbFn 有可能为 'goog.ac.h'
+        if (len > 1) {
+            cbFn = cbFn.replace(/^(.*)\..+$/, '$1');
+            o = S.namespace(cbFn, true);
+            o[parts[len - 1]] = callback;
+        } else {
+            win[cbFn] = callback;
+        }
+    }
+
     /**
      * 约定的全局回调函数
      */
-    win[CALLBACK_STR] = function(data) {
+    function callback(data) {
         if (!Suggest.focusInstance) return;
         // 保证先运行 script.onload 事件，然后再执行 callback 函数
         S.later(function() {
             Suggest.focusInstance._handleResponse(data);
         }, 0);
-    };
+    }
 
     Suggest.version = 1.1;
+    Suggest.callback = callback;
     S.Suggest = Suggest;
 
 }, { requires: ['core'] } );
@@ -9203,3 +10446,1720 @@ KISSY.add('suggest', function(S, undefined) {
  *
  * 2010-08-04 更新： 去掉对 yahoo-dom-event 的依赖，仅依赖 ks-core. 调整了部分 public api, 扩展更容易了。
  */
+/*
+Copyright 2010, KISSY UI Library v1.1.5
+MIT Licensed
+build time: Sep 30 18:00
+*/
+/**
+ * 图片放大效果 ImageZoom
+ * @creater  玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
+ */
+KISSY.add('imagezoom', function(S, undefined) {
+
+    var doc = document,
+        DOM = S.DOM, Event = S.Event,
+
+        CLS_PREFIX = 'ks-imagezoom-',
+        CLS_VIEWER = CLS_PREFIX + 'viewer',
+        CLS_LENS = CLS_PREFIX + 'lens',
+        CLS_ICON = CLS_PREFIX + 'icon',
+        CLS_LOADING = CLS_PREFIX + 'loading',
+
+        DIV = '<div>', IMG = '<img>',
+        STANDARD = 'standard',
+        RE_IMG_SRC = /^.+\.(?:jpg|png|gif)$/i,
+        round = Math.round,
+        AUTO = 'auto', LOAD = 'load',
+        POSITION = ['top', 'right', 'bottom', 'left', 'inner'],
+        SRC = 'src', MOUSEMOVE = 'mousemove',
+
+        /**
+         * 默认设置
+         */
+        defaultConfig = {
+            type: STANDARD,            // 显示类型
+
+            bigImageSrc: '',           // 大图路径, 默认为 '', 会取触点上的 data-ks-imagezoom 属性值.
+            bigImageSize: [800, 800],  // 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值.
+            position: 'right',         // 大图显示位置
+            offset: 10,                // 大图位置的偏移量. 单一值或 [x, y]
+            preload: true,             // 是否预加载大图
+            timeoutMsg: '图片暂不可用',
+
+            zoomSize: [AUTO, AUTO],    // 放大区域宽高
+            lensIcon: true,            // 是否显示放大镜提示图标
+
+            zoomCls: ''                // 放大区域额外样式
+        };
+
+    /**
+     * 图片放大镜组件
+     * @class ImageZoom
+     * @constructor
+     * attached members：
+     *   - this.image       需要缩放的图片      @type HTMLElement
+     *   - this.config      配置参数           @type Object
+     *   - this.lens        镜片              @type HTMLElement
+     *   - this.lensIcon    放大镜图标         @type HTMLElement
+     *   - this.bigImage    大图              @type HTMLElement
+     *   - this.viewer      大图显示区域        @type HTMLElement
+     */
+    function ImageZoom(image, config) {
+        var self = this, data;
+
+        if (!(self instanceof ImageZoom)) {
+            return new ImageZoom(image, config);
+        }
+
+        self.image = image = S.get(image);
+        if (!image) return;
+
+        self.config = config = S.merge(defaultConfig, config);
+
+        if (!config.bigImageSrc) {
+            data = DOM.attr(image, 'data-ks-imagezoom');
+            if (data && RE_IMG_SRC.test(data)) config.bigImageSrc = data;
+        }
+
+        // 支持 [x, y] or x
+        config.offset = S.makeArray(config.offset);
+
+        // 预加载大图
+        if (config.preload) {
+            new Image().src = config.bigImageSrc;
+        }
+
+        self._isInner = config.position === POSITION[4];
+
+        // 首次加载小图从缓存读取或在绑定load事件之前已经加载完小图时, 不显示 loading (ff 下诡异)
+        !image.complete && self._startLoading();
+        // 保证非首张小图切换时也能正确隐藏, 不管是否来自缓存
+        Event.on(image, LOAD, function(){
+            self._finishLoading();
+        });
+
+        // 在小图加载完毕时初始化
+        imgOnLoad(image, function() {
+            if (!self._imgRegion) self._init();
+        });
+    }
+
+    S.augment(ImageZoom, S.EventTarget, {
+        _init: function() {
+            this._renderUI();
+            this._bindUI();
+        },
+
+        _renderUI: function() {
+            var self = this, config = self.config,
+                image = self.image;
+
+            // 小图宽高及位置, 用到多次, 先保存起来
+            self._imgRegion = S.merge(DOM.offset(image), getSize(image));
+            
+            // 大图高宽, 默认使用配置信息中, 当加载大图之后, 更新该值
+            self._bigImageSize = { width: config.bigImageSize[0], height: config.bigImageSize[1] };
+
+            // 放大镜图标
+            if (config.lensIcon) self._renderIcon();
+        },
+
+        _renderIcon: function() {
+            var self = this,
+                region = self._imgRegion,
+                icon;
+
+            icon = createAbsElem(CLS_ICON);
+            doc.body.appendChild(icon);
+            DOM.offset(icon, {
+                left: region.left + region.width - DOM.width(icon),
+                top: region.top + region.height - DOM.height(icon)
+            });
+            self.lensIcon = icon;
+        },
+
+        _bindUI: function() {
+            var self = this, timer, config = self.config;
+
+            Event.on(self.image, 'mouseenter', function() {
+                Event.on(doc.body, MOUSEMOVE, self._getEv, self);
+
+                timer = S.later(function() {
+                    var bigImageSrc = self.config.bigImageSrc,
+                        bigImage = self.bigImage;
+
+                    if (!self.viewer) {
+                        self._createViewer();
+                    }
+                    else if (self._cacheBigImageSrc && (self._cacheBigImageSrc !== bigImageSrc)) {
+                        // 首张图片标志, 用于判断是否需要更新 viewer 位置
+                        self._partical = true;
+                        DOM.attr(bigImage, SRC, bigImageSrc);
+                        self._cacheBigImageSrc = bigImageSrc;
+                        if (self._isInner) DOM.attr(self._bigImageCopy, SRC, DOM.attr(self.image, SRC));
+                    }
+                    self.show();
+                }, 300); // 300 是感觉值，不立刻触发，同时要尽量让动画流畅
+            });
+
+            Event.on(self.image, 'mouseleave', function() {
+                Event.remove(doc.body, MOUSEMOVE, self._getEv);
+
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
+                }
+            });
+        },
+
+        _getEv: function(ev) {
+            this._ev = ev;
+        },
+
+        _createViewer: function() {
+            var self = this, config = self.config,
+                v, bigImage, bigImageCopy,
+                bigImageSize = self._bigImageSize;
+
+            // 创建 viewer 的 DOM 结构
+            v = createAbsElem(CLS_VIEWER + ' ' + config.zoomCls);
+
+            if (self._isInner) {
+                bigImageCopy = createImage(DOM.attr(self.image, SRC), v);
+                setWidthHeight(bigImageCopy, bigImageSize.width, bigImageSize.height);
+                self._bigImageCopy = bigImageCopy;
+            }
+            // 标准模式，添加镜片
+            else self._renderLens();
+
+            if (config.bigImageSrc) {
+                bigImage = createImage(config.bigImageSrc, v);
+                self.bigImage = bigImage;
+            }
+            // 将 viewer 添加到 DOM 中
+            doc.body.appendChild(v);
+            self.viewer = v;
+
+            // 立刻显示大图区域
+            self._setViewerRegion();
+
+            // 大图加载完毕后更新显示区域
+            imgOnLoad(bigImage, function() {
+                if (self._isInner) return;
+                self._bigImageSize = getSize(bigImage);
+                self._setViewerRegion();
+            });
+        },
+
+        _renderLens: function() {
+            var self = this, config = self.config,
+                lens = createAbsElem(CLS_LENS);
+
+            DOM.hide(lens);
+            doc.body.appendChild(lens);
+            self.lens = lens;
+        },
+
+        _setViewerRegion: function() {
+            var self = this, config = self.config,
+                v = self.viewer,
+                region = self._imgRegion,
+                zoomSize = config.zoomSize,
+                left, top, lensWidth, lensHeight, width, height,
+                bigImageSize = self._bigImageSize;
+
+            width = zoomSize[0];
+            if (width === AUTO) width = region.width;
+            height = zoomSize[1];
+            if (height === AUTO) height = region.height;
+
+            // 计算镜片宽高, vH / bigImageH = lensH / imageH
+            lensWidth = round( width * region.width / bigImageSize.width);
+            lensHeight = round( height * region.height / bigImageSize.height);
+            self._lensSize = [lensWidth, lensHeight];
+
+            if (!self._isInner) {
+                setWidthHeight(self.lens, lensWidth, lensHeight);
+                DOM.offset(self.lens, { left: round( region.left + ( region.width - lensWidth ) / 2 ),
+                                        top: round( region.top + ( region.height - lensHeight ) / 2 ) });
+            }
+
+            if (!self._partical) {
+                // 计算不同 position
+                left = region.left + (config.offset[0] || 0);
+                top = region.top + (config.offset[1] || 0);
+                switch (config.position) {
+                    // top
+                    case POSITION[0]:
+                        top -= height;
+                        break;
+                    // right
+                    case POSITION[1]:
+                        left += region.width;
+                        break;
+                    // bottom
+                    case POSITION[2]:
+                        top += region.height;
+                        break;
+                    // left
+                    case POSITION[3]:
+                        left -= width;
+                        break;
+                    // inner
+                    case POSITION[4]:
+                        width = region.width;
+                        height = region.height;
+                        DOM.css(v, 'cursor', 'move');
+                        break;
+                }
+
+                DOM.offset(v, { left: left, top: top });
+                setWidthHeight(v, width, height);
+            }
+        },
+
+        _onMouseMove: function() {
+            var self = this,
+                lens = self.lens, ev = self._ev,
+                region = self._imgRegion,
+                rl = region.left, rt = region.top,
+                rw = region.width, rh = region.height,
+                bigImageSize = self._bigImageSize, lensOffset;
+
+            if (ev.pageX > rl && ev.pageX < rl + rw &&
+                ev.pageY > rt && ev.pageY < rt + rh) {
+
+                if (self._isInner && self._animTimer) return;
+
+                lensOffset = self._getLensOffset();
+
+                // 更新 lens 位置
+                if (!self._isInner && lens) DOM.offset(lens, lensOffset);
+
+                // 设置大图偏移
+                DOM.css([self._bigImageCopy, self.bigImage], {
+                    marginLeft: - round((lensOffset.left - rl) * bigImageSize.width / rw),
+                    marginTop: - round((lensOffset.top - rt) * bigImageSize.height / rh)
+                });
+            } else {
+                self.hide();
+            }
+        },
+
+        // 获取镜片的位置
+        _getLensOffset: function() {
+            var self = this,
+                region = self._imgRegion, ev = self._ev,
+                rl = region.left, rt = region.top,
+                rw = region.width, rh = region.height,
+                lensSize = self._lensSize,
+                lensW = lensSize[0], lensH = lensSize[1],
+                lensLeft = ev.pageX - lensW / 2,
+                lensTop = ev.pageY - lensH / 2;
+
+            if (lensLeft <= rl) {
+                lensLeft = rl;
+            } else if (lensLeft >= rw + rl - lensW) {
+                lensLeft = rw + rl - lensW;
+            }
+
+            if (lensTop <= rt) {
+                lensTop = rt;
+            } else if (lensTop >= rh + rt - lensH) {
+                lensTop = rh + rt - lensH;
+            }
+            return { left: lensLeft, top: lensTop };
+        },
+
+        _anim: function(seconds, times) {
+            var self = this,
+                go, t = 1, ev = self._ev,
+                region = self._imgRegion,
+                rl = region.left, rt = region.top,
+                rw = region.width, rh = region.height,
+                img = [self.bigImage, self._bigImageCopy],
+                x = ev.pageX - rl, y = ev.pageY - rt, bigImageSize = self._bigImageSize;
+
+            if (self._animTimer) self._animTimer.cancel();
+
+            // set min width and height
+            setWidthHeight(img, rw, rh);
+            self._animTimer = S.later((go = function () {
+                var tmpW = rw + (bigImageSize.width - rw)/times*t,
+                    tmpH = rh + (bigImageSize.height - rh)/times*t;
+
+                setWidthHeight(img, tmpW, tmpH);
+                // 定位到鼠标点
+                DOM.css(img, {
+                    marginLeft: Math.max(Math.min(round( rw/2 - x*tmpW/rw ), 0), rw - tmpW),
+                    marginTop: Math.max(Math.min(round( rh/2 - y*tmpH/rh ), 0), rh - tmpH)
+                });
+
+                if ( ++t > times) {
+                    self._animTimer.cancel();
+                    self._animTimer = undefined;
+                }
+            }), seconds*1000/times, true);
+
+            go();
+        },
+
+        show: function() {
+            var self = this,
+                lens = self.lens, viewer = self.viewer;
+
+            DOM.hide(self.lensIcon);
+            if (self._isInner) {
+                DOM.show(viewer);
+                self._anim(0.5, 30);
+            } else {
+                DOM.show([lens, viewer]);
+                self._onMouseMove();
+            }
+
+            Event.on(doc.body, MOUSEMOVE, self._onMouseMove, self);
+        },
+
+        hide: function() {
+            var self = this;
+
+            DOM.hide([self.lens, self.viewer]);
+            DOM.show(self.lensIcon);
+
+            Event.remove(doc.body, MOUSEMOVE, self._onMouseMove, self);
+        },
+
+        // TODO: use ATTR
+        set: function(name, val) {
+            var self = this;
+
+            if (name === 'bigImageSrc') {
+                if (val && RE_IMG_SRC.test(val)) {
+                    self._cacheBigImageSrc = self.config.bigImageSrc;
+                    self.config.bigImageSrc = val;
+                }
+            }
+        },
+
+        _startLoading: function() {
+            DOM.addClass(this.viewer, CLS_LOADING);
+        },
+
+        _finishLoading: function() {
+            DOM.removeClass(this.viewer, CLS_LOADING);
+        },
+
+        changeImageSrc: function(src) {
+            var self = this;
+            DOM.attr(self.image, SRC, src);
+            self._startLoading();
+        }
+    });
+
+    S.ImageZoom = ImageZoom;
+
+    function imgOnLoad(img, callback) {
+        if (checkImageReady(img)) callback();
+        // 图尚未加载完毕，等待 onload 时再初始化
+        else Event.on(img, LOAD, callback);
+    }
+
+    function getSize(elem) {
+        return { width: elem.clientWidth, height: elem.clientHeight };
+    }
+
+    function createAbsElem(cls) {
+        return DOM.create(DIV, { 'class': cls, 'style': 'position:absolute;top:0;left:0' });
+    }
+
+    function  setWidthHeight(elem, w, h){
+        S.each(S.makeArray(elem), function(e){
+            DOM.width(e, w);
+            DOM.height(e, h);
+        });
+    }
+
+    function checkImageReady(imgElem) {
+        return (imgElem && imgElem.complete && imgElem.clientWidth) ? true : false;
+    }
+
+    function createImage(s, p) {
+        var img = DOM.create(IMG, { SRC: s, 'style': 'position:absolute;top:0;left:0' });
+        if (p) p.appendChild(img);
+        return img;
+    }
+});
+
+/**
+ * NOTES:
+ *  201006
+ *      - 加入 position 选项，动态构建所需 dom
+ *      - 小图加载
+ *      - 大图加载之后才能显示
+ *      - 加入跟随模式
+ *      - 0624 去除 yahoo-dom-event 的依赖
+ *  201007
+ *      - 去除 getStyle, 使用DOM.css()
+ *      - 增加 firstHover 事件
+ *      - 纠正显示区域位置计算错误
+ *      - 调整 DOM 结构，去除不必要的代码
+ *  201008
+ *      - yubo: refactor to kissy src
+ *      - 保留 标准模式+right, 镜片DOM移至body
+ *  201009
+ *      - 加入 Zazzle 的 follow 效果
+ * TODO:
+ *      - 仿照 Zazzle 的效果，在大图加载过程中显示进度条和提示文字
+ *      - http://www.apple.com/iphone/features/retina-display.html
+ */
+/**
+ * auto render
+ * @creator  玉伯<lifesinger@gmail.com>
+ */
+KISSY.add('autorender', function(S) {
+
+    /**
+     * 自动渲染 container 元素内的所有 ImageZoom 组件
+     * 默认钩子：<div class="KS_Widget" data-widget-type="ImageZoom" data-widget-config="{...}">
+     */
+    S.ImageZoom.autoRender = function(hook, container) {
+        hook = '.' + (hook || 'KS_Widget');
+
+        S.query(hook, container).each(function(elem) {
+            var type = elem.getAttribute('data-widget-type'), config;
+
+            if (type === 'ImageZoom') {
+                try {
+                    config = elem.getAttribute('data-widget-config');
+                    if (config) config = config.replace(/'/g, '"');
+                    new S[type](elem, S.JSON.parse(config));
+                }
+                catch(ex) {
+                    S.log('ImageZoom.autoRender: ' + ex, 'warn');
+                }
+            }
+        });
+    }
+
+}, { host: 'imagezoom' } );
+/*
+Copyright 2010, KISSY UI Library v1.1.5
+MIT Licensed
+build time: Sep 30 17:59
+*/
+/*
+ * Date Format 1.2.3
+ * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
+ * MIT license
+ *
+ * Includes enhancements by Scott Trenda <scott.trenda.net>
+ * and Kris Kowal <cixar.com/~kris.kowal/>
+ *
+ * Accepts a date, a mask, or a date and a mask.
+ * Returns a formatted version of the given date.
+ * The date defaults to the current date/time.
+ * The mask defaults to dateFormat.masks.default.
+ *
+ * Last modified by jayli 拔赤 2010-09-09
+ * - 增加中文的支持
+ * - 简单的本地化，对w（星期x）的支持
+ */
+KISSY.add('date', function(S) {
+
+    function dateParse(data) {
+
+        var date = null;
+
+        //Convert to date
+        if (!(date instanceof Date)) {
+            date = new Date(data);
+        }
+        else {
+            return date;
+        }
+
+        // Validate
+        if (date instanceof Date && (date != "Invalid Date") && !isNaN(date)) {
+            return date;
+        }
+        else {
+            return null;
+        }
+
+    }
+
+
+    var dateFormat = function () {
+        var token = /w{1}|d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
+            timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
+            timezoneClip = /[^-+\dA-Z]/g,
+            pad = function (val, len) {
+                val = String(val);
+                len = len || 2;
+                while (val.length < len) val = "0" + val;
+                return val;
+            },
+            // Some common format strings
+            masks = {
+                "default":      "ddd mmm dd yyyy HH:MM:ss",
+                shortDate:      "m/d/yy",
+                //mediumDate:     "mmm d, yyyy",
+                longDate:       "mmmm d, yyyy",
+                fullDate:       "dddd, mmmm d, yyyy",
+                shortTime:      "h:MM TT",
+                //mediumTime:     "h:MM:ss TT",
+                longTime:       "h:MM:ss TT Z",
+                isoDate:        "yyyy-mm-dd",
+                isoTime:        "HH:MM:ss",
+                isoDateTime:    "yyyy-mm-dd'T'HH:MM:ss",
+                isoUTCDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'",
+
+                //added by jayli
+                localShortDate:    "yy年mm月dd日",
+                localShortDateTime:"yy年mm月dd日 hh:MM:ss TT",
+                localLongDate:    "yyyy年mm月dd日",
+                localLongDateTime:"yyyy年mm月dd日 hh:MM:ss TT",
+                localFullDate:    "yyyy年mm月dd日 w",
+                localFullDateTime:"yyyy年mm月dd日 w hh:MM:ss TT"
+
+            },
+
+            // Internationalization strings
+            i18n = {
+                dayNames: [
+                    "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
+                    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
+                    "星期日","星期一","星期二","星期三","星期四","星期五","星期六"
+                ],
+                monthNames: [
+                    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+                    "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+                ]
+            };
+
+        // Regexes and supporting functions are cached through closure
+        return function (date, mask, utc) {
+            var dF = dateFormat;
+
+            // You can't provide utc if you skip other args (use the "UTC:" mask prefix)
+            if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
+                mask = date;
+                date = undefined;
+            }
+
+            // Passing date through Date applies Date.parse, if necessary
+            date = date ? new Date(date) : new Date;
+            if (isNaN(date)) throw SyntaxError("invalid date");
+
+            mask = String(masks[mask] || mask || masks["default"]);
+
+            // Allow setting the utc argument via the mask
+            if (mask.slice(0, 4) == "UTC:") {
+                mask = mask.slice(4);
+                utc = true;
+            }
+
+            var _ = utc ? "getUTC" : "get",
+                d = date[_ + "Date"](),
+                D = date[_ + "Day"](),
+                m = date[_ + "Month"](),
+                y = date[_ + "FullYear"](),
+                H = date[_ + "Hours"](),
+                M = date[_ + "Minutes"](),
+                s = date[_ + "Seconds"](),
+                L = date[_ + "Milliseconds"](),
+                o = utc ? 0 : date.getTimezoneOffset(),
+                flags = {
+                    d:    d,
+                    dd:   pad(d),
+                    ddd:  i18n.dayNames[D],
+                    dddd: i18n.dayNames[D + 7],
+                    w:     i18n.dayNames[D + 14],
+                    m:    m + 1,
+                    mm:   pad(m + 1),
+                    mmm:  i18n.monthNames[m],
+                    mmmm: i18n.monthNames[m + 12],
+                    yy:   String(y).slice(2),
+                    yyyy: y,
+                    h:    H % 12 || 12,
+                    hh:   pad(H % 12 || 12),
+                    H:    H,
+                    HH:   pad(H),
+                    M:    M,
+                    MM:   pad(M),
+                    s:    s,
+                    ss:   pad(s),
+                    l:    pad(L, 3),
+                    L:    pad(L > 99 ? Math.round(L / 10) : L),
+                    t:    H < 12 ? "a" : "p",
+                    tt:   H < 12 ? "am" : "pm",
+                    T:    H < 12 ? "A" : "P",
+                    TT:   H < 12 ? "AM" : "PM",
+                    Z:    utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
+                    o:    (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
+                    S:    ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
+                };
+
+            return mask.replace(token, function ($0) {
+                return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
+            });
+        };
+    }();
+
+    S.Date = {
+        format: function(date, mask, utc) {
+            return dateFormat(date, mask, utc);
+        },
+        parse: function(date) {
+            return dateParse(date);
+        }
+    }
+});
+
+/**
+ * 2010-09-14 拔赤
+ *        - 仅支持S.Date.format和S.Date.parse，format仅对常用格式进行支持（不超过10个），也可以自定义
+ *        - kissy-lang中是否应当增加Lang.type(o)?或者isDate(d)?
+ *        - 模块名称取为datetype还是直接用date? 我更倾向于用date
+ *        - YUI的datetype花了大量精力对全球语种进行hack，似乎KISSY是不必要的，KISSY只对中文做hack即可
+ */
+/**
+ * @module	 日历 
+ * @creator  拔赤<lijing00333@163.com>
+ */
+KISSY.add('calendar', function(S, undefined) {
+
+    function Calendar(trigger, config) {
+        this._init(trigger, config);
+    }
+
+    S.augment(Calendar, {
+
+		/**
+		 * 日历构造函数
+		 * @method 	_init
+		 * @param { string }	selector
+		 * @param { string }	config
+		 * @private
+		 */
+        _init: function(selector, config) {
+            var self = this,con = S.one(selector);
+            self.id = self.C_Id = self._stamp(con);
+            self._buildParam(config);
+
+            /*
+             self.con  日历的容器
+             self.id   传进来的id
+             self.C_Id 永远代表日历容器的ID
+             */
+            if (!self.popup) {
+                self.con = con;
+            } else {
+                self.trigger = con;
+                self.con = S.Node('<div></div>');
+                S.one('body').append(self.con);
+				self.C_Id = self._stamp(self.con);
+                self.con.css({
+                    'top':'0px',
+                    'position':'absolute',
+                    'background':'white',
+                    'visibility':'hidden'
+                });
+            }
+
+            //创建事件中心
+            //事件中心已经和Calendar合并
+            var EventFactory = new Function;
+            S.augment(EventFactory, S.EventTarget);
+            var eventCenter = new EventFactory();
+            S.mix(self, eventCenter);
+
+            self.render();
+            self._buildEvent();
+            return this;
+        },
+
+        render: function(o) {
+            var self = this,
+                i = 0,
+                _prev,_next,_oym;
+
+            o = o || {};
+            self._parseParam(o);
+            self.ca = [];
+
+            self.con.addClass('ks-cal-call ks-clearfix multi-' + self.pages);
+            self.con.html('');
+
+            for (i = 0,_oym = [self.year,self.month]; i < self.pages; i++) {
+                if (i == 0) {
+                    _prev = true;
+                } else {
+                    _prev = false;
+                    _oym = self._computeNextMonth(_oym);
+                }
+                _next = i == (self.pages - 1);
+                self.ca.push(new self.Page({
+                    year:_oym[0],
+                    month:_oym[1],
+                    prevArrow:_prev,
+                    nextArrow:_next,
+                    showTime:self.showTime
+                }, self));
+
+
+                self.ca[i].render();
+            }
+            return this;
+
+        },
+
+		/**
+		 * 用以给容器打上id的标记,容器有id则返回
+		 * @method _stamp
+		 * @param { Kissy-Node }
+		 * @return { string }
+		 * @private
+		 */
+		_stamp: function(el){
+			if(el.attr('id') == undefined || el.attr('id')==''){
+				el.attr('id','K_'+S.now());
+			}
+			return el.attr('id');
+		},
+
+        /**
+         * 计算d天的前几天或者后几天，返回date
+		 * @method _showdate
+		 * @private
+         */
+        _showdate: function(n, d) {
+            var uom = new Date(d - 0 + n * 86400000);
+            uom = uom.getFullYear() + "/" + (uom.getMonth() + 1) + "/" + uom.getDate();
+            return new Date(uom);
+        },
+
+        /**
+         * 创建日历外框的事件
+		 * @method _buildEvent
+		 * @private
+         */
+        _buildEvent: function() {
+            var self = this;
+            if (!self.popup)return this;
+            //点击空白
+            //flush event
+            for (var i = 0; i < self.EV.length; i++) {
+                if (self.EV[i] !== undefined) {
+                    self.EV[i].detach();
+                }
+            }
+            self.EV[0] = S.one('body').on('click', function(e) {
+                //TODO e.target是裸的节点，这句不得不加，虽然在逻辑上并无特殊语义
+                e.target = S.Node(e.target);
+                //点击到日历上
+                if (e.target.attr('id') == self.C_Id)return;
+                if ((e.target.hasClass('ks-next') || e.target.hasClass('ks-prev'))
+                    && e.target[0].tagName == 'A')    return;
+                //点击在trigger上
+                if (e.target.attr('id') == self.id)return;
+                if (!S.DOM.contains(S.one('#' + self.C_Id), e.target)) {
+                    self.hide();
+                }
+            });
+            //点击触点
+            for (i = 0; i < self.triggerType.length; i++) {
+
+                self.EV[1] = S.one('#' + self.id).on(self.triggerType[i], function(e) {
+                    e.target = S.Node(e.target);
+                    e.preventDefault();
+                    //如果focus和click同时存在的hack
+                    S.log(e.type);
+                    var a = self.triggerType;
+                    if (S.inArray('click', a) && S.inArray('focus', a)) {//同时含有
+                        if (e.type == 'focus') {
+                            self.toggle();
+                        }
+                    } else if (S.inArray('click', a) && !S.inArray('focus', a)) {//只有click
+                        if (e.type == 'click') {
+                            self.toggle();
+                        }
+                    } else if (!S.inArray('click', a) && S.inArray('focus', a)) {//只有focus
+                        setTimeout(function() {//为了跳过document.onclick事件
+                            self.toggle();
+                        }, 170);
+                    } else {
+                        self.toggle();
+                    }
+
+                });
+
+            }
+            return this;
+        },
+
+		/**
+		 * 改变日历是否显示的状态
+		 * @mathod toggle
+		 */
+        toggle: function() {
+            var self = this;
+            if (self.con.css('visibility') == 'hidden') {
+                self.show();
+            } else {
+                self.hide();
+            }
+        },
+
+        /**
+         * 显示日历
+		 * @method show
+         */
+        show: function() {
+            var self = this;
+            self.con.css('visibility', '');
+            var _x = self.trigger.offset().left,
+                //KISSY得到DOM的width是innerWidth，这里期望得到outterWidth
+                height = self.trigger[0].offsetHeight || self.trigger.height(),
+                _y = self.trigger.offset().top + height;
+            self.con.css('left', _x.toString() + 'px');
+            self.con.css('top', _y.toString() + 'px');
+            return this;
+        },
+
+        /**
+         * 隐藏日历
+		 * @method hide
+         */
+        hide: function() {
+            var self = this;
+            self.con.css('visibility', 'hidden');
+            return this;
+        },
+
+        /**
+         * 创建参数列表
+		 * @method _buildParam
+		 * @private
+         */
+        _buildParam: function(o) {
+            var self = this;
+            if (o === undefined || o == null) {
+                o = { };
+            }
+
+            function setParam(def, key) {
+                var v = o[key];
+                // null在这里是“占位符”，用来清除参数的一个道具
+                self[key] = (v === undefined || v == null) ? def : v;
+            }
+
+			//这种处理方式不错
+            S.each({
+                date:        new Date(),
+                startDay:    0,
+                pages:       1,
+                closable:    false,
+                rangeSelect: false,
+                minDate:     false,
+                maxDate:     false,
+                multiSelect: false,
+                navigator:   true,
+                popup:       false,
+                showTime:    false,
+                triggerType: ['click']
+            }, setParam);
+
+			// 支持用户传进来一个string
+			if(typeof o.triggerType === 'string'){
+				o.triggerType = [o.triggerType];
+			}
+
+            setParam(self.date, 'selected');
+            if(o.startDay) self.startDay = (7 - o.startDay) % 7;
+
+            if (o.range !== undefined && o.range != null) {
+                var s = self._showdate(1, new Date(o.range.start.getFullYear() + '/' + (o.range.start.getMonth() + 1) + '/' + (o.range.start.getDate())));
+                var e = self._showdate(1, new Date(o.range.end.getFullYear() + '/' + (o.range.end.getMonth() + 1) + '/' + (o.range.end.getDate())));
+                self.range = {
+                    start:s,
+                    end:e
+                };
+            } else {
+                self.range = {
+                    start:null,
+                    end:null
+                };
+            }
+            self.EV = [];
+            return this;
+        },
+
+        /**
+         * 过滤参数列表
+		 * @method _parseParam
+		 * @private
+         */
+        _parseParam: function(o) {
+            var self = this,i;
+            if (o === undefined || o == null) {
+                o = {};
+            }
+            for (i in o) {
+                self[i] = o[i];
+            }
+            self._handleDate();
+            return this;
+        },
+
+        /**
+         * 模板函数
+		 * @method _templetShow
+		 * @private
+         */
+        _templetShow: function(templet, data) {
+            var str_in,value_s,i,m,value,par;
+            if (data instanceof Array) {
+                str_in = '';
+                for (i = 0; i < data.length; i++) {
+                    str_in += arguments.callee(templet, data[i]);
+                }
+                templet = str_in;
+            } else {
+                value_s = templet.match(/{\$(.*?)}/g);
+                if (data !== undefined && value_s != null) {
+                    for (i = 0,m = value_s.length; i < m; i++) {
+                        par = value_s[i].replace(/({\$)|}/g, '');
+                        value = (data[par] !== undefined) ? data[par] : '';
+                        templet = templet.replace(value_s[i], value);
+                    }
+                }
+            }
+            return templet;
+        },
+
+        /**
+         * 处理日期
+		 * @method _handleDate
+		 * @private
+         */
+        _handleDate: function() {
+            var self = this,
+            date = self.date;
+            self.weekday = date.getDay() + 1;//星期几 //指定日期是星期几
+            self.day = date.getDate();//几号
+            self.month = date.getMonth();//月份
+            self.year = date.getFullYear();//年份
+            return this;
+        },
+
+        //get标题
+        _getHeadStr: function(year, month) {
+            return year.toString() + '年' + (Number(month) + 1).toString() + '月';
+        },
+
+        //月加
+        _monthAdd: function() {
+            var self = this;
+            if (self.month == 11) {
+                self.year++;
+                self.month = 0;
+            } else {
+                self.month++;
+            }
+            self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
+            return this;
+        },
+
+        //月减
+        _monthMinus: function() {
+            var self = this;
+            if (self.month == 0) {
+                self.year--;
+                self.month = 11;
+            } else {
+                self.month--;
+            }
+            self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
+            return this;
+        },
+
+        //裸算下一个月的年月,[2009,11],年:fullYear，月:从0开始计数
+        _computeNextMonth: function(a) {
+            var _year = a[0],
+                _month = a[1];
+            if (_month == 11) {
+                _year++;
+                _month = 0;
+            } else {
+                _month++;
+            }
+            return [_year,_month];
+        },
+
+        //处理日期的偏移量
+        _handleOffset: function() {
+            var self = this,
+                data = ['日','一','二','三','四','五','六'],
+                temp = '<span>{$day}</span>',
+                offset = self.startDay,
+                day_html = '',
+                a = [];
+            for (var i = 0; i < 7; i++) {
+                a[i] = {
+                    day:data[(i - offset + 7) % 7]
+                };
+            }
+            day_html = self._templetShow(temp, a);
+
+            return {
+                day_html:day_html
+            };
+        },
+
+        //处理起始日期,d:Date类型
+        _handleRange: function(d) {
+            var self = this,t;
+            if ((self.range.start == null && self.range.end == null ) || (self.range.start != null && self.range.end != null)) {
+                self.range.start = d;
+                self.range.end = null;
+                self.render();
+            } else if (self.range.start != null && self.range.end == null) {
+                self.range.end = d;
+                if (self.range.start.getTime() > self.range.end.getTime()) {
+                    t = self.range.start;
+                    self.range.start = self.range.end;
+                    self.range.end = t;
+                }
+                self.fire('rangeSelect', self.range);
+                self.render();
+            }
+            return this;
+        }
+    });
+
+    S.Calendar = Calendar;
+}, { requires: ['core'] } );
+
+/**
+ * 2010-09-09 by lijing00333@163.com - 拔赤
+ *     - 将基于YUI2/3的Calendar改为基于KISSY
+ *     - 增加起始日期（星期x）的自定义
+ *      - 常见浮层的bugfix
+ *
+ * TODO:
+ *   - 日历日期的输出格式的定制
+ *   - 多选日期的场景的交互设计
+ */
+/**
+ * @module	 日历 
+ * @creator  拔赤<lijing00333@163.com>
+ */
+KISSY.add('calendar-page', function(S) {
+
+    S.augment(S.Calendar, {
+
+        Page: function(config, father) {
+            /**
+             * 子日历构造器
+             * @constructor S.Calendar.Page
+             * @param {object} config ,参数列表，需要指定子日历所需的年月
+             * @param {object} father,指向Y.Calendar实例的指针，需要共享父框的参数
+             * @return 子日历的实例
+             */
+
+            //属性
+            this.father = father;
+            this.month = Number(config.month);
+            this.year = Number(config.year);
+            this.prevArrow = config.prevArrow;
+            this.nextArrow = config.nextArrow;
+            this.node = null;
+            this.timmer = null;//时间选择的实例
+            this.id = '';
+            this.EV = [];
+            this.html = [
+                '<div class="ks-cal-box" id="{$id}">',
+                '<div class="ks-cal-hd">',
+                '<a href="javascript:void(0);" class="ks-prev {$prev}"><</a>',
+                '<a href="javascript:void(0);" class="ks-title">{$title}</a>',
+                '<a href="javascript:void(0);" class="ks-next {$next}">></a>',
+                '</div>',
+                '<div class="ks-cal-bd">',
+                '<div class="ks-whd">',
+                /*
+                 '<span>日</span>',
+                 '<span>一</span>',
+                 '<span>二</span>',
+                 '<span>三</span>',
+                 '<span>四</span>',
+                 '<span>五</span>',
+                 '<span>六</span>',
+                 */
+                father._handleOffset().day_html,
+                '</div>',
+                '<div class="ks-dbd ks-clearfix">',
+                '{$ds}',
+                /*
+                 <a href="" class="ks-null">1</a>
+                 <a href="" class="ks-disabled">3</a>
+                 <a href="" class="ks-selected">1</a>
+                 <a href="" class="ks-today">1</a>
+                 <a href="">1</a>
+                 */
+                '</div>',
+                '</div>',
+                '<div class="ks-setime hidden">',
+                '</div>',
+                '<div class="ks-cal-ft {$showtime}">',
+                '<div class="ks-cal-time">',
+                '时间：00:00 &hearts;',
+                '</div>',
+                '</div>',
+                '<div class="ks-selectime hidden">',//<!--用以存放点选时间的一些关键值-->',
+                '</div>',
+                '</div><!--#ks-cal-box-->'
+            ].join("");
+            this.nav_html = [
+                '<p>',
+                '月',
+                '<select value="{$the_month}">',
+                '<option class="m1" value="1">01</option>',
+                '<option class="m2" value="2">02</option>',
+                '<option class="m3" value="3">03</option>',
+                '<option class="m4" value="4">04</option>',
+                '<option class="m5" value="5">05</option>',
+                '<option class="m6" value="6">06</option>',
+                '<option class="m7" value="7">07</option>',
+                '<option class="m8" value="8">08</option>',
+                '<option class="m9" value="9">09</option>',
+                '<option class="m10" value="10">10</option>',
+                '<option class="m11" value="11">11</option>',
+                '<option class="m12" value="12">12</option>',
+                '</select>',
+                '</p>',
+                '<p>',
+                '年',
+                '<input type="text" value="{$the_year}" onfocus="this.select()"/>',
+                '</p>',
+                '<p>',
+                '<button class="ok">确定</button><button class="cancel">取消</button>',
+                '</p>'
+            ].join("");
+
+
+            //方法
+            //常用的数据格式的验证
+            this.Verify = function() {
+
+                var isDay = function(n) {
+                    if (!/\d+/i.test(n))return false;
+                    n = Number(n);
+                    return !(n < 1 || n > 31);
+
+                },
+                    isYear = function(n) {
+                        if (!/\d+/i.test(n))return false;
+                        n = Number(n);
+                        return !(n < 100 || n > 10000);
+
+                    },
+                    isMonth = function(n) {
+                        if (!/\d+/i.test(n))return false;
+                        n = Number(n);
+                        return !(n < 1 || n > 12);
+
+
+                    };
+
+                return {
+                    isDay:isDay,
+                    isYear:isYear,
+                    isMonth:isMonth
+
+                };
+
+
+            };
+
+            /**
+             * 渲染子日历的UI
+             */
+            this._renderUI = function() {
+                var cc = this,_o = {},ft;
+                cc.HTML = '';
+                _o.prev = '';
+                _o.next = '';
+                _o.title = '';
+                _o.ds = '';
+                if (!cc.prevArrow) {
+                    _o.prev = 'hidden';
+                }
+                if (!cc.nextArrow) {
+                    _o.next = 'hidden';
+                }
+                if (!cc.father.showtime) {
+                    _o.showtime = 'hidden';
+                }
+                _o.id = cc.id = 'ks-cal-' + Math.random().toString().replace(/.\./i, '');
+                _o.title = cc.father._getHeadStr(cc.year, cc.month);
+                cc.createDS();
+                _o.ds = cc.ds;
+                cc.father.con.append(cc.father._templetShow(cc.html, _o));
+                cc.node = S.one('#' + cc.id);
+                if (cc.father.showTime) {
+                    ft = cc.node.one('.ks-cal-ft');
+                    ft.removeClass('hidden');
+                    cc.timmer = new cc.father.TimeSelector(ft, cc.father);
+                }
+                return this;
+            };
+            /**
+             * 创建子日历的事件
+             */
+            this._buildEvent = function() {
+                var cc = this,i,
+                    con = S.one('#' + cc.id);
+                //flush event
+                for (i = 0; i < cc.EV.length; i++) {
+                    if (typeof cc.EV[i] != 'undefined') {
+                        cc.EV[i].detach();
+                    }
+                }
+
+                cc.EV[0] = con.one('div.ks-dbd').on('click', function(e) {
+                    e.preventDefault();
+                    e.target = S.Node(e.target);
+                    if (e.target.hasClass('null'))return;
+                    if (e.target.hasClass('disabled'))return;
+                    var selectedd = Number(e.target.html());
+                    var d = new Date();
+                    d.setDate(selectedd);
+                    d.setMonth(cc.month);
+                    d.setYear(cc.year);
+                    //self.callback(d);
+                    //datetime的date
+                    cc.father.dt_date = d;
+                    cc.father.fire('select', {
+                        date:d
+                    });
+                    if (cc.father.popup && cc.father.closable) {
+                        cc.father.hide();
+                    }
+                    if (cc.father.rangeSelect) {
+                        cc.father._handleRange(d);
+                    }
+                    cc.father.render({selected:d});
+                });
+                //向前
+                cc.EV[1] = con.one('a.ks-prev').on('click', function(e) {
+                    e.preventDefault();
+                    cc.father._monthMinus().render();
+                    cc.father.fire('monthChange', {
+                        date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
+                    });
+
+                });
+                //向后
+                cc.EV[2] = con.one('a.ks-next').on('click', function(e) {
+                    e.preventDefault();
+                    cc.father._monthAdd().render();
+                    cc.father.fire('monthChange', {
+                        date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
+                    });
+                });
+                if (cc.father.navigator) {
+                    cc.EV[3] = con.one('a.ks-title').on('click', function(e) {
+                        try {
+                            cc.timmer.hidePopup();
+                            e.preventDefault();
+                        } catch(e) {
+                        }
+                        e.target = S.Node(e.target);
+                        var setime_node = con.one('.ks-setime');
+                        setime_node.html('');
+                        var in_str = cc.father._templetShow(cc.nav_html, {
+                            the_month:cc.month + 1,
+                            the_year:cc.year
+                        });
+                        setime_node.html(in_str);
+                        setime_node.removeClass('hidden');
+                        con.one('input').on('keydown', function(e) {
+                            e.target = S.Node(e.target);
+                            if (e.keyCode == 38) {//up
+                                e.target.val(Number(e.target.val()) + 1);
+                                e.target[0].select();
+                            }
+                            if (e.keyCode == 40) {//down
+                                e.target.val(Number(e.target.val()) - 1);
+                                e.target[0].select();
+                            }
+                            if (e.keyCode == 13) {//enter
+                                var _month = con.one('.ks-setime').one('select').val();
+                                var _year = con.one('.ks-setime').one('input').val();
+                                con.one('.ks-setime').addClass('hidden');
+                                if (!cc.Verify().isYear(_year))return;
+                                if (!cc.Verify().isMonth(_month))return;
+                                cc.father.render({
+                                    date:new Date(_year + '/' + _month + '/01')
+                                });
+                                cc.father.fire('monthChange', {
+                                    date:new Date(_year + '/' + _month + '/01')
+                                });
+                            }
+                        });
+                    });
+                    cc.EV[4] = con.one('.ks-setime').on('click', function(e) {
+                        e.preventDefault();
+                        e.target = S.Node(e.target);
+                        if (e.target.hasClass('ok')) {
+                            var _month = con.one('.ks-setime').one('select').val(),
+                                _year = con.one('.ks-setime').one('input').val();
+                            con.one('.ks-setime').addClass('hidden');
+                            if (!cc.Verify().isYear(_year))return;
+                            if (!cc.Verify().isMonth(_month))return;
+                            cc.father.render({
+                                date:new Date(_year + '/' + _month + '/01')
+                            });
+                            cc.father.fire('monthChange', {
+                                date:new Date(_year + '/' + _month + '/01')
+                            });
+                        } else if (e.target.hasClass('cancel')) {
+                            con.one('.ks-setime').addClass('hidden');
+                        }
+                    });
+                }
+                return this;
+
+            };
+            /**
+             * 得到当前子日历的node引用
+             */
+            this._getNode = function() {
+                var cc = this;
+                return cc.node;
+            };
+            /**
+             * 得到某月有多少天,需要给定年来判断闰年
+             */
+            this._getNumOfDays = function(year, month) {
+                return 32 - new Date(year, month - 1, 32).getDate();
+            };
+            /**
+             * 生成日期的html
+             */
+            this.createDS = function() {
+                var cc = this,
+                    s = '',
+                    startweekday = (new Date(cc.year + '/' + (cc.month + 1) + '/01').getDay() + cc.father.startDay + 7) % 7,//当月第一天是星期几
+                    k = cc._getNumOfDays(cc.year, cc.month + 1) + startweekday,
+                    i, _td_s;
+
+                for (i = 0; i < k; i++) {
+                    //prepare data {{
+                    if (/532/.test(S.UA.webkit)) {//hack for chrome
+                        _td_s = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 1 - startweekday).toString());
+                    } else {
+                        _td_s = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 2 - startweekday).toString());
+                    }
+                    var _td_e = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 1 - startweekday).toString());
+                    //prepare data }}
+                    if (i < startweekday) {//null
+                        s += '<a href="javascript:void(0);" class="ks-null">0</a>';
+                    } else if (cc.father.minDate instanceof Date
+                        && new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 2 - startweekday)).getTime() < (cc.father.minDate.getTime() + 1)) {//disabled
+                        s += '<a href="javascript:void(0);" class="ks-disabled">' + (i - startweekday + 1) + '</a>';
+
+                    } else if (cc.father.maxDate instanceof Date
+                        && new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 1 - startweekday)).getTime() > cc.father.maxDate.getTime()) {//disabled
+                        s += '<a href="javascript:void(0);" class="ks-disabled">' + (i - startweekday + 1) + '</a>';
+
+
+                    } else if ((cc.father.range.start != null && cc.father.range.end != null) //日期选择范围
+                        && (
+                        _td_s.getTime() >= cc.father.range.start.getTime() && _td_e.getTime() < cc.father.range.end.getTime())) {
+
+                        if (i == (startweekday + (new Date()).getDate() - 1)
+                            && (new Date()).getFullYear() == cc.year
+                            && (new Date()).getMonth() == cc.month) {//今天并被选择
+                            s += '<a href="javascript:void(0);" class="ks-range ks-today">' + (i - startweekday + 1) + '</a>';
+                        } else {
+                            s += '<a href="javascript:void(0);" class="ks-range">' + (i - startweekday + 1) + '</a>';
+                        }
+
+                    } else if (i == (startweekday + (new Date()).getDate() - 1)
+                        && (new Date()).getFullYear() == cc.year
+                        && (new Date()).getMonth() == cc.month) {//today
+                        s += '<a href="javascript:void(0);" class="ks-today">' + (i - startweekday + 1) + '</a>';
+
+                    } else if (i == (startweekday + cc.father.selected.getDate() - 1)
+                        && cc.month == cc.father.selected.getMonth()
+                        && cc.year == cc.father.selected.getFullYear()) {//selected
+                        s += '<a href="javascript:void(0);" class="ks-selected">' + (i - startweekday + 1) + '</a>';
+                    } else {//other
+                        s += '<a href="javascript:void(0);">' + (i - startweekday + 1) + '</a>';
+                    }
+                }
+                if (k % 7 != 0) {
+                    for (i = 0; i < (7 - k % 7); i++) {
+                        s += '<a href="javascript:void(0);" class="ks-null">0</a>';
+                    }
+                }
+                cc.ds = s;
+                return this;
+            };
+            /**
+             * 渲染
+             */
+            this.render = function() {
+                var cc = this;
+                cc._renderUI();
+                cc._buildEvent();
+                return this;
+            };
+
+
+        }//Page constructor over
+    });
+
+}, { host: 'calendar' });
+/**
+ * @module	 日历 
+ * @creator  拔赤<lijing00333@163.com>
+ */
+KISSY.add('calendar-time', function(S) {
+
+    S.augment(S.Calendar, {
+
+        /**
+         * 时间选择构造器
+         * @constructor S.Calendar.TimerSelector
+         * @param {object} ft ,timer所在的容器
+         * @param {object} father 指向S.Calendar实例的指针，需要共享父框的参数
+         */
+        TimeSelector:function(ft, father) {
+            //属性
+            this.father = father;
+            this.fcon = ft.parent('.ks-cal-box');
+            this.popupannel = this.fcon.one('.ks-selectime');//点选时间的弹出层
+            if (typeof father._time == 'undefined') {//确保初始值和当前时间一致
+                father._time = new Date();
+            }
+            this.time = father._time;
+            this.status = 's';//当前选择的状态，'h','m','s'依次判断更新哪个值
+            this.ctime = S.Node('<div class="ks-cal-time">时间：<span class="h">h</span>:<span class="m">m</span>:<span class="s">s</span><!--{{arrow--><div class="cta"><button class="u"></button><button class="d"></button></div><!--arrow}}--></div>');
+            this.button = S.Node('<button class="ct-ok">确定</button>');
+            //小时
+            this.h_a = ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
+            //分钟
+            this.m_a = ['00','10','20','30','40','50'];
+            //秒
+            this.s_a = ['00','10','20','30','40','50'];
+
+
+            //方法
+            /**
+             * 创建相应的容器html，值均包含在a中
+             * 参数：要拼装的数组
+             * 返回：拼好的innerHTML,结尾还要带一个关闭的a
+             *
+             */
+            this.parseSubHtml = function(a) {
+                var in_str = '';
+                for (var i = 0; i < a.length; i++) {
+                    in_str += '<a href="javascript:void(0);" class="item">' + a[i] + '</a>';
+                }
+                in_str += '<a href="javascript:void(0);" class="x">x</a>';
+                return in_str;
+            };
+            /**
+             * 显示ks-selectime容器
+             * 参数，构造好的innerHTML
+             */
+            this.showPopup = function(instr) {
+                var self = this;
+                this.popupannel.html(instr);
+                this.popupannel.removeClass('hidden');
+                var status = self.status;
+                self.ctime.all('span').removeClass('on');
+                switch (status) {
+                    case 'h':
+                        self.ctime.all('.h').addClass('on');
+                        break;
+                    case 'm':
+                        self.ctime.all('.m').addClass('on');
+                        break;
+                    case 's':
+                        self.ctime.all('.s').addClass('on');
+                        break;
+                }
+            };
+            /**
+             * 隐藏ks-selectime容器
+             */
+            this.hidePopup = function() {
+                this.popupannel.addClass('hidden');
+            };
+            /**
+             * 不对其做更多的上下文假设，仅仅根据time显示出来
+             */
+            this.render = function() {
+                var self = this;
+                var h = self.get('h');
+                var m = self.get('m');
+                var s = self.get('s');
+                self.father._time = self.time;
+                self.ctime.all('.h').html(h);
+                self.ctime.all('.m').html(m);
+                self.ctime.all('.s').html(s);
+                return self;
+            };
+            //这里的set和get都只是对time的操作，并不对上下文做过多假设
+            /**
+             * set(status,v)
+             * h:2,'2'
+             */
+            this.set = function(status, v) {
+                var self = this;
+                v = Number(v);
+                switch (status) {
+                    case 'h':
+                        self.time.setHours(v);
+                        break;
+                    case 'm':
+                        self.time.setMinutes(v);
+                        break;
+                    case 's':
+                        self.time.setSeconds(v);
+                        break;
+                }
+                self.render();
+            };
+            /**
+             * get(status)
+             */
+            this.get = function(status) {
+                var self = this;
+                var time = self.time;
+                switch (status) {
+                    case 'h':
+                        return time.getHours();
+                        break;
+                    case 'm':
+                        return time.getMinutes();
+                        break;
+                    case 's':
+                        return time.getSeconds();
+                        break;
+                }
+            };
+
+            /**
+             * add()
+             * 状态值代表的变量增1
+             */
+            this.add = function() {
+                var self = this;
+                var status = self.status;
+                var v = self.get(status);
+                v++;
+                self.set(status, v);
+            };
+            /**
+             * minus()
+             * 状态值代表的变量增1
+             */
+            this.minus = function() {
+                var self = this;
+                var status = self.status;
+                var v = self.get(status);
+                v--;
+                self.set(status, v);
+            };
+
+
+            //构造
+            this._init = function() {
+                var self = this;
+                ft.html('').append(self.ctime);
+                ft.append(self.button);
+                self.render();
+                self.popupannel.on('click', function(e) {
+                    var el = S.Node(e.target);
+                    if (el.hasClass('x')) {//关闭
+                        self.hidePopup();
+                    } else if (el.hasClass('item')) {//点选一个值
+                        var v = Number(el.html());
+                        self.set(self.status, v);
+                        self.hidePopup();
+                    }
+                });
+                //确定的动作
+                self.button.on('click', function() {
+                    //初始化读取父框的date
+                    var d = typeof self.father.dt_date == 'undefined' ? self.father.date : self.father.dt_date;
+                    d.setHours(self.get('h'));
+                    d.setMinutes(self.get('m'));
+                    d.setSeconds(self.get('s'));
+                    self.father.fire('timeSelect', {
+                        date:d
+                    });
+                    if (self.father.popup && self.father.closable) {
+                        self.father.hide();
+                    }
+                });
+                //ctime上的键盘事件，上下键，左右键的监听
+                //TODO 考虑是否去掉
+                self.ctime.on('keyup', function(e) {
+                    if (e.keyCode == 38 || e.keyCode == 37) {//up or left
+                        //e.stopPropagation();
+                        e.preventDefault();
+                        self.add();
+                    }
+                    if (e.keyCode == 40 || e.keyCode == 39) {//down or right
+                        //e.stopPropagation();
+                        e.preventDefault();
+                        self.minus();
+                    }
+                });
+                //上的箭头动作
+                self.ctime.one('.u').on('click', function() {
+                    self.hidePopup();
+                    self.add();
+                });
+                //下的箭头动作
+                self.ctime.one('.d').on('click', function() {
+                    self.hidePopup();
+                    self.minus();
+                });
+                //弹出选择小时
+                self.ctime.one('.h').on('click', function() {
+                    var in_str = self.parseSubHtml(self.h_a);
+                    self.status = 'h';
+                    self.showPopup(in_str);
+                });
+                //弹出选择分钟
+                self.ctime.one('.m').on('click', function() {
+                    var in_str = self.parseSubHtml(self.m_a);
+                    self.status = 'm';
+                    self.showPopup(in_str);
+                });
+                //弹出选择秒
+                self.ctime.one('.s').on('click', function() {
+                    var in_str = self.parseSubHtml(self.s_a);
+                    self.status = 's';
+                    self.showPopup(in_str);
+                });
+
+
+            };
+            this._init();
+
+
+        }
+
+    });
+
+
+},  { host: 'calendar' } );

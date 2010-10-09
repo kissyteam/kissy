@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 30 18:00
 */
 /**
  * @module  node
@@ -9,7 +9,7 @@ build time: Aug 26 22:48
  */
 KISSY.add('node', function(S) {
 
-    var DOM = S.DOM, nodeTypeIs = DOM._nodeTypeIs;
+    var DOM = S.DOM;
 
     /**
      * The Node class provides a wrapper for manipulating DOM Node.
@@ -28,12 +28,21 @@ KISSY.add('node', function(S) {
             return;
         }
 
-        // handle element or text node
-        if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
-            domNode = html;
-        }
-        else if (S.isString(html)) {
+        // create from html
+        if (S.isString(html)) {
             domNode = DOM.create(html, props, ownerDocument);
+            // 将 S.Node('<p>1</p><p>2</p>') 转换为 NodeList
+            if(domNode.nodeType === 11) { // fragment
+                return new S.NodeList(domNode.childNodes);
+            }
+        }
+        // handle Node
+        else if(html instanceof Node) {
+            return html;
+        }
+        // node, document, window 等等，由使用者保证正确性
+        else {
+            domNode = html;
         }
 
         self[0] = domNode;
@@ -85,7 +94,7 @@ KISSY.add('nodelist', function(S) {
         }
 
         // push nodes
-        AP.push.apply(this, domNodes || []);
+        AP.push.apply(this, S.makeArray(domNodes) || []);
     }
 
     S.mix(NodeList.prototype, {
@@ -156,6 +165,8 @@ KISSY.add('nodelist', function(S) {
 KISSY.add('node-attach', function(S, undefined) {
 
     var DOM = S.DOM, Event = S.Event,
+        nodeTypeIs = DOM._nodeTypeIs,
+        isKSNode = DOM._isKSNode,
         NP = S.Node.prototype,
         NLP = S.NodeList.prototype,
         GET_DOM_NODE = 'getDOMNode',
@@ -164,14 +175,14 @@ KISSY.add('node-attach', function(S, undefined) {
         ONLY_VAL = 2,
         ALWAYS_NODE = 4;
 
-    function normalGetterSetter(isNodeList, arguments, valIndex, fn) {
+    function normalGetterSetter(isNodeList, args, valIndex, fn) {
         var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
-            args = [elems].concat(S.makeArray(arguments));
+            args2 = [elems].concat(S.makeArray(args));
 
-        if (arguments[valIndex] === undefined) {
-            return fn.apply(DOM, args);
+        if (args[valIndex] === undefined) {
+            return fn.apply(DOM, args2);
         } else {
-            fn.apply(DOM, args);
+            fn.apply(DOM, args2);
             return this;
         }
     }
@@ -232,6 +243,9 @@ KISSY.add('node-attach', function(S, undefined) {
         }
     });
 
+    // dom-data
+    attach(['data', 'removeData'], HAS_NAME);
+
     // dom-class
     attach(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass']);
 
@@ -263,7 +277,7 @@ KISSY.add('node-attach', function(S, undefined) {
             return this;
         };
     });
-    S.each([NP, NLP], function(P) {
+    S.each([NP, NLP], function(P, isNodeList) {
         S.mix(P, {
 
             /**
@@ -272,7 +286,17 @@ KISSY.add('node-attach', function(S, undefined) {
             append: function(html) {
                 if (html) {
                     S.each(this, function(elem) {
-                        elem.appendChild(DOM.create(html));
+                        var domNode;
+
+                        // 对于 NodeList, 需要 cloneNode, 因此直接调用 create
+                        if (isNodeList || S.isString(html)) {
+                            domNode = DOM.create(html);
+                        } else {
+                            if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) domNode = html;
+                            if (isKSNode(html)) domNode = html[0];
+                        }
+
+                        elem.appendChild(domNode);
                     });
                 }
                 return this;
@@ -295,17 +319,22 @@ KISSY.add('node-attach', function(S, undefined) {
 
     // event-target
     S.each([NP, NLP], function(P) {
-        S.mix(P, S.EventTarget, { _supportSpecialEvent: true });
+
+        S.mix(P, S.EventTarget);
+        P._supportSpecialEvent = true;
+
         P._addEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
                 Event._simpleAdd(this[i], type, handle, capture);
             }
         };
+
         P._removeEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
                 Event._simpleRemove(this[i], type, handle, capture);
             }
         };
+
         delete P.fire;
     });
 });

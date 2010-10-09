@@ -15,13 +15,17 @@ KISSY.add('anim', function(S, undefined) {
 
         STEP_INTERVAL = 13,
         OPACITY = 'opacity',
+        NONE = 'none',
+        PROPERTY = 'Property',
+
         EVENT_START = 'start',
         EVENT_STEP = 'step',
         EVENT_COMPLETE = 'complete',
 
         defaultConfig = {
             duration: 1,
-            easing: Easing.easeNone
+            easing: 'easeNone',
+            nativeSupport: true // 优先使用原生 css3 transition
             //queue: true
         };
 
@@ -29,13 +33,13 @@ KISSY.add('anim', function(S, undefined) {
      * Anim Class
      * @constructor
      */
-    function Anim(elem, props, duration, easing, callback) {
+    function Anim(elem, props, duration, easing, callback, nativeSupport) {
         // ignore non-exist element
         if (!(elem = S.get(elem))) return;
 
         // factory or constructor
         if (!(this instanceof Anim)) {
-            return new Anim(elem, props, duration, easing, callback);
+            return new Anim(elem, props, duration, easing, callback, nativeSupport);
         }
 
         var self = this,
@@ -70,12 +74,27 @@ KISSY.add('anim', function(S, undefined) {
             config = S.merge(defaultConfig, duration);
         } else {
             config = S.clone(defaultConfig);
-            duration && (config.duration = PARSE_FLOAT(duration, 10) || 1);
-            S.isString(easing) && (easing = Easing[easing]); // 可以是字符串, 比如 'easingOut'
-            S.isFunction(easing) && (config.easing = easing);
-            S.isFunction(callback) && (config.complete = callback);
+            if (duration) (config.duration = PARSE_FLOAT(duration) || 1);
+            if (S.isString(easing) || S.isFunction(easing)) config.easing = easing;
+            if (S.isFunction(callback)) config.complete = callback;
+            if(nativeSupport !== undefined) config.nativeSupport = nativeSupport;
         }
         self.config = config;
+
+        /**
+         * detect browser native animation(CSS3 transition) support
+         */
+        if (config.nativeSupport && getNativeTransitionName()
+            && S.isString((easing = config.easing))) {
+
+            // 当 easing 是支持的字串时，才激活 native transition
+            if (/cubic-bezier\([\s\d.,]+\)/.test(easing) ||
+                (easing = Easing.NativeTimeFunction[easing])) {
+                config.easing = easing;
+                self.transitionName = getNativeTransitionName();
+            }
+        }
+
 
         /**
          * timer
@@ -93,75 +112,164 @@ KISSY.add('anim', function(S, undefined) {
         run: function() {
             var self = this, config = self.config,
                 elem = self.domEl,
-                duration = config.duration * 1000,
-                easing = config.easing,
-                start = S.now(), finish = start + duration,
+                duration, easing, start, finish,
                 target = self.props,
                 source = {}, prop, go;
 
             for (prop in target) source[prop] = parse(DOM.css(elem, prop));
-            if(self.fire(EVENT_START) === false) return;
-
+            if (self.fire(EVENT_START) === false) return;
             self.stop(); // 先停止掉正在运行的动画
 
-            self.timer = S.later((go = function () {
-                var time = S.now(),
-                    t = time > finish ? 1 : (time - start) / duration,
-                    sp, tp, b;
+            if (self.transitionName) {
+                self._nativeRun();
+            } else {
+                duration = config.duration * 1000;
+                start = S.now();
+                finish = start + duration;
 
-                for (prop in target) {
-                    sp = source[prop];
-                    tp = target[prop];
-
-                    // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
-                    // 这时要把 sp 的单位调整为和 tp 的一致
-                    if(tp.v == 0) tp.u = sp.u;
-
-                    // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
-                    // 比如：ie 下 border-width 默认为 medium
-                    if(sp.u !== tp.u) sp.v = 0;
-
-                    // go
-                    DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
+                easing = config.easing;
+                if(S.isString(easing)) {
+                    easing = Easing[easing] || Easing.easeNone;
                 }
 
-                if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
-                    self.stop();
-                    // complete 事件只在动画到达最后一帧时才触发
-                    if(b) self.fire(EVENT_COMPLETE);
-                }
-            }), STEP_INTERVAL, true);
+                self.timer = S.later((go = function () {
+                    var time = S.now(),
+                        t = time > finish ? 1 : (time - start) / duration,
+                        sp, tp, b;
 
-            // 立刻执行
-            go();
+                    for (prop in target) {
+                        sp = source[prop];
+                        tp = target[prop];
+
+                        // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
+                        // 这时要把 sp 的单位调整为和 tp 的一致
+                        if (tp.v == 0) tp.u = sp.u;
+
+                        // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
+                        // 比如：ie 下 border-width 默认为 medium
+                        if (sp.u !== tp.u) sp.v = 0;
+
+                        // go
+                        DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
+                    }
+
+                    if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
+                        self.stop();
+                        // complete 事件只在动画到达最后一帧时才触发
+                        if (b) self.fire(EVENT_COMPLETE);
+                    }
+                }), STEP_INTERVAL, true);
+
+                // 立刻执行
+                go();
+            }
 
             return self;
         },
 
+        _nativeRun: function() {
+            var self = this, config = self.config,
+                elem = self.domEl,
+                target = self.props,
+                duration = config.duration * 1000,
+                easing = config.easing,
+                prefix = self.transitionName,
+                transition = {};
+
+            S.log('Amin uses native transition.');
+
+            // using CSS transition process
+            transition[prefix + 'Property'] = 'all';
+            transition[prefix + 'Duration'] = duration + 'ms';
+            transition[prefix + 'TimingFunction'] = easing;
+
+            // set the CSS transition style
+            DOM.css(elem, transition);
+
+            // set the final style value (need some hack for opera)
+            S.later(function() {
+                setToFinal(elem, target, self.targetStyle);
+            }, 0);
+
+            // after duration time, fire the stop function
+            S.later(function() {
+                self.stop(true);
+            }, duration);
+        },
+
         stop: function(finish) {
-            var self = this, elem = self.domEl,
-                style = self.targetStyle;
+            var self = this;
 
-            // 停止定时器
-            if (self.timer) {
-                self.timer.cancel();
-                self.timer = undefined;
+            if (self.transitionName) {
+                self._nativeStop(finish);
             }
-
-            // 直接设置到最终样式
-            if(finish) {
-                if(S.UA.ie && style.indexOf(OPACITY) > -1) {
-                    DOM.css(elem, OPACITY, self.props[OPACITY].v);
+            else {
+                // 停止定时器
+                if (self.timer) {
+                    self.timer.cancel();
+                    self.timer = undefined;
                 }
-                elem.style.cssText += ';' + style;
-                self.fire(EVENT_COMPLETE);
+
+                // 直接设置到最终样式
+                if (finish) {
+                    setToFinal(self.domEl, self.props, self.targetStyle);
+                    self.fire(EVENT_COMPLETE);
+                }
             }
 
             return self;
+        },
+
+        _nativeStop: function(finish) {
+            var self = this, elem = self.domEl,
+                prefix = self.transitionName,
+                props = self.props, prop;
+
+            // handle for the CSS transition
+            if (finish) {
+                // CSS transition value remove should come first
+                DOM.css(elem, prefix + PROPERTY, NONE);
+                self.fire(EVENT_COMPLETE);
+            } else {
+                // if want to stop the CSS transition, should set the current computed style value to the final CSS value
+                for (prop in props) {
+                    DOM.css(elem, prop, DOM._getComputedStyle(elem, prop));
+                }
+                // CSS transition value remove should come last
+                DOM.css(elem, prefix + PROPERTY, NONE);
+            }
         }
     });
 
+    Anim.supportTransition = function() { return !!getNativeTransitionName(); };
+
     S.Anim = Anim;
+
+    function getNativeTransitionName() {
+        var name = 'transition', transitionName;
+
+        if (parseEl.style[name] !== undefined) {
+            transitionName = name;
+        } else {
+            S.each(['Webkit', 'Moz', 'O'], function(item) {
+                if (parseEl.style[(name = item + 'Transition')] !== undefined) {
+                    transitionName = name;
+                    return false;
+                }
+            });
+        }
+        getNativeTransitionName = function() {
+            return transitionName;
+        };
+        return transitionName;
+    }
+
+    function setToFinal(elem, props, style) {
+        if (S.UA.ie && style.indexOf(OPACITY) > -1) {
+            DOM.css(elem, OPACITY, props[OPACITY].v);
+        }
+        elem.style.cssText += ';' + style;
+    }
 
     function normalize(style) {
         var css, rules = { }, i = PROPS.length, v;
@@ -172,7 +280,7 @@ KISSY.add('anim', function(S, undefined) {
     }
 
     function parse(val) {
-        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d\.]+/, '');
+        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d.]+/, '');
         return isNaN(num) ? { v: unit, u: '', f: colorEtc } : { v: num, u: unit, f: interpolate };
     }
 
@@ -183,12 +291,12 @@ KISSY.add('anim', function(S, undefined) {
     function colorEtc(source, target, pos) {
         var i = 2, j, c, tmp, v = [], r = [];
 
-        while (j = 3, c = arguments[i - 1], i--) {
+        while (j = 3,c = arguments[i - 1],i--) {
             if (s(c, 0, 4) === 'rgb(') {
                 c = c.match(/\d+/g);
                 while (j--) v.push(~~c[j]);
             }
-            else if(s(c, 0) === '#') {
+            else if (s(c, 0) === '#') {
                 if (c.length === 4) c = '#' + s(c, 1) + s(c, 1) + s(c, 2) + s(c, 2) + s(c, 3) + s(c, 3);
                 while (j--) v.push(parseInt(s(c, 1 + j * 2, 2), 16));
             }
@@ -208,7 +316,8 @@ KISSY.add('anim', function(S, undefined) {
     function s(str, p, c) {
         return str.substr(p, c || 1);
     }
-});
+})
+    ;
 
 /**
  * TODO:

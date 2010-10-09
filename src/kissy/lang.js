@@ -12,7 +12,7 @@
         encode = encodeURIComponent,
         decode = decodeURIComponent,
         HAS_OWN_PROPERTY = 'hasOwnProperty',
-        EMPTY = '', SEP = '&',
+        EMPTY = '', SEP = '&', BRACKET = encode('[]'),
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
         REG_NOT_WHITE = /\S/;
@@ -30,14 +30,14 @@
          * Determines whether or not the provided object is a boolean.
          */
         isBoolean: function(o) {
-            return typeof o === 'boolean';
+            return toString.call(o) === '[object Boolean]';
         },
 
         /**
          * Determines whether or not the provided object is a string.
          */
         isString: function(o) {
-            return typeof o === 'string';
+            return toString.call(o) === '[object String]';
         },
 
         /**
@@ -45,7 +45,7 @@
          * NOTICE: Infinity and NaN return false.
          */
         isNumber: function(o) {
-            return typeof o === 'number' && isFinite(o);
+            return toString.call(o) === '[object Number]' && isFinite(o);
         },
 
         /**
@@ -264,7 +264,7 @@
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, '[]=', encode(val[i] + EMPTY), sep);
+                            buf.push(key, BRACKET + '=', encode(val[i] + EMPTY), sep);
                         }
                     }
                 }
@@ -414,11 +414,11 @@
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // 将 NodeList 等集合转换为普通数组
+    // 将 LiveNodeList 等 array-like 集合转换为普通数组
     function slice2Arr(arr) {
         return AP.slice.call(arr);
     }
-    // ie 不支持用 slice 转换 NodeList, 降级到普通方法
+    // ie 不支持用 slice 转换 LiveNodeList, 降级到普通方法
     try {
         slice2Arr(docElem.childNodes);
     }

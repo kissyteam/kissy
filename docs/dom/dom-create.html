@@ -42,6 +42,14 @@ DOM.create('text');
 // 创建时，同时添加属性值
 DOM.create('&lt;a&gt;', { href: 'hot.html', title: 'Hot Page' });
 
+// KISSY v1.1.5+， 创建时，支持添加更多的属性；
+// 新增属性有： val, css, html, text, data, width, height, offset
+DOM.create('&lt;a&gt;', { href: 'hot.html',
+                    title: 'Hot Page',
+                    css: {color: 'blue'},
+                    text: 'Test Link'
+          });
+
 // 直接内联属性
 DOM.create('&lt;img src="logo.png" alt="logo" /&gt;');
 </code></pre>

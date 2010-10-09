@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.3
+Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Aug 26 22:48
+build time: Sep 30 18:00
 */
 /**
  * @module kissy
@@ -69,7 +69,7 @@ build time: Aug 26 22:48
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.3',
+        version: '1.1.5',
 
         /**
          * Initializes KISSY object.
@@ -325,17 +325,20 @@ build time: Aug 26 22:48
          * <code>
          * S.namespace('KISSY.app'); // returns KISSY.app
          * S.namespace('app.Shop'); // returns KISSY.app.Shop
+         * S.namespace('TB.app.Shop', true); // returns TB.app.Shop
          * </code>
          * @return {Object}  A reference to the last namespace object created
          */
         namespace: function() {
-            var l = arguments.length, o = null, i, j, p;
+            var args = arguments, l = args.length,
+                o = null, i, j, p,
+                global = (args[l - 1] === true && l--);
 
             for (i = 0; i < l; ++i) {
-                p = (EMPTY + arguments[i]).split('.');
-                o = this;
+                p = (EMPTY + args[i]).split('.');
+                o = global ? win : this;
                 for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                    o = o[p[j]] = o[p[j]] || {};
+                    o = o[p[j]] = o[p[j]] || { };
                 }
             }
             return o;
@@ -450,7 +453,7 @@ build time: Aug 26 22:48
         encode = encodeURIComponent,
         decode = decodeURIComponent,
         HAS_OWN_PROPERTY = 'hasOwnProperty',
-        EMPTY = '', SEP = '&',
+        EMPTY = '', SEP = '&', BRACKET = encode('[]'),
         REG_TRIM = /^\s+|\s+$/g,
         REG_ARR_KEY = /^(\w+)\[\]$/,
         REG_NOT_WHITE = /\S/;
@@ -468,14 +471,14 @@ build time: Aug 26 22:48
          * Determines whether or not the provided object is a boolean.
          */
         isBoolean: function(o) {
-            return typeof o === 'boolean';
+            return toString.call(o) === '[object Boolean]';
         },
 
         /**
          * Determines whether or not the provided object is a string.
          */
         isString: function(o) {
-            return typeof o === 'string';
+            return toString.call(o) === '[object String]';
         },
 
         /**
@@ -483,7 +486,7 @@ build time: Aug 26 22:48
          * NOTICE: Infinity and NaN return false.
          */
         isNumber: function(o) {
-            return typeof o === 'number' && isFinite(o);
+            return toString.call(o) === '[object Number]' && isFinite(o);
         },
 
         /**
@@ -702,7 +705,7 @@ build time: Aug 26 22:48
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, '[]=', encode(val[i] + EMPTY), sep);
+                            buf.push(key, BRACKET + '=', encode(val[i] + EMPTY), sep);
                         }
                     }
                 }
@@ -852,11 +855,11 @@ build time: Aug 26 22:48
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // 将 NodeList 等集合转换为普通数组
+    // 将 LiveNodeList 等 array-like 集合转换为普通数组
     function slice2Arr(arr) {
         return AP.slice.call(arr);
     }
-    // ie 不支持用 slice 转换 NodeList, 降级到普通方法
+    // ie 不支持用 slice 转换 LiveNodeList, 降级到普通方法
     try {
         slice2Arr(docElem.childNodes);
     }
@@ -955,6 +958,7 @@ build time: Aug 26 22:48
             if (S.isPlainObject(name)) {
                 S.each(name, function(v, k) {
                     v.name = k;
+                    if(mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
                 });
                 mix(mods, name);
             }
@@ -1095,7 +1099,7 @@ build time: Aug 26 22:48
                     fn && fn(self);
                 });
                 mod.fns = undefined; // 保证 attach 过的方法只执行一次
-                S.log(mod.name + '.status = attached');
+                //S.log(mod.name + '.status = attached');
             }
 
             mod.status = ATTACHED;
@@ -1138,7 +1142,7 @@ build time: Aug 26 22:48
 
                 ret = self.getScript(url, {
                     success: function() {
-                        KISSY.log(mod.name + ' onload fired.', 'info'); // 压缩时不过滤该句，以方便线上调试
+                        KISSY.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
                         _success();
                     },
                     error: function() {
@@ -1272,10 +1276,8 @@ build time: Aug 26 22:48
 
 /**
  * TODO:
- *  - combo 实现
+ *  - 自动 combo 的实现，目前是手动
  *  - 使用场景和测试用例整理
- *  - 一个模块里，对 js 和 css 的同时支持
- *
  *
  * NOTES:
  *
@@ -1310,13 +1312,16 @@ build time: Aug 26 22:48
         }
     };
 
-    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
+    S.each(['sizzle', 'datalazyload', 'flash', 'switchable',
+        'suggest', 'overlay', 'imagezoom', 'calendar'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
             requires: ['core'],
             charset: 'utf-8'
         };
     });
+
+    map['calendar'].csspath = 'calendar/default-min.css';
 
     S.add(map);
 

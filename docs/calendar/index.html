@@ -1,0 +1,303 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Calendar - KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/tree/master/src/calendar/">src files</a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="section summary">
+                <p>开始之前，先来看看 Calendar 能做什么：<a href="http://kissyteam.github.com/kissy/src/calendar/demo.html">demo</a></p>
+				<p>这是一个交互清爽、功能实用的日历控件，支持基本的日期选择、时间选择、嵌入/弹出、范围选择、日期格式化输出等常用功能，能够满足多数的应用场景，非常方便用户调用。</p>
+            </div>
+
+            <div class="section">
+                <h3 id="usage">Usage</h3>
+                <div class="member prop">
+                    <h4><a name="Constructor">new S.Calendar(trigger,config)</a> </h4>
+                    <div class="detail">
+                        <p>S.Calendar构造器,传入触点/容器id和配置项</p>
+
+<pre class="example-code"><code>
+KISSY.use('calendar',function(S) {
+	//静态日历,单击回调
+	var c = new S.Calendar('#J_Calendar').on('select',function(e){
+		alert(e.date);
+	});
+});
+</code></pre>
+                    </div>
+                </div>
+                <h3 id="properties">Config</h3>
+
+                <div class="member prop">
+                    <h4><a name="date">date</a> - <code>Date</code></h4>
+                    <div class="detail">
+                        <p>默认显示该日期所在的月份，默认为当天</p>
+                    </div>
+                </div>
+
+
+                <div class="member prop">
+                    <h4><a name="selected">selected</a> - <code>Date</code></h4>
+                    <div class="detail">
+                        <p>当前选中的日期</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="start_day">startDay</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>日历显示星期x为起始日期，取值范围为0到6，默认为0,从星期日开始,若取值为1，则从星期一开始，若取值为7，则从周日开始</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="multi_page">pages</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>日历的页数，默认为1，包含一页日历</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="closeable">closable</a> - <code>Boolean</code></h4>
+                    <div class="detail">
+                        <p>在弹出情况下，点选日期后是否关闭日历，默认为false</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="range_select">rangeSelect</a> - <code>Object</code></h4>
+                    <div class="detail">
+                        <p>默认显示的选择范围，格式为：{start:s,end:n}</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="mindate">minDate</a> - <code>Date</code></h4>
+                    <div class="detail">
+                        <p>日历可选择的最小日期，默认不开启</p>
+                    </div>
+                </div>
+                <div class="member prop">
+                    <h4><a name="maxdate">maxDate</a> - <code>Date</code></h4>
+                    <div class="detail">
+                        <p>日历可选择的最大，默认不开启</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="multi_select">multiSelect</a> - <code>Boolean</code></h4>
+                    <div class="detail">
+                        <p>是否支持多选，默认不开启 (尚未实现)</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="navigator">navigator</a> - <code>Boolean</code></h4>
+                    <div class="detail">
+                        <p>是否可以通过点击导航输入日期，默认开启</p>
+                    </div>
+                </div>
+                <div class="member prop">
+                    <h4><a name="popup">popup</a> - <code>Boolean</code></h4>
+                    <div class="detail">
+                        <p>日历是否为弹出,默认为false，不开启</p>
+                    </div>
+                </div>
+                <div class="member prop">
+                    <h4><a name="withtime">showTime</a> - <code>Boolean</code></h4>
+                    <div class="detail">
+                        <p>是否显示时间的选择,默认为false，不开启</p>
+                    </div>
+                </div>
+                <div class="member prop">
+                    <h4><a name="action">triggerType</a> - <code>Array | String</code></h4>
+                    <div class="detail">
+                        <p>弹出状态下，触发弹出日历的事件，例如：['click','focus'],也可以直接传入'focus'，默认为['click']</p>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="section">
+                <h3 id="Events">Events</h3>
+                <div class="member event">
+                    <h4><a name="select">select</a></h4>
+                    <div class="detail">
+						选中一个日期事件,通过e.date来获得选中的日期
+                    </div>
+                </div>
+                <div class="member event">
+                    <h4><a name="switch">monthChange</a></h4>
+                    <div class="detail">
+						切换月份事件,通过e.date来获取切换到的日期，通过e.date.getMonth() + 1 来获得切换至的月份
+
+<pre class="example-code"><code>
+KISSY.use('calendar',function(S) {
+	//月份切换事件
+	new S.Calendar('J_AllEvents').on('switch',function(e){
+		alert('切换事件,月份切换到'+(e.date.getMonth()+1));
+	});
+});
+</code></pre>
+                    </div>
+                </div>
+
+
+
+                <div class="member event">
+                    <h4><a name="rangeselect">rangeSelect</a></h4>
+                    <div class="detail">
+						范围选择事件,通过e.start和e.end来获得开始和结束日期
+
+<pre class="example-code"><code>
+KISSY.use('calendar',function(S) {
+	//选择范围,并绑定范围回调
+	new S.Calendar('J_Range',{
+		multi_page:2,
+		range_select:true
+	}).on('rangeselect',function(e){
+		alert(e.start+' '+e.end);
+	});
+});
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="member event">
+                    <h4><a name="timeselect">timeSelect</a></h4>
+                    <div class="detail">
+						确定选中时间事件,通过e.date来获得日期时间
+
+<pre class="example-code"><code>
+KISSY.use('calendar',function(S) {
+	//日历可选择time
+	c = new S.Calendar('#J_WithTime',{
+		showTime:true
+	}).on('timeSelect',function(e){
+		alert(e.date);	
+	});
+});
+</code></pre>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
+            <div class="section">
+                <h3 id="methods">Methods</h3>
+                <div class="member prop">
+                    <h4><a name="init">toggle</a> </h4>
+                    <div class="detail">
+                        <p>切换日历的状态，从显示到隐藏和从隐藏到显示</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="render">render</a> </h4>
+                    <div class="detail">
+                        <p>通过render可以带入如上任意参数并重新渲染日历</p>
+<pre class="example-code"><code>
+KISSY.use('calendar',function(S) {
+	c = new S.Calendar('#J_WithTime');
+	c.render({maxDate:new Date()});
+});
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="hide">hide</a> </h4>
+                    <div class="detail">
+                        <p>如果日历是弹出形式，隐藏日历</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="show">show</a> </h4>
+                    <div class="detail">
+                        <p>显示日历</p>
+                    </div>
+                </div>
+
+			</div>
+
+
+            <div class="section summary">
+				<p>关于日历的设计，请参照<a href="http://uedmagazine.com/ued/comments.php?y=09&m=12&entry=entry091226-070433" target=_blank >日历控件的设计</a></p>
+            </div>
+            <div class="section notes">
+				<p>一些需要注意的地方：<br />
+                理论上，可以日历中的子日历可以生成无数个，但超过3个的情况需要自定义css：增加class为“multi-2”的样式，请自行在css文件中添加。<br />
+				日历阴影用css3来定义，在opera和ie下日历无阴影,在ie下用滤镜模拟阴影效果<br />
+				在chrome中，日期不支持诸如new Date('2009/12/35')的天溢出，在调试浏览器的时候应当注意.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc"><a href="../index.html">home</a> &rsaquo; calendar :</div>
+            <div class="toc">
+				<h3>Usage</h3>
+                <ul>
+                    <li><a href="#Constructor">Constructor</a></li>
+				</ul>
+					
+                <h3>Config</h3>
+                <ul>
+                    <li><a href="#date">date</a></li>
+                    <li><a href="#selected">selected</a></li>
+                    <li><a href="#start_day">startDay</a></li>
+                    <li><a href="#multi_page">pages</a></li>
+                    <li><a href="#closeable">closable</a></li>
+                    <li><a href="#range_select">rangeSelect</a></li>
+                    <li><a href="#mindate">minDate</a></li>
+                    <li><a href="#maxdate">maxDate</a></li>
+                    <li><a href="#multi_select">multiSelect</a></li>
+                    <li><a href="#navigator">navigator</a></li>
+                    <li><a href="#withtime">showTime</a></li>
+                    <li><a href="#action">triggerType</a></li>
+                </ul>
+                <h3>Events</h3>
+                <ul>
+                    <li><a href="#select">select</a></li>
+                    <li><a href="#switch">monthChange</a></li>
+                    <li><a href="#rangeselect">rangeSelect</a></li>
+                    <li><a href="#timeselect">timeSelect</a></li>
+                </ul>
+                <h3>Methods</h3>
+                <ul>
+                    <li><a href="#init">toggle</a></li>
+                    <li><a href="#render">render</a></li>
+                    <li><a href="#hide">hide</a></li>
+                    <li><a href="#show">show</a></li>
+                </ul>
+				<h3>More Info</h3>
+                <ul>
+                    <li><a href="date.html">DateType</a></li>
+				</ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2010 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

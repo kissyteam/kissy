@@ -10,6 +10,7 @@
         <concat destfile="dom-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="dom.js"/>
             <path path="selector.js"/>
+            <path path="dom-data.js"/>
             <path path="dom-class.js"/>
             <path path="dom-attr.js"/>
             <path path="dom-style.js"/>

@@ -12,7 +12,7 @@ KISSY.add('flash-embed', function(S) {
         TARGET_NOT_FOUND = -2,  // 指定 ID 的对象未找到
         SWF_SRC_UNDEFINED = -3, // swf 的地址未指定
 
-        RE_FLASH_TAGS = /object|embed/i,
+        RE_FLASH_TAGS = /^(?:object|embed)/i,
         CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
         TYPE = 'application/x-shockwave-flash',
         FLASHVARS = 'flashvars', EMPTY = '',

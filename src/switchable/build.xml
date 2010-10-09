@@ -10,12 +10,12 @@
         <concat destfile="switchable-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="switchable.js"/>
 
-            <path path="plugin-autoplay.js"/>
-            <path path="plugin-effect.js"/>
-            <path path="plugin-circular.js"/>
-            <path path="plugin-lazyload.js"/>
-            <!--<path path="plugin-countdown.js"/>-->
-            <path path="plugin-autorender.js"/>
+            <path path="mod-autoplay.js"/>
+            <path path="mod-effect.js"/>
+            <path path="mod-circular.js"/>
+            <path path="mod-lazyload.js"/>
+            <!--<path path="mod-countdown.js"/>-->
+            <path path="mod-autorender.js"/>
 
             <path path="widget-tabs.js"/>
             <path path="widget-slide.js"/>

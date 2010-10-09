@@ -69,16 +69,12 @@
             KISSY.ready(function(S) {
                 // 有啊
                 // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
-                window["suggestCallback"] = window["g_ks_suggest_callback"];
                 var dataUrl = 'http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10';
-
                 var sug = new S.Suggest('#q2', dataUrl, {
-                    containerCls: 'youa-suggest-container'
-                });
-
-                sug.on('beforeDataRequest', function() {
-                    this.dataScript.charset = 'GBK';
-                    this.queryParams = 'keyword=' + encodeURIComponent(this.query);
+                    containerCls: 'youa-suggest-container',
+                    charset: 'gbk',
+                    callbackFn: 'suggestCallback',
+                    queryName: 'keyword'
                 });
 
                 // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
@@ -113,17 +109,12 @@
             KISSY.ready(function(S) {
                 // Baidu
                 var dataUrl = 'http://suggestion.baidu.com/su?p=3&cb=window.bdsug.sug';
-                window.bdsug = {};
-                window.bdsug.sug = window["g_ks_suggest_callback"];
-
                 var sug = new S.Suggest('#kw', dataUrl, {
                     resultFormat: '',
-                    containerCls: 'bd-sug'
-                });
-
-                sug.on('beforeDataRequest', function() {
-                    this.dataScript.charset = 'gb2312';
-                    this.queryParams = 'wd=' + encodeURIComponent(this.query);
+                    containerCls: 'bd-sug',
+                    charset: 'gb2312',
+                    queryName: 'wd',
+                    callbackFn: 'bdsug.sug'
                 });
 
                 // baidu: window.bdsug.sug({q:"nike",p:true,s:["nike官网","妮可基德曼","妮可","妮可罗宾","妮可里奇","nike鞋","nike 官网","尼可","nike女","nike360"]});
@@ -164,13 +155,10 @@
             KISSY.ready(function(S) {
                 // Google
                 var dataUrl = 'http://clients1.google.com/complete/search?hl=en';
-                window.google = {};
-                window.google.ac = {};
-                window.google.ac.h = window["g_ks_suggest_callback"];
-
                 var sug = new S.Suggest('#gq', dataUrl, {
                     resultFormat: '',
-                    containerCls: 'g-sug'
+                    containerCls: 'g-sug',
+                    callbackFn: 'google.ac.h'
                 });
 
                 // google: window.google.ac.h(["ni",[["牛博网","73,248 结果","0z"],["牛博网首页","12,200,617 结果","1z"],["你是准备替党说话 还是准备替老百姓说话","136,545 结果","2z"],["nike","117,000,000 结果","3"],["nikon","127,000,000 结果","4"],["nissan","135,000,000 结果","5"],["nine west","40,000,000 结果","6"],["nike鞋","3,380,000 结果","7"],["倪萍 再婚","36,400 结果","8"],["牛年祝福语","582,000 结果","9"]]])

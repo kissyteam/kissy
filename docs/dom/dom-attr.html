@@ -34,7 +34,14 @@
                     </h4>
                     <div class="detail">
                         <p>给符合选择器的所有元素设置属性值。</p>
+                        <p class="notice">KISSY v1.1.5+, attr 支持 val, cs, html, text, data, width, height, offset 这几个“特殊属性”的设置： </p>
                     </div>
+<pre class="example-code"><code>
+var S = KISSY, DOM = S.DOM;
+
+// 同时设置多个属性
+DOM.attr('img', { src: 'kissy.png', width: 400, height: 400 });
+</code></pre>
                 </div>
 
                 <div class="member method">

@@ -1,0 +1,254 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Overlay Widgets Test</title>
+
+<script src="../../build/kissy.js"></script>
+
+<script src="mask.js"></script>
+<script src="overlay.js"></script>
+<script src="widget-popup.js"></script>
+<script src="widget-dialog.js"></script>
+<script src="mod-autorender.js"></script>
+
+<link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
+<style>
+    body { padding: 20px 50px 50px; }
+    h2 { margin: 10px 0 10px -20px; padding: 5px 10px; font-size: 14px; font-weight: normal; background: #F2F2F2; }
+
+    p.code-switch { color: #09f; cursor: pointer; margin-top: 10px; }
+    pre.code {
+        color: #444;
+        cursor: auto;
+        border-left: 2px solid #7F96AA;
+        margin-top: 5px;
+        padding: 0 10px 20px 10px;
+        font-size: 14px;
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Popup - 从 Markup 中构建</h2>
+
+<button id="btn1">Show</button><button id="btn2">Hide</button>
+<div id="popup1" style="display:none;border:1px solid #ccc;background:#F6F9FD">Popup content</div>
+<script>
+    KISSY.ready(function(S) {
+
+        var popup = S.Popup('#popup1', {
+            trigger: '#btn1',
+            triggerType: 'click',
+            width: 300,
+            height: 200,
+            align: {
+                node: 'trigger',
+                points: ['tr', 'tl'],
+                offset: [50, 0]
+            }
+        });
+
+        S.one('#btn2').on('click', function() {
+            popup.hide();
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+<h2>Popup - 从 Markup 中构建</h2>
+
+<a id="link1">hover me</a>
+<select>
+    <option>aaaa</option>
+    <option>bbb</option>
+</select>
+<div id="popup2" style="display:none;border:1px solid #ccc;background:#F6F9FD">Popup content</div>
+<script>
+    KISSY.ready(function(S) {
+
+        var popup = S.Popup('#popup2', {
+            trigger: '#link1',
+            width: 300,
+            height: 200,
+            align: {
+                node: 'trigger',
+                points: ['tr', 'tl']
+            }
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+
+<style>
+    .popup2 {
+        border: 1px solid green; 
+        background: none repeat scroll 0 0 rgb(246, 249, 253);
+    }
+</style>
+<h2>Popup - 新建Popup</h2>
+<a id="link2">hover me</a>
+<script>
+    KISSY.ready(function(S) {
+
+        var popup = S.Popup({
+            trigger: '#link2',
+            triggerType: 'mouse',
+            width: 300,
+            height: 200,
+            containerCls: 'popup2',
+            content: 'test popup',
+            align: {
+                node: 'trigger',
+                points: ['tr', 'tl']
+            }
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+
+<h2>多个Popup</h2>
+<style>
+    #multi {
+        width: 60px;
+    }
+    #multi li {
+        background: orange;
+        margin: 6px;
+    }
+    #popup3 {
+        display: none;
+        background: white;
+        border: 1px solid orange;
+        width: 100px;
+        height: 100px;
+    }
+</style>
+<ul id="multi">
+    <li>test1</li>
+    <li>test2</li>
+    <li>test3</li>
+</ul>
+<div id="popup3"></div>
+<script>
+    KISSY.ready(function(S){
+        S.each(S.query('#multi li'), function(t){
+            var popup = S.Popup('#popup3', {
+                trigger: t,
+                triggerType: 'mouse',
+                triggerLater: true
+            });
+            popup.on('show',function(){
+               popup.setBody(S.DOM.html(t)); 
+            });
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+<style>
+    .dialog1 {
+        display: none;
+        background: #ffffff;
+        border: 2px solid green;
+        text-align: center;
+        padding: 6px;
+    }
+</style>
+<h2>Dialog - auto render</h2>
+<button id="btn3">Show</button>
+<div class="dialog1 KS_Widget" data-widget-type="Dialog" data-widget-config="{ 'trigger': '#btn3', 'width': '400px', 'height': '300px', 'header': 'this is a title', 'content': 'this is content' }"><div class="ks-dialog-bd"></div></div>
+<script>
+    KISSY.ready(function(S){
+        S.Overlay.autoRender();
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+
+<style>
+    .dialog4 {
+        background: white;
+        border: 2px solid green;
+    }
+    .dialog4 .ks-dialog-close {
+        position: absolute;
+        right: 0;
+        top: 0;
+        text-indent: 9999em;
+        width: 16px;
+        height: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        background: transparent url(http://cdn.iconfinder.net/data/icons/bwpx/icons/symbol_multiplication.gif)
+    }
+    .dialog4 .ks-dialog-hd, .dialog4 .ks-dialog-ft {
+        position: relative;
+        text-align: center;
+        background: #eee;
+    }
+    .dialog4 .ks-dialog-bd {
+        padding: 10px;
+    }
+</style>
+<h2>Dialog - 新建 + Mask </h2>
+<button id="btn4">Show</button> <button id="btn5">Hide All</button>
+<script>
+    KISSY.ready(function(S){
+        var dialog = S.Dialog({
+            trigger: '#btn4',
+            containerCls: 'dialog4',
+            width: 400,
+            height: 300,
+            title: 'this is title',
+            footer: 'footer',
+            content: 'content',
+            mask: false
+        });
+        var times = 1;
+        dialog.on('show', function(){
+            alert('hi');
+        });
+
+        S.Event.on('#btn5', 'click', function(e){
+            dialog.manager.hideAll();
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+<script>
+    (function() {
+        var S = KISSY, DOM = S.DOM,
+            SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+
+        S.all('p.code-switch').each(function(p) {
+            p.on('click', function() {
+                var showing = (p.text() === SHOW_CODE),
+                    next = p.next(),
+                    pre = next;
+
+                if (next[0].nodeName !== 'PRE') {
+                    pre = S.Node('<pre>');
+
+                    pre.attr('class', 'code')
+                        .html(p.prev().html());
+
+                    if (S.UA.ie) {
+                        pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
+                    }
+
+                    DOM.insertAfter(pre[0], p[0]);
+                }
+
+                pre.css('display', showing ? 'block' : 'none');
+                p.html(showing ? HIDE_CODE : SHOW_CODE);
+            });
+        });
+    })();
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<project name="common-build" basedir=".">
+<project name="common-build" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
     <description>Common Build File</description>
 
     <dirname property="current.dir" file="${ant.file.common-build}"/>
@@ -6,15 +6,11 @@
     <property name="ks-tools.dir" location="${root.dir}/../kissy-tools/"/>
     <property name="build.dir" location="${root.dir}/build/"/>
 
-    <property name="version" value="1.1.3"/>
+    <property name="version" value="1.1.5"/>
     <property name="charset" value="utf-8"/>
     <property name="copyright.files" value="*.css, *.js"/>
 
-    <!-- 引入第三方包 -->
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
-    <!--<typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpath="svnant.jar"/>-->
-
-    <!-- 清空与复制文件等准备工作 -->
+    <!-- 清空与复制等准备工作 -->
     <target name="prepare">
         <mkdir dir="${build.dir}/${component.name}"/>        
         <delete>
@@ -101,7 +97,7 @@
             <fileset dir="${build.dir}/${component.name}" includes="${copyright.files}"/>
         </move>
 
-        <for param="file">
+        <ac:for param="file">
             <path>
                 <fileset dir="${build.dir}/${component.name}/tmp" includes="${copyright.files}"/>
             </path>
@@ -118,7 +114,7 @@
                 <replaceregexp match="@VERSION@" replace="${version}" flags="g" encoding="${charset}" byline="true" file="@{file}.tmp" />
                 <move file="@{file}.tmp" tofile="@{file}"/>
             </sequential>
-        </for>
+        </ac:for>
 
         <move todir="${build.dir}/${component.name}">
             <fileset dir="${build.dir}/${component.name}/tmp" includes="${copyright.files}"/>

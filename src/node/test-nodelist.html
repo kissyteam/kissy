@@ -14,22 +14,39 @@
 
 <script src="../../build/kissy/kissy-pkg.js"></script>
 <script src="../../build/ua/ua-pkg.js"></script>
-<script src="../../build/dom/dom-pkg.js"></script>
-<script src="../../build/event/event-pkg.js"></script>
+
+<script src="../dom/dom.js"></script>
+<script src="../dom/selector.js"></script>
+<script src="../dom/dom-data.js"></script>
+<script src="../dom/dom-class.js"></script>
+<script src="../dom/dom-attr.js"></script>
+<script src="../dom/dom-style.js"></script>
+<script src="../dom/dom-style-ie.js"></script>
+<script src="../dom/dom-offset.js"></script>
+<script src="../dom/dom-traversal.js"></script>
+<script src="../dom/dom-create.js"></script>
+<script src="../dom/dom-insertion.js"></script>
+
+<script src="../event/event.js"></script>
+<script src="../event/event-object.js"></script>
+<script src="../event/event-target.js"></script>
+<script src="../event/event-mouseenter.js"></script>
+<script src="../event/event-focusin.js"></script>
 
 <script src="node.js"></script>
 <script src="nodelist.js"></script>
 <script src="node-attach.js"></script>
 
-<script src="../../third-party/jquery/jquery-1.4.2.js"></script>
-<script src="../../third-party/yui3/yui-min.js"></script>
+<script src="../anim/anim-easing.js"></script>
+<script src="../anim/anim.js"></script>
+<script src="../anim/anim-node-plugin.js"></script>
 
 <!-- Test Cases -->
 <script>
     var S = KISSY;
 
     function test_constructor(test) {
-        if(S.all('#test-data div').length !== $('#test-data div').length) test.fail();
+        //if(S.all('#test-data div').length !== $('#test-data div').length) test.fail();
         if(S.all('#test-data input')[0].id !== 'test-input') test.fail();
         if(S.all('#test-data xx').length !== 0) test.fail();
         if(S.all().length !== 0) test.fail();
@@ -40,7 +57,7 @@
     }
 
     function test_getDOMNodes(test) {
-        if(S.all('#test-data div').getDOMNodes().length !== $('#test-data div').length) test.fail();        
+        //if(S.all('#test-data div').getDOMNodes().length !== $('#test-data div').length) test.fail();
     }
 
     function test_each(test) {
@@ -56,6 +73,25 @@
             if(this.attr('class') !== 'test-each-added') test.fail();
             this.removeAttr('class');
         })
+    }
+
+    function test_data(test) {
+        var nodes = S.all('#test-data2');
+
+        nodes.data('data-1', 'val-1');
+        if(nodes.data('data-1') !== 'val-1') test.fail();
+
+        nodes.data('data-1', 'val-2');
+        if(nodes.data('data-1') !== 'val-2') test.fail();
+    }
+
+    function test_removeData(test) {
+        var nodes = S.all('#test-data3');
+
+        nodes.data('data', 'val');
+        nodes.removeData('data');
+        if(nodes.data('data') === 'val') test.fail();
+        if(nodes.data()) test.fail();
     }
 
     function test_query_class_sep(test) {
@@ -164,8 +200,9 @@
         if(nodes.css('backgroundColor') !== 'transparent') test.fail();
         if(nodes.css('backgroundPosition') !== '0% 0%') test.fail();
         if(nodes.css('fontSize') !== '12px') test.fail();
-        if(!S.UA.ie) if(nodes.css('border-right-width') !== '5px') test.fail();
-        if(S.UA.ie) if(nodes.css('border-right-width') !== 'medium') test.fail();
+
+        if(S.UA.ie < 9) if(nodes.css('border-right-width') !== 'medium') test.fail(DOM.css(elem, 'border-right-width'));
+        else if(nodes.css('border-right-width') !== '5px') test.fail();
 
         if(nodes.css('paddingLeft') !== '2pt') test.fail();
         if(nodes.css('padding-left') !== '2pt') test.fail();
@@ -198,11 +235,42 @@
     }
 
     function test_width(test) {
-        if(S.all('#test2').width() !== $('#test2').width()) test.fail();
+        //if(S.all('#test2').width() !== $('#test2').width()) test.fail();
     }
 
     function test_height(test) {
-        if(S.all('#test2').height() !== $('#test2').height()) test.fail();
+        //if(S.all('#test2').height() !== $('#test2').height()) test.fail();
+    }
+
+    function test_show(test) {
+        var nodes = S.all('#test-display');
+
+        nodes.css('display', 'none');
+        nodes.show();
+        if(nodes.css('display') === 'none') test.fail();
+
+        nodes.removeAttr('style');
+    }
+
+    function test_hide(test) {
+        var nodes = S.all('#test-display');
+
+        nodes.hide();
+        if(nodes.css('display') !== 'none') test.fail();
+
+        nodes.removeAttr('style');
+    }
+
+    function test_toggle(test) {
+        var nodes = S.all('#test-display');
+
+        nodes.toggle();
+        if(nodes.css('display') !== 'none') test.fail();
+
+        nodes.toggle();
+        if(nodes.css('display') === 'none') test.fail();
+
+        nodes.removeAttr('style');
     }
 
     function test_query_offset_sep(test) {
@@ -349,6 +417,9 @@
         <option selected>2</option>
         <option>3</option>
     </select>
+    <p id="test-data2"></p>
+    <p id="test-data3"></p>
+    <p id="test-display"></p>
 </div>
 
 <script>

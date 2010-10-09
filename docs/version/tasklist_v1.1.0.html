@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY v1.1.0 - tasklist</title>
+<link rel="stylesheet" href="../assets/base-min.css"/>
+<link rel="stylesheet" href="../assets/docs.css"/>
+<style>
+    h1 {
+        font: 20px Candara,Verdana,serif;
+        display: inline-block;
+        position: relative;
+        bottom: 20px;
+        left: 5px;
+    }
+    table {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 5px 10px;
+        border: 1px solid #D5D5D5;
+        color: #333;
+    }
+
+    th {
+        background: #E9F2FA;
+        border-color: #AACCEE;
+    }
+
+    .done td {
+        background: #EFEFEF;
+        color: #666;
+    }
+
+    .waiting td {
+        background: #FFFFE6;
+        color: #666;
+    }
+    .date, .leader {
+        text-align: center;
+    }
+    #header p { float: right; position: relative; top: 55px; right: 10px; }
+</style>
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74"/></a>
+    <h1>Task List for Version 1.1.0</h1>
+    <p>已于 2010-08-02 发布</p>
+</div>
+<div id="content" class="layout">
+<table>
+<col width="80px">
+<col width="80px">
+<col width="*">
+<col width="100px">
+<col width="60px">
+<tbody>
+<tr>
+    <th></th>
+    <th>模块</th>
+    <th>进度</th>
+    <th class="date">期望完成日期</th>
+    <th class="leader">负责人</th>
+</tr>
+<tr class="done">
+    <th rowspan="6">core</th>
+    <td>kissy</td>
+    <td>已完成 2010-07-02</td>
+    <td class="date">2010-07-09</td>
+    <td class="leader">玉伯</td>
+</tr>
+<tr class="done">
+    <td>dom</td>
+    <td>已完成 2010-07-08</td>
+    <td class="date">2010-07-09</td>
+    <td class="leader">玉伯</td>
+</tr>
+<tr class="done">
+    <td>event</td>
+    <td>已完成 2010-07-02</td>
+    <td class="date">2010-07-09</td>
+    <td class="leader">玉伯</td>
+</tr>
+<tr class="done">
+    <td>node</td>
+    <td>已完成 2010-07-08</td>
+    <td class="date">2010-07-09</td>
+    <td class="leader">玉伯</td>
+</tr>
+<tr class="done">
+    <td>ajax</td>
+    <td>已完成 2010-08-01 只包含 getScript 功能</td>
+    <td class="date">2010-07-30</td>
+    <td class="leader">拔赤</td>
+</tr>
+<tr class="done">
+    <td>cookie</td>
+    <td>已完成 2010-07-08</td>
+    <td class="date">2010-07-09</td>
+    <td class="leader">玉伯</td>
+</tr>
+<tr class="done">
+    <th rowspan="3">css</th>
+    <td>cssreset</td>
+    <td>已完成 2010-07-02</td>
+    <td class="date">2010-07-09</td>
+    <td class="leader">玉伯</td>
+</tr>
+<tr class="done">
+    <td>cssgrids</td>
+    <td>已完成 2010-07-02</td>
+    <td class="date">2010-07-09</td>
+    <td class="leader">玉伯</td>
+</tr>
+<tr class="done">
+    <td>csscommon</td>
+    <td>已完成 2010-07-02</td>
+    <td class="date">2010-07-09</td>
+    <td class="leader">玉伯</td>
+</tr>
+<tr class="done">
+    <th rowspan="5">utils</th>
+    <td>json</td>
+    <td>已完成 2010-07-02</td>
+    <td class="date">2010-07-09</td>
+    <td class="leader">玉伯</td>
+</tr>
+<tr class="done">
+    <td>sizzle</td>
+    <td>已完成 2010-07-02</td>
+    <td class="date">2010-07-09</td>
+    <td class="leader">玉伯</td>
+</tr>
+<tr class="done">
+    <td>anim</td>
+    <td>已完成 2010-07-16</td>
+    <td class="date">2010-07-16</td>
+    <td class="leader">玉伯</td>
+</tr>
+<tr class="done">
+    <td>datalazyload</td>
+    <td>已完成 2010-07-30</td>
+    <td class="date">2010-07-16</td>
+    <td class="leader">承玉</td>
+</tr>
+<tr class="done">
+    <td>flash</td>
+    <td>已完成 2010-07-30</td>
+    <td class="date">2010-07-30</td>
+    <td class="leader">龙藏</td>
+</tr>
+<tr class="done">
+    <th rowspan="1">widgets</th>
+    <td>switchable</td>
+    <td>已完成 2010-07-31</td>
+    <td class="date">2010-07-23</td>
+    <td class="leader">玉伯</td>
+</tr>
+<tr class="done">
+    <th>docs</th>
+    <td>docs</td>
+    <td>已完成 2010-08-02</td>
+    <td class="date">2010-07-31</td>
+    <td class="leader">乔花</td>
+</tr>
+</tbody>
+</table>
+<p class="tips">KISSY 1.1 始于今年 3 月份，7 月份开始工作时间内可以半身心投入，并让大家都参与进来。初始计划 7 月 22 日发布，后调整为 8 月 2 日。</p>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

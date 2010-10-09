@@ -85,7 +85,7 @@ KISSY.add('selector', function(S, undefined) {
             ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
         }
         // 传入的 selector 是 NodeList 或已是 Array
-        else if (selector && (S.isArray(selector) || (selector.item && !selector.nodeType))) {
+        else if (selector && (S.isArray(selector) || isNodeList(selector))) {
             ret = selector;
         }
         // 传入的 selector 是 Node 等非字符串对象，原样返回
@@ -95,7 +95,7 @@ KISSY.add('selector', function(S, undefined) {
         // 传入的 selector 是其它值时，返回空数组
 
         // 将 NodeList 转换为普通数组
-        if(ret.item) {
+        if(isNodeList(ret)) {
             ret = S.makeArray(ret);
         }
 
@@ -105,6 +105,15 @@ KISSY.add('selector', function(S, undefined) {
         };
 
         return ret;
+    }
+
+    // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
+    function isNodeList(o) {
+        // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
+        // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
+        // 注3：通过 namedItem 来判断不可靠
+        // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
+        return o && !o.nodeType && o.item && (o != window);
     }
 
     // 调整 context 为合理值

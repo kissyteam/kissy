@@ -21,22 +21,107 @@
 					<p>anim-node-plugin 通过将 Anim 耦合到 Node/NodeList 上，让用户能更简单快捷的调用。</p>
 				</div>
 
-				<div class="section">
-                    <p>直接看范例：</p>
+                <div class="section">
+                    <div class="member method">
+                        <h4>
+                            <a name="method_animate">animate</a>
+                            <code>Node <em>animate</em>( props, duration, easing, callback )</code>
+                        </h4>
+                        <div class="detail">
+                            <p>直接看范例：</p>
 <pre class="example-code"><code>
 KISSY.ready(function(S) {
     S.one('#test-btn').on('click', function() {
-	    S.all('.test').animate('left: 800px', 5, 'elasticOut');
+        S.all('.test').animate('left: 800px', 5, 'elasticOut');
     });
 });
 </code></pre>
-                    <p>点击 #test-btn 时，就为所有 .test 元素添加了动画效果。</p>
+                            <p>点击 #test-btn 时，就为所有 .test 元素添加了动画效果。</p>
+                            <p>在 animate 基础上，我们封装好了一些常用的动画函数（如下）以便开发者快速使用。</p>
+                        </div>
+                    </div>
 				</div>
 
+                <div class="section">
+                    <div class="member method">
+                        <h4>
+                            <a name="method_show">show</a>
+                            <code>Node <em>show</em>( speed, callback )</code>
+                        </h4>
+                        <p>渐变的显示出来。</p>
+                    </div>
+<pre class="example-code"><code>
+KISSY.ready(function(S) {
+    S.one('.test').show(5, function(){
+        alert('you can see me!');
+    });
+});
+</code></pre>
+                </div>
+
+                <div class="section">
+                    <div class="member method">
+                        <h4>
+                            <a name="method_hide">hide</a>
+                            <code>Node <em>hide</em>( speed, callback )</code>
+                        </h4>
+                        <p>渐变的隐藏。</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="member method">
+                        <h4>
+                            <a name="method_toggle">toggle</a>
+                            <code>Node <em>toggle</em>( speed, callback )</code>
+                        </h4>
+                        <p>显示/隐藏间的切换。</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="member method">
+                        <h4>
+                            <a name="method_fadeIn">fadeIn</a>
+                            <code>Node <em>fadeIn</em>( speed, callback )</code>
+                        </h4>
+                        <p>淡入效果。</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="member method">
+                        <h4>
+                            <a name="method_fadeOut">fadeOut</a>
+                            <code>Node <em>fadeOut</em>( speed, callback )</code>
+                        </h4>
+                        <p>淡出效果。</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="member method">
+                        <h4>
+                            <a name="method_slideDown">slideDown</a>
+                            <code>Node <em>slideDown</em>( speed, callback )</code>
+                        </h4>
+                        <p>slideDown效果。</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="member method">
+                        <h4>
+                            <a name="method_slideUp">slideUp</a>
+                            <code>Node <em>slideUp</em>( speed, callback )</code>
+                        </h4>
+                        <p>slideUp效果。</p>
+                    </div>
+                </div>
 
                 <div class="section notes">
-					<p>没错，一切就这么简单！</p>
-				</div>
+                    <p>没错，一切就这么简单！</p>
+                </div>
             </div>
         </div>
         <div class="col-sub">
@@ -47,11 +132,16 @@ KISSY.ready(function(S) {
 					anim-node-plugin :
 				</div>
                 <div class="toc">
-                    <h3>Sub modules</h3>
+                    <h3>Methods</h3>
                     <ul>
-                        <li><a href="anim.html">anim</a></li>
-                        <li><a href="anim-easing.html">anim-easing</a></li>
-                        <li><a href="anim-node-plugin.html">anim-node-plugin</a></li>
+                        <li><a href="#method_animate">animate</a></li>
+                        <li><a href="#method_show">show</a></li>
+                        <li><a href="#method_hide">hide</a></li>
+                        <li><a href="#method_toggle">toggle</a></li>
+                        <li><a href="#method_fadeIn">fadeIn</a></li>
+                        <li><a href="#method_fadeOut">fadeOut</a></li>
+                        <li><a href="#method_slideDown">slideDown</a></li>
+                        <li><a href="#method_slideUp">slideUp</a></li>
                     </ul>
                 </div>
             </div>

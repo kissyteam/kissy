@@ -1,0 +1,27 @@
+<project name="overlay.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../../tools/build.xml"/>
+
+    <property file="build.properties"/>
+    <property name="src.dir" location="."/>
+
+    <target name="concat">
+        <concat destfile="overlay-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="mask.js"/>
+            <path path="overlay.js"/>
+
+            <path path="widget-popup.js"/>
+            <path path="widget-dialog.js"/>
+
+            <path path="mod-autorender.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="overlay-pkg.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
+    </target>
+</project>

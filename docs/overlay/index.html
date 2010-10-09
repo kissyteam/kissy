@@ -1,0 +1,478 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Overlay - KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/tree/master/src/overlay/">src files</a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="section summary">
+                <p>提供功能: </p>
+                <ul>
+                    <li>页面上的覆盖层;</li>
+                    <li>Overlay 基类, 扩展出 <a href="#dialog">Dialog</a>/<a href="#popup">Popup</a> ;</li>
+                    <li>见 Overlay <a href="http://kissyteam.github.com/kissy/src/overlay/test.html">demo</a></li>
+                    <li>调研报告, 见 <a href="http://kissyteam.github.com/kissy/src/overlay/slide.html">slide</a></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3 id="overlay">Overlay 最简单的使用</h3>
+                <div class="member">
+                    <h4><a name="Constructor">new S.Overlay(container, config)</a> </h4>
+                    <div class="detail">
+                        <p>当不传入 container , 表示新建 Overlay, 如果传入已有容器, 表示在此容器基础上产生 Overlay. </p>
+<pre class="example-code"><code>
+KISSY.ready(function(S) {
+    var popup = new S.Overlay({
+        trigger: '#link',
+        width: 300,
+        height: 200
+    });
+});
+</code></pre>
+                   </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 id="config">Config</h3>
+
+                <div class="member prop">
+                    <h4><a name="container">container</a> - <code>null | String | HTMLElement</code></h4>
+                    <div class="detail">
+                        <p>Overlay 容器, 默认为 null 时, 表示新建 DOM; </p>
+<pre class="example-code"><code>
+new S.Overlay('#popup1', {});
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="containerCls">containerCls</a> - <code>String</code></h4>
+                    <div class="detail">
+                        <p>容器 class , 默认 class 为 'ks-overlay'. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="content">content</a> - <code>undefined | String</code></h4>
+                    <div class="detail">
+                        <p>默认为 undefined, 不设置内容. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="bdCls">bdCls</a> - <code>String</code></h4>
+                    <div class="detail">
+                        <p>body class, 默认为 'ks-overlay-bd'. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="trigger">trigger</a> - <code>null | String | HTMLElement</code></h4>
+                    <div class="detail">
+                        <p>触发元素, 默认为 null 时, overlay 动作需要另外 js 指定. </p>
+<pre class="example-code"><code>
+var test = new S.Overlay('#popup1', {
+    width: 100,
+    height: 100
+});
+Event.on('#btn', 'click', function(){
+    test.show();
+});
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="triggerType">triggerType</a> - <code>String</code></h4>
+                    <div class="detail">
+                        <p>触发类型, 'mouse' or 'click', 默认为 'click'. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="width">width</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>容器宽度, 默认为 0. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="height">height</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>容器高度, 默认为 0. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="zIndex">zIndex</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>z-index 值, 默认为9999. </p>
+                    </div>
+                </div>
+
+
+                <div class="member prop">
+                    <h4><a name="xy">xy</a> - <code>Array</code></h4>
+                    <div class="detail">
+                        <p>相对 page 定位, 有效值为 [n, m]. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="align">align</a> - <code>Object</code></h4>
+                    <div class="detail">
+                        <p>相对指定 node or viewport 定位, 提供子选项</p>
+                        <pre class="example-code"><code>
+align: {
+    // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+    node: null,
+    // ['tl', 'tr'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+    points: [POSITION_ALIGN.CC, POSITION_ALIGN.CC],
+    // 水平, 垂直方向上的偏移, 有效值为 [n, m]
+    offset: [0,0]
+}
+</code></pre>
+                        <p>align 使用示例</p>
+                        <pre class="example-code"><code>
+var test = new S.Overlay('#popup2', {
+    trigger: '#btn1',
+    triggerType: 'click',
+    width: 300,
+    height: 200,
+    align: {
+        node: 'trigger',
+        points: ['tr', 'tl'],
+        offset: [50, 0]
+    }
+});
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="mask">mask</a> - <code>Boolean</code></h4>
+                    <div class="detail">
+                        <p>是否显示遮盖层, 默认为不显示. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="shim">shim</a> - <code>Boolean</code></h4>
+                    <div class="detail">
+                        <p>是否需要垫片, IE6 下默认需要. </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 id="members">Memeber</h3>
+                <div class="member members">
+                    <h4><a name="mem_container">container</a> - <code>HTMLElement</code></h4>
+                    <div class="detail">
+                        <p>指向容器元素. </p>
+                    </div>
+                </div>
+                <div class="member members">
+                    <h4><a name="mem_config">config</a> - <code>Object</code></h4>
+                    <div class="detail">
+                        <p>如上列出的配置选项. </p>
+                    </div>
+                </div>
+                <div class="member members">
+                    <h4><a name="mem_trigger">trigger</a> - <code>HTMLElement</code></h4>
+                    <div class="detail">
+                        <p>触发元素. </p>
+                    </div>
+                </div>
+                <div class="member members">
+                    <h4><a name="mem_body">body</a> - <code>HTMLElement</code></h4>
+                    <div class="detail">
+                        <p>容器 body 元素, 当 content 为空时, 不创建 ks-overlay-bd 层, 且 body 直接指向 container. </p>
+                    </div>
+                </div>
+                <div class="member members">
+                    <h4><a name="mem_shim">shim</a> - <code>HTMLElement</code></h4>
+                    <div class="detail">
+                        <p>垫片层, 如果选项中 shim 设置为 true. </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 id="events">Events</h3>
+                <div class="member event">
+                    <h4><a name="event_show">show</a></h4>
+                    <div class="detail">
+                        <p>Overlay 显示之后触发的事件. </p>
+                    </div>
+                </div>
+                <div class="member event">
+                    <h4><a name="event_hide">hide</a></h4>
+                    <div class="detail">
+                        <p>Overlay 隐藏之后触发的事件. </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 id="methods">Methods</h3>
+
+                <div class="member prop">
+                    <h4><a name="method_show">show()</a></h4>
+                    <div class="detail">
+                        <p>显示 Overlay. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="method_hide">hide()</a></h4>
+                    <div class="detail">
+                        <p>隐藏 Overlay. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="method_move">move(x, y)</a></h4>
+                    <div class="detail">
+                        <p>将 Overlay 移动到指定位置上, 绝对位置. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="method_align">align(node, points, offset)</a></h4>
+                    <div class="detail">
+                        <p>将 Overlay 定位到指定节点的特定位置上, 如果没有指定 node, 会默认使用 config 中的 align 设置.  </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="method_center">center()</a></h4>
+                    <div class="detail">
+                        <p>将 Overlay 居中到当前可视区域上.  </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="method_setBody">setBody()</a></h4>
+                    <div class="detail">
+                        <p>设置 body 内容. </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 id="Widgets">Widgets</h3>
+                <div class="member widget">
+                    <h4><a name="dialog">Dialog</a>
+                    <code> new S.Dialog(container, config) </code></h4>
+                    <div class="detail">
+                        <p>S.Dialog 增加了 header 和 footer, 因此, config 和 method 做了对应调整. </p>
+                        <pre>
+config:
+    header: '',                     // header 内容
+    footer: '',                     // footer 内容
+
+    containerCls: CLS_CONTAINER,    // 设置 containerCls , 默认为 'ks-overlay ks-dialog'
+    hdCls: CLS_PREFIX + 'hd',       // 设置 header 的 class , 默认为 ks-dialog-hd
+    bdCls: CLS_PREFIX + 'bd',       // 设置 body 的 class , 默认为 ks-dialog-bd
+    ftCls: CLS_PREFIX + 'ft',       // 设置 footer 的 class , 默认为 ks-dialog-ft
+    closeBtnCls: CLS_PREFIX + 'close',      // 设置关闭按钮的 class, 默认为 ks-dialog-close
+
+    width: 400,                     // 设置容器宽度, 默认为 400
+    height: 300,                    // 设置容器高度, 默认为 300
+    closable: true                  // 是否需要关闭按钮, 默认需要
+Member:
+    header                          // 对话框头部的HTML元素
+    footer                          // 对话框尾部的HTML元素
+    manager                         // 当前 DialogManager, 下面会介绍
+Method:
+    setHeader()                     // 设置 header 内容
+    setFooter()                     // 设置 footer 内容
+                        </pre>
+                    </div>
+                </div>
+                <div class="member widget">
+                    <h4><a name="dialogmanager">DialogManager</a>
+                    <code>S.DialogManager</code></h4>
+                    <div class="detail">
+                        <p>用于管理页面上所有的 Dialog , 目前提供功能较少. </p>
+                        <pre>
+Method:
+    register()                    // 将 dialog 实例注册到 DialogManager 中
+                                  // 且, dialog 示例也可以通过自己的 manager 访问到这个 DialogManager.
+    hideAll()                     // 隐藏页面上所有的 dialog
+                        </pre>
+                        <pre class="example-code"><code>
+KISSY.ready(function(S){
+    var dialog = S.Dialog({
+        trigger: '#btn4',
+        containerCls: 'dialog4',
+        width: 400,
+        height: 300,
+        title: 'this is title',
+        footer: 'footer',
+        content: 'content',
+        mask: false
+    });
+
+    S.Event.on('#btn5', 'click', function(e){
+        dialog.manager.hideAll();
+        // or S.DialogManager.hideAll();
+    });
+});
+                        </code></pre>
+                    </div>
+                </div>
+
+                <div class="member widget">
+                    <h4><a name="popup">Popup</a>
+                    <code>new S.Popup(container, config)</code></h4>
+                    <div class="detail">
+                        <p>S.Popup 同 S.Overlay 一致, 没有额外的 config 和 method, 简单使用如下: </p>
+                        <pre class="example-code"><code>
+KISSY.ready(function(S){
+    S.each(S.query('#multi li'), function(t){
+        var popup = new S.Popup('#popup3', {
+            trigger: t,
+            triggerType: 'mouse',
+            triggerLater: true
+        });
+        popup.on('show',function(){
+           popup.setBody(S.DOM.html(t));
+        });
+    });
+});
+                        </code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>其他相关</h3>
+                <div class="member other  widget">
+                    <h4><a name="other_mask">Mask</a>
+                    <code>new S.Mask();</code></h4>
+                    <div class="detail">
+                        <p>创建一个遮盖层. </p>
+                    </div>
+                </div>
+
+                <div class="member other widget">
+                    <h4><a name="other_shim">Shim</a>
+                        <code>new S.Mask({ shim: true });</code></h4>
+                    <div class="detail">
+                        <p>创建一个垫片. </p>
+                    </div>
+                </div>
+
+                <p> Mask 和 Shim 有自己的配置选项和方法, 相对于 Overlay 独立. 具体如下: </p>
+                <pre>
+Config:
+    shim: false,        // 是 shim 层还是 mask 层
+    opacity: .6,        // 指定 mask 的透明度
+    style: ''           // 指定样式
+
+Member:
+    iframe              // shim 和 mask 下都会有, mask 时, 标准浏览器也用 iframe 元素生成mask
+    config              // 配置选项
+    layer               // mask时, 且在IE下才会有这个成员, 由于 iframe 不能设置 background,
+                        // 所以添加了一个 div 作为 layer , 设置透明度及背景颜色
+Method:
+    show()              // 显示
+    hide()              // 隐藏
+    toggle()            // 切换显示/隐藏
+    setSize()           // 设置宽高
+    setOffset()         // 设置位置, 绝对位置
+                </pre>
+            </div>
+
+            <div class="summary">
+                <p>更多例子请参见 <a href="http://kissyteam.github.com/kissy/src/overlay/test.html">demo</a>. </p>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc"><a href="../index.html">home</a> &rsaquo; overlay :</div>
+            <div class="toc">
+                <h3>Usage</h3>
+                <ul>
+                    <li><a href="#Constructor">Constructor</a></li>
+                </ul>
+
+                <h3>Config</h3>
+                <ul>
+                    <li><a href="#container">container</a></li>
+                    <li><a href="#containerCls">containerCls</a></li>
+                    <li><a href="#content">content</a></li>
+                    <li><a href="#bdCls">bdCls</a></li>
+                    <li><a href="#trigger">trigger</a></li>
+                    <li><a href="#triggerType">triggerType</a></li>
+                    <li><a href="#width">width</a></li>
+                    <li><a href="#height">height</a></li>
+                    <li><a href="#zIndex">zIndex</a></li>
+                    <li><a href="#xy">xy</a></li>
+                    <li><a href="#align">align</a></li>
+                    <li><a href="#mask">mask</a></li>
+                    <li><a href="#shim">shim</a></li>
+                </ul>
+
+                <h3>Member</h3>
+                <ul>
+                    <li><a href="#mem_container">container</a></li>
+                    <li><a href="#mem_config">config</a></li>
+                    <li><a href="#mem_trigger">trigger</a></li>
+                    <li><a href="#mem_body">body</a></li>
+                    <li><a href="#mem_shim">shim</a></li>
+                </ul>
+
+                <h3>Events</h3>
+                <ul>
+                    <li><a href="#event_show">show</a></li>
+                    <li><a href="#event_hide">hide</a></li>
+                </ul>
+
+                <h3>Methods</h3>
+                <ul>
+                    <li><a href="#method_show">show</a></li>
+                    <li><a href="#method_hide">hide</a></li>
+                    <li><a href="#method_move">move</a></li>
+                    <li><a href="#method_align">align</a></li>
+                    <li><a href="#method_center">center</a></li>
+                    <li><a href="#method_setBody">setBody</a></li>
+                </ul>
+
+                <h3>Widgets</h3>
+                <ul>
+                    <li><a href="#dialog">Dialog</a></li>
+                    <li><a href="#popup">Popup</a></li>
+                </ul>
+
+                <h3>Other</h3>
+                <ul>
+                    <li><a href="#other_mask">Mask</a></li>
+                    <li><a href="#other_shim">Shim</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>

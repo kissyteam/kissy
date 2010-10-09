@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>imagezoom - KISSY Docs</title>
+<title>ImageZoom - KISSY Docs</title>
 <link rel="stylesheet" href="../assets/base-min.css" />
 <link rel="stylesheet" href="../assets/docs.css" />
 </head>
@@ -10,7 +10,7 @@
 <div id="header">
     <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
     <p class="rel-nav">
-        <a href="http://github.com/kissyteam/kissy/blob/master/src/imagezoom/">src files</a>
+        <a href="http://github.com/kissyteam/kissy/tree/master/src/imagezoom/">src files</a>
     </p>
 </div>
 <div id="content" class="layout grid-s232m0">
@@ -19,83 +19,180 @@
             <div class="section summary">
                 <p>图片放大镜效果, 功能说明: </p>
                 <ul>
-                    <li>镜片模式: 鼠标移到那里的一个特定范围内的图片被放大显示, 显示框在原图旁边;</li>
-                    <li>跟随模式: 显示框跟随鼠标移动, 即被放大的图片显示在原图上方, 并以鼠标为轴心;</li>
+                    <li>显示小图, 当鼠标移到小图的一个特定范围内时, 该区域被放大并显示在小图旁边;</li>
+                    <li>见 ImageZoom <a href="http://kissyteam.github.com/kissy/src/imagezoom/test.html">demo</a></li>
+                    <li>调研报告, 见 <a href="http://kissyteam.github.com/kissy/src/imagezoom/slide.html">slide</a></li>
                 </ul>
             </div>
 
-            <div class="section" id="imagezoom">
-                <h3>ImageZoom Method</h3>
-                <div class="member method">
-                    <h4>
-                        <a name="method_imagezoom"></a>
-                        <code>Object <em>ImageZoom(img, cfg)</em>()</code>
-                    </h4>
+            <div class="section">
+                <h3 id="usage">Usage</h3>
+                <div class="member prop">
+                    <h4><a name="Constructor">new S.ImageZoom(trigger, config)</a> </h4>
                     <div class="detail">
-                        <p>根据给定的选择器img, 按照配置cfg, 返回ImageZoom对象</p>
+                        <p>S.ImageZoom 构造器, 传入小图元素或小图id及配置项 , 例如</p>
+
+<pre class="example-code"><code>
+KISSY.ready(function(S) {
+	new S.ImageZoom("#standard", {
+            bigImageSrc: 'big image url'
+        });
+});
+</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h3 id="config">Config</h3>
+
+                <div class="member prop">
+                    <h4><a name="type">type</a> - <code>String</code></h4>
+                    <div class="detail">
+                        <p>缩放显示类型, 默认是标准模式 'standard', 目前仅支持此模式. </p>
                     </div>
                 </div>
 
-                <h3>ImageZoom Config</h3>
+                <div class="member prop">
+                    <h4><a name="bigImageSrc">bigImageSrc</a> - <code>String</code></h4>
+                    <div class="detail">
+                        <p>大图路径, 为 '' 时, 取触点上的 data-ks-imagezoom 属性值. 默认为 ''. </p>
+                    </div>
+                </div>
 
                 <div class="member prop">
-                    <h4><a name="config">config</a> - <code>Object</code></h4>
-                <div class="detail">
-<pre class="example-code"><code>
-defaultConfig = {
-    type: 'default',    // 显示模式, 可选值: TYPE
+                    <h4><a name="bigImageSize">bigImageSize</a> - <code>Array</code></h4>
+                    <div class="detail">
+                        <p>大图高宽, 如 [800, 800]; </p>
+                        <p>是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 请设置个更合适的值. </p>
+                    </div>
+                </div>
 
-    bigImageSrc: '',    // 大图路径, 为 '' 时取原图路径
-    bigImageSize: { height: 900, width:900 }, // 大图高宽
-    position: 'right',  // 大图显示位置, 可选值: POSITION
-    offset: 10,         // 大图位置的偏移量
-    preload: true,      // 是否预加载大图
-    timeout: 6000,      // 等待大图加载的最大时间, 单位: ms, 
-                        // 当超过timeout时间之后, 图片仍未加载, 
-                        // 会给出提示, 如果之后图片加载成功会覆盖提示;
+                <div class="member prop">
+                    <h4><a name="position">position</a> - <code>String</code></h4>
+                    <div class="detail">
+                        <p>大图显示在小图的哪个位置. </p>
+                        <p>可取 'top', 'right', 'bottom', 'left', 'inner', 当为 'inner' 时, 会覆盖显示在小图上. 默认为 'right'. </p>
 
-    glassSize: { height: 100, width: 100 }, // 镜片高宽
-    zoomIcon: true      // 是否显示放大镜提示图标
-};
-</code></pre>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="offset">offset</a> - <code>Number | Array</code></h4>
+                    <div class="detail">
+                        <p>大图相对于小图位置的偏移量. 单一值或 [x, y]. 默认为 10. </p>
+                        <p>x 值对应于水平方向上的偏移, y值对应于垂直方向上的偏移. 当 offset 为一个 Number 或 [Number] 时, 仅指水平方向上的偏移, 垂直方向上偏移为 0; 如果 position 设置 'top'/'bottom', 则需要通过 offset 为 [0, 10]来设置. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="preload">preload</a> - <code>Boolean</code></h4>
+                    <div class="detail">
+                        <p>是否预加载大图. 默认为 true. </p>
+                    </div>
+                </div>
+                <div class="member prop">
+                    <h4><a name="timeout">timeout</a> - <code>Number</code></h4>
+                    <div class="detail">
+                        <p>等待大图加载的最大时间, 单位: s.  默认 2 min. </p>
+                    </div>
+                </div>
+                <div class="member prop">
+                    <h4><a name="timeoutMsg">timeoutMsg</a> - <code>String</code></h4>
+                    <div class="detail">
+                        <p>大图无法加载超时时, 显示的提示文字. 默认为 "图片暂不可用". </p>
+                    </div>
+                </div>
+                <div class="member prop">
+                    <h4><a name="zoomSize">zoomSize</a> - <code>Array</code></h4>
+                    <div class="detail">
+                        <p>放大区域宽高. 默认为 ['auto', 'auto'], 当取 'auto' 时, 宽/高 取小图的高/宽. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="lensIcon">lensIcon</a> - <code>Boolean</code></h4>
+                    <div class="detail">
+                        <p>是否显示放大镜提示图标, 默认为 true.</p>
+                    </div>
+                </div>
+                
+                <div class="member prop">
+                    <h4><a name="zoomCls">zoomCls</a> - <code>String</code></h4>
+                    <div class="detail">
+                        <p>放大区域额外样式, 默认为 ''. 原有放大区域样式为 'ks-imagezoom-viewer', 设置该值会追加元素 class. </p>
                     </div>
                 </div>
 
             </div>
 
             <div class="section">
-                <h3 id="usage">使用示例: </h3>
+                <h3 id="members">Members</h3>
+                <div class="member members">
+                    <h4><a name="mem_image">image</a> - <code>HTMLElement</code></h4>
+                    <div class="detail">
+                        <p>需要缩放的小图元素. </p>
+                    </div>
+                </div>
+                <div class="member members">
+                    <h4><a name="mem_config">config</a> - <code>Object</code></h4>
+                    <div class="detail">
+                        <p>配置选项, 具体参见上述 <a href="#config">Config</a>. </p>
+                    </div>
+                </div>
+                <div class="member members">
+                    <h4><a name="mem_lens">lens</a> - <code>HTMLElement</code></h4>
+                    <div class="detail">
+                        <p>镜片元素. </p>
+                    </div>
+                </div>
+                <div class="member members">
+                    <h4><a name="mem_lensIcon">lensIcon</a> - <code>HTMLElement</code></h4>
+                    <div class="detail">
+                        <p>放大镜图标元素. </p>
+                    </div>
+                </div>
+                <div class="member members">
+                    <h4><a name="mem_bigImage">bigImage</a> - <code>HTMLElement</code></h4>
+                    <div class="detail">
+                        <p>大图元素. </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 id="methods">Methods</h3>
+
+                <div class="member prop">
+                    <h4><a name="method_show">show()</a></h4>
+                    <div class="detail">
+                        <p>显示放大区域. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="method_hide">hide()</a></h4>
+                    <div class="detail">
+                        <p>隐藏放大区域. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="method_set">set(name, val)</a></h4>
+                    <div class="detail">
+                        <p>设置配置信息, 目前只可动态设置 bigImageSrc 这个值. </p>
+                        <p>如果有多张图片切换时, 需要修改 大图src, 如: </p>
 <pre class="example-code"><code>
-&lt;body&gt;
-&lt;div id="page"&gt;
-    &lt;img id="smallimg" class="jqzoom" src="close1_small.jpg" /&gt;
-&lt;/div&gt;
-&lt;/body&gt;
-
-&lt;script&gt;
 KISSY.ready(function(S) {
-    var zm = S.ImageZoom("#smallimg", // 提供被放大图片选择器
-        {bigImageSrc:"close1_big.jpg"});
+    var m = new S.ImageZoom("#multi");
+    S.Event.on("#imgList img", 'click', function() {
+        var data = S.DOM.attr(this, 'data-ks-imagezoom');
+        S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
+        m.set('bigImageSrc', data);
+    });
 });
-&lt;/script&gt;
-
-
-&lt;!-- 构建出的DOM --&gt;
-&lt;body&gt;
-&lt;div id="page"&gt;
-    &lt;div class="ks-imagezoom-magnifier" data-ks-event-guid="1277113364450"&gt;
-        &lt;img src="close1_small.jpg" class="jqzoom" id="smallimg"&gt;
-        &lt;div class="ks-imagezoom-glass hidden"&gt;&lt;/div&gt;
-        &lt;div class="ks-imagezoom-icon"&gt;&lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="ks-imagezoom-viewer hidden"&gt;
-    &lt;img src="close1_big.jpg"&gt;
-&lt;/div&gt;
-&lt;/body&gt;
-
 </code></pre>
-                <p class="tips">特别注意：1. 跟随模式下生成的dom有点不同, 直接把ks-imagezoom-viewer这层放到ks-imagezoom-magnifier中; 2. 关于显示区域宽高, 显示区域宽=大图宽度*镜片宽度/小图宽度; </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -103,11 +200,42 @@ KISSY.ready(function(S) {
         <div class="sub-wrap">
             <div class="loc"><a href="../index.html">home</a> &rsaquo; imagezoom :</div>
             <div class="toc">
-                <h3>Sub modules</h3>
+                <h3>Usage</h3>
                 <ul>
-                    <li><a href="#config">config</a></li>
-                    <li><a href="#usage">usage</a></li>
+                    <li><a href="#Constructor">Constructor</a></li>
                 </ul>
+
+                <h3>Config</h3>
+                <ul>
+                    <li><a href="#type">type</a></li>
+                    <li><a href="#bigImageSrc">bigImageSrc</a></li>
+                    <li><a href="#bigImageSize">bigImageSize</a></li>
+                    <li><a href="#position">position</a></li>
+                    <li><a href="#offset">offset</a></li>
+                    <li><a href="#preload">preload</a></li>
+                    <li><a href="#timeout">timeout</a></li>
+                    <li><a href="#timeoutMsg">timeoutMsg</a></li>
+                    <li><a href="#zoomSize">zoomSize</a></li>
+                    <li><a href="#lensIcon">lensIcon</a></li>
+                    <li><a href="#zoomCls">zoomCls</a></li>
+                </ul>
+                
+                <h3>Members</h3>
+                <ul>
+                    <li><a href="#mem_image">image</a></li>
+                    <li><a href="#mem_config">config</a></li>
+                    <li><a href="#mem_lens">lens</a></li>
+                    <li><a href="#mem_lensIcon">lensIcon</a></li>
+                    <li><a href="#mem_bigImage">bigImage</a></li>
+                </ul>
+
+                <h3>Methods</h3>
+                <ul>
+                    <li><a href="#method_show">show</a></li>
+                    <li><a href="#method_hide">hide</a></li>
+                    <li><a href="#method_set">set</a></li>
+                </ul>
+
             </div>
         </div>
     </div>

@@ -11,13 +11,16 @@
         }
     };
 
-    S.each(['sizzle', 'datalazyload', 'flash', 'switchable', 'suggest'], function(modName) {
+    S.each(['sizzle', 'datalazyload', 'flash', 'switchable',
+        'suggest', 'overlay', 'imagezoom', 'calendar'], function(modName) {
         map[modName] = {
             path: modName + '/' + modName + '-pkg-min.js',
             requires: ['core'],
             charset: 'utf-8'
         };
     });
+
+    map['calendar'].csspath = 'calendar/default-min.css';
 
     S.add(map);
 

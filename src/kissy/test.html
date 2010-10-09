@@ -221,10 +221,14 @@
         // empty arguments
         if(S.namespace() !== null) test.fail();
 
+        // global
+        if(S.namespace('Global', true) !== Global) test.fail();
+
         // clear
         delete S.app1;
         delete S.app2;
         window.TB = undefined;
+        window.Global = undefined;
     }
 
     function test_app(test) {
@@ -451,7 +455,7 @@
 
     function test_param(test) {
         if(S.param({foo:1, bar:2}) !== 'foo=1&bar=2') test.fail();
-        if(S.param({foo:1, bar:[2,3]}) !== 'foo=1&bar[]=2&bar[]=3') test.fail();
+        if(S.param({foo:1, bar:[2,3]}) !== 'foo=1&bar%5B%5D=2&bar%5B%5D=3') test.fail();
 
         if(S.param({'&#': '!#='}) !== '%26%23=!%23%3D') test.fail();
 

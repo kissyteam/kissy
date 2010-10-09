@@ -17,16 +17,13 @@
 
 <script src="dom.js"></script>
 <script src="selector.js"></script>
+<script src="dom-data.js"></script>
 <script src="dom-class.js"></script>
 <script src="dom-attr.js"></script>
 <script src="dom-traversal.js"></script>
 <script src="dom-create.js"></script>
 
 <script src="../sizzle/sizzle.js"></script>
-<script src="../../third-party/jquery/jquery-1.4.2.js"></script>
-<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script src="../../third-party/yui3/yui-min.js"></script>
-<script src="../../third-party/ext-core/ext-core.js"></script>
 
 <div id="test-data">
     <p id="foo">
@@ -86,7 +83,6 @@
             html = '<' + tag + '></' + tag + '>';
 
             //div.innerHTML = html;
-            //div.appendChild(jQuery(html)[0]);
             div.appendChild(DOM.create(html));
             S.log(tag + ' - ' + div.innerHTML);
 

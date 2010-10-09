@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!-- build file for kissy by yiminghe@gmail.com -->
+<project name="kissy-build" default="build-package" xmlns:ac="antlib:net.sf.antcontrib">
+    <description>Kissy Build File</description>
+
+    <dirname property="current.dir" file="${ant.file.kissy-build}"/>
+
+    <property name="root.dir" location="${current.dir}/../"/>
+    <property name="src.dir" location="${root.dir}/src"/>
+    <property name="build.dir" location="${root.dir}/build"/>
+    <property name="build.package.dir" location="${root.dir}/build/packages"/>
+    <property name="charset" value="UTF-8"/>
+
+    <target name="prepare">
+        <mkdir dir="${build.dir}"/>
+        <copy todir="${build.dir}"
+              encoding="${charset}"
+              outputencoding="${charset}">
+            <fileset dir="${current.dir}/build-xml" includes="**/build.xml"/>
+        </copy>
+    </target>
+
+    <target name="build-package" depends="prepare">
+        <subant target="" failonerror="false" inheritall="false">
+            <filelist files="${build.package.dir}/build.xml"/>
+        </subant>
+    </target>
+
+    <target name="build-all" depends="prepare">
+        <subant target="" failonerror="false" inheritall="false">
+            <fileset dir="${src.dir}" includes="**/build.xml"/>
+        </subant>
+        <subant target="" failonerror="false" inheritall="false">
+            <fileset dir="${build.dir}" includes="**/build.xml"/>
+        </subant>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+</project>

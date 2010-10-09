@@ -14,14 +14,32 @@
 
 <script src="../../build/kissy/kissy-pkg.js"></script>
 <script src="../../build/ua/ua-pkg.js"></script>
-<script src="../../build/dom/dom-pkg.js"></script>
-<script src="../../build/event/event-pkg.js"></script>
+
+<script src="../dom/dom.js"></script>
+<script src="../dom/selector.js"></script>
+<script src="../dom/dom-data.js"></script>
+<script src="../dom/dom-class.js"></script>
+<script src="../dom/dom-attr.js"></script>
+<script src="../dom/dom-style.js"></script>
+<script src="../dom/dom-style-ie.js"></script>
+<script src="../dom/dom-offset.js"></script>
+<script src="../dom/dom-traversal.js"></script>
+<script src="../dom/dom-create.js"></script>
+<script src="../dom/dom-insertion.js"></script>
+
+<script src="../event/event.js"></script>
+<script src="../event/event-object.js"></script>
+<script src="../event/event-target.js"></script>
+<script src="../event/event-mouseenter.js"></script>
+<script src="../event/event-focusin.js"></script>
 
 <script src="node.js"></script>
 <script src="nodelist.js"></script>
 <script src="node-attach.js"></script>
 
-<script src="../../third-party/jquery/jquery-1.4.2.js"></script>
+<script src="../anim/anim-easing.js"></script>
+<script src="../anim/anim.js"></script>
+<script src="../anim/anim-node-plugin.js"></script>
 
 <!-- Test Cases -->
 <script>
@@ -49,10 +67,43 @@
         if(S.Node('').length !== 0) test.fail();
         if(S.Node(null).length !== 0) test.fail();
         if(S.Node(undefined).length !== 0) test.fail();
+
+        var t = S.Node('p');
+        if(S.Node(t) !== t) test.fail();
+
+        // props 设置
+        S.Node('<div>', {
+            'class': 'test-div',
+            css: {
+                width: '100px',
+                height: '100px',
+                border: '1px solid red'
+            },
+            html: 'test div'
+        }).appendTo(document.body);
     }
 
     function test_query_class_sep(test) {
         test.status = 'sep';
+    }
+
+    function test_data(test) {
+        var node = S.one('#test-data2');
+
+        node.data('data-1', 'val-1');
+        if(node.data('data-1') !== 'val-1') test.fail();
+
+        node.data('data-1', 'val-2');
+        if(node.data('data-1') !== 'val-2') test.fail();
+    }
+
+    function test_removeData(test) {
+        var node = S.one('#test-data3');
+
+        node.data('data', 'val');
+        node.removeData('data');
+        if(node.data('data') === 'val') test.fail();
+        if(node.data()) test.fail();
     }
 
     function test_hasClass(test) {
@@ -162,8 +213,9 @@
         if(node.css('backgroundColor') !== 'transparent') test.fail();
         if(node.css('backgroundPosition') !== '0% 0%') test.fail();
         if(node.css('fontSize') !== '12px') test.fail();
-        if(!S.UA.ie) if(node.css('border-right-width') !== '5px') test.fail();
-        if(S.UA.ie) if(node.css('border-right-width') !== 'medium') test.fail();
+
+        if(S.UA.ie < 9) if(node.css('border-right-width') !== 'medium') test.fail(DOM.css(elem, 'border-right-width'));
+        else if(node.css('border-right-width') !== '5px') test.fail();
 
         if(node.css('paddingLeft') !== '2pt') test.fail();
         if(node.css('padding-left') !== '2pt') test.fail();
@@ -196,11 +248,42 @@
     }
 
     function test_width(test) {
-        if(S.one('#test2').width() !== $('#test2').width()) test.fail();
+        //if(S.one('#test2').width() !== $('#test2').width()) test.fail();
     }
 
     function test_height(test) {
-        if(S.one('#test2').height() !== $('#test2').height()) test.fail();
+        //if(S.one('#test2').height() !== $('#test2').height()) test.fail();
+    }
+
+    function test_show(test) {
+        var node = S.one('#test-display');
+
+        node.css('display', 'none');
+        node.show();
+        if(node.css('display') === 'none') test.fail();
+
+        node.removeAttr('style');
+    }
+
+    function test_hide(test) {
+        var node = S.one('#test-display');
+
+        node.hide();
+        if(node.css('display') !== 'none') test.fail();
+
+        node.removeAttr('style');
+    }
+
+    function test_toggle(test) {
+        var node = S.one('#test-display');
+
+        node.toggle();
+        if(node.css('display') !== 'none') test.fail();
+
+        node.toggle();
+        if(node.css('display') === 'none') test.fail();
+
+        node.removeAttr('style');
     }
 
     function test_query_offset_sep(test) {
@@ -294,6 +377,7 @@
 
     function test_one(test) {
         if(S.one('#foo').one('input').attr('id') !== 'test-input') test.fail();
+        if(S.one('#feature-2').html('feature 2').html() !== 'feature 2') test.fail();
     }
 
     function test_all(test) {
@@ -311,7 +395,19 @@
         });
         test.extraMsg = '{click test link to invoke event}';
     }
-    
+
+    function test_mouseenter(test) {
+        S.Event.on(S.one('#test-mouseenter'), 'mouseenter mouseleave', function(ev) {
+            S.log('ev.type = ' + ev.type);
+            test.echo('ev.type = ' + ev.type);
+        });
+//        S.one('#test-mouseenter').on('mouseenter mouseleave', function(ev) {
+//            S.log('ev.type = ' + ev.type);
+//            test.log('ev.type = ' + ev.type);
+//        });
+        test.extraMsg = '{mouse enter/leave #test-mouseenter to test test_mouseenter case}';
+    }
+
 </script>
 
 <div id="test-data">
@@ -356,7 +452,23 @@
         <option selected>2</option>
         <option>3</option>
     </select>
+    <p id="test-data2"></p>
+    <p id="test-data3"></p>
+    <p id="test-display"></p>
+    <div id="feature-2"></div>
+    <div id="test-mouseenter" style="width:200px;height:200px;border:1px solid blue">
+        <div style="width: 100px; height: 100px; margin: 50px; border: 1px solid red">#test-mouseenter</div>
+    </div>
+    <div id="temp-node"></div>
 </div>
+
+
+<!--<script src="http://localhost/third-party/jquery/jquery-pkg.min.js"></script>-->
+<script>
+
+    // temp code
+
+</script>
 
 </body>
 </html>

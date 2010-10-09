@@ -1,0 +1,30 @@
+<project name="calendar.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../../tools/build.xml"/>
+
+    <property file="build.properties"/>
+    <property name="src.dir" location="."/>
+
+    <target name="pre">
+        <copy file="assets/default.css" todir="."/>
+    </target>
+
+    <target name="concat">
+        <concat destfile="calendar-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="date.js"/>
+
+            <path path="calendar.js"/>
+            <path path="calendar-page.js"/>
+            <path path="calendar-time.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="calendar-pkg.js"/>
+        <delete file="default.css"/>
+    </target>
+
+    <target name="build" depends="pre,concat,common.build,clean">
+    </target>
+</project>
