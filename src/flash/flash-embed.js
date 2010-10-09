@@ -162,7 +162,7 @@ KISSY.add('flash-embed', function(S) {
             return ret;
         },
 
-        _register: function(swf, config, callback) {
+        _register: function(swf, config, callback) {;
             var id = config.attrs.id;
             if (UA.gecko || UA.opera) {
                 swf = S.query('object', swf)[0] || swf; // bugfix: 静态双 object 获取问题。双 Object 外层有 id 但内部才有效。  longzang 2010/8/9
