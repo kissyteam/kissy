@@ -30,7 +30,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             bigImageSrc: '',           // 大图路径, 默认为 '', 会取触点上的 data-ks-imagezoom 属性值.
             bigImageSize: [800, 800],  // 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值.
             position: 'right',         // 大图显示位置
-            //relative: undefined,     // 大图显示位置相对于哪个元素, 默认不设置, 相对于小图位置, 如果取 PARENT, 为小图的 offsetParent 元素
+            //alignTo: undefined,      // 大图显示位置相对于哪个元素, 默认不设置, 相对于小图位置, 如果取 PARENT, 为小图的 offsetParent 元素
             offset: 10,                // 大图位置的偏移量. 单一值或 [x, y]
             preload: true,             // 是否预加载大图
 
@@ -53,7 +53,7 @@ KISSY.add('imagezoom', function(S, undefined) {
      *   - this.viewer      大图显示区域        @type HTMLElement
      */
     function ImageZoom(image, config) {
-        var self = this, data;
+        var self = this, data, rel;
 
         if (!(self instanceof ImageZoom)) {
             return new ImageZoom(image, config);
@@ -77,20 +77,31 @@ KISSY.add('imagezoom', function(S, undefined) {
             new Image().src = config.bigImageSrc;
         }
 
+        // 是否inner效果
         self._isInner = config.position === POSITION[4];
+
+        // 参照对齐元素
+        if (config.alignTo) {
+            if (config.alignTo === PARENT) {
+                rel = image.offsetParent;
+            } else {
+                rel = S.get(config.alignTo);
+            }
+            if (rel) self._alignToRegion = S.merge(DOM.offset(rel), getSize(rel));
+        }
+
+        // 大图高宽, 默认使用配置信息中, 当加载大图之后, 更新该值;
+        self._bigImageSize = { width: config.bigImageSize[0], height: config.bigImageSize[1] };
 
         // 首次加载小图从缓存读取或在绑定load事件之前已经加载完小图时, 不显示 loading
         !image.complete && self._startLoading();
-        // 保证非首张小图切换时也能正确隐藏, 不管是否来自缓存
-        Event.on(image, LOAD, function(){
-            self._finishLoading();
-        });
 
         self._firstInit = true;
         // 在小图加载完毕时初始化
         imgOnLoad(image, function() {
             self._init();
-        }, true);
+            self._finishLoading();
+        });
     }
 
     S.augment(ImageZoom, S.EventTarget, {
@@ -102,35 +113,21 @@ KISSY.add('imagezoom', function(S, undefined) {
 
         _renderUI: function() {
             var self = this, config = self.config,
-                image = self.image, rel;
+                image = self.image;
 
-            // 小图宽高及位置, 用到多次, 先保存起来
+            // 小图宽高及位置, 用到多次, 先保存起来; 更换小图时需要更新该值
             self._imgRegion = S.merge(DOM.offset(image), getSize(image));
-            if (config.relative) {
-                if (config.relative === PARENT){
-                    rel = image.offsetParent;
-                } else {
-                    rel = S.get(config.relative);
-                }
-                self._relativeRegion = S.merge(DOM.offset(rel), getSize(rel));
-            }
-
-            // 大图高宽, 默认使用配置信息中, 当加载大图之后, 更新该值
-            self._bigImageSize = { width: config.bigImageSize[0], height: config.bigImageSize[1] };
-
-            // 放大镜图标
-            if (config.lensIcon) self._renderIcon();
+            // 放大镜图标, 更改小图时不重新更改此图标位置
+            if (config.lensIcon && !self.lensIcon) self._renderIcon();
         },
 
         _renderIcon: function() {
             var self = this,
-                region = self._relativeRegion || self._imgRegion, icon;
+                region = self._alignToRegion || self._imgRegion, icon;
 
-            if (self._firstInit) {
-                icon = createAbsElem(CLS_ICON);
-                doc.body.appendChild(icon);
-                self.lensIcon = icon;
-            } else icon = self.lensIcon;
+            icon = createAbsElem(CLS_ICON);
+            doc.body.appendChild(icon);
+            self.lensIcon = icon;
 
             DOM.offset(icon, {
                 left: region.left + region.width - DOM.width(icon),
@@ -202,7 +199,7 @@ KISSY.add('imagezoom', function(S, undefined) {
                 self._setViewerRegion();
                 // 加载完立刻定位到鼠标位置
                 self._onMouseMove();
-            }, true);
+            });
         },
 
         _renderLens: function() {
@@ -218,7 +215,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             var self = this, config = self.config,
                 v = self.viewer,
                 region = self._imgRegion,
-                relativeRegion = self._relativeRegion || region,
+                alignToRegion = self._alignToRegion || region,
                 zoomSize = config.zoomSize,
                 left, top, lensWidth, lensHeight, width, height,
                 bigImageSize = self._bigImageSize;
@@ -236,8 +233,8 @@ KISSY.add('imagezoom', function(S, undefined) {
             if (!self._isInner) setWidthHeight(self.lens, lensWidth, lensHeight);
 
             // 计算不同 position
-            left = relativeRegion.left + (config.offset[0] || 0);
-            top = relativeRegion.top + (config.offset[1] || 0);
+            left = alignToRegion.left + (config.offset[0] || 0);
+            top = alignToRegion.top + (config.offset[1] || 0);
             switch (config.position) {
                 // top
                 case POSITION[0]:
@@ -245,11 +242,11 @@ KISSY.add('imagezoom', function(S, undefined) {
                     break;
                 // right
                 case POSITION[1]:
-                    left += relativeRegion.width;
+                    left += alignToRegion.width;
                     break;
                 // bottom
                 case POSITION[2]:
-                    top += relativeRegion.height;
+                    top += alignToRegion.height;
                     break;
                 // left
                 case POSITION[3]:
@@ -415,13 +412,12 @@ KISSY.add('imagezoom', function(S, undefined) {
 
     S.ImageZoom = ImageZoom;
 
-    function imgOnLoad(img, callback, f) {
+    function imgOnLoad(img, callback) {
         if (checkImageReady(img)) {
             callback();
-            if (f) Event.on(img, LOAD, callback);
         }
-        // 图尚未加载完毕，等待 onload 时再初始化
-        else Event.on(img, LOAD, callback);
+        // 1) 图尚未加载完毕，等待 onload 时再初始化 2) 多图切换时需要绑定load事件来更新相关信息
+        Event.on(img, LOAD, callback);
     }
 
     function getSize(elem) {
