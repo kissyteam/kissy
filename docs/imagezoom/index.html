@@ -72,7 +72,14 @@ KISSY.ready(function(S) {
                     <div class="detail">
                         <p>大图显示在小图的哪个位置. </p>
                         <p>可取 'top', 'right', 'bottom', 'left', 'inner', 当为 'inner' 时, 会覆盖显示在小图上. 默认为 'right'. </p>
+                    </div>
+                </div>
 
+                <div class="member prop">
+                    <h4><a name="relative">relative</a> - <code>String</code></h4>
+                    <div class="detail">
+                        <p>大图显示位置相对于哪个元素. </p>
+                        <p>默认不设置, 相对于小图位置, 如果取 PARENT, 为小图的 offsetParent 元素. </p>
                     </div>
                 </div>
 
@@ -90,6 +97,7 @@ KISSY.ready(function(S) {
                         <p>是否预加载大图. 默认为 true. </p>
                     </div>
                 </div>
+
                 <div class="member prop">
                     <h4><del><a name="timeout">timeout</a> - <code>Number</code></del></h4>
                     <div class="detail">
@@ -97,6 +105,7 @@ KISSY.ready(function(S) {
                         <p>等待大图加载的最大时间, 单位: s.  默认 2 min. </p>
                     </div>
                 </div>
+
                 <div class="member prop">
                     <h4><del><a name="timeoutMsg">timeoutMsg</a> - <code>String</code></del></h4>
                     <div class="detail">
@@ -104,6 +113,7 @@ KISSY.ready(function(S) {
                         <p>大图无法加载超时时, 显示的提示文字. 默认为 "图片暂不可用". </p>
                     </div>
                 </div>
+
                 <div class="member prop">
                     <h4><a name="zoomSize">zoomSize</a> - <code>Array</code></h4>
                     <div class="detail">
@@ -212,6 +222,7 @@ KISSY.ready(function(S) {
                     <li><a href="#bigImageSrc">bigImageSrc</a></li>
                     <li><a href="#bigImageSize">bigImageSize</a></li>
                     <li><a href="#position">position</a></li>
+                    <li><a href="#relative">relative</a></li>
                     <li><a href="#offset">offset</a></li>
                     <li><a href="#preload">preload</a></li>
                     <li><del><a href="#timeout">timeout</a></del></li>
