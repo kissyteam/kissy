@@ -1,0 +1,29 @@
+<script src="../../build/kissy.js"></script>
+<script>
+	if(!KISSY.UA.webkit){
+		alert("use chrome please");
+	}else{
+		function TestBaseInherit() {
+		}
+		
+		Object.defineProperty(TestBaseInherit.prototype, "description", {
+			get : function () {
+				document.write("<br/>get TestBaseInherit's attribute description<br/>");
+				return this.desc;
+			},
+			set : function (val) {
+				document.write("<br/>set TestBaseInherit's attribute description<br/>");
+				this.desc = val;
+			}
+		});
+		
+		TestBaseInherit.prototype.description="initial";
+		var test=new TestBaseInherit();
+		test.description = "Content container";	
+		document.write("<br/>description:"+test.description);
+		
+		var test2=new TestBaseInherit();
+		document.write("<br/>description:"+test2.description);
+}
+
+</script>
