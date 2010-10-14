@@ -1,0 +1,221 @@
+<html>
+<head>
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+</head>
+<body>
+
+<div style="margin:10px auto;padding:10px;width:500px;border:1px solid green;">
+    <h1>示例1：联动</h1>
+<p>
+数字(0到3)：<input id="v" value="0" readonly autocomplete="off"/> <br/>
+<input type="button" id="r" value="增加" />
+</p>
+
+
+
+
+
+<p>
+	<label>输入数字：<input id="v2" value="0" autocomplete="off"/></label> <br/>
+	<input type="button" id="r2" value="尝试直接设置" />
+</p>
+
+<p>
+<input type="button" id="r3" value="全部重置" />
+</p>
+
+</div>
+
+<div style="margin:10px auto;width:500px;padding:10px;border:1px solid green;">
+     <h1>示例2：多实例</h1>
+<p>
+数字(0到3)：<input id="vv" value="2" readonly autocomplete="off"/> <br/>
+<input type="button" id="rr" value="增加" />
+</p>
+</div>
+
+<p>
+	for more to see ,come <a href="http://yiminghe.javaeye.com/blog/696296" target="_blank">here</a>
+</p>
+
+<script src="../../build/kissy.js"></script>
+
+<script src="attribute.js"></script>
+
+<script>
+KISSY.ready(function (S) {
+    /*
+	1.原始类，业务逻辑与ui混合
+	*/
+    function Increaser(domInput, domAction, cfg) {
+        this.input = domInput;
+        this.domAction = domAction;
+        var self = this;
+        this.domAction.on("click", self.increasing, self);
+        //0,3 属性默认值
+        this.min = cfg.min.toString() || "0";
+        this.max = cfg.max.toString() || "3";
+    }
+    Increaser.prototype.increasing = function (e) {
+        if (this.input.val() == this.max) {
+            this.input.val(this.min);
+        } else {
+            this.input.val("value", parseInt(this.input.val()) + 1);
+        }
+    };
+    //new Increaser(S.one("#v"),S.one("#r"));
+    /*
+2.改进类，区分业务domain与ui，duplicate observed data，
+将数据复制到一个领域对象中，建立一个observer模式，用以同步领域对象和gui对象内的重复数据
+*/
+
+    function GuiIncreaser(domInput, domAction, cfg) {
+        this.input = domInput;
+        this.domAction = domAction;
+        this.domainIncreaser = new DomainIncreaser(this.input.val(), cfg);
+        this.domainIncreaser.addObserver(this);
+        var self = this;
+        this.domAction.on("click", self.increasing, self);
+    }
+    GuiIncreaser.prototype = {
+        constructor: GuiIncreaser,
+        increasing: function (e) {
+            this.domainIncreaser.increase();
+        },
+        //observer
+        update: function (v) {
+            this.input.val(v);
+        }
+    }
+
+    function DomainIncreaser(v, cfg) {
+        this.v = v;
+        this.observers = [];
+        //0,3 属性默认值
+        this.min = cfg.min.toString() || "0";
+        this.max = cfg.max.toString() || "3";
+        this._edge = parseInt(this.max) + 1 + "";
+    }
+    DomainIncreaser.prototype = {
+        constructor: DomainIncreaser,
+        addObserver: function (o) {
+            if (S.inArray(o, this.observers) == -1) {
+                this.observers.push(o);
+            }
+        },
+        checkChange: function () {
+            if (this.v == this._edge) this.v = this.min;
+        },
+        //observable
+        notify: function () {
+            for (var i = this.observers.length - 1; i >= 0; i--) {
+                this.observers[i].update(this.v);
+            }
+        },
+        increase: function () {
+            this.v = parseInt(this.v) + 1;
+            this.checkChange();
+            this.notify();
+        }
+    }
+    //new GuiIncreaser(S.one("#v"),S.one("#r"));
+    //(function(){
+    /*
+3.利用 kissy attribute 简化2，将domain和gui重新结合，利用kissy attribute分离与同步
+*/
+    AttributeIncreaser.ATTRS = {
+        "v": {
+            /*
+        			初始值取得，取得后该属性删除，添加默认值value=valueFn()
+        		*/
+            valueFn: function () {
+                return this.input.val();
+            },
+            //domain业务逻辑
+            setter: function (v) {
+                if (v == this._edge) return this.get("min");
+            }
+        },
+        max: {
+            value: "3"
+        },
+        min: {
+            value: "0"
+        }
+    };
+    /*
+			note : cfg should be first argument.
+		*/
+
+    function AttributeIncreaser(cfg, domInput, domAction) {
+        var self = this;
+        AttributeIncreaser.superclass.constructor.apply(this, arguments);
+        this.input = domInput;
+        this.domAction = domAction;
+        this._edge = parseInt(this.get("max")) + 1 + "";
+        //domain业务逻辑
+        this.domAction.on("click", self.increase, self);
+        //利用after事件触发实现属性与gui同步，属性首字母大小,after/before + Attribute + Change
+        this.on("afterVChange", self.afterVChange, self);
+        //dimain业务逻辑，利用before事件触发，阻止非规范值输入
+        this.on("beforeVChange", function (e) {
+            if (parseInt(e.newVal) > parseInt(self._edge)) {
+                alert("invalid input,refuse");
+                return false;
+            }
+        });
+    }
+    S.extend(AttributeIncreaser, S.Base, {
+        increase: function () {
+            this.set("v", parseInt(this.get("v")) + 1);
+        },
+        afterVChange: function (e) {
+            this.input.val(e.newVal);
+        }
+    });
+    //2,3的另一个好处是：由于浏览器dom engine同javascript engine的分离设计，通过尽可能少得 touch dom,减少js同dom间的通信提高效率，
+    //组件开发者不需要自己显式在构造器中动态建立对应dom的js属性，不需要显式定义相关状态事件
+    //使用attribute更适合多状态组件（对比多行为组件）
+    //组件开发者后期修改程序方便，某个属性变化的处理函数可以通过事件触发调用而放在合适的分离位置
+    var attrIn = new AttributeIncreaser({
+        max: 3
+    },
+    S.one("#v"), S.one("#r"));
+
+    //alert(attrIn.get("v"));
+     var attrIn2 = new AttributeIncreaser({
+        max: 3
+    },
+    S.one("#vv"), S.one("#rr"));
+
+    //alert(attrIn2.get("v"));
+
+    //alert(attrIn.get("v"));
+
+    /*
+     组件使用者，可以使用属性直观得和组件交互，同组件完全解耦分离，且组件开发者和使用者通过监控属性变化又达到了一定的统一协作。
+
+    */
+    //通过输入框设置组件状态部分代码
+    var v2 = S.one("#v2");
+    var r2 = S.one("#r2");
+    //设置组件属性，通知组件更新自己的状态
+    r2.on("click", function () {
+        attrIn.set("v", v2.val());
+    });
+    //设置组件属性，通知组件更新自己的状态
+    attrIn.on("afterVChange", function () {
+        v2.val(attrIn.get("v"));
+    });
+    //全部重置部分代码
+    var r3 = S.one("#r3");
+    r3.on("click", function () {
+        //利用属性事件统一了调用者与开发者
+        attrIn.reset();
+    });
+    //})();
+});
+</script>
+</body>
+</html>

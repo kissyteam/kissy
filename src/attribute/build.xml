@@ -1,0 +1,12 @@
+<project name="calendar.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../../tools/build.xml"/>
+
+    <property file="build.properties"/>
+    <property name="src.dir" location="."/>
+    
+
+    <target name="build" depends="pre,concat,common.build,clean">
+    </target>
+</project>
