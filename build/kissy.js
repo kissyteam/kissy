@@ -5529,7 +5529,7 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 15 14:07
+build time: Oct 15 17:13
 */
 /**
  * @module  Attribute
@@ -5751,7 +5751,7 @@ KISSY.add('attribute', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 15 14:07
+build time: Oct 15 17:13
 */
 /**
  * @module  Base
@@ -5772,19 +5772,25 @@ KISSY.add('base', function (S) {
     function initATTRS(host, config) {
         var c = host.constructor, attr, attrs, ATTRS = 'ATTRS';
 
+        // define
         while (c) {
             if ((attrs = c[ATTRS])) {
                 for (attr in attrs) {
                     // 子类上的 ATTRS 配置优先
                     if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
-                        if (attr in config) {
-                            attrs[attr].value = config[attr];
-                        }
                         host.addAttr(attr, attrs[attr]);
                     }
                 }
             }
             c = c.superclass ? c.superclass.constructor : null;
+        }
+
+        // initial
+        if (config) {
+            for (attr in config) {
+                if (config.hasOwnProperty(attr))
+                    host.__set(attr, config[attr]);
+            }
         }
     }
 
