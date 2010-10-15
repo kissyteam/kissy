@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 15 16:43
+build time: Oct 15 17:04
 */
 /**
  * @module  Base
@@ -22,19 +22,25 @@ KISSY.add('base', function (S) {
     function initATTRS(host, config) {
         var c = host.constructor, attr, attrs, ATTRS = 'ATTRS';
 
+        // define
         while (c) {
             if ((attrs = c[ATTRS])) {
                 for (attr in attrs) {
                     // 子类上的 ATTRS 配置优先
                     if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
-                        if (config && (attr in config)) {
-                            attrs[attr].value = config[attr];
-                        }
                         host.addAttr(attr, attrs[attr]);
                     }
                 }
             }
             c = c.superclass ? c.superclass.constructor : null;
+        }
+
+        // initial
+        if (config) {
+            for (attr in config) {
+                if (config.hasOwnProperty(attr))
+                    host._set(attr, config[attr]);
+            }
         }
     }
 
