@@ -201,6 +201,8 @@ config:
     offset: 10,                // 大图位置的偏移量. 单一值或 [x, y]
     preload: true,             // 是否预加载大图
 
+    hasZoom: true              // 初始时是否显示放大效果. 默认为 true, 显示放大. 在多图切换时, 可重设该值来开启或关闭显示放大功能.
+                               // 如果多个图都不需要放大显示, ImageZoom 不会生成任何东西.
     zoomSize: [AUTO, AUTO],    // 放大区域宽高
     lensIcon: true,            // 是否显示放大镜提示图标
 
@@ -215,7 +217,9 @@ Member:
 Method:
     show()      // 显示
     hide()      // 隐藏
-    set(name, val) // 重新设置某些值
+    set(name, val)      // 重新设置某些值
+        - bigImageSrc   // 重设大图 url
+        - hasZoom       // 重设 hasZoom 标志
     changeImageSrc // 设置小图 src
 </pre>
             </section>
