@@ -76,7 +76,7 @@ KISSY.ready(function(S) {
                 </div>
 
                 <div class="member prop">
-                    <h4><a name="relative">relative</a> - <code>String</code></h4>
+                    <h4><a name="alignTo">alignTo</a> - <code>String</code></h4>
                     <div class="detail">
                         <p>大图显示位置相对于哪个元素. </p>
                         <p>默认不设置, 相对于小图位置, 如果取 PARENT, 为小图的 offsetParent 元素. </p>
@@ -111,6 +111,13 @@ KISSY.ready(function(S) {
                     <div class="detail">
                         <p class="notice">新版已经删除该选项.</p>
                         <p>大图无法加载超时时, 显示的提示文字. 默认为 "图片暂不可用". </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="hasZoom">hasZoom</a> - <code>Boolean</code></h4>
+                    <div class="detail">
+                        <p>初始时是否显示放大效果. 默认为 true, 显示放大. 在多图切换时, 可重设该值来开启或关闭显示放大功能. 如果多个图都不需要放大显示, ImageZoom 不会生成任何东西.</p>
                     </div>
                 </div>
 
@@ -222,11 +229,12 @@ KISSY.ready(function(S) {
                     <li><a href="#bigImageSrc">bigImageSrc</a></li>
                     <li><a href="#bigImageSize">bigImageSize</a></li>
                     <li><a href="#position">position</a></li>
-                    <li><a href="#relative">relative</a></li>
+                    <li><a href="#alignTo">alignTo</a></li>
                     <li><a href="#offset">offset</a></li>
                     <li><a href="#preload">preload</a></li>
                     <li><del><a href="#timeout">timeout</a></del></li>
                     <li><del><a href="#timeoutMsg">timeoutMsg</a></del></li>
+                    <li><a href="#hasZoom">hasZoom</a></li>
                     <li><a href="#zoomSize">zoomSize</a></li>
                     <li><a href="#lensIcon">lensIcon</a></li>
                     <li><a href="#zoomCls">zoomCls</a></li>
