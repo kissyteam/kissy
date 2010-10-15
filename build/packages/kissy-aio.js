@@ -10714,14 +10714,13 @@ KISSY.add('suggest', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 15 14:07
+build time: Oct 15 14:26
 */
 /**
  * 图片放大效果 ImageZoom
  * @creater  玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('imagezoom', function(S, undefined) {
-
     var doc = document,
         DOM = S.DOM, Event = S.Event,
 
@@ -10734,7 +10733,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         DIV = '<div>', IMG = '<img>',
         STANDARD = 'standard',
         RE_IMG_SRC = /^.+\.(?:jpg|png|gif)$/i,
-        round = Math.round,
+        round = Math.round, min = Math.min, max = Math.max,
         AUTO = 'auto', LOAD = 'load',
         POSITION = ['top', 'right', 'bottom', 'left', 'inner'],
         SRC = 'src', MOUSEMOVE = 'mousemove', PARENT = 'parent',
@@ -10754,6 +10753,7 @@ KISSY.add('imagezoom', function(S, undefined) {
 
             zoomSize: [AUTO, AUTO],    // 放大区域宽高
             lensIcon: true,            // 是否显示放大镜提示图标
+            hasZoom: true,             // 初始是否显示放大效果
 
             zoomCls: ''                // 放大区域额外样式
         };
@@ -10812,11 +10812,12 @@ KISSY.add('imagezoom', function(S, undefined) {
         self._bigImageSize = { width: config.bigImageSize[0], height: config.bigImageSize[1] };
 
         // 首次加载小图从缓存读取或在绑定load事件之前已经加载完小图时, 不显示 loading
-        !image.complete && self._startLoading();
+        config.hasZoom && !image.complete && self._startLoading();
 
         self._firstInit = true;
         // 在小图加载完毕时初始化
         imgOnLoad(image, function() {
+            if (!config.hasZoom) return;
             self._init();
             self._finishLoading();
         });
@@ -10857,8 +10858,10 @@ KISSY.add('imagezoom', function(S, undefined) {
             var self = this, timer, config = self.config;
 
             Event.on(self.image, 'mouseenter', function(ev) {
-                self._getEv(ev);
-                Event.on(doc.body, MOUSEMOVE, self._getEv, self);
+                if (!config.hasZoom) return;
+
+                self._setEv(ev);
+                Event.on(doc.body, MOUSEMOVE, self._setEv, self);
 
                 timer = S.later(function() {
                     if (!self.viewer) {
@@ -10869,7 +10872,9 @@ KISSY.add('imagezoom', function(S, undefined) {
             });
 
             Event.on(self.image, 'mouseleave', function() {
-                Event.remove(doc.body, MOUSEMOVE, self._getEv);
+                if (!config.hasZoom) return;
+
+                Event.remove(doc.body, MOUSEMOVE, self._setEv);
 
                 if (timer) {
                     timer.cancel();
@@ -10878,7 +10883,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             });
         },
 
-        _getEv: function(ev) {
+        _setEv: function(ev) {
             this._ev = ev;
         },
 
@@ -10944,8 +10949,8 @@ KISSY.add('imagezoom', function(S, undefined) {
             if (height === AUTO) height = region.height;
 
             // 计算镜片宽高, vH / bigImageH = lensH / imageH
-            lensWidth = round( width * region.width / bigImageSize.width);
-            lensHeight = round( height * region.height / bigImageSize.height);
+            lensWidth = min(round( width * region.width / bigImageSize.width), region.width);
+            lensHeight = min(round( height * region.height / bigImageSize.height), region.height);
             self._lensSize = [lensWidth, lensHeight];
 
             if (!self._isInner) setWidthHeight(self.lens, lensWidth, lensHeight);
@@ -11055,8 +11060,8 @@ KISSY.add('imagezoom', function(S, undefined) {
                 setWidthHeight(img, tmpW, tmpH);
                 // 定位到鼠标点
                 DOM.css(img, {
-                    marginLeft: Math.max(Math.min(round( rw/2 - x*tmpW/rw ), 0), rw - tmpW),
-                    marginTop: Math.max(Math.min(round( rh/2 - y*tmpH/rh ), 0), rh - tmpH)
+                    marginLeft: max(min(round( rw/2 - x*tmpW/rw ), 0), rw - tmpW),
+                    marginTop: max(min(round( rh/2 - y*tmpH/rh ), 0), rh - tmpH)
                 });
 
                 if ( ++t > times) {
@@ -11103,13 +11108,17 @@ KISSY.add('imagezoom', function(S, undefined) {
 
         // TODO: use ATTR
         set: function(name, val) {
-            var self = this;
+            var self = this, config = self.config;
 
             if (name === 'bigImageSrc') {
                 if (val && RE_IMG_SRC.test(val)) {
-                    self._cacheBigImageSrc = self.config.bigImageSrc;
-                    self.config.bigImageSrc = val;
+                    self._cacheBigImageSrc = config.bigImageSrc;
+                    config.bigImageSrc = val;
                 }
+            } else if (name === 'hasZoom') {
+                val = !!val;
+                config.hasZoom = val;
+                DOM[val ? 'show' : 'hide'](self.lensIcon);
             }
         },
 
@@ -11127,7 +11136,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             self._startLoading();
         }
     });
-
+    
     S.ImageZoom = ImageZoom;
 
     function imgOnLoad(img, callback) {
@@ -11159,7 +11168,6 @@ KISSY.add('imagezoom', function(S, undefined) {
 
     function createImage(s, p) {
         var img = DOM.create('<img src="'+s+'" style="position:absolute;top:0;left:0" >');
-        //var img = DOM.create(IMG, { 'src': s, 'style': 'position:absolute;top:0;left:0' });
         if (p) p.appendChild(img);
         return img;
     }
