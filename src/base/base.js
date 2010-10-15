@@ -34,7 +34,7 @@ KISSY.add('base', function (S) {
         if (config) {
             for (attr in config) {
                 if (config.hasOwnProperty(attr))
-                    host._set(attr, config[attr]);
+                    host.__set(attr, config[attr]);
             }
         }
     }

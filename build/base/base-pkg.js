@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 15 17:04
+build time: Oct 15 17:06
 */
 /**
  * @module  Base
@@ -39,7 +39,7 @@ KISSY.add('base', function (S) {
         if (config) {
             for (attr in config) {
                 if (config.hasOwnProperty(attr))
-                    host._set(attr, config[attr]);
+                    host.__set(attr, config[attr]);
             }
         }
     }
