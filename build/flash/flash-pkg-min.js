@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 18:00
+build time: Oct 15 14:07
 */
 KISSY.add("flash",function(e){e.Flash={swfs:{},length:0}},{requires:["core"]});
 KISSY.add("flash-ua",function(e){function l(g){var h=e.isString(g)?g.match(/(\d)+/g):g;g=g;if(e.isArray(h))g=parseFloat(h[0]+"."+j(h[1],3)+j(h[2],5));return g||0}function j(g,h){for(var a=(g+"").length;a++<h;)g="0"+g;return g}var k=e.UA,f,n,m=true;k.fpv=function(g){if(g||m){m=false;var h;if(navigator.plugins&&navigator.mimeTypes.length)h=(navigator.plugins["Shockwave Flash"]||0).description;else if(window.ActiveXObject)try{h=(new ActiveXObject("ShockwaveFlash.ShockwaveFlash")).GetVariable("$version")}catch(a){}f=

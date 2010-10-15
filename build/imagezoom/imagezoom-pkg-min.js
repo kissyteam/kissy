@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 12 17:41
+build time: Oct 15 14:07
 */
 KISSY.add("imagezoom",function(i,n){function o(a,b){var c=this,d;if(!(c instanceof o))return new o(a,b);if(c.image=a=i.get(a)){c.config=b=i.merge(A,b);if(!b.bigImageSrc)if((d=e.attr(a,"data-ks-imagezoom"))&&x.test(d))b.bigImageSrc=d;b.offset=i.makeArray(b.offset);if(b.preload)(new Image).src=b.bigImageSrc;c._isInner=b.position===p[4];if(b.alignTo)if(d=b.alignTo===B?a.offsetParent:i.get(b.alignTo))c._alignToRegion=i.merge(e.offset(d),q(d));c._bigImageSize={width:b.bigImageSize[0],height:b.bigImageSize[1]};
 !a.complete&&c._startLoading();c._firstInit=true;r(a,function(){c._init();c._finishLoading()})}}function r(a,b){(a&&a.complete&&a.clientWidth?true:false)&&b();l.on(a,C,b)}function q(a){return{width:a.clientWidth,height:a.clientHeight}}function k(a){return e.create(D,{"class":a,style:"position:absolute;top:0;left:0"})}function s(a,b,c){i.each(i.makeArray(a),function(d){e.width(d,b);e.height(d,c)})}function y(a,b){var c=e.create('<img src="'+a+'" style="position:absolute;top:0;left:0" >');b&&b.appendChild(c);

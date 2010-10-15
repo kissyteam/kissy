@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Attribute Test</title>
+<style>
+    .settings, .ks-test-form button {
+        display: none
+    }
+    #log { height: 500px !important }
+</style>
+</head>
+<body>
+<script src="../../src/test/test.js"></script>
+<script> KISSY.Test.Config.times = 1; </script>
+
+<script src="../../build/kissy.js"></script>
+<script src="attribute.js"></script>
+
+<script>
+
+    KISSY.ready(function(S) {
+
+        S.Test.init();
+
+        // test code
+        function Test() {
+        }
+
+        S.augment(Test, S.Attribute, S.EventTarget);
+
+        var test = new Test();
+
+        test.addAttrs({
+            test: {
+                value: 1,
+                setter: function (v) {
+                    S.Test.echo("setting attribute test : " + v);
+                },
+                getter: function (v) {
+                    S.Test.echo("getting attribute test : " + v);
+                    return v;
+                }
+            }
+        }, { test: 99 });
+
+        test.on("beforeTestChange", function(e) {
+            S.Test.echo("***********************************");
+            S.Test.echo("before set attribute test :");
+            S.Test.echo("going to set value :" + e.newVal);
+            S.Test.echo("beforetestchange event return false");
+            S.Test.echo("***********************************");
+            return false;
+        });
+
+        test.on("beforeTestChange", function(e) {
+            S.Test.echo("***********************************");
+            S.Test.echo("before set attribute test -2:");
+            S.Test.echo("going to set value -2:" + e.newVal);
+            S.Test.echo("***********************************");
+        });
+
+        test.on("beforeTestChange", function(e) {
+            S.Test.echo("***********************************");
+            S.Test.echo("before set attribute test -3:");
+            S.Test.echo("going to set value -3:" + e.newVal);
+            S.Test.echo("***********************************");
+        });
+
+
+        test.on("afterTestChange", function(e) {
+            S.Test.echo("***********************************");
+            S.Test.echo("after set attribute test :");
+            S.Test.echo("previous value :" + e.prevVal);
+            S.Test.echo("new value :" + e.newVal);
+            S.Test.echo("***********************************");
+        });
+
+        S.Test.echo("loaded");
+
+        S.Test.echo("*********************************** going to get");
+        S.Test.echo("get attribute test :" + test.get("test"));
+        S.Test.echo('');
+
+        S.Test.echo("*********************************** going to set");
+        test.set("test", 2);
+        S.Test.echo('');
+
+        S.Test.echo("*********************************** after set ,then get");
+        S.Test.echo("get attribute test :" + test.get("test"));
+        S.Test.echo('');
+
+        S.Test.echo("*********************************** going to reset");
+        test.reset();
+        S.Test.echo('');
+
+        S.Test.echo("*********************************** after reset ,then read");
+        S.Test.echo("reset attribute test :" + test.get("test"));
+    });
+
+</script>
+</body>
+</html>

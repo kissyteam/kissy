@@ -1,4 +1,4 @@
-<project name="attribute.build" default="build" basedir=".">
+<project name="base.build" default="build" basedir=".">
     <description>Component Build File</description>
 
     <import file="../../tools/build.xml"/>
@@ -7,13 +7,13 @@
     <property name="src.dir" location="."/>
 
     <target name="concat">
-        <concat destfile="attribute-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="attribute.js"/>
+        <concat destfile="base-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="base.js"/>
         </concat>
     </target>
 
     <target name="clean">
-        <delete file="attribute-pkg.js"/>
+        <delete file="base-pkg.js"/>
     </target>
 
     <target name="build" depends="concat,common.build,clean">

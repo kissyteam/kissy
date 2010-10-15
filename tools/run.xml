@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
-<!-- build file for kissy by yiminghe@gmail.com -->
-<project name="kissy-build" default="build-package" xmlns:ac="antlib:net.sf.antcontrib">
-    <description>Kissy Build File</description>
+<project name="kissy-project-build" default="build-package" xmlns:ac="antlib:net.sf.antcontrib">
+    <description>KISSY Project Build File</description>
 
-    <dirname property="current.dir" file="${ant.file.kissy-build}"/>
+    <dirname property="current.dir" file="${ant.file.kissy-project-build}"/>
 
     <property name="root.dir" location="${current.dir}/../"/>
     <property name="src.dir" location="${root.dir}/src"/>

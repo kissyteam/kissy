@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 12 17:41
+build time: Oct 15 14:07
 */
 /**
  * 图片放大效果 ImageZoom
