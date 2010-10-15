@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 15 14:07
+build time: Oct 15 16:43
 */
 /**
  * @module  Base
@@ -27,7 +27,7 @@ KISSY.add('base', function (S) {
                 for (attr in attrs) {
                     // 子类上的 ATTRS 配置优先
                     if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
-                        if (attr in config) {
+                        if (config && (attr in config)) {
                             attrs[attr].value = config[attr];
                         }
                         host.addAttr(attr, attrs[attr]);

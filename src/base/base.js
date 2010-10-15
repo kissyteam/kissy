@@ -22,7 +22,7 @@ KISSY.add('base', function (S) {
                 for (attr in attrs) {
                     // 子类上的 ATTRS 配置优先
                     if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
-                        if (attr in config) {
+                        if (config && (attr in config)) {
                             attrs[attr].value = config[attr];
                         }
                         host.addAttr(attr, attrs[attr]);
