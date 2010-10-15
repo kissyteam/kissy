@@ -24,6 +24,7 @@ History:
  - [+] 社区建设 [Blog](http://kissyui.com/blog/) [Forum](http://kissyui.com/forum/)
  - [*] 正则优化 [小结](http://lifesinger.org/blog/2010/09/regular-expression-improvement-for-kissy/)
  - [*] README / CHANGELOG 等细节改进
+ - [+] core 增加 attribute 和 base 两个模块 [说明](todo)
  - [x] 已知 bugs 的修复
 
 
