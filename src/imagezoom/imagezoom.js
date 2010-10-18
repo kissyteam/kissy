@@ -261,7 +261,6 @@ KISSY.add('imagezoom', function(S, undefined) {
                 case POSITION[4]:
                     width = region.width;
                     height = region.height;
-                    DOM.css(v, 'cursor', 'move');
                     break;
             }
 
