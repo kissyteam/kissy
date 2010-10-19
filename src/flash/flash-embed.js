@@ -75,7 +75,6 @@ KISSY.add('flash-embed', function(S) {
             config = S.merge(defaultConifg, config);
             config.attrs = S.merge(defaultConifg.attrs, config.attrs);
 
-
             // 1. target 元素未找到
             if (!(target = S.get(target))) {
                 self._callback(callback, TARGET_NOT_FOUND);
@@ -84,9 +83,7 @@ KISSY.add('flash-embed', function(S) {
 
             // 保存 id, 没有则自动生成
             if (!target.id) target.id = S.guid(PREFIX);
-            //id = config.attrs.id = ID_PRE + target.id; 	//bugfix:	会改变DOM已被命名的ID 造成失效   longzang 2010/8/4
 			id = config.attrs.id = target.id;
-			
 
             // 2. flash 插件没有安装
             if (!UA.fpv()) {
@@ -184,7 +181,7 @@ KISSY.add('flash-embed', function(S) {
                 target.parentNode.replaceChild(o, target);
             }
 			
-			target = S.get("#"+target.id);				// bugfix:  重新获取对象,否则还是老对象. 如 入口为  div 如果不重新获取则仍然是 div	longzang | 2010/8/9
+			target = S.get(ID_PRE + target.id); // bugfix: 重新获取对象,否则还是老对象. 如 入口为 div 如果不重新获取则仍然是 div	longzang | 2010/8/9
 			
 			
 			Flash._register(target, config, callback);
@@ -242,7 +239,7 @@ KISSY.add('flash-embed', function(S) {
          * 一般用于配置选项 key 的标准化
          */
         _normalize: function(obj) {
-            var key, val, prop, ret = obj;
+            var key, val, prop, ret = obj || { };
 
             if (S.isPlainObject(obj)) {
                 ret = {};
@@ -289,7 +286,7 @@ KISSY.add('flash-embed', function(S) {
                 arr.push(prop + '=' + data);
             }
 			ret = arr.join('&');
-            return ret.replace(/\"/g,"'"); //bugfix: 将 " 替换为 ',以免取值产生问题。  但注意自转换为JSON时，需要进行还原处理。  
+            return ret.replace(/"/g,"'"); //bugfix: 将 " 替换为 ',以免取值产生问题。  但注意自转换为JSON时，需要进行还原处理。
         }
     });
 
