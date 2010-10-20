@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 15 14:07
+build time: Oct 20 20:25
 */
 /**
  * @module anim-easing
@@ -268,7 +268,10 @@ KISSY.add('anim', function(S, undefined) {
          * 也可以是 { width: '200px', color: '#ccc' } 对象形式
          */
         if (S.isPlainObject(style)) {
-            style = S.param(style, ';').replace(/=/g, ':');
+            style = S.param(style, ';')
+                .replace(/=/g, ':')
+                .replace(/%23/g, '#') // 还原颜色值中的 #
+                .replace(/([A-Z])/g, '-$1').toLowerCase(); // backgroundColor => background-color
         }
         self.props = normalize(style);
         self.targetStyle = style;
