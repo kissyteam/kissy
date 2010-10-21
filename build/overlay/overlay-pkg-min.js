@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 18:00
+build time: Oct 15 14:07
 */
 KISSY.add("mask",function(c,g){function i(a){if(!(this instanceof i))return new i(a);a=c.merge(b,a);var f=a.shim,h=f?o:m+a.style,l=f?0:a.opacity,n=k("<iframe>",h,l,!f);if(!f&&e)this.layer=k("<div>",h,l,true);this.config=a;this.iframe=n}function k(a,f,h,l){a=d.create(a);d.attr(a,"style",f);d.css(a,"opacity",h);if(l){d.height(a,d.docHeight());j&&d.width(a,d.docWidth())}document.body.appendChild(a);return a}var d=c.DOM,e=c.UA.ie,j=e===6,m="position:absolute;left:0;top:0;width:100%;border:0;background:black;z-index:9998;display:none;",
 o="position:absolute;z-index:9997;border:0;display:none;",b={shim:false,opacity:0.6,style:""};c.augment(i,{show:function(){d.show([this.iframe,this.layer])},hide:function(){d.hide([this.iframe,this.layer])},toggle:function(){this[d.css(this.iframe,"display")!=="none"?"hide":"show"]()},setSize:function(a,f){var h=this.iframe;if(h){d.width(h,a);d.height(h,f)}if(h=this.layer){d.width(h,a);d.height(h,f)}},setOffset:function(a,f){var h=a;if(f!==g)h={left:a,top:f};d.offset([this.iframe,this.layer],h)}});

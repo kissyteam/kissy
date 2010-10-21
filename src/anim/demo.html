@@ -23,6 +23,9 @@
 <div id="test4" style="width: 200px; height: 80px; text-align: center; overflow: hidden; background: #bca">test4</div>
 <button id="test4-btn">run #test4</button>
 
+<div id="test5" style="width: 100px; height: 20px; border: 1px solid #333; padding: 20px">test</div>
+<button id="test5-btn">run #test5</button>
+
 <script src="../../build/kissy/kissy-pkg.js"></script>
 <script src="../../build/ua/ua-pkg.js"></script>
 <script src="../../build/dom/dom-pkg.js"></script>
@@ -67,6 +70,11 @@
     // test for 0
     S.one('#test4-btn').on('click', function() {
         S.one('#test4').animate('width: 0', 3, 'easeOutStrong');
+    });
+
+    // test for color #rgb
+    S.one('#test5-btn').on('click', function() {
+        S.one('#test5').animate({ backgroundColor: '#000', color: '#fff' }, 3, 'easeOutStrong');
     });
 
 </script>

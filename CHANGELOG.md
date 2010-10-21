@@ -17,13 +17,14 @@ History:
 ### v1.1.5 -> v1.x.x (2010/MM/DD)
 
  - [+] 单元测试框架改用 Jasmine 20% [tests](http://kissyteam.github.com/kissy/tests/)
- - [+] imagezoom 增加 Zazzle 内部放大效果 [demo](todo)
+ - [+] imagezoom 增加 Zazzle 内部放大效果 [demo](http://kissyui.com/blog/2010/10/imagezoom-inner/)
  - [*] anim 增加原生 CSS3 Transitions 支持 [原理](http://lifesinger.org/blog/2010/09/anim-using-css3-transitions/)
  - [+] 组件开发规范整理 20%
  - [*] 组件开发流程整理 80%
  - [+] 社区建设 [Blog](http://kissyui.com/blog/) [Forum](http://kissyui.com/forum/)
  - [*] 正则优化 [小结](http://lifesinger.org/blog/2010/09/regular-expression-improvement-for-kissy/)
  - [*] README / CHANGELOG 等细节改进
+ - [+] core 增加 attribute 和 base 两个模块 [说明](todo)
  - [x] 已知 bugs 的修复
 
 

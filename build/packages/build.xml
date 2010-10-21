@@ -29,6 +29,8 @@
             <path path="../cookie/cookie-pkg.js"/>
             <path path="../json/json-pkg.js"/>
             <path path="../anim/anim-pkg.js"/>
+            <path path="../attribute/attribute-pkg.js"/>
+            <path path="../base/base-pkg.js"/>
             <footer filtering="no" trimleading="yes">
                 KISSY.add('core');
             </footer>

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 18:00
+build time: Oct 15 14:07
 */
 /**
  * @module kissy
@@ -1337,7 +1337,7 @@ build time: Sep 30 18:00
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 18:00
+build time: Oct 15 14:08
 */
 /**
  * @module  ua
@@ -1534,7 +1534,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 17:59
+build time: Oct 15 14:07
 */
 /**
  * @module  dom
@@ -3558,7 +3558,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 18:00
+build time: Oct 15 14:07
 */
 /**
  * @module  event
@@ -4123,7 +4123,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 18:00
+build time: Oct 15 14:07
 */
 /**
  * @module  node
@@ -4463,7 +4463,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 17:59
+build time: Oct 15 14:07
 */
 /**
  * @module  cookie
@@ -4549,7 +4549,7 @@ KISSY.add('cookie', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 18:00
+build time: Oct 15 14:07
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -4877,7 +4877,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 17:59
+build time: Oct 20 20:25
 */
 /**
  * @module anim-easing
@@ -5144,7 +5144,10 @@ KISSY.add('anim', function(S, undefined) {
          * 也可以是 { width: '200px', color: '#ccc' } 对象形式
          */
         if (S.isPlainObject(style)) {
-            style = S.param(style, ';').replace(/=/g, ':');
+            style = S.param(style, ';')
+                .replace(/=/g, ':')
+                .replace(/%23/g, '#') // 还原颜色值中的 #
+                .replace(/([A-Z])/g, '-$1').toLowerCase(); // backgroundColor => background-color
         }
         self.props = normalize(style);
         self.targetStyle = style;
@@ -5526,12 +5529,283 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
     }
 
 });
+/*
+Copyright 2010, KISSY UI Library v1.1.5
+MIT Licensed
+build time: Oct 15 17:13
+*/
+/**
+ * @module  Attribute
+ * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ */
+KISSY.add('attribute', function(S, undefined) {
+
+    /**
+     * Attribute provides the implementation for any object
+     * to deal with its attribute in aop ways.
+     */
+    function Attribute() {
+        /**
+         * attribute meta information
+         {
+            attrName: {
+                getter: function,
+                setter: function,
+                value: v, // default value
+                valueFn: function
+            }
+         }
+         */
+        //host.__attrs = { };
+
+        /**
+         * attribute value
+         {
+            attrName: attrVal
+         }
+         */
+        //host.__attrVals = { };
+    }
+
+    S.augment(Attribute, {
+
+        __initAttrs: function() {
+            var host = this;
+            if(host.__attrs) return;
+
+            host.__attrs = { };
+            host.__attrVals = { };
+        },
+
+        /**
+         * Adds an attribute with the provided configuration to the host object.
+         * The config supports the following properties:
+         * {
+         *     value: 'the default value',
+         *     valueFn: function
+         *     setter: function
+         *     getter: function
+         * }
+         */
+        addAttr: function(name, attrConfig) {
+            var host = this;
+
+            host.__initAttrs();
+            host.__attrs[name] = S.clone(attrConfig || { });
+
+            return host;
+        },
+
+        /**
+         * Configures a group of attributes, and sets initial values.
+         * @param attrConfigs {Object} An object with attribute name/configuration pairs.
+         * @param values {Object} An object with attribute name/value pairs, defining the initial values to apply.
+         *        Values defined in the cfgs argument will be over-written by values in this argument.
+         */
+        addAttrs: function(attrConfigs, values) {
+            var host = this;
+
+            S.each(attrConfigs, function(attrConfig, name) {
+                if (name in values) {
+                    attrConfig.value = values[name];
+                }
+                host.addAttr(name, attrConfig);
+            });
+
+            return host;
+        },
+
+        /**
+         * Checks if the given attribute has been added to the host.
+         */
+        hasAttr: function(name) {
+            return name && (name in (this.__attrs || { }));
+        },
+
+        /**
+         * Removes an attribute from the host object.
+         */
+        removeAttr: function(name) {
+            var host = this;
+
+            if(host.hasAttr(name)) {
+                delete host.__attrs.name;
+                delete host.__attrVals.name;
+            }
+
+            return host;
+        },
+
+        /**
+         * Sets the value of an attribute.
+         */
+        set: function (name, value) {
+            var host = this,
+                prevVal = host.get(name);
+
+            // if no change, just return
+            if (prevVal === value) return;
+
+            // check before event
+            if (false === host.__fireAttrChange('before', name, prevVal, value)) return;
+
+            // set it
+            host.__set(name, value);
+
+            // fire after event
+            host.__fireAttrChange('after', name, prevVal, host.__attrVals[name]);
+
+            return host;
+        },
+
+        __fireAttrChange: function(when, name, prevVal, newVal) {
+            return this.fire(when + capitalFirst(name) + 'Change', {
+                attrName: name,
+                prevVal: prevVal,
+                newVal: newVal
+            });
+        },
+
+        /**
+         * internal use, no event involved, just set.
+         */
+        __set: function (name, value) {
+            var host = this,
+                setValue,
+                attrConfig = host.__attrs[name],
+                setter = attrConfig && attrConfig['setter'];
+
+            // if setter has effect
+            if (setter) setValue = setter.call(host, value);
+            if (setValue !== undefined) value = setValue;
+
+            // finally set
+            host.__attrVals[name] = value;
+        },
+
+        /**
+         * Gets the current value of the attribute.
+         */
+        get: function (name) {
+            var host = this, attrConfig, getter, ret;
+
+            host.__initAttrs();
+            attrConfig = host.__attrs[name];
+            getter = attrConfig && attrConfig['getter'];
+
+            // get user-set value or default value
+            ret = name in host.__attrVals ?
+                host.__attrVals[name] :
+                host.__getDefAttrVal(name);
+
+            // invoke getter for this attribute
+            if (getter) ret = getter.call(host, ret);
+
+            return ret;
+        },
+
+        __getDefAttrVal: function(name) {
+            var host = this,
+                attrConfig = host.__attrs[name],
+                valFn, val;
+
+            if (!attrConfig) return;
+
+            if ((valFn = attrConfig.valueFn)) {
+                val = valFn.call(host);
+                if (val !== undefined) {
+                    attrConfig.value = val;
+                }
+                delete attrConfig.valueFn;
+            }
+
+            return attrConfig.value;
+        },
+
+        /**
+         * Resets the value of an attribute.
+         */
+        reset: function (name) {
+            var host = this;
+
+            if (host.hasAttr(name)) {
+                // if attribute does not have default value, then set to undefined.
+                return host.set(name, host.__getDefAttrVal(name));
+            }
+
+            // reset all
+            for (name in host.__attrs) {
+                if (host.hasAttr(name)) {
+                    host.reset(name);
+                }
+            }
+            
+            return host;
+        }
+    });
+
+    S.Attribute = Attribute;
+
+    function capitalFirst(s) {
+        s = s + '';
+        return s.charAt(0).toUpperCase() + s.substring(1);
+    }
+});
+/*
+Copyright 2010, KISSY UI Library v1.1.5
+MIT Licensed
+build time: Oct 15 17:13
+*/
+/**
+ * @module  Base
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('base', function (S) {
+
+    /*
+     * Base for class-based component
+     */
+    function Base(config) {
+        initATTRS(this, config);
+    }
+
+    /**
+     * init attr using constructors ATTRS meta info
+     */
+    function initATTRS(host, config) {
+        var c = host.constructor, attr, attrs, ATTRS = 'ATTRS';
+
+        // define
+        while (c) {
+            if ((attrs = c[ATTRS])) {
+                for (attr in attrs) {
+                    // 子类上的 ATTRS 配置优先
+                    if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
+                        host.addAttr(attr, attrs[attr]);
+                    }
+                }
+            }
+            c = c.superclass ? c.superclass.constructor : null;
+        }
+
+        // initial
+        if (config) {
+            for (attr in config) {
+                if (config.hasOwnProperty(attr))
+                    host.__set(attr, config[attr]);
+            }
+        }
+    }
+
+    S.augment(Base, S.EventTarget, S.Attribute);
+    S.Base = Base;
+});
 
 KISSY.add('core');
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 18:00
+build time: Oct 15 14:07
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -6611,7 +6885,7 @@ KISSY.add('sizzle', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 17:59
+build time: Oct 15 14:07
 */
 /**
  * 数据延迟加载组件
@@ -7094,7 +7368,7 @@ KISSY.add('datalazyload', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 18:00
+build time: Oct 19 16:37
 */
 /**
  * @module   Flash 全局静态类
@@ -7304,7 +7578,6 @@ KISSY.add('flash-embed', function(S) {
             config = S.merge(defaultConifg, config);
             config.attrs = S.merge(defaultConifg.attrs, config.attrs);
 
-
             // 1. target 元素未找到
             if (!(target = S.get(target))) {
                 self._callback(callback, TARGET_NOT_FOUND);
@@ -7313,9 +7586,7 @@ KISSY.add('flash-embed', function(S) {
 
             // 保存 id, 没有则自动生成
             if (!target.id) target.id = S.guid(PREFIX);
-            //id = config.attrs.id = ID_PRE + target.id; 	//bugfix:	会改变DOM已被命名的ID 造成失效   longzang 2010/8/4
 			id = config.attrs.id = target.id;
-			
 
             // 2. flash 插件没有安装
             if (!UA.fpv()) {
@@ -7413,7 +7684,7 @@ KISSY.add('flash-embed', function(S) {
                 target.parentNode.replaceChild(o, target);
             }
 			
-			target = S.get("#"+target.id);				// bugfix:  重新获取对象,否则还是老对象. 如 入口为  div 如果不重新获取则仍然是 div	longzang | 2010/8/9
+			target = S.get(ID_PRE + target.id); // bugfix: 重新获取对象,否则还是老对象. 如 入口为 div 如果不重新获取则仍然是 div	longzang | 2010/8/9
 			
 			
 			Flash._register(target, config, callback);
@@ -7471,7 +7742,7 @@ KISSY.add('flash-embed', function(S) {
          * 一般用于配置选项 key 的标准化
          */
         _normalize: function(obj) {
-            var key, val, prop, ret = obj;
+            var key, val, prop, ret = obj || { };
 
             if (S.isPlainObject(obj)) {
                 ret = {};
@@ -7518,7 +7789,7 @@ KISSY.add('flash-embed', function(S) {
                 arr.push(prop + '=' + data);
             }
 			ret = arr.join('&');
-            return ret.replace(/\"/g,"'"); //bugfix: 将 " 替换为 ',以免取值产生问题。  但注意自转换为JSON时，需要进行还原处理。  
+            return ret.replace(/"/g,"'"); //bugfix: 将 " 替换为 ',以免取值产生问题。  但注意自转换为JSON时，需要进行还原处理。
         }
     });
 
@@ -7551,7 +7822,7 @@ KISSY.add('flash-embed', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 18:00
+build time: Oct 15 14:08
 */
 /**
  * Switchable
@@ -8652,7 +8923,7 @@ KISSY.add('accordion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 18:00
+build time: Oct 15 14:07
 */
 /**
  * KISSY Mask
@@ -9358,7 +9629,7 @@ KISSY.add('autorender', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 18:00
+build time: Oct 15 14:08
 */
 /**
  * 提示补全组件
@@ -10449,14 +10720,13 @@ KISSY.add('suggest', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 18:00
+build time: Oct 15 14:26
 */
 /**
  * 图片放大效果 ImageZoom
  * @creater  玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('imagezoom', function(S, undefined) {
-
     var doc = document,
         DOM = S.DOM, Event = S.Event,
 
@@ -10469,10 +10739,10 @@ KISSY.add('imagezoom', function(S, undefined) {
         DIV = '<div>', IMG = '<img>',
         STANDARD = 'standard',
         RE_IMG_SRC = /^.+\.(?:jpg|png|gif)$/i,
-        round = Math.round,
+        round = Math.round, min = Math.min, max = Math.max,
         AUTO = 'auto', LOAD = 'load',
         POSITION = ['top', 'right', 'bottom', 'left', 'inner'],
-        SRC = 'src', MOUSEMOVE = 'mousemove',
+        SRC = 'src', MOUSEMOVE = 'mousemove', PARENT = 'parent',
 
         /**
          * 默认设置
@@ -10483,12 +10753,13 @@ KISSY.add('imagezoom', function(S, undefined) {
             bigImageSrc: '',           // 大图路径, 默认为 '', 会取触点上的 data-ks-imagezoom 属性值.
             bigImageSize: [800, 800],  // 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值.
             position: 'right',         // 大图显示位置
+            //alignTo: undefined,      // 大图显示位置相对于哪个元素, 默认不设置, 相对于小图位置, 如果取 PARENT, 为小图的 offsetParent 元素
             offset: 10,                // 大图位置的偏移量. 单一值或 [x, y]
             preload: true,             // 是否预加载大图
-            timeoutMsg: '图片暂不可用',
 
             zoomSize: [AUTO, AUTO],    // 放大区域宽高
             lensIcon: true,            // 是否显示放大镜提示图标
+            hasZoom: true,             // 初始是否显示放大效果
 
             zoomCls: ''                // 放大区域额外样式
         };
@@ -10506,7 +10777,7 @@ KISSY.add('imagezoom', function(S, undefined) {
      *   - this.viewer      大图显示区域        @type HTMLElement
      */
     function ImageZoom(image, config) {
-        var self = this, data;
+        var self = this, data, rel;
 
         if (!(self instanceof ImageZoom)) {
             return new ImageZoom(image, config);
@@ -10530,81 +10801,86 @@ KISSY.add('imagezoom', function(S, undefined) {
             new Image().src = config.bigImageSrc;
         }
 
+        // 是否inner效果
         self._isInner = config.position === POSITION[4];
 
-        // 首次加载小图从缓存读取或在绑定load事件之前已经加载完小图时, 不显示 loading (ff 下诡异)
-        !image.complete && self._startLoading();
-        // 保证非首张小图切换时也能正确隐藏, 不管是否来自缓存
-        Event.on(image, LOAD, function(){
-            self._finishLoading();
-        });
+        // 参照对齐元素
+        if (config.alignTo) {
+            if (config.alignTo === PARENT) {
+                rel = image.offsetParent;
+            } else {
+                rel = S.get(config.alignTo);
+            }
+            if (rel) self._alignToRegion = S.merge(DOM.offset(rel), getSize(rel));
+        }
 
+        // 大图高宽, 默认使用配置信息中, 当加载大图之后, 更新该值;
+        self._bigImageSize = { width: config.bigImageSize[0], height: config.bigImageSize[1] };
+
+        // 首次加载小图从缓存读取或在绑定load事件之前已经加载完小图时, 不显示 loading
+        config.hasZoom && !image.complete && self._startLoading();
+
+        self._firstInit = true;
         // 在小图加载完毕时初始化
         imgOnLoad(image, function() {
-            if (!self._imgRegion) self._init();
+            if (!config.hasZoom) return;
+            self._init();
+            self._finishLoading();
         });
     }
 
     S.augment(ImageZoom, S.EventTarget, {
         _init: function() {
             this._renderUI();
-            this._bindUI();
+            if (this._firstInit) this._bindUI();
+            this._firstInit = false;
         },
 
         _renderUI: function() {
             var self = this, config = self.config,
                 image = self.image;
 
-            // 小图宽高及位置, 用到多次, 先保存起来
+            // 小图宽高及位置, 用到多次, 先保存起来; 更换小图时需要更新该值
             self._imgRegion = S.merge(DOM.offset(image), getSize(image));
-            
-            // 大图高宽, 默认使用配置信息中, 当加载大图之后, 更新该值
-            self._bigImageSize = { width: config.bigImageSize[0], height: config.bigImageSize[1] };
-
-            // 放大镜图标
-            if (config.lensIcon) self._renderIcon();
+            // 放大镜图标, 更改小图时不重新更改此图标位置
+            if (config.lensIcon && !self.lensIcon) self._renderIcon();
         },
 
         _renderIcon: function() {
             var self = this,
-                region = self._imgRegion,
-                icon;
+                region = self._alignToRegion || self._imgRegion, icon;
 
             icon = createAbsElem(CLS_ICON);
             doc.body.appendChild(icon);
+            self.lensIcon = icon;
+
             DOM.offset(icon, {
                 left: region.left + region.width - DOM.width(icon),
                 top: region.top + region.height - DOM.height(icon)
             });
-            self.lensIcon = icon;
         },
 
         _bindUI: function() {
             var self = this, timer, config = self.config;
 
-            Event.on(self.image, 'mouseenter', function() {
-                Event.on(doc.body, MOUSEMOVE, self._getEv, self);
+            Event.on(self.image, 'mouseenter', function(ev) {
+                if (!config.hasZoom) return;
+
+                self._setEv(ev);
+                Event.on(doc.body, MOUSEMOVE, self._setEv, self);
 
                 timer = S.later(function() {
-                    var bigImageSrc = self.config.bigImageSrc,
-                        bigImage = self.bigImage;
-
                     if (!self.viewer) {
                         self._createViewer();
-                    }
-                    else if (self._cacheBigImageSrc && (self._cacheBigImageSrc !== bigImageSrc)) {
-                        // 首张图片标志, 用于判断是否需要更新 viewer 位置
-                        self._partical = true;
-                        DOM.attr(bigImage, SRC, bigImageSrc);
-                        self._cacheBigImageSrc = bigImageSrc;
-                        if (self._isInner) DOM.attr(self._bigImageCopy, SRC, DOM.attr(self.image, SRC));
                     }
                     self.show();
                 }, 300); // 300 是感觉值，不立刻触发，同时要尽量让动画流畅
             });
 
             Event.on(self.image, 'mouseleave', function() {
-                Event.remove(doc.body, MOUSEMOVE, self._getEv);
+                if (!config.hasZoom) return;
+
+                Event.remove(doc.body, MOUSEMOVE, self._setEv);
 
                 if (timer) {
                     timer.cancel();
@@ -10613,7 +10889,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             });
         },
 
-        _getEv: function(ev) {
+        _setEv: function(ev) {
             this._ev = ev;
         },
 
@@ -10647,8 +10923,11 @@ KISSY.add('imagezoom', function(S, undefined) {
             // 大图加载完毕后更新显示区域
             imgOnLoad(bigImage, function() {
                 if (self._isInner) return;
+                
                 self._bigImageSize = getSize(bigImage);
                 self._setViewerRegion();
+                // 加载完立刻定位到鼠标位置
+                self._onMouseMove();
             });
         },
 
@@ -10665,6 +10944,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             var self = this, config = self.config,
                 v = self.viewer,
                 region = self._imgRegion,
+                alignToRegion = self._alignToRegion || region,
                 zoomSize = config.zoomSize,
                 left, top, lensWidth, lensHeight, width, height,
                 bigImageSize = self._bigImageSize;
@@ -10675,48 +10955,42 @@ KISSY.add('imagezoom', function(S, undefined) {
             if (height === AUTO) height = region.height;
 
             // 计算镜片宽高, vH / bigImageH = lensH / imageH
-            lensWidth = round( width * region.width / bigImageSize.width);
-            lensHeight = round( height * region.height / bigImageSize.height);
+            lensWidth = min(round( width * region.width / bigImageSize.width), region.width);
+            lensHeight = min(round( height * region.height / bigImageSize.height), region.height);
             self._lensSize = [lensWidth, lensHeight];
 
-            if (!self._isInner) {
-                setWidthHeight(self.lens, lensWidth, lensHeight);
-                DOM.offset(self.lens, { left: round( region.left + ( region.width - lensWidth ) / 2 ),
-                                        top: round( region.top + ( region.height - lensHeight ) / 2 ) });
+            if (!self._isInner) setWidthHeight(self.lens, lensWidth, lensHeight);
+
+            // 计算不同 position
+            left = alignToRegion.left + (config.offset[0] || 0);
+            top = alignToRegion.top + (config.offset[1] || 0);
+            switch (config.position) {
+                // top
+                case POSITION[0]:
+                    top -= height;
+                    break;
+                // right
+                case POSITION[1]:
+                    left += alignToRegion.width;
+                    break;
+                // bottom
+                case POSITION[2]:
+                    top += alignToRegion.height;
+                    break;
+                // left
+                case POSITION[3]:
+                    left -= width;
+                    break;
+                // inner
+                case POSITION[4]:
+                    width = region.width;
+                    height = region.height;
+                    DOM.css(v, 'cursor', 'move');
+                    break;
             }
 
-            if (!self._partical) {
-                // 计算不同 position
-                left = region.left + (config.offset[0] || 0);
-                top = region.top + (config.offset[1] || 0);
-                switch (config.position) {
-                    // top
-                    case POSITION[0]:
-                        top -= height;
-                        break;
-                    // right
-                    case POSITION[1]:
-                        left += region.width;
-                        break;
-                    // bottom
-                    case POSITION[2]:
-                        top += region.height;
-                        break;
-                    // left
-                    case POSITION[3]:
-                        left -= width;
-                        break;
-                    // inner
-                    case POSITION[4]:
-                        width = region.width;
-                        height = region.height;
-                        DOM.css(v, 'cursor', 'move');
-                        break;
-                }
-
-                DOM.offset(v, { left: left, top: top });
-                setWidthHeight(v, width, height);
-            }
+            DOM.offset(v, { left: left, top: top });
+            setWidthHeight(v, width, height);
         },
 
         _onMouseMove: function() {
@@ -10792,8 +11066,8 @@ KISSY.add('imagezoom', function(S, undefined) {
                 setWidthHeight(img, tmpW, tmpH);
                 // 定位到鼠标点
                 DOM.css(img, {
-                    marginLeft: Math.max(Math.min(round( rw/2 - x*tmpW/rw ), 0), rw - tmpW),
-                    marginTop: Math.max(Math.min(round( rh/2 - y*tmpH/rh ), 0), rh - tmpH)
+                    marginLeft: max(min(round( rw/2 - x*tmpW/rw ), 0), rw - tmpW),
+                    marginTop: max(min(round( rh/2 - y*tmpH/rh ), 0), rh - tmpH)
                 });
 
                 if ( ++t > times) {
@@ -10807,7 +11081,8 @@ KISSY.add('imagezoom', function(S, undefined) {
 
         show: function() {
             var self = this,
-                lens = self.lens, viewer = self.viewer;
+                lens = self.lens, viewer = self.viewer,
+                bigImageSrc = self.config.bigImageSrc;
 
             DOM.hide(self.lensIcon);
             if (self._isInner) {
@@ -10816,6 +11091,13 @@ KISSY.add('imagezoom', function(S, undefined) {
             } else {
                 DOM.show([lens, viewer]);
                 self._onMouseMove();
+            }
+
+            // 先 show 再替换 src, 是因为需要更新 viewer 位置, 当 display:none 时, DOM.offset 错误
+            if (self._cacheBigImageSrc && (self._cacheBigImageSrc !== bigImageSrc)) {
+                DOM.attr(self.bigImage, SRC, bigImageSrc);
+                self._cacheBigImageSrc = bigImageSrc;
+                if (self._isInner) DOM.attr(self._bigImageCopy, SRC, DOM.attr(self.image, SRC));
             }
 
             Event.on(doc.body, MOUSEMOVE, self._onMouseMove, self);
@@ -10832,13 +11114,17 @@ KISSY.add('imagezoom', function(S, undefined) {
 
         // TODO: use ATTR
         set: function(name, val) {
-            var self = this;
+            var self = this, config = self.config;
 
             if (name === 'bigImageSrc') {
                 if (val && RE_IMG_SRC.test(val)) {
-                    self._cacheBigImageSrc = self.config.bigImageSrc;
-                    self.config.bigImageSrc = val;
+                    self._cacheBigImageSrc = config.bigImageSrc;
+                    config.bigImageSrc = val;
                 }
+            } else if (name === 'hasZoom') {
+                val = !!val;
+                config.hasZoom = val;
+                DOM[val ? 'show' : 'hide'](self.lensIcon);
             }
         },
 
@@ -10856,13 +11142,15 @@ KISSY.add('imagezoom', function(S, undefined) {
             self._startLoading();
         }
     });
-
+    
     S.ImageZoom = ImageZoom;
 
     function imgOnLoad(img, callback) {
-        if (checkImageReady(img)) callback();
-        // 图尚未加载完毕，等待 onload 时再初始化
-        else Event.on(img, LOAD, callback);
+        if (checkImageReady(img)) {
+            callback();
+        }
+        // 1) 图尚未加载完毕，等待 onload 时再初始化 2) 多图切换时需要绑定load事件来更新相关信息
+        Event.on(img, LOAD, callback);
     }
 
     function getSize(elem) {
@@ -10885,7 +11173,7 @@ KISSY.add('imagezoom', function(S, undefined) {
     }
 
     function createImage(s, p) {
-        var img = DOM.create(IMG, { SRC: s, 'style': 'position:absolute;top:0;left:0' });
+        var img = DOM.create('<img src="'+s+'" style="position:absolute;top:0;left:0" >');
         if (p) p.appendChild(img);
         return img;
     }
@@ -10946,7 +11234,7 @@ KISSY.add('autorender', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Sep 30 17:59
+build time: Oct 15 14:07
 */
 /*
  * Date Format 1.2.3

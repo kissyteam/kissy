@@ -70,7 +70,7 @@ pre {
                     <br />* 鼠标移至上方显示放大镜, 点击, 以鼠标点击的位置为轴心放大图片, 鼠标变成手型, 单击鼠标不放可拖动大图. 只能单独显示小图或者大图, 没有整体和局部的对比;
                     <br />* 用户增加了点击鼠标拖动的操作;
                     <br />* 在大图上移动, 用户鼠标的移动范围要大些, 影响效率;
-                    <br />* 用户不能直接定位到自己想看的位置.
+                    <br />* 用户能直接定位到自己想看的位置.
                     <br />* 小图放大到大图, 过渡很自然. 
                     <br /><a href="http://store.apple.com/us/product/IPAD_CASE?mco=MTc0MjU1OTM"><img src="assets/apple.png" style="height: 200px;"/></a>
                 </p>
@@ -107,7 +107,7 @@ pre {
                 <pre>
 4. AnythingZoomer: <a href="http://css-tricks.com/examples/AnythingZoomer/image.php">http://css-tricks.com/examples/AnythingZoomer/image.php</a>
     - 基于 jQuery 类库，大小 1.2k
-    - 显示类型只有跟随模式；
+    - 显示类型只有跟随模式;
     - 强大之处在于，该组件可以放大任何区域，比如文本等等，不愧为 anything zoomer!
     
 5. CloudZoom: <a href="http://www.professorcloud.com/mainsite/cloud-zoom.htm">http://www.professorcloud.com/mainsite/cloud-zoom.htm</a>
@@ -131,10 +131,10 @@ pre {
    无 lens 的标准模式，在在线应用中也很少看到。因为有 lens 的感觉更佳，组件实现时，可以不考虑无 lens 的标准模式。
    综上考虑，KISSY 将实现以下两种显示类型：
     - 标准模式 standard  显示 lens
-    - 跟随模式 follow    分 普通跟随模式 和 Zazzle 的跟随模式，具体参数实现时再定
+    - 跟随模式 follow 分 <del>普通跟随模式</del> 和 Zazzle 的跟随模式，具体参数实现时再定
 
 2. 大图的预加载功能。基本是标配，KISSY 可以进一步做到：
-    - 仿照 Zazzle 的效果，在大图加载过程中显示进度条，以及相关提示文字
+    - 仿照 Zazzle 的效果，<del>在大图加载过程中显示进度条，以及相关提示文字</del>, 目前已添加 loading 样式
 
 3. 放大系数、滚轮缩放、拖曳裁剪等功能，对用户用途不大，不支持
 
@@ -175,20 +175,18 @@ pre {
                 <p>鼠标移动时，小区域映射到大区域</p>
                 <p><img src="assets/m3.png" style="height:400px;" /></p>
             </section>
-        </div>      
-        
+        </div>
+
         <div class="slide">
+            <header> Zazzle 放大渐变效果分析</header>
             <section>
-                <p>一些细节</p>
-                <p>- 边框: 扣除上下左右边框宽度</p>
-                <p>- 跟随模式下：<br />
-                    * 1) 镜片边界超过小图宽度有镜片宽度的一半； <br />
-                    * 2) 显示区域应该是以鼠标为中心的，所以大图偏移应加镜片宽度的一半。
-                </p>
-                <p>- 大小图尺寸：当小图加载完才继续初始化。大图加载设置定时器，没有加载完成前，使用 config 中设定的大图尺寸大小；当加载完之后重新计算显示区域大小；如果超时就给出无法加载提示。</p>
+                <p>- 小图至大图缩放具有动画效果, 且在大图未加载完成时, 使用小图进行放大. 由此需要在大图加载完毕时刻, 替换原来的小图.</p>
+                <p>- 运动初始, 图片大小为小图大小, 终态为 config 中设置的尺寸, 不使用真实大图尺寸, 是因为在动画过程中会动态设置宽高, 即使大图加载完, 也无法获取到正确的大图尺寸.</p>
+                <p>- 放大的终态, 鼠标触发时的中心点应该定位到放大区域的中心位置.</p>
+                <p>- 运动过程中, 不响应鼠标移动事件.</p>
             </section>
-        </div>      
-        
+        </div>
+
         <div class="slide">
             <header>五. Public API</header>
             <section>
@@ -196,15 +194,15 @@ pre {
 config:
     type: STANDARD,            // 显示类型
 
-    bigImageSrc: '',           // 大图路径，为 '' 时，会取 data-src
-    bigImageSize: [900, 900],  // 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算,
-                               // 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值.
-    position: 'right',         // 大图显示位置。仅支持 right, 不开放其它值
-    offset: 10,                // 大图位置的偏移量。单一值或 [x, y]
+    bigImageSrc: '',           // 大图路径, 默认为 '', 会取触点上的 data-ks-imagezoom 属性值.
+    bigImageSize: [800, 800],  // 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值.
+    position: 'right',         // 大图显示位置, 可取 top, right, bottom, left, inner
+    //alignTo: undefined,      // 大图显示位置相对于哪个元素, 默认不设置, 相对于小图位置, 如果取 PARENT, 为小图的 offsetParent 元素
+    offset: 10,                // 大图位置的偏移量. 单一值或 [x, y]
     preload: true,             // 是否预加载大图
-    timeout: 120,              // 等待大图加载的最大时间, 单位: s  默认 2 min
-    timeoutMsg: '图片暂不可用',
 
+    hasZoom: true              // 初始时是否显示放大效果. 默认为 true, 显示放大. 在多图切换时, 可重设该值来开启或关闭显示放大功能.
+                               // 如果多个图都不需要放大显示, ImageZoom 不会生成任何东西.
     zoomSize: [AUTO, AUTO],    // 放大区域宽高
     lensIcon: true,            // 是否显示放大镜提示图标
 
@@ -215,23 +213,58 @@ Member:
     lens        // 镜片
     lensIcon    // 放大镜图标
     bigImage    // 大图
+    viewer      // 大图显示区域
 Method:
     show()      // 显示
     hide()      // 隐藏
-    set(name, val) // 重新设置某些值
+    set(name, val)      // 重新设置某些值
+        - bigImageSrc   // 重设大图 url
+        - hasZoom       // 重设 hasZoom 标志
+    changeImageSrc // 设置小图 src
 </pre>
             </section>
         </div>
 
         <div class="slide">
+            <header>基本使用</header>
             <section>
-                <p>基本使用</p>
                 <pre>
-1) 出现镜片, 大图位置在小图右边, 如宝贝详情页上:
+1) 出现镜片, 大图位置默认在小图右边:
         new S.ImageZoom("#standard", {
                             bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg"
                         });
+
+2) 多图切换时, 大图 src 的更改通过 m.set('bigImageSrc', data); 小图 src 通过 changeImageSrc ,
+   也可直接在外部更改小图 src 值, 两者区别仅在是否处理 ks-imagezoom-loading 状态.
+        var m = new S.ImageZoom("#multi");
+        S.Event.on("#imgList img", 'click', function() {
+            var data = S.DOM.attr(this, 'data-ks-imagezoom');
+            m.changeImageSrc(data+'_310x310.jpg');
+            //S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
+            m.set('bigImageSrc', data);
+        });
+
+3) position 为 inner 时, 需要给定 bigImageSize, 且该值固定, 不会随着大图加载完毕而更新;
+        new S.ImageZoom("#innerGIF", {
+            position: 'inner',
+            bigImageSize: [512, 512],
+            offset: 0,
+            lensIcon: false
+        });
+    另外, inner 方式下, 对齐元素为原小图, 设置 alignTo 无效.
                 </pre>
+            </section>
+        </div>
+
+        <div class="slide">
+            <header>默认样式名称列表</header>
+            <section>
+<pre>
+    ks-imagezoom-viewer : 放大区域样式, 注意: config 中的 zoomCls 附加到放大区域容器上
+    ks-imagezoom-lens : 镜片样式
+    ks-imagezoom-icon : 放大镜图标样式
+    ks-imagezoom-loading : 放大区域等待状态样式
+</pre>
             </section>
         </div>
 

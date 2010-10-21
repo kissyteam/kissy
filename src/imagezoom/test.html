@@ -47,17 +47,9 @@
         overflow: hidden;
         text-align: center;
         z-index: 999;
-        background: #fff url(assets/loading.gif) no-repeat center center;
     }
-    #loading {
-        position: absolute;
-        display: none;
-        top: 0;
-        right: 0;
-        width: 16px;
-        height: 16px;
-        background: transparent url(assets/loading.gif) no-repeat center center;
-        z-index: 9999;
+    .ks-imagezoom-loading {
+        background: #fff url(assets/loading.gif) no-repeat center center;
     }
 
 </style>
@@ -86,7 +78,6 @@
 <h2>多图加载</h2>
 <div class="demo">
     <a href="#"><img id="multi" data-ks-imagezoom="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/></a>
-    <div id="loading"></div>
 </div>
 <ul id="imgList">
     <li>
@@ -123,7 +114,7 @@
     </li>
 </ul>
 
-<h2>GIF</h2>
+<!--<h2>GIF</h2>
 <div>
     <img id="innerGIF" src="http://t1.gstatic.com/images?q=tbn:ANd9GcQ2vnXhnmkMfCAIxmWCk30RMkCEQzCuZqiBW2A31f0IlnpTKrk&t=1&usg=__SgHRt2YpoMzLSom2RwryLZ9h-b0=" data-ks-imagezoom="http://spiff.rit.edu/classes/phys235/badrock/kt_impact.gif" />
 </div>
@@ -132,18 +123,16 @@
 <div>
     <img id="innerPNG" src="http://t2.gstatic.com/images?q=tbn:ANd9GcRh4hSB5hJrHqBhqg_qMbxWIaFHAIrcHl_5Eh3hkWIx67ARSUs&t=1&usg=__qWOTgiUVJAxh66euWNsLiXm_NYw=" data-ks-imagezoom="http://d.lanrentuku.com/down/png/0904/Mario_Galaxy/Mario_Galaxy_002.png" />
 </div>
+-->
 <script>
     KISSY.ready(function(S) {
 
         new S.ImageZoom("#standard", {
-                            bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg"
+                            bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
+                            alignTo: S.DOM.parent('#bad-small')
                         });
 
-        var m = new S.ImageZoom("#multi", {
-            position: 'inner',
-            offset: 0,
-            loader: S.DOM.get('#loading')
-        });
+        var m = new S.ImageZoom("#multi");
         S.Event.on("#imgList img", 'click', function() {
             var data = S.DOM.attr(this, 'data-ks-imagezoom');
             m.changeImageSrc(data+'_310x310.jpg');
@@ -159,7 +148,7 @@
             zoomCls: 'inner'
         });
 
-        new S.ImageZoom("#innerGIF", {
+        /*new S.ImageZoom("#innerGIF", {
             position: 'inner',
             bigImageSize: [512, 512],
             offset: 0,
@@ -170,7 +159,7 @@
             bigImageSize: [650, 487],
             offset: 0,
             lensIcon: false
-        });
+        });*/
 
 
         S.ImageZoom.autoRender();
@@ -186,9 +175,10 @@
         });
 
     });
-
 </script>
 <p class="code-switch">显示源码</p>
+
+
 
 <script>
     (function() {
