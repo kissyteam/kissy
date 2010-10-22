@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>base - KISSY Docs</title>
+<link rel="stylesheet" href="../assets/base-min.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body class="w866">
+<div id="header">
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <p class="rel-nav">
+        <a href="http://github.com/kissyteam/kissy/blob/master/src/base/">src files</a>
+    </p>
+</div>
+<div id="content" class="layout grid-s232m0">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="section summary">
+                <p>KISSY 的 base 模块提供给我们一个基类, 整合了 attribute 功能, 让继承 base 的子类自动具有 attribute 的功能. </p>
+                <p>属性的使用见 <a href="../attribute/index.html">attribute</a>. 下面给出一个使用 base 的基本示例.</p>
+            </div>
+
+            <div class="section">
+                <h3 id="demo">基本使用</h3>
+                <div class="member">
+                    <h4><a name="Constructor">new S.Base( config )</a> </h4>
+                    <div class="detail">
+                        <p>继承自 Base 的子类. </p>
+                        <p class="notice"> 使用 S.Base 时, 虽然你还是可以通过 <a href="../attribute/index.html#method_addAttr">addAttr</a>
+                            添加支持需要支持 setter/getter 的属性, 但最好还是把这些属性和它们的配置定义在类的 ATTRS 成员中.</p>
+                   </div>
+<pre class="example-code"><code>
+KISSY.ready(function(S) {
+    // 自定义类
+    function myClass(config) {
+        myClass.superclass.constructor.call(this, config);
+    }
+
+    // 继承 Base
+    S.extend(myClass, S.Base);
+
+    // 增加属性
+    myClass.ATTRS = {
+        size: {
+            value: 0,
+            setter: function(v) {
+                if (S.isString(v) && v.indexOf('inch')!== -1) {
+                    return parseFloat(v)*10/3;
+                }
+                return parseFloat(v);
+            },
+            getter: function(v) {
+                return v;
+            }
+        }
+    };
+
+    var cls = new myClass();
+
+    // 绑定事件
+    cls.on('afterSizeChange', function(ev){
+        console.log('change '+ ev.attrName + ': '+ev.prevVal+' --> '+ev.newVal);
+    });
+
+    // 设置属性
+    cls.set('size', 20);
+
+    // 获取属性
+    alert(cls.get('size'));
+
+    // 重置
+    cls.reset();
+    alert(cls.get('size'));
+});
+</code></pre>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-sub">
+        <div class="sub-wrap">
+            <div class="loc"><a href="../index.html">home</a> &rsaquo; base :</div>
+            <div class="toc">
+                <h3>modules</h3>
+                <ul>
+                    <li><a href="index.html#demo">示例</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <p class="copyright">&copy; 2009 - 2029 KISSY UI LIBRARY</p>
+</div>
+</body>
+</html>
