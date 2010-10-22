@@ -1,6 +1,6 @@
 /**
  * @module  Base
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('base', function (S) {
 
