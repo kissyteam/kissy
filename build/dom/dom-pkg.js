@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 22 20:51
+build time: Oct 22 21:17
 */
 /**
  * @module  dom
@@ -659,10 +659,11 @@ KISSY.add('dom-class', function(S, undefined) {
 KISSY.add('dom-attr', function(S, undefined) {
 
     var UA = S.UA,
-        doc = document,
-        oldIE = UA.ie && ((doc['documentMode'] || 0) < 8), // ie < 8
 
+        doc = document,
         docElement = doc.documentElement,
+        oldIE = !docElement.hasAttribute,
+
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
         SELECT = 'select',
         EMPTY = '',
@@ -1910,7 +1911,8 @@ KISSY.add('dom-create', function(S, undefined) {
     }
 
     // only for gecko and ie
-    if (UA.gecko || ie) {
+    // 2010-10-22: 发现 chrome 也与 gecko 的处理一致了
+    if (ie || UA.gecko || UA.webkit) {
         // 定义 creators, 处理浏览器兼容
         var creators = DOM._creators,
             create = DOM.create,
