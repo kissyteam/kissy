@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 15 14:07
+build time: Oct 22 20:51
 */
 /**
  * @module  dom
@@ -659,10 +659,9 @@ KISSY.add('dom-class', function(S, undefined) {
 KISSY.add('dom-attr', function(S, undefined) {
 
     var UA = S.UA,
-        ie = UA.ie,
-        oldIE = ie && ie < 8,
-
         doc = document,
+        oldIE = UA.ie && ((doc['documentMode'] || 0) < 8), // ie < 8
+
         docElement = doc.documentElement,
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
         SELECT = 'select',
