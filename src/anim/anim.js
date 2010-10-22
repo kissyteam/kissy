@@ -57,7 +57,10 @@ KISSY.add('anim', function(S, undefined) {
          * 也可以是 { width: '200px', color: '#ccc' } 对象形式
          */
         if (S.isPlainObject(style)) {
-            style = S.param(style, ';').replace(/=/g, ':');
+            style = S.param(style, ';')
+                .replace(/=/g, ':')
+                .replace(/%23/g, '#') // 还原颜色值中的 #
+                .replace(/([A-Z])/g, '-$1').toLowerCase(); // backgroundColor => background-color
         }
         self.props = normalize(style);
         self.targetStyle = style;
