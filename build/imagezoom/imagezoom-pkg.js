@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 15 14:26
+build time: Oct 27 13:07
 */
 /**
  * 图片放大效果 ImageZoom
@@ -86,7 +86,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         self._isInner = config.position === POSITION[4];
 
         // 参照对齐元素
-        if (config.alignTo) {
+        if (!self._isInner && config.alignTo) {
             if (config.alignTo === PARENT) {
                 rel = image.offsetParent;
             } else {
@@ -124,17 +124,19 @@ KISSY.add('imagezoom', function(S, undefined) {
             // 小图宽高及位置, 用到多次, 先保存起来; 更换小图时需要更新该值
             self._imgRegion = S.merge(DOM.offset(image), getSize(image));
             // 放大镜图标, 更改小图时不重新更改此图标位置
-            if (config.lensIcon && !self.lensIcon) self._renderIcon();
+            if (config.lensIcon) self._renderIcon();
         },
 
         _renderIcon: function() {
             var self = this,
-                region = self._alignToRegion || self._imgRegion, icon;
+                region = self._alignToRegion || self._imgRegion, icon = self.lensIcon;
 
-            icon = createAbsElem(CLS_ICON);
-            doc.body.appendChild(icon);
-            self.lensIcon = icon;
-
+            if (!icon) {
+                icon = createAbsElem(CLS_ICON);
+                doc.body.appendChild(icon);
+                self.lensIcon = icon;
+            }
+            // TODO: alignTo 设置之后是不需要再次更新此位置的.
             DOM.offset(icon, {
                 left: region.left + region.width - DOM.width(icon),
                 top: region.top + region.height - DOM.height(icon)
@@ -203,12 +205,10 @@ KISSY.add('imagezoom', function(S, undefined) {
 
             // 大图加载完毕后更新显示区域
             imgOnLoad(bigImage, function() {
-                if (self._isInner) return;
-                
-                self._bigImageSize = getSize(bigImage);
+                if (!self._isInner) self._bigImageSize = getSize(bigImage);
                 self._setViewerRegion();
                 // 加载完立刻定位到鼠标位置
-                self._onMouseMove();
+                if (!self._isInner) self._onMouseMove();
             });
         },
 
