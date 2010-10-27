@@ -5,11 +5,11 @@
 KISSY.add('dom-attr', function(S, undefined) {
 
     var UA = S.UA,
-        ie = UA.ie,
-        oldIE = ie && ie < 8,
 
         doc = document,
         docElement = doc.documentElement,
+        oldIE = !docElement.hasAttribute,
+
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
         SELECT = 'select',
         EMPTY = '',
