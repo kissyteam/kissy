@@ -127,10 +127,10 @@
 <script>
     KISSY.ready(function(S) {
 
-        new S.ImageZoom("#standard", {
-                            bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
+        var a = new S.ImageZoom("#standard", {
                             alignTo: S.DOM.parent('#bad-small')
                         });
+        a.set('bigImageSrc', "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg");
 
         var m = new S.ImageZoom("#multi");
         S.Event.on("#imgList img", 'click', function() {
@@ -141,12 +141,12 @@
         });
 
 
-        new S.ImageZoom("#inner", {
-            bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
+        var b = new S.ImageZoom("#inner", {
             position: 'inner',
             offset: 0,
             zoomCls: 'inner'
         });
+        b.set('bigImageSrc', "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg");
 
         /*new S.ImageZoom("#innerGIF", {
             position: 'inner',
@@ -165,13 +165,13 @@
         S.ImageZoom.autoRender();
 
         S.each(S.query("#imgGallery img"), function(img) {
-            new S.ImageZoom(img, {
-                bigImageSrc: S.DOM.attr(img, 'data-ks-imagezoom'),
+            var t = new S.ImageZoom(img, {
                 position: 'inner',
                 offset: 0,
                 zoomCls: 'inner',
                 lensIcon: false
             });
+            t.set('bigImageSrc', S.DOM.attr(img, 'data-ks-imagezoom'));
         });
 
     });

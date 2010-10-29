@@ -1,12 +1,13 @@
 /**
  * auto render
- * @creator  玉伯<lifesinger@gmail.com>
+ * @author  玉伯<lifesinger@gmail.com>
  */
 KISSY.add('autorender', function(S) {
 
     /**
      * 自动渲染 container 元素内的所有 ImageZoom 组件
      * 默认钩子：<div class="KS_Widget" data-widget-type="ImageZoom" data-widget-config="{...}">
+     * 
      */
     S.ImageZoom.autoRender = function(hook, container) {
         hook = '.' + (hook || 'KS_Widget');
