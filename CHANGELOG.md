@@ -16,6 +16,9 @@ History:
 
 ### v1.1.5 -> v1.x.x (2010/MM/DD)
 
+ - [+] 增加 dd 模块 乔花完善中...
+ - [+] 增加 ajax 模块 拔赤开发中...
+ - [+] kissy-gallery 增加 Sliding Label demo  乔花完善中...
  - [+] 单元测试框架改用 Jasmine 20% [tests](http://kissyteam.github.com/kissy/tests/)
  - [+] imagezoom 增加 Zazzle 内部放大效果 [demo](http://kissyui.com/blog/2010/10/imagezoom-inner/)
  - [*] anim 增加原生 CSS3 Transitions 支持 [原理](http://lifesinger.org/blog/2010/09/anim-using-css3-transitions/)

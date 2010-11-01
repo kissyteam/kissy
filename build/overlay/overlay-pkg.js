@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 27 13:07
+build time: Nov 1 17:48
 */
 /**
  * KISSY Mask
@@ -107,7 +107,8 @@ KISSY.add('mask', function(S, undefined) {
     }
 
     S.Mask = Mask;
-});
+
+}, { host: 'overlay' } );
 /**
  * KISSY Overlay
  * @creator   玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
