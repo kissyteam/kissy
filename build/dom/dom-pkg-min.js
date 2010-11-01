@@ -1,8 +1,3 @@
-/*
-Copyright 2010, KISSY UI Library v1.1.5
-MIT Licensed
-build time: Oct 22 21:17
-*/
 KISSY.add("dom",function(a,u){function r(l,p){return l&&l.nodeType===p}a.DOM={_isElementNode:function(l){return r(l,1)},_isKSNode:function(l){return a.Node&&r(l,a.Node.TYPE)},_getWin:function(l){return l&&"scrollTo"in l&&l.document?l:r(l,9)?l.defaultView||l.parentWindow:l===u?window:false},_nodeTypeIs:r}});
 KISSY.add("selector",function(a,u){function r(e,f){var d,b,c=[],m;f=l(f);if(a.isString(e)){e=a.trim(e);if(x.test(e)){if(b=p(e.slice(1),f))c=[b]}else if(d=n.exec(e)){b=d[1];m=d[2];d=d[3];if(f=b?p(b,f):f)if(d)if(!b||e.indexOf(i)!==-1)c=g(d,m,f);else{if((b=p(b,f))&&w.hasClass(b,d))c=[b]}else if(m)c=z(m,f)}else if(a.ExternalSelector)return a.ExternalSelector(e,f);else j(e)}else if(e&&(e[q]||e[s]))c=e[q]?[e[q]()]:e[s]();else if(e&&(a.isArray(e)||e&&!e.nodeType&&e.item&&e!=window))c=e;else if(e)c=[e];if(c&&
 !c.nodeType&&c.item&&c!=window)c=a.makeArray(c);c.each=function(y,h){return a.each(c,y,h)};return c}function l(e){if(e===u)e=k;else if(a.isString(e)&&x.test(e))e=p(e.slice(1),k);else if(e&&e.nodeType!==1&&e.nodeType!==9)e=null;return e}function p(e,f){if(f.nodeType!==9)f=f.ownerDocument;return f.getElementById(e)}function z(e,f){return f.getElementsByTagName(e)}function g(e,f,d){d=e=d.getElementsByClassName(e);var b=0,c=0,m=e.length,y;if(f&&f!==o){d=[];for(f=f.toUpperCase();b<m;++b){y=e[b];if(y.tagName===

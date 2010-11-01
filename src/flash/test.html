@@ -39,10 +39,12 @@
 <div id="test-flash4"></div>
 
 <script src="../../build/packages/kissy.js"></script>
-
+<script src="../../build/flash/flash-pkg.js"></script> 
+<!-- 
 <script src="flash.js"></script>
 <script src="flash-ua.js"></script>
 <script src="flash-embed.js"></script>
+-->
 
 <!-- Test Cases -->
 <script>
@@ -72,6 +74,7 @@
             if (data.status !== 1) test.fail(data.status);
             if (F.length !== 1) test.fail(F.length);
 			if(!RE_FLASH_TAGS.test(data.swf.nodeName))test.fail();
+			if (data.dynamic) test.fail();
         });
     }
 	
@@ -82,14 +85,23 @@
     }
 
     function test_add_embed(test) {
+		
         // target 不存在
-        F.add('#non-exist', null, function(data) {
-            if (data.status !== -2) test.fail();
+        F.add('#non-exist', {
+            src: 'assets/test.swf',
+            version: 9,
+            params: {
+				wmode:"opaque",
+                flashvars: 'a=1&b=2'
+            }
+        }, function(data) {
+           
         });
 
         // 无 src
         F.add('#test-flash3', null, function(data) {
             if (data.status !== -3) test.fail();
+			if (!data.dynamic) test.fail("add('#test-flash3'");
         });
 
         // 动态添加
@@ -101,6 +113,7 @@
                 height: 150
             },
             params: {
+				wmode:"window",
                 flashvars: {
                     s: "string",
                     b: false,
@@ -128,11 +141,13 @@
             xi: 'express-install/expressInstall.swf',
             version: 12.2,
             params: {
+				wmode:"window",
                 flashvars: 'a=1&b=2'
             }
         }, function(data) {
-            if (data.status !== 1) test.fail(data.status);
+            if (data.status !== 1) test.fail();
 			if(!RE_FLASH_TAGS.test(data.swf.nodeName))test.fail();
+			 if (!data.dynamic) test.fail();
         });
     }
 
@@ -141,12 +156,14 @@
     }
 	
 	function test_swfs(test){
-		if(!RE_FLASH_TAGS.test(F.get('myFlashContent2').nodeName))test.fail();
+		var swf = F.get('myFlashContent2');
+		if(!swf)return; 
+		if(!RE_FLASH_TAGS.test(swf.nodeName))test.fail();
 	}
 
     function test_contains(test) {
-        if (S.UA.safari) return;
-
+       	if (S.UA.safari) return;
+		
         if (!F.contains('myFlashContent2')) test.fail();
         if (F.contains('#test-xxxxx')) test.fail();
     }

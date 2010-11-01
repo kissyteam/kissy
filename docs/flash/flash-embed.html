@@ -32,14 +32,14 @@
                         <code>void add( target, config, callback )</code>
                     </h4>
 					<div class="detail">
-                        <p>通过指定的HTML元素或HTML元素ID添加当前SWF元素对象。</p>
-                        <p>对于是否添加成功，需要依靠callback注册回调方法进行获取。</p>
+                        <p>通过指定SWF 容器 的 HTML 元素或 HTML 元素 ID。</p>
+                        <p>对于是否添加成功，需要依靠 callback 注册回调方法进行获取。</p>
                        <dl class="parameters">
                             <dt>Parameters:</dt>
                             <dd>
                                 <code class="param-name">target</code>
                                 <code class="param-type">&lt;String&gt;|&lt;HTMLElement&gt;</code>
-                               	指定的HTML元素或HTML元素ID。
+                               	指定的HTML元素或HTML元素ID。（如果不存在 则自行创建 一个 div容器 。<b> KISSY.Flash.version 版本要 大于 1.2</b>）
 								必选，
 								这里添加主要是将对象加入KISSY进行统一管理。
                             </dd>
@@ -63,7 +63,8 @@
 						 <p>config 配置示例：</p>
 						 <pre class="example-code"><code>
 var conifg = {
-            src: 'test.swf',       // swf 路径
+            src: 'test.swf',       // swf 路径  [唯一必选]
+            id:'myswfid'          //swf id  如果没有定义 会自行创建
             params: { flashvars:{a:123,b,"yes"} }, // Flash Player 的配置参数
             attrs: {         // swf 对应 DOM 元素的属性
                 width: 215,	// 最小控制面板宽度,小于此数字将无法支持在线快速安装
@@ -81,6 +82,7 @@ var conifg = {
             alert("My id:" + data.id);
             alert("My status:" + data.status);
             alert("My html element:" + data.swf);
+            alert("is dynamic publish:" + data.dynamic);
             
         });
 </code></pre>

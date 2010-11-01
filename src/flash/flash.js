@@ -10,7 +10,8 @@ KISSY.add('flash', function(S){
          * @static
 		 */
 		swfs: { },
-		length: 0
+		length: 0,
+		version:"1.2"
 	};
 
 }, { requires: ['core'] });
