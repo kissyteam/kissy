@@ -6,7 +6,7 @@ KISSY.add('dialog', function(S) {
 
     var DOM = S.DOM, Event = S.Event,
 
-        DOT = '.', DIV = '<div>',
+        DOT = '.', DIV = '<div>', EMPTY = '',
 
         CLS_CONTAINER = 'ks-overlay ks-dialog',
         CLS_PREFIX = 'ks-dialog-',
@@ -22,8 +22,8 @@ KISSY.add('dialog', function(S) {
              *      <div class="ks-dialog-ft"></div>
              *  </div>
              */
-            header: '',
-            footer: '',
+            header: EMPTY,
+            footer: EMPTY,
 
             containerCls: CLS_CONTAINER,
             hdCls: CLS_PREFIX + 'hd',
@@ -36,6 +36,14 @@ KISSY.add('dialog', function(S) {
             closable: true
         };
 
+    Dialog.ATTRS = {
+        header: {
+            value: EMPTY
+        },
+        footer: {
+            value: EMPTY
+        }
+    };
     /**
      * Dialog Class
      * @constructor
@@ -55,19 +63,26 @@ KISSY.add('dialog', function(S) {
         config = config || { };
         if (S.isPlainObject(container)) config = container;
         else config.container = container;
-        config.align = S.merge(S.clone(defaultConfig.align), config.align);
-        
+
         Dialog.superclass.constructor.call(self, S.merge(defaultConfig, config));
 
         self.manager = S.DialogManager;
-        self.manager.register(self);
+        self.dialogID = self.manager.register(self) || -1;
+
+        // attrs event
+        self.on('afterHeaderChange', function(e) {
+            DOM.html(self.header, e.newVal);
+        });
+        self.on('afterFooterChange', function(e) {
+            DOM.html(self.footer, e.newVal);
+        });
     }
 
     S.extend(Dialog, S.Overlay);
+    
     S.Dialog = Dialog;
 
     S.augment(Dialog, S.EventTarget, {
-
         _prepareMarkup: function() {
             var self = this,
                 config = self.config;
@@ -93,6 +108,10 @@ KISSY.add('dialog', function(S) {
             if (config.closable) self._initClose();
         },
 
+        /**
+         * 初始化关闭按钮
+         * @private
+         */
         _initClose: function() {
             var self = this, config = self.config,
                 elem = DOM.create(DIV, { 'class': config.closeBtnCls });
@@ -107,24 +126,33 @@ KISSY.add('dialog', function(S) {
             self.header.appendChild(elem);
         },
 
+        /**
+         * 设置头部内容
+         * @param {string} html
+         */
         setHeader: function(html) {
-            this._setContent('header', html);
+            this.set('header', html);
         },
 
+        /**
+         * 设置尾部内容
+         * @param {string} html
+         */
         setFooter: function(html) {
-            this._setContent('footer', html);
+            this.set('footer', html);
         }
     });
 
     S.DialogManager = {
-
         register: function(dlg) {
             if (dlg instanceof Dialog) {
-                this._dialog.push(dlg);
+                var id = S.guid();
+                this._dialog[id] = dlg;
+                return id;
             }
         },
 
-        _dialog: [],
+        _dialog: {},
 
         hideAll: function() {
             S.each(this._dialog, function(dlg) {
@@ -135,9 +163,5 @@ KISSY.add('dialog', function(S) {
 
 }, { host: 'overlay' });
 
-/**
- * TODO:
- *  - S.guid() 唯一标识
- */
 
 

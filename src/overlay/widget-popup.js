@@ -27,7 +27,6 @@ KISSY.add('popup', function(S) {
         config = config || { };
         if (S.isPlainObject(container)) config = container;
         else config.container = container;
-        config.align = S.merge(S.clone(defaultConfig.align), config.align);
 
         Popup.superclass.constructor.call(self, S.merge(defaultConfig, config));
     }
