@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 27 13:07
+build time: Nov 2 13:10
 */
 /**
  * 图片放大效果 ImageZoom
@@ -266,7 +266,6 @@ KISSY.add('imagezoom', function(S, undefined) {
                 case POSITION[4]:
                     width = region.width;
                     height = region.height;
-                    DOM.css(v, 'cursor', 'move');
                     break;
             }
 

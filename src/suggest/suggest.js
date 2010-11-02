@@ -367,8 +367,9 @@ KISSY.add('suggest', function(S, undefined) {
          */
         _initContainer: function() {
             var self = this,
+                extraCls = self.config.containerCls,
                 container = DOM.create(DIV, {
-                    'class': CONTAINER_CLS + ' ' + self.config.containerCls,
+                    'class': CONTAINER_CLS + (extraCls ? ' ' + extraCls : EMPTY),
                     style: 'position:absolute;visibility:hidden'
                 }),
                 content = DOM.create(DIV, {

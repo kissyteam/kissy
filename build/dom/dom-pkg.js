@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 27 13:07
+build time: Nov 2 13:10
 */
 /**
  * @module  dom
@@ -948,7 +948,7 @@ KISSY.add('dom-style', function(S, undefined) {
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width', HEIGHT = 'height',
         AUTO = 'auto',
-        DISPLAY = 'display', NONE = 'none', BLOCK = 'block',
+        DISPLAY = 'display', NONE = 'none',
         PARSEINT = parseInt,
         RE_LT = /^(?:left|top)/,
         RE_NEED_UNIT = /^(?:width|height|top|left|right|bottom|margin|padding)/i,
