@@ -102,4 +102,5 @@ KISSY.add('mask', function(S, undefined) {
     }
 
     S.Mask = Mask;
-});
+
+}, { host: 'overlay' } );
