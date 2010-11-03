@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 1 14:55
+build time: Nov 2 13:10
 */
 /**
  * dd support for kissy
@@ -23,7 +23,7 @@ KISSY.add('dd', function(S) {
 
     DDM.ATTRS = {
         /**
-         * mousedown 后 buffer 触发时间
+         * mousedown 后 buffer 触发时间  timeThred
          */
         bufferTime: { value: 200 },
 

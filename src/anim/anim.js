@@ -60,7 +60,7 @@ KISSY.add('anim', function(S, undefined) {
             style = S.param(style, ';')
                 .replace(/=/g, ':')
                 .replace(/%23/g, '#') // 还原颜色值中的 #
-                .replace(/([A-Z])/g, '-$1').toLowerCase(); // backgroundColor => background-color
+                .replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(); // backgroundColor => background-color
         }
         self.props = normalize(style);
         self.targetStyle = style;

@@ -10,7 +10,7 @@ KISSY.add('dom-style', function(S, undefined) {
         CSS_FLOAT = 'cssFloat', STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width', HEIGHT = 'height',
         AUTO = 'auto',
-        DISPLAY = 'display', NONE = 'none', BLOCK = 'block',
+        DISPLAY = 'display', NONE = 'none',
         PARSEINT = parseInt,
         RE_LT = /^(?:left|top)/,
         RE_NEED_UNIT = /^(?:width|height|top|left|right|bottom|margin|padding)/i,

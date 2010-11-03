@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 1 14:55
+build time: Nov 2 13:10
 */
 KISSY.add("dd",function(d){function g(){g.superclass.constructor.apply(this,arguments);this._init()}function i(a,c,e){e=e||150;if(e===-1)return function(){a.apply(c,arguments)};var h=d.now();return function(){var k=d.now();if(k-h>e){h=k;a.apply(c,arguments)}}}var f=d.Event,j=d.DOM,b=d.Node;d.DD={};g.ATTRS={bufferTime:{value:200},activeDrag:{}};d.extend(g,d.Base,{_init:function(){this._showShimMove=i(this._move,this,30)},_move:function(a){var c=this.get("activeDrag");a.preventDefault();c&&c._move(a)},
 _start:function(a){var c=this,e=c.get("bufferTime")||0;c._registerEvent();if(e)c._bufferTimer=setTimeout(function(){c._bufferStart(a)},e);else c._bufferStart(a)},_bufferStart:function(a){this.set("activeDrag",a);this._activeShim();a._start()},_end:function(a){var c=this.get("activeDrag");if(this._bufferTimer){clearTimeout(this._bufferTimer);this._bufferTimer=null}this._shim&&this._shim.css({display:"none"});if(c){c._end(a);this.set("activeDrag",null)}},_activeShim:function(){var a=document;this._shim=

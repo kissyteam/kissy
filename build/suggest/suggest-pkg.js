@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Oct 27 13:07
+build time: Nov 2 13:10
 */
 /**
  * 提示补全组件
@@ -372,8 +372,9 @@ KISSY.add('suggest', function(S, undefined) {
          */
         _initContainer: function() {
             var self = this,
+                extraCls = self.config.containerCls,
                 container = DOM.create(DIV, {
-                    'class': CONTAINER_CLS + ' ' + self.config.containerCls,
+                    'class': CONTAINER_CLS + (extraCls ? ' ' + extraCls : EMPTY),
                     style: 'position:absolute;visibility:hidden'
                 }),
                 content = DOM.create(DIV, {
