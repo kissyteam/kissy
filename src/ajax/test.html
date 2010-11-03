@@ -3,35 +3,131 @@
 <head>
 <meta charset="utf-8"/>
 <title>Ajax Test</title>
+<script src="http://kissyteam.github.com/kissy/build/packages/kissy.js"></script>
 </head>
 <body>
-<script src="../test/test.js"></script>
-<script>
-    KISSY.Test.Config.times = 1;
-</script>
 
 <h2>Test Data</h2>
 
-<script src="../../build/kissy/kissy-pkg.js"></script>
-<script src="../../build/ua/ua-pkg.js"></script>
-<script src="../../build/dom/dom-pkg.js"></script>
-<script src="../../build/event/event-pkg.js"></script>
+	<button id="GET">GET</button>
+	<button id="POST">POST</button>
+	<button id="JSONP1">JSONP</button>
+	<button id="JSONP2">从YQL获取数据</button>
+	<button id="SYNC">同步获取数据</button>
 
-<script src="ajax.js"></script>
 
-<script src="../../third-party/jquery/jquery-1.4.2.js"></script>
+	<!--link rel="stylesheet" href="../kissy/assets/console.css" /-->
+	<div id="console"></div>
 
+</body>
 <!-- Test Cases -->
 <script>
-    var S = KISSY;
 
-    function test_getScript(test) {
-        S.getScript('../cookie/cookie.js', function() {
-            test.echo('cookie.js is loaded.');
-        });
-    }
+var S = KISSY,
+	doc = document,
+	now = function() {
+		return new Date().getTime();
+	},
+	get = function(id) {
+		return typeof id === 'string' ? doc.getElementById(id) : id;
+	};
+S._log = S.log;
+S.log = function(msg,color){
+	var con = get('console');
+	S._log(msg);
+
+	if(typeof color == 'undefined'){
+		color = '';
+	}
+    if(color == 'info') color = 'green';
+    else if(color == 'warn') color = 'yellow';
+
+	if(!con)return;
+	con.innerHTML = '<p class="'+color+'">' +msg +'</p>' + con.innerHTML;
+};
+</script>
+<script>
+
+S.add({
+	'ajax':{
+		fullpath:'ajax.js'
+	}
+}).use('ajax',function(S){
+
+	//普通get请求
+	S.one('#GET').on('click',function(e){
+		S.io({
+			type:'get',
+			url:'interface.php?t=get',
+			complete:function(id,o,args){
+				S.log('GET '+o.responseText);
+			}
+		});
+		
+	});
+
+	//普通post请求
+	S.one('#POST').on('click',function(e){
+
+		S.io({
+			type:'post',
+			data:{
+				type:'post',
+				name:'jayli',
+				company:'cn.yahoo.com',
+				countru:'china'
+			},
+			url:'interface.php?t=post',
+			complete:function(id,o,args){
+				S.log('POST '+o.responseText);
+			}
+		});
+		
+	});
+
+	//JSONP
+	S.one('#JSONP1').on('click',function(e){
+
+		S.io({
+			url:'interface.php?callback=?',
+			dataType:'jsonp',
+			complete:function(id,data,args){
+				S.log(data.toString() + 'Simple Jsonp callback');
+			}
+		});
+		
+	});
+
+	S.one('#JSONP2').on('click',function(e){
+
+		//自定义jsonp
+		S.io({
+			url:'http://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22http%3A%2F%2Fued.taobao.com%2Fblog%2Ffeed%2F%22&format=json&diagnostics=true&callback=?',
+			dataType:'jsonp',
+			jsonp:'my_callback',
+			complete:function(id,data,args){
+				S.log(S.JSON.stringify(data));
+			}
+		});
+		
+	});
+
+	S.one('#SYNC').on('click',function(e){
+		var str = S.io({
+			type:'get',
+			url:'interface.php?t=get',
+			async:false,
+			complete:function(id,o,args){
+				//this will not exec in firefox
+				S.log(o.responseText);
+			}
+		}).responseText;
+		S.log('ASYN block the thread :'+ str,'yellow');
+		
+	});
+	
+});
 
 </script>
 
-</body>
 </html>
