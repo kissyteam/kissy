@@ -2,12 +2,11 @@
  * Overlay Alignment Plugin
  * @author 乔花<qiaohua@taobao.com>
  */
-
-
 KISSY.add('alignment', function(S, undefined) {
     var DOM = S.DOM,
         Overlay = S.Overlay,
 
+        ALIGN = 'align',
         POSITION_ALIGN = {
             TL: 'tl',
             TC: 'tc',
@@ -19,36 +18,32 @@ KISSY.add('alignment', function(S, undefined) {
             BC: 'bc',
             BR: 'br'
         },
-        defaultAlign = {
+        defaultAlignment = {
             node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
             points: [POSITION_ALIGN.CC, POSITION_ALIGN.CC], // ['tl', 'tr'] 表示 overlay 的 tl 与参考节点的 tr 对齐
-            offset: [0, 0]       // 有效值为 [n, m]
+            offset: [0, 0]      // 有效值为 [n, m]
         };
 
-    S.mix(Overlay.Config, {
-        align: defaultAlign // 相对指定 node or viewport 的定位
-    });
-
     S.mix(Overlay.ATTRS, {
-        align: {
-            value: defaultAlign
+        align: {                // 相对指定 node or viewport 的定位
+            value: defaultAlignment,
+            setter: function(v) {
+                return S.merge(this.get(ALIGN), v);
+            },
+            getter: function(v) {
+                return S.merge(defaultAlignment, v);
+            }
         }
     });
 
     Overlay.Plugins.push({
-        name: 'alignment',
+        name: ALIGN,
         init: function(host) {
-            host.config.align = S.merge(S.clone(Overlay.Config.align), host.config.align);
-
-            // 初始化设置
-            host.set('align', host.config.align);
-
             host.on('afterAlignChange', function(e) {
                 host.align();
             });
         }
     });
-
 
     S.augment(Overlay, {
         /**
@@ -58,7 +53,7 @@ KISSY.add('alignment', function(S, undefined) {
          * @param {Array.<number>} offset 偏移
          */
         align: function(node, points, offset) {
-            var self = this, alignConfig = self.get('align'), xy, diff, p1, p2;
+            var self = this, alignConfig = self.get(ALIGN), xy, diff, p1, p2;
 
             if (!self.container) return;
 
@@ -81,7 +76,9 @@ KISSY.add('alignment', function(S, undefined) {
         },
 
         /**
-         * 获取 node 上的 align 对齐点 相对 page 的坐标
+         * 获取 node 上的 align 对齐点 相对于页面的坐标
+         * @param {?Element} node
+         * @param {align} align
          */
         _getAlignOffset: function(node, align) {
             var V = align.charAt(0),
@@ -120,18 +117,22 @@ KISSY.add('alignment', function(S, undefined) {
          * 居中显示到可视区域, 一次性居中
          */
         center: function() {
-            //this.set('align', defaultAlign);
+            //this.set(ALIGN, defaultAlign);
             this.align('viewport', [POSITION_ALIGN.CC, POSITION_ALIGN.CC], [0, 0]);
         },
 
         /**
-         * 设置位置
+         * 设置初始位置
          */
         _setPosition: function() {
-            var self = this, xy = self.config.xy;
+            var self = this,
+                xy = self.get('xy'), offset;
 
             if (xy) {
-                self.move(xy);
+                offset = {left: self.get('x'), top: self.get('y')};
+
+                DOM.offset(self.container, offset);
+                if (self.shim) self.shim.setOffset(offset);
             } else {
                 self.align();
             }
@@ -144,5 +145,5 @@ KISSY.add('alignment', function(S, undefined) {
 
 /**
  * Note:
- * - 2010/11/01 从 Overlay 中拆分出 alignment
+ * - 2010/11/01 从 Overlay 中拆分出 align
  */

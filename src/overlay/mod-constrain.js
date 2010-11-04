@@ -6,22 +6,21 @@
 KISSY.add('constrain', function(S, undefined) {
     var DOM = S.DOM,
         Overlay = S.Overlay,
-        min = Math.min, max = Math.max,
+        min = Math.min, max = Math.max, CONSTRAIN = 'constrain',
         defaultConstrain = {
             node: undefined,    // 如果没有设置限制容器元素, 默认以可视区域
             mode: false         // 开启/关闭限制
         };
 
-    /**
-     * 添加 constrain 配置项
-     */
-    S.mix(Overlay.Config, {
-        constrain: defaultConstrain
-    });
-
     S.mix(Overlay.ATTRS, {
-        constrain: {
-            value: defaultConstrain
+        constrain: {            // 限制设置
+            value: defaultConstrain,
+            setter: function(v) {
+                return S.merge(this.get(CONSTRAIN), v);
+            },
+            getter: function(v) {
+                return S.merge(defaultConstrain, v);
+            }
         },
         x: {
             value: 0,
@@ -50,13 +49,10 @@ KISSY.add('constrain', function(S, undefined) {
     });
 
     Overlay.Plugins.push({
-        name: 'constrain',
+        name: CONSTRAIN,
         init: function(host) {
-            host.config.constrain = S.merge(S.clone(Overlay.Config.constrain), host.config.constrain);
-
-            host.set('constrain', host.config.constrain);
-            host.on('afterConstrainChange', function(e) {
-                host.align();
+            host.on('afterConstrainChange', function() {
+                host.align && host.align();
             });
         }
     });
@@ -68,7 +64,7 @@ KISSY.add('constrain', function(S, undefined) {
          */
         _getConstrainRegion: function() {
             var self = this,
-                constrain = self.get('constrain'),
+                constrain = self.get(CONSTRAIN),
                 elem = S.get(constrain.node),
                 ret;
 
@@ -97,11 +93,9 @@ KISSY.add('constrain', function(S, undefined) {
          * @param {Element=} node 
          */
         constrain: function(node) {
-            var self = this;
-
-            self.set('constrain', {
-                'node': node,
-                'mode': true
+            this.set(CONSTRAIN, {
+                node: node,
+                mode: true
             });
         },
 
@@ -112,8 +106,8 @@ KISSY.add('constrain', function(S, undefined) {
         toggleConstrain: function(enabled) {
             var self = this;
 
-            self.set('constrain', {
-                node: self.get('constrain').node,
+            self.set(CONSTRAIN, {
+                node: self.get(CONSTRAIN).node,
                 mode: !!enabled
             });
         }

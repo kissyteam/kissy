@@ -11,10 +11,12 @@
 <script src="widget-popup.js"></script>
 <script src="widget-dialog.js"></script>
 <script src="mod-autorender.js"></script>
-<script src="mod-alignment.js"></script>
 <script src="mod-constrain.js"></script>
+<script src="mod-alignment.js"></script>
 <script src="../dd/ddm.js"></script>
 <script src="../dd/draggable.js"></script>
+<script src="mod-draggable.js"></script>
+<script src="mod-fix.js"></script>
 
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
 <style>
@@ -47,6 +49,7 @@
             triggerType: 'click',
             width: 300,
             height: 200,
+            xy: [200, 200],
             align: {
                 node: 'trigger',
                 points: ['tr', 'tl'],
@@ -96,7 +99,6 @@
 <a id="link2">hover me</a>
 <script>
     KISSY.ready(function(S) {
-
         var popup = S.Popup({
             trigger: '#link2',
             triggerType: 'mouse',
@@ -166,7 +168,7 @@
 </style>
 <h2>Dialog - auto render</h2>
 <button id="btn3">Show</button>
-<div class="dialog1 KS_Widget" data-widget-type="Dialog" data-widget-config="{ 'trigger': '#btn3', 'width': '400px', 'height': '300px', 'header': 'this is a title', 'content': 'this is content' }"><div class="ks-dialog-bd"></div></div>
+<div class="dialog1 KS_Widget" data-widget-type="Dialog" data-widget-config="{ 'trigger': '#btn3', 'width': '400px', 'height': '300px', 'header': 'this is a title', 'content': 'this is content', 'fixed': true }"><div class="ks-dialog-bd"></div></div>
 <script>
     KISSY.ready(function(S){
         S.Overlay.autoRender();
@@ -200,7 +202,7 @@
         padding: 10px;
     }
 </style>
-<h2>Dialog - 新建 + Mask </h2>
+<h2>Dialog - 新建 + Mask + Fixed</h2>
 <button id="btn4">Show</button> <button id="btn5">Hide All</button>
 <script>
     KISSY.ready(function(S){
@@ -212,14 +214,16 @@
             header: 'this is title',
             footer: 'footer',
             content: 'content',
-            mask: true
+            mask: true,
+            fixed: true
         });
         dialog.on('show', function(){
-            alert('hi');
+            //alert('hi');
         });
 
         S.Event.on('#btn5', 'click', function(e){
             dialog.manager.hideAll();
+            //dialog.set('fixed', false);
         });
     });
 </script>
@@ -232,11 +236,11 @@
         height: 400px;
     }
 </style>
-<h2>Dialog Constrain</h2>
+<h2>Dialog Constrain + Fixed</h2>
 <div class="constrain">
     constrain area
 </div>
-<button id="btn6">show</button><button id="btn7">release</button><button id="btn8">center</button>
+<button id="btn6">show</button><button id="btn7">release</button><button id="btn8">center</button><button id="btn9">fixed</button>
 <script>
     KISSY.ready(function(S){
         var dialog = S.Dialog({
@@ -255,22 +259,13 @@
             align: {
                 node: '.constrain',
                 points: ['cr', 'cc']
-            }
-        });
-        
-        dialog.on('create', function() {
-            var dd = new S.Draggable({
-                node: new S.Node(dialog.container),
-                handlers: [new S.Node(dialog.header)]
-            });
-
-            dd.on("drag", function(ev) {
-                dialog.move(ev.left, ev.top);
-            });
+            },
+            draggable: true
         });
 
         var stat = ['release', 'constrain'],
-            sh = ['show', 'hide'];
+            sh = ['show', 'hide'],
+            fx = ['fixed', 'unfixed'];
         S.Event.on('#btn6', 'click', function() {
             var b = this,
                 s = S.DOM.html(b);
@@ -298,6 +293,18 @@
         });
         S.Event.on('#btn8', 'click', function() {
             dialog.center();
+        });
+
+        S.Event.on('#btn9', 'click', function() {
+            var b = this,
+                s = S.DOM.html(b);
+            if (s == fx[0]) {
+                dialog.set('fixed', true);
+                S.DOM.html(b, fx[1]);
+            } else {
+                dialog.set('fixed', false);
+                S.DOM.html(b, fx[0]);
+            }
         });
     });
 </script>

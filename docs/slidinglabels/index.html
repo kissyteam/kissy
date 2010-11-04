@@ -42,36 +42,55 @@ KISSY.ready(function(S) {
             <div class="section">
                 <h3 id="config">Config</h3>
 
-                <div class="member prop">
+                <!--<div class="member prop">
                     <h4><a name="axis">axis</a> - <code>String</code></h4>
                     <div class="detail">
                         <p>label 的移动方向, "x" 为水平方向; "y" 为垂直方向. 默认为 "x".</p>
                     </div>
-                </div>
+                </div>-->
+
                 <div class="member prop">
                     <h4><a name="position">position</a> - <code>number | Array.&lt;number&gt;</code></h4>
                     <div class="detail">
                         <p>单位 px, 表示在水平和垂直方向上, 相对于父元素的位置. x or [x, y], 不设置时, 取 0. 默认是 [5, 5].</p>
                     </div>
                 </div>
+
                 <div class="member prop">
                     <h4><a name="offset">offset</a> - <code>number</code></h4>
                     <div class="detail">
                         <p>单位 px, 表示label 和 input 之间的距离. 默认为 5.</p>
                     </div>
                 </div>
+
                 <div class="member prop">
                     <h4><a name="zIndex">zIndex</a> - <code>number</code></h4>
                     <div class="detail">
                         <p>label 的 z-index 值. 默认为 99.</p>
                     </div>
                 </div>
+
                 <div class="member prop">
                     <h4><a name="duration">duration</a> - <code>number</code></h4>
                     <div class="detail">
                         <p>label 的运动速度. 默认为 0.2.</p>
                     </div>
                 </div>
+
+                <div class="member prop">
+                    <h4><a name="focusStyle">focusStyle</a> - <code>Object</code></h4>
+                    <div class="detail">
+                        <p>输入框获取焦点时, label 的样式. 默认为 {}.</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="blurStyle">blurStyle</a> - <code>Object</code></h4>
+                    <div class="detail">
+                        <p>输入框失去焦点时, label 的样式. 默认为 {}.</p>
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -87,11 +106,13 @@ KISSY.ready(function(S) {
 
                 <h3>Config</h3>
                 <ul>
-                    <li><a href="#axis">axis</a></li>
+                    <!--<li><a href="#axis">axis</a></li>-->
                     <li><a href="#position">position</a></li>
                     <li><a href="#offset">offset</a></li>
                     <li><a href="#zIndex">zIndex</a></li>
                     <li><a href="#duration">duration</a></li>
+                    <li><a href="#focusStyle">focusStyle</a></li>
+                    <li><a href="#blurStyle">blurStyle</a></li>
                 </ul>
             </div>
         </div>

@@ -5,7 +5,7 @@
 KISSY.add('popup', function(S) {
 
     var defaultConfig = {
-        triggerType: 'mouse', // 触发类型, click, mouse
+        triggerType: 'mouse', // 触发类型默认为 mouse
         align: {
             node: 'trigger',
             points: ['cr', 'ct'],

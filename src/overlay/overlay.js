@@ -9,12 +9,16 @@ KISSY.add('overlay', function(S, undefined) {
         ie6 = S.UA.ie === 6,
 
         DOT = '.', KEYDOWN = 'keydown', EMPTY = '',
+        TRIGGERTYPE = 'triggerType', MOUSE = 'mouse', MOUSEENTER = 'mouseenter', MOUSELEAVE = 'mouseleave', CLICK = 'click',
+        MASK = 'mask', SHOW = 'show', HIDE = 'hide',
+        BDCLS = 'bdCls', CONTENT = 'content', ZINDEX = 'zIndex', DISPLAY = 'display', WIDTH = 'width', HEIGHT = 'height',
+        X = 'x', Y = 'y',
 
         CLS_CONTAINER = 'ks-overlay',
         CLS_PREFIX = CLS_CONTAINER + '-',
 
-        EVENT_SHOW = 'show',
-        EVENT_HIDE = 'hide',
+        EVENT_SHOW = SHOW,
+        EVENT_HIDE = HIDE,
         EVENT_CREATE = 'create',
 
         DEFAULT_STYLE = 'visibility:hidden;position:absolute;',
@@ -23,16 +27,23 @@ KISSY.add('overlay', function(S, undefined) {
         mask;
 
     /*
+     * DOM 结构
+     *  <div class="ks-overlay-container">
+     *      <div class="ks-overlay-bd"></div>
+     *  </div>
+     */
+
+    /*
      * Overlay Class
      * @constructor
      * @param {Element=} container
-     * @param {Object} config
+     * @param {Object=} config
      * attached members：
-     *   - this.container
-     *   - this.trigger
-     *   - this.config
-     *   - this.body
-     *   - this.shim
+     *  - this.container
+     *  - this.trigger
+     *  - this.currentTrigger
+     *  - this.body
+     *  - this.shim
      */
     function Overlay(container, config) {
         var self = this;
@@ -45,9 +56,7 @@ KISSY.add('overlay', function(S, undefined) {
             config.container = container;
         }
 
-        Overlay.superclass.constructor.call(self);
-
-        self._config(config);
+        Overlay.superclass.constructor.call(self, config);
 
         /**
          * 获取相关联的 DOM 节点
@@ -60,13 +69,12 @@ KISSY.add('overlay', function(S, undefined) {
          * @type {Array.<Element>}
          */
         self.trigger = S.makeArray(S.query(config.trigger));
-        self.currentTrigger = self.trigger[0];
 
         /**
-         * 配置信息
-         * @type {Object}
+         * 当前触发元素, 默认为第一个
+         * @type {Element}
          */
-        self.config = S.merge(Overlay.Config, config);
+        self.currentTrigger = self.trigger[0];
 
         self._init();
     }
@@ -74,76 +82,84 @@ KISSY.add('overlay', function(S, undefined) {
     S.extend(Overlay, S.Base);
 
     Overlay.ATTRS = {
-        x: {
+        container: {            // 容器元素
+            value: null
+        },
+        containerCls: {         // 容器的 class
+            value: CLS_CONTAINER
+        },
+        bdCls: {                // 内容 class
+            value: CLS_PREFIX + 'bd'
+        },
+
+        trigger: {              // 触发器, 可以是多个
+            value: null
+        },
+        triggerType: {          // 触发类型
+            value: CLICK
+        },
+
+        x: {                    // 水平方向绝对位置
             value: 0
         },
-        y: {
+        y: {                    // 垂直方向绝对位置
             value: 0
         },
-        width: {
+        xy: {                   // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
+            value: null,
+            setter: function(v) {
+                var self = this,
+                    xy = S.makeArray(v);
+
+                if (xy.length) {
+                    xy[0] && self.set(X, xy[0]);
+                    xy[1] && self.set(Y, xy[1]);
+                }
+                return v;
+            }
+        },
+        width: {                // 宽度
             value: 0,
             setter: function(v) {
                 return parseInt(v) || 0;
             }
         },
-        height: {
+        height: {               // 高度
             value: 0,
             setter: function(v) {
                 return parseInt(v) || 0;
             }
         },
-        body: {
-            value: EMPTY
+
+        content: {              // 内容, 默认为 undefined, 不设置
+            value: undefined
+        },
+
+        mask: {                 // 是否显示蒙层, 默认不显示
+            value: false
+        },
+        shim: {                 // 是否需要垫片
+            value: ie6
+        },
+        zIndex: {
+            value: 9999
         }
     };
 
     Overlay.Plugins = [];
 
-    /**
-     * 默认设置
-     */
-    Overlay.Config = {
-        /*
-         * DOM 结构
-         *  <div class="ks-overlay-container">
-         *      <div class="ks-overlay-bd"></div>
-         *  </div>
-         */
-        container: null,
-        containerCls: CLS_CONTAINER,
-        //content: undefined,      // 默认为 undefined, 不设置
-        bdCls: CLS_PREFIX + 'bd',
-
-        trigger: null,
-        triggerType: 'click',   // 触发类型
-
-        width: 0,
-        height: 0,
-        zIndex: 9999,
-
-        xy: null,               // 相对 page 定位, 有效值为 [n, m]
-
-        mask: false,            // 是否显示蒙层, 默认不显示
-        shim: ie6
-    };
-
     S.augment(Overlay, {
-        _config: function(cfg) {
-
-        },
-
         /**
          * initialize
          */
         _init: function() {
             var self = this;
 
+            self._onAttrChanges();
+
             if (self.trigger.length > 0) {
                 self._bindTrigger();
             }
-
-            self._onAttrChanges();
-            
             // init plugins
             S.each(Overlay.Plugins, function(plugin) {
                 if (plugin.init) {
@@ -154,6 +170,23 @@ KISSY.add('overlay', function(S, undefined) {
 
         _onAttrChanges: function() {
             var self = this;
+
+            self.on('afterContainerChange', function(e) {
+                /**
+                 * 获取相关联的 DOM 节点
+                 * @type {Element}
+                 */
+                self.container = S.get(e.newVal);
+            });
+
+            self.on('afterTriggerChange', function(e) {
+                /**
+                 * 触发元素, 有可能多个
+                 * @type {Array.<Element>}
+                 */
+                self.trigger = S.makeArray(S.query(e.newVal));
+                self.currentTrigger = self.trigger[0];
+            });
 
             self.on('afterXChange', function(e) {
                 var offset = {left: e.newVal};
@@ -173,7 +206,7 @@ KISSY.add('overlay', function(S, undefined) {
                 var w = e.newVal;
                 if (w) {
                     DOM.width(self.container, w);
-                    self.shim && self.shim.setSize(w, self.get('height'));
+                    self.shim && self.shim.setSize(w, self.get(HEIGHT));
                 }
                 // 当设置 0 时, 表示按照内容宽度
             });
@@ -182,11 +215,11 @@ KISSY.add('overlay', function(S, undefined) {
                 var h = e.newVal;
                 if (h) {
                     DOM.height(self.container, h);
-                    self.shim && self.shim.setSize(self.get('width'), h);
+                    self.shim && self.shim.setSize(self.get(WIDTH), h);
                 }
             });
 
-            self.on('afterBodyChange', function(e) {
+            self.on('afterContentChange', function(e) {
                 DOM.html(self.body, e.newVal);
             });
         },
@@ -197,7 +230,7 @@ KISSY.add('overlay', function(S, undefined) {
         _bindTrigger: function() {
             var self = this;
 
-            if (self.config.triggerType === 'mouse') {
+            if (self.get(TRIGGERTYPE) === MOUSE) {
                 self._bindTriggerMouse();
             } else {
                 self._bindTriggerClick();
@@ -213,7 +246,7 @@ KISSY.add('overlay', function(S, undefined) {
             S.each(self.trigger, function(trigger) {
                 var timer;
 
-                Event.on(trigger, 'mouseenter', function() {
+                Event.on(trigger, MOUSEENTER, function() {
                     self._clearHiddenTimer();
 
                     timer = S.later(function() {
@@ -223,7 +256,7 @@ KISSY.add('overlay', function(S, undefined) {
                     }, 100);
                 });
 
-                Event.on(trigger, 'mouseleave', function() {
+                Event.on(trigger, MOUSELEAVE, function() {
                     if (timer) {
                         timer.cancel();
                         timer = undefined;
@@ -240,11 +273,11 @@ KISSY.add('overlay', function(S, undefined) {
         _bindContainerMouse: function() {
             var self = this;
 
-            Event.on(self.container, 'mouseleave', function() {
+            Event.on(self.container, MOUSELEAVE, function() {
                 self._setHiddenTimer();
             });
 
-            Event.on(self.container, 'mouseenter', function() {
+            Event.on(self.container, MOUSEENTER, function() {
                 self._clearHiddenTimer();
             });
         },
@@ -271,7 +304,7 @@ KISSY.add('overlay', function(S, undefined) {
             var self = this;
 
             S.each(self.trigger, function(trigger) {
-                Event.on(trigger, 'click', function(e) {
+                Event.on(trigger, CLICK, function(e) {
                     e.halt();
                     self.currentTrigger = trigger;
                     self.show();
@@ -296,10 +329,11 @@ KISSY.add('overlay', function(S, undefined) {
             self._setDisplay();
             self._setSize();
             self._setPosition();
+            
+            self.fire(EVENT_CREATE);
+
             self._realShow();
             self._firstShow = self._realShow;
-
-            self.fire(EVENT_CREATE);
         },
 
         _realShow: function() {
@@ -315,8 +349,8 @@ KISSY.add('overlay', function(S, undefined) {
 
             DOM.css(self.container, 'visibility', isVisible ? 'hidden' : EMPTY);
 
-            if(self.shim) self.shim.toggle();
-            if (self.config.mask) mask[isVisible ? 'hide' : 'show']();
+            self.shim && self.shim.toggle();
+            self.get(MASK) && mask[isVisible ? HIDE : SHOW]();
 
             self[isVisible ? '_unbindUI' : '_bindUI']();
             self.fire(isVisible ? EVENT_HIDE : EVENT_SHOW);
@@ -330,34 +364,38 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         _prepareMarkup: function() {
-            var self = this, config = self.config, container = self.container;
+            var self = this, container = self.container;
 
             // 多个 Overlay 实例共用一个 mask
-            if (config.mask && !mask) {
+            if (self.get(MASK) && !mask) {
                 mask = new S.Mask();
             }
-            if (config.shim) {
+            if (self.get('shim')) {
                 self.shim = new S.Mask({ shim: true });
             }
 
             // 已有 Markup
             if (container) {
                 // 已有 markup 可以很灵活，如果没有 bdCls, 就让 body 指向 container
-                self.body = S.get(DOT + config.bdCls, container) || container;
+                self.body = S.get(DOT + self.get(BDCLS), container) || container;
 
                 container.style.cssText += DEFAULT_STYLE;
+                DOM.html(self.body, self.get(CONTENT));
             }
             // 构建 DOM
             else {
-                container = self.container = DOM.create(S.substitute(TMPL, config));
+                container = self.container = DOM.create(S.substitute(TMPL, {
+                    containerCls: self.get('containerCls'),
+                    bdCls: self.get(BDCLS),
+                    content: self.get(CONTENT)
+                }));
                 self.body = DOM.children(container)[0];
                 doc.body.appendChild(container);
             }
 
-            DOM.css(container, 'zIndex', config.zIndex);
+            DOM.css(container, ZINDEX, self.get(ZINDEX));
 
-            self.setBody(config.content);
-            if (config.triggerType === 'mouse') self._bindContainerMouse();
+            if (self.get(TRIGGERTYPE) === MOUSE) self._bindContainerMouse();
         },
 
         /**
@@ -365,22 +403,34 @@ KISSY.add('overlay', function(S, undefined) {
          */
         _setDisplay: function(){
             var self = this;
-            if (DOM.css(self.container, 'display') === 'none') {
-                DOM.css(self.container, 'display', 'block');
+            if (DOM.css(self.container, DISPLAY) === 'none') {
+                DOM.css(self.container, DISPLAY, 'block');
             }
         },
 
-        _setPosition: function() {
-            var self = this, xy = self.config.xy;
-
-            xy && self.move(xy);
-        },
-
+        /**
+         * 设置初始宽高
+         */
         _setSize: function() {
-            var self = this, config = self.config;
+            var self = this,
+                w, h, container = self.container;
 
-            self.set('width', config.width);
-            self.set('height', config.height);
+            w = self.get(WIDTH) || DOM.width(container);
+            h = self.get(HEIGHT) || DOM.height(container);
+
+            DOM.width(container, w);
+            DOM.height(container, h);
+            if (self.shim) self.shim.setSize(w, h);
+        },
+        /**
+         * 设置初始位置
+         */
+        _setPosition: function() {
+            var self = this,
+                offset = {left: self.get(X), top: self.get(Y)};
+
+            DOM.offset(self.container, offset);
+            if (self.shim) self.shim.setOffset(offset);
         },
 
         /**
@@ -395,10 +445,13 @@ KISSY.add('overlay', function(S, undefined) {
                 y = x[1];
                 x = x[0];
             }
-            self.set('x', x);
-            y && self.set('y', y);
+            self.set(X, x);
+            y && self.set(Y, y);
         },
 
+        /**
+         * 显示/隐藏时绑定的事件
+         */
         _bindUI: function() {
             Event.on(doc, KEYDOWN, this._esc, this);
         },
@@ -413,10 +466,27 @@ KISSY.add('overlay', function(S, undefined) {
 
         /**
          * 设置内容
+         * @deprecated set('content', html)
          * @param {string} html
          */
         setBody: function(html) {
-            this.set('body', html);
+            this.set(CONTENT, html);
+        },
+
+        /**
+         * 删除自己, mask 删不了
+         */
+        dispose: function() {
+            var self = this;
+
+            self._toggle(true);
+            self.detach();
+            Event.remove(self.container);
+            S.each(self.trigger, function(t) {
+                Event.remove(t, self.get(TRIGGERTYPE) === MOUSE ? (MOUSEENTER + ' ' + MOUSELEAVE) : CLICK);
+            });
+            
+            DOM.remove(self.container);
         }
     });
 
@@ -428,5 +498,4 @@ KISSY.add('overlay', function(S, undefined) {
  * TODO:
  *  - stackable ? 
  *  - effect
- *  - draggable
  */
