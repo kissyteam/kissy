@@ -51,8 +51,12 @@ KISSY.add('constrain', function(S, undefined) {
     Overlay.Plugins.push({
         name: CONSTRAIN,
         init: function(host) {
-            host.on('afterConstrainChange', function() {
-                host.align && host.align();
+            host.on('create', function() {
+                var self = this;
+
+                self.on('afterConstrainChange', function() {
+                    self.align && self.align();
+                });
             });
         }
     });

@@ -19,12 +19,14 @@ KISSY.add('overlay-fix', function(S) {
         name: FIXED,
         init: function(host) {
             host.on('create', function() {
-                if (host.get(FIXED)) {
-                    setFixed(host, true);
+                var self = this;
+
+                if (self.get(FIXED)) {
+                    setFixed(self, true);
                 }
 
-                host.on('afterFixedChange', function(e) {
-                    setFixed(host, e.newVal);
+                self.on('afterFixedChange', function(e) {
+                    setFixed(self, e.newVal);
                 });
             });
         }
@@ -101,6 +103,8 @@ KISSY.add('overlay-fix', function(S) {
     });
 
     function setFixed(elem, f) {
+        if (!elem.container) return;
+
         // 更新left/top
         updatePosition(elem, f);
 

@@ -39,8 +39,12 @@ KISSY.add('alignment', function(S, undefined) {
     Overlay.Plugins.push({
         name: ALIGN,
         init: function(host) {
-            host.on('afterAlignChange', function(e) {
-                host.align();
+            host.on('create', function() {
+                var self = this;
+
+                self.on('afterAlignChange', function() {
+                    self.align();
+                });
             });
         }
     });
