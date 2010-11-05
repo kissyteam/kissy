@@ -137,9 +137,9 @@
                 }
 
                 self.__attach(mod, function() {
+                    if(mod._requires) mod.requires = mod._requires; // restore requires
                     if (!fired && self.__isAttached(modNames)) {
                         fired = true;
-                        if(mod._requires) mod.requires = mod._requires; // restore requires
                         callback && callback(self);
                     }
                 }, global);
