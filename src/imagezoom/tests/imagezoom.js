@@ -3,7 +3,7 @@ describe('imagezoom', function() {
         tempImage;
 
     beforeEach(function() {
-        tempImage = DOM.create('<img>', {src: 'smallImage', style: 'position: absolute'});
+        tempImage = DOM.create('<img>', {src: '1.jpg', style: 'position: absolute'});
         document.body.appendChild(tempImage);
         DOM.offset(tempImage, {left: 100, top: 100});
         DOM.width(tempImage, 400);
@@ -20,7 +20,8 @@ describe('imagezoom', function() {
             test = new S.ImageZoom(tempImage, {
                 zoomSize: [400, 400]
             });
-            test.set('bigImageSrc', 'bigImage.jpg');
+            test.set('bigImageSrc', '2.jpg');
+            test._ev = {pageX: 200, pageY: 200};
         });
         afterEach(function() {
             DOM.remove(test.viewer);
@@ -43,8 +44,8 @@ describe('imagezoom', function() {
 
             expect(test.viewer).toBeDefined();
             expect(test.lens).toBeDefined();
-            expect(test._lensSize[0]).toEqual(200);
-            expect(test._lensSize[1]).toEqual(200);
+            expect(test._lensSize[0]).toEqual(100);
+            expect(test._lensSize[1]).toEqual(133);
             expect(DOM.offset(test.viewer).left).toEqual(510);
             expect(DOM.offset(test.viewer).top).toEqual(100);
             expect(DOM.width(test.viewer)).toEqual(400);
@@ -53,9 +54,8 @@ describe('imagezoom', function() {
 
         it('should show viewer correctly when mouseenter', function() {
             test._init();
-            test._ev = {pageX: 200, pageY: 200};
             test._createViewer();
-            
+
             test.show();
 
             expect(DOM.css(test.lens, 'display')).not.toEqual('none');
@@ -68,10 +68,10 @@ describe('imagezoom', function() {
             test._createViewer();
 
             test._ev = {pageX: 300, pageY: 300};
-            expect(test._getLensOffset()).toEqual({ left: 200, top: 200 });
+            expect(test._getLensOffset()).toEqual({ left: 250, top: 233.5 });
 
             test._ev = {pageX: 320, pageY: 420};
-            expect(test._getLensOffset()).toEqual({ left: 220, top: 300 });
+            expect(test._getLensOffset()).toEqual({ left: 270, top: 353.5 });
         });
     });
 
@@ -86,7 +86,8 @@ describe('imagezoom', function() {
                 offset: 0,
                 lensIcon: false
             });
-            test.set('bigImageSrc', 'bigImage.jpg');
+            test.set('bigImageSrc', '2.jpg');
+            test._ev = {pageX: 220, pageY: 300};
         });
         afterEach(function() {
             DOM.remove(test.viewer);
@@ -118,10 +119,9 @@ describe('imagezoom', function() {
         it('should animate image correctly', function() {
             test._init();
             test._createViewer();
-            test._ev = {pageX: 220, pageY: 300};
             test._anim(0.5, 30);
 
-            waits(500);
+            waits(1000);
             runs(function() {
                 expect(DOM.width(test.bigImage)).toEqual(800);
                 expect(DOM.height(test.bigImage)).toEqual(800);
@@ -138,7 +138,8 @@ describe('imagezoom', function() {
             test = new S.ImageZoom(tempImage, {
                 bigImageSize: [800, 800]
             });
-            test.set('bigImageSrc', 'bigImage.jpg');
+            test.set('bigImageSrc', '2.jpg');
+            test._ev = {pageX: 200, pageY: 200};
         });
         afterEach(function() {
             DOM.remove(test.viewer);
