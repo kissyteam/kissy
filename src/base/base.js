@@ -67,7 +67,7 @@ KISSY.add('base', function (S) {
         if (S.isArray(baseCls)) {
             sx = px;
             px = exts;
-            exts = baseCls;
+            exts = arguments[0];
             baseCls = Base;
         }
         function re() {
@@ -88,7 +88,7 @@ KISSY.add('base', function (S) {
             }
         }
         return re;
-    }
+    };
     S.Base = Base;
 });
 
