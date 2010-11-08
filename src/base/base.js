@@ -84,6 +84,7 @@ KISSY.add('base', function (S) {
                 if (attrs) {
                     re.ATTRS = re.ATTRS || {};
                     S.mix(re.ATTRS, attrs);
+                    S.augment(re, exts[i]);
                 }
             }
         }
@@ -93,5 +94,5 @@ KISSY.add('base', function (S) {
 });
 
 /**
- * 2011-11-08 Base && yui3 Widget 压缩一下
+ * 2011-11-08 add create by chengyu,Base && yui3 Widget 压缩一下 
  */
