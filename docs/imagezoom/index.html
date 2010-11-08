@@ -34,9 +34,8 @@
 
 <pre class="example-code"><code>
 KISSY.ready(function(S) {
-	new S.ImageZoom("#standard", {
-            bigImageSrc: 'big image url'
-        });
+    var a = new S.ImageZoom("#standard");
+    a.set('bigImageSrc'. 'big image url');
 });
 </code></pre>
                     </div>
@@ -51,7 +50,7 @@ KISSY.ready(function(S) {
                         <p>缩放显示类型, 默认是标准模式 'standard', 目前仅支持此模式. </p>
                     </div>
                 </div>
-
+                
                 <div class="member prop">
                     <h4><a name="bigImageSrc">bigImageSrc</a> - <code>String</code></h4>
                     <div class="detail">
@@ -115,19 +114,19 @@ KISSY.ready(function(S) {
                 </div>
 
                 <div class="member prop">
-                    <h4><a name="hasZoom">hasZoom</a> - <code>Boolean</code></h4>
-                    <div class="detail">
-                        <p>初始时是否显示放大效果. 默认为 true, 显示放大. 在多图切换时, 可重设该值来开启或关闭显示放大功能. 如果多个图都不需要放大显示, ImageZoom 不会生成任何东西.</p>
-                    </div>
-                </div>
-
-                <div class="member prop">
                     <h4><a name="zoomSize">zoomSize</a> - <code>Array</code></h4>
                     <div class="detail">
                         <p>放大区域宽高. 默认为 ['auto', 'auto'], 当取 'auto' 时, 宽/高 取小图的高/宽. </p>
                     </div>
                 </div>
 
+                <div class="member prop">
+                    <h4><a name="hasZoom">hasZoom</a> - <code>Boolean</code></h4>
+                    <div class="detail">
+                        <p>初始时是否显示放大效果. 默认为 true, 显示放大. 在多图切换时, 可重设该值来开启或关闭显示放大功能. 如果多个图都不需要放大显示, ImageZoom 不会生成任何东西.</p>
+                    </div>
+                </div>
+                
                 <div class="member prop">
                     <h4><a name="lensIcon">lensIcon</a> - <code>Boolean</code></h4>
                     <div class="detail">
@@ -197,8 +196,9 @@ KISSY.ready(function(S) {
                 <div class="member prop">
                     <h4><a name="method_set">set(name, val)</a></h4>
                     <div class="detail">
-                        <p>设置配置信息, 目前只可动态设置 bigImageSrc 这个值. </p>
-                        <p>如果有多张图片切换时, 需要修改 大图src, 如: </p>
+                        <p>设置如下属性. </p>
+                        <p> - bigImageSrc - <code>String</code>: 大图路径, 为 '' 时, 取触点上的 data-ks-imagezoom 属性值. 默认为 ''. <br />
+                            如果有多张图片切换时, 需要修改 大图src, 如: </p>
 <pre class="example-code"><code>
 KISSY.ready(function(S) {
     var m = new S.ImageZoom("#multi");
@@ -209,9 +209,47 @@ KISSY.ready(function(S) {
     });
 });
 </code></pre>
+                        <p> - hasZoom - <code>Boolean</code>: 初始时是否显示放大效果. 默认为 true, 显示放大. 在多图切换时, 可重设该值来开启或关闭显示放大功能. 如果多个图都不需要放大显示, ImageZoom 不会生成任何东西.</p>
                     </div>
                 </div>
+
+                <div class="member prop">
+                    <h4><a name="method_changeImageSrc">changeImageSrc()</a></h4>
+                    <div class="detail">
+                        <p>设置小图 src. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="method_refreshRegion">refreshRegion()</a></h4>
+                    <div class="detail">
+                        <p>调整放大区域位置. </p>
+                    </div>
+                </div>
+                
             </div>
+
+        <div class="section">
+            <h3 id="Events">Events</h3>
+            <div class="member prop">
+                <h4><a name="event_show"><code>show</code></a></h4>
+                <div class="detail">
+                    <p>放大区域显示之后.</p>
+                </div>
+            </div>
+            <div class="member prop">
+                <h4><a name="event_hide"><code>hide</code></a></h4>
+                <div class="detail">
+                    <p>放大区域隐藏之后.</p>
+                </div>
+            </div>
+            <div class="member prop">
+                <h4><a name="event_viewer_create"><code>viewer_create</code></a></h4>
+                <div class="detail">
+                    <p>放大区域生成之后.</p>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
     <div class="col-sub">
@@ -254,8 +292,16 @@ KISSY.ready(function(S) {
                     <li><a href="#method_show">show</a></li>
                     <li><a href="#method_hide">hide</a></li>
                     <li><a href="#method_set">set</a></li>
+                    <li><a href="#method_changeImageSrc">changeImageSrc</a></li>
+                    <li><a href="#method_refreshRegion">refreshRegion</a></li>
                 </ul>
 
+                <h3>Events</h3>
+                <ul>
+                    <li><a href="#event_show">show</a></li>
+                    <li><a href="#event_hide">hide</a></li>
+                    <li><a href="#event_viewer_create">viewer_create</a></li>
+                </ul>
             </div>
         </div>
     </div>

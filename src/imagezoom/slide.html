@@ -194,15 +194,12 @@ pre {
 config:
     type: STANDARD,            // 显示类型
 
-    bigImageSrc: '',           // 大图路径, 默认为 '', 会取触点上的 data-ks-imagezoom 属性值.
     bigImageSize: [800, 800],  // 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值.
     position: 'right',         // 大图显示位置, 可取 top, right, bottom, left, inner
     //alignTo: undefined,      // 大图显示位置相对于哪个元素, 默认不设置, 相对于小图位置, 如果取 PARENT, 为小图的 offsetParent 元素
     offset: 10,                // 大图位置的偏移量. 单一值或 [x, y]
     preload: true,             // 是否预加载大图
 
-    hasZoom: true              // 初始时是否显示放大效果. 默认为 true, 显示放大. 在多图切换时, 可重设该值来开启或关闭显示放大功能.
-                               // 如果多个图都不需要放大显示, ImageZoom 不会生成任何东西.
     zoomSize: [AUTO, AUTO],    // 放大区域宽高
     lensIcon: true,            // 是否显示放大镜提示图标
 
@@ -221,6 +218,11 @@ Method:
         - bigImageSrc   // 重设大图 url
         - hasZoom       // 重设 hasZoom 标志
     changeImageSrc // 设置小图 src
+    refreshRegion  // 调整放大区域位置
+Event:
+    show        // 放大区域显示之后
+    hide        // 放大区域隐藏之后
+    viewer_create // 放大区域生成之后
 </pre>
             </section>
         </div>
@@ -230,9 +232,8 @@ Method:
             <section>
                 <pre>
 1) 出现镜片, 大图位置默认在小图右边:
-        new S.ImageZoom("#standard", {
-                            bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg"
-                        });
+        var a = new S.ImageZoom("#standard");
+        a.set('bigImageSrc', "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg");
 
 2) 多图切换时, 大图 src 的更改通过 m.set('bigImageSrc', data); 小图 src 通过 changeImageSrc ,
    也可直接在外部更改小图 src 值, 两者区别仅在是否处理 ks-imagezoom-loading 状态.
@@ -252,6 +253,8 @@ Method:
             lensIcon: false
         });
     另外, inner 方式下, 对齐元素为原小图, 设置 alignTo 无效.
+4) hasZoom 属性, 默认为 true. 在多图切换时, 可重设该值来开启或关闭显示放大功能. 如果多个图都不需要放大显示, ImageZoom 不会生成任何东西.
+        m.set('hasZoom', false);
                 </pre>
             </section>
         </div>

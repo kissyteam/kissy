@@ -54,6 +54,11 @@ KISSY.add('mask', function(S, undefined) {
             DOM.hide([this.iframe, this.layer]);
         },
 
+        dispose: function() {
+            this.iframe && DOM.remove(this.iframe);
+            this.layer && DOM.remove(this.layer);
+        },
+
         toggle: function() {
             var isVisible = DOM.css(this.iframe, DISPLAY) !== 'none';
             this[isVisible ? 'hide' : 'show']();
@@ -96,8 +101,8 @@ KISSY.add('mask', function(S, undefined) {
 
     function setSize(elem, w, h) {
         if (elem) {
-            DOM.width(elem, w);
-            DOM.height(elem, h);
+            DOM.width(elem, w+20);
+            DOM.height(elem, h+20);
         }
     }
 

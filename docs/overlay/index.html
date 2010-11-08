@@ -128,6 +128,9 @@ Event.on('#btn', 'click', function(){
                     <h4><a name="xy">xy</a> - <code>Array</code></h4>
                     <div class="detail">
                         <p>相对 page 定位, 有效值为 [n, m]. </p>
+                        <p class="notice">
+                            后来, 加入了 x 和 y 两个独立参数, 设置 xy 等价于分别设置 x 和 y.
+                        </p>
                     </div>
                 </div>
 
@@ -173,6 +176,33 @@ var test = new S.Overlay('#popup2', {
                     <h4><a name="shim">shim</a> - <code>Boolean</code></h4>
                     <div class="detail">
                         <p>是否需要垫片, IE6 下默认需要. </p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="fixed">fixed</a> - <code>Boolean</code></h4>
+                    <div class="detail">
+                        <p>是否位置固定, 默认为 false.</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="draggable">draggable</a> - <code>Boolean</code></h4>
+                    <div class="detail">
+                        <p>是否可拖动, 默认为 false. 需要引入 dd 支持.</p>
+                    </div>
+                </div>
+
+                <div class="member prop">
+                    <h4><a name="constrain">constrain</a> - <code>Object</code></h4>
+                    <div class="detail">
+                        <p>限制功能, 两个.</p>
+                        <pre class="example-code">
+constrain: {
+    node: undefined,    // 如果没有设置限制容器元素, 默认以可视区域
+    mode: false         // 开启/关闭限制
+}
+</pre>
                     </div>
                 </div>
             </div>
@@ -298,6 +328,8 @@ Member:
     header                          // 对话框头部的HTML元素
     footer                          // 对话框尾部的HTML元素
     manager                         // 当前 DialogManager, 下面会介绍
+    ID                              // 唯一的 ID
+
 Method:
     setHeader()                     // 设置 header 内容
     setFooter()                     // 设置 footer 内容
@@ -314,6 +346,7 @@ Method:
     register()                    // 将 dialog 实例注册到 DialogManager 中
                                   // 且, dialog 示例也可以通过自己的 manager 访问到这个 DialogManager.
     hideAll()                     // 隐藏页面上所有的 dialog
+    get(id)                       // 根据 id 获取对于的 dialog 对象
                         </pre>
                         <pre class="example-code"><code>
 KISSY.ready(function(S){
@@ -429,6 +462,9 @@ Method:
                     <li><a href="#align">align</a></li>
                     <li><a href="#mask">mask</a></li>
                     <li><a href="#shim">shim</a></li>
+                    <li><a href="#fixed">fixed</a></li>
+                    <li><a href="#draggable">draggable</a></li>
+                    <li><a href="#constrain">constrain</a></li>
                 </ul>
 
                 <h3>Member</h3>
