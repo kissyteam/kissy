@@ -466,7 +466,6 @@ KISSY.add('overlay', function(S, undefined) {
 
         /**
          * 设置内容
-         * @deprecated set('content', html)
          * @param {string} html
          */
         setBody: function(html) {

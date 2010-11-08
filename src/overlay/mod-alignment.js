@@ -145,8 +145,6 @@ KISSY.add('alignment', function(S, undefined) {
 
 }, { host: 'overlay' });
 
-
-
 /**
  * Note:
  * - 2010/11/01 从 Overlay 中拆分出 align

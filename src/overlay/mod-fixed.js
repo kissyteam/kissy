@@ -1,9 +1,9 @@
 /**
- * Overlay Fix Plugin
+ * Overlay Fixed Plugin
  * @author 乔花<qiaohua@taobao.com>
  */
 
-KISSY.add('overlay-fix', function(S) {
+KISSY.add('overlay-fixed', function(S) {
     var DOM = S.DOM,
         Overlay = S.Overlay,
         FIXED = 'fixed', POSITION = 'position', ABSOLUTE = 'absolute',
