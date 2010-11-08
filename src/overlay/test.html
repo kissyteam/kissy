@@ -247,11 +247,11 @@
         height: 400px;
     }
 </style>
-<h2>Dialog Constrain + Fixed</h2>
+<h2>Dialog Constrain</h2>
 <div class="constrain">
     constrain area
 </div>
-<button id="btn6">show</button><button id="btn7">release</button><button id="btn8">center</button><button id="btn9">fixed</button>
+<button id="btn6">show</button><button id="btn7">release</button><button id="btn8">center</button>
 <script>
     KISSY.ready(function(S){
         var dialog = new S.Dialog({
@@ -263,20 +263,16 @@
             footer: 'footer',
             content: 'content',
             mask: false,
-            constrain: {
-                node: '.constrain',
-                mode: true
-            },
             align: {
                 node: '.constrain',
-                points: ['cr', 'cc']
+                points: ['bc', 'cc']
             },
+            constrain: '.constrain',
             draggable: true
         });
 
         var stat = ['release', 'constrain'],
-            sh = ['show', 'hide'],
-            fx = ['fixed', 'unfixed'];
+            sh = ['show', 'hide'];
         S.Event.on('#btn6', 'click', function() {
             var b = this,
                 s = S.DOM.html(b);
@@ -295,27 +291,29 @@
                 s = S.DOM.html(b);
 
             if (s == stat[0]) {
-                dialog.toggleConstrain(false);
+                dialog.set('constrain', false);
                 S.DOM.html(b, stat[1]);
             } else {
-                dialog.toggleConstrain(true);
+                dialog.set('constrain', '.constrain');
                 S.DOM.html(b, stat[0]);
             }
         });
         S.Event.on('#btn8', 'click', function() {
             dialog.center();
         });
+    });
+</script>
+<p class="code-switch">显示源码</p>
 
-        S.Event.on('#btn9', 'click', function() {
-            var b = this,
-                s = S.DOM.html(b);
-            if (s == fx[0]) {
-                dialog.set('fixed', true);
-                S.DOM.html(b, fx[1]);
-            } else {
-                dialog.set('fixed', false);
-                S.DOM.html(b, fx[0]);
-            }
+
+<h2>Dialog + Fixed </h2>
+<button id="btn9">Show</button>
+<script>
+    KISSY.ready(function(S){
+        new S.Dialog({
+            trigger: '#btn9',
+            content: '再怎么滚, 我都不会动~',
+            fixed: true
         });
     });
 </script>
