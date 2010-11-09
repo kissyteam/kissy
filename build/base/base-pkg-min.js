@@ -1,6 +1,9 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 2 13:10
+build time: Nov 9 20:03
 */
-KISSY.add("base",function(c){function f(d){for(var b=this.constructor,a,e;b;){if(e=b.ATTRS)for(a in e)e.hasOwnProperty(a)&&!this.hasAttr(a)&&this.addAttr(a,e[a]);b=b.superclass?b.superclass.constructor:null}if(d)for(a in d)d.hasOwnProperty(a)&&this.__set(a,d[a])}c.augment(f,c.EventTarget,c.Attribute);c.Base=f});
+KISSY.add("base",function(f){function i(a){for(var c=this.constructor,b,e;c;){if(e=c.ATTRS)for(b in e)e.hasOwnProperty(b)&&!this.hasAttr(b)&&this.addAttr(b,e[b]);if(e=(e=c._kissycreate)&&e._exts)for(var d=0;d<e.length;d++)e[d]&&e[d].call(this,a);if(a&&a[k]&&c.HTML_PARSER){e=a[k];d=c.HTML_PARSER;var g=void 0;for(g in d)if(d.hasOwnProperty(g)){var h=d[g];if(f.isFunction(h))this.set(g,h.call(this,e));else if(f.isString(h))this.set(g,e.one(h));else f.isArray(h)&&h[0]&&this.set(g,e.all(h[0]))}}c=c.superclass?
+c.superclass.constructor:null}if(a)for(b in a)a.hasOwnProperty(b)&&this.__set(b,a[b]);this.init&&this.init();a&&a.autoRender&&this.renderer()}var k="srcNode",j=f.Attribute.capitalFirst;i.HTML_PARSER={};i.ATTRS={rendered:{value:false},render:{setter:function(a){if(f.isString(a))return f.one(a)}}};f.augment(i,f.EventTarget,f.Attribute,{renderer:function(){var a=this.get("render");if(!this.get("rendered")){this.renderUI(a);this.bindUI();this.syncUI();this.set("rendered",true)}},renderUI:function(){this.fire("renderUI")},
+bindUI:function(){var a=this,c=a.getDefAttrs(),b;for(b in c)if(c.hasOwnProperty(b)){var e="_uiSet"+j(b);a[e]&&function(d,g){a.on("after"+j(d)+"Change",function(h){a[g](h.newVal)})}(b,e)}a.fire("bindUI")},syncUI:function(){var a=this.getDefAttrs(),c;for(c in a)if(a.hasOwnProperty(c)){var b="_uiSet"+j(c);this[b]&&this[b](this.get(c))}this.fire("syncUI")},destroy:function(){this.detach();this.fire("destroy")}});i.create=function(a,c,b,e){function d(){d.superclass.constructor.apply(this,arguments)}if(f.isArray(a)){e=
+b;b=c;c=a;a=i}a=a||i;f.extend(d,a,b,e);if(c){d._kissycreate=d._kissycreate||{};d._kissycreate._exts=c;for(a=0;a<c.length;a++){e=(b=c[a])&&b.ATTRS;var g=b&&b.HTML_PARSER;if(e&&b){d.ATTRS=d.ATTRS||{};d.HTML_PARSER=d.HTML_PARSER||{};f.mix(d.ATTRS,e,false);f.mix(d.HTML_PARSER,g,false);f.augment(d,c[a])}}}return d};f.Base=i});

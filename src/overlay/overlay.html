@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Test</title>
+</head>
+<body>
+<button id="show1">
+    show
+</button>
+<button id="hide1">
+    hide
+</button>
+
+
+<div id="markup" class="ks-overlay">
+    <div class="ks-innerbox-content">
+        从 markup 生成 overlay
+    </div>
+</div>
+
+
+<button id="show2">
+    show from markup
+</button>
+
+<button id="hide2">
+    hide from markup
+</button>
+<script src="../../build/kissy.js"></script>
+<script src="../ext/boxExt.js"></script>
+<script src="../ext/innerBoxExt.js"></script>
+<script src="../ext/positionExt.js"></script>
+<script src="overlay.js"></script>
+<script>
+    KISSY.ready(function(S) {
+        var Overlay = S.Overlay;
+
+        //debugger
+
+        var o = new Overlay({
+            content:"i am overly 动态生成",
+            x:100,
+            y:100
+        });
+
+        var o2 = new Overlay({
+            srcNode:S.one("#markup"),
+            autoRender:true,
+            x:100,
+            y:100
+        });
+
+        S.one("#show1").on("click", function() {
+            o.show();
+        });
+
+        S.one("#hide1").on("click", function() {
+            o.hide();
+        });
+
+        S.one("#show2").on("click", function() {
+            o2.show();
+        });
+
+        S.one("#hide2").on("click", function() {
+            o2.hide();
+        });
+
+    });
+</script>
+</body>
+</html>

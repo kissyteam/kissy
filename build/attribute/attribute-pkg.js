@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 2 13:10
+build time: Nov 9 13:15
 */
 /**
  * @module  Attribute
@@ -17,12 +17,12 @@ KISSY.add('attribute', function(S, undefined) {
         /**
          * attribute meta information
          {
-            attrName: {
-                getter: function,
-                setter: function,
-                value: v, // default value
-                valueFn: function
-            }
+         attrName: {
+         getter: function,
+         setter: function,
+         value: v, // default value
+         valueFn: function
+         }
          }
          */
         //host.__attrs = { };
@@ -30,7 +30,7 @@ KISSY.add('attribute', function(S, undefined) {
         /**
          * attribute value
          {
-            attrName: attrVal
+         attrName: attrVal
          }
          */
         //host.__attrVals = { };
@@ -40,10 +40,14 @@ KISSY.add('attribute', function(S, undefined) {
 
         __initAttrs: function() {
             var host = this;
-            if(host.__attrs) return;
+            if (host.__attrs) return;
 
             host.__attrs = { };
             host.__attrVals = { };
+        },
+
+        getDefAttrs:function() {
+            return S.clone(this.__attrs);
         },
 
         /**
@@ -97,7 +101,7 @@ KISSY.add('attribute', function(S, undefined) {
         removeAttr: function(name) {
             var host = this;
 
-            if(host.hasAttr(name)) {
+            if (host.hasAttr(name)) {
                 delete host.__attrs.name;
                 delete host.__attrVals.name;
             }
@@ -208,7 +212,7 @@ KISSY.add('attribute', function(S, undefined) {
                     host.reset(name);
                 }
             }
-            
+
             return host;
         }
     });
@@ -219,4 +223,6 @@ KISSY.add('attribute', function(S, undefined) {
         s = s + '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
+
+    Attribute.capitalFirst = capitalFirst;
 });
