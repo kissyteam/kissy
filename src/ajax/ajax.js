@@ -4,7 +4,8 @@
  */
 KISSY.add('ajax', function(S) {
 
-	S.Ajax = S.Ajax || {};
+	//S.Ajax = S.Ajax || {};
+	S.namespace('S.Ajax');
 
 	//通讯序列号
 	_transactionid = 0;
@@ -13,6 +14,10 @@ KISSY.add('ajax', function(S) {
 	var id = function(){
 		return _transactionid++;
 	};
+
+	var _ajaxEventFactory = new Function;
+	S.augment(_ajaxEventFactory,S.EventTarget);
+	var _ajaxEventCenter = new _ajaxEventFactory();
 
 	//检测xhr是否成功
 	var _httpSuccess = function( xhr ) {
@@ -26,13 +31,20 @@ KISSY.add('ajax', function(S) {
 		return false;
 	};
 
+	//将form转换为数组
+	//是否需要？
+	var serializeArray = function(elem){
+
+
+	};
+
 	/**
 	 * S.Ajax.io(options) 基础方法,派生出S.Ajax.get,S.Ajax.post,
 	 * @param o
 	 			type:get,GET,post,POST
 				url:
 				data:a=1&b=2
-				dataType:jsonp
+				dataType:jsonp,json,script.. 字段来自于 acceept
 				complete:function
 				success:function
 				failure:function
@@ -122,7 +134,13 @@ KISSY.add('ajax', function(S) {
 			// Handle JSONP-style loading
 			window[ jsonp ] = window[ jsonp ] || function( data ) {
 				s.success(id(),data,s.args);
+				_ajaxEventCenter.fire('success',{
+					xhr:xhr	
+				});
 				s.complete(id(),data,s.args);
+				_ajaxEventCenter.fire('complete',{
+					xhr:xhr	
+				});
 				/*
 				//是否需要delete，需要经过测试
 				window[ jsonp ] = undefined;
@@ -133,7 +151,6 @@ KISSY.add('ajax', function(S) {
 			};
 		}
 
-
 		if ( s.data && type === "GET" ) {
 			s.url += (rquery.test(s.url) ? "&" : "?") + s.data;
 		}
@@ -143,11 +160,23 @@ KISSY.add('ajax', function(S) {
 			if(!jsonp){
 				S.getScript(s.url,function(){
 					s.complete(id(),s.args);
+					_ajaxEventCenter.fire('complete',{
+						xhr:xhr	
+					});
 					s.success(id(),s.args);
+					_ajaxEventCenter.fire('success',{
+						xhr:xhr	
+					});
 				});
 
 			}else {
+				_ajaxEventCenter.fire('start',{
+					xhr:xhr	
+				});
 				S.getScript(s.url,new Function);
+				_ajaxEventCenter.fire('send',{
+					xhr:xhr	
+				});
 			}
 
 			return undefined;
@@ -158,6 +187,9 @@ KISSY.add('ajax', function(S) {
 
 		var xhr = s.xhr();
 		
+		_ajaxEventCenter.fire('start',{
+			xhr:xhr	
+		});
 		xhr.open(type, s.url, s.async);
 
 		// Need an extra try/catch for cross domain requests in Firefox 3
@@ -181,6 +213,9 @@ KISSY.add('ajax', function(S) {
 				// so we simulate the call
 				if ( !requestDone ) {
 					s.complete(id(),xhr,s.args);
+					_ajaxEventCenter.fire('complete',{
+						xhr:xhr	
+					});
 				}
 
 				//请求完成，onreadystatechange值空
@@ -205,16 +240,28 @@ KISSY.add('ajax', function(S) {
 					// JSONP handles its own success callback
 					if ( !jsonp ) {
 						s.success(id(),xhr,s.args);
+						_ajaxEventCenter.fire('success',{
+							xhr:xhr	
+						});
 					}
 				} else {
 					s.failure(id(),xhr,s.args);
+					_ajaxEventCenter.fire('error',{
+						xhr:xhr	
+					});
 				}
 
 				// Fire the complete handlers
 				s.complete(id(),xhr,s.args);
+				_ajaxEventCenter.fire('complete',{
+					xhr:xhr	
+				});
 
 				if ( isTimeout === "timeout" ) {
 					xhr.abort();
+					_ajaxEventCenter.fire('stop',{
+						xhr:xhr	
+					});
 				}
 
 				// Stop memory leaks
@@ -224,9 +271,17 @@ KISSY.add('ajax', function(S) {
 			}
 		};
 
+		_ajaxEventCenter.fire('send',{
+			xhr:xhr	
+		});
 		xhr.send( type === "POST" ? s.data : null );
 
 		// return XMLHttpRequest to allow aborting the request etc.
+		if(s.async == false){
+			_ajaxEventCenter.fire('complete',{
+				xhr:xhr	
+			});
+		}
 		return xhr;
 
 
@@ -240,26 +295,141 @@ KISSY.add('ajax', function(S) {
         /**
          * Sends an HTTP request to a remote server.
          */
-        get: function(url, options) {
-			var s = options;
-			s.type = 'get';
-			s.url = url;
-			S.Ajax(s);
+        get: function(url, data, callback,dataType) {
+			//get(url)
+			if(typeof data == 'undefined'){
+				var data = null,
+					callback = new Function,
+					dateType = '_default';
+			}
+			//get(url,callback)
+			//get(url,callback,type)
+			if(typeof data == 'function' ){
+				var dataType = callback || '_default',
+					callback = data,
+					data = null;
+			}
+			//get(url,data)
+			if(typeof callback == 'undefined'){
+				var callback = new Function,
+					dataType = '_default';
+			}
+			//get(url,data,callback,type)
+			
+			S.Ajax({
+				type:'get',
+				url:url,
+				data:data,
+				complete:function(id,data,args){
+					callback(data,args);
+				},
+				dataType:dataType
+			});
+
         },
 
-		post: function(url,options){
-			var s = options;
-			s.type = 'post';
-			s.url = url;
-			S.Ajax(s);
+		post: function(url,data,callback,dataType){
+			//post(url)
+			if(typeof data == 'undefined'){
+				var data = null,
+					callback = new Function,
+					dateType = '_default';
+			}
+			//post(url,callback)
+			//post(url,callback,type)
+			if(typeof data == 'function' ){
+				var dataType = callback || '_default',
+					callback = data,
+					data = null;
+			}
+			//post(url,data)
+			if(typeof callback == 'undefined'){
+				var callback = new Function,
+					dataType = '_default';
+			}
+			//post(url,data,callback,type)
+			S.Ajax({
+				type:'post',
+				url:url,
+				complete:function(id,data,args){
+					callback(data,args);
+				},
+				data:data,
+				dataType:dataType
+			});
+		},
+		jsonp : function(url,data,callback){
+			//jsonp(url)
+			if(typeof data == 'undefined'){
+				var data = null,
+					callback = new Function;
+			}
+			//jsonp(url,callback)
+			if(typeof data == 'function' ){
+				var callback = data,
+					data = null;
+			}
+			//jsonp(url,data)
+			if(typeof callback == 'undefined'){
+				var callback = new Function;
+			}
+			//jsonp(url,data,callback)
+			S.Ajax({
+				dataType:'jsonp',
+				url:url,
+				complete:function(id,data,args){
+					callback(data,args);
+				},
+				data:data
+			});
+
+
+		},
+		getJSON:function(url,data,callback){
+			//getJSON(url)
+			if(typeof data == 'undefined'){
+				var data = null,
+					callback = new Function;
+			}
+			//getJSON(url,callback)
+			if(typeof data == 'function' ){
+				var callback = data,
+					data = null;
+			}
+			//getJSON(url,data)
+			if(typeof callback == 'undefined'){
+				var callback = new Function;
+			}
+			//getJSON(url,data,callback)
+			S.Ajax({
+				dataType:'json',
+				url:url,
+				complete:function(id,xhr,args){
+					callback(S.JSON.parse(xhr.responseText),args);
+				},
+				data:data
+			});
+
+		},
+		onComplete:function(callback){
+			_ajaxEventCenter.on('complete',callback);
+		},
+		onError:function(callback){
+			_ajaxEventCenter.on('error',callback);
+		},
+		onSend:function(callback){
+			_ajaxEventCenter.on('send',callback);
+		},
+		onStart:function(callback){
+			_ajaxEventCenter.on('start',callback);
+		},
+		onStop:function(callback){
+			_ajaxEventCenter.on('stop',callback);
+		},
+		onSuccess:function(callback){
+			_ajaxEventCenter.on('success',callback);
 		}
 
-        /**
-         * Load a JavaScript file from the server using a GET HTTP request, then execute it.
-         */
-		/*
-        getScript:
-		*/
 			
 	});
 
@@ -281,4 +451,7 @@ KISSY.add('ajax', function(S) {
  *			基本格式依照 callback(id,xhr,args)
  *   - 没有经过严格测试，包括jsonp里的内存泄漏的测试
  *			对xml,json的格式的回调支持是否必要？
+ * 2010.11
+ *	 - 实现了S.io.get/post/jsonp/getJSON 
+ *   - 实现了onComplete/onError/onSend/onStart/onStop/onSucess的ajax状态的处理
  */

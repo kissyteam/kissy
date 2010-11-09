@@ -54,46 +54,37 @@ S.add({
 	}
 }).use('ajax',function(S){
 
+
+	S.io.onStart(function(){
+		S.Node('<p><img src="http://img04.taobaocdn.com/tps/i4/T1CntDXh8hXXXXXXXX-32-32.gif" /></p>').insertBefore('#console');
+	});
+	S.io.onComplete(function(){
+		S.one('#console').prev().remove();
+	});
+
 	//普通get请求
 	S.one('#GET').on('click',function(e){
-		S.io({
-			type:'get',
-			url:'interface.php?t=get',
-			complete:function(id,o,args){
-				S.log('GET '+o.responseText);
-			}
+		S.io.get('interface.php?t=get',function(o,args){
+			S.log('GET '+o.responseText);
 		});
-		
 	});
 
 	//普通post请求
 	S.one('#POST').on('click',function(e){
-
-		S.io({
+		S.io.post('interface.php?t=post',{
 			type:'post',
-			data:{
-				type:'post',
-				name:'jayli',
-				company:'cn.yahoo.com',
-				countru:'china'
-			},
-			url:'interface.php?t=post',
-			complete:function(id,o,args){
-				S.log('POST '+o.responseText);
-			}
+			name:'jayli',
+			company:'cn.yahoo.com',
+			countru:'china'
+		},function(o,args){
+			S.log('POST '+o.responseText);
 		});
-		
 	});
 
 	//JSONP
 	S.one('#JSONP1').on('click',function(e){
-
-		S.io({
-			url:'interface.php?callback=?',
-			dataType:'jsonp',
-			complete:function(id,data,args){
-				S.log(data.toString() + 'Simple Jsonp callback');
-			}
+		S.io.jsonp('interface.php?callback=?',function(data,args){
+			S.log(data.toString() + 'Simple Jsonp callback');
 		});
 		
 	});
