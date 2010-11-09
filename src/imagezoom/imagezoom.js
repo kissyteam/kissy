@@ -19,11 +19,10 @@ KISSY.add('imagezoom', function(S, undefined) {
         AUTO = 'auto',
         POSITION = ['top', 'right', 'bottom', 'left', 'inner'],
         SRC = 'src', MOUSEMOVE = 'mousemove', PARENT = 'parent',
-        HASZOOM = 'hasZoom', BIGIMAGESRC = 'bigImageSrc', ABS_STYLE = '" style="position:absolute;top:0;left:0">',
-        EMPTY = '', SHOW = 'show', HIDE = 'hide', ZOOMSIZE = 'zoomSize', OFFSET = 'offset', POS = 'position',
-        BIGIMAGESIZE = 'bigImageSize',
+        HAS_ZOOM = 'hasZoom', BIG_IMAGE_SRC = 'bigImageSrc', ABS_STYLE = '" style="position:absolute;top:0;left:0">',
+        EMPTY = '', SHOW = 'show', HIDE = 'hide', ZOOM_SIZE = 'zoomSize', OFFSET = 'offset', POS = 'position',
+        BIG_IMAGE_SIZE = 'bigImageSize',
 
-        EVENT_VIEWER_CREATE = 'viewer_create',
         EVENT_SHOW = SHOW,
         EVENT_HIDE = HIDE;
 
@@ -75,13 +74,13 @@ KISSY.add('imagezoom', function(S, undefined) {
             value: '',
             setter: function(v) {
                 var self = this,
-                    old = self.get(BIGIMAGESRC);
+                    old = self.get(BIG_IMAGE_SRC);
 
                 if (v && RE_IMG_SRC.test(v) && v !== old) {
                     self._cacheBigImageSrc = old;
                     return v;
                 }
-                return self.get(BIGIMAGESRC);
+                return self.get(BIG_IMAGE_SRC);
             },
             getter: function(v) {
                 var self = this, data;
@@ -100,7 +99,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         bigImageSize: {
             value: [800, 800],
             setter: function(v) {
-                return S.mix(this.get(BIGIMAGESIZE), toArray(v));
+                return S.mix(this.get(BIG_IMAGE_SIZE), toArray(v));
             }
         },
 
@@ -143,7 +142,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         zoomSize: {
             value: [AUTO, AUTO],
             setter: function(v) {
-                return S.mix(this.get(ZOOMSIZE), toArray(v));
+                return S.mix(this.get(ZOOM_SIZE), toArray(v));
             },
             getter: function(v) {
                 var self = this;
@@ -181,7 +180,8 @@ KISSY.add('imagezoom', function(S, undefined) {
         }
     };
 
-    S.augment(ImageZoom, S.EventTarget, {
+    S.augment(ImageZoom, {
+
         /**
          * 初始化
          * @private
@@ -191,7 +191,7 @@ KISSY.add('imagezoom', function(S, undefined) {
                 tmp, image = self.image;
 
             // 预加载大图
-            tmp = self.get(BIGIMAGESRC);
+            tmp = self.get(BIG_IMAGE_SRC);
             if (tmp && self.get('preload')) {
                 new Image().src = tmp;
             }
@@ -202,22 +202,23 @@ KISSY.add('imagezoom', function(S, undefined) {
             self._getAlignTo();
 
             // 大图高宽, 默认使用配置信息中, 当加载大图之后, 更新该值
-            tmp = self.get(BIGIMAGESIZE);
+            tmp = self.get(BIG_IMAGE_SIZE);
             self._bigImageSize = { width: tmp[0], height: tmp[1] };
 
             // 首次加载小图从缓存读取或在绑定load事件之前已经加载完小图时
-            self.get(HASZOOM) && !image.complete && self._startLoading();
+            self.get(HAS_ZOOM) && !image.complete && self._startLoading();
 
             // 初始化标志, 多张小图切换时, 通过此标志判断是否需要初始化
             self._firstInit = true;
             // 在小图加载完毕时初始化
             imgOnLoad(image, function() {
-                if (!self.get(HASZOOM)) return;
+                if (!self.get(HAS_ZOOM)) return;
                 self._finishLoading();
 
                 self._ready();
             });
         },
+
         /**
          * 获取参照元素的位置
          * @private
@@ -290,7 +291,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             var self = this, timer;
 
             Event.on(self.image, 'mouseenter', function(ev) {
-                if (!self.get(HASZOOM)) return;
+                if (!self.get(HAS_ZOOM)) return;
 
                 self._setEv(ev);
                 Event.on(doc.body, MOUSEMOVE, self._setEv, self);
@@ -304,7 +305,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             });
 
             Event.on(self.image, 'mouseleave', function() {
-                if (!self.get(HASZOOM)) return;
+                if (!self.get(HAS_ZOOM)) return;
 
                 Event.remove(doc.body, MOUSEMOVE, self._setEv);
 
@@ -344,7 +345,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             var self = this,
                 v, bigImage, bigImageCopy,
                 bigImageSize = self._bigImageSize,
-                bigImageSrc = self.get(BIGIMAGESRC);
+                bigImageSrc = self.get(BIG_IMAGE_SRC);
 
             // 创建 viewer 的 DOM 结构
             v = createAbsElem(CLS_VIEWER + ' ' + self.get('zoomCls'));
@@ -386,8 +387,6 @@ KISSY.add('imagezoom', function(S, undefined) {
                 // 加载完立刻定位到鼠标位置
                 if (!self._isInner) self._onMouseMove();
             });
-
-            self.fire(EVENT_VIEWER_CREATE);
         },
 
         /**
@@ -415,7 +414,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             var self = this,
                 v = self.viewer,
                 region = self._imgRegion, alignToRegion = self._alignToRegion || region,
-                zoomSize = self.get(ZOOMSIZE), offset = self.get(OFFSET),
+                zoomSize = self.get(ZOOM_SIZE), offset = self.get(OFFSET),
                 left = alignToRegion.left + offset[0], top = alignToRegion.top + offset[1],
                 lensWidth, lensHeight, width, height;
 
@@ -612,7 +611,7 @@ KISSY.add('imagezoom', function(S, undefined) {
          */
         _checkBigImageSrc: function() {
             var self = this,
-                bigImageSrc = self.get(BIGIMAGESRC);
+                bigImageSrc = self.get(BIG_IMAGE_SRC);
 
             if (self._cacheBigImageSrc && (self._cacheBigImageSrc !== bigImageSrc)) {
                 DOM.attr(self.bigImage, SRC, bigImageSrc);
@@ -729,6 +728,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         }
         return v;
     }
+
 }, { requires: ['core'] } );
 
 /**

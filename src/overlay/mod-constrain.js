@@ -6,44 +6,13 @@
 KISSY.add('constrain', function(S, undefined) {
     var DOM = S.DOM,
         Overlay = S.Overlay,
-        min = Math.min, max = Math.max, CONSTRAIN = 'constrain',
-        defaultConstrain = {
-            node: undefined,    // 如果没有设置限制容器元素, 默认以可视区域
-            mode: false         // 开启/关闭限制
-        };
+        min = Math.min, max = Math.max, CONSTRAIN = 'constrain';
 
     S.mix(Overlay.ATTRS, {
         constrain: {            // 限制设置
-            value: defaultConstrain,
+            value: false,
             setter: function(v) {
-                return S.merge(this.get(CONSTRAIN), v);
-            },
-            getter: function(v) {
-                return S.merge(defaultConstrain, v);
-            }
-        },
-        x: {
-            value: 0,
-            setter: function(v) {
-                var self = this,
-                    constrainRegion = self._getConstrainRegion();
-
-                if (constrainRegion) {
-                    v = min(max(constrainRegion.left, v), constrainRegion.maxLeft);
-                }
-                return v;
-            }
-        },
-        y: {
-            value: 0,
-            setter: function(v) {
-                var self = this,
-                    constrainRegion = self._getConstrainRegion();
-
-                if (constrainRegion) {
-                    v = min(max(constrainRegion.top, v), constrainRegion.maxTop);
-                }
-                return v;
+                return S.isBoolean(v) ? v : S.get(v);
             }
         }
     });
@@ -55,7 +24,7 @@ KISSY.add('constrain', function(S, undefined) {
                 var self = this;
 
                 self.on('afterConstrainChange', function() {
-                    self.align && self.align();
+                    self._setPosition();
                 });
             });
         }
@@ -69,16 +38,15 @@ KISSY.add('constrain', function(S, undefined) {
         _getConstrainRegion: function() {
             var self = this,
                 constrain = self.get(CONSTRAIN),
-                elem = S.get(constrain.node),
                 ret;
 
-            if (!constrain.mode) return undefined;
+            if (!constrain) return undefined;
 
-            if (elem) {
-                ret = DOM.offset(elem);
+            if (constrain !== true) {
+                ret = DOM.offset(constrain);
                 S.mix(ret, {
-                    maxLeft: ret.left + DOM.width(elem) - DOM.width(self.container),
-                    maxTop: ret.top + DOM.height(elem) - DOM.height(self.container)
+                    maxLeft: ret.left + DOM.width(constrain) - DOM.width(self.container),
+                    maxTop: ret.top + DOM.height(constrain) - DOM.height(self.container)
                 });
             }
             // 没有指定 constrain, 表示受限于可视区域
@@ -92,30 +60,26 @@ KISSY.add('constrain', function(S, undefined) {
             return ret;
         },
 
-        /**
-         * 限制 overlay 在 node 中
-         * @param {Element=} node 
-         */
-        constrain: function(node) {
-            this.set(CONSTRAIN, {
-                node: node,
-                mode: true
-            });
-        },
+        move: function(x, y) {
+            var self = this,
+                constrainRegion = self._getConstrainRegion();
 
-        /**
-         * 开启/关闭 constrain
-         * @param {boolean} enabled
-         */
-        toggleConstrain: function(enabled) {
-            var self = this;
+            if (S.isArray(x)) {
+                y = x[1];
+                x = x[0];
+            }
 
-            self.set(CONSTRAIN, {
-                node: self.get(CONSTRAIN).node,
-                mode: !!enabled
-            });
+            if (constrainRegion) {
+                x = min(max(constrainRegion.left, x), constrainRegion.maxLeft);
+                if (y) {
+                    y = min(max(constrainRegion.top, y), constrainRegion.maxTop);
+                }
+            }
+            self.set('x', x);
+            y && self.set('y', y);
         }
     });
+
 }, { host: 'overlay' });
 
 

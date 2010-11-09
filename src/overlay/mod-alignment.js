@@ -121,8 +121,7 @@ KISSY.add('alignment', function(S, undefined) {
          * 居中显示到可视区域, 一次性居中
          */
         center: function() {
-            //this.set(ALIGN, defaultAlign);
-            this.align('viewport', [POSITION_ALIGN.CC, POSITION_ALIGN.CC], [0, 0]);
+            this.align(this.get(ALIGN).node, [POSITION_ALIGN.CC, POSITION_ALIGN.CC], [0, 0]);
         },
 
         /**
@@ -144,8 +143,6 @@ KISSY.add('alignment', function(S, undefined) {
     });
 
 }, { host: 'overlay' });
-
-
 
 /**
  * Note:

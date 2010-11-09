@@ -16,7 +16,7 @@
 
             <path path="mod-alignment.js"/>
             <path path="mod-constrain.js"/>
-            <path path="mod-fix.js"/>
+            <path path="mod-fixed.js"/>
             <path path="mod-draggable.js"/>
             <path path="mod-autorender.js"/>
         </concat>

@@ -194,15 +194,10 @@ var test = new S.Overlay('#popup2', {
                 </div>
 
                 <div class="member prop">
-                    <h4><a name="constrain">constrain</a> - <code>Object</code></h4>
+                    <h4><a name="constrain">constrain</a> - <code>Boolean | Element</code></h4>
                     <div class="detail">
-                        <p>限制功能, 两个.</p>
-                        <pre class="example-code">
-constrain: {
-    node: undefined,    // 如果没有设置限制容器元素, 默认以可视区域
-    mode: false         // 开启/关闭限制
-}
-</pre>
+                        <p>限制功能, 默认无限制.</p>
+                        <p>如果为 falsy 值, 无限制; 如果为 true 时, 限制在可视区域中, 如果是字符串或者元素, 则限制在对应元素中.</p>
                     </div>
                 </div>
             </div>
