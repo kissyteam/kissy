@@ -100,19 +100,19 @@ KISSY.add('calendar-page', function(S) {
             this.Verify = function() {
 
                 var isDay = function(n) {
-                    if (!/\d+/i.test(n))return false;
+                    if (!/^\d+$/i.test(n))return false;
                     n = Number(n);
                     return !(n < 1 || n > 31);
 
                 },
                     isYear = function(n) {
-                        if (!/\d+/i.test(n))return false;
+                        if (!/^\d+$/i.test(n))return false;
                         n = Number(n);
                         return !(n < 100 || n > 10000);
 
                     },
                     isMonth = function(n) {
-                        if (!/\d+/i.test(n))return false;
+                        if (!/^\d+$/i.test(n))return false;
                         n = Number(n);
                         return !(n < 1 || n > 12);
 
@@ -181,9 +181,9 @@ KISSY.add('calendar-page', function(S) {
                     if (e.target.hasClass('disabled'))return;
                     var selectedd = Number(e.target.html());
                     var d = new Date();
-                    d.setDate(selectedd);
-                    d.setMonth(cc.month);
                     d.setYear(cc.year);
+                    d.setMonth(cc.month);
+                    d.setDate(selectedd);
                     //self.callback(d);
                     //datetime的date
                     cc.father.dt_date = d;
