@@ -38,10 +38,28 @@
         background: #FFFFE6;
         color: #666;
     }
-    .date, .leader {
+    .progress, .leader {
         text-align: center;
+        padding: 0;
     }
     #header p { float: right; position: relative; top: 55px; right: 10px; }
+
+    .progress p {
+        width: 0;
+        height: 28px;
+        line-height: 28px;
+        background: #EFEFEF;
+    }
+    .p1 p { width: 10px; }
+    .p2 p { width: 20px; }
+    .p3 p { width: 30px; }
+    .p4 p { width: 40px; }
+    .p5 p { width: 50px; }
+    .p6 p { width: 60px; }
+    .p7 p { width: 70px; }
+    .p8 p { width: 80px; }
+    .p9 p { width: 90px; }
+    .done p { width: 100px; }
 </style>
 </head>
 <body class="w866">
@@ -52,126 +70,237 @@
 <div id="content" class="layout">
 <table>
 <col width="80px">
-<col width="80px">
+<col width="100px">
 <col width="*">
 <col width="100px">
-<col width="60px">
+<col width="65px">
 <tbody>
 <tr>
     <th></th>
     <th>模块</th>
-    <th>进度</th>
-    <th class="date">发布版本</th>
+    <th>任务</th>
+    <th class="progress">进度</th>
     <th class="leader">负责人</th>
 </tr>
 <tr>
-    <th>core</th>
+    <th rowspan="2">seed</th>
+    <td>kissy/lang</td>
+    <td>完善核心代码，用 Jasmine 增加测试用例。</td>
+    <td class="progress p3"><p>30%</p></td>
+    <td class="leader">玉伯</td>
+</tr>
+<tr>
+    <td>loader</td>
+    <td>重构 loader 代码，完善使用场景，用 Jasmine 增加测试用例。</td>
+    <td class="progress p2"><p>20%</p></td>
+    <td class="leader">英杰</td>
+</tr>
+<tr>
+    <th rowspan="6">core</th>
     <td>ajax</td>
-    <td>需进一步确定 public api</td>
-    <td class="date">1.2.0</td>
+    <td>增加 ajax 功能，增加测试用例。</td>
+    <td class="progress p6"><p>60%</p></td>
     <td class="leader">拔赤</td>
 </tr>
 <tr>
-    <th rowspan="4">dpl</th>
-    <td>基本规范</td>
-    <td>命名约定 convention + 基本结构 structure + 基本使用说明 guide</td>
-    <td class="date">1.2.0</td>
-    <td class="leader">沉鱼</td>
+    <td>dom/node</td>
+    <td>利用函数变换思想，进一步优化和解耦；增加详尽的测试用例。</td>
+    <td class="progress p3"><p>30%</p></td>
+    <td class="leader">玉伯</td>
 </tr>
 <tr>
-    <td>容器</td>
-    <td>盒子 box + 可切换控件 switchable + 悬浮控件 overlay</td>
-    <td class="date">1.2.0</td>
-    <td class="leader">沉鱼</td>
+    <td>组件基础架构</td>
+    <td>增加 attribute 和 base 模块，寻找适合 KISSY 的组件基础架构；增加文档和测试用例。</td>
+    <td class="progress p5"><p>50%</p></td>
+    <td class="leader">承玉 玉伯</td>
 </tr>
 <tr>
-    <td>简单控件</td>
-    <td>按钮 button + 提示信息 message + 面包屑 crumbs + 步骤条 flowsteps + 翻页 pagination</td>
-    <td class="date">1.2.0</td>
-    <td class="leader">沉鱼</td>
+    <td>anim</td>
+    <td>优化代码 + 增加测试用例</td>
+    <td class="progress p1"><p>10%</p></td>
+    <td class="leader">龚浩</td>
 </tr>
 <tr>
-    <td>复杂控件</td>
-    <td>日历 calendar + 表单 form + 复选框 combobox + 表格 table + 树 tree</td>
-    <td class="date">1.2.0</td>
-    <td class="leader">沉鱼</td>
+    <td>event</td>
+    <td>优化代码 + 增加测试用例</td>
+    <td class="progress p1"><p>10%</p></td>
+    <td class="leader">龚浩</td>
 </tr>
 <tr>
-    <th>editor</th>
-    <td>editor</td>
-    <td>KISSY Editor 2.0</td>
-    <td class="date">1.2.0</td>
-    <td class="leader">承玉</td>
+    <td>ua/cookie/json</td>
+    <td>增加测试用例</td>
+    <td class="progress p6"><p>60%</p></td>
+    <td class="leader">龚浩</td>
 </tr>
 <tr>
-    <th>docs</th>
-    <td>官网</td>
-    <td>kissyui.com 建设（blog + forum）</td>
-    <td class="date">1.2.0</td>
-    <td class="leader">明城</td>
-</tr>
-<tr>
-    <th rowspan="5">utils</th>
-    <td>attribute</td>
-    <td>TODO: code review + 考虑 base 模块</td>
-    <td class="date">1.2.0</td>
-    <td class="leader">承玉</td>
-</tr>
-
-<tr>
+    <th rowspan="12">components</th>
     <td>form</td>
-    <td>sandbox 表单相关实用工具</td>
-    <td class="date">1.2.0</td>
+    <td>表单相关实用工具</td>
+    <td class="progress p2"><p>20%</p></td>
     <td class="leader">阿大</td>
 </tr>
 <tr>
     <td>template</td>
-    <td>sandbox 模板工具</td>
-    <td class="date">1.2.0</td>
+    <td>模板工具</td>
+    <td class="progress p6"><p>60%</p></td>
     <td class="leader">文河</td>
 </tr>
 <tr>
     <td>dd</td>
-    <td>拖放</td>
-    <td class="date">1.2.0</td>
+    <td>dd 中的 draggable</td>
+    <td class="progress p9"><p>90%</p></td>
     <td class="leader">承玉</td>
 </tr>
 <tr>
     <td>resizable</td>
     <td>缩放功能</td>
-    <td class="date">1.2.0</td>
+    <td class="progress p1"><p>10%</p></td>
+    <td class="leader">承玉</td>
+</tr>
+<tr>
+    <td>selectable</td>
+    <td>复合选择框等可选择组件</td>
+    <td class="progress p5"><p>50%</p></td>
+    <td class="leader">博玉 清羽</td>
+</tr>
+<tr>
+    <td>switchable</td>
+    <td>重构 + 测试用例</td>
+    <td class="progress p2"><p>20%</p></td>
+    <td class="leader">云谦 玉伯</td>
+</tr>
+<tr>
+    <td>overlay</td>
+    <td>重构 + 测试用例</td>
+    <td class="progress p6"><p>60%</p></td>
+    <td class="leader">乔花 承玉</td>
+</tr>
+<tr>
+    <td>imagezoom</td>
+    <td>重构 + 测试用例</td>
+    <td class="progress p9"><p>90%</p></td>
+    <td class="leader">乔花</td>
+</tr>
+<tr>
+    <td>suggest</td>
+    <td>重构 + 测试用例</td>
+    <td class="progress p1"><p>10%</p></td>
+    <td class="leader">英杰 玉伯</td>
+</tr>
+<tr>
+    <td>calendar</td>
+    <td>重构 + 测试用例</td>
+    <td class="progress p1"><p>10%</p></td>
+    <td class="leader">拔赤</td>
+</tr>
+<tr>
+    <td>datalazyload</td>
+    <td>重构 + 测试用例</td>
+    <td class="progress p1"><p>10%</p></td>
     <td class="leader">云谦</td>
 </tr>
 <tr>
-    <th rowspan="4">widgets</th>
-    <td>combobox</td>
-    <td>复合选择框</td>
-    <td class="date">1.2.0</td>
-    <td class="leader">清羽</td>
+    <td>flash</td>
+    <td>用 Jasmine 增加测试用例</td>
+    <td class="progress p1"><p>10%</p></td>
+    <td class="leader">龙藏</td>
 </tr>
 <tr>
-    <td>datagrid</td>
-    <td>待重构</td>
-    <td class="date">1.2.0</td>
-    <td class="leader">沉鱼</td>
+    <th>editor</th>
+    <td>editor</td>
+    <td>KISSY Editor 2.0</td>
+    <td class="progress p9"><p>90%</p></td>
+    <td class="leader">承玉</td>
 </tr>
 <tr>
-    <td>tree</td>
-    <td>待重构</td>
-    <td class="date">1.2.0</td>
-    <td class="leader">沉鱼</td>
+    <th rowspan="3">ajbridge</th>
+    <td>ajbridge</td>
+    <td>AJBridge 基础类</td>
+    <td class="progress p8"><p>80%</p></td>
+    <td class="leader">龙藏</td>
 </tr>
 <tr>
-    <td>star-rating</td>
-    <td>星级评分组件</td>
-    <td class="date">1.2.0</td>
-    <td class="leader">云谦</td>
+    <td>store</td>
+    <td>基于 flash 的本地存储</td>
+    <td class="progress p8"><p>80%</p></td>
+    <td class="leader">龙藏</td>
+</tr>
+<tr>
+    <td>uploader</td>
+    <td>基于 flash 的多文件上传</td>
+    <td class="progress p8"><p>80%</p></td>
+    <td class="leader">龙藏</td>
+</tr>
+<tr>
+    <th rowspan="2">dpl</th>
+    <td>基本规范</td>
+    <td>命名约定 convention + 基本结构 structure + 基本使用说明 guide</td>
+    <td class="progress p1"><p>10%</p></td>
+    <td class="leader">沉鱼 云谦</td>
+</tr>
+<tr>
+    <td>基本控件</td>
+    <td>box, message 等基本视觉控件</td>
+    <td class="progress p1"><p>10%</p></td>
+    <td class="leader">沉鱼 法海</td>
 </tr>
 <tr>
     <th>tools</th>
-    <td>autotest</td>
-    <td>自动单元测试框架</td>
-    <td class="date">1.2.0</td>
+    <td>idebug</td>
+    <td>淘宝环境下的快速调试工具</td>
+    <td class="progress p7"><p>70%</p></td>
+    <td class="leader">云谦</td>
+</tr>
+<tr>
+    <th>社区</th>
+    <td>docs/blog</td>
+    <td>博客建设 + 文档整理 + 规范流程整理</td>
+    <td class="progress p9"><p>90%</p></td>
+    <td class="leader">乔花 明城</td>
+</tr>
+<tr>
+    <th rowspan="5">gallery</th>
+    <td>kslide</td>
+    <td>基于 html5 的幻灯片模板</td>
+    <td class="progress p9"><p>90%</p></td>
+    <td class="leader">乔花</td>
+</tr>
+<tr>
+    <td>poster</td>
+    <td>基于 kissy 的画报</td>
+    <td class="progress p6"><p>60%</p></td>
+    <td class="leader">龙刚</td>
+</tr>
+<tr>
+    <td>kslite</td>
+    <td>kissy 超级精简版，适用于广告等独立系统</td>
+    <td class="progress p5"><p>50%</p></td>
+    <td class="leader">李牧</td>
+</tr>
+<tr>
+    <td>slidinglabels</td>
+    <td>基于 kissy 实现的一个有趣 label 范例</td>
+    <td class="progress p9"><p>90%</p></td>
+    <td class="leader">乔花</td>
+</tr>
+<tr>
+    <td>digital-clock</td>
+    <td>基于 kissy 实现的纯 js 数字时钟</td>
+    <td class="progress p9"><p>90%</p></td>
+    <td class="leader">承玉</td>
+</tr>
+<tr>
+    <th rowspan="1">nodejs-kissy</th>
+    <td>0.1</td>
+    <td>初始可运行版本</td>
+    <td class="progress p2"><p>20%</p></td>
+    <td class="leader">拔赤</td>
+</tr>
+<tr>
+    <th rowspan="1">rls</th>
+    <td>发布检查</td>
+    <td>更新 sizzle + kissy-tools, 运行所有测试用例 + 移除 src/test + 更新 changelog 等</td>
+    <td class="progress"><p></p></td>
     <td class="leader">玉伯</td>
 </tr>
 </tbody>
