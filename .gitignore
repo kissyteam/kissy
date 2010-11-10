@@ -7,9 +7,9 @@
 *.diff
 *.patch
 *.bak
-*.swp
 .DS_Store
 Thumb.db
 .project
 .*proj
 .svn/
+*.swp
