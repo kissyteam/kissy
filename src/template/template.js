@@ -7,6 +7,10 @@ KISSY.add('template', function(S, undefined){
     // 前端，如果不使用本地存储，基本不需要缓冲
     var templateCache = {},
         regexpCache = {},
+        specialChars = "[]{}()?*.",
+        checkSpacial = function(char){
+            return char.replace(/([{}\[\]()?*.])/g, "\\$1");
+        },
         getRegexp = function(regexp) {
             if (!(regexp in regexpCache)) {
                 regexpCache[regexp] = new RegExp(regexp, "g");
@@ -14,7 +18,9 @@ KISSY.add('template', function(S, undefined){
             return regexpCache[regexp];
         }
         buildparser = function(templ, lq, rq) {
-            return S.trim(templ)
+            lq = checkSpacial(lq);
+            rq = checkSpacial(rq);
+            templ = S.trim(templ)
                     .replace(getRegexp("[\r\t\n]"), " ")
                     .replace(getRegexp(lq), "\t")
                     .replace(getRegexp("(^|" + rq + ")[^\t]*'"), "$1\r")
@@ -22,6 +28,7 @@ KISSY.add('template', function(S, undefined){
                     .replace(getRegexp("\t"), "');")
                     .replace(getRegexp(rq), "_ks_tmpl.push('")
                     .replace(getRegexp("\r"), "\\'");
+            return templ;
         };
 
     /**
@@ -32,18 +39,14 @@ KISSY.add('template', function(S, undefined){
     var Template = function(templ, config){
 
         if(!(templ in templateCache)) {
-            config = S.merge(config, {
+            config = S.merge({
                 lq: "<%",
                 rq: "%>"
-            });
+            }, config);
 
             var _ks_data = "_ks_data_" + +new Date,
                 _lq = config.lq, _rq = config.rq,
-                _parser = [
-                    "var _ks_tmpl=[];with(" + _ks_data + "){_ks_tmpl.push('",
-                        buildparser(templ, _lq, _rq),
-                    "');};return _ks_tmpl.join('');"
-                ].join("");
+                _parser = "var _ks_tmpl=[];with(" + _ks_data + "){_ks_tmpl.push('" + buildparser(templ, _lq, _rq) + "');};return _ks_tmpl.join('');";
 
             templateCache[templ] = {
                 parser: _parser,

@@ -94,6 +94,7 @@ describe("template", function(){
             });
 
         });
+
     });
 
     describe("数据", function(){
@@ -122,7 +123,33 @@ describe("template", function(){
 
     });
 
-    describe("debug", function(){
+    describe("配置", function(){
+
+        describe("自定义Tag", function(){
+
+            TA("支持变量", function(){
+                expect(
+                    T("{{=a}}", {lq: "{{", rq: "}}"})
+                        .render({a: "a"})
+                ).toBe("a");
+            });
+
+            TA("支持操作符", function(){
+                var templ = [
+                    "{{ for ( var i in a ) { }}",
+                    "{{=i}}:{{=a[i]}};",
+                    "{{ } }}"
+                ].join("");
+                expect(
+                    T(templ, {lq: "{{", rq: "}}"})
+                        .render({a: {b: "b", c: "c"}})
+                ).toBe("b:b;c:c;");
+            });
+        });
+
+    });
+
+    describe("调试", function(){
 
     });
 
