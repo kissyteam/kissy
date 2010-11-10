@@ -2,8 +2,7 @@ KISSY - An Enjoyable JavaScript Library
 =======================================
 
  * Source: <http://github.com/kissyteam/kissy>
- * Docs: <http://kissyteam.github.com/kissy/docs/>
- * Blog: <http://kissyui.com/blog/>
+ * Docs: <http://kissyteam.github.com/>
  * Changelog: <http://github.com/kissyteam/kissy/blob/master/CHANGELOG.md>
  * License: <http://github.com/kissyteam/kissy/blob/master/LICENSE.md>
 
@@ -46,5 +45,5 @@ Questions?
  - 邮件：<kissyteam@gmail.com>
  - 讨论：<http://kissyui.com/forum/>
  - Twitter: <http://twitter.com/#!/kissyteam>
- - SlideShare: <http://www.slideshare.net/kissyteam>
- 
+ * Blog: <http://kissyui.com/blog/>
+
