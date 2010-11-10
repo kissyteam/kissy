@@ -168,7 +168,7 @@
                 var notframe = false;
 
                 try {
-                    notframe = window.frameElement == null;
+                    notframe = win['frameElement'] == null;
                 } catch(e) {
                 }
 

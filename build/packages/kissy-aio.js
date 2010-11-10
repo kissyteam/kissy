@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 10 20:54
+build time: Nov 10 20:59
 */
 /**
  * @module kissy
@@ -173,7 +173,7 @@ build time: Nov 10 20:54
                 var notframe = false;
 
                 try {
-                    notframe = window.frameElement == null;
+                    notframe = win['frameElement'] == null;
                 } catch(e) {
                 }
 
