@@ -19,25 +19,6 @@ describe("template", function(){
                         })
                 ).toBe("ab");
             });
-
-            TA("能够手动指定内部变量名，用于防止with的作用域延长", function(){
-                expect(
-                    T("<%=_ks_data.a%><%=_ks_data.b%>")
-                        .render({
-                            a:"a",
-                            b:"b"
-                        })
-                ).toBe("ab");
-            });
-
-            TA("支持对象的多种调用方式", function(){
-                expect(
-                    T("<%=_ks_data['a']%>")
-                        .render({
-                            a:"a"
-                        })
-                ).toBe("a");
-            });
         });
 
         describe("循环", function(){
@@ -50,7 +31,7 @@ describe("template", function(){
                 ].join("");
                 expect(
                     T(templ)
-                        .render(["a", "b"])
+                        .render({_ks_data: ["a", "b"]})
                 ).toBe("0:a,1:b,");
             });
 
@@ -63,8 +44,10 @@ describe("template", function(){
                 expect(
                     T(templ)
                         .render({
-                            a:"A",
-                            b:"B"
+                            _ks_data: {
+                                a:"A",
+                                b:"B"
+                            }
                         })
                 ).toBe("a:A,b:B,");
             });
@@ -78,7 +61,7 @@ describe("template", function(){
                 ].join("");
                 expect(
                     T(templ)
-                        .render(["a", "b"])
+                        .render({_ks_data: ["a", "b"]})
                 ).toBe("1:b,0:a,");
             });
 
@@ -132,7 +115,7 @@ describe("template", function(){
 
             expect(
                 T("<%=_ks_data[0]%>")
-                    .render(['abc'])
+                    .render({_ks_data: ['abc']})
             ).toBe("abc");
 
         });

@@ -5,38 +5,53 @@
 KISSY.add('template', function(S, undefined){
 
     // 前端，如果不使用本地存储，基本不需要缓冲
-    var cache = {};
+    var templateCache = {},
+        regexpCache = {},
+        getRegexp = function(regexp) {
+            if (!(regexp in regexpCache)) {
+                regexpCache[regexp] = new RegExp(regexp, "g");
+            }
+            return regexpCache[regexp];
+        }
+        buildparser = function(templ, lq, rq) {
+            return S.trim(templ)
+                    .replace(getRegexp("[\r\t\n]"), " ")
+                    .replace(getRegexp(lq), "\t")
+                    .replace(getRegexp("(^|" + rq + ")[^\t]*'"), "$1\r")
+                    .replace(getRegexp("\t=(.*?)" + rq), "',$1,'")
+                    .replace(getRegexp("\t"), "');")
+                    .replace(getRegexp(rq), "_ks_tmpl.push('")
+                    .replace(getRegexp("\r"), "\\'");
+        };
 
     /**
      * @see http://ejohn.org/blog/javascript-micro-templating/
      * @param templ 待渲染的模板
      * @param vari 待渲染的数据变量名，模板内部调用
      */
-    var Template = function(templ){
+    var Template = function(templ, config){
 
-        if(!(templ in cache)) {
+        if(!(templ in templateCache)) {
+            config = S.merge(config, {
+                lq: "<%",
+                rq: "%>"
+            });
 
-            var _lq = "<%", _rq = "%>",
+            var _ks_data = "_ks_data_" + +new Date,
+                _lq = config.lq, _rq = config.rq,
                 _parser = [
-                    "var _ks_tmpl=[];with(_ks_data){_ks_tmpl.push('",
-                        S.trim(templ)
-                             .replace(new RegExp("[\r\t\n]", "g"), " ")
-                             .replace(new RegExp(_lq, "g"), "\t")
-                             .replace(new RegExp("(^|" + _rq + ")[^\t]*'", "g"), "$1\r")
-                             .replace(new RegExp("\t=(.*?)" + _rq, "g"), "',$1,'")
-                             .replace(new RegExp("\t", "g"), "');")
-                             .replace(new RegExp(_rq, "g"), "_ks_tmpl.push('")
-                             .replace(new RegExp("\r", "g"), "\\'"),
+                    "var _ks_tmpl=[];with(" + _ks_data + "){_ks_tmpl.push('",
+                        buildparser(templ, _lq, _rq),
                     "');};return _ks_tmpl.join('');"
                 ].join("");
 
-            cache[templ] = {
+            templateCache[templ] = {
                 parser: _parser,
-                render: new Function ("_ks_data", _parser)
+                render: new Function(_ks_data, _parser)
             };
         }
 
-        return cache[templ];
+        return templateCache[templ];
     };
 
     S.Template = Template;
