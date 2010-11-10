@@ -1,16 +1,16 @@
-describe('template', function(){
-    var T = KISSY.Template, TA = it;
+describe("template", function(){
+    var S = KISSY, T = S.Template, TA = it;
 
-    describe("Ä£°åÓï·¨", function(){
+    describe("æ¨¡æ¿è¯­æ³•çš„", function(){
 
-        describe('±äÁ¿²Ù×÷', function(){
-            TA('Ó¦¸Ã°ÑÒ»¸ö×Ö·û´®Ô­·â²»¶¯µÄÊä³ö', function(){
+        describe("å˜é‡æ“ä½œ", function(){
+            TA("æŠŠä¸€ä¸ªå­—ç¬¦ä¸²åŸå°ä¸åŠ¨çš„è¾“å‡º", function(){
                 expect(
                     T("a").render({})
                 ).toBe("a");
             });
 
-            TA('Ó¦¸Ã°Ñ¶ÔÏóµÄ²ÎÊı´«¸øäÖÈ¾·½·¨µÄµ±Ç°ÉÏÏÂÎÄ', function(){
+            TA("æŠŠå¯¹è±¡çš„å‚æ•°ä¼ ç»™æ¸²æŸ“æ–¹æ³•çš„å½“å‰ä¸Šä¸‹æ–‡", function(){
                 expect(
                     T("<%=a%><%=b%>")
                         .render({
@@ -20,9 +20,9 @@ describe('template', function(){
                 ).toBe("ab");
             });
 
-            TA('Ó¦¸ÃÄÜ¹»ÊÖ¶¯Ö¸¶¨ÄÚ²¿±äÁ¿Ãû£¬ÓÃÓÚ·ÀÖ¹withµÄ×÷ÓÃÓòÑÓ³¤', function(){
+            TA("èƒ½å¤Ÿæ‰‹åŠ¨æŒ‡å®šå†…éƒ¨å˜é‡åï¼Œç”¨äºé˜²æ­¢withçš„ä½œç”¨åŸŸå»¶é•¿", function(){
                 expect(
-                    T("<%=_ks_data.a%><%=_ks_data.b%>", "_ks_data")
+                    T("<%=_ks_data.a%><%=_ks_data.b%>")
                         .render({
                             a:"a",
                             b:"b"
@@ -30,9 +30,9 @@ describe('template', function(){
                 ).toBe("ab");
             });
 
-            TA('Ó¦¸ÃÖ§³Ö¶ÔÏóµÄ¶àÖÖµ÷ÓÃ·½Ê½', function(){
+            TA("æ”¯æŒå¯¹è±¡çš„å¤šç§è°ƒç”¨æ–¹å¼", function(){
                 expect(
-                    T("<%=data['a']%>")
+                    T("<%=_ks_data['a']%>")
                         .render({
                             a:"a"
                         })
@@ -40,28 +40,28 @@ describe('template', function(){
             });
         });
 
-        describe('Ñ­»·', function(){
+        describe("å¾ªç¯", function(){
 
-            TA('Ó¦¸ÃÖ§³ÖÆÕÍ¨µÄforÑ­»·', function(){
+            TA("æ”¯æŒæ™®é€šçš„forå¾ªç¯", function(){
                 var templ = [
                     "<% for ( var i = 0, l = _ks_data.length; i < l; i++ ) { %>",
                     "<%= i %>:<%= _ks_data[i] %>,",
                     "<% } %>",
-                ].join('');
+                ].join("");
                 expect(
-                    T(templ, "_ks_data")
+                    T(templ)
                         .render(["a", "b"])
                 ).toBe("0:a,1:b,");
             });
 
-            TA('Ó¦¸ÃÖ§³Öfor..in', function(){
+            TA("æ”¯æŒfor..in", function(){
                 var templ = [
                     "<% for ( var i in _ks_data ) { %>",
                     "<%= i %>:<%= _ks_data[i] %>,",
                     "<% } %>",
-                ].join('');
+                ].join("");
                 expect(
-                    T(templ, "_ks_data")
+                    T(templ)
                         .render({
                             a:"A",
                             b:"B"
@@ -69,24 +69,24 @@ describe('template', function(){
                 ).toBe("a:A,b:B,");
             });
 
-            TA('Ó¦¸ÃÖ§³Öwhile', function(){
+            TA("æ”¯æŒwhile", function(){
                 var templ = [
                     "<% var l = _ks_data.length; %>",
                     "<% while ( l-- ) { %>",
                     "<%= l %>:<%= _ks_data[l] %>,",
                     "<% } %>",
-                ].join('');
+                ].join("");
                 expect(
-                    T(templ, "_ks_data")
+                    T(templ)
                         .render(["a", "b"])
                 ).toBe("1:b,0:a,");
             });
 
         });
 
-        describe("Ìõ¼şÅĞ¶Ï", function(){
+        describe("æ¡ä»¶åˆ¤æ–­", function(){
 
-            TA("Ó¦¸ÃÖ§³Öif/else if/else", function(){
+            TA("æ”¯æŒif/else if/else", function(){
                 var templ = [
                     "<% if(a.show) { %>",
                     "<%= a.value %>",
@@ -94,9 +94,9 @@ describe('template', function(){
                     "<% if(b.show) { %>",
                     "<%= b.value %>",
                     "<% } %>"
-                ].join('');
+                ].join("");
                 expect(
-                    T(templ, "_ks_data")
+                    T(templ)
                         .render({
                             a: {
                                 show: false,
@@ -113,7 +113,33 @@ describe('template', function(){
         });
     });
 
-    describe('debug', function(){
+    describe("æ•°æ®", function(){
+
+        TA("æ”¯æŒæ™®é€šçš„æ•°æ®å¯¹è±¡", function(){
+            expect(
+                T("<%=a.b.c%>")
+                    .render({
+                        a: {
+                            b: {
+                                c: "abc"
+                            }
+                        }
+                     })
+            ).toBe("abc");
+        });
+
+        TA("æ”¯æŒæ•°ç»„", function(){
+
+            expect(
+                T("<%=_ks_data[0]%>")
+                    .render(['abc'])
+            ).toBe("abc");
+
+        });
+
+    });
+
+    describe("debug", function(){
 
     });
 

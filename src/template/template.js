@@ -4,46 +4,35 @@
  */
 KISSY.add('template', function(S, undefined){
 
+    // 前端，如果不使用本地存储，基本不需要缓冲
+    var cache = {};
+
     /**
-     * Micro Tempalte via John Resig
      * @see http://ejohn.org/blog/javascript-micro-templating/
-     * @constructor  
      * @param templ 待渲染的模板
      * @param vari 待渲染的数据变量名，模板内部调用
-     * @description
-     *
-     * 模板替换逻辑如下：
-     * 1. 把<% %>里的语句直接清除'<%'，'%>'标签进入new Function字符串
-     * 2. 把<%= %>里的文本串，拆成一个一个参数push入文本栈
-     * 3. 因为1的关系，所以所有脚本直接在function内部执行，if/for/while/do,while/等等
-     *    <%%>内部的变量因为被拆分为文本push入栈，所以等于构造一个渲染方法
-     *    这个方法执行<%%>里的逻辑，而<%=%>的逻辑则直接转换为文本进行push
-     *
-     * 如：
-     * <%= user.name %> 则转为 p.push(user.name)
-     *     如果没有user或者name，会报错，而且错误比较隐蔽，不易调试
-     * <% if(true) %> 则转为 if(true) 如果没有大括号或者闭括号，则也会报错，跟原生js一致
-     *
-     * 即：
-     * <% %>里的内容，直接过滤掉'<%','%>': <% blah %> => <% blah %>
-     * <%=%>里的内容，换成一个一个的参数push入内部栈
-     *     这个push过程受到<%%>的中断，所以必须拆开写，主要难点就在这里
-     *     "<%= blah %> <%= blah2 %>" => p.push(blah, blah2)
-     *
-     * 使用with，使得模板里的参数不需要指定pass的对象名，直接在with作用域使用
-     * 注意使用with总是有隐患的，这里with内部所有变量均只为了_ks_data所用，不会超出作用域
-     *
-     * 因为引号没有做处理过滤，所以该模板对引号有要求，要么全部使用双引号，要么全部使用单引号
      */
-    var Template = function(templ, vari){
+    var Template = function(templ){
 
-        var _var = vari || 'data';
-            _ks_data = '_ks_data_' + +new Date,
-            _parser = [
-                "var " + _ks_data + " = [];", 
+        // 获取hash串，作为cache key保留
+        var hex = "Crypto" in S ? S.Crypto.hex_sha1 : S.now,
+
+            _var = '_ks_data',
+
+            _ks_tmpl = "_ks_tmpl_" + hex(templ).substring(0, 13);
+
+        if(templ in cache) {
+            return cache[templ];
+        }
+
+        var _parser = [
+                "var " + _ks_tmpl + " = [];", 
                 "with(" + _var + ") {",
-                    _ks_data + ".push('",
-                        templ
+                    _ks_tmpl + ".push('",
+                        S.trim(templ)
+
+                             //把 \' 处理为 \\''
+                             //.replace(/([\\'])/g, "\\$1")
 
                              //清除换行，和tab，接下去用\t\r进行占位
                              .replace(/[\r\t\n]/g, " ")
@@ -63,34 +52,30 @@ KISSY.add('template', function(S, undefined){
 
                              //上一步替换掉<%，这一步继续替换%>为p.push
                              //条件/循环等语句内部局部作用域push
-                             .split("%>").join(_ks_data + ".push('")
+                             .split("%>").join(_ks_tmpl + ".push('")
 
                              //把换行换成\'，结束多余字符
                              .split("\r").join("\\'"),
 
                    "'); ",
                 "}",
-                "return " + _ks_data + ".join('');"
-            ].join(""),
+                "return " + _ks_tmpl + ".join('');"
+            ].join("");
 
-            render = new Function (_var, _parser);
+        var render = new Function (_var, _parser);
 
-        S.mix(render, {
-            parser: _parser
-        });
-
-        return {
-
-            /**
-             * 渲染方法
-             * @param data 渲染模板的数据
-             * @return {string|function} 如果有数据，则返回渲染完毕的数据，否则返回解析方法
-             */
-            render: function(data){
-                return data ? render(data) : render;
-            }
+        cache[templ] = {
+            hash: _ks_tmpl,
+            parser: _parser,
+            render: render
         };
+
+        return cache[templ];
     };
 
-    S.Template = Template;
-});
+    S.Template = S.mix(Template, {
+        getCache: function(hash){
+            return cache[hash];
+        }
+    });
+}, { requires: [ 'core' ] } );
