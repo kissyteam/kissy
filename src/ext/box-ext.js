@@ -5,7 +5,7 @@
 KISSY.add("ext-box", function(S) {
     S.namespace("Ext");
 
-    var doc = document,Node=S.Node;
+    var doc = document,Node = S.Node;
 
     function BoxExt() {
         var self = this;
@@ -30,6 +30,9 @@ KISSY.add("ext-box", function(S) {
         elCls: {
             // 容器的 class
             value: "ks-box-el"
+        },
+        elStyle:{
+            //容器的行内样式
         },
         width: {
             // 宽度
@@ -59,6 +62,7 @@ KISSY.add("ext-box", function(S) {
     BoxExt.prototype = {
 
         _renderUIBoxExt:function() {
+            S.log("_renderUIBoxExt");
             var self = this,
                 render = self.get("render") || S.one(doc.body),
                 el = self.get("el");
@@ -78,6 +82,12 @@ KISSY.add("ext-box", function(S) {
         _uiSetElCls:function(cls) {
             if (cls) {
                 this.get("el")[0].className = cls;
+            }
+        },
+
+        _uiSetElStyle:function(style) {
+            if (style) {
+                this.get("el").css(style);
             }
         },
 
@@ -102,6 +112,4 @@ KISSY.add("ext-box", function(S) {
     };
 
     S.Ext.Box = BoxExt;
-
-
 });

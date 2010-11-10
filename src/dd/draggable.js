@@ -4,7 +4,7 @@
  */
 KISSY.add('dd-draggable', function(S) {
 
-    var UA = S.UA,Node=S.Node;
+    var UA = S.UA,Node = S.Node;
 
     /*
      拖放纯功能类
@@ -53,7 +53,7 @@ KISSY.add('dd-draggable', function(S) {
                 if (!handlers.hasOwnProperty(h)) continue;
                 var hl = handlers[h],
                     ori = hl.css('cursor');
-                if (hl[0] == node[0]) {
+                if (hl[0] != node[0]) {
                     if (!ori || ori === 'auto')
                         hl.css('cursor', 'move');
                 }

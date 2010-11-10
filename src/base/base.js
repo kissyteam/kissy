@@ -1,6 +1,6 @@
 /**
  * @module  Base
- * @author  lifesinger@gmail.com, yiminghe@gmail.com
+ * @author  lifesinger@gmail.com, 承玉<yiminghe@gmail.com>
  */
 KISSY.add('base', function (S) {
     var UI_SET = "_uiSet",
@@ -23,6 +23,7 @@ KISSY.add('base', function (S) {
         var c = host.constructor,
             attr,
             attrs,
+            extChains = [],
             ATTRS = 'ATTRS';
 
         // define
@@ -38,13 +39,12 @@ KISSY.add('base', function (S) {
                 }
             }
 
-            //初始化扩展类构造器
+            //收集扩展类
             var exts = c._kissycreate;
             exts = exts && exts._exts;
             if (exts) {
-                for (var i = 0; i < exts.length; i++) {
-                    exts[i] && exts[i].call(host, config);
-                }
+                //原地 reverse
+                extChains.push.apply(extChains, exts.concat().reverse());
             }
 
             //从 markup 生成相应的属性项
@@ -55,6 +55,12 @@ KISSY.add('base', function (S) {
             c = c.superclass ? c.superclass.constructor : null;
         }
 
+        //初始化扩展类构造器，
+        //注意：父类的扩展类优先执行！
+        for (var i = extChains.length - 1; i >= 0; i--) {
+            extChains[i] && extChains[i].call(host, config);
+        }
+
         // initialize
         //注意：用户设置的属性值会覆盖 html_parser 得到的属性值
         if (config) {
@@ -63,6 +69,7 @@ KISSY.add('base', function (S) {
                     host.__set(attr, config[attr]);
             }
         }
+
     }
 
     function applyParser(srcNode, parser) {
@@ -191,19 +198,19 @@ KISSY.add('base', function (S) {
                 var ext = exts[i],
                     attrs = ext && ext.ATTRS,
                     parsers = ext && ext.HTML_PARSER;
-                if (attrs && ext) {
-
+                if (attrs) {
                     re.ATTRS = re.ATTRS || {};
-                    re.HTML_PARSER = re.HTML_PARSER || {};
-
                     //合并功能类属性定义到主类，不要覆盖主类属性重定义
                     S.mix(re.ATTRS, attrs, false);
+                }
+
+                if (parsers) {
+                    re.HTML_PARSER = re.HTML_PARSER || {};
                     //合并功能类 htmlparser 定义到主类，不要覆盖主类属性重定义
                     S.mix(re.HTML_PARSER, parsers, false);
-
-                    //合并功能类代码到主类
-                    S.augment(re, exts[i]);
                 }
+                //合并功能类代码到主类
+                S.augment(re, exts[i]);
             }
         }
         return re;
@@ -212,5 +219,5 @@ KISSY.add('base', function (S) {
 });
 
 /**
- * 2011-11-08 Base && yui3 Widget 压缩一下，增加扩展类支持，组件初始化生命周期以及 htmlparser
+ * 2011-11-08 承玉重构，Base && yui3 Widget 压缩一下，增加扩展类支持，组件初始化生命周期以及 htmlparser
  */

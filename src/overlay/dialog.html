@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Test</title>
+<link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
 <style>
     .ks-dialog-close {
         position: absolute;
@@ -14,6 +15,15 @@
         overflow: hidden;
         cursor: pointer;
         background: transparent url(http://cdn.iconfinder.net/data/icons/bwpx/icons/symbol_multiplication.gif)
+    }
+
+    .ks-overlay {
+        position: absolute;
+        border:1px solid green;
+    }
+
+    .ks-stdmod-header {
+        border:1px solid red;
     }
 </style>
 </head>
@@ -30,6 +40,7 @@
     <div class="ks-dialog-close">
     </div>
     <div class="ks-stdmod-header">
+        i am header
     </div>
     <div class="ks-stdmod-body">
         从 markup 生成 dialog
@@ -46,16 +57,26 @@
     hide from markup
 </button>
 <script src="../../build/kissy.js"></script>
+<script src="../ext/box-ext.js"></script>
+<script src="../ext/contentbox-ext.js"></script>
+<script src="../ext/position-ext.js"></script>
+<script src="../ext/shim-ext.js"></script>
 <script src="overlay.js"></script>
-<script src="../ext/stdModExt.js"></script>
-<script src="../ext/closeExt.js"></script>
+<script src="../dd/ddm.js"></script>
+<script src="../dd/draggable.js"></script>
+<script src="../ext/stdmod-ext.js"></script>
+<script src="../ext/close-ext.js"></script>
+<script src="../ext/drag-ext.js"></script>
 <script src="widget-dialog.js"></script>
 <script>
     KISSY.ready(function(S) {
         var Dialog = S.Dialog;
 
         window.o = new Dialog({
-            bodyContent:"i am overly 动态生成"
+            headerContent:"i am header",
+            bodyContent:"i am dialog 动态生成",
+            x:100,
+            y:100
         });
 
 

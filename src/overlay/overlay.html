@@ -3,18 +3,26 @@
 <head>
 <meta charset="utf-8"/>
 <title>Test</title>
+<link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
+<style>
+    .ks-ext-mask {
+        background-color: #000;
+        opacity: 0.3;
+    }
+</style>
 </head>
 <body>
 <button id="show1">
-    show
-</button>
-<button id="hide1">
-    hide
+    点击出现
 </button>
 
+
+<div id="show3" style="margin:10px;border:1px solid red;width:100px;">
+    鼠标掠过出现
+</div>
 
 <div id="markup" class="ks-overlay">
-    <div class="ks-innerbox-content">
+    <div class="ks-contentbox-content">
         从 markup 生成 overlay
     </div>
 </div>
@@ -28,36 +36,42 @@
     hide from markup
 </button>
 <script src="../../build/kissy.js"></script>
-<script src="../ext/boxExt.js"></script>
-<script src="../ext/innerBoxExt.js"></script>
-<script src="../ext/positionExt.js"></script>
+<script src="../ext/box-ext.js"></script>
+<script src="../ext/contentbox-ext.js"></script>
+<script src="../ext/position-ext.js"></script>
+<script src="../ext/shim-ext.js"></script>
+<script src="../ext/mask-ext.js"></script>
 <script src="overlay.js"></script>
 <script>
     KISSY.ready(function(S) {
         var Overlay = S.Overlay;
 
-        //debugger
-
         var o = new Overlay({
             content:"i am overly 动态生成",
             x:100,
-            y:100
+            y:100,
+            trigger:"#show1",
+            mask:true
         });
 
+        
+        new Overlay({
+            content:"i am overly 动态生成 2",
+            x:100,
+            y:100,
+            triggerType:"mouse",
+            trigger:"#show3"
+        });
+
+        
         var o2 = new Overlay({
             srcNode:S.one("#markup"),
             autoRender:true,
+            width:100,
             x:100,
             y:100
         });
 
-        S.one("#show1").on("click", function() {
-            o.show();
-        });
-
-        S.one("#hide1").on("click", function() {
-            o.hide();
-        });
 
         S.one("#show2").on("click", function() {
             o2.show();

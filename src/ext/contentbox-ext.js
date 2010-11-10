@@ -2,17 +2,17 @@
  * 里层包裹层定义，适合mask以及shim
  * @author:yiminghe@gmail.com
  */
-KISSY.add("ext-innerbox", function(S) {
+KISSY.add("ext-contentbox", function(S) {
 
     S.namespace("Ext");
     var Node = S.Node;
 
-    function InnerBox() {
+    function ContentBox() {
         var self = this;
         self.on("renderUI", self._renderUIOverlayExt, self);
     }
 
-    InnerBox.ATTRS = {
+    ContentBox.ATTRS = {
         //内容容器节点
         contentEl:{},
         //层内容
@@ -20,17 +20,18 @@ KISSY.add("ext-innerbox", function(S) {
     };
 
 
-    InnerBox.HTML_PARSER = {
-        contentEl:".ks-innerbox-content"
+    ContentBox.HTML_PARSER = {
+        contentEl:".ks-contentbox-content"
     };
 
-    InnerBox.prototype = {
+    ContentBox.prototype = {
         _renderUIOverlayExt:function() {
+            S.log("_renderUIContentBox");
             var self = this,
                 contentEl = self.get("contentEl"),
                 el = self.get("el");
             if (!contentEl) {
-                contentEl = new Node("<div class='ks-innerbox-content'>").appendTo(el);
+                contentEl = new Node("<div class='ks-contentbox-content'>").appendTo(el);
                 self.set("contentEl", contentEl);
             }
         },
@@ -42,5 +43,5 @@ KISSY.add("ext-innerbox", function(S) {
         }
     };
 
-    S.Ext.InnerBox = InnerBox;
+    S.Ext.ContentBox = ContentBox;
 });

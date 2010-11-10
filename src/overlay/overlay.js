@@ -19,7 +19,11 @@ KISSY.add("overlay", function(S, undefined) {
      *  </div>
      */
 
-    var Overlay = Base.create([S.Ext.Box,S.Ext.InnerBox,S.Ext.Position], {
+    var Overlay = Base.create([S.Ext.Box,
+        S.Ext.ContentBox,
+        S.Ext.Position,
+        S.Ext.Shim,
+        S.Ext.Mask], {
 
         init:function() {
             var self = this,trigger = self.get("trigger");
@@ -36,9 +40,8 @@ KISSY.add("overlay", function(S, undefined) {
          * @override
          */
         _bindUIOverlay: function() {
+            S.log("_bindUIOverlay");
             var self = this;
-            if (self.get(TRIGGERTYPE) === MOUSE)
-                self._bindElMouse();
         },
 
 
@@ -63,45 +66,21 @@ KISSY.add("overlay", function(S, undefined) {
             self.get("trigger").each(function(trigger) {
                 var timer;
                 trigger.on(MOUSEENTER, function() {
-                    self._clearHiddenTimer();
+                    timer && timer.cancel();
                     timer = S.later(function() {
                         self.show();
                         timer = undefined;
                     }, 100);
                 });
                 trigger.on(MOUSELEAVE, function() {
-                    if (timer) {
-                        timer.cancel();
-                        timer = undefined;
-                    }
-                    self._setHiddenTimer();
+                    timer && timer.cancel();
+                    timer = undefined;
+                    self.hide();
                 });
             });
         },
 
-        /**
-         * 下面三个函数, 用于处理鼠标快速移出容器时是否需要隐藏的延时
-         */
-        _bindElMouse: function() {
-            var self = this,
-                el = self.get(EL);
-            el.detach(MOUSEENTER + " " + MOUSELEAVE);
-            el.on(MOUSELEAVE, self._setHiddenTimer, self);
-            el.on(MOUSEENTER, self._clearHiddenTimer, self);
-        },
 
-        _setHiddenTimer: function() {
-            var self = this;
-            self._hiddenTimer = S.later(self.hide, 120, false, self);
-        },
-
-        _clearHiddenTimer: function() {
-            var self = this;
-            if (self._hiddenTimer) {
-                self._hiddenTimer.cancel();
-                self._hiddenTimer = undefined;
-            }
-        },
 
         /**
          * 触发器点击事件
@@ -127,13 +106,13 @@ KISSY.add("overlay", function(S, undefined) {
                 MOUSELEAVE +
                 " " +
                 CLICK);
-            Overlay.superclass.constructor.call(self);
+            Overlay.superclass.destroy.call(self);
         }
 
     }, {
         ATTRS : {
             trigger: {
-                // 触发器, 可以是多个
+                // 触发器，可以是多个
                 setter:function(v) {
                     if (S.isString(v)) {
                         return S.all(v);
@@ -144,10 +123,14 @@ KISSY.add("overlay", function(S, undefined) {
                 // 触发类型
                 value: CLICK
             },
-
             //重定义最外层css默认值
             elCls:{
                 value:"ks-overlay"
+            },
+            elStyle:{
+                value:{
+                    position:"absolute"
+                }
             }
 
         }
@@ -161,7 +144,7 @@ KISSY.add("overlay", function(S, undefined) {
 });
 
 /**
- * 2010-11-09 yiminghe 重构，attribute-base-Overlay ，采用 Base.create
+ * 2010-11-09 2010-11-10 承玉<yiminghe@gmail.com>重构，attribute-base-Overlay ，采用 Base.create
  *
  * TODO:
  *  - stackable ?

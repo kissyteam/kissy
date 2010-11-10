@@ -29,8 +29,8 @@ KISSY.add("ext-position", function(S) {
                     xy = S.makeArray(v);
 
                 if (xy.length) {
-                    xy[0] && self.set(X, xy[0]);
-                    xy[1] && self.set(Y, xy[1]);
+                    xy[0] && self.set("x", xy[0]);
+                    xy[1] && self.set("y", xy[1]);
                 }
                 return v;
             }
@@ -46,10 +46,11 @@ KISSY.add("ext-position", function(S) {
 
     PositionExt.prototype = {
         _renderUIPosition:function() {
+            S.log("_renderUIPosition");
             this.get("el").css("display", "");
         },
         _bindUIPosition:function() {
-
+            S.log("_bindUIPosition");
         },
         _uiSetZIndex:function(x) {
             if (x !== undefined)

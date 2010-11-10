@@ -1,6 +1,6 @@
 /**
  * support standard mod for component
- * @author:yiminghe@gmail.com
+ * @author: yiminghe@gmail.com
  */
 KISSY.add("ext-stdmod", function(S) {
 
