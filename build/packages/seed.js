@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 7 21:52
+build time: Nov 10 20:54
 */
 /**
  * @module kissy
@@ -168,7 +168,16 @@ build time: Nov 7 21:52
                 // A fallback to window.onload, that will always work.
                 win.attachEvent('onload', fire);
 
-                if (win == win.top) { // not an iframe
+                // If IE and not a frame
+                // continually check to see if the document is ready
+                var notframe = false;
+
+                try {
+                    notframe = window.frameElement == null;
+                } catch(e) {
+                }
+
+                if (doScroll && notframe) {
                     function readyScroll() {
                         try {
                             // Ref: http://javascript.nwbox.com/IEContentLoaded/

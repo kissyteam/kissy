@@ -163,7 +163,16 @@
                 // A fallback to window.onload, that will always work.
                 win.attachEvent('onload', fire);
 
-                if (win == win.top) { // not an iframe
+                // If IE and not a frame
+                // continually check to see if the document is ready
+                var notframe = false;
+
+                try {
+                    notframe = window.frameElement == null;
+                } catch(e) {
+                }
+
+                if (doScroll && notframe) {
                     function readyScroll() {
                         try {
                             // Ref: http://javascript.nwbox.com/IEContentLoaded/
