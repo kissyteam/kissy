@@ -43,7 +43,6 @@ Questions?
 
  - Bug：<http://github.com/kissyteam/kissy/issues>
  - 邮件：<kissyteam@gmail.com>
- - 讨论：<http://kissyui.com/forum/>
  - Twitter: <http://twitter.com/#!/kissyteam>
  * Blog: <http://kissyui.com/blog/>
 
