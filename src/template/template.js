@@ -4,19 +4,25 @@
  */
 KISSY.add('template', function(S, undefined){
 
-    // 前端，如果不使用本地存储，基本不需要缓冲
-    var templateCache = {},
+    var 
+        // 前端，如果不使用本地存储，基本不需要模板缓冲
+        templateCache = {},
+
+        // 正则缓存
         regexpCache = {},
-        specialChars = "[]{}()?*.",
-        checkSpacial = function(char){
-            return char.replace(/([{}\[\]()?*.])/g, "\\$1");
-        },
         getRegexp = function(regexp) {
             if (!(regexp in regexpCache)) {
                 regexpCache[regexp] = new RegExp(regexp, "g");
             }
             return regexpCache[regexp];
-        }
+        },
+
+        // 特殊字符转义
+        checkSpacial = function(char){
+            return char.replace(/([{}\[\]()?*.\\\/])/g, "\\$1");
+        },
+
+        // 静态化parser
         buildparser = function(templ, lq, rq) {
             lq = checkSpacial(lq);
             rq = checkSpacial(rq);
