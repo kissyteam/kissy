@@ -1,14 +1,31 @@
 KISSY.add("ext-mask", function(S) {
     S.namespace("Ext");
-    var mask,num = 0;
+    /**
+     * 多 position 共享一个遮罩
+     */
+    var mask,
+        num = 0;
 
 
     function initMask() {
-        
+        mask = new S.Node("<div class='ks-ext-mask'>");
+        var b = document.body,c = b.firstChild;
+        if (c) mask.insertBefore(c);
+        else mask.appendTo(b);
+
+        mask.css({
+            "position":"absolute",
+            width:"100%",
+            "height": S.DOM.docHeight()
+        });
     }
 
     function MaskExt() {
+         S.log("mask init");
         var self = this;
+        self.on("bindUI", self._bindUIMask, self);
+        self.on("renderUI", self._renderUIMask, self);
+        self.on("syncUI", self._syncUIMask, self);
     }
 
     MaskExt.ATTRS = {
@@ -18,7 +35,19 @@ KISSY.add("ext-mask", function(S) {
     };
 
     MaskExt.prototype = {
+        _bindUIMask:function() {
+            S.log("_bindUIMask");
+        },
+
+        _renderUIMask:function() {
+            S.log("_renderUIMask");
+        },
+
+        _syncUIMask:function() {
+            S.log("_syncUIMask");
+        },
         _uiSetMask:function(v) {
+            S.log("_uiSetMask");
             var self = this;
             if (v) {
                 self.on("show", self._maskExtShow, self);
@@ -31,22 +60,24 @@ KISSY.add("ext-mask", function(S) {
 
         _maskExtShow:function() {
             if (!mask) {
-                mask = new S.Node("<div class='ks-ext-mask'>");
-                var b = document.body,c = b.firstChild;
-                if (c) mask.insertBefore(c);
-                else mask.appendTo(b);
+                initMask();
             }
             mask.css({
-                "position":"absolute",
-                "z-index":this.get("zIndex"),
-                width:"100%",
-                "height": S.DOM.docHeight()
+                "z-index":this.get("zIndex")
             });
+            num++;
             mask.show();
         },
 
         _maskExtHide:function() {
-            mask && mask.hide();
+            num--;
+            if (num <= 0) num = 0;
+            if (!num)
+                mask && mask.hide();
+        },
+
+        __destructor:function() {
+            S.log("mask __destructor");
         }
 
     };

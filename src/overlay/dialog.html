@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
 <style>
     .ks-dialog-close {
-        position: absolute;
+        position:absolute;
         right: 0;
         top: 0;
         text-indent: 9999em;
@@ -15,12 +15,7 @@
         overflow: hidden;
         cursor: pointer;
         background: transparent url(http://cdn.iconfinder.net/data/icons/bwpx/icons/symbol_multiplication.gif)
-    }
-
-    .ks-overlay {
-        position: absolute;
-        border:1px solid green;
-    }
+    }  
 
     .ks-stdmod-header {
         border:1px solid red;
@@ -29,13 +24,13 @@
 </head>
 <body>
 <button id="show1">
-    show
+    show 窗口1
 </button>
-<button id="hide1">
-    hide
+<button id="destroy1">
+    destroy 窗口1
 </button>
 
-
+<!--
 <div id="markup" class="ks-dialog" style="position:absolute;">
     <div class="ks-dialog-close">
     </div>
@@ -56,11 +51,13 @@
 <button id="hide2">
     hide from markup
 </button>
+-->
 <script src="../../build/kissy.js"></script>
 <script src="../ext/box-ext.js"></script>
 <script src="../ext/contentbox-ext.js"></script>
 <script src="../ext/position-ext.js"></script>
 <script src="../ext/shim-ext.js"></script>
+<script src="../ext/mask-ext.js"></script>
 <script src="overlay.js"></script>
 <script src="../dd/ddm.js"></script>
 <script src="../dd/draggable.js"></script>
@@ -79,20 +76,20 @@
             y:100
         });
 
-
+        /*
         var o2 = new Dialog({
             srcNode:S.one("#markup"),
             autoRender:true
         });
-
+        */
         S.one("#show1").on("click", function() {
             o.show();
         });
 
-        S.one("#hide1").on("click", function() {
-            o.hide();
+        S.one("#destroy1").on("click", function() {
+            o.destroy();
         });
-
+/*
         S.one("#show2").on("click", function() {
             o2.show();
         });
@@ -100,7 +97,7 @@
         S.one("#hide2").on("click", function() {
             o2.hide();
         });
-
+*/
     });
 </script>
 </body>

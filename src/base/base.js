@@ -12,12 +12,12 @@ KISSY.add('base', function (S) {
     function Base(config) {
         var self = this;
         initHierarchy(self, config);
-        self.init && self.init();
         config && config.autoRender && self.renderer();
     }
 
     /**
      * init attr using constructors ATTRS meta info
+     * 模拟多继承
      */
     function initHierarchy(host, config) {
         var c = host.constructor,
@@ -39,30 +39,42 @@ KISSY.add('base', function (S) {
                 }
             }
 
+
             //收集扩展类
             var exts = c._kissycreate;
             exts = exts && exts._exts;
+            var t_ext = [];
             if (exts) {
-                //原地 reverse
-                extChains.push.apply(extChains, exts.concat().reverse());
+                t_ext = exts.concat();
             }
+
+
+            //先执行扩展类
+            var t_init = c.prototype.init;
+            if (t_init) {
+                t_ext.push(t_init);
+            }
+
+            //原地 reverse
+            if (t_ext.length) {
+                extChains.push.apply(extChains, t_ext.reverse());
+            }
+
 
             //从 markup 生成相应的属性项
             if (config &&
                 config[SRC_NODE] &&
-                c.HTML_PARSER) applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
+                c.HTML_PARSER) {
+                applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
+            }
 
             c = c.superclass ? c.superclass.constructor : null;
         }
 
-        //初始化扩展类构造器，
-        //注意：父类的扩展类优先执行！
-        for (var i = extChains.length - 1; i >= 0; i--) {
-            extChains[i] && extChains[i].call(host, config);
-        }
 
         // initialize
         //注意：用户设置的属性值会覆盖 html_parser 得到的属性值
+        //先设置属性，再运行主类以及扩展类的初始化函数
         if (config) {
             for (attr in config) {
                 if (config.hasOwnProperty(attr))
@@ -70,24 +82,58 @@ KISSY.add('base', function (S) {
             }
         }
 
+
+        //初始化扩展类构造器，
+        //注意：执行顺序
+        //父类 init，父类的所有扩展类构造器，子类 init，子类的所有扩展构造器
+        for (var i = extChains.length - 1; i >= 0; i--) {
+            extChains[i] && extChains[i].call(host, config);
+        }
+
+
+    }
+
+    /**
+     * 摧毁组件机制
+     * 子类扩展 destructor，子类 destructor，父类扩展 destructor，父类 destructor，
+     */
+    function destroyHierarchy(host) {
+        var c = host.constructor;
+        while (c) {
+            //收集扩展类
+            var exts = c._kissycreate;
+            exts = exts && exts._exts;
+            var d = c.prototype.destructor;
+            d && d.apply(host);
+            
+            if (exts) {
+                for (var l = exts.length - 1; l >= 0; l--) {
+                    var d = exts[l].prototype.__destructor;
+                    d && d.apply(host);
+                }
+
+            }
+            c = c.superclass ? c.superclass.constructor : null;
+        }
     }
 
     function applyParser(srcNode, parser) {
         var self = this;
+        //从parser中，默默设置属性，不触发事件！__set
         for (var p in parser) {
             if (parser.hasOwnProperty(p)) {
                 var v = parser[p];
                 //函数
                 if (S.isFunction(v)) {
-                    self.set(p, v.call(self, srcNode));
+                    self.__set(p, v.call(self, srcNode));
                 }
                 //单选选择器
                 else if (S.isString(v)) {
-                    self.set(p, srcNode.one(v));
+                    self.__set(p, srcNode.one(v));
                 }
                 //多选选择器
                 else if (S.isArray(v) && v[0]) {
-                    self.set(p, srcNode.all(v[0]))
+                    self.__set(p, srcNode.all(v[0]))
                 }
             }
         }
@@ -165,8 +211,9 @@ KISSY.add('base', function (S) {
         },
 
         destroy:function() {
-            this.detach();
+            destroyHierarchy(this);
             this.fire("destroy");
+            this.detach();
         }
     });
 
@@ -187,7 +234,7 @@ KISSY.add('base', function (S) {
         }
         baseCls = baseCls || Base;
         function re() {
-            re.superclass.constructor.apply(this, arguments);
+            Base.apply(this, arguments);
         }
 
         S.extend(re, baseCls, px, sx);

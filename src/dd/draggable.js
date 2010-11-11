@@ -58,8 +58,21 @@ KISSY.add('dd-draggable', function(S) {
                         hl.css('cursor', 'move');
                 }
             }
-
             node.on('mousedown', self._handleMouseDown, self);
+        },
+
+        destroy:function() {
+            var self = this,
+                node = self.get('node'),
+                handlers = self.get('handlers');
+            for (var h in handlers) {
+                if (!handlers.hasOwnProperty(h)) continue;
+                var hl = handlers[h];
+                if (hl.css("cursor") == "move") {
+                    hl.css("cursor", "auto");
+                }
+            }
+            node.detach('mousedown', self._handleMouseDown, self);
         },
 
         _check: function(t) {

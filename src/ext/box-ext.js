@@ -8,15 +8,12 @@ KISSY.add("ext-box", function(S) {
     var doc = document,Node = S.Node;
 
     function BoxExt() {
+        S.log("box init");
         var self = this;
         self.on("renderUI", self._renderUIBoxExt, self);
-        var oriDdestroy = self.destroy;
-        self.destroy = function() {
-            var el = self.get("el");
-            el.detach();
-            el.remove();
-            oriDdestroy.call(self);
-        };
+        self.on("syncUI", self._syncUIBoxExt, self);
+        self.on("bindUI", self._bindUIBoxExt, self);
+
     }
 
     BoxExt.ATTRS = {
@@ -60,7 +57,12 @@ KISSY.add("ext-box", function(S) {
     };
 
     BoxExt.prototype = {
-
+        _syncUIBoxExt:function() {
+            S.log("_syncUIBoxExt");
+        },
+        _bindUIBoxExt:function() {
+            S.log("_bindUIBoxExt");
+        },
         _renderUIBoxExt:function() {
             S.log("_renderUIBoxExt");
             var self = this,
@@ -80,18 +82,21 @@ KISSY.add("ext-box", function(S) {
         },
 
         _uiSetElCls:function(cls) {
+            S.log("_uiSetElCls");
             if (cls) {
                 this.get("el")[0].className = cls;
             }
         },
 
         _uiSetElStyle:function(style) {
+            S.log("_uiSetElStyle");
             if (style) {
                 this.get("el").css(style);
             }
         },
 
         _uiSetWidth:function(w) {
+            S.log("_uiSetWidth");
             var self = this;
             if (w) {
                 self.get("el").width(w);
@@ -99,6 +104,7 @@ KISSY.add("ext-box", function(S) {
         },
 
         _uiSetHeight:function(h) {
+            S.log("_uiSetHeight");
             var self = this;
             if (h) {
                 self.get("el").height(h);
@@ -106,8 +112,18 @@ KISSY.add("ext-box", function(S) {
         },
 
         _uiSetHtml:function(c) {
+            S.log("_uiSetHtml");
             if (c !== false)
                 this.get("el").html(c);
+        },
+
+        __destructor:function() {
+            S.log("box __destructor");
+            var el = this.get("el");
+            if (el) {
+                el.detach();
+                el.remove();
+            }
         }
     };
 

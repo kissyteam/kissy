@@ -1,6 +1,6 @@
 /**
  * KISSY Overlay
- * @author 玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>,yiminghe@gmail.com
+ * @author 玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay", function(S, undefined) {
 
@@ -26,14 +26,24 @@ KISSY.add("overlay", function(S, undefined) {
         S.Ext.Mask], {
 
         init:function() {
+            S.log("Overlay init");
             var self = this,trigger = self.get("trigger");
             if (trigger &&
                 trigger.length > 0) {
                 self._bindTrigger();
             }
             self.on("bindUI", self._bindUIOverlay, self);
+            self.on("renderUI", self._renderUIOverlay, self);
+            self.on("syncUI", self._syncUIOverlay, self);
         },
 
+        _renderUIOverlay:function() {
+            S.log("_renderUIOverlay");
+        },
+
+        _syncUIOverlay:function() {
+            S.log("_syncUIOverlay");
+        },
         /**
          * bindUI
          * 注册dom事件以及属性事件
@@ -61,22 +71,21 @@ KISSY.add("overlay", function(S, undefined) {
          * 触发器的鼠标移动事件
          */
         _bindTriggerMouse: function() {
-            var self = this;
+            var self = this,
+                trigger = self.get("trigger");
 
-            self.get("trigger").each(function(trigger) {
-                var timer;
-                trigger.on(MOUSEENTER, function() {
-                    timer && timer.cancel();
-                    timer = S.later(function() {
-                        self.show();
-                        timer = undefined;
-                    }, 100);
-                });
-                trigger.on(MOUSELEAVE, function() {
-                    timer && timer.cancel();
+            var timer;
+            trigger.on(MOUSEENTER, function() {
+                timer && timer.cancel();
+                timer = S.later(function() {
+                    self.show();
                     timer = undefined;
-                    self.hide();
-                });
+                }, 100);
+            });
+            trigger.on(MOUSELEAVE, function() {
+                timer && timer.cancel();
+                timer = undefined;
+                self.hide();
             });
         },
 
@@ -86,19 +95,19 @@ KISSY.add("overlay", function(S, undefined) {
          * 触发器点击事件
          */
         _bindTriggerClick: function() {
-            var self = this;
-            self.get("trigger").each(function(trigger) {
-                trigger.on(CLICK, function(e) {
-                    e.halt();
-                    self.show();
-                });
+            var self = this,
+                trigger = self.get("trigger");
+            trigger.on(CLICK, function(e) {
+                e.halt();
+                self.show();
             });
         },
 
         /**
          * 删除自己, mask 删不了
          */
-        destroy: function() {
+        destructor: function() {
+            S.log("overlay destructor");
             var self = this,
                 trigger = self.get("trigger");
             trigger && trigger.detach(MOUSEENTER +
@@ -106,7 +115,6 @@ KISSY.add("overlay", function(S, undefined) {
                 MOUSELEAVE +
                 " " +
                 CLICK);
-            Overlay.superclass.destroy.call(self);
         }
 
     }, {

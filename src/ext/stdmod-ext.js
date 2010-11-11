@@ -9,8 +9,11 @@ KISSY.add("ext-stdmod", function(S) {
         Node = S.Node;
 
     function StdMod() {
+        S.log("stdmod init");
         var self = this;
         self.on("renderUI", self._renderUIStdMod, self);
+        self.on("syncUI", self._syncUIStdMod, self);
+        self.on("bindUI", self._bindUIStdMod, self);
     }
 
     StdMod.ATTRS = {
@@ -39,16 +42,24 @@ KISSY.add("ext-stdmod", function(S) {
 
 
     StdMod.prototype = {
-
+        _bindUIStdMod:function() {
+            S.log("_bindUIStdMod");
+        },
+        _syncUIStdMod:function() {
+            S.log("_syncUIStdMod");
+        },
         _uiSetBodyContent:function(v) {
+            S.log("_uiSetBodyContent");
             if (v !== false)
                 this.get("body").html(v);
         },
         _uiSetHeaderContent:function(v) {
+            S.log("_uiSetHeaderContent");
             if (v !== false)
                 this.get("header").html(v);
         },
         _uiSetFooterContent:function(v) {
+            S.log("_uiSetFooterContent");
             if (v !== false)
                 this.get("footer").html(v);
         },
@@ -74,6 +85,10 @@ KISSY.add("ext-stdmod", function(S) {
                 footer = new Node("<div class='" + CLS_PREFIX + "footer'>").appendTo(el);
                 self.set("footer", footer);
             }
+        },
+
+        __destructor:function() {
+            S.log("stdmod __destructor");
         }
     };
 

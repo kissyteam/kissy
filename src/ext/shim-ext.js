@@ -5,12 +5,21 @@
 KISSY.add("ext-shim", function(S) {
     S.namespace("Ext");
     function ShimExt() {
+         S.log("shim init");
         var self = this;
         self.on("renderUI", self._renderUIShimExt, self);
+        self.on("bindUI", self._bindUIShimExt, self);
+        self.on("syncUI", self._syncUIShimExt, self);
     }
 
     var Node = S.Node;
     ShimExt.prototype = {
+        _syncUIShimExt:function() {
+            S.log("_syncUIShimExt");
+        },
+        _bindUIShimExt:function() {
+            S.log("_bindUIShimExt");
+        },
         _renderUIShimExt:function() {
             S.log("_renderUIShimExt");
             var self = this,el = self.get("el");
@@ -24,6 +33,10 @@ KISSY.add("ext-shim", function(S) {
             var c = el[0].firstChild;
             if (c) shim.insertBefore(c);
             else shim.appendTo(el);
+        },
+
+        __destructor:function() {
+            S.log("shim __destructor");
         }
     };
     S.Ext.Shim = ShimExt;

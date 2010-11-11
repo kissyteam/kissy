@@ -5,8 +5,11 @@
 KISSY.add("ext-drag", function(S) {
     S.namespace('Ext');
     function DragExt() {
+         S.log("drag init");
         var self = this;
         self.on("bindUI", self._bindUIDragExt, self);
+        self.on("renderUI", self._renderUIDragExt, self);
+        self.on("syncUIUI", self._syncUIDragExt, self);
     }
 
     DragExt.ATTRS = {
@@ -17,8 +20,17 @@ KISSY.add("ext-drag", function(S) {
     DragExt.prototype = {
 
         _uiSetHanlders:function(v) {
+            S.log("_uiSetHanlders");
             if (v && v.length > 0)
                 this.__drag.set("handlers", v);
+        },
+
+        _syncUIDragExt:function() {
+            S.log("_syncUIDragExt");
+        },
+
+        _renderUIDragExt:function() {
+            S.log("_renderUIDragExt");
         },
 
         _bindUIDragExt:function() {
@@ -31,6 +43,7 @@ KISSY.add("ext-drag", function(S) {
         },
 
         _uiSetDraggable:function(v) {
+            S.log("_uiSetDraggable");
             var self = this,d = self.__drag;
             if (v) {
                 d.on("drag", self._dragExtAction, self);
@@ -41,6 +54,14 @@ KISSY.add("ext-drag", function(S) {
 
         _dragExtAction:function(offset) {
             this.set("xy", [offset.left,offset.top])
+        },
+        /**
+         *
+         */
+        __destructor:function() {
+            S.log("DragExt __destructor");
+            var d = this.__drag;
+            d&&d.destroy();
         }
 
     };

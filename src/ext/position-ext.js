@@ -10,9 +10,11 @@ KISSY.add("ext-position", function(S) {
         KEYDOWN = "keydown";
 
     function PositionExt() {
+         S.log("position init");
         var self = this;
         self.on("bindUI", self._bindUIPosition, self);
         self.on("renderUI", self._renderUIPosition, self);
+        self.on("syncUI", self._syncUIPosition, self);
     }
 
     PositionExt.ATTRS = {
@@ -45,6 +47,9 @@ KISSY.add("ext-position", function(S) {
 
 
     PositionExt.prototype = {
+        _syncUIPosition:function() {
+            S.log("_syncUIPosition");
+        },
         _renderUIPosition:function() {
             S.log("_renderUIPosition");
             this.get("el").css("display", "");
@@ -53,22 +58,26 @@ KISSY.add("ext-position", function(S) {
             S.log("_bindUIPosition");
         },
         _uiSetZIndex:function(x) {
+            S.log("_uiSetZIndex");
             if (x !== undefined)
                 this.get("el").css("z-index", x);
         },
         _uiSetX:function(x) {
+            S.log("_uiSetX");
             if (x !== undefined)
                 this.get("el").offset({
                     left:x
                 });
         },
         _uiSetY:function(y) {
+            S.log("_uiSetY");
             if (y !== undefined)
                 this.get("el").offset({
                     top:y
                 });
         },
         _uiSetVisible:function(isVisible) {
+            S.log("_uiSetVisible");
             var self = this,
                 el = self.get("el");
             el.css("visibility", isVisible ? "" : "hidden");
@@ -130,6 +139,10 @@ KISSY.add("ext-position", function(S) {
          */
         hide: function() {
             this.set("visible", false);
+        },
+
+        __destructor:function() {
+            S.log("position __destructor");
         }
 
     };

@@ -8,8 +8,11 @@ KISSY.add("ext-contentbox", function(S) {
     var Node = S.Node;
 
     function ContentBox() {
+         S.log("contentbox init");
         var self = this;
-        self.on("renderUI", self._renderUIOverlayExt, self);
+        self.on("renderUI", self._renderUIContentBox, self);
+        self.on("syncUI", self._syncUIContentBox, self);
+        self.on("bindUI", self._bindUIContentBox, self);
     }
 
     ContentBox.ATTRS = {
@@ -25,7 +28,13 @@ KISSY.add("ext-contentbox", function(S) {
     };
 
     ContentBox.prototype = {
-        _renderUIOverlayExt:function() {
+        _syncUIContentBox:function() {
+            S.log("_syncUIContentBox");
+        },
+        _bindUIContentBox:function() {
+            S.log("_bindUIContentBox");
+        },
+        _renderUIContentBox:function() {
             S.log("_renderUIContentBox");
             var self = this,
                 contentEl = self.get("contentEl"),
@@ -37,9 +46,14 @@ KISSY.add("ext-contentbox", function(S) {
         },
 
         _uiSetContent:function(c) {
+            S.log("_uiSetContent");
             if (c !== undefined) {
                 this.get("contentEl").html(c);
             }
+        },
+
+        __destructor:function(){
+            S.log("contentbox __destructor");
         }
     };
 

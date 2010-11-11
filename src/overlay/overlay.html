@@ -12,10 +12,14 @@
 </style>
 </head>
 <body>
+
 <button id="show1">
-    点击出现
+    点击出现弹窗1
 </button>
 
+<button id="destroy1">
+    点击摧毁弹窗1
+</button>
 
 <div id="show3" style="margin:10px;border:1px solid red;width:100px;">
     鼠标掠过出现
@@ -54,7 +58,11 @@
             mask:true
         });
 
-        
+        S.one("#destroy1").on("click", function() {
+            o.destroy();
+        });
+
+
         new Overlay({
             content:"i am overly 动态生成 2",
             x:100,
@@ -63,7 +71,7 @@
             trigger:"#show3"
         });
 
-        
+
         var o2 = new Overlay({
             srcNode:S.one("#markup"),
             autoRender:true,

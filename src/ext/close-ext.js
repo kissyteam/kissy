@@ -7,9 +7,11 @@ KISSY.add("ext-overlay-close", function(S) {
     var CLS_PREFIX = 'ks-dialog-',Node = S.Node;
 
     function CloseExt() {
+         S.log("close init");
         var self = this;
         self.on("renderUI", self._rendUICloseExt, self);
         self.on("bindUI", self._bindUICloseExt, self);
+        self.on("syncUI", self._syncUICloseExt, self);
     }
 
     CloseExt.ATTRS = {
@@ -27,7 +29,11 @@ KISSY.add("ext-overlay-close", function(S) {
     };
 
     CloseExt.prototype = {
+        _syncUICloseExt:function() {
+            S.log("_syncUICloseExt");
+        },
         _uiSetClosable:function(v) {
+            S.log("_uiSetClosable");
             var self = this,
                 closeBtn = self.get("closeBtn");
             if (closeBtn) {
@@ -52,11 +58,19 @@ KISSY.add("ext-overlay-close", function(S) {
             }
         },
         _bindUICloseExt:function() {
+            S.log("_bindUICloseExt");
             var self = this,
                 closeBtn = self.get("closeBtn");
             closeBtn && closeBtn.on("click", function() {
                 self.hide();
             });
+        },
+
+        __destructor:function() {
+            S.log("close-ext __destructor");
+            var self = this,
+                closeBtn = self.get("closeBtn");
+            closeBtn&&closeBtn.detach();
         }
     };
     S.Ext.Close = CloseExt;
