@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 11 12:36
+build time: Nov 11 15:24
 */
 /**
  * @module  Base
@@ -44,6 +44,7 @@ KISSY.add('base', function (S) {
                 }
             }
 
+
             //收集扩展类
             var exts = c._kissycreate;
             exts = exts && exts._exts;
@@ -52,6 +53,8 @@ KISSY.add('base', function (S) {
                 t_ext = exts.concat();
             }
 
+
+            //先执行扩展类
             var t_init = c.prototype.init;
             if (t_init) {
                 t_ext.push(t_init);
@@ -105,13 +108,13 @@ KISSY.add('base', function (S) {
             //收集扩展类
             var exts = c._kissycreate;
             exts = exts && exts._exts;
+            var d = c.prototype.destructor;
+            d && d.apply(host);
             if (exts) {
                 for (var l = exts.length - 1; l >= 0; l--) {
                     var d = exts[l].prototype.__destructor;
                     d && d.apply(host);
                 }
-                d = c.prototype.destructor;
-                d && d.apply(host);
             }
             c = c.superclass ? c.superclass.constructor : null;
         }
@@ -234,7 +237,7 @@ KISSY.add('base', function (S) {
         }
         baseCls = baseCls || Base;
         function re() {
-            re.superclass.constructor.apply(this, arguments);
+            Base.apply(this, arguments);
         }
 
         S.extend(re, baseCls, px, sx);

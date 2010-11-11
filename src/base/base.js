@@ -105,13 +105,11 @@ KISSY.add('base', function (S) {
             exts = exts && exts._exts;
             var d = c.prototype.destructor;
             d && d.apply(host);
-            
             if (exts) {
                 for (var l = exts.length - 1; l >= 0; l--) {
                     var d = exts[l].prototype.__destructor;
                     d && d.apply(host);
                 }
-
             }
             c = c.superclass ? c.superclass.constructor : null;
         }
