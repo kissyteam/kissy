@@ -1,5 +1,5 @@
 /**
- * @module	 日历 
+ * KISSY Calendar
  * @creator  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar', function(S, undefined) {
@@ -44,7 +44,7 @@ KISSY.add('calendar', function(S, undefined) {
 
             //创建事件中心
             //事件中心已经和Calendar合并
-            var EventFactory = new Function;
+            var EventFactory = function(){};
             S.augment(EventFactory, S.EventTarget);
             var eventCenter = new EventFactory();
             S.mix(self, eventCenter);
@@ -67,7 +67,7 @@ KISSY.add('calendar', function(S, undefined) {
             self.con.html('');
 
             for (i = 0,_oym = [self.year,self.month]; i < self.pages; i++) {
-                if (i == 0) {
+                if (i === 0) {
                     _prev = true;
                 } else {
                     _prev = false;
@@ -97,7 +97,7 @@ KISSY.add('calendar', function(S, undefined) {
 		 * @private
 		 */
 		_stamp: function(el){
-			if(el.attr('id') == undefined || el.attr('id')==''){
+			if(el.attr('id') === undefined || el.attr('id')===''){
 				el.attr('id','K_'+S.now());
 			}
 			return el.attr('id');
@@ -121,7 +121,9 @@ KISSY.add('calendar', function(S, undefined) {
          */
         _buildEvent: function() {
             var self = this;
-            if (!self.popup)return this;
+            if (!self.popup){
+				return this;
+			}
             //点击空白
             //flush event
             for (var i = 0; i < self.EV.length; i++) {
@@ -133,11 +135,17 @@ KISSY.add('calendar', function(S, undefined) {
                 //TODO e.target是裸的节点，这句不得不加，虽然在逻辑上并无特殊语义
                 e.target = S.Node(e.target);
                 //点击到日历上
-                if (e.target.attr('id') == self.C_Id)return;
-                if ((e.target.hasClass('ks-next') || e.target.hasClass('ks-prev'))
-                    && e.target[0].tagName == 'A')    return;
+                if (e.target.attr('id') === self.C_Id){
+					return;
+				}
+                if ((e.target.hasClass('ks-next') || e.target.hasClass('ks-prev')) && 
+                    e.target[0].tagName === 'A'){
+					return;
+				}
                 //点击在trigger上
-                if (e.target.attr('id') == self.id)return;
+                if (e.target.attr('id') == self.id){
+					return;
+				}
                 if (!S.DOM.contains(S.one('#' + self.C_Id), e.target)) {
                     self.hide();
                 }
@@ -219,14 +227,14 @@ KISSY.add('calendar', function(S, undefined) {
          */
         _buildParam: function(o) {
             var self = this;
-            if (o === undefined || o == null) {
+            if (o === undefined || o === null) {
                 o = { };
             }
 
             function setParam(def, key) {
                 var v = o[key];
                 // null在这里是“占位符”，用来清除参数的一个道具
-                self[key] = (v === undefined || v == null) ? def : v;
+                self[key] = (v === undefined || v === null) ? def : v;
             }
 
 			//这种处理方式不错
@@ -251,9 +259,11 @@ KISSY.add('calendar', function(S, undefined) {
 			}
 
             setParam(self.date, 'selected');
-            if(o.startDay) self.startDay = (7 - o.startDay) % 7;
+            if(o.startDay){
+				self.startDay = (7 - o.startDay) % 7;
+			}
 
-            if (o.range !== undefined && o.range != null) {
+            if (o.range !== undefined && o.range !== null) {
                 var s = self._showdate(1, new Date(o.range.start.getFullYear() + '/' + (o.range.start.getMonth() + 1) + '/' + (o.range.start.getDate())));
                 var e = self._showdate(1, new Date(o.range.end.getFullYear() + '/' + (o.range.end.getMonth() + 1) + '/' + (o.range.end.getDate())));
                 self.range = {
@@ -277,7 +287,7 @@ KISSY.add('calendar', function(S, undefined) {
          */
         _parseParam: function(o) {
             var self = this,i;
-            if (o === undefined || o == null) {
+            if (o === undefined || o === null) {
                 o = {};
             }
             for (i in o) {
@@ -302,7 +312,7 @@ KISSY.add('calendar', function(S, undefined) {
                 templet = str_in;
             } else {
                 value_s = templet.match(/{\$(.*?)}/g);
-                if (data !== undefined && value_s != null) {
+                if (data !== undefined && value_s !== null) {
                     for (i = 0,m = value_s.length; i < m; i++) {
                         par = value_s[i].replace(/({\$)|}/g, '');
                         value = (data[par] !== undefined) ? data[par] : '';
@@ -349,7 +359,7 @@ KISSY.add('calendar', function(S, undefined) {
         //月减
         _monthMinus: function() {
             var self = this;
-            if (self.month == 0) {
+            if (self.month === 0) {
                 self.year--;
                 self.month = 11;
             } else {
@@ -395,11 +405,11 @@ KISSY.add('calendar', function(S, undefined) {
         //处理起始日期,d:Date类型
         _handleRange: function(d) {
             var self = this,t;
-            if ((self.range.start == null && self.range.end == null ) || (self.range.start != null && self.range.end != null)) {
+            if ((self.range.start === null && self.range.end === null ) || (self.range.start !== null && self.range.end !== null)) {
                 self.range.start = d;
                 self.range.end = null;
                 self.render();
-            } else if (self.range.start != null && self.range.end == null) {
+            } else if (self.range.start !== null && self.range.end === null) {
                 self.range.end = d;
                 if (self.range.start.getTime() > self.range.end.getTime()) {
                     t = self.range.start;

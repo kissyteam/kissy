@@ -119,13 +119,10 @@ KISSY.add('calendar-time', function(S) {
                 switch (status) {
                     case 'h':
                         return time.getHours();
-                        break;
                     case 'm':
                         return time.getMinutes();
-                        break;
                     case 's':
                         return time.getSeconds();
-                        break;
                 }
             };
 

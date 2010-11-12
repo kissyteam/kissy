@@ -100,19 +100,25 @@ KISSY.add('calendar-page', function(S) {
             this.Verify = function() {
 
                 var isDay = function(n) {
-                    if (!/^\d+$/i.test(n))return false;
+                    if (!/^\d+$/i.test(n)){
+						return false;
+					}
                     n = Number(n);
                     return !(n < 1 || n > 31);
 
                 },
                     isYear = function(n) {
-                        if (!/^\d+$/i.test(n))return false;
+                        if (!/^\d+$/i.test(n)){
+							return false;
+						}
                         n = Number(n);
                         return !(n < 100 || n > 10000);
 
                     },
                     isMonth = function(n) {
-                        if (!/^\d+$/i.test(n))return false;
+                        if (!/^\d+$/i.test(n)){
+							return false;
+						}
                         n = Number(n);
                         return !(n < 1 || n > 12);
 
@@ -177,8 +183,12 @@ KISSY.add('calendar-page', function(S) {
                 cc.EV[0] = con.one('div.ks-dbd').on('click', function(e) {
                     e.preventDefault();
                     e.target = S.Node(e.target);
-                    if (e.target.hasClass('null'))return;
-                    if (e.target.hasClass('disabled'))return;
+                    if (e.target.hasClass('null')){
+						return;
+					}
+                    if (e.target.hasClass('disabled')){
+						return;
+					}
                     var selectedd = Number(e.target.html());
                     var d = new Date();
                     d.setYear(cc.year);
@@ -220,7 +230,7 @@ KISSY.add('calendar-page', function(S) {
                         try {
                             cc.timmer.hidePopup();
                             e.preventDefault();
-                        } catch(e) {
+                        } catch(exp) {
                         }
                         e.target = S.Node(e.target);
                         var setime_node = con.one('.ks-setime');
@@ -245,8 +255,12 @@ KISSY.add('calendar-page', function(S) {
                                 var _month = con.one('.ks-setime').one('select').val();
                                 var _year = con.one('.ks-setime').one('input').val();
                                 con.one('.ks-setime').addClass('hidden');
-                                if (!cc.Verify().isYear(_year))return;
-                                if (!cc.Verify().isMonth(_month))return;
+                                if (!cc.Verify().isYear(_year)){
+									return;
+								}
+                                if (!cc.Verify().isMonth(_month)){
+									return;
+								}
                                 cc.father.render({
                                     date:new Date(_year + '/' + _month + '/01')
                                 });
@@ -263,8 +277,12 @@ KISSY.add('calendar-page', function(S) {
                             var _month = con.one('.ks-setime').one('select').val(),
                                 _year = con.one('.ks-setime').one('input').val();
                             con.one('.ks-setime').addClass('hidden');
-                            if (!cc.Verify().isYear(_year))return;
-                            if (!cc.Verify().isMonth(_month))return;
+                            if (!cc.Verify().isYear(_year)){
+								return;
+							}
+                            if (!cc.Verify().isMonth(_month)){
+								return;
+							}
                             cc.father.render({
                                 date:new Date(_year + '/' + _month + '/01')
                             });
@@ -313,41 +331,40 @@ KISSY.add('calendar-page', function(S) {
                     //prepare data }}
                     if (i < startweekday) {//null
                         s += '<a href="javascript:void(0);" class="ks-null">0</a>';
-                    } else if (cc.father.minDate instanceof Date
-                        && new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 2 - startweekday)).getTime() < (cc.father.minDate.getTime() + 1)) {//disabled
+                    } else if (cc.father.minDate instanceof Date &&
+                        new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 2 - startweekday)).getTime() < (cc.father.minDate.getTime() + 1)) {//disabled
                         s += '<a href="javascript:void(0);" class="ks-disabled">' + (i - startweekday + 1) + '</a>';
 
-                    } else if (cc.father.maxDate instanceof Date
-                        && new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 1 - startweekday)).getTime() > cc.father.maxDate.getTime()) {//disabled
+                    } else if (cc.father.maxDate instanceof Date &&
+                        new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 1 - startweekday)).getTime() > cc.father.maxDate.getTime()) {//disabled
                         s += '<a href="javascript:void(0);" class="ks-disabled">' + (i - startweekday + 1) + '</a>';
 
 
-                    } else if ((cc.father.range.start != null && cc.father.range.end != null) //日期选择范围
-                        && (
-                        _td_s.getTime() >= cc.father.range.start.getTime() && _td_e.getTime() < cc.father.range.end.getTime())) {
+                    } else if ((cc.father.range.start !== null && cc.father.range.end !== null) && //日期选择范围
+                        (  _td_s.getTime() >= cc.father.range.start.getTime() && _td_e.getTime() < cc.father.range.end.getTime())) {
 
-                        if (i == (startweekday + (new Date()).getDate() - 1)
-                            && (new Date()).getFullYear() == cc.year
-                            && (new Date()).getMonth() == cc.month) {//今天并被选择
+                        if (i == (startweekday + (new Date()).getDate() - 1) &&
+                            (new Date()).getFullYear() == cc.year &&
+                            (new Date()).getMonth() == cc.month) {//今天并被选择
                             s += '<a href="javascript:void(0);" class="ks-range ks-today">' + (i - startweekday + 1) + '</a>';
                         } else {
                             s += '<a href="javascript:void(0);" class="ks-range">' + (i - startweekday + 1) + '</a>';
                         }
 
-                    } else if (i == (startweekday + (new Date()).getDate() - 1)
-                        && (new Date()).getFullYear() == cc.year
-                        && (new Date()).getMonth() == cc.month) {//today
+                    } else if (i == (startweekday + (new Date()).getDate() - 1) &&
+                        (new Date()).getFullYear() == cc.year  &&
+                        (new Date()).getMonth() == cc.month) {//today
                         s += '<a href="javascript:void(0);" class="ks-today">' + (i - startweekday + 1) + '</a>';
 
-                    } else if (i == (startweekday + cc.father.selected.getDate() - 1)
-                        && cc.month == cc.father.selected.getMonth()
-                        && cc.year == cc.father.selected.getFullYear()) {//selected
+                    } else if (i == (startweekday + cc.father.selected.getDate() - 1) &&
+                        cc.month == cc.father.selected.getMonth() &&
+                        cc.year == cc.father.selected.getFullYear()) {//selected
                         s += '<a href="javascript:void(0);" class="ks-selected">' + (i - startweekday + 1) + '</a>';
                     } else {//other
                         s += '<a href="javascript:void(0);">' + (i - startweekday + 1) + '</a>';
                     }
                 }
-                if (k % 7 != 0) {
+                if (k % 7 !== 0) {
                     for (i = 0; i < (7 - k % 7); i++) {
                         s += '<a href="javascript:void(0);" class="ks-null">0</a>';
                     }

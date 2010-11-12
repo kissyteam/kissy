@@ -163,7 +163,7 @@ KISSY.use('calendar',function(S){
 		popup:true,
 		triggerType:['click']
 	}).on('select',function(e){
-		S.one('#J_Popup').val(e.date.format('localFullDate'));
+		S.one('#J_Popup').val(S.Date.format(e.date,'localFullDate'));
 	});
 
 	//Popup日历,单选关闭
