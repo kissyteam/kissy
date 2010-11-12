@@ -1,4 +1,4 @@
-/**
+/***
  * @module  ajax
  * @author  拔赤<lijing00333@163.com>
  */
@@ -15,7 +15,7 @@ KISSY.add('ajax', function(S) {
 		return _transactionid++;
 	};
 
-	var _ajaxEventFactory = new Function;
+	var _ajaxEventFactory = function(){};
 	S.augment(_ajaxEventFactory,S.EventTarget);
 	var _ajaxEventCenter = new _ajaxEventFactory();
 
@@ -41,7 +41,7 @@ KISSY.add('ajax', function(S) {
 	/**
 	 * S.Ajax.io(options) 基础方法,派生出S.Ajax.get,S.Ajax.post,
 	 * @param o
-	 			type:get,GET,post,POST
+	 			type: get, GET, post, POST
 				url:
 				data:a=1&b=2
 				dataType:jsonp,json,script.. 字段来自于 acceept
@@ -85,9 +85,9 @@ KISSY.add('ajax', function(S) {
 				text: "text/plain",
 				_default: "*/*"
 			},
-			complete:new Function,
-			success:new Function,
-			failure:new Function,
+			complete:function(){},
+			success:function(){},
+			failure:function(){},
 			args:null
 		};
 
@@ -173,7 +173,7 @@ KISSY.add('ajax', function(S) {
 				_ajaxEventCenter.fire('start',{
 					xhr:xhr	
 				});
-				S.getScript(s.url,new Function);
+				S.getScript(s.url,function(){});
 				_ajaxEventCenter.fire('send',{
 					xhr:xhr	
 				});
@@ -221,13 +221,13 @@ KISSY.add('ajax', function(S) {
 				//请求完成，onreadystatechange值空
 				requestDone = true;
 				if ( xhr ) {
-					xhr.onreadystatechange = new Function;
+					xhr.onreadystatechange = function(){};
 				}
 
 			//请求成功，数据可用，或者请求超时
 			} else if ( !requestDone && xhr && (xhr.readyState === 4 || isTimeout === "timeout") ) {
 				requestDone = true;
-				xhr.onreadystatechange = new Function;
+				xhr.onreadystatechange = function(){};
 
 				status = isTimeout === "timeout" ?
 					"timeout" :
@@ -299,7 +299,7 @@ KISSY.add('ajax', function(S) {
 			//get(url)
 			if(typeof data == 'undefined'){
 				var data = null,
-					callback = new Function,
+					callback = function(){},
 					dateType = '_default';
 			}
 			//get(url,callback)
@@ -311,7 +311,7 @@ KISSY.add('ajax', function(S) {
 			}
 			//get(url,data)
 			if(typeof callback == 'undefined'){
-				var callback = new Function,
+				var callback = function(){},
 					dataType = '_default';
 			}
 			//get(url,data,callback,type)
@@ -332,7 +332,7 @@ KISSY.add('ajax', function(S) {
 			//post(url)
 			if(typeof data == 'undefined'){
 				var data = null,
-					callback = new Function,
+					callback = function(){},
 					dateType = '_default';
 			}
 			//post(url,callback)
@@ -344,7 +344,7 @@ KISSY.add('ajax', function(S) {
 			}
 			//post(url,data)
 			if(typeof callback == 'undefined'){
-				var callback = new Function,
+				var callback = function(){},
 					dataType = '_default';
 			}
 			//post(url,data,callback,type)
@@ -362,7 +362,7 @@ KISSY.add('ajax', function(S) {
 			//jsonp(url)
 			if(typeof data == 'undefined'){
 				var data = null,
-					callback = new Function;
+					callback = function(){};
 			}
 			//jsonp(url,callback)
 			if(typeof data == 'function' ){
@@ -371,7 +371,7 @@ KISSY.add('ajax', function(S) {
 			}
 			//jsonp(url,data)
 			if(typeof callback == 'undefined'){
-				var callback = new Function;
+				var callback = function(){};
 			}
 			//jsonp(url,data,callback)
 			S.Ajax({
@@ -389,7 +389,7 @@ KISSY.add('ajax', function(S) {
 			//getJSON(url)
 			if(typeof data == 'undefined'){
 				var data = null,
-					callback = new Function;
+					callback = function(){};
 			}
 			//getJSON(url,callback)
 			if(typeof data == 'function' ){
@@ -398,7 +398,7 @@ KISSY.add('ajax', function(S) {
 			}
 			//getJSON(url,data)
 			if(typeof callback == 'undefined'){
-				var callback = new Function;
+				var callback = function(){};
 			}
 			//getJSON(url,data,callback)
 			S.Ajax({

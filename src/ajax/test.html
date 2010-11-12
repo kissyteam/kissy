@@ -19,7 +19,6 @@
 	<!--link rel="stylesheet" href="../kissy/assets/console.css" /-->
 	<div id="console"></div>
 
-</body>
 <!-- Test Cases -->
 <script>
 
@@ -39,11 +38,17 @@ S.log = function(msg,color){
 	if(typeof color == 'undefined'){
 		color = '';
 	}
-    if(color == 'info') color = 'green';
-    else if(color == 'warn') color = 'yellow';
+    if(color == 'info') {
+		color = 'green';
+	}
+    else if(color == 'warn'){
+		color = 'yellow';
+	}
 
-	if(!con)return;
-	con.innerHTML = '<p class="'+color+'">' +msg +'</p>' + con.innerHTML;
+	if(!con){
+		return;
+	}
+	con.innerHTML = '<p class="'+color+'">' +msg +'<\/p>' + con.innerHTML;
 };
 </script>
 <script>
@@ -56,7 +61,7 @@ S.add({
 
 
 	S.io.onStart(function(){
-		S.Node('<p><img src="http://img04.taobaocdn.com/tps/i4/T1CntDXh8hXXXXXXXX-32-32.gif" /></p>').insertBefore('#console');
+		S.Node('<p><img src="http://img04.taobaocdn.com/tps/i4/T1CntDXh8hXXXXXXXX-32-32.gif" /><\/p>').insertBefore('#console');
 	});
 	S.io.onComplete(function(){
 		S.one('#console').prev().remove();
@@ -120,5 +125,6 @@ S.add({
 });
 
 </script>
+</body>
 
 </html>
