@@ -5,9 +5,14 @@
 <title>Test</title>
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
 <style>
+    .ks-ext-position {
+        position: absolute;
+    }
+
     .ks-ext-mask {
         background-color: #000;
         opacity: 0.3;
+        filter: alpha(opacity = 15);
     }
 </style>
 </head>
@@ -21,15 +26,19 @@
     点击摧毁弹窗1
 </button>
 
-<div id="show3" style="margin:10px;border:1px solid red;width:100px;">
+<div id="show3" style="margin:10px;border:1px solid red;width:100px;padding:50px;">
     鼠标掠过出现
 </div>
 
-<div id="markup" class="ks-overlay">
+<div id="markup" class="ks-overlay" style="width:200px">
     <div class="ks-contentbox-content">
         从 markup 生成 overlay
     </div>
 </div>
+
+<select>
+    <option>测试 ie6</option>
+</select>
 
 
 <button id="show2">
@@ -44,40 +53,74 @@
 <script src="../ext/contentbox-ext.js"></script>
 <script src="../ext/position-ext.js"></script>
 <script src="../ext/shim-ext.js"></script>
+<script src="../ext/align-ext.js"></script>
 <script src="../ext/mask-ext.js"></script>
 <script src="overlay.js"></script>
 <script>
     KISSY.ready(function(S) {
-        var Overlay = S.Overlay;
+        var Overlay = S.Overlay,show1 = S.one("#show1");
+        var show3 = S.one("#show3"),
+                Align = S.Ext.Align;
 
         var o = new Overlay({
-            content:"i am overly 动态生成",
-            x:100,
-            y:100,
-            trigger:"#show1",
-            mask:true
+            content:"i am overly 动态生成,esc 隐藏",
+            width:200,
+            //x:100,
+            //y:100,
+            align:{
+                // 参考元素, falsy 值为可视区域
+                node: null,
+                // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+                points: [Align.CC, Align.CC],
+                // 有效值为 [n, m]
+                offset: [0, 0]
+            },
+            mask:true,
+            elStyle:{
+                //position:"absolute",
+                border:"1px solid red"
+            }
         });
 
+        show1.on("click", function() {
+            o.show();
+        });
         S.one("#destroy1").on("click", function() {
             o.destroy();
         });
 
 
-        new Overlay({
+        var o3 = new Overlay({
             content:"i am overly 动态生成 2",
-            x:100,
-            y:100,
-            triggerType:"mouse",
-            trigger:"#show3"
+            width:"200px",
+            elStyle:{
+                //position:"absolute",
+                border:"1px solid green"
+            }
         });
 
+
+        show3.on("mouseenter", function() {
+            S.log("mouseenter");
+            o3.show();
+            //o3.align(show3, [Align.TR,Align.TL], [0,0]);'
+            //overlay的左上角与参考点的右上角对齐
+            o3.set("align", {node:show3, points:[Align.TR,Align.TL],offset:[0,0]});
+        });
+        show3.on("mouseleave", function() {
+            S.log("mouseleave");
+            o3.hide();
+        });
 
         var o2 = new Overlay({
             srcNode:S.one("#markup"),
             autoRender:true,
-            width:100,
             x:100,
-            y:100
+            y:100,
+            elStyle:{
+                //position:"absolute",
+                border:"1px solid black"
+            }
         });
 
 

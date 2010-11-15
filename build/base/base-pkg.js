@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 11 15:24
+build time: Nov 15 18:02
 */
 /**
  * @module  Base
@@ -54,7 +54,7 @@ KISSY.add('base', function (S) {
             }
 
 
-            //先执行扩展类
+            //先收集扩展类
             var t_init = c.prototype.init;
             if (t_init) {
                 t_ext.push(t_init);
@@ -90,7 +90,7 @@ KISSY.add('base', function (S) {
 
         //初始化扩展类构造器，
         //注意：执行顺序
-        //父类 init，父类的所有扩展类构造器，子类 init，子类的所有扩展构造器
+        //父类的所有扩展类构造器，父类 init，子类的所有扩展构造器，子类 init
         for (var i = extChains.length - 1; i >= 0; i--) {
             extChains[i] && extChains[i].call(host, config);
         }
@@ -112,7 +112,7 @@ KISSY.add('base', function (S) {
             d && d.apply(host);
             if (exts) {
                 for (var l = exts.length - 1; l >= 0; l--) {
-                    var d = exts[l].prototype.__destructor;
+                    var d = exts[l] && exts[l].prototype.__destructor;
                     d && d.apply(host);
                 }
             }
@@ -260,7 +260,8 @@ KISSY.add('base', function (S) {
                     S.mix(re.HTML_PARSER, parsers, false);
                 }
                 //合并功能类代码到主类
-                S.augment(re, exts[i]);
+                if (ext)
+                    S.augment(re, ext);
             }
         }
         return re;

@@ -4,6 +4,7 @@ KISSY.add("ext-mask", function(S) {
      * 多 position 共享一个遮罩
      */
     var mask,
+        UA = S.UA,
         num = 0;
 
 
@@ -18,10 +19,16 @@ KISSY.add("ext-mask", function(S) {
             width:"100%",
             "height": S.DOM.docHeight()
         });
+        if (UA.ie == 6) {
+            mask.append("<iframe style='width:100%;" +
+                "height:expression(this.parentNode.offsetHeight);" +
+                "filter:alpha(opacity=0);" +
+                "z-index:-1;'>");
+        }
     }
 
     function MaskExt() {
-         S.log("mask init");
+        S.log("mask init");
         var self = this;
         self.on("bindUI", self._bindUIMask, self);
         self.on("renderUI", self._renderUIMask, self);

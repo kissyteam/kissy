@@ -10,7 +10,7 @@ KISSY.add("ext-position", function(S) {
         KEYDOWN = "keydown";
 
     function PositionExt() {
-         S.log("position init");
+        S.log("position init");
         var self = this;
         self.on("bindUI", self._bindUIPosition, self);
         self.on("renderUI", self._renderUIPosition, self);
@@ -52,6 +52,7 @@ KISSY.add("ext-position", function(S) {
         },
         _renderUIPosition:function() {
             S.log("_renderUIPosition");
+            this.get("el").addClass("ks-ext-position");
             this.get("el").css("display", "");
         },
         _bindUIPosition:function() {

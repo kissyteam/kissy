@@ -5,7 +5,7 @@
 KISSY.add("ext-shim", function(S) {
     S.namespace("Ext");
     function ShimExt() {
-         S.log("shim init");
+        S.log("shim init");
         var self = this;
         self.on("renderUI", self._renderUIShimExt, self);
         self.on("bindUI", self._bindUIShimExt, self);
@@ -27,9 +27,12 @@ KISSY.add("ext-shim", function(S) {
                 "border: none;" +
                 "width: 100%;" +
                 "top: 0;" +
+                "opacity: 0;" +
+                "filter: alpha(opacity=0);" +
                 "left: 0;" +
                 "z-index: -1;" +
                 "height: expression(this.parentNode.offsetHeight);" + "'>");
+
             var c = el[0].firstChild;
             if (c) shim.insertBefore(c);
             else shim.appendTo(el);

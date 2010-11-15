@@ -48,25 +48,32 @@ KISSY.add("ext-stdmod", function(S) {
         _syncUIStdMod:function() {
             S.log("_syncUIStdMod");
         },
+        _setStdModContent:function(part, v) {
+            if (v !== false) {
+                if (S.isString(v)) {
+                    this.get(part).html(v);
+                } else {
+                    this.get(part).html("");
+                    this.get(part).append(v);
+                }
+            }
+        },
         _uiSetBodyContent:function(v) {
             S.log("_uiSetBodyContent");
-            if (v !== false)
-                this.get("body").html(v);
+            this._setStdModContent("body", v);
         },
         _uiSetHeaderContent:function(v) {
             S.log("_uiSetHeaderContent");
-            if (v !== false)
-                this.get("header").html(v);
+            this._setStdModContent("header", v);
         },
         _uiSetFooterContent:function(v) {
             S.log("_uiSetFooterContent");
-            if (v !== false)
-                this.get("footer").html(v);
+            this._setStdModContent("footer", v);
         },
         _renderUIStdMod:function() {
             S.log("_renderUIStdMod");
             var self = this,
-                el = self.get("el"),
+                el = self.get("contentEl"),
                 header = self.get("header"),
                 body = self.get("body"),
                 footer = self.get("footer"),

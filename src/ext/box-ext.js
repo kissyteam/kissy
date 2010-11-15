@@ -25,8 +25,7 @@ KISSY.add("ext-box", function(S) {
             }
         },
         elCls: {
-            // 容器的 class
-            value: "ks-box-el"
+            // 容器的 class           
         },
         elStyle:{
             //容器的行内样式

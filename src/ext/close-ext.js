@@ -4,7 +4,7 @@
  */
 KISSY.add("ext-overlay-close", function(S) {
     S.namespace("Ext");
-    var CLS_PREFIX = 'ks-dialog-',Node = S.Node;
+    var CLS_PREFIX = 'ks-ext-',Node = S.Node;
 
     function CloseExt() {
          S.log("close init");

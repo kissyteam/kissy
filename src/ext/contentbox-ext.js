@@ -40,7 +40,7 @@ KISSY.add("ext-contentbox", function(S) {
                 contentEl = self.get("contentEl"),
                 el = self.get("el");
             if (!contentEl) {
-                contentEl = new Node("<div class='ks-contentbox-content'>").appendTo(el);
+                contentEl = new Node("<div class='ks-contentbox'>").appendTo(el);
                 self.set("contentEl", contentEl);
             }
         },
