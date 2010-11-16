@@ -5,7 +5,7 @@
 KISSY.add('popup', function(S) {
 
     var defaultConfig = {
-        triggerType: 'mouse', // 触发类型, click, mouse
+        triggerType: 'mouse', // 触发类型默认为 mouse
         align: {
             node: 'trigger',
             points: ['cr', 'ct'],
@@ -27,7 +27,6 @@ KISSY.add('popup', function(S) {
         config = config || { };
         if (S.isPlainObject(container)) config = container;
         else config.container = container;
-        config.align = S.merge(S.clone(defaultConfig.align), config.align);
 
         Popup.superclass.constructor.call(self, S.merge(defaultConfig, config));
     }

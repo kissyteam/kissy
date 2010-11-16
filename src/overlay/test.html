@@ -11,6 +11,12 @@
 <script src="widget-popup.js"></script>
 <script src="widget-dialog.js"></script>
 <script src="mod-autorender.js"></script>
+<script src="mod-constrain.js"></script>
+<script src="mod-alignment.js"></script>
+<script src="../dd/ddm.js"></script>
+<script src="../dd/draggable.js"></script>
+<script src="mod-draggable.js"></script>
+<script src="mod-fixed.js"></script>
 
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
 <style>
@@ -38,11 +44,12 @@
 <script>
     KISSY.ready(function(S) {
 
-        var popup = S.Popup('#popup1', {
+        var popup = new S.Popup('#popup1', {
             trigger: '#btn1',
             triggerType: 'click',
             width: 300,
             height: 200,
+            xy: [200, 200],
             align: {
                 node: 'trigger',
                 points: ['tr', 'tl'],
@@ -68,7 +75,7 @@
 <script>
     KISSY.ready(function(S) {
 
-        var popup = S.Popup('#popup2', {
+        var popup = new S.Popup('#popup2', {
             trigger: '#link1',
             width: 300,
             height: 200,
@@ -92,8 +99,7 @@
 <a id="link2">hover me</a>
 <script>
     KISSY.ready(function(S) {
-
-        var popup = S.Popup({
+        var popup = new S.Popup({
             trigger: '#link2',
             triggerType: 'mouse',
             width: 300,
@@ -110,7 +116,7 @@
 <p class="code-switch">显示源码</p>
 
 
-<h2>多个Popup</h2>
+<h2>多个触发元素公用一个 Popup</h2>
 <style>
     #multi {
         width: 60px;
@@ -118,6 +124,8 @@
     #multi li {
         background: orange;
         margin: 6px;
+        width: 80px;
+        text-align: center;
     }
     #popup3 {
         display: none;
@@ -135,16 +143,27 @@
 <div id="popup3"></div>
 <script>
     KISSY.ready(function(S){
-        S.each(S.query('#multi li'), function(t){
+        var lis = S.query('#multi li'),
+            popup = new S.Popup('#popup3', {
+            trigger: lis,
+            triggerType: 'mouse'
+        });
+        popup.on('show', function() {
+            popup.setBody(S.DOM.html(popup.currentTrigger));
+            popup.align();
+        });
+
+        // 注意：这里的用法已改变
+        /*S.each(S.query('#multi li'), function(t) {
             var popup = S.Popup('#popup3', {
                 trigger: t,
-                triggerType: 'mouse',
-                triggerLater: true
+                triggerType: 'mouse'
             });
-            popup.on('show',function(){
-               popup.setBody(S.DOM.html(t)); 
+            popup.on('show', function() {
+                popup.setBody(S.DOM.html(t));
+                popup.align();
             });
-        });
+        });*/
     });
 </script>
 <p class="code-switch">显示源码</p>
@@ -160,7 +179,7 @@
 </style>
 <h2>Dialog - auto render</h2>
 <button id="btn3">Show</button>
-<div class="dialog1 KS_Widget" data-widget-type="Dialog" data-widget-config="{ 'trigger': '#btn3', 'width': '400px', 'height': '300px', 'header': 'this is a title', 'content': 'this is content' }"><div class="ks-dialog-bd"></div></div>
+<div class="dialog1 KS_Widget" data-widget-type="Dialog" data-widget-config="{ 'trigger': '#btn3', 'width': '400px', 'height': '300px', 'header': 'this is a title', 'content': 'this is content', 'fixed': true }"><div class="ks-dialog-bd"></div></div>
 <script>
     KISSY.ready(function(S){
         S.Overlay.autoRender();
@@ -174,7 +193,7 @@
         background: white;
         border: 2px solid green;
     }
-    .dialog4 .ks-dialog-close {
+    .ks-dialog-close {
         position: absolute;
         right: 0;
         top: 0;
@@ -194,27 +213,107 @@
         padding: 10px;
     }
 </style>
-<h2>Dialog - 新建 + Mask </h2>
+<h2>Dialog - 新建 + Mask + Fixed</h2>
 <button id="btn4">Show</button> <button id="btn5">Hide All</button>
 <script>
     KISSY.ready(function(S){
-        var dialog = S.Dialog({
+        var dialog = new S.Dialog({
             trigger: '#btn4',
-            containerCls: 'dialog4',
+            containerCls: 'dialog5',
             width: 400,
             height: 300,
-            title: 'this is title',
+            header: 'this is title',
             footer: 'footer',
             content: 'content',
-            mask: false
+            mask: true,
+            fixed: true
         });
-        var times = 1;
         dialog.on('show', function(){
-            alert('hi');
+            //alert('hi');
         });
 
         S.Event.on('#btn5', 'click', function(e){
             dialog.manager.hideAll();
+            //dialog.set('fixed', false);
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+<style>
+    .constrain {
+        border: 4px solid grey;
+        width: 600px;
+        height: 400px;
+    }
+</style>
+<h2>Dialog Constrain</h2>
+<div class="constrain">
+    constrain area
+</div>
+<button id="btn6">show</button><button id="btn7">release</button><button id="btn8">center</button>
+<script>
+    KISSY.ready(function(S){
+        var dialog = new S.Dialog({
+            trigger: '.constrain',
+            containerCls: 'dialog4',
+            width: 400,
+            height: 300,
+            header: 'this is title',
+            footer: 'footer',
+            content: 'content',
+            mask: false,
+            align: {
+                node: '.constrain',
+                points: ['bc', 'cc']
+            },
+            constrain: '.constrain',
+            draggable: true
+        });
+
+        var stat = ['release', 'constrain'],
+            sh = ['show', 'hide'];
+        S.Event.on('#btn6', 'click', function() {
+            var b = this,
+                s = S.DOM.html(b);
+            if (s == sh[0]) {
+                dialog.show();
+                S.DOM.html(b, sh[1]);
+            } else {
+                dialog.hide();
+                S.DOM.html(b, sh[0]);
+            }
+        });
+
+
+        S.Event.on('#btn7', 'click', function() {
+            var b = this,
+                s = S.DOM.html(b);
+
+            if (s == stat[0]) {
+                dialog.set('constrain', false);
+                S.DOM.html(b, stat[1]);
+            } else {
+                dialog.set('constrain', '.constrain');
+                S.DOM.html(b, stat[0]);
+            }
+        });
+        S.Event.on('#btn8', 'click', function() {
+            dialog.center();
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+
+<h2>Dialog + Fixed </h2>
+<button id="btn9">Show</button>
+<script>
+    KISSY.ready(function(S){
+        new S.Dialog({
+            trigger: '#btn9',
+            content: '再怎么滚, 我都不会动~',
+            fixed: true
         });
     });
 </script>

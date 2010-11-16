@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 2 13:10
+build time: Nov 10 20:59
 */
 /**
  * @module kissy
@@ -168,7 +168,16 @@ build time: Nov 2 13:10
                 // A fallback to window.onload, that will always work.
                 win.attachEvent('onload', fire);
 
-                if (win == win.top) { // not an iframe
+                // If IE and not a frame
+                // continually check to see if the document is ready
+                var notframe = false;
+
+                try {
+                    notframe = win['frameElement'] == null;
+                } catch(e) {
+                }
+
+                if (doScroll && notframe) {
                     function readyScroll() {
                         try {
                             // Ref: http://javascript.nwbox.com/IEContentLoaded/
@@ -958,7 +967,7 @@ build time: Nov 2 13:10
             if (S.isPlainObject(name)) {
                 S.each(name, function(v, k) {
                     v.name = k;
-                    if(mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
+                    if (mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
                 });
                 mix(mods, name);
             }
@@ -973,7 +982,7 @@ build time: Nov 2 13:10
                 // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
                 //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
                 mix(mod, { name: name, status: LOADED });
-                if(!mod.fns) mod.fns = [];
+                if (!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
                 mix((mods[name] = mod), config);
 
@@ -1006,7 +1015,7 @@ build time: Nov 2 13:10
                 i, len = modNames.length, mod, name, fired;
 
             // 将 global 上的 mods, 移动到 instance 上
-            if(global) self.__mixMods(global);
+            if (global) self.__mixMods(global);
 
             // 已经全部 attached, 直接执行回调即可
             if (self.__isAttached(modNames)) {
@@ -1031,9 +1040,12 @@ build time: Nov 2 13:10
                 }
 
                 self.__attach(mod, function() {
+                    if (mod._requires) {
+                        mod.requires = mod._requires; // restore requires
+                        delete mod._requires;
+                    }
                     if (!fired && self.__isAttached(modNames)) {
                         fired = true;
-                        if(mod._requires) mod.requires = mod._requires; // restore requires
                         callback && callback(self);
                     }
                 }, global);
@@ -1079,14 +1091,14 @@ build time: Nov 2 13:10
 
         __mixMod: function(mods, gMods, name, global) {
             var mod = mods[name] || { }, status = mod.status;
-            
+
             S.mix(mod, S.clone(gMods[name]));
 
             // status 属于实例，当有值时，不能被覆盖。只有没有初始值时，才从 global 上继承
-            if(status) mod.status = status;
+            if (status) mod.status = status;
 
             // 来自 global 的 mod, path 应该基于 global
-            if(global) this.__buildPath(mod, global.Config.base);
+            if (global) this.__buildPath(mod, global.Config.base);
 
             mods[name] = mod;
         },
@@ -1154,7 +1166,7 @@ build time: Nov 2 13:10
 
                 // css 是同步的，在 success 回调里，已经将 loadQueque[url] 置成 LOADED
                 // 不需要再置成节点，否则有问题
-                if(!RE_CSS.test(url)) {
+                if (!RE_CSS.test(url)) {
                     loadQueque[url] = ret;
                 }
             }
@@ -1174,16 +1186,16 @@ build time: Nov 2 13:10
 
                     // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息，需要同步到 instance 上去
                     // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
-                    if(global) self.__mixMod(self.Env.mods, global.Env.mods, mod.name, global);
+                    if (global) self.__mixMod(self.Env.mods, global.Env.mods, mod.name, global);
 
                     // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
                     // 因此要加上下面的 !== 判断，否则会出现重复 attach, 比如编辑器里动态加载时，被依赖的模块会重复
-                    if(mod.status !== ATTACHED) mod.status = LOADED;
+                    if (mod.status !== ATTACHED) mod.status = LOADED;
 
                     callback();
                 }
             }
-            
+
             function _final() {
                 loadQueque[url] = LOADED;
             }
@@ -1193,7 +1205,7 @@ build time: Nov 2 13:10
             var Config = this.Config;
 
             build('path', 'fullpath');
-            if(mod[CSSFULLPATH] !== LOADED) build('csspath', CSSFULLPATH);
+            if (mod[CSSFULLPATH] !== LOADED) build('csspath', CSSFULLPATH);
 
             function build(path, fullpath) {
                 if (!mod[fullpath] && mod[path]) {
@@ -4878,7 +4890,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 2 13:10
+build time: Nov 2 14:57
 */
 /**
  * @module anim-easing
@@ -5148,7 +5160,7 @@ KISSY.add('anim', function(S, undefined) {
             style = S.param(style, ';')
                 .replace(/=/g, ':')
                 .replace(/%23/g, '#') // 还原颜色值中的 #
-                .replace(/([A-Z])/g, '-$1').toLowerCase(); // backgroundColor => background-color
+                .replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(); // backgroundColor => background-color
         }
         self.props = normalize(style);
         self.targetStyle = style;
@@ -8997,7 +9009,7 @@ KISSY.add('accordion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 2 13:10
+build time: Nov 8 16:12
 */
 /**
  * KISSY Mask
@@ -9055,6 +9067,11 @@ KISSY.add('mask', function(S, undefined) {
             DOM.hide([this.iframe, this.layer]);
         },
 
+        dispose: function() {
+            this.iframe && DOM.remove(this.iframe);
+            this.layer && DOM.remove(this.layer);
+        },
+
         toggle: function() {
             var isVisible = DOM.css(this.iframe, DISPLAY) !== 'none';
             this[isVisible ? 'hide' : 'show']();
@@ -9097,8 +9114,8 @@ KISSY.add('mask', function(S, undefined) {
 
     function setSize(elem, w, h) {
         if (elem) {
-            DOM.width(elem, w);
-            DOM.height(elem, h);
+            DOM.width(elem, w+20);
+            DOM.height(elem, h+20);
         }
     }
 
@@ -9107,7 +9124,7 @@ KISSY.add('mask', function(S, undefined) {
 }, { host: 'overlay' } );
 /**
  * KISSY Overlay
- * @creator   玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @author   玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('overlay', function(S, undefined) {
 
@@ -9115,57 +9132,18 @@ KISSY.add('overlay', function(S, undefined) {
         DOM = S.DOM, Event = S.Event,
         ie6 = S.UA.ie === 6,
 
-        DOT = '.', KEYDOWN = 'keydown',
-        POSITION_ALIGN = {
-            TL: 'tl',
-            TC: 'tc',
-            TR: 'tr',
-            LC: 'cl',
-            CC: 'cc',
-            RC: 'cr',
-            BL: 'bl',
-            BC: 'bc',
-            BR: 'br'
-        },
+        DOT = '.', KEYDOWN = 'keydown', EMPTY = '',
+        TRIGGERTYPE = 'triggerType', MOUSE = 'mouse', MOUSEENTER = 'mouseenter', MOUSELEAVE = 'mouseleave', CLICK = 'click',
+        MASK = 'mask', SHOW = 'show', HIDE = 'hide',
+        BDCLS = 'bdCls', CONTENT = 'content', ZINDEX = 'zIndex', DISPLAY = 'display', WIDTH = 'width', HEIGHT = 'height',
+        X = 'x', Y = 'y',
 
         CLS_CONTAINER = 'ks-overlay',
         CLS_PREFIX = CLS_CONTAINER + '-',
 
-        EVT_SHOW = 'show',
-        EVT_HIDE = 'hide',
-
-        /**
-         * 默认设置
-         */
-        defaultConfig = {
-            /*
-             * DOM 结构
-             *  <div class="ks-overlay-container">
-             *      <div class="ks-overlay-bd"></div>
-             *  </div>
-             */
-            container: null,
-            containerCls: CLS_CONTAINER,
-            //content: undefined,      // 默认为 undefined, 不设置
-            bdCls: CLS_PREFIX + 'bd',
-
-            trigger: null,
-            triggerType: 'click',   // 触发类型
-
-            width: 0,
-            height: 0,
-            zIndex: 9999,
-
-            xy: null,               // 相对 page 定位, 有效值为 [n, m]
-            align: {                // 相对指定 node or viewport 定位
-                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
-                points: [POSITION_ALIGN.CC, POSITION_ALIGN.CC], // ['tl', 'tr'] 表示 overlay 的 tl 与参考节点的 tr 对齐
-                offset: [0,0]       // 有效值为 [n, m]
-            },
-
-            mask: false,            // 是否显示蒙层, 默认不显示
-            shim: ie6
-        },
+        EVENT_SHOW = SHOW,
+        EVENT_HIDE = HIDE,
+        EVENT_CREATE = 'create',
 
         DEFAULT_STYLE = 'visibility:hidden;position:absolute;',
         TMPL = '<div class="{containerCls}" style="' + DEFAULT_STYLE + '"><div class="{bdCls}">{content}</div></div>',
@@ -9173,14 +9151,23 @@ KISSY.add('overlay', function(S, undefined) {
         mask;
 
     /*
+     * DOM 结构
+     *  <div class="ks-overlay-container">
+     *      <div class="ks-overlay-bd"></div>
+     *  </div>
+     */
+
+    /*
      * Overlay Class
      * @constructor
+     * @param {Element=} container
+     * @param {Object=} config
      * attached members：
-     *   - this.container
-     *   - this.trigger
-     *   - this.config
-     *   - this.body
-     *   - this.shim
+     *  - this.container
+     *  - this.trigger
+     *  - this.currentTrigger
+     *  - this.body
+     *  - this.shim
      */
     function Overlay(container, config) {
         var self = this;
@@ -9193,67 +9180,228 @@ KISSY.add('overlay', function(S, undefined) {
             config.container = container;
         }
 
-        // 获取相关联的 DOM 节点
-        self.container = S.get(config.container);
-        
-        self.trigger = S.get(config.trigger);
+        Overlay.superclass.constructor.call(self, config);
 
-        // 合并配置信息
-        config.align = S.merge(S.clone(defaultConfig.align), config.align);
-        self.config = S.merge(defaultConfig, config);
+        /**
+         * 获取相关联的 DOM 节点
+         * @type {Element}
+         */
+        self.container = S.get(config.container);
+
+        /**
+         * 触发元素, 有可能多个
+         * @type {Array.<Element>}
+         */
+        self.trigger = S.makeArray(S.query(config.trigger));
+
+        /**
+         * 当前触发元素, 默认为第一个
+         * @type {Element}
+         */
+        self.currentTrigger = self.trigger[0];
 
         self._init();
     }
 
-    S.augment(Overlay, S.EventTarget, {
+    S.extend(Overlay, S.Base);
 
-        _init: function() {
-            if (this.trigger) {
-                this._bindTrigger();
+    Overlay.ATTRS = {
+        container: {            // 容器元素
+            value: null
+        },
+        containerCls: {         // 容器的 class
+            value: CLS_CONTAINER
+        },
+        bdCls: {                // 内容 class
+            value: CLS_PREFIX + 'bd'
+        },
+
+        trigger: {              // 触发器, 可以是多个
+            value: null
+        },
+        triggerType: {          // 触发类型
+            value: CLICK
+        },
+
+        x: {                    // 水平方向绝对位置
+            value: 0
+        },
+        y: {                    // 垂直方向绝对位置
+            value: 0
+        },
+        xy: {                   // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
+            value: null,
+            setter: function(v) {
+                var self = this,
+                    xy = S.makeArray(v);
+
+                if (xy.length) {
+                    xy[0] && self.set(X, xy[0]);
+                    xy[1] && self.set(Y, xy[1]);
+                }
+                return v;
+            }
+        },
+        width: {                // 宽度
+            value: 0,
+            setter: function(v) {
+                return parseInt(v) || 0;
+            }
+        },
+        height: {               // 高度
+            value: 0,
+            setter: function(v) {
+                return parseInt(v) || 0;
             }
         },
 
+        content: {              // 内容, 默认为 undefined, 不设置
+            value: undefined
+        },
+
+        mask: {                 // 是否显示蒙层, 默认不显示
+            value: false
+        },
+        shim: {                 // 是否需要垫片
+            value: ie6
+        },
+        zIndex: {
+            value: 9999
+        }
+    };
+
+    Overlay.Plugins = [];
+
+    S.augment(Overlay, {
+        /**
+         * initialize
+         */
+        _init: function() {
+            var self = this;
+
+            self._onAttrChanges();
+
+            if (self.trigger.length > 0) {
+                self._bindTrigger();
+            }
+            // init plugins
+            S.each(Overlay.Plugins, function(plugin) {
+                if (plugin.init) {
+                    plugin.init(self);
+                }
+            });
+        },
+
+        _onAttrChanges: function() {
+            var self = this;
+
+            self.on('afterContainerChange', function(e) {
+                /**
+                 * 获取相关联的 DOM 节点
+                 * @type {Element}
+                 */
+                self.container = S.get(e.newVal);
+            });
+
+            self.on('afterTriggerChange', function(e) {
+                /**
+                 * 触发元素, 有可能多个
+                 * @type {Array.<Element>}
+                 */
+                self.trigger = S.makeArray(S.query(e.newVal));
+                self.currentTrigger = self.trigger[0];
+            });
+
+            self.on('afterXChange', function(e) {
+                var offset = {left: e.newVal};
+
+                DOM.offset(self.container, offset);
+                if (self.shim) self.shim.setOffset(offset);
+            });
+
+            self.on('afterYChange', function(e) {
+                var offset = {top: e.newVal};
+
+                DOM.offset(self.container, offset);
+                if(self.shim) self.shim.setOffset(offset);
+            });
+
+            self.on('afterWidthChange', function(e) {
+                var w = e.newVal;
+                if (w) {
+                    DOM.width(self.container, w);
+                    self.shim && self.shim.setSize(w, self.get(HEIGHT));
+                }
+                // 当设置 0 时, 表示按照内容宽度
+            });
+
+            self.on('afterHeightChange', function(e) {
+                var h = e.newVal;
+                if (h) {
+                    DOM.height(self.container, h);
+                    self.shim && self.shim.setSize(self.get(WIDTH), h);
+                }
+            });
+
+            self.on('afterContentChange', function(e) {
+                DOM.html(self.body, e.newVal);
+            });
+        },
+
+        /**
+         * 绑定触发器上的响应事件
+         */
         _bindTrigger: function() {
             var self = this;
 
-            if (self.config.triggerType === 'mouse') {
+            if (self.get(TRIGGERTYPE) === MOUSE) {
                 self._bindTriggerMouse();
             } else {
                 self._bindTriggerClick();
             }
         },
 
+        /**
+         * 触发器的鼠标移动事件
+         */
         _bindTriggerMouse: function() {
-            var self = this,
-                trigger = self.trigger, timer;
+            var self = this;
 
-            Event.on(trigger, 'mouseenter', function() {
-                self._clearHiddenTimer();
+            S.each(self.trigger, function(trigger) {
+                var timer;
 
-                timer = S.later(function() {
-                    self.show();
-                    timer = undefined;
-                }, 100);
-            });
+                Event.on(trigger, MOUSEENTER, function() {
+                    self._clearHiddenTimer();
 
-            Event.on(trigger, 'mouseleave', function() {
-                if (timer) {
-                    timer.cancel();
-                    timer = undefined;
-                }
+                    timer = S.later(function() {
+                        self.currentTrigger = trigger;
+                        self.show();
+                        timer = undefined;
+                    }, 100);
+                });
 
-                self._setHiddenTimer();
+                Event.on(trigger, MOUSELEAVE, function() {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
+
+                    self._setHiddenTimer();
+                });
             });
         },
 
+        /**
+         * 下面三个函数, 用于处理鼠标快速移出容器时是否需要隐藏的延时
+         */
         _bindContainerMouse: function() {
             var self = this;
 
-            Event.on(self.container, 'mouseleave', function() {
+            Event.on(self.container, MOUSELEAVE, function() {
                 self._setHiddenTimer();
             });
 
-            Event.on(self.container, 'mouseenter', function() {
+            Event.on(self.container, MOUSEENTER, function() {
                 self._clearHiddenTimer();
             });
         },
@@ -9273,131 +9421,532 @@ KISSY.add('overlay', function(S, undefined) {
             }
         },
 
+        /**
+         * 触发器点击事件
+         */
         _bindTriggerClick: function() {
             var self = this;
 
-            Event.on(self.trigger, 'click', function(e) {
-                e.halt();
-                self.show();
+            S.each(self.trigger, function(trigger) {
+                Event.on(trigger, CLICK, function(e) {
+                    e.halt();
+                    self.currentTrigger = trigger;
+                    self.show();
+                });
             });
         },
 
+        /**
+         * 显示 Overlay
+         */
         show: function() {
             this._firstShow();
         },
 
+        /**
+         * 第一次显示时, 需要构建 DOM, 设置位置
+         */
         _firstShow: function() {
             var self = this;
 
             self._prepareMarkup();
+            self._setDisplay();
+            self._setSize();
+            self._setPosition();
+            
+            self.fire(EVENT_CREATE);
+
             self._realShow();
             self._firstShow = self._realShow;
         },
 
         _realShow: function() {
-            this._setPosition();
             this._toggle(false);
         },
 
+        /**
+         * 切换显示/隐藏
+         * @param {boolean} isVisible
+         */
         _toggle: function(isVisible) {
             var self = this;
 
-            DOM.css(self.container, 'visibility', isVisible ? 'hidden' : '');
+            DOM.css(self.container, 'visibility', isVisible ? 'hidden' : EMPTY);
 
-            if(self.shim) self.shim.toggle();
-            if (self.config.mask) mask[isVisible ? 'hide' : 'show']();
+            self.shim && self.shim.toggle();
+            self.get(MASK) && mask[isVisible ? HIDE : SHOW]();
 
             self[isVisible ? '_unbindUI' : '_bindUI']();
-            self.fire(isVisible ? EVT_HIDE : EVT_SHOW);
+            self.fire(isVisible ? EVENT_HIDE : EVENT_SHOW);
         },
 
-
+        /**
+         * 隐藏
+         */
         hide: function() {
             this._toggle(true);
         },
 
         _prepareMarkup: function() {
-            var self = this, config = self.config, container = self.container;
+            var self = this, container = self.container;
 
             // 多个 Overlay 实例共用一个 mask
-            if (config.mask && !mask) {
+            if (self.get(MASK) && !mask) {
                 mask = new S.Mask();
             }
-            if (config.shim) {
+            if (self.get('shim')) {
                 self.shim = new S.Mask({ shim: true });
             }
 
             // 已有 Markup
             if (container) {
                 // 已有 markup 可以很灵活，如果没有 bdCls, 就让 body 指向 container
-                self.body = S.get(DOT + config.bdCls, container) || container;
+                self.body = S.get(DOT + self.get(BDCLS), container) || container;
 
                 container.style.cssText += DEFAULT_STYLE;
+                DOM.html(self.body, self.get(CONTENT));
             }
             // 构建 DOM
             else {
-                container = self.container = DOM.create(S.substitute(TMPL, config));
+                container = self.container = DOM.create(S.substitute(TMPL, {
+                    containerCls: self.get('containerCls'),
+                    bdCls: self.get(BDCLS),
+                    content: self.get(CONTENT)
+                }));
                 self.body = DOM.children(container)[0];
                 doc.body.appendChild(container);
             }
 
-            DOM.css(container, 'zIndex', config.zIndex);
+            DOM.css(container, ZINDEX, self.get(ZINDEX));
 
-            self.setBody(config.content);
-            self._setSize();
-
-            if (config.triggerType === 'mouse') self._bindContainerMouse();
+            if (self.get(TRIGGERTYPE) === MOUSE) self._bindContainerMouse();
         },
 
-        _setSize: function(w, h) {
-            var self = this,
-                config = self.config;
-
-            w = w || config.width;
-            h = h || config.height;
-
-            if (w) DOM.width(self.container, w);
-            if (h) DOM.height(self.container, h);
-            if (self.shim) self.shim.setSize(w, h);
-        },
-
+        /**
+         * 防止其他地方设置 display: none 后, 无法再次显示
+         */
         _setDisplay: function(){
             var self = this;
-            // 防止其他地方设置 display: none 后, 无法再次显示
-            if (DOM.css(self.container, 'display') === 'none') {
-                DOM.css(self.container, 'display', 'block');
+            if (DOM.css(self.container, DISPLAY) === 'none') {
+                DOM.css(self.container, DISPLAY, 'block');
             }
         },
 
+        /**
+         * 设置初始宽高
+         */
+        _setSize: function() {
+            var self = this,
+                w, h, container = self.container;
+
+            w = self.get(WIDTH) || DOM.width(container);
+            h = self.get(HEIGHT) || DOM.height(container);
+
+            DOM.width(container, w);
+            DOM.height(container, h);
+            if (self.shim) self.shim.setSize(w, h);
+        },
+        /**
+         * 设置初始位置
+         */
         _setPosition: function() {
-            var self = this, xy = self.config.xy;
+            var self = this,
+                offset = {left: self.get(X), top: self.get(Y)};
 
-            if (xy) {
-                self.move(xy);
-            } else {
-                self._setDisplay();
-                self.align();
-            }
+            DOM.offset(self.container, offset);
+            if (self.shim) self.shim.setOffset(offset);
         },
 
+        /**
+         * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
+         * @param {number|Array.<number>} x
+         * @param {number=} y
+         */
         move: function(x, y) {
-            var self = this, offset;
+            var self = this;
 
             if (S.isArray(x)) {
                 y = x[1];
                 x = x[0];
             }
-            offset = { left: x, top: y };
-
-            DOM.offset(self.container, offset);
-            if(self.shim) self.shim.setOffset(offset);
+            self.set(X, x);
+            y && self.set(Y, y);
         },
 
+        /**
+         * 显示/隐藏时绑定的事件
+         */
+        _bindUI: function() {
+            Event.on(doc, KEYDOWN, this._esc, this);
+        },
+
+        _unbindUI: function() {
+            Event.remove(doc, KEYDOWN, this._esc, this);
+        },
+        
+        _esc: function(e) {
+            if (e.keyCode === 27) this.hide();
+        },
+
+        /**
+         * 设置内容
+         * @param {string} html
+         */
+        setBody: function(html) {
+            this.set(CONTENT, html);
+        },
+
+        /**
+         * 删除自己, mask 删不了
+         */
+        dispose: function() {
+            var self = this;
+
+            self._toggle(true);
+            self.detach();
+            Event.remove(self.container);
+            S.each(self.trigger, function(t) {
+                Event.remove(t, self.get(TRIGGERTYPE) === MOUSE ? (MOUSEENTER + ' ' + MOUSELEAVE) : CLICK);
+            });
+            
+            DOM.remove(self.container);
+        }
+    });
+
+    S.Overlay = Overlay;
+
+}, { requires: ['core'] });
+
+/**
+ * TODO:
+ *  - stackable ? 
+ *  - effect
+ */
+/**
+ * KISSY Popup
+ * @creator   玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
+ */
+KISSY.add('popup', function(S) {
+
+    var defaultConfig = {
+        triggerType: 'mouse', // 触发类型默认为 mouse
+        align: {
+            node: 'trigger',
+            points: ['cr', 'ct'],
+            offset: [10, 0]
+        }
+    };
+
+    /**
+     * Popup Class
+     * @constructor
+     */
+    function Popup(container, config) {
+        var self = this;
+
+        if (!(self instanceof Popup)) {
+            return new Popup(container, config);
+        }
+
+        config = config || { };
+        if (S.isPlainObject(container)) config = container;
+        else config.container = container;
+
+        Popup.superclass.constructor.call(self, S.merge(defaultConfig, config));
+    }
+
+    S.extend(Popup, S.Overlay);
+    S.Popup = Popup;
+
+}, { host: 'overlay' });
+/**
+ * KISSY.Dialog
+ * @creator  玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
+ */
+KISSY.add('dialog', function(S, undefined) {
+
+    var DOM = S.DOM, Event = S.Event,
+        DOT = '.', DIV = '<div>', EMPTY = '', HEADER = 'header', FOOTER = 'footer',
+
+        CLS_CONTAINER = 'ks-overlay ks-dialog',
+        CLS_PREFIX = 'ks-dialog-',
+
+        /*
+         * DOM 结构
+         *  <div class="ks-overlay ks-dialog">
+         *      <div class="ks-dialog-hd">
+         *          <div class="ks-dialog-close"></div>
+         *      </div>
+         *      <div class="ks-dialog-bd"></div>
+         *      <div class="ks-dialog-ft"></div>
+         *  </div>
+         */
+        defaultConfig = {
+            containerCls: CLS_CONTAINER,
+            bdCls: CLS_PREFIX + 'bd',
+
+            width: 400,
+            height: 300
+        };
+
+    Dialog.ATTRS = {
+        header: {                // 头部内容
+            value: EMPTY
+        },
+        footer: {                // 尾部内容
+            value: EMPTY
+        },
+
+        hdCls: {                // 头部元素的 class
+            value: CLS_PREFIX + 'hd'
+        },
+        ftCls: {                // 尾部元素的 class
+            value: CLS_PREFIX + 'ft'
+        },
+
+        closeBtnCls: {          // 关闭按钮的 class
+            value: CLS_PREFIX + 'close'
+        },
+        closable: {             // 是否需要关闭按钮
+            value: true
+        }
+    };
+    /**
+     * Dialog Class
+     * @constructor
+     * attached members：
+     *  - this.header
+     *  - this.footer
+     *  - this.manager
+     *  - this.ID
+     */
+    function Dialog(container, config) {
+        var self = this;
+
+        // factory or constructor
+        if (!(self instanceof Dialog)) {
+            return new Dialog(container, config);
+        }
+
+        config = config || { };
+        if (S.isPlainObject(container)) config = container;
+        else config.container = container;
+
+        Dialog.superclass.constructor.call(self, S.merge(defaultConfig, config));
+
+        /**
+         * 对话框管理器
+         * @type {Object}
+         */
+        self.manager = S.DialogManager;
+        /**
+         * 对话框唯一 ID
+         * @type {number}
+         */
+        self.ID = self.manager.register(self);
+    }
+
+    S.extend(Dialog, S.Overlay);
+    
+    S.Dialog = Dialog;
+
+    S.augment(Dialog, S.EventTarget, {
+        _onAttrChanges: function() {
+            var self = this;
+
+            Dialog.superclass._onAttrChanges.call(self);
+
+            self.on('afterHeaderChange', function(e) {
+                DOM.html(self.header, e.newVal);
+            });
+            self.on('afterFooterChange', function(e) {
+                DOM.html(self.footer, e.newVal);
+            });
+        },
+
+        _prepareMarkup: function() {
+            var self = this,
+                footer,
+                hdCls = self.get('hdCls'), ftCls = self.get('ftCls');
+
+            Dialog.superclass._prepareMarkup.call(self);
+
+            /**
+             * 对话框头
+             * @type {Element}
+             */
+            self.header = S.get(DOT + hdCls, self.container);
+            if (!self.header) {
+                self.header = DOM.create(DIV, { 'class': hdCls });
+                DOM.insertBefore(self.header, self.body);
+            }
+            DOM.html(self.header, self.get(HEADER));
+
+            if (footer = self.get(FOOTER)) {
+                /**
+                 * 对话框尾
+                 * @type {Element}
+                 */
+                self.footer = S.get(DOT + ftCls, self.container);
+                if (!self.footer) {
+                    self.footer = DOM.create(DIV, { 'class': ftCls });
+                    self.container.appendChild(self.footer);
+                }
+                DOM.html(self.footer, footer);
+            }
+
+            if (self.get('closable')) self._initClose();
+        },
+
+        /**
+         * 初始化关闭按钮
+         * @private
+         */
+        _initClose: function() {
+            var self = this,
+                elem = DOM.create(DIV, { 'class': self.get('closeBtnCls') });
+
+            DOM.html(elem, 'close');
+            
+            Event.on(elem, 'click', function(e) {
+                e.halt();
+                self.hide();
+            });
+
+            self.header.appendChild(elem);
+        },
+
+        /**
+         * 设置头部内容
+         * @param {string} html
+         * @deprecated set('header', html)
+         */
+        setHeader: function(html) {
+            this.set(HEADER, html);
+        },
+
+        /**
+         * 设置尾部内容
+         * @param {string} html
+         * @deprecated set('footer', html)
+         */
+        setFooter: function(html) {
+            this.set(FOOTER, html);
+        }
+    });
+
+    S.DialogManager = {
+        /**
+         * 注册 dialog 对象
+         * @param dlg
+         */
+        register: function(dlg) {
+            if (dlg instanceof Dialog) {
+                var id = S.guid();
+                this._dialog[id] = dlg;
+                return id;
+            }
+            return -1;
+        },
+
+        /**
+         * 保存所有 dialog 对象
+         * @type {Object.<number, Object>}
+         */
+        _dialog: {},
+
+        /**
+         * 隐藏所有
+         */
+        hideAll: function() {
+            S.each(this._dialog, function(dlg) {
+                dlg && dlg.hide();
+            })
+        },
+        /**
+         * 根据 id 获取 dialog 对象
+         * @param {number} id
+         * @return {Object} Dialog 实例
+         */
+        get: function(id) {
+            if (!id) return undefined;
+            try{
+                return this._dialog[id];
+            } catch(e) {
+                return undefined;
+            }
+        }
+    };
+
+}, { host: 'overlay' });
+
+
+
+/**
+ * Overlay Alignment Plugin
+ * @author 乔花<qiaohua@taobao.com>
+ */
+KISSY.add('alignment', function(S, undefined) {
+    var DOM = S.DOM,
+        Overlay = S.Overlay,
+
+        ALIGN = 'align',
+        POSITION_ALIGN = {
+            TL: 'tl',
+            TC: 'tc',
+            TR: 'tr',
+            CL: 'cl',
+            CC: 'cc',
+            CR: 'cr',
+            BL: 'bl',
+            BC: 'bc',
+            BR: 'br'
+        },
+        defaultAlignment = {
+            node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+            points: [POSITION_ALIGN.CC, POSITION_ALIGN.CC], // ['tl', 'tr'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+            offset: [0, 0]      // 有效值为 [n, m]
+        };
+
+    S.mix(Overlay.ATTRS, {
+        align: {                // 相对指定 node or viewport 的定位
+            value: defaultAlignment,
+            setter: function(v) {
+                return S.merge(this.get(ALIGN), v);
+            },
+            getter: function(v) {
+                return S.merge(defaultAlignment, v);
+            }
+        }
+    });
+
+    Overlay.Plugins.push({
+        name: ALIGN,
+        init: function(host) {
+            host.on('create', function() {
+                var self = this;
+
+                self.on('afterAlignChange', function() {
+                    self.align();
+                });
+            });
+        }
+    });
+
+    S.augment(Overlay, {
+        /**
+         * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
+         * @param {Element=} node 参照元素, 可取配置选项中的设置, 也可是一元素
+         * @param {Array.<string>} points 对齐方式
+         * @param {Array.<number>} offset 偏移
+         */
         align: function(node, points, offset) {
-            var self = this, alignConfig = self.config.align, xy, diff, p1, p2;
+            var self = this, alignConfig = self.get(ALIGN), xy, diff, p1, p2;
+
+            if (!self.container) return;
 
             node = node || alignConfig.node;
-            if (node === 'trigger') node = self.trigger;
+            if (node === 'trigger') node = self.currentTrigger;
             else node = S.get(node);
 
             points = points || alignConfig.points;
@@ -9415,7 +9964,9 @@ KISSY.add('overlay', function(S, undefined) {
         },
 
         /**
-         * 获取 node 上的 align 对齐点 相对 page 的坐标
+         * 获取 node 上的 align 对齐点 相对于页面的坐标
+         * @param {?Element} node
+         * @param {align} align
          */
         _getAlignOffset: function(node, align) {
             var V = align.charAt(0),
@@ -9449,230 +10000,374 @@ KISSY.add('overlay', function(S, undefined) {
 
             return { left: x, top: y };
         },
-
-        center: function() {
-            var self = this;
-
-            self.move(
-                (DOM.viewportWidth() - DOM.width(self.container)) / 2 + DOM.scrollLeft(),
-                (DOM.viewportHeight() - DOM.height(self.container)) / 2 + DOM.scrollTop()
-                );
-        },
-
-        _bindUI: function() {
-            Event.on(doc, KEYDOWN, this._esc, this);
-        },
-
-        _unbindUI: function() {
-            Event.remove(doc, KEYDOWN, this._esc, this);
-        },
         
-        _esc: function(e) {
-            if (e.keyCode === 27) this.hide();
+        /**
+         * 居中显示到可视区域, 一次性居中
+         */
+        center: function() {
+            //this.set(ALIGN, defaultAlign);
+            this.align('viewport', [POSITION_ALIGN.CC, POSITION_ALIGN.CC], [0, 0]);
         },
 
-        setBody: function(html) {
-            this._setContent('body', html);
-        },
+        /**
+         * 设置初始位置
+         */
+        _setPosition: function() {
+            var self = this,
+                xy = self.get('xy'), offset;
 
-        _setContent: function(where, html) {
-            if(S.isString(html)) DOM.html(this[where], html);
+            if (xy) {
+                offset = {left: self.get('x'), top: self.get('y')};
+
+                DOM.offset(self.container, offset);
+                if (self.shim) self.shim.setOffset(offset);
+            } else {
+                self.align();
+            }
         }
     });
 
-    S.Overlay = Overlay;
-
-});
-
-/**
- * TODO:
- *  - stackable ? 
- *  - constrain 支持可视区域或指定区域 ?
- *  - effect
- *  - draggable
- */
-/**
- * KISSY Popup
- * @creator   玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
- */
-KISSY.add('popup', function(S) {
-
-    var defaultConfig = {
-        triggerType: 'mouse', // 触发类型, click, mouse
-        align: {
-            node: 'trigger',
-            points: ['cr', 'ct'],
-            offset: [10, 0]
-        }
-    };
-
-    /**
-     * Popup Class
-     * @constructor
-     */
-    function Popup(container, config) {
-        var self = this;
-
-        if (!(self instanceof Popup)) {
-            return new Popup(container, config);
-        }
-
-        config = config || { };
-        if (S.isPlainObject(container)) config = container;
-        else config.container = container;
-        config.align = S.merge(S.clone(defaultConfig.align), config.align);
-
-        Popup.superclass.constructor.call(self, S.merge(defaultConfig, config));
-    }
-
-    S.extend(Popup, S.Overlay);
-    S.Popup = Popup;
-
 }, { host: 'overlay' });
+
 /**
- * KISSY.Dialog
- * @creator  玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
+ * Note:
+ * - 2010/11/01 从 Overlay 中拆分出 align
  */
-KISSY.add('dialog', function(S) {
+/**
+ * Overlay Constrain Plugin
+ * @author 乔花<qiaohua@taobao.com>
+ */
 
-    var DOM = S.DOM, Event = S.Event,
-
-        DOT = '.', DIV = '<div>',
-
-        CLS_CONTAINER = 'ks-overlay ks-dialog',
-        CLS_PREFIX = 'ks-dialog-',
-
-        defaultConfig = {
-            /*
-             * DOM 结构
-             *  <div class="ks-overlay ks-dialog">
-             *      <div class="ks-dialog-hd">
-             *          <div class="ks-dialog-close"></div>
-             *      </div>
-             *      <div class="ks-dialog-bd"></div>
-             *      <div class="ks-dialog-ft"></div>
-             *  </div>
-             */
-            header: '',
-            footer: '',
-
-            containerCls: CLS_CONTAINER,
-            hdCls: CLS_PREFIX + 'hd',
-            bdCls: CLS_PREFIX + 'bd',
-            ftCls: CLS_PREFIX + 'ft',
-            closeBtnCls: CLS_PREFIX + 'close',
-
-            width: 400,
-            height: 300,
-            closable: true
+KISSY.add('constrain', function(S, undefined) {
+    var DOM = S.DOM,
+        Overlay = S.Overlay,
+        min = Math.min, max = Math.max, CONSTRAIN = 'constrain',
+        defaultConstrain = {
+            node: undefined,    // 如果没有设置限制容器元素, 默认以可视区域
+            mode: false         // 开启/关闭限制
         };
 
-    /**
-     * Dialog Class
-     * @constructor
-     * attached members：
-     *  - this.header
-     *  - this.footer
-     *  - this.manager
-     */
-    function Dialog(container, config) {
-        var self = this;
-
-        // factory or constructor
-        if (!(self instanceof Dialog)) {
-            return new Dialog(container, config);
-        }
-
-        config = config || { };
-        if (S.isPlainObject(container)) config = container;
-        else config.container = container;
-        config.align = S.merge(S.clone(defaultConfig.align), config.align);
-        
-        Dialog.superclass.constructor.call(self, S.merge(defaultConfig, config));
-
-        self.manager = S.DialogManager;
-        self.manager.register(self);
-    }
-
-    S.extend(Dialog, S.Overlay);
-    S.Dialog = Dialog;
-
-    S.augment(Dialog, S.EventTarget, {
-
-        _prepareMarkup: function() {
-            var self = this,
-                config = self.config;
-
-            Dialog.superclass._prepareMarkup.call(self);
-
-            self.header = S.get(DOT + config.hdCls, self.container);
-            if (!self.header) {
-                self.header = DOM.create(DIV, { 'class': config.hdCls });
-                DOM.insertBefore(self.header, self.body);
+    S.mix(Overlay.ATTRS, {
+        constrain: {            // 限制设置
+            value: defaultConstrain,
+            setter: function(v) {
+                return S.merge(this.get(CONSTRAIN), v);
+            },
+            getter: function(v) {
+                return S.merge(defaultConstrain, v);
             }
-            self.setHeader(config.header);
+        },
+        x: {
+            value: 0,
+            setter: function(v) {
+                var self = this,
+                    constrainRegion = self._getConstrainRegion();
 
-            if (config.footer) {
-                self.footer = S.get(DOT + config.ftCls, self.container);
-                if (!self.footer) {
-                    self.footer = DOM.create(DIV, { 'class': config.ftCls });
-                    self.container.appendChild(self.footer);
+                if (constrainRegion) {
+                    v = min(max(constrainRegion.left, v), constrainRegion.maxLeft);
                 }
-                self.setFooter(config.footer);
+                return v;
             }
-
-            if (config.closable) self._initClose();
         },
+        y: {
+            value: 0,
+            setter: function(v) {
+                var self = this,
+                    constrainRegion = self._getConstrainRegion();
 
-        _initClose: function() {
-            var self = this, config = self.config,
-                elem = DOM.create(DIV, { 'class': config.closeBtnCls });
-
-            DOM.html(elem, 'close');
-            
-            Event.on(elem, 'click', function(e) {
-                e.halt();
-                self.hide();
-            });
-
-            self.header.appendChild(elem);
-        },
-
-        setHeader: function(html) {
-            this._setContent('header', html);
-        },
-
-        setFooter: function(html) {
-            this._setContent('footer', html);
+                if (constrainRegion) {
+                    v = min(max(constrainRegion.top, v), constrainRegion.maxTop);
+                }
+                return v;
+            }
         }
     });
 
-    S.DialogManager = {
+    Overlay.Plugins.push({
+        name: CONSTRAIN,
+        init: function(host) {
+            host.on('create', function() {
+                var self = this;
 
-        register: function(dlg) {
-            if (dlg instanceof Dialog) {
-                this._dialog.push(dlg);
+                self.on('afterConstrainChange', function() {
+                    self.align && self.align();
+                });
+            });
+        }
+    });
+
+    S.augment(Overlay, {
+        /**
+         * 获取受限区域的宽高, 位置
+         * @return {Object | undefined} {left: 0, top: 0, maxLeft: 100, maxTop: 100}
+         */
+        _getConstrainRegion: function() {
+            var self = this,
+                constrain = self.get(CONSTRAIN),
+                elem = S.get(constrain.node),
+                ret;
+
+            if (!constrain.mode) return undefined;
+
+            if (elem) {
+                ret = DOM.offset(elem);
+                S.mix(ret, {
+                    maxLeft: ret.left + DOM.width(elem) - DOM.width(self.container),
+                    maxTop: ret.top + DOM.height(elem) - DOM.height(self.container)
+                });
             }
+            // 没有指定 constrain, 表示受限于可视区域
+            else {
+                ret = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
+                S.mix(ret, {
+                    maxLeft: ret.left + DOM.viewportWidth() - DOM.width(self.container),
+                    maxTop: ret.top + DOM.viewportHeight() - DOM.height(self.container)
+                });
+            }
+            return ret;
         },
 
-        _dialog: [],
+        /**
+         * 限制 overlay 在 node 中
+         * @param {Element=} node 
+         */
+        constrain: function(node) {
+            this.set(CONSTRAIN, {
+                node: node,
+                mode: true
+            });
+        },
 
-        hideAll: function() {
-            S.each(this._dialog, function(dlg) {
-                dlg && dlg.hide();
-            })
+        /**
+         * 开启/关闭 constrain
+         * @param {boolean} enabled
+         */
+        toggleConstrain: function(enabled) {
+            var self = this;
+
+            self.set(CONSTRAIN, {
+                node: self.get(CONSTRAIN).node,
+                mode: !!enabled
+            });
         }
-    };
+    });
+}, { host: 'overlay' });
+
+
+/**
+ * Note:
+ * - 2010/11/01 constrain 支持可视区域或指定区域
+ *//**
+ * Overlay Fixed Plugin
+ * @author 乔花<qiaohua@taobao.com>
+ */
+
+KISSY.add('overlay-fixed', function(S) {
+    var DOM = S.DOM,
+        Overlay = S.Overlay,
+        FIXED = 'fixed', POSITION = 'position', ABSOLUTE = 'absolute',
+        ie6 = S.UA.ie === 6, rf, body = document.body;
+
+    S.mix(Overlay.ATTRS, {
+        fixed: {
+            value: false
+        }
+    });
+
+    Overlay.Plugins.push({
+        name: FIXED,
+        init: function(host) {
+            host.on('create', function() {
+                var self = this;
+
+                if (self.get(FIXED)) {
+                    setFixed(self, true);
+                }
+
+                self.on('afterFixedChange', function(e) {
+                    setFixed(self, e.newVal);
+                });
+            });
+        }
+    });
+
+    /**
+     * IE6 下 position: fixed
+     * @param config
+     * @see http://www.cnblogs.com/cloudgamer/archive/2010/10/11/AlertBox.html
+     */
+    function RepairFixed() {
+    }
+
+    S.augment(RepairFixed, {
+        create: function() {
+            var self = this;
+
+            body = document.body;
+            if (body.currentStyle.backgroundAttachment !== FIXED) {
+                if (body.currentStyle.backgroundImage === "none") {
+                    body.runtimeStyle.backgroundRepeat = "no-repeat";
+                    body.runtimeStyle.backgroundImage = "url(about:blank)";
+                }
+                body.runtimeStyle.backgroundAttachment = FIXED;
+            }
+
+            self.container = document.createElement("<div class=" + "ks-overlay-" + FIXED + " style='position:absolute;border:0;padding:0;margin:0;overflow:hidden;background:transparent;top:expression((document).documentElement.scrollTop);left:expression((document).documentElement.scrollLeft);width:expression((document).documentElement.clientWidth);height:expression((document).documentElement.clientHeight);display:block;'>");
+
+            body.appendChild(self.container);// or DOM.insertBefore(self.container, body.childNodes[0]);
+            self.create = self.empty;
+        },
+        empty: function() {
+        },
+        add: function(elem) {
+            var self = this;
+
+            self.create();
+            
+            // 备份原来的父亲
+            elem._parent = elem.container.parentNode;
+
+            // 将 Overlay 及相关元素搬到 fixed 容器中
+            if (elem.shim) {
+                self.container.appendChild(elem.shim.iframe);
+                //elem.shim.iframe.runtimeStyle.position = ABSOLUTE;
+            }
+
+            self.container.appendChild(elem.container);
+            //elem.container.runtimeStyle.position = ABSOLUTE;
+        },
+
+        /**
+         * 取消 elem 的 fixed 设置
+         * @param elem
+         */
+        remove: function(elem) {
+            var parent;
+
+            // 将 Overlay 搬到原来的 parent 中
+            if (elem.container.parentNode === this.container) {
+                parent = elem._parent || body;
+
+                parent.appendChild(elem.container);
+                //elem.container.runtimeStyle.position = ABSOLUTE;
+                if (elem.shim) {
+                    elem.shim && parent.appendChild(elem.shim.iframe);
+                    //elem.shim.iframe.runtimeStyle.position = ABSOLUTE;
+                }
+
+                elem._parent = undefined;
+            }
+            // 这里保留 fixed 层
+        }
+    });
+
+    function setFixed(elem, f) {
+        if (!elem.container) return;
+
+        // 更新left/top
+        updatePosition(elem, f);
+
+        if (f) {
+            if (!ie6) {
+                DOM.css(elem.container, POSITION, FIXED);
+            } else {
+                DOM.css(elem.container, POSITION, ABSOLUTE);
+
+                if (!rf) {
+                    rf = new RepairFixed();
+                }
+                rf.add(elem);
+            }
+        } else {
+            if (!ie6) {
+                DOM.css(elem.container, POSITION, ABSOLUTE);
+            } else {
+                rf.remove(elem);
+            }
+        }
+    }
+
+    function updatePosition(elem, f) {
+        var old;
+        
+        old = DOM.offset(elem.container);
+        DOM.offset(elem.container, {
+            left: old.left + (f ? -DOM.scrollLeft() : DOM.scrollLeft()),
+            top: old.top + (f ? -DOM.scrollTop() : DOM.scrollTop())});
+    }
 
 }, { host: 'overlay' });
 
+
 /**
- * TODO:
- *  - S.guid() 唯一标识
+ * Note:
+ * - 2010/11/04  加入 fixed 支持
+ *//**
+ * Overlay Draggable Plugin
+ * @author 乔花<qiaohua@taobao.com>
  */
 
+KISSY.add('overlay-draggable', function(S) {
+    var Overlay = S.Overlay,
+        DRAGGABLE = 'draggable';
+
+    S.mix(Overlay.ATTRS, {
+        draggable: {
+            value: false
+        }
+    });
+
+    Overlay.Plugins.push({
+        name: DRAGGABLE,
+        init: function(host) {
+
+            host.on('create', function() {
+                var self = this;
+                if (self.get(DRAGGABLE)) {
+                    setDraggable(self, true);
+                }
+
+                self.on('afterDraggableChange', function(e) {
+                    setDraggable(self, e.newVal);
+                });
+            });
+        }
+    });
+
+
+    function setDraggable(elem, f) {
+        if (!elem.header) return;
+
+        try {
+            if (f) {
+                if (elem._dd) return;
+
+                var dd = new S.Draggable({
+                    node: new S.Node(elem.container),
+                    handlers: [new S.Node(elem.header)]
+                });
+                dd.on('drag', function(ev) {
+                    elem.move(ev.left, ev.top);
+                });
+
+                elem._dd = dd;
+            } else {
+                if (!elem._dd) return;
+
+                // 取消 draggable and else
+                elem._dd.remove('drag');
+            }
+        } catch(e) {
+            S.log('Required S.Draggable: ' + ex, 'warn');
+        }
+    }
+}, { host: 'overlay', requires: ['dd'] });
+
 
 /**
+ * Note:
+ * - 2010/11/03 draggable
+ *//**
  *  auto render
  * @creator  玉伯<lifesinger@gmail.com>
  */
@@ -10796,11 +11491,12 @@ KISSY.add('suggest', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 2 13:10
+build time: Nov 8 15:49
 */
 /**
- * 图片放大效果 ImageZoom
- * @creater  玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @fileoverview 图片放大效果 ImageZoom.
+ * @author  玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @see silde.html
  */
 KISSY.add('imagezoom', function(S, undefined) {
     var doc = document,
@@ -10812,116 +11508,257 @@ KISSY.add('imagezoom', function(S, undefined) {
         CLS_ICON = CLS_PREFIX + 'icon',
         CLS_LOADING = CLS_PREFIX + 'loading',
 
-        DIV = '<div>', IMG = '<img>',
         STANDARD = 'standard',
         RE_IMG_SRC = /^.+\.(?:jpg|png|gif)$/i,
-        round = Math.round, min = Math.min, max = Math.max,
-        AUTO = 'auto', LOAD = 'load',
+        round = Math.round, min = Math.min,
+        AUTO = 'auto',
         POSITION = ['top', 'right', 'bottom', 'left', 'inner'],
         SRC = 'src', MOUSEMOVE = 'mousemove', PARENT = 'parent',
+        HAS_ZOOM = 'hasZoom', BIG_IMAGE_SRC = 'bigImageSrc', ABS_STYLE = '" style="position:absolute;top:0;left:0">',
+        EMPTY = '', SHOW = 'show', HIDE = 'hide', ZOOM_SIZE = 'zoomSize', OFFSET = 'offset', POS = 'position',
+        BIG_IMAGE_SIZE = 'bigImageSize',
 
-        /**
-         * 默认设置
-         */
-        defaultConfig = {
-            type: STANDARD,            // 显示类型
-
-            bigImageSrc: '',           // 大图路径, 默认为 '', 会取触点上的 data-ks-imagezoom 属性值.
-            bigImageSize: [800, 800],  // 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值.
-            position: 'right',         // 大图显示位置
-            //alignTo: undefined,      // 大图显示位置相对于哪个元素, 默认不设置, 相对于小图位置, 如果取 PARENT, 为小图的 offsetParent 元素
-            offset: 10,                // 大图位置的偏移量. 单一值或 [x, y]
-            preload: true,             // 是否预加载大图
-
-            zoomSize: [AUTO, AUTO],    // 放大区域宽高
-            lensIcon: true,            // 是否显示放大镜提示图标
-            hasZoom: true,             // 初始是否显示放大效果
-
-            zoomCls: ''                // 放大区域额外样式
-        };
+        EVENT_SHOW = SHOW,
+        EVENT_HIDE = HIDE;
 
     /**
      * 图片放大镜组件
      * @class ImageZoom
      * @constructor
-     * attached members：
-     *   - this.image       需要缩放的图片      @type HTMLElement
-     *   - this.config      配置参数           @type Object
-     *   - this.lens        镜片              @type HTMLElement
-     *   - this.lensIcon    放大镜图标         @type HTMLElement
-     *   - this.bigImage    大图              @type HTMLElement
-     *   - this.viewer      大图显示区域        @type HTMLElement
+     * @param {Element} image 小图元素.
+     * @param {Object} config 配置对象.
      */
     function ImageZoom(image, config) {
-        var self = this, data, rel;
+        var self = this;
 
         if (!(self instanceof ImageZoom)) {
             return new ImageZoom(image, config);
         }
 
+        /**
+         * 需要缩放的图片
+         * @type Element
+         */
         self.image = image = S.get(image);
         if (!image) return;
 
-        self.config = config = S.merge(defaultConfig, config);
+        ImageZoom.superclass.constructor.call(self, config);
 
-        if (!config.bigImageSrc) {
-            data = DOM.attr(image, 'data-ks-imagezoom');
-            if (data && RE_IMG_SRC.test(data)) config.bigImageSrc = data;
-        }
-
-        // 支持 [x, y] or x
-        config.offset = S.makeArray(config.offset);
-
-        // 预加载大图
-        if (config.preload) {
-            new Image().src = config.bigImageSrc;
-        }
-
-        // 是否inner效果
-        self._isInner = config.position === POSITION[4];
-
-        // 参照对齐元素
-        if (!self._isInner && config.alignTo) {
-            if (config.alignTo === PARENT) {
-                rel = image.offsetParent;
-            } else {
-                rel = S.get(config.alignTo);
-            }
-            if (rel) self._alignToRegion = S.merge(DOM.offset(rel), getSize(rel));
-        }
-
-        // 大图高宽, 默认使用配置信息中, 当加载大图之后, 更新该值;
-        self._bigImageSize = { width: config.bigImageSize[0], height: config.bigImageSize[1] };
-
-        // 首次加载小图从缓存读取或在绑定load事件之前已经加载完小图时, 不显示 loading
-        config.hasZoom && !image.complete && self._startLoading();
-
-        self._firstInit = true;
-        // 在小图加载完毕时初始化
-        imgOnLoad(image, function() {
-            if (!config.hasZoom) return;
-            self._init();
-            self._finishLoading();
-        });
+        self._init();
     }
 
-    S.augment(ImageZoom, S.EventTarget, {
-        _init: function() {
-            this._renderUI();
-            if (this._firstInit) this._bindUI();
-            this._firstInit = false;
+    S.extend(ImageZoom, S.Base);
+
+    /**
+     * 设置不同参数
+     */
+    ImageZoom.ATTRS = {
+        /**
+         * 显示类型
+         * @type {string}
+         */
+        type: {
+            value: STANDARD
         },
 
-        _renderUI: function() {
-            var self = this, config = self.config,
-                image = self.image;
+        /**
+         * 大图路径, 默认为 '', 会取触点上的 data-ks-imagezoom 属性值
+         * @type {string}
+         */
+        bigImageSrc: {
+            value: '',
+            setter: function(v) {
+                var self = this,
+                    old = self.get(BIG_IMAGE_SRC);
+
+                if (v && RE_IMG_SRC.test(v) && v !== old) {
+                    self._cacheBigImageSrc = old;
+                    return v;
+                }
+                return self.get(BIG_IMAGE_SRC);
+            },
+            getter: function(v) {
+                var self = this, data;
+
+                if (!v) {
+                    data = DOM.attr(self.image, 'data-ks-imagezoom');
+                    if (data && RE_IMG_SRC.test(data)) v = data;
+                }
+                return v;
+            }
+        },
+        /**
+         * 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值
+         * @type {Array.<number>}
+         */
+        bigImageSize: {
+            value: [800, 800],
+            setter: function(v) {
+                return S.mix(this.get(BIG_IMAGE_SIZE), toArray(v));
+            }
+        },
+
+        /**
+         * 大图显示位置
+         * @type {string} POSITION
+         */
+        position: {
+            value: 'right'
+        },
+        /**
+         * 大图显示位置相对于哪个元素, 默认不设置, 相对于小图位置, 如果取 PARENT, 为小图的 offsetParent 元素
+         * @type {string|Element} parent or Element
+         */
+        alignTo: {
+            value: undefined
+        },
+        /**
+         * 大图位置的偏移量.
+         * @type {Array.<number>}
+         */
+        offset: {
+            value: [10, 0],
+            setter: function(v) {
+                return S.mix(this.get(OFFSET), toArray(v));
+            }
+        },
+        /**
+         * 是否预加载大图
+         * @type {boolean}
+         */
+        preload: {
+            value: true
+        },
+
+        /**
+         * 放大区域宽高
+         * @type {Array.<number>} [w, h] or wh
+         */
+        zoomSize: {
+            value: [AUTO, AUTO],
+            setter: function(v) {
+                return S.mix(this.get(ZOOM_SIZE), toArray(v));
+            },
+            getter: function(v) {
+                var self = this;
+
+                if (self._imgRegion) {
+                    if (v[0] === AUTO) v[0] = self._imgRegion.width;
+                    if (v[1] === AUTO) v[1] = self._imgRegion.height;
+                }
+                return v;
+            }
+        },
+        /**
+         * 是否显示放大镜提示图标
+         * @type {boolean}
+         */
+        lensIcon: {
+            value: true
+        },
+        /**
+         * 放大区域额外样式
+         * @type {string}
+         */
+        zoomCls: {
+            value: EMPTY
+        },
+        /**
+         * 显示放大区域标志
+         * @type {boolean}
+         */
+        hasZoom: {
+            value: true,
+            setter: function(v) {
+                return !!v;
+            }
+        }
+    };
+
+    S.augment(ImageZoom, {
+
+        /**
+         * 初始化
+         * @private
+         */
+        _init: function() {
+            var self = this,
+                tmp, image = self.image;
+
+            // 预加载大图
+            tmp = self.get(BIG_IMAGE_SRC);
+            if (tmp && self.get('preload')) {
+                new Image().src = tmp;
+            }
+
+            // 两种显示效果切换标志
+            self._isInner = self.get(POS) === POSITION[4];
+
+            self._getAlignTo();
+
+            // 大图高宽, 默认使用配置信息中, 当加载大图之后, 更新该值
+            tmp = self.get(BIG_IMAGE_SIZE);
+            self._bigImageSize = { width: tmp[0], height: tmp[1] };
+
+            // 首次加载小图从缓存读取或在绑定load事件之前已经加载完小图时
+            self.get(HAS_ZOOM) && !image.complete && self._startLoading();
+
+            // 初始化标志, 多张小图切换时, 通过此标志判断是否需要初始化
+            self._firstInit = true;
+            // 在小图加载完毕时初始化
+            imgOnLoad(image, function() {
+                if (!self.get(HAS_ZOOM)) return;
+                self._finishLoading();
+
+                self._ready();
+            });
+        },
+
+        /**
+         * 获取参照元素的位置
+         * @private
+         */
+        _getAlignTo: function() {
+            var self = this, rel, alignTo;
+
+            // 参照对齐元素
+            if (!self._isInner && (alignTo = self.get('alignTo'))) {
+                if (alignTo === PARENT) {
+                    rel = self.image.offsetParent;
+                } else {
+                    rel = S.get(alignTo);
+                }
+                if (rel) {
+                    // 参照对齐元素的宽高, 位置信息
+                    self._alignToRegion = S.merge(DOM.offset(rel), getSize(rel));
+                }
+            }
+        },
+
+        /**
+         * 小图准备好后, 构建 UI 和绑定事件
+         * @private
+         */
+        _ready: function() {
+            var self = this, image = self.image;
 
             // 小图宽高及位置, 用到多次, 先保存起来; 更换小图时需要更新该值
             self._imgRegion = S.merge(DOM.offset(image), getSize(image));
+
             // 放大镜图标, 更改小图时不重新更改此图标位置
-            if (config.lensIcon) self._renderIcon();
+            if (self.get('lensIcon')) self._renderIcon();
+
+            if (self._firstInit) {
+                self._bindUI();
+                self._onAttrChanges();
+            }
+            self._firstInit = false;
         },
 
+        /**
+         * 创建放大镜
+         * @private
+         */
         _renderIcon: function() {
             var self = this,
                 region = self._alignToRegion || self._imgRegion, icon = self.lensIcon;
@@ -10929,20 +11766,27 @@ KISSY.add('imagezoom', function(S, undefined) {
             if (!icon) {
                 icon = createAbsElem(CLS_ICON);
                 doc.body.appendChild(icon);
+                /**
+                 * 放大镜图标
+                 * @type Element
+                 */
                 self.lensIcon = icon;
             }
-            // TODO: alignTo 设置之后是不需要再次更新此位置的.
             DOM.offset(icon, {
                 left: region.left + region.width - DOM.width(icon),
                 top: region.top + region.height - DOM.height(icon)
             });
         },
 
+        /**
+         * 绑定鼠标进入/离开/移动事件, 只有进入, 才响应鼠标移动事件
+         * @private
+         */
         _bindUI: function() {
-            var self = this, timer, config = self.config;
+            var self = this, timer;
 
             Event.on(self.image, 'mouseenter', function(ev) {
-                if (!config.hasZoom) return;
+                if (!self.get(HAS_ZOOM)) return;
 
                 self._setEv(ev);
                 Event.on(doc.body, MOUSEMOVE, self._setEv, self);
@@ -10956,7 +11800,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             });
 
             Event.on(self.image, 'mouseleave', function() {
-                if (!config.hasZoom) return;
+                if (!self.get(HAS_ZOOM)) return;
 
                 Event.remove(doc.body, MOUSEMOVE, self._setEv);
 
@@ -10967,32 +11811,62 @@ KISSY.add('imagezoom', function(S, undefined) {
             });
         },
 
+        /**
+         * attrs 改变事件
+         * @private
+         */
+        _onAttrChanges: function() {
+            var self = this;
+
+            self.on('afterHasZoomChange', function(e) {
+                DOM[e.newVal ? SHOW : HIDE](self.lensIcon);
+            });
+        },
+
+        /**
+         * 保存当前鼠标位置
+         * @param {Object} ev
+         * @private
+         */
         _setEv: function(ev) {
             this._ev = ev;
         },
 
+        /**
+         * 创建放大区域
+         * @private
+         */
         _createViewer: function() {
-            var self = this, config = self.config,
+            var self = this,
                 v, bigImage, bigImageCopy,
-                bigImageSize = self._bigImageSize;
+                bigImageSize = self._bigImageSize,
+                bigImageSrc = self.get(BIG_IMAGE_SRC);
 
             // 创建 viewer 的 DOM 结构
-            v = createAbsElem(CLS_VIEWER + ' ' + config.zoomCls);
+            v = createAbsElem(CLS_VIEWER + ' ' + self.get('zoomCls'));
 
             if (self._isInner) {
                 bigImageCopy = createImage(DOM.attr(self.image, SRC), v);
                 setWidthHeight(bigImageCopy, bigImageSize.width, bigImageSize.height);
                 self._bigImageCopy = bigImageCopy;
             }
-            // 标准模式，添加镜片
+            // 标准模式, 添加镜片
             else self._renderLens();
 
-            if (config.bigImageSrc) {
-                bigImage = createImage(config.bigImageSrc, v);
+            if (bigImageSrc) {
+                bigImage = createImage(bigImageSrc, v);
+                !bigImage.complete && self._startBigLoading();
+                /**
+                 * 大图元素
+                 * @type {Element}
+                 */
                 self.bigImage = bigImage;
             }
-            // 将 viewer 添加到 DOM 中
             doc.body.appendChild(v);
+            /**
+             * 大图显示区域
+             * @type {Element}
+             */
             self.viewer = v;
 
             // 立刻显示大图区域
@@ -11000,47 +11874,49 @@ KISSY.add('imagezoom', function(S, undefined) {
 
             // 大图加载完毕后更新显示区域
             imgOnLoad(bigImage, function() {
+                self._finishBigLoading();
+
                 if (!self._isInner) self._bigImageSize = getSize(bigImage);
                 self._setViewerRegion();
+
                 // 加载完立刻定位到鼠标位置
                 if (!self._isInner) self._onMouseMove();
             });
         },
 
+        /**
+         * 创建镜片
+         * @private
+         */
         _renderLens: function() {
-            var self = this, config = self.config,
+            var self = this,
                 lens = createAbsElem(CLS_LENS);
 
             DOM.hide(lens);
             doc.body.appendChild(lens);
+            /**
+             * 镜片元素
+             * @type {Element}
+             */
             self.lens = lens;
         },
 
+        /**
+         * 设置放大区域的位置及宽高
+         * @private
+         */
         _setViewerRegion: function() {
-            var self = this, config = self.config,
+            var self = this,
                 v = self.viewer,
-                region = self._imgRegion,
-                alignToRegion = self._alignToRegion || region,
-                zoomSize = config.zoomSize,
-                left, top, lensWidth, lensHeight, width, height,
-                bigImageSize = self._bigImageSize;
+                region = self._imgRegion, alignToRegion = self._alignToRegion || region,
+                zoomSize = self.get(ZOOM_SIZE), offset = self.get(OFFSET),
+                left = alignToRegion.left + offset[0], top = alignToRegion.top + offset[1],
+                lensWidth, lensHeight, width, height;
 
-            width = zoomSize[0];
-            if (width === AUTO) width = region.width;
-            height = zoomSize[1];
-            if (height === AUTO) height = region.height;
-
-            // 计算镜片宽高, vH / bigImageH = lensH / imageH
-            lensWidth = min(round( width * region.width / bigImageSize.width), region.width);
-            lensHeight = min(round( height * region.height / bigImageSize.height), region.height);
-            self._lensSize = [lensWidth, lensHeight];
-
-            if (!self._isInner) setWidthHeight(self.lens, lensWidth, lensHeight);
+            self._setLensSize(width = zoomSize[0], height = zoomSize[1]);
 
             // 计算不同 position
-            left = alignToRegion.left + (config.offset[0] || 0);
-            top = alignToRegion.top + (config.offset[1] || 0);
-            switch (config.position) {
+            switch (self.get(POS)) {
                 // top
                 case POSITION[0]:
                     top -= height;
@@ -11068,6 +11944,30 @@ KISSY.add('imagezoom', function(S, undefined) {
             setWidthHeight(v, width, height);
         },
 
+        /**
+         * 设置镜片宽高
+         * @param {number} w
+         * @param {number} h
+         * @private
+         */
+        _setLensSize: function(w, h) {
+            var self = this,
+                region = self._imgRegion, bigImageSize = self._bigImageSize,
+                lensWidth, lensHeight;
+
+            // 计算镜片宽高, vH / bigImageH = lensH / imageH
+            lensWidth = min(round(w * region.width / bigImageSize.width), region.width);
+            lensHeight = min(round(h * region.height / bigImageSize.height), region.height);
+            // 镜片宽高, 随大图宽高变化而变化
+            self._lensSize = [lensWidth, lensHeight];
+
+            if (!self._isInner) setWidthHeight(self.lens, lensWidth, lensHeight);
+        },
+
+        /**
+         * 鼠标移动时, 更新放大区域的显示
+         * @private
+         */
         _onMouseMove: function() {
             var self = this,
                 lens = self.lens, ev = self._ev,
@@ -11079,24 +11979,27 @@ KISSY.add('imagezoom', function(S, undefined) {
             if (ev.pageX > rl && ev.pageX < rl + rw &&
                 ev.pageY > rt && ev.pageY < rt + rh) {
 
+                // 动画时阻止移动
                 if (self._isInner && self._animTimer) return;
 
                 lensOffset = self._getLensOffset();
-
                 // 更新 lens 位置
                 if (!self._isInner && lens) DOM.offset(lens, lensOffset);
 
                 // 设置大图偏移
                 DOM.css([self._bigImageCopy, self.bigImage], {
-                    marginLeft: - round((lensOffset.left - rl) * bigImageSize.width / rw),
-                    marginTop: - round((lensOffset.top - rt) * bigImageSize.height / rh)
+                    left: - round((lensOffset.left - rl) * bigImageSize.width / rw),
+                    top: - round((lensOffset.top - rt) * bigImageSize.height / rh)
                 });
             } else {
                 self.hide();
             }
         },
 
-        // 获取镜片的位置
+        /**
+         * 随着鼠标移动, 获取镜片位置
+         * @private
+         */
         _getLensOffset: function() {
             var self = this,
                 region = self._imgRegion, ev = self._ev,
@@ -11121,63 +12024,101 @@ KISSY.add('imagezoom', function(S, undefined) {
             return { left: lensLeft, top: lensTop };
         },
 
+        /**
+         * Inner 效果中的放大动画
+         * @param {number} seconds
+         * @param {number} times
+         * @private
+         */
         _anim: function(seconds, times) {
             var self = this,
-                go, t = 1, ev = self._ev,
+                go, t = 1,
                 region = self._imgRegion,
                 rl = region.left, rt = region.top,
                 rw = region.width, rh = region.height,
                 img = [self.bigImage, self._bigImageCopy],
-                x = ev.pageX - rl, y = ev.pageY - rt, bigImageSize = self._bigImageSize;
+                bigImageSize = self._bigImageSize,
+                lensOffset = self._getLensOffset(),
+                max_left = - round((lensOffset.left - rl) * bigImageSize.width / rw),
+                max_top = - round((lensOffset.top - rt) * bigImageSize.height / rh);
 
             if (self._animTimer) self._animTimer.cancel();
 
             // set min width and height
             setWidthHeight(img, rw, rh);
-            self._animTimer = S.later((go = function () {
-                var tmpW = rw + (bigImageSize.width - rw)/times*t,
-                    tmpH = rh + (bigImageSize.height - rh)/times*t;
-
-                setWidthHeight(img, tmpW, tmpH);
+            self._animTimer = S.later((go = function() {
+                setWidthHeight(img, rw + (bigImageSize.width - rw) / times * t, rh + (bigImageSize.height - rh) / times * t);
                 // 定位到鼠标点
                 DOM.css(img, {
-                    marginLeft: max(min(round( rw/2 - x*tmpW/rw ), 0), rw - tmpW),
-                    marginTop: max(min(round( rh/2 - y*tmpH/rh ), 0), rh - tmpH)
+                    left: max_left / times * t,
+                    top: max_top / times * t
                 });
 
-                if ( ++t > times) {
+                if (++t > times) {
                     self._animTimer.cancel();
                     self._animTimer = undefined;
                 }
-            }), seconds*1000/times, true);
+            }), seconds * 1000 / times, true);
 
             go();
         },
 
+        /**
+         * 显示放大区域
+         */
         show: function() {
             var self = this,
-                lens = self.lens, viewer = self.viewer,
-                bigImageSrc = self.config.bigImageSrc;
+                lens = self.lens, viewer = self.viewer;
 
             DOM.hide(self.lensIcon);
             if (self._isInner) {
                 DOM.show(viewer);
-                self._anim(0.5, 30);
+                self._anim(0.4, 42);
             } else {
                 DOM.show([lens, viewer]);
                 self._onMouseMove();
             }
 
+            self._checkRefresh();
             // 先 show 再替换 src, 是因为需要更新 viewer 位置, 当 display:none 时, DOM.offset 错误
+            self._checkBigImageSrc();
+
+            Event.on(doc.body, MOUSEMOVE, self._onMouseMove, self);
+            self.fire(EVENT_SHOW);
+        },
+
+        /**
+         * 检查显示时, 是否需要更新放大区域位置大小
+         * @private
+         */
+        _checkRefresh: function() {
+            var self = this;
+
+            if (self._refresh) {
+                self._setViewerRegion();
+                self._refresh = false;
+            }
+        },
+
+        /**
+         * 检查是否改变了大图的 src
+         * @private
+         */
+        _checkBigImageSrc: function() {
+            var self = this,
+                bigImageSrc = self.get(BIG_IMAGE_SRC);
+
             if (self._cacheBigImageSrc && (self._cacheBigImageSrc !== bigImageSrc)) {
                 DOM.attr(self.bigImage, SRC, bigImageSrc);
                 self._cacheBigImageSrc = bigImageSrc;
                 if (self._isInner) DOM.attr(self._bigImageCopy, SRC, DOM.attr(self.image, SRC));
+                !self.bigImage.complete && self._startBigLoading();
             }
-
-            Event.on(doc.body, MOUSEMOVE, self._onMouseMove, self);
         },
 
+        /**
+         * 隐藏放大区域
+         */
         hide: function() {
             var self = this;
 
@@ -11185,39 +12126,61 @@ KISSY.add('imagezoom', function(S, undefined) {
             DOM.show(self.lensIcon);
 
             Event.remove(doc.body, MOUSEMOVE, self._onMouseMove, self);
+            self.fire(EVENT_HIDE);
         },
 
-        // TODO: use ATTR
-        set: function(name, val) {
-            var self = this, config = self.config;
-
-            if (name === 'bigImageSrc') {
-                if (val && RE_IMG_SRC.test(val)) {
-                    self._cacheBigImageSrc = config.bigImageSrc;
-                    config.bigImageSrc = val;
-                }
-            } else if (name === 'hasZoom') {
-                val = !!val;
-                config.hasZoom = val;
-                DOM[val ? 'show' : 'hide'](self.lensIcon);
-            }
-        },
-
+        /**
+         * 小图加载开始
+         * @private
+         */
         _startLoading: function() {
+        },
+
+         /**
+         * 小图加载结束
+         * @private
+         */
+        _finishLoading: function() {
+        },
+
+        /**
+         * 大图加载开始
+         * @private
+         */
+        _startBigLoading: function() {
             DOM.addClass(this.viewer, CLS_LOADING);
         },
 
-        _finishLoading: function() {
+        /**
+         * 大图加载结束
+         * @private
+         */
+        _finishBigLoading: function() {
             DOM.removeClass(this.viewer, CLS_LOADING);
         },
 
+        /**
+         * 改变小图元素的 src
+         * @param {String} src
+         */
         changeImageSrc: function(src) {
             var self = this;
             DOM.attr(self.image, SRC, src);
             self._startLoading();
+        },
+
+        /**
+         * 调整放大区域位置, 在外部改变小图位置时, 需要对应更新放大区域的位置
+         */
+        refreshRegion: function() {
+            this._getAlignTo();
+            this._renderUI();
+
+            // 更新位置标志
+            this._refresh = true;
         }
     });
-    
+
     S.ImageZoom = ImageZoom;
 
     function imgOnLoad(img, callback) {
@@ -11225,7 +12188,7 @@ KISSY.add('imagezoom', function(S, undefined) {
             callback();
         }
         // 1) 图尚未加载完毕，等待 onload 时再初始化 2) 多图切换时需要绑定load事件来更新相关信息
-        Event.on(img, LOAD, callback);
+        Event.on(img, 'load', callback);
     }
 
     function getSize(elem) {
@@ -11233,11 +12196,11 @@ KISSY.add('imagezoom', function(S, undefined) {
     }
 
     function createAbsElem(cls) {
-        return DOM.create(DIV, { 'class': cls, 'style': 'position:absolute;top:0;left:0' });
+        return DOM.create('<div class="' + cls + ABS_STYLE);
     }
 
-    function  setWidthHeight(elem, w, h){
-        S.each(S.makeArray(elem), function(e){
+    function setWidthHeight(elem, w, h) {
+        S.each(S.makeArray(elem), function(e) {
             DOM.width(e, w);
             DOM.height(e, h);
         });
@@ -11248,11 +12211,20 @@ KISSY.add('imagezoom', function(S, undefined) {
     }
 
     function createImage(s, p) {
-        var img = DOM.create('<img src="'+s+'" style="position:absolute;top:0;left:0" >');
+        var img = DOM.create('<img src="' + s + ABS_STYLE);
         if (p) p.appendChild(img);
         return img;
     }
-});
+
+    function toArray(v) {
+        v = S.makeArray(v);
+        if (v.length === 1) {
+            v[1] = v[0];
+        }
+        return v;
+    }
+
+}, { requires: ['core'] } );
 
 /**
  * NOTES:
@@ -11275,16 +12247,18 @@ KISSY.add('imagezoom', function(S, undefined) {
  * TODO:
  *      - 仿照 Zazzle 的效果，在大图加载过程中显示进度条和提示文字
  *      - http://www.apple.com/iphone/features/retina-display.html
+ *
  */
 /**
  * auto render
- * @creator  玉伯<lifesinger@gmail.com>
+ * @author  玉伯<lifesinger@gmail.com>
  */
 KISSY.add('autorender', function(S) {
 
     /**
      * 自动渲染 container 元素内的所有 ImageZoom 组件
      * 默认钩子：<div class="KS_Widget" data-widget-type="ImageZoom" data-widget-config="{...}">
+     * 
      */
     S.ImageZoom.autoRender = function(hook, container) {
         hook = '.' + (hook || 'KS_Widget');

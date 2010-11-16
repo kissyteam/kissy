@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 2 13:10
+build time: Nov 10 20:59
 */
 /**
  * @module kissy
@@ -168,7 +168,16 @@ build time: Nov 2 13:10
                 // A fallback to window.onload, that will always work.
                 win.attachEvent('onload', fire);
 
-                if (win == win.top) { // not an iframe
+                // If IE and not a frame
+                // continually check to see if the document is ready
+                var notframe = false;
+
+                try {
+                    notframe = win['frameElement'] == null;
+                } catch(e) {
+                }
+
+                if (doScroll && notframe) {
                     function readyScroll() {
                         try {
                             // Ref: http://javascript.nwbox.com/IEContentLoaded/
@@ -958,7 +967,7 @@ build time: Nov 2 13:10
             if (S.isPlainObject(name)) {
                 S.each(name, function(v, k) {
                     v.name = k;
-                    if(mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
+                    if (mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
                 });
                 mix(mods, name);
             }
@@ -973,7 +982,7 @@ build time: Nov 2 13:10
                 // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
                 //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
                 mix(mod, { name: name, status: LOADED });
-                if(!mod.fns) mod.fns = [];
+                if (!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
                 mix((mods[name] = mod), config);
 
@@ -1006,7 +1015,7 @@ build time: Nov 2 13:10
                 i, len = modNames.length, mod, name, fired;
 
             // 将 global 上的 mods, 移动到 instance 上
-            if(global) self.__mixMods(global);
+            if (global) self.__mixMods(global);
 
             // 已经全部 attached, 直接执行回调即可
             if (self.__isAttached(modNames)) {
@@ -1031,9 +1040,12 @@ build time: Nov 2 13:10
                 }
 
                 self.__attach(mod, function() {
+                    if (mod._requires) {
+                        mod.requires = mod._requires; // restore requires
+                        delete mod._requires;
+                    }
                     if (!fired && self.__isAttached(modNames)) {
                         fired = true;
-                        if(mod._requires) mod.requires = mod._requires; // restore requires
                         callback && callback(self);
                     }
                 }, global);
@@ -1079,14 +1091,14 @@ build time: Nov 2 13:10
 
         __mixMod: function(mods, gMods, name, global) {
             var mod = mods[name] || { }, status = mod.status;
-            
+
             S.mix(mod, S.clone(gMods[name]));
 
             // status 属于实例，当有值时，不能被覆盖。只有没有初始值时，才从 global 上继承
-            if(status) mod.status = status;
+            if (status) mod.status = status;
 
             // 来自 global 的 mod, path 应该基于 global
-            if(global) this.__buildPath(mod, global.Config.base);
+            if (global) this.__buildPath(mod, global.Config.base);
 
             mods[name] = mod;
         },
@@ -1154,7 +1166,7 @@ build time: Nov 2 13:10
 
                 // css 是同步的，在 success 回调里，已经将 loadQueque[url] 置成 LOADED
                 // 不需要再置成节点，否则有问题
-                if(!RE_CSS.test(url)) {
+                if (!RE_CSS.test(url)) {
                     loadQueque[url] = ret;
                 }
             }
@@ -1174,16 +1186,16 @@ build time: Nov 2 13:10
 
                     // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息，需要同步到 instance 上去
                     // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
-                    if(global) self.__mixMod(self.Env.mods, global.Env.mods, mod.name, global);
+                    if (global) self.__mixMod(self.Env.mods, global.Env.mods, mod.name, global);
 
                     // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
                     // 因此要加上下面的 !== 判断，否则会出现重复 attach, 比如编辑器里动态加载时，被依赖的模块会重复
-                    if(mod.status !== ATTACHED) mod.status = LOADED;
+                    if (mod.status !== ATTACHED) mod.status = LOADED;
 
                     callback();
                 }
             }
-            
+
             function _final() {
                 loadQueque[url] = LOADED;
             }
@@ -1193,7 +1205,7 @@ build time: Nov 2 13:10
             var Config = this.Config;
 
             build('path', 'fullpath');
-            if(mod[CSSFULLPATH] !== LOADED) build('csspath', CSSFULLPATH);
+            if (mod[CSSFULLPATH] !== LOADED) build('csspath', CSSFULLPATH);
 
             function build(path, fullpath) {
                 if (!mod[fullpath] && mod[path]) {
@@ -4878,7 +4890,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 2 13:10
+build time: Nov 2 14:57
 */
 /**
  * @module anim-easing
@@ -5148,7 +5160,7 @@ KISSY.add('anim', function(S, undefined) {
             style = S.param(style, ';')
                 .replace(/=/g, ':')
                 .replace(/%23/g, '#') // 还原颜色值中的 #
-                .replace(/([A-Z])/g, '-$1').toLowerCase(); // backgroundColor => background-color
+                .replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(); // backgroundColor => background-color
         }
         self.props = normalize(style);
         self.targetStyle = style;

@@ -1,6 +1,6 @@
 /**
  * @module  Base
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('base', function (S) {
 
@@ -30,7 +30,7 @@ KISSY.add('base', function (S) {
             c = c.superclass ? c.superclass.constructor : null;
         }
 
-        // initial
+        // initialize
         if (config) {
             for (attr in config) {
                 if (config.hasOwnProperty(attr))

@@ -16,18 +16,15 @@ History:
 
 ### v1.1.5 -> v1.x.x (2010/MM/DD)
 
- - [+] 增加 dd 模块 乔花完善中...
- - [+] 增加 ajax 模块 拔赤开发中...
- - [+] kissy-gallery 增加 Sliding Label demo  乔花完善中...
- - [+] 单元测试框架改用 Jasmine 20% [tests](http://kissyteam.github.com/kissy/tests/)
- - [+] imagezoom 增加 Zazzle 内部放大效果 [demo](http://kissyui.com/blog/2010/10/imagezoom-inner/)
+ - [+] 采用 Jasmine 构建所有正式组件的测试用例 [Understanding JavaScript Testing](http://kissyui.com/blog/2010/10/understanding-javascript-testing/)
+ - [+] gallery 增加 Sliding Label demo
+ - [+] imagezoom 增加 Zazzle 内部放大效果 [demo](http://kissyteam.github.com/kissy/src/imagezoom/test-inner.html)
  - [*] anim 增加原生 CSS3 Transitions 支持 [原理](http://lifesinger.org/blog/2010/09/anim-using-css3-transitions/)
- - [+] 组件开发规范整理 20%
- - [*] 组件开发流程整理 80%
- - [+] 社区建设 [Blog](http://kissyui.com/blog/) [Forum](http://kissyui.com/forum/)
+ - [+] 开发规范整理 [link](http://kissyteam.github.com/docs/html/styleguide/)
+ - [*] 开发流程整理 [link](http://kissyteam.github.com/docs/html/workflow/)
+ - [+] 社区建设 [Blog](http://kissyui.com/blog/)
  - [*] 正则优化 [小结](http://lifesinger.org/blog/2010/09/regular-expression-improvement-for-kissy/)
- - [*] README / CHANGELOG 等细节改进
- - [+] core 增加 attribute 和 base 两个模块 [说明](todo)
+ - [*] README / CHANGELOG 细节改进
  - [x] 已知 bugs 的修复
 
 

@@ -3542,7 +3542,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 2 13:10
+build time: Nov 2 14:57
 */
 /**
  * @module anim-easing
@@ -3812,7 +3812,7 @@ KISSY.add('anim', function(S, undefined) {
             style = S.param(style, ';')
                 .replace(/=/g, ':')
                 .replace(/%23/g, '#') // 还原颜色值中的 #
-                .replace(/([A-Z])/g, '-$1').toLowerCase(); // backgroundColor => background-color
+                .replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(); // backgroundColor => background-color
         }
         self.props = normalize(style);
         self.targetStyle = style;

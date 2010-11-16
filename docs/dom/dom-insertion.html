@@ -46,7 +46,7 @@ var S = KISSY, DOM = S.DOM;
 DOM.insertBefore(elem1, elem2);
 
 // 在 elem2 前面插入 p 节点
-DOM.insertBefore('&lt;p&gt;', elem2);
+DOM.insertBefore(DOM.create('&lt;p&gt;'), elem2);
 
 // 在第一个 class 为 hot 的元素前面插入 elem1
 DOM.insertBefore(elem1, '.hot');
