@@ -24,7 +24,7 @@ KISSY.add("ext-contentbox", function(S) {
 
 
     ContentBox.HTML_PARSER = {
-        contentEl:".ks-contentbox-content"
+        contentEl:".ks-contentbox"
     };
 
     ContentBox.prototype = {

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 15 18:02
+build time: Nov 16 12:40
 */
 (function(a,n,v){if(a[n]===v)a[n]={};n=a[n];var o=a.document,d=location,h=function(g,p,r,m){if(!p||!g)return g;if(r===v)r=true;var l,b,f;if(m&&(f=m.length))for(l=0;l<f;l++){b=m[l];if(b in p)if(r||!(b in g))g[b]=p[b]}else for(b in p)if(r||!(b in g))g[b]=p[b];return g},j=false,e=[],s=false,y=/^#?([\w-]+)$/,t=0;h(n,{version:"1.1.5",__init:function(){this.Env={mods:{},_loadQueue:{}};var g=o.getElementsByTagName("script");this.Config={debug:"",base:g[g.length-1].src.replace(/^(.*)(seed|kissy).*$/i,
 "$1"),timeout:10}},ready:function(g){s||this._bindReady();j?g.call(a,this):e.push(g);return this},_bindReady:function(){var g=this,p=o.documentElement.doScroll,r=p?"onreadystatechange":"DOMContentLoaded",m=function(){g._fireReady()};s=true;if(o.readyState==="complete")return m();if(o.addEventListener){var l=function(){o.removeEventListener(r,l,false);m()};o.addEventListener(r,l,false);a.addEventListener("load",m,false)}else{var b=function(){if(o.readyState==="complete"){o.detachEvent(r,b);m()}};o.attachEvent(r,

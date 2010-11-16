@@ -47,10 +47,11 @@ KISSY.add('dd', function(S) {
          */
         _move: function(ev) {
             var activeDrag = this.get('activeDrag');
+            S.log("move");
+            if (!activeDrag) return;
             //防止 ie 选择到字
             ev.preventDefault();
             this._clearSelection();
-            if (!activeDrag) return;
             activeDrag._move(ev);
         },
 
@@ -93,7 +94,7 @@ KISSY.add('dd', function(S) {
         _end: function(ev) {
             var self = this,
                 activeDrag = self.get("activeDrag");
-
+            self._unregisterEvent();
             if (self._bufferTimer) {
                 clearTimeout(self._bufferTimer);
                 self._bufferTimer = null;
@@ -129,6 +130,7 @@ KISSY.add('dd', function(S) {
             //0.5 for debug
             self._shim.css("opacity", 0);
             self._activeShim = self._showShim;
+            self._showShim();
         },
 
         _showShim: function() {
@@ -137,10 +139,10 @@ KISSY.add('dd', function(S) {
                 display: "",
                 height: DOM.docHeight()
             });
-
             self._clearSelection();
         },
         _clearSelection:function() {
+            S.log("_clearSelection");
             //清除由于浏览器导致的选择文字
             if (window.getSelection) {
                 window.getSelection().removeAllRanges();
@@ -156,7 +158,7 @@ KISSY.add('dd', function(S) {
          */
         _registerEvent: function() {
             var self = this,doc = document;
-            //S.log("_registerEvent");
+            S.log("_registerEvent");
             Event.on(doc, "mouseup", self._end, self);
             Event.on(doc, "mousemove", self._showShimMove, self);
         },
@@ -166,7 +168,7 @@ KISSY.add('dd', function(S) {
          */
         _unregisterEvent: function() {
             var self = this,doc = document;
-            //S.log("_unregisterEvent");
+            S.log("_unregisterEvent");
             Event.remove(doc, "mousemove", self._showShimMove, self);
             Event.remove(doc, "mouseup", self._end, self);
         }

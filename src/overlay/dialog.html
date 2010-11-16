@@ -4,37 +4,16 @@
 <meta charset="utf-8"/>
 <title>Test</title>
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
+<link rel="stylesheet" href="assets/cool.css"/>
 <style>
-    .ks-ext-position {
-        position: absolute;
-    }
 
-    .ks-dialog {
-        border: 1px solid green;
-    }
-
-    .ks-ext-close {
-        position: absolute;
-        right: 0;
-        top: 0;
-        text-indent: 9999em;
-        width: 16px;
-        height: 16px;
-        overflow: hidden;
-        cursor: pointer;
-        background: transparent url(http://cdn.iconfinder.net/data/icons/bwpx/icons/symbol_multiplication.gif)
-    }
-
-    .ks-stdmod-header {
-        border: 1px solid red;
-    }
     #constrainRegion {
-        width:800px;
-        height:500px;
-        border:1px solid green;
-        left:200px;
-        top:200px;
-        position:absolute;
+        width: 800px;
+        height: 500px;
+        border: 1px solid green;
+        left: 200px;
+        top: 200px;
+        position: absolute;
     }
 </style>
 </head>
@@ -49,22 +28,25 @@
 <div id="constrainRegion">
 
     <select>
-    <option>测试 ie6</option>
-</select>
-    
+        <option>测试 ie6</option>
+    </select>
+
 </div>
 
-<!--
-<div id="markup" class="ks-dialog" style="position:absolute;">
-    <div class="ks-dialog-close">
+
+<div id="markup" class="ks-dialog">
+    <div class="ks-contentbox">
+        <a class="ks-ext-close"><span class="ks-ext-close-x">X</span></a>
+        <div class="ks-stdmod-header">
+            i am header
+        </div>
+        <div class="ks-stdmod-body">
+            <div style="padding:50px;">
+                从 markup 生成 dialog
+            </div>
+        </div>
+        <div class="ks-stdmod-footer"></div>
     </div>
-    <div class="ks-stdmod-header">
-        i am header
-    </div>
-    <div class="ks-stdmod-body">
-        从 markup 生成 dialog
-    </div>
-    <div class="ks-stdmod-footer"></div>
 </div>
 
 
@@ -75,7 +57,7 @@
 <button id="hide2">
     hide from markup
 </button>
--->
+
 <script src="../../build/kissy.js"></script>
 <script src="../ext/box-ext.js"></script>
 <script src="../ext/contentbox-ext.js"></script>
@@ -97,30 +79,32 @@
 
         window.o = new Dialog({
             headerContent:"i am header",
-            bodyContent:"i am dialog 动态生成",
+            bodyContent:"<div style='padding:50px;'>i am dialog 动态生成</div>",
             x:400,
             y:400,
+            //mask:true,
             /*
-            align:{
-                // 参考元素, falsy 值为可视区域
-                node: null,
-                // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
-                points: [Align.CC, Align.CC],
-                // 有效值为 [n, m]
-                offset: [0, 0]
-            },*/
-            width:200,
+             align:{
+             // 参考元素, falsy 值为可视区域
+             node: null,
+             // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+             points: [Align.CC, Align.CC],
+             // 有效值为 [n, m]
+             offset: [0, 0]
+             },*/
+            width:300,
             //true 限制在可视区域
             //S.one("#xx")
             constrain:S.one("#constrainRegion")
         });
 
-        /*
-         var o2 = new Dialog({
-         srcNode:S.one("#markup"),
-         autoRender:true
-         });
-         */
+
+        var o2 = new Dialog({
+            srcNode:S.one("#markup"),
+            width:200,
+            autoRender:true
+        });
+
         S.one("#show1").on("click", function() {
             o.show();
         });
@@ -128,15 +112,15 @@
         S.one("#destroy1").on("click", function() {
             o.destroy();
         });
-        /*
-         S.one("#show2").on("click", function() {
-         o2.show();
-         });
 
-         S.one("#hide2").on("click", function() {
-         o2.hide();
-         });
-         */
+        S.one("#show2").on("click", function() {
+            o2.show();
+        });
+
+        S.one("#hide2").on("click", function() {
+            o2.hide();
+        });
+
     });
 </script>
 </body>

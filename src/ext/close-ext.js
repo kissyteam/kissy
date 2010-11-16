@@ -7,7 +7,7 @@ KISSY.add("ext-overlay-close", function(S) {
     var CLS_PREFIX = 'ks-ext-',Node = S.Node;
 
     function CloseExt() {
-         S.log("close init");
+        S.log("close init");
         var self = this;
         self.on("renderUI", self._rendUICloseExt, self);
         self.on("bindUI", self._bindUICloseExt, self);
@@ -15,9 +15,6 @@ KISSY.add("ext-overlay-close", function(S) {
     }
 
     CloseExt.ATTRS = {
-        closeBtnCls: {          // 关闭按钮的 class
-            value: CLS_PREFIX + 'close'
-        },
         closable: {             // 是否需要关闭按钮
             value: true
         },
@@ -48,11 +45,15 @@ KISSY.add("ext-overlay-close", function(S) {
             S.log("_rendUICloseExt");
             var self = this,
                 closeBtn = self.get("closeBtn"),
-                el = self.get("el");
+                el = self.get("contentEl");
 
             if (!closeBtn &&
                 el) {
-                closeBtn = new Node("<div class='" + self.get("closeBtnCls") + "'>")
+                closeBtn = new Node("<a class='" + CLS_PREFIX + "close" + "'>" +
+                    "<span class='" +
+                    CLS_PREFIX + "close-x" +
+                    "'>X</span>" +
+                    "</a>")
                     .appendTo(el);
                 self.set("closeBtn", closeBtn);
             }
@@ -70,7 +71,7 @@ KISSY.add("ext-overlay-close", function(S) {
             S.log("close-ext __destructor");
             var self = this,
                 closeBtn = self.get("closeBtn");
-            closeBtn&&closeBtn.detach();
+            closeBtn && closeBtn.detach();
         }
     };
     S.Ext.Close = CloseExt;
