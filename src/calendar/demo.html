@@ -64,6 +64,9 @@
 起始星期可以自定义，指定参数startDay:0-6,默认为0，从星期日开始
 <div id="J_CustomDay"></div>
 <hr size=1 />
+<h3>更多定制</h3>
+<input type="text" value="" class="ks-select-calendar" id="J_SelectResult" name="">
+<hr size=1 />
 <h3>日期格式的自定义</h3>
 日期格式的自定义是在一个单独的模块中date-format，和Calendar无关,这里只是一个示例
 <br />
@@ -194,6 +197,12 @@ KISSY.use('calendar',function(S){
 	c = new S.Calendar('#J_CustomDay',{
 		startDay:1,
 		popup:false
+	});
+
+
+	//更多定制
+	c = new S.Calendar('#J_SelectResult',{
+		popup:true
 	});
 
 	//格式化时间类型
