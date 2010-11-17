@@ -8,7 +8,7 @@
 *.patch
 *.bak
 .DS_Store
-Thumb.db
+Thumbs.db
 .project
 .*proj
 .svn/
