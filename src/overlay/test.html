@@ -8,6 +8,7 @@
 
 <script src="mask.js"></script>
 <script src="overlay.js"></script>
+<!--
 <script src="widget-popup.js"></script>
 <script src="widget-dialog.js"></script>
 <script src="mod-autorender.js"></script>
@@ -17,7 +18,7 @@
 <script src="../dd/draggable.js"></script>
 <script src="mod-draggable.js"></script>
 <script src="mod-fixed.js"></script>
-
+-->j
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
 <style>
     body { padding: 20px 50px 50px; }
@@ -43,7 +44,7 @@
 <div id="popup1" style="display:none;border:1px solid #ccc;background:#F6F9FD">Popup content</div>
 <script>
     KISSY.ready(function(S) {
-
+/*
         var popup = new S.Popup('#popup1', {
             trigger: '#btn1',
             triggerType: 'click',
@@ -60,6 +61,7 @@
         S.one('#btn2').on('click', function() {
             popup.hide();
         });
+        */
     });
 </script>
 <p class="code-switch">显示源码</p>
@@ -74,7 +76,7 @@
 <div id="popup2" style="display:none;border:1px solid #ccc;background:#F6F9FD">Popup content</div>
 <script>
     KISSY.ready(function(S) {
-
+/*
         var popup = new S.Popup('#popup2', {
             trigger: '#link1',
             width: 300,
@@ -84,6 +86,7 @@
                 points: ['tr', 'tl']
             }
         });
+        */
     });
 </script>
 <p class="code-switch">显示源码</p>
@@ -99,6 +102,7 @@
 <a id="link2">hover me</a>
 <script>
     KISSY.ready(function(S) {
+        /*
         var popup = new S.Popup({
             trigger: '#link2',
             triggerType: 'mouse',
@@ -111,6 +115,7 @@
                 points: ['tr', 'tl']
             }
         });
+        */
     });
 </script>
 <p class="code-switch">显示源码</p>
@@ -143,6 +148,7 @@
 <div id="popup3"></div>
 <script>
     KISSY.ready(function(S){
+        /*
         var lis = S.query('#multi li'),
             popup = new S.Popup('#popup3', {
             trigger: lis,
@@ -152,7 +158,7 @@
             popup.setBody(S.DOM.html(popup.currentTrigger));
             popup.align();
         });
-
+        */
         // 注意：这里的用法已改变
         /*S.each(S.query('#multi li'), function(t) {
             var popup = S.Popup('#popup3', {
@@ -182,7 +188,7 @@
 <div class="dialog1 KS_Widget" data-widget-type="Dialog" data-widget-config="{ 'trigger': '#btn3', 'width': '400px', 'height': '300px', 'header': 'this is a title', 'content': 'this is content', 'fixed': true }"><div class="ks-dialog-bd"></div></div>
 <script>
     KISSY.ready(function(S){
-        S.Overlay.autoRender();
+//        S.Overlay.autoRender();
     });
 </script>
 <p class="code-switch">显示源码</p>

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 2 13:10
+build time: Nov 16 12:40
 */
 /**
  * dd support for kissy
@@ -52,11 +52,11 @@ KISSY.add('dd', function(S) {
          */
         _move: function(ev) {
             var activeDrag = this.get('activeDrag');
-
+            S.log("move");
+            if (!activeDrag) return;
             //防止 ie 选择到字
             ev.preventDefault();
-
-            if (!activeDrag) return;
+            this._clearSelection();
             activeDrag._move(ev);
         },
 
@@ -99,7 +99,7 @@ KISSY.add('dd', function(S) {
         _end: function(ev) {
             var self = this,
                 activeDrag = self.get("activeDrag");
-
+            self._unregisterEvent();
             if (self._bufferTimer) {
                 clearTimeout(self._bufferTimer);
                 self._bufferTimer = null;
@@ -135,6 +135,7 @@ KISSY.add('dd', function(S) {
             //0.5 for debug
             self._shim.css("opacity", 0);
             self._activeShim = self._showShim;
+            self._showShim();
         },
 
         _showShim: function() {
@@ -143,14 +144,17 @@ KISSY.add('dd', function(S) {
                 display: "",
                 height: DOM.docHeight()
             });
-
+            self._clearSelection();
+        },
+        _clearSelection:function() {
+            S.log("_clearSelection");
             //清除由于浏览器导致的选择文字
             if (window.getSelection) {
                 window.getSelection().removeAllRanges();
             }
             //防止 ie 莫名选择文字
             else if (document.selection) {
-                document.selection.clear();
+                document.selection.empty();
             }
         },
 
@@ -159,7 +163,7 @@ KISSY.add('dd', function(S) {
          */
         _registerEvent: function() {
             var self = this,doc = document;
-            //S.log("_registerEvent");
+            S.log("_registerEvent");
             Event.on(doc, "mouseup", self._end, self);
             Event.on(doc, "mousemove", self._showShimMove, self);
         },
@@ -169,7 +173,7 @@ KISSY.add('dd', function(S) {
          */
         _unregisterEvent: function() {
             var self = this,doc = document;
-            //S.log("_unregisterEvent");
+            S.log("_unregisterEvent");
             Event.remove(doc, "mousemove", self._showShimMove, self);
             Event.remove(doc, "mouseup", self._end, self);
         }
@@ -211,7 +215,7 @@ KISSY.add('dd', function(S) {
  */
 KISSY.add('dd-draggable', function(S) {
 
-    var UA = S.UA;
+    var UA = S.UA,Node = S.Node;
 
     /*
      拖放纯功能类
@@ -225,12 +229,24 @@ KISSY.add('dd-draggable', function(S) {
         /**
          * 拖放节点
          */
-        node: { },
+        node: {
+            setter:function(v) {
+                return new Node(v);
+            }
+        },
 
         /**
          * handler 集合，注意暂时必须在 node 里面
          */
-        handlers:{ value: { } }
+        handlers:{
+            setter:function(vs) {
+                if (vs) {
+                    for (var i = 0; i < vs.length; i++) {
+                        vs[i] = new Node(vs[i]);
+                    }
+                }
+            }
+        }
     };
 
     S.extend(Draggable, S.Base, {
@@ -246,17 +262,28 @@ KISSY.add('dd-draggable', function(S) {
 
             for (var h in handlers) {
                 if (!handlers.hasOwnProperty(h)) continue;
-                var hl = handlers[h],ori = hl.css('cursor');
-                if (!equals(hl, node)) {
+                var hl = handlers[h],
+                    ori = hl.css('cursor');
+                if (hl[0] != node[0]) {
                     if (!ori || ori === 'auto')
                         hl.css('cursor', 'move');
-
-                    //ie 不能被选择了
-                    unselectable(hl);
                 }
             }
-
             node.on('mousedown', self._handleMouseDown, self);
+        },
+
+        destroy:function() {
+            var self = this,
+                node = self.get('node'),
+                handlers = self.get('handlers');
+            for (var h in handlers) {
+                if (!handlers.hasOwnProperty(h)) continue;
+                var hl = handlers[h];
+                if (hl.css("cursor") == "move") {
+                    hl.css("cursor", "auto");
+                }
+            }
+            node.detach('mousedown', self._handleMouseDown, self);
         },
 
         _check: function(t) {
@@ -267,7 +294,7 @@ KISSY.add('dd-draggable', function(S) {
                 if (handlers[h].contains(t)
                     ||
                     //子区域内点击也可以启动
-                    equals(handlers[h], t)) return true;
+                    handlers[h][0] == t[0]) return true;
             }
             return false;
         },
@@ -287,7 +314,7 @@ KISSY.add('dd-draggable', function(S) {
                 //firefox 默认会拖动对象地址
                 ev.preventDefault();
             }
-            
+
             S.DD.DDM._start(self);
 
             var node = self.get("node"),
@@ -331,48 +358,4 @@ KISSY.add('dd-draggable', function(S) {
 
     S.Draggable = Draggable;
 
-
-    function normalElDom(el) {
-        return el[0] || el;
-    }
-
-    function equals(e1, e2) {
-        if (!e1 && !e2) return true; // 全部为空
-        if (!e1 || !e2) return false; // 有一个为空
-        return normalElDom(e1) === normalElDom(e2);
-    }
-
-    var unselectable =
-        UA.gecko ?
-            function(el) {
-                el = normalElDom(el);
-                el.style.MozUserSelect = 'none';
-            }
-            : UA.webkit ?
-            function(el) {
-                el = normalElDom(el);
-                el.style.KhtmlUserSelect = 'none';
-            }
-            :
-            function(el) {
-                el = normalElDom(el);
-                if (UA.ie || UA.opera) {
-                    var e, i = 0;
-                    el.unselectable = 'on';
-
-                    while (( e = el.all[ i++ ] )) {
-                        switch (e.tagName.toLowerCase()) {
-                            case 'iframe' :
-                            case 'textarea' :
-                            case 'input' :
-                            case 'select' :
-                                /* Ignore the above tags */
-                                break;
-                            default :
-                                e.unselectable = 'on';
-                        }
-                    }
-                }
-            };
-
-}, { host: 'dd' } );
+}, { host: 'dd' });
