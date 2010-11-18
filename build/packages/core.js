@@ -198,7 +198,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 17 22:45
+build time: Nov 18 14:40
 */
 /**
  * @module  dom
@@ -1808,18 +1808,15 @@ KISSY.add('dom-traversal', function(S, undefined) {
         contains: function(container, contained) {
             var ret = false;
 
-            if ((container = S.get(container))
-                &&
-                (contained = S.get(contained))
-                &&
-                container.nodeType == 1
-                ) {
+            if ((container = S.get(container)) && (contained = S.get(contained))) {
                 if (container.contains) {
-                    //ie6 error when text:不支持此接口
-                    if (contained.nodeType != 1)
+                    if (contained.nodeType === 3) {
                         contained = contained.parentNode;
-                    if (contained)
+                        if (contained === container) return true;
+                    }
+                    if (contained) {
                         return container.contains(contained);
+                    }
                 }
                 else if (container.compareDocumentPosition) {
                     return !!(container.compareDocumentPosition(contained) & 16);
@@ -2205,7 +2202,7 @@ KISSY.add('dom-insertion', function(S) {
             }
             return newNode;
         },
-
+        
         /**
          * Inserts the new node as the next sibling of the reference node.
          * @return {HTMLElement} The node that was inserted (or null if insert fails)
@@ -2219,6 +2216,30 @@ KISSY.add('dom-insertion', function(S) {
                 }
             }
             return newNode;
+        },
+
+        /**
+         * Inserts the new node as the last child.
+         */
+        append: function(node, parent) {
+            if ((node = S.get(node)) && (parent = S.get(parent))) {
+                if (parent.appendChild) {
+                    parent.appendChild(node);
+                }
+            }
+        },
+
+        /**
+         * Inserts the new node as the first child.
+         */
+        prepend: function(node, parent) {
+            if ((node = S.get(node)) && (parent = S.get(parent))) {
+                if (parent.firstChild) {
+                    DOM.insertBefore(node, parent.firstChild);
+                } else {
+                    parent.appendChild(node);
+                }
+            }
         }
     });
 });
@@ -2797,7 +2818,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 2 13:10
+build time: Nov 18 14:40
 */
 /**
  * @module  node
@@ -3074,44 +3095,45 @@ KISSY.add('node-attach', function(S, undefined) {
         };
     });
     S.each([NP, NLP], function(P, isNodeList) {
-        S.mix(P, {
-
-            /**
-             *  Insert content to the end of the node.
-             */
-            append: function(html) {
-                if (html) {
-                    S.each(this, function(elem) {
-                        var domNode;
-
-                        // 对于 NodeList, 需要 cloneNode, 因此直接调用 create
-                        if (isNodeList || S.isString(html)) {
-                            domNode = DOM.create(html);
-                        } else {
-                            if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) domNode = html;
-                            if (isKSNode(html)) domNode = html[0];
-                        }
-
-                        elem.appendChild(domNode);
-                    });
-                }
-                return this;
-            },
-
-            /**
-             * Insert the element to the end of the parent.
-             */
-            appendTo: function(parent) {
-                if ((parent = S.get(parent)) && parent.appendChild) {
-                    S.each(this, function(elem) {
-                        parent.appendChild(elem);
-                    });
-                }
-                return this;
-            }
+        S.each(['append', 'prepend'], function(insertType) {
+            // append 和 prepend
+            P[insertType] = function(html) {
+                return insert.call(this, html, isNodeList, insertType);
+            };
+            // appendTo 和 prependTo
+            P[insertType + 'To'] = function(parent) {
+                return insertTo.call(this, parent, insertType);
+            };
         });
     });
 
+    function insert(html, isNodeList, insertType) {
+        if (html) {
+            S.each(this, function(elem) {
+                var domNode;
+
+                // 对于 NodeList, 需要 cloneNode, 因此直接调用 create
+                if (isNodeList || S.isString(html)) {
+                    domNode = DOM.create(html);
+                } else {
+                    if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) domNode = html;
+                    if (isKSNode(html)) domNode = html[0];
+                }
+
+                DOM[insertType](domNode, elem);
+            });
+        }
+        return this;
+    }
+
+    function insertTo(parent, insertType) {
+        if ((parent = S.get(parent)) && parent.appendChild) {
+            S.each(this, function(elem) {
+                DOM[insertType](elem, parent);
+            });
+        }
+        return this;
+    }
 
     // event-target
     S.each([NP, NLP], function(P) {
