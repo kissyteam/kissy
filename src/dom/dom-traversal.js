@@ -52,18 +52,15 @@ KISSY.add('dom-traversal', function(S, undefined) {
         contains: function(container, contained) {
             var ret = false;
 
-            if ((container = S.get(container))
-                &&
-                (contained = S.get(contained))
-                &&
-                container.nodeType == 1
-                ) {
+            if ((container = S.get(container)) && (contained = S.get(contained))) {
                 if (container.contains) {
-                    //ie6 error when text:不支持此接口
-                    if (contained.nodeType != 1)
+                    if (contained.nodeType === 3) {
                         contained = contained.parentNode;
-                    if (contained)
+                        if (contained === container) return true;
+                    }
+                    if (contained) {
                         return container.contains(contained);
+                    }
                 }
                 else if (container.compareDocumentPosition) {
                     return !!(container.compareDocumentPosition(contained) & 16);

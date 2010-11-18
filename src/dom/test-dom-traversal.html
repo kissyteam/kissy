@@ -65,6 +65,7 @@
         <p class="test-next"><a id="test-parent3">3</a></p>
         <p class="test-p" id="test-prev"><em class="test-em"><span><a id="test-parent4">4</a></span></em></p>
     </div>
+    <div id="test-contains">text node</div>
 </div>
 
 <!-- Test Cases -->
@@ -150,12 +151,18 @@
         if(DOM.contains(document, document.body) !== true) test.fail();
         if(DOM.contains(document.body, document.documentElement) !== false) test.fail();
 
+        // test text node
+        var tn = S.get('#test-contains').firstChild;
+        if(tn.nodeType !== 3) test.fail();
+        if(DOM.contains('#test-contains', tn) !== true) test.fail();
+
+        // exceptions
+        if(DOM.contains(document, document) === true) test.fail();        
         if(DOM.contains(document.body) !== false) test.fail();
         if(DOM.contains() !== false) test.fail();
     }
 
     // temp code
-    //alert(Ext.get('test-next').is('p'));
 
 </script>
 

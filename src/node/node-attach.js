@@ -118,44 +118,45 @@ KISSY.add('node-attach', function(S, undefined) {
         };
     });
     S.each([NP, NLP], function(P, isNodeList) {
-        S.mix(P, {
-
-            /**
-             *  Insert content to the end of the node.
-             */
-            append: function(html) {
-                if (html) {
-                    S.each(this, function(elem) {
-                        var domNode;
-
-                        // 对于 NodeList, 需要 cloneNode, 因此直接调用 create
-                        if (isNodeList || S.isString(html)) {
-                            domNode = DOM.create(html);
-                        } else {
-                            if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) domNode = html;
-                            if (isKSNode(html)) domNode = html[0];
-                        }
-
-                        elem.appendChild(domNode);
-                    });
-                }
-                return this;
-            },
-
-            /**
-             * Insert the element to the end of the parent.
-             */
-            appendTo: function(parent) {
-                if ((parent = S.get(parent)) && parent.appendChild) {
-                    S.each(this, function(elem) {
-                        parent.appendChild(elem);
-                    });
-                }
-                return this;
-            }
+        S.each(['append', 'prepend'], function(insertType) {
+            // append 和 prepend
+            P[insertType] = function(html) {
+                return insert.call(this, html, isNodeList, insertType);
+            };
+            // appendTo 和 prependTo
+            P[insertType + 'To'] = function(parent) {
+                return insertTo.call(this, parent, insertType);
+            };
         });
     });
 
+    function insert(html, isNodeList, insertType) {
+        if (html) {
+            S.each(this, function(elem) {
+                var domNode;
+
+                // 对于 NodeList, 需要 cloneNode, 因此直接调用 create
+                if (isNodeList || S.isString(html)) {
+                    domNode = DOM.create(html);
+                } else {
+                    if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) domNode = html;
+                    if (isKSNode(html)) domNode = html[0];
+                }
+
+                DOM[insertType](domNode, elem);
+            });
+        }
+        return this;
+    }
+
+    function insertTo(parent, insertType) {
+        if ((parent = S.get(parent)) && parent.appendChild) {
+            S.each(this, function(elem) {
+                DOM[insertType](elem, parent);
+            });
+        }
+        return this;
+    }
 
     // event-target
     S.each([NP, NLP], function(P) {
