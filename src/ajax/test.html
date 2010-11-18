@@ -11,12 +11,20 @@
 
 <button id="GET">GET</button>
 <button id="POST">POST</button>
-<button id="JSONP1">JSONP</button>
-<button id="JSONP2">从YQL获取数据</button>
+<button id="JSON">JSON</button>
+<button id="JSONP">JSONP</button>
 <button id="SYNC">同步获取数据</button>
 
-<div id="loading"></div>
-
+<div id="console" style="margin: 20px; padding: 10px; border: 1px solid #ccc"></div>
+<script>
+(function() {
+    var S = KISSY, _log = S.log, c = S.get('#console');
+    S.log = function() {
+        c.innerHTML = arguments[0];
+        _log.apply(S, arguments);
+    };
+})();
+</script>
 <!-- Test Cases -->
 <script>
 
@@ -26,54 +34,60 @@
         }
     }).use('ajax', function(S) {
 
-        S.io.onStart(function() {
-            S.Node('<p><img src="http://img04.taobaocdn.com/tps/i4/T1CntDXh8hXXXXXXXX-32-32.gif" /></p>').appendTo('#loading');
+        var IO = S.io;
+
+        // 全局事件
+        IO.on('start', function() {
+            S.one('#console').html('<p><img src="http://img04.taobaocdn.com/tps/i4/T1CntDXh8hXXXXXXXX-32-32.gif" /></p>');
         });
-        S.io.onComplete(function() {
-            S.one('#loading').html('');
+
+        IO.on('complete', function() {
+            var p = S.one('#console p');
+            if (p) p.remove();
         });
 
         //普通 get 请求
         S.one('#GET').on('click', function() {
-            S.io.get('interface.php?t=get', function(o, args) {
-                S.log('GET ' + o.responseText);
+            IO.get('interface.php?t=get', function(data) {
+                S.log('GET ' + data);
             });
         });
 
-        //普通post请求
-        S.one('#POST').on('click', function(e) {
-            S.io.post('interface.php?t=post', {
+        //普通 post 请求
+        S.one('#POST').on('click', function() {
+            IO.post('interface.php?t=post', {
                 type:'post',
                 name:'jayli',
                 company:'cn.yahoo.com',
                 countru:'china'
-            }, function(o, args) {
-                S.log('POST ' + o.responseText);
+            }, function(o) {
+                S.log('POST ' + o);
             });
         });
 
-        //JSONP
-        S.one('#JSONP1').on('click', function(e) {
-            S.io.jsonp('interface.php?callback=?', function(data, args) {
-                S.log(data.toString() + 'Simple Jsonp callback');
+        // JSON
+        S.one('#JSON').on('click', function(e) {
+            IO.getJSON('interface.php?callback=?', function(data) {
+                S.log('getJSON ' + data);
             });
 
         });
 
-        S.one('#JSONP2').on('click', function(e) {
+        // JSONP
+        S.one('#JSONP').on('click', function(e) {
 
-            //自定义jsonp
+            //自定义 jsonp
             S.io({
                 url:'http://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22http%3A%2F%2Fued.taobao.com%2Fblog%2Ffeed%2F%22&format=json&diagnostics=true&callback=?',
-                dataType:'jsonp',
-                jsonp:'my_callback',
-                complete:function(id, data, args) {
+                dataType: 'jsonp',
+                jsonp: 'my_callback',
+                complete: function(data) {
                     S.log(S.JSON.stringify(data));
                 }
             });
-
         });
 
+        // 同步
         S.one('#SYNC').on('click', function(e) {
             var str = S.io({
                 type:'get',

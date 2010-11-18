@@ -5,37 +5,22 @@
 KISSY.add('ajax', function(S, undef) {
 
     var win = window,
-
-        transactionid = 0, // 通讯序列号
-        id = function() {  // 获得新的通讯序列号
-            return transactionid++;
+        noop = function() {
         },
 
-        eventCenter = S.mix({}, S.EventTarget),
-
-        //检测 xhr 是否成功
-        xhrSuccessful = function(xhr) {
-            try {
-                // ref: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-                return (xhr.status >= 200 && xhr.status < 300) ||
-                    // Opera returns 0 when status is 304
-                    xhr.status === 304 || xhr.status === 0 || xhr.status === 1223;
-            } catch(e) {
-            }
-            return false;
-        },
-
-        GET = 'GET',
-        JSON = 'json', JSONP = JSON + 'p', CALLBACK = 'callback',
-
+        GET = 'GET', POST = 'POST',
+        JSON = 'json', JSONP = JSON + 'p', SCRIPT = 'script',
+        CALLBACK = 'callback', EMPTY = '',
+        SUCCESS = 'success', COMPLETE = 'complete',
+        ERROR = 'error', TIMEOUT = 'timeout', PARSERERR = 'parsererror',
+        START = 'start', SEND = 'send', STOP = 'stop',
         jsre = /=\?(&|$)/,
-        rquery = /\?/,
 
         // 默认配置
         // 参数含义和 jQuery 保持一致：http://api.jquery.com/jQuery.ajax/
         defaultConfig = {
             type: GET,
-            url: '',
+            url: EMPTY,
             global: true,
             contentType: 'application/x-www-form-urlencoded',
             async: true,
@@ -58,115 +43,98 @@ KISSY.add('ajax', function(S, undef) {
                 text: 'text/plain',
                 _default: '*/*'
             },
-            complete: function() {},
-            success: function() {},
-            error: function() {}
+            complete: function() {
+            },
+            success: function() {
+            },
+            error: function() {
+            },
+            jsonp: CALLBACK
             // dataType
             // headers
+            // jsonpCallback
         };
 
-    S.io = function(s) {
-        S.mix(s, defaultConfig);
-        var jsonp, status, type = s.type.toUpperCase();
+    function io(s) {
+        s = S.merge(defaultConfig, s);
 
-        // convert data if not already a string
+        var jsonp, status = SUCCESS, data, type = s.type.toUpperCase();
+
         if (s.data && !S.isString(s.data)) {
             s.data = S.param(s.data);
         }
 
-        // Handle JSONP Parameter Callbacks, 参照 jQuery, 保留 callback=? 的约定
+        // Handle JSONP, 参照 jQuery, 保留 callback=? 的约定
         if (s.dataType === JSONP) {
             if (type === GET) {
                 if (!jsre.test(s.url)) {
-                    s.url += (rquery.test(s.url) ? "&" : "?") + (s.jsonp || "callback") + "=?";
+                    s.url = addQuery(s.url, s.jsonp + '=?');
                 }
             } else if (!s.data || !jsre.test(s.data)) {
-                s.data = (s.data ? s.data + "&" : "") + (s.jsonp || "callback") + "=?";
+                s.data = (s.data ? s.data + '&' : EMPTY) + s.jsonp + '=?';
             }
-            s.dataType = "json";
+            s.dataType = JSON;
+        }
 
-            jsonp = "jsonp" + S.now();
+        // Build temporary JSONP function
+        if (s.dataType === JSON && (s.data && jsre.test(s.data) || jsre.test(s.url))) {
+            jsonp = s['jsonpCallback'] || JSONP + S.now();
 
             // Replace the =? sequence both in the query string and the data
             if (s.data) {
-                s.data = (s.data + "").replace(jsre, "=" + jsonp + "$1");
+                s.data = (s.data + EMPTY).replace(jsre, '=' + jsonp + '$1');
             }
 
-            s.url = s.url.replace(jsre, "=" + jsonp + "$1");
-
-            s.dataType = "script";
+            s.url = s.url.replace(jsre, '=' + jsonp + '$1');
+            s.dataType = SCRIPT;
 
             // Handle JSONP-style loading
-            window[ jsonp ] = window[ jsonp ] || function(data) {
-                s.success(id(), data, s.args);
-                eventCenter.fire('success', {
-                    xhr:xhr
-                });
-                s.complete(id(), data, s.args);
-                eventCenter.fire('complete', {
-                    xhr:xhr
-                });
-                /*
-                 //是否需要delete，需要经过测试
-                 window[ jsonp ] = undefined;
-                 try {
-                 delete window[ jsonp ];
-                 } catch(e) {}
-                 */
+            var customJsonp = win[jsonp];
+
+            win[jsonp] = function(data) {
+                if (S.isFunction(customJsonp)) {
+                    customJsonp(data);
+                } else {
+                    // Garbage collect
+                    win[jsonp] = undef;
+                    try {
+                        delete win[jsonp];
+                    } catch(e) {
+                    }
+                }
+                handleEvent([SUCCESS, COMPLETE], data, xhr, status, s);
             };
         }
 
-        if (s.data && type === "GET") {
-            s.url += (rquery.test(s.url) ? "&" : "?") + s.data;
+        if (s.data && type === GET) {
+            s.url = addQuery(s.url, s.data);
         }
 
-        //
-        if (s.dataType === "script") {
-            if (!jsonp) {
-                S.getScript(s.url, function() {
-                    s.complete(id(), s.args);
-                    eventCenter.fire('complete', {
-                        xhr:xhr
-                    });
-                    s.success(id(), s.args);
-                    eventCenter.fire('success', {
-                        xhr:xhr
-                    });
-                });
-
-            } else {
-                eventCenter.fire('start', {
-                    xhr:xhr
-                });
-                S.getScript(s.url, function() {
-                });
-                eventCenter.fire('send', {
-                    xhr:xhr
-                });
-            }
-
-            return undef;
+        if (s.dataType === SCRIPT) {
+            io.fire(START);
+            S.getScript(s.url, jsonp ? null : function() {
+                handleEvent([SUCCESS, COMPLETE], EMPTY, xhr, status, s);
+            });
+            io.fire(SEND);
+            return; // 结束 json/jsonp/script 的流程
         }
 
 
-        var requestDone = false;
+        // 开始 XHR 之旅
+        var requestDone = false, xhr = s.xhr();
 
-        var xhr = s.xhr();
-
-        eventCenter.fire('start', {
-            xhr:xhr
-        });
+        io.fire(START, { xhr: xhr });
         xhr.open(type, s.url, s.async);
 
         // Need an extra try/catch for cross domain requests in Firefox 3
         try {
             // Set the correct header, if data is being sent
-            if (s.data || s && s.contentType) {
-                xhr.setRequestHeader("Content-Type", s.contentType);
+            if (s.data || s.contentType) {
+                xhr.setRequestHeader('Content-Type', s.contentType);
             }
 
             // Set the Accepts header for the server, depending on the dataType
-            xhr.setRequestHeader("Accept", s.dataType && s.accepts[ s.dataType ] ?
+            xhr.setRequestHeader('Accept', s.dataType && s.accepts[s.dataType] ?
                 s.accepts[ s.dataType ] + ", */*" :
                 s.accepts._default);
         } catch(e) {
@@ -174,63 +142,51 @@ KISSY.add('ajax', function(S, undef) {
 
         // Wait for a response to come back
         xhr.onreadystatechange = function(isTimeout) {
-            //请求中止
-            if (!xhr || xhr.readyState === 0 || isTimeout === "abort") {
+            // 请求中止
+            if (!xhr || xhr.readyState === 0 || isTimeout === 'abort') {
                 // Opera doesn't call onreadystatechange before this point
                 // so we simulate the call
                 if (!requestDone) {
-                    s.complete(id(), xhr, s.args);
-                    eventCenter.fire('complete', {
-                        xhr:xhr
-                    });
+                    handleEvent(COMPLETE, null, xhr, ERROR, s);
                 }
 
-                //请求完成，onreadystatechange值空
                 requestDone = true;
                 if (xhr) {
-                    xhr.onreadystatechange = function() {
-                    };
+                    xhr.onreadystatechange = noop;
+                }
+            } else
+            // 请求成功，数据可用，或请求超时
+            if (!requestDone && xhr && (xhr.readyState === 4 || isTimeout === TIMEOUT)) {
+                requestDone = true;
+                xhr.onreadystatechange = noop;
+
+                status = isTimeout === TIMEOUT ? TIMEOUT :
+                    !xhrSuccessful(xhr) ? ERROR : SUCCESS;
+
+                // Watch for, and catch, XML document parse errors
+                try {
+                    // process the data (runs the xml through httpData regardless of callback)
+                    data = httpData(xhr, s.dataType);
+                } catch(e) {
+                    status = PARSERERR;
                 }
 
-                //请求成功，数据可用，或者请求超时
-            } else if (!requestDone && xhr && (xhr.readyState === 4 || isTimeout === "timeout")) {
-                requestDone = true;
-                xhr.onreadystatechange = function() {
-                };
-
-                status = isTimeout === "timeout" ?
-                    "timeout" :
-                    !xhrSuccessful(xhr) ?
-                        "error" :
-                        "success";
-
                 // Make sure that the request was successful or notmodified
-                if (status === "success") {
+                if (status === SUCCESS) {
                     // JSONP handles its own success callback
                     if (!jsonp) {
-                        s.success(id(), xhr, s.args);
-                        eventCenter.fire('success', {
-                            xhr:xhr
-                        });
+                        handleEvent(SUCCESS, data, xhr, status, s);
                     }
                 } else {
-                    s.failure(id(), xhr, s.args);
-                    eventCenter.fire('error', {
-                        xhr:xhr
-                    });
+                    handleEvent(ERROR, data, xhr, status, s);
                 }
 
                 // Fire the complete handlers
-                s.complete(id(), xhr, s.args);
-                eventCenter.fire('complete', {
-                    xhr:xhr
-                });
+                handleEvent(COMPLETE, data, xhr, status, s);
 
-                if (isTimeout === "timeout") {
+                if (isTimeout === TIMEOUT) {
                     xhr.abort();
-                    eventCenter.fire('stop', {
-                        xhr:xhr
-                    });
+                    io.fire(STOP, { xhr: xhr });
                 }
 
                 // Stop memory leaks
@@ -240,173 +196,124 @@ KISSY.add('ajax', function(S, undef) {
             }
         };
 
-        eventCenter.fire('send', {
-            xhr:xhr
-        });
-        xhr.send(type === "POST" ? s.data : null);
+        io.fire(SEND, { xhr: xhr });
+        xhr.send(type === POST ? s.data : null);
 
         // return XMLHttpRequest to allow aborting the request etc.
         if (!s.async) {
-            eventCenter.fire('complete', {
-                xhr:xhr
-            });
+            io.fire(COMPLETE, { xhr: xhr });
         }
         return xhr;
-    };
+    }
+
+    // 事件支持
+    S.mix(io, S.EventTarget);
 
     // 定制各种快捷操作
-    S.mix(S.io, {
-        /**
-         * Sends an HTTP request to a remote server.
-         */
-        get: function(url, data, callback, dataType) {
-            //get(url)
-            if (typeof data == 'undefined') {
-                var data = null,
-                    callback = function() {
-                    },
-                    dateType = '_default';
-            }
-            //get(url,callback)
-            //get(url,callback,type)
-            if (typeof data == 'function') {
-                var dataType = callback || '_default',
-                    callback = data,
-                    data = null;
-            }
-            //get(url,data)
-            if (typeof callback == 'undefined') {
-                var callback = function() {
-                },
-                    dataType = '_default';
-            }
-            //get(url,data,callback,type)
+    S.mix(io, {
 
-            S.io({
-                type:'get',
-                url:url,
-                data:data,
-                complete:function(id, data, args) {
-                    callback(data, args);
+        get: function(url, data, callback, dataType, _t) {
+            // data 参数可省略
+            if(S.isFunction(data)) {
+                dataType = callback;
+                callback = data;
+            }
+
+            io({
+                type: _t || GET,
+                url: url,
+                data: data,
+                complete: function(data, xhr, textStatus) {
+                    if (S.isFunction(callback)) callback(data, xhr, textStatus);
                 },
-                dataType:dataType
+                dataType: dataType
             });
-
+            return this;
         },
 
         post: function(url, data, callback, dataType) {
-            //post(url)
-            if (typeof data == 'undefined') {
-                var data = null,
-                    callback = function() {
-                    },
-                    dateType = '_default';
+            // data 参数可省略
+            if(S.isFunction(data)) {
+                dataType = callback;
+                callback = data;
+                data = null;
             }
-            //post(url,callback)
-            //post(url,callback,type)
-            if (typeof data == 'function') {
-                var dataType = callback || '_default',
-                    callback = data,
-                    data = null;
-            }
-            //post(url,data)
-            if (typeof callback == 'undefined') {
-                var callback = function() {
-                },
-                    dataType = '_default';
-            }
-            //post(url,data,callback,type)
-            S.io({
-                type:'post',
-                url:url,
-                complete:function(id, data, args) {
-                    callback(data, args);
-                },
-                data:data,
-                dataType:dataType
-            });
+            return io.get(url, data, callback, dataType, POST);
         },
 
-        jsonp: function(url, data, callback) {
-            //jsonp(url)
-            if (typeof data == 'undefined') {
-                var data = null,
-                    callback = function() {
-                    };
+        getJSON: function(url, data, callback) {
+            // data 参数可省略
+            if(S.isFunction(data)) {
+                callback = data;
             }
-            //jsonp(url,callback)
-            if (typeof data == 'function') {
-                var callback = data,
-                    data = null;
-            }
-            //jsonp(url,data)
-            if (typeof callback == 'undefined') {
-                var callback = function() {
-                };
-            }
-            //jsonp(url,data,callback)
-            S.io({
-                dataType:'jsonp',
-                url:url,
-                complete:function(id, data, args) {
-                    callback(data, args);
+            
+            io({
+                dataType: JSON,
+                url: url,
+                complete: function(data, xhr, textStatus) {
+                    if (S.isFunction(callback)) callback(data, xhr, textStatus);
                 },
                 data:data
             });
-
-
-        },
-
-        getJSON:function(url, data, callback) {
-            //getJSON(url)
-            if (typeof data == 'undefined') {
-                var data = null,
-                    callback = function() {
-                    };
-            }
-            //getJSON(url,callback)
-            if (typeof data == 'function') {
-                var callback = data,
-                    data = null;
-            }
-            //getJSON(url,data)
-            if (typeof callback == 'undefined') {
-                var callback = function() {
-                };
-            }
-            //getJSON(url,data,callback)
-            S.Ajax({
-                dataType:'json',
-                url:url,
-                complete:function(id, xhr, args) {
-                    callback(S.JSON.parse(xhr.responseText), args);
-                },
-                data:data
-            });
-
-        },
-        onComplete:function(callback) {
-            eventCenter.on('complete', callback);
-        },
-        onError:function(callback) {
-            eventCenter.on('error', callback);
-        },
-        onSend:function(callback) {
-            eventCenter.on('send', callback);
-        },
-        onStart:function(callback) {
-            eventCenter.on('start', callback);
-        },
-        onStop:function(callback) {
-            eventCenter.on('stop', callback);
-        },
-        onSuccess:function(callback) {
-            eventCenter.on('success', callback);
+            return this;
         }
     });
 
-    // alias
-    S.ajax = S.io;
+    // shortcuts
+    io.getScript = S.getScript;
+    S.ajax = S.io = io;
+    S.getJSON = io.getJSON;
+
+    //检测 xhr 是否成功
+    function xhrSuccessful(xhr) {
+        try {
+            // ref: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+            return (xhr.status >= 200 && xhr.status < 300) ||
+                // Opera returns 0 when status is 304
+                xhr.status === 304 || xhr.status === 0 || xhr.status === 1223;
+        } catch(e) {
+        }
+        return false;
+    }
+
+    function addQuery(url, params) {
+        return (url.indexOf('?') === -1 ? '?' : '&') + params;
+    }
+
+    function handleEvent(type, data, xhr, status, s) {
+        if (S.isArray(type)) {
+            S.each(type, function(t) {
+                handleEvent(t, data, xhr, status, s);
+            });
+        } else {
+            s[type](data, xhr, status);
+            io.fire(type, { xhr: xhr });
+        }
+    }
+
+    function httpData(xhr, type) {
+        var ct = xhr.getResponseHeader('content-type') || EMPTY,
+            xml = type === 'xml' || !type && ct.indexOf('xml') >= 0,
+            data = xml ? xhr.responseXML : xhr.responseText;
+
+        if (xml && data.documentElement.nodeName === PARSERERR) {
+            S.error(PARSERERR);
+        }
+
+        // The filter can actually parse the response
+        if (S.isString(data)) {
+            // Get the JavaScript object, if JSON is used.
+            if (type === JSON || !type && ct.indexOf(JSONP) >= 0) {
+                data = S.JSON.parse(data);
+            } else
+            // If the type is "script", eval it in global context
+            if (type === SCRIPT || !type && ct.indexOf('javascript') >= 0) {
+                S.globalEval(data);
+            }
+        }
+        return data;
+    }
+
 });
 
 /**
