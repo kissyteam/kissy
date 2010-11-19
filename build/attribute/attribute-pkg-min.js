@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 9 13:15
+build time: Nov 19 13:47
 */
 KISSY.add("attribute",function(e,h){function f(){}function i(a){a+="";return a.charAt(0).toUpperCase()+a.substring(1)}e.augment(f,{__initAttrs:function(){if(!this.__attrs){this.__attrs={};this.__attrVals={}}},getDefAttrs:function(){return e.clone(this.__attrs)},addAttr:function(a,b){this.__initAttrs();this.__attrs[a]=e.clone(b||{});return this},addAttrs:function(a,b){var c=this;e.each(a,function(d,g){if(g in b)d.value=b[g];c.addAttr(g,d)});return c},hasAttr:function(a){return a&&a in(this.__attrs||
 {})},removeAttr:function(a){if(this.hasAttr(a)){delete this.__attrs.name;delete this.__attrVals.name}return this},set:function(a,b){var c=this.get(a);if(c!==b)if(false!==this.__fireAttrChange("before",a,c,b)){this.__set(a,b);this.__fireAttrChange("after",a,c,this.__attrVals[a]);return this}},__fireAttrChange:function(a,b,c,d){return this.fire(a+i(b)+"Change",{attrName:b,prevVal:c,newVal:d})},__set:function(a,b){var c,d=this.__attrs[a];if(d=d&&d.setter)c=d.call(this,b);if(c!==h)b=c;this.__attrVals[a]=

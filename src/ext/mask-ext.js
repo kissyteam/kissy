@@ -11,8 +11,7 @@ KISSY.add("ext-mask", function(S) {
     function initMask() {
         mask = new S.Node("<div class='ks-ext-mask'>");
         var b = document.body,c = b.firstChild;
-        if (c) mask.insertBefore(c);
-        else mask.appendTo(b);
+        S.DOM.prepend(c,b);
 
         mask.css({
             "position":"absolute",

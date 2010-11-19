@@ -32,10 +32,7 @@ KISSY.add("ext-shim", function(S) {
                 "left: 0;" +
                 "z-index: -1;" +
                 "height: expression(this.parentNode.offsetHeight);" + "'>");
-
-            var c = el[0].firstChild;
-            if (c) shim.insertBefore(c);
-            else shim.appendTo(el);
+            el.prepend(shim);
         },
 
         __destructor:function() {

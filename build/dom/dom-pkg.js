@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 17 22:45
+build time: Nov 19 13:47
 */
 /**
  * @module  dom
@@ -1611,18 +1611,15 @@ KISSY.add('dom-traversal', function(S, undefined) {
         contains: function(container, contained) {
             var ret = false;
 
-            if ((container = S.get(container))
-                &&
-                (contained = S.get(contained))
-                &&
-                container.nodeType == 1
-                ) {
+            if ((container = S.get(container)) && (contained = S.get(contained))) {
                 if (container.contains) {
-                    //ie6 error when text:不支持此接口
-                    if (contained.nodeType != 1)
+                    if (contained.nodeType === 3) {
                         contained = contained.parentNode;
-                    if (contained)
+                        if (contained === container) return true;
+                    }
+                    if (contained) {
                         return container.contains(contained);
+                    }
                 }
                 else if (container.compareDocumentPosition) {
                     return !!(container.compareDocumentPosition(contained) & 16);
@@ -2008,7 +2005,7 @@ KISSY.add('dom-insertion', function(S) {
             }
             return newNode;
         },
-
+        
         /**
          * Inserts the new node as the next sibling of the reference node.
          * @return {HTMLElement} The node that was inserted (or null if insert fails)
@@ -2022,6 +2019,30 @@ KISSY.add('dom-insertion', function(S) {
                 }
             }
             return newNode;
+        },
+
+        /**
+         * Inserts the new node as the last child.
+         */
+        append: function(node, parent) {
+            if ((node = S.get(node)) && (parent = S.get(parent))) {
+                if (parent.appendChild) {
+                    parent.appendChild(node);
+                }
+            }
+        },
+
+        /**
+         * Inserts the new node as the first child.
+         */
+        prepend: function(node, parent) {
+            if ((node = S.get(node)) && (parent = S.get(parent))) {
+                if (parent.firstChild) {
+                    DOM.insertBefore(node, parent.firstChild);
+                } else {
+                    parent.appendChild(node);
+                }
+            }
         }
     });
 });

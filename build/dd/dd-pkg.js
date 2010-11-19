@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 16 12:40
+build time: Nov 19 13:47
 */
 /**
  * dd support for kissy
@@ -239,6 +239,7 @@ KISSY.add('dd-draggable', function(S) {
          * handler 集合，注意暂时必须在 node 里面
          */
         handlers:{
+            value:{},
             setter:function(vs) {
                 if (vs) {
                     for (var i = 0; i < vs.length; i++) {
@@ -339,11 +340,11 @@ KISSY.add('dd-draggable', function(S) {
                 diff = self.get("diff"),
                 left = ev.pageX - diff.left,
                 top = ev.pageY - diff.top;
-
-            this.fire("drag", {
+            S.mix(ev, {
                 left:left,
                 top:top
             });
+            this.fire("drag", ev);
         },
 
         _end: function() {

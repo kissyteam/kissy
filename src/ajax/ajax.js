@@ -2,456 +2,329 @@
  * @module  ajax
  * @author  拔赤<lijing00333@163.com>
  */
-KISSY.add('ajax', function(S) {
+KISSY.add('ajax', function(S, undef) {
 
-	//S.Ajax = S.Ajax || {};
-	S.namespace('S.Ajax');
-
-	//通讯序列号
-	_transactionid = 0;
-
-	//获得新的通讯序列号
-	var id = function(){
-		return _transactionid++;
-	};
-
-	var _ajaxEventFactory = function(){};
-	S.augment(_ajaxEventFactory,S.EventTarget);
-	var _ajaxEventCenter = new _ajaxEventFactory();
-
-	//检测xhr是否成功
-	var _httpSuccess = function( xhr ) {
-		try {
-			return !xhr.status && location.protocol === "file:" ||
-				// Opera returns 0 when status is 304
-				( xhr.status >= 200 && xhr.status < 300 ) ||
-				xhr.status === 304 || xhr.status === 1223 || xhr.status === 0;
-		} catch(e) {}
-
-		return false;
-	};
-
-	//将form转换为数组
-	//是否需要？
-	var serializeArray = function(elem){
-
-
-	};
-
-	/**
-	 * S.Ajax.io(options) 基础方法,派生出S.Ajax.get,S.Ajax.post,
-	 * @param o
-	 			type: get, GET, post, POST
-				url:
-				data:a=1&b=2
-				dataType:jsonp,json,script.. 字段来自于 acceept
-				complete:function
-				success:function
-				failure:function
-				async:true,false
-				headers:{
-					'Content-Type': 'application/json'
-				}
-				args:
-	 */
-
-	S.Ajax = function(o){
-
-		//默认设置
-		var _ajaxSettings = {
-
-			url: window.location.href,
-			global: true,
-			type: "GET",
-			contentType: "application/x-www-form-urlencoded",
-			async: true,
-			//data可以是对象，也可以是字符串
-			data:null,
-			xhr: window.XMLHttpRequest && (window.location.protocol !== "file:" || !window.ActiveXObject) ?
-				function() {
-					return new window.XMLHttpRequest();
-				} :
-				function() {
-					try {
-						return new window.ActiveXObject("Microsoft.XMLHTTP");
-					} catch(e) {}
-				},
-			//结果类型，和jquery保持一致
-			accepts: {
-				xml: "application/xml, text/xml",
-				html: "text/html",
-				script: "text/javascript, application/javascript",
-				json: "application/json, text/javascript",
-				text: "text/plain",
-				_default: "*/*"
-			},
-			complete:function(){},
-			success:function(){},
-			failure:function(){},
-			args:null
-		};
-
-		var s = _ajaxSettings;
-
-		S.mix(s,o);
-
-		var jsonp, status,
-			jsre = /=\?(&|$)/,
-			rquery = /\?/,
-			type = s.type.toUpperCase();
-
-		// convert data if not already a string
-		if ( s.data && typeof s.data !== "string" ) {
-			var _str = '';
-			for(var i in s.data){
-				_str += '&'+ i+'='+s.data[i];
-			}
-			s.data = _str.replace(/^&/i,'');
-		}
-
-		// Handle JSONP Parameter Callbacks,参照jquery,保留callback=?的约定
-		if ( s.dataType === "jsonp") {
-			if ( type === "GET" ) {
-				if ( !jsre.test( s.url ) ) {
-					s.url += (rquery.test( s.url ) ? "&" : "?") + (s.jsonp || "callback") + "=?";
-				}
-			} else if ( !s.data || !jsre.test(s.data) ) {
-				s.data = (s.data ? s.data + "&" : "") + (s.jsonp || "callback") + "=?";
-			}
-			s.dataType = "json";
-
-			jsonp = "jsonp" + S.now();
-
-			// Replace the =? sequence both in the query string and the data
-			if ( s.data ) {
-				s.data = (s.data + "").replace(jsre, "=" + jsonp + "$1");
-			}
-
-			s.url = s.url.replace(jsre, "=" + jsonp + "$1");
-
-			s.dataType = "script";
-
-			// Handle JSONP-style loading
-			window[ jsonp ] = window[ jsonp ] || function( data ) {
-				s.success(id(),data,s.args);
-				_ajaxEventCenter.fire('success',{
-					xhr:xhr	
-				});
-				s.complete(id(),data,s.args);
-				_ajaxEventCenter.fire('complete',{
-					xhr:xhr	
-				});
-				/*
-				//是否需要delete，需要经过测试
-				window[ jsonp ] = undefined;
-				try {
-					delete window[ jsonp ];
-				} catch(e) {}
-				*/
-			};
-		}
-
-		if ( s.data && type === "GET" ) {
-			s.url += (rquery.test(s.url) ? "&" : "?") + s.data;
-		}
-
-		//
-		if ( s.dataType === "script") {
-			if(!jsonp){
-				S.getScript(s.url,function(){
-					s.complete(id(),s.args);
-					_ajaxEventCenter.fire('complete',{
-						xhr:xhr	
-					});
-					s.success(id(),s.args);
-					_ajaxEventCenter.fire('success',{
-						xhr:xhr	
-					});
-				});
-
-			}else {
-				_ajaxEventCenter.fire('start',{
-					xhr:xhr	
-				});
-				S.getScript(s.url,function(){});
-				_ajaxEventCenter.fire('send',{
-					xhr:xhr	
-				});
-			}
-
-			return undefined;
-		}
-
-
-		var requestDone = false;
-
-		var xhr = s.xhr();
-		
-		_ajaxEventCenter.fire('start',{
-			xhr:xhr	
-		});
-		xhr.open(type, s.url, s.async);
-
-		// Need an extra try/catch for cross domain requests in Firefox 3
-		try {
-			// Set the correct header, if data is being sent
-			if ( s.data || s && s.contentType ) {
-				xhr.setRequestHeader("Content-Type", s.contentType);
-			}
-
-			// Set the Accepts header for the server, depending on the dataType
-			xhr.setRequestHeader("Accept", s.dataType && s.accepts[ s.dataType ] ?
-				s.accepts[ s.dataType ] + ", */*" :
-				s.accepts._default );
-		} catch(e) {}
-
-		// Wait for a response to come back
-		xhr.onreadystatechange = function( isTimeout ) {
-			//请求中止 
-			if ( !xhr || xhr.readyState === 0 || isTimeout === "abort" ) {
-				// Opera doesn't call onreadystatechange before this point
-				// so we simulate the call
-				if ( !requestDone ) {
-					s.complete(id(),xhr,s.args);
-					_ajaxEventCenter.fire('complete',{
-						xhr:xhr	
-					});
-				}
-
-				//请求完成，onreadystatechange值空
-				requestDone = true;
-				if ( xhr ) {
-					xhr.onreadystatechange = function(){};
-				}
-
-			//请求成功，数据可用，或者请求超时
-			} else if ( !requestDone && xhr && (xhr.readyState === 4 || isTimeout === "timeout") ) {
-				requestDone = true;
-				xhr.onreadystatechange = function(){};
-
-				status = isTimeout === "timeout" ?
-					"timeout" :
-					!_httpSuccess( xhr ) ?
-						"error" :
-						"success";
-
-				// Make sure that the request was successful or notmodified
-				if ( status === "success" ) {
-					// JSONP handles its own success callback
-					if ( !jsonp ) {
-						s.success(id(),xhr,s.args);
-						_ajaxEventCenter.fire('success',{
-							xhr:xhr	
-						});
-					}
-				} else {
-					s.failure(id(),xhr,s.args);
-					_ajaxEventCenter.fire('error',{
-						xhr:xhr	
-					});
-				}
-
-				// Fire the complete handlers
-				s.complete(id(),xhr,s.args);
-				_ajaxEventCenter.fire('complete',{
-					xhr:xhr	
-				});
-
-				if ( isTimeout === "timeout" ) {
-					xhr.abort();
-					_ajaxEventCenter.fire('stop',{
-						xhr:xhr	
-					});
-				}
-
-				// Stop memory leaks
-				if ( s.async ) {
-					xhr = null;
-				}
-			}
-		};
-
-		_ajaxEventCenter.fire('send',{
-			xhr:xhr	
-		});
-		xhr.send( type === "POST" ? s.data : null );
-
-		// return XMLHttpRequest to allow aborting the request etc.
-		if(s.async == false){
-			_ajaxEventCenter.fire('complete',{
-				xhr:xhr	
-			});
-		}
-		return xhr;
-
-
-
-	};
-
-
-	//根据S.Ajax基础方法，定制各种快捷操作
-	S.mix(S.Ajax,{
-		
-        /**
-         * Sends an HTTP request to a remote server.
-         */
-        get: function(url, data, callback,dataType) {
-			//get(url)
-			if(typeof data == 'undefined'){
-				var data = null,
-					callback = function(){},
-					dateType = '_default';
-			}
-			//get(url,callback)
-			//get(url,callback,type)
-			if(typeof data == 'function' ){
-				var dataType = callback || '_default',
-					callback = data,
-					data = null;
-			}
-			//get(url,data)
-			if(typeof callback == 'undefined'){
-				var callback = function(){},
-					dataType = '_default';
-			}
-			//get(url,data,callback,type)
-			
-			S.Ajax({
-				type:'get',
-				url:url,
-				data:data,
-				complete:function(id,data,args){
-					callback(data,args);
-				},
-				dataType:dataType
-			});
-
+    var win = window,
+        noop = function() {
         },
 
-		post: function(url,data,callback,dataType){
-			//post(url)
-			if(typeof data == 'undefined'){
-				var data = null,
-					callback = function(){},
-					dateType = '_default';
-			}
-			//post(url,callback)
-			//post(url,callback,type)
-			if(typeof data == 'function' ){
-				var dataType = callback || '_default',
-					callback = data,
-					data = null;
-			}
-			//post(url,data)
-			if(typeof callback == 'undefined'){
-				var callback = function(){},
-					dataType = '_default';
-			}
-			//post(url,data,callback,type)
-			S.Ajax({
-				type:'post',
-				url:url,
-				complete:function(id,data,args){
-					callback(data,args);
-				},
-				data:data,
-				dataType:dataType
-			});
-		},
-		jsonp : function(url,data,callback){
-			//jsonp(url)
-			if(typeof data == 'undefined'){
-				var data = null,
-					callback = function(){};
-			}
-			//jsonp(url,callback)
-			if(typeof data == 'function' ){
-				var callback = data,
-					data = null;
-			}
-			//jsonp(url,data)
-			if(typeof callback == 'undefined'){
-				var callback = function(){};
-			}
-			//jsonp(url,data,callback)
-			S.Ajax({
-				dataType:'jsonp',
-				url:url,
-				complete:function(id,data,args){
-					callback(data,args);
-				},
-				data:data
-			});
+        GET = 'GET', POST = 'POST',
+        JSON = 'json', JSONP = JSON + 'p', SCRIPT = 'script',
+        CALLBACK = 'callback', EMPTY = '',
+        SUCCESS = 'success', COMPLETE = 'complete',
+        ERROR = 'error', TIMEOUT = 'timeout', PARSERERR = 'parsererror',
+        START = 'start', SEND = 'send', STOP = 'stop',
+        jsre = /=\?(&|$)/,
+
+        // 默认配置
+        // 参数含义和 jQuery 保持一致：http://api.jquery.com/jQuery.ajax/
+        defaultConfig = {
+            type: GET,
+            url: EMPTY,
+            global: true,
+            contentType: 'application/x-www-form-urlencoded',
+            async: true,
+            data: null,
+            xhr: win.XMLHttpRequest ?
+                function() {
+                    return new window.XMLHttpRequest();
+                } :
+                function() {
+                    try {
+                        return new window.ActiveXObject('Microsoft.XMLHTTP');
+                    } catch(e) {
+                    }
+                },
+            accepts: {
+                xml: 'application/xml, text/xml',
+                html: 'text/html',
+                script: 'text/javascript, application/javascript',
+                json: 'application/json, text/javascript',
+                text: 'text/plain',
+                _default: '*/*'
+            },
+            complete: function() {
+            },
+            success: function() {
+            },
+            error: function() {
+            },
+            jsonp: CALLBACK
+            // dataType
+            // headers
+            // jsonpCallback
+        };
+
+    function io(s) {
+        s = S.merge(defaultConfig, s);
+
+        var jsonp, status = SUCCESS, data, type = s.type.toUpperCase();
+
+        if (s.data && !S.isString(s.data)) {
+            s.data = S.param(s.data);
+        }
+
+        // Handle JSONP, 参照 jQuery, 保留 callback=? 的约定
+        if (s.dataType === JSONP) {
+            if (type === GET) {
+                if (!jsre.test(s.url)) {
+                    s.url = addQuery(s.url, s.jsonp + '=?');
+                }
+            } else if (!s.data || !jsre.test(s.data)) {
+                s.data = (s.data ? s.data + '&' : EMPTY) + s.jsonp + '=?';
+            }
+            s.dataType = JSON;
+        }
+
+        // Build temporary JSONP function
+        if (s.dataType === JSON && (s.data && jsre.test(s.data) || jsre.test(s.url))) {
+            jsonp = s['jsonpCallback'] || JSONP + S.now();
+
+            // Replace the =? sequence both in the query string and the data
+            if (s.data) {
+                s.data = (s.data + EMPTY).replace(jsre, '=' + jsonp + '$1');
+            }
+
+            s.url = s.url.replace(jsre, '=' + jsonp + '$1');
+            s.dataType = SCRIPT;
+
+            // Handle JSONP-style loading
+            var customJsonp = win[jsonp];
+
+            win[jsonp] = function(data) {
+                if (S.isFunction(customJsonp)) {
+                    customJsonp(data);
+                } else {
+                    // Garbage collect
+                    win[jsonp] = undef;
+                    try {
+                        delete win[jsonp];
+                    } catch(e) {
+                    }
+                }
+                handleEvent([SUCCESS, COMPLETE], data, xhr, status, s);
+            };
+        }
+
+        if (s.data && type === GET) {
+            s.url = addQuery(s.url, s.data);
+        }
+
+        if (s.dataType === SCRIPT) {
+            io.fire(START);
+            S.getScript(s.url, jsonp ? null : function() {
+                handleEvent([SUCCESS, COMPLETE], EMPTY, xhr, status, s);
+            });
+            io.fire(SEND);
+            return; // 结束 json/jsonp/script 的流程
+        }
 
 
-		},
-		getJSON:function(url,data,callback){
-			//getJSON(url)
-			if(typeof data == 'undefined'){
-				var data = null,
-					callback = function(){};
-			}
-			//getJSON(url,callback)
-			if(typeof data == 'function' ){
-				var callback = data,
-					data = null;
-			}
-			//getJSON(url,data)
-			if(typeof callback == 'undefined'){
-				var callback = function(){};
-			}
-			//getJSON(url,data,callback)
-			S.Ajax({
-				dataType:'json',
-				url:url,
-				complete:function(id,xhr,args){
-					callback(S.JSON.parse(xhr.responseText),args);
-				},
-				data:data
-			});
+        // 开始 XHR 之旅
+        var requestDone = false, xhr = s.xhr();
 
-		},
-		onComplete:function(callback){
-			_ajaxEventCenter.on('complete',callback);
-		},
-		onError:function(callback){
-			_ajaxEventCenter.on('error',callback);
-		},
-		onSend:function(callback){
-			_ajaxEventCenter.on('send',callback);
-		},
-		onStart:function(callback){
-			_ajaxEventCenter.on('start',callback);
-		},
-		onStop:function(callback){
-			_ajaxEventCenter.on('stop',callback);
-		},
-		onSuccess:function(callback){
-			_ajaxEventCenter.on('success',callback);
-		}
+        io.fire(START, { xhr: xhr });
+        xhr.open(type, s.url, s.async);
 
-			
-	});
+        // Need an extra try/catch for cross domain requests in Firefox 3
+        try {
+            // Set the correct header, if data is being sent
+            if (s.data || s.contentType) {
+                xhr.setRequestHeader('Content-Type', s.contentType);
+            }
 
-	//alias
-	S.io = S.Ajax;
+            // Set the Accepts header for the server, depending on the dataType
+            xhr.setRequestHeader('Accept', s.dataType && s.accepts[s.dataType] ?
+                s.accepts[ s.dataType ] + ", */*" :
+                s.accepts._default);
+        } catch(e) {
+        }
 
+        // Wait for a response to come back
+        xhr.onreadystatechange = function(isTimeout) {
+            // 请求中止
+            if (!xhr || xhr.readyState === 0 || isTimeout === 'abort') {
+                // Opera doesn't call onreadystatechange before this point
+                // so we simulate the call
+                if (!requestDone) {
+                    handleEvent(COMPLETE, null, xhr, ERROR, s);
+                }
+
+                requestDone = true;
+                if (xhr) {
+                    xhr.onreadystatechange = noop;
+                }
+            } else
+            // 请求成功，数据可用，或请求超时
+            if (!requestDone && xhr && (xhr.readyState === 4 || isTimeout === TIMEOUT)) {
+                requestDone = true;
+                xhr.onreadystatechange = noop;
+
+                status = isTimeout === TIMEOUT ? TIMEOUT :
+                    !xhrSuccessful(xhr) ? ERROR : SUCCESS;
+
+                // Watch for, and catch, XML document parse errors
+                try {
+                    // process the data (runs the xml through httpData regardless of callback)
+                    data = httpData(xhr, s.dataType);
+                } catch(e) {
+                    status = PARSERERR;
+                }
+
+                // Make sure that the request was successful or notmodified
+                if (status === SUCCESS) {
+                    // JSONP handles its own success callback
+                    if (!jsonp) {
+                        handleEvent(SUCCESS, data, xhr, status, s);
+                    }
+                } else {
+                    handleEvent(ERROR, data, xhr, status, s);
+                }
+
+                // Fire the complete handlers
+                handleEvent(COMPLETE, data, xhr, status, s);
+
+                if (isTimeout === TIMEOUT) {
+                    xhr.abort();
+                    io.fire(STOP, { xhr: xhr });
+                }
+
+                // Stop memory leaks
+                if (s.async) {
+                    xhr = null;
+                }
+            }
+        };
+
+        io.fire(SEND, { xhr: xhr });
+        xhr.send(type === POST ? s.data : null);
+
+        // return XMLHttpRequest to allow aborting the request etc.
+        if (!s.async) {
+            io.fire(COMPLETE, { xhr: xhr });
+        }
+        return xhr;
+    }
+
+    // 事件支持
+    S.mix(io, S.EventTarget);
+
+    // 定制各种快捷操作
+    S.mix(io, {
+
+        get: function(url, data, callback, dataType, _t) {
+            // data 参数可省略
+            if(S.isFunction(data)) {
+                dataType = callback;
+                callback = data;
+            }
+
+            io({
+                type: _t || GET,
+                url: url,
+                data: data,
+                complete: function(data, xhr, textStatus) {
+                    if (S.isFunction(callback)) callback(data, xhr, textStatus);
+                },
+                dataType: dataType
+            });
+            return this;
+        },
+
+        post: function(url, data, callback, dataType) {
+            // data 参数可省略
+            if(S.isFunction(data)) {
+                dataType = callback;
+                callback = data;
+                data = null;
+            }
+            return io.get(url, data, callback, dataType, POST);
+        },
+
+        getJSON: function(url, data, callback) {
+            // data 参数可省略
+            if(S.isFunction(data)) {
+                callback = data;
+            }
+            
+            io({
+                dataType: JSON,
+                url: url,
+                complete: function(data, xhr, textStatus) {
+                    if (S.isFunction(callback)) callback(data, xhr, textStatus);
+                },
+                data:data
+            });
+            return this;
+        }
+    });
+
+    // shortcuts
+    io.getScript = S.getScript;
+    S.ajax = S.io = io;
+    S.getJSON = io.getJSON;
+
+    //检测 xhr 是否成功
+    function xhrSuccessful(xhr) {
+        try {
+            // ref: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+            return (xhr.status >= 200 && xhr.status < 300) ||
+                // Opera returns 0 when status is 304
+                xhr.status === 304 || xhr.status === 0 || xhr.status === 1223;
+        } catch(e) {
+        }
+        return false;
+    }
+
+    function addQuery(url, params) {
+        return (url.indexOf('?') === -1 ? '?' : '&') + params;
+    }
+
+    function handleEvent(type, data, xhr, status, s) {
+        if (S.isArray(type)) {
+            S.each(type, function(t) {
+                handleEvent(t, data, xhr, status, s);
+            });
+        } else {
+            s[type](data, xhr, status);
+            io.fire(type, { xhr: xhr });
+        }
+    }
+
+    function httpData(xhr, type) {
+        var ct = xhr.getResponseHeader('content-type') || EMPTY,
+            xml = type === 'xml' || !type && ct.indexOf('xml') >= 0,
+            data = xml ? xhr.responseXML : xhr.responseText;
+
+        if (xml && data.documentElement.nodeName === PARSERERR) {
+            S.error(PARSERERR);
+        }
+
+        // The filter can actually parse the response
+        if (S.isString(data)) {
+            // Get the JavaScript object, if JSON is used.
+            if (type === JSON || !type && ct.indexOf(JSONP) >= 0) {
+                data = S.JSON.parse(data);
+            } else
+            // If the type is "script", eval it in global context
+            if (type === SCRIPT || !type && ct.indexOf('javascript') >= 0) {
+                S.globalEval(data);
+            }
+        }
+        return data;
+    }
 
 });
 
 /**
  * NOTES:
- *  2010.04
- *   - api 考虑：jQuery 的全耦合在 jQuery 对象上，ajaxComplete 等方法不优雅。
- *         YUI2 的 YAHOO.util.Connect.Get.script 层级太深，YUI3 的 io 则
- *         野心过大，KISSY 借鉴 ExtJS, 部分方法借鉴 jQuery.
  *  2010.07
  *   - 实现常用功实现常用功实现常用功实现常用功,get,post以及类jquery的jsonp，
- *			考虑是否继续实现iframe-upload和flash xdr，代码借鉴jquery-ajax，api形状借鉴yui3-io
- *			基本格式依照 callback(id,xhr,args)
+ *     考虑是否继续实现iframe-upload和flash xdr，代码借鉴jquery-ajax，api形状借鉴yui3-io
+ *     基本格式依照 callback(id,xhr,args)
  *   - 没有经过严格测试，包括jsonp里的内存泄漏的测试
- *			对xml,json的格式的回调支持是否必要？
+ *     对xml,json的格式的回调支持是否必要？
  * 2010.11
- *	 - 实现了S.io.get/post/jsonp/getJSON 
+ *   - 实现了S.io.get/post/jsonp/getJSON
  *   - 实现了onComplete/onError/onSend/onStart/onStop/onSucess的ajax状态的处理
  */

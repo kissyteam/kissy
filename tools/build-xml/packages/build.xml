@@ -25,7 +25,7 @@
             <path path="../dom/dom-pkg.js"/>
             <path path="../event/event-pkg.js"/>
             <path path="../node/node-pkg.js"/>
-            <!--<path path="../ajax/ajax-pkg.js"/>-->
+            <path path="../ajax/ajax-pkg.js"/>
             <path path="../cookie/cookie-pkg.js"/>
             <path path="../json/json-pkg.js"/>
             <path path="../anim/anim-pkg.js"/>

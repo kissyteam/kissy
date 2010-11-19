@@ -371,6 +371,14 @@
         if(S.Node('<p id="test-append2">append2 node</p>').appendTo('#test-div').attr('id') !== 'test-append2') test.fail();
     }
 
+    function test_prepend(test) {
+        if(S.one('#test-div').prepend('<p id="test-prepend">prepend node</p>').attr('id') !== 'test-div') test.fail();
+    }
+
+    function test_prependTo(test) {
+        if(S.Node('<p id="test-prepend2">prepend2 node</p>').prependTo('#test-div').attr('id') !== 'test-prepend2') test.fail();
+    }
+
     function test_query_selector_sep(test) {
         test.status = 'sep';
     }

@@ -64,12 +64,7 @@ KISSY.add("ext-box", function(S) {
             render = new Node(render);
             if (!el) {
                 el = new Node("<div>");
-                var b = render[0];
-                if (b.firstChild) {
-                    el.insertBefore(b.firstChild);
-                } else {
-                    el.appendTo(b);
-                }
+                render.prepend(el);
                 self.set("el", el);
             }
         },
