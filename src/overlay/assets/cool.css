@@ -1,5 +1,6 @@
 .ks-dialog {
     position: absolute;
+    visibility:hidden;
 }
 
 .ks-dialog .ks-contentbox {
@@ -52,4 +53,10 @@
     background-color: #000;
     opacity: 0.3;
     filter: alpha(opacity = 15);
+}
+
+.ks-ext-loading {
+    opacity: 0.3;
+    filter: alpha(opacity = 15);
+    background: #000 url("loading.gif") center center no-repeat scroll;
 }

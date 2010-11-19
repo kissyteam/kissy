@@ -31,16 +31,10 @@ KISSY.add("ext-box", function(S) {
             //容器的行内样式
         },
         width: {
-            // 宽度
-            setter: function(v) {
-                return parseInt(v) || 0;
-            }
+            // 宽度           
         },
         height: {
             // 高度
-            setter: function(v) {
-                return parseInt(v) || 0;
-            }
         },
 
         html: {
@@ -67,7 +61,7 @@ KISSY.add("ext-box", function(S) {
             var self = this,
                 render = self.get("render") || S.one(doc.body),
                 el = self.get("el");
-
+            render = new Node(render);
             if (!el) {
                 el = new Node("<div>");
                 var b = render[0];
@@ -83,7 +77,7 @@ KISSY.add("ext-box", function(S) {
         _uiSetElCls:function(cls) {
             S.log("_uiSetElCls");
             if (cls) {
-                this.get("el")[0].className = cls;
+                this.get("el").addClass(cls);
             }
         },
 
@@ -112,8 +106,10 @@ KISSY.add("ext-box", function(S) {
 
         _uiSetHtml:function(c) {
             S.log("_uiSetHtml");
-            if (c !== false)
+            if (c !== false){
                 this.get("el").html(c);
+            }
+
         },
 
         __destructor:function() {

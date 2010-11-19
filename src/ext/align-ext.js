@@ -90,7 +90,6 @@ KISSY.add("ext-align", function(S) {
         },
         _uiSetAlign:function(v) {
             S.log("_uiSetAlign");
-
             if (S.isPlainObject(v)) {
                 this.align(v.node, v.points, v.offset);
             }

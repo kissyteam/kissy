@@ -11,6 +11,7 @@ KISSY.add("overlay", function(S) {
     var Overlay = Base.create([S.Ext.Box,
         S.Ext.ContentBox,
         S.Ext.Position,
+        S.Ext.Loading,
         //ie6 支持,select bug
         UA.ie == 6 ? S.Ext.Shim : null,
         S.Ext.Align,

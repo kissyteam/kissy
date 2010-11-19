@@ -49,7 +49,9 @@ KISSY.add("ext-overlay-close", function(S) {
 
             if (!closeBtn &&
                 el) {
-                closeBtn = new Node("<a class='" + CLS_PREFIX + "close" + "'>" +
+                closeBtn = new Node("<a " +
+                    "href='#' " +
+                    "class='" + CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
                     CLS_PREFIX + "close-x" +
                     "'>X</span>" +
@@ -62,8 +64,9 @@ KISSY.add("ext-overlay-close", function(S) {
             S.log("_bindUICloseExt");
             var self = this,
                 closeBtn = self.get("closeBtn");
-            closeBtn && closeBtn.on("click", function() {
+            closeBtn && closeBtn.on("click", function(ev) {
                 self.hide();
+                ev.halt();
             });
         },
 

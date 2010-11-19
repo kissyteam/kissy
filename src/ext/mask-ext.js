@@ -70,7 +70,7 @@ KISSY.add("ext-mask", function(S) {
                 initMask();
             }
             mask.css({
-                "z-index":this.get("zIndex")
+                "z-index":this.get("zIndex")-1
             });
             num++;
             mask.show();

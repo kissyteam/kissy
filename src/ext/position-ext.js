@@ -41,7 +41,7 @@ KISSY.add("ext-position", function(S) {
             value: 9999
         },
         visible:{
-            value:false
+            value:undefined
         }
     };
 
@@ -78,10 +78,11 @@ KISSY.add("ext-position", function(S) {
                 });
         },
         _uiSetVisible:function(isVisible) {
+            if (isVisible === undefined) return;
             S.log("_uiSetVisible");
             var self = this,
                 el = self.get("el");
-            el.css("visibility", isVisible ? "" : "hidden");
+            el.css("visibility", isVisible ? "visible" : "hidden");
             self[isVisible ? "_bindKey" : "_unbindKey" ]();
             self.fire(isVisible ? "show" : "hide");
         },
