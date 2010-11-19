@@ -5782,7 +5782,7 @@ KISSY.add('attribute', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 15 18:02
+build time: Nov 18 20:18
 */
 /**
  * @module  Base
@@ -5938,10 +5938,10 @@ KISSY.add('base', function (S) {
         }
     };
     S.augment(Base, S.EventTarget, S.Attribute, {
-        renderer:function() {
-            var self = this,
-                render = self.get("render"),
-                rendered = self.get("rendered");
+        renderer:function(render) {
+            var self = this,rendered = self.get("rendered");
+            render = render || self.get("render");
+
             if (!rendered) {
                 self.renderUI(render);
                 self.bindUI();
