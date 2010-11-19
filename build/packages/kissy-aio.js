@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * @module kissy
@@ -1349,7 +1349,7 @@ build time: Nov 19 13:47
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * @module  ua
@@ -1546,7 +1546,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * @module  dom
@@ -3601,7 +3601,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * @module  event
@@ -4166,7 +4166,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * @module  node
@@ -4507,7 +4507,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /***
  * @module  ajax
@@ -4842,7 +4842,7 @@ KISSY.add('ajax', function(S, undef) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * @module  cookie
@@ -4928,7 +4928,7 @@ KISSY.add('cookie', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -5256,7 +5256,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * @module anim-easing
@@ -5911,7 +5911,7 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * @module  Attribute
@@ -6139,7 +6139,7 @@ KISSY.add('attribute', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * @module  Base
@@ -6415,7 +6415,7 @@ KISSY.add('core');
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -7495,7 +7495,7 @@ KISSY.add('sizzle', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * 数据延迟加载组件
@@ -7978,7 +7978,7 @@ KISSY.add('datalazyload', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * @module   Flash 全局静态类
@@ -8505,7 +8505,7 @@ KISSY.add('flash-embed', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * Switchable
@@ -9606,7 +9606,7 @@ KISSY.add('accordion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * KISSY Overlay
@@ -9675,7 +9675,7 @@ KISSY.add("overlay", function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * 提示补全组件
@@ -10767,7 +10767,7 @@ KISSY.add('suggest', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /**
  * @fileoverview 图片放大效果 ImageZoom.
@@ -11559,7 +11559,7 @@ KISSY.add('autorender', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 /*
  * Date Format 1.2.3

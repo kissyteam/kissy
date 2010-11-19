@@ -25,7 +25,7 @@ KISSY.add("ext-shim", function(S) {
             var self = this,el = self.get("el");
             var shim = new Node("<iframe style='position: absolute;" +
                 "border: none;" +
-                "width: 100%;" +
+                "width: expression(this.parentNode.offsetWidth);" +
                 "top: 0;" +
                 "opacity: 0;" +
                 "filter: alpha(opacity=0);" +

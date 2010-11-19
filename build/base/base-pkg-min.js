@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 13:47
+build time: Nov 19 15:43
 */
 KISSY.add("base",function(g){function h(a){for(var b=this.constructor,c,d,e=[];b;){if(d=b.ATTRS)for(c in d)d.hasOwnProperty(c)&&!this.hasAttr(c)&&this.addAttr(c,d[c]);var f=b._kissycreate;f=f&&f._exts;d=[];if(f)d=f.concat();(f=b.prototype.init)&&d.push(f);d.length&&e.push.apply(e,d.reverse());if(a&&a[l]&&b.HTML_PARSER){d=a[l];f=b.HTML_PARSER;var i=void 0;for(i in f)if(f.hasOwnProperty(i)){var j=f[i];if(g.isFunction(j))this.__set(i,j.call(this,d));else if(g.isString(j))this.__set(i,d.one(j));else g.isArray(j)&&
 j[0]&&this.__set(i,d.all(j[0]))}}b=b.superclass?b.superclass.constructor:null}if(a)for(c in a)a.hasOwnProperty(c)&&this.__set(c,a[c]);for(b=e.length-1;b>=0;b--)e[b]&&e[b].call(this,a);a&&a.autoRender&&this.renderer()}var l="srcNode",k=g.Attribute.capitalFirst;h.HTML_PARSER={};h.ATTRS={rendered:{value:false},render:{setter:function(a){if(g.isString(a))return g.one(a)}}};g.augment(h,g.EventTarget,g.Attribute,{renderer:function(a){var b=this.get("rendered");a=a||this.get("render");if(!b){this.renderUI(a);

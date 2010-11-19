@@ -9,10 +9,7 @@ KISSY.add("ext-mask", function(S) {
 
 
     function initMask() {
-        mask = new S.Node("<div class='ks-ext-mask'>");
-        var b = document.body,c = b.firstChild;
-        S.DOM.prepend(c,b);
-
+        mask = new S.Node("<div class='ks-ext-mask'>").prependTo(document.body);
         mask.css({
             "position":"absolute",
             width:"100%",
@@ -69,7 +66,7 @@ KISSY.add("ext-mask", function(S) {
                 initMask();
             }
             mask.css({
-                "z-index":this.get("zIndex")-1
+                "z-index":this.get("zIndex") - 1
             });
             num++;
             mask.show();
