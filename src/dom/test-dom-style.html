@@ -175,6 +175,8 @@
 
     function test_addStyleSheet(test) {
         DOM.addStyleSheet('#test-div { padding: 100px; color: blue }');
+        DOM.addStyleSheet('#test-div { padding: 100px; color: blue }', 'test-style');
+        DOM.addStyleSheet('#test-div { padding: 100px; color: blue }', '#test-style');
 
         if (UA.opera) {
             if (DOM.css('#test-div', 'color') !== '#0000ff') test.fail();
