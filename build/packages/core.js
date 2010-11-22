@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 18:23
 */
 /**
  * @module  ua
@@ -198,7 +198,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 18:22
 */
 /**
  * @module  dom
@@ -2253,7 +2253,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 18:22
 */
 /**
  * @module  event
@@ -2770,6 +2770,7 @@ KISSY.add('event-mouseenter', function(S) {
                             Event._handle(el, event, listeners);
                         }
                     } catch(e) {
+                        S.log(e);
                     }
                 }
             }
@@ -2818,7 +2819,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 18:23
 */
 /**
  * @module  node
@@ -3159,7 +3160,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 18:22
 */
 /***
  * @module  ajax
@@ -3494,7 +3495,7 @@ KISSY.add('ajax', function(S, undef) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 18:22
 */
 /**
  * @module  cookie
@@ -3580,7 +3581,7 @@ KISSY.add('cookie', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 18:23
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -3908,7 +3909,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 18:22
 */
 /**
  * @module anim-easing
@@ -4563,7 +4564,7 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 18:22
 */
 /**
  * @module  Attribute
@@ -4791,7 +4792,7 @@ KISSY.add('attribute', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 18:22
 */
 /**
  * @module  Base
@@ -4860,7 +4861,8 @@ KISSY.add('base', function (S) {
             if (config &&
                 config[SRC_NODE] &&
                 c.HTML_PARSER) {
-                applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
+                if (config[SRC_NODE] = S.one(config[SRC_NODE]))
+                    applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
             }
 
             c = c.superclass ? c.superclass.constructor : null;
@@ -4902,7 +4904,7 @@ KISSY.add('base', function (S) {
             d && d.apply(host);
             if (exts) {
                 for (var l = exts.length - 1; l >= 0; l--) {
-                    var d = exts[l] && exts[l].prototype.__destructor;
+                    d = exts[l] && exts[l].prototype.__destructor;
                     d && d.apply(host);
                 }
             }

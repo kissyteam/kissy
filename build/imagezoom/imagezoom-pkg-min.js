@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.5
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 18:22
 */
 KISSY.add("imagezoom",function(h,m){function k(a,b){if(!(this instanceof k))return new k(a,b);if(this.image=a=h.get(a)){k.superclass.constructor.call(this,b);this._init()}}function p(a,b){(a&&a.complete&&a.clientWidth?true:false)&&b();n.on(a,"load",b)}function q(a){return{width:a.clientWidth,height:a.clientHeight}}function l(a){return e.create('<div class="'+a+y)}function r(a,b,c){h.each(h.makeArray(a),function(d){e.width(d,b);e.height(d,c)})}function z(a,b){var c=e.create('<img src="'+a+y);b&&b.appendChild(c);
 return c}function w(a){a=h.makeArray(a);if(a.length===1)a[1]=a[0];return a}var o=document,e=h.DOM,n=h.Event,A=/^.+\.(?:jpg|png|gif)$/i,s=Math.round,B=Math.min,t=["top","right","bottom","left","inner"],y='" style="position:absolute;top:0;left:0">';h.extend(k,h.Base);k.ATTRS={type:{value:"standard"},bigImageSrc:{value:"",setter:function(a){var b=this.get("bigImageSrc");if(a&&A.test(a)&&a!==b){this._cacheBigImageSrc=b;return a}return this.get("bigImageSrc")},getter:function(a){var b;if(!a)if((b=e.attr(this.image,

@@ -7,18 +7,9 @@
     <property name="src.dir" location="."/>
 
     <target name="concat">
-        <concat destfile="overlay-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="mask.js"/>
+        <concat destfile="overlay-pkg.js" encoding="${charset}" outputencoding="${charset}">            
             <path path="overlay.js"/>
-
-            <path path="widget-popup.js"/>
-            <path path="widget-dialog.js"/>
-
-            <path path="mod-alignment.js"/>
-            <path path="mod-constrain.js"/>
-            <path path="mod-fixed.js"/>
-            <path path="mod-draggable.js"/>
-            <path path="mod-autorender.js"/>
+            <path path="dialog.js"/>
         </concat>
     </target>
 

@@ -27,6 +27,7 @@ KISSY.add("ext-position", function(S) {
         xy: {
             // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
             setter: function(v) {
+                
                 var self = this,
                     xy = S.makeArray(v);
 

@@ -1,9 +1,11 @@
-.ks-dialog {
+.ks-dialog, .ks-overlay {
     position: absolute;
-    visibility:hidden;
+    /*防止移位带来的闪烁*/
+    left: -9999px;
+    top: -9999px;
 }
 
-.ks-dialog .ks-contentbox {
+.ks-dialog .ks-contentbox,.ks-popup .ks-contentbox{
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;
 }
@@ -59,4 +61,8 @@
     opacity: 0.3;
     filter: alpha(opacity = 15);
     background: #000 url("loading.gif") center center no-repeat scroll;
+}
+
+.ke-global-loading .ks-ext-loading {
+    background-attachment: fixed;
 }

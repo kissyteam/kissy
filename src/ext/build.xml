@@ -1,0 +1,31 @@
+<project name="overlay.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../../tools/build.xml"/>
+
+    <property file="build.properties"/>
+    <property name="src.dir" location="."/>
+
+    <target name="concat">
+        <concat destfile="ext-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="align-ext.js"/>
+            <path path="box-ext.js"/>
+            <path path="close-ext.js"/>
+            <path path="constrain-ext.js"/>
+            <path path="contentbox-ext.js"/>
+            <path path="drag-ext.js"/>
+            <path path="loading-ext.js"/>
+            <path path="mask-ext.js"/>
+            <path path="position-ext.js"/>
+            <path path="shim-ext.js"/>
+            <path path="stdmod-ext.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="ext-pkg.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
+    </target>
+</project>

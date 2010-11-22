@@ -23,6 +23,8 @@ KISSY.add("ext-stdmod", function(S) {
         },
         footer:{
         },
+        bodyStyle:{
+        },
         headerContent:{
             value:false
         },
@@ -56,6 +58,11 @@ KISSY.add("ext-stdmod", function(S) {
                     this.get(part).html("");
                     this.get(part).append(v);
                 }
+            }
+        },
+        _uiSetBodyStyle:function(v) {
+            if (v !== undefined) {
+                this.get("body").css(v);
             }
         },
         _uiSetBodyContent:function(v) {

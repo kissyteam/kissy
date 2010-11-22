@@ -12,6 +12,8 @@ KISSY.add("ext-mask", function(S) {
         mask = new S.Node("<div class='ks-ext-mask'>").prependTo(document.body);
         mask.css({
             "position":"absolute",
+            left:0,
+            top:0,
             width:"100%",
             "height": S.DOM.docHeight()
         });
