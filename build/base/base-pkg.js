@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 20:39
 */
 /**
  * @module  Base
@@ -70,7 +70,8 @@ KISSY.add('base', function (S) {
             if (config &&
                 config[SRC_NODE] &&
                 c.HTML_PARSER) {
-                applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
+                if (config[SRC_NODE] = S.one(config[SRC_NODE]))
+                    applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
             }
 
             c = c.superclass ? c.superclass.constructor : null;
@@ -112,7 +113,7 @@ KISSY.add('base', function (S) {
             d && d.apply(host);
             if (exts) {
                 for (var l = exts.length - 1; l >= 0; l--) {
-                    var d = exts[l] && exts[l].prototype.__destructor;
+                    d = exts[l] && exts[l].prototype.__destructor;
                     d && d.apply(host);
                 }
             }

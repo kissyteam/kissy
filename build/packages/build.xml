@@ -47,7 +47,8 @@
             <path path="../sizzle/sizzle-pkg.js"/>
             <path path="../datalazyload/datalazyload-pkg.js"/>
             <path path="../flash/flash-pkg.js"/>
-
+            <path path="../ext/ext-pkg.js"/>
+                
             <path path="../switchable/switchable-pkg.js"/>
             <path path="../overlay/overlay-pkg.js"/>
             <path path="../suggest/suggest-pkg.js"/>

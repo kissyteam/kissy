@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 20:39
 */
 /**
  * @module  ua
@@ -196,9 +196,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 20:39
 */
 /**
  * @module  dom
@@ -1333,7 +1333,7 @@ KISSY.add('dom-style', function(S, undefined) {
         addStyleSheet: function(cssText, id) {
             var elem;
 
-            if (id) elem = S.get('#' + id);
+            if (id && (id = id.replace('#', EMPTY))) elem = S.get('#' + id);
             if (elem) return; // 仅添加一次，不重复添加
 
             elem = DOM.create('<style>', { id: id });
@@ -2251,9 +2251,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 20:39
 */
 /**
  * @module  event
@@ -2770,6 +2770,7 @@ KISSY.add('event-mouseenter', function(S) {
                             Event._handle(el, event, listeners);
                         }
                     } catch(e) {
+                        S.log(e);
                     }
                 }
             }
@@ -2816,9 +2817,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 20:39
 */
 /**
  * @module  node
@@ -3157,9 +3158,9 @@ KISSY.add('node-attach', function(S, undefined) {
     });
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 20:39
 */
 /***
  * @module  ajax
@@ -3492,9 +3493,9 @@ KISSY.add('ajax', function(S, undef) {
  *   - 实现了onComplete/onError/onSend/onStart/onStop/onSucess的ajax状态的处理
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 20:39
 */
 /**
  * @module  cookie
@@ -3578,9 +3579,9 @@ KISSY.add('cookie', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 20:39
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -3906,9 +3907,9 @@ KISSY.add('json', function (S) {
     }
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 20:39
 */
 /**
  * @module anim-easing
@@ -4561,9 +4562,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 20:39
 */
 /**
  * @module  Attribute
@@ -4789,9 +4790,9 @@ KISSY.add('attribute', function(S, undefined) {
     Attribute.capitalFirst = capitalFirst;
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 19 15:43
+build time: Nov 22 20:39
 */
 /**
  * @module  Base
@@ -4860,7 +4861,8 @@ KISSY.add('base', function (S) {
             if (config &&
                 config[SRC_NODE] &&
                 c.HTML_PARSER) {
-                applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
+                if (config[SRC_NODE] = S.one(config[SRC_NODE]))
+                    applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
             }
 
             c = c.superclass ? c.superclass.constructor : null;
@@ -4902,7 +4904,7 @@ KISSY.add('base', function (S) {
             d && d.apply(host);
             if (exts) {
                 for (var l = exts.length - 1; l >= 0; l--) {
-                    var d = exts[l] && exts[l].prototype.__destructor;
+                    d = exts[l] && exts[l].prototype.__destructor;
                     d && d.apply(host);
                 }
             }

@@ -65,7 +65,8 @@ KISSY.add('base', function (S) {
             if (config &&
                 config[SRC_NODE] &&
                 c.HTML_PARSER) {
-                applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
+                if (config[SRC_NODE] = S.one(config[SRC_NODE]))
+                    applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
             }
 
             c = c.superclass ? c.superclass.constructor : null;
@@ -107,7 +108,7 @@ KISSY.add('base', function (S) {
             d && d.apply(host);
             if (exts) {
                 for (var l = exts.length - 1; l >= 0; l--) {
-                    var d = exts[l] && exts[l].prototype.__destructor;
+                    d = exts[l] && exts[l].prototype.__destructor;
                     d && d.apply(host);
                 }
             }

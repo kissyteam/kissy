@@ -30,7 +30,7 @@ KISSY.add("ext-constrain", function(S) {
         if (!constrain) return ret;
         var el = this.get("el");
         if (constrain !== true) {
-            constrain = new Node(constrain);
+            constrain = S.one(constrain);
             ret = constrain.offset();
             S.mix(ret, {
                 maxLeft: ret.left + constrain[0].offsetWidth - el[0].offsetWidth,
@@ -52,26 +52,29 @@ KISSY.add("ext-constrain", function(S) {
     ConstrainExt.prototype = {
         _bindUIConstrain:function() {
             S.log("_bindUIConstrain");
-            var self = this;
-            self.on("beforeXChange", function(ev) {
-                var v = ev.newVal,
-                    _ConstrainExtRegion = _getConstrainRegion.call(
-                        self, self.get("constrain"));
-                if (!_ConstrainExtRegion) return;
-                if (v >= _ConstrainExtRegion.maxLeft || v <= _ConstrainExtRegion.left) return false;
-            });
 
-            self.on("beforeYChange", function(ev) {
-                var v = ev.newVal,
-                    _ConstrainExtRegion = _getConstrainRegion.call(
-                        self, self.get("constrain"));
-                if (!_ConstrainExtRegion) return;
-                if (v >= _ConstrainExtRegion.maxTop || v <= _ConstrainExtRegion.top) return false;
-            });
         },
         _renderUIConstrain:function() {
             S.log("_renderUIConstrain");
 
+        },
+        _constrainX:function(ev) {
+            var self=this;
+            var v = ev.newVal,
+                _ConstrainExtRegion = _getConstrainRegion.call(
+                    self, self.get("constrain"));
+            if (!_ConstrainExtRegion) return;
+            if (v >= _ConstrainExtRegion.maxLeft
+                || v <= _ConstrainExtRegion.left) return false;
+        },
+        _constrainY:function(ev) {
+            var self=this;
+            var v = ev.newVal,
+                _ConstrainExtRegion = _getConstrainRegion.call(
+                    self, self.get("constrain"));
+            if (!_ConstrainExtRegion) return;
+            if (v >= _ConstrainExtRegion.maxTop
+                || v <= _ConstrainExtRegion.top) return false;
         },
         _syncUIConstrain:function() {
             S.log("_syncUIConstrain");
@@ -79,9 +82,17 @@ KISSY.add("ext-constrain", function(S) {
 
         _uiSetConstrain:function(v) {
             S.log("_uiSetConstrain");
-            //this._ConstrainExtRegion = _getConstrainRegion.call(this, v);
+            var self = this;
+            if (v) {
+                self.detach("beforeXChange", self._constrainX, self);
+                self.detach("beforeYChange", self._constrainY, self);
+                self.on("beforeXChange", self._constrainX, self);
+                self.on("beforeYChange", self._constrainY, self);
+            } else {
+                self.detach("beforeXChange", self._constrainX, self);
+                self.detach("beforeYChange", self._constrainY, self);
+            }
         },
-
         __destructor:function() {
             S.log("constrain-ext __destructor");
         }

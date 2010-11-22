@@ -46,6 +46,7 @@ KISSY.add("ext-drag", function(S) {
             S.log("_uiSetDraggable");
             var self = this,d = self.__drag;
             if (v) {
+                d.detach("drag");
                 d.on("drag", self._dragExtAction, self);
             } else {
                 d.detach("drag");

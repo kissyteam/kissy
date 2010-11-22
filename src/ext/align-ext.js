@@ -50,7 +50,7 @@ KISSY.add("ext-align", function(S) {
             offset, w, h, x, y;
 
         if (node) {
-            node = new Node(node);
+            node = S.one(node);
             offset = node.offset();
             w = node[0].offsetWidth;
             h = node[0].offsetHeight;
@@ -101,22 +101,23 @@ KISSY.add("ext-align", function(S) {
          * @param {Array.<number>} offset 偏移
          */
         align: function(node, points, offset) {
+
             var self = this,
                 xy,
                 diff,
                 p1,
                 el = self.get("el"),
                 p2;
-
+            offset = offset || [0,0];
             xy = DOM.offset(el);
             // p1 是 node 上 points[0] 的 offset
             // p2 是 overlay 上 points[1] 的 offset
             p1 = _getAlignOffset(node, points[0]);
             p2 = _getAlignOffset(el, points[1]);
             diff = [p2.left - p1.left, p2.top - p1.top];
-
-            self.set("xy", [xy.left - diff[0] + (+offset[0]),
-                xy.top - diff[1] + (+offset[1])]);
+            var v = [xy.left - diff[0] + (+offset[0]),
+                xy.top - diff[1] + (+offset[1])];
+            self.set("xy", v);
         },
 
 
