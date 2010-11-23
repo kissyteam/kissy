@@ -21,7 +21,6 @@ KISSY.add('ajax', function(S, undef) {
         defaultConfig = {
             type: GET,
             url: EMPTY,
-            global: true,
             contentType: 'application/x-www-form-urlencoded',
             async: true,
             data: null,
@@ -57,12 +56,9 @@ KISSY.add('ajax', function(S, undef) {
 
     function io(s) {
         s = S.merge(defaultConfig, s);
+        if (s.data && !S.isString(s.data)) s.data = S.param(s.data);
 
         var jsonp, status = SUCCESS, data, type = s.type.toUpperCase();
-
-        if (s.data && !S.isString(s.data)) {
-            s.data = S.param(s.data);
-        }
 
         // Handle JSONP, 参照 jQuery, 保留 callback=? 的约定
         if (s.dataType === JSONP) {
@@ -102,7 +98,7 @@ KISSY.add('ajax', function(S, undef) {
                     } catch(e) {
                     }
                 }
-                handleEvent([SUCCESS, COMPLETE], data, xhr, status, s);
+                handleEvent([SUCCESS, COMPLETE], data, status, xhr, s);
             };
         }
 
@@ -112,9 +108,9 @@ KISSY.add('ajax', function(S, undef) {
 
         if (s.dataType === SCRIPT) {
             io.fire(START);
-            S.getScript(s.url, jsonp ? null : function() {
-                handleEvent([SUCCESS, COMPLETE], EMPTY, xhr, status, s);
-            });
+            S.getScript(s.url, jsonp ? function() {
+                handleEvent([SUCCESS, COMPLETE], EMPTY, status, xhr, s);
+            } : null);
             io.fire(SEND);
             return; // 结束 json/jsonp/script 的流程
         }
@@ -147,7 +143,7 @@ KISSY.add('ajax', function(S, undef) {
                 // Opera doesn't call onreadystatechange before this point
                 // so we simulate the call
                 if (!requestDone) {
-                    handleEvent(COMPLETE, null, xhr, ERROR, s);
+                    handleEvent(COMPLETE, null, ERROR, xhr, s);
                 }
 
                 requestDone = true;
@@ -175,14 +171,14 @@ KISSY.add('ajax', function(S, undef) {
                 if (status === SUCCESS) {
                     // JSONP handles its own success callback
                     if (!jsonp) {
-                        handleEvent(SUCCESS, data, xhr, status, s);
+                        handleEvent(SUCCESS, data, status, xhr, s);
                     }
                 } else {
-                    handleEvent(ERROR, data, xhr, status, s);
+                    handleEvent(ERROR, data, status, xhr, s);
                 }
 
                 // Fire the complete handlers
-                handleEvent(COMPLETE, data, xhr, status, s);
+                handleEvent(COMPLETE, data, status, xhr, s);
 
                 if (isTimeout === TIMEOUT) {
                     xhr.abort();
@@ -223,11 +219,12 @@ KISSY.add('ajax', function(S, undef) {
                 type: _t || GET,
                 url: url,
                 data: data,
-                complete: function(data, xhr, textStatus) {
-                    if (S.isFunction(callback)) callback(data, xhr, textStatus);
+                success: function(data, textStatus, xhr) {
+                    if (S.isFunction(callback)) callback(data, textStatus, xhr);
                 },
                 dataType: dataType
             });
+
             return this;
         },
 
@@ -246,16 +243,7 @@ KISSY.add('ajax', function(S, undef) {
             if(S.isFunction(data)) {
                 callback = data;
             }
-            
-            io({
-                dataType: JSON,
-                url: url,
-                complete: function(data, xhr, textStatus) {
-                    if (S.isFunction(callback)) callback(data, xhr, textStatus);
-                },
-                data:data
-            });
-            return this;
+            return io.get(url, data, callback, JSON);
         }
     });
 
@@ -277,16 +265,17 @@ KISSY.add('ajax', function(S, undef) {
     }
 
     function addQuery(url, params) {
-        return (url.indexOf('?') === -1 ? '?' : '&') + params;
+        return url + (url.indexOf('?') === -1 ? '?' : '&') + params;
     }
 
-    function handleEvent(type, data, xhr, status, s) {
+    function handleEvent(type, data, status, xhr, s) {
         if (S.isArray(type)) {
             S.each(type, function(t) {
-                handleEvent(t, data, xhr, status, s);
+                handleEvent(t, data, status, xhr, s);
             });
         } else {
-            s[type](data, xhr, status);
+            // 只调用与 status 匹配的 s.type, 比如成功时才调 s.complete
+            if(status === type) s[type](data, status, xhr);
             io.fire(type, { xhr: xhr });
         }
     }
@@ -323,8 +312,10 @@ KISSY.add('ajax', function(S, undef) {
  *     考虑是否继续实现iframe-upload和flash xdr，代码借鉴jquery-ajax，api形状借鉴yui3-io
  *     基本格式依照 callback(id,xhr,args)
  *   - 没有经过严格测试，包括jsonp里的内存泄漏的测试
- *     对xml,json的格式的回调支持是否必要？
+ *     对xml,json的格式的回调支持是否必要
  * 2010.11
  *   - 实现了S.io.get/post/jsonp/getJSON
  *   - 实现了onComplete/onError/onSend/onStart/onStop/onSucess的ajax状态的处理
+ *   - [玉伯] 在拔赤的代码基础上重构，调整了部分 public api
+ *   - 增加Jasmine单元测试
  */
