@@ -149,7 +149,11 @@ KISSY.add('dd', function(S) {
             }
             //防止 ie 莫名选择文字
             else if (document.selection) {
-                document.selection.empty();
+                try {
+                    document.selection.empty();
+                }
+                catch(e) {
+                }
             }
         },
 
