@@ -183,7 +183,7 @@ KISSY.add('base', function (S) {
                         //自动绑定事件到对应函数
                         (function(a, m) {
                             self.on("after" + capitalFirst(a) + "Change", function(ev) {
-                                self[m](ev.newVal);
+                                self[m](ev.newVal,ev);
                             });
                         })(a, m);
                     }
