@@ -58,6 +58,7 @@ KISSY.add('dd-draggable', function(S) {
                         hl.css('cursor', 'move');
                 }
             }
+
             node.on('mousedown', self._handleMouseDown, self);
         },
 
@@ -96,6 +97,7 @@ KISSY.add('dd-draggable', function(S) {
         _handleMouseDown: function(ev) {
             var self = this,
                 t = new S.Node(ev.target);
+            
             if (!self._check(t)) return;
             //chrome 阻止了 flash 点击？？
             if (!UA.webkit) {

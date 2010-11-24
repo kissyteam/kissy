@@ -19,7 +19,7 @@ KISSY.add("ext-drag", function(S) {
 
     DragExt.prototype = {
 
-        _uiSetHanlders:function(v) {
+        _uiSetHandlers:function(v) {
             S.log("_uiSetHanlders");
             if (v && v.length > 0)
                 this.__drag.set("handlers", v);

@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 20:39
+build time: Nov 24 11:33
 */
 KISSY.add("event",function(d,l){function k(a,c,e,g,j){if(d.isString(c))c=d.query(c);if(d.isArray(c)){d.each(c,function(h){r[a](h,e,g,j)});return true}if((e=d.trim(e))&&e.indexOf(y)>0){d.each(e.split(y),function(h){r[a](c,h,g,j)});return true}}function i(a,c){m(a)&&f.data(a,w,c)}function m(a){return a&&a.nodeType!==3&&a.nodeType!==8}var b=document,f=d.DOM,s=b.addEventListener?function(a,c,e,g){a.addEventListener&&a.addEventListener(c,e,!!g)}:function(a,c,e){a.attachEvent&&a.attachEvent("on"+c,e)},
 t=b.removeEventListener?function(a,c,e,g){a.removeEventListener&&a.removeEventListener(c,e,!!g)}:function(a,c,e){a.detachEvent&&a.detachEvent("on"+c,e)},w="ksEventTargetId",y=" ",z=d.now(),x={},r={EVENT_GUID:w,special:{},add:function(a,c,e,g){if(!k("add",a,c,e,g)){var j=m(a)?f.data(a,w):-1,h,o,p,q,v;if(!(j===-1||!c||!d.isFunction(e))){if(!j){i(a,j=z++);x[j]={target:a,events:{}}}o=x[j].events;if(!o[c]){h=((j=!a.isCustomEventTarget)||a._supportSpecialEvent)&&r.special[c]||{};p=function(n,u){if(!n||

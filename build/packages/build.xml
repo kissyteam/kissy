@@ -25,10 +25,10 @@
             <path path="../dom/dom-pkg.js"/>
             <path path="../event/event-pkg.js"/>
             <path path="../node/node-pkg.js"/>
-            <path path="../ajax/ajax-pkg.js"/>
-            <path path="../cookie/cookie-pkg.js"/>
             <path path="../json/json-pkg.js"/>
+            <path path="../ajax/ajax-pkg.js"/>
             <path path="../anim/anim-pkg.js"/>
+            <path path="../cookie/cookie-pkg.js"/>
             <path path="../attribute/attribute-pkg.js"/>
             <path path="../base/base-pkg.js"/>
             <footer filtering="no" trimleading="yes">
@@ -47,8 +47,7 @@
             <path path="../sizzle/sizzle-pkg.js"/>
             <path path="../datalazyload/datalazyload-pkg.js"/>
             <path path="../flash/flash-pkg.js"/>
-            <path path="../ext/ext-pkg.js"/>
-                
+
             <path path="../switchable/switchable-pkg.js"/>
             <path path="../overlay/overlay-pkg.js"/>
             <path path="../suggest/suggest-pkg.js"/>
