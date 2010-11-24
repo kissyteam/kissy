@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 KISSY.add("ajax",function(e,H){function f(a){a=e.merge(I,a);var c,d=m,g,h=a.type.toUpperCase();if(a.data&&!e.isString(a.data))a.data=e.param(a.data);if(a.dataType===x){if(h===v){if(!n.test(a.url))a.url=(a.url.indexOf("?")===-1?"?":"&")+(a.jsonp+"=?")}else if(!a.data||!n.test(a.data))a.data=(a.data?a.data+"&":r)+a.jsonp+"=?";a.dataType=s}if(a.dataType===s&&(a.data&&n.test(a.data)||n.test(a.url))){c=a.jsonpCallback||x+e.now();if(a.data)a.data=(a.data+r).replace(n,"="+c+"$1");a.url=a.url.replace(n,"="+
 c+"$1");a.dataType=y;var j=t[c];t[c]=function(k){if(e.isFunction(j))j(k);else{t[c]=H;try{delete t[c]}catch(i){}}l([m,u],k,b,d,a)}}if(a.data&&h===v)a.url=(a.url.indexOf("?")===-1?"?":"&")+a.data;if(a.dataType===y){f.fire(C);e.getScript(a.url,c?null:function(){l([m,u],r,b,d,a)});f.fire(D)}else{var o=false,b=a.xhr();f.fire(C,{xhr:b});b.open(h,a.url,a.async);try{if(a.data||a.contentType)b.setRequestHeader("Content-Type",a.contentType);b.setRequestHeader("Accept",a.dataType&&a.accepts[a.dataType]?a.accepts[a.dataType]+

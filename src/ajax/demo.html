@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>Ajax Test</title>
+<title>Ajax Demo</title>
 <script src="../../build/kissy.js"></script>
 </head>
 <body>
@@ -48,14 +48,14 @@
 
         //普通 get 请求
         S.one('#GET').on('click', function() {
-            IO.get('interface.php?t=get', function(data) {
+            IO.get('tests/interface.php?t=get', function(data) {
                 S.log('GET ' + data);
             });
         });
 
         //普通 post 请求
         S.one('#POST').on('click', function() {
-            IO.post('interface.php?t=post', {
+            IO.post('tests/interface.php?t=post', {
                 type:'post',
                 name:'jayli',
                 company:'cn.yahoo.com',
@@ -67,7 +67,7 @@
 
         // JSON
         S.one('#JSON').on('click', function(e) {
-            IO.getJSON('interface.php?callback=?', function(data) {
+            IO.getJSON('tests/interface.php?callback=?', function(data) {
                 S.log('getJSON ' + data);
             });
 
@@ -91,7 +91,7 @@
         S.one('#SYNC').on('click', function(e) {
             var str = S.io({
                 type:'get',
-                url:'interface.php?t=get',
+                url:'tests/interface.php?t=get',
                 async:false,
                 complete:function(id, o, args) {
                     //this will not exec in firefox

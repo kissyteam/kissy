@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 /**
  * @module  dom
@@ -1136,7 +1136,7 @@ KISSY.add('dom-style', function(S, undefined) {
         addStyleSheet: function(cssText, id) {
             var elem;
 
-            if (id) elem = S.get('#' + id);
+            if (id && (id = id.replace('#', EMPTY))) elem = S.get('#' + id);
             if (elem) return; // 仅添加一次，不重复添加
 
             elem = DOM.create('<style>', { id: id });

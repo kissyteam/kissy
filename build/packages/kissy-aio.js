@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:23
+build time: Nov 22 20:39
 */
 /**
  * @module kissy
@@ -69,7 +69,7 @@ build time: Nov 22 18:23
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.5',
+        version: '1.1.6',
 
         /**
          * Initializes KISSY object.
@@ -1347,9 +1347,9 @@ build time: Nov 22 18:23
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:23
+build time: Nov 22 20:39
 */
 /**
  * @module  ua
@@ -1544,9 +1544,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 /**
  * @module  dom
@@ -2681,7 +2681,7 @@ KISSY.add('dom-style', function(S, undefined) {
         addStyleSheet: function(cssText, id) {
             var elem;
 
-            if (id) elem = S.get('#' + id);
+            if (id && (id = id.replace('#', EMPTY))) elem = S.get('#' + id);
             if (elem) return; // 仅添加一次，不重复添加
 
             elem = DOM.create('<style>', { id: id });
@@ -3599,9 +3599,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 /**
  * @module  event
@@ -4165,9 +4165,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:23
+build time: Nov 22 20:39
 */
 /**
  * @module  node
@@ -4506,9 +4506,9 @@ KISSY.add('node-attach', function(S, undefined) {
     });
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 /***
  * @module  ajax
@@ -4841,9 +4841,9 @@ KISSY.add('ajax', function(S, undef) {
  *   - 实现了onComplete/onError/onSend/onStart/onStop/onSucess的ajax状态的处理
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 /**
  * @module  cookie
@@ -4927,9 +4927,9 @@ KISSY.add('cookie', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:23
+build time: Nov 22 20:39
 */
 /**
  * from http://www.JSON.org/json2.js
@@ -5255,9 +5255,9 @@ KISSY.add('json', function (S) {
     }
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 /**
  * @module anim-easing
@@ -5910,9 +5910,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 /**
  * @module  Attribute
@@ -6138,9 +6138,9 @@ KISSY.add('attribute', function(S, undefined) {
     Attribute.capitalFirst = capitalFirst;
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 /**
  * @module  Base
@@ -6415,9 +6415,9 @@ KISSY.add('base', function (S) {
 
 KISSY.add('core');
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:23
+build time: Nov 22 20:39
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -7495,9 +7495,9 @@ KISSY.add('sizzle', function(S) {
 })();
 
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 /**
  * 数据延迟加载组件
@@ -7978,9 +7978,9 @@ KISSY.add('datalazyload', function(S, undefined) {
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 /**
  * @module   Flash 全局静态类
@@ -8505,9 +8505,9 @@ KISSY.add('flash-embed', function(S) {
  * 								
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 /**
  * align extension
@@ -9520,9 +9520,9 @@ KISSY.add("ext-stdmod", function(S) {
     S.Ext.StdMod = StdMod;
 
 });/*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:23
+build time: Nov 22 20:39
 */
 /**
  * Switchable
@@ -10621,9 +10621,9 @@ KISSY.add('accordion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:23
+build time: Nov 22 20:39
 */
 /**
  * KISSY Overlay
@@ -10736,9 +10736,9 @@ KISSY.add('dialog', function(S) {
 
 
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:23
+build time: Nov 22 20:39
 */
 /**
  * 提示补全组件
@@ -11828,9 +11828,9 @@ KISSY.add('suggest', function(S, undefined) {
  * 2010-08-04 更新： 去掉对 yahoo-dom-event 的依赖，仅依赖 ks-core. 调整了部分 public api, 扩展更容易了。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 /**
  * @fileoverview 图片放大效果 ImageZoom.
@@ -12620,9 +12620,9 @@ KISSY.add('autorender', function(S) {
 
 }, { host: 'imagezoom' } );
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 /*
  * Date Format 1.2.3

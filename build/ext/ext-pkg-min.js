@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 18:22
+build time: Nov 22 20:39
 */
 KISSY.add("ext-align",function(c){function e(){this.on("bindUI",this._bindUIAlign,this);this.on("renderUI",this._renderUIAlign,this);this.on("syncUI",this._syncUIAlign,this)}function f(a,d){var g=d.charAt(0),i=d.charAt(1),h,j,k,l;if(a){a=c.one(a);h=a.offset();j=a[0].offsetWidth;k=a[0].offsetHeight}else{h={left:b.scrollLeft(),top:b.scrollTop()};j=b.viewportWidth();k=b.viewportHeight()}l=h.left;h=h.top;if(g==="c")h+=k/2;else if(g==="b")h+=k;if(i==="c")l+=j/2;else if(i==="r")l+=j;return{left:l,top:h}}
 c.namespace("Ext");var b=c.DOM;c.mix(e,{TL:"tl",TC:"tc",TR:"tr",CL:"cl",CC:"cc",CR:"cr",BL:"bl",BC:"bc",BR:"br"});e.ATTRS={align:{}};e.prototype={_bindUIAlign:function(){},_renderUIAlign:function(){},_syncUIAlign:function(){},_uiSetAlign:function(a){c.isPlainObject(a)&&this.align(a.node,a.points,a.offset)},align:function(a,d,g){var i,h=this.get("el");g=g||[0,0];i=b.offset(h);a=f(a,d[0]);d=f(h,d[1]);d=[d.left-a.left,d.top-a.top];this.set("xy",[i.left-d[0]+ +g[0],i.top-d[1]+ +g[1]])},center:function(a){this.set("align",
