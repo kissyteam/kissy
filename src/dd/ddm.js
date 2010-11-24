@@ -83,7 +83,8 @@ KISSY.add('dd', function(S) {
             self.set('activeDrag', drag);
 
             //真正开始移动了才激活垫片
-            self._activeShim();
+            if (drag.get("shim"))
+                self._activeShim();
             drag._start();
         },
 

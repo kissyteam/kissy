@@ -4,7 +4,7 @@
  */
 KISSY.add('dd-draggable', function(S) {
 
-    var UA = S.UA,Node = S.Node;
+    var UA = S.UA;
 
     /*
      拖放纯功能类
@@ -22,6 +22,13 @@ KISSY.add('dd-draggable', function(S) {
             setter:function(v) {
                 return S.one(v);
             }
+        },
+
+        /**
+         * 是否需要遮罩跨越iframe
+         */
+        shim:{
+            value:true
         },
 
         /**
@@ -97,7 +104,7 @@ KISSY.add('dd-draggable', function(S) {
         _handleMouseDown: function(ev) {
             var self = this,
                 t = new S.Node(ev.target);
-            
+
             if (!self._check(t)) return;
             //chrome 阻止了 flash 点击？？
             if (!UA.webkit) {
