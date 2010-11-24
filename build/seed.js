@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 22 20:39
+build time: Nov 24 19:17
 */
 /**
  * @module kissy
@@ -1252,18 +1252,22 @@ build time: Nov 22 20:39
             }
             if (charset) node.charset = charset;
 
-            if (S.isFunction(success)) {
-                if (isCSS) {
-                    success.call(node);
-                } else {
-                    scriptOnload(node, function() {
-                        if (timer) {
-                            timer.cancel();
-                            timer = undefined;
-                        }
-                        success.call(node);
-                    });
-                }
+            if (isCSS) {
+                S.isFunction(success) && success.call(node);
+            } else {
+                scriptOnload(node, function() {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
+
+                    S.isFunction(success) && success.call(node);
+
+                    // remove script
+                    if (head && node.parentNode) {
+                        head.removeChild(node);
+                    }
+                });
             }
 
             if (S.isFunction(error)) {

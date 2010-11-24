@@ -349,18 +349,22 @@
             }
             if (charset) node.charset = charset;
 
-            if (S.isFunction(success)) {
-                if (isCSS) {
-                    success.call(node);
-                } else {
-                    scriptOnload(node, function() {
-                        if (timer) {
-                            timer.cancel();
-                            timer = undefined;
-                        }
-                        success.call(node);
-                    });
-                }
+            if (isCSS) {
+                S.isFunction(success) && success.call(node);
+            } else {
+                scriptOnload(node, function() {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
+
+                    S.isFunction(success) && success.call(node);
+
+                    // remove script
+                    if (head && node.parentNode) {
+                        head.removeChild(node);
+                    }
+                });
             }
 
             if (S.isFunction(error)) {
