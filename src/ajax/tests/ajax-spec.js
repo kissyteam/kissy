@@ -178,7 +178,7 @@ describe('ajax', function() {
         it('当 dataType 不为 jsonp, url 参数跨域时，不触发回调', function() {
 
             try {
-                $.get('http://google.com/', function() {
+                IO.get('http://google.com/', function() {
                     expect('此处').toBe('不运行');
                 });
             } catch(e) {
@@ -216,7 +216,7 @@ describe('ajax', function() {
         it('getScript 方式时，能正确设置 callback 里的 this', function() {
             var ok = false;
 
-            $.get('interface.php?t=get&dataType=script', function() {
+            IO.get('interface.php?t=get&dataType=script', function() {
                 ok = true;
                 expect(this.dataType).toBe('script');
             }, 'script');
@@ -225,15 +225,25 @@ describe('ajax', function() {
                 return ok;
             });
         });
+
+        it('能正确获取返回值', function() {
+
+            var xhr = IO.get('interface.php?t=get');
+            expect('onreadystatechange' in xhr).toBe(true);
+
+            // 注：jQuery 里，不跨域时，jsonp 返回 xhr. 跨域时，返回 void
+            var scriptEl = IO.jsonp('interface.php?t=get');
+            expect('setAttribute' in scriptEl).toBe(true);
+        });
     });
 
     describe('events', function() {
 
-        it('能正确触发 start/send/success/complete 事件，并获取到参数数据', function() {
+        it('能正确触发 start/send/success/complete/end 事件，并获取到参数数据', function() {
             var ok = false;
 
             runs(function() {
-                S.each(['start', 'send', 'success', 'complete'], function(type) {
+                S.each(['start', 'send', 'success', 'complete', 'end'], function(type) {
                     IO.on(type, function(ev) {
                         expect(ev.ajaxConfig).not.toBe(undefined);
                         expect(ev.type).toBe(type);

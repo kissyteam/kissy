@@ -58,7 +58,7 @@ KISSY.add('ajax', function(S, undef) {
         if (c.data && !S.isString(c.data)) c.data = S.param(c.data);
         c.context = c.context || c;
 
-        var jsonp, status = SUCCESS, data, type = c.type.toUpperCase();
+        var jsonp, status = SUCCESS, data, type = c.type.toUpperCase(), scriptEl;
 
         // handle JSONP
         if (c.dataType === JSONP) {
@@ -91,11 +91,11 @@ KISSY.add('ajax', function(S, undef) {
         if (c.dataType === SCRIPT) {
             fire(START, c);
             // jsonp 有自己的回调处理
-            S.getScript(c.url, jsonp ? null : function() {
+            scriptEl = S.getScript(c.url, jsonp ? null : function() {
                 handleEvent([SUCCESS, COMPLETE], EMPTY, status, xhr, c);
             });
             fire(SEND, c);
-            return; // 结束 json/jsonp/script 的流程
+            return scriptEl;
         }
 
 
@@ -187,12 +187,12 @@ KISSY.add('ajax', function(S, undef) {
 
         get: function(url, data, callback, dataType, _t) {
             // data 参数可省略
-            if(S.isFunction(data)) {
+            if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
             }
 
-            io({
+            return io({
                 type: _t || GET,
                 url: url,
                 data: data,
@@ -201,8 +201,6 @@ KISSY.add('ajax', function(S, undef) {
                 },
                 dataType: dataType
             });
-
-            return this;
         },
 
         post: function(url, data, callback, dataType) {
@@ -224,11 +222,11 @@ KISSY.add('ajax', function(S, undef) {
 
     // shortcuts
     io.getScript = S.getScript;
-    S.ajax = io.ajax = io;
+    S.io = S.ajax = io.ajax = io;
     S.jsonp = io.jsonp;
     S.IO = io;
     // 所有方法在 IO 下都可调 IO.ajax/get/post/getScript/jsonp
-    // S 下有便捷入口 S.ajax/getScript/jsonp
+    // S 下有便捷入口 S.io/S.ajax/getScript/jsonp
 
     //检测 xhr 是否成功
     function xhrSuccessful(xhr) {
@@ -298,7 +296,7 @@ KISSY.add('ajax', function(S, undef) {
  *   - 没有经过严格测试，包括jsonp里的内存泄漏的测试
  *     对xml,json的格式的回调支持是否必要
  * 2010.11
- *   - 实现了S.io.get/post/jsonp/getJSON
+ *   - 实现了get/post/jsonp/getJSON
  *   - 实现了onComplete/onError/onSend/onStart/onStop/onSucess的ajax状态的处理
  *   - [玉伯] 在拔赤的代码基础上重构，调整了部分 public api
  *   - [玉伯] 增加部分 Jasmine 单元测试
