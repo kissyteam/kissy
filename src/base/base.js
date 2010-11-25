@@ -2,7 +2,7 @@
  * @module  Base
  * @author  lifesinger@gmail.com  , 承玉<yiminghe@gmail.com>
  */
-KISSY.add('base', function (S) {
+KISSY.add('base' , function (S) {
     var UI_SET = "_uiSet",
         SRC_NODE = "srcNode",
         capitalFirst = S.Attribute.capitalFirst;
