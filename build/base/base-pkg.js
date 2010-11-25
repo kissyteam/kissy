@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 22 20:39
+build time: ${build.time}
 */
 /**
  * @module  Base
@@ -188,7 +188,7 @@ KISSY.add('base', function (S) {
                         //自动绑定事件到对应函数
                         (function(a, m) {
                             self.on("after" + capitalFirst(a) + "Change", function(ev) {
-                                self[m](ev.newVal);
+                                self[m](ev.newVal,ev);
                             });
                         })(a, m);
                     }

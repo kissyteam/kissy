@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 22 20:39
+build time: ${build.time}
 */
 /**
  * @module  ua
@@ -196,9 +196,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 22 20:39
+build time: ${build.time}
 */
 /**
  * @module  dom
@@ -2251,9 +2251,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 25 13:48
+build time: ${build.time}
 */
 /**
  * @module  event
@@ -2820,9 +2820,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 25 13:48
+build time: ${build.time}
 */
 /**
  * @module  node
@@ -3169,9 +3169,9 @@ KISSY.add('node-attach', function(S, undefined) {
     }
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 25 10:50
+build time: ${build.time}
 */
 /*
     http://www.JSON.org/json2.js
@@ -3675,9 +3675,9 @@ KISSY.add('json', function (S) {
     };
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 22:56
+build time: ${build.time}
 */
 /***
  * @module  ajax
@@ -3739,7 +3739,7 @@ KISSY.add('ajax', function(S, undef) {
         if (c.data && !S.isString(c.data)) c.data = S.param(c.data);
         c.context = c.context || c;
 
-        var jsonp, status = SUCCESS, data, type = c.type.toUpperCase();
+        var jsonp, status = SUCCESS, data, type = c.type.toUpperCase(), scriptEl;
 
         // handle JSONP
         if (c.dataType === JSONP) {
@@ -3772,11 +3772,11 @@ KISSY.add('ajax', function(S, undef) {
         if (c.dataType === SCRIPT) {
             fire(START, c);
             // jsonp 有自己的回调处理
-            S.getScript(c.url, jsonp ? null : function() {
+            scriptEl = S.getScript(c.url, jsonp ? null : function() {
                 handleEvent([SUCCESS, COMPLETE], EMPTY, status, xhr, c);
             });
             fire(SEND, c);
-            return; // 结束 json/jsonp/script 的流程
+            return scriptEl;
         }
 
 
@@ -3868,12 +3868,12 @@ KISSY.add('ajax', function(S, undef) {
 
         get: function(url, data, callback, dataType, _t) {
             // data 参数可省略
-            if(S.isFunction(data)) {
+            if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
             }
 
-            io({
+            return io({
                 type: _t || GET,
                 url: url,
                 data: data,
@@ -3882,8 +3882,6 @@ KISSY.add('ajax', function(S, undef) {
                 },
                 dataType: dataType
             });
-
-            return this;
         },
 
         post: function(url, data, callback, dataType) {
@@ -3905,11 +3903,11 @@ KISSY.add('ajax', function(S, undef) {
 
     // shortcuts
     io.getScript = S.getScript;
-    S.ajax = io.ajax = io;
+    S.io = S.ajax = io.ajax = io;
     S.jsonp = io.jsonp;
     S.IO = io;
     // 所有方法在 IO 下都可调 IO.ajax/get/post/getScript/jsonp
-    // S 下有便捷入口 S.ajax/getScript/jsonp
+    // S 下有便捷入口 S.io/S.ajax/getScript/jsonp
 
     //检测 xhr 是否成功
     function xhrSuccessful(xhr) {
@@ -3979,16 +3977,16 @@ KISSY.add('ajax', function(S, undef) {
  *   - 没有经过严格测试，包括jsonp里的内存泄漏的测试
  *     对xml,json的格式的回调支持是否必要
  * 2010.11
- *   - 实现了S.io.get/post/jsonp/getJSON
+ *   - 实现了get/post/jsonp/getJSON
  *   - 实现了onComplete/onError/onSend/onStart/onStop/onSucess的ajax状态的处理
  *   - [玉伯] 在拔赤的代码基础上重构，调整了部分 public api
  *   - [玉伯] 增加部分 Jasmine 单元测试
  *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 22 20:39
+build time: ${build.time}
 */
 /**
  * @module anim-easing
@@ -4641,9 +4639,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 25 11:20
+build time: ${build.time}
 */
 /**
  * @module  cookie
@@ -4726,9 +4724,9 @@ KISSY.add('cookie', function(S) {
  *     独立成静态工具类的方式更优。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 22 20:39
+build time: ${build.time}
 */
 /**
  * @module  Attribute
@@ -4954,9 +4952,9 @@ KISSY.add('attribute', function(S, undefined) {
     Attribute.capitalFirst = capitalFirst;
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 22 20:39
+build time: ${build.time}
 */
 /**
  * @module  Base
@@ -5143,7 +5141,7 @@ KISSY.add('base', function (S) {
                         //自动绑定事件到对应函数
                         (function(a, m) {
                             self.on("after" + capitalFirst(a) + "Change", function(ev) {
-                                self[m](ev.newVal);
+                                self[m](ev.newVal,ev);
                             });
                         })(a, m);
                     }
