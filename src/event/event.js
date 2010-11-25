@@ -74,7 +74,7 @@ KISSY.add('event', function(S, undefined) {
 
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
-                        event = new S.EventObject(target, event, type);
+                        event = new S.EventObject(target, event, type, this);
                         if (S.isPlainObject(eventData)) {
                             S.mix(event, eventData);
                         }
@@ -167,8 +167,8 @@ KISSY.add('event', function(S, undefined) {
 
             var ret, i = 0, len = listeners.length, listener, scope;
 
-            // 让 nodelist 等集合，等自定义 scope
-            if(target._getScope) scope = target._getScope(this);
+            // 让 nodelist 等集合，能自定义 scope
+            if(target.isCustomEventTarget && target.item) scope = target.item(this);
 
             for (; i < len; ++i) {
                 listener = listeners[i];

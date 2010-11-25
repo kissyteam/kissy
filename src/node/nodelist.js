@@ -5,7 +5,8 @@
 KISSY.add('nodelist', function(S) {
 
     var DOM = S.DOM,
-        AP = Array.prototype;
+        AP = Array.prototype,
+        isElementNode = DOM._isElementNode;
 
     /**
      * The NodeList class provides a wrapper for manipulating DOM NodeList.
@@ -28,13 +29,26 @@ KISSY.add('nodelist', function(S) {
         length: 0,
 
         /**
-         * Retrieves the Node instance at the given index
+         * 根据 index 或 DOMElement 获取对应的 KSNode
          */
         item: function(index) {
-            var ret = null;
-            if(DOM._isElementNode(this[index])) {
+            var ret = null, i, len;
+
+            // 找到 DOMElement 对应的 index
+            if (isElementNode(index)) {
+                for (i = 0, len = this.length; i < len; i++) {
+                    if (index === this[i]) {
+                        index = i;
+                        break;
+                    }
+                }
+            }
+
+            // 转换为 KSNode
+            if(isElementNode(this[index])) {
                 ret = new S.Node(this[index]);
             }
+
             return ret;
         },
 

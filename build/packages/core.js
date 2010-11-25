@@ -2331,7 +2331,7 @@ KISSY.add('event', function(S, undefined) {
 
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
-                        event = new S.EventObject(target, event, type);
+                        event = new S.EventObject(target, event, type, this);
                         if (S.isPlainObject(eventData)) {
                             S.mix(event, eventData);
                         }
@@ -2425,7 +2425,7 @@ KISSY.add('event', function(S, undefined) {
             var ret, i = 0, len = listeners.length, listener, scope;
 
             // 让 nodelist 等集合，等自定义 scope
-            if(target._getScope) scope = target._getScope(this);
+            if(target._getScopeNode) scope = target._getScopeNode(this);
 
             for (; i < len; ++i) {
                 listener = listeners[i];
@@ -2523,7 +2523,7 @@ KISSY.add('event-object', function(S, undefined) {
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
      */
-    function EventObject(currentTarget, domEvent, type) {
+    function EventObject(currentTarget, domEvent, type, currentEl) {
         var self = this;
         self.currentTarget = currentTarget;
         self.originalEvent = domEvent || { };
@@ -2540,6 +2540,12 @@ KISSY.add('event-object', function(S, undefined) {
         // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
         self.currentTarget = currentTarget;
         self.fixed = true;
+
+        // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
+        if(currentTarget.isCustomEventTarget) {
+            if(currentTarget._getScopeNode) currentTarget = currentTarget._getScopeNode(currentEl);
+            self.target = self.currentTarget = currentTarget;
+        }
     }
 
     S.augment(EventObject, {
@@ -3159,7 +3165,7 @@ KISSY.add('node-attach', function(S, undefined) {
     });
 
     // 使得 Y.all('..').on('click', function(ev) { 这里的 this 能指向对应的 Node })
-    NLP._getScope = function(el) {
+    NLP._getScopeNode = function(el) {
         for(var i = 0, len = this.length; i < len; i++) {
             if(el === this[i]) {
                 return new S.Node(this[i]);
