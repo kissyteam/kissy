@@ -1,6 +1,6 @@
 /**
  * loading mask support for overlay
- * @author:yiminghe@gmail.com
+ * @author:承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-loading", function(S) {
     S.namespace("Ext");

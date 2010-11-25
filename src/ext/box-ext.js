@@ -1,6 +1,6 @@
 /**
  * basic box support for component
- * @author:yiminghe@gmail.com
+ * @author:承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-box", function(S) {
     S.namespace("Ext");

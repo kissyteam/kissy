@@ -1,3 +1,7 @@
+/**
+ * mask extension for kissy
+ * @author:承玉<yiminghe@gmail.com>
+ */
 KISSY.add("ext-mask", function(S) {
     S.namespace("Ext");
     /**
