@@ -2,6 +2,427 @@ describe('ajax', function() {
 
     var S = KISSY, IO = S.IO, JSON = S.JSON;
 
+	describe('同步请求的test case',function(){
+
+		it('get 同步加载,等待2秒钟继续执行',function(){
+
+            var str = S.ajax({
+                type:'get',
+                url:'interface.php?sleep=2',
+                async:false,
+                success: function(data) {
+                    S.log(data);
+                }
+            }).responseText;
+			expect(typeof str).toBe('string');
+			var o = JSON.parse(str);
+			expect(o['name']).toBe('test');
+			
+		});
+
+		it('post 同步加载,等待2秒钟继续执行',function(){
+
+            var str = S.ajax({
+                type:'post',
+                url:'interface.php?sleep=2',
+                async:false,
+				data:{
+					myparam:'taobao'
+				},
+                success: function(data) {
+                    S.log(data);
+                }
+            }).responseText;
+			expect(typeof str).toBe('string');
+			var o = JSON.parse(str);
+			expect(o['myparam']).toBe('taobao');
+			
+		});
+		
+		
+	});
+
+	describe('jsonp',function(){
+
+		it('请求错误的jsonp,不触发回调',function(){
+			IO.jsonp('');
+			IO.jsonp();
+			IO.jsonp(null);
+			expect('此处会运行').toBe('此处会运行');
+			
+			
+		});
+
+		it('自定义callback',function(){
+			var ok = false;
+			runs(function(){
+				window['customCallback'] = function(data){
+					ok = true;
+					expect(typeof data).toBe('object');
+					expect(data.callback).toBe('customCallback');
+
+				};
+				IO.getScript('interface.php?callback=customCallback');
+			});
+
+			waitsFor(function(){
+				return ok;
+			});
+			
+		});
+		it('自定义callback',function(){
+			var ok = false;
+			runs(function(){
+				window['customCallback'] = function(data){
+					ok = true;
+					expect(typeof data).toBe('object');
+					expect(data.callback).toBe('customCallback');
+
+				};
+				IO.getScript('interface.php?callback=customCallback');
+			});
+
+			waitsFor(function(){
+				return ok;
+			});
+			
+		});
+
+		it('自定义callbackName',function(){
+			var ok = false;
+			runs(function(){
+				IO({
+					url:'interface.php?t=get',
+					success: function(data, textStatus, xhr) {
+						ok = true;
+						expect(typeof data).toBe('object');
+					},
+					dataType:'jsonp',
+					jsonp:'customCallback'
+				});
+				
+			});
+
+			waitsFor(function(){
+				return ok;
+			});
+			
+		});
+		it('不带参数请求jsonp',function(){
+			var ok = false;
+			runs(function(){
+				IO.jsonp('interface.php',function(data){
+					ok = true;
+					expect(typeof data).toBe('object');
+					
+				});
+			});
+
+			waitsFor(function(){
+				return ok;
+			});
+			
+		});
+
+		it('带参数提交jsonp，获取回调参数',function(){
+
+            var scriptEl = IO.jsonp('interface.php?sleep=0',{
+				myparam:'taobao'
+			},function(data){
+				expect(typeof data).toBe('object');
+				var o = data;
+                expect(o).not.toBe(undefined);
+                expect(o['myparam']).toBe('taobao');
+				
+			});
+			
+			//等待回调执行后执行这里
+            expect('setAttribute' in scriptEl).toBe(true);
+			
+		});
+
+		it('404/301时，不触发回调',function(){
+
+			IO.jsonp('404.php',function(){
+                expect('此处').toBe('不运行');
+			});
+			
+            waits(300);
+		});
+
+		
+		
+	});
+
+
+	describe('post',function(){
+
+		it('能正确发起post 请求，无参数,正确获取回调参数',function(){
+			var ok = false;
+			IO.post('interface.php?t=post',function(data){
+				ok = true;
+				var o = JSON.parse(data);
+                expect(o).not.toBe(undefined);
+                expect(o['name']).toBe('test');
+			});
+
+			waitsFor(function(){
+				return ok;
+			});
+			
+			
+		});
+
+
+		it('能正确发起 post 请求, 参数为json，并正确获取参数',function(){
+			var ok = false;
+            IO.post('interface.php?t=post', {
+                type:'post',
+                name:'test',
+                company:'www.taobao.com',
+				exp:'>,?/\%."`~'
+            }, function(data,textStatus,xhr) {
+				ok = true;
+				var o = JSON.parse(data);
+                expect(o).not.toBe(undefined);
+                expect(o['name']).toBe('test');
+                expect(o['company']).toBe('www.taobao.com');
+
+                expect(textStatus).toBe('success');
+                expect(xhr.responseText).toBe(data);
+            });
+			waitsFor(function(){
+				return ok;
+			});
+			
+			
+		});
+
+		it('能正确发起 post 请求 参数为string，并正确获取参数',function(){
+			var ok = false;
+            IO.post('interface.php?t=post', 'name=test&company=www.taobao.com&exp=>,?/\%."`~',function(data,textStatus,xhr) {
+				ok = true;
+				var o = JSON.parse(data);
+                expect(o).not.toBe(undefined);
+                expect(o['name']).toBe('test');
+                expect(o['company']).toBe('www.taobao.com');
+
+                expect(textStatus).toBe('success');
+                expect(xhr.responseText).toBe(data);
+            });
+			waitsFor(function(){
+				return ok;
+			});
+			
+		});
+
+		it('正确处理 dataType 为 json 的情况',function(){
+            var ok, o;
+
+            runs(function() {
+                IO.post('interface.php?t=post',function(data) {
+                    ok = true;
+                    o = data;
+                }, 'json');
+            });
+
+            waitsFor(function() {
+                return ok;
+            });
+
+            runs(function() {
+                expect(typeof o).toBe('object');
+                expect(o['name']).toBe('test');
+            });
+			
+		});
+
+		it('json 参数 可以覆盖url参数',function(){
+			var ok = false;
+			IO.post('interface.php?t=post&foo=sk1',{
+				foo:'sk2'	
+			},function(data){
+				ok = true;
+                expect(typeof data).toBe('object');
+				expect(data['foo']).toBe('sk2');
+			},'json');
+			
+			waitsFor(function(){
+				return ok;
+			});
+			
+		});
+		it('正确处理 dataType 为 jsonp 的情况',function(){
+            var ok, o;
+
+            runs(function() {
+                ok = false;
+
+                // 注：此处的处理方式和get带jsonp的处理是一样的,不管post还是get，只要带参数jsonp，就用getScript来处理
+                IO.post('interface.php', function(data) {
+                    ok = true;
+                    o = data;
+                }, 'jsonp');
+            });
+
+            waitsFor(function() {
+                return ok;
+            });
+
+            runs(function() {
+                expect(typeof o).toBe('object');
+                expect(o['name']).toBe('test');
+            });
+			
+			
+		});
+		it('正确处理 dataType 为 script 的情况',function(){
+            var ok = false;
+
+            runs(function() {
+                // 这里和get的处理一致
+                IO.post('interface.php?type=post&dataType=script', function(data) {
+                    ok = true;
+					expect(data).toBe("");
+                }, 'script');
+            });
+
+            waitsFor(function() {
+                return ok;
+            });
+
+            runs(function() {
+                expect(window['global_script_test']).toBe(500);
+            });
+			
+			
+		});
+		it('正确处理 dataType 为 xml 的情况,回调参数为xml对象',function(){
+            var ok = false, o;
+
+            runs(function() {
+				
+				//这里'xml'的参数可以省略
+                IO.post('xml.php', function(data) {
+                    ok = true;
+                    o = data;
+                },'xml');//'xml'不可以写成'json'?
+            });
+
+            waitsFor(function() {
+                return ok;
+            });
+
+            runs(function() {
+                expect(o.childNodes.length > 0).toBe(true);
+            });
+			
+		});
+		//TODO , 暂不支持
+		/*
+		it('正确处理 dataType 为 xml 的情况,回调参数为json对象',function(){
+
+		});
+		*/
+		it('能正确处理 dataType 为 html 和 text 的情况',function(){
+            var ok, o;
+
+            runs(function() {
+            	ok = false;
+
+                IO.post('test.html', function(data) {
+                    ok = true;
+                    o = data;
+                });
+            });
+
+            waitsFor(function() {
+                return ok;
+            });
+
+            runs(function() {
+                expect(o.indexOf('<!doctype')).toBe(0);
+            });
+			
+		});
+		it('当请求为404/301时，不触发回调',function(){
+			
+            IO.post('404.php', function() {
+                expect('此处').toBe('不运行');
+            });
+
+            IO.post('301.php', function() {
+                expect('此处').toBe('不运行');
+            });
+
+            waits(300);
+			
+		});
+		it('当 dataType 不为 jsonp, url 参数跨域时，不触发回调',function(){
+            try {
+                IO.post('http://www.g.cn/', function() {
+                    expect('此处').toBe('不运行');
+                });
+            } catch(e) {
+                // IE 会抛 Access is denied 错误，是正确的。
+            }
+
+            waits(300);
+		});
+        it('当 url 参数非法时，忽略请求，不抛异常',function(){
+            // 这里的处理和get一致 
+            try {
+                IO.post('');
+                IO.post();
+                IO.post(null);
+                expect('此处会运行').toBe('此处会运行');
+            } catch(ex) {
+                expect('此处').toBe('不会运行');
+            }
+			
+		});
+
+        it('xhr 方式时，能正确设置 callback 里的 this',function(){
+			
+            var ok = false;
+
+            IO.post('interface.php', function() {
+                ok = true;
+                expect(this.type).toBe('POST');
+            });
+
+            waitsFor(function() {
+                return ok;
+            });
+			
+		});
+        it('getScript 方式时，能正确设置 callback 里的 this',function(){
+			var ok = false;
+
+            IO.post('interface.php?t=get&dataType=script', function() {
+                ok = true;
+                expect(this.dataType).toBe('script');
+            }, 'script');
+
+            waitsFor(function() {
+                return ok;
+            });
+
+		});
+		it('能正确获取返回值',function(){
+            var xhr = IO.post('interface.php');
+            expect('onreadystatechange' in xhr).toBe(true);
+
+            // 注：jQuery 里，不跨域时，jsonp 返回 xhr. 跨域时，返回 void
+            var scriptEl = IO.jsonp('interface.php');
+            expect('setAttribute' in scriptEl).toBe(true);
+			
+			
+		});
+		
+		
+	});
+
     describe('get', function() {
 
         it('能正确获取 callback 参数', function() {
@@ -23,6 +444,7 @@ describe('ajax', function() {
                 return ok;
             });
         });
+
 
         it('能正确处理 data 参数', function() {
             var ok;
@@ -145,7 +567,7 @@ describe('ajax', function() {
             var ok, o;
 
             runs(function() {
-                ok = false;
+            	ok = false;
 
                 IO.get('test.html', function(data) {
                     ok = true;

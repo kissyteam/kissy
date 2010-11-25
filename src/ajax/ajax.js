@@ -215,6 +215,7 @@ KISSY.add('ajax', function(S, undef) {
         jsonp: function(url, data, callback) {
             if(S.isFunction(data)) {
                 callback = data;
+				data = null;//占位符
             }
             return io.get(url, data, callback, JSONP);
         }
