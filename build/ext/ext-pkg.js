@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * align extension
@@ -147,7 +147,7 @@ KISSY.add("ext-align", function(S) {
 
 });/**
  * basic box support for component
- * @author:yiminghe@gmail.com
+ * @author:承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-box", function(S) {
     S.namespace("Ext");
@@ -267,7 +267,7 @@ KISSY.add("ext-box", function(S) {
     S.Ext.Box = BoxExt;
 });/**
  * close extension for kissy dialog
- * @author:yiminghe@gmail.com
+ * @author:承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-overlay-close", function(S) {
     S.namespace("Ext");
@@ -346,7 +346,11 @@ KISSY.add("ext-overlay-close", function(S) {
     };
     S.Ext.Close = CloseExt;
 
-});KISSY.add("ext-constrain", function(S) {
+});/**
+ * constrain extension for kissy
+ * @author:承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ */
+KISSY.add("ext-constrain", function(S) {
     S.namespace("Ext");
 
     var DOM = S.DOM,
@@ -374,7 +378,7 @@ KISSY.add("ext-overlay-close", function(S) {
      * @return {Object | undefined} {left: 0, top: 0, maxLeft: 100, maxTop: 100}
      */
     function _getConstrainRegion(constrain) {
-        var ret = undefined;
+        var ret;
         if (!constrain) return ret;
         var el = this.get("el");
         if (constrain !== true) {
@@ -387,14 +391,20 @@ KISSY.add("ext-overlay-close", function(S) {
         }
         // 没有指定 constrain, 表示受限于可视区域
         else {
+            //不要使用 viewportWidth()
+            //The innerWidth attribute, on getting,
+            //must return the viewport width including the size of a rendered scroll bar (if any).
+            //On getting, the clientWidth attribute returns the viewport width
+            //excluding the size of a rendered scroll bar (if any)
+            //  if the element is the root element 
             var vWidth = document.documentElement.clientWidth;
             ret = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
-
             S.mix(ret, {
                 maxLeft: ret.left + vWidth - el[0].offsetWidth,
                 maxTop: ret.top + DOM.viewportHeight() - el[0].offsetHeight
             });
         }
+
         return ret;
     }
 
@@ -411,7 +421,7 @@ KISSY.add("ext-overlay-close", function(S) {
                 yAttr = attrs["y"],
                 oriXSetter = xAttr["setter"],
                 oriYSetter = yAttr["setter"];
-            xAttr.setter = function(v) {                
+            xAttr.setter = function(v) {
                 var r = oriXSetter && oriXSetter(v);
                 if (r === undefined) {
                     r = v;
@@ -453,7 +463,7 @@ KISSY.add("ext-overlay-close", function(S) {
 
 });/**
  * 里层包裹层定义，适合mask以及shim
- * @author:yiminghe@gmail.com
+ * @author:承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-contentbox", function(S) {
 
@@ -513,7 +523,7 @@ KISSY.add("ext-contentbox", function(S) {
     S.Ext.ContentBox = ContentBox;
 });/**
  * drag extension for position
- * @author:yiminghe@gmail.com
+ * @author:承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-drag", function(S) {
     S.namespace('Ext');
@@ -584,7 +594,7 @@ KISSY.add("ext-drag", function(S) {
 
 });/**
  * loading mask support for overlay
- * @author:yiminghe@gmail.com
+ * @author:承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-loading", function(S) {
     S.namespace("Ext");
@@ -618,7 +628,11 @@ KISSY.add("ext-loading", function(S) {
 
     S.Ext.Loading = LoadingExt;
 
-});KISSY.add("ext-mask", function(S) {
+});/**
+ * mask extension for kissy
+ * @author:承玉<yiminghe@gmail.com>
+ */
+KISSY.add("ext-mask", function(S) {
     S.namespace("Ext");
     /**
      * 多 position 共享一个遮罩
@@ -710,7 +724,7 @@ KISSY.add("ext-loading", function(S) {
     S.Ext.Mask = MaskExt;
 });/**
  * position and visible extension，可定位的隐藏层
- * @author:yiminghe@gmail.com
+ * @author:承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-position", function(S) {
     S.namespace("Ext");
@@ -863,7 +877,7 @@ KISSY.add("ext-position", function(S) {
     S.Ext.Position = PositionExt;
 });/**
  * shim for ie6 ,require box-ext
- * @author:yiminghe@gmail.com
+ * @author:承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-shim", function(S) {
     S.namespace("Ext");
@@ -905,7 +919,7 @@ KISSY.add("ext-shim", function(S) {
     S.Ext.Shim = ShimExt;
 });/**
  * support standard mod for component
- * @author: yiminghe@gmail.com
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-stdmod", function(S) {
 

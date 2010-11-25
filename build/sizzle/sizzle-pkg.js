@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0

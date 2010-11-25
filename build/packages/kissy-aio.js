@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * @module kissy
@@ -69,7 +69,7 @@ build time: Nov 24 11:33
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.6',
+        version: '1.1.6dev',
 
         /**
          * Initializes KISSY object.
@@ -1252,18 +1252,22 @@ build time: Nov 24 11:33
             }
             if (charset) node.charset = charset;
 
-            if (S.isFunction(success)) {
-                if (isCSS) {
-                    success.call(node);
-                } else {
-                    scriptOnload(node, function() {
-                        if (timer) {
-                            timer.cancel();
-                            timer = undefined;
-                        }
-                        success.call(node);
-                    });
-                }
+            if (isCSS) {
+                S.isFunction(success) && success.call(node);
+            } else {
+                scriptOnload(node, function() {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
+
+                    S.isFunction(success) && success.call(node);
+
+                    // remove script
+                    if (head && node.parentNode) {
+                        head.removeChild(node);
+                    }
+                });
             }
 
             if (S.isFunction(error)) {
@@ -1347,9 +1351,9 @@ build time: Nov 24 11:33
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:34
+build time: ${build.time}
 */
 /**
  * @module  ua
@@ -1544,9 +1548,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * @module  dom
@@ -3599,9 +3603,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * @module  event
@@ -3687,7 +3691,7 @@ KISSY.add('event', function(S, undefined) {
                     if (special['setup']) {
                         special['setup'](event);
                     }
-                    return (special.handle || Event._handle)(target, event, events[type].listeners);
+                    return (special.handle || Event._handle).call(this, target, event, events[type].listeners);
                 };
 
                 events[type] = {
@@ -3705,7 +3709,7 @@ KISSY.add('event', function(S, undefined) {
             }
 
             // 增加 listener
-            events[type].listeners.push({fn: fn, scope: scope || target});
+            events[type].listeners.push({fn: fn, scope: scope});
         },
 
         /**
@@ -3746,7 +3750,7 @@ KISSY.add('event', function(S, undefined) {
                         special = Event.special[type] || { };
                         simpleRemove(target, special.fix || type, eventsType.handle);
                     }
-                    else if (target._addEvent) { // such as Node
+                    else if (target._removeEvent) { // such as Node
                         target._removeEvent(type, eventsType.handle);
                     }
                     delete events[type];
@@ -3770,11 +3774,14 @@ KISSY.add('event', function(S, undefined) {
              sure we'll call all of them.*/
             listeners = listeners.slice(0);
 
-            var ret, i = 0, len = listeners.length, listener;
+            var ret, i = 0, len = listeners.length, listener, scope;
+
+            // 让 nodelist 等集合，等自定义 scope
+            if(target._getScope) scope = target._getScope(this);
 
             for (; i < len; ++i) {
                 listener = listeners[i];
-                ret = listener.fn.call(listener.scope || target, event);
+                ret = listener.fn.call(scope || listener.scope || target, event);
 
                 // 自定义事件对象，可以用 return false 来立刻停止后续监听函数
                 // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡
@@ -4165,9 +4172,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * @module  node
@@ -4495,28 +4502,195 @@ KISSY.add('node-attach', function(S, undefined) {
                 Event._simpleAdd(this[i], type, handle, capture);
             }
         };
-
         P._removeEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
                 Event._simpleRemove(this[i], type, handle, capture);
             }
         };
-
         delete P.fire;
     });
+
+    // 使得 Y.all('..').on('click', function(ev) { 这里的 this 能指向对应的 Node })
+    NLP._getScope = function(el) {
+        for(var i = 0, len = this.length; i < len; i++) {
+            if(el === this[i]) {
+                return new S.Node(this[i]);
+            }
+        }
+        return null;
+    }
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
-/**
- * from http://www.JSON.org/json2.js
- * 2010-03-20
- */
-KISSY.add('json', function (S) {
+/*
+    http://www.JSON.org/json2.js
+    2010-08-25
 
-    var JSON = S.JSON = window.JSON || { };
+    Public Domain.
+
+    NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+
+    See http://www.JSON.org/js.html
+
+
+    This code should be minified before deployment.
+    See http://javascript.crockford.com/jsmin.html
+
+    USE YOUR OWN COPY. IT IS EXTREMELY UNWISE TO LOAD CODE FROM SERVERS YOU DO
+    NOT CONTROL.
+
+
+    This file creates a global JSON object containing two methods: stringify
+    and parse.
+
+        JSON.stringify(value, replacer, space)
+            value       any JavaScript value, usually an object or array.
+
+            replacer    an optional parameter that determines how object
+                        values are stringified for objects. It can be a
+                        function or an array of strings.
+
+            space       an optional parameter that specifies the indentation
+                        of nested structures. If it is omitted, the text will
+                        be packed without extra whitespace. If it is a number,
+                        it will specify the number of spaces to indent at each
+                        level. If it is a string (such as '\t' or '&nbsp;'),
+                        it contains the characters used to indent at each level.
+
+            This method produces a JSON text from a JavaScript value.
+
+            When an object value is found, if the object contains a toJSON
+            method, its toJSON method will be called and the result will be
+            stringified. A toJSON method does not serialize: it returns the
+            value represented by the name/value pair that should be serialized,
+            or undefined if nothing should be serialized. The toJSON method
+            will be passed the key associated with the value, and this will be
+            bound to the value
+
+            For example, this would serialize Dates as ISO strings.
+
+                Date.prototype.toJSON = function (key) {
+                    function f(n) {
+                        // Format integers to have at least two digits.
+                        return n < 10 ? '0' + n : n;
+                    }
+
+                    return this.getUTCFullYear()   + '-' +
+                         f(this.getUTCMonth() + 1) + '-' +
+                         f(this.getUTCDate())      + 'T' +
+                         f(this.getUTCHours())     + ':' +
+                         f(this.getUTCMinutes())   + ':' +
+                         f(this.getUTCSeconds())   + 'Z';
+                };
+
+            You can provide an optional replacer method. It will be passed the
+            key and value of each member, with this bound to the containing
+            object. The value that is returned from your method will be
+            serialized. If your method returns undefined, then the member will
+            be excluded from the serialization.
+
+            If the replacer parameter is an array of strings, then it will be
+            used to select the members to be serialized. It filters the results
+            such that only members with keys listed in the replacer array are
+            stringified.
+
+            Values that do not have JSON representations, such as undefined or
+            functions, will not be serialized. Such values in objects will be
+            dropped; in arrays they will be replaced with null. You can use
+            a replacer function to replace those with JSON values.
+            JSON.stringify(undefined) returns undefined.
+
+            The optional space parameter produces a stringification of the
+            value that is filled with line breaks and indentation to make it
+            easier to read.
+
+            If the space parameter is a non-empty string, then that string will
+            be used for indentation. If the space parameter is a number, then
+            the indentation will be that many spaces.
+
+            Example:
+
+            text = JSON.stringify(['e', {pluribus: 'unum'}]);
+            // text is '["e",{"pluribus":"unum"}]'
+
+
+            text = JSON.stringify(['e', {pluribus: 'unum'}], null, '\t');
+            // text is '[\n\t"e",\n\t{\n\t\t"pluribus": "unum"\n\t}\n]'
+
+            text = JSON.stringify([new Date()], function (key, value) {
+                return this[key] instanceof Date ?
+                    'Date(' + this[key] + ')' : value;
+            });
+            // text is '["Date(---current time---)"]'
+
+
+        JSON.parse(text, reviver)
+            This method parses a JSON text to produce an object or array.
+            It can throw a SyntaxError exception.
+
+            The optional reviver parameter is a function that can filter and
+            transform the results. It receives each of the keys and values,
+            and its return value is used instead of the original value.
+            If it returns what it received, then the structure is not modified.
+            If it returns undefined then the member is deleted.
+
+            Example:
+
+            // Parse the text. Values that look like ISO date strings will
+            // be converted to Date objects.
+
+            myData = JSON.parse(text, function (key, value) {
+                var a;
+                if (typeof value === 'string') {
+                    a =
+/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
+                    if (a) {
+                        return new Date(Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4],
+                            +a[5], +a[6]));
+                    }
+                }
+                return value;
+            });
+
+            myData = JSON.parse('["Date(09/09/2001)"]', function (key, value) {
+                var d;
+                if (typeof value === 'string' &&
+                        value.slice(0, 5) === 'Date(' &&
+                        value.slice(-1) === ')') {
+                    d = new Date(value.slice(5, -1));
+                    if (d) {
+                        return d;
+                    }
+                }
+                return value;
+            });
+
+
+    This is a reference implementation. You are free to copy, modify, or
+    redistribute.
+*/
+
+/*jslint evil: true, strict: false */
+
+/*members "", "\b", "\t", "\n", "\f", "\r", "\"", JSON, "\\", apply,
+    call, charCodeAt, getUTCDate, getUTCFullYear, getUTCHours,
+    getUTCMinutes, getUTCMonth, getUTCSeconds, hasOwnProperty, join,
+    lastIndex, length, parse, prototype, push, replace, slice, stringify,
+    test, toJSON, toString, valueOf
+*/
+
+
+// Create a JSON object only if one does not already exist. We create the
+// methods in a closure to avoid creating global variables.
+
+if (!this.JSON) {
+    this.JSON = {};
+}
+
+(function () {
 
     function f(n) {
         // Format integers to have at least two digits.
@@ -4525,20 +4699,20 @@ KISSY.add('json', function (S) {
 
     if (typeof Date.prototype.toJSON !== 'function') {
 
-        Date.prototype.toJSON = function () {
+        Date.prototype.toJSON = function (key) {
 
             return isFinite(this.valueOf()) ?
-                   this.getUTCFullYear() + '-' +
-                   f(this.getUTCMonth() + 1) + '-' +
-                   f(this.getUTCDate()) + 'T' +
-                   f(this.getUTCHours()) + ':' +
-                   f(this.getUTCMinutes()) + ':' +
-                   f(this.getUTCSeconds()) + 'Z' : null;
+                   this.getUTCFullYear()   + '-' +
+                 f(this.getUTCMonth() + 1) + '-' +
+                 f(this.getUTCDate())      + 'T' +
+                 f(this.getUTCHours())     + ':' +
+                 f(this.getUTCMinutes())   + ':' +
+                 f(this.getUTCSeconds())   + 'Z' : null;
         };
 
         String.prototype.toJSON =
         Number.prototype.toJSON =
-        Boolean.prototype.toJSON = function () {
+        Boolean.prototype.toJSON = function (key) {
             return this.valueOf();
         };
     }
@@ -4561,25 +4735,25 @@ KISSY.add('json', function (S) {
 
     function quote(string) {
 
-        // If the string contains no control characters, no quote characters, and no
-        // backslash characters, then we can safely slap some quotes around it.
-        // Otherwise we must also replace the offending characters with safe escape
-        // sequences.
+// If the string contains no control characters, no quote characters, and no
+// backslash characters, then we can safely slap some quotes around it.
+// Otherwise we must also replace the offending characters with safe escape
+// sequences.
 
         escapable.lastIndex = 0;
         return escapable.test(string) ?
-               '"' + string.replace(escapable, function (a) {
-                   var c = meta[a];
-                   return typeof c === 'string' ? c :
-                          '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-               }) + '"' :
-               '"' + string + '"';
+            '"' + string.replace(escapable, function (a) {
+                var c = meta[a];
+                return typeof c === 'string' ? c :
+                    '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+            }) + '"' :
+            '"' + string + '"';
     }
 
 
     function str(key, holder) {
 
-        // Produce a string from holder[key].
+// Produce a string from holder[key].
 
         var i,          // The loop counter.
             k,          // The member key.
@@ -4589,181 +4763,181 @@ KISSY.add('json', function (S) {
             partial,
             value = holder[key];
 
-        // If the value has a toJSON method, call it to obtain a replacement value.
+// If the value has a toJSON method, call it to obtain a replacement value.
 
         if (value && typeof value === 'object' &&
-            typeof value.toJSON === 'function') {
+                typeof value.toJSON === 'function') {
             value = value.toJSON(key);
         }
 
-        // If we were called with a replacer function, then call the replacer to
-        // obtain a replacement value.
+// If we were called with a replacer function, then call the replacer to
+// obtain a replacement value.
 
         if (typeof rep === 'function') {
             value = rep.call(holder, key, value);
         }
 
-        // What happens next depends on the value's type.
+// What happens next depends on the value's type.
 
         switch (typeof value) {
-            case 'string':
-                return quote(value);
+        case 'string':
+            return quote(value);
 
-            case 'number':
+        case 'number':
 
-                // JSON numbers must be finite. Encode non-finite numbers as null.
+// JSON numbers must be finite. Encode non-finite numbers as null.
 
-                return isFinite(value) ? String(value) : 'null';
+            return isFinite(value) ? String(value) : 'null';
 
-            case 'boolean':
-            case 'null':
+        case 'boolean':
+        case 'null':
 
-                // If the value is a boolean or null, convert it to a string. Note:
-                // typeof null does not produce 'null'. The case is included here in
-                // the remote chance that this gets fixed someday.
+// If the value is a boolean or null, convert it to a string. Note:
+// typeof null does not produce 'null'. The case is included here in
+// the remote chance that this gets fixed someday.
 
-                return String(value);
+            return String(value);
 
-            // If the type is 'object', we might be dealing with an object or an array or
-            // null.
+// If the type is 'object', we might be dealing with an object or an array or
+// null.
 
-            case 'object':
+        case 'object':
 
-                // Due to a specification blunder in ECMAScript, typeof null is 'object',
-                // so watch out for that case.
+// Due to a specification blunder in ECMAScript, typeof null is 'object',
+// so watch out for that case.
 
-                if (!value) {
-                    return 'null';
+            if (!value) {
+                return 'null';
+            }
+
+// Make an array to hold the partial results of stringifying this object value.
+
+            gap += indent;
+            partial = [];
+
+// Is the value an array?
+
+            if (Object.prototype.toString.apply(value) === '[object Array]') {
+
+// The value is an array. Stringify every element. Use null as a placeholder
+// for non-JSON values.
+
+                length = value.length;
+                for (i = 0; i < length; i += 1) {
+                    partial[i] = str(i, value) || 'null';
                 }
 
-                // Make an array to hold the partial results of stringifying this object value.
+// Join all of the elements together, separated with commas, and wrap them in
+// brackets.
 
-                gap += indent;
-                partial = [];
-
-                // Is the value an array?
-
-                if (Object.prototype.toString.apply(value) === '[object Array]') {
-
-                    // The value is an array. Stringify every element. Use null as a placeholder
-                    // for non-JSON values.
-
-                    length = value.length;
-                    for (i = 0; i < length; i += 1) {
-                        partial[i] = str(i, value) || 'null';
-                    }
-
-                    // Join all of the elements together, separated with commas, and wrap them in
-                    // brackets.
-
-                    v = partial.length === 0 ? '[]' :
-                        gap ? '[\n' + gap +
-                              partial.join(',\n' + gap) + '\n' +
-                              mind + ']' :
-                        '[' + partial.join(',') + ']';
-                    gap = mind;
-                    return v;
-                }
-
-                // If the replacer is an array, use it to select the members to be stringified.
-
-                if (rep && typeof rep === 'object') {
-                    length = rep.length;
-                    for (i = 0; i < length; i += 1) {
-                        k = rep[i];
-                        if (typeof k === 'string') {
-                            v = str(k, value);
-                            if (v) {
-                                partial.push(quote(k) + (gap ? ': ' : ':') + v);
-                            }
-                        }
-                    }
-                } else {
-
-                    // Otherwise, iterate through all of the keys in the object.
-
-                    for (k in value) {
-                        if (Object.hasOwnProperty.call(value, k)) {
-                            v = str(k, value);
-                            if (v) {
-                                partial.push(quote(k) + (gap ? ': ' : ':') + v);
-                            }
-                        }
-                    }
-                }
-
-                // Join all of the member texts together, separated with commas,
-                // and wrap them in braces.
-
-                v = partial.length === 0 ? '{}' :
-                    gap ? '{\n' + gap + partial.join(',\n' + gap) + '\n' +
-                          mind + '}' : '{' + partial.join(',') + '}';
+                v = partial.length === 0 ? '[]' :
+                    gap ? '[\n' + gap +
+                            partial.join(',\n' + gap) + '\n' +
+                                mind + ']' :
+                          '[' + partial.join(',') + ']';
                 gap = mind;
                 return v;
+            }
+
+// If the replacer is an array, use it to select the members to be stringified.
+
+            if (rep && typeof rep === 'object') {
+                length = rep.length;
+                for (i = 0; i < length; i += 1) {
+                    k = rep[i];
+                    if (typeof k === 'string') {
+                        v = str(k, value);
+                        if (v) {
+                            partial.push(quote(k) + (gap ? ': ' : ':') + v);
+                        }
+                    }
+                }
+            } else {
+
+// Otherwise, iterate through all of the keys in the object.
+
+                for (k in value) {
+                    if (Object.hasOwnProperty.call(value, k)) {
+                        v = str(k, value);
+                        if (v) {
+                            partial.push(quote(k) + (gap ? ': ' : ':') + v);
+                        }
+                    }
+                }
+            }
+
+// Join all of the member texts together, separated with commas,
+// and wrap them in braces.
+
+            v = partial.length === 0 ? '{}' :
+                gap ? '{\n' + gap + partial.join(',\n' + gap) + '\n' +
+                        mind + '}' : '{' + partial.join(',') + '}';
+            gap = mind;
+            return v;
         }
     }
 
-    // If the JSON object does not yet have a stringify method, give it one.
+// If the JSON object does not yet have a stringify method, give it one.
 
     if (typeof JSON.stringify !== 'function') {
         JSON.stringify = function (value, replacer, space) {
 
-            // The stringify method takes a value and an optional replacer, and an optional
-            // space parameter, and returns a JSON text. The replacer can be a function
-            // that can replace values, or an array of strings that will select the keys.
-            // A default replacer method can be provided. Use of the space parameter can
-            // produce text that is more easily readable.
+// The stringify method takes a value and an optional replacer, and an optional
+// space parameter, and returns a JSON text. The replacer can be a function
+// that can replace values, or an array of strings that will select the keys.
+// A default replacer method can be provided. Use of the space parameter can
+// produce text that is more easily readable.
 
             var i;
             gap = '';
             indent = '';
 
-            // If the space parameter is a number, make an indent string containing that
-            // many spaces.
+// If the space parameter is a number, make an indent string containing that
+// many spaces.
 
             if (typeof space === 'number') {
                 for (i = 0; i < space; i += 1) {
                     indent += ' ';
                 }
 
-                // If the space parameter is a string, it will be used as the indent string.
+// If the space parameter is a string, it will be used as the indent string.
 
             } else if (typeof space === 'string') {
                 indent = space;
             }
 
-            // If there is a replacer, it must be a function or an array.
-            // Otherwise, throw an error.
+// If there is a replacer, it must be a function or an array.
+// Otherwise, throw an error.
 
             rep = replacer;
             if (replacer && typeof replacer !== 'function' &&
-                (typeof replacer !== 'object' ||
-                 typeof replacer.length !== 'number')) {
+                    (typeof replacer !== 'object' ||
+                     typeof replacer.length !== 'number')) {
                 throw new Error('JSON.stringify');
             }
 
-            // Make a fake root object containing our value under the key of ''.
-            // Return the result of stringifying the value.
+// Make a fake root object containing our value under the key of ''.
+// Return the result of stringifying the value.
 
             return str('', {'': value});
         };
     }
 
 
-    // If the JSON object does not yet have a parse method, give it one.
+// If the JSON object does not yet have a parse method, give it one.
 
     if (typeof JSON.parse !== 'function') {
         JSON.parse = function (text, reviver) {
 
-            // The parse method takes a text and an optional reviver function, and returns
-            // a JavaScript value if the text is a valid JSON text.
+// The parse method takes a text and an optional reviver function, and returns
+// a JavaScript value if the text is a valid JSON text.
 
             var j;
 
             function walk(holder, key) {
 
-                // The walk method is used to recursively walk the resulting structure so
-                // that modifications can be made.
+// The walk method is used to recursively walk the resulting structure so
+// that modifications can be made.
 
                 var k, v, value = holder[key];
                 if (value && typeof value === 'object') {
@@ -4782,61 +4956,80 @@ KISSY.add('json', function (S) {
             }
 
 
-            // Parsing happens in four stages. In the first stage, we replace certain
-            // Unicode characters with escape sequences. JavaScript handles many characters
-            // incorrectly, either silently deleting them, or treating them as line endings.
+// Parsing happens in four stages. In the first stage, we replace certain
+// Unicode characters with escape sequences. JavaScript handles many characters
+// incorrectly, either silently deleting them, or treating them as line endings.
 
             text = String(text);
             cx.lastIndex = 0;
             if (cx.test(text)) {
                 text = text.replace(cx, function (a) {
                     return '\\u' +
-                           ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+                        ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
                 });
             }
 
-            // In the second stage, we run the text against regular expressions that look
-            // for non-JSON patterns. We are especially concerned with '()' and 'new'
-            // because they can cause invocation, and '=' because it can cause mutation.
-            // But just to be safe, we want to reject all unexpected forms.
+// In the second stage, we run the text against regular expressions that look
+// for non-JSON patterns. We are especially concerned with '()' and 'new'
+// because they can cause invocation, and '=' because it can cause mutation.
+// But just to be safe, we want to reject all unexpected forms.
 
-            // We split the second stage into 4 regexp operations in order to work around
-            // crippling inefficiencies in IE's and Safari's regexp engines. First we
-            // replace the JSON backslash pairs with '@' (a non-JSON character). Second, we
-            // replace all simple value tokens with ']' characters. Third, we delete all
-            // open brackets that follow a colon or comma or that begin the text. Finally,
-            // we look to see that the remaining characters are only whitespace or ']' or
-            // ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
+// We split the second stage into 4 regexp operations in order to work around
+// crippling inefficiencies in IE's and Safari's regexp engines. First we
+// replace the JSON backslash pairs with '@' (a non-JSON character). Second, we
+// replace all simple value tokens with ']' characters. Third, we delete all
+// open brackets that follow a colon or comma or that begin the text. Finally,
+// we look to see that the remaining characters are only whitespace or ']' or
+// ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
 
-            if (/^[\],:{}\s]*$/.
-                test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@').
-                replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-                replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+            if (/^[\],:{}\s]*$/
+.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
+.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
+.replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 
-                // In the third stage we use the eval function to compile the text into a
-                // JavaScript structure. The '{' operator is subject to a syntactic ambiguity
-                // in JavaScript: it can begin a block or an object literal. We wrap the text
-                // in parens to eliminate the ambiguity.
+// In the third stage we use the eval function to compile the text into a
+// JavaScript structure. The '{' operator is subject to a syntactic ambiguity
+// in JavaScript: it can begin a block or an object literal. We wrap the text
+// in parens to eliminate the ambiguity.
 
                 j = eval('(' + text + ')');
 
-                // In the optional fourth stage, we recursively walk the new structure, passing
-                // each name/value pair to a reviver function for possible transformation.
+// In the optional fourth stage, we recursively walk the new structure, passing
+// each name/value pair to a reviver function for possible transformation.
 
                 return typeof reviver === 'function' ?
-                       walk({'': j}, '') : j;
+                    walk({'': j}, '') : j;
             }
 
-            // If the text is not JSON parseable, then a SyntaxError is thrown.
+// If the text is not JSON parseable, then a SyntaxError is thrown.
 
             throw new SyntaxError('JSON.parse');
         };
     }
+}());
+/**
+ * adapt json2 to kissy
+ * @author lifesinger@gmail.com
+ */
+KISSY.add('json', function (S) {
+
+    var JSON = window.JSON;
+
+    S.JSON = {
+
+        parse: function(text) {
+            // 当输入为 undefined / null / '' 时，返回 null
+            if(text == null || text === '') return null;
+            return JSON.parse(text);
+        },
+
+        stringify: JSON.stringify
+    };
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /***
  * @module  ajax
@@ -4849,12 +5042,12 @@ KISSY.add('ajax', function(S, undef) {
         },
 
         GET = 'GET', POST = 'POST',
+        CONTENT_TYPE = 'Content-Type',
         JSON = 'json', JSONP = JSON + 'p', SCRIPT = 'script',
         CALLBACK = 'callback', EMPTY = '',
+        START = 'start', SEND = 'send', STOP = 'stop',
         SUCCESS = 'success', COMPLETE = 'complete',
         ERROR = 'error', TIMEOUT = 'timeout', PARSERERR = 'parsererror',
-        START = 'start', SEND = 'send', STOP = 'stop',
-        jsre = /=\?(&|$)/,
 
         // 默认配置
         // 参数含义和 jQuery 保持一致：http://api.jquery.com/jQuery.ajax/
@@ -4882,49 +5075,31 @@ KISSY.add('ajax', function(S, undef) {
                 text: 'text/plain',
                 _default: '*/*'
             },
-            complete: function() {
-            },
-            success: function() {
-            },
-            error: function() {
-            },
+            //complete: fn,
+            //success: fn,
+            //error: fn,
             jsonp: CALLBACK
-            // dataType
-            // headers
             // jsonpCallback
+            // dataType: 可以取 json | jsonp | script | xml | html | text
+            // headers
+            // context
         };
 
-    function io(s) {
-        s = S.merge(defaultConfig, s);
-        if (s.data && !S.isString(s.data)) s.data = S.param(s.data);
+    function io(c) {
+        c = S.merge(defaultConfig, c);
+        if(!c.url) return;
+        if (c.data && !S.isString(c.data)) c.data = S.param(c.data);
+        c.context = c.context || c;
 
-        var jsonp, status = SUCCESS, data, type = s.type.toUpperCase();
+        var jsonp, status = SUCCESS, data, type = c.type.toUpperCase(), scriptEl;
 
-        // Handle JSONP, 参照 jQuery, 保留 callback=? 的约定
-        if (s.dataType === JSONP) {
-            if (type === GET) {
-                if (!jsre.test(s.url)) {
-                    s.url = addQuery(s.url, s.jsonp + '=?');
-                }
-            } else if (!s.data || !jsre.test(s.data)) {
-                s.data = (s.data ? s.data + '&' : EMPTY) + s.jsonp + '=?';
-            }
-            s.dataType = JSON;
-        }
+        // handle JSONP
+        if (c.dataType === JSONP) {
+            jsonp = c['jsonpCallback'] || JSONP + S.now();
+            c.url = addQuery(c.url, c.jsonp + '=' + jsonp);
+            c.dataType = SCRIPT;
 
-        // Build temporary JSONP function
-        if (s.dataType === JSON && (s.data && jsre.test(s.data) || jsre.test(s.url))) {
-            jsonp = s['jsonpCallback'] || JSONP + S.now();
-
-            // Replace the =? sequence both in the query string and the data
-            if (s.data) {
-                s.data = (s.data + EMPTY).replace(jsre, '=' + jsonp + '$1');
-            }
-
-            s.url = s.url.replace(jsre, '=' + jsonp + '$1');
-            s.dataType = SCRIPT;
-
-            // Handle JSONP-style loading
+            // build temporary JSONP function
             var customJsonp = win[jsonp];
 
             win[jsonp] = function(data) {
@@ -4938,106 +5113,101 @@ KISSY.add('ajax', function(S, undef) {
                     } catch(e) {
                     }
                 }
-                handleEvent([SUCCESS, COMPLETE], data, status, xhr, s);
+                handleEvent([SUCCESS, COMPLETE], data, status, xhr, c);
             };
         }
 
-        if (s.data && type === GET) {
-            s.url = addQuery(s.url, s.data);
+        if (c.data && type === GET) {
+            c.url = addQuery(c.url, c.data);
         }
 
-        if (s.dataType === SCRIPT) {
-            io.fire(START);
-            S.getScript(s.url, jsonp ? function() {
-                handleEvent([SUCCESS, COMPLETE], EMPTY, status, xhr, s);
-            } : null);
-            io.fire(SEND);
-            return; // 结束 json/jsonp/script 的流程
+        if (c.dataType === SCRIPT) {
+            fire(START, c);
+            // jsonp 有自己的回调处理
+            scriptEl = S.getScript(c.url, jsonp ? null : function() {
+                handleEvent([SUCCESS, COMPLETE], EMPTY, status, xhr, c);
+            });
+            fire(SEND, c);
+            return scriptEl;
         }
 
 
         // 开始 XHR 之旅
-        var requestDone = false, xhr = s.xhr();
+        var requestDone = false, xhr = c.xhr();
 
-        io.fire(START, { xhr: xhr });
-        xhr.open(type, s.url, s.async);
+        fire(START, c);
+        xhr.open(type, c.url, c.async);
 
         // Need an extra try/catch for cross domain requests in Firefox 3
         try {
             // Set the correct header, if data is being sent
-            if (s.data || s.contentType) {
-                xhr.setRequestHeader('Content-Type', s.contentType);
+            if (c.data || c.contentType) {
+                xhr.setRequestHeader(CONTENT_TYPE, c.contentType);
             }
 
             // Set the Accepts header for the server, depending on the dataType
-            xhr.setRequestHeader('Accept', s.dataType && s.accepts[s.dataType] ?
-                s.accepts[ s.dataType ] + ", */*" :
-                s.accepts._default);
+            // Set the Accepts header for the server, depending on the dataType
+			xhr.setRequestHeader('Accept', c.dataType && c.accepts[c.dataType] ?
+				c.accepts[c.dataType] + ', */*; q=0.01' :
+				c.accepts._default );
         } catch(e) {
         }
 
         // Wait for a response to come back
         xhr.onreadystatechange = function(isTimeout) {
-            // 请求中止
+            // The request was aborted
             if (!xhr || xhr.readyState === 0 || isTimeout === 'abort') {
                 // Opera doesn't call onreadystatechange before this point
                 // so we simulate the call
                 if (!requestDone) {
-                    handleEvent(COMPLETE, null, ERROR, xhr, s);
+                    handleEvent(COMPLETE, null, ERROR, xhr, c);
                 }
-
                 requestDone = true;
                 if (xhr) {
                     xhr.onreadystatechange = noop;
                 }
             } else
-            // 请求成功，数据可用，或请求超时
+            // The transfer is complete and the data is available, or the request timed out
             if (!requestDone && xhr && (xhr.readyState === 4 || isTimeout === TIMEOUT)) {
                 requestDone = true;
                 xhr.onreadystatechange = noop;
 
-                status = isTimeout === TIMEOUT ? TIMEOUT :
-                    !xhrSuccessful(xhr) ? ERROR : SUCCESS;
+                status = (isTimeout === TIMEOUT) ? TIMEOUT :
+                    xhrSuccessful(xhr) ? SUCCESS : ERROR;
 
                 // Watch for, and catch, XML document parse errors
                 try {
                     // process the data (runs the xml through httpData regardless of callback)
-                    data = httpData(xhr, s.dataType);
+                    data = parseData(xhr, c.dataType);
                 } catch(e) {
                     status = PARSERERR;
                 }
 
-                // Make sure that the request was successful or notmodified
-                if (status === SUCCESS) {
-                    // JSONP handles its own success callback
-                    if (!jsonp) {
-                        handleEvent(SUCCESS, data, status, xhr, s);
-                    }
-                } else {
-                    handleEvent(ERROR, data, status, xhr, s);
-                }
-
-                // Fire the complete handlers
-                handleEvent(COMPLETE, data, status, xhr, s);
+                // fire events
+                handleEvent([status === SUCCESS ? SUCCESS : ERROR, COMPLETE], data, status, xhr, c);
 
                 if (isTimeout === TIMEOUT) {
                     xhr.abort();
-                    io.fire(STOP, { xhr: xhr });
+                    fire(STOP, c);
                 }
 
                 // Stop memory leaks
-                if (s.async) {
+                if (c.async) {
                     xhr = null;
                 }
             }
         };
 
-        io.fire(SEND, { xhr: xhr });
-        xhr.send(type === POST ? s.data : null);
+        fire(SEND, c);
+		try {
+            xhr.send(type === POST ? c.data : null);
+		} catch(e) {
+            handleEvent([ERROR, COMPLETE], data, ERROR, xhr, c);
+		}
 
         // return XMLHttpRequest to allow aborting the request etc.
-        if (!s.async) {
-            io.fire(COMPLETE, { xhr: xhr });
+        if (!c.async) {
+            fire(COMPLETE, c);
         }
         return xhr;
     }
@@ -5050,119 +5220,125 @@ KISSY.add('ajax', function(S, undef) {
 
         get: function(url, data, callback, dataType, _t) {
             // data 参数可省略
-            if(S.isFunction(data)) {
+            if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
             }
 
-            io({
+            return io({
                 type: _t || GET,
                 url: url,
                 data: data,
                 success: function(data, textStatus, xhr) {
-                    if (S.isFunction(callback)) callback(data, textStatus, xhr);
+                    callback && callback.call(this, data, textStatus, xhr);
                 },
                 dataType: dataType
             });
-
-            return this;
         },
 
         post: function(url, data, callback, dataType) {
-            // data 参数可省略
             if(S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
-                data = null;
+                data = undef;
             }
             return io.get(url, data, callback, dataType, POST);
         },
 
-        getJSON: function(url, data, callback) {
-            // data 参数可省略
+        jsonp: function(url, data, callback) {
             if(S.isFunction(data)) {
                 callback = data;
             }
-            return io.get(url, data, callback, JSON);
+            return io.get(url, data, callback, JSONP);
         }
     });
 
     // shortcuts
     io.getScript = S.getScript;
-    S.ajax = S.io = io;
-    S.getJSON = io.getJSON;
+    S.io = S.ajax = io.ajax = io;
+    S.jsonp = io.jsonp;
+    S.IO = io;
+    // 所有方法在 IO 下都可调 IO.ajax/get/post/getScript/jsonp
+    // S 下有便捷入口 S.io/S.ajax/getScript/jsonp
 
     //检测 xhr 是否成功
     function xhrSuccessful(xhr) {
         try {
+			// IE error sometimes returns 1223 when it should be 204 so treat it as success, see #1450
             // ref: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-            return (xhr.status >= 200 && xhr.status < 300) ||
-                // Opera returns 0 when status is 304
-                xhr.status === 304 || xhr.status === 0 || xhr.status === 1223;
-        } catch(e) {
-        }
-        return false;
+			return xhr.status >= 200 && xhr.status < 300 ||
+				xhr.status === 304 || xhr.status === 1223;
+		} catch(e) {}
+		return false;
     }
 
     function addQuery(url, params) {
         return url + (url.indexOf('?') === -1 ? '?' : '&') + params;
     }
 
-    function handleEvent(type, data, status, xhr, s) {
+    function handleEvent(type, data, status, xhr, c) {
         if (S.isArray(type)) {
             S.each(type, function(t) {
-                handleEvent(t, data, status, xhr, s);
+                handleEvent(t, data, status, xhr, c);
             });
         } else {
-            // 只调用与 status 匹配的 s.type, 比如成功时才调 s.complete
-            if(status === type) s[type](data, status, xhr);
-            io.fire(type, { xhr: xhr });
+            // 只调用与 status 匹配的 c.type, 比如成功时才调 c.success
+            if(status === type && c[type]) c[type].call(c.context, data, status, xhr);
+            fire(type, c);
         }
     }
 
-    function httpData(xhr, type) {
-        var ct = xhr.getResponseHeader('content-type') || EMPTY,
-            xml = type === 'xml' || !type && ct.indexOf('xml') >= 0,
+    function fire(type, config) {
+        io.fire(type, { ajaxConfig: config });
+    }
+
+    function parseData(xhr, type) {
+        var ct = EMPTY, xml, data = xhr;
+
+        // xhr 可以直接是 data
+        if (!S.isString(data)) {
+            ct = xhr.getResponseHeader(CONTENT_TYPE) || EMPTY;
+            xml = type === 'xml' || !type && ct.indexOf('xml') >= 0;
             data = xml ? xhr.responseXML : xhr.responseText;
 
-        if (xml && data.documentElement.nodeName === PARSERERR) {
-            S.error(PARSERERR);
-        }
-
-        // The filter can actually parse the response
-        if (S.isString(data)) {
-            // Get the JavaScript object, if JSON is used.
-            if (type === JSON || !type && ct.indexOf(JSONP) >= 0) {
-                data = S.JSON.parse(data);
-            } else
-            // If the type is "script", eval it in global context
-            if (type === SCRIPT || !type && ct.indexOf('javascript') >= 0) {
-                S.globalEval(data);
+            if (xml && data.documentElement.nodeName === PARSERERR) {
+                throw PARSERERR;
             }
         }
+
+        if (S.isString(data)) {
+            if (type === JSON || !type && ct.indexOf(JSON) >= 0) {
+                data = S.JSON.parse(data);
+            }
+        }
+
         return data;
     }
 
 });
 
 /**
+ * TODO:
+ *   - 给 Node 增加 load 方法?
+ *
  * NOTES:
  *  2010.07
- *   - 实现常用功实现常用功实现常用功实现常用功,get,post以及类jquery的jsonp，
+ *   - 实现常用功实现常用功实现常用功实现常用功,get,post以及类jquery的jsonp
  *     考虑是否继续实现iframe-upload和flash xdr，代码借鉴jquery-ajax，api形状借鉴yui3-io
  *     基本格式依照 callback(id,xhr,args)
  *   - 没有经过严格测试，包括jsonp里的内存泄漏的测试
  *     对xml,json的格式的回调支持是否必要
  * 2010.11
- *   - 实现了S.io.get/post/jsonp/getJSON
+ *   - 实现了get/post/jsonp/getJSON
  *   - 实现了onComplete/onError/onSend/onStart/onStop/onSucess的ajax状态的处理
  *   - [玉伯] 在拔赤的代码基础上重构，调整了部分 public api
- *   - 增加Jasmine单元测试
+ *   - [玉伯] 增加部分 Jasmine 单元测试
+ *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * @module anim-easing
@@ -5815,9 +5991,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * @module  cookie
@@ -5898,12 +6074,11 @@ KISSY.add('cookie', function(S) {
  *     除了正则获取，还可以 split 字符串的方式来获取。
  *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
  *     独立成静态工具类的方式更优。
- *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * @module  Attribute
@@ -6129,9 +6304,9 @@ KISSY.add('attribute', function(S, undefined) {
     Attribute.capitalFirst = capitalFirst;
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 14:17
+build time: ${build.time}
 */
 /**
  * @module  Base
@@ -6402,13 +6577,13 @@ KISSY.add('base', function (S) {
 
 /**
  * 2011-11-08 承玉重构，Base && yui3 Widget 压缩一下，增加扩展类支持，组件初始化生命周期以及 htmlparser
+ * 测试 crlf
  */
-
 KISSY.add('core');
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -7486,9 +7661,9 @@ KISSY.add('sizzle', function(S) {
 })();
 
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * 数据延迟加载组件
@@ -7969,9 +8144,9 @@ KISSY.add('datalazyload', function(S, undefined) {
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * @module   Flash 全局静态类
@@ -8496,9 +8671,9 @@ KISSY.add('flash-embed', function(S) {
  * 								
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * Switchable
@@ -9597,13 +9772,13 @@ KISSY.add('accordion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * KISSY Overlay
- * @author 玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ * @author: 玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay", function(S) {
 
@@ -9667,7 +9842,7 @@ KISSY.add("overlay", function(S) {
  */
 /**
  * KISSY.Dialog
- * @creator  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('dialog', function(S) {
 
@@ -9712,9 +9887,9 @@ KISSY.add('dialog', function(S) {
 
 
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * 提示补全组件
@@ -10804,9 +10979,9 @@ KISSY.add('suggest', function(S, undefined) {
  * 2010-08-04 更新： 去掉对 yahoo-dom-event 的依赖，仅依赖 ks-core. 调整了部分 public api, 扩展更容易了。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * @fileoverview 图片放大效果 ImageZoom.
@@ -11596,9 +11771,9 @@ KISSY.add('autorender', function(S) {
 
 }, { host: 'imagezoom' } );
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /*
  * Date Format 1.2.3

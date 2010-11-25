@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 14:17
+build time: ${build.time}
 */
 KISSY.add("base",function(f){function i(a){for(var b=this.constructor,c,d,e=[];b;){if(d=b.ATTRS)for(c in d)d.hasOwnProperty(c)&&!this.hasAttr(c)&&this.addAttr(c,d[c]);var g=b._kissycreate;g=g&&g._exts;d=[];if(g)d=g.concat();(g=b.prototype.init)&&d.push(g);d.length&&e.push.apply(e,d.reverse());if(a&&a[k]&&b.HTML_PARSER)if(a[k]=f.one(a[k])){d=a[k];g=b.HTML_PARSER;var h=void 0;for(h in g)if(g.hasOwnProperty(h)){var j=g[h];if(f.isFunction(j))this.__set(h,j.call(this,d));else if(f.isString(j))this.__set(h,
 d.one(j));else f.isArray(j)&&j[0]&&this.__set(h,d.all(j[0]))}}b=b.superclass?b.superclass.constructor:null}if(a)for(c in a)a.hasOwnProperty(c)&&this.__set(c,a[c]);for(b=e.length-1;b>=0;b--)e[b]&&e[b].call(this,a);a&&a.autoRender&&this.renderer()}var k="srcNode",l=f.Attribute.capitalFirst;i.HTML_PARSER={};i.ATTRS={rendered:{value:false},render:{setter:function(a){if(f.isString(a))return f.one(a)}}};f.augment(i,f.EventTarget,f.Attribute,{renderer:function(a){var b=this.get("rendered");a=a||this.get("render");

@@ -1,11 +1,11 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * dd support for kissy
- * @author: yiminghe@gmail.com
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add('dd', function(S) {
 
@@ -88,7 +88,8 @@ KISSY.add('dd', function(S) {
             self.set('activeDrag', drag);
 
             //真正开始移动了才激活垫片
-            self._activeShim();
+            if (drag.get("shim"))
+                self._activeShim();
             drag._start();
         },
 
@@ -215,11 +216,11 @@ KISSY.add('dd', function(S) {
 });
 /**
  * dd support for kissy, drag for dd
- * @author: yiminghe@gmail.com
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add('dd-draggable', function(S) {
 
-    var UA = S.UA,Node = S.Node;
+    var UA = S.UA;
 
     /*
      拖放纯功能类
@@ -237,6 +238,13 @@ KISSY.add('dd-draggable', function(S) {
             setter:function(v) {
                 return S.one(v);
             }
+        },
+
+        /**
+         * 是否需要遮罩跨越iframe
+         */
+        shim:{
+            value:true
         },
 
         /**
@@ -312,7 +320,7 @@ KISSY.add('dd-draggable', function(S) {
         _handleMouseDown: function(ev) {
             var self = this,
                 t = new S.Node(ev.target);
-            
+
             if (!self._check(t)) return;
             //chrome 阻止了 flash 点击？？
             if (!UA.webkit) {

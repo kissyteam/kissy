@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
-build time: Nov 24 11:33
+build time: ${build.time}
 */
 /**
  * @module  node
@@ -329,13 +329,21 @@ KISSY.add('node-attach', function(S, undefined) {
                 Event._simpleAdd(this[i], type, handle, capture);
             }
         };
-
         P._removeEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
                 Event._simpleRemove(this[i], type, handle, capture);
             }
         };
-
         delete P.fire;
     });
+
+    // 使得 Y.all('..').on('click', function(ev) { 这里的 this 能指向对应的 Node })
+    NLP._getScope = function(el) {
+        for(var i = 0, len = this.length; i < len; i++) {
+            if(el === this[i]) {
+                return new S.Node(this[i]);
+            }
+        }
+        return null;
+    }
 });
