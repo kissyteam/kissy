@@ -1,6 +1,6 @@
 /**
  * close extension for kissy dialog
- * @author:yiminghe@gmail.com
+ * @author:承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-overlay-close", function(S) {
     S.namespace("Ext");

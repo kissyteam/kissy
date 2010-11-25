@@ -1,6 +1,6 @@
 /**
  * 里层包裹层定义，适合mask以及shim
- * @author:yiminghe@gmail.com
+ * @author:承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-contentbox", function(S) {
 

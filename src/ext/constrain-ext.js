@@ -1,3 +1,7 @@
+/**
+ * constrain extension for kissy
+ * @author:承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ */
 KISSY.add("ext-constrain", function(S) {
     S.namespace("Ext");
 
@@ -26,7 +30,7 @@ KISSY.add("ext-constrain", function(S) {
      * @return {Object | undefined} {left: 0, top: 0, maxLeft: 100, maxTop: 100}
      */
     function _getConstrainRegion(constrain) {
-        var ret = undefined;
+        var ret;
         if (!constrain) return ret;
         var el = this.get("el");
         if (constrain !== true) {
@@ -39,14 +43,20 @@ KISSY.add("ext-constrain", function(S) {
         }
         // 没有指定 constrain, 表示受限于可视区域
         else {
+            //不要使用 viewportWidth()
+            //The innerWidth attribute, on getting,
+            //must return the viewport width including the size of a rendered scroll bar (if any).
+            //On getting, the clientWidth attribute returns the viewport width
+            //excluding the size of a rendered scroll bar (if any)
+            //  if the element is the root element 
             var vWidth = document.documentElement.clientWidth;
             ret = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
-
             S.mix(ret, {
                 maxLeft: ret.left + vWidth - el[0].offsetWidth,
                 maxTop: ret.top + DOM.viewportHeight() - el[0].offsetHeight
             });
         }
+
         return ret;
     }
 
@@ -63,7 +73,7 @@ KISSY.add("ext-constrain", function(S) {
                 yAttr = attrs["y"],
                 oriXSetter = xAttr["setter"],
                 oriYSetter = yAttr["setter"];
-            xAttr.setter = function(v) {                
+            xAttr.setter = function(v) {
                 var r = oriXSetter && oriXSetter(v);
                 if (r === undefined) {
                     r = v;

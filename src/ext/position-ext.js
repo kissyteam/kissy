@@ -1,6 +1,6 @@
 /**
  * position and visible extension，可定位的隐藏层
- * @author:yiminghe@gmail.com
+ * @author:承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-position", function(S) {
     S.namespace("Ext");

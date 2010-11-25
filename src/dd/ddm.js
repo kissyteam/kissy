@@ -1,6 +1,6 @@
 /**
  * dd support for kissy
- * @author: yiminghe@gmail.com
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add('dd', function(S) {
 
