@@ -1,6 +1,6 @@
 /**
  * @module  Base
- * @author  lifesinger@gmail.com, 承玉<yiminghe@gmail.com>
+ * @author  lifesinger@gmail.com , 承玉<yiminghe@gmail.com>
  */
 KISSY.add('base', function (S) {
     var UI_SET = "_uiSet",
