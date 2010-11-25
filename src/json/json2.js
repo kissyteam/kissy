@@ -1,9 +1,4 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
-MIT Licensed
-build time: Nov 25 10:50
-*/
-/*
     http://www.JSON.org/json2.js
     2010-08-25
 
@@ -485,22 +480,3 @@ if (!this.JSON) {
         };
     }
 }());
-/**
- * adapt json2 to kissy
- * @author lifesinger@gmail.com
- */
-KISSY.add('json', function (S) {
-
-    var JSON = window.JSON;
-
-    S.JSON = {
-
-        parse: function(text) {
-            // 当输入为 undefined / null / '' 时，返回 null
-            if(text == null || text === '') return null;
-            return JSON.parse(text);
-        },
-
-        stringify: JSON.stringify
-    };
-});
