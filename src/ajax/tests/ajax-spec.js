@@ -1,48 +1,66 @@
 describe('ajax', function() {
 
     var S = KISSY, IO = S.IO, JSON = S.JSON;
+/*
+	describe('test',function(){
+		
+        it('能正确获取返回值', function() {
 
-	describe('同步请求的test case',function(){
+            var xhr = IO.get('interface.php?t='+S.now());
+            expect('onreadystatechange' in xhr).toBe(true);
 
-		it('get 同步加载,等待2秒钟继续执行',function(){
+            // 注：jQuery 里，不跨域时，jsonp 返回 xhr. 跨域时，返回 void
+            var scriptEl = IO.jsonp('interface.php?t='+S.now());
+            expect('setAttribute' in scriptEl).toBe(true);
+        });
+		
+	});
+	return;
+	*/
+	describe('404s/301s',function(){
 
-            var str = S.ajax({
-                type:'get',
-                url:'interface.php?sleep=2',
-                async:false,
-                success: function(data) {
-                    S.log(data);
-                }
-            }).responseText;
-			expect(typeof str).toBe('string');
-			var o = JSON.parse(str);
-			expect(o['name']).toBe('test');
+        it('当请求为 404/301 时，get不触发回调', function() {
+
+			//如果不带随机数，ie下会从缓存中取，会认为链接状态为200，从而执行回调
+            IO.get('404_none.php?t='+S.now(), function() {
+                expect('此处').toBe('不运行');
+            });
+
+            IO.get('301.php', function() {
+                expect('此处').toBe('不运行');
+            });
+
+            waits(300);
+        });
+
+		it('当请求为404/301时，post不触发回调',function(){
 			
-		});
+            IO.post('404_none.php?t='+S.now(), function() {
+                expect('此处').toBe('不运行');
+            });
 
-		it('post 同步加载,等待2秒钟继续执行',function(){
+            IO.post('301.php', function() {
+                expect('此处').toBe('不运行');
+            });
 
-            var str = S.ajax({
-                type:'post',
-                url:'interface.php?sleep=2',
-                async:false,
-				data:{
-					myparam:'taobao'
-				},
-                success: function(data) {
-                    S.log(data);
-                }
-            }).responseText;
-			expect(typeof str).toBe('string');
-			var o = JSON.parse(str);
-			expect(o['myparam']).toBe('taobao');
+            waits(300);
 			
 		});
 		
+		it('404/301时，jsonp不触发回调',function(){
+
+			IO.jsonp('404_none.php?t='+S.now(),function(){
+                expect('此处').toBe('不运行');
+			});
+			
+            waits(300);
+		});
+
 		
 	});
 
 	describe('jsonp',function(){
+
 
 		it('请求错误的jsonp,不触发回调',function(){
 			IO.jsonp('');
@@ -53,23 +71,6 @@ describe('ajax', function() {
 			
 		});
 
-		it('自定义callback',function(){
-			var ok = false;
-			runs(function(){
-				window['customCallback'] = function(data){
-					ok = true;
-					expect(typeof data).toBe('object');
-					expect(data.callback).toBe('customCallback');
-
-				};
-				IO.getScript('interface.php?callback=customCallback');
-			});
-
-			waitsFor(function(){
-				return ok;
-			});
-			
-		});
 		it('自定义callback',function(){
 			var ok = false;
 			runs(function(){
@@ -141,26 +142,80 @@ describe('ajax', function() {
 			
 		});
 
-		it('404/301时，不触发回调',function(){
-
-			IO.jsonp('404.php',function(){
-                expect('此处').toBe('不运行');
-			});
-			
-            waits(300);
-		});
 
 		
 		
 	});
 
 
+	describe('同步请求的test case',function(){
+
+		it('get 同步加载,等待2秒钟继续执行',function(){
+			var str;
+
+			runs(function(){
+				str = S.ajax({
+					type:'get',
+					url:'interface.php?sleep=1&contype=text/json',
+					async:false
+				}).responseText;
+			});
+			runs(function(){
+				expect(typeof str).toBe('string');
+				var o = JSON.parse(S.trim(str));
+				expect(o['name']).toBe('test');
+			});
+			
+		});
+
+		it('post 同步加载,等待2秒钟继续执行',function(){
+			var str;
+
+			runs(function(){
+				str = S.ajax({
+					type:'post',
+					url:'interface.php?sleep=1&contype=text/json',
+					async:false
+				}).responseText;
+			});
+			runs(function(){
+				expect(typeof str).toBe('string');
+				var o = JSON.parse(S.trim(str));
+				expect(o['name']).toBe('test');
+			});
+			
+		});
+		
+		
+	});
+
+
+
 	describe('post',function(){
+
+		it('能正确发起post 请求，无参数,正确获取回调参数，类型是text/json',function(){
+			var ok = false;
+			IO.post('interface.php?t=post&contype=text/json',function(data){
+				ok = true;
+				//var o = JSON.parse(data);
+				expect(typeof data).toBe('object');
+				var o = data;
+                expect(o).not.toBe(undefined);
+                expect(o['name']).toBe('test');
+			});
+
+			waitsFor(function(){
+				return ok;
+			});
+			
+			
+		});
 
 		it('能正确发起post 请求，无参数,正确获取回调参数',function(){
 			var ok = false;
 			IO.post('interface.php?t=post',function(data){
 				ok = true;
+				expect(typeof data).toBe('string');
 				var o = JSON.parse(data);
                 expect(o).not.toBe(undefined);
                 expect(o['name']).toBe('test');
@@ -172,6 +227,7 @@ describe('ajax', function() {
 			
 			
 		});
+
 
 
 		it('能正确发起 post 请求, 参数为json，并正确获取参数',function(){
@@ -220,7 +276,7 @@ describe('ajax', function() {
             var ok, o;
 
             runs(function() {
-                IO.post('interface.php?t=post',function(data) {
+                IO.post('interface.php?contype=text/json',function(data) {
                     ok = true;
                     o = data;
                 }, 'json');
@@ -239,7 +295,7 @@ describe('ajax', function() {
 
 		it('json 参数 可以覆盖url参数',function(){
 			var ok = false;
-			IO.post('interface.php?t=post&foo=sk1',{
+			IO.post('interface.php?foo=sk1',{
 				foo:'sk2'	
 			},function(data){
 				ok = true;
@@ -249,9 +305,10 @@ describe('ajax', function() {
 			
 			waitsFor(function(){
 				return ok;
-			});
+			},'success',5000);
 			
 		});
+
 		it('正确处理 dataType 为 jsonp 的情况',function(){
             var ok, o;
 
@@ -297,6 +354,7 @@ describe('ajax', function() {
 			
 			
 		});
+
 		it('正确处理 dataType 为 xml 的情况,回调参数为xml对象',function(){
             var ok = false, o;
 
@@ -345,19 +403,7 @@ describe('ajax', function() {
             });
 			
 		});
-		it('当请求为404/301时，不触发回调',function(){
-			
-            IO.post('404.php', function() {
-                expect('此处').toBe('不运行');
-            });
 
-            IO.post('301.php', function() {
-                expect('此处').toBe('不运行');
-            });
-
-            waits(300);
-			
-		});
 		it('当 dataType 不为 jsonp, url 参数跨域时，不触发回调',function(){
             try {
                 IO.post('http://www.g.cn/', function() {
@@ -422,6 +468,7 @@ describe('ajax', function() {
 		
 		
 	});
+
 
     describe('get', function() {
 
@@ -584,18 +631,6 @@ describe('ajax', function() {
             });
         });
 
-        it('当请求为 404/301 时，不触发回调', function() {
-
-            IO.get('404.php', function() {
-                expect('此处').toBe('不运行');
-            });
-
-            IO.get('301.php', function() {
-                expect('此处').toBe('不运行');
-            });
-
-            waits(300);
-        });
 
         it('当 dataType 不为 jsonp, url 参数跨域时，不触发回调', function() {
 
@@ -650,11 +685,12 @@ describe('ajax', function() {
 
         it('能正确获取返回值', function() {
 
-            var xhr = IO.get('interface.php?t=get');
+			//如果不加时间戳，ie下会从缓存中取数据，得不到预期的xhr
+            var xhr = IO.get('interface.php?t='+S.now());
             expect('onreadystatechange' in xhr).toBe(true);
 
             // 注：jQuery 里，不跨域时，jsonp 返回 xhr. 跨域时，返回 void
-            var scriptEl = IO.jsonp('interface.php?t=get');
+            var scriptEl = IO.jsonp('interface.php?t='+S.now());
             expect('setAttribute' in scriptEl).toBe(true);
         });
     });
@@ -692,7 +728,7 @@ describe('ajax', function() {
                     expect(ev.ajaxConfig).not.toBe(undefined);
                     expect(ev.type).toBe('error');
                 });
-                IO.get('404.php');
+                IO.get('404_none.php');
             });
 
             waitsFor(function() {

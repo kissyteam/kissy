@@ -30,7 +30,12 @@ KISSY.add('ajax', function(S, undef) {
                 } :
                 function() {
                     try {
-                        return new window.ActiveXObject('Microsoft.XMLHTTP');
+                        //return new window.ActiveXObject('Microsoft.XMLHTTP');
+                        return S.UA.ie == 6 ? 
+								//iE 6 下请求缓存中的资源无法正确返回xhr.responseText,需要使用老版本的XMLHTTP
+								//jQuery 没有考虑请求缓存的情况
+								new window.ActiveXObject('Msxml2.XMLHTTP.5.0')://xhr 无状态值1
+								new window.ActiveXObject('Microsoft.XMLHTTP');
                     } catch(e) {
                     }
                 },
@@ -138,7 +143,6 @@ KISSY.add('ajax', function(S, undef) {
             if (!requestDone && xhr && (xhr.readyState === 4 || isTimeout === TIMEOUT)) {
                 requestDone = true;
                 xhr.onreadystatechange = noop;
-
                 status = (isTimeout === TIMEOUT) ? TIMEOUT :
                     xhrSuccessful(xhr) ? SUCCESS : ERROR;
 
@@ -146,6 +150,9 @@ KISSY.add('ajax', function(S, undef) {
                 try {
                     // process the data (runs the xml through httpData regardless of callback)
                     data = parseData(xhr, c.dataType);
+
+					//alert(xhr);
+					//S.log(data,'warn');
                 } catch(e) {
                     status = PARSERERR;
                 }
@@ -234,6 +241,10 @@ KISSY.add('ajax', function(S, undef) {
         try {
 			// IE error sometimes returns 1223 when it should be 204 so treat it as success, see #1450
             // ref: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+			// IE 中如果请求一个缓存住的页面，会出现如下状况 (jQuery中未考虑,此处也不作处理)：
+			// 		请求一个页面成功，但头输出为404,ie6/8下检测为200,ie7/ff/chrome/opera检测为404
+			// 		请求一个不存在的页面，ie 均检测为 200 ,ff/chrome/opera检测为404
+			// 		请求一个不存在的页面，ie6/7的statusText为'Not Found'，ie8的为'OK',statusText是可以被程序赋值的
 			return xhr.status >= 200 && xhr.status < 300 ||
 				xhr.status === 304 || xhr.status === 1223;
 		} catch(e) {}
@@ -288,6 +299,7 @@ KISSY.add('ajax', function(S, undef) {
 /**
  * TODO:
  *   - 给 Node 增加 load 方法?
+ *   - 请求缓存资源的状态的判断（主要针对404）？
  *
  * NOTES:
  *  2010.07
