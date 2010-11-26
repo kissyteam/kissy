@@ -17,7 +17,8 @@ describe('ajax', function() {
 	});
 	return;
 	*/
-	describe('404s/301s',function(){
+
+	describe('404s/301s', function(){
 
         it('当请求为 404/301 时，get不触发回调', function() {
 
@@ -59,16 +60,13 @@ describe('ajax', function() {
 		
 	});
 
-	describe('jsonp',function(){
-
+	describe('jsonp', function(){
 
 		it('请求错误的jsonp,不触发回调',function(){
 			IO.jsonp('');
 			IO.jsonp();
 			IO.jsonp(null);
 			expect('此处会运行').toBe('此处会运行');
-			
-			
 		});
 
 		it('自定义callback',function(){
@@ -94,7 +92,7 @@ describe('ajax', function() {
 			runs(function(){
 				IO({
 					url:'interface.php?t=get',
-					success: function(data, textStatus, xhr) {
+					success: function(data) {
 						ok = true;
 						expect(typeof data).toBe('object');
 					},
@@ -109,6 +107,7 @@ describe('ajax', function() {
 			});
 			
 		});
+        
 		it('不带参数请求jsonp',function(){
 			var ok = false;
 			runs(function(){
@@ -131,9 +130,8 @@ describe('ajax', function() {
 				myparam:'taobao'
 			},function(data){
 				expect(typeof data).toBe('object');
-				var o = data;
-                expect(o).not.toBe(undefined);
-                expect(o['myparam']).toBe('taobao');
+                expect(data).not.toBe(undefined);
+                expect(data['myparam']).toBe('taobao');
 				
 			});
 			
@@ -147,10 +145,9 @@ describe('ajax', function() {
 		
 	});
 
+	describe('同步请求的test case', function(){
 
-	describe('同步请求的test case',function(){
-
-		it('get 同步加载,等待2秒钟继续执行',function(){
+		it('get 同步加载,等待2秒钟继续执行', function(){
 			var str;
 
 			runs(function(){
@@ -199,9 +196,8 @@ describe('ajax', function() {
 				ok = true;
 				//var o = JSON.parse(data);
 				expect(typeof data).toBe('object');
-				var o = data;
-                expect(o).not.toBe(undefined);
-                expect(o['name']).toBe('test');
+                expect(data).not.toBe(undefined);
+                expect(data['name']).toBe('test');
 			});
 
 			waitsFor(function(){
@@ -376,7 +372,7 @@ describe('ajax', function() {
             });
 			
 		});
-		//TODO , 暂不支持
+		//TODO: 暂不支持
 		/*
 		it('正确处理 dataType 为 xml 的情况,回调参数为json对象',function(){
 
@@ -738,11 +734,3 @@ describe('ajax', function() {
     });
 
 });
-
-/**
- * TODO:
- *  - post/jsonp 测试
- *  - io 的全面测试，找出现有测试用例还没覆盖到的路径（不知有没有好用的 Test Coverage 检测工具?）
- *  - 目前只测试了 Chrome/Firefox/IE8+, 其它浏览器尚未测试
- *  - 同步的测试
- */

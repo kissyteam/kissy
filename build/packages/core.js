@@ -2424,8 +2424,8 @@ KISSY.add('event', function(S, undefined) {
 
             var ret, i = 0, len = listeners.length, listener, scope;
 
-            // 让 nodelist 等集合，等自定义 scope
-            if(target._getScopeNode) scope = target._getScopeNode(this);
+            // 让 nodelist 等集合，能自定义 scope
+            if(target.isCustomEventTarget && target.item) scope = target.item(this);
 
             for (; i < len; ++i) {
                 listener = listeners[i];
@@ -2543,7 +2543,7 @@ KISSY.add('event-object', function(S, undefined) {
 
         // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
         if(currentTarget.isCustomEventTarget) {
-            if(currentTarget._getScopeNode) currentTarget = currentTarget._getScopeNode(currentEl);
+            if(currentTarget.item) currentTarget = currentTarget.item(currentEl);
             self.target = self.currentTarget = currentTarget;
         }
     }
@@ -2909,7 +2909,8 @@ KISSY.add('node', function(S) {
 KISSY.add('nodelist', function(S) {
 
     var DOM = S.DOM,
-        AP = Array.prototype;
+        AP = Array.prototype,
+        isElementNode = DOM._isElementNode;
 
     /**
      * The NodeList class provides a wrapper for manipulating DOM NodeList.
@@ -2932,13 +2933,26 @@ KISSY.add('nodelist', function(S) {
         length: 0,
 
         /**
-         * Retrieves the Node instance at the given index
+         * 根据 index 或 DOMElement 获取对应的 KSNode
          */
         item: function(index) {
-            var ret = null;
-            if(DOM._isElementNode(this[index])) {
+            var ret = null, i, len;
+
+            // 找到 DOMElement 对应的 index
+            if (isElementNode(index)) {
+                for (i = 0, len = this.length; i < len; i++) {
+                    if (index === this[i]) {
+                        index = i;
+                        break;
+                    }
+                }
+            }
+
+            // 转换为 KSNode
+            if(isElementNode(this[index])) {
                 ret = new S.Node(this[index]);
             }
+
             return ret;
         },
 
@@ -3163,16 +3177,6 @@ KISSY.add('node-attach', function(S, undefined) {
         };
         delete P.fire;
     });
-
-    // 使得 Y.all('..').on('click', function(ev) { 这里的 this 能指向对应的 Node })
-    NLP._getScopeNode = function(el) {
-        for(var i = 0, len = this.length; i < len; i++) {
-            if(el === this[i]) {
-                return new S.Node(this[i]);
-            }
-        }
-        return null;
-    }
 });
 /*
 Copyright 2010, KISSY UI Library v1.1.6dev
@@ -3713,11 +3717,16 @@ KISSY.add('ajax', function(S, undef) {
             data: null,
             xhr: win.XMLHttpRequest ?
                 function() {
-                    return new window.XMLHttpRequest();
+                    return new win.XMLHttpRequest();
                 } :
                 function() {
                     try {
-                        return new window.ActiveXObject('Microsoft.XMLHTTP');
+                        // ie 6 下请求缓存中的资源无法正确返回 xhr.responseText, 需要使用老版本的 XMLHTTP
+                        // jQuery 没有考虑请求缓存的情况
+                        return new win.ActiveXObject(
+                            S.UA.ie == 6 ?
+                                'Msxml2.XMLHTTP.5.0' :
+                                'Microsoft.XMLHTTP');
                     } catch(e) {
                     }
                 },
@@ -3800,7 +3809,6 @@ KISSY.add('ajax', function(S, undef) {
             }
 
             // Set the Accepts header for the server, depending on the dataType
-            // Set the Accepts header for the server, depending on the dataType
 			xhr.setRequestHeader('Accept', c.dataType && c.accepts[c.dataType] ?
 				c.accepts[c.dataType] + ', */*; q=0.01' :
 				c.accepts._default );
@@ -3825,7 +3833,6 @@ KISSY.add('ajax', function(S, undef) {
             if (!requestDone && xhr && (xhr.readyState === 4 || isTimeout === TIMEOUT)) {
                 requestDone = true;
                 xhr.onreadystatechange = noop;
-
                 status = (isTimeout === TIMEOUT) ? TIMEOUT :
                     xhrSuccessful(xhr) ? SUCCESS : ERROR;
 
@@ -3833,6 +3840,9 @@ KISSY.add('ajax', function(S, undef) {
                 try {
                     // process the data (runs the xml through httpData regardless of callback)
                     data = parseData(xhr, c.dataType);
+
+					//alert(xhr);
+					//S.log(data,'warn');
                 } catch(e) {
                     status = PARSERERR;
                 }
@@ -3902,6 +3912,7 @@ KISSY.add('ajax', function(S, undef) {
         jsonp: function(url, data, callback) {
             if(S.isFunction(data)) {
                 callback = data;
+				data = null; // 占位符
             }
             return io.get(url, data, callback, JSONP);
         }
@@ -3913,13 +3924,17 @@ KISSY.add('ajax', function(S, undef) {
     S.jsonp = io.jsonp;
     S.IO = io;
     // 所有方法在 IO 下都可调 IO.ajax/get/post/getScript/jsonp
-    // S 下有便捷入口 S.io/S.ajax/getScript/jsonp
+    // S 下有便捷入口 S.io/ajax/getScript/jsonp
 
     //检测 xhr 是否成功
     function xhrSuccessful(xhr) {
         try {
 			// IE error sometimes returns 1223 when it should be 204 so treat it as success, see #1450
             // ref: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+			// IE 中如果请求一个缓存住的页面，会出现如下状况 (jQuery 中未考虑,此处也不作处理)：
+			// 		请求一个页面成功，但头输出为 404, ie6/8 下检测为 200, ie7/ff/chrome/opera 检测为 404
+			// 		请求一个不存在的页面，ie 均检测为 200 ,ff/chrome/opera检测为 404
+			// 		请求一个不存在的页面，ie6/7 的 statusText为 'Not Found'，ie8 的为 'OK', statusText 是可以被程序赋值的
 			return xhr.status >= 200 && xhr.status < 300 ||
 				xhr.status === 304 || xhr.status === 1223;
 		} catch(e) {}
@@ -3974,6 +3989,7 @@ KISSY.add('ajax', function(S, undef) {
 /**
  * TODO:
  *   - 给 Node 增加 load 方法?
+ *   - 请求缓存资源的状态的判断（主要针对404）？
  *
  * NOTES:
  *  2010.07
