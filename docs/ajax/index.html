@@ -17,11 +17,11 @@
     <div class="col-main">
         <div class="main-wrap">
             <div class="section summary">
-                <p>首先说声抱歉，ajax 模块没来得及在 v1.1.5 完成所有预期功能，并进行充分测试。为了保证发布质量，目前该模块仅包含 getScript 方法。</p>
-                <p>我们会很快完善并充分测试这个模块，最晚会在 v1.2 提供，敬请期待。相关 public api, 也期望听到您的建议。</p>
+                <p>Kissy ajax 组件对ajax作了基础封装，支持get/post/jsonp等方法，并支持全局事件的绑定</p>
             </div>
 
             <div class="section" id="node">
+				<!--section{{-->
                 <div class="member method">
                     <h4>
                         <a name="method_getScript">getScript</a>
@@ -37,6 +37,105 @@ S.getScript('http://path/to/filename.js', function() {
 </code></pre>
                     </div>
                 </div>
+				<!--section}}-->
+				<!--section{{-->
+                <div class="member method">
+                    <h4>
+                        <a name="method_getScript">KISSY.io/ajax/IO.get</a>
+						<code>KISSY.io.get(url, data, callback, dataType, _t)</code>
+                    </h4>
+                    <div class="detail">
+						<p><b>url | string</b>: 接口地址</p>
+						<p><b>data | string/json</b>: 附加数据，数据将转换成键值对附着在请求的url参数串中</p>
+						<p><b>callback | function</b> : 回调函数，参数为data,返回数据,textStatus,文本状态,xhr,ajax 对象</p> 
+						<p><b>dataType | string </b>: 可取值为json,jsonp,script,xml,html,text，其中如果值为json,回调参数data为对象，如果值为xml，回调参数为xml对象,其他情况的回调参数皆为字符串</p>
+						<p><b>_t | string</b> :可取值为post,get</p>
+                        <p>可省略参数</p>
+<pre class="example-code"><code>
+var S = KISSY;
+//在不指定dataType的情况下,data的类型和ajax响应头类型保持一致
+//若为text/json，data为json，若为text/xml，data为xml object,其他情况为text
+S.io.get('interface.php', function(data,textStatus,xhr) {
+	S.log(data);
+});
+</code></pre>
+                        <p>指定dataType</p>
+<pre class="example-code"><code>
+var S = KISSY;
+//如果ajax响应头类型和用户设置不一定的时候，以用户设置为准
+S.io.get('interface.php', function(data,textStatus,xhr) {
+	S.log(typeof data);//'object'
+},'json');
+</code></pre>
+                        <p>附加参数</p>
+<pre class="example-code"><code>
+var S = KISSY;
+//传入json
+S.io.get('interface.php',{k:'v'}, function(data) {
+	S.log(data);
+});
+//传入string
+S.io.get('interface.php','k=v', function(data) {
+	S.log(data);
+});
+</code></pre>
+                        <p>变身为jsonp</p>
+<pre class="example-code"><code>
+var S = KISSY;
+S.io.get('interface.php', function(data) {
+	S.log(data);
+}, 'jsonp');
+</code></pre>
+                    </div>
+                </div>
+				<!--section}}-->
+				<!--section{{-->
+                <div class="member method">
+                    <h4>
+                        <a name="method_getScript">KISSY.io/ajax/IO.post</a>
+						<code>KISSY.io.post(url, data, callback, dataType)</code>
+                    </h4>
+                    <div class="detail">
+						<p><b>url | string</b>: 接口地址</p>
+						<p><b>data | string/json</b>: 附加数据，数据将转换成键值对附着在请求的url参数串中</p>
+						<p><b>callback | function</b> : 回调函数，参数为data,返回数据,textStatus,文本状态,xhr,ajax 对象</p> 
+						<p><b>dataType | string </b>: 可取值为json,jsonp,script,xml,html,text，其中如果值为json,回调参数data为对象，如果值为xml，回调参数为xml对象,其他情况的回调参数皆为字符串</p>
+                        <p>常规用法</p>
+<pre class="example-code"><code>
+var S = KISSY;
+//直接使用
+S.io.post('interface',function(data){
+	S.log(data);
+});
+//带参数
+S.io.post('interface',{
+	k:'v'	
+},function(data){
+	S.log(data);
+});
+</code></pre>
+                    </div>
+                </div>
+				<!--section}}-->
+				<!--section{{-->
+                <div class="member method">
+                    <h4>
+                        <a name="method_getScript">KISSY.io/ajax/IO.jsonp</a>
+						<code>KISSY.jsonp(url, data, callback)</code>
+                    </h4>
+                    <div class="detail">
+                        <p>常规用法</p>
+<pre class="example-code"><code>
+var S = KISSY;
+//直接使用
+S.io.jsonp('interface.php',function(data){
+	S.log(typeof data);
+});
+//TODO
+</code></pre>
+                    </div>
+                </div>
+				<!--section}}-->
             </div>
 
         </div>
