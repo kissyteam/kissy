@@ -707,7 +707,7 @@ describe('ajax', function() {
                         expect(ev.type).toBe(type);
                     });
                 });
-                IO.get('interface.php?t=get', function() {
+                IO.get('interface.php?t='+S.now(), function() {
                     ok = true;
                 });
             });
@@ -728,7 +728,7 @@ describe('ajax', function() {
                     expect(ev.ajaxConfig).not.toBe(undefined);
                     expect(ev.type).toBe('error');
                 });
-                IO.get('404_none.php');
+                IO.get('404_none.php?t='+S.now());
             });
 
             waitsFor(function() {
