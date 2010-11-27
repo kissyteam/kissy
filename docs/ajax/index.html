@@ -18,7 +18,7 @@
         <div class="main-wrap">
             <div class="section summary">
                 <p>ajax 组件对常用 ajax 操作作了基础封装，支持 get/post/jsonp/getScript 等方法，并支持全局事件的绑定</p>
-                <p>ajax组件的命名空间为KISSY.ajax,别名为KISSY.io/KISSY.IO，可参照 <a href="../../src/ajax/demo.html">demo</a></p>
+                <p>ajax 组件的命名空间为 KISSY.ajax，别名为 KISSY.io/KISSY.IO，可参照 <a href="../../src/ajax/demo.html">demo</a></p>
             </div>
 
             <div class="section" id="node">
@@ -54,9 +54,9 @@ S.getScript('http://path/to/filename.js', function() {
 						<p><b>complete | function</b>: 请求完成的回调，在 success 调用之后触发,参数同 success</p>
 						<p><b>error | function</b>: 请求错误时的回调</p>
 						<p><b>async | boolean </b>: 是否为异步，默认为 true</p>
-						<p><b>jsonp | string </b>: 指定 callback 的别名,请求url会生成"url?{$jsonp}=jsonp123456"</p>
-						<p><b>jsonpCallback | string </b>: 指定 callback 的参数,请求url会生成"url?callback={$jsonpCallback}"</p>
-						<p><b>dataType | string </b>: 请求数据类型,将决定返回值data的类型,若不指定，返回值data的类型由响应头决定，可取值为 json | jsonp | script | xml | html | text</p>
+						<p><b>jsonp | string </b>: 指定 callback 的别名,请求url会生成 "url?{$jsonp}=jsonp123456"</p>
+						<p><b>jsonpCallback | string </b>: 指定 callback 的参数,请求 url 会生成 "url?callback={$jsonpCallback}"</p>
+						<p><b>dataType | string </b>: 请求数据类型,将决定返回值 data 的类型,若不指定，返回值data的类型由响应头决定，可取值为 json | jsonp | script | xml | html | text</p>
                         <p>直接使用</p>
 <pre class="example-code"><code>
 var S = KISSY;
@@ -82,15 +82,15 @@ S.io({
                     </h4>
                     <div class="detail">
 						<p><b>url | string</b>: 接口地址</p>
-						<p><b>data | string/json</b>: 附加数据，数据将转换成键值对附着在请求的url参数串中</p>
-						<p><b>callback | function</b> : 回调函数，参数为data,返回数据,textStatus,文本状态,xhr,ajax 对象</p> 
-						<p><b>dataType | string </b>: 可取值为json,jsonp,script,xml,html,text，其中如果值为json,回调参数data为对象，如果值为xml，回调参数为xml对象,其他情况的回调参数皆为字符串</p>
-						<p><b>_t | string</b> :可取值为post,get</p>
+						<p><b>data | string/json</b>: 附加数据，数据将转换成键值对附着在请求的 url 参数串中</p>
+						<p><b>callback | function</b> : 回调函数，参数为 data,返回数据,textStatus,文本状态,xhr,ajax 对象</p> 
+						<p><b>dataType | string </b>: 可取值为 json,jsonp,script,xml,html,text，其中如果值为json,回调参数data为对象，如果值为xml，回调参数为xml对象,其他情况的回调参数皆为字符串</p>
+						<p><b>_t | string</b> :可取值为 post,get</p>
                         <p>直接使用</p>
 <pre class="example-code"><code>
 var S = KISSY;
-//在不指定dataType的情况下,data的类型和ajax响应头类型保持一致
-//若为text/json，data为json，若为text/xml，data为xml object,其他情况为text
+//在不指定 dataType 的情况下,data 的类型和 ajax 响应头类型保持一致
+//若为 text/json，data 为 json，若为 text/xml，data 为 xml object，其他情况为 text
 S.io.get('interface.php', function(data,textStatus,xhr) {
 	S.log(data);
 });
@@ -98,7 +98,7 @@ S.io.get('interface.php', function(data,textStatus,xhr) {
                         <p>指定dataType</p>
 <pre class="example-code"><code>
 var S = KISSY;
-//如果ajax响应头类型和用户设置不一定的时候，以用户设置为准
+//如果 ajax 响应头类型和用户设置不一定的时候，以用户设置为准
 S.io.get('interface.php', function(data,textStatus,xhr) {
 	S.log(typeof data);//'object'
 },'json');
@@ -106,11 +106,11 @@ S.io.get('interface.php', function(data,textStatus,xhr) {
                         <p>附加参数</p>
 <pre class="example-code"><code>
 var S = KISSY;
-//传入json
+//传入 json
 S.io.get('interface.php',{k:'v'}, function(data) {
 	S.log(data);
 });
-//传入string
+//传入 string
 S.io.get('interface.php','k=v', function(data) {
 	S.log(data);
 });
@@ -133,9 +133,9 @@ S.io.get('interface.php', function(data) {
                     </h4>
                     <div class="detail">
 						<p><b>url | string</b>: 接口地址</p>
-						<p><b>data | string/json</b>: 附加数据，数据将转换成键值对附着在请求的url参数串中</p>
-						<p><b>callback | function</b> : 回调函数，参数为data,返回数据,textStatus,文本状态,xhr,ajax 对象</p> 
-						<p><b>dataType | string </b>: 可取值为json,jsonp,script,xml,html,text，其中如果值为json,回调参数data为对象，如果值为xml，回调参数为xml对象,其他情况的回调参数皆为字符串</p>
+						<p><b>data | string/json</b>: 附加数据，数据将转换成键值对附着在请求的 url 参数串中</p>
+						<p><b>callback | function</b> : 回调函数，参数为 data,返回数据,textStatus,文本状态,xhr,ajax 对象</p> 
+						<p><b>dataType | string </b>: 可取值为 json,jsonp,script,xml,html,text，其中如果值为 json,回调参数 data 为对象，如果值为 xml，回调参数为 xml 对象,其他情况的回调参数皆为字符串</p>
                         <p>直接使用(无参数)</p>
 <pre class="example-code"><code>
 var S = KISSY;
@@ -144,10 +144,10 @@ S.io.post('interface',function(data){
 	S.log(data);
 });
 </code></pre>
-                        <p>带参数提交post请求</p>
+                        <p>带参数提交 post 请求</p>
 <pre class="example-code"><code>
 var S = KISSY;
-//带json参数
+//带 json 参数
 S.io.post('interface',{
 	k:'v'	
 },function(data){
@@ -169,7 +169,7 @@ S.io.post('interface','k=v',function(data){
                     </h4>
                     <div class="detail">
 						<p><b>url | string</b>: 接口地址</p>
-						<p><b>data | string/json</b>: 附加数据，数据将转换成键值对附着在请求的url参数串中</p>
+						<p><b>data | string/json</b>: 附加数据，数据将转换成键值对附着在请求的 url 参数串中</p>
 						<p><b>callback | function</b>: 回调函数</p>
                         <p>常规用法</p>
 <pre class="example-code"><code>
@@ -182,13 +182,13 @@ S.io.jsonp('interface.php',function(data){
                         <p>自定义callback的参数</p>
 <pre class="example-code"><code>
 var S = KISSY;
-//使用getScript模拟
+//使用 getScript 模拟
 window['customCallback'] = function(data){
 	//callback
 };
 S.getScript('interface.php?callback=customCallback');
 </code></pre>
-                        <p>指定callbackName</p>
+                        <p>指定 callbackName</p>
 <pre class="example-code"><code>
 var S = KISSY;
 //将会发起类似 interface.php?customCallback=jsonp123455 的请求
@@ -201,10 +201,10 @@ S.ajax({
 	jsonp:'customCallback'
 });
 </code></pre>
-                        <p>带参数提交jsonp</p>
+                        <p>带参数提交 jsonp</p>
 <pre class="example-code"><code>
 var S = KISSY;
-//参数可以为json，也可以为字符串
+//参数可以为 json，也可以为字符串
 S.jsonp('interface.php?sleep=0',{
 	myparam:'taobao'
 },function(data){
