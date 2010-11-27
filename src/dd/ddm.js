@@ -1,6 +1,6 @@
 /**
  * dd support for kissy
- * @author: yiminghe@gmail.com
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add('dd', function(S) {
 
@@ -83,7 +83,8 @@ KISSY.add('dd', function(S) {
             self.set('activeDrag', drag);
 
             //真正开始移动了才激活垫片
-            self._activeShim();
+            if (drag.get("shim"))
+                self._activeShim();
             drag._start();
         },
 
@@ -149,7 +150,11 @@ KISSY.add('dd', function(S) {
             }
             //防止 ie 莫名选择文字
             else if (document.selection) {
-                document.selection.empty();
+                try {
+                    document.selection.empty();
+                }
+                catch(e) {
+                }
             }
         },
 

@@ -74,7 +74,7 @@ KISSY.add('event', function(S, undefined) {
 
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
-                        event = new S.EventObject(target, event, type);
+                        event = new S.EventObject(target, event, type, this);
                         if (S.isPlainObject(eventData)) {
                             S.mix(event, eventData);
                         }
@@ -82,7 +82,7 @@ KISSY.add('event', function(S, undefined) {
                     if (special['setup']) {
                         special['setup'](event);
                     }
-                    return (special.handle || Event._handle)(target, event, events[type].listeners);
+                    return (special.handle || Event._handle).call(this, target, event, events[type].listeners);
                 };
 
                 events[type] = {
@@ -100,7 +100,7 @@ KISSY.add('event', function(S, undefined) {
             }
 
             // 增加 listener
-            events[type].listeners.push({fn: fn, scope: scope || target});
+            events[type].listeners.push({fn: fn, scope: scope});
         },
 
         /**
@@ -141,7 +141,7 @@ KISSY.add('event', function(S, undefined) {
                         special = Event.special[type] || { };
                         simpleRemove(target, special.fix || type, eventsType.handle);
                     }
-                    else if (target._addEvent) { // such as Node
+                    else if (target._removeEvent) { // such as Node
                         target._removeEvent(type, eventsType.handle);
                     }
                     delete events[type];
@@ -165,11 +165,14 @@ KISSY.add('event', function(S, undefined) {
              sure we'll call all of them.*/
             listeners = listeners.slice(0);
 
-            var ret, i = 0, len = listeners.length, listener;
+            var ret, i = 0, len = listeners.length, listener, scope;
+
+            // 让 nodelist 等集合，能自定义 scope
+            if(target.isCustomEventTarget && target.item) scope = target.item(this);
 
             for (; i < len; ++i) {
                 listener = listeners[i];
-                ret = listener.fn.call(listener.scope || target, event);
+                ret = listener.fn.call(scope || listener.scope || target, event);
 
                 // 自定义事件对象，可以用 return false 来立刻停止后续监听函数
                 // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡

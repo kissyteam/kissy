@@ -16,6 +16,8 @@ History:
 
 ### v1.1.5 -> v1.x.x (2010/MM/DD)
 
+ - [!] 将 S.one/all(selector).on(type, function(ev) { ev.target/currentTarget 由原来的裸节点变成对应 Node })
+ - [!] 将 S.all(selector).on(type, function() { this 由 NodeList 变成对应 Node })
  - [+] 增加了 append/appendTo/prepend/prependTo [尚缺文档]
  - [+] 采用 Jasmine 构建所有正式组件的测试用例 [Understanding JavaScript Testing](http://kissyui.com/blog/2010/10/understanding-javascript-testing/)
  - [+] gallery 增加 Sliding Label demo

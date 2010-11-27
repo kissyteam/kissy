@@ -169,13 +169,11 @@ KISSY.add('node-attach', function(S, undefined) {
                 Event._simpleAdd(this[i], type, handle, capture);
             }
         };
-
         P._removeEvent = function(type, handle, capture) {
             for (var i = 0, len = this.length; i < len; i++) {
                 Event._simpleRemove(this[i], type, handle, capture);
             }
         };
-
         delete P.fire;
     });
 });

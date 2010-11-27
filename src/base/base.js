@@ -1,6 +1,6 @@
 /**
  * @module  Base
- * @author  lifesinger@gmail.com, 承玉<yiminghe@gmail.com>
+ * @author  lifesinger@gmail.com , 承玉<yiminghe@gmail.com>
  */
 KISSY.add('base', function (S) {
     var UI_SET = "_uiSet",
@@ -183,7 +183,7 @@ KISSY.add('base', function (S) {
                         //自动绑定事件到对应函数
                         (function(a, m) {
                             self.on("after" + capitalFirst(a) + "Change", function(ev) {
-                                self[m](ev.newVal);
+                                self[m](ev.newVal,ev);
                             });
                         })(a, m);
                     }
@@ -267,4 +267,5 @@ KISSY.add('base', function (S) {
 
 /**
  * 2011-11-08 承玉重构，Base && yui3 Widget 压缩一下，增加扩展类支持，组件初始化生命周期以及 htmlparser
+ * 测试 crlf
  */
