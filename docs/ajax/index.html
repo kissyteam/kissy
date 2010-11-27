@@ -42,7 +42,7 @@ S.getScript('http://path/to/filename.js', function() {
 				<!--section{{-->
                 <div class="member method">
                     <h4>
-                        <a name="method_getScript">ajax</a>
+                        <a name="method_ajax">ajax</a>
 						<code>KISSY.ajax/io/IO(config)</code>
 						config为json，其中的成员包括：
                     </h4>
@@ -77,7 +77,7 @@ S.io({
 				<!--section{{-->
                 <div class="member method">
                     <h4>
-                        <a name="method_getScript">get</a>
+                        <a name="method_get">get</a>
 						<code>KISSY.io.get(url, data, callback, dataType, _t)</code>
                     </h4>
                     <div class="detail">
@@ -128,7 +128,7 @@ S.io.get('interface.php', function(data) {
 				<!--section{{-->
                 <div class="member method">
                     <h4>
-                        <a name="method_getScript">post</a>
+                        <a name="method_post">post</a>
 						<code>KISSY.io.post(url, data, callback, dataType)</code>
                     </h4>
                     <div class="detail">
@@ -164,7 +164,7 @@ S.io.post('interface','k=v',function(data){
 				<!--section{{-->
                 <div class="member method">
                     <h4>
-                        <a name="method_getScript">jsonp</a>
+                        <a name="method_jsonp">jsonp</a>
 						<code>KISSY.jsonp(url, data, callback)</code>
                     </h4>
                     <div class="detail">
@@ -217,7 +217,7 @@ S.jsonp('interface.php?sleep=0',{
 				<!--section{{-->
                 <div class="member method">
                     <h4>
-                        <a name="method_getScript">全局事件绑定</a>
+                        <a name="method_on">全局事件绑定</a>
 						<code>KISSY.ajax.on(type, callback)</code>
                     </h4>
                     <div class="detail">
@@ -245,9 +245,14 @@ IO.on('complete', function() {
         <div class="sub-wrap">
             <div class="loc"><a href="../index.html">home</a> &rsaquo; ajax :</div>
             <div class="toc">
-                <h3>Sub modules</h3>
+                <h3>Methods</h3>
                 <ul>
                     <li><a href="#method_getScript">getScript</a></li>
+                    <li><a href="#method_ajax">ajax</a></li>
+                    <li><a href="#method_get">get</a></li>
+                    <li><a href="#method_post">post</a></li>
+                    <li><a href="#method_jsonp">jsonp</a></li>
+                    <li><a href="#method_on">on (全局事件)</a></li>
                 </ul>
             </div>
         </div>
