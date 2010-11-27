@@ -18,7 +18,7 @@
         <div class="main-wrap">
             <div class="section summary">
                 <p>ajax 组件对常用 ajax 操作作了基础封装，支持 get/post/jsonp/getScript 等方法，并支持全局事件的绑定</p>
-                <p>ajax 组件的命名空间为 KISSY.ajax，别名为 KISSY.io/KISSY.IO，可参照 <a href="../../src/ajax/demo.html">demo</a></p>
+                <p>ajax 组件的命名空间为 KISSY.IO, 常用使用场景可参照 <a href="../../src/ajax/demo.html">demo</a></p>
             </div>
 
             <div class="section" id="node">
@@ -26,7 +26,7 @@
                 <div class="member method">
                     <h4>
                         <a name="method_getScript">getScript</a>
-                        <code>void <em>getScript</em>()</code>
+                        <code>HTMLElement <em>getScript</em>( url, success, charset )</code>
                     </h4>
                     <div class="detail">
                         <p>动态加载 js 脚本。</p>
@@ -43,7 +43,7 @@ S.getScript('http://path/to/filename.js', function() {
                 <div class="member method">
                     <h4>
                         <a name="method_ajax">ajax</a>
-						<code>KISSY.ajax/io/IO(config)</code>
+                        <code>XHR|HTMLElement <em>ajax</em>( config )</code>
 						config 为 json，其中的成员包括：
                     </h4>
                     <div class="detail">
@@ -60,7 +60,7 @@ S.getScript('http://path/to/filename.js', function() {
                         <p>直接使用</p>
 <pre class="example-code"><code>
 var S = KISSY;
-//S.io 可以写为 S.IO / S.ajax
+//S.io 可以写为 S.ajax
 S.io({
 	type: 'POST',
 	url: 'interface.php',
@@ -78,14 +78,13 @@ S.io({
                 <div class="member method">
                     <h4>
                         <a name="method_get">get</a>
-						<code>KISSY.io.get(url, data, callback, dataType, _t)</code>
+						<code>XHR|HTMLElement get(url, data, callback, dataType)</code>
                     </h4>
                     <div class="detail">
 						<p><b>url | string</b>: 接口地址</p>
 						<p><b>data | string/json</b>: 附加数据，数据将转换成键值对附着在请求的 url 参数串中</p>
 						<p><b>callback | function</b> : 回调函数，参数为 data,返回数据,textStatus,文本状态,xhr,ajax 对象</p> 
 						<p><b>dataType | string </b>: 可取值为 json,jsonp,script,xml,html,text，其中如果值为json,回调参数data为对象，如果值为xml，回调参数为xml对象,其他情况的回调参数皆为字符串</p>
-						<p><b>_t | string</b> :可取值为 post,get</p>
                         <p>直接使用</p>
 <pre class="example-code"><code>
 var S = KISSY;
@@ -97,28 +96,28 @@ S.io.get('interface.php', function(data,textStatus,xhr) {
 </code></pre>
                         <p>指定dataType</p>
 <pre class="example-code"><code>
-var S = KISSY;
+var S = KISSY, IO = S.IO;
 //如果 ajax 响应头类型和用户设置不一定的时候，以用户设置为准
-S.io.get('interface.php', function(data,textStatus,xhr) {
+IO.get('interface.php', function(data,textStatus,xhr) {
 	S.log(typeof data);//'object'
 },'json');
 </code></pre>
                         <p>附加参数</p>
 <pre class="example-code"><code>
-var S = KISSY;
+var S = KISSY, IO = S.IO;
 //传入 json
-S.io.get('interface.php',{k:'v'}, function(data) {
+IO.get('interface.php',{k:'v'}, function(data) {
 	S.log(data);
 });
 //传入 string
-S.io.get('interface.php','k=v', function(data) {
+IO.get('interface.php','k=v', function(data) {
 	S.log(data);
 });
 </code></pre>
                         <p>变身为jsonp</p>
 <pre class="example-code"><code>
-var S = KISSY;
-S.io.get('interface.php', function(data) {
+var S = KISSY, IO = S.IO;
+IO.get('interface.php', function(data) {
 	S.log(data);
 }, 'jsonp');
 </code></pre>
@@ -129,7 +128,7 @@ S.io.get('interface.php', function(data) {
                 <div class="member method">
                     <h4>
                         <a name="method_post">post</a>
-						<code>KISSY.io.post(url, data, callback, dataType)</code>
+						<code>XHR post(url, data, callback, dataType)</code>
                     </h4>
                     <div class="detail">
 						<p><b>url | string</b>: 接口地址</p>
@@ -138,23 +137,23 @@ S.io.get('interface.php', function(data) {
 						<p><b>dataType | string </b>: 可取值为 json,jsonp,script,xml,html,text，其中如果值为 json,回调参数 data 为对象，如果值为 xml，回调参数为 xml 对象,其他情况的回调参数皆为字符串</p>
                         <p>直接使用(无参数)</p>
 <pre class="example-code"><code>
-var S = KISSY;
+var S = KISSY, IO = S.IO;
 //直接使用
-S.io.post('interface',function(data){
+IO.post('interface',function(data){
 	S.log(data);
 });
 </code></pre>
                         <p>带参数提交 post 请求</p>
 <pre class="example-code"><code>
-var S = KISSY;
+var S = KISSY, IO = S.IO;
 //带 json 参数
-S.io.post('interface',{
+IO.post('interface',{
 	k:'v'	
 },function(data){
 	S.log(data);
 });
 //带 string 参数
-S.io.post('interface','k=v',function(data){
+IO.post('interface','k=v',function(data){
 	S.log(data);
 });
 </code></pre>
@@ -165,7 +164,7 @@ S.io.post('interface','k=v',function(data){
                 <div class="member method">
                     <h4>
                         <a name="method_jsonp">jsonp</a>
-						<code>KISSY.jsonp(url, data, callback)</code>
+						<code>HTMLElement jsonp(url, data, callback)</code>
                     </h4>
                     <div class="detail">
 						<p><b>url | string</b>: 接口地址</p>
@@ -175,7 +174,7 @@ S.io.post('interface','k=v',function(data){
 <pre class="example-code"><code>
 var S = KISSY;
 //直接使用
-S.io.jsonp('interface.php',function(data){
+S.jsonp('interface.php',function(data){
 	S.log(typeof data);
 });
 </code></pre>
@@ -218,14 +217,14 @@ S.jsonp('interface.php?sleep=0',{
                 <div class="member method">
                     <h4>
                         <a name="method_on">全局事件绑定</a>
-						<code>KISSY.ajax.on(type, callback)</code>
+						<code>KISSY.IO.on(type, callback)</code>
                     </h4>
                     <div class="detail">
 						<p><b>type | string</b>: 类型，可取值为 start,complete,stop,send</p>
 						<p><b>callback | function</b>: 回调函数</p>
                         <p>常规用法</p>
 <pre class="example-code"><code>
-var S = KISSY,IO = S.io;
+var S = KISSY,IO = S.IO;
 // 全局事件
 IO.on('start', function() {
 	//ajax 请求开始事件
