@@ -1,8 +1,8 @@
 /**
  * @module  Base
- * @author  lifesinger@gmail.com , 承玉<yiminghe@gmail.com>
+ * @author  lifesinger@gmail.com  , 承玉<yiminghe@gmail.com>
  */
-KISSY.add('base', function (S) {
+KISSY.add('base' , function (S) {
     var UI_SET = "_uiSet",
         SRC_NODE = "srcNode",
         capitalFirst = S.Attribute.capitalFirst;
@@ -268,4 +268,5 @@ KISSY.add('base', function (S) {
 /**
  * 2011-11-08 承玉重构，Base && yui3 Widget 压缩一下，增加扩展类支持，组件初始化生命周期以及 htmlparser
  * 测试 crlf
+ * 
  */
