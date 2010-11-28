@@ -182,14 +182,14 @@ KISSY.add('datalazyload', function(S, undefined) {
          * @protected
          */
         _initLoadEvent: function() {
-            var timer, self = this;
+            var timer, self = this, resizeHandler;
 
             // scroll 和 resize 时，加载图片
             Event.on(win, SCROLL, loader);
-            Event.on(win, RESIZE, function() {
+            Event.on(win, RESIZE, (resizeHandler = function() {
                 self.threshold = self._getThreshold();
                 loader();
-            });
+            }));
 
             // 需要立即加载一次，以保证第一屏的延迟项可见
             if (self._getItemsLength()) {
@@ -212,7 +212,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                 self._loadItems();
                 if (self._getItemsLength() === 0) {
                     Event.remove(win, SCROLL, loader);
-                    Event.remove(win, RESIZE, loader);
+                    Event.remove(win, RESIZE, resizeHandler);
                 }
             }
         },
