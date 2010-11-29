@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>Base Test</title>
+<title>Attribute Test</title>
 <style>
     .settings, .ks-test-form button {
         display: none
@@ -14,9 +14,12 @@
 <script src="../../src/test/test.js"></script>
 <script> KISSY.Test.Config.times = 1; </script>
 
-<script src="../../build/kissy.js"></script>
-<script src="../attribute/attribute.js"></script>
-<script src="base.js"></script>
+<script src="../../build/seed/seed-pkg.js"></script>
+<script src="../../build/ua/ua-pkg.js"></script>
+<script src="../../build/dom/dom-pkg.js"></script>
+<script src="../../build/event/event-pkg.js"></script>
+
+<script src="attribute.js"></script>
 
 <script>
 
@@ -24,13 +27,15 @@
 
         S.Test.init();
 
-        function Test(config) {
-            Test.superclass.constructor.call(this, config);
+        // test code
+        function Test() {
         }
 
-        S.extend(Test, S.Base);
+        S.augment(Test, S.Attribute);
 
-        Test.ATTRS = {
+        var test = new Test();
+
+        test.addAttrs({
             test: {
                 value: 1,
                 setter: function (v) {
@@ -41,10 +46,7 @@
                     return v;
                 }
             }
-        };
-
-        var test = new Test( { test: [1, 2] } );
-        alert(test.get('test'));
+        }, { test: 99 });
 
         test.on("beforeTestChange", function(e) {
             S.Test.echo("***********************************");
