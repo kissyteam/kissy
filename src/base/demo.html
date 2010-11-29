@@ -19,7 +19,7 @@
 <script src="../../build/dom/dom-pkg.js"></script>
 <script src="../../build/event/event-pkg.js"></script>
 
-<script src="../attribute/attribute.js"></script>
+<script src="attribute.js"></script>
 <script src="base.js"></script>
 
 <script>
@@ -48,7 +48,7 @@
         };
 
         var test = new Test( { test: [1, 2] } );
-        alert(test.get('test'));
+        S.log(test.get('test'));
 
         test.on("beforeTestChange", function(e) {
             S.Test.echo("***********************************");

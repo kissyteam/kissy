@@ -1,6 +1,6 @@
 /**
  * drag extension for position
- * @author:承玉<yiminghe@gmail.com>
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-drag", function(S) {
     S.namespace('Ext');

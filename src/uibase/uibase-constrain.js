@@ -1,6 +1,6 @@
 /**
  * constrain extension for kissy
- * @author:承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add("ext-constrain", function(S) {
     S.namespace("Ext");

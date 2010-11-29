@@ -31,7 +31,7 @@ KISSY.add('attribute', function(S, undefined) {
         //host.__attrVals = {};
     }
 
-    S.augment(Attribute, S.EventTarget, {
+    S.augment(Attribute, {
 
         __initAttrs: function() {
             var host = this;
