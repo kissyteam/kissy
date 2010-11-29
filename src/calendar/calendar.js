@@ -146,7 +146,28 @@ KISSY.add('calendar', function(S, undefined) {
                 if (e.target.attr('id') == self.id){
 					return;
 				}
+
+				if(self.con.css('visibility') == 'hidden') return ;
+				var inRegion = function(dot,r){
+					if(dot[0]> r[0].x && dot[0]<r[1].x && dot[1] > r[0].y && dot[1] < r[1].y){
+						return true;
+					}else{
+						return false;
+					}
+				};
+
+				/*
                 if (!S.DOM.contains(S.one('#' + self.C_Id), e.target)) {
+				*/
+				if(!inRegion([e.pageX,e.pageY],[
+								{
+									x:self.con.offset().left,
+									y:self.con.offset().top
+								},
+								{
+									x:self.con.offset().left + self.con.width(),
+									y:self.con.offset().top + self.con.height()
+								}])){
                     self.hide();
                 }
             });

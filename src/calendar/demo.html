@@ -48,6 +48,9 @@
 <h3>Popup日历，默认点击触发，点击空白处关闭</h3>
 <input type="text" id="J_Popup" style="margin-left:50px;" />
 <hr size=1 />
+<h3>Popup日历，默认点击触发，选择范围</h3>
+<input type="text" id="J_Popup2" style="margin-left:50px;" />
+<hr size=1 />
 <h3>Popup日历，单选关闭，focus事件触发时弹出日历</h3>
 <a href="javascript:void(0);" id="J_PopupClosable" style="margin-left:50px;">click here!</a>
 <hr size=1 />
@@ -165,10 +168,22 @@ KISSY.use('calendar',function(S){
 	new S.Calendar('#J_Popup',{
 		popup:true,
 		triggerType:['click'],
-		minDate:new Date(),
-		maxDate:showdate(10,new Date())
+		closable:true
 	}).on('select',function(e){
 		S.one('#J_Popup').val(S.Date.format(e.date,'localFullDate'));
+	});
+
+	//Popup日历,默认点击触发,选择范围
+	var k = new S.Calendar('#J_Popup2',{
+		popup:true,
+		triggerType:['click'],
+		closable:false,
+		pages:2,
+		rangeSelect:true
+	}).on('rangeSelect',function(e){
+		alert(e.start+' '+e.end);
+		k.hide();
+		//S.one('#J_Popup').val(S.Date.format(e.date,'localFullDate'));
 	});
 
 	//Popup日历,单选关闭

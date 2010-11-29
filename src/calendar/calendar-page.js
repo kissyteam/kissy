@@ -181,7 +181,7 @@ KISSY.add('calendar-page', function(S) {
                 }
 
                 cc.EV[0] = con.one('div.ks-dbd').on('click', function(e) {
-                    e.preventDefault();
+                    //e.preventDefault();
                     e.target = S.Node(e.target);
                     if (e.target.hasClass('ks-null')){
 						return;
