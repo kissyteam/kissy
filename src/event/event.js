@@ -56,7 +56,7 @@ KISSY.add('event', function(S, undefined) {
 
             // 不是有效的 target 或 参数不对
             if (id === -1 || !type || !S.isFunction(fn)) return;
-
+            scope = scope || target;
             // 还没有添加过任何事件
             if (!id) {
                 setID(target, (id = guid++));
@@ -118,14 +118,14 @@ KISSY.add('event', function(S, undefined) {
             if (c.target !== target) return; // target 不匹配
             scope = scope || target;
             events = c.events || { };
-            
+
             if ((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
 
                 // 移除 fn
                 if (S.isFunction(fn) && len) {
-                    for (i = 0, j = 0, t = []; i < len; ++i) {
+                    for (i = 0,j = 0,t = []; i < len; ++i) {
                         if (fn !== listeners[i].fn
                             || scope !== listeners[i].scope) {
                             t[j++] = listeners[i];
@@ -168,7 +168,7 @@ KISSY.add('event', function(S, undefined) {
             var ret, i = 0, len = listeners.length, listener, scope;
 
             // 让 nodelist 等集合，能自定义 scope
-            if(target.isCustomEventTarget && target.item) scope = target.item(this);
+            if (target.isCustomEventTarget && target.item) scope = target.item(this);
 
             for (; i < len; ++i) {
                 listener = listeners[i];
