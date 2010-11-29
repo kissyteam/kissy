@@ -25,7 +25,7 @@ KISSY.add('attribute', function(S, undefined) {
          }
          }
          */
-        //host.__attrs = { };
+        //host.__attrs = {};
 
         /**
          * attribute value
@@ -33,20 +33,20 @@ KISSY.add('attribute', function(S, undefined) {
          attrName: attrVal
          }
          */
-        //host.__attrVals = { };
+        //host.__attrVals = {};
     }
 
-    S.augment(Attribute, {
+    S.augment(Attribute, S.EventTarget, {
 
         __initAttrs: function() {
             var host = this;
             if (host.__attrs) return;
 
-            host.__attrs = { };
-            host.__attrVals = { };
+            host.__attrs = {};
+            host.__attrVals = {};
         },
 
-        getDefAttrs:function() {
+        __getDefAttrs: function() {
             return S.clone(this.__attrs);
         },
 
@@ -64,7 +64,7 @@ KISSY.add('attribute', function(S, undefined) {
             var host = this;
 
             host.__initAttrs();
-            host.__attrs[name] = S.clone(attrConfig || { });
+            host.__attrs[name] = S.clone(attrConfig || {});
 
             return host;
         },
@@ -92,7 +92,7 @@ KISSY.add('attribute', function(S, undefined) {
          * Checks if the given attribute has been added to the host.
          */
         hasAttr: function(name) {
-            return name && (name in (this.__attrs || { }));
+            return name && (name in (this.__attrs || {}));
         },
 
         /**
@@ -112,7 +112,7 @@ KISSY.add('attribute', function(S, undefined) {
         /**
          * Sets the value of an attribute.
          */
-        set: function (name, value) {
+        set: function(name, value) {
             var host = this,
                 prevVal = host.get(name);
 
@@ -142,7 +142,7 @@ KISSY.add('attribute', function(S, undefined) {
         /**
          * internal use, no event involved, just set.
          */
-        __set: function (name, value) {
+        __set: function(name, value) {
             var host = this,
                 setValue,
                 attrConfig = host.__attrs[name],
@@ -159,7 +159,7 @@ KISSY.add('attribute', function(S, undefined) {
         /**
          * Gets the current value of the attribute.
          */
-        get: function (name) {
+        get: function(name) {
             var host = this, attrConfig, getter, ret;
 
             host.__initAttrs();
@@ -224,5 +224,5 @@ KISSY.add('attribute', function(S, undefined) {
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    Attribute.capitalFirst = capitalFirst;
+    Attribute.__capitalFirst = capitalFirst;
 });
