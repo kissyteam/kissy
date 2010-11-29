@@ -164,7 +164,9 @@ KISSY.use('calendar',function(S){
 	//Popup日历,默认点击触发
 	new S.Calendar('#J_Popup',{
 		popup:true,
-		triggerType:['click']
+		triggerType:['click'],
+		minDate:new Date(),
+		maxDate:showdate(10,new Date())
 	}).on('select',function(e){
 		S.one('#J_Popup').val(S.Date.format(e.date,'localFullDate'));
 	});

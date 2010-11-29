@@ -183,10 +183,10 @@ KISSY.add('calendar-page', function(S) {
                 cc.EV[0] = con.one('div.ks-dbd').on('click', function(e) {
                     e.preventDefault();
                     e.target = S.Node(e.target);
-                    if (e.target.hasClass('null')){
+                    if (e.target.hasClass('ks-null')){
 						return;
 					}
-                    if (e.target.hasClass('disabled')){
+                    if (e.target.hasClass('ks-disabled')){
 						return;
 					}
                     var selectedd = Number(e.target.html());

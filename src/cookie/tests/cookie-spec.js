@@ -21,10 +21,10 @@ describe('cookie', function() {
 
         it('should return undefined for non-existing name', function() {
 
-            expect(Cookie.get('_ks_test_none')).toBe(undefined);
-            expect(Cookie.get(true)).toBe(undefined);
-            expect(Cookie.get({})).toBe(undefined);
-            expect(Cookie.get(null)).toBe(undefined);
+            expect(Cookie.get('_ks_test_none')).toBeUndefined();
+            expect(Cookie.get(true)).toBeUndefined();
+            expect(Cookie.get({})).toBeUndefined();
+            expect(Cookie.get(null)).toBeUndefined();
 
         });
     });
@@ -37,7 +37,7 @@ describe('cookie', function() {
             expect(Cookie.get('_ks_test_11')).toBe('xx');
 
             Cookie.set('_ks_test_12', 'xx', 0);
-            expect(Cookie.get('_ks_test_12')).toBe(undefined);
+            expect(Cookie.get('_ks_test_12')).toBeUndefined();
 
             Cookie.set('_ks_test_13', '1', new Date(2099, 1, 1), '', '/');
             Cookie.set('_ks_test_13', '2', new Date(2099, 1, 1), '', '/');
@@ -52,11 +52,11 @@ describe('cookie', function() {
 
             Cookie.set('_ks_test_21', 'xx');
             Cookie.remove('_ks_test_21');
-            expect(Cookie.get('_ks_test_21')).toBe(undefined);
+            expect(Cookie.get('_ks_test_21')).toBeUndefined();
 
             Cookie.set('_ks_test_22', 'xx', new Date(2099, 1, 1), '', '/');
             Cookie.remove('_ks_test_22', '', '/');
-            expect(Cookie.get('_ks_test_22')).toBe(undefined);
+            expect(Cookie.get('_ks_test_22')).toBeUndefined();
 
         });
     });
