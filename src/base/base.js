@@ -15,7 +15,7 @@ KISSY.add('base' , function (S) {
      */
     function Base(config) {
         initHierarchy(this, config);
-        config && config.autoRender && this.renderer();
+        config && config.autoRender && this.render();
     }
 
     /**
