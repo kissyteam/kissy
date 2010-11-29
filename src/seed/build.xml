@@ -1,4 +1,4 @@
-<project name="kissy.build" default="build" basedir=".">
+<project name="seed.build" default="build" basedir=".">
     <description>Component Build File</description>
 
     <import file="../../tools/build.xml"/>
@@ -7,7 +7,7 @@
     <property name="src.dir" location="."/>
 
     <target name="concat">
-        <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="kissy.js"/>
             <path path="lang.js"/>
             <path path="loader.js"/>
@@ -16,7 +16,7 @@
     </target>
 
     <target name="clean">
-        <delete file="kissy-pkg.js"/>
+        <delete file="seed-pkg.js"/>
         <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="${build.dir}/${component.name}/kissy-pkg-min.js"  encoding="${charset}"/>
     </target>
 

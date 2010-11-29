@@ -7,11 +7,11 @@ build time: ${build.time}
  * @module kissy
  * @author lifesinger@gmail.com
  */
-(function(win, S, undefined) {
+(function(win, S, undef) {
 
     // If KISSY is already defined, the existing KISSY object will not
     // be overwritten so that defined namespaces are preserved.
-    if (win[S] === undefined) win[S] = {};
+    if (win[S] === undef) win[S] = {};
     S = win[S]; // shortcut
 
     var doc = win['document'], loc = location,
@@ -20,7 +20,7 @@ build time: ${build.time}
         // Copies all the properties of s to r
         mix = function(r, s, ov, wl) {
             if (!s || !r) return r;
-            if (ov === undefined) ov = true;
+            if (ov === undef) ov = true;
             var i, p, l;
 
             if (wl && (l = wl.length)) {
@@ -266,12 +266,12 @@ build time: ${build.time}
 
             if (!S.isArray(wl)) {
                 ov = wl;
-                wl = undefined;
+                wl = undef;
                 len++;
             }
 
             if (!S.isBoolean(ov)) {
-                ov = undefined;
+                ov = undef;
                 len++;
             }
 
@@ -388,7 +388,7 @@ build time: ${build.time}
                 if (src) {
                     msg = src + ': ' + msg;
                 }
-                if (win['console'] !== undefined && console.log) {
+                if (win['console'] !== undef && console.log) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                 }
             }
@@ -7871,14 +7871,14 @@ KISSY.add('datalazyload', function(S, undefined) {
          * @protected
          */
         _initLoadEvent: function() {
-            var timer, self = this;
+            var timer, self = this, resizeHandler;
 
             // scroll 和 resize 时，加载图片
             Event.on(win, SCROLL, loader);
-            Event.on(win, RESIZE, function() {
+            Event.on(win, RESIZE, (resizeHandler = function() {
                 self.threshold = self._getThreshold();
                 loader();
-            });
+            }));
 
             // 需要立即加载一次，以保证第一屏的延迟项可见
             if (self._getItemsLength()) {
@@ -7901,7 +7901,7 @@ KISSY.add('datalazyload', function(S, undefined) {
                 self._loadItems();
                 if (self._getItemsLength() === 0) {
                     Event.remove(win, SCROLL, loader);
-                    Event.remove(win, RESIZE, loader);
+                    Event.remove(win, RESIZE, resizeHandler);
                 }
             }
         },

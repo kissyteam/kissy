@@ -7,11 +7,11 @@ build time: ${build.time}
  * @module kissy
  * @author lifesinger@gmail.com
  */
-(function(win, S, undefined) {
+(function(win, S, undef) {
 
     // If KISSY is already defined, the existing KISSY object will not
     // be overwritten so that defined namespaces are preserved.
-    if (win[S] === undefined) win[S] = {};
+    if (win[S] === undef) win[S] = {};
     S = win[S]; // shortcut
 
     var doc = win['document'], loc = location,
@@ -20,7 +20,7 @@ build time: ${build.time}
         // Copies all the properties of s to r
         mix = function(r, s, ov, wl) {
             if (!s || !r) return r;
-            if (ov === undefined) ov = true;
+            if (ov === undef) ov = true;
             var i, p, l;
 
             if (wl && (l = wl.length)) {
@@ -266,12 +266,12 @@ build time: ${build.time}
 
             if (!S.isArray(wl)) {
                 ov = wl;
-                wl = undefined;
+                wl = undef;
                 len++;
             }
 
             if (!S.isBoolean(ov)) {
-                ov = undefined;
+                ov = undef;
                 len++;
             }
 
@@ -388,7 +388,7 @@ build time: ${build.time}
                 if (src) {
                     msg = src + ': ' + msg;
                 }
-                if (win['console'] !== undefined && console.log) {
+                if (win['console'] !== undef && console.log) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                 }
             }

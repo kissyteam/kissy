@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="kissy-project-build" default="build-package" xmlns:ac="antlib:net.sf.antcontrib">
+<project name="kissy-project-build" default="build-packages" xmlns:ac="antlib:net.sf.antcontrib">
     <description>KISSY Project Build File</description>
 
     <dirname property="current.dir" file="${ant.file.kissy-project-build}"/>
@@ -7,7 +7,7 @@
     <property name="root.dir" location="${current.dir}/../"/>
     <property name="src.dir" location="${root.dir}/src"/>
     <property name="build.dir" location="${root.dir}/build"/>
-    <property name="build.package.dir" location="${root.dir}/build/packages"/>
+    <property name="build.packages.dir" location="${root.dir}/build/packages"/>
     <property name="charset" value="UTF-8"/>
 
     <target name="prepare">
@@ -19,9 +19,9 @@
         </copy>
     </target>
 
-    <target name="build-package" depends="prepare">
+    <target name="build-packages" depends="prepare">
         <subant target="" failonerror="false" inheritall="false">
-            <filelist files="${build.package.dir}/build.xml"/>
+            <filelist files="${build.packages.dir}/build.xml"/>
         </subant>
     </target>
 

@@ -17,7 +17,7 @@
     <target name="concat">
         <!-- seed: 种子 -->
         <concat destfile="seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../kissy/kissy-pkg.js"/>
+            <path path="../seed/seed-pkg.js"/>
         </concat>
         <!-- core: 核心，提供基础服务 -->
         <concat destfile="core-pkg.js" encoding="${charset}" outputencoding="${charset}">
