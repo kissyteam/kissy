@@ -3896,7 +3896,7 @@ KISSY.add('event-object', function(S, undefined) {
         // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
         if(currentTarget.isCustomEventTarget) {
             if(currentTarget.item) currentTarget = currentTarget.item(currentEl);
-            self.target = self.currentTarget = currentTarget;
+            if(S.DOM._isKSNode(currentTarget)) self.target = new S.Node(self.target);
         }
     }
 
