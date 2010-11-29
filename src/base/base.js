@@ -69,7 +69,7 @@ KISSY.add('base' , function (S) {
                     applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
             }
 
-            c = (c.superclass || 0).constructor;
+            c = c.superclass && c.superclass.constructor;
         }
 
         // initialize
@@ -109,7 +109,7 @@ KISSY.add('base' , function (S) {
                 }
             }
 
-            c = (c.superclass || 0).constructor;
+            c = c.superclass && c.superclass.constructor;
         }
     }
 
