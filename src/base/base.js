@@ -1,11 +1,11 @@
 /**
  * @module  Base
- * @author  lifesinger@gmail.com  , 承玉<yiminghe@gmail.com>
+ * @author  lifesinger@gmail.com, 承玉<yiminghe@gmail.com>
  */
 KISSY.add('base' , function (S) {
     var UI_SET = "_uiSet",
         SRC_NODE = "srcNode",
-        capitalFirst = S.Attribute.capitalFirst;
+        capitalFirst = S.Attribute.__capitalFirst;
     /*
      * Base for class-based component
      */
@@ -152,7 +152,7 @@ KISSY.add('base' , function (S) {
             }
         }
     };
-    S.augment(Base, S.EventTarget, S.Attribute, {
+    S.augment(Base, S.Attribute, {
         renderer:function(render) {
             var self = this,rendered = self.get("rendered");
             render = render || self.get("render");
@@ -175,7 +175,7 @@ KISSY.add('base' , function (S) {
          */
         bindUI:function() {
             var self = this,
-                attrs = self.getDefAttrs();
+                attrs = self.__getDefAttrs();
             for (var a in attrs) {
                 if (attrs.hasOwnProperty(a)) {
                     var m = UI_SET + capitalFirst(a);
@@ -197,7 +197,7 @@ KISSY.add('base' , function (S) {
          */
         syncUI:function() {
             var self = this,
-                attrs = self.getDefAttrs();
+                attrs = self.__getDefAttrs();
             for (var a in attrs) {
                 if (attrs.hasOwnProperty(a)) {
                     var m = UI_SET + capitalFirst(a);
@@ -264,9 +264,6 @@ KISSY.add('base' , function (S) {
     };
     S.Base = Base;
 });
-
 /**
  * 2011-11-08 承玉重构，Base && yui3 Widget 压缩一下，增加扩展类支持，组件初始化生命周期以及 htmlparser
- * 测试 crlf
- * 
  */

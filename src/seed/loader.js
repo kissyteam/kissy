@@ -2,7 +2,7 @@
  * @module loader
  * @author lifesinger@gmail.com, lijing00333@163.com
  */
-(function(win, S, undefined) {
+(function(win, S, undef) {
 
     var doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
@@ -207,7 +207,7 @@
                 S.each(mod.fns, function(fn) {
                     fn && fn(self);
                 });
-                mod.fns = undefined; // 保证 attach 过的方法只执行一次
+                mod.fns = undef; // 保证 attach 过的方法只执行一次
                 //S.log(mod.name + '.status = attached');
             }
 
@@ -355,7 +355,7 @@
                 scriptOnload(node, function() {
                     if (timer) {
                         timer.cancel();
-                        timer = undefined;
+                        timer = undef;
                     }
 
                     S.isFunction(success) && success.call(node);
@@ -369,7 +369,7 @@
 
             if (S.isFunction(error)) {
                 timer = S.later(function() {
-                    timer = undefined;
+                    timer = undef;
                     error();
                 }, (timeout || this.Config.timeout) * 1000);
             }

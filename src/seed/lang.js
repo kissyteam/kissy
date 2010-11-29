@@ -2,7 +2,7 @@
  * @module  lang
  * @author  lifesinger@gmail.com
  */
-(function(win, S, undefined) {
+(function(win, S, undef) {
 
     var doc = document, docElem = doc.documentElement,
         AP = Array.prototype,
@@ -23,7 +23,7 @@
          * Determines whether or not the provided object is undefined.
          */
         isUndefined: function(o) {
-            return o === undefined;
+            return o === undef;
         },
 
         /**
@@ -88,10 +88,10 @@
          */
         trim: trim ?
             function(str) {
-                return (str == undefined) ? EMPTY : trim.call(str);
+                return (str == undef) ? EMPTY : trim.call(str);
             } :
             function(str) {
-                return (str == undefined) ? EMPTY : str.toString().replace(REG_TRIM, EMPTY);
+                return (str == undef) ? EMPTY : str.toString().replace(REG_TRIM, EMPTY);
             },
 
         /**
@@ -103,7 +103,7 @@
 
             return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
                 if (match.charAt(0) === '\\') return match.slice(1);
-                return (o[name] !== undefined) ? o[name] : EMPTY;
+                return (o[name] !== undef) ? o[name] : EMPTY;
             });
         },
 
@@ -116,7 +116,7 @@
          */
         each: function(object, fn, context) {
             var key, val, i = 0, length = object.length,
-                isObj = length === undefined || S.isFunction(object);
+                isObj = length === undef || S.isFunction(object);
             context = context || win;
             
             if (isObj) {
@@ -200,7 +200,7 @@
          * Converts object to a true array.
          */
         makeArray: function(o) {
-            if (o === null || o === undefined) return [];
+            if (o === null || o === undef) return [];
             if (S.isArray(o)) return o;
 
             // The strings and functions also have 'length'
