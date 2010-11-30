@@ -18,7 +18,7 @@ KISSY.add("uibase-mask", function(S) {
             "position":"absolute",
             left:0,
             top:0,
-            width:S.DOM.docWidth() ,// ie6 bug : "100%",
+            width:UA.ie==6 ? S.DOM.docWidth() : "100%",
             "height": S.DOM.docHeight()
         });
         if (UA.ie == 6) {
