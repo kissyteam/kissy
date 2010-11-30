@@ -8,19 +8,20 @@ KISSY.add('base', function (S) {
      * Base for class-based component
      */
     function Base(config) {
+        S.Attribute.call(this);
         var c = this.constructor;
 
         // define
         while (c) {
-            Base.__addAttrs(this, c['ATTRS']);
+            __addAttrs(this, c['ATTRS']);
             c = c.superclass ? c.superclass.constructor : null;
         }
 
         // initial
-        Base.__initAttrs(this, config);
+        __initAttrs(this, config);
     }
 
-    Base.__addAttrs = function(host, attrs) {
+    var __addAttrs = function(host, attrs) {
         if (attrs) {
             for (var attr in attrs) {
                 // 子类上的 ATTRS 配置优先
@@ -31,7 +32,7 @@ KISSY.add('base', function (S) {
         }
     };
 
-    Base.__initAttrs = function(host, config) {
+    var __initAttrs = function(host, config) {
         if (config) {
             for (var attr in config) {
                 if (config.hasOwnProperty(attr))
