@@ -43,6 +43,9 @@ describe('cookie', function() {
             Cookie.set('_ks_test_13', '2', new Date(2099, 1, 1), '', '/');
             expect(Cookie.get('_ks_test_13')).toBe('2');
 
+            Cookie.remove('_ks_test_14');
+            Cookie.set('_ks_test_14', '4', 1, document.domain, '/', true);
+            expect(Cookie.get('_ks_test_14')).toBeUndefined();
         });
     });
 

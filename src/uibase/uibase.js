@@ -1,26 +1,21 @@
-/*
-Copyright 2010, KISSY UI Library v1.1.6dev
-MIT Licensed
-build time: ${build.time}
-*/
 /**
- * @module  Base
+ * @module  UIBase
  * @author  lifesinger@gmail.com, 承玉<yiminghe@gmail.com>
  */
-KISSY.add('base' , function (S) {
+KISSY.add('uibase' , function (S) {
 
     var UI_SET = '_uiSet', SRC_NODE = 'srcNode',
         ATTRS = 'ATTRS', HTML_PARSER = 'HTML_PARSER',
-        Attribute = S.Attribute,
+        Attribute = S.Attribute, Base = S.Base,
         capitalFirst = Attribute.__capitalFirst,
         noop = function() {};
 
     /*
-     * Base for class-based component
+     * UIBase for class-based component
      */
-    function Base(config) {
+    function UIBase(config) {
         initHierarchy(this, config);
-        config && config.autoRender && this.renderer();
+        config && config.autoRender && this.render();
     }
 
     /**
@@ -29,8 +24,6 @@ KISSY.add('base' , function (S) {
      */
     function initHierarchy(host, config) {
         var c = host.constructor,
-            attr,
-            attrs,
             extChains = [],
             exts,
             init,
@@ -41,14 +34,7 @@ KISSY.add('base' , function (S) {
         while (c) {
 
             // 定义属性
-            if ((attrs = c[ATTRS])) {
-                for (attr in attrs) {
-                    // 子类上的 ATTRS 配置优先
-                    if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
-                        host.addAttr(attr, attrs[attr]);
-                    }
-                }
-            }
+            Base.__addAttrs(host, c[ATTRS]);
 
             // 收集扩展类
             t = [];
@@ -74,18 +60,13 @@ KISSY.add('base' , function (S) {
                     applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
             }
 
-            c = (c.superclass || 0).constructor;
+            c = c.superclass && c.superclass.constructor;
         }
 
         // initialize
         // 注意：用户设置的属性值会覆盖 html_parser 得到的属性值
         // 先设置属性，再运行主类以及扩展类的初始化函数
-        if (config) {
-            for (attr in config) {
-                if (config.hasOwnProperty(attr))
-                    host.__set(attr, config[attr]);
-            }
-        }
+        Base.__initAttrs(host, config);
 
         // 初始化扩展类构造器
         // 顺序：父类的所有扩展类构造器 -> 父类 init -> 子类的所有扩展构造器 -> 子类 init
@@ -114,7 +95,7 @@ KISSY.add('base' , function (S) {
                 }
             }
 
-            c = (c.superclass || 0).constructor;
+            c = c.superclass && c.superclass.constructor;
         }
     }
 
@@ -142,10 +123,10 @@ KISSY.add('base' , function (S) {
         }
     }
 
-    Base.HTML_PARSER = {};
+    UIBase.HTML_PARSER = {};
 
 
-    S.augment(Base, Attribute, {
+    S.augment(UIBase, Attribute, {
 
         render: function() {
             var self = this;
@@ -224,17 +205,17 @@ KISSY.add('base' , function (S) {
      * @param {Object} px 原型 mix 对象
      * @param {Object} sx 静态 mix 对象
      */
-    Base.create = function(base, exts, px, sx) {
+    UIBase.create = function(base, exts, px, sx) {
         if (S.isArray(base)) {
             sx = px;
             px = exts;
             exts = base;
-            base = Base;
+            base = UIBase;
         }
-        base = base || Base;
+        base = base || UIBase;
 
         function C() {
-            Base.apply(this, arguments);
+            UIBase.apply(this, arguments);
         }
         S.extend(C, base, px, sx);
 
@@ -259,8 +240,5 @@ KISSY.add('base' , function (S) {
         return C;
     };
 
-    S.Base = Base;
+    S.UIBase = UIBase;
 });
-/**
- * 2011-11-08 承玉重构，加入 lifecycle 管理
- */

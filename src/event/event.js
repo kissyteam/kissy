@@ -56,7 +56,7 @@ KISSY.add('event', function(S, undefined) {
 
             // 不是有效的 target 或 参数不对
             if (id === -1 || !type || !S.isFunction(fn)) return;
-            scope = scope || target;
+
             // 还没有添加过任何事件
             if (!id) {
                 setID(target, (id = guid++));
@@ -100,7 +100,7 @@ KISSY.add('event', function(S, undefined) {
             }
 
             // 增加 listener
-            events[type].listeners.push({fn: fn, scope: scope});
+            events[type].listeners.push({fn: fn, scope: scope || target});
         },
 
         /**
@@ -172,7 +172,7 @@ KISSY.add('event', function(S, undefined) {
 
             for (; i < len; ++i) {
                 listener = listeners[i];
-                ret = listener.fn.call(scope || listener.scope || target, event);
+                ret = listener.fn.call(scope || listener.scope, event);
 
                 // 自定义事件对象，可以用 return false 来立刻停止后续监听函数
                 // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡

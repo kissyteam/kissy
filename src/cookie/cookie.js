@@ -53,6 +53,7 @@ KISSY.add('cookie', function(S) {
                 text += '; secure';
             }
 
+            //S.log(text);
             doc.cookie = name + '=' + text;
         },
 
