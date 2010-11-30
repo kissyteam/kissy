@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 13:21
 */
 /**
  * dd support for kissy
@@ -9,7 +9,8 @@ build time: ${build.time}
  */
 KISSY.add('dd', function(S) {
 
-    var Event = S.Event,
+    var doc = document,
+        Event = S.Event,
         DOM = S.DOM,
         Node = S.Node,
         SHIM_ZINDEX = 999999;
@@ -147,18 +148,17 @@ KISSY.add('dd', function(S) {
             });
             self._clearSelection();
         },
-        _clearSelection:function() {
-            S.log("_clearSelection");
-            //清除由于浏览器导致的选择文字
+
+        _clearSelection: function() {
+            // 清除由于浏览器导致的选择文字
             if (window.getSelection) {
                 window.getSelection().removeAllRanges();
             }
-            //防止 ie 莫名选择文字
+            // 防止 ie 莫名选择文字
             else if (document.selection) {
                 try {
                     document.selection.empty();
-                }
-                catch(e) {
+                } catch(e) {
                 }
             }
         },
@@ -167,20 +167,18 @@ KISSY.add('dd', function(S) {
          * 开始时注册全局监听事件
          */
         _registerEvent: function() {
-            var self = this,doc = document;
-            S.log("_registerEvent");
-            Event.on(doc, "mouseup", self._end, self);
-            Event.on(doc, "mousemove", self._showShimMove, self);
+            var self = this;
+            Event.on(doc, 'mouseup', self._end, self);
+            Event.on(doc, 'mousemove', self._showShimMove, self);
         },
 
         /**
          * 结束时需要取消掉，防止平时无谓的监听
          */
         _unregisterEvent: function() {
-            var self = this,doc = document;
-            S.log("_unregisterEvent");
-            Event.remove(doc, "mousemove", self._showShimMove, self);
-            Event.remove(doc, "mouseup", self._end, self);
+            var self = this;
+            Event.remove(doc, 'mousemove', self._showShimMove, self);
+            Event.remove(doc, 'mouseup', self._end, self);
         }
     });
 

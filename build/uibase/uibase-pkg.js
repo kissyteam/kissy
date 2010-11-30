@@ -1,25 +1,264 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 13:21
 */
 /**
- * align extension
- * @author:承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ * @module  UIBase
+ * @author  lifesinger@gmail.com, 承玉<yiminghe@gmail.com>
  */
-KISSY.add("ext-align", function(S) {
-    S.namespace("Ext");
-    var DOM = S.DOM,Node = S.Node;
+KISSY.add('uibase' , function (S) {
 
-    function AlignExt() {
-        S.log("align init");
-        var self = this;
-        self.on("bindUI", self._bindUIAlign, self);
-        self.on("renderUI", self._renderUIAlign, self);
-        self.on("syncUI", self._syncUIAlign, self);
+    var UI_SET = '_uiSet', SRC_NODE = 'srcNode',
+        ATTRS = 'ATTRS', HTML_PARSER = 'HTML_PARSER',
+        Attribute = S.Attribute, Base = S.Base,
+        capitalFirst = Attribute.__capitalFirst,
+        noop = function() {};
+
+    /*
+     * UIBase for class-based component
+     */
+    function UIBase(config) {
+        initHierarchy(this, config);
+        config && config.autoRender && this.render();
     }
 
-    S.mix(AlignExt, {
+    /**
+     * 模拟多继承
+     * init attr using constructors ATTRS meta info
+     */
+    function initHierarchy(host, config) {
+        var c = host.constructor,
+            extChains = [],
+            exts,
+            init,
+            t,
+            i;
+
+        // define
+        while (c) {
+
+            // 定义属性
+            Base.__addAttrs(host, c[ATTRS]);
+
+            // 收集扩展类
+            t = [];
+            if ((exts = c.__ks_exts)) {
+                t = exts.concat();
+            }
+
+            // 收集 initializer
+            if ((init = c.prototype['initializer'])) {
+                t.push(init);
+            }
+
+            // 原地 reverse
+            if (t.length) {
+                extChains.push.apply(extChains, t.reverse());
+            }
+
+            // 从 markup 生成相应的属性项
+            if (config &&
+                config[SRC_NODE] &&
+                c.HTML_PARSER) {
+                if ((config[SRC_NODE] = S.one(config[SRC_NODE])))
+                    applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
+            }
+
+            c = c.superclass && c.superclass.constructor;
+        }
+
+        // initialize
+        // 注意：用户设置的属性值会覆盖 html_parser 得到的属性值
+        // 先设置属性，再运行主类以及扩展类的初始化函数
+        Base.__initAttrs(host, config);
+
+        // 初始化扩展类构造器
+        // 顺序：父类的所有扩展类构造器 -> 父类 init -> 子类的所有扩展构造器 -> 子类 init
+        for (i = extChains.length - 1; i >= 0; i--) {
+            extChains[i] && extChains[i].call(host, config);
+        }
+    }
+
+    /**
+     * 销毁组件
+     * 顺序：子类扩展 destructor -> 子类 destructor -> 父类扩展 destructor -> 父类 destructor
+     */
+    function destroyHierarchy(host) {
+        var c = host.constructor,
+            exts,
+            d,
+            i;
+
+        while (c) {
+            (d = c.prototype.destructor) && d.apply(host);
+
+            if ((exts = c.__ks_exts)) {
+                for (i = exts.length - 1; i >= 0; i--) {
+                    d = exts[i] && exts[i].prototype.__destructor;
+                    d && d.apply(host);
+                }
+            }
+
+            c = c.superclass && c.superclass.constructor;
+        }
+    }
+
+    function applyParser(srcNode, parser) {
+        var host = this, p, v;
+        
+        // 从 parser 中，默默设置属性，不触发事件
+        for (p in parser) {
+            if (parser.hasOwnProperty(p)) {
+                v = parser[p];
+
+                // 函数
+                if (S.isFunction(v)) {
+                    host.__set(p, v.call(host, srcNode));
+                }
+                // 单选选择器
+                else if (S.isString(v)) {
+                    host.__set(p, srcNode.one(v));
+                }
+                // 多选选择器
+                else if (S.isArray(v) && v[0]) {
+                    host.__set(p, srcNode.all(v[0]))
+                }
+            }
+        }
+    }
+
+    UIBase.HTML_PARSER = {};
+
+
+    S.augment(UIBase, Attribute, {
+
+        render: function() {
+            var self = this;
+
+            self._renderUI();
+            self.fire('renderUI');
+            self.renderUI();
+
+            self._bindUI();
+            self.fire('bindUI');
+            self.bindUI();
+
+            self._syncUI();
+            self.fire('syncUI');
+            self.syncUI();
+        },
+
+        /**
+         * 根据属性添加 DOM 节点
+         */
+        _renderUI: noop,
+        renderUI: noop,
+
+        /**
+         * 根据属性变化设置 UI
+         */
+        _bindUI: function() {
+            var self = this,
+                attrs = self.__getDefAttrs(),
+                attr, m;
+
+            for (attr in attrs) {
+                if (attrs.hasOwnProperty(attr)) {
+                    m = UI_SET + capitalFirst(attr);
+                    if (self[m]) {
+                        // 自动绑定事件到对应函数
+                        (function(attr, m) {
+                            self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
+                                self[m](ev.newVal, ev);
+                            });
+                        })(attr, m);
+                    }
+                }
+            }
+        },
+        bindUI: noop,
+
+        /**
+         * 根据当前（初始化）状态来设置 UI
+         */
+        _syncUI: function() {
+            var self = this,
+                attrs = self.__getDefAttrs();
+            for (var a in attrs) {
+                if (attrs.hasOwnProperty(a)) {
+                    var m = UI_SET + capitalFirst(a);
+                    if (self[m]) {
+                        self[m](self.get(a));
+                    }
+                }
+            }
+        },
+        syncUI: noop,
+
+        destroy: function() {
+            destroyHierarchy(this);
+            this.fire('destroy');
+            this.detach();
+        }
+    });
+
+    /**
+     * 根据基类以及扩展类得到新类
+     * @param {function} base 基类
+     * @param {Array.<function>} exts 扩展类
+     * @param {Object} px 原型 mix 对象
+     * @param {Object} sx 静态 mix 对象
+     */
+    UIBase.create = function(base, exts, px, sx) {
+        if (S.isArray(base)) {
+            sx = px;
+            px = exts;
+            exts = base;
+            base = UIBase;
+        }
+        base = base || UIBase;
+
+        function C() {
+            UIBase.apply(this, arguments);
+        }
+        S.extend(C, base, px, sx);
+
+        if (exts) {
+            C.__ks_exts = exts;
+
+            S.each(exts, function(ext) {
+                // 合并 ATTRS/HTML_PARSER 到主类
+                S.each([ATTRS, HTML_PARSER], function(K) {
+                    if (ext[K]) {
+                        C[K] = C[K] || {};
+                        // 不覆盖主类上的定义
+                        S.mix(C[K], ext[K], false);
+                    }
+                });
+
+                // 合并功能代码到主类，不覆盖
+                S.augment(C, ext, false);
+            });
+        }
+
+        return C;
+    };
+
+    S.UIBase = UIBase;
+});
+/**
+ * UIBase.Align
+ * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ */
+KISSY.add('uibase-align', function(S) {
+
+    var DOM = S.DOM;
+
+    function Align() {
+    }
+
+    S.mix(Align, {
         TL: 'tl',
         TC: 'tc',
         TR: 'tr',
@@ -31,9 +270,8 @@ KISSY.add("ext-align", function(S) {
         BR: 'br'
     });
 
-
-    AlignExt.ATTRS = {
-        align:{
+    Align.ATTRS = {
+        align: {
             /*
              value:{
              node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
@@ -43,13 +281,12 @@ KISSY.add("ext-align", function(S) {
         }
     };
 
-
     /**
      * 获取 node 上的 align 对齐点 相对于页面的坐标
      * @param {?Element} node
      * @param align
      */
-    function _getAlignOffset(node, align) {
+    function getAlignOffset(node, align) {
         var V = align.charAt(0),
             H = align.charAt(1),
             offset, w, h, x, y;
@@ -83,22 +320,14 @@ KISSY.add("ext-align", function(S) {
         return { left: x, top: y };
     }
 
-    AlignExt.prototype = {
-        _bindUIAlign:function() {
-            S.log("_bindUIAlign");
-        },
-        _renderUIAlign:function() {
-            S.log("_renderUIAlign");
-        },
-        _syncUIAlign:function() {
-            S.log("_syncUIAlign");
-        },
-        _uiSetAlign:function(v) {
-            S.log("_uiSetAlign");
+    Align.prototype = {
+
+        _uiSetAlign: function(v) {
             if (S.isPlainObject(v)) {
                 this.align(v.node, v.points, v.offset);
             }
         },
+
         /**
          * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
          * @param {Element=} node 参照元素, 可取配置选项中的设置, 也可是一元素
@@ -106,168 +335,154 @@ KISSY.add("ext-align", function(S) {
          * @param {Array.<number>} offset 偏移
          */
         align: function(node, points, offset) {
-
             var self = this,
                 xy,
                 diff,
                 p1,
-                el = self.get("el"),
+                el = self.get('el'),
                 p2;
+
             offset = offset || [0,0];
             xy = DOM.offset(el);
+
             // p1 是 node 上 points[0] 的 offset
             // p2 是 overlay 上 points[1] 的 offset
-            p1 = _getAlignOffset(node, points[0]);
-            p2 = _getAlignOffset(el, points[1]);
+            p1 = getAlignOffset(node, points[0]);
+            p2 = getAlignOffset(el, points[1]);
+
             diff = [p2.left - p1.left, p2.top - p1.top];
-            var v = [xy.left - diff[0] + (+offset[0]),
-                xy.top - diff[1] + (+offset[1])];
-            self.set("xy", v);
+
+            self.set('xy', [
+                xy.left - diff[0] + (+offset[0]),
+                xy.top - diff[1] + (+offset[1])
+            ]);
         },
-
-
 
         /**
          * 居中显示到可视区域, 一次性居中
          */
         center: function(node) {
-            this.set("align", {
-                node:node,
-                points:[AlignExt.CC, AlignExt.CC],
-                offset:[0,0]
+            this.set('align', {
+                node: node,
+                points: [Align.CC, Align.CC],
+                offset: [0, 0]
             });
-        },
-
-        __destructor:function() {
-            S.log("align __destructor");
         }
     };
 
-    S.Ext.Align = AlignExt;
-
-});/**
- * basic box support for component
- * @author:承玉<yiminghe@gmail.com>
+    S.UIBase.Align = Align;
+});
+/**
+ * UIBase.Box
+ * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("ext-box", function(S) {
-    S.namespace("Ext");
+KISSY.add('uibase-box', function(S) {
 
-    var doc = document,Node = S.Node;
+    var doc = document,
+        Node = S.Node,
+        CONTAINER = 'container'; // CC 压缩时会内联，和 YC 相比，体积增大了，囧
 
-    function BoxExt() {
-        S.log("box init");
-        var self = this;
-        self.on("renderUI", self._renderUIBoxExt, self);
-        self.on("syncUI", self._syncUIBoxExt, self);
-        self.on("bindUI", self._bindUIBoxExt, self);
-
+    function Box() {
+        this.on('renderUI', this._renderUIBox);
     }
 
-    BoxExt.ATTRS = {
-        el: {
-            //容器元素
-            setter:function(v) {
+    Box.ATTRS = {
+        // 容器元素
+        container: {
+            setter: function(v) {
                 if (S.isString(v))
                     return S.one(v);
             }
         },
-        elCls: {
-            // 容器的 class           
-        },
-        elStyle:{
-            //容器的行内样式
-        },
-        width: {
-            // 宽度           
-        },
-        height: {
-            // 高度
+
+        // 容器 class
+        containerCls: {
         },
 
+        // 容器的内联样式
+        containerStyle: {
+        },
+
+        // 容器宽度
+        width: {
+        },
+
+        // 容器高度
+        height: {
+        },
+
+        // 容器的 innerHTML
         html: {
             // 内容, 默认为 undefined, 不设置
             value: false
         }
     };
 
-    BoxExt.HTML_PARSER = {
-        el:function(srcNode) {
+    Box.HTML_PARSER = {
+        container: function(srcNode) {
             return srcNode;
         }
     };
 
-    BoxExt.prototype = {
-        _syncUIBoxExt:function() {
-            S.log("_syncUIBoxExt");
-        },
-        _bindUIBoxExt:function() {
-            S.log("_bindUIBoxExt");
-        },
-        _renderUIBoxExt:function() {
-            S.log("_renderUIBoxExt");
+    Box.prototype = {
+
+        _renderUIBox: function() {
             var self = this,
-                render = self.get("render") || S.one(doc.body),
-                el = self.get("el");
-            render = new Node(render);
-            if (!el) {
-                el = new Node("<div>");
-                render.prepend(el);
-                self.set("el", el);
+                render = S.one(self.get('render') || doc.body),
+                container = self.get(CONTAINER);
+
+            if (!container) {
+                container = new Node('<div>');
+                render.prepend(container);
+                self.set(CONTAINER, container);
             }
         },
 
-        _uiSetElCls:function(cls) {
-            S.log("_uiSetElCls");
+        _uiSetContainerCls: function(cls) {
             if (cls) {
-                this.get("el").addClass(cls);
+                this.get(CONTAINER).addClass(cls);
             }
         },
 
-        _uiSetElStyle:function(style) {
-            S.log("_uiSetElStyle");
+        _uiSetContainerStyle: function(style) {
             if (style) {
-                this.get("el").css(style);
+                this.get(CONTAINER).css(style);
             }
         },
 
-        _uiSetWidth:function(w) {
-            S.log("_uiSetWidth");
-            var self = this;
+        _uiSetWidth: function(w) {
             if (w) {
-                self.get("el").width(w);
+                this.get(CONTAINER).width(w);
             }
         },
 
-        _uiSetHeight:function(h) {
-            S.log("_uiSetHeight");
-            var self = this;
+        _uiSetHeight: function(h) {
             if (h) {
-                self.get("el").height(h);
+                this.get(CONTAINER).height(h);
             }
         },
 
-        _uiSetHtml:function(c) {
-            S.log("_uiSetHtml");
+        _uiSetHtml: function(c) {
             if (c !== false){
-                this.get("el").html(c);
+                this.get(CONTAINER).html(c);
             }
-
         },
 
         __destructor:function() {
-            S.log("box __destructor");
-            var el = this.get("el");
-            if (el) {
-                el.detach();
-                el.remove();
+            S.log('UIBase.Box.__destructor');
+            var container = this.get(CONTAINER);
+            if (container) {
+                container.detach();
+                container.remove();
             }
         }
     };
 
-    S.Ext.Box = BoxExt;
-});/**
+    S.UIBase.Box = Box;
+});
+/**
  * close extension for kissy dialog
- * @author:承玉<yiminghe@gmail.com>
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-overlay-close", function(S) {
     S.namespace("Ext");
@@ -348,7 +563,7 @@ KISSY.add("ext-overlay-close", function(S) {
 
 });/**
  * constrain extension for kissy
- * @author:承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add("ext-constrain", function(S) {
     S.namespace("Ext");
@@ -463,7 +678,7 @@ KISSY.add("ext-constrain", function(S) {
 
 });/**
  * 里层包裹层定义，适合mask以及shim
- * @author:承玉<yiminghe@gmail.com>
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-contentbox", function(S) {
 
@@ -523,7 +738,7 @@ KISSY.add("ext-contentbox", function(S) {
     S.Ext.ContentBox = ContentBox;
 });/**
  * drag extension for position
- * @author:承玉<yiminghe@gmail.com>
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-drag", function(S) {
     S.namespace('Ext');
@@ -594,7 +809,7 @@ KISSY.add("ext-drag", function(S) {
 
 });/**
  * loading mask support for overlay
- * @author:承玉<yiminghe@gmail.com>
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-loading", function(S) {
     S.namespace("Ext");
@@ -630,7 +845,7 @@ KISSY.add("ext-loading", function(S) {
 
 });/**
  * mask extension for kissy
- * @author:承玉<yiminghe@gmail.com>
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-mask", function(S) {
     S.namespace("Ext");
@@ -724,7 +939,7 @@ KISSY.add("ext-mask", function(S) {
     S.Ext.Mask = MaskExt;
 });/**
  * position and visible extension，可定位的隐藏层
- * @author:承玉<yiminghe@gmail.com>
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-position", function(S) {
     S.namespace("Ext");
@@ -877,7 +1092,7 @@ KISSY.add("ext-position", function(S) {
     S.Ext.Position = PositionExt;
 });/**
  * shim for ie6 ,require box-ext
- * @author:承玉<yiminghe@gmail.com>
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add("ext-shim", function(S) {
     S.namespace("Ext");

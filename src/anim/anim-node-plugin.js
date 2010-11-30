@@ -54,56 +54,60 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
             });
     });
 
-    function fx(elem, which, speed, callback, display) {
+    function fx(elem, which, speed, callback, visible) {
         if (which === 'toggle') {
-            display = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
+            visible = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
             which = 'show';
         }
 
-        if (display) DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
+        if (visible) DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
 
         // 根据不同类型设置初始 css 属性, 并设置动画参数
-        var style = { };
+        var originalStyle = {}, style = {};
         S.each(FX[which], function(prop) {
             if (prop === OVERFLOW) {
+                originalStyle[OVERFLOW] = DOM.css(elem, OVERFLOW);
                 DOM.css(elem, OVERFLOW, HIDDEN);
             }
             else if (prop === OPCACITY) {
-                style.opacity = display ? 1 : 0;
-                if (display) DOM.css(elem, OPCACITY, 0);
+                originalStyle[OPCACITY] = DOM.css(elem, OPCACITY);
+                style.opacity = visible ? 1 : 0;
+                if (visible) DOM.css(elem, OPCACITY, 0);
             }
             else if (prop === HEIGHT) {
-                style.height = (display ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
-                if (display) DOM.css(elem, HEIGHT, 0);
+                originalStyle[HEIGHT] = DOM.css(elem, HEIGHT);
+                style.height = (visible ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
+                if (visible) DOM.css(elem, HEIGHT, 0);
             }
             else if (prop === WIDTH) {
-                style.width = (display ? DOM.css(elem, WIDTH) || elem.naturalWidth : 0);
-                if (display) DOM.css(elem, WIDTH, 0);
+                originalStyle[WIDTH] = DOM.css(elem, WIDTH);
+                style.width = (visible ? DOM.css(elem, WIDTH) || elem.naturalWidth : 0);
+                if (visible) DOM.css(elem, WIDTH, 0);
             }
         });
 
         // 开始动画
         new S.Anim(elem, style, speed, 'easeOut', function() {
             // 如果是隐藏, 需要还原一些 css 属性
-            if (!display) {
+            if (!visible) {
                 // 保留原有值
-                var style = elem.style, oldVal = style[DISPLAY];
+                var currStyle = elem.style, oldVal = currStyle[DISPLAY];
                 if (oldVal !== NONE) {
                     if (oldVal) {
                         DOM.data(elem, DISPLAY, oldVal);
                     }
-                    style[DISPLAY] = NONE;
+                    currStyle[DISPLAY] = NONE;
                 }
 
-                // 还原部分样式
-                DOM.css(elem, {
-                    height: AUTO,
-                    width: AUTO,
-                    overflow: AUTO,
-                    opacity: 1
-                });
+                // 还原样式
+                if(originalStyle[HEIGHT]) DOM.css(elem, { height: originalStyle[HEIGHT] });
+                if(originalStyle[WIDTH]) DOM.css(elem, { height: originalStyle[WIDTH] });
+                if(originalStyle[OPCACITY]) DOM.css(elem, { height: originalStyle[OPCACITY] });
+                if(originalStyle[OVERFLOW]) DOM.css(elem, { height: originalStyle[OVERFLOW] });
             }
+
             if (callback && S.isFunction(callback)) callback();
+
         }).run();
     }
 

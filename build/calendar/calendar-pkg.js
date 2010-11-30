@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 13:20
 */
 /*
  * Date Format 1.2.3
@@ -331,7 +331,28 @@ KISSY.add('calendar', function(S, undefined) {
                 if (e.target.attr('id') == self.id){
 					return;
 				}
+
+				if(self.con.css('visibility') == 'hidden') return ;
+				var inRegion = function(dot,r){
+					if(dot[0]> r[0].x && dot[0]<r[1].x && dot[1] > r[0].y && dot[1] < r[1].y){
+						return true;
+					}else{
+						return false;
+					}
+				};
+
+				/*
                 if (!S.DOM.contains(S.one('#' + self.C_Id), e.target)) {
+				*/
+				if(!inRegion([e.pageX,e.pageY],[
+								{
+									x:self.con.offset().left,
+									y:self.con.offset().top
+								},
+								{
+									x:self.con.offset().left + self.con.width(),
+									y:self.con.offset().top + self.con.height()
+								}])){
                     self.hide();
                 }
             });
@@ -804,19 +825,20 @@ KISSY.add('calendar-page', function(S) {
                 }
 
                 cc.EV[0] = con.one('div.ks-dbd').on('click', function(e) {
-                    e.preventDefault();
+                    //e.preventDefault();
                     e.target = S.Node(e.target);
-                    if (e.target.hasClass('null')){
+                    if (e.target.hasClass('ks-null')){
 						return;
 					}
-                    if (e.target.hasClass('disabled')){
+                    if (e.target.hasClass('ks-disabled')){
 						return;
 					}
                     var selectedd = Number(e.target.html());
-                    var d = new Date();
+					//如果当天是30日或者31日，设置2月份就会出问题
+                    var d = new Date('2010/01/01');
+                    d.setDate(selectedd);
                     d.setYear(cc.year);
                     d.setMonth(cc.month);
-                    d.setDate(selectedd);
                     //self.callback(d);
                     //datetime的date
                     cc.father.dt_date = d;

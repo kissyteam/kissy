@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 13:21
 */
 /**
  * @module kissy
@@ -69,7 +69,7 @@ build time: ${build.time}
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.6dev',
+        version: '1.1.6',
 
         /**
          * Initializes KISSY object.
@@ -452,7 +452,7 @@ build time: ${build.time}
  * @module  lang
  * @author  lifesinger@gmail.com
  */
-(function(win, S, undefined) {
+(function(win, S, undef) {
 
     var doc = document, docElem = doc.documentElement,
         AP = Array.prototype,
@@ -473,7 +473,7 @@ build time: ${build.time}
          * Determines whether or not the provided object is undefined.
          */
         isUndefined: function(o) {
-            return o === undefined;
+            return o === undef;
         },
 
         /**
@@ -538,10 +538,10 @@ build time: ${build.time}
          */
         trim: trim ?
             function(str) {
-                return (str == undefined) ? EMPTY : trim.call(str);
+                return (str == undef) ? EMPTY : trim.call(str);
             } :
             function(str) {
-                return (str == undefined) ? EMPTY : str.toString().replace(REG_TRIM, EMPTY);
+                return (str == undef) ? EMPTY : str.toString().replace(REG_TRIM, EMPTY);
             },
 
         /**
@@ -553,7 +553,7 @@ build time: ${build.time}
 
             return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
                 if (match.charAt(0) === '\\') return match.slice(1);
-                return (o[name] !== undefined) ? o[name] : EMPTY;
+                return (o[name] !== undef) ? o[name] : EMPTY;
             });
         },
 
@@ -566,7 +566,7 @@ build time: ${build.time}
          */
         each: function(object, fn, context) {
             var key, val, i = 0, length = object.length,
-                isObj = length === undefined || S.isFunction(object);
+                isObj = length === undef || S.isFunction(object);
             context = context || win;
             
             if (isObj) {
@@ -650,7 +650,7 @@ build time: ${build.time}
          * Converts object to a true array.
          */
         makeArray: function(o) {
-            if (o === null || o === undefined) return [];
+            if (o === null || o === undef) return [];
             if (S.isArray(o)) return o;
 
             // The strings and functions also have 'length'
@@ -905,7 +905,7 @@ build time: ${build.time}
  * @module loader
  * @author lifesinger@gmail.com, lijing00333@163.com
  */
-(function(win, S, undefined) {
+(function(win, S, undef) {
 
     var doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
@@ -1110,7 +1110,7 @@ build time: ${build.time}
                 S.each(mod.fns, function(fn) {
                     fn && fn(self);
                 });
-                mod.fns = undefined; // 保证 attach 过的方法只执行一次
+                mod.fns = undef; // 保证 attach 过的方法只执行一次
                 //S.log(mod.name + '.status = attached');
             }
 
@@ -1258,7 +1258,7 @@ build time: ${build.time}
                 scriptOnload(node, function() {
                     if (timer) {
                         timer.cancel();
-                        timer = undefined;
+                        timer = undef;
                     }
 
                     S.isFunction(success) && success.call(node);
@@ -1272,7 +1272,7 @@ build time: ${build.time}
 
             if (S.isFunction(error)) {
                 timer = S.later(function() {
-                    timer = undefined;
+                    timer = undef;
                     error();
                 }, (timeout || this.Config.timeout) * 1000);
             }
@@ -1328,14 +1328,19 @@ build time: ${build.time}
         }
     };
 
-    S.each(['sizzle', 'datalazyload', 'flash', 'switchable',
-        'suggest', 'overlay', 'imagezoom', 'calendar'], function(modName) {
-        map[modName] = {
-            path: modName + '/' + modName + '-pkg-min.js',
-            requires: ['core'],
-            charset: 'utf-8'
-        };
-    });
+    S.each([
+        'sizzle', 'dd', 'datalazyload', // 纯工具类
+        'flash', // flash 类
+        'switchable', 'suggest', 'calendar', // 传统 UI 组件
+        'uibase', 'overlay', 'imagezoom' // 基于 uibase 的组件
+    ],
+        function(modName) {
+            map[modName] = {
+                path: modName + '/' + modName + '-pkg-min.js',
+                requires: ['core'],
+                charset: 'utf-8'
+            };
+        });
 
     map['calendar'].csspath = 'calendar/default-min.css';
 
@@ -1351,9 +1356,9 @@ build time: ${build.time}
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 13:21
 */
 /**
  * @module  ua
@@ -1548,9 +1553,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 13:21
 */
 /**
  * @module  dom
@@ -1854,7 +1859,7 @@ KISSY.add('selector', function(S, undefined) {
             }
             // 其它复杂 filter, 采用外部选择器
             else if (filter && S.ExternalSelector) {
-                ret = S.ExternalSelector._filter(selector, filter);
+                ret = S.ExternalSelector._filter(selector, filter + '');
             }
             // filter 为空或不支持的 selector
             else {
@@ -1869,9 +1874,8 @@ KISSY.add('selector', function(S, undefined) {
          */
         test: function(selector, filter) {
             var elems = query(selector);
-            return DOM.filter(elems, filter).length === elems.length;
+            return elems.length && (DOM.filter(elems, filter).length === elems.length);
         }
-
     });
 });
 
@@ -3603,9 +3607,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 13:21
 */
 /**
  * @module  event
@@ -3665,7 +3669,7 @@ KISSY.add('event', function(S, undefined) {
 
             // 不是有效的 target 或 参数不对
             if (id === -1 || !type || !S.isFunction(fn)) return;
-            scope = scope || target;
+
             // 还没有添加过任何事件
             if (!id) {
                 setID(target, (id = guid++));
@@ -3709,7 +3713,7 @@ KISSY.add('event', function(S, undefined) {
             }
 
             // 增加 listener
-            events[type].listeners.push({fn: fn, scope: scope});
+            events[type].listeners.push({fn: fn, scope: scope || target});
         },
 
         /**
@@ -3781,7 +3785,7 @@ KISSY.add('event', function(S, undefined) {
 
             for (; i < len; ++i) {
                 listener = listeners[i];
-                ret = listener.fn.call(scope || listener.scope || target, event);
+                ret = listener.fn.call(scope || listener.scope, event);
 
                 // 自定义事件对象，可以用 return false 来立刻停止后续监听函数
                 // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡
@@ -4178,9 +4182,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 13:21
 */
 /**
  * @module  node
@@ -4531,9 +4535,9 @@ KISSY.add('node-attach', function(S, undefined) {
     });
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 13:21
 */
 /*
     http://www.JSON.org/json2.js
@@ -5037,9 +5041,9 @@ KISSY.add('json', function (S) {
     };
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 13:20
 */
 /***
  * @module  ajax
@@ -5358,9 +5362,9 @@ KISSY.add('ajax', function(S, undef) {
  *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 13:20
 */
 /**
  * @module anim-easing
@@ -5958,64 +5962,68 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
             });
     });
 
-    function fx(elem, which, speed, callback, display) {
+    function fx(elem, which, speed, callback, visible) {
         if (which === 'toggle') {
-            display = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
+            visible = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
             which = 'show';
         }
 
-        if (display) DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
+        if (visible) DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
 
         // 根据不同类型设置初始 css 属性, 并设置动画参数
-        var style = { };
+        var originalStyle = {}, style = {};
         S.each(FX[which], function(prop) {
             if (prop === OVERFLOW) {
+                originalStyle[OVERFLOW] = DOM.css(elem, OVERFLOW);
                 DOM.css(elem, OVERFLOW, HIDDEN);
             }
             else if (prop === OPCACITY) {
-                style.opacity = display ? 1 : 0;
-                if (display) DOM.css(elem, OPCACITY, 0);
+                originalStyle[OPCACITY] = DOM.css(elem, OPCACITY);
+                style.opacity = visible ? 1 : 0;
+                if (visible) DOM.css(elem, OPCACITY, 0);
             }
             else if (prop === HEIGHT) {
-                style.height = (display ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
-                if (display) DOM.css(elem, HEIGHT, 0);
+                originalStyle[HEIGHT] = DOM.css(elem, HEIGHT);
+                style.height = (visible ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
+                if (visible) DOM.css(elem, HEIGHT, 0);
             }
             else if (prop === WIDTH) {
-                style.width = (display ? DOM.css(elem, WIDTH) || elem.naturalWidth : 0);
-                if (display) DOM.css(elem, WIDTH, 0);
+                originalStyle[WIDTH] = DOM.css(elem, WIDTH);
+                style.width = (visible ? DOM.css(elem, WIDTH) || elem.naturalWidth : 0);
+                if (visible) DOM.css(elem, WIDTH, 0);
             }
         });
 
         // 开始动画
         new S.Anim(elem, style, speed, 'easeOut', function() {
             // 如果是隐藏, 需要还原一些 css 属性
-            if (!display) {
+            if (!visible) {
                 // 保留原有值
-                var style = elem.style, oldVal = style[DISPLAY];
+                var currStyle = elem.style, oldVal = currStyle[DISPLAY];
                 if (oldVal !== NONE) {
                     if (oldVal) {
                         DOM.data(elem, DISPLAY, oldVal);
                     }
-                    style[DISPLAY] = NONE;
+                    currStyle[DISPLAY] = NONE;
                 }
 
-                // 还原部分样式
-                DOM.css(elem, {
-                    height: AUTO,
-                    width: AUTO,
-                    overflow: AUTO,
-                    opacity: 1
-                });
+                // 还原样式
+                if(originalStyle[HEIGHT]) DOM.css(elem, { height: originalStyle[HEIGHT] });
+                if(originalStyle[WIDTH]) DOM.css(elem, { height: originalStyle[WIDTH] });
+                if(originalStyle[OPCACITY]) DOM.css(elem, { height: originalStyle[OPCACITY] });
+                if(originalStyle[OVERFLOW]) DOM.css(elem, { height: originalStyle[OVERFLOW] });
             }
+
             if (callback && S.isFunction(callback)) callback();
+
         }).run();
     }
 
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 13:21
 */
 /**
  * @module  cookie
@@ -6072,6 +6080,7 @@ KISSY.add('cookie', function(S) {
                 text += '; secure';
             }
 
+            //S.log(text);
             doc.cookie = name + '=' + text;
         },
 
@@ -6098,9 +6107,9 @@ KISSY.add('cookie', function(S) {
  *     独立成静态工具类的方式更优。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 13:20
 */
 /**
  * @module  Attribute
@@ -6124,7 +6133,7 @@ KISSY.add('attribute', function(S, undefined) {
          }
          }
          */
-        //host.__attrs = { };
+        this.__attrs = {};
 
         /**
          * attribute value
@@ -6132,20 +6141,12 @@ KISSY.add('attribute', function(S, undefined) {
          attrName: attrVal
          }
          */
-        //host.__attrVals = { };
+        this.__attrVals = {};
     }
 
     S.augment(Attribute, {
 
-        __initAttrs: function() {
-            var host = this;
-            if (host.__attrs) return;
-
-            host.__attrs = { };
-            host.__attrVals = { };
-        },
-
-        getDefAttrs:function() {
+        __getDefAttrs: function() {
             return S.clone(this.__attrs);
         },
 
@@ -6161,9 +6162,7 @@ KISSY.add('attribute', function(S, undefined) {
          */
         addAttr: function(name, attrConfig) {
             var host = this;
-
-            host.__initAttrs();
-            host.__attrs[name] = S.clone(attrConfig || { });
+            host.__attrs[name] = S.clone(attrConfig || {});
 
             return host;
         },
@@ -6191,7 +6190,7 @@ KISSY.add('attribute', function(S, undefined) {
          * Checks if the given attribute has been added to the host.
          */
         hasAttr: function(name) {
-            return name && (name in (this.__attrs || { }));
+            return name && (name in (this.__attrs || {}));
         },
 
         /**
@@ -6201,8 +6200,8 @@ KISSY.add('attribute', function(S, undefined) {
             var host = this;
 
             if (host.hasAttr(name)) {
-                delete host.__attrs.name;
-                delete host.__attrVals.name;
+                delete host.__attrs[name];
+                delete host.__attrVals[name];
             }
 
             return host;
@@ -6211,7 +6210,7 @@ KISSY.add('attribute', function(S, undefined) {
         /**
          * Sets the value of an attribute.
          */
-        set: function (name, value) {
+        set: function(name, value) {
             var host = this,
                 prevVal = host.get(name);
 
@@ -6241,7 +6240,7 @@ KISSY.add('attribute', function(S, undefined) {
         /**
          * internal use, no event involved, just set.
          */
-        __set: function (name, value) {
+        __set: function(name, value) {
             var host = this,
                 setValue,
                 attrConfig = host.__attrs[name],
@@ -6258,10 +6257,9 @@ KISSY.add('attribute', function(S, undefined) {
         /**
          * Gets the current value of the attribute.
          */
-        get: function (name) {
+        get: function(name) {
             var host = this, attrConfig, getter, ret;
-
-            host.__initAttrs();
+            
             attrConfig = host.__attrs[name];
             getter = attrConfig && attrConfig['getter'];
 
@@ -6323,282 +6321,53 @@ KISSY.add('attribute', function(S, undefined) {
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    Attribute.capitalFirst = capitalFirst;
+    Attribute.__capitalFirst = capitalFirst;
 });
-/*
-Copyright 2010, KISSY UI Library v1.1.6dev
-MIT Licensed
-build time: ${build.time}
-*/
 /**
  * @module  Base
- * @author  lifesinger@gmail.com, 承玉<yiminghe@gmail.com>
+ * @author  lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('base', function (S) {
-    var UI_SET = "_uiSet",
-        SRC_NODE = "srcNode",
-        capitalFirst = S.Attribute.capitalFirst;
+
     /*
      * Base for class-based component
      */
     function Base(config) {
-        var self = this;
-        initHierarchy(self, config);
-        config && config.autoRender && self.renderer();
-    }
-
-    /**
-     * init attr using constructors ATTRS meta info
-     * 模拟多继承
-     */
-    function initHierarchy(host, config) {
-        var c = host.constructor,
-            attr,
-            attrs,
-            extChains = [],
-            ATTRS = 'ATTRS';
+        S.Attribute.call(this);
+        var c = this.constructor;
 
         // define
         while (c) {
-
-            //定义属性
-            if ((attrs = c[ATTRS])) {
-                for (attr in attrs) {
-                    // 子类上的 ATTRS 配置优先
-                    if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
-                        host.addAttr(attr, attrs[attr]);
-                    }
-                }
-            }
-
-
-            //收集扩展类
-            var exts = c._kissycreate;
-            exts = exts && exts._exts;
-            var t_ext = [];
-            if (exts) {
-                t_ext = exts.concat();
-            }
-
-
-            //先收集扩展类
-            var t_init = c.prototype.init;
-            if (t_init) {
-                t_ext.push(t_init);
-            }
-
-            //原地 reverse
-            if (t_ext.length) {
-                extChains.push.apply(extChains, t_ext.reverse());
-            }
-
-
-            //从 markup 生成相应的属性项
-            if (config &&
-                config[SRC_NODE] &&
-                c.HTML_PARSER) {
-                if (config[SRC_NODE] = S.one(config[SRC_NODE]))
-                    applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
-            }
-
+            addAttrs(this, c['ATTRS']);
             c = c.superclass ? c.superclass.constructor : null;
         }
 
+        // initial
+        initAttrs(this, config);
+    }
 
-        // initialize
-        //注意：用户设置的属性值会覆盖 html_parser 得到的属性值
-        //先设置属性，再运行主类以及扩展类的初始化函数
+    function addAttrs(host, attrs) {
+        if (attrs) {
+            for (var attr in attrs) {
+                // 子类上的 ATTRS 配置优先
+                if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
+                    host.addAttr(attr, attrs[attr]);
+                }
+            }
+        }
+    }
+
+    function initAttrs(host, config) {
         if (config) {
-            for (attr in config) {
+            for (var attr in config) {
                 if (config.hasOwnProperty(attr))
                     host.__set(attr, config[attr]);
             }
         }
-
-
-        //初始化扩展类构造器，
-        //注意：执行顺序
-        //父类的所有扩展类构造器，父类 init，子类的所有扩展构造器，子类 init
-        for (var i = extChains.length - 1; i >= 0; i--) {
-            extChains[i] && extChains[i].call(host, config);
-        }
-
-
     }
 
-    /**
-     * 摧毁组件机制
-     * 子类扩展 destructor，子类 destructor，父类扩展 destructor，父类 destructor，
-     */
-    function destroyHierarchy(host) {
-        var c = host.constructor;
-        while (c) {
-            //收集扩展类
-            var exts = c._kissycreate;
-            exts = exts && exts._exts;
-            var d = c.prototype.destructor;
-            d && d.apply(host);
-            if (exts) {
-                for (var l = exts.length - 1; l >= 0; l--) {
-                    d = exts[l] && exts[l].prototype.__destructor;
-                    d && d.apply(host);
-                }
-            }
-            c = c.superclass ? c.superclass.constructor : null;
-        }
-    }
-
-    function applyParser(srcNode, parser) {
-        var self = this;
-        //从parser中，默默设置属性，不触发事件！__set
-        for (var p in parser) {
-            if (parser.hasOwnProperty(p)) {
-                var v = parser[p];
-                //函数
-                if (S.isFunction(v)) {
-                    self.__set(p, v.call(self, srcNode));
-                }
-                //单选选择器
-                else if (S.isString(v)) {
-                    self.__set(p, srcNode.one(v));
-                }
-                //多选选择器
-                else if (S.isArray(v) && v[0]) {
-                    self.__set(p, srcNode.all(v[0]))
-                }
-            }
-        }
-    }
-
-
-    Base.HTML_PARSER = {};
-    Base.ATTRS = {
-        //保证只会 renderer 一次
-        rendered:{
-            value:false
-        },
-        render:{
-            setter:function(v) {
-                if (S.isString(v))
-                    return S.one(v);
-            }
-        }
-    };
-    S.augment(Base, S.EventTarget, S.Attribute, {
-        renderer:function(render) {
-            var self = this,rendered = self.get("rendered");
-            render = render || self.get("render");
-
-            if (!rendered) {
-                self.renderUI(render);
-                self.bindUI();
-                self.syncUI();
-                self.set("rendered", true);
-            }
-        },
-        /**
-         * 根据属性添加 DOM 节点
-         */
-        renderUI:function() {
-            this.fire("renderUI");
-        },
-        /**
-         * 根据属性变化设置 UI
-         */
-        bindUI:function() {
-            var self = this,
-                attrs = self.getDefAttrs();
-            for (var a in attrs) {
-                if (attrs.hasOwnProperty(a)) {
-                    var m = UI_SET + capitalFirst(a);
-                    if (self[m]) {
-                        //自动绑定事件到对应函数
-                        (function(a, m) {
-                            self.on("after" + capitalFirst(a) + "Change", function(ev) {
-                                self[m](ev.newVal,ev);
-                            });
-                        })(a, m);
-                    }
-                }
-            }
-
-            self.fire("bindUI");
-        },
-        /**
-         * 根据当前（初始化）状态来设置 UI
-         */
-        syncUI:function() {
-            var self = this,
-                attrs = self.getDefAttrs();
-            for (var a in attrs) {
-                if (attrs.hasOwnProperty(a)) {
-                    var m = UI_SET + capitalFirst(a);
-                    if (self[m]) {
-                        self[m](self.get(a));
-                    }
-                }
-            }
-            self.fire("syncUI");
-        },
-
-        destroy:function() {
-            destroyHierarchy(this);
-            this.fire("destroy");
-            this.detach();
-        }
-    });
-
-
-    /**
-     * 根据基类以及扩展类得到新类
-     * @param {function} baseCls 基类
-     * @param {Array.<function>} exts 扩展类
-     * @param {Object} px 原型 mix 对象
-     * @param {Object} sx 静态mix对象
-     */
-    Base.create = function(baseCls, exts, px, sx) {
-        if (S.isArray(baseCls)) {
-            sx = px;
-            px = exts;
-            exts = arguments[0];
-            baseCls = Base;
-        }
-        baseCls = baseCls || Base;
-        function re() {
-            Base.apply(this, arguments);
-        }
-
-        S.extend(re, baseCls, px, sx);
-        if (exts) {
-            re._kissycreate = re._kissycreate || {};
-            re._kissycreate._exts = exts;
-            for (var i = 0; i < exts.length; i++) {
-                var ext = exts[i],
-                    attrs = ext && ext.ATTRS,
-                    parsers = ext && ext.HTML_PARSER;
-                if (attrs) {
-                    re.ATTRS = re.ATTRS || {};
-                    //合并功能类属性定义到主类，不要覆盖主类属性重定义
-                    S.mix(re.ATTRS, attrs, false);
-                }
-
-                if (parsers) {
-                    re.HTML_PARSER = re.HTML_PARSER || {};
-                    //合并功能类 htmlparser 定义到主类，不要覆盖主类属性重定义
-                    S.mix(re.HTML_PARSER, parsers, false);
-                }
-                //合并功能类代码到主类
-                if (ext)
-                    S.augment(re, ext);
-            }
-        }
-        return re;
-    };
+    S.augment(Base, S.EventTarget, S.Attribute);
     S.Base = Base;
 });
 
-/**
- * 2011-11-08 承玉重构，Base && yui3 Widget 压缩一下，增加扩展类支持，组件初始化生命周期以及 htmlparser
- * 测试 crlf
- */
 KISSY.add('core');

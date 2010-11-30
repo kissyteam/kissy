@@ -6,11 +6,11 @@ describe('selectable', function() {
 	function arrayEqualDOM(array, domArray) {
 		if (array.length != domArray.length) {
 			return false;
-		} 
+		}
 
 		for (var i=0, len = array.length; i<len; i++) {
 			if (array[i] != domArray[i]) {
-				return false;			
+				return false;
 			}
 		}
 
@@ -18,21 +18,21 @@ describe('selectable', function() {
 	}
 
 	beforeEach(function() {
-		//²âÊÔÇ°ÏÈ´´½¨Ò»¸öÄ£ÄâµÄlistÊ÷
+		//æµ‹è¯•å‰å…ˆåˆ›å»ºä¸€ä¸ªæ¨¡æ‹Ÿçš„listæ ‘
 		tempList = D.create('<ul id="KS_List"><li ks-filter="true" ks-data = "list1">list1</li><li ks-filter="true" ks-data = "list2">list2</li><li ks-filter="true" ks-data = "list3">list3</li><li ks-data = "list4">list4</li><li ks-data = "list5">list5</li></ul>');
 		document.body.appendChild(tempList);
 	});
 
 	afterEach(function() {
-		//²âÊÔÍê±Ïºó½«Õâ¸ö½ÚµãÉ¾³ı
+		//æµ‹è¯•å®Œæ¯•åå°†è¿™ä¸ªèŠ‚ç‚¹åˆ é™¤
 		D.remove( tempList );
 	});
 
 	/**
-	 * init µÄfire·½·¨»¹Ã»ÏëºÃ
+	 * init çš„fireæ–¹æ³•è¿˜æ²¡æƒ³å¥½
 	 */
-	describe('³õÊ¼»¯·½·¨', function() {
-		var testList
+	describe('åˆå§‹åŒ–æ–¹æ³•', function() {
+		var testList;
 		beforeEach(function() {
 			testList = new S.Selectable('#KS_List',{
 				valueKey : VALUE_KEY,
@@ -42,10 +42,10 @@ describe('selectable', function() {
 
 		afterEach(function() {
 			testList = null;
-		});	
+		});
 
-		//²âÊÔ³õÊ¼»¯ÖµÊÇ·ñÕıÈ·,_parseMarkupºÍ_buildValueMap·½·¨Ã»ÓĞµ¥¶À²âÊÔ
-		it('²âÊÔ³õÊ¼»¯²ÎÊı', function() {
+		//æµ‹è¯•åˆå§‹åŒ–å€¼æ˜¯å¦æ­£ç¡®,_parseMarkupå’Œ_buildValueMapæ–¹æ³•æ²¡æœ‰å•ç‹¬æµ‹è¯•
+		it('æµ‹è¯•åˆå§‹åŒ–å‚æ•°', function() {
 			testList.on('init', function() {
 				alert('');
 			});
@@ -57,13 +57,13 @@ describe('selectable', function() {
 			expect( testList.config.selectedItemCls ).toEqual( SELECTED_ITEM_CLS );
 			expect( testList.selectedIndex ).toEqual( undefined );
 			expect( testList.valueMap ).not.toBeNull();
-		});		
+		});
 	});
 
 	/**
-	 * ²âÊÔselect·½·¨
+	 * æµ‹è¯•selectæ–¹æ³•
 	 */
-	describe('select·½·¨', function() {
+	describe('selectæ–¹æ³•', function() {
 		var testList;
 		beforeEach(function() {
 			testList = new S.Selectable('#KS_List',{
@@ -74,10 +74,10 @@ describe('selectable', function() {
 
 		afterEach(function() {
 			testList = null;
-		});	
+		});
 
-		it('ÊäÈëÎªÕıÕûÊıÊ±£¬Ó¦¸ÃÕıÈ·Ñ¡ÖĞ¶ÔÓ¦item£¬ÊÂ¼ş·¢²¼', function() {
-			var index = 1, config = testList.config, 
+		it('è¾“å…¥ä¸ºæ­£æ•´æ•°æ—¶ï¼Œåº”è¯¥æ­£ç¡®é€‰ä¸­å¯¹åº”itemï¼Œäº‹ä»¶å‘å¸ƒ', function() {
+			var index = 1, config = testList.config,
 				item = testList.select(index), fired = false;
 
 			testList.on('select', function() {
@@ -86,19 +86,19 @@ describe('selectable', function() {
 
 			testList.select(index);
 
-			//µ±Ç°Ñ¡ÖĞÏîºÍdomÖĞÑ¡ÖĞÏîÊÇÒ»ÑùµÄ
+			//å½“å‰é€‰ä¸­é¡¹å’Œdomä¸­é€‰ä¸­é¡¹æ˜¯ä¸€æ ·çš„
 			expect( item ).toEqual( tempList.children[index] );
-			//µ±Ç°Ñ¡ÖĞÖµÒÑ±»ÖÃÎªindex
+			//å½“å‰é€‰ä¸­å€¼å·²è¢«ç½®ä¸ºindex
 			expect( testList.selectedIndex ).toEqual( index );
-			//dom½ÚµãµÄclassÊôĞÔÒÑ¾­±»¸Ä±äÎªselected
-			expect( D.hasClass(tempList.children[index], config.selectedItemCls) ).toEqual( true );			
-			//selectÊÂ¼ş·¢²¼
+			//domèŠ‚ç‚¹çš„classå±æ€§å·²ç»è¢«æ”¹å˜ä¸ºselected
+			expect( D.hasClass(tempList.children[index], config.selectedItemCls) ).toEqual( true );
+			//selectäº‹ä»¶å‘å¸ƒ
 			expect( fired ).toEqual( true );
 
 		});
 
-		it('ÊäÈëÎª0Ê±£¬Ñ¡ÖĞµÚÒ»¸öitem£¬ÊÂ¼ş·¢²¼', function() {
-			var index = 0, config = testList.config, 
+		it('è¾“å…¥ä¸º0æ—¶ï¼Œé€‰ä¸­ç¬¬ä¸€ä¸ªitemï¼Œäº‹ä»¶å‘å¸ƒ', function() {
+			var index = 0, config = testList.config,
 				item = testList.select(index), fired = false;
 
 			testList.on('select', function() {
@@ -107,18 +107,18 @@ describe('selectable', function() {
 
 			testList.select(index);
 
-			//µ±Ç°Ñ¡ÖĞÏîºÍdomÖĞÑ¡ÖĞÏîÊÇÒ»ÑùµÄ
+			//å½“å‰é€‰ä¸­é¡¹å’Œdomä¸­é€‰ä¸­é¡¹æ˜¯ä¸€æ ·çš„
 			expect( item ).toEqual( tempList.children[index] );
-			//µ±Ç°Ñ¡ÖĞÖµÒÑ±»ÖÃÎªindex
+			//å½“å‰é€‰ä¸­å€¼å·²è¢«ç½®ä¸ºindex
 			expect( testList.selectedIndex ).toEqual( index );
-			//dom½ÚµãµÄclassÊôĞÔÒÑ¾­±»¸Ä±äÎªselected
-			expect( D.hasClass(tempList.children[index], config.selectedItemCls) ).toEqual( true );			
-			//selectÊÂ¼ş·¢²¼
+			//domèŠ‚ç‚¹çš„classå±æ€§å·²ç»è¢«æ”¹å˜ä¸ºselected
+			expect( D.hasClass(tempList.children[index], config.selectedItemCls) ).toEqual( true );
+			//selectäº‹ä»¶å‘å¸ƒ
 			expect( fired ).toEqual( true );
 		});
 
-		it('ÊäÈëÎªundefined£¬²»Ñ¡ÈÎºÎitem£¬²»·¢²¼ÊÂ¼ş', function() {
-			var index, config = testList.config, 
+		it('è¾“å…¥ä¸ºundefinedï¼Œä¸é€‰ä»»ä½•itemï¼Œä¸å‘å¸ƒäº‹ä»¶', function() {
+			var index, config = testList.config,
 				item = testList.select(index), fired = false;
 
 			testList.on('select', function() {
@@ -127,18 +127,18 @@ describe('selectable', function() {
 
 			testList.select(index);
 
-			//Ñ¡ÖĞÏîÎªundefined
+			//é€‰ä¸­é¡¹ä¸ºundefined
 			expect( item ).toEqual( undefined );
-			//selectedIndex±»ÖÃÎªundefined
+			//selectedIndexè¢«ç½®ä¸ºundefined
 			expect( testList.selectedIndex ).toEqual( undefined );
-			//ÔÚdom½ÚµãÖĞÃ»ÓĞÑ¡ÖĞµÄ½Úµã
-			expect( D.hasClass(tempList.children[index], config.selectedItemCls) ).toEqual( false );						
-			//ÊÂ¼ş²»·¢²¼
+			//åœ¨domèŠ‚ç‚¹ä¸­æ²¡æœ‰é€‰ä¸­çš„èŠ‚ç‚¹
+			expect( D.hasClass(tempList.children[index], config.selectedItemCls) ).toEqual( false );
+			//äº‹ä»¶ä¸å‘å¸ƒ
 			expect( fired ).toEqual( false );
 		});
 
-		it('ÊäÈëÎªnull£¬²»Ñ¡ÈÎºÎitem£¬²»·¢²¼ÊÂ¼ş', function() {
-			var index = null, config = testList.config, 
+		it('è¾“å…¥ä¸ºnullï¼Œä¸é€‰ä»»ä½•itemï¼Œä¸å‘å¸ƒäº‹ä»¶', function() {
+			var index = null, config = testList.config,
 				item = testList.select(index), fired = false;
 
 			testList.on('select', function() {
@@ -147,18 +147,18 @@ describe('selectable', function() {
 
 			testList.select(index);
 
-			//Ñ¡ÖĞÏîÎªundefined
+			//é€‰ä¸­é¡¹ä¸ºundefined
 			expect( item ).toEqual( undefined );
-			//selectedIndex±»ÖÃÎªundefined
+			//selectedIndexè¢«ç½®ä¸ºundefined
 			expect( testList.selectedIndex ).toEqual( undefined );
-			//ÔÚdom½ÚµãÖĞÃ»ÓĞÑ¡ÖĞµÄ½Úµã
-			expect( D.hasClass(tempList.children[index], config.selectedItemCls) ).toEqual( false );						
-			//ÊÂ¼ş²»·¢²¼
+			//åœ¨domèŠ‚ç‚¹ä¸­æ²¡æœ‰é€‰ä¸­çš„èŠ‚ç‚¹
+			expect( D.hasClass(tempList.children[index], config.selectedItemCls) ).toEqual( false );
+			//äº‹ä»¶ä¸å‘å¸ƒ
 			expect( fired ).toEqual( false );
 		});
 
-		it('ÊäÈëÎª¶ÔÏóÊ±£¬²»Ñ¡ÈÎºÎitem£¬²»·¢²¼ÊÂ¼ş', function() {
-			var index = {}, config = testList.config, 
+		it('è¾“å…¥ä¸ºå¯¹è±¡æ—¶ï¼Œä¸é€‰ä»»ä½•itemï¼Œä¸å‘å¸ƒäº‹ä»¶', function() {
+			var index = {}, config = testList.config,
 				item, fired = false;
 
 			testList.on('select', function() {
@@ -167,21 +167,21 @@ describe('selectable', function() {
 
 			item = testList.select(index);
 
-			//Ñ¡ÖĞÏîÎªundefined
+			//é€‰ä¸­é¡¹ä¸ºundefined
 			expect( item ).toEqual( undefined );
-			//selectedIndex±»ÖÃÎªundefined
+			//selectedIndexè¢«ç½®ä¸ºundefined
 			expect( testList.selectedIndex ).toEqual( undefined );
-			//ÔÚdom½ÚµãÖĞÃ»ÓĞÑ¡ÖĞµÄ½Úµã
-			expect( D.hasClass(tempList.children[index], config.selectedItemCls) ).toEqual( false );						
-			//ÊÂ¼ş²»·¢²¼
+			//åœ¨domèŠ‚ç‚¹ä¸­æ²¡æœ‰é€‰ä¸­çš„èŠ‚ç‚¹
+			expect( D.hasClass(tempList.children[index], config.selectedItemCls) ).toEqual( false );
+			//äº‹ä»¶ä¸å‘å¸ƒ
 			expect( fired ).toEqual( false );
 		});
 	});
 
-	/** 
-	 * ²âÊÔselectByValue·½·¨
+	/**
+	 * æµ‹è¯•selectByValueæ–¹æ³•
 	 */
-	describe('selectByValue·½·¨', function() {
+	describe('selectByValueæ–¹æ³•', function() {
 		var testList;
 		beforeEach(function() {
 			testList = new S.Selectable('#KS_List',{
@@ -192,143 +192,143 @@ describe('selectable', function() {
 
 		afterEach(function() {
 			testList = null;
-		});	
-		
-		it('ÊäÈë²ÎÊıÊÇlistÖĞÒÑÓĞµÄ×Ö·û£¬Ó¦¸ÃÕıÈ·Ñ¡ÖĞ£¬ÊÂ¼ş·¢²¼', function() {
+		});
+
+		it('è¾“å…¥å‚æ•°æ˜¯listä¸­å·²æœ‰çš„å­—ç¬¦ï¼Œåº”è¯¥æ­£ç¡®é€‰ä¸­ï¼Œäº‹ä»¶å‘å¸ƒ', function() {
 			var value = 'list2', fired = false, config = testList.config,
 				item;
 
 			testList.on( 'selectByValue', function() {
 				fired = true;
 			});
-			
+
 			testList.selectByValue( value );
-			
+
 
 			selectedIndex = testList.selectedIndex;
 			item = D.get( '.' + config.selectedItemCls );
 
-			//µ±Ñ¡ÖĞÊ±selectedIndex²»ÊÇundefined
+			//å½“é€‰ä¸­æ—¶selectedIndexä¸æ˜¯undefined
 			expect( selectedIndex ).toNotEqual( undefined );
-			//µ±Ñ¡ÖĞÊ±£¬domÊ÷ÖĞ¶ÔÓ¦µÄ½Úµã¾ßÓĞselected classÊôĞÔ
+			//å½“é€‰ä¸­æ—¶ï¼Œdomæ ‘ä¸­å¯¹åº”çš„èŠ‚ç‚¹å…·æœ‰selected classå±æ€§
 			expect( D.hasClass(tempList.children[selectedIndex], config.selectedItemCls) ).toEqual( true );
-			//µ±Ñ¡ÖĞÊ±£¬Ñ¡ÖĞµÄ½ÚµãµÄvalueºÍ´«ÈëµÄvalueÓ¦¸ÃÒ»ÖÂ
+			//å½“é€‰ä¸­æ—¶ï¼Œé€‰ä¸­çš„èŠ‚ç‚¹çš„valueå’Œä¼ å…¥çš„valueåº”è¯¥ä¸€è‡´
 			expect( D.attr(item, config.valueKey)).toEqual( value );
-			//selectByValueÊÂ¼ş·¢²¼
+			//selectByValueäº‹ä»¶å‘å¸ƒ
 			expect( fired ).toEqual( true );
 		});
 
-		it('ÊäÈë²ÎÊıÊÇlistÖĞÃ»ÓĞµÄ×Ö·û£¬²»Ñ¡ÖĞÈÎºÎitem£¬²»·¢²¼ÊÂ¼ş', function() {
+		it('è¾“å…¥å‚æ•°æ˜¯listä¸­æ²¡æœ‰çš„å­—ç¬¦ï¼Œä¸é€‰ä¸­ä»»ä½•itemï¼Œä¸å‘å¸ƒäº‹ä»¶', function() {
 			var value = 'list555', fired = false, config = testList.config,
 				item;
 
 			testList.on( 'selectByValue', function() {
 				fired = true;
 			});
-			
+
 			testList.selectByValue( value );
 
 			selectedIndex = testList.selectedIndex;
 			item = D.get( '.' + config.selectedItemCls );
 
-			//µ±Ñ¡ÖĞÊ±selectedIndexÊÇundefined
+			//å½“é€‰ä¸­æ—¶selectedIndexæ˜¯undefined
 			expect( selectedIndex ).toEqual( undefined );
-			//domÊ÷ÖĞ²»´æÔÚº¬ÓĞselectedItmeCls classµÄ¶®½Úµã
+			//domæ ‘ä¸­ä¸å­˜åœ¨å«æœ‰selectedItmeCls classçš„æ‡‚èŠ‚ç‚¹
 			expect( item ).toEqual( undefined );
-			//selectByValueÊÂ¼ş²»·¢²¼
+			//selectByValueäº‹ä»¶ä¸å‘å¸ƒ
 			expect( fired ).toEqual( false );
 		});
 
-		it('ÊäÈë²ÎÊıÊÇ¿Õ×Ö·û×Ö·û£¬²»Ñ¡ÖĞÈÎºÎitem£¬²»·¢²¼ÊÂ¼ş', function() {
+		it('è¾“å…¥å‚æ•°æ˜¯ç©ºå­—ç¬¦å­—ç¬¦ï¼Œä¸é€‰ä¸­ä»»ä½•itemï¼Œä¸å‘å¸ƒäº‹ä»¶', function() {
 			var value = '', fired = false, config = testList.config,
 				item;
 
 			testList.on( 'selectByValue', function() {
 				fired = true;
 			});
-			
+
 			testList.selectByValue( value );
 
 			selectedIndex = testList.selectedIndex;
 			item = D.get( '.' + config.selectedItemCls );
 
-			//µ±Ñ¡ÖĞÊ±selectedIndexÊÇundefined
+			//å½“é€‰ä¸­æ—¶selectedIndexæ˜¯undefined
 			expect( selectedIndex ).toEqual( undefined );
-			//domÊ÷ÖĞ²»´æÔÚº¬ÓĞselectedItmeCls classµÄ¶®½Úµã
+			//domæ ‘ä¸­ä¸å­˜åœ¨å«æœ‰selectedItmeCls classçš„æ‡‚èŠ‚ç‚¹
 			expect( item ).toEqual( undefined );
-			//selectByValueÊÂ¼ş²»·¢²¼
+			//selectByValueäº‹ä»¶ä¸å‘å¸ƒ
 			expect( fired ).toEqual( false );
 		});
 
-		it('ÊäÈë²ÎÊıÊÇundefined£¬²»Ñ¡ÖĞÈÎºÎitem£¬²»·¢²¼ÊÂ¼ş', function() {
+		it('è¾“å…¥å‚æ•°æ˜¯undefinedï¼Œä¸é€‰ä¸­ä»»ä½•itemï¼Œä¸å‘å¸ƒäº‹ä»¶', function() {
 			var value = undefined, fired = false, config = testList.config,
 				item;
 
 			testList.on( 'selectByValue', function() {
 				fired = true;
 			});
-			
+
 			testList.selectByValue( value );
 
 			selectedIndex = testList.selectedIndex;
 			item = D.get( '.' + config.selectedItemCls );
 
-			//µ±Ñ¡ÖĞÊ±selectedIndexÊÇundefined
+			//å½“é€‰ä¸­æ—¶selectedIndexæ˜¯undefined
 			expect( selectedIndex ).toEqual( undefined );
-			//domÊ÷ÖĞ²»´æÔÚº¬ÓĞselectedItmeCls classµÄ¶®½Úµã
+			//domæ ‘ä¸­ä¸å­˜åœ¨å«æœ‰selectedItmeCls classçš„æ‡‚èŠ‚ç‚¹
 			expect( item ).toEqual( undefined );
-			//selectByValueÊÂ¼ş²»·¢²¼
+			//selectByValueäº‹ä»¶ä¸å‘å¸ƒ
 			expect( fired ).toEqual( false );
 		});
 
-		it('ÊäÈë²ÎÊıÊÇnull£¬²»Ñ¡ÖĞÈÎºÎitem£¬²»·¢²¼ÊÂ¼ş', function() {
+		it('è¾“å…¥å‚æ•°æ˜¯nullï¼Œä¸é€‰ä¸­ä»»ä½•itemï¼Œä¸å‘å¸ƒäº‹ä»¶', function() {
 			var value = null, fired = false, config = testList.config,
 				item;
 
 			testList.on( 'selectByValue', function() {
 				fired = true;
 			});
-			
+
 			testList.selectByValue( value );
 
 			selectedIndex = testList.selectedIndex;
 			item = D.get( '.' + config.selectedItemCls );
 
-			//µ±Ñ¡ÖĞÊ±selectedIndexÊÇundefined
+			//å½“é€‰ä¸­æ—¶selectedIndexæ˜¯undefined
 			expect( selectedIndex ).toEqual( undefined );
-			//domÊ÷ÖĞ²»´æÔÚº¬ÓĞselectedItmeCls classµÄ¶®½Úµã
+			//domæ ‘ä¸­ä¸å­˜åœ¨å«æœ‰selectedItmeCls classçš„æ‡‚èŠ‚ç‚¹
 			expect( item ).toEqual( undefined );
-			//selectByValueÊÂ¼ş²»·¢²¼
+			//selectByValueäº‹ä»¶ä¸å‘å¸ƒ
 			expect( fired ).toEqual( false );
 		});
 
-		it('ÊäÈë²ÎÊıÊÇ¶ÔÏó£¬²»Ñ¡ÖĞÈÎºÎitem£¬²»·¢²¼ÊÂ¼ş', function() {
+		it('è¾“å…¥å‚æ•°æ˜¯å¯¹è±¡ï¼Œä¸é€‰ä¸­ä»»ä½•itemï¼Œä¸å‘å¸ƒäº‹ä»¶', function() {
 			var value = {}, fired = false, config = testList.config,
 				item;
 
 			testList.on( 'selectByValue', function() {
 				fired = true;
 			});
-			
+
 			testList.selectByValue( value );
 
 			selectedIndex = testList.selectedIndex;
 			item = D.get( '.' + config.selectedItemCls );
 
-			//µ±Ñ¡ÖĞÊ±selectedIndexÊÇundefined
+			//å½“é€‰ä¸­æ—¶selectedIndexæ˜¯undefined
 			expect( selectedIndex ).toEqual( undefined );
-			//domÊ÷ÖĞ²»´æÔÚº¬ÓĞselectedItmeCls classµÄ¶®½Úµã
+			//domæ ‘ä¸­ä¸å­˜åœ¨å«æœ‰selectedItmeCls classçš„æ‡‚èŠ‚ç‚¹
 			expect( item ).toEqual( undefined );
-			//selectByValueÊÂ¼ş²»·¢²¼
+			//selectByValueäº‹ä»¶ä¸å‘å¸ƒ
 			expect( fired ).toEqual( false );
 		});
 	});
 
 
 	/**
-	 * ²âÊÔprev·½·¨
+	 * æµ‹è¯•prevæ–¹æ³•
 	 */
-	describe('prev·½·¨', function() {
+	describe('prevæ–¹æ³•', function() {
 		var testList;
 		beforeEach(function() {
 			testList = new S.Selectable('#KS_List',{
@@ -339,12 +339,12 @@ describe('selectable', function() {
 
 		afterEach(function() {
 			testList = null;
-		});	
+		});
 
-		it('µ±Ç°Ñ¡ÖĞÎªµÚ3ÏîÊ±£¬ÕıÈ·Ñ¡ÖĞµÚ2Ïî£¬ÊÂ¼ş·¢²¼', function() {
+		it('å½“å‰é€‰ä¸­ä¸ºç¬¬3é¡¹æ—¶ï¼Œæ­£ç¡®é€‰ä¸­ç¬¬2é¡¹ï¼Œäº‹ä»¶å‘å¸ƒ', function() {
 			var index = 3, config = testList.config, fired = false,
-				currrentIndex, items, currentItem, currentDOMItem;	
-			
+				currrentIndex, items, currentItem, currentDOMItem;
+
 			testList.on('prev', function() {
 				fired = true;
 			});
@@ -355,19 +355,19 @@ describe('selectable', function() {
 			items = testList.items;
 			currentDOMItem = D.get('.' + config.selectedItemCls);
 			currentItem = items[currentIndex];
-		
-			//prevÊÂ¼ş·¢²¼
+
+			//preväº‹ä»¶å‘å¸ƒ
 			expect( fired ).toEqual( true );
-			//µ±Ç°Ñ¡ÖĞÏîÓ¦¸ÃÊÇµ±Ç°ÏîµÄÇ°Ò»Ïî
+			//å½“å‰é€‰ä¸­é¡¹åº”è¯¥æ˜¯å½“å‰é¡¹çš„å‰ä¸€é¡¹
 			expect( currentIndex ).toEqual( 2 );
-			//º¬ÓĞselectedItemClsµÄdom½ÚµãÓ¦¸ÃºÍselecteableÖĞµÄÑ¡ÖĞ½ÚµãÒ»ÖÂ
+			//å«æœ‰selectedItemClsçš„domèŠ‚ç‚¹åº”è¯¥å’Œselecteableä¸­çš„é€‰ä¸­èŠ‚ç‚¹ä¸€è‡´
 			expect( currentDOMItem ).toEqual( currentItem );
 		});
 
-		it('µ±Ç°Ñ¡ÖĞÎªµÚ1ÏîÊ±£¬Ñ¡ÖĞ×îºóÒ»Ïî£¬ÊÂ¼ş·¢²¼', function() {
+		it('å½“å‰é€‰ä¸­ä¸ºç¬¬1é¡¹æ—¶ï¼Œé€‰ä¸­æœ€åä¸€é¡¹ï¼Œäº‹ä»¶å‘å¸ƒ', function() {
 			var index = 0, config = testList.config, fired = false,
-				currrentIndex, items, currentItem, currentDOMItem;	
-			
+				currrentIndex, items, currentItem, currentDOMItem;
+
 			testList.on('prev', function() {
 				fired = true;
 			});
@@ -378,19 +378,19 @@ describe('selectable', function() {
 			items = testList.items;
 			currentDOMItem = D.get('.' + config.selectedItemCls);
 			currentItem = items[currentIndex];
-		
-			//prevÊÂ¼ş·¢²¼
+
+			//preväº‹ä»¶å‘å¸ƒ
 			expect( fired ).toEqual( true );
-			//µ±Ç°Ñ¡ÖĞÏîÓ¦¸ÃÊÇ×îºóÒ»Ïî
+			//å½“å‰é€‰ä¸­é¡¹åº”è¯¥æ˜¯æœ€åä¸€é¡¹
 			expect( currentIndex ).toEqual( items.length - 1 );
-			//º¬ÓĞselectedItemClsµÄdom½ÚµãÓ¦¸ÃºÍselecteableÖĞµÄÑ¡ÖĞ½ÚµãÒ»ÖÂ
+			//å«æœ‰selectedItemClsçš„domèŠ‚ç‚¹åº”è¯¥å’Œselecteableä¸­çš„é€‰ä¸­èŠ‚ç‚¹ä¸€è‡´
 			expect( currentDOMItem ).toEqual( currentItem );
 		});
 
-		it('µ±Ç°ÎŞÑ¡ÖĞÏîÊ±£¬Ñ¡ÖĞ×îºóÒ»Ïî£¬ÊÂ¼ş·¢²¼', function() {
+		it('å½“å‰æ— é€‰ä¸­é¡¹æ—¶ï¼Œé€‰ä¸­æœ€åä¸€é¡¹ï¼Œäº‹ä»¶å‘å¸ƒ', function() {
 			var index = 0, config = testList.config, fired = false,
-				currrentIndex, items, currentItem, currentDOMItem;	
-			
+				currrentIndex, items, currentItem, currentDOMItem;
+
 			testList.on('prev', function() {
 				fired = true;
 			});
@@ -401,20 +401,20 @@ describe('selectable', function() {
 			items = testList.items;
 			currentDOMItem = D.get('.' + config.selectedItemCls);
 			currentItem = items[currentIndex];
-		
-			//prevÊÂ¼ş·¢²¼
+
+			//preväº‹ä»¶å‘å¸ƒ
 			expect( fired ).toEqual( true );
-			//µ±Ç°Ñ¡ÖĞÏîÓ¦¸ÃÊÇ×îºóÒ»Ïî
+			//å½“å‰é€‰ä¸­é¡¹åº”è¯¥æ˜¯æœ€åä¸€é¡¹
 			expect( currentIndex ).toEqual( items.length - 1 );
-			//º¬ÓĞselectedItemClsµÄdom½ÚµãÓ¦¸ÃºÍselecteableÖĞµÄÑ¡ÖĞ½ÚµãÒ»ÖÂ
+			//å«æœ‰selectedItemClsçš„domèŠ‚ç‚¹åº”è¯¥å’Œselecteableä¸­çš„é€‰ä¸­èŠ‚ç‚¹ä¸€è‡´
 			expect( currentDOMItem ).toEqual( currentItem );
 		});
 	});
 
 	/**
-	 * ²âÊÔnext·½·¨
+	 * æµ‹è¯•nextæ–¹æ³•
 	 */
-	describe('next·½·¨', function() {
+	describe('nextæ–¹æ³•', function() {
 		var testList;
 		beforeEach(function() {
 			testList = new S.Selectable('#KS_List',{
@@ -425,12 +425,12 @@ describe('selectable', function() {
 
 		afterEach(function() {
 			testList = null;
-		});	
+		});
 
-		it('µ±Ç°Ñ¡ÖĞÎªµÚ2ÏîÊ±£¬ÕıÈ·Ñ¡ÖĞµÚ3Ïî£¬ÊÂ¼ş·¢²¼', function() {
+		it('å½“å‰é€‰ä¸­ä¸ºç¬¬2é¡¹æ—¶ï¼Œæ­£ç¡®é€‰ä¸­ç¬¬3é¡¹ï¼Œäº‹ä»¶å‘å¸ƒ', function() {
 			var index = 2, config = testList.config, fired = false,
-				currrentIndex, items, currentItem, currentDOMItem;	
-			
+				currrentIndex, items, currentItem, currentDOMItem;
+
 			testList.on('next', function() {
 				fired = true;
 			});
@@ -441,19 +441,19 @@ describe('selectable', function() {
 			items = testList.items;
 			currentDOMItem = D.get('.' + config.selectedItemCls);
 			currentItem = items[currentIndex];
-		
-			//nextÊÂ¼ş·¢²¼
+
+			//nextäº‹ä»¶å‘å¸ƒ
 			expect( fired ).toEqual( true );
-			//µ±Ç°Ñ¡ÖĞÏîÓ¦¸ÃÊÇºóÒ»Ïî
+			//å½“å‰é€‰ä¸­é¡¹åº”è¯¥æ˜¯åä¸€é¡¹
 			expect( currentIndex ).toEqual( 3 );
-			//º¬ÓĞselectedItemClsµÄdom½ÚµãÓ¦¸ÃºÍselecteableÖĞµÄÑ¡ÖĞ½ÚµãÒ»ÖÂ
+			//å«æœ‰selectedItemClsçš„domèŠ‚ç‚¹åº”è¯¥å’Œselecteableä¸­çš„é€‰ä¸­èŠ‚ç‚¹ä¸€è‡´
 			expect( currentDOMItem ).toEqual( currentItem );
 		});
 
-		it('µ±Ç°Ñ¡ÖĞÎªµÚ1ÏîÊ±£¬Ñ¡ÖĞµÚÒ»Ïî£¬ÊÂ¼ş·¢²¼', function() {
+		it('å½“å‰é€‰ä¸­ä¸ºç¬¬1é¡¹æ—¶ï¼Œé€‰ä¸­ç¬¬ä¸€é¡¹ï¼Œäº‹ä»¶å‘å¸ƒ', function() {
 			var index = tempList.children.length, config = testList.config, fired = false,
-				currrentIndex, items, currentItem, currentDOMItem;	
-			
+				currrentIndex, items, currentItem, currentDOMItem;
+
 			testList.on('next', function() {
 				fired = true;
 			});
@@ -464,19 +464,19 @@ describe('selectable', function() {
 			items = testList.items;
 			currentDOMItem = D.get('.' + config.selectedItemCls);
 			currentItem = items[currentIndex];
-		
-			//nextÊÂ¼ş·¢²¼
+
+			//nextäº‹ä»¶å‘å¸ƒ
 			expect( fired ).toEqual( true );
-			//µ±Ç°Ñ¡ÖĞÏîÓ¦¸ÃÊÇµÚÒ»Ïî
+			//å½“å‰é€‰ä¸­é¡¹åº”è¯¥æ˜¯ç¬¬ä¸€é¡¹
 			expect( currentIndex ).toEqual( 0 );
-			//º¬ÓĞselectedItemClsµÄdom½ÚµãÓ¦¸ÃºÍselecteableÖĞµÄÑ¡ÖĞ½ÚµãÒ»ÖÂ
+			//å«æœ‰selectedItemClsçš„domèŠ‚ç‚¹åº”è¯¥å’Œselecteableä¸­çš„é€‰ä¸­èŠ‚ç‚¹ä¸€è‡´
 			expect( currentDOMItem ).toEqual( currentItem );
 		});
 
-		it('µ±Ç°ÎŞÑ¡ÖĞÏîÊ±£¬Ñ¡ÖĞµÚÒ»Ïî£¬ÊÂ¼ş·¢²¼', function() {
+		it('å½“å‰æ— é€‰ä¸­é¡¹æ—¶ï¼Œé€‰ä¸­ç¬¬ä¸€é¡¹ï¼Œäº‹ä»¶å‘å¸ƒ', function() {
 			var index = 0, config = testList.config, fired = false,
-				currrentIndex, items, currentItem, currentDOMItem;	
-			
+				currrentIndex, items, currentItem, currentDOMItem;
+
 			testList.on('next', function() {
 				fired = true;
 			});
@@ -487,20 +487,20 @@ describe('selectable', function() {
 			items = testList.items;
 			currentDOMItem = D.get('.' + config.selectedItemCls);
 			currentItem = items[currentIndex];
-		
-			//nextÊÂ¼ş·¢²¼
+
+			//nextäº‹ä»¶å‘å¸ƒ
 			expect( fired ).toEqual( true );
-			//µ±Ç°Ñ¡ÖĞÏîÓ¦¸ÃÊÇµÚÒ»Ïî
+			//å½“å‰é€‰ä¸­é¡¹åº”è¯¥æ˜¯ç¬¬ä¸€é¡¹
 			expect( currentIndex ).toEqual( 0 );
-			//º¬ÓĞselectedItemClsµÄdom½ÚµãÓ¦¸ÃºÍselecteableÖĞµÄÑ¡ÖĞ½ÚµãÒ»ÖÂ
+			//å«æœ‰selectedItemClsçš„domèŠ‚ç‚¹åº”è¯¥å’Œselecteableä¸­çš„é€‰ä¸­èŠ‚ç‚¹ä¸€è‡´
 			expect( currentDOMItem ).toEqual( currentItem );
 		});
 	});
 
 	/**
-	 * ²âÊÔvalue
+	 * æµ‹è¯•value
 	 */
-	describe('value·½·¨', function() {
+	describe('valueæ–¹æ³•', function() {
 		var testList;
 		beforeEach(function() {
 			testList = new S.Selectable('#KS_List',{
@@ -511,36 +511,36 @@ describe('selectable', function() {
 
 		afterEach(function() {
 			testList = null;
-		});	
+		});
 
-		it('µ±Ç°Ñ¡ÖĞÎªµÚ3ÏîÊ±£¬ÕıÈ··µ»ØÖµ£¬Ã»ÓĞÊÂ¼ş·¢²¼', function() {
+		it('å½“å‰é€‰ä¸­ä¸ºç¬¬3é¡¹æ—¶ï¼Œæ­£ç¡®è¿”å›å€¼ï¼Œæ²¡æœ‰äº‹ä»¶å‘å¸ƒ', function() {
 			var index = 2, config = testList.config, fired = false,
-				currrentIndex, currentDOMItem, reValue;	
-			
+				currrentIndex, currentDOMItem, reValue;
+
 
 			testList.select(index);
-			reValue = testList.value();			
+			reValue = testList.value();
 			currentDOMItem = D.get('.' + config.selectedItemCls);
 
-			//·µ»ØÖµÓ¦¸ÃºÍµ±Ç°DOMÊ÷ÖĞÑ¡ÖĞÏîµÄdataÊı¾İÒ»ÖÂ
+			//è¿”å›å€¼åº”è¯¥å’Œå½“å‰DOMæ ‘ä¸­é€‰ä¸­é¡¹çš„dataæ•°æ®ä¸€è‡´
 			expect( reValue ).toEqual( D.attr(currentDOMItem, config.valueKey) );
 		});
 
-		it('µ±Ç°Ã»ÓĞÑ¡Ïî,·µ»Øundefined£¬Ã»ÓĞÊÂ¼ş·¢²¼', function() {
+		it('å½“å‰æ²¡æœ‰é€‰é¡¹,è¿”å›undefinedï¼Œæ²¡æœ‰äº‹ä»¶å‘å¸ƒ', function() {
 			var index = 2, config = testList.config, fired = false,
-				currrentIndex, currentDOMItem, reValue;	
-			
-			reValue = testList.value();			
-			
-			//·µ»ØÖµÓ¦¸ÃÊÇundefined
+				currrentIndex, currentDOMItem, reValue;
+
+			reValue = testList.value();
+
+			//è¿”å›å€¼åº”è¯¥æ˜¯undefined
 			expect( reValue ).toEqual( undefined );
 		});
 	});
 
 	/**
-	 * ²âÊÔitem
+	 * æµ‹è¯•item
 	 */
-	describe('item·½·¨', function() {
+	describe('itemæ–¹æ³•', function() {
 		var testList;
 		beforeEach(function() {
 			testList = new S.Selectable('#KS_List',{
@@ -551,36 +551,36 @@ describe('selectable', function() {
 
 		afterEach(function() {
 			testList = null;
-		});	
+		});
 
-		it('µ±Ç°Ñ¡ÖĞÎªµÚ3ÏîÊ±£¬ÕıÈ··µ»Ø¶ÔÓ¦item£¬Ã»ÓĞÊÂ¼ş·¢²¼', function() {
+		it('å½“å‰é€‰ä¸­ä¸ºç¬¬3é¡¹æ—¶ï¼Œæ­£ç¡®è¿”å›å¯¹åº”itemï¼Œæ²¡æœ‰äº‹ä»¶å‘å¸ƒ', function() {
 			var index = 2, config = testList.config, fired = false,
-				currrentIndex, currentDOMItem, currentItem;	
-			
+				currrentIndex, currentDOMItem, currentItem;
+
 			testList.select(index);
-			currentItem = testList.item();			
+			currentItem = testList.item();
 			currentDOMItem = D.get('.' + config.selectedItemCls);
 
-			//µ±Ç°Ñ¡ÖĞµÄitemÓ¦¸ÃºÍDOMÊ÷ÖĞclassÊôĞÔº¬ÓĞselectedItemClsµÄ½ÚµãÒ»Ñù
+			//å½“å‰é€‰ä¸­çš„itemåº”è¯¥å’ŒDOMæ ‘ä¸­classå±æ€§å«æœ‰selectedItemClsçš„èŠ‚ç‚¹ä¸€æ ·
 			expect( currentItem ).toEqual( currentDOMItem );
 		});
 
-		it('µ±Ç°Ã»ÓĞÑ¡Ïî£¬·µ»Øundefined£¬Ã»ÓĞÊÂ¼ş·¢²¼', function() {
+		it('å½“å‰æ²¡æœ‰é€‰é¡¹ï¼Œè¿”å›undefinedï¼Œæ²¡æœ‰äº‹ä»¶å‘å¸ƒ', function() {
 			var index = 2, config = testList.config, fired = false,
-				currrentIndex, currentDOMItem, currentItem;	
+				currrentIndex, currentDOMItem, currentItem;
 
-			currentItem = testList.item();			
+			currentItem = testList.item();
 			currentDOMItem = D.get('.' + config.selectedItemCls);
 
-			//µ±Ç°Ñ¡ÖĞµÄitemÓ¦¸ÃºÍDOMÊ÷ÖĞclassÊôĞÔº¬ÓĞselectedItemClsµÄ½ÚµãÒ»Ñù
+			//å½“å‰é€‰ä¸­çš„itemåº”è¯¥å’ŒDOMæ ‘ä¸­classå±æ€§å«æœ‰selectedItemClsçš„èŠ‚ç‚¹ä¸€æ ·
 			expect( currentItem ).toEqual( undefined );
 		});
 	});
 
 	/**
-	 * ²âÊÔfilter
+	 * æµ‹è¯•filter
 	 */
-	describe('filter·½·¨', function() {
+	describe('filteræ–¹æ³•', function() {
 		var testList;
 		beforeEach(function() {
 			testList = new S.Selectable('#KS_List',{
@@ -592,23 +592,19 @@ describe('selectable', function() {
 		afterEach(function() {
 			testList = null;
 		});
-		
-		it('´«ÈëÕı³£filter·½·¨£¬·µ»Øfilter£¬ÊÂ¼ş·¢²¼', function() {
+
+		it('ä¼ å…¥æ­£å¸¸filteræ–¹æ³•ï¼Œè¿”å›filterï¼Œäº‹ä»¶å‘å¸ƒ', function() {
 			var config = testList.config, fired = false,
-				filterItems, DOMItems = [];	
-			
+				filterItems, DOMItems = [];
+
 			testList.on('filter', function() {
 				fired = true;
-			});		
-			
-			filterItems = testList.filter(function( list ) {
-				if (D.attr( list, 'ks-filter' ) == 'true') {
-					return true;
-				} else {
-					return false;
-				}
 			});
-			
+
+			filterItems = testList.filter(function( list ) {
+				return D.attr(list, 'ks-filter') == 'true';
+			});
+
 			var listItem;
 			for(var i=0, len = tempList.children.length; i<len; i++){
 				listItem = tempList.children[i];
@@ -617,57 +613,57 @@ describe('selectable', function() {
 				}
 			}
 
-			//filterÊÂ¼ş·¢²¼
+			//filteräº‹ä»¶å‘å¸ƒ
 			expect( fired ).toEqual( true );
-			//Õı³£filterºóµÄitemÓ¦¸ÃºÍfullItems²»ÏàµÈ
+			//æ­£å¸¸filteråçš„itemåº”è¯¥å’ŒfullItemsä¸ç›¸ç­‰
 			expect( filterItems ).toNotEqual( testList.fullItems );
-			//filterºó·µ»ØµÄarrayÓ¦¸ÃºÍselectable×ÔÉíµÄitemsÏàµÈ
+			//filteråè¿”å›çš„arrayåº”è¯¥å’Œselectableè‡ªèº«çš„itemsç›¸ç­‰
 			expect( filterItems ).toEqual( testList.items );
-			//filterºó·µ»ØµÄarrayÓ¦¸ÃºÍDOMÖĞÂú×ãfilterµÄ½ÚµãÏàµÈ
+			//filteråè¿”å›çš„arrayåº”è¯¥å’ŒDOMä¸­æ»¡è¶³filterçš„èŠ‚ç‚¹ç›¸ç­‰
 			expect( filterItems ).toEqual( DOMItems );
 		});
 
-		it('´«Èë·Ç·½·¨(¿Õ¶ÔÏó)£¬·µ»Øundefined£¬²»filter£¬²»·¢²¼ÊÂ¼ş', function() {
+		it('ä¼ å…¥éæ–¹æ³•(ç©ºå¯¹è±¡)ï¼Œè¿”å›undefinedï¼Œä¸filterï¼Œä¸å‘å¸ƒäº‹ä»¶', function() {
 			var config = testList.config, fired = false,
-				filterItems, DOMItems = [];	
-			
+				filterItems, DOMItems = [];
+
 			testList.on('filter', function() {
 				fired = true;
-			});		
-			
+			});
+
 			filterItems = testList.filter({});
 
-			//filterÊÂ¼ş²»·¢²¼
+			//filteräº‹ä»¶ä¸å‘å¸ƒ
 			expect( fired ).toEqual( false );
-			//·µ»ØÖµÓ¦¸ÃÊÇundefined
+			//è¿”å›å€¼åº”è¯¥æ˜¯undefined
 			expect( filterItems ).toEqual( undefined );
-			//selectableÖĞµÄitemsÓ¦¸ÃºÍfullItemsÒ»Ñù£¨Ã»ÓĞfilter¹ı£©
+			//selectableä¸­çš„itemsåº”è¯¥å’ŒfullItemsä¸€æ ·ï¼ˆæ²¡æœ‰filterè¿‡ï¼‰
 			expect( testList.items ).toEqual( testList.fullItems );
 		});
 
-		it('´«Èë·Ç·½·¨(null)£¬·µ»Øundefined£¬²»filter£¬²»·¢²¼ÊÂ¼ş', function() {
+		it('ä¼ å…¥éæ–¹æ³•(null)ï¼Œè¿”å›undefinedï¼Œä¸filterï¼Œä¸å‘å¸ƒäº‹ä»¶', function() {
 			var config = testList.config, fired = false,
-				filterItems, DOMItems = [];	
-			
+				filterItems, DOMItems = [];
+
 			testList.on('filter', function() {
 				fired = true;
-			});		
-			
+			});
+
 			filterItems = testList.filter(null);
 
-			//filterÊÂ¼ş²»·¢²¼
+			//filteräº‹ä»¶ä¸å‘å¸ƒ
 			expect( fired ).toEqual( false );
-			//·µ»ØÖµÓ¦¸ÃÊÇundefined
+			//è¿”å›å€¼åº”è¯¥æ˜¯undefined
 			expect( filterItems ).toEqual( undefined );
-			//selectableÖĞµÄitemsÓ¦¸ÃºÍfullItemsÒ»Ñù£¨Ã»ÓĞfilter¹ı£©
+			//selectableä¸­çš„itemsåº”è¯¥å’ŒfullItemsä¸€æ ·ï¼ˆæ²¡æœ‰filterè¿‡ï¼‰
 			expect( testList.items ).toEqual( testList.fullItems );
 		});
 	});
 
 	/**
-	 * ²âÊÔclearFilter,clearFilter·½·¨ÊÇÎŞÂÛÈçºÎ¶¼Òªfire clearFilterÊÂ¼şµÄ
+	 * æµ‹è¯•clearFilter,clearFilteræ–¹æ³•æ˜¯æ— è®ºå¦‚ä½•éƒ½è¦fire clearFilteräº‹ä»¶çš„
 	 */
-	describe('clearFilter·½·¨', function() {
+	describe('clearFilteræ–¹æ³•', function() {
 		var testList;
 		beforeEach(function() {
 			testList = new S.Selectable('#KS_List',{
@@ -680,99 +676,43 @@ describe('selectable', function() {
 			testList = null;
 		});
 
-		it('ÔÚfilterºó½øĞĞclearFilter£¬Çå¿Õfilter£¬ÊÂ¼ş·¢²¼', function() {
+		it('åœ¨filteråè¿›è¡ŒclearFilterï¼Œæ¸…ç©ºfilterï¼Œäº‹ä»¶å‘å¸ƒ', function() {
 			var config = testList.config, fired = false,
-				filterItems, DOMItems = [];	
-			
+				filterItems, DOMItems = [];
+
 			testList.on('clearFilter', function() {
 				fired = true;
-			});		
-			
+			});
+
 			filterItems = testList.filter(function(list) {
-				if (D.attr( list, 'ks-filter' ) == 'true') {
-					return true;
-				} else {
-					return false;
-				}				
-			});	
+				return D.attr(list, 'ks-filter') == 'true';
+			});
 			testList.clearFilter();
 
-			//clearFilterÊÂ¼ş·¢²¼
+			//clearFilteräº‹ä»¶å‘å¸ƒ
 			expect( fired ).toEqual( true );
-			//selectableÖĞµÄitemsÓ¦¸ÃºÍfullItemsÒ»Ñù
-			expect( testList.items ).toEqual( testList.fullItems );	
-			//fullItemsÓ¦¸ÃºÍDOMµÄchildrenÒ»Ñù
+			//selectableä¸­çš„itemsåº”è¯¥å’ŒfullItemsä¸€æ ·
+			expect( testList.items ).toEqual( testList.fullItems );
+			//fullItemsåº”è¯¥å’ŒDOMçš„childrenä¸€æ ·
 			expect( arrayEqualDOM(testList.fullItems, tempList.children) ).toEqual( true );
 		});
 
-		it('ÔÚÎŞfilterÊ±½øĞĞclearFilter£¬Çå¿Õfilter£¬ÊÂ¼ş·¢²¼', function() {
+		it('åœ¨æ— filteræ—¶è¿›è¡ŒclearFilterï¼Œæ¸…ç©ºfilterï¼Œäº‹ä»¶å‘å¸ƒ', function() {
 			var config = testList.config, fired = false,
-				filterItems, DOMItems = [];	
-			
+				filterItems, DOMItems = [];
+
 			testList.on('clearFilter', function() {
 				fired = true;
-			});		
-			
+			});
+
 			testList.clearFilter();
 
-			//clearFilterÊÂ¼ş·¢²¼
+			//clearFilteräº‹ä»¶å‘å¸ƒ
 			expect( fired ).toEqual( true );
-			//selectableÖĞµÄitemsÓ¦¸ÃºÍfullItemsÒ»Ñù
-			expect( testList.items ).toEqual( testList.fullItems );	
-			//fullItemsÓ¦¸ÃºÍDOMµÄchildrenÒ»Ñù
+			//selectableä¸­çš„itemsåº”è¯¥å’ŒfullItemsä¸€æ ·
+			expect( testList.items ).toEqual( testList.fullItems );
+			//fullItemsåº”è¯¥å’ŒDOMçš„childrenä¸€æ ·
 			expect( arrayEqualDOM(testList.fullItems, tempList.children) ).toEqual( true );
 		});
 	});
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
