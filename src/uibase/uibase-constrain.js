@@ -2,21 +2,16 @@
  * constrain extension for kissy
  * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add("ext-constrain", function(S) {
-    S.namespace("Ext");
+KISSY.add("uibase-constrain", function(S) {
+    S.namespace("UIBase");
 
-    var DOM = S.DOM,
-        Node = S.Node;
+    var DOM = S.DOM;
 
-    function ConstrainExt() {
+    function Constrain() {
         S.log("constrain init");
-        var self = this;
-        self.on("bindUI", self._bindUIConstrain, self);
-        self.on("renderUI", self._renderUIConstrain, self);
-        self.on("syncUI", self._syncUIConstrain, self);
     }
 
-    ConstrainExt.ATTRS = {
+    Constrain.ATTRS = {
         constrain:{
             //不限制
             //true:viewport限制
@@ -60,15 +55,15 @@ KISSY.add("ext-constrain", function(S) {
         return ret;
     }
 
-    ConstrainExt.prototype = {
-        _bindUIConstrain:function() {
+    Constrain.prototype = {
+        __bindUI:function() {
             S.log("_bindUIConstrain");
 
         },
-        _renderUIConstrain:function() {
+        __renderUI:function() {
             S.log("_renderUIConstrain");
             var self = this,
-                attrs = self.getDefAttrs(),
+                attrs = self.__getDefAttrs(),
                 xAttr = attrs["x"],
                 yAttr = attrs["y"],
                 oriXSetter = xAttr["setter"],
@@ -101,7 +96,7 @@ KISSY.add("ext-constrain", function(S) {
             self.addAttr("y", yAttr);
         },
 
-        _syncUIConstrain:function() {
+        __syncUI:function() {
             S.log("_syncUIConstrain");
         },
         __destructor:function() {
@@ -111,6 +106,6 @@ KISSY.add("ext-constrain", function(S) {
     };
 
 
-    S.Ext.Constrain = ConstrainExt;
+    S.UIBase.Constrain = Constrain;
 
 });

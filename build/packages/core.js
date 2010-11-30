@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 30 13:21
+build time: Nov 30 13:27
 */
 /**
  * @module  ua
@@ -198,7 +198,7 @@ KISSY.add('ua-extra', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 30 13:21
+build time: Nov 30 13:27
 */
 /**
  * @module  dom
@@ -2252,7 +2252,7 @@ KISSY.add('dom-insertion', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 30 13:21
+build time: Nov 30 13:27
 */
 /**
  * @module  event
@@ -2827,7 +2827,7 @@ KISSY.add('event-focusin', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 30 13:21
+build time: Nov 30 13:27
 */
 /**
  * @module  node
@@ -3180,7 +3180,7 @@ KISSY.add('node-attach', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 30 13:21
+build time: Nov 30 13:27
 */
 /*
     http://www.JSON.org/json2.js
@@ -3686,7 +3686,7 @@ KISSY.add('json', function (S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 30 13:20
+build time: Nov 30 13:27
 */
 /***
  * @module  ajax
@@ -4007,7 +4007,7 @@ KISSY.add('ajax', function(S, undef) {
 /*
 Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 30 13:20
+build time: Nov 30 13:27
 */
 /**
  * @module anim-easing
@@ -4666,7 +4666,7 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 /*
 Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 30 13:21
+build time: Nov 30 13:27
 */
 /**
  * @module  cookie
@@ -4752,7 +4752,7 @@ KISSY.add('cookie', function(S) {
 /*
 Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 30 13:20
+build time: Nov 30 13:27
 */
 /**
  * @module  Attribute

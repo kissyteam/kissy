@@ -2,8 +2,8 @@
  * mask extension for kissy
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("ext-mask", function(S) {
-    S.namespace("Ext");
+KISSY.add("uibase-mask", function(S) {
+    S.namespace("UIBase");
     /**
      * 多 position 共享一个遮罩
      */
@@ -18,52 +18,48 @@ KISSY.add("ext-mask", function(S) {
             "position":"absolute",
             left:0,
             top:0,
-            width:"100%",
+            width:S.DOM.docWidth() ,// ie6 bug : "100%",
             "height": S.DOM.docHeight()
         });
         if (UA.ie == 6) {
-            mask.append("<iframe style='width:100%;" +
+            mask.append("<" + "iframe style='width:100%;" +
                 "height:expression(this.parentNode.offsetHeight);" +
                 "filter:alpha(opacity=0);" +
                 "z-index:-1;'>");
         }
     }
 
-    function MaskExt() {
+    function Mask() {
         S.log("mask init");
-        var self = this;
-        self.on("bindUI", self._bindUIMask, self);
-        self.on("renderUI", self._renderUIMask, self);
-        self.on("syncUI", self._syncUIMask, self);
     }
 
-    MaskExt.ATTRS = {
+    Mask.ATTRS = {
         mask:{
             value:false
         }
     };
 
-    MaskExt.prototype = {
-        _bindUIMask:function() {
+    Mask.prototype = {
+        __bindUI:function() {
             S.log("_bindUIMask");
         },
 
-        _renderUIMask:function() {
+        __renderUI:function() {
             S.log("_renderUIMask");
         },
 
-        _syncUIMask:function() {
+        __syncUI:function() {
             S.log("_syncUIMask");
         },
         _uiSetMask:function(v) {
             S.log("_uiSetMask");
             var self = this;
             if (v) {
-                self.on("show", self._maskExtShow, self);
-                self.on("hide", self._maskExtHide, self);
+                self.on("show", self._maskExtShow);
+                self.on("hide", self._maskExtHide);
             } else {
-                self.detach("show", self._maskExtShow, self);
-                self.detach("hide", self._maskExtHide, self);
+                self.detach("show", self._maskExtShow);
+                self.detach("hide", self._maskExtHide);
             }
         },
 
@@ -91,5 +87,5 @@ KISSY.add("ext-mask", function(S) {
 
     };
 
-    S.Ext.Mask = MaskExt;
+    S.UIBase.Mask = Mask;
 });

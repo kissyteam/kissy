@@ -2,22 +2,18 @@
  * position and visible extension，可定位的隐藏层
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("ext-position", function(S) {
-    S.namespace("Ext");
+KISSY.add("uibase-position", function(S) {
+    S.namespace("UIBase");
 
     var doc = document ,
         Event = S.Event,
         KEYDOWN = "keydown";
 
-    function PositionExt() {
+    function Position() {
         S.log("position init");
-        var self = this;
-        self.on("bindUI", self._bindUIPosition, self);
-        self.on("renderUI", self._renderUIPosition, self);
-        self.on("syncUI", self._syncUIPosition, self);
     }
 
-    PositionExt.ATTRS = {
+    Position.ATTRS = {
         x: {
             // 水平方向绝对位置
         },
@@ -47,16 +43,17 @@ KISSY.add("ext-position", function(S) {
     };
 
 
-    PositionExt.prototype = {
-        _syncUIPosition:function() {
+    Position.prototype = {
+        __syncUI:function() {
             S.log("_syncUIPosition");
         },
-        _renderUIPosition:function() {
+        __renderUI:function() {
             S.log("_renderUIPosition");
-            this.get("el").addClass("ks-ext-position");
-            this.get("el").css("display", "");
+            var el=this.get("el");
+            el.addClass("ks-ext-position");
+            el.css("display", "");
         },
-        _bindUIPosition:function() {
+        __bindUI:function() {
             S.log("_bindUIPosition");
         },
         _uiSetZIndex:function(x) {
@@ -127,7 +124,7 @@ KISSY.add("ext-position", function(S) {
          */
         _firstShow: function() {
             var self = this;
-            self.renderer();
+            self.render();
             self._realShow();
             self._firstShow = self._realShow;
         },
@@ -150,5 +147,5 @@ KISSY.add("ext-position", function(S) {
 
     };
 
-    S.Ext.Position = PositionExt;
+    S.UIBase.Position = Position;
 });

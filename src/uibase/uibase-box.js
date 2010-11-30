@@ -3,41 +3,52 @@
  * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add('uibase-box', function(S) {
-
+    S.namespace("UIBase");
     var doc = document,
-        Node = S.Node,
-        CONTAINER = 'container'; // CC 压缩时会内联，和 YC 相比，体积增大了，囧
+        Node = S.Node;
 
     function Box() {
-        this.on('renderUI', this._renderUIBox);
+        S.log("box init");
     }
 
+    S.mix(Box, {
+        APPEND:1,
+        INSERT:0
+    });
+
     Box.ATTRS = {
-        // 容器元素
-        container: {
-            setter: function(v) {
+        el: {
+            //容器元素
+            setter:function(v) {
                 if (S.isString(v))
                     return S.one(v);
             }
         },
-
-        // 容器 class
-        containerCls: {
+        elCls: {
+            // 容器的 class
         },
-
-        // 容器的内联样式
-        containerStyle: {
+        elStyle:{
+            //容器的行内样式
         },
-
-        // 容器宽度
         width: {
+            // 宽度
         },
-
-        // 容器高度
         height: {
+            // 高度
         },
-
-        // 容器的 innerHTML
+        elTagName:{
+            //生成标签名字
+            value:"div"
+        },
+        elAttrs:{
+            //其他属性
+        },
+        elOrder:{
+            //插入容器位置
+            //0 : prepend
+            //1 : append
+            value:1
+        },
         html: {
             // 内容, 默认为 undefined, 不设置
             value: false
@@ -45,61 +56,83 @@ KISSY.add('uibase-box', function(S) {
     };
 
     Box.HTML_PARSER = {
-        container: function(srcNode) {
+        el:function(srcNode) {
             return srcNode;
         }
     };
 
     Box.prototype = {
-
-        _renderUIBox: function() {
+        __syncUI:function() {
+            S.log("_syncUIBoxExt");
+        },
+        __bindUI:function() {
+            S.log("_bindUIBoxExt");
+        },
+        __renderUI:function() {
+            S.log("_renderUIBoxExt");
             var self = this,
-                render = S.one(self.get('render') || doc.body),
-                container = self.get(CONTAINER);
-
-            if (!container) {
-                container = new Node('<div>');
-                render.prepend(container);
-                self.set(CONTAINER, container);
+                render = self.get("render"),
+                el = self.get("el");
+            render = new Node(render);
+            if (!el) {
+                el = new Node("<" + self.get("elTagName") + ">");
+                if (self.get("elOrder")) {
+                    render.append(el);
+                } else {
+                    render.prepend(el);
+                }
+                self.set("el", el);
             }
         },
-
-        _uiSetContainerCls: function(cls) {
+        _uiSetElAttrs:function(attrs) {
+            S.log("_uiSetElAttrs");
+            if (attrs) {
+                this.get("el").attr(attrs);
+            }
+        },
+        _uiSetElCls:function(cls) {
             if (cls) {
-                this.get(CONTAINER).addClass(cls);
+                this.get("el").addClass(cls);
             }
         },
 
-        _uiSetContainerStyle: function(style) {
+        _uiSetElStyle:function(style) {
+            S.log("_uiSetElStyle");
             if (style) {
-                this.get(CONTAINER).css(style);
+                this.get("el").css(style);
             }
         },
 
-        _uiSetWidth: function(w) {
+        _uiSetWidth:function(w) {
+            S.log("_uiSetWidth");
+            var self = this;
             if (w) {
-                this.get(CONTAINER).width(w);
+                self.get("el").width(w);
             }
         },
 
-        _uiSetHeight: function(h) {
+        _uiSetHeight:function(h) {
+            S.log("_uiSetHeight");
+            var self = this;
             if (h) {
-                this.get(CONTAINER).height(h);
+                self.get("el").height(h);
             }
         },
 
-        _uiSetHtml: function(c) {
-            if (c !== false){
-                this.get(CONTAINER).html(c);
+        _uiSetHtml:function(c) {
+            S.log("_uiSetHtml");
+            if (c !== false) {
+                this.get("el").html(c);
             }
+
         },
 
         __destructor:function() {
-            S.log('UIBase.Box.__destructor');
-            var container = this.get(CONTAINER);
-            if (container) {
-                container.detach();
-                container.remove();
+            S.log("box __destructor");
+            var el = this.get("el");
+            if (el) {
+                el.detach();
+                el.remove();
             }
         }
     };

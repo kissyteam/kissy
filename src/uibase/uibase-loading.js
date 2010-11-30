@@ -2,13 +2,13 @@
  * loading mask support for overlay
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("ext-loading", function(S) {
-    S.namespace("Ext");
-    function LoadingExt() {
+KISSY.add("uibase-loading", function(S) {
+    S.namespace("UIBase");
+    function Loading() {
         S.log("LoadingExt init");
     }
 
-    LoadingExt.prototype = {
+    Loading.prototype = {
         loading:function() {
             var self = this;
             if (!self._loadingExtEl) {
@@ -21,7 +21,8 @@ KISSY.add("ext-loading", function(S) {
                     "left: 0;" +
                     "z-index: 99999;" +
                     "height:100%;" +
-                    "*height: expression(this.parentNode.offsetHeight);" + "'>").appendTo(self.get("el"));
+                    "*height: expression(this.parentNode.offsetHeight);" + "'>")
+                    .appendTo(self.get("el"));
             }
             self._loadingExtEl.show();
         },
@@ -32,6 +33,6 @@ KISSY.add("ext-loading", function(S) {
         }
     };
 
-    S.Ext.Loading = LoadingExt;
+    S.UIBase.Loading = Loading;
 
 });

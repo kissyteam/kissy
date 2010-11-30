@@ -2,18 +2,14 @@
  * support standard mod for component
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("ext-stdmod", function(S) {
+KISSY.add("uibase-stdmod", function(S) {
 
-    S.namespace("Ext");
+    S.namespace("UIBase");
     var CLS_PREFIX = "ks-stdmod-",
         Node = S.Node;
 
     function StdMod() {
         S.log("stdmod init");
-        var self = this;
-        self.on("renderUI", self._renderUIStdMod, self);
-        self.on("syncUI", self._syncUIStdMod, self);
-        self.on("bindUI", self._bindUIStdMod, self);
     }
 
     StdMod.ATTRS = {
@@ -44,10 +40,10 @@ KISSY.add("ext-stdmod", function(S) {
 
 
     StdMod.prototype = {
-        _bindUIStdMod:function() {
+        __bindUI:function() {
             S.log("_bindUIStdMod");
         },
-        _syncUIStdMod:function() {
+        __syncUI:function() {
             S.log("_syncUIStdMod");
         },
         _setStdModContent:function(part, v) {
@@ -77,7 +73,7 @@ KISSY.add("ext-stdmod", function(S) {
             S.log("_uiSetFooterContent");
             this._setStdModContent("footer", v);
         },
-        _renderUIStdMod:function() {
+        __renderUI:function() {
             S.log("_renderUIStdMod");
             var self = this,
                 el = self.get("contentEl"),
@@ -107,6 +103,6 @@ KISSY.add("ext-stdmod", function(S) {
     };
 
 
-    S.Ext.StdMod = StdMod;
+    S.UIBase.StdMod = StdMod;
 
 });

@@ -74,6 +74,7 @@ KISSY.add('uibase-align', function(S) {
     Align.prototype = {
 
         _uiSetAlign: function(v) {
+            
             if (S.isPlainObject(v)) {
                 this.align(v.node, v.points, v.offset);
             }

@@ -2,28 +2,24 @@
  * shim for ie6 ,require box-ext
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("ext-shim", function(S) {
-    S.namespace("Ext");
-    function ShimExt() {
+KISSY.add("uibase-shim", function(S) {
+    S.namespace("UIBase");
+    function Shim() {
         S.log("shim init");
-        var self = this;
-        self.on("renderUI", self._renderUIShimExt, self);
-        self.on("bindUI", self._bindUIShimExt, self);
-        self.on("syncUI", self._syncUIShimExt, self);
     }
 
     var Node = S.Node;
-    ShimExt.prototype = {
-        _syncUIShimExt:function() {
+    Shim.prototype = {
+        __syncUI:function() {
             S.log("_syncUIShimExt");
         },
-        _bindUIShimExt:function() {
+        __bindUI:function() {
             S.log("_bindUIShimExt");
         },
-        _renderUIShimExt:function() {
+        __renderUI:function() {
             S.log("_renderUIShimExt");
             var self = this,el = self.get("el");
-            var shim = new Node("<iframe style='position: absolute;" +
+            var shim = new Node("<"+"iframe style='position: absolute;" +
                 "border: none;" +
                 "width: expression(this.parentNode.offsetWidth);" +
                 "top: 0;" +
@@ -39,5 +35,5 @@ KISSY.add("ext-shim", function(S) {
             S.log("shim __destructor");
         }
     };
-    S.Ext.Shim = ShimExt;
+    S.UIBase.Shim = Shim;
 });
