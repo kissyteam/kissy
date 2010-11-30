@@ -1,7 +1,7 @@
 /*
 Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: Nov 30 13:27
+build time: Nov 30 13:32
 */
 KISSY.add("uibase",function(c){function d(g){a.apply(this,arguments);for(var h=this.constructor;h;){if(g&&g[b]&&h.HTML_PARSER)if(g[b]=c.one(g[b])){var i=g[b],j=h.HTML_PARSER,k=void 0,m=void 0;for(k in j)if(j.hasOwnProperty(k)){m=j[k];if(c.isFunction(m))this.__set(k,m.call(this,i));else if(c.isString(m))this.__set(k,i.one(m));else c.isArray(m)&&m[0]&&this.__set(k,i.all(m[0]))}}h=h.superclass&&h.superclass.constructor}e(this,"initializer","constructor");g&&g.autoRender&&this.render()}function e(g,h,
 i){for(var j=g.constructor,k=[],m,n,p;j;){p=[];if(n=j.__ks_exts)for(var o=0;o<n.length;o++)if(m=n[o]){if(i!="constructor")m=n[o].prototype[i];m&&p.push(m)}if(m=j.prototype[h])p.push(m);p.length&&k.push.apply(k,p.reverse());j=j.superclass&&j.superclass.constructor}for(o=k.length-1;o>=0;o--)k[o]&&k[o].call(g)}var b="srcNode",a=c.Base,f=c.Attribute.__capitalFirst,l=function(){};d.HTML_PARSER={};d.ATTRS={render:{valueFn:function(){return document.body}},rendered:{value:false}};c.extend(d,a,{render:function(){if(!this.get("rendered")){this._renderUI();
