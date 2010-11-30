@@ -67,24 +67,25 @@
 </button>
 
 <script src="../../build/kissy.js"></script>
-<script src="../ext/box-ext.js"></script>
-<script src="../ext/contentbox-ext.js"></script>
-<script src="../ext/position-ext.js"></script>
-<script src="../ext/shim-ext.js"></script>
-<script src="../ext/mask-ext.js"></script>
-<script src="../ext/align-ext.js"></script>
-<script src="../ext/loading-ext.js"></script>
+<script src="../uibase/uibase.js"></script>
+<script src="../uibase/uibase-box.js"></script>
+<script src="../uibase/uibase-contentbox.js"></script>
+<script src="../uibase/uibase-position.js"></script>
+<script src="../uibase/uibase-shim.js"></script>
+<script src="../uibase/uibase-mask.js"></script>
+<script src="../uibase/uibase-align.js"></script>
+<script src="../uibase/uibase-loading.js"></script>
 <script src="overlay.js"></script>
 <script src="../dd/ddm.js"></script>
 <script src="../dd/draggable.js"></script>
-<script src="../ext/stdmod-ext.js"></script>
-<script src="../ext/close-ext.js"></script>
-<script src="../ext/drag-ext.js"></script>
-<script src="../ext/constrain-ext.js"></script>
+<script src="../uibase/uibase-stdmod.js"></script>
+<script src="../uibase/uibase-close.js"></script>
+<script src="../uibase/uibase-drag.js"></script>
+<script src="../uibase/uibase-constrain.js"></script>
 <script src="dialog.js"></script>
 <script>
     KISSY.ready(function(S) {
-        var Dialog = S.Dialog,Align = S.Ext.Align;
+        var Dialog = S.Dialog,Align = S.UIBase.Align;
 
         window.o = new Dialog({
             headerContent:"i am header",
@@ -125,11 +126,6 @@
             o.unloading();
         });
 
-        var o2 = new Dialog({
-            srcNode:S.one("#markup"),
-            width:200,
-            autoRender:true
-        });
 
         S.one("#show1").on("click", function() {
             o.show();
@@ -139,14 +135,23 @@
             o.destroy();
         });
 
+        var o2 = new Dialog({
+            srcNode:S.one("#markup"),
+            width:200,
+            autoRender:true
+        });
+
+
         S.one("#show2").on("click", function() {
+            o2.center();
             o2.show();
         });
+
 
         S.one("#hide2").on("click", function() {
             o2.hide();
         });
-
+       
     });
 </script>
 </body>

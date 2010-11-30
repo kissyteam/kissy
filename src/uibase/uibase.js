@@ -2,18 +2,20 @@
  * @module  UIBase
  * @author  lifesinger@gmail.com, 承玉<yiminghe@gmail.com>
  */
-KISSY.add('uibase' , function (S) {
+KISSY.add('uibase', function (S) {
 
     var UI_SET = '_uiSet', SRC_NODE = 'srcNode',
         ATTRS = 'ATTRS', HTML_PARSER = 'HTML_PARSER',
         Attribute = S.Attribute, Base = S.Base,
         capitalFirst = Attribute.__capitalFirst,
-        noop = function() {};
+        noop = function() {
+        };
 
     /*
      * UIBase for class-based component
      */
     function UIBase(config) {
+        Base.apply(this, arguments);
         initHierarchy(this, config);
         config && config.autoRender && this.render();
     }
@@ -23,34 +25,10 @@ KISSY.add('uibase' , function (S) {
      * init attr using constructors ATTRS meta info
      */
     function initHierarchy(host, config) {
-        var c = host.constructor,
-            extChains = [],
-            exts,
-            init,
-            t,
-            i;
 
-        // define
+        var c = host.constructor;
+
         while (c) {
-
-            // 定义属性
-            Base.__addAttrs(host, c[ATTRS]);
-
-            // 收集扩展类
-            t = [];
-            if ((exts = c.__ks_exts)) {
-                t = exts.concat();
-            }
-
-            // 收集 initializer
-            if ((init = c.prototype['initializer'])) {
-                t.push(init);
-            }
-
-            // 原地 reverse
-            if (t.length) {
-                extChains.push.apply(extChains, t.reverse());
-            }
 
             // 从 markup 生成相应的属性项
             if (config &&
@@ -63,15 +41,52 @@ KISSY.add('uibase' , function (S) {
             c = c.superclass && c.superclass.constructor;
         }
 
-        // initialize
-        // 注意：用户设置的属性值会覆盖 html_parser 得到的属性值
-        // 先设置属性，再运行主类以及扩展类的初始化函数
-        Base.__initAttrs(host, config);
+        callMethodByHierarchy(host, "initializer", "constructor");
 
-        // 初始化扩展类构造器
-        // 顺序：父类的所有扩展类构造器 -> 父类 init -> 子类的所有扩展构造器 -> 子类 init
+    }
+
+    function callMethodByHierarchy(host, mainMethod, extMethod) {
+        var c = host.constructor,
+            extChains = [],
+            ext,
+            main,
+            exts,
+            t;
+
+        // define
+        while (c) {
+
+            // 收集扩展类
+            t = [];
+            if ((exts = c.__ks_exts)) {
+                for (var i = 0; i < exts.length; i++) {
+                    ext = exts[i];
+                    if (ext) {
+                        if (extMethod != "constructor") {
+                            ext = exts[i].prototype[extMethod];
+                        }
+                        ext && t.push(ext);
+                    }
+                }
+            }
+
+            // 收集主类
+            if ((main = c.prototype[mainMethod])) {
+                t.push(main);
+            }
+
+            // 原地 reverse
+            if (t.length) {
+                extChains.push.apply(extChains, t.reverse());
+            }
+
+            c = c.superclass && c.superclass.constructor;
+        }
+
+        // 初始化函数
+        // 顺序：父类的所有扩展类函数 -> 父类对应函数 -> 子类的所有扩展函数 -> 子类对应函数
         for (i = extChains.length - 1; i >= 0; i--) {
-            extChains[i] && extChains[i].call(host, config);
+            extChains[i] && extChains[i].call(host);
         }
     }
 
@@ -101,7 +116,7 @@ KISSY.add('uibase' , function (S) {
 
     function applyParser(srcNode, parser) {
         var host = this, p, v;
-        
+
         // 从 parser 中，默默设置属性，不触发事件
         for (p in parser) {
             if (parser.hasOwnProperty(p)) {
@@ -124,24 +139,35 @@ KISSY.add('uibase' , function (S) {
     }
 
     UIBase.HTML_PARSER = {};
+    UIBase.ATTRS = {
+        //渲染容器
+        render:{
+            valueFn:function() {
+                return document.body;
+            }
+        },
+        //是否已经渲染过
+        rendered:{value:false}
+    };
 
-
-    S.augment(UIBase, Attribute, {
+    S.extend(UIBase, Base, {
 
         render: function() {
             var self = this;
+            if (!self.get("rendered")) {
+                self._renderUI();
+                self.fire('renderUI');
+                callMethodByHierarchy(self, "renderUI", "__renderUI");
 
-            self._renderUI();
-            self.fire('renderUI');
-            self.renderUI();
+                self._bindUI();
+                self.fire('bindUI');
+                callMethodByHierarchy(self, "bindUI", "__bindUI");
 
-            self._bindUI();
-            self.fire('bindUI');
-            self.bindUI();
-
-            self._syncUI();
-            self.fire('syncUI');
-            self.syncUI();
+                self._syncUI();
+                self.fire('syncUI');
+                callMethodByHierarchy(self, "syncUI", "__syncUI");
+                self.set("rendered", true);
+            }
         },
 
         /**
@@ -217,12 +243,14 @@ KISSY.add('uibase' , function (S) {
         function C() {
             UIBase.apply(this, arguments);
         }
+
         S.extend(C, base, px, sx);
 
         if (exts) {
             C.__ks_exts = exts;
 
             S.each(exts, function(ext) {
+                if (!ext)return;
                 // 合并 ATTRS/HTML_PARSER 到主类
                 S.each([ATTRS, HTML_PARSER], function(K) {
                     if (ext[K]) {

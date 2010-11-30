@@ -49,18 +49,20 @@
     hide from markup
 </button>
 <script src="../../build/kissy.js"></script>
-<script src="../ext/box-ext.js"></script>
-<script src="../ext/contentbox-ext.js"></script>
-<script src="../ext/position-ext.js"></script>
-<script src="../ext/shim-ext.js"></script>
-<script src="../ext/align-ext.js"></script>
-<script src="../ext/mask-ext.js"></script>
+<script src="../uibase/uibase.js"></script>
+<script src="../uibase/uibase-box.js"></script>
+<script src="../uibase/uibase-contentbox.js"></script>
+<script src="../uibase/uibase-position.js"></script>
+<script src="../uibase/uibase-loading.js"></script>
+<script src="../uibase/uibase-shim.js"></script>
+<script src="../uibase/uibase-align.js"></script>
+<script src="../uibase/uibase-mask.js"></script>
 <script src="overlay.js"></script>
 <script>
     KISSY.ready(function(S) {
         var Overlay = S.Overlay,show1 = S.one("#show1");
         var show3 = S.one("#show3"),
-                Align = S.Ext.Align;
+                Align = S.UIBase.Align;
 
         var o = new Overlay({
             content:"i am overly 动态生成,esc 隐藏",
@@ -131,7 +133,7 @@
         S.one("#hide2").on("click", function() {
             o2.hide();
         });
-
+        
     });
 </script>
 </body>

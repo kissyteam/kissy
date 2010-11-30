@@ -2,22 +2,18 @@
  * drag extension for position
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("ext-drag", function(S) {
-    S.namespace('Ext');
-    function DragExt() {
+KISSY.add("uibase-drag", function(S) {
+    S.namespace('UIBase');
+    function Drag() {
          S.log("drag init");
-        var self = this;
-        self.on("bindUI", self._bindUIDragExt, self);
-        self.on("renderUI", self._renderUIDragExt, self);
-        self.on("syncUIUI", self._syncUIDragExt, self);
     }
 
-    DragExt.ATTRS = {
+    Drag.ATTRS = {
         handlers:{value:[]},
         draggable:{value:true}
     };
 
-    DragExt.prototype = {
+    Drag.prototype = {
 
         _uiSetHandlers:function(v) {
             S.log("_uiSetHanlders");
@@ -25,15 +21,15 @@ KISSY.add("ext-drag", function(S) {
                 this.__drag.set("handlers", v);
         },
 
-        _syncUIDragExt:function() {
+        __syncUI:function() {
             S.log("_syncUIDragExt");
         },
 
-        _renderUIDragExt:function() {
+        __renderUI:function() {
             S.log("_renderUIDragExt");
         },
 
-        _bindUIDragExt:function() {
+        __bindUI:function() {
             S.log("_bindUIDragExt");
             var self = this,el = self.get("el");
             self.__drag = new S.Draggable({
@@ -67,6 +63,6 @@ KISSY.add("ext-drag", function(S) {
 
     };
 
-    S.Ext.Drag = DragExt;
+    S.UIBase.Drag = Drag;
 
 });

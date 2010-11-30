@@ -452,7 +452,7 @@ build time: ${build.time}
  * @module  lang
  * @author  lifesinger@gmail.com
  */
-(function(win, S, undefined) {
+(function(win, S, undef) {
 
     var doc = document, docElem = doc.documentElement,
         AP = Array.prototype,
@@ -473,7 +473,7 @@ build time: ${build.time}
          * Determines whether or not the provided object is undefined.
          */
         isUndefined: function(o) {
-            return o === undefined;
+            return o === undef;
         },
 
         /**
@@ -538,10 +538,10 @@ build time: ${build.time}
          */
         trim: trim ?
             function(str) {
-                return (str == undefined) ? EMPTY : trim.call(str);
+                return (str == undef) ? EMPTY : trim.call(str);
             } :
             function(str) {
-                return (str == undefined) ? EMPTY : str.toString().replace(REG_TRIM, EMPTY);
+                return (str == undef) ? EMPTY : str.toString().replace(REG_TRIM, EMPTY);
             },
 
         /**
@@ -553,7 +553,7 @@ build time: ${build.time}
 
             return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
                 if (match.charAt(0) === '\\') return match.slice(1);
-                return (o[name] !== undefined) ? o[name] : EMPTY;
+                return (o[name] !== undef) ? o[name] : EMPTY;
             });
         },
 
@@ -566,7 +566,7 @@ build time: ${build.time}
          */
         each: function(object, fn, context) {
             var key, val, i = 0, length = object.length,
-                isObj = length === undefined || S.isFunction(object);
+                isObj = length === undef || S.isFunction(object);
             context = context || win;
             
             if (isObj) {
@@ -650,7 +650,7 @@ build time: ${build.time}
          * Converts object to a true array.
          */
         makeArray: function(o) {
-            if (o === null || o === undefined) return [];
+            if (o === null || o === undef) return [];
             if (S.isArray(o)) return o;
 
             // The strings and functions also have 'length'
@@ -905,7 +905,7 @@ build time: ${build.time}
  * @module loader
  * @author lifesinger@gmail.com, lijing00333@163.com
  */
-(function(win, S, undefined) {
+(function(win, S, undef) {
 
     var doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
@@ -1110,7 +1110,7 @@ build time: ${build.time}
                 S.each(mod.fns, function(fn) {
                     fn && fn(self);
                 });
-                mod.fns = undefined; // 保证 attach 过的方法只执行一次
+                mod.fns = undef; // 保证 attach 过的方法只执行一次
                 //S.log(mod.name + '.status = attached');
             }
 
@@ -1258,7 +1258,7 @@ build time: ${build.time}
                 scriptOnload(node, function() {
                     if (timer) {
                         timer.cancel();
-                        timer = undefined;
+                        timer = undef;
                     }
 
                     S.isFunction(success) && success.call(node);
@@ -1272,7 +1272,7 @@ build time: ${build.time}
 
             if (S.isFunction(error)) {
                 timer = S.later(function() {
-                    timer = undefined;
+                    timer = undef;
                     error();
                 }, (timeout || this.Config.timeout) * 1000);
             }
