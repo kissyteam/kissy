@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Selectable Demo</title>
+
+<script src="../../build/kissy.js"></script>
+<script src="selectable.js"></script>
+
+<link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
+<style>
+    body { padding: 20px 50px 50px; }
+    h2 { margin: 30px 0 10px; font-size: 17px; }
+
+    p.code-switch { color: #09f; cursor: pointer; margin-top: 10px; }
+    pre.code {
+        color: #444;
+        cursor: auto;
+        border-left: 2px solid #7F96AA;
+        margin-top: 5px;
+        padding: 0 10px 20px 10px;
+        font-size: 14px;
+    }
+</style>
+</head>
+
+<body>
+
+<ol id="test1">
+    <li>item 1</li>
+    <li>item 2</li>
+    <li>item 3</li>
+    <li>item 4</li>
+    <li>item 5</li>
+</ol>
+
+<script>
+
+    var s1 = new KISSY.Selectable('#test1');
+
+</script>
+</body>
+</html>
