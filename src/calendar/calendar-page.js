@@ -190,11 +190,11 @@ KISSY.add('calendar-page', function(S) {
 						return;
 					}
                     var selectedd = Number(e.target.html());
-					//Tip: new Date().setMonth(1) 无法正确设置2月份，被设置了3月，new Date('yyyy/mm/dd')带上初始值才可以
+					//如果当天是30日或者31日，设置2月份就会出问题
                     var d = new Date('2010/01/01');
+                    d.setDate(selectedd);
                     d.setYear(cc.year);
                     d.setMonth(cc.month);
-                    d.setDate(selectedd);
                     //self.callback(d);
                     //datetime的date
                     cc.father.dt_date = d;
