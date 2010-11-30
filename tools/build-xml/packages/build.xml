@@ -19,7 +19,7 @@
         <concat destfile="seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../seed/seed-pkg.js"/>
         </concat>
-        <!-- core: 核心，提供基础服务 -->
+        <!-- core: 核心 -->
         <concat destfile="core-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../ua/ua-pkg.js"/>
             <path path="../dom/dom-pkg.js"/>
