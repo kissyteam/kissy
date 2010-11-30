@@ -26,6 +26,11 @@
 <div id="test5" style="width: 100px; height: 20px; border: 1px solid #333; padding: 20px">test</div>
 <button id="test5-btn">run #test5</button>
 
+<hr>
+<button id="test6-btn">run #test6 slideUp</button>
+<button id="test6-btn2">run #test6 slideDown</button>
+<div id="test6" style="width: 100px; height: 100px; background-color: #ccc;">#test6</div>
+
 <script src="../../build/seed/seed-pkg.js"></script>
 <script src="../../build/ua/ua-pkg.js"></script>
 <script src="../../build/dom/dom-pkg.js"></script>
@@ -75,6 +80,14 @@
     // test for color #rgb
     S.one('#test5-btn').on('click', function() {
         S.one('#test5').animate({ backgroundColor: '#000', color: '#fff' }, 3, 'easeOutStrong');
+    });
+
+    // test for slideUp/slideDown
+    S.one('#test6-btn').on('click', function() {
+        S.one('#test6').slideUp();
+    });
+    S.one('#test6-btn2').on('click', function() {
+        S.one('#test6').slideDown();
     });
 
 </script>

@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 14:19
 */
 /**
  * @module  UIBase
@@ -918,7 +918,7 @@ KISSY.add("uibase-mask", function(S) {
             "position":"absolute",
             left:0,
             top:0,
-            width:S.DOM.docWidth() ,// ie6 bug : "100%",
+            width:UA.ie==6 ? S.DOM.docWidth() : "100%",
             "height": S.DOM.docHeight()
         });
         if (UA.ie == 6) {

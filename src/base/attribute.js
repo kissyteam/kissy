@@ -20,7 +20,6 @@ KISSY.add('attribute', function(S, undefined) {
          }
          }
          */
-
         this.__attrs = {};
 
         /**
@@ -88,8 +87,8 @@ KISSY.add('attribute', function(S, undefined) {
             var host = this;
 
             if (host.hasAttr(name)) {
-                delete host.__attrs.name;
-                delete host.__attrVals.name;
+                delete host.__attrs[name];
+                delete host.__attrVals[name];
             }
 
             return host;

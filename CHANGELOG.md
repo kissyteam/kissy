@@ -16,6 +16,7 @@ History:
 
 ### v1.1.5 -> v1.x.x (2010/MM/DD)
 
+ - [*] 升级 sizzle 到 v1.4.4
  - [+] 增加 ajax 模块 [文档](http://kissyteam.github.com/kissy/docs/ajax/index.html)
  - [!] 将 S.one/all(selector).on(type, function(ev) { ev.target/currentTarget 由原来的裸节点变成对应 Node })
  - [!] 将 S.all(selector).on(type, function() { this 由 NodeList 变成对应 Node })

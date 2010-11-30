@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Nov 30 14:19
 */
 /*
  * Date Format 1.2.3
@@ -834,10 +834,11 @@ KISSY.add('calendar-page', function(S) {
 						return;
 					}
                     var selectedd = Number(e.target.html());
-                    var d = new Date();
+					//如果当天是30日或者31日，设置2月份就会出问题
+                    var d = new Date('2010/01/01');
+                    d.setDate(selectedd);
                     d.setYear(cc.year);
                     d.setMonth(cc.month);
-                    d.setDate(selectedd);
                     //self.callback(d);
                     //datetime的date
                     cc.father.dt_date = d;
