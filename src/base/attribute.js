@@ -20,7 +20,8 @@ KISSY.add('attribute', function(S, undefined) {
          }
          }
          */
-        //host.__attrs = {};
+
+        this.__attrs = {};
 
         /**
          * attribute value
@@ -28,18 +29,10 @@ KISSY.add('attribute', function(S, undefined) {
          attrName: attrVal
          }
          */
-        //host.__attrVals = {};
+        this.__attrVals = {};
     }
 
     S.augment(Attribute, {
-
-        __initAttrs: function() {
-            var host = this;
-            if (host.__attrs) return;
-
-            host.__attrs = {};
-            host.__attrVals = {};
-        },
 
         __getDefAttrs: function() {
             return S.clone(this.__attrs);
@@ -57,8 +50,6 @@ KISSY.add('attribute', function(S, undefined) {
          */
         addAttr: function(name, attrConfig) {
             var host = this;
-
-            host.__initAttrs();
             host.__attrs[name] = S.clone(attrConfig || {});
 
             return host;
@@ -156,8 +147,7 @@ KISSY.add('attribute', function(S, undefined) {
          */
         get: function(name) {
             var host = this, attrConfig, getter, ret;
-
-            host.__initAttrs();
+            
             attrConfig = host.__attrs[name];
             getter = attrConfig && attrConfig['getter'];
 
