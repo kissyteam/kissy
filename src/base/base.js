@@ -13,15 +13,15 @@ KISSY.add('base', function (S) {
 
         // define
         while (c) {
-            __addAttrs(this, c['ATTRS']);
+            addAttrs(this, c['ATTRS']);
             c = c.superclass ? c.superclass.constructor : null;
         }
 
         // initial
-        __initAttrs(this, config);
+        initAttrs(this, config);
     }
 
-    var __addAttrs = function(host, attrs) {
+    function addAttrs(host, attrs) {
         if (attrs) {
             for (var attr in attrs) {
                 // 子类上的 ATTRS 配置优先
@@ -30,16 +30,16 @@ KISSY.add('base', function (S) {
                 }
             }
         }
-    };
+    }
 
-    var __initAttrs = function(host, config) {
+    function initAttrs(host, config) {
         if (config) {
             for (var attr in config) {
                 if (config.hasOwnProperty(attr))
                     host.__set(attr, config[attr]);
             }
         }
-    };
+    }
 
     S.augment(Base, S.EventTarget, S.Attribute);
     S.Base = Base;
