@@ -190,7 +190,8 @@ KISSY.add('calendar-page', function(S) {
 						return;
 					}
                     var selectedd = Number(e.target.html());
-                    var d = new Date();
+					//Tip: new Date().setMonth(1) 无法正确设置2月份，被设置了3月，new Date('yyyy/mm/dd')带上初始值才可以
+                    var d = new Date('2010/01/01');
                     d.setYear(cc.year);
                     d.setMonth(cc.month);
                     d.setDate(selectedd);
