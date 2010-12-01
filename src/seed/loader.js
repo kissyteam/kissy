@@ -2,9 +2,10 @@
  * @module loader
  * @author lifesinger@gmail.com, lijing00333@163.com
  */
-(function(win, S, undef) {
+(function(S, undefined) {
 
-    var doc = win['document'],
+    var win = S.__APP_HOST,
+        doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
         EMPTY = '', CSSFULLPATH = 'cssfullpath',
         LOADING = 1, LOADED = 2, ERROR = 3, ATTACHED = 4,
@@ -207,7 +208,7 @@
                 S.each(mod.fns, function(fn) {
                     fn && fn(self);
                 });
-                mod.fns = undef; // 保证 attach 过的方法只执行一次
+                mod.fns = undefined; // 保证 attach 过的方法只执行一次
                 //S.log(mod.name + '.status = attached');
             }
 
@@ -355,7 +356,7 @@
                 scriptOnload(node, function() {
                     if (timer) {
                         timer.cancel();
-                        timer = undef;
+                        timer = undefined;
                     }
 
                     S.isFunction(success) && success.call(node);
@@ -369,7 +370,7 @@
 
             if (S.isFunction(error)) {
                 timer = S.later(function() {
-                    timer = undef;
+                    timer = undefined;
                     error();
                 }, (timeout || this.Config.timeout) * 1000);
             }
@@ -385,7 +386,7 @@
         S.__APP_MEMBERS.push(k);
     });
 
-})(window, KISSY);
+})(KISSY);
 
 /**
  * TODO:

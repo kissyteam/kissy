@@ -79,7 +79,7 @@ KISSY.add('event', function(S, undefined) {
 
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
-                        event = new S.EventObject(target, event, type, target);
+                        event = new S.EventObject(target, event, type);
                         if (S.isPlainObject(eventData)) {
                             S.mix(event, eventData);
                         }
@@ -87,7 +87,7 @@ KISSY.add('event', function(S, undefined) {
                     if (special['setup']) {
                         special['setup'](event);
                     }
-                    return (special.handle || Event._handle).call(target, target, event, events[type].listeners);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners);
                 };
 
                 events[type] = {
@@ -170,7 +170,7 @@ KISSY.add('event', function(S, undefined) {
              sure we'll call all of them.*/
             listeners = listeners.slice(0);
 
-            var ret, i = 0, len = listeners.length, listener, scope;
+            var ret, i = 0, len = listeners.length, listener;
 
             // 让 nodelist 等集合，能自定义 scope
 
@@ -207,6 +207,14 @@ KISSY.add('event', function(S, undefined) {
             targets = S.query(targets);
         }
 
+        // on([targetA, targetB], type, fn)
+        if (S.isArray(targets)) {
+            S.each(targets, function(target) {
+                Event[methodName](target, types, fn, scope);
+            });
+            return true;
+        }
+
         // on(target, 'click focus', fn)
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
             S.each(types.split(SPACE), function(type) {
@@ -215,13 +223,10 @@ KISSY.add('event', function(S, undefined) {
             return true;
         }
 
-        //!TODO nodelist 解包
-        if (targets.length && targets.length>1) {
+        // unpack nodelist
+        if (targets.getDOMNodes) {
             for (var i = 0; i < targets.length; i++) {
-                var t = targets[i];
-                if (targets.getDOMNodes)
-                    t = targets.item(i);
-                Event[methodName](t, types, fn, scope);
+                Event[methodName](targets.item(i), types, fn, scope);
             }
             return true;
         }
@@ -273,7 +278,7 @@ KISSY.add('event-object', function(S, undefined) {
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
      */
-    function EventObject(currentTarget, domEvent, type, currentEl) {
+    function EventObject(currentTarget, domEvent, type) {
         var self = this;
         self.currentTarget = currentTarget;
         self.originalEvent = domEvent || { };
@@ -289,7 +294,6 @@ KISSY.add('event-object', function(S, undefined) {
 
         // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
         if (currentTarget.isCustomEventTarget) {
-            if (currentTarget.item) currentTarget = currentTarget.item(currentEl);
             if (S.DOM._isKSNode(currentTarget)) self.target = new S.Node(self.target);
         }
 

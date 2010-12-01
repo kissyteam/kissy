@@ -11,6 +11,7 @@
             <path path="kissy.js"/>
             <path path="lang.js"/>
             <path path="loader.js"/>
+            <path path="web.js"/>
             <path path="mods.js"/>
         </concat>
     </target>

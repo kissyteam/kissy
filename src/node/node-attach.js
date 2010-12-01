@@ -160,7 +160,6 @@ KISSY.add('node-attach', function(S, undefined) {
 
     // event-target
     S.mix(NP, S.EventTarget);
-    S.mix(NLP, S.EventTarget);
     NP._supportSpecialEvent = true;
     NP._addEvent = function(type, handle, capture) {
         Event._simpleAdd(this[0], type, handle, capture);
@@ -169,4 +168,7 @@ KISSY.add('node-attach', function(S, undefined) {
         Event._simpleRemove(this[0], type, handle, capture);
     };
     delete NP.fire;
+
+    S.mix(NLP, S.EventTarget);
+    delete NLP.fire;
 });
