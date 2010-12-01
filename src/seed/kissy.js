@@ -250,29 +250,3 @@
     S.__init();
 
 })('KISSY');
-
-/**
- * NOTES:
- *
- * 2010/12
- *  - 周爱民老师（aimingoo）对
- *
- * 2010/08
- *  - 将 loader 功能独立到 loader.js 中
- *
- * 2010/07
- *  - 增加 available 和 guid 方法
- *
- * 2010/04
- *  - 移除掉 weave 方法，鸡肋
- *
- * 2010/01
- *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）
- *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱
- *  - S.mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码
- *  - namespace, app 方法，决定子库的实现和代码的整体组织
- *  - log, error 方法，简单的调试工具和报错机制
- *  - guid 方法，全局辅助方法
- *  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
- *
- */

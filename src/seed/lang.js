@@ -266,22 +266,3 @@
     });
 
 })(KISSY);
-
-/**
- * NOTES:
- *
- *  2010/08
- *   - 增加 lastIndexOf 和 unique 方法。
- *
- *  2010/06
- *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着。
- *
- *  2010/05
- *   - 增加 filter 方法。
- *   - globalEval 中，直接采用 text 赋值，去掉 appendChild 方式。
- *
- *  2010/04
- *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
- *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
- *
- */
