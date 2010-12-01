@@ -9,7 +9,7 @@ note by aimingoo:
 4. 核心的 kissy.js 是对对象和系统扩展特性的封装，以及对 app/namespace 的概念约定与实现。
 5. 从 kissy.js 中去掉私有函数 mix() 声明的原因，是力图使 S.mix() 成为标准用法。
 6. kissy 核心的层次结构为：
-
+<pre><code>
     |          web app ...         |
     |------------------------------|
     |    web.js      |             |
@@ -17,5 +17,5 @@ note by aimingoo:
     |    lang.js     | loader.js   |
     |    kissy.js    |             |
     |----------------|-------------|
-
+</code></pre>
 其左下角的核心框架是 HOST 无关的，可以应用于其它的脚本引擎。
