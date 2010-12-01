@@ -74,7 +74,7 @@ KISSY.add('event', function(S, undefined) {
 
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
-                        event = new S.EventObject(target, event, type, this);
+                        event = new S.EventObject(target, event, type, target);
                         if (S.isPlainObject(eventData)) {
                             S.mix(event, eventData);
                         }
@@ -82,7 +82,7 @@ KISSY.add('event', function(S, undefined) {
                     if (special['setup']) {
                         special['setup'](event);
                     }
-                    return (special.handle || Event._handle).call(this, target, event, events[type].listeners);
+                    return (special.handle || Event._handle).call(target, target, event, events[type].listeners);
                 };
 
                 events[type] = {
@@ -168,11 +168,10 @@ KISSY.add('event', function(S, undefined) {
             var ret, i = 0, len = listeners.length, listener, scope;
 
             // 让 nodelist 等集合，能自定义 scope
-            if (target.isCustomEventTarget && target.item) scope = target.item(this);
 
             for (; i < len; ++i) {
                 listener = listeners[i];
-                ret = listener.fn.call(scope || listener.scope, event);
+                ret = listener.fn.call(listener.scope, event);
 
                 // 自定义事件对象，可以用 return false 来立刻停止后续监听函数
                 // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡
@@ -203,19 +202,22 @@ KISSY.add('event', function(S, undefined) {
             targets = S.query(targets);
         }
 
-        // on([targetA, targetB], type, fn)
-        if (S.isArray(targets)) {
-            S.each(targets, function(target) {
-                Event[methodName](target, types, fn, scope);
-            });
-            return true;
-        }
-
         // on(target, 'click focus', fn)
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
             S.each(types.split(SPACE), function(type) {
                 Event[methodName](targets, type, fn, scope);
             });
+            return true;
+        }
+
+        //!TODO nodelist 解包
+        if (targets.length && targets.length>1) {
+            for (var i = 0; i < targets.length; i++) {
+                var t = targets[i];
+                if (targets.getDOMNodes)
+                    t = targets.item(i);
+                Event[methodName](t, types, fn, scope);
+            }
             return true;
         }
     }

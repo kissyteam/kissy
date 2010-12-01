@@ -38,6 +38,16 @@ KISSY.add("uibase-stdmod", function(S) {
         footer:"." + CLS_PREFIX + "footer"
     };
 
+    function renderUI(self, part) {
+        var el = self.get("contentEl"),
+            partEl = self.get(part);
+
+        if (!partEl) {
+            partEl = new Node("<div class='" + CLS_PREFIX + part + "'>")
+                .appendTo(el);
+            self.set(part, partEl);
+        }
+    }
 
     StdMod.prototype = {
         __bindUI:function() {
@@ -48,6 +58,7 @@ KISSY.add("uibase-stdmod", function(S) {
         },
         _setStdModContent:function(part, v) {
             if (v !== false) {
+
                 if (S.isString(v)) {
                     this.get(part).html(v);
                 } else {
@@ -75,26 +86,9 @@ KISSY.add("uibase-stdmod", function(S) {
         },
         __renderUI:function() {
             S.log("_renderUIStdMod");
-            var self = this,
-                el = self.get("contentEl"),
-                header = self.get("header"),
-                body = self.get("body"),
-                footer = self.get("footer"),
-                headerContent = self.get("headerContent"),
-                bodyContent = self.get("bodyContent"),
-                footerContent = self.get("footerContent");
-            if (!header) {
-                header = new Node("<div class='" + CLS_PREFIX + "header'>").appendTo(el);
-                self.set("header", header);
-            }
-            if (!body) {
-                body = new Node("<div class='" + CLS_PREFIX + "body'>").appendTo(el);
-                self.set("body", body);
-            }
-            if (!footer) {
-                footer = new Node("<div class='" + CLS_PREFIX + "footer'>").appendTo(el);
-                self.set("footer", footer);
-            }
+            renderUI(this, "header");
+            renderUI(this, "body");
+            renderUI(this, "footer");
         },
 
         __destructor:function() {

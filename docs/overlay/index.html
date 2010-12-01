@@ -68,12 +68,26 @@
     <div class="member prop">
         <h4><a name="srcNode">srcNode</a> - <code>null | String | HTMLElement | KISSY.Node</code></h4>
         <div class="detail">
-            <p>Overlay 容器, 默认为 null 时, 表示新建 DOM; </p>
+            <p>Overlay 容器, 默认为 null 时, 表示新建 DOM，注意设置该配置时，也要设置 autoRender 配置 </p>
 <pre class="example-code">
     <code>
-        new S.Overlay({srcNode:"#markup1"});
+        new S.Overlay({srcNode:"#markup1",autoRender:true});
     </code>
 </pre>
+        </div>
+    </div>
+
+    <div class="member prop">
+        <h4><a name="autoRender">autoRender</a> - <code>true/false</code></h4>
+        <div class="detail">
+            <p>是否自动渲染，否则会等 show 时才新建节点，对于设置了 srcNode 时，该配置一定要设置为 true</p>
+        </div>
+    </div>
+
+    <div class="member prop">
+        <h4><a name="shim">shim</a> - <code>true/false</code></h4>
+        <div class="detail">
+            <p>添加iframe shim，ie6 默认为 true，其他浏览器默认 false</p>
         </div>
     </div>
 
@@ -367,6 +381,8 @@ Member:
             <h3>Config</h3>
             <ul>
                 <li><a href="#srcNode">srcNode</a></li>
+                <li><a href="#autoRender">autoRender</a></li>
+                <li><a href="#shim">shim</a></li>
                 <li><a href="#content">content</a></li>
                 <li><a href="#elCls">elCls</a></li>
                 <li><a href="#width">width</a></li>

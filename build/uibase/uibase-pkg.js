@@ -351,7 +351,7 @@ KISSY.add('uibase-align', function(S) {
     Align.prototype = {
 
         _uiSetAlign: function(v) {
-            
+
             if (S.isPlainObject(v)) {
                 this.align(v.node, v.points, v.offset);
             }
@@ -380,11 +380,11 @@ KISSY.add('uibase-align', function(S) {
             p2 = getAlignOffset(el, points[1]);
 
             diff = [p2.left - p1.left, p2.top - p1.top];
-
-            self.set('xy', [
+            xy = [
                 xy.left - diff[0] + (+offset[0]),
                 xy.top - diff[1] + (+offset[1])
-            ]);
+            ];
+            self.set('xy', xy);
         },
 
         /**
@@ -805,7 +805,7 @@ KISSY.add("uibase-contentbox", function(S) {
 KISSY.add("uibase-drag", function(S) {
     S.namespace('UIBase');
     function Drag() {
-         S.log("drag init");
+        S.log("drag init");
     }
 
     Drag.ATTRS = {
@@ -817,7 +817,7 @@ KISSY.add("uibase-drag", function(S) {
 
         _uiSetHandlers:function(v) {
             S.log("_uiSetHanlders");
-            if (v && v.length > 0)
+            if (v && v.length > 0 && this.__drag)
                 this.__drag.set("handlers", v);
         },
 
@@ -831,16 +831,20 @@ KISSY.add("uibase-drag", function(S) {
 
         __bindUI:function() {
             S.log("_bindUIDragExt");
-            var self = this,el = self.get("el");
-            self.__drag = new S.Draggable({
-                node:el,
-                handlers:self.get("handlers")
-            });
+            var self = this,
+                el = self.get("el");
+            if (self.get("draggable")&&S.Draggable    )
+                self.__drag = new S.Draggable({
+                    node:el,
+                    handlers:self.get("handlers")
+                });
         },
 
         _uiSetDraggable:function(v) {
             S.log("_uiSetDraggable");
-            var self = this,d = self.__drag;
+            var self = this,
+                d = self.__drag;
+            if (!d) return;
             if (v) {
                 d.detach("drag");
                 d.on("drag", self._dragExtAction, self);
@@ -858,7 +862,7 @@ KISSY.add("uibase-drag", function(S) {
         __destructor:function() {
             S.log("DragExt __destructor");
             var d = this.__drag;
-            d&&d.destroy();
+            d && d.destroy();
         }
 
     };
@@ -1153,6 +1157,11 @@ KISSY.add("uibase-shim", function(S) {
     }
 
     var Node = S.Node;
+    Shim.ATTRS = {
+        shim:{
+            value:true
+        }
+    };
     Shim.prototype = {
         __syncUI:function() {
             S.log("_syncUIShimExt");
@@ -1160,19 +1169,27 @@ KISSY.add("uibase-shim", function(S) {
         __bindUI:function() {
             S.log("_bindUIShimExt");
         },
+        _uiSetShim:function(v) {
+            var self = this,el = self.get("el");
+            if (v && !self.__shimEl) {
+                self.__shimEl = new Node("<" + "iframe style='position: absolute;" +
+                    "border: none;" +
+                    "width: expression(this.parentNode.offsetWidth);" +
+                    "top: 0;" +
+                    "opacity: 0;" +
+                    "filter: alpha(opacity=0);" +
+                    "left: 0;" +
+                    "z-index: -1;" +
+                    "height: expression(this.parentNode.offsetHeight);" + "'>");
+                el.prepend(self.__shimEl);
+            } else if (!v && self.__shimEl) {
+                self.__shimEl.remove();
+                delete self.__shimEl;
+            }
+        },
         __renderUI:function() {
             S.log("_renderUIShimExt");
-            var self = this,el = self.get("el");
-            var shim = new Node("<"+"iframe style='position: absolute;" +
-                "border: none;" +
-                "width: expression(this.parentNode.offsetWidth);" +
-                "top: 0;" +
-                "opacity: 0;" +
-                "filter: alpha(opacity=0);" +
-                "left: 0;" +
-                "z-index: -1;" +
-                "height: expression(this.parentNode.offsetHeight);" + "'>");
-            el.prepend(shim);
+
         },
 
         __destructor:function() {
@@ -1220,6 +1237,16 @@ KISSY.add("uibase-stdmod", function(S) {
         footer:"." + CLS_PREFIX + "footer"
     };
 
+    function renderUI(self, part) {
+        var el = self.get("contentEl"),
+            partEl = self.get(part);
+
+        if (!partEl) {
+            partEl = new Node("<div class='" + CLS_PREFIX + part + "'>")
+                .appendTo(el);
+            self.set(part, partEl);
+        }
+    }
 
     StdMod.prototype = {
         __bindUI:function() {
@@ -1230,6 +1257,7 @@ KISSY.add("uibase-stdmod", function(S) {
         },
         _setStdModContent:function(part, v) {
             if (v !== false) {
+
                 if (S.isString(v)) {
                     this.get(part).html(v);
                 } else {
@@ -1257,26 +1285,9 @@ KISSY.add("uibase-stdmod", function(S) {
         },
         __renderUI:function() {
             S.log("_renderUIStdMod");
-            var self = this,
-                el = self.get("contentEl"),
-                header = self.get("header"),
-                body = self.get("body"),
-                footer = self.get("footer"),
-                headerContent = self.get("headerContent"),
-                bodyContent = self.get("bodyContent"),
-                footerContent = self.get("footerContent");
-            if (!header) {
-                header = new Node("<div class='" + CLS_PREFIX + "header'>").appendTo(el);
-                self.set("header", header);
-            }
-            if (!body) {
-                body = new Node("<div class='" + CLS_PREFIX + "body'>").appendTo(el);
-                self.set("body", body);
-            }
-            if (!footer) {
-                footer = new Node("<div class='" + CLS_PREFIX + "footer'>").appendTo(el);
-                self.set("footer", footer);
-            }
+            renderUI(this, "header");
+            renderUI(this, "body");
+            renderUI(this, "footer");
         },
 
         __destructor:function() {
