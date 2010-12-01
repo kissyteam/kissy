@@ -10,8 +10,9 @@ kissy seed 的层次结构为：
     |----------------|-------------|
 </code></pre>
 其左下角的核心框架是 HOST 无关的，可应用于其它脚本引擎。
+
 非常感谢周爱民老师(aimingoo)对 kissy 进行 review 和重构。
-- - -
+
 
 ### 2010/12 aimingoo:
 
@@ -21,10 +22,12 @@ kissy seed 的层次结构为：
  - 核心的 kissy.js 是对对象和系统扩展特性的封装，以及对 app/namespace 的概念约定与实现。
  - 从 kissy.js 中去掉私有函数 mix() 声明的原因，是力图使 S.mix() 成为标准用法。
 
+
 ### 2010/08 yubo:
 
  - 将 loader 功能独立到 loader.js 中。
  - lang.js 增加 lastIndexOf 和 unique 方法。
+
 
 ### 2010/07 yubo:
 
@@ -33,11 +36,13 @@ kissy seed 的层次结构为：
  - 增加 filter 方法。
  - globalEval 中，直接采用 text 赋值，去掉 appendChild 方式。
 
+
 ### 2010/04 yubo:
 
  - 移除掉 weave 方法，鸡肋。
  - param 和 unparam 应该放在什么地方合适？有点纠结，暂放放在 lang.js
  - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
+
 
 ### 2010/01 yubo:
 
@@ -48,4 +53,3 @@ kissy seed 的层次结构为：
  - log, error 方法，简单的调试工具和报错机制。
  - guid 方法，全局辅助方法。
  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
-
