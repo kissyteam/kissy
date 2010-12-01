@@ -2,54 +2,30 @@
  * @module  lang
  * @author  lifesinger@gmail.com
  */
-(function(S, undefined) {
+(function(S, undef) {
 
     var host = S.__APP_HOST,
-        AP = Array.prototype,
-        indexOf = AP.indexOf, lastIndexOf = AP.lastIndexOf, filter = AP.filter,
+
+        indexOf = Array.prototype.indexOf,
+        lastIndexOf = Array.prototype.lastIndexOf,
+        filter = Array.prototype.filter,
         trim = String.prototype.trim,
-        toString = Object.prototype.toString,
-        HAS_OWN_PROPERTY = 'hasOwnProperty',
+
         EMPTY = '',
-        RE_TRIM = /^\s+|\s+$/g;
+        RE_TRIM = /^\s+|\s+$/g,
+
+        // [[Class]] -> type pairs
+        class2type = {};
 
     S.mix(S, {
 
         /**
-         * Determines whether or not the provided object is undefined.
+         * Determine the internal JavaScript [[Class]] of an object.
          */
-        isUndefined: function(o) {
-            return o === undefined;
-        },
-
-        /**
-         * Determines whether or not the provided object is a boolean.
-         */
-        isBoolean: function(o) {
-            return toString.call(o) === '[object Boolean]';
-        },
-
-        /**
-         * Determines whether or not the provided object is a string.
-         */
-        isString: function(o) {
-            return toString.call(o) === '[object String]';
-        },
-
-        /**
-         * Determines whether or not the provided item is a legal number.
-         * NOTICE: Infinity and NaN return false.
-         */
-        isNumber: function(o) {
-            return toString.call(o) === '[object Number]' && isFinite(o);
-        },
-
-        /**
-         * Checks to see if an object is a plain object (created using "{}" or "new Object").
-         */
-        isPlainObject: function(o) {
-            // Make sure that DOM nodes and window objects don't pass through.
-            return o && toString.call(o) === '[object Object]' && !o['nodeType'] && !o['setInterval'];
+        type: function(obj) {
+            return obj == null ?
+                String(obj) :
+                class2type[Object.prototype.toString.call(obj)] || 'object';
         },
 
         /**
@@ -63,31 +39,14 @@
         },
 
         /**
-         * Determines whether or not the provided object is a function.
-         * NOTICE: DOM methods and functions like alert aren't supported. They return false on IE.
-         */
-        isFunction: function(o) {
-            //return typeof o === 'function';
-            // Safari 下，typeof NodeList 也返回 function
-            return toString.call(o) === '[object Function]';
-        },
-
-        /**
-         * Determines whether or not the provided object is an array.
-         */
-        isArray: function(o) {
-            return toString.call(o) === '[object Array]';
-        },
-
-        /**
          * Removes the whitespace from the beginning and end of a string.
          */
         trim: trim ?
             function(str) {
-                return (str == undefined) ? EMPTY : trim.call(str);
+                return (str == undef) ? EMPTY : trim.call(str);
             } :
             function(str) {
-                return (str == undefined) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+                return (str == undef) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
             },
 
         /**
@@ -95,11 +54,11 @@
          * Removes undefined keywords and ignores escaped keywords.
          */
         substitute: function(str, o, regexp) {
-            if(!S.isString(str) || !S.isPlainObject(o)) return str;
+            if (!S.isString(str) || !S.isPlainObject(o)) return str;
 
             return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
                 if (match.charAt(0) === '\\') return match.slice(1);
-                return (o[name] !== undefined) ? o[name] : EMPTY;
+                return (o[name] !== undef) ? o[name] : EMPTY;
             });
         },
 
@@ -112,9 +71,9 @@
          */
         each: function(object, fn, context) {
             var key, val, i = 0, length = object.length,
-                isObj = length === undefined || S.isFunction(object);
+                isObj = length === undef || S.isFunction(object);
             context = context || host;
-            
+
             if (isObj) {
                 for (key in object) {
                     if (fn.call(context, object[key], key, object) === false) {
@@ -170,7 +129,7 @@
          * @return {Array} a copy of the array with duplicate entries removed
          */
         unique: function(a, override) {
-            if(override) a.reverse(); // 默认是后置删除，如果 override 为 true, 则前置删除
+            if (override) a.reverse(); // 默认是后置删除，如果 override 为 true, 则前置删除
             var b = a.slice(), i = 0, n, item;
 
             while (i < b.length) {
@@ -181,35 +140,15 @@
                 i += 1;
             }
 
-            if(override) b.reverse(); // 将顺序转回来
+            if (override) b.reverse(); // 将顺序转回来
             return b;
         },
-        
+
         /**
          * Search for a specified value index within an array.
          */
         inArray: function(item, arr) {
             return S.indexOf(item, arr) > -1;
-        },
-
-        // 将 LiveNodeList 等 array-like 集合转换为普通数组
-        slice2Arr: function (arr) {
-            return AP.slice.call(arr);
-        },
-
-        /**
-         * Converts object to a true array.
-         */
-        makeArray: function(o) {
-            if (o === null || o === undefined) return [];
-            if (S.isArray(o)) return o;
-
-            // The strings and functions also have 'length'
-            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
-                return [o];
-            }
-
-            return S.slice2Arr(o);
         },
 
         /**
@@ -237,26 +176,6 @@
                 return ret;
             },
 
-
-        /**
-         * Creates a deep copy of a plain object or array. Others are returned untouched.
-         */
-        clone: function(o) {
-            var ret = o, b, k;
-
-            // array or plain object
-            if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
-                ret = b ? [] : {};
-                for (k in o) {
-                    if (o[HAS_OWN_PROPERTY](k)) {
-                        ret[k] = S.clone(o[k]);
-                    }
-                }
-            }
-
-            return ret;
-        },
-
         /**
          * Gets current date in milliseconds.
          */
@@ -264,5 +183,16 @@
             return new Date().getTime();
         }
     });
+
+    S.each('Undefined Null Boolean Number String Function Array Date RegExp Object'.split(' '),
+        function(name, lc) {
+            // populate the class2type map
+            class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
+
+            // add isBoolean/isNumber/...
+            S['is' + name] = function(o) {
+                return S.type(o) == lc;
+            }
+        });
 
 })(KISSY);

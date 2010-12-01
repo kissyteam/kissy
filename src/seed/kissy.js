@@ -2,7 +2,7 @@
  * @module kissy
  * @author lifesinger@gmail.com
  */
-(function(S, undefined) {
+(function(S, undef) {
 
     var meta = {
         /**
@@ -11,7 +11,7 @@
          */
         mix: function(r, s, ov, wl) {
             if (!s || !r) return r;
-            if (ov === undefined) ov = true;
+            if (ov === undef) ov = true;
             var i, p, l;
 
             if (wl && (l = wl.length)) {
@@ -32,15 +32,22 @@
             }
             return r;
         }
-    };
-    
+    },
+
+    host = this,
+
     // If KISSY is already defined, the existing KISSY object will not
     // be overwritten so that defined namespaces are preserved.
-    var host = this, seed = host[S], guid = 0,
-        S = (seed && seed.mix) ? seed : meta.mix(seed || (host[S]={}), meta, false, ['mix']), // shortcut
-        EMPTY = '';
+    seed = host[S] || {},
+
+    guid = 0,
+    EMPTY = '';
+
+    if(!seed.mix) seed.mix = meta.mix;
+    S = seed; // shortcut
 
     S.mix(S, {
+
         /**
          * S.app() with these members.
          */
@@ -79,12 +86,11 @@
 
             if (!S.isArray(wl)) {
                 ov = wl;
-                wl = undefined;
+                wl = undef;
                 len++;
             }
-
             if (!S.isBoolean(ov)) {
-                ov = undefined;
+                ov = undef;
                 len++;
             }
 
@@ -143,22 +149,24 @@
 
 /****************************************************************************************
 
- *                            The kissy system framework.                               *
+ *                            The KISSY System Framework                                *
 
  ****************************************************************************************/
 
         /**
-         * Debug is off by defult.
+         * NOTICE: '@DEBUG@' will replace with '' when compressing.
+         * So, if loading source file, debug is on by default.
+         * If loading min version, debug is turned off automatically.
          */
-        Config: { debug: false },
+        Config: { debug: '@DEBUG' },
 
         /**
          * Initializes KISSY environment.
          */
         __init: function() {
             this.Env = {
-                mods: { }, // all mods
-                _loadQueue: { } // infomation for mods
+                mods: {}, // all mods
+                _loadQueue: {} // infomation for mods
             };
         },
 
@@ -199,7 +207,7 @@
          */
         app: function(name, sx) {
             var isStr = S.isString(name),
-                O = isStr ? host[name] || { } : name;
+                O = isStr ? host[name] || {} : name;
 
             S.mix(O, this, true, S.__APP_MEMBERS);
             O.__init();
@@ -222,7 +230,7 @@
                 if (src) {
                     msg = src + ': ' + msg;
                 }
-                if (host['console'] !== undefined && console.log) {
+                if (host['console'] !== undef && console.log) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                 }
             }

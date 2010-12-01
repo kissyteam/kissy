@@ -2,7 +2,7 @@
  * @module loader
  * @author lifesinger@gmail.com, lijing00333@163.com
  */
-(function(S, undefined) {
+(function(S, undef) {
 
     var win = S.__APP_HOST,
         doc = win['document'],
@@ -208,7 +208,7 @@
                 S.each(mod.fns, function(fn) {
                     fn && fn(self);
                 });
-                mod.fns = undefined; // 保证 attach 过的方法只执行一次
+                mod.fns = undef; // 保证 attach 过的方法只执行一次
                 //S.log(mod.name + '.status = attached');
             }
 
@@ -230,7 +230,7 @@
          * Load a single module.
          */
         __load: function(mod, callback, global) {
-            var self = this, url = mod.fullpath,
+            var self = this, url = mod['fullpath'],
                 loadQueque = S.Env._loadQueue, // 这个是全局的，防止多实例对同一模块的重复下载
                 node = loadQueque[url], ret;
 
@@ -356,7 +356,7 @@
                 scriptOnload(node, function() {
                     if (timer) {
                         timer.cancel();
-                        timer = undefined;
+                        timer = undef;
                     }
 
                     S.isFunction(success) && success.call(node);
@@ -370,7 +370,7 @@
 
             if (S.isFunction(error)) {
                 timer = S.later(function() {
-                    timer = undefined;
+                    timer = undef;
                     error();
                 }, (timeout || this.Config.timeout) * 1000);
             }
@@ -389,10 +389,6 @@
 })(KISSY);
 
 /**
- * TODO:
- *  - 自动 combo 的实现，目前是手动
- *  - 使用场景和测试用例整理
- *
  * NOTES:
  *
  * 2010/08/16 玉伯：

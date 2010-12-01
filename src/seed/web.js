@@ -2,11 +2,16 @@
  * @module  lang
  * @author  lifesinger@gmail.com
  */
-(function(S, undefined) {
+(function(S, undef) {
 
     var win = S.__APP_HOST,
-        doc = win['document'], loc = location,
+        doc = win['document'],
         docElem = doc.documentElement,
+
+        hasOwn = Object.prototype.hasOwnProperty,
+        EMPTY = '',
+        SEP = '&',
+        BRACKET = encodeURIComponent('[]'),
 
         // Is the DOM ready to be used? Set to true once it occurs.
         isReady = false,
@@ -17,11 +22,6 @@
         // Has the ready events already been bound?
         readyBound = false,
 
-        encode = encodeURIComponent,
-        decode = decodeURIComponent,
-
-        EMPTY = '', SEP = '&', BRACKET = encode('[]'),
-
         // The number of poll times.
         POLL_RETRYS = 500,
 
@@ -30,17 +30,17 @@
 
         // #id or id
         RE_IDSTR = /^#?([\w-]+)$/,
-
         RE_ARR_KEY = /^(\w+)\[\]$/,
         RE_NOT_WHITE = /\S/;
 
     S.mix(S, {
+
         /**
          * Initializes web environment.
          */
-        __init: function(_init_kissy) {
+        __init: function(initFn) {
           return function() {
-            _init_kissy.apply(this, arguments);
+            initFn.apply(this, arguments);
 
             // 从当前引用文件路径中提取 base
             var scripts = doc.getElementsByTagName('script'),
@@ -56,6 +56,74 @@
           }
         }(S.__init),
 
+        /**
+         * A crude way of determining if an object is a window
+         */
+        isWindow: function(o) {
+            return o && typeof o === 'object' && 'setInterval' in o;
+        },
+
+        /**
+         * Checks to see if an object is a plain object (created using "{}" or "new Object").
+         */
+        isPlainObject: function(o) {
+            // Must be an Object.
+            // Because of IE, we also have to check the presence of the constructor property.
+            // Make sure that DOM nodes and window objects don't pass through, as well
+            if (!o || S.type(o) !== 'object' || o.nodeType || S.isWindow(o)) {
+                return false;
+            }
+
+            // Not own constructor property must be Object
+            if (o.constructor &&
+                !hasOwn.call(o, 'constructor') &&
+                !hasOwn.call(o.constructor.prototype, 'isPrototypeOf')) {
+                return false;
+            }
+
+            // Own properties are enumerated firstly, so to speed up,
+            // if last one is own, then all properties are own.
+
+            var key;
+            for (key in o) {
+            }
+
+            return key === undef || hasOwn.call(o, key);
+        },
+
+        /**
+         * Creates a deep copy of a plain object or array. Others are returned untouched.
+         */
+        clone: function(o) {
+            var ret = o, b, k;
+
+            // array or plain object
+            if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
+                ret = b ? [] : {};
+                for (k in o) {
+                    if (o.hasOwnProperty(k)) {
+                        ret[k] = S.clone(o[k]);
+                    }
+                }
+            }
+
+            return ret;
+        },
+
+        /**
+         * Converts object to a true array.
+         */
+        makeArray: function(o) {
+            if (o === null || o === undef) return [];
+            if (S.isArray(o)) return o;
+
+            // The strings and functions also have 'length'
+            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
+                return [o];
+            }
+
+            return slice2Arr(o);
+        },
 
         /**
          * Parses a URI-like query string and returns an object composed of parameter/value pairs.
@@ -76,11 +144,11 @@
 
             for (; i < len; ++i) {
                 pair = pairs[i].split('=');
-                key = decode(pair[0]);
+                key = decodeURIComponent(pair[0]);
 
                 // pair[1] 可能包含 gbk 编码的中文，而 decodeURIComponent 仅能处理 utf-8 编码的中文，否则报错
                 try {
-                    val = decode(pair[1] || EMPTY);
+                    val = decodeURIComponent(pair[1] || EMPTY);
                 } catch (ex) {
                     val = pair[1] || EMPTY;
                 }
@@ -95,7 +163,43 @@
             return ret;
         },
 
+        /**
+         * Creates a serialized string of an array or object.
+         * <code>
+         * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
+         * {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
+         * </code>
+         */
+        param: function(o, sep) {
+            // 非 plain object, 直接返回空
+            if (!S.isPlainObject(o)) return EMPTY;
+            sep = sep || SEP;
 
+            var buf = [], key, val;
+            for (key in o) {
+                val = o[key];
+                key = encodeURIComponent(key);
+
+                // val 为有效的非数组值
+                if (isValidParamValue(val)) {
+                    buf.push(key, '=', encodeURIComponent(val + EMPTY), sep);
+                }
+                // val 为非空数组
+                else if (S.isArray(val) && val.length) {
+                    for (var i = 0, len = val.length; i < len; ++i) {
+                        if (isValidParamValue(val[i])) {
+                            buf.push(key, BRACKET + '=', encodeURIComponent(val[i] + EMPTY), sep);
+                        }
+                    }
+                }
+                // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
+            }
+            buf.pop();
+            return buf.join(EMPTY);
+        },
 
         /**
          * Executes the supplied function in the context of the supplied
@@ -147,44 +251,6 @@
         },
 
         /**
-         * Creates a serialized string of an array or object.
-         * <code>
-         * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
-         * {foo: '', bar: 2}    // -> 'foo=&bar=2'
-         * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-         * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
-         * </code>
-         */
-        param: function(o, sep) {
-            // 非 plain object, 直接返回空
-            if (!S.isPlainObject(o)) return EMPTY;
-            sep = sep || SEP;
-
-            var buf = [], key, val;
-            for (key in o) {
-                val = o[key];
-                key = encode(key);
-
-                // val 为有效的非数组值
-                if (isValidParamValue(val)) {
-                    buf.push(key, '=', encode(val + EMPTY), sep);
-                }
-                // val 为非空数组
-                else if (S.isArray(val) && val.length) {
-                    for (var i = 0, len = val.length; i < len; ++i) {
-                        if (isValidParamValue(val[i])) {
-                            buf.push(key, BRACKET + '=', encode(val[i] + EMPTY), sep);
-                        }
-                    }
-                }
-                // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
-            }
-            buf.pop();
-            return buf.join(EMPTY);
-        },
-
-        /**
          * Evalulates a script in a global context.
          */
         globalEval: function(data) {
@@ -203,7 +269,6 @@
                 head.removeChild(script);
             }
         },
-
 
         /**
          * Specify a function to execute when the DOM is fully loaded.
@@ -344,7 +409,7 @@
 
                 }, POLL_INTERVAL, true);
         }
-    })
+    });
 
     function isValidParamValue(val) {
         var t = typeof val;
@@ -352,12 +417,16 @@
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // ie 不支持用 slice 转换 LiveNodeList, 重写
+    // 将 LiveNodeList 等 array-like 集合转换为普通数组
+    function slice2Arr(arr) {
+        return Array.prototype.slice.call(arr);
+    }
+    // ie 不支持用 slice 转换 LiveNodeList, 降级到普通方法
     try {
-        S.slice2Arr(docElem.childNodes);
+        slice2Arr(docElem.childNodes);
     }
     catch(e) {
-        S.slice2Arr = function(arr) {
+        slice2Arr = function(arr) {
             for (var ret = [], i = arr.length - 1; i >= 0; i--) {
                 ret[i] = arr[i];
             }
@@ -365,30 +434,12 @@
         }
     }
 
+    // go
     S.__init();
 
     // 可以通过在 url 上加 ?ks-debug 参数来强制开启 debug 模式
-    if (loc && (loc.search || EMPTY).indexOf('ks-debug') !== -1) {
+    if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
         S.Config.debug = true;
     }
 
 })(KISSY);
-
-/**
- * NOTES:
- *
- *  2010/08
- *   - 增加 lastIndexOf 和 unique 方法。
- *
- *  2010/06
- *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着。
- *
- *  2010/05
- *   - 增加 filter 方法。
- *   - globalEval 中，直接采用 text 赋值，去掉 appendChild 方式。
- *
- *  2010/04
- *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
- *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
- *
- */
