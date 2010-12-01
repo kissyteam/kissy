@@ -404,8 +404,7 @@
          * @return {String} the guid
          */
         guid: function(pre) {
-            var id = guid++ + EMPTY;
-            return pre ? pre + id : id;
+            return (pre || EMPTY) + guid++;
         }
     });
 
