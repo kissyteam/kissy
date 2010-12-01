@@ -38,9 +38,13 @@ KISSY.add("uibase-contentbox", function(S) {
                 contentEl = self.get("contentEl"),
                 el = self.get("el");
             if (!contentEl) {
+                var elChildren = S.makeArray(el[0].childNodes);
                 contentEl = new Node("<" +
                     self.get("contentTagName") +
                     " class='ks-contentbox'>").appendTo(el);
+                for (var i = 0; i < elChildren.length; i++) {
+                    contentEl.append(elChildren[i]);
+                }
                 self.set("contentEl", contentEl);
             }
         },

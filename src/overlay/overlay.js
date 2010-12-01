@@ -45,6 +45,10 @@ KISSY.add("overlay", function(S) {
             S.log("overlay destructor");
         }
 
+    },{
+        ATTRS:{
+            elOrder:0
+        }
     });
 }, {
     requires: ["core"]

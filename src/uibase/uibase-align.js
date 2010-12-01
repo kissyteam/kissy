@@ -95,7 +95,7 @@ KISSY.add('uibase-align', function(S) {
                 p2;
 
             offset = offset || [0,0];
-            xy = DOM.offset(el);
+            xy = el.offset();
 
             // p1 是 node 上 points[0] 的 offset
             // p2 是 overlay 上 points[1] 的 offset

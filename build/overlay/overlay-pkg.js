@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Nov 30 13:31
+build time: ${build.time}
 */
 /**
  * KISSY Overlay
@@ -50,6 +50,10 @@ KISSY.add("overlay", function(S) {
             S.log("overlay destructor");
         }
 
+    },{
+        ATTRS:{
+            elOrder:0
+        }
     });
 }, {
     requires: ["core"]

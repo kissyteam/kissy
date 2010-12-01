@@ -1,5 +1,5 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -372,7 +372,7 @@ KISSY.add('uibase-align', function(S) {
                 p2;
 
             offset = offset || [0,0];
-            xy = el.offset();
+            xy = DOM.offset(el);
 
             // p1 是 node 上 points[0] 的 offset
             // p2 是 overlay 上 points[1] 的 offset
@@ -769,13 +769,9 @@ KISSY.add("uibase-contentbox", function(S) {
                 contentEl = self.get("contentEl"),
                 el = self.get("el");
             if (!contentEl) {
-                var elChildren = S.makeArray(el[0].childNodes);
                 contentEl = new Node("<" +
                     self.get("contentTagName") +
                     " class='ks-contentbox'>").appendTo(el);
-                for (var i = 0; i < elChildren.length; i++) {
-                    contentEl.append(elChildren[i]);
-                }
                 self.set("contentEl", contentEl);
             }
         },
@@ -922,7 +918,7 @@ KISSY.add("uibase-mask", function(S) {
             "position":"absolute",
             left:0,
             top:0,
-            width:UA.ie==6 ? S.DOM.docWidth() : "100%",
+            width:S.DOM.docWidth() ,// ie6 bug : "100%",
             "height": S.DOM.docHeight()
         });
         if (UA.ie == 6) {
