@@ -74,7 +74,7 @@ KISSY.add('uibase-align', function(S) {
     Align.prototype = {
 
         _uiSetAlign: function(v) {
-            
+
             if (S.isPlainObject(v)) {
                 this.align(v.node, v.points, v.offset);
             }
@@ -103,11 +103,11 @@ KISSY.add('uibase-align', function(S) {
             p2 = getAlignOffset(el, points[1]);
 
             diff = [p2.left - p1.left, p2.top - p1.top];
-
-            self.set('xy', [
+            xy = [
                 xy.left - diff[0] + (+offset[0]),
                 xy.top - diff[1] + (+offset[1])
-            ]);
+            ];
+            self.set('xy', xy);
         },
 
         /**
