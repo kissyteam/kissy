@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Nov 30 14:19
+build time: ${build.time}
 */
 KISSY.add("event",function(d,l){function k(a,c,e,g,j){if(d.isString(c))c=d.query(c);if(d.isArray(c)){d.each(c,function(h){s[a](h,e,g,j)});return true}if((e=d.trim(e))&&e.indexOf(y)>0){d.each(e.split(y),function(h){s[a](c,h,g,j)});return true}}function i(a,c){m(a)&&f.data(a,w,c)}function m(a){return a&&a.nodeType!==3&&a.nodeType!==8}var b=document,f=d.DOM,t=b.addEventListener?function(a,c,e,g){a.addEventListener&&a.addEventListener(c,e,!!g)}:function(a,c,e){a.attachEvent&&a.attachEvent("on"+c,e)},
 p=b.removeEventListener?function(a,c,e,g){a.removeEventListener&&a.removeEventListener(c,e,!!g)}:function(a,c,e){a.detachEvent&&a.detachEvent("on"+c,e)},w="ksEventTargetId",y=" ",z=d.now(),x={},s={EVENT_GUID:w,special:{},add:function(a,c,e,g){if(!k("add",a,c,e,g)){var j=m(a)?f.data(a,w):-1,h,n,q,r,v;if(!(j===-1||!c||!d.isFunction(e))){if(!j){i(a,j=z++);x[j]={target:a,events:{}}}n=x[j].events;if(!n[c]){h=((j=!a.isCustomEventTarget)||a._supportSpecialEvent)&&s.special[c]||{};q=function(o,u){if(!o||

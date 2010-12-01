@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Nov 30 14:19
+build time: ${build.time}
 */
 /**
  * @module  UIBase
@@ -372,7 +372,7 @@ KISSY.add('uibase-align', function(S) {
                 p2;
 
             offset = offset || [0,0];
-            xy = DOM.offset(el);
+            xy = el.offset();
 
             // p1 是 node 上 points[0] 的 offset
             // p2 是 overlay 上 points[1] 的 offset
@@ -769,9 +769,13 @@ KISSY.add("uibase-contentbox", function(S) {
                 contentEl = self.get("contentEl"),
                 el = self.get("el");
             if (!contentEl) {
+                var elChildren = S.makeArray(el[0].childNodes);
                 contentEl = new Node("<" +
                     self.get("contentTagName") +
                     " class='ks-contentbox'>").appendTo(el);
+                for (var i = 0; i < elChildren.length; i++) {
+                    contentEl.append(elChildren[i]);
+                }
                 self.set("contentEl", contentEl);
             }
         },

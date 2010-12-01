@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Nov 30 14:19
+build time: ${build.time}
 */
 if(!this.JSON)this.JSON={};
 (function(){function k(b){return b<10?"0"+b:b}function n(b){p.lastIndex=0;return p.test(b)?'"'+b.replace(p,function(f){var c=r[f];return typeof c==="string"?c:"\\u"+("0000"+f.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+b+'"'}function j(b,f){var c,d,g,l,i=h,e,a=f[b];if(a&&typeof a==="object"&&typeof a.toJSON==="function")a=a.toJSON(b);if(typeof m==="function")a=m.call(f,b,a);switch(typeof a){case "string":return n(a);case "number":return isFinite(a)?String(a):"null";case "boolean":case "null":return String(a);
