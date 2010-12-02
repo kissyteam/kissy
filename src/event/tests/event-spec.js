@@ -33,6 +33,7 @@ describe('event', function() {
             FIRST = '1',
             SECOND = '2',
             SEP = '-',
+            EMPTY = '',
 
             result,
 
@@ -198,6 +199,36 @@ describe('event', function() {
             result = null;
             simulateClick(f);
             expect(result).toBeNull();
+        });
+
+        it('should remove all the event handlers of the specified event type.', function() {
+            Event.on(g, 'click', function() {
+                result.push(FIRST);
+            });
+            Event.on(g, 'click', function() {
+                result.push(SECOND);
+            });
+            Event.remove(g, 'click');
+
+            // click g
+            result = [];
+            simulateClick(g);
+            expect(result.join(EMPTY)).toEqual([].join(EMPTY));
+        });
+
+        it('should reomve all the event handler of the specified element', function() {
+            Event.on(h, 'click', function() {
+                result.push(FIRST);
+            });
+            Event.on(h, 'click', function() {
+                result.push(SECOND);
+            });
+            Event.remove(h);
+
+            // click h
+            result = [];
+            simulateClick(h);
+            expect(result.join(EMPTY)).toEqual([].join(EMPTY));
         });
     });
 });
