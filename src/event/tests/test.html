@@ -1,59 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Test Runner</title>
+<meta charset="utf-8">
+<title>Test Runner</title>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
 
-    <style>.hidden{display: none}</style>
+<script src="../../../build/seed/seed-pkg.js"></script>
+<script src="../../../build/ua/ua-pkg.js"></script>
+<script src="../../../build/dom/dom-pkg.js"></script>
 
-    <link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
-    <script src="../../../tools/jasmine/jasmine.js"></script>
-    <script src="../../../tools/jasmine/jasmine-html.js"></script>
+<script src="../event.js"></script>
+<script src="../event-object.js"></script>
+<script src="../event-target.js"></script>
+<script src="../event-focusin.js"></script>
+<script src="../event-mouseenter.js"></script>
 
-    <script src="../../../build/kissy.js"></script>
-
-    <script src="../event.js"></script>
-    <script src="../event-object.js"></script>
-    <script src="../event-target.js"></script>
-    <script src="../event-focusin.js"></script>
-    <script src="../event-mouseenter.js"></script>
-
+<script src="../../../build/node/node-pkg.js"></script>
 </head>
 <body>
-<h2 class="hidden">Test Data</h2>
-
-<div id="foo" class="hidden">
-    <ul id="bar">
-        <li><a id="link-a" href="#">link a</a></li>
-        <li><input type="checkbox" id="checkbox-1" /><input type="checkbox" id="checkbox-2" /></li>
-        <li id="li-c"><a id="link-c1" href="#">link c1</a> | <a id="link-c2" href="#">link c2</a></li>
-        <li id="li-d"><a id="link-d1" href="#">link d1</a> | <a id="link-d2" href="#">link d2</a></li>
-        <li id="li-e"><a id="link-e1" href="#">link e1</a> | <a id="link-e2" href="#">link e2</a></li>
-        <li><a id="link-f" href="#">link f</a></li>
-        <li><a id="link-g" href="#">link g</a></li>
-        <li><a id="link-h" href="#">link h</a></li>
-        <li><a id="link-s" href="#">link s</a></li>
-    </ul>
-</div>
-<div id="test-focusin" class="hidden">
-    test focusin: <input type="text" value="点击我"/>
-</div>
-<div style="margin-top: 10px; padding: 30px; background-color: #e3e4e5" class="hidden">
-    <div id="outer" style="padding: 20px; background-color: #D6EDFC">
-        <p class="info">move your mouse</p>
-
-        <div id="inner" style="padding: 20px; background-color: #FFCC00">
+<!-- test data -->
+<div style="border: 1px solid #ccc; height: 50px; overflow-y: auto; padding: 5px; margin-bottom: 20px">
+    <p>Test Data:</p>
+    <div id="foo">
+        <ul id="bar">
+            <li><a id="link-a" href="#">link a</a></li>
+            <li><input type="checkbox" id="checkbox-1"/><input type="checkbox" id="checkbox-2"/></li>
+            <li id="li-c"><a id="link-c1" href="#">link c1</a> | <a id="link-c2" href="#">link c2</a></li>
+            <li id="li-d"><a id="link-d1" href="#">link d1</a> | <a id="link-d2" href="#">link d2</a></li>
+            <li id="li-e"><a id="link-e1" href="#">link e1</a> | <a id="link-e2" href="#">link e2</a></li>
+            <li><a id="link-f" href="#">link f</a></li>
+            <li><a id="link-g" href="#">link g</a></li>
+            <li><a id="link-h" href="#">link h</a></li>
+            <li><a id="link-s" href="#">link s</a></li>
+            <li><a id="link-test-this" href="#">link for test this</a></li>
+            <li><a id="link-test-this-dom" href="#">link for test this</a></li>
+            <li id="link-test-this-all"><span id="link-test-this-all-span">link for test this</span><span></span></li>
+        </ul>
+    </div>
+    <div id="test-focusin" class="hidden">
+        test focusin: <input type="text" value="点击我"/>
+    </div>
+    <div style="margin-top: 10px; padding: 30px; background-color: #e3e4e5" class="hidden">
+        <div id="outer" style="padding: 20px; background-color: #D6EDFC">
             <p class="info">move your mouse</p>
 
+            <div id="inner" style="padding: 20px; background-color: #FFCC00">
+                <p class="info">move your mouse</p>
+
+                <p class="num">0</p>
+            </div>
             <p class="num">0</p>
         </div>
-        <p class="num">0</p>
     </div>
 </div>
-<script src="./event-spec.js"></script>
+
+<script src="event-spec.js"></script>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
     jasmine.getEnv().execute();
 </script>
+
 </body>
 </html>

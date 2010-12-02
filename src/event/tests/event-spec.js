@@ -4,52 +4,56 @@
  * @date    2010-12-2
  */
 describe('event', function() {
+
     var win = window, doc = document,
-            S = KISSY, DOM = S.DOM, Event = S.Event,
-            foo = S.get('#foo'),
-            foo2 = S.get('#foo2'),
-            bar = S.get('#bar'),
-            bar2 = S.get('#bar2'),
-            outer = S.get('#outer'),
-            inner = S.get('#inner'),
-            a = S.get('#link-a'),
-            cb1 = S.get('#checkbox-1'),
-            cb2 = S.get('#checkbox-2'),
-            c1 = S.get('#link-c1'),
-            c2 = S.get('#link-c2'),
-            li_c = S.get('#li-c'),
-            li_d = S.get('#li-d'),
-            li_e = S.get('#li-e'),
-            d1 = S.get('#link-d1'),
-            d2 = S.get('#link-d2'),
-            e1 = S.get('#link-e1'),
-            e2 = S.get('#link-e2'),
-            f = S.get('#link-f'),
-            g = S.get('#link-g'),
-            h = S.get('#link-h'),
-            lis = S.query('#bar li'),
+        S = KISSY, DOM = S.DOM, Event = S.Event,
+        foo = S.get('#foo'),
+        foo2 = S.get('#foo2'),
+        bar = S.get('#bar'),
+        bar2 = S.get('#bar2'),
+        outer = S.get('#outer'),
+        inner = S.get('#inner'),
+        a = S.get('#link-a'),
+        cb1 = S.get('#checkbox-1'),
+        cb2 = S.get('#checkbox-2'),
+        c1 = S.get('#link-c1'),
+        c2 = S.get('#link-c2'),
+        li_c = S.get('#li-c'),
+        li_d = S.get('#li-d'),
+        li_e = S.get('#li-e'),
+        d1 = S.get('#link-d1'),
+        d2 = S.get('#link-d2'),
+        e1 = S.get('#link-e1'),
+        e2 = S.get('#link-e2'),
+        f = S.get('#link-f'),
+        g = S.get('#link-g'),
+        h = S.get('#link-h'),
+        lis = S.query('#bar li'),
 
-            HAPPENED = 'happened',
-            FIRST = '1',
-            SECOND = '2',
-            SEP = '-',
-            EMPTY = '',
+        HAPPENED = 'happened',
+        FIRST = '1',
+        SECOND = '2',
+        SEP = '-',
+        EMPTY = '',
 
-            result,
+        result,
 
-            // simulate mouse click on any element
-            simulateClick = function(ele) {
-                var clickEvent;
-                if (doc.createEvent) {
-                    clickEvent = doc.createEvent('MouseEvent');
-                    clickEvent.initMouseEvent('click', true, true, win, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-                    ele.dispatchEvent(clickEvent);
-                } else {
-                    ele.fireEvent('onclick');
-                }
-            };
+        // simulate mouse click on any element
+        simulateClick = function(el) {
+            var clickEvent;
+            el = S.get(el);
 
-    describe('addEvent', function() {
+            if (doc.createEvent) {
+                clickEvent = doc.createEvent('MouseEvent');
+                clickEvent.initMouseEvent('click', true, true, win, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                el.dispatchEvent(clickEvent);
+            } else {
+                el.fireEvent('onclick');
+            }
+        };
+
+    describe('add event', function() {
+
         it('should support batch adding.', function() {
             var total = lis.length, count = 0;
 
@@ -183,9 +187,35 @@ describe('event', function() {
             simulateClick(e2);
             expect(result.join(SEP)).toEqual([FIRST, SECOND, HAPPENED].join(SEP));
         });
+
+        it('should set this properly', function() {
+           var ret;
+
+            // Node
+            S.one('#link-test-this').on('click', function() {
+                ret = this;
+            });
+            simulateClick('#link-test-this');
+            expect(ret.nodeType).toBe(S.Node.TYPE);
+
+            // NodeList
+            S.all('#link-test-this-all span').on('click', function() {
+                ret = this;
+            });
+            simulateClick('#link-test-this-all-span');
+            expect(ret.text()).toBe('link for test this');
+
+            // DOM Element
+            S.Event.on('#link-test-this-dom', 'click', function() {
+                ret = this;
+            });
+            simulateClick('#link-test-this-dom');
+            expect(ret.nodeType).toBe(1);
+        });
     });
 
-    describe('removeEvent', function() {
+    describe('remove event', function() {
+
         it('should remove the specified event handler function.', function() {
             function foo() {
                 result = HAPPENED;
