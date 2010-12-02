@@ -22,10 +22,18 @@
         /**
          * Determine the internal JavaScript [[Class]] of an object.
          */
-        type: function(obj) {
-            return obj == null ?
-                String(obj) :
-                class2type[Object.prototype.toString.call(obj)] || 'object';
+        type: function(o) {
+            return o == null ?
+                String(o) :
+                class2type[Object.prototype.toString.call(o)] || 'object';
+        },
+
+        isNull: function(o) {
+            return o === null;
+        },
+
+        isUndefined: function(o) {
+            return o === undef;
         },
 
         /**
@@ -187,7 +195,7 @@
         }
     });
 
-    S.each('Undefined Null Boolean Number String Function Array Date RegExp Object'.split(' '),
+    S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
         function(name, lc) {
             // populate the class2type map
             class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
