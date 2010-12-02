@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 10:34
 */
 /*
  * Date Format 1.2.3

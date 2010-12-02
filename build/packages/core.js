@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 10:35
 */
 /**
  * @module  ua
@@ -196,9 +196,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 10:34
 */
 /**
  * @module  dom
@@ -2250,9 +2250,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 10:34
 */
 /**
  * @module  event
@@ -2330,7 +2330,7 @@ KISSY.add('event', function(S, undefined) {
 
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
-                        event = new S.EventObject(target, event, type, target);
+                        event = new S.EventObject(target, event, type);
                         if (S.isPlainObject(eventData)) {
                             S.mix(event, eventData);
                         }
@@ -2338,7 +2338,7 @@ KISSY.add('event', function(S, undefined) {
                     if (special['setup']) {
                         special['setup'](event);
                     }
-                    return (special.handle || Event._handle).call(target, target, event, events[type].listeners);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners);
                 };
 
                 events[type] = {
@@ -2421,7 +2421,7 @@ KISSY.add('event', function(S, undefined) {
              sure we'll call all of them.*/
             listeners = listeners.slice(0);
 
-            var ret, i = 0, len = listeners.length, listener, scope;
+            var ret, i = 0, len = listeners.length, listener;
 
             // 让 nodelist 等集合，能自定义 scope
 
@@ -2458,6 +2458,14 @@ KISSY.add('event', function(S, undefined) {
             targets = S.query(targets);
         }
 
+        // on([targetA, targetB], type, fn)
+        if (S.isArray(targets)) {
+            S.each(targets, function(target) {
+                Event[methodName](target, types, fn, scope);
+            });
+            return true;
+        }
+
         // on(target, 'click focus', fn)
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
             S.each(types.split(SPACE), function(type) {
@@ -2466,13 +2474,10 @@ KISSY.add('event', function(S, undefined) {
             return true;
         }
 
-        //!TODO nodelist 解包
-        if (targets.length && targets.length>1) {
+        // unpack nodelist
+        if (targets.getDOMNodes) {
             for (var i = 0; i < targets.length; i++) {
-                var t = targets[i];
-                if (targets.getDOMNodes)
-                    t = targets.item(i);
-                Event[methodName](t, types, fn, scope);
+                Event[methodName](targets.item(i), types, fn, scope);
             }
             return true;
         }
@@ -2524,7 +2529,7 @@ KISSY.add('event-object', function(S, undefined) {
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
      */
-    function EventObject(currentTarget, domEvent, type, currentEl) {
+    function EventObject(currentTarget, domEvent, type) {
         var self = this;
         self.currentTarget = currentTarget;
         self.originalEvent = domEvent || { };
@@ -2540,7 +2545,6 @@ KISSY.add('event-object', function(S, undefined) {
 
         // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
         if (currentTarget.isCustomEventTarget) {
-            if (currentTarget.item) currentTarget = currentTarget.item(currentEl);
             if (S.DOM._isKSNode(currentTarget)) self.target = new S.Node(self.target);
         }
 
@@ -2827,9 +2831,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 10:35
 */
 /**
  * @module  node
@@ -3162,7 +3166,6 @@ KISSY.add('node-attach', function(S, undefined) {
 
     // event-target
     S.mix(NP, S.EventTarget);
-    S.mix(NLP, S.EventTarget);
     NP._supportSpecialEvent = true;
     NP._addEvent = function(type, handle, capture) {
         Event._simpleAdd(this[0], type, handle, capture);
@@ -3171,11 +3174,14 @@ KISSY.add('node-attach', function(S, undefined) {
         Event._simpleRemove(this[0], type, handle, capture);
     };
     delete NP.fire;
+
+    S.mix(NLP, S.EventTarget);
+    delete NLP.fire;
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 10:35
 */
 /*
     http://www.JSON.org/json2.js
@@ -3679,9 +3685,9 @@ KISSY.add('json', function (S) {
     };
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 10:34
 */
 /***
  * @module  ajax
@@ -4000,9 +4006,9 @@ KISSY.add('ajax', function(S, undef) {
  *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 10:34
 */
 /**
  * @module anim-easing
@@ -4659,9 +4665,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 10:34
 */
 /**
  * @module  cookie
@@ -4745,9 +4751,9 @@ KISSY.add('cookie', function(S) {
  *     独立成静态工具类的方式更优。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 10:34
 */
 /**
  * @module  Attribute
