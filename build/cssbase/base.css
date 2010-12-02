@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Dec 2 10:34
+build time: ${build.time}
 */
 /*
 KISSY CSS Reset
@@ -51,9 +51,9 @@ button, input, select, textarea { font-size: 100%; } /* 使得表单元素在 ie
 /** 重置表格元素 **/
 table { border-collapse: collapse; border-spacing: 0; }
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Dec 2 10:34
+build time: ${build.time}
 */
 /*
 双飞翼栅格布局 Flying Swing Grids Layout
@@ -90,9 +90,9 @@ build time: Dec 2 10:34
     *zoom: 1;
 }
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Dec 2 10:34
+build time: ${build.time}
 */
 /*
 常用的通用样式 Common Style

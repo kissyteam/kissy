@@ -1,6 +1,6 @@
 .ks-dialog, .ks-overlay {
     position: absolute;
-    /*防止移位带来的闪烁*/
+    /*防止移位带来的闪烁*/    
     left: -9999px;
     top: -9999px;
 }
