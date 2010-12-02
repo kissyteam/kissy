@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 22:19
 */
 /*
  * @module kissy
@@ -64,7 +64,7 @@ build time: ${build.time}
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.7dev',
+        version: '1.1.6',
 
         /**
          * Returns a new object containing all of the properties of
@@ -286,10 +286,18 @@ build time: ${build.time}
         /**
          * Determine the internal JavaScript [[Class]] of an object.
          */
-        type: function(obj) {
-            return obj == null ?
-                String(obj) :
-                class2type[Object.prototype.toString.call(obj)] || 'object';
+        type: function(o) {
+            return o == null ?
+                String(o) :
+                class2type[Object.prototype.toString.call(o)] || 'object';
+        },
+
+        isNull: function(o) {
+            return o === null;
+        },
+
+        isUndefined: function(o) {
+            return o === undef;
         },
 
         /**
@@ -451,7 +459,7 @@ build time: ${build.time}
         }
     });
 
-    S.each('Undefined Null Boolean Number String Function Array Date RegExp Object'.split(' '),
+    S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
         function(name, lc) {
             // populate the class2type map
             class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
@@ -1325,9 +1333,9 @@ build time: ${build.time}
 
 })(KISSY);
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 22:19
 */
 /**
  * @module  ua
@@ -1522,9 +1530,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 22:18
 */
 /**
  * @module  dom
@@ -3575,9 +3583,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 22:18
 */
 /**
  * @module  event
@@ -4156,9 +4164,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 22:18
 */
 /**
  * @module  node
@@ -4504,9 +4512,9 @@ KISSY.add('node-attach', function(S, undefined) {
     delete NLP.fire;
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 22:18
 */
 /*
     http://www.JSON.org/json2.js
@@ -5010,9 +5018,9 @@ KISSY.add('json', function (S) {
     };
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 22:18
 */
 /***
  * @module  ajax
@@ -5331,9 +5339,9 @@ KISSY.add('ajax', function(S, undef) {
  *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 22:18
 */
 /**
  * @module anim-easing
@@ -5990,9 +5998,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 22:18
 */
 /**
  * @module  cookie
@@ -6076,9 +6084,9 @@ KISSY.add('cookie', function(S) {
  *     独立成静态工具类的方式更优。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 22:18
 */
 /**
  * @module  Attribute

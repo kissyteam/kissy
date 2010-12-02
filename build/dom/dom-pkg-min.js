@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 22:18
 */
 KISSY.add("dom",function(a,x){function p(g,q){return g&&g.nodeType===q}a.DOM={_isElementNode:function(g){return p(g,1)},_isKSNode:function(g){return a.Node&&p(g,a.Node.TYPE)},_getWin:function(g){return g&&"scrollTo"in g&&g.document?g:p(g,9)?g.defaultView||g.parentWindow:g===x?window:false},_nodeTypeIs:p}});
 KISSY.add("selector",function(a,x){function p(e,f){var c,b,d=[],m;f=g(f);if(a.isString(e)){e=a.trim(e);if(w.test(e)){if(b=q(e.slice(1),f))d=[b]}else if(c=n.exec(e)){b=c[1];m=c[2];c=c[3];if(f=b?q(b,f):f)if(c)if(!b||e.indexOf(k)!==-1)d=h(c,m,f);else{if((b=q(b,f))&&v.hasClass(b,c))d=[b]}else if(m)d=z(m,f)}else if(a.ExternalSelector)return a.ExternalSelector(e,f);else j(e)}else if(e&&(e[r]||e[s]))d=e[r]?[e[r]()]:e[s]();else if(e&&(a.isArray(e)||e&&!e.nodeType&&e.item&&e!=window))d=e;else if(e)d=[e];if(d&&

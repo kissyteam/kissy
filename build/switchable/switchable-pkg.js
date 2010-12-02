@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 22:19
 */
 /**
  * Switchable
@@ -440,10 +440,7 @@ KISSY.add('autoplay', function(S, undefined) {
             // 鼠标悬停，停止自动播放
             if (cfg.pauseOnHover) {
                 Event.on(host.container, 'mouseenter', function() {
-                    if(timer) {
-                        timer.cancel();
-                        timer = undefined;
-                    }
+                    host.stop();
                     host.paused = true; // paused 可以让外部知道 autoplay 的当前状态
                 });
                 Event.on(host.container, 'mouseleave', function() {
@@ -464,6 +461,14 @@ KISSY.add('autoplay', function(S, undefined) {
 
             // go
             startAutoplay();
+
+            // 添加 stop 方法，使得外部可以停止自动播放
+            host.stop = function() {
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
+                }
+            }
         }
     });
 

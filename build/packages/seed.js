@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 2 22:19
 */
 /*
  * @module kissy
@@ -64,7 +64,7 @@ build time: ${build.time}
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.7dev',
+        version: '1.1.6',
 
         /**
          * Returns a new object containing all of the properties of
@@ -286,10 +286,18 @@ build time: ${build.time}
         /**
          * Determine the internal JavaScript [[Class]] of an object.
          */
-        type: function(obj) {
-            return obj == null ?
-                String(obj) :
-                class2type[Object.prototype.toString.call(obj)] || 'object';
+        type: function(o) {
+            return o == null ?
+                String(o) :
+                class2type[Object.prototype.toString.call(o)] || 'object';
+        },
+
+        isNull: function(o) {
+            return o === null;
+        },
+
+        isUndefined: function(o) {
+            return o === undef;
         },
 
         /**
@@ -451,7 +459,7 @@ build time: ${build.time}
         }
     });
 
-    S.each('Undefined Null Boolean Number String Function Array Date RegExp Object'.split(' '),
+    S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
         function(name, lc) {
             // populate the class2type map
             class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
