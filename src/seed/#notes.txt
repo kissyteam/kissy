@@ -6,25 +6,9 @@ note by lifesinger
 3. 重构 S.app 和 S.__init 的关系，抽离出 S.__APP_INIT_METHODS, 现在 kissy.js 中不再包含 loader.js 相关信息。
 4. 将 test.html 转移到 tests 目录，目前可运行版本：test-domready.html. 还需进一步重构和完善。
 
-层次结构有疑问：
-原来的图中，反映不出 loader.js 对 kissy.js/lang.js/web.js 的依赖。
-是否应该为
-|          web app ...         |
-|------------------------------|
-|    mods.js                   |
-|    loader.js                 |
-|------------------------------|
-|    web.js                    |
-|------------------------------|
-|    lang.js                   |
-|    kissy.js                  |
-|------------------------------|
-愚公指正下。
-
 详细代码修改点可以看：
 https://github.com/kissyteam/kissy/commit/533faf7791d40000988aa69a52bcab6c021b9d6e
 https://github.com/kissyteam/kissy/commit/54a3941710442893b5c1b8d3eaee4bee497e6a7c
-
 最新代码点击 https://github.com/kissyteam/kissy 右上角的 Downloads 下载即可
 
 
@@ -41,7 +25,7 @@ note by aimingoo
 |          web app ...         |
 |------------------------------|
 |    web.js      |             |
-|----------------|             |
+|----------------| mods.js     |
 |    lang.js     | loader.js   |
 |    kissy.js    |             |
 |----------------|-------------|
