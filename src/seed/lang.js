@@ -4,7 +4,7 @@
  */
 (function(S, undef) {
 
-    var host = S.__APP_HOST,
+    var host = S.__HOST,
 
         indexOf = Array.prototype.indexOf,
         lastIndexOf = Array.prototype.lastIndexOf,
@@ -71,7 +71,7 @@
          */
         each: function(object, fn, context) {
             var key, val, i = 0, length = object.length,
-                isObj = length === undef || S.isFunction(object);
+                isObj = length === undef || S.type(object) === 'function';
             context = context || host;
 
             if (isObj) {
@@ -126,10 +126,13 @@
         /**
          * Returns a copy of the array with the duplicate entries removed
          * @param a {Array} the array to find the subset of uniques for
+         * @param override {Boolean}
+         *        if override is true, S.unique([a, b, a]) => [b, a]
+         *        if override is false, S.unique([a, b, a]) => [a, b]
          * @return {Array} a copy of the array with duplicate entries removed
          */
         unique: function(a, override) {
-            if (override) a.reverse(); // 默认是后置删除，如果 override 为 true, 则前置删除
+            if (override) a.reverse();
             var b = a.slice(), i = 0, n, item;
 
             while (i < b.length) {
@@ -140,7 +143,7 @@
                 i += 1;
             }
 
-            if (override) b.reverse(); // 将顺序转回来
+            if (override) b.reverse();
             return b;
         },
 

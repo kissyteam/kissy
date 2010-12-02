@@ -4,7 +4,7 @@
  */
 (function(S, undef) {
 
-    var win = S.__APP_HOST,
+    var win = S.__HOST,
         doc = win['document'],
         docElem = doc.documentElement,
 
@@ -34,27 +34,6 @@
         RE_NOT_WHITE = /\S/;
 
     S.mix(S, {
-
-        /**
-         * Initializes web environment.
-         */
-        __init: function(initFn) {
-          return function() {
-            initFn.apply(this, arguments);
-
-            // 从当前引用文件路径中提取 base
-            var scripts = doc.getElementsByTagName('script'),
-                currentScript = scripts[scripts.length - 1],
-                base = currentScript.src.replace(/^(.*)(seed|kissy).*$/i, '$1');
-            
-            // 配置信息
-            this.Config = {
-                debug: '@DEBUG@', // build 时，会将 @DEBUG@ 替换为空
-                base: base,
-                timeout: 10   // getScript 的默认 timeout 时间
-            };
-          }
-        }(S.__init),
 
         /**
          * A crude way of determining if an object is a window
@@ -146,7 +125,8 @@
                 pair = pairs[i].split('=');
                 key = decodeURIComponent(pair[0]);
 
-                // pair[1] 可能包含 gbk 编码的中文，而 decodeURIComponent 仅能处理 utf-8 编码的中文，否则报错
+                // decodeURIComponent will throw exception when pair[1] contains
+                // GBK encoded chinese characters.
                 try {
                     val = decodeURIComponent(pair[1] || EMPTY);
                 } catch (ex) {
@@ -174,7 +154,6 @@
          * </code>
          */
         param: function(o, sep) {
-            // 非 plain object, 直接返回空
             if (!S.isPlainObject(o)) return EMPTY;
             sep = sep || SEP;
 
@@ -183,11 +162,11 @@
                 val = o[key];
                 key = encodeURIComponent(key);
 
-                // val 为有效的非数组值
+                // val is valid non-array value
                 if (isValidParamValue(val)) {
                     buf.push(key, '=', encodeURIComponent(val + EMPTY), sep);
                 }
-                // val 为非空数组
+                // val is not empty array
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
@@ -195,7 +174,7 @@
                         }
                     }
                 }
-                // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
+                // ignore other cases, including empty array, Function, RegExp, Date etc.
             }
             buf.pop();
             return buf.join(EMPTY);
@@ -279,21 +258,19 @@
          * @return {KISSY}
          */
         ready: function(fn) {
-            var self = this;
-
             // Attach the listeners
-            if (!readyBound) self._bindReady();
+            if (!readyBound) this._bindReady();
 
             // If the DOM is already ready
             if (isReady) {
                 // Execute the function immediately
-                fn.call(win, self);
+                fn.call(win, this);
             } else {
                 // Remember the function for later
                 readyList.push(fn);
             }
 
-            return self;
+            return this;
         },
 
         /**
@@ -413,15 +390,15 @@
 
     function isValidParamValue(val) {
         var t = typeof val;
-        // val 为 null, undefined, number, string, boolean 时，返回 true
+        // If the type of val is null, undefined, number, string, boolean, return true.
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // 将 LiveNodeList 等 array-like 集合转换为普通数组
+    // Converts array-like collection such as LiveNodeList to normal array.
     function slice2Arr(arr) {
         return Array.prototype.slice.call(arr);
     }
-    // ie 不支持用 slice 转换 LiveNodeList, 降级到普通方法
+    // IE will throw error.
     try {
         slice2Arr(docElem.childNodes);
     }
@@ -434,10 +411,7 @@
         }
     }
 
-    // go
-    S.__init();
-
-    // 可以通过在 url 上加 ?ks-debug 参数来强制开启 debug 模式
+    // If url contains '?ks-debug', debug mode will turn on automatically.
     if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
         S.Config.debug = true;
     }

@@ -16,11 +16,7 @@ kissy seed 的层次结构为：
 
 ### 2010/12 aimingoo:
 
- - 将 web 层从 kissy.js 和 lang 中分离出来，现在 kissy.js 是环境无关的。
- - kissy.js 不再依赖具体的 window 作为 context env. kissy.js 可以在任意的 host 中初始化。
- - 从 kissy.js 中找到 seed 的概念，即具有 meta 性质的 host 对象。如果 host 没有 meta 性质，则通过 meta.mix() 使其成为核心的 seed。
- - 核心的 kissy.js 是对对象和系统扩展特性的封装，以及对 app/namespace 的概念约定与实现。
- - 从 kissy.js 中去掉私有函数 mix() 声明的原因，是力图使 S.mix() 成为标准用法。
+ - 将 web 层从 kissy.js 和 lang.js 中分离出来，将 seed 的层次结构清晰化。
 
 ### 2010/08 yubo:
 

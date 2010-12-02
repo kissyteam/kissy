@@ -44,15 +44,16 @@
     EMPTY = '';
 
     if(!seed.mix) seed.mix = meta.mix;
-    S = seed; // shortcut
+    S = host[S] = seed; // shortcut
 
     S.mix(S, {
 
-        /**
-         * S.app() with these members.
-         */
-        __APP_MEMBERS: ['__init', 'namespace'],
-        __APP_HOST: host,
+         // The host of runtime environment.
+        __HOST: host,
+
+        // S.app() with these members.
+        __APP_MEMBERS: ['namespace'],
+        __APP_INIT_METHODS: ['__init'],
 
         /**
          * The version of the library.
@@ -154,20 +155,16 @@
  ****************************************************************************************/
 
         /**
-         * NOTICE: '@DEBUG@' will replace with '' when compressing.
-         * So, if loading source file, debug is on by default.
-         * If loading min version, debug is turned off automatically.
-         */
-        Config: { debug: '@DEBUG' },
-
-        /**
-         * Initializes KISSY environment.
+         * Initializes KISSY
          */
         __init: function() {
-            this.Env = {
-                mods: {}, // all mods
-                _loadQueue: {} // infomation for mods
-            };
+            this.Config = this.Config || {};
+            this.Env = this.Env || {};
+
+            // NOTICE: '@DEBUG@' will replace with '' when compressing.
+            // So, if loading source file, debug is on by default.
+            // If loading min version, debug is turned off automatically.
+            this.Config.debug = '@DEBUG@';
         },
 
         /**
@@ -207,10 +204,12 @@
          */
         app: function(name, sx) {
             var isStr = S.isString(name),
-                O = isStr ? host[name] || {} : name;
+                O = isStr ? host[name] || {} : name,
+                i = 0,
+                len = S.__APP_INIT_METHODS.length;
 
             S.mix(O, this, true, S.__APP_MEMBERS);
-            O.__init();
+            for(; i < len; ++i) S[S.__APP_INIT_METHODS[i]].call(O);
 
             S.mix(O, S.isFunction(sx) ? sx() : sx);
             isStr && (host[name] = O);
