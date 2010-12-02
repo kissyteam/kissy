@@ -348,6 +348,40 @@
 <p class="code-switch">显示源码</p>
 
 
+
+<h2>Dialog fixed 居中</h2>
+<button id="btn5">Show</button>
+<script>
+    KISSY.ready(function(S) {
+        var dialog = new S.Dialog({
+            width: 400,
+            bodyStyle:{
+                height: 300
+            },
+            elStyle:{
+              position:S.UA.ie==6?"absolute":"fixed"
+            },
+            headerContent: 'this is title',
+            footerContent: 'footer',
+            bodyContent: 'content',
+            mask: true,
+            draggable:false
+        });
+        S.one("#btn5").on("click", function() {
+            dialog.render();
+            dialog.center();
+            dialog.show();
+        });
+        if(S.UA.ie==6){
+            S.Event.on(window,"scroll",function(){
+                if(dialog.get("visible"))
+                dialog.center();
+            });
+        }
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
 <script>
     (function() {
         var S = KISSY, DOM = S.DOM,

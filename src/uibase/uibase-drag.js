@@ -5,7 +5,7 @@
 KISSY.add("uibase-drag", function(S) {
     S.namespace('UIBase');
     function Drag() {
-         S.log("drag init");
+        S.log("drag init");
     }
 
     Drag.ATTRS = {
@@ -17,7 +17,7 @@ KISSY.add("uibase-drag", function(S) {
 
         _uiSetHandlers:function(v) {
             S.log("_uiSetHanlders");
-            if (v && v.length > 0)
+            if (v && v.length > 0 && this.__drag)
                 this.__drag.set("handlers", v);
         },
 
@@ -31,16 +31,20 @@ KISSY.add("uibase-drag", function(S) {
 
         __bindUI:function() {
             S.log("_bindUIDragExt");
-            var self = this,el = self.get("el");
-            self.__drag = new S.Draggable({
-                node:el,
-                handlers:self.get("handlers")
-            });
+            var self = this,
+                el = self.get("el");
+            if (self.get("draggable")&&S.Draggable    )
+                self.__drag = new S.Draggable({
+                    node:el,
+                    handlers:self.get("handlers")
+                });
         },
 
         _uiSetDraggable:function(v) {
             S.log("_uiSetDraggable");
-            var self = this,d = self.__drag;
+            var self = this,
+                d = self.__drag;
+            if (!d) return;
             if (v) {
                 d.detach("drag");
                 d.on("drag", self._dragExtAction, self);
@@ -58,7 +62,7 @@ KISSY.add("uibase-drag", function(S) {
         __destructor:function() {
             S.log("DragExt __destructor");
             var d = this.__drag;
-            d&&d.destroy();
+            d && d.destroy();
         }
 
     };

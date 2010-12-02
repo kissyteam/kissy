@@ -12,10 +12,10 @@
     };
 
     S.each([
-        'sizzle', 'dd', 'datalazyload', // 纯工具类
-        'flash', // flash 类
-        'switchable', 'suggest', 'calendar', // 传统 UI 组件
-        'uibase', 'overlay', 'imagezoom' // 基于 uibase 的组件
+        'sizzle', 'dd', 'datalazyload', // pure utilities
+        'flash', // flash etc.
+        'switchable', 'suggest', 'calendar', // UI components based on Base
+        'uibase', 'overlay', 'imagezoom' // UI components based on UIBase
     ],
         function(modName) {
             map[modName] = {
@@ -30,11 +30,3 @@
     S.add(map);
 
 })(KISSY);
-
-/**
- * NOTES:
- *
- *  2010/08/16 玉伯：
- *   - 采用实用性粒度，防止颗粒过小给用户带来的不方便。
- *
- */
