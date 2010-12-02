@@ -1,0 +1,49 @@
+-----------------------------------------------------------
+note by lifesinger
+
+1. 重构 lang.js 中的 isString 等方法，抽离出 type 方法，和 jQuery 1.4.4 逻辑一致。
+2. web.js 中增加 isWindow 方法，并将 lang.js 中的 isPlainObject, clone, makeArray 移动到 web.js.
+3. 重构 S.app 和 S.__init 的关系，抽离出 S.__APP_INIT_METHODS, 现在 kissy.js 中不再包含 loader.js 相关信息。
+4. 将 test.html 转移到 tests 目录，目前可运行版本：test-domready.html. 还需进一步重构和完善。
+
+层次结构有疑问：
+原来的图中，反映不出 loader.js 对 kissy.js/lang.js/web.js 的依赖。
+是否应该为
+|          web app ...         |
+|------------------------------|
+|    mods.js                   |
+|    loader.js                 |
+|------------------------------|
+|    web.js                    |
+|------------------------------|
+|    lang.js                   |
+|    kissy.js                  |
+|------------------------------|
+愚公指正下。
+
+详细代码修改点可以看：
+https://github.com/kissyteam/kissy/commit/533faf7791d40000988aa69a52bcab6c021b9d6e
+https://github.com/kissyteam/kissy/commit/54a3941710442893b5c1b8d3eaee4bee497e6a7c
+
+最新代码点击 https://github.com/kissyteam/kissy 右上角的 Downloads 下载即可
+
+
+-----------------------------------------------------------
+note by aimingoo
+
+1. 将web层从kissy.js和lang中分离出来，现在kissy.js是环境无关的；
+2. kissy.js不再依赖具体的window作为context env. kissy.js可以在任意的host中初始化；
+3. 从kissy.js中找到seed的概念，即具有meta性质的host对象。如果host没有meta性质，则通过meta.mix()使其成为核心的seed。
+4. 核心的kissy.js是对对象和系统扩展特性的封装，以及对app/namespace的概念约定与实现。
+5. 从kissy.js中去掉私有函数mix()声明的原因，是力图使S.mix()成为标准用法。
+6. kissy核心的层次结构为：
+
+|          web app ...         |
+|------------------------------|
+|    web.js      |             |
+|----------------|             |
+|    lang.js     | loader.js   |
+|    kissy.js    |             |
+|----------------|-------------|
+
+其左下角的核心框架是HOST无关的，可以应用于其它的脚本引擎。
