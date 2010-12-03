@@ -6,7 +6,7 @@
 KISSY.add("resizable", function(S) {
 
     var Draggable = S.Draggable,
-        CLS_PREFIX = "ke-resizehandler-",
+        CLS_PREFIX = "ke-resizehandler",
         Node = S.Node;
 
     var hcNormal = {
@@ -68,7 +68,8 @@ KISSY.add("resizable", function(S) {
             for (var i = 0; i < v.length; i++) {
                 var hc = v[i],
                     dd
-                el = new Node("<div class='" + CLS_PREFIX + hc + "'>")
+                el = new Node("<div class='" + CLS_PREFIX +
+                    " " + CLS_PREFIX + "-" + hc + "'>")
                     .prependTo(node);
                 dd = dds[hc] = new Draggable({
                     node:el

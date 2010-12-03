@@ -52,7 +52,6 @@ KISSY.add('dd', function(S) {
             if (!activeDrag) return;
             //防止 ie 选择到字
             ev.preventDefault();
-            this._clearSelection();
             activeDrag._move(ev);
         },
 
@@ -141,21 +140,6 @@ KISSY.add('dd', function(S) {
                 display: "",
                 height: DOM.docHeight()
             });
-            self._clearSelection();
-        },
-
-        _clearSelection: function() {
-            // 清除由于浏览器导致的选择文字
-            if (window.getSelection) {
-                window.getSelection().removeAllRanges();
-            }
-            // 防止 ie 莫名选择文字
-            else if (document.selection) {
-                try {
-                    document.selection.empty();
-                } catch(e) {
-                }
-            }
         },
 
         /**
