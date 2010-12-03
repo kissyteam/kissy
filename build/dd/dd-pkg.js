@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Dec 2 22:18
+build time: ${build.time}
 */
 /**
  * dd support for kissy
@@ -57,7 +57,6 @@ KISSY.add('dd', function(S) {
             if (!activeDrag) return;
             //防止 ie 选择到字
             ev.preventDefault();
-            this._clearSelection();
             activeDrag._move(ev);
         },
 
@@ -146,21 +145,6 @@ KISSY.add('dd', function(S) {
                 display: "",
                 height: DOM.docHeight()
             });
-            self._clearSelection();
-        },
-
-        _clearSelection: function() {
-            // 清除由于浏览器导致的选择文字
-            if (window.getSelection) {
-                window.getSelection().removeAllRanges();
-            }
-            // 防止 ie 莫名选择文字
-            else if (document.selection) {
-                try {
-                    document.selection.empty();
-                } catch(e) {
-                }
-            }
         },
 
         /**
@@ -278,6 +262,7 @@ KISSY.add('dd-draggable', function(S) {
                     if (!ori || ori === 'auto')
                         hl.css('cursor', 'move');
                 }
+                unselectable(hl[0]);
             }
 
             node.on('mousedown', self._handleMouseDown, self);
@@ -294,6 +279,7 @@ KISSY.add('dd-draggable', function(S) {
                 }
             }
             node.detach('mousedown', self._handleMouseDown, self);
+            self.detach();
         },
 
         _check: function(t) {
@@ -321,10 +307,11 @@ KISSY.add('dd-draggable', function(S) {
 
             if (!self._check(t)) return;
             //chrome 阻止了 flash 点击？？
-            if (!UA.webkit) {
-                //firefox 默认会拖动对象地址
-                ev.preventDefault();
-            }
+            //不组织的话chrome会选择
+            //if (!UA.webkit) {
+            //firefox 默认会拖动对象地址
+            ev.preventDefault();
+            //}
 
             S.DD.DDM._start(self);
 
@@ -350,11 +337,10 @@ KISSY.add('dd-draggable', function(S) {
                 diff = self.get("diff"),
                 left = ev.pageX - diff.left,
                 top = ev.pageY - diff.top;
-            S.mix(ev, {
+            this.fire("drag", {
                 left:left,
                 top:top
             });
-            this.fire("drag", ev);
         },
 
         _end: function() {
@@ -366,6 +352,37 @@ KISSY.add('dd-draggable', function(S) {
         }
 
     });
+
+    var unselectable =
+        UA.gecko ?
+            function(el) {
+                el.style.MozUserSelect = 'none';
+            }
+            : UA.webkit ?
+            function(el) {
+                el.style.KhtmlUserSelect = 'none';
+            }
+            :
+            function(el) {
+                if (UA.ie || UA.opera) {
+                    var e,i = 0,
+                        els = el.getElementsByTagName("*");
+                    el.unselectable = 'on';
+                    while (( e = els[ i++ ] )) {
+                        switch (e.tagName.toLowerCase()) {
+                            case 'iframe' :
+                            case 'textarea' :
+                            case 'input' :
+                            case 'select' :
+                                /* Ignore the above tags */
+                                break;
+                            default :
+                                e.unselectable = 'on';
+                        }
+                    }
+                }
+            };
+
 
     S.Draggable = Draggable;
 
