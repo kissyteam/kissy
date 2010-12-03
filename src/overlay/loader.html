@@ -76,8 +76,8 @@
 <p class="code-switch">显示源码</p>
 
 <script>
-    (function() {
-        return;
+    KISSY.use("core",function() {
+       
         var S = KISSY, DOM = S.DOM,
                 SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
 
@@ -104,7 +104,7 @@
                 p.html(showing ? HIDE_CODE : SHOW_CODE);
             });
         });
-    })();
+    });
 </script>
 </body>
 </html>
