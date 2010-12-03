@@ -80,6 +80,7 @@ KISSY.add('dd-draggable', function(S) {
                 }
             }
             node.detach('mousedown', self._handleMouseDown, self);
+            self.detach();
         },
 
         _check: function(t) {
@@ -136,11 +137,10 @@ KISSY.add('dd-draggable', function(S) {
                 diff = self.get("diff"),
                 left = ev.pageX - diff.left,
                 top = ev.pageY - diff.top;
-            S.mix(ev, {
+            this.fire("drag", {
                 left:left,
                 top:top
             });
-            this.fire("drag", ev);
         },
 
         _end: function() {
