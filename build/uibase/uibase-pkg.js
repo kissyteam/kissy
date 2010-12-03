@@ -274,6 +274,8 @@ KISSY.add('uibase', function (S) {
     };
 
     S.UIBase = UIBase;
+}, {
+    requires:["core"]
 });
 /**
  * UIBase.Align
@@ -400,6 +402,8 @@ KISSY.add('uibase-align', function(S) {
     };
 
     S.UIBase.Align = Align;
+},{
+    host:"uibase"
 });
 /**
  * UIBase.Box
@@ -411,7 +415,7 @@ KISSY.add('uibase-box', function(S) {
         Node = S.Node;
 
     function Box() {
-        S.log("box init");
+        //S.log("box init");
     }
 
     S.mix(Box, {
@@ -466,13 +470,13 @@ KISSY.add('uibase-box', function(S) {
 
     Box.prototype = {
         __syncUI:function() {
-            S.log("_syncUIBoxExt");
+            //S.log("_syncUIBoxExt");
         },
         __bindUI:function() {
-            S.log("_bindUIBoxExt");
+            //S.log("_bindUIBoxExt");
         },
         __renderUI:function() {
-            S.log("_renderUIBoxExt");
+            //S.log("_renderUIBoxExt");
             var self = this,
                 render = self.get("render"),
                 el = self.get("el");
@@ -488,7 +492,7 @@ KISSY.add('uibase-box', function(S) {
             }
         },
         _uiSetElAttrs:function(attrs) {
-            S.log("_uiSetElAttrs");
+            //S.log("_uiSetElAttrs");
             if (attrs) {
                 this.get("el").attr(attrs);
             }
@@ -500,14 +504,14 @@ KISSY.add('uibase-box', function(S) {
         },
 
         _uiSetElStyle:function(style) {
-            S.log("_uiSetElStyle");
+            //S.log("_uiSetElStyle");
             if (style) {
                 this.get("el").css(style);
             }
         },
 
         _uiSetWidth:function(w) {
-            S.log("_uiSetWidth");
+            //S.log("_uiSetWidth");
             var self = this;
             if (w) {
                 self.get("el").width(w);
@@ -515,7 +519,7 @@ KISSY.add('uibase-box', function(S) {
         },
 
         _uiSetHeight:function(h) {
-            S.log("_uiSetHeight");
+            //S.log("_uiSetHeight");
             var self = this;
             if (h) {
                 self.get("el").height(h);
@@ -523,7 +527,7 @@ KISSY.add('uibase-box', function(S) {
         },
 
         _uiSetHtml:function(c) {
-            S.log("_uiSetHtml");
+            //S.log("_uiSetHtml");
             if (c !== false) {
                 this.get("el").html(c);
             }
@@ -531,7 +535,7 @@ KISSY.add('uibase-box', function(S) {
         },
 
         __destructor:function() {
-            S.log("box __destructor");
+            //S.log("box __destructor");
             var el = this.get("el");
             if (el) {
                 el.detach();
@@ -541,6 +545,8 @@ KISSY.add('uibase-box', function(S) {
     };
 
     S.UIBase.Box = Box;
+},{
+    host:"uibase"
 });
 /**
  * close extension for kissy dialog
@@ -551,7 +557,7 @@ KISSY.add("uibase-close", function(S) {
     var CLS_PREFIX = 'ks-ext-',Node = S.Node;
 
     function Close() {
-        S.log("close init");
+        //S.log("close init");
     }
 
     Close.ATTRS = {
@@ -567,10 +573,10 @@ KISSY.add("uibase-close", function(S) {
 
     Close.prototype = {
         __syncUI:function() {
-            S.log("_syncUICloseExt");
+            //S.log("_syncUICloseExt");
         },
         _uiSetClosable:function(v) {
-            S.log("_uiSetClosable");
+            //S.log("_uiSetClosable");
             var self = this,
                 closeBtn = self.get("closeBtn");
             if (closeBtn) {
@@ -582,7 +588,7 @@ KISSY.add("uibase-close", function(S) {
             }
         },
         __renderUI:function() {
-            S.log("_renderUICloseExt");
+            //S.log("_renderUICloseExt");
             var self = this,
                 closeBtn = self.get("closeBtn"),
                 el = self.get("contentEl");
@@ -601,7 +607,7 @@ KISSY.add("uibase-close", function(S) {
             }
         },
         __bindUI:function() {
-            S.log("_bindUICloseExt");
+            //S.log("_bindUICloseExt");
             var self = this,
                 closeBtn = self.get("closeBtn");
             closeBtn && closeBtn.on("click", function(ev) {
@@ -611,7 +617,7 @@ KISSY.add("uibase-close", function(S) {
         },
 
         __destructor:function() {
-            S.log("close-ext __destructor");
+            //S.log("close-ext __destructor");
             var self = this,
                 closeBtn = self.get("closeBtn");
             closeBtn && closeBtn.detach();
@@ -619,6 +625,8 @@ KISSY.add("uibase-close", function(S) {
     };
     S.UIBase.Close = Close;
 
+},{
+    host:"uibase"
 });/**
  * constrain extension for kissy
  * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
@@ -629,7 +637,7 @@ KISSY.add("uibase-constrain", function(S) {
     var DOM = S.DOM;
 
     function Constrain() {
-        S.log("constrain init");
+        //S.log("constrain init");
     }
 
     Constrain.ATTRS = {
@@ -678,11 +686,11 @@ KISSY.add("uibase-constrain", function(S) {
 
     Constrain.prototype = {
         __bindUI:function() {
-            S.log("_bindUIConstrain");
+            //S.log("_bindUIConstrain");
 
         },
         __renderUI:function() {
-            S.log("_renderUIConstrain");
+            //S.log("_renderUIConstrain");
             var self = this,
                 attrs = self.__getDefAttrs(),
                 xAttr = attrs["x"],
@@ -718,10 +726,10 @@ KISSY.add("uibase-constrain", function(S) {
         },
 
         __syncUI:function() {
-            S.log("_syncUIConstrain");
+            //S.log("_syncUIConstrain");
         },
         __destructor:function() {
-            S.log("constrain-ext __destructor");
+            //S.log("constrain-ext __destructor");
         }
 
     };
@@ -729,6 +737,8 @@ KISSY.add("uibase-constrain", function(S) {
 
     S.UIBase.Constrain = Constrain;
 
+},{
+    host:"uibase"
 });/**
  * 里层包裹层定义，适合mask以及shim
  * @author:yiminghe@gmail.com
@@ -739,7 +749,7 @@ KISSY.add("uibase-contentbox", function(S) {
     var Node = S.Node;
 
     function ContentBox() {
-        S.log("contentbox init");
+        //S.log("contentbox init");
     }
 
     ContentBox.ATTRS = {
@@ -758,13 +768,13 @@ KISSY.add("uibase-contentbox", function(S) {
 
     ContentBox.prototype = {
         __syncUI:function() {
-            S.log("_syncUIContentBox");
+            //S.log("_syncUIContentBox");
         },
         __bindUI:function() {
-            S.log("_bindUIContentBox");
+            //S.log("_bindUIContentBox");
         },
         __renderUI:function() {
-            S.log("_renderUIContentBox");
+            //S.log("_renderUIContentBox");
             var self = this,
                 contentEl = self.get("contentEl"),
                 el = self.get("el");
@@ -780,24 +790,31 @@ KISSY.add("uibase-contentbox", function(S) {
             }
         },
         _uiSetContentElAttrs:function(attrs) {
-            S.log("_uiSetContentElAttrs");
+            //S.log("_uiSetContentElAttrs");
             if (attrs) {
                 this.get("contentEl").attr(attrs);
             }
         },
         _uiSetContent:function(c) {
-            S.log("_uiSetContent");
+            //S.log("_uiSetContent");
             if (c !== undefined) {
-                this.get("contentEl").html(c);
+                if (S.isString(c)) {
+                    this.get("contentEl").html(c);
+                } else {
+                    this.get("contentEl").html("");
+                    this.get("contentEl").append(c);
+                }
             }
         },
 
         __destructor:function() {
-            S.log("contentbox __destructor");
+            //S.log("contentbox __destructor");
         }
     };
 
     S.UIBase.ContentBox = ContentBox;
+}, {
+    host:"uibase"
 });/**
  * drag extension for position
  * @author: 承玉<yiminghe@gmail.com>
@@ -805,7 +822,7 @@ KISSY.add("uibase-contentbox", function(S) {
 KISSY.add("uibase-drag", function(S) {
     S.namespace('UIBase');
     function Drag() {
-        S.log("drag init");
+        //S.log("drag init");
     }
 
     Drag.ATTRS = {
@@ -816,21 +833,21 @@ KISSY.add("uibase-drag", function(S) {
     Drag.prototype = {
 
         _uiSetHandlers:function(v) {
-            S.log("_uiSetHanlders");
+            //S.log("_uiSetHanlders");
             if (v && v.length > 0 && this.__drag)
                 this.__drag.set("handlers", v);
         },
 
         __syncUI:function() {
-            S.log("_syncUIDragExt");
+            //S.log("_syncUIDragExt");
         },
 
         __renderUI:function() {
-            S.log("_renderUIDragExt");
+            //S.log("_renderUIDragExt");
         },
 
         __bindUI:function() {
-            S.log("_bindUIDragExt");
+            //S.log("_bindUIDragExt");
             var self = this,
                 el = self.get("el");
             if (self.get("draggable")&&S.Draggable    )
@@ -841,7 +858,7 @@ KISSY.add("uibase-drag", function(S) {
         },
 
         _uiSetDraggable:function(v) {
-            S.log("_uiSetDraggable");
+            //S.log("_uiSetDraggable");
             var self = this,
                 d = self.__drag;
             if (!d) return;
@@ -860,7 +877,7 @@ KISSY.add("uibase-drag", function(S) {
          *
          */
         __destructor:function() {
-            S.log("DragExt __destructor");
+            //S.log("DragExt __destructor");
             var d = this.__drag;
             d && d.destroy();
         }
@@ -869,6 +886,8 @@ KISSY.add("uibase-drag", function(S) {
 
     S.UIBase.Drag = Drag;
 
+},{
+    host:"uibase"
 });/**
  * loading mask support for overlay
  * @author: 承玉<yiminghe@gmail.com>
@@ -876,7 +895,7 @@ KISSY.add("uibase-drag", function(S) {
 KISSY.add("uibase-loading", function(S) {
     S.namespace("UIBase");
     function Loading() {
-        S.log("LoadingExt init");
+        //S.log("LoadingExt init");
     }
 
     Loading.prototype = {
@@ -906,6 +925,8 @@ KISSY.add("uibase-loading", function(S) {
 
     S.UIBase.Loading = Loading;
 
+},{
+    host:"uibase"
 });/**
  * mask extension for kissy
  * @author: 承玉<yiminghe@gmail.com>
@@ -938,7 +959,7 @@ KISSY.add("uibase-mask", function(S) {
     }
 
     function Mask() {
-        S.log("mask init");
+        //S.log("mask init");
     }
 
     Mask.ATTRS = {
@@ -949,18 +970,18 @@ KISSY.add("uibase-mask", function(S) {
 
     Mask.prototype = {
         __bindUI:function() {
-            S.log("_bindUIMask");
+            //S.log("_bindUIMask");
         },
 
         __renderUI:function() {
-            S.log("_renderUIMask");
+            //S.log("_renderUIMask");
         },
 
         __syncUI:function() {
-            S.log("_syncUIMask");
+            //S.log("_syncUIMask");
         },
         _uiSetMask:function(v) {
-            S.log("_uiSetMask");
+            //S.log("_uiSetMask");
             var self = this;
             if (v) {
                 self.on("show", self._maskExtShow);
@@ -990,12 +1011,14 @@ KISSY.add("uibase-mask", function(S) {
         },
 
         __destructor:function() {
-            S.log("mask __destructor");
+            //S.log("mask __destructor");
         }
 
     };
 
     S.UIBase.Mask = Mask;
+},{
+    host:"uibase"
 });/**
  * position and visible extension，可定位的隐藏层
  * @author: 承玉<yiminghe@gmail.com>
@@ -1008,7 +1031,7 @@ KISSY.add("uibase-position", function(S) {
         KEYDOWN = "keydown";
 
     function Position() {
-        S.log("position init");
+        //S.log("position init");
     }
 
     Position.ATTRS = {
@@ -1043,31 +1066,31 @@ KISSY.add("uibase-position", function(S) {
 
     Position.prototype = {
         __syncUI:function() {
-            S.log("_syncUIPosition");
+            //S.log("_syncUIPosition");
         },
         __renderUI:function() {
-            S.log("_renderUIPosition");
+            //S.log("_renderUIPosition");
             var el=this.get("el");
             el.addClass("ks-ext-position");
             el.css("display", "");
         },
         __bindUI:function() {
-            S.log("_bindUIPosition");
+            //S.log("_bindUIPosition");
         },
         _uiSetZIndex:function(x) {
-            S.log("_uiSetZIndex");
+            //S.log("_uiSetZIndex");
             if (x !== undefined)
                 this.get("el").css("z-index", x);
         },
         _uiSetX:function(x) {
-            S.log("_uiSetX");
+            //S.log("_uiSetX");
             if (x !== undefined)
                 this.get("el").offset({
                     left:x
                 });
         },
         _uiSetY:function(y) {
-            S.log("_uiSetY");
+            //S.log("_uiSetY");
             if (y !== undefined)
                 this.get("el").offset({
                     top:y
@@ -1075,7 +1098,7 @@ KISSY.add("uibase-position", function(S) {
         },
         _uiSetVisible:function(isVisible) {
             if (isVisible === undefined) return;
-            S.log("_uiSetVisible");
+            //S.log("_uiSetVisible");
             var self = this,
                 el = self.get("el");
             el.css("visibility", isVisible ? "visible" : "hidden");
@@ -1140,12 +1163,14 @@ KISSY.add("uibase-position", function(S) {
         },
 
         __destructor:function() {
-            S.log("position __destructor");
+            //S.log("position __destructor");
         }
 
     };
 
     S.UIBase.Position = Position;
+},{
+    host:"uibase"
 });/**
  * shim for ie6 ,require box-ext
  * @author: 承玉<yiminghe@gmail.com>
@@ -1153,7 +1178,7 @@ KISSY.add("uibase-position", function(S) {
 KISSY.add("uibase-shim", function(S) {
     S.namespace("UIBase");
     function Shim() {
-        S.log("shim init");
+        //S.log("shim init");
     }
 
     var Node = S.Node;
@@ -1164,10 +1189,10 @@ KISSY.add("uibase-shim", function(S) {
     };
     Shim.prototype = {
         __syncUI:function() {
-            S.log("_syncUIShimExt");
+            //S.log("_syncUIShimExt");
         },
         __bindUI:function() {
-            S.log("_bindUIShimExt");
+            //S.log("_bindUIShimExt");
         },
         _uiSetShim:function(v) {
             var self = this,el = self.get("el");
@@ -1188,15 +1213,17 @@ KISSY.add("uibase-shim", function(S) {
             }
         },
         __renderUI:function() {
-            S.log("_renderUIShimExt");
+            //S.log("_renderUIShimExt");
 
         },
 
         __destructor:function() {
-            S.log("shim __destructor");
+            //S.log("shim __destructor");
         }
     };
     S.UIBase.Shim = Shim;
+},{
+    host:"uibase"
 });/**
  * support standard mod for component
  * @author: 承玉<yiminghe@gmail.com>
@@ -1208,7 +1235,7 @@ KISSY.add("uibase-stdmod", function(S) {
         Node = S.Node;
 
     function StdMod() {
-        S.log("stdmod init");
+        //S.log("stdmod init");
     }
 
     StdMod.ATTRS = {
@@ -1250,10 +1277,10 @@ KISSY.add("uibase-stdmod", function(S) {
 
     StdMod.prototype = {
         __bindUI:function() {
-            S.log("_bindUIStdMod");
+            //S.log("_bindUIStdMod");
         },
         __syncUI:function() {
-            S.log("_syncUIStdMod");
+            //S.log("_syncUIStdMod");
         },
         _setStdModContent:function(part, v) {
             if (v !== false) {
@@ -1272,30 +1299,32 @@ KISSY.add("uibase-stdmod", function(S) {
             }
         },
         _uiSetBodyContent:function(v) {
-            S.log("_uiSetBodyContent");
+            //S.log("_uiSetBodyContent");
             this._setStdModContent("body", v);
         },
         _uiSetHeaderContent:function(v) {
-            S.log("_uiSetHeaderContent");
+            //S.log("_uiSetHeaderContent");
             this._setStdModContent("header", v);
         },
         _uiSetFooterContent:function(v) {
-            S.log("_uiSetFooterContent");
+            //S.log("_uiSetFooterContent");
             this._setStdModContent("footer", v);
         },
         __renderUI:function() {
-            S.log("_renderUIStdMod");
+            //S.log("_renderUIStdMod");
             renderUI(this, "header");
             renderUI(this, "body");
             renderUI(this, "footer");
         },
 
         __destructor:function() {
-            S.log("stdmod __destructor");
+            //S.log("stdmod __destructor");
         }
     };
 
 
     S.UIBase.StdMod = StdMod;
 
+},{
+    host:"uibase"
 });

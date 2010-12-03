@@ -5,7 +5,7 @@
 KISSY.add("uibase-loading", function(S) {
     S.namespace("UIBase");
     function Loading() {
-        S.log("LoadingExt init");
+        //S.log("LoadingExt init");
     }
 
     Loading.prototype = {
@@ -35,4 +35,6 @@ KISSY.add("uibase-loading", function(S) {
 
     S.UIBase.Loading = Loading;
 
+},{
+    host:"uibase"
 });

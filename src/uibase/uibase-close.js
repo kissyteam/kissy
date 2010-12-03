@@ -7,7 +7,7 @@ KISSY.add("uibase-close", function(S) {
     var CLS_PREFIX = 'ks-ext-',Node = S.Node;
 
     function Close() {
-        S.log("close init");
+        //S.log("close init");
     }
 
     Close.ATTRS = {
@@ -23,10 +23,10 @@ KISSY.add("uibase-close", function(S) {
 
     Close.prototype = {
         __syncUI:function() {
-            S.log("_syncUICloseExt");
+            //S.log("_syncUICloseExt");
         },
         _uiSetClosable:function(v) {
-            S.log("_uiSetClosable");
+            //S.log("_uiSetClosable");
             var self = this,
                 closeBtn = self.get("closeBtn");
             if (closeBtn) {
@@ -38,7 +38,7 @@ KISSY.add("uibase-close", function(S) {
             }
         },
         __renderUI:function() {
-            S.log("_renderUICloseExt");
+            //S.log("_renderUICloseExt");
             var self = this,
                 closeBtn = self.get("closeBtn"),
                 el = self.get("contentEl");
@@ -57,7 +57,7 @@ KISSY.add("uibase-close", function(S) {
             }
         },
         __bindUI:function() {
-            S.log("_bindUICloseExt");
+            //S.log("_bindUICloseExt");
             var self = this,
                 closeBtn = self.get("closeBtn");
             closeBtn && closeBtn.on("click", function(ev) {
@@ -67,7 +67,7 @@ KISSY.add("uibase-close", function(S) {
         },
 
         __destructor:function() {
-            S.log("close-ext __destructor");
+            //S.log("close-ext __destructor");
             var self = this,
                 closeBtn = self.get("closeBtn");
             closeBtn && closeBtn.detach();
@@ -75,4 +75,6 @@ KISSY.add("uibase-close", function(S) {
     };
     S.UIBase.Close = Close;
 
+},{
+    host:"uibase"
 });

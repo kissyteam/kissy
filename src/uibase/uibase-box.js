@@ -8,7 +8,7 @@ KISSY.add('uibase-box', function(S) {
         Node = S.Node;
 
     function Box() {
-        S.log("box init");
+        //S.log("box init");
     }
 
     S.mix(Box, {
@@ -63,13 +63,13 @@ KISSY.add('uibase-box', function(S) {
 
     Box.prototype = {
         __syncUI:function() {
-            S.log("_syncUIBoxExt");
+            //S.log("_syncUIBoxExt");
         },
         __bindUI:function() {
-            S.log("_bindUIBoxExt");
+            //S.log("_bindUIBoxExt");
         },
         __renderUI:function() {
-            S.log("_renderUIBoxExt");
+            //S.log("_renderUIBoxExt");
             var self = this,
                 render = self.get("render"),
                 el = self.get("el");
@@ -85,7 +85,7 @@ KISSY.add('uibase-box', function(S) {
             }
         },
         _uiSetElAttrs:function(attrs) {
-            S.log("_uiSetElAttrs");
+            //S.log("_uiSetElAttrs");
             if (attrs) {
                 this.get("el").attr(attrs);
             }
@@ -97,14 +97,14 @@ KISSY.add('uibase-box', function(S) {
         },
 
         _uiSetElStyle:function(style) {
-            S.log("_uiSetElStyle");
+            //S.log("_uiSetElStyle");
             if (style) {
                 this.get("el").css(style);
             }
         },
 
         _uiSetWidth:function(w) {
-            S.log("_uiSetWidth");
+            //S.log("_uiSetWidth");
             var self = this;
             if (w) {
                 self.get("el").width(w);
@@ -112,7 +112,7 @@ KISSY.add('uibase-box', function(S) {
         },
 
         _uiSetHeight:function(h) {
-            S.log("_uiSetHeight");
+            //S.log("_uiSetHeight");
             var self = this;
             if (h) {
                 self.get("el").height(h);
@@ -120,7 +120,7 @@ KISSY.add('uibase-box', function(S) {
         },
 
         _uiSetHtml:function(c) {
-            S.log("_uiSetHtml");
+            //S.log("_uiSetHtml");
             if (c !== false) {
                 this.get("el").html(c);
             }
@@ -128,7 +128,7 @@ KISSY.add('uibase-box', function(S) {
         },
 
         __destructor:function() {
-            S.log("box __destructor");
+            //S.log("box __destructor");
             var el = this.get("el");
             if (el) {
                 el.detach();
@@ -138,4 +138,6 @@ KISSY.add('uibase-box', function(S) {
     };
 
     S.UIBase.Box = Box;
+},{
+    host:"uibase"
 });

@@ -123,4 +123,6 @@ KISSY.add('uibase-align', function(S) {
     };
 
     S.UIBase.Align = Align;
+},{
+    host:"uibase"
 });

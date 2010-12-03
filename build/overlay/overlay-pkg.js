@@ -23,16 +23,16 @@ KISSY.add("overlay", function(S) {
         S.UIBase.Mask], {
 
         initializer:function() {
-            S.log("Overlay init");
+            //S.log("Overlay init");
         },
 
         renderUI:function() {
-            S.log("_renderUIOverlay");
+            //S.log("_renderUIOverlay");
             this.get("el").addClass("ks-overlay");
         },
 
         syncUI:function() {
-            S.log("_syncUIOverlay");
+            //S.log("_syncUIOverlay");
         },
         /**
          * bindUI
@@ -40,14 +40,14 @@ KISSY.add("overlay", function(S) {
          * @override
          */
         bindUI: function() {
-            S.log("_bindUIOverlay");
+            //S.log("_bindUIOverlay");
         },
 
         /**
          * 删除自己, mask 删不了
          */
         destructor: function() {
-            S.log("overlay destructor");
+            //S.log("overlay destructor");
         }
 
     },{
@@ -56,7 +56,7 @@ KISSY.add("overlay", function(S) {
         }
     });
 }, {
-    requires: ["core"]
+    requires: ["uibase"]
 });
 
 /**
@@ -76,24 +76,24 @@ KISSY.add('dialog', function(S) {
             S.UIBase.Constrain
         ], {
         initializer:function() {
-            S.log("dialog init");
+            //S.log("dialog init");
         },
 
         renderUI:function() {
-            S.log("_renderUIDialog");
+            //S.log("_renderUIDialog");
             var self = this;
             self.get("el").addClass("ks-dialog");
             //设置值，drag-ext 绑定时用到
             self.set("handlers", [self.get("header")]);
         },
         bindUI:function() {
-            S.log("_bindUIDialog");
+            //S.log("_bindUIDialog");
         },
         syncUI:function() {
-            S.log("_syncUIDialog");
+            //S.log("_syncUIDialog");
         },
         destructor:function() {
-            S.log("Dialog destructor");
+            //S.log("Dialog destructor");
         }
     });
 

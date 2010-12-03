@@ -48,7 +48,7 @@ KISSY.add('dd', function(S) {
          */
         _move: function(ev) {
             var activeDrag = this.get('activeDrag');
-            S.log("move");
+            //S.log("move");
             if (!activeDrag) return;
             //防止 ie 选择到字
             ev.preventDefault();

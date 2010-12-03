@@ -30,7 +30,7 @@ KISSY.add("uibase-mask", function(S) {
     }
 
     function Mask() {
-        S.log("mask init");
+        //S.log("mask init");
     }
 
     Mask.ATTRS = {
@@ -41,18 +41,18 @@ KISSY.add("uibase-mask", function(S) {
 
     Mask.prototype = {
         __bindUI:function() {
-            S.log("_bindUIMask");
+            //S.log("_bindUIMask");
         },
 
         __renderUI:function() {
-            S.log("_renderUIMask");
+            //S.log("_renderUIMask");
         },
 
         __syncUI:function() {
-            S.log("_syncUIMask");
+            //S.log("_syncUIMask");
         },
         _uiSetMask:function(v) {
-            S.log("_uiSetMask");
+            //S.log("_uiSetMask");
             var self = this;
             if (v) {
                 self.on("show", self._maskExtShow);
@@ -82,10 +82,12 @@ KISSY.add("uibase-mask", function(S) {
         },
 
         __destructor:function() {
-            S.log("mask __destructor");
+            //S.log("mask __destructor");
         }
 
     };
 
     S.UIBase.Mask = Mask;
+},{
+    host:"uibase"
 });

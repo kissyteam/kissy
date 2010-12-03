@@ -8,7 +8,7 @@ KISSY.add("uibase-contentbox", function(S) {
     var Node = S.Node;
 
     function ContentBox() {
-        S.log("contentbox init");
+        //S.log("contentbox init");
     }
 
     ContentBox.ATTRS = {
@@ -27,13 +27,13 @@ KISSY.add("uibase-contentbox", function(S) {
 
     ContentBox.prototype = {
         __syncUI:function() {
-            S.log("_syncUIContentBox");
+            //S.log("_syncUIContentBox");
         },
         __bindUI:function() {
-            S.log("_bindUIContentBox");
+            //S.log("_bindUIContentBox");
         },
         __renderUI:function() {
-            S.log("_renderUIContentBox");
+            //S.log("_renderUIContentBox");
             var self = this,
                 contentEl = self.get("contentEl"),
                 el = self.get("el");
@@ -49,22 +49,29 @@ KISSY.add("uibase-contentbox", function(S) {
             }
         },
         _uiSetContentElAttrs:function(attrs) {
-            S.log("_uiSetContentElAttrs");
+            //S.log("_uiSetContentElAttrs");
             if (attrs) {
                 this.get("contentEl").attr(attrs);
             }
         },
         _uiSetContent:function(c) {
-            S.log("_uiSetContent");
+            //S.log("_uiSetContent");
             if (c !== undefined) {
-                this.get("contentEl").html(c);
+                if (S.isString(c)) {
+                    this.get("contentEl").html(c);
+                } else {
+                    this.get("contentEl").html("");
+                    this.get("contentEl").append(c);
+                }
             }
         },
 
         __destructor:function() {
-            S.log("contentbox __destructor");
+            //S.log("contentbox __destructor");
         }
     };
 
     S.UIBase.ContentBox = ContentBox;
+}, {
+    host:"uibase"
 });

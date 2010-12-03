@@ -5,7 +5,7 @@
 KISSY.add("uibase-drag", function(S) {
     S.namespace('UIBase');
     function Drag() {
-        S.log("drag init");
+        //S.log("drag init");
     }
 
     Drag.ATTRS = {
@@ -16,21 +16,21 @@ KISSY.add("uibase-drag", function(S) {
     Drag.prototype = {
 
         _uiSetHandlers:function(v) {
-            S.log("_uiSetHanlders");
+            //S.log("_uiSetHanlders");
             if (v && v.length > 0 && this.__drag)
                 this.__drag.set("handlers", v);
         },
 
         __syncUI:function() {
-            S.log("_syncUIDragExt");
+            //S.log("_syncUIDragExt");
         },
 
         __renderUI:function() {
-            S.log("_renderUIDragExt");
+            //S.log("_renderUIDragExt");
         },
 
         __bindUI:function() {
-            S.log("_bindUIDragExt");
+            //S.log("_bindUIDragExt");
             var self = this,
                 el = self.get("el");
             if (self.get("draggable")&&S.Draggable    )
@@ -41,7 +41,7 @@ KISSY.add("uibase-drag", function(S) {
         },
 
         _uiSetDraggable:function(v) {
-            S.log("_uiSetDraggable");
+            //S.log("_uiSetDraggable");
             var self = this,
                 d = self.__drag;
             if (!d) return;
@@ -60,7 +60,7 @@ KISSY.add("uibase-drag", function(S) {
          *
          */
         __destructor:function() {
-            S.log("DragExt __destructor");
+            //S.log("DragExt __destructor");
             var d = this.__drag;
             d && d.destroy();
         }
@@ -69,4 +69,6 @@ KISSY.add("uibase-drag", function(S) {
 
     S.UIBase.Drag = Drag;
 
+},{
+    host:"uibase"
 });

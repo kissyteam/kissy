@@ -892,7 +892,7 @@ build time: ${build.time}
 })(KISSY);
 /**
  * @module loader
- * @author lifesinger@gmail.com, lijing00333@163.com
+ * @author lifesinger@gmail.com, lijing00333@163.com, yiminghe@gmail.com
  */
 (function(S, undef) {
 
@@ -975,12 +975,16 @@ build time: ${build.time}
                 mix(mod, { name: name, status: LOADED });
                 if (!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
+
                 mix((mods[name] = mod), config);
 
                 // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
                 if ((mod['attach'] !== false) && self.__isAttached(mod.requires)) {
                     self.__attachMod(mod);
                 }
+
+                //!TODO add 中指定了依赖项，这里没有继续载依赖项
+                //self.__isAttached(mod.requires) 返回 false
             }
 
             return self;
@@ -1062,6 +1066,8 @@ build time: ${build.time}
             self.__load(mod, fn, global);
 
             function fn() {
+                // add 可能改了 config，这里重新取下
+                requires = mod['requires'] || [];
                 if (self.__isAttached(requires)) {
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);
@@ -1328,6 +1334,7 @@ build time: ${build.time}
         });
 
     map['calendar'].csspath = 'calendar/default-min.css';
+    map['overlay'].requires = ['uibase'];
 
     S.add(map);
 

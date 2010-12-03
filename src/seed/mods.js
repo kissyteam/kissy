@@ -26,6 +26,7 @@
         });
 
     map['calendar'].csspath = 'calendar/default-min.css';
+    map['overlay'].requires = ['uibase'];
 
     S.add(map);
 

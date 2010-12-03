@@ -5,7 +5,7 @@
 KISSY.add("uibase-shim", function(S) {
     S.namespace("UIBase");
     function Shim() {
-        S.log("shim init");
+        //S.log("shim init");
     }
 
     var Node = S.Node;
@@ -16,10 +16,10 @@ KISSY.add("uibase-shim", function(S) {
     };
     Shim.prototype = {
         __syncUI:function() {
-            S.log("_syncUIShimExt");
+            //S.log("_syncUIShimExt");
         },
         __bindUI:function() {
-            S.log("_bindUIShimExt");
+            //S.log("_bindUIShimExt");
         },
         _uiSetShim:function(v) {
             var self = this,el = self.get("el");
@@ -40,13 +40,15 @@ KISSY.add("uibase-shim", function(S) {
             }
         },
         __renderUI:function() {
-            S.log("_renderUIShimExt");
+            //S.log("_renderUIShimExt");
 
         },
 
         __destructor:function() {
-            S.log("shim __destructor");
+            //S.log("shim __destructor");
         }
     };
     S.UIBase.Shim = Shim;
+},{
+    host:"uibase"
 });

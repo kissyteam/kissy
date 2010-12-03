@@ -10,7 +10,7 @@ KISSY.add("uibase-position", function(S) {
         KEYDOWN = "keydown";
 
     function Position() {
-        S.log("position init");
+        //S.log("position init");
     }
 
     Position.ATTRS = {
@@ -45,31 +45,31 @@ KISSY.add("uibase-position", function(S) {
 
     Position.prototype = {
         __syncUI:function() {
-            S.log("_syncUIPosition");
+            //S.log("_syncUIPosition");
         },
         __renderUI:function() {
-            S.log("_renderUIPosition");
+            //S.log("_renderUIPosition");
             var el=this.get("el");
             el.addClass("ks-ext-position");
             el.css("display", "");
         },
         __bindUI:function() {
-            S.log("_bindUIPosition");
+            //S.log("_bindUIPosition");
         },
         _uiSetZIndex:function(x) {
-            S.log("_uiSetZIndex");
+            //S.log("_uiSetZIndex");
             if (x !== undefined)
                 this.get("el").css("z-index", x);
         },
         _uiSetX:function(x) {
-            S.log("_uiSetX");
+            //S.log("_uiSetX");
             if (x !== undefined)
                 this.get("el").offset({
                     left:x
                 });
         },
         _uiSetY:function(y) {
-            S.log("_uiSetY");
+            //S.log("_uiSetY");
             if (y !== undefined)
                 this.get("el").offset({
                     top:y
@@ -77,7 +77,7 @@ KISSY.add("uibase-position", function(S) {
         },
         _uiSetVisible:function(isVisible) {
             if (isVisible === undefined) return;
-            S.log("_uiSetVisible");
+            //S.log("_uiSetVisible");
             var self = this,
                 el = self.get("el");
             el.css("visibility", isVisible ? "visible" : "hidden");
@@ -142,10 +142,12 @@ KISSY.add("uibase-position", function(S) {
         },
 
         __destructor:function() {
-            S.log("position __destructor");
+            //S.log("position __destructor");
         }
 
     };
 
     S.UIBase.Position = Position;
+},{
+    host:"uibase"
 });

@@ -269,4 +269,6 @@ KISSY.add('uibase', function (S) {
     };
 
     S.UIBase = UIBase;
+}, {
+    requires:["core"]
 });

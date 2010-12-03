@@ -8,7 +8,7 @@ KISSY.add("uibase-constrain", function(S) {
     var DOM = S.DOM;
 
     function Constrain() {
-        S.log("constrain init");
+        //S.log("constrain init");
     }
 
     Constrain.ATTRS = {
@@ -57,11 +57,11 @@ KISSY.add("uibase-constrain", function(S) {
 
     Constrain.prototype = {
         __bindUI:function() {
-            S.log("_bindUIConstrain");
+            //S.log("_bindUIConstrain");
 
         },
         __renderUI:function() {
-            S.log("_renderUIConstrain");
+            //S.log("_renderUIConstrain");
             var self = this,
                 attrs = self.__getDefAttrs(),
                 xAttr = attrs["x"],
@@ -97,10 +97,10 @@ KISSY.add("uibase-constrain", function(S) {
         },
 
         __syncUI:function() {
-            S.log("_syncUIConstrain");
+            //S.log("_syncUIConstrain");
         },
         __destructor:function() {
-            S.log("constrain-ext __destructor");
+            //S.log("constrain-ext __destructor");
         }
 
     };
@@ -108,4 +108,6 @@ KISSY.add("uibase-constrain", function(S) {
 
     S.UIBase.Constrain = Constrain;
 
+},{
+    host:"uibase"
 });

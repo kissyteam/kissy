@@ -18,16 +18,16 @@ KISSY.add("overlay", function(S) {
         S.UIBase.Mask], {
 
         initializer:function() {
-            S.log("Overlay init");
+            //S.log("Overlay init");
         },
 
         renderUI:function() {
-            S.log("_renderUIOverlay");
+            //S.log("_renderUIOverlay");
             this.get("el").addClass("ks-overlay");
         },
 
         syncUI:function() {
-            S.log("_syncUIOverlay");
+            //S.log("_syncUIOverlay");
         },
         /**
          * bindUI
@@ -35,14 +35,14 @@ KISSY.add("overlay", function(S) {
          * @override
          */
         bindUI: function() {
-            S.log("_bindUIOverlay");
+            //S.log("_bindUIOverlay");
         },
 
         /**
          * 删除自己, mask 删不了
          */
         destructor: function() {
-            S.log("overlay destructor");
+            //S.log("overlay destructor");
         }
 
     },{
@@ -51,7 +51,7 @@ KISSY.add("overlay", function(S) {
         }
     });
 }, {
-    requires: ["core"]
+    requires: ["uibase"]
 });
 
 /**
