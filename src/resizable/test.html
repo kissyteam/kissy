@@ -90,8 +90,10 @@
 </style>
 </head>
 <body>
-<div style="border:1px solid red;width:100px;height:100px;" id="t">
-
+<div style="border:1px solid red;width:200px;height:100px;" id="t">
+    <button id="destroy" style='margin-top:50px;'>
+        destroy resize
+    </button>
 </div>
 <script src="../../build/kissy-min.js"></script>
 <script src="../uibase/uibase.js"></script>
@@ -100,12 +102,16 @@
 <script src="resizable.js"></script>
 <script>
     KISSY.ready(function(S) {
-        new S.Resizable({
+        var r = new S.Resizable({
             node:"#t",
             minHeight:10,
             autoRender:true,
             handlers:["b","t","r","l","tr","tl","br","bl"]
         });
+        S.one("#destroy").on("click", function() {
+            r.destroy();
+        });
+
     });
 </script>
 </body>
