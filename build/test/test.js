@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:45
 */
 /**
  * @module  单元测试

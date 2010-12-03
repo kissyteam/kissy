@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /*
  * @module kissy
@@ -64,7 +64,7 @@ build time: ${build.time}
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.7dev',
+        version: '1.1.6',
 
         /**
          * Returns a new object containing all of the properties of
@@ -975,7 +975,6 @@ build time: ${build.time}
                 mix(mod, { name: name, status: LOADED });
                 if (!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
-
                 mix((mods[name] = mod), config);
 
                 // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
@@ -983,7 +982,7 @@ build time: ${build.time}
                     self.__attachMod(mod);
                 }
 
-                //!TODO add 中指定了依赖项，这里没有继续载依赖项
+                // TODO add 中指定了依赖项，这里没有继续载依赖项
                 //self.__isAttached(mod.requires) 返回 false
             }
 
@@ -1068,6 +1067,7 @@ build time: ${build.time}
             function fn() {
                 // add 可能改了 config，这里重新取下
                 requires = mod['requires'] || [];
+
                 if (self.__isAttached(requires)) {
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);
@@ -1340,9 +1340,9 @@ build time: ${build.time}
 
 })(KISSY);
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:45
 */
 /**
  * @module  ua
@@ -1537,9 +1537,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * @module  dom
@@ -3590,9 +3590,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * @module  event
@@ -4171,9 +4171,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * @module  node
@@ -4519,9 +4519,9 @@ KISSY.add('node-attach', function(S, undefined) {
     delete NLP.fire;
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /*
     http://www.JSON.org/json2.js
@@ -5025,9 +5025,9 @@ KISSY.add('json', function (S) {
     };
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /***
  * @module  ajax
@@ -5346,9 +5346,9 @@ KISSY.add('ajax', function(S, undef) {
  *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * @module anim-easing
@@ -6005,9 +6005,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * @module  cookie
@@ -6091,9 +6091,9 @@ KISSY.add('cookie', function(S) {
  *     独立成静态工具类的方式更优。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * @module  Attribute

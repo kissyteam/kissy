@@ -83,7 +83,6 @@
                 mix(mod, { name: name, status: LOADED });
                 if (!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
-
                 mix((mods[name] = mod), config);
 
                 // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
@@ -91,7 +90,7 @@
                     self.__attachMod(mod);
                 }
 
-                //!TODO add 中指定了依赖项，这里没有继续载依赖项
+                // TODO add 中指定了依赖项，这里没有继续载依赖项
                 //self.__isAttached(mod.requires) 返回 false
             }
 
@@ -176,6 +175,7 @@
             function fn() {
                 // add 可能改了 config，这里重新取下
                 requires = mod['requires'] || [];
+
                 if (self.__isAttached(requires)) {
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);
