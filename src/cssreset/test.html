@@ -8,8 +8,11 @@
     // html5 shiv
     if (!+[1,]) {
         (function() {
-            var tags = ['article', 'aside', 'details', 'figcaption',
-                'figure', 'footer', 'header', 'hgroup', 'menu', 'nav', 'section'],
+            var tags = [
+                'article', 'aside', 'details', 'figcaption',
+                'figure', 'footer', 'header', 'hgroup',
+                'menu', 'nav', 'section', 'summary',
+                'time', 'mark', 'audio', 'video'],
                     i = 0, len = tags.length;
             for (; i < len; i++) document.createElement(tags[i]);
         })();
@@ -334,7 +337,11 @@ you may simply have typed the address incorrectly.
 <menu>menu</menu>
 <nav>nav</nav>
 <section>section</section>
-
+<summary>summary</summary>
+<time>time</time>
+<mark>mark</mark>
+<audio>audio</audio>
+<video>video</video>
 <hr />
 <h3>主要参考资料：</h3>
 <br />
