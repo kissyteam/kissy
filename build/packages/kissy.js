@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Dec 3 16:44
+build time: ${build.time}
 */
 /*
  * @module kissy
@@ -64,7 +64,7 @@ build time: Dec 3 16:44
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.6',
+        version: '1.1.7dev',
 
         /**
          * Returns a new object containing all of the properties of
@@ -311,6 +311,34 @@ build time: Dec 3 16:44
         },
 
         /**
+         * Checks to see if an object is a plain object (created using "{}"
+         * or "new Object()" or "new FunctionClass()").
+         * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
+         */
+        isPlainObject: function(o) {
+            return S.type(o) === 'object' && 'isPrototypeOf' in o;
+        },
+
+        /**
+         * Creates a deep copy of a plain object or array. Others are returned untouched.
+         */
+        clone: function(o) {
+            var ret = o, b, k;
+
+            // array or plain object
+            if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
+                ret = b ? [] : {};
+                for (k in o) {
+                    if (o.hasOwnProperty(k)) {
+                        ret[k] = S.clone(o[k]);
+                    }
+                }
+            }
+
+            return ret;
+        },
+
+        /**
          * Removes the whitespace from the beginning and end of a string.
          */
         trim: trim ?
@@ -481,7 +509,6 @@ build time: Dec 3 16:44
         doc = win['document'],
         docElem = doc.documentElement,
 
-        hasOwn = Object.prototype.hasOwnProperty,
         EMPTY = '',
         SEP = '&',
         BRACKET = encodeURIComponent('[]'),
@@ -512,54 +539,7 @@ build time: Dec 3 16:44
          * A crude way of determining if an object is a window
          */
         isWindow: function(o) {
-            return o && typeof o === 'object' && 'setInterval' in o;
-        },
-
-        /**
-         * Checks to see if an object is a plain object (created using "{}" or "new Object").
-         */
-        isPlainObject: function(o) {
-            // Must be an Object.
-            // Because of IE, we also have to check the presence of the constructor property.
-            // Make sure that DOM nodes and window objects don't pass through, as well
-            if (!o || S.type(o) !== 'object' || o.nodeType || S.isWindow(o)) {
-                return false;
-            }
-
-            // Not own constructor property must be Object
-            if (o.constructor &&
-                !hasOwn.call(o, 'constructor') &&
-                !hasOwn.call(o.constructor.prototype, 'isPrototypeOf')) {
-                return false;
-            }
-
-            // Own properties are enumerated firstly, so to speed up,
-            // if last one is own, then all properties are own.
-
-            var key;
-            for (key in o) {
-            }
-
-            return key === undef || hasOwn.call(o, key);
-        },
-
-        /**
-         * Creates a deep copy of a plain object or array. Others are returned untouched.
-         */
-        clone: function(o) {
-            var ret = o, b, k;
-
-            // array or plain object
-            if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
-                ret = b ? [] : {};
-                for (k in o) {
-                    if (o.hasOwnProperty(k)) {
-                        ret[k] = S.clone(o[k]);
-                    }
-                }
-            }
-
-            return ret;
+            return S.type(o) === 'object' && 'setInterval' in o;
         },
 
         /**
@@ -3590,9 +3570,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Dec 3 16:44
+build time: ${build.time}
 */
 /**
  * @module  event
@@ -3672,7 +3652,7 @@ KISSY.add('event', function(S, undefined) {
                     if (!event || !event.fixed) {
                         event = new S.EventObject(target, event, type);
                     }
-                    if (S.isObject(eventData)) {
+                    if (S.isPlainObject(eventData)) {
                         S.mix(event, eventData);
                     }
                     if (special['setup']) {

@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Dec 3 16:44
+build time: ${build.time}
 */
 /**
  * @module  event
@@ -81,7 +81,7 @@ KISSY.add('event', function(S, undefined) {
                     if (!event || !event.fixed) {
                         event = new S.EventObject(target, event, type);
                     }
-                    if (S.isObject(eventData)) {
+                    if (S.isPlainObject(eventData)) {
                         S.mix(event, eventData);
                     }
                     if (special['setup']) {

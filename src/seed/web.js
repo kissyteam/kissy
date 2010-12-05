@@ -8,7 +8,6 @@
         doc = win['document'],
         docElem = doc.documentElement,
 
-        hasOwn = Object.prototype.hasOwnProperty,
         EMPTY = '',
         SEP = '&',
         BRACKET = encodeURIComponent('[]'),
@@ -39,54 +38,7 @@
          * A crude way of determining if an object is a window
          */
         isWindow: function(o) {
-            return o && typeof o === 'object' && 'setInterval' in o;
-        },
-
-        /**
-         * Checks to see if an object is a plain object (created using "{}" or "new Object").
-         */
-        isPlainObject: function(o) {
-            // Must be an Object.
-            // Because of IE, we also have to check the presence of the constructor property.
-            // Make sure that DOM nodes and window objects don't pass through, as well
-            if (!o || S.type(o) !== 'object' || o.nodeType || S.isWindow(o)) {
-                return false;
-            }
-
-            // Not own constructor property must be Object
-            if (o.constructor &&
-                !hasOwn.call(o, 'constructor') &&
-                !hasOwn.call(o.constructor.prototype, 'isPrototypeOf')) {
-                return false;
-            }
-
-            // Own properties are enumerated firstly, so to speed up,
-            // if last one is own, then all properties are own.
-
-            var key;
-            for (key in o) {
-            }
-
-            return key === undef || hasOwn.call(o, key);
-        },
-
-        /**
-         * Creates a deep copy of a plain object or array. Others are returned untouched.
-         */
-        clone: function(o) {
-            var ret = o, b, k;
-
-            // array or plain object
-            if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
-                ret = b ? [] : {};
-                for (k in o) {
-                    if (o.hasOwnProperty(k)) {
-                        ret[k] = S.clone(o[k]);
-                    }
-                }
-            }
-
-            return ret;
+            return S.type(o) === 'object' && 'setInterval' in o;
         },
 
         /**

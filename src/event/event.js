@@ -76,7 +76,7 @@ KISSY.add('event', function(S, undefined) {
                     if (!event || !event.fixed) {
                         event = new S.EventObject(target, event, type);
                     }
-                    if (S.isObject(eventData)) {
+                    if (S.isPlainObject(eventData)) {
                         S.mix(event, eventData);
                     }
                     if (special['setup']) {
