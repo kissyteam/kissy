@@ -6,6 +6,7 @@
 
     var host = S.__HOST,
 
+        toString = Object.prototype.toString,
         indexOf = Array.prototype.indexOf,
         lastIndexOf = Array.prototype.lastIndexOf,
         filter = Array.prototype.filter,
@@ -25,7 +26,7 @@
         type: function(o) {
             return o == null ?
                 String(o) :
-                class2type[Object.prototype.toString.call(o)] || 'object';
+                class2type[toString.call(o)] || 'object';
         },
 
         isNull: function(o) {
@@ -52,7 +53,7 @@
          * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
          */
         isPlainObject: function(o) {
-            return S.type(o) === 'object' && 'isPrototypeOf' in o;
+            return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
         },
 
         /**
