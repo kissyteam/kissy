@@ -8,7 +8,6 @@ describe('lang.js', function() {
         };
 
     it('S.type', function() {
-    
         expect(S.type(null)).toBe('null');
 
         expect(S.type(undefined)).toBe('undefined');
@@ -49,20 +48,17 @@ describe('lang.js', function() {
     });
 
     it('S.isNull', function() {
-
         expect(S.isNull(null)).toBe(true);
         expect(S.isNull()).toBe(false);
     });
 
     it('S.isUndefined', function() {
-
         expect(S.isUndefined(null)).toBe(false);
         expect(S.isUndefined()).toBe(true);
         expect(S.isUndefined(undefined)).toBe(true);
     });
 
     it('S.isBoolean', function() {
-
         expect(S.isBoolean(true)).toBe(true);
         expect(S.isBoolean(false)).toBe(true);
         expect(S.isBoolean(Boolean(false))).toBe(true);
@@ -75,7 +71,6 @@ describe('lang.js', function() {
     });
 
     it('S.isNumber', function() {
-
         expect(S.isNumber(1)).toBe(true);
         expect(S.isNumber(0)).toBe(true);
         expect(S.isNumber(Number(1))).toBe(true);
@@ -89,7 +84,6 @@ describe('lang.js', function() {
     });
 
     it('S.isString', function() {
-
         expect(S.isString('')).toBe(true);
         expect(S.isString('a')).toBe(true);
         expect(S.isString(String('a'))).toBe(true);
@@ -101,7 +95,6 @@ describe('lang.js', function() {
     });
 
     it('S.isFunction', function() {
-
         // Make sure that false values return false
         expect(S.isFunction()).toBe(false);
         expect(S.isFunction(null)).toBe(false);
@@ -132,7 +125,6 @@ describe('lang.js', function() {
     });
 
     it('S.isArray', function() {
-
         expect(S.isArray([])).toBe(true);
 
         expect(S.isArray()).toBe(false);
@@ -144,19 +136,16 @@ describe('lang.js', function() {
     });
 
     it('S.isDate', function() {
-
         expect(S.isDate(new Date())).toBe(true);
         expect(S.isDate('2010/12/5')).toBe(false);
     });
 
     it('S.isRegExp', function() {
-
         expect(S.isRegExp(/s/)).toBe(true);
         expect(S.isRegExp(new RegExp('asdf'))).toBe(true);
     });
 
     it('S.isObject', function() {
-
         expect(S.isObject({})).toBe(true);
         expect(S.isObject(new fn())).toBe(true);
         expect(S.isObject(host)).toBe(true);
@@ -169,7 +158,6 @@ describe('lang.js', function() {
     });
 
     it('S.isEmptyObject', function() {
-
         expect(S.isEmptyObject({})).toBe(true);
         expect(S.isEmptyObject(new Object())).toBe(true);
 
@@ -181,7 +169,6 @@ describe('lang.js', function() {
     });
 
     it('S.isPlainObject', function() {
-
         // The use case that we want to match
         expect(S.isPlainObject({})).toBe(true);
         expect(S.isPlainObject(new fn)).toBe(true);
@@ -207,7 +194,6 @@ describe('lang.js', function() {
     });
 
     it('S.clone', function() {
-
         // non array or plain object, just return
         expect(S.clone()).toBe(undefined);
         expect(S.clone(null)).toBe(null);
@@ -236,7 +222,6 @@ describe('lang.js', function() {
     });
 
     it('S.trim', function() {
-
         var str = '    lots of spaces before and after    ';
         expect(S.trim(str)).toBe('lots of spaces before and after');
 
@@ -288,12 +273,12 @@ describe('lang.js', function() {
     });
 
     it('S.lastIndexOf', function() {
-
         expect(S.indexOf(6, [1, 2, 3, 4, 5])).toBe(-1);
         expect(S.indexOf(2, [1, 2, 3, 4, 5])).toBe(1);
     });
 
     it('S.unique', function() {
+        if(host.name === 'BESENShell') return; // BESENShell has bug for Array.prototype.splice 
 
         expect(S.unique([1,2,1]).length).toBe(2);
         expect(S.unique([1,2,'1']).length).toBe(3);
@@ -321,10 +306,7 @@ describe('lang.js', function() {
         expect(ret.length).toBe(2);
     });
 
-    it('S.now', function() {
-       
-        expect(S.now()).toBeTruthy();
+    it('S.now', function() {       
         expect(S.type(S.now())).toBe('number');
     });
-
 });

@@ -71,13 +71,15 @@ JasmineLite.excute = function() {
 };
 
 
-// load files
-load('../kissy.js');
-load('../lang.js');
+// add name to host
+this.name = 'BESENShell';
 
-load('kissy-spec.js');
-load('lang-spec.js');
+// load test files
+load('../kissy.js');
+//load('../lang.js');
+
+//load('kissy-spec.js');
+//load('lang-spec.js');
 
 // go
 JasmineLite.excute();
-'';
