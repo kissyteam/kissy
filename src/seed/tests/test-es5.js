@@ -71,8 +71,8 @@ JasmineLite.excute = function() {
 };
 
 
-// add name to host
-this.name = 'BESENShell';
+// set host type
+this.hostType = 'console';
 
 // load test files
 load('../kissy.js');

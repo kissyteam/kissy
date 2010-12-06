@@ -113,35 +113,30 @@
         extend: function(r, s, px, sx) {
             if (!s || !r) return r;
 
-            var OP = Object.prototype,
-                create = function (o) {
+            var create = Object.create ?
+                function(proto, c) {
+                    return Object.create(proto, {
+                        constructor: {
+                            value: c
+                        }
+                    });
+                } :
+                function (proto, c) {
                     function F() {
                     }
 
-                    F.prototype = o;
-                    return new F();
+                    F.prototype = proto;
+
+                    var o = new F();
+                    o.constructor = c;
+                    return o;
                 },
                 sp = s.prototype,
                 rp;
 
-            if (Object.create) {
-                rp = Object.create(sp, {
-                    constructor: {
-                        value: r
-                    }
-                });
-            } else {
-                rp = create(sp);
-                rp.constructor = r;
-            }
-
-            r.prototype = rp;
-            r.superclass = sp;
-
-            // assign constructor property
-            if (s !== Object && sp.constructor === OP.constructor) {
-                sp.constructor = s;
-            }
+            // add prototype chain
+            r.prototype = rp = create(sp, r);
+            r.superclass = create(sp, s);
 
             // add prototype overrides
             if (px) {

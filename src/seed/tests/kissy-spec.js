@@ -79,8 +79,10 @@ describe('kissy.js', function() {
             this.name = name;
         }
 
-        Bird.prototype.getName = function() {
-            return this.name;
+        Bird.prototype = {
+            getName: function() {
+                return this.name;
+            }
         };
 
         function Chicken(name) {

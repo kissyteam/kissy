@@ -278,7 +278,7 @@ describe('lang.js', function() {
     });
 
     it('S.unique', function() {
-        if(host.name === 'BESENShell') return; // BESENShell has bug for Array.prototype.splice 
+        if(host['hostType'] === 'console') return; // BESENShell has bug for Array.prototype.splice
 
         expect(S.unique([1,2,1]).length).toBe(2);
         expect(S.unique([1,2,'1']).length).toBe(3);
