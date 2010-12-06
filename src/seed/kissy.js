@@ -2,7 +2,7 @@
  * @module kissy
  * @author lifesinger@gmail.com
  */
-(function(S, undef) {
+(function(host, S, undef) {
 
     var meta = {
         /**
@@ -33,8 +33,6 @@
             return r;
         }
     },
-
-    host = this,
 
     // If KISSY is already defined, the existing KISSY object will not
     // be overwritten so that defined namespaces are preserved.
@@ -116,7 +114,7 @@
             if (!s || !r) return r;
 
             var OP = Object.prototype,
-                O = function (o) {
+                create = function (o) {
                     function F() {
                     }
 
@@ -124,10 +122,20 @@
                     return new F();
                 },
                 sp = s.prototype,
-                rp = O(sp);
+                rp;
+
+            if (Object.create) {
+                rp = Object.create(sp, {
+                    constructor: {
+                        value: r
+                    }
+                });
+            } else {
+                rp = create(sp);
+                rp.constructor = r;
+            }
 
             r.prototype = rp;
-            rp.constructor = r;
             r.superclass = sp;
 
             // assign constructor property
@@ -256,4 +264,4 @@
 
     S.__init();
 
-})('KISSY');
+})(this, 'KISSY');

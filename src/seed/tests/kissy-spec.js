@@ -79,10 +79,8 @@ describe('kissy.js', function() {
             this.name = name;
         }
 
-        Bird.prototype = {
-            getName: function() {
-                return this.name;
-            }
+        Bird.prototype.getName = function() {
+            return this.name;
         };
 
         function Chicken(name) {
@@ -92,6 +90,7 @@ describe('kissy.js', function() {
         S.extend(Chicken, Bird);
         var chicken = new Chicken('Tom');
 
+        expect(chicken.constructor).toBe(Chicken);
         expect(chicken.getName()).toBe('Tom');
     });
 

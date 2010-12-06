@@ -76,10 +76,11 @@ this.name = 'BESENShell';
 
 // load test files
 load('../kissy.js');
-//load('../lang.js');
+load('../lang.js');
 
-//load('kissy-spec.js');
-//load('lang-spec.js');
+load('kissy-spec.js');
+load('lang-spec.js');
 
 // go
 JasmineLite.excute();
+'';
