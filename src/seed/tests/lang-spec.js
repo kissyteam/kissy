@@ -67,7 +67,7 @@ describe('lang.js', function() {
         expect(S.isBoolean()).toBe(false);
         expect(S.isBoolean(null)).toBe(false);
         expect(S.isBoolean({})).toBe(false);
-        expect(S.isBoolean(window)).toBe(false);
+        expect(S.isBoolean(host)).toBe(false);
     });
 
     it('S.isNumber', function() {
@@ -91,7 +91,7 @@ describe('lang.js', function() {
         expect(S.isString()).toBe(false);
         expect(S.isString({})).toBe(false);
         expect(S.isString(null)).toBe(false);
-        expect(S.isString(window)).toBe(false);
+        expect(S.isString(host)).toBe(false);
     });
 
     it('S.isFunction', function() {
