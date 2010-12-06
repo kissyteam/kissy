@@ -7,7 +7,7 @@ build time: ${build.time}
  * @module kissy
  * @author lifesinger@gmail.com
  */
-(function(S, undef) {
+(function(host, S, undef) {
 
     var meta = {
         /**
@@ -38,8 +38,6 @@ build time: ${build.time}
             return r;
         }
     },
-
-    host = this,
 
     // If KISSY is already defined, the existing KISSY object will not
     // be overwritten so that defined namespaces are preserved.
@@ -120,25 +118,30 @@ build time: ${build.time}
         extend: function(r, s, px, sx) {
             if (!s || !r) return r;
 
-            var OP = Object.prototype,
-                O = function (o) {
+            var create = Object.create ?
+                function(proto, c) {
+                    return Object.create(proto, {
+                        constructor: {
+                            value: c
+                        }
+                    });
+                } :
+                function (proto, c) {
                     function F() {
                     }
 
-                    F.prototype = o;
-                    return new F();
+                    F.prototype = proto;
+
+                    var o = new F();
+                    o.constructor = c;
+                    return o;
                 },
                 sp = s.prototype,
-                rp = O(sp);
+                rp;
 
-            r.prototype = rp;
-            rp.constructor = r;
-            r.superclass = sp;
-
-            // assign constructor property
-            if (s !== Object && sp.constructor === OP.constructor) {
-                sp.constructor = s;
-            }
+            // add prototype chain
+            r.prototype = rp = create(sp, r);
+            r.superclass = create(sp, s);
 
             // add prototype overrides
             if (px) {
@@ -261,7 +264,7 @@ build time: ${build.time}
 
     S.__init();
 
-})('KISSY');
+})(this, 'KISSY');
 /**
  * @module  lang
  * @author  lifesinger@gmail.com
@@ -270,6 +273,7 @@ build time: ${build.time}
 
     var host = S.__HOST,
 
+        toString = Object.prototype.toString,
         indexOf = Array.prototype.indexOf,
         lastIndexOf = Array.prototype.lastIndexOf,
         filter = Array.prototype.filter,
@@ -289,7 +293,7 @@ build time: ${build.time}
         type: function(o) {
             return o == null ?
                 String(o) :
-                class2type[Object.prototype.toString.call(o)] || 'object';
+                class2type[toString.call(o)] || 'object';
         },
 
         isNull: function(o) {
@@ -316,7 +320,7 @@ build time: ${build.time}
          * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
          */
         isPlainObject: function(o) {
-            return S.type(o) === 'object' && 'isPrototypeOf' in o;
+            return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
         },
 
         /**
