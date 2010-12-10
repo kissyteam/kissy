@@ -80,7 +80,11 @@
 
                 // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
                 //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-                mix(mod, { name: name, status: LOADED });
+
+                //!TODO 暂时不考虑 requires 在 add 中的修改
+                //和 order _requires 关联起来太复杂
+                mix(mod, { name: name, status: LOADED }, true, null, ["requires"]);
+
                 if (!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
 
@@ -175,7 +179,7 @@
 
             function fn() {
                 // add 可能改了 config，这里重新取下
-                requires = mod['requires'] || [];
+                var requires = mod['requires'] || [];
                 if (self.__isAttached(requires)) {
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);

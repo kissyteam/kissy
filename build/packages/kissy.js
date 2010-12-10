@@ -14,7 +14,7 @@ build time: ${build.time}
          * Copies all the properties of s to r.
          * @return {Object} the augmented object
          */
-        mix: function(r, s, ov, wl) {
+        mix: function(r, s, ov, wl, bl) {
             if (!s || !r) return r;
             if (ov === undef) ov = true;
             var i, p, l;
@@ -31,7 +31,8 @@ build time: ${build.time}
             } else {
                 for (p in s) {
                     if (ov || !(p in r)) {
-                        r[p] = s[p];
+                        if (!bl || !(S.inArray(p, bl)))
+                            r[p] = s[p];
                     }
                 }
             }
@@ -39,21 +40,21 @@ build time: ${build.time}
         }
     },
 
-    host = this,
+        host = this,
 
-    // If KISSY is already defined, the existing KISSY object will not
-    // be overwritten so that defined namespaces are preserved.
-    seed = host[S] || {},
+        // If KISSY is already defined, the existing KISSY object will not
+        // be overwritten so that defined namespaces are preserved.
+        seed = host[S] || {},
 
-    guid = 0,
-    EMPTY = '';
+        guid = 0,
+        EMPTY = '';
 
-    if(!seed.mix) seed.mix = meta.mix;
+    if (!seed.mix) seed.mix = meta.mix;
     S = host[S] = seed; // shortcut
 
     S.mix(S, {
 
-         // The host of runtime environment.
+        // The host of runtime environment.
         __HOST: host,
 
         // S.app() with these members.
@@ -153,11 +154,11 @@ build time: ${build.time}
             return r;
         },
 
-/****************************************************************************************
+        /****************************************************************************************
 
- *                            The KISSY System Framework                                *
+         *                            The KISSY System Framework                                *
 
- ****************************************************************************************/
+         ****************************************************************************************/
 
         /**
          * Initializes KISSY
@@ -214,7 +215,7 @@ build time: ${build.time}
                 len = S.__APP_INIT_METHODS.length;
 
             S.mix(O, this, true, S.__APP_MEMBERS);
-            for(; i < len; ++i) S[S.__APP_INIT_METHODS[i]].call(O);
+            for (; i < len; ++i) S[S.__APP_INIT_METHODS[i]].call(O);
 
             S.mix(O, S.isFunction(sx) ? sx() : sx);
             isStr && (host[name] = O);
@@ -255,7 +256,7 @@ build time: ${build.time}
          * @return {String} the guid
          */
         guid: function(pre) {
-            return (pre || EMPTY) + guid++; 
+            return (pre || EMPTY) + guid++;
         }
     });
 
@@ -972,7 +973,11 @@ build time: ${build.time}
 
                 // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
                 //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-                mix(mod, { name: name, status: LOADED });
+
+                //!TODO 暂时不考虑 requires 在 add 中的修改
+                //和 order _requires 关联起来太复杂
+                mix(mod, { name: name, status: LOADED }, true, null, ["requires"]);
+
                 if (!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
 
@@ -1067,7 +1072,8 @@ build time: ${build.time}
 
             function fn() {
                 // add 可能改了 config，这里重新取下
-                requires = mod['requires'] || [];
+                var requires = mod['requires'] || [];
+
                 if (self.__isAttached(requires)) {
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);
