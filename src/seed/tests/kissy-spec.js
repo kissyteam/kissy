@@ -9,18 +9,23 @@ describe('kissy.js', function() {
         var o1 = { a: 1, b: 2 },
             o2 = { a: 1, b: 2 },
             o3 = { a: 1, b: 2 },
-            o4 = { a: 'a', c: true };
+            o4 = { a: 1, b: 2 },
+            o = { a: 'a', c: true };
 
-        S.mix(o1, o4);
+        S.mix(o1, o);
         expect(o1.a).toBe('a');
 
         // turn off override
-        S.mix(o2, o4, false);
+        S.mix(o2, o, false);
         expect(o2.a).toBe(1);
 
         // whitelist
-        S.mix(o3, o4, true, ['c']);
+        S.mix(o3, o, true, ['c']);
         expect(o3.a).toBe(1);
+
+        // blacklist
+        S.mix(o4, o, true, null, ['a']);
+        expect(o4.a).toBe(1);
     });
 
     it('S.merge', function() {
