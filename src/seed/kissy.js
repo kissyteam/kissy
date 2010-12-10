@@ -72,7 +72,7 @@
          */
         merge: function() {
             var o = {}, i, l = arguments.length;
-            for (i = 0; i < l; ++i) {
+            for (i = 0; i < l; i++) {
                 S.mix(o, arguments[i]);
             }
             return o;
@@ -189,7 +189,7 @@
                 o = null, i, j, p,
                 global = (args[l - 1] === true && l--);
 
-            for (i = 0; i < l; ++i) {
+            for (i = 0; i < l; i++) {
                 p = (EMPTY + args[i]).split('.');
                 o = global ? host : this;
                 for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
@@ -216,7 +216,7 @@
                 len = S.__APP_INIT_METHODS.length;
 
             S.mix(O, this, true, S.__APP_MEMBERS);
-            for (; i < len; ++i) S[S.__APP_INIT_METHODS[i]].call(O);
+            for (; i < len; i++) S[S.__APP_INIT_METHODS[i]].call(O);
 
             S.mix(O, S.isFunction(sx) ? sx() : sx);
             isStr && (host[name] = O);
