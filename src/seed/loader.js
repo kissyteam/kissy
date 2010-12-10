@@ -53,7 +53,7 @@
          * @return {KISSY}
          */
         add: function(name, fn, config) {
-            var self = this, mods = self.Env.mods, mod, o;
+            var self = this, mods = self.Env.mods, mod, o, oldr;
 
             // S.add(name, config) => S.add( { name: config } )
             if (S.isString(name) && !config && S.isPlainObject(fn)) {
@@ -80,15 +80,16 @@
 
                 // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
                 //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-
-                //!TODO 暂时不考虑 requires 在 add 中的修改
-                //和 order _requires 关联起来太复杂
-                mix(mod, { name: name, status: LOADED }, true, null, ["requires"]);
+                mix(mod, { name: name, status: LOADED });
 
                 if (!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
 
+                //!TODO 暂时不考虑 requires 在 add 中的修改
+                // 和 order _requires 关联起来太复杂
+                oldr = mod['requires'];
                 mix((mods[name] = mod), config);
+                mods[name]['requires'] = oldr; // 不覆盖
 
                 // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
                 if ((mod['attach'] !== false) && self.__isAttached(mod.requires)) {
@@ -180,6 +181,7 @@
             function fn() {
                 // add 可能改了 config，这里重新取下
                 var requires = mod['requires'] || [];
+
                 if (self.__isAttached(requires)) {
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);
@@ -394,13 +396,55 @@
     mix(S, loader);
 
     /**
+     * get base from src
+     * @param src script source url
+     * @return base for kissy
+     * @example:
+     *   http://a.tbcdn.cn/s/kissy/1.1.5/??kissy-min.js,suggest/suggest-pkg-min.js
+     *   http://a.tbcdn.cn/??s/kissy/1.1.5/kissy-min.js,s/kissy/1.1.5/suggest/suggest-pkg-min.js
+     * http://a.tbcdn.cn/??s/kissy/1.1.5/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
+     */
+    //notice:timestamp
+    var baseReg = /^(.*)(seed|kissy)(-min)?\.js/i,
+        baseTestReg = /(seed|kissy)(-min)?\.js/;
+
+    function getBaseUrl(src) {
+        var parts = src.split(/\s*,\s*/);
+        var base,
+            part0 = parts[0],
+            index = part0.indexOf("??");
+        //no combo
+        if (index == -1) {
+            base = src.replace(baseReg, '$1');
+        } else {
+            base = part0.substring(0, index);
+            var part01 = part0.substring(index + 2, part0.length);
+            //combo first
+            //notice use match better than test
+            if (part01.match(baseTestReg)) {
+                base += part01.replace(baseReg, '$1');
+            }
+            //combo after first
+            else {
+                for (var i = 1; i < parts.length; i++) {
+                    var part = parts[i];
+                    if (part.match(baseTestReg)) {
+                        base += part.replace(baseReg, '$1');
+                    }
+                }
+            }
+        }
+        return base;
+    }
+
+    /**
      * Initializes loader.
      */
     S.__initLoader = function() {
         // get base from current script file path
         var scripts = doc.getElementsByTagName('script'),
             currentScript = scripts[scripts.length - 1],
-            base = currentScript.src.replace(/^(.*)(seed|kissy).*$/i, '$1');
+            base = getBaseUrl(currentScript.src);
 
         this.Env.mods = {}; // all added mods
         this.Env._loadQueue = {}; // information for loading and loaded mods

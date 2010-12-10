@@ -14,9 +14,20 @@ kissy seed 的层次结构为：
 非常感谢周爱民老师(aimingoo)对 kissy 进行 review 和重构。
 
 
+### 2010/12 yubo:
+
+ - 重构 lang.js 中的 isString 等方法，抽离出 type 方法，和 jQuery 1.4.4 逻辑一致。
+ - web.js 中增加 isWindow 方法，并将 lang.js 中的 isPlainObject, clone, makeArray 移动到 web.js.
+ - 重构 S.app 和 S.__init 的关系，抽离出 S.__APP_INIT_METHODS, 现在 kissy.js 中不再包含 loader.js 相关信息。
+ - 将 test.html 转移到 tests 目录，目前可运行版本：test-domready.html. 还需进一步重构和完善。
+
 ### 2010/12 aimingoo:
 
- - 将 web 层从 kissy.js 和 lang.js 中分离出来，将 seed 的层次结构清晰化。
+ - 将 web 层从 kissy.js 和 lang 中分离出来，现在 kissy.js 是环境无关的；
+ - kissy.js 不再依赖具体的 window 作为 context env. kissy.js 可以在任意的 host 中初始化；
+ - 从 kissy.js 中找到 seed 的概念，即具有 meta 性质的 host 对象。如果 host 没有 meta 性质，则通过 meta.mix() 使其成为核心的 seed。
+ - 核心的 kissy.js 是对对象和系统扩展特性的封装，以及对 app/namespace 的概念约定与实现。
+ - 从 kissy.js 中去掉私有函数 mix() 声明的原因，是力图使 S.mix() 成为标准用法。
 
 ### 2010/08 yubo:
 
