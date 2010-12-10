@@ -53,7 +53,7 @@
          * @return {KISSY}
          */
         add: function(name, fn, config) {
-            var self = this, mods = self.Env.mods, mod, o;
+            var self = this, mods = self.Env.mods, mod, o, oldr;
 
             // S.add(name, config) => S.add( { name: config } )
             if (S.isString(name) && !config && S.isPlainObject(fn)) {
@@ -80,15 +80,16 @@
 
                 // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
                 //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-
-                //!TODO 暂时不考虑 requires 在 add 中的修改
-                //和 order _requires 关联起来太复杂
-                mix(mod, { name: name, status: LOADED }, true, null, ['requires']);
+                mix(mod, { name: name, status: LOADED });
 
                 if (!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
 
+                //!TODO 暂时不考虑 requires 在 add 中的修改
+                // 和 order _requires 关联起来太复杂
+                oldr = mod['requires'];
                 mix((mods[name] = mod), config);
+                mods[name]['requires'] = oldr; // 不覆盖
 
                 // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
                 if ((mod['attach'] !== false) && self.__isAttached(mod.requires)) {

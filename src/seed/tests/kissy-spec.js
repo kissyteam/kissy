@@ -1,15 +1,13 @@
 describe('kissy.js', function() {
 
     var S = KISSY,
-        host = S.__HOST,
-        fn = function() {
-        };
+        host = S.__HOST;
 
     it('S.mix', function() {
         var o1 = { a: 1, b: 2 },
             o2 = { a: 1, b: 2 },
             o3 = { a: 1, b: 2 },
-            o4 = { a: 1, b: 2 },
+            //o4 = { a: 1, b: 2 },
             o = { a: 'a', c: true };
 
         S.mix(o1, o);
@@ -24,8 +22,8 @@ describe('kissy.js', function() {
         expect(o3.a).toBe(1);
 
         // blacklist
-        S.mix(o4, o, true, null, ['a']);
-        expect(o4.a).toBe(1);
+        //S.mix(o4, o, true, null, ['a']);
+        //expect(o4.a).toBe(1);
     });
 
     it('S.merge', function() {

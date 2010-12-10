@@ -9,7 +9,7 @@
              * Copies all the properties of s to r.
              * @return {Object} the augmented object
              */
-            mix: function(r, s, ov, wl, bl) {
+            mix: function(r, s, ov, wl) {
                 if (!s || !r) return r;
                 if (ov === undef) ov = true;
                 var i, p, len;
@@ -18,22 +18,21 @@
                     for (i = 0; i < len; i++) {
                         p = wl[i];
                         if (p in s) {
-                            _mix(p, r, s, ov, bl);
+                            _mix(p, r, s, ov);
                         }
                     }
                 } else {
                     for (p in s) {
-                        _mix(p, r, s, ov, bl);
+                        _mix(p, r, s, ov);
                     }
                 }
                 return r;
             }
         },
 
-        _mix = function(p, r, s, ov, bl) {
+        _mix = function(p, r, s, ov) {
             if (ov || !(p in r)) {
-                if (!bl || !(S.inArray(p, bl)))
-                    r[p] = s[p];
+                r[p] = s[p];
             }
         },
 

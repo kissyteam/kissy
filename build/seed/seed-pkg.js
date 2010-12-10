@@ -10,49 +10,52 @@ build time: ${build.time}
 (function(host, S, undef) {
 
     var meta = {
-        /**
-         * Copies all the properties of s to r.
-         * @return {Object} the augmented object
-         */
-        mix: function(r, s, ov, wl) {
-            if (!s || !r) return r;
-            if (ov === undef) ov = true;
-            var i, p, l;
+            /**
+             * Copies all the properties of s to r.
+             * @return {Object} the augmented object
+             */
+            mix: function(r, s, ov, wl) {
+                if (!s || !r) return r;
+                if (ov === undef) ov = true;
+                var i, p, len;
 
-            if (wl && (l = wl.length)) {
-                for (i = 0; i < l; i++) {
-                    p = wl[i];
-                    if (p in s) {
-                        if (ov || !(p in r)) {
-                            r[p] = s[p];
+                if (wl && (len = wl.length)) {
+                    for (i = 0; i < len; i++) {
+                        p = wl[i];
+                        if (p in s) {
+                            _mix(p, r, s, ov);
                         }
                     }
-                }
-            } else {
-                for (p in s) {
-                    if (ov || !(p in r)) {
-                        r[p] = s[p];
+                } else {
+                    for (p in s) {
+                        _mix(p, r, s, ov);
                     }
                 }
+                return r;
             }
-            return r;
-        }
-    },
+        },
 
-    // If KISSY is already defined, the existing KISSY object will not
-    // be overwritten so that defined namespaces are preserved.
-    seed = host[S] || {},
+        _mix = function(p, r, s, ov) {
+            if (ov || !(p in r)) {
+                r[p] = s[p];
+            }
+        },
 
-    guid = 0,
-    EMPTY = '';
+        // If KISSY is already defined, the existing KISSY object will not
+        // be overwritten so that defined namespaces are preserved.
+        seed = (host && host[S]) || {},
 
-    if(!seed.mix) seed.mix = meta.mix;
-    S = host[S] = seed; // shortcut
+        guid = 0,
+        EMPTY = '';
+
+    // The host of runtime environment. specify by user's seed or <this>,
+    // compatibled for  '<this> is null' in unknown engine.
+    host = seed.__HOST || (seed.__HOST = host || {});
+
+    // shortcut and meta for seed.
+    S = host[S] = meta.mix(seed, meta, false);
 
     S.mix(S, {
-
-         // The host of runtime environment.
-        __HOST: host,
 
         // S.app() with these members.
         __APP_MEMBERS: ['namespace'],
@@ -73,7 +76,7 @@ build time: ${build.time}
          */
         merge: function() {
             var o = {}, i, l = arguments.length;
-            for (i = 0; i < l; ++i) {
+            for (i = 0; i < l; i++) {
                 S.mix(o, arguments[i]);
             }
             return o;
@@ -119,23 +122,23 @@ build time: ${build.time}
             if (!s || !r) return r;
 
             var create = Object.create ?
-                function(proto, c) {
-                    return Object.create(proto, {
-                        constructor: {
-                            value: c
-                        }
-                    });
-                } :
-                function (proto, c) {
-                    function F() {
-                    }
+                         function(proto, c) {
+                             return Object.create(proto, {
+                                 constructor: {
+                                     value: c
+                                 }
+                             });
+                         } :
+                         function (proto, c) {
+                             function F() {
+                             }
 
-                    F.prototype = proto;
+                             F.prototype = proto;
 
-                    var o = new F();
-                    o.constructor = c;
-                    return o;
-                },
+                             var o = new F();
+                             o.constructor = c;
+                             return o;
+                         },
                 sp = s.prototype,
                 rp;
 
@@ -156,11 +159,11 @@ build time: ${build.time}
             return r;
         },
 
-/****************************************************************************************
+        /****************************************************************************************
 
- *                            The KISSY System Framework                                *
+         *                            The KISSY System Framework                                *
 
- ****************************************************************************************/
+         ****************************************************************************************/
 
         /**
          * Initializes KISSY
@@ -190,7 +193,7 @@ build time: ${build.time}
                 o = null, i, j, p,
                 global = (args[l - 1] === true && l--);
 
-            for (i = 0; i < l; ++i) {
+            for (i = 0; i < l; i++) {
                 p = (EMPTY + args[i]).split('.');
                 o = global ? host : this;
                 for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
@@ -217,7 +220,7 @@ build time: ${build.time}
                 len = S.__APP_INIT_METHODS.length;
 
             S.mix(O, this, true, S.__APP_MEMBERS);
-            for(; i < len; ++i) S[S.__APP_INIT_METHODS[i]].call(O);
+            for (; i < len; i++) S[S.__APP_INIT_METHODS[i]].call(O);
 
             S.mix(O, S.isFunction(sx) ? sx() : sx);
             isStr && (host[name] = O);
@@ -258,7 +261,7 @@ build time: ${build.time}
          * @return {String} the guid
          */
         guid: function(pre) {
-            return (pre || EMPTY) + guid++; 
+            return (pre || EMPTY) + guid++;
         }
     });
 
@@ -929,7 +932,7 @@ build time: ${build.time}
          * @return {KISSY}
          */
         add: function(name, fn, config) {
-            var self = this, mods = self.Env.mods, mod, o;
+            var self = this, mods = self.Env.mods, mod, o, oldr;
 
             // S.add(name, config) => S.add( { name: config } )
             if (S.isString(name) && !config && S.isPlainObject(fn)) {
@@ -957,16 +960,22 @@ build time: ${build.time}
                 // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
                 //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
                 mix(mod, { name: name, status: LOADED });
+
                 if (!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
+
+                //!TODO 暂时不考虑 requires 在 add 中的修改
+                // 和 order _requires 关联起来太复杂
+                oldr = mod['requires'];
                 mix((mods[name] = mod), config);
+                mods[name]['requires'] = oldr; // 不覆盖
 
                 // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
                 if ((mod['attach'] !== false) && self.__isAttached(mod.requires)) {
                     self.__attachMod(mod);
                 }
 
-                // TODO add 中指定了依赖项，这里没有继续载依赖项
+                //!TODO add 中指定了依赖项，这里没有继续载依赖项
                 //self.__isAttached(mod.requires) 返回 false
             }
 
@@ -1050,7 +1059,7 @@ build time: ${build.time}
 
             function fn() {
                 // add 可能改了 config，这里重新取下
-                requires = mod['requires'] || [];
+                var requires = mod['requires'] || [];
 
                 if (self.__isAttached(requires)) {
                     if (mod.status === LOADED) {
