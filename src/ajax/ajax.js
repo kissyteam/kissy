@@ -32,10 +32,18 @@ KISSY.add('ajax', function(S, undef) {
                     try {
                         // ie 6 下请求缓存中的资源无法正确返回 xhr.responseText, 需要使用老版本的 XMLHTTP
                         // jQuery 没有考虑请求缓存的情况
-                        return new win.ActiveXObject(
-                            S.UA.ie == 6 ?
-                                'Msxml2.XMLHTTP.5.0' :
-                                'Microsoft.XMLHTTP');
+
+						var ieXMLVersion = ['Msxml2.XMLHTTP.5.0','Microsoft.XMLHTTP'],
+							xhr = null,i=0,latestVersion = ieXMLVersion[ieXMLVersion.length];
+						if(S.UA.ie == 6){
+							for(;i<ieXMLVersion.length;i++){
+								xhr = new win.ActiveXObject(ieXMLVersion[i]);
+								if(xhr){
+									return xhr;
+								}
+							}
+						}
+						return new win.ActiveXObject(latestVersion);
                     } catch(e) {
                     }
                 },
@@ -314,3 +322,4 @@ KISSY.add('ajax', function(S, undef) {
  *   - [玉伯] 增加部分 Jasmine 单元测试
  *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
  */
+
