@@ -264,7 +264,6 @@ KISSY.add('dd-draggable', function(S) {
                         hl.css('cursor', 'move');
                 }
             }
-
             node.on('mousedown', self._handleMouseDown, self);
         },
 
