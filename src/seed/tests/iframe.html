@@ -5,22 +5,21 @@
 <title>test iframe</title>
 </head>
 <body>
+
 <script src="../kissy.js"></script>
 <script src="../lang.js"></script>
 <script src="../web.js"></script>
+
 <script>
-    var S = KISSY, readyTime, loadTime,
-        now = function() {
-            return new Date().getTime();
-        };
+    var S = KISSY, readyTime, loadTime;
 
     S.ready(function() {
-        readyTime = now();
+        readyTime = S.now();
         S.log('iframe readTime = ' + readyTime);
     });
 
     window.onload = function() {
-        loadTime = now();
+        loadTime = S.now();
         S.log('iframe loadTime = ' + loadTime);
     }
 </script>
