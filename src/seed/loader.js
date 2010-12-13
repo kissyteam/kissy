@@ -1,11 +1,13 @@
 /**
  * @module loader
- * @author lifesinger@gmail.com, lijing00333@163.com
+ * @author lifesinger@gmail.com, lijing00333@163.com, yiminghe@gmail.com
  */
-(function(win, S, undef) {
+(function(S, undef) {
 
-    var doc = win['document'],
+    var win = S.__HOST,
+        doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+
         EMPTY = '', CSSFULLPATH = 'cssfullpath',
         LOADING = 1, LOADED = 2, ERROR = 3, ATTACHED = 4,
         mix = S.mix,
@@ -51,11 +53,11 @@
          * @return {KISSY}
          */
         add: function(name, fn, config) {
-            var self = this, mods = self.Env.mods, mod, o;
+            var self = this, mods = self.Env.mods, mod, o, oldr;
 
             // S.add(name, config) => S.add( { name: config } )
             if (S.isString(name) && !config && S.isPlainObject(fn)) {
-                o = { };
+                o = {};
                 o[name] = fn;
                 name = o;
             }
@@ -70,23 +72,32 @@
             }
             // S.add(name[, fn[, config]])
             else {
-                config = config || { };
+                config = config || {};
 
-                mod = mods[name] || { };
+                mod = mods[name] || {};
                 name = config.host || mod.host || name;
-                mod = mods[name] || { };
+                mod = mods[name] || {};
 
                 // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
                 //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
                 mix(mod, { name: name, status: LOADED });
+
                 if (!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
+
+                //!TODO 暂时不考虑 requires 在 add 中的修改
+                // 和 order _requires 关联起来太复杂
+                oldr = mod['requires'];
                 mix((mods[name] = mod), config);
+                mods[name]['requires'] = oldr; // 不覆盖
 
                 // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
                 if ((mod['attach'] !== false) && self.__isAttached(mod.requires)) {
                     self.__attachMod(mod);
                 }
+
+                //!TODO add 中指定了依赖项，这里没有继续载依赖项
+                //self.__isAttached(mod.requires) 返回 false
             }
 
             return self;
@@ -105,7 +116,7 @@
          */
         use: function(modNames, callback, config) {
             modNames = modNames.replace(/\s+/g, EMPTY).split(',');
-            config = config || { };
+            config = config || {};
 
             var self = this, mods = self.Env.mods,
                 global = (config || 0).global,
@@ -168,6 +179,9 @@
             self.__load(mod, fn, global);
 
             function fn() {
+                // add 可能改了 config，这里重新取下
+                var requires = mod['requires'] || [];
+
                 if (self.__isAttached(requires)) {
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);
@@ -187,7 +201,7 @@
         },
 
         __mixMod: function(mods, gMods, name, global) {
-            var mod = mods[name] || { }, status = mod.status;
+            var mod = mods[name] || {}, status = mod.status;
 
             S.mix(mod, S.clone(gMods[name]));
 
@@ -229,7 +243,7 @@
          * Load a single module.
          */
         __load: function(mod, callback, global) {
-            var self = this, url = mod.fullpath,
+            var self = this, url = mod['fullpath'],
                 loadQueque = S.Env._loadQueue, // 这个是全局的，防止多实例对同一模块的重复下载
                 node = loadQueque[url], ret;
 
@@ -381,34 +395,28 @@
 
     mix(S, loader);
 
+    /**
+     * Initializes loader.
+     */
+    S.__initLoader = function() {
+        // get base from current script file path
+        var scripts = doc.getElementsByTagName('script'),
+            currentScript = scripts[scripts.length - 1],
+            base = currentScript.src.replace(/^(.*)(seed|kissy).*$/i, '$1');
+
+        this.Env.mods = {}; // all added mods
+        this.Env._loadQueue = {}; // information for loading and loaded mods
+
+        this.Config.base = base;
+        this.Config.timeout = 10;   // the default timeout for getScript
+    };
+    S.__initLoader();
+
+    // for S.app working properly
     S.each(loader, function(v, k) {
         S.__APP_MEMBERS.push(k);
     });
+    S.__APP_INIT_METHODS.push('__initLoader');
 
-})(window, KISSY);
+})(KISSY);
 
-/**
- * TODO:
- *  - 自动 combo 的实现，目前是手动
- *  - 使用场景和测试用例整理
- *
- * NOTES:
- *
- * 2010/08/16 玉伯：
- *  - 基于拔赤的实现，重构。解耦 add/use 和 ready 的关系，简化实现代码。
- *  - 暂时去除 combo 支持，combo 由用户手工控制。
- *  - 支持 app 生成的多 loader.
- *
- * 2010/08/13 拔赤：
- *  - 重写 add, use, ready, 重新组织 add 的工作模式，添加 loader 功能。
- *  - 借鉴 YUI3 原生支持 loader, 但 YUI 的 loader 使用场景复杂，且多 loader 共存的场景
- *    在越复杂的程序中越推荐使用，在中等规模的 webpage 中，形同鸡肋，因此将 KISSY 全局对象
- *    包装成一个 loader，来统一管理页面所有的 modules.
- *  - loader 的使用一定要用 add 来配合，加载脚本过程中的三个状态（before domready,
- *    after domready & before KISSY callbacks' ready, after KISSY callbacks' ready）要明确区分。
- *  - 使用 add 和 ready 的基本思路和之前保持一致，即只要执行 add('mod-name', callback)，就
- *    会执行其中的 callback. callback 执行的时机由 loader 统一控制。
- *  - 支持 combo, 通过 Config.combo = true 来开启，模块的 fullpath 用 path 代替。
- *  - KISSY 内部组件和开发者文件当做地位平等的模块处理，包括 combo.
- *
- */

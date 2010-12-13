@@ -4,6 +4,20 @@
 <meta charset="utf-8"/>
 <title>CSS Reset Test</title>
 <link rel="stylesheet" href="reset.css" />
+<script>
+    // html5 shiv
+    if (!+[1,]) {
+        (function() {
+            var tags = [
+                'article', 'aside', 'details', 'figcaption',
+                'figure', 'footer', 'header', 'hgroup',
+                'menu', 'nav', 'section', 'summary',
+                'time', 'mark', 'audio', 'video'],
+                    i = 0, len = tags.length;
+            for (; i < len; i++) document.createElement(tags[i]);
+        })();
+    }
+</script>
 </head>
 <body>
 <h1>CSS Reset Test</h1>
@@ -37,7 +51,7 @@
 
 <h2>转世重生的元素</h2>
 <p>
-1. s - 表示 sprite, 可以用 &lt;s&gt;&;lt;/s&gt; 来做 icon 的占位元素<br />
+1. s - 表示 sprite, 可以用 &lt;s&gt;&lt;/s&gt; 来做 icon 的占位元素<br />
 2. b - 表示 border, 可以用来作为圆角的占位元素<br />
 3. i - 预留，尚未想到合理的复活理由
 </p>
@@ -308,13 +322,35 @@ you may simply have typed the address incorrectly.
     <p>Your browser does not support iframes. That kinda sucks, eh?</p>
 </iframe>
 <br />
+
+<hr />
+<h2>HTML5 Elements:</h2>
+<br />
+<article>article</article>
+<aside>aside</aside>
+<details>details</details>
+<figcaption>figcaption</figcaption>
+<figure>figure</figure>
+<footer>footer</footer>
+<header>header</header>
+<hgroup>hgroup</hgroup>
+<menu>menu</menu>
+<nav>nav</nav>
+<section>section</section>
+<summary>summary</summary>
+<time>time</time>
+<mark>mark</mark>
+<audio>audio</audio>
+<video>video</video>
 <hr />
 <h3>主要参考资料：</h3>
+<br />
 <ul>
     <li><a href="http://meyerweb.com/eric/tools/css/reset/">Eric Reset CSS</a></li>
     <li><a href="http://developer.yahoo.com/yui/3/cssreset/">YUI CSS Reset</a></li>
     <li><a href="http://developer.yahoo.com/yui/3/cssfonts/">YUI CSS Fonts</a></li>
     <li><a href="http://developer.yahoo.com/yui/3/cssbase/">YUI CSS Base</a></li>
+    <li><a href="http://www.dave-woods.co.uk/index.php/html5-css-reset/">HTML5 CSS Reset</a></li>
 </ul>
 <br />
 <br />

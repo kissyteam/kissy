@@ -92,6 +92,7 @@ KISSY.add('imagezoom', function(S, undefined) {
                 return v;
             }
         },
+        
         /**
          * 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值
          * @type {Array.<number>}
@@ -99,7 +100,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         bigImageSize: {
             value: [800, 800],
             setter: function(v) {
-                return S.mix(this.get(BIG_IMAGE_SIZE), toArray(v));
+                return toArray(v);
             }
         },
 
@@ -124,7 +125,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         offset: {
             value: [10, 0],
             setter: function(v) {
-                return S.mix(this.get(OFFSET), toArray(v));
+                return toArray(v);
             }
         },
         /**
@@ -142,7 +143,7 @@ KISSY.add('imagezoom', function(S, undefined) {
         zoomSize: {
             value: [AUTO, AUTO],
             setter: function(v) {
-                return S.mix(this.get(ZOOM_SIZE), toArray(v));
+                return toArray(v);
             },
             getter: function(v) {
                 var self = this;

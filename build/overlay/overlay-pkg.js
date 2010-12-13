@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * KISSY Overlay
@@ -9,63 +9,58 @@ build time: ${build.time}
  */
 KISSY.add("overlay", function(S) {
 
-    var Base = S.Base,
+    var UIBase = S.UIBase,
         UA = S.UA;
 
 
-    var Overlay = Base.create([S.Ext.Box,
-        S.Ext.ContentBox,
-        S.Ext.Position,
-        S.Ext.Loading,
+    S.Overlay = UIBase.create([S.UIBase.Box,
+        S.UIBase.ContentBox,
+        S.UIBase.Position,
+        S.UIBase.Loading,
         //ie6 支持,select bug
-        UA.ie == 6 ? S.Ext.Shim : null,
-        S.Ext.Align,
-        S.Ext.Mask], {
+        UA.ie == 6 ? S.UIBase.Shim : null,
+        S.UIBase.Align,
+        S.UIBase.Mask], {
 
-        init:function() {
-            S.log("Overlay init");
-            var self = this;
-            self.on("bindUI", self._bindUIOverlay, self);
-            self.on("renderUI", self._renderUIOverlay, self);
-            self.on("syncUI", self._syncUIOverlay, self);
+        initializer:function() {
+            //S.log("Overlay init");
         },
 
-        _renderUIOverlay:function() {
-            S.log("_renderUIOverlay");
+        renderUI:function() {
+            //S.log("_renderUIOverlay");
             this.get("el").addClass("ks-overlay");
         },
 
-        _syncUIOverlay:function() {
-            S.log("_syncUIOverlay");
+        syncUI:function() {
+            //S.log("_syncUIOverlay");
         },
         /**
          * bindUI
          * 注册dom事件以及属性事件
          * @override
          */
-        _bindUIOverlay: function() {
-            S.log("_bindUIOverlay");
+        bindUI: function() {
+            //S.log("_bindUIOverlay");
         },
 
         /**
          * 删除自己, mask 删不了
          */
         destructor: function() {
-            S.log("overlay destructor");
+            //S.log("overlay destructor");
         }
 
+    },{
+        ATTRS:{
+            elOrder:0
+        }
     });
-    S.Overlay = Overlay;
-
 }, {
-    requires: ["core"]
+    requires: ["uibase"]
 });
 
 /**
  * 2010-11-09 2010-11-10 承玉<yiminghe@gmail.com>重构，attribute-base-Overlay ，采用 Base.create
- *
- * TODO:
- *  - effect
  */
 /**
  * KISSY.Dialog
@@ -73,34 +68,32 @@ KISSY.add("overlay", function(S) {
  */
 KISSY.add('dialog', function(S) {
 
-    S.Dialog = S.Base.create(S.Overlay,
-        [S.Ext.StdMod,
-            S.Ext.Close,
-            S.Ext.Drag,
-            S.Ext.Constrain], {
-        init:function() {
-            S.log("dialog init");
-            var self = this;
-            self.on("renderUI", self._rendUIDialog, self);
-            self.on("bindUI", self._bindUIDialog, self);
-            self.on("syncUI", self._syncUIDialog, self);
+    S.Dialog = S.UIBase.create(S.Overlay,
+        [
+            S.UIBase.StdMod,
+            S.UIBase.Close,
+            S.UIBase.Drag,
+            S.UIBase.Constrain
+        ], {
+        initializer:function() {
+            //S.log("dialog init");
         },
 
-        _rendUIDialog:function() {
-            S.log("_rendUIDialog");
+        renderUI:function() {
+            //S.log("_renderUIDialog");
             var self = this;
             self.get("el").addClass("ks-dialog");
             //设置值，drag-ext 绑定时用到
             self.set("handlers", [self.get("header")]);
         },
-        _bindUIDialog:function() {
-            S.log("_bindUIDialog");
+        bindUI:function() {
+            //S.log("_bindUIDialog");
         },
-        _syncUIDialog:function() {
-            S.log("_syncUIDialog");
+        syncUI:function() {
+            //S.log("_syncUIDialog");
         },
         destructor:function() {
-            S.log("Dialog destructor");
+            //S.log("Dialog destructor");
         }
     });
 

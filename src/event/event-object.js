@@ -13,7 +13,7 @@ KISSY.add('event-object', function(S, undefined) {
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
      */
-    function EventObject(currentTarget, domEvent, type, currentEl) {
+    function EventObject(currentTarget, domEvent, type) {
         var self = this;
         self.currentTarget = currentTarget;
         self.originalEvent = domEvent || { };
@@ -27,15 +27,14 @@ KISSY.add('event-object', function(S, undefined) {
             self.target = currentTarget;
         }
 
+        // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
+        if (currentTarget.isCustomEventTarget) {
+            if (S.DOM._isKSNode(currentTarget)) self.target = new S.Node(self.target);
+        }
+
         // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
         self.currentTarget = currentTarget;
         self.fixed = true;
-
-        // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
-        if(currentTarget.isCustomEventTarget) {
-            if(currentTarget.item) currentTarget = currentTarget.item(currentEl);
-            if(S.DOM._isKSNode(currentTarget)) self.target = new S.Node(self.target);
-        }
     }
 
     S.augment(EventObject, {

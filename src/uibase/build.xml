@@ -1,0 +1,33 @@
+<project name="uibase.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../../tools/build.xml"/>
+
+    <property file="build.properties"/>
+    <property name="src.dir" location="."/>
+
+    <target name="concat">
+        <concat destfile="uibase-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="uibase.js"/>
+            <path path="uibase-align.js"/>
+            <path path="uibase-box.js"/>
+            <path path="uibase-close.js"/>
+            <path path="uibase-constrain.js"/>
+            <path path="uibase-contentbox.js"/>
+            <path path="uibase-drag.js"/>
+            <path path="uibase-loading.js"/>
+            <path path="uibase-mask.js"/>
+            <path path="uibase-position.js"/>
+            <path path="uibase-shim.js"/>
+            <path path="uibase-stdmod.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="uibase-pkg.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
+    </target>
+</project>
+

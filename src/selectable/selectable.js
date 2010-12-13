@@ -1,30 +1,30 @@
 /**
  * Selectable
- * @creator  ÇåÓğ<qingyu@taobao.com> & ²©Óñ<boyu@taobao.com>
+ * @creator  æ¸…ç¾½<qingyu@taobao.com> & åšç‰<boyu@taobao.com>
  */
 KISSY.add('selectable', function(S, undefined) {
-	
+
 	var DOM = S.DOM, Event = S.Event,
 		CLS_PREFIX = 'ks-selectable-', DATA_PREFIX = 'ks-data-',
 		NONE_SELECTED_INDEX = -1, DOT = '.',
 		EVENT_INIT = 'init', EVENT_SELECT = 'select', EVENT_SELECTBYVALUE = 'selectByValue',
 		EVENT_PREV = 'prev', EVENT_NEXT = 'next', EVENT_VALUE = 'value',
-		EVENT_ITEM = 'item', EVENT_FILTER = 'filter', 
+		EVENT_ITEM = 'item', EVENT_FILTER = 'filter',
 		EVENT_CLEARFILTER = 'clearFilter';
-	
+
 	/**
      * Selectable Widget
-     * attached members£º
+     * attached membersï¼š
      *   - this.container
      *   - this.config
-     *   - this.items  ¿ÉÒÔÎª¿ÕÖµ []
+     *   - this.items  å¯ä»¥ä¸ºç©ºå€¼ []
      *   - this.length
      *   - this.selectedIndex
      */
 	function Selectable(container, config) {
 		var self = this;
-		
-        // µ÷ÕûÅäÖÃĞÅÏ¢
+
+        // è°ƒæ•´é…ç½®ä¿¡æ¯
         config = config || {};
         if (!('markupType' in config)) {
             if (config.itemCls) {
@@ -34,13 +34,13 @@ KISSY.add('selectable', function(S, undefined) {
             }
         }
 		config = S.merge(Selectable.Config, config || {});
-		
+
 		/**
          * the container of widget
          * @type HTMLElement
          */
 		self.container = S.get(container);
-		
+
 		/**
          * the current items of widget
          * @type Array
@@ -60,55 +60,55 @@ KISSY.add('selectable', function(S, undefined) {
 		self.config = config;
 
 		/**
-         * µ±Ç°Ñ¡ÖĞÏîË÷ÒıÖµ
+         * å½“å‰é€‰ä¸­é¡¹ç´¢å¼•å€¼
          * @type Number
          */
 		//self.selectedIndex;
-		
+
 		/**
-         * value-itemµÄmap
+         * value-itemçš„map
          * @type Object
          */
 		//self.valueMap;
 
 		self._init();
 	}
-	
-	//Ä¬ÈÏÅäÖÃ
+
+	//é»˜è®¤é…ç½®
 	Selectable.Config = {
-		// markup µÄÀàĞÍ,È¡ÖµÈçÏÂ£º
+		// markup çš„ç±»å‹,å–å€¼å¦‚ä¸‹ï¼š
 		markupType: 0,
-		
-		//0 Ä¬ÈÏ·½Ê½,Í¨¹ıcontainer»ñÈ¡items;
-		
-		//1 Áé»î·½Ê½,Í¨¹ıclass»ñÈ¡items;
+
+		//0 é»˜è®¤æ–¹å¼,é€šè¿‡containerè·å–items;
+
+		//1 çµæ´»æ–¹å¼,é€šè¿‡classè·å–items;
 		itemCls: CLS_PREFIX + 'item',
 
-		//Ñ¡ÖĞµÄitemµÄclass
+		//é€‰ä¸­çš„itemçš„class
 		selectedItemCls: CLS_PREFIX + 'selected',
 
-		//Òş²ØitemµÄclass,Èô²»ÉèÖÃÔòÊ¹ÓÃdisplay:none
+		//éšè—itemçš„class,è‹¥ä¸è®¾ç½®åˆ™ä½¿ç”¨display:none
 		invisibleItemCls: undefined,
-	
-		//2 ×ÔÓÉ·½Ê½,×ÔÓÉ´«Èëitems
+
+		//2 è‡ªç”±æ–¹å¼,è‡ªç”±ä¼ å…¥items
 		items: [],
 
-		// »ñÈ¡ÖµµÄÊôĞÔ
+		// è·å–å€¼çš„å±æ€§
 		valueKey: DATA_PREFIX + 'value',
 
-		//Ä¬ÈÏÑ¡ÖĞÏîË÷ÒıÖµ
+		//é»˜è®¤é€‰ä¸­é¡¹ç´¢å¼•å€¼
 		selectedIndex: undefined,
 
-		//Ñ¡ÏîµÄÄ¬ÈÏdisplayÊôĞÔÖµ
+		//é€‰é¡¹çš„é»˜è®¤displayå±æ€§å€¼
 		defaultDisplay: undefined
 	};
-	
-	// ²å¼ş
+
+	// æ’ä»¶
     Selectable.Plugins = [];
-	
+
 	S.augment(Selectable, S.EventTarget, {
-		
-		//³õÊ¼»¯
+
+		//åˆå§‹åŒ–
 		_init: function() {
 			var self = this, cfg = self.config;
 
@@ -124,28 +124,28 @@ KISSY.add('selectable', function(S, undefined) {
 
 			self.fire(EVENT_INIT);
 		},
-		
-		//½âÎöhtml,»ñµÃitems
+
+		//è§£æhtml,è·å¾—items
 		_parseMarkup: function() {
 			var self = this, cfg = self.config,
 				container = self.container, items = [];
-				
+
 			switch (cfg.markupType) {
-				case 0: //Ä¬ÈÏ·½Ê½
+				case 0: //é»˜è®¤æ–¹å¼
 					items = DOM.children(container);
 					break;
-				case 1: //Áé»î·½Ê½
+				case 1: //çµæ´»æ–¹å¼
 					items = S.query(DOT + cfg.itemCls, container);
 					break;
-				case 2: //×ÔÓÉ·½Ê½
+				case 2: //è‡ªç”±æ–¹å¼
 					items = cfg.items;
 			}
-			
+
 			self.items = S.makeArray(items);
 			self.fullItems = self.items;
 		},
-		
-		//´´½¨Value-Item Map
+
+		//åˆ›å»ºValue-Item Map
 		_buildValueMap: function() {
 			var self = this, config = self.config,
 				obj = {};
@@ -157,11 +157,11 @@ KISSY.add('selectable', function(S, undefined) {
 			});
 			self.valueMap = obj;
 		},
-		
+
 		/**
-		 * ¸ù¾İË÷ÒıÖµÑ¡Ôñ
-		 * @param	index	Number	Ë÷ÒıÖµ,ÈôÎª-1(NONE_SELECTED_INDEX),Ôò²»Ñ¡ÖĞÈÎºÎÏî
-		 * @return	HTMLElement	µ±Ç°Ñ¡ÖĞµÄÏî
+		 * æ ¹æ®ç´¢å¼•å€¼é€‰æ‹©
+		 * @param	index	Number	ç´¢å¼•å€¼,è‹¥ä¸º-1(NONE_SELECTED_INDEX),åˆ™ä¸é€‰ä¸­ä»»ä½•é¡¹
+		 * @return	HTMLElement	å½“å‰é€‰ä¸­çš„é¡¹
 		 */
 		select: function(index) {
 			var item;
@@ -170,7 +170,7 @@ KISSY.add('selectable', function(S, undefined) {
 			}
 			this._setSelectedItem(index);
 			item = this.items[this.selectedIndex];
-			
+
 			if (item != undefined){
 				this.fire(EVENT_SELECT);
 			}
@@ -178,15 +178,15 @@ KISSY.add('selectable', function(S, undefined) {
 			return item;
 		},
 
-		//È¡Ïûµ±Ç°Ñ¡ÖĞÏî
+		//å–æ¶ˆå½“å‰é€‰ä¸­é¡¹
 		_cancelSelectedItem: function() {
 			var item = this.items[this.selectedIndex],
 				SELECTED_ITEM_CLS = this.config.selectedItemCls;
 			DOM.removeClass(item, SELECTED_ITEM_CLS);
 			this.selectedIndex = undefined;
 		},
-		
-		//ÉèÖÃÑ¡ÖĞÏî
+
+		//è®¾ç½®é€‰ä¸­é¡¹
 		_setSelectedItem: function(index) {
 			var item = this.items[index],
 				SELECTED_ITEM_CLS = this.config.selectedItemCls;
@@ -197,10 +197,10 @@ KISSY.add('selectable', function(S, undefined) {
 				this.selectedIndex = undefined;
 			}
 		},
-		
-		//¸ù¾İÖµÑ¡Ôñ
+
+		//æ ¹æ®å€¼é€‰æ‹©
 		selectByValue: function(value) {
-			var self = this, config = self.config, 
+			var self = this, config = self.config,
 				item = self.valueMap[value];
 
 			if (item) {
@@ -213,8 +213,8 @@ KISSY.add('selectable', function(S, undefined) {
 				}
 			}
 		},
-		
-		//Ñ¡ÔñÇ°Ò»Ïî
+
+		//é€‰æ‹©å‰ä¸€é¡¹
 		prev: function() {
 			if (this.selectedIndex === undefined) {
 				this.selectedIndex = 0;
@@ -223,8 +223,8 @@ KISSY.add('selectable', function(S, undefined) {
 
 			this.fire(EVENT_PREV);
 		},
-		
-		//Ñ¡ÔñºóÒ»Ïî
+
+		//é€‰æ‹©åä¸€é¡¹
 		next: function() {
 			if (this.selectedIndex === undefined) {
 				this.selectedIndex = this.items.length - 1;
@@ -233,8 +233,8 @@ KISSY.add('selectable', function(S, undefined) {
 
 			this.fire(EVENT_NEXT);
 		},
-		
-		//»ñµÃµ±Ç°Ñ¡ÔñÖµ
+
+		//è·å¾—å½“å‰é€‰æ‹©å€¼
 		value: function() {
 			var self = this, item = self.item();
 			if (item) {
@@ -242,24 +242,24 @@ KISSY.add('selectable', function(S, undefined) {
 			}
 		},
 
-		//»ñÈ¡µ±Ç°Ñ¡ÖĞµÄitem
+		//è·å–å½“å‰é€‰ä¸­çš„item
 		item: function() {
 			if (this.selectedIndex !== undefined) {
 				return this.items[this.selectedIndex];
 			}
 		},
 
-		//¸ù¾İÌá¹©µÄ·½·¨¹ıÂË
+		//æ ¹æ®æä¾›çš„æ–¹æ³•è¿‡æ»¤
 		filter: function(fn) {
 			var items = this.items, cfg = this.config, filterResult = [],
 				INVISIBLE_ITEM_CLS = cfg.invisibleItemCls;
 			this.clearFilter();
-	
+
 			if (!S.isFunction(fn)) {
 				return;
 			}
 			S.each(items, function(item) {
-				//Èç¹ûµ±Ç°ÓĞÑ¡ÖĞÖµ,ÔòÖÃ¿ÕÑ¡ÖĞÖµ
+				//å¦‚æœå½“å‰æœ‰é€‰ä¸­å€¼,åˆ™ç½®ç©ºé€‰ä¸­å€¼
 				this.select(NONE_SELECTED_INDEX);
 				if (!fn(item, this)) {
 					if (INVISIBLE_ITEM_CLS) {
@@ -273,17 +273,17 @@ KISSY.add('selectable', function(S, undefined) {
 			}, this);
 
 			this.items = filterResult;
-			
+
 			this.fire(EVENT_FILTER);
 
 			return filterResult;
 		},
 
 		clearFilter: function() {
-			var cfg = this.config, 
+			var cfg = this.config,
 				INVISIBLE_ITEM_CLS = cfg.invisibleItemCls;
 
-			//Èç¹ûµ±Ç°ÓĞÑ¡ÖĞÖµ,ÔòÖÃ¿ÕÑ¡ÖĞÖµ
+			//å¦‚æœå½“å‰æœ‰é€‰ä¸­å€¼,åˆ™ç½®ç©ºé€‰ä¸­å€¼
 			this.select(NONE_SELECTED_INDEX);
 			this.items = this.fullItems;
 			if (INVISIBLE_ITEM_CLS) {
@@ -294,7 +294,7 @@ KISSY.add('selectable', function(S, undefined) {
 
 			this.fire(EVENT_CLEARFILTER);
 		}
-		
+
 	});
 
 	S.Selectable = Selectable;
@@ -302,18 +302,18 @@ KISSY.add('selectable', function(S, undefined) {
 }, { requires: ['core'] });
 
 /**
-ÈÕÖ¾£º
+æ—¥å¿—ï¼š
 
-2010-10-29	
-1. ¿¼ÂÇÊÇ·ñÊµÏÖ¶àÑ¡£¿ÈôÊµÏÖ¶àÑ¡,½«»á´ó·¶Î§¸Ä¶¯µ±Ç°µÄÉè¼Æ
-	²»ÓÃÊµÏÖ¶àÑ¡
-2. valueµÄÉè¼Æ,ÊÇ·ñÔÚ³õÊ¼»¯Ê±ĞÎ³ÉÒ»¸övalue-itemµÄmap?
+2010-10-29
+1. è€ƒè™‘æ˜¯å¦å®ç°å¤šé€‰ï¼Ÿè‹¥å®ç°å¤šé€‰,å°†ä¼šå¤§èŒƒå›´æ”¹åŠ¨å½“å‰çš„è®¾è®¡
+	ä¸ç”¨å®ç°å¤šé€‰
+2. valueçš„è®¾è®¡,æ˜¯å¦åœ¨åˆå§‹åŒ–æ—¶å½¢æˆä¸€ä¸ªvalue-itemçš„map?
 
 2010-11-1
-1.selectableÔÚIEä¯ÀÀÆ÷ÏÂÏìÓ¦Âı
+1.selectableåœ¨IEæµè§ˆå™¨ä¸‹å“åº”æ…¢
 
 2010-11-3
-1.¿¼ÂÇÔÚÍâ²¿ÊµÏÖ¶ÔfilterºóµÄ½á¹ûcache£¬±ÈÈçcomboBoxµÄquery»òÕß±ğµÄ·½·¨£¬ÏÈ²éÑ¯¡¢cacheÔÙµ÷ÓÃfilter¡£
-2.fullItemsÃüÃû¿¼ÂÇĞŞ¸Ä
-3.ËùÓĞµÄ²Ù×÷ĞèÒªÔö¼Ó×Ô¶¨ÒåÊÂ¼ş
+1.è€ƒè™‘åœ¨å¤–éƒ¨å®ç°å¯¹filteråçš„ç»“æœcacheï¼Œæ¯”å¦‚comboBoxçš„queryæˆ–è€…åˆ«çš„æ–¹æ³•ï¼Œå…ˆæŸ¥è¯¢ã€cacheå†è°ƒç”¨filterã€‚
+2.fullItemså‘½åè€ƒè™‘ä¿®æ”¹
+3.æ‰€æœ‰çš„æ“ä½œéœ€è¦å¢åŠ è‡ªå®šä¹‰äº‹ä»¶
 */

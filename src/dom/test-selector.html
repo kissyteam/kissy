@@ -12,7 +12,7 @@
 
 <h2>Test Data</h2>
 
-<script src="../../build/kissy/kissy-pkg.js"></script>
+<script src="../../build/seed/seed-pkg.js"></script>
 <script src="../../build/ua/ua-pkg.js"></script>
 
 <script src="dom.js"></script>
@@ -21,9 +21,9 @@
 <script src="dom-class.js"></script>
 <script>KISSY.add('core');</script>
 
-<script src="../sizzle/sizzle.js"></script>
+<script src="../../build/sizzle/sizzle-pkg.js"></script>
 
-<script src="../../third-party/jquery/jquery-1.4.2.min.js"></script>
+<script src="../../tools/third-party/jquery.js"></script>
 
 <div id="test-data-div" style="width: 500px; height: 200px; overflow: auto; border: 1px solid #aaa"></div>
 <textarea id="test-data-area" style="display: none" rows="0" cols="0">
@@ -585,7 +585,7 @@ function test_query_group_ks(test) {
     if (ret.length !== 15) test.fail(ret.length);
 
     if(S.query('div span', '#foo').length !== 0) test.fail();
-    if(S.query('div span, p span', '#foo').length !== 0) test.fail();
+    if($('div span, p span', '#foo').length !== 1) test.fail();
 }
 
 function test_query_group_jq(test) {
@@ -683,7 +683,7 @@ function test_dom_filter(test) {
 }
 
 function test_dom_test(test) {
-    if(!DOM.test('.cateory', function(elem) {
+    if (DOM.test('.cateory', function(elem) {
         return elem.tagName === 'H3';
     })) test.fail();
 }

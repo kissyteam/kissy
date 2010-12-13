@@ -4,61 +4,56 @@
  */
 KISSY.add("overlay", function(S) {
 
-    var Base = S.Base,
+    var UIBase = S.UIBase,
         UA = S.UA;
 
 
-    var Overlay = Base.create([S.Ext.Box,
-        S.Ext.ContentBox,
-        S.Ext.Position,
-        S.Ext.Loading,
+    S.Overlay = UIBase.create([S.UIBase.Box,
+        S.UIBase.ContentBox,
+        S.UIBase.Position,
+        S.UIBase.Loading,
         //ie6 支持,select bug
-        UA.ie == 6 ? S.Ext.Shim : null,
-        S.Ext.Align,
-        S.Ext.Mask], {
+        UA.ie == 6 ? S.UIBase.Shim : null,
+        S.UIBase.Align,
+        S.UIBase.Mask], {
 
-        init:function() {
-            S.log("Overlay init");
-            var self = this;
-            self.on("bindUI", self._bindUIOverlay, self);
-            self.on("renderUI", self._renderUIOverlay, self);
-            self.on("syncUI", self._syncUIOverlay, self);
+        initializer:function() {
+            //S.log("Overlay init");
         },
 
-        _renderUIOverlay:function() {
-            S.log("_renderUIOverlay");
+        renderUI:function() {
+            //S.log("_renderUIOverlay");
             this.get("el").addClass("ks-overlay");
         },
 
-        _syncUIOverlay:function() {
-            S.log("_syncUIOverlay");
+        syncUI:function() {
+            //S.log("_syncUIOverlay");
         },
         /**
          * bindUI
          * 注册dom事件以及属性事件
          * @override
          */
-        _bindUIOverlay: function() {
-            S.log("_bindUIOverlay");
+        bindUI: function() {
+            //S.log("_bindUIOverlay");
         },
 
         /**
          * 删除自己, mask 删不了
          */
         destructor: function() {
-            S.log("overlay destructor");
+            //S.log("overlay destructor");
         }
 
+    },{
+        ATTRS:{
+            elOrder:0
+        }
     });
-    S.Overlay = Overlay;
-
 }, {
-    requires: ["core"]
+    requires: ["uibase"]
 });
 
 /**
  * 2010-11-09 2010-11-10 承玉<yiminghe@gmail.com>重构，attribute-base-Overlay ，采用 Base.create
- *
- * TODO:
- *  - effect
  */

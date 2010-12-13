@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * @module  dom
@@ -305,7 +305,7 @@ KISSY.add('selector', function(S, undefined) {
             }
             // 其它复杂 filter, 采用外部选择器
             else if (filter && S.ExternalSelector) {
-                ret = S.ExternalSelector._filter(selector, filter);
+                ret = S.ExternalSelector._filter(selector, filter + '');
             }
             // filter 为空或不支持的 selector
             else {
@@ -320,9 +320,8 @@ KISSY.add('selector', function(S, undefined) {
          */
         test: function(selector, filter) {
             var elems = query(selector);
-            return DOM.filter(elems, filter).length === elems.length;
+            return elems.length && (DOM.filter(elems, filter).length === elems.length);
         }
-
     });
 });
 
@@ -1184,8 +1183,7 @@ KISSY.add('dom-style', function(S, undefined) {
         // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
         if (val === AUTO && RE_LT.test(name)) {
             ret = 0;
-
-            if (DOM.css(elem, 'position') === 'absolute') {
+            if (S.inArray(DOM.css(elem, 'position'), ['absolute','fixed'])) {
                 offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
                 // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉

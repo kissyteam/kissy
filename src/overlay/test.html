@@ -5,20 +5,21 @@
 <title>Overlay Widgets Test</title>
 
 <script src="../../build/kissy.js"></script>
-<script src="../ext/box-ext.js"></script>
-<script src="../ext/contentbox-ext.js"></script>
-<script src="../ext/position-ext.js"></script>
-<script src="../ext/shim-ext.js"></script>
-<script src="../ext/mask-ext.js"></script>
-<script src="../ext/align-ext.js"></script>
-<script src="../ext/loading-ext.js"></script>
+<script src="../uibase/uibase.js"></script>
+<script src="../uibase/uibase-box.js"></script>
+<script src="../uibase/uibase-contentbox.js"></script>
+<script src="../uibase/uibase-position.js"></script>
+<script src="../uibase/uibase-shim.js"></script>
+<script src="../uibase/uibase-mask.js"></script>
+<script src="../uibase/uibase-align.js"></script>
+<script src="../uibase/uibase-loading.js"></script>
 <script src="overlay.js"></script>
 <script src="../dd/ddm.js"></script>
 <script src="../dd/draggable.js"></script>
-<script src="../ext/stdmod-ext.js"></script>
-<script src="../ext/close-ext.js"></script>
-<script src="../ext/drag-ext.js"></script>
-<script src="../ext/constrain-ext.js"></script>
+<script src="../uibase/uibase-stdmod.js"></script>
+<script src="../uibase/uibase-close.js"></script>
+<script src="../uibase/uibase-drag.js"></script>
+<script src="../uibase/uibase-constrain.js"></script>
 <script src="dialog.js"></script>
 
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
@@ -149,6 +150,7 @@
             }
         });
         S.one('#link2').on('mouseenter', function() {
+            
             popup.show();
         });
         S.one('#link2').on('mouseleave', function() {
@@ -202,7 +204,7 @@
             t = new S.Node(t);
             t.on("mouseenter", function() {
                 popup.set("content", t.html());
-                popup.renderer();
+                popup.render();
                 popup.align(t, ["tr","tl"]);
                 popup.show();
             });
@@ -227,7 +229,6 @@
 <button id="btn3">Show</button>
 <div id="markupDialog" class="ks-dialog">
     <div class="ks-contentbox">
-        <a class="ks-ext-close"><span class="ks-ext-close-x">X</span></a>
         <div class="ks-stdmod-header">
             i am header
         </div>
@@ -236,6 +237,7 @@
                 从 markup 生成 dialog
             </div>
         </div>
+        <a class="ks-ext-close"><span class="ks-ext-close-x">X</span></a>
     </div>
 </div>
 <script>
@@ -246,7 +248,7 @@
         });
 
         S.one("#btn3").on("click", function() {
-            d.renderer();
+            d.render();
             d.center();
             d.show();
         });
@@ -270,7 +272,7 @@
             mask: true
         });
         S.one("#btn4").on("click", function() {
-            dialog.renderer();
+            dialog.render();
             dialog.center();
             dialog.show();
         });
@@ -280,7 +282,7 @@
 
 <style>
     .constrain {
-        border: 4px solid grey;
+        border: 4px solid gray;
         width: 600px;
         height: 400px;
     }
@@ -288,6 +290,9 @@
 <h2>Dialog Constrain</h2>
 <div class="constrain" id="c1">
     constrain area
+    <select>
+        <option> hello world </option>
+    </select>
 </div>
 <button id="btn6">show</button>
 <button id="btn7">release</button>
@@ -342,6 +347,40 @@
 </script>
 <p class="code-switch">显示源码</p>
 
+
+
+<h2>Dialog fixed 居中</h2>
+<button id="btn5">Show</button>
+<script>
+    KISSY.ready(function(S) {
+        var dialog = new S.Dialog({
+            width: 400,
+            bodyStyle:{
+                height: 300
+            },
+            elStyle:{
+              position:S.UA.ie==6?"absolute":"fixed"
+            },
+            headerContent: 'this is title',
+            footerContent: 'footer',
+            bodyContent: 'content',
+            mask: true,
+            draggable:false
+        });
+        S.one("#btn5").on("click", function() {
+            dialog.render();
+            dialog.center();
+            dialog.show();
+        });
+        if(S.UA.ie==6){
+            S.Event.on(window,"scroll",function(){
+                if(dialog.get("visible"))
+                dialog.center();
+            });
+        }
+    });
+</script>
+<p class="code-switch">显示源码</p>
 
 <script>
     (function() {

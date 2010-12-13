@@ -1,46 +1,524 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
-/**
+/*
  * @module kissy
  * @author lifesinger@gmail.com
  */
-(function(win, S, undef) {
+(function(host, S, undef) {
 
-    // If KISSY is already defined, the existing KISSY object will not
-    // be overwritten so that defined namespaces are preserved.
-    if (win[S] === undef) win[S] = {};
-    S = win[S]; // shortcut
+    var meta = {
+            /**
+             * Copies all the properties of s to r.
+             * @return {Object} the augmented object
+             */
+            mix: function(r, s, ov, wl) {
+                if (!s || !r) return r;
+                if (ov === undef) ov = true;
+                var i, p, len;
 
-    var doc = win['document'], loc = location,
-        EMPTY = '',
-
-        // Copies all the properties of s to r
-        mix = function(r, s, ov, wl) {
-            if (!s || !r) return r;
-            if (ov === undef) ov = true;
-            var i, p, l;
-
-            if (wl && (l = wl.length)) {
-                for (i = 0; i < l; i++) {
-                    p = wl[i];
-                    if (p in s) {
-                        if (ov || !(p in r)) {
-                            r[p] = s[p];
+                if (wl && (len = wl.length)) {
+                    for (i = 0; i < len; i++) {
+                        p = wl[i];
+                        if (p in s) {
+                            _mix(p, r, s, ov);
                         }
                     }
+                } else {
+                    for (p in s) {
+                        _mix(p, r, s, ov);
+                    }
                 }
-            } else {
-                for (p in s) {
-                    if (ov || !(p in r)) {
-                        r[p] = s[p];
+                return r;
+            }
+        },
+
+        _mix = function(p, r, s, ov) {
+            if (ov || !(p in r)) {
+                r[p] = s[p];
+            }
+        },
+
+        // If KISSY is already defined, the existing KISSY object will not
+        // be overwritten so that defined namespaces are preserved.
+        seed = (host && host[S]) || {},
+
+        guid = 0,
+        EMPTY = '';
+
+    // The host of runtime environment. specify by user's seed or <this>,
+    // compatibled for  '<this> is null' in unknown engine.
+    host = seed.__HOST || (seed.__HOST = host || {});
+
+    // shortcut and meta for seed.
+    S = host[S] = meta.mix(seed, meta, false);
+
+    S.mix(S, {
+
+        // S.app() with these members.
+        __APP_MEMBERS: ['namespace'],
+        __APP_INIT_METHODS: ['__init'],
+
+        /**
+         * The version of the library.
+         * @type {String}
+         */
+        version: '1.1.7dev',
+
+        /**
+         * Returns a new object containing all of the properties of
+         * all the supplied objects. The properties from later objects
+         * will overwrite those in earlier objects. Passing in a
+         * single object will create a shallow copy of it.
+         * @return {Object} the new merged object
+         */
+        merge: function() {
+            var o = {}, i, l = arguments.length;
+            for (i = 0; i < l; i++) {
+                S.mix(o, arguments[i]);
+            }
+            return o;
+        },
+
+        /**
+         * Applies prototype properties from the supplier to the receiver.
+         * @return {Object} the augmented object
+         */
+        augment: function(/*r, s1, s2, ..., ov, wl*/) {
+            var args = arguments, len = args.length - 2,
+                r = args[0], ov = args[len], wl = args[len + 1],
+                i = 1;
+
+            if (!S.isArray(wl)) {
+                ov = wl;
+                wl = undef;
+                len++;
+            }
+            if (!S.isBoolean(ov)) {
+                ov = undef;
+                len++;
+            }
+
+            for (; i < len; i++) {
+                S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
+            }
+
+            return r;
+        },
+
+        /**
+         * Utility to set up the prototype, constructor and superclass properties to
+         * support an inheritance strategy that can chain constructors and methods.
+         * Static members will not be inherited.
+         * @param r {Function} the object to modify
+         * @param s {Function} the object to inherit
+         * @param px {Object} prototype properties to add/override
+         * @param sx {Object} static properties to add/override
+         * @return r {Object}
+         */
+        extend: function(r, s, px, sx) {
+            if (!s || !r) return r;
+
+            var create = Object.create ?
+                         function(proto, c) {
+                             return Object.create(proto, {
+                                 constructor: {
+                                     value: c
+                                 }
+                             });
+                         } :
+                         function (proto, c) {
+                             function F() {
+                             }
+
+                             F.prototype = proto;
+
+                             var o = new F();
+                             o.constructor = c;
+                             return o;
+                         },
+                sp = s.prototype,
+                rp;
+
+            // add prototype chain
+            r.prototype = rp = create(sp, r);
+            r.superclass = create(sp, s);
+
+            // add prototype overrides
+            if (px) {
+                S.mix(rp, px);
+            }
+
+            // add object overrides
+            if (sx) {
+                S.mix(r, sx);
+            }
+
+            return r;
+        },
+
+        /****************************************************************************************
+
+         *                            The KISSY System Framework                                *
+
+         ****************************************************************************************/
+
+        /**
+         * Initializes KISSY
+         */
+        __init: function() {
+            this.Config = this.Config || {};
+            this.Env = this.Env || {};
+
+            // NOTICE: '@DEBUG@' will replace with '' when compressing.
+            // So, if loading source file, debug is on by default.
+            // If loading min version, debug is turned off automatically.
+            this.Config.debug = '@DEBUG@';
+        },
+
+        /**
+         * Returns the namespace specified and creates it if it doesn't exist. Be careful
+         * when naming packages. Reserved words may work in some browsers and not others.
+         * <code>
+         * S.namespace('KISSY.app'); // returns KISSY.app
+         * S.namespace('app.Shop'); // returns KISSY.app.Shop
+         * S.namespace('TB.app.Shop', true); // returns TB.app.Shop
+         * </code>
+         * @return {Object}  A reference to the last namespace object created
+         */
+        namespace: function() {
+            var args = arguments, l = args.length,
+                o = null, i, j, p,
+                global = (args[l - 1] === true && l--);
+
+            for (i = 0; i < l; i++) {
+                p = (EMPTY + args[i]).split('.');
+                o = global ? host : this;
+                for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
+                    o = o[p[j]] = o[p[j]] || { };
+                }
+            }
+            return o;
+        },
+
+        /**
+         * create app based on KISSY.
+         * @param name {String} the app name
+         * @param sx {Object} static properties to add/override
+         * <code>
+         * S.app('TB');
+         * TB.namespace('app'); // returns TB.app
+         * </code>
+         * @return {Object}  A reference to the app global object
+         */
+        app: function(name, sx) {
+            var isStr = S.isString(name),
+                O = isStr ? host[name] || {} : name,
+                i = 0,
+                len = S.__APP_INIT_METHODS.length;
+
+            S.mix(O, this, true, S.__APP_MEMBERS);
+            for (; i < len; i++) S[S.__APP_INIT_METHODS[i]].call(O);
+
+            S.mix(O, S.isFunction(sx) ? sx() : sx);
+            isStr && (host[name] = O);
+
+            return O;
+        },
+
+        /**
+         * Prints debug info.
+         * @param msg {String} the message to log.
+         * @param cat {String} the log category for the message. Default
+         *        categories are "info", "warn", "error", "time" etc.
+         * @param src {String} the source of the the message (opt)
+         */
+        log: function(msg, cat, src) {
+            if (S.Config.debug) {
+                if (src) {
+                    msg = src + ': ' + msg;
+                }
+                if (host['console'] !== undef && console.log) {
+                    console[cat && console[cat] ? cat : 'log'](msg);
+                }
+            }
+        },
+
+        /**
+         * Throws error message.
+         */
+        error: function(msg) {
+            if (S.Config.debug) {
+                throw msg;
+            }
+        },
+
+        /*
+         * Generate a global unique id.
+         * @param pre {String} optional guid prefix
+         * @return {String} the guid
+         */
+        guid: function(pre) {
+            return (pre || EMPTY) + guid++;
+        }
+    });
+
+    S.__init();
+
+})(this, 'KISSY');
+/**
+ * @module  lang
+ * @author  lifesinger@gmail.com
+ */
+(function(S, undef) {
+
+    var host = S.__HOST,
+
+        toString = Object.prototype.toString,
+        indexOf = Array.prototype.indexOf,
+        lastIndexOf = Array.prototype.lastIndexOf,
+        filter = Array.prototype.filter,
+        trim = String.prototype.trim,
+
+        EMPTY = '',
+        RE_TRIM = /^\s+|\s+$/g,
+
+        // [[Class]] -> type pairs
+        class2type = {};
+
+    S.mix(S, {
+
+        /**
+         * Determine the internal JavaScript [[Class]] of an object.
+         */
+        type: function(o) {
+            return o == null ?
+                String(o) :
+                class2type[toString.call(o)] || 'object';
+        },
+
+        isNull: function(o) {
+            return o === null;
+        },
+
+        isUndefined: function(o) {
+            return o === undef;
+        },
+
+        /**
+         * Checks to see if an object is empty.
+         */
+        isEmptyObject: function(o) {
+            for (var p in o) {
+                return false;
+            }
+            return true;
+        },
+
+        /**
+         * Checks to see if an object is a plain object (created using "{}"
+         * or "new Object()" or "new FunctionClass()").
+         * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
+         */
+        isPlainObject: function(o) {
+            return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
+        },
+
+        /**
+         * Creates a deep copy of a plain object or array. Others are returned untouched.
+         */
+        clone: function(o) {
+            var ret = o, b, k;
+
+            // array or plain object
+            if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
+                ret = b ? [] : {};
+                for (k in o) {
+                    if (o.hasOwnProperty(k)) {
+                        ret[k] = S.clone(o[k]);
                     }
                 }
             }
-            return r;
+
+            return ret;
         },
+
+        /**
+         * Removes the whitespace from the beginning and end of a string.
+         */
+        trim: trim ?
+            function(str) {
+                return (str == undef) ? EMPTY : trim.call(str);
+            } :
+            function(str) {
+                return (str == undef) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+            },
+
+        /**
+         * Substitutes keywords in a string using an object/array.
+         * Removes undefined keywords and ignores escaped keywords.
+         */
+        substitute: function(str, o, regexp) {
+            if (!S.isString(str) || !S.isPlainObject(o)) return str;
+
+            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
+                if (match.charAt(0) === '\\') return match.slice(1);
+                return (o[name] !== undef) ? o[name] : EMPTY;
+            });
+        },
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * @param object {Object} the object to iterate
+         * @param fn {Function} the function to execute on each item. The function
+         *        receives three arguments: the value, the index, the full array.
+         * @param context {Object} (opt)
+         */
+        each: function(object, fn, context) {
+            var key, val, i = 0, length = object.length,
+                isObj = length === undef || S.type(object) === 'function';
+            context = context || host;
+
+            if (isObj) {
+                for (key in object) {
+                    if (fn.call(context, object[key], key, object) === false) {
+                        break;
+                    }
+                }
+            } else {
+                for (val = object[0];
+                     i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
+                }
+            }
+
+            return object;
+        },
+
+        /**
+         * Search for a specified value within an array.
+         */
+        indexOf: indexOf ?
+            function(item, arr) {
+                return indexOf.call(arr, item);
+            } :
+            function(item, arr) {
+                for (var i = 0, len = arr.length; i < len; ++i) {
+                    if (arr[i] === item) {
+                        return i;
+                    }
+                }
+                return -1;
+            },
+
+        /**
+         * Returns the index of the last item in the array
+         * that contains the specified value, -1 if the
+         * value isn't found.
+         */
+        lastIndexOf: (lastIndexOf) ?
+            function(item, arr) {
+                return lastIndexOf.call(arr, item);
+            } :
+            function(item, arr) {
+                for (var i = arr.length - 1; i >= 0; i--) {
+                    if (arr[i] === item) {
+                        break;
+                    }
+                }
+                return i;
+            },
+
+        /**
+         * Returns a copy of the array with the duplicate entries removed
+         * @param a {Array} the array to find the subset of uniques for
+         * @param override {Boolean}
+         *        if override is true, S.unique([a, b, a]) => [b, a]
+         *        if override is false, S.unique([a, b, a]) => [a, b]
+         * @return {Array} a copy of the array with duplicate entries removed
+         */
+        unique: function(a, override) {
+            if (override) a.reverse();
+            var b = a.slice(), i = 0, n, item;
+
+            while (i < b.length) {
+                item = b[i];
+                while ((n = S.lastIndexOf(item, b)) !== i) {
+                    b.splice(n, 1);
+                }
+                i += 1;
+            }
+
+            if (override) b.reverse();
+            return b;
+        },
+
+        /**
+         * Search for a specified value index within an array.
+         */
+        inArray: function(item, arr) {
+            return S.indexOf(item, arr) > -1;
+        },
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * Returns a new array containing the items that the supplied
+         * function returned true for.
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item
+         * @param context {Object} optional context object
+         * @return {Array} The items on which the supplied function
+         *         returned true. If no items matched an empty array is
+         *         returned.
+         */
+        filter: filter ?
+            function(arr, fn, context) {
+                return filter.call(arr, fn, context);
+            } :
+            function(arr, fn, context) {
+                var ret = [];
+                S.each(arr, function(item, i, arr) {
+                    if (fn.call(context, item, i, arr)) {
+                        ret.push(item);
+                    }
+                });
+                return ret;
+            },
+
+        /**
+         * Gets current date in milliseconds.
+         */
+        now: function() {
+            return new Date().getTime();
+        }
+    });
+
+    S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
+        function(name, lc) {
+            // populate the class2type map
+            class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
+
+            // add isBoolean/isNumber/...
+            S['is' + name] = function(o) {
+                return S.type(o) == lc;
+            }
+        });
+
+})(KISSY);
+/**
+ * @module  lang
+ * @author  lifesinger@gmail.com
+ */
+(function(S, undef) {
+
+    var win = S.__HOST,
+        doc = win['document'],
+        docElem = doc.documentElement,
+
+        EMPTY = '',
+        SEP = '&',
+        BRACKET = encodeURIComponent('[]'),
 
         // Is the DOM ready to be used? Set to true once it occurs.
         isReady = false,
@@ -59,39 +537,176 @@ build time: ${build.time}
 
         // #id or id
         RE_IDSTR = /^#?([\w-]+)$/,
+        RE_ARR_KEY = /^(\w+)\[\]$/,
+        RE_NOT_WHITE = /\S/;
 
-        // global unique id
-        guid = 0;
-
-    mix(S, {
-
-        /**
-         * The version of the library.
-         * @type {String}
-         */
-        version: '1.1.6dev',
+    S.mix(S, {
 
         /**
-         * Initializes KISSY object.
+         * A crude way of determining if an object is a window
          */
-        __init: function() {
-            // 环境信息
-            this.Env = {
-                mods: { }, // 所有模块列表
-                _loadQueue: { } // 加载的模块信息
+        isWindow: function(o) {
+            return S.type(o) === 'object' && 'setInterval' in o;
+        },
+
+        /**
+         * Converts object to a true array.
+         */
+        makeArray: function(o) {
+            if (o === null || o === undef) return [];
+            if (S.isArray(o)) return o;
+
+            // The strings and functions also have 'length'
+            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
+                return [o];
+            }
+
+            return slice2Arr(o);
+        },
+
+        /**
+         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
+         * <code>
+         * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+         * 'section=blog&tag[]=js&tag[]=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+         * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+         * 'id=45&raw'        // -> {id: '45', raw: ''}
+         * </code>
+         */
+        unparam: function(str, sep) {
+            if (typeof str !== 'string' || (str = S.trim(str)).length === 0) return {};
+
+            var ret = {},
+                pairs = str.split(sep || SEP),
+                pair, key, val, m,
+                i = 0, len = pairs.length;
+
+            for (; i < len; ++i) {
+                pair = pairs[i].split('=');
+                key = decodeURIComponent(pair[0]);
+
+                // decodeURIComponent will throw exception when pair[1] contains
+                // GBK encoded chinese characters.
+                try {
+                    val = decodeURIComponent(pair[1] || EMPTY);
+                } catch (ex) {
+                    val = pair[1] || EMPTY;
+                }
+
+                if ((m = key.match(RE_ARR_KEY)) && m[1]) {
+                    ret[m[1]] = ret[m[1]] || [];
+                    ret[m[1]].push(val);
+                } else {
+                    ret[key] = val;
+                }
+            }
+            return ret;
+        },
+
+        /**
+         * Creates a serialized string of an array or object.
+         * <code>
+         * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
+         * {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
+         * </code>
+         */
+        param: function(o, sep) {
+            if (!S.isPlainObject(o)) return EMPTY;
+            sep = sep || SEP;
+
+            var buf = [], key, val;
+            for (key in o) {
+                val = o[key];
+                key = encodeURIComponent(key);
+
+                // val is valid non-array value
+                if (isValidParamValue(val)) {
+                    buf.push(key, '=', encodeURIComponent(val + EMPTY), sep);
+                }
+                // val is not empty array
+                else if (S.isArray(val) && val.length) {
+                    for (var i = 0, len = val.length; i < len; ++i) {
+                        if (isValidParamValue(val[i])) {
+                            buf.push(key, BRACKET + '=', encodeURIComponent(val[i] + EMPTY), sep);
+                        }
+                    }
+                }
+                // ignore other cases, including empty array, Function, RegExp, Date etc.
+            }
+            buf.pop();
+            return buf.join(EMPTY);
+        },
+
+        /**
+         * Executes the supplied function in the context of the supplied
+         * object 'when' milliseconds later. Executes the function a
+         * single time unless periodic is set to true.
+         * @param fn {Function|String} the function to execute or the name of the method in
+         *        the 'o' object to execute.
+         * @param when {Number} the number of milliseconds to wait until the fn is executed.
+         * @param periodic {Boolean} if true, executes continuously at supplied interval
+         *        until canceled.
+         * @param o {Object} the context object.
+         * @param data [Array] that is provided to the function. This accepts either a single
+         *        item or an array. If an array is provided, the function is executed with
+         *        one parameter for each array item. If you need to pass a single array
+         *        parameter, it needs to be wrapped in an array [myarray].
+         * @return {Object} a timer object. Call the cancel() method on this object to stop
+         *         the timer.
+         */
+        later: function(fn, when, periodic, o, data) {
+            when = when || 0;
+            o = o || { };
+            var m = fn, d = S.makeArray(data), f, r;
+
+            if (S.isString(fn)) {
+                m = o[fn];
+            }
+
+            if (!m) {
+                S.error('method undefined');
+            }
+
+            f = function() {
+                m.apply(o, d);
             };
 
-            // 从当前引用文件路径中提取 base
-            var scripts = doc.getElementsByTagName('script'),
-                currentScript = scripts[scripts.length - 1],
-                base = currentScript.src.replace(/^(.*)(seed|kissy).*$/i, '$1');
-            
-            // 配置信息
-            this.Config = {
-                debug: '@DEBUG@', // build 时，会将 @DEBUG@ 替换为空
-                base: base,
-                timeout: 10   // getScript 的默认 timeout 时间
+            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
+
+            return {
+                id: r,
+                interval: periodic,
+                cancel: function() {
+                    if (this.interval) {
+                        clearInterval(r);
+                    } else {
+                        clearTimeout(r);
+                    }
+                }
             };
+        },
+
+        /**
+         * Evalulates a script in a global context.
+         */
+        globalEval: function(data) {
+            if (data && RE_NOT_WHITE.test(data)) {
+                // Inspired by code by Andrea Giammarchi
+                // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
+                var head = doc.getElementsByTagName('head')[0] || docElem,
+                    script = doc.createElement('script');
+
+                // It works! All browsers support!
+                script.text = data;
+
+                // Use insertBefore instead of appendChild to circumvent an IE6 bug.
+                // This arises when a base node is used.
+                head.insertBefore(script, head.firstChild);
+                head.removeChild(script);
+            }
         },
 
         /**
@@ -103,21 +718,19 @@ build time: ${build.time}
          * @return {KISSY}
          */
         ready: function(fn) {
-            var self = this;
-
             // Attach the listeners
-            if (!readyBound) self._bindReady();
+            if (!readyBound) this._bindReady();
 
             // If the DOM is already ready
             if (isReady) {
                 // Execute the function immediately
-                fn.call(win, self);
+                fn.call(win, this);
             } else {
                 // Remember the function for later
                 readyList.push(fn);
             }
 
-            return self;
+            return this;
         },
 
         /**
@@ -232,643 +845,20 @@ build time: ${build.time}
                     }
 
                 }, POLL_INTERVAL, true);
-        },
-
-        /**
-         * Copies all the properties of s to r.
-         * @return {Object} the augmented object
-         */
-        mix: mix,
-
-        /**
-         * Returns a new object containing all of the properties of
-         * all the supplied objects. The properties from later objects
-         * will overwrite those in earlier objects. Passing in a
-         * single object will create a shallow copy of it.
-         * @return {Object} the new merged object
-         */
-        merge: function() {
-            var o = {}, i, l = arguments.length;
-            for (i = 0; i < l; ++i) {
-                mix(o, arguments[i]);
-            }
-            return o;
-        },
-
-        /**
-         * Applies prototype properties from the supplier to the receiver.
-         * @return {Object} the augmented object
-         */
-        augment: function(/*r, s1, s2, ..., ov, wl*/) {
-            var args = arguments, len = args.length - 2,
-                r = args[0], ov = args[len], wl = args[len + 1],
-                i = 1;
-
-            if (!S.isArray(wl)) {
-                ov = wl;
-                wl = undef;
-                len++;
-            }
-
-            if (!S.isBoolean(ov)) {
-                ov = undef;
-                len++;
-            }
-
-            for (; i < len; i++) {
-                mix(r.prototype, args[i].prototype || args[i], ov, wl);
-            }
-
-            return r;
-        },
-
-        /**
-         * Utility to set up the prototype, constructor and superclass properties to
-         * support an inheritance strategy that can chain constructors and methods.
-         * Static members will not be inherited.
-         * @param r {Function} the object to modify
-         * @param s {Function} the object to inherit
-         * @param px {Object} prototype properties to add/override
-         * @param sx {Object} static properties to add/override
-         * @return r {Object}
-         */
-        extend: function(r, s, px, sx) {
-            if (!s || !r) return r;
-
-            var OP = Object.prototype,
-                O = function (o) {
-                    function F() {
-                    }
-
-                    F.prototype = o;
-                    return new F();
-                },
-                sp = s.prototype,
-                rp = O(sp);
-
-            r.prototype = rp;
-            rp.constructor = r;
-            r.superclass = sp;
-
-            // assign constructor property
-            if (s !== Object && sp.constructor === OP.constructor) {
-                sp.constructor = s;
-            }
-
-            // add prototype overrides
-            if (px) {
-                mix(rp, px);
-            }
-
-            // add object overrides
-            if (sx) {
-                mix(r, sx);
-            }
-
-            return r;
-        },
-
-        /**
-         * Returns the namespace specified and creates it if it doesn't exist. Be careful
-         * when naming packages. Reserved words may work in some browsers and not others.
-         * <code>
-         * S.namespace('KISSY.app'); // returns KISSY.app
-         * S.namespace('app.Shop'); // returns KISSY.app.Shop
-         * S.namespace('TB.app.Shop', true); // returns TB.app.Shop
-         * </code>
-         * @return {Object}  A reference to the last namespace object created
-         */
-        namespace: function() {
-            var args = arguments, l = args.length,
-                o = null, i, j, p,
-                global = (args[l - 1] === true && l--);
-
-            for (i = 0; i < l; ++i) {
-                p = (EMPTY + args[i]).split('.');
-                o = global ? win : this;
-                for (j = (win[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                    o = o[p[j]] = o[p[j]] || { };
-                }
-            }
-            return o;
-        },
-
-        /**
-         * create app based on KISSY.
-         * @param name {String} the app name
-         * @param sx {Object} static properties to add/override
-         * <code>
-         * S.app('TB');
-         * TB.namespace('app'); // returns TB.app
-         * </code>
-         * @return {Object}  A reference to the app global object
-         */
-        app: function(name, sx) {
-            var isStr = S.isString(name),
-                O = isStr ? win[name] || { } : name;
-
-            mix(O, this, true, S.__APP_MEMBERS);
-            O.__init();
-
-            mix(O, S.isFunction(sx) ? sx() : sx);
-            isStr && (win[name] = O);
-
-            return O;
-        },
-
-        /**
-         * Prints debug info.
-         * @param msg {String} the message to log.
-         * @param cat {String} the log category for the message. Default
-         *        categories are "info", "warn", "error", "time" etc.
-         * @param src {String} the source of the the message (opt)
-         */
-        log: function(msg, cat, src) {
-            if (S.Config.debug) {
-                if (src) {
-                    msg = src + ': ' + msg;
-                }
-                if (win['console'] !== undef && console.log) {
-                    console[cat && console[cat] ? cat : 'log'](msg);
-                }
-            }
-        },
-
-        /**
-         * Throws error message.
-         */
-        error: function(msg) {
-            if (S.Config.debug) {
-                throw msg;
-            }
-        },
-
-        /*
-         * Generate a global unique id.
-         * @param pre {String} optional guid prefix
-         * @return {String} the guid
-         */
-        guid: function(pre) {
-            var id = guid++ + EMPTY;
-            return pre ? pre + id : id;
-        }
-    });
-
-    S.__init();
-
-    // S.app() 时，需要动态复制的成员列表
-    S.__APP_MEMBERS = ['__init', 'namespace'];
-
-    // 可以通过在 url 上加 ?ks-debug 参数来强制开启 debug 模式
-    if (loc && (loc.search || EMPTY).indexOf('ks-debug') !== -1) {
-        S.Config.debug = true;
-    }
-
-})(window, 'KISSY');
-
-/**
- * NOTES:
- *
- * 2010/08
- *  - 将 loader 功能独立到 loader.js 中
- *
- * 2010/07
- *  - 增加 available 和 guid 方法
- *
- * 2010/04
- *  - 移除掉 weave 方法，鸡肋
- *
- * 2010/01
- *  - add 方法决定内部代码的基本组织方式（用 module 和 submodule 来组织代码）
- *  - ready, available 方法决定外部代码的基本调用方式，提供了一个简单的弱沙箱
- *  - mix, merge, augment, extend 方法，决定了类库代码的基本实现方式，充分利用 mixin 特性和 prototype 方式来实现代码
- *  - namespace, app 方法，决定子库的实现和代码的整体组织
- *  - log, error 方法，简单的调试工具和报错机制
- *  - guid 方法，全局辅助方法
- *  - 考虑简单够用和 2/8 原则，去掉对 YUI3 沙箱的模拟。（archives/2009 r402）
- *
- */
-/**
- * @module  lang
- * @author  lifesinger@gmail.com
- */
-(function(win, S, undefined) {
-
-    var doc = document, docElem = doc.documentElement,
-        AP = Array.prototype,
-        indexOf = AP.indexOf, lastIndexOf = AP.lastIndexOf, filter = AP.filter,
-        trim = String.prototype.trim,
-        toString = Object.prototype.toString,
-        encode = encodeURIComponent,
-        decode = decodeURIComponent,
-        HAS_OWN_PROPERTY = 'hasOwnProperty',
-        EMPTY = '', SEP = '&', BRACKET = encode('[]'),
-        REG_TRIM = /^\s+|\s+$/g,
-        REG_ARR_KEY = /^(\w+)\[\]$/,
-        REG_NOT_WHITE = /\S/;
-
-    S.mix(S, {
-
-        /**
-         * Determines whether or not the provided object is undefined.
-         */
-        isUndefined: function(o) {
-            return o === undefined;
-        },
-
-        /**
-         * Determines whether or not the provided object is a boolean.
-         */
-        isBoolean: function(o) {
-            return toString.call(o) === '[object Boolean]';
-        },
-
-        /**
-         * Determines whether or not the provided object is a string.
-         */
-        isString: function(o) {
-            return toString.call(o) === '[object String]';
-        },
-
-        /**
-         * Determines whether or not the provided item is a legal number.
-         * NOTICE: Infinity and NaN return false.
-         */
-        isNumber: function(o) {
-            return toString.call(o) === '[object Number]' && isFinite(o);
-        },
-
-        /**
-         * Checks to see if an object is a plain object (created using "{}" or "new Object").
-         */
-        isPlainObject: function(o) {
-            // Make sure that DOM nodes and window objects don't pass through.
-            return o && toString.call(o) === '[object Object]' && !o['nodeType'] && !o['setInterval'];
-        },
-
-        /**
-         * Checks to see if an object is empty.
-         */
-        isEmptyObject: function(o) {
-            for (var p in o) {
-                return false;
-            }
-            return true;
-        },
-
-        /**
-         * Determines whether or not the provided object is a function.
-         * NOTICE: DOM methods and functions like alert aren't supported. They return false on IE.
-         */
-        isFunction: function(o) {
-            //return typeof o === 'function';
-            // Safari 下，typeof NodeList 也返回 function
-            return toString.call(o) === '[object Function]';
-        },
-
-        /**
-         * Determines whether or not the provided object is an array.
-         */
-        isArray: function(o) {
-            return toString.call(o) === '[object Array]';
-        },
-
-        /**
-         * Removes the whitespace from the beginning and end of a string.
-         */
-        trim: trim ?
-            function(str) {
-                return (str == undefined) ? EMPTY : trim.call(str);
-            } :
-            function(str) {
-                return (str == undefined) ? EMPTY : str.toString().replace(REG_TRIM, EMPTY);
-            },
-
-        /**
-         * Substitutes keywords in a string using an object/array.
-         * Removes undefined keywords and ignores escaped keywords.
-         */
-        substitute: function(str, o, regexp) {
-            if(!S.isString(str) || !S.isPlainObject(o)) return str;
-
-            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
-                if (match.charAt(0) === '\\') return match.slice(1);
-                return (o[name] !== undefined) ? o[name] : EMPTY;
-            });
-        },
-
-        /**
-         * Executes the supplied function on each item in the array.
-         * @param object {Object} the object to iterate
-         * @param fn {Function} the function to execute on each item. The function
-         *        receives three arguments: the value, the index, the full array.
-         * @param context {Object} (opt)
-         */
-        each: function(object, fn, context) {
-            var key, val, i = 0, length = object.length,
-                isObj = length === undefined || S.isFunction(object);
-            context = context || win;
-            
-            if (isObj) {
-                for (key in object) {
-                    if (fn.call(context, object[key], key, object) === false) {
-                        break;
-                    }
-                }
-            } else {
-                for (val = object[0];
-                     i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
-                }
-            }
-
-            return object;
-        },
-
-        /**
-         * Search for a specified value within an array.
-         */
-        indexOf: indexOf ?
-            function(item, arr) {
-                return indexOf.call(arr, item);
-            } :
-            function(item, arr) {
-                for (var i = 0, len = arr.length; i < len; ++i) {
-                    if (arr[i] === item) {
-                        return i;
-                    }
-                }
-                return -1;
-            },
-
-        /**
-         * Returns the index of the last item in the array
-         * that contains the specified value, -1 if the
-         * value isn't found.
-         */
-        lastIndexOf: (lastIndexOf) ?
-            function(item, arr) {
-                return lastIndexOf.call(arr, item);
-            } :
-            function(item, arr) {
-                for (var i = arr.length - 1; i >= 0; i--) {
-                    if (arr[i] === item) {
-                        break;
-                    }
-                }
-                return i;
-            },
-
-        /**
-         * Returns a copy of the array with the duplicate entries removed
-         * @param a {Array} the array to find the subset of uniques for
-         * @return {Array} a copy of the array with duplicate entries removed
-         */
-        unique: function(a, override) {
-            if(override) a.reverse(); // 默认是后置删除，如果 override 为 true, 则前置删除
-            var b = a.slice(), i = 0, n, item;
-
-            while (i < b.length) {
-                item = b[i];
-                while ((n = S.lastIndexOf(item, b)) !== i) {
-                    b.splice(n, 1);
-                }
-                i += 1;
-            }
-
-            if(override) b.reverse(); // 将顺序转回来
-            return b;
-        },
-        
-        /**
-         * Search for a specified value index within an array.
-         */
-        inArray: function(item, arr) {
-            return S.indexOf(item, arr) > -1;
-        },
-
-        /**
-         * Converts object to a true array.
-         */
-        makeArray: function(o) {
-            if (o === null || o === undefined) return [];
-            if (S.isArray(o)) return o;
-
-            // The strings and functions also have 'length'
-            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
-                return [o];
-            }
-
-            return slice2Arr(o);
-        },
-
-        /**
-         * Executes the supplied function on each item in the array.
-         * Returns a new array containing the items that the supplied
-         * function returned true for.
-         * @param arr {Array} the array to iterate
-         * @param fn {Function} the function to execute on each item
-         * @param context {Object} optional context object
-         * @return {Array} The items on which the supplied function
-         *         returned true. If no items matched an empty array is
-         *         returned.
-         */
-        filter: filter ?
-            function(arr, fn, context) {
-                return filter.call(arr, fn, context);
-            } :
-            function(arr, fn, context) {
-                var ret = [];
-                S.each(arr, function(item, i, arr) {
-                    if (fn.call(context, item, i, arr)) {
-                        ret.push(item);
-                    }
-                });
-                return ret;
-            },
-
-        /**
-         * Creates a serialized string of an array or object.
-         * <code>
-         * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
-         * {foo: '', bar: 2}    // -> 'foo=&bar=2'
-         * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-         * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
-         * </code>
-         */
-        param: function(o, sep) {
-            // 非 plain object, 直接返回空
-            if (!S.isPlainObject(o)) return EMPTY;
-            sep = sep || SEP;
-
-            var buf = [], key, val;
-            for (key in o) {
-                val = o[key];
-                key = encode(key);
-
-                // val 为有效的非数组值
-                if (isValidParamValue(val)) {
-                    buf.push(key, '=', encode(val + EMPTY), sep);
-                }
-                // val 为非空数组
-                else if (S.isArray(val) && val.length) {
-                    for (var i = 0, len = val.length; i < len; ++i) {
-                        if (isValidParamValue(val[i])) {
-                            buf.push(key, BRACKET + '=', encode(val[i] + EMPTY), sep);
-                        }
-                    }
-                }
-                // 其它情况：包括空数组、不是数组的 object（包括 Function, RegExp, Date etc.），直接丢弃
-            }
-            buf.pop();
-            return buf.join(EMPTY);
-        },
-
-        /**
-         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-         * <code>
-         * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-         * 'section=blog&tag[]=js&tag[]=doc' // -> {section: 'blog', tag: ['js', 'doc']}
-         * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
-         * 'id=45&raw'        // -> {id: '45', raw: ''}
-         * </code>
-         */
-        unparam: function(str, sep) {
-            if (typeof str !== 'string' || (str = S.trim(str)).length === 0) return {};
-
-            var ret = {},
-                pairs = str.split(sep || SEP),
-                pair, key, val, m,
-                i = 0, len = pairs.length;
-
-            for (; i < len; ++i) {
-                pair = pairs[i].split('=');
-                key = decode(pair[0]);
-
-                // pair[1] 可能包含 gbk 编码的中文，而 decodeURIComponent 仅能处理 utf-8 编码的中文，否则报错
-                try {
-                    val = decode(pair[1] || EMPTY);
-                } catch (ex) {
-                    val = pair[1] || EMPTY;
-                }
-
-                if ((m = key.match(REG_ARR_KEY)) && m[1]) {
-                    ret[m[1]] = ret[m[1]] || [];
-                    ret[m[1]].push(val);
-                } else {
-                    ret[key] = val;
-                }
-            }
-            return ret;
-        },
-
-        /**
-         * Executes the supplied function in the context of the supplied
-         * object 'when' milliseconds later. Executes the function a
-         * single time unless periodic is set to true.
-         * @param fn {Function|String} the function to execute or the name of the method in
-         *        the 'o' object to execute.
-         * @param when {Number} the number of milliseconds to wait until the fn is executed.
-         * @param periodic {Boolean} if true, executes continuously at supplied interval
-         *        until canceled.
-         * @param o {Object} the context object.
-         * @param data [Array] that is provided to the function. This accepts either a single
-         *        item or an array. If an array is provided, the function is executed with
-         *        one parameter for each array item. If you need to pass a single array
-         *        parameter, it needs to be wrapped in an array [myarray].
-         * @return {Object} a timer object. Call the cancel() method on this object to stop
-         *         the timer.
-         */
-        later: function(fn, when, periodic, o, data) {
-            when = when || 0;
-            o = o || { };
-            var m = fn, d = S.makeArray(data), f, r;
-
-            if (S.isString(fn)) {
-                m = o[fn];
-            }
-
-            if (!m) {
-                S.error('method undefined');
-            }
-
-            f = function() {
-                m.apply(o, d);
-            };
-
-            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
-
-            return {
-                id: r,
-                interval: periodic,
-                cancel: function() {
-                    if (this.interval) {
-                        clearInterval(r);
-                    } else {
-                        clearTimeout(r);
-                    }
-                }
-            };
-        },
-
-        /**
-         * Creates a deep copy of a plain object or array. Others are returned untouched.
-         */
-        clone: function(o) {
-            var ret = o, b, k;
-
-            // array or plain object
-            if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
-                ret = b ? [] : {};
-                for (k in o) {
-                    if (o[HAS_OWN_PROPERTY](k)) {
-                        ret[k] = S.clone(o[k]);
-                    }
-                }
-            }
-
-            return ret;
-        },
-
-        /**
-         * Gets current date in milliseconds.
-         */
-        now: function() {
-            return new Date().getTime();
-        },
-
-        /**
-         * Evalulates a script in a global context.
-         */
-        globalEval: function(data) {
-            if (data && REG_NOT_WHITE.test(data)) {
-                // Inspired by code by Andrea Giammarchi
-                // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
-                var head = doc.getElementsByTagName('head')[0] || docElem,
-                    script = doc.createElement('script');
-
-                // It works! All browsers support!
-                script.text = data;
-
-                // Use insertBefore instead of appendChild to circumvent an IE6 bug.
-                // This arises when a base node is used.
-                head.insertBefore(script, head.firstChild);
-                head.removeChild(script);
-            }
         }
     });
 
     function isValidParamValue(val) {
         var t = typeof val;
-        // val 为 null, undefined, number, string, boolean 时，返回 true
+        // If the type of val is null, undefined, number, string, boolean, return true.
         return val === null || (t !== 'object' && t !== 'function');
     }
 
-    // 将 LiveNodeList 等 array-like 集合转换为普通数组
+    // Converts array-like collection such as LiveNodeList to normal array.
     function slice2Arr(arr) {
-        return AP.slice.call(arr);
+        return Array.prototype.slice.call(arr);
     }
-    // ie 不支持用 slice 转换 LiveNodeList, 降级到普通方法
+    // IE will throw error.
     try {
         slice2Arr(docElem.childNodes);
     }
@@ -881,34 +871,22 @@ build time: ${build.time}
         }
     }
 
-})(window, KISSY);
+    // If url contains '?ks-debug', debug mode will turn on automatically.
+    if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
+        S.Config.debug = true;
+    }
 
-/**
- * NOTES:
- *
- *  2010/08
- *   - 增加 lastIndexOf 和 unique 方法。
- *
- *  2010/06
- *   - unparam 里的 try catch 让人很难受，但为了顺应国情，决定还是留着。
- *
- *  2010/05
- *   - 增加 filter 方法。
- *   - globalEval 中，直接采用 text 赋值，去掉 appendChild 方式。
- *
- *  2010/04
- *   - param 和 unparam 应该放在什么地方合适？有点纠结，目前暂放此处。
- *   - param 和 unparam 是不完全可逆的。对空值的处理和 cookie 保持一致。
- *
- */
+})(KISSY);
 /**
  * @module loader
- * @author lifesinger@gmail.com, lijing00333@163.com
+ * @author lifesinger@gmail.com, lijing00333@163.com, yiminghe@gmail.com
  */
-(function(win, S, undefined) {
+(function(S, undef) {
 
-    var doc = win['document'],
+    var win = S.__HOST,
+        doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+
         EMPTY = '', CSSFULLPATH = 'cssfullpath',
         LOADING = 1, LOADED = 2, ERROR = 3, ATTACHED = 4,
         mix = S.mix,
@@ -954,11 +932,11 @@ build time: ${build.time}
          * @return {KISSY}
          */
         add: function(name, fn, config) {
-            var self = this, mods = self.Env.mods, mod, o;
+            var self = this, mods = self.Env.mods, mod, o, oldr;
 
             // S.add(name, config) => S.add( { name: config } )
             if (S.isString(name) && !config && S.isPlainObject(fn)) {
-                o = { };
+                o = {};
                 o[name] = fn;
                 name = o;
             }
@@ -973,23 +951,32 @@ build time: ${build.time}
             }
             // S.add(name[, fn[, config]])
             else {
-                config = config || { };
+                config = config || {};
 
-                mod = mods[name] || { };
+                mod = mods[name] || {};
                 name = config.host || mod.host || name;
-                mod = mods[name] || { };
+                mod = mods[name] || {};
 
                 // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
                 //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
                 mix(mod, { name: name, status: LOADED });
+
                 if (!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
+
+                //!TODO 暂时不考虑 requires 在 add 中的修改
+                // 和 order _requires 关联起来太复杂
+                oldr = mod['requires'];
                 mix((mods[name] = mod), config);
+                mods[name]['requires'] = oldr; // 不覆盖
 
                 // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
                 if ((mod['attach'] !== false) && self.__isAttached(mod.requires)) {
                     self.__attachMod(mod);
                 }
+
+                //!TODO add 中指定了依赖项，这里没有继续载依赖项
+                //self.__isAttached(mod.requires) 返回 false
             }
 
             return self;
@@ -1008,7 +995,7 @@ build time: ${build.time}
          */
         use: function(modNames, callback, config) {
             modNames = modNames.replace(/\s+/g, EMPTY).split(',');
-            config = config || { };
+            config = config || {};
 
             var self = this, mods = self.Env.mods,
                 global = (config || 0).global,
@@ -1071,6 +1058,9 @@ build time: ${build.time}
             self.__load(mod, fn, global);
 
             function fn() {
+                // add 可能改了 config，这里重新取下
+                var requires = mod['requires'] || [];
+
                 if (self.__isAttached(requires)) {
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);
@@ -1090,7 +1080,7 @@ build time: ${build.time}
         },
 
         __mixMod: function(mods, gMods, name, global) {
-            var mod = mods[name] || { }, status = mod.status;
+            var mod = mods[name] || {}, status = mod.status;
 
             S.mix(mod, S.clone(gMods[name]));
 
@@ -1110,7 +1100,7 @@ build time: ${build.time}
                 S.each(mod.fns, function(fn) {
                     fn && fn(self);
                 });
-                mod.fns = undefined; // 保证 attach 过的方法只执行一次
+                mod.fns = undef; // 保证 attach 过的方法只执行一次
                 //S.log(mod.name + '.status = attached');
             }
 
@@ -1132,7 +1122,7 @@ build time: ${build.time}
          * Load a single module.
          */
         __load: function(mod, callback, global) {
-            var self = this, url = mod.fullpath,
+            var self = this, url = mod['fullpath'],
                 loadQueque = S.Env._loadQueue, // 这个是全局的，防止多实例对同一模块的重复下载
                 node = loadQueque[url], ret;
 
@@ -1258,7 +1248,7 @@ build time: ${build.time}
                 scriptOnload(node, function() {
                     if (timer) {
                         timer.cancel();
-                        timer = undefined;
+                        timer = undef;
                     }
 
                     S.isFunction(success) && success.call(node);
@@ -1272,7 +1262,7 @@ build time: ${build.time}
 
             if (S.isFunction(error)) {
                 timer = S.later(function() {
-                    timer = undefined;
+                    timer = undef;
                     error();
                 }, (timeout || this.Config.timeout) * 1000);
             }
@@ -1284,37 +1274,31 @@ build time: ${build.time}
 
     mix(S, loader);
 
+    /**
+     * Initializes loader.
+     */
+    S.__initLoader = function() {
+        // get base from current script file path
+        var scripts = doc.getElementsByTagName('script'),
+            currentScript = scripts[scripts.length - 1],
+            base = currentScript.src.replace(/^(.*)(seed|kissy).*$/i, '$1');
+
+        this.Env.mods = {}; // all added mods
+        this.Env._loadQueue = {}; // information for loading and loaded mods
+
+        this.Config.base = base;
+        this.Config.timeout = 10;   // the default timeout for getScript
+    };
+    S.__initLoader();
+
+    // for S.app working properly
     S.each(loader, function(v, k) {
         S.__APP_MEMBERS.push(k);
     });
+    S.__APP_INIT_METHODS.push('__initLoader');
 
-})(window, KISSY);
+})(KISSY);
 
-/**
- * TODO:
- *  - 自动 combo 的实现，目前是手动
- *  - 使用场景和测试用例整理
- *
- * NOTES:
- *
- * 2010/08/16 玉伯：
- *  - 基于拔赤的实现，重构。解耦 add/use 和 ready 的关系，简化实现代码。
- *  - 暂时去除 combo 支持，combo 由用户手工控制。
- *  - 支持 app 生成的多 loader.
- *
- * 2010/08/13 拔赤：
- *  - 重写 add, use, ready, 重新组织 add 的工作模式，添加 loader 功能。
- *  - 借鉴 YUI3 原生支持 loader, 但 YUI 的 loader 使用场景复杂，且多 loader 共存的场景
- *    在越复杂的程序中越推荐使用，在中等规模的 webpage 中，形同鸡肋，因此将 KISSY 全局对象
- *    包装成一个 loader，来统一管理页面所有的 modules.
- *  - loader 的使用一定要用 add 来配合，加载脚本过程中的三个状态（before domready,
- *    after domready & before KISSY callbacks' ready, after KISSY callbacks' ready）要明确区分。
- *  - 使用 add 和 ready 的基本思路和之前保持一致，即只要执行 add('mod-name', callback)，就
- *    会执行其中的 callback. callback 执行的时机由 loader 统一控制。
- *  - 支持 combo, 通过 Config.combo = true 来开启，模块的 fullpath 用 path 代替。
- *  - KISSY 内部组件和开发者文件当做地位平等的模块处理，包括 combo.
- *
- */
 /**
  * @module mods
  * @author lifesinger@gmail.com
@@ -1328,32 +1312,30 @@ build time: ${build.time}
         }
     };
 
-    S.each(['sizzle', 'datalazyload', 'flash', 'switchable',
-        'suggest', 'overlay', 'imagezoom', 'calendar'], function(modName) {
-        map[modName] = {
-            path: modName + '/' + modName + '-pkg-min.js',
-            requires: ['core'],
-            charset: 'utf-8'
-        };
-    });
+    S.each([
+        'sizzle', 'dd', 'datalazyload', // pure utilities
+        'flash', // flash etc.
+        'switchable', 'suggest', 'calendar', // UI components based on Base
+        'uibase', 'overlay', 'imagezoom' // UI components based on UIBase
+    ],
+        function(modName) {
+            map[modName] = {
+                path: modName + '/' + modName + '-pkg-min.js',
+                requires: ['core'],
+                charset: 'utf-8'
+            };
+        });
 
     map['calendar'].csspath = 'calendar/default-min.css';
+    map['overlay'].requires = ['uibase'];
 
     S.add(map);
 
 })(KISSY);
-
-/**
- * NOTES:
- *
- *  2010/08/16 玉伯：
- *   - 采用实用性粒度，防止颗粒过小给用户带来的不方便。
- *
- */
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:45
 */
 /**
  * @module  ua
@@ -1548,9 +1530,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * @module  dom
@@ -1854,7 +1836,7 @@ KISSY.add('selector', function(S, undefined) {
             }
             // 其它复杂 filter, 采用外部选择器
             else if (filter && S.ExternalSelector) {
-                ret = S.ExternalSelector._filter(selector, filter);
+                ret = S.ExternalSelector._filter(selector, filter + '');
             }
             // filter 为空或不支持的 selector
             else {
@@ -1869,9 +1851,8 @@ KISSY.add('selector', function(S, undefined) {
          */
         test: function(selector, filter) {
             var elems = query(selector);
-            return DOM.filter(elems, filter).length === elems.length;
+            return elems.length && (DOM.filter(elems, filter).length === elems.length);
         }
-
     });
 });
 
@@ -2733,8 +2714,7 @@ KISSY.add('dom-style', function(S, undefined) {
         // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
         if (val === AUTO && RE_LT.test(name)) {
             ret = 0;
-
-            if (DOM.css(elem, 'position') === 'absolute') {
+            if (S.inArray(DOM.css(elem, 'position'), ['absolute','fixed'])) {
                 offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
                 // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
@@ -3603,7 +3583,7 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -3683,15 +3663,15 @@ KISSY.add('event', function(S, undefined) {
 
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
-                        event = new S.EventObject(target, event, type, this);
-                        if (S.isPlainObject(eventData)) {
-                            S.mix(event, eventData);
-                        }
+                        event = new S.EventObject(target, event, type);
+                    }
+                    if (S.isPlainObject(eventData)) {
+                        S.mix(event, eventData);
                     }
                     if (special['setup']) {
                         special['setup'](event);
                     }
-                    return (special.handle || Event._handle).call(this, target, event, events[type].listeners);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners);
                 };
 
                 events[type] = {
@@ -3709,7 +3689,7 @@ KISSY.add('event', function(S, undefined) {
             }
 
             // 增加 listener
-            events[type].listeners.push({fn: fn, scope: scope});
+            events[type].listeners.push({fn: fn, scope: scope || target});
         },
 
         /**
@@ -3727,14 +3707,14 @@ KISSY.add('event', function(S, undefined) {
             if (c.target !== target) return; // target 不匹配
             scope = scope || target;
             events = c.events || { };
-            
+
             if ((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
 
                 // 移除 fn
                 if (S.isFunction(fn) && len) {
-                    for (i = 0, j = 0, t = []; i < len; ++i) {
+                    for (i = 0,j = 0,t = []; i < len; ++i) {
                         if (fn !== listeners[i].fn
                             || scope !== listeners[i].scope) {
                             t[j++] = listeners[i];
@@ -3774,14 +3754,13 @@ KISSY.add('event', function(S, undefined) {
              sure we'll call all of them.*/
             listeners = listeners.slice(0);
 
-            var ret, i = 0, len = listeners.length, listener, scope;
+            var ret, i = 0, len = listeners.length, listener;
 
             // 让 nodelist 等集合，能自定义 scope
-            if(target.isCustomEventTarget && target.item) scope = target.item(this);
 
             for (; i < len; ++i) {
                 listener = listeners[i];
-                ret = listener.fn.call(scope || listener.scope || target, event);
+                ret = listener.fn.call(listener.scope, event);
 
                 // 自定义事件对象，可以用 return false 来立刻停止后续监听函数
                 // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡
@@ -3825,6 +3804,14 @@ KISSY.add('event', function(S, undefined) {
             S.each(types.split(SPACE), function(type) {
                 Event[methodName](targets, type, fn, scope);
             });
+            return true;
+        }
+
+        // unpack nodelist
+        if (targets.getDOMNodes) {
+            for (var i = 0; i < targets.length; i++) {
+                Event[methodName](targets.item(i), types, fn, scope);
+            }
             return true;
         }
     }
@@ -3875,7 +3862,7 @@ KISSY.add('event-object', function(S, undefined) {
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
      */
-    function EventObject(currentTarget, domEvent, type, currentEl) {
+    function EventObject(currentTarget, domEvent, type) {
         var self = this;
         self.currentTarget = currentTarget;
         self.originalEvent = domEvent || { };
@@ -3889,15 +3876,14 @@ KISSY.add('event-object', function(S, undefined) {
             self.target = currentTarget;
         }
 
+        // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
+        if (currentTarget.isCustomEventTarget) {
+            if (S.DOM._isKSNode(currentTarget)) self.target = new S.Node(self.target);
+        }
+
         // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
         self.currentTarget = currentTarget;
         self.fixed = true;
-
-        // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
-        if(currentTarget.isCustomEventTarget) {
-            if(currentTarget.item) currentTarget = currentTarget.item(currentEl);
-            if(S.DOM._isKSNode(currentTarget)) self.target = new S.Node(self.target);
-        }
     }
 
     S.augment(EventObject, {
@@ -4178,9 +4164,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * @module  node
@@ -4512,28 +4498,23 @@ KISSY.add('node-attach', function(S, undefined) {
     }
 
     // event-target
-    S.each([NP, NLP], function(P) {
+    S.mix(NP, S.EventTarget);
+    NP._supportSpecialEvent = true;
+    NP._addEvent = function(type, handle, capture) {
+        Event._simpleAdd(this[0], type, handle, capture);
+    };
+    NP._removeEvent = function(type, handle, capture) {
+        Event._simpleRemove(this[0], type, handle, capture);
+    };
+    delete NP.fire;
 
-        S.mix(P, S.EventTarget);
-        P._supportSpecialEvent = true;
-
-        P._addEvent = function(type, handle, capture) {
-            for (var i = 0, len = this.length; i < len; i++) {
-                Event._simpleAdd(this[i], type, handle, capture);
-            }
-        };
-        P._removeEvent = function(type, handle, capture) {
-            for (var i = 0, len = this.length; i < len; i++) {
-                Event._simpleRemove(this[i], type, handle, capture);
-            }
-        };
-        delete P.fire;
-    });
+    S.mix(NLP, S.EventTarget);
+    delete NLP.fire;
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /*
     http://www.JSON.org/json2.js
@@ -5037,9 +5018,9 @@ KISSY.add('json', function (S) {
     };
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /***
  * @module  ajax
@@ -5358,9 +5339,9 @@ KISSY.add('ajax', function(S, undef) {
  *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * @module anim-easing
@@ -5958,64 +5939,68 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
             });
     });
 
-    function fx(elem, which, speed, callback, display) {
+    function fx(elem, which, speed, callback, visible) {
         if (which === 'toggle') {
-            display = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
+            visible = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
             which = 'show';
         }
 
-        if (display) DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
+        if (visible) DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
 
         // 根据不同类型设置初始 css 属性, 并设置动画参数
-        var style = { };
+        var originalStyle = {}, style = {};
         S.each(FX[which], function(prop) {
             if (prop === OVERFLOW) {
+                originalStyle[OVERFLOW] = DOM.css(elem, OVERFLOW);
                 DOM.css(elem, OVERFLOW, HIDDEN);
             }
             else if (prop === OPCACITY) {
-                style.opacity = display ? 1 : 0;
-                if (display) DOM.css(elem, OPCACITY, 0);
+                originalStyle[OPCACITY] = DOM.css(elem, OPCACITY);
+                style.opacity = visible ? 1 : 0;
+                if (visible) DOM.css(elem, OPCACITY, 0);
             }
             else if (prop === HEIGHT) {
-                style.height = (display ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
-                if (display) DOM.css(elem, HEIGHT, 0);
+                originalStyle[HEIGHT] = DOM.css(elem, HEIGHT);
+                style.height = (visible ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
+                if (visible) DOM.css(elem, HEIGHT, 0);
             }
             else if (prop === WIDTH) {
-                style.width = (display ? DOM.css(elem, WIDTH) || elem.naturalWidth : 0);
-                if (display) DOM.css(elem, WIDTH, 0);
+                originalStyle[WIDTH] = DOM.css(elem, WIDTH);
+                style.width = (visible ? DOM.css(elem, WIDTH) || elem.naturalWidth : 0);
+                if (visible) DOM.css(elem, WIDTH, 0);
             }
         });
 
         // 开始动画
         new S.Anim(elem, style, speed, 'easeOut', function() {
             // 如果是隐藏, 需要还原一些 css 属性
-            if (!display) {
+            if (!visible) {
                 // 保留原有值
-                var style = elem.style, oldVal = style[DISPLAY];
+                var currStyle = elem.style, oldVal = currStyle[DISPLAY];
                 if (oldVal !== NONE) {
                     if (oldVal) {
                         DOM.data(elem, DISPLAY, oldVal);
                     }
-                    style[DISPLAY] = NONE;
+                    currStyle[DISPLAY] = NONE;
                 }
 
-                // 还原部分样式
-                DOM.css(elem, {
-                    height: AUTO,
-                    width: AUTO,
-                    overflow: AUTO,
-                    opacity: 1
-                });
+                // 还原样式
+                if(originalStyle[HEIGHT]) DOM.css(elem, { height: originalStyle[HEIGHT] });
+                if(originalStyle[WIDTH]) DOM.css(elem, { height: originalStyle[WIDTH] });
+                if(originalStyle[OPCACITY]) DOM.css(elem, { height: originalStyle[OPCACITY] });
+                if(originalStyle[OVERFLOW]) DOM.css(elem, { height: originalStyle[OVERFLOW] });
             }
+
             if (callback && S.isFunction(callback)) callback();
+
         }).run();
     }
 
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * @module  cookie
@@ -6072,6 +6057,7 @@ KISSY.add('cookie', function(S) {
                 text += '; secure';
             }
 
+            //S.log(text);
             doc.cookie = name + '=' + text;
         },
 
@@ -6098,9 +6084,9 @@ KISSY.add('cookie', function(S) {
  *     独立成静态工具类的方式更优。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * @module  Attribute
@@ -6124,7 +6110,7 @@ KISSY.add('attribute', function(S, undefined) {
          }
          }
          */
-        //host.__attrs = { };
+        this.__attrs = {};
 
         /**
          * attribute value
@@ -6132,20 +6118,12 @@ KISSY.add('attribute', function(S, undefined) {
          attrName: attrVal
          }
          */
-        //host.__attrVals = { };
+        this.__attrVals = {};
     }
 
     S.augment(Attribute, {
 
-        __initAttrs: function() {
-            var host = this;
-            if (host.__attrs) return;
-
-            host.__attrs = { };
-            host.__attrVals = { };
-        },
-
-        getDefAttrs:function() {
+        __getDefAttrs: function() {
             return S.clone(this.__attrs);
         },
 
@@ -6161,9 +6139,7 @@ KISSY.add('attribute', function(S, undefined) {
          */
         addAttr: function(name, attrConfig) {
             var host = this;
-
-            host.__initAttrs();
-            host.__attrs[name] = S.clone(attrConfig || { });
+            host.__attrs[name] = S.clone(attrConfig || {});
 
             return host;
         },
@@ -6191,7 +6167,7 @@ KISSY.add('attribute', function(S, undefined) {
          * Checks if the given attribute has been added to the host.
          */
         hasAttr: function(name) {
-            return name && (name in (this.__attrs || { }));
+            return name && (name in (this.__attrs || {}));
         },
 
         /**
@@ -6201,8 +6177,8 @@ KISSY.add('attribute', function(S, undefined) {
             var host = this;
 
             if (host.hasAttr(name)) {
-                delete host.__attrs.name;
-                delete host.__attrVals.name;
+                delete host.__attrs[name];
+                delete host.__attrVals[name];
             }
 
             return host;
@@ -6211,7 +6187,7 @@ KISSY.add('attribute', function(S, undefined) {
         /**
          * Sets the value of an attribute.
          */
-        set: function (name, value) {
+        set: function(name, value) {
             var host = this,
                 prevVal = host.get(name);
 
@@ -6241,7 +6217,7 @@ KISSY.add('attribute', function(S, undefined) {
         /**
          * internal use, no event involved, just set.
          */
-        __set: function (name, value) {
+        __set: function(name, value) {
             var host = this,
                 setValue,
                 attrConfig = host.__attrs[name],
@@ -6258,10 +6234,9 @@ KISSY.add('attribute', function(S, undefined) {
         /**
          * Gets the current value of the attribute.
          */
-        get: function (name) {
+        get: function(name) {
             var host = this, attrConfig, getter, ret;
-
-            host.__initAttrs();
+            
             attrConfig = host.__attrs[name];
             getter = attrConfig && attrConfig['getter'];
 
@@ -6323,282 +6298,53 @@ KISSY.add('attribute', function(S, undefined) {
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    Attribute.capitalFirst = capitalFirst;
+    Attribute.__capitalFirst = capitalFirst;
 });
-/*
-Copyright 2010, KISSY UI Library v1.1.6dev
-MIT Licensed
-build time: ${build.time}
-*/
 /**
  * @module  Base
- * @author  lifesinger@gmail.com, 承玉<yiminghe@gmail.com>
+ * @author  lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('base', function (S) {
-    var UI_SET = "_uiSet",
-        SRC_NODE = "srcNode",
-        capitalFirst = S.Attribute.capitalFirst;
+
     /*
      * Base for class-based component
      */
     function Base(config) {
-        var self = this;
-        initHierarchy(self, config);
-        config && config.autoRender && self.renderer();
-    }
-
-    /**
-     * init attr using constructors ATTRS meta info
-     * 模拟多继承
-     */
-    function initHierarchy(host, config) {
-        var c = host.constructor,
-            attr,
-            attrs,
-            extChains = [],
-            ATTRS = 'ATTRS';
+        S.Attribute.call(this);
+        var c = this.constructor;
 
         // define
         while (c) {
-
-            //定义属性
-            if ((attrs = c[ATTRS])) {
-                for (attr in attrs) {
-                    // 子类上的 ATTRS 配置优先
-                    if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
-                        host.addAttr(attr, attrs[attr]);
-                    }
-                }
-            }
-
-
-            //收集扩展类
-            var exts = c._kissycreate;
-            exts = exts && exts._exts;
-            var t_ext = [];
-            if (exts) {
-                t_ext = exts.concat();
-            }
-
-
-            //先收集扩展类
-            var t_init = c.prototype.init;
-            if (t_init) {
-                t_ext.push(t_init);
-            }
-
-            //原地 reverse
-            if (t_ext.length) {
-                extChains.push.apply(extChains, t_ext.reverse());
-            }
-
-
-            //从 markup 生成相应的属性项
-            if (config &&
-                config[SRC_NODE] &&
-                c.HTML_PARSER) {
-                if (config[SRC_NODE] = S.one(config[SRC_NODE]))
-                    applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
-            }
-
+            addAttrs(this, c['ATTRS']);
             c = c.superclass ? c.superclass.constructor : null;
         }
 
+        // initial
+        initAttrs(this, config);
+    }
 
-        // initialize
-        //注意：用户设置的属性值会覆盖 html_parser 得到的属性值
-        //先设置属性，再运行主类以及扩展类的初始化函数
+    function addAttrs(host, attrs) {
+        if (attrs) {
+            for (var attr in attrs) {
+                // 子类上的 ATTRS 配置优先
+                if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
+                    host.addAttr(attr, attrs[attr]);
+                }
+            }
+        }
+    }
+
+    function initAttrs(host, config) {
         if (config) {
-            for (attr in config) {
+            for (var attr in config) {
                 if (config.hasOwnProperty(attr))
                     host.__set(attr, config[attr]);
             }
         }
-
-
-        //初始化扩展类构造器，
-        //注意：执行顺序
-        //父类的所有扩展类构造器，父类 init，子类的所有扩展构造器，子类 init
-        for (var i = extChains.length - 1; i >= 0; i--) {
-            extChains[i] && extChains[i].call(host, config);
-        }
-
-
     }
 
-    /**
-     * 摧毁组件机制
-     * 子类扩展 destructor，子类 destructor，父类扩展 destructor，父类 destructor，
-     */
-    function destroyHierarchy(host) {
-        var c = host.constructor;
-        while (c) {
-            //收集扩展类
-            var exts = c._kissycreate;
-            exts = exts && exts._exts;
-            var d = c.prototype.destructor;
-            d && d.apply(host);
-            if (exts) {
-                for (var l = exts.length - 1; l >= 0; l--) {
-                    d = exts[l] && exts[l].prototype.__destructor;
-                    d && d.apply(host);
-                }
-            }
-            c = c.superclass ? c.superclass.constructor : null;
-        }
-    }
-
-    function applyParser(srcNode, parser) {
-        var self = this;
-        //从parser中，默默设置属性，不触发事件！__set
-        for (var p in parser) {
-            if (parser.hasOwnProperty(p)) {
-                var v = parser[p];
-                //函数
-                if (S.isFunction(v)) {
-                    self.__set(p, v.call(self, srcNode));
-                }
-                //单选选择器
-                else if (S.isString(v)) {
-                    self.__set(p, srcNode.one(v));
-                }
-                //多选选择器
-                else if (S.isArray(v) && v[0]) {
-                    self.__set(p, srcNode.all(v[0]))
-                }
-            }
-        }
-    }
-
-
-    Base.HTML_PARSER = {};
-    Base.ATTRS = {
-        //保证只会 renderer 一次
-        rendered:{
-            value:false
-        },
-        render:{
-            setter:function(v) {
-                if (S.isString(v))
-                    return S.one(v);
-            }
-        }
-    };
-    S.augment(Base, S.EventTarget, S.Attribute, {
-        renderer:function(render) {
-            var self = this,rendered = self.get("rendered");
-            render = render || self.get("render");
-
-            if (!rendered) {
-                self.renderUI(render);
-                self.bindUI();
-                self.syncUI();
-                self.set("rendered", true);
-            }
-        },
-        /**
-         * 根据属性添加 DOM 节点
-         */
-        renderUI:function() {
-            this.fire("renderUI");
-        },
-        /**
-         * 根据属性变化设置 UI
-         */
-        bindUI:function() {
-            var self = this,
-                attrs = self.getDefAttrs();
-            for (var a in attrs) {
-                if (attrs.hasOwnProperty(a)) {
-                    var m = UI_SET + capitalFirst(a);
-                    if (self[m]) {
-                        //自动绑定事件到对应函数
-                        (function(a, m) {
-                            self.on("after" + capitalFirst(a) + "Change", function(ev) {
-                                self[m](ev.newVal,ev);
-                            });
-                        })(a, m);
-                    }
-                }
-            }
-
-            self.fire("bindUI");
-        },
-        /**
-         * 根据当前（初始化）状态来设置 UI
-         */
-        syncUI:function() {
-            var self = this,
-                attrs = self.getDefAttrs();
-            for (var a in attrs) {
-                if (attrs.hasOwnProperty(a)) {
-                    var m = UI_SET + capitalFirst(a);
-                    if (self[m]) {
-                        self[m](self.get(a));
-                    }
-                }
-            }
-            self.fire("syncUI");
-        },
-
-        destroy:function() {
-            destroyHierarchy(this);
-            this.fire("destroy");
-            this.detach();
-        }
-    });
-
-
-    /**
-     * 根据基类以及扩展类得到新类
-     * @param {function} baseCls 基类
-     * @param {Array.<function>} exts 扩展类
-     * @param {Object} px 原型 mix 对象
-     * @param {Object} sx 静态mix对象
-     */
-    Base.create = function(baseCls, exts, px, sx) {
-        if (S.isArray(baseCls)) {
-            sx = px;
-            px = exts;
-            exts = arguments[0];
-            baseCls = Base;
-        }
-        baseCls = baseCls || Base;
-        function re() {
-            Base.apply(this, arguments);
-        }
-
-        S.extend(re, baseCls, px, sx);
-        if (exts) {
-            re._kissycreate = re._kissycreate || {};
-            re._kissycreate._exts = exts;
-            for (var i = 0; i < exts.length; i++) {
-                var ext = exts[i],
-                    attrs = ext && ext.ATTRS,
-                    parsers = ext && ext.HTML_PARSER;
-                if (attrs) {
-                    re.ATTRS = re.ATTRS || {};
-                    //合并功能类属性定义到主类，不要覆盖主类属性重定义
-                    S.mix(re.ATTRS, attrs, false);
-                }
-
-                if (parsers) {
-                    re.HTML_PARSER = re.HTML_PARSER || {};
-                    //合并功能类 htmlparser 定义到主类，不要覆盖主类属性重定义
-                    S.mix(re.HTML_PARSER, parsers, false);
-                }
-                //合并功能类代码到主类
-                if (ext)
-                    S.augment(re, ext);
-            }
-        }
-        return re;
-    };
+    S.augment(Base, S.EventTarget, S.Attribute);
     S.Base = Base;
 });
 
-/**
- * 2011-11-08 承玉重构，Base && yui3 Widget 压缩一下，增加扩展类支持，组件初始化生命周期以及 htmlparser
- * 测试 crlf
- */
 KISSY.add('core');

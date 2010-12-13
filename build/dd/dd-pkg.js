@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.6
 MIT Licensed
-build time: ${build.time}
+build time: Dec 3 16:44
 */
 /**
  * dd support for kissy
@@ -9,7 +9,8 @@ build time: ${build.time}
  */
 KISSY.add('dd', function(S) {
 
-    var Event = S.Event,
+    var doc = document,
+        Event = S.Event,
         DOM = S.DOM,
         Node = S.Node,
         SHIM_ZINDEX = 999999;
@@ -52,11 +53,10 @@ KISSY.add('dd', function(S) {
          */
         _move: function(ev) {
             var activeDrag = this.get('activeDrag');
-            S.log("move");
+            //S.log("move");
             if (!activeDrag) return;
             //防止 ie 选择到字
             ev.preventDefault();
-            this._clearSelection();
             activeDrag._move(ev);
         },
 
@@ -145,42 +145,24 @@ KISSY.add('dd', function(S) {
                 display: "",
                 height: DOM.docHeight()
             });
-            self._clearSelection();
-        },
-        _clearSelection:function() {
-            S.log("_clearSelection");
-            //清除由于浏览器导致的选择文字
-            if (window.getSelection) {
-                window.getSelection().removeAllRanges();
-            }
-            //防止 ie 莫名选择文字
-            else if (document.selection) {
-                try {
-                    document.selection.empty();
-                }
-                catch(e) {
-                }
-            }
         },
 
         /**
          * 开始时注册全局监听事件
          */
         _registerEvent: function() {
-            var self = this,doc = document;
-            S.log("_registerEvent");
-            Event.on(doc, "mouseup", self._end, self);
-            Event.on(doc, "mousemove", self._showShimMove, self);
+            var self = this;
+            Event.on(doc, 'mouseup', self._end, self);
+            Event.on(doc, 'mousemove', self._showShimMove, self);
         },
 
         /**
          * 结束时需要取消掉，防止平时无谓的监听
          */
         _unregisterEvent: function() {
-            var self = this,doc = document;
-            S.log("_unregisterEvent");
-            Event.remove(doc, "mousemove", self._showShimMove, self);
-            Event.remove(doc, "mouseup", self._end, self);
+            var self = this;
+            Event.remove(doc, 'mousemove', self._showShimMove, self);
+            Event.remove(doc, 'mouseup', self._end, self);
         }
     });
 
@@ -280,6 +262,7 @@ KISSY.add('dd-draggable', function(S) {
                     if (!ori || ori === 'auto')
                         hl.css('cursor', 'move');
                 }
+                unselectable(hl[0]);
             }
 
             node.on('mousedown', self._handleMouseDown, self);
@@ -296,6 +279,7 @@ KISSY.add('dd-draggable', function(S) {
                 }
             }
             node.detach('mousedown', self._handleMouseDown, self);
+            self.detach();
         },
 
         _check: function(t) {
@@ -323,10 +307,11 @@ KISSY.add('dd-draggable', function(S) {
 
             if (!self._check(t)) return;
             //chrome 阻止了 flash 点击？？
-            if (!UA.webkit) {
-                //firefox 默认会拖动对象地址
-                ev.preventDefault();
-            }
+            //不组织的话chrome会选择
+            //if (!UA.webkit) {
+            //firefox 默认会拖动对象地址
+            ev.preventDefault();
+            //}
 
             S.DD.DDM._start(self);
 
@@ -352,11 +337,10 @@ KISSY.add('dd-draggable', function(S) {
                 diff = self.get("diff"),
                 left = ev.pageX - diff.left,
                 top = ev.pageY - diff.top;
-            S.mix(ev, {
+            this.fire("drag", {
                 left:left,
                 top:top
             });
-            this.fire("drag", ev);
         },
 
         _end: function() {
@@ -368,6 +352,37 @@ KISSY.add('dd-draggable', function(S) {
         }
 
     });
+
+    var unselectable =
+        UA.gecko ?
+            function(el) {
+                el.style.MozUserSelect = 'none';
+            }
+            : UA.webkit ?
+            function(el) {
+                el.style.KhtmlUserSelect = 'none';
+            }
+            :
+            function(el) {
+                if (UA.ie || UA.opera) {
+                    var e,i = 0,
+                        els = el.getElementsByTagName("*");
+                    el.unselectable = 'on';
+                    while (( e = els[ i++ ] )) {
+                        switch (e.tagName.toLowerCase()) {
+                            case 'iframe' :
+                            case 'textarea' :
+                            case 'input' :
+                            case 'select' :
+                                /* Ignore the above tags */
+                                break;
+                            default :
+                                e.unselectable = 'on';
+                        }
+                    }
+                }
+            };
+
 
     S.Draggable = Draggable;
 

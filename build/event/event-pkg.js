@@ -1,5 +1,5 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6dev
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -79,15 +79,15 @@ KISSY.add('event', function(S, undefined) {
 
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
-                        event = new S.EventObject(target, event, type, this);
-                        if (S.isPlainObject(eventData)) {
-                            S.mix(event, eventData);
-                        }
+                        event = new S.EventObject(target, event, type);
+                    }
+                    if (S.isPlainObject(eventData)) {
+                        S.mix(event, eventData);
                     }
                     if (special['setup']) {
                         special['setup'](event);
                     }
-                    return (special.handle || Event._handle).call(this, target, event, events[type].listeners);
+                    return (special.handle || Event._handle)(target, event, events[type].listeners);
                 };
 
                 events[type] = {
@@ -105,7 +105,7 @@ KISSY.add('event', function(S, undefined) {
             }
 
             // 增加 listener
-            events[type].listeners.push({fn: fn, scope: scope});
+            events[type].listeners.push({fn: fn, scope: scope || target});
         },
 
         /**
@@ -123,14 +123,14 @@ KISSY.add('event', function(S, undefined) {
             if (c.target !== target) return; // target 不匹配
             scope = scope || target;
             events = c.events || { };
-            
+
             if ((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
 
                 // 移除 fn
                 if (S.isFunction(fn) && len) {
-                    for (i = 0, j = 0, t = []; i < len; ++i) {
+                    for (i = 0,j = 0,t = []; i < len; ++i) {
                         if (fn !== listeners[i].fn
                             || scope !== listeners[i].scope) {
                             t[j++] = listeners[i];
@@ -170,14 +170,13 @@ KISSY.add('event', function(S, undefined) {
              sure we'll call all of them.*/
             listeners = listeners.slice(0);
 
-            var ret, i = 0, len = listeners.length, listener, scope;
+            var ret, i = 0, len = listeners.length, listener;
 
             // 让 nodelist 等集合，能自定义 scope
-            if(target.isCustomEventTarget && target.item) scope = target.item(this);
 
             for (; i < len; ++i) {
                 listener = listeners[i];
-                ret = listener.fn.call(scope || listener.scope || target, event);
+                ret = listener.fn.call(listener.scope, event);
 
                 // 自定义事件对象，可以用 return false 来立刻停止后续监听函数
                 // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡
@@ -221,6 +220,14 @@ KISSY.add('event', function(S, undefined) {
             S.each(types.split(SPACE), function(type) {
                 Event[methodName](targets, type, fn, scope);
             });
+            return true;
+        }
+
+        // unpack nodelist
+        if (targets.getDOMNodes) {
+            for (var i = 0; i < targets.length; i++) {
+                Event[methodName](targets.item(i), types, fn, scope);
+            }
             return true;
         }
     }
@@ -271,7 +278,7 @@ KISSY.add('event-object', function(S, undefined) {
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
      */
-    function EventObject(currentTarget, domEvent, type, currentEl) {
+    function EventObject(currentTarget, domEvent, type) {
         var self = this;
         self.currentTarget = currentTarget;
         self.originalEvent = domEvent || { };
@@ -285,15 +292,14 @@ KISSY.add('event-object', function(S, undefined) {
             self.target = currentTarget;
         }
 
+        // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
+        if (currentTarget.isCustomEventTarget) {
+            if (S.DOM._isKSNode(currentTarget)) self.target = new S.Node(self.target);
+        }
+
         // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
         self.currentTarget = currentTarget;
         self.fixed = true;
-
-        // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
-        if(currentTarget.isCustomEventTarget) {
-            if(currentTarget.item) currentTarget = currentTarget.item(currentEl);
-            if(S.DOM._isKSNode(currentTarget)) self.target = new S.Node(self.target);
-        }
     }
 
     S.augment(EventObject, {
