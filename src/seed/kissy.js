@@ -262,4 +262,6 @@
 
     S.__init();
 
+    return S;
+
 })(this, 'KISSY');
