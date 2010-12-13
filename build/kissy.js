@@ -5020,9 +5020,9 @@ KISSY.add('json', function (S) {
     };
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Dec 3 16:44
+build time: ${build.time}
 */
 /***
  * @module  ajax
@@ -5050,21 +5050,23 @@ KISSY.add('ajax', function(S, undef) {
             contentType: 'application/x-www-form-urlencoded',
             async: true,
             data: null,
-            xhr: win.XMLHttpRequest ?
-                function() {
-                    return new win.XMLHttpRequest();
-                } :
-                function() {
-                    try {
-                        // ie 6 下请求缓存中的资源无法正确返回 xhr.responseText, 需要使用老版本的 XMLHTTP
-                        // jQuery 没有考虑请求缓存的情况
-                        return new win.ActiveXObject(
-                            S.UA.ie == 6 ?
-                                'Msxml2.XMLHTTP.5.0' :
-                                'Microsoft.XMLHTTP');
-                    } catch(e) {
-                    }
-                },
+            xhr: win.ActiveXObject ?
+                 function() {
+                     if (win.XmlHttpRequest) {
+                         try {
+                             return new win.XMLHttpRequest();
+                         } catch(xhrError) {
+                         }
+                     }
+
+                     try {
+                         return new win.ActiveXObject('Microsoft.XMLHTTP');
+                     } catch(activeError) {
+                     }
+                 } :
+                 function() {
+                     return new win.XMLHttpRequest();
+                 },
             accepts: {
                 xml: 'application/xml, text/xml',
                 html: 'text/html',

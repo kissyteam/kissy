@@ -24,29 +24,23 @@ KISSY.add('ajax', function(S, undef) {
             contentType: 'application/x-www-form-urlencoded',
             async: true,
             data: null,
-            xhr: win.XMLHttpRequest ?
-                function() {
-                    return new win.XMLHttpRequest();
-                } :
-                function() {
-                    try {
-                        // ie 6 下请求缓存中的资源无法正确返回 xhr.responseText, 需要使用老版本的 XMLHTTP
-                        // jQuery 没有考虑请求缓存的情况
+            xhr: win.ActiveXObject ?
+                 function() {
+                     if (win.XmlHttpRequest) {
+                         try {
+                             return new win.XMLHttpRequest();
+                         } catch(xhrError) {
+                         }
+                     }
 
-						var ieXMLVersion = ['Msxml2.XMLHTTP.5.0','Microsoft.XMLHTTP'],
-							xhr = null,i=0,latestVersion = ieXMLVersion[ieXMLVersion.length];
-						if(S.UA.ie == 6){
-							for(;i<ieXMLVersion.length;i++){
-								xhr = new win.ActiveXObject(ieXMLVersion[i]);
-								if(xhr){
-									return xhr;
-								}
-							}
-						}
-						return new win.ActiveXObject(latestVersion);
-                    } catch(e) {
-                    }
-                },
+                     try {
+                         return new win.ActiveXObject('Microsoft.XMLHTTP');
+                     } catch(activeError) {
+                     }
+                 } :
+                 function() {
+                     return new win.XMLHttpRequest();
+                 },
             accepts: {
                 xml: 'application/xml, text/xml',
                 html: 'text/html',
@@ -322,4 +316,3 @@ KISSY.add('ajax', function(S, undef) {
  *   - [玉伯] 增加部分 Jasmine 单元测试
  *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
  */
-
