@@ -430,6 +430,7 @@
                     var part = parts[i];
                     if (part.match(baseTestReg)) {
                         base += part.replace(baseReg, '$1');
+                        break;
                     }
                 }
             }
