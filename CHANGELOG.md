@@ -16,6 +16,7 @@ History:
 
 ### v1.1.5 -> v1.x.x (2010/MM/DD)
 
+ - [!] event 中对 return false, 仅 preventDefault + stopPropagation, 不再 stopImmediatePropagation
  - [+] cssreset 加入对 HTML5 的支持
  - [+] 2010/11/30 发布内部版本 v1.1.6
  - [+] 增加 ajax 模块 [文档](http://kissyteam.github.com/kissy/docs/ajax/index.html)
