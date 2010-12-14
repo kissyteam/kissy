@@ -1,33 +1,32 @@
 /**
- * @module  event-test
+ * @module  event-spec
  * @author  gonghao<gonghao@ghsky.com>
- * @date    2010-12-2
  */
 describe('event', function() {
 
     var win = window, doc = document,
-            S = KISSY, DOM = S.DOM, Event = S.Event,
+        S = KISSY, Event = S.Event,
 
-            HAPPENED = 'happened',
-            FIRST = '1',
-            SECOND = '2',
-            SEP = '-',
+        HAPPENED = 'happened',
+        FIRST = '1',
+        SECOND = '2',
+        SEP = '-',
 
-            result,
+        result,
 
         // simulate mouse event on any element
-            simulateMouseEvent = function(el, type, relatedTarget) {
-                var clickEvent;
-                el = S.get(el);
+        simulateMouseEvent = function(el, type, relatedTarget) {
+            var clickEvent;
+            el = S.get(el);
 
-                if (doc.createEvent) {
-                    clickEvent = doc.createEvent('MouseEvent');
-                    clickEvent.initMouseEvent(type, true, true, win, 0, 0, 0, 0, 0, false, false, false, false, 0, relatedTarget || null);
-                    el.dispatchEvent(clickEvent);
-                } else {
-                    el.fireEvent('on' + type);
-                }
-            };
+            if (doc.createEvent) {
+                clickEvent = doc.createEvent('MouseEvent');
+                clickEvent.initMouseEvent(type, true, true, win, 0, 0, 0, 0, 0, false, false, false, false, 0, relatedTarget || null);
+                el.dispatchEvent(clickEvent);
+            } else {
+                el.fireEvent('on' + type);
+            }
+        };
 
     describe('add event', function() {
 
@@ -250,6 +249,7 @@ describe('event', function() {
     });
 
     describe('remove event', function() {
+
         it('should remove the specified event handler function.', function() {
             var f = S.get('#link-f');
 
@@ -365,6 +365,7 @@ describe('event', function() {
     });
 
     describe('focusin and focusout', function() {
+
         it('should trigger the focusin/focusout event on the proper element, and support bubbling.', function() {
             var container = S.get('#test-focusin'), input = S.get('input', container);
 
@@ -431,6 +432,7 @@ describe('event', function() {
     });
 
     describe('event handler scope', function() {
+
         it('should treat the element itself as the scope.', function() {
             var foo = S.get('#foo');
 
@@ -472,6 +474,7 @@ describe('event', function() {
     });
 
     describe('event target', function() {
+
         it('should support custom event target.', function() {
 
             var SPEED = '70 km/h', NAME = 'Lady Gogo', dog;
