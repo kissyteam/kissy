@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.6
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Dec 3 16:44
+build time: ${build.time}
 */
 /**
  * dd support for kissy
@@ -238,6 +238,7 @@ KISSY.add('dd-draggable', function(S) {
                 if (vs) {
                     for (var i = 0; i < vs.length; i++) {
                         vs[i] = S.one(vs[i]);
+                        unselectable(vs[i][0]);
                     }
                 }
             }
@@ -262,9 +263,7 @@ KISSY.add('dd-draggable', function(S) {
                     if (!ori || ori === 'auto')
                         hl.css('cursor', 'move');
                 }
-                unselectable(hl[0]);
             }
-
             node.on('mousedown', self._handleMouseDown, self);
         },
 
@@ -367,7 +366,7 @@ KISSY.add('dd-draggable', function(S) {
                 if (UA.ie || UA.opera) {
                     var e,i = 0,
                         els = el.getElementsByTagName("*");
-                    el.unselectable = 'on';
+                    el.setAttribute("unselectable", 'on');
                     while (( e = els[ i++ ] )) {
                         switch (e.tagName.toLowerCase()) {
                             case 'iframe' :
@@ -377,7 +376,7 @@ KISSY.add('dd-draggable', function(S) {
                                 /* Ignore the above tags */
                                 break;
                             default :
-                                e.unselectable = 'on';
+                                e.setAttribute("unselectable", 'on');
                         }
                     }
                 }

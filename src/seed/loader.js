@@ -396,13 +396,56 @@
     mix(S, loader);
 
     /**
+     * get base from src
+     * @param src script source url
+     * @return base for kissy
+     * @example:
+     *   http://a.tbcdn.cn/s/kissy/1.1.5/??kissy-min.js,suggest/suggest-pkg-min.js
+     *   http://a.tbcdn.cn/??s/kissy/1.1.5/kissy-min.js,s/kissy/1.1.5/suggest/suggest-pkg-min.js
+     * http://a.tbcdn.cn/??s/kissy/1.1.5/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
+     */
+    //notice:timestamp
+    var baseReg = /^(.*)(seed|kissy)(-min)?\.js/i,
+        baseTestReg = /(seed|kissy)(-min)?\.js/;
+
+    function getBaseUrl(src) {
+        var parts = src.split(/\s*,\s*/);
+        var base,
+            part0 = parts[0],
+            index = part0.indexOf("??");
+        //no combo
+        if (index == -1) {
+            base = src.replace(baseReg, '$1');
+        } else {
+            base = part0.substring(0, index);
+            var part01 = part0.substring(index + 2, part0.length);
+            //combo first
+            //notice use match better than test
+            if (part01.match(baseTestReg)) {
+                base += part01.replace(baseReg, '$1');
+            }
+            //combo after first
+            else {
+                for (var i = 1; i < parts.length; i++) {
+                    var part = parts[i];
+                    if (part.match(baseTestReg)) {
+                        base += part.replace(baseReg, '$1');
+                        break;
+                    }
+                }
+            }
+        }
+        return base;
+    }
+
+    /**
      * Initializes loader.
      */
     S.__initLoader = function() {
         // get base from current script file path
         var scripts = doc.getElementsByTagName('script'),
             currentScript = scripts[scripts.length - 1],
-            base = currentScript.src.replace(/^(.*)(seed|kissy).*$/i, '$1');
+            base = getBaseUrl(currentScript.src);
 
         this.Env.mods = {}; // all added mods
         this.Env._loadQueue = {}; // information for loading and loaded mods
