@@ -1,7 +1,7 @@
 /**
  * resizable support for kissy
- * @author:承玉<yiminghe@gmail.com>
- * @requires:dd
+ * @author: 承玉<yiminghe@gmail.com>
+ * @requires: dd
  */
 KISSY.add("resizable", function(S) {
 
@@ -28,7 +28,7 @@ KISSY.add("resizable", function(S) {
             var l = ol + ow - w;
             return [w,0,0,l]
         }
-    }
+    };
 
     var horizonal = ["l","r"],vertical = ["t","b"];
     for (var i = 0; i < horizonal.length; i++) {

@@ -1283,29 +1283,30 @@ build time: ${build.time}
      * @example:
      *   http://a.tbcdn.cn/s/kissy/1.1.5/??kissy-min.js,suggest/suggest-pkg-min.js
      *   http://a.tbcdn.cn/??s/kissy/1.1.5/kissy-min.js,s/kissy/1.1.5/suggest/suggest-pkg-min.js
-     * http://a.tbcdn.cn/??s/kissy/1.1.5/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
+     *   http://a.tbcdn.cn/??s/kissy/1.1.5/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
      */
-    //notice:timestamp
+    // notice: timestamp
     var baseReg = /^(.*)(seed|kissy)(-min)?\.js/i,
         baseTestReg = /(seed|kissy)(-min)?\.js/;
 
+    // TODO: configurable for ?? and ,
     function getBaseUrl(src) {
         var parts = src.split(/\s*,\s*/);
         var base,
             part0 = parts[0],
-            index = part0.indexOf("??");
-        //no combo
+            index = part0.indexOf('??');
+        // no combo
         if (index == -1) {
             base = src.replace(baseReg, '$1');
         } else {
             base = part0.substring(0, index);
             var part01 = part0.substring(index + 2, part0.length);
-            //combo first
-            //notice use match better than test
+            // combo first
+            // notice use match better than test
             if (part01.match(baseTestReg)) {
                 base += part01.replace(baseReg, '$1');
             }
-            //combo after first
+            // combo after first
             else {
                 for (var i = 1; i < parts.length; i++) {
                     var part = parts[i];
@@ -1520,6 +1521,7 @@ KISSY.add('ua', function(S) {
  *
  * TODO:
  *  - test mobile
+ *  - 3Q 大战后，360 去掉了 UA 信息中的 360 信息，需采用 res 方法去判断
  *
  */
 /**
