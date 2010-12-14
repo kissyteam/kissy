@@ -4,7 +4,7 @@
  */
 describe('event', function() {
 
-    var win = window, doc = document,
+    var doc = document,
         S = KISSY, Event = S.Event,
 
         HAPPENED = 'happened',
@@ -15,17 +15,11 @@ describe('event', function() {
         result,
 
         // simulate mouse event on any element
-        simulateMouseEvent = function(el, type, relatedTarget) {
-            var clickEvent;
-            el = S.get(el);
-
-            if (doc.createEvent) {
-                clickEvent = doc.createEvent('MouseEvent');
-                clickEvent.initMouseEvent(type, true, true, win, 0, 0, 0, 0, 0, false, false, false, false, 0, relatedTarget || null);
-                el.dispatchEvent(clickEvent);
-            } else {
-                el.fireEvent('on' + type);
+        simulateMouseEvent = function(target, type, relatedTarget) {
+            if(typeof target === 'string') {
+                target = S.get(target);
             }
+            jasmine.simulate(target, type, { relatedTarget: relatedTarget });
         };
 
     describe('add event', function() {

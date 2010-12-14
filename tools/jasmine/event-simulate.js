@@ -34,6 +34,8 @@
             dblclick:   1,
             mouseover:  1,
             mouseout:   1,
+            mouseenter: 1,
+            mouseleave: 1,
             mousedown:  1,
             mouseup:    1,
             mousemove:  1
