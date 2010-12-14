@@ -185,7 +185,7 @@ KISSY.add('selectable', function(S, undefined) {
 			DOM.removeClass(item, SELECTED_ITEM_CLS);
 			this.selectedIndex = undefined;
 		},
-		
+
 		//设置选中项
 		_setSelectedItem: function(index) {
 			var item = this.items[index],

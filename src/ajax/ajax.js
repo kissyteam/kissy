@@ -129,6 +129,7 @@ KISSY.add('ajax', function(S) {
 
 			s.url = s.url.replace(jsre, "=" + jsonp + "$1");
 
+            new Date().getTime();
 			s.dataType = "script";
 
 			// Handle JSONP-style loading
