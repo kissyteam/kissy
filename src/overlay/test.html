@@ -5,25 +5,44 @@
 <title>Overlay Widgets Test</title>
 
 <script src="../../build/kissy.js"></script>
-
-<script src="mask.js"></script>
+<script src="../uibase/uibase.js"></script>
+<script src="../uibase/uibase-box.js"></script>
+<script src="../uibase/uibase-contentbox.js"></script>
+<script src="../uibase/uibase-position.js"></script>
+<script src="../uibase/uibase-shim.js"></script>
+<script src="../uibase/uibase-mask.js"></script>
+<script src="../uibase/uibase-align.js"></script>
+<script src="../uibase/uibase-loading.js"></script>
 <script src="overlay.js"></script>
-<script src="widget-popup.js"></script>
-<script src="widget-dialog.js"></script>
-<script src="mod-autorender.js"></script>
-<script src="mod-constrain.js"></script>
-<script src="mod-alignment.js"></script>
 <script src="../dd/ddm.js"></script>
 <script src="../dd/draggable.js"></script>
-<script src="mod-draggable.js"></script>
-<script src="mod-fixed.js"></script>
+<script src="../uibase/uibase-stdmod.js"></script>
+<script src="../uibase/uibase-close.js"></script>
+<script src="../uibase/uibase-drag.js"></script>
+<script src="../uibase/uibase-constrain.js"></script>
+<script src="dialog.js"></script>
 
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
+<link rel="stylesheet" href="assets/cool.css"/>
 <style>
-    body { padding: 20px 50px 50px; }
-    h2 { margin: 10px 0 10px -20px; padding: 5px 10px; font-size: 14px; font-weight: normal; background: #F2F2F2; }
+    body {
+        padding: 20px 50px 50px;
+    }
 
-    p.code-switch { color: #09f; cursor: pointer; margin-top: 10px; }
+    h2 {
+        margin: 10px 0 10px -20px;
+        padding: 5px 10px;
+        font-size: 14px;
+        font-weight: normal;
+        background: #F2F2F2;
+    }
+
+    p.code-switch {
+        color: #09f;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
     pre.code {
         color: #444;
         cursor: auto;
@@ -37,29 +56,38 @@
 
 <body>
 
-<h2>Popup - 从 Markup 中构建</h2>
+<h2>overlay - 从 Markup 中构建</h2>
 
-<button id="btn1">Show</button><button id="btn2">Hide</button>
-<div id="popup1" style="display:none;border:1px solid #ccc;background:#F6F9FD">Popup content</div>
+<button id="btn1">Show</button>
+<button id="btn2">Hide</button>
+
+<div id="popup1" class="ks-overlay" style="border:1px solid #ccc;background:#F6F9FD">
+    <div class="ks-contentbox-content">
+        Popup content
+    </div>
+</div>
+
+
 <script>
     KISSY.ready(function(S) {
 
-        var popup = new S.Popup('#popup1', {
-            trigger: '#btn1',
-            triggerType: 'click',
+        var popup = new S.Overlay({
+            srcNode:S.one("#popup1"),
             width: 300,
             height: 200,
-            xy: [200, 200],
             align: {
-                node: 'trigger',
+                node: '#btn1',
                 points: ['tr', 'tl'],
                 offset: [50, 0]
             }
         });
-
+        S.one('#btn1').on('click', function() {
+            popup.show();
+        });
         S.one('#btn2').on('click', function() {
             popup.hide();
         });
+
     });
 </script>
 <p class="code-switch">显示源码</p>
@@ -71,18 +99,30 @@
     <option>aaaa</option>
     <option>bbb</option>
 </select>
-<div id="popup2" style="display:none;border:1px solid #ccc;background:#F6F9FD">Popup content</div>
+<div id="popup2" class="ks-overlay" style="border:1px solid #ccc;background:#F6F9FD">
+    <div class="ks-contentbox-content">
+        Popup content
+    </div>
+</div>
 <script>
     KISSY.ready(function(S) {
 
-        var popup = new S.Popup('#popup2', {
-            trigger: '#link1',
+        var popup = new S.Overlay({
+            srcNode:"#popup2",
             width: 300,
             height: 200,
             align: {
-                node: 'trigger',
+                node: S.one('#link1'),
                 points: ['tr', 'tl']
             }
+        });
+
+        S.one('#link1').on('mouseenter', function() {
+
+            popup.show();
+        });
+        S.one('#link1').on('mouseleave', function() {
+            popup.hide();
         });
     });
 </script>
@@ -91,7 +131,7 @@
 
 <style>
     .popup2 {
-        border: 1px solid green; 
+        border: 1px solid green;
         background: none repeat scroll 0 0 rgb(246, 249, 253);
     }
 </style>
@@ -99,17 +139,22 @@
 <a id="link2">hover me</a>
 <script>
     KISSY.ready(function(S) {
-        var popup = new S.Popup({
-            trigger: '#link2',
-            triggerType: 'mouse',
+        var popup = new S.Overlay({
             width: 300,
             height: 200,
-            containerCls: 'popup2',
+            elCls: 'popup2',
             content: 'test popup',
             align: {
-                node: 'trigger',
+                node: '#link2',
                 points: ['tr', 'tl']
             }
+        });
+        S.one('#link2').on('mouseenter', function() {
+            
+            popup.show();
+        });
+        S.one('#link2').on('mouseleave', function() {
+            popup.hide();
         });
     });
 </script>
@@ -121,12 +166,14 @@
     #multi {
         width: 60px;
     }
+
     #multi li {
         background: orange;
         margin: 6px;
         width: 80px;
         text-align: center;
     }
+
     #popup3 {
         display: none;
         background: white;
@@ -140,30 +187,31 @@
     <li>test2</li>
     <li>test3</li>
 </ul>
-<div id="popup3"></div>
+
 <script>
-    KISSY.ready(function(S){
+    KISSY.ready(function(S) {
+
         var lis = S.query('#multi li'),
-            popup = new S.Popup('#popup3', {
-            trigger: lis,
-            triggerType: 'mouse'
-        });
-        popup.on('show', function() {
-            popup.setBody(S.DOM.html(popup.currentTrigger));
-            popup.align();
-        });
+                popup = new S.Overlay({
+                    elStyle:{
+                        border:"1px solid red"
+                    }
+                });
+
 
         // 注意：这里的用法已改变
-        /*S.each(S.query('#multi li'), function(t) {
-            var popup = S.Popup('#popup3', {
-                trigger: t,
-                triggerType: 'mouse'
+        S.each(S.query('#multi li'), function(t) {
+            t = new S.Node(t);
+            t.on("mouseenter", function() {
+                popup.set("content", t.html());
+                popup.render();
+                popup.align(t, ["tr","tl"]);
+                popup.show();
             });
-            popup.on('show', function() {
-                popup.setBody(S.DOM.html(t));
-                popup.align();
+            t.on("mouseleave", function() {
+                popup.hide();
             });
-        });*/
+        });
     });
 </script>
 <p class="code-switch">显示源码</p>
@@ -179,62 +227,54 @@
 </style>
 <h2>Dialog - auto render</h2>
 <button id="btn3">Show</button>
-<div class="dialog1 KS_Widget" data-widget-type="Dialog" data-widget-config="{ 'trigger': '#btn3', 'width': '400px', 'height': '300px', 'header': 'this is a title', 'content': 'this is content', 'fixed': true }"><div class="ks-dialog-bd"></div></div>
+<div id="markupDialog" class="ks-dialog">
+    <div class="ks-contentbox">
+        <div class="ks-stdmod-header">
+            i am header
+        </div>
+        <div class="ks-stdmod-body">
+            <div style="padding:50px;">
+                从 markup 生成 dialog
+            </div>
+        </div>
+        <a class="ks-ext-close"><span class="ks-ext-close-x">X</span></a>
+    </div>
+</div>
 <script>
-    KISSY.ready(function(S){
-        S.Overlay.autoRender();
+    KISSY.ready(function(S) {
+        var d = new S.Dialog({
+            srcNode: "#markupDialog",
+            width:400
+        });
+
+        S.one("#btn3").on("click", function() {
+            d.render();
+            d.center();
+            d.show();
+        });
     });
 </script>
 <p class="code-switch">显示源码</p>
 
 
-<style>
-    .dialog4 {
-        background: white;
-        border: 2px solid green;
-    }
-    .ks-dialog-close {
-        position: absolute;
-        right: 0;
-        top: 0;
-        text-indent: 9999em;
-        width: 16px;
-        height: 16px;
-        overflow: hidden;
-        cursor: pointer;
-        background: transparent url(http://cdn.iconfinder.net/data/icons/bwpx/icons/symbol_multiplication.gif)
-    }
-    .dialog4 .ks-dialog-hd, .dialog4 .ks-dialog-ft {
-        position: relative;
-        text-align: center;
-        background: #eee;
-    }
-    .dialog4 .ks-dialog-bd {
-        padding: 10px;
-    }
-</style>
-<h2>Dialog - 新建 + Mask + Fixed</h2>
-<button id="btn4">Show</button> <button id="btn5">Hide All</button>
+<h2>Dialog - 新建 + Mask</h2>
+<button id="btn4">Show</button>
 <script>
-    KISSY.ready(function(S){
+    KISSY.ready(function(S) {
         var dialog = new S.Dialog({
-            trigger: '#btn4',
-            containerCls: 'dialog5',
             width: 400,
-            height: 300,
-            header: 'this is title',
-            footer: 'footer',
-            content: 'content',
-            mask: true,
-            fixed: true
+            bodyStyle:{
+                height: 300
+            },
+            headerContent: 'this is title',
+            footerContent: 'footer',
+            bodyContent: 'content',
+            mask: true
         });
-        dialog.on('show', function(){
-            //alert('hi');
-        });
-
-        S.Event.on('#btn5', 'click', function(e){
-            dialog.manager.hideAll();
-            //dialog.set('fixed', false);
+        S.one("#btn4").on("click", function() {
+            dialog.render();
+            dialog.center();
+            dialog.show();
         });
     });
 </script>
@@ -242,79 +282,102 @@
 
 <style>
     .constrain {
-        border: 4px solid grey;
+        border: 4px solid gray;
         width: 600px;
         height: 400px;
     }
 </style>
 <h2>Dialog Constrain</h2>
-<div class="constrain">
+<div class="constrain" id="c1">
     constrain area
+    <select>
+        <option> hello world </option>
+    </select>
 </div>
-<button id="btn6">show</button><button id="btn7">release</button><button id="btn8">center</button>
+<button id="btn6">show</button>
+<button id="btn7">release</button>
+<button id="btn8">constrain</button>
 <script>
-    KISSY.ready(function(S){
+    KISSY.ready(function(S) {
         var dialog = new S.Dialog({
-            trigger: '.constrain',
-            containerCls: 'dialog4',
             width: 400,
-            height: 300,
-            header: 'this is title',
-            footer: 'footer',
-            content: 'content',
+            bodyStyle:{
+                height: 100
+            },
+            headerContent: 'this is title',
+            footerContent: 'footer',
+            bodyContent: 'content',
             mask: false,
             align: {
-                node: '.constrain',
-                points: ['bc', 'cc']
+                node: '#c1',
+                points: ['cc', 'cc']
             },
-            constrain: '.constrain',
+            constrain: '#c1',
             draggable: true
         });
 
         var stat = ['release', 'constrain'],
-            sh = ['show', 'hide'];
+                sh = ['show', 'hide'];
         S.Event.on('#btn6', 'click', function() {
-            var b = this,
-                s = S.DOM.html(b);
-            if (s == sh[0]) {
-                dialog.show();
-                S.DOM.html(b, sh[1]);
-            } else {
-                dialog.hide();
-                S.DOM.html(b, sh[0]);
-            }
+            dialog.show();
+            dialog.set("align", {
+                node: '#c1',
+                points: ['cc', 'cc']
+            });
         });
 
 
         S.Event.on('#btn7', 'click', function() {
             var b = this,
-                s = S.DOM.html(b);
+                    s = S.DOM.html(b);
+            dialog.set('constrain', false);
+        });
 
-            if (s == stat[0]) {
-                dialog.set('constrain', false);
-                S.DOM.html(b, stat[1]);
-            } else {
-                dialog.set('constrain', '.constrain');
-                S.DOM.html(b, stat[0]);
-            }
-        });
         S.Event.on('#btn8', 'click', function() {
-            dialog.center();
+            var b = this,
+                    s = S.DOM.html(b);
+            dialog.set('constrain', "#c1");
+            dialog.set("align", {
+                node: '#c1',
+                points: ['cc', 'cc']
+            });
         });
+
     });
 </script>
 <p class="code-switch">显示源码</p>
 
 
-<h2>Dialog + Fixed </h2>
-<button id="btn9">Show</button>
+
+<h2>Dialog fixed 居中</h2>
+<button id="btn5">Show</button>
 <script>
-    KISSY.ready(function(S){
-        new S.Dialog({
-            trigger: '#btn9',
-            content: '再怎么滚, 我都不会动~',
-            fixed: true
+    KISSY.ready(function(S) {
+        var dialog = new S.Dialog({
+            width: 400,
+            bodyStyle:{
+                height: 300
+            },
+            elStyle:{
+              position:S.UA.ie==6?"absolute":"fixed"
+            },
+            headerContent: 'this is title',
+            footerContent: 'footer',
+            bodyContent: 'content',
+            mask: true,
+            draggable:false
         });
+        S.one("#btn5").on("click", function() {
+            dialog.render();
+            dialog.center();
+            dialog.show();
+        });
+        if(S.UA.ie==6){
+            S.Event.on(window,"scroll",function(){
+                if(dialog.get("visible"))
+                dialog.center();
+            });
+        }
     });
 </script>
 <p class="code-switch">显示源码</p>
@@ -322,19 +385,19 @@
 <script>
     (function() {
         var S = KISSY, DOM = S.DOM,
-            SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+                SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
 
         S.all('p.code-switch').each(function(p) {
             p.on('click', function() {
                 var showing = (p.text() === SHOW_CODE),
-                    next = p.next(),
-                    pre = next;
+                        next = p.next(),
+                        pre = next;
 
                 if (next[0].nodeName !== 'PRE') {
                     pre = S.Node('<pre>');
 
                     pre.attr('class', 'code')
-                        .html(p.prev().html());
+                            .html(p.prev().html());
 
                     if (S.UA.ie) {
                         pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');

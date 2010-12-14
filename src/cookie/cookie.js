@@ -53,6 +53,7 @@ KISSY.add('cookie', function(S) {
                 text += '; secure';
             }
 
+            //S.log(text);
             doc.cookie = name + '=' + text;
         },
 
@@ -77,5 +78,4 @@ KISSY.add('cookie', function(S) {
  *     除了正则获取，还可以 split 字符串的方式来获取。
  *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
  *     独立成静态工具类的方式更优。
- *
  */

@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Nov 2 13:10
+build time: ${build.time}
 */
 /* 清除浮动 */
 .ks-clearfix:after {
@@ -121,3 +121,7 @@ build time: Nov 2 13:10
 .ks-selectime a:hover {text-decoration:underline;}
 .ks-selectime a.x {position:absolute;right:3px;bottom:2px;font-weight:bold;font-family:"comic Sans MS"}
 .ks-selectime select,.ks-selectime input {width:80px;}
+
+/*--日历选择组件--*/
+.ks-select-calendar{width:126px;height:20px;*width:122px;*height:18px;_width:124px;border:1px solid #ccc;background:url(http://img03.taobaocdn.com/tps/i3/T1cJ4PXfXGXXXXXXXX-16-13.gif) no-repeat 106px 4px;}
+.lot-calendar{position:absolute;top:0px;left:222px;z-index:100;}

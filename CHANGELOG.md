@@ -16,9 +16,17 @@ History:
 
 ### v1.1.5 -> v1.x.x (2010/MM/DD)
 
- - [+] 采用 Jasmine 构建所有正式组件的测试用例 [Understanding JavaScript Testing](http://kissyui.com/blog/2010/10/understanding-javascript-testing/)
- - [+] gallery 增加 Sliding Label demo
- - [+] imagezoom 增加 Zazzle 内部放大效果 [demo](http://kissyteam.github.com/kissy/src/imagezoom/test-inner.html)
+ - [+] kissy-tools 增加 idebug
+ - [+] 增加 jasminelite 和 event-simulate for jasmine
+ - [!] event 中对 return false, 仅 preventDefault + stopPropagation, 不再 stopImmediatePropagation
+ - [+] cssreset 加入对 HTML5 的支持
+ - [+] 2010/11/30 发布内部版本 v1.1.6
+ - [+] 增加 ajax 模块 [文档](http://kissyteam.github.com/kissy/docs/ajax/index.html)
+ - [!] 将 S.one/all(selector).on(type, function(ev) { ev.target/currentTarget 由原来的 DOM 裸节点变成对应 Node })
+ - [!] 将 S.all(selector).on(type, function() { this 由 NodeList 变成对应 Node })
+ - [+] Node 增加 append/appendTo/prepend/prependTo
+ - [+] 引入 Jasmine [Understanding JavaScript Testing](http://kissyui.com/blog/2010/10/understanding-javascript-testing/)
+ - [+] imagezoom 增加 Zazzle 内部放大效果 [demo](http://kissyteam.github.com/kissy/src/imagezoom/demo-inner.html)
  - [*] anim 增加原生 CSS3 Transitions 支持 [原理](http://lifesinger.org/blog/2010/09/anim-using-css3-transitions/)
  - [+] 开发规范整理 [link](http://kissyteam.github.com/docs/html/styleguide/)
  - [*] 开发流程整理 [link](http://kissyteam.github.com/docs/html/workflow/)

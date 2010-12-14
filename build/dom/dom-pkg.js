@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Nov 2 13:10
+build time: ${build.time}
 */
 /**
  * @module  dom
@@ -305,7 +305,7 @@ KISSY.add('selector', function(S, undefined) {
             }
             // 其它复杂 filter, 采用外部选择器
             else if (filter && S.ExternalSelector) {
-                ret = S.ExternalSelector._filter(selector, filter);
+                ret = S.ExternalSelector._filter(selector, filter + '');
             }
             // filter 为空或不支持的 selector
             else {
@@ -320,9 +320,8 @@ KISSY.add('selector', function(S, undefined) {
          */
         test: function(selector, filter) {
             var elems = query(selector);
-            return DOM.filter(elems, filter).length === elems.length;
+            return elems.length && (DOM.filter(elems, filter).length === elems.length);
         }
-
     });
 });
 
@@ -1136,7 +1135,7 @@ KISSY.add('dom-style', function(S, undefined) {
         addStyleSheet: function(cssText, id) {
             var elem;
 
-            if (id) elem = S.get('#' + id);
+            if (id && (id = id.replace('#', EMPTY))) elem = S.get('#' + id);
             if (elem) return; // 仅添加一次，不重复添加
 
             elem = DOM.create('<style>', { id: id });
@@ -1184,8 +1183,7 @@ KISSY.add('dom-style', function(S, undefined) {
         // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
         if (val === AUTO && RE_LT.test(name)) {
             ret = 0;
-
-            if (DOM.css(elem, 'position') === 'absolute') {
+            if (S.inArray(DOM.css(elem, 'position'), ['absolute','fixed'])) {
                 offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
                 // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
@@ -1613,7 +1611,13 @@ KISSY.add('dom-traversal', function(S, undefined) {
 
             if ((container = S.get(container)) && (contained = S.get(contained))) {
                 if (container.contains) {
-                    return container.contains(contained);
+                    if (contained.nodeType === 3) {
+                        contained = contained.parentNode;
+                        if (contained === container) return true;
+                    }
+                    if (contained) {
+                        return container.contains(contained);
+                    }
                 }
                 else if (container.compareDocumentPosition) {
                     return !!(container.compareDocumentPosition(contained) & 16);
@@ -1624,7 +1628,7 @@ KISSY.add('dom-traversal', function(S, undefined) {
                     }
                 }
             }
-            
+
             return ret;
         }
     });
@@ -1634,11 +1638,11 @@ KISSY.add('dom-traversal', function(S, undefined) {
     // direction 可为 parentNode, nextSibling, previousSibling
     function nth(elem, filter, direction, extraFilter) {
         if (!(elem = S.get(elem))) return null;
-        if(filter === undefined) filter = 1; // 默认取 1
+        if (filter === undefined) filter = 1; // 默认取 1
         var ret = null, fi, flen;
 
-        if(S.isNumber(filter) && filter >= 0) {
-            if(filter === 0) return elem;
+        if (S.isNumber(filter) && filter >= 0) {
+            if (filter === 0) return elem;
             fi = 0;
             flen = filter;
             filter = function() {
@@ -1646,7 +1650,7 @@ KISSY.add('dom-traversal', function(S, undefined) {
             };
         }
 
-        while((elem = elem[direction])) {
+        while ((elem = elem[direction])) {
             if (isElementNode(elem) && (!filter || DOM.test(elem, filter)) && (!extraFilter || extraFilter(elem))) {
                 ret = elem;
                 break;
@@ -1662,7 +1666,7 @@ KISSY.add('dom-traversal', function(S, undefined) {
         if (elem && parent) parentNode = elem.parentNode;
 
         if (parentNode) {
-            for (j = 0, next = parentNode.firstChild; next; next = next.nextSibling) {
+            for (j = 0,next = parentNode.firstChild; next; next = next.nextSibling) {
                 if (isElementNode(next) && next !== elem && (!filter || DOM.test(next, filter))) {
                     ret[j++] = next;
                 }
@@ -1999,7 +2003,7 @@ KISSY.add('dom-insertion', function(S) {
             }
             return newNode;
         },
-
+        
         /**
          * Inserts the new node as the next sibling of the reference node.
          * @return {HTMLElement} The node that was inserted (or null if insert fails)
@@ -2013,6 +2017,30 @@ KISSY.add('dom-insertion', function(S) {
                 }
             }
             return newNode;
+        },
+
+        /**
+         * Inserts the new node as the last child.
+         */
+        append: function(node, parent) {
+            if ((node = S.get(node)) && (parent = S.get(parent))) {
+                if (parent.appendChild) {
+                    parent.appendChild(node);
+                }
+            }
+        },
+
+        /**
+         * Inserts the new node as the first child.
+         */
+        prepend: function(node, parent) {
+            if ((node = S.get(node)) && (parent = S.get(parent))) {
+                if (parent.firstChild) {
+                    DOM.insertBefore(node, parent.firstChild);
+                } else {
+                    parent.appendChild(node);
+                }
+            }
         }
     });
 });

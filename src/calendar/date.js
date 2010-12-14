@@ -47,7 +47,9 @@ KISSY.add('date', function(S) {
             pad = function (val, len) {
                 val = String(val);
                 len = len || 2;
-                while (val.length < len) val = "0" + val;
+                while (val.length < len) {
+					val = "0" + val;
+				}
                 return val;
             },
             // Some common format strings
@@ -99,8 +101,10 @@ KISSY.add('date', function(S) {
             }
 
             // Passing date through Date applies Date.parse, if necessary
-            date = date ? new Date(date) : new Date;
-            if (isNaN(date)) throw SyntaxError("invalid date");
+            date = date ? new Date(date) : new Date();
+            if (isNaN(date)){
+				throw SyntaxError("invalid date");
+			}
 
             mask = String(masks[mask] || mask || masks["default"]);
 
@@ -164,7 +168,7 @@ KISSY.add('date', function(S) {
         parse: function(date) {
             return dateParse(date);
         }
-    }
+    };
 });
 
 /**

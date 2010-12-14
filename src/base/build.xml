@@ -8,6 +8,7 @@
 
     <target name="concat">
         <concat destfile="base-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="attribute.js"/>
             <path path="base.js"/>
         </concat>
     </target>

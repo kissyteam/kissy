@@ -17,19 +17,18 @@
     <target name="concat">
         <!-- seed: 种子 -->
         <concat destfile="seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../kissy/kissy-pkg.js"/>
+            <path path="../seed/seed-pkg.js"/>
         </concat>
-        <!-- core: 核心，提供基础服务 -->
+        <!-- core: 核心 -->
         <concat destfile="core-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../ua/ua-pkg.js"/>
             <path path="../dom/dom-pkg.js"/>
             <path path="../event/event-pkg.js"/>
             <path path="../node/node-pkg.js"/>
-            <!--<path path="../ajax/ajax-pkg.js"/>-->
-            <path path="../cookie/cookie-pkg.js"/>
             <path path="../json/json-pkg.js"/>
+            <path path="../ajax/ajax-pkg.js"/>
             <path path="../anim/anim-pkg.js"/>
-            <path path="../attribute/attribute-pkg.js"/>
+            <path path="../cookie/cookie-pkg.js"/>
             <path path="../base/base-pkg.js"/>
             <footer filtering="no" trimleading="yes">
                 KISSY.add('core');
@@ -48,6 +47,10 @@
             <path path="../datalazyload/datalazyload-pkg.js"/>
             <path path="../flash/flash-pkg.js"/>
 
+            <path path="../dd/dd-pkg.js"/>
+            <path path="../resizable/resizable-pkg.js"/>
+            <path path="../uibase/uibase-pkg.js"/>
+
             <path path="../switchable/switchable-pkg.js"/>
             <path path="../overlay/overlay-pkg.js"/>
             <path path="../suggest/suggest-pkg.js"/>
@@ -63,7 +66,6 @@
         </move>
         <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="seed-min.js" />
         <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="kissy-min.js" />
-        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="kissy-aio-min.js" />
         <copy todir="${src.dir}/..">
             <fileset dir="${src.dir}" includes="seed.js,seed-min.js,kissy.js,kissy-min.js"/>
         </copy>

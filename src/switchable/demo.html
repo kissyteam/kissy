@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <title>Switchable Widgets Demo</title>
 
-<script src="../../build/packages/kissy.js"></script>
+<script src="../../build/kissy.js"></script>
 <script src="../../build/datalazyload/datalazyload-pkg.js"></script>
 
 <script src="switchable.js"></script>
@@ -170,14 +170,19 @@
         </li>
     </ol>
 </div>
+<button id="demo2-btn">stop autoplay</button>
 <script>
     KISSY.ready(function(S) {
-        S.Slide('#demo2', {
+        var s = S.Slide('#demo2', {
             effect: 'scrolly',
             easing: 'easeOutStrong',
             countdown: true,
             countdownFromStyle: 'width:18px'
         });
+
+        S.Event.on('#demo2-btn', 'click', function() {
+            s.stop();
+        })
     });
 </script>
 <p class="code-switch">显示源码</p>

@@ -27,6 +27,11 @@ KISSY.add('event-object', function(S, undefined) {
             self.target = currentTarget;
         }
 
+        // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
+        if (currentTarget.isCustomEventTarget) {
+            if (S.DOM._isKSNode(currentTarget)) self.target = new S.Node(self.target);
+        }
+
         // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
         self.currentTarget = currentTarget;
         self.fixed = true;

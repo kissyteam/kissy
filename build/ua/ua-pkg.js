@@ -1,7 +1,7 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Nov 2 13:10
+build time: ${build.time}
 */
 /**
  * @module  ua
@@ -141,6 +141,7 @@ KISSY.add('ua', function(S) {
  *
  * TODO:
  *  - test mobile
+ *  - 3Q 大战后，360 去掉了 UA 信息中的 360 信息，需采用 res 方法去判断
  *
  */
 /**

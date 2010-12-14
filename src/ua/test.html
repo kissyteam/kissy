@@ -2,42 +2,36 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>KISSY UA Test</title>
+<title>UA Test</title>
 </head>
 <body>
-<script src="../test/test.js"></script>
 
-<h2>Test Data</h2>
-<script src="../kissy/kissy.js"></script>
-<script src="../kissy/lang.js"></script>
-<script src="../kissy/loader.js"></script>
+<script src="../../build/seed.js"></script>
 <script src="ua.js"></script>
 <script src="ua-extra.js"></script>
 
-<!-- Test Cases -->
+<div id="out" style="margin: 20px; font: 14px 'courier new', monospace"></div>
+
 <script>
+    var S = KISSY, UA = S.UA,
+        get = function(id) {
+            return document.getElementById(id);
+        },
+        log = function(msg) {
+            out.innerHTML += (msg || '') + '<br>';
+        },
+        out = get('out'),
+        html = '',
+        p;
 
-    var S = KISSY, UA = S.UA;
+    log(navigator.userAgent);
 
-    function test_userAgent(test) {
-        test.extraMsg = navigator.userAgent;
-    }
+    log();
 
-    function test_ua(test) {
-        var out = '', p;
-
-        for(p in UA) {
-            if(p.indexOf('_') !== 0) {
-                out += p + ' = ' + UA[p] + ', '
-            }
+    for (p in UA) {
+        if (p.indexOf('_') !== 0) {
+            log(p + ' = ' + UA[p]);
         }
-
-        test.extraMsg = out;
-    }
-
-    // test api
-    if(UA.ie < 100) {
-        document.write('UA.ie = ' + UA.ie);
     }
 
 </script>

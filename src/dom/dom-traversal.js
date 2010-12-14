@@ -54,7 +54,13 @@ KISSY.add('dom-traversal', function(S, undefined) {
 
             if ((container = S.get(container)) && (contained = S.get(contained))) {
                 if (container.contains) {
-                    return container.contains(contained);
+                    if (contained.nodeType === 3) {
+                        contained = contained.parentNode;
+                        if (contained === container) return true;
+                    }
+                    if (contained) {
+                        return container.contains(contained);
+                    }
                 }
                 else if (container.compareDocumentPosition) {
                     return !!(container.compareDocumentPosition(contained) & 16);
@@ -65,7 +71,7 @@ KISSY.add('dom-traversal', function(S, undefined) {
                     }
                 }
             }
-            
+
             return ret;
         }
     });
@@ -75,11 +81,11 @@ KISSY.add('dom-traversal', function(S, undefined) {
     // direction 可为 parentNode, nextSibling, previousSibling
     function nth(elem, filter, direction, extraFilter) {
         if (!(elem = S.get(elem))) return null;
-        if(filter === undefined) filter = 1; // 默认取 1
+        if (filter === undefined) filter = 1; // 默认取 1
         var ret = null, fi, flen;
 
-        if(S.isNumber(filter) && filter >= 0) {
-            if(filter === 0) return elem;
+        if (S.isNumber(filter) && filter >= 0) {
+            if (filter === 0) return elem;
             fi = 0;
             flen = filter;
             filter = function() {
@@ -87,7 +93,7 @@ KISSY.add('dom-traversal', function(S, undefined) {
             };
         }
 
-        while((elem = elem[direction])) {
+        while ((elem = elem[direction])) {
             if (isElementNode(elem) && (!filter || DOM.test(elem, filter)) && (!extraFilter || extraFilter(elem))) {
                 ret = elem;
                 break;
@@ -103,7 +109,7 @@ KISSY.add('dom-traversal', function(S, undefined) {
         if (elem && parent) parentNode = elem.parentNode;
 
         if (parentNode) {
-            for (j = 0, next = parentNode.firstChild; next; next = next.nextSibling) {
+            for (j = 0,next = parentNode.firstChild; next; next = next.nextSibling) {
                 if (isElementNode(next) && next !== elem && (!filter || DOM.test(next, filter))) {
                     ret[j++] = next;
                 }

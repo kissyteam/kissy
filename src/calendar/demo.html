@@ -48,6 +48,9 @@
 <h3>Popup日历，默认点击触发，点击空白处关闭</h3>
 <input type="text" id="J_Popup" style="margin-left:50px;" />
 <hr size=1 />
+<h3>Popup日历，默认点击触发，选择范围</h3>
+<input type="text" id="J_Popup2" style="margin-left:50px;" />
+<hr size=1 />
 <h3>Popup日历，单选关闭，focus事件触发时弹出日历</h3>
 <a href="javascript:void(0);" id="J_PopupClosable" style="margin-left:50px;">click here!</a>
 <hr size=1 />
@@ -63,6 +66,9 @@
 <h3>起始星期自定义</h3>
 起始星期可以自定义，指定参数startDay:0-6,默认为0，从星期日开始
 <div id="J_CustomDay"></div>
+<hr size=1 />
+<h3>更多定制</h3>
+<input type="text" value="" class="ks-select-calendar" id="J_SelectResult" name="">
 <hr size=1 />
 <h3>日期格式的自定义</h3>
 日期格式的自定义是在一个单独的模块中date-format，和Calendar无关,这里只是一个示例
@@ -161,9 +167,23 @@ KISSY.use('calendar',function(S){
 	//Popup日历,默认点击触发
 	new S.Calendar('#J_Popup',{
 		popup:true,
-		triggerType:['click']
+		triggerType:['click'],
+		closable:true
 	}).on('select',function(e){
-		S.one('#J_Popup').val(e.date.format('localFullDate'));
+		S.one('#J_Popup').val(S.Date.format(e.date,'localFullDate'));
+	});
+
+	//Popup日历,默认点击触发,选择范围
+	var k = new S.Calendar('#J_Popup2',{
+		popup:true,
+		triggerType:['click'],
+		closable:false,
+		pages:2,
+		rangeSelect:true
+	}).on('rangeSelect',function(e){
+		alert(e.start+' '+e.end);
+		k.hide();
+		//S.one('#J_Popup').val(S.Date.format(e.date,'localFullDate'));
 	});
 
 	//Popup日历,单选关闭
@@ -194,6 +214,12 @@ KISSY.use('calendar',function(S){
 	c = new S.Calendar('#J_CustomDay',{
 		startDay:1,
 		popup:false
+	});
+
+
+	//更多定制
+	c = new S.Calendar('#J_SelectResult',{
+		popup:true
 	});
 
 	//格式化时间类型

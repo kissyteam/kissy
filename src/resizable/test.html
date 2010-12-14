@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>resizable test</title>
+<style>
+    .ke-resizehandler {
+        overflow: hidden;
+        font-size: 0;
+        line-height: 0;
+        position: absolute;
+    }
+
+    .ke-resizehandler-b {
+        height: 5px;
+        width: 100%;
+        background-color: yellow;
+        bottom: 0;
+        left: 0;
+        cursor: n-resize;
+    }
+
+    .ke-resizehandler-t {
+        height: 5px;
+        width: 100%;
+        background-color: yellow;
+        top: 0;
+        left: 0;
+        cursor: n-resize;
+    }
+
+    .ke-resizehandler-l {
+        height: 100%;
+        -height: expression(this.parentNode.offsetHeight);
+        width: 5px;
+        background-color: yellow;
+        top: 0;
+        left: 0;
+        cursor: e-resize;
+    }
+
+    .ke-resizehandler-r {
+        height: 100%;
+        -height: expression(this.parentNode.offsetHeight);
+        background-color: yellow;
+        width: 5px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: e-resize;
+    }
+
+    .ke-resizehandler-bl {
+        height: 5px;
+        width: 5px;
+        background-color: green;
+        z-index: 1;
+        bottom: 0;
+        left: 0;
+        cursor: sw-resize;
+    }
+
+    .ke-resizehandler-br {
+        height: 5px;
+        width: 5px;
+        z-index: 1;
+        background-color: green;
+        bottom: 0;
+        right: 0;
+        cursor: se-resize;
+    }
+
+    .ke-resizehandler-tl {
+        height: 5px;
+        width: 5px;
+        z-index: 1;
+        background-color: green;
+        top: 0;
+        left: 0;
+        cursor: nw-resize;
+    }
+
+    .ke-resizehandler-tr {
+        height: 5px;
+        width: 5px;
+        z-index: 1;
+        background-color: green;       
+        top: 0;
+        right: 0;
+        cursor: ne-resize;
+    }
+</style>
+</head>
+<body>
+
+拖放测试
+
+<div style="border:1px solid red;width:200px;height:100px;overflow:hidden;" id="t">
+    <button id="destroy" style='margin-top:50px;'>
+        destroy resize
+    </button>
+</div>
+<script src="../../build/kissy-min.js"></script>
+<script src="../uibase/uibase.js"></script>
+<script src="../dd/ddm.js"></script>
+<script src="../dd/draggable.js"></script>
+<script src="resizable.js"></script>
+<script>
+    KISSY.ready(function(S) {
+        var r = new S.Resizable({
+            node:"#t",
+            minHeight:10,
+            autoRender:true,
+            handlers:["b","t","r","l","tr","tl","br","bl"]
+        });
+        S.one("#destroy").on("click", function() {
+            r.destroy();
+        });
+
+    });
+</script>
+</body>
+</html>

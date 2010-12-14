@@ -12,7 +12,7 @@
 
 <h2>Test Data</h2>
 
-<script src="../../build/kissy/kissy-pkg.js"></script>
+<script src="../../build/seed/seed-pkg.js"></script>
 <script src="../../build/ua/ua-pkg.js"></script>
 
 <script src="dom.js"></script>
@@ -24,7 +24,7 @@
 <script src="dom-create.js"></script>
 <script src="dom-insertion.js"></script>
 
-<script src="../sizzle/sizzle.js"></script>
+<script src="../../build/sizzle/sizzle-pkg.js"></script>
 
 <div id="test-data">
     <p id="foo">
@@ -65,6 +65,8 @@
         <p class="test-next"><a id="test-parent3">3</a></p>
         <p class="test-p" id="test-prev"><em class="test-em"><span><a id="test-parent4">4</a></span></em></p>
     </div>
+    <div id="test-append"></div>
+    <div id="test-prepend">text node</div>
 </div>
 
 <!-- Test Cases -->
@@ -81,6 +83,19 @@
         var t = DOM.insertAfter(DOM.create('<p class="test-insert">inserted node2</p>'), '#test-next');
         if(DOM.children('#test-insert')[1].className !== 'test-insert') test.fail();
         S.get('#test-insert').removeChild(t);
+    }
+
+    function test_append(test) {
+        DOM.append(DOM.create('<p>'), '#test-append');
+        if(DOM.children('#test-append').length !== 1) test.fail();
+    }
+    
+    function test_prepend(test) {
+        DOM.prepend(DOM.create('<p>'), '#test-prepend');
+        if(DOM.children('#test-prepend').length !== 1) test.fail();
+
+        DOM.prepend(DOM.create('<a>'), '#test-prepend');
+        if(DOM.children('#test-prepend')[0].nodeName !== 'A') test.fail();
     }
 
     // temp code

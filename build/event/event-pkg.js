@@ -1,13 +1,13 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.5
+Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed
-build time: Nov 2 13:10
+build time: ${build.time}
 */
 /**
  * @module  event
  * @author  lifesinger@gmail.com
  */
-KISSY.add('event', function(S, undefined) {
+KISSY.add('event', function(S, undef) {
 
     var doc = document,
         DOM = S.DOM,
@@ -80,9 +80,9 @@ KISSY.add('event', function(S, undefined) {
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
                         event = new S.EventObject(target, event, type);
-                        if (S.isPlainObject(eventData)) {
-                            S.mix(event, eventData);
-                        }
+                    }
+                    if (S.isPlainObject(eventData)) {
+                        S.mix(event, eventData);
                     }
                     if (special['setup']) {
                         special['setup'](event);
@@ -123,14 +123,14 @@ KISSY.add('event', function(S, undefined) {
             if (c.target !== target) return; // target 不匹配
             scope = scope || target;
             events = c.events || { };
-            
+
             if ((eventsType = events[type])) {
                 listeners = eventsType.listeners;
                 len = listeners.length;
 
                 // 移除 fn
                 if (S.isFunction(fn) && len) {
-                    for (i = 0, j = 0, t = []; i < len; ++i) {
+                    for (i = 0,j = 0,t = []; i < len; ++i) {
                         if (fn !== listeners[i].fn
                             || scope !== listeners[i].scope) {
                             t[j++] = listeners[i];
@@ -141,12 +141,12 @@ KISSY.add('event', function(S, undefined) {
                 }
 
                 // remove(el, type) or fn 已移除光
-                if (fn === undefined || len === 0) {
+                if (fn === undef || len === 0) {
                     if (!target.isCustomEventTarget) {
                         special = Event.special[type] || { };
                         simpleRemove(target, special.fix || type, eventsType.handle);
                     }
-                    else if (target._addEvent) { // such as Node
+                    else if (target._removeEvent) { // such as Node
                         target._removeEvent(type, eventsType.handle);
                     }
                     delete events[type];
@@ -154,7 +154,7 @@ KISSY.add('event', function(S, undefined) {
             }
 
             // remove(el) or type 已移除光
-            if (type === undefined || S.isEmptyObject(events)) {
+            if (type === undef || S.isEmptyObject(events)) {
                 for (type in events) {
                     Event.remove(target, type);
                 }
@@ -174,13 +174,17 @@ KISSY.add('event', function(S, undefined) {
 
             for (; i < len; ++i) {
                 listener = listeners[i];
-                ret = listener.fn.call(listener.scope || target, event);
+                ret = listener.fn.call(listener.scope, event);
 
-                // 自定义事件对象，可以用 return false 来立刻停止后续监听函数
-                // 注意：return false 仅停止当前 target 的后续监听函数，并不会阻止冒泡
-                // 目前没有实现自定义事件对象的冒泡，因此 return false 和 stopImmediatePropagation 效果是一样的
-                if ((ret === false && target.isCustomEventTarget) ||
-                    event.isImmediatePropagationStopped) {
+                // 和 jQuery 逻辑保持一致
+                // return false 等价 preventDefault + stopProgation
+                if (ret !== undef) {
+                    event.result = ret;
+                    if (ret === false) {
+                        event.halt();
+                    }
+                }
+                if (event.isImmediatePropagationStopped) {
                     break;
                 }
             }
@@ -218,6 +222,14 @@ KISSY.add('event', function(S, undefined) {
             S.each(types.split(SPACE), function(type) {
                 Event[methodName](targets, type, fn, scope);
             });
+            return true;
+        }
+
+        // unpack nodelist
+        if (targets.getDOMNodes) {
+            for (var i = 0; i < targets.length; i++) {
+                Event[methodName](targets.item(i), types, fn, scope);
+            }
             return true;
         }
     }
@@ -280,6 +292,11 @@ KISSY.add('event-object', function(S, undefined) {
         else { // custom
             self.type = type;
             self.target = currentTarget;
+        }
+
+        // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
+        if (currentTarget.isCustomEventTarget) {
+            if (S.DOM._isKSNode(currentTarget)) self.target = new S.Node(self.target);
         }
 
         // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
@@ -518,6 +535,7 @@ KISSY.add('event-mouseenter', function(S) {
                             Event._handle(el, event, listeners);
                         }
                     } catch(e) {
+                        S.log(e);
                     }
                 }
             }

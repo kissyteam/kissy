@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Test</title>
+<link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
+<link rel="stylesheet" href="assets/cool.css"/>
+<style>
+
+    #constrainRegion {
+        width: 800px;
+        height: 500px;
+        border: 1px solid green;
+        left: 200px;
+        top: 200px;
+        position: absolute;
+    }
+</style>
+</head>
+<body>
+<button id="show1">
+    show 窗口1
+</button>
+<button id="destroy1">
+    destroy 窗口1
+</button>
+
+<button id="loading1">
+    loading 窗口1
+</button>
+
+<button id="unloading1">
+    unloading 窗口1
+</button>
+
+<div id="constrainRegion">
+
+    <select>
+        <option>测试 ie6</option>
+    </select>
+
+</div>
+
+
+<div id="markup" class="ks-dialog">
+    <div class="ks-contentbox">
+        <a class="ks-ext-close"><span class="ks-ext-close-x">X</span></a>
+        <div class="ks-stdmod-header">
+            i am header
+        </div>
+        <div class="ks-stdmod-body">
+            <div style="padding:50px;">
+                从 markup 生成 dialog
+            </div>
+        </div>
+        <div class="ks-stdmod-footer"></div>
+    </div>
+</div>
+
+
+<button id="show2">
+    show from markup
+</button>
+
+<button id="hide2">
+    hide from markup
+</button>
+
+<script src="../../build/kissy.js"></script>
+<script src="../uibase/uibase.js"></script>
+<script src="../uibase/uibase-box.js"></script>
+<script src="../uibase/uibase-contentbox.js"></script>
+<script src="../uibase/uibase-position.js"></script>
+<script src="../uibase/uibase-shim.js"></script>
+<script src="../uibase/uibase-mask.js"></script>
+<script src="../uibase/uibase-align.js"></script>
+<script src="../uibase/uibase-loading.js"></script>
+<script src="overlay.js"></script>
+<script src="../dd/ddm.js"></script>
+<script src="../dd/draggable.js"></script>
+<script src="../uibase/uibase-stdmod.js"></script>
+<script src="../uibase/uibase-close.js"></script>
+<script src="../uibase/uibase-drag.js"></script>
+<script src="../uibase/uibase-constrain.js"></script>
+<script src="dialog.js"></script>
+<script>
+    KISSY.ready(function(S) {
+        var Dialog = S.Dialog,Align = S.UIBase.Align;
+
+        window.o = new Dialog({
+            headerContent:"i am header",
+            bodyContent:"<div style='padding:50px;'>i am dialog 动态生成</div>",
+            x:400,
+            y:400,
+            //mask:true,
+            /*
+             align:{
+             // 参考元素, falsy 值为可视区域
+             node: null,
+             // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+             points: [Align.CC, Align.CC],
+             // 有效值为 [n, m]
+             offset: [0, 0]
+             },*/
+            width:300,
+            //true 限制在可视区域
+            //S.one("#xx")
+            constrain:S.one("#constrainRegion")
+        });
+        var loading1 = S.one("#loading1"),
+                unloading1 = S.one("#unloading1");
+        o.on("show", function() {
+            loading1.show();
+            unloading1.show();
+        });
+        o.on("hide", function() {
+            loading1.hide();
+            unloading1.hide();
+        });
+        loading1.hide();
+        unloading1.hide();
+        loading1.on("click", function() {
+            o.loading();
+        });
+        unloading1.on("click", function() {
+            o.unloading();
+        });
+
+
+        S.one("#show1").on("click", function() {
+            o.show();
+        });
+
+        S.one("#destroy1").on("click", function() {
+            o.destroy();
+        });
+
+        var o2 = new Dialog({
+            srcNode:S.one("#markup"),
+            width:200,
+            autoRender:true
+        });
+
+
+        S.one("#show2").on("click", function() {
+            o2.center();
+            o2.show();
+        });
+
+
+        S.one("#hide2").on("click", function() {
+            o2.hide();
+        });
+       
+    });
+</script>
+</body>
+</html>

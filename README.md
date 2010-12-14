@@ -21,7 +21,6 @@ KISSY - An Enjoyable JavaScript Library
  - build:         构建好的发布文件
  - docs:          API 文档
  - src:           源码、测试等开发资源
- - tests:         测试相关资源
  - tools:         打包压缩等自动化工具
 
 

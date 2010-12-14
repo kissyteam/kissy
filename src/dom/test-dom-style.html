@@ -12,7 +12,7 @@
 
 <h2>Test Data</h2>
 
-<script src="../../build/kissy/kissy-pkg.js"></script>
+<script src="../../build/seed/seed-pkg.js"></script>
 <script src="../../build/ua/ua-pkg.js"></script>
 
 <script src="dom.js"></script>
@@ -24,10 +24,7 @@
 <script src="dom-attr.js"></script>
 <script src="dom-create.js"></script>
 
-<script src="../../third-party/jquery/jquery-1.4.2.js"></script>
-<script src="../../third-party/yui2/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script src="../../third-party/yui3/yui-min.js"></script>
-<script src="../../third-party/ext-core/ext-core.js"></script>
+<script src="../../tools/third-party/jquery.js"></script>
 
 <div id="test-data">
     <div id="test-div" style="padding-left: 2pt; background: transparent; float: left; border: 5px solid rgba(0,0,0,.201);"></div>
@@ -175,6 +172,8 @@
 
     function test_addStyleSheet(test) {
         DOM.addStyleSheet('#test-div { padding: 100px; color: blue }');
+        DOM.addStyleSheet('#test-div { padding: 100px; color: blue }', 'test-style');
+        DOM.addStyleSheet('#test-div { padding: 100px; color: blue }', '#test-style');
 
         if (UA.opera) {
             if (DOM.css('#test-div', 'color') !== '#0000ff') test.fail();

@@ -20,7 +20,7 @@ KISSY.add('dom-insertion', function(S) {
             }
             return newNode;
         },
-
+        
         /**
          * Inserts the new node as the next sibling of the reference node.
          * @return {HTMLElement} The node that was inserted (or null if insert fails)
@@ -34,6 +34,30 @@ KISSY.add('dom-insertion', function(S) {
                 }
             }
             return newNode;
+        },
+
+        /**
+         * Inserts the new node as the last child.
+         */
+        append: function(node, parent) {
+            if ((node = S.get(node)) && (parent = S.get(parent))) {
+                if (parent.appendChild) {
+                    parent.appendChild(node);
+                }
+            }
+        },
+
+        /**
+         * Inserts the new node as the first child.
+         */
+        prepend: function(node, parent) {
+            if ((node = S.get(node)) && (parent = S.get(parent))) {
+                if (parent.firstChild) {
+                    DOM.insertBefore(node, parent.firstChild);
+                } else {
+                    parent.appendChild(node);
+                }
+            }
         }
     });
 });

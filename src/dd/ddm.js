@@ -1,10 +1,11 @@
 /**
  * dd support for kissy
- * @author: yiminghe@gmail.com
+ * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add('dd', function(S) {
 
-    var Event = S.Event,
+    var doc = document,
+        Event = S.Event,
         DOM = S.DOM,
         Node = S.Node,
         SHIM_ZINDEX = 999999;
@@ -47,11 +48,10 @@ KISSY.add('dd', function(S) {
          */
         _move: function(ev) {
             var activeDrag = this.get('activeDrag');
-
+            //S.log("move");
+            if (!activeDrag) return;
             //防止 ie 选择到字
             ev.preventDefault();
-
-            if (!activeDrag) return;
             activeDrag._move(ev);
         },
 
@@ -83,7 +83,8 @@ KISSY.add('dd', function(S) {
             self.set('activeDrag', drag);
 
             //真正开始移动了才激活垫片
-            self._activeShim();
+            if (drag.get("shim"))
+                self._activeShim();
             drag._start();
         },
 
@@ -94,7 +95,7 @@ KISSY.add('dd', function(S) {
         _end: function(ev) {
             var self = this,
                 activeDrag = self.get("activeDrag");
-
+            self._unregisterEvent();
             if (self._bufferTimer) {
                 clearTimeout(self._bufferTimer);
                 self._bufferTimer = null;
@@ -130,6 +131,7 @@ KISSY.add('dd', function(S) {
             //0.5 for debug
             self._shim.css("opacity", 0);
             self._activeShim = self._showShim;
+            self._showShim();
         },
 
         _showShim: function() {
@@ -138,35 +140,24 @@ KISSY.add('dd', function(S) {
                 display: "",
                 height: DOM.docHeight()
             });
-
-            //清除由于浏览器导致的选择文字
-            if (window.getSelection) {
-                window.getSelection().removeAllRanges();
-            }
-            //防止 ie 莫名选择文字
-            else if (document.selection) {
-                document.selection.clear();
-            }
         },
 
         /**
          * 开始时注册全局监听事件
          */
         _registerEvent: function() {
-            var self = this,doc = document;
-            //S.log("_registerEvent");
-            Event.on(doc, "mouseup", self._end, self);
-            Event.on(doc, "mousemove", self._showShimMove, self);
+            var self = this;
+            Event.on(doc, 'mouseup', self._end, self);
+            Event.on(doc, 'mousemove', self._showShimMove, self);
         },
 
         /**
          * 结束时需要取消掉，防止平时无谓的监听
          */
         _unregisterEvent: function() {
-            var self = this,doc = document;
-            //S.log("_unregisterEvent");
-            Event.remove(doc, "mousemove", self._showShimMove, self);
-            Event.remove(doc, "mouseup", self._end, self);
+            var self = this;
+            Event.remove(doc, 'mousemove', self._showShimMove, self);
+            Event.remove(doc, 'mouseup', self._end, self);
         }
     });
 
