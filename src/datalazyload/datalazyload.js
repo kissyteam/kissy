@@ -121,10 +121,10 @@ KISSY.add('datalazyload', function(S, undefined) {
         _filterItems: function() {
             var self = this,
                 containers = self.containers,
-                n, N, imgs, areaes, i, len, img, area,
+                n, N, imgs, areaes, i, img,
                 lazyImgs = [], lazyAreas = [];
 
-            for (n = 0,N = containers.length; n < N; ++n) {
+            for (n = 0, N = containers.length; n < N; ++n) {
                 imgs = S.query('img', containers[n]);
                 lazyImgs = lazyImgs.concat(S.filter(imgs, self._filterImg, self));
 
@@ -463,7 +463,7 @@ KISSY.add('datalazyload', function(S, undefined) {
  */
 
 /**
- * zTODO:
+ * xTODO:
  *   - [取消] 背景图片的延迟加载（对于 css 里的背景图片和 sprite 很难处理）
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  */

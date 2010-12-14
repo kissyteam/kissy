@@ -1,3 +1,144 @@
 describe('base', function() {
 
+    var S = KISSY;
+
+    it('拥有 S.EventTarget 上的方法', function() {
+
+        function A() {
+            S.Base.call(this);
+        }
+        S.extend(A, S.Base);
+        
+        var a = new A();
+
+        var fired;
+        a.on('xxx', function() {
+            fired = true;
+        });
+        a.fire('xxx');
+        expect(fired).toBeTruthy();
+    });
+
+    it('拥有 S.Attribute 上的方法', function() {
+
+        function A() {
+            S.Base.call(this);
+        }
+        S.extend(A, S.Base);
+
+        var a = new A();
+
+        // 属性的正常设置和获取
+        a.set('xxx', 2);
+        expect(a.get('xxx')).toBe(2);
+
+        // 获取不存在的属性
+        expect(a.get('non-exist')).toBeUndefined();
+
+        // addAttr
+        a.addAttr('attr1', {
+            value: 1,
+            setter: function(v) {
+                return v * 2;
+            },
+            getter: function(v) {
+                return v;
+            }
+        });
+        expect(a.get('attr1')).toBe(1);
+        a.set('attr1', 2);
+        expect(a.get('attr1')).toBe(4);
+
+        // hasAttr
+        expect(a.hasAttr('attr1')).toBeTruthy();
+        expect(a.hasAttr('non-exist')).toBeFalsy();
+
+        // reset
+        // 目前的 reset 的实现有 bug, reset 后，值并不是 value, 而是 setter(value) 的返回值
+        // 考虑到 reset 的使用场景很少很少，从源码中拿掉
+        // 等以后真需要时，再加上（希望是一万年以后）
+        //a.reset('attr1');
+        //expect(a.get('attr1')).toBe(1);
+
+        // removeAttr
+        a.removeAttr('attr1');
+        expect(a.hasAttr('attr1')).toBeFalsy();
+
+        // addAttrs
+        a.addAttrs({
+            'attr2': { value: 2 },
+            'attr3': { value: 3 }
+        });
+        expect(a.get('attr2')).toBe(2);
+        expect(a.get('attr3')).toBe(3);
+    });
+
+    it('能解析 ATTRS 和 config', function() {
+
+        function A(config) {
+            S.Base.call(this, config);
+        }
+        S.extend(A, S.Base);
+        A.ATTRS = {
+            attr1: {
+                value: 0
+            }
+        };
+
+        var a = new A({ attr1: 1, attr2: 2 });
+        expect(a.get('attr1')).toBe(1);
+        expect(a.get('attr2')).toBe(2);
+
+        // 多重继承
+        function B(config) {
+            A.call(this, config);
+        }
+        S.extend(B, A);
+        B.ATTRS = {
+            'b-attr': {
+                value: 'b'
+            }
+        };
+
+        var b = new B({ 'b-attr': 3 });
+        expect(b.get('b-attr')).toBe(3);
+        expect(b.get('attr1')).toBe(0);
+        expect(b.hasAttr('attr2')).toBeFalsy();
+    });
+
+    it('能正确触发 S.Attribute 的事件', function() {
+
+        function A() {
+            S.Base.call(this);
+        }
+        S.extend(A, S.Base);
+
+        var a = new A();
+
+        // normal
+        var firedCount = 0;
+        a.on('beforeAttr1Change afterAttr1Change', function() {
+            firedCount++;
+        });
+        a.set('attr1', 1);
+        expect(firedCount).toBe(2);
+
+        // use 'return false' to cancel set
+        a.set('attr2', 2);
+        a.on('beforeAttr2Change', function() {
+            return false;
+        });
+        a.set('attr2', 3);
+        expect(a.get('attr2')).toBe(2);
+
+        // check event object
+        a.set('attr3', 3);
+        a.on('beforeAttr3Change', function(ev) {
+            expect(ev.attrName).toBe('attr3');
+            expect(ev.prevVal).toBe(3);
+            expect(ev.newVal).toBe(4);
+        });
+        a.set('attr3', 4);
+    });
+
 });
