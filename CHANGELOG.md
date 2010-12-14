@@ -16,6 +16,7 @@ History:
 
 ### v1.1.5 -> v1.x.x (2010/MM/DD)
 
+ - [+] kissy-tools 增加 idebug
  - [+] 增加 jasminelite 和 event-simulate for jasmine
  - [!] event 中对 return false, 仅 preventDefault + stopPropagation, 不再 stopImmediatePropagation
  - [+] cssreset 加入对 HTML5 的支持
