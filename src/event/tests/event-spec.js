@@ -6,56 +6,33 @@
 describe('event', function() {
 
     var win = window, doc = document,
-        S = KISSY, DOM = S.DOM, Event = S.Event,
-        foo = S.get('#foo'),
-        foo2 = S.get('#foo2'),
-        bar = S.get('#bar'),
-        bar2 = S.get('#bar2'),
-        outer = S.get('#outer'),
-        inner = S.get('#inner'),
-        a = S.get('#link-a'),
-        cb1 = S.get('#checkbox-1'),
-        cb2 = S.get('#checkbox-2'),
-        c1 = S.get('#link-c1'),
-        c2 = S.get('#link-c2'),
-        li_c = S.get('#li-c'),
-        li_d = S.get('#li-d'),
-        li_e = S.get('#li-e'),
-        d1 = S.get('#link-d1'),
-        d2 = S.get('#link-d2'),
-        e1 = S.get('#link-e1'),
-        e2 = S.get('#link-e2'),
-        f = S.get('#link-f'),
-        g = S.get('#link-g'),
-        h = S.get('#link-h'),
-        lis = S.query('#bar li'),
+            S = KISSY, DOM = S.DOM, Event = S.Event,
 
-        HAPPENED = 'happened',
-        FIRST = '1',
-        SECOND = '2',
-        SEP = '-',
-        EMPTY = '',
+            HAPPENED = 'happened',
+            FIRST = '1',
+            SECOND = '2',
+            SEP = '-',
 
-        result,
+            result,
 
-        // simulate mouse click on any element
-        simulateClick = function(el) {
-            var clickEvent;
-            el = S.get(el);
+        // simulate mouse event on any element
+            simulateMouseEvent = function(el, type, relatedTarget) {
+                var clickEvent;
+                el = S.get(el);
 
-            if (doc.createEvent) {
-                clickEvent = doc.createEvent('MouseEvent');
-                clickEvent.initMouseEvent('click', true, true, win, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-                el.dispatchEvent(clickEvent);
-            } else {
-                el.fireEvent('onclick');
-            }
-        };
+                if (doc.createEvent) {
+                    clickEvent = doc.createEvent('MouseEvent');
+                    clickEvent.initMouseEvent(type, true, true, win, 0, 0, 0, 0, 0, false, false, false, false, 0, relatedTarget || null);
+                    el.dispatchEvent(clickEvent);
+                } else {
+                    el.fireEvent('on' + type);
+                }
+            };
 
     describe('add event', function() {
 
         it('should support batch adding.', function() {
-            var total = lis.length, count = 0;
+            var lis = S.query('#bar li'), total = lis.length, count = 0;
 
             Event.on(lis, 'click', function() {
                 count++;
@@ -63,29 +40,36 @@ describe('event', function() {
 
             // click all lis
             S.each(lis, function(li) {
-                simulateClick(li);
+                simulateMouseEvent(li, 'click');
             });
-
-            expect(count).toEqual(total);
+            waits(0);
+            runs(function() {
+                expect(count).toEqual(total);
+            });
         });
 
         it('should execute in order.', function() {
+            var a = S.get('#link-a');
+
             Event.on(a, 'click', function() {
                 result.push(FIRST);
             });
-
             Event.on(a, 'click', function() {
                 result.push(SECOND);
             });
 
             // click a
             result = [];
-            simulateClick(a);
-
-            expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
+            simulateMouseEvent(a, 'click');
+            waits(0);
+            runs(function() {
+                expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
+            });
         });
 
         it('should prevent default behavior (do nothing if using "return false;").', function() {
+            var cb1 = S.get('#checkbox-1'), cb2 = S.get('#checkbox-2');
+
             // init
             cb1.checked = false;
             cb2.checked = false;
@@ -93,7 +77,6 @@ describe('event', function() {
             Event.on(cb1, 'click', function(evt) {
                 evt.preventDefault();
             });
-
             Event.on(cb2, 'click', function() {
                 return false;
             });
@@ -101,32 +84,47 @@ describe('event', function() {
             // click the checkbox
             cb1.click();
             cb2.click();
-
-            expect(cb1.checked).toBeFalsy();
-            expect(cb2.checked).toBeTruthy();
+            waits(0);
+            runs(function() {
+                expect(cb1.checked).toBeFalsy();
+                expect(cb2.checked).toBeTruthy();
+            });
         });
 
         it('should stop event\'s propagation.', function() {
+            var li_c = S.get('#li-c'), c1 = S.get('#link-c1'), c2 = S.get('#link-c2');
+
             Event.on(c2, 'click', function(evt) {
                 evt.stopPropagation();
             });
-
             Event.on(li_c, 'click', function() {
                 result = HAPPENED;
             });
 
             // click c1
-            result = null;
-            simulateClick(c1);
-            expect(result).toEqual(HAPPENED);
+            runs(function() {
+                result = null;
+                simulateMouseEvent(c1, 'click');
+            });
+            waits(0);
+            runs(function() {
+                expect(result).toEqual(HAPPENED);
+            });
 
             // click c2
-            result = null;
-            simulateClick(c2);
-            expect(result).toBeNull();
+            runs(function() {
+                result = null;
+                simulateMouseEvent(c2, 'click');
+            });
+            waits(0);
+            runs(function() {
+                expect(result).toBeNull();
+            });
         });
 
         it('should stop event\'s propagation immediately.', function() {
+            var li_d = S.get('#li-d'),  d1 = S.get('#link-d1'), d2 = S.get('#link-d2');
+
             Event.on(d1, 'click', function() {
                 result.push(FIRST);
             });
@@ -147,17 +145,29 @@ describe('event', function() {
             });
 
             // click d1
-            result = [];
-            simulateClick(d1);
-            expect(result.join(SEP)).toEqual([FIRST, SECOND, HAPPENED].join(SEP));
+            runs(function() {
+                result = [];
+                simulateMouseEvent(d1, 'click');
+            });
+            waits(0);
+            runs(function() {
+                expect(result.join(SEP)).toEqual([FIRST, SECOND, HAPPENED].join(SEP));
+            });
 
             // click d2
-            result = [];
-            simulateClick(d2);
-            expect(result.join(SEP)).toEqual([FIRST].join(SEP));
+            runs(function() {
+                result = [];
+                simulateMouseEvent(d2, 'click');
+            });
+            waits(0);
+            runs(function() {
+                expect(result.join(SEP)).toEqual([FIRST].join(SEP));
+            });
         });
 
         it('should do nothing else to event\'s propagation if using "return false;".', function() {
+            var li_e = S.get('#li-e'), e1 = S.get('#link-e1'), e2 = S.get('#link-e2');
+
             Event.on(e1, 'click', function() {
                 result.push(FIRST);
             });
@@ -178,45 +188,71 @@ describe('event', function() {
             });
 
             // click e1
-            result = [];
-            simulateClick(e1);
-            expect(result.join(SEP)).toEqual([FIRST, SECOND, HAPPENED].join(SEP));
+            runs(function() {
+                result = [];
+                simulateMouseEvent(e1, 'click');
+            });
+            waits(0);
+            runs(function() {
+                expect(result.join(SEP)).toEqual([FIRST, SECOND, HAPPENED].join(SEP));
+            });
 
             // click e2
-            result = [];
-            simulateClick(e2);
-            expect(result.join(SEP)).toEqual([FIRST, SECOND, HAPPENED].join(SEP));
+            runs(function() {
+                result = [];
+                simulateMouseEvent(e2, 'click');
+            });
+            waits(0);
+            runs(function() {
+                expect(result.join(SEP)).toEqual([FIRST, SECOND, HAPPENED].join(SEP));
+            });
         });
 
         it('should set this properly', function() {
-           var ret;
+            var ret;
 
             // Node
-            S.one('#link-test-this').on('click', function() {
-                ret = this;
+            runs(function() {
+                S.one('#link-test-this').on('click', function() {
+                    ret = this;
+                });
+                simulateMouseEvent('#link-test-this', 'click');
             });
-            simulateClick('#link-test-this');
-            expect(ret.nodeType).toBe(S.Node.TYPE);
+            waits(0);
+            runs(function() {
+                expect(ret.nodeType).toBe(S.Node.TYPE);
+            });
 
             // NodeList
-            S.all('#link-test-this-all span').on('click', function() {
-                ret = this;
+            runs(function() {
+                S.all('#link-test-this-all span').on('click', function() {
+                    ret = this;
+                });
+                simulateMouseEvent('#link-test-this-all-span', 'click');
             });
-            simulateClick('#link-test-this-all-span');
-            expect(ret.text()).toBe('link for test this');
+            waits(0);
+            runs(function() {
+                expect(ret.text()).toBe('link for test this');
+            });
 
             // DOM Element
-            S.Event.on('#link-test-this-dom', 'click', function() {
-                ret = this;
+            runs(function() {
+                S.Event.on('#link-test-this-dom', 'click', function() {
+                    ret = this;
+                });
+                simulateMouseEvent('#link-test-this-dom', 'click');
             });
-            simulateClick('#link-test-this-dom');
-            expect(ret.nodeType).toBe(1);
+            waits(0);
+            runs(function() {
+                expect(ret.nodeType).toBe(1);
+            });
         });
     });
 
     describe('remove event', function() {
-
         it('should remove the specified event handler function.', function() {
+            var f = S.get('#link-f');
+
             function foo() {
                 result = HAPPENED;
             }
@@ -227,11 +263,16 @@ describe('event', function() {
 
             // click f
             result = null;
-            simulateClick(f);
-            expect(result).toBeNull();
+            simulateMouseEvent(f, 'click');
+            waits(0);
+            runs(function() {
+                expect(result).toBeNull();
+            });
         });
 
         it('should remove all the event handlers of the specified event type.', function() {
+            var g = S.get('#link-g');
+
             Event.on(g, 'click', function() {
                 result.push(FIRST);
             });
@@ -242,11 +283,16 @@ describe('event', function() {
 
             // click g
             result = [];
-            simulateClick(g);
-            expect(result.join(EMPTY)).toEqual([].join(EMPTY));
+            simulateMouseEvent(g, 'click');
+            waits(0);
+            runs(function() {
+                expect(result.join(SEP)).toEqual([].join(SEP));
+            });
         });
 
         it('should reomve all the event handler of the specified element', function() {
+            var h = S.get('#link-h');
+            
             Event.on(h, 'click', function() {
                 result.push(FIRST);
             });
@@ -257,8 +303,210 @@ describe('event', function() {
 
             // click h
             result = [];
-            simulateClick(h);
-            expect(result.join(EMPTY)).toEqual([].join(EMPTY));
+            simulateMouseEvent(h, 'click');
+            waits(0);
+            runs(function() {
+                expect(result.join(SEP)).toEqual([].join(SEP));
+            });
+        });
+    });
+
+    describe('mouseenter and mouseleave', function() {
+        var ie = S.UA.ie, outer = S.get('#outer'), inner = S.get('#inner'),
+                container = outer.parentNode;
+
+        it('should trigger the mouseenter event on the proper element.', function() {
+            var outerCount = 0, innerCount = 0, type = ie ? 'mouseenter' : 'mouseover';
+
+            Event.on(outer, 'mouseenter', function() {
+                outerCount++;
+            });
+            Event.on(inner, 'mouseenter', function() {
+                innerCount++;
+            });
+
+            // move mouse from the container element to the outer element once
+            simulateMouseEvent(outer, type, container);
+            // move mouse from the outer element to the inner element twice
+            simulateMouseEvent(inner, type, outer);
+            simulateMouseEvent(inner, type, outer);
+
+            waits(0);
+
+            runs(function() {
+                expect(outerCount).toEqual(1);
+                expect(innerCount).toEqual(2);
+            });
+        });
+
+        it('should trigger the mouseleave event on the proper element.', function() {
+            var outerCount = 0, innerCount = 0, type = ie ? 'mouseleave' : 'mouseout';
+
+            Event.on(outer, 'mouseleave', function() {
+                outerCount++;
+            });
+            Event.on(inner, 'mouseleave', function() {
+                innerCount++;
+            });
+
+            // move mouse from the inner element to the outer element once
+            simulateMouseEvent(inner, type, outer);
+            // move mouse from the outer element to the container element
+            simulateMouseEvent(outer, type, container);
+            simulateMouseEvent(outer, type, outer.parentNode);
+
+            waits(0);
+
+            runs(function() {
+                expect(outerCount).toEqual(2);
+                expect(innerCount).toEqual(1);
+            });
+        });
+    });
+
+    describe('focusin and focusout', function() {
+        it('should trigger the focusin/focusout event on the proper element, and support bubbling.', function() {
+            var container = S.get('#test-focusin'), input = S.get('input', container);
+
+            // In non-IE, the simulation of focusin/focusout behavior do not correspond with IE exactly,
+            // so we should ignore the orders of the event
+            Event.on(container, 'focusin focusout', function() {
+                result.push(HAPPENED);
+            });
+            Event.on(input, 'focusin focusout', function() {
+                result.push(HAPPENED);
+            });
+
+            // focus the input element
+            runs(function() {
+                result = [];
+                input.focus();
+            });
+            waits(0);
+            runs(function() {
+                expect(result.join(SEP)).toEqual([HAPPENED, HAPPENED].join(SEP));
+            });
+
+            // blur the input element
+            runs(function() {
+                result = [];
+                input.blur();
+            });
+            waits(0);
+            runs(function() {
+                expect(result.join(SEP)).toEqual([HAPPENED, HAPPENED].join(SEP));
+            });
+        });
+
+        it('should trigger the focusin/focusout event and focus event in order.', function() {
+            var input = S.get('#test-focusin-input');
+
+            Event.on(input, 'focusin focusout', function() {
+                result.push(FIRST);
+            });
+            Event.on(input, 'focus blur', function() {
+                result.push(SECOND);
+            });
+
+            // focus the input element
+            runs(function() {
+                result = [];
+                input.focus();
+            });
+            waits(0);
+            runs(function() {
+                expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
+            });
+
+            // blur the input element
+            runs(function() {
+                result = [];
+                input.blur();
+            });
+            waits(0);
+            runs(function() {
+                expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
+            });
+        });
+    });
+
+    describe('event handler scope', function() {
+        it('should treat the element itself as the scope.', function() {
+            var foo = S.get('#foo');
+
+            Event.on(foo, 'click', function() {
+                expect(this).toBe(foo);
+            });
+
+            // click foo
+            simulateMouseEvent(foo, 'click');
+        });
+
+        it('should support using custom object as the scope.', function() {
+            var bar = S.get('#bar'),
+                    TEST = {
+                        foo: 'only for tesing'
+                    };
+
+            Event.on(bar, 'click', function() {
+                expect(this).toBe(TEST);
+            }, TEST);
+        });
+
+        it('should guarantee separate event adding function keeps separate scope.', function() {
+            Event.on(doc, 'click', handler, {id: FIRST});
+            Event.on(doc, 'click', handler, {id: SECOND});
+
+            function handler() {
+                result.push(this.id);
+            }
+
+            // click the document twice
+            simulateMouseEvent(doc, 'click');
+            simulateMouseEvent(doc, 'click');
+            waits(0);
+            runs(function() {
+                expect(result[1]).not.toEqual(result[2]);
+            });
+        });
+    });
+
+    describe('event target', function() {
+        it('should support custom event target.', function() {
+
+            var SPEED = '70 km/h', NAME = 'Lady Gogo', dog;
+
+            function Dog(name) {
+                this.name = name;
+            }
+
+            S.augment(Dog, S.EventTarget);
+            S.augment(Dog, {
+                run: function() {
+                    this.fire('running', {speed: SPEED});
+                }
+            });
+
+            dog = new Dog(NAME);
+            dog.on('running', function(ev) {
+                result.push(this.name);
+                result.push(ev.speed);
+            });
+            dog.on('running', function() {
+                result.push(FIRST);
+                return false;
+            });
+            dog.on('running', function() {
+                result.push(SECOND);
+            });
+
+            // let dog run
+            result = [];
+            dog.run();
+            waits(0);
+            runs(function() {
+                expect(result.join(SEP)).toEqual([NAME, SPEED, FIRST].join(SEP));
+            });
         });
     });
 });
