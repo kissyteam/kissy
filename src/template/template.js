@@ -43,6 +43,7 @@ KISSY.add('template', function(S, undefined) {
             var stack = [], prefix = KS_EMPTY;
             templ = S.trim(templ)
                         .replace(getRegexp('[\r\t\n]'), ' ')
+                        .replace(getRegexp('(["\'])'), '\\$1')
                         .replace(getRegexp('\{\{([#/]?)(?!\}\})([^}]*)\}\}'), function(all, expr, oper) {
 
                             S.log(arguments);
@@ -59,15 +60,14 @@ KISSY.add('template', function(S, undefined) {
                                                 // can be closed
                                                 if (Statements[i].end) {
                                                     stack.push(Statements[i]);
-                                                    prefix = '");';
-                                                } else {
-                                                    prefix = KS_EMPTY;
                                                 }
-                                                return prefix + Statements[i].start.replace(getRegexp(KS_TEMPL_STAT_PARAM), oper.join(KS_EMPTY));
+                                                prefix = '");';
+                                                return prefix + Statements[i].start.replace(getRegexp(KS_TEMPL_STAT_PARAM), oper.join(KS_EMPTY)) +
+                                                    KS_TEMPL + '.push("';
 
                                             case '/':
                                                 stack.pop();
-                                                return Statements[i].end + KS_TEMPL + '.push("';
+                                                return '");' + Statements[i].end + KS_TEMPL + '.push("';
 
                                             default:
                                                 // not supported
@@ -81,14 +81,14 @@ KISSY.add('template', function(S, undefined) {
                             // return array directly
                             else {
                                 if (stack.length > 0) {
-                                    return KS_TEMPL + '.push(' + oper + ');';
+                                    return '");' + KS_TEMPL + '.push(' + oper + ');' + KS_TEMPL + '.push("';
                                 }
-                                return oper;
+                                return '");' + KS_TEMPL + '.push(' + oper + ');' + KS_TEMPL + '.push("';
                             }
 
-                            return all;
                         });
-            S.log(templ);
+
+                                                S.log(templ);
             return templ;
         },
 
