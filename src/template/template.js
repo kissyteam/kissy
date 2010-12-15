@@ -9,6 +9,11 @@ KISSY.add('template', function(S, undefined) {
         KS_DATA = 'KS_DATA_',
         KS_EMPTY = '',
 
+        PREFIX = '");',
+        SUFFIX = KS_TEMPL + '.push("';
+
+        stack = [],
+
         defaultConfig = {
             lq: '{{',
             rq: '}}'
@@ -40,7 +45,7 @@ KISSY.add('template', function(S, undefined) {
         buildParser = function(templ, lq, rq) {
             lq = escape(lq);
             rq = escape(rq);
-            var stack = [], prefix = KS_EMPTY;
+            var stack = [], PREFIX = '");', suffix = KS_TEMPL + '.push("';
             templ = S.trim(templ)
                         .replace(getRegexp('[\r\t\n]'), ' ')
                         .replace(getRegexp('(["\'])'), '\\$1')
@@ -61,13 +66,11 @@ KISSY.add('template', function(S, undefined) {
                                                 if (Statements[i].end) {
                                                     stack.push(Statements[i]);
                                                 }
-                                                prefix = '");';
-                                                return prefix + Statements[i].start.replace(getRegexp(KS_TEMPL_STAT_PARAM), oper.join(KS_EMPTY)) +
-                                                    KS_TEMPL + '.push("';
+                                                return PREFIX + Statements[i].start.replace(getRegexp(KS_TEMPL_STAT_PARAM), oper.join(KS_EMPTY)) + suffix;
 
                                             case '/':
                                                 stack.pop();
-                                                return '");' + Statements[i].end + KS_TEMPL + '.push("';
+                                                return PREFIX + Statements[i].end + suffix;
 
                                             default:
                                                 // not supported
@@ -81,14 +84,14 @@ KISSY.add('template', function(S, undefined) {
                             // return array directly
                             else {
                                 if (stack.length > 0) {
-                                    return '");' + KS_TEMPL + '.push(' + oper + ');' + KS_TEMPL + '.push("';
+                                    return PREFIX + KS_TEMPL + '.push(' + oper + ');' + suffix;
                                 }
-                                return '");' + KS_TEMPL + '.push(' + oper + ');' + KS_TEMPL + '.push("';
+                                return PREFIX + KS_TEMPL + '.push(' + oper + ');' + suffix;
                             }
 
                         });
 
-                                                S.log(templ);
+            S.log(templ);
             return templ;
         },
 
