@@ -55,25 +55,6 @@ KISSY.add('attribute', function(S, undef) {
         },
 
         /**
-         * Configures a group of attributes, and sets initial values.
-         * @param attrConfigs {Object} An object with attribute name/configuration pairs.
-         * @param values {Object} An object with attribute name/value pairs, defining the initial values to apply.
-         *        Values defined in the cfgs argument will be over-written by values in this argument.
-         */
-        addAttrs: function(attrConfigs, values) {
-            var host = this;
-
-            S.each(attrConfigs, function(attrConfig, name) {
-                if (values && (name in values)) {
-                    attrConfig.value = values[name];
-                }
-                host.addAttr(name, attrConfig);
-            });
-
-            return host;
-        },
-
-        /**
          * Checks if the given attribute has been added to the host.
          */
         hasAttr: function(name) {
@@ -177,6 +158,27 @@ KISSY.add('attribute', function(S, undef) {
             }
 
             return attrConfig.value;
+        },
+
+        /**
+         * Resets the value of an attribute.
+         */
+        reset: function (name) {
+            var host = this;
+
+            if (host.hasAttr(name)) {
+                // if attribute does not have default value, then set to undefined.
+                return host.set(name, host.__getDefAttrVal(name));
+            }
+
+            // reset all
+            for (name in host.__attrs) {
+                if (host.hasAttr(name)) {
+                    host.reset(name);
+                }
+            }
+
+            return host;
         }
     });
 
