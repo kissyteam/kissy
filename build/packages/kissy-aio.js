@@ -1053,7 +1053,7 @@ build time: ${build.time}
             // attach all required modules
             for (; i < len; i++) {
                 var r = self.Env.mods[requires[i]];
-                if (mod.status === ATTACHED) {
+                if (r.status === ATTACHED) {
                     //no need
                 } else {
                     self.__attach(r, fn, global);
