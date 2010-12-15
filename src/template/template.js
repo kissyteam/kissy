@@ -11,9 +11,6 @@ KISSY.add('template', function(S, undefined) {
             rq: '}}'
         },
 
-        /*
-         * 正则缓存
-         */
         regexpCache = {},
         getRegexp = function(regexp) {
             if (!(regexp in regexpCache)) {
@@ -23,54 +20,72 @@ KISSY.add('template', function(S, undefined) {
         },
 
         /*
-         * 特殊字符转义
+         * special characters
          */
         escape = function(_char) {
             return _char.replace(/([{}\[\]()?*.\\\/])/g, '\\$1');
         },
 
         /*
-         * 静态化parser
-         *  - 通过白名单支持tag(jq-templ)
-         *  - 生成的js，通过jslint校检
+         * build a static parser
          */
         buildParser = function(templ, lq, rq) {
             lq = escape(lq);
             rq = escape(rq);
+            var stack = [], prefix = '';
             templ = S.trim(templ)
                         .replace(getRegexp('[\r\t\n]'), ' ')
                         .replace(getRegexp('\{\{([#/]?)(?!\}\})([^}]*)\}\}'), function(all, expr, oper) {
+
                             S.log(arguments);
 
-                            // 表达式
+                            // expressions
                             if (expr) {
                                 oper = S.trim(oper).split(/\s+/);
 
                                 for (var i in Statements) {
                                     if (oper[0] === i) {
-                                        if (expr === '#') {
-                                            return Statements[i].start;
-                                        } else if (expr === '/') {
-                                            return Statements[i].end;
+                                        oper.shift();
+                                        switch (expr) {
+                                            case '#':
+                                                // can be closed
+                                                if (Statements[i].end) {
+                                                    stack.push(Statements[i]);
+                                                    prefix = '");';
+                                                } else {
+                                                    prefix = '';
+                                                }
+                                                return prefix + Statements[i].start.replace(getRegexp('KS_TEMPL_STAT_PARAM'), oper.join(''));
+
+                                            case '/':
+                                                stack.pop();
+                                                return Statements[i].end + '_ks_templ.push("';
+
+                                            default:
+                                                // not supported
+                                                break;
                                         }
                                     }
                                 }
 
-                                //return all;
                             }
 
-                            // 直接返回数值
+                            // return array directly
                             else {
-                                return '_ks_templ.push(' + oper + ');';
+                                if (stack.length > 0) {
+                                    return '_ks_templ.push(' + oper + ');';
+                                }
+                                return oper;
                             }
 
                             return all;
                         });
+                                                console.log(templ);
             return templ;
         },
 
         /**
-         * HTML实体转义
+         * HTML Special Characters
          */
         htmlSpecialCharacters = {
             '&': '&amp;',
@@ -81,7 +96,7 @@ KISSY.add('template', function(S, undefined) {
         },
 
         /**
-         * 表达式组合,支持扩展
+         * expressions
          */
         Statements = {
 
@@ -107,8 +122,8 @@ KISSY.add('template', function(S, undefined) {
 
         /**
          * @see http://ejohn.org/blog/javascript-micro-templating/
-         * @param {String} templ 待渲染的模板.
-         * @param {String} config 模板配置.
+         * @param {String} templ template to be rendered.
+         * @param {String} config config of template.
          */
         Template = function(templ, config) {
 
@@ -124,7 +139,7 @@ KISSY.add('template', function(S, undefined) {
                     // }
                     // return _ks_templ.join("");
                     _parser = [
-                        'var _ks_templ=[];with(',
+                        'var _ks_templ=[],KS_TEMPL_STAT_PARAM=false;with(',
                         _ks_data,
                         '){_ks_templ.push("',
                         buildParser(templ, _lq, _rq),
@@ -137,6 +152,7 @@ KISSY.add('template', function(S, undefined) {
                 };
             }
 
+            S.log(templateCache[templ].render, 'info');
             return templateCache[templ];
         };
 
