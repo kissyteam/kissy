@@ -15,7 +15,7 @@ describe('event', function() {
         result,
 
         // simulate mouse event on any element
-        simulateMouseEvent = function(target, type, relatedTarget) {
+        simulate = function(target, type, relatedTarget) {
             if(typeof target === 'string') {
                 target = S.get(target);
             }
@@ -33,7 +33,7 @@ describe('event', function() {
 
             // click all lis
             S.each(lis, function(li) {
-                simulateMouseEvent(li, 'click');
+                simulate(li, 'click');
             });
             waits(0);
             runs(function() {
@@ -53,7 +53,7 @@ describe('event', function() {
 
             // click a
             result = [];
-            simulateMouseEvent(a, 'click');
+            simulate(a, 'click');
             waits(0);
             runs(function() {
                 expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
@@ -97,7 +97,7 @@ describe('event', function() {
             // click c1
             runs(function() {
                 result = null;
-                simulateMouseEvent(c1, 'click');
+                simulate(c1, 'click');
             });
             waits(0);
             runs(function() {
@@ -107,7 +107,7 @@ describe('event', function() {
             // click c2
             runs(function() {
                 result = null;
-                simulateMouseEvent(c2, 'click');
+                simulate(c2, 'click');
             });
             waits(0);
             runs(function() {
@@ -140,7 +140,7 @@ describe('event', function() {
             // click d1
             runs(function() {
                 result = [];
-                simulateMouseEvent(d1, 'click');
+                simulate(d1, 'click');
             });
             waits(0);
             runs(function() {
@@ -150,7 +150,7 @@ describe('event', function() {
             // click d2
             runs(function() {
                 result = [];
-                simulateMouseEvent(d2, 'click');
+                simulate(d2, 'click');
             });
             waits(0);
             runs(function() {
@@ -183,7 +183,7 @@ describe('event', function() {
             // click e1
             runs(function() {
                 result = [];
-                simulateMouseEvent(e1, 'click');
+                simulate(e1, 'click');
             });
             waits(0);
             runs(function() {
@@ -193,7 +193,7 @@ describe('event', function() {
             // click e2
             runs(function() {
                 result = [];
-                simulateMouseEvent(e2, 'click');
+                simulate(e2, 'click');
             });
             waits(0);
             runs(function() {
@@ -209,7 +209,7 @@ describe('event', function() {
                 S.one('#link-test-this').on('click', function() {
                     ret = this;
                 });
-                simulateMouseEvent('#link-test-this', 'click');
+                simulate('#link-test-this', 'click');
             });
             waits(0);
             runs(function() {
@@ -221,7 +221,7 @@ describe('event', function() {
                 S.all('#link-test-this-all span').on('click', function() {
                     ret = this;
                 });
-                simulateMouseEvent('#link-test-this-all-span', 'click');
+                simulate('#link-test-this-all-span', 'click');
             });
             waits(0);
             runs(function() {
@@ -233,7 +233,7 @@ describe('event', function() {
                 S.Event.on('#link-test-this-dom', 'click', function() {
                     ret = this;
                 });
-                simulateMouseEvent('#link-test-this-dom', 'click');
+                simulate('#link-test-this-dom', 'click');
             });
             waits(0);
             runs(function() {
@@ -257,7 +257,7 @@ describe('event', function() {
 
             // click f
             result = null;
-            simulateMouseEvent(f, 'click');
+            simulate(f, 'click');
             waits(0);
             runs(function() {
                 expect(result).toBeNull();
@@ -277,7 +277,7 @@ describe('event', function() {
 
             // click g
             result = [];
-            simulateMouseEvent(g, 'click');
+            simulate(g, 'click');
             waits(0);
             runs(function() {
                 expect(result.join(SEP)).toEqual([].join(SEP));
@@ -297,7 +297,7 @@ describe('event', function() {
 
             // click h
             result = [];
-            simulateMouseEvent(h, 'click');
+            simulate(h, 'click');
             waits(0);
             runs(function() {
                 expect(result.join(SEP)).toEqual([].join(SEP));
@@ -321,11 +321,11 @@ describe('event', function() {
             });
 
             // move mouse from the container element to the outer element once
-            simulateMouseEvent(outer, type, container);
+            simulate(outer, type, container);
 
             // move mouse from the outer element to the inner element twice
-            simulateMouseEvent(inner, type, outer);
-            simulateMouseEvent(inner, type, outer);
+            simulate(inner, type, outer);
+            simulate(inner, type, outer);
 
             waits(100);
 
@@ -348,11 +348,11 @@ describe('event', function() {
             });
 
             // move mouse from the inner element to the outer element once
-            simulateMouseEvent(inner, type, outer);
+            simulate(inner, type, outer);
 
             // move mouse from the outer element to the container element
-            simulateMouseEvent(outer, type, container);
-            simulateMouseEvent(outer, type, outer.parentNode);
+            simulate(outer, type, container);
+            simulate(outer, type, outer.parentNode);
 
             waits(0);
 
@@ -442,7 +442,7 @@ describe('event', function() {
             });
 
             // click foo
-            simulateMouseEvent(foo, 'click');
+            simulate(foo, 'click');
         });
 
         it('should support using custom object as the scope.', function() {
@@ -465,8 +465,8 @@ describe('event', function() {
             }
 
             // click the document twice
-            simulateMouseEvent(doc, 'click');
-            simulateMouseEvent(doc, 'click');
+            simulate(doc, 'click');
+            simulate(doc, 'click');
             waits(0);
             runs(function() {
                 expect(result[1]).not.toEqual(result[2]);

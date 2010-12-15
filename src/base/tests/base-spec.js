@@ -1,3 +1,6 @@
+/**
+ * @creator: lifesinger@gmail.com
+ */
 describe('base', function() {
 
     var S = KISSY;

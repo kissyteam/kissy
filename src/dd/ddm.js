@@ -10,7 +10,7 @@ KISSY.add('dd', function(S) {
         Node = S.Node,
         SHIM_ZINDEX = 999999;
 
-    S.DD = { };
+    S.DD = {};
 
     function DDM() {
         DDM.superclass.constructor.apply(this, arguments);
