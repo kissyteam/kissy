@@ -1,6 +1,30 @@
 /**
- * KISSY.Template
- * @author 文河(yyfrankyy@gmail.com)
+ * @fileoverview KISSY.Template.
+ * @author yyfrankyy(yyfrankyy@gmail.com)
+ *
+ * ChangeLog:
+ *
+ * 2010-9-22
+ *  - 根据new Function的思路，实现了一遍Micro Template，增加一些接口
+ *
+ * 2010-11-02
+ *  - 调整部分接口，实现一个较为复杂的用例，P4P
+ *
+ * 2010-11-10
+ *  - 迁移到kissy目录
+ *  - 按照原来的接口，规划好部分单元测试用例
+ *
+ * 2010-12-15
+ *  - 重构为白名单机制，语法支持扩展
+ *  - 重写测试用例
+ *  - 增加js-templates-benchmark和其他模板做一下性能对比
+ *
+ * TODO:
+ *  - 非标记字符直接push入数组，需要进行部分转义
+ *  - 标记内的字符会被直接转为js执行，要完善测试用例
+ *  - 集成错误处理
+ *  - 提供一些KISSY内置接口(DOM, Node, Ajax, Data)
+ *
  */
 KISSY.add('template', function(S, undefined) {
 
@@ -10,14 +34,11 @@ KISSY.add('template', function(S, undefined) {
         KS_EMPTY = '',
 
         PREFIX = '");',
-        SUFFIX = KS_TEMPL + '.push("';
+        SUFFIX = KS_TEMPL + '.push("',
 
-        stack = [],
-
-        defaultConfig = {
-            lq: '{{',
-            rq: '}}'
-        },
+        PARSER_PREFIX = 'var ' + KS_TEMPL + '=[],' + KS_TEMPL_STAT_PARAM + '=false;with(',
+        PARSER_MIDDLE = '){' + KS_TEMPL + '.push("',
+        PARSER_SUFFIX = '");};return ' + KS_TEMPL + '.join("");',
 
         templateCache = {},
 
@@ -27,6 +48,7 @@ KISSY.add('template', function(S, undefined) {
         regexpCache = {},
         getRegexp = function(regexp) {
             if (!(regexp in regexpCache)) {
+                S.log('regex cache hit rate', 'count');
                 regexpCache[regexp] = new RegExp(regexp, 'ig');
             }
             return regexpCache[regexp];
@@ -42,10 +64,8 @@ KISSY.add('template', function(S, undefined) {
         /*
          * build a static parser
          */
-        buildParser = function(templ, lq, rq) {
-            lq = escape(lq);
-            rq = escape(rq);
-            var stack = [], PREFIX = '");', suffix = KS_TEMPL + '.push("';
+        buildParser = function(templ) {
+            var _parser = '';
             templ = S.trim(templ)
                         .replace(getRegexp('[\r\t\n]'), ' ')
                         .replace(getRegexp('(["\'])'), '\\$1')
@@ -58,24 +78,21 @@ KISSY.add('template', function(S, undefined) {
                                 oper = S.trim(oper).split(/\s+/);
 
                                 for (var i in Statements) {
-                                    if (oper[0] === i) {
-                                        oper.shift();
-                                        switch (expr) {
-                                            case '#':
-                                                // can be closed
-                                                if (Statements[i].end) {
-                                                    stack.push(Statements[i]);
-                                                }
-                                                return PREFIX + Statements[i].start.replace(getRegexp(KS_TEMPL_STAT_PARAM), oper.join(KS_EMPTY)) + suffix;
+                                    if (oper[0] !== i) continue;
 
-                                            case '/':
-                                                stack.pop();
-                                                return PREFIX + Statements[i].end + suffix;
+                                    oper.shift();
+                                    switch (expr) {
+                                        case '#':
+                                            _parser = Statements[i].start.replace(getRegexp(KS_TEMPL_STAT_PARAM), oper.join(KS_EMPTY));
+                                            break;
 
-                                            default:
-                                                // not supported
-                                                break;
-                                        }
+                                        case '/':
+                                            _parser = Statements[i].end;
+                                            break;
+
+                                        default:
+                                            throw new Error('statement not supported');
+                                            break;
                                     }
                                 }
 
@@ -83,11 +100,10 @@ KISSY.add('template', function(S, undefined) {
 
                             // return array directly
                             else {
-                                if (stack.length > 0) {
-                                    return PREFIX + KS_TEMPL + '.push(' + oper + ');' + suffix;
-                                }
-                                return PREFIX + KS_TEMPL + '.push(' + oper + ');' + suffix;
+                                _parser = KS_TEMPL + '.push(' + oper + ');';
                             }
+
+                            return PREFIX + _parser + SUFFIX;
 
                         });
 
@@ -133,15 +149,13 @@ KISSY.add('template', function(S, undefined) {
 
         /**
          * @param {String} templ template to be rendered.
-         * @param {String} config config of template.
          */
-        Template = function(templ, config) {
+        Template = function(templ) {
 
             if (!(templ in templateCache)) {
-                config = S.merge(defaultConfig, config);
+                S.log('template cache hit rate', 'count');
 
                 var _ks_data = KS_DATA + +new Date,
-                    _lq = config.lq, _rq = config.rq,
 
                     // var _ks_templ = [],
                     //     KS_TEMPL_STAT_PARAM = false;
@@ -150,11 +164,11 @@ KISSY.add('template', function(S, undefined) {
                     // }
                     // return _ks_templ.join("");
                     _parser = [
-                        'var ' + KS_TEMPL + '=[],' + KS_TEMPL_STAT_PARAM + '=false;with(',
+                        PARSER_PREFIX,
                         _ks_data,
-                        '){' + KS_TEMPL + '.push("',
-                        buildParser(templ, _lq, _rq),
-                        '");};return ' + KS_TEMPL + '.join("");'
+                        PARSER_MIDDLE,
+                        buildParser(templ),
+                        PARSER_SUFFIX
                     ].join(KS_EMPTY);
 
                 templateCache[templ] = {
@@ -169,17 +183,3 @@ KISSY.add('template', function(S, undefined) {
 
     S.Template = Template;
 }, {requires: ['core']});
-/**
- * ChangeLog:
- *
- * 2010-9-22
- *  - 根据new Function的思路，实现了一遍Micro Template，增加一些接口
- *
- * 2010-11-02
- *  - 调整部分接口，实现一个较为复杂的用例，P4P
- *
- * 2010-11-10
- *  - 迁移到kissy目录
- *  - 按照原来的接口，规划好部分单元测试用例
- *
- */
