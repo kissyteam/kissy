@@ -2,34 +2,8 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>Anim Demo</title>
-</head>
-<body>
-<script src="../test/test.js"></script>
-<script>
-    KISSY.Test.Config.times = 1;
-</script>
-
-<h2>Test Data</h2>
-<div id="test" style="width: 10px; height: 20px; position: absolute; top: 200px; left: 50px; text-align: center; color: #999">^o^</div>
-
-<div id="test2" style="width: 50px; height: 20px; text-align: center; position: relative; border: 1px solid green; background: #bca">test2</div>
-<button id="test2-btn">run #test2</button>
-
-<div class="test3" style="width: 50px; height: 20px; margin: 10px; text-align: center; position: relative; border: 1px solid #478F45; background: #BDE877">test3 a</div>
-<div class="test3" style="width: 50px; height: 20px; margin: 10px; text-align: center; position: relative; border: 1px solid #C18F5A; background: #F7CA9B">test3 b</div>
-<button id="test3-btn">run .test3</button>
-
-<div id="test4" style="width: 200px; height: 80px; text-align: center; overflow: hidden; background: #bca">test4</div>
-<button id="test4-btn">run #test4</button>
-
-<div id="test5" style="width: 100px; height: 20px; border: 1px solid #333; padding: 20px">test</div>
-<button id="test5-btn">run #test5</button>
-
-<hr>
-<button id="test6-btn">run #test6 slideUp</button>
-<button id="test6-btn2">run #test6 slideDown</button>
-<div id="test6" style="width: 100px; height: 100px; background-color: #ccc;">#test6</div>
+<title>S.Anim Demo</title>
+<link href="../../build/cssreset/reset.css" rel="stylesheet" />
 
 <script src="../../build/seed/seed-pkg.js"></script>
 <script src="../../build/ua/ua-pkg.js"></script>
@@ -41,18 +15,51 @@
 <script src="anim.js"></script>
 <script src="anim-node-plugin.js"></script>
 
+<style>
+    body { padding: 20px }
+    hr { height: 1px; border: none; color: #ccc; background-color: #ccc; margin: 10px -10px }
+    button { margin-bottom: 5px; padding: 2px 5px }
+</style>
+</head>
+<body>
+
+<button id="test1-btn">run #test1</button>
+<div id="test1" style="width: 10px; height: 20px; position: absolute; top: 20px; left: 120px; text-align: center; color: #999">^o^</div>
+<hr>
+
+<button id="test2-btn">run #test2</button>
+<div id="test2" style="width: 50px; height: 20px; text-align: center; position: relative; border: 1px solid green; background: #bca">test2</div>
+<hr>
+
+<button id="test3-btn">run .test3</button>
+<div class="test3" style="width: 80px; height: 20px; margin: 10px; text-align: center; position: relative; border: 1px solid #478F45; background: #BDE877">test3 a</div>
+<div class="test3" style="width: 80px; height: 20px; margin: 10px; text-align: center; position: relative; border: 1px solid #C18F5A; background: #F7CA9B">test3 b</div>
+<hr>
+
+<button id="test4-btn">run #test4</button>
+<div id="test4" style="width: 200px; height: 80px; text-align: center; overflow: hidden; background: #bca">test4</div>
+<hr>
+
+<button id="test5-btn">run #test5</button>
+<div id="test5" style="width: 100px; height: 20px; border: 1px solid #333; padding: 20px">test</div>
+<hr>
+
+<button id="test6-btn">run #test6 slideUp</button>
+<button id="test6-btn2">run #test6 slideDown</button>
+<div id="test6" style="width: 100px; height: 100px; background-color: #ccc;">#test6</div>
+
 <!-- Test Cases -->
 <script>
     var S = KISSY,
 
         anim2 = S.Anim(
-                '#test',
+                '#test1',
                 'background-color: #fcc; border: 5px dashed #999; width: 100px; height: 40px; left: 900px; top: 285px; opacity: .5; border-color: #999; font-size: 48px; padding: 30px 0; color: #FF3333',
                 5,
                 'bounceOut'),
     
         anim = S.Anim(
-                '#test',
+                '#test1',
                 'width: 50px; height: 40px; left: 500px; background: #cfc; border: 1px solid #ddd; font: 22px Chiller, Batang, serif; padding-top: 10px',
                 3,
                 S.Easing.elasticOut,
@@ -60,9 +67,9 @@
                     anim2.run();
                 });
 
-    function test_anim() {
-        anim.run();
-    }
+    S.one('#test1-btn').on('click', function() {
+       anim.run();
+    });
 
     S.one('#test2-btn').on('click', function() {
         S.one('#test2').animate('left: 500px', 3, S.Easing.backOut);
@@ -91,6 +98,5 @@
     });
 
 </script>
-
 </body>
 </html>

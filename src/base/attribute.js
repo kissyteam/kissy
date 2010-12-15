@@ -2,7 +2,7 @@
  * @module  Attribute
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('attribute', function(S, undefined) {
+KISSY.add('attribute', function(S, undef) {
 
     /**
      * Attribute provides the implementation for any object
@@ -64,7 +64,7 @@ KISSY.add('attribute', function(S, undefined) {
             var host = this;
 
             S.each(attrConfigs, function(attrConfig, name) {
-                if (name in values) {
+                if (values && (name in values)) {
                     attrConfig.value = values[name];
                 }
                 host.addAttr(name, attrConfig);
@@ -135,7 +135,7 @@ KISSY.add('attribute', function(S, undefined) {
 
             // if setter has effect
             if (setter) setValue = setter.call(host, value);
-            if (setValue !== undefined) value = setValue;
+            if (setValue !== undef) value = setValue;
 
             // finally set
             host.__attrVals[name] = value;
@@ -170,34 +170,13 @@ KISSY.add('attribute', function(S, undefined) {
 
             if ((valFn = attrConfig.valueFn)) {
                 val = valFn.call(host);
-                if (val !== undefined) {
+                if (val !== undef) {
                     attrConfig.value = val;
                 }
                 delete attrConfig.valueFn;
             }
 
             return attrConfig.value;
-        },
-
-        /**
-         * Resets the value of an attribute.
-         */
-        reset: function (name) {
-            var host = this;
-
-            if (host.hasAttr(name)) {
-                // if attribute does not have default value, then set to undefined.
-                return host.set(name, host.__getDefAttrVal(name));
-            }
-
-            // reset all
-            for (name in host.__attrs) {
-                if (host.hasAttr(name)) {
-                    host.reset(name);
-                }
-            }
-
-            return host;
         }
     });
 

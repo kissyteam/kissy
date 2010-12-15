@@ -1281,20 +1281,26 @@ build time: ${build.time}
      * @param src script source url
      * @return base for kissy
      * @example:
-     *   http://a.tbcdn.cn/s/kissy/1.1.5/??kissy-min.js,suggest/suggest-pkg-min.js
-     *   http://a.tbcdn.cn/??s/kissy/1.1.5/kissy-min.js,s/kissy/1.1.5/suggest/suggest-pkg-min.js
-     *   http://a.tbcdn.cn/??s/kissy/1.1.5/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
+     *   http://a.tbcdn.cn/s/kissy/1.1.6/??kissy-min.js,suggest/suggest-pkg-min.js
+     *   http://a.tbcdn.cn/??s/kissy/1.1.6/kissy-min.js,s/kissy/1.1.5/suggest/suggest-pkg-min.js
+     *   http://a.tbcdn.cn/??s/kissy/1.1.6/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
+     *   http://a.tbcdn.cn/s/kissy/1.1.6/kissy-min.js?t=20101215.js
+     * @notice: custom combo rules, such as yui3:
+     *  <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
      */
     // notice: timestamp
-    var baseReg = /^(.*)(seed|kissy)(-min)?\.js/i,
+    var baseReg = /^(.*)(seed|kissy)(-min)?\.js[^/]*/i,
         baseTestReg = /(seed|kissy)(-min)?\.js/;
 
-    // TODO: configurable for ?? and ,
-    function getBaseUrl(src) {
-        var parts = src.split(/\s*,\s*/);
-        var base,
+    function getBaseUrl(script) {
+        var src = script.src,
+            prefix = script.getAttribute('data-combo-prefix') || '??',
+            sep = script.getAttribute('data-combo-sep') || ',',
+            parts = src.split(sep),
+            base,
             part0 = parts[0],
-            index = part0.indexOf('??');
+            index = part0.indexOf(prefix);
+
         // no combo
         if (index == -1) {
             base = src.replace(baseReg, '$1');
@@ -1327,13 +1333,14 @@ build time: ${build.time}
         // get base from current script file path
         var scripts = doc.getElementsByTagName('script'),
             currentScript = scripts[scripts.length - 1],
-            base = getBaseUrl(currentScript.src);
+            base = getBaseUrl(currentScript);
 
         this.Env.mods = {}; // all added mods
         this.Env._loadQueue = {}; // information for loading and loaded mods
 
-        this.Config.base = base;
-        this.Config.timeout = 10;   // the default timeout for getScript
+        // don't override
+        if(!this.Config.base) this.Config.base = base;
+        if(!this.Config.timeout) this.Config.timeout = 10;   // the default timeout for getScript
     };
     S.__initLoader();
 
