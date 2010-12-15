@@ -4763,7 +4763,7 @@ build time: ${build.time}
  * @module  Attribute
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('attribute', function(S, undefined) {
+KISSY.add('attribute', function(S, undef) {
 
     /**
      * Attribute provides the implementation for any object
@@ -4811,25 +4811,6 @@ KISSY.add('attribute', function(S, undefined) {
         addAttr: function(name, attrConfig) {
             var host = this;
             host.__attrs[name] = S.clone(attrConfig || {});
-
-            return host;
-        },
-
-        /**
-         * Configures a group of attributes, and sets initial values.
-         * @param attrConfigs {Object} An object with attribute name/configuration pairs.
-         * @param values {Object} An object with attribute name/value pairs, defining the initial values to apply.
-         *        Values defined in the cfgs argument will be over-written by values in this argument.
-         */
-        addAttrs: function(attrConfigs, values) {
-            var host = this;
-
-            S.each(attrConfigs, function(attrConfig, name) {
-                if (name in values) {
-                    attrConfig.value = values[name];
-                }
-                host.addAttr(name, attrConfig);
-            });
 
             return host;
         },
@@ -4896,7 +4877,7 @@ KISSY.add('attribute', function(S, undefined) {
 
             // if setter has effect
             if (setter) setValue = setter.call(host, value);
-            if (setValue !== undefined) value = setValue;
+            if (setValue !== undef) value = setValue;
 
             // finally set
             host.__attrVals[name] = value;
@@ -4931,7 +4912,7 @@ KISSY.add('attribute', function(S, undefined) {
 
             if ((valFn = attrConfig.valueFn)) {
                 val = valFn.call(host);
-                if (val !== undefined) {
+                if (val !== undef) {
                     attrConfig.value = val;
                 }
                 delete attrConfig.valueFn;

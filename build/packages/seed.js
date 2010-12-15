@@ -894,20 +894,20 @@ build time: ${build.time}
         mix = S.mix,
 
         scriptOnload = doc.createElement('script').readyState ?
-            function(node, callback) {
-                var oldCallback = node.onreadystatechange;
-                node.onreadystatechange = function() {
-                    var rs = node.readyState;
-                    if (rs === 'loaded' || rs === 'complete') {
-                        node.onreadystatechange = null;
-                        oldCallback && oldCallback();
-                        callback.call(this);
-                    }
-                };
-            } :
-            function(node, callback) {
-                node.addEventListener('load', callback, false);
-            },
+                       function(node, callback) {
+                           var oldCallback = node.onreadystatechange;
+                           node.onreadystatechange = function() {
+                               var rs = node.readyState;
+                               if (rs === 'loaded' || rs === 'complete') {
+                                   node.onreadystatechange = null;
+                                   oldCallback && oldCallback();
+                                   callback.call(this);
+                               }
+                           };
+                       } :
+                       function(node, callback) {
+                           node.addEventListener('load', callback, false);
+                       },
 
         RE_CSS = /\.css(?:\?|$)/i,
         loader;
@@ -937,7 +937,7 @@ build time: ${build.time}
             var self = this, mods = self.Env.mods, mod, o, oldr;
 
             // S.add(name, config) => S.add( { name: config } )
-            if (S.isString(name) && !config && S.isPlainObject(fn)) {
+            if (S['isString'](name) && !config && S.isPlainObject(fn)) {
                 o = {};
                 o[name] = fn;
                 name = o;
@@ -1052,22 +1052,32 @@ build time: ${build.time}
 
             // attach all required modules
             for (; i < len; i++) {
-                self.__attach(self.Env.mods[requires[i]], fn, global);
+                var r = self.Env.mods[requires[i]];
+                if (mod.status === ATTACHED) {
+                    //no need
+                } else {
+                    self.__attach(r, fn, global);
+                }
+
             }
 
             // load and attach this module
             self.__buildPath(mod);
             self.__load(mod, fn, global);
 
+            var attached = false;
+
             function fn() {
                 // add 可能改了 config，这里重新取下
                 var requires = mod['requires'] || [];
 
-                if (self.__isAttached(requires)) {
+                if (!attached && self.__isAttached(requires)) {
+
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);
                     }
                     if (mod.status === ATTACHED) {
+                        attached = true;
                         callback();
                     }
                 }
@@ -1136,7 +1146,7 @@ build time: ${build.time}
             }
 
             // 加载 css, 仅发出请求，不做任何其它处理
-            if (S.isString(mod[CSSFULLPATH])) {
+            if (S['isString'](mod[CSSFULLPATH])) {
                 self.getScript(mod[CSSFULLPATH]);
                 mod[CSSFULLPATH] = LOADED;
             }
@@ -1339,8 +1349,8 @@ build time: ${build.time}
         this.Env._loadQueue = {}; // information for loading and loaded mods
 
         // don't override
-        if(!this.Config.base) this.Config.base = base;
-        if(!this.Config.timeout) this.Config.timeout = 10;   // the default timeout for getScript
+        if (!this.Config.base) this.Config.base = base;
+        if (!this.Config.timeout) this.Config.timeout = 10;   // the default timeout for getScript
     };
     S.__initLoader();
 

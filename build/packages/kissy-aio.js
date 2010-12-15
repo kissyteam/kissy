@@ -894,20 +894,20 @@ build time: ${build.time}
         mix = S.mix,
 
         scriptOnload = doc.createElement('script').readyState ?
-            function(node, callback) {
-                var oldCallback = node.onreadystatechange;
-                node.onreadystatechange = function() {
-                    var rs = node.readyState;
-                    if (rs === 'loaded' || rs === 'complete') {
-                        node.onreadystatechange = null;
-                        oldCallback && oldCallback();
-                        callback.call(this);
-                    }
-                };
-            } :
-            function(node, callback) {
-                node.addEventListener('load', callback, false);
-            },
+                       function(node, callback) {
+                           var oldCallback = node.onreadystatechange;
+                           node.onreadystatechange = function() {
+                               var rs = node.readyState;
+                               if (rs === 'loaded' || rs === 'complete') {
+                                   node.onreadystatechange = null;
+                                   oldCallback && oldCallback();
+                                   callback.call(this);
+                               }
+                           };
+                       } :
+                       function(node, callback) {
+                           node.addEventListener('load', callback, false);
+                       },
 
         RE_CSS = /\.css(?:\?|$)/i,
         loader;
@@ -937,7 +937,7 @@ build time: ${build.time}
             var self = this, mods = self.Env.mods, mod, o, oldr;
 
             // S.add(name, config) => S.add( { name: config } )
-            if (S.isString(name) && !config && S.isPlainObject(fn)) {
+            if (S['isString'](name) && !config && S.isPlainObject(fn)) {
                 o = {};
                 o[name] = fn;
                 name = o;
@@ -1052,22 +1052,32 @@ build time: ${build.time}
 
             // attach all required modules
             for (; i < len; i++) {
-                self.__attach(self.Env.mods[requires[i]], fn, global);
+                var r = self.Env.mods[requires[i]];
+                if (mod.status === ATTACHED) {
+                    //no need
+                } else {
+                    self.__attach(r, fn, global);
+                }
+
             }
 
             // load and attach this module
             self.__buildPath(mod);
             self.__load(mod, fn, global);
 
+            var attached = false;
+
             function fn() {
                 // add 可能改了 config，这里重新取下
                 var requires = mod['requires'] || [];
 
-                if (self.__isAttached(requires)) {
+                if (!attached && self.__isAttached(requires)) {
+
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);
                     }
                     if (mod.status === ATTACHED) {
+                        attached = true;
                         callback();
                     }
                 }
@@ -1136,7 +1146,7 @@ build time: ${build.time}
             }
 
             // 加载 css, 仅发出请求，不做任何其它处理
-            if (S.isString(mod[CSSFULLPATH])) {
+            if (S['isString'](mod[CSSFULLPATH])) {
                 self.getScript(mod[CSSFULLPATH]);
                 mod[CSSFULLPATH] = LOADED;
             }
@@ -1339,8 +1349,8 @@ build time: ${build.time}
         this.Env._loadQueue = {}; // information for loading and loaded mods
 
         // don't override
-        if(!this.Config.base) this.Config.base = base;
-        if(!this.Config.timeout) this.Config.timeout = 10;   // the default timeout for getScript
+        if (!this.Config.base) this.Config.base = base;
+        if (!this.Config.timeout) this.Config.timeout = 10;   // the default timeout for getScript
     };
     S.__initLoader();
 
@@ -6150,7 +6160,7 @@ build time: ${build.time}
  * @module  Attribute
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('attribute', function(S, undefined) {
+KISSY.add('attribute', function(S, undef) {
 
     /**
      * Attribute provides the implementation for any object
@@ -6198,25 +6208,6 @@ KISSY.add('attribute', function(S, undefined) {
         addAttr: function(name, attrConfig) {
             var host = this;
             host.__attrs[name] = S.clone(attrConfig || {});
-
-            return host;
-        },
-
-        /**
-         * Configures a group of attributes, and sets initial values.
-         * @param attrConfigs {Object} An object with attribute name/configuration pairs.
-         * @param values {Object} An object with attribute name/value pairs, defining the initial values to apply.
-         *        Values defined in the cfgs argument will be over-written by values in this argument.
-         */
-        addAttrs: function(attrConfigs, values) {
-            var host = this;
-
-            S.each(attrConfigs, function(attrConfig, name) {
-                if (name in values) {
-                    attrConfig.value = values[name];
-                }
-                host.addAttr(name, attrConfig);
-            });
 
             return host;
         },
@@ -6283,7 +6274,7 @@ KISSY.add('attribute', function(S, undefined) {
 
             // if setter has effect
             if (setter) setValue = setter.call(host, value);
-            if (setValue !== undefined) value = setValue;
+            if (setValue !== undef) value = setValue;
 
             // finally set
             host.__attrVals[name] = value;
@@ -6318,7 +6309,7 @@ KISSY.add('attribute', function(S, undefined) {
 
             if ((valFn = attrConfig.valueFn)) {
                 val = valFn.call(host);
-                if (val !== undefined) {
+                if (val !== undef) {
                     attrConfig.value = val;
                 }
                 delete attrConfig.valueFn;
@@ -7614,10 +7605,10 @@ KISSY.add('datalazyload', function(S, undefined) {
         _filterItems: function() {
             var self = this,
                 containers = self.containers,
-                n, N, imgs, areaes, i, len, img, area,
+                n, N, imgs, areaes, i, img,
                 lazyImgs = [], lazyAreas = [];
 
-            for (n = 0,N = containers.length; n < N; ++n) {
+            for (n = 0, N = containers.length; n < N; ++n) {
                 imgs = S.query('img', containers[n]);
                 lazyImgs = lazyImgs.concat(S.filter(imgs, self._filterImg, self));
 
@@ -7956,7 +7947,7 @@ KISSY.add('datalazyload', function(S, undefined) {
  */
 
 /**
- * zTODO:
+ * xTODO:
  *   - [取消] 背景图片的延迟加载（对于 css 里的背景图片和 sprite 很难处理）
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  */
@@ -8513,7 +8504,7 @@ KISSY.add('dd', function(S) {
         Node = S.Node,
         SHIM_ZINDEX = 999999;
 
-    S.DD = { };
+    S.DD = {};
 
     function DDM() {
         DDM.superclass.constructor.apply(this, arguments);
