@@ -1,4 +1,5 @@
 describe('imagezoom', function() {
+
     var S = KISSY, DOM = S.DOM,
         tempImage;
 
@@ -9,6 +10,7 @@ describe('imagezoom', function() {
         DOM.width(tempImage, 400);
         DOM.height(tempImage, 400);
     });
+
     afterEach(function() {
         DOM.remove(tempImage);
     });

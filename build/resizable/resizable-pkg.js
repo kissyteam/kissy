@@ -1,3 +1,8 @@
+/*
+Copyright 2010, KISSY UI Library v1.1.7dev
+MIT Licensed
+build time: ${build.time}
+*/
 /**
  * resizable support for kissy
  * @author: 承玉<yiminghe@gmail.com>
