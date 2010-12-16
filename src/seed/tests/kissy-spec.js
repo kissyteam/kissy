@@ -91,12 +91,13 @@ describe('kissy.js', function() {
         function Chicken(name) {
             Chicken.superclass.constructor.call(this, name);
         }
-
+        Chicken.prototype.featcher = 2;
         S.extend(Chicken, Bird);
         var chicken = new Chicken('Tom');
 
         expect(chicken.constructor).toBe(Chicken);
         expect(chicken.getName()).toBe('Tom');
+        expect(chicken.featcher).toBe(2); // keep existed prototype members
     });
 
     it('S.namespace', function() {
