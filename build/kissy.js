@@ -1082,6 +1082,7 @@ build time: ${build.time}
                     componentCssName;
                 mod.csspath = modName + "/" + css;
             }
+            mod.name = modName;
 
             if (mod && mod.status === ATTACHED) return;
             self.__attach(mod, callback, global);
@@ -1109,29 +1110,37 @@ build time: ${build.time}
 
             // load and attach this module
             self.__buildPath(mod);
-            self.__load(mod, fn, global);
+            self.__load(mod, function() {
+                // add 可能改了 config，这里重新取下
+                var newRequires = mod['requires'] || [],optimize = [];
+                //本模块下载成功后串行下载 require
+                for (var i = newRequires.length - 1; i >= 0; i--) {
+                    var r = newRequires[i],
+                        rmod = mods[r],
+                        inA = S.inArray(r, requires);
+                    //已经处理过了或将要处理
+                    if (rmod && rmod.status === ATTACHED ||
+                        inA) {
+                        //no need
+                    } else {
+                        //新增的依赖项
+                        self.__attachModByName(r, fn, global);
+                    }
+                    if (!inA) {
+                        optimize.push(r);
+                    }
+                }
+                if (optimize.length != 0) {
+                    optimize.unshift(mod.name);
+                    S.log(optimize + " : better to be used together", "warn");
+                }
+                fn();
+            }, global);
 
             var attached = false;
 
             function fn() {
-                // add 可能改了 config，这里重新取下
-                var newRequires = mod['requires'] || [];
-                //本模块下载成功后串行下载 require
-                for (var i = newRequires.length - 1; i >= 0; i--) {
-                    var r = newRequires[i],
-                        rmod = mods[r];
-                    //已经处理过了或将要处理
-                    if (rmod && rmod.status === ATTACHED ||
-                        S.inArray(r, requires)) {
-                        //no need
-                    } else
-                    //新增的依赖项
-                    {
-                        self.__attachModByName(r, fn, global);
-                    }
-                }
-
-                if (!attached && self.__isAttached(newRequires)) {
+                if (!attached && self.__isAttached(mod['requires'])) {
 
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);
