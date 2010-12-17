@@ -6433,6 +6433,8 @@ KISSY.add('base', function (S) {
     S.augment(Base, S.EventTarget, S.Attribute);
     S.Base = Base;
 });
+
+KISSY.add('core');
 /*
 Copyright 2010, KISSY UI Library v1.1.7dev
 MIT Licensed

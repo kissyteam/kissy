@@ -35,6 +35,9 @@
         <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="seed-pkg.js"/>
             <path path="core-pkg.js"/>
+            <footer filtering="no" trimleading="yes">
+                KISSY.add('core');
+            </footer>
         </concat>
         <!-- kissy-aio: 所有文件 -->
         <concat destfile="kissy-aio-pkg.js" encoding="${charset}" outputencoding="${charset}">
