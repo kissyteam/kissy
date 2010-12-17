@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + "-pkg-min.js";
+                    return m + "-pkg-min.js?t="+encodeURIComponent("2010-12-17 13:12:50");
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) :
                     componentJsName;
@@ -1076,7 +1076,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + "-min.css";
+                    return m + "-min.css?t="+encodeURIComponent("2010-12-17 13:12:50");
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;

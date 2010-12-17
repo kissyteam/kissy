@@ -7,6 +7,10 @@
     <property name="component.name" value="packages"/>
     <property name="component.files" value="*.css, *.js"/>
     <property name="src.dir" location="."/>
+    <tstamp>
+        <format property="timestamp.isoformat"
+                pattern="yyyy-MM-dd' 'HH:mm:ss" locale="en"/>
+    </tstamp>
 
     <target name="pre-clean">
         <delete>
@@ -30,14 +34,14 @@
             <path path="../anim/anim-pkg.js"/>
             <path path="../cookie/cookie-pkg.js"/>
             <path path="../base/base-pkg.js"/>
-            <footer filtering="no" trimleading="yes">
-                KISSY.add('core');
-            </footer>
         </concat>
         <!-- kissy: seed + core, 独立单文件 -->
         <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="seed-pkg.js"/>
             <path path="core-pkg.js"/>
+            <footer filtering="no" trimleading="yes">
+                KISSY.add('core');
+            </footer>
         </concat>
         <!-- kissy-aio: 所有文件 -->
         <concat destfile="kissy-aio-pkg.js" encoding="${charset}" outputencoding="${charset}">
@@ -61,14 +65,36 @@
 
     <target name="clean">
         <move todir="${src.dir}">
-            <fileset dir="${src.dir}" includes="*.js"/>
-            <regexpmapper from="(.+)-pkg(.+)" to="\1\2" />
+            <fileset dir="${src.dir}" includes="*.js" excludes="core*.js"/>
+            <regexpmapper from="(.+)-pkg(.+)" to="\1\2"/>
         </move>
-        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="seed-min.js" />
-        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="kissy-min.js" />
+
+        <replaceregexp match="@DEBUG@"
+                       replace=""
+                       flags="g"
+                       byline="true"
+                       encoding="${charset}">
+            <fileset dir="${src.dir}"
+                     includes="seed-min.js,kissy-min.js"/>
+        </replaceregexp>
+
+        <replaceregexp match="@TIMESTAMP@"
+                       replace="${timestamp.isoformat}"
+                       flags="g"
+                       byline="true"
+                       encoding="${charset}">
+            <fileset dir="${src.dir}"
+                     includes="seed*.js,kissy*.js"/>
+        </replaceregexp>
+
         <copy todir="${src.dir}/..">
             <fileset dir="${src.dir}" includes="seed.js,seed-min.js,kissy.js,kissy-min.js"/>
         </copy>
+        <mkdir dir='${src.dir}/../core'/>
+        <copy todir="${src.dir}/../core">
+            <fileset dir="${src.dir}" includes="core*.js"/>
+        </copy>
+
     </target>
 
     <target name="build" depends="pre-clean,concat,compress,native2ascii,copyright,clean">
