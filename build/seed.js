@@ -1061,7 +1061,7 @@ build time: ${build.time}
             //没有模块定义，内部模块不许定义
             if (!mod) {
                 //默认js名字
-                var componentJsName = S.Config['componentJsName'] || function(m) {
+                var componentJsName = self.Config['componentJsName'] || function(m) {
                     return m + "-pkg-min.js";
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) :
@@ -1075,7 +1075,7 @@ build time: ${build.time}
             }
 
             if (hasCss) {
-                var componentCssName = S.Config['componentCssName'] || function(m) {
+                var componentCssName = self.Config['componentCssName'] || function(m) {
                     return m + "-min.css";
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
