@@ -4998,5 +4998,3 @@ KISSY.add('base', function (S) {
     S.augment(Base, S.EventTarget, S.Attribute);
     S.Base = Base;
 });
-
-KISSY.add('core');
