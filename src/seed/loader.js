@@ -150,13 +150,12 @@
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + "-pkg-min.js?t="+encodeURIComponent("@TIMESTAMP@");
+                    return m + '-pkg-min.js?t=@TIMESTAMP@';
                 },  js = S.isFunction(componentJsName) ?
-                    componentJsName(modName) :
-                    componentJsName;
+                    componentJsName(modName) : componentJsName;
                 mod = {
-                    path:modName + "/" + js,
-                    charset:"utf-8"
+                    path:modName + '/' + js,
+                    charset: 'utf-8'
                 };
                 //添加模块定义
                 mods[modName] = mod;
@@ -164,11 +163,11 @@
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + "-min.css?t="+encodeURIComponent("@TIMESTAMP@");
+                    return m + '-min.css?t=@TIMESTAMP@';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
-                mod.csspath = modName + "/" + css;
+                mod.csspath = modName + '/' + css;
             }
             mod.name = modName;
 

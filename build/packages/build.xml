@@ -9,7 +9,7 @@
     <property name="src.dir" location="."/>
     <tstamp>
         <format property="timestamp.isoformat"
-                pattern="yyyy-MM-dd' 'HH:mm:ss" locale="en"/>
+                pattern="yyyyMMddHHmmss" locale="en"/>
     </tstamp>
 
     <target name="pre-clean">
@@ -91,9 +91,9 @@
             <fileset dir="${src.dir}" includes="seed.js,seed-min.js,kissy.js,kissy-min.js"/>
         </copy>
         <mkdir dir='${src.dir}/../core'/>
-        <copy todir="${src.dir}/../core">
+        <move todir="${src.dir}/../core">
             <fileset dir="${src.dir}" includes="core*.js"/>
-        </copy>
+        </move>
 
     </target>
 
