@@ -137,7 +137,7 @@
             return self;
         },
         //加载指定模块名模块，如果不存在定义默认定义为内部模块
-        __attachModByName:function(modName, callback, global) {
+        __attachModByName: function(modName, callback, global) {
 
             var self = this,
                 mods = self.Env.mods,

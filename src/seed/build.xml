@@ -12,7 +12,6 @@
             <path path="lang.js"/>
             <path path="web.js"/>
             <path path="loader.js"/>
-            <path path="mods.js"/>
         </concat>
     </target>
 

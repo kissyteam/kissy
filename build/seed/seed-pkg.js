@@ -143,7 +143,8 @@ build time: ${build.time}
                 rp;
 
             // add prototype chain
-            r.prototype = rp = create(sp, r);
+            rp = create(sp, r);
+            r.prototype = S.mix(rp, r.prototype);
             r.superclass = create(sp, s);
 
             // add prototype overrides
@@ -285,6 +286,7 @@ build time: ${build.time}
         trim = String.prototype.trim,
 
         EMPTY = '',
+        CLONE_MARKER = '__~ks_cloned',
         RE_TRIM = /^\s+|\s+$/g,
 
         // [[Class]] -> type pairs
@@ -331,17 +333,46 @@ build time: ${build.time}
         /**
          * Creates a deep copy of a plain object or array. Others are returned untouched.
          */
-        clone: function(o) {
-            var ret = o, b, k;
+        clone: function(o, f, cloned) {
+            var ret = o, isArray, k, stamp, marked = cloned || {};
 
             // array or plain object
-            if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
-                ret = b ? [] : {};
-                for (k in o) {
-                    if (o.hasOwnProperty(k)) {
-                        ret[k] = S.clone(o[k]);
+            if (o && ((isArray = S.isArray(o)) || S.isPlainObject(o))) {
+
+                // avoid recursive clone
+                if (o[CLONE_MARKER]) {
+                    return marked[o[CLONE_MARKER]];
+                }
+                o[CLONE_MARKER] = (stamp = S.guid());
+                marked[stamp] = o;
+
+                // clone it
+                if (isArray) {
+                    ret = f ? S.filter(o, f) : o.concat();
+                } else {
+                    ret = {};
+                    for (k in o) {
+                        if (k !== CLONE_MARKER &&
+                            o.hasOwnProperty(k) &&
+                            (!f || (f.call(o, o[k], k, o) !== false))) {
+                            ret[k] = S.clone(o[k], f, marked);
+                        }
                     }
                 }
+            }
+
+            // clear marked
+            if (!cloned) {
+                S.each(marked, function(v) {
+                    if (v[CLONE_MARKER]) {
+                        try {
+                            delete v[CLONE_MARKER];
+                        } catch (e) {
+                            v[CLONE_MARKER] = undef;
+                        }
+                    }
+                });
+                marked = undef;
             }
 
             return ret;
@@ -476,12 +507,12 @@ build time: ${build.time}
          */
         filter: filter ?
             function(arr, fn, context) {
-                return filter.call(arr, fn, context);
+                return filter.call(arr, fn, context || this);
             } :
             function(arr, fn, context) {
                 var ret = [];
                 S.each(arr, function(item, i, arr) {
-                    if (fn.call(context, item, i, arr)) {
+                    if (fn.call(context || this, item, i, arr)) {
                         ret.push(item);
                     }
                 });
@@ -1006,6 +1037,7 @@ build time: ${build.time}
             }
             // 有尚未 attached 的模块
             for (i = 0; i < len && (modName = modNames[i]); i++) {
+                //从name开始调用，防止不存在模块
                 self.__attachModByName(modName, function() {
                     if (!fired && self.__isAttached(modNames)) {
                         fired = true;
@@ -1016,17 +1048,19 @@ build time: ${build.time}
 
             return self;
         },
-
-        __attachModByName:function(modName, callback, global) {
+        //加载指定模块名模块，如果不存在定义默认定义为内部模块
+        __attachModByName: function(modName, callback, global) {
 
             var self = this,
                 mods = self.Env.mods,
+                //是否自带了css
                 hasCss = modName.indexOf("+css") != -1;
-
+            //得到真实组件名
             modName = hasCss ? modName.replace(/\+css/g, "") : modName;
             var mod = mods[modName];
-
+            //没有模块定义，内部模块不许定义
             if (!mod) {
+                //默认js名字
                 var componentJsName = S.Config['componentJsName'] || function(m) {
                     return m + "-pkg-min.js";
                 },  js = S.isFunction(componentJsName) ?
@@ -1036,8 +1070,10 @@ build time: ${build.time}
                     path:modName + "/" + js,
                     charset:"utf-8"
                 };
+                //添加模块定义
                 mods[modName] = mod;
             }
+
             if (hasCss) {
                 var componentCssName = S.Config['componentCssName'] || function(m) {
                     return m + "-min.css";
@@ -1080,7 +1116,7 @@ build time: ${build.time}
             function fn() {
                 // add 可能改了 config，这里重新取下
                 var newRequires = mod['requires'] || [];
-
+                //本模块下载成功后串行下载 require
                 for (var i = newRequires.length - 1; i >= 0; i--) {
                     var r = newRequires[i],
                         rmod = mods[r];
