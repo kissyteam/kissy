@@ -83,7 +83,11 @@ KISSY.add('template', function(S, undefined) {
                                     oper.shift();
                                     switch (expr) {
                                         case '#':
-                                            _parser = Statements[i].start.replace(getRegexp(KS_TEMPL_STAT_PARAM), oper.join(KS_EMPTY));
+                                            _parser = Statements[i].start.replace(
+                                                getRegexp(KS_TEMPL_STAT_PARAM),
+                                                // 把引号转回来...
+                                                oper.join(KS_EMPTY).replace(getRegexp('\\\\([\'"])'), '$1')
+                                            );
                                             break;
 
                                         case '/':
