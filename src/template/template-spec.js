@@ -38,13 +38,39 @@ describe('template', function() {
         describe('elseif', function() {
             it('should support elseif statement', function() {
                 expect(T('{{#if a}}{{b}}{{#elseif true}}{{c}}{{/if}}').render({a: false, b: 'b', c: 'c'})).toBe('c');
+                expect(T('{{#if a}}{{b}}{{#elseif false}}{{c}}{{/if}}').render({a: false, b: 'b', c: 'c'})).toBe('');
+                expect(T('{{#if !a}}{{b}}{{#elseif false}}{{c}}{{/if}}').render({a: false, b: 'b', c: 'c'})).toBe('b');
+                expect(T('{{#if a}}{{b}}{{#elseif !!b}}{{c}}{{/if}}').render({a: false, b: 'b', c: 'c'})).toBe('c');
             });
         });
 
         describe('each', function() {
             it('should support each function', function() {
                 expect(T('{{#each a}}<{{_ks_value.a}}{{/each}}').render({a: [{a: 1}, {a: 2}, {a: 3}]})).toBe('<1<2<3');
+                expect(T('{{#each a}}{{#if _ks_value.a > 1}}{{_ks_value.a}}{{/if}}{{/each}}').render({a: [{a: 1}, {a: 2}, {a: 3}]})).toBe('23');
             });
+        });
+
+    });
+
+    describe('cache', function() {
+
+        it('should have template cache', function() {
+            var t = T('{{#each a}}<{{_ks_value.a}}{{/each}}');
+                f = T('{{#each a}}<{{_ks_value.a}}{{/each}}');
+
+            expect(t).toEqual(f);
+        });
+
+    });
+
+    describe('config', function() {
+
+        it('should support custom name', function() {
+            var custom_name = 'ks_data_custom_name',
+                t = T('{{#each a}}<{{_ks_value.a}}{{/each}}', {name: custom_name});
+
+            expect(t.name).toEqual(custom_name);
         });
 
     });

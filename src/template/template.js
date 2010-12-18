@@ -19,6 +19,9 @@
  *  - 重写测试用例
  *  - 增加js-templates-benchmark和其他模板做一下性能对比
  *
+ * 2010-12-15
+ *  - 完善测试用例
+ *
  * TODO:
  *  - 非标记字符直接push入数组，需要进行部分转义
  *  - 标记内的字符会被直接转为js执行，要完善测试用例
@@ -37,8 +40,8 @@ KISSY.add('template', function(S, undefined) {
         SUFFIX = KS_TEMPL + '.push("',
 
         PARSER_PREFIX = 'var ' + KS_TEMPL + '=[],' + KS_TEMPL_STAT_PARAM + '=false;with(',
-        PARSER_MIDDLE = '){' + KS_TEMPL + '.push("',
-        PARSER_SUFFIX = '");};return ' + KS_TEMPL + '.join("");',
+        PARSER_MIDDLE = '){try{' + KS_TEMPL + '.push("',
+        PARSER_SUFFIX = '");}catch(e){KISSY.Template.fire(\'error\', {message: e.message});}};return ' + KS_TEMPL + '.join("");',
 
         templateCache = {},
 
@@ -52,6 +55,12 @@ KISSY.add('template', function(S, undefined) {
                 regexpCache[regexp] = new RegExp(regexp, 'ig');
             }
             return regexpCache[regexp];
+        },
+
+        /**
+         * 默认配置.
+         */
+        defaultConfig = {
         },
 
         /*
@@ -154,13 +163,14 @@ KISSY.add('template', function(S, undefined) {
         /**
          * @param {String} templ template to be rendered.
          */
-        Template = function(templ) {
+        Template = function(templ, config) {
 
             if (!(templ in templateCache)) {
                 S.log('template cache hit rate', 'count');
 
-                var _ks_data = KS_DATA + +new Date,
+                config = S.mix(defaultConfig, config);
 
+                var _ks_data = config.name || KS_DATA + S.now();
                     // var _ks_templ = [],
                     //     KS_TEMPL_STAT_PARAM = false;
                     // with (_ks_data) {
@@ -176,6 +186,7 @@ KISSY.add('template', function(S, undefined) {
                     ].join(KS_EMPTY);
 
                 templateCache[templ] = {
+                    name: _ks_data,
                     parser: _parser,
                     render: new Function(_ks_data, _parser)
                 };
@@ -185,5 +196,24 @@ KISSY.add('template', function(S, undefined) {
             return templateCache[templ];
         };
 
+        S.mix(Template, {
+
+            /**
+             * 得到所有缓存
+             */
+            cache: templateCache,
+
+            /**
+             * @param {String} name 根据串作为with的内部变量名.
+             */
+            getCacheByName: function(name) {
+                for (var i in templateCache) {
+                    if (templateCache[i].name === name) {
+                        return templateCache[i];
+                    }
+                }
+            }
+
+        });
     S.Template = Template;
 }, {requires: ['core']});
