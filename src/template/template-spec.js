@@ -10,13 +10,14 @@ describe('template', function() {
         });
         it('should render a normal variable', function() {
             expect(T('{{a}},{{b}}').render({a: '1', b: '2'})).toBe('1,2');
+            expect(T('{{}}').render({})).toBe('{{}}');
         });
     });
 
     describe('statement', function() {
 
         describe('if', function() {
-            it('should support if statement', function() {
+            it('support if statement', function() {
                 expect(T('{{#if a}}{{b}}{{/if}}').render({a: 'a', b: 'b'})).toBe('b');
                 expect(T('{{#if a}}normal string{{b}}{{/if}}').render({a: 'a', b: 'b'})).toBe('normal stringb');
                 expect(T('{{#if a==\'a\'}}{{b}}{{/if}}').render({a: 'a', b: 'b'})).toBe('b');
@@ -27,7 +28,7 @@ describe('template', function() {
         });
 
         describe('else', function() {
-            it('should support else statement', function() {
+            it('support else statement', function() {
                 expect(T('{{#if a}}{{b}}{{#else}}{{c}}{{/if}}').render({a: 'a', b: 'b', c: 'c'})).toBe('b');
                 expect(T('{{#if a}}{{b}}{{#else}}{{c}}{{/if}}').render({a: false, b: 'b', c: 'c'})).toBe('c');
                 expect(T('{{#if a==\'b\'}}{{b}}{{#else}}{{c}}{{/if}}').render({a: 'a', b: 'b', c: 'c'})).toBe('c');
@@ -35,7 +36,7 @@ describe('template', function() {
         });
 
         describe('elseif', function() {
-            it('should support elseif statement', function() {
+            it('support elseif statement', function() {
                 expect(T('{{#if a}}{{b}}{{#elseif true}}{{c}}{{/if}}').render({a: false, b: 'b', c: 'c'})).toBe('c');
                 expect(T('{{#if a}}{{b}}{{#elseif false}}{{c}}{{/if}}').render({a: false, b: 'b', c: 'c'})).toBe('');
                 expect(T('{{#if !a}}{{b}}{{#elseif false}}{{c}}{{/if}}').render({a: false, b: 'b', c: 'c'})).toBe('b');
@@ -44,7 +45,7 @@ describe('template', function() {
         });
 
         describe('each', function() {
-            it('should support each function', function() {
+            it('support each function', function() {
                 expect(T('{{#each a}}<{{_ks_value.a}}{{/each}}').render({a: [{a: 1}, {a: 2}, {a: 3}]})).toBe('<1<2<3');
                 expect(T('{{#each a}}{{#if _ks_value.a > 1}}{{_ks_value.a}}{{/if}}{{/each}}').render({a: [{a: 1}, {a: 2}, {a: 3}]})).toBe('23');
             });
@@ -53,7 +54,7 @@ describe('template', function() {
     });
 
     describe('cache', function() {
-        it('should have template cache', function() {
+        it('have template cache', function() {
             var t = T('{{#each a}}<{{_ks_value.a}}{{/each}}');
                 f = T('{{#each a}}<{{_ks_value.a}}{{/each}}');
             expect(t).toEqual(f);
@@ -63,6 +64,28 @@ describe('template', function() {
     describe('error', function() {
         it('can handle syntax template error', function() {
             expect(T('{{-}}').render()).toBe('KISSY.Template: Syntax Error. ,Unexpected token )');
+        });
+    });
+
+    describe('log', function() {
+        it('can log all compiled template code', function() {
+            T.log('{{}}');
+        });
+    });
+
+    describe('node', function() {
+        it('have chain support for KISSY.Node', function() {
+            S.one(S.DOM.create([
+                '<script type="text/x-kissy-template" id="template">',
+                '<div id="render">{{#each a}}{{_ks_value.a}}{{/each}}</div>',
+                '</script><div id="container"></div>'
+            ].join(''))).appendTo(document.body);
+            S.tmpl('#template', {
+                a: [{a: 1}, {a: 2}, {a: 3}],
+                b: [{a: 4}, {a: 5}, {a: 6}]
+            }).appendTo('#container');
+            expect(S.one('#container').html()).toEqual('<div id="render">123</div>');
+            S.one('#container').html('');
         });
     });
 

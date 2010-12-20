@@ -1,0 +1,4 @@
+KISSY.Template TODO.
+
+* 集成KISSY接口
+  - 提供一些KISSY内置接口(DOM, Node, Ajax, Data)

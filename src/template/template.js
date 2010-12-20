@@ -1,38 +1,10 @@
 /**
  * @fileoverview KISSY.Template.
  * @author yyfrankyy(yyfrankyy@gmail.com)
- *
- * ChangeLog:
- *
- * 2010-9-22
- *  - 根据new Function的思路，实现了一遍Micro Template，增加一些接口
- *
- * 2010-11-02
- *  - 调整部分接口，实现一个较为复杂的用例，P4P
- *
- * 2010-11-10
- *  - 迁移到kissy目录
- *  - 按照原来的接口，规划好部分单元测试用例
- *
- * 2010-12-15
- *  - 重构为白名单机制，语法支持扩展
- *  - 重写测试用例
- *  - 增加js-templates-benchmark和其他模板做一下性能对比
- *
- * 2010-12-15
- *  - 完善测试用例
- *
- * TODO:
- *  - 非标记字符直接push入数组，需要进行部分转义
- *  - 标记内的字符会被直接转为js执行，要完善测试用例
- *  - 集成错误处理
- *  - 提供一些KISSY内置接口(DOM, Node, Ajax, Data)
- *
  */
 KISSY.add('template', function(S, undefined) {
 
-    var defaultConfig = {
-        },
+    var defaultConfig = {},
 
         /**
          * Template Cache
@@ -172,10 +144,21 @@ KISSY.add('template', function(S, undefined) {
                             keep_array_indentation: false,
                             space_after_anon_function: true
                         }), 'info');
+                    } else {
+                        S.log(templateCache[templ].parser, 'info');
                     }
                 } else {
                     Template(templ);
                     this.log(templ);
+                }
+            },
+
+            /**
+             * @param {String} statement 支持的标签扩展.
+             */
+            addStatement: function(statement, o) {
+                if (S.isString(statement) && S.isObject(o)) {
+                    Statements[statement] = o;
                 }
             },
 
@@ -191,5 +174,7 @@ KISSY.add('template', function(S, undefined) {
             }
 
         });
+
     S.Template = Template;
+
 }, {requires: ['core']});
