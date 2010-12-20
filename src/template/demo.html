@@ -11,7 +11,7 @@
     </head>
 
     <body>
-        <script type="text/x-kissy-template" id="template">
+        <script type="text/x-kissy-template" id="ajax-template">
             <dl>
                 {{#each item}}
                 <dt>
@@ -21,25 +21,25 @@
                 {{/each}}
             </dl>
         </script>
-        <button id="get">GET</button>
-        <button id="post">POST</button>
-        <button id="json">JSON</button>
         <button id="jsonp">JSONP</button>
-        <button id="sync">同步获取数据</button>
+        <button id="clean">Clean</button>
         <div id="console" style="margin: 20px; padding: 10px; border: 1px solid #ccc"></div>
 
         <script>
-            var S = KISSY, _log = S.log, c = S.get('#console');
+            var S = KISSY, _log = S.log, c = S.get('#console'), T = S.Template;
             S.log = function() {
                 c.innerHTML = arguments[0];
                 _log.apply(S, arguments);
             };
 
-            T = S.Template;
+            S.one('#clean').on('click', function() {
+                S.log('');
+            });
+
             S.one('#jsonp').on('click', function() {
                 S.jsonp('http://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22http%3A%2F%2Fued.taobao.com%2Fblog%2Ffeed%2F%22&format=json&diagnostics=true',
                     function(data) {
-                        S.tmpl('#template', data.query.results).appendTo('#console');
+                        S.tmpl('#ajax-template', data.query.results).appendTo('#console');
                     }
                 );
             });
