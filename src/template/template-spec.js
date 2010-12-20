@@ -22,6 +22,7 @@ describe('template', function() {
                 expect(T('{{#if a==\'a\'}}{{b}}{{/if}}').render({a: 'a', b: 'b'})).toBe('b');
                 expect(T('{{#if a==\'b\'}}{{b}}{{/if}}').render({a: 'a', b: 'b'})).toBe('');
                 expect(T('{{#if a!=\'b\'}}{{b}}{{/if}}').render({a: 'a', b: 'b'})).toBe('b');
+                expect(T('{{#if a == " "}}{{b}}{{/if}}').render({a: ' ', b: 'b'})).toBe('b');
             });
         });
 

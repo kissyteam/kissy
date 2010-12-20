@@ -70,14 +70,16 @@ KISSY.add('template', function(S, undefined) {
          * build a static parser
          */
         buildParser = function(templ) {
-            var _parser;
+            var _parser, _empty_index;
             return S.trim(templ).replace(getRegexp('[\r\t\n]'), ' ').replace(getRegexp('(["\'])'), '\\$1')
                 .replace(getRegexp('\{\{([#/]?)(?!\}\})([^}]*)\}\}'), function(all, expr, oper) {
                     _parser = KS_EMPTY;
-
                     // is an expression
                     if (expr) {
-                        oper = S.trim(oper).split(/\s+/);
+                        oper = S.trim(oper);
+                        _empty_index = oper.indexOf(' ');
+                        oper = _empty_index === -1 ? [oper, ''] :
+                                [oper.substring(0, oper.indexOf(' ')), oper.substring(oper.indexOf(' '))];
                         for (var i in Statements) {
                             if (oper[0] !== i) continue;
                             oper.shift();
@@ -85,7 +87,6 @@ KISSY.add('template', function(S, undefined) {
                                 case '#':
                                     _parser = Statements[i].start.replace(
                                         getRegexp(KS_TEMPL_STAT_PARAM),
-                                        // 把引号转回来...
                                         oper.join(KS_EMPTY).replace(getRegexp('\\\\([\'"])'), '$1')
                                     );
                                     break;
@@ -129,6 +130,8 @@ KISSY.add('template', function(S, undefined) {
 
         /**
          * @param {String} templ template to be rendered.
+         * @param {Object} config configuration.
+         * @return {KISSY.Template} return this for chain.
          */
         Template = function(templ, config) {
             if (!(templ in templateCache)) {
