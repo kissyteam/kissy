@@ -2,17 +2,15 @@ describe('template', function() {
     var S = KISSY, T = S.Template;
 
     describe('variable', function() {
-
         it('should render a normal string', function() {
+            expect(T('a').render()).toBe('a');
             expect(T('a').render({})).toBe('a');
             expect(T('"a').render({})).toBe('"a');
             expect(T('>a').render({})).toBe('>a');
         });
-
         it('should render a normal variable', function() {
             expect(T('{{a}},{{b}}').render({a: '1', b: '2'})).toBe('1,2');
         });
-
     });
 
     describe('statement', function() {
@@ -54,25 +52,19 @@ describe('template', function() {
     });
 
     describe('cache', function() {
-
         it('should have template cache', function() {
             var t = T('{{#each a}}<{{_ks_value.a}}{{/each}}');
                 f = T('{{#each a}}<{{_ks_value.a}}{{/each}}');
-
             expect(t).toEqual(f);
         });
-
     });
 
-    describe('config', function() {
-
-        it('should support custom name', function() {
-            var custom_name = 'ks_data_custom_name',
-                t = T('{{#each a}}<{{_ks_value.a}}{{/each}}', {name: custom_name});
-
-            expect(t.name).toEqual(custom_name);
+    describe('error', function() {
+        it('can handle syntax template error', function() {
+            expect(T('{{-}}').render()).toBe('KISSY.Template: Syntax Error. ,Unexpected token )');
         });
-
     });
+
+    describe('config', function() {});
 
 });
