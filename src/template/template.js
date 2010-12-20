@@ -36,7 +36,7 @@ KISSY.add('template', function(S, undefined) {
 
         PARSER_PREFIX = 'var ' + KS_TEMPL + '=[],' + KS_TEMPL_STAT_PARAM + '=false;with(',
         PARSER_MIDDLE = '||{}){try{' + KS_TEMPL + '.push("',
-        PARSER_SUFFIX = '");}catch(e){' + SUFFIX + PARSER_RENDER_ERROR + '", e.message);}};return ' + KS_TEMPL + '.join("");',
+        PARSER_SUFFIX = '");}catch(e){' + KS_TEMPL + '=["' + PARSER_RENDER_ERROR + '" + e.message]}};return ' + KS_TEMPL + '.join("");',
 
         /*
          * build a static parser

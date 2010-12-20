@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf8" />
+        <title>Template Demo</title>
+        <script src="../../build/kissy.js"></script>
+        <script src="template.js"></script>
+        <script src="beautify.js"></script>
+        <script src="../ajax/ajax.js"></script>
+        <script src="template-node.js"></script>
+    </head>
+
+    <body>
+        <script type="text/x-kissy-template" id="template">
+            <dl>
+                {{#each item}}
+                <dt>
+                    <a href="{{_ks.value.link}}">{{_ks_value.title}}</a>
+                </dt>
+                <dd>{{_ks_value.description}}</dd>
+                {{/each}}
+            </dl>
+        </script>
+        <button id="get">GET</button>
+        <button id="post">POST</button>
+        <button id="json">JSON</button>
+        <button id="jsonp">JSONP</button>
+        <button id="sync">同步获取数据</button>
+        <div id="console" style="margin: 20px; padding: 10px; border: 1px solid #ccc"></div>
+
+        <script>
+            var S = KISSY, _log = S.log, c = S.get('#console');
+            S.log = function() {
+                c.innerHTML = arguments[0];
+                _log.apply(S, arguments);
+            };
+
+            T = S.Template;
+            S.one('#jsonp').on('click', function() {
+                S.jsonp('http://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22http%3A%2F%2Fued.taobao.com%2Fblog%2Ffeed%2F%22&format=json&diagnostics=true',
+                    function(data) {
+                        S.tmpl('#template', data.query.results).appendTo('#console');
+                    }
+                );
+            });
+        </script>
+    </body>
+</html>
+
