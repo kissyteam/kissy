@@ -63,7 +63,7 @@ describe('template', function() {
 
     describe('error', function() {
         it('can handle syntax template error', function() {
-            expect(T('{{-}}').render()).toBe('KISSY.Template: Syntax Error. ,syntax error');
+            expect(T('{{-}}').render().indexOf('Syntax Error.')).not.toBe(-1);
         });
     });
 
@@ -84,7 +84,7 @@ describe('template', function() {
                 a: [{a: 1}, {a: 2}, {a: 3}],
                 b: [{a: 4}, {a: 5}, {a: 6}]
             }).appendTo('#container');
-            expect(S.one('#container').html()).toEqual('<div id="render">123</div>');
+            expect(S.one('#render').html()).toEqual('123');
             S.one('#container').html('');
         });
     });
