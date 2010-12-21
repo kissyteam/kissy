@@ -63,7 +63,7 @@ describe('template', function() {
 
     describe('error', function() {
         it('can handle syntax template error', function() {
-            expect(T('{{-}}').render()).toBe('KISSY.Template: Syntax Error. ,Unexpected token )');
+            expect(T('{{-}}').render()).toBe('KISSY.Template: Syntax Error. ,syntax error');
         });
     });
 

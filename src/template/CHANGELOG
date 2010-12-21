@@ -15,6 +15,10 @@ KISSY.Template Changelog:
   * 增加js-templates-benchmark和其他模板做一下性能对比.
   * 重写测试用例.
 
-2010-12-15  yyfrankyy   <yyfrankyy@gmail.com>
+2010-12-20  yyfrankyy   <yyfrankyy@gmail.com>
   * 增加调试信息,可通过加载jsbeauty来得到格式良好的预处理的模板方法.
   * 调整变量作用域,增加容错.
+
+2010-12-21  yyfrankyy   <yyfrankyy@gmail.com>
+  * 标签起始关闭重构为单一方法
+  * 增加文档.

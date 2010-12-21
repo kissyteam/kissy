@@ -1,6 +1,8 @@
 /**
- * @fileoverview KISSY.Template.
+ * @fileoverview KISSY Template Engine.
  * @author yyfrankyy(yyfrankyy@gmail.com)
+ * @see https://github.com/yyfrankyy/kissy/tree/template/src/template
+ * @version 0.3
  */
 KISSY.add('template', function(S, undefined) {
 
@@ -139,6 +141,10 @@ KISSY.add('template', function(S, undefined) {
         };
 
         S.mix(Template, {
+            /**
+             * Logging Compiled Template Codes
+             * @param {String} templ template string.
+             */
             log: function(templ) {
                 if (templ in templateCache) {
                     if ('js_beautify' in window) {
@@ -160,22 +166,13 @@ KISSY.add('template', function(S, undefined) {
             },
 
             /**
-             * @param {String} statement 支持的标签扩展.
+             * add statement for extending template tags
+             * @param {String} statement tag name.
+             * @param {String} o extent tag object.
              */
             addStatement: function(statement, o) {
                 if (S.isString(statement) && S.isObject(o)) {
                     Statements[statement] = o;
-                }
-            },
-
-            /**
-             * @param {String} name 根据串作为with的内部变量名.
-             */
-            getCacheByName: function(name) {
-                for (var i in templateCache) {
-                    if (templateCache[i].name === name) {
-                        return templateCache[i];
-                    }
                 }
             }
 
