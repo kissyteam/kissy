@@ -103,6 +103,8 @@
 
 ### 标签嵌套
 
+理论上支持任意标签嵌套,如果标签有关闭字符,记得关闭=,=,嵌套标签形成多代码块嵌套,作用域与JavaScript的作用域一致.
+
 #### 语法
 
     {{#each object}}
@@ -135,8 +137,39 @@
 
 ## 模板性能
 
+文档更新中..
+
 ## 扩展
 
-### KISSY.tmpl 方法
+模板方法仅依赖于KISSY的`core`部分,默认调用为:
+
+    KISSY.Template('template here.').render(data);
+
+而:
+
+    var templ = KISSY.Template();
+
+可直接预编译模板方法.
+
+### API
+
+#### KISSY.tmpl
 
     KISSY.tmpl('#template', {name: 'Frank'}).appendTo('#container');
+
+### 语法扩展
+
+`KISSY.Template.addStatement()`方法,提供扩展语法的接口,目前支持标签语法开始,关闭及一个参数传递.
+
+比如:
+
+    KISSY.Template.addStatement({'while': {
+        start: 'while(KS_TEMPL_STAT_PARAM){',
+        end: '}'
+    }});
+
+即可支持`while`语句
+
+    {{#while true}}
+        BLOCK
+    {{/while}}

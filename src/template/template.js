@@ -12,6 +12,14 @@ KISSY.add('template', function(S, undefined) {
         templateCache = {},
 
         /**
+         * start/end tag mark
+         */
+        tagStartEnd = {
+            '#': 'start',
+            '/': 'end'
+        },
+
+        /**
          * Regexp Cache
          */
         regexpCache = {},
@@ -55,18 +63,11 @@ KISSY.add('template', function(S, undefined) {
                         for (var i in Statements) {
                             if (oper[0] !== i) continue;
                             oper.shift();
-                            switch (expr) {
-                                case '#':
-                                    _parser = Statements[i].start.replace(
-                                        getRegexp(KS_TEMPL_STAT_PARAM),
-                                        oper.join(KS_EMPTY).replace(getRegexp('\\\\([\'"])'), '$1')
-                                    );
-                                    break;
-                                case '/':
-                                    _parser = Statements[i].end;
-                                    break;
-                                default:
-                                    break;
+                            if (expr in tagStartEnd) {
+                                _parser = Statements[i][tagStartEnd[expr]].replace(
+                                    getRegexp(KS_TEMPL_STAT_PARAM),
+                                    oper.join(KS_EMPTY).replace(getRegexp('\\\\([\'"])'), '$1')
+                                );
                             }
                         }
                     }
