@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Test Runner</title>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
+
+<script src="../../../build/seed/seed-pkg.js"></script>
+
+<script src="../flash.js"></script>
+<script src="../flash-ua.js"></script>
+<script src="../flash.js"></script>
+
+<script src="flash-spec.js"></script>
+
+<style>
+	
+</style>
+
+</head>
+<body>
+<script>
+    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    jasmine.getEnv().execute();
+</script>
+
+<table class="itable">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Static-publishing</th>
+			<th>Dynamic-publishing</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th>Normal</th>
+			<td>
+				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="200" height="150" id="FP-Normal-S">
+			        <param name="movie" value="../assets/test.swf"/>
+			        <!--[if !IE]>-->
+			        <object type="application/x-shockwave-flash" data="../assets/test.swf" width="200" height="150">
+			            <!--<![endif]-->
+			            <a href="http://www.adobe.com/go/getflashplayer">
+			                <img src="get_flash_player.gif" alt="Get Adobe Flash player"/>
+			            </a>
+			            <!--[if !IE]>-->
+			        </object>
+			        <!--<![endif]-->
+			    </object>
+			</td>
+			<td>
+				<div id="FP-Normal-D"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>Simple flash variables</th>
+			<td></td>
+			<td>
+				<div id="FP-SimpleFlashVariables"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>Complex flash variables(to JSON)</th>
+			<td></td>
+			<td>
+				<div id="FP-ComplexFlashVariables"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>Express install</th>
+			<td>
+				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="200" height="150" id="FP-ExpressInstall-S">
+			        <param name="movie" value="../express-install/expressInstall.swf"/>
+			        <param name="bgcolor" value="#FFFF00"/>
+			        <!--[if !IE]>-->
+			        <object type="application/x-shockwave-flash" data="../express-install/expressInstall.swf" width="200" height="150">
+			            <!--<![endif]-->
+						<param name="bgcolor" value="#FFFF00"/>
+			            <a href="http://www.adobe.com/go/getflashplayer">
+			                <img src="get_flash_player.gif" alt="Get Adobe Flash player"/>
+			            </a>
+			            <!--[if !IE]>-->
+			        </object>
+			        <!--<![endif]-->
+			    </object>
+			</td>
+			<td>
+				<div id="FP-ExpressInstall-D"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>Only Flash Player(no SWF)</th>
+			<td>
+				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="200" height="150" id="FP-NoSWF-S">
+			        <param name="movie" value="../assets/test.swf"/>
+			        <param name="bgcolor" value="#00FFFF"/>
+			        <!--[if !IE]>-->
+			        <object type="application/x-shockwave-flash" data="../assets/test.swf" width="200" height="150">
+			            <!--<![endif]-->
+						<param name="bgcolor" value="#FF00FF"/>
+			            <a href="http://www.adobe.com/go/getflashplayer">
+			                <img src="get_flash_player.gif" alt="Get Adobe Flash player"/>
+			            </a>
+			            <!--[if !IE]>-->
+			        </object>
+			        <!--<![endif]-->
+			    </object>
+			</td>
+			<td>
+				<div id="FP-NoSWF-D"></div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+</body>
+</html>
