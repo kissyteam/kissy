@@ -143,7 +143,8 @@ build time: ${build.time}
                 rp;
 
             // add prototype chain
-            r.prototype = rp = create(sp, r);
+            rp = create(sp, r);
+            r.prototype = S.mix(rp, r.prototype);
             r.superclass = create(sp, s);
 
             // add prototype overrides
@@ -285,6 +286,7 @@ build time: ${build.time}
         trim = String.prototype.trim,
 
         EMPTY = '',
+        CLONE_MARKER = '__~ks_cloned',
         RE_TRIM = /^\s+|\s+$/g,
 
         // [[Class]] -> type pairs
@@ -331,17 +333,46 @@ build time: ${build.time}
         /**
          * Creates a deep copy of a plain object or array. Others are returned untouched.
          */
-        clone: function(o) {
-            var ret = o, b, k;
+        clone: function(o, f, cloned) {
+            var ret = o, isArray, k, stamp, marked = cloned || {};
 
             // array or plain object
-            if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
-                ret = b ? [] : {};
-                for (k in o) {
-                    if (o.hasOwnProperty(k)) {
-                        ret[k] = S.clone(o[k]);
+            if (o && ((isArray = S.isArray(o)) || S.isPlainObject(o))) {
+
+                // avoid recursive clone
+                if (o[CLONE_MARKER]) {
+                    return marked[o[CLONE_MARKER]];
+                }
+                o[CLONE_MARKER] = (stamp = S.guid());
+                marked[stamp] = o;
+
+                // clone it
+                if (isArray) {
+                    ret = f ? S.filter(o, f) : o.concat();
+                } else {
+                    ret = {};
+                    for (k in o) {
+                        if (k !== CLONE_MARKER &&
+                            o.hasOwnProperty(k) &&
+                            (!f || (f.call(o, o[k], k, o) !== false))) {
+                            ret[k] = S.clone(o[k], f, marked);
+                        }
                     }
                 }
+            }
+
+            // clear marked
+            if (!cloned) {
+                S.each(marked, function(v) {
+                    if (v[CLONE_MARKER]) {
+                        try {
+                            delete v[CLONE_MARKER];
+                        } catch (e) {
+                            v[CLONE_MARKER] = undef;
+                        }
+                    }
+                });
+                marked = undef;
             }
 
             return ret;
@@ -476,12 +507,12 @@ build time: ${build.time}
          */
         filter: filter ?
             function(arr, fn, context) {
-                return filter.call(arr, fn, context);
+                return filter.call(arr, fn, context || this);
             } :
             function(arr, fn, context) {
                 var ret = [];
                 S.each(arr, function(item, i, arr) {
-                    if (fn.call(context, item, i, arr)) {
+                    if (fn.call(context || this, item, i, arr)) {
                         ret.push(item);
                     }
                 });
@@ -894,20 +925,20 @@ build time: ${build.time}
         mix = S.mix,
 
         scriptOnload = doc.createElement('script').readyState ?
-            function(node, callback) {
-                var oldCallback = node.onreadystatechange;
-                node.onreadystatechange = function() {
-                    var rs = node.readyState;
-                    if (rs === 'loaded' || rs === 'complete') {
-                        node.onreadystatechange = null;
-                        oldCallback && oldCallback();
-                        callback.call(this);
-                    }
-                };
-            } :
-            function(node, callback) {
-                node.addEventListener('load', callback, false);
-            },
+                       function(node, callback) {
+                           var oldCallback = node.onreadystatechange;
+                           node.onreadystatechange = function() {
+                               var rs = node.readyState;
+                               if (rs === 'loaded' || rs === 'complete') {
+                                   node.onreadystatechange = null;
+                                   oldCallback && oldCallback();
+                                   callback.call(this);
+                               }
+                           };
+                       } :
+                       function(node, callback) {
+                           node.addEventListener('load', callback, false);
+                       },
 
         RE_CSS = /\.css(?:\?|$)/i,
         loader;
@@ -934,10 +965,10 @@ build time: ${build.time}
          * @return {KISSY}
          */
         add: function(name, fn, config) {
-            var self = this, mods = self.Env.mods, mod, o, oldr;
+            var self = this, mods = self.Env.mods, mod, o;
 
             // S.add(name, config) => S.add( { name: config } )
-            if (S.isString(name) && !config && S.isPlainObject(fn)) {
+            if (S['isString'](name) && !config && S.isPlainObject(fn)) {
                 o = {};
                 o[name] = fn;
                 name = o;
@@ -966,19 +997,12 @@ build time: ${build.time}
                 if (!mod.fns) mod.fns = [];
                 fn && mod.fns.push(fn);
 
-                //!TODO 暂时不考虑 requires 在 add 中的修改
-                // 和 order _requires 关联起来太复杂
-                oldr = mod['requires'];
                 mix((mods[name] = mod), config);
-                mods[name]['requires'] = oldr; // 不覆盖
 
                 // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
                 if ((mod['attach'] !== false) && self.__isAttached(mod.requires)) {
                     self.__attachMod(mod);
                 }
-
-                //!TODO add 中指定了依赖项，这里没有继续载依赖项
-                //self.__isAttached(mod.requires) 返回 false
             }
 
             return self;
@@ -990,8 +1014,7 @@ build time: ${build.time}
          * S.use('mod-name', callback, config);
          * S.use('mod1,mod2', callback, config);
          * </code>
-         * config = {
-         *   order: true, // 默认为 false. 是否严格按照 modNames 的排列顺序来回调入口函数
+         * config = {         *
          *   global: KISSY // 默认为 KISSY. 当在 this.Env.mods 上找不到某个 mod 的属性时，会到 global.Env.mods 上去找
          * }
          */
@@ -999,9 +1022,10 @@ build time: ${build.time}
             modNames = modNames.replace(/\s+/g, EMPTY).split(',');
             config = config || {};
 
-            var self = this, mods = self.Env.mods,
+            var self = this,
+                modName,
                 global = (config || 0).global,
-                i, len = modNames.length, mod, name, fired;
+                i, len = modNames.length,fired;
 
             // 将 global 上的 mods, 移动到 instance 上
             if (global) self.__mixMods(global);
@@ -1011,28 +1035,10 @@ build time: ${build.time}
                 callback && callback(self);
                 return;
             }
-
             // 有尚未 attached 的模块
-            for (i = 0; i < len && (mod = mods[modNames[i]]); i++) {
-                if (mod.status === ATTACHED) continue;
-
-                // 通过添加依赖，来保证调用顺序
-                if (config.order && i > 0) {
-                    if (!mod.requires) mod.requires = [];
-                    mod._requires = mod.requires.concat(); // 保留，以便还原
-                    name = modNames[i - 1];
-
-                    if (!S.inArray(name, mod.requires)
-                        && !(S.inArray(mod.name, mods[name].requires || []))) { // 避免循环依赖
-                        mod.requires.push(name);
-                    }
-                }
-
-                self.__attach(mod, function() {
-                    if (mod._requires) {
-                        mod.requires = mod._requires; // restore requires
-                        delete mod._requires;
-                    }
+            for (i = 0; i < len && (modName = modNames[i]); i++) {
+                //从name开始调用，防止不存在模块
+                self.__attachModByName(modName, function() {
                     if (!fired && self.__isAttached(modNames)) {
                         fired = true;
                         callback && callback(self);
@@ -1042,32 +1048,104 @@ build time: ${build.time}
 
             return self;
         },
+        //加载指定模块名模块，如果不存在定义默认定义为内部模块
+        __attachModByName: function(modName, callback, global) {
+
+            var self = this,
+                mods = self.Env.mods,
+                //是否自带了css
+                hasCss = modName.indexOf("+css") != -1;
+            //得到真实组件名
+            modName = hasCss ? modName.replace(/\+css/g, "") : modName;
+            var mod = mods[modName];
+            //没有模块定义，内部模块不许定义
+            if (!mod) {
+                //默认js名字
+                var componentJsName = self.Config['componentJsName'] || function(m) {
+                    return m + '-pkg-min.js?t=20101217145724';
+                },  js = S.isFunction(componentJsName) ?
+                    componentJsName(modName) : componentJsName;
+                mod = {
+                    path:modName + '/' + js,
+                    charset: 'utf-8'
+                };
+                //添加模块定义
+                mods[modName] = mod;
+            }
+
+            if (hasCss) {
+                var componentCssName = self.Config['componentCssName'] || function(m) {
+                    return m + '-min.css?t=20101217145724';
+                },  css = S.isFunction(componentCssName) ?
+                    componentCssName(modName) :
+                    componentCssName;
+                mod.csspath = modName + '/' + css;
+            }
+            mod.name = modName;
+
+            if (mod && mod.status === ATTACHED) return;
+            self.__attach(mod, callback, global);
+        },
 
         /**
          * Attach a module and all required modules.
          */
         __attach: function(mod, callback, global) {
-            var self = this, requires = mod['requires'] || [],
+            var self = this,
+                mods = self.Env.mods,
+                //复制一份当前的依赖项出来，防止add后修改！
+                requires = (mod['requires'] || []).concat(),
                 i = 0, len = requires.length;
 
             // attach all required modules
             for (; i < len; i++) {
-                self.__attach(self.Env.mods[requires[i]], fn, global);
+                var r = mods[requires[i]];
+                if (r && r.status === ATTACHED) {
+                    //no need
+                } else {
+                    self.__attachModByName(requires[i], fn, global);
+                }
             }
 
             // load and attach this module
             self.__buildPath(mod);
-            self.__load(mod, fn, global);
+            self.__load(mod, function() {
+                // add 可能改了 config，这里重新取下
+                var newRequires = mod['requires'] || [],optimize = [];
+                //本模块下载成功后串行下载 require
+                for (var i = newRequires.length - 1; i >= 0; i--) {
+                    var r = newRequires[i],
+                        rmod = mods[r],
+                        inA = S.inArray(r, requires);
+                    //已经处理过了或将要处理
+                    if (rmod && rmod.status === ATTACHED ||
+                        inA) {
+                        //no need
+                    } else {
+                        //新增的依赖项
+                        self.__attachModByName(r, fn, global);
+                    }
+                    if (!inA) {
+                        optimize.push(r);
+                    }
+                }
+                if (optimize.length != 0) {
+                    optimize.unshift(mod.name);
+                    S.log(optimize + " : better to be used together", "warn");
+                }
+                fn();
+            }, global);
+
+            var attached = false;
 
             function fn() {
-                // add 可能改了 config，这里重新取下
-                var requires = mod['requires'] || [];
+                if (!attached && self.__isAttached(mod['requires'])) {
 
-                if (self.__isAttached(requires)) {
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);
                     }
                     if (mod.status === ATTACHED) {
+                        attached = true;
                         callback();
                     }
                 }
@@ -1113,7 +1191,9 @@ build time: ${build.time}
             var mods = this.Env.mods, mod,
                 i = (modNames = S.makeArray(modNames)).length - 1;
 
-            for (; i >= 0 && (mod = mods[modNames[i]]); i--) {
+            for (; i >= 0; i--) {
+                var name = modNames[i].replace(/\+css/, "");
+                mod = mods[name] || {};
                 if (mod.status !== ATTACHED) return false;
             }
 
@@ -1136,7 +1216,7 @@ build time: ${build.time}
             }
 
             // 加载 css, 仅发出请求，不做任何其它处理
-            if (S.isString(mod[CSSFULLPATH])) {
+            if (S['isString'](mod[CSSFULLPATH])) {
                 self.getScript(mod[CSSFULLPATH]);
                 mod[CSSFULLPATH] = LOADED;
             }
@@ -1281,20 +1361,26 @@ build time: ${build.time}
      * @param src script source url
      * @return base for kissy
      * @example:
-     *   http://a.tbcdn.cn/s/kissy/1.1.5/??kissy-min.js,suggest/suggest-pkg-min.js
-     *   http://a.tbcdn.cn/??s/kissy/1.1.5/kissy-min.js,s/kissy/1.1.5/suggest/suggest-pkg-min.js
-     *   http://a.tbcdn.cn/??s/kissy/1.1.5/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
+     *   http://a.tbcdn.cn/s/kissy/1.1.6/??kissy-min.js,suggest/suggest-pkg-min.js
+     *   http://a.tbcdn.cn/??s/kissy/1.1.6/kissy-min.js,s/kissy/1.1.5/suggest/suggest-pkg-min.js
+     *   http://a.tbcdn.cn/??s/kissy/1.1.6/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
+     *   http://a.tbcdn.cn/s/kissy/1.1.6/kissy-min.js?t=20101215.js
+     * @notice: custom combo rules, such as yui3:
+     *  <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
      */
     // notice: timestamp
-    var baseReg = /^(.*)(seed|kissy)(-min)?\.js/i,
+    var baseReg = /^(.*)(seed|kissy)(-min)?\.js[^/]*/i,
         baseTestReg = /(seed|kissy)(-min)?\.js/;
 
-    // TODO: configurable for ?? and ,
-    function getBaseUrl(src) {
-        var parts = src.split(/\s*,\s*/);
-        var base,
+    function getBaseUrl(script) {
+        var src = script.src,
+            prefix = script.getAttribute('data-combo-prefix') || '??',
+            sep = script.getAttribute('data-combo-sep') || ',',
+            parts = src.split(sep),
+            base,
             part0 = parts[0],
-            index = part0.indexOf('??');
+            index = part0.indexOf(prefix);
+
         // no combo
         if (index == -1) {
             base = src.replace(baseReg, '$1');
@@ -1327,13 +1413,14 @@ build time: ${build.time}
         // get base from current script file path
         var scripts = doc.getElementsByTagName('script'),
             currentScript = scripts[scripts.length - 1],
-            base = getBaseUrl(currentScript.src);
+            base = getBaseUrl(currentScript);
 
         this.Env.mods = {}; // all added mods
         this.Env._loadQueue = {}; // information for loading and loaded mods
 
-        this.Config.base = base;
-        this.Config.timeout = 10;   // the default timeout for getScript
+        // don't override
+        if (!this.Config.base) this.Config.base = base;
+        if (!this.Config.timeout) this.Config.timeout = 10;   // the default timeout for getScript
     };
     S.__initLoader();
 
@@ -1345,36 +1432,3 @@ build time: ${build.time}
 
 })(KISSY);
 
-/**
- * @module mods
- * @author lifesinger@gmail.com
- */
-(function(S) {
-
-    var map = {
-        core: {
-            path: 'packages/core-min.js',
-            charset: 'utf-8'
-        }
-    };
-
-    S.each([
-        'sizzle', 'dd', 'datalazyload', // pure utilities
-        'flash', // flash etc.
-        'switchable', 'suggest', 'calendar', // UI components based on Base
-        'uibase', 'overlay', 'imagezoom' // UI components based on UIBase
-    ],
-        function(modName) {
-            map[modName] = {
-                path: modName + '/' + modName + '-pkg-min.js',
-                requires: ['core'],
-                charset: 'utf-8'
-            };
-        });
-
-    map['calendar'].csspath = 'calendar/default-min.css';
-    map['overlay'].requires = ['uibase'];
-
-    S.add(map);
-
-})(KISSY);

@@ -219,6 +219,30 @@ describe('lang.js', function() {
         t3.push(5);
         expect(t4[1]).toBe(2);
         expect(t4.length).toBe(4);
+
+        // recursive clone
+        var CLONE_MARKER = '__~ks_cloned',
+            Tom = {},
+            Green = {
+                father: Tom
+            };
+        Tom.son = Green;
+
+        var Tom2 = S.clone(Tom);
+        expect(Tom2.son).toEqual(Green);
+        expect(Tom2[CLONE_MARKER]).toBeUndefined();
+
+        var Green2 = S.clone(Green);
+        expect(Green2.father).toEqual(Tom);
+        expect(Green2[CLONE_MARKER]).toBeUndefined();
+
+        // filter function
+        var t5 = [1, 2, 3, 4, 5, 6];
+        var t6 = S.clone(t5, function(v) { return v % 2 === 0; });
+        expect(t6.length).toBe(3);
+        expect(t6[0]).toBe(2);
+        expect(t6[1]).toBe(4);
+        expect(t6[2]).toBe(6);
     });
 
     it('S.trim', function() {

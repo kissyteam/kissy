@@ -13,6 +13,7 @@
         trim = String.prototype.trim,
 
         EMPTY = '',
+        CLONE_MARKER = '__~ks_cloned',
         RE_TRIM = /^\s+|\s+$/g,
 
         // [[Class]] -> type pairs
@@ -59,17 +60,46 @@
         /**
          * Creates a deep copy of a plain object or array. Others are returned untouched.
          */
-        clone: function(o) {
-            var ret = o, b, k;
+        clone: function(o, f, cloned) {
+            var ret = o, isArray, k, stamp, marked = cloned || {};
 
             // array or plain object
-            if (o && ((b = S.isArray(o)) || S.isPlainObject(o))) {
-                ret = b ? [] : {};
-                for (k in o) {
-                    if (o.hasOwnProperty(k)) {
-                        ret[k] = S.clone(o[k]);
+            if (o && ((isArray = S.isArray(o)) || S.isPlainObject(o))) {
+
+                // avoid recursive clone
+                if (o[CLONE_MARKER]) {
+                    return marked[o[CLONE_MARKER]];
+                }
+                o[CLONE_MARKER] = (stamp = S.guid());
+                marked[stamp] = o;
+
+                // clone it
+                if (isArray) {
+                    ret = f ? S.filter(o, f) : o.concat();
+                } else {
+                    ret = {};
+                    for (k in o) {
+                        if (k !== CLONE_MARKER &&
+                            o.hasOwnProperty(k) &&
+                            (!f || (f.call(o, o[k], k, o) !== false))) {
+                            ret[k] = S.clone(o[k], f, marked);
+                        }
                     }
                 }
+            }
+
+            // clear marked
+            if (!cloned) {
+                S.each(marked, function(v) {
+                    if (v[CLONE_MARKER]) {
+                        try {
+                            delete v[CLONE_MARKER];
+                        } catch (e) {
+                            v[CLONE_MARKER] = undef;
+                        }
+                    }
+                });
+                marked = undef;
             }
 
             return ret;
@@ -204,12 +234,12 @@
          */
         filter: filter ?
             function(arr, fn, context) {
-                return filter.call(arr, fn, context);
+                return filter.call(arr, fn, context || this);
             } :
             function(arr, fn, context) {
                 var ret = [];
                 S.each(arr, function(item, i, arr) {
-                    if (fn.call(context, item, i, arr)) {
+                    if (fn.call(context || this, item, i, arr)) {
                         ret.push(item);
                     }
                 });

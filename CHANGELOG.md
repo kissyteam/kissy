@@ -16,6 +16,9 @@ History:
 
 ### v1.1.5 -> v1.x.x (2010/MM/DD)
 
+ - [!] calendar 模块，S.use('calendar', fn) 需要写成 S.use('calendar+css', fn), 否则不会自动加载样式
+ - [*] loader 中，对内置模块无需配置，采用约定，去除 mods.js
+ - [*] S.clone 增加防循环引用
  - [+] kissy-tools 增加 idebug
  - [+] 增加 jasminelite 和 event-simulate for jasmine
  - [!] event 中对 return false, 仅 preventDefault + stopPropagation, 不再 stopImmediatePropagation
@@ -33,7 +36,7 @@ History:
  - [+] 社区建设 [Blog](http://kissyui.com/blog/)
  - [*] 正则优化 [小结](http://lifesinger.org/blog/2010/09/regular-expression-improvement-for-kissy/)
  - [*] README / CHANGELOG 细节改进
- - [x] 已知 bugs 的修复
+ - [x] 已知 bugs 的修复和大量细节改进
 
 
 ### v1.1.0 -> v1.1.5 (2010/09/19)

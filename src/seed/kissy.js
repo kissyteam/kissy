@@ -138,7 +138,8 @@
                 rp;
 
             // add prototype chain
-            r.prototype = rp = create(sp, r);
+            rp = create(sp, r);
+            r.prototype = S.mix(rp, r.prototype);
             r.superclass = create(sp, s);
 
             // add prototype overrides

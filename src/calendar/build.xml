@@ -7,7 +7,7 @@
     <property name="src.dir" location="."/>
 
     <target name="pre">
-        <copy file="assets/default.css" todir="."/>
+        <copy file="assets/calendar.css" todir="."/>
     </target>
 
     <target name="concat">
@@ -22,7 +22,7 @@
 
     <target name="clean">
         <delete file="calendar-pkg.js"/>
-        <delete file="default.css"/>
+        <delete file="calendar.css"/>
     </target>
 
     <target name="build" depends="pre,concat,common.build,clean">

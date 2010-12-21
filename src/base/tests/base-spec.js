@@ -1,3 +1,6 @@
+/**
+ * @creator: lifesinger@gmail.com
+ */
 describe('base', function() {
 
     var S = KISSY;
@@ -39,38 +42,24 @@ describe('base', function() {
         a.addAttr('attr1', {
             value: 1,
             setter: function(v) {
-                return v * 2;
-            },
-            getter: function(v) {
-                return v;
+                return parseInt(v);
             }
         });
         expect(a.get('attr1')).toBe(1);
-        a.set('attr1', 2);
-        expect(a.get('attr1')).toBe(4);
+        a.set('attr1', '2');
+        expect(a.get('attr1')).toBe(2);
 
         // hasAttr
         expect(a.hasAttr('attr1')).toBeTruthy();
         expect(a.hasAttr('non-exist')).toBeFalsy();
 
-        // reset
-        // 目前的 reset 的实现有 bug, reset 后，值并不是 value, 而是 setter(value) 的返回值
-        // 考虑到 reset 的使用场景很少很少，从源码中拿掉
-        // 等以后真需要时，再加上（希望是一万年以后）
-        //a.reset('attr1');
-        //expect(a.get('attr1')).toBe(1);
+        //reset
+        a.reset('attr1');
+        expect(a.get('attr1')).toBe(1);
 
         // removeAttr
         a.removeAttr('attr1');
         expect(a.hasAttr('attr1')).toBeFalsy();
-
-        // addAttrs
-        a.addAttrs({
-            'attr2': { value: 2 },
-            'attr3': { value: 3 }
-        });
-        expect(a.get('attr2')).toBe(2);
-        expect(a.get('attr3')).toBe(3);
     });
 
     it('能解析 ATTRS 和 config', function() {
