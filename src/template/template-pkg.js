@@ -73,7 +73,7 @@ KISSY.add('template', function(S, undefined) {
 
                     // return array directly
                     else {
-                        _parser = KS_TEMPL + '.push(' + oper.replace(getRegexp('\\\\([\'"])'), '$1') + ');';
+                        _parser = KS_TEMPL + '.push(' + oper + ');';
                     }
                     return PREFIX + _parser + SUFFIX;
 
@@ -94,14 +94,9 @@ KISSY.add('template', function(S, undefined) {
             'elseif': {
                 start: '}else if(' + KS_TEMPL_STAT_PARAM + '){'
             },
-            // KISSY.each function wrap
             'each': {
                 start: 'KISSY.each(' + KS_TEMPL_STAT_PARAM + ', function(_ks_value, _ks_index){',
                 end: '});'
-            },
-            // comments
-            '!': {
-                start: '/*' + KS_TEMPL_STAT_PARAM + '*/'
             }
         },
 
@@ -183,3 +178,17 @@ KISSY.add('template', function(S, undefined) {
     S.Template = Template;
 
 }, {requires: ['core']});
+/**
+ * @fileoverview KISSY.Template Node.
+ * @author 文河<wenhe@taobao.com>
+ */
+KISSY.add('template-node', function(S, undefined) {
+
+    S.mix(S, {
+        // S.one('#temlate').tmpl({a: 'a'}).appendTo(target);
+        tmpl: function(selector, data) {
+            return S.one(S.DOM.create(S.Template(S.one(selector).html()).render(data)));
+        }
+    });
+
+}, {host: 'template'});

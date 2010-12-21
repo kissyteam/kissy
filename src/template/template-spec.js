@@ -89,6 +89,12 @@ describe('template', function() {
         });
     });
 
+    describe('comments', function() {
+        it('supports comments', function() {
+            expect(T('{{#! here is a comment tag}}').render()).toBe('');
+        });
+    });
+
     describe('config', function() {});
 
 });
