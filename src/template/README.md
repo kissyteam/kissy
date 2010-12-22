@@ -137,7 +137,7 @@
 
 ## 模板性能
 
-文档更新中..
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"chartType":"ColumnChart","chartName":"Chart 2","dataSourceUrl":"//spreadsheets.google.com/tq?key=0ApZFGfLktT7FdDgtcGdzWV9wSzRpX2FRTElzZmVoV2c&range=A1%3AD11&gid=4&transpose=0&headers=1&pub=1","options":{"displayAnnotations":true,"showTip":true,"reverseCategories":false,"titleY":"","dataMode":"markers","maxAlternation":1,"pointSize":"0","colors":["#3366CC","#DC3912","#FF9900","#109618","#990099","#0099C6","#DD4477","#66AA00","#B82E2E","#316395"],"smoothLine":false,"lineWidth":"2","labelPosition":"right","is3D":false,"logScale":false,"hasLabelsColumn":true,"wmode":"opaque","title":"JavaScript Template Engine Performance /IE6","legend":"top","allowCollapse":true,"cht":"bhg","reverseAxis":false,"isStacked":false,"mapType":"hybrid","width":1272,"height":716},"packages":"corechart","refreshInterval":5} </script>
 
 ## 扩展
 
