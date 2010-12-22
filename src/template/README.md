@@ -135,15 +135,9 @@
 
 调试过程可调用`KISSY.Template.log()`方法输出渲染方法,定位脚本模板错误,并可通过引用`jsbeauty`来格式化生成的模板方法.
 
-## 模板性能
+## 模板性能对比
 
-### IE6:
-
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"chartType":"ColumnChart","chartName":"Chart 2","dataSourceUrl":"//spreadsheets.google.com/tq?key=0ApZFGfLktT7FdDgtcGdzWV9wSzRpX2FRTElzZmVoV2c&range=A1%3AD11&gid=4&transpose=0&headers=1&pub=1","options":{"displayAnnotations":true,"showTip":true,"reverseCategories":false,"titleY":"","dataMode":"markers","maxAlternation":1,"pointSize":"0","colors":["#3366CC","#DC3912","#FF9900","#109618","#990099","#0099C6","#DD4477","#66AA00","#B82E2E","#316395"],"smoothLine":false,"lineWidth":"2","labelPosition":"right","is3D":false,"logScale":false,"hasLabelsColumn":true,"wmode":"opaque","title":"JavaScript Template Engine Performance /IE6","legend":"top","allowCollapse":true,"cht":"bhg","reverseAxis":false,"isStacked":false,"mapType":"hybrid","width":1272,"height":716},"packages":"corechart","refreshInterval":5} </script>
-
-### Chrome 9:
-
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"chartType":"ColumnChart","chartName":"Chart 1","dataSourceUrl":"//spreadsheets.google.com/tq?key=0ApZFGfLktT7FdDgtcGdzWV9wSzRpX2FRTElzZmVoV2c&range=A1%3AD11&gid=0&transpose=0&headers=1&pub=1","options":{"displayAnnotations":true,"showTip":true,"reverseCategories":false,"dataMode":"markers","maxAlternation":1,"pointSize":"0","colors":["#3366CC","#DC3912","#FF9900","#109618","#990099","#0099C6","#DD4477","#66AA00","#B82E2E","#316395"],"smoothLine":false,"lineWidth":"2","labelPosition":"right","is3D":false,"logScale":false,"wmode":"opaque","hasLabelsColumn":true,"title":"JavaScript Template Engine Performance /Chrome","legend":"right","allowCollapse":true,"cht":"bhg","reverseAxis":false,"mapType":"hybrid","isStacked":false,"width":1272,"height":716},"packages":"corechart","refreshInterval":5} </script>
+https://spreadsheets.google.com/ccc?key=0ApZFGfLktT7FdDgtcGdzWV9wSzRpX2FRTElzZmVoV2c&hl=en#gid=3
 
 ## 扩展
 
