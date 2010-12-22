@@ -13,9 +13,9 @@
 
   Reference
 ------------
-API 文档：<http://kissyteam.github.com/kissy/docs/flash/index.html>
-最佳实践及参考：<http://kissyteam.github.com/kissy/docs/flash/practice/index.html>
- 更新日志：[CHANGELOG.md](/CHANGELOG.md/)
+ * API 文档：<http://kissyteam.github.com/kissy/docs/flash/index.html>
+ * 最佳实践及参考：<http://kissyteam.github.com/kissy/docs/flash/practice/index.html>
+ * 更新日志：[CHANGELOG.md](CHANGELOG.md)
 
 
 
