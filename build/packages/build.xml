@@ -90,6 +90,7 @@
         <copy todir="${src.dir}/..">
             <fileset dir="${src.dir}" includes="seed.js,seed-min.js,kissy.js,kissy-min.js"/>
         </copy>
+
         <mkdir dir='${src.dir}/../core'/>
         <move todir="${src.dir}/../core">
             <fileset dir="${src.dir}" includes="core*.js"/>

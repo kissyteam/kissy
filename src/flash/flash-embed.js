@@ -124,7 +124,8 @@ KISSY.add('flash-embed', function(S) {
 			if(!isDynamic){
 				// bugfix: 静态双 object 获取问题。双 Object 外层有 id 但内部才有效。  longzang 2010/8/9
 				if (nodeName == OBJECT_TAG) {
-					if (UA.gecko || UA.opera) {
+					// bugfix: 静态双 object 在 chrome 7以下存在问题，如使用 chrome 内胆的 sogou。2010/12/23
+					if (UA.gecko || UA.opera || UA.chrome > 7) {
 		                target = S.query('object', target)[0] || target; 
 		            }
 	            }

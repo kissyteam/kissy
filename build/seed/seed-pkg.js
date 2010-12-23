@@ -540,7 +540,7 @@ build time: ${build.time}
 
 })(KISSY);
 /**
- * @module  lang
+ * @module  web.js
  * @author  lifesinger@gmail.com
  */
 (function(S, undef) {
