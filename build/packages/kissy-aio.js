@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20101217145724';
+                    return m + '-pkg-min.js?t=20101224133745';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20101217145724';
+                    return m + '-min.css?t=20101224133745';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -4151,8 +4151,6 @@ KISSY.add('event-target', function(S, undefined) {
             if(t && S.isFunction(t.handle)) {
                 return t.handle(undefined, eventData);
             }
-
-            return this; // chain
         },
 
         on: function(type, fn, scope) {
