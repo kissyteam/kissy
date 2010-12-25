@@ -221,7 +221,7 @@ KISSY.add('event', function(S, undef) {
         }
 
         // unpack nodelist
-        if (targets.getDOMNodes) {
+        if (targets & targets.getDOMNodes) {
             for (var i = 0; i < targets.length; i++) {
                 Event[methodName](targets.item(i), types, fn, scope);
             }
