@@ -58,7 +58,7 @@ KISSY.add('attribute', function(S, undef) {
          * Checks if the given attribute has been added to the host.
          */
         hasAttr: function(name) {
-            return name && (name in (this.__attrs || {}));
+            return name && this.__attrs.hasOwnProperty(name);
         },
 
         /**

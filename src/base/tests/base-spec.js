@@ -60,6 +60,9 @@ describe('base', function() {
         // removeAttr
         a.removeAttr('attr1');
         expect(a.hasAttr('attr1')).toBeFalsy();
+
+        // 原子性
+        expect(a.hasAttr('toString')).toBeFalsy();
     });
 
     it('能解析 ATTRS 和 config', function() {
