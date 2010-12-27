@@ -1,81 +1,183 @@
 /**
- * @module template
- * @author 文河(yyfrankyy@gmail.com)
+ * @fileoverview KISSY Template Engine.
+ * @author yyfrankyy(yyfrankyy@gmail.com)
+ * @see https://github.com/yyfrankyy/kissy/tree/template/src/template
+ * @version 0.3
  */
-KISSY.add('template', function(S, undefined){
+KISSY.add('template', function(S, undefined) {
 
-    var 
-        // 前端，如果不使用本地存储，基本不需要模板缓冲
+    var defaultConfig = {},
+
+        /**
+         * Template Cache
+         */
         templateCache = {},
 
-        // 正则缓存
+        /**
+         * start/end tag mark
+         */
+        tagStartEnd = {
+            '#': 'start',
+            '/': 'end'
+        },
+
+        /**
+         * Regexp Cache
+         */
         regexpCache = {},
         getRegexp = function(regexp) {
             if (!(regexp in regexpCache)) {
-                regexpCache[regexp] = new RegExp(regexp, "g");
+                regexpCache[regexp] = new RegExp(regexp, 'ig');
             }
             return regexpCache[regexp];
         },
 
-        // 特殊字符转义
-        checkSpacial = function(char){
-            return char.replace(/([{}\[\]()?*.\\\/])/g, "\\$1");
+        // static string
+        KS_TEMPL_STAT_PARAM = 'KS_TEMPL_STAT_PARAM',
+        KS_TEMPL = 'KS_TEMPL',
+        KS_DATA = 'KS_DATA_',
+        KS_EMPTY = '',
+
+        PREFIX = '");',
+        SUFFIX = KS_TEMPL + '.push("',
+
+        PARSER_SYNTAX_ERROR = 'KISSY.Template: Syntax Error. ',
+        PARSER_RENDER_ERROR = 'KISSY.Template: Render Error. ',
+
+        PARSER_PREFIX = 'var ' + KS_TEMPL + '=[],' + KS_TEMPL_STAT_PARAM + '=false;with(',
+        PARSER_MIDDLE = '||{}){try{' + KS_TEMPL + '.push("',
+        PARSER_SUFFIX = '");}catch(e){' + KS_TEMPL + '=["' + PARSER_RENDER_ERROR + '" + e.message]}};return ' + KS_TEMPL + '.join("");',
+
+        /*
+         * build a static parser
+         */
+        buildParser = function(templ) {
+            var _parser, _empty_index;
+            return S.trim(templ).replace(getRegexp('[\r\t\n]'), ' ').replace(getRegexp('(["\'])'), '\\$1')
+                .replace(getRegexp('\{\{([#/]?)(?!\}\})([^}]*)\}\}'), function(all, expr, oper) {
+                    _parser = KS_EMPTY;
+                    // is an expression
+                    if (expr) {
+                        oper = S.trim(oper);
+                        _empty_index = oper.indexOf(' ');
+                        oper = _empty_index === -1 ? [oper, ''] :
+                                [oper.substring(0, oper.indexOf(' ')), oper.substring(oper.indexOf(' '))];
+                        for (var i in Statements) {
+                            if (oper[0] !== i) continue;
+                            oper.shift();
+                            if (expr in tagStartEnd) {
+                                _parser = Statements[i][tagStartEnd[expr]].replace(
+                                    getRegexp(KS_TEMPL_STAT_PARAM),
+                                    oper.join(KS_EMPTY).replace(getRegexp('\\\\([\'"])'), '$1')
+                                );
+                            }
+                        }
+                    }
+
+                    // return array directly
+                    else {
+                        _parser = KS_TEMPL + '.push(' + oper.replace(getRegexp('\\\\([\'"])'), '$1') + ');';
+                    }
+                    return PREFIX + _parser + SUFFIX;
+
+                });
         },
 
-        // 静态化parser
-        buildparser = function(templ, lq, rq) {
-            lq = checkSpacial(lq);
-            rq = checkSpacial(rq);
-            templ = S.trim(templ)
-                    .replace(getRegexp("[\r\t\n]"), " ")
-                    .replace(getRegexp(lq), "\t")
-                    .replace(getRegexp("(^|" + rq + ")[^\t]*'"), "$1\r")
-                    .replace(getRegexp("\t=(.*?)" + rq), "',$1,'")
-                    .replace(getRegexp("\t"), "');")
-                    .replace(getRegexp(rq), "_ks_tmpl.push('")
-                    .replace(getRegexp("\r"), "\\'");
-            return templ;
+        /**
+         * expressions
+         */
+        Statements = {
+            'if': {
+                start: 'if(' + KS_TEMPL_STAT_PARAM + '){',
+                end: '}'
+            },
+            'else': {
+                start: '}else{'
+            },
+            'elseif': {
+                start: '}else if(' + KS_TEMPL_STAT_PARAM + '){'
+            },
+            // KISSY.each function wrap
+            'each': {
+                start: 'KISSY.each(' + KS_TEMPL_STAT_PARAM + ', function(_ks_value, _ks_index){',
+                end: '});'
+            },
+            // comments
+            '!': {
+                start: '/*' + KS_TEMPL_STAT_PARAM + '*/'
+            }
+        },
+
+        /**
+         * @param {String} templ template to be rendered.
+         * @param {Object} config configuration.
+         * @return {KISSY.Template} return this for chain.
+         */
+        Template = function(templ, config) {
+            if (!(templ in templateCache)) {
+                var _ks_data = KS_DATA + S.now(), func,
+                    _parser = [
+                        PARSER_PREFIX,
+                        _ks_data,
+                        PARSER_MIDDLE,
+                        buildParser(templ),
+                        PARSER_SUFFIX
+                    ];
+
+                try {
+                    func = new Function(_ks_data, _parser.join(KS_EMPTY));
+                } catch (e) {
+                    _parser[3] = PREFIX + SUFFIX + PARSER_SYNTAX_ERROR + ',' + e.message + PREFIX + SUFFIX;
+                    func = new Function(_ks_data, _parser.join(KS_EMPTY));
+                }
+
+                templateCache[templ] = {
+                    name: _ks_data,
+                    parser: _parser.join(KS_EMPTY),
+                    render: func
+                };
+            }
+            return templateCache[templ];
         };
 
-    /**
-     * @see http://ejohn.org/blog/javascript-micro-templating/
-     * @param templ 待渲染的模板
-     * @param vari 待渲染的数据变量名，模板内部调用
-     */
-    var Template = function(templ, config){
+        S.mix(Template, {
+            /**
+             * Logging Compiled Template Codes
+             * @param {String} templ template string.
+             */
+            log: function(templ) {
+                if (templ in templateCache) {
+                    if ('js_beautify' in window) {
+                        S.log(js_beautify(templateCache[templ].parser, {
+                            indent_size: 4,
+                            indent_char: ' ',
+                            preserve_newlines: true,
+                            braces_on_own_line: false,
+                            keep_array_indentation: false,
+                            space_after_anon_function: true
+                        }), 'info');
+                    } else {
+                        S.log(templateCache[templ].parser, 'info');
+                    }
+                } else {
+                    Template(templ);
+                    this.log(templ);
+                }
+            },
 
-        if(!(templ in templateCache)) {
-            config = S.merge({
-                lq: "<%",
-                rq: "%>"
-            }, config);
+            /**
+             * add statement for extending template tags
+             * @param {String} statement tag name.
+             * @param {String} o extent tag object.
+             */
+            addStatement: function(statement, o) {
+                if (S.isString(statement) && S.isObject(o)) {
+                    Statements[statement] = o;
+                }
+            }
 
-            var _ks_data = "_ks_data_" + +new Date,
-                _lq = config.lq, _rq = config.rq,
-                _parser = "var _ks_tmpl=[];with(" + _ks_data + "){_ks_tmpl.push('" + buildparser(templ, _lq, _rq) + "');};return _ks_tmpl.join('');";
-
-            templateCache[templ] = {
-                parser: _parser,
-                render: new Function(_ks_data, _parser)
-            };
-        }
-
-        return templateCache[templ];
-    };
+        });
 
     S.Template = Template;
-}, { requires: [ 'core' ] } );
-/**
- * ChangeLog:
- *
- * 2010-9-22
- *  - 根据new Function的思路，实现了一遍Micro Template，增加一些接口
- *
- * 2010-11-02
- *  - 调整部分接口，实现一个较为复杂的用例，P4P
- *
- * 2010-11-10
- *  - 迁移到kissy目录
- *  - 按照原来的接口，规划好部分单元测试用例
- *
- */
+
+}, {requires: ['core']});
