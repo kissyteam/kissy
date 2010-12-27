@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20101227132613';
+                    return m + '-pkg-min.js?t=20101227141702';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20101227132613';
+                    return m + '-min.css?t=20101227141702';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -3771,7 +3771,10 @@ KISSY.add('event', function(S, undef) {
                         event = new S.EventObject(target, event, type);
                     }
                     if (S.isPlainObject(eventData)) {
+                        //protect type
+                        var type = event.type;
                         S.mix(event, eventData);
+                        event.type = type;
                     }
                     if (special['setup']) {
                         special['setup'](event);
@@ -3818,7 +3821,7 @@ KISSY.add('event', function(S, undef) {
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */, scope /* optional */) {
-            if (batch('remove', target, type, fn, scope)) return;            
+            if (batch('remove', target, type, fn, scope)) return;
 
             var events = Event.__getEvents(target),
                 id = getID(target),

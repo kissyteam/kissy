@@ -2337,7 +2337,10 @@ KISSY.add('event', function(S, undef) {
                         event = new S.EventObject(target, event, type);
                     }
                     if (S.isPlainObject(eventData)) {
+                        //protect type
+                        var type = event.type;
                         S.mix(event, eventData);
+                        event.type = type;
                     }
                     if (special['setup']) {
                         special['setup'](event);
@@ -2384,7 +2387,7 @@ KISSY.add('event', function(S, undef) {
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */, scope /* optional */) {
-            if (batch('remove', target, type, fn, scope)) return;            
+            if (batch('remove', target, type, fn, scope)) return;
 
             var events = Event.__getEvents(target),
                 id = getID(target),
