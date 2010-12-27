@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20101227141919';
+                    return m + '-pkg-min.js?t=20101227153645';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20101227141919';
+                    return m + '-min.css?t=20101227153645';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -4456,9 +4456,11 @@ KISSY.add('nodelist', function(S) {
  */
 KISSY.add('node-attach', function(S, undefined) {
 
-    var DOM = S.DOM, Event = S.Event,
+    var DOM = S.DOM,
+        Event = S.Event,
         nodeTypeIs = DOM._nodeTypeIs,
         isKSNode = DOM._isKSNode,
+        EventTarget = S.EventTarget,
         Node = S.Node,
         NodeList = S.NodeList,
         NP = Node.prototype,
