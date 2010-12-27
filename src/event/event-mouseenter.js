@@ -20,7 +20,7 @@ KISSY.add('event-mouseenter', function(S) {
                     event.type = o.name;
                 },
 
-                handle: function(el, event, listeners) {
+                handle: function(el, event) {
                     // 保证 el 为原生 DOMNode
                     if(S.DOM._isKSNode(el)) {
                         el = el[0];
@@ -39,7 +39,7 @@ KISSY.add('event-mouseenter', function(S) {
 
                         if (parent !== el) {
                             // handle event if we actually just moused on to a non sub-element
-                            Event._handle(el, event, listeners);
+                            Event._handle(el, event);
                         }
                     } catch(e) {
                         S.log(e);
