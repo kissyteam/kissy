@@ -11,7 +11,7 @@ KISSY.add('flash', function(S){
 		 */
 		swfs: { },
 		length: 0,
-		version:"1.2"
+		version:"1.3"
 	};
 
 }, { requires: ['core'] });

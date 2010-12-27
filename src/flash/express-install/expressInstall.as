@@ -12,13 +12,14 @@ var old_si = null;
 var loaderClip = this.createEmptyMovieClip("loaderClip", 0);
 var updateSWF = "http://fpdownload.macromedia.com/pub/flashplayer/update/current/swf/autoUpdater.swf?" + Math.random();
 loaderClip.loadMovie(updateSWF);
-
+msg = "Checking...";
 function checkLoaded(){
 	time += delay / 1000;
 	if (time > timeOut) {
 		// updater did not load in time, abort load and force alternative content
 		clearInterval(int_id);
 		loaderClip.unloadMovie();
+		msg = "Updater did not load in time! Maybe you installed the lastest flash player.";
 	}
 	else if (loaderClip.startInstall.toString() == "[type Function]") {
 		// updater has loaded successfully AND has determined that it can do the express install
@@ -49,14 +50,17 @@ function installStatus(statusValue) {
 			// Installation is complete.
 			// In most cases the browser window that this SWF is hosted in will be closed by the installer or otherwise it has to be closed manually by the end user.
 			// The Adobe Flash installer will attempt to reopen the browser window and reload the page containing the SWF. 
+			msg = "The Adobe Flash installer will attempt to reopen the browser window and reload the page containing the SWF...";
 		break;
 		case "Download.Cancelled":
 			// The end user chose "NO" when prompted to install the new player.
 			// By default the SWFObject callback function is called to force alternative content.
+			msg = "You chose 'NO' when prompted to install the new player...";
 		break;
 		case "Download.Failed":
 			// The end user failed to download the installer due to a network failure.
 			// By default the SWFObject callback function is called to force alternative content.
+			msg = "Failed to download the installer due to a network failure,maybe you installed the lastest flash player.";
 		break;
 	}
 }

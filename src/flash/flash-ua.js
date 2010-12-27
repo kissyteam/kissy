@@ -38,7 +38,7 @@ KISSY.add('flash-ua', function(S) {
      * arrify("10.1.r53") => ["10", "1", "53"]
      */
     function arrify(ver) {
-        return ver.match(/(\d)+/g);
+        return ver.match(/(\d)+/g).splice(0,3);
     }
 
     /**
