@@ -500,9 +500,10 @@ describe('event', function() {
                 result.push(FIRST);
                 return false;
             });
-            dog.on('running', function() {
+            function f() {
                 result.push(SECOND);
-            });
+            }
+            dog.on('running', f);
 
             // let dog run
             result = [];
@@ -510,6 +511,15 @@ describe('event', function() {
             waits(0);
             runs(function() {
                 expect(result.join(SEP)).toEqual([NAME, SPEED, FIRST, SECOND].join(SEP));
+            });
+
+            // test detach
+            result = [];
+            dog.detach('running', f);
+            dog.run();
+            waits(0);
+            runs(function() {
+                expect(result.join(SEP)).toEqual([NAME, SPEED, FIRST].join(SEP));
             });
         });
     });
