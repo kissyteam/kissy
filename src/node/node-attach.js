@@ -167,27 +167,27 @@ KISSY.add('node-attach', function(S, undefined) {
     }
 
     S.augment(Node, EventTarget, {
-        fire:function() {
-        },
+        fire:null,
         on:function(type, fn, scope) {
+            var self = this;
+
             function wrap(ev) {
                 var args = S.makeArray(arguments);
                 args.shift();
                 ev.target = new Node(ev.target);
                 args.unshift(ev);
-                return fn.apply(this, args);
+                return fn.apply(scope || self, args);
             }
-            scope = scope || this;
+
             Event.add(this[0], type, wrap, scope);
             tagFn(fn, wrap);
             return this;
         },
         detach:function(type, fn, scope) {
-            scope = scope || this;
             if (S.isFunction(fn)) {
                 var wraps = fn.__wrap || [];
                 for (var i = 0; i < wraps.length; i++) {
-                    Event.remove(this, type, wraps[i], scope);
+                    Event.remove(this[0], type, wraps[i], scope);
                 }
             } else {
                 Event.remove(this[0], type, fn, scope);
@@ -195,7 +195,7 @@ KISSY.add('node-attach', function(S, undefined) {
             return this; // chain
         }
     });
-    S.augment(NodeList, EventTarget);
+    S.augment(NodeList, EventTarget, {fire:null});
     NP._supportSpecialEvent = true;
 
     S.each({

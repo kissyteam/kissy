@@ -16,7 +16,7 @@ describe('event', function() {
 
         // simulate mouse event on any element
         simulate = function(target, type, relatedTarget) {
-            if(typeof target === 'string') {
+            if (typeof target === 'string') {
                 target = S.get(target);
             }
             jasmine.simulate(target, type, { relatedTarget: relatedTarget });
@@ -287,7 +287,7 @@ describe('event', function() {
 
         it('should reomve all the event handler of the specified element', function() {
             var h = S.get('#link-h');
-            
+
             Event.on(h, 'click', function() {
                 result.push(FIRST);
             });
@@ -308,7 +308,7 @@ describe('event', function() {
 
     describe('mouseenter and mouseleave', function() {
         var ie = S.UA.ie, outer = S.get('#outer'), inner = S.get('#inner'),
-                container = outer.parentNode;
+            container = outer.parentNode;
 
         it('should trigger the mouseenter event on the proper element.', function() {
             var outerCount = 0, innerCount = 0, type = ie ? 'mouseenter' : 'mouseover';
@@ -448,9 +448,9 @@ describe('event', function() {
 
         it('should support using custom object as the scope.', function() {
             var bar = S.get('#bar'),
-                    TEST = {
-                        foo: 'only for tesing'
-                    };
+                TEST = {
+                    foo: 'only for tesing'
+                };
 
             Event.on(bar, 'click', function() {
                 expect(this).toBe(TEST);
@@ -503,6 +503,7 @@ describe('event', function() {
             function f() {
                 result.push(SECOND);
             }
+
             dog.on('running', f);
 
             // let dog run
@@ -514,13 +515,39 @@ describe('event', function() {
             });
 
             // test detach
-            result = [];
-            dog.detach('running', f);
-            dog.run();
-            waits(0);
             runs(function() {
-                expect(result.join(SEP)).toEqual([NAME, SPEED, FIRST].join(SEP));
+                result = [];
+                dog.detach('running', f);
+                dog.run();
+                waits(0);
+                runs(function() {
+                    expect(result.join(SEP)).toEqual([NAME, SPEED, FIRST].join(SEP));
+                });
             });
+        });
+    });
+
+
+    it('should detach properly', function() {
+        var ret;
+
+        // Node
+        runs(function() {
+            var node = S.one('#link-detach')
+
+            function t() {
+                ret = 1;
+            }
+
+            node.on('click', t);
+            //debugger
+            S.one('#link-detach').detach('click', t);
+
+            simulate('#link-detach', 'click');
+        });
+        waits(10);
+        runs(function() {
+            expect(ret).toBeUndefined();
         });
     });
 });

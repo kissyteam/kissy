@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20101227125317';
+                    return m + '-pkg-min.js?t=20101227132613';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20101227125317';
+                    return m + '-min.css?t=20101227132613';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -4616,27 +4616,27 @@ KISSY.add('node-attach', function(S, undefined) {
     }
 
     S.augment(Node, EventTarget, {
-        fire:function() {
-        },
+        fire:null,
         on:function(type, fn, scope) {
+            var self = this;
+
             function wrap(ev) {
                 var args = S.makeArray(arguments);
                 args.shift();
                 ev.target = new Node(ev.target);
                 args.unshift(ev);
-                return fn.apply(this, args);
+                return fn.apply(scope || self, args);
             }
-            scope = scope || this;
+
             Event.add(this[0], type, wrap, scope);
             tagFn(fn, wrap);
             return this;
         },
         detach:function(type, fn, scope) {
-            scope = scope || this;
             if (S.isFunction(fn)) {
                 var wraps = fn.__wrap || [];
                 for (var i = 0; i < wraps.length; i++) {
-                    Event.remove(this, type, wraps[i], scope);
+                    Event.remove(this[0], type, wraps[i], scope);
                 }
             } else {
                 Event.remove(this[0], type, fn, scope);
@@ -4644,7 +4644,7 @@ KISSY.add('node-attach', function(S, undefined) {
             return this; // chain
         }
     });
-    S.augment(NodeList, EventTarget);
+    S.augment(NodeList, EventTarget, {fire:null});
     NP._supportSpecialEvent = true;
 
     S.each({
@@ -6298,7 +6298,7 @@ KISSY.add('attribute', function(S, undef) {
          * Checks if the given attribute has been added to the host.
          */
         hasAttr: function(name) {
-            return name && (name in (this.__attrs || {}));
+            return name && this.__attrs.hasOwnProperty(name);
         },
 
         /**
