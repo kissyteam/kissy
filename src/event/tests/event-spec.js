@@ -206,6 +206,7 @@ describe('event', function() {
 
             // Node
             runs(function() {
+
                 S.one('#link-test-this').on('click', function() {
                     ret = this;
                 });

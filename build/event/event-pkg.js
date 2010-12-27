@@ -12,27 +12,27 @@ KISSY.add('event', function(S, undef) {
     var doc = document,
         DOM = S.DOM,
         simpleAdd = doc.addEventListener ?
-            function(el, type, fn, capture) {
-                if (el.addEventListener) {
-                    el.addEventListener(type, fn, !!capture);
-                }
-            } :
-            function(el, type, fn) {
-                if (el.attachEvent) {
-                    el.attachEvent('on' + type, fn);
-                }
-            },
+                    function(el, type, fn, capture) {
+                        if (el.addEventListener) {
+                            el.addEventListener(type, fn, !!capture);
+                        }
+                    } :
+                    function(el, type, fn) {
+                        if (el.attachEvent) {
+                            el.attachEvent('on' + type, fn);
+                        }
+                    },
         simpleRemove = doc.removeEventListener ?
-            function(el, type, fn, capture) {
-                if (el.removeEventListener) {
-                    el.removeEventListener(type, fn, !!capture);
-                }
-            } :
-            function(el, type, fn) {
-                if (el.detachEvent) {
-                    el.detachEvent('on' + type, fn);
-                }
-            },
+                       function(el, type, fn, capture) {
+                           if (el.removeEventListener) {
+                               el.removeEventListener(type, fn, !!capture);
+                           }
+                       } :
+                       function(el, type, fn) {
+                           if (el.detachEvent) {
+                               el.detachEvent('on' + type, fn);
+                           }
+                       },
         EVENT_GUID = 'ksEventTargetId',
         SPACE = ' ',
         guid = S.now(),
@@ -56,6 +56,9 @@ KISSY.add('event', function(S, undef) {
         add: function(target, type, fn, scope /* optional */) {
             if (batch('add', target, type, fn, scope)) return;
 
+
+            // Event.add([dom,dom])
+
             var id = getID(target), isNativeEventTarget,
                 special, events, eventHandle, fixedType, capture;
 
@@ -75,7 +78,8 @@ KISSY.add('event', function(S, undef) {
             events = cache[id].events;
             if (!events[type]) {
                 isNativeEventTarget = !target.isCustomEventTarget;
-                special = ((isNativeEventTarget || target._supportSpecialEvent) && Event.special[type]) || { };
+                special = ((isNativeEventTarget || target._supportSpecialEvent)
+                    && Event.special[type]) || { };
 
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
@@ -87,7 +91,7 @@ KISSY.add('event', function(S, undef) {
                     if (special['setup']) {
                         special['setup'](event);
                     }
-                    return (special.handle || Event._handle)(target, event, events[type].listeners);
+                    return (special.handle || Event._handle)(target, event);
                 };
 
                 events[type] = {
@@ -99,30 +103,49 @@ KISSY.add('event', function(S, undef) {
                 capture = special['capture'];
                 if (isNativeEventTarget) {
                     simpleAdd(target, fixedType, eventHandle, capture);
-                } else if (target._addEvent) { // such as Node
-                    target._addEvent(fixedType, eventHandle, capture);
                 }
             }
-
             // 增加 listener
             events[type].listeners.push({fn: fn, scope: scope || target});
+        },
+
+        __getListeners:function(target, type) {
+            var events = Event.__getEvents(target) || {},
+                eventsType,
+                listeners = [];
+
+            if ((eventsType = events[type])) {
+                listeners = eventsType.listeners;
+            }
+            return listeners;
+        },
+        __getEvents:function(target) {
+            var id = getID(target),c,
+                events;
+            if (id === -1) return; // 不是有效的 target
+            if (!id || !(c = cache[id])) return; // 无 cache
+            if (c.target !== target) return; // target 不匹配
+            events = c.events || { };
+            return events;
         },
 
         /**
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */, scope /* optional */) {
-            if (batch('remove', target, type, fn, scope)) return;
+            if (batch('remove', target, type, fn, scope)) return;            
 
-            var id = getID(target),
-                events, eventsType, listeners,
-                i, j, len, c, t, special;
-
-            if (id === -1) return; // 不是有效的 target
-            if (!id || !(c = cache[id])) return; // 无 cache
-            if (c.target !== target) return; // target 不匹配
+            var events = Event.__getEvents(target),
+                id = getID(target),
+                eventsType,
+                listeners,
+                len,
+                i,
+                j,
+                t,
+                special;
+            if (events === undefined) return;
             scope = scope || target;
-            events = c.events || { };
 
             if ((eventsType = events[type])) {
                 listeners = eventsType.listeners;
@@ -146,9 +169,6 @@ KISSY.add('event', function(S, undef) {
                         special = Event.special[type] || { };
                         simpleRemove(target, special.fix || type, eventsType.handle);
                     }
-                    else if (target._removeEvent) { // such as Node
-                        target._removeEvent(type, eventsType.handle);
-                    }
                     delete events[type];
                 }
             }
@@ -163,13 +183,13 @@ KISSY.add('event', function(S, undef) {
             }
         },
 
-        _handle: function(target, event, listeners) {
+        _handle: function(target, event) {
             /* As some listeners may remove themselves from the
              event, the original array length is dynamic. So,
              let's make a copy of all listeners, so we are
              sure we'll call all of them.*/
+            var listeners = Event.__getListeners(target, event.type);
             listeners = listeners.slice(0);
-
             var ret, i = 0, len = listeners.length, listener;
 
             for (; i < len; ++i) {
@@ -195,6 +215,8 @@ KISSY.add('event', function(S, undef) {
         _getCache: function(id) {
             return cache[id];
         },
+
+        __getID:getID,
 
         _simpleAdd: simpleAdd,
         _simpleRemove: simpleRemove
@@ -222,14 +244,6 @@ KISSY.add('event', function(S, undef) {
             S.each(types.split(SPACE), function(type) {
                 Event[methodName](targets, type, fn, scope);
             });
-            return true;
-        }
-
-        // unpack nodelist
-        if (targets.getDOMNodes) {
-            for (var i = 0; i < targets.length; i++) {
-                Event[methodName](targets.item(i), types, fn, scope);
-            }
             return true;
         }
     }
@@ -292,11 +306,6 @@ KISSY.add('event-object', function(S, undefined) {
         else { // custom
             self.type = type;
             self.target = currentTarget;
-        }
-
-        // 让 custom 的 ev.target 指向包装过后的对象，比如 Node
-        if (currentTarget.isCustomEventTarget) {
-            if (S.DOM._isKSNode(currentTarget)) self.target = new S.Node(self.target);
         }
 
         // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
@@ -466,8 +475,6 @@ KISSY.add('event-target', function(S, undefined) {
             if(t && S.isFunction(t.handle)) {
                 return t.handle(undefined, eventData);
             }
-
-            return this; // chain
         },
 
         on: function(type, fn, scope) {
@@ -513,7 +520,7 @@ KISSY.add('event-mouseenter', function(S) {
                     event.type = o.name;
                 },
 
-                handle: function(el, event, listeners) {
+                handle: function(el, event) {
                     // 保证 el 为原生 DOMNode
                     if(S.DOM._isKSNode(el)) {
                         el = el[0];
@@ -532,7 +539,7 @@ KISSY.add('event-mouseenter', function(S) {
 
                         if (parent !== el) {
                             // handle event if we actually just moused on to a non sub-element
-                            Event._handle(el, event, listeners);
+                            Event._handle(el, event);
                         }
                     } catch(e) {
                         S.log(e);

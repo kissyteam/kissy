@@ -23,8 +23,6 @@ KISSY.add('event-target', function(S, undefined) {
             if(t && S.isFunction(t.handle)) {
                 return t.handle(undefined, eventData);
             }
-
-            return this; // chain
         },
 
         on: function(type, fn, scope) {

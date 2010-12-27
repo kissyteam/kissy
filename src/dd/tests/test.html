@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DD Test Runner</title>
+
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
+<script src="../../../tools/jasmine/event-simulate.js"></script>
+
+<script src="../../../build/seed/seed-pkg.js"></script>
+<script src="../../../build/ua/ua-pkg.js"></script>
+<script src="../../../build/dom/dom-pkg.js"></script>
+
+<script src="../../../build/event/event-pkg.js"></script>
+
+<script src="../../../build/node/node-pkg.js"></script>
+<script src="../../../build/base/base-pkg.js"></script>
+<script src="../ddm.js"></script>
+<script src="../draggable.js"></script>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+</style>
+</head>
+<body>
+
+<div id='drag_before'
+     style="width:100px;
+     height:100px;
+     position:absolute;
+     top:-1000px;
+     left:-1000px;
+     border:1px solid red;">
+    <div id="dragHeader_before" style="width:100px;height:10px;">
+        header
+    </div>
+    content
+</div>
+
+<div id='drag'
+     style="width:100px;
+     height:100px;
+     position:absolute;
+     top:-1000px;
+     left:-1000px;
+     border:1px solid red;">
+    <div id="dragHeader" style="width:100px;height:10px;">
+        header
+    </div>
+    content
+</div>
+
+
+<div id='drag_after'
+     style="width:100px;
+     height:100px;
+     position:absolute;
+     top:-1000px;
+     left:-1000px;
+     border:1px solid red;">
+    <div id="dragHeader_after" style="width:100px;height:10px;">
+        header
+    </div>
+    content
+</div>
+
+<script src="dd-spec.js"></script>
+<script>
+    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    jasmine.getEnv().execute();
+</script>
+
+</body>
+</html>

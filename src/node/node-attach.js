@@ -7,8 +7,10 @@ KISSY.add('node-attach', function(S, undefined) {
     var DOM = S.DOM, Event = S.Event,
         nodeTypeIs = DOM._nodeTypeIs,
         isKSNode = DOM._isKSNode,
-        NP = S.Node.prototype,
-        NLP = S.NodeList.prototype,
+        Node = S.Node,
+        NodeList = S.NodeList,
+        NP = Node.prototype,
+        NLP = NodeList.prototype,
         GET_DOM_NODE = 'getDOMNode',
         GET_DOM_NODES = GET_DOM_NODE + 's',
         HAS_NAME = 1,
@@ -159,16 +161,52 @@ KISSY.add('node-attach', function(S, undefined) {
     }
 
     // event-target
-    S.mix(NP, S.EventTarget);
-    NP._supportSpecialEvent = true;
-    NP._addEvent = function(type, handle, capture) {
-        Event._simpleAdd(this[0], type, handle, capture);
-    };
-    NP._removeEvent = function(type, handle, capture) {
-        Event._simpleRemove(this[0], type, handle, capture);
-    };
-    delete NP.fire;
+    function tagFn(fn, wrap) {
+        fn.__wrap = fn.__wrap || [];
+        fn.__wrap.push(wrap);
+    }
 
-    S.mix(NLP, S.EventTarget);
-    delete NLP.fire;
+    S.augment(Node, EventTarget, {
+        fire:function() {
+        },
+        on:function(type, fn, scope) {
+            function wrap(ev) {
+                var args = S.makeArray(arguments);
+                args.shift();
+                ev.target = new Node(ev.target);
+                args.unshift(ev);
+                return fn.apply(this, args);
+            }
+            scope = scope || this;
+            Event.add(this[0], type, wrap, scope);
+            tagFn(fn, wrap);
+            return this;
+        },
+        detach:function(type, fn, scope) {
+            scope = scope || this;
+            if (S.isFunction(fn)) {
+                var wraps = fn.__wrap || [];
+                for (var i = 0; i < wraps.length; i++) {
+                    Event.remove(this, type, wraps[i], scope);
+                }
+            } else {
+                Event.remove(this[0], type, fn, scope);
+            }
+            return this; // chain
+        }
+    });
+    S.augment(NodeList, EventTarget);
+    NP._supportSpecialEvent = true;
+
+    S.each({
+        on:"add",
+        detach:"remove"
+    }, function(v, k) {
+        NLP[k] = function(type, fn, scope) {
+            for (var i = 0; i < this.length; i++) {
+                this.item(i).on(type, fn, scope);
+            }
+        };
+    });
+
 });
