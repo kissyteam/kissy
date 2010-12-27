@@ -82,9 +82,9 @@ KISSY.add('event', function(S, undef) {
                     }
                     if (S.isPlainObject(eventData)) {
                         //protect type
-                        var type = event.type;
+                        var typeo = event.type;
                         S.mix(event, eventData);
-                        event.type = type;
+                        event.type = typeo;
                     }
                     if (special['setup']) {
                         special['setup'](event);
