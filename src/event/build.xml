@@ -13,6 +13,7 @@
             <path path="event-target.js"/>
             <path path="event-mouseenter.js"/>
             <path path="event-focusin.js"/>
+            <path path="event-hashchange.js"/>
         </concat>
     </target>
 
