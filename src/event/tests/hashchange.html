@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>hashchange history</title>
+</head>
+<body>
+<button onclick="window.location.hash='#t'+(+new Date())">
+    设置hash
+</button>
+
+<script src="../../../build/seed/seed-pkg.js"></script>
+<script src="../../../build/ua/ua-pkg.js"></script>
+<script src="../../../build/dom/dom-pkg.js"></script>
+
+<script src="../event.js"></script>
+<script src="../event-object.js"></script>
+<script src="../event-target.js"></script>
+<script src="../event-focusin.js"></script>
+<script src="../event-mouseenter.js"></script>
+<script src="../event-hashchange.js"></script>
+<script src="../../../build/node/node-pkg.js"></script>
+<script>
+    function t() {
+        alert("current hash :" + window.location.hash);
+    }
+    KISSY.Event.on(window, "hashchange", t);
+    /*
+    setTimeout(function() {
+        KISSY.Event.remove(window, "hashchange", t);
+    }, 5000);
+
+     setTimeout(function() {
+        KISSY.Event.on(window, "hashchange", t);
+    }, 10000);
+    */
+</script>
+</body>
+</html>

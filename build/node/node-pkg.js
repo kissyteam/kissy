@@ -178,9 +178,11 @@ KISSY.add('nodelist', function(S) {
  */
 KISSY.add('node-attach', function(S, undefined) {
 
-    var DOM = S.DOM, Event = S.Event,
+    var DOM = S.DOM,
+        Event = S.Event,
         nodeTypeIs = DOM._nodeTypeIs,
         isKSNode = DOM._isKSNode,
+        EventTarget = S.EventTarget,
         Node = S.Node,
         NodeList = S.NodeList,
         NP = Node.prototype,

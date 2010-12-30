@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20101227132613';
+                    return m + '-pkg-min.js?t=20101230105218';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20101227132613';
+                    return m + '-min.css?t=20101230105218';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -3771,7 +3771,10 @@ KISSY.add('event', function(S, undef) {
                         event = new S.EventObject(target, event, type);
                     }
                     if (S.isPlainObject(eventData)) {
+                        //protect type
+                        var typeo = event.type;
                         S.mix(event, eventData);
+                        event.type = typeo;
                     }
                     if (special['setup']) {
                         special['setup'](event);
@@ -3786,9 +3789,13 @@ KISSY.add('event', function(S, undef) {
 
                 fixedType = special.fix || type;
                 capture = special['capture'];
-                if (isNativeEventTarget) {
+                if (special['init']) {
+                    special['init'].apply(null, S.makeArray(arguments));
+                }
+                if (isNativeEventTarget && special.fix !== false) {
                     simpleAdd(target, fixedType, eventHandle, capture);
                 }
+
             }
             // 增加 listener
             events[type].listeners.push({fn: fn, scope: scope || target});
@@ -3818,7 +3825,7 @@ KISSY.add('event', function(S, undef) {
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */, scope /* optional */) {
-            if (batch('remove', target, type, fn, scope)) return;            
+            if (batch('remove', target, type, fn, scope)) return;
 
             var events = Event.__getEvents(target),
                 id = getID(target),
@@ -3828,7 +3835,11 @@ KISSY.add('event', function(S, undef) {
                 i,
                 j,
                 t,
-                special;
+                isNativeEventTarget = !target.isCustomEventTarget,
+                special = ((isNativeEventTarget || target._supportSpecialEvent)
+                    && Event.special[type]) || { };
+
+
             if (events === undefined) return;
             scope = scope || target;
 
@@ -3852,12 +3863,15 @@ KISSY.add('event', function(S, undef) {
                 if (fn === undef || len === 0) {
                     if (!target.isCustomEventTarget) {
                         special = Event.special[type] || { };
-                        simpleRemove(target, special.fix || type, eventsType.handle);
+                        if (special.fix !== false)
+                            simpleRemove(target, special.fix || type, eventsType.handle);
                     }
                     delete events[type];
                 }
             }
-
+            if (special.destroy) {
+                special.destroy.apply(null, S.makeArray(arguments));
+            }
             // remove(el) or type 已移除光
             if (type === undef || S.isEmptyObject(events)) {
                 for (type in events) {
@@ -3866,6 +3880,8 @@ KISSY.add('event', function(S, undef) {
                 delete cache[id];
                 removeID(target);
             }
+
+
         },
 
         _handle: function(target, event) {
@@ -4453,9 +4469,11 @@ KISSY.add('nodelist', function(S) {
  */
 KISSY.add('node-attach', function(S, undefined) {
 
-    var DOM = S.DOM, Event = S.Event,
+    var DOM = S.DOM,
+        Event = S.Event,
         nodeTypeIs = DOM._nodeTypeIs,
         isKSNode = DOM._isKSNode,
+        EventTarget = S.EventTarget,
         Node = S.Node,
         NodeList = S.NodeList,
         NP = Node.prototype,

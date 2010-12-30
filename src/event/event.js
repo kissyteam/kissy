@@ -81,7 +81,10 @@ KISSY.add('event', function(S, undef) {
                         event = new S.EventObject(target, event, type);
                     }
                     if (S.isPlainObject(eventData)) {
+                        //protect type
+                        var typeo = event.type;
                         S.mix(event, eventData);
+                        event.type = typeo;
                     }
                     if (special['setup']) {
                         special['setup'](event);
@@ -96,9 +99,13 @@ KISSY.add('event', function(S, undef) {
 
                 fixedType = special.fix || type;
                 capture = special['capture'];
-                if (isNativeEventTarget) {
+                if (special['init']) {
+                    special['init'].apply(null, S.makeArray(arguments));
+                }
+                if (isNativeEventTarget && special.fix !== false) {
                     simpleAdd(target, fixedType, eventHandle, capture);
                 }
+
             }
             // 增加 listener
             events[type].listeners.push({fn: fn, scope: scope || target});
@@ -128,7 +135,7 @@ KISSY.add('event', function(S, undef) {
          * Detach an event or set of events from an element.
          */
         remove: function(target, type /* optional */, fn /* optional */, scope /* optional */) {
-            if (batch('remove', target, type, fn, scope)) return;            
+            if (batch('remove', target, type, fn, scope)) return;
 
             var events = Event.__getEvents(target),
                 id = getID(target),
@@ -138,7 +145,11 @@ KISSY.add('event', function(S, undef) {
                 i,
                 j,
                 t,
-                special;
+                isNativeEventTarget = !target.isCustomEventTarget,
+                special = ((isNativeEventTarget || target._supportSpecialEvent)
+                    && Event.special[type]) || { };
+
+
             if (events === undefined) return;
             scope = scope || target;
 
@@ -162,12 +173,15 @@ KISSY.add('event', function(S, undef) {
                 if (fn === undef || len === 0) {
                     if (!target.isCustomEventTarget) {
                         special = Event.special[type] || { };
-                        simpleRemove(target, special.fix || type, eventsType.handle);
+                        if (special.fix !== false)
+                            simpleRemove(target, special.fix || type, eventsType.handle);
                     }
                     delete events[type];
                 }
             }
-
+            if (special.destroy) {
+                special.destroy.apply(null, S.makeArray(arguments));
+            }
             // remove(el) or type 已移除光
             if (type === undef || S.isEmptyObject(events)) {
                 for (type in events) {
@@ -176,6 +190,8 @@ KISSY.add('event', function(S, undef) {
                 delete cache[id];
                 removeID(target);
             }
+
+
         },
 
         _handle: function(target, event) {
