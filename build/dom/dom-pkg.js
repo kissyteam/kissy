@@ -162,7 +162,8 @@ KISSY.add('selector', function(S, undefined) {
         // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
         // 注3：通过 namedItem 来判断不可靠
         // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
-        return o && !o.nodeType && o.item && (o != window);
+        // 注5: 考虑 iframe.contentWindow
+        return o && !o.nodeType && o.item && !o.setTimeout;
     }
 
     // 调整 context 为合理值

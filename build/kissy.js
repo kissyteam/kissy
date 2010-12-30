@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20101230105218';
+                    return m + '-pkg-min.js?t=20101230183650';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20101230105218';
+                    return m + '-min.css?t=20101230183650';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -1794,7 +1794,8 @@ KISSY.add('selector', function(S, undefined) {
         // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
         // 注3：通过 namedItem 来判断不可靠
         // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
-        return o && !o.nodeType && o.item && (o != window);
+        // 注5: 考虑 iframe.contentWindow
+        return o && !o.nodeType && o.item && !o.setTimeout;
     }
 
     // 调整 context 为合理值

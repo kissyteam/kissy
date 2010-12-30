@@ -130,7 +130,7 @@ KISSY.add('event-hashchange', function(S) {
                     stopIE();
                 }
             }
-        }
+        };
     }
 });
 
