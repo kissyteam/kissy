@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf8" />
+        <title>Template Demo</title>
+        <script src="../../build/kissy.js"></script>
+        <script src="template.js"></script>
+        <script src="beautify.js"></script>
+        <script src="template-node.js"></script>
+        <script src="template-dpl.js"></script>
+    </head>
+
+    <body>
+        <script type="text/x-kissy-template" id="dpl-template">
+            {{#dpl-tabs}}
+                {{#dpl-tabs-hd}}
+                    {{#dpl-tabs-trigger}}Tabs1{{/dpl-tabs-trigger}}
+                    {{#dpl-tabs-trigger current}}Tabs2{{/dpl-tabs-trigger}}
+                    {{#dpl-tabs-trigger}}Tabs3{{/dpl-tabs-trigger}}
+                {{/dpl-tabs-hd}}
+                {{#dpl-tabs-bd}}
+                    {{#dpl-tabs-panel}}Panel1{{/dpl-tabs-panel}}
+                    {{#dpl-tabs-panel}}Panel2{{/dpl-tabs-panel}}
+                    {{#dpl-tabs-panel}}Panel3{{/dpl-tabs-panel}}
+                {{/dpl-tabs-bd}}
+            {{/dpl-tabs}}
+        </script>
+        <div id="console" style="margin: 20px; padding: 10px; border: 1px solid #ccc"></div>
+        <script>
+            KISSY.tmpl('#dpl-template', {});
+        </script>
+    </body>
+</html>
+

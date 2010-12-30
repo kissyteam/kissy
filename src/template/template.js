@@ -2,7 +2,6 @@
  * @fileoverview KISSY Template Engine.
  * @author yyfrankyy(yyfrankyy@gmail.com)
  * @see https://github.com/yyfrankyy/kissy/tree/template/src/template
- * @version 0.3
  */
 KISSY.add('template', function(S, undefined) {
 
