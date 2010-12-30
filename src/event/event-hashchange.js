@@ -20,17 +20,27 @@ KISSY.add('event-hashchange', function(S) {
              * 触发统一在 start(load)
              * iframe 内容和 url 同步
              */
-            var iframe = S.DOM.create("<iframe class='ks-hashchange-history-iframe'" +
-                "style='position:absolute;" +
-                "left:-9999px;top:-9999px;'>");
-            S.DOM.prepend(iframe, document.body);
+            //http://www.paciellogroup.com/blog/?p=604
+            var iframe = S.DOM.create('<iframe ' +
+                'src="javascript:0" ' +
+                'style="display:none" ' +
+                'height="0" ' +
+                'width="0" ' +
+                'tabindex="-1" ' +
+                'title="empty"/>');
+            // Append the iframe to the documentElement rather than the body.
+            // Keeping it outside the body prevents scrolling on the initial
+            // page load
+            S.DOM.prepend(iframe, document.documentElement);
             var h = 0,
                 location = window.location;
             //初始化
             function init() {
                 //debugger
-
                 Event.remove(iframe, "load");
+                // Update the iframe with the initial location hash, if any. This
+                // will create an initial history entry that the user can return to
+                // after the state has changed.
                 addHistory(location.hash || "#");
                 Event.add(iframe, "load", start);
                 check();
