@@ -124,7 +124,6 @@ KISSY.add('template', function(S, undefined) {
                     ];
 
                 try {
-                    console.log(_parser.join(KS_EMPTY));
                     func = new Function(_ks_data, _parser.join(KS_EMPTY));
                 } catch (e) {
                     _parser[3] = PREFIX + SUFFIX + PARSER_SYNTAX_ERROR + ',' + e.message + PREFIX + SUFFIX;
