@@ -5,7 +5,7 @@
 KISSY.add('event-hashchange', function(S) {
 
 	var Event = S.Event, doc = document,
-		HASH_CHANGE = 'hashchange',
+		HASH_CHANGE = 'hashchange2',
 		docMode = doc.documentMode,
 		ie = docMode || S.UA['ie'];
 
@@ -49,85 +49,71 @@ KISSY.add('event-hashchange', function(S) {
 			timer = null;
 		};
 
-		// ie6, 7, 用匿名函数来覆盖一些function 
+		// ie
 		8 > S.UA.ie && (function() {
 			var iframe;
 
-			/**
-             * 前进后退 : start -> notifyHashChange
-             * 直接输入 : poll -> hashChange -> start
-             * iframe 内容和 url 同步
-             */
-			
 			setup = function() {
 				if ( !iframe ) {
-					//http://www.paciellogroup.com/blog/?p=604
 					iframe = S.DOM.create('<iframe ' +
-						//'src="#" ' +
-						'style="display: none" ' +
-						'height="0" ' +
-						'width="0" ' +
-						'tabindex="-1" ' +
+						'src="javascript:0" ' +
+						'style="height: 100px; width: 90%" ' +
+						/*'height="0" ' +
+						 'width="0" ' +
+						 'tabindex="-1" ' +*/
 						'title="empty"/>');
-					iframe.src = lastHash;
-					S.DOM.prepend(iframe, document.documentElement);
+
+					S.DOM.append(iframe, doc.body);
 				
-					// init
 					Event.add(iframe, "load", function() {
 						Event.remove(iframe, "load");
-
-						hashChange( getHash() );
+						setHash( getHash() );
 						Event.add(iframe, "load", start);
 						poll();
 					});
 
-					// iframe后退前进事件
 					function start() {
-						//console.log('iframe start load..');
-                		var c = S.trim(iframe.contentWindow.document.body.innerHTML);
-                		var ch = location.hash || "#";
-                		
-						//后退时不等
+						var c = S.trim(iframe.contentWindow.document.body.innerHTML);
+						var ch = location.hash || "#";
+                		//后退时不等
                 		//改变location则相等
-						if (c != ch) {
-							location.hash = c;
-							// 使lasthash为iframe历史， 不然重新写iframe， 会导致最新状态（丢失前进状态）
-							lastHash = c;
+                		if (c != ch) {
+                    		//设为相等，但是这是不希望触发hashchange
+                    		location.hash = c;
 						}
-						notifyHashChange();
-					}
+
+						S.DOM.get('#log').value = c;
+						
+						//notifyHashChange();
+					} 
 				}
 			};
 
-			hashChange = function( archor ) {
-                //debugger
-                var html = '<html><body>' + archor + '</body></html>';
-                var doc = iframe.contentWindow.document;
-				try {
-                    doc.open();
-                    doc.write( html );
-                    doc.close();
-                    return true;
-                } catch (e) {
-                    return false;
-                }
-            };
-			
+			setHash = function(hash) {
+				var ifr = iframe.contentWindow.document;
+				//alert(ifr.title);
+				console.log(hash);
+					try {
+						ifr.open();
+						ifr.write('<html><body>' + hash + '</body></html>');
+						ifr.close();
+					} catch(e){
+						
+					}
+
+					//ifr.location.hash = hash;
+					//alert(ifr.location.href);
+			};
 		})();
 
 		function poll() {
-			//console.log('poll start..' + +new Date());
 			var hash = getHash();
-
 			if ( hash !== lastHash ) {
-				hashChange( hash );
 				lastHash = hash;
+				setHash( hash );
+				notifyHashChange();
 			}
 			timer = setTimeout(poll, 50);	
-		}
-
-		function hashChange( val ) {
-			notifyHashChange();
 		}
 
         function notifyHashChange() {
@@ -142,12 +128,16 @@ KISSY.add('event-hashchange', function(S) {
 			url = url || location.href;
 			return '#' + url.replace( /^[^#]*#?(.*)$/, '$1' );
 		}
+
+		function setHash(val) {
+			return val;
+		}
+
 	}
 });
 
 /**
  * v1 : 2010-12-29
- * v1.1: 支持非IE，但不支持onhashchange事件的浏览器(例如低版本的firefox、safari)
  * refer : http://yiminghe.javaeye.com/blog/377867
- *         https://github.com/cowboy/jquery-hashchange
+ *         ttps://github.com/cowboy/jquery-hashchange
  */
