@@ -6,6 +6,5 @@ KISSY.add("event", function(S, Event) {
         "event/target",
         "event/object",
         "event/focusin",
-        "event/hashchange",
         "event/mouseenter"]
 });

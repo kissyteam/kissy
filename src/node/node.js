@@ -63,7 +63,7 @@ KISSY.add('node/node', function(S, DOM, undefined) {
 
     // query api
     Node.one = function(selector, context) {
-        var elem = S.get(selector, context);
+        var elem = DOM.get(selector, context);
         return elem ? new Node(elem, undefined, undefined) : null;
     };
 

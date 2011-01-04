@@ -50,7 +50,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
                             return function() {
                                 var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
                                     ret = fn.apply(DOM, [elems].concat(S.makeArray(arguments)));
-                                return ret ? new S[S.isArray(ret) ? 'NodeList' : 'Node'](ret) : null;
+                                return ret ? new (S.isArray(ret) ? NodeList : Node)(ret) : null;
                             };
 
                         default:
@@ -87,7 +87,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
     attach(['data', 'removeData'], HAS_NAME);
 
     // dom-class
-    attach(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'],undefined);
+    attach(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'], undefined);
 
     // dom-attr
     attach(['attr', 'removeAttr'], HAS_NAME);
@@ -99,15 +99,15 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
 
     // dom-offset
     attach(['offset'], ONLY_VAL);
-    attach(['scrollIntoView'],undefined);
+    attach(['scrollIntoView'], undefined);
 
     // dom-traversal
     attach(['parent', 'next', 'prev', 'siblings', 'children'], ALWAYS_NODE);
-    attach(['contains'],undefined);
+    attach(['contains'], undefined);
 
     // dom-create
     attach(['html'], ONLY_VAL);
-    attach(['remove'],undefined);
+    attach(['remove'], undefined);
 
     // dom-insertion
     S.each(['insertBefore', 'insertAfter'], function(methodName) {

@@ -8,9 +8,8 @@
 
     <target name="concat">
         <concat destfile="node-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="node.js"/>
-            <path path="nodelist.js"/>
-            <path path="node-attach.js"/>
+            <fileset dir="${src.dir}" includes="*.js" />
+            <path location="../node.js" />
         </concat>
     </target>
 
