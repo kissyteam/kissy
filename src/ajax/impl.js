@@ -2,12 +2,11 @@
  * @module  ajax
  * @author  拔赤<lijing00333@163.com>
  */
-KISSY.add('ajax', function(S, EventTarget, S_JSON, undef) {
+KISSY.add('ajax/impl', function(S, EventTarget, S_JSON, undef) {
 
     var win = window,
         noop = function() {
         },
-
         GET = 'GET', POST = 'POST',
         CONTENT_TYPE = 'Content-Type',
         JSON = 'json', JSONP = JSON + 'p', SCRIPT = 'script',

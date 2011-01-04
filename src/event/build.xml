@@ -8,7 +8,7 @@
 
     <target name="concat">
         <concat destfile="event-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <fileset dir="${src.dir}" includes="**/*.js"/>
+            <fileset dir="${src.dir}" includes="*.js" excludes="hashchange.js"/>
             <path location="../event.js"/>
         </concat>
     </target>
