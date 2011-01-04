@@ -8,6 +8,13 @@
 <button onclick="window.location.hash='#t'+(+new Date())">
     设置hash
 </button>
+<style>#test {
+    height: 30px;
+    margin: 20px auto;
+    border: 1px solid #aaa;
+    line-height: 2;
+}</style>
+<div id="test"></div>
 
 <script src="../../../build/seed/seed-pkg.js"></script>
 <script src="../../../build/ua/ua-pkg.js"></script>
@@ -21,19 +28,13 @@
 <script src="../event-hashchange.js"></script>
 <script src="../../../build/node/node-pkg.js"></script>
 <script>
-    function t() {
-        alert("current hash :" + window.location.hash);
-    }
-    KISSY.Event.on(window, "hashchange", t);
-    /*
-    setTimeout(function() {
-        KISSY.Event.remove(window, "hashchange", t);
-    }, 5000);
-
-     setTimeout(function() {
-        KISSY.Event.on(window, "hashchange", t);
-    }, 10000);
-    */
+    KISSY.Event.on(window, "hashchange", function(ev) {
+        KISSY.DOM.get('#test').innerHTML = location.hash ;
+    });
+    // debuger
+    /*KISSY.Event.on(window, "hashchange2", function(){
+     KISSY.DOM.get('#test').innerHTML = location.hash;
+     });*/
 </script>
 </body>
 </html>
