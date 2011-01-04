@@ -5,30 +5,30 @@
 (function(host, S, undef) {
 
     var meta = {
-            /**
-             * Copies all the properties of s to r.
-             * @return {Object} the augmented object
-             */
-            mix: function(r, s, ov, wl) {
-                if (!s || !r) return r;
-                if (ov === undef) ov = true;
-                var i, p, len;
+        /**
+         * Copies all the properties of s to r.
+         * @return {Object} the augmented object
+         */
+        mix: function(r, s, ov, wl) {
+            if (!s || !r) return r;
+            if (ov === undef) ov = true;
+            var i, p, len;
 
-                if (wl && (len = wl.length)) {
-                    for (i = 0; i < len; i++) {
-                        p = wl[i];
-                        if (p in s) {
-                            _mix(p, r, s, ov);
-                        }
-                    }
-                } else {
-                    for (p in s) {
+            if (wl && (len = wl.length)) {
+                for (i = 0; i < len; i++) {
+                    p = wl[i];
+                    if (p in s) {
                         _mix(p, r, s, ov);
                     }
                 }
-                return r;
+            } else {
+                for (p in s) {
+                    _mix(p, r, s, ov);
+                }
             }
-        },
+            return r;
+        }
+    },
 
         _mix = function(p, r, s, ov) {
             if (ov || !(p in r)) {
@@ -262,7 +262,6 @@
     });
 
     S.__init();
-
     return S;
 
 })(this, 'KISSY');

@@ -1,5 +1,5 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -10,30 +10,30 @@ build time: ${build.time}
 (function(host, S, undef) {
 
     var meta = {
-            /**
-             * Copies all the properties of s to r.
-             * @return {Object} the augmented object
-             */
-            mix: function(r, s, ov, wl) {
-                if (!s || !r) return r;
-                if (ov === undef) ov = true;
-                var i, p, len;
+        /**
+         * Copies all the properties of s to r.
+         * @return {Object} the augmented object
+         */
+        mix: function(r, s, ov, wl) {
+            if (!s || !r) return r;
+            if (ov === undef) ov = true;
+            var i, p, len;
 
-                if (wl && (len = wl.length)) {
-                    for (i = 0; i < len; i++) {
-                        p = wl[i];
-                        if (p in s) {
-                            _mix(p, r, s, ov);
-                        }
-                    }
-                } else {
-                    for (p in s) {
+            if (wl && (len = wl.length)) {
+                for (i = 0; i < len; i++) {
+                    p = wl[i];
+                    if (p in s) {
                         _mix(p, r, s, ov);
                     }
                 }
-                return r;
+            } else {
+                for (p in s) {
+                    _mix(p, r, s, ov);
+                }
             }
-        },
+            return r;
+        }
+    },
 
         _mix = function(p, r, s, ov) {
             if (ov || !(p in r)) {
@@ -267,7 +267,6 @@ build time: ${build.time}
     });
 
     S.__init();
-
     return S;
 
 })(this, 'KISSY');
@@ -919,11 +918,13 @@ build time: ${build.time}
     var win = S.__HOST,
         doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-
-        EMPTY = '', CSSFULLPATH = 'cssfullpath',
-        LOADING = 1, LOADED = 2, ERROR = 3, ATTACHED = 4,
+        EMPTY = '',
+        CSSFULLPATH = 'cssfullpath',
+        LOADING = 1,
+        LOADED = 2,
+        ERROR = 3,
+        ATTACHED = 4,
         mix = S.mix,
-
         scriptOnload = doc.createElement('script').readyState ?
                        function(node, callback) {
                            var oldCallback = node.onreadystatechange;
@@ -939,7 +940,6 @@ build time: ${build.time}
                        function(node, callback) {
                            node.addEventListener('load', callback, false);
                        },
-
         RE_CSS = /\.css(?:\?|$)/i,
         loader;
 
@@ -948,29 +948,33 @@ build time: ${build.time}
         /**
          * Registers a module.
          * @param name {String} module name
-         * @param fn {Function} entry point into the module that is used to bind module to KISSY
+         * @param def {Function|Object} entry point into the module that is used to bind module to KISSY
          * @param config {Object}
          * <code>
-         * KISSY.add('module-name', function(S){ }, requires: ['mod1']);
+         * KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
          * </code>
          * <code>
          * KISSY.add({
          *     'mod-name': {
          *         fullpath: 'url',
-         *         requires: ['mod1','mod2'],
-         *         attach: false // 默认为 true
+         *         requires: ['mod1','mod2']
          *     }
          * });
          * </code>
          * @return {KISSY}
          */
-        add: function(name, fn, config) {
-            var self = this, mods = self.Env.mods, mod, o;
+        add: function(name, def, config) {
+            var self = this,
+                mods = self.Env.mods,
+                mod,
+                o;
 
             // S.add(name, config) => S.add( { name: config } )
-            if (S['isString'](name) && !config && S.isPlainObject(fn)) {
+            if (S['isString'](name)
+                && !config
+                && S.isPlainObject(def)) {
                 o = {};
-                o[name] = fn;
+                o[name] = def;
                 name = o;
             }
 
@@ -987,22 +991,17 @@ build time: ${build.time}
                 config = config || {};
 
                 mod = mods[name] || {};
-                name = config.host || mod.host || name;
-                mod = mods[name] || {};
 
-                // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
-                //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
+                // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
+                // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
                 mix(mod, { name: name, status: LOADED });
 
-                if (!mod.fns) mod.fns = [];
-                fn && mod.fns.push(fn);
+                if (mod.fn) {
+                    S.error(name + " is defined more than once");
 
-                mix((mods[name] = mod), config);
-
-                // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
-                if ((mod['attach'] !== false) && self.__isAttached(mod.requires)) {
-                    self.__attachMod(mod);
                 }
+                mod.def = def;
+                mix((mods[name] = mod), config);
             }
 
             return self;
@@ -1014,9 +1013,6 @@ build time: ${build.time}
          * S.use('mod-name', callback, config);
          * S.use('mod1,mod2', callback, config);
          * </code>
-         * config = {         *
-         *   global: KISSY // 默认为 KISSY. 当在 this.Env.mods 上找不到某个 mod 的属性时，会到 global.Env.mods 上去找
-         * }
          */
         use: function(modNames, callback, config) {
             modNames = modNames.replace(/\s+/g, EMPTY).split(',');
@@ -1024,15 +1020,15 @@ build time: ${build.time}
 
             var self = this,
                 modName,
-                global = (config || 0).global,
-                i, len = modNames.length,fired;
+                i,
+                len = modNames.length,
+                fired;
 
-            // 将 global 上的 mods, 移动到 instance 上
-            if (global) self.__mixMods(global);
 
             // 已经全部 attached, 直接执行回调即可
             if (self.__isAttached(modNames)) {
-                callback && callback(self);
+                var mods = self.__getModules(modNames);
+                callback && callback.apply(self, mods);
                 return;
             }
             // 有尚未 attached 的模块
@@ -1041,15 +1037,35 @@ build time: ${build.time}
                 self.__attachModByName(modName, function() {
                     if (!fired && self.__isAttached(modNames)) {
                         fired = true;
-                        callback && callback(self);
+                        var mods = self.__getModules(modNames);
+                        callback && callback.apply(self, mods);
                     }
-                }, global);
+                });
             }
-
             return self;
         },
+
+        __getModules:function(modNames) {
+            var mods = [this];
+            modNames = modNames || [];
+            for (var i = 0; i < modNames.length; i++) {
+                mods.push(this.require(modNames[i]));
+            }
+            return mods;
+        },
+        /**
+         * get module's value defined by define function
+         * @param {string} moduleName
+         */
+        require:function(moduleName) {
+            var self = this,
+                mods = self.Env.mods,
+                mod = mods[moduleName];
+
+            return mod && mod.value;
+        },
         //加载指定模块名模块，如果不存在定义默认定义为内部模块
-        __attachModByName: function(modName, callback, global) {
+        __attachModByName: function(modName, callback) {
 
             var self = this,
                 mods = self.Env.mods,
@@ -1062,11 +1078,11 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20101230183650';
+                    return m + '-min.js?t=@TIMESTAMP@';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
-                    path:modName + '/' + js,
+                    path:js,
                     charset: 'utf-8'
                 };
                 //添加模块定义
@@ -1075,7 +1091,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20101230183650';
+                    return m + '-min.css?t=@TIMESTAMP@';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -1084,18 +1100,19 @@ build time: ${build.time}
             mod.name = modName;
 
             if (mod && mod.status === ATTACHED) return;
-            self.__attach(mod, callback, global);
+            self.__attach(mod, callback);
         },
 
         /**
          * Attach a module and all required modules.
          */
-        __attach: function(mod, callback, global) {
+        __attach: function(mod, callback) {
             var self = this,
                 mods = self.Env.mods,
                 //复制一份当前的依赖项出来，防止add后修改！
                 requires = (mod['requires'] || []).concat(),
-                i = 0, len = requires.length;
+                i = 0,
+                len = requires.length;
 
             // attach all required modules
             for (; i < len; i++) {
@@ -1103,7 +1120,7 @@ build time: ${build.time}
                 if (r && r.status === ATTACHED) {
                     //no need
                 } else {
-                    self.__attachModByName(requires[i], fn, global);
+                    self.__attachModByName(requires[i], fn);
                 }
             }
 
@@ -1123,7 +1140,7 @@ build time: ${build.time}
                         //no need
                     } else {
                         //新增的依赖项
-                        self.__attachModByName(r, fn, global);
+                        self.__attachModByName(r, fn);
                     }
                     if (!inA) {
                         optimize.push(r);
@@ -1134,7 +1151,7 @@ build time: ${build.time}
                     S.log(optimize + " : better to be used together", "warn");
                 }
                 fn();
-            }, global);
+            });
 
             var attached = false;
 
@@ -1152,43 +1169,24 @@ build time: ${build.time}
             }
         },
 
-        __mixMods: function(global) {
-            var mods = this.Env.mods, gMods = global.Env.mods, name;
-            for (name in gMods) {
-                this.__mixMod(mods, gMods, name, global);
-            }
-        },
-
-        __mixMod: function(mods, gMods, name, global) {
-            var mod = mods[name] || {}, status = mod.status;
-
-            S.mix(mod, S.clone(gMods[name]));
-
-            // status 属于实例，当有值时，不能被覆盖。只有没有初始值时，才从 global 上继承
-            if (status) mod.status = status;
-
-            // 来自 global 的 mod, path 应该基于 global
-            if (global) this.__buildPath(mod, global.Config.base);
-
-            mods[name] = mod;
-        },
-
         __attachMod: function(mod) {
-            var self = this;
+            var self = this,
+                def = mod.def;
 
-            if (mod.fns) {
-                S.each(mod.fns, function(fn) {
-                    fn && fn(self);
-                });
-                mod.fns = undef; // 保证 attach 过的方法只执行一次
-                //S.log(mod.name + '.status = attached');
+            if (def) {
+                if (S.isFunction(def)) {
+                    mod.value = def.apply(self, self.__getModules(mod['requires']));
+                } else {
+                    mod.value = def;
+                }
             }
 
             mod.status = ATTACHED;
         },
 
         __isAttached: function(modNames) {
-            var mods = this.Env.mods, mod,
+            var mods = this.Env.mods,
+                mod,
                 i = (modNames = S.makeArray(modNames)).length - 1;
 
             for (; i >= 0; i--) {
@@ -1203,9 +1201,11 @@ build time: ${build.time}
         /**
          * Load a single module.
          */
-        __load: function(mod, callback, global) {
-            var self = this, url = mod['fullpath'],
-                loadQueque = S.Env._loadQueue, // 这个是全局的，防止多实例对同一模块的重复下载
+        __load: function(mod, callback) {
+            var self = this,
+                url = mod['fullpath'],
+                //这个是全局的，防止多实例对同一模块的重复下载
+                loadQueque = S.Env._loadQueue,
                 node = loadQueque[url], ret;
 
             mod.status = mod.status || 0;
@@ -1226,7 +1226,7 @@ build time: ${build.time}
 
                 ret = self.getScript(url, {
                     success: function() {
-                        KISSY.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
+                        S.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
                         _success();
                     },
                     error: function() {
@@ -1256,10 +1256,6 @@ build time: ${build.time}
                 _final();
                 if (mod.status !== ERROR) {
 
-                    // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息，需要同步到 instance 上去
-                    // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
-                    if (global) self.__mixMod(self.Env.mods, global.Env.mods, mod.name, global);
-
                     // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
                     // 因此要加上下面的 !== 判断，否则会出现重复 attach, 比如编辑器里动态加载时，被依赖的模块会重复
                     if (mod.status !== ATTACHED) mod.status = LOADED;
@@ -1277,7 +1273,10 @@ build time: ${build.time}
             var Config = this.Config;
 
             build('path', 'fullpath');
-            if (mod[CSSFULLPATH] !== LOADED) build('csspath', CSSFULLPATH);
+
+            if (mod[CSSFULLPATH] !== LOADED) {
+                build('csspath', CSSFULLPATH);
+            }
 
             function build(path, fullpath) {
                 if (!mod[fullpath] && mod[path]) {
@@ -1431,4 +1430,21 @@ build time: ${build.time}
     S.__APP_INIT_METHODS.push('__initLoader');
 
 })(KISSY);
+
+/**
+ * 2011-01-04 adopt requirejs :
+ * 1. add(moduleName,{property:value});
+ * 2. add(moduleName,function(depModule){return function(){}},{requires:["depModule"]});
+ * 3. S.use(["core"],function(S){
+ *          dom=S.DOM;
+ *    })
+ *
+ * add("core",function(dom,event,ua){
+ * return {
+ * DOM:dom,
+ * Event:event
+ * };
+ *
+ },{requires:["dom","event","ua"]})
+ */
 

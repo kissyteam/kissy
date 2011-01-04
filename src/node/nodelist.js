@@ -2,10 +2,9 @@
  * @module  nodelist
  * @author  lifesinger@gmail.com
  */
-KISSY.add('nodelist', function(S) {
+KISSY.add('node/nodelist', function(S, DOM,Node,undefined) {
 
-    var DOM = S.DOM,
-        AP = Array.prototype,
+    var AP = Array.prototype,
         isElementNode = DOM._isElementNode;
 
     /**
@@ -19,6 +18,7 @@ KISSY.add('nodelist', function(S) {
 
         // push nodes
         AP.push.apply(this, S.makeArray(domNodes) || []);
+        return undefined;
     }
 
     S.mix(NodeList.prototype, {
@@ -36,7 +36,7 @@ KISSY.add('nodelist', function(S) {
 
             // 找到 DOMElement 对应的 index
             if (isElementNode(index)) {
-                for (i = 0, len = this.length; i < len; i++) {
+                for (i = 0,len = this.length; i < len; i++) {
                     if (index === this[i]) {
                         index = i;
                         break;
@@ -45,8 +45,8 @@ KISSY.add('nodelist', function(S) {
             }
 
             // 转换为 KSNode
-            if(isElementNode(this[index])) {
-                ret = new S.Node(this[index]);
+            if (isElementNode(this[index])) {
+                ret = new Node(this[index]);
             }
 
             return ret;
@@ -67,8 +67,8 @@ KISSY.add('nodelist', function(S) {
         each: function(fn, context) {
             var len = this.length, i = 0, node;
 
-            for (node = new S.Node(this[0]);
-                 i < len && fn.call(context || node, node, i, this) !== false; node = new S.Node(this[++i])) {
+            for (node = new Node(this[0]);
+                 i < len && fn.call(context || node, node, i, this) !== false; node = new Node(this[++i])) {
             }
 
             return this;
@@ -76,11 +76,13 @@ KISSY.add('nodelist', function(S) {
     });
 
     // query api
-    S.all = function(selector, context) {
-        return new NodeList(S.query(selector, context, true));
+    NodeList.all = function(selector, context) {
+        return new NodeList(DOM.query(selector, context, true));
     };
 
-    S.NodeList = NodeList;
+    return  NodeList;
+}, {
+    requires:["dom","node/node"]
 });
 
 /**

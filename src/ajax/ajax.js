@@ -2,7 +2,7 @@
  * @module  ajax
  * @author  拔赤<lijing00333@163.com>
  */
-KISSY.add('ajax', function(S, undef) {
+KISSY.add('ajax', function(S, EventTarget, S_JSON, undef) {
 
     var win = window,
         noop = function() {
@@ -61,8 +61,8 @@ KISSY.add('ajax', function(S, undef) {
 
     function io(c) {
         c = S.merge(defaultConfig, c);
-        if(!c.url) return;
-        if (c.data && !S.isString(c.data)) c.data = S.param(c.data);
+        if (!c.url) return undef;
+        if (c.data && !S['isString'](c.data)) c.data = S.param(c.data);
         c.context = c.context || c;
 
         var jsonp, status = SUCCESS, data, type = c.type.toUpperCase(), scriptEl;
@@ -120,9 +120,9 @@ KISSY.add('ajax', function(S, undef) {
             }
 
             // Set the Accepts header for the server, depending on the dataType
-			xhr.setRequestHeader('Accept', c.dataType && c.accepts[c.dataType] ?
-				c.accepts[c.dataType] + ', */*; q=0.01' :
-				c.accepts._default );
+            xhr.setRequestHeader('Accept', c.dataType && c.accepts[c.dataType] ?
+                c.accepts[c.dataType] + ', */*; q=0.01' :
+                c.accepts._default);
         } catch(e) {
         }
 
@@ -152,8 +152,8 @@ KISSY.add('ajax', function(S, undef) {
                     // process the data (runs the xml through httpData regardless of callback)
                     data = parseData(xhr, c.dataType);
 
-					//alert(xhr);
-					//S.log(data,'warn');
+                    //alert(xhr);
+                    //S.log(data,'warn');
                 } catch(e) {
                     status = PARSERERR;
                 }
@@ -174,11 +174,11 @@ KISSY.add('ajax', function(S, undef) {
         };
 
         fire(SEND, c);
-		try {
+        try {
             xhr.send(type === POST ? c.data : null);
-		} catch(e) {
+        } catch(e) {
             handleEvent([ERROR, COMPLETE], data, ERROR, xhr, c);
-		}
+        }
 
         // return XMLHttpRequest to allow aborting the request etc.
         if (!c.async) {
@@ -188,7 +188,7 @@ KISSY.add('ajax', function(S, undef) {
     }
 
     // 事件支持
-    S.mix(io, S.EventTarget);
+    S.mix(io, EventTarget);
 
     // 定制各种快捷操作
     S.mix(io, {
@@ -212,7 +212,7 @@ KISSY.add('ajax', function(S, undef) {
         },
 
         post: function(url, data, callback, dataType) {
-            if(S.isFunction(data)) {
+            if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
                 data = undef;
@@ -221,35 +221,31 @@ KISSY.add('ajax', function(S, undef) {
         },
 
         jsonp: function(url, data, callback) {
-            if(S.isFunction(data)) {
+            if (S.isFunction(data)) {
                 callback = data;
-				data = null; // 占位符
+                data = null; // 占位符
             }
             return io.get(url, data, callback, JSONP);
         }
     });
 
-    // shortcuts
-    io.getScript = S.getScript;
-    S.io = S.ajax = io.ajax = io;
-    S.jsonp = io.jsonp;
-    S.IO = io;
     // 所有方法在 IO 下都可调 IO.ajax/get/post/getScript/jsonp
     // S 下有便捷入口 S.io/ajax/getScript/jsonp
 
     //检测 xhr 是否成功
     function xhrSuccessful(xhr) {
         try {
-			// IE error sometimes returns 1223 when it should be 204 so treat it as success, see #1450
+            // IE error sometimes returns 1223 when it should be 204 so treat it as success, see #1450
             // ref: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-			// IE 中如果请求一个缓存住的页面，会出现如下状况 (jQuery 中未考虑,此处也不作处理)：
-			// 		请求一个页面成功，但头输出为 404, ie6/8 下检测为 200, ie7/ff/chrome/opera 检测为 404
-			// 		请求一个不存在的页面，ie 均检测为 200 ,ff/chrome/opera检测为 404
-			// 		请求一个不存在的页面，ie6/7 的 statusText为 'Not Found'，ie8 的为 'OK', statusText 是可以被程序赋值的
-			return xhr.status >= 200 && xhr.status < 300 ||
-				xhr.status === 304 || xhr.status === 1223;
-		} catch(e) {}
-		return false;
+            // IE 中如果请求一个缓存住的页面，会出现如下状况 (jQuery 中未考虑,此处也不作处理)：
+            // 		请求一个页面成功，但头输出为 404, ie6/8 下检测为 200, ie7/ff/chrome/opera 检测为 404
+            // 		请求一个不存在的页面，ie 均检测为 200 ,ff/chrome/opera检测为 404
+            // 		请求一个不存在的页面，ie6/7 的 statusText为 'Not Found'，ie8 的为 'OK', statusText 是可以被程序赋值的
+            return xhr.status >= 200 && xhr.status < 300 ||
+                xhr.status === 304 || xhr.status === 1223;
+        } catch(e) {
+        }
+        return false;
     }
 
     function addQuery(url, params) {
@@ -263,7 +259,7 @@ KISSY.add('ajax', function(S, undef) {
             });
         } else {
             // 只调用与 status 匹配的 c.type, 比如成功时才调 c.success
-            if(status === type && c[type]) c[type].call(c.context, data, status, xhr);
+            if (status === type && c[type]) c[type].call(c.context, data, status, xhr);
             fire(type, c);
         }
     }
@@ -276,7 +272,7 @@ KISSY.add('ajax', function(S, undef) {
         var ct = EMPTY, xml, data = xhr;
 
         // xhr 可以直接是 data
-        if (!S.isString(data)) {
+        if (!S['isString'](data)) {
             ct = xhr.getResponseHeader(CONTENT_TYPE) || EMPTY;
             xml = type === 'xml' || !type && ct.indexOf('xml') >= 0;
             data = xml ? xhr.responseXML : xhr.responseText;
@@ -286,15 +282,19 @@ KISSY.add('ajax', function(S, undef) {
             }
         }
 
-        if (S.isString(data)) {
+        if (S['isString'](data)) {
             if (type === JSON || !type && ct.indexOf(JSON) >= 0) {
-                data = S.JSON.parse(data);
+                data = S_JSON.parse(data);
             }
         }
 
         return data;
     }
 
+    return io;
+
+}, {
+    requires:["event/target","json"]
 });
 
 /**

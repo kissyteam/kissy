@@ -12,7 +12,7 @@
 
     <!-- 清空与复制等准备工作 -->
     <target name="prepare">
-        <mkdir dir="${build.dir}/${component.name}"/>        
+        <mkdir dir="${build.dir}/${component.name}"/>
         <delete>
             <fileset dir="${build.dir}/${component.name}" includes="*.css,*.js"/>
         </delete>
@@ -26,10 +26,10 @@
         <!-- 去除 S.log -->
         <mkdir dir="${build.dir}/${component.name}/debug"/>
         <copy todir="${build.dir}/${component.name}/debug">
-            <fileset dir="${build.dir}/${component.name}" includes="*-pkg.js"/>
+            <fileset dir="${build.dir}/${component.name}" includes="${component.files}"/>
         </copy>
         <replaceregexp match="^\s*S\.log\(.+$" replace="" flags="g" byline="true" encoding="${charset}">
-            <fileset dir="${build.dir}/${component.name}" includes="*-pkg.js"/>
+            <fileset dir="${build.dir}/${component.name}" includes="${component.files}"/>
         </replaceregexp>
 
         <!-- 用 YUICompressor 压缩 CSS -->
@@ -50,8 +50,8 @@
             <arg line="-jar"/>
             <arg path="${ks-tools.dir}/closure-compiler/compiler.jar"/>
             <arg line="--charset ${charset}"/>
-            <arg value="--warning_level" />
-            <arg value="QUIET" />
+            <arg value="--warning_level"/>
+            <arg value="QUIET"/>
             <arg value="--js"/>
             <srcfile/>
             <arg value="--js_output_file"/>
@@ -61,7 +61,7 @@
 
         <!-- 还原 debug 版本 -->
         <move todir="${build.dir}/${component.name}">
-            <fileset dir="${build.dir}/${component.name}/debug" includes="*-pkg.js"/>
+            <fileset dir="${build.dir}/${component.name}/debug" includes="${component.files}"/>
         </move>
         <delete dir="${build.dir}/${component.name}/debug"/>
     </target>
@@ -90,7 +90,7 @@
             <matches string="${version}" pattern=".+\d$"/>
         </condition>
         <!--<svn>-->
-            <!--<wcVersion path="${root.dir}" prefix="svn."/>-->
+        <!--<wcVersion path="${root.dir}" prefix="svn."/>-->
         <!--</svn>-->
         <mkdir dir="${build.dir}/${component.name}/tmp"/>
         <move todir="${build.dir}/${component.name}/tmp">
@@ -109,9 +109,9 @@
                         build time: ${build.time}
                         */
                     </header>
-                    <fileset file="@{file}" />
+                    <fileset file="@{file}"/>
                 </concat>
-                <replaceregexp match="@VERSION@" replace="${version}" flags="g" encoding="${charset}" byline="true" file="@{file}.tmp" />
+                <replaceregexp match="@VERSION@" replace="${version}" flags="g" encoding="${charset}" byline="true" file="@{file}.tmp"/>
                 <move file="@{file}.tmp" tofile="@{file}"/>
             </sequential>
         </ac:for>
@@ -121,7 +121,11 @@
         </move>
         <delete dir="${build.dir}/${component.name}/tmp"/>
     </target>
-    
+
     <target name="common.build" depends="prepare,compress,native2ascii,copyright">
+        <move encoding="${charset}" todir="${build.dir}">
+            <fileset dir="${build.dir}/${component.name}/" includes="*-pkg*.js"/>
+            <mapper type="regexp" from="(.*)-pkg(.*)" to="\1\2"/>
+        </move>
     </target>
 </project>

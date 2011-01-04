@@ -2,10 +2,11 @@
  * @module  selector
  * @author  lifesinger@gmail.com
  */
-KISSY.add('selector', function(S, undefined) {
+KISSY.add('dom/selector', function(S, DOM, undefined) {
 
-    var doc = document, DOM = S.DOM,
-        SPACE = ' ', ANY = '*',
+    var doc = document,
+        SPACE = ' ',
+        ANY = '*',
         GET_DOM_NODE = 'getDOMNode', GET_DOM_NODES = GET_DOM_NODE + 's',
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
@@ -14,10 +15,15 @@ KISSY.add('selector', function(S, undefined) {
      * Retrieves an Array of HTMLElement based on the given CSS selector.
      * @param {string} selector
      * @param {string|HTMLElement} context An #id string or a HTMLElement used as context
-     * @return {Array} The array of found HTMLElement
+     * @return  The array of found HTMLElement
      */
     function query(selector, context) {
-        var match, t, ret = [], id, tag, cls;
+        var match, t,
+            ret=[],
+            id,
+            tag,
+            sizzle = S.require("sizzle"),
+            cls;
         context = tuneContext(context);
 
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
@@ -36,7 +42,7 @@ KISSY.add('selector', function(S, undefined) {
 
         // selector 为字符串是最常见的情况，优先考虑
         // 注：空白字符串无需判断，运行下去自动能返回空数组
-        if (S.isString(selector)) {
+        if (S['isString'](selector)) {
             selector = S.trim(selector);
 
             // selector 为 #id 是最常见的情况，特殊优化处理
@@ -60,7 +66,7 @@ KISSY.add('selector', function(S, undefined) {
                         // 处理 #id.cls
                         else {
                             t = getElementById(id, context);
-                            if(t && DOM.hasClass(t, cls)) {
+                            if (t && DOM.hasClass(t, cls)) {
                                 ret = [t];
                             }
                         }
@@ -72,8 +78,8 @@ KISSY.add('selector', function(S, undefined) {
                 }
             }
             // 采用外部选择器
-            else if(S.ExternalSelector) {
-                return S.ExternalSelector(selector, context);
+            else if (sizzle) {
+                return sizzle(selector, context);
             }
             // 依旧不支持，抛异常
             else {
@@ -81,7 +87,7 @@ KISSY.add('selector', function(S, undefined) {
             }
         }
         // 传入的 selector 是 KISSY.Node/NodeList. 始终返回原生 DOM Node
-        else if(selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
+        else if (selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
             ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
         }
         // 传入的 selector 是 NodeList 或已是 Array
@@ -95,10 +101,9 @@ KISSY.add('selector', function(S, undefined) {
         // 传入的 selector 是其它值时，返回空数组
 
         // 将 NodeList 转换为普通数组
-        if(isNodeList(ret)) {
+        if (isNodeList(ret)) {
             ret = S.makeArray(ret);
         }
-
         // attach each method
         ret.each = function(fn, context) {
             return S.each(ret, fn, context);
@@ -124,7 +129,7 @@ KISSY.add('selector', function(S, undefined) {
             context = doc;
         }
         // 2). context 的第二使用场景是传入 #id
-        else if (S.isString(context) && REG_ID.test(context)) {
+        else if (S['isString'](context) && REG_ID.test(context)) {
             context = getElementById(context.slice(1), doc);
             // 注：#id 可能无效，这时获取的 context 为 null
         }
@@ -138,7 +143,7 @@ KISSY.add('selector', function(S, undefined) {
 
     // query #id
     function getElementById(id, context) {
-        if(context.nodeType !== 9) {
+        if (context.nodeType !== 9) {
             context = context.ownerDocument;
         }
         return context.getElementById(id);
@@ -148,6 +153,7 @@ KISSY.add('selector', function(S, undefined) {
     function getElementsByTagName(tag, context) {
         return context.getElementsByTagName(tag);
     }
+
     (function() {
         // Check to see if the browser returns only elements
         // when doing getElementsByTagName('*')
@@ -193,6 +199,7 @@ KISSY.add('selector', function(S, undefined) {
         }
         return ret;
     }
+
     if (!doc.getElementsByClassName) {
         // 降级使用 querySelectorAll
         if (doc.querySelectorAll) {
@@ -224,27 +231,25 @@ KISSY.add('selector', function(S, undefined) {
         S.error('Unsupported selector: ' + msg);
     }
 
-    // public api
-    S.query = query;
-    S.get = function(selector, context) {
-        return query(selector, context)[0] || null;
-    };
-
     S.mix(DOM, {
 
         query: query,
 
-        get: S.get,
+        get: function(selector, context) {
+            return query(selector, context)[0] || null;
+        },
 
         /**
          * Filters an array of elements to only include matches of a filter.
          * @param filter selector or fn
          */
-        filter: function(selector, filter) {
-            var elems = query(selector), match, tag, cls, ret = [];
+        filter: function(selector, filter, context) {
+            var elems = query(selector, context),
+                sizzle = S.require("sizzle"),
+                match, tag, cls, ret = [];
 
             // 默认仅支持最简单的 tag.cls 形式
-            if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
+            if (S['isString'](filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
                 tag = match[2];
                 cls = match[3];
                 filter = function(elem) {
@@ -256,8 +261,8 @@ KISSY.add('selector', function(S, undefined) {
                 ret = S.filter(elems, filter);
             }
             // 其它复杂 filter, 采用外部选择器
-            else if (filter && S.ExternalSelector) {
-                ret = S.ExternalSelector._filter(selector, filter + '');
+            else if (filter && sizzle) {
+                ret = sizzle._filter(selector, filter + '');
             }
             // filter 为空或不支持的 selector
             else {
@@ -270,11 +275,14 @@ KISSY.add('selector', function(S, undefined) {
         /**
          * Returns true if the passed element(s) match the passed filter
          */
-        test: function(selector, filter) {
-            var elems = query(selector);
-            return elems.length && (DOM.filter(elems, filter).length === elems.length);
+        test: function(selector, filter, context) {
+            var elems = query(selector, context);
+            return elems.length && (DOM.filter(elems, filter, context).length === elems.length);
         }
     });
+    return DOM;
+}, {
+    requires:["dom/base"]
 });
 
 /**
