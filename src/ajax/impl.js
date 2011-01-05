@@ -293,7 +293,7 @@ KISSY.add('ajax/impl', function(S, EventTarget, S_JSON, undef) {
     return io;
 
 }, {
-    requires:["event/target","json"]
+    requires:["event","json"]
 });
 
 /**

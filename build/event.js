@@ -243,7 +243,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     function batch(methodName, targets, types, fn, scope) {
         // on('#id tag.className', type, fn)
         if (S['isString'](targets)) {
-            targets = S.query(targets);
+            targets = DOM.query(targets);
         }
 
         // on([targetA, targetB], type, fn)
@@ -594,7 +594,7 @@ KISSY.add('event/target', function(S, Event,DOM,undefined) {
         }
     };
 }, {
-    requires:["event/base","dom/data"]
+    requires:["event/base","dom"]
 });
 
 /**

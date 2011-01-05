@@ -8,7 +8,6 @@
         doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
         EMPTY = '',
-        CSSFULLPATH = 'cssfullpath',
         LOADING = 1,
         LOADED = 2,
         ERROR = 3,
@@ -29,7 +28,6 @@
                        function(node, callback) {
                            node.addEventListener('load', callback, false);
                        },
-        RE_CSS = /\.css(?:\?|$)/i,
         loader;
 
     loader = {
@@ -95,7 +93,16 @@
 
             return self;
         },
-
+        packages:function() {
+            var self = this,
+                cfgs = S.makeArray(arguments),
+                ps;
+            ps = self.__packages = self.__packages || {};
+            for (var i = 0; i < cfgs.length; i++) {
+                var cfg = cfgs[i];
+                ps[cfg.name] = cfg;
+            }
+        },
         /**
          * Start load specific mods, and fire callback when these mods and requires are attached.
          * <code>
@@ -135,10 +142,10 @@
         },
 
         __getModules:function(modNames) {
-            var mods = [this];
+            var self = this,mods = [self];
             modNames = modNames || [];
             for (var i = 0; i < modNames.length; i++) {
-                mods.push(this.require(modNames[i]));
+                mods.push(self.require(modNames[i]));
             }
             return mods;
         },
@@ -153,17 +160,26 @@
 
             return mod && mod.value;
         },
+        __getPackagePath:function(mod) {
+            var p = mod.name,ind,packages = this.__packages || {};
+            if ((ind = p.indexOf("/")) != -1) {
+                p = p.substring(0, ind);
+            }
+            var p_def = packages[p];
+            if (!p_def) return;
+            var p_path = p_def.path || ".";
+            if (p_path.charAt(p_path.length - 1) !== "/") {
+                p_path += "/";
+            }
+            return p_path;
+        },
         //加载指定模块名模块，如果不存在定义默认定义为内部模块
         __attachModByName: function(modName, callback) {
 
             var self = this,
-                mods = self.Env.mods,
-                //是否自带了css
-                hasCss = modName.indexOf("+css") != -1;
-            //得到真实组件名
-            modName = hasCss ? modName.replace(/\+css/g, "") : modName;
+                mods = self.Env.mods;
             var mod = mods[modName];
-            //没有模块定义，内部模块不许定义
+            //没有模块定义
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
@@ -177,17 +193,7 @@
                 //添加模块定义
                 mods[modName] = mod;
             }
-
-            if (hasCss) {
-                var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=@TIMESTAMP@';
-                },  css = S.isFunction(componentCssName) ?
-                    componentCssName(modName) :
-                    componentCssName;
-                mod.csspath = modName + '/' + css;
-            }
             mod.name = modName;
-
             if (mod && mod.status === ATTACHED) return;
             self.__attach(mod, callback);
         },
@@ -214,7 +220,7 @@
             }
 
             // load and attach this module
-            self.__buildPath(mod);
+            self.__buildPath(mod, self.__getPackagePath(mod));
             self.__load(mod, function() {
                 // add 可能改了 config，这里重新取下
                 var newRequires = mod['requires'] || [],optimize = [];
@@ -231,7 +237,10 @@
                         //新增的依赖项
                         self.__attachModByName(r, fn);
                     }
-                    if (!inA) {
+                    /**
+                     * 依赖项需要重新下载，最好和被依赖者一起 use
+                     */
+                    if (!inA && (!rmod || rmod.status < LOADED)) {
                         optimize.push(r);
                     }
                 }
@@ -304,12 +313,6 @@
                 mod.status = node.nodeName ? LOADING : LOADED;
             }
 
-            // 加载 css, 仅发出请求，不做任何其它处理
-            if (S['isString'](mod[CSSFULLPATH])) {
-                self.getScript(mod[CSSFULLPATH]);
-                mod[CSSFULLPATH] = LOADED;
-            }
-
             if (mod.status < LOADING && url) {
                 mod.status = LOADING;
 
@@ -327,9 +330,9 @@
 
                 // css 是同步的，在 success 回调里，已经将 loadQueque[url] 置成 LOADED
                 // 不需要再置成节点，否则有问题
-                if (!RE_CSS.test(url)) {
-                    loadQueque[url] = ret;
-                }
+                //if (!RE_CSS.test(url)) {
+                loadQueque[url] = ret;
+                //}
             }
             // 已经在加载中，需要添加回调到 script onload 中
             // 注意：没有考虑 error 情形
@@ -359,22 +362,17 @@
         },
 
         __buildPath: function(mod, base) {
-            var Config = this.Config;
+            var self = this,
+                Config = self.Config,
+                path = 'path',
+                fullpath = 'fullpath';
 
-            build('path', 'fullpath');
-
-            if (mod[CSSFULLPATH] !== LOADED) {
-                build('csspath', CSSFULLPATH);
+            if (!mod[fullpath] && mod[path]) {
+                mod[fullpath] = (base || Config.base) + mod[path];
             }
-
-            function build(path, fullpath) {
-                if (!mod[fullpath] && mod[path]) {
-                    mod[fullpath] = (base || Config.base) + mod[path];
-                }
-                // debug 模式下，加载非 min 版
-                if (mod[fullpath] && Config.debug) {
-                    mod[fullpath] = mod[fullpath].replace(/-min/g, '');
-                }
+            // debug 模式下，加载非 min 版
+            if (mod[fullpath] && Config.debug) {
+                mod[fullpath] = mod[fullpath].replace(/-min/g, '');
             }
         },
 
@@ -392,7 +390,7 @@
          * </code>
          */
         getScript: function(url, success, charset) {
-            var isCSS = RE_CSS.test(url),
+            var isCSS = /\.css(?:\?|$)/i.test(url),
                 node = doc.createElement(isCSS ? 'link' : 'script'),
                 config = success, error, timeout, timer;
 
@@ -534,6 +532,7 @@
  * Event:event
  * };
  *
- },{requires:["dom","event","ua"]})
+ },{requires:["dom","event","ua"]});
+ 4. add,use 不支持 css loader ,getScript 仍然保留支持
  */
 
