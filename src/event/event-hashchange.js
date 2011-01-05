@@ -1,6 +1,6 @@
 /**
  * @module  event-hashchange
- * @author  yiminghe@gmail.com
+ * @author  yiminghe@gmail.com, xiaomacji@gmail.com
  */
 KISSY.add('event-hashchange', function(S) {
 
@@ -10,7 +10,7 @@ KISSY.add('event-hashchange', function(S) {
 		ie = docMode || S.UA['ie'];
 
 	// IE8以上切换浏览器模式到IE7，会导致 'onhashchange' in window === true
-	if ( !( 'on' + HASH_CHANGE in window && ( undefined === docMode || 7 < docMode ) ) ) {
+	if ( (!( 'on' + HASH_CHANGE in window)) || ie < 8 ) {
 		var timer, targets = [], lastHash = getHash();
 
 		Event.special[HASH_CHANGE] = {
@@ -49,7 +49,7 @@ KISSY.add('event-hashchange', function(S) {
 		};
 
 		// ie6, 7, 用匿名函数来覆盖一些function 
-		8 > S.UA.ie && (function() {
+		8 > ie && (function() {
 			var iframe;
 
 			/**
