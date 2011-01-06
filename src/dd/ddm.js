@@ -2,15 +2,11 @@
  * dd support for kissy
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add('dd', function(S) {
+KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
 
     var doc = document,
-        Event = S.Event,
-        DOM = S.DOM,
-        Node = S.Node,
+        Node = S.require("node/node"),
         SHIM_ZINDEX = 999999;
-
-    S.DD = {};
 
     function DDM() {
         DDM.superclass.constructor.apply(this, arguments);
@@ -35,7 +31,7 @@ KISSY.add('dd', function(S) {
      2.全局统一的鼠标弹起监控，用来通知当前拖动对象停止
      3.为了跨越 iframe 而统一在底下的遮罩层
      */
-    S.extend(DDM, S.Base, {
+    S.extend(DDM, Base, {
 
         _init: function() {
             var self = this;
@@ -138,7 +134,7 @@ KISSY.add('dd', function(S) {
             var self = this;
             self._shim.css({
                 display: "",
-                height: DOM.docHeight()
+                height: DOM['docHeight']()
             });
         },
 
@@ -161,7 +157,6 @@ KISSY.add('dd', function(S) {
         }
     });
 
-    S.DD.DDM = new DDM();
 
     /**
      * Throttles a call to a method based on the time between calls. from YUI
@@ -190,4 +185,8 @@ KISSY.add('dd', function(S) {
             }
         });
     }
+
+    return new DDM();
+}, {
+    requires:["dom","event","node","base"]
 });

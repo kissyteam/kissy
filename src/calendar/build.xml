@@ -12,11 +12,8 @@
 
     <target name="concat">
         <concat destfile="calendar-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="date.js"/>
-
-            <path path="calendar.js"/>
-            <path path="calendar-page.js"/>
-            <path path="calendar-time.js"/>
+            <fileset dir="${src.dir}" includes="*.js"/>
+            <path location="../calendar.js"/>
         </concat>
     </target>
 

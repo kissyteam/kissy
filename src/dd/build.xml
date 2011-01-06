@@ -10,6 +10,7 @@
         <concat destfile="dd-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="ddm.js"/>
             <path path="draggable.js"/>
+             <path location="../dd.js"/>
         </concat>
     </target>
 

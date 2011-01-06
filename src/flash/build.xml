@@ -8,9 +8,8 @@
 
     <target name="concat">
         <concat destfile="flash-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="flash.js"/>
-            <path path="flash-ua.js"/>
-            <path path="flash-embed.js"/>
+            <fileset dir="${src.dir}" includes="*.js"/>
+            <path location="../flash.js"/>
         </concat>
         <copy file="express-install/expressInstall.swf" todir="${src.dir}"/>
     </target>

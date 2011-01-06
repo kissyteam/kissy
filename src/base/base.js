@@ -2,13 +2,13 @@
  * @module  Base
  * @author  lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('base', function (S) {
+KISSY.add('base/base', function (S, Attribute) {
 
     /*
      * Base for class-based component
      */
     function Base(config) {
-        S.Attribute.call(this);
+        Attribute.call(this);
         var c = this.constructor;
 
         // define
@@ -41,6 +41,8 @@ KISSY.add('base', function (S) {
         }
     }
 
-    S.augment(Base, S.EventTarget, S.Attribute);
-    S.Base = Base;
+    S.augment(Base, S.require("event/target"), Attribute);
+    return Base;
+}, {
+    requires:["base/attribute","event"]
 });

@@ -2,15 +2,18 @@
  * KISSY.Dialog
  * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('dialog', function(S) {
+KISSY.add('overlay/dialog', function(S, Overlay, UIBase) {
 
-    S.Dialog = S.UIBase.create(S.Overlay,
-        [
-            S.UIBase.StdMod,
-            S.UIBase.Close,
-            S.UIBase.Drag,
-            S.UIBase.Constrain
-        ], {
+    function require(s) {
+        return S.require("uibase/" + s);
+    }
+
+    return UIBase.create(Overlay, [
+        require("stdmod"),
+        require("close"),
+        require("drag"),
+        require("constrain")
+    ], {
         initializer:function() {
             //S.log("dialog init");
         },
@@ -34,7 +37,9 @@ KISSY.add('dialog', function(S) {
     });
 
 
-}, { host: 'overlay' });
+}, {
+    requires:[ "overlay/overlay","uibase"]
+});
 
 /**
  * 2010-11-10 承玉<yiminghe@gmail.com>重构，使用扩展类

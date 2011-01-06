@@ -243,7 +243,7 @@ KISSY.add('node/node', function(S, DOM, undefined) {
             domNode = DOM.create(html, props, ownerDocument);
             // 将 S.Node('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === 11) { // fragment
-                return new S.NodeList(domNode.childNodes);
+                return new (S.require("node/nodelist"))(domNode.childNodes);
             }
         }
         // handle Node

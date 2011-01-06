@@ -2,9 +2,9 @@
  * dd support for kissy, drag for dd
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add('dd-draggable', function(S) {
+KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
 
-    var UA = S.UA;
+    var Node = S.require("node/node");
 
     /*
      拖放纯功能类
@@ -20,7 +20,7 @@ KISSY.add('dd-draggable', function(S) {
          */
         node: {
             setter:function(v) {
-                return S.one(v);
+                return Node.one(v);
             }
         },
 
@@ -39,7 +39,7 @@ KISSY.add('dd-draggable', function(S) {
             setter:function(vs) {
                 if (vs) {
                     for (var i = 0; i < vs.length; i++) {
-                        vs[i] = S.one(vs[i]);
+                        vs[i] = Node.one(vs[i]);
                         unselectable(vs[i][0]);
                     }
                 }
@@ -47,7 +47,7 @@ KISSY.add('dd-draggable', function(S) {
         }
     };
 
-    S.extend(Draggable, S.Base, {
+    S.extend(Draggable, Base, {
 
         _init: function() {
             var self = this,
@@ -104,7 +104,7 @@ KISSY.add('dd-draggable', function(S) {
          */
         _handleMouseDown: function(ev) {
             var self = this,
-                t = new S.Node(ev.target);
+                t = new Node(ev.target);
 
             if (!self._check(t)) return;
             //chrome 阻止了 flash 点击？？
@@ -114,7 +114,7 @@ KISSY.add('dd-draggable', function(S) {
             ev.preventDefault();
             //}
 
-            S.DD.DDM._start(self);
+            DDM._start(self);
 
             var node = self.get("node"),
                 mx = ev.pageX,
@@ -155,36 +155,36 @@ KISSY.add('dd-draggable', function(S) {
     });
 
     var unselectable =
-        UA.gecko ?
-            function(el) {
-                el.style.MozUserSelect = 'none';
-            }
-            : UA.webkit ?
-            function(el) {
-                el.style.KhtmlUserSelect = 'none';
-            }
+        UA['gecko'] ?
+        function(el) {
+            el.style.MozUserSelect = 'none';
+        }
+            : UA['webkit'] ?
+              function(el) {
+                  el.style.KhtmlUserSelect = 'none';
+              }
             :
-            function(el) {
-                if (UA.ie || UA.opera) {
-                    var e,i = 0,
-                        els = el.getElementsByTagName("*");
-                    el.setAttribute("unselectable", 'on');
-                    while (( e = els[ i++ ] )) {
-                        switch (e.tagName.toLowerCase()) {
-                            case 'iframe' :
-                            case 'textarea' :
-                            case 'input' :
-                            case 'select' :
-                                /* Ignore the above tags */
-                                break;
-                            default :
-                                e.setAttribute("unselectable", 'on');
-                        }
-                    }
-                }
-            };
+              function(el) {
+                  if (UA['ie'] || UA['opera']) {
+                      var e,i = 0,
+                          els = el.getElementsByTagName("*");
+                      el.setAttribute("unselectable", 'on');
+                      while (( e = els[ i++ ] )) {
+                          switch (e.tagName.toLowerCase()) {
+                              case 'iframe' :
+                              case 'textarea' :
+                              case 'input' :
+                              case 'select' :
+                                  /* Ignore the above tags */
+                                  break;
+                              default :
+                                  e.setAttribute("unselectable", 'on');
+                          }
+                      }
+                  }
+              };
 
 
-    S.Draggable = Draggable;
+    return Draggable;
 
-}, { host: 'dd' });
+}, { requires:["ua","node","base","dd/ddm"] });

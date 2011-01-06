@@ -2,7 +2,7 @@
  * @module  Attribute
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('attribute', function(S, undef) {
+KISSY.add('base/attribute', function(S, undef) {
 
     /**
      * Attribute provides the implementation for any object
@@ -127,7 +127,7 @@ KISSY.add('attribute', function(S, undef) {
          */
         get: function(name) {
             var host = this, attrConfig, getter, ret;
-            
+
             attrConfig = host.__attrs[name];
             getter = attrConfig && attrConfig['getter'];
 
@@ -182,12 +182,12 @@ KISSY.add('attribute', function(S, undef) {
         }
     });
 
-    S.Attribute = Attribute;
-
     function capitalFirst(s) {
         s = s + '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
     Attribute.__capitalFirst = capitalFirst;
+
+    return Attribute;
 });

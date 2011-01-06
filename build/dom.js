@@ -292,7 +292,7 @@ KISSY.add('dom/attr', function(S,DOM, UA, undefined) {
  * @module  dom
  * @author  lifesinger@gmail.com
  */
-KISSY.add('dom/base', function(S,undefined) {
+KISSY.add('dom/base', function(S, undefined) {
 
     function nodeTypeIs(node, val) {
         return node && node.nodeType === val;
@@ -311,7 +311,8 @@ KISSY.add('dom/base', function(S,undefined) {
          * 是不是 KISSY.Node
          */
         _isKSNode: function(elem) {
-            return S.Node && nodeTypeIs(elem, S.Node.TYPE);
+            var Node = S.require("node/node");
+            return Node && nodeTypeIs(elem, Node.TYPE);
         },
 
         /**

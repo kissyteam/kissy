@@ -3,24 +3,35 @@
 <head>
 <meta charset="utf-8"/>
 <title>S.Overlay Demo</title>
+<script src="../seed/kissy.js"></script>
+<script src="../seed/lang.js"></script>
+<script src="../seed/web.js"></script>
+<script src="../seed/loader.js"></script>
+<script src="../../build/ua.js"></script>
+<script src="../../build/node.js"></script>
+<script src="../../build/dom.js"></script>
+<script src="../../build/event.js"></script>
+<script src="../../build/base.js"></script>
+<script src="../../build/json.js"></script>
+<script src="../../build/dd.js"></script>
 
-<script src="../../build/kissy.js"></script>
-<script src="../uibase/uibase.js"></script>
-<script src="../uibase/uibase-box.js"></script>
-<script src="../uibase/uibase-contentbox.js"></script>
-<script src="../uibase/uibase-position.js"></script>
-<script src="../uibase/uibase-shim.js"></script>
-<script src="../uibase/uibase-mask.js"></script>
-<script src="../uibase/uibase-align.js"></script>
-<script src="../uibase/uibase-loading.js"></script>
 <script src="overlay.js"></script>
-<script src="../dd/ddm.js"></script>
-<script src="../dd/draggable.js"></script>
-<script src="../uibase/uibase-stdmod.js"></script>
-<script src="../uibase/uibase-close.js"></script>
-<script src="../uibase/uibase-drag.js"></script>
-<script src="../uibase/uibase-constrain.js"></script>
 <script src="dialog.js"></script>
+<script src="../overlay.js"></script>
+<script src="../uibase.js"></script>
+<script src="../uibase/align.js"></script>
+<script src="../uibase/base.js"></script>
+<script src="../uibase/box.js"></script>
+<script src="../uibase/close.js"></script>
+<script src="../uibase/constrain.js"></script>
+<script src="../uibase/contentbox.js"></script>
+<script src="../uibase/drag.js"></script>
+<script src="../uibase/loading.js"></script>
+<script src="../uibase/mask.js"></script>
+<script src="../uibase/position.js"></script>
+<script src="../uibase/shim.js"></script>
+<script src="../uibase/stdmod.js"></script>
+
 
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
 <link rel="stylesheet" href="assets/cool.css"/>
@@ -69,25 +80,30 @@
 
 
 <script>
-    KISSY.ready(function(S) {
+    KISSY.use("overlay", function(S) {
+        var Node = S.require("node/node"),
+                Overlay = S.require("overlay/overlay");
 
-        var popup = new S.Overlay({
-            srcNode:S.one("#popup1"),
-            width: 300,
-            height: 200,
-            align: {
-                node: '#btn1',
-                points: ['tr', 'tl'],
-                offset: [50, 0]
-            }
-        });
-        S.one('#btn1').on('click', function() {
-            popup.show();
-        });
-        S.one('#btn2').on('click', function() {
-            popup.hide();
-        });
+        S.ready(function(S) {
 
+            var popup = new Overlay({
+                srcNode:Node.one("#popup1"),
+                width: 300,
+                height: 200,
+                align: {
+                    node: '#btn1',
+                    points: ['tr', 'tl'],
+                    offset: [50, 0]
+                }
+            });
+            Node.one('#btn1').on('click', function() {
+                popup.show();
+            });
+            Node.one('#btn2').on('click', function() {
+                popup.hide();
+            });
+
+        });
     });
 </script>
 <p class="code-switch">显示源码</p>
@@ -105,24 +121,29 @@
     </div>
 </div>
 <script>
-    KISSY.ready(function(S) {
+    KISSY.use("overlay", function(S) {
+        var Node = S.require("node/node"),
+                Overlay = S.require("overlay/overlay");
 
-        var popup = new S.Overlay({
-            srcNode:"#popup2",
-            width: 300,
-            height: 200,
-            align: {
-                node: S.one('#link1'),
-                points: ['tr', 'tl']
-            }
-        });
+        S.ready(function(S) {
 
-        S.one('#link1').on('mouseenter', function() {
+            var popup = new Overlay({
+                srcNode:"#popup2",
+                width: 300,
+                height: 200,
+                align: {
+                    node: Node.one('#link1'),
+                    points: ['tr', 'tl']
+                }
+            });
 
-            popup.show();
-        });
-        S.one('#link1').on('mouseleave', function() {
-            popup.hide();
+            Node.one('#link1').on('mouseenter', function() {
+
+                popup.show();
+            });
+            Node.one('#link1').on('mouseleave', function() {
+                popup.hide();
+            });
         });
     });
 </script>
@@ -138,23 +159,28 @@
 <h2>Popup - 新建Popup</h2>
 <a id="link2">hover me</a>
 <script>
-    KISSY.ready(function(S) {
-        var popup = new S.Overlay({
-            width: 300,
-            height: 200,
-            elCls: 'popup2',
-            content: 'test popup',
-            align: {
-                node: '#link2',
-                points: ['tr', 'tl']
-            }
-        });
-        S.one('#link2').on('mouseenter', function() {
-            
-            popup.show();
-        });
-        S.one('#link2').on('mouseleave', function() {
-            popup.hide();
+    KISSY.use("overlay", function(S) {
+        var Node = S.require("node/node"),
+                Overlay = S.require("overlay/overlay");
+
+        S.ready(function(S) {
+            var popup = new Overlay({
+                width: 300,
+                height: 200,
+                elCls: 'popup2',
+                content: 'test popup',
+                align: {
+                    node: '#link2',
+                    points: ['tr', 'tl']
+                }
+            });
+            Node.one('#link2').on('mouseenter', function() {
+
+                popup.show();
+            });
+            Node.one('#link2').on('mouseleave', function() {
+                popup.hide();
+            });
         });
     });
 </script>
@@ -189,27 +215,33 @@
 </ul>
 
 <script>
-    KISSY.ready(function(S) {
+    KISSY.use("overlay", function(S) {
+        var Node = S.require("node/node"),
+                DOM = S.require("dom"),
+                Overlay = S.require("overlay/overlay");
 
-        var lis = S.query('#multi li'),
-                popup = new S.Overlay({
-                    elStyle:{
-                        border:"1px solid red"
-                    }
+        S.ready(function(S) {
+
+            var lis = DOM.query('#multi li'),
+                    popup = new Overlay({
+                        elStyle:{
+                            border:"1px solid red"
+                        }
+                    });
+
+
+            // 注意：这里的用法已改变
+            S.each(DOM.query('#multi li'), function(t) {
+                t = new Node(t);
+                t.on("mouseenter", function() {
+                    popup.set("content", t.html());
+                    popup.render();
+                    popup.align(t, ["tr","tl"]);
+                    popup.show();
                 });
-
-
-        // 注意：这里的用法已改变
-        S.each(S.query('#multi li'), function(t) {
-            t = new S.Node(t);
-            t.on("mouseenter", function() {
-                popup.set("content", t.html());
-                popup.render();
-                popup.align(t, ["tr","tl"]);
-                popup.show();
-            });
-            t.on("mouseleave", function() {
-                popup.hide();
+                t.on("mouseleave", function() {
+                    popup.hide();
+                });
             });
         });
     });
@@ -241,16 +273,22 @@
     </div>
 </div>
 <script>
-    KISSY.ready(function(S) {
-        var d = new S.Dialog({
-            srcNode: "#markupDialog",
-            width:400
-        });
+    KISSY.use("overlay,dd", function(S) {
+        var Node = S.require("node/node"),
+                DOM = S.require("dom"),
+                Dialog = S.require("overlay/dialog");
 
-        S.one("#btn3").on("click", function() {
-            d.render();
-            d.center();
-            d.show();
+        S.ready(function(S) {
+            var d = new Dialog({
+                srcNode: "#markupDialog",
+                width:400
+            });
+
+            Node.one("#btn3").on("click", function() {
+                d.render();
+                d.center();
+                d.show();
+            });
         });
     });
 </script>
@@ -260,21 +298,27 @@
 <h2>Dialog - 新建 + Mask</h2>
 <button id="btn4">Show</button>
 <script>
-    KISSY.ready(function(S) {
-        var dialog = new S.Dialog({
-            width: 400,
-            bodyStyle:{
-                height: 300
-            },
-            headerContent: 'this is title',
-            footerContent: 'footer',
-            bodyContent: 'content',
-            mask: true
-        });
-        S.one("#btn4").on("click", function() {
-            dialog.render();
-            dialog.center();
-            dialog.show();
+    KISSY.use("overlay,dd", function(S) {
+        var Node = S.require("node/node"),
+                DOM = S.require("dom"),
+                Dialog = S.require("overlay/dialog");
+
+        S.ready(function(S) {
+            var dialog = new Dialog({
+                width: 400,
+                bodyStyle:{
+                    height: 300
+                },
+                headerContent: 'this is title',
+                footerContent: 'footer',
+                bodyContent: 'content',
+                mask: true
+            });
+            Node.one("#btn4").on("click", function() {
+                dialog.render();
+                dialog.center();
+                dialog.show();
+            });
         });
     });
 </script>
@@ -291,115 +335,129 @@
 <div class="constrain" id="c1">
     constrain area
     <select>
-        <option> hello world </option>
+        <option> hello world</option>
     </select>
 </div>
 <button id="btn6">show</button>
 <button id="btn7">release</button>
 <button id="btn8">constrain</button>
 <script>
-    KISSY.ready(function(S) {
-        var dialog = new S.Dialog({
-            width: 400,
-            bodyStyle:{
-                height: 100
-            },
-            headerContent: 'this is title',
-            footerContent: 'footer',
-            bodyContent: 'content',
-            mask: false,
-            align: {
-                node: '#c1',
-                points: ['cc', 'cc']
-            },
-            constrain: '#c1',
-            draggable: true
-        });
+    KISSY.use("event,dd,overlay", function(S, Event) {
+        var Node = S.require("node/node"),
 
-        var stat = ['release', 'constrain'],
-                sh = ['show', 'hide'];
-        S.Event.on('#btn6', 'click', function() {
-            dialog.show();
-            dialog.set("align", {
-                node: '#c1',
-                points: ['cc', 'cc']
+                DOM = S.require("dom"),
+                Dialog = S.require("overlay/dialog");
+
+        S.ready(function(S) {
+            var dialog = new Dialog({
+                width: 400,
+                bodyStyle:{
+                    height: 100
+                },
+                headerContent: 'this is title',
+                footerContent: 'footer',
+                bodyContent: 'content',
+                mask: false,
+                align: {
+                    node: '#c1',
+                    points: ['cc', 'cc']
+                },
+                constrain: '#c1',
+                draggable: true
             });
-        });
 
-
-        S.Event.on('#btn7', 'click', function() {
-            var b = this,
-                    s = S.DOM.html(b);
-            dialog.set('constrain', false);
-        });
-
-        S.Event.on('#btn8', 'click', function() {
-            var b = this,
-                    s = S.DOM.html(b);
-            dialog.set('constrain', "#c1");
-            dialog.set("align", {
-                node: '#c1',
-                points: ['cc', 'cc']
+            var stat = ['release', 'constrain'],
+                    sh = ['show', 'hide'];
+            Event.on('#btn6', 'click', function() {
+                dialog.show();
+                dialog.set("align", {
+                    node: '#c1',
+                    points: ['cc', 'cc']
+                });
             });
-        });
 
+
+            Event.on('#btn7', 'click', function() {
+                var b = this,
+                        s = DOM.html(b);
+                dialog.set('constrain', false);
+            });
+
+            Event.on('#btn8', 'click', function() {
+                var b = this,
+                        s = DOM.html(b);
+                dialog.set('constrain', "#c1");
+                dialog.set("align", {
+                    node: '#c1',
+                    points: ['cc', 'cc']
+                });
+            });
+
+        });
     });
 </script>
 <p class="code-switch">显示源码</p>
-
 
 
 <h2>Dialog fixed 居中</h2>
 <button id="btn5">Show</button>
 <script>
-    KISSY.ready(function(S) {
-        var dialog = new S.Dialog({
-            width: 400,
-            bodyStyle:{
-                height: 300
-            },
-            elStyle:{
-              position:S.UA.ie==6?"absolute":"fixed"
-            },
-            headerContent: 'this is title',
-            footerContent: 'footer',
-            bodyContent: 'content',
-            mask: true,
-            draggable:false
-        });
-        S.one("#btn5").on("click", function() {
-            dialog.render();
-            dialog.center();
-            dialog.show();
-        });
-        if(S.UA.ie==6){
-            S.Event.on(window,"scroll",function(){
-                if(dialog.get("visible"))
-                dialog.center();
+    KISSY.use("ua,event,overlay,dd", function(S, UA, Event) {
+        var Node = S.require("node/node"),
+
+                DOM = S.require("dom"),
+                Dialog = S.require("overlay/dialog");
+
+        S.ready(function(S) {
+            var dialog = new Dialog({
+                width: 400,
+                bodyStyle:{
+                    height: 300
+                },
+                elStyle:{
+                    position:UA['ie'] == 6 ? "absolute" : "fixed"
+                },
+                headerContent: 'this is title',
+                footerContent: 'footer',
+                bodyContent: 'content',
+                mask: true,
+                draggable:false
             });
-        }
+            Node.one("#btn5").on("click", function() {
+                dialog.render();
+                dialog.center();
+                dialog.show();
+            });
+            if (UA.ie == 6) {
+                Event.on(window, "scroll", function() {
+                    if (dialog.get("visible"))
+                        dialog.center();
+                });
+            }
+        });
     });
 </script>
 <p class="code-switch">显示源码</p>
 
 <script>
-    (function() {
-        var S = KISSY, DOM = S.DOM,
+    KISSY.use("ua,dom,event,node", function(S, UA, DOM, Event) {
+        var NodeList = S.require("node/nodelist"),
+                Node = S.require("node/node"),
                 SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
 
-        S.all('p.code-switch').each(function(p) {
+        NodeList.all('p.code-switch').each(function(p) {
             p.on('click', function() {
                 var showing = (p.text() === SHOW_CODE),
                         next = p.next(),
                         pre = next;
 
                 if (next[0].nodeName !== 'PRE') {
-                    pre = S.Node('<pre>');
+                    pre = Node('<pre>');
 
                     pre.attr('class', 'code')
                             .html(p.prev().html());
 
-                    if (S.UA.ie) {
+                    if (UA['ie']) {
                         pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
                     }
 
@@ -410,7 +468,7 @@
                 p.html(showing ? HIDE_CODE : SHOW_CODE);
             });
         });
-    })();
+    });
 </script>
 </body>
 </html>

@@ -2,20 +2,19 @@
  * KISSY Overlay
  * @author: 玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
-KISSY.add("overlay", function(S) {
+KISSY.add("overlay/overlay", function(S, UA, UIBase) {
 
-    var UIBase = S.UIBase,
-        UA = S.UA;
+    function require(s) {
+        return S.require("uibase/" + s);
+    }
 
-
-    S.Overlay = UIBase.create([S.UIBase.Box,
-        S.UIBase.ContentBox,
-        S.UIBase.Position,
-        S.UIBase.Loading,
-        //ie6 支持,select bug
-        UA.ie == 6 ? S.UIBase.Shim : null,
-        S.UIBase.Align,
-        S.UIBase.Mask], {
+    return UIBase.create([require("box"),
+        require("contentbox"),
+        require("position"),
+        require("loading"),
+        UA['ie'] == 6 ? require("shim") : null,
+        require("align"),
+        require("mask")], {
 
         initializer:function() {
             //S.log("Overlay init");
@@ -45,13 +44,13 @@ KISSY.add("overlay", function(S) {
             //S.log("overlay destructor");
         }
 
-    },{
+    }, {
         ATTRS:{
             elOrder:0
         }
     });
 }, {
-    requires: ["uibase"]
+    requires: ["ua","uibase"]
 });
 
 /**
