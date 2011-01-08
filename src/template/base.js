@@ -4,10 +4,9 @@
  * @see https://github.com/yyfrankyy/kissy/tree/template/src/template
  * @version 0.3
  */
-KISSY.add('template', function(S, undefined) {
+KISSY.add('template/base', function(S) {
 
-    var defaultConfig = {},
-
+    var
         /**
          * Template Cache
          */
@@ -110,10 +109,10 @@ KISSY.add('template', function(S, undefined) {
 
         /**
          * @param {String} templ template to be rendered.
-         * @param {Object} config configuration.
-         * @return {KISSY.Template} return this for chain.
+         * @return return this for chain.
          */
-        Template = function(templ, config) {
+        Template = function(templ//, config
+            ) {
             if (!(templ in templateCache)) {
                 var _ks_data = KS_DATA + S.now(), func,
                     _parser = [
@@ -171,13 +170,13 @@ KISSY.add('template', function(S, undefined) {
              * @param {String} o extent tag object.
              */
             addStatement: function(statement, o) {
-                if (S.isString(statement) && S.isObject(o)) {
+                if (S['isString'](statement) && S['isObject'](o)) {
                     Statements[statement] = o;
                 }
             }
 
         });
 
-    S.Template = Template;
+    return Template;
 
-}, {requires: ['core']});
+});
