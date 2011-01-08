@@ -2,10 +2,9 @@
  * Switchable Countdown Plugin
  * @creator  gonghao<gonghao@ghsky.com>
  */
-KISSY.add('countdown', function(S, undefined) {
+KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, undefined) {
 
-    var DOM = S.DOM, Event = S.Event, Anim = S.Anim,
-        Switchable = S.Switchable,
+    var
         CLS_PREFIX = 'ks-switchable-trigger-',
         TRIGGER_MASK_CLS = CLS_PREFIX + 'mask',
         TRIGGER_CONTENT_CLS = CLS_PREFIX + 'content',
@@ -106,7 +105,9 @@ KISSY.add('countdown', function(S, undefined) {
         }
     });
 
-}, { requires: 'switchable' } );
+    return Switchable;
+
+}, { requires:["dom","event","anim","switchable/base"]});
 
 /**
  * NOTES:

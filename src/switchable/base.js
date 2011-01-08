@@ -2,10 +2,10 @@
  * Switchable
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable', function(S, undefined) {
+KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
-    var DOM = S.DOM, Event = S.Event,
-        DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
+    var DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
+        EventTarget = S.require("event/target"),
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
 
@@ -43,7 +43,7 @@ KISSY.add('switchable', function(S, undefined) {
          * the container of widget
          * @type HTMLElement
          */
-        self.container = S.get(container);
+        self.container = DOM.get(container);
 
         /**
          * 配置参数
@@ -122,7 +122,7 @@ KISSY.add('switchable', function(S, undefined) {
     // 插件
     Switchable.Plugins = [];
 
-    S.augment(Switchable, S.EventTarget, {
+    S.augment(Switchable, EventTarget, {
 
         /**
          * init switchable
@@ -134,7 +134,7 @@ KISSY.add('switchable', function(S, undefined) {
             self._parseMarkup();
 
             // 切换到指定项
-            if(cfg.switchTo) {
+            if (cfg.switchTo) {
                 self.switchTo(cfg.switchTo);
             }
 
@@ -145,11 +145,11 @@ KISSY.add('switchable', function(S, undefined) {
 
             // init plugins
             S.each(Switchable.Plugins, function(plugin) {
-                if(plugin.init) {
+                if (plugin.init) {
                     plugin.init(self);
                 }
             });
-            
+
             self.fire(EVENT_INIT);
         },
 
@@ -159,18 +159,22 @@ KISSY.add('switchable', function(S, undefined) {
         _parseMarkup: function() {
             var self = this, container = self.container,
                 cfg = self.config,
-                nav, content, triggers = [], panels = [], i, n, m;
+                nav, content, triggers = [], panels = [],
+                //i,
+                n
+                //m
+                ;
 
             switch (cfg.markupType) {
                 case 0: // 默认结构
-                    nav = S.get(DOT + cfg.navCls, container);
+                    nav = DOM.get(DOT + cfg.navCls, container);
                     if (nav) triggers = DOM.children(nav);
-                    content = S.get(DOT + cfg.contentCls, container);
+                    content = DOM.get(DOT + cfg.contentCls, container);
                     panels = DOM.children(content);
                     break;
                 case 1: // 适度灵活
-                    triggers = S.query(DOT + cfg.triggerCls, container);
-                    panels = S.query(DOT + cfg.panelCls, container);
+                    triggers = DOM.query(DOT + cfg.triggerCls, container);
+                    panels = DOM.query(DOT + cfg.panelCls, container);
                     break;
                 case 2: // 完全自由
                     triggers = cfg.triggers;
@@ -287,7 +291,7 @@ KISSY.add('switchable', function(S, undefined) {
          */
         _cancelSwitchTimer: function() {
             var self = this;
-            if(self.switchTimer) {
+            if (self.switchTimer) {
                 self.switchTimer.cancel();
                 self.switchTimer = undefined;
             }
@@ -375,9 +379,9 @@ KISSY.add('switchable', function(S, undefined) {
         }
     });
 
-    S.Switchable = Switchable;
+    return Switchable;
 
-}, { requires: ['core'] } );
+}, { requires: ['dom',"event"] });
 
 /**
  * NOTES:

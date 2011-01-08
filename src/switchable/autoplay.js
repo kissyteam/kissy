@@ -2,10 +2,8 @@
  * Switchable Autoplay Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('autoplay', function(S, undefined) {
+KISSY.add('switchable/autoplay', function(S, Event,Switchable,undefined) {
 
-    var Event = S.Event,
-        Switchable = S.Switchable;
 
     /**
      * 添加默认配置
@@ -63,5 +61,5 @@ KISSY.add('autoplay', function(S, undefined) {
             }
         }
     });
-
-}, { host: 'switchable' } );
+    return Switchable;
+}, { requires:["event","switchable/base"]});

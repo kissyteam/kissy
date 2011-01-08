@@ -2,14 +2,12 @@
  * Switchable Lazyload Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('lazyload', function(S) {
+KISSY.add('switchable/lazyload', function(S,DOM,Switchable) {
 
-    var DOM = S.DOM,
-        EVENT_BEFORE_SWITCH = 'beforeSwitch',
+    var EVENT_BEFORE_SWITCH = 'beforeSwitch',
         IMG_SRC = 'img-src',
         AREA_DATA = 'area-data',
-        FLAGS = { },
-        Switchable = S.Switchable;
+        FLAGS = { };
 
     FLAGS[IMG_SRC] = 'data-ks-lazyload-custom';
     FLAGS[AREA_DATA] = 'ks-datalazyload-custom';
@@ -29,7 +27,7 @@ KISSY.add('lazyload', function(S) {
         name: 'lazyload',
 
         init: function(host) {
-            var DataLazyload = S.DataLazyload,
+            var DataLazyload = S.require("datalazyload"),
                 cfg = host.config,
                 type = cfg.lazyDataType, flag = FLAGS[type];
 
@@ -60,7 +58,7 @@ KISSY.add('lazyload', function(S) {
                     tagName = isImgSrc ? 'img' : (type === AREA_DATA ? 'textarea' : '');
 
                 if (tagName) {
-                    elems = S.query(tagName, host.container);
+                    elems = DOM.query(tagName, host.container);
                     for (i = 0, len = elems.length; i < len; i++) {
                         if (isImgSrc ? DOM.attr(elems[i], flag) : DOM.hasClass(elems[i], flag)) return false;
                     }
@@ -70,4 +68,6 @@ KISSY.add('lazyload', function(S) {
         }
     });
 
-}, { host: 'switchable' } );
+    return Switchable;
+
+}, { requires:["dom","switchable/base"]});

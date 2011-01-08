@@ -2,10 +2,9 @@
  * Accordion Widget
  * @creator  沉鱼<fool2fish@gmail.com>
  */
-KISSY.add('accordion', function(S) {
+KISSY.add('switchable/accordion', function(S, DOM, Switchable) {
 
-    var DOM = S.DOM,
-        DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
+    var DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
 
         defaultConfig = {
             markupType: 1,
@@ -28,13 +27,15 @@ KISSY.add('accordion', function(S) {
         Accordion.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
 
         // multiple 模式时，switchTrigger 在 switchView 时已经实现
-        if(self.config.multiple) {
-            self._switchTrigger = function() { }
+        if (self.config.multiple) {
+            self._switchTrigger = function() {
+            }
         }
+        return 0;
     }
 
-    S.extend(Accordion, S.Switchable);
-    S.Accordion = Accordion;
+    S.extend(Accordion, Switchable);
+
 
     S.augment(Accordion, {
 
@@ -64,7 +65,9 @@ KISSY.add('accordion', function(S) {
         }
     });
 
-}, { host: 'switchable' } );
+    return Accordion;
+
+}, { requires:["dom","switchable/base"]});
 
 /**
  * TODO:

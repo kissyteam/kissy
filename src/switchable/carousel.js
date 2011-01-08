@@ -2,10 +2,9 @@
  * Carousel Widget
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('carousel', function(S, undefined) {
+KISSY.add('switchable/carousel', function(S, DOM,Event,Switchable,undefined) {
 
-    var DOM = S.DOM, Event = S.Event,
-        CLS_PREFIX = 'ks-switchable-', DOT = '.',
+    var CLS_PREFIX = 'ks-switchable-', DOT = '.',
         PREV_BTN = 'prevBtn', NEXT_BTN = 'nextBtn',
 
         /**
@@ -35,10 +34,11 @@ KISSY.add('carousel', function(S, undefined) {
 
         // call super
         Carousel.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
+        return 0;
     }
 
-    S.extend(Carousel, S.Switchable);
-    S.Carousel = Carousel;
+    S.extend(Carousel, Switchable);
+    
 
     /**
      * Carousel 的初始化逻辑
@@ -51,7 +51,7 @@ KISSY.add('carousel', function(S, undefined) {
 
         // 获取 prev/next 按钮，并添加事件
         S.each(['prev', 'next'], function(d) {
-            var btn = self[d + 'Btn'] = S.get(DOT + cfg[d + 'BtnCls'], self.container);
+            var btn = self[d + 'Btn'] = DOM.get(DOT + cfg[d + 'BtnCls'], self.container);
 
             Event.on(btn, 'click', function(ev) {
                 ev.preventDefault();
@@ -78,8 +78,10 @@ KISSY.add('carousel', function(S, undefined) {
             self.fire('itemSelected', { item: this });
         });
     }
+    
+    return Carousel;
 
-}, { host: 'switchable' } );
+}, { requires:["dom","event","switchable/base"]});
 
 
 /**

@@ -2,15 +2,15 @@
  * Switchable Effect Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('effect', function(S, undefined) {
+KISSY.add('switchable/effect', function(S, DOM,Event,Anim,Switchable,undefined) {
 
-    var DOM = S.DOM, Anim = S.Anim,
+    var
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         OPACITY = 'opacity', Z_INDEX = 'z-index',
         POSITION = 'position', RELATIVE = 'relative', ABSOLUTE = 'absolute',
         SCROLLX = 'scrollx', SCROLLY = 'scrolly', FADE = 'fade',
         LEFT = 'left', TOP = 'top', FLOAT = 'float', PX = 'px',
-        Switchable = S.Switchable, Effects;
+        Effects;
 
     /**
      * 添加默认配置
@@ -57,6 +57,7 @@ KISSY.add('effect', function(S, undefined) {
 
                 callback();
             }, cfg.nativeAnim).run();
+
         },
 
         // 水平/垂直滚动效果
@@ -67,12 +68,14 @@ KISSY.add('effect', function(S, undefined) {
                 props = { };
 
             props[isX ? LEFT : TOP] = -diff + PX;
+
             if (self.anim) self.anim.stop();
 
             self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
                 self.anim = undefined; // free
                 callback();
             }, cfg.nativeAnim).run();
+
         }
     };
     Effects = Switchable.Effects;
@@ -117,8 +120,10 @@ KISSY.add('effect', function(S, undefined) {
                     // 如果是滚动效果
                     case SCROLLX:
                     case SCROLLY:
+
                         // 设置定位信息，为滚动效果做铺垫
                         DOM.css(content, POSITION, ABSOLUTE);
+                        
                         DOM.css(content.parentNode, POSITION, RELATIVE); // 注：content 的父级不一定是 container
 
                         // 水平排列
@@ -158,6 +163,7 @@ KISSY.add('effect', function(S, undefined) {
     S.augment(Switchable, {
 
         _switchView: function(fromEls, toEls, index, direction) {
+
             var self = this, cfg = self.config,
                 effect = cfg.effect,
                 fn = S.isFunction(effect) ? effect : Effects[effect];
@@ -169,4 +175,6 @@ KISSY.add('effect', function(S, undefined) {
 
     });
 
-}, { host: 'switchable' } );
+    return Switchable;
+
+}, { requires:["dom","event","anim","switchable/base"]});

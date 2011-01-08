@@ -2,15 +2,13 @@
  * Switchable Circular Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('circular', function(S, undefined) {
+KISSY.add('switchable/circular', function(S,DOM, Anim,Switchable) {
 
-    var DOM = S.DOM,
-        POSITION = 'position', RELATIVE = 'relative',
+    var POSITION = 'position', RELATIVE = 'relative',
         LEFT = 'left', TOP = 'top',
         EMPTY = '', PX = 'px',
         FORWARD = 'forward', BACKWARD = 'backward',
-        SCROLLX = 'scrollx', SCROLLY = 'scrolly',
-        Switchable = S.Switchable;
+        SCROLLX = 'scrollx', SCROLLY = 'scrolly';
 
     /**
      * 添加默认配置
@@ -45,8 +43,10 @@ KISSY.add('circular', function(S, undefined) {
         props[prop] = diff + PX;
 
         // 开始动画
+
         if (self.anim) self.anim.stop();
-        self.anim = new S.Anim(self.content, props, cfg.duration, cfg.easing, function() {
+
+        self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
             if (isCritical) {
                 // 复原位置
                 resetPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
@@ -55,6 +55,7 @@ KISSY.add('circular', function(S, undefined) {
             self.anim = undefined;
             callback();
         }, cfg.nativeAnim).run();
+
     }
 
     /**
@@ -123,7 +124,7 @@ KISSY.add('circular', function(S, undefined) {
         }
     });
 
-}, { host: 'switchable' } );
+}, { requires:["dom","anim","switchable/base","switchable/effect"]});
 
 /**
  * TODO:

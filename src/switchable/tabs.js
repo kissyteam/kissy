@@ -2,7 +2,7 @@
  * Tabs Widget
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('tabs', function(S) {
+KISSY.add('switchable/tabs', function(S,Switchable) {
 
     /**
      * Tabs Class
@@ -17,9 +17,10 @@ KISSY.add('tabs', function(S) {
         }
 
         Tabs.superclass.constructor.call(self, container, config);
+        return 0;
     }
 
-    S.extend(Tabs, S.Switchable);
-    S.Tabs = Tabs;
+    S.extend(Tabs, Switchable);
+    return Tabs;
 
-}, { host: 'switchable' } );
+}, { requires:["switchable/base"]});

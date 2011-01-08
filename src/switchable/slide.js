@@ -2,7 +2,7 @@
  * Tabs Widget
  * @creator     玉伯<lifesinger@gmail.com>
  */
-KISSY.add('slide', function(S) {
+KISSY.add('switchable/slide', function(S, Switchable) {
 
     /**
      * 默认配置，和 Switchable 相同的部分此处未列出
@@ -25,9 +25,11 @@ KISSY.add('slide', function(S) {
         }
 
         Slide.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
+        return 0;
     }
 
-    S.extend(Slide, S.Switchable);
-    S.Slide = Slide;
+    S.extend(Slide, Switchable);
 
-}, { host: 'switchable' } );
+    return Slide;
+
+}, { requires:["switchable/base"]});
