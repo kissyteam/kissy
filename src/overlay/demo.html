@@ -14,6 +14,7 @@
 <script src="../../build/base.js"></script>
 <script src="../../build/json.js"></script>
 <script src="../../build/dd.js"></script>
+<script src="../../build/resizable.js"></script>
 
 <script src="overlay.js"></script>
 <script src="dialog.js"></script>
@@ -31,6 +32,7 @@
 <script src="../uibase/position.js"></script>
 <script src="../uibase/shim.js"></script>
 <script src="../uibase/stdmod.js"></script>
+<script src="../uibase/resize.js"></script>
 
 
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
@@ -434,6 +436,76 @@
                         dialog.center();
                 });
             }
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+
+<h2>Overlay 可缩放大小</h2>
+<button id="btn16">Show</button>
+<script>
+    KISSY.use("ua,event,overlay,resizable", function(S, UA, Event) {
+        var Node = S.require("node/node"),
+                DOM = S.require("dom"),
+                Overlay = S.require("overlay/overlay"),
+                Dialog = S.require("overlay/dialog");
+
+        S.ready(function(S) {
+            var dialog = new Overlay({
+                width: 400,
+                content:"可以缩放？",
+                elStyle:{
+                    border:"1px solid red"
+                },
+
+                resize:{
+                    handlers:["b","t","r","l","tr","tl","br","bl"]
+                }
+            });
+            Node.one("#btn16").on("click", function() {
+                dialog.show();
+                dialog.center();
+            });
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+
+<h2>Dialog 可缩放大小</h2>
+<button id="btn17">Show</button>
+<script>
+    KISSY.use("ua,event,overlay,resizable", function(S, UA, Event) {
+        var Node = S.require("node/node"),
+                DOM = S.require("dom"),
+                Overlay = S.require("overlay/overlay"),
+                Dialog = S.require("overlay/dialog");
+
+        S.ready(function(S) {
+            var dialog = new Dialog({
+                width: 400,
+                bodyContent:"可以缩放？",
+                headerContent: 'this is title',
+                footerContent: 'footer',
+                footerStyle:{
+                  position:"absolute",
+                    bottom:0
+                },
+                bodyStyle:{
+                    marginBottom:"20px"
+                },
+
+                resize:{
+                    minWidth:150,
+                    minHeight:70,
+                    handlers:["b","t","r","l","tr","tl","br","bl"]
+                }
+            });
+            Node.one("#btn17").on("click", function() {
+                dialog.show();
+                dialog.center();
+            });
         });
     });
 </script>
