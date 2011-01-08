@@ -84,7 +84,7 @@
         height: 5px;
         width: 5px;
         z-index: 1;
-        background-color: green;       
+        background-color: green;
         top: 0;
         right: 0;
         cursor: ne-resize;
@@ -100,23 +100,35 @@
         destroy resize
     </button>
 </div>
-<script src="../../build/kissy-min.js"></script>
-<script src="../uibase/uibase.js"></script>
-<script src="../dd/ddm.js"></script>
-<script src="../dd/draggable.js"></script>
-<script src="resizable.js"></script>
+<script src="../seed/kissy.js"></script>
+<script src="../seed/lang.js"></script>
+<script src="../seed/web.js"></script>
+<script src="../seed/loader.js"></script>
+<script src="../../build/ua.js"></script>
+<script src="../../build/node.js"></script>
+<script src="../../build/dom.js"></script>
+<script src="../../build/event.js"></script>
+<script src="../../build/base.js"></script>
+<script src="../../build/dd.js"></script>
+<script src="../../build/uibase.js"></script>
+<script src="base.js"></script>
+<script src="../resizable.js"></script>
 <script>
-    KISSY.ready(function(S) {
-        var r = new S.Resizable({
-            node:"#t",
-            minHeight:10,
-            autoRender:true,
-            handlers:["b","t","r","l","tr","tl","br","bl"]
-        });
-        S.one("#destroy").on("click", function() {
-            r.destroy();
-        });
+    KISSY.use("node,resizable", function(S, N, Resizable) {
+        var Node = S.require("node/node");
 
+        S.ready(function(S) {
+            var r = new Resizable({
+                node:"#t",
+                minHeight:10,
+                autoRender:true,
+                handlers:["b","t","r","l","tr","tl","br","bl"]
+            });
+            Node.one("#destroy").on("click", function() {
+                r.destroy();
+            });
+
+        });
     });
 </script>
 </body>

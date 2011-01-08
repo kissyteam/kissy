@@ -19,6 +19,7 @@ KISSY.add("overlay/overlay", function(S, UA, UIBase) {
         require("loading"),
         UA['ie'] == 6 ? require("shim") : null,
         require("align"),
+         require("resize"),
         require("mask")], {
 
         initializer:function() {

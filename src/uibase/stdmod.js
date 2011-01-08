@@ -20,6 +20,12 @@ KISSY.add("uibase/stdmod", function(S) {
         },
         bodyStyle:{
         },
+        footerStyle:{
+
+        },
+        headerStyle:{
+
+        },
         headerContent:{
             value:false
         },
@@ -70,6 +76,16 @@ KISSY.add("uibase/stdmod", function(S) {
         _uiSetBodyStyle:function(v) {
             if (v !== undefined) {
                 this.get("body").css(v);
+            }
+        },
+        _uiSetHeaderStyle:function(v) {
+            if (v !== undefined) {
+                this.get("header").css(v);
+            }
+        },
+        _uiSetFooterStyle:function(v) {
+            if (v !== undefined) {
+                this.get("footer").css(v);
             }
         },
         _uiSetBodyContent:function(v) {

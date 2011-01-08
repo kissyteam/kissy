@@ -15,6 +15,7 @@ KISSY.add("uibase/contentbox", function(S) {
         //内容容器节点
         contentEl:{},
         contentElAttrs:{},
+        contentElStyle:{},
         contentTagName:{value:"div"},
         //层内容
         content:{}
@@ -50,9 +51,10 @@ KISSY.add("uibase/contentbox", function(S) {
         },
         _uiSetContentElAttrs:function(attrs) {
             //S.log("_uiSetContentElAttrs");
-            if (attrs) {
-                this.get("contentEl").attr(attrs);
-            }
+            attrs && this.get("contentEl").attr(attrs);
+        },
+        _uiSetContentElStyle:function(v) {
+            v && this.get("contentEl").css(v);
         },
         _uiSetContent:function(c) {
             //S.log("_uiSetContent");

@@ -1,18 +1,17 @@
 .ks-dialog, .ks-overlay {
-    position: absolute;
-    /*防止移位带来的闪烁*/    
+    position: absolute; /*防止移位带来的闪烁*/
     left: -9999px;
     top: -9999px;
 }
 
-.ks-dialog .ks-contentbox,.ks-popup .ks-contentbox{
+.ks-dialog, .ks-popup {
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;
 }
 
 .ks-dialog .ks-stdmod-header {
     background: repeat-x scroll 0 0 #D6DBE2;
-    background-image:url("dialog-hd.png");
+    background-image: url("dialog-hd.png");
     border-bottom: 1px solid #ACB4BE;
     font-size: 14px;
     font-weight: bold;
@@ -61,10 +60,88 @@
 .ks-ext-loading {
     opacity: 0.3;
     filter: alpha(opacity = 15);
-    background: #000  center center no-repeat scroll;
-    background-image:url("loading.gif");
+    background: #000 center center no-repeat scroll;
+    background-image: url("loading.gif");
 }
 
 .ke-global-loading .ks-ext-loading {
     background-attachment: fixed;
+}
+
+.ks-overlay .ke-resizehandler {
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+}
+
+.ks-overlay .ke-resizehandler-b {
+    height: 5px;
+    width: 100%; /*background-color: yellow;*/
+    bottom: 0;
+    left: 0;
+    cursor: n-resize;
+}
+
+.ks-overlay .ke-resizehandler-t {
+    height: 5px;
+    width: 100%; /*background-color: yellow;*/
+    top: 0;
+    left: 0;
+    cursor: n-resize;
+}
+
+.ks-overlay .ke-resizehandler-l {
+    height: 100%;
+    -height: expression(this.parentNode.offsetHeight);
+    width: 5px; /*background-color: yellow;*/
+    top: 0;
+    left: 0;
+    cursor: e-resize;
+}
+
+.ks-overlay .ke-resizehandler-r {
+    height: 100%;
+    -height: expression(this.parentNode.offsetHeight); /*background-color: yellow;*/
+    width: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: e-resize;
+}
+
+.ks-overlay .ke-resizehandler-bl {
+    height: 5px;
+    width: 5px; /*background-color: green;*/
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    cursor: sw-resize;
+}
+
+.ks-overlay .ke-resizehandler-br {
+    height: 5px;
+    width: 5px;
+    z-index: 1; /*background-color: green;*/
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+}
+
+.ks-overlay .ke-resizehandler-tl {
+    height: 5px;
+    width: 5px;
+    z-index: 1; /*background-color: green;*/
+    top: 0;
+    left: 0;
+    cursor: nw-resize;
+}
+
+.ks-overlay .ke-resizehandler-tr {
+    height: 5px;
+    width: 5px;
+    z-index: 1; /*background-color: green;*/
+    top: 0;
+    right: 0;
+    cursor: ne-resize;
 }

@@ -8,7 +8,8 @@
 
     <target name="concat">
         <concat destfile="resizable-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="resizable.js"/>
+            <path path="base.js"/>
+            <path path="../resizable.js"/>
         </concat>
     </target>
 

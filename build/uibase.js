@@ -754,6 +754,7 @@ KISSY.add("uibase/contentbox", function(S) {
         //内容容器节点
         contentEl:{},
         contentElAttrs:{},
+        contentElStyle:{},
         contentTagName:{value:"div"},
         //层内容
         content:{}
@@ -789,9 +790,10 @@ KISSY.add("uibase/contentbox", function(S) {
         },
         _uiSetContentElAttrs:function(attrs) {
             //S.log("_uiSetContentElAttrs");
-            if (attrs) {
-                this.get("contentEl").attr(attrs);
-            }
+            attrs && this.get("contentEl").attr(attrs);
+        },
+        _uiSetContentElStyle:function(v) {
+            v && this.get("contentEl").css(v);
         },
         _uiSetContent:function(c) {
             //S.log("_uiSetContent");
@@ -1164,6 +1166,38 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
     return Position;
 }, {
     requires:["dom","event"]
+});KISSY.add("uibase/resize", function(S) {
+    function Resize() {
+
+    }
+
+    Resize.ATTRS = {
+        resize:{
+            value:{
+
+            }
+        }
+    };
+
+    Resize.prototype = {
+        __destructor:function() {
+            self.resizer && self.resizer.destroy();
+        },
+        _uiSetResize:function(v) {
+
+            var Resizable = S.require("resizable"),self = this;
+            if (Resizable) {
+                self.resizer && self.resizer.destroy();
+                v.node = self.get("el");
+                v.autoRender=true;
+                if (v.handlers) {
+                    self.resizer = new Resizable(v);
+                }
+
+            }
+        }
+    };
+    return Resize;
 });/**
  * shim for ie6 ,require box-ext
  * @author: 承玉<yiminghe@gmail.com>
@@ -1240,6 +1274,12 @@ KISSY.add("uibase/stdmod", function(S) {
         },
         bodyStyle:{
         },
+        footerStyle:{
+
+        },
+        headerStyle:{
+
+        },
         headerContent:{
             value:false
         },
@@ -1292,6 +1332,16 @@ KISSY.add("uibase/stdmod", function(S) {
                 this.get("body").css(v);
             }
         },
+        _uiSetHeaderStyle:function(v) {
+            if (v !== undefined) {
+                this.get("header").css(v);
+            }
+        },
+        _uiSetFooterStyle:function(v) {
+            if (v !== undefined) {
+                this.get("footer").css(v);
+            }
+        },
         _uiSetBodyContent:function(v) {
             //S.log("_uiSetBodyContent");
             this._setStdModContent("body", v);
@@ -1333,5 +1383,6 @@ KISSY.add("uibase/stdmod", function(S) {
         "uibase/mask",
         "uibase/position",
         "uibase/shim",
+        "uibase/resize",
         "uibase/stdmod"]
 });

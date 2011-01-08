@@ -12,5 +12,6 @@ KISSY.add("uibase", function(S, UIBase) {
         "uibase/mask",
         "uibase/position",
         "uibase/shim",
+        "uibase/resize",
         "uibase/stdmod"]
 });
