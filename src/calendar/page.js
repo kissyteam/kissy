@@ -183,7 +183,7 @@ KISSY.add('calendar/page', function(S, UA, N, Calendar) {
 
                 cc.EV[0] = con.one('div.ks-dbd').on('click', function(e) {
                     //e.preventDefault();
-                    e.target = S.Node(e.target);
+                    e.target = Node(e.target);
                     if (e.target.hasClass('ks-null')) {
                         return;
                     }
@@ -234,7 +234,7 @@ KISSY.add('calendar/page', function(S, UA, N, Calendar) {
                             e.preventDefault();
                         } catch(exp) {
                         }
-                        e.target = S.Node(e.target);
+                        e.target = Node(e.target);
                         var setime_node = con.one('.ks-setime');
                         setime_node.html('');
                         var in_str = cc.father._templetShow(cc.nav_html, {
@@ -244,7 +244,7 @@ KISSY.add('calendar/page', function(S, UA, N, Calendar) {
                         setime_node.html(in_str);
                         setime_node.removeClass('hidden');
                         con.one('input').on('keydown', function(e) {
-                            e.target = S.Node(e.target);
+                            e.target = Node(e.target);
                             if (e.keyCode == 38) {//up
                                 e.target.val(Number(e.target.val()) + 1);
                                 e.target[0].select();
@@ -274,7 +274,7 @@ KISSY.add('calendar/page', function(S, UA, N, Calendar) {
                     });
                     cc.EV[4] = con.one('.ks-setime').on('click', function(e) {
                         e.preventDefault();
-                        e.target = S.Node(e.target);
+                        e.target = Node(e.target);
                         if (e.target.hasClass('ok')) {
                             var _month = con.one('.ks-setime').one('select').val(),
                                 _year = con.one('.ks-setime').one('input').val();

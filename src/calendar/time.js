@@ -2,8 +2,8 @@
  * @module     日历
  * @creator  拔赤<lijing00333@163.com>
  */
-KISSY.add('calendar/time', function(S, Calendar) {
-
+KISSY.add('calendar/time', function(S, N,Calendar) {
+    var Node=S.require("node/node");
     S.augment(Calendar, {
 
         /**
@@ -22,8 +22,8 @@ KISSY.add('calendar/time', function(S, Calendar) {
             }
             this.time = father._time;
             this.status = 's';//当前选择的状态，'h','m','s'依次判断更新哪个值
-            this.ctime = S.Node('<div class="ks-cal-time">时间：<span class="h">h</span>:<span class="m">m</span>:<span class="s">s</span><!--{{arrow--><div class="cta"><button class="u"></button><button class="d"></button></div><!--arrow}}--></div>');
-            this.button = S.Node('<button class="ct-ok">确定</button>');
+            this.ctime = Node('<div class="ks-cal-time">时间：<span class="h">h</span>:<span class="m">m</span>:<span class="s">s</span><!--{{arrow--><div class="cta"><button class="u"></button><button class="d"></button></div><!--arrow}}--></div>');
+            this.button = Node('<button class="ct-ok">确定</button>');
             //小时
             this.h_a = ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
             //分钟
@@ -157,7 +157,7 @@ KISSY.add('calendar/time', function(S, Calendar) {
                 ft.append(self.button);
                 self.render();
                 self.popupannel.on('click', function(e) {
-                    var el = S.Node(e.target);
+                    var el = Node(e.target);
                     if (el.hasClass('x')) {//关闭
                         self.hidePopup();
                     } else if (el.hasClass('item')) {//点选一个值
@@ -234,4 +234,4 @@ KISSY.add('calendar/time', function(S, Calendar) {
 
     return Calendar;
 
-}, { requires:["calendar/base"] });
+}, { requires:["node","calendar/base"] });
