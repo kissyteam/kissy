@@ -1,5 +1,8 @@
+KISSY.use("dom,event,selectable",function(S,DOM,Event,Selectable){
+    var D=DOM,selectedIndex,currentIndex;
+
 describe('selectable', function() {
-	var S = KISSY, D = S.DOM, E = S.Event,
+	var 
 		tempList, VALUE_KEY = 'ks-data',
 		SELECTED_ITEM_CLS = 'selected';
 
@@ -34,7 +37,7 @@ describe('selectable', function() {
 	describe('初始化方法', function() {
 		var testList;
 		beforeEach(function() {
-			testList = new S.Selectable('#KS_List',{
+			testList = new Selectable('#KS_List',{
 				valueKey : VALUE_KEY,
 				selectedItemCls : SELECTED_ITEM_CLS
 			});
@@ -66,7 +69,7 @@ describe('selectable', function() {
 	describe('select方法', function() {
 		var testList;
 		beforeEach(function() {
-			testList = new S.Selectable('#KS_List',{
+			testList = new Selectable('#KS_List',{
 				valueKey : VALUE_KEY,
 				selectedItemCls : SELECTED_ITEM_CLS
 			});
@@ -184,7 +187,7 @@ describe('selectable', function() {
 	describe('selectByValue方法', function() {
 		var testList;
 		beforeEach(function() {
-			testList = new S.Selectable('#KS_List',{
+			testList = new Selectable('#KS_List',{
 				valueKey : VALUE_KEY,
 				selectedItemCls : SELECTED_ITEM_CLS
 			});
@@ -205,7 +208,7 @@ describe('selectable', function() {
 			testList.selectByValue( value );
 
 
-			selectedIndex = testList.selectedIndex;
+			var selectedIndex = testList.selectedIndex;
 			item = D.get( '.' + config.selectedItemCls );
 
 			//当选中时selectedIndex不是undefined
@@ -228,7 +231,7 @@ describe('selectable', function() {
 
 			testList.selectByValue( value );
 
-			selectedIndex = testList.selectedIndex;
+			var selectedIndex = testList.selectedIndex;
 			item = D.get( '.' + config.selectedItemCls );
 
 			//当选中时selectedIndex是undefined
@@ -331,7 +334,7 @@ describe('selectable', function() {
 	describe('prev方法', function() {
 		var testList;
 		beforeEach(function() {
-			testList = new S.Selectable('#KS_List',{
+			testList = new Selectable('#KS_List',{
 				valueKey : VALUE_KEY,
 				selectedItemCls : SELECTED_ITEM_CLS
 			});
@@ -417,7 +420,7 @@ describe('selectable', function() {
 	describe('next方法', function() {
 		var testList;
 		beforeEach(function() {
-			testList = new S.Selectable('#KS_List',{
+			testList = new Selectable('#KS_List',{
 				valueKey : VALUE_KEY,
 				selectedItemCls : SELECTED_ITEM_CLS
 			});
@@ -503,7 +506,7 @@ describe('selectable', function() {
 	describe('value方法', function() {
 		var testList;
 		beforeEach(function() {
-			testList = new S.Selectable('#KS_List',{
+			testList = new Selectable('#KS_List',{
 				valueKey : VALUE_KEY,
 				selectedItemCls : SELECTED_ITEM_CLS
 			});
@@ -543,7 +546,7 @@ describe('selectable', function() {
 	describe('item方法', function() {
 		var testList;
 		beforeEach(function() {
-			testList = new S.Selectable('#KS_List',{
+			testList = new Selectable('#KS_List',{
 				valueKey : VALUE_KEY,
 				selectedItemCls : SELECTED_ITEM_CLS
 			});
@@ -583,7 +586,7 @@ describe('selectable', function() {
 	describe('filter方法', function() {
 		var testList;
 		beforeEach(function() {
-			testList = new S.Selectable('#KS_List',{
+			testList = new Selectable('#KS_List',{
 				valueKey : VALUE_KEY,
 				selectedItemCls : SELECTED_ITEM_CLS
 			});
@@ -666,7 +669,7 @@ describe('selectable', function() {
 	describe('clearFilter方法', function() {
 		var testList;
 		beforeEach(function() {
-			testList = new S.Selectable('#KS_List',{
+			testList = new Selectable('#KS_List',{
 				valueKey : VALUE_KEY,
 				selectedItemCls : SELECTED_ITEM_CLS
 			});
@@ -715,4 +718,5 @@ describe('selectable', function() {
 			expect( arrayEqualDOM(testList.fullItems, tempList.children) ).toEqual( true );
 		});
 	});
+});
 });

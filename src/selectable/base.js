@@ -2,14 +2,16 @@
  * Selectable
  * @creator  清羽<qingyu@taobao.com> & 博玉<boyu@taobao.com>
  */
-KISSY.add('selectable', function(S, undefined) {
+KISSY.add('selectable/base', function(S, DOM,Event,undefined) {
 
-	var DOM = S.DOM, Event = S.Event,
-		CLS_PREFIX = 'ks-selectable-', DATA_PREFIX = 'ks-data-',
+	var EventTarget=S.require("event/target"),
+        CLS_PREFIX = 'ks-selectable-', DATA_PREFIX = 'ks-data-',
 		NONE_SELECTED_INDEX = -1, DOT = '.',
 		EVENT_INIT = 'init', EVENT_SELECT = 'select', EVENT_SELECTBYVALUE = 'selectByValue',
-		EVENT_PREV = 'prev', EVENT_NEXT = 'next', EVENT_VALUE = 'value',
-		EVENT_ITEM = 'item', EVENT_FILTER = 'filter',
+		EVENT_PREV = 'prev', EVENT_NEXT = 'next',
+        //EVENT_VALUE = 'value',
+		//EVENT_ITEM = 'item',
+        EVENT_FILTER = 'filter',
 		EVENT_CLEARFILTER = 'clearFilter';
 
 	/**
@@ -39,7 +41,7 @@ KISSY.add('selectable', function(S, undefined) {
          * the container of widget
          * @type HTMLElement
          */
-		self.container = S.get(container);
+		self.container = DOM.get(container);
 
 		/**
          * the current items of widget
@@ -106,7 +108,7 @@ KISSY.add('selectable', function(S, undefined) {
 	// 插件
     Selectable.Plugins = [];
 
-	S.augment(Selectable, S.EventTarget, {
+	S.augment(Selectable, EventTarget, {
 
 		//初始化
 		_init: function() {
@@ -135,7 +137,7 @@ KISSY.add('selectable', function(S, undefined) {
 					items = DOM.children(container);
 					break;
 				case 1: //灵活方式
-					items = S.query(DOT + cfg.itemCls, container);
+					items = DOM.query(DOT + cfg.itemCls, container);
 					break;
 				case 2: //自由方式
 					items = cfg.items;
@@ -150,7 +152,7 @@ KISSY.add('selectable', function(S, undefined) {
 			var self = this, config = self.config,
 				obj = {};
 			S.each(self.items, function(item) {
-				var value = DOM.attr(item, config.valueKey)
+				var value = DOM.attr(item, config.valueKey);
 				if (value !== undefined){
 					obj[value] = item;
 				}
@@ -200,7 +202,8 @@ KISSY.add('selectable', function(S, undefined) {
 
 		//根据值选择
 		selectByValue: function(value) {
-			var self = this, config = self.config,
+			var self = this,
+                //config = self.config,
 				item = self.valueMap[value];
 
 			if (item) {
@@ -297,9 +300,9 @@ KISSY.add('selectable', function(S, undefined) {
 
 	});
 
-	S.Selectable = Selectable;
+	return Selectable;
 
-}, { requires: ['core'] });
+}, { requires: ['dom',"event"] });
 
 /**
 日志：
