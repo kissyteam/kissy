@@ -1,20 +1,56 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8" />
+<meta charset="utf-8"/>
 <title>Suggest Test</title>
 
-<link rel="stylesheet" href="../../build/cssbase/base-min.css" />
-<script src="../../build/kissy.js"></script>
-<script src="suggest.js"></script>
+<link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
+<script src="../seed/kissy.js"></script>
+<script src="../seed/lang.js"></script>
+<script src="../seed/web.js"></script>
+<script src="../seed/loader.js"></script>
+<script src="../../build/ua.js"></script>
+<script src="../../build/node.js"></script>
+<script src="../../build/dom.js"></script>
+<script src="../../build/event.js"></script>
+<script src="../../build/base.js"></script>
+<script src="../suggest.js"></script>
+<script src="base.js"></script>
 <style>
-    #page { padding: 50px 50px 300px; width: 950px; margin: 0 auto; line-height: 18px; }
-    h1, h2, h3 { margin: 1em 0 0.3em; }
-    .section ol { margin: 5px 20px; }
-    .section ol li { list-style: decimal inside; margin: 5px 0; }
-    .search-input { width: 300px; height: 20px; padding: 3px 2px 2px 4px; }
-    .search-submit { padding: 4px 10px; margin-left: 5px; }
-    html { overflow-y: scroll; }
+    #page {
+        padding: 50px 50px 300px;
+        width: 950px;
+        margin: 0 auto;
+        line-height: 18px;
+    }
+
+    h1, h2, h3 {
+        margin: 1em 0 0.3em;
+    }
+
+    .section ol {
+        margin: 5px 20px;
+    }
+
+    .section ol li {
+        list-style: decimal inside;
+        margin: 5px 0;
+    }
+
+    .search-input {
+        width: 300px;
+        height: 20px;
+        padding: 3px 2px 2px 4px;
+    }
+
+    .search-submit {
+        padding: 4px 10px;
+        margin-left: 5px;
+    }
+
+    html {
+        overflow-y: scroll;
+    }
 </style>
 </head>
 <body>
@@ -31,7 +67,7 @@
         <input type="hidden" value="initiative" name="user_action"/>
         <input type="hidden" value="s1-e" name="ssid"/>
 
-        <input name="q" id="q" class="search-input" />
+        <input name="q" id="q" class="search-input"/>
 
         <button type="submit" class="search-submit">Search</button>
     </form>
@@ -118,13 +154,13 @@
         <form id="form6" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
             <input class="search-input" name="q" id="q6"/>
             <button type="submit" class="search-submit">Search</button>
-            <input type="radio" name="rel" checked value="1" /> 开启提示
-            <input type="radio" name="rel" value="0" /> 关闭提示
+            <input type="radio" name="rel" checked value="1"/> 开启提示
+            <input type="radio" name="rel" value="0"/> 关闭提示
         </form>
 
         <h3>测试提示层宽度和遮罩：</h3>
         <form name="search4" method="get" action="http://search1.taobao.com/browse/search_auction.htm" target="_blank">
-            <input name="q" id="q4" style="margin-left: 100px" />
+            <input name="q" id="q4" style="margin-left: 100px"/>
             <button type="submit">Search</button>
         </form>
         <br>
@@ -137,7 +173,7 @@
 
         <h3>有啊有啊哈哈哈：</h3>
         <form name="search7" method="get" action="http://youa.baidu.com/search/s" target="_blank">
-            <input class="search-input" name="keyword" id="q5" />
+            <input class="search-input" name="keyword" id="q5"/>
             <button type="submit" class="search-submit">百度一下</button>
         </form>
     </div>
@@ -145,102 +181,103 @@
 </div>
 
 <script>
-    KISSY.ready(function(S) {
+    KISSY.use("dom,suggest", function(S,DOM, Suggest) {
+        S.ready(function(S) {
+            var dataUrl = 'http://suggest.taobao.com/sug';
+            //var dataUrl = 'http://t-yubo/work/lab/suggest/sug.php';
+            //var dataUrl = 'http://192.168.208.18:8090/sug';
 
-        var dataUrl = 'http://suggest.taobao.com/sug';
-        //var dataUrl = 'http://t-yubo/work/lab/suggest/sug.php';
-        //var dataUrl = 'http://192.168.208.18:8090/sug';
+            // 淘宝搜索
+            var sug = new Suggest('#q', dataUrl, {
+                autoFocus: true,
+                resultFormat: '约%result%个宝贝'
+            });
 
-        // 淘宝搜索
-        var sug = new S.Suggest('#q', dataUrl, {
-            autoFocus: true,
-            resultFormat: '约%result%个宝贝'
-        });
+            sug.on('updateFooter', function() {
+                this.footer.innerHTML = '<form _fieldname="q" method="get" action="/search" style="padding: 5px 0">' +
+                        '<input type="hidden" name="q">' +
+                        '<input type="hidden" value="tdg1" name="from">' +
+                        '同店购：<input type="text" _default="第一件宝贝" class="input" style="width: 60px" index="0"><em>+</em><input type="text" style="width: 60px" _default="另一宝贝" class="input blur" index="1"><em>+</em><input type="text"  style="width: 60px" _default="另一宝贝" class="input blur" index="2"> <button class="ms-btn" type="submit">搜索</button>' +
+                        '</form>';
+            });
 
-        sug.on('updateFooter', function() {
-            this.footer.innerHTML = '<form _fieldname="q" method="get" action="/search" style="padding: 5px 0">' +
-                    '<input type="hidden" name="q">' +
-                    '<input type="hidden" value="tdg1" name="from">' +
-                    '同店购：<input type="text" _default="第一件宝贝" class="input" style="width: 60px" index="0"><em>+</em><input type="text" style="width: 60px" _default="另一宝贝" class="input blur" index="1"><em>+</em><input type="text"  style="width: 60px" _default="另一宝贝" class="input blur" index="2"> <button class="ms-btn" type="submit">搜索</button>' +
-                    '</form>';
-        });
+            // 测试事件
+            var sug2 = new Suggest('#q2', dataUrl);
+            sug2.on('beforeDataRequest', function() {
+                if (this.query === 'pig') {
+                    alert('你输入的是：' + this.query);
+                }
+            });
+            sug2.on('dataReturn', function() {
+                if (this.query === 'dog') {
+                    alert('返回的数据是：' + this.returnedData);
+                }
+            });
 
-        // 测试事件
-        var sug2 = new S.Suggest('#q2', dataUrl);
-        sug2.on('beforeDataRequest', function() {
-            if (this.query === 'pig') {
-                alert('你输入的是：' + this.query);
-            }
-        });
-        sug2.on('dataReturn', function() {
-            if (this.query === 'dog') {
-                alert('返回的数据是：' + this.returnedData);
-            }
-        });
+            // 测试事件2
+            var sug3 = new Suggest('#q3', dataUrl);
+            sug3.on('beforeShow', function() {
+                var container = this.container,
+                        list = DOM.get('ol', container);
 
-        // 测试事件2
-        var sug3 = new S.Suggest('#q3', dataUrl);
-        sug3.on('beforeShow', function() {
-            var container = this.container,
-                list = S.get('ol', container);
+                if (list) {
+                    list.insertBefore(
+                            DOM.create('<li class="even"><span class="ks-suggest-key">含 "' + this.query + '" 的商品</span></li>'),
+                            DOM.get('li', list)
+                            );
+                    list.insertBefore(
+                            DOM.create('<li class="odd"><span class="ks-suggest-key">含 "' + this.query + '" 的店铺</span></li>'),
+                            DOM.get('li', list)
+                            );
+                }
 
-            if (list) {
-                list.insertBefore(
-                        S.DOM.create('<li class="even"><span class="ks-suggest-key">含 "' + this.query + '" 的商品</span></li>'),
-                        S.get('li', list)
-                        );
-                list.insertBefore(
-                        S.DOM.create('<li class="odd"><span class="ks-suggest-key">含 "' + this.query + '" 的店铺</span></li>'),
-                        S.get('li', list)
-                        );
-            }
-            
-            container.appendChild(document.createTextNode('我是天下无敌的广告'));
-        });
-        sug3.on('itemSelect', function() {
-            alert('你选中了：' + this.textInput.value);
-        });
+                container.appendChild(document.createTextNode('我是天下无敌的广告'));
+            });
+            sug3.on('itemSelect', function() {
+                alert('你选中了：' + this.textInput.value);
+            });
 
-        
-        // 测试 beforeStart / beforeSubmit 事件
-        var sug6 = new S.Suggest('#q6', dataUrl), form6 = S.get('#form6');
-        sug6.on('beforeStart', function() {
-            if(form6.rel[1].checked) {
+
+            // 测试 beforeStart / beforeSubmit 事件
+            var sug6 = new Suggest('#q6', dataUrl), form6 = DOM.get('#form6');
+            sug6.on('beforeStart', function() {
+                if (form6.rel[1].checked) {
+                    return false;
+                }
+            });
+            sug6.on('beforeSubmit', function() {
                 return false;
-            }
-        });
-        sug6.on('beforeSubmit', function() {
-            return false;
-        });
+            });
 
-        // 测试配置参数
-        new S.Suggest('#q4', dataUrl, {
-            containerWidth: '200px',
-            closeBtn: true
-        });
+            // 测试配置参数
+            new Suggest('#q4', dataUrl, {
+                containerWidth: '200px',
+                closeBtn: true
+            });
 
 
-        // 有啊有啊哈哈哈
-        // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
-        dataUrl = 'http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10';
+            // 有啊有啊哈哈哈
+            // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
+            dataUrl = 'http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10';
 
-        var sug5 = new S.Suggest('#q5', dataUrl, {
-            charset: 'gbk',
-            callbackFn: 'suggestCallback',
-            queryName: 'keyword'
-        });
+            var sug5 = new Suggest('#q5', dataUrl, {
+                charset: 'gbk',
+                callbackFn: 'suggestCallback',
+                queryName: 'keyword'
+            });
 
-        // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
-        // taobao: g_ks_suggest_callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
-        sug5.on('dataReturn', function() {
-            var data = this.returnedData['r'] || [];
-            var result = [];
+            // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
+            // taobao: g_ks_suggest_callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
+            sug5.on('dataReturn', function() {
+                var data = this.returnedData['r'] || [];
+                var result = [];
 
-            for (var i = 0, len = data.length; i < len; ++i) {
-                result.push([data[i]['key'], data[i]['val']]);
-            }
+                for (var i = 0, len = data.length; i < len; ++i) {
+                    result.push([data[i]['key'], data[i]['val']]);
+                }
 
-            this.returnedData = result;
+                this.returnedData = result;
+            });
         });
     });
 </script>

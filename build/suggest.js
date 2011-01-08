@@ -1,13 +1,24 @@
-/**
+/*
+Copyright 2011, KISSY UI Library v1.1.7dev
+MIT Licensed
+build time: ${build.time}
+*/
+KISSY.add("suggest", function(S, Sug) {
+    return Sug;
+}, {
+    requires:["suggest/base"]
+});/**
  * 提示补全组件
  * @module   suggest
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('suggest', function(S, undefined) {
+KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 
-    var DOM = S.DOM, Event = S.Event,
-        win = window, doc = document, bd, head = S.get('head'),
-        ie = S.UA.ie, ie6 = (ie === 6),
+    var win = window,
+        EventTarget = S.require("event/target"),
+        doc = document, bd, head = DOM.get('head'),
+        ie = UA['ie'],
+        ie6 = (ie === 6),
 
         CALLBACK_FN = 'KISSY.Suggest.callback', // 约定的全局回调函数
         PREFIX = 'ks-suggest-',
@@ -156,7 +167,7 @@ KISSY.add('suggest', function(S, undefined) {
          * 文本输入框
          * @type HTMLElement
          */
-        self.textInput = S.get(textInput);
+        self.textInput = DOM.get(textInput);
 
         /**
          * 配置参数
@@ -252,9 +263,10 @@ KISSY.add('suggest', function(S, undefined) {
 
         // init
         self._init();
+        return 0;
     }
 
-    S.augment(Suggest, S.EventTarget, {
+    S.augment(Suggest, EventTarget, {
 
         /**
          * 初始化方法
@@ -324,7 +336,7 @@ KISSY.add('suggest', function(S, undefined) {
                     // 如果是键盘选中某项后回车，触发 onItemSelect 事件
                     if (isDowningOrUping) {
                         if (input.value == self._getSelectedItemKey()) { // 确保值匹配
-                            if(self.fire(EVENT_ITEM_SELECT) === false) return;
+                            if (self.fire(EVENT_ITEM_SELECT) === false) return;
                         }
                     }
 
@@ -439,7 +451,7 @@ KISSY.add('suggest', function(S, undefined) {
             Event.on(content, 'mousedown', function(ev) {
                 var target = ev.target;
 
-               // 可能点击在 li 的子元素上
+                // 可能点击在 li 的子元素上
                 if (target.nodeName !== LI) {
                     target = DOM.parent(target, li);
                 }
@@ -461,13 +473,13 @@ KISSY.add('suggest', function(S, undefined) {
 
             Event.on(content, 'mouseup', function(ev) {
                 var target = ev.target;
-                if(ev.which > 2) return; // 非左键和中键点击
+                if (ev.which > 2) return; // 非左键和中键点击
 
                 // 可能点击在 li 的子元素上
                 if (target.nodeName !== LI) {
                     target = DOM.parent(target, li);
                 }
-                
+
                 // 在提示层 A 项处按下鼠标，移动到 B 处释放，不触发 onItemSelect
                 if (target != mouseDownItem) return;
 
@@ -476,7 +488,7 @@ KISSY.add('suggest', function(S, undefined) {
                     self._updateInputFromSelectItem(target);
 
                     // 触发选中事件
-                    if(self.fire(EVENT_ITEM_SELECT) === false) return;
+                    if (self.fire(EVENT_ITEM_SELECT) === false) return;
 
                     // 提交表单前，先隐藏提示层并停止计时器
                     input.blur();
@@ -500,7 +512,7 @@ KISSY.add('suggest', function(S, undefined) {
                 // 因此需要等待另一个输入框 focusin 触发后，再执行下面的逻辑
                 S.later(function() {
                     // 鼠标已移开 footer 区域
-                    if(mouseLeaveFooter) {
+                    if (mouseLeaveFooter) {
                         self.hide();
                     }
                     // 不是转移到另一个输入框，而是在 footer 非输入框处点击
@@ -534,7 +546,7 @@ KISSY.add('suggest', function(S, undefined) {
                 var form = self.textInput.form;
                 if (!form) return;
 
-                if(self.fire(EVENT_BEFORE_SUBMIT, { form: form }) === false) return;
+                if (self.fire(EVENT_BEFORE_SUBMIT, { form: form }) === false) return;
 
                 // 通过 js 提交表单时，不会触发 onsubmit 事件
                 // 需要 js 自己触发
@@ -586,22 +598,22 @@ KISSY.add('suggest', function(S, undefined) {
          * 初始化样式
          */
         _initStyle: function() {
-            var styleEl = S.get('#' + STYLE_ID);
+            var styleEl = DOM.get('#' + STYLE_ID);
             if (styleEl) return; // 防止多个实例时重复添加
 
             DOM.addStyleSheet(
                 '.ks-suggest-container{background:white;border:1px solid #999;z-index:99999}'
-                + '.ks-suggest-shim{z-index:99998}'
-                + '.ks-suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}'
-                + '.ks-suggest-container .ks-selected{background-color:#39F;cursor:default}'
-                + '.ks-suggest-key{float:left;text-align:left;padding-left:5px}'
-                + '.ks-suggest-result{float:right;text-align:right;padding-right:5px;color:green}'
-                + '.ks-suggest-container .ks-selected span{color:#FFF;cursor:default}'
-                + '.ks-suggest-footer{padding:0 5px 5px}'
-                + '.ks-suggest-closebtn{float:right}'
-                + '.ks-suggest-container li,.ks-suggest-footer{overflow:hidden;zoom:1;clear:both}'
-                /* hacks */
-                + '.ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}',
+                    + '.ks-suggest-shim{z-index:99998}'
+                    + '.ks-suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}'
+                    + '.ks-suggest-container .ks-selected{background-color:#39F;cursor:default}'
+                    + '.ks-suggest-key{float:left;text-align:left;padding-left:5px}'
+                    + '.ks-suggest-result{float:right;text-align:right;padding-right:5px;color:green}'
+                    + '.ks-suggest-container .ks-selected span{color:#FFF;cursor:default}'
+                    + '.ks-suggest-footer{padding:0 5px 5px}'
+                    + '.ks-suggest-closebtn{float:right}'
+                    + '.ks-suggest-container li,.ks-suggest-footer{overflow:hidden;zoom:1;clear:both}'
+                    /* hacks */
+                    + '.ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}',
                 STYLE_ID);
         },
 
@@ -624,7 +636,7 @@ KISSY.add('suggest', function(S, undefined) {
          */
         start: function() {
             var self = this;
-            if(self.fire(EVENT_BEFORE_START) === false) return;
+            if (self.fire(EVENT_BEFORE_START) === false) return;
 
             Suggest.focusInstance = self;
 
@@ -643,7 +655,7 @@ KISSY.add('suggest', function(S, undefined) {
             var self = this;
 
             Suggest.focusInstance = undefined;
-            if(self._timer) self._timer.cancel();
+            if (self._timer) self._timer.cancel();
             self._isRunning = false;
         },
 
@@ -740,7 +752,7 @@ KISSY.add('suggest', function(S, undefined) {
             }
 
             self.queryParams = config.queryName + '=' + encodeURIComponent(self.query);
-            if(self.fire(EVENT_BEFORE_DATA_REQUEST) === false) return;
+            if (self.fire(EVENT_BEFORE_DATA_REQUEST) === false) return;
 
             // 注意：没必要加时间戳，是否缓存由服务器返回的Header头控制
             self.dataScript.src = self.dataSource + '&' + self.queryParams;
@@ -754,11 +766,11 @@ KISSY.add('suggest', function(S, undefined) {
             var self = this, formattedData,
                 content = EMPTY, i, len, list, li, key, itemData;
             //S.log('handle response');
-            
+
             if (self._scriptDataIsOut) return; // 抛弃过期数据，否则会导致 bug：1. 缓存 key 值不对； 2. 过期数据导致的闪屏
 
             self.returnedData = data;
-            if(self.fire(EVENT_DATA_RETURN, { data: data }) === false) return;
+            if (self.fire(EVENT_DATA_RETURN, { data: data }) === false) return;
 
             // 格式化数据
             formattedData = self._formatData(self.returnedData);
@@ -813,7 +825,7 @@ KISSY.add('suggest', function(S, undefined) {
             for (i = 0; i < len; ++i) {
                 item = data[i];
 
-                if (S.isString(item)) { // 只有 key 值时
+                if (S['isString'](item)) { // 只有 key 值时
                     arr[j++] = { 'key' : item };
                 } else if (S.isArray(item) && item.length > 1) { // ['key', 'result'] 取数组前2个
                     arr[j++] = {'key' : item[0], 'result' : item[1]};
@@ -913,7 +925,7 @@ KISSY.add('suggest', function(S, undefined) {
          */
         _selectItem: function(down) {
             var self = this,
-                items = S.query(li, self.container),
+                items = DOM.query(li, self.container),
                 newSelectedItem;
             if (items.length === 0) return;
 
@@ -1028,9 +1040,10 @@ KISSY.add('suggest', function(S, undefined) {
 
     Suggest.version = 1.1;
     Suggest.callback = callback;
-    S.Suggest = Suggest;
+    S.Suggest=Suggest;
+    return Suggest;
 
-}, { requires: ['core'] } );
+}, { requires: ['dom','event','ua'] });
 
 
 /**
