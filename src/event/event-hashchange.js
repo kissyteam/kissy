@@ -1,6 +1,6 @@
 /**
  * @module  event-hashchange
- * @author  yiminghe@gmail.com,xiaohu@taobao.com
+ * @author  yiminghe@gmail.com, xiaomacji@gmail.com
  */
 KISSY.add('event-hashchange', function(S) {
 
@@ -44,26 +44,10 @@ KISSY.add('event-hashchange', function(S) {
         var setup = function() {
             poll();
         },
-            teardown = function() {
-                timer && clearTimeout(timer);
-                timer = null;
-            };
-
-        function poll() {
-            //console.log('poll start..' + +new Date());
-            var hash = getHash();
-
-            if (hash !== lastHash) {
-                //debugger
-                hashChange(hash);
-                lastHash = hash;
-            }
-            timer = setTimeout(poll, 50);
-        }
-
-        function hashChange(hash) {
-            notifyHashChange(hash);
-        }
+        teardown = function() {
+            timer && clearTimeout(timer);
+            timer = null;
+        };
 
         // ie6, 7, 用匿名函数来覆盖一些function
         8 > ie && (function() {
@@ -142,7 +126,22 @@ KISSY.add('event-hashchange', function(S) {
             };
 
         })();
+        
+				function poll() {
+            //console.log('poll start..' + +new Date());
+            var hash = getHash();
 
+            if (hash !== lastHash) {
+                //debugger
+                hashChange(hash);
+                lastHash = hash;
+            }
+            timer = setTimeout(poll, 50);
+        }
+
+        function hashChange(hash) {
+            notifyHashChange(hash);
+        }
 
         function notifyHashChange(hash) {
             S.log("hash changed : " + hash);
