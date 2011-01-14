@@ -1,9 +1,9 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7
 MIT Licensed
-build time: ${build.time}
+build time: Jan 14 13:56
 */
-(function(f,n,u){var v={mix:function(j,l,o,p){if(!l||!j)return j;if(o===u)o=true;var d,i,k;if(p&&(k=p.length))for(d=0;d<k;d++){i=p[d];if(i in l)if(o||!(i in j))j[i]=l[i]}else for(i in l)if(o||!(i in j))j[i]=l[i];return j}},r=f&&f[n]||{},s=0;f=r.__HOST||(r.__HOST=f||{});n=f[n]=v.mix(r,v,false);n.mix(n,{__APP_MEMBERS:["namespace"],__APP_INIT_METHODS:["__init"],version:"1.1.7dev",merge:function(){var j={},l,o=arguments.length;for(l=0;l<o;l++)n.mix(j,arguments[l]);return j},augment:function(){var j=
+(function(f,n,u){var v={mix:function(j,l,o,p){if(!l||!j)return j;if(o===u)o=true;var d,i,k;if(p&&(k=p.length))for(d=0;d<k;d++){i=p[d];if(i in l)if(o||!(i in j))j[i]=l[i]}else for(i in l)if(o||!(i in j))j[i]=l[i];return j}},r=f&&f[n]||{},s=0;f=r.__HOST||(r.__HOST=f||{});n=f[n]=v.mix(r,v,false);n.mix(n,{__APP_MEMBERS:["namespace"],__APP_INIT_METHODS:["__init"],version:"1.1.7",merge:function(){var j={},l,o=arguments.length;for(l=0;l<o;l++)n.mix(j,arguments[l]);return j},augment:function(){var j=
 arguments,l=j.length-2,o=j[0],p=j[l],d=j[l+1],i=1;if(!n.isArray(d)){p=d;d=u;l++}if(!n.isBoolean(p)){p=u;l++}for(;i<l;i++)n.mix(o.prototype,j[i].prototype||j[i],p,d);return o},extend:function(j,l,o,p){if(!l||!j)return j;var d=Object.create?function(a,h){return Object.create(a,{constructor:{value:h}})}:function(a,h){function b(){}b.prototype=a;var c=new b;c.constructor=h;return c},i=l.prototype,k;k=d(i,j);j.prototype=n.mix(k,j.prototype);j.superclass=d(i,l);o&&n.mix(k,o);p&&n.mix(j,p);return j},__init:function(){this.Config=
 this.Config||{};this.Env=this.Env||{};this.Config.debug="@DEBUG@"},namespace:function(){var j=arguments,l=j.length,o=null,p,d,i,k=j[l-1]===true&&l--;for(p=0;p<l;p++){i=(""+j[p]).split(".");o=k?f:this;for(d=f[i[0]]===o?1:0;d<i.length;++d)o=o[i[d]]=o[i[d]]||{}}return o},app:function(j,l){var o=n.isString(j),p=o?f[j]||{}:j,d=0,i=n.__APP_INIT_METHODS.length;for(n.mix(p,this,true,n.__APP_MEMBERS);d<i;d++)n[n.__APP_INIT_METHODS[d]].call(p);n.mix(p,n.isFunction(l)?l():l);o&&(f[j]=p);return p},log:function(j,
 l,o){if(n.Config.debug){if(o)j=o+": "+j;if(f.console!==u&&console.log)console[l&&console[l]?l:"log"](j)}},error:function(j){if(n.Config.debug)throw j;},guid:function(j){return(j||"")+s++}});n.__init();return n})(this,"KISSY");

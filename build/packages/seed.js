@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7
 MIT Licensed
-build time: ${build.time}
+build time: Jan 14 13:56
 */
 /*
  * @module kissy
@@ -65,7 +65,7 @@ build time: ${build.time}
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.7dev',
+        version: '1.1.7',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110114134242';
+                    return m + '-pkg-min.js?t=20110114135714';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110114134242';
+                    return m + '-min.css?t=20110114135714';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
