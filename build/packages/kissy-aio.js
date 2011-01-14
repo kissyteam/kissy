@@ -1,5 +1,5 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20101230183650';
+                    return m + '-pkg-min.js?t=20110114134242';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20101230183650';
+                    return m + '-min.css?t=20110114134242';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -1433,7 +1433,7 @@ build time: ${build.time}
 })(KISSY);
 
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -1631,7 +1631,7 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -3685,7 +3685,7 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -4291,7 +4291,7 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -4679,7 +4679,7 @@ KISSY.add('node-attach', function(S, undefined) {
 
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -5185,7 +5185,7 @@ KISSY.add('json', function (S) {
     };
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -5508,7 +5508,7 @@ KISSY.add('ajax', function(S, undef) {
  *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -6167,7 +6167,7 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
 });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -6253,7 +6253,7 @@ KISSY.add('cookie', function(S) {
  *     独立成静态工具类的方式更优。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -6499,7 +6499,7 @@ KISSY.add('base', function (S) {
 
 KISSY.add('core');
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -7579,7 +7579,7 @@ KISSY.add('sizzle', function(S) {
 })();
 
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -7620,7 +7620,12 @@ KISSY.add('datalazyload', function(S, undefined) {
             /**
              * 图像的占位图，默认无
              */
-            placeholder: NONE
+            placeholder: NONE,
+
+            /**
+             * 是否执行 textarea 里面的脚本
+             */
+            execScript: true
         };
 
     /**
@@ -7872,7 +7877,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             top = DOM.offset(isHidden ? area.parentNode : area).top;
 
             if (top <= self.threshold + DOM.scrollTop()) {
-                self._loadAreaData(area.parentNode, area);
+                self._loadAreaData(area.parentNode, area, self.config.execScript);
             } else {
                 return true;
             }
@@ -7882,17 +7887,14 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 从 textarea 中加载数据
          * @static
          */
-        _loadAreaData: function(container, area) {
-            //chengyu 大幅重构，使用正则识别 html 字符串里的 script，提高性能
-            // 为了通用性，不要搜索 container 内的全部 script dom 节点执行
-
+        _loadAreaData: function(container, area, execScript) {
             // 采用隐藏 textarea 但不去除方式，去除会引发 Chrome 下错乱
             area.style.display = NONE;
             area.className = ''; // clear hook
 
             var content = DOM.create('<div>');
             container.insertBefore(content, area);
-            DOM.html(content, area.value, true);
+            DOM.html(content, area.value, execScript === undefined ? true : execScript);
 
             //area.value = ''; // bug fix: 注释掉，不能清空，否则 F5 刷新，会丢内容
         },
@@ -8062,7 +8064,7 @@ KISSY.add('datalazyload', function(S, undefined) {
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -8563,7 +8565,7 @@ KISSY.add('flash-embed', function(S) {
 }, { host: 'flash' });
 
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -8951,7 +8953,7 @@ KISSY.add('dd-draggable', function(S) {
 
 }, { host: 'dd' });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -9110,7 +9112,7 @@ KISSY.add("resizable", function(S) {
 
 }, { requires:["dd"] });
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -10439,7 +10441,7 @@ KISSY.add("uibase-stdmod", function(S) {
 },{
     host:"uibase"
 });/*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -11545,7 +11547,7 @@ KISSY.add('accordion', function(S) {
  *
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -11653,7 +11655,7 @@ KISSY.add('dialog', function(S) {
 
 
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -12745,7 +12747,7 @@ KISSY.add('suggest', function(S, undefined) {
  * 2010-08-04 更新： 去掉对 yahoo-dom-event 的依赖，仅依赖 ks-core. 调整了部分 public api, 扩展更容易了。
  */
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -13538,7 +13540,7 @@ KISSY.add('autorender', function(S) {
 
 }, { host: 'imagezoom' } );
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.7dev
 MIT Licensed
 build time: ${build.time}
 */
