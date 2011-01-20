@@ -1062,7 +1062,7 @@ build time: Jan 14 13:56
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110114135714';
+                    return m + '-pkg-min.js?t=20110120201417';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: Jan 14 13:56
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110114135714';
+                    return m + '-min.css?t=20110120201417';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -4291,9 +4291,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module  node
@@ -4643,6 +4643,9 @@ KISSY.add('node-attach', function(S, undefined) {
                 var args = S.makeArray(arguments);
                 args.shift();
                 ev.target = new Node(ev.target);
+                if (ev.relatedTarget) {
+                    ev.relatedTarget = new Node(ev.relatedTarget);
+                }
                 args.unshift(ev);
                 return fn.apply(scope || self, args);
             }

@@ -177,6 +177,9 @@ KISSY.add('node-attach', function(S, undefined) {
                 var args = S.makeArray(arguments);
                 args.shift();
                 ev.target = new Node(ev.target);
+                if (ev.relatedTarget) {
+                    ev.relatedTarget = new Node(ev.relatedTarget);
+                }
                 args.unshift(ev);
                 return fn.apply(scope || self, args);
             }

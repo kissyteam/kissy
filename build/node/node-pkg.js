@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module  node
@@ -351,6 +351,9 @@ KISSY.add('node-attach', function(S, undefined) {
                 var args = S.makeArray(arguments);
                 args.shift();
                 ev.target = new Node(ev.target);
+                if (ev.relatedTarget) {
+                    ev.relatedTarget = new Node(ev.relatedTarget);
+                }
                 args.unshift(ev);
                 return fn.apply(scope || self, args);
             }
