@@ -707,5 +707,8 @@
  *    依赖注入，发生于 add 和 use 时期
  *
  * 4. add,use 不支持 css loader ,getScript 仍然保留支持
+ *
+ *
+ * demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
  */
 
