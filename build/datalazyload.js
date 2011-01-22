@@ -7,7 +7,7 @@ KISSY.add("datalazyload", function(S, D) {
     return D;
 }, {
     requires:["datalazyload/impl"]
-})/**
+});/**
  * 数据延迟加载组件
  * @module   datalazyload
  * @creator  玉伯<lifesinger@gmail.com>

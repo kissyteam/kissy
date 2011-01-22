@@ -60,7 +60,7 @@ KISSY.add("overlay/overlay", function(S, UA, UIBase) {
 });
 
 /**
- * 2010-11-09 2010-11-10 承玉<yiminghe@gmail.com>重构，attribute-base-Overlay ，采用 Base.create
+ * 2010-11-09 2010-11-10 承玉<yiminghe@gmail.com>重构，attribute-base-uibase-Overlay ，采用 UIBase.create
  */
 /**
  * KISSY.Dialog

@@ -50,24 +50,54 @@
     }
 
     function normalDepModuleName(moduleName, depName) {
-        var archor = "",index;
-        if ((index = moduleName.lastIndexOf("/")) != -1) {
-            archor = moduleName.substring(0, index + 1);
+        if (depName.lastIndexOf("./") == 0
+            || depName.lastIndexOf("../") == 0) {
+            var archor = "",index;
+            if ((index = moduleName.lastIndexOf("/")) != -1) {
+                archor = moduleName.substring(0, index + 1);
+            }
+            return normalPath(archor + depName);
+        } else if (depName.indexOf("./") != -1
+            || depName.indexOf("../") != -1) {
+            return normalPath(depName);
+        } else {
+            return depName;
         }
-        return normalPath(archor + depName);
+    }
+
+    function removePostfix(path) {
+        return path.replace(/(-min)?\.js[^/]*$/i, "");
+    }
+
+    var pagePath = (function() {
+        var url = location.href;
+        return url.replace(/[^/]*$/i, "");
+    })();
+
+    function normalBasePath(path) {
+        if (path.charAt(path.length - 1) != '/')
+            path += "/";
+        path = S.trim(path);
+        if (!path.match(/^http(s)?:/i)) {
+            path = pagePath + path;
+        }
+
+        return normalPath(path);
     }
 
 
     loader = {
+        //页面基地址
+
 
         //firefox,ie9,chrome 如果add没有模块名，模块定义先暂存这里
-        currentModule:null,
+        __currentModule:null,
 
-        //
-        startLoadTime:0,
+        //ie6,7,8开始载入脚本的时间
+        __startLoadTime:0,
 
-        //
-        startLoadModuleName:null,
+        //ie6,7,8开始载入脚本对应的模块名
+        __startLoadModuleName:null,
 
         /**
          * Registers a module.
@@ -115,15 +145,16 @@
             }
             //S.add(fn,config);
             else if (S.isFunction(name)) {
-                def = name;
                 config = def;
+                def = name;
                 if (oldIE) {
                     //15 ms 内，从缓存读取的
-                    if (((+new Date()) - self.startLoadTime) < 15) {
+                    if (((+new Date()) - self.__startLoadTime) < 15) {
                         S.log("old_ie 从缓存中读取");
-                        if (name = self.startLoadModuleName) {
+                        if (name = self.__startLoadModuleName) {
                             self.__registerModule(name, def, config);
                         } else {
+                            S.log("从缓存读取？？但是记录没有模块名", "error");
                             S.error("从缓存读取？？但是记录没有模块名");
                         }
                     } else {
@@ -131,12 +162,12 @@
                         name = self.__findModuleNameByInteractive();
                         self.__registerModule(name, def, config);
                     }
-                    self.startLoadModuleName = null;
-                    self.startLoadTime = 0;
+                    self.__startLoadModuleName = null;
+                    self.__startLoadTime = 0;
                 } else {
-                    S.log("标准浏览器等load时再搞");
+                    S.log("标准浏览器等load时再关联模块名");
                     //其他浏览器 onload 时，关联模块名与模块定义
-                    self.currentModule = {
+                    self.__currentModule = {
                         def:def,
                         config:config
                     };
@@ -147,7 +178,8 @@
         },
 
         __findModuleNameByInteractive:function() {
-            var scripts = document.getElementsByTagName("script"),re;
+            var self = this,
+                scripts = document.getElementsByTagName("script"),re;
             for (var i = 0; i < scripts.length; i++) {
                 var script = scripts[i];
                 if (script.readyState == "interactive") {
@@ -156,18 +188,31 @@
                 }
             }
             if (!re) {
-                S.error("找不到 interactive 状态的 script")
+                S.log("找不到 interactive 状态的 script", "error");
+                S.error("找不到 interactive 状态的 script");
             }
             var src = re.src;
-            if (src.lastIndexOf(this.config.base, 0) != 0) {
-                S.error("当前脚本地址：" + src + " 不以 base 开头：" + this.config.base);
+            S.log("interactive src :" + src);
+
+            if (src.lastIndexOf(self.Config.base, 0) == 0) {
+                return removePostfix(src.substring(self.Config.base.length));
+            }
+            var packages = self.__packages;
+            for (var p in packages) {
+                if (!packages.hasOwnProperty(p)) continue;
+                if (src.lastIndexOf(packages[p].path, 0) == 0) {
+                    return removePostfix(src.substring(packages[p].path.length));
+                }
             }
 
-            return src.substring(this.config.base.length);
+            S.log("interactive 状态的 script 没有对应包 ：" + src, "error");
+            S.error("interactive 状态的 script 没有对应包 ：" + src);
+            return undefined;
         },
         __registerModule:function(name, def, config) {
             config = config || {};
-            var mods = self.Env.mods,
+            var self = this,
+                mods = self.Env.mods,
                 mod = mods[name] || {};
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
@@ -175,6 +220,7 @@
             mix(mod, { name: name, status: LOADED });
 
             if (mod.fn) {
+                S.log(name + " is defined more than once", "error");
                 S.error(name + " is defined more than once");
 
             }
@@ -190,6 +236,9 @@
             for (var i = 0; i < cfgs.length; i++) {
                 var cfg = cfgs[i];
                 ps[cfg.name] = cfg;
+                if (cfg.path) {
+                    cfg.path = normalBasePath(cfg.path);
+                }
             }
         }
         ,
@@ -233,7 +282,8 @@
         ,
 
         __getModules:function(modNames) {
-            var self = this,mods = [self];
+            var self = this,
+                mods = [self];
             modNames = modNames || [];
             for (var i = 0; i < modNames.length; i++) {
                 mods.push(self.require(modNames[i]));
@@ -251,18 +301,23 @@
                 mod = mods[moduleName];
 
             return mod && mod.value;
-        }
-        ,
+        },
         __getPackagePath:function(mod) {
-            var p = mod.name,ind,packages = this.__packages || {};
+            var self = this,
+                p = mod.name,
+                ind,
+                packages = self.__packages || {};
             if ((ind = p.indexOf("/")) != -1) {
                 p = p.substring(0, ind);
             }
             var p_def = packages[p];
             if (!p_def) return;
-            var p_path = p_def.path || ".";
+            var p_path = p_def.path || pagePath;
             if (p_path.charAt(p_path.length - 1) !== "/") {
                 p_path += "/";
+            }
+            if (p_def.charset) {
+                mod.charset = p_def.charset;
             }
             return p_path;
         }
@@ -318,9 +373,10 @@
             self.__buildPath(mod, self.__getPackagePath(mod));
             self.__load(mod, function() {
 
-                if (self.currentModule) {
-                    self.__registerModule(mod.name, self.currentModule.def, self.currentModule.config);
-                    self.currentModule = null;
+                if (self.__currentModule) {
+                    self.__registerModule(mod.name, self.__currentModule.def,
+                        self.__currentModule.config);
+                    self.__currentModule = null;
                 }
 
                 // add 可能改了 config，这里重新取下
@@ -393,7 +449,7 @@
                 i = (modNames = S.makeArray(modNames)).length - 1;
 
             for (; i >= 0; i--) {
-                var name = modNames[i].replace(/\+css/, "");
+                var name = modNames[i];
                 mod = mods[name] || {};
                 if (mod.status !== ATTACHED) return false;
             }
@@ -422,8 +478,8 @@
             if (mod.status < LOADING && url) {
                 mod.status = LOADING;
                 if (oldIE) {
-                    self.startLoadModuleName = mod.name;
-                    self.startLoadTime = Number(+new Date());
+                    self.__startLoadModuleName = mod.name;
+                    self.__startLoadTime = Number(+new Date());
                 }
                 ret = self.getScript(url, {
                     success: function() {
@@ -482,7 +538,7 @@
             }
             // debug 模式下，加载非 min 版
             if (mod[fullpath] && Config.debug) {
-                mod[fullpath] = mod[fullpath].replace(/-min/g, '');
+                mod[fullpath] = mod[fullpath].replace(/-min/ig, '');
             }
         }
         ,
@@ -533,9 +589,9 @@
                     S.isFunction(success) && success.call(node);
 
                     // remove script
-                    if (head && node.parentNode) {
-                        head.removeChild(node);
-                    }
+                    //if (head && node.parentNode) {
+                    //    head.removeChild(node);
+                    //}
                 });
             }
 
@@ -567,7 +623,7 @@
      */
     // notice: timestamp
     var baseReg = /^(.*)(seed|kissy)(-min)?\.js[^/]*/i,
-        baseTestReg = /(seed|kissy)(-min)?\.js/;
+        baseTestReg = /(seed|kissy)(-min)?\.js/i;
 
     function getBaseUrl(script) {
         var src = script.src,
@@ -608,16 +664,21 @@
      */
     S.__initLoader = function() {
         // get base from current script file path
-        var scripts = doc.getElementsByTagName('script'),
+        var self = this,
+            scripts = doc.getElementsByTagName('script'),
             currentScript = scripts[scripts.length - 1],
             base = getBaseUrl(currentScript);
 
-        this.Env.mods = {}; // all added mods
-        this.Env._loadQueue = {}; // information for loading and loaded mods
+        self.Env.mods = {}; // all added mods
+        self.Env._loadQueue = {}; // information for loading and loaded mods
 
         // don't override
-        if (!this.Config.base) this.Config.base = base;
-        if (!this.Config.timeout) this.Config.timeout = 10;   // the default timeout for getScript
+        if (!self.Config.base) {
+            self.Config.base = normalBasePath(base);
+        }
+        if (!self.Config.timeout) {
+            self.Config.timeout = 10;
+        }   // the default timeout for getScript
     };
     S.__initLoader();
 
@@ -630,15 +691,21 @@
 })(KISSY);
 
 /**
- * 2011-01-04 yiminghe start refactor:
+ * 2011-01-04 chengyu<yiminghe@gmail.com> refactor:
  * adopt requirejs :
- * 1. add(moduleName,{property:value});
- *        moduleName add 时可以不写
+ * 1. packages(cfg) , cfg :{
+ *    name : 包名，用于指定业务模块前缀
+ *    path: 前缀包名对应的路径
+ *    charset: 该包下所有文件的编码
+ *
  * 2. add(moduleName,function(S,depModule){return function(){}},{requires:["depModuleName"]});
- *        depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
+ *    moduleName add 时可以不写
+ *    depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
+ *
  * 3. S.use(["dom"],function(S,DOM){
  *    });
- *        依赖注入，发生于 add 和 use 时期
+ *    依赖注入，发生于 add 和 use 时期
+ *
  * 4. add,use 不支持 css loader ,getScript 仍然保留支持
  */
 

@@ -24,5 +24,6 @@
     </target>
 
     <target name="build" depends="pre-clean,concat,compress,copyright">
+
     </target>
 </project>

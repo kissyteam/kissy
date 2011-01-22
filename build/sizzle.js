@@ -1068,7 +1068,7 @@ KISSY.add('sizzle/impl', function(S) {
         return Sizzle.filter(later, tmpSet);
     };
     Sizzle._filter = function(selector, filter) {
-        return Sizzle.matches(filter, S.query(selector));
+        return Sizzle.matches(filter, S.require("dom/selector").query(selector));
     };
     return Sizzle;
 });

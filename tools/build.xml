@@ -16,6 +16,7 @@
         <delete>
             <fileset dir="${build.dir}/${component.name}" includes="*.css,*.js"/>
         </delete>
+
         <copy todir="${build.dir}/${component.name}">
             <fileset dir="${src.dir}" includes="${component.files}"/>
         </copy>
@@ -77,6 +78,8 @@
                       dest="${build.dir}/${component.name}"
                       includes="*.js"/>
         <delete dir="${build.dir}/${component.name}/ascii"/>
+
+        <fixcrlf srcdir="${build.dir}/${component.name}/" includes="**/*.js,**/*.css"/>
     </target>
 
     <!-- 替换版本信息以及给文件加上版权信息 -->
@@ -120,9 +123,11 @@
             <fileset dir="${build.dir}/${component.name}/tmp" includes="${copyright.files}"/>
         </move>
         <delete dir="${build.dir}/${component.name}/tmp"/>
+        <fixcrlf srcdir="${build.dir}/${component.name}/" includes="**/*.js,**/*.css"/>
     </target>
 
     <target name="common.build" depends="prepare,compress,native2ascii,copyright">
+
         <move encoding="${charset}" todir="${build.dir}">
             <fileset dir="${build.dir}/${component.name}/" includes="*-pkg*.js"/>
             <mapper type="regexp" from="(.*)-pkg(.*)" to="\1\2"/>

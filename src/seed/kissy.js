@@ -171,7 +171,7 @@
             // NOTICE: '@DEBUG@' will replace with '' when compressing.
             // So, if loading source file, debug is on by default.
             // If loading min version, debug is turned off automatically.
-            this.Config.debug = '@DEBUG@';
+            //this.Config.debug = '@DEBUG@';
         },
 
         /**

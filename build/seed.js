@@ -176,7 +176,7 @@ build time: ${build.time}
             // NOTICE: '@DEBUG@' will replace with '' when compressing.
             // So, if loading source file, debug is on by default.
             // If loading min version, debug is turned off automatically.
-            this.Config.debug = '@DEBUG@';
+            //this.Config.debug = '@DEBUG@';
         },
 
         /**
@@ -598,6 +598,7 @@ build time: ${build.time}
 
         /**
          * Creates a serialized string of an array or object.
+         * @return {String}
          * <code>
          * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
          * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
@@ -916,6 +917,7 @@ build time: ${build.time}
 (function(S, undef) {
 
     var win = S.__HOST,
+        oldIE = !window.getSelection && window.ActiveXObject,
         doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
         EMPTY = '',
@@ -941,7 +943,73 @@ build time: ${build.time}
                        },
         loader;
 
+    function normalPath(path) {
+        var paths = path.split("/");
+        var re = [];
+        for (var i = 0; i < paths.length; i++) {
+            var p = paths[i];
+            if (p == ".") {
+            }
+            else if (p == "..") {
+                re.pop();
+            }
+            else {
+                re.push(p);
+            }
+
+        }
+        return re.join("/");
+    }
+
+    function normalDepModuleName(moduleName, depName) {
+        if (depName.lastIndexOf("./") == 0
+            || depName.lastIndexOf("../") == 0) {
+            var archor = "",index;
+            if ((index = moduleName.lastIndexOf("/")) != -1) {
+                archor = moduleName.substring(0, index + 1);
+            }
+            return normalPath(archor + depName);
+        } else if (depName.indexOf("./") != -1
+            || depName.indexOf("../") != -1) {
+            return normalPath(depName);
+        } else {
+            return depName;
+        }
+    }
+
+    function removePostfix(path) {
+        return path.replace(/(-min)?\.js[^/]*$/i, "");
+    }
+
+    var pagePath = (function() {
+        var url = location.href;
+        return url.replace(/[^/]*$/i, "");
+    })();
+
+    function normalBasePath(path) {
+        if (path.charAt(path.length - 1) != '/')
+            path += "/";
+        path = S.trim(path);
+        if (!path.match(/^http(s)?:/i)) {
+            path = pagePath + path;
+        }
+
+        return normalPath(path);
+    }
+
+
     loader = {
+        //页面基地址
+
+
+        //firefox,ie9,chrome 如果add没有模块名，模块定义先暂存这里
+        __currentModule:null,
+
+        //ie6,7,8开始载入脚本的时间
+        __startLoadTime:0,
+
+        //ie6,7,8开始载入脚本对应的模块名
+        __startLoadModuleName:null,
 
         /**
          * Registers a module.
@@ -964,7 +1032,6 @@ build time: ${build.time}
         add: function(name, def, config) {
             var self = this,
                 mods = self.Env.mods,
-                mod,
                 o;
 
             // S.add(name, config) => S.add( { name: config } )
@@ -985,25 +1052,94 @@ build time: ${build.time}
                 mix(mods, name);
             }
             // S.add(name[, fn[, config]])
-            else {
-                config = config || {};
-
-                mod = mods[name] || {};
-
-                // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
-                // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-                mix(mod, { name: name, status: LOADED });
-
-                if (mod.fn) {
-                    S.error(name + " is defined more than once");
-
+            else if (S['isString'](name)) {
+                self.__registerModule(name, def, config);
+            }
+            //S.add(fn,config);
+            else if (S.isFunction(name)) {
+                config = def;
+                def = name;
+                if (oldIE) {
+                    //15 ms 内，从缓存读取的
+                    if (((+new Date()) - self.__startLoadTime) < 15) {
+                        S.log("old_ie 从缓存中读取");
+                        if (name = self.__startLoadModuleName) {
+                            self.__registerModule(name, def, config);
+                        } else {
+                            S.log("从缓存读取？？但是记录没有模块名", "error");
+                            S.error("从缓存读取？？但是记录没有模块名");
+                        }
+                    } else {
+                        S.log("old_ie 读取 interactiove 脚本地址");
+                        name = self.__findModuleNameByInteractive();
+                        self.__registerModule(name, def, config);
+                    }
+                    self.__startLoadModuleName = null;
+                    self.__startLoadTime = 0;
+                } else {
+                    S.log("标准浏览器等load时再关联模块名");
+                    //其他浏览器 onload 时，关联模块名与模块定义
+                    self.__currentModule = {
+                        def:def,
+                        config:config
+                    };
                 }
-                mod.def = def;
-                mix((mods[name] = mod), config);
             }
 
             return self;
         },
+
+        __findModuleNameByInteractive:function() {
+            var self = this,
+                scripts = document.getElementsByTagName("script"),re;
+            for (var i = 0; i < scripts.length; i++) {
+                var script = scripts[i];
+                if (script.readyState == "interactive") {
+                    re = script;
+                    break;
+                }
+            }
+            if (!re) {
+                S.log("找不到 interactive 状态的 script", "error");
+                S.error("找不到 interactive 状态的 script");
+            }
+            var src = re.src;
+            S.log("interactive src :" + src);
+
+            if (src.lastIndexOf(self.Config.base, 0) == 0) {
+                return removePostfix(src.substring(self.Config.base.length));
+            }
+            var packages = self.__packages;
+            for (var p in packages) {
+                if (!packages.hasOwnProperty(p)) continue;
+                if (src.lastIndexOf(packages[p].path, 0) == 0) {
+                    return removePostfix(src.substring(packages[p].path.length));
+                }
+            }
+
+            S.log("interactive 状态的 script 没有对应包 ：" + src, "error");
+            S.error("interactive 状态的 script 没有对应包 ：" + src);
+            return undefined;
+        },
+        __registerModule:function(name, def, config) {
+            config = config || {};
+            var self = this,
+                mods = self.Env.mods,
+                mod = mods[name] || {};
+
+            // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
+            // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
+            mix(mod, { name: name, status: LOADED });
+
+            if (mod.fn) {
+                S.log(name + " is defined more than once", "error");
+                S.error(name + " is defined more than once");
+
+            }
+            mod.def = def;
+            mix((mods[name] = mod), config);
+        } ,
+
         packages:function() {
             var self = this,
                 cfgs = S.makeArray(arguments),
@@ -1012,8 +1148,12 @@ build time: ${build.time}
             for (var i = 0; i < cfgs.length; i++) {
                 var cfg = cfgs[i];
                 ps[cfg.name] = cfg;
+                if (cfg.path) {
+                    cfg.path = normalBasePath(cfg.path);
+                }
             }
-        },
+        }
+        ,
         /**
          * Start load specific mods, and fire callback when these mods and requires are attached.
          * <code>
@@ -1050,16 +1190,19 @@ build time: ${build.time}
                 });
             }
             return self;
-        },
+        }
+        ,
 
         __getModules:function(modNames) {
-            var self = this,mods = [self];
+            var self = this,
+                mods = [self];
             modNames = modNames || [];
             for (var i = 0; i < modNames.length; i++) {
                 mods.push(self.require(modNames[i]));
             }
             return mods;
-        },
+        }
+        ,
         /**
          * get module's value defined by define function
          * @param {string} moduleName
@@ -1072,18 +1215,25 @@ build time: ${build.time}
             return mod && mod.value;
         },
         __getPackagePath:function(mod) {
-            var p = mod.name,ind,packages = this.__packages || {};
+            var self = this,
+                p = mod.name,
+                ind,
+                packages = self.__packages || {};
             if ((ind = p.indexOf("/")) != -1) {
                 p = p.substring(0, ind);
             }
             var p_def = packages[p];
             if (!p_def) return;
-            var p_path = p_def.path || ".";
+            var p_path = p_def.path || pagePath;
             if (p_path.charAt(p_path.length - 1) !== "/") {
                 p_path += "/";
             }
+            if (p_def.charset) {
+                mod.charset = p_def.charset;
+            }
             return p_path;
-        },
+        }
+        ,
         //加载指定模块名模块，如果不存在定义默认定义为内部模块
         __attachModByName: function(modName, callback) {
 
@@ -1119,9 +1269,10 @@ build time: ${build.time}
                 requires = (mod['requires'] || []).concat(),
                 i = 0,
                 len = requires.length;
-
+            mod['requires'] = requires;
             // attach all required modules
             for (; i < len; i++) {
+                requires[i] = normalDepModuleName(mod.name, requires[i]);
                 var r = mods[requires[i]];
                 if (r && r.status === ATTACHED) {
                     //no need
@@ -1133,10 +1284,19 @@ build time: ${build.time}
             // load and attach this module
             self.__buildPath(mod, self.__getPackagePath(mod));
             self.__load(mod, function() {
+
+                if (self.__currentModule) {
+                    self.__registerModule(mod.name, self.__currentModule.def,
+                        self.__currentModule.config);
+                    self.__currentModule = null;
+                }
+
                 // add 可能改了 config，这里重新取下
                 var newRequires = mod['requires'] || [],optimize = [];
+                mod['requires'] = newRequires;
                 //本模块下载成功后串行下载 require
                 for (var i = newRequires.length - 1; i >= 0; i--) {
+                    newRequires[i] = normalDepModuleName(mod.name, newRequires[i]);
                     var r = newRequires[i],
                         rmod = mods[r],
                         inA = S.inArray(r, requires);
@@ -1176,7 +1336,8 @@ build time: ${build.time}
                     }
                 }
             }
-        },
+        }
+        ,
 
         __attachMod: function(mod) {
             var self = this,
@@ -1191,7 +1352,8 @@ build time: ${build.time}
             }
 
             mod.status = ATTACHED;
-        },
+        }
+        ,
 
         __isAttached: function(modNames) {
             var mods = this.Env.mods,
@@ -1199,13 +1361,14 @@ build time: ${build.time}
                 i = (modNames = S.makeArray(modNames)).length - 1;
 
             for (; i >= 0; i--) {
-                var name = modNames[i].replace(/\+css/, "");
+                var name = modNames[i];
                 mod = mods[name] || {};
                 if (mod.status !== ATTACHED) return false;
             }
 
             return true;
-        },
+        }
+        ,
 
         /**
          * Load a single module.
@@ -1226,7 +1389,10 @@ build time: ${build.time}
 
             if (mod.status < LOADING && url) {
                 mod.status = LOADING;
-
+                if (oldIE) {
+                    self.__startLoadModuleName = mod.name;
+                    self.__startLoadTime = Number(+new Date());
+                }
                 ret = self.getScript(url, {
                     success: function() {
                         S.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
@@ -1270,7 +1436,8 @@ build time: ${build.time}
             function _final() {
                 loadQueque[url] = LOADED;
             }
-        },
+        }
+        ,
 
         __buildPath: function(mod, base) {
             var self = this,
@@ -1283,9 +1450,10 @@ build time: ${build.time}
             }
             // debug 模式下，加载非 min 版
             if (mod[fullpath] && Config.debug) {
-                mod[fullpath] = mod[fullpath].replace(/-min/g, '');
+                mod[fullpath] = mod[fullpath].replace(/-min/ig, '');
             }
-        },
+        }
+        ,
 
         /**
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
@@ -1333,9 +1501,9 @@ build time: ${build.time}
                     S.isFunction(success) && success.call(node);
 
                     // remove script
-                    if (head && node.parentNode) {
-                        head.removeChild(node);
-                    }
+                    //if (head && node.parentNode) {
+                    //    head.removeChild(node);
+                    //}
                 });
             }
 
@@ -1367,7 +1535,7 @@ build time: ${build.time}
      */
     // notice: timestamp
     var baseReg = /^(.*)(seed|kissy)(-min)?\.js[^/]*/i,
-        baseTestReg = /(seed|kissy)(-min)?\.js/;
+        baseTestReg = /(seed|kissy)(-min)?\.js/i;
 
     function getBaseUrl(script) {
         var src = script.src,
@@ -1408,16 +1576,21 @@ build time: ${build.time}
      */
     S.__initLoader = function() {
         // get base from current script file path
-        var scripts = doc.getElementsByTagName('script'),
+        var self = this,
+            scripts = doc.getElementsByTagName('script'),
             currentScript = scripts[scripts.length - 1],
             base = getBaseUrl(currentScript);
 
-        this.Env.mods = {}; // all added mods
-        this.Env._loadQueue = {}; // information for loading and loaded mods
+        self.Env.mods = {}; // all added mods
+        self.Env._loadQueue = {}; // information for loading and loaded mods
 
         // don't override
-        if (!this.Config.base) this.Config.base = base;
-        if (!this.Config.timeout) this.Config.timeout = 10;   // the default timeout for getScript
+        if (!self.Config.base) {
+            self.Config.base = normalBasePath(base);
+        }
+        if (!self.Config.timeout) {
+            self.Config.timeout = 10;
+        }   // the default timeout for getScript
     };
     S.__initLoader();
 
@@ -1430,20 +1603,15 @@ build time: ${build.time}
 })(KISSY);
 
 /**
- * 2011-01-04 adopt requirejs :
+ * 2011-01-04 yiminghe start refactor:
+ * adopt requirejs :
  * 1. add(moduleName,{property:value});
- * 2. add(moduleName,function(depModule){return function(){}},{requires:["depModule"]});
- * 3. S.use(["core"],function(S){
- *          dom=S.DOM;
- *    })
- *
- * add("core",function(dom,event,ua){
- * return {
- * DOM:dom,
- * Event:event
- * };
- *
- },{requires:["dom","event","ua"]});
- 4. add,use 不支持 css loader ,getScript 仍然保留支持
+ *        moduleName add 时可以不写
+ * 2. add(moduleName,function(S,depModule){return function(){}},{requires:["depModuleName"]});
+ *        depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
+ * 3. S.use(["dom"],function(S,DOM){
+ *    });
+ *        依赖注入，发生于 add 和 use 时期
+ * 4. add,use 不支持 css loader ,getScript 仍然保留支持
  */
 

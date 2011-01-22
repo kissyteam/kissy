@@ -1,0 +1,6 @@
+/*
+Copyright 2011, KISSY UI Library v1.1.7dev
+MIT Licensed
+build time: ${build.time}
+*/
+body.ks-test{margin:0;padding:15px;font-size:12px;line-height:20px;font-family:Verdana,Arial,sans-serif;}#konsole{border:1px solid #999;background-color:#eee;padding:10px;margin-top:10px;}#log{color:#666;border:1px solid #999;background-color:#fff;padding:5px;height:312px;overflow-x:auto;overflow-y:scroll;font:14px / 16px "Courier New",Courier,monospace;white-space:pre-wrap;}#log .passed{color:darkgreen;}#log .failed{color:#900;}#log hr{border:0;border-top:1px dotted #ccc;margin:3px 0;color:#fff;}.ks-test-form button{padding:2px 20px;}.ks-test-form .settings{padding:10px;line-height:25px;}

@@ -386,9 +386,9 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
 
 }, { requires:["ua","node","base","dd/ddm"] });
 KISSY.add("dd",function(S,Draggable){
-    {
+    return {
         Draggable:Draggable
-    }
+    };
 },{
     requires:["dd/draggable"]
 });

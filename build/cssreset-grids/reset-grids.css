@@ -1,0 +1,100 @@
+/*
+Copyright 2011, KISSY UI Library v1.1.7dev
+MIT Licensed
+build time: ${build.time}
+*/
+/*
+KISSY CSS Reset
+理念�?. reset 的目的不是清除浏览器的默认样式，这仅是部分工作�?清除和重置是紧密不可分的�?
+     2. reset 的目的不是让默认样式在所有浏览器下一致，而是减少默认样式有可能带来的问题�?
+     3. reset 期望提供�?��普�?通用的基�?��式�?但没有银弹，推荐根据具体�?��，裁剪和修改后再使用�?
+特色�?. 适应中文�?. 基于�?��主流浏览器�?
+维护：玉�?lifesinger@gmail.com>, 正淳<ragecarrier@gmail.com>
+*/
+
+/** 清除内外边距 **/
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
+dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
+pre, /* text formatting elements 文本格式元素 */
+form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */
+th, td /* table elements 表格元素 */ {
+    margin: 0;
+    padding: 0;
+}
+
+/** 设置默认字体 **/
+body,
+button, input, select, textarea /* for ie */ {
+    font: 12px/1.5 tahoma, arial, \5b8b\4f53, sans-serif;
+}
+h1, h2, h3, h4, h5, h6 { font-size: 100%; }
+address, cite, dfn, em, var { font-style: normal; } /* 将斜体扶�?*/
+code, kbd, pre, samp { font-family: courier new, courier, monospace; } /* 统一等宽字体 */
+small { font-size: 12px; } /* 小于 12px 的中文很难阅读，�?small 正常�?*/
+
+/** 重置列表元素 **/
+ul, ol { list-style: none; }
+
+/** 重置文本格式元素 **/
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+sup { vertical-align: text-top; } /* 重置，减少对行高的影�?*/
+sub { vertical-align: text-bottom; }
+
+/** 重置表单元素 **/
+legend { color: #000; } /* for ie6 */
+fieldset, img { border: 0; } /* img 搭车：让链接里的 img 无边�?*/
+button, input, select, textarea { font-size: 100%; } /* 使得表单元素�?ie 下能继承字体大小 */
+/* 注：optgroup 无法扶正 */
+
+/** 重置表格元素 **/
+table { border-collapse: collapse; border-spacing: 0; }
+
+/* 重置 HTML5 元素 */
+article, aside, details, figcaption, figure, footer,header, hgroup, menu, nav, section,
+summary, time, mark, audio, video {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+mark { background: #ff0; }
+/*
+Copyright 2011, KISSY UI Library v1.1.7dev
+MIT Licensed
+build time: ${build.time}
+*/
+/*
+双飞翼栅格布�?Flying Swing Grids Layout
+理念：简单质朴，语义化布�??
+维护：玉�?lifesinger@gmail.com>, 正淳<ragecarrier@gmail.com>
+*/
+
+/* 居中 */
+#header, #content, #footer {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/** 布局基础样式 **/
+.col-main {
+    float: left;
+    width: 100%;
+    /* bug fix: 主栏没有内容时，�?Firefox �?Chrome 等浏览器下，布局不对 */
+    min-height: 1px;
+}
+.col-sub, .col-extra {
+    float: left;
+    /*position: relative;  按需设置，仅在需要时添加 */
+}
+
+/** 清除浮动 **/
+.layout:after, .main-wrap:after, .col-sub:after, .col-extra:after {
+	content: '\20';
+	display: block;
+	height: 0;
+	clear: both;
+}
+.layout, .main-wrap, .col-sub, .col-extra {
+    *zoom: 1;
+}
