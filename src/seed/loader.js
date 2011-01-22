@@ -5,6 +5,7 @@
 (function(S, undef) {
 
     var win = S.__HOST,
+        oldIE = !window.getSelection && window.ActiveXObject,
         doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
         EMPTY = '',
@@ -30,7 +31,43 @@
                        },
         loader;
 
+    function normalPath(path) {
+        var paths = path.split("/");
+        var re = [];
+        for (var i = 0; i < paths.length; i++) {
+            var p = paths[i];
+            if (p == ".") {
+            }
+            else if (p == "..") {
+                re.pop();
+            }
+            else {
+                re.push(p);
+            }
+
+        }
+        return re.join("/");
+    }
+
+    function normalDepModuleName(moduleName, depName) {
+        var archor = "",index;
+        if ((index = moduleName.lastIndexOf("/")) != -1) {
+            archor = moduleName.substring(0, index + 1);
+        }
+        return normalPath(archor + depName);
+    }
+
+
     loader = {
+
+        //firefox,ie9,chrome 如果add没有模块名，模块定义先暂存这里
+        currentModule:null,
+
+        //
+        startLoadTime:0,
+
+        //
+        startLoadModuleName:null,
 
         /**
          * Registers a module.
@@ -53,7 +90,6 @@
         add: function(name, def, config) {
             var self = this,
                 mods = self.Env.mods,
-                mod,
                 o;
 
             // S.add(name, config) => S.add( { name: config } )
@@ -74,25 +110,78 @@
                 mix(mods, name);
             }
             // S.add(name[, fn[, config]])
-            else {
-                config = config || {};
-
-                mod = mods[name] || {};
-
-                // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
-                // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-                mix(mod, { name: name, status: LOADED });
-
-                if (mod.fn) {
-                    S.error(name + " is defined more than once");
-
+            else if (S['isString'](name)) {
+                self.__registerModule(name, def, config);
+            }
+            //S.add(fn,config);
+            else if (S.isFunction(name)) {
+                def = name;
+                config = def;
+                if (oldIE) {
+                    //15 ms 内，从缓存读取的
+                    if (((+new Date()) - self.startLoadTime) < 15) {
+                        S.log("old_ie 从缓存中读取");
+                        if (name = self.startLoadModuleName) {
+                            self.__registerModule(name, def, config);
+                        } else {
+                            S.error("从缓存读取？？但是记录没有模块名");
+                        }
+                    } else {
+                        S.log("old_ie 读取 interactiove 脚本地址");
+                        name = self.__findModuleNameByInteractive();
+                        self.__registerModule(name, def, config);
+                    }
+                    self.startLoadModuleName = null;
+                    self.startLoadTime = 0;
+                } else {
+                    S.log("标准浏览器等load时再搞");
+                    //其他浏览器 onload 时，关联模块名与模块定义
+                    self.currentModule = {
+                        def:def,
+                        config:config
+                    };
                 }
-                mod.def = def;
-                mix((mods[name] = mod), config);
             }
 
             return self;
         },
+
+        __findModuleNameByInteractive:function() {
+            var scripts = document.getElementsByTagName("script"),re;
+            for (var i = 0; i < scripts.length; i++) {
+                var script = scripts[i];
+                if (script.readyState == "interactive") {
+                    re = script;
+                    break;
+                }
+            }
+            if (!re) {
+                S.error("找不到 interactive 状态的 script")
+            }
+            var src = re.src;
+            if (src.lastIndexOf(this.config.base, 0) != 0) {
+                S.error("当前脚本地址：" + src + " 不以 base 开头：" + this.config.base);
+            }
+
+            return src.substring(this.config.base.length);
+        },
+        __registerModule:function(name, def, config) {
+            config = config || {};
+            var mods = self.Env.mods,
+                mod = mods[name] || {};
+
+            // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
+            // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
+            mix(mod, { name: name, status: LOADED });
+
+            if (mod.fn) {
+                S.error(name + " is defined more than once");
+
+            }
+            mod.def = def;
+            mix((mods[name] = mod), config);
+        } ,
+
         packages:function() {
             var self = this,
                 cfgs = S.makeArray(arguments),
@@ -102,7 +191,8 @@
                 var cfg = cfgs[i];
                 ps[cfg.name] = cfg;
             }
-        },
+        }
+        ,
         /**
          * Start load specific mods, and fire callback when these mods and requires are attached.
          * <code>
@@ -139,7 +229,8 @@
                 });
             }
             return self;
-        },
+        }
+        ,
 
         __getModules:function(modNames) {
             var self = this,mods = [self];
@@ -148,7 +239,8 @@
                 mods.push(self.require(modNames[i]));
             }
             return mods;
-        },
+        }
+        ,
         /**
          * get module's value defined by define function
          * @param {string} moduleName
@@ -159,7 +251,8 @@
                 mod = mods[moduleName];
 
             return mod && mod.value;
-        },
+        }
+        ,
         __getPackagePath:function(mod) {
             var p = mod.name,ind,packages = this.__packages || {};
             if ((ind = p.indexOf("/")) != -1) {
@@ -172,7 +265,8 @@
                 p_path += "/";
             }
             return p_path;
-        },
+        }
+        ,
         //加载指定模块名模块，如果不存在定义默认定义为内部模块
         __attachModByName: function(modName, callback) {
 
@@ -208,9 +302,10 @@
                 requires = (mod['requires'] || []).concat(),
                 i = 0,
                 len = requires.length;
-
+            mod['requires'] = requires;
             // attach all required modules
             for (; i < len; i++) {
+                requires[i] = normalDepModuleName(mod.name, requires[i]);
                 var r = mods[requires[i]];
                 if (r && r.status === ATTACHED) {
                     //no need
@@ -222,10 +317,18 @@
             // load and attach this module
             self.__buildPath(mod, self.__getPackagePath(mod));
             self.__load(mod, function() {
+
+                if (self.currentModule) {
+                    self.__registerModule(mod.name, self.currentModule.def, self.currentModule.config);
+                    self.currentModule = null;
+                }
+
                 // add 可能改了 config，这里重新取下
                 var newRequires = mod['requires'] || [],optimize = [];
+                mod['requires'] = newRequires;
                 //本模块下载成功后串行下载 require
                 for (var i = newRequires.length - 1; i >= 0; i--) {
+                    newRequires[i] = normalDepModuleName(mod.name, newRequires[i]);
                     var r = newRequires[i],
                         rmod = mods[r],
                         inA = S.inArray(r, requires);
@@ -265,7 +368,8 @@
                     }
                 }
             }
-        },
+        }
+        ,
 
         __attachMod: function(mod) {
             var self = this,
@@ -280,7 +384,8 @@
             }
 
             mod.status = ATTACHED;
-        },
+        }
+        ,
 
         __isAttached: function(modNames) {
             var mods = this.Env.mods,
@@ -294,7 +399,8 @@
             }
 
             return true;
-        },
+        }
+        ,
 
         /**
          * Load a single module.
@@ -315,7 +421,10 @@
 
             if (mod.status < LOADING && url) {
                 mod.status = LOADING;
-
+                if (oldIE) {
+                    self.startLoadModuleName = mod.name;
+                    self.startLoadTime = Number(+new Date());
+                }
                 ret = self.getScript(url, {
                     success: function() {
                         S.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
@@ -359,7 +468,8 @@
             function _final() {
                 loadQueque[url] = LOADED;
             }
-        },
+        }
+        ,
 
         __buildPath: function(mod, base) {
             var self = this,
@@ -374,7 +484,8 @@
             if (mod[fullpath] && Config.debug) {
                 mod[fullpath] = mod[fullpath].replace(/-min/g, '');
             }
-        },
+        }
+        ,
 
         /**
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
@@ -519,20 +630,15 @@
 })(KISSY);
 
 /**
- * 2011-01-04 adopt requirejs :
+ * 2011-01-04 yiminghe start refactor:
+ * adopt requirejs :
  * 1. add(moduleName,{property:value});
- * 2. add(moduleName,function(depModule){return function(){}},{requires:["depModule"]});
- * 3. S.use(["core"],function(S){
- *          dom=S.DOM;
- *    })
- *
- * add("core",function(dom,event,ua){
- * return {
- * DOM:dom,
- * Event:event
- * };
- *
- },{requires:["dom","event","ua"]});
- 4. add,use 不支持 css loader ,getScript 仍然保留支持
+ *        moduleName add 时可以不写
+ * 2. add(moduleName,function(S,depModule){return function(){}},{requires:["depModuleName"]});
+ *        depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
+ * 3. S.use(["dom"],function(S,DOM){
+ *    });
+ *        依赖注入，发生于 add 和 use 时期
+ * 4. add,use 不支持 css loader ,getScript 仍然保留支持
  */
 
