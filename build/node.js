@@ -391,10 +391,8 @@ KISSY.add('node/nodelist', function(S, DOM,Node,undefined) {
  *     以说，技术成本会制约 api 设计。
  */
 KISSY.add("node", function(S, Node, NodeList) {
-    return {
-        Node:Node,
-        NodeList:NodeList
-    };
+    Node.List = NodeList;
+    return Node;
 }, {
     requires:["node/node","node/nodelist","node/attach"]
 });

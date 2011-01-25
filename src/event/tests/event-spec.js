@@ -4,7 +4,7 @@
  */
 KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
     var EventTarget = S.require("event/target"),
-        Node = N.Node,NodeList = N.NodeList;
+        Node = N,NodeList = N.List;
     describe('event', function() {
 
         var doc = document,

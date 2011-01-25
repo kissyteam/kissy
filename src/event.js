@@ -1,4 +1,5 @@
-KISSY.add("event", function(S, Event) {
+KISSY.add("event", function(S, Event, Target) {
+    Event.Target = Target;
     return Event;
 }, {
     requires:[

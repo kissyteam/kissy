@@ -50,22 +50,22 @@
 KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
 
     window.test_constructor = function(test) {
-        //if(N.NodeList.all('#test-data div').length !== $('#test-data div').length) test.fail();
-        if (N.NodeList.all('#test-data input')[0].id !== 'test-input') test.fail();
-        if (N.NodeList.all('#test-data xx').length !== 0) test.fail();
-        if (N.NodeList.all().length !== 0) test.fail();
+        //if(N.List.all('#test-data div').length !== $('#test-data div').length) test.fail();
+        if (N.List.all('#test-data input')[0].id !== 'test-input') test.fail();
+        if (N.List.all('#test-data xx').length !== 0) test.fail();
+        if (N.List.all().length !== 0) test.fail();
     }
 
     window.test_item = function(test) {
-        if (N.NodeList.all('#test-data div').item(0)[0] !== DOM.get('#test-data div')) test.fail();
+        if (N.List.all('#test-data div').item(0)[0] !== DOM.get('#test-data div')) test.fail();
     }
 
     window.test_getDOMNodes = function(test) {
-        //if(N.NodeList.all('#test-data div').getDOMNodes().length !== $('#test-data div').length) test.fail();
+        //if(N.List.all('#test-data div').getDOMNodes().length !== $('#test-data div').length) test.fail();
     }
 
     window.test_each = function(test) {
-        var len = 0, inputs = N.NodeList.all('#test-data input');
+        var len = 0, inputs = N.List.all('#test-data input');
 
         inputs.each(function() {
             len++;
@@ -80,7 +80,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_data = function(test) {
-        var nodes = N.NodeList.all('#test-data2');
+        var nodes = N.List.all('#test-data2');
 
         nodes.data('data-1', 'val-1');
         if (nodes.data('data-1') !== 'val-1') test.fail();
@@ -90,7 +90,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_removeData = function(test) {
-        var nodes = N.NodeList.all('#test-data3');
+        var nodes = N.List.all('#test-data3');
 
         nodes.data('data', 'val');
         nodes.removeData('data');
@@ -103,23 +103,23 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_hasClass = function(test) {
-        var a = N.NodeList.all('#foo a');
+        var a = N.List.all('#foo a');
 
         if (a.hasClass('link') !== true) test.fail();
         if (a.hasClass('link2') !== false) test.fail();
     }
 
     window.test_addClass = function(test) {
-        if (N.NodeList.all('#foo a')
+        if (N.List.all('#foo a')
                 .addClass('link-added')
                 .hasClass('link-added') !== true) test.fail();
 
         // clean up
-        N.NodeList.all('#foo a').removeClass('link-added');
+        N.List.all('#foo a').removeClass('link-added');
     }
 
     window.test_removeClass = function(test) {
-        var a = N.NodeList.all('#foo a');
+        var a = N.List.all('#foo a');
 
         if (a.removeClass('link').hasClass(a, 'link') !== false) test.fail();
 
@@ -128,7 +128,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_replaceClass = function(test) {
-        var a = N.NodeList.all('#foo a');
+        var a = N.List.all('#foo a');
 
         // oldCls 有的话替换
         a.replaceClass('link', 'link2');
@@ -143,7 +143,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_toggleClass = function(test) {
-        var a = N.NodeList.all('#foo a');
+        var a = N.List.all('#foo a');
 
         if (a.toggleClass('link2').hasClass('link2') !== true) test.fail();
     }
@@ -153,7 +153,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_attr = function(test) {
-        var nodes = N.NodeList.all('#foo a');
+        var nodes = N.List.all('#foo a');
 
         // set attr
         if (nodes.attr('title') !== 'test') test.fail();
@@ -164,7 +164,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_removeAttr = function(test) {
-        var nodes = N.NodeList.all('#foo label');
+        var nodes = N.List.all('#foo label');
 
         nodes.attr('test-remove', 'xx');
         if (nodes.attr('test-remove') !== 'xx') test.fail();
@@ -175,19 +175,19 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
 
     window.test_val = function(test) {
         // normal
-        if (N.NodeList.all('#foo input').val() !== 'hello') test.fail();
+        if (N.List.all('#foo input').val() !== 'hello') test.fail();
 
         // area
-        if (N.NodeList.all('#foo textarea').val().length !== 25) test.fail();
+        if (N.List.all('#foo textarea').val().length !== 25) test.fail();
 
         // set value
-        var a = N.NodeList.all('#foo a');
+        var a = N.List.all('#foo a');
         if (a.val('test').val() !== 'test') test.fail();
         a.removeAttr('value');
     }
 
     window.test_text = function(test) {
-        var div = N.NodeList.all('#test-div');
+        var div = N.List.all('#test-div');
         if (div.text('hello, are you ok?').text() !== 'hello, are you ok?') test.fail();
     }
 
@@ -196,7 +196,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_css = function(test) {
-        var nodes = N.NodeList.all('#test-div');
+        var nodes = N.List.all('#test-div');
 
         // getter
         if (nodes.css('float') !== 'left') test.fail();
@@ -239,15 +239,15 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_width = function(test) {
-        //if(N.NodeList.all('#test2').width() !== $('#test2').width()) test.fail();
+        //if(N.List.all('#test2').width() !== $('#test2').width()) test.fail();
     }
 
     window.test_height = function(test) {
-        //if(N.NodeList.all('#test2').height() !== $('#test2').height()) test.fail();
+        //if(N.List.all('#test2').height() !== $('#test2').height()) test.fail();
     }
 
     window.test_show = function(test) {
-        var nodes = N.NodeList.all('#test-display');
+        var nodes = N.List.all('#test-display');
 
         nodes.css('display', 'none');
         nodes.css('display', '');
@@ -257,7 +257,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_hide = function(test) {
-        var nodes = N.NodeList.all('#test-display');
+        var nodes = N.List.all('#test-display');
 
         nodes.css('display', 'none');
         if (nodes.css('display') !== 'none') test.fail();
@@ -266,7 +266,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_toggle = function(test) {
-        var nodes = N.NodeList.all('#test-display');
+        var nodes = N.List.all('#test-display');
 
         nodes.css('display', 'none');
         if (nodes.css('display') !== 'none') test.fail();
@@ -284,11 +284,11 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     window.test_offset = function(test) {
         // getter
         var ret = 15;
-        var t = N.NodeList.all('#konsole').offset().left;
+        var t = N.List.all('#konsole').offset().left;
         if (t !== ret) test.fail(t);
 
         // setter
-        N.NodeList.all('#inner').offset({ top: 600, left: 200 });
+        N.List.all('#inner').offset({ top: 600, left: 200 });
     }
 
     window.test_query_traversal_sep = function(test) {
@@ -296,28 +296,28 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_parent = function(test) {
-        if (N.NodeList.all('#foo input').parent()[0].id !== 'foo') test.fail();
+        if (N.List.all('#foo input').parent()[0].id !== 'foo') test.fail();
     }
 
     window.test_next = function(test) {
-        if (N.NodeList.all('#foo a').next().prev()[0].nodeName !== 'A') test.fail();
+        if (N.List.all('#foo a').next().prev()[0].nodeName !== 'A') test.fail();
     }
 
     window.test_prev = function(test) {
-        if (N.NodeList.all('#foo input').prev().next()[0].nodeName !== 'INPUT') test.fail();
+        if (N.List.all('#foo input').prev().next()[0].nodeName !== 'INPUT') test.fail();
     }
 
     window.test_siblings = function(test) {
-        if (N.NodeList.all('#foo a').siblings().length !== 7) test.fail();
+        if (N.List.all('#foo a').siblings().length !== 7) test.fail();
     }
 
     window.test_children = function(test) {
-        if (N.NodeList.all('#foo').children().length !== 8) test.fail();
-        if (N.NodeList.all('#foo').children()[0] !== DOM.get('#foo a')) test.fail();
+        if (N.List.all('#foo').children().length !== 8) test.fail();
+        if (N.List.all('#foo').children()[0] !== DOM.get('#foo a')) test.fail();
     }
 
     window.test_contains = function(test) {
-        if (N.NodeList.all('#test-data').contains('#test-div') !== true) test.fail();
+        if (N.List.all('#test-data').contains('#test-div') !== true) test.fail();
     }
 
     window.test_query_create_sep = function(test) {
@@ -325,13 +325,13 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_html = function(test) {
-        var div = N.NodeList.all('#test-div');
+        var div = N.List.all('#test-div');
         if (div.html('<p>hello, are you ok?</p>').text() !== 'hello, are you ok?') test.fail();
     }
 
     window.test_remove = function(test) {
-        N.NodeList.all('.test').remove();
-        if (N.NodeList.all('.test').length !== 0) test.fail();
+        N.List.all('.test').remove();
+        if (N.List.all('.test').length !== 0) test.fail();
     }
 
     window.test_query_insertion_sep = function(test) {
@@ -340,21 +340,21 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
 
 //    window.test_insertBefore(test) {
 //        S.Node('<p id="test-insert">inserted node</p>').insertBefore('#test-div');
-//        if(N.NodeList.all('#test-insert').next().attr('id') !== 'test-div') test.fail();
+//        if(N.List.all('#test-insert').next().attr('id') !== 'test-div') test.fail();
 //    }
 //
 //    window.test_insertAfter(test) {
 //        S.Node('<p id="test-insert2">inserted node2</p>').insertAfter('#test-div');
-//        if(N.NodeList.all('#test-insert2').prev().attr('id') !== 'test-div') test.fail();
+//        if(N.List.all('#test-insert2').prev().attr('id') !== 'test-div') test.fail();
 //    }
 
     window.test_append = function(test) {
-        N.NodeList.all('.test-div').append('<p class="test-append">append node</p>');
-        if (N.NodeList.all('.test-append').length !== 5) test.fail();
+        N.List.all('.test-div').append('<p class="test-append">append node</p>');
+        if (N.List.all('.test-append').length !== 5) test.fail();
     }
 
     window.test_appendTo = function(test) {
-        N.NodeList.all('.test-append').appendTo('#test-div2');
+        N.List.all('.test-append').appendTo('#test-div2');
         if (N.Node.one('#test-div2').children().length !== 5) test.fail();
     }
 
@@ -363,7 +363,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM, UA) {
     }
 
     window.test_on = function(test) {
-        N.NodeList.all('#foo a').on('click', function(ev) {
+        N.List.all('#foo a').on('click', function(ev) {
             ev.preventDefault();
             //console.dir(ev);
             test.echo('I am a nodelist. this instanceof NodeList = ' + (this instanceof S.NodeList));

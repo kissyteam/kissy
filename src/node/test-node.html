@@ -53,31 +53,31 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     window.test_constructor = function(test) {
         var div, bd = document.body, el;
 
-        div = N.Node('<div>')[0];
+        div = N('<div>')[0];
         div.id = 'test-create';
         bd.appendChild(div);
         if (!DOM.get('#test-create')) test.fail();
 
-        div = new N.Node('<div id="test-create2">create2</div>')[0];
+        div = new N('<div id="test-create2">create2</div>')[0];
         bd.appendChild(div);
         el = DOM.get('#test-create2');
         if (!el) test.fail();
         if (DOM.text(el) !== 'create2') test.fail();
 
-        // 对于不存在的 selector, N.Node.one 返回 null
-        if (N.Node.one('#zzzzzzzz') !== null) test.fail();
-        if (N.Node.one('zzzzzzzz') !== null) test.fail();
+        // 对于不存在的 selector, N.one 返回 null
+        if (N.one('#zzzzzzzz') !== null) test.fail();
+        if (N.one('zzzzzzzz') !== null) test.fail();
 
         // Node(''), Node(null), or Node(undefined), Node 的 length 需要为 0
-        if (N.Node('').length !== 0) test.fail();
-        if (N.Node(null).length !== 0) test.fail();
-        if (N.Node(undefined).length !== 0) test.fail();
+        if (N('').length !== 0) test.fail();
+        if (N(null).length !== 0) test.fail();
+        if (N(undefined).length !== 0) test.fail();
 
-        var t = N.Node('p');
-        if (N.Node(t) !== t) test.fail();
+        var t = N('p');
+        if (N(t) !== t) test.fail();
 
         // props 设置
-        N.Node('<div>', {
+        N('<div>', {
             'class': 'test-div',
             css: {
                 width: '100px',
@@ -93,7 +93,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_data = function(test) {
-        var node = N.Node.one('#test-data2');
+        var node = N.one('#test-data2');
 
         node.data('data-1', 'val-1');
         if (node.data('data-1') !== 'val-1') test.fail();
@@ -103,7 +103,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_removeData = function(test) {
-        var node = N.Node.one('#test-data3');
+        var node = N.one('#test-data3');
 
         node.data('data', 'val');
         node.removeData('data');
@@ -112,23 +112,23 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_hasClass = function(test) {
-        var a = N.Node.one('#foo a');
+        var a = N.one('#foo a');
 
         if (a.hasClass('link') !== true) test.fail();
         if (a.hasClass('link2') !== false) test.fail();
     }
 
     window.test_addClass = function(test) {
-        if (N.Node.one('#foo a')
+        if (N.one('#foo a')
                 .addClass('link-added')
                 .hasClass('link-added') !== true) test.fail();
 
         // clean up
-        N.Node.one('#foo a').removeClass('link-added');
+        N.one('#foo a').removeClass('link-added');
     }
 
     window.test_removeClass = function(test) {
-        var a = N.Node.one('#foo a');
+        var a = N.one('#foo a');
 
         if (a.removeClass('link').hasClass(a, 'link') !== false) test.fail();
 
@@ -141,7 +141,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_replaceClass = function(test) {
-        var a = N.Node.one('#foo a');
+        var a = N.one('#foo a');
 
         // oldCls 有的话替换
         a.replaceClass('link', 'link2');
@@ -156,7 +156,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_toggleClass = function(test) {
-        var a = N.Node.one('#foo a');
+        var a = N.one('#foo a');
 
         if (a.toggleClass('link2').hasClass('link2') !== true) test.fail();
         if (a.toggleClass('link2').hasClass('link2') !== false) test.fail();
@@ -167,7 +167,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_attr = function(test) {
-        var node = N.Node.one('#foo a');
+        var node = N.one('#foo a');
 
         // set attr
         if (node.attr('title') !== 'test') test.fail();
@@ -178,7 +178,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_removeAttr = function(test) {
-        var node = N.Node.one('#foo label');
+        var node = N.one('#foo label');
 
         node.attr('test-remove', 'xx');
         if (node.attr('test-remove') !== 'xx') test.fail();
@@ -189,19 +189,19 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
 
     window.test_val = function(test) {
         // normal
-        if (N.Node.one('#foo input').val() !== 'hello') test.fail();
+        if (N.one('#foo input').val() !== 'hello') test.fail();
 
         // area
-        if (N.Node.one('#foo textarea').val().length !== 25) test.fail();
+        if (N.one('#foo textarea').val().length !== 25) test.fail();
 
         // set value
-        var a = N.Node.one('#foo a');
+        var a = N.one('#foo a');
         if (a.val('test').val() !== 'test') test.fail();
         a.removeAttr('value');
     }
 
     window.test_text = function(test) {
-        var div = N.Node.one('#test-div');
+        var div = N.one('#test-div');
         if (div.text('hello, are you ok?').text() !== 'hello, are you ok?') test.fail();
     }
 
@@ -210,7 +210,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_css = function(test) {
-        var node = N.Node.one('#test-div');
+        var node = N.one('#test-div');
 
         // getter
         if (node.css('float') !== 'left') test.fail();
@@ -253,15 +253,15 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_width = function(test) {
-        //if(N.Node.one('#test2').width() !== $('#test2').width()) test.fail();
+        //if(N.one('#test2').width() !== $('#test2').width()) test.fail();
     }
 
     window.test_height = function(test) {
-        //if(N.Node.one('#test2').height() !== $('#test2').height()) test.fail();
+        //if(N.one('#test2').height() !== $('#test2').height()) test.fail();
     }
 
     window.test_show = function(test) {
-        var node = N.Node.one('#test-display');
+        var node = N.one('#test-display');
 
         node.css('display', 'none');
         node.css('display', '');
@@ -271,7 +271,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_hide = function(test) {
-        var node = N.Node.one('#test-display');
+        var node = N.one('#test-display');
 
         node.css('display', 'none');
         if (node.css('display') !== 'none') test.fail();
@@ -280,7 +280,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_toggle = function(test) {
-        var node = N.Node.one('#test-display');
+        var node = N.one('#test-display');
 
         node.css('display', 'none');
         if (node.css('display') !== 'none') test.fail();
@@ -298,11 +298,11 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     window.test_offset = function(test) {
         // getter
         var ret = 15;
-        var t = N.Node.one('#konsole').offset().left;
+        var t = N.one('#konsole').offset().left;
         if (t !== ret) test.fail(t);
 
         // setter
-        //N.Node.one('#inner').offset({ top: 600, left: 200 });
+        //N.one('#inner').offset({ top: 600, left: 200 });
     }
 
     window.test_query_traversal_sep = function(test) {
@@ -310,29 +310,29 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_parent = function(test) {
-        if (N.Node.one('#foo input').parent()[0].id !== 'foo') test.fail();
+        if (N.one('#foo input').parent()[0].id !== 'foo') test.fail();
     }
 
     window.test_next = function(test) {
-        if (N.Node.one('#foo a').next().prev()[0].nodeName !== 'A') test.fail();
+        if (N.one('#foo a').next().prev()[0].nodeName !== 'A') test.fail();
     }
 
     window.test_prev = function(test) {
-        if (N.Node.one('#foo input').prev().next()[0].nodeName !== 'INPUT') test.fail();
+        if (N.one('#foo input').prev().next()[0].nodeName !== 'INPUT') test.fail();
     }
 
     window.test_siblings = function(test) {
-        if (N.Node.one('#foo a').siblings().length !== 6) test.fail();
+        if (N.one('#foo a').siblings().length !== 6) test.fail();
     }
 
     window.test_children = function(test) {
-        if (N.Node.one('#foo').children().length !== 7) test.fail();
-        if (N.Node.one('#foo').children()[0] !== DOM.get('#foo a')) test.fail();
-        if (N.Node.one('#test-children').children().length !== 0) test.fail();
+        if (N.one('#foo').children().length !== 7) test.fail();
+        if (N.one('#foo').children()[0] !== DOM.get('#foo a')) test.fail();
+        if (N.one('#test-children').children().length !== 0) test.fail();
     }
 
     window.test_contains = function(test) {
-        if (N.Node.one('#test-data').contains('#test-div') !== true) test.fail();
+        if (N.one('#test-data').contains('#test-div') !== true) test.fail();
     }
 
     window.test_query_create_sep = function(test) {
@@ -340,7 +340,7 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_html = function(test) {
-        var div = N.Node.one('#test-div');
+        var div = N.one('#test-div');
         if (div.html('<p>hello, are you ok?</p>').text() !== 'hello, are you ok?') test.fail();
 
         div.html('<script>window.g_testSetScriptHTML = 1;<\/script>', true);
@@ -356,29 +356,29 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_insertBefore = function(test) {
-        N.Node('<p id="test-insert">inserted node</p>').insertBefore('#test-div');
-        if (N.Node.one('#test-insert').next().attr('id') !== 'test-div') test.fail();
+        N('<p id="test-insert">inserted node</p>').insertBefore('#test-div');
+        if (N.one('#test-insert').next().attr('id') !== 'test-div') test.fail();
     }
 
     window.test_insertAfter = function(test) {
-        N.Node('<p id="test-insert2">inserted node2</p>').insertAfter('#test-div');
-        if (N.Node.one('#test-insert2').prev().attr('id') !== 'test-div') test.fail();
+        N('<p id="test-insert2">inserted node2</p>').insertAfter('#test-div');
+        if (N.one('#test-insert2').prev().attr('id') !== 'test-div') test.fail();
     }
 
     window.test_append = function(test) {
-        if (N.Node.one('#test-div').append('<p id="test-append">append node</p>').attr('id') !== 'test-div') test.fail();
+        if (N.one('#test-div').append('<p id="test-append">append node</p>').attr('id') !== 'test-div') test.fail();
     }
 
     window.test_appendTo = function(test) {
-        if (N.Node('<p id="test-append2">append2 node</p>').appendTo('#test-div').attr('id') !== 'test-append2') test.fail();
+        if (N('<p id="test-append2">append2 node</p>').appendTo('#test-div').attr('id') !== 'test-append2') test.fail();
     }
 
     window.test_prepend = function(test) {
-        if (N.Node.one('#test-div').prepend('<p id="test-prepend">prepend node</p>').attr('id') !== 'test-div') test.fail();
+        if (N.one('#test-div').prepend('<p id="test-prepend">prepend node</p>').attr('id') !== 'test-div') test.fail();
     }
 
     window.test_prependTo = function(test) {
-        if (N.Node('<p id="test-prepend2">prepend2 node</p>').prependTo('#test-div').attr('id') !== 'test-prepend2') test.fail();
+        if (N('<p id="test-prepend2">prepend2 node</p>').prependTo('#test-div').attr('id') !== 'test-prepend2') test.fail();
     }
 
     window.test_query_selector_sep = function(test) {
@@ -386,12 +386,12 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_one = function(test) {
-        if (N.Node.one('#foo').one('input').attr('id') !== 'test-input') test.fail();
-        if (N.Node.one('#feature-2').html('feature 2').html() !== 'feature 2') test.fail();
+        if (N.one('#foo').one('input').attr('id') !== 'test-input') test.fail();
+        if (N.one('#feature-2').html('feature 2').html() !== 'feature 2') test.fail();
     }
 
     window.test_all = function(test) {
-        if (N.Node.one('#foo').all('input').length !== 3) test.fail();
+        if (N.one('#foo').all('input').length !== 3) test.fail();
     }
 
     window.test_query_event_sep = function(test) {
@@ -399,9 +399,9 @@ KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
     }
 
     window.test_on = function(test) {
-        N.Node.one('#foo a').on('click', function(ev) {
+        N.one('#foo a').on('click', function(ev) {
             ev.preventDefault();
-            test.echo('I am a node. this instanceof Node = ' + (this instanceof N.Node));
+            test.echo('I am a node. this instanceof Node = ' + (this instanceof N));
         });
         test.extraMsg = '{click test link to invoke event}';
     }

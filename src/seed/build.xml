@@ -17,9 +17,10 @@
 
     <target name="clean">
         <delete file="seed-pkg.js"/>
-        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="${build.dir}/${component.name}/kissy-pkg-min.js"  encoding="${charset}"/>
+        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="${build.dir}/seed-min.js"  encoding="${charset}"/>
     </target>
 
     <target name="build" depends="concat,common.build,clean">
+
     </target>
 </project>

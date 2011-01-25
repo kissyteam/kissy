@@ -176,7 +176,7 @@ build time: ${build.time}
             // NOTICE: '@DEBUG@' will replace with '' when compressing.
             // So, if loading source file, debug is on by default.
             // If loading min version, debug is turned off automatically.
-            //this.Config.debug = '@DEBUG@';
+            this.Config.debug = '@DEBUG@';
         },
 
         /**
@@ -1603,15 +1603,24 @@ build time: ${build.time}
 })(KISSY);
 
 /**
- * 2011-01-04 yiminghe start refactor:
+ * 2011-01-04 chengyu<yiminghe@gmail.com> refactor:
  * adopt requirejs :
- * 1. add(moduleName,{property:value});
- *        moduleName add 时可以不写
+ * 1. packages(cfg) , cfg :{
+ *    name : 包名，用于指定业务模块前缀
+ *    path: 前缀包名对应的路径
+ *    charset: 该包下所有文件的编码
+ *
  * 2. add(moduleName,function(S,depModule){return function(){}},{requires:["depModuleName"]});
- *        depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
+ *    moduleName add 时可以不写
+ *    depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
+ *
  * 3. S.use(["dom"],function(S,DOM){
  *    });
- *        依赖注入，发生于 add 和 use 时期
+ *    依赖注入，发生于 add 和 use 时期
+ *
  * 4. add,use 不支持 css loader ,getScript 仍然保留支持
+ *
+ *
+ * demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
  */
 
