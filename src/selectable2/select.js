@@ -55,7 +55,9 @@ KISSY.add("selectable2/select", function(S, UIBase, SBase, SList, UA, Node) {
 
                 if (self.get("width")) {
                     wrap.css("width", self.get("width"));
-                    inputNode.css("width", wrap.width() - arrow[0].offsetWidth);
+                    inputNode.css("width",
+                        wrap.width() - arrow[0].offsetWidth -
+                            (inputNode[0].offsetWidth - inputNode.width()));
                 } else {
                     self.set("width", wrap[0].offsetWidth);
                 }

@@ -7,6 +7,7 @@
     border: 1px solid #C1C8D1;
     cursor:pointer;
     position:relative;
+    overflow:hidden;
 }
 
 .ks-selectable2-mask {
