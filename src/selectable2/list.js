@@ -55,7 +55,7 @@ KISSY.add("selectable2/list", function(S, Node) {
             if (target) {
                 self.set("selectListItem", target);
             }
-
+            ev.halt();
         });
 
         list.on("mousedown", function(ev) {

@@ -35,9 +35,14 @@ KISSY.add("selectable2/select", function(S, UIBase, SBase, SList, UA, Node) {
 
                 self.set("align", align);
 
-                wrap.on("click", function() {
+                wrap.on("click", function(ev) {
                     self.render();
                     self.set("visible", !self.get("visible"));
+                    ev.halt();
+                });
+
+                Node.one(document).on("click",function(){
+                   self.hide(); 
                 });
 
                 self.on("show", function() {
