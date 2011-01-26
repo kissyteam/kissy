@@ -1097,6 +1097,9 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
             var self = this,
                 el = self.get("el");
             el.css("visibility", isVisible ? "visible" : "hidden");
+//            if (!isVisible) {
+//                self.set("xy", [-9999,-9999]);
+//            }
             self[isVisible ? "_bindKey" : "_unbindKey" ]();
             self.fire(isVisible ? "show" : "hide");
         },

@@ -106,7 +106,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
     attach(['contains'], undefined);
 
     // dom-create
-    attach(['html'], ONLY_VAL);
+    attach(['html','unselectable'], ONLY_VAL);
     attach(['remove'], undefined);
 
     // dom-insertion
