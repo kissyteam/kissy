@@ -41,8 +41,8 @@ KISSY.add("selectable2/select", function(S, UIBase, SBase, SList, UA, Node) {
                     ev.halt();
                 });
 
-                Node.one(document).on("click",function(){
-                   self.hide(); 
+                Node.one(document).on("click", function() {
+                    self.hide();
                 });
 
                 self.on("show", function() {
@@ -53,9 +53,12 @@ KISSY.add("selectable2/select", function(S, UIBase, SBase, SList, UA, Node) {
                     self.set("xy", [-9999,-9999]);
                 });
 
-
-                self.set("width", wrap[0].offsetWidth);
-
+                if (self.get("width")) {
+                    wrap.css("width", self.get("width"));
+                    inputNode.css("width", wrap.width() - arrow[0].offsetWidth);
+                } else {
+                    self.set("width", wrap[0].offsetWidth);
+                }
 
                 //move list'select item to inputNode
                 self.on("afterSelectListItemChange", function(ev) {
