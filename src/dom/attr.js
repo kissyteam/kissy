@@ -1,8 +1,8 @@
 /**
  * @module  dom-attr
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add('dom/attr', function(S,DOM, UA, undefined) {
+KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
     var doc = document,
         docElement = doc.documentElement,
@@ -10,8 +10,6 @@ KISSY.add('dom/attr', function(S,DOM, UA, undefined) {
         TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
         SELECT = 'select',
         EMPTY = '',
-        CHECKED = 'checked',
-        STYLE = 'style',
         isElementNode = DOM._isElementNode,
         isTextNode = function(elem) {
             return DOM._nodeTypeIs(elem, 3);
@@ -44,6 +42,41 @@ KISSY.add('dom/attr', function(S,DOM, UA, undefined) {
         });
     }
 
+    var attrNormalizers = {
+        tabindex:{
+            getter:function(el) {
+                return el.tabIndex;
+            },
+            setter:function(el, val) {
+                // http://www.w3.org/TR/html5/editing.html#sequential-focus-navigation-and-the-tabindex-attribute
+                // 简化，和不填一样处理！
+                if (isNaN(parseInt(val))) {
+                    el.removeAttribute("tabindex");
+                    el.removeAttribute("tabIndex");
+                } else {
+                    el.tabIndex = val;
+                }
+            }
+        },
+        // 在标准浏览器下，用 getAttribute 获取 style 值
+        // IE7- 下，需要用 cssText 来获取
+        // 统一使用 cssText
+        style:{
+            getter:function(el) {
+                return el.style.cssText;
+            },
+            setter:function(el, val) {
+                el.style.cssText = val;
+            }
+        },
+        checked:{
+            // checked 属性值，需要通过直接设置才能生效
+            setter:function(el, val) {
+                el.checked = !!val;
+            }
+        }
+    };
+
     S.mix(DOM, {
 
         /**
@@ -71,6 +104,8 @@ KISSY.add('dom/attr', function(S,DOM, UA, undefined) {
             // custom attrs
             name = CUSTOM_ATTRS[name] || name;
 
+            var attrNormalizer = attrNormalizers[name];
+
             // getter
             if (val === undefined) {
                 // supports css selector/Node/NodeList
@@ -79,6 +114,9 @@ KISSY.add('dom/attr', function(S,DOM, UA, undefined) {
                 // only get attributes on element nodes
                 if (!isElementNode(el)) {
                     return undefined;
+                }
+                if (attrNormalizer && attrNormalizer.getter) {
+                    return attrNormalizer.getter(el);
                 }
 
                 var ret;
@@ -103,11 +141,6 @@ KISSY.add('dom/attr', function(S,DOM, UA, undefined) {
                     if (RE_NORMALIZED_ATTRS.test(name)) {
                         ret = el.getAttribute(name, 2);
                     }
-                    // 在标准浏览器下，用 getAttribute 获取 style 值
-                    // IE7- 下，需要用 cssText 来获取
-                    else if (name === STYLE) {
-                        ret = el[STYLE].cssText;
-                    }
                 }
 
                 // 对于不存在的属性，统一返回 undefined
@@ -121,15 +154,9 @@ KISSY.add('dom/attr', function(S,DOM, UA, undefined) {
                     return;
                 }
 
-                // 不需要加 oldIE 判断，否则 IE8 的 IE7 兼容模式有问题
-                if (name === STYLE) {
-                    el[STYLE].cssText = val;
-                }
-                else {
-                    // checked 属性值，需要通过直接设置才能生效
-                    if (name === CHECKED) {
-                        el[name] = !!val;
-                    }
+                if (attrNormalizer && attrNormalizer.setter) {
+                    attrNormalizer.setter(el, val);
+                } else {
                     // convert the value to a string (all browsers do this but IE)
                     el.setAttribute(name, EMPTY + val);
                 }
@@ -140,6 +167,7 @@ KISSY.add('dom/attr', function(S,DOM, UA, undefined) {
          * Removes the attribute of the matched elements.
          */
         removeAttr: function(selector, name) {
+            name = name.toLowerCase();
             S.each(DOM.query(selector), function(el) {
                 if (isElementNode(el)) {
                     DOM.attr(el, name, EMPTY); // 先置空
@@ -147,6 +175,26 @@ KISSY.add('dom/attr', function(S,DOM, UA, undefined) {
                 }
             });
         },
+
+        hasAttr: oldIE ?
+                 function(selector, name) {
+                     name = name.toLowerCase();
+                     var el = DOM.get(selector);
+                     // from ppk :http://www.quirksmode.org/dom/w3c_core.html
+                     // IE5-7 doesn't return the value of a style attribute.
+                     // var $attr = el.attributes[name];
+                     // http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+                     // try name=tabindex
+                     var $attr = el.getAttributeNode(name);
+                     return !!( $attr && $attr.specified );
+                 }
+            :
+                 function(selector, name) {
+                     name = name.toLowerCase();
+                     var el = DOM.get(selector);
+                     //使用原生实现
+                     return el.hasAttribute(name);
+                 },
 
         /**
          * Gets the current value of the first element in the set of matched or
@@ -271,6 +319,9 @@ KISSY.add('dom/attr', function(S,DOM, UA, undefined) {
 
 /**
  * NOTES:
+ * 2011-01-28
+ *
+ * 处理 tabindex，顺便重构
  *
  * 2010.03
  *  - 在 jquery/support.js 中，special attrs 里还有 maxlength, cellspacing,
