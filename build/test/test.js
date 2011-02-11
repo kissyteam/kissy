@@ -103,6 +103,7 @@ var KISSY = window.KISSY || {};
         Config: { },
 
         init: function() {
+
             // set config
             var c = this.Config;
             if (c.times) get('times').value = c.times;
@@ -112,15 +113,23 @@ var KISSY = window.KISSY || {};
             // get config
             konsole.init();
 
+            this.__findTests();
+        },
+        __findTests:function() {
             // add test cases
             var prefix = 'test_',
-                global = win['RuntimeObject'] ? win['RuntimeObject'](prefix + '*') : win;
+                global =  win;
             for (var p in global) {
                 if (p.indexOf('test_') === 0 && typeof win[p] === 'function') {
                     tests.add(p, win[p]);
                 }
             }
-
+            if (tests.length == 0) {
+                setTimeout(arguments.callee, 100);
+                //console.log("xunhuan");
+                return;
+            }
+            //alert(tests.length);
             // adjust for firefox
             if (navigator.userAgent.indexOf('Firefox') !== -1) {
                 tests.reverse();
@@ -135,26 +144,27 @@ var KISSY = window.KISSY || {};
                 currentScript = scripts[scripts.length - 1],
                 cssUrl = currentScript.src.replace('.js', '.css'),
                 tmpl = '<link rel="stylesheet" href="' + cssUrl + '" />' +
-                       '<form onsubmit="return false" action="" class="ks-test-form">' +
-                       '<button type="button" onclick="KISSY.Test.start()">Start</button>' +
-                       '<div id="konsole">' +
-                       '<div id="log"></div>' +
-                       '</div>' +
-                       '<div class="settings">' +
-                       'Settings:<br/>' +
-                       '<input type="checkbox" id="hidepasses" name="hidepasses"/>' +
-                       '<label for="hidepasses">Hide passes</label><br/>' +
-                       '<input type="text" value="1" id="times" size="4"/>' +
-                       '<label for="times">Iteration times for each test function</label><br/>' +
-                       '<input type="text" value="" id="wl" size="12"/>' +
-                       '<label for="wl">The whitelist of test names</label>' +
-                       '</div>' +
-                       '</form>';
+                    '<form onsubmit="return false" action="" class="ks-test-form">' +
+                    '<button type="button" onclick="KISSY.Test.start()">Start</button>' +
+                    '<div id="konsole">' +
+                    '<div id="log"></div>' +
+                    '</div>' +
+                    '<div class="settings">' +
+                    'Settings:<br/>' +
+                    '<input type="checkbox" id="hidepasses" name="hidepasses"/>' +
+                    '<label for="hidepasses">Hide passes</label><br/>' +
+                    '<input type="text" value="1" id="times" size="4"/>' +
+                    '<label for="times">Iteration times for each test function</label><br/>' +
+                    '<input type="text" value="" id="wl" size="12"/>' +
+                    '<label for="wl">The whitelist of test names</label>' +
+                    '</div>' +
+                    '</form>';
             doc.body.className += ' ks-test';
             doc.write(tmpl);
         },
 
         start: function() {
+
             // get latest settings
             konsole.init();
 
@@ -189,6 +199,7 @@ var KISSY = window.KISSY || {};
 
     // attach load event
     var inited = false;
+
     function initTest() {
         if (!inited) {
             S.Test.init();
