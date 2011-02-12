@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 KISSY.add("resizable",function(j){for(var q=j.Draggable,r=j.Node,l={t:function(a,b,c,d,e,f,g,h,i){a=Math.min(Math.max(c,h-i),d);return[0,a,e+h-a,0]},b:function(a,b,c,d,e,f,g,h,i){return[0,Math.min(Math.max(c,h+i),d),0,0]},r:function(a,b,c,d,e,f,g,h,i,k){return[Math.min(Math.max(a,g+k),b),0,0,0]},l:function(a,b,c,d,e,f,g,h,i,k){a=Math.min(Math.max(a,g-k),b);return[a,0,0,f+g-a]}},o=["l","r"],p=["t","b"],m=0;m<o.length;m++)for(var n=0;n<p.length;n++)(function(a,b){l[a+b]=l[b+a]=function(){for(var c=
 l[a].apply(this,arguments),d=l[b].apply(this,arguments),e=[],f=0;f<c.length;f++)e[f]=c[f]||d[f];return e}})(o[m],p[n]);j.Resizable=j.UIBase.create([],{renderUI:function(){var a=this.get("node");this.dds={};a.css("position")=="static"&&a.css("position","relative")},_uiSetHandlers:function(a){var b=this.dds,c=this.get("node");this.destructor();for(var d=0;d<a.length;d++){var e=a[d],f=(new r("<div class='ke-resizehandler ke-resizehandler-"+e+"'>")).prependTo(c);e=b[e]=new q({node:f});e.on("drag",this._drag,

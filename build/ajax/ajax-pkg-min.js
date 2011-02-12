@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 KISSY.add("ajax",function(d,B){function i(a){a=d.merge(J,a);if(a.url){if(a.data&&!d.isString(a.data))a.data=d.param(a.data);a.context=a.context||a;var b,e=n,g,f=a.type.toUpperCase();if(a.dataType===w){b=a.jsonpCallback||w+d.now();a.url=a.url+(a.url.indexOf("?")===-1?"?":"&")+(a.jsonp+"="+b);a.dataType=C;var o=j[b];j[b]=function(k){if(d.isFunction(o))o(k);else{j[b]=B;try{delete j[b]}catch(h){}}p([n,q],k,e,c,a)}}if(a.data&&f===x)a.url=a.url+(a.url.indexOf("?")===-1?"?":"&")+a.data;if(a.dataType===C){l(D,
 a);f=d.getScript(a.url,b?null:function(){p([n,q],t,e,c,a)});l(E,a);return f}var r=false,c=a.xhr();l(D,a);c.open(f,a.url,a.async);try{if(a.data||a.contentType)c.setRequestHeader(F,a.contentType);c.setRequestHeader("Accept",a.dataType&&a.accepts[a.dataType]?a.accepts[a.dataType]+", */*; q=0.01":a.accepts._default)}catch(L){}c.onreadystatechange=function(k){if(!c||c.readyState===0||k==="abort"){r||p(q,null,s,c,a);r=true;if(c)c.onreadystatechange=G}else if(!r&&c&&(c.readyState===4||k===u)){r=true;c.onreadystatechange=

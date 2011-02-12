@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /*
  * @module kissy
@@ -65,7 +65,7 @@ build time: Jan 14 13:56
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.7',
+        version: '1.1.8dev',
 
         /**
          * Returns a new object containing all of the properties of
@@ -925,20 +925,20 @@ build time: Jan 14 13:56
         mix = S.mix,
 
         scriptOnload = doc.createElement('script').readyState ?
-                       function(node, callback) {
-                           var oldCallback = node.onreadystatechange;
-                           node.onreadystatechange = function() {
-                               var rs = node.readyState;
-                               if (rs === 'loaded' || rs === 'complete') {
-                                   node.onreadystatechange = null;
-                                   oldCallback && oldCallback();
-                                   callback.call(this);
-                               }
-                           };
-                       } :
-                       function(node, callback) {
-                           node.addEventListener('load', callback, false);
-                       },
+            function(node, callback) {
+                var oldCallback = node.onreadystatechange;
+                node.onreadystatechange = function() {
+                    var rs = node.readyState;
+                    if (rs === 'loaded' || rs === 'complete') {
+                        node.onreadystatechange = null;
+                        oldCallback && oldCallback();
+                        callback.call(this);
+                    }
+                };
+            } :
+            function(node, callback) {
+                node.addEventListener('load', callback, false);
+            },
 
         RE_CSS = /\.css(?:\?|$)/i,
         loader;
@@ -1062,7 +1062,7 @@ build time: Jan 14 13:56
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110120201417';
+                    return m + '-pkg-min.js?t=20110212143207';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: Jan 14 13:56
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110120201417';
+                    return m + '-min.css?t=20110212143207';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -1403,7 +1403,17 @@ build time: Jan 14 13:56
                 }
             }
         }
+        /**
+         * 一定要正则化，防止出现 ../ 等相对路径
+         */
+        if (!startsWith(base, "/") && !startsWith(base, "http://") && !startsWith(base, "https://")) {
+            base = window.location.href.replace(/[^/]*$/, '') + base;
+        }
         return base;
+    }
+
+    function startsWith(str, prefix) {
+        return str.lastIndexOf(prefix, 0) == 0;
     }
 
     /**
@@ -1433,9 +1443,9 @@ build time: Jan 14 13:56
 })(KISSY);
 
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:57
+build time: ${build.time}
 */
 /**
  * @module  ua
@@ -1631,9 +1641,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module  dom
@@ -2304,7 +2314,9 @@ KISSY.add('dom-attr', function(S, undefined) {
 
         DOM = S.DOM,
         isElementNode = DOM._isElementNode,
-        isTextNode = function(elem) { return DOM._nodeTypeIs(elem, 3); },
+        isTextNode = function(elem) {
+            return DOM._nodeTypeIs(elem, 3);
+        },
 
         RE_SPECIAL_ATTRS = /^(?:href|src|style)/,
         RE_NORMALIZED_ATTRS = /^(?:href|src|colspan|rowspan)/,
@@ -2325,6 +2337,41 @@ KISSY.add('dom-attr', function(S, undefined) {
             height: 1,
             offset: 1
         };
+
+    var attrNormalizers = {
+        tabindex:{
+            getter:function(el) {
+                return el.tabIndex;
+            },
+            setter:function(el, val) {
+                // http://www.w3.org/TR/html5/editing.html#sequential-focus-navigation-and-the-tabindex-attribute
+                // 简化，和不填一样处理！
+                if (isNaN(parseInt(val))) {
+                    el.removeAttribute("tabindex");
+                    el.removeAttribute("tabIndex");
+                } else {
+                    el.tabIndex = val;
+                }
+            }
+        },
+        // 在标准浏览器下，用 getAttribute 获取 style 值
+        // IE7- 下，需要用 cssText 来获取
+        // 统一使用 cssText
+        style:{
+            getter:function(el) {
+                return el.style.cssText;
+            },
+            setter:function(el, val) {
+                el.style.cssText = val;
+            }
+        },
+        checked:{
+            // checked 属性值，需要通过直接设置才能生效
+            setter:function(el, val) {
+                el.checked = !!val;
+            }
+        }
+    };
 
     if (oldIE) {
         S.mix(CUSTOM_ATTRS, {
@@ -2360,23 +2407,28 @@ KISSY.add('dom-attr', function(S, undefined) {
             // custom attrs
             name = CUSTOM_ATTRS[name] || name;
 
+            var attrNormalizer = attrNormalizers[name];
+
             // getter
             if (val === undefined) {
                 // supports css selector/Node/NodeList
-                var el = S.get(selector);
+                var el = DOM.get(selector);
 
                 // only get attributes on element nodes
                 if (!isElementNode(el)) {
                     return undefined;
                 }
+                if (attrNormalizer && attrNormalizer.getter) {
+                    return attrNormalizer.getter(el);
+                }
 
                 var ret;
 
                 // 优先用 el[name] 获取 mapping 属性值：
-                //  - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
-                //  - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
-                //  - href, src 直接获取的是 normalized 后的值，排除掉
-                //  - style 需要用 getAttribute 来获取字符串值，也排除掉
+                // - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
+                // - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
+                // - href, src 直接获取的是 normalized 后的值，排除掉
+                // - style 需要用 getAttribute 来获取字符串值，也排除掉
                 if (!RE_SPECIAL_ATTRS.test(name)) {
                     ret = el[name];
                 }
@@ -2392,11 +2444,6 @@ KISSY.add('dom-attr', function(S, undefined) {
                     if (RE_NORMALIZED_ATTRS.test(name)) {
                         ret = el.getAttribute(name, 2);
                     }
-                    // 在标准浏览器下，用 getAttribute 获取 style 值
-                    // IE7- 下，需要用 cssText 来获取
-                    else if (name === STYLE) {
-                        ret = el[STYLE].cssText;
-                    }
                 }
 
                 // 对于不存在的属性，统一返回 undefined
@@ -2404,21 +2451,15 @@ KISSY.add('dom-attr', function(S, undefined) {
             }
 
             // setter
-            S.each(S.query(selector), function(el) {
+            S.each(DOM.query(selector), function(el) {
                 // only set attributes on element nodes
                 if (!isElementNode(el)) {
                     return;
                 }
 
-                // 不需要加 oldIE 判断，否则 IE8 的 IE7 兼容模式有问题
-                if (name === STYLE) {
-                    el[STYLE].cssText = val;
-                }
-                else {
-                    // checked 属性值，需要通过直接设置才能生效
-                    if(name === CHECKED) {
-                        el[name] = !!val;
-                    }
+                if (attrNormalizer && attrNormalizer.setter) {
+                    attrNormalizer.setter(el, val);
+                } else {
                     // convert the value to a string (all browsers do this but IE)
                     el.setAttribute(name, EMPTY + val);
                 }
@@ -3685,9 +3726,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module  event
@@ -4682,9 +4723,9 @@ KISSY.add('node-attach', function(S, undefined) {
 
 });
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /*
     http://www.JSON.org/json2.js
@@ -5188,9 +5229,9 @@ KISSY.add('json', function (S) {
     };
 });
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /***
  * @module  ajax
@@ -5511,9 +5552,9 @@ KISSY.add('ajax', function(S, undef) {
  *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
  */
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module anim-easing
@@ -6170,9 +6211,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
 });
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module  cookie
@@ -6256,9 +6297,9 @@ KISSY.add('cookie', function(S) {
  *     独立成静态工具类的方式更优。
  */
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module  Attribute
@@ -6502,9 +6543,9 @@ KISSY.add('base', function (S) {
 
 KISSY.add('core');
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:57
+build time: ${build.time}
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -7582,9 +7623,9 @@ KISSY.add('sizzle', function(S) {
 })();
 
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * 数据延迟加载组件
@@ -8067,9 +8108,9 @@ KISSY.add('datalazyload', function(S, undefined) {
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module   Flash 全局静态类
@@ -8568,9 +8609,9 @@ KISSY.add('flash-embed', function(S) {
 }, { host: 'flash' });
 
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * dd support for kissy
@@ -8956,9 +8997,9 @@ KISSY.add('dd-draggable', function(S) {
 
 }, { host: 'dd' });
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * resizable support for kissy
@@ -9115,9 +9156,9 @@ KISSY.add("resizable", function(S) {
 
 }, { requires:["dd"] });
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:57
+build time: ${build.time}
 */
 /**
  * @module  UIBase
@@ -10444,9 +10485,9 @@ KISSY.add("uibase-stdmod", function(S) {
 },{
     host:"uibase"
 });/*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:57
+build time: ${build.time}
 */
 /**
  * Switchable
@@ -11550,9 +11591,9 @@ KISSY.add('accordion', function(S) {
  *
  */
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * KISSY Overlay
@@ -11658,9 +11699,9 @@ KISSY.add('dialog', function(S) {
 
 
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:57
+build time: ${build.time}
 */
 /**
  * 提示补全组件
@@ -12750,9 +12791,9 @@ KISSY.add('suggest', function(S, undefined) {
  * 2010-08-04 更新： 去掉对 yahoo-dom-event 的依赖，仅依赖 ks-core. 调整了部分 public api, 扩展更容易了。
  */
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @fileoverview 图片放大效果 ImageZoom.
@@ -13543,9 +13584,9 @@ KISSY.add('autorender', function(S) {
 
 }, { host: 'imagezoom' } );
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /*
  * Date Format 1.2.3
