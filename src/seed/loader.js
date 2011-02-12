@@ -657,7 +657,17 @@
                 }
             }
         }
+        /**
+         * 一定要正则化，防止出现 ../ 等相对路径
+         */
+        if (!startsWith(base, "/") && !startsWith(base, "http://") && !startsWith(base, "https://")) {
+            base = window.location.href.replace(/[^/]*$/, '') + base;
+        }
         return base;
+    }
+
+    function startsWith(str, prefix) {
+        return str.lastIndexOf(prefix, 0) == 0;
     }
 
     /**
