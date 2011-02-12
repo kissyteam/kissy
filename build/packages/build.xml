@@ -20,15 +20,14 @@
 
     <target name="concat">
 
+        <!-- using module compiler to gen core.js -->
         <delete file="../core.js" />
         <copy tofile="../core.js" file="../../src/core.js">
         </copy>
 
         <java jar="../../tools/module-compiler.jar"
               fork="true"
-              args="../../tools/kissy_require.properties">
-
-        </java>
+              args="../../tools/kissy_require.properties"/>
 
         <!-- kissy: seed + core, 独立单文件 -->
         <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
@@ -78,6 +77,10 @@
             <fileset dir="${src.dir}"
                      includes="seed*.js,kissy*.js"/>
         </replaceregexp>
+
+        <move todir="${src.dir}/../">
+            <fileset dir="${src.dir}" includes="*.js,*.css"/>
+        </move>
 
     </target>
 

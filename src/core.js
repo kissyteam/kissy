@@ -1,6 +1,5 @@
-KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie, DataLazyload) {
-
-    return {
+KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
+    var re = {
         UA:UA,
         DOM:DOM,
         Event:Event,
@@ -9,10 +8,10 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         Ajax:Ajax,
         Anim:Anim,
         Base:Base,
-        Cookie:Cookie,
-        DataLazyload:DataLazyload
+        Cookie:Cookie
     };
-
+    S.mix(S, re);
+    return re;
 }, {
     requires:[
         "ua",
@@ -23,7 +22,6 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         "ajax",
         "anim",
         "base",
-        "cookie",
-        "datalazyload"
+        "cookie"
     ]
 });

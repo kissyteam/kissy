@@ -14,21 +14,24 @@
         ERROR = 3,
         ATTACHED = 4,
         mix = S.mix,
-        scriptOnload = doc.createElement('script').readyState ?
-                       function(node, callback) {
-                           var oldCallback = node.onreadystatechange;
-                           node.onreadystatechange = function() {
-                               var rs = node.readyState;
-                               if (rs === 'loaded' || rs === 'complete') {
-                                   node.onreadystatechange = null;
-                                   oldCallback && oldCallback();
-                                   callback.call(this);
-                               }
-                           };
-                       } :
-                       function(node, callback) {
-                           node.addEventListener('load', callback, false);
-                       },
+        /**
+         * ie 与标准浏览器监听 script 载入完毕有区别
+         */
+            scriptOnload = doc.createElement('script').readyState ?
+            function(node, callback) {
+                var oldCallback = node.onreadystatechange;
+                node.onreadystatechange = function() {
+                    var rs = node.readyState;
+                    if (rs === 'loaded' || rs === 'complete') {
+                        node.onreadystatechange = null;
+                        oldCallback && oldCallback();
+                        callback.call(this);
+                    }
+                };
+            } :
+            function(node, callback) {
+                node.addEventListener('load', callback, false);
+            },
         loader;
 
     function normalPath(path) {
@@ -81,13 +84,11 @@
         if (!path.match(/^http(s)?:/i)) {
             path = pagePath + path;
         }
-
         return normalPath(path);
     }
 
 
     loader = {
-        //页面基地址
 
 
         //firefox,ie9,chrome 如果add没有模块名，模块定义先暂存这里

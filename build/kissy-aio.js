@@ -1244,7 +1244,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-min.js?t=20110211185309';
+                    return m + '-min.js?t=20110212135244';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1624,9 +1624,8 @@ build time: ${build.time}
  * demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
  */
 
-KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie, DataLazyload) {
-
-    return {
+KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
+    var re = {
         UA:UA,
         DOM:DOM,
         Event:Event,
@@ -1635,10 +1634,10 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         Ajax:Ajax,
         Anim:Anim,
         Base:Base,
-        Cookie:Cookie,
-        DataLazyload:DataLazyload
+        Cookie:Cookie
     };
-
+    S.mix(S, re);
+    return re;
 }, {
     requires:[
         "ua",
@@ -1649,8 +1648,7 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         "ajax",
         "anim",
         "base",
-        "cookie",
-        "datalazyload"
+        "cookie"
     ]
 });
 KISSY.use('core');
