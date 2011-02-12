@@ -5418,7 +5418,11 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         Ajax:Ajax,
         Anim:Anim,
         Base:Base,
-        Cookie:Cookie
+        Cookie:Cookie,
+        one:Node.one,
+        all:Node.List.all,
+        get:DOM.get,
+        query:DOM.query
     };
     S.mix(S, re);
     return re;

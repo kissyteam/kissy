@@ -917,7 +917,7 @@ build time: ${build.time}
 (function(S, undef) {
 
     var win = S.__HOST,
-        oldIE = !window.getSelection && window.ActiveXObject,
+        oldIE = !win['getSelection'] && win['ActiveXObject'],
         doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
         EMPTY = '',
@@ -946,6 +946,13 @@ build time: ${build.time}
             },
         loader;
 
+    /**
+     * resolve relative part of path
+     * x/../y/z -> y/z
+     * x/./y/z -> x/y/z
+     * @param path uri path
+     * @return {string} resolved path
+     */
     function normalPath(path) {
         var paths = path.split("/");
         var re = [];
@@ -964,14 +971,20 @@ build time: ${build.time}
         return re.join("/");
     }
 
+    /**
+     * 根据当前模块以及依赖模块的相对路径，得到依赖模块的绝对路径
+     * @param moduleName 当前模块
+     * @param depName 依赖模块
+     * @return {string} 依赖模块的绝对路径
+     */
     function normalDepModuleName(moduleName, depName) {
-        if (depName.lastIndexOf("./") == 0
-            || depName.lastIndexOf("../") == 0) {
-            var archor = "",index;
+        if (startsWith(depName, "../") || startsWith(depName, "./")) {
+            var anchor = EMPTY,index;
+            // x/y/z -> x/y/
             if ((index = moduleName.lastIndexOf("/")) != -1) {
-                archor = moduleName.substring(0, index + 1);
+                anchor = moduleName.substring(0, index + 1);
             }
-            return normalPath(archor + depName);
+            return normalPath(anchor + depName);
         } else if (depName.indexOf("./") != -1
             || depName.indexOf("../") != -1) {
             return normalPath(depName);
@@ -980,20 +993,27 @@ build time: ${build.time}
         }
     }
 
+    //去除后缀名，要考虑时间戳?
     function removePostfix(path) {
-        return path.replace(/(-min)?\.js[^/]*$/i, "");
+        return path.replace(/(-min)?\.js[^/]*$/i, EMPTY);
     }
 
+    //当前页面所在的目录
+    // http://xx.com/y/z.htm
+    // ->
+    // http://xx.com/y/
     var pagePath = (function() {
         var url = location.href;
-        return url.replace(/[^/]*$/i, "");
+        return url.replace(/[^/]*$/i, EMPTY);
     })();
 
+    //路径正则化，不能是相对地址
+    //相对地址则转换成相对页面的绝对地址
     function normalBasePath(path) {
         if (path.charAt(path.length - 1) != '/')
             path += "/";
         path = S.trim(path);
-        if (!path.match(/^http(s)?:/i)) {
+        if (!path.match(/^http(s)?:/i) && !startsWith(path, "/")) {
             path = pagePath + path;
         }
         return normalPath(path);
@@ -1067,8 +1087,8 @@ build time: ${build.time}
                         if (name = self.__startLoadModuleName) {
                             self.__registerModule(name, def, config);
                         } else {
-                            S.log("从缓存读取？？但是记录没有模块名", "error");
-                            S.error("从缓存读取？？但是记录没有模块名");
+                            S.log("从缓存读取？？但是请求前记录没有模块名", "error");
+                            S.error("从缓存读取？？但是请求前记录没有模块名");
                         }
                     } else {
                         S.log("old_ie 读取 interactiove 脚本地址");
@@ -1086,10 +1106,10 @@ build time: ${build.time}
                     };
                 }
             }
-
             return self;
         },
 
+        //ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
         __findModuleNameByInteractive:function() {
             var self = this,
                 scripts = document.getElementsByTagName("script"),re;
@@ -1107,10 +1127,13 @@ build time: ${build.time}
             var src = re.src;
             S.log("interactive src :" + src);
 
+            //注意：模块名不包含后缀名以及参数，所以去除
+            //系统模块去除系统路径
             if (src.lastIndexOf(self.Config.base, 0) == 0) {
                 return removePostfix(src.substring(self.Config.base.length));
             }
             var packages = self.__packages;
+            //外部模块去除包路径，得到模块名
             for (var p in packages) {
                 if (!packages.hasOwnProperty(p)) continue;
                 if (src.lastIndexOf(packages[p].path, 0) == 0) {
@@ -1122,6 +1145,8 @@ build time: ${build.time}
             S.error("interactive 状态的 script 没有对应包 ：" + src);
             return undefined;
         },
+
+        //注册模块，将模块和定义 factory 关联起来
         __registerModule:function(name, def, config) {
             config = config || {};
             var self = this,
@@ -1135,12 +1160,17 @@ build time: ${build.time}
             if (mod.fn) {
                 S.log(name + " is defined more than once", "error");
                 S.error(name + " is defined more than once");
-
             }
             mod.def = def;
             mix((mods[name] = mod), config);
-        } ,
+        },
 
+        /**
+         * 包声明
+         * biz -> .
+         * 表示遇到 biz/x
+         * 在当前网页路径找 biz/x.js
+         */
         packages:function() {
             var self = this,
                 cfgs = S.makeArray(arguments),
@@ -1150,11 +1180,31 @@ build time: ${build.time}
                 var cfg = cfgs[i];
                 ps[cfg.name] = cfg;
                 if (cfg.path) {
+                    //注意正则化
                     cfg.path = normalBasePath(cfg.path);
                 }
             }
-        }
-        ,
+        },
+
+        /**
+         * compress 'from module' to 'to module'
+         */
+        compress:function(from, to) {
+            var self = this,cs;
+            if (S['isObject'](from)) {
+                S.each(from, function(v, k) {
+                    self.compress(k, v);
+                });
+                return;
+            }
+            cs = self.__compresses = self.__compresses || {};
+            if (to) {
+                cs[from] = to;
+            } else {
+                return cs[from] || from;
+            }
+        },
+
         /**
          * Start load specific mods, and fire callback when these mods and requires are attached.
          * <code>
@@ -1181,7 +1231,7 @@ build time: ${build.time}
             }
             // 有尚未 attached 的模块
             for (i = 0; i < len && (modName = modNames[i]); i++) {
-                //从name开始调用，防止不存在模块
+                // 从 name 开始调用，防止不存在模块
                 self.__attachModByName(modName, function() {
                     if (!fired && self.__isAttached(modNames)) {
                         fired = true;
@@ -1191,8 +1241,7 @@ build time: ${build.time}
                 });
             }
             return self;
-        }
-        ,
+        },
 
         __getModules:function(modNames) {
             var self = this,
@@ -1202,8 +1251,8 @@ build time: ${build.time}
                 mods.push(self.require(modNames[i]));
             }
             return mods;
-        }
-        ,
+        },
+
         /**
          * get module's value defined by define function
          * @param {string} moduleName
@@ -1215,9 +1264,11 @@ build time: ${build.time}
 
             return mod && mod.value;
         },
+
         __getPackagePath:function(mod) {
             var self = this,
-                p = mod.name,
+                //一个模块合并到了另一个模块文件中去
+                p = self.compress(mod.name),
                 ind,
                 packages = self.__packages || {};
             if ((ind = p.indexOf("/")) != -1) {
@@ -1233,8 +1284,8 @@ build time: ${build.time}
                 mod.charset = p_def.charset;
             }
             return p_path;
-        }
-        ,
+        },
+
         //加载指定模块名模块，如果不存在定义默认定义为内部模块
         __attachModByName: function(modName, callback) {
 
@@ -1245,11 +1296,13 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-min.js?t=20110212144108';
-                },  js = S.isFunction(componentJsName) ?
-                    componentJsName(modName) : componentJsName;
+                    return m + '-min.js?t=20110212161935';
+                },  jsPath = S.isFunction(componentJsName) ?
+                    //一个模块合并到了了另一个模块文件中去
+                    componentJsName(self.compress(modName))
+                    : componentJsName;
                 mod = {
-                    path:js,
+                    path:jsPath,
                     charset: 'utf-8'
                 };
                 //添加模块定义
@@ -1284,8 +1337,10 @@ build time: ${build.time}
 
             // load and attach this module
             self.__buildPath(mod, self.__getPackagePath(mod));
+
             self.__load(mod, function() {
 
+                //标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件
                 if (self.__currentModule) {
                     self.__registerModule(mod.name, self.__currentModule.def,
                         self.__currentModule.config);
@@ -1302,8 +1357,9 @@ build time: ${build.time}
                         rmod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
-                    if (rmod && rmod.status === ATTACHED ||
-                        inA) {
+                    if (rmod && rmod.status === ATTACHED
+                        //已经正在处理了
+                        || inA) {
                         //no need
                     } else {
                         //新增的依赖项
@@ -1337,8 +1393,7 @@ build time: ${build.time}
                     }
                 }
             }
-        }
-        ,
+        },
 
         __attachMod: function(mod) {
             var self = this,
@@ -1353,8 +1408,7 @@ build time: ${build.time}
             }
 
             mod.status = ATTACHED;
-        }
-        ,
+        },
 
         __isAttached: function(modNames) {
             var mods = this.Env.mods,
@@ -1368,8 +1422,7 @@ build time: ${build.time}
             }
 
             return true;
-        }
-        ,
+        },
 
         /**
          * Load a single module.
@@ -1437,8 +1490,7 @@ build time: ${build.time}
             function _final() {
                 loadQueque[url] = LOADED;
             }
-        }
-        ,
+        },
 
         __buildPath: function(mod, base) {
             var self = this,
@@ -1451,10 +1503,9 @@ build time: ${build.time}
             }
             // debug 模式下，加载非 min 版
             if (mod[fullpath] && Config.debug) {
-                mod[fullpath] = mod[fullpath].replace(/-min/ig, '');
+                mod[fullpath] = mod[fullpath].replace(/-min/ig, EMPTY);
             }
-        }
-        ,
+        },
 
         /**
          * Load a JavaScript file from the server using a GET HTTP request, then execute it.
@@ -1573,7 +1624,7 @@ build time: ${build.time}
          * 一定要正则化，防止出现 ../ 等相对路径
          */
         if (!startsWith(base, "/") && !startsWith(base, "http://") && !startsWith(base, "https://")) {
-            base = window.location.href.replace(/[^/]*$/, '') + base;
+            base = pagePath + base;
         }
         return base;
     }
@@ -1645,7 +1696,11 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         Ajax:Ajax,
         Anim:Anim,
         Base:Base,
-        Cookie:Cookie
+        Cookie:Cookie,
+        one:Node.one,
+        all:Node.List.all,
+        get:DOM.get,
+        query:DOM.query
     };
     S.mix(S, re);
     return re;
