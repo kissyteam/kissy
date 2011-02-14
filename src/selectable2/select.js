@@ -31,7 +31,7 @@ KISSY.add("selectable2/select", function(S, UIBase, SBase, SList, UA, Node) {
                 var align = {
                     node:inputNode,
                     points:["bl","tl"]
-                }
+                };
 
                 self.set("align", align);
 

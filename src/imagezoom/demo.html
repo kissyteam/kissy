@@ -15,9 +15,9 @@
 <script src="../../build/base.js"></script>
 <script src="../../build/json.js"></script>
 
+<script src="zoomer.js"></script>
 <script src="base.js"></script>
 <script src="autorender.js"></script>
-<script src="../imagezoom.js"></script>
 <style>
     body {
         padding: 20px 50px 50px;
@@ -151,43 +151,47 @@
 </div>
 -->
 <script>
-    KISSY.use("dom,event,imagezoom", function(S, DOM, Event, ImageZoom) {
-        KISSY.ready(function(S) {
-
-            var a = new ImageZoom("#standard", {
-                //alignTo: S.DOM.parent('#bad-small')
-            });
-            a.set('bigImageSrc', "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg");
-
-            var m = new ImageZoom("#multi");
-            Event.on("#imgList img", 'click', function() {
-                var data = DOM.attr(this, 'data-ks-imagezoom');
-                m.changeImageSrc(data + '_310x310.jpg');
-                //S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
-                m.set('bigImageSrc', data);
-            });
-
-
-            var b = new ImageZoom("#inner", {
-                position: 'inner',
-                offset: 0,
-                zoomCls: 'inner'
-            });
-            b.set('bigImageSrc', "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg");
-
-            ImageZoom.autoRender();
-
-            S.each(DOM.query("#imgGallery img"), function(img) {
-                var t = new ImageZoom(img, {
-                    position: 'inner',
-                    offset: 0,
-                    zoomCls: 'inner',
-                    lensIcon: false
-                });
-                t.set('bigImageSrc', DOM.attr(img, 'data-ks-imagezoom'));
-            });
-
+    KISSY.use("dom,event,imagezoom/base", function(S, DOM, Event, ImageZoom) {
+        alert('hi');
+        var a = new ImageZoom({
+            imageNode: "#standard",
+            zoomCls: 'inner',
+            align:{
+                node: "#standard",
+                points: ["tr","tl"],
+                offset: [0, 0]
+            }
         });
+        /*a.set('bigImageSrc', "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg");
+
+         var m = new ImageZoom("#multi");
+         Event.on("#imgList img", 'click', function() {
+         var data = DOM.attr(this, 'data-ks-imagezoom');
+         m.changeImageSrc(data + '_310x310.jpg');
+         //S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
+         m.set('bigImageSrc', data);
+         });
+
+
+         var b = new ImageZoom("#inner", {
+         position: 'inner',
+         offset: 0,
+         zoomCls: 'inner'
+         });
+         b.set('bigImageSrc', "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg");
+
+         ImageZoom.autoRender();
+
+         S.each(DOM.query("#imgGallery img"), function(img) {
+         var t = new ImageZoom(img, {
+         position: 'inner',
+         offset: 0,
+         zoomCls: 'inner',
+         lensIcon: false
+         });
+         t.set('bigImageSrc', DOM.attr(img, 'data-ks-imagezoom'));
+         });**/
+
     });
 </script>
 <p class="code-switch">显示源码</p>
