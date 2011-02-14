@@ -237,7 +237,7 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
                 if (vs) {
                     for (var i = 0; i < vs.length; i++) {
                         vs[i] = Node.one(vs[i]);
-                        unselectable(vs[i][0]);
+                        vs[i].unselectable();
                     }
                 }
             }
@@ -348,39 +348,7 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
         _start: function() {
             this.fire("dragstart");
         }
-
     });
-
-    var unselectable =
-        UA['gecko'] ?
-        function(el) {
-            el.style.MozUserSelect = 'none';
-        }
-            : UA['webkit'] ?
-              function(el) {
-                  el.style.KhtmlUserSelect = 'none';
-              }
-            :
-              function(el) {
-                  if (UA['ie'] || UA['opera']) {
-                      var e,i = 0,
-                          els = el.getElementsByTagName("*");
-                      el.setAttribute("unselectable", 'on');
-                      while (( e = els[ i++ ] )) {
-                          switch (e.tagName.toLowerCase()) {
-                              case 'iframe' :
-                              case 'textarea' :
-                              case 'input' :
-                              case 'select' :
-                                  /* Ignore the above tags */
-                                  break;
-                              default :
-                                  e.setAttribute("unselectable", 'on');
-                          }
-                      }
-                  }
-              };
-
 
     return Draggable;
 

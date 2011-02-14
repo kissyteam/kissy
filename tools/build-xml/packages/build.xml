@@ -19,47 +19,38 @@
     </target>
 
     <target name="concat">
-        <!-- seed: 种子 -->
-        <concat destfile="seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../seed/seed-pkg.js"/>
-        </concat>
-        <!-- core: 核心 -->
-        <concat destfile="core-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../ua/ua-pkg.js"/>
-            <path path="../dom/dom-pkg.js"/>
-            <path path="../event/event-pkg.js"/>
-            <path path="../node/node-pkg.js"/>
-            <path path="../json/json-pkg.js"/>
-            <path path="../ajax/ajax-pkg.js"/>
-            <path path="../anim/anim-pkg.js"/>
-            <path path="../cookie/cookie-pkg.js"/>
-            <path path="../base/base-pkg.js"/>
-        </concat>
+
+        <!-- using module compiler to gen core.js -->
+        <delete file="../core.js" />
+        <copy tofile="../core.js" file="../../src/core.js">
+        </copy>
+
+        <java jar="../../tools/module-compiler.jar"
+              fork="true"
+              args="../../tools/kissy_require.properties"/>
+
         <!-- kissy: seed + core, 独立单文件 -->
         <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="seed-pkg.js"/>
-            <path path="core-pkg.js"/>
+            <path path="../seed.js"/>
+            <path path="../core.js"/>
             <footer filtering="no" trimleading="yes">
-                KISSY.add('core');
+                KISSY.use('core');
             </footer>
         </concat>
         <!-- kissy-aio: 所有文件 -->
         <concat destfile="kissy-aio-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="kissy-pkg.js"/>
-
-            <path path="../sizzle/sizzle-pkg.js"/>
-            <path path="../datalazyload/datalazyload-pkg.js"/>
-            <path path="../flash/flash-pkg.js"/>
-
-            <path path="../dd/dd-pkg.js"/>
-            <path path="../resizable/resizable-pkg.js"/>
-            <path path="../uibase/uibase-pkg.js"/>
-
-            <path path="../switchable/switchable-pkg.js"/>
-            <path path="../overlay/overlay-pkg.js"/>
-            <path path="../suggest/suggest-pkg.js"/>
-            <path path="../imagezoom/imagezoom-pkg.js"/>
-            <path path="../calendar/calendar-pkg.js"/>
+            <path path="../sizzle.js"/>
+            <path path="../datalazyload.js"/>
+            <path path="../flash.js"/>
+            <path path="../dd.js"/>
+            <path path="../resizable.js"/>
+            <path path="../uibase.js"/>
+            <path path="../switchable.js"/>
+            <path path="../overlay.js"/>
+            <path path="../suggest.js"/>
+            <path path="../imagezoom.js"/>
+            <path path="../calendar.js"/>
         </concat>
     </target>
 
@@ -87,13 +78,8 @@
                      includes="seed*.js,kissy*.js"/>
         </replaceregexp>
 
-        <copy todir="${src.dir}/..">
-            <fileset dir="${src.dir}" includes="seed.js,seed-min.js,kissy.js,kissy-min.js"/>
-        </copy>
-
-        <mkdir dir='${src.dir}/../core'/>
-        <move todir="${src.dir}/../core">
-            <fileset dir="${src.dir}" includes="core*.js"/>
+        <move todir="${src.dir}/../">
+            <fileset dir="${src.dir}" includes="*.js,*.css"/>
         </move>
 
     </target>
