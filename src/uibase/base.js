@@ -4,11 +4,11 @@
  */
 KISSY.add('uibase/base', function (S, Base) {
 
-    var UI_SET = '_uiSet', 
+    var UI_SET = '_uiSet',
         SRC_NODE = 'srcNode',
         ATTRS = 'ATTRS',
         HTML_PARSER = 'HTML_PARSER',
-        Node=S.require("node/node"),
+        Node = S.require("node/node"),
         Attribute = S.require("base/attribute"),
         capitalFirst = Attribute.__capitalFirst,
         noop = function() {
@@ -259,7 +259,7 @@ KISSY.add('uibase/base', function (S, Base) {
                     if (ext[K]) {
                         C[K] = C[K] || {};
                         // 不覆盖主类上的定义
-                        S.mix(C[K], ext[K], false);
+                       deepMix(C[K], ext[K]);
                     }
                 });
 
@@ -270,6 +270,17 @@ KISSY.add('uibase/base', function (S, Base) {
 
         return C;
     };
+    function deepMix(r, s) {
+        if (!s) return r;
+        for (var p in s) {
+            // 如果属性是对象，接着递归进行
+            if (S['isObject'](s[p]) && S['isObject'](r[p])) {
+                deepMix(r[p], s[p]);
+            } else if (!(p in r)) {
+                r[p] = s[p];
+            }
+        }
+    }
 
     return UIBase;
 }, {
