@@ -280,6 +280,10 @@ KISSY.add('uibase/base', function (S, Base) {
         render:{
             valueFn:function() {
                 return document.body;
+            },
+            setter:function(v) {
+                if (S['isString'](v))
+                    return Node.one(v);
             }
         },
         //是否已经渲染过
@@ -392,7 +396,7 @@ KISSY.add('uibase/base', function (S, Base) {
                     if (ext[K]) {
                         C[K] = C[K] || {};
                         // 不覆盖主类上的定义
-                       deepMix(C[K], ext[K]);
+                        deepMix(C[K], ext[K]);
                     }
                 });
 
@@ -406,6 +410,7 @@ KISSY.add('uibase/base', function (S, Base) {
     function deepMix(r, s) {
         if (!s) return r;
         for (var p in s) {
+            // 如果属性是对象，接着递归进行
             if (S['isObject'](s[p]) && S['isObject'](r[p])) {
                 deepMix(r[p], s[p]);
             } else if (!(p in r)) {
@@ -1382,7 +1387,22 @@ KISSY.add("uibase/stdmod", function(S) {
 
     return StdMod;
 
-});KISSY.add("uibase", function(S, UIBase) {
+});KISSY.add("uibase", function(S, UIBase,Align,Box,Close,Contrain,Contentbox,Drag,Loading,
+    Mask,Position,Shim,Resize,StdMod) {
+    S.mix(UIBase,{
+        Align:Align,
+        Box:Box,
+        Close:Close,
+        Contrain:Contrain,
+        Contentbox:Contentbox,
+        Drag:Drag,
+        Loading:Loading,
+        Mask:Mask,
+        Position:Position,
+        Shim:Shim,
+        Resize:Resize,
+        StdMod:StdMod
+    });
     return UIBase;
 }, {
     requires:["uibase/base",

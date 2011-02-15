@@ -147,6 +147,10 @@ KISSY.add('uibase/base', function (S, Base) {
         render:{
             valueFn:function() {
                 return document.body;
+            },
+            setter:function(v) {
+                if (S['isString'](v))
+                    return Node.one(v);
             }
         },
         //是否已经渲染过
@@ -259,7 +263,7 @@ KISSY.add('uibase/base', function (S, Base) {
                     if (ext[K]) {
                         C[K] = C[K] || {};
                         // 不覆盖主类上的定义
-                       deepMix(C[K], ext[K]);
+                        deepMix(C[K], ext[K]);
                     }
                 });
 
