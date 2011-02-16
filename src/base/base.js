@@ -35,8 +35,11 @@ KISSY.add('base/base', function (S, Attribute) {
     function initAttrs(host, config) {
         if (config) {
             for (var attr in config) {
-                if (config.hasOwnProperty(attr))
+                if (config.hasOwnProperty(attr)) {
+                    //用户设置会调用 setter 的
                     host.__set(attr, config[attr]);
+                }
+
             }
         }
     }

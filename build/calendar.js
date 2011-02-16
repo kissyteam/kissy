@@ -988,7 +988,7 @@ KISSY.add('calendar/page', function(S, UA, N, Calendar) {
 
 
                     } else if ((cc.father.range.start !== null && cc.father.range.end !== null) && //日期选择范围
-                        (  _td_s.getTime() >= cc.father.range.start.getTime() && _td_e.getTime() < cc.father.range.end.getTime())) {
+                       (  _td_s.getTime() >= cc.father._showdate(1,cc.father.range.start).getTime() && _td_e.getTime() < cc.father._showdate(1,cc.father.range.end).getTime())) {
 
                         if (i == (startweekday + (new Date()).getDate() - 1) &&
                             (new Date()).getFullYear() == cc.year &&

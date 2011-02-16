@@ -1296,7 +1296,10 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-min.js?t=@TIMESTAMP@';
+                    var reg = /^([^?]+)(\?.*)?$/;
+                    reg.test(m);
+                    var name = RegExp.$1,tag = RegExp.$2;
+                    return name + '-min.js' + (tag ? tag : '');
                 },  jsPath = S.isFunction(componentJsName) ?
                     //一个模块合并到了了另一个模块文件中去
                     componentJsName(self.compress(modName))
