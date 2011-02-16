@@ -24,12 +24,17 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
         var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
             args2 = [elems].concat(S.makeArray(args));
 
-        if (args[valIndex] === undefined) {
+        //el.css({xx:yy}) chainable
+        if (args[valIndex] === undefined
+            &&
+            (valIndex != 1 || S['isString'](args[0]))
+            ) {
             return fn.apply(DOM, args2);
-        } else {
-            fn.apply(DOM, args2);
-            return this;
         }
+
+        fn.apply(DOM, args2);
+        return this;
+
     }
 
     function attach(methodNames, type) {
