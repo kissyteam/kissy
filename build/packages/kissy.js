@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110212143207';
+                    return m + '-pkg-min.js?t=20110216163709';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110212143207';
+                    return m + '-min.css?t=20110216163709';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -4530,12 +4530,17 @@ KISSY.add('node-attach', function(S, undefined) {
         var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
             args2 = [elems].concat(S.makeArray(args));
 
-        if (args[valIndex] === undefined) {
+        //el.css({xx:yy}) chainable
+        if (args[valIndex] === undefined
+            &&
+            (valIndex != 1 || S['isString'](args[0]))
+            ) {
             return fn.apply(DOM, args2);
-        } else {
-            fn.apply(DOM, args2);
-            return this;
         }
+
+        fn.apply(DOM, args2);
+        return this;
+
     }
 
     function attach(methodNames, type) {
