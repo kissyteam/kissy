@@ -3,11 +3,9 @@
  * @author  玉伯<lifesinger@gmail.com>, 乔花<qiaohua@taobao.com>
  * @see silde.html
  */
-KISSY.add('imagezoom/base', function(S, DOM, Event, UA, UIBase, Node, Zoomer, undefined) {
-    var doc = document,
-        IMAGEZOOM_ICON_TMPL = "<span class='{iconClass}'></span>",
+KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoomer, undefined) {
+    var IMAGEZOOM_ICON_TMPL = "<span class='{iconClass}'></span>",
         IMAGEZOOM_WRAP_TMPL = "<div class='{wrapClass}'></div>";
-
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -30,11 +28,11 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, UIBase, Node, Zoomer, un
             tmp = self.image = self.get('imageNode');
 
             // 在小图加载完毕时初始化
-            tmp && imgOnLoad(tmp, function() {
-                alert('hi');
-                self._render();
-                self._bind();
-                self._onAttrChanges();
+            tmp && Zoomer.__imgOnLoad(tmp, function() {
+                if (!self.imageWrap) {
+                    self._render();
+                    self._bind();
+                }
             });
         },
 
@@ -45,6 +43,9 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, UIBase, Node, Zoomer, un
         bindUI: function() {
         },
         destructor: function() {
+            var self = this;
+
+            self.image.detach();
         },
 
         _render: function() {
@@ -68,31 +69,34 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, UIBase, Node, Zoomer, un
          * @private
          */
         _bind: function() {
-            var self = this, timer;
+            var self = this,
+                timer, hasZoom = self.get('hasZoom');
 
-            Event.on(self.image, 'mouseenter', function(ev) {
-                if (!self.get('hasZoom')) return;
+            self.image.on('mouseenter', function(ev) {
+                if (!hasZoom) return;
 
-                self._setEv(ev);
-                Event.on(doc.body, 'mousemove', self._setEv, self);
+                self.set('currentMouse', ev);
 
                 timer = S.later(function() {
                     self.render();
-                    self.set("visible", !self.get("visible"));
+                    self.show();
+
+                    timer = undefined;
                 }, 300);
-            });
 
-            Event.on(self.image, 'mouseleave', function() {
-                if (!self.get('hasZoom')) return;
+            }).on('mouseleave', function(ev) {
+                if (!hasZoom) return;
 
-                Event.remove(doc.body, 'mousemove', self._setEv);
-
-                self.set("visible", !self.get("visible"));
+                self.set('currentMouse', ev);
 
                 if (timer) {
                     timer.cancel();
                     timer = undefined;
+                } else {
+                    self.hide();
                 }
+            }).on('mousemove', function(ev) {
+                self.set('currentMouse', ev);
             });
         },
 
@@ -107,14 +111,8 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, UIBase, Node, Zoomer, un
                 e.newVal ? self.show() : self.hide();
             });
         },
-
-        /**
-         * 保存当前鼠标位置
-         * @param {Object} ev
-         * @private
-         */
-        _setEv: function(ev) {
-            this._ev = ev;
+        _uiSetHasZoom: function(v) {
+            //v ? this.show() : this.hide();
         }
     },
     {
@@ -130,14 +128,14 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, UIBase, Node, Zoomer, un
             imageWidth: {
                 valueFn: function() {
                     var img = this.get('imageNode');
-                    img = img && img.clientWidth;
+                    img = img && img.width();
                     return img || 400;
                 }
             },
             imageHeight: {
                 valueFn: function() {
                     var img = this.get('imageNode');
-                    img = img && img.clientHeight;
+                    img = img && img.height();
                     return img || 400;
                 }
             },
@@ -177,22 +175,9 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, UIBase, Node, Zoomer, un
                 value: 'ks-imagezoom-icon'
             }
         }
-
     });
-
-    function imgOnLoad(img, callback) {
-        if (checkImageReady(img)) {
-            callback();
-        }
-        // 1) 图尚未加载完毕，等待 onload 时再初始化 2) 多图切换时需要绑定load事件来更新相关信息
-        Event.on(img, 'load', callback);
-    }
-
-    function checkImageReady(imgElem) {
-        return (imgElem && imgElem.complete && imgElem.clientWidth) ? true : false;
-    }
 }, {
-    requires: ['dom','event', 'ua', 'uibase', 'node', 'imagezoom/zoomer']
+    requires: ['dom','event', 'ua', 'anim', 'uibase', 'node', 'imagezoom/zoomer']
 });
 
 

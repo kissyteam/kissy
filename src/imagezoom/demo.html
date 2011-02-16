@@ -14,7 +14,8 @@
 <script src="../../build/event.js"></script>
 <script src="../../build/base.js"></script>
 <script src="../../build/json.js"></script>
-
+<script src="../../build/anim.js"></script>
+<script src="../../build/uibase.js"></script>
 <script src="zoomer.js"></script>
 <script src="base.js"></script>
 <script src="autorender.js"></script>
@@ -47,19 +48,18 @@
     }
 </style>
 <style>
-    .demo {
+    .ks-imagezoom-wrap {
         position: relative;
         width: 310px;
         height: 310px;
         border: 1px solid grey;
     }
 
-    .ks-imagezoom-lens {
-        background: url(http://img04.taobaocdn.com/tps/i4/T12pdtXaldXXXXXXXX-2-2.png) repeat;
-        cursor: move;
-    }
-
     .ks-imagezoom-icon {
+        display: block;
+        position: absolute;
+        right: -1px;
+        bottom: -1px;
         height: 23px;
         width: 23px;
         border-right: 1px solid #999;
@@ -67,15 +67,14 @@
         background: url(http://img02.taobaocdn.com/tps/i2/T1uJNuXX8tXXXXXXXX-23-23.png) no-repeat scroll left top transparent;
     }
 
-    .ks-imagezoom-viewer {
-        border: 1px solid #CCCCCC;
-        overflow: hidden;
-        text-align: center;
-        z-index: 999;
+    .ks-imagezoom-lens {
+        background: url(http://img04.taobaocdn.com/tps/i4/T12pdtXaldXXXXXXXX-2-2.png) repeat;
+        cursor: move;
     }
 
-    .ks-imagezoom-loading {
-        background: #fff url(assets/loading.gif) no-repeat center center;
+    .ks-imagezoom-viewer {
+        border: 1px solid #CCCCCC;
+        text-align: center;
     }
 
 </style>
@@ -87,11 +86,6 @@
 
 <div class="demo">
     <img id="standard" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
-</div>
-
-<h2>小图不能访问</h2>
-<div class="demo">
-    <img id="bad-small" src="http://google.com/non-exist.jpg"/>
 </div>
 
 <style>
@@ -114,84 +108,34 @@
     </li>
 </ul>
 
-<h2>auto render</h2>
 
-<div class="demo">
-    <img class="KS_Widget" data-widget-type="ImageZoom" data-widget-config="{ 'bigImageSrc': 'http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg' }" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
-</div>
-
-<h2>inner</h2>
-<style>
-    .inner {
-        border: none;
-    }
-</style>
-<div class="demo">
-    <img id="inner" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
-</div>
-
-<br/>
-<ul id="imgGallery">
-    <li>
-        <img src="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg_120x120.jpg" data-ks-imagezoom="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg"/>
-    </li>
-    <li>
-        <img src="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg_120x120.jpg" data-ks-imagezoom="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg"/>
-    </li>
-</ul>
-
-<!--<h2>GIF</h2>
-<div>
-    <img id="innerGIF" src="http://t1.gstatic.com/images?q=tbn:ANd9GcQ2vnXhnmkMfCAIxmWCk30RMkCEQzCuZqiBW2A31f0IlnpTKrk&t=1&usg=__SgHRt2YpoMzLSom2RwryLZ9h-b0=" data-ks-imagezoom="http://spiff.rit.edu/classes/phys235/badrock/kt_impact.gif" />
-</div>
-
-<h2>PNG</h2>
-<div>
-    <img id="innerPNG" src="http://t2.gstatic.com/images?q=tbn:ANd9GcRh4hSB5hJrHqBhqg_qMbxWIaFHAIrcHl_5Eh3hkWIx67ARSUs&t=1&usg=__qWOTgiUVJAxh66euWNsLiXm_NYw=" data-ks-imagezoom="http://d.lanrentuku.com/down/png/0904/Mario_Galaxy/Mario_Galaxy_002.png" />
-</div>
--->
 <script>
     KISSY.use("dom,event,imagezoom/base", function(S, DOM, Event, ImageZoom) {
-        alert('hi');
+
         var a = new ImageZoom({
             imageNode: "#standard",
-            zoomCls: 'inner',
+            //type: 'inner',
             align:{
                 node: "#standard",
                 points: ["tr","tl"],
                 offset: [0, 0]
+            },
+            bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg"
+        });
+
+        var m = new ImageZoom({
+            imageNode: "#multi",
+            align:{
+                node: "#multi",
+                points: ["tr","tl"],
+                offset: [0, 0]
             }
         });
-        /*a.set('bigImageSrc', "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg");
-
-         var m = new ImageZoom("#multi");
-         Event.on("#imgList img", 'click', function() {
-         var data = DOM.attr(this, 'data-ks-imagezoom');
-         m.changeImageSrc(data + '_310x310.jpg');
-         //S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
-         m.set('bigImageSrc', data);
-         });
-
-
-         var b = new ImageZoom("#inner", {
-         position: 'inner',
-         offset: 0,
-         zoomCls: 'inner'
-         });
-         b.set('bigImageSrc', "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg");
-
-         ImageZoom.autoRender();
-
-         S.each(DOM.query("#imgGallery img"), function(img) {
-         var t = new ImageZoom(img, {
-         position: 'inner',
-         offset: 0,
-         zoomCls: 'inner',
-         lensIcon: false
-         });
-         t.set('bigImageSrc', DOM.attr(img, 'data-ks-imagezoom'));
-         });**/
-
+        Event.on("#imgList img", 'click', function() {
+            var data = DOM.attr(this, 'data-ks-imagezoom');
+            DOM.attr('#multi', 'src', data+'_310x310.jpg');
+            m.set('bigImageSrc', data);
+        });
     });
 </script>
 <p class="code-switch">显示源码</p>
