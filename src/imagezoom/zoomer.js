@@ -131,8 +131,7 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
             var self = this, bigImage;
 
             self.viewer = self.get("contentEl");
-            bigImage = self.bigImage = new Node('<img src="' + self.get("bigImageSrc") + '" />').appendTo(self.viewer);
-            bigImage.css({ position: 'absolute' });
+            bigImage = self.bigImage = new Node('<img src="' + self.get("bigImageSrc") + '" />').css('position', 'absolute').appendTo(self.viewer);
 
             self._setLensSize();
             self._setLensOffset();
@@ -143,17 +142,12 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
                     node: self.image,
                     points: ['cc', 'cc']
                 });*/
-                self._bigImageCopy = new Node('<img src="' + self.image.attr('src') + '"  />').prependTo(self.viewer);
-                self._bigImageCopy.css({
-                    width: self.get('bigImageWidth'),
-                    height: self.get('bigImageHeight'),
-                    position: 'absolute' });
+                self._bigImageCopy = new Node('<img src="' + self.image.attr('src') + '"  />').css('position', 'absolute')
+                    .width(self.get('bigImageWidth')).height(self.get('bigImageHeight')).prependTo(self.viewer);
             }
             // 标准模式, 添加镜片
             else {
-                self.lens = new Node('<div class="' + self.get("lensClass") + '"></div>').appendTo(body);
-                S.log(self.lens.css({ position: 'absolute' }));
-                self.lens.hide();
+                self.lens = new Node('<div class="' + self.get("lensClass") + '"></div>').css('position', 'absolute').appendTo(body).hide();
             }
 
             self.viewer.appendTo(self.get("el"));

@@ -70,10 +70,10 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
          */
         _bind: function() {
             var self = this,
-                timer, hasZoom = self.get('hasZoom');
+                timer;
 
             self.image.on('mouseenter', function(ev) {
-                if (!hasZoom) return;
+                if (!self.get('hasZoom')) return;
 
                 self.set('currentMouse', ev);
 
@@ -85,7 +85,7 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
                 }, 300);
 
             }).on('mouseleave', function(ev) {
-                if (!hasZoom) return;
+                if (!self.get('hasZoom')) return;
 
                 self.set('currentMouse', ev);
 
@@ -100,19 +100,12 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
             });
         },
 
-        /**
-         * attrs 改变事件
-         * @private
-         */
-        _onAttrChanges: function() {
-            var self = this;
-
-            self.on('afterHasZoomChange', function(e) {
-                e.newVal ? self.show() : self.hide();
-            });
-        },
         _uiSetHasZoom: function(v) {
-            //v ? this.show() : this.hide();
+            if (v) {
+                this.icon && this.icon.show();
+            } else {
+                this.icon && this.icon.hide();
+            }
         }
     },
     {

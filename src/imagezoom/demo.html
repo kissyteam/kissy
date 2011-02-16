@@ -101,10 +101,12 @@
 </div>
 <ul id="imgList">
     <li>
-        <img src="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg_40x40.jpg" data-ks-imagezoom="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg"/>
+        <img src="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg_40x40.jpg"
+              data-ks-imagezoom="http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg"/>
     </li>
     <li>
-        <img src="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg_40x40.jpg" data-ks-imagezoom="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg"/>
+        <img src="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg_40x40.jpg"
+             data-has-zoom="true" data-ks-imagezoom="http://img06.taobaocdn.com/imgextra/i6/354823861/T2vWNlXbFdXXXXXXXX_!!354823861.jpg"/>
     </li>
 </ul>
 
@@ -133,8 +135,11 @@
         });
         Event.on("#imgList img", 'click', function() {
             var data = DOM.attr(this, 'data-ks-imagezoom');
-            DOM.attr('#multi', 'src', data+'_310x310.jpg');
-            m.set('bigImageSrc', data);
+            DOM.attr('#multi', 'src', data + '_310x310.jpg');
+            m.set('hasZoom', DOM.attr(this, 'data-has-zoom'));
+            if (data) {
+                m.set('bigImageSrc', data);
+            }
         });
     });
 </script>
