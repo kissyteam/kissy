@@ -132,6 +132,7 @@ KISSY.add('base/attribute', function(S, undef) {
             getter = attrConfig && attrConfig['getter'];
 
             // get user-set value or default value
+            //user-set value takes privilege
             ret = name in host.__attrVals ?
                 host.__attrVals[name] :
                 host.__getDefAttrVal(name);
