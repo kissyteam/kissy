@@ -2,16 +2,12 @@
  * view : render button using div
  * @author:yiminghe@gmail.com
  */
-KISSY.add("button/css3render", function(S, UIBase) {
+KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
 
-    return UIBase.create([UIBase.Box], {
+    return UIBase.create(ButtonRender, [], {
 
-        renderUI:function(){
+        renderUI:function() {
             this.get("el").unselectable();
-        },
-
-        _uiSetContent:function(v) {
-            this.get("el").html(v);
         },
 
         _handleFocus:function() {
@@ -35,6 +31,7 @@ KISSY.add("button/css3render", function(S, UIBase) {
             this._handleMouseUp();
         },
 
+        //模拟原生 disabled 机制
         _uiSetDisabled:function(v) {
             if (v) {
                 this.get("el").addClass(this.get("disabledCls"));
@@ -62,26 +59,37 @@ KISSY.add("button/css3render", function(S, UIBase) {
 
     }, {
         ATTRS:{
-            content:{},
-            disabled:{},
+            prefixCls:{
+                value:"goog-css3-button"
+            },
             elCls:{
-                value:"goog-inline-block goog-css3-button"
+                valueFn:function() {
+                    return "goog-inline-block " + this.get("prefixCls");
+                }
             },
             hoverCls:{
-                value:"goog-css3-button-hover"
+                valueFn:function() {
+                    return this.get("prefixCls") + "-hover";
+                }
             },
             focusCls:{
-                value:"goog-css3-button-focused"
+                valueFn:function() {
+                    return this.get("prefixCls") + "-focused";
+                }
             },
             activeCls:{
-                value:"goog-css3-button-active"
+                valueFn:function() {
+                    return this.get("prefixCls") + "-active";
+                }
             },
             disabledCls:{
-                value:"goog-css3-button-disabled"
+                valueFn:function() {
+                    return this.get("prefixCls") + "-disabled";
+                }
             }
         }
     });
 
 }, {
-    requires:['uibase']
+    requires:['uibase','button/buttonrender']
 });

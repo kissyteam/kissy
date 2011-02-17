@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>css3render for button 测试</title>
+<title>CustomRender for button 测试</title>
 <link href="common.css" rel="stylesheet"/>
-<link href="css3button.css" rel="stylesheet"/>
+<link href="custombutton.css" rel="stylesheet"/>
 </head>
 <body>
 
-<h1>css3render for button 测试</h1>
+<h1>CustomRender for button 测试</h1>
 
 <div id="button_container">
 
@@ -36,11 +36,12 @@
 <script src="../buttonrender.js"></script>
 <script src="../nativerender.js"></script>
 <script src="../css3render.js"></script>
+<script src="../customrender.js"></script>
 <script>
-    KISSY.use("node,button/base,button/css3render", function(S, Node, Button, Css3Render) {
+    KISSY.use("node,button/base,button/customrender", function(S, Node, Button, CustomRender) {
         //view
         //render to container : button_container
-        var r = new Css3Render({
+        var r = new CustomRender({
             render:"#button_container"
         });
 
@@ -77,7 +78,7 @@
         }
 
         var exist = new Button({
-            view:new Css3Render({
+            view:new CustomRender({
                 srcNode:"#exist"
             }),
             autoRender:true
