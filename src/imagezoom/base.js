@@ -10,6 +10,12 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
     function require(s) {
         return S.require("uibase/" + s);
     }
+    function show(obj) {
+        obj && obj.show();
+    }
+    function hide(obj) {
+        obj && obj.hide();
+    }
 
     return UIBase.create([require("box"),
         require("contentbox"),
@@ -80,20 +86,27 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
                     self.show();
                     timer = undefined;
 
-                }, 100);
+                }, 50);
             }).on('mouseleave', function() {
                 if (timer) {
                     timer.cancel();
                     timer = undefined;
                 }
             });
+
+            self.on('show', function() {
+                hide(self.icon);
+            });
+            self.on('hide', function() {
+                show(self.icon);
+            })
         },
 
         _uiSetHasZoom: function(v) {
             if (v) {
-                this.icon && this.icon.show();
+                show(self.icon);
             } else {
-                this.icon && this.icon.hide();
+                hide(self.icon);
             }
         }
     },

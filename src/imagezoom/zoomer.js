@@ -138,10 +138,10 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
             
             if (self._isInner) {
                 // inner 位置强制修改
-                /*self.set('align', {
+                self.set('align', {
                     node: self.image,
                     points: ['cc', 'cc']
-                });*/
+                });
                 self._bigImageCopy = new Node('<img src="' + self.image.attr('src') + '"  />').css('position', 'absolute')
                     .width(self.get('bigImageWidth')).height(self.get('bigImageHeight')).prependTo(self.viewer);
             }
@@ -164,8 +164,6 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
             var self = this;
 
             self.on('show', function() {
-                hide(self.icon);
-
                 if (self._isInner) {
                     self._anim(0.4, 42);
                 }
@@ -173,10 +171,8 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
                 body.on('mousemove', self._mouseMove, self);
             });
 
-
             self.on('hide', function() {
                 hide(self.lens);
-                show(self.icon);
 
                 body.detach('mousemove', self._mouseMove, self);
             });
