@@ -75,28 +75,17 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
             self.image.on('mouseenter', function(ev) {
                 if (!self.get('hasZoom')) return;
 
-                self.set('currentMouse', ev);
-
                 timer = S.later(function() {
-                    self.render();
-                    self.show();
-
-                    timer = undefined;
-                }, 300);
-
-            }).on('mouseleave', function(ev) {
-                if (!self.get('hasZoom')) return;
-
                 self.set('currentMouse', ev);
+                    self.show();
+                    timer = undefined;
 
+                }, 100);
+            }).on('mouseleave', function() {
                 if (timer) {
                     timer.cancel();
                     timer = undefined;
-                } else {
-                    self.hide();
                 }
-            }).on('mousemove', function(ev) {
-                self.set('currentMouse', ev);
             });
         },
 
