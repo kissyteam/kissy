@@ -168,15 +168,17 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
 
                 if (self._isInner) {
                     self._anim(0.4, 42);
-                } else {
-                    //show(self.lens);
                 }
+
+                body.on('mousemove', self._mouseMove, self);
             });
 
 
             self.on('hide', function() {
-                //hide(self.lens);
+                hide(self.lens);
                 show(self.icon);
+
+                body.detach('mousemove', self._mouseMove, self);
             });
         },
         __syncUI: function() {
@@ -230,6 +232,20 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
             self.set('lensTop', lensTop);
         },
 
+        _mouseMove: function(ev) {
+            var self = this,
+                rl = self.get('imageLeft'), rt = self.get('imageTop'),
+                rw = self.get('imageWidth'), rh = self.get('imageHeight');
+
+            if (ev.pageX > rl && ev.pageX < rl + rw &&
+                ev.pageY > rt && ev.pageY < rt + rh) {
+                self.set('currentMouse', ev);
+            } else {
+                // 移出
+                self.hide();
+            }
+        },
+
         /**
          * Inner 效果中的放大动画
          * @param {number} seconds
@@ -278,6 +294,7 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
             if (!self.bigImage || self._animTimer) return;
 
             // 更新 lens 位置
+            show(self.lens);
             self._setLensOffset(ev);
 
             // 设置大图偏移
