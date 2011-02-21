@@ -104,9 +104,9 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
 
         _uiSetHasZoom: function(v) {
             if (v) {
-                show(self.icon);
+                show(this.icon);
             } else {
-                hide(self.icon);
+                hide(this.icon);
             }
         }
     },
