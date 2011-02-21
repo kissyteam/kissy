@@ -16,7 +16,7 @@ KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
             this.get("el").one('div').one('div').attr("id", id);
 
             //按钮的描述节点在最内层，其余都是装饰
-            this.get("el").attr("aria-labelby", id);
+            this.get("el").attr("aria-labelledby", id);
         },
         _uiSetContent:function(v) {
             if (v == undefined) return;
