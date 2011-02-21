@@ -33,24 +33,30 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
 
         //模拟原生 disabled 机制
         _uiSetDisabled:function(v) {
+            var el = this.get("el");
             if (v) {
-                this.get("el").addClass(this.get("disabledCls"));
+                el.addClass(this.get("disabledCls"));
                 //不能被 tab focus 到
-                this.get("el").removeAttr("tabindex");
+                el.removeAttr("tabindex");
+                //support aria
+                el.attr("aria-disabled", true);
             } else {
-                this.get("el").removeClass(this.get("disabledCls"));
-                this.get("el").attr("tabindex", 0);
+                el.removeClass(this.get("disabledCls"));
+                el.attr("tabindex", 0);
+                el.attr("aria-disabled", false);
             }
         },
 
         _handleMouseDown:function() {
             if (this.get("disabled")) return;
             this.get("el").addClass(this.get("activeCls"));
+            this.get("el").attr("aria-pressed", true);
         },
 
         _handleMouseUp:function() {
             if (this.get("disabled")) return;
             this.get("el").removeClass(this.get("activeCls"));
+            this.get("el").attr("aria-pressed", false);
         },
 
         _handleKeydown:function() {

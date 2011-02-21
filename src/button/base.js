@@ -64,6 +64,15 @@ KISSY.add("button/base", function(S, UIBase) {
             view.set("disabled", d);
         },
 
+        _uiSetTooltip:function(t) {
+            var view = this.get("view");
+            view.set("tooltip", t);
+        },
+        _uiSetDescribedby:function(d) {
+            if (d === undefined) return;
+            var view = this.get("view");
+            view.set("describedby", d);
+        },
         destructor:function() {
             var view = this.get("view");
             var el = view.get("el");
@@ -81,6 +90,8 @@ KISSY.add("button/base", function(S, UIBase) {
                     return this.get("view").get("content");
                 }
             },
+            describedby:{},
+            tooltip:{},
             view:{},
             disabled:{}
         }

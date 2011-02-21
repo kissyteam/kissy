@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8"/>
 <title>CustomRender for button 测试</title>
-<link href="common.css" rel="stylesheet"/>
-<link href="custombutton.css" rel="stylesheet"/>
+<link href="tests/common.css" rel="stylesheet"/>
+<link href="tests/custombutton.css" rel="stylesheet"/>
 </head>
 <body>
 
-<h1 id="describe">CustomRender for button 测试</h1>
+<h1 id="describe">demo for button 测试</h1>
 
 <div id="button_container">
 
@@ -21,27 +21,29 @@
 
 
 
-<script src="../../seed/kissy.js"></script>
-<script src="../../seed/lang.js"></script>
-<script src="../../seed/web.js"></script>
-<script src="../../seed/loader.js"></script>
-<script src="../../../build/ua.js"></script>
-<script src="../../../build/node.js"></script>
-<script src="../../../build/dom.js"></script>
-<script src="../../../build/event.js"></script>
-<script src="../../../build/base.js"></script>
-<script src="../../../build/json.js"></script>
-<script src="../../../build/uibase.js"></script>
-<script src="../base.js"></script>
-<script src="../buttonrender.js"></script>
-<script src="../nativerender.js"></script>
-<script src="../css3render.js"></script>
-<script src="../customrender.js"></script>
+<script src="../seed/kissy.js"></script>
+<script src="../seed/lang.js"></script>
+<script src="../seed/web.js"></script>
+<script src="../seed/loader.js"></script>
+<script src="../../build/ua.js"></script>
+<script src="../../build/node.js"></script>
+<script src="../../build/dom.js"></script>
+<script src="../../build/event.js"></script>
+<script src="../../build/base.js"></script>
+<script src="../../build/json.js"></script>
+<script src="../../build/uibase.js"></script>
+
+<script src="base.js"></script>
+<script src="buttonrender.js"></script>
+<script src="nativerender.js"></script>
+<script src="css3render.js"></script>
+<script src="customrender.js"></script>
+<script src="../button.js"></script>
 <script>
-    KISSY.use("node,button/base,button/customrender", function(S, Node, Button, CustomRender) {
+    KISSY.use("node,button", function(S, Node, Button) {
         //view
         //render to container : button_container
-        var r = new CustomRender({
+        var r = new Button.Render({
             render:"#button_container"
         });
 
@@ -79,7 +81,7 @@
         }
 
         var exist = new Button({
-            view:new CustomRender({
+            view:new Button.Render({
                 srcNode:"#exist"
             }),
             autoRender:true

@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h1>css3render for button 测试</h1>
+<h1 id="describe">css3render for button 测试</h1>
 
 <div id="button_container">
 
@@ -48,6 +48,7 @@
         //view as a parameter
         var b = new Button({
             content:"测试",
+            describedby:"describe",
             view:r,
             autoRender:true
         });
