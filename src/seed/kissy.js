@@ -117,23 +117,23 @@
             if (!s || !r) return r;
 
             var create = Object.create ?
-                         function(proto, c) {
-                             return Object.create(proto, {
-                                 constructor: {
-                                     value: c
-                                 }
-                             });
-                         } :
-                         function (proto, c) {
-                             function F() {
-                             }
+                function(proto, c) {
+                    return Object.create(proto, {
+                        constructor: {
+                            value: c
+                        }
+                    });
+                } :
+                function (proto, c) {
+                    function F() {
+                    }
 
-                             F.prototype = proto;
+                    F.prototype = proto;
 
-                             var o = new F();
-                             o.constructor = c;
-                             return o;
-                         },
+                    var o = new F();
+                    o.constructor = c;
+                    return o;
+                },
                 sp = s.prototype,
                 rp;
 
@@ -155,11 +155,11 @@
             return r;
         },
 
-        /****************************************************************************************
+    /****************************************************************************************
 
-         *                            The KISSY System Framework                                *
+     *                            The KISSY System Framework                                *
 
-         ****************************************************************************************/
+     ****************************************************************************************/
 
         /**
          * Initializes KISSY
@@ -222,6 +222,13 @@
             isStr && (host[name] = O);
 
             return O;
+        },
+
+
+        config:function(c) {
+            for(var p in c) {
+                if(this["_"+p]) this["_"+p](c[p]);
+            }
         },
 
         /**

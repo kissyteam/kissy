@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>CustomRender for button 测试</title>
+<link href="common.css" rel="stylesheet"/>
+<link href="custombutton.css" rel="stylesheet"/>
+<link href="menubutton.css" rel="stylesheet"/>
+<link href="../../overlay/assets/cool.css" rel="stylesheet"/>
+<style>
+    .ks-menu {
+        background:white;
+        border:1px solid red;
+    }
+</style>
+</head>
+<body>
+
+<h1 id="describe">CustomRender for button 测试</h1>
+
+<div id="button_container">
+
+</div>
+<label>禁用：<input type="checkbox" id='dis'/></label>
+
+<h2>从已知元素生成</h2>
+
+<div id="exist">渐进增强</div>
+
+
+
+<script src="../../seed/kissy.js"></script>
+<script src="../../seed/lang.js"></script>
+<script src="../../seed/web.js"></script>
+<script src="../../seed/loader.js"></script>
+<script src="../../../build/ua.js"></script>
+<script src="../../../build/node.js"></script>
+<script src="../../../build/dom.js"></script>
+<script src="../../../build/event.js"></script>
+<script src="../../../build/base.js"></script>
+<script src="../../../build/json.js"></script>
+<script src="../../../build/uibase.js"></script>
+<script src="../../../build/overlay.js"></script>
+<script src="../base.js"></script>
+<script src="../buttonrender.js"></script>
+<script src="../nativerender.js"></script>
+<script src="../css3render.js"></script>
+<script src="../menubutton.js"></script>
+<script src="../menubuttonrender.js"></script>
+<script src="../customrender.js"></script>
+<script>
+    KISSY.use("node,button/menubutton,button/menubuttonrender,overlay", function(S,
+                                                                                 Node,
+                                                                                 MenuButton,
+                                                                                 MenuButtonRender,
+                                                                                Overlay) {
+        //view
+        //render to container : button_container
+        var r = new MenuButtonRender({
+            render:"#button_container"
+        });
+
+        var o=new Overlay({
+            width:200,
+            height:200,
+            elCls:"ks-menu",
+            content:"haha"
+        });
+
+        //model and control
+        //view as a parameter
+        var b = new MenuButton({
+            content:"测试",
+            describedby:"describe",
+            menu:o,
+            view:r,
+            autoRender:true
+        });
+        //or
+        //b.render()
+
+
+
+        var dis = Node.one("#dis");
+
+        dis.on("click", function() {
+            if (dis[0].checked) {
+                b.set("disabled", true);
+            } else {
+                b.set("disabled", false);
+            }
+        });
+
+        if (dis[0].checked) {
+            b.set("disabled", true);
+        } else {
+            b.set("disabled", false);
+        }
+
+        var exist = new MenuButton({
+            view:new MenuButtonRender({
+                srcNode:"#exist"
+            }),
+            menu:o,
+            autoRender:true
+        });
+
+     
+
+        S.log(exist.get("content"));
+    });
+</script>
+</body>
+</html>

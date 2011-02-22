@@ -14,43 +14,91 @@ KISSY.add("button/base", function(S, UIBase) {
         bindUI:function() {
             var self = this,view = self.get("view");
             var el = view.get("el");
-            if (view['_handleMouseEnter']) {
-                el.on("mouseenter", view['_handleMouseEnter'], view);
-            }
-            if (view['_handleMouseLeave']) {
-                el.on("mouseleave", view['_handleMouseLeave'], view);
-            }
-            if (view['_handleMouseDown']) {
-                el.on("mousedown", view['_handleMouseDown'], view);
-            }
-            if (view['_handleMouseUp']) {
-                el.on("mouseup", view['_handleMouseUp'], view);
-            }
-            if (view['_handleFocus']) {
-                el.on("focus", view['_handleFocus'], view);
-            }
-            if (view['_handleBlur']) {
-                el.on("blur", view['_handleBlur'], view);
-            }
+            el.on("mouseenter", self._handleMouseEnter, self);
+            el.on("mouseleave", self._handleMouseLeave, self);
+            el.on("mousedown", self._handleMouseDown, self);
+            el.on("mouseup", self._handleMouseUp, self);
+            el.on("focus", self._handleFocus, self);
+            el.on("blur", self._handleBlur, self);
+            el.on("keydown", self._handleKeydown, self);
+            el.on("click", self._handleClick, self);
+        },
 
-            function perform(e) {
-                if (self.get("disabled")) return;
-                if (view['_handleClick']) {
-                    view['_handleClick'](e);
-                }
-                self.fire("click");
-            }
+        _forwordToView:function(method, ev) {
+            var self = this,view = self.get("view");
+            view[method] && view[method](ev);
+        },
 
-            if (view['_handleKeydown']) {
-                el.on("keydown", function(ev) {
-                    if (ev.keyCode == 13 || ev.keyCode == 32) {
-                        perform(ev);
-                    } else {
-                        view['_handleKeydown'](ev);
-                    }
-                });
+        /**
+         * root element handler for mouse enter
+         * @param ev
+         */
+        _handleMouseEnter:function(ev) {
+            if (self.get("disabled")) return false;
+            this._forwordToView('_handleMouseEnter', ev);
+        },
+        /**
+         * root element handler for mouse leave
+         * @param ev
+         */
+        _handleMouseLeave:function(ev) {
+            if (self.get("disabled")) return false;
+            this._forwordToView('_handleMouseLeave', ev);
+        },
+        /**
+         * root element handler for mouse down
+         * @param ev
+         */
+        _handleMouseDown:function(ev) {
+            if (self.get("disabled")) return false;
+            this._forwordToView('_handleMouseDown', ev);
+        },
+        /**
+         * root element handler for mouse up
+         * @param ev
+         */
+        _handleMouseUp:function(ev) {
+            if (self.get("disabled")) return false;
+            this._forwordToView('_handleMouseUp', ev);
+        },
+        /**
+         * root element handler for focus
+         * @param ev
+         */
+        _handleFocus:function(ev) {
+            if (self.get("disabled")) return false;
+            this._forwordToView('_handleFocus', ev);
+        },
+        /**
+         * root element handler for blur
+         * @param ev
+         */
+        _handleBlur:function(ev) {
+            if (self.get("disabled")) return false;
+            this._forwordToView('_handleBlur', ev);
+        },
+        /**
+         * root element handler for keydown
+         * @param ev
+         */
+        _handleKeydown:function(ev) {
+            if (self.get("disabled")) return false;
+            var self = this,view = self.get("view");
+            if (!view['_handleKeydown']) return;
+            if (ev.keyCode == 13 || ev.keyCode == 32) {
+                this._handleClick();
+            } else {
+                view['_handleKeydown'](ev);
             }
-            el.on("click", perform);
+        },
+        /**
+         * root element handler for mouse enter
+         * @param ev
+         */
+        _handleClick:function() {
+            if (self.get("disabled")) return false;
+            this._forwordToView("_handleClick");
+            self.fire("click");
         },
 
         //model 中数据属性变化后要更新到 view 层

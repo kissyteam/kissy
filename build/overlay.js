@@ -111,3 +111,9 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase) {
 
 
 
+KISSY.add("overlay", function(S, O, D) {
+    O.Dialog=D;
+    return O;
+}, {
+    requires:["overlay/overlay","overlay/dialog"]
+});

@@ -30,5 +30,5 @@ KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
         }
     });
 }, {
-    requires:['uibase','button/css3render']
+    requires:['uibase','./css3render']
 });

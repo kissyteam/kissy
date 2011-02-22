@@ -11,22 +11,22 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
         },
 
         _handleFocus:function() {
-            if (this.get("disabled")) return;
+            if (this.get("disabled")) return false;
             this.get("el").addClass(this.get("focusCls"));
         },
 
         _handleBlur:function() {
-            if (this.get("disabled")) return;
+            if (this.get("disabled")) return false;
             this.get("el").removeClass(this.get("focusCls"));
         },
 
         _handleMouseEnter:function() {
-            if (this.get("disabled")) return;
+            if (this.get("disabled")) return false;
             this.get("el").addClass(this.get("hoverCls"));
         },
 
         _handleMouseLeave:function() {
-            if (this.get("disabled")) return;
+            if (this.get("disabled")) return false;
             this.get("el").removeClass(this.get("hoverCls"));
             this._handleMouseUp();
         },
@@ -48,19 +48,19 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
         },
 
         _handleMouseDown:function() {
-            if (this.get("disabled")) return;
+            if (this.get("disabled")) return false;
             this.get("el").addClass(this.get("activeCls"));
             this.get("el").attr("aria-pressed", true);
         },
 
         _handleMouseUp:function() {
-            if (this.get("disabled")) return;
+            if (this.get("disabled")) return false;
             this.get("el").removeClass(this.get("activeCls"));
             this.get("el").attr("aria-pressed", false);
         },
 
         _handleKeydown:function() {
-            if (this.get("disabled")) return;
+            if (this.get("disabled")) return false;
         }
 
     }, {
@@ -97,5 +97,5 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
     });
 
 }, {
-    requires:['uibase','button/buttonrender']
+    requires:['uibase','./buttonrender']
 });

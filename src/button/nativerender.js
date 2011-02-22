@@ -17,5 +17,5 @@ KISSY.add("button/nativerender", function(S, UIBase, ButtonRender) {
         }
     });
 }, {
-    requires:['uibase','button/buttonrender']
+    requires:['uibase','./buttonrender']
 });

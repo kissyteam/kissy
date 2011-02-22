@@ -1,8 +1,6 @@
 KISSY.add("overlay", function(S, O, D) {
-    return {
-        Overlay:O,
-        Dialog:D
-    };
+    O.Dialog=D;
+    return O;
 }, {
     requires:["overlay/overlay","overlay/dialog"]
 });

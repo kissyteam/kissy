@@ -107,6 +107,11 @@
         return normalPath(path);
     }
 
+    //清楚时间戳
+    function removeTimestamp(str) {
+        return str.replace(/\?.*$/, "");
+    }
+
 
     loader = {
 
@@ -259,9 +264,8 @@
          * 表示遇到 biz/x
          * 在当前网页路径找 biz/x.js
          */
-        packages:function() {
+        _packages:function(cfgs) {
             var self = this,
-                cfgs = S.makeArray(arguments),
                 ps;
             ps = self.__packages = self.__packages || {};
             for (var i = 0; i < cfgs.length; i++) {
@@ -276,16 +280,21 @@
 
         /**
          * compress 'from module' to 'to module'
+         * {
+         *   core:['dom','ua','event','node','json','ajax','anim','base','cookie']
+         * }
          */
-        compress:function(from, to) {
+        _combine:function(from, to) {
             var self = this,cs;
             if (S['isObject'](from)) {
                 S.each(from, function(v, k) {
-                    self.compress(k, v);
+                    S.each(v, function(v2) {
+                        self._combine(v2, k);
+                    });
                 });
                 return;
             }
-            cs = self.__compresses = self.__compresses || {};
+            cs = self.__combines = self.__combines || {};
             if (to) {
                 cs[from] = to;
             } else {
@@ -301,6 +310,7 @@
          * </code>
          */
         use: function(modNames, callback, config) {
+
             modNames = modNames.replace(/\s+/g, EMPTY).split(',');
             config = config || {};
 
@@ -348,7 +358,7 @@
         require:function(moduleName) {
             var self = this,
                 mods = self.Env.mods,
-                mod = mods[moduleName];
+                mod = mods[removeTimestamp(moduleName)];
 
             return mod && mod.value;
         },
@@ -356,7 +366,7 @@
         __getPackagePath:function(mod) {
             var self = this,
                 //一个模块合并到了另一个模块文件中去
-                p = self.compress(mod.name),
+                p = self._combine(mod.name),
                 ind,
                 packages = self.__packages || {};
             if ((ind = p.indexOf("/")) != -1) {
@@ -379,18 +389,21 @@
 
             var self = this,
                 mods = self.Env.mods;
+            // x/y?t=2011
+            // 注意模块名中带时间戳，用于强制下载最新模块文件
+            var reg = /^([^?]+)(\?.*)?$/;
+            reg.test(modName);
+            var name = RegExp.$1,tag = RegExp.$2;
+            modName = name;
             var mod = mods[modName];
             //没有模块定义
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    var reg = /^([^?]+)(\?.*)?$/;
-                    reg.test(m);
-                    var name = RegExp.$1,tag = RegExp.$2;
-                    return name + '-min.js' + (tag ? tag : '');
+                    return removeTimestamp(m) + '-min.js' + (tag ? tag : '');
                 },  jsPath = S.isFunction(componentJsName) ?
                     //一个模块合并到了了另一个模块文件中去
-                    componentJsName(self.compress(modName))
+                    componentJsName(self._combine(modName))
                     : componentJsName;
                 mod = {
                     path:jsPath,
@@ -417,8 +430,9 @@
             mod['requires'] = requires;
             // attach all required modules
             for (; i < len; i++) {
-                requires[i] = normalDepModuleName(mod.name, requires[i]);
-                var r = mods[requires[i]];
+                requires[i] = normalDepModuleName(mod.name,
+                    requires[i]);
+                var r = mods[removeTimestamp(requires[i])];
                 if (r && r.status === ATTACHED) {
                     //no need
                 } else {
@@ -443,9 +457,10 @@
                 mod['requires'] = newRequires;
                 //本模块下载成功后串行下载 require
                 for (var i = newRequires.length - 1; i >= 0; i--) {
-                    newRequires[i] = normalDepModuleName(mod.name, newRequires[i]);
+                    newRequires[i] = normalDepModuleName(mod.name,
+                        newRequires[i]);
                     var r = newRequires[i],
-                        rmod = mods[r],
+                        rmod = mods[removeTimestamp(r)],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
                     if (rmod && rmod.status === ATTACHED
@@ -507,7 +522,7 @@
                 i = (modNames = S.makeArray(modNames)).length - 1;
 
             for (; i >= 0; i--) {
-                var name = modNames[i];
+                var name = removeTimestamp(modNames[i]);
                 mod = mods[name] || {};
                 if (mod.status !== ATTACHED) return false;
             }
@@ -772,6 +787,8 @@
  *    依赖注入，发生于 add 和 use 时期
  *
  * 4. add,use 不支持 css loader ,getScript 仍然保留支持
+ *
+ * 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
  *
  *
  * demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
