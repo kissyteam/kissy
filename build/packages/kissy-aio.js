@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110216163709';
+                    return m + '-pkg-min.js?t=20110223204543';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110216163709';
+                    return m + '-min.css?t=20110223204543';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -9230,7 +9230,12 @@ KISSY.add('uibase', function (S) {
                     ext = exts[i];
                     if (ext) {
                         if (extMethod != "constructor") {
-                            ext = exts[i].prototype[extMethod];
+                            //只调用真正自己构造器原型的定义，继承原型链上的不要管
+                            if (ext.prototype.hasOwnProperty(extMethod)) {
+                                ext = ext.prototype[extMethod];
+                            } else {
+                                ext = null;
+                            }
                         }
                         ext && t.push(ext);
                     }
@@ -9238,7 +9243,9 @@ KISSY.add('uibase', function (S) {
             }
 
             // 收集主类
-            if ((main = c.prototype[mainMethod])) {
+            // 只调用真正自己构造器原型的定义，继承原型链上的不要管 !important
+            //所以不用自己在 renderUI 中调用 superclass.renderUI 了，UIBase 构造器自动搜寻
+            if (c.prototype.hasOwnProperty(mainMethod) && (main = c.prototype[mainMethod])) {
                 t.push(main);
             }
 
@@ -9294,7 +9301,7 @@ KISSY.add('uibase', function (S) {
                     host.__set(p, v.call(host, srcNode));
                 }
                 // 单选选择器
-                else if (S.isString(v)) {
+                else if (S['isString'](v)) {
                     host.__set(p, srcNode.one(v));
                 }
                 // 多选选择器
@@ -12894,7 +12901,7 @@ KISSY.add('imagezoom', function(S, undefined) {
                 return v;
             }
         },
-        
+
         /**
          * 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值
          * @type {Array.<number>}
@@ -13096,22 +13103,16 @@ KISSY.add('imagezoom', function(S, undefined) {
             Event.on(self.image, 'mouseenter', function(ev) {
                 if (!self.get(HAS_ZOOM)) return;
 
-                self._setEv(ev);
-                Event.on(doc.body, MOUSEMOVE, self._setEv, self);
-
                 timer = S.later(function() {
+                    self._setEv(ev);
                     if (!self.viewer) {
                         self._createViewer();
                     }
                     self.show();
-                }, 300); // 300 是感觉值，不立刻触发，同时要尽量让动画流畅
+                }, 50); // 100 是感觉值，不立刻触发，同时要尽量让动画流畅
             });
 
             Event.on(self.image, 'mouseleave', function() {
-                if (!self.get(HAS_ZOOM)) return;
-
-                Event.remove(doc.body, MOUSEMOVE, self._setEv);
-
                 if (timer) {
                     timer.cancel();
                     timer = undefined;
@@ -13219,7 +13220,7 @@ KISSY.add('imagezoom', function(S, undefined) {
                 region = self._imgRegion, alignToRegion = self._alignToRegion || region,
                 zoomSize = self.get(ZOOM_SIZE), offset = self.get(OFFSET),
                 left = alignToRegion.left + offset[0], top = alignToRegion.top + offset[1],
-                lensWidth, lensHeight, width, height;
+                width, height;
 
             self._setLensSize(width = zoomSize[0], height = zoomSize[1]);
 
@@ -13276,13 +13277,19 @@ KISSY.add('imagezoom', function(S, undefined) {
          * 鼠标移动时, 更新放大区域的显示
          * @private
          */
-        _onMouseMove: function() {
+        _onMouseMove: function(ev) {
             var self = this,
-                lens = self.lens, ev = self._ev,
+                lens = self.lens,
                 region = self._imgRegion,
                 rl = region.left, rt = region.top,
                 rw = region.width, rh = region.height,
                 bigImageSize = self._bigImageSize, lensOffset;
+
+            if (ev) {
+                self._setEv(ev);
+            } else {
+                ev = self._ev;
+            }
 
             if (ev.pageX > rl && ev.pageX < rl + rw &&
                 ev.pageY > rt && ev.pageY < rt + rh) {
@@ -13482,7 +13489,7 @@ KISSY.add('imagezoom', function(S, undefined) {
          */
         refreshRegion: function() {
             this._getAlignTo();
-            this._renderUI();
+            this._ready();
 
             // 更新位置标志
             this._refresh = true;
