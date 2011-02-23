@@ -66,7 +66,12 @@ KISSY.add('uibase/base', function (S, Base) {
                     ext = exts[i];
                     if (ext) {
                         if (extMethod != "constructor") {
-                            ext = exts[i].prototype[extMethod];
+                            //只调用真正自己构造器原型的定义，继承原型链上的不要管
+                            if (ext.prototype.hasOwnProperty(extMethod)) {
+                                ext = ext.prototype[extMethod];
+                            } else {
+                                ext = null;
+                            }
                         }
                         ext && t.push(ext);
                     }
@@ -74,7 +79,9 @@ KISSY.add('uibase/base', function (S, Base) {
             }
 
             // 收集主类
-            if ((main = c.prototype[mainMethod])) {
+            // 只调用真正自己构造器原型的定义，继承原型链上的不要管 !important
+            //所以不用自己在 renderUI 中调用 superclass.renderUI 了，UIBase 构造器自动搜寻
+            if (c.prototype.hasOwnProperty(mainMethod) && (main = c.prototype[mainMethod])) {
                 t.push(main);
             }
 

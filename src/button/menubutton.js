@@ -53,7 +53,7 @@ KISSY.add("button/menubutton", function(S, UIBase, Button) {
         _handleClick:function() {
             var re = MenuButton.superclass._handleClick.call(this);
             if (re === false) return re;
-            var menu = self.get("menu");
+            var menu = this.get("menu");
             if (!menu.get("visible")) {
                 this._showMenu();
             } else {

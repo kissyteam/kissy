@@ -2,9 +2,9 @@
  * abstract view for button
  * @author:yiminghe@gmail.com
  */
-KISSY.add("button/buttonrender", function(S, UIBase) {
+KISSY.add("button/buttonrender", function(S, UIBase,Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return UIBase.create([UIBase.Box], {
+    return UIBase.create(Component.Render,[UIBase.Box], {
         renderUI:function() {
             //set wai-aria role
             this.get("el").attr("role", "button");
@@ -22,9 +22,6 @@ KISSY.add("button/buttonrender", function(S, UIBase) {
         ATTRS:{
             //按钮内容
             content:{},
-            //是否禁用
-            disabled:{},
-
             //aria-describledby support
             describedby:{},
 
@@ -39,5 +36,5 @@ KISSY.add("button/buttonrender", function(S, UIBase) {
         }
     });
 }, {
-    requires:['uibase']
+    requires:['uibase','component']
 });
