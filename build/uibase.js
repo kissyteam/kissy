@@ -305,14 +305,15 @@ KISSY.add('uibase/base', function (S, Base) {
                 self._renderUI();
                 self.fire('renderUI');
                 callMethodByHierarchy(self, "renderUI", "__renderUI");
-
+                self.fire('afterRenderUI');
                 self._bindUI();
                 self.fire('bindUI');
                 callMethodByHierarchy(self, "bindUI", "__bindUI");
-
+                self.fire('afterBindUI');
                 self._syncUI();
                 self.fire('syncUI');
                 callMethodByHierarchy(self, "syncUI", "__syncUI");
+                self.fire('afterSyncUI');
                 self.set("rendered", true);
             }
         },

@@ -39,12 +39,14 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             } else {
                 children.push(c);
             }
+            c.set("parent", this);
         },
 
         removeChild:function(c) {
             var children = this.get("children");
             var index = S.indexOf(c, children);
             if (index != -1) children.splice(index, 1);
+            c.destroy();
         },
 
         bindUI:function() {
@@ -141,6 +143,10 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         _uiSetDisabled:function(d) {
             var view = this.get("view");
             view.set("disabled", d);
+            var children = this.get("children");
+            S.each(children, function(child) {
+                child.set("disabled", d);
+            });
         },
 
         destructor:function() {

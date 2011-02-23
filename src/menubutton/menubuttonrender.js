@@ -1,9 +1,13 @@
-KISSY.add("button/menubuttonrender", function(S, UIBase, CustomRender) {
+/**
+ * render aria and drop arrow for menubutton
+ * @author:yiminghe@gmail.com
+ */
+KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
     var MENU_BUTTON_TMPL = '<div class="goog-inline-block {prefixCls}-caption"></div>' +
         '<div class="goog-inline-block {prefixCls}-dropdown">&nbsp;</div>';
 
-    var MenuButtonRender = UIBase.create(CustomRender, [], {
+    var MenuButtonRender = UIBase.create(Button.Render, [], {
         renderUI:function() {
             var el = this.get("el");
             el.one("div").one("div").html(S.substitute(MENU_BUTTON_TMPL, {
@@ -41,5 +45,5 @@ KISSY.add("button/menubuttonrender", function(S, UIBase, CustomRender) {
 
     return MenuButtonRender;
 }, {
-    requires:['uibase','./customrender']
+    requires:['uibase','button']
 });

@@ -2,21 +2,23 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>CustomRender for button 测试</title>
-<link href="common.css" rel="stylesheet"/>
-<link href="custombutton.css" rel="stylesheet"/>
+<title>menubutton 测试</title>
+<link href="../../button/tests/common.css" rel="stylesheet"/>
+<link href="../../button/tests/custombutton.css" rel="stylesheet"/>
 <link href="menubutton.css" rel="stylesheet"/>
 <link href="../../overlay/assets/cool.css" rel="stylesheet"/>
+<link href="../../menu/tests/menu.css" rel="stylesheet"/>
+<link href="../../menu/tests/menuitem.css" rel="stylesheet"/>
 <style>
     .ks-menu {
-        background:white;
-        border:1px solid red;
+        background: white;
+        border: 1px solid red;
     }
 </style>
 </head>
 <body>
 
-<h1 id="describe">CustomRender for button 测试</h1>
+<h1 id="describe">menu 测试</h1>
 
 <div id="button_container">
 
@@ -26,7 +28,6 @@
 <h2>从已知元素生成</h2>
 
 <div id="exist">渐进增强</div>
-
 
 
 <script src="../../seed/kissy.js"></script>
@@ -44,30 +45,50 @@
 <script src="../../component.js"></script>
 <script src="../../component/modelcontrol.js"></script>
 <script src="../../component/render.js"></script>
-<script src="../base.js"></script>
-<script src="../buttonrender.js"></script>
-<script src="../nativerender.js"></script>
-<script src="../css3render.js"></script>
+<script src="../../button/base.js"></script>
+<script src="../../button/buttonrender.js"></script>
+<script src="../../button/nativerender.js"></script>
+<script src="../../button/css3render.js"></script>
+<script src="../../button/customrender.js"></script>
+<script src="../../button.js"></script>
+
+<script src="../../menu.js"></script>
+<script src="../../menu/menu.js"></script>
+<script src="../../menu/menuitem.js"></script>
+<script src="../../menu/menurender.js"></script>
+<script src="../../menu/menuitemrender.js"></script>
+
+
 <script src="../menubutton.js"></script>
 <script src="../menubuttonrender.js"></script>
-<script src="../customrender.js"></script>
+
 <script>
-    KISSY.use("node,button/menubutton,button/menubuttonrender,overlay", function(S,
-                                                                                 Node,
-                                                                                 MenuButton,
-                                                                                 MenuButtonRender,
-                                                                                Overlay) {
+    KISSY.use("node,menubutton/menubutton,menubutton/menubuttonrender,menu", function(S, Node, MenuButton, MenuButtonRender, Menu) {
         //view
         //render to container : button_container
         var r = new MenuButtonRender({
             render:"#button_container"
         });
 
-        var o=new Overlay({
-            width:200,
-            height:200,
-            elCls:"ks-menu",
-            content:"haha"
+        var b = new Menu.Item({
+            content:"测试",
+            view:new Menu.ItemRender()
+        });
+
+
+        var b2 = new Menu.Item({
+            content:"测试2",
+            view:new Menu.ItemRender()
+        });
+
+        var b3 = new Menu.Item({
+            content:"测试3",
+            view:new Menu.ItemRender()
+        });
+
+        var menu = new Menu({
+            children:[b,b2,b3],
+            view:new Menu.Render()
         });
 
         //model and control
@@ -75,13 +96,18 @@
         var b = new MenuButton({
             content:"测试",
             describedby:"describe",
-            menu:o,
+            menu:menu,
             view:r,
             autoRender:true
         });
+
+
+        b.on("menuItemSelected", function() {
+            alert("selected : " + b.get("selectedItem").get("view").get("el").text());
+        });
+
         //or
         //b.render()
-
 
 
         var dis = Node.one("#dis");
@@ -104,13 +130,10 @@
             view:new MenuButtonRender({
                 srcNode:"#exist"
             }),
-            menu:o,
+            menu:menu,
             autoRender:true
         });
 
-     
-
-        S.log(exist.get("content"));
     });
 </script>
 </body>

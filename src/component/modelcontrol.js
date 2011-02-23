@@ -34,12 +34,14 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             } else {
                 children.push(c);
             }
+            c.set("parent", this);
         },
 
         removeChild:function(c) {
             var children = this.get("children");
             var index = S.indexOf(c, children);
             if (index != -1) children.splice(index, 1);
+            c.destroy();
         },
 
         bindUI:function() {
@@ -119,6 +121,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             if (!view['_handleKeydown']) return;
             if (ev.keyCode == 13 || ev.keyCode == 32) {
                 this._handleClick();
+                ev.preventDefault();
             } else {
                 view['_handleKeydown'](ev);
             }
@@ -136,6 +139,10 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         _uiSetDisabled:function(d) {
             var view = this.get("view");
             view.set("disabled", d);
+            var children = this.get("children");
+            S.each(children, function(child) {
+                child.set("disabled", d);
+            });
         },
 
         destructor:function() {
@@ -153,7 +160,14 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         ATTRS:{
             //子组件
             children:{
-                value:[]
+                value:[],
+                setter:function(v) {
+                    var self = this;
+                    //自动给儿子组件加入父亲链
+                    S.each(v, function(c) {
+                        c.set("parent", self);
+                    });
+                }
             },
 
             //父组件
