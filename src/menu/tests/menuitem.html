@@ -50,11 +50,14 @@
                 //view as a parameter
                 var b = new MenuItem({
                     content:"测试",
-                    view:r,
-                    autoRender:true
+                    view:r
                 });
                 //or
-                //b.render()
+
+                //b.set("disabled",true);
+
+
+                b.render()
 
                 b.on("click", function(ev) {
                     alert("menuitem click");
@@ -69,7 +72,7 @@
                         b.set("disabled", false);
                     }
                 });
-
+                return;
                 if (dis[0].checked) {
                     b.set("disabled", true);
                 } else {

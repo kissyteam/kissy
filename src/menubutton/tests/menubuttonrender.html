@@ -78,6 +78,7 @@
 
         var b2 = new Menu.Item({
             content:"测试2",
+            disabled:true,
             view:new Menu.ItemRender()
         });
 
@@ -86,8 +87,14 @@
             view:new Menu.ItemRender()
         });
 
+
+        var b4 = new Menu.Item({
+            content:"测试4",
+            view:new Menu.ItemRender()
+        });
+
         var menu = new Menu({
-            children:[b,b2,b3],
+            children:[b,b2,b3,b4],
             view:new Menu.Render()
         });
 

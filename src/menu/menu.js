@@ -55,6 +55,24 @@ KISSY.add("menu/menu", function(S, UIBase, Component) {
             }
             if (this.get("selectedItem")) this.fire("menuItemSelected");
         },
+        //dir : -1 ,+1
+        //skip disabled items
+        _getNextEnabledHighlighted:function(index, dir) {
+            var children = this.get("children");
+            if (children.length == 0)return null;
+            if (!children[index].get("disabled")) return children[index];
+            var o = index;
+            index += dir;
+            while (index != o) {
+
+                if (!children[index].get("disabled")) return children[index];
+
+                index += dir;
+                if (index == -1) index = children.length - 1;
+                else if (index == children.length) index = 0;
+            }
+            return null;
+        },
 
         _handleKeydown:function(e) {
 
@@ -74,22 +92,22 @@ KISSY.add("menu/menu", function(S, UIBase, Component) {
             //up
             if (e.keyCode == 38) {
                 if (!highlightedItem) {
-                    this.set("highlightedItem", children[children.length - 1]);
+                    this.set("highlightedItem", this._getNextEnabledHighlighted(children.length - 1, -1));
                 } else {
                     index = S.indexOf(highlightedItem, children);
                     destIndex = index == 0 ? children.length - 1 : index - 1;
-                    this.set("highlightedItem", children[destIndex]);
+                    this.set("highlightedItem", this._getNextEnabledHighlighted(destIndex, -1));
                 }
                 e.preventDefault();
             }
             //down
             else if (e.keyCode == 40) {
                 if (!highlightedItem) {
-                    this.set("highlightedItem", children[0]);
+                    this.set("highlightedItem", this._getNextEnabledHighlighted(0, 1));
                 } else {
                     index = S.indexOf(highlightedItem, children);
                     destIndex = index == children.length - 1 ? 0 : index + 1;
-                    this.set("highlightedItem", children[destIndex]);
+                    this.set("highlightedItem", this._getNextEnabledHighlighted(destIndex, 1));
                 }
                 e.preventDefault();
             }

@@ -16,6 +16,7 @@ KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
         },
 
         _uiSetDisabled:function(v) {
+            
             var el = this.get("el");
             if (v) {
                 el.addClass(this.get("prefixCls") + "menuitem-disabled");
