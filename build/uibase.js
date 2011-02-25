@@ -96,7 +96,8 @@ KISSY.add('uibase/align', function(S, DOM) {
                 xy,
                 diff,
                 p1,
-                el = self.get('el'),
+                //如果没有view，就是不区分mvc
+                el = (self.get("view")||self).get('el'),
                 p2;
 
             offset = offset || [0,0];
@@ -439,6 +440,32 @@ KISSY.add('uibase/box', function(S) {
 
 
     function Box() {
+    }
+
+
+    Box.ATTRS = {
+        html: {}
+    };
+
+
+    Box.prototype = {
+        _uiSetHtml:function(c) {
+            if (c !== undefined) {
+                this.get("view").set("html", c);
+            }
+        }
+    };
+
+    return Box;
+});
+/**
+ * UIBase.Box
+ * @author: 承玉<yiminghe@gmail.com>
+ */
+KISSY.add('uibase/boxrender', function(S) {
+
+
+    function Box() {
         //S.log("box init");
     }
 
@@ -481,10 +508,7 @@ KISSY.add('uibase/box', function(S) {
             //1 : append
             value:1
         },
-        html: {
-            // 内容, 默认为 undefined, 不设置
-            value: false
-        }
+        html: {}
     };
 
     Box.HTML_PARSER = {
@@ -553,11 +577,7 @@ KISSY.add('uibase/box', function(S) {
         },
 
         _uiSetHtml:function(c) {
-            //S.log("_uiSetHtml");
-            if (c !== false) {
-                this.get("el").html(c);
-            }
-
+            this.get("el").html(c);
         },
 
         __destructor:function() {
@@ -578,6 +598,40 @@ KISSY.add('uibase/box', function(S) {
  */
 KISSY.add("uibase/close", function(S) {
 
+
+
+    function Close() {
+    }
+
+    Close.ATTRS = {
+        closable: {             // 是否需要关闭按钮
+            value: true
+        }
+    };
+
+    Close.prototype = {
+        _uiSetClosable:function(v) {
+           this.get("view").set("closable",true);
+        },
+
+        __bindUI:function() {
+
+            var self = this,
+                closeBtn = self.get("view").get("closeBtn");
+            closeBtn && closeBtn.on("click", function(ev) {
+                self.hide();
+                ev.halt();
+            });
+        }
+    };
+    return Close;
+
+});/**
+ * close extension for kissy dialog
+ * @author: 承玉<yiminghe@gmail.com>
+ */
+KISSY.add("uibase/closerender", function(S) {
+
     var CLS_PREFIX = 'ks-ext-';
 
     function Close() {
@@ -596,9 +650,6 @@ KISSY.add("uibase/close", function(S) {
     };
 
     Close.prototype = {
-        __syncUI:function() {
-            //S.log("_syncUICloseExt");
-        },
         _uiSetClosable:function(v) {
             //S.log("_uiSetClosable");
             var self = this,
@@ -613,7 +664,6 @@ KISSY.add("uibase/close", function(S) {
         },
         __renderUI:function() {
             var Node = S.require("node/node");
-            //S.log("_renderUICloseExt");
             var self = this,
                 closeBtn = self.get("closeBtn"),
                 el = self.get("contentEl");
@@ -631,18 +681,9 @@ KISSY.add("uibase/close", function(S) {
                 self.set("closeBtn", closeBtn);
             }
         },
-        __bindUI:function() {
-            //S.log("_bindUICloseExt");
-            var self = this,
-                closeBtn = self.get("closeBtn");
-            closeBtn && closeBtn.on("click", function(ev) {
-                self.hide();
-                ev.halt();
-            });
-        },
 
         __destructor:function() {
-            //S.log("close-ext __destructor");
+
             var self = this,
                 closeBtn = self.get("closeBtn");
             closeBtn && closeBtn.detach();
@@ -677,7 +718,7 @@ KISSY.add("uibase/constrain", function(S, DOM) {
     function _getConstrainRegion(constrain) {
         var ret;
         if (!constrain) return ret;
-        var el = this.get("el");
+        var el = this.get("view").get("el");
         if (constrain !== true) {
             constrain = Node.one(constrain);
             ret = constrain.offset();
@@ -706,10 +747,7 @@ KISSY.add("uibase/constrain", function(S, DOM) {
     }
 
     Constrain.prototype = {
-        __bindUI:function() {
-            //S.log("_bindUIConstrain");
 
-        },
         __renderUI:function() {
             //S.log("_renderUIConstrain");
             var self = this,
@@ -744,15 +782,7 @@ KISSY.add("uibase/constrain", function(S, DOM) {
             };
             self.addAttr("x", xAttr);
             self.addAttr("y", yAttr);
-        },
-
-        __syncUI:function() {
-            //S.log("_syncUIConstrain");
-        },
-        __destructor:function() {
-            //S.log("constrain-ext __destructor");
         }
-
     };
 
 
@@ -766,11 +796,31 @@ KISSY.add("uibase/constrain", function(S, DOM) {
  */
 KISSY.add("uibase/contentbox", function(S) {
 
+    function ContentBox() {
+    }
 
-    var Node = S.require("node/node");
+    ContentBox.ATTRS = {
+        //层内容
+        content:{}
+    };
+
+
+    ContentBox.prototype = {
+        _uiSetContent:function(c) {
+            if (c !== undefined) {
+                this.get("view").set("content", c);
+            }
+        }
+    };
+
+    return ContentBox;
+});/**
+ * 里层包裹层定义，适合mask以及shim
+ * @author:yiminghe@gmail.com
+ */
+KISSY.add("uibase/contentboxrender", function(S, Node) {
 
     function ContentBox() {
-        //S.log("contentbox init");
     }
 
     ContentBox.ATTRS = {
@@ -789,14 +839,9 @@ KISSY.add("uibase/contentbox", function(S) {
     };
 
     ContentBox.prototype = {
-        __syncUI:function() {
-            //S.log("_syncUIContentBox");
-        },
-        __bindUI:function() {
-            //S.log("_bindUIContentBox");
-        },
+
         __renderUI:function() {
-            //S.log("_renderUIContentBox");
+
             var self = this,
                 contentEl = self.get("contentEl"),
                 el = self.get("el");
@@ -812,32 +857,24 @@ KISSY.add("uibase/contentbox", function(S) {
             }
         },
         _uiSetContentElAttrs:function(attrs) {
-            //S.log("_uiSetContentElAttrs");
             attrs && this.get("contentEl").attr(attrs);
         },
         _uiSetContentElStyle:function(v) {
             v && this.get("contentEl").css(v);
         },
         _uiSetContent:function(c) {
-            //S.log("_uiSetContent");
-            if (c !== undefined) {
-                if (S['isString'](c)) {
-                    this.get("contentEl").html(c);
-                } else {
-                    this.get("contentEl").html("");
-                    this.get("contentEl").append(c);
-                }
+            if (S['isString'](c)) {
+                this.get("contentEl").html(c);
+            } else if (c !== undefined) {
+                this.get("contentEl").html("");
+                this.get("contentEl").append(c);
             }
-        },
-
-        __destructor:function() {
-            //S.log("contentbox __destructor");
         }
     };
 
     return ContentBox;
 }, {
-    requires:["dom","node"]
+    requires:["node"]
 });/**
  * drag extension for position
  * @author: 承玉<yiminghe@gmail.com>
@@ -857,17 +894,9 @@ KISSY.add("uibase/drag", function(S) {
     Drag.prototype = {
 
         _uiSetHandlers:function(v) {
-            //S.log("_uiSetHanlders");
+
             if (v && v.length > 0 && this.__drag)
                 this.__drag.set("handlers", v);
-        },
-
-        __syncUI:function() {
-            //S.log("_syncUIDragExt");
-        },
-
-        __renderUI:function() {
-            //S.log("_renderUIDragExt");
         },
 
         __bindUI:function() {
@@ -883,7 +912,7 @@ KISSY.add("uibase/drag", function(S) {
         },
 
         _uiSetDraggable:function(v) {
-            //S.log("_uiSetDraggable");
+
             var self = this,
                 d = self.__drag;
             if (!d) return;
@@ -918,7 +947,27 @@ KISSY.add("uibase/drag", function(S) {
 KISSY.add("uibase/loading", function(S) {
 
     function Loading() {
-        //S.log("LoadingExt init");
+    }
+
+    Loading.prototype = {
+        loading:function() {
+            this.get("view").loading();
+        },
+
+        unloading:function() {
+            this.get("view").unloading();
+        }
+    };
+
+    return Loading;
+
+});/**
+ * loading mask support for overlay
+ * @author: 承玉<yiminghe@gmail.com>
+ */
+KISSY.add("uibase/loadingrender", function(S) {
+
+    function Loading() {
     }
 
     Loading.prototype = {
@@ -954,6 +1003,37 @@ KISSY.add("uibase/loading", function(S) {
  */
 KISSY.add("uibase/mask", function(S) {
 
+
+    function Mask() {
+    }
+
+    Mask.ATTRS = {
+        mask:{
+            value:false
+        }
+    };
+
+    Mask.prototype = {
+
+        _uiSetMask:function(v) {
+            var self = this;
+            if (v) {
+                self.on("show", self.get("view")._maskExtShow);
+                self.on("hide", self.get("view")._maskExtHide);
+            } else {
+                self.detach("show", self.get("view")._maskExtShow);
+                self.detach("hide", self.get("view")._maskExtHide);
+            }
+        }
+    };
+
+    return Mask;
+}, {requires:["ua"]});/**
+ * mask extension for kissy
+ * @author: 承玉<yiminghe@gmail.com>
+ */
+KISSY.add("uibase/maskrender", function(S) {
+
     /**
      * 多 position 共享一个遮罩
      */
@@ -983,35 +1063,8 @@ KISSY.add("uibase/mask", function(S) {
         //S.log("mask init");
     }
 
-    Mask.ATTRS = {
-        mask:{
-            value:false
-        }
-    };
 
     Mask.prototype = {
-        __bindUI:function() {
-            //S.log("_bindUIMask");
-        },
-
-        __renderUI:function() {
-            //S.log("_renderUIMask");
-        },
-
-        __syncUI:function() {
-            //S.log("_syncUIMask");
-        },
-        _uiSetMask:function(v) {
-            //S.log("_uiSetMask");
-            var self = this;
-            if (v) {
-                self.on("show", self._maskExtShow);
-                self.on("hide", self._maskExtHide);
-            } else {
-                self.detach("show", self._maskExtShow);
-                self.detach("hide", self._maskExtHide);
-            }
-        },
 
         _maskExtShow:function() {
             if (!mask) {
@@ -1029,10 +1082,6 @@ KISSY.add("uibase/mask", function(S) {
             if (num <= 0) num = 0;
             if (!num)
                 mask && mask.css("display", "none");
-        },
-
-        __destructor:function() {
-            //S.log("mask __destructor");
         }
 
     };
@@ -1049,7 +1098,6 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
         KEYDOWN = "keydown";
 
     function Position() {
-        //S.log("position init");
     }
 
     Position.ATTRS = {
@@ -1083,46 +1131,24 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
 
 
     Position.prototype = {
-        __syncUI:function() {
-            //S.log("_syncUIPosition");
-        },
-        __renderUI:function() {
-            //S.log("_renderUIPosition");
-            var el = this.get("el");
-            el.addClass("ks-ext-position");
-            el.css("display", "");
-        },
-        __bindUI:function() {
-            //S.log("_bindUIPosition");
-        },
+
         _uiSetZIndex:function(x) {
-            //S.log("_uiSetZIndex");
-            if (x !== undefined)
-                this.get("el").css("z-index", x);
+            this.get("view").set("zIndex", x);
         },
         _uiSetX:function(x) {
-            //S.log("_uiSetX");
-            if (x !== undefined)
-                this.get("el").offset({
-                    left:x
-                });
+            if (x !== undefined) {
+                this.get("view").set("x", x);
+            }
         },
         _uiSetY:function(y) {
-            //S.log("_uiSetY");
-            if (y !== undefined)
-                this.get("el").offset({
-                    top:y
-                });
+            if (y !== undefined) {
+                this.get("view").set("y", y);
+            }
         },
         _uiSetVisible:function(isVisible) {
             if (isVisible === undefined) return;
-            //S.log("_uiSetVisible");
-            var self = this,
-                el = self.get("el");
-            el.css("visibility", isVisible ? "visible" : "hidden");
-//            if (!isVisible) {
-//                self.set("xy", [-9999,-9999]);
-//            }
+            var self = this;
+            self.get("view").set("visible", isVisible);
             self[isVisible ? "_bindKey" : "_unbindKey" ]();
             self.fire(isVisible ? "show" : "hide");
         },
@@ -1181,10 +1207,6 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
          */
         hide: function() {
             this.set("visible", false);
-        },
-
-        __destructor:function() {
-            //S.log("position __destructor");
         }
 
     };
@@ -1192,15 +1214,63 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
     return Position;
 }, {
     requires:["dom","event"]
+});/**
+ * position and visible extension，可定位的隐藏层
+ * @author: 承玉<yiminghe@gmail.com>
+ */
+KISSY.add("uibase/positionrender", function(S) {
+
+    function Position() {
+    }
+
+    Position.ATTRS = {
+        x: {
+            // 水平方向绝对位置
+        },
+        y: {
+            // 垂直方向绝对位置
+        },
+        zIndex: {
+            value: 9999
+        },
+        visible:{}
+    };
+
+
+    Position.prototype = {
+
+        __renderUI:function() {
+            var el = this.get("el");
+            el.addClass("ks-ext-position");
+            el.css("display", "");
+        },
+
+        _uiSetZIndex:function(x) {
+            this.get("el").css("z-index", x);
+        },
+        _uiSetX:function(x) {
+            this.get("el").offset({
+                left:x
+            });
+        },
+        _uiSetY:function(y) {
+            this.get("el").offset({
+                top:y
+            });
+        },
+        _uiSetVisible:function(isVisible) {
+            this.get("el").css("visibility", isVisible ? "visible" : "hidden");
+        }
+    };
+
+    return Position;
 });KISSY.add("uibase/resize", function(S) {
     function Resize() {
-
     }
 
     Resize.ATTRS = {
         resize:{
             value:{
-
             }
         }
     };
@@ -1214,13 +1284,13 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
             var Resizable = S.require("resizable"),self = this;
             if (Resizable) {
                 self.resizer && self.resizer.destroy();
-                v.node = self.get("el");
-                v.autoRender=true;
+                v.node = self.get("view").get("el");
+                v.autoRender = true;
                 if (v.handlers) {
                     self.resizer = new Resizable(v);
                 }
-
             }
+
         }
     };
     return Resize;
@@ -1228,7 +1298,7 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
  * shim for ie6 ,require box-ext
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/shim", function(S) {
+KISSY.add("uibase/shimrender", function(S) {
 
     function Shim() {
         //S.log("shim init");
@@ -1241,12 +1311,7 @@ KISSY.add("uibase/shim", function(S) {
         }
     };
     Shim.prototype = {
-        __syncUI:function() {
-            //S.log("_syncUIShimExt");
-        },
-        __bindUI:function() {
-            //S.log("_bindUIShimExt");
-        },
+
         _uiSetShim:function(v) {
             var Node = S.require("node/node");
             var self = this,el = self.get("el");
@@ -1265,19 +1330,9 @@ KISSY.add("uibase/shim", function(S) {
                 self.__shimEl.remove();
                 delete self.__shimEl;
             }
-        },
-        __renderUI:function() {
-            //S.log("_renderUIShimExt");
-
-        },
-
-        __destructor:function() {
-            //S.log("shim __destructor");
         }
     };
     return Shim;
-},{
-    host:"uibase"
 });/**
  * support standard mod for component
  * @author: 承玉<yiminghe@gmail.com>
@@ -1285,10 +1340,75 @@ KISSY.add("uibase/shim", function(S) {
 KISSY.add("uibase/stdmod", function(S) {
 
 
+    function StdMod() {
+
+    }
+
+    StdMod.ATTRS = {
+        header:{
+        },
+        body:{
+        },
+        footer:{
+        },
+        bodyStyle:{
+        },
+        footerStyle:{
+        },
+        headerStyle:{
+        },
+        headerContent:{},
+        bodyContent:{},
+        footerContent:{}
+    };
+
+
+    StdMod.prototype = {
+
+        _uiSetBodyStyle:function(v) {
+            if (v !== undefined) {
+                this.get("view").set("bodyStyle", v);
+            }
+        },
+        _uiSetHeaderStyle:function(v) {
+            if (v !== undefined) {
+                this.get("view").set("headerStyle", v);
+            }
+        },
+        _uiSetFooterStyle:function(v) {
+            if (v !== undefined) {
+                this.get("view").set("footerStyle", v);
+            }
+        },
+        _uiSetBodyContent:function(v) {
+            if (v !== undefined) {
+                this.get("view").set("bodyContent", v);
+            }
+        },
+        _uiSetHeaderContent:function(v) {
+            if (v !== undefined) {
+                this.get("view").set("headerContent", v);
+            }
+        },
+        _uiSetFooterContent:function(v) {
+            if (v !== undefined) {
+                this.get("view").set("footerContent", v);
+            }
+        }
+    };
+
+    return StdMod;
+
+});/**
+ * support standard mod for component
+ * @author: 承玉<yiminghe@gmail.com>
+ */
+KISSY.add("uibase/stdmodrender", function(S, Node) {
+
+
     var CLS_PREFIX = "ks-stdmod-";
 
     function StdMod() {
-        //S.log("stdmod init");
     }
 
     StdMod.ATTRS = {
@@ -1306,15 +1426,9 @@ KISSY.add("uibase/stdmod", function(S) {
         headerStyle:{
 
         },
-        headerContent:{
-            value:false
-        },
-        bodyContent:{
-            value:false
-        },
-        footerContent:{
-            value:false
-        }
+        headerContent:{},
+        bodyContent:{},
+        footerContent:{}
     };
 
     StdMod.HTML_PARSER = {
@@ -1324,10 +1438,8 @@ KISSY.add("uibase/stdmod", function(S) {
     };
 
     function renderUI(self, part) {
-        var Node = S.require("node/node");
         var el = self.get("contentEl"),
             partEl = self.get(part);
-
         if (!partEl) {
             partEl = new Node("<div class='" + CLS_PREFIX + part + "'>")
                 .appendTo(el);
@@ -1336,68 +1448,62 @@ KISSY.add("uibase/stdmod", function(S) {
     }
 
     StdMod.prototype = {
-        __bindUI:function() {
-            //S.log("_bindUIStdMod");
-        },
-        __syncUI:function() {
-            //S.log("_syncUIStdMod");
-        },
-        _setStdModContent:function(part, v) {
-            if (v !== false) {
 
-                if (S['isString'](v)) {
-                    this.get(part).html(v);
-                } else {
-                    this.get(part).html("");
-                    this.get(part).append(v);
-                }
+        _setStdModContent:function(part, v) {
+            if (S['isString'](v)) {
+                this.get(part).html(v);
+            } else {
+                this.get(part).html("");
+                this.get(part).append(v);
             }
         },
         _uiSetBodyStyle:function(v) {
-            if (v !== undefined) {
-                this.get("body").css(v);
-            }
+
+            this.get("body").css(v);
+
         },
         _uiSetHeaderStyle:function(v) {
-            if (v !== undefined) {
-                this.get("header").css(v);
-            }
+
+            this.get("header").css(v);
+
         },
         _uiSetFooterStyle:function(v) {
-            if (v !== undefined) {
-                this.get("footer").css(v);
-            }
+
+            this.get("footer").css(v);
+
         },
         _uiSetBodyContent:function(v) {
-            //S.log("_uiSetBodyContent");
             this._setStdModContent("body", v);
         },
         _uiSetHeaderContent:function(v) {
-            //S.log("_uiSetHeaderContent");
+
             this._setStdModContent("header", v);
         },
         _uiSetFooterContent:function(v) {
-            //S.log("_uiSetFooterContent");
+
             this._setStdModContent("footer", v);
         },
         __renderUI:function() {
-            //S.log("_renderUIStdMod");
             renderUI(this, "header");
             renderUI(this, "body");
             renderUI(this, "footer");
-        },
-
-        __destructor:function() {
-            //S.log("stdmod __destructor");
         }
     };
 
 
     return StdMod;
 
-});KISSY.add("uibase", function(S, UIBase,Align,Box,Close,Contrain,Contentbox,Drag,Loading,
-    Mask,Position,Shim,Resize,StdMod) {
-    S.mix(UIBase,{
+}, {
+    requires:['node']
+});KISSY.add("uibase", function(S, UIBase, Align, Box,BoxRender, Close, CloseRender, Contrain, Contentbox,ContentboxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
+    Close.Render = CloseRender;
+    Loading.Render = LoadingRender;
+    Mask.Render = MaskRender;
+    Position.Render = PositionRender;
+    StdMod.Render = StdModRender;
+    Box.Render=BoxRender;
+    Contentbox.Render=ContentboxRender;
+    S.mix(UIBase, {
         Align:Align,
         Box:Box,
         Close:Close,
@@ -1407,7 +1513,9 @@ KISSY.add("uibase/stdmod", function(S) {
         Loading:Loading,
         Mask:Mask,
         Position:Position,
-        Shim:Shim,
+        Shim:{
+            Render:ShimRender
+        },
         Resize:Resize,
         StdMod:StdMod
     });
@@ -1416,14 +1524,21 @@ KISSY.add("uibase/stdmod", function(S) {
     requires:["uibase/base",
         "uibase/align",
         "uibase/box",
+        "uibase/boxrender",
         "uibase/close",
+        "uibase/closerender",
         "uibase/constrain",
         "uibase/contentbox",
+        "uibase/contentboxrender",
         "uibase/drag",
         "uibase/loading",
+        "uibase/loadingrender",
         "uibase/mask",
+        "uibase/maskrender",
         "uibase/position",
-        "uibase/shim",
+        "uibase/positionrender",
+        "uibase/shimrender",
         "uibase/resize",
-        "uibase/stdmod"]
+        "uibase/stdmod",
+        "uibase/stdmodrender"]
 });

@@ -9,7 +9,6 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
         KEYDOWN = "keydown";
 
     function Position() {
-        //S.log("position init");
     }
 
     Position.ATTRS = {
@@ -43,46 +42,24 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
 
 
     Position.prototype = {
-        __syncUI:function() {
-            //S.log("_syncUIPosition");
-        },
-        __renderUI:function() {
-            //S.log("_renderUIPosition");
-            var el = this.get("el");
-            el.addClass("ks-ext-position");
-            el.css("display", "");
-        },
-        __bindUI:function() {
-            //S.log("_bindUIPosition");
-        },
+
         _uiSetZIndex:function(x) {
-            //S.log("_uiSetZIndex");
-            if (x !== undefined)
-                this.get("el").css("z-index", x);
+            this.get("view").set("zIndex", x);
         },
         _uiSetX:function(x) {
-            //S.log("_uiSetX");
-            if (x !== undefined)
-                this.get("el").offset({
-                    left:x
-                });
+            if (x !== undefined) {
+                this.get("view").set("x", x);
+            }
         },
         _uiSetY:function(y) {
-            //S.log("_uiSetY");
-            if (y !== undefined)
-                this.get("el").offset({
-                    top:y
-                });
+            if (y !== undefined) {
+                this.get("view").set("y", y);
+            }
         },
         _uiSetVisible:function(isVisible) {
             if (isVisible === undefined) return;
-            //S.log("_uiSetVisible");
-            var self = this,
-                el = self.get("el");
-            el.css("visibility", isVisible ? "visible" : "hidden");
-//            if (!isVisible) {
-//                self.set("xy", [-9999,-9999]);
-//            }
+            var self = this;
+            self.get("view").set("visible", isVisible);
             self[isVisible ? "_bindKey" : "_unbindKey" ]();
             self.fire(isVisible ? "show" : "hide");
         },
@@ -141,10 +118,6 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
          */
         hide: function() {
             this.set("visible", false);
-        },
-
-        __destructor:function() {
-            //S.log("position __destructor");
         }
 
     };
