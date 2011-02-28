@@ -2,7 +2,7 @@
  * support standard mod for component
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/stdmodrender", function(S, Node) {
+KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
 
 
     var CLS_PREFIX = "ks-stdmod-";
@@ -58,28 +58,25 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         },
         _uiSetBodyStyle:function(v) {
 
-            this.get("body").css(v);
+                this.get("body").css(v);
 
         },
         _uiSetHeaderStyle:function(v) {
 
-            this.get("header").css(v);
+                this.get("header").css(v);
 
         },
         _uiSetFooterStyle:function(v) {
 
-            this.get("footer").css(v);
-
+                this.get("footer").css(v);
         },
         _uiSetBodyContent:function(v) {
             this._setStdModContent("body", v);
         },
         _uiSetHeaderContent:function(v) {
-
             this._setStdModContent("header", v);
         },
         _uiSetFooterContent:function(v) {
-
             this._setStdModContent("footer", v);
         },
         __renderUI:function() {
@@ -88,7 +85,6 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
             renderUI(this, "footer");
         }
     };
-
 
     return StdMod;
 

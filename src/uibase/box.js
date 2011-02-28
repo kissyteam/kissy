@@ -10,15 +10,29 @@ KISSY.add('uibase/box', function(S) {
 
 
     Box.ATTRS = {
-        html: {}
+        html: {},
+        width:{},
+        height:{},
+        elCls:{},
+        elStyle:{}
     };
 
 
     Box.prototype = {
+        _uiSetElStyle:function(c) {
+            this._forwordStateToView("elStyle", c);
+        },
         _uiSetHtml:function(c) {
-            if (c !== undefined) {
-                this.get("view").set("html", c);
-            }
+            this._forwordStateToView("html", c);
+        },
+        _uiSetWidth:function(c) {
+            this._forwordStateToView("width", c);
+        },
+        _uiSetHeight:function(c) {
+            this._forwordStateToView("height", c);
+        },
+        _uiSetElCls:function(c) {
+            this._forwordStateToView("elCls", c);
         }
     };
 

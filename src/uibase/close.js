@@ -3,9 +3,6 @@
  * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/close", function(S) {
-
-
-
     function Close() {
     }
 
@@ -16,8 +13,8 @@ KISSY.add("uibase/close", function(S) {
     };
 
     Close.prototype = {
-        _uiSetClosable:function(v) {
-           this.get("view").set("closable",true);
+        _uiSetClosable:function(c) {
+           this._forwordStateToView("closable", c);
         },
 
         __bindUI:function() {

@@ -15,25 +15,9 @@
 <script src="../../build/json.js"></script>
 <script src="../../build/dd.js"></script>
 <script src="../../build/resizable.js"></script>
-
-<script src="overlay.js"></script>
-<script src="dialog.js"></script>
-<script src="../overlay.js"></script>
-<script src="../uibase.js"></script>
-<script src="../uibase/align.js"></script>
-<script src="../uibase/base.js"></script>
-<script src="../uibase/box.js"></script>
-<script src="../uibase/close.js"></script>
-<script src="../uibase/constrain.js"></script>
-<script src="../uibase/contentbox.js"></script>
-<script src="../uibase/drag.js"></script>
-<script src="../uibase/loading.js"></script>
-<script src="../uibase/mask.js"></script>
-<script src="../uibase/position.js"></script>
-<script src="../uibase/shim.js"></script>
-<script src="../uibase/stdmod.js"></script>
-<script src="../uibase/resize.js"></script>
-
+<script src="../../build/component.js"></script>
+<script src="../../build/uibase.js"></script>
+<script src="../../build/overlay.js"></script>
 
 <link href="../../build/cssreset/reset-min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="assets/cool.css"/>
@@ -89,7 +73,7 @@
         S.ready(function(S) {
 
             var popup = new Overlay({
-                srcNode:Node.one("#popup1"),
+                view:new Overlay.Render({srcNode:Node.one("#popup1")}),
                 width: 300,
                 height: 200,
                 align: {
@@ -130,7 +114,7 @@
         S.ready(function(S) {
 
             var popup = new Overlay({
-                srcNode:"#popup2",
+                 view:new Overlay.Render({srcNode:Node.one("#popup2")}),
                 width: 300,
                 height: 200,
                 align: {
@@ -282,7 +266,7 @@
 
         S.ready(function(S) {
             var d = new Dialog({
-                srcNode: "#markupDialog",
+                view:new Dialog.Render({srcNode:Node.one("#markupDialog")}),
                 width:400
             });
 
@@ -430,7 +414,7 @@
                 dialog.center();
                 dialog.show();
             });
-            if (UA.ie == 6) {
+            if (UA['ie'] == 6) {
                 Event.on(window, "scroll", function() {
                     if (dialog.get("visible"))
                         dialog.center();

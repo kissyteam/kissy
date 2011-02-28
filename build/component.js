@@ -67,6 +67,10 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             view[method] && view[method](ev);
         },
 
+        _forwordStateToView:function(state, value) {
+            this.get("view").set(state, value);
+        },
+
         /**
          * root element handler for mouse enter
          * @param ev
@@ -126,6 +130,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             if (!view['_handleKeydown']) return;
             if (ev.keyCode == 13 || ev.keyCode == 32) {
                 this._handleClick();
+                ev.preventDefault();
             } else {
                 view['_handleKeydown'](ev);
             }
@@ -141,6 +146,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         },
 
         _uiSetDisabled:function(d) {
+            //初始值不考虑
+            if (d == undefined) return;
             var view = this.get("view");
             view.set("disabled", d);
             var children = this.get("children");
@@ -164,7 +171,14 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         ATTRS:{
             //子组件
             children:{
-                value:[]
+                value:[],
+                setter:function(v) {
+                    var self = this;
+                    //自动给儿子组件加入父亲链
+                    S.each(v, function(c) {
+                        c.set("parent", self);
+                    });
+                }
             },
 
             //父组件

@@ -358,7 +358,8 @@ KISSY.add('uibase/base', function (S, Base) {
             for (var a in attrs) {
                 if (attrs.hasOwnProperty(a)) {
                     var m = UI_SET + capitalFirst(a);
-                    if (self[m]) {
+                    //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                    if (self[m] && self.get(a) !== undefined) {
                         self[m](self.get(a));
                     }
                 }
@@ -444,15 +445,29 @@ KISSY.add('uibase/box', function(S) {
 
 
     Box.ATTRS = {
-        html: {}
+        html: {},
+        width:{},
+        height:{},
+        elCls:{},
+        elStyle:{}
     };
 
 
     Box.prototype = {
+        _uiSetElStyle:function(c) {
+            this._forwordStateToView("elStyle", c);
+        },
         _uiSetHtml:function(c) {
-            if (c !== undefined) {
-                this.get("view").set("html", c);
-            }
+            this._forwordStateToView("html", c);
+        },
+        _uiSetWidth:function(c) {
+            this._forwordStateToView("width", c);
+        },
+        _uiSetHeight:function(c) {
+            this._forwordStateToView("height", c);
+        },
+        _uiSetElCls:function(c) {
+            this._forwordStateToView("elCls", c);
         }
     };
 
@@ -466,7 +481,6 @@ KISSY.add('uibase/boxrender', function(S) {
 
 
     function Box() {
-        //S.log("box init");
     }
 
     S.mix(Box, {
@@ -518,15 +532,9 @@ KISSY.add('uibase/boxrender', function(S) {
     };
 
     Box.prototype = {
-        __syncUI:function() {
-            //S.log("_syncUIBoxExt");
-        },
-        __bindUI:function() {
-            //S.log("_bindUIBoxExt");
-        },
+
         __renderUI:function() {
             var Node = S.require("node/node");
-            //S.log("_renderUIBoxExt");
             var self = this,
                 render = self.get("render"),
                 el = self.get("el");
@@ -542,38 +550,26 @@ KISSY.add('uibase/boxrender', function(S) {
             }
         },
         _uiSetElAttrs:function(attrs) {
-            //S.log("_uiSetElAttrs");
-            if (attrs) {
                 this.get("el").attr(attrs);
-            }
         },
         _uiSetElCls:function(cls) {
-            if (cls) {
                 this.get("el").addClass(cls);
-            }
         },
 
         _uiSetElStyle:function(style) {
-            //S.log("_uiSetElStyle");
-            if (style) {
                 this.get("el").css(style);
-            }
         },
 
         _uiSetWidth:function(w) {
-            //S.log("_uiSetWidth");
+
             var self = this;
-            if (w) {
                 self.get("el").width(w);
-            }
         },
 
         _uiSetHeight:function(h) {
             //S.log("_uiSetHeight");
             var self = this;
-            if (h) {
                 self.get("el").height(h);
-            }
         },
 
         _uiSetHtml:function(c) {
@@ -597,9 +593,6 @@ KISSY.add('uibase/boxrender', function(S) {
  * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/close", function(S) {
-
-
-
     function Close() {
     }
 
@@ -610,8 +603,8 @@ KISSY.add("uibase/close", function(S) {
     };
 
     Close.prototype = {
-        _uiSetClosable:function(v) {
-           this.get("view").set("closable",true);
+        _uiSetClosable:function(c) {
+           this._forwordStateToView("closable", c);
         },
 
         __bindUI:function() {
@@ -635,7 +628,6 @@ KISSY.add("uibase/closerender", function(S) {
     var CLS_PREFIX = 'ks-ext-';
 
     function Close() {
-        //S.log("close init");
     }
 
     Close.ATTRS = {
@@ -651,7 +643,6 @@ KISSY.add("uibase/closerender", function(S) {
 
     Close.prototype = {
         _uiSetClosable:function(v) {
-            //S.log("_uiSetClosable");
             var self = this,
                 closeBtn = self.get("closeBtn");
             if (closeBtn) {
@@ -807,9 +798,7 @@ KISSY.add("uibase/contentbox", function(S) {
 
     ContentBox.prototype = {
         _uiSetContent:function(c) {
-            if (c !== undefined) {
-                this.get("view").set("content", c);
-            }
+                this._forwordStateToView("content", c);
         }
     };
 
@@ -883,7 +872,6 @@ KISSY.add("uibase/drag", function(S) {
 
 
     function Drag() {
-        //S.log("drag init");
     }
 
     Drag.ATTRS = {
@@ -894,16 +882,14 @@ KISSY.add("uibase/drag", function(S) {
     Drag.prototype = {
 
         _uiSetHandlers:function(v) {
-
             if (v && v.length > 0 && this.__drag)
                 this.__drag.set("handlers", v);
         },
 
         __bindUI:function() {
             var Draggable = S.require("dd/draggable");
-            //S.log("_bindUIDragExt");
             var self = this,
-                el = self.get("el");
+                el = self.get("view").get("el");
             if (self.get("draggable") && Draggable)
                 self.__drag = new Draggable({
                     node:el,
@@ -1133,22 +1119,18 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
     Position.prototype = {
 
         _uiSetZIndex:function(x) {
-            this.get("view").set("zIndex", x);
+            this._forwordStateToView("zIndex", x);
         },
         _uiSetX:function(x) {
-            if (x !== undefined) {
-                this.get("view").set("x", x);
-            }
+            this._forwordStateToView("x", x);
         },
         _uiSetY:function(y) {
-            if (y !== undefined) {
-                this.get("view").set("y", y);
-            }
+            this._forwordStateToView("y", y);
+
         },
         _uiSetVisible:function(isVisible) {
-            if (isVisible === undefined) return;
             var self = this;
-            self.get("view").set("visible", isVisible);
+            this._forwordStateToView("visible", isVisible);
             self[isVisible ? "_bindKey" : "_unbindKey" ]();
             self.fire(isVisible ? "show" : "hide");
         },
@@ -1341,7 +1323,6 @@ KISSY.add("uibase/stdmod", function(S) {
 
 
     function StdMod() {
-
     }
 
     StdMod.ATTRS = {
@@ -1366,34 +1347,22 @@ KISSY.add("uibase/stdmod", function(S) {
     StdMod.prototype = {
 
         _uiSetBodyStyle:function(v) {
-            if (v !== undefined) {
-                this.get("view").set("bodyStyle", v);
-            }
+            this._forwordStateToView("bodyStyle", v);
         },
         _uiSetHeaderStyle:function(v) {
-            if (v !== undefined) {
-                this.get("view").set("headerStyle", v);
-            }
+            this._forwordStateToView("headerStyle", v);
         },
         _uiSetFooterStyle:function(v) {
-            if (v !== undefined) {
-                this.get("view").set("footerStyle", v);
-            }
+            this._forwordStateToView("footerStyle", v);
         },
         _uiSetBodyContent:function(v) {
-            if (v !== undefined) {
-                this.get("view").set("bodyContent", v);
-            }
+            this._forwordStateToView("bodyContent", v);
         },
         _uiSetHeaderContent:function(v) {
-            if (v !== undefined) {
-                this.get("view").set("headerContent", v);
-            }
+            this._forwordStateToView("headerContent", v);
         },
         _uiSetFooterContent:function(v) {
-            if (v !== undefined) {
-                this.get("view").set("footerContent", v);
-            }
+            this._forwordStateToView("footerContent", v);
         }
     };
 
@@ -1403,7 +1372,7 @@ KISSY.add("uibase/stdmod", function(S) {
  * support standard mod for component
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/stdmodrender", function(S, Node) {
+KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
 
 
     var CLS_PREFIX = "ks-stdmod-";
@@ -1459,28 +1428,25 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         },
         _uiSetBodyStyle:function(v) {
 
-            this.get("body").css(v);
+                this.get("body").css(v);
 
         },
         _uiSetHeaderStyle:function(v) {
 
-            this.get("header").css(v);
+                this.get("header").css(v);
 
         },
         _uiSetFooterStyle:function(v) {
 
-            this.get("footer").css(v);
-
+                this.get("footer").css(v);
         },
         _uiSetBodyContent:function(v) {
             this._setStdModContent("body", v);
         },
         _uiSetHeaderContent:function(v) {
-
             this._setStdModContent("header", v);
         },
         _uiSetFooterContent:function(v) {
-
             this._setStdModContent("footer", v);
         },
         __renderUI:function() {
@@ -1489,7 +1455,6 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
             renderUI(this, "footer");
         }
     };
-
 
     return StdMod;
 

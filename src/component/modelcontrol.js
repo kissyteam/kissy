@@ -62,6 +62,10 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             view[method] && view[method](ev);
         },
 
+        _forwordStateToView:function(state, value) {
+            this.get("view").set(state, value);
+        },
+
         /**
          * root element handler for mouse enter
          * @param ev

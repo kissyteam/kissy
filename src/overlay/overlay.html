@@ -55,84 +55,81 @@
 <script>
     KISSY.ready(function(S) {
 
-        KISSY.use("node,overlay/overlay,overlay/overlayrender", function(S, Node, Overlay, OverlayRender) {
+        KISSY.use("node,overlay/overlay,overlay/overlayrender",
+                function(S, Node, Overlay, OverlayRender) {
 
 
-            var show1 = Node.one("#show1");
-            var show3 = Node.one("#show3");
+                    var show1 = Node.one("#show1");
+                    var show3 = Node.one("#show3");
 
-            var o = new Overlay({
-                content:"i am overly 动态生成,esc 隐藏",
-                view:new OverlayRender({
-                    width:200,
-                    elStyle:{
-                        //position:"absolute",
-                        border:"1px solid red"
-                    }
-                }),
-                align:{
-                    // 参考元素, falsy 值为可视区域
-                    node: null,
-                    // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
-                    points: ['cc','cc'],
-                    // 有效值为 [n, m]
-                    offset: [0, 0]
-                },
-                mask:true
-            });
+                    var o = new Overlay({
+                        content:"i am overly 动态生成,esc 隐藏",
+                        width:200,
+                        elStyle:{
+                            //position:"absolute",
+                            border:"1px solid red"
+                        },
+                        align:{
+                            // 参考元素, falsy 值为可视区域
+                            node: null,
+                            // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+                            points: ['cc','cc'],
+                            // 有效值为 [n, m]
+                            offset: [0, 0]
+                        },
+                        mask:true
+                    });
 
-            show1.on("click", function() {
-                o.show();
-            });
-            Node.one("#destroy1").on("click", function() {
-                o.destroy();
-            });
+                    show1.on("click", function() {
+                        o.show();
+                    });
+                    Node.one("#destroy1").on("click", function() {
+                        o.destroy();
+                    });
 
 
-            var o3 = new Overlay({
-                content:"i am overly 动态生成 2",
-                view:new OverlayRender({
-                    width:"200px",
-                    elStyle:{
-                        border:"1px solid green"
-                    }
-                })
-            });
+                    var o3 = new Overlay({
+                        content:"i am overly 动态生成 2",
+                        width:"200px",
+                        elStyle:{
+                            border:"1px solid green"
+                        }
+                    });
 
 
-            show3.on("mouseenter", function() {
-                S.log("mouseenter");
-                o3.show();
-                //o3.align(show3, [Align.TR,Align.TL], [0,0]);'
-                //overlay的左上角与参考点的右上角对齐
-                o3.set("align", {node:show3, points:["tr","tl"],offset:[0,0]});
-            });
-            show3.on("mouseleave", function() {
-                S.log("mouseleave");
-                o3.hide();
-            });
+                    show3.on("mouseenter", function() {
+                        S.log("mouseenter");
+                        o3.show();
+                        //o3.align(show3, [Align.TR,Align.TL], [0,0]);'
+                        //overlay的左上角与参考点的右上角对齐
+                        o3.set("align", {node:show3, points:["tr","tl"],offset:[0,0]});
+                    });
+                    show3.on("mouseleave", function() {
+                        S.log("mouseleave");
+                        o3.hide();
+                    });
 
-            var o2 = new Overlay({
-                view:new OverlayRender({
-                    srcNode:Node.one("#markup"),
-                    elStyle:{
-                        border:"1px solid black"
-                    }
-                }),
-                autoRender:true,
-                x:100,
-                y:100
-            });
+                    var o2 = new Overlay({
+                        view:new OverlayRender({
+                            srcNode:Node.one("#markup")
+                        }),
+                        elStyle:{
+                            border:"1px solid black"
+                        },
+                        autoRender:true,
+                        x:100,
+                        y:100
+                    });
 
 
-            Node.one("#show2").on("click", function() {
-                o2.show();
-            });
+                    Node.one("#show2").on("click", function() {
+                        o2.show();
+                    });
 
-            Node.one("#hide2").on("click", function() {
-                o2.hide();
-            });
-        });
+                    Node.one("#hide2").on("click", function() {
+                        o2.hide();
+                    });
+                });
     });
 </script>
 </body>

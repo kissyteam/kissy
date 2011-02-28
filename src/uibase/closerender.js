@@ -7,7 +7,6 @@ KISSY.add("uibase/closerender", function(S) {
     var CLS_PREFIX = 'ks-ext-';
 
     function Close() {
-        //S.log("close init");
     }
 
     Close.ATTRS = {
@@ -23,7 +22,6 @@ KISSY.add("uibase/closerender", function(S) {
 
     Close.prototype = {
         _uiSetClosable:function(v) {
-            //S.log("_uiSetClosable");
             var self = this,
                 closeBtn = self.get("closeBtn");
             if (closeBtn) {

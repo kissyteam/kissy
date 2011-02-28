@@ -224,7 +224,8 @@ KISSY.add('uibase/base', function (S, Base) {
             for (var a in attrs) {
                 if (attrs.hasOwnProperty(a)) {
                     var m = UI_SET + capitalFirst(a);
-                    if (self[m]) {
+                    //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                    if (self[m] && self.get(a) !== undefined) {
                         self[m](self.get(a));
                     }
                 }

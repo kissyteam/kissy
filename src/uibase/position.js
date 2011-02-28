@@ -44,22 +44,18 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
     Position.prototype = {
 
         _uiSetZIndex:function(x) {
-            this.get("view").set("zIndex", x);
+            this._forwordStateToView("zIndex", x);
         },
         _uiSetX:function(x) {
-            if (x !== undefined) {
-                this.get("view").set("x", x);
-            }
+            this._forwordStateToView("x", x);
         },
         _uiSetY:function(y) {
-            if (y !== undefined) {
-                this.get("view").set("y", y);
-            }
+            this._forwordStateToView("y", y);
+
         },
         _uiSetVisible:function(isVisible) {
-            if (isVisible === undefined) return;
             var self = this;
-            self.get("view").set("visible", isVisible);
+            this._forwordStateToView("visible", isVisible);
             self[isVisible ? "_bindKey" : "_unbindKey" ]();
             self.fire(isVisible ? "show" : "hide");
         },

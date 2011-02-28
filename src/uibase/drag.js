@@ -6,7 +6,6 @@ KISSY.add("uibase/drag", function(S) {
 
 
     function Drag() {
-        //S.log("drag init");
     }
 
     Drag.ATTRS = {
@@ -17,16 +16,14 @@ KISSY.add("uibase/drag", function(S) {
     Drag.prototype = {
 
         _uiSetHandlers:function(v) {
-
             if (v && v.length > 0 && this.__drag)
                 this.__drag.set("handlers", v);
         },
 
         __bindUI:function() {
             var Draggable = S.require("dd/draggable");
-            //S.log("_bindUIDragExt");
             var self = this,
-                el = self.get("el");
+                el = self.get("view").get("el");
             if (self.get("draggable") && Draggable)
                 self.__drag = new Draggable({
                     node:el,

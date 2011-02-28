@@ -6,7 +6,6 @@ KISSY.add('uibase/boxrender', function(S) {
 
 
     function Box() {
-        //S.log("box init");
     }
 
     S.mix(Box, {
@@ -58,15 +57,9 @@ KISSY.add('uibase/boxrender', function(S) {
     };
 
     Box.prototype = {
-        __syncUI:function() {
-            //S.log("_syncUIBoxExt");
-        },
-        __bindUI:function() {
-            //S.log("_bindUIBoxExt");
-        },
+
         __renderUI:function() {
             var Node = S.require("node/node");
-            //S.log("_renderUIBoxExt");
             var self = this,
                 render = self.get("render"),
                 el = self.get("el");
@@ -82,38 +75,26 @@ KISSY.add('uibase/boxrender', function(S) {
             }
         },
         _uiSetElAttrs:function(attrs) {
-            //S.log("_uiSetElAttrs");
-            if (attrs) {
                 this.get("el").attr(attrs);
-            }
         },
         _uiSetElCls:function(cls) {
-            if (cls) {
                 this.get("el").addClass(cls);
-            }
         },
 
         _uiSetElStyle:function(style) {
-            //S.log("_uiSetElStyle");
-            if (style) {
                 this.get("el").css(style);
-            }
         },
 
         _uiSetWidth:function(w) {
-            //S.log("_uiSetWidth");
+
             var self = this;
-            if (w) {
                 self.get("el").width(w);
-            }
         },
 
         _uiSetHeight:function(h) {
             //S.log("_uiSetHeight");
             var self = this;
-            if (h) {
                 self.get("el").height(h);
-            }
         },
 
         _uiSetHtml:function(c) {

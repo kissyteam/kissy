@@ -6,7 +6,6 @@ KISSY.add("uibase/stdmod", function(S) {
 
 
     function StdMod() {
-
     }
 
     StdMod.ATTRS = {
@@ -31,34 +30,22 @@ KISSY.add("uibase/stdmod", function(S) {
     StdMod.prototype = {
 
         _uiSetBodyStyle:function(v) {
-            if (v !== undefined) {
-                this.get("view").set("bodyStyle", v);
-            }
+            this._forwordStateToView("bodyStyle", v);
         },
         _uiSetHeaderStyle:function(v) {
-            if (v !== undefined) {
-                this.get("view").set("headerStyle", v);
-            }
+            this._forwordStateToView("headerStyle", v);
         },
         _uiSetFooterStyle:function(v) {
-            if (v !== undefined) {
-                this.get("view").set("footerStyle", v);
-            }
+            this._forwordStateToView("footerStyle", v);
         },
         _uiSetBodyContent:function(v) {
-            if (v !== undefined) {
-                this.get("view").set("bodyContent", v);
-            }
+            this._forwordStateToView("bodyContent", v);
         },
         _uiSetHeaderContent:function(v) {
-            if (v !== undefined) {
-                this.get("view").set("headerContent", v);
-            }
+            this._forwordStateToView("headerContent", v);
         },
         _uiSetFooterContent:function(v) {
-            if (v !== undefined) {
-                this.get("view").set("footerContent", v);
-            }
+            this._forwordStateToView("footerContent", v);
         }
     };
 

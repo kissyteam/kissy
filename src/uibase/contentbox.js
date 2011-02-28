@@ -15,9 +15,7 @@ KISSY.add("uibase/contentbox", function(S) {
 
     ContentBox.prototype = {
         _uiSetContent:function(c) {
-            if (c !== undefined) {
-                this.get("view").set("content", c);
-            }
+                this._forwordStateToView("content", c);
         }
     };
 

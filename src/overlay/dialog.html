@@ -67,91 +67,90 @@
 </button>
 
 <script src="../../build/kissy.js"></script>
-<script src="../uibase/uibase.js"></script>
-<script src="../uibase/uibase-box.js"></script>
-<script src="../uibase/uibase-contentbox.js"></script>
-<script src="../uibase/uibase-position.js"></script>
-<script src="../uibase/uibase-shim.js"></script>
-<script src="../uibase/uibase-mask.js"></script>
-<script src="../uibase/uibase-align.js"></script>
-<script src="../uibase/uibase-loading.js"></script>
+<script src="../../build/uibase.js"></script>
+
 <script src="overlay.js"></script>
+<script src="overlayrender.js"></script>
 <script src="../dd/ddm.js"></script>
 <script src="../dd/draggable.js"></script>
-<script src="../uibase/uibase-stdmod.js"></script>
-<script src="../uibase/uibase-close.js"></script>
-<script src="../uibase/uibase-drag.js"></script>
-<script src="../uibase/uibase-constrain.js"></script>
+
 <script src="dialog.js"></script>
+<script src="dialogrender.js"></script>
 <script>
     KISSY.ready(function(S) {
-        var Dialog = S.Dialog,Align = S.UIBase.Align;
 
-        window.o = new Dialog({
-            headerContent:"i am header",
-            bodyContent:"<div style='padding:50px;'>i am dialog 动态生成</div>",
-            x:400,
-            y:400,
-            //mask:true,
-            /*
-             align:{
-             // 参考元素, falsy 值为可视区域
-             node: null,
-             // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
-             points: [Align.CC, Align.CC],
-             // 有效值为 [n, m]
-             offset: [0, 0]
-             },*/
-            width:300,
-            //true 限制在可视区域
-            //S.one("#xx")
-            constrain:S.one("#constrainRegion")
-        });
-        var loading1 = S.one("#loading1"),
-                unloading1 = S.one("#unloading1");
-        o.on("show", function() {
-            loading1.show();
-            unloading1.show();
-        });
-        o.on("hide", function() {
+        KISSY.use("node,overlay/dialog,overlay/dialogrender", function(S, Node,
+                                                                       Dialog,
+                DialogRender) {
+
+
+            window.o = new Dialog({
+                headerContent:"i am header",
+                bodyContent:"<div style='padding:50px;'>i am dialog 动态生成</div>",
+                x:400,
+                y:400,
+                //mask:true,
+                /*
+                 align:{
+                 // 参考元素, falsy 值为可视区域
+                 node: null,
+                 // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+                 points: [Align.CC, Align.CC],
+                 // 有效值为 [n, m]
+                 offset: [0, 0]
+                 },*/
+                width:300,
+                //true 限制在可视区域
+                //Node.one("#xx")
+                constrain:Node.one("#constrainRegion")
+            });
+            var loading1 = Node.one("#loading1"),
+                    unloading1 = Node.one("#unloading1");
+            o.on("show", function() {
+                loading1.show();
+                unloading1.show();
+            });
+            o.on("hide", function() {
+                loading1.hide();
+                unloading1.hide();
+            });
             loading1.hide();
             unloading1.hide();
-        });
-        loading1.hide();
-        unloading1.hide();
-        loading1.on("click", function() {
-            o.loading();
-        });
-        unloading1.on("click", function() {
-            o.unloading();
-        });
+            loading1.on("click", function() {
+                o.loading();
+            });
+            unloading1.on("click", function() {
+                o.unloading();
+            });
 
 
-        S.one("#show1").on("click", function() {
-            o.show();
+            Node.one("#show1").on("click", function() {
+                
+                o.show();
+            });
+
+            Node.one("#destroy1").on("click", function() {
+                o.destroy();
+            });
+
+            var o2 = new Dialog({
+                view : new DialogRender({srcNode:Node.one("#markup")}),
+                width:200,
+                autoRender:true
+            });
+
+
+            Node.one("#show2").on("click", function() {
+                o2.center();
+                o2.show();
+            });
+
+
+            Node.one("#hide2").on("click", function() {
+                o2.hide();
+            });
+
         });
-
-        S.one("#destroy1").on("click", function() {
-            o.destroy();
-        });
-
-        var o2 = new Dialog({
-            srcNode:S.one("#markup"),
-            width:200,
-            autoRender:true
-        });
-
-
-        S.one("#show2").on("click", function() {
-            o2.center();
-            o2.show();
-        });
-
-
-        S.one("#hide2").on("click", function() {
-            o2.hide();
-        });
-       
     });
 </script>
 </body>
