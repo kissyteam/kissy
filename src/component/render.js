@@ -8,7 +8,9 @@ KISSY.add("component/render", function(S, UIBase) {
     }, {
         ATTRS:{
             //是否禁用
-            disabled:{}
+            disabled:{
+                value:false
+            }
         }
     });
 }, {

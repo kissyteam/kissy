@@ -14,17 +14,18 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Button) {
             menu.hide();
             this.get("view").set("collapsed", true);
         },
+
         _showMenu:function() {
             var self = this,
                 view = self.get("view"),
                 el = view.get("el");
             var menu = self.get("menu");
             if (!menu.get("visible")) {
-                menu.render();
-                menu.get("view").set("align", {
+                menu.set("align", {
                     node:el,
-                    points:['bl',"tl"]
+                    points:["bl","tl"]
                 });
+                menu.render();
                 menu.show();
                 view.set("collapsed", false);
             }
@@ -59,11 +60,16 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Button) {
          */
         _handleKeydown:function(e) {
 
-            var re = MenuButton.superclass._handleKeydown.call(this, e);
-            if (re === false) return re;
+            //不继承 button 的按钮设置，space , enter 都要留给 menu
+            //if (MenuButton.superclass._handleKeydown.call(this, e) === false) {
+            //    return false;
+            //}
+
             var menu = this.get("menu");
             //转发给 menu 处理
-            menu._handleKeydown(e);
+            if (menu && menu.get("visible")) {
+                menu._handleKeydown(e);
+            }
             if (e.keyCode == 27) {
                 e.preventDefault();
                 this._hideMenu();
@@ -109,10 +115,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Button) {
             menu:{
                 setter:function(v) {
                     //menubutton 的 menu 不可以获得焦点
-                    v.on("afterRenderUI", function() {
-                        v.set("focusable", false);
-                        v.get("view").get("el").attr("onmousedown", "return false;");
-                    });
+                    v.set("focusable", false);
                 }
             }
         }

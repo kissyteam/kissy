@@ -2,30 +2,40 @@
  * menu model and controller for kissy,accommodate menu items
  * @author:yiminghe@gmail.com
  */
-KISSY.add("menu/menu", function(S, UIBase, Component) {
+KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 
     var Menu;
 
-    Menu = UIBase.create(Component.ModelControl, [], {
+    Menu = UIBase.create(Component.ModelControl, [
+        UIBase.Position,
+        UIBase.Align
+    ], {
 
         _bindMenuItem:function(menuItem) {
             var self = this;
             menuItem.on("afterSelectedChange", function(ev) {
                 if (!ev.newVal) return;
-                var selectedItem = self.get("selectedItem");
-                if (selectedItem) {
-                    selectedItem.set("selected", false);
-                }
                 self.set("selectedItem", this);
             });
+
             menuItem.on("afterHighlightedChange", function(ev) {
                 if (!ev.newVal) return;
-                var highlightedItem = this.get("highlightedItem");
-                if (highlightedItem) {
-                    highlightedItem.set("highlighted", false);
-                }
                 self.set("highlightedItem", this);
             });
+
+            menuItem.on("menuItemSelected", function() {
+                self.fire("menuItemSelected");
+            });
+        },
+
+        //清楚上一个选择 menuitem 的选中状态
+        _uiSetSelectedItem:function(item, ev) {
+            if (ev.prevVal) {
+                //不触发事件，避免再被 menuitem 捕获死循环 ??
+                //afterSelectedChange 已经只监控选中了
+                ev.prevVal.set("selected", false);
+            }
+            item.set("selected", true);
         },
 
         _uiSetHighlightedItem:function(v, ev) {
@@ -35,26 +45,12 @@ KISSY.add("menu/menu", function(S, UIBase, Component) {
             v && v.set("highlighted", true);
             this.get("view").set("highlightedItem", v);
         },
-
-        _handleMouseLeave:function() {
-            if (Menu.superclass._handleMouseLeave.call(this) === false) return false;
-            this.set("highlightedItem", null);
-        },
         _handleBlur:function() {
             if (Menu.superclass._handleBlur.call(this) === false) return false;
             this.set("highlightedItem", null);
         },
 
-        _handleClick:function() {
 
-            if (Menu.superclass._handleClick.call(this) === false) return false;
-            //从键盘来的，需要更新
-            //否则 _bindMenuItem 会更新
-            if (arguments.length == 0) {
-                this.set("selectedItem", this.get("highlightedItem"));
-            }
-            if (this.get("selectedItem")) this.fire("menuItemSelected");
-        },
         //dir : -1 ,+1
         //skip disabled items
         _getNextEnabledHighlighted:function(index, dir) {
@@ -64,9 +60,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component) {
             var o = index;
             index += dir;
             while (index != o) {
-
                 if (!children[index].get("disabled")) return children[index];
-
                 index += dir;
                 if (index == -1) index = children.length - 1;
                 else if (index == children.length) index = 0;
@@ -76,7 +70,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component) {
 
         _handleKeydown:function(e) {
 
-            if (Menu.superclass._handleKeydown.call(this, e) === false) return false;
+            if (Menu.superclass._handleKeydown.call(this, e) === false)
+                return false;
             var highlightedItem = this.get("highlightedItem");
 
             //先看当前活跃 menuitem 是否要处理
@@ -86,7 +81,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component) {
 
             //自己这边只处理上下
             var children = this.get("children");
-            if (children.length == 0)return;
+            if (children.length === 0) return;
             var index,destIndex;
 
             //up
@@ -99,6 +94,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component) {
                     this.set("highlightedItem", this._getNextEnabledHighlighted(destIndex, -1));
                 }
                 e.preventDefault();
+                //自己处理了，嵌套菜单情况
+                return false;
             }
             //down
             else if (e.keyCode == 40) {
@@ -110,6 +107,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component) {
                     this.set("highlightedItem", this._getNextEnabledHighlighted(destIndex, 1));
                 }
                 e.preventDefault();
+                //自己处理了，不要向上处理，嵌套菜单情况
+                return false;
             }
         },
 
@@ -120,30 +119,22 @@ KISSY.add("menu/menu", function(S, UIBase, Component) {
             });
         },
 
-        addChild:function(c) {
-            Menu.superclass.addChild.call(this, c);
-            this._bindMenuItem(c);
-        },
-        _uiSetVisible:function(v) {
-            this.get("view").set("visible", v);
-        },
-        _uiFocusable:function(v) {
+        _uiSetFocusable:function(v) {
+
             this.get("view").set("focusable", v);
-        },
-        show:function() {
-            this.set("visible", true);
-        },
-        hide:function() {
-            this.set("visible", false);
         }
     }, {
         ATTRS:{
             highlightedItem:{},
             selectedItem:{},
-            visible:{},
             focusable:{
                 //默认可以获得焦点
                 value:true
+            },
+            view:{
+                valueFn:function() {
+                    return new MenuRender();
+                }
             }
         }
     });
@@ -152,5 +143,5 @@ KISSY.add("menu/menu", function(S, UIBase, Component) {
     return Menu;
 
 }, {
-    requires:['uibase','component']
+    requires:['uibase','component','./menurender']
 });

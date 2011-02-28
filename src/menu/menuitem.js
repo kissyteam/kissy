@@ -2,7 +2,7 @@
  * menu item ,child component for menu
  * @author:yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem", function(S, UIBase, Component) {
+KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
     var MenuItem = UIBase.create(Component.ModelControl, [], {
         _uiSetHighlighted:function(v) {
             this.get("view").set("highlighted", v);
@@ -24,9 +24,13 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component) {
             this.set("highlighted", false);
         },
 
+        _handleClickInternal:function() {
+            this.set("selected", true);
+            this.fire("menuItemSelected");
+        },
         _handleClick:function() {
             if (MenuItem.superclass._handleClick.call(this) === false) return false;
-            this.set("selected", true);
+            this._handleClickInternal.apply(this, arguments);
         }
     }, {
         ATTRS:{
@@ -36,11 +40,16 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component) {
             },
             selected:{
                 value:false
+            },
+            view:{
+                valueFn:function() {
+                    return new MenuItemRender();
+                }
             }
         }
     });
 
     return MenuItem;
 }, {
-    requires:['uibase','component']
+    requires:['uibase','component','./menuitemrender']
 });

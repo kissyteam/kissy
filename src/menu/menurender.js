@@ -4,19 +4,16 @@
  */
 KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
     var MenuRender = UIBase.create(Component.Render, [
-        UIBase.Box,
-        UIBase.Contentbox,
-        UIBase.Position,
-        UA['ie'] === 6 ? UIBase.Shim : null,
-        UIBase.Align
+        UIBase.Box.Render,
+        UIBase.Contentbox.Render,
+        UIBase.Position.Render,
+        UA['ie'] === 6 ? UIBase.Shim.Render : null
     ], {
 
         renderUI:function() {
             var el = this.get("el");
             el.attr("role", "menu");
             el.attr("aria-haspopup", true);
-            //接受键盘焦点
-            el.attr("tabindex", 0);
         },
 
         _uiSetHighlightedItem:function(v) {
@@ -35,16 +32,19 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
         },
 
         _uiSetDisabled:function(v) {
-            if (this.get("focusable"))
+            if (this.get("focusable")) {
+                //接受键盘焦点
                 this.get("el").attr("tabindex", v ? -1 : 0);
+            }
         },
 
-        _uiFocusable:function(v) {
+        _uiSetFocusable:function(v) {
             if (!this.get("disabled")) {
+                
                 if (v) {
-                    this.get("el").attr("tabindex", 0);
                 } else {
-                    this.get("el").removeAttr("tabindex");
+                    this.get("el").unselectable();
+                    this.get("el").attr("onmousedown", "return false;");
                 }
             }
         },
@@ -69,7 +69,9 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
             prefixCls:{
                 value:"goog-"
             },
-            focusable:{}
+            focusable:{
+                value:true
+            }
         }
     });
     return MenuRender;

@@ -146,14 +146,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         },
 
         _uiSetDisabled:function(d) {
-            //初始值不考虑
-            if (d == undefined) return;
             var view = this.get("view");
             view.set("disabled", d);
-            var children = this.get("children");
-            S.each(children, function(child) {
-                child.set("disabled", d);
-            });
         },
 
         destructor:function() {

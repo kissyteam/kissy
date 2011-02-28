@@ -3,7 +3,7 @@
  * @author:yiminghe@gmail.com
  */
 KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
-    return UIBase.create(Component.Render, [UIBase.Box], {
+    return UIBase.create(Component.Render, [UIBase.Box.Render], {
         renderUI:function() {
             this.get("el").html("<div class='" + this.get("prefixCls") + "menuitem-content" + "'>")
             this.get("el").attr("role", "menuitem");
@@ -16,7 +16,7 @@ KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
         },
 
         _uiSetDisabled:function(v) {
-            
+
             var el = this.get("el");
             if (v) {
                 el.addClass(this.get("prefixCls") + "menuitem-disabled");
@@ -42,6 +42,10 @@ KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
         _handleMouseUp:function() {
             this.get("el").removeClass(this.get("prefixCls") + "menuitem-active");
             this.get("el").attr("aria-pressed", false);
+        },
+
+        //支持按钮，默认按键 space ，enter 映射到 model and view handleClick
+        _handleKeydown:function() {
         }
     }, {
         ATTRS:{

@@ -127,7 +127,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 this._handleClick();
                 ev.preventDefault();
             } else {
-                view['_handleKeydown'](ev);
+                return view['_handleKeydown'](ev);
             }
         },
 
@@ -141,14 +141,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         },
 
         _uiSetDisabled:function(d) {
-            //初始值不考虑
-            if (d == undefined) return;
             var view = this.get("view");
             view.set("disabled", d);
-            var children = this.get("children");
-            S.each(children, function(child) {
-                child.set("disabled", d);
-            });
         },
 
         destructor:function() {
@@ -183,7 +177,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             view:{},
 
             //是否禁用
-            disabled:{}
+            disabled:{
+                value:false
+            }
         }
     });
 }, {
