@@ -610,9 +610,16 @@ build time: ${build.time}
      * 根据当前模块以及依赖模块的相对路径，得到依赖模块的绝对路径
      * @param moduleName 当前模块
      * @param depName 依赖模块
-     * @return {string} 依赖模块的绝对路径
+     * @return {string|Array} 依赖模块的绝对路径
      */
     function normalDepModuleName(moduleName, depName) {
+        if (!depName) return depName;
+        if (S.isArray(depName)) {
+            for (var i = 0; i < depName.length; i++) {
+                depName[i] = normalDepModuleName(moduleName, depName[i]);
+            }
+            return depName;
+        }
         if (startsWith(depName, "../") || startsWith(depName, "./")) {
             var anchor = EMPTY,index;
             // x/y/z -> x/y/
@@ -717,7 +724,7 @@ build time: ${build.time}
             if (S['isString'](name)) {
 
                 var host;
-                if (config && (host = config.host)) {
+                if (config && ( host = config.host )) {
                     var hostMod = mods[host];
                     if (!hostMod) {
                         S.error("module " + host + " can not be found !");
@@ -734,8 +741,20 @@ build time: ${build.time}
                 self.__registerModule(name, def, config);
                 // 和 1.1.7 以前版本保持兼容，不得已而为之
                 var mod = mods[name];
-                if (self.__isAttached(mod.requires)) {
+                var requires = normalDepModuleName(name, mod.requires);
+                if (self.__isAttached(requires)) {
+                    //S.log(mod.name + " is attached when add !");
                     self.__attachMod(mod);
+                } else {
+                    var i,modNames;
+                    i = (modNames = S.makeArray(requires)).length - 1;
+                    for (; i >= 0; i--) {
+                        var requireName = removeTimestamp(modNames[i]);
+                        var requireMod = mods[requireName] || {};
+                        if (requireMod.status !== ATTACHED) {
+                            S.log(mod.name + " not attached when added : depends " + requireName);
+                        }
+                    }
                 }
                 return self;
             }
@@ -970,8 +989,8 @@ build time: ${build.time}
             // 注意模块名中带时间戳，用于强制下载最新模块文件
             var reg = /^([^?]+)(\?.*)?$/;
             reg.test(modName);
-            var name = RegExp.$1,tag = RegExp.$2;
-            modName = name;
+            modName = RegExp.$1;
+            var tag = RegExp.$2;
             var mod = mods[modName];
             //没有模块定义
             if (!mod) {

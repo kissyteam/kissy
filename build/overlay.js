@@ -66,7 +66,7 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender) {
     });
 }, {
     requires:['uibase','component','./overlayrender']
-})KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender) {
+});KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender) {
     function require(s) {
         return S.require("uibase/" + s);
     }
