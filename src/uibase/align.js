@@ -91,7 +91,8 @@ KISSY.add('uibase/align', function(S, DOM) {
                 xy,
                 diff,
                 p1,
-                el = self.get('el'),
+                //如果没有view，就是不区分mvc
+                el = (self.get("view")||self).get('el'),
                 p2;
 
             offset = offset || [0,0];

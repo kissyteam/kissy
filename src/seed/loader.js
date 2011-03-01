@@ -107,6 +107,11 @@
         return normalPath(path);
     }
 
+    //清楚时间戳
+    function removeTimestamp(str) {
+        return str.replace(/\?.*$/, "");
+    }
+
 
     loader = {
 
@@ -159,17 +164,40 @@
                     if (mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
                 });
                 mix(mods, name);
+                return self;
             }
             // S.add(name[, fn[, config]])
-            else if (S['isString'](name)) {
+            if (S['isString'](name)) {
+
+                var host;
+                if (config && (host = config.host)) {
+                    var hostMod = mods[host];
+                    if (!hostMod) {
+                        S.error("module " + host + " can not be found !");
+                        return self;
+                    }
+                    if (self.__isAttached(host)) {
+                        def.apply(self);
+                    } else {
+                        hostMod.fns.push(def);
+                    }
+                    return self;
+                }
+
                 self.__registerModule(name, def, config);
+                // 和 1.1.7 以前版本保持兼容，不得已而为之
+                var mod = mods[name];
+                if (self.__isAttached(mod.requires)) {
+                    self.__attachMod(mod);
+                }
+                return self;
             }
-            //S.add(fn,config);
-            else if (S.isFunction(name)) {
+            // S.add(fn,config);
+            if (S.isFunction(name)) {
                 config = def;
                 def = name;
                 if (oldIE) {
-                    //15 ms 内，从缓存读取的
+                    // 15 ms 内，从缓存读取的
                     if (((+new Date()) - self.__startLoadTime) < 15) {
                         S.log("old_ie 从缓存中读取");
                         if (name = self.__startLoadModuleName) {
@@ -187,13 +215,17 @@
                     self.__startLoadTime = 0;
                 } else {
                     S.log("标准浏览器等load时再关联模块名");
-                    //其他浏览器 onload 时，关联模块名与模块定义
+                    // 其他浏览器 onload 时，关联模块名与模块定义
                     self.__currentModule = {
                         def:def,
                         config:config
                     };
                 }
+
+                return self;
             }
+
+            S.error("invalid format for KISSY.add !");
             return self;
         },
 
@@ -245,11 +277,14 @@
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
             mix(mod, { name: name, status: LOADED });
 
-            if (mod.fn) {
+            if (mod.fns && mod.fns.length) {
                 S.log(name + " is defined more than once", "error");
                 S.error(name + " is defined more than once");
             }
-            mod.def = def;
+
+            //支持 host，一个模块多个 add factory
+            mod.fns = mod.fns || [];
+            mod.fns.push(def);
             mix((mods[name] = mod), config);
         },
 
@@ -259,9 +294,8 @@
          * 表示遇到 biz/x
          * 在当前网页路径找 biz/x.js
          */
-        packages:function() {
+        _packages:function(cfgs) {
             var self = this,
-                cfgs = S.makeArray(arguments),
                 ps;
             ps = self.__packages = self.__packages || {};
             for (var i = 0; i < cfgs.length; i++) {
@@ -276,16 +310,21 @@
 
         /**
          * compress 'from module' to 'to module'
+         * {
+         *   core:['dom','ua','event','node','json','ajax','anim','base','cookie']
+         * }
          */
-        compress:function(from, to) {
+        _combine:function(from, to) {
             var self = this,cs;
             if (S['isObject'](from)) {
                 S.each(from, function(v, k) {
-                    self.compress(k, v);
+                    S.each(v, function(v2) {
+                        self._combine(v2, k);
+                    });
                 });
                 return;
             }
-            cs = self.__compresses = self.__compresses || {};
+            cs = self.__combines = self.__combines || {};
             if (to) {
                 cs[from] = to;
             } else {
@@ -301,6 +340,7 @@
          * </code>
          */
         use: function(modNames, callback, config) {
+
             modNames = modNames.replace(/\s+/g, EMPTY).split(',');
             config = config || {};
 
@@ -348,7 +388,7 @@
         require:function(moduleName) {
             var self = this,
                 mods = self.Env.mods,
-                mod = mods[moduleName];
+                mod = mods[removeTimestamp(moduleName)];
 
             return mod && mod.value;
         },
@@ -356,7 +396,7 @@
         __getPackagePath:function(mod) {
             var self = this,
                 //一个模块合并到了另一个模块文件中去
-                p = self.compress(mod.name),
+                p = self._combine(mod.name),
                 ind,
                 packages = self.__packages || {};
             if ((ind = p.indexOf("/")) != -1) {
@@ -379,18 +419,21 @@
 
             var self = this,
                 mods = self.Env.mods;
+            // x/y?t=2011
+            // 注意模块名中带时间戳，用于强制下载最新模块文件
+            var reg = /^([^?]+)(\?.*)?$/;
+            reg.test(modName);
+            var name = RegExp.$1,tag = RegExp.$2;
+            modName = name;
             var mod = mods[modName];
             //没有模块定义
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    var reg = /^([^?]+)(\?.*)?$/;
-                    reg.test(m);
-                    var name = RegExp.$1,tag = RegExp.$2;
-                    return name + '-min.js' + (tag ? tag : '');
+                    return removeTimestamp(m) + '-min.js' + (tag ? tag : '');
                 },  jsPath = S.isFunction(componentJsName) ?
                     //一个模块合并到了了另一个模块文件中去
-                    componentJsName(self.compress(modName))
+                    componentJsName(self._combine(modName))
                     : componentJsName;
                 mod = {
                     path:jsPath,
@@ -417,8 +460,9 @@
             mod['requires'] = requires;
             // attach all required modules
             for (; i < len; i++) {
-                requires[i] = normalDepModuleName(mod.name, requires[i]);
-                var r = mods[requires[i]];
+                requires[i] = normalDepModuleName(mod.name,
+                    requires[i]);
+                var r = mods[removeTimestamp(requires[i])];
                 if (r && r.status === ATTACHED) {
                     //no need
                 } else {
@@ -443,9 +487,10 @@
                 mod['requires'] = newRequires;
                 //本模块下载成功后串行下载 require
                 for (var i = newRequires.length - 1; i >= 0; i--) {
-                    newRequires[i] = normalDepModuleName(mod.name, newRequires[i]);
+                    newRequires[i] = normalDepModuleName(mod.name,
+                        newRequires[i]);
                     var r = newRequires[i],
-                        rmod = mods[r],
+                        rmod = mods[removeTimestamp(r)],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
                     if (rmod && rmod.status === ATTACHED
@@ -488,14 +533,18 @@
 
         __attachMod: function(mod) {
             var self = this,
-                def = mod.def;
+                defs = mod.fns;
 
-            if (def) {
-                if (S.isFunction(def)) {
-                    mod.value = def.apply(self, self.__getModules(mod['requires']));
-                } else {
-                    mod.value = def;
-                }
+            if (defs) {
+                S.each(defs, function(def) {
+                    var value;
+                    if (S.isFunction(def)) {
+                        value = def.apply(self, self.__getModules(mod['requires']));
+                    } else {
+                        value = def;
+                    }
+                    mod.value = mod.value || value;
+                });
             }
 
             mod.status = ATTACHED;
@@ -507,7 +556,7 @@
                 i = (modNames = S.makeArray(modNames)).length - 1;
 
             for (; i >= 0; i--) {
-                var name = modNames[i];
+                var name = removeTimestamp(modNames[i]);
                 mod = mods[name] || {};
                 if (mod.status !== ATTACHED) return false;
             }
@@ -757,7 +806,9 @@
 
 /**
  * 2011-01-04 chengyu<yiminghe@gmail.com> refactor:
+ *
  * adopt requirejs :
+ *
  * 1. packages(cfg) , cfg :{
  *    name : 包名，用于指定业务模块前缀
  *    path: 前缀包名对应的路径
@@ -773,7 +824,16 @@
  *
  * 4. add,use 不支持 css loader ,getScript 仍然保留支持
  *
+ * 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
  *
  * demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
+ *
+ * 2011-03-01 yiminghe@gmail.com note:
+ *
+ * compatibility
+ *
+ * 1. 保持兼容性，不得已而为之
+ *      支持 { host : }
+ *      如果 requires 都已经 attached，支持 add 后立即 attach
  */
 

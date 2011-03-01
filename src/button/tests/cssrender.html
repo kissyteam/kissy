@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h1>css3render for button 测试</h1>
+<h1 id="describe">css3render for button 测试</h1>
 
 <div id="button_container">
 
@@ -32,6 +32,9 @@
 <script src="../../../build/base.js"></script>
 <script src="../../../build/json.js"></script>
 <script src="../../../build/uibase.js"></script>
+<script src="../../component.js"></script>
+<script src="../../component/modelcontrol.js"></script>
+<script src="../../component/render.js"></script>
 <script src="../base.js"></script>
 <script src="../buttonrender.js"></script>
 <script src="../nativerender.js"></script>
@@ -48,6 +51,7 @@
         //view as a parameter
         var b = new Button({
             content:"测试",
+            describedby:"describe",
             view:r,
             autoRender:true
         });

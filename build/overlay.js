@@ -4,69 +4,10 @@ MIT Licensed
 build time: ${build.time}
 */
 /**
- * KISSY Overlay
- * @author: 玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
- */
-KISSY.add("overlay/overlay", function(S, UA, UIBase) {
-
-    function require(s) {
-        return S.require("uibase/" + s);
-    }
-
-    return UIBase.create([require("box"),
-        require("contentbox"),
-        require("position"),
-        require("loading"),
-        UA['ie'] == 6 ? require("shim") : null,
-        require("align"),
-         require("resize"),
-        require("mask")], {
-
-        initializer:function() {
-            //S.log("Overlay init");
-        },
-
-        renderUI:function() {
-            //S.log("_renderUIOverlay");
-            this.get("el").addClass("ks-overlay");
-        },
-
-        syncUI:function() {
-            //S.log("_syncUIOverlay");
-        },
-        /**
-         * bindUI
-         * 注册dom事件以及属性事件
-         * @override
-         */
-        bindUI: function() {
-            //S.log("_bindUIOverlay");
-        },
-
-        /**
-         * 删除自己, mask 删不了
-         */
-        destructor: function() {
-            //S.log("overlay destructor");
-        }
-
-    }, {
-        ATTRS:{
-            elOrder:0
-        }
-    });
-}, {
-    requires: ["ua","uibase"]
-});
-
-/**
- * 2010-11-09 2010-11-10 承玉<yiminghe@gmail.com>重构，attribute-base-uibase-Overlay ，采用 UIBase.create
- */
-/**
  * KISSY.Dialog
  * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function(S, Overlay, UIBase) {
+KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -78,31 +19,25 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase) {
         require("drag"),
         require("constrain")
     ], {
-        initializer:function() {
-            //S.log("dialog init");
-        },
-
         renderUI:function() {
-            //S.log("_renderUIDialog");
             var self = this;
-            self.get("el").addClass("ks-dialog");
+            self.get("view").get("el").addClass("ks-dialog");
             //设置值，drag-ext 绑定时用到
-            self.set("handlers", [self.get("header")]);
-        },
-        bindUI:function() {
-            //S.log("_bindUIDialog");
-        },
-        syncUI:function() {
-            //S.log("_syncUIDialog");
-        },
-        destructor:function() {
-            //S.log("Dialog destructor");
+            self.set("handlers", [self.get("view").get("header")]);
+        }
+    }, {
+        ATTRS:{
+            view:{
+                valueFn:function() {
+                    return new DialogRender();
+                }
+            }
         }
     });
 
 
 }, {
-    requires:[ "overlay/overlay","uibase"]
+    requires:[ "overlay/overlay","uibase",'overlay/dialogrender']
 });
 
 /**
@@ -111,3 +46,85 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase) {
 
 
 
+KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender) {
+    function require(s) {
+        return S.require("uibase/" + s);
+    }
+
+    return UIBase.create(OverlayRender, [
+        require("stdmodrender"),
+        require("closerender")
+    ]);
+}, {
+    requires:['uibase','./overlayrender']
+});/**
+ * model and control for overlay
+ * @author:yiminghe@gmail.com
+ */
+KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender) {
+    function require(s) {
+        return S.require("uibase/" + s);
+    }
+
+    return UIBase.create(Component.ModelControl, [
+        require("box"),
+        require("contentbox"),
+        require("position"),
+        require("loading"),
+        require("align"),
+        require("resize"),
+        require("mask")], {
+    }, {
+        ATTRS:{
+            view:{
+                valueFn:function() {
+                    return new OverlayRender();
+                }
+            }
+        }
+    });
+}, {
+    requires:['uibase','component','./overlayrender']
+})/**
+ * KISSY Overlay
+ * @author: 玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ */
+KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
+
+    function require(s) {
+        return S.require("uibase/" + s);
+    }
+
+    return UIBase.create(Component.Render, [
+        require("boxrender"),
+        require("contentboxrender"),
+        require("positionrender"),
+        require("loadingrender"),
+        UA['ie'] == 6 ? require("shimrender") : null,
+        require("maskrender")
+    ], {
+
+        renderUI:function() {
+            this.get("el").addClass("ks-overlay");
+        }
+
+    }, {
+        ATTRS:{
+            elOrder:0
+        }
+    });
+}, {
+    requires: ["ua","uibase","component"]
+});
+
+/**
+ * 2010-11-09 2010-11-10 承玉<yiminghe@gmail.com>重构，attribute-base-uibase-Overlay ，采用 UIBase.create
+ */
+KISSY.add("overlay", function(S, O, OR, D, DR) {
+    O.Render = OR;
+    D.Render = DR;
+    O.Dialog = D;
+    return O;
+}, {
+    requires:["overlay/overlay","overlay/overlayrender","overlay/dialog","overlay/dialogrender"]
+});

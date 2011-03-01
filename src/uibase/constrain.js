@@ -25,7 +25,7 @@ KISSY.add("uibase/constrain", function(S, DOM) {
     function _getConstrainRegion(constrain) {
         var ret;
         if (!constrain) return ret;
-        var el = this.get("el");
+        var el = this.get("view").get("el");
         if (constrain !== true) {
             constrain = Node.one(constrain);
             ret = constrain.offset();
@@ -54,10 +54,7 @@ KISSY.add("uibase/constrain", function(S, DOM) {
     }
 
     Constrain.prototype = {
-        __bindUI:function() {
-            //S.log("_bindUIConstrain");
 
-        },
         __renderUI:function() {
             //S.log("_renderUIConstrain");
             var self = this,
@@ -92,15 +89,7 @@ KISSY.add("uibase/constrain", function(S, DOM) {
             };
             self.addAttr("x", xAttr);
             self.addAttr("y", yAttr);
-        },
-
-        __syncUI:function() {
-            //S.log("_syncUIConstrain");
-        },
-        __destructor:function() {
-            //S.log("constrain-ext __destructor");
         }
-
     };
 
 

@@ -31,7 +31,7 @@
 </div>
 
 <div id="markup" style="visibility:hidden;">
-        从 markup 生成 overlay
+    从 markup 生成 overlay
 </div>
 
 <select>
@@ -46,92 +46,90 @@
 <button id="hide2">
     hide from markup
 </button>
-<script src="../../build/kissy.js"></script>
-<script src="../uibase/uibase.js"></script>
-<script src="../uibase/uibase-box.js"></script>
-<script src="../uibase/uibase-contentbox.js"></script>
-<script src="../uibase/uibase-position.js"></script>
-<script src="../uibase/uibase-loading.js"></script>
-<script src="../uibase/uibase-shim.js"></script>
-<script src="../uibase/uibase-align.js"></script>
-<script src="../uibase/uibase-mask.js"></script>
+<script src="../../build/seed.js"></script>
+<script src="../../build/core.js"></script>
+<script src="../../build/uibase.js"></script>
+<script src="../../build/component.js"></script>
 <script src="overlay.js"></script>
+<script src="overlayrender.js"></script>
 <script>
     KISSY.ready(function(S) {
-        var Overlay = S.Overlay,show1 = S.one("#show1");
-        var show3 = S.one("#show3"),
-                Align = S.UIBase.Align;
 
-        var o = new Overlay({
-            content:"i am overly 动态生成,esc 隐藏",
-            width:200,
-            //x:100,
-            //y:100,
-            align:{
-                // 参考元素, falsy 值为可视区域
-                node: null,
-                // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
-                points: [Align.CC, Align.CC],
-                // 有效值为 [n, m]
-                offset: [0, 0]
-            },
-            mask:true,
-            elStyle:{
-                //position:"absolute",
-                border:"1px solid red"
-            }
-        });
-
-        show1.on("click", function() {
-            o.show();
-        });
-        S.one("#destroy1").on("click", function() {
-            o.destroy();
-        });
+        KISSY.use("node,overlay/overlay,overlay/overlayrender",
+                function(S, Node, Overlay, OverlayRender) {
 
 
-        var o3 = new Overlay({
-            content:"i am overly 动态生成 2",
-            width:"200px",
-            elStyle:{
-                //position:"absolute",
-                border:"1px solid green"
-            }
-        });
+                    var show1 = Node.one("#show1");
+                    var show3 = Node.one("#show3");
+
+                    var o = new Overlay({
+                        content:"i am overly 动态生成,esc 隐藏",
+                        width:200,
+                        elStyle:{
+                            //position:"absolute",
+                            border:"1px solid red"
+                        },
+                        align:{
+                            // 参考元素, falsy 值为可视区域
+                            node: null,
+                            // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+                            points: ['cc','cc'],
+                            // 有效值为 [n, m]
+                            offset: [0, 0]
+                        },
+                        mask:true
+                    });
+
+                    show1.on("click", function() {
+                        o.show();
+                    });
+                    Node.one("#destroy1").on("click", function() {
+                        o.destroy();
+                    });
 
 
-        show3.on("mouseenter", function() {
-            S.log("mouseenter");
-            o3.show();
-            //o3.align(show3, [Align.TR,Align.TL], [0,0]);'
-            //overlay的左上角与参考点的右上角对齐
-            o3.set("align", {node:show3, points:[Align.TR,Align.TL],offset:[0,0]});
-        });
-        show3.on("mouseleave", function() {
-            S.log("mouseleave");
-            o3.hide();
-        });
-
-        var o2 = new Overlay({
-            srcNode:S.one("#markup"),
-            autoRender:true,
-            x:100,
-            y:100,
-            elStyle:{
-                //position:"absolute",
-                border:"1px solid black"
-            }
-        });
+                    var o3 = new Overlay({
+                        content:"i am overly 动态生成 2",
+                        width:"200px",
+                        elStyle:{
+                            border:"1px solid green"
+                        }
+                    });
 
 
-        S.one("#show2").on("click", function() {
-            o2.show();
-        });
+                    show3.on("mouseenter", function() {
+                        S.log("mouseenter");
+                        o3.show();
+                        //o3.align(show3, [Align.TR,Align.TL], [0,0]);'
+                        //overlay的左上角与参考点的右上角对齐
+                        o3.set("align", {node:show3, points:["tr","tl"],offset:[0,0]});
+                    });
+                    show3.on("mouseleave", function() {
+                        S.log("mouseleave");
+                        o3.hide();
+                    });
 
-        S.one("#hide2").on("click", function() {
-            o2.hide();
-        });
-        
+                    var o2 = new Overlay({
+                        view:new OverlayRender({
+                            srcNode:Node.one("#markup")
+                        }),
+                        elStyle:{
+                            border:"1px solid black"
+                        },
+                        autoRender:true,
+                        x:100,
+                        y:100
+                    });
+
+
+                    Node.one("#show2").on("click", function() {
+                        o2.show();
+                    });
+
+                    Node.one("#hide2").on("click", function() {
+                        o2.hide();
+                    });
+                });
     });
 </script>
 </body>

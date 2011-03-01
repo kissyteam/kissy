@@ -5,10 +5,7 @@
 KISSY.add("uibase/stdmod", function(S) {
 
 
-    var CLS_PREFIX = "ks-stdmod-";
-
     function StdMod() {
-        //S.log("stdmod init");
     }
 
     StdMod.ATTRS = {
@@ -21,97 +18,36 @@ KISSY.add("uibase/stdmod", function(S) {
         bodyStyle:{
         },
         footerStyle:{
-
         },
         headerStyle:{
-
         },
-        headerContent:{
-            value:false
-        },
-        bodyContent:{
-            value:false
-        },
-        footerContent:{
-            value:false
-        }
+        headerContent:{},
+        bodyContent:{},
+        footerContent:{}
     };
 
-    StdMod.HTML_PARSER = {
-        header:"." + CLS_PREFIX + "header",
-        body:"." + CLS_PREFIX + "body",
-        footer:"." + CLS_PREFIX + "footer"
-    };
-
-    function renderUI(self, part) {
-        var Node = S.require("node/node");
-        var el = self.get("contentEl"),
-            partEl = self.get(part);
-
-        if (!partEl) {
-            partEl = new Node("<div class='" + CLS_PREFIX + part + "'>")
-                .appendTo(el);
-            self.set(part, partEl);
-        }
-    }
 
     StdMod.prototype = {
-        __bindUI:function() {
-            //S.log("_bindUIStdMod");
-        },
-        __syncUI:function() {
-            //S.log("_syncUIStdMod");
-        },
-        _setStdModContent:function(part, v) {
-            if (v !== false) {
 
-                if (S['isString'](v)) {
-                    this.get(part).html(v);
-                } else {
-                    this.get(part).html("");
-                    this.get(part).append(v);
-                }
-            }
-        },
         _uiSetBodyStyle:function(v) {
-            if (v !== undefined) {
-                this.get("body").css(v);
-            }
+            this._forwordStateToView("bodyStyle", v);
         },
         _uiSetHeaderStyle:function(v) {
-            if (v !== undefined) {
-                this.get("header").css(v);
-            }
+            this._forwordStateToView("headerStyle", v);
         },
         _uiSetFooterStyle:function(v) {
-            if (v !== undefined) {
-                this.get("footer").css(v);
-            }
+            this._forwordStateToView("footerStyle", v);
         },
         _uiSetBodyContent:function(v) {
-            //S.log("_uiSetBodyContent");
-            this._setStdModContent("body", v);
+            this._forwordStateToView("bodyContent", v);
         },
         _uiSetHeaderContent:function(v) {
-            //S.log("_uiSetHeaderContent");
-            this._setStdModContent("header", v);
+            this._forwordStateToView("headerContent", v);
         },
         _uiSetFooterContent:function(v) {
-            //S.log("_uiSetFooterContent");
-            this._setStdModContent("footer", v);
-        },
-        __renderUI:function() {
-            //S.log("_renderUIStdMod");
-            renderUI(this, "header");
-            renderUI(this, "body");
-            renderUI(this, "footer");
-        },
-
-        __destructor:function() {
-            //S.log("stdmod __destructor");
+            this._forwordStateToView("footerContent", v);
         }
     };
-
 
     return StdMod;
 

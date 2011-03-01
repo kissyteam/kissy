@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h1>CustomRender for button 测试</h1>
+<h1 id="describe">CustomRender for button 测试</h1>
 
 <div id="button_container">
 
@@ -18,7 +18,6 @@
 <h2>从已知元素生成</h2>
 
 <div id="exist">渐进增强</div>
-
 
 
 <script src="../../seed/kissy.js"></script>
@@ -32,6 +31,9 @@
 <script src="../../../build/base.js"></script>
 <script src="../../../build/json.js"></script>
 <script src="../../../build/uibase.js"></script>
+<script src="../../component.js"></script>
+<script src="../../component/modelcontrol.js"></script>
+<script src="../../component/render.js"></script>
 <script src="../base.js"></script>
 <script src="../buttonrender.js"></script>
 <script src="../nativerender.js"></script>
@@ -49,6 +51,7 @@
         //view as a parameter
         var b = new Button({
             content:"测试",
+            describedby:"describe",
             view:r,
             autoRender:true
         });
@@ -56,9 +59,7 @@
         //b.render()
 
         b.on("click", function() {
-            setTimeout(function() {
-                alert("button click");
-            }, 0);
+            alert("button click");
         });
 
         var dis = Node.one("#dis");

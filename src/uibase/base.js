@@ -66,7 +66,12 @@ KISSY.add('uibase/base', function (S, Base) {
                     ext = exts[i];
                     if (ext) {
                         if (extMethod != "constructor") {
-                            ext = exts[i].prototype[extMethod];
+                            //只调用真正自己构造器原型的定义，继承原型链上的不要管
+                            if (ext.prototype.hasOwnProperty(extMethod)) {
+                                ext = ext.prototype[extMethod];
+                            } else {
+                                ext = null;
+                            }
                         }
                         ext && t.push(ext);
                     }
@@ -74,7 +79,9 @@ KISSY.add('uibase/base', function (S, Base) {
             }
 
             // 收集主类
-            if ((main = c.prototype[mainMethod])) {
+            // 只调用真正自己构造器原型的定义，继承原型链上的不要管 !important
+            //所以不用自己在 renderUI 中调用 superclass.renderUI 了，UIBase 构造器自动搜寻
+            if (c.prototype.hasOwnProperty(mainMethod) && (main = c.prototype[mainMethod])) {
                 t.push(main);
             }
 
@@ -165,14 +172,15 @@ KISSY.add('uibase/base', function (S, Base) {
                 self._renderUI();
                 self.fire('renderUI');
                 callMethodByHierarchy(self, "renderUI", "__renderUI");
-
+                self.fire('afterRenderUI');
                 self._bindUI();
                 self.fire('bindUI');
                 callMethodByHierarchy(self, "bindUI", "__bindUI");
-
+                self.fire('afterBindUI');
                 self._syncUI();
                 self.fire('syncUI');
                 callMethodByHierarchy(self, "syncUI", "__syncUI");
+                self.fire('afterSyncUI');
                 self.set("rendered", true);
             }
         },
@@ -216,7 +224,8 @@ KISSY.add('uibase/base', function (S, Base) {
             for (var a in attrs) {
                 if (attrs.hasOwnProperty(a)) {
                     var m = UI_SET + capitalFirst(a);
-                    if (self[m]) {
+                    //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                    if (self[m] && self.get(a) !== undefined) {
                         self[m](self.get(a));
                     }
                 }

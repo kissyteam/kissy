@@ -2,7 +2,7 @@
  * shim for ie6 ,require box-ext
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/shim", function(S) {
+KISSY.add("uibase/shimrender", function(S) {
 
     function Shim() {
         //S.log("shim init");
@@ -15,12 +15,7 @@ KISSY.add("uibase/shim", function(S) {
         }
     };
     Shim.prototype = {
-        __syncUI:function() {
-            //S.log("_syncUIShimExt");
-        },
-        __bindUI:function() {
-            //S.log("_bindUIShimExt");
-        },
+
         _uiSetShim:function(v) {
             var Node = S.require("node/node");
             var self = this,el = self.get("el");
@@ -39,17 +34,7 @@ KISSY.add("uibase/shim", function(S) {
                 self.__shimEl.remove();
                 delete self.__shimEl;
             }
-        },
-        __renderUI:function() {
-            //S.log("_renderUIShimExt");
-
-        },
-
-        __destructor:function() {
-            //S.log("shim __destructor");
         }
     };
     return Shim;
-},{
-    host:"uibase"
 });
