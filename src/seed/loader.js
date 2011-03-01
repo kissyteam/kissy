@@ -170,7 +170,7 @@
             if (S['isString'](name)) {
 
                 var host;
-                if (config && (host = config.host)) {
+                if (config && ( host = config.host )) {
                     var hostMod = mods[host];
                     if (!hostMod) {
                         S.error("module " + host + " can not be found !");
@@ -188,7 +188,10 @@
                 // 和 1.1.7 以前版本保持兼容，不得已而为之
                 var mod = mods[name];
                 if (self.__isAttached(mod.requires)) {
+                    S.log(mod.name + " is attached when add !");
                     self.__attachMod(mod);
+                }else{
+
                 }
                 return self;
             }
