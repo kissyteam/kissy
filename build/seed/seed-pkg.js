@@ -1,5 +1,5 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -65,7 +65,7 @@ build time: ${build.time}
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.7dev',
+        version: '1.1.8dev',
 
         /**
          * Returns a new object containing all of the properties of
@@ -925,20 +925,20 @@ build time: ${build.time}
         mix = S.mix,
 
         scriptOnload = doc.createElement('script').readyState ?
-                       function(node, callback) {
-                           var oldCallback = node.onreadystatechange;
-                           node.onreadystatechange = function() {
-                               var rs = node.readyState;
-                               if (rs === 'loaded' || rs === 'complete') {
-                                   node.onreadystatechange = null;
-                                   oldCallback && oldCallback();
-                                   callback.call(this);
-                               }
-                           };
-                       } :
-                       function(node, callback) {
-                           node.addEventListener('load', callback, false);
-                       },
+            function(node, callback) {
+                var oldCallback = node.onreadystatechange;
+                node.onreadystatechange = function() {
+                    var rs = node.readyState;
+                    if (rs === 'loaded' || rs === 'complete') {
+                        node.onreadystatechange = null;
+                        oldCallback && oldCallback();
+                        callback.call(this);
+                    }
+                };
+            } :
+            function(node, callback) {
+                node.addEventListener('load', callback, false);
+            },
 
         RE_CSS = /\.css(?:\?|$)/i,
         loader;
@@ -1403,7 +1403,17 @@ build time: ${build.time}
                 }
             }
         }
+        /**
+         * 一定要正则化，防止出现 ../ 等相对路径
+         */
+        if (!startsWith(base, "/") && !startsWith(base, "http://") && !startsWith(base, "https://")) {
+            base = window.location.href.replace(/[^/]*$/, '') + base;
+        }
         return base;
+    }
+
+    function startsWith(str, prefix) {
+        return str.lastIndexOf(prefix, 0) == 0;
     }
 
     /**

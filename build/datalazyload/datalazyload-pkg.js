@@ -1,5 +1,5 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -40,7 +40,12 @@ KISSY.add('datalazyload', function(S, undefined) {
             /**
              * 图像的占位图，默认无
              */
-            placeholder: NONE
+            placeholder: NONE,
+
+            /**
+             * 是否执行 textarea 里面的脚本
+             */
+            execScript: true
         };
 
     /**
@@ -292,7 +297,7 @@ KISSY.add('datalazyload', function(S, undefined) {
             top = DOM.offset(isHidden ? area.parentNode : area).top;
 
             if (top <= self.threshold + DOM.scrollTop()) {
-                self._loadAreaData(area.parentNode, area);
+                self._loadAreaData(area.parentNode, area, self.config.execScript);
             } else {
                 return true;
             }
@@ -302,17 +307,14 @@ KISSY.add('datalazyload', function(S, undefined) {
          * 从 textarea 中加载数据
          * @static
          */
-        _loadAreaData: function(container, area) {
-            //chengyu 大幅重构，使用正则识别 html 字符串里的 script，提高性能
-            // 为了通用性，不要搜索 container 内的全部 script dom 节点执行
-
+        _loadAreaData: function(container, area, execScript) {
             // 采用隐藏 textarea 但不去除方式，去除会引发 Chrome 下错乱
             area.style.display = NONE;
             area.className = ''; // clear hook
 
             var content = DOM.create('<div>');
             container.insertBefore(content, area);
-            DOM.html(content, area.value, true);
+            DOM.html(content, area.value, execScript === undefined ? true : execScript);
 
             //area.value = ''; // bug fix: 注释掉，不能清空，否则 F5 刷新，会丢内容
         },

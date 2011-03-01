@@ -1,5 +1,5 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -986,7 +986,7 @@ KISSY.add('calendar-page', function(S) {
 
 
                     } else if ((cc.father.range.start !== null && cc.father.range.end !== null) && //日期选择范围
-                        (  _td_s.getTime() >= cc.father.range.start.getTime() && _td_e.getTime() < cc.father.range.end.getTime())) {
+                        (  _td_s.getTime() >= cc.father._showdate(1,cc.father.range.start).getTime() && _td_e.getTime() < cc.father._showdate(1,cc.father.range.end).getTime())) {
 
                         if (i == (startweekday + (new Date()).getDate() - 1) &&
                             (new Date()).getFullYear() == cc.year &&

@@ -13,20 +13,20 @@
         mix = S.mix,
 
         scriptOnload = doc.createElement('script').readyState ?
-                       function(node, callback) {
-                           var oldCallback = node.onreadystatechange;
-                           node.onreadystatechange = function() {
-                               var rs = node.readyState;
-                               if (rs === 'loaded' || rs === 'complete') {
-                                   node.onreadystatechange = null;
-                                   oldCallback && oldCallback();
-                                   callback.call(this);
-                               }
-                           };
-                       } :
-                       function(node, callback) {
-                           node.addEventListener('load', callback, false);
-                       },
+            function(node, callback) {
+                var oldCallback = node.onreadystatechange;
+                node.onreadystatechange = function() {
+                    var rs = node.readyState;
+                    if (rs === 'loaded' || rs === 'complete') {
+                        node.onreadystatechange = null;
+                        oldCallback && oldCallback();
+                        callback.call(this);
+                    }
+                };
+            } :
+            function(node, callback) {
+                node.addEventListener('load', callback, false);
+            },
 
         RE_CSS = /\.css(?:\?|$)/i,
         loader;
@@ -491,7 +491,17 @@
                 }
             }
         }
+        /**
+         * 一定要正则化，防止出现 ../ 等相对路径
+         */
+        if (!startsWith(base, "/") && !startsWith(base, "http://") && !startsWith(base, "https://")) {
+            base = window.location.href.replace(/[^/]*$/, '') + base;
+        }
         return base;
+    }
+
+    function startsWith(str, prefix) {
+        return str.lastIndexOf(prefix, 0) == 0;
     }
 
     /**

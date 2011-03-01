@@ -1,5 +1,5 @@
 /*
-Copyright 2010, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -97,7 +97,7 @@ KISSY.add('imagezoom', function(S, undefined) {
                 return v;
             }
         },
-        
+
         /**
          * 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值
          * @type {Array.<number>}
@@ -299,22 +299,16 @@ KISSY.add('imagezoom', function(S, undefined) {
             Event.on(self.image, 'mouseenter', function(ev) {
                 if (!self.get(HAS_ZOOM)) return;
 
-                self._setEv(ev);
-                Event.on(doc.body, MOUSEMOVE, self._setEv, self);
-
                 timer = S.later(function() {
+                    self._setEv(ev);
                     if (!self.viewer) {
                         self._createViewer();
                     }
                     self.show();
-                }, 300); // 300 是感觉值，不立刻触发，同时要尽量让动画流畅
+                }, 50); // 100 是感觉值，不立刻触发，同时要尽量让动画流畅
             });
 
             Event.on(self.image, 'mouseleave', function() {
-                if (!self.get(HAS_ZOOM)) return;
-
-                Event.remove(doc.body, MOUSEMOVE, self._setEv);
-
                 if (timer) {
                     timer.cancel();
                     timer = undefined;
@@ -422,7 +416,7 @@ KISSY.add('imagezoom', function(S, undefined) {
                 region = self._imgRegion, alignToRegion = self._alignToRegion || region,
                 zoomSize = self.get(ZOOM_SIZE), offset = self.get(OFFSET),
                 left = alignToRegion.left + offset[0], top = alignToRegion.top + offset[1],
-                lensWidth, lensHeight, width, height;
+                width, height;
 
             self._setLensSize(width = zoomSize[0], height = zoomSize[1]);
 
@@ -479,13 +473,19 @@ KISSY.add('imagezoom', function(S, undefined) {
          * 鼠标移动时, 更新放大区域的显示
          * @private
          */
-        _onMouseMove: function() {
+        _onMouseMove: function(ev) {
             var self = this,
-                lens = self.lens, ev = self._ev,
+                lens = self.lens,
                 region = self._imgRegion,
                 rl = region.left, rt = region.top,
                 rw = region.width, rh = region.height,
                 bigImageSize = self._bigImageSize, lensOffset;
+
+            if (ev) {
+                self._setEv(ev);
+            } else {
+                ev = self._ev;
+            }
 
             if (ev.pageX > rl && ev.pageX < rl + rw &&
                 ev.pageY > rt && ev.pageY < rt + rh) {
@@ -685,7 +685,7 @@ KISSY.add('imagezoom', function(S, undefined) {
          */
         refreshRegion: function() {
             this._getAlignTo();
-            this._renderUI();
+            this._ready();
 
             // 更新位置标志
             this._refresh = true;
