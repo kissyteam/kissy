@@ -33,17 +33,21 @@ KISSY.add("menu/submenu", function(S, UIBase, MenuItem, SubMenuRender) {
                 parentMenu.on("hide", function() {
                     if (self.get("menu")) self.get("menu").hide();
                 });
-
-                var menu = this.get("menu");
-
-                //子菜单选中后也要通知父级菜单
-                //不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
-                // 单个 menu 来看可能 selectedItem没有变化
-                menu.on("menuItemSelected", function() {
-                    parentMenu.set("selectedItem", menu.get("selectedItem"));
-                    parentMenu.fire("menuItemSelected");
-                });
             }
+
+            var menu = this.get("menu");
+
+            //子菜单选中后也要通知父级菜单
+            //不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
+            // 单个 menu 来看可能 selectedItem没有变化
+            menu.on("menuItemSelected", function() {
+                parentMenu.set("selectedItem", menu.get("selectedItem"));
+                parentMenu.fire("menuItemSelected");
+            });
+
+
+            //!TODO
+            //parentMenu 的 aria-activedescendant 同步 menu 的 aria-activedescendant
         },
 
         _handleMouseEnter:function() {

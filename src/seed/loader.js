@@ -164,17 +164,40 @@
                     if (mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
                 });
                 mix(mods, name);
+                return self;
             }
             // S.add(name[, fn[, config]])
-            else if (S['isString'](name)) {
+            if (S['isString'](name)) {
+
+                var host;
+                if (config && (host = config.host)) {
+                    var hostMod = mods[host];
+                    if (!hostMod) {
+                        S.error("module " + host + " can not be found !");
+                        return self;
+                    }
+                    if (self.__isAttached(host)) {
+                        def.apply(self);
+                    } else {
+                        hostMod.fns.push(def);
+                    }
+                    return self;
+                }
+
                 self.__registerModule(name, def, config);
+                // 和 1.1.7 以前版本保持兼容，不得已而为之
+                var mod = mods[name];
+                if (self.__isAttached(mod.requires)) {
+                    self.__attachMod(mod);
+                }
+                return self;
             }
-            //S.add(fn,config);
-            else if (S.isFunction(name)) {
+            // S.add(fn,config);
+            if (S.isFunction(name)) {
                 config = def;
                 def = name;
                 if (oldIE) {
-                    //15 ms 内，从缓存读取的
+                    // 15 ms 内，从缓存读取的
                     if (((+new Date()) - self.__startLoadTime) < 15) {
                         S.log("old_ie 从缓存中读取");
                         if (name = self.__startLoadModuleName) {
@@ -192,13 +215,17 @@
                     self.__startLoadTime = 0;
                 } else {
                     S.log("标准浏览器等load时再关联模块名");
-                    //其他浏览器 onload 时，关联模块名与模块定义
+                    // 其他浏览器 onload 时，关联模块名与模块定义
                     self.__currentModule = {
                         def:def,
                         config:config
                     };
                 }
+
+                return self;
             }
+
+            S.error("invalid format for KISSY.add !");
             return self;
         },
 
@@ -250,11 +277,14 @@
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
             mix(mod, { name: name, status: LOADED });
 
-            if (mod.fn) {
+            if (mod.fns && mod.fns.length) {
                 S.log(name + " is defined more than once", "error");
                 S.error(name + " is defined more than once");
             }
-            mod.def = def;
+
+            //支持 host，一个模块多个 add factory
+            mod.fns = mod.fns || [];
+            mod.fns.push(def);
             mix((mods[name] = mod), config);
         },
 
@@ -503,14 +533,18 @@
 
         __attachMod: function(mod) {
             var self = this,
-                def = mod.def;
+                defs = mod.fns;
 
-            if (def) {
-                if (S.isFunction(def)) {
-                    mod.value = def.apply(self, self.__getModules(mod['requires']));
-                } else {
-                    mod.value = def;
-                }
+            if (defs) {
+                S.each(defs, function(def) {
+                    var value;
+                    if (S.isFunction(def)) {
+                        value = def.apply(self, self.__getModules(mod['requires']));
+                    } else {
+                        value = def;
+                    }
+                    mod.value = mod.value || value;
+                });
             }
 
             mod.status = ATTACHED;
@@ -772,7 +806,9 @@
 
 /**
  * 2011-01-04 chengyu<yiminghe@gmail.com> refactor:
+ *
  * adopt requirejs :
+ *
  * 1. packages(cfg) , cfg :{
  *    name : 包名，用于指定业务模块前缀
  *    path: 前缀包名对应的路径
@@ -790,7 +826,14 @@
  *
  * 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
  *
- *
  * demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
+ *
+ * 2011-03-01 yiminghe@gmail.com note:
+ *
+ * compatibility
+ *
+ * 1. 保持兼容性，不得已而为之
+ *      支持 { host : }
+ *      如果 requires 都已经 attached，支持 add 后立即 attach
  */
 
