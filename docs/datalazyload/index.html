@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8"/>
 <title>datalazyload - KISSY Docs</title>
-<link rel="stylesheet" href="../assets/base-min.css" />
-<link rel="stylesheet" href="../assets/docs.css" />
+<link rel="stylesheet" href="../assets/base-min.css"/>
+<link rel="stylesheet" href="../assets/docs.css"/>
 </head>
 <body class="w866">
 <div id="header">
-    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74" /></a>
+    <a class="logo" href="../index.html"><img src="../assets/logo.png" alt="KISSY" width="138" height="74"/></a>
     <p class="rel-nav">
         <a href="http://github.com/kissyteam/kissy/tree/master/src/datalazyload/">src files</a>
     </p>
@@ -23,18 +23,93 @@
 
             <div class="section">
                 <p>如何调用呢，只需要如下简单的代码：</p>
-<pre class="example-code"><code>
-KISSY.ready(function(S) {
-    S.DataLazyload( { mod: 'auto' } );
-});</code></pre>
+                <pre class="example-code"><code>
+                    KISSY.ready(function(S) {
+                        S.DataLazyload( { mod: 'auto' } );
+                    });
+                </code></pre>
                 <p>这样，页面加载时就会自动延迟所有图片的下载，以及延迟特定 textarea 里的 html 渲染。</p>
                 <p class="tips">具体配置参数，推荐看下源码的开头部分：<a href="http://github.com/kissyteam/kissy/blob/master/src/datalazyload/datalazyload.js">datalazyload.js</a>. 相关注意事项，推荐阅读源码最后的注释。推荐采用 manual 模式，这样获得的效果最好。</p>
             </div>
-            
+
+            <div class="section">
+
+                <h1>
+                    <p>
+                        自动模式与手动模式讨论
+                    </p>
+                </h1>
+                
+                <pre class="example-code"><code>
+                    var dataLazyload =DataLazyload({
+                        placeholder : "占位.png"//不设为空
+                        mod:'auto'//默认 manual 手动模式
+                    });
+                </code></pre>
+
+                <h2>
+                    <p>
+                        自动模式：
+                    </p>
+                </h2>
+<pre class="example-code"><code>
+    &lt;img src="xx.png"/&gt;
+</code></pre>
+                <p>首先把当前视窗外的 img 的 src 保存在自定义属性中，并将src 替换为 placeholder (不指定为空)，当滚动导致该图片出现在当前视窗时将 src 设置已经保存的真实值。
+                </p>
+                <p>讨论：</p>
+                <ol>
+                    <li>在 IE,Firefox 下不尽完美。脚本运行时，有部分图片已经与服务器建立链接，导致这部分图片 abort 掉，再在滚动时延迟加载，反而增加了链接数。
+                    </li>
+                    <li> 在 Safari 和 Chrome 下，因为 webkit 内核 bug，导致无法 abort 掉下载。该
+                        脚本完全无用。
+                    </li>
+                    <li>当 js 禁用时图片仍然可以全部显示。</li>
+                </ol>
+                <h2>
+                    <p>
+                        手动模式：
+                    </p>
+                </h2>
+
+                <pre class="example-code"><code>
+                    &lt;img data-ks-lazyload="xx.jpg"//&gt;
+                </code></pre>
+                <p>
+                    可以不设置 img 的 src 属性，但是必须设置 img 的 data-ks-lazyload 自定义属性为真实图片地址，当滚动导致该图片出现在当前视窗时会将 src 设置为真实地址。
+                </p>
+                <p>讨论：</p>
+                <ol>
+                    <li> 在任何浏览器下都可以完美实现，不增加额外http连接数。
+                    </li>
+                    <li>缺点是不渐进增强，无 JS 时，图片不能展示。</li>
+                </ol>
+
+                <h2>
+                    <p>
+                        textarea 延迟加载
+                    </p>
+                </h2>
+
+                <p>这种情况下和模式的手动自动没关系:</p>
+                <ol>
+                    <li>页面中需要延迟的 dom 节点，放在
+<pre class="example-code"><code>
+    &lt;textarea class='ks-datalazyload invisible'/&gt;dom code&lt;/textarea/&gt;
+</code></pre>
+                        里。可以添加 hidden 等 class, 但建议用 invisible (visiblity:hidden), 并设定 height = '实际高度'，这样可以保证滚动时无缝连接。 当滚动导致该 textarea 出现在当前视窗时会将该 textarea 内的 html 添加到新生成的 div 中，并用新生成的 di v替换该 textarea .
+                    </li>
+                    <li> 延迟 callback 约定：dataLazyload.addCallback(el, fn) 表示当 el 即将出现时，触发 fn.
+                    </li>
+                    <li> 所有操作都是最多触发一次，比如来回拖动滚动条时，只有 el 第一次出现时会触发 fn 回调。
+                    </li>
+                </ol>
+            </div>
+
             <div class="section notes">
                 <p>讲起来有些枯燥，来看下示例吧，相信你一看就能明白：
-                <br>manual 模式：<a href="../../src/datalazyload/test.html">test.html</a>
-                <br>auto 模式：<a href="../../src/datalazyload/test-auto.html">test-auto.html</a></p>
+                    <br>manual 模式：<a href="../../src/datalazyload/test.html">test.html</a>
+                    <br>auto 模式：<a href="../../src/datalazyload/test-auto.html">test-auto.html</a></p>
             </div>
         </div>
     </div>
