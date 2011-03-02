@@ -163,19 +163,20 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
         __bindUI: function() {
             var self = this;
 
-            self.on('show', function() {
-                if (self._isInner) {
-                    self._anim(0.4, 42);
+            self.on('afterVisibleChange', function(isVisible) {
+                if (isVisible) {
+                    if (self._isInner) {
+                        self._anim(0.4, 42);
+                    }
+
+                    body.on('mousemove', self._mouseMove, self);
+
+                } else {
+                    hide(self.lens);
+                    body.detach('mousemove', self._mouseMove, self);
                 }
-
-                body.on('mousemove', self._mouseMove, self);
             });
 
-            self.on('hide', function() {
-                hide(self.lens);
-
-                body.detach('mousemove', self._mouseMove, self);
-            });
         },
         __syncUI: function() {
         },
@@ -286,7 +287,6 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
         _uiSetCurrentMouse: function(ev) {
             var self = this,
                 lt;
-
             if (!self.bigImage || self._animTimer) return;
 
             // 更新 lens 位置
