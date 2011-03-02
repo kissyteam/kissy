@@ -40,15 +40,12 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             },
             selected:{
                 value:false
-            },
-            view:{
-                valueFn:function() {
-                    return new MenuItemRender();
-                }
             }
         }
     });
 
+    MenuItem.DefaultRender = MenuItemRender;
+    
     return MenuItem;
 }, {
     requires:['uibase','component','./menuitemrender']

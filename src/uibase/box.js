@@ -14,7 +14,12 @@ KISSY.add('uibase/box', function(S) {
         width:{},
         height:{},
         elCls:{},
-        elStyle:{}
+        elStyle:{},
+        el:{
+            getter:function() {
+                return this.get("view").get("el");
+            }
+        }
     };
 
 

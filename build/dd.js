@@ -1,5 +1,5 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -353,10 +353,14 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
     return Draggable;
 
 }, { requires:["ua","node","base","dd/ddm"] });
-KISSY.add("dd",function(S,Draggable){
-    return {
+KISSY.add("dd", function(S, Draggable) {
+    var dd = {
         Draggable:Draggable
     };
-},{
+
+    S.mix(S, dd);
+
+    return dd;
+}, {
     requires:["dd/draggable"]
 });

@@ -1,5 +1,5 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -132,7 +132,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 this._handleClick();
                 ev.preventDefault();
             } else {
-                view['_handleKeydown'](ev);
+                return view['_handleKeydown'](ev);
             }
         },
 
@@ -175,14 +175,38 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 }
             },
 
+            //转交给渲染层
+            //note1 : 兼容性考虑
+            //note2 : 调用者可以完全不需要接触渲染层
+            srcNode:{},
+
             //父组件
             parent:{},
 
             //渲染层
-            view:{},
+            view:{
+
+                valueFn:function() {
+                    // 逐层找默认渲染器
+                    var c = this.constructor,DefaultRender;
+                    while (c && !DefaultRender) {
+                        DefaultRender = c['DefaultRender'];
+                        c = c.superclass && c.superclass.constructor;
+                    }
+                    if (DefaultRender) {
+                        return new DefaultRender({
+                            srcNode:this.get("srcNode"),
+                            render:this.get("render")
+                        });
+                    }
+                }
+
+            },
 
             //是否禁用
-            disabled:{}
+            disabled:{
+                value:false
+            }
         }
     });
 }, {
@@ -196,8 +220,12 @@ KISSY.add("component/render", function(S, UIBase) {
 
     }, {
         ATTRS:{
+            //从 maskup 中渲染
+            srcNode:{},
             //是否禁用
-            disabled:{}
+            disabled:{
+                value:false
+            }
         }
     });
 }, {

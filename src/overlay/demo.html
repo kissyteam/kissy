@@ -3,18 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>S.Overlay Demo</title>
-<script src="../seed/kissy.js"></script>
-<script src="../seed/lang.js"></script>
-<script src="../seed/web.js"></script>
-<script src="../seed/loader.js"></script>
-<script src="../../build/ua.js"></script>
-<script src="../../build/node.js"></script>
-<script src="../../build/dom.js"></script>
-<script src="../../build/event.js"></script>
-<script src="../../build/base.js"></script>
-<script src="../../build/json.js"></script>
-<script src="../../build/dd.js"></script>
-<script src="../../build/resizable.js"></script>
+<script src="../../build/kissy.js"></script>
 <script src="../../build/component.js"></script>
 <script src="../../build/uibase.js"></script>
 <script src="../../build/overlay.js"></script>
@@ -73,7 +62,7 @@
         S.ready(function(S) {
 
             var popup = new Overlay({
-                view:new Overlay.Render({srcNode:Node.one("#popup1")}),
+                srcNode:Node.one("#popup1"),
                 width: 300,
                 height: 200,
                 align: {
@@ -114,7 +103,7 @@
         S.ready(function(S) {
 
             var popup = new Overlay({
-                 view:new Overlay.Render({srcNode:Node.one("#popup2")}),
+                srcNode:Node.one("#popup2"),
                 width: 300,
                 height: 200,
                 align: {
@@ -266,7 +255,7 @@
 
         S.ready(function(S) {
             var d = new Dialog({
-                view:new Dialog.Render({srcNode:Node.one("#markupDialog")}),
+                srcNode:Node.one("#markupDialog"),
                 width:400
             });
 

@@ -7,6 +7,8 @@ KISSY.add("component/render", function(S, UIBase) {
 
     }, {
         ATTRS:{
+            //从 maskup 中渲染
+            srcNode:{},
             //是否禁用
             disabled:{
                 value:false

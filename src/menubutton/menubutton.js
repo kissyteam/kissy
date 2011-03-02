@@ -2,7 +2,7 @@
  * combination of menu and button ,similar to native select
  * @author:yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubutton", function(S, UIBase, Button) {
+KISSY.add("menubutton/menubutton", function(S, UIBase, Button, MenuButtonRender) {
 
     var MenuButton = UIBase.create(Button, [], {
 
@@ -121,7 +121,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Button) {
         }
     });
 
+    MenuButton.DefaultRender = MenuButtonRender;
+
     return MenuButton;
 }, {
-    requires:["uibase","button"]
+    requires:["uibase","button","./menubuttonrender"]
 });

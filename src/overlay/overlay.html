@@ -46,10 +46,10 @@
 <button id="hide2">
     hide from markup
 </button>
-<script src="../../build/seed.js"></script>
-<script src="../../build/core.js"></script>
-<script src="../../build/uibase.js"></script>
+<script src="../../build/kissy.js"></script>
 <script src="../../build/component.js"></script>
+<script src="../../build/uibase.js"></script>
+
 <script src="overlay.js"></script>
 <script src="overlayrender.js"></script>
 <script>
@@ -110,9 +110,8 @@
                     });
 
                     var o2 = new Overlay({
-                        view:new OverlayRender({
-                            srcNode:Node.one("#markup")
-                        }),
+
+                        srcNode:Node.one("#markup"),
                         elStyle:{
                             border:"1px solid black"
                         },

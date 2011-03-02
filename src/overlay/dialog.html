@@ -67,8 +67,8 @@
 </button>
 
 <script src="../../build/kissy.js"></script>
+<script src="../../build/component.js"></script>
 <script src="../../build/uibase.js"></script>
-
 <script src="overlay.js"></script>
 <script src="overlayrender.js"></script>
 <script src="../dd/ddm.js"></script>
@@ -79,9 +79,7 @@
 <script>
     KISSY.ready(function(S) {
 
-        KISSY.use("node,overlay/dialog,overlay/dialogrender", function(S, Node,
-                                                                       Dialog,
-                DialogRender) {
+        KISSY.use("node,overlay/dialog,overlay/dialogrender", function(S, Node, Dialog, DialogRender) {
 
 
             window.o = new Dialog({
@@ -125,7 +123,7 @@
 
 
             Node.one("#show1").on("click", function() {
-                
+
                 o.show();
             });
 
@@ -134,7 +132,7 @@
             });
 
             var o2 = new Dialog({
-                view : new DialogRender({srcNode:Node.one("#markup")}),
+                srcNode:Node.one("#markup"),
                 width:200,
                 autoRender:true
             });

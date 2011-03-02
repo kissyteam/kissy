@@ -1,4 +1,5 @@
 KISSY.add("switchable",function(S,Switchable){
+    S.Switchable=Switchable
     return Switchable;
 },{
     requires:["switchable/base",

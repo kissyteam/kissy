@@ -10,10 +10,19 @@ KISSY.add("uibase/stdmod", function(S) {
 
     StdMod.ATTRS = {
         header:{
+            getter:function() {
+                return this.get("view").get("header");
+            }
         },
         body:{
+            getter:function() {
+                return this.get("view").get("body");
+            }
         },
         footer:{
+            getter:function() {
+                return this.get("view").get("footer");
+            }
         },
         bodyStyle:{
         },
