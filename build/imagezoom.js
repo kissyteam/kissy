@@ -46,6 +46,12 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
     function require(s) {
         return S.require("uibase/" + s);
     }
+    function show(obj) {
+        obj && obj.show();
+    }
+    function hide(obj) {
+        obj && obj.hide();
+    }
 
     return UIBase.create([require("boxrender"),
         require("contentboxrender"),
@@ -109,27 +115,36 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
                 timer;
 
             self.image.on('mouseenter', function(ev) {
-                if (!self.get('hasZoom')) return;
+                    if (!self.get('hasZoom')) return;
 
-                timer = S.later(function() {
-                self.set('currentMouse', ev);
-                    self.show();
-                    timer = undefined;
+                    timer = S.later(function() {
+                        self.set('currentMouse', ev);
+                        self.show();
+                        timer = undefined;
 
-                }, 100);
-            }).on('mouseleave', function() {
-                if (timer) {
-                    timer.cancel();
-                    timer = undefined;
+                    }, 50);
+                }).on('mouseleave', function() {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
+            });
+
+            self.on('afterVisibleChange', function(ev) {
+                var isVisible = ev.newVal;
+                if (isVisible) {
+                    hide(self.icon);
+                } else {
+                    show(self.icon);
                 }
             });
         },
 
         _uiSetHasZoom: function(v) {
             if (v) {
-                this.icon && this.icon.show();
+                show(this.icon);
             } else {
-                this.icon && this.icon.hide();
+                hide(this.icon);
             }
         }
     },
@@ -346,10 +361,10 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
             
             if (self._isInner) {
                 // inner 位置强制修改
-                /*self.set('align', {
+                self.set('align', {
                     node: self.image,
                     points: ['cc', 'cc']
-                });*/
+                });
                 self._bigImageCopy = new Node('<img src="' + self.image.attr('src') + '"  />').css('position', 'absolute')
                     .width(self.get('bigImageWidth')).height(self.get('bigImageHeight')).prependTo(self.viewer);
             }
@@ -360,8 +375,10 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
 
             self.viewer.appendTo(self.get("el"));
 
+            self.loading();
             // 大图加载完毕后更新显示区域
             imgOnLoad(bigImage, function() {
+                self.unloading();
                 self._setLensSize();
 
                 self.set('bigImageWidth', bigImage.width());
@@ -371,23 +388,21 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
         __bindUI: function() {
             var self = this;
 
-            self.on('show', function() {
-                hide(self.icon);
+            self.on('afterVisibleChange', function(ev) {
+                var isVisible = ev.newVal;
+                if (isVisible) {
+                    if (self._isInner) {
+                        self._anim(0.4, 42);
+                    }
 
-                if (self._isInner) {
-                    self._anim(0.4, 42);
+                    body.on('mousemove', self._mouseMove, self);
+
+                } else {
+                    hide(self.lens);
+                    body.detach('mousemove', self._mouseMove, self);
                 }
-
-                body.on('mousemove', self._mouseMove, self);
             });
 
-
-            self.on('hide', function() {
-                hide(self.lens);
-                show(self.icon);
-
-                body.detach('mousemove', self._mouseMove, self);
-            });
         },
         __syncUI: function() {
         },
@@ -498,7 +513,6 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
         _uiSetCurrentMouse: function(ev) {
             var self = this,
                 lt;
-
             if (!self.bigImage || self._animTimer) return;
 
             // 更新 lens 位置
