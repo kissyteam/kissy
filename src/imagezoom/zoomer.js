@@ -163,7 +163,8 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
         __bindUI: function() {
             var self = this;
 
-            self.on('afterVisibleChange', function(isVisible) {
+            self.on('afterVisibleChange', function(ev) {
+                var isVisible = ev.newVal;
                 if (isVisible) {
                     if (self._isInner) {
                         self._anim(0.4, 42);
