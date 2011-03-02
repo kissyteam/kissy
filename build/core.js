@@ -3983,9 +3983,10 @@ KISSY.add('json', function (S, JSON) {
  * @module  ajax
  * @author  拔赤<lijing00333@163.com>
  */
-KISSY.add('ajax/impl', function(S, EventTarget, S_JSON, undef) {
+KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
 
     var win = window,
+        EventTarget = Event.Target,
         noop = function() {
         },
         GET = 'GET', POST = 'POST',
@@ -4005,22 +4006,22 @@ KISSY.add('ajax/impl', function(S, EventTarget, S_JSON, undef) {
             async: true,
             data: null,
             xhr: win.ActiveXObject ?
-                 function() {
-                     if (win.XmlHttpRequest) {
-                         try {
-                             return new win.XMLHttpRequest();
-                         } catch(xhrError) {
-                         }
-                     }
+                function() {
+                    if (win.XmlHttpRequest) {
+                        try {
+                            return new win.XMLHttpRequest();
+                        } catch(xhrError) {
+                        }
+                    }
 
-                     try {
-                         return new win.ActiveXObject('Microsoft.XMLHTTP');
-                     } catch(activeError) {
-                     }
-                 } :
-                 function() {
-                     return new win.XMLHttpRequest();
-                 },
+                    try {
+                        return new win.ActiveXObject('Microsoft.XMLHTTP');
+                    } catch(activeError) {
+                    }
+                } :
+                function() {
+                    return new win.XMLHttpRequest();
+                },
             accepts: {
                 xml: 'application/xml, text/xml',
                 html: 'text/html',
@@ -5326,6 +5327,10 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         Node:Node,
         JSON:JSON,
         Ajax:Ajax,
+        IO:Ajax,
+        ajax:Ajax,
+        io:Ajax,
+        jsonp:Ajax.jsonp,
         Anim:Anim,
         Base:Base,
         Cookie:Cookie,
