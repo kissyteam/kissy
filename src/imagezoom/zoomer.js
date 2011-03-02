@@ -138,10 +138,10 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
             
             if (self._isInner) {
                 // inner 位置强制修改
-                /*self.set('align', {
+                self.set('align', {
                     node: self.image,
                     points: ['cc', 'cc']
-                });*/
+                });
                 self._bigImageCopy = new Node('<img src="' + self.image.attr('src') + '"  />').css('position', 'absolute')
                     .width(self.get('bigImageWidth')).height(self.get('bigImageHeight')).prependTo(self.viewer);
             }
@@ -163,23 +163,20 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
         __bindUI: function() {
             var self = this;
 
-            self.on('show', function() {
-                hide(self.icon);
+            self.on('afterVisibleChange', function(isVisible) {
+                if (isVisible) {
+                    if (self._isInner) {
+                        self._anim(0.4, 42);
+                    }
 
-                if (self._isInner) {
-                    self._anim(0.4, 42);
+                    body.on('mousemove', self._mouseMove, self);
+
+                } else {
+                    hide(self.lens);
+                    body.detach('mousemove', self._mouseMove, self);
                 }
-
-                body.on('mousemove', self._mouseMove, self);
             });
 
-
-            self.on('hide', function() {
-                hide(self.lens);
-                show(self.icon);
-
-                body.detach('mousemove', self._mouseMove, self);
-            });
         },
         __syncUI: function() {
         },
@@ -290,7 +287,6 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
         _uiSetCurrentMouse: function(ev) {
             var self = this,
                 lt;
-
             if (!self.bigImage || self._animTimer) return;
 
             // 更新 lens 位置

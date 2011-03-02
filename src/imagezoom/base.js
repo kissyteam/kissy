@@ -10,6 +10,12 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
     function require(s) {
         return S.require("uibase/" + s);
     }
+    function show(obj) {
+        obj && obj.show();
+    }
+    function hide(obj) {
+        obj && obj.hide();
+    }
 
     return UIBase.create([require("boxrender"),
         require("contentboxrender"),
@@ -73,27 +79,34 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
                 timer;
 
             self.image.on('mouseenter', function(ev) {
-                if (!self.get('hasZoom')) return;
+                    if (!self.get('hasZoom')) return;
 
-                timer = S.later(function() {
-                self.set('currentMouse', ev);
-                    self.show();
-                    timer = undefined;
+                    timer = S.later(function() {
+                        self.set('currentMouse', ev);
+                        self.show();
+                        timer = undefined;
 
-                }, 100);
-            }).on('mouseleave', function() {
-                if (timer) {
-                    timer.cancel();
-                    timer = undefined;
-                }
+                    }, 50);
+                }).on('mouseleave', function() {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
             });
+
+            self.on('show', function() {
+                hide(self.icon);
+            });
+            self.on('hide', function() {
+                show(self.icon);
+            })
         },
 
         _uiSetHasZoom: function(v) {
             if (v) {
-                this.icon && this.icon.show();
+                show(this.icon);
             } else {
-                this.icon && this.icon.hide();
+                hide(this.icon);
             }
         }
     },
