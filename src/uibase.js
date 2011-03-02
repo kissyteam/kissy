@@ -1,11 +1,11 @@
-KISSY.add("uibase", function(S, UIBase, Align, Box,BoxRender, Close, CloseRender, Contrain, Contentbox,ContentboxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
+KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Contrain, Contentbox, ContentboxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
     Close.Render = CloseRender;
     Loading.Render = LoadingRender;
     Mask.Render = MaskRender;
     Position.Render = PositionRender;
     StdMod.Render = StdModRender;
-    Box.Render=BoxRender;
-    Contentbox.Render=ContentboxRender;
+    Box.Render = BoxRender;
+    Contentbox.Render = ContentboxRender;
     S.mix(UIBase, {
         Align:Align,
         Box:Box,
@@ -22,6 +22,7 @@ KISSY.add("uibase", function(S, UIBase, Align, Box,BoxRender, Close, CloseRender
         Resize:Resize,
         StdMod:StdMod
     });
+    S.UIBase = UIBase;
     return UIBase;
 }, {
     requires:["uibase/base",

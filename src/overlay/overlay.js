@@ -7,23 +7,18 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender) {
         return S.require("uibase/" + s);
     }
 
-    return UIBase.create(Component.ModelControl, [
+    var Overlay= UIBase.create(Component.ModelControl, [
         require("box"),
         require("contentbox"),
         require("position"),
         require("loading"),
         require("align"),
         require("resize"),
-        require("mask")], {
-    }, {
-        ATTRS:{
-            view:{
-                valueFn:function() {
-                    return new OverlayRender();
-                }
-            }
-        }
-    });
+        require("mask")]);
+
+    Overlay.DefaultRender=OverlayRender;
+
+    return Overlay;
 }, {
     requires:['uibase','component','./overlayrender']
 });

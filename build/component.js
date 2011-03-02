@@ -187,7 +187,12 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             view:{
 
                 valueFn:function() {
-                    var DefaultRender = this.constructor['DefaultRender'];
+                    // 逐层找默认渲染器
+                    var c = this.constructor,DefaultRender;
+                    while (c && !DefaultRender) {
+                        DefaultRender = c['DefaultRender'];
+                        c = c.superclass && c.superclass.constructor;
+                    }
                     if (DefaultRender) {
                         return new DefaultRender({
                             srcNode:this.get("srcNode"),

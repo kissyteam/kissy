@@ -8,7 +8,7 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
         return S.require("uibase/" + s);
     }
 
-    return UIBase.create(Overlay, [
+    var Dialog = UIBase.create(Overlay, [
         require("stdmod"),
         require("close"),
         require("drag"),
@@ -20,16 +20,11 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
             //设置值，drag-ext 绑定时用到
             self.set("handlers", [self.get("view").get("header")]);
         }
-    }, {
-        ATTRS:{
-            view:{
-                valueFn:function() {
-                    return new DialogRender();
-                }
-            }
-        }
     });
 
+    Dialog.DefaultRender = DialogRender;
+
+    return Dialog;
 
 }, {
     requires:[ "overlay/overlay","uibase",'overlay/dialogrender']

@@ -1178,10 +1178,7 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
         show: function() {
             this.render();
             this.set("visible", true);
-        },
-
-        _realShow: function() {
-            this.set("visible", true);
+            this.fire("show");
         },
 
         /**
@@ -1189,6 +1186,7 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
          */
         hide: function() {
             this.set("visible", false);
+            this.fire("hide");
         }
 
     };
@@ -1335,10 +1333,19 @@ KISSY.add("uibase/stdmod", function(S) {
 
     StdMod.ATTRS = {
         header:{
+            getter:function() {
+                return this.get("view").get("header");
+            }
         },
         body:{
+            getter:function() {
+                return this.get("view").get("body");
+            }
         },
         footer:{
+            getter:function() {
+                return this.get("view").get("footer");
+            }
         },
         bodyStyle:{
         },
@@ -1468,14 +1475,14 @@ KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
 
 }, {
     requires:['node']
-});KISSY.add("uibase", function(S, UIBase, Align, Box,BoxRender, Close, CloseRender, Contrain, Contentbox,ContentboxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
+});KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Contrain, Contentbox, ContentboxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
     Close.Render = CloseRender;
     Loading.Render = LoadingRender;
     Mask.Render = MaskRender;
     Position.Render = PositionRender;
     StdMod.Render = StdModRender;
-    Box.Render=BoxRender;
-    Contentbox.Render=ContentboxRender;
+    Box.Render = BoxRender;
+    Contentbox.Render = ContentboxRender;
     S.mix(UIBase, {
         Align:Align,
         Box:Box,
@@ -1492,6 +1499,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
         Resize:Resize,
         StdMod:StdMod
     });
+    S.UIBase = UIBase;
     return UIBase;
 }, {
     requires:["uibase/base",

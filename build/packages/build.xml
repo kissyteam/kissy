@@ -64,6 +64,7 @@
             <path path="../dd.js"/>
             <path path="../resizable.js"/>
             <path path="../uibase.js"/>
+            <path path="../component.js"/>
             <path path="../switchable.js"/>
             <path path="../overlay.js"/>
             <path path="../suggest.js"/>

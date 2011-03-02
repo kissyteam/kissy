@@ -47,7 +47,7 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender) {
         return S.require("uibase/" + s);
     }
 
-    return UIBase.create(Component.ModelControl, [
+    var Overlay= UIBase.create(Component.ModelControl, [
         require("box"),
         require("contentbox"),
         require("position"),
@@ -55,15 +55,11 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender) {
         require("align"),
         require("resize"),
         require("mask")], {
-    }, {
-        ATTRS:{
-            view:{
-                valueFn:function() {
-                    return new OverlayRender();
-                }
-            }
-        }
     });
+
+    Overlay.DefaultRender=OverlayRender;
+
+    return Overlay;
 }, {
     requires:['uibase','component','./overlayrender']
 });KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender) {
@@ -87,7 +83,7 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
         return S.require("uibase/" + s);
     }
 
-    return UIBase.create(Overlay, [
+    var Dialog = UIBase.create(Overlay, [
         require("stdmod"),
         require("close"),
         require("drag"),
@@ -99,16 +95,11 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
             //设置值，drag-ext 绑定时用到
             self.set("handlers", [self.get("view").get("header")]);
         }
-    }, {
-        ATTRS:{
-            view:{
-                valueFn:function() {
-                    return new DialogRender();
-                }
-            }
-        }
     });
 
+    Dialog.DefaultRender = DialogRender;
+
+    return Dialog;
 
 }, {
     requires:[ "overlay/overlay","uibase",'overlay/dialogrender']
@@ -124,6 +115,8 @@ KISSY.add("overlay", function(S, O, OR, D, DR) {
     O.Render = OR;
     D.Render = DR;
     O.Dialog = D;
+    S.Overlay = O;
+    S.Dialog = D;
     return O;
 }, {
     requires:["overlay/overlay","overlay/overlayrender","overlay/dialog","overlay/dialogrender"]
