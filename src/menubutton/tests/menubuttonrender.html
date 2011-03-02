@@ -18,7 +18,7 @@
 
     li {
         padding: 5px;
-        border:1px solid white;
+        border: 1px solid white;
     }
 </style>
 </head>
@@ -94,16 +94,22 @@
 <script src="../../seed/web.js"></script>
 <script src="../../seed/loader.js"></script>
 <script src="../../../build/ua.js"></script>
-<script src="../../../build/node.js"></script>
 <script src="../../../build/dom.js"></script>
 <script src="../../../build/event.js"></script>
+<script src="../../../build/node.js"></script>
 <script src="../../../build/base.js"></script>
 <script src="../../../build/json.js"></script>
+<script src="../../core.js"></script>
+<script>
+   KISSY.use("core");
+</script>
 <script src="../../../build/uibase.js"></script>
-<script src="../../../build/overlay.js"></script>
-<script src="../../component.js"></script>
+
 <script src="../../component/modelcontrol.js"></script>
 <script src="../../component/render.js"></script>
+<script src="../../component.js"></script>
+
+<script src="../../../build/overlay.js"></script>
 <script src="../../button/base.js"></script>
 <script src="../../button/buttonrender.js"></script>
 <script src="../../button/nativerender.js"></script>
@@ -111,16 +117,21 @@
 <script src="../../button/customrender.js"></script>
 <script src="../../button.js"></script>
 
-<script src="../../menu.js"></script>
-<script src="../../menu/menu.js"></script>
-<script src="../../menu/menuitem.js"></script>
-<script src="../../menu/menurender.js"></script>
-<script src="../../menu/menuitemrender.js"></script>
-<script src="../../menu/submenu.js"></script>
-<script src="../../menu/submenurender.js"></script>
 
-<script src="../menubutton.js"></script>
+<script src="../../menu/menuitemrender.js"></script>
+<script src="../../menu/menuitem.js"></script>
+
+
+<script src="../../menu/submenurender.js"></script>
+<script src="../../menu/submenu.js"></script>
+
+<script src="../../menu/menurender.js"></script>
+<script src="../../menu/menu.js"></script>
+<script src="../../menu.js"></script>
+
 <script src="../menubuttonrender.js"></script>
+<script src="../menubutton.js"></script>
+
 
 <script>
     KISSY.use("node,menubutton/menubutton,menubutton/menubuttonrender,menu", function(S, Node, MenuButton, MenuButtonRender, Menu) {

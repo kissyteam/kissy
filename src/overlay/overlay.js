@@ -26,4 +26,4 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender) {
     });
 }, {
     requires:['uibase','component','./overlayrender']
-})
+});

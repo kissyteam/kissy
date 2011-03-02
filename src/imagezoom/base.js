@@ -17,13 +17,13 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
         obj && obj.hide();
     }
 
-    return UIBase.create([require("box"),
-        require("contentbox"),
-        require("position"),
-        require("loading"),
-        UA['ie'] == 6 ? require("shim") : null,
+    return UIBase.create([require("boxrender"),
+        require("contentboxrender"),
+        require("positionrender"),
+        require("loadingrender"),
+        UA['ie'] == 6 ? require("shimrender") : null,
         require("align"),
-        require("mask"),
+        require("maskrender"),
         Zoomer
     ], {
 

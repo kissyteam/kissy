@@ -1,23 +1,47 @@
 /**
  combined files : 
 
-D:\code\kissy_git\kissy\build\packages\..\ua.js
-D:\code\kissy_git\kissy\build\packages\..\dom.js
-D:\code\kissy_git\kissy\build\packages\..\event.js
-D:\code\kissy_git\kissy\build\packages\..\node.js
-D:\code\kissy_git\kissy\build\packages\..\json.js
-D:\code\kissy_git\kissy\build\packages\..\ajax.js
-D:\code\kissy_git\kissy\build\packages\..\anim.js
-D:\code\kissy_git\kissy\build\packages\..\base.js
-D:\code\kissy_git\kissy\build\packages\..\cookie.js
-D:\code\kissy_git\kissy\build\packages\..\core.js
+D:\code\kissy_git\kissy\tools\..\src\ua\base.js
+D:\code\kissy_git\kissy\tools\..\src\ua\extra.js
+D:\code\kissy_git\kissy\tools\..\src\ua.js
+D:\code\kissy_git\kissy\tools\..\src\dom\base.js
+D:\code\kissy_git\kissy\tools\..\src\dom\attr.js
+D:\code\kissy_git\kissy\tools\..\src\dom\class.js
+D:\code\kissy_git\kissy\tools\..\src\dom\create.js
+D:\code\kissy_git\kissy\tools\..\src\dom\data.js
+D:\code\kissy_git\kissy\tools\..\src\dom\insertion.js
+D:\code\kissy_git\kissy\tools\..\src\dom\offset.js
+D:\code\kissy_git\kissy\tools\..\src\dom\style.js
+D:\code\kissy_git\kissy\tools\..\src\dom\selector.js
+D:\code\kissy_git\kissy\tools\..\src\dom\style-ie.js
+D:\code\kissy_git\kissy\tools\..\src\dom\traversal.js
+D:\code\kissy_git\kissy\tools\..\src\dom.js
+D:\code\kissy_git\kissy\tools\..\src\event\object.js
+D:\code\kissy_git\kissy\tools\..\src\event\base.js
+D:\code\kissy_git\kissy\tools\..\src\event\target.js
+D:\code\kissy_git\kissy\tools\..\src\event\focusin.js
+D:\code\kissy_git\kissy\tools\..\src\event\mouseenter.js
+D:\code\kissy_git\kissy\tools\..\src\event.js
+D:\code\kissy_git\kissy\tools\..\src\node\node.js
+D:\code\kissy_git\kissy\tools\..\src\node\nodelist.js
+D:\code\kissy_git\kissy\tools\..\src\node\attach.js
+D:\code\kissy_git\kissy\tools\..\src\node.js
+D:\code\kissy_git\kissy\tools\..\src\json\json2.js
+D:\code\kissy_git\kissy\tools\..\src\json.js
+D:\code\kissy_git\kissy\tools\..\src\ajax\impl.js
+D:\code\kissy_git\kissy\tools\..\src\ajax.js
+D:\code\kissy_git\kissy\tools\..\src\anim\easing.js
+D:\code\kissy_git\kissy\tools\..\src\anim\base.js
+D:\code\kissy_git\kissy\tools\..\src\anim\node-plugin.js
+D:\code\kissy_git\kissy\tools\..\src\anim.js
+D:\code\kissy_git\kissy\tools\..\src\base\attribute.js
+D:\code\kissy_git\kissy\tools\..\src\base\base.js
+D:\code\kissy_git\kissy\tools\..\src\base.js
+D:\code\kissy_git\kissy\tools\..\src\cookie\base.js
+D:\code\kissy_git\kissy\tools\..\src\cookie.js
+D:\code\kissy_git\kissy\tools\..\src\core.js
 **/
 
-/*
-Copyright 2011, KISSY UI Library v1.1.7dev
-MIT Licensed
-build time: ${build.time}
-*/
 /**
  * @module  ua
  * @author  lifesinger@gmail.com
@@ -159,6 +183,7 @@ KISSY.add('ua/base', function() {
  *  - 3Q 大战后，360 去掉了 UA 信息中的 360 信息，需采用 res 方法去判断
  *
  */
+
 /**
  * @module  ua-extra
  * @author  gonghao<gonghao@ghsky.com>
@@ -213,17 +238,60 @@ KISSY.add('ua/extra', function(S, UA) {
 }, {
     requires:["ua/base"]
 });
+
 KISSY.add("ua", function(S,UA) {
     return UA;
 }, {
     requires:["ua/extra"]
 });
 
-/*
-Copyright 2011, KISSY UI Library v1.1.7dev
-MIT Licensed
-build time: ${build.time}
-*/
+/**
+ * @module  dom
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom/base', function(S, undefined) {
+
+    function nodeTypeIs(node, val) {
+        return node && node.nodeType === val;
+    }
+
+    return {
+
+        /**
+         * 是不是 element node
+         */
+        _isElementNode: function(elem) {
+            return nodeTypeIs(elem, 1);
+        },
+
+        /**
+         * 是不是 KISSY.Node
+         */
+        _isKSNode: function(elem) {
+            var Node = S.require("node/node");
+            return Node && nodeTypeIs(elem, Node.TYPE);
+        },
+
+        /**
+         * elem 为 window 时，直接返回
+         * elem 为 document 时，返回关联的 window
+         * elem 为 undefined 时，返回当前 window
+         * 其它值，返回 false
+         */
+        _getWin: function(elem) {
+            return (elem && ('scrollTo' in elem) && elem['document']) ?
+                elem :
+                nodeTypeIs(elem, 9) ?
+                    elem.defaultView || elem.parentWindow :
+                    elem === undefined ?
+                        window : false;
+        },
+
+        _nodeTypeIs: nodeTypeIs
+    };
+
+});
+
 /**
  * @module  dom-attr
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
@@ -560,52 +628,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
  *    property of an option 在 Safari 4 中已修复。
  *
  */
-/**
- * @module  dom
- * @author  lifesinger@gmail.com
- */
-KISSY.add('dom/base', function(S, undefined) {
 
-    function nodeTypeIs(node, val) {
-        return node && node.nodeType === val;
-    }
-
-    return {
-
-        /**
-         * 是不是 element node
-         */
-        _isElementNode: function(elem) {
-            return nodeTypeIs(elem, 1);
-        },
-
-        /**
-         * 是不是 KISSY.Node
-         */
-        _isKSNode: function(elem) {
-            var Node = S.require("node/node");
-            return Node && nodeTypeIs(elem, Node.TYPE);
-        },
-
-        /**
-         * elem 为 window 时，直接返回
-         * elem 为 document 时，返回关联的 window
-         * elem 为 undefined 时，返回当前 window
-         * 其它值，返回 false
-         */
-        _getWin: function(elem) {
-            return (elem && ('scrollTo' in elem) && elem['document']) ?
-                elem :
-                nodeTypeIs(elem, 9) ?
-                    elem.defaultView || elem.parentWindow :
-                    elem === undefined ?
-                        window : false;
-        },
-
-        _nodeTypeIs: nodeTypeIs
-    };
-
-});
 /**
  * @module  dom-class
  * @author  lifesinger@gmail.com
@@ -743,6 +766,7 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
  *   - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
  *   - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
  */
+
 /**
  * @module  dom-create
  * @author  lifesinger@gmail.com
@@ -1041,6 +1065,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
  *  - 支持更多 props
  *  - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
  */
+
 /**
  * @module  dom-data
  * @author  lifesinger@gmail.com
@@ -1178,6 +1203,7 @@ KISSY.add('dom/data', function(S, DOM,undefined) {
 },{
     requires:["dom/base"]
 });
+
 /**
  * @module  dom-insertion
  * @author  lifesinger@gmail.com
@@ -1255,6 +1281,7 @@ KISSY.add('dom/insertion', function(S, DOM) {
  *  - append/appendTo, prepend/prependTo, wrap/unwrap 放在 Node 里
  *
  */
+
 /**
  * @module  dom-offset
  * @author  lifesinger@gmail.com
@@ -1488,6 +1515,330 @@ KISSY.add('dom/offset', function(S, DOM, UA,undefined) {
  *  - 考虑是否实现 jQuery 的 position, offsetParent 等功能
  *  - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
  */
+
+/**
+ * @module  dom
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('dom/style', function(S, DOM, UA, undefined) {
+
+    var doc = document,
+        docElem = doc.documentElement,
+        STYLE = 'style',
+        FLOAT = 'float',
+        CSS_FLOAT = 'cssFloat',
+        STYLE_FLOAT = 'styleFloat',
+        WIDTH = 'width',
+        HEIGHT = 'height',
+        AUTO = 'auto',
+        DISPLAY = 'display',
+        NONE = 'none',
+        PARSEINT = parseInt,
+        RE_LT = /^(?:left|top)/,
+        RE_NEED_UNIT = /^(?:width|height|top|left|right|bottom|margin|padding)/i,
+        RE_DASH = /-([a-z])/ig,
+        CAMELCASE_FN = function(all, letter) {
+            return letter.toUpperCase();
+        },
+        EMPTY = '',
+        DEFAULT_UNIT = 'px',
+        CUSTOM_STYLES = { },
+        defaultDisplay = { };
+
+    S.mix(DOM, {
+
+        _CUSTOM_STYLES: CUSTOM_STYLES,
+
+        _getComputedStyle: function(elem, name) {
+            var val = '', d = elem.ownerDocument;
+
+            if (elem[STYLE]) {
+                val = d.defaultView.getComputedStyle(elem, null)[name];
+            }
+            return val;
+        },
+
+        /**
+         * Gets or sets styles on the matches elements.
+         */
+        css: function(selector, name, val) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.css(selector, k, name[k]);
+                }
+                return;
+            }
+
+            if (name.indexOf('-') > 0) {
+                // webkit 认识 camel-case, 其它内核只认识 cameCase
+                name = name.replace(RE_DASH, CAMELCASE_FN);
+            }
+            name = CUSTOM_STYLES[name] || name;
+
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var elem = DOM.get(selector), ret = '';
+
+                if (elem && elem[STYLE]) {
+                    ret = name.get ? name.get(elem) : elem[STYLE][name];
+
+                    // 有 get 的直接用自定义函数的返回值
+                    if (ret === '' && !name.get) {
+                        ret = fixComputedStyle(elem, name, DOM._getComputedStyle(elem, name));
+                    }
+                }
+
+                return ret === undefined ? '' : ret;
+            }
+            // setter
+            else {
+                // normalize unsetting
+                if (val === null || val === EMPTY) {
+                    val = EMPTY;
+                }
+                // number values may need a unit
+                else if (!isNaN(new Number(val)) && RE_NEED_UNIT.test(name)) {
+                    val += DEFAULT_UNIT;
+                }
+
+                // ignore negative width and height values
+                if ((name === WIDTH || name === HEIGHT) && parseFloat(val) < 0) {
+                    return;
+                }
+
+                S.each(DOM.query(selector), function(elem) {
+                    if (elem && elem[STYLE]) {
+                        name.set ? name.set(elem, val) : (elem[STYLE][name] = val);
+                        if (val === EMPTY) {
+                            if (!elem[STYLE].cssText)
+                                elem.removeAttribute(STYLE);
+                        }
+                    }
+                });
+            }
+        },
+
+        /**
+         * Get the current computed width for the first element in the set of matched elements or
+         * set the CSS width of each element in the set of matched elements.
+         */
+        width: function(selector, value) {
+            // getter
+            if (value === undefined) {
+                return getWH(selector, WIDTH);
+            }
+            // setter
+            else {
+                DOM.css(selector, WIDTH, value);
+            }
+        },
+
+        /**
+         * Get the current computed height for the first element in the set of matched elements or
+         * set the CSS height of each element in the set of matched elements.
+         */
+        height: function(selector, value) {
+            // getter
+            if (value === undefined) {
+                return getWH(selector, HEIGHT);
+            }
+            // setter
+            else {
+                DOM.css(selector, HEIGHT, value);
+            }
+        },
+
+        /**
+         * Show the matched elements.
+         */
+        show: function(selector) {
+
+            DOM.query(selector).each(function(elem) {
+                if (!elem) return;
+
+                elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
+
+                // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
+                if (DOM.css(elem, DISPLAY) === NONE) {
+                    var tagName = elem.tagName,
+                        old = defaultDisplay[tagName], tmp;
+
+                    if (!old) {
+                        tmp = doc.createElement(tagName);
+                        doc.body.appendChild(tmp);
+                        old = DOM.css(tmp, DISPLAY);
+                        DOM.remove(tmp);
+                        defaultDisplay[tagName] = old;
+                    }
+
+                    DOM.data(elem, DISPLAY, old);
+                    elem.style[DISPLAY] = old;
+                }
+            });
+        },
+
+        /**
+         * Hide the matched elements.
+         */
+        hide: function(selector) {
+            DOM.query(selector).each(function(elem) {
+                if (!elem) return;
+
+                var style = elem.style, old = style[DISPLAY];
+                if (old !== NONE) {
+                    if (old) {
+                        DOM.data(elem, DISPLAY, old);
+                    }
+                    style[DISPLAY] = NONE;
+                }
+            });
+        },
+
+        /**
+         * Display or hide the matched elements.
+         */
+        toggle: function(selector) {
+            DOM.query(selector).each(function(elem) {
+                if (elem) {
+                    if (elem.style[DISPLAY] === NONE) {
+                        DOM.show(elem);
+                    } else {
+                        DOM.hide(elem);
+                    }
+                }
+            });
+        },
+
+        /**
+         * Creates a stylesheet from a text blob of rules.
+         * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+         * @param {String} cssText The text containing the css rules
+         * @param {String} id An id to add to the stylesheet for later removal
+         */
+        addStyleSheet: function(cssText, id) {
+            var elem;
+
+            if (id && (id = id.replace('#', EMPTY))) elem = DOM.get('#' + id);
+            if (elem) return; // 仅添加一次，不重复添加
+
+            elem = DOM.create('<style>', { id: id });
+
+            // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
+            DOM.get('head').appendChild(elem);
+
+            if (elem.styleSheet) { // IE
+                elem.styleSheet.cssText = cssText;
+            } else { // W3C
+                elem.appendChild(doc.createTextNode(cssText));
+            }
+        },
+
+        unselectable:function(selector) {
+            DOM.query(selector).each(function(elem) {
+                if (elem) {
+                    if (UA['gecko']) {
+                        elem.style.MozUserSelect = 'none';
+                    }
+                    else if (UA['webkit']) {
+                        elem.style.KhtmlUserSelect = 'none';
+                    } else {
+                        if (UA['ie'] || UA['opera']) {
+                            var e,i = 0,
+                                els = elem.getElementsByTagName("*");
+                            elem.setAttribute("unselectable", 'on');
+                            while (( e = els[ i++ ] )) {
+                                switch (e.tagName.toLowerCase()) {
+                                    case 'iframe' :
+                                    case 'textarea' :
+                                    case 'input' :
+                                    case 'select' :
+                                        /* Ignore the above tags */
+                                        break;
+                                    default :
+                                        e.setAttribute("unselectable", 'on');
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    });
+
+    // normalize reserved word float alternatives ("cssFloat" or "styleFloat")
+    if (docElem[STYLE][CSS_FLOAT] !== undefined) {
+        CUSTOM_STYLES[FLOAT] = CSS_FLOAT;
+    }
+    else if (docElem[STYLE][STYLE_FLOAT] !== undefined) {
+        CUSTOM_STYLES[FLOAT] = STYLE_FLOAT;
+    }
+
+    function getWH(selector, name) {
+        var elem = DOM.get(selector),
+            which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
+            val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
+
+        S.each(which, function(direction) {
+            val -= parseFloat(DOM._getComputedStyle(elem, 'padding' + direction)) || 0;
+            val -= parseFloat(DOM._getComputedStyle(elem, 'border' + direction + 'Width')) || 0;
+        });
+
+        return val;
+    }
+
+    // 修正 getComputedStyle 返回值的部分浏览器兼容性问题
+    function fixComputedStyle(elem, name, val) {
+        var offset, ret = val;
+
+        // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
+        //    比如：firefox 返回 0, webkit/ie 返回 auto
+        // 2. style.left 设置为百分比时，返回值为百分比
+        // 对于第一种情况，如果是 relative 元素，值为 0. 如果是 absolute 元素，值为 offsetLeft - marginLeft
+        // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
+        if (val === AUTO && RE_LT.test(name)) {
+            ret = 0;
+            if (S.inArray(DOM.css(elem, 'position'), ['absolute','fixed'])) {
+                offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
+
+                // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
+                // TODO: 改成特性探测
+                if (UA['ie'] === 8 || UA['opera']) {
+                    offset -= PARSEINT(DOM.css(elem.offsetParent, 'border-' + name + '-width')) || 0;
+                }
+
+                ret = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
+            }
+        }
+
+        return ret;
+    }
+
+    return DOM;
+}, {
+    requires:["dom/base","ua"]
+});
+
+/**
+ * NOTES:
+ *  - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
+ *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
+ *
+ *  - 非 webkit 下，jQuery.css paddingLeft 返回 style 值， padding-left 返回 computedStyle 值，
+ *    返回的值不同。KISSY 做了统一，更符合预期。
+ *
+ *  - getComputedStyle 在 webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输出 float 值。
+ *
+ *  - color: blue 继承值，getComputedStyle, 在 ie 下返回 blue, opera 返回 #0000ff, 其它浏览器
+ *    返回 rgb(0, 0, 255)
+ *
+ *  - border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值。
+ *
+ *  - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未“追求完美”。YUI3 做了部分完美处理，但
+ *    依旧存在浏览器差异。
+ */
+
 /**
  * @module  selector
  * @author  lifesinger@gmail.com
@@ -1833,6 +2184,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  *  - http://ejohn.org/blog/comparing-document-position/
  *  - http://github.com/jeresig/sizzle/blob/master/sizzle.js
  */
+
 /**
  * @module  dom
  * @author  lifesinger@gmail.com
@@ -1948,328 +2300,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, undefined) {
  *    主流类库都是用 DXImageTransform.Microsoft.Alpha 来实现的，为了保证多类库混合使用时不会出现问题，kissy 里
  *    依旧采用 Alpha 来实现。
  */
-/**
- * @module  dom
- * @author  lifesinger@gmail.com
- */
-KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
-    var doc = document,
-        docElem = doc.documentElement,
-        STYLE = 'style',
-        FLOAT = 'float',
-        CSS_FLOAT = 'cssFloat',
-        STYLE_FLOAT = 'styleFloat',
-        WIDTH = 'width',
-        HEIGHT = 'height',
-        AUTO = 'auto',
-        DISPLAY = 'display',
-        NONE = 'none',
-        PARSEINT = parseInt,
-        RE_LT = /^(?:left|top)/,
-        RE_NEED_UNIT = /^(?:width|height|top|left|right|bottom|margin|padding)/i,
-        RE_DASH = /-([a-z])/ig,
-        CAMELCASE_FN = function(all, letter) {
-            return letter.toUpperCase();
-        },
-        EMPTY = '',
-        DEFAULT_UNIT = 'px',
-        CUSTOM_STYLES = { },
-        defaultDisplay = { };
-
-    S.mix(DOM, {
-
-        _CUSTOM_STYLES: CUSTOM_STYLES,
-
-        _getComputedStyle: function(elem, name) {
-            var val = '', d = elem.ownerDocument;
-
-            if (elem[STYLE]) {
-                val = d.defaultView.getComputedStyle(elem, null)[name];
-            }
-            return val;
-        },
-
-        /**
-         * Gets or sets styles on the matches elements.
-         */
-        css: function(selector, name, val) {
-            // suports hash
-            if (S.isPlainObject(name)) {
-                for (var k in name) {
-                    DOM.css(selector, k, name[k]);
-                }
-                return;
-            }
-
-            if (name.indexOf('-') > 0) {
-                // webkit 认识 camel-case, 其它内核只认识 cameCase
-                name = name.replace(RE_DASH, CAMELCASE_FN);
-            }
-            name = CUSTOM_STYLES[name] || name;
-
-            // getter
-            if (val === undefined) {
-                // supports css selector/Node/NodeList
-                var elem = DOM.get(selector), ret = '';
-
-                if (elem && elem[STYLE]) {
-                    ret = name.get ? name.get(elem) : elem[STYLE][name];
-
-                    // 有 get 的直接用自定义函数的返回值
-                    if (ret === '' && !name.get) {
-                        ret = fixComputedStyle(elem, name, DOM._getComputedStyle(elem, name));
-                    }
-                }
-
-                return ret === undefined ? '' : ret;
-            }
-            // setter
-            else {
-                // normalize unsetting
-                if (val === null || val === EMPTY) {
-                    val = EMPTY;
-                }
-                // number values may need a unit
-                else if (!isNaN(new Number(val)) && RE_NEED_UNIT.test(name)) {
-                    val += DEFAULT_UNIT;
-                }
-
-                // ignore negative width and height values
-                if ((name === WIDTH || name === HEIGHT) && parseFloat(val) < 0) {
-                    return;
-                }
-
-                S.each(DOM.query(selector), function(elem) {
-                    if (elem && elem[STYLE]) {
-                        name.set ? name.set(elem, val) : (elem[STYLE][name] = val);
-                        if (val === EMPTY) {
-                            if (!elem[STYLE].cssText)
-                                elem.removeAttribute(STYLE);
-                        }
-                    }
-                });
-            }
-        },
-
-        /**
-         * Get the current computed width for the first element in the set of matched elements or
-         * set the CSS width of each element in the set of matched elements.
-         */
-        width: function(selector, value) {
-            // getter
-            if (value === undefined) {
-                return getWH(selector, WIDTH);
-            }
-            // setter
-            else {
-                DOM.css(selector, WIDTH, value);
-            }
-        },
-
-        /**
-         * Get the current computed height for the first element in the set of matched elements or
-         * set the CSS height of each element in the set of matched elements.
-         */
-        height: function(selector, value) {
-            // getter
-            if (value === undefined) {
-                return getWH(selector, HEIGHT);
-            }
-            // setter
-            else {
-                DOM.css(selector, HEIGHT, value);
-            }
-        },
-
-        /**
-         * Show the matched elements.
-         */
-        show: function(selector) {
-
-            DOM.query(selector).each(function(elem) {
-                if (!elem) return;
-
-                elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
-
-                // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
-                if (DOM.css(elem, DISPLAY) === NONE) {
-                    var tagName = elem.tagName,
-                        old = defaultDisplay[tagName], tmp;
-
-                    if (!old) {
-                        tmp = doc.createElement(tagName);
-                        doc.body.appendChild(tmp);
-                        old = DOM.css(tmp, DISPLAY);
-                        DOM.remove(tmp);
-                        defaultDisplay[tagName] = old;
-                    }
-
-                    DOM.data(elem, DISPLAY, old);
-                    elem.style[DISPLAY] = old;
-                }
-            });
-        },
-
-        /**
-         * Hide the matched elements.
-         */
-        hide: function(selector) {
-            DOM.query(selector).each(function(elem) {
-                if (!elem) return;
-
-                var style = elem.style, old = style[DISPLAY];
-                if (old !== NONE) {
-                    if (old) {
-                        DOM.data(elem, DISPLAY, old);
-                    }
-                    style[DISPLAY] = NONE;
-                }
-            });
-        },
-
-        /**
-         * Display or hide the matched elements.
-         */
-        toggle: function(selector) {
-            DOM.query(selector).each(function(elem) {
-                if (elem) {
-                    if (elem.style[DISPLAY] === NONE) {
-                        DOM.show(elem);
-                    } else {
-                        DOM.hide(elem);
-                    }
-                }
-            });
-        },
-
-        /**
-         * Creates a stylesheet from a text blob of rules.
-         * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
-         * @param {String} cssText The text containing the css rules
-         * @param {String} id An id to add to the stylesheet for later removal
-         */
-        addStyleSheet: function(cssText, id) {
-            var elem;
-
-            if (id && (id = id.replace('#', EMPTY))) elem = DOM.get('#' + id);
-            if (elem) return; // 仅添加一次，不重复添加
-
-            elem = DOM.create('<style>', { id: id });
-
-            // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
-            DOM.get('head').appendChild(elem);
-
-            if (elem.styleSheet) { // IE
-                elem.styleSheet.cssText = cssText;
-            } else { // W3C
-                elem.appendChild(doc.createTextNode(cssText));
-            }
-        },
-
-        unselectable:function(selector) {
-            DOM.query(selector).each(function(elem) {
-                if (elem) {
-                    if (UA['gecko']) {
-                        elem.style.MozUserSelect = 'none';
-                    }
-                    else if (UA['webkit']) {
-                        elem.style.KhtmlUserSelect = 'none';
-                    } else {
-                        if (UA['ie'] || UA['opera']) {
-                            var e,i = 0,
-                                els = elem.getElementsByTagName("*");
-                            elem.setAttribute("unselectable", 'on');
-                            while (( e = els[ i++ ] )) {
-                                switch (e.tagName.toLowerCase()) {
-                                    case 'iframe' :
-                                    case 'textarea' :
-                                    case 'input' :
-                                    case 'select' :
-                                        /* Ignore the above tags */
-                                        break;
-                                    default :
-                                        e.setAttribute("unselectable", 'on');
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    });
-
-    // normalize reserved word float alternatives ("cssFloat" or "styleFloat")
-    if (docElem[STYLE][CSS_FLOAT] !== undefined) {
-        CUSTOM_STYLES[FLOAT] = CSS_FLOAT;
-    }
-    else if (docElem[STYLE][STYLE_FLOAT] !== undefined) {
-        CUSTOM_STYLES[FLOAT] = STYLE_FLOAT;
-    }
-
-    function getWH(selector, name) {
-        var elem = DOM.get(selector),
-            which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
-            val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
-
-        S.each(which, function(direction) {
-            val -= parseFloat(DOM._getComputedStyle(elem, 'padding' + direction)) || 0;
-            val -= parseFloat(DOM._getComputedStyle(elem, 'border' + direction + 'Width')) || 0;
-        });
-
-        return val;
-    }
-
-    // 修正 getComputedStyle 返回值的部分浏览器兼容性问题
-    function fixComputedStyle(elem, name, val) {
-        var offset, ret = val;
-
-        // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
-        //    比如：firefox 返回 0, webkit/ie 返回 auto
-        // 2. style.left 设置为百分比时，返回值为百分比
-        // 对于第一种情况，如果是 relative 元素，值为 0. 如果是 absolute 元素，值为 offsetLeft - marginLeft
-        // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
-        if (val === AUTO && RE_LT.test(name)) {
-            ret = 0;
-            if (S.inArray(DOM.css(elem, 'position'), ['absolute','fixed'])) {
-                offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
-
-                // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                // TODO: 改成特性探测
-                if (UA['ie'] === 8 || UA['opera']) {
-                    offset -= PARSEINT(DOM.css(elem.offsetParent, 'border-' + name + '-width')) || 0;
-                }
-
-                ret = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
-            }
-        }
-
-        return ret;
-    }
-
-    return DOM;
-}, {
-    requires:["dom/base","ua"]
-});
-
-/**
- * NOTES:
- *  - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
- *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
- *
- *  - 非 webkit 下，jQuery.css paddingLeft 返回 style 值， padding-left 返回 computedStyle 值，
- *    返回的值不同。KISSY 做了统一，更符合预期。
- *
- *  - getComputedStyle 在 webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输出 float 值。
- *
- *  - color: blue 继承值，getComputedStyle, 在 ie 下返回 blue, opera 返回 #0000ff, 其它浏览器
- *    返回 rgb(0, 0, 255)
- *
- *  - border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值。
- *
- *  - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未“追求完美”。YUI3 做了部分完美处理，但
- *    依旧存在浏览器差异。
- */
 /**
  * @module  dom-traversal
  * @author  lifesinger@gmail.com
@@ -2402,6 +2433,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
  *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
  *
  */
+
 KISSY.add("dom", function(S,DOM) {
     return DOM;
 }, {
@@ -2417,11 +2449,178 @@ KISSY.add("dom", function(S,DOM) {
         "dom/traversal"]
 });
 
-/*
-Copyright 2011, KISSY UI Library v1.1.7dev
-MIT Licensed
-build time: ${build.time}
-*/
+/**
+ * @module  EventObject
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('event/object', function(S, undefined) {
+
+    var doc = document,
+        props = 'altKey attrChange attrName bubbles button cancelable charCode clientX clientY ctrlKey currentTarget data detail eventPhase fromElement handler keyCode layerX layerY metaKey newValue offsetX offsetY originalTarget pageX pageY prevValue relatedNode relatedTarget screenX screenY shiftKey srcElement target toElement view wheelDelta which'.split(' ');
+
+    /**
+     * KISSY's event system normalizes the event object according to
+     * W3C standards. The event object is guaranteed to be passed to
+     * the event handler. Most properties from the original event are
+     * copied over and normalized to the new event object.
+     */
+    function EventObject(currentTarget, domEvent, type) {
+        var self = this;
+        self.currentTarget = currentTarget;
+        self.originalEvent = domEvent || { };
+
+        if (domEvent) { // html element
+            self.type = domEvent.type;
+            self._fix();
+        }
+        else { // custom
+            self.type = type;
+            self.target = currentTarget;
+        }
+
+        // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
+        self.currentTarget = currentTarget;
+        self.fixed = true;
+    }
+
+    S.augment(EventObject, {
+
+        _fix: function() {
+            var self = this,
+                originalEvent = self.originalEvent,
+                l = props.length, prop,
+                ct = self.currentTarget,
+                ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
+
+            // clone properties of the original event object
+            while (l) {
+                prop = props[--l];
+                self[prop] = originalEvent[prop];
+            }
+
+            // fix target property, if necessary
+            if (!self.target) {
+                self.target = self.srcElement || doc; // srcElement might not be defined either
+            }
+
+            // check if target is a textnode (safari)
+            if (self.target.nodeType === 3) {
+                self.target = self.target.parentNode;
+            }
+
+            // add relatedTarget, if necessary
+            if (!self.relatedTarget && self.fromElement) {
+                self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
+            }
+
+            // calculate pageX/Y if missing and clientX/Y available
+            if (self.pageX === undefined && self.clientX !== undefined) {
+                var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
+                self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
+                self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
+            }
+
+            // add which for key events
+            if (self.which === undefined) {
+                self.which = (self.charCode !== undefined) ? self.charCode : self.keyCode;
+            }
+
+            // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
+            if (self.metaKey === undefined) {
+                self.metaKey = self.ctrlKey;
+            }
+
+            // add which for click: 1 === left; 2 === middle; 3 === right
+            // Note: button is not normalized, so don't use it
+            if (!self.which && self.button !== undefined) {
+                self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
+            }
+        },
+
+        /**
+         * Prevents the event's default behavior
+         */
+        preventDefault: function() {
+            var e = this.originalEvent;
+
+            // if preventDefault exists run it on the original event
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            // otherwise set the returnValue property of the original event to false (IE)
+            else {
+                e.returnValue = false;
+            }
+
+            this.isDefaultPrevented = true;
+        },
+
+        /**
+         * Stops the propagation to the next bubble target
+         */
+        stopPropagation: function() {
+            var e = this.originalEvent;
+
+            // if stopPropagation exists run it on the original event
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            // otherwise set the cancelBubble property of the original event to true (IE)
+            else {
+                e.cancelBubble = true;
+            }
+
+            this.isPropagationStopped = true;
+        },
+
+        /**
+         * Stops the propagation to the next bubble target and
+         * prevents any additional listeners from being exectued
+         * on the current target.
+         */
+        stopImmediatePropagation: function() {
+            var e = this.originalEvent;
+
+            if (e.stopImmediatePropagation) {
+                e.stopImmediatePropagation();
+            } else {
+                this.stopPropagation();
+            }
+
+            this.isImmediatePropagationStopped = true;
+        },
+
+        /**
+         * Stops the event propagation and prevents the default
+         * event behavior.
+         * @param immediate {boolean} if true additional listeners
+         * on the current target will not be executed
+         */
+        halt: function(immediate) {
+            if (immediate) {
+                this.stopImmediatePropagation();
+            } else {
+                this.stopPropagation();
+            }
+
+            this.preventDefault();
+        }
+    });
+
+    return EventObject;
+
+});
+
+/**
+ * NOTES:
+ *
+ *  2010.04
+ *   - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
+ *
+ * TODO:
+ *   - pageX, clientX, scrollLeft, clientLeft 的详细测试
+ */
+
 /**
  * @module  event
  * @author  lifesinger@gmail.com
@@ -2716,6 +2915,60 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
  *   - target 为 window, iframe 等特殊对象时的 test case
  *   - special events 的 teardown 方法缺失，需要做特殊处理
  */
+
+/**
+ * @module  EventTarget
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('event/target', function(S, Event, DOM, undefined) {
+
+    /**
+     * EventTarget provides the implementation for any object to publish,
+     * subscribe and fire to custom events.
+     */
+    return {
+
+        isCustomEventTarget: true,
+
+        fire: function(type, eventData) {
+            var id = DOM.data(this, Event.EVENT_GUID) || -1,
+                cache = Event._getCache(id) || { },
+                events = cache.events || { },
+                t = events[type];
+
+            if (t && S.isFunction(t.handle)) {
+                return t.handle(undefined, eventData);
+            }
+        },
+
+        on: function(type, fn, scope) {
+            Event.add(this, type, fn, scope);
+            return this; // chain
+        },
+
+        detach: function(type, fn, scope) {
+            Event.remove(this, type, fn, scope);
+            return this; // chain
+        }
+    };
+}, {
+    /*
+     实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
+     否则会导致build打包文件 dom 和 dom-data 重复载入
+     */
+    requires:["event/base","dom"]
+});
+
+/**
+ * NOTES:
+ *
+ *  2010.04
+ *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 不是必须
+ *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
+ *
+ *   - detach 命名是因为 removeEventListener 太长，remove 则太容易冲突
+ */
+
 /**
  * @module  event-focusin
  * @author  lifesinger@gmail.com
@@ -2749,6 +3002,7 @@ KISSY.add('event/focusin', function(S,Event) {
  * NOTES:
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
+
 /**
  * @module  event-mouseenter
  * @author  lifesinger@gmail.com
@@ -2806,343 +3060,8 @@ KISSY.add('event/mouseenter', function(S, Event,DOM, UA) {
  *  - ie6 下，原生的 mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>
  *    jQuery 也异常，需要进一步研究
  */
-/**
- * @module  EventObject
- * @author  lifesinger@gmail.com
- */
-KISSY.add('event/object', function(S, undefined) {
 
-    var doc = document,
-        props = 'altKey attrChange attrName bubbles button cancelable charCode clientX clientY ctrlKey currentTarget data detail eventPhase fromElement handler keyCode layerX layerY metaKey newValue offsetX offsetY originalTarget pageX pageY prevValue relatedNode relatedTarget screenX screenY shiftKey srcElement target toElement view wheelDelta which'.split(' ');
-
-    /**
-     * KISSY's event system normalizes the event object according to
-     * W3C standards. The event object is guaranteed to be passed to
-     * the event handler. Most properties from the original event are
-     * copied over and normalized to the new event object.
-     */
-    function EventObject(currentTarget, domEvent, type) {
-        var self = this;
-        self.currentTarget = currentTarget;
-        self.originalEvent = domEvent || { };
-
-        if (domEvent) { // html element
-            self.type = domEvent.type;
-            self._fix();
-        }
-        else { // custom
-            self.type = type;
-            self.target = currentTarget;
-        }
-
-        // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
-        self.currentTarget = currentTarget;
-        self.fixed = true;
-    }
-
-    S.augment(EventObject, {
-
-        _fix: function() {
-            var self = this,
-                originalEvent = self.originalEvent,
-                l = props.length, prop,
-                ct = self.currentTarget,
-                ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
-
-            // clone properties of the original event object
-            while (l) {
-                prop = props[--l];
-                self[prop] = originalEvent[prop];
-            }
-
-            // fix target property, if necessary
-            if (!self.target) {
-                self.target = self.srcElement || doc; // srcElement might not be defined either
-            }
-
-            // check if target is a textnode (safari)
-            if (self.target.nodeType === 3) {
-                self.target = self.target.parentNode;
-            }
-
-            // add relatedTarget, if necessary
-            if (!self.relatedTarget && self.fromElement) {
-                self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
-            }
-
-            // calculate pageX/Y if missing and clientX/Y available
-            if (self.pageX === undefined && self.clientX !== undefined) {
-                var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
-                self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
-                self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
-            }
-
-            // add which for key events
-            if (self.which === undefined) {
-                self.which = (self.charCode !== undefined) ? self.charCode : self.keyCode;
-            }
-
-            // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
-            if (self.metaKey === undefined) {
-                self.metaKey = self.ctrlKey;
-            }
-
-            // add which for click: 1 === left; 2 === middle; 3 === right
-            // Note: button is not normalized, so don't use it
-            if (!self.which && self.button !== undefined) {
-                self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
-            }
-        },
-
-        /**
-         * Prevents the event's default behavior
-         */
-        preventDefault: function() {
-            var e = this.originalEvent;
-
-            // if preventDefault exists run it on the original event
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
-            // otherwise set the returnValue property of the original event to false (IE)
-            else {
-                e.returnValue = false;
-            }
-
-            this.isDefaultPrevented = true;
-        },
-
-        /**
-         * Stops the propagation to the next bubble target
-         */
-        stopPropagation: function() {
-            var e = this.originalEvent;
-
-            // if stopPropagation exists run it on the original event
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-            // otherwise set the cancelBubble property of the original event to true (IE)
-            else {
-                e.cancelBubble = true;
-            }
-
-            this.isPropagationStopped = true;
-        },
-
-        /**
-         * Stops the propagation to the next bubble target and
-         * prevents any additional listeners from being exectued
-         * on the current target.
-         */
-        stopImmediatePropagation: function() {
-            var e = this.originalEvent;
-
-            if (e.stopImmediatePropagation) {
-                e.stopImmediatePropagation();
-            } else {
-                this.stopPropagation();
-            }
-
-            this.isImmediatePropagationStopped = true;
-        },
-
-        /**
-         * Stops the event propagation and prevents the default
-         * event behavior.
-         * @param immediate {boolean} if true additional listeners
-         * on the current target will not be executed
-         */
-        halt: function(immediate) {
-            if (immediate) {
-                this.stopImmediatePropagation();
-            } else {
-                this.stopPropagation();
-            }
-
-            this.preventDefault();
-        }
-    });
-
-    return EventObject;
-
-});
-
-/**
- * NOTES:
- *
- *  2010.04
- *   - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
- *
- * TODO:
- *   - pageX, clientX, scrollLeft, clientLeft 的详细测试
- */
-/**
- * @module  EventTarget
- * @author  lifesinger@gmail.com
- */
-KISSY.add('event/target', function(S, Event, DOM, undefined) {
-
-    /**
-     * EventTarget provides the implementation for any object to publish,
-     * subscribe and fire to custom events.
-     */
-    return {
-
-        isCustomEventTarget: true,
-
-        fire: function(type, eventData) {
-            var id = DOM.data(this, Event.EVENT_GUID) || -1,
-                cache = Event._getCache(id) || { },
-                events = cache.events || { },
-                t = events[type];
-
-            if (t && S.isFunction(t.handle)) {
-                return t.handle(undefined, eventData);
-            }
-        },
-
-        on: function(type, fn, scope) {
-            Event.add(this, type, fn, scope);
-            return this; // chain
-        },
-
-        detach: function(type, fn, scope) {
-            Event.remove(this, type, fn, scope);
-            return this; // chain
-        }
-    };
-}, {
-    /*
-     实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
-     否则会导致build打包文件 dom 和 dom-data 重复载入
-     */
-    requires:["event/base","dom"]
-});
-
-/**
- * NOTES:
- *
- *  2010.04
- *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 不是必须
- *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
- *
- *   - detach 命名是因为 removeEventListener 太长，remove 则太容易冲突
- */
-/**
- * inspired by yui3 :
- *
- * Synthetic event that fires when the <code>value</code> property of an input
- * field or textarea changes as a result of a keystroke, mouse operation, or
- * input method editor (IME) input event.
- *
- * Unlike the <code>onchange</code> event, this event fires when the value
- * actually changes and not when the element loses focus. This event also
- * reports IME and multi-stroke input more reliably than <code>oninput</code> or
- * the various key events across browsers.
- *
- * @author:yiminghe@gmail.com
- */
-KISSY.add('event/valuechange', function(S, Event, DOM) {
-    var VALUE_CHANGE = "valueChange";
-
-
-    var KEY = "event/valuechange";
-    var history = {};
-    var poll = {};
-    var interval = 50;
-
-    function timestamp(node) {
-        var r = DOM.data(node, KEY);
-        if (!r) {
-            r = (+new Date());
-            DOM.data(node, KEY, r);
-        }
-        return r;
-    }
-
-    function untimestamp(node) {
-        DOM.removeData(node, KEY);
-    }
-
-    //pre value for input monitored
-
-
-    function stopPoll(target) {
-        var t = timestamp(target);
-        delete history[t];
-        if (poll[t]) {
-            clearTimeout(poll[t]);
-            delete poll[t];
-        }
-    }
-
-    function blur(ev) {
-        var target = ev.target;
-        stopPoll(target);
-    }
-
-    function startPoll(target) {
-        var t = timestamp(target);
-        if (poll[t]) return;
-
-        poll[t] = setTimeout(function() {
-            var v = target.value;
-            if (v !== history[t]) {
-                Event._handle(target, {
-                    type:VALUE_CHANGE,
-                    preVal:history[t],
-                    newVal:v
-                });
-                history[t] = v;
-            }
-            poll[t] = setTimeout(arguments.callee, interval);
-        }, interval);
-    }
-
-    function startPollHandler(ev) {
-        var target = ev.target;
-        //when focus ,record its previous value
-        if (ev.type == "focus") {
-            var t = timestamp(target);
-            history[t] = target.value;
-        }
-        startPoll(target);
-    }
-
-    function monitor(target) {
-        unmonitored(target);
-        Event.on(target, "blur", blur);
-        Event.on(target, "mousedown keyup keydown focus", startPollHandler);
-    }
-
-    function unmonitored(target) {
-        stopPoll(target);
-        Event.remove(target, "blur", blur);
-        Event.remove(target, "mousedown keyup keydown focus", startPollHandler);
-        untimestamp(target);
-    }
-
-    Event.special[VALUE_CHANGE] = {
-        //no corresponding dom event needed
-        fix: false,
-        init: function(target) {
-            var nodeName = target.nodeName.toLowerCase();
-            if ("input" == nodeName
-                || "textarea" == nodeName)
-                monitor(target);
-        },
-        destroy: function(target, type) {
-            var events = Event.__getEvents(target);
-            //this target's all handlers for valueChange are gone
-            if (!events[type]) {
-                unmonitored(target);
-            }
-        }
-    };
-}, {
-    requires:["event/base","dom"]
-});KISSY.add("event", function(S, Event, Target) {
+KISSY.add("event", function(S, Event, Target) {
     Event.Target = Target;
     return Event;
 }, {
@@ -3154,11 +3073,180 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
         "event/mouseenter"]
 });
 
-/*
-Copyright 2011, KISSY UI Library v1.1.7dev
-MIT Licensed
-build time: ${build.time}
-*/
+/**
+ * @module  node
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('node/node', function(S, DOM, undefined) {
+
+    /**
+     * The Node class provides a wrapper for manipulating DOM Node.
+     */
+    function Node(html, props, ownerDocument) {
+        var self = this, domNode;
+
+        // factory or constructor
+        if (!(self instanceof Node)) {
+            return new Node(html, props, ownerDocument);
+        }
+
+        // handle Node(''), Node(null), or Node(undefined)
+        if (!html) {
+            self.length = 0;
+            return undefined;
+        }
+
+        // create from html
+        if (S['isString'](html)) {
+            domNode = DOM.create(html, props, ownerDocument);
+            // 将 S.Node('<p>1</p><p>2</p>') 转换为 NodeList
+            if (domNode.nodeType === 11) { // fragment
+                return new (S.require("node/nodelist"))(domNode.childNodes);
+            }
+        }
+        // handle Node
+        else if (html instanceof Node) {
+            return html;
+        }
+        // node, document, window 等等，由使用者保证正确性
+        else {
+            domNode = html;
+        }
+
+        self[0] = domNode;
+        return undefined;
+    }
+
+    Node.TYPE = '-ks-Node';
+
+    S.augment(Node, {
+
+        /**
+         * 长度为 1
+         */
+        length: 1,
+
+        /**
+         * Retrieves the DOMNode.
+         */
+        getDOMNode: function() {
+            return this[0];
+        },
+
+        nodeType: Node.TYPE
+    });
+
+    // query api
+    Node.one = function(selector, context) {
+        var elem = DOM.get(selector, context);
+        return elem ? new Node(elem, undefined, undefined) : null;
+    };
+
+    return Node;
+}, {
+    requires:["dom"]
+});
+
+/**
+ * @module  nodelist
+ * @author  lifesinger@gmail.com
+ */
+KISSY.add('node/nodelist', function(S, DOM,Node,undefined) {
+
+    var AP = Array.prototype,
+        isElementNode = DOM._isElementNode;
+
+    /**
+     * The NodeList class provides a wrapper for manipulating DOM NodeList.
+     */
+    function NodeList(domNodes) {
+        // factory or constructor
+        if (!(this instanceof NodeList)) {
+            return new NodeList(domNodes);
+        }
+
+        // push nodes
+        AP.push.apply(this, S.makeArray(domNodes) || []);
+        return undefined;
+    }
+
+    S.mix(NodeList.prototype, {
+
+        /**
+         * 默认长度为 0
+         */
+        length: 0,
+
+        /**
+         * 根据 index 或 DOMElement 获取对应的 KSNode
+         */
+        item: function(index) {
+            var ret = null, i, len;
+
+            // 找到 DOMElement 对应的 index
+            if (isElementNode(index)) {
+                for (i = 0,len = this.length; i < len; i++) {
+                    if (index === this[i]) {
+                        index = i;
+                        break;
+                    }
+                }
+            }
+
+            // 转换为 KSNode
+            if (isElementNode(this[index])) {
+                ret = new Node(this[index]);
+            }
+
+            return ret;
+        },
+
+        /**
+         * Retrieves the DOMNodes.
+         */
+        getDOMNodes: function() {
+            return AP.slice.call(this);
+        },
+
+        /**
+         * Applies the given function to each Node in the NodeList.
+         * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
+         * @param context An optional context to apply the function with Default context is the current Node instance
+         */
+        each: function(fn, context) {
+            var len = this.length, i = 0, node;
+
+            for (node = new Node(this[0]);
+                 i < len && fn.call(context || node, node, i, this) !== false; node = new Node(this[++i])) {
+            }
+
+            return this;
+        }
+    });
+
+    // query api
+    NodeList.all = function(selector, context) {
+        return new NodeList(DOM.query(selector, context, true));
+    };
+
+    return  NodeList;
+}, {
+    requires:["dom","node/node"]
+});
+
+/**
+ * Notes:
+ *
+ *  2010.04
+ *   - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。
+ *     但从用户角度讲，this 的第一直觉是 $(this), kissy 和 yui3 保持一致，牺牲
+ *     性能，以易用为首。
+ *   - 有了 each 方法，似乎不再需要 import 所有 dom 方法，意义不大。
+ *   - dom 是低级 api, node 是中级 api, 这是分层的一个原因。还有一个原因是，如果
+ *     直接在 node 里实现 dom 方法，则不大好将 dom 的方法耦合到 nodelist 里。可
+ *     以说，技术成本会制约 api 设计。
+ */
+
 /**
  * @module  node-attach
  * @author  lifesinger@gmail.com
@@ -3379,178 +3467,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
 }, {
     requires:["dom","event","node/node","node/nodelist"]
 });
-/**
- * @module  node
- * @author  lifesinger@gmail.com
- */
-KISSY.add('node/node', function(S, DOM, undefined) {
 
-    /**
-     * The Node class provides a wrapper for manipulating DOM Node.
-     */
-    function Node(html, props, ownerDocument) {
-        var self = this, domNode;
-
-        // factory or constructor
-        if (!(self instanceof Node)) {
-            return new Node(html, props, ownerDocument);
-        }
-
-        // handle Node(''), Node(null), or Node(undefined)
-        if (!html) {
-            self.length = 0;
-            return undefined;
-        }
-
-        // create from html
-        if (S['isString'](html)) {
-            domNode = DOM.create(html, props, ownerDocument);
-            // 将 S.Node('<p>1</p><p>2</p>') 转换为 NodeList
-            if (domNode.nodeType === 11) { // fragment
-                return new (S.require("node/nodelist"))(domNode.childNodes);
-            }
-        }
-        // handle Node
-        else if (html instanceof Node) {
-            return html;
-        }
-        // node, document, window 等等，由使用者保证正确性
-        else {
-            domNode = html;
-        }
-
-        self[0] = domNode;
-        return undefined;
-    }
-
-    Node.TYPE = '-ks-Node';
-
-    S.augment(Node, {
-
-        /**
-         * 长度为 1
-         */
-        length: 1,
-
-        /**
-         * Retrieves the DOMNode.
-         */
-        getDOMNode: function() {
-            return this[0];
-        },
-
-        nodeType: Node.TYPE
-    });
-
-    // query api
-    Node.one = function(selector, context) {
-        var elem = DOM.get(selector, context);
-        return elem ? new Node(elem, undefined, undefined) : null;
-    };
-
-    return Node;
-}, {
-    requires:["dom"]
-});
-/**
- * @module  nodelist
- * @author  lifesinger@gmail.com
- */
-KISSY.add('node/nodelist', function(S, DOM,Node,undefined) {
-
-    var AP = Array.prototype,
-        isElementNode = DOM._isElementNode;
-
-    /**
-     * The NodeList class provides a wrapper for manipulating DOM NodeList.
-     */
-    function NodeList(domNodes) {
-        // factory or constructor
-        if (!(this instanceof NodeList)) {
-            return new NodeList(domNodes);
-        }
-
-        // push nodes
-        AP.push.apply(this, S.makeArray(domNodes) || []);
-        return undefined;
-    }
-
-    S.mix(NodeList.prototype, {
-
-        /**
-         * 默认长度为 0
-         */
-        length: 0,
-
-        /**
-         * 根据 index 或 DOMElement 获取对应的 KSNode
-         */
-        item: function(index) {
-            var ret = null, i, len;
-
-            // 找到 DOMElement 对应的 index
-            if (isElementNode(index)) {
-                for (i = 0,len = this.length; i < len; i++) {
-                    if (index === this[i]) {
-                        index = i;
-                        break;
-                    }
-                }
-            }
-
-            // 转换为 KSNode
-            if (isElementNode(this[index])) {
-                ret = new Node(this[index]);
-            }
-
-            return ret;
-        },
-
-        /**
-         * Retrieves the DOMNodes.
-         */
-        getDOMNodes: function() {
-            return AP.slice.call(this);
-        },
-
-        /**
-         * Applies the given function to each Node in the NodeList.
-         * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
-         * @param context An optional context to apply the function with Default context is the current Node instance
-         */
-        each: function(fn, context) {
-            var len = this.length, i = 0, node;
-
-            for (node = new Node(this[0]);
-                 i < len && fn.call(context || node, node, i, this) !== false; node = new Node(this[++i])) {
-            }
-
-            return this;
-        }
-    });
-
-    // query api
-    NodeList.all = function(selector, context) {
-        return new NodeList(DOM.query(selector, context, true));
-    };
-
-    return  NodeList;
-}, {
-    requires:["dom","node/node"]
-});
-
-/**
- * Notes:
- *
- *  2010.04
- *   - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。
- *     但从用户角度讲，this 的第一直觉是 $(this), kissy 和 yui3 保持一致，牺牲
- *     性能，以易用为首。
- *   - 有了 each 方法，似乎不再需要 import 所有 dom 方法，意义不大。
- *   - dom 是低级 api, node 是中级 api, 这是分层的一个原因。还有一个原因是，如果
- *     直接在 node 里实现 dom 方法，则不大好将 dom 的方法耦合到 nodelist 里。可
- *     以说，技术成本会制约 api 设计。
- */
 KISSY.add("node", function(S, Node, NodeList) {
     Node.List = NodeList;
     return Node;
@@ -3558,11 +3475,6 @@ KISSY.add("node", function(S, Node, NodeList) {
     requires:["node/node","node/nodelist","node/attach"]
 });
 
-/*
-Copyright 2011, KISSY UI Library v1.1.7dev
-MIT Licensed
-build time: ${build.time}
-*/
 /*
  http://www.JSON.org/json2.js
  2010-08-25
@@ -4046,6 +3958,7 @@ KISSY.add("json/json2", function(S) {
     }
     return JSON;
 });
+
 /**
  * adapt json2 to kissy
  * @author lifesinger@gmail.com
@@ -4066,11 +3979,6 @@ KISSY.add('json', function (S, JSON) {
     requires:["json/json2"]
 });
 
-/*
-Copyright 2011, KISSY UI Library v1.1.7dev
-MIT Licensed
-build time: ${build.time}
-*/
 /***
  * @module  ajax
  * @author  拔赤<lijing00333@163.com>
@@ -4388,17 +4296,220 @@ KISSY.add('ajax/impl', function(S, EventTarget, S_JSON, undef) {
  *   - [玉伯] 增加部分 Jasmine 单元测试
  *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
  */
+
 KISSY.add("ajax", function(S, io) {
     return io;
 }, {
     requires:["ajax/impl"]
 });
 
-/*
-Copyright 2011, KISSY UI Library v1.1.7dev
-MIT Licensed
-build time: ${build.time}
-*/
+/**
+ * @module anim-easing
+ */
+KISSY.add('anim/easing', function(S) {
+
+    // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
+    // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
+    // Preview: http://www.robertpenner.com/easing/easing_demo.html
+
+    /**
+     * 和 YUI 的 Easing 相比，S.Easing 进行了归一化处理，参数调整为：
+     * @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
+     * @param {Number} b Starting value  b = 0
+     * @param {Number} c Delta between start and end values  c = 1
+     * @param {Number} d Total length of animation d = 1
+     */
+
+    var M = Math, PI = M.PI,
+        pow = M.pow, sin = M.sin,
+        BACK_CONST = 1.70158,
+
+        Easing = {
+
+            /**
+             * Uniform speed between points.
+             */
+            easeNone: function (t) {
+                return t;
+            },
+
+            /**
+             * Begins slowly and accelerates towards end. (quadratic)
+             */
+            easeIn: function (t) {
+                return t * t;
+            },
+
+            /**
+             * Begins quickly and decelerates towards end.  (quadratic)
+             */
+            easeOut: function (t) {
+                return ( 2 - t) * t;
+            },
+
+            /**
+             * Begins slowly and decelerates towards end. (quadratic)
+             */
+            easeBoth: function (t) {
+                return (t *= 2) < 1 ?
+                    .5 * t * t :
+                    .5 * (1 - (--t) * (t - 2));
+            },
+
+            /**
+             * Begins slowly and accelerates towards end. (quartic)
+             */
+            easeInStrong: function (t) {
+                return t * t * t * t;
+            },
+
+            /**
+             * Begins quickly and decelerates towards end.  (quartic)
+             */
+            easeOutStrong: function (t) {
+                return 1 - (--t) * t * t * t;
+            },
+
+            /**
+             * Begins slowly and decelerates towards end. (quartic)
+             */
+            easeBothStrong: function (t) {
+                return (t *= 2) < 1 ?
+                    .5 * t * t * t * t :
+                    .5 * (2 - (t -= 2) * t * t * t);
+            },
+
+            /**
+             * Snap in elastic effect.
+             */
+
+            elasticIn: function (t) {
+                var p = .3, s = p / 4;
+                if (t === 0 || t === 1) return t;
+                return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
+            },
+
+            /**
+             * Snap out elastic effect.
+             */
+            elasticOut: function (t) {
+                var p = .3, s = p / 4;
+                if (t === 0 || t === 1) return t;
+                return pow(2, -10 * t) * sin((t - s) * (2 * PI) / p) + 1;
+            },
+
+            /**
+             * Snap both elastic effect.
+             */
+            elasticBoth: function (t) {
+                var p = .45, s = p / 4;
+                if (t === 0 || (t *= 2) === 2) return t;
+
+                if (t < 1) {
+                    return -.5 * (pow(2, 10 * (t -= 1)) *
+                        sin((t - s) * (2 * PI) / p));
+                }
+                return pow(2, -10 * (t -= 1)) *
+                    sin((t - s) * (2 * PI) / p) * .5 + 1;
+            },
+
+            /**
+             * Backtracks slightly, then reverses direction and moves to end.
+             */
+            backIn: function (t) {
+                if (t === 1) t -= .001;
+                return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
+            },
+
+            /**
+             * Overshoots end, then reverses and comes back to end.
+             */
+            backOut: function (t) {
+                return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
+            },
+
+            /**
+             * Backtracks slightly, then reverses direction, overshoots end,
+             * then reverses and comes back to end.
+             */
+            backBoth: function (t) {
+                if ((t *= 2 ) < 1) {
+                    return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
+                }
+                return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
+            },
+
+            /**
+             * Bounce off of start.
+             */
+            bounceIn: function (t) {
+                return 1 - Easing.bounceOut(1 - t);
+            },
+
+            /**
+             * Bounces off end.
+             */
+            bounceOut: function (t) {
+                var s = 7.5625, r;
+
+                if (t < (1 / 2.75)) {
+                    r = s * t * t;
+                }
+                else if (t < (2 / 2.75)) {
+                    r = s * (t -= (1.5 / 2.75)) * t + .75;
+                }
+                else if (t < (2.5 / 2.75)) {
+                    r = s * (t -= (2.25 / 2.75)) * t + .9375;
+                }
+                else {
+                    r = s * (t -= (2.625 / 2.75)) * t + .984375;
+                }
+
+                return r;
+            },
+
+            /**
+             * Bounces off start and end.
+             */
+            bounceBoth: function (t) {
+                if (t < .5) {
+                    return Easing.bounceIn(t * 2) * .5;
+                }
+                return Easing.bounceOut(t * 2 - 1) * .5 + .5;
+            }
+        };
+
+    Easing.NativeTimeFunction = {
+        easeNone: 'linear',
+        ease: 'ease',
+
+        easeIn: 'ease-in',
+        easeOut: 'ease-out',
+        easeBoth: 'ease-in-out',
+
+        // Ref:
+        //  1. http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
+        //  2. http://www.robertpenner.com/easing/easing_demo.html
+        //  3. assets/cubic-bezier-timing-function.html
+        // 注：是模拟值，非精确推导值
+        easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
+        easeOutStrong: 'cubic-bezier(0.1, 0.5, 0.1, 1.0)',
+        easeBothStrong: 'cubic-bezier(0.9, 0.0, 0.1, 1.0)'
+    };
+
+    return Easing;
+});
+
+/**
+ * TODO:
+ *  - test-easing.html 详细的测试 + 曲线可视化
+ *
+ * NOTES:
+ *  - 综合比较 jQuery UI/scripty2/YUI 的 easing 命名，还是觉得 YUI 的对用户
+ *    最友好。因此这次完全照搬 YUI 的 Easing, 只是代码上做了点压缩优化。
+ *
+ */
+
 /**
  * @module   anim
  * @author   lifesinger@gmail.com
@@ -4740,212 +4851,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, undefined) {
  *  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
  *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile
  */
-/**
- * @module anim-easing
- */
-KISSY.add('anim/easing', function(S) {
 
-    // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
-    // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
-    // Preview: http://www.robertpenner.com/easing/easing_demo.html
-
-    /**
-     * 和 YUI 的 Easing 相比，S.Easing 进行了归一化处理，参数调整为：
-     * @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
-     * @param {Number} b Starting value  b = 0
-     * @param {Number} c Delta between start and end values  c = 1
-     * @param {Number} d Total length of animation d = 1
-     */
-
-    var M = Math, PI = M.PI,
-        pow = M.pow, sin = M.sin,
-        BACK_CONST = 1.70158,
-
-        Easing = {
-
-            /**
-             * Uniform speed between points.
-             */
-            easeNone: function (t) {
-                return t;
-            },
-
-            /**
-             * Begins slowly and accelerates towards end. (quadratic)
-             */
-            easeIn: function (t) {
-                return t * t;
-            },
-
-            /**
-             * Begins quickly and decelerates towards end.  (quadratic)
-             */
-            easeOut: function (t) {
-                return ( 2 - t) * t;
-            },
-
-            /**
-             * Begins slowly and decelerates towards end. (quadratic)
-             */
-            easeBoth: function (t) {
-                return (t *= 2) < 1 ?
-                    .5 * t * t :
-                    .5 * (1 - (--t) * (t - 2));
-            },
-
-            /**
-             * Begins slowly and accelerates towards end. (quartic)
-             */
-            easeInStrong: function (t) {
-                return t * t * t * t;
-            },
-
-            /**
-             * Begins quickly and decelerates towards end.  (quartic)
-             */
-            easeOutStrong: function (t) {
-                return 1 - (--t) * t * t * t;
-            },
-
-            /**
-             * Begins slowly and decelerates towards end. (quartic)
-             */
-            easeBothStrong: function (t) {
-                return (t *= 2) < 1 ?
-                    .5 * t * t * t * t :
-                    .5 * (2 - (t -= 2) * t * t * t);
-            },
-
-            /**
-             * Snap in elastic effect.
-             */
-
-            elasticIn: function (t) {
-                var p = .3, s = p / 4;
-                if (t === 0 || t === 1) return t;
-                return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
-            },
-
-            /**
-             * Snap out elastic effect.
-             */
-            elasticOut: function (t) {
-                var p = .3, s = p / 4;
-                if (t === 0 || t === 1) return t;
-                return pow(2, -10 * t) * sin((t - s) * (2 * PI) / p) + 1;
-            },
-
-            /**
-             * Snap both elastic effect.
-             */
-            elasticBoth: function (t) {
-                var p = .45, s = p / 4;
-                if (t === 0 || (t *= 2) === 2) return t;
-
-                if (t < 1) {
-                    return -.5 * (pow(2, 10 * (t -= 1)) *
-                        sin((t - s) * (2 * PI) / p));
-                }
-                return pow(2, -10 * (t -= 1)) *
-                    sin((t - s) * (2 * PI) / p) * .5 + 1;
-            },
-
-            /**
-             * Backtracks slightly, then reverses direction and moves to end.
-             */
-            backIn: function (t) {
-                if (t === 1) t -= .001;
-                return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
-            },
-
-            /**
-             * Overshoots end, then reverses and comes back to end.
-             */
-            backOut: function (t) {
-                return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
-            },
-
-            /**
-             * Backtracks slightly, then reverses direction, overshoots end,
-             * then reverses and comes back to end.
-             */
-            backBoth: function (t) {
-                if ((t *= 2 ) < 1) {
-                    return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
-                }
-                return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
-            },
-
-            /**
-             * Bounce off of start.
-             */
-            bounceIn: function (t) {
-                return 1 - Easing.bounceOut(1 - t);
-            },
-
-            /**
-             * Bounces off end.
-             */
-            bounceOut: function (t) {
-                var s = 7.5625, r;
-
-                if (t < (1 / 2.75)) {
-                    r = s * t * t;
-                }
-                else if (t < (2 / 2.75)) {
-                    r = s * (t -= (1.5 / 2.75)) * t + .75;
-                }
-                else if (t < (2.5 / 2.75)) {
-                    r = s * (t -= (2.25 / 2.75)) * t + .9375;
-                }
-                else {
-                    r = s * (t -= (2.625 / 2.75)) * t + .984375;
-                }
-
-                return r;
-            },
-
-            /**
-             * Bounces off start and end.
-             */
-            bounceBoth: function (t) {
-                if (t < .5) {
-                    return Easing.bounceIn(t * 2) * .5;
-                }
-                return Easing.bounceOut(t * 2 - 1) * .5 + .5;
-            }
-        };
-
-    Easing.NativeTimeFunction = {
-        easeNone: 'linear',
-        ease: 'ease',
-
-        easeIn: 'ease-in',
-        easeOut: 'ease-out',
-        easeBoth: 'ease-in-out',
-
-        // Ref:
-        //  1. http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
-        //  2. http://www.robertpenner.com/easing/easing_demo.html
-        //  3. assets/cubic-bezier-timing-function.html
-        // 注：是模拟值，非精确推导值
-        easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
-        easeOutStrong: 'cubic-bezier(0.1, 0.5, 0.1, 1.0)',
-        easeBothStrong: 'cubic-bezier(0.9, 0.0, 0.1, 1.0)'
-    };
-
-    return Easing;
-});
-
-/**
- * TODO:
- *  - test-easing.html 详细的测试 + 曲线可视化
- *
- * NOTES:
- *  - 综合比较 jQuery UI/scripty2/YUI 的 easing 命名，还是觉得 YUI 的对用户
- *    最友好。因此这次完全照搬 YUI 的 Easing, 只是代码上做了点压缩优化。
- *
- */
 /**
  * @module  anim-node-plugin
  * @author  lifesinger@gmail.com, qiaohua@taobao.com
@@ -5060,17 +4966,13 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
 }, {
     requires:["dom","anim/base","node"]
 });
+
 KISSY.add("anim", function(S, Anim) {
     return Anim;
 }, {
     requires:["anim/base","anim/easing","anim/node-plugin"]
 });
 
-/*
-Copyright 2011, KISSY UI Library v1.1.7dev
-MIT Licensed
-build time: ${build.time}
-*/
 /**
  * @module  Attribute
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
@@ -5265,6 +5167,7 @@ KISSY.add('base/attribute', function(S, undef) {
 
     return Attribute;
 });
+
 /**
  * @module  Base
  * @author  lifesinger@gmail.com, yiminghe@gmail.com
@@ -5316,17 +5219,13 @@ KISSY.add('base/base', function (S, Attribute) {
 }, {
     requires:["base/attribute","event"]
 });
+
 KISSY.add("base", function(S, Base) {
     return Base;
 }, {
     requires:["base/base"]
 });
 
-/*
-Copyright 2011, KISSY UI Library v1.1.7dev
-MIT Licensed
-build time: ${build.time}
-*/
 /**
  * @module  cookie
  * @author  lifesinger@gmail.com
@@ -5411,6 +5310,7 @@ KISSY.add('cookie/base', function(S) {
  *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
  *     独立成静态工具类的方式更优。
  */
+
 KISSY.add("cookie", function(S,C) {
     return C;
 }, {
@@ -5450,3 +5350,5 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
 });
 
 
+
+KISSY.use('core');

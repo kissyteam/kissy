@@ -21,21 +21,35 @@
     <target name="concat">
 
         <!-- using module compiler to gen core.js -->
-        <delete file="../core.js" />
-        <copy tofile="../core.js" file="../../src/core.js">
-        </copy>
+        <delete file="../core.js"/>
+        <copy tofile="../core.js" file="../../src/core.js"/>
 
-        <java jar="../../tools/module-compiler.jar"
-              fork="true"
-              args="../../tools/kissy_require.properties"/>
+        <!--
+            不使用 java -jar fork 的话，新开 jvm 和后面的 concat 不串行了
+        -->
+        <java classname="com.taobao.f2e.Main">
+            <arg value="${src.dir}/../../tools/kissy_require.properties"/>
+            <classpath>
+                <pathelement location="../../tools/module-compiler.jar"/>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+        </java>
+
+        <!--use core 直接放入 core.js 中-->
+        <concat destfile="../core_tmp.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="../core.js"/>
+            <footer filtering="no" trimleading="yes">
+                KISSY.use('core');
+            </footer>
+        </concat>
+
+        <delete file="../core.js"/>
+        <move tofile="../core.js" file="../core_tmp.js"/>
 
         <!-- kissy: seed + core, 独立单文件 -->
         <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../seed.js"/>
             <path path="../core.js"/>
-            <footer filtering="no" trimleading="yes">
-                KISSY.use('core');
-            </footer>
         </concat>
         <!-- kissy-aio: 所有文件 -->
         <concat destfile="kissy-aio-pkg.js" encoding="${charset}" outputencoding="${charset}">
