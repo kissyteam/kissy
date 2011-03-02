@@ -94,12 +94,14 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
                     }
             });
 
-            self.on('show', function() {
-                hide(self.icon);
+            self.on('afterVisibleChange', function(ev) {
+                var isVisible = ev.newVal;
+                if (isVisible) {
+                    hide(self.icon);
+                } else {
+                    show(self.icon);
+                }
             });
-            self.on('hide', function() {
-                show(self.icon);
-            })
         },
 
         _uiSetHasZoom: function(v) {

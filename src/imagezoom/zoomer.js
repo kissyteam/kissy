@@ -152,8 +152,10 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
 
             self.viewer.appendTo(self.get("el"));
 
+            self.loading();
             // 大图加载完毕后更新显示区域
             imgOnLoad(bigImage, function() {
+                self.unloading();
                 self._setLensSize();
 
                 self.set('bigImageWidth', bigImage.width());
