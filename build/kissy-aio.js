@@ -8889,7 +8889,7 @@ KISSY.add("resizable",function(S,R){
     requires:["resizable/base"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -8987,7 +8987,7 @@ KISSY.add('uibase/align', function(S, DOM) {
                 diff,
                 p1,
                 //如果没有view，就是不区分mvc
-                el = (self.get("view")||self).get('el'),
+                el = (self.get("view") || self).get('el'),
                 p2;
 
             offset = offset || [0,0];
@@ -9003,7 +9003,8 @@ KISSY.add('uibase/align', function(S, DOM) {
                 xy.left - diff[0] + (+offset[0]),
                 xy.top - diff[1] + (+offset[1])
             ];
-            self.set('xy', xy);
+            self.set('x', xy[0]);
+            self.set('y', xy[1]);
         },
 
         /**
@@ -10016,7 +10017,6 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
         },
         _uiSetY:function(y) {
             this._forwordStateToView("y", y);
-
         },
         _uiSetVisible:function(isVisible) {
             var self = this;
@@ -10056,19 +10056,9 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
          * 显示 Overlay
          */
         show: function() {
-            this._firstShow();
+            this.render();
+            this.set("visible", true);
         },
-
-        /**
-         * 第一次显示时, 需要构建 DOM, 设置位置
-         */
-        _firstShow: function() {
-            var self = this;
-            self.render();
-            self._realShow();
-            self._firstShow = self._realShow;
-        },
-
 
         _realShow: function() {
             this.set("visible", true);
@@ -10132,6 +10122,14 @@ KISSY.add("uibase/positionrender", function(S) {
         },
         _uiSetVisible:function(isVisible) {
             this.get("el").css("visibility", isVisible ? "visible" : "hidden");
+        },
+
+        show:function() {
+            this.render();
+            this.set("visible", true);
+        },
+        hide:function() {
+            this.set("visible", false);
         }
     };
 
@@ -12882,7 +12880,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
  * 2010-08-04 更新： 去掉对 yahoo-dom-event 的依赖，仅依赖 ks-core. 调整了部分 public api, 扩展更容易了。
  */
 /*
-Copyright 2011, KISSY UI Library v1.1.7dev
+Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
 build time: ${build.time}
 */
@@ -12930,13 +12928,13 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
         return S.require("uibase/" + s);
     }
 
-    return UIBase.create([require("box"),
-        require("contentbox"),
-        require("position"),
-        require("loading"),
-        UA['ie'] == 6 ? require("shim") : null,
+    return UIBase.create([require("boxrender"),
+        require("contentboxrender"),
+        require("positionrender"),
+        require("loadingrender"),
+        UA['ie'] == 6 ? require("shimrender") : null,
         require("align"),
-        require("mask"),
+        require("maskrender"),
         Zoomer
     ], {
 

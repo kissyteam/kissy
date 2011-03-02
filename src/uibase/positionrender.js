@@ -44,6 +44,14 @@ KISSY.add("uibase/positionrender", function(S) {
         },
         _uiSetVisible:function(isVisible) {
             this.get("el").css("visibility", isVisible ? "visible" : "hidden");
+        },
+
+        show:function() {
+            this.render();
+            this.set("visible", true);
+        },
+        hide:function() {
+            this.set("visible", false);
         }
     };
 

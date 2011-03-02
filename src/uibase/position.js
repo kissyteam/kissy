@@ -51,7 +51,6 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
         },
         _uiSetY:function(y) {
             this._forwordStateToView("y", y);
-
         },
         _uiSetVisible:function(isVisible) {
             var self = this;
@@ -91,19 +90,9 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
          * 显示 Overlay
          */
         show: function() {
-            this._firstShow();
+            this.render();
+            this.set("visible", true);
         },
-
-        /**
-         * 第一次显示时, 需要构建 DOM, 设置位置
-         */
-        _firstShow: function() {
-            var self = this;
-            self.render();
-            self._realShow();
-            self._firstShow = self._realShow;
-        },
-
 
         _realShow: function() {
             this.set("visible", true);

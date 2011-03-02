@@ -192,6 +192,8 @@
                 }
 
                 self.__registerModule(name, def, config);
+                //显示指定 add 不 attach
+                if (config && config['attach'] === false) return self;
                 // 和 1.1.7 以前版本保持兼容，不得已而为之
                 var mod = mods[name];
                 var requires = normalDepModuleName(name, mod.requires);
@@ -297,8 +299,8 @@
             mix(mod, { name: name, status: LOADED });
 
             if (mod.fns && mod.fns.length) {
-                S.log(name + " is defined more than once", "error");
-                S.error(name + " is defined more than once");
+                S.log(name + " is defined more than once");
+                //S.error(name + " is defined more than once");
             }
 
             //支持 host，一个模块多个 add factory
