@@ -200,7 +200,9 @@
                 if (self.__isAttached(requires)) {
                     //S.log(mod.name + " is attached when add !");
                     self.__attachMod(mod);
-                } else {
+                }
+                //调试用，为什么不在 add 时 attach
+                else if (!mod) {
                     var i,modNames;
                     i = (modNames = S.makeArray(requires)).length - 1;
                     for (; i >= 0; i--) {
@@ -353,6 +355,27 @@
             }
         },
 
+        __mixMods: function(global) {
+            var mods = this.Env.mods, gMods = global.Env.mods, name;
+            for (name in gMods) {
+                this.__mixMod(mods, gMods, name, global);
+            }
+        },
+
+        __mixMod: function(mods, gMods, name, global) {
+            var mod = mods[name] || {}, status = mod.status;
+
+            S.mix(mod, S.clone(gMods[name]));
+
+            // status 属于实例，当有值时，不能被覆盖。只有没有初始值时，才从 global 上继承
+            if (status) mod.status = status;
+
+            // 来自 global 的 mod, path 应该基于 global
+            if (global) this.__buildPath(mod, global.Config.base);
+
+            mods[name] = mod;
+        },
+
         /**
          * Start load specific mods, and fire callback when these mods and requires are attached.
          * <code>
@@ -360,17 +383,17 @@
          * S.use('mod1,mod2', callback, config);
          * </code>
          */
-        use: function(modNames, callback, config) {
+        use: function(modNames, callback, cfg) {
 
             modNames = modNames.replace(/\s+/g, EMPTY).split(',');
-            config = config || {};
-
+            cfg = cfg || {};
             var self = this,
                 modName,
                 i,
                 len = modNames.length,
                 fired;
-
+            //如果 use 指定了 global
+            if (cfg.global)self.__mixMods(cfg.global);
 
             // 已经全部 attached, 直接执行回调即可
             if (self.__isAttached(modNames)) {
@@ -387,7 +410,7 @@
                         var mods = self.__getModules(modNames);
                         callback && callback.apply(self, mods);
                     }
-                });
+                }, cfg);
             }
             return self;
         },
@@ -436,7 +459,7 @@
         },
 
         //加载指定模块名模块，如果不存在定义默认定义为内部模块
-        __attachModByName: function(modName, callback) {
+        __attachModByName: function(modName, callback, cfg) {
 
             var self = this,
                 mods = self.Env.mods;
@@ -450,11 +473,11 @@
             //没有模块定义
             if (!mod) {
                 //默认js名字
-                var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return removeTimestamp(m) + '-min.js' + (tag ? tag : '');
+                var componentJsName = self.Config['componentJsName'] || function(m, tag) {
+                    return m + '-min.js' + (tag ? tag : '');
                 },  jsPath = S.isFunction(componentJsName) ?
                     //一个模块合并到了了另一个模块文件中去
-                    componentJsName(self._combine(modName))
+                    componentJsName(self._combine(modName), tag)
                     : componentJsName;
                 mod = {
                     path:jsPath,
@@ -465,13 +488,13 @@
             }
             mod.name = modName;
             if (mod && mod.status === ATTACHED) return;
-            self.__attach(mod, callback);
+            self.__attach(mod, callback, cfg);
         },
 
         /**
          * Attach a module and all required modules.
          */
-        __attach: function(mod, callback) {
+        __attach: function(mod, callback, cfg) {
             var self = this,
                 mods = self.Env.mods,
                 //复制一份当前的依赖项出来，防止add后修改！
@@ -487,7 +510,7 @@
                 if (r && r.status === ATTACHED) {
                     //no need
                 } else {
-                    self.__attachModByName(requires[i], fn);
+                    self.__attachModByName(requires[i], fn, cfg);
                 }
             }
 
@@ -520,7 +543,7 @@
                         //no need
                     } else {
                         //新增的依赖项
-                        self.__attachModByName(r, fn);
+                        self.__attachModByName(r, fn, cfg);
                     }
                     /**
                      * 依赖项需要重新下载，最好和被依赖者一起 use
@@ -534,7 +557,7 @@
                     S.log(optimize + " : better to be used together", "warn");
                 }
                 fn();
-            });
+            }, cfg);
 
             var attached = false;
 
@@ -588,7 +611,7 @@
         /**
          * Load a single module.
          */
-        __load: function(mod, callback) {
+        __load: function(mod, callback, cfg) {
             var self = this,
                 url = mod['fullpath'],
                 //这个是全局的，防止多实例对同一模块的重复下载
@@ -639,6 +662,12 @@
             function _success() {
                 _final();
                 if (mod.status !== ERROR) {
+
+                    // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息，需要同步到 instance 上去
+                    // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
+                    if (cfg.global) {
+                        self.__mixMod(self.Env.mods, cfg.global.Env.mods, mod.name, cfg.global);
+                    }
 
                     // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
                     // 因此要加上下面的 !== 判断，否则会出现重复 attach, 比如编辑器里动态加载时，被依赖的模块会重复
@@ -856,5 +885,7 @@
  * 1. 保持兼容性，不得已而为之
  *      支持 { host : }
  *      如果 requires 都已经 attached，支持 add 后立即 attach
+ *      支持 { attach : false } 显示控制 add 时是否 attach
+ *      支持 { global : Editor } 指明模块来源
  */
 

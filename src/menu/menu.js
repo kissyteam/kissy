@@ -130,16 +130,11 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             focusable:{
                 //默认可以获得焦点
                 value:true
-            },
-            view:{
-                valueFn:function() {
-                    return new MenuRender();
-                }
             }
         }
     });
 
-
+    Menu.DefaultRender = MenuRender;
     return Menu;
 
 }, {

@@ -89,27 +89,13 @@
 <div id="exist">渐进增强</div>
 
 
-<script src="../../seed/kissy.js"></script>
-<script src="../../seed/lang.js"></script>
-<script src="../../seed/web.js"></script>
-<script src="../../seed/loader.js"></script>
-<script src="../../../build/ua.js"></script>
-<script src="../../../build/dom.js"></script>
-<script src="../../../build/event.js"></script>
-<script src="../../../build/node.js"></script>
-<script src="../../../build/base.js"></script>
-<script src="../../../build/json.js"></script>
-<script src="../../core.js"></script>
-<script>
-   KISSY.use("core");
-</script>
+<script src="../../../build/kissy.js"></script>
 <script src="../../../build/uibase.js"></script>
 
 <script src="../../component/modelcontrol.js"></script>
 <script src="../../component/render.js"></script>
 <script src="../../component.js"></script>
 
-<script src="../../../build/overlay.js"></script>
 <script src="../../button/base.js"></script>
 <script src="../../button/buttonrender.js"></script>
 <script src="../../button/nativerender.js"></script>
@@ -140,11 +126,12 @@
             Node.one("#log")[0].scrollTop = Node.one("#log")[0].scrollHeight;
         }
 
-        var sb = new Menu();
-        sb.addChild(new Menu.Item({content:"submenuitem1"}));
-        sb.addChild(new Menu.Item({content:"submenuitem2"}));
+        (function() {
+            var sb = new Menu();
+            sb.addChild(new Menu.Item({content:"submenuitem1"}));
+            sb.addChild(new Menu.Item({content:"submenuitem2"}));
 
-        if (true) {
+
             var sb2 = new Menu();
             sb2.addChild(new Menu.Item({content:"submenuitem11"}));
             sb2.addChild(new Menu.Item({content:"submenuitem22"}));
@@ -153,61 +140,80 @@
                 menu:sb2
             });
             sb.addChild(b2);
-        }
 
-        var b = new Menu.SubMenu({
-            content:"submenu",
-            menu:sb
-        });
-        var b2;
-        var menu = new Menu({
-            children:[b,b2 = new Menu.Item({content:"alone"})]
-        });
-        //model and control
-        //view as a parameter
-        var bbbbb = new MenuButton({
-            content:"测试",
-            describedby:"describe",
-            menu:menu,
-            view:new MenuButtonRender({
-                render:"#button_container"
-            }),
-            autoRender:true
-        });
+            var b = new Menu.SubMenu({
+                content:"submenu",
+                menu:sb
+            });
+
+            var menu = new Menu({
+                children:[b, new Menu.Item({content:"alone"})]
+            });
+            //model and control
+            //view as a parameter
+            var bbbbb = new MenuButton({
+                content:"测试",
+                describedby:"describe",
+                menu:menu,
+                render:"#button_container",
+                autoRender:true
+            });
 
 
-        bbbbb.on("menuItemSelected", function() {
-            log("selected : " + bbbbb.get("selectedItem").get("content"));
-        });
+            bbbbb.on("menuItemSelected", function() {
+                log("selected : " + bbbbb.get("selectedItem").get("content"));
+            });
 
-        //or
-        //b.render()
+            //or
+            //b.render()
 
-        var dis = Node.one("#dis");
+            var dis = Node.one("#dis");
 
-        dis.on("click", function() {
+            dis.on("click", function() {
+                if (dis[0].checked) {
+                    bbbbb.set("disabled", true);
+                } else {
+                    bbbbb.set("disabled", false);
+                }
+            });
+
             if (dis[0].checked) {
                 bbbbb.set("disabled", true);
             } else {
                 bbbbb.set("disabled", false);
             }
-        });
+        })();
+        (function() {
+            var sb = new Menu();
+            sb.addChild(new Menu.Item({content:"submenuitem1"}));
+            sb.addChild(new Menu.Item({content:"submenuitem2"}));
 
-        if (dis[0].checked) {
-            bbbbb.set("disabled", true);
-        } else {
-            bbbbb.set("disabled", false);
-        }
 
-        return;
+            var sb2 = new Menu();
+            sb2.addChild(new Menu.Item({content:"submenuitem11"}));
+            sb2.addChild(new Menu.Item({content:"submenuitem22"}));
+            var b2 = new Menu.SubMenu({
+                content:"sub-sub-menu",
+                menu:sb2
+            });
+            sb.addChild(b2);
 
-        var exist = new MenuButton({
-            view:new MenuButtonRender({
-                srcNode:"#exist"
-            }),
-            menu:menu,
-            autoRender:true
-        });
+            var b = new Menu.SubMenu({
+                content:"submenu",
+                menu:sb
+            });
+
+            var menu = new Menu({
+                children:[b,new Menu.Item({content:"alone"})]
+            });
+            var exist = new MenuButton({
+                srcNode:"#exist",
+                menu:menu,
+                autoRender:true
+            });
+
+        })();
+
 
     });
 </script>

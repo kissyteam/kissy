@@ -10,6 +10,7 @@
         <concat destfile="seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path location="kissy.js" />
             <path location="lang.js" />
+            <path location="loader.js" />
             <path location="web.js" />
             <path location="mods.js" />
         </concat>

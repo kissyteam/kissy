@@ -120,15 +120,11 @@ KISSY.add("menu/submenu", function(S, UIBase, MenuItem, SubMenuRender) {
                 setter:function(m) {
                     m.set("focusable", false);
                 }
-            },
-
-            view:{
-                valueFn:function() {
-                    return new SubMenuRender();
-                }
             }
         }
     });
+
+    SubMenu.DefaultRender = SubMenuRender;
     return SubMenu;
 }, {
     requires:['uibase','./menuitem','./submenurender']

@@ -170,11 +170,28 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 }
             },
 
+            //转交给渲染层
+            //note1 : 兼容性考虑
+            //note2 : 调用者可以完全不需要接触渲染层
+            srcNode:{},
+
             //父组件
             parent:{},
 
             //渲染层
-            view:{},
+            view:{
+
+                valueFn:function() {
+                    var DefaultRender = this.constructor['DefaultRender'];
+                    if (DefaultRender) {
+                        return new DefaultRender({
+                            srcNode:this.get("srcNode"),
+                            render:this.get("render")
+                        });
+                    }
+                }
+
+            },
 
             //是否禁用
             disabled:{

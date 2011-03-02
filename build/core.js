@@ -5322,6 +5322,7 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         UA:UA,
         DOM:DOM,
         Event:Event,
+        EventTarget:Event.Target,
         Node:Node,
         JSON:JSON,
         Ajax:Ajax,
@@ -5350,5 +5351,3 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
 });
 
 
-
-KISSY.use('core');

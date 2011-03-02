@@ -2,9 +2,9 @@
  * Model and Control for button
  * @author:yiminghe@gmail.com
  */
-KISSY.add("button/base", function(S, UIBase, Component) {
+KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
 
-    return UIBase.create(Component.ModelControl, [], {
+    var Button = UIBase.create(Component.ModelControl, [], {
 
         //model 中数据属性变化后要更新到 view 层
         _uiSetContent:function(v) {
@@ -38,6 +38,10 @@ KISSY.add("button/base", function(S, UIBase, Component) {
         }
     });
 
+    Button.DefaultRender = CustomRender;
+
+    return Button;
+
 }, {
-    requires:['uibase','component']
+    requires:['uibase','component','./customrender']
 });

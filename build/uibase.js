@@ -450,7 +450,12 @@ KISSY.add('uibase/box', function(S) {
         width:{},
         height:{},
         elCls:{},
-        elStyle:{}
+        elStyle:{},
+        el:{
+            getter:function() {
+                return this.get("view").get("el");
+            }
+        }
     };
 
 
@@ -793,13 +798,18 @@ KISSY.add("uibase/contentbox", function(S) {
 
     ContentBox.ATTRS = {
         //层内容
-        content:{}
+        content:{},
+        contentEl:{
+            getter:function() {
+                return this.get("view").get("contentEl");
+            }
+        }
     };
 
 
     ContentBox.prototype = {
         _uiSetContent:function(c) {
-                this._forwordStateToView("content", c);
+            this._forwordStateToView("content", c);
         }
     };
 

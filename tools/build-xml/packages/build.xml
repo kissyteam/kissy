@@ -35,7 +35,7 @@
             </classpath>
         </java>
 
-        <!--use core 直接放入 core.js 中-->
+        <!--use core 直接放入 core.js 中 ??
         <concat destfile="../core_tmp.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../core.js"/>
             <footer filtering="no" trimleading="yes">
@@ -45,11 +45,15 @@
 
         <delete file="../core.js"/>
         <move tofile="../core.js" file="../core_tmp.js"/>
+        -->
 
         <!-- kissy: seed + core, 独立单文件 -->
         <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../seed.js"/>
             <path path="../core.js"/>
+            <footer filtering="no" trimleading="yes">
+                KISSY.use('core');
+            </footer>
         </concat>
         <!-- kissy-aio: 所有文件 -->
         <concat destfile="kissy-aio-pkg.js" encoding="${charset}" outputencoding="${charset}">
