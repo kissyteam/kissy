@@ -13,7 +13,8 @@ KISSY.add("uibase/maskrender", function(S) {
 
     function initMask() {
         var UA = S.require("ua"),Node = S.require("node/node"),DOM = S.require("dom");
-        mask = new Node("<div class='ks-ext-mask'>").prependTo(document.body);
+        mask = new Node("<div class='" +
+             "ks-ext-mask'>").prependTo(document.body);
         mask.css({
             "position":"absolute",
             left:0,
@@ -38,7 +39,7 @@ KISSY.add("uibase/maskrender", function(S) {
 
         _maskExtShow:function() {
             if (!mask) {
-                initMask();
+                initMask.call(this);
             }
             mask.css({
                 "z-index":this.get("zIndex") - 1

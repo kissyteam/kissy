@@ -60,31 +60,31 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
     }, {
         ATTRS:{
             prefixCls:{
-                value:"goog-css3-button"
+                value:"goog-"
             },
             elCls:{
                 valueFn:function() {
-                    return "goog-inline-block " + this.get("prefixCls");
+                    return this.get("prefixCls") + "inline-block " + this.get("prefixCls") + "css3-button";
                 }
             },
             hoverCls:{
                 valueFn:function() {
-                    return this.get("prefixCls") + "-hover";
+                    return this.get("prefixCls") + "css3-button-hover";
                 }
             },
             focusCls:{
                 valueFn:function() {
-                    return this.get("prefixCls") + "-focused";
+                    return this.get("prefixCls") + "css3-button-focused";
                 }
             },
             activeCls:{
                 valueFn:function() {
-                    return this.get("prefixCls") + "-active";
+                    return this.get("prefixCls") + "css3-button-active";
                 }
             },
             disabledCls:{
                 valueFn:function() {
-                    return this.get("prefixCls") + "-disabled";
+                    return this.get("prefixCls") + "css3-button-disabled";
                 }
             }
         }

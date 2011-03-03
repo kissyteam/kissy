@@ -5,7 +5,7 @@
 KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
 
 
-    var CLS_PREFIX = "ks-stdmod-";
+    var CLS_PREFIX = "stdmod-";
 
     function StdMod() {
     }
@@ -31,16 +31,22 @@ KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
     };
 
     StdMod.HTML_PARSER = {
-        header:"." + CLS_PREFIX + "header",
-        body:"." + CLS_PREFIX + "body",
-        footer:"." + CLS_PREFIX + "footer"
+        header:function(el) {
+            return el.one("." + this.get("prefixCls") + CLS_PREFIX + "header");
+        },
+        body:function(el) {
+            return el.one("." + this.get("prefixCls") + CLS_PREFIX + "body");
+        },
+        footer:function(el) {
+            return el.one("." + this.get("prefixCls") + CLS_PREFIX + "footer");
+        }
     };
 
     function renderUI(self, part) {
         var el = self.get("contentEl"),
             partEl = self.get(part);
         if (!partEl) {
-            partEl = new Node("<div class='" + CLS_PREFIX + part + "'>")
+            partEl = new Node("<div class='" + self.get("prefixCls") +CLS_PREFIX + part + "'>")
                 .appendTo(el);
             self.set(part, partEl);
         }
@@ -58,17 +64,17 @@ KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
         },
         _uiSetBodyStyle:function(v) {
 
-                this.get("body").css(v);
+            this.get("body").css(v);
 
         },
         _uiSetHeaderStyle:function(v) {
 
-                this.get("header").css(v);
+            this.get("header").css(v);
 
         },
         _uiSetFooterStyle:function(v) {
 
-                this.get("footer").css(v);
+            this.get("footer").css(v);
         },
         _uiSetBodyContent:function(v) {
             this._setStdModContent("body", v);

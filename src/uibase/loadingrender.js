@@ -12,7 +12,8 @@ KISSY.add("uibase/loadingrender", function(S) {
             var self = this;
             if (!self._loadingExtEl) {
                 self._loadingExtEl = new (S.require("node/node"))("<div " +
-                    "class='ks-ext-loading'" +
+                    "class='" +
+                    "ks-ext-loading'" +
                     " style='position: absolute;" +
                     "border: none;" +
                     "width: 100%;" +

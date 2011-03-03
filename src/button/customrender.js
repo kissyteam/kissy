@@ -4,8 +4,8 @@
  */
 KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
     //双层 div 模拟圆角
-    var CUSTOM_RENDER_HTML = "<div class='goog-inline-block {prefixCls}-outer-box'>" +
-        "<div class='goog-inline-block {prefixCls}-inner-box'></div></div>";
+    var CUSTOM_RENDER_HTML = "<div class='{prefixCls}inline-block {prefixCls}custom-button-outer-box'>" +
+        "<div class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
 
     return UIBase.create(Css3Render, [], {
         renderUI:function() {
@@ -24,8 +24,30 @@ KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
         }
     }, {
         ATTRS:{
-            prefixCls:{
-                value:"goog-custom-button"
+            elCls:{
+                valueFn:function() {
+                    return this.get("prefixCls") + "inline-block " + this.get("prefixCls") + "custom-button";
+                }
+            },
+            hoverCls:{
+                valueFn:function() {
+                    return this.get("prefixCls") + "custom-button-hover";
+                }
+            },
+            focusCls:{
+                valueFn:function() {
+                    return this.get("prefixCls") + "custom-button-focused";
+                }
+            },
+            activeCls:{
+                valueFn:function() {
+                    return this.get("prefixCls") + "custom-button-active";
+                }
+            },
+            disabledCls:{
+                valueFn:function() {
+                    return this.get("prefixCls") + "custom-button-disabled";
+                }
             }
         }
     });

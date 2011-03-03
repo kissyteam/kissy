@@ -23,11 +23,14 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
     ], {
 
         renderUI:function() {
-            this.get("el").addClass("ks-overlay");
+            this.get("el").addClass(this.get("prefixCls") + "overlay");
         }
 
     }, {
         ATTRS:{
+            prefixCls:{
+                value:"ks-"
+            },
             elOrder:0
         }
     });
@@ -54,8 +57,7 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender) {
         require("loading"),
         require("align"),
         require("resize"),
-        require("mask")], {
-    });
+        require("mask")]);
 
     Overlay.DefaultRender=OverlayRender;
 

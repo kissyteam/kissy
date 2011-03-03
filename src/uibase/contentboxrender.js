@@ -19,7 +19,9 @@ KISSY.add("uibase/contentboxrender", function(S, Node) {
 
 
     ContentBox.HTML_PARSER = {
-        contentEl:".ks-contentbox"
+        contentEl:function(el) {
+            return el.one("." + this.get("prefixCls") + "contentbox");
+        }
     };
 
     ContentBox.prototype = {
@@ -33,7 +35,9 @@ KISSY.add("uibase/contentboxrender", function(S, Node) {
                 var elChildren = S.makeArray(el[0].childNodes);
                 contentEl = new Node("<" +
                     self.get("contentTagName") +
-                    " class='ks-contentbox'>").appendTo(el);
+                    " class='" +
+                    this.get("prefixCls")
+                    + "contentbox'>").appendTo(el);
                 for (var i = 0; i < elChildren.length; i++) {
                     contentEl.append(elChildren[i]);
                 }

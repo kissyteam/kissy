@@ -11,7 +11,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         renderUI:function() {
             var el = this.get("el");
             el.one("div").one("div").html(S.substitute(MENU_BUTTON_TMPL, {
-                prefixCls:this.get("prefixCls")
+                prefixCls:this.get("prefixCls")+"menu-button"
             }));
             //带有 menu
             el.attr("aria-haspopup", true);
@@ -19,24 +19,21 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
         _uiSetContent:function(v) {
             if (v == undefined) return;
-            this.get("el").one("." + this.get("prefixCls") + "-caption").html(v);
+            this.get("el").one("." + this.get("prefixCls") + "menu-button-caption").html(v);
         },
 
         _uiSetCollapsed:function(v) {
-            var el = this.get("el"),prefixCls = this.get("prefixCls");
+            var el = this.get("el"),prefixCls = this.get("prefixCls")+"menu-button";
             if (!v) {
-                el.addClass(prefixCls + "-open");
+                el.addClass(prefixCls + "menu-button-open");
                 el.attr("aria-expanded", true);
             } else {
-                el.removeClass(prefixCls + "-open");
+                el.removeClass(prefixCls + "menu-button-open");
                 el.attr("aria-expanded", false);
             }
         }
     }, {
         ATTRS:{
-            prefixCls:{
-                value:"goog-menu-button"
-            },
             collapsed:{
                 value:true
             }

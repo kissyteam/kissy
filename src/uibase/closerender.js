@@ -4,7 +4,7 @@
  */
 KISSY.add("uibase/closerender", function(S) {
 
-    var CLS_PREFIX = 'ks-ext-';
+    var CLS_PREFIX = 'ext-';
 
     function Close() {
     }
@@ -17,7 +17,9 @@ KISSY.add("uibase/closerender", function(S) {
     };
 
     Close.HTML_PARSER = {
-        closeBtn:"." + CLS_PREFIX + 'close'
+        closeBtn:function(el) {
+            return el.one("." + this.get("prefixCls") + CLS_PREFIX + 'close');
+        }
     };
 
     Close.prototype = {
@@ -26,9 +28,9 @@ KISSY.add("uibase/closerender", function(S) {
                 closeBtn = self.get("closeBtn");
             if (closeBtn) {
                 if (v) {
-                    closeBtn.css("display","");
+                    closeBtn.css("display", "");
                 } else {
-                    closeBtn.css("display","none");
+                    closeBtn.css("display", "none");
                 }
             }
         },
@@ -42,9 +44,9 @@ KISSY.add("uibase/closerender", function(S) {
                 el) {
                 closeBtn = new Node("<a " +
                     "href='#' " +
-                    "class='" + CLS_PREFIX + "close" + "'>" +
+                    "class='" + this.get("prefixCls") +CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
-                    CLS_PREFIX + "close-x" +
+                    this.get("prefixCls") +CLS_PREFIX + "close-x" +
                     "'>X</span>" +
                     "</a>")
                     .appendTo(el);

@@ -10422,7 +10422,7 @@ KISSY.add("uibase/close", function(S) {
  */
 KISSY.add("uibase/closerender", function(S) {
 
-    var CLS_PREFIX = 'ks-ext-';
+    var CLS_PREFIX = 'ext-';
 
     function Close() {
     }
@@ -10435,7 +10435,9 @@ KISSY.add("uibase/closerender", function(S) {
     };
 
     Close.HTML_PARSER = {
-        closeBtn:"." + CLS_PREFIX + 'close'
+        closeBtn:function(el) {
+            return el.one("." + this.get("prefixCls") + CLS_PREFIX + 'close');
+        }
     };
 
     Close.prototype = {
@@ -10444,9 +10446,9 @@ KISSY.add("uibase/closerender", function(S) {
                 closeBtn = self.get("closeBtn");
             if (closeBtn) {
                 if (v) {
-                    closeBtn.css("display","");
+                    closeBtn.css("display", "");
                 } else {
-                    closeBtn.css("display","none");
+                    closeBtn.css("display", "none");
                 }
             }
         },
@@ -10460,9 +10462,9 @@ KISSY.add("uibase/closerender", function(S) {
                 el) {
                 closeBtn = new Node("<a " +
                     "href='#' " +
-                    "class='" + CLS_PREFIX + "close" + "'>" +
+                    "class='" + this.get("prefixCls") +CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
-                    CLS_PREFIX + "close-x" +
+                    this.get("prefixCls") +CLS_PREFIX + "close-x" +
                     "'>X</span>" +
                     "</a>")
                     .appendTo(el);
@@ -10626,7 +10628,9 @@ KISSY.add("uibase/contentboxrender", function(S, Node) {
 
 
     ContentBox.HTML_PARSER = {
-        contentEl:".ks-contentbox"
+        contentEl:function(el) {
+            return el.one("." + this.get("prefixCls") + "contentbox");
+        }
     };
 
     ContentBox.prototype = {
@@ -10640,7 +10644,9 @@ KISSY.add("uibase/contentboxrender", function(S, Node) {
                 var elChildren = S.makeArray(el[0].childNodes);
                 contentEl = new Node("<" +
                     self.get("contentTagName") +
-                    " class='ks-contentbox'>").appendTo(el);
+                    " class='" +
+                    this.get("prefixCls")
+                    + "contentbox'>").appendTo(el);
                 for (var i = 0; i < elChildren.length; i++) {
                     contentEl.append(elChildren[i]);
                 }
@@ -10763,7 +10769,8 @@ KISSY.add("uibase/loadingrender", function(S) {
             var self = this;
             if (!self._loadingExtEl) {
                 self._loadingExtEl = new (S.require("node/node"))("<div " +
-                    "class='ks-ext-loading'" +
+                    "class='" +
+                    "ks-ext-loading'" +
                     " style='position: absolute;" +
                     "border: none;" +
                     "width: 100%;" +
@@ -10831,7 +10838,8 @@ KISSY.add("uibase/maskrender", function(S) {
 
     function initMask() {
         var UA = S.require("ua"),Node = S.require("node/node"),DOM = S.require("dom");
-        mask = new Node("<div class='ks-ext-mask'>").prependTo(document.body);
+        mask = new Node("<div class='" +
+             "ks-ext-mask'>").prependTo(document.body);
         mask.css({
             "position":"absolute",
             left:0,
@@ -10856,7 +10864,7 @@ KISSY.add("uibase/maskrender", function(S) {
 
         _maskExtShow:function() {
             if (!mask) {
-                initMask();
+                initMask.call(this);
             }
             mask.css({
                 "z-index":this.get("zIndex") - 1
@@ -11181,7 +11189,7 @@ KISSY.add("uibase/stdmod", function(S) {
 KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
 
 
-    var CLS_PREFIX = "ks-stdmod-";
+    var CLS_PREFIX = "stdmod-";
 
     function StdMod() {
     }
@@ -11207,16 +11215,22 @@ KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
     };
 
     StdMod.HTML_PARSER = {
-        header:"." + CLS_PREFIX + "header",
-        body:"." + CLS_PREFIX + "body",
-        footer:"." + CLS_PREFIX + "footer"
+        header:function(el) {
+            return el.one("." + this.get("prefixCls") + CLS_PREFIX + "header");
+        },
+        body:function(el) {
+            return el.one("." + this.get("prefixCls") + CLS_PREFIX + "body");
+        },
+        footer:function(el) {
+            return el.one("." + this.get("prefixCls") + CLS_PREFIX + "footer");
+        }
     };
 
     function renderUI(self, part) {
         var el = self.get("contentEl"),
             partEl = self.get(part);
         if (!partEl) {
-            partEl = new Node("<div class='" + CLS_PREFIX + part + "'>")
+            partEl = new Node("<div class='" + self.get("prefixCls") +CLS_PREFIX + part + "'>")
                 .appendTo(el);
             self.set(part, partEl);
         }
@@ -11234,17 +11248,17 @@ KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
         },
         _uiSetBodyStyle:function(v) {
 
-                this.get("body").css(v);
+            this.get("body").css(v);
 
         },
         _uiSetHeaderStyle:function(v) {
 
-                this.get("header").css(v);
+            this.get("header").css(v);
 
         },
         _uiSetFooterStyle:function(v) {
 
-                this.get("footer").css(v);
+            this.get("footer").css(v);
         },
         _uiSetBodyContent:function(v) {
             this._setStdModContent("body", v);
@@ -11538,6 +11552,9 @@ KISSY.add("component/render", function(S, UIBase) {
         ATTRS:{
             //从 maskup 中渲染
             srcNode:{},
+            prefixCls:{
+                value:""
+            },
             //是否禁用
             disabled:{
                 value:false
@@ -12837,11 +12854,14 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
     ], {
 
         renderUI:function() {
-            this.get("el").addClass("ks-overlay");
+            this.get("el").addClass(this.get("prefix") + "overlay");
         }
 
     }, {
         ATTRS:{
+            prefix:{
+                value:"ks-"
+            },
             elOrder:0
         }
     });
@@ -12868,8 +12888,7 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender) {
         require("loading"),
         require("align"),
         require("resize"),
-        require("mask")], {
-    });
+        require("mask")]);
 
     Overlay.DefaultRender=OverlayRender;
 
@@ -14083,6 +14102,12 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
     function require(s) {
         return S.require("uibase/" + s);
     }
+    function show(obj) {
+        obj && obj.show();
+    }
+    function hide(obj) {
+        obj && obj.hide();
+    }
 
     return UIBase.create([require("boxrender"),
         require("contentboxrender"),
@@ -14146,27 +14171,36 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
                 timer;
 
             self.image.on('mouseenter', function(ev) {
-                if (!self.get('hasZoom')) return;
+                    if (!self.get('hasZoom')) return;
 
-                timer = S.later(function() {
-                self.set('currentMouse', ev);
-                    self.show();
-                    timer = undefined;
+                    timer = S.later(function() {
+                        self.set('currentMouse', ev);
+                        self.show();
+                        timer = undefined;
 
-                }, 100);
-            }).on('mouseleave', function() {
-                if (timer) {
-                    timer.cancel();
-                    timer = undefined;
+                    }, 50);
+                }).on('mouseleave', function() {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
+            });
+
+            self.on('afterVisibleChange', function(ev) {
+                var isVisible = ev.newVal;
+                if (isVisible) {
+                    hide(self.icon);
+                } else {
+                    show(self.icon);
                 }
             });
         },
 
         _uiSetHasZoom: function(v) {
             if (v) {
-                this.icon && this.icon.show();
+                show(this.icon);
             } else {
-                this.icon && this.icon.hide();
+                hide(this.icon);
             }
         }
     },
@@ -14383,10 +14417,10 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
             
             if (self._isInner) {
                 // inner 位置强制修改
-                /*self.set('align', {
+                self.set('align', {
                     node: self.image,
                     points: ['cc', 'cc']
-                });*/
+                });
                 self._bigImageCopy = new Node('<img src="' + self.image.attr('src') + '"  />').css('position', 'absolute')
                     .width(self.get('bigImageWidth')).height(self.get('bigImageHeight')).prependTo(self.viewer);
             }
@@ -14397,8 +14431,10 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
 
             self.viewer.appendTo(self.get("el"));
 
+            self.loading();
             // 大图加载完毕后更新显示区域
             imgOnLoad(bigImage, function() {
+                self.unloading();
                 self._setLensSize();
 
                 self.set('bigImageWidth', bigImage.width());
@@ -14408,23 +14444,21 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
         __bindUI: function() {
             var self = this;
 
-            self.on('show', function() {
-                hide(self.icon);
+            self.on('afterVisibleChange', function(ev) {
+                var isVisible = ev.newVal;
+                if (isVisible) {
+                    if (self._isInner) {
+                        self._anim(0.4, 42);
+                    }
 
-                if (self._isInner) {
-                    self._anim(0.4, 42);
+                    body.on('mousemove', self._mouseMove, self);
+
+                } else {
+                    hide(self.lens);
+                    body.detach('mousemove', self._mouseMove, self);
                 }
-
-                body.on('mousemove', self._mouseMove, self);
             });
 
-
-            self.on('hide', function() {
-                hide(self.lens);
-                show(self.icon);
-
-                body.detach('mousemove', self._mouseMove, self);
-            });
         },
         __syncUI: function() {
         },
@@ -14535,7 +14569,6 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
         _uiSetCurrentMouse: function(ev) {
             var self = this,
                 lt;
-
             if (!self.bigImage || self._animTimer) return;
 
             // 更新 lens 位置
