@@ -27,23 +27,30 @@ KISSY.add("menu/submenu", function(S, UIBase, MenuItem, SubMenuRender) {
         },
 
         bindUI:function() {
-            var self = this,parentMenu = self.get("parent");
+            var self = this,
+                parentMenu = self.get("parent");
+
+            var menu = this.get("menu");
+
             //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
             if (parentMenu) {
                 parentMenu.on("hide", function() {
                     if (self.get("menu")) self.get("menu").hide();
                 });
+
+                // 子菜单选中后也要通知父级菜单
+                // 不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
+                // 单个 menu 来看可能 selectedItem没有变化
+                menu.on("menuItemSelected", function() {
+                    parentMenu.set("selectedItem", menu.get("selectedItem"));
+                    parentMenu.fire("menuItemSelected");
+                });
+
+                //纯表现层的事情
+                menu.get("view").on("afterHighlightedItemChange", function(ev) {
+                    parentMenu.get("view").set("highlightedItem", ev.newVal);
+                });
             }
-
-            var menu = this.get("menu");
-
-            //子菜单选中后也要通知父级菜单
-            //不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
-            // 单个 menu 来看可能 selectedItem没有变化
-            menu.on("menuItemSelected", function() {
-                parentMenu.set("selectedItem", menu.get("selectedItem"));
-                parentMenu.fire("menuItemSelected");
-            });
 
 
             //!TODO
@@ -103,6 +110,10 @@ KISSY.add("menu/submenu", function(S, UIBase, MenuItem, SubMenuRender) {
             if (e.keyCode == 39 && (!menu ||
                 !menu.get("visible"))) {
                 this._showSubMenu();
+                var menuChildren = menu.get("children");
+                if (menuChildren[0]) {
+                    menuChildren[0].set("highlighted", true);
+                }
                 return false;
             }
             //left

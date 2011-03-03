@@ -128,8 +128,10 @@
 
         (function() {
             var sb = new Menu();
+
+
             sb.addChild(new Menu.Item({content:"submenuitem1"}));
-            sb.addChild(new Menu.Item({content:"submenuitem2"}));
+            sb.addChild(new Menu.Item({content:"submenuitem2",disabled:true}));
 
 
             var sb2 = new Menu();
