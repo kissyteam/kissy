@@ -3,7 +3,7 @@
  * @author:yiminghe@gmail.com
  */
 KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
-    return UIBase.create(Component.Render, [UIBase.Box.Render], {
+    return UIBase.create(Component.Render, {
         renderUI:function() {
             this.get("el").html("<div class='" + this.get("prefixCls") + "menuitem-content" + "'>")
             this.get("el").attr("role", "menuitem");

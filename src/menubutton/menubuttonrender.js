@@ -7,7 +7,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
     var MENU_BUTTON_TMPL = '<div class="goog-inline-block {prefixCls}-caption"></div>' +
         '<div class="goog-inline-block {prefixCls}-dropdown">&nbsp;</div>';
 
-    var MenuButtonRender = UIBase.create(Button.Render, [], {
+    var MenuButtonRender = UIBase.create(Button.Render, {
         renderUI:function() {
             var el = this.get("el");
             el.one("div").one("div").html(S.substitute(MENU_BUTTON_TMPL, {

@@ -4,7 +4,7 @@
  */
 KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
 
-    return UIBase.create(ButtonRender, [], {
+    return UIBase.create(ButtonRender, {
 
         renderUI:function() {
             this.get("el").unselectable();

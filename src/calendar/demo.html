@@ -4,20 +4,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>S.Calendar Demo</title>
 
-<script src="../seed/kissy.js"></script>
-<script src="../seed/lang.js"></script>
-<script src="../seed/web.js"></script>
-<script src="../seed/loader.js"></script>
-<script src="../../build/ua.js"></script>
-<script src="../../build/node.js"></script>
-<script src="../../build/dom.js"></script>
-<script src="../../build/event.js"></script>
+<script src="../../build/kissy.js"></script>
 
+<script src="base.js"></script>
 <script src="date.js"></script>
-<script src="../calendar.js"></script>
 <script src="page.js"></script>
 <script src="time.js"></script>
-<script src="base.js"></script>
+<script src="../calendar.js"></script>
 
 <link href="assets/calendar.css" rel="stylesheet"/>
 
@@ -130,6 +123,9 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
 </p>
 
 <script>
+    var S=KISSY;
+    S.log(S.Calendar);
+    S.log(S.Date);
 
     var c = {};
     var showdate = function(n, d) {//计算d天的前几天或者后几天，返回date,注：chrome下不支持date构造时的天溢出
@@ -139,9 +135,8 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
     };
 
 
-    KISSY.use('node,calendar', function(S, N, Calendar) {
-        var Node = S.require("node/node"),
-                S_Date = S.require("calendar/date");
+    KISSY.use('node,calendar', function(S, Node, Calendar) {
+        var S_Date = S.Date;
         var i = 0;
         //静态日历,单击回调
         c = new Calendar('#J_Calendar').on('select', function(e) {

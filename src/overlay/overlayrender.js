@@ -9,7 +9,6 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
     }
 
     return UIBase.create(Component.Render, [
-        require("boxrender"),
         require("contentboxrender"),
         require("positionrender"),
         require("loadingrender"),

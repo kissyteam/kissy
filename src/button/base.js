@@ -4,7 +4,7 @@
  */
 KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
 
-    var Button = UIBase.create(Component.ModelControl, [], {
+    var Button = UIBase.create(Component.ModelControl, {
 
         //model 中数据属性变化后要更新到 view 层
         _uiSetContent:function(v) {

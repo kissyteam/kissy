@@ -3,7 +3,7 @@
  * @author:yiminghe@gmail.com
  */
 KISSY.add("component/render", function(S, UIBase) {
-    return UIBase.create([], {
+    return UIBase.create([UIBase.Box.Render], {
 
     }, {
         ATTRS:{

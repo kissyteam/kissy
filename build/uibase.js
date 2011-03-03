@@ -390,6 +390,11 @@ KISSY.add('uibase/base', function (S, Base) {
             base = UIBase;
         }
         base = base || UIBase;
+        if (S['isObject'](exts)) {
+            sx = px;
+            px = exts;
+            exts = [];
+        }
 
         function C() {
             UIBase.apply(this, arguments);

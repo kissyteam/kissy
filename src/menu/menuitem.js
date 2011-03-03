@@ -3,7 +3,7 @@
  * @author:yiminghe@gmail.com
  */
 KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
-    var MenuItem = UIBase.create(Component.ModelControl, [], {
+    var MenuItem = UIBase.create(Component.ModelControl,{
         _uiSetHighlighted:function(v) {
             this.get("view").set("highlighted", v);
         },

@@ -12,6 +12,7 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         io:Ajax,
         jsonp:Ajax.jsonp,
         Anim:Anim,
+        Easing:Anim.Easing,
         Base:Base,
         Cookie:Cookie,
         one:Node.one,

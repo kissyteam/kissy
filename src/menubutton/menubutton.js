@@ -4,7 +4,7 @@
  */
 KISSY.add("menubutton/menubutton", function(S, UIBase, Button, MenuButtonRender) {
 
-    var MenuButton = UIBase.create(Button, [], {
+    var MenuButton = UIBase.create(Button, {
 
         _hideMenu:function() {
             var self = this,

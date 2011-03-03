@@ -66,11 +66,10 @@
 
 <!-- Test Cases -->
 <script>
-    KISSY.use("anim,node", function(S, Anim) {
+    KISSY.use("anim,node", function(S, Anim,Node) {
 
-        var Node = S.require("node/node"),
-        NodeList=S.require("node/nodelist"),
-                Easing = S.require("anim/easing"),
+        var     NodeList=Node.List,
+                Easing = Anim.Easing,
                 anim2 = Anim(
                         '#test1',
                         'background-color: #fcc; border: 5px dashed #999; width: 100px; height: 40px; left: 900px; top: 285px; opacity: .5; border-color: #999; font-size: 48px; padding: 30px 0; color: #FF3333',

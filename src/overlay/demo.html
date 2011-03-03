@@ -7,7 +7,11 @@
 <script src="../../build/component.js"></script>
 <script src="../../build/uibase.js"></script>
 <script src="../../build/overlay.js"></script>
-
+<script>
+    var S = KISSY;
+    S.log(S.Overlay);
+    S.log(S.Dialog);
+</script>
 <link href="../../build/cssreset/reset-min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="assets/cool.css"/>
 <style>
@@ -462,7 +466,7 @@
                 headerContent: 'this is title',
                 footerContent: 'footer',
                 footerStyle:{
-                  position:"absolute",
+                    position:"absolute",
                     bottom:0
                 },
                 bodyStyle:{

@@ -7,7 +7,7 @@ KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
     var CUSTOM_RENDER_HTML = "<div class='{prefixCls}inline-block {prefixCls}custom-button-outer-box'>" +
         "<div class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
 
-    return UIBase.create(Css3Render, [], {
+    return UIBase.create(Css3Render,  {
         renderUI:function() {
             this.get("el").html(S.substitute(CUSTOM_RENDER_HTML, {
                 prefixCls:this.get("prefixCls")

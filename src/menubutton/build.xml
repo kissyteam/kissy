@@ -1,4 +1,4 @@
-<project name="imagezoom.build" default="build" basedir=".">
+<project name="menubutton.build" default="build" basedir=".">
     <description>Component Build File</description>
 
     <import file="../../tools/build.xml"/>
@@ -7,16 +7,14 @@
     <property name="src.dir" location="."/>
 
     <target name="concat">
-        <concat destfile="imagezoom-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path location="zoomer.js"/>
-            <path location="base.js"/>
-            <path location="autorender.js"/>
-            <path location="../imagezoom.js"/>
+        <concat destfile="menubutton-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <fileset dir="${src.dir}" includes="*.js"/>
+            <path location="../menubutton.js"/>
         </concat>
     </target>
 
     <target name="clean">
-        <delete file="imagezoom-pkg.js"/>
+        <delete file="menubutton-pkg.js"/>
     </target>
 
     <target name="build" depends="concat,common.build,clean">

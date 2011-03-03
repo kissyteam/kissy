@@ -8,7 +8,6 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender) {
     }
 
     var Overlay= UIBase.create(Component.ModelControl, [
-        require("box"),
         require("contentbox"),
         require("position"),
         require("loading"),

@@ -4,7 +4,7 @@
  */
 KISSY.add("menu/submenu", function(S, UIBase, MenuItem, SubMenuRender) {
     var SubMenu;
-    SubMenu = UIBase.create(MenuItem, [], {
+    SubMenu = UIBase.create(MenuItem,  {
         _handleMouseLeave:function(ev) {
             if (MenuItem.superclass._handleMouseLeave.call(this, ev) === false) return false;
             var menu = this.get("menu");

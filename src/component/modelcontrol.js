@@ -3,7 +3,7 @@
  * @author:yiminghe@gmail.com
  */
 KISSY.add("component/modelcontrol", function(S, UIBase) {
-    return UIBase.create([], {
+    return UIBase.create([UIBase.Box], {
 
         renderUI:function() {
             var view = this.get("view");

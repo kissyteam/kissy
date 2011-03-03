@@ -12854,12 +12854,12 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
     ], {
 
         renderUI:function() {
-            this.get("el").addClass(this.get("prefix") + "overlay");
+            this.get("el").addClass(this.get("prefixCls") + "overlay");
         }
 
     }, {
         ATTRS:{
-            prefix:{
+            prefixCls:{
                 value:"ks-"
             },
             elOrder:0

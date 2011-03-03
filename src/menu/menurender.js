@@ -4,7 +4,7 @@
  */
 KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
     var MenuRender = UIBase.create(Component.Render, [
-        UIBase.Box.Render,
+
         UIBase.Contentbox.Render,
         UIBase.Position.Render,
         UA['ie'] === 6 ? UIBase.Shim.Render : null

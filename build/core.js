@@ -5356,3 +5356,5 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
 });
 
 
+
+KISSY.use('core');
