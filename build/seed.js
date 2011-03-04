@@ -733,6 +733,8 @@ build time: ${build.time}
                     if (self.__isAttached(host)) {
                         def.apply(self);
                     } else {
+                        //该 host 模块纯虚！
+                        hostMod.fns = hostMod.fns || [];
                         hostMod.fns.push(def);
                     }
                     return self;
@@ -749,7 +751,7 @@ build time: ${build.time}
                     self.__attachMod(mod);
                 }
                 //调试用，为什么不在 add 时 attach
-                else if (true||!mod) {
+                else if (true || !mod) {
                     var i,modNames;
                     i = (modNames = S.makeArray(requires)).length - 1;
                     for (; i >= 0; i--) {
