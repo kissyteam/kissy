@@ -127,10 +127,10 @@
     </target>
 
     <target name="common.build" depends="prepare,compress,native2ascii,copyright">
-
-        <move encoding="${charset}" todir="${build.dir}">
+        <!--兼容性考虑，pkg保留-->
+        <copy encoding="${charset}" todir="${build.dir}">
             <fileset dir="${build.dir}/${component.name}/" includes="*-pkg*.js"/>
             <mapper type="regexp" from="(.*)-pkg(.*)" to="\1\2"/>
-        </move>
+        </copy>
     </target>
 </project>

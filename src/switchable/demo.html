@@ -4,32 +4,27 @@
 <meta charset="utf-8"/>
 <title>S.Switchable Demo</title>
 
-<script src="../seed/kissy.js"></script>
-<script src="../seed/lang.js"></script>
-<script src="../seed/web.js"></script>
-<script src="../seed/loader.js"></script>
-<script src="../../build/ua.js"></script>
-<script src="../../build/node.js"></script>
-<script src="../../build/dom.js"></script>
-<script src="../../build/event.js"></script>
-<script src="../../build/base.js"></script>
-<script src="../../build/anim.js"></script>
-<script src="../../build/json.js"></script>
+
+<script src="../../build/kissy.js"></script>
 <script src="../../build/datalazyload.js"></script>
 
-<script src="../switchable.js"></script>
-
+<script src="base.js"></script>
+<script src="accordion.js"></script>
 <script src="autoplay.js"></script>
+<script src="autorender.js"></script>
+<script src="carousel.js"></script>
 <script src="effect.js"></script>
 <script src="circular.js"></script>
-<script src="lazyload.js"></script>
 <script src="countdown.js"></script>
-<script src="base.js"></script>
-<script src="autorender.js"></script>
-<script src="tabs.js"></script>
+<script src="lazyload.js"></script>
 <script src="slide.js"></script>
-<script src="carousel.js"></script>
-<script src="accordion.js"></script>
+<script src="tabs.js"></script>
+<script src="../switchable.js"></script>
+<script>
+    var S = KISSY;
+    S.log(S.Switchable);
+    S.log(S.Tabs);
+</script>
 
 <link rel="stylesheet" href="../../build/cssreset/reset-min.css"/>
 <style>
@@ -135,8 +130,8 @@
 </div>
 <script>
     KISSY.use("datalazyload,switchable", function(S) {
-        ;
-        var Tabs = S.require("switchable/tabs");
+
+        var Tabs = S.Tabs
 
         S.ready(function(S) {
             var tabs = new Tabs('#demo1');
@@ -240,8 +235,8 @@
 </div>
 <button id="demo2-btn">stop autoplay</button>
 <script>
-    KISSY.use("switchable", function(S) {
-        var Slide = S.require("switchable/slide"),Event = S.require("event");
+    KISSY.use("event,switchable", function(S, Event, Switchable) {
+        var Slide = S.Slide;
 
         S.ready(function(S) {
 
@@ -326,9 +321,8 @@
     </ul>
 </div>
 <script>
-    KISSY.use("switchable", function(S) {
-        var Slide = S.require("switchable/slide"),Event = S.require("event");
-;
+    KISSY.use("event,switchable", function(S, Event, Switchable) {
+        var Slide = S.Slide;
         S.ready(function(S) {
             Slide('#demo3', {
                 navCls: 'yslider-stick',
@@ -442,8 +436,8 @@
     </div>
 </div>
 <script>
-    KISSY.use("switchable", function(S) {
-        var Carousel = S.require("switchable/carousel"),Event = S.require("event");
+    KISSY.use("event,switchable", function(S, Event) {
+        var Carousel = S.Carousel;
 
         S.ready(function(S) {
             var carousel = new Carousel('#demo4', {
@@ -488,9 +482,8 @@
     </ul>
 </div>
 <script>
-    KISSY.use("switchable", function(S) {
-        var Slide = S.require("switchable/slide"),Event = S.require("event");
-;
+    KISSY.use("event,switchable", function(S, Event) {
+        var Slide = S.Slide;
         S.ready(function(S) {
             Slide('#demo5', {
                 contentCls: 'news-items',
@@ -616,15 +609,13 @@
     </div>
 </div>
 <script>
-    KISSY.use("switchable", function(S) {
-        var Slide = S.require("switchable/slide"),
-                Event = S.require("event"),
-                Easing = S.require("anim/easing"),
-                DOM = S.require("dom");
-;
+    KISSY.use("dom,event,anim,switchable", function(S, DOM, Event, Anim, Switchable) {
+        var Slide = S.Slide,
+
+                Easing = S.Easing;
+
         S.ready(function(S) {
-            var
-                    descList = DOM.children('#slideFocus ul.desc-list');
+            var descList = DOM.children('#slideFocus ul.desc-list');
 
             var slide = new Slide('#slideFocus', {
                 contentCls: 'pic-list',
@@ -713,12 +704,10 @@
     <div class="ks-switchable-panel last-panel" style="display:none;">内容D<br/>内容D<br/>内容D</div>
 </div>
 <script>
-    KISSY.use("switchable", function(S) {
-        var Accordion = S.require("switchable/accordion"),
-                Event = S.require("event"),
-                Easing = S.require("anim/easing"),
-                DOM = S.require("dom");
-;
+    KISSY.use("dom,event,anim,switchable", function(S, DOM, Event, Anim, Switchable) {
+        var Accordion = S.Accordion,
+                Easing = S.Easing;
+
         S.ready(function(S) {
             Accordion('#accordion1', { multiple: true });
         });
@@ -727,9 +716,9 @@
 <p class="code-switch">显示源码</p>
 
 <script>
-    KISSY.use("ua,dom,event,node", function(S, UA, DOM, Event) {
-        var NodeList = S.require("node/nodelist"),
-                Node = S.require("node/node"),
+    KISSY.use("ua,dom,event,node", function(S, UA, DOM, Event, Node) {
+        var NodeList = Node.List,
+
                 SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
 
         NodeList.all('p.code-switch').each(function(p) {

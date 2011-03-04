@@ -8,8 +8,8 @@
 
     <target name="concat">
         <concat destfile="datalazyload-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path location="../datalazyload.js"/>
             <path location="impl.js"/>
+            <path location="../datalazyload.js"/>
         </concat>
     </target>
 

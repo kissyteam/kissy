@@ -8,7 +8,17 @@
 
     <target name="concat">
         <concat destfile="switchable-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <fileset dir="${src.dir}" includes="*.js" />
+            <path location="base.js" />
+            <path location="accordion.js" />
+            <path location="autoplay.js" />
+            <path location="autorender.js" />
+            <path location="carousel.js" />
+            <path location="effect.js" />
+            <path location="circular.js" />
+            <path location="countdown.js" />
+            <path location="lazyload.js" />
+            <path location="slide.js" />
+            <path location="tabs.js" />
             <path location="../switchable.js" />
         </concat>
     </target>

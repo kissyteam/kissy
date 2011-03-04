@@ -21,8 +21,8 @@
     <target name="concat">
 
         <!-- using module compiler to gen core.js -->
-        <delete file="../core.js"/>
-        <copy tofile="../core.js" file="../../src/core.js"/>
+        <delete file="${src.dir}/core-pkg.js"/>
+        <copy tofile="${src.dir}/core-pkg.js" file="../../src/core.js"/>
 
         <!--
             不使用 java -jar fork 的话，新开 jvm 和后面的 concat 不串行了
@@ -39,21 +39,21 @@
             use core 直接放入 core.js 中 ??
             有的应用会先载入 seed.js，再载入 core.js ，希望能立刻用到 core 的东西
         -->
-        <concat destfile="../core_tmp.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../core.js"/>
+        <concat destfile="${src.dir}/core_tmp.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="${src.dir}/core-pkg.js"/>
             <footer filtering="no" trimleading="yes">
                 KISSY.use('core');
             </footer>
         </concat>
 
-        <delete file="../core.js"/>
-        <move tofile="../core.js" file="../core_tmp.js"/>
+        <delete file="${src.dir}/core-pkg.js"/>
+        <move tofile="${src.dir}/core-pkg.js" file="${src.dir}/core_tmp.js"/>
 
 
         <!-- kissy: seed + core, 独立单文件 -->
         <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../seed.js"/>
-            <path path="../core.js"/>
+            <path path="${src.dir}/core-pkg.js"/>
             <!--
             <footer filtering="no" trimleading="yes">
                 KISSY.use('core');
@@ -79,10 +79,7 @@
     </target>
 
     <target name="clean">
-        <move todir="${src.dir}">
-            <fileset dir="${src.dir}" includes="*.js" excludes="core*.js"/>
-            <regexpmapper from="(.+)-pkg(.+)" to="\1\2"/>
-        </move>
+
 
         <replaceregexp match="@DEBUG@"
                        replace=""
@@ -90,7 +87,7 @@
                        byline="true"
                        encoding="${charset}">
             <fileset dir="${src.dir}"
-                     includes="seed-min.js,kissy-min.js"/>
+                     includes="*-min.js"/>
         </replaceregexp>
 
         <replaceregexp match="@TIMESTAMP@"
@@ -99,12 +96,14 @@
                        byline="true"
                        encoding="${charset}">
             <fileset dir="${src.dir}"
-                     includes="seed*.js,kissy*.js"/>
+                     includes="*.js"/>
         </replaceregexp>
 
-        <move todir="${src.dir}/../">
-            <fileset dir="${src.dir}" includes="*.js,*.css"/>
-        </move>
+        <!--保持原有文件-->
+        <copy todir="${src.dir}/../">
+            <fileset dir="${src.dir}" includes="*.js"/>
+            <regexpmapper from="(.+)-pkg(.+)" to="\1\2"/>
+        </copy>
 
     </target>
 
