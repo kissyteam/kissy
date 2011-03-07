@@ -19,7 +19,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
      */
     function query(selector, context) {
         var match, t,
-            ret=[],
+            ret = [],
             id,
             tag,
             sizzle = S.require("sizzle"),
@@ -79,7 +79,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             }
             // 采用外部选择器
             else if (sizzle) {
-                return sizzle(selector, context);
+                ret = sizzle(selector, context);
             }
             // 依旧不支持，抛异常
             else {
