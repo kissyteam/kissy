@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110314212842';
+                    return m + '-pkg-min.js?t=20110314214430';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110314212842';
+                    return m + '-min.css?t=20110314214430';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -11491,7 +11491,8 @@ KISSY.add('carousel', function(S, undefined) {
      *   self.nextBtn
      */
     function init_carousel(self) {
-        var cfg = self.config, disableCls = cfg.disableBtnCls;
+        var cfg = self.config, disableCls = cfg.disableBtnCls,
+            switching = false;
 
         // 获取 prev/next 按钮，并添加事件
         S.each(['prev', 'next'], function(d) {
@@ -11499,6 +11500,7 @@ KISSY.add('carousel', function(S, undefined) {
 
             Event.on(btn, 'click', function(ev) {
                 ev.preventDefault();
+                if (switching) return;
                 if(!DOM.hasClass(btn, disableCls)) self[d]();
             });
         });
@@ -11506,6 +11508,9 @@ KISSY.add('carousel', function(S, undefined) {
         // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
         // circular = true 时，无需处理
         if (!cfg.circular) {
+            self.on('beforeSwitch', function() {
+                switching = true;
+            });
             self.on('switch', function(ev) {
                 var i = ev.currentIndex,
                     disableBtn = (i === 0) ? self[PREV_BTN]
@@ -11514,6 +11519,8 @@ KISSY.add('carousel', function(S, undefined) {
 
                 DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
                 if (disableBtn) DOM.addClass(disableBtn, disableCls);
+
+                switching = false;
             });
         }
 
