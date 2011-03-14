@@ -1406,7 +1406,8 @@ build time: ${build.time}
         /**
          * 一定要正则化，防止出现 ../ 等相对路径
          */
-        if (!startsWith(base, "/") && !startsWith(base, "http://") && !startsWith(base, "https://")) {
+        if (!startsWith(base, "/")
+            && !base.match(/^(http(s)?)|(file):/i)) {
             base = window.location.href.replace(/[^/]*$/, '') + base;
         }
         return base;
