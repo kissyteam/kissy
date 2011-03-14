@@ -7,6 +7,9 @@
     <property name="component.name" value="packages"/>
     <property name="component.files" value="*.css, *.js"/>
     <property name="src.dir" location="."/>
+
+    <property name="nodejs.patch.file" location="../../tools/nodejs-patch/patch.js"/>
+
     <tstamp>
         <format property="timestamp.isoformat"
                 pattern="yyyyMMddHHmmss" locale="en"/>
@@ -80,7 +83,6 @@
 
     <target name="clean">
 
-
         <replaceregexp match="@DEBUG@"
                        replace=""
                        flags="g"
@@ -107,6 +109,17 @@
 
     </target>
 
-    <target name="build" depends="pre-clean,concat,compress,native2ascii,copyright,clean">
+    <!--
+    apply nodejs patch to kissy.js
+    -->
+    <target name="nodejs-patch">
+        <concat destfile="${src.dir}/kissy-nodejs-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path location="${nodejs.patch.file}"/>
+            <path location="${src.dir}/kissy-pkg.js"/>
+        </concat>
+    </target>
+
+    <target name="build"
+            depends="pre-clean,concat,nodejs-patch,compress,native2ascii,copyright,clean">
     </target>
 </project>

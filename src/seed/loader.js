@@ -3,6 +3,8 @@
  * @author lifesinger@gmail.com, lijing00333@163.com, yiminghe@gmail.com
  */
 (function(S, undef) {
+    //如果已经定义过，则不运行，例如 nodejs 环境下采用原生机制先行定义
+    if(S.use) return;
 
     var win = S.__HOST,
         oldIE = !win['getSelection'] && win['ActiveXObject'],
@@ -40,8 +42,9 @@
      * x/./y/z -> x/y/z
      * @param path uri path
      * @return {string} resolved path
+     * @description similar to path.normalize in nodejs
      */
-    function normalPath(path) {
+    function normalizePath(path) {
         var paths = path.split("/");
         var re = [];
         for (var i = 0; i < paths.length; i++) {
@@ -64,6 +67,7 @@
      * @param moduleName 当前模块
      * @param depName 依赖模块
      * @return {string|Array} 依赖模块的绝对路径
+     * @description similar to path.resolve in nodejs
      */
     function normalDepModuleName(moduleName, depName) {
         if (!depName) return depName;
@@ -79,10 +83,10 @@
             if ((index = moduleName.lastIndexOf("/")) != -1) {
                 anchor = moduleName.substring(0, index + 1);
             }
-            return normalPath(anchor + depName);
+            return normalizePath(anchor + depName);
         } else if (depName.indexOf("./") != -1
             || depName.indexOf("../") != -1) {
-            return normalPath(depName);
+            return normalizePath(depName);
         } else {
             return depName;
         }
@@ -112,7 +116,7 @@
             && !startsWith(path, "/")) {
             path = pagePath + path;
         }
-        return normalPath(path);
+        return normalizePath(path);
     }
 
     //清楚时间戳
