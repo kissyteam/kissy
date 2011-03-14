@@ -2200,6 +2200,13 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             setter:function(el, val) {
                 el.checked = !!val;
             }
+        },
+        disabled:{
+            // disabled 属性值，需要通过直接设置才能生效
+            //true 然后 false，false失效
+            setter:function(el, val) {
+                el.disabled = !!val;
+            }
         }
     };
 
@@ -2303,24 +2310,24 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
         },
 
         hasAttr: oldIE ?
-                 function(selector, name) {
-                     name = name.toLowerCase();
-                     var el = DOM.get(selector);
-                     // from ppk :http://www.quirksmode.org/dom/w3c_core.html
-                     // IE5-7 doesn't return the value of a style attribute.
-                     // var $attr = el.attributes[name];
-                     // http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
-                     // try name=tabindex
-                     var $attr = el.getAttributeNode(name);
-                     return !!( $attr && $attr.specified );
-                 }
+            function(selector, name) {
+                name = name.toLowerCase();
+                var el = DOM.get(selector);
+                // from ppk :http://www.quirksmode.org/dom/w3c_core.html
+                // IE5-7 doesn't return the value of a style attribute.
+                // var $attr = el.attributes[name];
+                // http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+                // try name=tabindex
+                var $attr = el.getAttributeNode(name);
+                return !!( $attr && $attr.specified );
+            }
             :
-                 function(selector, name) {
-                     name = name.toLowerCase();
-                     var el = DOM.get(selector);
-                     //使用原生实现
-                     return el.hasAttribute(name);
-                 },
+            function(selector, name) {
+                name = name.toLowerCase();
+                var el = DOM.get(selector);
+                //使用原生实现
+                return el.hasAttribute(name);
+            },
 
         /**
          * Gets the current value of the first element in the set of matched or

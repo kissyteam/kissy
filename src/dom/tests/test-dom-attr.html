@@ -69,6 +69,10 @@
     <br/>
     <br/>
     <input type="checkbox" id="test-20100728-checkbox"/>test checked
+
+    <br/>
+
+    <input type="button" id="test-20100728-disabled"/>test disabled
 </div>
 
 <!-- Test Cases -->
@@ -95,7 +99,8 @@ KISSY.use("dom", function(S, DOM) {
             opt = S.get('#test-opt'),
             div = S.get('#test-div'),
             opt2 = S.query('#test-select option')[1],
-            area = S.get('#foo textarea');
+            area = S.get('#foo textarea'),
+            disabledTest = S.get("#test-20100728-disabled");
 
     window.test_attr = function(test) {
 
@@ -226,8 +231,22 @@ KISSY.use("dom", function(S, DOM) {
             test.fail('removeAttr checked');
         }
 
-        if(DOM.hasAttr(checkbox2,"checked")){
-            test.failt("removeAttr fail");
+        if (DOM.hasAttr(checkbox2, "checked")) {
+            test.fail("removeAttr fail");
+        }
+
+        if (DOM.attr(disabledTest, "disabled") === true) {
+            test.fail();
+        }
+
+        DOM.attr(disabledTest, "disabled", true);
+        if (DOM.attr(disabledTest, "disabled") !== true) {
+            test.fail();
+        }
+
+        DOM.attr(disabledTest, "disabled", false);
+        if (DOM.attr(disabledTest, "disabled") == true) {
+            test.fail();
         }
     }
 
