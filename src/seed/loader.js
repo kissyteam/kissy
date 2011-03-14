@@ -108,7 +108,8 @@
         if (path.charAt(path.length - 1) != '/')
             path += "/";
         path = S.trim(path);
-        if (!path.match(/^http(s)?:/i) && !startsWith(path, "/")) {
+        if (!path.match(/^(http(s)?)|(file):/i)
+            && !startsWith(path, "/")) {
             path = pagePath + path;
         }
         return normalPath(path);
@@ -435,7 +436,8 @@
             var self = this,
                 mods = self.Env.mods,
                 mod = mods[removeTimestamp(moduleName)];
-
+            var re = self['onRequire'] && self['onRequire'](mod);
+            if (re !== undefined) return re;
             return mod && mod.value;
         },
 
@@ -814,8 +816,10 @@
         }
         /**
          * 一定要正则化，防止出现 ../ 等相对路径
+         * 考虑本地路径
          */
-        if (!startsWith(base, "/") && !startsWith(base, "http://") && !startsWith(base, "https://")) {
+        if (!base.match(/^(http(s)?)|(file):/i)
+            && !startsWith(base, "/")) {
             base = pagePath + base;
         }
         return base;
