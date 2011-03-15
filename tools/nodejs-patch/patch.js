@@ -66,10 +66,22 @@
             }
         },
 
+
+
         _getPath:function(modName) {
             this.__packages = this.__packages || {};
             var packages = this.__packages;
-            var base = packages[modName] || this.Config.base;
+            var pName = "";
+            for (var p in packages) {
+                if (packages.hasOwnProperty(p)) {
+                    if (startsWith(modName, p)) {
+                        if (p.length > pName) {
+                            pName = p;
+                        }
+                    }
+                }
+            }
+            var base = (packages[pName] && packages[pName].path) || this.Config.base;
             return base + modName;
         },
 
@@ -118,6 +130,7 @@
         },
         use:function(modNames, callback) {
             modNames = modNames.replace(/\s+/g, "").split(',');
+            indexMapping(modNames);
             var self = this;
             var deps = [this];
             S.each(modNames, function(modName) {
@@ -127,6 +140,18 @@
             callback && callback.apply(null, deps);
         }
     });
+
+    //http://wiki.commonjs.org/wiki/Packages/Mappings/A
+    //如果模块名以 / 结尾，自动加 index
+    function indexMapping(names) {
+        for (var i = 0; i < names.length; i++) {
+            if (names[i].match(/\/$/)) {
+                names[i] += "index";
+            }
+        }
+        return names;
+    }
+
     function startsWith(str, prefix) {
         return str.lastIndexOf(prefix, 0) == 0;
     }

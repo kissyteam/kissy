@@ -66,10 +66,22 @@
             }
         },
 
+
+
         _getPath:function(modName) {
             this.__packages = this.__packages || {};
             var packages = this.__packages;
-            var base = packages[modName] || this.Config.base;
+            var pName = "";
+            for (var p in packages) {
+                if (packages.hasOwnProperty(p)) {
+                    if (startsWith(modName, p)) {
+                        if (p.length > pName) {
+                            pName = p;
+                        }
+                    }
+                }
+            }
+            var base = (packages[pName] && packages[pName].path) || this.Config.base;
             return base + modName;
         },
 
@@ -118,6 +130,7 @@
         },
         use:function(modNames, callback) {
             modNames = modNames.replace(/\s+/g, "").split(',');
+            indexMapping(modNames);
             var self = this;
             var deps = [this];
             S.each(modNames, function(modName) {
@@ -127,6 +140,18 @@
             callback && callback.apply(null, deps);
         }
     });
+
+    //http://wiki.commonjs.org/wiki/Packages/Mappings/A
+    //如果模块名以 / 结尾，自动加 index
+    function indexMapping(names) {
+        for (var i = 0; i < names.length; i++) {
+            if (names[i].match(/\/$/)) {
+                names[i] += "index";
+            }
+        }
+        return names;
+    }
+
     function startsWith(str, prefix) {
         return str.lastIndexOf(prefix, 0) == 0;
     }
@@ -707,7 +732,7 @@ build time: ${build.time}
  */
 (function(S, undef) {
     //如果已经定义过，则不运行，例如 nodejs 环境下采用原生机制先行定义
-    if(S.use) return;
+    if (S.use) return;
 
     var win = S.__HOST,
         oldIE = !win['getSelection'] && win['ActiveXObject'],
@@ -825,6 +850,17 @@ build time: ${build.time}
     //清楚时间戳
     function removeTimestamp(str) {
         return str.replace(/\?.*$/, "");
+    }
+
+    //http://wiki.commonjs.org/wiki/Packages/Mappings/A
+    //如果模块名以 / 结尾，自动加 index
+    function indexMapping(names) {
+        for (var i = 0; i < names.length; i++) {
+            if (names[i].match(/\/$/)) {
+                names[i] += "index";
+            }
+        }
+        return names;
     }
 
 
@@ -1096,6 +1132,7 @@ build time: ${build.time}
         use: function(modNames, callback, cfg) {
 
             modNames = modNames.replace(/\s+/g, EMPTY).split(',');
+            indexMapping(modNames);
             cfg = cfg || {};
             var self = this,
                 modName,
@@ -1151,19 +1188,21 @@ build time: ${build.time}
         __getPackagePath:function(mod) {
             var self = this,
                 //一个模块合并到了另一个模块文件中去
-                p = self._combine(mod.name),
-                ind,
+                modName = self._combine(mod.name),
                 packages = self.__packages || {};
-            if ((ind = p.indexOf("/")) != -1) {
-                p = p.substring(0, ind);
+            var pName = "";
+            for (var p in packages) {
+                if (packages.hasOwnProperty(p)) {
+                    if (startsWith(modName, p)) {
+                        if (p.length > pName) {
+                            pName = p;
+                        }
+                    }
+                }
             }
-            var p_def = packages[p];
-            if (!p_def) return;
-            var p_path = p_def.path || pagePath;
-            if (p_path.charAt(p_path.length - 1) !== "/") {
-                p_path += "/";
-            }
-            if (p_def.charset) {
+            var p_def = packages[pName];
+            var p_path = (p_def && p_def.path) || this.Config.base;
+            if (p_def && p_def.charset) {
                 mod.charset = p_def.charset;
             }
             return p_path;
