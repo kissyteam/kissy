@@ -13,11 +13,15 @@
     document = jsdom("<html><head></head><body></body></html>");
     window = document.createWindow();
     location = window.location;
+    navigator = window.navigator;
 
     KISSY = {
         __HOST:window
     };
-    exports.KISSY = KISSY;
+    /**
+     * note : this === exports !== global
+     */
+    exports.KISSY = window.KISSY = KISSY;
 })();
 
 /**
@@ -65,7 +69,7 @@
         _getPath:function(modName) {
             this.__packages = this.__packages || {};
             var packages = this.__packages;
-            var base = packages[modName] || this.baseUrl;
+            var base = packages[modName] || this.Config.base;
             return base + modName;
         },
 
@@ -86,7 +90,7 @@
                 return cs[from] || from;
             }
         },
-        _require:function(moduleName) {
+        require:function(moduleName) {
             var self = this,
                 mod = mods[moduleName];
             var re = self['onRequire'] && self['onRequire'](mod);
@@ -95,17 +99,22 @@
         },
         _attach:function(modName) {
             var modPath = this._getPath(this._combine(modName));
-            require(modPath);
             var mod = mods[modName];
+            if (!mod) {
+                require(modPath);
+            }
+            mod = mods[modName];
+            if (mod.attached) return;
             mod.requires = mod.requires || [];
             var requires = mod.requires;
             normalDepModuleName(modName, requires);
             var deps = [this];
             for (var i = 0; i < requires.length; i++) {
                 this._attach(requires[i]);
-                deps.push(this._require(requires[i]));
+                deps.push(this.require(requires[i]));
             }
             mod.value = mod.fn.apply(null, deps);
+            mod.attached = true;
         },
         use:function(modNames, callback) {
             modNames = modNames.replace(/\s+/g, "").split(',');
@@ -113,7 +122,7 @@
             var deps = [this];
             S.each(modNames, function(modName) {
                 self._attach(modName);
-                deps.push(self._require(modName));
+                deps.push(self.require(modName));
             });
             callback && callback.apply(null, deps);
         }
