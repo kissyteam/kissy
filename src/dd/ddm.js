@@ -1,5 +1,5 @@
 /**
- * dd support for kissy
+ * dd support for kissy , dd objects central management module
  * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
@@ -135,7 +135,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 activeDrop.fire('drophit', { drag: activeDrag, drop: activeDrop});
                 activeDrag.fire('dragdrophit', { drag: activeDrag,  drop: activeDrop})
             } else {
-                activeDrag.fire('dragdropmiss',{
+                activeDrag.fire('dragdropmiss', {
                     drag:activeDrag
                 });
             }

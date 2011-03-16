@@ -30,7 +30,7 @@
         position: relative;
     }
 
-    #c1, #c2, #c3 {
+    .component {
         position: relative;
         margin: 50px 10px;
         width: 100px;
@@ -85,25 +85,25 @@
 
 <div id="container">
 
-    <div id="c1">
+    <div id="c1" class="component">
         <div class="cheader">
             拖动头
         </div>
         intersect drag
     </div>
 
-    <div id="c2">
+    <div id="c2" class="component">
         <div class="cheader">
             拖动头
         </div>
         point drag
     </div>
 
-    <div id="c3">
+    <div id="c3" class="component" style="width:250px">
         <div class="cheader">
             拖动头
         </div>
-        strict drag
+        strict drag with proxy
     </div>
 
 
@@ -118,6 +118,7 @@
 <script src="ddm.js"></script>
 <script src="draggable.js"></script>
 <script src="droppable.js"></script>
+<script src="proxy.js"></script>
 <script src="../dd.js"></script>
 <script>
 
@@ -151,9 +152,23 @@
 
 
     KISSY.use("node,dd", function(S, Node, DD) {
-        var DDM = DD.DDM,Draggable = DD.Draggable,Droppable = DD.Droppable;
+        var DDM = DD.DDM,
+                Draggable = DD.Draggable,
+                Droppable = DD.Droppable,
+                Proxy = DD.Proxy;
         S.ready(function(S) {
-
+            var p = new Proxy({
+                /**
+                 * 如何产生替代节点
+                 * @param drag 当前拖对象
+                 */
+                node:function(drag) {
+                    var n = S.one(drag.get("node")[0].cloneNode(true));
+                    n.attr("id", S.guid("ks-dd-proxy"));
+                    n.css("opacity", 0.2);
+                    return n;
+                }
+            });
             var c1 = new Draggable({
                 node:"#c1",
                 //模式，
@@ -177,6 +192,8 @@
             c3.on("drag", function(ev) {
                 c3.get("node").offset(ev);
             });
+
+            p.attach(c3);
 
             var c2 = new Draggable({
                 node:"#c2",

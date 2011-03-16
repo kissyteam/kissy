@@ -11,7 +11,8 @@
             <path path="ddm.js"/>
             <path path="draggable.js"/>
             <path path="droppable.js"/>
-             <path location="../dd.js"/>
+            <path path="proxy.js"/>
+            <path location="../dd.js"/>
         </concat>
     </target>
 
