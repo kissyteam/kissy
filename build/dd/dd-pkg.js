@@ -4,7 +4,7 @@ MIT Licensed
 build time: ${build.time}
 */
 /**
- * dd support for kissy
+ * dd support for kissy , dd objects central management module
  * @author: 承玉<yiminghe@gmail.com>
  */
 KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
@@ -124,9 +124,9 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 oldDrop._handleOut(ev);
             }
             if (activeDrop) {
-
                 activeDrop._handleOver(ev);
             } else {
+                activeDrag.get("node").removeClass(this.get("prefixCls") + "drag-over");
                 this.set("activeDrop", null);
             }
         },
@@ -140,7 +140,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 activeDrop.fire('drophit', { drag: activeDrag, drop: activeDrop});
                 activeDrag.fire('dragdrophit', { drag: activeDrag,  drop: activeDrop})
             } else {
-                activeDrag.fire('dragdropmiss',{
+                activeDrag.fire('dragdropmiss', {
                     drag:activeDrag
                 });
             }
@@ -634,7 +634,11 @@ KISSY.add("dd/proxy", function(S) {
     });
 
     return Proxy;
-});KISSY.add("dd", function(S, DDM, Draggable, Droppable,Proxy) {
+});/**
+ * dd support for kissy
+ * @author: 承玉<yiminghe@gmail.com>
+ */
+KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy) {
     var dd = {
         Draggable:Draggable,
         Droppable:Droppable,

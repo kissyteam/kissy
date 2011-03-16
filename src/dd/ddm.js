@@ -119,9 +119,9 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 oldDrop._handleOut(ev);
             }
             if (activeDrop) {
-
                 activeDrop._handleOver(ev);
             } else {
+                activeDrag.get("node").removeClass(this.get("prefixCls") + "drag-over");
                 this.set("activeDrop", null);
             }
         },
