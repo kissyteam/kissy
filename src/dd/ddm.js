@@ -87,9 +87,10 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 vArea = 0,
                 dragRegion = region(activeDrag.get("node")),
                 dragArea = area(dragRegion);
+
             S.each(drops, function(drop) {
                 var a;
-                if (mode == "pointer") {
+                if (mode == "point") {
                     //取鼠标所在的 drop 区域
                     if (inNodeByPointer(drop.get("node"), activeDrag.mousePos)) {
                         activeDrop = drop;
@@ -118,6 +119,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 oldDrop._handleOut(ev);
             }
             if (activeDrop) {
+
                 activeDrop._handleOver(ev);
             } else {
                 this.set("activeDrop", null);
@@ -133,7 +135,9 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 activeDrop.fire('drophit', { drag: activeDrag, drop: activeDrop});
                 activeDrag.fire('dragdrophit', { drag: activeDrag,  drop: activeDrop})
             } else {
-                activeDrag.fire('dragdropmiss');
+                activeDrag.fire('dragdropmiss',{
+                    drag:activeDrag
+                });
             }
         },
 
@@ -191,6 +195,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
             //处理 drop，看看到底是否有 drop 命中
             this._deactivateDrops(ev);
             self.set("activeDrag", null);
+            self.set("activeDrop", null);
         },
 
         /**
@@ -207,6 +212,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 "left:0;" +
                 "width:100%;" +
                 "top:0;" +
+                "cursor:move;" +
                 "z-index:" +
                 //覆盖iframe上面即可
                 SHIM_ZINDEX
@@ -285,6 +291,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
     }
 
     function inRegion(region, pointer) {
+
         return region.left <= pointer.left
             && region.right >= pointer.left
             && region.top <= pointer.top
@@ -296,7 +303,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
         return (region.right - region.left) * (region.bottom - region.top);
     }
 
-    function intersect(region1, region2) {
+    function intersect(r1, r2) {
         var t = Math.max(r1.top, r2.top),
             r = Math.min(r1.right, r2.right),
             b = Math.min(r1.bottom, r2.bottom),

@@ -19,6 +19,9 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
     }
 
     DDM.ATTRS = {
+        prefixCls:{
+            value:"ks-dd-"
+        },
         /**
          * mousedown 后 buffer 触发时间  timeThred
          */
@@ -27,7 +30,18 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
         /**
          * 当前激活的拖动对象，在同一时间只有一个值，所以不是数组
          */
-        activeDrag: { }
+        activeDrag: {},
+
+        /**
+         *当前激活的drop对象，在同一时间只有一个值
+         */
+        activeDrop:{},
+        /**
+         * 所有注册的可被防止对象，统一管理
+         */
+        drops:{
+            value:[]
+        }
     };
 
     /*
@@ -37,6 +51,17 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
      3.为了跨越 iframe 而统一在底下的遮罩层
      */
     S.extend(DDM, Base, {
+
+        _regDrop:function(d) {
+            this.get("drops").push(d);
+        },
+
+        _unregDrop:function(d) {
+            var index = S.indexOf(d, this.get("drops"));
+            if (index != -1) {
+                this.get("drops").splice(index, 1);
+            }
+        },
 
         _init: function() {
             var self = this;
@@ -54,6 +79,71 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
             //防止 ie 选择到字
             ev.preventDefault();
             activeDrag._move(ev);
+            /**
+             * 获得当前的激活drop
+             */
+            this._notifyDropsMove(ev);
+        },
+
+        _notifyDropsMove:function(ev) {
+            var activeDrag = this.get("activeDrag"),mode = activeDrag.get("mode");
+            var drops = this.get("drops");
+            var activeDrop,
+                vArea = 0,
+                dragRegion = region(activeDrag.get("node")),
+                dragArea = area(dragRegion);
+
+            S.each(drops, function(drop) {
+                var a;
+                if (mode == "point") {
+                    //取鼠标所在的 drop 区域
+                    if (inNodeByPointer(drop.get("node"), activeDrag.mousePos)) {
+                        activeDrop = drop;
+                        return false;
+                    }
+
+                } else if (mode == "intersect") {
+                    //取一个和activeDrag交集最大的drop区域
+                    a = area(intersect(dragRegion, region(drop.get("node"))));
+                    if (a > vArea) {
+                        vArea = a;
+                        activeDrop = drop;
+                    }
+
+                } else if (mode == "strict") {
+                    //drag 全部在 drop 里面
+                    a = area(intersect(dragRegion, region(drop.get("node"))));
+                    if (a == dragArea) {
+                        activeDrop = drop;
+                        return false;
+                    }
+                }
+            });
+            var oldDrop = this.get("activeDrop");
+            if (oldDrop && oldDrop != activeDrop) {
+                oldDrop._handleOut(ev);
+            }
+            if (activeDrop) {
+
+                activeDrop._handleOver(ev);
+            } else {
+                this.set("activeDrop", null);
+            }
+        },
+
+        _deactivateDrops:function() {
+            var activeDrag = this.get("activeDrag"),
+                activeDrop = this.get("activeDrop");
+            activeDrag.get("node").removeClass(this.get("prefixCls") + "drag-over");
+            if (activeDrop) {
+                activeDrop.get("node").removeClass(this.get("prefixCls") + "drop-over");
+                activeDrop.fire('drophit', { drag: activeDrag, drop: activeDrop});
+                activeDrag.fire('dragdrophit', { drag: activeDrag,  drop: activeDrop})
+            } else {
+                activeDrag.fire('dragdropmiss',{
+                    drag:activeDrag
+                });
+            }
         },
 
         /**
@@ -107,7 +197,10 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
 
             if (!activeDrag) return;
             activeDrag._end(ev);
+            //处理 drop，看看到底是否有 drop 命中
+            this._deactivateDrops(ev);
             self.set("activeDrag", null);
+            self.set("activeDrop", null);
         },
 
         /**
@@ -124,6 +217,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 "left:0;" +
                 "width:100%;" +
                 "top:0;" +
+                "cursor:move;" +
                 "z-index:" +
                 //覆盖iframe上面即可
                 SHIM_ZINDEX
@@ -191,6 +285,46 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
         });
     }
 
+    function region(node) {
+        var offset = node.offset();
+        return {
+            left:offset.left,
+            right:offset.left + node[0].offsetWidth,
+            top:offset.top,
+            bottom:offset.top + node[0].offsetHeight
+        };
+    }
+
+    function inRegion(region, pointer) {
+
+        return region.left <= pointer.left
+            && region.right >= pointer.left
+            && region.top <= pointer.top
+            && region.bottom >= pointer.top;
+    }
+
+    function area(region) {
+        if (region.top >= region.bottom || region.left >= region.right) return 0;
+        return (region.right - region.left) * (region.bottom - region.top);
+    }
+
+    function intersect(r1, r2) {
+        var t = Math.max(r1.top, r2.top),
+            r = Math.min(r1.right, r2.right),
+            b = Math.min(r1.bottom, r2.bottom),
+            l = Math.max(r1.left, r2.left);
+        return {
+            left:l,
+            right:r,
+            top:t,
+            bottom:b
+        };
+    }
+
+    function inNodeByPointer(node, point) {
+        return inRegion(region(node), point);
+    }
+
     return new DDM();
 }, {
     requires:["dom","event","node","base"]
@@ -210,6 +344,10 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
         Draggable.superclass.constructor.apply(this, arguments);
         this._init();
     }
+
+    Draggable.POINT = "pointer";
+    Draggable.INTERSECT = "intersect";
+    Draggable.STRICT = "strict";
 
     Draggable.ATTRS = {
         /**
@@ -241,7 +379,19 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
                     }
                 }
             }
+        },
+
+        mode:{
+            /**
+             * @enum point,intersect,strict
+             * @description
+             *  In point mode, a Drop is targeted by the cursor being over the Target
+             *  In intersect mode, a Drop is targeted by "part" of the drag node being over the Target
+             *  In strict mode, a Drop is targeted by the "entire" drag node being over the Target             *
+             */
+            value:'point'
         }
+
     };
 
     S.extend(Draggable, Base, {
@@ -317,7 +467,7 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
                 mx = ev.pageX,
                 my = ev.pageY,
                 nxy = node.offset();
-            self.startMousePos = {
+            self.startMousePos = self.mousePos = {
                 left:mx,
                 top:my
             };
@@ -335,7 +485,11 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
                 diff = self.get("diff"),
                 left = ev.pageX - diff.left,
                 top = ev.pageY - diff.top;
-            this.fire("drag", {
+            self.mousePos = {
+                left:ev.pageX,
+                top:ev.pageY
+            };
+            self.fire("drag", {
                 left:left,
                 top:top
             });
@@ -353,14 +507,86 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
     return Draggable;
 
 }, { requires:["ua","node","base","dd/ddm"] });
-KISSY.add("dd", function(S, Draggable) {
+/**
+ * droppable for kissy
+ * @author:yiminghe@gmail.com
+ */
+KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
+
+    function Droppable() {
+        Droppable.superclass.constructor.apply(this, arguments);
+        this._init();
+    }
+
+    Droppable.ATTRS = {
+        /**
+         * 放节点
+         */
+        node: {
+            setter:function(v) {
+                var n = Node.one(v);
+                n.addClass(DDM.get("prefixCls") + "drop");
+                return n;
+            }
+        }
+
+    };
+
+    S.extend(Droppable, Base, {
+        _init:function() {
+            DDM._regDrop(this);
+        },
+        _handleOut:function(ev) {
+            var activeDrag = DDM.get("activeDrag");
+
+            this.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
+            this.fire("dropexit", {
+                drop:this,
+                drag:activeDrag
+            });
+
+            activeDrag.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
+            activeDrag.fire("dragexit", {
+                drop:this,
+                drag:activeDrag
+            });
+        },
+        _handleOver:function(ev) {
+            var oldDrop = DDM.get("activeDrop");
+            DDM.set("activeDrop", this);
+            var activeDrag = DDM.get("activeDrag");
+            this.get("node").addClass(DDM.get("prefixCls") + "drop-over");
+            var evt = {
+                drag:activeDrag,
+                drop:this
+            };
+            if (this != oldDrop) {
+                activeDrag.get("node").addClass(DDM.get("prefixCls") + "drag-over");
+                //第一次先触发 dropenter,dragenter
+                activeDrag.fire("dragenter", evt);
+                this.fire("dropenter", evt)
+            } else {
+                activeDrag.fire("dragover", evt);
+                this.fire("dropover", evt)
+            }
+        },
+        destroy:function() {
+            DDM._unregDrop(this);
+        }
+    });
+
+    return Droppable;
+
+}, { requires:["node","base","dd/ddm"] });KISSY.add("dd", function(S, DDM, Draggable, Droppable) {
     var dd = {
-        Draggable:Draggable
+        Draggable:Draggable,
+        Droppable:Droppable,
+        DDM:DDM
     };
 
     S.mix(S, dd);
 
     return dd;
 }, {
-    requires:["dd/draggable"]
+    requires:["dd/ddm","dd/draggable","dd/droppable"]
 });

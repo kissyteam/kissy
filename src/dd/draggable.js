@@ -14,6 +14,10 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
         this._init();
     }
 
+    Draggable.POINT = "pointer";
+    Draggable.INTERSECT = "intersect";
+    Draggable.STRICT = "strict";
+
     Draggable.ATTRS = {
         /**
          * 拖放节点

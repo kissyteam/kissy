@@ -28,12 +28,18 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
             DDM._regDrop(this);
         },
         _handleOut:function(ev) {
-            this.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
-            this.fire("dropexit");
             var activeDrag = DDM.get("activeDrag");
+
+            this.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
+            this.fire("dropexit", {
+                drop:this,
+                drag:activeDrag
+            });
+
             activeDrag.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
             activeDrag.fire("dragexit", {
-                drop:this
+                drop:this,
+                drag:activeDrag
             });
         },
         _handleOver:function(ev) {
