@@ -44,7 +44,19 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
                     }
                 }
             }
+        },
+
+        mode:{
+            /**
+             * @enum point,intersect,strict
+             * @description
+             *  In point mode, a Drop is targeted by the cursor being over the Target
+             *  In intersect mode, a Drop is targeted by "part" of the drag node being over the Target
+             *  In strict mode, a Drop is targeted by the "entire" drag node being over the Target             *
+             */
+            value:'point'
         }
+
     };
 
     S.extend(Draggable, Base, {
@@ -120,7 +132,7 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
                 mx = ev.pageX,
                 my = ev.pageY,
                 nxy = node.offset();
-            self.startMousePos = {
+            self.startMousePos = self.mousePos = {
                 left:mx,
                 top:my
             };
@@ -138,7 +150,11 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
                 diff = self.get("diff"),
                 left = ev.pageX - diff.left,
                 top = ev.pageY - diff.top;
-            this.fire("drag", {
+            self.mousePos = {
+                left:ev.pageX,
+                top:ev.pageY
+            };
+            self.fire("drag", {
                 left:left,
                 top:top
             });

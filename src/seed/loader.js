@@ -220,7 +220,7 @@
                     self.__attachMod(mod);
                 }
                 //调试用，为什么不在 add 时 attach
-                else if (true || !mod) {
+                else if (this.Config.debug && !mod) {
                     var i,modNames;
                     i = (modNames = S.makeArray(requires)).length - 1;
                     for (; i >= 0; i--) {

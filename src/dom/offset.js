@@ -30,6 +30,7 @@ KISSY.add('dom/offset', function(S, DOM, UA,undefined) {
 
     S.mix(DOM, {
 
+
         /**
          * Gets the current coordinates of the element, relative to the document.
          */

@@ -9,6 +9,7 @@
         position: absolute;
         width: 500px;
         height: 300px;
+        top: 500px;
     }
 
     #header {
@@ -20,6 +21,40 @@
         float: right;
         display: inline;
         margin: 0 5px;
+    }
+
+    #container {
+        border: 1px solid red;
+        height: 300px;
+        padding: 10px;
+        position: relative;
+    }
+
+    #c1, #c2 {
+        position: relative;
+        margin: 50px 10px;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        top: 0;
+        border: 1px solid black;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+    }
+
+    #drop {
+        border: 1px solid green;
+        height: 100px;
+        line-height: 100px;
+    }
+
+    .ks-dd-drag-over {
+        background: #a52a2a;
+    }
+
+    .ks-dd-drop-over {
+        background: #fa8072;
     }
 </style>
 </head>
@@ -38,14 +73,32 @@
 </div>
 
 
+<div id="container">
+
+    <div id="c1">
+        1 drag
+    </div>
+
+    <div id="c2">
+        2 drag
+    </div>
+
+
+    <div id="drop">
+        drop zone
+    </div>
+</div>
+
+
 <script src="../../build/kissy.js"></script>
 
 <script src="ddm.js"></script>
 <script src="draggable.js"></script>
+<script src="droppable.js"></script>
 <script src="../dd.js"></script>
 <script>
 
-    var S=KISSY;
+    var S = KISSY;
 
     S.log(S.Draggable);
 
@@ -69,6 +122,30 @@
             h.on("drag", function(ev) {
                 if (ev.left < 0) return;
                 node.offset(ev);
+            });
+        });
+    });
+
+
+    KISSY.use("node,dd", function(S, Node, DD) {
+        var Draggable = DD.Draggable,Droppable = DD.Droppable;
+        S.ready(function(S) {
+            var c1 = new Draggable({
+                node:"#c1"
+            });
+            c1.on("drag", function(ev) {
+                c1.get("node").offset(ev);
+            });
+
+            var c2 = new Draggable({
+                node:"#c2"
+            });
+            c2.on("drag", function(ev) {
+                c2.get("node").offset(ev);
+            });
+
+            var drop = new Droppable({
+                node:"#drop"
             });
         });
     });

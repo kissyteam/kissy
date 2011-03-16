@@ -1,11 +1,12 @@
-KISSY.add("dd", function(S, Draggable) {
+KISSY.add("dd", function(S, Draggable, Droppable) {
     var dd = {
-        Draggable:Draggable
+        Draggable:Draggable,
+        Droppable:Droppable
     };
 
     S.mix(S, dd);
 
     return dd;
 }, {
-    requires:["dd/draggable"]
+    requires:["dd/draggable","dd/droppable"]
 });
