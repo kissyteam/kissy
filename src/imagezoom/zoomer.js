@@ -3,10 +3,10 @@
  * @author  乔花<qiaohua@taobao.com>
  */
 KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
-    var body = new Node(document.body),
-        STANDARD = 'standard', INNER = 'inner',
+    var STANDARD = 'standard', INNER = 'inner',
         RE_IMG_SRC = /^.+\.(?:jpg|png|gif)$/i,
-        round = Math.round, min = Math.min;
+        round = Math.round, min = Math.min,
+        body;
 
     function Zoomer() {
         var self = this,
@@ -20,6 +20,7 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
 
         // 两种显示效果切换标志
         self._isInner = self.get('type') === INNER;
+        body = new Node(document.body);
     }
 
     Zoomer.ATTRS = {
@@ -171,15 +172,12 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
                     if (self._isInner) {
                         self._anim(0.4, 42);
                     }
-
                     body.on('mousemove', self._mouseMove, self);
-
                 } else {
                     hide(self.lens);
                     body.detach('mousemove', self._mouseMove, self);
                 }
             });
-
         },
         __syncUI: function() {
         },

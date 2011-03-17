@@ -42,12 +42,12 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
             });
         },
 
-        renderUI:function() {
+        /*renderUI:function() {
         },
         syncUI:function() {
         },
         bindUI: function() {
-        },
+        },*/
         destructor: function() {
             var self = this;
 
@@ -79,19 +79,18 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
                 timer;
 
             self.image.on('mouseenter', function(ev) {
-                    if (!self.get('hasZoom')) return;
+                if (!self.get('hasZoom')) return;
 
-                    timer = S.later(function() {
-                        self.set('currentMouse', ev);
-                        self.show();
-                        timer = undefined;
-
-                    }, 50);
-                }).on('mouseleave', function() {
-                    if (timer) {
-                        timer.cancel();
-                        timer = undefined;
-                    }
+                timer = S.later(function() {
+                    self.set('currentMouse', ev);
+                    self.show();
+                    timer = undefined;
+                }, 50);
+            }).on('mouseleave', function() {
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
+                }
             });
 
             self.on('afterVisibleChange', function(ev) {
