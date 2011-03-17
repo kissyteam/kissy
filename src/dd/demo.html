@@ -55,23 +55,17 @@
 <div id="container" class="container">
 
     <div id="c1" class="component">
-        <div class="cheader">
-            拖动头
-        </div>
+
         intersect drag
     </div>
 
     <div id="c2" class="component">
-        <div class="cheader">
-            拖动头
-        </div>
+
         point drag
     </div>
 
     <div id="c3" class="component" style="width:250px">
-        <div class="cheader">
-            拖动头
-        </div>
+
         strict drag with proxy
     </div>
 
@@ -168,23 +162,20 @@
                 // strict : drag 区域完全在 drop 区域内才算
                 // point : 鼠标在 drop 区域内
                 //默认 point
-                mode:Draggable.INTERSECT,
-                handlers:[S.one("#c1 .cheader")]
+                mode:Draggable.INTERSECT
             });
 
 
             var c3 = new Draggable({
                 node:"#c3",
-                mode:Draggable.STRICT,
-                handlers:[S.one("#c3 .cheader")]
+                mode:Draggable.STRICT
             });
 
 
             p.attach(c3);
 
             var c2 = new Draggable({
-                node:"#c2",
-                handlers:[S.one("#c2 .cheader")]
+                node:"#c2"
             });
             ondrag(c1, c2, c3);
 

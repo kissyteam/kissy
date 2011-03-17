@@ -37,26 +37,14 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
          */
         shim:{
             value:true
-        }
-        ,
+        },
 
         /**
          * handler 数组，注意暂时必须在 node 里面
          */
         handlers:{
-            value:[],
-            setter
-                :
-                function(vs) {
-                    if (vs) {
-                        for (var i = 0; i < vs.length; i++) {
-                            vs[i] = Node.one(vs[i]);
-                            vs[i].unselectable();
-                        }
-                    }
-                }
-        }
-        ,
+            value:[]
+        },
 
         mode:{
             /**
@@ -84,12 +72,11 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
             }
 
             for (var i = 0; i < handlers.length; i++) {
-                var hl = handlers[i],
-                    ori = hl.css('cursor');
-                if (hl[0] != node[0]) {
-                    if (!ori || ori === 'auto')
-                        hl.css('cursor', 'move');
-                }
+                var hl = handlers[i];
+                hl = S.one(hl);
+                //ie 不能在其内开始选择区域
+                hl.unselectable();
+                hl.css('cursor', 'move');
             }
             node.on('mousedown', self._handleMouseDown, self);
         },
