@@ -89,6 +89,8 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 dragArea = area(dragRegion);
 
             S.each(drops, function(drop) {
+                if (drop.get("node")[0] == activeDrag.get("dragNode")[0])
+                    return;
                 var a;
                 if (mode == "point") {
                     //取鼠标所在的 drop 区域

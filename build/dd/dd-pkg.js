@@ -94,6 +94,8 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 dragArea = area(dragRegion);
 
             S.each(drops, function(drop) {
+                if (drop.get("node")[0] == activeDrag.get("dragNode")[0])
+                    return;
                 var a;
                 if (mode == "point") {
                     //取鼠标所在的 drop 区域
@@ -351,35 +353,43 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
 
     Draggable.ATTRS = {
         /**
-         * 拖放节点
+         * 拖放节点，可能指向 proxy node
          */
         node: {
             setter:function(v) {
                 return Node.one(v);
             }
         },
+        /*
+         真实的节点
+         */
+        dragNode:{},
 
         /**
          * 是否需要遮罩跨越iframe
          */
         shim:{
             value:true
-        },
+        }
+        ,
 
         /**
          * handler 数组，注意暂时必须在 node 里面
          */
         handlers:{
             value:[],
-            setter:function(vs) {
-                if (vs) {
-                    for (var i = 0; i < vs.length; i++) {
-                        vs[i] = Node.one(vs[i]);
-                        vs[i].unselectable();
+            setter
+                :
+                function(vs) {
+                    if (vs) {
+                        for (var i = 0; i < vs.length; i++) {
+                            vs[i] = Node.one(vs[i]);
+                            vs[i].unselectable();
+                        }
                     }
                 }
-            }
-        },
+        }
+        ,
 
         mode:{
             /**
@@ -400,6 +410,7 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
             var self = this,
                 node = self.get('node'),
                 handlers = self.get('handlers');
+            self.set("dragNode", node);
 
             if (handlers.length == 0) {
                 handlers[0] = node;
@@ -506,7 +517,10 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
 
     return Draggable;
 
-}, { requires:["ua","node","base","dd/ddm"] });
+},
+{
+    requires:["ua","node","base","dd/ddm"]
+});
 /**
  * droppable for kissy
  * @author:yiminghe@gmail.com
