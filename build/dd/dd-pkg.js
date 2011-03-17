@@ -624,8 +624,8 @@ KISSY.add("dd/proxy", function(S) {
                     node = node(drag);
                     node.css("position", "absolute");
                     self.set("node", node);
-                    dragNode.parent().append(node);
                 }
+                dragNode.parent().append(node);
                 node.show();
                 node.offset(dragNode.offset());
                 drag.set("dragNode", dragNode);
