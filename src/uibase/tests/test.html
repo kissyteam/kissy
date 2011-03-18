@@ -11,9 +11,14 @@
 <script src="uibase-spec.js"></script>
 </head>
 <body>
+<h1>KISSY.UIBase Test Cases</h1>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute();
+    jasmine.getEnv().execute(function() {
+        if (parent && parent.jasmine.kissyNext) {
+            parent.jasmine.kissyNext(this.results().failedCount);
+        }
+    });
 </script>
 </body>
 </html>

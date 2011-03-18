@@ -10,12 +10,12 @@ KISSY.add('template/base', function(S) {
         /**
          * Template Cache
          */
-        templateCache = {},
+            templateCache = {},
 
         /**
          * start/end tag mark
          */
-        tagStartEnd = {
+            tagStartEnd = {
             '#': 'start',
             '/': 'end'
         },
@@ -23,7 +23,7 @@ KISSY.add('template/base', function(S) {
         /**
          * Regexp Cache
          */
-        regexpCache = {},
+            regexpCache = {},
         getRegexp = function(regexp) {
             if (!(regexp in regexpCache)) {
                 regexpCache[regexp] = new RegExp(regexp, 'ig');
@@ -54,38 +54,38 @@ KISSY.add('template/base', function(S) {
             var _parser, _empty_index;
             return S.trim(templ).replace(getRegexp('[\r\t\n]'), ' ').replace(getRegexp('(["\'])'), '\\$1')
                 .replace(getRegexp('\{\{([#/]?)(?!\}\})([^}]*)\}\}'), function(all, expr, oper) {
-                    _parser = KS_EMPTY;
-                    // is an expression
-                    if (expr) {
-                        oper = S.trim(oper);
-                        _empty_index = oper.indexOf(' ');
-                        oper = _empty_index === -1 ? [oper, ''] :
-                                [oper.substring(0, oper.indexOf(' ')), oper.substring(oper.indexOf(' '))];
-                        for (var i in Statements) {
-                            if (oper[0] !== i) continue;
-                            oper.shift();
-                            if (expr in tagStartEnd) {
-                                _parser = Statements[i][tagStartEnd[expr]].replace(
-                                    getRegexp(KS_TEMPL_STAT_PARAM),
-                                    oper.join(KS_EMPTY).replace(getRegexp('\\\\([\'"])'), '$1')
+                _parser = KS_EMPTY;
+                // is an expression
+                if (expr) {
+                    oper = S.trim(oper);
+                    _empty_index = oper.indexOf(' ');
+                    oper = _empty_index === -1 ? [oper, ''] :
+                        [oper.substring(0, oper.indexOf(' ')), oper.substring(oper.indexOf(' '))];
+                    for (var i in Statements) {
+                        if (oper[0] !== i) continue;
+                        oper.shift();
+                        if (expr in tagStartEnd) {
+                            _parser = Statements[i][tagStartEnd[expr]].replace(
+                                getRegexp(KS_TEMPL_STAT_PARAM),
+                                oper.join(KS_EMPTY).replace(getRegexp('\\\\([\'"])'), '$1')
                                 );
-                            }
                         }
                     }
+                }
 
-                    // return array directly
-                    else {
-                        _parser = KS_TEMPL + '.push(' + oper.replace(getRegexp('\\\\([\'"])'), '$1') + ');';
-                    }
-                    return PREFIX + _parser + SUFFIX;
+                // return array directly
+                else {
+                    _parser = KS_TEMPL + '.push(' + oper.replace(getRegexp('\\\\([\'"])'), '$1') + ');';
+                }
+                return PREFIX + _parser + SUFFIX;
 
-                });
+            });
         },
 
         /**
          * expressions
          */
-        Statements = {
+            Statements = {
             'if': {
                 start: 'if(' + KS_TEMPL_STAT_PARAM + '){',
                 end: '}'
@@ -111,7 +111,7 @@ KISSY.add('template/base', function(S) {
          * @param {String} templ template to be rendered.
          * @return return this for chain.
          */
-        Template = function(templ//, config
+            Template = function(templ//, config
             ) {
             if (!(templ in templateCache)) {
                 var _ks_data = KS_DATA + S.now(), func,
@@ -139,43 +139,43 @@ KISSY.add('template/base', function(S) {
             return templateCache[templ];
         };
 
-        S.mix(Template, {
-            /**
-             * Logging Compiled Template Codes
-             * @param {String} templ template string.
-             */
-            log: function(templ) {
-                if (templ in templateCache) {
-                    if ('js_beautify' in window) {
-                        S.log(js_beautify(templateCache[templ].parser, {
-                            indent_size: 4,
-                            indent_char: ' ',
-                            preserve_newlines: true,
-                            braces_on_own_line: false,
-                            keep_array_indentation: false,
-                            space_after_anon_function: true
-                        }), 'info');
-                    } else {
-                        S.log(templateCache[templ].parser, 'info');
-                    }
+    S.mix(Template, {
+        /**
+         * Logging Compiled Template Codes
+         * @param {String} templ template string.
+         */
+        log: function(templ) {
+            if (templ in templateCache) {
+                if ('js_beautify' in window) {
+                    S.log(js_beautify(templateCache[templ].parser, {
+                        indent_size:4,
+                        indent_char:" ",
+                        preserve_newlines: true,
+                        braces_on_own_line: false,
+                        keep_array_indentation: false,
+                        space_after_anon_function: true
+                    }), 'info');
                 } else {
-                    Template(templ);
-                    this.log(templ);
+                    S.log(templateCache[templ].parser, 'info');
                 }
-            },
-
-            /**
-             * add statement for extending template tags
-             * @param {String} statement tag name.
-             * @param {String} o extent tag object.
-             */
-            addStatement: function(statement, o) {
-                if (S['isString'](statement) && S['isObject'](o)) {
-                    Statements[statement] = o;
-                }
+            } else {
+                Template(templ);
+                this.log(templ);
             }
+        },
 
-        });
+        /**
+         * add statement for extending template tags
+         * @param {String} statement tag name.
+         * @param {String} o extent tag object.
+         */
+        addStatement: function(statement, o) {
+            if (S['isString'](statement) && S['isObject'](o)) {
+                Statements[statement] = o;
+            }
+        }
+
+    });
 
     return Template;
 

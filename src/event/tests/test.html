@@ -56,11 +56,15 @@
     </div>
 </div>
 
-
+<h1>KISSY.Event Test Cases</h1>
 <script src="event-spec.js"></script>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute();
+    jasmine.getEnv().execute(function() {
+        if (parent && parent.jasmine.kissyNext) {
+            parent.jasmine.kissyNext(this.results().failedCount);
+        }
+    });
 </script>
 
 </body>

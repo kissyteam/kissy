@@ -70,11 +70,15 @@
     </div>
     content
 </div>
-
+<h1>KISSY.DD Test Cases</h1>
 <script src="dd-spec.js"></script>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute();
+    jasmine.getEnv().execute(function() {
+        if (parent && parent.jasmine.kissyNext) {
+            parent.jasmine.kissyNext(this.results().failedCount);
+        }
+    });
 </script>
 
 </body>

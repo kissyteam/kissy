@@ -67,7 +67,12 @@
         <concat destfile="kissy-aio-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="kissy-pkg.js"/>
             <path path="../sizzle.js"/>
+
             <path path="../datalazyload.js"/>
+            <!--
+           cause error!
+            <path path="../template.js"/>
+            -->
             <path path="../flash.js"/>
             <path path="../dd.js"/>
             <path path="../resizable.js"/>
@@ -78,6 +83,9 @@
             <path path="../suggest.js"/>
             <path path="../imagezoom.js"/>
             <path path="../calendar.js"/>
+            <path path="../menu.js"/>
+            <path path="../button.js"/>
+            <path path="../menubutton.js"/>
         </concat>
     </target>
 
