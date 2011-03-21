@@ -200,7 +200,7 @@
                         return self;
                     }
                     if (self.__isAttached(host)) {
-                        def.apply(self);
+                        def.call(self, self);
                     } else {
                         //该 host 模块纯虚！
                         hostMod.fns = hostMod.fns || [];
