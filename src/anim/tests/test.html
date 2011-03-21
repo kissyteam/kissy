@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Test Runner</title>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
+<script src="../../../tools/jasmine/event-simulate.js"></script>
+
+<script src="../../seed/kissy.js"></script>
+<script src="../../seed/lang.js"></script>
+<script src="../../seed/web.js"></script>
+<script src="../../seed/loader.js"></script>
+<script src="../../../build/ua.js"></script>
+<script src="../../../build/event.js"></script>
+<script src="../../../build/dom.js"></script>
+
+<script src="../easing.js"></script>
+<script src="../base.js"></script>
+<script src="../node-plugin.js"></script>
+<script src="../../anim.js"></script>
+
+<script src="../../../build/node.js"></script>
+</head>
+<body>
+
+<div id="test1" style="position: absolute; text-align: center;">^o^</div>
+<div id="test2">#test2</div>
+<div id="test6">#test6</div>
+
+<h1>KISSY.Anim Test Cases</h1>
+<script src="anim-spec.js"></script>
+<script>
+    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    jasmine.getEnv().execute(function() {
+        if (parent && parent.jasmine.kissyNext) {
+            parent.jasmine.kissyNext(this.results().failedCount);
+        }
+    });
+</script>
+
+</body>
+</html>
