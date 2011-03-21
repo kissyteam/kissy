@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110314214430';
+                    return m + '-pkg-min.js?t=20110321121343';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110314214430';
+                    return m + '-min.css?t=20110321121343';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -6212,9 +6212,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
                 // 还原样式
                 if(originalStyle[HEIGHT]) DOM.css(elem, { height: originalStyle[HEIGHT] });
-                if(originalStyle[WIDTH]) DOM.css(elem, { height: originalStyle[WIDTH] });
-                if(originalStyle[OPCACITY]) DOM.css(elem, { height: originalStyle[OPCACITY] });
-                if(originalStyle[OVERFLOW]) DOM.css(elem, { height: originalStyle[OVERFLOW] });
+                if(originalStyle[WIDTH]) DOM.css(elem, { width: originalStyle[WIDTH] });
+                if(originalStyle[OPCACITY]) DOM.css(elem, { opacity: originalStyle[OPCACITY] });
+                if(originalStyle[OVERFLOW]) DOM.css(elem, { overflow: originalStyle[OVERFLOW] });
             }
 
             if (callback && S.isFunction(callback)) callback();
