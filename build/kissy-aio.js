@@ -11267,9 +11267,16 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
     Position.ATTRS = {
         x: {
             // 水平方向绝对位置
+            valueFn:function() {
+                return this.get("view").get("x");
+            }
         },
         y: {
             // 垂直方向绝对位置
+            // 水平方向绝对位置
+            valueFn:function() {
+                return this.get("view").get("y");
+            }
         },
         xy: {
             // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
@@ -11283,6 +11290,10 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
                     xy[1] && self.set("y", xy[1]);
                 }
                 return v;
+            },
+
+            valueFn:function() {
+                return [this.get("x"),this.get("y")];
             }
         },
         zIndex: {
@@ -11365,7 +11376,7 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
  * position and visible extension，可定位的隐藏层
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/positionrender", function(S) {
+KISSY.add("uibase/positionrender", function() {
 
     function Position() {
     }
@@ -11373,9 +11384,15 @@ KISSY.add("uibase/positionrender", function(S) {
     Position.ATTRS = {
         x: {
             // 水平方向绝对位置
+            valueFn:function() {
+                return this.get("el").offset().left;
+            }
         },
         y: {
             // 垂直方向绝对位置
+            valueFn:function() {
+                return this.get("el").offset().top;
+            }
         },
         zIndex: {
             value: 9999

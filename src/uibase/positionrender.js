@@ -2,7 +2,7 @@
  * position and visible extension，可定位的隐藏层
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/positionrender", function(S) {
+KISSY.add("uibase/positionrender", function() {
 
     function Position() {
     }
@@ -10,9 +10,15 @@ KISSY.add("uibase/positionrender", function(S) {
     Position.ATTRS = {
         x: {
             // 水平方向绝对位置
+            valueFn:function() {
+                return this.get("el").offset().left;
+            }
         },
         y: {
             // 垂直方向绝对位置
+            valueFn:function() {
+                return this.get("el").offset().top;
+            }
         },
         zIndex: {
             value: 9999
