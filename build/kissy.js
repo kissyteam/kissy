@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110321121343';
+                    return m + '-pkg-min.js?t=20110322125623';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110321121343';
+                    return m + '-min.css?t=20110322125623';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -3747,27 +3747,27 @@ KISSY.add('event', function(S, undef) {
     var doc = document,
         DOM = S.DOM,
         simpleAdd = doc.addEventListener ?
-                    function(el, type, fn, capture) {
-                        if (el.addEventListener) {
-                            el.addEventListener(type, fn, !!capture);
-                        }
-                    } :
-                    function(el, type, fn) {
-                        if (el.attachEvent) {
-                            el.attachEvent('on' + type, fn);
-                        }
-                    },
+            function(el, type, fn, capture) {
+                if (el.addEventListener) {
+                    el.addEventListener(type, fn, !!capture);
+                }
+            } :
+            function(el, type, fn) {
+                if (el.attachEvent) {
+                    el.attachEvent('on' + type, fn);
+                }
+            },
         simpleRemove = doc.removeEventListener ?
-                       function(el, type, fn, capture) {
-                           if (el.removeEventListener) {
-                               el.removeEventListener(type, fn, !!capture);
-                           }
-                       } :
-                       function(el, type, fn) {
-                           if (el.detachEvent) {
-                               el.detachEvent('on' + type, fn);
-                           }
-                       },
+            function(el, type, fn, capture) {
+                if (el.removeEventListener) {
+                    el.removeEventListener(type, fn, !!capture);
+                }
+            } :
+            function(el, type, fn) {
+                if (el.detachEvent) {
+                    el.detachEvent('on' + type, fn);
+                }
+            },
         EVENT_GUID = 'ksEventTargetId',
         SPACE = ' ',
         guid = S.now(),
@@ -3941,15 +3941,22 @@ KISSY.add('event', function(S, undef) {
              sure we'll call all of them.*/
             var listeners = Event.__getListeners(target, event.type);
             listeners = listeners.slice(0);
-            var ret, i = 0, len = listeners.length, listener;
+            var ret,
+                gRet,
+                i = 0,
+                len = listeners.length,
+                listener;
 
             for (; i < len; ++i) {
                 listener = listeners[i];
                 ret = listener.fn.call(listener.scope, event);
-
+                //有一个 false，最终结果就是 false
+                if (gRet !== false) {
+                    gRet = ret;
+                }
                 // 和 jQuery 逻辑保持一致
                 // return false 等价 preventDefault + stopProgation
-                if (ret !== undef) {
+                if (ret !== undefined) {
                     event.result = ret;
                     if (ret === false) {
                         event.halt();
@@ -3960,7 +3967,7 @@ KISSY.add('event', function(S, undef) {
                 }
             }
 
-            return ret;
+            return gRet;
         },
 
         _getCache: function(id) {
