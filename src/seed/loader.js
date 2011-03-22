@@ -460,6 +460,8 @@
         },
 
         __getPackagePath:function(mod) {
+            //缓存包路径，未申明的包的模块都到核心模块中找
+            if (mod.packagepath) return mod.packagepath;
             var self = this,
                 //一个模块合并到了另一个模块文件中去
                 modName = self._combine(mod.name),
@@ -479,6 +481,7 @@
             if (p_def && p_def.charset) {
                 mod.charset = p_def.charset;
             }
+            mod.packagepath = p_path;
             return p_path;
         },
 
@@ -580,6 +583,17 @@
                     optimize.unshift(mod.name);
                     S.log(optimize + " : better to be used together", "warn");
                 }
+
+                /**
+                 * 如果设置了csspath,css 是一种特殊的依赖
+                 */
+                if (S['isString'](mod["csspath"]) || S['isString'](mod[CSSFULLPATH])) {
+                    //如果 path 以 ./或 ../开头，则根据当前模块定位
+                    self.__buildPath(mod, self.__getPackagePath(mod));
+                    S.getScript(mod[CSSFULLPATH]);
+                }
+
+
                 fn();
             }, cfg);
 
@@ -652,7 +666,7 @@
             // 加载 css, 仅发出请求，不做任何其它处理
             if (S['isString'](mod[CSSFULLPATH])) {
                 self.getScript(mod[CSSFULLPATH]);
-                mod[CSSFULLPATH] = LOADED;
+                mod[CSSFULLPATH] = mod.csspath = LOADED;
             }
 
             if (mod.status < LOADING && url) {
@@ -721,6 +735,8 @@
 
             function build(fullpath, path) {
                 if (!mod[fullpath] && mod[path]) {
+                    //如果是 ./ 或 ../ 则相对当前模块路径
+                    mod[path] = normalDepModuleName(mod.name, mod[path]);
                     mod[fullpath] = (base || Config.base) + mod[path];
                 }
                 // debug 模式下，加载非 min 版
