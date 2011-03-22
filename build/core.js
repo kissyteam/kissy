@@ -5343,6 +5343,7 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         Event:Event,
         EventTarget:Event.Target,
         Node:Node,
+        NodeList:Node.List,
         JSON:JSON,
         Ajax:Ajax,
         IO:Ajax,
