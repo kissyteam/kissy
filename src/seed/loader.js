@@ -34,7 +34,9 @@
             function(node, callback) {
                 node.addEventListener('load', callback, false);
             },
-        loader;
+        loader,
+        RE_CSS = /\.css(?:\?|$)/i,
+        CSSFULLPATH = 'cssfullpath';
 
     /**
      * resolve relative part of path
@@ -647,6 +649,12 @@
                 mod.status = node.nodeName ? LOADING : LOADED;
             }
 
+            // 加载 css, 仅发出请求，不做任何其它处理
+            if (S['isString'](mod[CSSFULLPATH])) {
+                self.getScript(mod[CSSFULLPATH]);
+                mod[CSSFULLPATH] = LOADED;
+            }
+
             if (mod.status < LOADING && url) {
                 mod.status = LOADING;
                 if (oldIE) {
@@ -667,9 +675,9 @@
 
                 // css 是同步的，在 success 回调里，已经将 loadQueque[url] 置成 LOADED
                 // 不需要再置成节点，否则有问题
-                //if (!RE_CSS.test(url)) {
-                loadQueque[url] = ret;
-                //}
+                if (!RE_CSS.test(url)) {
+                    loadQueque[url] = ret;
+                }
             }
             // 已经在加载中，需要添加回调到 script onload 中
             // 注意：没有考虑 error 情形
@@ -706,16 +714,19 @@
 
         __buildPath: function(mod, base) {
             var self = this,
-                Config = self.Config,
-                path = 'path',
-                fullpath = 'fullpath';
+                Config = self.Config;
 
-            if (!mod[fullpath] && mod[path]) {
-                mod[fullpath] = (base || Config.base) + mod[path];
-            }
-            // debug 模式下，加载非 min 版
-            if (mod[fullpath] && Config.debug) {
-                mod[fullpath] = mod[fullpath].replace(/-min/ig, EMPTY);
+            build("fullpath", "path");
+            build("cssfullpath", "csspath");
+
+            function build(fullpath, path) {
+                if (!mod[fullpath] && mod[path]) {
+                    mod[fullpath] = (base || Config.base) + mod[path];
+                }
+                // debug 模式下，加载非 min 版
+                if (mod[fullpath] && Config.debug) {
+                    mod[fullpath] = mod[fullpath].replace(/-min/ig, EMPTY);
+                }
             }
         },
 
