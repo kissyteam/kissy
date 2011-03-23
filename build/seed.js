@@ -67,6 +67,8 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
+        buildTime:'@TIMESTAMP@',
+
         /**
          * Returns a new object containing all of the properties of
          * all the supplied objects. The properties from later objects
@@ -416,7 +418,7 @@ build time: ${build.time}
          * @param context {Object} (opt)
          */
         each: function(object, fn, context) {
-            var key, val, i = 0, length = object.length,
+            var key, val, i = 0, length = object && object.length,
                 isObj = length === undef || S.type(object) === 'function';
             context = context || host;
 
@@ -583,6 +585,7 @@ build time: ${build.time}
             },
         loader,
         RE_CSS = /\.css(?:\?|$)/i,
+        buildTime = encodeURIComponent(S.buildTime),
         CSSFULLPATH = 'cssfullpath';
 
     /**
@@ -594,10 +597,11 @@ build time: ${build.time}
      * @description similar to path.normalize in nodejs
      */
     function normalizePath(path) {
-        var paths = path.split("/");
-        var re = [];
+        var paths = path.split("/"),
+            re = [],
+            p;
         for (var i = 0; i < paths.length; i++) {
-            var p = paths[i];
+            p = paths[i];
             if (p == ".") {
             }
             else if (p == "..") {
@@ -606,7 +610,6 @@ build time: ${build.time}
             else {
                 re.push(p);
             }
-
         }
         return re.join("/");
     }
@@ -666,11 +669,6 @@ build time: ${build.time}
             path = pagePath + path;
         }
         return normalizePath(path);
-    }
-
-    //清楚时间戳
-    function removeTimestamp(str) {
-        return str.replace(/\?.*$/, "");
     }
 
     //http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -773,7 +771,7 @@ build time: ${build.time}
                     var i,modNames;
                     i = (modNames = S.makeArray(requires)).length - 1;
                     for (; i >= 0; i--) {
-                        var requireName = removeTimestamp(modNames[i]);
+                        var requireName = modNames[i];
                         var requireMod = mods[requireName] || {};
                         if (requireMod.status !== ATTACHED) {
                             S.log(mod.name + " not attached when added : depends " + requireName);
@@ -811,10 +809,8 @@ build time: ${build.time}
                         config:config
                     };
                 }
-
                 return self;
             }
-
             S.error("invalid format for KISSY.add !");
             return self;
         },
@@ -822,9 +818,12 @@ build time: ${build.time}
         //ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
         __findModuleNameByInteractive:function() {
             var self = this,
-                scripts = document.getElementsByTagName("script"),re;
+                scripts = document.getElementsByTagName("script"),
+                re,
+                script;
+
             for (var i = 0; i < scripts.length; i++) {
-                var script = scripts[i];
+                script = scripts[i];
                 if (script.readyState == "interactive") {
                     re = script;
                     break;
@@ -834,20 +833,22 @@ build time: ${build.time}
                 S.log("找不到 interactive 状态的 script", "error");
                 S.error("找不到 interactive 状态的 script");
             }
+
             var src = re.src;
             S.log("interactive src :" + src);
-
             //注意：模块名不包含后缀名以及参数，所以去除
             //系统模块去除系统路径
             if (src.lastIndexOf(self.Config.base, 0) == 0) {
                 return removePostfix(src.substring(self.Config.base.length));
             }
+
             var packages = self.__packages;
             //外部模块去除包路径，得到模块名
             for (var p in packages) {
+                var p_path = packages[p].path;
                 if (!packages.hasOwnProperty(p)) continue;
-                if (src.lastIndexOf(packages[p].path, 0) == 0) {
-                    return removePostfix(src.substring(packages[p].path.length));
+                if (src.lastIndexOf(p_path, 0) == 0) {
+                    return removePostfix(src.substring(p_path.length));
                 }
             }
 
@@ -888,14 +889,16 @@ build time: ${build.time}
             var self = this,
                 ps;
             ps = self.__packages = self.__packages || {};
-            for (var i = 0; i < cfgs.length; i++) {
-                var cfg = cfgs[i];
+            S.each(cfgs, function(cfg) {
                 ps[cfg.name] = cfg;
                 if (cfg.path) {
                     //注意正则化
                     cfg.path = normalBasePath(cfg.path);
                 }
-            }
+                if (cfg.tag) {
+                    cfg.tag = encodeURIComponent(cfg.tag);
+                }
+            });
         },
 
         /**
@@ -905,7 +908,8 @@ build time: ${build.time}
          * }
          */
         _combine:function(from, to) {
-            var self = this,cs;
+            var self = this,
+                cs;
             if (S['isObject'](from)) {
                 S.each(from, function(v, k) {
                     S.each(v, function(v2) {
@@ -923,22 +927,29 @@ build time: ${build.time}
         },
 
         __mixMods: function(global) {
-            var mods = this.Env.mods, gMods = global.Env.mods, name;
+            var mods = this.Env.mods,
+                gMods = global.Env.mods,
+                name;
             for (name in gMods) {
                 this.__mixMod(mods, gMods, name, global);
             }
         },
 
         __mixMod: function(mods, gMods, name, global) {
-            var mod = mods[name] || {}, status = mod.status;
+            var mod = mods[name] || {},
+                status = mod.status;
 
             S.mix(mod, S.clone(gMods[name]));
 
             // status 属于实例，当有值时，不能被覆盖。只有没有初始值时，才从 global 上继承
-            if (status) mod.status = status;
+            if (status) {
+                mod.status = status;
+            }
 
             // 来自 global 的 mod, path 应该基于 global
-            if (global) this.__buildPath(mod, global.Config.base);
+            if (global) {
+                this.__buildPath(mod, global.Config.base);
+            }
 
             mods[name] = mod;
         },
@@ -951,17 +962,16 @@ build time: ${build.time}
          * </code>
          */
         use: function(modNames, callback, cfg) {
-
             modNames = modNames.replace(/\s+/g, EMPTY).split(',');
             indexMapping(modNames);
             cfg = cfg || {};
+
             var self = this,
-                modName,
-                i,
-                len = modNames.length,
                 fired;
             //如果 use 指定了 global
-            if (cfg.global)self.__mixMods(cfg.global);
+            if (cfg.global) {
+                self.__mixMods(cfg.global);
+            }
 
             // 已经全部 attached, 直接执行回调即可
             if (self.__isAttached(modNames)) {
@@ -969,8 +979,9 @@ build time: ${build.time}
                 callback && callback.apply(self, mods);
                 return;
             }
+
             // 有尚未 attached 的模块
-            for (i = 0; i < len && (modName = modNames[i]); i++) {
+            S.each(modNames, function(modName) {
                 // 从 name 开始调用，防止不存在模块
                 self.__attachModByName(modName, function() {
                     if (!fired && self.__isAttached(modNames)) {
@@ -979,17 +990,17 @@ build time: ${build.time}
                         callback && callback.apply(self, mods);
                     }
                 }, cfg);
-            }
+            });
+
             return self;
         },
 
         __getModules:function(modNames) {
             var self = this,
                 mods = [self];
-            modNames = modNames || [];
-            for (var i = 0; i < modNames.length; i++) {
-                mods.push(self.require(modNames[i]));
-            }
+            S.each(modNames, function(modName) {
+                mods.push(self.require(modName));
+            });
             return mods;
         },
 
@@ -1000,8 +1011,8 @@ build time: ${build.time}
         require:function(moduleName) {
             var self = this,
                 mods = self.Env.mods,
-                mod = mods[removeTimestamp(moduleName)];
-            var re = self['onRequire'] && self['onRequire'](mod);
+                mod = mods[moduleName],
+                re = self['onRequire'] && self['onRequire'](mod);
             if (re !== undefined) return re;
             return mod && mod.value;
         },
@@ -1012,8 +1023,11 @@ build time: ${build.time}
             var self = this,
                 //一个模块合并到了另一个模块文件中去
                 modName = self._combine(mod.name),
-                packages = self.__packages || {};
-            var pName = "";
+                packages = self.__packages || {},
+                pName = "",
+                p_def,
+                p_path;
+
             for (var p in packages) {
                 if (packages.hasOwnProperty(p)) {
                     if (startsWith(modName, p)) {
@@ -1023,10 +1037,15 @@ build time: ${build.time}
                     }
                 }
             }
-            var p_def = packages[pName];
-            var p_path = (p_def && p_def.path) || this.Config.base;
+            p_def = packages[pName];
+            p_path = (p_def && p_def.path) || self.Config.base;
             if (p_def && p_def.charset) {
                 mod.charset = p_def.charset;
+            }
+            if (p_def) {
+                mod.tag = p_def.tag;
+            } else {
+                mod.tag = buildTime;
             }
             mod.packagepath = p_path;
             return p_path;
@@ -1036,22 +1055,16 @@ build time: ${build.time}
         __attachModByName: function(modName, callback, cfg) {
 
             var self = this,
-                mods = self.Env.mods;
-            // x/y?t=2011
-            // 注意模块名中带时间戳，用于强制下载最新模块文件
-            var reg = /^([^?]+)(\?.*)?$/;
-            reg.test(modName);
-            modName = RegExp.$1;
-            var tag = RegExp.$2;
-            var mod = mods[modName];
+                mods = self.Env.mods,
+                mod = mods[modName];
             //没有模块定义
             if (!mod) {
                 //默认js名字
-                var componentJsName = self.Config['componentJsName'] || function(m, tag) {
-                    return m + '-min.js' + (tag ? tag : '');
+                var componentJsName = self.Config['componentJsName'] || function(m) {
+                    return m + '-min.js';
                 },  jsPath = S.isFunction(componentJsName) ?
                     //一个模块合并到了了另一个模块文件中去
-                    componentJsName(self._combine(modName), tag)
+                    componentJsName(self._combine(modName))
                     : componentJsName;
                 mod = {
                     path:jsPath,
@@ -1072,21 +1085,20 @@ build time: ${build.time}
             var self = this,
                 mods = self.Env.mods,
                 //复制一份当前的依赖项出来，防止add后修改！
-                requires = (mod['requires'] || []).concat(),
-                i = 0,
-                len = requires.length;
+                requires = (mod['requires'] || []).concat();
             mod['requires'] = requires;
+
             // attach all required modules
-            for (; i < len; i++) {
-                requires[i] = normalDepModuleName(mod.name,
-                    requires[i]);
-                var r = mods[removeTimestamp(requires[i])];
-                if (r && r.status === ATTACHED) {
+            S.each(requires, function(r, i, requires) {
+                r = requires[i] = normalDepModuleName(mod.name, r);
+                var rMod = mods[r];
+                if (rMod && rMod.status === ATTACHED) {
                     //no need
                 } else {
-                    self.__attachModByName(requires[i], fn, cfg);
+                    self.__attachModByName(r, fn, cfg);
                 }
-            }
+            });
+
 
             // load and attach this module
             self.__buildPath(mod, self.__getPackagePath(mod));
@@ -1101,17 +1113,18 @@ build time: ${build.time}
                 }
 
                 // add 可能改了 config，这里重新取下
-                var newRequires = mod['requires'] || [],optimize = [];
-                mod['requires'] = newRequires;
+                mod['requires'] = mod['requires'] || [];
+
+                var newRequires = mod['requires'],
+                    optimize = [];
+
                 //本模块下载成功后串行下载 require
-                for (var i = newRequires.length - 1; i >= 0; i--) {
-                    newRequires[i] = normalDepModuleName(mod.name,
-                        newRequires[i]);
-                    var r = newRequires[i],
-                        rmod = mods[removeTimestamp(r)],
+                S.each(newRequires, function(r, i, newRequires) {
+                    r = newRequires[i] = normalDepModuleName(mod.name, r);
+                    var rMod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
-                    if (rmod && rmod.status === ATTACHED
+                    if (rMod && rMod.status === ATTACHED
                         //已经正在处理了
                         || inA) {
                         //no need
@@ -1122,24 +1135,24 @@ build time: ${build.time}
                     /**
                      * 依赖项需要重新下载，最好和被依赖者一起 use
                      */
-                    if (!inA && (!rmod || rmod.status < LOADED)) {
+                    if (!inA && (!rMod || rMod.status < LOADED)) {
                         optimize.push(r);
                     }
-                }
+                });
+
                 if (optimize.length != 0) {
                     optimize.unshift(mod.name);
-                    S.log(optimize + " : better to be used together", "warn");
+                    //S.log(optimize + " : better to be used together", "warn");
                 }
 
                 /**
-                 * 如果设置了csspath,css 是一种特殊的依赖
+                 * 如果设置了csspath，css 是一种特殊的依赖
                  */
                 if (S['isString'](mod["csspath"]) || S['isString'](mod[CSSFULLPATH])) {
                     //如果 path 以 ./或 ../开头，则根据当前模块定位
                     self.__buildPath(mod, self.__getPackagePath(mod));
                     S.getScript(mod[CSSFULLPATH]);
                 }
-
 
                 fn();
             }, cfg);
@@ -1181,16 +1194,15 @@ build time: ${build.time}
 
         __isAttached: function(modNames) {
             var mods = this.Env.mods,
-                mod,
-                i = (modNames = S.makeArray(modNames)).length - 1;
-
-            for (; i >= 0; i--) {
-                var name = removeTimestamp(modNames[i]);
-                mod = mods[name] || {};
-                if (mod.status !== ATTACHED) return false;
-            }
-
-            return true;
+                ret = true;
+            S.each(modNames, function(name) {
+                var mod = mods[name];
+                if (!mod || mod.status !== ATTACHED) {
+                    ret = false;
+                    return ret;
+                }
+            });
+            return ret;
         },
 
         /**
@@ -1201,7 +1213,8 @@ build time: ${build.time}
                 url = mod['fullpath'],
                 //这个是全局的，防止多实例对同一模块的重复下载
                 loadQueque = S.Env._loadQueue,
-                node = loadQueque[url], ret;
+                node = loadQueque[url],
+                ret;
 
             mod.status = mod.status || 0;
 
@@ -1290,6 +1303,13 @@ build time: ${build.time}
                 if (mod[fullpath] && Config.debug) {
                     mod[fullpath] = mod[fullpath].replace(/-min/ig, EMPTY);
                 }
+
+                //刷新客户端缓存，加时间戳 tag
+                if (mod[fullpath]
+                    && !(mod[fullpath].match(/\?t=/))
+                    && mod.tag) {
+                    mod[fullpath] += "?t=" + mod.tag;
+                }
             }
         },
 
@@ -1309,7 +1329,10 @@ build time: ${build.time}
         getScript: function(url, success, charset) {
             var isCSS = /\.css(?:\?|$)/i.test(url),
                 node = doc.createElement(isCSS ? 'link' : 'script'),
-                config = success, error, timeout, timer;
+                config = success,
+                error,
+                timeout,
+                timer;
 
             if (S.isPlainObject(config)) {
                 success = config.success;
@@ -1337,11 +1360,6 @@ build time: ${build.time}
                     }
 
                     S.isFunction(success) && success.call(node);
-
-                    // remove script
-                    //if (head && node.parentNode) {
-                    //    head.removeChild(node);
-                    //}
                 });
             }
 
@@ -1397,13 +1415,12 @@ build time: ${build.time}
             }
             // combo after first
             else {
-                for (var i = 1; i < parts.length; i++) {
-                    var part = parts[i];
+                S.each(parts, function(part) {
                     if (part.match(baseTestReg)) {
                         base += part.replace(baseReg, '$1');
-                        break;
+                        return false;
                     }
-                }
+                });
             }
         }
         /**

@@ -62,6 +62,8 @@
          */
         version: '@VERSION@',
 
+        buildTime:'@TIMESTAMP@',
+
         /**
          * Returns a new object containing all of the properties of
          * all the supplied objects. The properties from later objects
