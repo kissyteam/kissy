@@ -67,7 +67,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110329124122',
+        buildTime:'20110329141358',
 
         /**
          * Returns a new object containing all of the properties of
@@ -9730,6 +9730,9 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
         handlers:{
             value:[]
         },
+        cursor:{
+            value:"move"
+        },
 
         mode:{
             /**
@@ -9761,7 +9764,9 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
                 hl = S.one(hl);
                 //ie 不能在其内开始选择区域
                 hl.unselectable();
-                hl.css('cursor', 'move');
+                if (self.get("cursor")) {
+                    hl.css('cursor', 'move');
+                }
             }
             node.on('mousedown', self._handleMouseDown, self);
         },
@@ -10015,7 +10020,7 @@ build time: ${build.time}
  * @author: 承玉<yiminghe@gmail.com>
  * @requires: dd
  */
-KISSY.add("resizable/base", function(S, N, D,UIBase) {
+KISSY.add("resizable/base", function(S, N, D, UIBase) {
 
     var Draggable = S.require("dd/draggable"),
         Node = S.require("node/node"),
@@ -10083,7 +10088,8 @@ KISSY.add("resizable/base", function(S, N, D,UIBase) {
                         " " + CLS_PREFIX + "-" + hc + "'>")
                         .prependTo(node),
                     dd = dds[hc] = new Draggable({
-                        node:el
+                        node:el,
+                        cursor:null
                     });
                 dd.on("drag", self._drag, self);
                 dd.on("dragstart", self._dragStart, self);
@@ -10285,6 +10291,7 @@ KISSY.add('uibase/align', function(S, DOM) {
                 xy.left - diff[0] + (+offset[0]),
                 xy.top - diff[1] + (+offset[1])
             ];
+
             self.set('x', xy[0]);
             self.set('y', xy[1]);
         },
@@ -10503,7 +10510,7 @@ KISSY.add('uibase/base', function (S, Base) {
          */
         _bindUI: function() {
             var self = this,
-                attrs = self.__getDefAttrs(),
+                attrs = self.__attrs,
                 attr, m;
 
             for (attr in attrs) {
@@ -10734,8 +10741,10 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             }
         }
 
-
-        return "<" + tag + (styleStr ? (" style='" + styleStr + "' ") : "") + attrStr + (cls ? (" class='" + cls + "' ") : "") + ">";
+        var ret = "<" + tag + (styleStr ? (" style='" + styleStr + "' ") : "")
+            + attrStr + (cls ? (" class='" + cls + "' ") : "")
+            + ">";
+        return ret;
     }
 
     Box.HTML_PARSER = {
@@ -11245,11 +11254,11 @@ KISSY.add("uibase/mask", function(S) {
         _uiSetMask:function(v) {
             var self = this;
             if (v) {
-                self.on("show", self.get("view")._maskExtShow);
-                self.on("hide", self.get("view")._maskExtHide);
+                self.on("show", self.get("view")._maskExtShow, self.get("view"));
+                self.on("hide", self.get("view")._maskExtHide, self.get("view"));
             } else {
-                self.detach("show", self.get("view")._maskExtShow);
-                self.detach("hide", self.get("view")._maskExtHide);
+                self.detach("show", self.get("view")._maskExtShow, self.get("view"));
+                self.detach("hide", self.get("view")._maskExtHide, self.get("view"));
             }
         }
     };
@@ -11767,21 +11776,42 @@ build time: ${build.time}
  * @author:yiminghe@gmail.com
  */
 KISSY.add("component/modelcontrol", function(S, UIBase) {
+    function wrapperViewSetter(attrName) {
+        return function(value) {
+            this.get("view").set(attrName, value);
+        };
+    }
 
     return UIBase.create([UIBase.Box], {
 
         renderUI:function() {
-            var view = this.get("view");
+            var self = this;
+            /**
+             * 将 view 的属性转发过去
+             * 用户一般实际上只需在一个地点设置
+             */
+            var attrs = self.__attrs;
+            for (var attrName in attrs) {
+                if (attrs.hasOwnProperty(attrName)) {
+                    var attrCfg = attrs[attrName];
+                    if (attrCfg.view && !self['_uiSet' + capitalFirst(attrName)]) {
+                        self['_uiSet' + capitalFirst(attrName)] = wrapperViewSetter(attrName);
+                    }
+                }
+            }
+
+
+            var view = self.get("view");
 
             //first render myself to my parent
-            if (this.get("parent")) {
-                var pv = this.get("parent").get("view");
+            if (self.get("parent")) {
+                var pv = self.get("parent").get("view");
                 view.set("render", pv.get("contentEl") || pv.get("el"));
             }
             view.render();
 
             //then render my children
-            var children = this.get("children");
+            var children = self.get("children");
             S.each(children, function(child) {
                 child.render();
             });
@@ -11821,22 +11851,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             el.on("keydown", self._handleKeydown, self);
             el.on("click", self._handleClick, self);
 
-
-            /**
-             * 将 view 的属性转发过去
-             * 用户一般实际上只需在一个地点设置
-             */
-            var attrs = this.__attrs;
-            for (var attrName in attrs) {
-                if (attrs.hasOwnProperty(attrName)) {
-                    var attrCfg = attrs[attrName];
-                    if (attrCfg.view) {
-                        self['_uiSet' + capitalFirst(attrName)] = function(value) {
-                            this.get("view").set("attrName", value);
-                        };
-                    }
-                }
-            }
         },
 
         _forwordToView:function(method, ev) {
@@ -11978,17 +11992,18 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                         /**
                          * 将渲染层初始化所需要的属性，直接构造器设置过去
                          */
-                        var attrs = this.__attrs,cfg;
+                        var attrs = this.__attrs,cfg = {};
                         for (var attrName in attrs) {
                             if (attrs.hasOwnProperty(attrName)) {
                                 var attrCfg = attrs[attrName];
-                                if (attrCfg.view) {
+                                if (attrCfg.view
+                                    //如果用户没设，不要帮他设 undefined
+                                    //attribute get 判断是 name in attrs
+                                    && this.__attrVals[attrName] !== undefined) {
                                     cfg[attrName] = this.__attrVals[attrName];
                                 }
                             }
                         }
-
-
                         return new DefaultRender(cfg);
                     }
                 }

@@ -26,7 +26,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             for (var attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName];
-                    if (attrCfg.view) {
+                    if (attrCfg.view && !self['_uiSet' + capitalFirst(attrName)]) {
                         self['_uiSet' + capitalFirst(attrName)] = wrapperViewSetter(attrName);
                     }
                 }
