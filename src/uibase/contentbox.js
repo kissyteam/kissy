@@ -26,6 +26,9 @@ KISSY.add("uibase/contentbox", function(S) {
         },
         contentTagName:{
             view:true
+        },
+        prefixCls: {
+            value: 'ks-'
         }
     };
 

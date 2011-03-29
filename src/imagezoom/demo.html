@@ -74,10 +74,10 @@
 
 <body>
 
-<h2>标准模式</h2>
+<h2>内嵌模式</h2>
 
 <div class="demo">
-    <img id="standard" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+    <img id="inner" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
 </div>
 
 <style>
@@ -105,14 +105,13 @@
 
 <script>
     var S = KISSY;
-    S.log(S.ImageZoom);
     KISSY.use("dom,event,imagezoom", function(S, DOM, Event, ImageZoom) {
 
         var a = new ImageZoom({
-            imageNode: "#standard",
+            imageNode: "#inner",
             type: 'inner',
             align:{
-                node: "#standard",
+                node: "#inner",
                 points: ["tr","tl"],
                 offset: [0, 0]
             },

@@ -14,7 +14,10 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
         contentElStyle:{},
         contentTagName:{value:"div"},
         //层内容
-        content:{}
+        content:{},
+        prefixCls: {
+            value: 'ks-'
+        }
     };
 
 
