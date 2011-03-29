@@ -1031,7 +1031,8 @@ KISSY.add("uibase/loadingrender", function(S, Node) {
             if (!self._loadingExtEl) {
                 self._loadingExtEl = new Node("<div " +
                     "class='" +
-                    "ks-ext-loading'" +
+                    this.get("prefixCls") +
+                    "ext-loading'" +
                     " style='position: absolute;" +
                     "border: none;" +
                     "width: 100%;" +
@@ -1102,7 +1103,7 @@ KISSY.add("uibase/maskrender", function(S) {
     function initMask() {
         var UA = S.require("ua"),Node = S.require("node/node"),DOM = S.require("dom");
         mask = new Node("<div class='" +
-             "ks-ext-mask'>").prependTo(document.body);
+            this.get("prefixCls") + "ext-mask'>").prependTo(document.body);
         mask.css({
             "position":"absolute",
             left:0,
@@ -1291,7 +1292,7 @@ KISSY.add("uibase/positionrender", function() {
 
         __renderUI:function() {
             var el = this.get("el");
-            el.addClass("ks-ext-position");
+            el.addClass(this.get("prefixCls") + "ext-position");
             el.css("display", "");
         },
 
