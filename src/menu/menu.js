@@ -117,11 +117,6 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             S.each(this.get("children"), function(c) {
                 self._bindMenuItem(c);
             });
-        },
-
-        _uiSetFocusable:function(v) {
-
-            this.get("view").set("focusable", v);
         }
     }, {
         ATTRS:{
@@ -129,7 +124,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             selectedItem:{},
             focusable:{
                 //默认可以获得焦点
-                value:true
+                value:true,
+                view:true
             }
         }
     });

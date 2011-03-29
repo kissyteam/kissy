@@ -9,20 +9,28 @@ KISSY.add("uibase/contentbox", function(S) {
 
     ContentBox.ATTRS = {
         //层内容
-        content:{},
+        content:{
+            view:true
+        },
         contentEl:{
             getter:function() {
                 return this.get("view").get("contentEl");
             }
+        },
+
+        contentElAttrs:{
+            view:true
+        },
+        contentElStyle:{
+            view:true
+        },
+        contentTagName:{
+            view:true
         }
     };
 
 
-    ContentBox.prototype = {
-        _uiSetContent:function(c) {
-            this._forwordStateToView("content", c);
-        }
-    };
+    ContentBox.prototype = {    };
 
     return ContentBox;
 });

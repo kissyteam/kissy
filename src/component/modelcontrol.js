@@ -3,20 +3,42 @@
  * @author:yiminghe@gmail.com
  */
 KISSY.add("component/modelcontrol", function(S, UIBase) {
+    function wrapperViewSetter(attrName) {
+        return function(value) {
+            this.get("view").set(attrName, value);
+        };
+    }
+
     return UIBase.create([UIBase.Box], {
 
         renderUI:function() {
-            var view = this.get("view");
+            var self = this;
+            /**
+             * 将 view 的属性转发过去
+             * 用户一般实际上只需在一个地点设置
+             */
+            var attrs = self.__attrs;
+            for (var attrName in attrs) {
+                if (attrs.hasOwnProperty(attrName)) {
+                    var attrCfg = attrs[attrName];
+                    if (attrCfg.view) {
+                        self['_uiSet' + capitalFirst(attrName)] = wrapperViewSetter(attrName);
+                    }
+                }
+            }
+
+
+            var view = self.get("view");
 
             //first render myself to my parent
-            if (this.get("parent")) {
-                var pv = this.get("parent").get("view");
+            if (self.get("parent")) {
+                var pv = self.get("parent").get("view");
                 view.set("render", pv.get("contentEl") || pv.get("el"));
             }
             view.render();
 
             //then render my children
-            var children = this.get("children");
+            var children = self.get("children");
             S.each(children, function(child) {
                 child.render();
             });
@@ -55,6 +77,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             el.on("blur", self._handleBlur, self);
             el.on("keydown", self._handleKeydown, self);
             el.on("click", self._handleClick, self);
+
         },
 
         _forwordToView:function(method, ev) {
@@ -62,9 +85,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             view[method] && view[method](ev);
         },
 
-        _forwordStateToView:function(state, value) {
-            this.get("view").set(state, value);
-        },
 
         /**
          * root element handler for mouse enter
@@ -173,7 +193,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             //转交给渲染层
             //note1 : 兼容性考虑
             //note2 : 调用者可以完全不需要接触渲染层
-            srcNode:{},
+            srcNode:{
+                view:true
+            },
+
+            render:{
+                view:true
+            },
 
             //父组件
             parent:{},
@@ -189,10 +215,23 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                         c = c.superclass && c.superclass.constructor;
                     }
                     if (DefaultRender) {
-                        return new DefaultRender({
-                            srcNode:this.get("srcNode"),
-                            render:this.get("render")
-                        });
+
+                        /**
+                         * 将渲染层初始化所需要的属性，直接构造器设置过去
+                         */
+                        var attrs = this.__attrs,cfg = {};
+                        for (var attrName in attrs) {
+                            if (attrs.hasOwnProperty(attrName)) {
+                                var attrCfg = attrs[attrName];
+                                if (attrCfg.view
+                                    //如果用户没设，不要帮他设 undefined
+                                    //attribute get 判断是 name in attrs
+                                    && this.__attrVals[attrName] !== undefined) {
+                                    cfg[attrName] = this.__attrVals[attrName];
+                                }
+                            }
+                        }
+                        return new DefaultRender(cfg);
                     }
                 }
 
@@ -200,10 +239,16 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
             //是否禁用
             disabled:{
-                value:false
+                value:false,
+                view:true
             }
         }
     });
+
+    function capitalFirst(s) {
+        s = s + '';
+        return s.charAt(0).toUpperCase() + s.substring(1);
+    }
 }, {
     requires:['uibase']
 });

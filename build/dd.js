@@ -378,6 +378,9 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
         handlers:{
             value:[]
         },
+        cursor:{
+            value:"move"
+        },
 
         mode:{
             /**
@@ -409,7 +412,9 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
                 hl = S.one(hl);
                 //ie 不能在其内开始选择区域
                 hl.unselectable();
-                hl.css('cursor', 'move');
+                if (self.get("cursor")) {
+                    hl.css('cursor', 'move');
+                }
             }
             node.on('mousedown', self._handleMouseDown, self);
         },

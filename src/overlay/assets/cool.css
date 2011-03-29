@@ -76,17 +76,18 @@
 }
 
 .ks-overlay .ke-resizehandler-b {
-    height: 5px;
+    height: 15px;
     width: 100%; /*background-color: yellow;*/
-    bottom: 0;
+    /*-15px ie6 cross iframe shim*/
+    bottom: -15px;
     left: 0;
     cursor: n-resize;
 }
 
 .ks-overlay .ke-resizehandler-t {
-    height: 5px;
+    height: 15px;
     width: 100%; /*background-color: yellow;*/
-    top: 0;
+    top: -15px;
     left: 0;
     cursor: n-resize;
 }
@@ -94,54 +95,54 @@
 .ks-overlay .ke-resizehandler-l {
     height: 100%;
     -height: expression(this.parentNode.offsetHeight);
-    width: 5px; /*background-color: yellow;*/
+    width: 15px; /*background-color: yellow;*/
     top: 0;
-    left: 0;
+    left: -15px;
     cursor: e-resize;
 }
 
 .ks-overlay .ke-resizehandler-r {
     height: 100%;
     -height: expression(this.parentNode.offsetHeight); /*background-color: yellow;*/
-    width: 5px;
+    width: 15px;
     position: absolute;
     top: 0;
-    right: 0;
+    right: -15px;
     cursor: e-resize;
 }
 
 .ks-overlay .ke-resizehandler-bl {
-    height: 5px;
-    width: 5px; /*background-color: green;*/
+    height: 15px;
+    width: 15px; /*background-color: green;*/
     z-index: 1;
-    bottom: 0;
-    left: 0;
+    bottom: -15px;
+    left: -15px;
     cursor: sw-resize;
 }
 
 .ks-overlay .ke-resizehandler-br {
-    height: 5px;
-    width: 5px;
+    height: 15px;
+    width: 15px;
     z-index: 1; /*background-color: green;*/
-    bottom: 0;
-    right: 0;
+    bottom: -15px;
+    right: -15px;
     cursor: se-resize;
 }
 
 .ks-overlay .ke-resizehandler-tl {
-    height: 5px;
-    width: 5px;
+    height: 15px;
+    width: 15px;
     z-index: 1; /*background-color: green;*/
-    top: 0;
-    left: 0;
+    top: -15px;
+    left: -15px;
     cursor: nw-resize;
 }
 
 .ks-overlay .ke-resizehandler-tr {
-    height: 5px;
-    width: 5px;
+    height: 15px;
+    width: 15px;
     z-index: 1; /*background-color: green;*/
-    top: 0;
-    right: 0;
+    top: -15px;
+    right: -15px;
     cursor: ne-resize;
 }

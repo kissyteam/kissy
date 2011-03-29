@@ -25,38 +25,27 @@ KISSY.add("uibase/stdmod", function(S) {
             }
         },
         bodyStyle:{
+            view:true
         },
         footerStyle:{
+            view:true
         },
         headerStyle:{
+            view:true
         },
-        headerContent:{},
-        bodyContent:{},
-        footerContent:{}
-    };
-
-
-    StdMod.prototype = {
-
-        _uiSetBodyStyle:function(v) {
-            this._forwordStateToView("bodyStyle", v);
+        headerContent:{
+            view:true
         },
-        _uiSetHeaderStyle:function(v) {
-            this._forwordStateToView("headerStyle", v);
+        bodyContent:{
+            view:true
         },
-        _uiSetFooterStyle:function(v) {
-            this._forwordStateToView("footerStyle", v);
-        },
-        _uiSetBodyContent:function(v) {
-            this._forwordStateToView("bodyContent", v);
-        },
-        _uiSetHeaderContent:function(v) {
-            this._forwordStateToView("headerContent", v);
-        },
-        _uiSetFooterContent:function(v) {
-            this._forwordStateToView("footerContent", v);
+        footerContent:{
+            view:true
         }
     };
+
+
+    StdMod.prototype = {};
 
     return StdMod;
 

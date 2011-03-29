@@ -587,21 +587,21 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
             slideDown: ['slide', 1],
             slideUp: ['slide', 0]
         },
-              function(v, k) {
+            function(v, k) {
 
-                  P[k] = function(speed, callback) {
-                      // 没有参数时，调用 DOM 中的对应方法
-                      if (DOM[k] && arguments.length === 0) {
-                          DOM[k](this);
-                      }
-                      else {
-                          S.each(this, function(elem) {
-                              fx(elem, v[0], speed, callback, v[1]);
-                          });
-                      }
-                      return this;
-                  };
-              });
+                P[k] = function(speed, callback) {
+                    // 没有参数时，调用 DOM 中的对应方法
+                    if (DOM[k] && arguments.length === 0) {
+                        DOM[k](this);
+                    }
+                    else {
+                        S.each(this, function(elem) {
+                            fx(elem, v[0], speed, callback, v[1]);
+                        });
+                    }
+                    return this;
+                };
+            });
     });
 
     function fx(elem, which, speed, callback, visible) {
@@ -626,6 +626,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
             }
             else if (prop === HEIGHT) {
                 originalStyle[HEIGHT] = DOM.css(elem, HEIGHT);
+                //http://arunprasad.wordpress.com/2008/08/26/naturalwidth-and-naturalheight-for-image-element-in-internet-explorer/
                 style.height = (visible ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
                 if (visible) DOM.css(elem, HEIGHT, 0);
             }
@@ -651,9 +652,10 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
 
                 // 还原样式
                 if (originalStyle[HEIGHT]) DOM.css(elem, { height: originalStyle[HEIGHT] });
-                if (originalStyle[WIDTH]) DOM.css(elem, { height: originalStyle[WIDTH] });
-                if (originalStyle[OPCACITY]) DOM.css(elem, { height: originalStyle[OPCACITY] });
-                if (originalStyle[OVERFLOW]) DOM.css(elem, { height: originalStyle[OVERFLOW] });
+                if (originalStyle[WIDTH]) DOM.css(elem, { width: originalStyle[WIDTH] });
+                if (originalStyle[OPCACITY]) DOM.css(elem, { opacity: originalStyle[OPCACITY] });
+                if (originalStyle[OVERFLOW]) DOM.css(elem, { overflow: originalStyle[OVERFLOW] });
+
             }
 
             if (callback && S.isFunction(callback)) callback();

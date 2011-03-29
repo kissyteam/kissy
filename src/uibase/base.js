@@ -196,7 +196,7 @@ KISSY.add('uibase/base', function (S, Base) {
          */
         _bindUI: function() {
             var self = this,
-                attrs = self.__getDefAttrs(),
+                attrs = self.__attrs,
                 attr, m;
 
             for (attr in attrs) {

@@ -2,7 +2,7 @@
  * UIBase.Box
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add('uibase/boxrender', function(S) {
+KISSY.add('uibase/boxrender', function(S, Node) {
 
 
     function Box() {
@@ -50,6 +50,41 @@ KISSY.add('uibase/boxrender', function(S) {
         html: {}
     };
 
+    Box.construct = constructEl;
+
+    function constructEl(cls, style, width, height, tag, attrs) {
+        style = style || {};
+
+        if (width) {
+            style.width = width;
+        }
+
+        if (height) {
+            style.height = height;
+        }
+
+        var styleStr = '';
+
+        for (var s in style) {
+            if (style.hasOwnProperty(s)) {
+                styleStr += s + ":" + style[s] + ";";
+            }
+        }
+
+        var attrStr = '';
+
+        for (var a in attrs) {
+            if (attrs.hasOwnProperty(a)) {
+                attrStr += " " + a + "='" + attrs[a] + "'" + " ";
+            }
+        }
+
+        var ret = "<" + tag + (styleStr ? (" style='" + styleStr + "' ") : "")
+            + attrStr + (cls ? (" class='" + cls + "' ") : "")
+            + ">";
+        return ret;
+    }
+
     Box.HTML_PARSER = {
         el:function(srcNode) {
             return srcNode;
@@ -59,13 +94,17 @@ KISSY.add('uibase/boxrender', function(S) {
     Box.prototype = {
 
         __renderUI:function() {
-            var Node = S.require("node/node");
             var self = this,
                 render = self.get("render"),
                 el = self.get("el");
             render = new Node(render);
             if (!el) {
-                el = new Node("<" + self.get("elTagName") + ">");
+                el = new Node(constructEl(self.get("elCls"),
+                    self.get("elStyle"),
+                    self.get("width"),
+                    self.get("height"),
+                    self.get("elTagName"),
+                    self.get("elAttrs")));
                 if (self.get("elOrder")) {
                     render.append(el);
                 } else {
@@ -75,26 +114,24 @@ KISSY.add('uibase/boxrender', function(S) {
             }
         },
         _uiSetElAttrs:function(attrs) {
-                this.get("el").attr(attrs);
+            this.get("el").attr(attrs);
         },
         _uiSetElCls:function(cls) {
-                this.get("el").addClass(cls);
+            this.get("el").addClass(cls);
         },
 
         _uiSetElStyle:function(style) {
-                this.get("el").css(style);
+            this.get("el").css(style);
         },
 
         _uiSetWidth:function(w) {
-
-            var self = this;
-                self.get("el").width(w);
+            this.get("el").width(w);
         },
 
         _uiSetHeight:function(h) {
             //S.log("_uiSetHeight");
             var self = this;
-                self.get("el").height(h);
+            self.get("el").height(h);
         },
 
         _uiSetHtml:function(c) {
@@ -112,4 +149,6 @@ KISSY.add('uibase/boxrender', function(S) {
     };
 
     return Box;
+}, {
+    requires:['node']
 });

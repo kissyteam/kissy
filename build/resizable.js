@@ -8,7 +8,7 @@ build time: ${build.time}
  * @author: 承玉<yiminghe@gmail.com>
  * @requires: dd
  */
-KISSY.add("resizable/base", function(S, N, D,UIBase) {
+KISSY.add("resizable/base", function(S, N, D, UIBase) {
 
     var Draggable = S.require("dd/draggable"),
         Node = S.require("node/node"),
@@ -76,7 +76,8 @@ KISSY.add("resizable/base", function(S, N, D,UIBase) {
                         " " + CLS_PREFIX + "-" + hc + "'>")
                         .prependTo(node),
                     dd = dds[hc] = new Draggable({
-                        node:el
+                        node:el,
+                        cursor:null
                     });
                 dd.on("drag", self._drag, self);
                 dd.on("dragstart", self._dragStart, self);

@@ -13,12 +13,14 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
 
     Position.ATTRS = {
         x: {
+            view:true,
             // 水平方向绝对位置
             valueFn:function() {
                 return this.get("view").get("x");
             }
         },
         y: {
+            view:true,
             // 垂直方向绝对位置
             // 水平方向绝对位置
             valueFn:function() {
@@ -44,28 +46,17 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
             }
         },
         zIndex: {
-            value: 9999
+            view:true
         },
-        visible:{
-            value:undefined
-        }
+        visible:{}
     };
 
 
     Position.prototype = {
 
-        _uiSetZIndex:function(x) {
-            this._forwordStateToView("zIndex", x);
-        },
-        _uiSetX:function(x) {
-            this._forwordStateToView("x", x);
-        },
-        _uiSetY:function(y) {
-            this._forwordStateToView("y", y);
-        },
         _uiSetVisible:function(isVisible) {
             var self = this;
-            this._forwordStateToView("visible", isVisible);
+            this.get("view").set("visible", isVisible);
             self[isVisible ? "_bindKey" : "_unbindKey" ]();
             self.fire(isVisible ? "show" : "hide");
         },

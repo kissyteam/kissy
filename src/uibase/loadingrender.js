@@ -2,7 +2,7 @@
  * loading mask support for overlay
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/loadingrender", function(S) {
+KISSY.add("uibase/loadingrender", function(S, Node) {
 
     function Loading() {
     }
@@ -11,7 +11,7 @@ KISSY.add("uibase/loadingrender", function(S) {
         loading:function() {
             var self = this;
             if (!self._loadingExtEl) {
-                self._loadingExtEl = new (S.require("node/node"))("<div " +
+                self._loadingExtEl = new Node("<div " +
                     "class='" +
                     "ks-ext-loading'" +
                     " style='position: absolute;" +
@@ -35,4 +35,6 @@ KISSY.add("uibase/loadingrender", function(S) {
 
     return Loading;
 
+}, {
+    requires:['node']
 });

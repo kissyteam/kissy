@@ -122,11 +122,6 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             S.each(this.get("children"), function(c) {
                 self._bindMenuItem(c);
             });
-        },
-
-        _uiSetFocusable:function(v) {
-
-            this.get("view").set("focusable", v);
         }
     }, {
         ATTRS:{
@@ -134,7 +129,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             selectedItem:{},
             focusable:{
                 //默认可以获得焦点
-                value:true
+                value:true,
+                view:true
             }
         }
     });
@@ -149,16 +145,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
  * @author:yiminghe@gmail.com
  */
 KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
-    var MenuItem = UIBase.create(Component.ModelControl,{
-        _uiSetHighlighted:function(v) {
-            this.get("view").set("highlighted", v);
-        },
-        _uiSetSelected:function(v) {
-            this.get("view").set("selected", v);
-        },
-        _uiSetContent:function(v) {
-            this.get("view").set("content", v);
-        },
+    var MenuItem = UIBase.create(Component.ModelControl, {
 
         _handleMouseEnter:function() {
             if (MenuItem.superclass._handleMouseEnter.call(this) === false) return false;
@@ -180,18 +167,22 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
         }
     }, {
         ATTRS:{
-            content:{},
+            content:{
+                view:true
+            },
             highlighted:{
+                view:true,
                 value:false
             },
             selected:{
+                view:true,
                 value:false
             }
         }
     });
 
     MenuItem.DefaultRender = MenuItemRender;
-    
+
     return MenuItem;
 }, {
     requires:['uibase','component','./menuitemrender']

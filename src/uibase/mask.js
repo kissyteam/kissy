@@ -19,11 +19,11 @@ KISSY.add("uibase/mask", function(S) {
         _uiSetMask:function(v) {
             var self = this;
             if (v) {
-                self.on("show", self.get("view")._maskExtShow);
-                self.on("hide", self.get("view")._maskExtHide);
+                self.on("show", self.get("view")._maskExtShow, self.get("view"));
+                self.on("hide", self.get("view")._maskExtHide, self.get("view"));
             } else {
-                self.detach("show", self.get("view")._maskExtShow);
-                self.detach("hide", self.get("view")._maskExtHide);
+                self.detach("show", self.get("view")._maskExtShow, self.get("view"));
+                self.detach("hide", self.get("view")._maskExtHide, self.get("view"));
             }
         }
     };

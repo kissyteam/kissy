@@ -8,13 +8,27 @@ KISSY.add('uibase/box', function(S) {
     function Box() {
     }
 
-
     Box.ATTRS = {
-        html: {},
-        width:{},
-        height:{},
-        elCls:{},
-        elStyle:{},
+        html: {
+            view:true
+        },
+        width:{
+            view:true
+        },
+        height:{
+            view:true
+        },
+        elCls:{
+            view:true
+        },
+        elStyle:{
+            view:true
+        },
+        elAttrs:{
+            //其他属性
+            view:true
+        },
+        elOrder:{},
         el:{
             getter:function() {
                 return this.get("view").get("el");
@@ -22,24 +36,7 @@ KISSY.add('uibase/box', function(S) {
         }
     };
 
-
-    Box.prototype = {
-        _uiSetElStyle:function(c) {
-            this._forwordStateToView("elStyle", c);
-        },
-        _uiSetHtml:function(c) {
-            this._forwordStateToView("html", c);
-        },
-        _uiSetWidth:function(c) {
-            this._forwordStateToView("width", c);
-        },
-        _uiSetHeight:function(c) {
-            this._forwordStateToView("height", c);
-        },
-        _uiSetElCls:function(c) {
-            this._forwordStateToView("elCls", c);
-        }
-    };
+    Box.prototype = {};
 
     return Box;
 });

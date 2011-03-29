@@ -8,14 +8,12 @@ KISSY.add("uibase/close", function(S) {
 
     Close.ATTRS = {
         closable: {             // 是否需要关闭按钮
-            value: true
+            value: true,
+            view:true
         }
     };
 
     Close.prototype = {
-        _uiSetClosable:function(c) {
-           this._forwordStateToView("closable", c);
-        },
 
         __bindUI:function() {
 

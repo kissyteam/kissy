@@ -2,7 +2,7 @@
  * 里层包裹层定义，适合mask以及shim
  * @author:yiminghe@gmail.com
  */
-KISSY.add("uibase/contentboxrender", function(S, Node) {
+KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
 
     function ContentBox() {
     }
@@ -24,6 +24,8 @@ KISSY.add("uibase/contentboxrender", function(S, Node) {
         }
     };
 
+    var constructEl = BoxRender.construct;
+
     ContentBox.prototype = {
 
         __renderUI:function() {
@@ -33,17 +35,19 @@ KISSY.add("uibase/contentboxrender", function(S, Node) {
                 el = self.get("el");
             if (!contentEl) {
                 var elChildren = S.makeArray(el[0].childNodes);
-                contentEl = new Node("<" +
-                    self.get("contentTagName") +
-                    " class='" +
-                    this.get("prefixCls")
-                    + "contentbox'>").appendTo(el);
+                contentEl = new Node(constructEl(this.get("prefixCls") + "contentbox",
+                    self.get("contentElStyle"),
+                    undefined,
+                    undefined,
+                    self.get("contentTagName"),
+                    self.get("contentElAttrs"))).appendTo(el);
                 for (var i = 0; i < elChildren.length; i++) {
                     contentEl.append(elChildren[i]);
                 }
                 self.set("contentEl", contentEl);
             }
         },
+
         _uiSetContentElAttrs:function(attrs) {
             attrs && this.get("contentEl").attr(attrs);
         },
@@ -62,5 +66,5 @@ KISSY.add("uibase/contentboxrender", function(S, Node) {
 
     return ContentBox;
 }, {
-    requires:["node"]
+    requires:["node","./boxrender"]
 });
