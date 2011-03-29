@@ -148,14 +148,14 @@ KISSY.add('template', function(S, undefined) {
             log: function(templ) {
                 if (templ in templateCache) {
                     if ('js_beautify' in window) {
-                        S.log(js_beautify(templateCache[templ].parser, {
-                            indent_size: 4,
-                            indent_char: ' ',
-                            preserve_newlines: true,
-                            braces_on_own_line: false,
-                            keep_array_indentation: false,
-                            space_after_anon_function: true
-                        }), 'info');
+//                        S.log(js_beautify(templateCache[templ].parser, {
+//                            indent_size: 4,
+//                            indent_char: " ",
+//                            preserve_newlines: true,
+//                            braces_on_own_line: false,
+//                            keep_array_indentation: false,
+//                            space_after_anon_function: true
+//                        }), 'info');
                     } else {
                         S.log(templateCache[templ].parser, 'info');
                     }
