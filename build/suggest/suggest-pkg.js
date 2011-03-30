@@ -586,6 +586,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
             var self = this, container = self.container,
                 style = container.style, shim = container.shim;
             if (shim) {
+                S.log([PARSEINT(style.left) - 2, style.top, PARSEINT(style.width) + 2, DOM.height(container)-2]);
                 DOM.css(shim, {
                     left: PARSEINT(style.left) - 2, // -2 可以解决吞边线的 bug
                     top: style.top,
@@ -868,8 +869,12 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
          * 填充提示层容器
          */
         _fillContainer: function(content, footer) {
-            this._fillContent(content || EMPTY);
-            this._fillFooter(footer || EMPTY);
+            var self = this;
+            self._fillContent(content || EMPTY);
+            self._fillFooter(footer || EMPTY);
+
+            // bugfix: 更改容器内容时, 调整 shim 大小
+            if (self.isVisible()) self._setShimRegion();
         },
 
         /**

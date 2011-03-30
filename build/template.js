@@ -152,6 +152,7 @@ KISSY.add('template/base', function(S) {
         log: function(templ) {
             if (templ in templateCache) {
                 if ('js_beautify' in window) {
+                    //cause compress error in ant
 //                    S.log(js_beautify(templateCache[templ].parser, {
 //                        indent_size:4,
 //                        indent_char:" ",

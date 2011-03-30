@@ -67,7 +67,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110330114431',
+        buildTime:'20110330122527',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1891,45 +1891,45 @@ build time: ${build.time}
 /**
  combined files : 
 
-D:\code\kissy_git\kissy\tools\..\src\ua\base.js
-D:\code\kissy_git\kissy\tools\..\src\ua\extra.js
-D:\code\kissy_git\kissy\tools\..\src\ua.js
-D:\code\kissy_git\kissy\tools\..\src\dom\base.js
-D:\code\kissy_git\kissy\tools\..\src\dom\attr.js
-D:\code\kissy_git\kissy\tools\..\src\dom\class.js
-D:\code\kissy_git\kissy\tools\..\src\dom\create.js
-D:\code\kissy_git\kissy\tools\..\src\dom\data.js
-D:\code\kissy_git\kissy\tools\..\src\dom\insertion.js
-D:\code\kissy_git\kissy\tools\..\src\dom\offset.js
-D:\code\kissy_git\kissy\tools\..\src\dom\style.js
-D:\code\kissy_git\kissy\tools\..\src\dom\selector.js
-D:\code\kissy_git\kissy\tools\..\src\dom\style-ie.js
-D:\code\kissy_git\kissy\tools\..\src\dom\traversal.js
-D:\code\kissy_git\kissy\tools\..\src\dom.js
-D:\code\kissy_git\kissy\tools\..\src\event\object.js
-D:\code\kissy_git\kissy\tools\..\src\event\base.js
-D:\code\kissy_git\kissy\tools\..\src\event\target.js
-D:\code\kissy_git\kissy\tools\..\src\event\focusin.js
-D:\code\kissy_git\kissy\tools\..\src\event\mouseenter.js
-D:\code\kissy_git\kissy\tools\..\src\event.js
-D:\code\kissy_git\kissy\tools\..\src\node\node.js
-D:\code\kissy_git\kissy\tools\..\src\node\nodelist.js
-D:\code\kissy_git\kissy\tools\..\src\node\attach.js
-D:\code\kissy_git\kissy\tools\..\src\node.js
-D:\code\kissy_git\kissy\tools\..\src\json\json2.js
-D:\code\kissy_git\kissy\tools\..\src\json.js
-D:\code\kissy_git\kissy\tools\..\src\ajax\impl.js
-D:\code\kissy_git\kissy\tools\..\src\ajax.js
-D:\code\kissy_git\kissy\tools\..\src\anim\easing.js
-D:\code\kissy_git\kissy\tools\..\src\anim\base.js
-D:\code\kissy_git\kissy\tools\..\src\anim\node-plugin.js
-D:\code\kissy_git\kissy\tools\..\src\anim.js
-D:\code\kissy_git\kissy\tools\..\src\base\attribute.js
-D:\code\kissy_git\kissy\tools\..\src\base\base.js
-D:\code\kissy_git\kissy\tools\..\src\base.js
-D:\code\kissy_git\kissy\tools\..\src\cookie\base.js
-D:\code\kissy_git\kissy\tools\..\src\cookie.js
-D:\code\kissy_git\kissy\tools\..\src\core.js
+D:\workspace\github\kissy\tools\..\src\ua\base.js
+D:\workspace\github\kissy\tools\..\src\ua\extra.js
+D:\workspace\github\kissy\tools\..\src\ua.js
+D:\workspace\github\kissy\tools\..\src\dom\base.js
+D:\workspace\github\kissy\tools\..\src\dom\attr.js
+D:\workspace\github\kissy\tools\..\src\dom\class.js
+D:\workspace\github\kissy\tools\..\src\dom\create.js
+D:\workspace\github\kissy\tools\..\src\dom\data.js
+D:\workspace\github\kissy\tools\..\src\dom\insertion.js
+D:\workspace\github\kissy\tools\..\src\dom\offset.js
+D:\workspace\github\kissy\tools\..\src\dom\style.js
+D:\workspace\github\kissy\tools\..\src\dom\selector.js
+D:\workspace\github\kissy\tools\..\src\dom\style-ie.js
+D:\workspace\github\kissy\tools\..\src\dom\traversal.js
+D:\workspace\github\kissy\tools\..\src\dom.js
+D:\workspace\github\kissy\tools\..\src\event\object.js
+D:\workspace\github\kissy\tools\..\src\event\base.js
+D:\workspace\github\kissy\tools\..\src\event\target.js
+D:\workspace\github\kissy\tools\..\src\event\focusin.js
+D:\workspace\github\kissy\tools\..\src\event\mouseenter.js
+D:\workspace\github\kissy\tools\..\src\event.js
+D:\workspace\github\kissy\tools\..\src\node\node.js
+D:\workspace\github\kissy\tools\..\src\node\nodelist.js
+D:\workspace\github\kissy\tools\..\src\node\attach.js
+D:\workspace\github\kissy\tools\..\src\node.js
+D:\workspace\github\kissy\tools\..\src\json\json2.js
+D:\workspace\github\kissy\tools\..\src\json.js
+D:\workspace\github\kissy\tools\..\src\ajax\impl.js
+D:\workspace\github\kissy\tools\..\src\ajax.js
+D:\workspace\github\kissy\tools\..\src\anim\easing.js
+D:\workspace\github\kissy\tools\..\src\anim\base.js
+D:\workspace\github\kissy\tools\..\src\anim\node-plugin.js
+D:\workspace\github\kissy\tools\..\src\anim.js
+D:\workspace\github\kissy\tools\..\src\base\attribute.js
+D:\workspace\github\kissy\tools\..\src\base\base.js
+D:\workspace\github\kissy\tools\..\src\base.js
+D:\workspace\github\kissy\tools\..\src\cookie\base.js
+D:\workspace\github\kissy\tools\..\src\cookie.js
+D:\workspace\github\kissy\tools\..\src\core.js
 **/
 
 /**
@@ -4145,6 +4145,11 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, undefined) {
 
                     // Set the alpha filter to set the opacity
                     style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
+
+                    // bugfix: ie下, 图片黑色太多时, 设置 filter 时, 出现白色噪点
+                    if (val === 1) {
+                        style[FILTER] = '';
+                    }
                 }
             };
         }
