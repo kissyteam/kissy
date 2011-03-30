@@ -2197,7 +2197,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  * @module  dom
  * @author  lifesinger@gmail.com
  */
-KISSY.add('dom/style-ie', function(S, DOM, UA, undefined) {
+KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
 
     // only for ie
     if (!UA['ie']) return DOM;
@@ -2218,11 +2218,13 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, undefined) {
 
     // use alpha filter for IE opacity
     try {
-        if (docElem.style[OPACITY] === undefined && docElem[FILTERS]) {
+        if (docElem.style[OPACITY] == undefined
+            && docElem[FILTERS]) {
 
             CUSTOM_STYLES[OPACITY] = {
 
                 get: function(elem) {
+
                     var val = 100;
 
                     try { // will error if no DXImageTransform
