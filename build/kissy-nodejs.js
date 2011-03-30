@@ -248,7 +248,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110329183028',
+        buildTime:'20110330114431',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4370,7 +4370,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, undefined) {
     }
     return DOM;
 }, {
-    requires:["dom/base","ua"]
+    requires:["./base","ua","./style"]
 });
 /**
  * NOTES:

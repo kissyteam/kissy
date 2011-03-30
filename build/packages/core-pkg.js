@@ -2299,7 +2299,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, undefined) {
     }
     return DOM;
 }, {
-    requires:["dom/base","ua"]
+    requires:["./base","ua","./style"]
 });
 /**
  * NOTES:

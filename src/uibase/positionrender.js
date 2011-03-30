@@ -11,13 +11,13 @@ KISSY.add("uibase/positionrender", function() {
         x: {
             // 水平方向绝对位置
             valueFn:function() {
-                return this.get("el").offset().left;
+                return this.get("el")&&this.get("el").offset().left;
             }
         },
         y: {
             // 垂直方向绝对位置
             valueFn:function() {
-                return this.get("el").offset().top;
+                return this.get("el")&&this.get("el").offset().top;
             }
         },
         zIndex: {
