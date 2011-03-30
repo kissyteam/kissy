@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110322125623';
+                    return m + '-pkg-min.js?t=20110330123752';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110322125623';
+                    return m + '-min.css?t=20110330123752';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -2964,6 +2964,11 @@ KISSY.add('dom-style-ie', function(S, undefined) {
 
                     // Set the alpha filter to set the opacity
                     style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
+
+                    // bugfix: ie下, 图片黑色太多时, 设置 filter 时, 出现白色噪点
+                    if (val === 1) {
+                        style[FILTER] = '';
+                    }
                 }
             };
         }

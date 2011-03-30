@@ -61,6 +61,11 @@ KISSY.add('dom-style-ie', function(S, undefined) {
 
                     // Set the alpha filter to set the opacity
                     style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
+
+                    // bugfix: ie下, 图片黑色太多时, 设置 filter 时, 出现白色噪点
+                    if (val === 1) {
+                        style[FILTER] = '';
+                    }
                 }
             };
         }
