@@ -1279,13 +1279,13 @@ KISSY.add("uibase/positionrender", function() {
         x: {
             // 水平方向绝对位置
             valueFn:function() {
-                return this.get("el")&&this.get("el").offset().left;
+                return this.get("el") && this.get("el").offset().left;
             }
         },
         y: {
             // 垂直方向绝对位置
             valueFn:function() {
-                return this.get("el")&&this.get("el").offset().top;
+                return this.get("el") && this.get("el").offset().top;
             }
         },
         zIndex: {
@@ -1300,7 +1300,13 @@ KISSY.add("uibase/positionrender", function() {
         __renderUI:function() {
             var el = this.get("el");
             el.addClass(this.get("prefixCls") + "ext-position");
-            el.css("display", "");
+            el.css({
+                display: "",
+                left:-9999,
+                top:-9999,
+                bottom:"",
+                right:""
+            });
         },
 
         _uiSetZIndex:function(x) {
