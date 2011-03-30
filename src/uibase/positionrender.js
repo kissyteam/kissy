@@ -31,7 +31,7 @@ KISSY.add("uibase/positionrender", function() {
 
         __renderUI:function() {
             var el = this.get("el");
-            el.addClass("ks-ext-position");
+            el.addClass(this.get("prefixCls") + "ext-position");
             el.css("display", "");
         },
 

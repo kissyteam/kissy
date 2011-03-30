@@ -14,7 +14,7 @@ KISSY.add("uibase/maskrender", function(S) {
     function initMask() {
         var UA = S.require("ua"),Node = S.require("node/node"),DOM = S.require("dom");
         mask = new Node("<div class='" +
-             "ks-ext-mask'>").prependTo(document.body);
+            this.get("prefixCls") + "ext-mask'>").prependTo(document.body);
         mask.css({
             "position":"absolute",
             left:0,

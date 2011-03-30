@@ -69,10 +69,7 @@
             <path path="../sizzle.js"/>
 
             <path path="../datalazyload.js"/>
-            <!--
-           cause error!
             <path path="../template.js"/>
-            -->
             <path path="../flash.js"/>
             <path path="../dd.js"/>
             <path path="../resizable.js"/>
