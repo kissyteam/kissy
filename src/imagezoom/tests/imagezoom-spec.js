@@ -1,175 +1,167 @@
-KISSY.use("dom,event,imagezoom", function(S, DOM, Event, ImageZoom) {
+KISSY.use("imagezoom", function(S, ImageZoom) {
 
-
-    describe('imagezoom', function() {
-
-        var tempImage;
-
-        beforeEach(function() {
-            tempImage = DOM.create('<img>', {src: '1.jpg', style: 'position: absolute'});
-            document.body.appendChild(tempImage);
-            DOM.offset(tempImage, {left: 100, top: 100});
-            DOM.width(tempImage, 400);
-            DOM.height(tempImage, 400);
+    // simulate mouse event on any element
+    var simulate = function(target, type, relatedTarget) {
+        jasmine.simulate(target[0], type, { relatedTarget: relatedTarget });
+    };
+    
+    beforeEach(function() {
+        this.addMatchers({
+            toBeHidden: function() {
+                var obj = this.actual;
+                return obj.css('display') === 'none' || obj.css('visibility') === 'hidden';
+            }
         });
+    });
+    describe('图片放大组件', function() {
+        describe('标准模式下,', function() {
+            var a = new ImageZoom({
+                imageNode: "#standard",
+                align:{
+                    node: "#standard",
+                    points: ["tr","tl"],
+                    offset: [0, 0]
+                },
+                bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
+                bigImageWidth: 900,
+                bigImageHeight: 900
+            });
 
-        afterEach(function() {
-            DOM.remove(tempImage);
-        });
+            it('初始化后, 小图 DOM 结构正确', function() {
+                expect(a.image).toBeDefined();
+                expect(a.imageWrap).toBeDefined();
+                expect(a.imageWrap.hasClass('ks-imagezoom-wrap')).toEqual(true);
+            });
 
-        describe('in standard mode', function() {
-            var test;
+            it('显示放大镜图标', function() {
+                expect(a.icon).toBeDefined();
+                expect(a.icon.hasClass('ks-imagezoom-icon')).toEqual(true);
+            });
 
-            beforeEach(function() {
-                test = new ImageZoom(tempImage, {
-                    zoomSize: [400, 400]
+            it('能够正确显示大图', function() {
+                var offset = a.image.offset();
+                a.set('currentMouse', {
+                    pageX: offset.left + 100,
+                    pageY: offset.top + 100
                 });
-                test.set('bigImageSrc', '2.jpg');
-                test._ev = {pageX: 200, pageY: 200};
-            });
-            afterEach(function() {
-                DOM.remove(test.viewer);
-                DOM.remove(test.lens);
-                DOM.remove(test.lensIcon);
-            });
+                a.show();
 
-            it('should init correctly', function() {
-                test._init();
-
-                expect(test._isInner).toEqual(false);
-                expect(test._imgRegion).toBeDefined();
-                expect(test.lensIcon).toBeDefined();
-                expect(test._firstInit).toEqual(false);
-            });
-
-            it('should create viewer correctly', function() {
-                test._init();
-                test._createViewer();
-
-                expect(test.viewer).toBeDefined();
-                expect(test.lens).toBeDefined();
-                expect(test._lensSize[0]).toEqual(100);
-                expect(test._lensSize[1]).toEqual(133);
-                expect(DOM.offset(test.viewer).left).toEqual(510);
-                expect(DOM.offset(test.viewer).top).toEqual(100);
-                expect(DOM.width(test.viewer)).toEqual(400);
-                expect(DOM.height(test.viewer)).toEqual(400);
-            });
-
-            it('should show viewer correctly when mouseenter', function() {
-                test._init();
-                test._createViewer();
-
-                test.show();
-
-                expect(DOM.css(test.lens, 'display')).not.toEqual('none');
-                expect(DOM.css(test.viewer, 'display')).not.toEqual('none');
-                expect(DOM.css(test.lensIcon, 'display')).toEqual('none');
-            });
-
-            it('should update poisiton correctly', function() {
-                test._init();
-                test._createViewer();
-
-                test._ev = {pageX: 300, pageY: 300};
-                expect(test._getLensOffset()).toEqual({ left: 250, top: 233.5 });
-
-                test._ev = {pageX: 320, pageY: 420};
-                expect(test._getLensOffset()).toEqual({ left: 270, top: 353.5 });
-            });
-        });
-
-        describe('in inner mode', function() {
-            var test;
-
-            beforeEach(function() {
-                test = new ImageZoom(tempImage, {
-                    bigImageSize: [800, 800],
-                    position: 'inner',
-                    zoomCls: 'inner',
-                    offset: 0,
-                    lensIcon: false
-                });
-                test.set('bigImageSrc', '2.jpg');
-                test._ev = {pageX: 220, pageY: 300};
-            });
-            afterEach(function() {
-                DOM.remove(test.viewer);
-                DOM.remove(test.lens);
-                DOM.remove(test.lensIcon);
-            });
-
-            it('should init correctly correctly', function() {
-                test._init();
-
-                expect(test._isInner).toEqual(true);
-                expect(test._imgRegion).toBeDefined();
-                expect(test.lensIcon).not.toBeDefined();
-                expect(test._firstInit).toEqual(false);
-            });
-
-            it('should create viewer correctly', function() {
-                test._init();
-                test._createViewer();
-
-                expect(test.viewer).toBeDefined();
-                expect(test.lens).not.toBeDefined();
-                expect(DOM.offset(test.viewer).left).toEqual(100);
-                expect(DOM.offset(test.viewer).top).toEqual(100);
-                expect(DOM.width(test.viewer)).toEqual(400);
-                expect(DOM.height(test.viewer)).toEqual(400);
-            });
-
-            it('should animate image correctly', function() {
-                test._init();
-                test._createViewer();
-                test._anim(0.5, 30);
-
-                waits(1000);
+                waits(500);
                 runs(function() {
-                    expect(DOM.width(test.bigImage)).toEqual(800);
-                    expect(DOM.height(test.bigImage)).toEqual(800);
-                    expect(parseInt(DOM.css(test.bigImage, 'left'))).toEqual(-40);
-                    expect(parseInt(DOM.css(test.bigImage, 'top'))).toEqual(-200);
+                    expect(a.icon).toBeHidden();
+                    expect(a.viewer).toBeDefined();
+                    expect(a.bigImage).toBeDefined();
+                    expect(a.viewer).not.toBeHidden();
+                    expect(a.bigImage.width()).toEqual(900);
+                    expect(a.bigImage.height()).toEqual(900);
+                    expect(a.viewer.width()).toEqual(310);
+                    //expect(a.viewer.height()).toEqual(310);
+                    //expect(a.viewer.css('height')).toEqual('310px');
+                    expect(a.lens).toBeDefined();
+                    expect(a.lens).not.toBeHidden();
+                    expect(a.lens.width()).toEqual(107);
+                    expect(a.lens.height()).toEqual(107);
+                });
+            });
+
+            it('移动鼠标时, 设置坐标正确', function() {
+                var oft = a.image.offset();
+
+                a.set('currentMouse', {
+                    pageX: oft.left + 200,
+                    pageY: oft.top + 200
+                });
+                waits(500);
+                runs(function() {
+                    var lenOffset = a.lens.offset();
+                    expect(a.bigImage.css('left')).toEqual(- Math.round((lenOffset.left - oft.left) * 900 / 310) - 1 + 'px');
+                    expect(a.bigImage.css('top')).toEqual(- Math.round((lenOffset.top - oft.top) * 900 / 310) - 1 + 'px');
+                });
+            });
+
+            it('能够正确隐藏大图', function() {
+                a.hide();
+
+                waits(500);
+                runs(function() {
+                    expect(a.icon).not.toBeHidden();
+                    expect(a.viewer).toBeHidden();
+                    expect(a.lens).toBeHidden();
                 });
             });
         });
 
-        describe('in multi mode', function() {
-            var test;
+        describe('内嵌模式下,', function() {
+            var a = new ImageZoom({
+                imageNode: "#inner",
+                type: 'inner',
+                bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
+                bigImageWidth: 900,
+                bigImageHeight: 900
+            });
 
-            beforeEach(function() {
-                test = new ImageZoom(tempImage, {
-                    bigImageSize: [800, 800]
+            it('不会显示镜片且大图位置是在小图上', function() {
+                var offset = a.image.offset();
+                a.set('currentMouse', {
+                    pageX: offset.left + 100,
+                    pageY: offset.top + 100
                 });
-                test.set('bigImageSrc', '2.jpg');
-                test._ev = {pageX: 200, pageY: 200};
+                a.show();
+
+                waits(500);
+                runs(function() {
+                    expect(a.viewer.offset().left).toEqual(a.image.offset().left);
+                    expect(a.lens).not.toBeDefined();
+                });
             });
-            afterEach(function() {
-                DOM.remove(test.viewer);
-                DOM.remove(test.lens);
-                DOM.remove(test.lensIcon);
-            });
+        });
 
-            it('should disabled viewer correctly', function() {
-                test._init();
-                test.set('hasZoom', false);
-
-                expect(test.viewer).not.toBeDefined();
-                expect(test.lens).not.toBeDefined();
-                expect(DOM.css(test.lensIcon, 'display')).toEqual('none');
-            });
-
-            it('should enabled viewer correctly', function() {
-                test._init();
-                test.set('hasZoom', true);
-                test._createViewer();
-
-                expect(test.viewer).toBeDefined();
-                expect(test.lens).toBeDefined();
-                expect(DOM.css(test.lensIcon, 'display')).not.toEqual('none');
+        describe('多图模式下,', function() {
+            var a = new ImageZoom({
+                imageNode: "#multi",
+                align:{
+                    node: "#multi",
+                    points: ["tr","tl"],
+                    offset: [0, 0]
+                },
+                bigImageWidth: 900,
+                bigImageHeight: 900
             });
 
+            it('初始小图显示正常', function() {
+                var offset = a.image.offset();
+                a.set('currentMouse', {
+                    pageX: offset.left + 100,
+                    pageY: offset.top + 100
+                });
+                a.show();
+
+                waits(500);
+                runs(function() {
+                    expect(a.viewer).not.toBeHidden();
+                });
+            });
+
+            it('改变小图src', function() {
+                a.changeImageSrc('http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg_310x310.jpg');
+                a.set('bigImageSrc', 'http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg');
+                a.show();
+                waits(500);
+                runs(function() {
+                    expect(a.viewer).not.toBeHidden();
+                    expect(a.get('bigImageSrc')).toEqual('http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg');
+                });
+            });
+            it('设置小图没有大图预览时, 不显示大图', function() {
+                a.hide();
+                a.set('hasZoom', false);
+                simulate(a.image, 'mouseenter');
+                waits(500);
+                runs(function() {
+                    expect(a.viewer).toBeHidden();
+                    expect(a.icon).toBeHidden();
+                });
+            });
         });
     });
 });

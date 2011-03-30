@@ -67,7 +67,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110330130324',
+        buildTime:'20110330152727',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4131,7 +4131,8 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, undefined) {
                 },
 
                 set: function(elem, val) {
-                    var style = elem.style, currentFilter = (elem.currentStyle || 0).filter || '';
+                    var style = elem.style,
+                        currentFilter = (elem.currentStyle || 0).filter || '';
 
                     // IE has trouble with opacity if it does not have layout
                     // Force it by setting the zoom level
@@ -4140,11 +4141,14 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, undefined) {
                     // keep existed filters, and remove opacity filter
                     if (currentFilter) {
                         currentFilter = currentFilter.replace(/alpha\(opacity=.+\)/ig, '');
-                        if (currentFilter) currentFilter += ', ';
                     }
 
-                    // Set the alpha filter to set the opacity
-                    style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
+                    if (currentFilter && val != 1) {
+                        currentFilter += ', ';
+                    }
+
+                    // Set the alpha filter to set the opacity when really needed
+                    style[FILTER] = currentFilter + (val != 1 ? 'alpha(' + OPACITY + '=' + val * 100 + ')' : '');
                 }
             };
         }
@@ -8998,6 +9002,7 @@ KISSY.add('template/base', function(S) {
         log: function(templ) {
             if (templ in templateCache) {
                 if ('js_beautify' in window) {
+                    //cause compress error in ant
 //                    S.log(js_beautify(templateCache[templ].parser, {
 //                        indent_size:4,
 //                        indent_char:" ",
@@ -14251,6 +14256,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
             var self = this, container = self.container,
                 style = container.style, shim = container.shim;
             if (shim) {
+                //S.log([PARSEINT(style.left) - 2, style.top, PARSEINT(style.width) + 2, DOM.height(container)-2]);
                 DOM.css(shim, {
                     left: PARSEINT(style.left) - 2, // -2 可以解决吞边线的 bug
                     top: style.top,
@@ -14533,8 +14539,12 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
          * 填充提示层容器
          */
         _fillContainer: function(content, footer) {
-            this._fillContent(content || EMPTY);
-            this._fillFooter(footer || EMPTY);
+            var self = this;
+            self._fillContent(content || EMPTY);
+            self._fillFooter(footer || EMPTY);
+
+            // bugfix: 更改容器内容时, 调整 shim 大小
+            if (self.isVisible()) self._setShimRegion();
         },
 
         /**
@@ -14795,7 +14805,6 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
     }
 
     Zoomer.ATTRS = {
-
         width: {
             valueFn: function() {
                 return this.get('imageWidth');
@@ -14853,6 +14862,18 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
                 return undefined;
             }
         },
+        /**
+         * 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值
+         * @type {Array.<number>}
+
+        bigImageSize: {
+            value: [800, 800],
+            setter: function(v) {
+                this.set('bigImageWidth', v[0]);
+                this.set('bigImageHeight', v[1]);
+                return v;
+            }
+        },*/
         /**
          * 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值
          * @type {number}
@@ -15098,6 +15119,27 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
         _uiSetBigImageSrc: function(v) {
             v && this.bigImage && this.bigImage.attr('src', v);
             v && this._bigImageCopy && this._bigImageCopy.attr('src', v);
+        },
+
+
+        /**
+         * 改变小图元素的 src
+         * @param {String} src
+         */
+        changeImageSrc: function(src) {
+            var self = this;
+            self.image.attr('src', src);
+            self.loading();
+        },
+
+        /**
+         * 调整放大区域位置, 在外部改变小图位置时, 需要对应更新放大区域的位置
+         */
+        refreshRegion: function() {
+            var self = this;
+
+            self._fresh = self.get('align');
+            self.set('align', undefined);
         }
     });
 
@@ -15178,12 +15220,17 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
         },
 
         _render: function() {
-            var self = this, wrap, image = self.image;
+            var self = this, wrap,
+                image = self.image,
+                elem = image.parent();
 
+            if (elem.css('display') !== 'inline') {
+                elem = image;
+            }
             wrap = self.imageWrap = new Node(S.substitute(IMAGEZOOM_WRAP_TMPL, {
                 wrapClass: self.get('wrapClass')
-            })).insertBefore(image);
-            wrap.prepend(image);
+            })).insertBefore(elem);
+            wrap.prepend(elem);
 
             if (self.get('showIcon')) {
                 self.icon = new Node(S.substitute(IMAGEZOOM_ICON_TMPL, {
@@ -15206,6 +15253,10 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
 
                 timer = S.later(function() {
                     self.set('currentMouse', ev);
+                    if (self._fresh) {
+                        self.set('align', self._fresh);
+                        self._fresh = undefined;
+                    }
                     self.show();
                     timer = undefined;
                 }, 50);

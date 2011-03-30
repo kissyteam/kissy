@@ -55,12 +55,17 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
         },
 
         _render: function() {
-            var self = this, wrap, image = self.image;
+            var self = this, wrap,
+                image = self.image,
+                elem = image.parent();
 
+            if (elem.css('display') !== 'inline') {
+                elem = image;
+            }
             wrap = self.imageWrap = new Node(S.substitute(IMAGEZOOM_WRAP_TMPL, {
                 wrapClass: self.get('wrapClass')
-            })).insertBefore(image);
-            wrap.prepend(image);
+            })).insertBefore(elem);
+            wrap.prepend(elem);
 
             if (self.get('showIcon')) {
                 self.icon = new Node(S.substitute(IMAGEZOOM_ICON_TMPL, {
@@ -83,6 +88,10 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
 
                 timer = S.later(function() {
                     self.set('currentMouse', ev);
+                    if (self._fresh) {
+                        self.set('align', self._fresh);
+                        self._fresh = undefined;
+                    }
                     self.show();
                     timer = undefined;
                 }, 50);

@@ -24,7 +24,6 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
     }
 
     Zoomer.ATTRS = {
-
         width: {
             valueFn: function() {
                 return this.get('imageWidth');
@@ -82,6 +81,18 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
                 return undefined;
             }
         },
+        /**
+         * 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值
+         * @type {Array.<number>}
+
+        bigImageSize: {
+            value: [800, 800],
+            setter: function(v) {
+                this.set('bigImageWidth', v[0]);
+                this.set('bigImageHeight', v[1]);
+                return v;
+            }
+        },*/
         /**
          * 大图高宽, 大图高宽是指在没有加载完大图前, 使用这个值来替代计算, 等加载完后会重新更新镜片大小, 具体场景下, 设置个更合适的值
          * @type {number}
@@ -327,6 +338,27 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
         _uiSetBigImageSrc: function(v) {
             v && this.bigImage && this.bigImage.attr('src', v);
             v && this._bigImageCopy && this._bigImageCopy.attr('src', v);
+        },
+
+
+        /**
+         * 改变小图元素的 src
+         * @param {String} src
+         */
+        changeImageSrc: function(src) {
+            var self = this;
+            self.image.attr('src', src);
+            self.loading();
+        },
+
+        /**
+         * 调整放大区域位置, 在外部改变小图位置时, 需要对应更新放大区域的位置
+         */
+        refreshRegion: function() {
+            var self = this;
+
+            self._fresh = self.get('align');
+            self.set('align', undefined);
         }
     });
 
