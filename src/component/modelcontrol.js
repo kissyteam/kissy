@@ -9,6 +9,38 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         };
     }
 
+    /**
+     * 不使用 valueFn
+     * 只有 render 时需要找到默认，其他时候不需要，防止莫名其妙初始化
+     */
+    function getDefaultView() {
+        // 逐层找默认渲染器
+        var c = this.constructor,DefaultRender;
+        while (c && !DefaultRender) {
+            DefaultRender = c['DefaultRender'];
+            c = c.superclass && c.superclass.constructor;
+        }
+        if (DefaultRender) {
+            /**
+             * 将渲染层初始化所需要的属性，直接构造器设置过去
+             */
+            var attrs = this.__attrs,cfg = {};
+            for (var attrName in attrs) {
+                if (attrs.hasOwnProperty(attrName)) {
+                    var attrCfg = attrs[attrName];
+                    if (attrCfg.view
+                        //如果用户没设，不要帮他设 undefined
+                        //attribute get 判断是 name in attrs
+                        && this.__attrVals[attrName] !== undefined) {
+                        cfg[attrName] = this.__attrVals[attrName];
+                    }
+                }
+            }
+            return new DefaultRender(cfg);
+        }
+        return undefined;
+    }
+
     return UIBase.create([UIBase.Box], {
 
         renderUI:function() {
@@ -28,8 +60,12 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             }
 
 
-            var view = self.get("view");
-
+            var view = self.get("view") || getDefaultView.call(self);
+            if (!view) {
+                S.error("no view for");
+                S.error(self.constructor);
+            }
+            self.set("view", view);
             //first render myself to my parent
             if (self.get("parent")) {
                 var pv = self.get("parent").get("view");
@@ -205,37 +241,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             parent:{},
 
             //渲染层
-            view:{
-
-                valueFn:function() {
-                    // 逐层找默认渲染器
-                    var c = this.constructor,DefaultRender;
-                    while (c && !DefaultRender) {
-                        DefaultRender = c['DefaultRender'];
-                        c = c.superclass && c.superclass.constructor;
-                    }
-                    if (DefaultRender) {
-
-                        /**
-                         * 将渲染层初始化所需要的属性，直接构造器设置过去
-                         */
-                        var attrs = this.__attrs,cfg = {};
-                        for (var attrName in attrs) {
-                            if (attrs.hasOwnProperty(attrName)) {
-                                var attrCfg = attrs[attrName];
-                                if (attrCfg.view
-                                    //如果用户没设，不要帮他设 undefined
-                                    //attribute get 判断是 name in attrs
-                                    && this.__attrVals[attrName] !== undefined) {
-                                    cfg[attrName] = this.__attrVals[attrName];
-                                }
-                            }
-                        }
-                        return new DefaultRender(cfg);
-                    }
-                }
-
-            },
+            view:{},
 
             //是否禁用
             disabled:{

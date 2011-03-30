@@ -136,7 +136,7 @@ KISSY.add('uibase/align', function(S, DOM) {
 });
 /**
  * @module  UIBase
- * @author  lifesinger@gmail.com, 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>,lifesinger@gmail.com
  */
 KISSY.add('uibase/base', function (S, Base) {
 
@@ -473,7 +473,7 @@ KISSY.add('uibase/box', function(S) {
         elOrder:{},
         el:{
             getter:function() {
-                return this.get("view").get("el");
+                return this.get("view")&&this.get("view").get("el");
             }
         }
     };
@@ -845,7 +845,7 @@ KISSY.add("uibase/contentbox", function(S) {
         },
         contentEl:{
             getter:function() {
-                return this.get("view").get("contentEl");
+                return this.get("view") && this.get("view").get("contentEl");
             }
         },
 
@@ -1165,7 +1165,9 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
             view:true,
             // 水平方向绝对位置
             valueFn:function() {
-                return this.get("view").get("x");
+                //初始化 xy，结果调用了 set("x") 里面又调用了 get("x")
+                //这时还没有渲染，尚没有 view，必须判断
+                return this.get("view") && this.get("view").get("x");
             }
         },
         y: {
@@ -1173,7 +1175,7 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
             // 垂直方向绝对位置
             // 水平方向绝对位置
             valueFn:function() {
-                return this.get("view").get("y");
+                return this.get("view") && this.get("view").get("y");
             }
         },
         xy: {
@@ -1183,6 +1185,11 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
                 var self = this,
                     xy = S.makeArray(v);
 
+                /*
+                 属性内分发特别注意：
+                 xy -> x,y
+
+                 */
                 if (xy.length) {
                     xy[0] && self.set("x", xy[0]);
                     xy[1] && self.set("y", xy[1]);
@@ -1405,17 +1412,17 @@ KISSY.add("uibase/stdmod", function(S) {
     StdMod.ATTRS = {
         header:{
             getter:function() {
-                return this.get("view").get("header");
+                return this.get("view") && this.get("view").get("header");
             }
         },
         body:{
             getter:function() {
-                return this.get("view").get("body");
+                return this.get("view") && this.get("view").get("body");
             }
         },
         footer:{
             getter:function() {
-                return this.get("view").get("footer");
+                return this.get("view") && this.get("view").get("footer");
             }
         },
         bodyStyle:{

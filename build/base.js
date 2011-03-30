@@ -51,11 +51,15 @@ KISSY.add('base/attribute', function(S, undef) {
          *     setter: function
          *     getter: function
          * }
+         * @param {boolean} override whether override existing attribute config ,default true
          */
-        addAttr: function(name, attrConfig) {
+        addAttr: function(name, attrConfig, override) {
             var host = this;
-            host.__attrs[name] = S.clone(attrConfig || {});
-
+            if (!host.__attrs[name]) {
+                host.__attrs[name] = S.clone(attrConfig || {});
+            }else{
+                S.mix(host.__attrs[name],attrConfig,override);
+            }
             return host;
         },
 
@@ -199,7 +203,7 @@ KISSY.add('base/attribute', function(S, undef) {
 });
 /**
  * @module  Base
- * @author  lifesinger@gmail.com, yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('base/base', function (S, Attribute) {
 
@@ -224,8 +228,9 @@ KISSY.add('base/base', function (S, Attribute) {
         if (attrs) {
             for (var attr in attrs) {
                 // 子类上的 ATTRS 配置优先
-                if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
-                    host.addAttr(attr, attrs[attr]);
+                if (attrs.hasOwnProperty(attr)) {
+                    //父类后加，父类不覆盖子类的相同设置
+                    host.addAttr(attr, attrs[attr], false);
                 }
             }
         }

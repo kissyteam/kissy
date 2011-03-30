@@ -1,6 +1,6 @@
 /**
  * @module  UIBase
- * @author  lifesinger@gmail.com, 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>,lifesinger@gmail.com
  */
 KISSY.add('uibase/base', function (S, Base) {
 

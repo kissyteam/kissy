@@ -1,6 +1,6 @@
 /**
  * @module  Base
- * @author  lifesinger@gmail.com, yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('base/base', function (S, Attribute) {
 
@@ -25,8 +25,9 @@ KISSY.add('base/base', function (S, Attribute) {
         if (attrs) {
             for (var attr in attrs) {
                 // 子类上的 ATTRS 配置优先
-                if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
-                    host.addAttr(attr, attrs[attr]);
+                if (attrs.hasOwnProperty(attr)) {
+                    //父类后加，父类不覆盖子类的相同设置
+                    host.addAttr(attr, attrs[attr], false);
                 }
             }
         }

@@ -31,7 +31,7 @@ KISSY.add('uibase/box', function(S) {
         elOrder:{},
         el:{
             getter:function() {
-                return this.get("view").get("el");
+                return this.get("view")&&this.get("view").get("el");
             }
         }
     };

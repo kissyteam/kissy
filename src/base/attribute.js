@@ -46,11 +46,15 @@ KISSY.add('base/attribute', function(S, undef) {
          *     setter: function
          *     getter: function
          * }
+         * @param {boolean} override whether override existing attribute config ,default true
          */
-        addAttr: function(name, attrConfig) {
+        addAttr: function(name, attrConfig, override) {
             var host = this;
-            host.__attrs[name] = S.clone(attrConfig || {});
-
+            if (!host.__attrs[name]) {
+                host.__attrs[name] = S.clone(attrConfig || {});
+            }else{
+                S.mix(host.__attrs[name],attrConfig,override);
+            }
             return host;
         },
 

@@ -67,7 +67,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110330114431',
+        buildTime:'20110330130324',
 
         /**
          * Returns a new object containing all of the properties of
@@ -6930,11 +6930,15 @@ KISSY.add('base/attribute', function(S, undef) {
          *     setter: function
          *     getter: function
          * }
+         * @param {boolean} override whether override existing attribute config ,default true
          */
-        addAttr: function(name, attrConfig) {
+        addAttr: function(name, attrConfig, override) {
             var host = this;
-            host.__attrs[name] = S.clone(attrConfig || {});
-
+            if (!host.__attrs[name]) {
+                host.__attrs[name] = S.clone(attrConfig || {});
+            }else{
+                S.mix(host.__attrs[name],attrConfig,override);
+            }
             return host;
         },
 
@@ -7079,7 +7083,7 @@ KISSY.add('base/attribute', function(S, undef) {
 
 /**
  * @module  Base
- * @author  lifesinger@gmail.com, yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('base/base', function (S, Attribute) {
 
@@ -7104,8 +7108,9 @@ KISSY.add('base/base', function (S, Attribute) {
         if (attrs) {
             for (var attr in attrs) {
                 // 子类上的 ATTRS 配置优先
-                if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
-                    host.addAttr(attr, attrs[attr]);
+                if (attrs.hasOwnProperty(attr)) {
+                    //父类后加，父类不覆盖子类的相同设置
+                    host.addAttr(attr, attrs[attr], false);
                 }
             }
         }
@@ -10507,7 +10512,7 @@ KISSY.add('uibase/align', function(S, DOM) {
 });
 /**
  * @module  UIBase
- * @author  lifesinger@gmail.com, 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>,lifesinger@gmail.com
  */
 KISSY.add('uibase/base', function (S, Base) {
 
@@ -10844,7 +10849,7 @@ KISSY.add('uibase/box', function(S) {
         elOrder:{},
         el:{
             getter:function() {
-                return this.get("view").get("el");
+                return this.get("view")&&this.get("view").get("el");
             }
         }
     };
@@ -11216,7 +11221,7 @@ KISSY.add("uibase/contentbox", function(S) {
         },
         contentEl:{
             getter:function() {
-                return this.get("view").get("contentEl");
+                return this.get("view") && this.get("view").get("contentEl");
             }
         },
 
@@ -11536,7 +11541,9 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
             view:true,
             // 水平方向绝对位置
             valueFn:function() {
-                return this.get("view").get("x");
+                //初始化 xy，结果调用了 set("x") 里面又调用了 get("x")
+                //这时还没有渲染，尚没有 view，必须判断
+                return this.get("view") && this.get("view").get("x");
             }
         },
         y: {
@@ -11544,7 +11551,7 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
             // 垂直方向绝对位置
             // 水平方向绝对位置
             valueFn:function() {
-                return this.get("view").get("y");
+                return this.get("view") && this.get("view").get("y");
             }
         },
         xy: {
@@ -11554,6 +11561,11 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
                 var self = this,
                     xy = S.makeArray(v);
 
+                /*
+                 属性内分发特别注意：
+                 xy -> x,y
+
+                 */
                 if (xy.length) {
                     xy[0] && self.set("x", xy[0]);
                     xy[1] && self.set("y", xy[1]);
@@ -11776,17 +11788,17 @@ KISSY.add("uibase/stdmod", function(S) {
     StdMod.ATTRS = {
         header:{
             getter:function() {
-                return this.get("view").get("header");
+                return this.get("view") && this.get("view").get("header");
             }
         },
         body:{
             getter:function() {
-                return this.get("view").get("body");
+                return this.get("view") && this.get("view").get("body");
             }
         },
         footer:{
             getter:function() {
-                return this.get("view").get("footer");
+                return this.get("view") && this.get("view").get("footer");
             }
         },
         bodyStyle:{
@@ -11976,6 +11988,38 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         };
     }
 
+    /**
+     * 不使用 valueFn
+     * 只有 render 时需要找到默认，其他时候不需要，防止莫名其妙初始化
+     */
+    function getDefaultView() {
+        // 逐层找默认渲染器
+        var c = this.constructor,DefaultRender;
+        while (c && !DefaultRender) {
+            DefaultRender = c['DefaultRender'];
+            c = c.superclass && c.superclass.constructor;
+        }
+        if (DefaultRender) {
+            /**
+             * 将渲染层初始化所需要的属性，直接构造器设置过去
+             */
+            var attrs = this.__attrs,cfg = {};
+            for (var attrName in attrs) {
+                if (attrs.hasOwnProperty(attrName)) {
+                    var attrCfg = attrs[attrName];
+                    if (attrCfg.view
+                        //如果用户没设，不要帮他设 undefined
+                        //attribute get 判断是 name in attrs
+                        && this.__attrVals[attrName] !== undefined) {
+                        cfg[attrName] = this.__attrVals[attrName];
+                    }
+                }
+            }
+            return new DefaultRender(cfg);
+        }
+        return undefined;
+    }
+
     return UIBase.create([UIBase.Box], {
 
         renderUI:function() {
@@ -11995,8 +12039,12 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             }
 
 
-            var view = self.get("view");
-
+            var view = self.get("view") || getDefaultView.call(self);
+            if (!view) {
+                S.error("no view for");
+                S.error(self.constructor);
+            }
+            self.set("view", view);
             //first render myself to my parent
             if (self.get("parent")) {
                 var pv = self.get("parent").get("view");
@@ -12172,37 +12220,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             parent:{},
 
             //渲染层
-            view:{
-
-                valueFn:function() {
-                    // 逐层找默认渲染器
-                    var c = this.constructor,DefaultRender;
-                    while (c && !DefaultRender) {
-                        DefaultRender = c['DefaultRender'];
-                        c = c.superclass && c.superclass.constructor;
-                    }
-                    if (DefaultRender) {
-
-                        /**
-                         * 将渲染层初始化所需要的属性，直接构造器设置过去
-                         */
-                        var attrs = this.__attrs,cfg = {};
-                        for (var attrName in attrs) {
-                            if (attrs.hasOwnProperty(attrName)) {
-                                var attrCfg = attrs[attrName];
-                                if (attrCfg.view
-                                    //如果用户没设，不要帮他设 undefined
-                                    //attribute get 判断是 name in attrs
-                                    && this.__attrVals[attrName] !== undefined) {
-                                    cfg[attrName] = this.__attrVals[attrName];
-                                }
-                            }
-                        }
-                        return new DefaultRender(cfg);
-                    }
-                }
-
-            },
+            view:{},
 
             //是否禁用
             disabled:{

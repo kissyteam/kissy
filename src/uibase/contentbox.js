@@ -14,7 +14,7 @@ KISSY.add("uibase/contentbox", function(S) {
         },
         contentEl:{
             getter:function() {
-                return this.get("view").get("contentEl");
+                return this.get("view") && this.get("view").get("contentEl");
             }
         },
 
