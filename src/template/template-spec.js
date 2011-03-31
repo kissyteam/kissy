@@ -50,7 +50,7 @@ describe('template', function() {
                 expect(T('{{#each a}}{{#if _ks_value.a > 1}}{{_ks_value.a}}{{/if}}{{/each}}').render({a: [{a: 1}, {a: 2}, {a: 3}]})).toBe('23');
             });
             it('support custom value, index', function() {
-                expect(T('{{#each a as value}}<{{v.a}}{{/each}}').render({a: [{a: 1}, {a: 2}, {a: 3}]})).toBe('<1<2<3');
+                expect(T('{{#each a as value}}<{{value.a}}{{/each}}').render({a: [{a: 1}, {a: 2}, {a: 3}]})).toBe('<1<2<3');
             });
         });
 

@@ -87,9 +87,14 @@ KISSY.add('template', function(S) {
                             if (oper[0] !== i) continue;
                             oper.shift();
                             if (expr in tagStartEnd) {
-                                _parser = Statements[i][tagStartEnd[expr]].apply(this,
-                                    S.trim(oper.join(KS_EMPTY)
-                                        .replace(getRegexp('\\\\([\'"])'), '$1')).split(/\s+/));
+                                // 获取表达式动作
+                                var fn = Statements[i][tagStartEnd[expr]];
+                                _parser = S.isFunction(fn) ?
+                                    fn.apply(this, S.trim(oper.join(KS_EMPTY)
+                                        .replace(getRegexp('\\\\([\'"])'), '$1')).split(/\s+/)) :
+                                    fn.replace(getRegexp(KS_TEMPL_STAT_PARAM),
+                                        oper.join(KS_EMPTY).replace(getRegexp('\\\\([\'"])'), '$1')
+                                    );
                             }
                         }
                     }
@@ -116,14 +121,14 @@ KISSY.add('template', function(S) {
         // expression
         Statements = {
             'if': {
-                start: function() { return 'if(' + join(arguments) + '){'; },
-                end: function() { return '}'; }
+                start: 'if(' + KS_TEMPL_STAT_PARAM + '){',
+                end: '}'
             },
             'else': {
-                start: function() { return '}else{'; }
+                start: '}else{'
             },
             'elseif': {
-                start: function() { return '}else if(' + join(arguments) + '){'; }
+                start: '}else if(' + KS_TEMPL_STAT_PARAM + '){'
             },
             // KISSY.each function wrap
             'each': {
@@ -140,11 +145,11 @@ KISSY.add('template', function(S) {
                             ', function(' + _ks_value + ', ' + _ks_index + '){';
                     return r;
                 },
-                end: function() { return '});'}
+                end: '});'
             },
             // comments
             '!': {
-                start: function() { return '/*' + join(arguments) + '*/'; }
+                start: '/*' + KS_TEMPL_STAT_PARAM + '*/'
             }
         },
 
