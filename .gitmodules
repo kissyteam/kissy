@@ -1,3 +1,0 @@
-[submodule "src/template/js-templates-benchmark"]
-	path = src/template/js-templates-benchmark
-	url = git://github.com/brianjlandau/js-templates-benchmark.git

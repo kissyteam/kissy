@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module  dom
@@ -672,7 +672,9 @@ KISSY.add('dom-attr', function(S, undefined) {
 
         DOM = S.DOM,
         isElementNode = DOM._isElementNode,
-        isTextNode = function(elem) { return DOM._nodeTypeIs(elem, 3); },
+        isTextNode = function(elem) {
+            return DOM._nodeTypeIs(elem, 3);
+        },
 
         RE_SPECIAL_ATTRS = /^(?:href|src|style)/,
         RE_NORMALIZED_ATTRS = /^(?:href|src|colspan|rowspan)/,
@@ -693,6 +695,48 @@ KISSY.add('dom-attr', function(S, undefined) {
             height: 1,
             offset: 1
         };
+
+    var attrNormalizers = {
+        tabindex:{
+            getter:function(el) {
+                return el.tabIndex;
+            },
+            setter:function(el, val) {
+                // http://www.w3.org/TR/html5/editing.html#sequential-focus-navigation-and-the-tabindex-attribute
+                // 简化，和不填一样处理！
+                if (isNaN(parseInt(val))) {
+                    el.removeAttribute("tabindex");
+                    el.removeAttribute("tabIndex");
+                } else {
+                    el.tabIndex = val;
+                }
+            }
+        },
+        // 在标准浏览器下，用 getAttribute 获取 style 值
+        // IE7- 下，需要用 cssText 来获取
+        // 统一使用 cssText
+        style:{
+            getter:function(el) {
+                return el.style.cssText;
+            },
+            setter:function(el, val) {
+                el.style.cssText = val;
+            }
+        },
+        checked:{
+            // checked 属性值，需要通过直接设置才能生效
+            setter:function(el, val) {
+                el.checked = !!val;
+            }
+        },
+        disabled:{
+            // disabled 属性值，需要通过直接设置才能生效
+            //true 然后 false，false失效
+            setter:function(el, val) {
+                el.disabled = !!val;
+            }
+        }
+    };
 
     if (oldIE) {
         S.mix(CUSTOM_ATTRS, {
@@ -728,23 +772,28 @@ KISSY.add('dom-attr', function(S, undefined) {
             // custom attrs
             name = CUSTOM_ATTRS[name] || name;
 
+            var attrNormalizer = attrNormalizers[name];
+
             // getter
             if (val === undefined) {
                 // supports css selector/Node/NodeList
-                var el = S.get(selector);
+                var el = DOM.get(selector);
 
                 // only get attributes on element nodes
                 if (!isElementNode(el)) {
                     return undefined;
                 }
+                if (attrNormalizer && attrNormalizer.getter) {
+                    return attrNormalizer.getter(el);
+                }
 
                 var ret;
 
                 // 优先用 el[name] 获取 mapping 属性值：
-                //  - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
-                //  - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
-                //  - href, src 直接获取的是 normalized 后的值，排除掉
-                //  - style 需要用 getAttribute 来获取字符串值，也排除掉
+                // - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
+                // - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
+                // - href, src 直接获取的是 normalized 后的值，排除掉
+                // - style 需要用 getAttribute 来获取字符串值，也排除掉
                 if (!RE_SPECIAL_ATTRS.test(name)) {
                     ret = el[name];
                 }
@@ -760,11 +809,6 @@ KISSY.add('dom-attr', function(S, undefined) {
                     if (RE_NORMALIZED_ATTRS.test(name)) {
                         ret = el.getAttribute(name, 2);
                     }
-                    // 在标准浏览器下，用 getAttribute 获取 style 值
-                    // IE7- 下，需要用 cssText 来获取
-                    else if (name === STYLE) {
-                        ret = el[STYLE].cssText;
-                    }
                 }
 
                 // 对于不存在的属性，统一返回 undefined
@@ -772,21 +816,15 @@ KISSY.add('dom-attr', function(S, undefined) {
             }
 
             // setter
-            S.each(S.query(selector), function(el) {
+            S.each(DOM.query(selector), function(el) {
                 // only set attributes on element nodes
                 if (!isElementNode(el)) {
                     return;
                 }
 
-                // 不需要加 oldIE 判断，否则 IE8 的 IE7 兼容模式有问题
-                if (name === STYLE) {
-                    el[STYLE].cssText = val;
-                }
-                else {
-                    // checked 属性值，需要通过直接设置才能生效
-                    if(name === CHECKED) {
-                        el[name] = !!val;
-                    }
+                if (attrNormalizer && attrNormalizer.setter) {
+                    attrNormalizer.setter(el, val);
+                } else {
                     // convert the value to a string (all browsers do this but IE)
                     el.setAttribute(name, EMPTY + val);
                 }
@@ -1241,7 +1279,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         PX = 'px',
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
-	    RE_NUM = /^-?\d/,
+        RE_NUM = /^-?\d/,
         RE_WH = /^(?:width|height)$/;
 
     // use alpha filter for IE opacity
@@ -1276,13 +1314,16 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                     style.zoom = 1;
 
                     // keep existed filters, and remove opacity filter
-                    if(currentFilter) {
+                    if (currentFilter) {
                         currentFilter = currentFilter.replace(/alpha\(opacity=.+\)/ig, '');
-                        if(currentFilter) currentFilter += ', ';
                     }
 
-                    // Set the alpha filter to set the opacity
-                    style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
+                    if (currentFilter && val != 1) {
+                        currentFilter += ', ';
+                    }
+
+                    // Set the alpha filter to set the opacity when really needed
+                    style[FILTER] = currentFilter + (val != 1 ? 'alpha(' + OPACITY + '=' + val * 100 + ')' : '');
                 }
             };
         }
@@ -1301,7 +1342,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
             // 在 ie 下不对，需要直接用 offset 方式
             // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
-            if(RE_WH.test(name)) {
+            if (RE_WH.test(name)) {
                 ret = DOM[name](elem) + PX;
             }
             // From the awesome hack by Dean Edwards
@@ -1310,16 +1351,16 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // but a number that has a weird ending, we need to convert it to pixels
             else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret))) {
                 // Remember the original values
-				var left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
+                var left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
 
-				// Put in the new values to get a computed value out
-				elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
-				style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
-				ret = style['pixelLeft'] + PX;
+                // Put in the new values to get a computed value out
+                elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
+                style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
+                ret = style['pixelLeft'] + PX;
 
-				// Revert the changed values
-				style[LEFT] = left;
-				elem[RUNTIME_STYLE][LEFT] = rsLeft;
+                // Revert the changed values
+                style[LEFT] = left;
+                elem[RUNTIME_STYLE][LEFT] = rsLeft;
             }
 
             return ret;

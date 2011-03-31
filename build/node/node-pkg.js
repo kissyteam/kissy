@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module  node
@@ -197,12 +197,17 @@ KISSY.add('node-attach', function(S, undefined) {
         var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
             args2 = [elems].concat(S.makeArray(args));
 
-        if (args[valIndex] === undefined) {
+        //el.css({xx:yy}) chainable
+        if (args[valIndex] === undefined
+            &&
+            (valIndex != 1 || S['isString'](args[0]))
+            ) {
             return fn.apply(DOM, args2);
-        } else {
-            fn.apply(DOM, args2);
-            return this;
         }
+
+        fn.apply(DOM, args2);
+        return this;
+
     }
 
     function attach(methodNames, type) {
@@ -351,6 +356,9 @@ KISSY.add('node-attach', function(S, undefined) {
                 var args = S.makeArray(arguments);
                 args.shift();
                 ev.target = new Node(ev.target);
+                if (ev.relatedTarget) {
+                    ev.relatedTarget = new Node(ev.relatedTarget);
+                }
                 args.unshift(ev);
                 return fn.apply(scope || self, args);
             }

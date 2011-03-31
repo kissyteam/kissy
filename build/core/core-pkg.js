@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:57
+build time: ${build.time}
 */
 /**
  * @module  ua
@@ -197,9 +197,9 @@ KISSY.add('ua-extra', function(S) {
     S.mix(UA, o);
 });
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module  dom
@@ -870,7 +870,9 @@ KISSY.add('dom-attr', function(S, undefined) {
 
         DOM = S.DOM,
         isElementNode = DOM._isElementNode,
-        isTextNode = function(elem) { return DOM._nodeTypeIs(elem, 3); },
+        isTextNode = function(elem) {
+            return DOM._nodeTypeIs(elem, 3);
+        },
 
         RE_SPECIAL_ATTRS = /^(?:href|src|style)/,
         RE_NORMALIZED_ATTRS = /^(?:href|src|colspan|rowspan)/,
@@ -891,6 +893,48 @@ KISSY.add('dom-attr', function(S, undefined) {
             height: 1,
             offset: 1
         };
+
+    var attrNormalizers = {
+        tabindex:{
+            getter:function(el) {
+                return el.tabIndex;
+            },
+            setter:function(el, val) {
+                // http://www.w3.org/TR/html5/editing.html#sequential-focus-navigation-and-the-tabindex-attribute
+                // 简化，和不填一样处理！
+                if (isNaN(parseInt(val))) {
+                    el.removeAttribute("tabindex");
+                    el.removeAttribute("tabIndex");
+                } else {
+                    el.tabIndex = val;
+                }
+            }
+        },
+        // 在标准浏览器下，用 getAttribute 获取 style 值
+        // IE7- 下，需要用 cssText 来获取
+        // 统一使用 cssText
+        style:{
+            getter:function(el) {
+                return el.style.cssText;
+            },
+            setter:function(el, val) {
+                el.style.cssText = val;
+            }
+        },
+        checked:{
+            // checked 属性值，需要通过直接设置才能生效
+            setter:function(el, val) {
+                el.checked = !!val;
+            }
+        },
+        disabled:{
+            // disabled 属性值，需要通过直接设置才能生效
+            //true 然后 false，false失效
+            setter:function(el, val) {
+                el.disabled = !!val;
+            }
+        }
+    };
 
     if (oldIE) {
         S.mix(CUSTOM_ATTRS, {
@@ -926,23 +970,28 @@ KISSY.add('dom-attr', function(S, undefined) {
             // custom attrs
             name = CUSTOM_ATTRS[name] || name;
 
+            var attrNormalizer = attrNormalizers[name];
+
             // getter
             if (val === undefined) {
                 // supports css selector/Node/NodeList
-                var el = S.get(selector);
+                var el = DOM.get(selector);
 
                 // only get attributes on element nodes
                 if (!isElementNode(el)) {
                     return undefined;
                 }
+                if (attrNormalizer && attrNormalizer.getter) {
+                    return attrNormalizer.getter(el);
+                }
 
                 var ret;
 
                 // 优先用 el[name] 获取 mapping 属性值：
-                //  - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
-                //  - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
-                //  - href, src 直接获取的是 normalized 后的值，排除掉
-                //  - style 需要用 getAttribute 来获取字符串值，也排除掉
+                // - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
+                // - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
+                // - href, src 直接获取的是 normalized 后的值，排除掉
+                // - style 需要用 getAttribute 来获取字符串值，也排除掉
                 if (!RE_SPECIAL_ATTRS.test(name)) {
                     ret = el[name];
                 }
@@ -958,11 +1007,6 @@ KISSY.add('dom-attr', function(S, undefined) {
                     if (RE_NORMALIZED_ATTRS.test(name)) {
                         ret = el.getAttribute(name, 2);
                     }
-                    // 在标准浏览器下，用 getAttribute 获取 style 值
-                    // IE7- 下，需要用 cssText 来获取
-                    else if (name === STYLE) {
-                        ret = el[STYLE].cssText;
-                    }
                 }
 
                 // 对于不存在的属性，统一返回 undefined
@@ -970,21 +1014,15 @@ KISSY.add('dom-attr', function(S, undefined) {
             }
 
             // setter
-            S.each(S.query(selector), function(el) {
+            S.each(DOM.query(selector), function(el) {
                 // only set attributes on element nodes
                 if (!isElementNode(el)) {
                     return;
                 }
 
-                // 不需要加 oldIE 判断，否则 IE8 的 IE7 兼容模式有问题
-                if (name === STYLE) {
-                    el[STYLE].cssText = val;
-                }
-                else {
-                    // checked 属性值，需要通过直接设置才能生效
-                    if(name === CHECKED) {
-                        el[name] = !!val;
-                    }
+                if (attrNormalizer && attrNormalizer.setter) {
+                    attrNormalizer.setter(el, val);
+                } else {
                     // convert the value to a string (all browsers do this but IE)
                     el.setAttribute(name, EMPTY + val);
                 }
@@ -1439,7 +1477,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         PX = 'px',
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
-	    RE_NUM = /^-?\d/,
+        RE_NUM = /^-?\d/,
         RE_WH = /^(?:width|height)$/;
 
     // use alpha filter for IE opacity
@@ -1474,13 +1512,16 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                     style.zoom = 1;
 
                     // keep existed filters, and remove opacity filter
-                    if(currentFilter) {
+                    if (currentFilter) {
                         currentFilter = currentFilter.replace(/alpha\(opacity=.+\)/ig, '');
-                        if(currentFilter) currentFilter += ', ';
                     }
 
-                    // Set the alpha filter to set the opacity
-                    style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
+                    if (currentFilter && val != 1) {
+                        currentFilter += ', ';
+                    }
+
+                    // Set the alpha filter to set the opacity when really needed
+                    style[FILTER] = currentFilter + (val != 1 ? 'alpha(' + OPACITY + '=' + val * 100 + ')' : '');
                 }
             };
         }
@@ -1499,7 +1540,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
             // 在 ie 下不对，需要直接用 offset 方式
             // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
-            if(RE_WH.test(name)) {
+            if (RE_WH.test(name)) {
                 ret = DOM[name](elem) + PX;
             }
             // From the awesome hack by Dean Edwards
@@ -1508,16 +1549,16 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // but a number that has a weird ending, we need to convert it to pixels
             else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret))) {
                 // Remember the original values
-				var left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
+                var left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
 
-				// Put in the new values to get a computed value out
-				elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
-				style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
-				ret = style['pixelLeft'] + PX;
+                // Put in the new values to get a computed value out
+                elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
+                style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
+                ret = style['pixelLeft'] + PX;
 
-				// Revert the changed values
-				style[LEFT] = left;
-				elem[RUNTIME_STYLE][LEFT] = rsLeft;
+                // Revert the changed values
+                style[LEFT] = left;
+                elem[RUNTIME_STYLE][LEFT] = rsLeft;
             }
 
             return ret;
@@ -2251,9 +2292,9 @@ KISSY.add('dom-insertion', function(S) {
  *
  */
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module  event
@@ -2264,27 +2305,27 @@ KISSY.add('event', function(S, undef) {
     var doc = document,
         DOM = S.DOM,
         simpleAdd = doc.addEventListener ?
-                    function(el, type, fn, capture) {
-                        if (el.addEventListener) {
-                            el.addEventListener(type, fn, !!capture);
-                        }
-                    } :
-                    function(el, type, fn) {
-                        if (el.attachEvent) {
-                            el.attachEvent('on' + type, fn);
-                        }
-                    },
+            function(el, type, fn, capture) {
+                if (el.addEventListener) {
+                    el.addEventListener(type, fn, !!capture);
+                }
+            } :
+            function(el, type, fn) {
+                if (el.attachEvent) {
+                    el.attachEvent('on' + type, fn);
+                }
+            },
         simpleRemove = doc.removeEventListener ?
-                       function(el, type, fn, capture) {
-                           if (el.removeEventListener) {
-                               el.removeEventListener(type, fn, !!capture);
-                           }
-                       } :
-                       function(el, type, fn) {
-                           if (el.detachEvent) {
-                               el.detachEvent('on' + type, fn);
-                           }
-                       },
+            function(el, type, fn, capture) {
+                if (el.removeEventListener) {
+                    el.removeEventListener(type, fn, !!capture);
+                }
+            } :
+            function(el, type, fn) {
+                if (el.detachEvent) {
+                    el.detachEvent('on' + type, fn);
+                }
+            },
         EVENT_GUID = 'ksEventTargetId',
         SPACE = ' ',
         guid = S.now(),
@@ -2458,15 +2499,22 @@ KISSY.add('event', function(S, undef) {
              sure we'll call all of them.*/
             var listeners = Event.__getListeners(target, event.type);
             listeners = listeners.slice(0);
-            var ret, i = 0, len = listeners.length, listener;
+            var ret,
+                gRet,
+                i = 0,
+                len = listeners.length,
+                listener;
 
             for (; i < len; ++i) {
                 listener = listeners[i];
                 ret = listener.fn.call(listener.scope, event);
-
+                //有一个 false，最终结果就是 false
+                if (gRet !== false) {
+                    gRet = ret;
+                }
                 // 和 jQuery 逻辑保持一致
                 // return false 等价 preventDefault + stopProgation
-                if (ret !== undef) {
+                if (ret !== undefined) {
                     event.result = ret;
                     if (ret === false) {
                         event.halt();
@@ -2477,7 +2525,7 @@ KISSY.add('event', function(S, undef) {
                 }
             }
 
-            return ret;
+            return gRet;
         },
 
         _getCache: function(id) {
@@ -2857,9 +2905,9 @@ KISSY.add('event-focusin', function(S) {
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module  node
@@ -3055,12 +3103,17 @@ KISSY.add('node-attach', function(S, undefined) {
         var elems = this[isNodeList ? GET_DOM_NODES : GET_DOM_NODE](),
             args2 = [elems].concat(S.makeArray(args));
 
-        if (args[valIndex] === undefined) {
+        //el.css({xx:yy}) chainable
+        if (args[valIndex] === undefined
+            &&
+            (valIndex != 1 || S['isString'](args[0]))
+            ) {
             return fn.apply(DOM, args2);
-        } else {
-            fn.apply(DOM, args2);
-            return this;
         }
+
+        fn.apply(DOM, args2);
+        return this;
+
     }
 
     function attach(methodNames, type) {
@@ -3209,6 +3262,9 @@ KISSY.add('node-attach', function(S, undefined) {
                 var args = S.makeArray(arguments);
                 args.shift();
                 ev.target = new Node(ev.target);
+                if (ev.relatedTarget) {
+                    ev.relatedTarget = new Node(ev.relatedTarget);
+                }
                 args.unshift(ev);
                 return fn.apply(scope || self, args);
             }
@@ -3245,9 +3301,9 @@ KISSY.add('node-attach', function(S, undefined) {
 
 });
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /*
     http://www.JSON.org/json2.js
@@ -3751,9 +3807,9 @@ KISSY.add('json', function (S) {
     };
 });
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /***
  * @module  ajax
@@ -4074,9 +4130,9 @@ KISSY.add('ajax', function(S, undef) {
  *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
  */
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module anim-easing
@@ -4721,9 +4777,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
                 // 还原样式
                 if(originalStyle[HEIGHT]) DOM.css(elem, { height: originalStyle[HEIGHT] });
-                if(originalStyle[WIDTH]) DOM.css(elem, { height: originalStyle[WIDTH] });
-                if(originalStyle[OPCACITY]) DOM.css(elem, { height: originalStyle[OPCACITY] });
-                if(originalStyle[OVERFLOW]) DOM.css(elem, { height: originalStyle[OVERFLOW] });
+                if(originalStyle[WIDTH]) DOM.css(elem, { width: originalStyle[WIDTH] });
+                if(originalStyle[OPCACITY]) DOM.css(elem, { opacity: originalStyle[OPCACITY] });
+                if(originalStyle[OVERFLOW]) DOM.css(elem, { overflow: originalStyle[OVERFLOW] });
             }
 
             if (callback && S.isFunction(callback)) callback();
@@ -4733,9 +4789,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
 });
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module  cookie
@@ -4819,9 +4875,9 @@ KISSY.add('cookie', function(S) {
  *     独立成静态工具类的方式更优。
  */
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module  Attribute

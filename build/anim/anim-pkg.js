@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /**
  * @module anim-easing
@@ -646,9 +646,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
                 // 还原样式
                 if(originalStyle[HEIGHT]) DOM.css(elem, { height: originalStyle[HEIGHT] });
-                if(originalStyle[WIDTH]) DOM.css(elem, { height: originalStyle[WIDTH] });
-                if(originalStyle[OPCACITY]) DOM.css(elem, { height: originalStyle[OPCACITY] });
-                if(originalStyle[OVERFLOW]) DOM.css(elem, { height: originalStyle[OVERFLOW] });
+                if(originalStyle[WIDTH]) DOM.css(elem, { width: originalStyle[WIDTH] });
+                if(originalStyle[OPCACITY]) DOM.css(elem, { opacity: originalStyle[OPCACITY] });
+                if(originalStyle[OVERFLOW]) DOM.css(elem, { overflow: originalStyle[OVERFLOW] });
             }
 
             if (callback && S.isFunction(callback)) callback();

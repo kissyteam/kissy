@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:57
+build time: ${build.time}
 */
 /**
  * @module  UIBase
@@ -68,7 +68,12 @@ KISSY.add('uibase', function (S) {
                     ext = exts[i];
                     if (ext) {
                         if (extMethod != "constructor") {
-                            ext = exts[i].prototype[extMethod];
+                            //只调用真正自己构造器原型的定义，继承原型链上的不要管
+                            if (ext.prototype.hasOwnProperty(extMethod)) {
+                                ext = ext.prototype[extMethod];
+                            } else {
+                                ext = null;
+                            }
                         }
                         ext && t.push(ext);
                     }
@@ -76,7 +81,9 @@ KISSY.add('uibase', function (S) {
             }
 
             // 收集主类
-            if ((main = c.prototype[mainMethod])) {
+            // 只调用真正自己构造器原型的定义，继承原型链上的不要管 !important
+            //所以不用自己在 renderUI 中调用 superclass.renderUI 了，UIBase 构造器自动搜寻
+            if (c.prototype.hasOwnProperty(mainMethod) && (main = c.prototype[mainMethod])) {
                 t.push(main);
             }
 
@@ -132,7 +139,7 @@ KISSY.add('uibase', function (S) {
                     host.__set(p, v.call(host, srcNode));
                 }
                 // 单选选择器
-                else if (S.isString(v)) {
+                else if (S['isString'](v)) {
                     host.__set(p, srcNode.one(v));
                 }
                 // 多选选择器
@@ -214,7 +221,8 @@ KISSY.add('uibase', function (S) {
             for (var a in attrs) {
                 if (attrs.hasOwnProperty(a)) {
                     var m = UI_SET + capitalFirst(a);
-                    if (self[m]) {
+                    //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                    if (self[m] && self.get(a) !== undefined) {
                         self[m](self.get(a));
                     }
                 }

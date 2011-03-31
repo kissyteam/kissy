@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:56
+build time: ${build.time}
 */
 /*
  * @module kissy
@@ -65,7 +65,7 @@ build time: Jan 14 13:56
          * The version of the library.
          * @type {String}
          */
-        version: '1.1.7',
+        version: '1.1.8dev',
 
         /**
          * Returns a new object containing all of the properties of
@@ -925,20 +925,20 @@ build time: Jan 14 13:56
         mix = S.mix,
 
         scriptOnload = doc.createElement('script').readyState ?
-                       function(node, callback) {
-                           var oldCallback = node.onreadystatechange;
-                           node.onreadystatechange = function() {
-                               var rs = node.readyState;
-                               if (rs === 'loaded' || rs === 'complete') {
-                                   node.onreadystatechange = null;
-                                   oldCallback && oldCallback();
-                                   callback.call(this);
-                               }
-                           };
-                       } :
-                       function(node, callback) {
-                           node.addEventListener('load', callback, false);
-                       },
+            function(node, callback) {
+                var oldCallback = node.onreadystatechange;
+                node.onreadystatechange = function() {
+                    var rs = node.readyState;
+                    if (rs === 'loaded' || rs === 'complete') {
+                        node.onreadystatechange = null;
+                        oldCallback && oldCallback();
+                        callback.call(this);
+                    }
+                };
+            } :
+            function(node, callback) {
+                node.addEventListener('load', callback, false);
+            },
 
         RE_CSS = /\.css(?:\?|$)/i,
         loader;
@@ -1062,7 +1062,7 @@ build time: Jan 14 13:56
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110114135714';
+                    return m + '-pkg-min.js?t=20110331125521';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: Jan 14 13:56
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110114135714';
+                    return m + '-min.css?t=20110331125521';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -1403,7 +1403,18 @@ build time: Jan 14 13:56
                 }
             }
         }
+        /**
+         * 一定要正则化，防止出现 ../ 等相对路径
+         */
+        if (!startsWith(base, "/")
+            && !base.match(/^(http(s)?)|(file):/i)) {
+            base = window.location.href.replace(/[^/]*$/, '') + base;
+        }
         return base;
+    }
+
+    function startsWith(str, prefix) {
+        return str.lastIndexOf(prefix, 0) == 0;
     }
 
     /**

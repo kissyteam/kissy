@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.1.7
+Copyright 2011, KISSY UI Library v1.1.8dev
 MIT Licensed
-build time: Jan 14 13:57
+build time: ${build.time}
 */
 /**
  * Switchable
@@ -984,7 +984,8 @@ KISSY.add('carousel', function(S, undefined) {
      *   self.nextBtn
      */
     function init_carousel(self) {
-        var cfg = self.config, disableCls = cfg.disableBtnCls;
+        var cfg = self.config, disableCls = cfg.disableBtnCls,
+            switching = false;
 
         // 获取 prev/next 按钮，并添加事件
         S.each(['prev', 'next'], function(d) {
@@ -992,6 +993,7 @@ KISSY.add('carousel', function(S, undefined) {
 
             Event.on(btn, 'click', function(ev) {
                 ev.preventDefault();
+                if (switching) return;
                 if(!DOM.hasClass(btn, disableCls)) self[d]();
             });
         });
@@ -999,6 +1001,9 @@ KISSY.add('carousel', function(S, undefined) {
         // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
         // circular = true 时，无需处理
         if (!cfg.circular) {
+            self.on('beforeSwitch', function() {
+                switching = true;
+            });
             self.on('switch', function(ev) {
                 var i = ev.currentIndex,
                     disableBtn = (i === 0) ? self[PREV_BTN]
@@ -1007,6 +1012,8 @@ KISSY.add('carousel', function(S, undefined) {
 
                 DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
                 if (disableBtn) DOM.addClass(disableBtn, disableCls);
+
+                switching = false;
             });
         }
 
