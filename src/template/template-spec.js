@@ -1,7 +1,7 @@
 describe('template', function() {
     var S = KISSY, T = S.Template;
 
-    describe('variable', function() {
+    describe('variable', function() { // {{{
         it('should render a normal string', function() {
             expect(T('a').render()).toBe('a');
             expect(T('a').render({})).toBe('a');
@@ -12,7 +12,7 @@ describe('template', function() {
             expect(T('{{a}},{{b}}').render({a: '1', b: '2'})).toBe('1,2');
             expect(T('{{}}').render({})).toBe('{{}}');
         });
-    });
+    }); // }}}
 
     describe('statement', function() {
 
@@ -50,34 +50,30 @@ describe('template', function() {
                 expect(T('{{#each a}}{{#if _ks_value.a > 1}}{{_ks_value.a}}{{/if}}{{/each}}').render({a: [{a: 1}, {a: 2}, {a: 3}]})).toBe('23');
             });
             it('support custom value, index', function() {
-                T.log('{{#each a}}{{#value a}}<{{v.a}}{{/each}}');
-                expect(T('{{#each a v}}<{{v.a}}{{/each}}').render({a: [{a: 1}, {a: 2}, {a: 3}]})).toBe('<1<2<3');
+                expect(T('{{#each a as value}}<{{v.a}}{{/each}}').render({a: [{a: 1}, {a: 2}, {a: 3}]})).toBe('<1<2<3');
             });
         });
 
     });
 
-    describe('cache', function() {
+    describe('cache', function() { // {{{
         it('have template cache', function() {
             var t = T('{{#each a}}<{{_ks_value.a}}{{/each}}');
                 f = T('{{#each a}}<{{_ks_value.a}}{{/each}}');
             expect(t).toEqual(f);
         });
-    });
-
-    describe('error', function() {
+    }); // }}}
+    describe('error', function() { // {{{
         it('can handle syntax template error', function() {
             expect(T('{{-}}').render().indexOf('Syntax Error.')).not.toBe(-1);
         });
-    });
-
-    describe('log', function() {
+    }); // }}}
+    describe('log', function() { // {{{
         it('can log all compiled template code', function() {
             T.log('{{}}');
         });
-    });
-
-    describe('node', function() {
+    }); // }}}
+    describe('node', function() { // {{{
         it('have chain support for KISSY.Node', function() {
             S.one(S.DOM.create([
                 '<script type="text/x-kissy-template" id="template">',
@@ -91,15 +87,13 @@ describe('template', function() {
             expect(S.one('#render').html()).toEqual('123');
             S.one('#container').html('');
         });
-    });
-
-    describe('comments', function() {
+    }); // }}}
+    describe('comments', function() { // {{{
         it('supports comments', function() {
             expect(T('{{#! here is a comment tag}}').render()).toBe('');
         });
-    });
-
-    describe('nested', function() {
+    }); // }}}
+    describe('nested', function() { // {{{
         it('supports nested', function() {
             KISSY.Template('Hello, {{#each users}}' +
                 '{{#if _ks_value.show}}{{_ks_value.name}}{{/if}}' +
@@ -114,7 +108,7 @@ describe('template', function() {
                 sub: [{ f: 'angela' }]
             }]});
         });
-    });
+    }); // }}}
 
     describe('config', function() {});
 

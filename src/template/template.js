@@ -57,6 +57,7 @@ KISSY.add('template', function(S) {
         KS_TEMPL = 'KS_TEMPL',
         KS_DATA = 'KS_DATA_',
         KS_EMPTY = '',
+        KS_AS = 'as',
 
         PREFIX = '");',
         SUFFIX = KS_TEMPL + '.push("',
@@ -86,12 +87,9 @@ KISSY.add('template', function(S) {
                             if (oper[0] !== i) continue;
                             oper.shift();
                             if (expr in tagStartEnd) {
-                                console.log('tagStartEnd: %s', tagStartEnd[expr]);
-                                console.log('oper: %s', oper.join(KS_EMPTY));
-                                _parser = Statements[i][tagStartEnd[expr]].replace(
-                                    getRegexp(KS_TEMPL_STAT_PARAM),
-                                    oper.join(KS_EMPTY).replace(getRegexp('\\\\([\'"])'), '$1')
-                                );
+                                _parser = Statements[i][tagStartEnd[expr]].apply(this,
+                                    S.trim(oper.join(KS_EMPTY)
+                                        .replace(getRegexp('\\\\([\'"])'), '$1')).split(/\s+/));
                             }
                         }
                     }
@@ -100,49 +98,53 @@ KISSY.add('template', function(S) {
                     else {
                         _parser = KS_TEMPL + '.push(' + oper.replace(getRegexp('\\\\([\'"])'), '$1') + ');';
                     }
-                    console.log(PREFIX + _parser + SUFFIX);
                     return PREFIX + _parser + SUFFIX;
 
                 });
         },
 
-        /**
-         * expressions
-         */
+        // convert any object to array
+        toArray = function(args) {
+            return [].slice.call(args);
+        },
+
+        // join any array to string by empty
+        join = function(args) {
+            return toArray(args).join(KS_EMPTY);
+        },
+
+        // expression
         Statements = {
             'if': {
-                start: 'if(' + KS_TEMPL_STAT_PARAM + '){',
-                end: '}'
+                start: function() { return 'if(' + join(arguments) + '){'; },
+                end: function() { return '}'; }
             },
             'else': {
-                start: '}else{'
+                start: function() { return '}else{'; }
             },
             'elseif': {
-                start: '}else if(' + KS_TEMPL_STAT_PARAM + '){'
+                start: function() { return '}else if(' + join(arguments) + '){'; }
             },
             // KISSY.each function wrap
             'each': {
                 start: function() {
-                    var params = KS_TEMPL_STAT_PARAM.split(/\s+/),
-                        _ks_value = params[1] || '_ks_value',
-                        _ks_index = params[2] || '_ks_index';
-                    console.log('params: %o', params);
-                    var r = 'KISSY.each(' + params[0] +
-                            ', function(_ks_value,_ks_index){';
-                    console.log(r);
+                    var args = toArray(arguments),
+                        _ks_value = '_ks_value', _ks_index = '_ks_index';
+                    if (args[1] === KS_AS && args[2]) {
+                        _ks_value = args[2] || _ks_value,
+                        _ks_index = args[3] || _ks_index;
+                    } else {
+                        args[0] = join(arguments);
+                    }
+                    var r = 'KISSY.each(' + args[0] +
+                            ', function(' + _ks_value + ', ' + _ks_index + '){';
                     return r;
-                }(),
-                end: '});'
-            },
-            'value': {
-                start: 'var ' + KS_TEMPL_STAT_PARAM + ' = _ks_value;'
-            },
-            'index': {
-                start: 'var ' + KS_TEMPL_STAT_PARAM + ' = _ks_index;'
+                },
+                end: function() { return '});'}
             },
             // comments
             '!': {
-                start: '/*' + KS_TEMPL_STAT_PARAM + '*/'
+                start: function() { return '/*' + join(arguments) + '*/'; }
             }
         },
 
@@ -187,14 +189,14 @@ KISSY.add('template', function(S) {
             log: function(templ) {
                 if (templ in templateCache) {
                     if ('js_beautify' in window) {
-//                        S.log(js_beautify(templateCache[templ].parser, {
-//                            indent_size: 4,
-//                            indent_char: " ",
-//                            preserve_newlines: true,
-//                            braces_on_own_line: false,
-//                            keep_array_indentation: false,
-//                            space_after_anon_function: true
-//                        }), 'info');
+                        S.log(js_beautify(templateCache[templ].parser, {
+                            indent_size: 4,
+                            indent_char: ' ',
+                            preserve_newlines: true,
+                            braces_on_own_line: false,
+                            keep_array_indentation: false,
+                            space_after_anon_function: true
+                        }), 'info');
                     } else {
                         S.log(templateCache[templ].parser, 'info');
                     }
