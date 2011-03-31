@@ -58,6 +58,7 @@
     <br />
     <br />
     <input type="checkbox" id="test-20100728-checkbox" />test checked
+    <input type="button" id="test-20100728-disabled"/>test disabled
 </div>
 
 <!-- Test Cases -->
@@ -79,7 +80,8 @@
         opt = S.get('#test-opt'),
         div = S.get('#test-div'),
         opt2 = S.query('#test-select option')[1],
-        area = S.get('#foo textarea');
+        area = S.get('#foo textarea'),
+            disabledTest = S.get("#test-20100728-disabled");
     
     function test_attr(test) {
 
@@ -170,6 +172,21 @@
         if(DOM.attr(checkbox2, 'checked') !== true) test.fail('attr checked');
         DOM.removeAttr(checkbox2, 'checked');
         if(DOM.attr(checkbox2, 'checked') !== false) test.fail('removeAttr checked');
+
+
+        if (DOM.attr(disabledTest, "disabled") === true) {
+            test.fail();
+        }
+
+        DOM.attr(disabledTest, "disabled", true);
+        if (DOM.attr(disabledTest, "disabled") !== true) {
+            test.fail();
+        }
+
+        DOM.attr(disabledTest, "disabled", false);
+        if (DOM.attr(disabledTest, "disabled") == true) {
+            test.fail();
+        }
     }
 
     function test_removeAttr(test) {

@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110223204543';
+                    return m + '-pkg-min.js?t=20110331125521';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110223204543';
+                    return m + '-min.css?t=20110331125521';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -1406,7 +1406,8 @@ build time: ${build.time}
         /**
          * 一定要正则化，防止出现 ../ 等相对路径
          */
-        if (!startsWith(base, "/") && !startsWith(base, "http://") && !startsWith(base, "https://")) {
+        if (!startsWith(base, "/")
+            && !base.match(/^(http(s)?)|(file):/i)) {
             base = window.location.href.replace(/[^/]*$/, '') + base;
         }
         return base;

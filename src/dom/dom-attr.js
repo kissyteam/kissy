@@ -74,6 +74,13 @@ KISSY.add('dom-attr', function(S, undefined) {
             setter:function(el, val) {
                 el.checked = !!val;
             }
+        },
+        disabled:{
+            // disabled 属性值，需要通过直接设置才能生效
+            //true 然后 false，false失效
+            setter:function(el, val) {
+                el.disabled = !!val;
+            }
         }
     };
 

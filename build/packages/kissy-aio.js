@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110223204543';
+                    return m + '-pkg-min.js?t=20110331125521';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110223204543';
+                    return m + '-min.css?t=20110331125521';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -1406,7 +1406,8 @@ build time: ${build.time}
         /**
          * 一定要正则化，防止出现 ../ 等相对路径
          */
-        if (!startsWith(base, "/") && !startsWith(base, "http://") && !startsWith(base, "https://")) {
+        if (!startsWith(base, "/")
+            && !base.match(/^(http(s)?)|(file):/i)) {
             base = window.location.href.replace(/[^/]*$/, '') + base;
         }
         return base;
@@ -2370,6 +2371,13 @@ KISSY.add('dom-attr', function(S, undefined) {
             setter:function(el, val) {
                 el.checked = !!val;
             }
+        },
+        disabled:{
+            // disabled 属性值，需要通过直接设置才能生效
+            //true 然后 false，false失效
+            setter:function(el, val) {
+                el.disabled = !!val;
+            }
         }
     };
 
@@ -2914,7 +2922,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         PX = 'px',
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
-	    RE_NUM = /^-?\d/,
+        RE_NUM = /^-?\d/,
         RE_WH = /^(?:width|height)$/;
 
     // use alpha filter for IE opacity
@@ -2949,13 +2957,16 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                     style.zoom = 1;
 
                     // keep existed filters, and remove opacity filter
-                    if(currentFilter) {
+                    if (currentFilter) {
                         currentFilter = currentFilter.replace(/alpha\(opacity=.+\)/ig, '');
-                        if(currentFilter) currentFilter += ', ';
                     }
 
-                    // Set the alpha filter to set the opacity
-                    style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
+                    if (currentFilter && val != 1) {
+                        currentFilter += ', ';
+                    }
+
+                    // Set the alpha filter to set the opacity when really needed
+                    style[FILTER] = currentFilter + (val != 1 ? 'alpha(' + OPACITY + '=' + val * 100 + ')' : '');
                 }
             };
         }
@@ -2974,7 +2985,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
             // 在 ie 下不对，需要直接用 offset 方式
             // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
-            if(RE_WH.test(name)) {
+            if (RE_WH.test(name)) {
                 ret = DOM[name](elem) + PX;
             }
             // From the awesome hack by Dean Edwards
@@ -2983,16 +2994,16 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // but a number that has a weird ending, we need to convert it to pixels
             else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret))) {
                 // Remember the original values
-				var left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
+                var left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
 
-				// Put in the new values to get a computed value out
-				elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
-				style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
-				ret = style['pixelLeft'] + PX;
+                // Put in the new values to get a computed value out
+                elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
+                style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
+                ret = style['pixelLeft'] + PX;
 
-				// Revert the changed values
-				style[LEFT] = left;
-				elem[RUNTIME_STYLE][LEFT] = rsLeft;
+                // Revert the changed values
+                style[LEFT] = left;
+                elem[RUNTIME_STYLE][LEFT] = rsLeft;
             }
 
             return ret;
@@ -3739,27 +3750,27 @@ KISSY.add('event', function(S, undef) {
     var doc = document,
         DOM = S.DOM,
         simpleAdd = doc.addEventListener ?
-                    function(el, type, fn, capture) {
-                        if (el.addEventListener) {
-                            el.addEventListener(type, fn, !!capture);
-                        }
-                    } :
-                    function(el, type, fn) {
-                        if (el.attachEvent) {
-                            el.attachEvent('on' + type, fn);
-                        }
-                    },
+            function(el, type, fn, capture) {
+                if (el.addEventListener) {
+                    el.addEventListener(type, fn, !!capture);
+                }
+            } :
+            function(el, type, fn) {
+                if (el.attachEvent) {
+                    el.attachEvent('on' + type, fn);
+                }
+            },
         simpleRemove = doc.removeEventListener ?
-                       function(el, type, fn, capture) {
-                           if (el.removeEventListener) {
-                               el.removeEventListener(type, fn, !!capture);
-                           }
-                       } :
-                       function(el, type, fn) {
-                           if (el.detachEvent) {
-                               el.detachEvent('on' + type, fn);
-                           }
-                       },
+            function(el, type, fn, capture) {
+                if (el.removeEventListener) {
+                    el.removeEventListener(type, fn, !!capture);
+                }
+            } :
+            function(el, type, fn) {
+                if (el.detachEvent) {
+                    el.detachEvent('on' + type, fn);
+                }
+            },
         EVENT_GUID = 'ksEventTargetId',
         SPACE = ' ',
         guid = S.now(),
@@ -3933,15 +3944,22 @@ KISSY.add('event', function(S, undef) {
              sure we'll call all of them.*/
             var listeners = Event.__getListeners(target, event.type);
             listeners = listeners.slice(0);
-            var ret, i = 0, len = listeners.length, listener;
+            var ret,
+                gRet,
+                i = 0,
+                len = listeners.length,
+                listener;
 
             for (; i < len; ++i) {
                 listener = listeners[i];
                 ret = listener.fn.call(listener.scope, event);
-
+                //有一个 false，最终结果就是 false
+                if (gRet !== false) {
+                    gRet = ret;
+                }
                 // 和 jQuery 逻辑保持一致
                 // return false 等价 preventDefault + stopProgation
-                if (ret !== undef) {
+                if (ret !== undefined) {
                     event.result = ret;
                     if (ret === false) {
                         event.halt();
@@ -3952,7 +3970,7 @@ KISSY.add('event', function(S, undef) {
                 }
             }
 
-            return ret;
+            return gRet;
         },
 
         _getCache: function(id) {
@@ -6204,9 +6222,9 @@ KISSY.add('anim-node-plugin', function(S, undefined) {
 
                 // 还原样式
                 if(originalStyle[HEIGHT]) DOM.css(elem, { height: originalStyle[HEIGHT] });
-                if(originalStyle[WIDTH]) DOM.css(elem, { height: originalStyle[WIDTH] });
-                if(originalStyle[OPCACITY]) DOM.css(elem, { height: originalStyle[OPCACITY] });
-                if(originalStyle[OVERFLOW]) DOM.css(elem, { height: originalStyle[OVERFLOW] });
+                if(originalStyle[WIDTH]) DOM.css(elem, { width: originalStyle[WIDTH] });
+                if(originalStyle[OPCACITY]) DOM.css(elem, { opacity: originalStyle[OPCACITY] });
+                if(originalStyle[OVERFLOW]) DOM.css(elem, { overflow: originalStyle[OVERFLOW] });
             }
 
             if (callback && S.isFunction(callback)) callback();
@@ -9383,7 +9401,8 @@ KISSY.add('uibase', function (S) {
             for (var a in attrs) {
                 if (attrs.hasOwnProperty(a)) {
                     var m = UI_SET + capitalFirst(a);
-                    if (self[m]) {
+                    //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                    if (self[m] && self.get(a) !== undefined) {
                         self[m](self.get(a));
                     }
                 }
@@ -11482,7 +11501,8 @@ KISSY.add('carousel', function(S, undefined) {
      *   self.nextBtn
      */
     function init_carousel(self) {
-        var cfg = self.config, disableCls = cfg.disableBtnCls;
+        var cfg = self.config, disableCls = cfg.disableBtnCls,
+            switching = false;
 
         // 获取 prev/next 按钮，并添加事件
         S.each(['prev', 'next'], function(d) {
@@ -11490,6 +11510,7 @@ KISSY.add('carousel', function(S, undefined) {
 
             Event.on(btn, 'click', function(ev) {
                 ev.preventDefault();
+                if (switching) return;
                 if(!DOM.hasClass(btn, disableCls)) self[d]();
             });
         });
@@ -11497,6 +11518,9 @@ KISSY.add('carousel', function(S, undefined) {
         // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
         // circular = true 时，无需处理
         if (!cfg.circular) {
+            self.on('beforeSwitch', function() {
+                switching = true;
+            });
             self.on('switch', function(ev) {
                 var i = ev.currentIndex,
                     disableBtn = (i === 0) ? self[PREV_BTN]
@@ -11505,6 +11529,8 @@ KISSY.add('carousel', function(S, undefined) {
 
                 DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
                 if (disableBtn) DOM.addClass(disableBtn, disableCls);
+
+                switching = false;
             });
         }
 
@@ -12572,8 +12598,12 @@ KISSY.add('suggest', function(S, undefined) {
          * 填充提示层容器
          */
         _fillContainer: function(content, footer) {
-            this._fillContent(content || EMPTY);
-            this._fillFooter(footer || EMPTY);
+            var self = this;
+            self._fillContent(content || EMPTY);
+            self._fillFooter(footer || EMPTY);
+            
+            // bugfix: 更改容器内容时, 调整 shim 大小
+            if (self.isVisible()) self._setShimRegion();
         },
 
         /**
