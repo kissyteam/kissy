@@ -138,8 +138,6 @@ KISSY.add('template', function(S) {
                     if (args[1] === KS_AS && args[2]) {
                         _ks_value = args[2] || _ks_value,
                         _ks_index = args[3] || _ks_index;
-                    } else {
-                        args[0] = join(arguments);
                     }
                     var r = 'KISSY.each(' + args[0] +
                             ', function(' + _ks_value + ', ' + _ks_index + '){';
@@ -225,5 +223,6 @@ KISSY.add('template', function(S) {
         });
 
     S.Template = Template;
+    return Template;
 
 }, {requires: ['core']});
