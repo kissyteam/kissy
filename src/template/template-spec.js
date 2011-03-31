@@ -13,8 +13,7 @@ describe('template', function() {
             expect(T('{{}}').render({})).toEqual('{{}}');
         });
     }); // }}}
-
-    describe('statement', function() {
+    describe('statement', function() { // {{{
 
         describe('if', function() {
             it('support if statement', function() {
@@ -56,8 +55,7 @@ describe('template', function() {
             });
         });
 
-    });
-
+    }); // }}}
     describe('cache', function() { // {{{
         it('have template cache', function() {
             var t = T('{{#each a}}<{{_ks_value.a}}{{/each}}');
@@ -125,7 +123,6 @@ describe('template', function() {
             }]})).toEqual('Hello,  <i>jolin</i>  <i>jolin2</i>  yyfrankyy <i>angela</i>  .');
         });
     }); // }}}
-
     describe('config', function() {});
 
 });

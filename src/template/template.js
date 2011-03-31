@@ -28,22 +28,16 @@ KISSY.add('template', function(S) {
 
     var defaultConfig = {},
 
-        /**
-         * Template Cache
-         */
+        // Template Cache
         templateCache = {},
 
-        /**
-         * start/end tag mark
-         */
+        // start/end tag mark
         tagStartEnd = {
             '#': 'start',
             '/': 'end'
         },
 
-        /**
-         * Regexp Cache
-         */
+        // Regexp Cache
         regexpCache = {},
         getRegexp = function(regexp) {
             if (!(regexp in regexpCache)) {
@@ -65,35 +59,41 @@ KISSY.add('template', function(S) {
         PARSER_SYNTAX_ERROR = 'KISSY.Template: Syntax Error. ',
         PARSER_RENDER_ERROR = 'KISSY.Template: Render Error. ',
 
-        PARSER_PREFIX = 'var ' + KS_TEMPL + '=[],' + KS_TEMPL_STAT_PARAM + '=false;with(',
+        PARSER_PREFIX = 'var ' + KS_TEMPL + '=[],' +
+            KS_TEMPL_STAT_PARAM + '=false;with(',
         PARSER_MIDDLE = '||{}){try{' + KS_TEMPL + '.push("',
-        PARSER_SUFFIX = '");}catch(e){' + KS_TEMPL + '=["' + PARSER_RENDER_ERROR + '" + e.message]}};return ' + KS_TEMPL + '.join("");',
+        PARSER_SUFFIX = '");}catch(e){' + KS_TEMPL + '=["' +
+            PARSER_RENDER_ERROR + '" + e.message]}};return ' +
+            KS_TEMPL + '.join("");',
 
-        /*
-         * build a static parser
-         */
+        // build a static parser
         buildParser = function(templ) {
             var _parser, _empty_index;
-            return S.trim(templ).replace(getRegexp('[\r\t\n]'), ' ').replace(getRegexp('(["\'])'), '\\$1')
-                .replace(getRegexp('\{\{([#/]?)(?!\}\})([^}]*)\}\}'), function(all, expr, oper) {
+            return S.trim(templ).replace(getRegexp('[\r\t\n]'), ' ')
+                .replace(getRegexp('(["\'])'), '\\$1')
+                .replace(getRegexp('\{\{([#/]?)(?!\}\})([^}]*)\}\}'),
+                    function(all, expr, oper) {
                     _parser = KS_EMPTY;
                     // is an expression
                     if (expr) {
                         oper = S.trim(oper);
                         _empty_index = oper.indexOf(' ');
                         oper = _empty_index === -1 ? [oper, ''] :
-                                [oper.substring(0, oper.indexOf(' ')), oper.substring(oper.indexOf(' '))];
+                                [oper.substring(0, oper.indexOf(' ')),
+                                oper.substring(oper.indexOf(' '))];
                         for (var i in Statements) {
                             if (oper[0] !== i) continue;
                             oper.shift();
                             if (expr in tagStartEnd) {
-                                // 获取表达式动作
+                                // get expression definition function/string
                                 var fn = Statements[i][tagStartEnd[expr]];
                                 _parser = S.isFunction(fn) ?
                                     fn.apply(this, S.trim(oper.join(KS_EMPTY)
-                                        .replace(getRegexp('\\\\([\'"])'), '$1')).split(/\s+/)) :
+                                        .replace(getRegexp('\\\\([\'"])'),
+                                            '$1')).split(/\s+/)) :
                                     fn.replace(getRegexp(KS_TEMPL_STAT_PARAM),
-                                        oper.join(KS_EMPTY).replace(getRegexp('\\\\([\'"])'), '$1')
+                                        oper.join(KS_EMPTY)
+                                        .replace(getRegexp('\\\\([\'"])'), '$1')
                                     );
                             }
                         }
@@ -101,7 +101,9 @@ KISSY.add('template', function(S) {
 
                     // return array directly
                     else {
-                        _parser = KS_TEMPL + '.push(' + oper.replace(getRegexp('\\\\([\'"])'), '$1') + ');';
+                        _parser = KS_TEMPL +
+                            '.push(' +
+                            oper.replace(getRegexp('\\\\([\'"])'), '$1') + ');';
                     }
                     return PREFIX + _parser + SUFFIX;
 
@@ -124,12 +126,15 @@ KISSY.add('template', function(S) {
                 start: 'if(' + KS_TEMPL_STAT_PARAM + '){',
                 end: '}'
             },
+
             'else': {
                 start: '}else{'
             },
+
             'elseif': {
                 start: '}else if(' + KS_TEMPL_STAT_PARAM + '){'
             },
+
             // KISSY.each function wrap
             'each': {
                 start: function() {
@@ -145,6 +150,7 @@ KISSY.add('template', function(S) {
                 },
                 end: '});'
             },
+
             // comments
             '!': {
                 start: '/*' + KS_TEMPL_STAT_PARAM + '*/'
@@ -152,7 +158,7 @@ KISSY.add('template', function(S) {
         },
 
         /**
-         * Template 核心类
+         * Template
          * @param {String} templ template to be rendered.
          * @param {Object} config configuration.
          * @return {Object} return this for chain.
@@ -172,7 +178,8 @@ KISSY.add('template', function(S) {
                 try {
                     func = new Function(_ks_data, _parser.join(KS_EMPTY));
                 } catch (e) {
-                    _parser[3] = PREFIX + SUFFIX + PARSER_SYNTAX_ERROR + ',' + e.message + PREFIX + SUFFIX;
+                    _parser[3] = PREFIX + SUFFIX + PARSER_SYNTAX_ERROR + ',' +
+                        e.message + PREFIX + SUFFIX;
                     func = new Function(_ks_data, _parser.join(KS_EMPTY));
                 }
 
