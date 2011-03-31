@@ -152,6 +152,7 @@ KISSY.add('template', function(S) {
         },
 
         /**
+         * Template 核心类
          * @param {String} templ template to be rendered.
          * @param {Object} config configuration.
          * @return {Object} return this for chain.
