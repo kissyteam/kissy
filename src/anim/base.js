@@ -246,7 +246,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, undefined) {
     });
 
     Anim.supportTransition = function() {
-        return !!getNativeTransitionName();
+        return getNativeTransitionName();
     };
 
 
