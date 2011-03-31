@@ -67,7 +67,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110330203256',
+        buildTime:'20110331134310',
 
         /**
          * Returns a new object containing all of the properties of
@@ -11633,7 +11633,6 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
         show: function() {
             this.render();
             this.set("visible", true);
-            this.fire("show");
         },
 
         /**
@@ -11641,7 +11640,6 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
          */
         hide: function() {
             this.set("visible", false);
-            this.fire("hide");
         }
 
     };

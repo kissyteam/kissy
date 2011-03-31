@@ -101,7 +101,6 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
         show: function() {
             this.render();
             this.set("visible", true);
-            this.fire("show");
         },
 
         /**
@@ -109,7 +108,6 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
          */
         hide: function() {
             this.set("visible", false);
-            this.fire("hide");
         }
 
     };
