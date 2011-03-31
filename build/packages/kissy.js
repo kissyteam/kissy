@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110322125623';
+                    return m + '-pkg-min.js?t=20110331125521';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110322125623';
+                    return m + '-min.css?t=20110331125521';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -2922,7 +2922,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
         PX = 'px',
         CUSTOM_STYLES = DOM._CUSTOM_STYLES,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
-	    RE_NUM = /^-?\d/,
+        RE_NUM = /^-?\d/,
         RE_WH = /^(?:width|height)$/;
 
     // use alpha filter for IE opacity
@@ -2957,13 +2957,16 @@ KISSY.add('dom-style-ie', function(S, undefined) {
                     style.zoom = 1;
 
                     // keep existed filters, and remove opacity filter
-                    if(currentFilter) {
+                    if (currentFilter) {
                         currentFilter = currentFilter.replace(/alpha\(opacity=.+\)/ig, '');
-                        if(currentFilter) currentFilter += ', ';
                     }
 
-                    // Set the alpha filter to set the opacity
-                    style[FILTER] = currentFilter + 'alpha(' + OPACITY + '=' + val * 100 + ')';
+                    if (currentFilter && val != 1) {
+                        currentFilter += ', ';
+                    }
+
+                    // Set the alpha filter to set the opacity when really needed
+                    style[FILTER] = currentFilter + (val != 1 ? 'alpha(' + OPACITY + '=' + val * 100 + ')' : '');
                 }
             };
         }
@@ -2982,7 +2985,7 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
             // 在 ie 下不对，需要直接用 offset 方式
             // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
-            if(RE_WH.test(name)) {
+            if (RE_WH.test(name)) {
                 ret = DOM[name](elem) + PX;
             }
             // From the awesome hack by Dean Edwards
@@ -2991,16 +2994,16 @@ KISSY.add('dom-style-ie', function(S, undefined) {
             // but a number that has a weird ending, we need to convert it to pixels
             else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret))) {
                 // Remember the original values
-				var left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
+                var left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
 
-				// Put in the new values to get a computed value out
-				elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
-				style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
-				ret = style['pixelLeft'] + PX;
+                // Put in the new values to get a computed value out
+                elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
+                style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
+                ret = style['pixelLeft'] + PX;
 
-				// Revert the changed values
-				style[LEFT] = left;
-				elem[RUNTIME_STYLE][LEFT] = rsLeft;
+                // Revert the changed values
+                style[LEFT] = left;
+                elem[RUNTIME_STYLE][LEFT] = rsLeft;
             }
 
             return ret;

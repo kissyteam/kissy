@@ -860,8 +860,12 @@ KISSY.add('suggest', function(S, undefined) {
          * 填充提示层容器
          */
         _fillContainer: function(content, footer) {
-            this._fillContent(content || EMPTY);
-            this._fillFooter(footer || EMPTY);
+            var self = this;
+            self._fillContent(content || EMPTY);
+            self._fillFooter(footer || EMPTY);
+            
+            // bugfix: 更改容器内容时, 调整 shim 大小
+            if (self.isVisible()) self._setShimRegion();
         },
 
         /**
