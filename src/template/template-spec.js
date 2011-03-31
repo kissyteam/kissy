@@ -49,6 +49,10 @@ describe('template', function() {
                 expect(T('{{#each a}}<{{_ks_value.a}}{{/each}}').render({a: [{a: 1}, {a: 2}, {a: 3}]})).toBe('<1<2<3');
                 expect(T('{{#each a}}{{#if _ks_value.a > 1}}{{_ks_value.a}}{{/if}}{{/each}}').render({a: [{a: 1}, {a: 2}, {a: 3}]})).toBe('23');
             });
+            it('support custom value, index', function() {
+                T.log('{{#each a}}{{#value a}}<{{v.a}}{{/each}}');
+                expect(T('{{#each a v}}<{{v.a}}{{/each}}').render({a: [{a: 1}, {a: 2}, {a: 3}]})).toBe('<1<2<3');
+            });
         });
 
     });
@@ -92,6 +96,23 @@ describe('template', function() {
     describe('comments', function() {
         it('supports comments', function() {
             expect(T('{{#! here is a comment tag}}').render()).toBe('');
+        });
+    });
+
+    describe('nested', function() {
+        it('supports nested', function() {
+            KISSY.Template('Hello, {{#each users}}' +
+                '{{#if _ks_value.show}}{{_ks_value.name}}{{/if}}' +
+                '{{#each _ks_value.sub}} <i>{{_ks_value.sub.f}}</i> {{/each}} {{/each}}.')
+            .render({users: [{
+                show: false,
+                name: 'Frank',
+                sub: [{ f: 'jolin' }, { f: 'jolin2' }]
+            }, {
+                show: true,
+                name: 'yyfrankyy',
+                sub: [{ f: 'angela' }]
+            }]});
         });
     });
 

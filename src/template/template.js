@@ -1,9 +1,30 @@
 /**
  * @fileoverview KISSY Template Engine.
- * @author yyfrankyy(yyfrankyy@gmail.com)
+ * @author 文河(yyfrankyy) <yyfrankyy@gmail.com>
  * @see https://github.com/yyfrankyy/kissy/tree/template/src/template
+ *
+ * @license
+ * Copyright (c) 2010 Taobao Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
-KISSY.add('template', function(S, undefined) {
+KISSY.add('template', function(S) {
 
     var defaultConfig = {},
 
@@ -65,6 +86,8 @@ KISSY.add('template', function(S, undefined) {
                             if (oper[0] !== i) continue;
                             oper.shift();
                             if (expr in tagStartEnd) {
+                                console.log('tagStartEnd: %s', tagStartEnd[expr]);
+                                console.log('oper: %s', oper.join(KS_EMPTY));
                                 _parser = Statements[i][tagStartEnd[expr]].replace(
                                     getRegexp(KS_TEMPL_STAT_PARAM),
                                     oper.join(KS_EMPTY).replace(getRegexp('\\\\([\'"])'), '$1')
@@ -77,6 +100,7 @@ KISSY.add('template', function(S, undefined) {
                     else {
                         _parser = KS_TEMPL + '.push(' + oper.replace(getRegexp('\\\\([\'"])'), '$1') + ');';
                     }
+                    console.log(PREFIX + _parser + SUFFIX);
                     return PREFIX + _parser + SUFFIX;
 
                 });
@@ -98,8 +122,23 @@ KISSY.add('template', function(S, undefined) {
             },
             // KISSY.each function wrap
             'each': {
-                start: 'KISSY.each(' + KS_TEMPL_STAT_PARAM + ', function(_ks_value, _ks_index){',
+                start: function() {
+                    var params = KS_TEMPL_STAT_PARAM.split(/\s+/),
+                        _ks_value = params[1] || '_ks_value',
+                        _ks_index = params[2] || '_ks_index';
+                    console.log('params: %o', params);
+                    var r = 'KISSY.each(' + params[0] +
+                            ', function(_ks_value,_ks_index){';
+                    console.log(r);
+                    return r;
+                }(),
                 end: '});'
+            },
+            'value': {
+                start: 'var ' + KS_TEMPL_STAT_PARAM + ' = _ks_value;'
+            },
+            'index': {
+                start: 'var ' + KS_TEMPL_STAT_PARAM + ' = _ks_index;'
             },
             // comments
             '!': {
@@ -110,9 +149,10 @@ KISSY.add('template', function(S, undefined) {
         /**
          * @param {String} templ template to be rendered.
          * @param {Object} config configuration.
-         * @return {KISSY.Template} return this for chain.
+         * @return {Object} return this for chain.
          */
         Template = function(templ, config) {
+            S.mix(defaultConfig, config);
             if (!(templ in templateCache)) {
                 var _ks_data = KS_DATA + S.now(), func,
                     _parser = [
