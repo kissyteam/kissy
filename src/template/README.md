@@ -76,16 +76,37 @@
 
 #### 语法
 
-    {{#each conditions}}
+    {{#each conditions as value index}}
         BLOCK
     {{/each}}
 
-#### 范例
+注意`as value index`可选
 
-    KISSY.Template('Hello, {{#each names}}<b color="{{_ks_value.color}}">{{_ks_value.name}}</b>{{/each}})')
-        .render({names: [{name: 'Frank', color: 'red'}, {name: 'yyfrankyy', color: 'green']});
+#### 范例1(使用默认的循环参数)
+
+    KISSY.Template('Hello, {{#each users}}<b color="{{_ks_value.color}}">{{_ks_value.user}}</b>{{/each}})')
+        .render({users: [{name: 'Frank', color: 'red'}, {name: 'yyfrankyy', color: 'green']});
 
     Hello, <b color="red">Frank</b><b color="green">yyfrankyy</b>
+
+#### 范例2(使用自定义参数,可选)
+
+    KISSY.Template('Hello, {{#each users as user}}<b color="{{user.color}}">{{user.name}}</b>{{/each}})')
+        .render({users: [{name: 'Frank', color: 'red'}, {name: 'yyfrankyy', color: 'green']});
+
+    Hello, <b color="red">Frank</b><b color="green">yyfrankyy</b>
+
+    KISSY.Template('Hello, {{#each users as user index}}<b color="{{user.color}}">{{index}}:{{user.name}}</b>{{/each}})')
+        .render({users: [{name: 'Frank', color: 'red'}, {name: 'yyfrankyy', color: 'green']});
+
+    Hello, <b color="red">0:Frank</b><b color="green">1:yyfrankyy</b>
+
+#### 范例3(嵌套使用)
+
+    KISSY.Template('Hello, {{#each users as user}}<b color="{{user.color}}">{{#each user.names as name}}{{name}}{{/each}}</b>{{/each}})')
+        .render({users: [{names: ['Frank', 'Wang'], color: 'red'}, {names: ['Frank', 'Xu'], color: 'green']});
+
+    Hello, <b color="red">FrankWang</b><b color="green">FrankXu</b>
 
 ### !
 

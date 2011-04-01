@@ -1,8 +1,3 @@
-/*
-Copyright 2011, KISSY UI Library v1.20dev
-MIT Licensed
-build time: ${build.time}
-*/
 /**
  * @fileoverview KISSY Template Engine.
  * @author 文河(yyfrankyy) <yyfrankyy@gmail.com>
@@ -239,16 +234,3 @@ KISSY.add('template/template', function(S) {
     return Template;
 
 }, {requires: ['core']});
-/**
- * @fileoverview KISSY.Template Node.
- * @author 文河<wenhe@taobao.com>
- */
-KISSY.add('template/template-node', function(S, undefined) {
-
-    S.mix(S, {
-        tmpl: function(selector, data) {
-            return S.one(S.DOM.create(S.Template(S.one(selector).html()).render(data)));
-        }
-    });
-
-}, {requires:["./template"]});

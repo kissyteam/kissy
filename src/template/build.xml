@@ -8,8 +8,8 @@
 
     <target name="concat">
         <concat destfile="template-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <fileset dir="${src.dir}" includes="*.js" />
-            <path location="../template.js"/>
+            <path path="template.js"/>
+            <path path="template-node.js"/>
         </concat>
     </target>
 
