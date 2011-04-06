@@ -655,11 +655,11 @@ KISSY.add("dd/proxy", function(S) {
                     node.css("position", "absolute");
                     self.__proxy = node;
                 }
-                dragNode.parent().append(node);
-                node.show();
-                node.offset(dragNode.offset());
+                dragNode.parent().append(self.__proxy);
+                self.__proxy.show();
+                self.__proxy.offset(dragNode.offset());
                 drag.set("dragNode", dragNode);
-                drag.set("node", node);
+                drag.set("node", self.__proxy);
             });
             drag.on("dragend", function() {
                 var node = self.__proxy;
