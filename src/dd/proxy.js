@@ -18,6 +18,12 @@ KISSY.add("dd/proxy", function(S) {
                 n.attr("id", S.guid("ks-dd-proxy"));
                 return n;
             }
+        },
+        destroyOnEnd:{
+            /**
+             * 是否每次都生成新节点/拖放完毕是否销毁当前代理节点
+             */
+            value:false
         }
     };
 
@@ -27,10 +33,11 @@ KISSY.add("dd/proxy", function(S) {
             drag.on("dragstart", function() {
                 var node = self.get("node");
                 var dragNode = drag.get("node");
-                if (S.isFunction(node)) {
+
+                if (!self.__proxy && S.isFunction(node)) {
                     node = node(drag);
                     node.css("position", "absolute");
-                    self.set("node", node);
+                    self.__proxy = node;
                 }
                 dragNode.parent().append(node);
                 node.show();
@@ -39,9 +46,13 @@ KISSY.add("dd/proxy", function(S) {
                 drag.set("node", node);
             });
             drag.on("dragend", function() {
-                var node = self.get("node");
+                var node = self.__proxy;
                 drag.get("dragNode").offset(node.offset());
                 node.hide();
+                if (self.get("destroyOnEnd")) {
+                    node.remove();
+                    self.__proxy = null;
+                }
                 drag.set("node", drag.get("dragNode"));
             });
         },

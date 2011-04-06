@@ -2,9 +2,7 @@
  * dd support for kissy, drag for dd
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
-
-    var Node = S.require("node/node");
+KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
     /*
      拖放纯功能类
@@ -163,14 +161,25 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
                 left:left,
                 top:top
             });
+            DDM.fire("drag", {
+                left:left,
+                top:top,
+                drag:this
+            });
         },
 
         _end: function() {
             this.fire("dragend");
+            DDM.fire("dragend", {
+                drag:this
+            });
         },
 
         _start: function() {
             this.fire("dragstart");
+            DDM.fire("dragstart", {
+                drag:this
+            });
         }
     });
 

@@ -27,7 +27,7 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
         _init:function() {
             DDM._regDrop(this);
         },
-        _handleOut:function(ev) {
+        _handleOut:function() {
             var activeDrag = DDM.get("activeDrag");
 
             this.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
@@ -35,14 +35,21 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
                 drop:this,
                 drag:activeDrag
             });
-
+            DDM.fire("dropexit", {
+                drop:this,
+                drag:activeDrag
+            });
             activeDrag.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
             activeDrag.fire("dragexit", {
                 drop:this,
                 drag:activeDrag
             });
+            DDM.fire("dragexit", {
+                drop:this,
+                drag:activeDrag
+            });
         },
-        _handleOver:function(ev) {
+        _handleOver:function() {
             var oldDrop = DDM.get("activeDrop");
             DDM.set("activeDrop", this);
             var activeDrag = DDM.get("activeDrag");
@@ -55,10 +62,14 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
                 activeDrag.get("node").addClass(DDM.get("prefixCls") + "drag-over");
                 //第一次先触发 dropenter,dragenter
                 activeDrag.fire("dragenter", evt);
-                this.fire("dropenter", evt)
+                this.fire("dropenter", evt);
+                DDM.fire("dragenter", evt);
+                DDM.fire("dropenter", evt);
             } else {
                 activeDrag.fire("dragover", evt);
-                this.fire("dropover", evt)
+                this.fire("dropover", evt);
+                DDM.fire("dragover", evt);
+                DDM.fire("dropover", evt);
             }
         },
         destroy:function() {

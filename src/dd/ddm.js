@@ -133,11 +133,17 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 activeDrop = this.get("activeDrop");
             activeDrag.get("node").removeClass(this.get("prefixCls") + "drag-over");
             if (activeDrop) {
+                var ret = { drag: activeDrag, drop: activeDrop};
                 activeDrop.get("node").removeClass(this.get("prefixCls") + "drop-over");
-                activeDrop.fire('drophit', { drag: activeDrag, drop: activeDrop});
-                activeDrag.fire('dragdrophit', { drag: activeDrag,  drop: activeDrop})
+                activeDrop.fire('drophit', ret);
+                activeDrag.fire('dragdrophit', ret)
+                this.fire("drophit", ret);
+                this.fire("dragdrophit", ret);
             } else {
                 activeDrag.fire('dragdropmiss', {
+                    drag:activeDrag
+                });
+                this.fire("dragdropmiss", {
                     drag:activeDrag
                 });
             }

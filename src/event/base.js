@@ -50,9 +50,6 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         add: function(target, type, fn, scope /* optional */) {
             if (batch('add', target, type, fn, scope)) return;
 
-
-            // Event.add([dom,dom])
-
             var id = getID(target), isNativeEventTarget,
                 special, events, eventHandle, fixedType, capture;
 
