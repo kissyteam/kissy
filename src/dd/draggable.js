@@ -128,6 +128,12 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             //firefox 默认会拖动对象地址
             ev.preventDefault();
             //}
+            self._prepare(ev);
+
+        },
+
+        _prepare:function(ev) {
+            var self = this;
 
             DDM._start(self);
 
@@ -145,7 +151,6 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 top:my - nxy.top
             };
             self.set("diff", self._diff);
-
         },
 
         _move: function(ev) {

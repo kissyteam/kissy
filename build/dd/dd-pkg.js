@@ -467,6 +467,12 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             //firefox 默认会拖动对象地址
             ev.preventDefault();
             //}
+            self._prepare(ev);
+
+        },
+
+        _prepare:function(ev) {
+            var self = this;
 
             DDM._start(self);
 
@@ -484,7 +490,6 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 top:my - nxy.top
             };
             self.set("diff", self._diff);
-
         },
 
         _move: function(ev) {
@@ -746,21 +751,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM) {
             ev.preventDefault();
             self.set("node", node);
             self.set("dragNode", node);
-            DDM._start(self);
-
-            var mx = ev.pageX,
-                my = ev.pageY,
-                nxy = node.offset();
-            self.startMousePos = self.mousePos = {
-                left:mx,
-                top:my
-            };
-            self.startNodePos = nxy;
-            self._diff = {
-                left:mx - nxy.left,
-                top:my - nxy.top
-            };
-            self.set("diff", self._diff);
+            self._prepare(ev);
         }
     },
     {

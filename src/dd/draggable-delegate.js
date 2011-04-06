@@ -67,21 +67,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM) {
             ev.preventDefault();
             self.set("node", node);
             self.set("dragNode", node);
-            DDM._start(self);
-
-            var mx = ev.pageX,
-                my = ev.pageY,
-                nxy = node.offset();
-            self.startMousePos = self.mousePos = {
-                left:mx,
-                top:my
-            };
-            self.startNodePos = nxy;
-            self._diff = {
-                left:mx - nxy.left,
-                top:my - nxy.top
-            };
-            self.set("diff", self._diff);
+            self._prepare(ev);
         }
     },
     {
