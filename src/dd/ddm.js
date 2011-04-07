@@ -89,19 +89,21 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 dragArea = area(dragRegion);
 
             S.each(drops, function(drop) {
-                if (drop.get("node")[0] == activeDrag.get("dragNode")[0])
+                var node = drop.getNodeFromTarget(ev);
+               
+                if (!node || node[0] == activeDrag.get("dragNode")[0])
                     return;
                 var a;
                 if (mode == "point") {
                     //取鼠标所在的 drop 区域
-                    if (inNodeByPointer(drop.get("node"), activeDrag.mousePos)) {
+                    if (inNodeByPointer(node, activeDrag.mousePos)) {
                         activeDrop = drop;
                         return false;
                     }
 
                 } else if (mode == "intersect") {
                     //取一个和activeDrag交集最大的drop区域
-                    a = area(intersect(dragRegion, region(drop.get("node"))));
+                    a = area(intersect(dragRegion, region(node)));
                     if (a > vArea) {
                         vArea = a;
                         activeDrop = drop;
@@ -109,7 +111,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
 
                 } else if (mode == "strict") {
                     //drag 全部在 drop 里面
-                    a = area(intersect(dragRegion, region(drop.get("node"))));
+                    a = area(intersect(dragRegion, region(node)));
                     if (a == dragArea) {
                         activeDrop = drop;
                         return false;
@@ -179,7 +181,9 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
             //真正开始移动了才激活垫片
             if (drag.get("shim"))
                 self._activeShim();
+
             drag._start();
+            drag.get("dragNode").addClass(this.get("prefixCls") + "dragging");
         },
 
         /**
@@ -200,6 +204,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
 
             if (!activeDrag) return;
             activeDrag._end(ev);
+            activeDrag.get("dragNode").removeClass(this.get("prefixCls") + "dragging");
             //处理 drop，看看到底是否有 drop 命中
             this._deactivateDrops(ev);
             self.set("activeDrag", null);
@@ -328,7 +333,10 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
         return inRegion(region(node), point);
     }
 
-    return new DDM();
+    var ddm = new DDM();
+    ddm.inRegion = inRegion;
+    ddm.region = region;
+    return ddm;
 }, {
     requires:["dom","event","node","base"]
 });

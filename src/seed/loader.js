@@ -692,6 +692,7 @@
                         _success();
                     },
                     error: function() {
+                        S.log(mod.name + ' is not loaded!', 'error');
                         mod.status = ERROR;
                         _final();
                     },

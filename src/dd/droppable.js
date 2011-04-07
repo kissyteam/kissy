@@ -15,15 +15,24 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
          */
         node: {
             setter:function(v) {
-                var n = Node.one(v);
-                n.addClass(DDM.get("prefixCls") + "drop");
-                return n;
+                if (v) {
+                    var n = Node.one(v);
+                    n.addClass(DDM.get("prefixCls") + "drop");
+                    return n;
+                }
             }
         }
 
     };
 
     S.extend(Droppable, Base, {
+        /**
+         * 用于被 droppable-delegate override
+         * @param {KISSY.EventObject} ev
+         */
+        getNodeFromTarget:function(ev) {
+            return this.get("node");
+        },
         _init:function() {
             DDM._regDrop(this);
         },
@@ -49,15 +58,15 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
                 drag:activeDrag
             });
         },
-        _handleOver:function() {
+        _handleOver:function(ev) {
             var oldDrop = DDM.get("activeDrop");
             DDM.set("activeDrop", this);
             var activeDrag = DDM.get("activeDrag");
             this.get("node").addClass(DDM.get("prefixCls") + "drop-over");
-            var evt = {
+            var evt = S.mix({
                 drag:activeDrag,
                 drop:this
-            };
+            }, ev);
             if (this != oldDrop) {
                 activeDrag.get("node").addClass(DDM.get("prefixCls") + "drag-over");
                 //第一次先触发 dropenter,dragenter

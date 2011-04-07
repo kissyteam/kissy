@@ -36,6 +36,7 @@ KISSY.add("dd/proxy", function(S) {
 
                 if (!self.__proxy && S.isFunction(node)) {
                     node = node(drag);
+                    node.addClass("ks-dd-proxy");
                     node.css("position", "absolute");
                     self.__proxy = node;
                 }
