@@ -16,6 +16,8 @@
 
 <script src="easing.js"></script>
 <script src="base.js"></script>
+<script src="manager.js"></script>
+<script src="color.js"></script>
 <script src="node-plugin.js"></script>
 <script src="../anim.js"></script>
 <style>
@@ -64,11 +66,15 @@
 <button id="test6-btn2">run #test6 slideDown</button>
 <div id="test6" style="width: 100px; height: 100px; background-color: #ccc;">#test6</div>
 
+
+<button id="test-opacity">run opacity</button>
+
+<div id='test7' style="width: 100px; height: 100px; background-color: #ccc;">test-opacity</div>
 <!-- Test Cases -->
 <script>
-    KISSY.use("anim,node", function(S, Anim,Node) {
+    KISSY.use("anim,node", function(S, Anim, Node) {
 
-        var     NodeList=Node.List,
+        var NodeList = Node.List,
                 Easing = Anim.Easing,
                 anim2 = Anim(
                         '#test1',
@@ -78,12 +84,14 @@
 
                 anim = Anim(
                         '#test1',
-                        'width: 50px; height: 40px; left: 500px; background: #cfc; border: 1px solid #ddd; font: 22px Chiller, Batang, serif; padding-top: 10px',
+                        'width: 50px; height: 40px; left: 500px; background: #cfc; border: 1px solid #ddd;'
+                                + "font: 22px Chiller, Batang, serif; "
+                                + "padding-top: 10px",
                         3,
                         Easing.elasticOut,
-                           function() {
-                               anim2.run();
-                           });
+                        function() {
+                            anim2.run();
+                        });
 
         Node.one('#test1-btn').on('click', function() {
             anim.run();
@@ -113,6 +121,15 @@
         });
         Node.one('#test6-btn2').on('click', function() {
             Node.one('#test6').slideDown();
+        });
+
+
+        Node.one("#test-opacity").on("click",function(){
+           Node.one("#test7").animate({
+               opacity:0
+           },2,undefined,function(){
+               alert("ok");
+           });
         });
     });
 

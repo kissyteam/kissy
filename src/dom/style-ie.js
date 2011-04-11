@@ -54,10 +54,11 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
                     // IE has trouble with opacity if it does not have layout
                     // Force it by setting the zoom level
                     style.zoom = 1;
-
+                    //S.log(currentFilter + " : "+val);
                     // keep existed filters, and remove opacity filter
                     if (currentFilter) {
-                        currentFilter = currentFilter.replace(/alpha\(opacity=.+\)/ig, '');
+                        //出现 alpha(opacity:0), alpha(opacity=0) ?
+                        currentFilter = S.trim(currentFilter.replace(/alpha\(opacity[=:][^)]+\),?/ig, ''));
                     }
 
                     if (currentFilter && val != 1) {
@@ -66,6 +67,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
 
                     // Set the alpha filter to set the opacity when really needed
                     style[FILTER] = currentFilter + (val != 1 ? 'alpha(' + OPACITY + '=' + val * 100 + ')' : '');
+                    //S.log( style[FILTER]);
                 }
             };
         }

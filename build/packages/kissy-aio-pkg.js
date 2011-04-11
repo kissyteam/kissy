@@ -67,7 +67,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110331134310',
+        buildTime:'20110411223841',
 
         /**
          * Returns a new object containing all of the properties of
@@ -335,6 +335,13 @@ build time: ${build.time}
          * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
          */
         isPlainObject: function(o) {
+            /**
+             * note by yiminghe
+             * isPlainObject(node=document.getElementById("xx")) -> false
+             * toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
+             * 'isPrototypeOf' in node : ie678 === false ,other === true
+             */
+
             return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
         },
 
@@ -1921,8 +1928,10 @@ D:\code\kissy_git\kissy\tools\..\src\json.js
 D:\code\kissy_git\kissy\tools\..\src\ajax\impl.js
 D:\code\kissy_git\kissy\tools\..\src\ajax.js
 D:\code\kissy_git\kissy\tools\..\src\anim\easing.js
+D:\code\kissy_git\kissy\tools\..\src\anim\manager.js
 D:\code\kissy_git\kissy\tools\..\src\anim\base.js
 D:\code\kissy_git\kissy\tools\..\src\anim\node-plugin.js
+D:\code\kissy_git\kissy\tools\..\src\anim\color.js
 D:\code\kissy_git\kissy\tools\..\src\anim.js
 D:\code\kissy_git\kissy\tools\..\src\base\attribute.js
 D:\code\kissy_git\kissy\tools\..\src\base\base.js
@@ -4139,10 +4148,11 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
                     // IE has trouble with opacity if it does not have layout
                     // Force it by setting the zoom level
                     style.zoom = 1;
-
+                    //S.log(currentFilter + " : "+val);
                     // keep existed filters, and remove opacity filter
                     if (currentFilter) {
-                        currentFilter = currentFilter.replace(/alpha\(opacity=.+\)/ig, '');
+                        //出现 alpha(opacity:0), alpha(opacity=0) ?
+                        currentFilter = S.trim(currentFilter.replace(/alpha\(opacity[=:][^)]+\),?/ig, ''));
                     }
 
                     if (currentFilter && val != 1) {
@@ -4151,6 +4161,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
 
                     // Set the alpha filter to set the opacity when really needed
                     style[FILTER] = currentFilter + (val != 1 ? 'alpha(' + OPACITY + '=' + val * 100 + ')' : '');
+                    //S.log( style[FILTER]);
                 }
             };
         }
@@ -4576,9 +4587,6 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
          */
         add: function(target, type, fn, scope /* optional */) {
             if (batch('add', target, type, fn, scope)) return;
-
-
-            // Event.add([dom,dom])
 
             var id = getID(target), isNativeEventTarget,
                 special, events, eventHandle, fixedType, capture;
@@ -6423,41 +6431,164 @@ KISSY.add('anim/easing', function(S) {
  */
 
 /**
- * @module   anim
- * @author   lifesinger@gmail.com
+ * single timer for the whole anim module
+ * @author:yiminghe@gmail.com
  */
-KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, undefined) {
+KISSY.add("anim/manager", function(S) {
+    var tag = S.guid("anim-"),id = 1;
 
-    var PARSE_FLOAT = parseFloat,
-        EventTarget = S.require("event/target"),
-        parseEl = DOM.create('<div>'),
-        PROPS = ('backgroundColor borderBottomColor borderBottomWidth borderBottomStyle borderLeftColor borderLeftWidth borderLeftStyle ' +
-            'borderRightColor borderRightWidth borderRightStyle borderSpacing borderTopColor borderTopWidth borderTopStyle bottom color ' +
-            'font fontFamily fontSize fontWeight height left letterSpacing lineHeight marginBottom marginLeft marginRight marginTop maxHeight ' +
-            'maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineWidth paddingBottom paddingLeft ' +
-            'paddingRight paddingTop right textIndent top width wordSpacing zIndex').split(' '),
+    function getKv(anim) {
+        anim[tag] = anim[tag] || S.guid("anim-");
+        return anim[tag];
+    }
 
-        STEP_INTERVAL = 13,
-        OPACITY = 'opacity',
-        NONE = 'none',
-        PROPERTY = 'Property',
+    return {
+        interval:20,
+        runnings:{},
+        timer:null,
+        start:function(anim) {
+            var kv = getKv(anim);
+            if (this.runnings[kv]) return;
+            this.runnings[kv] = anim;
+            this.startTimer();
+        },
+        stop:function(anim) {
+            this.notRun(anim);
+        },
+        notRun:function(anim) {
+            var kv = getKv(anim);
+            delete this.runnings[kv];
+            if (S.isEmptyObject(this.runnings)) {
+                this.stopTimer();
+            }
+        },
+        pause:function(anim) {
+            this.notRun(anim);
+        },
+        resume:function(anim) {
+            this.start(anim);
+        },
+        startTimer:function() {
+            var self = this;
+            if (!self.timer) {
+                self.timer = setTimeout(function() {
+                    //S.log("running : " + (id++));
+                    if (!self.runFrames()) {
+                        self.timer = null;
+                        self.startTimer();
+                    } else {
+                        self.stopTimer();
+                    }
+                }, self.interval);
+            }
+        },
+        stopTimer:function() {
+            var t = this.timer;
+            if (t) {
+                clearTimeout(t);
+                this.timer = null;
+                //S.log("timer stop");
+            }
+        },
+        runFrames:function() {
+            var done = true,runnings = this.runnings;
+            for (var r in runnings) {
+                if (runnings.hasOwnProperty(r)) {
+                    done = false;
+                    runnings[r]._runFrame();
+                }
+            }
+            return done;
+        }
+    };
+});
 
-        EVENT_START = 'start',
-        EVENT_STEP = 'step',
-        EVENT_COMPLETE = 'complete',
+/**
+ * @module   anim
+ * @author   lifesinger@gmail.com,yiminghe@gmail.com
+ */
+KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
-        defaultConfig = {
-            duration: 1,
-            easing: 'easeNone',
-            nativeSupport: true // 优先使用原生 css3 transition
-            //queue: true
-        };
+    var EventTarget,
+        PROPS,
+        OPACITY,NONE,
+        PROPERTY,EVENT_START,
+        EVENT_STEP,
+        EVENT_COMPLETE,
+        defaultConfig,
+        TRANSITION_NAME;
+
+    EventTarget = Event.Target;
+    //所有有效的 css 分属性，数字则动画，否则直接设最终结果
+    PROPS = (
+        'backgroundColor ' +
+            'borderBottomColor ' +
+            'borderBottomWidth ' +
+            'borderBottomStyle ' +
+            'borderLeftColor ' +
+            'borderLeftWidth ' +
+            'borderLeftStyle ' +
+            // 同 font
+            //'borderColor ' +
+            'borderRightColor ' +
+            'borderRightWidth ' +
+            'borderRightStyle ' +
+            'borderSpacing ' +
+            'borderTopColor ' +
+            'borderTopWidth ' +
+            'borderTopStyle ' +
+            'bottom ' +
+            'color ' +
+            // shorthand 属性去掉，取分解属性
+            //'font ' +
+            'fontFamily ' +
+            'fontSize ' +
+            'fontWeight ' +
+            'height ' +
+            'left ' +
+            'letterSpacing ' +
+            'lineHeight ' +
+            'marginBottom ' +
+            'marginLeft ' +
+            'marginRight ' +
+            'marginTop ' +
+            'maxHeight ' +
+            'maxWidth ' +
+            'minHeight ' +
+            'minWidth ' +
+            'opacity ' +
+            'outlineColor ' +
+            'outlineOffset ' +
+            'outlineWidth ' +
+            'paddingBottom ' +
+            'paddingLeft ' +
+            'paddingRight ' +
+            'paddingTop ' +
+            'right ' +
+            'textIndent ' +
+            'top ' +
+            'width ' +
+            'wordSpacing ' +
+            'zIndex').split(' ');
+
+    OPACITY = 'opacity';
+    NONE = 'none';
+    PROPERTY = 'Property';
+    EVENT_START = 'start';
+    EVENT_STEP = 'step';
+    EVENT_COMPLETE = 'complete';
+    defaultConfig = {
+        duration: 1,
+        easing: 'easeNone',
+        nativeSupport: true // 优先使用原生 css3 transition
+    };
 
     /**
      * Anim Class
      * @constructor
      */
     function Anim(elem, props, duration, easing, callback, nativeSupport) {
+
         // ignore non-exist element
         if (!(elem = DOM.get(elem))) return undefined;
 
@@ -6468,7 +6599,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, undefined) {
 
         var self = this,
             isConfig = S.isPlainObject(duration),
-            style = props, config;
+            style = props,
+            config;
 
         /**
          * the related dom element
@@ -6484,15 +6616,22 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, undefined) {
             style = String(S.param(style, ';'))
                 .replace(/=/g, ':')
                 .replace(/%23/g, '#')// 还原颜色值中的 #
-                .replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(); // backgroundColor => background-color
+                .replace(/([a-z])([A-Z])/g, '$1-$2')
+                .toLowerCase(); // backgroundColor => background-color
         }
-        self.props = normalize(style);
-        self.targetStyle = style;
+
+        //正则化，并且将shorthand属性分解成各个属性统一单独处理
+        //border:1px solid #fff =>
+        //borderLeftWidth:1px
+        //borderLeftColor:#fff
+        self.props = normalize(style, elem);
         // normalize 后：
         // props = {
         //          width: { v: 200, unit: 'px', f: interpolate }
         //          color: { v: '#ccc', unit: '', f: color }
         //         }
+
+        self.targetStyle = style;
 
         /**
          * animation config
@@ -6501,7 +6640,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, undefined) {
             config = S.merge(defaultConfig, duration);
         } else {
             config = S.clone(defaultConfig);
-            if (duration) (config.duration = PARSE_FLOAT(duration) || 1);
+            if (duration) (config.duration = parseFloat(duration) || 1);
             if (S['isString'](easing) || S.isFunction(easing)) config.easing = easing;
             if (S.isFunction(callback)) config.complete = callback;
             if (nativeSupport !== undefined) config.nativeSupport = nativeSupport;
@@ -6511,9 +6650,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, undefined) {
         /**
          * detect browser native animation(CSS3 transition) support
          */
-        if (config.nativeSupport && getNativeTransitionName()
+        if (config.nativeSupport
+            && getNativeTransitionName()
             && S['isString']((easing = config.easing))) {
-
             // 当 easing 是支持的字串时，才激活 native transition
             if (/cubic-bezier\([\s\d.,]+\)/.test(easing) ||
                 (easing = Easing.NativeTimeFunction[easing])) {
@@ -6522,84 +6661,187 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, undefined) {
             }
         }
 
-
-        /**
-         * timer
-         */
-        //self.timer = undefined;
-
         // register callback
         if (S.isFunction(callback)) {
-            self.on(EVENT_COMPLETE, callback);
+
+            self.callback = callback;
+            //不要这样注册了，常用方式(new 完就扔)会忘记 detach，造成内存不断增加
+            //self.on(EVENT_COMPLETE, callback);
         }
         return undefined;
     }
 
+    Anim.PROPS = PROPS;
+
+    // 不能插值的直接返回终值，没有动画插值过程
+    function mirror(source, target) {
+        source += '';
+        return target;
+    }
+
+    /**
+     * 相应属性的读取设置操作，需要转化为动画模块格式
+     */
+    Anim.PROP_OPS = {
+        "*":{
+            getter:function(elem, prop) {
+                var val = DOM.css(elem, prop),
+                    num = parseFloat(val),
+                    unit = (val + '').replace(/^[-\d.]+/, '');
+                if (isNaN(num)) {
+                    return {v:unit,u:'',f:mirror};
+                }
+                return {v:num,u:unit,f:this.interpolate};
+            },
+            setter:function(elem, prop, val) {
+                return DOM.css(elem, prop, val);
+            },
+            /**
+             * 数值插值函数
+             * @param {Number} source 源值
+             * @param {Number} target 目的值
+             * @param {Number} pos 当前位置，从 easing 得到 0~1
+             * @return {Number} 当前值
+             */
+            interpolate:function(source, target, pos) {
+                return (source + (target - source) * pos).toFixed(3);
+            }
+        }
+    };
+
+
     S.augment(Anim, EventTarget, {
+        /**
+         * @type {boolean} 是否在运行
+         */
+        isRunning:false,
+        /**
+         * 动画开始到现在逝去的时间
+         */
+        elapsedTime:0,
+        /**
+         * 动画开始的时间
+         */
+        start:0,
+        /**
+         * 动画结束的时间
+         */
+        finish:0,
+        /**
+         * 动画持续时间，不间断的话 = finish-start
+         */
+        duration:0,
 
         run: function() {
-            var self = this, config = self.config,
+
+            var self = this,
+                config = self.config,
                 elem = self.domEl,
-                duration, easing, start, finish,
+                duration, easing,
+                start,
+                finish,
                 target = self.props,
-                source = {}, prop, go;
+                source = {},
+                prop;
 
-            for (prop in target) source[prop] = parse(DOM.css(elem, prop));
             if (self.fire(EVENT_START) === false) return;
-            self.stop(); // 先停止掉正在运行的动画
 
+            self.stop(); // 先停止掉正在运行的动画
+            duration = config.duration * 1000;
+            self.duration = duration;
             if (self.transitionName) {
                 self._nativeRun();
             } else {
-                duration = config.duration * 1000;
+                for (prop in target) {
+                    source[prop] = getAnimValue(elem, prop);
+                }
+
+                self.source = source;
+
                 start = S.now();
                 finish = start + duration;
-
                 easing = config.easing;
+
                 if (S['isString'](easing)) {
                     easing = Easing[easing] || Easing.easeNone;
                 }
 
-                self.timer = S.later((go = function () {
-                    var time = S.now(),
-                        t = time > finish ? 1 : (time - start) / duration,
-                        sp, tp, b;
 
-                    for (prop in target) {
-                        sp = source[prop];
-                        tp = target[prop];
+                self.start = start;
+                self.finish = finish;
+                self.easing = easing;
 
-                        // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
-                        // 这时要把 sp 的单位调整为和 tp 的一致
-                        if (tp.v == 0) tp.u = sp.u;
-
-                        // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
-                        // 比如：ie 下 border-width 默认为 medium
-                        if (sp.u !== tp.u) sp.v = 0;
-
-                        // go
-                        DOM.css(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
-                    }
-
-                    if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
-                        self.stop();
-                        // complete 事件只在动画到达最后一帧时才触发
-                        if (b) self.fire(EVENT_COMPLETE);
-                    }
-                }), STEP_INTERVAL, true);
-
-                // 立刻执行
-                go();
+                AM.start(self);
             }
+
+            self.isRunning = true;
 
             return self;
         },
 
-        _nativeRun: function() {
-            var self = this, config = self.config,
+        _complete:function() {
+            var self = this;
+            self.fire(EVENT_COMPLETE);
+            self.callback && self.callback();
+        },
+
+        _runFrame:function() {
+
+            var self = this,
                 elem = self.domEl,
+                finish = self.finish,
+                start = self.start,
+                duration = self.duration,
+                time = S.now(),
+                source = self.source,
+                easing = self.easing,
                 target = self.props,
-                duration = config.duration * 1000,
+                prop,
+                elapsedTime;
+            elapsedTime = time - start;
+            var t = time > finish ? 1 : elapsedTime / duration,
+                sp, tp, b;
+
+            self.elapsedTime = elapsedTime;
+
+
+            for (prop in target) {
+                sp = source[prop];
+                tp = target[prop];
+
+                // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
+                // 这时要把 sp 的单位调整为和 tp 的一致
+                if (tp.v == 0) {
+                    tp.u = sp.u;
+                }
+
+                // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
+                // 比如：ie 下 border-width 默认为 medium
+                if (sp.u !== tp.u) {
+                    //S.log(prop + " : " + sp.v + " : " + sp.u);
+                    //S.log(prop + " : " + tp.v + " : " + tp.u);
+                    //S.log(tp.f);
+                    sp.v = 0;
+                    sp.u = tp.u;
+                }
+
+                setAnimValue(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
+            }
+
+            if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
+                self.stop();
+                // complete 事件只在动画到达最后一帧时才触发
+                if (b) {
+                    self._complete();
+                }
+            }
+        },
+
+        _nativeRun: function() {
+            var self = this,
+                config = self.config,
+                elem = self.domEl,
+                duration = self.duration,
                 easing = config.easing,
                 prefix = self.transitionName,
                 transition = {};
@@ -6616,7 +6858,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, undefined) {
 
             // set the final style value (need some hack for opera)
             S.later(function() {
-                setToFinal(elem, target, self.targetStyle);
+                setToFinal(elem,
+                    // target,
+                    self.targetStyle);
             }, 0);
 
             // after duration time, fire the stop function
@@ -6630,34 +6874,34 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, undefined) {
 
             if (self.transitionName) {
                 self._nativeStop(finish);
-            }
-            else {
-                // 停止定时器
-                if (self.timer) {
-                    self.timer.cancel();
-                    self.timer = undefined;
-                }
-
+            } else {
                 // 直接设置到最终样式
                 if (finish) {
-                    setToFinal(self.domEl, self.props, self.targetStyle);
-                    self.fire(EVENT_COMPLETE);
+                    setToFinal(self.domEl,
+                        //self.props,
+                        self.targetStyle);
+                    self._complete();
                 }
+                AM.stop(self);
             }
+
+            self.isRunning = false;
 
             return self;
         },
 
         _nativeStop: function(finish) {
-            var self = this, elem = self.domEl,
+            var self = this,
+                elem = self.domEl,
                 prefix = self.transitionName,
-                props = self.props, prop;
+                props = self.props,
+                prop;
 
             // handle for the CSS transition
             if (finish) {
                 // CSS transition value remove should come first
                 DOM.css(elem, prefix + PROPERTY, NONE);
-                self.fire(EVENT_COMPLETE);
+                self._complete();
             } else {
                 // if want to stop the CSS transition, should set the current computed style value to the final CSS value
                 for (prop in props) {
@@ -6670,87 +6914,82 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, undefined) {
     });
 
     Anim.supportTransition = function() {
-        return !!getNativeTransitionName();
-    };
-
-
-    function getNativeTransitionName() {
+        if (TRANSITION_NAME) return TRANSITION_NAME;
         var name = 'transition', transitionName;
-
-        if (parseEl.style[name] !== undefined) {
+        var el = document.body;
+        if (el.style[name] !== undefined) {
             transitionName = name;
         } else {
             S.each(['Webkit', 'Moz', 'O'], function(item) {
-                if (parseEl.style[(name = item + 'Transition')] !== undefined) {
+                if (el.style[(name = item + 'Transition')] !== undefined) {
                     transitionName = name;
                     return false;
                 }
             });
         }
-        getNativeTransitionName = function() {
-            return transitionName;
-        };
+        TRANSITION_NAME = transitionName;
         return transitionName;
+    };
+
+
+    var getNativeTransitionName = Anim.supportTransition;
+
+    function setToFinal(elem, style) {
+        setCssText(elem, style);
     }
 
-    function setToFinal(elem, props, style) {
+    function getAnimValue(el, prop) {
+        return (Anim.PROP_OPS[prop] || Anim.PROP_OPS["*"]).getter(el, prop);
+    }
+
+
+    function setAnimValue(el, prop, v) {
+        return (Anim.PROP_OPS[prop] || Anim.PROP_OPS["*"]).setter(el, prop, v);
+    }
+
+    /**
+     * 建一个尽量相同的 dom 节点在相同的位置（不单行内，获得相同的 css 选择器样式定义），从中取值
+     */
+    function normalize(style, elem) {
+        var css,
+            rules = {},
+            i = PROPS.length,
+            v;
+        var el = DOM.insertAfter(elem.cloneNode(false), elem);
+
+        css = el.style;
+        setCssText(el, style);
+        while (i--) {
+            var prop = PROPS[i];
+            if (v = css[prop]) {
+                rules[prop] = getAnimValue(el, prop);
+            }
+        }
+        DOM.remove(el);
+        return rules;
+    }
+
+    /**
+     * 直接设置 cssText，注意 ie 的 opacity
+     * @param style
+     * @param elem
+     */
+    function setCssText(elem, style) {
         if (UA['ie'] && style.indexOf(OPACITY) > -1) {
-            DOM.css(elem, OPACITY, props[OPACITY].v);
+            var reg = /opacity\s*:\s*([^;]+)(;|$)/;
+            var match = style.match(reg);
+            if (match) {
+                DOM.css(elem, OPACITY, parseFloat(match[1]));
+            }
+            //不要把它清除了
+            //ie style.opacity 要能取！
         }
         elem.style.cssText += ';' + style;
     }
 
-    function normalize(style) {
-        var css, rules = { }, i = PROPS.length, v;
-        parseEl.innerHTML = '<div style="' + style + '"></div>';
-        css = parseEl.firstChild.style;
-        while (i--) if ((v = css[PROPS[i]])) rules[PROPS[i]] = parse(v);
-        return rules;
-    }
-
-    function parse(val) {
-        var num = PARSE_FLOAT(val), unit = (val + '').replace(/^[-\d.]+/, '');
-        return isNaN(num) ? { v: unit, u: '', f: colorEtc } : { v: num, u: unit, f: interpolate };
-    }
-
-    function interpolate(source, target, pos) {
-        return (source + (target - source) * pos).toFixed(3);
-    }
-
-    function colorEtc(source, target, pos) {
-        var i = 2, j, c, tmp, v = [], r = [];
-
-        while (j = 3,c = arguments[i - 1],i--) {
-            if (s(c, 0, 4) === 'rgb(') {
-                c = c.match(/\d+/g);
-                while (j--) v.push(~~c[j]);
-            }
-            else if (s(c, 0, undefined) === '#') {
-                if (c.length === 4) c = '#' + s(c, 1, undefined)
-                    + s(c, 1, undefined) + s(c, 2, undefined)
-                    + s(c, 2, undefined) + s(c, 3, undefined) + s(c, 3, undefined);
-                while (j--) v.push(parseInt(s(c, 1 + j * 2, 2), 16));
-            }
-            else { // red, black 等值，以及其它一切非颜色值，直接返回 target
-                return target;
-            }
-        }
-
-        while (j--) {
-            tmp = ~~(v[j + 3] + (v[j] - v[j + 3]) * pos);
-            r.push(tmp < 0 ? 0 : tmp > 255 ? 255 : tmp);
-        }
-
-        return 'rgb(' + r.join(',') + ')';
-    }
-
-    function s(str, p, c) {
-        return str.substr(p, c || 1);
-    }
-
     return Anim;
 }, {
-    requires:["dom","event","anim/easing","ua"]
+    requires:["dom","event","./easing","ua","./manager"]
 });
 
 /**
@@ -6762,6 +7001,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, undefined) {
  *  - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
  *  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
  *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile
+ *  - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
  */
 
 /**
@@ -6881,11 +7121,88 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
     requires:["dom","anim/base","node"]
 });
 
+/**
+ * special patch for making color gradual change
+ * @author:yiminghe@gmail.com
+ */
+KISSY.add("anim/color", function(S, DOM, Anim) {
+
+    var re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
+        re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i;
+
+    //得到颜色的数值表示，红绿蓝数字数组
+    function numericColor(val) {
+        var match;
+        if (match = val.match(re_RGB)) {
+            return [
+                parseInt(match[1]),
+                parseInt(match[2]),
+                parseInt(match[3])
+            ];
+        } else if (match = val.match(re_hex)) {
+            for (var i = 1; i < match.length; i++) {
+                if (match[i].length < 2) {
+                    match[i] = match[i] + match[i];
+                }
+            }
+            return [
+                parseInt(match[1], 16),
+                parseInt(match[2], 16),
+                parseInt(match[3], 16)
+            ];
+        }
+
+        //transparent 或者 颜色字符串返回
+        S.log("only allow rgb or hex color string : " + val, "warn");
+        return [255,255,255];
+    }
+
+    var OPS = Anim.PROP_OPS,
+        PROPS = Anim.PROPS;
+
+    OPS["color"] = {
+        getter:function(elem, prop) {
+            return {
+                v:numericColor(DOM.css(elem, prop)),
+                u:'',
+                f:this.interpolate
+            };
+        },
+        setter:OPS["*"].setter,
+        /**
+         * 根据颜色的数值表示，执行数组插值
+         * @param source {Array.<Number>} 颜色源值表示
+         * @param target {Array.<Number>} 颜色目的值表示
+         * @param pos {Number} 当前进度
+         * @return {String} 可设置css属性的格式值 : rgb
+         */
+        interpolate:function(source, target, pos) {
+            var interpolate = OPS["*"].interpolate;
+//            var ret=
+            return 'rgb(' + [
+                Math.floor(interpolate(source[0], target[0], pos)),
+                Math.floor(interpolate(source[1], target[1], pos)),
+                Math.floor(interpolate(source[2], target[2], pos))
+            ].join(', ') + ')';
+//            S.log(ret);
+//            return  ret;
+        }
+    };
+
+    S.each(PROPS, function(prop) {
+        if (prop.match(/color$/i)) {
+            OPS[prop] = OPS['color'];
+        }
+    });
+}, {
+    requires:["dom","./base"]
+});
+
 KISSY.add("anim", function(S, Anim,Easing) {
     Anim.Easing=Easing;
     return Anim;
 }, {
-    requires:["anim/base","anim/easing","anim/node-plugin"]
+    requires:["anim/base","anim/easing","anim/node-plugin","anim/color"]
 });
 
 /**
@@ -8857,30 +9174,45 @@ build time: ${build.time}
 */
 /**
  * @fileoverview KISSY Template Engine.
- * @author yyfrankyy(yyfrankyy@gmail.com)
+ * @author 文河(yyfrankyy) <yyfrankyy@gmail.com>
  * @see https://github.com/yyfrankyy/kissy/tree/template/src/template
- * @version 0.3
+ *
+ * @license
+ * Copyright (c) 2010 Taobao Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
-KISSY.add('template/base', function(S) {
+KISSY.add('template/template', function(S) {
 
-    var
-        /**
-         * Template Cache
-         */
-            templateCache = {},
+    var defaultConfig = {},
 
-        /**
-         * start/end tag mark
-         */
-            tagStartEnd = {
+        // Template Cache
+        templateCache = {},
+
+        // start/end tag mark
+        tagStartEnd = {
             '#': 'start',
             '/': 'end'
         },
 
-        /**
-         * Regexp Cache
-         */
-            regexpCache = {},
+        // Regexp Cache
+        regexpCache = {},
         getRegexp = function(regexp) {
             if (!(regexp in regexpCache)) {
                 regexpCache[regexp] = new RegExp(regexp, 'ig');
@@ -8893,6 +9225,7 @@ KISSY.add('template/base', function(S) {
         KS_TEMPL = 'KS_TEMPL',
         KS_DATA = 'KS_DATA_',
         KS_EMPTY = '',
+        KS_AS = 'as',
 
         PREFIX = '");',
         SUFFIX = KS_TEMPL + '.push("',
@@ -8900,64 +9233,98 @@ KISSY.add('template/base', function(S) {
         PARSER_SYNTAX_ERROR = 'KISSY.Template: Syntax Error. ',
         PARSER_RENDER_ERROR = 'KISSY.Template: Render Error. ',
 
-        PARSER_PREFIX = 'var ' + KS_TEMPL + '=[],' + KS_TEMPL_STAT_PARAM + '=false;with(',
+        PARSER_PREFIX = 'var ' + KS_TEMPL + '=[],' +
+            KS_TEMPL_STAT_PARAM + '=false;with(',
         PARSER_MIDDLE = '||{}){try{' + KS_TEMPL + '.push("',
-        PARSER_SUFFIX = '");}catch(e){' + KS_TEMPL + '=["' + PARSER_RENDER_ERROR + '" + e.message]}};return ' + KS_TEMPL + '.join("");',
+        PARSER_SUFFIX = '");}catch(e){' + KS_TEMPL + '=["' +
+            PARSER_RENDER_ERROR + '" + e.message]}};return ' +
+            KS_TEMPL + '.join("");',
 
-        /*
-         * build a static parser
-         */
+        // build a static parser
         buildParser = function(templ) {
             var _parser, _empty_index;
-            return S.trim(templ).replace(getRegexp('[\r\t\n]'), ' ').replace(getRegexp('(["\'])'), '\\$1')
-                .replace(getRegexp('\{\{([#/]?)(?!\}\})([^}]*)\}\}'), function(all, expr, oper) {
-                _parser = KS_EMPTY;
-                // is an expression
-                if (expr) {
-                    oper = S.trim(oper);
-                    _empty_index = oper.indexOf(' ');
-                    oper = _empty_index === -1 ? [oper, ''] :
-                        [oper.substring(0, oper.indexOf(' ')), oper.substring(oper.indexOf(' '))];
-                    for (var i in Statements) {
-                        if (oper[0] !== i) continue;
-                        oper.shift();
-                        if (expr in tagStartEnd) {
-                            _parser = Statements[i][tagStartEnd[expr]].replace(
-                                getRegexp(KS_TEMPL_STAT_PARAM),
-                                oper.join(KS_EMPTY).replace(getRegexp('\\\\([\'"])'), '$1')
-                                );
+            return S.trim(templ).replace(getRegexp('[\r\t\n]'), ' ')
+                .replace(getRegexp('(["\'])'), '\\$1')
+                .replace(getRegexp('\{\{([#/]?)(?!\}\})([^}]*)\}\}'),
+                    function(all, expr, oper) {
+                    _parser = KS_EMPTY;
+                    // is an expression
+                    if (expr) {
+                        oper = S.trim(oper);
+                        _empty_index = oper.indexOf(' ');
+                        oper = _empty_index === -1 ? [oper, ''] :
+                                [oper.substring(0, oper.indexOf(' ')),
+                                oper.substring(oper.indexOf(' '))];
+                        for (var i in Statements) {
+                            if (oper[0] !== i) continue;
+                            oper.shift();
+                            if (expr in tagStartEnd) {
+                                // get expression definition function/string
+                                var fn = Statements[i][tagStartEnd[expr]];
+                                _parser = S.isFunction(fn) ?
+                                    fn.apply(this, S.trim(oper.join(KS_EMPTY)
+                                        .replace(getRegexp('\\\\([\'"])'),
+                                            '$1')).split(/\s+/)) :
+                                    fn.replace(getRegexp(KS_TEMPL_STAT_PARAM),
+                                        oper.join(KS_EMPTY)
+                                        .replace(getRegexp('\\\\([\'"])'), '$1')
+                                    );
+                            }
                         }
                     }
-                }
 
-                // return array directly
-                else {
-                    _parser = KS_TEMPL + '.push(' + oper.replace(getRegexp('\\\\([\'"])'), '$1') + ');';
-                }
-                return PREFIX + _parser + SUFFIX;
+                    // return array directly
+                    else {
+                        _parser = KS_TEMPL +
+                            '.push(' +
+                            oper.replace(getRegexp('\\\\([\'"])'), '$1') + ');';
+                    }
+                    return PREFIX + _parser + SUFFIX;
 
-            });
+                });
         },
 
-        /**
-         * expressions
-         */
-            Statements = {
+        // convert any object to array
+        toArray = function(args) {
+            return [].slice.call(args);
+        },
+
+        // join any array to string by empty
+        join = function(args) {
+            return toArray(args).join(KS_EMPTY);
+        },
+
+        // expression
+        Statements = {
             'if': {
                 start: 'if(' + KS_TEMPL_STAT_PARAM + '){',
                 end: '}'
             },
+
             'else': {
                 start: '}else{'
             },
+
             'elseif': {
                 start: '}else if(' + KS_TEMPL_STAT_PARAM + '){'
             },
+
             // KISSY.each function wrap
             'each': {
-                start: 'KISSY.each(' + KS_TEMPL_STAT_PARAM + ', function(_ks_value, _ks_index){',
+                start: function() {
+                    var args = toArray(arguments),
+                        _ks_value = '_ks_value', _ks_index = '_ks_index';
+                    if (args[1] === KS_AS && args[2]) {
+                        _ks_value = args[2] || _ks_value,
+                        _ks_index = args[3] || _ks_index;
+                    }
+                    var r = 'KISSY.each(' + args[0] +
+                            ', function(' + _ks_value + ', ' + _ks_index + '){';
+                    return r;
+                },
                 end: '});'
             },
+
             // comments
             '!': {
                 start: '/*' + KS_TEMPL_STAT_PARAM + '*/'
@@ -8965,11 +9332,13 @@ KISSY.add('template/base', function(S) {
         },
 
         /**
+         * Template
          * @param {String} templ template to be rendered.
-         * @return return this for chain.
+         * @param {Object} config configuration.
+         * @return {Object} return this for chain.
          */
-            Template = function(templ//, config
-            ) {
+        Template = function(templ, config) {
+            S.mix(defaultConfig, config);
             if (!(templ in templateCache)) {
                 var _ks_data = KS_DATA + S.now(), func,
                     _parser = [
@@ -8983,7 +9352,8 @@ KISSY.add('template/base', function(S) {
                 try {
                     func = new Function(_ks_data, _parser.join(KS_EMPTY));
                 } catch (e) {
-                    _parser[3] = PREFIX + SUFFIX + PARSER_SYNTAX_ERROR + ',' + e.message + PREFIX + SUFFIX;
+                    _parser[3] = PREFIX + SUFFIX + PARSER_SYNTAX_ERROR + ',' +
+                        e.message + PREFIX + SUFFIX;
                     func = new Function(_ks_data, _parser.join(KS_EMPTY));
                 }
 
@@ -8996,54 +9366,61 @@ KISSY.add('template/base', function(S) {
             return templateCache[templ];
         };
 
-    S.mix(Template, {
-        /**
-         * Logging Compiled Template Codes
-         * @param {String} templ template string.
-         */
-        log: function(templ) {
-            if (templ in templateCache) {
-                if ('js_beautify' in window) {
-                    //cause compress error in ant
-//                    S.log(js_beautify(templateCache[templ].parser, {
-//                        indent_size:4,
-//                        indent_char:" ",
-//                        preserve_newlines: true,
-//                        braces_on_own_line: false,
-//                        keep_array_indentation: false,
-//                        space_after_anon_function: true
-//                    }), 'info');
+        S.mix(Template, {
+            /**
+             * Logging Compiled Template Codes
+             * @param {String} templ template string.
+             */
+            log: function(templ) {
+                if (templ in templateCache) {
+                    if ('js_beautify' in window) {
+//                        S.log(js_beautify(templateCache[templ].parser, {
+//                            indent_size: 4,
+//                            indent_char: ' ',
+//                            preserve_newlines: true,
+//                            braces_on_own_line: false,
+//                            keep_array_indentation: false,
+//                            space_after_anon_function: true
+//                        }), 'info');
+                    } else {
+                        S.log(templateCache[templ].parser, 'info');
+                    }
                 } else {
-                    S.log(templateCache[templ].parser, 'info');
+                    Template(templ);
+                    this.log(templ);
                 }
-            } else {
-                Template(templ);
-                this.log(templ);
+            },
+
+            /**
+             * add statement for extending template tags
+             * @param {String} statement tag name.
+             * @param {String} o extent tag object.
+             */
+            addStatement: function(statement, o) {
+                if (S.isString(statement) && S.isObject(o)) {
+                    Statements[statement] = o;
+                }
             }
-        },
 
-        /**
-         * add statement for extending template tags
-         * @param {String} statement tag name.
-         * @param {String} o extent tag object.
-         */
-        addStatement: function(statement, o) {
-            if (S['isString'](statement) && S['isObject'](o)) {
-                Statements[statement] = o;
-            }
-        }
+        });
 
-    });
-
+    //S.Template = Template;
     return Template;
 
-});
-KISSY.add("template", function(S, T) {
-    S.Template = T;
-    return T;
-}, {
-    requires:["template/base"]
-});
+}, {requires: ['core']});
+/**
+ * @fileoverview KISSY.Template Node.
+ * @author 文河<wenhe@taobao.com>
+ */
+KISSY.add('template/template-node', function(S, undefined) {
+
+    S.mix(S, {
+        tmpl: function(selector, data) {
+            return S.one(S.DOM.create(S.Template(S.one(selector).html()).render(data)));
+        }
+    });
+
+}, {requires:["./template"]});
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
@@ -9695,11 +10072,17 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 activeDrop = this.get("activeDrop");
             activeDrag.get("node").removeClass(this.get("prefixCls") + "drag-over");
             if (activeDrop) {
+                var ret = { drag: activeDrag, drop: activeDrop};
                 activeDrop.get("node").removeClass(this.get("prefixCls") + "drop-over");
-                activeDrop.fire('drophit', { drag: activeDrag, drop: activeDrop});
-                activeDrag.fire('dragdrophit', { drag: activeDrag,  drop: activeDrop})
+                activeDrop.fire('drophit', ret);
+                activeDrag.fire('dragdrophit', ret)
+                this.fire("drophit", ret);
+                this.fire("dragdrophit", ret);
             } else {
                 activeDrag.fire('dragdropmiss', {
+                    drag:activeDrag
+                });
+                this.fire("dragdropmiss", {
                     drag:activeDrag
                 });
             }
@@ -9892,9 +10275,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
  * dd support for kissy, drag for dd
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
-
-    var Node = S.require("node/node");
+KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
     /*
      拖放纯功能类
@@ -10020,6 +10401,12 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
             //firefox 默认会拖动对象地址
             ev.preventDefault();
             //}
+            self._prepare(ev);
+
+        },
+
+        _prepare:function(ev) {
+            var self = this;
 
             DDM._start(self);
 
@@ -10037,7 +10424,6 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
                 top:my - nxy.top
             };
             self.set("diff", self._diff);
-
         },
 
         _move: function(ev) {
@@ -10053,14 +10439,25 @@ KISSY.add('dd/draggable', function(S, UA, N, Base, DDM) {
                 left:left,
                 top:top
             });
+            DDM.fire("drag", {
+                left:left,
+                top:top,
+                drag:this
+            });
         },
 
         _end: function() {
             this.fire("dragend");
+            DDM.fire("dragend", {
+                drag:this
+            });
         },
 
         _start: function() {
             this.fire("dragstart");
+            DDM.fire("dragstart", {
+                drag:this
+            });
         }
     });
 
@@ -10099,7 +10496,7 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
         _init:function() {
             DDM._regDrop(this);
         },
-        _handleOut:function(ev) {
+        _handleOut:function() {
             var activeDrag = DDM.get("activeDrag");
 
             this.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
@@ -10107,14 +10504,21 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
                 drop:this,
                 drag:activeDrag
             });
-
+            DDM.fire("dropexit", {
+                drop:this,
+                drag:activeDrag
+            });
             activeDrag.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
             activeDrag.fire("dragexit", {
                 drop:this,
                 drag:activeDrag
             });
+            DDM.fire("dragexit", {
+                drop:this,
+                drag:activeDrag
+            });
         },
-        _handleOver:function(ev) {
+        _handleOver:function() {
             var oldDrop = DDM.get("activeDrop");
             DDM.set("activeDrop", this);
             var activeDrag = DDM.get("activeDrag");
@@ -10127,10 +10531,14 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
                 activeDrag.get("node").addClass(DDM.get("prefixCls") + "drag-over");
                 //第一次先触发 dropenter,dragenter
                 activeDrag.fire("dragenter", evt);
-                this.fire("dropenter", evt)
+                this.fire("dropenter", evt);
+                DDM.fire("dragenter", evt);
+                DDM.fire("dropenter", evt);
             } else {
                 activeDrag.fire("dragover", evt);
-                this.fire("dropover", evt)
+                this.fire("dropover", evt);
+                DDM.fire("dragover", evt);
+                DDM.fire("dropover", evt);
             }
         },
         destroy:function() {
@@ -10160,6 +10568,12 @@ KISSY.add("dd/proxy", function(S) {
                 n.attr("id", S.guid("ks-dd-proxy"));
                 return n;
             }
+        },
+        destroyOnEnd:{
+            /**
+             * 是否每次都生成新节点/拖放完毕是否销毁当前代理节点
+             */
+            value:false
         }
     };
 
@@ -10169,21 +10583,26 @@ KISSY.add("dd/proxy", function(S) {
             drag.on("dragstart", function() {
                 var node = self.get("node");
                 var dragNode = drag.get("node");
-                if (S.isFunction(node)) {
+
+                if (!self.__proxy && S.isFunction(node)) {
                     node = node(drag);
                     node.css("position", "absolute");
-                    self.set("node", node);
+                    self.__proxy = node;
                 }
-                dragNode.parent().append(node);
-                node.show();
-                node.offset(dragNode.offset());
+                dragNode.parent().append(self.__proxy);
+                self.__proxy.show();
+                self.__proxy.offset(dragNode.offset());
                 drag.set("dragNode", dragNode);
-                drag.set("node", node);
+                drag.set("node", self.__proxy);
             });
             drag.on("dragend", function() {
-                var node = self.get("node");
+                var node = self.__proxy;
                 drag.get("dragNode").offset(node.offset());
                 node.hide();
+                if (self.get("destroyOnEnd")) {
+                    node.remove();
+                    self.__proxy = null;
+                }
                 drag.set("node", drag.get("dragNode"));
             });
         },
@@ -10198,22 +10617,126 @@ KISSY.add("dd/proxy", function(S) {
 
     return Proxy;
 });/**
+ * delegate all draggable nodes to one draggable object
+ * @author:yiminghe@gmail.com
+ */
+KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM) {
+    function Delegate() {
+        Delegate.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(Delegate, Draggable, {
+        _init:function() {
+            var self = this,
+                handlers = self.get('handlers'),
+                node = self.get('container');
+            if (handlers.length == 0) {
+                handlers.push(self.get("selector"));
+            }
+            node.on('mousedown', self._handleMouseDown, self);
+        },
+
+        /**
+         * 得到适合 handler，从这里开始启动拖放，对于 handlers 选择器字符串数组
+         * @param target
+         */
+        _getHandler:function(target) {
+            var self = this,
+                node = this.get("container"),
+                handlers = self.get('handlers');
+
+            while (target && target[0] !== node[0]) {
+                for (var i = 0; i < handlers.length; i++) {
+                    var h = handlers[i];
+                    if (DOM.test(target[0], h, node[0])) {
+                        return target;
+                    }
+                }
+                target = target.parent();
+            }
+        },
+
+        /**
+         * 找到真正应该移动的节点，对应 selector 属性选择器字符串
+         * @param h
+         */
+        _getNode:function(h) {
+            var node = this.get("container"),sel = this.get("selector");
+            while (h && h[0] != node[0]) {
+                if (DOM.test(h[0], sel, node[0])) {
+                    return h;
+                }
+                h = h.parent();
+            }
+        },
+
+        /**
+         * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
+         *
+         * @param ev
+         */
+        _handleMouseDown:function(ev) {
+            var self = this;
+            var target = ev.target;
+            var handler = target && this._getHandler(target);
+            if (!handler) return;
+            var node = this._getNode(handler);
+            if (!node) return;
+            ev.preventDefault();
+            self.set("node", node);
+            self.set("dragNode", node);
+            self._prepare(ev);
+        }
+    },
+    {
+        ATTRS:{
+            /**
+             * 用于委托的父容器
+             */
+            container:{
+                setter:function(v) {
+                    return S.one(v);
+                }
+            },
+
+            /**
+             * 实际拖放的节点选择器，一般用 tag.cls
+             */
+            selector:{
+            }
+
+        /**
+         * 继承来的 handlers : 拖放句柄选择器数组，一般用 [ tag.cls ]
+         * 不设则为 [ selector ]
+         *
+         * handlers:{
+         *  value:[]
+         * }
+         */
+        }
+    });
+
+    return Delegate;
+}, {
+    requires:['./ddm','./draggable','dom']
+});/**
  * dd support for kissy
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy) {
+KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate) {
     var dd = {
         Draggable:Draggable,
         Droppable:Droppable,
         DDM:DDM,
-        Proxy:Proxy
+        Proxy:Proxy,
+        DraggableDelegate:Delegate
     };
 
     S.mix(S, dd);
 
     return dd;
 }, {
-    requires:["dd/ddm","dd/draggable","dd/droppable","dd/proxy"]
+    requires:["dd/ddm","dd/draggable","dd/droppable","dd/proxy","dd/draggable-delegate"]
 });
 /*
 Copyright 2011, KISSY UI Library v1.20dev
@@ -16242,9 +16765,9 @@ KISSY.add('calendar/page', function(S, UA, N, Calendar) {
                     var selectedd = Number(e.target.html());
                     //如果当天是30日或者31日，设置2月份就会出问题
                     var d = new Date('2010/01/01');
-                    d.setDate(selectedd);
                     d.setYear(cc.year);
                     d.setMonth(cc.month);
+                     d.setDate(selectedd);
                     //self.callback(d);
                     //datetime的date
                     cc.father.dt_date = d;

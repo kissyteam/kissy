@@ -71,7 +71,7 @@ KISSY.use("anim,node", function(S, Anim, Node) {
 
             anim.run();
 
-            waits(10);
+            waits(100);
 
             runs(function() {
 
