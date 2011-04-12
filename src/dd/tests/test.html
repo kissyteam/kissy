@@ -9,23 +9,23 @@
 <script src="../../../tools/jasmine/jasmine-html.js"></script>
 <script src="../../../tools/jasmine/event-simulate.js"></script>
 
-<script src="../../seed/kissy.js"></script>
-<script src="../../seed/lang.js"></script>
-<script src="../../seed/web.js"></script>
-<script src="../../seed/loader.js"></script>
-<script src="../../../build/ua.js"></script>
-<script src="../../../build/node.js"></script>
-<script src="../../../build/dom.js"></script>
-<script src="../../../build/event.js"></script>
-<script src="../../../build/base.js"></script>
+<script src="../../../build/kissy.js"></script>
 <script src="../ddm.js"></script>
+<script src="../draggable-delegate.js"></script>
 <script src="../draggable.js"></script>
+<script src="../droppable-delegate.js"></script>
+<script src="../droppable.js"></script>
+<script src="../proxy.js"></script>
 <script src="../../dd.js"></script>
 <style>
     html, body {
         margin: 0;
         padding: 0;
         border: 0;
+    }
+
+    .dh {
+        border-bottom: 1px solid red;
     }
 </style>
 </head>
@@ -35,11 +35,11 @@
      style="width:100px;
      height:100px;
      position:absolute;
-     top:-1000px;
-     left:-1000px;
+     top:500px;
+     left:500px;
      border:1px solid red;">
-    <div id="dragHeader_before" style="width:100px;height:10px;">
-        header
+    <div id="dragHeader_before" class='dh' style="width:100px;height:10px;">
+        header 1
     </div>
     content
 </div>
@@ -48,11 +48,11 @@
      style="width:100px;
      height:100px;
      position:absolute;
-     top:-1000px;
-     left:-1000px;
+     top:500px;
+     left:500px;
      border:1px solid red;">
-    <div id="dragHeader" style="width:100px;height:10px;">
-        header
+    <div id="dragHeader" class='dh' style="width:100px;height:10px;">
+        header 2
     </div>
     content
 </div>
@@ -62,11 +62,11 @@
      style="width:100px;
      height:100px;
      position:absolute;
-     top:-1000px;
-     left:-1000px;
+     top:500px;
+     left:500px;
      border:1px solid red;">
-    <div id="dragHeader_after" style="width:100px;height:10px;">
-        header
+    <div id="dragHeader_after" class='dh' style="width:100px;height:10px;">
+        header 3
     </div>
     content
 </div>

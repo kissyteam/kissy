@@ -2,9 +2,8 @@
  * @module  dd-spec
  * @author  yiminghe@gmail.com
  */
-KISSY.use("ua,node,dd", function(S, UA) {
-    var Node = S.require("node/node"),
-        Draggable = S.require("dd/draggable");
+KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
+    var Draggable = DD.Draggable;
 
     describe('dd', function() {
         describe('drag', function() {
@@ -24,12 +23,14 @@ KISSY.use("ua,node,dd", function(S, UA) {
 
                 waits(300);
                 runs(function() {
-                    jasmine.simulate(document, "mousemove",
-                    { clientX: -100,clientY:-100 });
+                    jasmine.simulate(document, "mousemove", {
+                        clientX: -100,
+                        clientY:-100
+                    });
                 });
                 waits(50);
                 runs(function() {
-                    var expected = -1000;
+                    var expected = 500;
                     if (ie == 7) expected += 2;
                     expect(drag.offset().top).toEqual(expected);
                     expect(drag.offset().left).toEqual(expected);
@@ -46,17 +47,24 @@ KISSY.use("ua,node,dd", function(S, UA) {
                     handlers:[dragHeader]
                 });
 
+                var xy = dragHeader.offset();
+
                 action.on("drag", function(off) {
                     drag.offset(off);
                 });
 
                 runs(function() {
-                    jasmine.simulate(dragHeader[0], "mousedown");
+                    jasmine.simulate(dragHeader[0], "mousedown", {
+                        clientX:xy.left,
+                        clientY:xy.top
+                    });
                 });
                 waits(300);
                 runs(function() {
-                    jasmine.simulate(document, "mousemove",
-                    { clientX: -100,clientY:-100 });
+                    jasmine.simulate(document, "mousemove", {
+                        clientX: xy.left - 100,
+                        clientY:xy.top - 100
+                    });
                 });
                 waits(50);
 
@@ -65,7 +73,7 @@ KISSY.use("ua,node,dd", function(S, UA) {
                 });
                 waits(50);
                 runs(function() {
-                    var expected = -1100;
+                    var expected =400;
                     if (ie == 7) expected += 2;
                     expect(drag.offset().top).toEqual(expected);
                     expect(drag.offset().left).toEqual(expected);
@@ -81,17 +89,25 @@ KISSY.use("ua,node,dd", function(S, UA) {
                     handlers:[dragHeader]
                 });
 
+
+                var xy = dragHeader.offset();
+
                 action.on("drag", function(off) {
                     drag.offset(off);
                 });
 
                 runs(function() {
-                    jasmine.simulate(dragHeader[0], "mousedown");
+                    jasmine.simulate(dragHeader[0], "mousedown", {
+                        clientX: xy.left,
+                        clientY:xy.top
+                    });
                 });
                 waits(300);
                 runs(function() {
-                    jasmine.simulate(document, "mousemove",
-                    { clientX: -100,clientY:-100 });
+                    jasmine.simulate(document, "mousemove", {
+                        clientX: xy.left - 100,
+                        clientY:xy.top - 100
+                    });
                 });
                 waits(50);
 
@@ -100,10 +116,13 @@ KISSY.use("ua,node,dd", function(S, UA) {
                 });
                 waits(50);
                 runs(function() {
-                    jasmine.simulate(document, "mousemove");
+                    jasmine.simulate(document, "mousemove", {
+                        clientX: xy.left - 300,
+                        clientY:xy.top - 300
+                    });
                 });
                 runs(function() {
-                    var expected = -1100;
+                    var expected = 400;
                     if (ie == 7) expected += 2;
                     expect(drag.offset().top).toEqual(expected);
                     expect(drag.offset().left).toEqual(expected);
