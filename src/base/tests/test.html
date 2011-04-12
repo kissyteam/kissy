@@ -7,19 +7,29 @@
 <script src="../../../tools/jasmine/jasmine.js"></script>
 <script src="../../../tools/jasmine/jasmine-html.js"></script>
 
-<script src="../../../build/seed/seed-pkg.js"></script>
-<script src="../../../build/ua/ua-pkg.js"></script>
-<script src="../../../build/dom/dom-pkg.js"></script>
-<script src="../../../build/event/event-pkg.js"></script>
+<script src="../../seed/kissy.js"></script>
+<script src="../../seed/lang.js"></script>
+<script src="../../seed/web.js"></script>
+<script src="../../seed/loader.js"></script>
+<script src="../../../build/ua.js"></script>
+<script src="../../../build/node.js"></script>
+<script src="../../../build/dom.js"></script>
+<script src="../../../build/event.js"></script>
 
 <script src="../attribute.js"></script>
 <script src="../base.js"></script>
+<script src="../../base.js"></script>
 <script src="base-spec.js"></script>
 </head>
 <body>
+<h1>KISSY.Base Test Cases</h1>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute();
+    jasmine.getEnv().execute(function() {
+        if (parent && parent.jasmine.kissyNext) {
+            parent.jasmine.kissyNext(this.results().failedCount);
+        }
+    });
 </script>
 </body>
 </html>

@@ -2,39 +2,33 @@
  * KISSY.Dialog
  * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('dialog', function(S) {
+KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
 
-    S.Dialog = S.UIBase.create(S.Overlay,
-        [
-            S.UIBase.StdMod,
-            S.UIBase.Close,
-            S.UIBase.Drag,
-            S.UIBase.Constrain
-        ], {
-        initializer:function() {
-            //S.log("dialog init");
-        },
+    function require(s) {
+        return S.require("uibase/" + s);
+    }
 
+    var Dialog = UIBase.create(Overlay, [
+        require("stdmod"),
+        require("close"),
+        require("drag"),
+        require("constrain")
+    ], {
         renderUI:function() {
-            //S.log("_renderUIDialog");
             var self = this;
-            self.get("el").addClass("ks-dialog");
+            self.get("view").get("el").addClass(this.get("view").get("prefixCls")+"dialog");
             //设置值，drag-ext 绑定时用到
-            self.set("handlers", [self.get("header")]);
-        },
-        bindUI:function() {
-            //S.log("_bindUIDialog");
-        },
-        syncUI:function() {
-            //S.log("_syncUIDialog");
-        },
-        destructor:function() {
-            //S.log("Dialog destructor");
+            self.set("handlers", [self.get("view").get("header")]);
         }
     });
 
+    Dialog.DefaultRender = DialogRender;
 
-}, { host: 'overlay' });
+    return Dialog;
+
+}, {
+    requires:[ "overlay/overlay","uibase",'overlay/dialogrender']
+});
 
 /**
  * 2010-11-10 承玉<yiminghe@gmail.com>重构，使用扩展类

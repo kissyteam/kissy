@@ -8,7 +8,8 @@
 
     <target name="concat">
         <concat destfile="ajax-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="ajax.js"/>
+            <path path="impl.js"/>
+            <path path="../ajax.js"/>
         </concat>
     </target>
 

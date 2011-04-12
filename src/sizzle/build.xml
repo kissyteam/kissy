@@ -8,7 +8,8 @@
 
     <target name="concat">
         <concat destfile="sizzle-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="sizzle.js"/>
+            <path path="impl.js"/>
+            <path path="../sizzle.js"/>
         </concat>
     </target>
 

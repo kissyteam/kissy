@@ -7,9 +7,12 @@
     <property name="src.dir" location="."/>
 
     <target name="concat">
-        <concat destfile="overlay-pkg.js" encoding="${charset}" outputencoding="${charset}">            
+        <concat destfile="overlay-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="overlayrender.js"/>
             <path path="overlay.js"/>
+            <path path="dialogrender.js"/>
             <path path="dialog.js"/>
+            <path path="../overlay.js"/>
         </concat>
     </target>
 

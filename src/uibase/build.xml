@@ -8,18 +8,8 @@
 
     <target name="concat">
         <concat destfile="uibase-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="uibase.js"/>
-            <path path="uibase-align.js"/>
-            <path path="uibase-box.js"/>
-            <path path="uibase-close.js"/>
-            <path path="uibase-constrain.js"/>
-            <path path="uibase-contentbox.js"/>
-            <path path="uibase-drag.js"/>
-            <path path="uibase-loading.js"/>
-            <path path="uibase-mask.js"/>
-            <path path="uibase-position.js"/>
-            <path path="uibase-shim.js"/>
-            <path path="uibase-stdmod.js"/>
+            <fileset dir="${src.dir}" includes="*.js" />
+            <path location="../uibase.js" />
         </concat>
     </target>
 

@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>list</title>
+<link href="../assets/selectable2.css" rel="stylesheet"/>
+</head>
+<body>
+
+<h1>select 测试</h1>
+
+<div>
+    <input id='sel'/>
+</div>
+<select>
+    <option>请选择</option>
+    <option value="1">一</option>
+    <option value="2">二</option>
+</select>
+<br/><br/><br/><br/><br/><br/><br/><br/>
+
+选择这里点击select，不会丢失选择区域
+<script src="../../seed/kissy.js"></script>
+<script src="../../seed/lang.js"></script>
+<script src="../../seed/web.js"></script>
+<script src="../../seed/loader.js"></script>
+<script src="../../../build/ua.js"></script>
+<script src="../../../build/node.js"></script>
+<script src="../../../build/dom.js"></script>
+<script src="../../../build/event.js"></script>
+<script src="../../../build/base.js"></script>
+<script src="../../../build/json.js"></script>
+<script src="../../../build/uibase.js"></script>
+<script src="../../selectable2/list.js"></script>
+<script src="../../selectable2/base.js"></script>
+<script src="../../selectable2/select.js"></script>
+<script>
+
+    KISSY.use("selectable2/select", function(S, Select) {
+        new Select({
+            width:"100px",
+            inputNode:"#sel",
+            inputDisplay:"请选择",
+            listData:[
+                {
+                    value:1,
+                    display:"一"
+                },
+                {
+                    value:2,
+                    display:"二"
+                }
+            ]
+        });
+    });
+
+</script>
+</body>
+</html>

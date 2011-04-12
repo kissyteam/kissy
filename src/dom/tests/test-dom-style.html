@@ -1,0 +1,276 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>dom-style Test</title>
+</head>
+<body>
+<script src="../../test/test.js"></script>
+
+
+<h2>Test Data</h2>
+
+<script src="../../../build/seed.js"></script>
+<script src="../../../build/ua.js"></script>
+<script>
+    KISSY.Test.Config.times = 1;
+</script>
+<script src="../attr.js"></script>
+<script src="../base.js"></script>
+<script src="../class.js"></script>
+<script src="../create.js"></script>
+<script src="../data.js"></script>
+<script src="../insertion.js"></script>
+<script src="../offset.js"></script>
+<script src="../selector.js"></script>
+<script src="../style.js"></script>
+<script src="../style-ie.js"></script>
+<script src="../traversal.js"></script>
+<script src="../../dom.js"></script>
+
+<script src="../../../tools/third-party/jquery.js"></script>
+
+<div id="test-data">
+    <div id="test-div" style="padding-left: 2pt; background: transparent; float: left; border: 5px solid rgba(0,0,0,.201);"></div>
+    <style>
+        #test2 {
+            border: 1px solid #ccc;
+            width: 80%;
+            height: 20px;
+        }
+
+        .shadow {
+            background-color: #fff;
+            -moz-box-shadow: rgba(0, 0, 0, 0.2) 2px 3px 3px;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.2) 2px 3px 3px;
+            filter: progid:DXImageTransform.Microsoft.Shadow(direction = 155, Color = #dadada, Strength = 3), progid:DXImageTransform.Microsoft.DropShadow(Color = #22aaaaaa, OffX = -2, OffY = -2);
+        }
+    </style>
+    <div id="test2"></div>
+    <img id="test-img" src="../../../docs/assets/logo.png" alt="kissy"/>
+    <div id="test-filter" class="shadow" style="height: 80px; width: 120px; border:1px solid #ccc;"></div>
+    <table id="test-table" cellspacing="10">
+        <tbody>
+        <tr>
+            <td rowspan="2" colspan="3">td</td>
+        </tr>
+        </tbody>
+    </table>
+    <select id="test-select">
+        <option id="test-opt" value="1">0</option>
+        <option>2</option>
+        <option>3</option>
+    </select>
+    <div id="test3">for test show/hide/toggle</div>
+</div>
+
+<iframe src="test-dom-offset-iframe.html"
+        id="testIframe"
+        style="border:1px solid black; position:absolute; top:500px; left:500px; background:white;"
+        width="200"
+        frameborder="0"
+        scrolling="no"
+        ></iframe>
+
+<!-- Test Cases -->
+<script>
+
+    KISSY.Config.base = "../";
+    KISSY.use("dom,ua", function(S, DOM, UA) {
+
+        window.test_css = function(test) {
+            var elem = DOM.get('#test-div');
+
+            // getter
+            if (DOM.css(elem, 'float') !== 'left') {
+                test.fail('float');
+            }
+            if (DOM.css(elem, 'position') !== 'static') {
+                test.fail('position');
+            }
+            if (DOM.css(elem, 'backgroundColor') !== 'transparent') {
+                test.fail('backgroundColor');
+            }
+            if (DOM.css(elem, 'backgroundPosition') !== '0% 0%') {
+                test.fail('backgroundPosition');
+            }
+            if (DOM.css(elem, 'fontSize') !== '12px') {
+                test.fail('fontSize');
+            }
+
+            if (UA.ie < 9) {
+                //5px 为 medium ??
+                if (DOM.css(elem, 'border-right-width') !== 'medium') {
+                    test.fail(DOM.css(elem, 'border-right-width'));
+                }
+            }else{
+                if (DOM.css(elem, 'border-right-width') !== '5px') {
+                    test.fail(DOM.css(elem, 'border-right-width'));
+                }
+            }
+
+            if (DOM.css(elem, 'paddingLeft') !== '2pt') {
+                test.fail('paddingLeft');
+            }
+            if (DOM.css(elem, 'padding-left') !== '2pt') {
+                test.fail('padding-left');
+            }
+            if (DOM.css(elem, 'padding-right') !== '0px') {
+                test.fail('padding-right');
+            }
+
+
+            if (DOM.css(elem, 'opacity') !== '1') {
+                test.fail('opacity');
+            }
+
+            // 当返回 auto 时，要将 auto 转换为 pixel
+            if (DOM.css('#test-div', 'height') == 'auto') {
+                test.fail('height');
+            }
+
+
+            // setter
+            try {
+                DOM.css(elem, 'height', '-20px');
+            } catch(ex) {
+                test.fail();
+            }
+
+            DOM.css(elem, 'float', 'right');
+            if (DOM.css(elem, 'float') !== 'right') {
+                test.fail();
+            }
+
+            DOM.css(elem.parentNode, 'font-size', '100%');
+            if (DOM.css(elem, 'font-size') !== '12px') {
+                test.fail();
+            }
+
+            DOM.css(elem, 'opacity', '0.2');
+            if (DOM.css(elem, 'opacity') !== '0.2') {
+                test.fail('opacity 0.2');
+            }
+
+            DOM.css(elem, 'border', '2px dashed red');
+            if (DOM.css(elem, 'borderWidth') !== '2px') {
+                test.fail();
+            }
+
+            DOM.css(elem, {
+                marginLeft: '20px',
+                opacity: '0.8',
+                border: '2px solid #ccc'
+            });
+            if (DOM.css(elem, 'opacity') !== '0.8') {
+                test.fail('opacity 0.8');
+            }
+
+            // test filter  #issue5
+            //jQuery('#test-filter').css('opacity', .5);
+            DOM.css('#test-filter', 'opacity', .5);
+            //S.log(DOM.get('#test-filter').style.filter);
+        }
+
+        window.test_width = function(test) {
+            var elem = DOM.get('#test2');
+
+            //if(DOM.width(elem) !== $(elem).width()) test.fail();
+        }
+
+        window.test_height = function(test) {
+            var elem = DOM.get('#test2');
+
+            //if(DOM.height(elem) !== $(elem).height()) test.fail();
+        }
+
+        window.test_show = function(test) {
+            var elem = DOM.get('#test3');
+
+            DOM.css(elem, 'display', 'none');
+            DOM.show(elem);
+            if (DOM.css(elem, 'display') === 'none') test.fail();
+
+            DOM.removeAttr(elem, 'style');
+        }
+
+        window.test_hide = function(test) {
+            var elem = DOM.get('#test3');
+
+            DOM.hide(elem);
+            if (DOM.css(elem, 'display') !== 'none') test.fail();
+
+            DOM.removeAttr(elem, 'style');
+        }
+
+        window.test_toggle = function(test) {
+            var elem = DOM.get('#test3');
+
+            DOM.toggle(elem);
+            if (DOM.css(elem, 'display') !== 'none') test.fail(DOM.css(elem, 'display'));
+
+            DOM.toggle(elem);
+            if (DOM.css(elem, 'display') === 'none') test.fail(DOM.css(elem, 'display'));
+
+            DOM.removeAttr(elem, 'style');
+        }
+
+        window.test_addStyleSheet = function(test) {
+            setTimeout(function() {
+                DOM.addStyleSheet('#test-div { padding: 100px; color: blue }');
+                DOM.addStyleSheet('#test-div { padding: 100px; color: blue }', 'test-style');
+                DOM.addStyleSheet('#test-div { padding: 100px; color: blue }', '#test-style');
+
+                if (UA.opera) {
+                    if (DOM.css('#test-div', 'color') !== '#0000ff') test.fail();
+                } else {
+                    if (UA.ie < 9) {
+                        if (DOM.css('#test-div', 'color') !== 'blue') test.fail();
+                    } else {
+                        if (DOM.css('#test-div', 'color') !== 'rgb(0, 0, 255)') test.fail();
+                    }
+                }
+            }, 10);
+
+        }
+    });
+
+    // temp code
+    //alert(!(document.defaultView || { }).getComputedStyle && document.documentElement.currentStyle);
+    //var t = S.get('#test-div');
+    //alert(document.defaultView.getComputedStyle(t, null)['paddingLeft']);
+    //alert(jQuery(t).css('paddingLeft'));
+    //alert(jQuery(t).css('padding-left'));
+    //alert(DOM.css(t, 'borderWidth'));
+    //alert(jQuery(t).css('borderWidth'));
+
+    // kissy 会将 auto 转换为绝对数值，和 yui3 保持一致，让 ie 与其它浏览器一致
+    //alert(t.style.height);
+    //alert(DOM.css(t, 'height'));
+    //alert(jQuery(t).css('height'));
+    //alert(Ext.get(t).getStyle('height'));
+
+    // 测试百分比
+    //YUI().use('node', function(Y) {
+    //t = S.get('#test2');
+
+    // ext 返回 80%
+    // jquery 多 4px
+    // yui3 是对的
+    //        alert('kissy: ' + DOM.css(t, 'width') +
+    //              ' jquery: ' + jQuery(t).css('width') +
+    //              ' ext: ' + Ext.get(t).getStyle('width') +
+    //              //' ext: ' + Ext.get(t).getWidth(true) +
+    //              ' yui3: ' + Y.one(t).getStyle('width')
+    //             );
+    //        alert('KISSY.DOM.width = ' + DOM.width(t));
+    //});
+
+    // 测试 DOM.height(iframe)
+    //alert(jQuery('#testIframe').height());
+    //alert(DOM.height('#testIframe'));
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+.ks-selectable2-wrap {
+    display: inline-block;
+    *zoom: 1;
+    *display: inline;
+    -moz-border-radius: 2px 2px 2px 2px;
+    -border-radius: 2px 2px 2px 2px;
+    border: 1px solid #C1C8D1;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+}
+
+.ks-selectable2-mask {
+    position:absolute;
+    background-color:black;
+    z-index:99;
+    width:100%;
+    height:100%;
+    *width:expression(function(el){el.style.width=el.parentNode.offsetWidth;}(this));
+    *height:expression(function(el){el.style.height=el.parentNode.offsetHeight;}(this));
+}
+
+.ks-selectable2-wrap input {
+    background: transparent;
+    border: none;
+    cursor:pointer;
+}
+
+.ks-selectable2-arrow {
+    display: inline-block;
+    *zoom: 1;
+    *display: inline;
+    background: url("arrow.png") center center no-repeat;
+    width: 15px;
+    height: 5px;
+    vertical-align: middle;
+}
+
+.ks-selectable2-list {
+    zoom:1;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    -moz-box-shadow: 1px 1px 4px #888;
+    -webkit-box-shadow: 1px 1px 4px #888;
+    background: #fff;
+    border: 1px solid #afafaf;
+    box-shadow: 1px 1px 4px #888;
+}
+
+.ks-selectable2-list-item {
+    cursor: pointer;
+    list-style: none;
+    padding: 2px 5px;
+}
+
+.ks-selectable2-list-item-active {
+    outline: #afafaf dotted thin;
+}
+
+.ks-selectable2-list-item-hover {
+    background: #bfdaff;
+}
+
+.ks-selectable2-list-item-active {
+    background: #2647a0;
+    color: #fff;
+    outline: none;
+}

@@ -12,67 +12,72 @@
 
 <h2>Test Data</h2>
 
-<script src="../../build/seed/seed-pkg.js"></script>
-<script src="../../build/ua/ua-pkg.js"></script>
+<script src="../../build/seed.js"></script>
+<script src="../../build/ua.js"></script>
 
-<script src="../dom/dom.js"></script>
+<script src="../dom.js"></script>
+<script src="../dom/base.js"></script>
 <script src="../dom/selector.js"></script>
-<script src="../dom/dom-data.js"></script>
-<script src="../dom/dom-class.js"></script>
-<script src="../dom/dom-attr.js"></script>
-<script src="../dom/dom-style.js"></script>
-<script src="../dom/dom-style-ie.js"></script>
-<script src="../dom/dom-offset.js"></script>
-<script src="../dom/dom-traversal.js"></script>
-<script src="../dom/dom-create.js"></script>
-<script src="../dom/dom-insertion.js"></script>
+<script src="../dom/data.js"></script>
+<script src="../dom/class.js"></script>
+<script src="../dom/attr.js"></script>
+<script src="../dom/style.js"></script>
+<script src="../dom/style-ie.js"></script>
+<script src="../dom/offset.js"></script>
+<script src="../dom/traversal.js"></script>
+<script src="../dom/create.js"></script>
+<script src="../dom/insertion.js"></script>
 
-<script src="../event/event.js"></script>
-<script src="../event/event-object.js"></script>
-<script src="../event/event-target.js"></script>
-<script src="../event/event-mouseenter.js"></script>
-<script src="../event/event-focusin.js"></script>
+<script src="../event/base.js"></script>
+<script src="../event/object.js"></script>
+<script src="../event/target.js"></script>
+<script src="../event/mouseenter.js"></script>
+<script src="../event/focusin.js"></script>
+<script src="../event.js"></script>
 
 <script src="node.js"></script>
 <script src="nodelist.js"></script>
-<script src="node-attach.js"></script>
-
+<script src="attach.js"></script>
+<script src="../node.js"></script>
+<!--
 <script src="../anim/anim-easing.js"></script>
 <script src="../anim/anim.js"></script>
 <script src="../anim/anim-node-plugin.js"></script>
+-->
 
 <!-- Test Cases -->
 <script>
-    var S = KISSY;
+KISSY.use("node,dom,ua", function(S, N, DOM,UA) {
 
-    function test_constructor(test) {
+
+    window.test_constructor = function(test) {
         var div, bd = document.body, el;
 
-        div = S.Node('<div>')[0];
+        div = N('<div>')[0];
         div.id = 'test-create';
         bd.appendChild(div);
-        if(!S.get('#test-create')) test.fail();
+        if (!DOM.get('#test-create')) test.fail();
 
-        div = new S.Node('<div id="test-create2">create2</div>')[0];
+        div = new N('<div id="test-create2">create2</div>')[0];
         bd.appendChild(div);
-        el = S.get('#test-create2');
-        if(!el) test.fail();
-        if(S.DOM.text(el) !== 'create2') test.fail();
+        el = DOM.get('#test-create2');
+        if (!el) test.fail();
+        if (DOM.text(el) !== 'create2') test.fail();
 
-        // 对于不存在的 selector, S.one 返回 null
-        if(S.one('#zzzzzzzz') !== null) test.fail();
-        if(S.one('zzzzzzzz') !== null) test.fail();
+        // 对于不存在的 selector, N.one 返回 null
+        if (N.one('#zzzzzzzz') !== null) test.fail();
+        if (N.one('zzzzzzzz') !== null) test.fail();
 
         // Node(''), Node(null), or Node(undefined), Node 的 length 需要为 0
-        if(S.Node('').length !== 0) test.fail();
-        if(S.Node(null).length !== 0) test.fail();
-        if(S.Node(undefined).length !== 0) test.fail();
+        if (N('').length !== 0) test.fail();
+        if (N(null).length !== 0) test.fail();
+        if (N(undefined).length !== 0) test.fail();
 
-        var t = S.Node('p');
-        if(S.Node(t) !== t) test.fail();
+        var t = N('p');
+        if (N(t) !== t) test.fail();
 
         // props 设置
-        S.Node('<div>', {
+        N('<div>', {
             'class': 'test-div',
             css: {
                 width: '100px',
@@ -83,47 +88,47 @@
         }).appendTo(document.body);
     }
 
-    function test_query_class_sep(test) {
+    window.test_query_class_sep = function(test) {
         test.status = 'sep';
     }
 
-    function test_data(test) {
-        var node = S.one('#test-data2');
+    window.test_data = function(test) {
+        var node = N.one('#test-data2');
 
         node.data('data-1', 'val-1');
-        if(node.data('data-1') !== 'val-1') test.fail();
+        if (node.data('data-1') !== 'val-1') test.fail();
 
         node.data('data-1', 'val-2');
-        if(node.data('data-1') !== 'val-2') test.fail();
+        if (node.data('data-1') !== 'val-2') test.fail();
     }
 
-    function test_removeData(test) {
-        var node = S.one('#test-data3');
+    window.test_removeData = function(test) {
+        var node = N.one('#test-data3');
 
         node.data('data', 'val');
         node.removeData('data');
-        if(node.data('data') === 'val') test.fail();
-        if(node.data()) test.fail();
+        if (node.data('data') === 'val') test.fail();
+        if (node.data()) test.fail();
     }
 
-    function test_hasClass(test) {
-        var a = S.one('#foo a');
+    window.test_hasClass = function(test) {
+        var a = N.one('#foo a');
 
         if (a.hasClass('link') !== true) test.fail();
         if (a.hasClass('link2') !== false) test.fail();
     }
 
-    function test_addClass(test) {
-        if (S.one('#foo a')
+    window.test_addClass = function(test) {
+        if (N.one('#foo a')
                 .addClass('link-added')
                 .hasClass('link-added') !== true) test.fail();
 
         // clean up
-        S.one('#foo a').removeClass('link-added');
+        N.one('#foo a').removeClass('link-added');
     }
 
-    function test_removeClass(test) {
-        var a = S.one('#foo a');
+    window.test_removeClass = function(test) {
+        var a = N.one('#foo a');
 
         if (a.removeClass('link').hasClass(a, 'link') !== false) test.fail();
 
@@ -135,8 +140,8 @@
         a[0].className = 'link';
     }
 
-    function test_replaceClass(test) {
-        var a = S.one('#foo a');
+    window.test_replaceClass = function(test) {
+        var a = N.one('#foo a');
 
         // oldCls 有的话替换
         a.replaceClass('link', 'link2');
@@ -150,19 +155,19 @@
         a[0].className = 'link';
     }
 
-    function test_toggleClass(test) {
-        var a = S.one('#foo a');
+    window.test_toggleClass = function(test) {
+        var a = N.one('#foo a');
 
         if (a.toggleClass('link2').hasClass('link2') !== true) test.fail();
         if (a.toggleClass('link2').hasClass('link2') !== false) test.fail();
     }
 
-    function test_query_attr_sep(test) {
+    window.test_query_attr_sep = function(test) {
         test.status = 'sep';
     }
 
-    function test_attr(test) {
-        var node = S.one('#foo a');
+    window.test_attr = function(test) {
+        var node = N.one('#foo a');
 
         // set attr
         if (node.attr('title') !== 'test') test.fail();
@@ -172,56 +177,56 @@
         if (node.attr('data-set') !== 'test-xx') test.fail();
     }
 
-    function test_removeAttr(test) {
-        var node = S.one('#foo label');
+    window.test_removeAttr = function(test) {
+        var node = N.one('#foo label');
 
         node.attr('test-remove', 'xx');
         if (node.attr('test-remove') !== 'xx') test.fail();
-        
+
         node.removeAttr('test-remove');
         if (node.attr('test-remove') !== undefined) test.fail();
     }
 
-    function test_val(test) {
+    window.test_val = function(test) {
         // normal
-        if (S.one('#foo input').val() !== 'hello') test.fail();
+        if (N.one('#foo input').val() !== 'hello') test.fail();
 
         // area
-        if (S.one('#foo textarea').val().length !== 25) test.fail();
+        if (N.one('#foo textarea').val().length !== 25) test.fail();
 
         // set value
-        var a = S.one('#foo a');
-        if(a.val('test').val() !== 'test') test.fail();
+        var a = N.one('#foo a');
+        if (a.val('test').val() !== 'test') test.fail();
         a.removeAttr('value');
     }
 
-    function test_text(test) {
-        var div = S.one('#test-div');
-        if(div.text('hello, are you ok?').text() !== 'hello, are you ok?') test.fail();
+    window.test_text = function(test) {
+        var div = N.one('#test-div');
+        if (div.text('hello, are you ok?').text() !== 'hello, are you ok?') test.fail();
     }
 
-    function test_query_css_sep(test) {
+    window.test_query_css_sep = function(test) {
         test.status = 'sep';
     }
 
-    function test_css(test) {
-        var node = S.one('#test-div');
+    window.test_css = function(test) {
+        var node = N.one('#test-div');
 
         // getter
-        if(node.css('float') !== 'left') test.fail();
-        if(node.css('position') !== 'static') test.fail();
-        if(node.css('backgroundColor') !== 'transparent') test.fail();
-        if(node.css('backgroundPosition') !== '0% 0%') test.fail();
-        if(node.css('fontSize') !== '12px') test.fail();
+        if (node.css('float') !== 'left') test.fail();
+        if (node.css('position') !== 'static') test.fail();
+        if (node.css('backgroundColor') !== 'transparent') test.fail();
+        if (node.css('backgroundPosition') !== '0% 0%') test.fail();
+        if (node.css('fontSize') !== '12px') test.fail();
 
-        if(S.UA.ie < 9) if(node.css('border-right-width') !== 'medium') test.fail(DOM.css(elem, 'border-right-width'));
-        else if(node.css('border-right-width') !== '5px') test.fail();
+        if (UA.ie < 9) if (node.css('border-right-width') !== 'medium') test.fail(DOM.css(elem, 'border-right-width'));
+        else if (node.css('border-right-width') !== '5px') test.fail();
 
-        if(node.css('paddingLeft') !== '2pt') test.fail();
-        if(node.css('padding-left') !== '2pt') test.fail();
-        if(node.css('padding-right') !== '0px') test.fail();
+        if (node.css('paddingLeft') !== '2pt') test.fail();
+        if (node.css('padding-left') !== '2pt') test.fail();
+        if (node.css('padding-right') !== '0px') test.fail();
 
-        if(node.css('opacity') !== '1') test.fail();
+        if (node.css('opacity') !== '1') test.fail();
 
         // setter
         try {
@@ -231,191 +236,176 @@
         }
 
         node.css('float', 'right');
-        if(node.css('float') !== 'right') test.fail();
+        if (node.css('float') !== 'right') test.fail();
 
         node.css('opacity', '0.2');
-        if(node.css('opacity') !== '0.2') test.fail();
+        if (node.css('opacity') !== '0.2') test.fail();
 
         node.css('border', '2px dashed red');
-        if(node.css('borderWidth') !== '2px') test.fail();
+        if (node.css('borderWidth') !== '2px') test.fail();
 
         node.css({
             marginLeft: '20px',
             opacity: '0.8',
             border: '2px solid #ccc'
         });
-        if(node.css('opacity') !== '0.8') test.fail();
+        if (node.css('opacity') !== '0.8') test.fail();
     }
 
-    function test_width(test) {
-        //if(S.one('#test2').width() !== $('#test2').width()) test.fail();
+    window.test_width = function(test) {
+        //if(N.one('#test2').width() !== $('#test2').width()) test.fail();
     }
 
-    function test_height(test) {
-        //if(S.one('#test2').height() !== $('#test2').height()) test.fail();
+    window.test_height = function(test) {
+        //if(N.one('#test2').height() !== $('#test2').height()) test.fail();
     }
 
-    function test_show(test) {
-        var node = S.one('#test-display');
+    window.test_show = function(test) {
+        var node = N.one('#test-display');
 
         node.css('display', 'none');
-        node.show();
-        if(node.css('display') === 'none') test.fail();
+        node.css('display', '');
+        if (node.css('display') === 'none') test.fail();
 
         node.removeAttr('style');
     }
 
-    function test_hide(test) {
-        var node = S.one('#test-display');
+    window.test_hide = function(test) {
+        var node = N.one('#test-display');
 
-        node.hide();
-        if(node.css('display') !== 'none') test.fail();
-
-        node.removeAttr('style');
-    }
-
-    function test_toggle(test) {
-        var node = S.one('#test-display');
-
-        node.toggle();
-        if(node.css('display') !== 'none') test.fail();
-
-        node.toggle();
-        if(node.css('display') === 'none') test.fail();
+        node.css('display', 'none');
+        if (node.css('display') !== 'none') test.fail();
 
         node.removeAttr('style');
     }
 
-    function test_query_offset_sep(test) {
+    window.test_toggle = function(test) {
+        var node = N.one('#test-display');
+
+        node.css('display', 'none');
+        if (node.css('display') !== 'none') test.fail();
+
+        node.css('display', '');
+        if (node.css('display') === 'none') test.fail();
+
+        node.removeAttr('style');
+    }
+
+    window.test_query_offset_sep = function(test) {
         test.status = 'sep';
     }
 
-    function test_offset(test) {
+    window.test_offset = function(test) {
         // getter
         var ret = 15;
-        var t = S.one('#konsole').offset().left;
+        var t = N.one('#konsole').offset().left;
         if (t !== ret) test.fail(t);
 
         // setter
-        //S.one('#inner').offset({ top: 600, left: 200 });
+        //N.one('#inner').offset({ top: 600, left: 200 });
     }
 
-    function test_query_traversal_sep(test) {
+    window.test_query_traversal_sep = function(test) {
         test.status = 'sep';
     }
 
-    function test_parent(test) {
-        if (S.one('#foo input').parent()[0].id !== 'foo') test.fail();
+    window.test_parent = function(test) {
+        if (N.one('#foo input').parent()[0].id !== 'foo') test.fail();
     }
 
-    function test_next(test) {
-        if (S.one('#foo a').next().prev()[0].nodeName !== 'A') test.fail();
+    window.test_next = function(test) {
+        if (N.one('#foo a').next().prev()[0].nodeName !== 'A') test.fail();
     }
 
-    function test_prev(test) {
-        if (S.one('#foo input').prev().next()[0].nodeName !== 'INPUT') test.fail();
+    window.test_prev = function(test) {
+        if (N.one('#foo input').prev().next()[0].nodeName !== 'INPUT') test.fail();
     }
 
-    function test_siblings(test) {
-        if (S.one('#foo a').siblings().length !== 6) test.fail();
+    window.test_siblings = function(test) {
+        if (N.one('#foo a').siblings().length !== 6) test.fail();
     }
 
-    function test_children(test) {
-        if (S.one('#foo').children().length !== 7) test.fail();
-        if (S.one('#foo').children()[0] !== S.get('#foo a')) test.fail();
-        if(S.one('#test-children').children().length !== 0) test.fail();
+    window.test_children = function(test) {
+        if (N.one('#foo').children().length !== 7) test.fail();
+        if (N.one('#foo').children()[0] !== DOM.get('#foo a')) test.fail();
+        if (N.one('#test-children').children().length !== 0) test.fail();
     }
 
-    function test_contains(test) {
-        if(S.one('#test-data').contains('#test-div') !== true) test.fail();
+    window.test_contains = function(test) {
+        if (N.one('#test-data').contains('#test-div') !== true) test.fail();
     }
 
-    function test_query_create_sep(test) {
+    window.test_query_create_sep = function(test) {
         test.status = 'sep';
     }
 
-    function test_html(test) {
-        var div = S.one('#test-div');
-        if(div.html('<p>hello, are you ok?</p>').text() !== 'hello, are you ok?') test.fail();
+    window.test_html = function(test) {
+        var div = N.one('#test-div');
+        if (div.html('<p>hello, are you ok?</p>').text() !== 'hello, are you ok?') test.fail();
 
         div.html('<script>window.g_testSetScriptHTML = 1;<\/script>', true);
         S.later(function() {
-            if(window['g_testSetScriptHTML'] !== 1) test.fail('' + window['g_testSetScriptHTML']);
+            if (window['g_testSetScriptHTML'] !== 1) test.fail('' + window['g_testSetScriptHTML']);
         }, 500);
     }
 
-    function test_remove(test) {
-        S.all('.test').remove();
-        if(S.all('.test').length !== 0) test.fail();
-    }
+    
 
-    function test_query_insertion_sep(test) {
+    window.test_query_insertion_sep = function(test) {
         test.status = 'sep';
     }
 
-    function test_insertBefore(test) {
-        S.Node('<p id="test-insert">inserted node</p>').insertBefore('#test-div');
-        if(S.one('#test-insert').next().attr('id') !== 'test-div') test.fail();
+    window.test_insertBefore = function(test) {
+        N('<p id="test-insert">inserted node</p>').insertBefore('#test-div');
+        if (N.one('#test-insert').next().attr('id') !== 'test-div') test.fail();
     }
 
-    function test_insertAfter(test) {
-        S.Node('<p id="test-insert2">inserted node2</p>').insertAfter('#test-div');
-        if(S.one('#test-insert2').prev().attr('id') !== 'test-div') test.fail();
+    window.test_insertAfter = function(test) {
+        N('<p id="test-insert2">inserted node2</p>').insertAfter('#test-div');
+        if (N.one('#test-insert2').prev().attr('id') !== 'test-div') test.fail();
     }
 
-    function test_append(test) {
-        if(S.one('#test-div').append('<p id="test-append">append node</p>').attr('id') !== 'test-div') test.fail();
+    window.test_append = function(test) {
+        if (N.one('#test-div').append('<p id="test-append">append node</p>').attr('id') !== 'test-div') test.fail();
     }
 
-    function test_appendTo(test) {
-        if(S.Node('<p id="test-append2">append2 node</p>').appendTo('#test-div').attr('id') !== 'test-append2') test.fail();
+    window.test_appendTo = function(test) {
+        if (N('<p id="test-append2">append2 node</p>').appendTo('#test-div').attr('id') !== 'test-append2') test.fail();
     }
 
-    function test_prepend(test) {
-        if(S.one('#test-div').prepend('<p id="test-prepend">prepend node</p>').attr('id') !== 'test-div') test.fail();
+    window.test_prepend = function(test) {
+        if (N.one('#test-div').prepend('<p id="test-prepend">prepend node</p>').attr('id') !== 'test-div') test.fail();
     }
 
-    function test_prependTo(test) {
-        if(S.Node('<p id="test-prepend2">prepend2 node</p>').prependTo('#test-div').attr('id') !== 'test-prepend2') test.fail();
+    window.test_prependTo = function(test) {
+        if (N('<p id="test-prepend2">prepend2 node</p>').prependTo('#test-div').attr('id') !== 'test-prepend2') test.fail();
     }
 
-    function test_query_selector_sep(test) {
+    window.test_query_selector_sep = function(test) {
         test.status = 'sep';
     }
 
-    function test_one(test) {
-        if(S.one('#foo').one('input').attr('id') !== 'test-input') test.fail();
-        if(S.one('#feature-2').html('feature 2').html() !== 'feature 2') test.fail();
+    window.test_one = function(test) {
+        if (N.one('#foo').one('input').attr('id') !== 'test-input') test.fail();
+        if (N.one('#feature-2').html('feature 2').html() !== 'feature 2') test.fail();
     }
 
-    function test_all(test) {
-        if(S.one('#foo').all('input').length !== 3) test.fail();
+    window.test_all = function(test) {
+        if (N.one('#foo').all('input').length !== 3) test.fail();
     }
 
-    function test_query_event_sep(test) {
+    window.test_query_event_sep = function(test) {
         test.status = 'sep';
     }
 
-    function test_on(test) {
-        S.one('#foo a').on('click', function(ev) {
+    window.test_on = function(test) {
+        N.one('#foo a').on('click', function(ev) {
             ev.preventDefault();
-            test.echo('I am a node. this instanceof Node = ' + (this instanceof S.Node));
+            test.echo('I am a node. this instanceof Node = ' + (this instanceof N));
         });
         test.extraMsg = '{click test link to invoke event}';
     }
-
-    function test_mouseenter(test) {
-        S.Event.on(S.one('#test-mouseenter'), 'mouseenter mouseleave', function(ev) {
-            S.log('ev.type = ' + ev.type);
-            test.echo('ev.type = ' + ev.type);
-        });
-//        S.one('#test-mouseenter').on('mouseenter mouseleave', function(ev) {
-//            S.log('ev.type = ' + ev.type);
-//            test.log('ev.type = ' + ev.type);
-//        });
-        test.extraMsg = '{mouse enter/leave #test-mouseenter to test test_mouseenter case}';
-    }
-
+});
 </script>
 
 <div id="test-data">
@@ -432,8 +422,8 @@
     <p id="foo">
         <a href="./" style="color:red" class="link" title="test" data-test="test">test link</a>
         <input type="text" id="test-input" readonly maxlength="20" value="hello"/>
-        <input type="radio" id="test-radio" />
-        <input type="radio" id="test-radio2" checked />
+        <input type="radio" id="test-radio"/>
+        <input type="radio" id="test-radio2" checked/>
         <label class="test" for="test-input">label</label>
         <button type="button" tabindex="3">Submit</button>
         <textarea rows="2" cols="2">

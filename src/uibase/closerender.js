@@ -1,0 +1,66 @@
+/**
+ * close extension for kissy dialog
+ * @author: 承玉<yiminghe@gmail.com>
+ */
+KISSY.add("uibase/closerender", function(S) {
+
+    var CLS_PREFIX = 'ext-';
+
+    function Close() {
+    }
+
+    Close.ATTRS = {
+        closable: {             // 是否需要关闭按钮
+            value: true
+        },
+        closeBtn:{}
+    };
+
+    Close.HTML_PARSER = {
+        closeBtn:function(el) {
+            return el.one("." + this.get("prefixCls") + CLS_PREFIX + 'close');
+        }
+    };
+
+    Close.prototype = {
+        _uiSetClosable:function(v) {
+            var self = this,
+                closeBtn = self.get("closeBtn");
+            if (closeBtn) {
+                if (v) {
+                    closeBtn.css("display", "");
+                } else {
+                    closeBtn.css("display", "none");
+                }
+            }
+        },
+        __renderUI:function() {
+            var Node = S.require("node/node");
+            var self = this,
+                closeBtn = self.get("closeBtn"),
+                el = self.get("contentEl");
+
+            if (!closeBtn &&
+                el) {
+                closeBtn = new Node("<a " +
+                    "href='#' " +
+                    "class='" + this.get("prefixCls") +CLS_PREFIX + "close" + "'>" +
+                    "<span class='" +
+                    this.get("prefixCls") +CLS_PREFIX + "close-x" +
+                    "'>X</span>" +
+                    "</a>")
+                    .appendTo(el);
+                self.set("closeBtn", closeBtn);
+            }
+        },
+
+        __destructor:function() {
+
+            var self = this,
+                closeBtn = self.get("closeBtn");
+            closeBtn && closeBtn.detach();
+        }
+    };
+    return Close;
+
+});

@@ -8,18 +8,20 @@
 
     <target name="concat">
         <concat destfile="seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="kissy.js"/>
-            <path path="lang.js"/>
-            <path path="web.js"/>
-            <path path="loader.js"/>
+            <path location="kissy.js" />
+            <path location="lang.js" />
+            <path location="loader.js" />
+            <path location="web.js" />
+            <path location="mods.js" />
         </concat>
     </target>
 
     <target name="clean">
         <delete file="seed-pkg.js"/>
-        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="${build.dir}/${component.name}/kissy-pkg-min.js"  encoding="${charset}"/>
+        <replaceregexp match="@DEBUG@" replace="" flags="g" byline="true" file="${build.dir}/seed-min.js" encoding="${charset}"/>
     </target>
 
     <target name="build" depends="concat,common.build,clean">
+
     </target>
 </project>

@@ -5,23 +5,22 @@
 <title>S.Switchable Demo</title>
 
 <script src="../../build/kissy.js"></script>
-<script src="../../build/datalazyload/datalazyload-pkg.js"></script>
+<script src="../../build/datalazyload.js"></script>
 
-<script src="switchable.js"></script>
+<script src="base.js"></script>
+<script src="accordion.js"></script>
+<script src="autoplay.js"></script>
+<script src="autorender.js"></script>
+<script src="carousel.js"></script>
+<script src="effect.js"></script>
+<script src="circular.js"></script>
+<script src="countdown.js"></script>
+<script src="lazyload.js"></script>
+<script src="slide.js"></script>
+<script src="tabs.js"></script>
+<script src="../switchable.js"></script>
 
-<script src="mod-autoplay.js"></script>
-<script src="mod-effect.js"></script>
-<script src="mod-circular.js"></script>
-<script src="mod-lazyload.js"></script>
-<script src="mod-countdown.js"></script>
-<script src="mod-autorender.js"></script>
-
-<script src="widget-tabs.js"></script>
-<script src="widget-slide.js"></script>
-<script src="widget-carousel.js"></script>
-<script src="widget-accordion.js"></script>
-
-<link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
+<link href="../../build/cssreset/reset-min.css" rel="stylesheet"/>
 <style>
     body { padding: 20px 50px 50px; }
     h2 { margin: 30px 0 10px; font-size: 17px; }
@@ -330,9 +329,42 @@
     <div class="ks-switchable-panel last-panel" style="display:none;">内容D<br/>内容D<br/>内容D</div>
 </div>
 
+<style>
+    #big { position: relative; border: 1px solid #B6D1E6; overflow: hidden; }
+    #big .ks-switchable-nav { position: absolute; bottom: 5px; right: 5px; z-index: 99; }
+    #big .ks-switchable-nav li {
+        float: left;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        margin-left: 3px;
+        background-color: #FCF2CF;
+        border: 1px solid #F47500;
+        color: #D94B01;
+        text-align: center;
+        cursor: pointer;
+    }
+    #big .ks-switchable-nav li.ks-active {
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        margin-top: -1px;
+        color: #FFF;
+        background-color: #FFB442;
+        font-weight: bold;
+    }
+</style>
+
+<div id="big" class="KS_Widget section" data-widget-type="Slide" style="height:450px;" data-widget-config="{'effect':'fade'}">
+    <ul class="ks-switchable-content">
+        <li><a href="http://item.taobao.com/item.htm?id=7002076261" style="height:450px;" target="_blank"><img src="http://img02.taobaocdn.com/imgextra/i2/438942225/T27Z0bXeRdXXXXXXXX_!!438942225.jpg" alt=""/></a></li>
+        <li><a href="http://gearband.tmall.com/view_page-74632436.htm" style="height:450px;" target="_blank"><img src="http://img03.taobaocdn.com/imgextra/i3/438942225/T2eMBHXkFaXXXXXXXX_!!438942225.jpg" alt=""/></a></li>
+    </ul>
+</div>
+
 <script>
-KISSY.ready(function(S) {
-   S.Switchable.autoRender(); 
+KISSY.use("switchable", function(S, Switchable) {
+   Switchable.autoRender();
 });
 </script>
 </body>

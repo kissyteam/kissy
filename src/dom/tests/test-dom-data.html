@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>dom-data Test</title>
+</head>
+<body>
+<script src="../../test/test.js"></script>
+<script>
+    KISSY.Test.Config.times = 1;
+</script>
+
+<h2>Test Data</h2>
+
+<script src="../../build/seed.js"></script>
+<script src="../../build/ua.js"></script>
+
+<script src="../attr.js"></script>
+<script src="../base.js"></script>
+<script src="../class.js"></script>
+<script src="../create.js"></script>
+<script src="../data.js"></script>
+<script src="../insertion.js"></script>
+<script src="../offset.js"></script>
+<script src="../selector.js"></script>
+<script src="../style-ie.js"></script>
+<script src="../style.js"></script>
+<script src="../traversal.js"></script>
+<script src="../../dom.js"></script>
+<script src="../../../tools/third-party/jquery.js"></script>
+
+<div id="test-data">
+    <p id="foo">#foo</p>
+    <p id="foo2">#foo2</p>
+    <iframe></iframe>
+    <object></object>
+</div>
+
+<!-- Test Cases -->
+<script>
+    KISSY.Config.base = "../";
+    KISSY.use("dom,sizzle", function(S, DOM) {
+        window.test_data = function(test) {
+
+            DOM.data('#foo', 'data-1', 'val-1');
+            if (DOM.data('#foo', 'data-1') !== 'val-1') test.fail();
+
+            DOM.data('#foo', 'data-1', 'val-2');
+            if (DOM.data('#foo', 'data-1') !== 'val-2') test.fail();
+
+            DOM.data(document, 'data', 'val');
+            if (DOM.data(document, 'data') !== 'val') test.fail();
+
+            DOM.data(window, 'data', 'val');
+            if (DOM.data(window, 'data') !== 'val') test.fail();
+            if (window.data) test.fail(); // 不污染全局
+
+            DOM.data(top, 'data', 'val');
+            if (DOM.data(top, 'data') !== 'val') test.fail();
+
+            var o = {};
+            DOM.data(o, 'data', 'val');
+            if (DOM.data(o, 'data') !== 'val') test.fail();
+            if (DOM.data(o).data !== 'val') test.fail();
+        }
+
+        window.test_removeData = function(test) {
+
+            DOM.data('#foo2', 'data', 'val');
+            DOM.removeData('#foo2', 'data');
+            if (DOM.data('#foo2', 'data') === 'val') test.fail();
+            if (DOM.data('#foo2')) test.fail();
+
+            DOM.data(window, 'data', 'val');
+            DOM.removeData(window, 'data');
+            if (DOM.data(window, 'data')) test.fail();
+            if (DOM.data(window)) test.fail();
+        }
+
+        window.test_exceptions = function(test) {
+            DOM.data('iframe', 'test', '1');
+            DOM.data('object', 'test', '2');
+            DOM.data(null);
+            DOM.data(null, 'test');
+            DOM.data(null, 'test', 'xx');
+        }
+    });
+
+</script>
+
+</body>
+</html>

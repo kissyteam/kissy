@@ -8,7 +8,8 @@
 
     <target name="concat">
         <concat destfile="cookie-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="cookie.js"/>
+            <path path="base.js"/>
+            <path path="../cookie.js"/>
         </concat>
     </target>
 

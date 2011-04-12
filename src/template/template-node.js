@@ -2,7 +2,7 @@
  * @fileoverview KISSY.Template Node.
  * @author 文河<wenhe@taobao.com>
  */
-KISSY.add('template-node', function(S, undefined) {
+KISSY.add('template/template-node', function(S, undefined) {
 
     S.mix(S, {
         tmpl: function(selector, data) {
@@ -10,4 +10,4 @@ KISSY.add('template-node', function(S, undefined) {
         }
     });
 
-}, {host: 'template'});
+}, {requires:["./template"]});

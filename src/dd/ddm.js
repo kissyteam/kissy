@@ -1,16 +1,12 @@
 /**
- * dd support for kissy
+ * dd support for kissy , dd objects central management module
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add('dd', function(S) {
+KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
 
     var doc = document,
-        Event = S.Event,
-        DOM = S.DOM,
-        Node = S.Node,
+        Node = S.require("node/node"),
         SHIM_ZINDEX = 999999;
-
-    S.DD = {};
 
     function DDM() {
         DDM.superclass.constructor.apply(this, arguments);
@@ -18,6 +14,9 @@ KISSY.add('dd', function(S) {
     }
 
     DDM.ATTRS = {
+        prefixCls:{
+            value:"ks-dd-"
+        },
         /**
          * mousedown 后 buffer 触发时间  timeThred
          */
@@ -26,7 +25,18 @@ KISSY.add('dd', function(S) {
         /**
          * 当前激活的拖动对象，在同一时间只有一个值，所以不是数组
          */
-        activeDrag: { }
+        activeDrag: {},
+
+        /**
+         *当前激活的drop对象，在同一时间只有一个值
+         */
+        activeDrop:{},
+        /**
+         * 所有注册的可被防止对象，统一管理
+         */
+        drops:{
+            value:[]
+        }
     };
 
     /*
@@ -35,7 +45,18 @@ KISSY.add('dd', function(S) {
      2.全局统一的鼠标弹起监控，用来通知当前拖动对象停止
      3.为了跨越 iframe 而统一在底下的遮罩层
      */
-    S.extend(DDM, S.Base, {
+    S.extend(DDM, Base, {
+
+        _regDrop:function(d) {
+            this.get("drops").push(d);
+        },
+
+        _unregDrop:function(d) {
+            var index = S.indexOf(d, this.get("drops"));
+            if (index != -1) {
+                this.get("drops").splice(index, 1);
+            }
+        },
 
         _init: function() {
             var self = this;
@@ -53,6 +74,81 @@ KISSY.add('dd', function(S) {
             //防止 ie 选择到字
             ev.preventDefault();
             activeDrag._move(ev);
+            /**
+             * 获得当前的激活drop
+             */
+            this._notifyDropsMove(ev);
+        },
+
+        _notifyDropsMove:function(ev) {
+            var activeDrag = this.get("activeDrag"),mode = activeDrag.get("mode");
+            var drops = this.get("drops");
+            var activeDrop,
+                vArea = 0,
+                dragRegion = region(activeDrag.get("node")),
+                dragArea = area(dragRegion);
+
+            S.each(drops, function(drop) {
+                var node = drop.getNodeFromTarget(ev);
+               
+                if (!node || node[0] == activeDrag.get("dragNode")[0])
+                    return;
+                var a;
+                if (mode == "point") {
+                    //取鼠标所在的 drop 区域
+                    if (inNodeByPointer(node, activeDrag.mousePos)) {
+                        activeDrop = drop;
+                        return false;
+                    }
+
+                } else if (mode == "intersect") {
+                    //取一个和activeDrag交集最大的drop区域
+                    a = area(intersect(dragRegion, region(node)));
+                    if (a > vArea) {
+                        vArea = a;
+                        activeDrop = drop;
+                    }
+
+                } else if (mode == "strict") {
+                    //drag 全部在 drop 里面
+                    a = area(intersect(dragRegion, region(node)));
+                    if (a == dragArea) {
+                        activeDrop = drop;
+                        return false;
+                    }
+                }
+            });
+            var oldDrop = this.get("activeDrop");
+            if (oldDrop && oldDrop != activeDrop) {
+                oldDrop._handleOut(ev);
+            }
+            if (activeDrop) {
+                activeDrop._handleOver(ev);
+            } else {
+                activeDrag.get("node").removeClass(this.get("prefixCls") + "drag-over");
+                this.set("activeDrop", null);
+            }
+        },
+
+        _deactivateDrops:function() {
+            var activeDrag = this.get("activeDrag"),
+                activeDrop = this.get("activeDrop");
+            activeDrag.get("node").removeClass(this.get("prefixCls") + "drag-over");
+            if (activeDrop) {
+                var ret = { drag: activeDrag, drop: activeDrop};
+                activeDrop.get("node").removeClass(this.get("prefixCls") + "drop-over");
+                activeDrop.fire('drophit', ret);
+                activeDrag.fire('dragdrophit', ret)
+                this.fire("drophit", ret);
+                this.fire("dragdrophit", ret);
+            } else {
+                activeDrag.fire('dragdropmiss', {
+                    drag:activeDrag
+                });
+                this.fire("dragdropmiss", {
+                    drag:activeDrag
+                });
+            }
         },
 
         /**
@@ -85,7 +181,9 @@ KISSY.add('dd', function(S) {
             //真正开始移动了才激活垫片
             if (drag.get("shim"))
                 self._activeShim();
+
             drag._start();
+            drag.get("dragNode").addClass(this.get("prefixCls") + "dragging");
         },
 
         /**
@@ -106,7 +204,11 @@ KISSY.add('dd', function(S) {
 
             if (!activeDrag) return;
             activeDrag._end(ev);
+            activeDrag.get("dragNode").removeClass(this.get("prefixCls") + "dragging");
+            //处理 drop，看看到底是否有 drop 命中
+            this._deactivateDrops(ev);
             self.set("activeDrag", null);
+            self.set("activeDrop", null);
         },
 
         /**
@@ -123,6 +225,7 @@ KISSY.add('dd', function(S) {
                 "left:0;" +
                 "width:100%;" +
                 "top:0;" +
+                "cursor:move;" +
                 "z-index:" +
                 //覆盖iframe上面即可
                 SHIM_ZINDEX
@@ -138,7 +241,7 @@ KISSY.add('dd', function(S) {
             var self = this;
             self._shim.css({
                 display: "",
-                height: DOM.docHeight()
+                height: DOM['docHeight']()
             });
         },
 
@@ -161,7 +264,6 @@ KISSY.add('dd', function(S) {
         }
     });
 
-    S.DD.DDM = new DDM();
 
     /**
      * Throttles a call to a method based on the time between calls. from YUI
@@ -190,4 +292,51 @@ KISSY.add('dd', function(S) {
             }
         });
     }
+
+    function region(node) {
+        var offset = node.offset();
+        return {
+            left:offset.left,
+            right:offset.left + node[0].offsetWidth,
+            top:offset.top,
+            bottom:offset.top + node[0].offsetHeight
+        };
+    }
+
+    function inRegion(region, pointer) {
+
+        return region.left <= pointer.left
+            && region.right >= pointer.left
+            && region.top <= pointer.top
+            && region.bottom >= pointer.top;
+    }
+
+    function area(region) {
+        if (region.top >= region.bottom || region.left >= region.right) return 0;
+        return (region.right - region.left) * (region.bottom - region.top);
+    }
+
+    function intersect(r1, r2) {
+        var t = Math.max(r1.top, r2.top),
+            r = Math.min(r1.right, r2.right),
+            b = Math.min(r1.bottom, r2.bottom),
+            l = Math.max(r1.left, r2.left);
+        return {
+            left:l,
+            right:r,
+            top:t,
+            bottom:b
+        };
+    }
+
+    function inNodeByPointer(node, point) {
+        return inRegion(region(node), point);
+    }
+
+    var ddm = new DDM();
+    ddm.inRegion = inRegion;
+    ddm.region = region;
+    return ddm;
+}, {
+    requires:["dom","event","node","base"]
 });

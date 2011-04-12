@@ -8,8 +8,8 @@
 
     <target name="concat">
         <concat destfile="base-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="attribute.js"/>
-            <path path="base.js"/>
+            <fileset dir="${src.dir}" includes="*.js" />
+            <path location="../base.js" />
         </concat>
     </target>
 

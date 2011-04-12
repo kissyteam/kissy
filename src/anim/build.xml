@@ -8,9 +8,8 @@
 
     <target name="concat">
         <concat destfile="anim-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="anim-easing.js"/>
-            <path path="anim.js"/>
-            <path path="anim-node-plugin.js"/>
+            <fileset dir="${src.dir}" includes="*.js"/>
+            <path location="../anim.js"/>
         </concat>
     </target>
 

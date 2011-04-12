@@ -2,7 +2,7 @@
  * @module  Attribute
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('attribute', function(S, undef) {
+KISSY.add('base/attribute', function(S, undef) {
 
     /**
      * Attribute provides the implementation for any object
@@ -46,11 +46,15 @@ KISSY.add('attribute', function(S, undef) {
          *     setter: function
          *     getter: function
          * }
+         * @param {boolean} override whether override existing attribute config ,default true
          */
-        addAttr: function(name, attrConfig) {
+        addAttr: function(name, attrConfig, override) {
             var host = this;
-            host.__attrs[name] = S.clone(attrConfig || {});
-
+            if (!host.__attrs[name]) {
+                host.__attrs[name] = S.clone(attrConfig || {});
+            }else{
+                S.mix(host.__attrs[name],attrConfig,override);
+            }
             return host;
         },
 
@@ -127,11 +131,12 @@ KISSY.add('attribute', function(S, undef) {
          */
         get: function(name) {
             var host = this, attrConfig, getter, ret;
-            
+
             attrConfig = host.__attrs[name];
             getter = attrConfig && attrConfig['getter'];
 
             // get user-set value or default value
+            //user-set value takes privilege
             ret = name in host.__attrVals ?
                 host.__attrVals[name] :
                 host.__getDefAttrVal(name);
@@ -182,12 +187,12 @@ KISSY.add('attribute', function(S, undef) {
         }
     });
 
-    S.Attribute = Attribute;
-
     function capitalFirst(s) {
         s = s + '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
     Attribute.__capitalFirst = capitalFirst;
+
+    return Attribute;
 });

@@ -54,6 +54,13 @@
          * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
          */
         isPlainObject: function(o) {
+            /**
+             * note by yiminghe
+             * isPlainObject(node=document.getElementById("xx")) -> false
+             * toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
+             * 'isPrototypeOf' in node : ie678 === false ,other === true
+             */
+
             return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
         },
 
@@ -137,7 +144,7 @@
          * @param context {Object} (opt)
          */
         each: function(object, fn, context) {
-            var key, val, i = 0, length = object.length,
+            var key, val, i = 0, length = object && object.length,
                 isObj = length === undef || S.type(object) === 'function';
             context = context || host;
 

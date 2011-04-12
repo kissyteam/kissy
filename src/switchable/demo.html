@@ -4,29 +4,49 @@
 <meta charset="utf-8"/>
 <title>S.Switchable Demo</title>
 
+
 <script src="../../build/kissy.js"></script>
-<script src="../../build/datalazyload/datalazyload-pkg.js"></script>
+<script src="../../build/datalazyload.js"></script>
 
-<script src="switchable.js"></script>
+<script src="base.js"></script>
+<script src="accordion.js"></script>
+<script src="autoplay.js"></script>
+<script src="autorender.js"></script>
+<script src="carousel.js"></script>
+<script src="effect.js"></script>
+<script src="circular.js"></script>
+<script src="countdown.js"></script>
+<script src="lazyload.js"></script>
+<script src="slide.js"></script>
+<script src="tabs.js"></script>
+<script src="../switchable.js"></script>
+<script>
+    var S = KISSY;
+    S.log(S.Switchable);
+    S.log(S.Tabs);
+</script>
 
-<script src="mod-autoplay.js"></script>
-<script src="mod-effect.js"></script>
-<script src="mod-circular.js"></script>
-<script src="mod-lazyload.js"></script>
-<script src="mod-countdown.js"></script>
-
-<script src="widget-tabs.js"></script>
-<script src="widget-slide.js"></script>
-<script src="widget-carousel.js"></script>
-<script src="widget-accordion.js"></script>
-
-<link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
+<link rel="stylesheet" href="../../build/cssreset/reset-min.css"/>
 <style>
-    body { padding: 20px 50px 50px; }
-    h2 { margin: 30px 0 10px; font-size: 17px; }
-    .loading { background: #EBF5FA url(assets/loading.gif) no-repeat 50% 50%; }
+    body {
+        padding: 20px 50px 50px;
+    }
 
-    p.code-switch { color: #09f; cursor: pointer; margin-top: 10px; }
+    h2 {
+        margin: 30px 0 10px;
+        font-size: 17px;
+    }
+
+    .loading {
+        background: #EBF5FA url(assets/loading.gif) no-repeat 50% 50%;
+    }
+
+    p.code-switch {
+        color: #09f;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
     pre.code {
         color: #444;
         cursor: auto;
@@ -41,8 +61,19 @@
 <body>
 <h2>Tabs - 普通标签页</h2>
 <style>
-    #demo1 { position: relative; width: 750px; padding-top: 29px; }
-    #demo1 .ks-switchable-nav { position: absolute; left: 20px; margin-top: -29px; z-index: 99; }
+    #demo1 {
+        position: relative;
+        width: 750px;
+        padding-top: 29px;
+    }
+
+    #demo1 .ks-switchable-nav {
+        position: absolute;
+        left: 20px;
+        margin-top: -29px;
+        z-index: 99;
+    }
+
     #demo1 .ks-switchable-nav li {
         float: left;
         width: 130px;
@@ -54,7 +85,12 @@
         padding-top: 8px;
         cursor: pointer;
     }
-    #demo1 .ks-switchable-nav li.ks-active { background-position: 0 -40px; cursor: default; }
+
+    #demo1 .ks-switchable-nav li.ks-active {
+        background-position: 0 -40px;
+        cursor: default;
+    }
+
     #demo1 .ks-switchable-content {
         position: relative;
         height: 120px;
@@ -93,14 +129,19 @@
     </div>
 </div>
 <script>
-    KISSY.ready(function(S) {
-        var tabs = new S.Tabs('#demo1');
+    KISSY.use("datalazyload,switchable", function(S) {
 
-        tabs.on('beforeSwitch', function(ev) {
-            var index = ev.toIndex;
-            if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
-                this.panels[index].innerHTML = 'index = ' + index;
-            }
+        var Tabs = S.Tabs
+
+        S.ready(function(S) {
+            var tabs = new Tabs('#demo1');
+
+            tabs.on('beforeSwitch', function(ev) {
+                var index = ev.toIndex;
+                if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
+                    this.panels[index].innerHTML = 'index = ' + index;
+                }
+            });
         });
     });
 </script>
@@ -108,8 +149,21 @@
 
 <h2>Slide - 淘宝首页卡盘</h2>
 <style>
-    #demo2 { position: relative; width: 470px; height: 150px; border: 1px solid #B6D1E6; overflow: hidden; }
-    #demo2 .ks-switchable-nav { position: absolute; bottom: 5px; right: 5px; z-index: 99; }
+    #demo2 {
+        position: relative;
+        width: 470px;
+        height: 150px;
+        border: 1px solid #B6D1E6;
+        overflow: hidden;
+    }
+
+    #demo2 .ks-switchable-nav {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        z-index: 99;
+    }
+
     #demo2 .ks-switchable-nav li {
         float: left;
         width: 16px;
@@ -122,6 +176,7 @@
         text-align: center;
         cursor: pointer;
     }
+
     #demo2 .ks-switchable-nav li.ks-active {
         width: 18px;
         height: 18px;
@@ -131,12 +186,19 @@
         background-color: #FFB442;
         font-weight: bold;
     }
-    #demo2 .ks-switchable-content li { height: 150px; width: 470px; overflow: hidden; }
+
+    #demo2 .ks-switchable-content li {
+        height: 150px;
+        width: 470px;
+        overflow: hidden;
+    }
+
     /* for countdown plugin */
     #demo2 .ks-switchable-nav li,
     #demo2 .ks-switchable-trigger-content {
         position: relative;
     }
+
     #demo2 .ks-switchable-trigger-mask {
         position: absolute;
         right: 0;
@@ -145,16 +207,17 @@
         background-color: #FF9415;
         visibility: hidden
     }
+
     #demo2 .ks-active .ks-switchable-trigger-mask {
         visibility: visible
     }
 </style>
 <div id="demo2" class="section loading">
     <ol class="ks-switchable-content">
-        <li><a href="http://ju.atpanel.com/?url=http://www.taobao.com/go/act/discount/hdfk091222.php?ad_id=&amp;am_id=&amp;cm_id=1400213687422f80dd4d&amp;pm_id=150021371293fce706af" target="_blank"><img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
-        <li class="hidden"><a target="_blank" href="http://click.mz.simba.taobao.com/cc_mt?p=&amp;s=24760534&amp;e=%2FzU1KBMrzT1jMRVFtqDNyn1tgJqIJA3Hy9QloO7MbgHOIBqxgkWBGKUTW8JURsTh01ynhY4RKTMplHfnVnxiYajw5JHBVqSAXBrj%2Bf%2BTLVcq5t6PSe6eCT%2F8Tn1KGQ46A85BMYIsMXzYy8dzkPxQZCyLyt0ostjNaENU1Z0QCSZaXSgNYtb%2FwhYogN3jOrIE2Q9NE12H0Hk111VWqQddJzvjKwdymURFo%2BK2etf0wTrlhYBv%2B5sdunm4S3KBeGdooeLPkaQt4Mg4u3TgCNezGX1Mh9B64cCdF8VN3SsQNW%2BgArkM4F%2BFplGwl1UuyTCLtMOb3cgDCxBQldTmR3mwFhNV09QNPjZ2bUxM3CBHkfb2wyn42y1yjjwMVjNQnmpt4NEtPh%2F5PsbupFa6ZZ2sVQdCo%2FjLJ9sf&amp;ec=ffloYVIRbFZ%2BaahPJekdUQ%3D%3D&amp;c=17016"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></a></li>
-        <li class="hidden"><a target="_blank" href="http://click.mz.simba.taobao.com/cc_mt?p=&amp;s=24760534&amp;e=%2FzU1KBMrzT1jMRVFtqDNyn1tgJqIJA3Hy9QloO7MbgHOIBqxgkWBGKUTW8JURsTh01ynhY4RKTMplHfnVnxiYajw5JHBVqSAXBrj%2Bf%2BTLVcq5t6PSe6eCT%2F8Tn1KGQ46A85BMYIsMXzYy8dzkPxQZCyLyt0ostjNaENU1Z0QCSZaXSgNYtb%2FwhYogN3jOrIE2Q9NE12H0Hk111VWqQddJzvjKwdymURFo%2BK2etf0wTrlhYBv%2B5sdunm4S3KBeGdooeLPkaQt4Mg4u3TgCNezGX1Mh9B64cCdF8VN3SsQNW%2BgArkM4F%2BFplGwl1UuyTCLtMOb3cgDCxBQldTmR3mwFhNV09QNPjZ2bUxM3CBHkfb2wyn42y1yjjwMVjNQnmpt4NEtPh%2F5PsbupFa6ZZ2sVQdCo%2FjLJ9sf&amp;ec=ffloYVIRbFZ%2BaahPJekdUQ%3D%3D&amp;c=17016"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-29/091229160359.jpg"/></a></li>
-        <li class="hidden"><a href="http://ju.atpanel.com/?url=http://www.taobao.com/go/act/focus/nzdc_qqg2.php?TBG=7285.module-1.4&amp;ad_id=&amp;am_id=&amp;cm_id=140021305131ef184707&amp;pm_id=15002137139b40e4bba3" target="_blank"><img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
+        <li><a href="#" target="_blank"><img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
+        <li class="hidden"><a target="_blank" href="#"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></a></li>
+        <li class="hidden"><a target="_blank" href="#"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-29/091229160359.jpg"/></a></li>
+        <li class="hidden"><a href="#" target="_blank"><img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
         <li class="hidden">
             <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="470" height="150" class="holiday-logo">
                 <param name="movie" value="http://img04.taobaocdn.com/tps/i4/T1bblrXfBrXXXXXXXX.swf"/>
@@ -172,17 +235,22 @@
 </div>
 <button id="demo2-btn">stop autoplay</button>
 <script>
-    KISSY.ready(function(S) {
-        var s = S.Slide('#demo2', {
-            effect: 'scrolly',
-            easing: 'easeOutStrong',
-            countdown: true,
-            countdownFromStyle: 'width:18px'
-        });
+    KISSY.use("event,switchable", function(S, Event, Switchable) {
+        var Slide = S.Slide;
 
-        S.Event.on('#demo2-btn', 'click', function() {
-            s.stop();
-        })
+        S.ready(function(S) {
+
+            var s = Slide('#demo2', {
+                effect: 'scrolly',
+                easing: 'easeOutStrong',
+                countdown: true,
+                countdownFromStyle: 'width:18px'
+            });
+
+            Event.on('#demo2-btn', 'click', function() {
+                s.stop();
+            })
+        });
     });
 </script>
 <p class="code-switch">显示源码</p>
@@ -197,6 +265,7 @@
         padding: 1px;
         overflow: hidden;
     }
+
     #demo3 .yslider-stick {
         position: absolute;
         top: 0;
@@ -207,22 +276,27 @@
         margin: 1px;
         z-index: 99;
     }
+
     #demo3 .yslider-stick li {
         border-bottom: 1px solid #EDEDED;
     }
+
     #demo3 .yslider-stick li a {
         display: block;
         text-indent: 15px;
         padding: 8px 5px;
         color: #666;
     }
+
     #demo3 .yslider-stick li.selected {
         background-color: #C8282B;
     }
+
     #demo3 .yslider-stick li.selected a {
         color: #fff;
         border-left: 3px solid #B30024;
     }
+
     #demo3 .yslider-stage {
         height: 220px;
         width: 405px;
@@ -232,10 +306,10 @@
     <div class="yslider-stage">
         <p><a href="http://co.youa.baidu.com/content/promo/zhongjimiaoshazong/index.html" target="_blank"><img width="405" height="220" alt="终极秒杀场" src="http://co.youa.baidu.com/picture/r/image/2009-12-25/236d430f443d05925ad7291d9ad6b560.jpg"/></a></p>
         <p><a href="http://youa.baidu.com/zc" target="_blank"><img width="405" height="220" alt="9折话费" src="http://co.youa.baidu.com/picture/r/image/2009-12-25/4b2e801b6d174648ec77678d4a9f32e8.jpg"/></a></p>
-        <p><a href="http://co.youa.baidu.com/content/lottery/chrislotact/index.html?c=676" target="_blank"><img  width="405" height="220" alt="彩票大派送" src="http://co.youa.baidu.com/picture/r/image/2009-12-21/eb76df2598316e6b5e52cd94ae2e3f1b.jpg"/></a></p>
-        <p><a href="http://co.youa.baidu.com/content/promo/nianzhongjihe/index.html" target="_blank"><img  width="405" height="220" alt="限量抢购" src="http://co.youa.baidu.com/picture/r/image/2009-12-25/cc60334e6a75fab260e680cfc2b35ea7.jpg"/></a></p>
-        <p><a href="http://youa.baidu.com/shop/3710a13d15c375285841ef08/tab/0344b67328e77dc92132cad9" target="_blank"><img  width="405" height="220" alt="周末购" src="http://co.youa.baidu.com/picture/r/image/2009-12-27/74538ac61dc0836f5d40d29b181868fc.jpg"/></a></p>
-        <p><a href="http://co.youa.baidu.com/content/promo/xmas09/index.html?c=740" target="_blank"><img  width="405" height="220" alt="年终风暴" src="http://co.youa.baidu.com/picture/r/image/2009-12-23/d69f75d92daf625053bd0f92f2b5e586.jpg"/></a></p>
+        <p><a href="http://co.youa.baidu.com/content/lottery/chrislotact/index.html?c=676" target="_blank"><img width="405" height="220" alt="彩票大派送" src="http://co.youa.baidu.com/picture/r/image/2009-12-21/eb76df2598316e6b5e52cd94ae2e3f1b.jpg"/></a></p>
+        <p><a href="http://co.youa.baidu.com/content/promo/nianzhongjihe/index.html" target="_blank"><img width="405" height="220" alt="限量抢购" src="http://co.youa.baidu.com/picture/r/image/2009-12-25/cc60334e6a75fab260e680cfc2b35ea7.jpg"/></a></p>
+        <p><a href="http://youa.baidu.com/shop/3710a13d15c375285841ef08/tab/0344b67328e77dc92132cad9" target="_blank"><img width="405" height="220" alt="周末购" src="http://co.youa.baidu.com/picture/r/image/2009-12-27/74538ac61dc0836f5d40d29b181868fc.jpg"/></a></p>
+        <p><a href="http://co.youa.baidu.com/content/promo/xmas09/index.html?c=740" target="_blank"><img width="405" height="220" alt="年终风暴" src="http://co.youa.baidu.com/picture/r/image/2009-12-23/d69f75d92daf625053bd0f92f2b5e586.jpg"/></a></p>
     </div>
     <ul class="yslider-stick">
         <li class="selected"><a href="http://co.youa.baidu.com/content/promo/xmas09/index.html?c=740" target="_blank">年终风暴</a></li>
@@ -247,16 +321,19 @@
     </ul>
 </div>
 <script>
-    KISSY.ready(function(S) {
-        S.Slide('#demo3', {
-            navCls: 'yslider-stick',
-            contentCls: 'yslider-stage',
-            activeTriggerCls: 'selected',
-            delay: .2,
-            effect: 'fade',
-            easing: 'easeBoth',
-            duration: .8,
-            autoplay: false
+    KISSY.use("event,switchable", function(S, Event, Switchable) {
+        var Slide = S.Slide;
+        S.ready(function(S) {
+            Slide('#demo3', {
+                navCls: 'yslider-stick',
+                contentCls: 'yslider-stage',
+                activeTriggerCls: 'selected',
+                delay: .2,
+                effect: 'fade',
+                easing: 'easeBoth',
+                duration: .8,
+                autoplay: false
+            });
         });
     });
 </script>
@@ -268,27 +345,40 @@
         position: relative;
         width: 820px;
     }
+
     .scrollable .prev, .scrollable .next {
         position: absolute;
         top: 50px;
         color: #666;
         cursor: pointer;
     }
-    .scrollable .prev { left: 10px; }
-    .scrollable .next { right: 10px; }
-    .scrollable .disable { color: #ddd; cursor: default; }
+
+    .scrollable .prev {
+        left: 10px;
+    }
+
+    .scrollable .next {
+        right: 10px;
+    }
+
+    .scrollable .disable {
+        color: #ddd;
+        cursor: default;
+    }
 
     .scrollable .ks-switchable-nav {
         position: absolute;
         right: 30px;
         top: -10px;
     }
+
     .scrollable .ks-switchable-nav li {
         float: left;
         padding: 5px;
         font-size: 18px;
         cursor: pointer;
     }
+
     .scrollable .ks-switchable-nav li.ks-active {
         color: #C8282B;
     }
@@ -302,6 +392,7 @@
         margin: auto;
         overflow: hidden;
     }
+
     .scroller .ks-switchable-content img {
         float: left;
         width: 100px;
@@ -345,22 +436,25 @@
     </div>
 </div>
 <script>
-    KISSY.ready(function(S) {
+    KISSY.use("event,switchable", function(S, Event) {
+        var Carousel = S.Carousel;
 
-        var carousel = new S.Carousel('#demo4', {
-            effect: 'scrollx',
-            easing: 'easeOutStrong',
-            steps: 5,
-            viewSize: [680],
-            circular: false,
-            prevBtnCls: 'prev',
-            nextBtnCls: 'next',
-            disableBtnCls: 'disable',
-            lazyDataType: 'img-src'
-        });
+        S.ready(function(S) {
+            var carousel = new Carousel('#demo4', {
+                effect: 'scrollx',
+                easing: 'easeOutStrong',
+                steps: 5,
+                viewSize: [680],
+                circular: false,
+                prevBtnCls: 'prev',
+                nextBtnCls: 'next',
+                disableBtnCls: 'disable',
+                lazyDataType: 'img-src'
+            });
 
-        carousel.on('itemSelected', function(ev) {
-            alert('I am selected. src = ' + ev.item.src);
+            carousel.on('itemSelected', function(ev) {
+                alert('I am selected. src = ' + ev.item.src);
+            });
         });
     });
 </script>
@@ -368,8 +462,14 @@
 
 <h2>Slide - 有啊滚动新闻条</h2>
 <style>
-    .scroll-news { height: 20px; overflow: hidden; }
-    .scroll-news a { color: #FF7E00; }
+    .scroll-news {
+        height: 20px;
+        overflow: hidden;
+    }
+
+    .scroll-news a {
+        color: #FF7E00;
+    }
 </style>
 <div id="demo5" class="scroll-news">
     <ul class="news-items">
@@ -382,14 +482,17 @@
     </ul>
 </div>
 <script>
-    KISSY.ready(function(S) {
-        S.Slide('#demo5', {
-            contentCls: 'news-items',
-            hasTriggers: false,
-            effect: 'scrolly',
-            easing: 'easeOutStrong',
-            interval: 3,
-            duration: .2
+    KISSY.use("event,switchable", function(S, Event) {
+        var Slide = S.Slide;
+        S.ready(function(S) {
+            Slide('#demo5', {
+                contentCls: 'news-items',
+                hasTriggers: false,
+                effect: 'scrolly',
+                easing: 'easeOutStrong',
+                interval: 3,
+                duration: .2
+            });
         });
     });
 </script>
@@ -397,15 +500,60 @@
 
 <h2>Slide - 土豆今日焦点</h2>
 <style>
-    #slideFocus { border: 1px solid #C2C2C2; height: 284px; width: 678px; overflow: hidden; }
-    #slideFocus .h { background: #f3f3f3; padding: 3px 0 7px 12px; }
-    #slideFocus .c { padding: 9px 10px 0; }
-    #slideFocus .pic { width: 379px; height: 233px; overflow: hidden; float: left; }
-    #slideFocus .txt { width: 270px; float: right; }
-    #slideFocus .desc-list h4 a { font-size: 14px; line-height: 25px; color: #f60; }
-    #slideFocus .desc-list p { height: 55px; line-height: 18px; color: #666; overflow: hidden; margin: 10px 0; }
-    #slideFocus .thumbs-list li { float: left; height: 62px; width: 84px; padding: 2px; margin: 1px; display: inline !important; }
-    #slideFocus .thumbs-list li.current { background-color: #f60; }
+    #slideFocus {
+        border: 1px solid #C2C2C2;
+        height: 284px;
+        width: 678px;
+        overflow: hidden;
+    }
+
+    #slideFocus .h {
+        background: #f3f3f3;
+        padding: 3px 0 7px 12px;
+    }
+
+    #slideFocus .c {
+        padding: 9px 10px 0;
+    }
+
+    #slideFocus .pic {
+        width: 379px;
+        height: 233px;
+        overflow: hidden;
+        float: left;
+    }
+
+    #slideFocus .txt {
+        width: 270px;
+        float: right;
+    }
+
+    #slideFocus .desc-list h4 a {
+        font-size: 14px;
+        line-height: 25px;
+        color: #f60;
+    }
+
+    #slideFocus .desc-list p {
+        height: 55px;
+        line-height: 18px;
+        color: #666;
+        overflow: hidden;
+        margin: 10px 0;
+    }
+
+    #slideFocus .thumbs-list li {
+        float: left;
+        height: 62px;
+        width: 84px;
+        padding: 2px;
+        margin: 1px;
+        display: inline !important;
+    }
+
+    #slideFocus .thumbs-list li.current {
+        background-color: #f60;
+    }
 </style>
 <div id="slideFocus">
     <div class="h">
@@ -461,21 +609,26 @@
     </div>
 </div>
 <script>
-    KISSY.ready(function(S) {
-        var DOM = S.DOM,
-            descList = DOM.children('#slideFocus ul.desc-list');
+    KISSY.use("dom,event,anim,switchable", function(S, DOM, Event, Anim, Switchable) {
+        var Slide = S.Slide,
 
-        var slide = new S.Slide('#slideFocus', {
-            contentCls: 'pic-list',
-            navCls: 'thumbs-list',
-            activeTriggerCls: 'current',
-            effect: 'scrollx',
-            easing: S.Easing.easeOutStrong
-        });
+                Easing = S.Easing;
 
-        slide.on('beforeSwitch', function(ev) {
-            S.each(descList, function(desc, i) {
-                desc.style.display = i === ev.toIndex ? 'block' : 'none';
+        S.ready(function(S) {
+            var descList = DOM.children('#slideFocus ul.desc-list');
+
+            var slide = new Slide('#slideFocus', {
+                contentCls: 'pic-list',
+                navCls: 'thumbs-list',
+                activeTriggerCls: 'current',
+                effect: 'scrollx',
+                easing: Easing.easeOutStrong
+            });
+
+            slide.on('beforeSwitch', function(ev) {
+                S.each(descList, function(desc, i) {
+                    desc.style.display = i === ev.toIndex ? 'block' : 'none';
+                });
             });
         });
     });
@@ -484,15 +637,58 @@
 
 <h2>Accordion - 手风琴</h2>
 <style>
-    #accordion1 {width:300px;border:1px solid #ccc;}
-    #accordion1 .ks-switchable-trigger{padding:3px 10px;cursor:pointer;border-bottom:1px solid #ddd;background:#f3f3f3;overflow:hidden; height: 18px;}
-    #accordion1 .ks-switchable-trigger h3{float: left; width: 100px; margin-left: 5px; }
-    #accordion1 .ks-switchable-panel{height:150px;padding:3px 10px;border-bottom:1px solid #ddd;}
-    #accordion1 .ks-icon{float:left;width:12px;height:12px;overflow:hidden;margin-top:2px;font-size:0;vertical-align:middle;background:url(assets/accordion-sprite.png) no-repeat 0 0;}
-    #accordion1 .ks-active .ks-icon{background-position:-20px 0;}
-    #accordion1 .last-trigger { border-bottom-width: 0 }
-    #accordion1 .ks-active { border-bottom-width: 1px }
-    #accordion1 .last-panel { border-bottom: none }
+    #accordion1 {
+        width: 300px;
+        border: 1px solid #ccc;
+    }
+
+    #accordion1 .ks-switchable-trigger {
+        padding: 3px 10px;
+        cursor: pointer;
+        border-bottom: 1px solid #ddd;
+        background: #f3f3f3;
+        overflow: hidden;
+        height: 18px;
+    }
+
+    #accordion1 .ks-switchable-trigger h3 {
+        float: left;
+        width: 100px;
+        margin-left: 5px;
+    }
+
+    #accordion1 .ks-switchable-panel {
+        height: 150px;
+        padding: 3px 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #accordion1 .ks-icon {
+        float: left;
+        width: 12px;
+        height: 12px;
+        overflow: hidden;
+        margin-top: 2px;
+        font-size: 0;
+        vertical-align: middle;
+        background: url(assets/accordion-sprite.png) no-repeat 0 0;
+    }
+
+    #accordion1 .ks-active .ks-icon {
+        background-position: -20px 0;
+    }
+
+    #accordion1 .last-trigger {
+        border-bottom-width: 0
+    }
+
+    #accordion1 .ks-active {
+        border-bottom-width: 1px
+    }
+
+    #accordion1 .last-panel {
+        border-bottom: none
+    }
 </style>
 <div id="accordion1" class="section">
     <div class="ks-switchable-trigger ks-active"><i class="ks-icon"></i><h3>标题A</h3></div>
@@ -508,30 +704,36 @@
     <div class="ks-switchable-panel last-panel" style="display:none;">内容D<br/>内容D<br/>内容D</div>
 </div>
 <script>
-    KISSY.ready(function(S) {
-        S.Accordion('#accordion1', { multiple: true } );
+    KISSY.use("dom,event,anim,switchable", function(S, DOM, Event, Anim, Switchable) {
+        var Accordion = S.Accordion,
+                Easing = S.Easing;
+
+        S.ready(function(S) {
+            Accordion('#accordion1', { multiple: true });
+        });
     });
 </script>
 <p class="code-switch">显示源码</p>
 
 <script>
-    (function() {
-        var S = KISSY, DOM = S.DOM,
-            SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+    KISSY.use("ua,dom,event,node", function(S, UA, DOM, Event, Node) {
+        var NodeList = Node.List,
 
-        S.all('p.code-switch').each(function(p) {
+                SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+
+        NodeList.all('p.code-switch').each(function(p) {
             p.on('click', function() {
                 var showing = (p.text() === SHOW_CODE),
-                    next = p.next(),
-                    pre = next;
+                        next = p.next(),
+                        pre = next;
 
                 if (next[0].nodeName !== 'PRE') {
-                    pre = S.Node('<pre>');
+                    pre = Node('<pre>');
 
                     pre.attr('class', 'code')
-                        .html(p.prev().html());
+                            .html(p.prev().html());
 
-                    if (S.UA.ie) {
+                    if (UA['ie']) {
                         pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
                     }
 
@@ -542,7 +744,7 @@
                 p.html(showing ? HIDE_CODE : SHOW_CODE);
             });
         });
-    })();
+    });
 </script>
 </body>
 </html>

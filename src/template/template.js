@@ -24,7 +24,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-KISSY.add('template', function(S) {
+KISSY.add('template/template', function(S) {
 
     var defaultConfig = {},
 
@@ -72,14 +72,14 @@ KISSY.add('template', function(S) {
             return S.trim(templ).replace(getRegexp('[\r\t\n]'), ' ')
                 .replace(getRegexp('(["\'])'), '\\$1')
                 .replace(getRegexp('\{\{([#/]?)(?!\}\})([^}]*)\}\}'),
-                function(all, expr, oper) {
+                    function(all, expr, oper) {
                     _parser = KS_EMPTY;
                     // is an expression
                     if (expr) {
                         oper = S.trim(oper);
                         _empty_index = oper.indexOf(' ');
                         oper = _empty_index === -1 ? [oper, ''] :
-                            [oper.substring(0, oper.indexOf(' ')),
+                                [oper.substring(0, oper.indexOf(' ')),
                                 oper.substring(oper.indexOf(' '))];
                         for (var i in Statements) {
                             if (oper[0] !== i) continue;
@@ -90,11 +90,11 @@ KISSY.add('template', function(S) {
                                 _parser = S.isFunction(fn) ?
                                     fn.apply(this, S.trim(oper.join(KS_EMPTY)
                                         .replace(getRegexp('\\\\([\'"])'),
-                                        '$1')).split(/\s+/)) :
+                                            '$1')).split(/\s+/)) :
                                     fn.replace(getRegexp(KS_TEMPL_STAT_PARAM),
                                         oper.join(KS_EMPTY)
-                                            .replace(getRegexp('\\\\([\'"])'), '$1')
-                                        );
+                                        .replace(getRegexp('\\\\([\'"])'), '$1')
+                                    );
                             }
                         }
                     }
@@ -142,10 +142,10 @@ KISSY.add('template', function(S) {
                         _ks_value = '_ks_value', _ks_index = '_ks_index';
                     if (args[1] === KS_AS && args[2]) {
                         _ks_value = args[2] || _ks_value,
-                            _ks_index = args[3] || _ks_index;
+                        _ks_index = args[3] || _ks_index;
                     }
                     var r = 'KISSY.each(' + args[0] +
-                        ', function(' + _ks_value + ', ' + _ks_index + '){';
+                            ', function(' + _ks_value + ', ' + _ks_index + '){';
                     return r;
                 },
                 end: '});'
@@ -163,7 +163,7 @@ KISSY.add('template', function(S) {
          * @param {Object} config configuration.
          * @return {Object} return this for chain.
          */
-            Template = function(templ, config) {
+        Template = function(templ, config) {
             S.mix(defaultConfig, config);
             if (!(templ in templateCache)) {
                 var _ks_data = KS_DATA + S.now(), func,
@@ -192,15 +192,14 @@ KISSY.add('template', function(S) {
             return templateCache[templ];
         };
 
-    S.mix(Template, {
-        /**
-         * Logging Compiled Template Codes
-         * @param {String} templ template string.
-         */
-        log: function(templ) {
-            if (templ in templateCache) {
-                if ('js_beautify' in window) {
-                    //cause compress error
+        S.mix(Template, {
+            /**
+             * Logging Compiled Template Codes
+             * @param {String} templ template string.
+             */
+            log: function(templ) {
+                if (templ in templateCache) {
+                    if ('js_beautify' in window) {
 //                        S.log(js_beautify(templateCache[templ].parser, {
 //                            indent_size: 4,
 //                            indent_char: ' ',
@@ -209,29 +208,29 @@ KISSY.add('template', function(S) {
 //                            keep_array_indentation: false,
 //                            space_after_anon_function: true
 //                        }), 'info');
+                    } else {
+                        S.log(templateCache[templ].parser, 'info');
+                    }
                 } else {
-                    S.log(templateCache[templ].parser, 'info');
+                    Template(templ);
+                    this.log(templ);
                 }
-            } else {
-                Template(templ);
-                this.log(templ);
+            },
+
+            /**
+             * add statement for extending template tags
+             * @param {String} statement tag name.
+             * @param {String} o extent tag object.
+             */
+            addStatement: function(statement, o) {
+                if (S.isString(statement) && S.isObject(o)) {
+                    Statements[statement] = o;
+                }
             }
-        },
 
-        /**
-         * add statement for extending template tags
-         * @param {String} statement tag name.
-         * @param {String} o extent tag object.
-         */
-        addStatement: function(statement, o) {
-            if (S.isString(statement) && S.isObject(o)) {
-                Statements[statement] = o;
-            }
-        }
+        });
 
-    });
-
-    S.Template = Template;
+    //S.Template = Template;
     return Template;
 
 }, {requires: ['core']});

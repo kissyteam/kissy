@@ -15,7 +15,7 @@
  * - 增加中文的支持
  * - 简单的本地化，对w（星期x）的支持
  */
-KISSY.add('date', function(S) {
+KISSY.add('calendar/date', function(S) {
 
     function dateParse(data) {
 
@@ -48,8 +48,8 @@ KISSY.add('date', function(S) {
                 val = String(val);
                 len = len || 2;
                 while (val.length < len) {
-					val = "0" + val;
-				}
+                    val = "0" + val;
+                }
                 return val;
             },
             // Some common format strings
@@ -92,7 +92,6 @@ KISSY.add('date', function(S) {
 
         // Regexes and supporting functions are cached through closure
         return function (date, mask, utc) {
-            var dF = dateFormat;
 
             // You can't provide utc if you skip other args (use the "UTC:" mask prefix)
             if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
@@ -102,9 +101,9 @@ KISSY.add('date', function(S) {
 
             // Passing date through Date applies Date.parse, if necessary
             date = date ? new Date(date) : new Date();
-            if (isNaN(date)){
-				throw SyntaxError("invalid date");
-			}
+            if (isNaN(date)) {
+                throw SyntaxError("invalid date");
+            }
 
             mask = String(masks[mask] || mask || masks["default"]);
 
@@ -126,26 +125,26 @@ KISSY.add('date', function(S) {
                 o = utc ? 0 : date.getTimezoneOffset(),
                 flags = {
                     d:    d,
-                    dd:   pad(d),
+                    dd:   pad(d, undefined),
                     ddd:  i18n.dayNames[D],
                     dddd: i18n.dayNames[D + 7],
                     w:     i18n.dayNames[D + 14],
                     m:    m + 1,
-                    mm:   pad(m + 1),
+                    mm:   pad(m + 1, undefined),
                     mmm:  i18n.monthNames[m],
                     mmmm: i18n.monthNames[m + 12],
                     yy:   String(y).slice(2),
                     yyyy: y,
                     h:    H % 12 || 12,
-                    hh:   pad(H % 12 || 12),
+                    hh:   pad(H % 12 || 12, undefined),
                     H:    H,
-                    HH:   pad(H),
+                    HH:   pad(H, undefined),
                     M:    M,
-                    MM:   pad(M),
+                    MM:   pad(M, undefined),
                     s:    s,
-                    ss:   pad(s),
+                    ss:   pad(s, undefined),
                     l:    pad(L, 3),
-                    L:    pad(L > 99 ? Math.round(L / 10) : L),
+                    L:    pad(L > 99 ? Math.round(L / 10) : L, undefined),
                     t:    H < 12 ? "a" : "p",
                     tt:   H < 12 ? "am" : "pm",
                     T:    H < 12 ? "A" : "P",
@@ -161,7 +160,7 @@ KISSY.add('date', function(S) {
         };
     }();
 
-    S.Date = {
+    return {
         format: function(date, mask, utc) {
             return dateFormat(date, mask, utc);
         },

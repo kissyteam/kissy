@@ -8,11 +8,8 @@
 
     <target name="concat">
         <concat destfile="event-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="event.js"/>
-            <path path="event-object.js"/>
-            <path path="event-target.js"/>
-            <path path="event-mouseenter.js"/>
-            <path path="event-focusin.js"/>
+            <fileset dir="${src.dir}" includes="*.js" excludes="hashchange.js"/>
+            <path location="../event.js"/>
         </concat>
     </target>
 

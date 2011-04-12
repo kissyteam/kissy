@@ -58,6 +58,7 @@
 
         /**
          * Creates a serialized string of an array or object.
+         * @return {String}
          * <code>
          * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
          * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'

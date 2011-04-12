@@ -8,8 +8,10 @@
 
     <target name="concat">
         <concat destfile="imagezoom-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="imagezoom.js"/>
-            <path path="mod-autorender.js"/>
+            <path location="zoomer.js"/>
+            <path location="base.js"/>
+            <path location="autorender.js"/>
+            <path location="../imagezoom.js"/>
         </concat>
     </target>
 

@@ -2,9 +2,7 @@
  * dd support for kissy, drag for dd
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add('dd-draggable', function(S) {
-
-    var UA = S.UA;
+KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
     /*
      拖放纯功能类
@@ -14,15 +12,23 @@ KISSY.add('dd-draggable', function(S) {
         this._init();
     }
 
+    Draggable.POINT = "pointer";
+    Draggable.INTERSECT = "intersect";
+    Draggable.STRICT = "strict";
+
     Draggable.ATTRS = {
         /**
-         * 拖放节点
+         * 拖放节点，可能指向 proxy node
          */
         node: {
             setter:function(v) {
-                return S.one(v);
+                return Node.one(v);
             }
         },
+        /*
+         真实的节点
+         */
+        dragNode:{},
 
         /**
          * 是否需要遮罩跨越iframe
@@ -35,35 +41,44 @@ KISSY.add('dd-draggable', function(S) {
          * handler 数组，注意暂时必须在 node 里面
          */
         handlers:{
-            value:[],
-            setter:function(vs) {
-                if (vs) {
-                    for (var i = 0; i < vs.length; i++) {
-                        vs[i] = S.one(vs[i]);
-                        unselectable(vs[i][0]);
-                    }
-                }
-            }
+            value:[]
+        },
+        cursor:{
+            value:"move"
+        },
+
+        mode:{
+            /**
+             * @enum point,intersect,strict
+             * @description
+             *  In point mode, a Drop is targeted by the cursor being over the Target
+             *  In intersect mode, a Drop is targeted by "part" of the drag node being over the Target
+             *  In strict mode, a Drop is targeted by the "entire" drag node being over the Target             *
+             */
+            value:'point'
         }
+
     };
 
-    S.extend(Draggable, S.Base, {
+    S.extend(Draggable, Base, {
 
         _init: function() {
             var self = this,
                 node = self.get('node'),
                 handlers = self.get('handlers');
+            self.set("dragNode", node);
 
             if (handlers.length == 0) {
                 handlers[0] = node;
             }
 
             for (var i = 0; i < handlers.length; i++) {
-                var hl = handlers[i],
-                    ori = hl.css('cursor');
-                if (hl[0] != node[0]) {
-                    if (!ori || ori === 'auto')
-                        hl.css('cursor', 'move');
+                var hl = handlers[i];
+                hl = S.one(hl);
+                //ie 不能在其内开始选择区域
+                hl.unselectable();
+                if (self.get("cursor")) {
+                    hl.css('cursor', 'move');
                 }
             }
             node.on('mousedown', self._handleMouseDown, self);
@@ -104,7 +119,7 @@ KISSY.add('dd-draggable', function(S) {
          */
         _handleMouseDown: function(ev) {
             var self = this,
-                t = new S.Node(ev.target);
+                t = new Node(ev.target);
 
             if (!self._check(t)) return;
             //chrome 阻止了 flash 点击？？
@@ -113,14 +128,20 @@ KISSY.add('dd-draggable', function(S) {
             //firefox 默认会拖动对象地址
             ev.preventDefault();
             //}
+            self._prepare(ev);
 
-            S.DD.DDM._start(self);
+        },
+
+        _prepare:function(ev) {
+            var self = this;
+
+            DDM._start(self);
 
             var node = self.get("node"),
                 mx = ev.pageX,
                 my = ev.pageY,
                 nxy = node.offset();
-            self.startMousePos = {
+            self.startMousePos = self.mousePos = {
                 left:mx,
                 top:my
             };
@@ -130,7 +151,6 @@ KISSY.add('dd-draggable', function(S) {
                 top:my - nxy.top
             };
             self.set("diff", self._diff);
-
         },
 
         _move: function(ev) {
@@ -138,53 +158,39 @@ KISSY.add('dd-draggable', function(S) {
                 diff = self.get("diff"),
                 left = ev.pageX - diff.left,
                 top = ev.pageY - diff.top;
-            this.fire("drag", {
+            self.mousePos = {
+                left:ev.pageX,
+                top:ev.pageY
+            };
+            self.fire("drag", {
                 left:left,
                 top:top
+            });
+            DDM.fire("drag", {
+                left:left,
+                top:top,
+                drag:this
             });
         },
 
         _end: function() {
             this.fire("dragend");
+            DDM.fire("dragend", {
+                drag:this
+            });
         },
 
         _start: function() {
             this.fire("dragstart");
+            DDM.fire("dragstart", {
+                drag:this
+            });
         }
-
     });
 
-    var unselectable =
-        UA.gecko ?
-            function(el) {
-                el.style.MozUserSelect = 'none';
-            }
-            : UA.webkit ?
-            function(el) {
-                el.style.KhtmlUserSelect = 'none';
-            }
-            :
-            function(el) {
-                if (UA.ie || UA.opera) {
-                    var e,i = 0,
-                        els = el.getElementsByTagName("*");
-                    el.setAttribute("unselectable", 'on');
-                    while (( e = els[ i++ ] )) {
-                        switch (e.tagName.toLowerCase()) {
-                            case 'iframe' :
-                            case 'textarea' :
-                            case 'input' :
-                            case 'select' :
-                                /* Ignore the above tags */
-                                break;
-                            default :
-                                e.setAttribute("unselectable", 'on');
-                        }
-                    }
-                }
-            };
+    return Draggable;
 
-
-    S.Draggable = Draggable;
-
-}, { host: 'dd' });
+},
+{
+    requires:["ua","node","base","dd/ddm"]
+});

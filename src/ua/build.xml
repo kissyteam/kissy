@@ -8,8 +8,8 @@
 
     <target name="concat">
         <concat destfile="ua-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="ua.js"/>
-            <path path="ua-extra.js"/>
+            <fileset dir="." includes="*.js"/>
+            <path location="../ua.js"/>
         </concat>
     </target>
 

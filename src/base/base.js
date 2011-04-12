@@ -1,14 +1,14 @@
 /**
  * @module  Base
- * @author  lifesinger@gmail.com, yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('base', function (S) {
+KISSY.add('base/base', function (S, Attribute) {
 
     /*
      * Base for class-based component
      */
     function Base(config) {
-        S.Attribute.call(this);
+        Attribute.call(this);
         var c = this.constructor;
 
         // define
@@ -25,8 +25,9 @@ KISSY.add('base', function (S) {
         if (attrs) {
             for (var attr in attrs) {
                 // 子类上的 ATTRS 配置优先
-                if (attrs.hasOwnProperty(attr) && !host.hasAttr(attr)) {
-                    host.addAttr(attr, attrs[attr]);
+                if (attrs.hasOwnProperty(attr)) {
+                    //父类后加，父类不覆盖子类的相同设置
+                    host.addAttr(attr, attrs[attr], false);
                 }
             }
         }
@@ -35,12 +36,17 @@ KISSY.add('base', function (S) {
     function initAttrs(host, config) {
         if (config) {
             for (var attr in config) {
-                if (config.hasOwnProperty(attr))
+                if (config.hasOwnProperty(attr)) {
+                    //用户设置会调用 setter 的
                     host.__set(attr, config[attr]);
+                }
+
             }
         }
     }
 
-    S.augment(Base, S.EventTarget, S.Attribute);
-    S.Base = Base;
+    S.augment(Base, S.require("event/target"), Attribute);
+    return Base;
+}, {
+    requires:["base/attribute","event"]
 });

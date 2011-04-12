@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>list</title>
+<link href="../assets/selectable2.css" rel="stylesheet"/>
+</head>
+<body>
+<script src="../../seed/kissy.js"></script>
+<script src="../../seed/lang.js"></script>
+<script src="../../seed/web.js"></script>
+<script src="../../seed/loader.js"></script>
+<script src="../../../build/ua.js"></script>
+<script src="../../../build/node.js"></script>
+<script src="../../../build/dom.js"></script>
+<script src="../../../build/event.js"></script>
+<script src="../../../build/base.js"></script>
+<script src="../../../build/json.js"></script>
+<script src="../../../build/uibase.js"></script>
+<script src="../../selectable2/list.js"></script>
+<script>
+
+    KISSY.use("uibase,selectable2/list", function(S, UIBase, List) {
+
+        var TestList = UIBase.create([
+            S.require("uibase/box"),
+            S.require("uibase/contentbox"),
+            List
+        ]);
+
+
+        var l = new TestList({
+            render:document.body,
+            listData:[
+                {
+                    value:1,
+                    display:2
+                },
+                {
+                    value:3,
+                    display:4
+                }
+
+            ]
+        });
+        l.render();
+
+    });
+
+</script>
+</body>
+</html>

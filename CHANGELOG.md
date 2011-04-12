@@ -13,8 +13,10 @@ Legend of version history:
 
 History:
 --------
+### v1.1.6 -> v1.X.X (2011/MM/DD)
+ - [x] bugfix
 
-### v1.1.5 -> v1.x.x (2010/MM/DD)
+### v1.1.5 -> v1.1.6 (2010/11/30)
 
  - [!] KISSY.Event.on 第一个参数只支持单个原生 dom 节点或原生 dom 节点数组以及选择器字符串
  - [!] calendar 模块，S.use('calendar', fn) 需要写成 S.use('calendar+css', fn), 否则不会自动加载样式
@@ -24,7 +26,6 @@ History:
  - [+] 增加 jasminelite 和 event-simulate for jasmine
  - [!] event 中对 return false, 仅 preventDefault + stopPropagation, 不再 stopImmediatePropagation
  - [+] cssreset 加入对 HTML5 的支持
- - [+] 2010/11/30 发布内部版本 v1.1.6
  - [+] 增加 ajax 模块 [文档](http://kissyteam.github.com/kissy/docs/ajax/index.html)
  - [!] 将 S.one/all(selector).on(type, function(ev) { ev.target/currentTarget 由原来的 DOM 裸节点变成对应 Node })
  - [!] 将 S.all(selector).on(type, function() { this 由 NodeList 变成对应 Node })
@@ -38,6 +39,8 @@ History:
  - [*] 正则优化 [小结](http://lifesinger.org/blog/2010/09/regular-expression-improvement-for-kissy/)
  - [*] README / CHANGELOG 细节改进
  - [x] 已知 bugs 的修复和大量细节改进
+ - [+] 增加 uibase
+ - [!] Overlay 基于 uibase 进行重构, 接口不兼容
 
 
 ### v1.1.0 -> v1.1.5 (2010/09/19)
@@ -73,3 +76,4 @@ History:
 ### Initial Version 1.0.0 (2009/10/26)
 
  - [+] KISSY 从一片黑色的土壤中，伸出一叶嫩绿的芽: KISSY Editor ^o^
+

@@ -3,16 +3,23 @@
  * @author lifesinger@gmail.com, lijing00333@163.com, yiminghe@gmail.com
  */
 (function(S, undef) {
+    //如果已经定义过，则不运行，例如 nodejs 环境下采用原生机制先行定义
+    if (S.use) return;
 
     var win = S.__HOST,
+        oldIE = !win['getSelection'] && win['ActiveXObject'],
         doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-
-        EMPTY = '', CSSFULLPATH = 'cssfullpath',
-        LOADING = 1, LOADED = 2, ERROR = 3, ATTACHED = 4,
+        EMPTY = '',
+        LOADING = 1,
+        LOADED = 2,
+        ERROR = 3,
+        ATTACHED = 4,
         mix = S.mix,
-
-        scriptOnload = doc.createElement('script').readyState ?
+        /**
+         * ie 与标准浏览器监听 script 载入完毕有区别
+         */
+            scriptOnload = doc.createElement('script').readyState ?
             function(node, callback) {
                 var oldCallback = node.onreadystatechange;
                 node.onreadystatechange = function() {
@@ -27,38 +34,147 @@
             function(node, callback) {
                 node.addEventListener('load', callback, false);
             },
-
+        loader,
         RE_CSS = /\.css(?:\?|$)/i,
-        loader;
+        buildTime = encodeURIComponent(S.buildTime),
+        CSSFULLPATH = 'cssfullpath';
+
+    /**
+     * resolve relative part of path
+     * x/../y/z -> y/z
+     * x/./y/z -> x/y/z
+     * @param path uri path
+     * @return {string} resolved path
+     * @description similar to path.normalize in nodejs
+     */
+    function normalizePath(path) {
+        var paths = path.split("/"),
+            re = [],
+            p;
+        for (var i = 0; i < paths.length; i++) {
+            p = paths[i];
+            if (p == ".") {
+            }
+            else if (p == "..") {
+                re.pop();
+            }
+            else {
+                re.push(p);
+            }
+        }
+        return re.join("/");
+    }
+
+    /**
+     * 根据当前模块以及依赖模块的相对路径，得到依赖模块的绝对路径
+     * @param moduleName 当前模块
+     * @param depName 依赖模块
+     * @return {string|Array} 依赖模块的绝对路径
+     * @description similar to path.resolve in nodejs
+     */
+    function normalDepModuleName(moduleName, depName) {
+        if (!depName) return depName;
+        if (S.isArray(depName)) {
+            for (var i = 0; i < depName.length; i++) {
+                depName[i] = normalDepModuleName(moduleName, depName[i]);
+            }
+            return depName;
+        }
+        if (startsWith(depName, "../") || startsWith(depName, "./")) {
+            var anchor = EMPTY,index;
+            // x/y/z -> x/y/
+            if ((index = moduleName.lastIndexOf("/")) != -1) {
+                anchor = moduleName.substring(0, index + 1);
+            }
+            return normalizePath(anchor + depName);
+        } else if (depName.indexOf("./") != -1
+            || depName.indexOf("../") != -1) {
+            return normalizePath(depName);
+        } else {
+            return depName;
+        }
+    }
+
+    //去除后缀名，要考虑时间戳?
+    function removePostfix(path) {
+        return path.replace(/(-min)?\.js[^/]*$/i, EMPTY);
+    }
+
+    //当前页面所在的目录
+    // http://xx.com/y/z.htm
+    // ->
+    // http://xx.com/y/
+    var pagePath = (function() {
+        var url = location.href;
+        return url.replace(/[^/]*$/i, EMPTY);
+    })();
+
+    //路径正则化，不能是相对地址
+    //相对地址则转换成相对页面的绝对地址
+    function normalBasePath(path) {
+        if (path.charAt(path.length - 1) != '/')
+            path += "/";
+        path = S.trim(path);
+        if (!path.match(/^(http(s)?)|(file):/i)
+            && !startsWith(path, "/")) {
+            path = pagePath + path;
+        }
+        return normalizePath(path);
+    }
+
+    //http://wiki.commonjs.org/wiki/Packages/Mappings/A
+    //如果模块名以 / 结尾，自动加 index
+    function indexMapping(names) {
+        for (var i = 0; i < names.length; i++) {
+            if (names[i].match(/\/$/)) {
+                names[i] += "index";
+            }
+        }
+        return names;
+    }
+
 
     loader = {
+
+
+        //firefox,ie9,chrome 如果add没有模块名，模块定义先暂存这里
+        __currentModule:null,
+
+        //ie6,7,8开始载入脚本的时间
+        __startLoadTime:0,
+
+        //ie6,7,8开始载入脚本对应的模块名
+        __startLoadModuleName:null,
 
         /**
          * Registers a module.
          * @param name {String} module name
-         * @param fn {Function} entry point into the module that is used to bind module to KISSY
+         * @param def {Function|Object} entry point into the module that is used to bind module to KISSY
          * @param config {Object}
          * <code>
-         * KISSY.add('module-name', function(S){ }, requires: ['mod1']);
+         * KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
          * </code>
          * <code>
          * KISSY.add({
          *     'mod-name': {
          *         fullpath: 'url',
-         *         requires: ['mod1','mod2'],
-         *         attach: false // 默认为 true
+         *         requires: ['mod1','mod2']
          *     }
          * });
          * </code>
          * @return {KISSY}
          */
-        add: function(name, fn, config) {
-            var self = this, mods = self.Env.mods, mod, o;
+        add: function(name, def, config) {
+            var self = this,
+                mods = self.Env.mods,
+                o;
 
             // S.add(name, config) => S.add( { name: config } )
-            if (S['isString'](name) && !config && S.isPlainObject(fn)) {
+            if (S['isString'](name)
+                && !config
+                && S.isPlainObject(def)) {
                 o = {};
-                o[name] = fn;
+                o[name] = def;
                 name = o;
             }
 
@@ -69,31 +185,224 @@
                     if (mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
                 });
                 mix(mods, name);
+                return self;
             }
             // S.add(name[, fn[, config]])
-            else {
-                config = config || {};
+            if (S['isString'](name)) {
 
-                mod = mods[name] || {};
-                name = config.host || mod.host || name;
-                mod = mods[name] || {};
+                var host;
+                if (config && ( host = config.host )) {
+                    var hostMod = mods[host];
+                    if (!hostMod) {
+                        S.error("module " + host + " can not be found !");
+                        return self;
+                    }
+                    if (self.__isAttached(host)) {
+                        def.call(self, self);
+                    } else {
+                        //该 host 模块纯虚！
+                        hostMod.fns = hostMod.fns || [];
+                        hostMod.fns.push(def);
+                    }
+                    return self;
+                }
 
-                // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，还
-                //      是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-                mix(mod, { name: name, status: LOADED });
-
-                if (!mod.fns) mod.fns = [];
-                fn && mod.fns.push(fn);
-
-                mix((mods[name] = mod), config);
-
-                // 对于 requires 都已 attached 的模块，比如 core 中的模块，直接 attach
-                if ((mod['attach'] !== false) && self.__isAttached(mod.requires)) {
+                self.__registerModule(name, def, config);
+                //显示指定 add 不 attach
+                if (config && config['attach'] === false) return self;
+                // 和 1.1.7 以前版本保持兼容，不得已而为之
+                var mod = mods[name];
+                var requires = normalDepModuleName(name, mod.requires);
+                if (self.__isAttached(requires)) {
+                    //S.log(mod.name + " is attached when add !");
                     self.__attachMod(mod);
+                }
+                //调试用，为什么不在 add 时 attach
+                else if (this.Config.debug && !mod) {
+                    var i,modNames;
+                    i = (modNames = S.makeArray(requires)).length - 1;
+                    for (; i >= 0; i--) {
+                        var requireName = modNames[i];
+                        var requireMod = mods[requireName] || {};
+                        if (requireMod.status !== ATTACHED) {
+                            S.log(mod.name + " not attached when added : depends " + requireName);
+                        }
+                    }
+                }
+                return self;
+            }
+            // S.add(fn,config);
+            if (S.isFunction(name)) {
+                config = def;
+                def = name;
+                if (oldIE) {
+                    // 15 ms 内，从缓存读取的
+                    if (((+new Date()) - self.__startLoadTime) < 15) {
+                        S.log("old_ie 从缓存中读取");
+                        if (name = self.__startLoadModuleName) {
+                            self.__registerModule(name, def, config);
+                        } else {
+                            S.log("从缓存读取？？但是请求前记录没有模块名", "error");
+                            S.error("从缓存读取？？但是请求前记录没有模块名");
+                        }
+                    } else {
+                        S.log("old_ie 读取 interactiove 脚本地址");
+                        name = self.__findModuleNameByInteractive();
+                        self.__registerModule(name, def, config);
+                    }
+                    self.__startLoadModuleName = null;
+                    self.__startLoadTime = 0;
+                } else {
+                    S.log("标准浏览器等load时再关联模块名");
+                    // 其他浏览器 onload 时，关联模块名与模块定义
+                    self.__currentModule = {
+                        def:def,
+                        config:config
+                    };
+                }
+                return self;
+            }
+            S.error("invalid format for KISSY.add !");
+            return self;
+        },
+
+        //ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
+        __findModuleNameByInteractive:function() {
+            var self = this,
+                scripts = document.getElementsByTagName("script"),
+                re,
+                script;
+
+            for (var i = 0; i < scripts.length; i++) {
+                script = scripts[i];
+                if (script.readyState == "interactive") {
+                    re = script;
+                    break;
+                }
+            }
+            if (!re) {
+                S.log("找不到 interactive 状态的 script", "error");
+                S.error("找不到 interactive 状态的 script");
+            }
+
+            var src = re.src;
+            S.log("interactive src :" + src);
+            //注意：模块名不包含后缀名以及参数，所以去除
+            //系统模块去除系统路径
+            if (src.lastIndexOf(self.Config.base, 0) == 0) {
+                return removePostfix(src.substring(self.Config.base.length));
+            }
+
+            var packages = self.__packages;
+            //外部模块去除包路径，得到模块名
+            for (var p in packages) {
+                var p_path = packages[p].path;
+                if (!packages.hasOwnProperty(p)) continue;
+                if (src.lastIndexOf(p_path, 0) == 0) {
+                    return removePostfix(src.substring(p_path.length));
                 }
             }
 
-            return self;
+            S.log("interactive 状态的 script 没有对应包 ：" + src, "error");
+            S.error("interactive 状态的 script 没有对应包 ：" + src);
+            return undefined;
+        },
+
+        //注册模块，将模块和定义 factory 关联起来
+        __registerModule:function(name, def, config) {
+            config = config || {};
+            var self = this,
+                mods = self.Env.mods,
+                mod = mods[name] || {};
+
+            // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
+            // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
+            mix(mod, { name: name, status: LOADED });
+
+            if (mod.fns && mod.fns.length) {
+                S.log(name + " is defined more than once");
+                //S.error(name + " is defined more than once");
+            }
+
+            //支持 host，一个模块多个 add factory
+            mod.fns = mod.fns || [];
+            mod.fns.push(def);
+            mix((mods[name] = mod), config);
+        },
+
+        /**
+         * 包声明
+         * biz -> .
+         * 表示遇到 biz/x
+         * 在当前网页路径找 biz/x.js
+         */
+        _packages:function(cfgs) {
+            var self = this,
+                ps;
+            ps = self.__packages = self.__packages || {};
+            S.each(cfgs, function(cfg) {
+                ps[cfg.name] = cfg;
+                if (cfg.path) {
+                    //注意正则化
+                    cfg.path = normalBasePath(cfg.path);
+                }
+                if (cfg.tag) {
+                    cfg.tag = encodeURIComponent(cfg.tag);
+                }
+            });
+        },
+
+        /**
+         * compress 'from module' to 'to module'
+         * {
+         *   core:['dom','ua','event','node','json','ajax','anim','base','cookie']
+         * }
+         */
+        _combine:function(from, to) {
+            var self = this,
+                cs;
+            if (S['isObject'](from)) {
+                S.each(from, function(v, k) {
+                    S.each(v, function(v2) {
+                        self._combine(v2, k);
+                    });
+                });
+                return;
+            }
+            cs = self.__combines = self.__combines || {};
+            if (to) {
+                cs[from] = to;
+            } else {
+                return cs[from] || from;
+            }
+        },
+
+        __mixMods: function(global) {
+            var mods = this.Env.mods,
+                gMods = global.Env.mods,
+                name;
+            for (name in gMods) {
+                this.__mixMod(mods, gMods, name, global);
+            }
+        },
+
+        __mixMod: function(mods, gMods, name, global) {
+            var mod = mods[name] || {},
+                status = mod.status;
+
+            S.mix(mod, S.clone(gMods[name]));
+
+            // status 属于实例，当有值时，不能被覆盖。只有没有初始值时，才从 global 上继承
+            if (status) {
+                mod.status = status;
+            }
+
+            // 来自 global 的 mod, path 应该基于 global
+            if (global) {
+                this.__buildPath(mod, global.Config.base);
+            }
+
+            mods[name] = mod;
         },
 
         /**
@@ -102,127 +411,202 @@
          * S.use('mod-name', callback, config);
          * S.use('mod1,mod2', callback, config);
          * </code>
-         * config = {         *
-         *   global: KISSY // 默认为 KISSY. 当在 this.Env.mods 上找不到某个 mod 的属性时，会到 global.Env.mods 上去找
-         * }
          */
-        use: function(modNames, callback, config) {
+        use: function(modNames, callback, cfg) {
             modNames = modNames.replace(/\s+/g, EMPTY).split(',');
-            config = config || {};
+            indexMapping(modNames);
+            cfg = cfg || {};
 
             var self = this,
-                modName,
-                global = (config || 0).global,
-                i, len = modNames.length,fired;
-
-            // 将 global 上的 mods, 移动到 instance 上
-            if (global) self.__mixMods(global);
+                fired;
+            //如果 use 指定了 global
+            if (cfg.global) {
+                self.__mixMods(cfg.global);
+            }
 
             // 已经全部 attached, 直接执行回调即可
             if (self.__isAttached(modNames)) {
-                callback && callback(self);
+                var mods = self.__getModules(modNames);
+                callback && callback.apply(self, mods);
                 return;
             }
+
             // 有尚未 attached 的模块
-            for (i = 0; i < len && (modName = modNames[i]); i++) {
-                //从name开始调用，防止不存在模块
+            S.each(modNames, function(modName) {
+                // 从 name 开始调用，防止不存在模块
                 self.__attachModByName(modName, function() {
                     if (!fired && self.__isAttached(modNames)) {
                         fired = true;
-                        callback && callback(self);
+                        var mods = self.__getModules(modNames);
+                        callback && callback.apply(self, mods);
                     }
-                }, global);
-            }
+                }, cfg);
+            });
 
             return self;
         },
+
+        __getModules:function(modNames) {
+            var self = this,
+                mods = [self];
+            S.each(modNames, function(modName) {
+                mods.push(self.require(modName));
+            });
+            return mods;
+        },
+
+        /**
+         * get module's value defined by define function
+         * @param {string} moduleName
+         */
+        require:function(moduleName) {
+            var self = this,
+                mods = self.Env.mods,
+                mod = mods[moduleName],
+                re = self['onRequire'] && self['onRequire'](mod);
+            if (re !== undefined) return re;
+            return mod && mod.value;
+        },
+
+        __getPackagePath:function(mod) {
+            //缓存包路径，未申明的包的模块都到核心模块中找
+            if (mod.packagepath) return mod.packagepath;
+            var self = this,
+                //一个模块合并到了另一个模块文件中去
+                modName = self._combine(mod.name),
+                packages = self.__packages || {},
+                pName = "",
+                p_def,
+                p_path;
+
+            for (var p in packages) {
+                if (packages.hasOwnProperty(p)) {
+                    if (startsWith(modName, p)) {
+                        if (p.length > pName) {
+                            pName = p;
+                        }
+                    }
+                }
+            }
+            p_def = packages[pName];
+            p_path = (p_def && p_def.path) || self.Config.base;
+            if (p_def && p_def.charset) {
+                mod.charset = p_def.charset;
+            }
+            if (p_def) {
+                mod.tag = p_def.tag;
+            } else {
+                mod.tag = buildTime;
+            }
+            mod.packagepath = p_path;
+            return p_path;
+        },
+
         //加载指定模块名模块，如果不存在定义默认定义为内部模块
-        __attachModByName: function(modName, callback, global) {
+        __attachModByName: function(modName, callback, cfg) {
 
             var self = this,
                 mods = self.Env.mods,
-                //是否自带了css
-                hasCss = modName.indexOf("+css") != -1;
-            //得到真实组件名
-            modName = hasCss ? modName.replace(/\+css/g, "") : modName;
-            var mod = mods[modName];
-            //没有模块定义，内部模块不许定义
+                mod = mods[modName];
+            //没有模块定义
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=@TIMESTAMP@';
-                },  js = S.isFunction(componentJsName) ?
-                    componentJsName(modName) : componentJsName;
+                    return m + '-min.js';
+                },  jsPath = S.isFunction(componentJsName) ?
+                    //一个模块合并到了了另一个模块文件中去
+                    componentJsName(self._combine(modName))
+                    : componentJsName;
                 mod = {
-                    path:modName + '/' + js,
+                    path:jsPath,
                     charset: 'utf-8'
                 };
                 //添加模块定义
                 mods[modName] = mod;
             }
-
-            if (hasCss) {
-                var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=@TIMESTAMP@';
-                },  css = S.isFunction(componentCssName) ?
-                    componentCssName(modName) :
-                    componentCssName;
-                mod.csspath = modName + '/' + css;
-            }
             mod.name = modName;
-
             if (mod && mod.status === ATTACHED) return;
-            self.__attach(mod, callback, global);
+            self.__attach(mod, callback, cfg);
         },
 
         /**
          * Attach a module and all required modules.
          */
-        __attach: function(mod, callback, global) {
+        __attach: function(mod, callback, cfg) {
             var self = this,
                 mods = self.Env.mods,
                 //复制一份当前的依赖项出来，防止add后修改！
-                requires = (mod['requires'] || []).concat(),
-                i = 0, len = requires.length;
+                requires = (mod['requires'] || []).concat();
+            mod['requires'] = requires;
 
             // attach all required modules
-            for (; i < len; i++) {
-                var r = mods[requires[i]];
-                if (r && r.status === ATTACHED) {
+            S.each(requires, function(r, i, requires) {
+                r = requires[i] = normalDepModuleName(mod.name, r);
+                var rMod = mods[r];
+                if (rMod && rMod.status === ATTACHED) {
                     //no need
                 } else {
-                    self.__attachModByName(requires[i], fn, global);
+                    self.__attachModByName(r, fn, cfg);
                 }
-            }
+            });
+
 
             // load and attach this module
-            self.__buildPath(mod);
+            self.__buildPath(mod, self.__getPackagePath(mod));
+
             self.__load(mod, function() {
+
+                //标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件
+                if (self.__currentModule) {
+                    self.__registerModule(mod.name, self.__currentModule.def,
+                        self.__currentModule.config);
+                    self.__currentModule = null;
+                }
+
                 // add 可能改了 config，这里重新取下
-                var newRequires = mod['requires'] || [],optimize = [];
+                mod['requires'] = mod['requires'] || [];
+
+                var newRequires = mod['requires'],
+                    optimize = [];
+
                 //本模块下载成功后串行下载 require
-                for (var i = newRequires.length - 1; i >= 0; i--) {
-                    var r = newRequires[i],
-                        rmod = mods[r],
+                S.each(newRequires, function(r, i, newRequires) {
+                    r = newRequires[i] = normalDepModuleName(mod.name, r);
+                    var rMod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
-                    if (rmod && rmod.status === ATTACHED ||
-                        inA) {
+                    if (rMod && rMod.status === ATTACHED
+                        //已经正在处理了
+                        || inA) {
                         //no need
                     } else {
                         //新增的依赖项
-                        self.__attachModByName(r, fn, global);
+                        self.__attachModByName(r, fn, cfg);
                     }
-                    if (!inA) {
+                    /**
+                     * 依赖项需要重新下载，最好和被依赖者一起 use
+                     */
+                    if (!inA && (!rMod || rMod.status < LOADED)) {
                         optimize.push(r);
                     }
-                }
+                });
+
                 if (optimize.length != 0) {
                     optimize.unshift(mod.name);
-                    S.log(optimize + " : better to be used together", "warn");
+                    //S.log(optimize + " : better to be used together", "warn");
                 }
+
+                /**
+                 * 如果设置了csspath，css 是一种特殊的依赖
+                 */
+                if (S['isString'](mod["csspath"]) || S['isString'](mod[CSSFULLPATH])) {
+                    //如果 path 以 ./或 ../开头，则根据当前模块定位
+                    self.__buildPath(mod, self.__getPackagePath(mod));
+                    S.getScript(mod[CSSFULLPATH]);
+                }
+
                 fn();
-            }, global);
+            }, cfg);
 
             var attached = false;
 
@@ -240,61 +624,48 @@
             }
         },
 
-        __mixMods: function(global) {
-            var mods = this.Env.mods, gMods = global.Env.mods, name;
-            for (name in gMods) {
-                this.__mixMod(mods, gMods, name, global);
-            }
-        },
-
-        __mixMod: function(mods, gMods, name, global) {
-            var mod = mods[name] || {}, status = mod.status;
-
-            S.mix(mod, S.clone(gMods[name]));
-
-            // status 属于实例，当有值时，不能被覆盖。只有没有初始值时，才从 global 上继承
-            if (status) mod.status = status;
-
-            // 来自 global 的 mod, path 应该基于 global
-            if (global) this.__buildPath(mod, global.Config.base);
-
-            mods[name] = mod;
-        },
-
         __attachMod: function(mod) {
-            var self = this;
+            var self = this,
+                defs = mod.fns;
 
-            if (mod.fns) {
-                S.each(mod.fns, function(fn) {
-                    fn && fn(self);
+            if (defs) {
+                S.each(defs, function(def) {
+                    var value;
+                    if (S.isFunction(def)) {
+                        value = def.apply(self, self.__getModules(mod['requires']));
+                    } else {
+                        value = def;
+                    }
+                    mod.value = mod.value || value;
                 });
-                mod.fns = undef; // 保证 attach 过的方法只执行一次
-                //S.log(mod.name + '.status = attached');
             }
 
             mod.status = ATTACHED;
         },
 
         __isAttached: function(modNames) {
-            var mods = this.Env.mods, mod,
-                i = (modNames = S.makeArray(modNames)).length - 1;
-
-            for (; i >= 0; i--) {
-                var name = modNames[i].replace(/\+css/, "");
-                mod = mods[name] || {};
-                if (mod.status !== ATTACHED) return false;
-            }
-
-            return true;
+            var mods = this.Env.mods,
+                ret = true;
+            S.each(modNames, function(name) {
+                var mod = mods[name];
+                if (!mod || mod.status !== ATTACHED) {
+                    ret = false;
+                    return ret;
+                }
+            });
+            return ret;
         },
 
         /**
          * Load a single module.
          */
-        __load: function(mod, callback, global) {
-            var self = this, url = mod['fullpath'],
-                loadQueque = S.Env._loadQueue, // 这个是全局的，防止多实例对同一模块的重复下载
-                node = loadQueque[url], ret;
+        __load: function(mod, callback, cfg) {
+            var self = this,
+                url = mod['fullpath'],
+                //这个是全局的，防止多实例对同一模块的重复下载
+                loadQueque = S.Env._loadQueue,
+                node = loadQueque[url],
+                ret;
 
             mod.status = mod.status || 0;
 
@@ -306,18 +677,22 @@
             // 加载 css, 仅发出请求，不做任何其它处理
             if (S['isString'](mod[CSSFULLPATH])) {
                 self.getScript(mod[CSSFULLPATH]);
-                mod[CSSFULLPATH] = LOADED;
+                mod[CSSFULLPATH] = mod.csspath = LOADED;
             }
 
             if (mod.status < LOADING && url) {
                 mod.status = LOADING;
-
+                if (oldIE) {
+                    self.__startLoadModuleName = mod.name;
+                    self.__startLoadTime = Number(+new Date());
+                }
                 ret = self.getScript(url, {
                     success: function() {
-                        KISSY.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
+                        S.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
                         _success();
                     },
                     error: function() {
+                        S.log(mod.name + ' is not loaded!', 'error');
                         mod.status = ERROR;
                         _final();
                     },
@@ -346,7 +721,9 @@
 
                     // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息，需要同步到 instance 上去
                     // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
-                    if (global) self.__mixMod(self.Env.mods, global.Env.mods, mod.name, global);
+                    if (cfg.global) {
+                        self.__mixMod(self.Env.mods, cfg.global.Env.mods, mod.name, cfg.global);
+                    }
 
                     // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
                     // 因此要加上下面的 !== 判断，否则会出现重复 attach, 比如编辑器里动态加载时，被依赖的模块会重复
@@ -362,18 +739,28 @@
         },
 
         __buildPath: function(mod, base) {
-            var Config = this.Config;
+            var self = this,
+                Config = self.Config;
 
-            build('path', 'fullpath');
-            if (mod[CSSFULLPATH] !== LOADED) build('csspath', CSSFULLPATH);
+            build("fullpath", "path");
+            build("cssfullpath", "csspath");
 
-            function build(path, fullpath) {
+            function build(fullpath, path) {
                 if (!mod[fullpath] && mod[path]) {
+                    //如果是 ./ 或 ../ 则相对当前模块路径
+                    mod[path] = normalDepModuleName(mod.name, mod[path]);
                     mod[fullpath] = (base || Config.base) + mod[path];
                 }
                 // debug 模式下，加载非 min 版
                 if (mod[fullpath] && Config.debug) {
-                    mod[fullpath] = mod[fullpath].replace(/-min/g, '');
+                    mod[fullpath] = mod[fullpath].replace(/-min/ig, EMPTY);
+                }
+
+                //刷新客户端缓存，加时间戳 tag
+                if (mod[fullpath]
+                    && !(mod[fullpath].match(/\?t=/))
+                    && mod.tag) {
+                    mod[fullpath] += "?t=" + mod.tag;
                 }
             }
         },
@@ -392,9 +779,12 @@
          * </code>
          */
         getScript: function(url, success, charset) {
-            var isCSS = RE_CSS.test(url),
+            var isCSS = /\.css(?:\?|$)/i.test(url),
                 node = doc.createElement(isCSS ? 'link' : 'script'),
-                config = success, error, timeout, timer;
+                config = success,
+                error,
+                timeout,
+                timer;
 
             if (S.isPlainObject(config)) {
                 success = config.success;
@@ -422,11 +812,6 @@
                     }
 
                     S.isFunction(success) && success.call(node);
-
-                    // remove script
-                    if (head && node.parentNode) {
-                        head.removeChild(node);
-                    }
                 });
             }
 
@@ -458,7 +843,7 @@
      */
     // notice: timestamp
     var baseReg = /^(.*)(seed|kissy)(-min)?\.js[^/]*/i,
-        baseTestReg = /(seed|kissy)(-min)?\.js/;
+        baseTestReg = /(seed|kissy)(-min)?\.js/i;
 
     function getBaseUrl(script) {
         var src = script.src,
@@ -482,21 +867,21 @@
             }
             // combo after first
             else {
-                for (var i = 1; i < parts.length; i++) {
-                    var part = parts[i];
+                S.each(parts, function(part) {
                     if (part.match(baseTestReg)) {
                         base += part.replace(baseReg, '$1');
-                        break;
+                        return false;
                     }
-                }
+                });
             }
         }
         /**
          * 一定要正则化，防止出现 ../ 等相对路径
+         * 考虑本地路径
          */
-        if (!startsWith(base, "/")
-            && !base.match(/^(http(s)?)|(file):/i)) {
-            base = window.location.href.replace(/[^/]*$/, '') + base;
+        if (!base.match(/^(http(s)?)|(file):/i)
+            && !startsWith(base, "/")) {
+            base = pagePath + base;
         }
         return base;
     }
@@ -510,16 +895,21 @@
      */
     S.__initLoader = function() {
         // get base from current script file path
-        var scripts = doc.getElementsByTagName('script'),
+        var self = this,
+            scripts = doc.getElementsByTagName('script'),
             currentScript = scripts[scripts.length - 1],
             base = getBaseUrl(currentScript);
 
-        this.Env.mods = {}; // all added mods
-        this.Env._loadQueue = {}; // information for loading and loaded mods
+        self.Env.mods = {}; // all added mods
+        self.Env._loadQueue = {}; // information for loading and loaded mods
 
         // don't override
-        if (!this.Config.base) this.Config.base = base;
-        if (!this.Config.timeout) this.Config.timeout = 10;   // the default timeout for getScript
+        if (!self.Config.base) {
+            self.Config.base = normalBasePath(base);
+        }
+        if (!self.Config.timeout) {
+            self.Config.timeout = 10;
+        }   // the default timeout for getScript
     };
     S.__initLoader();
 
@@ -530,4 +920,39 @@
     S.__APP_INIT_METHODS.push('__initLoader');
 
 })(KISSY);
+
+/**
+ * 2011-01-04 chengyu<yiminghe@gmail.com> refactor:
+ *
+ * adopt requirejs :
+ *
+ * 1. packages(cfg) , cfg :{
+ *    name : 包名，用于指定业务模块前缀
+ *    path: 前缀包名对应的路径
+ *    charset: 该包下所有文件的编码
+ *
+ * 2. add(moduleName,function(S,depModule){return function(){}},{requires:["depModuleName"]});
+ *    moduleName add 时可以不写
+ *    depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
+ *
+ * 3. S.use(["dom"],function(S,DOM){
+ *    });
+ *    依赖注入，发生于 add 和 use 时期
+ *
+ * 4. add,use 不支持 css loader ,getScript 仍然保留支持
+ *
+ * 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
+ *
+ * demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
+ *
+ * 2011-03-01 yiminghe@gmail.com note:
+ *
+ * compatibility
+ *
+ * 1. 保持兼容性，不得已而为之
+ *      支持 { host : }
+ *      如果 requires 都已经 attached，支持 add 后立即 attach
+ *      支持 { attach : false } 显示控制 add 时是否 attach
+ *      支持 { global : Editor } 指明模块来源
+ */
 

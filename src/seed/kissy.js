@@ -5,30 +5,30 @@
 (function(host, S, undef) {
 
     var meta = {
-            /**
-             * Copies all the properties of s to r.
-             * @return {Object} the augmented object
-             */
-            mix: function(r, s, ov, wl) {
-                if (!s || !r) return r;
-                if (ov === undef) ov = true;
-                var i, p, len;
+        /**
+         * Copies all the properties of s to r.
+         * @return {Object} the augmented object
+         */
+        mix: function(r, s, ov, wl) {
+            if (!s || !r) return r;
+            if (ov === undef) ov = true;
+            var i, p, len;
 
-                if (wl && (len = wl.length)) {
-                    for (i = 0; i < len; i++) {
-                        p = wl[i];
-                        if (p in s) {
-                            _mix(p, r, s, ov);
-                        }
-                    }
-                } else {
-                    for (p in s) {
+            if (wl && (len = wl.length)) {
+                for (i = 0; i < len; i++) {
+                    p = wl[i];
+                    if (p in s) {
                         _mix(p, r, s, ov);
                     }
                 }
-                return r;
+            } else {
+                for (p in s) {
+                    _mix(p, r, s, ov);
+                }
             }
-        },
+            return r;
+        }
+    },
 
         _mix = function(p, r, s, ov) {
             if (ov || !(p in r)) {
@@ -61,6 +61,8 @@
          * @type {String}
          */
         version: '@VERSION@',
+
+        buildTime:'@TIMESTAMP@',
 
         /**
          * Returns a new object containing all of the properties of
@@ -117,23 +119,23 @@
             if (!s || !r) return r;
 
             var create = Object.create ?
-                         function(proto, c) {
-                             return Object.create(proto, {
-                                 constructor: {
-                                     value: c
-                                 }
-                             });
-                         } :
-                         function (proto, c) {
-                             function F() {
-                             }
+                function(proto, c) {
+                    return Object.create(proto, {
+                        constructor: {
+                            value: c
+                        }
+                    });
+                } :
+                function (proto, c) {
+                    function F() {
+                    }
 
-                             F.prototype = proto;
+                    F.prototype = proto;
 
-                             var o = new F();
-                             o.constructor = c;
-                             return o;
-                         },
+                    var o = new F();
+                    o.constructor = c;
+                    return o;
+                },
                 sp = s.prototype,
                 rp;
 
@@ -155,11 +157,11 @@
             return r;
         },
 
-        /****************************************************************************************
+    /****************************************************************************************
 
-         *                            The KISSY System Framework                                *
+     *                            The KISSY System Framework                                *
 
-         ****************************************************************************************/
+     ****************************************************************************************/
 
         /**
          * Initializes KISSY
@@ -224,6 +226,13 @@
             return O;
         },
 
+
+        config:function(c) {
+            for(var p in c) {
+                if(this["_"+p]) this["_"+p](c[p]);
+            }
+        },
+
         /**
          * Prints debug info.
          * @param msg {String} the message to log.
@@ -262,7 +271,6 @@
     });
 
     S.__init();
-
     return S;
 
 })(this, 'KISSY');

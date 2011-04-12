@@ -7,16 +7,21 @@
 <script src="../../../tools/jasmine/jasmine.js"></script>
 <script src="../../../tools/jasmine/jasmine-html.js"></script>
 
-<script src="../../../build/seed/seed-pkg.js"></script>
+<script src="../../../build/seed.js"></script>
 
 <script src="../json2.js"></script>
-<script src="../json.js"></script>
+<script src="../../json.js"></script>
 <script src="json-spec.js"></script>
 </head>
 <body>
+<h1>KISSY.Json Test Cases</h1>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute();
+    jasmine.getEnv().execute(function() {
+        if (parent && parent.jasmine.kissyNext) {
+            parent.jasmine.kissyNext(this.results().failedCount);
+        }
+    });
 </script>
 </body>
 </html>
