@@ -47,8 +47,10 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
                 }
                 return v;
             },
-
-            valueFn:function() {
+            /**
+             * xy 纯中转作用
+             */
+            getter:function() {
                 return [this.get("x"),this.get("y")];
             }
         },
