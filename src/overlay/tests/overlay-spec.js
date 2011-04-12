@@ -180,7 +180,7 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
                     height = o.get("el")[0].offsetHeight;
                 var hxy = h.offset();
                 S.log(hxy);
-                
+
                 jasmine.simulate(h[0], "mousedown", {
                     clientX:hxy.left + 2 ,
                     clientY:hxy.top + 2
@@ -217,10 +217,35 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
 
 
     });
-    
+
     var Dialog = Overlay.Dialog;
 
     describe("dialog", function() {
+
+        describe("从页面中取得已渲染元素", function() {
+
+            var d = new Dialog({
+                srcNode:"#drender",
+                width:200,
+                drag:true,
+                constrain:true
+            });
+
+            d.render();
+            d.center();
+            d.show();
+
+            window.dialog = d;
+
+
+            it("头体尾已经渲染完毕", function() {
+                expect(d.get("header").html()).toBe("prerender header");
+                expect(d.get("body").html()).toBe("prerender body");
+                expect(d.get("footer").html()).toBe("prerender footer");
+            });
+
+        });
+
 
         describe("完全由 javascript 创建", function() {
 
