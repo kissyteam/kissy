@@ -4,7 +4,7 @@
  */
 KISSY.add("menu/submenu", function(S, UIBase, MenuItem, SubMenuRender) {
     var SubMenu;
-    SubMenu = UIBase.create(MenuItem,  {
+    SubMenu = UIBase.create(MenuItem, {
         _handleMouseLeave:function(ev) {
             if (MenuItem.superclass._handleMouseLeave.call(this, ev) === false) return false;
             var menu = this.get("menu");
@@ -19,7 +19,7 @@ KISSY.add("menu/submenu", function(S, UIBase, MenuItem, SubMenuRender) {
         },
 
         _uiSetHighlighted:function(v) {
-            SubMenu.superclass._uiSetHighlighted.call(this, v);
+            this.get("view").set("highlighted",v);
             if (!v) {
                 var menu = this.get("menu");
                 menu && menu.hide();
@@ -46,10 +46,13 @@ KISSY.add("menu/submenu", function(S, UIBase, MenuItem, SubMenuRender) {
                     parentMenu.fire("menuItemSelected");
                 });
 
-                //纯表现层的事情
-                menu.get("view").on("afterHighlightedItemChange", function(ev) {
-                    parentMenu.get("view").set("highlightedItem", ev.newVal);
+                menu.on("afterRenderUI", function() {
+                    //纯表现层的事情
+                    menu.get("view").on("afterHighlightedItemChange", function(ev) {
+                        parentMenu.get("view").set("highlightedItem", ev.newVal);
+                    });
                 });
+
             }
 
 
