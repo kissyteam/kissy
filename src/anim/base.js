@@ -6,6 +6,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
     var EventTarget,
         PROPS,
+        CUSTOM_ATTRS,
         OPACITY,NONE,
         PROPERTY,EVENT_START,
         EVENT_STEP,
@@ -14,26 +15,26 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         TRANSITION_NAME;
 
     EventTarget = Event.Target;
-    //所有有效的 css 分属性，数字则动画，否则直接设最终结果
+
+    //支持的有效的 css 分属性，数字则动画，否则直接设最终结果
     PROPS = (
-        'backgroundColor ' +
-            'borderBottomColor ' +
-            'borderBottomWidth ' +
+
+        'borderBottomWidth ' +
             'borderBottomStyle ' +
-            'borderLeftColor ' +
+
             'borderLeftWidth ' +
             'borderLeftStyle ' +
             // 同 font
             //'borderColor ' +
-            'borderRightColor ' +
+
             'borderRightWidth ' +
             'borderRightStyle ' +
             'borderSpacing ' +
-            'borderTopColor ' +
+
             'borderTopWidth ' +
             'borderTopStyle ' +
             'bottom ' +
-            'color ' +
+
             // shorthand 属性去掉，取分解属性
             //'font ' +
             'fontFamily ' +
@@ -52,7 +53,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             'minHeight ' +
             'minWidth ' +
             'opacity ' +
-            'outlineColor ' +
+
             'outlineOffset ' +
             'outlineWidth ' +
             'paddingBottom ' +
@@ -65,6 +66,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             'width ' +
             'wordSpacing ' +
             'zIndex').split(' ');
+
+    //支持的元素属性
+    CUSTOM_ATTRS = [];
 
     OPACITY = 'opacity';
     NONE = 'none';
@@ -83,6 +87,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
      * @constructor
      */
     function Anim(elem, props, duration, easing, callback, nativeSupport) {
+
+
 
         // ignore non-exist element
         if (!(elem = DOM.get(elem))) return undefined;
@@ -111,6 +117,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             style = String(S.param(style, ';'))
                 .replace(/=/g, ':')
                 .replace(/%23/g, '#')// 还原颜色值中的 #
+                //注意：这里自定义属性也被 - 了，后面从字符串中取值时需要考虑
                 .replace(/([a-z])([A-Z])/g, '$1-$2')
                 .toLowerCase(); // backgroundColor => background-color
         }
@@ -138,7 +145,14 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             if (duration) (config.duration = parseFloat(duration) || 1);
             if (S['isString'](easing) || S.isFunction(easing)) config.easing = easing;
             if (S.isFunction(callback)) config.complete = callback;
-            if (nativeSupport !== undefined) config.nativeSupport = nativeSupport;
+            if (nativeSupport !== undefined) {
+                config.nativeSupport = nativeSupport;
+            }
+        }
+
+        //如果设定了元素属性的动画，则不能启动 css3 transition
+        if (!S.isEmptyObject(getCustomAttrs(style))) {
+            config.nativeSupport = false;
         }
         self.config = config;
 
@@ -158,7 +172,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
         // register callback
         if (S.isFunction(callback)) {
-
             self.callback = callback;
             //不要这样注册了，常用方式(new 完就扔)会忘记 detach，造成内存不断增加
             //self.on(EVENT_COMPLETE, callback);
@@ -167,6 +180,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
     }
 
     Anim.PROPS = PROPS;
+    Anim.CUSTOM_ATTRS = CUSTOM_ATTRS;
 
     // 不能插值的直接返回终值，没有动画插值过程
     function mirror(source, target) {
@@ -203,6 +217,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             }
         }
     };
+
+    var PROP_OPS = Anim.PROP_OPS;
 
 
     S.augment(Anim, EventTarget, {
@@ -430,16 +446,16 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
     var getNativeTransitionName = Anim.supportTransition;
 
     function setToFinal(elem, style) {
-        setCssText(elem, style);
+        setAnimStyleText(elem, style);
     }
 
     function getAnimValue(el, prop) {
-        return (Anim.PROP_OPS[prop] || Anim.PROP_OPS["*"]).getter(el, prop);
+        return (PROP_OPS[prop] || PROP_OPS["*"]).getter(el, prop);
     }
 
 
     function setAnimValue(el, prop, v) {
-        return (Anim.PROP_OPS[prop] || Anim.PROP_OPS["*"]).setter(el, prop, v);
+        return (PROP_OPS[prop] || PROP_OPS["*"]).setter(el, prop, v);
     }
 
     /**
@@ -450,26 +466,31 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             rules = {},
             i = PROPS.length,
             v;
-        var el = DOM.insertAfter(elem.cloneNode(false), elem);
+        var el = DOM.insertAfter(elem.cloneNode(true), elem);
 
         css = el.style;
-        setCssText(el, style);
+        setAnimStyleText(el, style);
         while (i--) {
             var prop = PROPS[i];
             if (v = css[prop]) {
                 rules[prop] = getAnimValue(el, prop);
             }
         }
+        //自定义属性混入
+        var customAttrs = getCustomAttrs(style);
+        for (var a in customAttrs) {
+            rules[a] = getAnimValue(el, a);
+        }
         DOM.remove(el);
         return rules;
     }
 
     /**
-     * 直接设置 cssText，注意 ie 的 opacity
+     * 直接设置 cssText 以及属性字符串，注意 ie 的 opacity
      * @param style
      * @param elem
      */
-    function setCssText(elem, style) {
+    function setAnimStyleText(elem, style) {
         if (UA['ie'] && style.indexOf(OPACITY) > -1) {
             var reg = /opacity\s*:\s*([^;]+)(;|$)/;
             var match = style.match(reg);
@@ -480,6 +501,31 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             //ie style.opacity 要能取！
         }
         elem.style.cssText += ';' + style;
+        //设置自定义属性
+        var attrs = getCustomAttrs(style);
+        for (var a in attrs) {
+            elem[a] = attrs[a];
+        }
+    }
+
+    /**
+     * 从自定义属性和样式字符串中解出属性值
+     * @param style
+     */
+    function getCustomAttrs(style) {
+
+        var ret = {};
+        for (var i = 0; i < CUSTOM_ATTRS.length; i++) {
+            var attr = CUSTOM_ATTRS[i]
+                .replace(/([a-z])([A-Z])/g, '$1-$2')
+                .toLowerCase();
+            var reg = new RegExp(attr + "\\s*:([^;]+)(;|$)");
+            var m = style.match(reg);
+            if (m) {
+                ret[CUSTOM_ATTRS[i]] = S.trim(m[1]);
+            }
+        }
+        return ret;
     }
 
     return Anim;

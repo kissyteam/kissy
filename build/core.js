@@ -35,6 +35,7 @@ D:\code\kissy_git\kissy\tools\..\src\anim\manager.js
 D:\code\kissy_git\kissy\tools\..\src\anim\base.js
 D:\code\kissy_git\kissy\tools\..\src\anim\node-plugin.js
 D:\code\kissy_git\kissy\tools\..\src\anim\color.js
+D:\code\kissy_git\kissy\tools\..\src\anim\scroll.js
 D:\code\kissy_git\kissy\tools\..\src\anim.js
 D:\code\kissy_git\kissy\tools\..\src\base\attribute.js
 D:\code\kissy_git\kissy\tools\..\src\base\base.js
@@ -331,6 +332,48 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             offset: 1
         };
 
+    var attrNormalizers = {
+        tabindex:{
+            getter:function(el) {
+                return el.tabIndex;
+            },
+            setter:function(el, val) {
+                // http://www.w3.org/TR/html5/editing.html#sequential-focus-navigation-and-the-tabindex-attribute
+                // 简化，和不填一样处理！
+                if (isNaN(parseInt(val))) {
+                    el.removeAttribute("tabindex");
+                    el.removeAttribute("tabIndex");
+                } else {
+                    el.tabIndex = val;
+                }
+            }
+        },
+        // 在标准浏览器下，用 getAttribute 获取 style 值
+        // IE7- 下，需要用 cssText 来获取
+        // 统一使用 cssText
+        style:{
+            getter:function(el) {
+                return el.style.cssText;
+            },
+            setter:function(el, val) {
+                el.style.cssText = val;
+            }
+        },
+        checked:{
+            // checked 属性值，需要通过直接设置才能生效
+            setter:function(el, val) {
+                el.checked = !!val;
+            }
+        },
+        disabled:{
+            // disabled 属性值，需要通过直接设置才能生效
+            //true 然后 false，false失效
+            setter:function(el, val) {
+                el.disabled = !!val;
+            }
+        }
+    };
+
     if (oldIE) {
         S.mix(CUSTOM_ATTRS, {
             'for': 'htmlFor',
@@ -425,10 +468,10 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 var ret;
 
                 // 优先用 el[name] 获取 mapping 属性值：
-                //  - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
-                //  - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
-                //  - href, src 直接获取的是 normalized 后的值，排除掉
-                //  - style 需要用 getAttribute 来获取字符串值，也排除掉
+                // - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
+                // - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
+                // - href, src 直接获取的是 normalized 后的值，排除掉
+                // - style 需要用 getAttribute 来获取字符串值，也排除掉
                 if (!RE_SPECIAL_ATTRS.test(name)) {
                     ret = el[name];
                 }
@@ -4614,6 +4657,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
     var EventTarget,
         PROPS,
+        CUSTOM_ATTRS,
         OPACITY,NONE,
         PROPERTY,EVENT_START,
         EVENT_STEP,
@@ -4622,26 +4666,26 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         TRANSITION_NAME;
 
     EventTarget = Event.Target;
-    //所有有效的 css 分属性，数字则动画，否则直接设最终结果
+
+    //支持的有效的 css 分属性，数字则动画，否则直接设最终结果
     PROPS = (
-        'backgroundColor ' +
-            'borderBottomColor ' +
-            'borderBottomWidth ' +
+
+        'borderBottomWidth ' +
             'borderBottomStyle ' +
-            'borderLeftColor ' +
+
             'borderLeftWidth ' +
             'borderLeftStyle ' +
             // 同 font
             //'borderColor ' +
-            'borderRightColor ' +
+
             'borderRightWidth ' +
             'borderRightStyle ' +
             'borderSpacing ' +
-            'borderTopColor ' +
+
             'borderTopWidth ' +
             'borderTopStyle ' +
             'bottom ' +
-            'color ' +
+
             // shorthand 属性去掉，取分解属性
             //'font ' +
             'fontFamily ' +
@@ -4660,7 +4704,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             'minHeight ' +
             'minWidth ' +
             'opacity ' +
-            'outlineColor ' +
+
             'outlineOffset ' +
             'outlineWidth ' +
             'paddingBottom ' +
@@ -4673,6 +4717,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             'width ' +
             'wordSpacing ' +
             'zIndex').split(' ');
+
+    //支持的元素属性
+    CUSTOM_ATTRS = [];
 
     OPACITY = 'opacity';
     NONE = 'none';
@@ -4691,6 +4738,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
      * @constructor
      */
     function Anim(elem, props, duration, easing, callback, nativeSupport) {
+
+
 
         // ignore non-exist element
         if (!(elem = DOM.get(elem))) return undefined;
@@ -4719,6 +4768,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             style = String(S.param(style, ';'))
                 .replace(/=/g, ':')
                 .replace(/%23/g, '#')// 还原颜色值中的 #
+                //注意：这里自定义属性也被 - 了，后面从字符串中取值时需要考虑
                 .replace(/([a-z])([A-Z])/g, '$1-$2')
                 .toLowerCase(); // backgroundColor => background-color
         }
@@ -4746,7 +4796,14 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             if (duration) (config.duration = parseFloat(duration) || 1);
             if (S['isString'](easing) || S.isFunction(easing)) config.easing = easing;
             if (S.isFunction(callback)) config.complete = callback;
-            if (nativeSupport !== undefined) config.nativeSupport = nativeSupport;
+            if (nativeSupport !== undefined) {
+                config.nativeSupport = nativeSupport;
+            }
+        }
+
+        //如果设定了元素属性的动画，则不能启动 css3 transition
+        if (!S.isEmptyObject(getCustomAttrs(style))) {
+            config.nativeSupport = false;
         }
         self.config = config;
 
@@ -4766,7 +4823,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
         // register callback
         if (S.isFunction(callback)) {
-
             self.callback = callback;
             //不要这样注册了，常用方式(new 完就扔)会忘记 detach，造成内存不断增加
             //self.on(EVENT_COMPLETE, callback);
@@ -4775,6 +4831,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
     }
 
     Anim.PROPS = PROPS;
+    Anim.CUSTOM_ATTRS = CUSTOM_ATTRS;
 
     // 不能插值的直接返回终值，没有动画插值过程
     function mirror(source, target) {
@@ -4811,6 +4868,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             }
         }
     };
+
+    var PROP_OPS = Anim.PROP_OPS;
 
 
     S.augment(Anim, EventTarget, {
@@ -5038,16 +5097,16 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
     var getNativeTransitionName = Anim.supportTransition;
 
     function setToFinal(elem, style) {
-        setCssText(elem, style);
+        setAnimStyleText(elem, style);
     }
 
     function getAnimValue(el, prop) {
-        return (Anim.PROP_OPS[prop] || Anim.PROP_OPS["*"]).getter(el, prop);
+        return (PROP_OPS[prop] || PROP_OPS["*"]).getter(el, prop);
     }
 
 
     function setAnimValue(el, prop, v) {
-        return (Anim.PROP_OPS[prop] || Anim.PROP_OPS["*"]).setter(el, prop, v);
+        return (PROP_OPS[prop] || PROP_OPS["*"]).setter(el, prop, v);
     }
 
     /**
@@ -5058,26 +5117,31 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             rules = {},
             i = PROPS.length,
             v;
-        var el = DOM.insertAfter(elem.cloneNode(false), elem);
+        var el = DOM.insertAfter(elem.cloneNode(true), elem);
 
         css = el.style;
-        setCssText(el, style);
+        setAnimStyleText(el, style);
         while (i--) {
             var prop = PROPS[i];
             if (v = css[prop]) {
                 rules[prop] = getAnimValue(el, prop);
             }
         }
+        //自定义属性混入
+        var customAttrs = getCustomAttrs(style);
+        for (var a in customAttrs) {
+            rules[a] = getAnimValue(el, a);
+        }
         DOM.remove(el);
         return rules;
     }
 
     /**
-     * 直接设置 cssText，注意 ie 的 opacity
+     * 直接设置 cssText 以及属性字符串，注意 ie 的 opacity
      * @param style
      * @param elem
      */
-    function setCssText(elem, style) {
+    function setAnimStyleText(elem, style) {
         if (UA['ie'] && style.indexOf(OPACITY) > -1) {
             var reg = /opacity\s*:\s*([^;]+)(;|$)/;
             var match = style.match(reg);
@@ -5088,6 +5152,31 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             //ie style.opacity 要能取！
         }
         elem.style.cssText += ';' + style;
+        //设置自定义属性
+        var attrs = getCustomAttrs(style);
+        for (var a in attrs) {
+            elem[a] = attrs[a];
+        }
+    }
+
+    /**
+     * 从自定义属性和样式字符串中解出属性值
+     * @param style
+     */
+    function getCustomAttrs(style) {
+
+        var ret = {};
+        for (var i = 0; i < CUSTOM_ATTRS.length; i++) {
+            var attr = CUSTOM_ATTRS[i]
+                .replace(/([a-z])([A-Z])/g, '$1-$2')
+                .toLowerCase();
+            var reg = new RegExp(attr + "\\s*:([^;]+)(;|$)");
+            var m = style.match(reg);
+            if (m) {
+                ret[CUSTOM_ATTRS[i]] = S.trim(m[1]);
+            }
+        }
+        return ret;
     }
 
     return Anim;
@@ -5230,11 +5319,47 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
  */
 KISSY.add("anim/color", function(S, DOM, Anim) {
 
+    var KEYWORDS = {
+        "black":[0,0,0],
+        "silver":[192,192,192],
+        "gray":[128,128,128],
+        "white":[255,255,255],
+        "maroon":[128,0,0],
+        "red":[255,0,0],
+        "purple":[128,0,128],
+        "fuchsia":[255,0,255],
+        "green":[0,128,0],
+        "lime":[0,255,0],
+        "olive":[128,128,0],
+        "yellow":[255,255,0],
+        "navy":[0,0,128],
+        "blue":[0,0,255],
+        "teal":[0,128,128],
+        "aqua":[0,255,255]
+    };
     var re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
         re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i;
 
+
+    //颜色 css 属性
+    var colors = ('backgroundColor ' +
+        'borderBottomColor ' +
+        'borderLeftColor ' +
+        'borderRightColor ' +
+        'borderTopColor ' +
+        'color ' +
+        'outlineColor').split(' ');
+
+    var OPS = Anim.PROP_OPS,
+        PROPS = Anim.PROPS;
+
+    //添加到支持集
+    PROPS.push.apply(PROPS, colors);
+
+
     //得到颜色的数值表示，红绿蓝数字数组
     function numericColor(val) {
+        val = val.toLowerCase();
         var match;
         if (match = val.match(re_RGB)) {
             return [
@@ -5254,14 +5379,12 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
                 parseInt(match[3], 16)
             ];
         }
-
+        if (KEYWORDS[val]) return KEYWORDS[val];
         //transparent 或者 颜色字符串返回
         S.log("only allow rgb or hex color string : " + val, "warn");
         return [255,255,255];
     }
 
-    var OPS = Anim.PROP_OPS,
-        PROPS = Anim.PROPS;
 
     OPS["color"] = {
         getter:function(elem, prop) {
@@ -5292,11 +5415,38 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
         }
     };
 
-    S.each(PROPS, function(prop) {
-        if (prop.match(/color$/i)) {
-            OPS[prop] = OPS['color'];
-        }
+    S.each(colors, function(prop) {
+        OPS[prop] = OPS['color'];
     });
+}, {
+    requires:["dom","./base"]
+});
+
+/**
+ * special patch for animate scroll property of element
+ * @author:yiminghe@gmail.com
+ */
+KISSY.add("anim/scroll", function(S, DOM, Anim) {
+
+    var OPS = Anim.PROP_OPS;
+
+    //添加到支持集
+    Anim.CUSTOM_ATTRS.push("scrollLeft", "scrollTop");
+
+    // 不从 css  中读取，从元素属性中得到值
+    OPS["scrollLeft"] = OPS["scrollTop"] = {
+        getter:function(elem, prop) {
+
+            return {
+                v:elem[prop],
+                u:'',
+                f:OPS["*"].interpolate
+            };
+        },
+        setter:function(elem, prop, val) {
+            elem[prop] = val;
+        }
+    };
 }, {
     requires:["dom","./base"]
 });
@@ -5305,7 +5455,7 @@ KISSY.add("anim", function(S, Anim,Easing) {
     Anim.Easing=Easing;
     return Anim;
 }, {
-    requires:["anim/base","anim/easing","anim/node-plugin","anim/color"]
+    requires:["anim/base","anim/easing","anim/node-plugin","anim/color","anim/scroll"]
 });
 
 /**

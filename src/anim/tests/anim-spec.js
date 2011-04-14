@@ -17,9 +17,9 @@ KISSY.use("anim,node", function(S, Anim, Node) {
                 x.push(padding(Number(m).toString(16)));
             });
             c = "#" + x.join("");
-        }else if(c.length==4){
-            c=c.replace(/[^#]/g,function(c){
-                return c+c;
+        } else if (c.length == 4) {
+            c = c.replace(/[^#]/g, function(c) {
+                return c + c;
             });
         }
         return c;
@@ -104,6 +104,27 @@ KISSY.use("anim,node", function(S, Anim, Node) {
                 expect(test1.css("height")).toBe("50px");
                 expect(test1.css("left")).toBe("900px");
                 expect(test1.css("top")).toBe("285px");
+            });
+
+        });
+
+        it("should animate scroll correctly", function() {
+
+            var test = Node.one("#test8");
+            test[0].scrollLeft = 500;
+            var scrollLimit = test[0].scrollLeft;
+            test[0].scrollLeft = 0;
+            S.log(scrollLimit);
+            test.animate({
+                scrollLeft:scrollLimit
+            }, 2);
+            waits(100);
+            runs(function() {
+                expect(test[0].scrollLeft).not.toBe(0);
+            });
+            waits(2000);
+            runs(function() {
+                expect(test[0].scrollLeft).toBe(scrollLimit);
             });
 
         });

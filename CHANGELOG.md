@@ -13,8 +13,18 @@ Legend of version history:
 
 History:
 --------
-### v1.1.6 -> v1.X.X (2011/MM/DD)
- - [x] bugfix
+### v1.1.6 -> v1.2.0 (2011/4/14)
+ - [x] bugfix anim 内存泄露
+ - [+] anim 支持 scrollLeft ,scrollTop 配置
+ - [+] 增加 anim 单元测试
+ - [+] loader 支持包配置，各个模块无需配置路径 (http://docs.kissyui.com/docs/html/seed/loader/index.html)
+ - [+] loader 增加单元测试
+ - [+] overlay 增加 resize 配置
+ - [+] 增加 button 组件
+ - [+] 增加 menubutton 组件
+ - [+] 增加 menu 组件
+ - [+] kissy-tools 增加 module-compiler 工具
+ - [+] dd 支持 drop 以及基于委托的 drag&drop
 
 ### v1.1.5 -> v1.1.6 (2010/11/30)
 
