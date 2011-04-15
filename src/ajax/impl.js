@@ -69,7 +69,8 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
 
         // handle JSONP
         if (c.dataType === JSONP) {
-            jsonp = c['jsonpCallback'] || JSONP + S.now();
+            //不使用 now() ，极端情况下可能重复
+            jsonp = c['jsonpCallback'] || S.guid(JSONP);
             c.url = addQuery(c.url, c.jsonp + '=' + jsonp);
             c.dataType = SCRIPT;
 
