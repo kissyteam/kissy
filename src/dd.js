@@ -2,14 +2,15 @@
  * dd support for kissy
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, DroppableDelegate) {
+KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, DroppableDelegate, Scroll) {
     var dd = {
         Draggable:Draggable,
         Droppable:Droppable,
         DDM:DDM,
         Proxy:Proxy,
         DraggableDelegate:Delegate,
-        DroppableDelegate:DroppableDelegate
+        DroppableDelegate:DroppableDelegate,
+        Scroll:Scroll
     };
 
     S.mix(S, dd);
@@ -21,5 +22,6 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
         "dd/droppable",
         "dd/proxy",
         "dd/draggable-delegate",
-        "dd/droppable-delegate"]
+        "dd/droppable-delegate",
+        "dd/scroll"]
 });
