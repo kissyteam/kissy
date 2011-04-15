@@ -138,7 +138,7 @@
     </div>
     <div id="container">
         <br><br><br><br><br><br><br><br><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容器
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容器
         <div class="pad">
             1.asdfasdfasdfasdfasdfuiwyeriqwemnxb vzxm,ioasytuiwertkmxcn z,xnvioasyertiowhreknz,xmn ,mzxbiusery
         </div>
@@ -249,7 +249,11 @@
 
             new Scroll({
                 // container 容器自动滚动
-                node:"#container"
+                node:"#container",
+                //滚动速度
+                rate:[10,10],
+                //容器边缘高宽度
+                diff:[20,20]
             }).attach(drag);
 
             drag.on("drag", function(ev) {
@@ -273,10 +277,12 @@
                 });
             });
 
-            new Scroll(
+            new Scroll({
                 //默认 window 自动滚动，相当于
                 //node :window
-                    ).attach(drag);
+                rate : [20,20],
+                diff :[20,20]
+            }).attach(drag);
         })();
 
 
