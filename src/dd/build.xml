@@ -13,6 +13,7 @@
             <path path="droppable.js"/>
             <path path="proxy.js"/>
             <path path="draggable-delegate.js"/>
+            <path path="draggable-delegate.js"/>
             <path path="scroll.js"/>
             <path location="../dd.js"/>
         </concat>
