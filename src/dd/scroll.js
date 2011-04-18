@@ -92,7 +92,7 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
                 if (ev.fake) return;
                 var node = self.get("node");
                 event = ev;
-                dxy = drag.mousePos;
+                dxy = S.clone(drag.mousePos);
                 var offset = self.getOffset(node);
                 dxy.left -= offset.left;
                 dxy.top -= offset.top;
@@ -147,6 +147,7 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
                 }
 
                 if (adjust) {
+
                     self.setScroll(node, scroll);
                     timer = setTimeout(arguments.callee, 100);
                     // 不希望更新相对值，特别对于相对 window 时，相对值如果不真正拖放触发的 drag，是不变的，

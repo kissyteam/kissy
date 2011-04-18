@@ -7,9 +7,10 @@
 
     .container {
         border: 1px solid red;
-        height: 450px;
+        height: 200px;
         padding: 10px;
         position: relative;
+        overflow: auto;
     }
 
     .component {
@@ -49,7 +50,7 @@
 <h1> see console </h1>
 
 
-<h2>基于委托的拖放排序</h2>
+<h2>基于委托 + 容器自动滚动的拖放排序</h2>
 
 <button id="add"> add module</button>
 <br/><br/>
@@ -103,6 +104,7 @@
                 DroppableDelegate = DD.DroppableDelegate,
                 Draggable = DD.Draggable,
                 Droppable = DD.Droppable,
+                Scroll = DD.Scroll,
                 Proxy = DD.Proxy;
 
         /**
@@ -132,6 +134,8 @@
             });
 
             proxy.attach(dragDelegate);
+
+
 
 
             var dropDelegate = new DroppableDelegate({
@@ -165,7 +169,8 @@
             dragDelegate.on("dragover", function(ev) {
                 var drag = ev.drag;
                 var drop = ev.drop;
-                var dragNode = drag.get("dragNode"),dropNode = drop.get("node");
+                var dragNode = drag.get("dragNode"),
+                        dropNode = drop.get("node");
                 var middleDropX = (dropNode.offset().left * 2 + dropNode.width()) / 2;
                 if (ev.pageX > middleDropX) {
                     var next = dropNode.next();
@@ -183,6 +188,13 @@
                     }
                 }
             });
+
+
+            var s=new Scroll({
+                node:"#container2"
+            });
+
+            s.attach(dragDelegate);
 
             var container = S.one("#container2");
             var id = 4;
