@@ -248,7 +248,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110414125627',
+        buildTime:'20110418155905',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3833,7 +3833,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         toggle: function(selector) {
             DOM.query(selector).each(function(elem) {
                 if (elem) {
-                    if (elem.style[DISPLAY] === NONE) {
+                    if (DOM.css[elem,DISPLAY] === NONE) {
                         DOM.show(elem);
                     } else {
                         DOM.hide(elem);
@@ -6193,7 +6193,8 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
 
         // handle JSONP
         if (c.dataType === JSONP) {
-            jsonp = c['jsonpCallback'] || JSONP + S.now();
+            //不使用 now() ，极端情况下可能重复
+            jsonp = c['jsonpCallback'] || S.guid(JSONP);
             c.url = addQuery(c.url, c.jsonp + '=' + jsonp);
             c.dataType = SCRIPT;
 

@@ -40,6 +40,48 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             offset: 1
         };
 
+    var attrNormalizers = {
+        tabindex:{
+            getter:function(el) {
+                return el.tabIndex;
+            },
+            setter:function(el, val) {
+                // http://www.w3.org/TR/html5/editing.html#sequential-focus-navigation-and-the-tabindex-attribute
+                // 简化，和不填一样处理！
+                if (isNaN(parseInt(val))) {
+                    el.removeAttribute("tabindex");
+                    el.removeAttribute("tabIndex");
+                } else {
+                    el.tabIndex = val;
+                }
+            }
+        },
+        // 在标准浏览器下，用 getAttribute 获取 style 值
+        // IE7- 下，需要用 cssText 来获取
+        // 统一使用 cssText
+        style:{
+            getter:function(el) {
+                return el.style.cssText;
+            },
+            setter:function(el, val) {
+                el.style.cssText = val;
+            }
+        },
+        checked:{
+            // checked 属性值，需要通过直接设置才能生效
+            setter:function(el, val) {
+                el.checked = !!val;
+            }
+        },
+        disabled:{
+            // disabled 属性值，需要通过直接设置才能生效
+            //true 然后 false，false失效
+            setter:function(el, val) {
+                el.disabled = !!val;
+            }
+        }
+    };
+
     if (oldIE) {
         S.mix(CUSTOM_ATTRS, {
             'for': 'htmlFor',
@@ -134,10 +176,10 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 var ret;
 
                 // 优先用 el[name] 获取 mapping 属性值：
-                //  - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
-                //  - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
-                //  - href, src 直接获取的是 normalized 后的值，排除掉
-                //  - style 需要用 getAttribute 来获取字符串值，也排除掉
+                // - 可以正确获取 readonly, checked, selected 等特殊 mapping 属性值
+                // - 可以获取用 getAttribute 不一定能获取到的值，比如 tabindex 默认值
+                // - href, src 直接获取的是 normalized 后的值，排除掉
+                // - style 需要用 getAttribute 来获取字符串值，也排除掉
                 if (!RE_SPECIAL_ATTRS.test(name)) {
                     ret = el[name];
                 }
@@ -1929,7 +1971,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         toggle: function(selector) {
             DOM.query(selector).each(function(elem) {
                 if (elem) {
-                    if (elem.style[DISPLAY] === NONE) {
+                    if (DOM.css[elem,DISPLAY] === NONE) {
                         DOM.show(elem);
                     } else {
                         DOM.hide(elem);
