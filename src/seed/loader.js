@@ -4,7 +4,9 @@
  */
 (function(S, undef) {
     //如果已经定义过，则不运行，例如 nodejs 环境下采用原生机制先行定义
-    if (S.use) return;
+    if (S.use) {
+        return;
+    }
 
     var win = S.__HOST,
         oldIE = !win['getSelection'] && win['ActiveXObject'],
@@ -19,7 +21,10 @@
         /**
          * ie 与标准浏览器监听 script 载入完毕有区别
          */
-            scriptOnload = doc.createElement('script').readyState ?
+            scriptOnload = doc.addEventListener ?
+            function(node, callback) {
+                node.addEventListener('load', callback, false);
+            } :
             function(node, callback) {
                 var oldCallback = node.onreadystatechange;
                 node.onreadystatechange = function() {
@@ -30,10 +35,7 @@
                         callback.call(this);
                     }
                 };
-            } :
-            function(node, callback) {
-                node.addEventListener('load', callback, false);
-            },
+            } ,
         loader,
         RE_CSS = /\.css(?:\?|$)/i,
         buildTime = encodeURIComponent(S.buildTime),
@@ -54,11 +56,9 @@
         for (var i = 0; i < paths.length; i++) {
             p = paths[i];
             if (p == ".") {
-            }
-            else if (p == "..") {
+            } else if (p == "..") {
                 re.pop();
-            }
-            else {
+            } else {
                 re.push(p);
             }
         }
@@ -73,7 +73,9 @@
      * @description similar to path.resolve in nodejs
      */
     function normalDepModuleName(moduleName, depName) {
-        if (!depName) return depName;
+        if (!depName) {
+            return depName;
+        }
         if (S.isArray(depName)) {
             for (var i = 0; i < depName.length; i++) {
                 depName[i] = normalDepModuleName(moduleName, depName[i]);
@@ -112,8 +114,9 @@
     //路径正则化，不能是相对地址
     //相对地址则转换成相对页面的绝对地址
     function normalBasePath(path) {
-        if (path.charAt(path.length - 1) != '/')
+        if (path.charAt(path.length - 1) != '/') {
             path += "/";
+        }
         path = S.trim(path);
         if (!path.match(/^(http(s)?)|(file):/i)
             && !startsWith(path, "/")) {
@@ -182,7 +185,10 @@
             if (S.isPlainObject(name)) {
                 S.each(name, function(v, k) {
                     v.name = k;
-                    if (mods[k]) mix(v, mods[k], false); // 保留之前添加的配置
+                    if (mods[k]) {
+                        // 保留之前添加的配置
+                        mix(v, mods[k], false);
+                    }
                 });
                 mix(mods, name);
                 return self;
@@ -209,7 +215,9 @@
 
                 self.__registerModule(name, def, config);
                 //显示指定 add 不 attach
-                if (config && config['attach'] === false) return self;
+                if (config && config['attach'] === false) {
+                    return self;
+                }
                 // 和 1.1.7 以前版本保持兼容，不得已而为之
                 var mod = mods[name];
                 var requires = normalDepModuleName(name, mod.requires);
@@ -297,8 +305,8 @@
             //外部模块去除包路径，得到模块名
             for (var p in packages) {
                 var p_path = packages[p].path;
-                if (!packages.hasOwnProperty(p)) continue;
-                if (src.lastIndexOf(p_path, 0) == 0) {
+                if (packages.hasOwnProperty(p)
+                    && src.lastIndexOf(p_path, 0) == 0) {
                     return removePostfix(src.substring(p_path.length));
                 }
             }
@@ -464,13 +472,17 @@
                 mods = self.Env.mods,
                 mod = mods[moduleName],
                 re = self['onRequire'] && self['onRequire'](mod);
-            if (re !== undefined) return re;
+            if (re !== undefined) {
+                return re;
+            }
             return mod && mod.value;
         },
 
         __getPackagePath:function(mod) {
             //缓存包路径，未申明的包的模块都到核心模块中找
-            if (mod.packagepath) return mod.packagepath;
+            if (mod.packagepath) {
+                return mod.packagepath;
+            }
             var self = this,
                 //一个模块合并到了另一个模块文件中去
                 modName = self._combine(mod.name),
@@ -480,12 +492,11 @@
                 p_path;
 
             for (var p in packages) {
-                if (packages.hasOwnProperty(p)) {
-                    if (startsWith(modName, p)) {
-                        if (p.length > pName) {
-                            pName = p;
-                        }
-                    }
+                if (packages.hasOwnProperty(p)
+                    && startsWith(modName, p)
+                    && p.length > pName
+                    ) {
+                    pName = p;
                 }
             }
             p_def = packages[pName];
@@ -525,7 +536,9 @@
                 mods[modName] = mod;
             }
             mod.name = modName;
-            if (mod && mod.status === ATTACHED) return;
+            if (mod && mod.status === ATTACHED) {
+                return;
+            }
             self.__attach(mod, callback, cfg);
         },
 
@@ -676,7 +689,7 @@
 
             // 加载 css, 仅发出请求，不做任何其它处理
             if (S['isString'](mod[CSSFULLPATH])) {
-                self.getScript(mod[CSSFULLPATH]);
+                S.getScript(mod[CSSFULLPATH]);
                 mod[CSSFULLPATH] = mod.csspath = LOADED;
             }
 
@@ -686,15 +699,19 @@
                     self.__startLoadModuleName = mod.name;
                     self.__startLoadTime = Number(+new Date());
                 }
-                ret = self.getScript(url, {
+                ret = S.getScript(url, {
                     success: function() {
-                        S.log(mod.name + ' is loaded.', 'info'); // 压缩时不过滤该句，以方便线上调试
-                        _success();
+                        if (mod.fns && mod.fns.length > 0) {
+                            // 压缩时不过滤该句，以方便线上调试
+                            S.log(mod.name + ' is loaded.', 'info');
+                        } else {
+                            _modError();
+                        }
+                        _scriptOnComplete();
                     },
                     error: function() {
-                        S.log(mod.name + ' is not loaded!', 'error');
-                        mod.status = ERROR;
-                        _final();
+                        _modError();
+                        _scriptOnComplete();
                     },
                     charset: mod.charset
                 });
@@ -708,15 +725,20 @@
             // 已经在加载中，需要添加回调到 script onload 中
             // 注意：没有考虑 error 情形
             else if (mod.status === LOADING) {
-                scriptOnload(node, _success);
+                scriptOnload(node, _scriptOnComplete);
             }
             // 是内嵌代码，或者已经 loaded
             else {
                 callback();
             }
 
-            function _success() {
-                _final();
+            function _modError() {
+                S.log(mod.name + ' is not loaded! , can not find module in path : ' + mod['fullpath'], 'error');
+                mod.status = ERROR;
+            }
+
+            function _scriptOnComplete() {
+                loadQueque[url] = LOADED;
                 if (mod.status !== ERROR) {
 
                     // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息，需要同步到 instance 上去
@@ -726,16 +748,17 @@
                     }
 
                     // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
-                    // 因此要加上下面的 !== 判断，否则会出现重复 attach, 比如编辑器里动态加载时，被依赖的模块会重复
-                    if (mod.status !== ATTACHED) mod.status = LOADED;
+                    // 因此要加上下面的 !== 判断，否则会出现重复 attach,
+                    // 比如编辑器里动态加载时，被依赖的模块会重复
+                    if (mod.status !== ATTACHED) {
+                        mod.status = LOADED;
+                    }
 
                     callback();
                 }
             }
 
-            function _final() {
-                loadQueque[url] = LOADED;
-            }
+
         },
 
         __buildPath: function(mod, base) {
@@ -786,6 +809,13 @@
                 timeout,
                 timer;
 
+            function clearTimer() {
+                if (timer) {
+                    timer.cancel();
+                    timer = undef;
+                }
+            }
+
             if (S.isPlainObject(config)) {
                 success = config.success;
                 error = config.error;
@@ -800,22 +830,29 @@
                 node.src = url;
                 node.async = true;
             }
-            if (charset) node.charset = charset;
+            if (charset) {
+                node.charset = charset;
+            }
 
             if (isCSS) {
                 S.isFunction(success) && success.call(node);
             } else {
                 scriptOnload(node, function() {
-                    if (timer) {
-                        timer.cancel();
-                        timer = undef;
-                    }
-
+                    clearTimer();
                     S.isFunction(success) && success.call(node);
                 });
             }
 
             if (S.isFunction(error)) {
+
+                //标准浏览器
+                if (doc.addEventListener) {
+                    node.addEventListener("error", function() {
+                        clearTimer();
+                        error.call(node);
+                    }, false);
+                }
+
                 timer = S.later(function() {
                     timer = undef;
                     error();
