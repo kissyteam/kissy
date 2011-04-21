@@ -5,9 +5,24 @@ describe('web.js', function() {
         fn = function() {
         };
 
+    it("S.escapeHTML", function() {
+        expect(S.escapeHTML("<")).toBe("&lt;");
+        expect(S.escapeHTML(">")).toBe("&gt;");
+        expect(S.escapeHTML("&")).toBe("&amp;");
+        expect(S.escapeHTML('"')).toBe("&quot;");
+    });
+
+
+    it("S.unEscapeHTML", function() {
+        expect(S.unEscapeHTML("&lt;")).toBe("<");
+        expect(S.unEscapeHTML("&gt;")).toBe(">");
+        expect(S.unEscapeHTML("&amp;")).toBe("&");
+        expect(S.unEscapeHTML('&quot;')).toBe('"');
+        expect(S.unEscapeHTML('&#' + "b".charCodeAt(0) + ';')).toBe('b');
+    });
+
     it('S.isWindow', function() {
         expect(S.isWindow(host)).toBe(true);
-
         expect(S.isWindow({})).toBe(false);
         expect(S.isWindow(document)).toBe(false);
         expect(S.isWindow(document.documentElement.firstChild)).toBe(false);

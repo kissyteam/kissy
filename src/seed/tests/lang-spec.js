@@ -7,6 +7,10 @@ describe('lang.js', function() {
         fn = function() {
         };
 
+    it('S.fromUnicode', function() {
+        expect(S.fromUnicode("ab\\u627F\\u7389c")).toBe("ab承玉c");
+    });
+
     it('S.type', function() {
         expect(S.type(null)).toBe('null');
 
@@ -113,7 +117,7 @@ describe('lang.js', function() {
         expect(S.isFunction(['arr'])).toBe(false);
         expect(S.isFunction({})).toBe(false);
 
-    	// Make sure normal functions still work
+        // Make sure normal functions still work
         expect(S.isFunction(fn)).toBe(true);
 
         // exclude dom elements
@@ -130,7 +134,7 @@ describe('lang.js', function() {
         expect(S.isArray()).toBe(false);
         expect(S.isArray(arguments)).toBe(false);
 
-        if(web) {
+        if (web) {
             expect(S.isArray(doc.getElementsByTagName('*'))).toBe(false);
         }
     });
@@ -185,7 +189,7 @@ describe('lang.js', function() {
         expect(S.isPlainObject(fn)).toBe(false);
 
         // DOM Element
-        if(web) {
+        if (web) {
             expect(S.isPlainObject(doc.createElement('div'))).toBe(false);
         }
 
@@ -238,7 +242,9 @@ describe('lang.js', function() {
 
         // filter function
         var t5 = [1, 2, 3, 4, 5, 6];
-        var t6 = S.clone(t5, function(v) { return v % 2 === 0; });
+        var t6 = S.clone(t5, function(v) {
+            return v % 2 === 0;
+        });
         expect(t6.length).toBe(3);
         expect(t6[0]).toBe(2);
         expect(t6[1]).toBe(4);
@@ -302,7 +308,7 @@ describe('lang.js', function() {
     });
 
     it('S.unique', function() {
-        if(host['hostType'] === 'console') return; // BESENShell has bug for Array.prototype.splice
+        if (host['hostType'] === 'console') return; // BESENShell has bug for Array.prototype.splice
 
         expect(S.unique([1,2,1]).length).toBe(2);
         expect(S.unique([1,2,'1']).length).toBe(3);
@@ -330,7 +336,7 @@ describe('lang.js', function() {
         expect(ret.length).toBe(2);
     });
 
-    it('S.now', function() {       
+    it('S.now', function() {
         expect(S.type(S.now())).toBe('number');
     });
 });

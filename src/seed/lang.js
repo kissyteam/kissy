@@ -258,6 +258,14 @@
          */
         now: function() {
             return new Date().getTime();
+        },
+        /**
+         * frequently used in taobao cookie about nick
+         */
+        fromUnicode:function(str) {
+            return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
+                return  String.fromCharCode(parseInt(u, 16));
+            });
         }
     });
 

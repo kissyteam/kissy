@@ -539,6 +539,14 @@ build time: ${build.time}
          */
         now: function() {
             return new Date().getTime();
+        },
+        /**
+         * frequently used in taobao cookie about nick
+         */
+        fromUnicode:function(str) {
+            return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
+                return  String.fromCharCode(parseInt(u, 16));
+            });
         }
     });
 
@@ -1561,7 +1569,7 @@ build time: ${build.time}
 
 /**
  * @module  web.js
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, undef) {
 
@@ -1591,9 +1599,58 @@ build time: ${build.time}
         // #id or id
         RE_IDSTR = /^#?([\w-]+)$/,
         RE_ARR_KEY = /^(\w+)\[\]$/,
-        RE_NOT_WHITE = /\S/;
+        RE_NOT_WHITE = /\S/,
+        htmlEntities = {
+            '&amp;': '&',
+            '&gt;': '>',
+            '&lt;': '<',
+            '&quot;': '"'
+        },
+        reverseEntities = {},
+        escapeReg,
+        unEscapeReg;
+
+    S.each(htmlEntities, function(v, k) {
+        reverseEntities[v] = k;
+    });
+
+    function getEscapeReg() {
+        if (escapeReg) {
+            return escapeReg
+        }
+        var str = '';
+        S.each(htmlEntities, function(entity) {
+            str += entity + '|';
+        });
+        str = str.slice(0, -1);
+        return escapeReg = new RegExp(str, "g");
+    }
+
+    function getUnEscapeReg() {
+        if (unEscapeReg) {
+            return unEscapeReg
+        }
+        var str = '';
+        S.each(reverseEntities, function(entity) {
+            str += entity + '|';
+        });
+        str += '&#(\\d{1,5});';
+        return unEscapeReg = new RegExp(str, "g");
+    }
 
     S.mix(S, {
+
+        escapeHTML:function(str) {
+            return str.replace(getEscapeReg(), function(m) {
+                return reverseEntities[m];
+            });
+        },
+
+        unEscapeHTML:function(str) {
+            return str.replace(getUnEscapeReg(), function(m, n) {
+                return htmlEntities[m] || String.fromCharCode(+n);
+            });
+        },
 
         /**
          * A crude way of determining if an object is a window
@@ -1912,6 +1969,7 @@ build time: ${build.time}
     function slice2Arr(arr) {
         return Array.prototype.slice.call(arr);
     }
+
     // IE will throw error.
     try {
         slice2Arr(docElem.childNodes);
