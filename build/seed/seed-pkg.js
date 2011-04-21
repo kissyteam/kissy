@@ -956,7 +956,10 @@ build time: ${build.time}
 
             S.mix(mod, S.clone(gMods[name]));
 
-            // status 属于实例，当有值时，不能被覆盖。只有没有初始值时，才从 global 上继承
+            // status 属于实例，当有值时，不能被覆盖。
+            // 1. 只有没有初始值时，才从 global 上继承
+            // 2. 初始值为 0 时，也从 global 上继承
+            // 其他都保存自己的状态
             if (status) {
                 mod.status = status;
             }
@@ -1257,6 +1260,7 @@ build time: ${build.time}
                 }
                 ret = S.getScript(url, {
                     success: function() {
+                        mixGlobal();
                         if (mod.fns && mod.fns.length > 0) {
                             // 压缩时不过滤该句，以方便线上调试
                             S.log(mod.name + ' is loaded.', 'info');
@@ -1293,15 +1297,21 @@ build time: ${build.time}
                 mod.status = ERROR;
             }
 
+            function mixGlobal() {
+                // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息
+                // 需要同步到 instance 上去
+                // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
+                if (cfg.global) {
+                    self.__mixMod(self.Env.mods, cfg.global.Env.mods,
+                        mod.name, cfg.global);
+                }
+            }
+
             function _scriptOnComplete() {
                 loadQueque[url] = LOADED;
                 if (mod.status !== ERROR) {
 
-                    // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息，需要同步到 instance 上去
-                    // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
-                    if (cfg.global) {
-                        self.__mixMod(self.Env.mods, cfg.global.Env.mods, mod.name, cfg.global);
-                    }
+                    mixGlobal();
 
                     // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
                     // 因此要加上下面的 !== 判断，否则会出现重复 attach,
