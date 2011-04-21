@@ -70,7 +70,10 @@
     }
 
     S.mix(S, {
-
+        /**
+         * refer : http://yiminghe.javaeye.com/blog/788929
+         * @param str
+         */
         escapeHTML:function(str) {
             return str.replace(getEscapeReg(), function(m) {
                 return reverseEntities[m];
