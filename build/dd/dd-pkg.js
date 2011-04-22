@@ -143,7 +143,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
                 var ret = { drag: activeDrag, drop: activeDrop};
                 activeDrop.get("node").removeClass(this.get("prefixCls") + "drop-over");
                 activeDrop.fire('drophit', ret);
-                activeDrag.fire('dragdrophit', ret)
+                activeDrag.fire('dragdrophit', ret);
                 this.fire("drophit", ret);
                 this.fire("dragdrophit", ret);
             } else {
@@ -359,7 +359,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
         this._init();
     }
 
-    Draggable.POINT = "pointer";
+    Draggable.POINTER = "pointer";
     Draggable.INTERSECT = "intersect";
     Draggable.STRICT = "strict";
 
@@ -509,26 +509,30 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 left:ev.pageX,
                 top:ev.pageY
             };
-            self.fire("drag", {
-                left:left,
-                top:top
-            });
-            DDM.fire("drag", {
+            var ret = {
                 left:left,
                 top:top,
+                pageX:ev.pageX,
+                pageY:ev.pageY,
                 drag:this
-            });
+            };
+            self.fire("drag", ret);
+            DDM.fire("drag", ret);
         },
 
         _end: function() {
-            this.fire("dragend");
+            this.fire("dragend", {
+                drag:this
+            });
             DDM.fire("dragend", {
                 drag:this
             });
         },
 
         _start: function() {
-            this.fire("dragstart");
+            this.fire("dragstart", {
+                drag:this
+            });
             DDM.fire("dragstart", {
                 drag:this
             });
@@ -583,23 +587,15 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
             var activeDrag = DDM.get("activeDrag");
 
             this.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
-            this.fire("dropexit", {
+            var ret = {
                 drop:this,
                 drag:activeDrag
-            });
-            DDM.fire("dropexit", {
-                drop:this,
-                drag:activeDrag
-            });
+            };
+            this.fire("dropexit", ret);
+            DDM.fire("dropexit", ret);
             activeDrag.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
-            activeDrag.fire("dragexit", {
-                drop:this,
-                drag:activeDrag
-            });
-            DDM.fire("dragexit", {
-                drop:this,
-                drag:activeDrag
-            });
+            activeDrag.fire("dragexit", ret);
+            DDM.fire("dragexit", ret);
         },
         _handleOver:function(ev) {
             var oldDrop = DDM.get("activeDrop");

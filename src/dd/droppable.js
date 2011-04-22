@@ -40,23 +40,15 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
             var activeDrag = DDM.get("activeDrag");
 
             this.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
-            this.fire("dropexit", {
+            var ret = {
                 drop:this,
                 drag:activeDrag
-            });
-            DDM.fire("dropexit", {
-                drop:this,
-                drag:activeDrag
-            });
+            };
+            this.fire("dropexit", ret);
+            DDM.fire("dropexit", ret);
             activeDrag.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
-            activeDrag.fire("dragexit", {
-                drop:this,
-                drag:activeDrag
-            });
-            DDM.fire("dragexit", {
-                drop:this,
-                drag:activeDrag
-            });
+            activeDrag.fire("dragexit", ret);
+            DDM.fire("dragexit", ret);
         },
         _handleOver:function(ev) {
             var oldDrop = DDM.get("activeDrop");

@@ -12,7 +12,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
         this._init();
     }
 
-    Draggable.POINT = "pointer";
+    Draggable.POINTER = "pointer";
     Draggable.INTERSECT = "intersect";
     Draggable.STRICT = "strict";
 
@@ -162,26 +162,30 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 left:ev.pageX,
                 top:ev.pageY
             };
-            self.fire("drag", {
-                left:left,
-                top:top
-            });
-            DDM.fire("drag", {
+            var ret = {
                 left:left,
                 top:top,
+                pageX:ev.pageX,
+                pageY:ev.pageY,
                 drag:this
-            });
+            };
+            self.fire("drag", ret);
+            DDM.fire("drag", ret);
         },
 
         _end: function() {
-            this.fire("dragend");
+            this.fire("dragend", {
+                drag:this
+            });
             DDM.fire("dragend", {
                 drag:this
             });
         },
 
         _start: function() {
-            this.fire("dragstart");
+            this.fire("dragstart", {
+                drag:this
+            });
             DDM.fire("dragstart", {
                 drag:this
             });
