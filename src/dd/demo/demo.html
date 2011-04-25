@@ -127,12 +127,12 @@
 
 <h2>完全委托拖放 demo</h2>
 <div>
-<a href="delegate.html?t=1" target="_blank">完全委托拖放 demo</a>
+    <a href="delegate.html?t=1" target="_blank">完全委托拖放 demo</a>
 </div>
 
 <h2>随拖放自动滚动容器 demo</h2>
 <div>
-<a href="scroll.html?t=1" target="_blank">随拖放自动滚动容器 demo</a>
+    <a href="scroll.html?t=1" target="_blank">随拖放自动滚动容器 demo</a>
 </div>
 <script src="../../../build/kissy.js"></script>
 
@@ -239,10 +239,11 @@ KISSY.use("node,dd", function(S, Node, DD) {
                     + ev.drop.get("node").attr("id"));
         });
 
-        c1.on("dragdrophit", function(ev) {
-            S.log(ev.drag.get("node").attr("id") + " dragdrophit "
-                    + ev.drop.get("node").attr("id"));
-        });
+        function onhit(ev) {
+            ev.drag.get("node").css("margin", "5px 10px");
+            ev.drag.get("node").appendTo(ev.drop.get("node"));
+            ev.drag.destroy();
+        }
 
         c1.on("dragdropmiss", function(ev) {
             S.log(ev.drag.get("node").attr("id") + " dragdropmiss ");
@@ -264,10 +265,7 @@ KISSY.use("node,dd", function(S, Node, DD) {
                     + ev.drop.get("node").attr("id"));
         });
 
-        drop.on("drophit", function(ev) {
-            S.log(ev.drag.get("node").attr("id") + " drophit "
-                    + ev.drop.get("node").attr("id"));
-        });
+        drop.on("drophit",onhit);
 
     });
 
