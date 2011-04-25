@@ -3,8 +3,13 @@
  * @author:yiminghe@gmail.com
  */
 KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
+
+    var TAG_DRAG = "__dd-scroll-id-",
+        DESTRUCTORS = "__dd_scrolls";
+
     function Scroll() {
         Scroll.superclass.constructor.apply(this, arguments);
+        this[DESTRUCTORS] = {};
     }
 
     Scroll.ATTRS = {
@@ -76,7 +81,22 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
             }
         },
 
+        unAttach:function(drag) {
+            var tag = drag[TAG_DRAG];
+            if (!tag) return;
+            this[DESTRUCTORS][tag].fn();
+            delete drag[TAG_DRAG];
+            delete this[DESTRUCTORS][tag];
+        },
+
+        destroy:function() {
+            for (var d in this[DESTRUCTORS]) {
+                this.unAttach(this[DESTRUCTORS][d].drag);
+            }
+        },
+
         attach:function(drag) {
+            if (drag[TAG_DRAG]) return;
 
             var self = this,
                 rate = self.get("rate"),
@@ -88,7 +108,7 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
                 dxy,
                 timer = null;
 
-            drag.on("drag", function(ev) {
+            function dragging(ev) {
                 if (ev.fake) return;
                 var node = self.get("node");
                 event = ev;
@@ -99,12 +119,25 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
                 if (!timer) {
                     startScroll();
                 }
-            });
+            }
 
-            drag.on("dragend", function() {
+            function dragend() {
                 clearTimeout(timer);
                 timer = null;
-            });
+            }
+
+            drag.on("drag", dragging);
+
+            drag.on("dragend", dragend);
+
+            var tag = drag[TAG_DRAG] = S.guid(TAG_DRAG);
+            self[DESTRUCTORS][tag] = {
+                drag:drag,
+                fn:function() {
+                    drag.detach("drag", dragging);
+                    drag.detach("dragend", dragend);
+                }
+            };
 
 
             function startScroll() {

@@ -80,4 +80,4 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
 
     return Droppable;
 
-}, { requires:["node","base","dd/ddm"] });
+}, { requires:["node","base","./ddm"] });

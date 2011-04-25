@@ -543,7 +543,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
 },
 {
-    requires:["ua","node","base","dd/ddm"]
+    requires:["ua","node","base","./ddm"]
 });
 /**
  * droppable for kissy
@@ -627,13 +627,18 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
 
     return Droppable;
 
-}, { requires:["node","base","dd/ddm"] });/**
+}, { requires:["node","base","./ddm"] });/**
  * generate proxy drag object,
  * @author:yiminghe@gmail.com
  */
-KISSY.add("dd/proxy", function(S) {
+KISSY.add("dd/proxy", function(S, Node) {
+    var DESTRUCTOR_ID = "__proxy_destructors",
+        DRAG_TAG = "__proxy_id",
+        PROXY_ATTR = "__proxy";
+
     function Proxy() {
         Proxy.superclass.constructor.apply(this, arguments);
+        this[DESTRUCTOR_ID] = {};
     }
 
     Proxy.ATTRS = {
@@ -643,9 +648,8 @@ KISSY.add("dd/proxy", function(S) {
              @return {KISSY.Node} 替代节点
              */
             value:function(drag) {
-                var n = S.one(drag.get("node")[0].cloneNode(true));
-                n.attr("id", S.guid("ks-dd-proxy"));
-                return n;
+                return new Node(drag.get("node")[0].cloneNode(true));
+                //n.attr("id", S.guid("ks-dd-proxy"));
             }
         },
         destroyOnEnd:{
@@ -658,33 +662,57 @@ KISSY.add("dd/proxy", function(S) {
 
     S.extend(Proxy, S.Base, {
         attach:function(drag) {
+            if (drag[DRAG_TAG]) return;
+
             var self = this;
-            drag.on("dragstart", function() {
+
+            function start() {
                 var node = self.get("node");
                 var dragNode = drag.get("node");
 
-                if (!self.__proxy && S.isFunction(node)) {
+                if (!self[PROXY_ATTR] && S.isFunction(node)) {
                     node = node(drag);
                     node.addClass("ks-dd-proxy");
                     node.css("position", "absolute");
-                    self.__proxy = node;
+                    self[PROXY_ATTR] = node;
                 }
-                dragNode.parent().append(self.__proxy);
-                self.__proxy.show();
-                self.__proxy.offset(dragNode.offset());
+                dragNode.parent().append(self[PROXY_ATTR]);
+                self[PROXY_ATTR].show();
+                self[PROXY_ATTR].offset(dragNode.offset());
                 drag.set("dragNode", dragNode);
-                drag.set("node", self.__proxy);
-            });
-            drag.on("dragend", function() {
-                var node = self.__proxy;
+                drag.set("node", self[PROXY_ATTR]);
+            }
+
+            function end() {
+                var node = self[PROXY_ATTR];
                 drag.get("dragNode").offset(node.offset());
                 node.hide();
                 if (self.get("destroyOnEnd")) {
                     node.remove();
-                    self.__proxy = null;
+                    self[PROXY_ATTR] = null;
                 }
                 drag.set("node", drag.get("dragNode"));
-            });
+            }
+
+            drag.on("dragstart", start);
+            drag.on("dragend", end);
+
+            var tag = drag[DRAG_TAG] = S.guid("dd-proxyid-");
+
+            self[DESTRUCTOR_ID][tag] = {
+                drag:drag,
+                fn:function() {
+                    drag.detach("dragstart", start);
+                    drag.detach("dragend", end);
+                }
+            };
+        },
+        unAttach:function(drag) {
+            var tag = drag[DRAG_TAG];
+            if (!tag) return;
+            this[DESTRUCTOR_ID][tag].fn();
+            delete this[DESTRUCTOR_ID][tag];
+            delete drag[DRAG_TAG];
         },
 
         destroy:function() {
@@ -692,10 +720,15 @@ KISSY.add("dd/proxy", function(S) {
             if (node && !S.isFunction(node)) {
                 node.remove();
             }
+            for (var d in this[DESTRUCTOR_ID]) {
+                this.unAttach(this[DESTRUCTOR_ID][d].drag);
+            }
         }
     });
 
     return Proxy;
+}, {
+    requires:['node']
 });/**
  * delegate all draggable nodes to one draggable object
  * @author:yiminghe@gmail.com
@@ -919,8 +952,13 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
  * @author:yiminghe@gmail.com
  */
 KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
+
+    var TAG_DRAG = "__dd-scroll-id-",
+        DESTRUCTORS = "__dd_scrolls";
+
     function Scroll() {
         Scroll.superclass.constructor.apply(this, arguments);
+        this[DESTRUCTORS] = {};
     }
 
     Scroll.ATTRS = {
@@ -992,7 +1030,22 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
             }
         },
 
+        unAttach:function(drag) {
+            var tag = drag[TAG_DRAG];
+            if (!tag) return;
+            this[DESTRUCTORS][tag].fn();
+            delete drag[TAG_DRAG];
+            delete this[DESTRUCTORS][tag];
+        },
+
+        destroy:function() {
+            for (var d in this[DESTRUCTORS]) {
+                this.unAttach(this[DESTRUCTORS][d].drag);
+            }
+        },
+
         attach:function(drag) {
+            if (drag[TAG_DRAG]) return;
 
             var self = this,
                 rate = self.get("rate"),
@@ -1004,7 +1057,7 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
                 dxy,
                 timer = null;
 
-            drag.on("drag", function(ev) {
+            function dragging(ev) {
                 if (ev.fake) return;
                 var node = self.get("node");
                 event = ev;
@@ -1015,12 +1068,25 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
                 if (!timer) {
                     startScroll();
                 }
-            });
+            }
 
-            drag.on("dragend", function() {
+            function dragend() {
                 clearTimeout(timer);
                 timer = null;
-            });
+            }
+
+            drag.on("drag", dragging);
+
+            drag.on("dragend", dragend);
+
+            var tag = drag[TAG_DRAG] = S.guid(TAG_DRAG);
+            self[DESTRUCTORS][tag] = {
+                drag:drag,
+                fn:function() {
+                    drag.detach("drag", dragging);
+                    drag.detach("dragend", dragend);
+                }
+            };
 
 
             function startScroll() {

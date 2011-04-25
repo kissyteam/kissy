@@ -216,5 +216,5 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
     });
 
 }, {
-    requires:["dom","event","node/node","node/nodelist"]
+    requires:["dom","event","./node","./nodelist"]
 });

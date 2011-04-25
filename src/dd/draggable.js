@@ -196,5 +196,5 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
 },
 {
-    requires:["ua","node","base","dd/ddm"]
+    requires:["ua","node","base","./ddm"]
 });
