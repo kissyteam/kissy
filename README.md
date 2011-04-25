@@ -1,10 +1,13 @@
 KISSY - An Enjoyable JavaScript Library
 =======================================
 
+1.1x
+
  * Source: <http://github.com/kissyteam/kissy>
  * Docs: <http://kissyteam.github.com/>
  * Changelog: <http://github.com/kissyteam/kissy/blob/master/CHANGELOG.md>
  * License: <http://github.com/kissyteam/kissy/blob/master/LICENSE.md>
+
 
 
  Vision
