@@ -86,11 +86,11 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
         destroy:function() {
             var self = this,
-                node = self.get('node'),
+                node = self.get('dragNode'),
                 handlers = self.get('handlers');
             for (var i = 0; i < handlers.length; i++) {
                 var hl = handlers[i];
-                if (hl.css && hl.css("cursor") == "move") {
+                if (hl.css("cursor") == "move") {
                     hl.css("cursor", "auto");
                 }
             }

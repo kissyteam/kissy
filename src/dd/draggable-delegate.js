@@ -68,6 +68,14 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM) {
             self.set("node", node);
             self.set("dragNode", node);
             self._prepare(ev);
+        },
+
+        destroy:function() {
+            var self = this;
+            self.get("container").detach('mousedown',
+                self._handleMouseDown,
+                self);
+            self.detach();
         }
     },
     {
