@@ -10,6 +10,7 @@
         <concat destfile="template-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="template.js"/>
             <path path="template-node.js"/>
+             <path path="../template.js"/>
         </concat>
     </target>
 

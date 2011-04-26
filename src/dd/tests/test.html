@@ -16,6 +16,7 @@
 <script src="../droppable-delegate.js"></script>
 <script src="../droppable.js"></script>
 <script src="../proxy.js"></script>
+<script src="../scroll.js"></script>
 <script src="../../dd.js"></script>
 <style>
     html, body {
@@ -31,6 +32,11 @@
 </head>
 <body>
 
+<!--
+
+for draggable-spec.js
+
+-->
 <div id='drag_before'
      style="width:100px;
      height:100px;
@@ -70,8 +76,85 @@
     </div>
     content
 </div>
+
+<!--
+
+for droppable-spec.js
+
+-->
+
+<div id="drag_mode" style="position:absolute;
+left:400px;top:400px;
+width:100px;height:100px;
+border:1px solid red;">
+    drag
+</div>
+
+<div id="drop_mode" style="position:absolute;left:600px;top:600px;width:110px;height:110px;
+border:1px solid green;">
+    drop
+</div>
+
+
+<!--
+
+for proxy-spec.js
+
+-->
+
+<div id="drag_proxy" style="position:absolute;
+left:400px;top:400px;
+width:100px;height:100px;
+border:1px solid red;">
+    drag
+</div>
+
+
+<!--
+
+for scroll-spec.js
+
+-->
+
+<div id="drag_scroll_container" style="position:relative;
+border:1px solid green;
+width:200px;
+overflow:auto;
+height:200px;
+">
+    <div id="drag-scroll" style="width:50px;height:50px;border:1px solid red;
+    position:absolute;
+    left:50px;top:50px;">
+        drag
+    </div>
+
+    1<br/>
+    2<br/>
+    3<br/>
+    4<br/>
+    5<br/>
+    6<br/>
+    7<br/>
+    8<br/>
+    9<br/>
+    10<br/>
+    1<br/>
+    2<br/>
+    3<br/>
+    4<br/>
+    5<br/>
+    6<br/>
+    7<br/>
+    8<br/>
+    9<br/>
+    10<br/>
+   
+</div>
+
 <h1>KISSY.DD Test Cases</h1>
-<script src="dd-spec.js"></script>
+<script src="draggable-spec.js"></script>
+<script src="droppable-spec.js"></script>
+<script src="proxy-spec.js"></script>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
     jasmine.getEnv().execute(function() {

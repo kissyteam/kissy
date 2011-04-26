@@ -12,7 +12,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
         this._init();
     }
 
-    Draggable.POINTER = "pointer";
+    Draggable.POINT = "point";
     Draggable.INTERSECT = "intersect";
     Draggable.STRICT = "strict";
 

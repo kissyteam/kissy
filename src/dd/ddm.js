@@ -81,6 +81,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
         },
 
         _notifyDropsMove:function(ev) {
+            
             var activeDrag = this.get("activeDrag"),mode = activeDrag.get("mode");
             var drops = this.get("drops");
             var activeDrop,
