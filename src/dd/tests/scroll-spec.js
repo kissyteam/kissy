@@ -4,12 +4,76 @@
  */
 KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
     var Draggable = DD.Draggable,
+        DOM = S.DOM,
         Scroll = DD.Scroll;
     var ie = document['documentMode'] || UA['ie'];
 
     describe("scroll", function() {
 
+        var drag,dragNode,dragContainer,dragOffset,containerOffset,scrollTop = 0;
+
+        runs(function() {
+            dragNode = S.one("#drag-scroll");
+            dragContainer = S.one("#drag_scroll_container");
+            drag = new Draggable({
+                node:dragNode
+            });
+
+            new Scroll({
+                node:dragContainer,
+                diff:[10,10]
+            }).attach(drag);
+
+            drag.on("drag", function(ev) {
+                dragNode.offset(ev);
+            });
+            dragOffset = dragNode.offset();
+            containerOffset = dragContainer.offset();
+
+            scrollTop = dragContainer[0].scrollTop;
+
+        });
+
         it("should make container autoscroll properly", function() {
+            runs(function() {
+                jasmine.simulate(dragNode[0], "mousedown", {
+                    clientX:dragOffset.left + 20 - DOM.scrollLeft(),
+                    clientY:dragOffset.top + 20 - DOM.scrollTop()
+                });
+            });
+
+            waits(300);
+
+            runs(function() {
+
+                jasmine.simulate(document, "mousemove", {
+                    clientX:containerOffset.left + 50 - DOM.scrollLeft(),
+                    clientY:containerOffset.top + dragContainer[0].offsetHeight - 10 + 2 - DOM.scrollTop()
+                });
+
+
+            });
+
+            if (UA['webkit']) {
+                alert("click ok");
+            }
+
+
+            waits(300);
+            runs(function() {
+                jasmine.simulate(document, "mouseup");
+            });
+
+            waits(300);
+
+            runs(function() {
+                expect(dragNode.offset().top).toBe(dragNode.offset().top);
+            });
+
+
+            runs(function() {
+                expect(dragContainer[0].scrollTop).not.toBe(scrollTop);
+            });
 
         });
 

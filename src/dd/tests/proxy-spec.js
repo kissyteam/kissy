@@ -3,7 +3,9 @@
  * @author  yiminghe@gmail.com
  */
 KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
-    var Draggable = DD.Draggable,Proxy = DD.Proxy;
+    var Draggable = DD.Draggable,
+        DOM=S.DOM,
+        Proxy = DD.Proxy;
     var ie = document['documentMode'] || UA['ie'];
 
 
@@ -31,8 +33,8 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
 
                 dragXy = dragNode.offset();
                 jasmine.simulate(dragNode[0], "mousedown", {
-                    clientX:dragXy.left + 10,
-                    clientY:dragXy.top + 10
+                    clientX:dragXy.left + 10- DOM.scrollLeft(),
+                    clientY:dragXy.top + 10- DOM.scrollTop()
                 });
             });
 
@@ -47,6 +49,11 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
             });
 
 
+        });
+
+        runs(function() {
+            drag.destroy();
+            dragNode.remove();
         });
 
     });

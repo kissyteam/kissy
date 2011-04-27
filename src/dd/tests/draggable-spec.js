@@ -1,9 +1,10 @@
 /**
  * @module  draggable-spec
  * @author  yiminghe@gmail.com
+ * @description ie9 模式下 mousemove 触发事件有问题，无法测试
  */
 KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
-    var Draggable = DD.Draggable;
+    var Draggable = DD.Draggable,DOM = S.DOM;
     var ie = document['documentMode'] || UA['ie'];
 
 
@@ -24,8 +25,8 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
             waits(300);
             runs(function() {
                 jasmine.simulate(document, "mousemove", {
-                    clientX: -100,
-                    clientY:-100
+                    clientX: -100 - DOM.scrollLeft(),
+                    clientY:-100 - DOM.scrollTop()
                 });
             });
             waits(50);
@@ -55,31 +56,33 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
 
             runs(function() {
                 jasmine.simulate(dragHeader[0], "mousedown", {
-                    clientX:xy.left,
-                    clientY:xy.top
+                    clientX:xy.left - DOM.scrollLeft(),
+                    clientY:xy.top - DOM.scrollTop()
                 });
             });
             waits(300);
             runs(function() {
+
                 jasmine.simulate(document, "mousemove", {
-                    clientX: xy.left - 100,
-                    clientY:xy.top - 100
+                    clientX: xy.left - 100 - DOM.scrollLeft(),
+                    clientY:xy.top - 100 - DOM.scrollTop()
                 });
             });
-            waits(50);
+
+            waits(300);
 
             runs(function() {
                 jasmine.simulate(document, "mouseup");
             });
-            waits(50);
+
+            waits(300);
             runs(function() {
-                var expected = 400;
+                var expected = 450;
                 if (ie == 7) expected += 2;
                 expect(drag.offset().top).toEqual(expected);
                 expect(drag.offset().left).toEqual(expected);
             });
         });
-
 
         it('should not drag after mouseup while mousemove', function() {
             var drag = Node.one("#drag_after"),
@@ -98,27 +101,27 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
 
             runs(function() {
                 jasmine.simulate(dragHeader[0], "mousedown", {
-                    clientX: xy.left,
-                    clientY:xy.top
+                    clientX: xy.left - DOM.scrollLeft(),
+                    clientY:xy.top - DOM.scrollTop()
                 });
             });
             waits(300);
             runs(function() {
                 jasmine.simulate(document, "mousemove", {
-                    clientX: xy.left - 100,
-                    clientY:xy.top - 100
+                    clientX: xy.left - 100 - DOM.scrollLeft(),
+                    clientY:xy.top - 100 - DOM.scrollTop()
                 });
             });
-            waits(50);
+            waits(300);
 
             runs(function() {
                 jasmine.simulate(document, "mouseup");
             });
-            waits(50);
+            waits(300);
             runs(function() {
                 jasmine.simulate(document, "mousemove", {
-                    clientX: xy.left - 300,
-                    clientY:xy.top - 300
+                    clientX: xy.left - 300 - DOM.scrollLeft(),
+                    clientY:xy.top - 300 - DOM.scrollTop()
                 });
             });
             runs(function() {

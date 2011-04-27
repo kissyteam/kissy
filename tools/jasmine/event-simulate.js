@@ -25,7 +25,7 @@
         doc = document,
 
         mix = function(r, s) {
-            for(var p in s) r[p] = s[p];
+            for (var p in s) r[p] = s[p];
         },
 
         // mouse events supported
@@ -419,7 +419,9 @@
             // fire the event
             target.dispatchEvent(customEvent);
 
-        } else if (isObject(doc.createEventObject)) { // IE
+        }
+        else
+        if (doc.createEventObject) { // IE
 
             // create an IE event object
             customEvent = doc.createEventObject();

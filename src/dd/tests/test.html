@@ -54,8 +54,8 @@ for draggable-spec.js
      style="width:100px;
      height:100px;
      position:absolute;
-     top:500px;
-     left:500px;
+     top:550px;
+     left:550px;
      border:1px solid red;">
     <div id="dragHeader" class='dh' style="width:100px;height:10px;">
         header 2
@@ -127,40 +127,123 @@ height:200px;
     left:50px;top:50px;">
         drag
     </div>
-
-    1<br/>
-    2<br/>
-    3<br/>
-    4<br/>
-    5<br/>
-    6<br/>
-    7<br/>
-    8<br/>
-    9<br/>
-    10<br/>
-    1<br/>
-    2<br/>
-    3<br/>
-    4<br/>
-    5<br/>
-    6<br/>
-    7<br/>
-    8<br/>
-    9<br/>
-    10<br/>
-   
+    <div style="width:250px">
+        1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 <br/>
+        2 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0<br/>
+        3 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0<br/>
+        4 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0<br/>
+        5 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0<br/>
+        6 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0<br/>
+        7 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0<br/>
+        8<br/>
+        9<br/>
+        10<br/>
+        1<br/>
+        2<br/>
+        3<br/>
+        4<br/>
+        5<br/>
+        6<br/>
+        7<br/>
+        8<br/>
+        9<br/>
+        10<br/>
+    </div>
 </div>
 
+
+<!--
+for delegate-spec.js
+-->
+<style>
+
+    .container {
+        border: 1px solid red;
+        height: 200px;
+        padding: 10px;
+        position: relative;
+        overflow: auto;
+    }
+
+    .component {
+        margin: 50px 10px;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        border: 1px solid black;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        overflow: hidden;
+    }
+
+    .cheader {
+        cursor: move;
+        border: 1px solid black;
+        height: 20px;
+        line-height: 20px;
+    }
+
+    .component .cheader {
+        cursor: move;
+    }
+
+    .ks-dd-dragging * {
+        visibility: hidden;
+    }
+
+    .ks-dd-dragging {
+        border: 2px blue dashed;
+    }
+</style>
+<div id="container2" class="container">
+
+    <div class="component" id='c1'>
+        <div class="cheader">
+            拖动头
+        </div>
+        <span>
+        drag proxy1
+            </span>
+    </div>
+
+    <div class="component" id='c2'>
+        <div class="cheader">
+            拖动头
+        </div>
+         <span>
+        drag proxy2
+        </span>
+    </div>
+
+    <div class="component" id='c3'>
+        <div class="cheader">
+            拖动头
+        </div>
+         <span>
+        drag proxy3
+        </span>
+    </div>
+</div>
+
+
 <h1>KISSY.DD Test Cases</h1>
+
+
 <script src="draggable-spec.js"></script>
 <script src="droppable-spec.js"></script>
 <script src="proxy-spec.js"></script>
+<script src="scroll-spec.js"></script>
+<script src="delegate-spec.js"></script>
+
 <script>
-    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute(function() {
-        if (parent && parent.jasmine.kissyNext) {
-            parent.jasmine.kissyNext(this.results().failedCount);
-        }
+    KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute(function() {
+            if (parent && parent.jasmine.kissyNext) {
+                parent.jasmine.kissyNext(this.results().failedCount);
+            }
+        });
     });
 </script>
 
