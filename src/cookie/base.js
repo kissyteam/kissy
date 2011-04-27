@@ -11,7 +11,7 @@ KISSY.add('cookie/base', function(S) {
 
 
     function isNotEmptyString(val) {
-        return S['isString'](val) && val !== '';
+        return S.isString(val) && val !== '';
     }
 
     return {

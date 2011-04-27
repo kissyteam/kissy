@@ -173,7 +173,7 @@
                 o;
 
             // S.add(name, config) => S.add( { name: config } )
-            if (S['isString'](name)
+            if (S.isString(name)
                 && !config
                 && S.isPlainObject(def)) {
                 o = {};
@@ -194,7 +194,7 @@
                 return self;
             }
             // S.add(name[, fn[, config]])
-            if (S['isString'](name)) {
+            if (S.isString(name)) {
 
                 var host;
                 if (config && ( host = config.host )) {
@@ -369,7 +369,7 @@
         _combine:function(from, to) {
             var self = this,
                 cs;
-            if (S['isObject'](from)) {
+            if (S.isObject(from)) {
                 S.each(from, function(v, k) {
                     S.each(v, function(v2) {
                         self._combine(v2, k);
@@ -615,7 +615,7 @@
                 /**
                  * 如果设置了csspath，css 是一种特殊的依赖
                  */
-                if (S['isString'](mod["csspath"]) || S['isString'](mod[CSSFULLPATH])) {
+                if (S.isString(mod["csspath"]) || S.isString(mod[CSSFULLPATH])) {
                     //如果 path 以 ./或 ../开头，则根据当前模块定位
                     self.__buildPath(mod, self.__getPackagePath(mod));
                     S.getScript(mod[CSSFULLPATH]);
@@ -691,7 +691,7 @@
             }
 
             // 加载 css, 仅发出请求，不做任何其它处理
-            if (S['isString'](mod[CSSFULLPATH])) {
+            if (S.isString(mod[CSSFULLPATH])) {
                 S.getScript(mod[CSSFULLPATH]);
                 mod[CSSFULLPATH] = mod.csspath = LOADED;
             }

@@ -42,7 +42,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
         // selector 为字符串是最常见的情况，优先考虑
         // 注：空白字符串无需判断，运行下去自动能返回空数组
-        if (S['isString'](selector)) {
+        if (S.isString(selector)) {
             selector = S.trim(selector);
 
             // selector 为 #id 是最常见的情况，特殊优化处理
@@ -129,7 +129,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             context = doc;
         }
         // 2). context 的第二使用场景是传入 #id
-        else if (S['isString'](context) && REG_ID.test(context)) {
+        else if (S.isString(context) && REG_ID.test(context)) {
             context = getElementById(context.slice(1), doc);
             // 注：#id 可能无效，这时获取的 context 为 null
         }
@@ -249,7 +249,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 match, tag, cls, ret = [];
 
             // 默认仅支持最简单的 tag.cls 形式
-            if (S['isString'](filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
+            if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
                 tag = match[2];
                 cls = match[3];
                 filter = function(elem) {

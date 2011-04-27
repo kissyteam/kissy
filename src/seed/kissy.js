@@ -1,34 +1,36 @@
 /*
  * @module kissy
  * @author lifesinger@gmail.com
+ * @descript a seed where kissy grow up from , kiss yeah !
  */
-(function(host, S, undef) {
+(function(S, undefined) {
 
-    var meta = {
-        /**
-         * Copies all the properties of s to r.
-         * @return {Object} the augmented object
-         */
-        mix: function(r, s, ov, wl) {
-            if (!s || !r) return r;
-            if (ov === undef) ov = true;
-            var i, p, len;
+    var host = this,
+        meta = {
+            /**
+             * Copies all the properties of s to r.
+             * @return {Object} the augmented object
+             */
+            mix: function(r, s, ov, wl) {
+                if (!s || !r) return r;
+                if (ov === undefined) ov = true;
+                var i, p, len;
 
-            if (wl && (len = wl.length)) {
-                for (i = 0; i < len; i++) {
-                    p = wl[i];
-                    if (p in s) {
+                if (wl && (len = wl.length)) {
+                    for (i = 0; i < len; i++) {
+                        p = wl[i];
+                        if (p in s) {
+                            _mix(p, r, s, ov);
+                        }
+                    }
+                } else {
+                    for (p in s) {
                         _mix(p, r, s, ov);
                     }
                 }
-            } else {
-                for (p in s) {
-                    _mix(p, r, s, ov);
-                }
+                return r;
             }
-            return r;
-        }
-    },
+        },
 
         _mix = function(p, r, s, ov) {
             if (ov || !(p in r)) {
@@ -84,17 +86,20 @@
          * @return {Object} the augmented object
          */
         augment: function(/*r, s1, s2, ..., ov, wl*/) {
-            var args = arguments, len = args.length - 2,
-                r = args[0], ov = args[len], wl = args[len + 1],
+            var args = S.makeArray(arguments),
+                len = args.length - 2,
+                r = args[0],
+                ov = args[len],
+                wl = args[len + 1],
                 i = 1;
 
             if (!S.isArray(wl)) {
                 ov = wl;
-                wl = undef;
+                wl = undefined;
                 len++;
             }
             if (!S.isBoolean(ov)) {
-                ov = undef;
+                ov = undefined;
                 len++;
             }
 
@@ -187,7 +192,8 @@
          * @return {Object}  A reference to the last namespace object created
          */
         namespace: function() {
-            var args = arguments, l = args.length,
+            var args = S.makeArray(arguments),
+                l = args.length,
                 o = null, i, j, p,
                 global = (args[l - 1] === true && l--);
 
@@ -228,8 +234,8 @@
 
 
         config:function(c) {
-            for(var p in c) {
-                if(this["_"+p]) this["_"+p](c[p]);
+            for (var p in c) {
+                if (this["_" + p]) this["_" + p](c[p]);
             }
         },
 
@@ -245,7 +251,7 @@
                 if (src) {
                     msg = src + ': ' + msg;
                 }
-                if (host['console'] !== undef && console.log) {
+                if (host['console'] !== undefined && console.log) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                 }
             }
@@ -273,4 +279,4 @@
     S.__init();
     return S;
 
-})(this, 'KISSY');
+})('KISSY');

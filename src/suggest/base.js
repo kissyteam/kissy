@@ -817,7 +817,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
             for (i = 0; i < len; ++i) {
                 item = data[i];
 
-                if (S['isString'](item)) { // 只有 key 值时
+                if (S.isString(item)) { // 只有 key 值时
                     arr[j++] = { 'key' : item };
                 } else if (S.isArray(item) && item.length > 1) { // ['key', 'result'] 取数组前2个
                     arr[j++] = {'key' : item[0], 'result' : item[1]};

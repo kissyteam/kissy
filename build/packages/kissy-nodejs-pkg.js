@@ -187,34 +187,36 @@ build time: ${build.time}
 /*
  * @module kissy
  * @author lifesinger@gmail.com
+ * @descript a seed where kissy grow up from , kiss yeah !
  */
-(function(host, S, undef) {
+(function(S, undefined) {
 
-    var meta = {
-        /**
-         * Copies all the properties of s to r.
-         * @return {Object} the augmented object
-         */
-        mix: function(r, s, ov, wl) {
-            if (!s || !r) return r;
-            if (ov === undef) ov = true;
-            var i, p, len;
+    var host = this,
+        meta = {
+            /**
+             * Copies all the properties of s to r.
+             * @return {Object} the augmented object
+             */
+            mix: function(r, s, ov, wl) {
+                if (!s || !r) return r;
+                if (ov === undefined) ov = true;
+                var i, p, len;
 
-            if (wl && (len = wl.length)) {
-                for (i = 0; i < len; i++) {
-                    p = wl[i];
-                    if (p in s) {
+                if (wl && (len = wl.length)) {
+                    for (i = 0; i < len; i++) {
+                        p = wl[i];
+                        if (p in s) {
+                            _mix(p, r, s, ov);
+                        }
+                    }
+                } else {
+                    for (p in s) {
                         _mix(p, r, s, ov);
                     }
                 }
-            } else {
-                for (p in s) {
-                    _mix(p, r, s, ov);
-                }
+                return r;
             }
-            return r;
-        }
-    },
+        },
 
         _mix = function(p, r, s, ov) {
             if (ov || !(p in r)) {
@@ -248,7 +250,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110421222637',
+        buildTime:'20110427214546',
 
         /**
          * Returns a new object containing all of the properties of
@@ -270,17 +272,20 @@ build time: ${build.time}
          * @return {Object} the augmented object
          */
         augment: function(/*r, s1, s2, ..., ov, wl*/) {
-            var args = arguments, len = args.length - 2,
-                r = args[0], ov = args[len], wl = args[len + 1],
+            var args = S.makeArray(arguments),
+                len = args.length - 2,
+                r = args[0],
+                ov = args[len],
+                wl = args[len + 1],
                 i = 1;
 
             if (!S.isArray(wl)) {
                 ov = wl;
-                wl = undef;
+                wl = undefined;
                 len++;
             }
             if (!S.isBoolean(ov)) {
-                ov = undef;
+                ov = undefined;
                 len++;
             }
 
@@ -373,7 +378,8 @@ build time: ${build.time}
          * @return {Object}  A reference to the last namespace object created
          */
         namespace: function() {
-            var args = arguments, l = args.length,
+            var args = S.makeArray(arguments),
+                l = args.length,
                 o = null, i, j, p,
                 global = (args[l - 1] === true && l--);
 
@@ -414,8 +420,8 @@ build time: ${build.time}
 
 
         config:function(c) {
-            for(var p in c) {
-                if(this["_"+p]) this["_"+p](c[p]);
+            for (var p in c) {
+                if (this["_" + p]) this["_" + p](c[p]);
             }
         },
 
@@ -431,7 +437,7 @@ build time: ${build.time}
                 if (src) {
                     msg = src + ': ' + msg;
                 }
-                if (host['console'] !== undef && console.log) {
+                if (host['console'] !== undefined && console.log) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                 }
             }
@@ -459,27 +465,77 @@ build time: ${build.time}
     S.__init();
     return S;
 
-})(this, 'KISSY');
+})('KISSY');
 /**
  * @module  lang
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @description this code can run in any ecmascript compliant environment
  */
-(function(S, undef) {
+(function(S, undefined) {
 
     var host = S.__HOST,
 
         toString = Object.prototype.toString,
-        indexOf = Array.prototype.indexOf,
-        lastIndexOf = Array.prototype.lastIndexOf,
-        filter = Array.prototype.filter,
+        AP = Array.prototype,
+        indexOf = AP.indexOf,
+        lastIndexOf = AP.lastIndexOf,
+        filter = AP.filter,
         trim = String.prototype.trim,
 
         EMPTY = '',
         CLONE_MARKER = '__~ks_cloned',
         RE_TRIM = /^\s+|\s+$/g,
 
+        SEP = '&',
+        BRACKET = encodeURIComponent('[]'),
+        RE_ARR_KEY = /^(\w+)\[\]$/,
+
         // [[Class]] -> type pairs
-        class2type = {};
+        class2type = {},
+        htmlEntities = {
+            '&amp;': '&',
+            '&gt;': '>',
+            '&lt;': '<',
+            '&quot;': '"'
+        },
+        reverseEntities = {},
+        escapeReg,
+        unEscapeReg;
+
+    for (var k in htmlEntities) {
+        reverseEntities[htmlEntities[k]] = k;
+    }
+
+    function getEscapeReg() {
+        if (escapeReg) {
+            return escapeReg
+        }
+        var str = '';
+        S.each(htmlEntities, function(entity) {
+            str += entity + '|';
+        });
+        str = str.slice(0, -1);
+        return escapeReg = new RegExp(str, "g");
+    }
+
+    function getUnEscapeReg() {
+        if (unEscapeReg) {
+            return unEscapeReg
+        }
+        var str = '';
+        S.each(reverseEntities, function(entity) {
+            str += entity + '|';
+        });
+        str += '&#(\\d{1,5});';
+        return unEscapeReg = new RegExp(str, "g");
+    }
+
+
+    function isValidParamValue(val) {
+        var t = typeof val;
+        // If the type of val is null, undefined, number, string, boolean, return true.
+        return val === null || (t !== 'object' && t !== 'function');
+    }
 
     S.mix(S, {
 
@@ -497,7 +553,7 @@ build time: ${build.time}
         },
 
         isUndefined: function(o) {
-            return o === undef;
+            return o === undefined;
         },
 
         /**
@@ -505,7 +561,9 @@ build time: ${build.time}
          */
         isEmptyObject: function(o) {
             for (var p in o) {
-                return false;
+                if (p !== undefined) {
+                    return false;
+                }
             }
             return true;
         },
@@ -533,7 +591,12 @@ build time: ${build.time}
             var ret = o, isArray, k, stamp, marked = cloned || {};
 
             // array or plain object
-            if (o && ((isArray = S.isArray(o)) || S.isPlainObject(o))) {
+            if (o
+                && (
+                (isArray = S.isArray(o))
+                    || S.isPlainObject(o)
+                )
+                ) {
 
                 // avoid recursive clone
                 if (o[CLONE_MARKER]) {
@@ -564,11 +627,11 @@ build time: ${build.time}
                         try {
                             delete v[CLONE_MARKER];
                         } catch (e) {
-                            v[CLONE_MARKER] = undef;
+                            v[CLONE_MARKER] = undefined;
                         }
                     }
                 });
-                marked = undef;
+                marked = undefined;
             }
 
             return ret;
@@ -579,10 +642,10 @@ build time: ${build.time}
          */
         trim: trim ?
             function(str) {
-                return (str == undef) ? EMPTY : trim.call(str);
+                return (str == undefined) ? EMPTY : trim.call(str);
             } :
             function(str) {
-                return (str == undef) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+                return (str == undefined) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
             },
 
         /**
@@ -590,11 +653,16 @@ build time: ${build.time}
          * Removes undefined keywords and ignores escaped keywords.
          */
         substitute: function(str, o, regexp) {
-            if (!S.isString(str) || !S.isPlainObject(o)) return str;
+            if (!S.isString(str)
+                || !S.isPlainObject(o)) {
+                return str;
+            }
 
             return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
-                if (match.charAt(0) === '\\') return match.slice(1);
-                return (o[name] !== undef) ? o[name] : EMPTY;
+                if (match.charAt(0) === '\\') {
+                    return match.slice(1);
+                }
+                return (o[name] !== undefined) ? o[name] : EMPTY;
             });
         },
 
@@ -606,8 +674,11 @@ build time: ${build.time}
          * @param context {Object} (opt)
          */
         each: function(object, fn, context) {
-            var key, val, i = 0, length = object && object.length,
-                isObj = length === undef || S.type(object) === 'function';
+            var key,
+                val,
+                i = 0,
+                length = object && object.length,
+                isObj = length === undefined || S.type(object) === 'function';
             context = context || host;
 
             if (isObj) {
@@ -668,8 +739,13 @@ build time: ${build.time}
          * @return {Array} a copy of the array with duplicate entries removed
          */
         unique: function(a, override) {
-            if (override) a.reverse();
-            var b = a.slice(), i = 0, n, item;
+            if (override) {
+                a.reverse();
+            }
+            var b = a.slice(),
+                i = 0,
+                n,
+                item;
 
             while (i < b.length) {
                 item = b[i];
@@ -679,7 +755,9 @@ build time: ${build.time}
                 i += 1;
             }
 
-            if (override) b.reverse();
+            if (override) {
+                b.reverse();
+            }
             return b;
         },
 
@@ -728,7 +806,182 @@ build time: ${build.time}
             return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
                 return  String.fromCharCode(parseInt(u, 16));
             });
+        },
+        /**
+         * escape string to html
+         * @refer http://yiminghe.javaeye.com/blog/788929
+         * @param str {string} text2html show
+         */
+        escapeHTML:function(str) {
+            return str.replace(getEscapeReg(), function(m) {
+                return reverseEntities[m];
+            });
+        },
+
+        /**
+         * unescape html to string
+         * @param str {string} html2text
+         */
+        unEscapeHTML:function(str) {
+            return str.replace(getUnEscapeReg(), function(m, n) {
+                return htmlEntities[m] || String.fromCharCode(+n);
+            });
+        },
+        /**
+         * Converts object to a true array.
+         * @param o {object|Array} array like object or array
+         */
+        makeArray: function(o) {
+            if (o === null || o === undefined) return [];
+            if (S.isArray(o)) return o;
+
+            // The strings and functions also have 'length'
+            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
+                return [o];
+            }
+            var ret = [];
+            for (var i = 0,l = o.length; i < l; i++) {
+                ret[i] = o[i];
+            }
+            return ret;
+        },
+        /**
+         * Creates a serialized string of an array or object.
+         * @return {String}
+         * <code>
+         * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
+         * {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
+         * </code>
+         */
+        param: function(o, sep) {
+            if (!S.isPlainObject(o)) return EMPTY;
+            sep = sep || SEP;
+
+            var buf = [], key, val;
+            for (key in o) {
+                val = o[key];
+                key = encodeURIComponent(key);
+
+                // val is valid non-array value
+                if (isValidParamValue(val)) {
+                    buf.push(key, '=', encodeURIComponent(val + EMPTY), sep);
+                }
+                // val is not empty array
+                else if (S.isArray(val) && val.length) {
+                    for (var i = 0, len = val.length; i < len; ++i) {
+                        if (isValidParamValue(val[i])) {
+                            buf.push(key, BRACKET + '=', encodeURIComponent(val[i] + EMPTY), sep);
+                        }
+                    }
+                }
+                // ignore other cases, including empty array, Function, RegExp, Date etc.
+            }
+            buf.pop();
+            return buf.join(EMPTY);
+        },
+
+        /**
+         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
+         * <code>
+         * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+         * 'section=blog&tag[]=js&tag[]=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+         * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+         * 'id=45&raw'        // -> {id: '45', raw: ''}
+         * </code>
+         */
+        unparam: function(str, sep) {
+            if (typeof str !== 'string' || (str = S.trim(str)).length === 0) return {};
+
+            var ret = {},
+                pairs = str.split(sep || SEP),
+                pair, key, val, m,
+                i = 0, len = pairs.length;
+
+            for (; i < len; ++i) {
+                pair = pairs[i].split('=');
+                key = decodeURIComponent(pair[0]);
+
+                // decodeURIComponent will throw exception when pair[1] contains
+                // GBK encoded chinese characters.
+                try {
+                    val = decodeURIComponent(pair[1] || EMPTY);
+                } catch (ex) {
+                    val = pair[1] || EMPTY;
+                }
+
+                if ((m = key.match(RE_ARR_KEY)) && m[1]) {
+                    ret[m[1]] = ret[m[1]] || [];
+                    ret[m[1]].push(val);
+                } else {
+                    ret[key] = val;
+                }
+            }
+            return ret;
+        },
+        /**
+         * Executes the supplied function in the context of the supplied
+         * object 'when' milliseconds later. Executes the function a
+         * single time unless periodic is set to true.
+         * @param fn {Function|String} the function to execute or the name of the method in
+         *        the 'o' object to execute.
+         * @param when {Number} the number of milliseconds to wait until the fn is executed.
+         * @param periodic {Boolean} if true, executes continuously at supplied interval
+         *        until canceled.
+         * @param o {Object} the context object.
+         * @param data [Array] that is provided to the function. This accepts either a single
+         *        item or an array. If an array is provided, the function is executed with
+         *        one parameter for each array item. If you need to pass a single array
+         *        parameter, it needs to be wrapped in an array [myarray].
+         * @return {Object} a timer object. Call the cancel() method on this object to stop
+         *         the timer.
+         */
+        later: function(fn, when, periodic, o, data) {
+            when = when || 0;
+            o = o || { };
+            var m = fn, d = S.makeArray(data), f, r;
+
+            if (S.isString(fn)) {
+                m = o[fn];
+            }
+
+            if (!m) {
+                S.error('method undefined');
+            }
+
+            f = function() {
+                m.apply(o, d);
+            };
+
+            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
+
+            return {
+                id: r,
+                interval: periodic,
+                cancel: function() {
+                    if (this.interval) {
+                        clearInterval(r);
+                    } else {
+                        clearTimeout(r);
+                    }
+                }
+            };
         }
+
+    });
+
+    // for idea ..... auto-hint
+    S.mix(S, {
+        isBoolean:isValidParamValue,
+        isNumber:isValidParamValue,
+        isString:isValidParamValue,
+        isFunction:isValidParamValue,
+        isArray:isValidParamValue,
+        isDate:isValidParamValue,
+        isRegExp:isValidParamValue,
+        isObject:isValidParamValue
     });
 
     S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
@@ -918,7 +1171,7 @@ build time: ${build.time}
                 o;
 
             // S.add(name, config) => S.add( { name: config } )
-            if (S['isString'](name)
+            if (S.isString(name)
                 && !config
                 && S.isPlainObject(def)) {
                 o = {};
@@ -939,7 +1192,7 @@ build time: ${build.time}
                 return self;
             }
             // S.add(name[, fn[, config]])
-            if (S['isString'](name)) {
+            if (S.isString(name)) {
 
                 var host;
                 if (config && ( host = config.host )) {
@@ -1114,7 +1367,7 @@ build time: ${build.time}
         _combine:function(from, to) {
             var self = this,
                 cs;
-            if (S['isObject'](from)) {
+            if (S.isObject(from)) {
                 S.each(from, function(v, k) {
                     S.each(v, function(v2) {
                         self._combine(v2, k);
@@ -1360,7 +1613,7 @@ build time: ${build.time}
                 /**
                  * 如果设置了csspath，css 是一种特殊的依赖
                  */
-                if (S['isString'](mod["csspath"]) || S['isString'](mod[CSSFULLPATH])) {
+                if (S.isString(mod["csspath"]) || S.isString(mod[CSSFULLPATH])) {
                     //如果 path 以 ./或 ../开头，则根据当前模块定位
                     self.__buildPath(mod, self.__getPackagePath(mod));
                     S.getScript(mod[CSSFULLPATH]);
@@ -1436,7 +1689,7 @@ build time: ${build.time}
             }
 
             // 加载 css, 仅发出请求，不做任何其它处理
-            if (S['isString'](mod[CSSFULLPATH])) {
+            if (S.isString(mod[CSSFULLPATH])) {
                 S.getScript(mod[CSSFULLPATH]);
                 mod[CSSFULLPATH] = mod.csspath = LOADED;
             }
@@ -1751,16 +2004,16 @@ build time: ${build.time}
 /**
  * @module  web.js
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @description this code can only run at browser environment
  */
-(function(S, undef) {
+(function(S) {
 
     var win = S.__HOST,
         doc = win['document'],
+
         docElem = doc.documentElement,
 
         EMPTY = '',
-        SEP = '&',
-        BRACKET = encodeURIComponent('[]'),
 
         // Is the DOM ready to be used? Set to true once it occurs.
         isReady = false,
@@ -1779,157 +2032,19 @@ build time: ${build.time}
 
         // #id or id
         RE_IDSTR = /^#?([\w-]+)$/,
-        RE_ARR_KEY = /^(\w+)\[\]$/,
-        RE_NOT_WHITE = /\S/,
-        htmlEntities = {
-            '&amp;': '&',
-            '&gt;': '>',
-            '&lt;': '<',
-            '&quot;': '"'
-        },
-        reverseEntities = {},
-        escapeReg,
-        unEscapeReg;
 
-    S.each(htmlEntities, function(v, k) {
-        reverseEntities[v] = k;
-    });
-
-    function getEscapeReg() {
-        if (escapeReg) {
-            return escapeReg
-        }
-        var str = '';
-        S.each(htmlEntities, function(entity) {
-            str += entity + '|';
-        });
-        str = str.slice(0, -1);
-        return escapeReg = new RegExp(str, "g");
-    }
-
-    function getUnEscapeReg() {
-        if (unEscapeReg) {
-            return unEscapeReg
-        }
-        var str = '';
-        S.each(reverseEntities, function(entity) {
-            str += entity + '|';
-        });
-        str += '&#(\\d{1,5});';
-        return unEscapeReg = new RegExp(str, "g");
-    }
-
+        RE_NOT_WHITE = /\S/;
     S.mix(S, {
 
-        escapeHTML:function(str) {
-            return str.replace(getEscapeReg(), function(m) {
-                return reverseEntities[m];
-            });
-        },
-
-        unEscapeHTML:function(str) {
-            return str.replace(getUnEscapeReg(), function(m, n) {
-                return htmlEntities[m] || String.fromCharCode(+n);
-            });
-        },
 
         /**
          * A crude way of determining if an object is a window
          */
         isWindow: function(o) {
-            return S.type(o) === 'object' && 'setInterval' in o;
-        },
-
-        /**
-         * Converts object to a true array.
-         */
-        makeArray: function(o) {
-            if (o === null || o === undef) return [];
-            if (S.isArray(o)) return o;
-
-            // The strings and functions also have 'length'
-            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
-                return [o];
-            }
-
-            return slice2Arr(o);
-        },
-
-        /**
-         * Creates a serialized string of an array or object.
-         * @return {String}
-         * <code>
-         * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
-         * {foo: '', bar: 2}    // -> 'foo=&bar=2'
-         * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-         * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
-         * </code>
-         */
-        param: function(o, sep) {
-            if (!S.isPlainObject(o)) return EMPTY;
-            sep = sep || SEP;
-
-            var buf = [], key, val;
-            for (key in o) {
-                val = o[key];
-                key = encodeURIComponent(key);
-
-                // val is valid non-array value
-                if (isValidParamValue(val)) {
-                    buf.push(key, '=', encodeURIComponent(val + EMPTY), sep);
-                }
-                // val is not empty array
-                else if (S.isArray(val) && val.length) {
-                    for (var i = 0, len = val.length; i < len; ++i) {
-                        if (isValidParamValue(val[i])) {
-                            buf.push(key, BRACKET + '=', encodeURIComponent(val[i] + EMPTY), sep);
-                        }
-                    }
-                }
-                // ignore other cases, including empty array, Function, RegExp, Date etc.
-            }
-            buf.pop();
-            return buf.join(EMPTY);
-        },
-
-        /**
-         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-         * <code>
-         * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-         * 'section=blog&tag[]=js&tag[]=doc' // -> {section: 'blog', tag: ['js', 'doc']}
-         * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
-         * 'id=45&raw'        // -> {id: '45', raw: ''}
-         * </code>
-         */
-        unparam: function(str, sep) {
-            if (typeof str !== 'string' || (str = S.trim(str)).length === 0) return {};
-
-            var ret = {},
-                pairs = str.split(sep || SEP),
-                pair, key, val, m,
-                i = 0, len = pairs.length;
-
-            for (; i < len; ++i) {
-                pair = pairs[i].split('=');
-                key = decodeURIComponent(pair[0]);
-
-                // decodeURIComponent will throw exception when pair[1] contains
-                // GBK encoded chinese characters.
-                try {
-                    val = decodeURIComponent(pair[1] || EMPTY);
-                } catch (ex) {
-                    val = pair[1] || EMPTY;
-                }
-
-                if ((m = key.match(RE_ARR_KEY)) && m[1]) {
-                    ret[m[1]] = ret[m[1]] || [];
-                    ret[m[1]].push(val);
-                } else {
-                    ret[key] = val;
-                }
-            }
-            return ret;
+            return S.type(o) === 'object'
+                && 'setInterval' in o
+                && 'document' in o
+                && o.document.nodeType == 9;
         },
 
         /**
@@ -1953,55 +2068,6 @@ build time: ${build.time}
         },
 
         /**
-         * Executes the supplied function in the context of the supplied
-         * object 'when' milliseconds later. Executes the function a
-         * single time unless periodic is set to true.
-         * @param fn {Function|String} the function to execute or the name of the method in
-         *        the 'o' object to execute.
-         * @param when {Number} the number of milliseconds to wait until the fn is executed.
-         * @param periodic {Boolean} if true, executes continuously at supplied interval
-         *        until canceled.
-         * @param o {Object} the context object.
-         * @param data [Array] that is provided to the function. This accepts either a single
-         *        item or an array. If an array is provided, the function is executed with
-         *        one parameter for each array item. If you need to pass a single array
-         *        parameter, it needs to be wrapped in an array [myarray].
-         * @return {Object} a timer object. Call the cancel() method on this object to stop
-         *         the timer.
-         */
-        later: function(fn, when, periodic, o, data) {
-            when = when || 0;
-            o = o || { };
-            var m = fn, d = S.makeArray(data), f, r;
-
-            if (S.isString(fn)) {
-                m = o[fn];
-            }
-
-            if (!m) {
-                S.error('method undefined');
-            }
-
-            f = function() {
-                m.apply(o, d);
-            };
-
-            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
-
-            return {
-                id: r,
-                interval: periodic,
-                cancel: function() {
-                    if (this.interval) {
-                        clearInterval(r);
-                    } else {
-                        clearTimeout(r);
-                    }
-                }
-            };
-        },
-
-        /**
          * Specify a function to execute when the DOM is fully loaded.
          * @param fn {Function} A function to execute after the DOM is ready
          * <code>
@@ -2011,7 +2077,9 @@ build time: ${build.time}
          */
         ready: function(fn) {
             // Attach the listeners
-            if (!readyBound) this._bindReady();
+            if (!readyBound) {
+                this._bindReady();
+            }
 
             // If the DOM is already ready
             if (isReady) {
@@ -2102,7 +2170,9 @@ build time: ${build.time}
          * Executes functions bound to ready event.
          */
         _fireReady: function() {
-            if (isReady) return;
+            if (isReady) {
+                return;
+            }
 
             // Remember that the DOM is ready
             isReady = true;
@@ -2140,29 +2210,6 @@ build time: ${build.time}
         }
     });
 
-    function isValidParamValue(val) {
-        var t = typeof val;
-        // If the type of val is null, undefined, number, string, boolean, return true.
-        return val === null || (t !== 'object' && t !== 'function');
-    }
-
-    // Converts array-like collection such as LiveNodeList to normal array.
-    function slice2Arr(arr) {
-        return Array.prototype.slice.call(arr);
-    }
-
-    // IE will throw error.
-    try {
-        slice2Arr(docElem.childNodes);
-    }
-    catch(e) {
-        slice2Arr = function(arr) {
-            for (var ret = [], i = arr.length - 1; i >= 0; i--) {
-                ret[i] = arr[i];
-            }
-            return ret;
-        }
-    }
 
     // If url contains '?ks-debug', debug mode will turn on automatically.
     if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
@@ -2516,48 +2563,6 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             offset: 1
         };
 
-    var attrNormalizers = {
-        tabindex:{
-            getter:function(el) {
-                return el.tabIndex;
-            },
-            setter:function(el, val) {
-                // http://www.w3.org/TR/html5/editing.html#sequential-focus-navigation-and-the-tabindex-attribute
-                // 简化，和不填一样处理！
-                if (isNaN(parseInt(val))) {
-                    el.removeAttribute("tabindex");
-                    el.removeAttribute("tabIndex");
-                } else {
-                    el.tabIndex = val;
-                }
-            }
-        },
-        // 在标准浏览器下，用 getAttribute 获取 style 值
-        // IE7- 下，需要用 cssText 来获取
-        // 统一使用 cssText
-        style:{
-            getter:function(el) {
-                return el.style.cssText;
-            },
-            setter:function(el, val) {
-                el.style.cssText = val;
-            }
-        },
-        checked:{
-            // checked 属性值，需要通过直接设置才能生效
-            setter:function(el, val) {
-                el.checked = !!val;
-            }
-        },
-        disabled:{
-            // disabled 属性值，需要通过直接设置才能生效
-            //true 然后 false，false失效
-            setter:function(el, val) {
-                el.disabled = !!val;
-            }
-        }
-    };
-
     if (oldIE) {
         S.mix(CUSTOM_ATTRS, {
             'for': 'htmlFor',
@@ -2783,7 +2788,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             S.each(DOM.query(selector), function(el) {
                 if (nodeNameIs(SELECT, el)) {
                     // 强制转换数值为字符串，以保证下面的 inArray 正常工作
-                    if (S['isNumber'](value)) {
+                    if (S.isNumber(value)) {
                         value += EMPTY;
                     }
 
@@ -2959,7 +2964,7 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
          *        should be added or removed regardless of current state.
          */
         toggleClass: function(selector, value, state) {
-            var isBool = S['isBoolean'](state), has;
+            var isBool = S.isBoolean(state), has;
 
             batch(selector, value, function(elem, classNames, cl) {
                 var j = 0, className;
@@ -3349,7 +3354,7 @@ KISSY.add('dom/data', function(S, DOM,undefined) {
                 key = isNode ? elem[expando] : expando;
                 thisCache = cache[key];
 
-                if(S['isString'](name) && thisCache) {
+                if(S.isString(name) && thisCache) {
                     return thisCache[name];
                 }
                 return thisCache;
@@ -4120,7 +4125,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
         // selector 为字符串是最常见的情况，优先考虑
         // 注：空白字符串无需判断，运行下去自动能返回空数组
-        if (S['isString'](selector)) {
+        if (S.isString(selector)) {
             selector = S.trim(selector);
 
             // selector 为 #id 是最常见的情况，特殊优化处理
@@ -4207,7 +4212,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             context = doc;
         }
         // 2). context 的第二使用场景是传入 #id
-        else if (S['isString'](context) && REG_ID.test(context)) {
+        else if (S.isString(context) && REG_ID.test(context)) {
             context = getElementById(context.slice(1), doc);
             // 注：#id 可能无效，这时获取的 context 为 null
         }
@@ -4327,7 +4332,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 match, tag, cls, ret = [];
 
             // 默认仅支持最简单的 tag.cls 形式
-            if (S['isString'](filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
+            if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
                 tag = match[2];
                 cls = match[3];
                 filter = function(elem) {
@@ -4631,7 +4636,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         if (filter === undefined) filter = 1; // 默认取 1
         var ret = null, fi, flen;
 
-        if (S['isNumber'](filter) && filter >= 0) {
+        if (S.isNumber(filter) && filter >= 0) {
             if (filter === 0) return elem;
             fi = 0;
             flen = filter;
@@ -5109,7 +5114,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     function batch(methodName, targets, types, fn, scope) {
         // on('#id tag.className', type, fn)
-        if (S['isString'](targets)) {
+        if (S.isString(targets)) {
             targets = DOM.query(targets);
         }
 
@@ -5346,7 +5351,7 @@ KISSY.add('node/node', function(S, DOM, undefined) {
         }
 
         // create from html
-        if (S['isString'](html)) {
+        if (S.isString(html)) {
             domNode = DOM.create(html, props, ownerDocument);
             // 将 S.Node('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === 11) { // fragment
@@ -5520,7 +5525,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
         //el.css({xx:yy}) chainable
         if (args[valIndex] === undefined
             &&
-            (valIndex != 1 || S['isString'](args[0]))
+            (valIndex != 1 || S.isString(args[0]))
             ) {
             return fn.apply(DOM, args2);
         }
@@ -5639,7 +5644,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
                 var domNode;
 
                 // 对于 NodeList, 需要 cloneNode, 因此直接调用 create
-                if (isNodeList || S['isString'](html)) {
+                if (isNodeList || S.isString(html)) {
                     domNode = DOM.create(html);
                 } else {
                     if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) domNode = html;
@@ -5714,7 +5719,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
     });
 
 }, {
-    requires:["dom","event","node/node","node/nodelist"]
+    requires:["dom","event","./node","./nodelist"]
 });
 
 KISSY.add("node", function(S, Node, NodeList) {
@@ -6291,8 +6296,12 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
 
     function io(c) {
         c = S.merge(defaultConfig, c);
-        if (!c.url) return undef;
-        if (c.data && !S['isString'](c.data)) c.data = S.param(c.data);
+        if (!c.url) {
+            return undef;
+        }
+        if (c.data && !S.isString(c.data)) {
+            c.data = S.param(c.data);
+        }
         c.context = c.context || c;
 
         var jsonp, status = SUCCESS, data, type = c.type.toUpperCase(), scriptEl;
@@ -6503,7 +6512,7 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
         var ct = EMPTY, xml, data = xhr;
 
         // xhr 可以直接是 data
-        if (!S['isString'](data)) {
+        if (!S.isString(data)) {
             ct = xhr.getResponseHeader(CONTENT_TYPE) || EMPTY;
             xml = type === 'xml' || !type && ct.indexOf('xml') >= 0;
             data = xml ? xhr.responseXML : xhr.responseText;
@@ -6513,7 +6522,7 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
             }
         }
 
-        if (S['isString'](data)) {
+        if (S.isString(data)) {
             if (type === JSON || !type && ct.indexOf(JSON) >= 0) {
                 data = S_JSON.parse(data);
             }
@@ -6979,7 +6988,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         } else {
             config = S.clone(defaultConfig);
             if (duration) (config.duration = parseFloat(duration) || 1);
-            if (S['isString'](easing) || S.isFunction(easing)) config.easing = easing;
+            if (S.isString(easing) || S.isFunction(easing)) config.easing = easing;
             if (S.isFunction(callback)) config.complete = callback;
             if (nativeSupport !== undefined) {
                 config.nativeSupport = nativeSupport;
@@ -6997,7 +7006,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
          */
         if (config.nativeSupport
             && getNativeTransitionName()
-            && S['isString']((easing = config.easing))) {
+            && S.isString((easing = config.easing))) {
             // 当 easing 是支持的字串时，才激活 native transition
             if (/cubic-bezier\([\s\d.,]+\)/.test(easing) ||
                 (easing = Easing.NativeTimeFunction[easing])) {
@@ -7109,7 +7118,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 finish = start + duration;
                 easing = config.easing;
 
-                if (S['isString'](easing)) {
+                if (S.isString(easing)) {
                     easing = Easing[easing] || Easing.easeNone;
                 }
 
@@ -7914,7 +7923,7 @@ KISSY.add('cookie/base', function(S) {
 
 
     function isNotEmptyString(val) {
-        return S['isString'](val) && val !== '';
+        return S.isString(val) && val !== '';
     }
 
     return {

@@ -115,7 +115,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
                 Flash._callback(callback, FP_LOW, id, target,isDynamic);
 
                 // 有 xi 时，将 src 替换为快速安装
-                if (!((xi = config.xi) && S['isString'](xi))) return;
+                if (!((xi = config.xi) && S.isString(xi))) return;
                 config.src = xi;
             }
 
@@ -181,7 +181,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
             var swfs = Flash.swfs,
                 id, ret = false;
 
-            if (S['isString'](target)) {
+            if (S.isString(target)) {
                 ret = (target in swfs);
             } else {
                 for (id in swfs)
@@ -332,7 +332,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
                 data = obj[prop];
 
                 // 字符串，用双引号括起来 		 [bug]不需要	longzang
-                if (S['isString'](data)) {
+                if (S.isString(data)) {
                    //data = '"' + encode(data) + '"';
 				   data = encode(data);  	//bugfix:	有些值事实上不需要双引号   longzang 2010/8/4
                 }

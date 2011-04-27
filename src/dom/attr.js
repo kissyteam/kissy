@@ -35,48 +35,6 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             offset: 1
         };
 
-    var attrNormalizers = {
-        tabindex:{
-            getter:function(el) {
-                return el.tabIndex;
-            },
-            setter:function(el, val) {
-                // http://www.w3.org/TR/html5/editing.html#sequential-focus-navigation-and-the-tabindex-attribute
-                // 简化，和不填一样处理！
-                if (isNaN(parseInt(val))) {
-                    el.removeAttribute("tabindex");
-                    el.removeAttribute("tabIndex");
-                } else {
-                    el.tabIndex = val;
-                }
-            }
-        },
-        // 在标准浏览器下，用 getAttribute 获取 style 值
-        // IE7- 下，需要用 cssText 来获取
-        // 统一使用 cssText
-        style:{
-            getter:function(el) {
-                return el.style.cssText;
-            },
-            setter:function(el, val) {
-                el.style.cssText = val;
-            }
-        },
-        checked:{
-            // checked 属性值，需要通过直接设置才能生效
-            setter:function(el, val) {
-                el.checked = !!val;
-            }
-        },
-        disabled:{
-            // disabled 属性值，需要通过直接设置才能生效
-            //true 然后 false，false失效
-            setter:function(el, val) {
-                el.disabled = !!val;
-            }
-        }
-    };
-
     if (oldIE) {
         S.mix(CUSTOM_ATTRS, {
             'for': 'htmlFor',
@@ -302,7 +260,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             S.each(DOM.query(selector), function(el) {
                 if (nodeNameIs(SELECT, el)) {
                     // 强制转换数值为字符串，以保证下面的 inArray 正常工作
-                    if (S['isNumber'](value)) {
+                    if (S.isNumber(value)) {
                         value += EMPTY;
                     }
 

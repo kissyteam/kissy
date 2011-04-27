@@ -2,7 +2,7 @@
  * support standard mod for component
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
+KISSY.add("uibase/stdmodrender", function(S, Node) {
 
 
     var CLS_PREFIX = "stdmod-";
@@ -55,7 +55,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
     StdMod.prototype = {
 
         _setStdModContent:function(part, v) {
-            if (S['isString'](v)) {
+            if (S.isString(v)) {
                 this.get(part).html(v);
             } else {
                 this.get(part).html("");

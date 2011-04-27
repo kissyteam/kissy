@@ -143,7 +143,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         } else {
             config = S.clone(defaultConfig);
             if (duration) (config.duration = parseFloat(duration) || 1);
-            if (S['isString'](easing) || S.isFunction(easing)) config.easing = easing;
+            if (S.isString(easing) || S.isFunction(easing)) config.easing = easing;
             if (S.isFunction(callback)) config.complete = callback;
             if (nativeSupport !== undefined) {
                 config.nativeSupport = nativeSupport;
@@ -161,7 +161,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
          */
         if (config.nativeSupport
             && getNativeTransitionName()
-            && S['isString']((easing = config.easing))) {
+            && S.isString((easing = config.easing))) {
             // 当 easing 是支持的字串时，才激活 native transition
             if (/cubic-bezier\([\s\d.,]+\)/.test(easing) ||
                 (easing = Easing.NativeTimeFunction[easing])) {
@@ -273,7 +273,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 finish = start + duration;
                 easing = config.easing;
 
-                if (S['isString'](easing)) {
+                if (S.isString(easing)) {
                     easing = Easing[easing] || Easing.easeNone;
                 }
 

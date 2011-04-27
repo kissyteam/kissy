@@ -22,7 +22,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
         //el.css({xx:yy}) chainable
         if (args[valIndex] === undefined
             &&
-            (valIndex != 1 || S['isString'](args[0]))
+            (valIndex != 1 || S.isString(args[0]))
             ) {
             return fn.apply(DOM, args2);
         }
@@ -141,7 +141,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
                 var domNode;
 
                 // 对于 NodeList, 需要 cloneNode, 因此直接调用 create
-                if (isNodeList || S['isString'](html)) {
+                if (isNodeList || S.isString(html)) {
                     domNode = DOM.create(html);
                 } else {
                     if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) domNode = html;

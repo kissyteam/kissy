@@ -22,7 +22,7 @@ KISSY.add('node/node', function(S, DOM, undefined) {
         }
 
         // create from html
-        if (S['isString'](html)) {
+        if (S.isString(html)) {
             domNode = DOM.create(html, props, ownerDocument);
             // 将 S.Node('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === 11) { // fragment

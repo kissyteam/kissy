@@ -458,7 +458,7 @@ KISSY.add('selectable/combobox', function(S, DOM, Event, Selectable) {
             //selectIndex = self.selectable.selectedIndex
 
 
-            if (S['isNumber'](index) && !!ul) {
+            if (S.isNumber(index) && !!ul) {
                 ul.remove(ul.children[index]);
             }
 

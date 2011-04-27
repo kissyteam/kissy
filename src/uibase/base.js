@@ -137,7 +137,7 @@ KISSY.add('uibase/base', function (S, Base) {
                     host.__set(p, v.call(host, srcNode));
                 }
                 // 单选选择器
-                else if (S['isString'](v)) {
+                else if (S.isString(v)) {
                     host.__set(p, srcNode.one(v));
                 }
                 // 多选选择器
@@ -156,7 +156,7 @@ KISSY.add('uibase/base', function (S, Base) {
                 return document.body;
             },
             setter:function(v) {
-                if (S['isString'](v))
+                if (S.isString(v))
                     return Node.one(v);
             }
         },
@@ -255,7 +255,7 @@ KISSY.add('uibase/base', function (S, Base) {
             base = UIBase;
         }
         base = base || UIBase;
-        if (S['isObject'](exts)) {
+        if (S.isObject(exts)) {
             sx = px;
             px = exts;
             exts = [];
@@ -292,12 +292,13 @@ KISSY.add('uibase/base', function (S, Base) {
         if (!s) return r;
         for (var p in s) {
             // 如果属性是对象，接着递归进行
-            if (S['isObject'](s[p]) && S['isObject'](r[p])) {
+            if (S.isObject(s[p]) && S.isObject(r[p])) {
                 deepMix(r[p], s[p]);
             } else if (!(p in r)) {
                 r[p] = s[p];
             }
         }
+        return undefined;
     }
 
     return UIBase;

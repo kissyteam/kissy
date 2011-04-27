@@ -49,7 +49,7 @@ KISSY.add('flash/ua', function(S, UA) {
      * numerify(12.2) => 12.2
      */
     function numerify(ver) {
-        var arr = S['isString'](ver) ? arrify(ver) : ver, ret = ver;
+        var arr = S.isString(ver) ? arrify(ver) : ver, ret = ver;
         if (S.isArray(arr)) {
             ret = parseFloat(arr[0] + '.' + pad(arr[1], 3) + pad(arr[2], 5));
         }

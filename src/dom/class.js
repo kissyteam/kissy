@@ -92,7 +92,7 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
          *        should be added or removed regardless of current state.
          */
         toggleClass: function(selector, value, state) {
-            var isBool = S['isBoolean'](state), has;
+            var isBool = S.isBoolean(state), has;
 
             batch(selector, value, function(elem, classNames, cl) {
                 var j = 0, className;

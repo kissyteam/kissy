@@ -241,7 +241,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     function batch(methodName, targets, types, fn, scope) {
         // on('#id tag.className', type, fn)
-        if (S['isString'](targets)) {
+        if (S.isString(targets)) {
             targets = DOM.query(targets);
         }
 

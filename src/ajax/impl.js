@@ -61,8 +61,12 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
 
     function io(c) {
         c = S.merge(defaultConfig, c);
-        if (!c.url) return undef;
-        if (c.data && !S['isString'](c.data)) c.data = S.param(c.data);
+        if (!c.url) {
+            return undef;
+        }
+        if (c.data && !S.isString(c.data)) {
+            c.data = S.param(c.data);
+        }
         c.context = c.context || c;
 
         var jsonp, status = SUCCESS, data, type = c.type.toUpperCase(), scriptEl;
@@ -273,7 +277,7 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
         var ct = EMPTY, xml, data = xhr;
 
         // xhr 可以直接是 data
-        if (!S['isString'](data)) {
+        if (!S.isString(data)) {
             ct = xhr.getResponseHeader(CONTENT_TYPE) || EMPTY;
             xml = type === 'xml' || !type && ct.indexOf('xml') >= 0;
             data = xml ? xhr.responseXML : xhr.responseText;
@@ -283,7 +287,7 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
             }
         }
 
-        if (S['isString'](data)) {
+        if (S.isString(data)) {
             if (type === JSON || !type && ct.indexOf(JSON) >= 0) {
                 data = S_JSON.parse(data);
             }

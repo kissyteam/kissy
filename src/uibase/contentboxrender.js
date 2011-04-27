@@ -55,7 +55,7 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
             v && this.get("contentEl").css(v);
         },
         _uiSetContent:function(c) {
-            if (S['isString'](c)) {
+            if (S.isString(c)) {
                 this.get("contentEl").html(c);
             } else if (c !== undefined) {
                 this.get("contentEl").html("");

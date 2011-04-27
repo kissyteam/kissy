@@ -45,7 +45,7 @@ KISSY.add('dom/data', function(S, DOM,undefined) {
                 key = isNode ? elem[expando] : expando;
                 thisCache = cache[key];
 
-                if(S['isString'](name) && thisCache) {
+                if(S.isString(name) && thisCache) {
                     return thisCache[name];
                 }
                 return thisCache;

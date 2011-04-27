@@ -83,7 +83,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         if (filter === undefined) filter = 1; // 默认取 1
         var ret = null, fi, flen;
 
-        if (S['isNumber'](filter) && filter >= 0) {
+        if (S.isNumber(filter) && filter >= 0) {
             if (filter === 0) return elem;
             fi = 0;
             flen = filter;

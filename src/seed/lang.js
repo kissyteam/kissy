@@ -1,23 +1,73 @@
 /**
  * @module  lang
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @description this code can run in any ecmascript compliant environment
  */
-(function(S, undef) {
+(function(S, undefined) {
 
     var host = S.__HOST,
 
         toString = Object.prototype.toString,
-        indexOf = Array.prototype.indexOf,
-        lastIndexOf = Array.prototype.lastIndexOf,
-        filter = Array.prototype.filter,
+        AP = Array.prototype,
+        indexOf = AP.indexOf,
+        lastIndexOf = AP.lastIndexOf,
+        filter = AP.filter,
         trim = String.prototype.trim,
 
         EMPTY = '',
         CLONE_MARKER = '__~ks_cloned',
         RE_TRIM = /^\s+|\s+$/g,
 
+        SEP = '&',
+        BRACKET = encodeURIComponent('[]'),
+        RE_ARR_KEY = /^(\w+)\[\]$/,
+
         // [[Class]] -> type pairs
-        class2type = {};
+        class2type = {},
+        htmlEntities = {
+            '&amp;': '&',
+            '&gt;': '>',
+            '&lt;': '<',
+            '&quot;': '"'
+        },
+        reverseEntities = {},
+        escapeReg,
+        unEscapeReg;
+
+    for (var k in htmlEntities) {
+        reverseEntities[htmlEntities[k]] = k;
+    }
+
+    function getEscapeReg() {
+        if (escapeReg) {
+            return escapeReg
+        }
+        var str = '';
+        S.each(htmlEntities, function(entity) {
+            str += entity + '|';
+        });
+        str = str.slice(0, -1);
+        return escapeReg = new RegExp(str, "g");
+    }
+
+    function getUnEscapeReg() {
+        if (unEscapeReg) {
+            return unEscapeReg
+        }
+        var str = '';
+        S.each(reverseEntities, function(entity) {
+            str += entity + '|';
+        });
+        str += '&#(\\d{1,5});';
+        return unEscapeReg = new RegExp(str, "g");
+    }
+
+
+    function isValidParamValue(val) {
+        var t = typeof val;
+        // If the type of val is null, undefined, number, string, boolean, return true.
+        return val === null || (t !== 'object' && t !== 'function');
+    }
 
     S.mix(S, {
 
@@ -35,7 +85,7 @@
         },
 
         isUndefined: function(o) {
-            return o === undef;
+            return o === undefined;
         },
 
         /**
@@ -43,7 +93,9 @@
          */
         isEmptyObject: function(o) {
             for (var p in o) {
-                return false;
+                if (p !== undefined) {
+                    return false;
+                }
             }
             return true;
         },
@@ -71,7 +123,12 @@
             var ret = o, isArray, k, stamp, marked = cloned || {};
 
             // array or plain object
-            if (o && ((isArray = S.isArray(o)) || S.isPlainObject(o))) {
+            if (o
+                && (
+                (isArray = S.isArray(o))
+                    || S.isPlainObject(o)
+                )
+                ) {
 
                 // avoid recursive clone
                 if (o[CLONE_MARKER]) {
@@ -102,11 +159,11 @@
                         try {
                             delete v[CLONE_MARKER];
                         } catch (e) {
-                            v[CLONE_MARKER] = undef;
+                            v[CLONE_MARKER] = undefined;
                         }
                     }
                 });
-                marked = undef;
+                marked = undefined;
             }
 
             return ret;
@@ -117,10 +174,10 @@
          */
         trim: trim ?
             function(str) {
-                return (str == undef) ? EMPTY : trim.call(str);
+                return (str == undefined) ? EMPTY : trim.call(str);
             } :
             function(str) {
-                return (str == undef) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+                return (str == undefined) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
             },
 
         /**
@@ -128,11 +185,16 @@
          * Removes undefined keywords and ignores escaped keywords.
          */
         substitute: function(str, o, regexp) {
-            if (!S.isString(str) || !S.isPlainObject(o)) return str;
+            if (!S.isString(str)
+                || !S.isPlainObject(o)) {
+                return str;
+            }
 
             return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
-                if (match.charAt(0) === '\\') return match.slice(1);
-                return (o[name] !== undef) ? o[name] : EMPTY;
+                if (match.charAt(0) === '\\') {
+                    return match.slice(1);
+                }
+                return (o[name] !== undefined) ? o[name] : EMPTY;
             });
         },
 
@@ -144,8 +206,11 @@
          * @param context {Object} (opt)
          */
         each: function(object, fn, context) {
-            var key, val, i = 0, length = object && object.length,
-                isObj = length === undef || S.type(object) === 'function';
+            var key,
+                val,
+                i = 0,
+                length = object && object.length,
+                isObj = length === undefined || S.type(object) === 'function';
             context = context || host;
 
             if (isObj) {
@@ -206,8 +271,13 @@
          * @return {Array} a copy of the array with duplicate entries removed
          */
         unique: function(a, override) {
-            if (override) a.reverse();
-            var b = a.slice(), i = 0, n, item;
+            if (override) {
+                a.reverse();
+            }
+            var b = a.slice(),
+                i = 0,
+                n,
+                item;
 
             while (i < b.length) {
                 item = b[i];
@@ -217,7 +287,9 @@
                 i += 1;
             }
 
-            if (override) b.reverse();
+            if (override) {
+                b.reverse();
+            }
             return b;
         },
 
@@ -266,7 +338,182 @@
             return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
                 return  String.fromCharCode(parseInt(u, 16));
             });
+        },
+        /**
+         * escape string to html
+         * @refer http://yiminghe.javaeye.com/blog/788929
+         * @param str {string} text2html show
+         */
+        escapeHTML:function(str) {
+            return str.replace(getEscapeReg(), function(m) {
+                return reverseEntities[m];
+            });
+        },
+
+        /**
+         * unescape html to string
+         * @param str {string} html2text
+         */
+        unEscapeHTML:function(str) {
+            return str.replace(getUnEscapeReg(), function(m, n) {
+                return htmlEntities[m] || String.fromCharCode(+n);
+            });
+        },
+        /**
+         * Converts object to a true array.
+         * @param o {object|Array} array like object or array
+         */
+        makeArray: function(o) {
+            if (o === null || o === undefined) return [];
+            if (S.isArray(o)) return o;
+
+            // The strings and functions also have 'length'
+            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
+                return [o];
+            }
+            var ret = [];
+            for (var i = 0,l = o.length; i < l; i++) {
+                ret[i] = o[i];
+            }
+            return ret;
+        },
+        /**
+         * Creates a serialized string of an array or object.
+         * @return {String}
+         * <code>
+         * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
+         * {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
+         * </code>
+         */
+        param: function(o, sep) {
+            if (!S.isPlainObject(o)) return EMPTY;
+            sep = sep || SEP;
+
+            var buf = [], key, val;
+            for (key in o) {
+                val = o[key];
+                key = encodeURIComponent(key);
+
+                // val is valid non-array value
+                if (isValidParamValue(val)) {
+                    buf.push(key, '=', encodeURIComponent(val + EMPTY), sep);
+                }
+                // val is not empty array
+                else if (S.isArray(val) && val.length) {
+                    for (var i = 0, len = val.length; i < len; ++i) {
+                        if (isValidParamValue(val[i])) {
+                            buf.push(key, BRACKET + '=', encodeURIComponent(val[i] + EMPTY), sep);
+                        }
+                    }
+                }
+                // ignore other cases, including empty array, Function, RegExp, Date etc.
+            }
+            buf.pop();
+            return buf.join(EMPTY);
+        },
+
+        /**
+         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
+         * <code>
+         * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+         * 'section=blog&tag[]=js&tag[]=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+         * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+         * 'id=45&raw'        // -> {id: '45', raw: ''}
+         * </code>
+         */
+        unparam: function(str, sep) {
+            if (typeof str !== 'string' || (str = S.trim(str)).length === 0) return {};
+
+            var ret = {},
+                pairs = str.split(sep || SEP),
+                pair, key, val, m,
+                i = 0, len = pairs.length;
+
+            for (; i < len; ++i) {
+                pair = pairs[i].split('=');
+                key = decodeURIComponent(pair[0]);
+
+                // decodeURIComponent will throw exception when pair[1] contains
+                // GBK encoded chinese characters.
+                try {
+                    val = decodeURIComponent(pair[1] || EMPTY);
+                } catch (ex) {
+                    val = pair[1] || EMPTY;
+                }
+
+                if ((m = key.match(RE_ARR_KEY)) && m[1]) {
+                    ret[m[1]] = ret[m[1]] || [];
+                    ret[m[1]].push(val);
+                } else {
+                    ret[key] = val;
+                }
+            }
+            return ret;
+        },
+        /**
+         * Executes the supplied function in the context of the supplied
+         * object 'when' milliseconds later. Executes the function a
+         * single time unless periodic is set to true.
+         * @param fn {Function|String} the function to execute or the name of the method in
+         *        the 'o' object to execute.
+         * @param when {Number} the number of milliseconds to wait until the fn is executed.
+         * @param periodic {Boolean} if true, executes continuously at supplied interval
+         *        until canceled.
+         * @param o {Object} the context object.
+         * @param data [Array] that is provided to the function. This accepts either a single
+         *        item or an array. If an array is provided, the function is executed with
+         *        one parameter for each array item. If you need to pass a single array
+         *        parameter, it needs to be wrapped in an array [myarray].
+         * @return {Object} a timer object. Call the cancel() method on this object to stop
+         *         the timer.
+         */
+        later: function(fn, when, periodic, o, data) {
+            when = when || 0;
+            o = o || { };
+            var m = fn, d = S.makeArray(data), f, r;
+
+            if (S.isString(fn)) {
+                m = o[fn];
+            }
+
+            if (!m) {
+                S.error('method undefined');
+            }
+
+            f = function() {
+                m.apply(o, d);
+            };
+
+            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
+
+            return {
+                id: r,
+                interval: periodic,
+                cancel: function() {
+                    if (this.interval) {
+                        clearInterval(r);
+                    } else {
+                        clearTimeout(r);
+                    }
+                }
+            };
         }
+
+    });
+
+    // for idea ..... auto-hint
+    S.mix(S, {
+        isBoolean:isValidParamValue,
+        isNumber:isValidParamValue,
+        isString:isValidParamValue,
+        isFunction:isValidParamValue,
+        isArray:isValidParamValue,
+        isDate:isValidParamValue,
+        isRegExp:isValidParamValue,
+        isObject:isValidParamValue
     });
 
     S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),

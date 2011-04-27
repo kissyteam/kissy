@@ -332,48 +332,6 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             offset: 1
         };
 
-    var attrNormalizers = {
-        tabindex:{
-            getter:function(el) {
-                return el.tabIndex;
-            },
-            setter:function(el, val) {
-                // http://www.w3.org/TR/html5/editing.html#sequential-focus-navigation-and-the-tabindex-attribute
-                // 简化，和不填一样处理！
-                if (isNaN(parseInt(val))) {
-                    el.removeAttribute("tabindex");
-                    el.removeAttribute("tabIndex");
-                } else {
-                    el.tabIndex = val;
-                }
-            }
-        },
-        // 在标准浏览器下，用 getAttribute 获取 style 值
-        // IE7- 下，需要用 cssText 来获取
-        // 统一使用 cssText
-        style:{
-            getter:function(el) {
-                return el.style.cssText;
-            },
-            setter:function(el, val) {
-                el.style.cssText = val;
-            }
-        },
-        checked:{
-            // checked 属性值，需要通过直接设置才能生效
-            setter:function(el, val) {
-                el.checked = !!val;
-            }
-        },
-        disabled:{
-            // disabled 属性值，需要通过直接设置才能生效
-            //true 然后 false，false失效
-            setter:function(el, val) {
-                el.disabled = !!val;
-            }
-        }
-    };
-
     if (oldIE) {
         S.mix(CUSTOM_ATTRS, {
             'for': 'htmlFor',
@@ -599,7 +557,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             S.each(DOM.query(selector), function(el) {
                 if (nodeNameIs(SELECT, el)) {
                     // 强制转换数值为字符串，以保证下面的 inArray 正常工作
-                    if (S['isNumber'](value)) {
+                    if (S.isNumber(value)) {
                         value += EMPTY;
                     }
 
@@ -775,7 +733,7 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
          *        should be added or removed regardless of current state.
          */
         toggleClass: function(selector, value, state) {
-            var isBool = S['isBoolean'](state), has;
+            var isBool = S.isBoolean(state), has;
 
             batch(selector, value, function(elem, classNames, cl) {
                 var j = 0, className;
@@ -1165,7 +1123,7 @@ KISSY.add('dom/data', function(S, DOM,undefined) {
                 key = isNode ? elem[expando] : expando;
                 thisCache = cache[key];
 
-                if(S['isString'](name) && thisCache) {
+                if(S.isString(name) && thisCache) {
                     return thisCache[name];
                 }
                 return thisCache;
@@ -1936,7 +1894,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
         // selector 为字符串是最常见的情况，优先考虑
         // 注：空白字符串无需判断，运行下去自动能返回空数组
-        if (S['isString'](selector)) {
+        if (S.isString(selector)) {
             selector = S.trim(selector);
 
             // selector 为 #id 是最常见的情况，特殊优化处理
@@ -2023,7 +1981,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             context = doc;
         }
         // 2). context 的第二使用场景是传入 #id
-        else if (S['isString'](context) && REG_ID.test(context)) {
+        else if (S.isString(context) && REG_ID.test(context)) {
             context = getElementById(context.slice(1), doc);
             // 注：#id 可能无效，这时获取的 context 为 null
         }
@@ -2143,7 +2101,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 match, tag, cls, ret = [];
 
             // 默认仅支持最简单的 tag.cls 形式
-            if (S['isString'](filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
+            if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
                 tag = match[2];
                 cls = match[3];
                 filter = function(elem) {
@@ -2447,7 +2405,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         if (filter === undefined) filter = 1; // 默认取 1
         var ret = null, fi, flen;
 
-        if (S['isNumber'](filter) && filter >= 0) {
+        if (S.isNumber(filter) && filter >= 0) {
             if (filter === 0) return elem;
             fi = 0;
             flen = filter;
@@ -2925,7 +2883,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     function batch(methodName, targets, types, fn, scope) {
         // on('#id tag.className', type, fn)
-        if (S['isString'](targets)) {
+        if (S.isString(targets)) {
             targets = DOM.query(targets);
         }
 
@@ -3162,7 +3120,7 @@ KISSY.add('node/node', function(S, DOM, undefined) {
         }
 
         // create from html
-        if (S['isString'](html)) {
+        if (S.isString(html)) {
             domNode = DOM.create(html, props, ownerDocument);
             // 将 S.Node('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === 11) { // fragment
@@ -3336,7 +3294,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
         //el.css({xx:yy}) chainable
         if (args[valIndex] === undefined
             &&
-            (valIndex != 1 || S['isString'](args[0]))
+            (valIndex != 1 || S.isString(args[0]))
             ) {
             return fn.apply(DOM, args2);
         }
@@ -3455,7 +3413,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
                 var domNode;
 
                 // 对于 NodeList, 需要 cloneNode, 因此直接调用 create
-                if (isNodeList || S['isString'](html)) {
+                if (isNodeList || S.isString(html)) {
                     domNode = DOM.create(html);
                 } else {
                     if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) domNode = html;
@@ -3530,7 +3488,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
     });
 
 }, {
-    requires:["dom","event","node/node","node/nodelist"]
+    requires:["dom","event","./node","./nodelist"]
 });
 
 KISSY.add("node", function(S, Node, NodeList) {
@@ -4107,8 +4065,12 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
 
     function io(c) {
         c = S.merge(defaultConfig, c);
-        if (!c.url) return undef;
-        if (c.data && !S['isString'](c.data)) c.data = S.param(c.data);
+        if (!c.url) {
+            return undef;
+        }
+        if (c.data && !S.isString(c.data)) {
+            c.data = S.param(c.data);
+        }
         c.context = c.context || c;
 
         var jsonp, status = SUCCESS, data, type = c.type.toUpperCase(), scriptEl;
@@ -4319,7 +4281,7 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
         var ct = EMPTY, xml, data = xhr;
 
         // xhr 可以直接是 data
-        if (!S['isString'](data)) {
+        if (!S.isString(data)) {
             ct = xhr.getResponseHeader(CONTENT_TYPE) || EMPTY;
             xml = type === 'xml' || !type && ct.indexOf('xml') >= 0;
             data = xml ? xhr.responseXML : xhr.responseText;
@@ -4329,7 +4291,7 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
             }
         }
 
-        if (S['isString'](data)) {
+        if (S.isString(data)) {
             if (type === JSON || !type && ct.indexOf(JSON) >= 0) {
                 data = S_JSON.parse(data);
             }
@@ -4795,7 +4757,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         } else {
             config = S.clone(defaultConfig);
             if (duration) (config.duration = parseFloat(duration) || 1);
-            if (S['isString'](easing) || S.isFunction(easing)) config.easing = easing;
+            if (S.isString(easing) || S.isFunction(easing)) config.easing = easing;
             if (S.isFunction(callback)) config.complete = callback;
             if (nativeSupport !== undefined) {
                 config.nativeSupport = nativeSupport;
@@ -4813,7 +4775,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
          */
         if (config.nativeSupport
             && getNativeTransitionName()
-            && S['isString']((easing = config.easing))) {
+            && S.isString((easing = config.easing))) {
             // 当 easing 是支持的字串时，才激活 native transition
             if (/cubic-bezier\([\s\d.,]+\)/.test(easing) ||
                 (easing = Easing.NativeTimeFunction[easing])) {
@@ -4925,7 +4887,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 finish = start + duration;
                 easing = config.easing;
 
-                if (S['isString'](easing)) {
+                if (S.isString(easing)) {
                     easing = Easing[easing] || Easing.easeNone;
                 }
 
@@ -5730,7 +5692,7 @@ KISSY.add('cookie/base', function(S) {
 
 
     function isNotEmptyString(val) {
-        return S['isString'](val) && val !== '';
+        return S.isString(val) && val !== '';
     }
 
     return {
