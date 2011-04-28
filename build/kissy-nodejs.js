@@ -250,7 +250,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110427214546',
+        buildTime:'20110428220418',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1007,7 +1007,7 @@ build time: ${build.time}
     }
 
     var win = S.__HOST,
-        oldIE = !win['getSelection'] && win['ActiveXObject'],
+        IE = !!navigator.userAgent.match(/MSIE/),
         doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
         EMPTY = '',
@@ -1016,28 +1016,21 @@ build time: ${build.time}
         ERROR = 3,
         ATTACHED = 4,
         mix = S.mix,
-        /**
-         * ie 与标准浏览器监听 script 载入完毕有区别
-         */
-            scriptOnload = doc.addEventListener ?
-            function(node, callback) {
-                node.addEventListener('load', callback, false);
-            } :
-            function(node, callback) {
-                var oldCallback = node.onreadystatechange;
-                node.onreadystatechange = function() {
-                    var rs = node.readyState;
-                    if (rs === 'loaded' || rs === 'complete') {
-                        node.onreadystatechange = null;
-                        oldCallback && oldCallback();
-                        callback.call(this);
-                    }
-                };
-            } ,
-        loader,
-        RE_CSS = /\.css(?:\?|$)/i,
-        buildTime = encodeURIComponent(S.buildTime),
-        CSSFULLPATH = 'cssfullpath';
+        scriptOnload = doc.addEventListener ?
+        function(node, callback) {
+            node.addEventListener('load', callback, false);
+        } :
+        function(node, callback) {
+            var oldCallback = node.onreadystatechange;
+            node.onreadystatechange = function() {
+                var rs = node.readyState;
+                if (rs === 'loaded' || rs === 'complete') {
+                    node.onreadystatechange = null;
+                    oldCallback && oldCallback();
+                    callback.call(this);
+                }
+            };
+        }, RE_CSS = /\.css(?:\?|$)/i, buildTime = encodeURIComponent(S.buildTime), CSSFULLPATH = 'cssfullpath';
 
     /**
      * resolve relative part of path
@@ -1135,7 +1128,7 @@ build time: ${build.time}
     }
 
 
-    loader = {
+    var loader = {
 
 
         //firefox,ie9,chrome 如果add没有模块名，模块定义先暂存这里
@@ -1198,7 +1191,8 @@ build time: ${build.time}
                 if (config && ( host = config.host )) {
                     var hostMod = mods[host];
                     if (!hostMod) {
-                        S.error("module " + host + " can not be found !");
+                        S.log("module " + host + " can not be found !", "error");
+                        //S.error("module " + host + " can not be found !");
                         return self;
                     }
                     if (self.__isAttached(host)) {
@@ -1241,25 +1235,13 @@ build time: ${build.time}
             if (S.isFunction(name)) {
                 config = def;
                 def = name;
-                if (oldIE) {
-                    // 15 ms 内，从缓存读取的
-                    if (((+new Date()) - self.__startLoadTime) < 15) {
-                        S.log("old_ie 从缓存中读取");
-                        if (name = self.__startLoadModuleName) {
-                            self.__registerModule(name, def, config);
-                        } else {
-                            S.log("从缓存读取？？但是请求前记录没有模块名", "error");
-                            S.error("从缓存读取？？但是请求前记录没有模块名");
-                        }
-                    } else {
-                        S.log("old_ie 读取 interactiove 脚本地址");
-                        name = self.__findModuleNameByInteractive();
-                        self.__registerModule(name, def, config);
-                    }
+                if (IE) {
+                    name = self.__findModuleNameByInteractive();
+                    S.log("old_ie 读取 interactive 脚本地址 : " + name);
+                    self.__registerModule(name, def, config);
                     self.__startLoadModuleName = null;
                     self.__startLoadTime = 0;
                 } else {
-                    S.log("标准浏览器等load时再关联模块名");
                     // 其他浏览器 onload 时，关联模块名与模块定义
                     self.__currentModule = {
                         def:def,
@@ -1268,11 +1250,13 @@ build time: ${build.time}
                 }
                 return self;
             }
-            S.error("invalid format for KISSY.add !");
+            S.log("invalid format for KISSY.add !", "error");
+            //S.error("invalid format for KISSY.add !");
             return self;
         },
 
         //ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
+        // 如果找不到，返回发送前那个脚本
         __findModuleNameByInteractive:function() {
             var self = this,
                 scripts = document.getElementsByTagName("script"),
@@ -1287,8 +1271,10 @@ build time: ${build.time}
                 }
             }
             if (!re) {
-                S.log("找不到 interactive 状态的 script", "error");
-                S.error("找不到 interactive 状态的 script");
+                S.log("找不到 interactive 状态的 script,time diff : " + (+new Date() - self.__startLoadTime), "error");
+                S.log("old_ie 从缓存中读取 : " + self.__startLoadModuleName);
+                return self.__startLoadModuleName;
+                //S.error("找不到 interactive 状态的 script");
             }
 
             var src = re.src;
@@ -1310,7 +1296,7 @@ build time: ${build.time}
             }
 
             S.log("interactive 状态的 script 没有对应包 ：" + src, "error");
-            S.error("interactive 状态的 script 没有对应包 ：" + src);
+            //S.error("interactive 状态的 script 没有对应包 ：" + src);
             return undefined;
         },
 
@@ -1447,6 +1433,7 @@ build time: ${build.time}
                     if (!fired && self.__isAttached(modNames)) {
                         fired = true;
                         var mods = self.__getModules(modNames);
+                        S.log("use callback called");
                         callback && callback.apply(self, mods);
                     }
                 }, cfg);
@@ -1570,13 +1557,6 @@ build time: ${build.time}
 
             self.__load(mod, function() {
 
-                //标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件
-                if (self.__currentModule) {
-                    self.__registerModule(mod.name, self.__currentModule.def,
-                        self.__currentModule.config);
-                    self.__currentModule = null;
-                }
-
                 // add 可能改了 config，这里重新取下
                 mod['requires'] = mod['requires'] || [];
 
@@ -1696,12 +1676,19 @@ build time: ${build.time}
 
             if (mod.status < LOADING && url) {
                 mod.status = LOADING;
-                if (oldIE) {
+                if (IE) {
                     self.__startLoadModuleName = mod.name;
                     self.__startLoadTime = Number(+new Date());
                 }
                 ret = S.getScript(url, {
                     success: function() {
+                        //标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
+                        if (self.__currentModule) {
+                            S.log("标准浏览器等load时再关联模块名 : " + mod.name);
+                            self.__registerModule(mod.name, self.__currentModule.def,
+                                self.__currentModule.config);
+                            self.__currentModule = null;
+                        }
                         mixGlobal();
                         if (mod.fns && mod.fns.length > 0) {
                             // 压缩时不过滤该句，以方便线上调试
