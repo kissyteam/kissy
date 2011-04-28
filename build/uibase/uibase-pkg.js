@@ -273,7 +273,7 @@ KISSY.add('uibase/base', function (S, Base) {
                     host.__set(p, v.call(host, srcNode));
                 }
                 // 单选选择器
-                else if (S['isString'](v)) {
+                else if (S.isString(v)) {
                     host.__set(p, srcNode.one(v));
                 }
                 // 多选选择器
@@ -292,7 +292,7 @@ KISSY.add('uibase/base', function (S, Base) {
                 return document.body;
             },
             setter:function(v) {
-                if (S['isString'](v))
+                if (S.isString(v))
                     return Node.one(v);
             }
         },
@@ -391,7 +391,7 @@ KISSY.add('uibase/base', function (S, Base) {
             base = UIBase;
         }
         base = base || UIBase;
-        if (S['isObject'](exts)) {
+        if (S.isObject(exts)) {
             sx = px;
             px = exts;
             exts = [];
@@ -428,12 +428,13 @@ KISSY.add('uibase/base', function (S, Base) {
         if (!s) return r;
         for (var p in s) {
             // 如果属性是对象，接着递归进行
-            if (S['isObject'](s[p]) && S['isObject'](r[p])) {
+            if (S.isObject(s[p]) && S.isObject(r[p])) {
                 deepMix(r[p], s[p]);
             } else if (!(p in r)) {
                 r[p] = s[p];
             }
         }
+        return undefined;
     }
 
     return UIBase;
@@ -502,7 +503,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             //容器元素
             setter:function(v) {
                 var Node = S.require("node/node");
-                if (S['isString'](v))
+                if (S.isString(v))
                     return Node.one(v);
             }
         },
@@ -563,10 +564,10 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             }
         }
 
-        var ret = "<" + tag + (styleStr ? (" style='" + styleStr + "' ") : "")
+        return "<" + tag + (styleStr ? (" style='" + styleStr + "' ") : "")
             + attrStr + (cls ? (" class='" + cls + "' ") : "")
             + ">";
-        return ret;
+        //return ret;
     }
 
     Box.HTML_PARSER = {
@@ -921,7 +922,7 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
             v && this.get("contentEl").css(v);
         },
         _uiSetContent:function(c) {
-            if (S['isString'](c)) {
+            if (S.isString(c)) {
                 this.get("contentEl").html(c);
             } else if (c !== undefined) {
                 this.get("contentEl").html("");
@@ -1213,6 +1214,7 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
     Position.prototype = {
 
         _uiSetVisible:function(isVisible) {
+
             var self = this;
             this.get("view").set("visible", isVisible);
             self[isVisible ? "_bindKey" : "_unbindKey" ]();
@@ -1301,6 +1303,7 @@ KISSY.add("uibase/positionrender", function() {
             var el = this.get("el");
             el.addClass(this.get("prefixCls") + "ext-position");
             el.css({
+                visibility:'hidden',
                 display: "",
                 left:-9999,
                 top:-9999,
@@ -1460,7 +1463,7 @@ KISSY.add("uibase/stdmod", function(S) {
  * support standard mod for component
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
+KISSY.add("uibase/stdmodrender", function(S, Node) {
 
 
     var CLS_PREFIX = "stdmod-";
@@ -1513,7 +1516,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node, undefined) {
     StdMod.prototype = {
 
         _setStdModContent:function(part, v) {
-            if (S['isString'](v)) {
+            if (S.isString(v)) {
                 this.get(part).html(v);
             } else {
                 this.get(part).html("");

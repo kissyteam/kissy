@@ -33,6 +33,7 @@ KISSY.add("uibase/positionrender", function() {
             var el = this.get("el");
             el.addClass(this.get("prefixCls") + "ext-position");
             el.css({
+                visibility:'hidden',
                 display: "",
                 left:-9999,
                 top:-9999,

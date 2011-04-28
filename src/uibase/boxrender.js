@@ -18,7 +18,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             //容器元素
             setter:function(v) {
                 var Node = S.require("node/node");
-                if (S.isString.(v))
+                if (S.isString(v))
                     return Node.one(v);
             }
         },

@@ -64,6 +64,7 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
     Position.prototype = {
 
         _uiSetVisible:function(isVisible) {
+
             var self = this;
             this.get("view").set("visible", isVisible);
             self[isVisible ? "_bindKey" : "_unbindKey" ]();
