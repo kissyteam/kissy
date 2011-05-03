@@ -86,6 +86,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
         },
 
         _notifyDropsMove:function(ev) {
+            
             var activeDrag = this.get("activeDrag"),mode = activeDrag.get("mode");
             var drops = this.get("drops");
             var activeDrop,
@@ -359,7 +360,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
         this._init();
     }
 
-    Draggable.POINTER = "pointer";
+    Draggable.POINT = "point";
     Draggable.INTERSECT = "intersect";
     Draggable.STRICT = "strict";
 
@@ -425,7 +426,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 //ie 不能在其内开始选择区域
                 hl.unselectable();
                 if (self.get("cursor")) {
-                    hl.css('cursor', 'move');
+                    hl.css('cursor', self.get("cursor"));
                 }
             }
             node.on('mousedown', self._handleMouseDown, self);
@@ -437,7 +438,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 handlers = self.get('handlers');
             for (var i = 0; i < handlers.length; i++) {
                 var hl = handlers[i];
-                if (hl.css("cursor") == "move") {
+                if (hl.css("cursor") == self.get("cursor")) {
                     hl.css("cursor", "auto");
                 }
             }
