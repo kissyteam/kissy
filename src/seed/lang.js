@@ -13,6 +13,7 @@
         lastIndexOf = AP.lastIndexOf,
         filter = AP.filter,
         trim = String.prototype.trim,
+        map = AP.map,
 
         EMPTY = '',
         CLONE_MARKER = '__~ks_cloned',
@@ -271,11 +272,11 @@
          * @return {Array} a copy of the array with duplicate entries removed
          */
         unique: function(a, override) {
+            var b = a.slice();
             if (override) {
-                a.reverse();
+                b.reverse();
             }
-            var b = a.slice(),
-                i = 0,
+            var i = 0,
                 n,
                 item;
 
@@ -323,6 +324,21 @@
                     }
                 });
                 return ret;
+            },
+        // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
+        map:map ?
+            function(arr, fn, context) {
+                return map.call(arr, fn, context || this);
+            } :
+            function(arr, fn, context) {
+                var len = arr.length,
+                    res = new Array(len);
+                for (var i = 0; i < len; i++) {
+                    if (i in arr) {
+                        res[i] = fn.call(context || this, arr[i], i, arr);
+                    }
+                }
+                return res;
             },
 
         /**

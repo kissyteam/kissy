@@ -1,5 +1,25 @@
 describe('lang.js', function() {
+    beforeEach(function() {
+        this.addMatchers({
+            toBeAlmostEqual: function(expected) {
+                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+            },
 
+
+            toBeEqual: function(expected) {
+                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+            },
+
+            toBeArrayEq:function(expected) {
+                var actual = this.actual;
+                if (expected.length != actual.length) return false;
+                for (var i = 0; i < expected.length; i++) {
+                    if (expected[i] != actual[i]) return false;
+                }
+                return true;
+            }
+        });
+    });
     var S = KISSY,
         host = S.__HOST,
         doc = host['document'],
@@ -334,6 +354,25 @@ describe('lang.js', function() {
         });
 
         expect(ret.length).toBe(2);
+    });
+
+
+    it('S.map', function() {
+        function makePseudoPlural(single) {
+            return single.replace(/o/g, "e");
+        }
+
+        var singles = ["foot", "goose", "moose"];
+        var plurals = S.map(singles, makePseudoPlural);
+
+        expect(plurals).toBeArrayEq(["feet", "geese", "meese"]);
+
+        var a = S.map("Hello World",
+            function(x) {
+                return x.charCodeAt(0);
+            });
+        expect(a).toBeArrayEq([72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100]);
+
     });
 
     it('S.now', function() {
