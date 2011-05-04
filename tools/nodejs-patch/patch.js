@@ -46,6 +46,11 @@
             base:__filename.replace(/[^/]*$/i, "")
         },
         add: function(name, def, cfg) {
+            if (S.isFunction(name)) {
+                cfg = def;
+                def = name;
+                name = this.currentModName;
+            }
             mods[name] = {
                 name:name,
                 fn:def
@@ -113,6 +118,7 @@
             var modPath = this._getPath(this._combine(modName));
             var mod = mods[modName];
             if (!mod) {
+                this.currentModName = modName;
                 require(modPath);
             }
             mod = mods[modName];

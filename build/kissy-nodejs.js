@@ -46,6 +46,11 @@
             base:__filename.replace(/[^/]*$/i, "")
         },
         add: function(name, def, cfg) {
+            if (S.isFunction(name)) {
+                cfg = def;
+                def = name;
+                name = this.currentModName;
+            }
             mods[name] = {
                 name:name,
                 fn:def
@@ -113,6 +118,7 @@
             var modPath = this._getPath(this._combine(modName));
             var mod = mods[modName];
             if (!mod) {
+                this.currentModName = modName;
                 require(modPath);
             }
             mod = mods[modName];
@@ -250,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110428220418',
+        buildTime:'20110504114328',
 
         /**
          * Returns a new object containing all of the properties of
@@ -481,6 +487,7 @@ build time: ${build.time}
         lastIndexOf = AP.lastIndexOf,
         filter = AP.filter,
         trim = String.prototype.trim,
+        map = AP.map,
 
         EMPTY = '',
         CLONE_MARKER = '__~ks_cloned',
@@ -739,11 +746,11 @@ build time: ${build.time}
          * @return {Array} a copy of the array with duplicate entries removed
          */
         unique: function(a, override) {
+            var b = a.slice();
             if (override) {
-                a.reverse();
+                b.reverse();
             }
-            var b = a.slice(),
-                i = 0,
+            var i = 0,
                 n,
                 item;
 
@@ -791,6 +798,21 @@ build time: ${build.time}
                     }
                 });
                 return ret;
+            },
+        // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
+        map:map ?
+            function(arr, fn, context) {
+                return map.call(arr, fn, context || this);
+            } :
+            function(arr, fn, context) {
+                var len = arr.length,
+                    res = new Array(len);
+                for (var i = 0; i < len; i++) {
+                    if (i in arr) {
+                        res[i] = fn.call(context || this, arr[i], i, arr);
+                    }
+                }
+                return res;
             },
 
         /**
@@ -1017,20 +1039,20 @@ build time: ${build.time}
         ATTACHED = 4,
         mix = S.mix,
         scriptOnload = doc.addEventListener ?
-        function(node, callback) {
-            node.addEventListener('load', callback, false);
-        } :
-        function(node, callback) {
-            var oldCallback = node.onreadystatechange;
-            node.onreadystatechange = function() {
-                var rs = node.readyState;
-                if (rs === 'loaded' || rs === 'complete') {
-                    node.onreadystatechange = null;
-                    oldCallback && oldCallback();
-                    callback.call(this);
-                }
-            };
-        }, RE_CSS = /\.css(?:\?|$)/i, buildTime = encodeURIComponent(S.buildTime), CSSFULLPATH = 'cssfullpath';
+            function(node, callback) {
+                node.addEventListener('load', callback, false);
+            } :
+            function(node, callback) {
+                var oldCallback = node.onreadystatechange;
+                node.onreadystatechange = function() {
+                    var rs = node.readyState;
+                    if (rs === 'loaded' || rs === 'complete') {
+                        node.onreadystatechange = null;
+                        oldCallback && oldCallback();
+                        callback.call(this);
+                    }
+                };
+            }, RE_CSS = /\.css(?:\?|$)/i, buildTime = encodeURIComponent(S.buildTime), CSSFULLPATH = 'cssfullpath';
 
     /**
      * resolve relative part of path
@@ -1433,7 +1455,6 @@ build time: ${build.time}
                     if (!fired && self.__isAttached(modNames)) {
                         fired = true;
                         var mods = self.__getModules(modNames);
-                        S.log("use callback called");
                         callback && callback.apply(self, mods);
                     }
                 }, cfg);
