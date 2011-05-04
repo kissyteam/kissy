@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110504114328',
+        buildTime:'20110504115421',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1259,7 +1259,7 @@ build time: ${build.time}
                 def = name;
                 if (IE) {
                     name = self.__findModuleNameByInteractive();
-                    S.log("old_ie 读取 interactive 脚本地址 : " + name);
+                    S.log("old_ie get modname by interactive : " + name);
                     self.__registerModule(name, def, config);
                     self.__startLoadModuleName = null;
                     self.__startLoadTime = 0;
@@ -1293,8 +1293,8 @@ build time: ${build.time}
                 }
             }
             if (!re) {
-                S.log("找不到 interactive 状态的 script,time diff : " + (+new Date() - self.__startLoadTime), "error");
-                S.log("old_ie 从缓存中读取 : " + self.__startLoadModuleName);
+                S.log("can not find interactive script,time diff : " + (+new Date() - self.__startLoadTime), "error");
+                S.log("old_ie get modname from cache : " + self.__startLoadModuleName);
                 return self.__startLoadModuleName;
                 //S.error("找不到 interactive 状态的 script");
             }
@@ -1317,7 +1317,7 @@ build time: ${build.time}
                 }
             }
 
-            S.log("interactive 状态的 script 没有对应包 ：" + src, "error");
+            S.log("interactive script not have package config ：" + src, "error");
             //S.error("interactive 状态的 script 没有对应包 ：" + src);
             return undefined;
         },
@@ -1705,7 +1705,7 @@ build time: ${build.time}
                     success: function() {
                         //标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
                         if (self.__currentModule) {
-                            S.log("标准浏览器等load时再关联模块名 : " + mod.name);
+                            S.log("standard browser get modname after load : " + mod.name);
                             self.__registerModule(mod.name, self.__currentModule.def,
                                 self.__currentModule.config);
                             self.__currentModule = null;
