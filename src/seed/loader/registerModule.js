@@ -1,6 +1,6 @@
 /**
  * register module ,associate module name with module factory(definition)
- * @author:yiminghe@gmail.com
+ * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader,data) {
     if (S.use) return;

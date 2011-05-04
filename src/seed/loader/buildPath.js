@@ -1,6 +1,6 @@
 /**
  * build full path from relative path and base path
- * @author:yiminghe@gmail.com
+ * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils) {
     if("require" in this) return;

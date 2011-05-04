@@ -1,6 +1,6 @@
 /**
  * load a single mod (js or css)
- * @author:yiminghe@gmail.com
+ * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
     if ("require" in this) return;

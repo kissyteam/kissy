@@ -1,6 +1,6 @@
 /**
  * script load across browser
- * @author:yiminghe@gmail.com
+ * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, utils) {
     if (S.use) return;
@@ -12,7 +12,7 @@
             var oldCallback = node.onreadystatechange;
             node.onreadystatechange = function() {
                 var rs = node.readyState;
-                if (rs === 'loaded' || rs === 'complete') {
+                if (/loaded|complete/i.test(rs)) {
                     node.onreadystatechange = null;
                     oldCallback && oldCallback();
                     callback.call(this);

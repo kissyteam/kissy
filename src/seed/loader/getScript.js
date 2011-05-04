@@ -1,6 +1,6 @@
 /**
  * getScript support for css and js callback after load
- * @author:yiminghe@gmail.com
+ * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, utils) {
     if ("require" in this) return;
