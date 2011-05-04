@@ -21,7 +21,7 @@
 
             var self = this,
                 url = mod['fullpath'],
-                isCss = /\.css(?:\?|$)/i.test(url),
+                isCss = utils.isCss(url),
                 //这个是全局的，防止多实例对同一模块的重复下载
                 loadQueque = self.Env._loadQueue,
                 node = loadQueque[url],
@@ -75,11 +75,7 @@
                     charset: mod.charset
                 });
 
-                // css 是同步的，在 success 回调里，已经将 loadQueque[url] 置成 LOADED
-                // 不需要再置成节点，否则有问题
-                if (!/\.css(?:\?|$)/i.test(url)) {
-                    loadQueque[url] = ret;
-                }
+                loadQueque[url] = ret;
             }
             // 已经在加载中，需要添加回调到 script onload 中
             // 注意：没有考虑 error 情形

@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110504213705',
+        buildTime:'20110504224721',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1052,11 +1052,14 @@ build time: ${build.time}
  * utils for kissy loader
  * @author:yiminghe@gmail.com
  */
-(function(S,loader, utils) {
+(function(S, loader, utils) {
     if (S.use) return;
     S.mix(utils, {
         isWebKit:!!navigator.userAgent.match(/AppleWebKit/),
         IE : !!navigator.userAgent.match(/MSIE/),
+        isCss:function(url) {
+            return /\.css(?:\?|$)/i.test(url);
+        },
         /**
          * resolve relative part of path
          * x/../y/z -> y/z
@@ -1144,9 +1147,9 @@ build time: ${build.time}
 
     var startsWith = S.startsWith,normalizePath = utils.normalizePath;
 
-})(KISSY,KISSY.__loader, KISSY.__loaderUtils);/**
+})(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * script load across browser
- * @author:yiminghe@gmail.com
+ * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, utils) {
     if (S.use) return;
@@ -1158,7 +1161,7 @@ build time: ${build.time}
             var oldCallback = node.onreadystatechange;
             node.onreadystatechange = function() {
                 var rs = node.readyState;
-                if (rs === 'loaded' || rs === 'complete') {
+                if (/loaded|complete/i.test(rs)) {
                     node.onreadystatechange = null;
                     oldCallback && oldCallback();
                     callback.call(this);
@@ -1168,7 +1171,7 @@ build time: ${build.time}
 
 })(KISSY, KISSY.__loaderUtils);/**
  * getScript support for css and js callback after load
- * @author:yiminghe@gmail.com
+ * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, utils) {
     if ("require" in this) return;
@@ -1252,7 +1255,7 @@ build time: ${build.time}
          * </code>
          */
         getScript:function(url, success, charset) {
-            if (/\.css(?:\?|$)/i.test(url)) {
+            if (utils.isCss(url)) {
                 return S.getStyle(url, success, charset);
             }
             var doc = document,
@@ -1312,7 +1315,7 @@ build time: ${build.time}
 
 })(KISSY, KISSY.__loaderUtils);/**
  * add module definition
- * @author:yiminghe@gmail.com
+ * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils,data) {
     if("require" in this) return;
@@ -1443,7 +1446,7 @@ build time: ${build.time}
 
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils,KISSY.__loaderData);/**
  * build full path from relative path and base path
- * @author:yiminghe@gmail.com
+ * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils) {
     if("require" in this) return;
@@ -1477,7 +1480,7 @@ build time: ${build.time}
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * logic for config.global , mainly for kissy.editor
- * @author:yiminghe@gmail.com
+ * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader) {
     if("require" in this) return;
@@ -1567,7 +1570,7 @@ build time: ${build.time}
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * load a single mod (js or css)
- * @author:yiminghe@gmail.com
+ * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
     if ("require" in this) return;
@@ -1588,7 +1591,7 @@ build time: ${build.time}
 
             var self = this,
                 url = mod['fullpath'],
-                isCss = /\.css(?:\?|$)/i.test(url),
+                isCss = utils.isCss(url),
                 //这个是全局的，防止多实例对同一模块的重复下载
                 loadQueque = self.Env._loadQueue,
                 node = loadQueque[url],
@@ -1642,11 +1645,7 @@ build time: ${build.time}
                     charset: mod.charset
                 });
 
-                // css 是同步的，在 success 回调里，已经将 loadQueque[url] 置成 LOADED
-                // 不需要再置成节点，否则有问题
-                if (!/\.css(?:\?|$)/i.test(url)) {
-                    loadQueque[url] = ret;
-                }
+                loadQueque[url] = ret;
             }
             // 已经在加载中，需要添加回调到 script onload 中
             // 注意：没有考虑 error 情形
@@ -1875,7 +1874,7 @@ build time: ${build.time}
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * register module ,associate module name with module factory(definition)
- * @author:yiminghe@gmail.com
+ * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader,data) {
     if (S.use) return;
@@ -1910,7 +1909,7 @@ build time: ${build.time}
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderData);/**
  * use and attach mod
- * @author:yiminghe@gmail.com
+ * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
     if ("require" in this) return;
@@ -1966,7 +1965,9 @@ build time: ${build.time}
             var self = this,
                 mods = [self];
             S.each(modNames, function(modName) {
-                mods.push(self.require(modName));
+                if (!utils.isCss(modName)) {
+                    mods.push(self.require(modName));
+                }
             });
             return mods;
         },
@@ -2123,7 +2124,7 @@ build time: ${build.time}
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
  *  mix loader into S and infer KISSy baseUrl if not set
- *  @author:yiminghe@gmail.com
+ *  @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils) {
 if("require" in this) return;

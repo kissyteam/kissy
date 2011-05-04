@@ -84,7 +84,7 @@
          * </code>
          */
         getScript:function(url, success, charset) {
-            if (/\.css(?:\?|$)/i.test(url)) {
+            if (utils.isCss(url)) {
                 return S.getStyle(url, success, charset);
             }
             var doc = document,

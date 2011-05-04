@@ -56,7 +56,9 @@
             var self = this,
                 mods = [self];
             S.each(modNames, function(modName) {
-                mods.push(self.require(modName));
+                if (!utils.isCss(modName)) {
+                    mods.push(self.require(modName));
+                }
             });
             return mods;
         },

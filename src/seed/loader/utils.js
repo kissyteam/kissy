@@ -2,11 +2,14 @@
  * utils for kissy loader
  * @author:yiminghe@gmail.com
  */
-(function(S,loader, utils) {
+(function(S, loader, utils) {
     if (S.use) return;
     S.mix(utils, {
         isWebKit:!!navigator.userAgent.match(/AppleWebKit/),
         IE : !!navigator.userAgent.match(/MSIE/),
+        isCss:function(url) {
+            return /\.css(?:\?|$)/i.test(url);
+        },
         /**
          * resolve relative part of path
          * x/../y/z -> y/z
@@ -94,4 +97,4 @@
 
     var startsWith = S.startsWith,normalizePath = utils.normalizePath;
 
-})(KISSY,KISSY.__loader, KISSY.__loaderUtils);
+})(KISSY, KISSY.__loader, KISSY.__loaderUtils);
