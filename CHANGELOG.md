@@ -14,6 +14,9 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/4/14)
+ - [+] KISSY.getScript 支持 css 载入后调用回调
+ - [+] KISSY.getScript 支持除了ie<9外的 error 立即回调
+ - [x] KISSY Loader 初步重构，拆分文件
  - [x] bugfix anim 内存泄露
  - [+] anim 支持 scrollLeft ,scrollTop 配置
  - [+] 增加 anim 单元测试

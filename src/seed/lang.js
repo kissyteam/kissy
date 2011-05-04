@@ -516,6 +516,15 @@
                     }
                 }
             };
+        },
+
+        startsWith:function(str, prefix) {
+            return str.lastIndexOf(prefix, 0) == 0;
+        },
+
+        endsWith:function(str, suffix) {
+            var ind = str.length - suffix.length;
+            return str.indexOf(suffix, ind) == ind;
         }
 
     });
