@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110505111156',
+        buildTime:'20110505115609',
 
         /**
          * Returns a new object containing all of the properties of
@@ -494,9 +494,6 @@ build time: ${build.time}
         RE_TRIM = /^\s+|\s+$/g,
 
         SEP = '&',
-        BRACKET = encodeURIComponent('[]'),
-        RE_ARR_KEY = /^(\w+)\[\]$/,
-
         // [[Class]] -> type pairs
         class2type = {},
         htmlEntities = {
@@ -876,7 +873,7 @@ build time: ${build.time}
          * @return {String}
          * <code>
          * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
+         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
          * {foo: '', bar: 2}    // -> 'foo=&bar=2'
          * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
          * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
@@ -899,7 +896,7 @@ build time: ${build.time}
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, BRACKET + '=', encodeURIComponent(val[i] + EMPTY), sep);
+                            buf.push(key, '=', encodeURIComponent(val[i] + EMPTY), sep);
                         }
                     }
                 }
@@ -913,7 +910,7 @@ build time: ${build.time}
          * Parses a URI-like query string and returns an object composed of parameter/value pairs.
          * <code>
          * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-         * 'section=blog&tag[]=js&tag[]=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+         * 'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
          * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
          * 'id=45&raw'        // -> {id: '45', raw: ''}
          * </code>
@@ -938,9 +935,12 @@ build time: ${build.time}
                     val = pair[1] || EMPTY;
                 }
 
-                if ((m = key.match(RE_ARR_KEY)) && m[1]) {
-                    ret[m[1]] = ret[m[1]] || [];
-                    ret[m[1]].push(val);
+                if (ret[key]) {
+                    if (S.isArray(ret[key])) {
+                        ret[key].push(val);
+                    } else {
+                        ret[key] = [ret[key],val];
+                    }
                 } else {
                     ret[key] = val;
                 }

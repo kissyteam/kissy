@@ -65,7 +65,7 @@ describe('web.js', function() {
 
     it('S.param', function() {
         expect(S.param({foo:1, bar:2})).toBe('foo=1&bar=2');
-        expect(S.param({foo:1, bar:[2,3]})).toBe('foo=1&bar%5B%5D=2&bar%5B%5D=3');
+        expect(S.param({foo:1, bar:[2,3]})).toBe('foo=1&bar=2&bar=3');
 
         expect(S.param({'&#': '!#='})).toBe('%26%23=!%23%3D');
 
@@ -89,14 +89,14 @@ describe('web.js', function() {
         expect(S.unparam('foo').foo).toBe('');
         expect(S.unparam('foo=').foo).toBe('');
 
-        expect(S.unparam('foo=1&bar[]=2&bar[]=3').bar[0]).toBe('2');
-        expect(S.unparam('foo=1&bar[]=2&bar[]=3').bar[1]).toBe('3');
+        expect(S.unparam('foo=1&bar=2&bar=3').bar[0]).toBe('2');
+        expect(S.unparam('foo=1&bar=2&bar=3').bar[1]).toBe('3');
 
         expect(S.unparam('foo=null&bar=2').foo).toBe('null');
         expect(S.unparam('foo=&bar=2').foo).toBe('');
         expect(S.unparam('foo&bar=2').foo).toBe('');
 
-        expect(S.unparam('foo=1&bar=2&foo=3').foo).toBe('3');
+        expect(S.unparam('foo=1&bar=2&foo=3').foo[1]).toBe('3');
     });
 
     it('S.globalEval', function() {

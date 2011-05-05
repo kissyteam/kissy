@@ -20,9 +20,6 @@
         RE_TRIM = /^\s+|\s+$/g,
 
         SEP = '&',
-        BRACKET = encodeURIComponent('[]'),
-        RE_ARR_KEY = /^(\w+)\[\]$/,
-
         // [[Class]] -> type pairs
         class2type = {},
         htmlEntities = {
@@ -402,7 +399,7 @@
          * @return {String}
          * <code>
          * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar[]=2&bar[]=3'
+         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
          * {foo: '', bar: 2}    // -> 'foo=&bar=2'
          * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
          * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
@@ -425,7 +422,7 @@
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, BRACKET + '=', encodeURIComponent(val[i] + EMPTY), sep);
+                            buf.push(key, '=', encodeURIComponent(val[i] + EMPTY), sep);
                         }
                     }
                 }
@@ -439,7 +436,7 @@
          * Parses a URI-like query string and returns an object composed of parameter/value pairs.
          * <code>
          * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-         * 'section=blog&tag[]=js&tag[]=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+         * 'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
          * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
          * 'id=45&raw'        // -> {id: '45', raw: ''}
          * </code>
@@ -464,9 +461,12 @@
                     val = pair[1] || EMPTY;
                 }
 
-                if ((m = key.match(RE_ARR_KEY)) && m[1]) {
-                    ret[m[1]] = ret[m[1]] || [];
-                    ret[m[1]].push(val);
+                if (ret[key]) {
+                    if (S.isArray(ret[key])) {
+                        ret[key].push(val);
+                    } else {
+                        ret[key] = [ret[key],val];
+                    }
                 } else {
                     ret[key] = val;
                 }
