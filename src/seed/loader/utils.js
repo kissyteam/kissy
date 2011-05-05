@@ -10,6 +10,9 @@
         isCss:function(url) {
             return /\.css(?:\?|$)/i.test(url);
         },
+        isLinkNode:function(n) {
+            return n.nodeName.toLowerCase() == 'link';
+        },
         /**
          * resolve relative part of path
          * x/../y/z -> y/z

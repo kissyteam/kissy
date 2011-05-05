@@ -621,8 +621,12 @@ build time: ${build.time}
                 var len = arr.length,
                     res = new Array(len);
                 for (var i = 0; i < len; i++) {
-                    if (i in arr) {
-                        res[i] = fn.call(context || this, arr[i], i, arr);
+                    var el = S.isString(arr) ? arr.charAt(i) : arr[i];
+                    if (el
+                        ||
+                        //ie<9 in invalid when typeof arr == string
+                        i in arr) {
+                        res[i] = fn.call(context || this, el, i, arr);
                     }
                 }
                 return res;
@@ -873,6 +877,9 @@ build time: ${build.time}
         isCss:function(url) {
             return /\.css(?:\?|$)/i.test(url);
         },
+        isLinkNode:function(n) {
+            return n.nodeName.toLowerCase() == 'link';
+        },
         /**
          * resolve relative part of path
          * x/../y/z -> y/z
@@ -961,38 +968,142 @@ build time: ${build.time}
     var startsWith = S.startsWith,normalizePath = utils.normalizePath;
 
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
- * script load across browser
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * script/css load across browser
+ * @author: yiminghe@gmail.com
  */
 (function(S, utils) {
     if (S.use) return;
-    utils.scriptOnload = document.addEventListener ?
-        function(node, callback) {
-            node.addEventListener('load', callback, false);
-        } :
-        function(node, callback) {
-            var oldCallback = node.onreadystatechange;
-            node.onreadystatechange = function() {
-                var rs = node.readyState;
-                if (/loaded|complete/i.test(rs)) {
-                    node.onreadystatechange = null;
-                    oldCallback && oldCallback();
-                    callback.call(this);
-                }
-            };
+    var isWebKit = utils.isWebKit,
+        /**
+         * central poll for link node
+         */
+            timer = null,
+
+        monitors = {
+        /**
+         * node.href:{node:node,callback:callback}
+         */
         };
 
-})(KISSY, KISSY.__loaderUtils);/**
+    function startCssTimer() {
+        if (!timer) {
+            S.log("start css polling");
+            ccsPoll();
+        }
+    }
+
+    // single thread is ok
+    function ccsPoll() {
+        var stop = true;
+        for (var url in monitors) {
+            var d = monitors[url],
+                node = d.node,
+                callback = d.callback,
+                loaded = false;
+            if (isWebKit) {
+                if (node['sheet']) {
+                    S.log("webkit loaded : " + url);
+                    loaded = true;
+                }
+            } else if (node['sheet']) {
+                try {
+                    if (node['sheet'].cssRules) {
+                        S.log('firefox  ' + node['sheet'].cssRules + ' loaded : ' + url);
+                        loaded = true;
+                    }
+                } catch(ex) {
+                    S.log('firefox  ' + ex.name + ' ' + url);
+                    if (ex.name === 'NS_ERROR_DOM_SECURITY_ERR') {
+                        S.log('firefox  ' + ex.name + ' loaded : ' + url);
+                        loaded = true;
+                    }
+                }
+            }
+
+            if (loaded) {
+                callback.call(node);
+                delete monitors[url];
+            } else {
+                stop = false;
+            }
+        }
+        if (stop) {
+            timer = null;
+            S.log("end css polling");
+        } else {
+            timer = setTimeout(ccsPoll, 100);
+        }
+    }
+
+
+    S.mix(utils, {
+        scriptOnload:document.addEventListener ?
+            function(node, callback) {
+                if (utils.isLinkNode(node)) {
+                    return utils.styleOnload(node, callback);
+                }
+                node.addEventListener('load', callback, false);
+            } :
+            function(node, callback) {
+                if (utils.isLinkNode(node)) {
+                    return utils.styleOnload(node, callback);
+                }
+                var oldCallback = node.onreadystatechange;
+                node.onreadystatechange = function() {
+                    var rs = node.readyState;
+                    if (/loaded|complete/i.test(rs)) {
+                        node.onreadystatechange = null;
+                        oldCallback && oldCallback();
+                        callback.call(this);
+                    }
+                };
+            },
+
+        /**
+         * monitor css onload across browsers
+         */
+        styleOnload:window.attachEvent ?
+            //ie/opera
+            function(node, callback) {
+                // whether to detach using function wrapper?
+                function t() {
+                    node.detachEvent('onload', t);
+                    S.log('ie/opera loaded : ' + node.href);
+                    callback.call(node);
+                }
+
+                node.attachEvent('onload', t);
+            } :
+            //refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+            //暂时不考虑如何判断失败，如 404 等
+            function(node, callback) {
+                monitors[node.href] = {
+                    node:node,
+                    callback:callback
+                };
+                startCssTimer();
+            }
+    });
+
+}
+
+    )
+    (KISSY, KISSY.__loaderUtils);/**
  * getScript support for css and js callback after load
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, utils) {
     if ("require" in this) return;
-    var scriptOnload = utils.scriptOnload,
-        isWebKit = utils.isWebKit;
+    var scriptOnload = utils.scriptOnload;
+
     S.mix(S, {
-        //refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
-        //暂时不考虑如何判断失败，如 404 等
+
+        /**
+         * load  a css file from server using http get ,after css file load ,execute success callback
+         * @param url css file url
+         * @param success callback
+         * @param charset
+         */
         getStyle:function(url, success, charset) {
             var doc = document,
                 head = doc.getElementsByTagName("head")[0],
@@ -1012,50 +1123,14 @@ build time: ${build.time}
             }
 
             if (success) {
-                if (window.attachEvent) {
-                    node.onload = function() {
-                        node.onload = null;
-                        S.log('ie/opera loaded : ' + url);
-                        success.call(node);
-                    };
-                } else {
-                    function poll() {
-                        var loaded = false;
-                        if (isWebKit) {
-                            if (node['sheet']) {
-                                S.log("webkit loaded : " + url);
-                                loaded = true;
-                            }
-                        } else if (node['sheet']) {
-                            try {
-                                if (node['sheet'].cssRules) {
-                                    S.log('firefox  ' + node['sheet'].cssRules + ' loaded : ' + url);
-                                    loaded = true;
-                                }
-                            } catch(ex) {
-                                S.log('firefox  ' + ex.name + ' ' + url);
-                                if (ex.name === 'NS_ERROR_DOM_SECURITY_ERR') {
-                                    S.log('firefox  ' + ex.name + ' loaded : ' + url);
-                                    loaded = true;
-                                }
-                            }
-                        }
-                        if (!loaded) {
-                            setTimeout(poll, 300);
-                        } else {
-                            success.call(node);
-                        }
-                    }
-
-                    poll();
-                }
+                utils.scriptOnload(node, success);
             }
             head.appendChild(node);
             return node;
 
         },
         /**
-         * Load a JavaScript file from the server using a GET HTTP request, then execute it.
+         * Load a JavaScript/Css file from the server using a GET HTTP request, then execute it.
          * <code>
          *  getScript(url, success, charset);
          *  or

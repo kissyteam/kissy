@@ -367,6 +367,7 @@ describe('lang.js', function() {
 
         expect(plurals).toBeArrayEq(["feet", "geese", "meese"]);
 
+
         var a = S.map("Hello World",
             function(x) {
                 return x.charCodeAt(0);

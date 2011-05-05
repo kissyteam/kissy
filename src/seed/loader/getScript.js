@@ -4,11 +4,16 @@
  */
 (function(S, utils) {
     if ("require" in this) return;
-    var scriptOnload = utils.scriptOnload,
-        isWebKit = utils.isWebKit;
+    var scriptOnload = utils.scriptOnload;
+
     S.mix(S, {
-        //refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
-        //暂时不考虑如何判断失败，如 404 等
+
+        /**
+         * load  a css file from server using http get ,after css file load ,execute success callback
+         * @param url css file url
+         * @param success callback
+         * @param charset
+         */
         getStyle:function(url, success, charset) {
             var doc = document,
                 head = doc.getElementsByTagName("head")[0],
@@ -28,50 +33,14 @@
             }
 
             if (success) {
-                if (window.attachEvent) {
-                    node.onload = function() {
-                        node.onload = null;
-                        S.log('ie/opera loaded : ' + url);
-                        success.call(node);
-                    };
-                } else {
-                    function poll() {
-                        var loaded = false;
-                        if (isWebKit) {
-                            if (node['sheet']) {
-                                S.log("webkit loaded : " + url);
-                                loaded = true;
-                            }
-                        } else if (node['sheet']) {
-                            try {
-                                if (node['sheet'].cssRules) {
-                                    S.log('firefox  ' + node['sheet'].cssRules + ' loaded : ' + url);
-                                    loaded = true;
-                                }
-                            } catch(ex) {
-                                S.log('firefox  ' + ex.name + ' ' + url);
-                                if (ex.name === 'NS_ERROR_DOM_SECURITY_ERR') {
-                                    S.log('firefox  ' + ex.name + ' loaded : ' + url);
-                                    loaded = true;
-                                }
-                            }
-                        }
-                        if (!loaded) {
-                            setTimeout(poll, 300);
-                        } else {
-                            success.call(node);
-                        }
-                    }
-
-                    poll();
-                }
+                utils.scriptOnload(node, success);
             }
             head.appendChild(node);
             return node;
 
         },
         /**
-         * Load a JavaScript file from the server using a GET HTTP request, then execute it.
+         * Load a JavaScript/Css file from the server using a GET HTTP request, then execute it.
          * <code>
          *  getScript(url, success, charset);
          *  or

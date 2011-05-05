@@ -334,8 +334,12 @@
                 var len = arr.length,
                     res = new Array(len);
                 for (var i = 0; i < len; i++) {
-                    if (i in arr) {
-                        res[i] = fn.call(context || this, arr[i], i, arr);
+                    var el = S.isString(arr) ? arr.charAt(i) : arr[i];
+                    if (el
+                        ||
+                        //ie<9 in invalid when typeof arr == string
+                        i in arr) {
+                        res[i] = fn.call(context || this, el, i, arr);
                     }
                 }
                 return res;
