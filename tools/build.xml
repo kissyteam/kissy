@@ -1,10 +1,10 @@
 <project name="common-build" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
     <description>Common Build File</description>
 
-    <dirname property="current.dir" file="${ant.file.common-build}"/>
-    <property name="root.dir" location="${current.dir}/../"/>
-    <property name="ks-tools.dir" location="${root.dir}/../kissy-tools/"/>
-    <property name="build.dir" location="${root.dir}/build/"/>
+    <property name="kissy.dir" location="${ant.file.common-build}/../../"/>
+    <property name="kissy-tools.dir" location="${kissy.dir}/../kissy-tools/"/>
+    <property name="kissy.build.dir" location="${kissy.dir}/build/"/>
+    <property name="kissy.src.dir" location="${kissy.dir}/src/"/>
 
     <property name="version" value="1.20dev"/>
     <property name="charset" value="utf-8"/>
@@ -12,12 +12,12 @@
 
     <!-- 清空与复制等准备工作 -->
     <target name="prepare">
-        <mkdir dir="${build.dir}/${component.name}"/>
+        <mkdir dir="${kissy.build.dir}/${component.name}"/>
         <delete>
-            <fileset dir="${build.dir}/${component.name}" includes="*.css,*.js"/>
+            <fileset dir="${kissy.build.dir}/${component.name}" includes="*.css,*.js"/>
         </delete>
 
-        <copy todir="${build.dir}/${component.name}">
+        <copy todir="${kissy.build.dir}/${component.name}">
             <fileset dir="${src.dir}" includes="${component.files}"/>
         </copy>
     </target>
@@ -25,19 +25,19 @@
     <!-- 压缩代码 -->
     <target name="compress">
         <!-- 去除 S.log -->
-        <mkdir dir="${build.dir}/${component.name}/debug"/>
-        <copy todir="${build.dir}/${component.name}/debug">
-            <fileset dir="${build.dir}/${component.name}" includes="${component.files}"/>
+        <mkdir dir="${kissy.build.dir}/${component.name}/debug"/>
+        <copy todir="${kissy.build.dir}/${component.name}/debug">
+            <fileset dir="${kissy.build.dir}/${component.name}" includes="${component.files}"/>
         </copy>
         <replaceregexp match="^\s*S\.log\(.+$" replace="" flags="g" byline="true" encoding="${charset}">
-            <fileset dir="${build.dir}/${component.name}" includes="${component.files}"/>
+            <fileset dir="${kissy.build.dir}/${component.name}" includes="${component.files}"/>
         </replaceregexp>
 
         <!-- 用 YUICompressor 压缩 CSS -->
-        <apply executable="java" verbose="true" dest="${build.dir}/${component.name}">
-            <fileset dir="${build.dir}/${component.name}" includes="*.css"/>
+        <apply executable="java" verbose="true" dest="${kissy.build.dir}/${component.name}">
+            <fileset dir="${kissy.build.dir}/${component.name}" includes="*.css"/>
             <arg line="-jar"/>
-            <arg path="${ks-tools.dir}/yuicompressor/yuicompressor.jar"/>
+            <arg path="${kissy-tools.dir}/yuicompressor/yuicompressor.jar"/>
             <arg line="--charset ${charset}"/>
             <srcfile/>
             <arg line="-o"/>
@@ -46,10 +46,10 @@
         </apply>
 
         <!-- 用 Closure Compiler 压缩 JS -->
-        <apply executable="java" verbose="true" dest="${build.dir}/${component.name}">
-            <fileset dir="${build.dir}/${component.name}" includes="*.js"/>
+        <apply executable="java" verbose="true" dest="${kissy.build.dir}/${component.name}">
+            <fileset dir="${kissy.build.dir}/${component.name}" includes="*.js"/>
             <arg line="-jar"/>
-            <arg path="${ks-tools.dir}/closure-compiler/compiler.jar"/>
+            <arg path="${kissy-tools.dir}/closure-compiler/compiler.jar"/>
             <arg line="--charset ${charset}"/>
             <arg value="--warning_level"/>
             <arg value="QUIET"/>
@@ -61,25 +61,25 @@
         </apply>
 
         <!-- 还原 debug 版本 -->
-        <move todir="${build.dir}/${component.name}">
-            <fileset dir="${build.dir}/${component.name}/debug" includes="${component.files}"/>
+        <move todir="${kissy.build.dir}/${component.name}">
+            <fileset dir="${kissy.build.dir}/${component.name}/debug" includes="${component.files}"/>
         </move>
-        <delete dir="${build.dir}/${component.name}/debug"/>
+        <delete dir="${kissy.build.dir}/${component.name}/debug"/>
     </target>
 
     <!-- 对 JS 文件 ASCII 化 -->
     <target name="native2ascii" depends="compress">
-        <mkdir dir="${build.dir}/${component.name}/ascii"/>
-        <move todir="${build.dir}/${component.name}/ascii">
-            <fileset dir="${build.dir}/${component.name}" includes="*-min.js"/>
+        <mkdir dir="${kissy.build.dir}/${component.name}/ascii"/>
+        <move todir="${kissy.build.dir}/${component.name}/ascii">
+            <fileset dir="${kissy.build.dir}/${component.name}" includes="*-min.js"/>
         </move>
         <native2ascii encoding="${charset}"
-                      src="${build.dir}/${component.name}/ascii"
-                      dest="${build.dir}/${component.name}"
+                      src="${kissy.build.dir}/${component.name}/ascii"
+                      dest="${kissy.build.dir}/${component.name}"
                       includes="*.js"/>
-        <delete dir="${build.dir}/${component.name}/ascii"/>
+        <delete dir="${kissy.build.dir}/${component.name}/ascii"/>
 
-        <fixcrlf srcdir="${build.dir}/${component.name}/" includes="**/*.js,**/*.css"/>
+        <fixcrlf srcdir="${kissy.build.dir}/${component.name}/" includes="**/*.js,**/*.css"/>
     </target>
 
     <!-- 替换版本信息以及给文件加上版权信息 -->
@@ -93,16 +93,16 @@
             <matches string="${version}" pattern=".+\d$"/>
         </condition>
         <!--<svn>-->
-        <!--<wcVersion path="${root.dir}" prefix="svn."/>-->
+        <!--<wcVersion path="${kissy.dir}" prefix="svn."/>-->
         <!--</svn>-->
-        <mkdir dir="${build.dir}/${component.name}/tmp"/>
-        <move todir="${build.dir}/${component.name}/tmp">
-            <fileset dir="${build.dir}/${component.name}" includes="${copyright.files}"/>
+        <mkdir dir="${kissy.build.dir}/${component.name}/tmp"/>
+        <move todir="${kissy.build.dir}/${component.name}/tmp">
+            <fileset dir="${kissy.build.dir}/${component.name}" includes="${copyright.files}"/>
         </move>
 
         <ac:for param="file">
             <path>
-                <fileset dir="${build.dir}/${component.name}/tmp" includes="${copyright.files}"/>
+                <fileset dir="${kissy.build.dir}/${component.name}/tmp" includes="${copyright.files}"/>
             </path>
             <sequential>
                 <concat destfile="@{file}.tmp" encoding="${charset}" outputencoding="${charset}">
@@ -119,17 +119,17 @@
             </sequential>
         </ac:for>
 
-        <move todir="${build.dir}/${component.name}">
-            <fileset dir="${build.dir}/${component.name}/tmp" includes="${copyright.files}"/>
+        <move todir="${kissy.build.dir}/${component.name}">
+            <fileset dir="${kissy.build.dir}/${component.name}/tmp" includes="${copyright.files}"/>
         </move>
-        <delete dir="${build.dir}/${component.name}/tmp"/>
-        <fixcrlf srcdir="${build.dir}/${component.name}/" includes="**/*.js,**/*.css"/>
+        <delete dir="${kissy.build.dir}/${component.name}/tmp"/>
+        <fixcrlf srcdir="${kissy.build.dir}/${component.name}/" includes="**/*.js,**/*.css"/>
     </target>
 
     <target name="common.build" depends="prepare,compress,native2ascii,copyright">
         <!--兼容性考虑，pkg保留-->
-        <copy encoding="${charset}" todir="${build.dir}">
-            <fileset dir="${build.dir}/${component.name}/" includes="*-pkg*.js"/>
+        <copy encoding="${charset}" todir="${kissy.build.dir}">
+            <fileset dir="${kissy.build.dir}/${component.name}/" includes="*-pkg*.js"/>
             <mapper type="regexp" from="(.*)-pkg(.*)" to="\1\2"/>
         </copy>
     </target>

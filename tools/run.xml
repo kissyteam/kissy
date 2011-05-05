@@ -1,42 +1,47 @@
 <?xml version="1.0"?>
-<project name="kissy-project-build" default="build-packages" xmlns:ac="antlib:net.sf.antcontrib">
+<project name="kissy-project-build" default="build-packages">
     <description>KISSY Project Build File</description>
 
-    <dirname property="current.dir" file="${ant.file.kissy-project-build}"/>
+    <dirname property="kissy-project-build.dir" file="${ant.file.kissy-project-build}"/>
+    <property name="kissy.dir"
+              location="${kissy-project-build.dir}/../"/>
+    <property name="kissy.src.dir"
+              location="${kissy.dir}/src"/>
+    <property name="kissy.build.dir"
+              location="${kissy.dir}/build"/>
 
-    <property name="root.dir" location="${current.dir}/../"/>
-    <property name="src.dir" location="${root.dir}/src"/>
-    <property name="build.dir" location="${root.dir}/build"/>
-    <property name="build.packages.dir" location="${root.dir}/build/packages"/>
-    <property name="charset" value="UTF-8"/>
+    <property name="charset" value="utf-8"/>
 
     <target name="prepare">
-        <mkdir dir="${build.dir}"/>
-        <copy todir="${build.dir}"
+        <mkdir dir="${kissy.build.dir}"/>
+        <copy todir="${kissy.build.dir}"
               encoding="${charset}"
               outputencoding="${charset}">
-            <fileset dir="${current.dir}/build-xml" includes="**/build.xml"/>
+            <fileset dir="${kissy-project-build.dir}/build-xml" includes="**/build.xml"/>
         </copy>
     </target>
 
     <target name="build-packages" depends="prepare">
+        <!--
+        propery will leak to subant
+        -->
         <subant target="" failonerror="false" inheritall="false">
-            <filelist files="${build.packages.dir}/build.xml"/>
+            <filelist files="${kissy.build.dir}/packages/build.xml"/>
         </subant>
     </target>
 
     <target name="build-all" depends="prepare">
         <subant target="" failonerror="false" inheritall="false">
-            <fileset dir="${src.dir}" includes="**/build.xml"/>
+            <fileset dir="${kissy.src.dir}" includes="**/build.xml"/>
         </subant>
 
         <subant target="" failonerror="false" inheritall="false">
-            <fileset dir="${build.dir}" includes="**/build.xml"/>
+            <fileset dir="${kissy.build.dir}" includes="**/build.xml"/>
         </subant>
     </target>
 
     <target name="clean">
-        <delete dir="${build.dir}"/>
+        <delete dir="${kissy.build.dir}"/>
     </target>
 
 </project>

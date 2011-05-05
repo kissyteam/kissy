@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110505115609',
+        buildTime:'20110505134120',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2336,48 +2336,48 @@ if("require" in this) return;
 /**
  combined files : 
 
-D:\code\kissy_git\kissy\tools\..\src\ua\base.js
-D:\code\kissy_git\kissy\tools\..\src\ua\extra.js
-D:\code\kissy_git\kissy\tools\..\src\ua.js
-D:\code\kissy_git\kissy\tools\..\src\dom\base.js
-D:\code\kissy_git\kissy\tools\..\src\dom\attr.js
-D:\code\kissy_git\kissy\tools\..\src\dom\class.js
-D:\code\kissy_git\kissy\tools\..\src\dom\create.js
-D:\code\kissy_git\kissy\tools\..\src\dom\data.js
-D:\code\kissy_git\kissy\tools\..\src\dom\insertion.js
-D:\code\kissy_git\kissy\tools\..\src\dom\offset.js
-D:\code\kissy_git\kissy\tools\..\src\dom\style.js
-D:\code\kissy_git\kissy\tools\..\src\dom\selector.js
-D:\code\kissy_git\kissy\tools\..\src\dom\style-ie.js
-D:\code\kissy_git\kissy\tools\..\src\dom\traversal.js
-D:\code\kissy_git\kissy\tools\..\src\dom.js
-D:\code\kissy_git\kissy\tools\..\src\event\object.js
-D:\code\kissy_git\kissy\tools\..\src\event\base.js
-D:\code\kissy_git\kissy\tools\..\src\event\target.js
-D:\code\kissy_git\kissy\tools\..\src\event\focusin.js
-D:\code\kissy_git\kissy\tools\..\src\event\mouseenter.js
-D:\code\kissy_git\kissy\tools\..\src\event.js
-D:\code\kissy_git\kissy\tools\..\src\node\node.js
-D:\code\kissy_git\kissy\tools\..\src\node\nodelist.js
-D:\code\kissy_git\kissy\tools\..\src\node\attach.js
-D:\code\kissy_git\kissy\tools\..\src\node.js
-D:\code\kissy_git\kissy\tools\..\src\json\json2.js
-D:\code\kissy_git\kissy\tools\..\src\json.js
-D:\code\kissy_git\kissy\tools\..\src\ajax\impl.js
-D:\code\kissy_git\kissy\tools\..\src\ajax.js
-D:\code\kissy_git\kissy\tools\..\src\anim\easing.js
-D:\code\kissy_git\kissy\tools\..\src\anim\manager.js
-D:\code\kissy_git\kissy\tools\..\src\anim\base.js
-D:\code\kissy_git\kissy\tools\..\src\anim\node-plugin.js
-D:\code\kissy_git\kissy\tools\..\src\anim\color.js
-D:\code\kissy_git\kissy\tools\..\src\anim\scroll.js
-D:\code\kissy_git\kissy\tools\..\src\anim.js
-D:\code\kissy_git\kissy\tools\..\src\base\attribute.js
-D:\code\kissy_git\kissy\tools\..\src\base\base.js
-D:\code\kissy_git\kissy\tools\..\src\base.js
-D:\code\kissy_git\kissy\tools\..\src\cookie\base.js
-D:\code\kissy_git\kissy\tools\..\src\cookie.js
-D:\code\kissy_git\kissy\tools\..\src\core.js
+D:\code\kissy_git\kissy\src\ua\base.js
+D:\code\kissy_git\kissy\src\ua\extra.js
+D:\code\kissy_git\kissy\src\ua.js
+D:\code\kissy_git\kissy\src\dom\base.js
+D:\code\kissy_git\kissy\src\dom\attr.js
+D:\code\kissy_git\kissy\src\dom\class.js
+D:\code\kissy_git\kissy\src\dom\create.js
+D:\code\kissy_git\kissy\src\dom\data.js
+D:\code\kissy_git\kissy\src\dom\insertion.js
+D:\code\kissy_git\kissy\src\dom\offset.js
+D:\code\kissy_git\kissy\src\dom\style.js
+D:\code\kissy_git\kissy\src\dom\selector.js
+D:\code\kissy_git\kissy\src\dom\style-ie.js
+D:\code\kissy_git\kissy\src\dom\traversal.js
+D:\code\kissy_git\kissy\src\dom.js
+D:\code\kissy_git\kissy\src\event\object.js
+D:\code\kissy_git\kissy\src\event\base.js
+D:\code\kissy_git\kissy\src\event\target.js
+D:\code\kissy_git\kissy\src\event\focusin.js
+D:\code\kissy_git\kissy\src\event\mouseenter.js
+D:\code\kissy_git\kissy\src\event.js
+D:\code\kissy_git\kissy\src\node\node.js
+D:\code\kissy_git\kissy\src\node\nodelist.js
+D:\code\kissy_git\kissy\src\node\attach.js
+D:\code\kissy_git\kissy\src\node.js
+D:\code\kissy_git\kissy\src\json\json2.js
+D:\code\kissy_git\kissy\src\json.js
+D:\code\kissy_git\kissy\src\ajax\impl.js
+D:\code\kissy_git\kissy\src\ajax.js
+D:\code\kissy_git\kissy\src\anim\easing.js
+D:\code\kissy_git\kissy\src\anim\manager.js
+D:\code\kissy_git\kissy\src\anim\base.js
+D:\code\kissy_git\kissy\src\anim\node-plugin.js
+D:\code\kissy_git\kissy\src\anim\color.js
+D:\code\kissy_git\kissy\src\anim\scroll.js
+D:\code\kissy_git\kissy\src\anim.js
+D:\code\kissy_git\kissy\src\base\attribute.js
+D:\code\kissy_git\kissy\src\base\base.js
+D:\code\kissy_git\kissy\src\base.js
+D:\code\kissy_git\kissy\src\cookie\base.js
+D:\code\kissy_git\kissy\src\cookie.js
+D:\code\kissy_git\kissy\src\core.js
 **/
 
 /**

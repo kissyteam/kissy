@@ -2,13 +2,14 @@
     <description>Component Build File</description>
 
     <property name="copyright.files" value="*-min.css, *-min.js"/>
-    <import file="../../tools/build.xml"/>
+    <dirname property="current.dir" file="${ant.file.packages.build}"/>
+
+    <import file="${current.dir}/../../tools/build.xml"/>
 
     <property name="component.name" value="packages"/>
     <property name="component.files" value="*.css, *.js"/>
-    <property name="src.dir" location="."/>
 
-    <property name="nodejs.patch.file" location="../../tools/nodejs-patch/patch.js"/>
+    <property name="nodejs.patch.file" location="${kissy.dir}/tools/nodejs-patch/patch.js"/>
 
     <tstamp>
         <format property="timestamp.isoformat"
@@ -24,16 +25,24 @@
     <target name="concat">
 
         <!-- using module compiler to gen core.js -->
-        <delete file="${src.dir}/core-pkg.js"/>
-        <copy tofile="${src.dir}/core-pkg.js" file="../../src/core.js"/>
+        <delete file="${current.dir}/core-pkg.js"/>
 
         <!--
             不使用 java -jar fork 的话，新开 jvm 和后面的 concat 不串行了
         -->
         <java classname="com.taobao.f2e.Main">
-            <arg value="${src.dir}/../../tools/kissy_require.properties"/>
+            <arg value="-requires"/>
+            <arg value="core"/>
+            <arg value="-baseUrls"/>
+            <arg value="${kissy.src.dir}"/>
+            <arg value="-encodings"/>
+            <arg value="utf-8"/>
+            <arg value="-outputEncoding"/>
+            <arg value="utf-8"/>
+            <arg value="-output"/>
+            <arg value="${current.dir}/core-pkg.js"/>
             <classpath>
-                <pathelement location="../../tools/module-compiler.jar"/>
+                <pathelement location="${kissy-tools.dir}/module-compiler/module-compiler.jar"/>
                 <pathelement path="${java.class.path}"/>
             </classpath>
         </java>
@@ -42,21 +51,21 @@
             use core 直接放入 core.js 中 ??
             有的应用会先载入 seed.js，再载入 core.js ，希望能立刻用到 core 的东西
         -->
-        <concat destfile="${src.dir}/core_tmp.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="${src.dir}/core-pkg.js"/>
+        <concat destfile="${current.dir}/core_tmp.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="${current.dir}/core-pkg.js"/>
             <footer filtering="no" trimleading="yes">
                 KISSY.use('core');
             </footer>
         </concat>
 
-        <delete file="${src.dir}/core-pkg.js"/>
-        <move tofile="${src.dir}/core-pkg.js" file="${src.dir}/core_tmp.js"/>
+        <delete file="${current.dir}/core-pkg.js"/>
+        <move tofile="${current.dir}/core-pkg.js" file="${current.dir}/core_tmp.js"/>
 
 
         <!-- kissy: seed + core, 独立单文件 -->
         <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../seed.js"/>
-            <path path="${src.dir}/core-pkg.js"/>
+            <path path="${current.dir}/core-pkg.js"/>
             <!--
             <footer filtering="no" trimleading="yes">
                 KISSY.use('core');
@@ -93,7 +102,7 @@
                        flags="g"
                        byline="true"
                        encoding="${charset}">
-            <fileset dir="${src.dir}"
+            <fileset dir="${current.dir}"
                      includes="*-min.js"/>
         </replaceregexp>
 
@@ -102,13 +111,13 @@
                        flags="g"
                        byline="true"
                        encoding="${charset}">
-            <fileset dir="${src.dir}"
+            <fileset dir="${current.dir}"
                      includes="*.js"/>
         </replaceregexp>
 
         <!--保持原有文件-->
-        <copy todir="${src.dir}/../">
-            <fileset dir="${src.dir}" includes="*.js"/>
+        <copy todir="${current.dir}/../">
+            <fileset dir="${current.dir}" includes="*.js"/>
             <regexpmapper from="(.+)-pkg(.+)" to="\1\2"/>
         </copy>
 
@@ -118,9 +127,9 @@
     apply nodejs patch to kissy.js
     -->
     <target name="nodejs-patch">
-        <concat destfile="${src.dir}/kissy-nodejs-pkg.js" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="${current.dir}/kissy-nodejs-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path location="${nodejs.patch.file}"/>
-            <path location="${src.dir}/kissy-pkg.js"/>
+            <path location="${current.dir}/kissy-pkg.js"/>
         </concat>
     </target>
 
