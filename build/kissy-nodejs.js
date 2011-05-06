@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110506123452',
+        buildTime:'20110506142739',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4392,7 +4392,8 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     var doc = document,
         SPACE = ' ',
         ANY = '*',
-        GET_DOM_NODE = 'getDOMNode', GET_DOM_NODES = GET_DOM_NODE + 's',
+        GET_DOM_NODE = 'getDOMNode',
+        GET_DOM_NODES = GET_DOM_NODE + 's',
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
@@ -4411,6 +4412,11 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             cls;
         context = tuneContext(context);
 
+        // attach each method
+        ret.each = function(fn, context) {
+            return S.each(ret, fn, context);
+        };
+
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
         // 考虑 2/8 原则，仅支持以下选择器：
         // #id
@@ -4422,12 +4428,23 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         // #id tag.cls
         // 注 1：REG_QUERY 还会匹配 #id.cls
         // 注 2：tag 可以为 * 字符
+        // 注 3: 支持 , 号分组
         // 返回值为数组
         // 选择器不支持时，抛出异常
 
         // selector 为字符串是最常见的情况，优先考虑
         // 注：空白字符串无需判断，运行下去自动能返回空数组
         if (S.isString(selector)) {
+
+            if (selector.indexOf(",") != -1) {
+                var selectors = selector.split(",");
+                S.each(selectors, function(s) {
+                    ret.push.apply(ret, query(s, context));
+                });
+                return ret;
+            }
+
+
             selector = S.trim(selector);
 
             // selector 为 #id 是最常见的情况，特殊优化处理
@@ -4489,10 +4506,6 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (isNodeList(ret)) {
             ret = S.makeArray(ret);
         }
-        // attach each method
-        ret.each = function(fn, context) {
-            return S.each(ret, fn, context);
-        };
 
         return ret;
     }
@@ -4647,7 +4660,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             }
             // 其它复杂 filter, 采用外部选择器
             else if (filter && sizzle) {
-                ret = sizzle._filter(selector, filter + '');
+                ret = sizzle._filter(selector, filter, context);
             }
             // filter 为空或不支持的 selector
             else {

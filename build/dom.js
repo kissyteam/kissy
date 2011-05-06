@@ -40,48 +40,6 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             offset: 1
         };
 
-    var attrNormalizers = {
-        tabindex:{
-            getter:function(el) {
-                return el.tabIndex;
-            },
-            setter:function(el, val) {
-                // http://www.w3.org/TR/html5/editing.html#sequential-focus-navigation-and-the-tabindex-attribute
-                // 简化，和不填一样处理！
-                if (isNaN(parseInt(val))) {
-                    el.removeAttribute("tabindex");
-                    el.removeAttribute("tabIndex");
-                } else {
-                    el.tabIndex = val;
-                }
-            }
-        },
-        // 在标准浏览器下，用 getAttribute 获取 style 值
-        // IE7- 下，需要用 cssText 来获取
-        // 统一使用 cssText
-        style:{
-            getter:function(el) {
-                return el.style.cssText;
-            },
-            setter:function(el, val) {
-                el.style.cssText = val;
-            }
-        },
-        checked:{
-            // checked 属性值，需要通过直接设置才能生效
-            setter:function(el, val) {
-                el.checked = !!val;
-            }
-        },
-        disabled:{
-            // disabled 属性值，需要通过直接设置才能生效
-            //true 然后 false，false失效
-            setter:function(el, val) {
-                el.disabled = !!val;
-            }
-        }
-    };
-
     if (oldIE) {
         S.mix(CUSTOM_ATTRS, {
             'for': 'htmlFor',
@@ -307,7 +265,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             S.each(DOM.query(selector), function(el) {
                 if (nodeNameIs(SELECT, el)) {
                     // 强制转换数值为字符串，以保证下面的 inArray 正常工作
-                    if (S['isNumber'](value)) {
+                    if (S.isNumber(value)) {
                         value += EMPTY;
                     }
 
@@ -528,7 +486,7 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
          *        should be added or removed regardless of current state.
          */
         toggleClass: function(selector, value, state) {
-            var isBool = S['isBoolean'](state), has;
+            var isBool = S.isBoolean(state), has;
 
             batch(selector, value, function(elem, classNames, cl) {
                 var j = 0, className;
@@ -916,7 +874,7 @@ KISSY.add('dom/data', function(S, DOM,undefined) {
                 key = isNode ? elem[expando] : expando;
                 thisCache = cache[key];
 
-                if(S['isString'](name) && thisCache) {
+                if(S.isString(name) && thisCache) {
                     return thisCache[name];
                 }
                 return thisCache;
@@ -1326,7 +1284,8 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     var doc = document,
         SPACE = ' ',
         ANY = '*',
-        GET_DOM_NODE = 'getDOMNode', GET_DOM_NODES = GET_DOM_NODE + 's',
+        GET_DOM_NODE = 'getDOMNode',
+        GET_DOM_NODES = GET_DOM_NODE + 's',
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
@@ -1345,6 +1304,11 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             cls;
         context = tuneContext(context);
 
+        // attach each method
+        ret.each = function(fn, context) {
+            return S.each(ret, fn, context);
+        };
+
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
         // 考虑 2/8 原则，仅支持以下选择器：
         // #id
@@ -1356,12 +1320,23 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         // #id tag.cls
         // 注 1：REG_QUERY 还会匹配 #id.cls
         // 注 2：tag 可以为 * 字符
+        // 注 3: 支持 , 号分组
         // 返回值为数组
         // 选择器不支持时，抛出异常
 
         // selector 为字符串是最常见的情况，优先考虑
         // 注：空白字符串无需判断，运行下去自动能返回空数组
-        if (S['isString'](selector)) {
+        if (S.isString(selector)) {
+
+            if (selector.indexOf(",") != -1) {
+                var selectors = selector.split(",");
+                S.each(selectors, function(s) {
+                    ret.push.apply(ret, query(s, context));
+                });
+                return ret;
+            }
+
+
             selector = S.trim(selector);
 
             // selector 为 #id 是最常见的情况，特殊优化处理
@@ -1423,10 +1398,6 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (isNodeList(ret)) {
             ret = S.makeArray(ret);
         }
-        // attach each method
-        ret.each = function(fn, context) {
-            return S.each(ret, fn, context);
-        };
 
         return ret;
     }
@@ -1448,7 +1419,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             context = doc;
         }
         // 2). context 的第二使用场景是传入 #id
-        else if (S['isString'](context) && REG_ID.test(context)) {
+        else if (S.isString(context) && REG_ID.test(context)) {
             context = getElementById(context.slice(1), doc);
             // 注：#id 可能无效，这时获取的 context 为 null
         }
@@ -1568,7 +1539,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 match, tag, cls, ret = [];
 
             // 默认仅支持最简单的 tag.cls 形式
-            if (S['isString'](filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
+            if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
                 tag = match[2];
                 cls = match[3];
                 filter = function(elem) {
@@ -1581,7 +1552,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             }
             // 其它复杂 filter, 采用外部选择器
             else if (filter && sizzle) {
-                ret = sizzle._filter(selector, filter + '');
+                ret = sizzle._filter(selector, filter, context);
             }
             // filter 为空或不支持的 selector
             else {
@@ -2192,7 +2163,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         if (filter === undefined) filter = 1; // 默认取 1
         var ret = null, fi, flen;
 
-        if (S['isNumber'](filter) && filter >= 0) {
+        if (S.isNumber(filter) && filter >= 0) {
             if (filter === 0) return elem;
             fi = 0;
             flen = filter;
