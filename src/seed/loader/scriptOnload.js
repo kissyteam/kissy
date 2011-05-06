@@ -29,7 +29,7 @@
         for (var url in monitors) {
             var d = monitors[url],
                 node = d.node,
-                callback = d.callback,
+                callbacks = d.callbacks,
                 loaded = false;
             if (isWebKit) {
                 if (node['sheet']) {
@@ -52,7 +52,9 @@
             }
 
             if (loaded) {
-                callback.call(node);
+                S.each(callbacks, function(callback) {
+                    callback.call(node);
+                });
                 delete monitors[url];
             } else {
                 stop = false;
@@ -108,10 +110,15 @@
             //refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
             //暂时不考虑如何判断失败，如 404 等
             function(node, callback) {
-                monitors[node.href] = {
-                    node:node,
-                    callback:callback
-                };
+                var k = node.href;
+                if (monitors[k]) {
+                    monitors[k].callbacks.push(callback);
+                } else {
+                    monitors[k] = {
+                        node:node,
+                        callbacks:[callback]
+                    };
+                }
                 startCssTimer();
             }
     });
