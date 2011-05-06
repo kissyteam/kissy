@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110506142739',
+        buildTime:'20110506153947',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4225,10 +4225,6 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             cls;
         context = tuneContext(context);
 
-        // attach each method
-        ret.each = function(fn, context) {
-            return S.each(ret, fn, context);
-        };
 
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
         // 考虑 2/8 原则，仅支持以下选择器：
@@ -4254,51 +4250,51 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 S.each(selectors, function(s) {
                     ret.push.apply(ret, query(s, context));
                 });
-                return ret;
-            }
+            } else {
 
 
-            selector = S.trim(selector);
+                selector = S.trim(selector);
 
-            // selector 为 #id 是最常见的情况，特殊优化处理
-            if (REG_ID.test(selector)) {
-                t = getElementById(selector.slice(1), context);
-                if (t) ret = [t]; // #id 无效时，返回空数组
-            }
-            // selector 为支持列表中的其它 6 种
-            else if ((match = REG_QUERY.exec(selector))) {
-                // 获取匹配出的信息
-                id = match[1];
-                tag = match[2];
-                cls = match[3];
+                // selector 为 #id 是最常见的情况，特殊优化处理
+                if (REG_ID.test(selector)) {
+                    t = getElementById(selector.slice(1), context);
+                    if (t) ret = [t]; // #id 无效时，返回空数组
+                }
+                // selector 为支持列表中的其它 6 种
+                else if ((match = REG_QUERY.exec(selector))) {
+                    // 获取匹配出的信息
+                    id = match[1];
+                    tag = match[2];
+                    cls = match[3];
 
-                if ((context = id ? getElementById(id, context) : context)) {
-                    // #id .cls | #id tag.cls | .cls | tag.cls
-                    if (cls) {
-                        if (!id || selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
-                            ret = getElementsByClassName(cls, tag, context);
-                        }
-                        // 处理 #id.cls
-                        else {
-                            t = getElementById(id, context);
-                            if (t && DOM.hasClass(t, cls)) {
-                                ret = [t];
+                    if ((context = id ? getElementById(id, context) : context)) {
+                        // #id .cls | #id tag.cls | .cls | tag.cls
+                        if (cls) {
+                            if (!id || selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
+                                ret = getElementsByClassName(cls, tag, context);
+                            }
+                            // 处理 #id.cls
+                            else {
+                                t = getElementById(id, context);
+                                if (t && DOM.hasClass(t, cls)) {
+                                    ret = [t];
+                                }
                             }
                         }
-                    }
-                    // #id tag | tag
-                    else if (tag) { // 排除空白字符串
-                        ret = getElementsByTagName(tag, context);
+                        // #id tag | tag
+                        else if (tag) { // 排除空白字符串
+                            ret = getElementsByTagName(tag, context);
+                        }
                     }
                 }
-            }
-            // 采用外部选择器
-            else if (sizzle) {
-                ret = sizzle(selector, context);
-            }
-            // 依旧不支持，抛异常
-            else {
-                error(selector);
+                // 采用外部选择器
+                else if (sizzle) {
+                    ret = sizzle(selector, context);
+                }
+                // 依旧不支持，抛异常
+                else {
+                    error(selector);
+                }
             }
         }
         // 传入的 selector 是 KISSY.Node/NodeList. 始终返回原生 DOM Node
@@ -4319,6 +4315,11 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (isNodeList(ret)) {
             ret = S.makeArray(ret);
         }
+
+        // attach each method
+        ret.each = function(fn, context) {
+            return S.each(ret, fn, context);
+        };
 
         return ret;
     }
