@@ -293,20 +293,22 @@ build time: ${build.time}
 (function(S, undefined) {
 
     var host = S.__HOST,
-
-        toString = Object.prototype.toString,
+        OP = Object.prototype,
+        toString = OP.toString,
+        hasOwnProperty = OP.hasOwnProperty,
         AP = Array.prototype,
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
         filter = AP.filter,
         trim = String.prototype.trim,
         map = AP.map,
-
         EMPTY = '',
         CLONE_MARKER = '__~ks_cloned',
         RE_TRIM = /^\s+|\s+$/g,
-
+        encode = encodeURIComponent,
+        decode = decodeURIComponent,
         SEP = '&',
+        EQ = '=',
         // [[Class]] -> type pairs
         class2type = {},
         htmlEntities = {
@@ -327,7 +329,7 @@ build time: ${build.time}
         if (escapeReg) {
             return escapeReg
         }
-        var str = '';
+        var str = EMPTY;
         S.each(htmlEntities, function(entity) {
             str += entity + '|';
         });
@@ -339,7 +341,7 @@ build time: ${build.time}
         if (unEscapeReg) {
             return unEscapeReg
         }
-        var str = '';
+        var str = EMPTY;
         S.each(reverseEntities, function(entity) {
             str += entity + '|';
         });
@@ -692,24 +694,27 @@ build time: ${build.time}
          * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
          * </code>
          */
-        param: function(o, sep) {
+        param: function(o, sep, eq, arr) {
             if (!S.isPlainObject(o)) return EMPTY;
             sep = sep || SEP;
-
+            eq = eq || EQ;
+            if (S.isUndefined(arr)) arr = true;
             var buf = [], key, val;
             for (key in o) {
                 val = o[key];
-                key = encodeURIComponent(key);
+                key = encode(key);
 
                 // val is valid non-array value
                 if (isValidParamValue(val)) {
-                    buf.push(key, '=', encodeURIComponent(val + EMPTY), sep);
+                    buf.push(key, eq, encode(val + EMPTY), sep);
                 }
                 // val is not empty array
                 else if (S.isArray(val) && val.length) {
                     for (var i = 0, len = val.length; i < len; ++i) {
                         if (isValidParamValue(val[i])) {
-                            buf.push(key, '=', encodeURIComponent(val[i] + EMPTY), sep);
+                            buf.push(key,
+                                (arr ? encode("[]") : EMPTY),
+                                eq, encode(val[i] + EMPTY), sep);
                         }
                     }
                 }
@@ -728,27 +733,26 @@ build time: ${build.time}
          * 'id=45&raw'        // -> {id: '45', raw: ''}
          * </code>
          */
-        unparam: function(str, sep) {
-            if (typeof str !== 'string' || (str = S.trim(str)).length === 0) return {};
-
+        unparam: function(str, sep, eq) {
+            if (typeof str !== 'string'
+                || (str = S.trim(str)).length === 0) {
+                return {};
+            }
+            sep = sep || SEP;
+            eq = eq || EQ;
             var ret = {},
-                pairs = str.split(sep || SEP),
-                pair, key, val, m,
+                pairs = str.split(sep),
+                pair, key, val,
                 i = 0, len = pairs.length;
 
             for (; i < len; ++i) {
-                pair = pairs[i].split('=');
-                key = decodeURIComponent(pair[0]);
-
-                // decodeURIComponent will throw exception when pair[1] contains
-                // GBK encoded chinese characters.
-                try {
-                    val = decodeURIComponent(pair[1] || EMPTY);
-                } catch (ex) {
-                    val = pair[1] || EMPTY;
+                pair = pairs[i].split(eq);
+                key = decode(pair[0]);
+                val = decode(pair[1] || EMPTY);
+                if (S.endsWith(key, "[]")) {
+                    key = key.substring(0, key.length - 2);
                 }
-
-                if (ret[key]) {
+                if (hasOwnProperty.call(ret, key)) {
                     if (S.isArray(ret[key])) {
                         ret[key].push(val);
                     } else {
