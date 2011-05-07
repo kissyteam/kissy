@@ -12,16 +12,12 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
         _handleMouseLeave:function() {
             if (MenuItem.superclass._handleMouseLeave.call(this) === false) return false;
+            S.log("menuitem " + this.get("view").get("el").attr("id") + "  leave");
             this.set("highlighted", false);
         },
 
-        _handleClickInternal:function() {
-            this.set("selected", true);
-            this.fire("menuItemSelected");
-        },
-        _handleClick:function() {
-            if (MenuItem.superclass._handleClick.call(this) === false) return false;
-            this._handleClickInternal.apply(this, arguments);
+        _handleClickInternal:function(ev) {
+            this.fire("click");
         }
     }, {
         ATTRS:{
@@ -29,10 +25,6 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                 view:true
             },
             highlighted:{
-                view:true,
-                value:false
-            },
-            selected:{
                 view:true,
                 value:false
             }

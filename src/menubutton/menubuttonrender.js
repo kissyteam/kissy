@@ -11,7 +11,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         renderUI:function() {
             var el = this.get("el");
             el.one("div").one("div").html(S.substitute(MENU_BUTTON_TMPL, {
-                prefixCls:this.get("prefixCls")+"menu-button"
+                prefixCls:this.get("prefixCls") + "menu-button"
             }));
             //带有 menu
             el.attr("aria-haspopup", true);
@@ -23,7 +23,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         },
 
         _uiSetCollapsed:function(v) {
-            var el = this.get("el"),prefixCls = this.get("prefixCls")+"menu-button";
+            var el = this.get("el"),prefixCls = this.get("prefixCls") + "menu-button";
             if (!v) {
                 el.addClass(prefixCls + "menu-button-open");
                 el.attr("aria-expanded", true);
@@ -31,9 +31,17 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
                 el.removeClass(prefixCls + "menu-button-open");
                 el.attr("aria-expanded", false);
             }
+        },
+
+        _uiSetActiveItem:function(v) {
+            S.log("button set aria " + (v && v.get("view").get("el").attr("id")) || "");
+            this.get("el").attr("aria-activedescendant", (v && v.get("view").get("el").attr("id")) || "");
         }
     }, {
         ATTRS:{
+            activeItem:{
+
+            },
             collapsed:{
                 value:true
             }

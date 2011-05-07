@@ -180,7 +180,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             var self = this,view = self.get("view");
             if (!view['_handleKeydown']) return;
             if (ev.keyCode == 13 || ev.keyCode == 32) {
-                this._handleClick();
+                this._handleClick(ev);
                 ev.preventDefault();
             } else {
                 return view['_handleKeydown'](ev);
@@ -190,9 +190,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         /**
          * root element handler for mouse enter
          */
-        _handleClick:function() {
+        _handleClick:function(ev) {
             if (this.get("disabled")) return false;
             this._forwordToView("_handleClick");
+            this._handleClickInternal(ev);
+        },
+
+        _handleClickInternal:function(ev) {
             this.fire("click");
         },
 

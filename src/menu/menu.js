@@ -13,29 +13,20 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 
         _bindMenuItem:function(menuItem) {
             var self = this;
-            menuItem.on("afterSelectedChange", function(ev) {
-                if (!ev.newVal) return;
-                self.set("selectedItem", this);
-            });
 
             menuItem.on("afterHighlightedChange", function(ev) {
-                if (!ev.newVal) return;
-                self.set("highlightedItem", this);
+                //允许取消
+                S.log("menu knows menuitemchange : " + ev.newVal
+                    + " : " + menuItem.get("view").get("el").attr("id"));
+                self.set("highlightedItem", ev.newVal ? this : null);
             });
 
-            menuItem.on("menuItemSelected", function() {
-                self.fire("menuItemSelected");
+            menuItem.on("click", function() {
+                S.log("menu fire click : " + menuItem.get("view").get("el").attr("id"));
+                self.fire("menuItemClick",{
+                    menuItem:this
+                });
             });
-        },
-
-        //清楚上一个选择 menuitem 的选中状态
-        _uiSetSelectedItem:function(item, ev) {
-            if (ev.prevVal) {
-                //不触发事件，避免再被 menuitem 捕获死循环 ??
-                //afterSelectedChange 已经只监控选中了
-                ev.prevVal.set("selected", false);
-            }
-            item.set("selected", true);
         },
 
         _uiSetHighlightedItem:function(v, ev) {
@@ -44,6 +35,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             }
             v && v.set("highlighted", true);
             this.get("view").set("highlightedItem", v);
+            this.set("activeItem", v);
         },
         _handleBlur:function() {
             if (Menu.superclass._handleBlur.call(this) === false) return false;
@@ -76,12 +68,16 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 
             //先看当前活跃 menuitem 是否要处理
             if (highlightedItem && highlightedItem._handleKeydown) {
-                if (highlightedItem._handleKeydown(e) === false) return false;
+                if (highlightedItem._handleKeydown(e) === false) {
+                    return false;
+                }
             }
 
             //自己这边只处理上下
             var children = this.get("children");
-            if (children.length === 0) return;
+            if (children.length === 0) {
+                return;
+            }
             var index,destIndex;
 
             //up
@@ -120,8 +116,17 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
         }
     }, {
         ATTRS:{
+            /**
+             * 当前高亮的儿子菜单项
+             */
             highlightedItem:{},
-            selectedItem:{},
+
+            /**
+             * 当前 active 的子孙菜单项，并不一直等于 highlightedItem
+             */
+            activeItem:{
+                view:true
+            },
             focusable:{
                 //默认可以获得焦点
                 value:true,

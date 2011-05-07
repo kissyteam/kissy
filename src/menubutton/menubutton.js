@@ -33,25 +33,11 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Button, MenuButtonRender)
 
         bindUI:function() {
             var self = this,
-                el = self.get("view").get("el"),
                 menu = this.get("menu");
-            menu.on("afterSelectedItemChange", function(ev) {
-                self.set("selectedItem", ev.newVal);
-            });
 
-            menu.on("menuItemSelected", function() {
-                if (self.get("selectedItem")) self.fire("menuItemSelected");
-            });
+            menu.on("afterActiveItemChange", function(ev) {
 
-            menu.on("afterHighlightedItemChange", function(ev) {
-                //等 menuitem 自己搞好了id再执行
-                setTimeout(function() {
-                    if (ev.newVal) {
-                        el.attr("aria-activedescendant", ev.newVal.get("view").get("el").attr("id"));
-                    } else {
-                        el.attr("aria-activedescendant", " ");
-                    }
-                }, 0);
+                self.set("activeItem", ev.newVal);
             });
         },
 
@@ -105,13 +91,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Button, MenuButtonRender)
         }
     }, {
         ATTRS:{
-
-            selectedItem:{
-                valueFn:function() {
-                    return this.get("menu").get("selectedItem");
-                }
+            activeItem:{
+                view:true
             },
-
             menu:{
                 setter:function(v) {
                     //menubutton 的 menu 不可以获得焦点

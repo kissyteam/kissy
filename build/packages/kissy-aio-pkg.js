@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110506153947',
+        buildTime:'20110507164507',
 
         /**
          * Returns a new object containing all of the properties of
@@ -18464,7 +18464,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
                 }
                 el.attr("aria-activedescendant", id);
             } else {
-                el.attr("aria-activedescendant", " ");
+                el.removeAttr("aria-activedescendant");
             }
         },
 
@@ -18665,9 +18665,10 @@ KISSY.add("menu/submenu", function(S, UIBase, MenuItem, SubMenuRender) {
 KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
     var SubMenuRender;
     var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►</span>';
-    SubMenuRender = UIBase.create(MenuItemRender,  {
+    SubMenuRender = UIBase.create(MenuItemRender, {
         renderUI:function() {
             this.get("el").addClass(this.get("prefixCls") + "submenu");
+            this.get("el").attr("aria-haspopup", "true");
         },
         _uiSetContent:function(v) {
 

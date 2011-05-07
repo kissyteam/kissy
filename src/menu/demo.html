@@ -81,8 +81,8 @@
 
                 menu.render();
 
-                menu.on("menuItemSelected", function() {
-                    log("selected : " + menu.get("selectedItem").get("content"));
+                menu.on("menuItemClick", function(ev) {
+                    log("selected : " + ev.menuItem.get("content"));
                 });
 
 

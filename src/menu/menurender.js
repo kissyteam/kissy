@@ -3,6 +3,20 @@
  * @author:yiminghe@gmail.com
  */
 KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
+    function setActiveDescendant(self, v) {
+        var el = self.get("el");
+
+        if (v) {
+            var menuItemEl = v.get("view").get("el"),
+                id = menuItemEl.attr("id");
+            S.log("set aria-activedescendant " + id);
+            el.attr("aria-activedescendant", id);
+        } else {
+            S.log("remove aria-activedescendant ");
+            el.attr("aria-activedescendant", "");
+        }
+    }
+
     var MenuRender = UIBase.create(Component.Render, [
 
         UIBase.Contentbox.Render,
@@ -16,19 +30,13 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
             el.attr("aria-haspopup", true);
         },
 
-        _uiSetHighlightedItem:function(v) {
 
-            var el = this.get("el");
-            if (v) {
-                var menuItemEl = v.get("view").get("el"),
-                    id = menuItemEl.attr("id");
-                if (!id) {
-                    menuItemEl.attr("id", id = S.guid("ks-menuitem"));
-                }
-                el.attr("aria-activedescendant", id);
-            } else {
-                el.attr("aria-activedescendant", " ");
-            }
+        _uiSetHighlightedItem:function(v) {
+            setActiveDescendant(this, v);
+        },
+
+        _uiSetActiveItem:function(v) {
+            setActiveDescendant(this, v);
         },
 
         _uiSetDisabled:function(v) {
@@ -40,7 +48,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
 
         _uiSetFocusable:function(v) {
             if (!this.get("disabled")) {
-                
+
                 if (v) {
                 } else {
                     this.get("el").unselectable();
@@ -60,6 +68,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
     }, {
         ATTRS:{
             highlightedItem:{},
+            activeItem:{},
             elCls:{
                 valueFn:function() {
                     return this.get("prefixCls") + "menu "

@@ -120,7 +120,7 @@
 <script src="../menubutton.js"></script>
 
 <script>
-    KISSY.use("node,menubutton,menu", function(S, Node, MenuButton,  Menu) {
+    KISSY.use("node,menubutton,menu", function(S, Node, MenuButton, Menu) {
         function log(s) {
             Node.one("#log").append(new Node("<p>" + s + "</p>"));
             Node.one("#log")[0].scrollTop = Node.one("#log")[0].scrollHeight;
@@ -162,8 +162,8 @@
             });
 
 
-            bbbbb.on("menuItemSelected", function() {
-                log("selected : " + bbbbb.get("selectedItem").get("content"));
+            menu.on("menuItemClick", function(ev) {
+                log("selected : " + ev.menuItem.get("content"));
             });
 
             //or

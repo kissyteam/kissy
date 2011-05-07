@@ -5,9 +5,13 @@
 KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
     return UIBase.create(Component.Render, {
         renderUI:function() {
-            this.get("el").html("<div class='" + this.get("prefixCls") + "menuitem-content" + "'>")
-            this.get("el").attr("role", "menuitem");
-            this.get("el").unselectable();
+            var el = this.get("el");
+            el.html("<div class='" + this.get("prefixCls") + "menuitem-content" + "'>")
+            el.attr("role", "menuitem");
+            el.unselectable();
+            if (!el.attr("id")) {
+                el.attr("id", S.guid("ks-menuitem"));
+            }
         },
 
         _uiSetContent:function(v) {
