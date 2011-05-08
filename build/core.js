@@ -4985,8 +4985,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 prefix = self.transitionName,
                 transition = {};
 
-            S.log('Amin uses native transition.');
-
             // using CSS transition process
             transition[prefix + 'Property'] = 'all';
             transition[prefix + 'Duration'] = duration + 'ms';

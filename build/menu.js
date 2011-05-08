@@ -21,8 +21,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 
             menuItem.on("afterHighlightedChange", function(ev) {
                 //允许取消
-                S.log("menu knows menuitemchange : " + ev.newVal
-                    + " : " + menuItem.get("view").get("el").attr("id"));
+//                S.log("menu knows menuitemchange : " + ev.newVal
+//                    + " : " + menuItem.get("view").get("el").attr("id"));
                 self.set("highlightedItem", ev.newVal ? this : null);
             });
 

@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110507164507',
+        buildTime:'20110508193757',
 
         /**
          * Returns a new object containing all of the properties of
@@ -7330,8 +7330,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 easing = config.easing,
                 prefix = self.transitionName,
                 transition = {};
-
-            S.log('Amin uses native transition.');
 
             // using CSS transition process
             transition[prefix + 'Property'] = 'all';

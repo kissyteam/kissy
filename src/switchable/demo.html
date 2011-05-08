@@ -32,9 +32,16 @@
         padding: 20px 50px 50px;
     }
 
-    h2 {
+    h1 {
+        margin: 30px 0 10px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    h1 {
         margin: 30px 0 10px;
         font-size: 17px;
+        font-weight: bold;
     }
 
     .loading {
@@ -59,7 +66,7 @@
 </head>
 
 <body>
-<h2>Tabs - 普通标签页</h2>
+<h1>Tabs - 普通标签页</h1>
 <style>
     #demo1 {
         position: relative;
@@ -72,6 +79,13 @@
         left: 20px;
         margin-top: -29px;
         z-index: 99;
+    }
+
+    .list li {
+        margin-left: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        list-style-type: circle;
     }
 
     #demo1 .ks-switchable-nav li {
@@ -98,6 +112,18 @@
         border: 1px solid #AEC7E5;
     }
 </style>
+
+
+<h2>键盘快捷键</h2>
+
+<ul class="list">
+    <li>左/上键:当焦点在标签时转到上一个标签
+    <li>右/下键:当焦点在标签时转到下一个标签
+    <li>Home: 当焦点在标签时转到第一个标签
+    <li>End: 当焦点在标签时转到最后一个标签
+    <li>Control + PgUp : 当然焦点在容器内时转到当前标签上一个标签
+    <li>Control + PgDn : 当然焦点在容器内时转到当前标签下一个标签
+</ul>
 <div id="demo1" class="section">
     <ul class="ks-switchable-nav">
         <li class="ks-active">标题 A</li>
@@ -115,14 +141,17 @@
   - click 或 Tab 切换到 trigger, 立即触发
   - beforeSwitch/onSwitch 事件的触发
   - 延迟的内容能正确加载
+
+
+    <a href="#"> 内容 a</a>
 </pre>
         </div>
-        <div style="display: none">内容 B</div>
-        <div style="display: none">内容 C</div>
-        <div style="display: none">内容 D</div>
+        <div style="display: none"><a href="#">内容 B</a></div>
+        <div style="display: none"><a href="#">内容 C</a></div>
+        <div style="display: none"><a href="#">内容 D</a></div>
         <div style="display: none">
             <textarea class="ks-datalazyload-custom">
-                我是延迟内容
+                <a href="#">我是延迟内容</a>
                 <script>alert('我是延迟内容中的脚本，仅在第一次加载时执行。');</script>
             </textarea>
         </div>
@@ -139,7 +168,7 @@
             tabs.on('beforeSwitch', function(ev) {
                 var index = ev.toIndex;
                 if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
-                    this.panels[index].innerHTML = 'index = ' + index;
+                    //this.panels[index].innerHTML = 'index = ' + index;
                 }
             });
         });
@@ -147,7 +176,7 @@
 </script>
 <p class="code-switch">显示源码</p>
 
-<h2>Slide - 淘宝首页卡盘</h2>
+<h1>Slide - 淘宝首页卡盘</h1>
 <style>
     #demo2 {
         position: relative;
@@ -255,7 +284,7 @@
 </script>
 <p class="code-switch">显示源码</p>
 
-<h2>Slide - 有啊首页卡盘</h2>
+<h1>Slide - 有啊首页卡盘</h1>
 <style>
     #demo3 {
         position: relative;
@@ -339,7 +368,7 @@
 </script>
 <p class="code-switch">显示源码</p>
 
-<h2>Carousel - 旋转木马</h2>
+<h1>Carousel - 旋转木马</h1>
 <style>
     .scrollable {
         position: relative;
@@ -410,23 +439,23 @@
     <div class="scroller">
         <div class="ks-switchable-content">
             <!-- 1-5 -->
-            <img alt="" src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg"/>
-            <img alt="" src="http://farm4.static.flickr.com/3089/2796719087_c3ee89a730_t.jpg"/>
-            <img alt="" src="http://farm1.static.flickr.com/79/244441862_08ec9b6b49_t.jpg"/>
-            <img alt="" src="http://farm1.static.flickr.com/28/66523124_b468cf4978_t.jpg"/>
-            <img alt="" src="http://farm1.static.flickr.com/164/399223606_b875ddf797_t.jpg"/>
+            <img alt="" src="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
+            <img alt="" src="http://img02.taobaocdn.com/tps/i2/T1.XGaXalnXXXXXXXX-110-135.png"/>
+            <img alt="" src="http://img04.taobaocdn.com/tps/i4/T1oEmXXmVoXXXXXXXX-110-135.png"/>
+            <img alt="" src="http://img04.taobaocdn.com/tps/i4/T1oEmXXmVoXXXXXXXX-110-135.png"/>
+            <img alt="" src="http://img03.taobaocdn.com/tps/i3/T1Hm1XXipvXXXXXXXX-110-135.png"/>
             <!-- 5-10 -->
-            <img alt="" data-ks-lazyload-custom="http://farm1.static.flickr.com/163/399223609_db47d35b7c_t.jpg"/>
-            <img alt="" data-ks-lazyload-custom="http://farm1.static.flickr.com/135/321464104_c010dbf34c_t.jpg"/>
-            <img alt="" data-ks-lazyload-custom="http://farm1.static.flickr.com/40/117346184_9760f3aabc_t.jpg"/>
-            <img alt="" data-ks-lazyload-custom="http://farm1.static.flickr.com/153/399232237_6928a527c1_t.jpg"/>
-            <img alt="" data-ks-lazyload-custom="http://farm1.static.flickr.com/50/117346182_1fded507fa_t.jpg"/>
+            <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
+            <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
+            <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
+            <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
+            <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
             <!-- 10-15 -->
-            <img alt="" data-ks-lazyload-custom="http://farm4.static.flickr.com/3629/3323896446_3b87a8bf75_t.jpg"/>
-            <img alt="" data-ks-lazyload-custom="http://farm4.static.flickr.com/3023/3323897466_e61624f6de_t.jpg"/>
-            <img alt="" data-ks-lazyload-custom="http://farm4.static.flickr.com/3650/3323058611_d35c894fab_t.jpg"/>
-            <img alt="" data-ks-lazyload-custom="http://farm4.static.flickr.com/3635/3323893254_3183671257_t.jpg"/>
-            <img alt="" data-ks-lazyload-custom="http://farm4.static.flickr.com/3624/3323893148_8318838fbd_t.jpg"/>
+            <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
+            <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
+            <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
+            <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
+            <img alt="" data-ks-lazyload-custom="http://img02.taobaocdn.com/tps/i2/T1l_yXXiFyXXXXXXXX-110-135.png"/>
         </div>
         <ul class="ks-switchable-nav">
             <li class="ks-active">&bull;</li>
@@ -460,7 +489,7 @@
 </script>
 <p class="code-switch">显示源码</p>
 
-<h2>Slide - 有啊滚动新闻条</h2>
+<h1>Slide - 有啊滚动新闻条</h1>
 <style>
     .scroll-news {
         height: 20px;
@@ -498,7 +527,7 @@
 </script>
 <p class="code-switch">显示源码</p>
 
-<h2>Slide - 土豆今日焦点</h2>
+<h1>Slide - 土豆今日焦点</h1>
 <style>
     #slideFocus {
         border: 1px solid #C2C2C2;
@@ -635,7 +664,7 @@
 </script>
 <p class="code-switch">显示源码</p>
 
-<h2>Accordion - 手风琴</h2>
+<h1>Accordion - 手风琴</h1>
 <style>
     #accordion1 {
         width: 300px;
