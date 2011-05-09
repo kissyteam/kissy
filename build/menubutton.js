@@ -41,7 +41,6 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Button, MenuButtonRender)
                 menu = this.get("menu");
 
             menu.on("afterActiveItemChange", function(ev) {
-
                 self.set("activeItem", ev.newVal);
             });
         },

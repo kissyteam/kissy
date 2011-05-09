@@ -1358,6 +1358,7 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
                 case KEY_LEFT:
                 case KEY_UP:
                     if (self._currentTabFromEvent(t)
+                    // 争渡读屏器阻止了上下左右键
                     //&& no_modifier_pressed_flag
                         ) {
                         self.prev();

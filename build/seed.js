@@ -2026,7 +2026,7 @@ build time: ${build.time}
  *  @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-if("require" in this) return;
+    if ("require" in this) return;
     S.mix(S, loader);
 
     /**
@@ -2104,7 +2104,7 @@ if("require" in this) return;
         var scripts = document.getElementsByTagName('script'),
             currentScript = scripts[scripts.length - 1],
             base = getBaseUrl(currentScript);
-        S.Config.base = S.Config.base || utils.normalBasePath(base);
+        S.Config.base = utils.normalBasePath(base);
         // the default timeout for getScript
         S.Config.timeout = 10;
     })();

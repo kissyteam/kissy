@@ -23,7 +23,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 
             menuItem.on("click", function() {
                 S.log("menu fire click : " + menuItem.get("view").get("el").attr("id"));
-                self.fire("menuItemClick",{
+                self.fire("menuItemClick", {
                     menuItem:this
                 });
             });
@@ -112,6 +112,13 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             var self = this;
             S.each(this.get("children"), function(c) {
                 self._bindMenuItem(c);
+            });
+
+            /**
+             * 隐藏后，去掉高亮与当前
+             */
+            self.on("hide", function() {
+                self.set("highlightedItem", null);
             });
         }
     }, {
