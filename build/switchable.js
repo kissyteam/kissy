@@ -1234,15 +1234,14 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
     var KEY_UP = 38;
     var KEY_RIGHT = 39;
     var KEY_DOWN = 40;
-
-    var KEY_SPACE = 32;
     var KEY_TAB = 9;
 
-    var KEY_BACKSPACE = 8;
-    var KEY_DELETE = 46;
-    var KEY_ENTER = 13;
-    var KEY_INSERT = 45;
-    var KEY_ESCAPE = 27;
+//    var KEY_SPACE = 32;
+//    var KEY_BACKSPACE = 8;
+//    var KEY_DELETE = 46;
+//    var KEY_ENTER = 13;
+//    var KEY_INSERT = 45;
+//    var KEY_ESCAPE = 27;
 
     /**
      * Tabs Class
@@ -1260,6 +1259,13 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
         return 0;
     }
 
+    function setTabIndex(root, v) {
+        root.tabIndex = v;
+        DOM.query("*", root).each(function(n) {
+            n.tabIndex = v;
+        });
+    }
+
     S.extend(Tabs, Switchable, {
         _init:function() {
             var self = this;
@@ -1267,11 +1273,10 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
             var activeIndex = self.activeIndex;
             self.lastActiveIndex = activeIndex;
             var triggers = self.triggers,panels = self.panels;
-            var activeTab = triggers[activeIndex];
             var i = 0;
             S.each(triggers, function(trigger) {
                 trigger.setAttribute("role", "tab");
-                trigger.tabIndex = i == activeIndex ? "0" : "-1";
+                setTabIndex(trigger, i == activeIndex ? "0" : "-1");
                 if (!trigger.id) {
                     trigger.id = S.guid("ks-switchable");
                 }
@@ -1322,13 +1327,13 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
                 case KEY_PAGEUP:
                 case KEY_PAGEDOWN:
                     if (e.ctrlKey && !e.altKey && !e.shiftKey) {
-                        e.stopPropagation();
+                        e.halt();
                     } // endif
                     break;
 
                 case KEY_TAB:
                     if (e.ctrlKey && !e.altKey) {
-                        e.stopPropagation();
+                        e.halt();
                     } // endif
                     break;
 
@@ -1355,7 +1360,7 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
                     if (self._currentTabFromEvent(t)
                         && no_modifier_pressed_flag) {
                         self.prev();
-                        e.stopPropagation();
+                        e.halt();
                     } // endif
                     break;
 
@@ -1364,7 +1369,7 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
                     if (self._currentTabFromEvent(t)
                         && no_modifier_pressed_flag) {
                         self.next();
-                        e.stopPropagation();
+                        e.halt();
                     } // endif
                     break;
 
@@ -1372,7 +1377,7 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
 
                     if (control_modifier_pressed_flag) {
                         S.log("租借");
-                        e.stopPropagation();
+                        e.halt();
                         e.preventDefault();
                         self.next();
 
@@ -1381,7 +1386,7 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
 
                 case KEY_PAGEUP:
                     if (control_modifier_pressed_flag) {
-                        e.stopPropagation();
+                        e.halt();
                         self.prev();
 
                     }
@@ -1390,19 +1395,19 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
                 case KEY_HOME:
                     if (no_modifier_pressed_flag) {
                         self.switchTo(0);
-                        e.stopPropagation();
+                        e.halt();
                     }
                     break;
                 case KEY_END:
                     if (no_modifier_pressed_flag) {
                         self.switchTo(triggers.length - 1);
-                        e.stopPropagation();
+                        e.halt();
                     }
 
                     break;
                 case KEY_TAB:
                     if (e.ctrlKey && !e.altKey) {
-                        e.stopPropagation();
+                        e.halt();
                         if (e.shiftKey)
                             self.prev();
                         else
@@ -1424,8 +1429,8 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
             var trigger = self.triggers[activeIndex];
             var lastPanel = self.panels[lastActiveIndex];
             var panel = self.panels[activeIndex];
-            lastTrigger.tabIndex = "-1";
-            trigger.tabIndex = "0";
+            setTabIndex(lastTrigger, "-1");
+            setTabIndex(trigger, "0");
             trigger.focus();
             lastPanel.setAttribute("aria-hidden", "true");
             panel.setAttribute("aria-hidden", "false");
@@ -1437,9 +1442,7 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
 },
 {
     requires:["switchable/base"]
-}
-    )
-    ;
+});
 
 /**
  * 2011-05-08 承玉：add support for aria & keydown
