@@ -47,7 +47,7 @@ KISSY.add("uibase/closerender", function(S) {
                     "class='" + this.get("prefixCls") +CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
                     this.get("prefixCls") +CLS_PREFIX + "close-x" +
-                    "'>X</span>" +
+                    "'>关闭</span>" +
                     "</a>")
                     .appendTo(el);
                 self.set("closeBtn", closeBtn);

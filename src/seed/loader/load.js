@@ -66,6 +66,9 @@
                                 _modError();
                             }
                         }
+                        if (mod.status != ERROR) {
+                            S.log(mod.name + ' is loaded.', 'info');
+                        }
                         _scriptOnComplete();
                     },
                     error: function() {
@@ -96,7 +99,7 @@
                 // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息
                 // 需要同步到 instance 上去
                 // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
-                if (cfg.global && !isCss) {
+                if (cfg.global) {
                     self.__mixMod(self.Env.mods, cfg.global.Env.mods,
                         mod.name, cfg.global);
                 }
@@ -106,16 +109,12 @@
                 loadQueque[url] = LOADED;
                 if (mod.status !== ERROR) {
 
-                    mixGlobal();
-
                     // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
                     // 因此要加上下面的 !== 判断，否则会出现重复 attach,
                     // 比如编辑器里动态加载时，被依赖的模块会重复
                     if (mod.status !== ATTACHED) {
                         mod.status = LOADED;
                     }
-
-                    S.log(mod.name + ' is loaded.', 'info');
 
                     callback();
                 }

@@ -2,7 +2,7 @@
  * KISSY Overlay
  * @author: 玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
-KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
+KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component, AriaRender) {
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -13,7 +13,8 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         require("positionrender"),
         require("loadingrender"),
         UA['ie'] == 6 ? require("shimrender") : null,
-        require("maskrender")
+        require("maskrender"),
+        AriaRender
     ], {
 
         renderUI:function() {
@@ -29,7 +30,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         }
     });
 }, {
-    requires: ["ua","uibase","component"]
+    requires: ["ua","uibase","component","./ariarender"]
 });
 
 /**

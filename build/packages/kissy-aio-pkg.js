@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110509191504',
+        buildTime:'20110509231248',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1535,6 +1535,9 @@ build time: ${build.time}
                                 _modError();
                             }
                         }
+                        if (mod.status != ERROR) {
+                            S.log(mod.name + ' is loaded.', 'info');
+                        }
                         _scriptOnComplete();
                     },
                     error: function() {
@@ -1565,7 +1568,7 @@ build time: ${build.time}
                 // 对于动态下载下来的模块，loaded 后，global 上有可能更新 mods 信息
                 // 需要同步到 instance 上去
                 // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
-                if (cfg.global && !isCss) {
+                if (cfg.global) {
                     self.__mixMod(self.Env.mods, cfg.global.Env.mods,
                         mod.name, cfg.global);
                 }
@@ -1575,16 +1578,12 @@ build time: ${build.time}
                 loadQueque[url] = LOADED;
                 if (mod.status !== ERROR) {
 
-                    mixGlobal();
-
                     // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
                     // 因此要加上下面的 !== 判断，否则会出现重复 attach,
                     // 比如编辑器里动态加载时，被依赖的模块会重复
                     if (mod.status !== ATTACHED) {
                         mod.status = LOADED;
                     }
-
-                    S.log(mod.name + ' is loaded.', 'info');
 
                     callback();
                 }
@@ -5727,7 +5726,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
     attach(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'], undefined);
 
     // dom-attr
-    attach(['attr', 'removeAttr'], HAS_NAME);
+    attach(['attr', 'removeAttr','hasAttr'], HAS_NAME);
     attach(['val', 'text'], ONLY_VAL);
 
     // dom-style
@@ -12586,7 +12585,7 @@ KISSY.add("uibase/closerender", function(S) {
                     "class='" + this.get("prefixCls") +CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
                     this.get("prefixCls") +CLS_PREFIX + "close-x" +
-                    "'>X</span>" +
+                    "'>关闭</span>" +
                     "</a>")
                     .appendTo(el);
                 self.set("closeBtn", closeBtn);
@@ -12969,12 +12968,15 @@ KISSY.add("uibase/maskrender", function(S) {
      * 多 position 共享一个遮罩
      */
     var mask,
+        iframe,
         num = 0;
 
 
     function initMask() {
         var UA = S.require("ua"),Node = S.require("node/node"),DOM = S.require("dom");
-        mask = new Node("<div class='" +
+        mask = new Node("<div " +
+            //"tabindex='-1' " +
+            "class='" +
             this.get("prefixCls") + "ext-mask'>").prependTo(document.body);
         mask.css({
             "position":"absolute",
@@ -12984,11 +12986,36 @@ KISSY.add("uibase/maskrender", function(S) {
             "height": DOM['docHeight']()
         });
         if (UA['ie'] == 6) {
-            mask.append("<" + "iframe style='width:100%;" +
-                "height:expression(this.parentNode.offsetHeight);" +
+            iframe = new Node("<" + "iframe " +
+                //"tabindex='-1' " +
+                "style='position:absolute;" +
+                "left:0;" +
+                "top:0;" +
+                "background:red;" +
+                "width:" + DOM['docWidth']() + "px;" +
+                "height:" + DOM['docHeight']() + "px;" +
                 "filter:alpha(opacity=0);" +
-                "z-index:-1;'>");
+                "z-index:-1;'>").insertBefore(mask)
         }
+
+        S.Event.on(window, "resize", function() {
+            var o = {
+                width:UA['ie'] == 6 ? DOM['docWidth']() : "100%",
+                "height": DOM['docHeight']()
+            };
+            if (iframe) {
+                iframe.css(o);
+            }
+            mask.css(o);
+        });
+
+        /**
+         * 点 mask 焦点不转移
+         */
+        mask.unselectable();
+        mask.on("mousedown click", function(e) {
+            e.halt();
+        });
     }
 
     function Mask() {
@@ -13005,15 +13032,21 @@ KISSY.add("uibase/maskrender", function(S) {
             mask.css({
                 "z-index":this.get("zIndex") - 1
             });
+            iframe && iframe.css({
+                "z-index":this.get("zIndex") - 1
+            });
             num++;
             mask.css("display", "");
+            iframe && iframe.css("display", "");
         },
 
         _maskExtHide:function() {
             num--;
             if (num <= 0) num = 0;
-            if (!num)
+            if (!num) {
                 mask && mask.css("display", "none");
+                iframe && iframe.css("display", "none");
+            }
         }
 
     };

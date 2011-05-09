@@ -95,7 +95,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
     attach(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'], undefined);
 
     // dom-attr
-    attach(['attr', 'removeAttr'], HAS_NAME);
+    attach(['attr', 'removeAttr','hasAttr'], HAS_NAME);
     attach(['val', 'text'], ONLY_VAL);
 
     // dom-style

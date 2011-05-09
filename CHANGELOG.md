@@ -14,6 +14,7 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/4/14)
+ - [*] KISSY.Overlay 增加 aria 配置，trap focus and keydown
  - [*] KISSY.param/unparam 增加数组处理选项
  - [+] KISSY.getScript 支持 css 载入后调用回调
  - [+] KISSY.getScript 支持除了ie<9外的 error 立即回调

@@ -9,6 +9,8 @@
     <target name="concat">
         <concat destfile="overlay-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="overlayrender.js"/>
+            <path path="ariarender.js"/>
+            <path path="aria.js"/>
             <path path="overlay.js"/>
             <path path="dialogrender.js"/>
             <path path="dialog.js"/>

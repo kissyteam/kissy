@@ -27,7 +27,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
         //el.css({xx:yy}) chainable
         if (args[valIndex] === undefined
             &&
-            (valIndex != 1 || S['isString'](args[0]))
+            (valIndex != 1 || S.isString(args[0]))
             ) {
             return fn.apply(DOM, args2);
         }
@@ -100,7 +100,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
     attach(['hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass'], undefined);
 
     // dom-attr
-    attach(['attr', 'removeAttr'], HAS_NAME);
+    attach(['attr', 'removeAttr','hasAttr'], HAS_NAME);
     attach(['val', 'text'], ONLY_VAL);
 
     // dom-style
@@ -146,7 +146,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
                 var domNode;
 
                 // 对于 NodeList, 需要 cloneNode, 因此直接调用 create
-                if (isNodeList || S['isString'](html)) {
+                if (isNodeList || S.isString(html)) {
                     domNode = DOM.create(html);
                 } else {
                     if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) domNode = html;
@@ -221,7 +221,7 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, NodeList, undefined) {
     });
 
 }, {
-    requires:["dom","event","node/node","node/nodelist"]
+    requires:["dom","event","./node","./nodelist"]
 });
 /**
  * @module  node
@@ -247,7 +247,7 @@ KISSY.add('node/node', function(S, DOM, undefined) {
         }
 
         // create from html
-        if (S['isString'](html)) {
+        if (S.isString(html)) {
             domNode = DOM.create(html, props, ownerDocument);
             // 将 S.Node('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === 11) { // fragment

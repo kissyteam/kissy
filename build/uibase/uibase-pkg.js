@@ -715,7 +715,7 @@ KISSY.add("uibase/closerender", function(S) {
                     "class='" + this.get("prefixCls") +CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
                     this.get("prefixCls") +CLS_PREFIX + "close-x" +
-                    "'>X</span>" +
+                    "'>关闭</span>" +
                     "</a>")
                     .appendTo(el);
                 self.set("closeBtn", closeBtn);
@@ -1098,12 +1098,15 @@ KISSY.add("uibase/maskrender", function(S) {
      * 多 position 共享一个遮罩
      */
     var mask,
+        iframe,
         num = 0;
 
 
     function initMask() {
         var UA = S.require("ua"),Node = S.require("node/node"),DOM = S.require("dom");
-        mask = new Node("<div class='" +
+        mask = new Node("<div " +
+            //"tabindex='-1' " +
+            "class='" +
             this.get("prefixCls") + "ext-mask'>").prependTo(document.body);
         mask.css({
             "position":"absolute",
@@ -1113,11 +1116,36 @@ KISSY.add("uibase/maskrender", function(S) {
             "height": DOM['docHeight']()
         });
         if (UA['ie'] == 6) {
-            mask.append("<" + "iframe style='width:100%;" +
-                "height:expression(this.parentNode.offsetHeight);" +
+            iframe = new Node("<" + "iframe " +
+                //"tabindex='-1' " +
+                "style='position:absolute;" +
+                "left:0;" +
+                "top:0;" +
+                "background:red;" +
+                "width:" + DOM['docWidth']() + "px;" +
+                "height:" + DOM['docHeight']() + "px;" +
                 "filter:alpha(opacity=0);" +
-                "z-index:-1;'>");
+                "z-index:-1;'>").insertBefore(mask)
         }
+
+        S.Event.on(window, "resize", function() {
+            var o = {
+                width:UA['ie'] == 6 ? DOM['docWidth']() : "100%",
+                "height": DOM['docHeight']()
+            };
+            if (iframe) {
+                iframe.css(o);
+            }
+            mask.css(o);
+        });
+
+        /**
+         * 点 mask 焦点不转移
+         */
+        mask.unselectable();
+        mask.on("mousedown click", function(e) {
+            e.halt();
+        });
     }
 
     function Mask() {
@@ -1134,15 +1162,21 @@ KISSY.add("uibase/maskrender", function(S) {
             mask.css({
                 "z-index":this.get("zIndex") - 1
             });
+            iframe && iframe.css({
+                "z-index":this.get("zIndex") - 1
+            });
             num++;
             mask.css("display", "");
+            iframe && iframe.css("display", "");
         },
 
         _maskExtHide:function() {
             num--;
             if (num <= 0) num = 0;
-            if (!num)
+            if (!num) {
                 mask && mask.css("display", "none");
+                iframe && iframe.css("display", "none");
+            }
         }
 
     };

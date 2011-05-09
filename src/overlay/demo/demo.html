@@ -7,8 +7,14 @@
 <script src="../../../build/uibase.js"></script>
 <script src="../../../build/component.js"></script>
 
-<script src="../../../build/overlay.js"></script>
+<script src="../overlayrender.js"></script>
+<script src="../ariarender.js"></script>
+<script src="../aria.js"></script>
+<script src="../overlay.js"></script>
 
+<script src="../dialogrender.js"></script>
+<script src="../dialog.js"></script>
+<script src="../../overlay.js"></script>
 <script>
     var S = KISSY;
     S.log(S.Overlay);
@@ -239,7 +245,7 @@
         padding: 6px;
     }
 </style>
-<h2>Dialog - auto render</h2>
+<h2>Dialog - auto render with aria support</h2>
 <button id="btn3">Show</button>
 <div id="markupDialog" class="ks-dialog">
     <div class="ks-contentbox">
@@ -248,10 +254,17 @@
         </div>
         <div class="ks-stdmod-body">
             <div style="padding:50px;">
-                从 markup 生成 dialog
+                从 markup 生成 dialog，并且按键不能使得焦点脱离overlay内部！
+                <br/>
+                <input value='input 1'/>
+                <a href="http://www.taobao.com">http://www.taobao.com</a>
+                <a href="http://www.g.cn">http://www.g.cn</a>
+                <div tabindex="5">tabIndex==5</div>
+                <div tabindex="0">tabIndex==0</div>
+                <input value='input 2'/>
             </div>
         </div>
-        <a class="ks-ext-close"><span class="ks-ext-close-x">X</span></a>
+        <a href='#' class="ks-ext-close"><span class="ks-ext-close-x">关闭</span></a>
     </div>
 </div>
 <script>
@@ -263,6 +276,8 @@
         S.ready(function(S) {
             var d = new Dialog({
                 srcNode:Node.one("#markupDialog"),
+                aria:true,
+                mask:true,
                 width:400
             });
 
