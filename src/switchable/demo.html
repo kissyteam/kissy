@@ -66,7 +66,7 @@
 </head>
 
 <body>
-<h1>Tabs - 普通标签页</h1>
+<h1 id="tabs_aria">Tabs - 普通标签页</h1>
 <style>
     #demo1 {
         position: relative;
@@ -125,8 +125,12 @@
     <li>Control + PgDn : 当然焦点在容器内时转到当前标签下一个标签
 </ul>
 <div id="demo1" class="section">
+
     <ul class="ks-switchable-nav">
-        <li class="ks-active"><a href="http://www.taobao.com">标题 A</a></li>
+        <!-- title 争渡读屏器不读-->
+        <li class="ks-active" aria-labelledby='a_tip' title="读屏器读不出来">
+            <span style="display:none" id="a_tip">标题 A，可左右键切换操作</span>
+            <a href="http://www.taobao.com">标题 A</a></li>
         <li><a href="http://www.taobao.com">标题 B</a></li>
         <li>标题 C</li>
         <li>标题 D</li>

@@ -1358,7 +1358,8 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
                 case KEY_LEFT:
                 case KEY_UP:
                     if (self._currentTabFromEvent(t)
-                        && no_modifier_pressed_flag) {
+                    //&& no_modifier_pressed_flag
+                        ) {
                         self.prev();
                         e.halt();
                     } // endif
@@ -1367,7 +1368,8 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
                 case KEY_RIGHT:
                 case KEY_DOWN:
                     if (self._currentTabFromEvent(t)
-                        && no_modifier_pressed_flag) {
+                    //&& no_modifier_pressed_flag
+                        ) {
                         self.next();
                         e.halt();
                     } // endif
