@@ -1238,10 +1238,6 @@ KISSY.add('switchable/slide', function(S, Switchable) {
  * @creator  玉伯<lifesinger@gmail.com>
  */
 KISSY.add('switchable/tabs', function(S, Switchable) {
-    Tabs.Config = {
-
-    };
-    Tabs.Plugins = [];
     function Tabs(container, config) {
         var self = this;
 
@@ -1258,6 +1254,7 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
 
     S.Tabs = Tabs;
     Tabs.Config = {};
+    Tabs.Plugins = [];
     return Tabs;
 }, {
     requires:["./base"]
