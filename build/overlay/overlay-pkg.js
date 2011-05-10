@@ -7,7 +7,7 @@ build time: ${build.time}
  * KISSY Overlay
  * @author: 玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
-KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component, AriaRender) {
+KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -18,8 +18,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component, AriaRender
         require("positionrender"),
         require("loadingrender"),
         UA['ie'] == 6 ? require("shimrender") : null,
-        require("maskrender"),
-        AriaRender
+        require("maskrender")
     ], {
 
         renderUI:function() {
@@ -35,7 +34,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component, AriaRender
         }
     });
 }, {
-    requires: ["ua","uibase","component","./ariarender"]
+    requires: ["ua","uibase","component"]
 });
 
 /**
@@ -99,7 +98,7 @@ KISSY.add("overlay/ariarender", function(S) {
                 }
             }
         }
-        
+
         return re;
     }
 
@@ -116,7 +115,7 @@ KISSY.add("overlay/ariarender", function(S) {
         // Handles the keyboard events for accessibility reasons
 
         var node = evt.target; // get the target node of the keypress event
-        
+
         // find the first and last tab focusable items in the hierarchy of the dialog container node
         // do this every time if the items may be added / removed from the the dialog may change visibility or state
         var focusItemsArray = getFocusItems(dialogContainerNode);
@@ -156,9 +155,15 @@ KISSY.add("overlay/ariarender", function(S) {
     Aria.prototype = {
 
         __renderUI:function() {
-            var el = this.get("el");
-            el.attr("role", "dialog");
-            el.attr("tabindex", 0);
+            var self = this,el = self.get("el"),header = self.get("header");
+            if (self.get("aria")) {
+                el.attr("role", "dialog");
+                el.attr("tabindex", 0);
+                if (!header.attr("id")) {
+                    header.attr("id", S.guid("ks-dialog-header"));
+                }
+                el.attr("aria-labelledby", header.attr("id"));
+            }
         },
 
         __bindUI:function() {
@@ -210,29 +215,30 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Aria)
         require("loading"),
         require("align"),
         require("resize"),
-        require("mask"),Aria]);
+        require("mask")]);
 
     Overlay.DefaultRender = OverlayRender;
 
     return Overlay;
 }, {
-    requires:['uibase','component','./overlayrender','./aria']
-});KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender) {
+    requires:['uibase','component','./overlayrender']
+});KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender) {
     function require(s) {
         return S.require("uibase/" + s);
     }
 
     return UIBase.create(OverlayRender, [
         require("stdmodrender"),
-        require("closerender")
+        require("closerender"),
+        AriaRender
     ]);
 }, {
-    requires:['uibase','./overlayrender']
+    requires:['uibase','./overlayrender','./ariarender']
 });/**
  * KISSY.Dialog
  * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
+KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -242,7 +248,8 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
         require("stdmod"),
         require("close"),
         require("drag"),
-        require("constrain")
+        require("constrain"),
+        Aria
     ], {
         renderUI:function() {
             var self = this;
@@ -257,7 +264,7 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
     return Dialog;
 
 }, {
-    requires:[ "overlay/overlay","uibase",'overlay/dialogrender']
+    requires:[ "overlay/overlay","uibase",'overlay/dialogrender','./aria']
 });
 
 /**
