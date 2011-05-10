@@ -19,6 +19,7 @@
             <path location="lazyload.js" />
             <path location="slide.js" />
             <path location="tabs.js" />
+            <path location="tabs-aria.js" />
             <path location="../switchable.js" />
         </concat>
     </target>

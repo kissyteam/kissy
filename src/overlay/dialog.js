@@ -2,7 +2,7 @@
  * KISSY.Dialog
  * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
+KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -12,7 +12,8 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
         require("stdmod"),
         require("close"),
         require("drag"),
-        require("constrain")
+        require("constrain"),
+        Aria
     ], {
         renderUI:function() {
             var self = this;
@@ -27,7 +28,7 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
     return Dialog;
 
 }, {
-    requires:[ "overlay/overlay","uibase",'overlay/dialogrender']
+    requires:[ "overlay/overlay","uibase",'overlay/dialogrender','./aria']
 });
 
 /**

@@ -13,11 +13,11 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Aria)
         require("loading"),
         require("align"),
         require("resize"),
-        require("mask"),Aria]);
+        require("mask")]);
 
     Overlay.DefaultRender = OverlayRender;
 
     return Overlay;
 }, {
-    requires:['uibase','component','./overlayrender','./aria']
+    requires:['uibase','component','./overlayrender']
 });

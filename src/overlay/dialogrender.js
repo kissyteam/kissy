@@ -1,4 +1,4 @@
-KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender) {
+KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender,AriaRender) {
     function require(s) {
         return S.require("uibase/" + s);
     }
@@ -8,5 +8,5 @@ KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender) {
         require("closerender")
     ]);
 }, {
-    requires:['uibase','./overlayrender']
+    requires:['uibase','./overlayrender','./ariarender']
 });

@@ -19,6 +19,7 @@
 <script src="lazyload.js"></script>
 <script src="slide.js"></script>
 <script src="tabs.js"></script>
+<script src="tabs-aria.js"></script>
 <script src="../switchable.js"></script>
 <script>
     var S = KISSY;
@@ -167,7 +168,9 @@
         var Tabs = S.Tabs
 
         S.ready(function(S) {
-            var tabs = new Tabs('#demo1');
+            var tabs = new Tabs('#demo1',{
+                // aria:false 默认 true，支持 aria
+            });
 
             tabs.on('beforeSwitch', function(ev) {
                 var index = ev.toIndex;

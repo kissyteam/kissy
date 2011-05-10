@@ -56,7 +56,7 @@ KISSY.add("overlay/ariarender", function(S) {
                 }
             }
         }
-        
+
         return re;
     }
 
@@ -73,7 +73,7 @@ KISSY.add("overlay/ariarender", function(S) {
         // Handles the keyboard events for accessibility reasons
 
         var node = evt.target; // get the target node of the keypress event
-        
+
         // find the first and last tab focusable items in the hierarchy of the dialog container node
         // do this every time if the items may be added / removed from the the dialog may change visibility or state
         var focusItemsArray = getFocusItems(dialogContainerNode);
@@ -113,9 +113,15 @@ KISSY.add("overlay/ariarender", function(S) {
     Aria.prototype = {
 
         __renderUI:function() {
-            var el = this.get("el");
-            el.attr("role", "dialog");
-            el.attr("tabindex", 0);
+            var self = this,el = self.get("el"),header = self.get("header");
+            if (self.get("aria")) {
+                el.attr("role", "dialog");
+                el.attr("tabindex", 0);
+                if (!header.attr("id")) {
+                    header.attr("id", S.guid("ks-dialog-header"));
+                }
+                el.attr("aria-labelledby", header.attr("id"));
+            }
         },
 
         __bindUI:function() {

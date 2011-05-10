@@ -37,8 +37,13 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
                 config.markupType = 2;
             }
         }
-        config = S.merge(Switchable.Config, config);
 
+        // init config by hierarchy
+        var host = this.constructor;
+        while (host) {
+            config = S.merge(host.Config, config);
+            host = host.superclass ? host.superclass.constructor : null;
+        }
         /**
          * the container of widget
          * @type HTMLElement
@@ -143,12 +148,19 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
                 self._bindTriggers();
             }
 
-            // init plugins
-            S.each(Switchable.Plugins, function(plugin) {
-                if (plugin.init) {
-                    plugin.init(self);
-                }
-            });
+            // init plugins by Hierarchy
+
+            var pluginHost = this.constructor;
+            while (pluginHost) {
+                S.each(pluginHost.Plugins, function(plugin) {
+                    if (plugin.init) {
+                        plugin.init(self);
+                    }
+                });
+                pluginHost = pluginHost.superclass ?
+                    pluginHost.superclass.constructor :
+                    null;
+            }
 
             self.fire(EVENT_INIT);
         },
@@ -385,6 +397,9 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
 /**
  * NOTES:
+ * 承玉：2011.05.10
+ *   - init plugins by Hierarchy
+ *   - init config by hierarchy
  *
  * 2010.07
  *  - 重构，去掉对 YUI2-Animation 的依赖

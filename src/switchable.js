@@ -20,5 +20,6 @@ KISSY.add("switchable", function(S, Switchable, Accordion, autoplay, autorender,
         "switchable/effect",
         "switchable/lazyload",
         "switchable/slide",
-        "switchable/tabs"]
+        "switchable/tabs",
+        "switchable/tabs-aria"]
 });
