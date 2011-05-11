@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110509231248',
+        buildTime:'20110511123249',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1534,15 +1534,17 @@ build time: ${build.time}
  * build full path from relative path and base path
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function(S, loader, utils) {
-    if("require" in this) return;
+(function(S, loader, utils, data) {
+    if ("require" in this) return;
     S.mix(loader, {
         __buildPath: function(mod, base) {
             var self = this,
                 Config = self.Config;
 
             build("fullpath", "path");
-            build("cssfullpath", "csspath");
+            if (mod["cssfullpath"] !== data.LOADED) {
+                build("cssfullpath", "csspath");
+            }
 
             function build(fullpath, path) {
                 if (!mod[fullpath] && mod[path]) {
@@ -1564,7 +1566,7 @@ build time: ${build.time}
             }
         }
     });
-})(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
+})(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
  * logic for config.global , mainly for kissy.editor
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
@@ -2379,7 +2381,7 @@ build time: ${build.time}
         ready: function(fn) {
             // Attach the listeners
             if (!readyBound) {
-                this._bindReady();
+                _bindReady();
             }
 
             // If the DOM is already ready
@@ -2392,103 +2394,6 @@ build time: ${build.time}
             }
 
             return this;
-        },
-
-        /**
-         * Binds ready events.
-         */
-        _bindReady: function() {
-            var self = this,
-                doScroll = doc.documentElement.doScroll,
-                eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
-                COMPLETE = 'complete',
-                fire = function() {
-                    self._fireReady();
-                };
-
-            // Set to true once it runs
-            readyBound = true;
-
-            // Catch cases where ready() is called after the
-            // browser event has already occurred.
-            if (doc.readyState === COMPLETE) {
-                return fire();
-            }
-
-            // w3c mode
-            if (doc.addEventListener) {
-                function domReady() {
-                    doc.removeEventListener(eventType, domReady, false);
-                    fire();
-                }
-
-                doc.addEventListener(eventType, domReady, false);
-
-                // A fallback to window.onload, that will always work
-                win.addEventListener('load', fire, false);
-            }
-            // IE event model is used
-            else {
-                function stateChange() {
-                    if (doc.readyState === COMPLETE) {
-                        doc.detachEvent(eventType, stateChange);
-                        fire();
-                    }
-                }
-
-                // ensure firing before onload, maybe late but safe also for iframes
-                doc.attachEvent(eventType, stateChange);
-
-                // A fallback to window.onload, that will always work.
-                win.attachEvent('onload', fire);
-
-                // If IE and not a frame
-                // continually check to see if the document is ready
-                var notframe = false;
-
-                try {
-                    notframe = win['frameElement'] == null;
-                } catch(e) {
-                }
-
-                if (doScroll && notframe) {
-                    function readyScroll() {
-                        try {
-                            // Ref: http://javascript.nwbox.com/IEContentLoaded/
-                            doScroll('left');
-                            fire();
-                        } catch(ex) {
-                            setTimeout(readyScroll, 1);
-                        }
-                    }
-
-                    readyScroll();
-                }
-            }
-        },
-
-        /**
-         * Executes functions bound to ready event.
-         */
-        _fireReady: function() {
-            if (isReady) {
-                return;
-            }
-
-            // Remember that the DOM is ready
-            isReady = true;
-
-            // If there are functions bound, to execute
-            if (readyList) {
-                // Execute all of them
-                var fn, i = 0;
-                while (fn = readyList[i++]) {
-                    fn.call(win, this);
-                }
-
-                // Reset the list of functions
-                readyList = null;
-            }
         },
 
         /**
@@ -2511,6 +2416,103 @@ build time: ${build.time}
         }
     });
 
+
+    /**
+     * Binds ready events.
+     */
+    function _bindReady() {
+        var doScroll = doc.documentElement.doScroll,
+            eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
+            COMPLETE = 'complete',
+            fire = function() {
+                _fireReady();
+            };
+
+        // Set to true once it runs
+        readyBound = true;
+
+        // Catch cases where ready() is called after the
+        // browser event has already occurred.
+        if (doc.readyState === COMPLETE) {
+            return fire();
+        }
+
+        // w3c mode
+        if (doc.addEventListener) {
+            function domReady() {
+                doc.removeEventListener(eventType, domReady, false);
+                fire();
+            }
+
+            doc.addEventListener(eventType, domReady, false);
+
+            // A fallback to window.onload, that will always work
+            win.addEventListener('load', fire, false);
+        }
+        // IE event model is used
+        else {
+            function stateChange() {
+                if (doc.readyState === COMPLETE) {
+                    doc.detachEvent(eventType, stateChange);
+                    fire();
+                }
+            }
+
+            // ensure firing before onload, maybe late but safe also for iframes
+            doc.attachEvent(eventType, stateChange);
+
+            // A fallback to window.onload, that will always work.
+            win.attachEvent('onload', fire);
+
+            // If IE and not a frame
+            // continually check to see if the document is ready
+            var notframe = false;
+
+            try {
+                notframe = win['frameElement'] == null;
+            } catch(e) {
+            }
+
+            if (doScroll && notframe) {
+                function readyScroll() {
+                    try {
+                        // Ref: http://javascript.nwbox.com/IEContentLoaded/
+                        doScroll('left');
+                        fire();
+                    } catch(ex) {
+                        setTimeout(readyScroll, 50);
+                    }
+                }
+
+                readyScroll();
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Executes functions bound to ready event.
+     */
+    function _fireReady() {
+        if (isReady) {
+            return;
+        }
+
+        // Remember that the DOM is ready
+        isReady = true;
+
+        // If there are functions bound, to execute
+        if (readyList) {
+            // Execute all of them
+            var fn, i = 0;
+            while (fn = readyList[i++]) {
+                fn.call(win, S);
+            }
+
+            // Reset the list of functions
+            readyList = null;
+        }
+    }
 
     // If url contains '?ks-debug', debug mode will turn on automatically.
     if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
@@ -4245,7 +4247,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         toggle: function(selector) {
             DOM.query(selector).each(function(elem) {
                 if (elem) {
-                    if (DOM.css[elem,DISPLAY] === NONE) {
+                    if (DOM.css(elem, DISPLAY) === NONE) {
                         DOM.show(elem);
                     } else {
                         DOM.hide(elem);
@@ -5401,7 +5403,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 // 和 jQuery 逻辑保持一致
                 // return false 等价 preventDefault + stopProgation
                 if (ret !== undefined) {
-                    event.result = ret;
+                    // no use
+                    // event.result = ret;
                     if (ret === false) {
                         event.halt();
                     }

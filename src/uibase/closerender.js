@@ -43,7 +43,8 @@ KISSY.add("uibase/closerender", function(S) {
             if (!closeBtn &&
                 el) {
                 closeBtn = new Node("<a " +
-                    "href='#' " +
+                    "tabindex='0' " +
+                    "role='button' " +
                     "class='" + this.get("prefixCls") +CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
                     this.get("prefixCls") +CLS_PREFIX + "close-x" +

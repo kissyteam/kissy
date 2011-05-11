@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110509231248',
+        buildTime:'20110511123249',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1347,15 +1347,17 @@ build time: ${build.time}
  * build full path from relative path and base path
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function(S, loader, utils) {
-    if("require" in this) return;
+(function(S, loader, utils, data) {
+    if ("require" in this) return;
     S.mix(loader, {
         __buildPath: function(mod, base) {
             var self = this,
                 Config = self.Config;
 
             build("fullpath", "path");
-            build("cssfullpath", "csspath");
+            if (mod["cssfullpath"] !== data.LOADED) {
+                build("cssfullpath", "csspath");
+            }
 
             function build(fullpath, path) {
                 if (!mod[fullpath] && mod[path]) {
@@ -1377,7 +1379,7 @@ build time: ${build.time}
             }
         }
     });
-})(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
+})(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
  * logic for config.global , mainly for kissy.editor
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
@@ -2192,7 +2194,7 @@ build time: ${build.time}
         ready: function(fn) {
             // Attach the listeners
             if (!readyBound) {
-                this._bindReady();
+                _bindReady();
             }
 
             // If the DOM is already ready
@@ -2205,103 +2207,6 @@ build time: ${build.time}
             }
 
             return this;
-        },
-
-        /**
-         * Binds ready events.
-         */
-        _bindReady: function() {
-            var self = this,
-                doScroll = doc.documentElement.doScroll,
-                eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
-                COMPLETE = 'complete',
-                fire = function() {
-                    self._fireReady();
-                };
-
-            // Set to true once it runs
-            readyBound = true;
-
-            // Catch cases where ready() is called after the
-            // browser event has already occurred.
-            if (doc.readyState === COMPLETE) {
-                return fire();
-            }
-
-            // w3c mode
-            if (doc.addEventListener) {
-                function domReady() {
-                    doc.removeEventListener(eventType, domReady, false);
-                    fire();
-                }
-
-                doc.addEventListener(eventType, domReady, false);
-
-                // A fallback to window.onload, that will always work
-                win.addEventListener('load', fire, false);
-            }
-            // IE event model is used
-            else {
-                function stateChange() {
-                    if (doc.readyState === COMPLETE) {
-                        doc.detachEvent(eventType, stateChange);
-                        fire();
-                    }
-                }
-
-                // ensure firing before onload, maybe late but safe also for iframes
-                doc.attachEvent(eventType, stateChange);
-
-                // A fallback to window.onload, that will always work.
-                win.attachEvent('onload', fire);
-
-                // If IE and not a frame
-                // continually check to see if the document is ready
-                var notframe = false;
-
-                try {
-                    notframe = win['frameElement'] == null;
-                } catch(e) {
-                }
-
-                if (doScroll && notframe) {
-                    function readyScroll() {
-                        try {
-                            // Ref: http://javascript.nwbox.com/IEContentLoaded/
-                            doScroll('left');
-                            fire();
-                        } catch(ex) {
-                            setTimeout(readyScroll, 1);
-                        }
-                    }
-
-                    readyScroll();
-                }
-            }
-        },
-
-        /**
-         * Executes functions bound to ready event.
-         */
-        _fireReady: function() {
-            if (isReady) {
-                return;
-            }
-
-            // Remember that the DOM is ready
-            isReady = true;
-
-            // If there are functions bound, to execute
-            if (readyList) {
-                // Execute all of them
-                var fn, i = 0;
-                while (fn = readyList[i++]) {
-                    fn.call(win, this);
-                }
-
-                // Reset the list of functions
-                readyList = null;
-            }
         },
 
         /**
@@ -2324,6 +2229,103 @@ build time: ${build.time}
         }
     });
 
+
+    /**
+     * Binds ready events.
+     */
+    function _bindReady() {
+        var doScroll = doc.documentElement.doScroll,
+            eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
+            COMPLETE = 'complete',
+            fire = function() {
+                _fireReady();
+            };
+
+        // Set to true once it runs
+        readyBound = true;
+
+        // Catch cases where ready() is called after the
+        // browser event has already occurred.
+        if (doc.readyState === COMPLETE) {
+            return fire();
+        }
+
+        // w3c mode
+        if (doc.addEventListener) {
+            function domReady() {
+                doc.removeEventListener(eventType, domReady, false);
+                fire();
+            }
+
+            doc.addEventListener(eventType, domReady, false);
+
+            // A fallback to window.onload, that will always work
+            win.addEventListener('load', fire, false);
+        }
+        // IE event model is used
+        else {
+            function stateChange() {
+                if (doc.readyState === COMPLETE) {
+                    doc.detachEvent(eventType, stateChange);
+                    fire();
+                }
+            }
+
+            // ensure firing before onload, maybe late but safe also for iframes
+            doc.attachEvent(eventType, stateChange);
+
+            // A fallback to window.onload, that will always work.
+            win.attachEvent('onload', fire);
+
+            // If IE and not a frame
+            // continually check to see if the document is ready
+            var notframe = false;
+
+            try {
+                notframe = win['frameElement'] == null;
+            } catch(e) {
+            }
+
+            if (doScroll && notframe) {
+                function readyScroll() {
+                    try {
+                        // Ref: http://javascript.nwbox.com/IEContentLoaded/
+                        doScroll('left');
+                        fire();
+                    } catch(ex) {
+                        setTimeout(readyScroll, 50);
+                    }
+                }
+
+                readyScroll();
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Executes functions bound to ready event.
+     */
+    function _fireReady() {
+        if (isReady) {
+            return;
+        }
+
+        // Remember that the DOM is ready
+        isReady = true;
+
+        // If there are functions bound, to execute
+        if (readyList) {
+            // Execute all of them
+            var fn, i = 0;
+            while (fn = readyList[i++]) {
+                fn.call(win, S);
+            }
+
+            // Reset the list of functions
+            readyList = null;
+        }
+    }
 
     // If url contains '?ks-debug', debug mode will turn on automatically.
     if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
@@ -4058,7 +4060,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         toggle: function(selector) {
             DOM.query(selector).each(function(elem) {
                 if (elem) {
-                    if (DOM.css[elem,DISPLAY] === NONE) {
+                    if (DOM.css(elem, DISPLAY) === NONE) {
                         DOM.show(elem);
                     } else {
                         DOM.hide(elem);
@@ -5214,7 +5216,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 // 和 jQuery 逻辑保持一致
                 // return false 等价 preventDefault + stopProgation
                 if (ret !== undefined) {
-                    event.result = ret;
+                    // no use
+                    // event.result = ret;
                     if (ret === false) {
                         event.halt();
                     }
@@ -13851,8 +13854,13 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
                 config.markupType = 2;
             }
         }
-        config = S.merge(Switchable.Config, config);
 
+        // init config by hierarchy
+        var host = this.constructor;
+        while (host) {
+            config = S.merge(host.Config, config);
+            host = host.superclass ? host.superclass.constructor : null;
+        }
         /**
          * the container of widget
          * @type HTMLElement
@@ -13957,12 +13965,19 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
                 self._bindTriggers();
             }
 
-            // init plugins
-            S.each(Switchable.Plugins, function(plugin) {
-                if (plugin.init) {
-                    plugin.init(self);
-                }
-            });
+            // init plugins by Hierarchy
+
+            var pluginHost = this.constructor;
+            while (pluginHost) {
+                S.each(pluginHost.Plugins, function(plugin) {
+                    if (plugin.init) {
+                        plugin.init(self);
+                    }
+                });
+                pluginHost = pluginHost.superclass ?
+                    pluginHost.superclass.constructor :
+                    null;
+            }
 
             self.fire(EVENT_INIT);
         },
@@ -14199,6 +14214,9 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
 /**
  * NOTES:
+ * 承玉：2011.05.10
+ *   - init plugins by Hierarchy
+ *   - init config by hierarchy
  *
  * 2010.07
  *  - 重构，去掉对 YUI2-Animation 的依赖
@@ -15029,9 +15047,34 @@ KISSY.add('switchable/slide', function(S, Switchable) {
 }, { requires:["switchable/base"]});
 /**
  * Tabs Widget
- * @creator  玉伯<lifesinger@gmail.com>,yiminghe@gmail.com
+ * @creator  玉伯<lifesinger@gmail.com>
  */
 KISSY.add('switchable/tabs', function(S, Switchable) {
+    function Tabs(container, config) {
+        var self = this;
+
+        // factory or constructor
+        if (!(self instanceof Tabs)) {
+            return new Tabs(container, config);
+        }
+
+        Tabs.superclass.constructor.call(self, container, config);
+        return 0;
+    }
+
+    S.extend(Tabs, Switchable);
+
+    S.Tabs = Tabs;
+    Tabs.Config = {};
+    Tabs.Plugins = [];
+    return Tabs;
+}, {
+    requires:["./base"]
+});/**
+ * Tabs aria support
+ * @creator yiminghe@gmail.com
+ */
+KISSY.add('switchable/tabs-aria', function(S, Tabs) {
 
     var Event = S.Event,DOM = S.DOM;
     var KEY_PAGEUP = 33;
@@ -15052,36 +15095,18 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
 
-    /**
-     * Tabs Class
-     * @constructor
-     */
-    function Tabs(container, config) {
-        var self = this;
+    S.mix(Tabs.Config, {
+        aria:true
+    });
 
-        // factory or constructor
-        if (!(self instanceof Tabs)) {
-            return new Tabs(container, config);
-        }
-
-        Tabs.superclass.constructor.call(self, container, config);
-        return 0;
-    }
-
-    function setTabIndex(root, v) {
-        root.tabIndex = v;
-        DOM.query("*", root).each(function(n) {
-            n.tabIndex = v;
-        });
-    }
-
-    S.extend(Tabs, Switchable, {
-        _init:function() {
-            var self = this;
-            Tabs.superclass._init.call(this);
+    Tabs.Plugins.push({
+        name:"aria",
+        init:function(self) {
+            if (!self.config.aria) return;
             var activeIndex = self.activeIndex;
             self.lastActiveIndex = activeIndex;
-            var triggers = self.triggers,panels = self.panels;
+            var triggers = self.triggers,
+                panels = self.panels;
             var i = 0;
             S.each(triggers, function(trigger) {
                 trigger.setAttribute("role", "tab");
@@ -15093,167 +15118,179 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
             });
             i = 0;
             S.each(panels, function(panel) {
+                var t=triggers[i];
                 panel.setAttribute("role", "tabpanel");
                 panel.setAttribute("aria-hidden", i == activeIndex ? "false" : "true");
-                panel.setAttribute("aria-labelledby", triggers[i].id);
+                panel.setAttribute("aria-labelledby", t.id);
                 i++;
             });
 
-            self.on("switch", self._tabSwitch, self);
+            self.on("switch", _tabSwitch, self);
             var container = self.container;
 
-            Event.on(container, "keydown", self._tabKeydown, self);
+            Event.on(container, "keydown", _tabKeydown, self);
             /**
              * prevent firefox native tab switch
              */
-            Event.on(container, "keypress", self._tabKeypress, self);
+            Event.on(container, "keypress", _tabKeypress, self);
 
-        },
-
-        _currentTabFromEvent:function(t) {
-            var triggers = this.triggers,trigger;
-            S.each(triggers, function(ct) {
-                if (ct == t || DOM.contains(ct, t)) {
-                    trigger = ct;
-                }
-            });
-            return trigger;
-        },
-
-        _currentPanelFromEvent:function(t) {
-            var panels = this.panels,panel;
-            S.each(panels, function(ct) {
-                if (ct == t || DOM.contains(ct, t)) {
-                    panel = ct;
-                }
-            });
-            return panel;
-        },
-        _tabKeypress:function(e) {
-
-            switch (e.keyCode) {
-
-                case KEY_PAGEUP:
-                case KEY_PAGEDOWN:
-                    if (e.ctrlKey && !e.altKey && !e.shiftKey) {
-                        e.halt();
-                    } // endif
-                    break;
-
-                case KEY_TAB:
-                    if (e.ctrlKey && !e.altKey) {
-                        e.halt();
-                    } // endif
-                    break;
-
-            }
-        },
-
-        /**
-         * Keyboard commands for the Tab Panel
-         * @param e
-         */
-        _tabKeydown:function(e) {
-            var t = e.target,self = this;
-            var triggers = self.triggers;
-
-            // Save information about a modifier key being pressed
-            // May want to ignore keyboard events that include modifier keys
-            var no_modifier_pressed_flag = !e.ctrlKey && !e.shiftKey && !e.altKey;
-            var control_modifier_pressed_flag = e.ctrlKey && !e.shiftKey && !e.altKey;
-
-            switch (e.keyCode) {
-
-                case KEY_LEFT:
-                case KEY_UP:
-                    if (self._currentTabFromEvent(t)
-                    // 争渡读屏器阻止了上下左右键
-                    //&& no_modifier_pressed_flag
-                        ) {
-                        self.prev();
-                        e.halt();
-                    } // endif
-                    break;
-
-                case KEY_RIGHT:
-                case KEY_DOWN:
-                    if (self._currentTabFromEvent(t)
-                    //&& no_modifier_pressed_flag
-                        ) {
-                        self.next();
-                        e.halt();
-                    } // endif
-                    break;
-
-                case KEY_PAGEDOWN:
-
-                    if (control_modifier_pressed_flag) {
-                        S.log("租借");
-                        e.halt();
-                        e.preventDefault();
-                        self.next();
-
-                    }
-                    break;
-
-                case KEY_PAGEUP:
-                    if (control_modifier_pressed_flag) {
-                        e.halt();
-                        self.prev();
-
-                    }
-                    break;
-
-                case KEY_HOME:
-                    if (no_modifier_pressed_flag) {
-                        self.switchTo(0);
-                        e.halt();
-                    }
-                    break;
-                case KEY_END:
-                    if (no_modifier_pressed_flag) {
-                        self.switchTo(triggers.length - 1);
-                        e.halt();
-                    }
-
-                    break;
-                case KEY_TAB:
-                    if (e.ctrlKey && !e.altKey) {
-                        e.halt();
-                        if (e.shiftKey)
-                            self.prev();
-                        else
-                            self.next();
-
-                    }
-                    break;
-            }
-        },
-
-        _tabSwitch:function(ev) {
-            var self = this;
-            var lastActiveIndex = self.lastActiveIndex;
-            var activeIndex = ev.currentIndex;
-
-            if (lastActiveIndex === undefined || lastActiveIndex == activeIndex) return;
-
-            var lastTrigger = self.triggers[lastActiveIndex];
-            var trigger = self.triggers[activeIndex];
-            var lastPanel = self.panels[lastActiveIndex];
-            var panel = self.panels[activeIndex];
-            setTabIndex(lastTrigger, "-1");
-            setTabIndex(trigger, "0");
-            trigger.focus();
-            lastPanel.setAttribute("aria-hidden", "true");
-            panel.setAttribute("aria-hidden", "false");
-            self.lastActiveIndex = activeIndex;
         }
     });
-    return Tabs;
+
+
+    function setTabIndex(root, v) {
+        root.tabIndex = v;
+        DOM.query("*", root).each(function(n) {
+            n.tabIndex = v;
+        });
+    }
+
+
+    function _currentTabFromEvent(t) {
+        var triggers = this.triggers,trigger;
+        S.each(triggers, function(ct) {
+            if (ct == t || DOM.contains(ct, t)) {
+                trigger = ct;
+            }
+        });
+        return trigger;
+    }
+
+//
+//    function _currentPanelFromEvent(t) {
+//        var panels = this.panels,panel;
+//        S.each(panels, function(ct) {
+//            if (ct == t || DOM.contains(ct, t)) {
+//                panel = ct;
+//            }
+//        });
+//        return panel;
+//    }
+
+    function _tabKeypress(e) {
+
+        switch (e.keyCode) {
+
+            case KEY_PAGEUP:
+            case KEY_PAGEDOWN:
+                if (e.ctrlKey && !e.altKey && !e.shiftKey) {
+                    e.halt();
+                } // endif
+                break;
+
+            case KEY_TAB:
+                if (e.ctrlKey && !e.altKey) {
+                    e.halt();
+                } // endif
+                break;
+
+        }
+    }
+
+    /**
+     * Keyboard commands for the Tab Panel
+     * @param e
+     */
+    function _tabKeydown(e) {
+        var t = e.target,self = this;
+        var triggers = self.triggers;
+
+        // Save information about a modifier key being pressed
+        // May want to ignore keyboard events that include modifier keys
+        var no_modifier_pressed_flag = !e.ctrlKey && !e.shiftKey && !e.altKey;
+        var control_modifier_pressed_flag = e.ctrlKey && !e.shiftKey && !e.altKey;
+
+        switch (e.keyCode) {
+
+            case KEY_LEFT:
+            case KEY_UP:
+                if (_currentTabFromEvent.call(self, t)
+                // 争渡读屏器阻止了上下左右键
+                //&& no_modifier_pressed_flag
+                    ) {
+                    self.prev();
+                    e.halt();
+                } // endif
+                break;
+
+            case KEY_RIGHT:
+            case KEY_DOWN:
+                if (_currentTabFromEvent.call(self, t)
+                //&& no_modifier_pressed_flag
+                    ) {
+                    self.next();
+                    e.halt();
+                } // endif
+                break;
+
+            case KEY_PAGEDOWN:
+
+                if (control_modifier_pressed_flag) {
+                    S.log("租借");
+                    e.halt();
+                    e.preventDefault();
+                    self.next();
+
+                }
+                break;
+
+            case KEY_PAGEUP:
+                if (control_modifier_pressed_flag) {
+                    e.halt();
+                    self.prev();
+
+                }
+                break;
+
+            case KEY_HOME:
+                if (no_modifier_pressed_flag) {
+                    self.switchTo(0);
+                    e.halt();
+                }
+                break;
+            case KEY_END:
+                if (no_modifier_pressed_flag) {
+                    self.switchTo(triggers.length - 1);
+                    e.halt();
+                }
+
+                break;
+            case KEY_TAB:
+                if (e.ctrlKey && !e.altKey) {
+                    e.halt();
+                    if (e.shiftKey)
+                        self.prev();
+                    else
+                        self.next();
+
+                }
+                break;
+        }
+    }
+
+    function _tabSwitch(ev) {
+        var self = this;
+        var lastActiveIndex = self.lastActiveIndex;
+        var activeIndex = ev.currentIndex;
+
+        if (lastActiveIndex === undefined || lastActiveIndex == activeIndex) return;
+
+        var lastTrigger = self.triggers[lastActiveIndex];
+        var trigger = self.triggers[activeIndex];
+        var lastPanel = self.panels[lastActiveIndex];
+        var panel = self.panels[activeIndex];
+        setTabIndex(lastTrigger, "-1");
+        setTabIndex(trigger, "0");
+        trigger.focus();
+        lastPanel.setAttribute("aria-hidden", "true");
+        panel.setAttribute("aria-hidden", "false");
+        self.lastActiveIndex = activeIndex;
+    }
+
 
 },
 {
-    requires:["switchable/base"]
+    requires:["./tabs"]
 });
 
 /**
@@ -15291,7 +15328,8 @@ KISSY.add("switchable", function(S, Switchable, Accordion, autoplay, autorender,
         "switchable/effect",
         "switchable/lazyload",
         "switchable/slide",
-        "switchable/tabs"]
+        "switchable/tabs",
+        "switchable/tabs-aria"]
 });
 /*
 Copyright 2011, KISSY UI Library v1.20dev
@@ -15336,15 +15374,175 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
  * 2010-11-09 2010-11-10 承玉<yiminghe@gmail.com>重构，attribute-base-uibase-Overlay ，采用 UIBase.create
  */
 /**
+ * http://www.w3.org/TR/wai-aria-practices/#trap_focus
+ * @author:yiminghe@gmail.com
+ */
+KISSY.add("overlay/ariarender", function(S) {
+
+
+    function Aria() {
+
+    }
+
+//    Aria.ATTRS={
+//      aria:{
+//          value:false
+//      }
+//    };
+
+
+    function name(n) {
+        return n[0].nodeName.toLowerCase();
+    }
+
+    function getFocusItems(el) {
+        var els = el.all("*");
+        var re = [];
+
+        for (var ei = 0; ei < els.length; ei++) {
+            var n = S.one(els[ei]);
+            var reserved = false;
+            if (-1 == n[0].tabIndex) {
+                continue;
+            }
+            if (name(n) == "a") {
+                reserved = true;
+            } else if (name(n) == 'input' && ! n[0].disabled) {
+                reserved = true;
+            } else
+            // 其他元素必须设 0
+            if (n.hasAttr("tabindex") && n[0].tabIndex == 0) {
+                reserved = true;
+            }
+            if (reserved) {
+                var nIndex = n[0].tabIndex || 0;
+
+                for (var i = 0; i < re.length; i++) {
+                    var r = re[i],rIndex = r[0].tabIndex || 0;
+                    if (rIndex > nIndex) {
+                        //大的在后面
+                        re.splice(i, 0, n);
+                        break;
+                    }
+                }
+
+                if (i == re.length) {
+                    re.push(n);
+                }
+            }
+        }
+
+        return re;
+    }
+
+    var KEY_TAB = 9;
+
+    function _onKey(/*Normalized Event*/ evt) {
+
+
+        var self = this,
+            keyCode = evt.keyCode,
+            dialogContainerNode = self.get("el");
+        if (keyCode != KEY_TAB) return;
+        // summary:
+        // Handles the keyboard events for accessibility reasons
+
+        var node = evt.target; // get the target node of the keypress event
+
+        // find the first and last tab focusable items in the hierarchy of the dialog container node
+        // do this every time if the items may be added / removed from the the dialog may change visibility or state
+        var focusItemsArray = getFocusItems(dialogContainerNode);
+        var firstFocusItem = focusItemsArray[0];
+        var lastFocusItem = focusItemsArray[focusItemsArray.length - 1];
+
+        // assumes firstFocusItem and lastFocusItem maintained by dialog object
+        var singleFocusItem = (firstFocusItem == lastFocusItem);
+
+        // see if we are shift-tabbing from first focusable item on dialog
+        if (node[0] == firstFocusItem[0] && evt.shiftKey) {
+            if (!singleFocusItem) {
+                lastFocusItem[0].focus(); // send focus to last item in dialog
+            }
+            evt.halt(); //stop the tab keypress event
+        }
+        // see if we are tabbing from the last focusable item
+        else if (node[0] == lastFocusItem[0] && !evt.shiftKey) {
+            if (!singleFocusItem) {
+                firstFocusItem[0].focus(); // send focus to first item in dialog
+            }
+            evt.halt(); //stop the tab keypress event
+        }
+        else {
+            // see if the key is for the dialog
+            if (node[0] == dialogContainerNode[0] ||
+                dialogContainerNode.contains(node)) {
+                return;
+            }
+        }
+        // this key is for the document window
+        // allow tabbing into the dialog
+        evt.halt();//stop the event if not a tab keypress
+    } // end of function
+
+
+    Aria.prototype = {
+
+        __renderUI:function() {
+            var self = this,el = self.get("el"),header = self.get("header");
+            if (self.get("aria")) {
+                el.attr("role", "dialog");
+                el.attr("tabindex", 0);
+                if (!header.attr("id")) {
+                    header.attr("id", S.guid("ks-dialog-header"));
+                }
+                el.attr("aria-labelledby", header.attr("id"));
+            }
+        },
+
+        __bindUI:function() {
+
+            var self = this;
+            if (self.get("aria")) {
+                var el = self.get("el"),lastActive;
+                self.on("afterVisibleChange", function(ev) {
+                    if (ev.newVal) {
+                        lastActive = document.activeElement;
+                        el[0].focus();
+                        el.on("keydown", _onKey, self);
+                    } else {
+                        el.detach("keydown", _onKey, self);
+                        lastActive && lastActive.focus();
+                    }
+                });
+            }
+        }
+    };
+
+    return Aria;
+});/**
+ * http://www.w3.org/TR/wai-aria-practices/#trap_focus
+ * @author:yiminghe@gmail.com
+ */
+KISSY.add("overlay/aria", function() {
+    function Aria() {
+    }
+
+    Aria.ATTRS = {
+        aria:{
+            view:true
+        }
+    };
+    return Aria;
+});/**
  * model and control for overlay
  * @author:yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender) {
+KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Aria) {
     function require(s) {
         return S.require("uibase/" + s);
     }
 
-    var Overlay= UIBase.create(Component.ModelControl, [
+    var Overlay = UIBase.create(Component.ModelControl, [
         require("contentbox"),
         require("position"),
         require("loading"),
@@ -15352,27 +15550,28 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender) {
         require("resize"),
         require("mask")]);
 
-    Overlay.DefaultRender=OverlayRender;
+    Overlay.DefaultRender = OverlayRender;
 
     return Overlay;
 }, {
     requires:['uibase','component','./overlayrender']
-});KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender) {
+});KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender) {
     function require(s) {
         return S.require("uibase/" + s);
     }
 
     return UIBase.create(OverlayRender, [
         require("stdmodrender"),
-        require("closerender")
+        require("closerender"),
+        AriaRender
     ]);
 }, {
-    requires:['uibase','./overlayrender']
+    requires:['uibase','./overlayrender','./ariarender']
 });/**
  * KISSY.Dialog
  * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
+KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -15382,7 +15581,8 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
         require("stdmod"),
         require("close"),
         require("drag"),
-        require("constrain")
+        require("constrain"),
+        Aria
     ], {
         renderUI:function() {
             var self = this;
@@ -15397,7 +15597,7 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender) {
     return Dialog;
 
 }, {
-    requires:[ "overlay/overlay","uibase",'overlay/dialogrender']
+    requires:[ "overlay/overlay","uibase",'overlay/dialogrender','./aria']
 });
 
 /**

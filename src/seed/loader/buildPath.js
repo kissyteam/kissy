@@ -2,15 +2,17 @@
  * build full path from relative path and base path
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function(S, loader, utils) {
-    if("require" in this) return;
+(function(S, loader, utils, data) {
+    if ("require" in this) return;
     S.mix(loader, {
         __buildPath: function(mod, base) {
             var self = this,
                 Config = self.Config;
 
             build("fullpath", "path");
-            build("cssfullpath", "csspath");
+            if (mod["cssfullpath"] !== data.LOADED) {
+                build("cssfullpath", "csspath");
+            }
 
             function build(fullpath, path) {
                 if (!mod[fullpath] && mod[path]) {
@@ -32,4 +34,4 @@
             }
         }
     });
-})(KISSY, KISSY.__loader, KISSY.__loaderUtils);
+})(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);

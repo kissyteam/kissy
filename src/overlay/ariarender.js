@@ -32,7 +32,8 @@ KISSY.add("overlay/ariarender", function(S) {
             }
             if (name(n) == "a") {
                 reserved = true;
-            } else if (name(n) == 'input' && ! n[0].disabled) {
+            } else if ((name(n) == 'input' || name(n) == 'button')
+                && ! n[0].disabled) {
                 reserved = true;
             } else
             // 其他元素必须设 0
@@ -128,13 +129,16 @@ KISSY.add("overlay/ariarender", function(S) {
 
             var self = this;
             if (self.get("aria")) {
-                var el = self.get("el"),lastActive;
+                var el = self.get("el"),
+                    lastActive;
                 self.on("afterVisibleChange", function(ev) {
                     if (ev.newVal) {
                         lastActive = document.activeElement;
                         el[0].focus();
+                        el.attr("aria-hidden","false");
                         el.on("keydown", _onKey, self);
                     } else {
+                        el.attr("aria-hidden","true");
                         el.detach("keydown", _onKey, self);
                         lastActive && lastActive.focus();
                     }

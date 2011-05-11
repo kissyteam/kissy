@@ -11,5 +11,20 @@ KISSY.add("overlay/aria", function() {
             view:true
         }
     };
+
+    Aria.prototype = {
+
+        __bindUI:function() {
+            var self = this,el = self.get("view").get("el");
+            if (self.get("aria")) {
+                el.on("keydown", function(e) {
+                    if (e.keyCode === 27) {
+                        self.hide();
+                        e.halt();
+                    }
+                });
+            }
+        }
+    };
     return Aria;
 });

@@ -1,5 +1,5 @@
-KISSY.add("switchable", function(S, Switchable, Accordion, autoplay, autorender, Carousel, circular, countdown, effect, lazyload, Slide, Tabs) {
-    S.Switchable = Switchable
+KISSY.add("switchable", function(S, Switchable, Accordion, AAria, autoplay, autorender, Carousel, circular, countdown, effect, lazyload, Slide, Tabs, TAria) {
+    S.Switchable = Switchable;
     var re = {
         Accordion:Accordion,
         Carousel:Carousel,
@@ -11,7 +11,8 @@ KISSY.add("switchable", function(S, Switchable, Accordion, autoplay, autorender,
     return Switchable;
 }, {
     requires:["switchable/base",
-        "switchable/accordion",
+        "switchable/accordion/base",
+        "switchable/accordion/aria",
         "switchable/autoplay",
         "switchable/autorender",
         "switchable/carousel",
@@ -20,6 +21,6 @@ KISSY.add("switchable", function(S, Switchable, Accordion, autoplay, autorender,
         "switchable/effect",
         "switchable/lazyload",
         "switchable/slide",
-        "switchable/tabs",
-        "switchable/tabs-aria"]
+        "switchable/tabs/base",
+        "switchable/tabs/aria"]
 });

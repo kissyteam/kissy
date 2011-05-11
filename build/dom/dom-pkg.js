@@ -1943,7 +1943,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         toggle: function(selector) {
             DOM.query(selector).each(function(elem) {
                 if (elem) {
-                    if (DOM.css[elem,DISPLAY] === NONE) {
+                    if (DOM.css(elem, DISPLAY) === NONE) {
                         DOM.show(elem);
                     } else {
                         DOM.hide(elem);

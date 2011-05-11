@@ -2,7 +2,7 @@
  * Tabs aria support
  * @creator yiminghe@gmail.com
  */
-KISSY.add('switchable/tabs-aria', function(S, Tabs) {
+KISSY.add('switchable/tabs/aria', function(S, Tabs) {
 
     var Event = S.Event,DOM = S.DOM;
     var KEY_PAGEUP = 33;
@@ -31,14 +31,14 @@ KISSY.add('switchable/tabs-aria', function(S, Tabs) {
         name:"aria",
         init:function(self) {
             if (!self.config.aria) return;
-            var activeIndex = self.activeIndex;
-            self.lastActiveIndex = activeIndex;
             var triggers = self.triggers,
                 panels = self.panels;
+            var container = self.container;
+            DOM.attr(container, "role", "tablist");
             var i = 0;
             S.each(triggers, function(trigger) {
                 trigger.setAttribute("role", "tab");
-                setTabIndex(trigger, i == activeIndex ? "0" : "-1");
+                setTabIndex(trigger, "-1");
                 if (!trigger.id) {
                     trigger.id = S.guid("ks-switchable");
                 }
@@ -46,15 +46,15 @@ KISSY.add('switchable/tabs-aria', function(S, Tabs) {
             });
             i = 0;
             S.each(panels, function(panel) {
-                var t=triggers[i];
+                var t = triggers[i];
                 panel.setAttribute("role", "tabpanel");
-                panel.setAttribute("aria-hidden", i == activeIndex ? "false" : "true");
+                panel.setAttribute("aria-hidden", "true");
                 panel.setAttribute("aria-labelledby", t.id);
                 i++;
             });
 
             self.on("switch", _tabSwitch, self);
-            var container = self.container;
+
 
             Event.on(container, "keydown", _tabKeydown, self);
             /**
@@ -69,7 +69,15 @@ KISSY.add('switchable/tabs-aria', function(S, Tabs) {
     function setTabIndex(root, v) {
         root.tabIndex = v;
         DOM.query("*", root).each(function(n) {
-            n.tabIndex = v;
+            // a 需要被禁止或者恢复
+            if (n.tabIndex != -1
+                &&
+                (n.nodeName.toLowerCase() == "a"
+                    || n.nodeName.toLowerCase() == "input"
+                    )
+                ) {
+                n.tabIndex = v;
+            }
         });
     }
 
@@ -83,17 +91,6 @@ KISSY.add('switchable/tabs-aria', function(S, Tabs) {
         });
         return trigger;
     }
-
-//
-//    function _currentPanelFromEvent(t) {
-//        var panels = this.panels,panel;
-//        S.each(panels, function(ct) {
-//            if (ct == t || DOM.contains(ct, t)) {
-//                panel = ct;
-//            }
-//        });
-//        return panel;
-//    }
 
     function _tabKeypress(e) {
 
@@ -154,7 +151,6 @@ KISSY.add('switchable/tabs-aria', function(S, Tabs) {
             case KEY_PAGEDOWN:
 
                 if (control_modifier_pressed_flag) {
-                    S.log("租借");
                     e.halt();
                     e.preventDefault();
                     self.next();
@@ -198,27 +194,36 @@ KISSY.add('switchable/tabs-aria', function(S, Tabs) {
 
     function _tabSwitch(ev) {
         var self = this;
-        var lastActiveIndex = self.lastActiveIndex;
+        // 上一个激活 tab
+        var lastActiveIndex = self.activeIndex;
+
+        // 当前激活 tab
         var activeIndex = ev.currentIndex;
 
-        if (lastActiveIndex === undefined || lastActiveIndex == activeIndex) return;
+        if (lastActiveIndex == activeIndex) return;
 
         var lastTrigger = self.triggers[lastActiveIndex];
         var trigger = self.triggers[activeIndex];
         var lastPanel = self.panels[lastActiveIndex];
         var panel = self.panels[activeIndex];
-        setTabIndex(lastTrigger, "-1");
+        if (lastTrigger) {
+            setTabIndex(lastTrigger, "-1");
+        }
         setTabIndex(trigger, "0");
-        trigger.focus();
-        lastPanel.setAttribute("aria-hidden", "true");
+        //初次不聚焦
+        if (lastActiveIndex != -1) {
+            trigger.focus();
+        }
+        if (lastPanel) {
+            lastPanel.setAttribute("aria-hidden", "true");
+        }
         panel.setAttribute("aria-hidden", "false");
-        self.lastActiveIndex = activeIndex;
     }
 
 
 },
 {
-    requires:["./tabs"]
+    requires:["./base"]
 });
 
 /**

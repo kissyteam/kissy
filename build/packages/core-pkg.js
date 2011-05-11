@@ -1713,7 +1713,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         toggle: function(selector) {
             DOM.query(selector).each(function(elem) {
                 if (elem) {
-                    if (DOM.css[elem,DISPLAY] === NONE) {
+                    if (DOM.css(elem, DISPLAY) === NONE) {
                         DOM.show(elem);
                     } else {
                         DOM.hide(elem);
@@ -2869,7 +2869,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 // 和 jQuery 逻辑保持一致
                 // return false 等价 preventDefault + stopProgation
                 if (ret !== undefined) {
-                    event.result = ret;
+                    // no use
+                    // event.result = ret;
                     if (ret === false) {
                         event.halt();
                     }

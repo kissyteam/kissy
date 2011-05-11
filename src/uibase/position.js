@@ -2,11 +2,7 @@
  * position and visible extension，可定位的隐藏层
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/position", function(S, DOM, Event) {
-
-
-    var doc = document ,
-        KEYDOWN = "keydown";
+KISSY.add("uibase/position", function(S) {
 
     function Position() {
     }
@@ -67,23 +63,9 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
 
             var self = this;
             this.get("view").set("visible", isVisible);
-            self[isVisible ? "_bindKey" : "_unbindKey" ]();
             self.fire(isVisible ? "show" : "hide");
         },
-        /**
-         * 显示/隐藏时绑定的事件
-         */
-        _bindKey: function() {
-            Event.on(doc, KEYDOWN, this._esc, this);
-        },
 
-        _unbindKey: function() {
-            Event.remove(doc, KEYDOWN, this._esc, this);
-        },
-
-        _esc: function(e) {
-            if (e.keyCode === 27) this.hide();
-        },
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
          * @param {number|Array.<number>} x
@@ -116,6 +98,4 @@ KISSY.add("uibase/position", function(S, DOM, Event) {
     };
 
     return Position;
-}, {
-    requires:["dom","event"]
 });

@@ -2,7 +2,7 @@
  * Tabs Widget
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable/tabs', function(S, Switchable) {
+KISSY.add('switchable/tabs/base', function(S, Switchable) {
     function Tabs(container, config) {
         var self = this;
 
@@ -17,10 +17,9 @@ KISSY.add('switchable/tabs', function(S, Switchable) {
 
     S.extend(Tabs, Switchable);
 
-    S.Tabs = Tabs;
     Tabs.Config = {};
     Tabs.Plugins = [];
     return Tabs;
 }, {
-    requires:["./base"]
+    requires:["../base"]
 });

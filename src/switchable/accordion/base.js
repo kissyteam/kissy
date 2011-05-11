@@ -1,16 +1,9 @@
 /**
  * Accordion Widget
- * @creator  沉鱼<fool2fish@gmail.com>
+ * @creator  沉鱼<fool2fish@gmail.com>,yiminghe@gmail.com
  */
-KISSY.add('switchable/accordion', function(S, DOM, Switchable) {
+KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
 
-    var DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
-
-        defaultConfig = {
-            markupType: 1,
-            triggerType: 'click',
-            multiple: false
-        };
 
     /**
      * Accordion Class
@@ -24,20 +17,20 @@ KISSY.add('switchable/accordion', function(S, DOM, Switchable) {
             return new Accordion(container, config);
         }
 
-        Accordion.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
-
-        // multiple 模式时，switchTrigger 在 switchView 时已经实现
-        if (self.config.multiple) {
-            self._switchTrigger = function() {
-            }
-        }
+        Accordion.superclass.constructor.apply(self, arguments);
         return 0;
     }
 
-    S.extend(Accordion, Switchable);
+    S.extend(Accordion, Switchable, {
 
-
-    S.augment(Accordion, {
+        _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
+            var self = this, cfg = self.config;
+            if (cfg.multiple) {
+                DOM.toggleClass(toTrigger, cfg.activeTriggerCls);
+            } else {
+                Accordion.superclass._switchTrigger.apply(self, arguments);
+            }
+        },
 
         /**
          * 重复触发时的有效判断
@@ -55,23 +48,31 @@ KISSY.add('switchable/accordion', function(S, DOM, Switchable) {
                 panel = toPanels[0];
 
             if (cfg.multiple) {
-                DOM.toggleClass(self.triggers[index], cfg.activeTriggerCls);
-                DOM.css(panel, DISPLAY, panel.style[DISPLAY] == NONE ? BLOCK : NONE);
+                DOM.toggle(panel);
                 this._fireOnSwitch(index);
-            }
-            else {
-                Accordion.superclass._switchView.call(self, fromPanels, toPanels, index);
+            } else {
+                Accordion.superclass._switchView.apply(self, arguments);
             }
         }
     });
 
+    Accordion.Plugins = [];
+    Accordion.Config = {
+        markupType: 1,
+        triggerType: 'click',
+        multiple: false
+    };
     return Accordion;
 
-}, { requires:["dom","switchable/base"]});
+}, { requires:["dom","../base"]});
 
 /**
  * TODO:
  *
  *  - 支持动画
+ *
+ *  2011-05-10
+ *
+ *   承玉：review ,prepare for aria
  *
  */

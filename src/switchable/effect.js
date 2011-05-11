@@ -2,7 +2,7 @@
  * Switchable Effect Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable/effect', function(S, DOM,Event,Anim,Switchable,undefined) {
+KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefined) {
 
     var
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
@@ -29,35 +29,46 @@ KISSY.add('switchable/effect', function(S, DOM,Event,Anim,Switchable,undefined) 
 
         // 最朴素的显示/隐藏效果
         none: function(fromEls, toEls, callback) {
-            DOM.css(fromEls, DISPLAY, NONE);
+            if (fromEls) {
+                DOM.css(fromEls, DISPLAY, NONE);
+            }
             DOM.css(toEls, DISPLAY, BLOCK);
             callback();
         },
 
         // 淡隐淡现效果
         fade: function(fromEls, toEls, callback) {
-            if (fromEls.length !== 1) {
-                S.error('fade effect only supports steps == 1.');
+            if (fromEls) {
+                if (fromEls.length !== 1) {
+                    S.error('fade effect only supports steps == 1.');
+                }
             }
-            var self = this, cfg = self.config,
-                fromEl = fromEls[0], toEl = toEls[0];
+
+            var self = this,
+                cfg = self.config,
+                fromEl = fromEls ? fromEls[0] : null,
+                toEl = toEls[0];
 
             if (self.anim) self.anim.stop(true);
 
             // 首先显示下一张
             DOM.css(toEl, OPACITY, 1);
 
-            // 动画切换
-            self.anim = new Anim(fromEl, { opacity: 0 }, cfg.duration, cfg.easing, function() {
-                self.anim = undefined; // free
+            if (fromEl) {
+                // 动画切换
+                self.anim = new Anim(fromEl, { opacity: 0 }, cfg.duration, cfg.easing, function() {
+                    self.anim = undefined; // free
 
-                // 切换 z-index
+                    // 切换 z-index
+                    DOM.css(toEl, Z_INDEX, 9);
+                    DOM.css(fromEl, Z_INDEX, 1);
+
+                    callback();
+                }, cfg.nativeAnim).run();
+            } else {
                 DOM.css(toEl, Z_INDEX, 9);
-                DOM.css(fromEl, Z_INDEX, 1);
-
                 callback();
-            }, cfg.nativeAnim).run();
-
+            }
         },
 
         // 水平/垂直滚动效果
@@ -123,7 +134,7 @@ KISSY.add('switchable/effect', function(S, DOM,Event,Anim,Switchable,undefined) 
 
                         // 设置定位信息，为滚动效果做铺垫
                         DOM.css(content, POSITION, ABSOLUTE);
-                        
+
                         DOM.css(content.parentNode, POSITION, RELATIVE); // 注：content 的父级不一定是 container
 
                         // 水平排列

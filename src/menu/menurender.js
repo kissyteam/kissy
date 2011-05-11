@@ -28,6 +28,9 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
             var el = this.get("el");
             el.attr("role", "menu");
             el.attr("aria-haspopup", true);
+            if (!el.attr("id")) {
+                el.attr("id", S.guid("ks-menu"));
+            }
         },
 
 

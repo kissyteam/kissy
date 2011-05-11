@@ -17,6 +17,7 @@ KISSY.add('switchable/slide', function(S, Switchable) {
      * @constructor
      */
     function Slide(container, config) {
+        
         var self = this;
 
         // factory or constructor
@@ -32,4 +33,4 @@ KISSY.add('switchable/slide', function(S, Switchable) {
 
     return Slide;
 
-}, { requires:["switchable/base"]});
+}, { requires:["./base"]});

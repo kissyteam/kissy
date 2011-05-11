@@ -81,10 +81,10 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         //self.content
 
         /**
-         * 当前激活的 index
+         * 当前激活的 index，内部使用，不可外部设置
          * @type Number
          */
-        self.activeIndex = config.activeIndex;
+        self.activeIndex = config.activeIndex = -1;
 
         self._init();
     }
@@ -113,9 +113,9 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         // 触发延迟
         delay: .1, // 100ms
 
-        activeIndex: 0, // markup 的默认激活项应与 activeIndex 保持一致
+        activeIndex: -1, // markup 的默认激活项应与 activeIndex 保持一致
         activeTriggerCls: 'ks-active',
-        //switchTo: 0,
+        switchTo: 0,  // 初始切换到面板，默认第一个
 
         // 可见视图内有多少个 panels
         steps: 1,
@@ -138,11 +138,6 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
             // parse markup
             self._parseMarkup();
 
-            // 切换到指定项
-            if (cfg.switchTo) {
-                self.switchTo(cfg.switchTo);
-            }
-
             // bind triggers
             if (cfg.hasTriggers) {
                 self._bindTriggers();
@@ -163,6 +158,10 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
             }
 
             self.fire(EVENT_INIT);
+            // 切换到指定项
+            if (S.isNumber(cfg.switchTo)) {
+                self.switchTo(cfg.switchTo);
+            }
         },
 
         /**
@@ -334,7 +333,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
             // switch view
             self._switchView(
-                panels.slice(fromIndex, fromIndex + steps),
+                activeIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
                 panels.slice(toIndex, toIndex + steps),
                 index,
                 direction);
@@ -360,7 +359,9 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
          */
         _switchView: function(fromPanels, toPanels, index/*, direction*/) {
             // 最简单的切换效果：直接隐藏/显示
-            DOM.css(fromPanels, DISPLAY, NONE);
+            if (fromPanels) {
+                DOM.css(fromPanels, DISPLAY, NONE);
+            }
             DOM.css(toPanels, DISPLAY, BLOCK);
 
             // fire onSwitch events
@@ -400,6 +401,8 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
  * 承玉：2011.05.10
  *   - init plugins by Hierarchy
  *   - init config by hierarchy
+ *   - switchTo 处理，外部设置，初始展开面板
+ *   - activeIndex 不可外部设置，内部使用
  *
  * 2010.07
  *  - 重构，去掉对 YUI2-Animation 的依赖

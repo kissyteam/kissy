@@ -86,9 +86,6 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
                 }
             });
 
-            // 开始第一次
-            startAnim(host.activeIndex);
-
             // 开始倒计时动画
             function startAnim() {
                 stopAnim(); // 开始之前，先确保停止掉之前的
