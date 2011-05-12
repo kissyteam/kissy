@@ -14,22 +14,30 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/4/14)
+ - [*] KISSY.Accordion 增加 aria 配置
+ - [*] KISSY.Carousel 增加 aria 配置
+ - [*] KISSY.Tabs 增加 aria 配置
  - [*] KISSY.Overlay 增加 aria 配置，trap focus and keydown
  - [*] KISSY.param/unparam 增加数组处理选项
  - [+] KISSY.getScript 支持 css 载入后调用回调
  - [+] KISSY.getScript 支持除了ie<9外的 error 立即回调
  - [x] KISSY Loader 初步重构，拆分文件
  - [x] bugfix anim 内存泄露
- - [+] anim 支持 scrollLeft ,scrollTop 配置
+ - [+] anim 重构，支持 scrollLeft ,scrollTop 配置
  - [+] 增加 anim 单元测试
  - [+] loader 支持包配置，各个模块无需配置路径 (http://docs.kissyui.com/docs/html/seed/loader/index.html)
  - [+] loader 增加单元测试
  - [+] overlay 增加 resize 配置
+ - [+] overlay 增加单元测试
  - [+] 增加 button 组件
  - [+] 增加 menubutton 组件
  - [+] 增加 menu 组件
+ - [+] 增加 component 组件基类
  - [+] kissy-tools 增加 module-compiler 工具
  - [+] dd 支持 drop 以及基于委托的 drag&drop
+ - [+] dd 增加单元测试
+ - [*] 所有模块结构根据 loader 重新组织
+ - [*] kissyteam 文档利用 sphinx 重新编写整理
 
 ### v1.1.5 -> v1.1.6 (2010/11/30)
 

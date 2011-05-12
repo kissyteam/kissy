@@ -49,10 +49,22 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                 fromEl = fromEls ? fromEls[0] : null,
                 toEl = toEls[0];
 
-            if (self.anim) self.anim.stop(true);
+            if (self.anim) {
+                var el = self.anim.domEl;
+                S.log("stop:");
+
+                self.anim.stop();
+//                S.log("stop : ");
+              S.log( (S.indexOf(el, DOM.children(el.parentNode))));
+            }
 
             // 首先显示下一张
             DOM.css(toEl, OPACITY, 1);
+
+//            S.log("from:");
+//            S.log(fromEl);
+//            S.log("to:");
+//            S.log(toEl);
 
             if (fromEl) {
                 // 动画切换
@@ -63,11 +75,13 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                     DOM.css(toEl, Z_INDEX, 9);
                     DOM.css(fromEl, Z_INDEX, 1);
 
-                    callback();
+                    callback && callback();
+                    S.log("anim callback : " +
+                        (S.indexOf(toEl, DOM.children(toEl.parentNode))));
                 }, cfg.nativeAnim).run();
             } else {
                 DOM.css(toEl, Z_INDEX, 9);
-                callback();
+                callback && callback();
             }
         },
 
@@ -80,7 +94,9 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
 
             props[isX ? LEFT : TOP] = -diff + PX;
 
-            if (self.anim) self.anim.stop();
+            if (self.anim) {
+                self.anim.stop();
+            }
 
             self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
                 self.anim = undefined; // free
@@ -173,14 +189,15 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
      */
     S.augment(Switchable, {
 
-        _switchView: function(fromEls, toEls, index, direction) {
+        _switchView: function(fromEls, toEls, index, direction, ev, callback) {
 
             var self = this, cfg = self.config,
                 effect = cfg.effect,
                 fn = S.isFunction(effect) ? effect : Effects[effect];
 
             fn.call(self, fromEls, toEls, function() {
-                self._fireOnSwitch(index);
+                self._fireOnSwitch(index, ev);
+                callback && callback.call(self);
             }, index, direction);
         }
 

@@ -1,6 +1,6 @@
 /**
  * Switchable
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  玉伯<lifesinger@gmail.com>,yiminghe@gmail.com
  */
 KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
@@ -86,7 +86,20 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
          */
         self.activeIndex = config.activeIndex = -1;
 
+        /**
+         * 正打算激活的 index，内部使用，不可外部设置
+         * 一般和 activeIndex 相同，有动画时，则有落差
+         */
+        self.ingIndex = -1;
+
         self._init();
+        self._initPlugins();
+        self.fire(EVENT_INIT);
+        // 切换到指定项
+        if (S.isNumber(config.switchTo)) {
+            self.switchTo(config.switchTo);
+        }
+
     }
 
     // 默认配置
@@ -129,23 +142,10 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
     S.augment(Switchable, EventTarget, {
 
-        /**
-         * init switchable
-         */
-        _init: function() {
-            var self = this, cfg = self.config;
-
-            // parse markup
-            self._parseMarkup();
-
-            // bind triggers
-            if (cfg.hasTriggers) {
-                self._bindTriggers();
-            }
-
+        _initPlugins:function() {
             // init plugins by Hierarchy
-
-            var pluginHost = this.constructor;
+            var self = this,
+                pluginHost = self.constructor;
             while (pluginHost) {
                 S.each(pluginHost.Plugins, function(plugin) {
                     if (plugin.init) {
@@ -156,11 +156,21 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
                     pluginHost.superclass.constructor :
                     null;
             }
+        },
 
-            self.fire(EVENT_INIT);
-            // 切换到指定项
-            if (S.isNumber(cfg.switchTo)) {
-                self.switchTo(cfg.switchTo);
+        /**
+         * init switchable
+         */
+        _init: function() {
+            var self = this,
+                cfg = self.config;
+
+            // parse markup
+            self._parseMarkup();
+
+            // bind triggers
+            if (cfg.hasTriggers) {
+                self._bindTriggers();
             }
         },
 
@@ -209,6 +219,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
             // get content
             self.content = content || panels[0].parentNode;
+            self.nav = nav || cfg.hasTriggers && triggers[0].parentNode;
         },
 
         /**
@@ -244,16 +255,16 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
                 (function(index) {
                     trigger = triggers[index];
 
-                    Event.on(trigger, 'click', function() {
-                        self._onFocusTrigger(index);
+                    Event.on(trigger, 'click', function(ev) {
+                        self._onFocusTrigger(index, ev);
                     });
 
                     if (cfg.triggerType === 'mouse') {
-                        Event.on(trigger, 'mouseenter', function() {
-                            self._onMouseEnterTrigger(index);
+                        Event.on(trigger, 'mouseenter', function(ev) {
+                            self._onMouseEnterTrigger(index, ev);
                         });
-                        Event.on(trigger, 'mouseleave', function() {
-                            self._onMouseLeaveTrigger(index);
+                        Event.on(trigger, 'mouseleave', function(ev) {
+                            self._onMouseLeaveTrigger(index, ev);
                         });
                     }
                 })(i);
@@ -263,23 +274,25 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         /**
          * click or tab 键激活 trigger 时触发的事件
          */
-        _onFocusTrigger: function(index) {
+        _onFocusTrigger: function(index, ev) {
             var self = this;
             if (!self._triggerIsValid(index)) return; // 重复点击
 
             this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
-            self.switchTo(index);
+            self.switchTo(index, undefined, ev);
         },
 
         /**
          * 鼠标悬浮在 trigger 上时触发的事件
          */
-        _onMouseEnterTrigger: function(index) {
+        _onMouseEnterTrigger: function(index, ev) {
             var self = this;
-            if (!self._triggerIsValid(index)) return; // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
+            if (!self._triggerIsValid(index)) {
+                return;
+            } // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
 
             self.switchTimer = S.later(function() {
-                self.switchTo(index);
+                self.switchTo(index, undefined, ev);
             }, self.config.delay * 1000);
         },
 
@@ -294,7 +307,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
          * 重复触发时的有效判断
          */
         _triggerIsValid: function(index) {
-            return this.activeIndex !== index;
+            return this.ingIndex !== index;
         },
 
         /**
@@ -309,37 +322,53 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         },
 
         /**
-         * 切换操作
+         * 切换操作，对外 api
+         * @param index 要切换的项
+         * @param direction 方向，用于 effect
+         * @param ev 引起该操作的事件
+         * @param callback 运行完回调，和绑定 switch 事件作用一样
          */
-        switchTo: function(index, direction) {
-            var self = this, cfg = self.config,
-                triggers = self.triggers, panels = self.panels,
-                activeIndex = self.activeIndex,
+        switchTo: function(index, direction, ev, callback) {
+            var self = this,
+                cfg = self.config,
+                triggers = self.triggers,
+                panels = self.panels,
+                ingIndex = self.ingIndex,
                 steps = cfg.steps,
-                fromIndex = activeIndex * steps, toIndex = index * steps;
+                fromIndex = ingIndex * steps,
+                toIndex = index * steps;
 
-            if (!self._triggerIsValid(index)) return self; // 再次避免重复触发
-            if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) return self;
+            // 再次避免重复触发
+            if (!self._triggerIsValid(index)) {
+                return self;
+            }
+            if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) {
+                return self;
+            }
+
 
             // switch active trigger
             if (cfg.hasTriggers) {
-                self._switchTrigger(activeIndex > -1 ? triggers[activeIndex] : null, triggers[index]);
+                self._switchTrigger(ingIndex > -1 ?
+                    triggers[ingIndex] : null,
+                    triggers[index]);
             }
 
             // switch active panels
             if (direction === undefined) {
-                direction = index > activeIndex ? FORWARD : BACKWARD;
+                direction = index > ingIndex ? FORWARD : BACKWARD;
             }
-
+            self.ingIndex = index;
             // switch view
             self._switchView(
-                activeIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
+                ingIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
                 panels.slice(toIndex, toIndex + steps),
                 index,
-                direction);
-
-            // update activeIndex
-            self.activeIndex = index;
+                direction, ev, function() {
+                    callback && callback.call(self, index);
+                    // update activeIndex
+                    self.activeIndex = index
+                });
 
             return self; // chain
         },
@@ -357,7 +386,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         /**
          * 切换视图
          */
-        _switchView: function(fromPanels, toPanels, index/*, direction*/) {
+        _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
             // 最简单的切换效果：直接隐藏/显示
             if (fromPanels) {
                 DOM.css(fromPanels, DISPLAY, NONE);
@@ -365,14 +394,15 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
             DOM.css(toPanels, DISPLAY, BLOCK);
 
             // fire onSwitch events
-            this._fireOnSwitch(index);
+            this._fireOnSwitch(index, ev);
+            callback && callback.call(this);
         },
 
         /**
          * 触发 switch 相关事件
          */
-        _fireOnSwitch: function(index) {
-            this.fire(EVENT_SWITCH, { currentIndex: index });
+        _fireOnSwitch: function(index, ev) {
+            this.fire(EVENT_SWITCH, S.mix(ev || {}, { currentIndex: index }));
         },
 
         /**
@@ -399,8 +429,8 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 /**
  * NOTES:
  * 承玉：2011.05.10
- *   - init plugins by Hierarchy
- *   - init config by hierarchy
+ *   - 抽象 init plugins by Hierarchy
+ *   - 抽象 init config by hierarchy
  *   - switchTo 处理，外部设置，初始展开面板
  *   - activeIndex 不可外部设置，内部使用
  *

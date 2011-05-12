@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Slide - 有啊滚动新闻条</title>
+
+
+<script src="../../../build/kissy.js"></script>
+<script src="../../../build/datalazyload.js"></script>
+
+<script src="../base.js"></script>
+<script src="../aria.js"></script>
+<script src="../accordion/base.js"></script>
+<script src="../accordion/aria.js"></script>
+<script src="../autoplay.js"></script>
+<script src="../autorender.js"></script>
+<script src="../carousel/base.js"></script>
+<script src="../carousel/aria.js"></script>
+<script src="../effect.js"></script>
+<script src="../circular.js"></script>
+<script src="../countdown.js"></script>
+<script src="../lazyload.js"></script>
+<script src="../slide/base.js"></script>
+<script src="../slide/aria.js"></script>
+<script src="../tabs/base.js"></script>
+<script src="../tabs/aria.js"></script>
+<script src="../../switchable.js"></script>
+<link rel="stylesheet" href="../../../build/cssreset/reset-min.css"/>
+<style>
+    body {
+        padding: 20px 50px 50px;
+    }
+
+    h1 {
+        margin: 30px 0 10px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    h2 {
+        margin: 30px 0 10px;
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    .loading {
+        background: #EBF5FA url(../assets/loading.gif) no-repeat 50% 50%;
+    }
+
+    p.code-switch {
+        color: #09f;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    pre.code {
+        color: #444;
+        cursor: auto;
+        border-left: 2px solid #7F96AA;
+        margin-top: 5px;
+        padding: 0 10px 20px 10px;
+        font-size: 14px;
+    }
+
+    .list li {
+        margin-left: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        list-style-type: circle;
+    }
+
+</style>
+</head>
+<body>
+<h1>Slide - 有啊滚动新闻条</h1>
+<h2>键盘操作</h2>
+<ul class="list">
+    <li>tab 进入卡盘时，停止自动播放</li>
+    <li>上/左键：当焦点位于卡盘时，切换到上一个新闻</li>
+    <li>下/右键：当焦点位于卡盘时，切换到下一个新闻</li>
+    <li>tab 离开卡盘时，开始自动播放</li>
+</ul>
+
+<style>
+    .scroll-news {
+        height: 20px;
+        overflow: hidden;
+    }
+
+    .scroll-news a {
+        color: #FF7E00;
+    }
+</style>
+<div id="demo5" class="scroll-news">
+    <ul class="news-items">
+        <li><a target="_blank" href="http://youa.baidu.com/shop/72e01b38fb26b4ebc5db0136">“一分钱”轻松体验有啊网购流程</a></li>
+        <li><a target="_blank" href="http://co.youa.baidu.com/content/payhelp/b12/zhaoshang/">开通网银，百付宝为您一路护航</a></li>
+        <li><a target="_blank" href="http://co.youa.baidu.com/picture/r/mall/guide/index.html">新手买家？帮助教程带您走通有啊</a></li>
+        <li><a target="_blank" href="http://youa.baidu.com/static/help/quality_form_build.html">尽情挥洒你的创意，共建百度有啊</a></li>
+        <li><a target="_blank" href="http://co.youa.baidu.com/content/help/A10/2008-09-06/153433185574.html">认准标识，精选实力卖家任您选择</a></li>
+        <li><a target="_blank" href="http://co.youa.baidu.com/content/help/A3/2/2008-09-01/143723181295.html#10">收藏</a> + <a target="_blank" href="http://co.youa.baidu.com/content/help/A3/2009-01-08/112820209991.html">购物车</a>，逛街搜店更便捷</li>
+    </ul>
+</div>
+<script>
+    KISSY.use("event,switchable", function(S, Event) {
+        var Slide = S.Slide;
+        S.ready(function(S) {
+            Slide('#demo5', {
+                contentCls: 'news-items',
+                hasTriggers: false,
+                effect: 'scrolly',
+                easing: 'easeOutStrong',
+                interval: 3,
+                duration: .2
+            });
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+<script>
+    KISSY.use("ua,dom,event,node", function(S, UA, DOM, Event, Node) {
+        var NodeList = Node.List,
+
+                SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+
+        NodeList.all('p.code-switch').each(function(p) {
+            p.on('click', function() {
+                var showing = (p.text() === SHOW_CODE),
+                        next = p.next(),
+                        pre = next;
+
+                if (next[0].nodeName !== 'PRE') {
+                    pre = Node('<pre>');
+
+                    pre.attr('class', 'code')
+                            .html(p.prev().html());
+
+                    if (UA['ie']) {
+                        pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
+                    }
+
+                    DOM.insertAfter(pre[0], p[0]);
+                }
+
+                pre.css('display', showing ? 'block' : 'none');
+                p.html(showing ? HIDE_CODE : SHOW_CODE);
+            });
+        });
+    });
+</script>
+</body>
+</html>

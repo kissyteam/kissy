@@ -2,7 +2,7 @@
  * accordion aria support
  * @creator yiminghe@gmail.com
  */
-KISSY.add('switchable/accordion/aria', function(S, Accordion) {
+KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
     var SELECT = "ks-switchable-select";
     var Event = S.Event,DOM = S.DOM;
     var KEY_PAGEUP = 33;
@@ -79,22 +79,7 @@ KISSY.add('switchable/accordion/aria', function(S, Accordion) {
         }
     });
 
-
-    function setTabIndex(root, v) {
-        root.tabIndex = v;
-        DOM.query("*", root).each(function(n) {
-            // a 需要被禁止或者恢复
-            if (n.tabIndex != -1
-                &&
-                (n.nodeName.toLowerCase() == "a"
-                    || n.nodeName.toLowerCase() == "input"
-                    )
-                ) {
-                n.tabIndex = v;
-            }
-        });
-    }
-
+    var setTabIndex = Aria.setTabIndex;
 
     function _currentTabFromEvent(t) {
         var triggers = this.triggers,trigger;
@@ -310,7 +295,7 @@ KISSY.add('switchable/accordion/aria', function(S, Accordion) {
 
 },
 {
-    requires:["./base"]
+    requires:["../aria","./base"]
 });
 
 /**

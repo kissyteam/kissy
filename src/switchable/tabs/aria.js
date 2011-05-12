@@ -2,7 +2,7 @@
  * Tabs aria support
  * @creator yiminghe@gmail.com
  */
-KISSY.add('switchable/tabs/aria', function(S, Tabs) {
+KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
     var Event = S.Event,DOM = S.DOM;
     var KEY_PAGEUP = 33;
@@ -65,21 +65,7 @@ KISSY.add('switchable/tabs/aria', function(S, Tabs) {
         }
     });
 
-
-    function setTabIndex(root, v) {
-        root.tabIndex = v;
-        DOM.query("*", root).each(function(n) {
-            // a 需要被禁止或者恢复
-            if (n.tabIndex != -1
-                &&
-                (n.nodeName.toLowerCase() == "a"
-                    || n.nodeName.toLowerCase() == "input"
-                    )
-                ) {
-                n.tabIndex = v;
-            }
-        });
-    }
+    var setTabIndex = Aria.setTabIndex;
 
 
     function _currentTabFromEvent(t) {
@@ -223,7 +209,7 @@ KISSY.add('switchable/tabs/aria', function(S, Tabs) {
 
 },
 {
-    requires:["./base"]
+    requires:["../aria","./base"]
 });
 
 /**

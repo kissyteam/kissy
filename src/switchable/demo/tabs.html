@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Slide - 有啊首页卡盘</title>
+
+
+<script src="../../../build/kissy.js"></script>
+<script src="../../../build/datalazyload.js"></script>
+
+<script src="../base.js"></script>
+<script src="../aria.js"></script>
+<script src="../accordion/base.js"></script>
+<script src="../accordion/aria.js"></script>
+<script src="../autoplay.js"></script>
+<script src="../autorender.js"></script>
+<script src="../carousel/base.js"></script>
+<script src="../carousel/aria.js"></script>
+<script src="../effect.js"></script>
+<script src="../circular.js"></script>
+<script src="../countdown.js"></script>
+<script src="../lazyload.js"></script>
+<script src="../slide/base.js"></script>
+<script src="../slide/aria.js"></script>
+<script src="../tabs/base.js"></script>
+<script src="../tabs/aria.js"></script>
+<script src="../../switchable.js"></script>
+<link rel="stylesheet" href="../../../build/cssreset/reset-min.css"/>
+<style>
+    body {
+        padding: 20px 50px 50px;
+    }
+
+    h1 {
+        margin: 30px 0 10px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    h2 {
+        margin: 30px 0 10px;
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    .loading {
+        background: #EBF5FA url(../assets/loading.gif) no-repeat 50% 50%;
+    }
+
+    p.code-switch {
+        color: #09f;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    pre.code {
+        color: #444;
+        cursor: auto;
+        border-left: 2px solid #7F96AA;
+        margin-top: 5px;
+        padding: 0 10px 20px 10px;
+        font-size: 14px;
+    }
+
+    .list li {
+        margin-left: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        list-style-type: circle;
+    }
+
+</style>
+</head>
+<body>
+<h1 id="tabs_aria">Tabs - 普通标签页</h1>
+<style>
+    #demo1 {
+        position: relative;
+        width: 750px;
+        padding-top: 29px;
+    }
+
+    #demo1 .ks-switchable-nav {
+        position: absolute;
+        left: 20px;
+        margin-top: -29px;
+        z-index: 99;
+    }
+
+    .list li {
+        margin-left: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        list-style-type: circle;
+    }
+
+    #demo1 .ks-switchable-nav li {
+        float: left;
+        width: 130px;
+        height: 27px;
+        line-height: 21px;
+        text-align: center;
+        background: url(../assets/tabs-sprite.gif) no-repeat 0 6px;
+        margin-right: 3px;
+        padding-top: 8px;
+        cursor: pointer;
+    }
+
+    #demo1 .ks-switchable-nav li.ks-active {
+        background-position: 0 -40px;
+        cursor: default;
+    }
+
+    #demo1 .ks-switchable-content {
+        position: relative;
+        height: 120px;
+        padding: 20px;
+        border: 1px solid #AEC7E5;
+    }
+
+    #accordion1 .ks-switchable-select {
+        background: white !important;
+    }
+</style>
+
+
+<h2>键盘快捷键</h2>
+
+<ul class="list">
+    <li>左/上键:当焦点在标签时转到上一个标签
+    <li>右/下键:当焦点在标签时转到下一个标签
+    <li>Home: 当焦点在标签时转到第一个标签
+    <li>End: 当焦点在标签时转到最后一个标签
+    <li>Control + PgUp : 当然焦点在容器内时转到当前标签上一个标签
+    <li>Control + PgDn : 当然焦点在容器内时转到当前标签下一个标签
+</ul>
+<p>
+    note : chrome 不支持 Control + PgUp 以及 Control + PgDn
+</p>
+<div id="demo1" class="section">
+
+    <ul class="ks-switchable-nav">
+        <!-- title 争渡读屏器不读-->
+        <li aria-labelledby='a_tip' title="读屏器读不出来">
+            <span style="display:none" id="a_tip">标题 A，可左右键切换操作</span>
+            <a href="http://www.taobao.com">标题 A</a></li>
+        <li><a href="http://www.taobao.com">标题 B</a></li>
+        <li>标题 C</li>
+        <li>标题 D</li>
+        <li>标题 E</li>
+    </ul>
+    <div class="ks-switchable-content">
+        <div style="display: none">
+<pre>
+  - 在当前 trigger 中 mouseover/mouseout, click, focus, 不触发
+  - 鼠标快速滑过非当前 trigger, 不触发
+  - mouseover 到非当前 trigger, 停留时间到达延迟时，触发
+  - click 或 Tab 切换到 trigger, 立即触发
+  - beforeSwitch/onSwitch 事件的触发
+  - 延迟的内容能正确加载
+
+
+    <a href="#"> 内容 a</a>
+</pre>
+        </div>
+        <div style="display: none"><a href="#">内容 B</a></div>
+        <div style="display: none"><a href="#">内容 C</a></div>
+        <div style="display: none"><a href="#">内容 D</a></div>
+        <div style="display: none">
+            <textarea class="ks-datalazyload-custom">
+                <a href="#">我是延迟内容</a>
+                <script>alert('我是延迟内容中的脚本，仅在第一次加载时执行。');</script>
+            </textarea>
+        </div>
+    </div>
+</div>
+<script>
+    KISSY.use("datalazyload,switchable", function(S) {
+
+        var Tabs = S.Tabs
+
+        S.ready(function(S) {
+
+            var tabs = new Tabs('#demo1', {
+                // aria:false 默认 true，支持 aria
+            });
+
+            tabs.on('beforeSwitch', function(ev) {
+                var index = ev.toIndex;
+                if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
+                    //this.panels[index].innerHTML = 'index = ' + index;
+                }
+            });
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+
+<script>
+    KISSY.use("ua,dom,event,node", function(S, UA, DOM, Event, Node) {
+        var NodeList = Node.List,
+
+                SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+
+        NodeList.all('p.code-switch').each(function(p) {
+            p.on('click', function() {
+                var showing = (p.text() === SHOW_CODE),
+                        next = p.next(),
+                        pre = next;
+
+                if (next[0].nodeName !== 'PRE') {
+                    pre = Node('<pre>');
+
+                    pre.attr('class', 'code')
+                            .html(p.prev().html());
+
+                    if (UA['ie']) {
+                        pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
+                    }
+
+                    DOM.insertAfter(pre[0], p[0]);
+                }
+
+                pre.css('display', showing ? 'block' : 'none');
+                p.html(showing ? HIDE_CODE : SHOW_CODE);
+            });
+        });
+    });
+</script>
+</body>
+</html>

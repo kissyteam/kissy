@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Slide - 淘宝首页卡盘</title>
+
+
+<script src="../../../build/kissy.js"></script>
+<script src="../../../build/datalazyload.js"></script>
+
+<script src="../base.js"></script>
+<script src="../aria.js"></script>
+<script src="../accordion/base.js"></script>
+<script src="../accordion/aria.js"></script>
+<script src="../autoplay.js"></script>
+<script src="../autorender.js"></script>
+<script src="../carousel/base.js"></script>
+<script src="../carousel/aria.js"></script>
+<script src="../effect.js"></script>
+<script src="../circular.js"></script>
+<script src="../countdown.js"></script>
+<script src="../lazyload.js"></script>
+<script src="../slide/base.js"></script>
+<script src="../slide/aria.js"></script>
+<script src="../tabs/base.js"></script>
+<script src="../tabs/aria.js"></script>
+<script src="../../switchable.js"></script>
+<link rel="stylesheet" href="../../../build/cssreset/reset-min.css"/>
+<style>
+    body {
+        padding: 20px 50px 50px;
+    }
+
+    h1 {
+        margin: 30px 0 10px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    h2 {
+        margin: 30px 0 10px;
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    .loading {
+        background: #EBF5FA url(../assets/loading.gif) no-repeat 50% 50%;
+    }
+
+    p.code-switch {
+        color: #09f;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    pre.code {
+        color: #444;
+        cursor: auto;
+        border-left: 2px solid #7F96AA;
+        margin-top: 5px;
+        padding: 0 10px 20px 10px;
+        font-size: 14px;
+    }
+
+    #demo2 {
+        position: relative;
+        width: 470px;
+        height: 150px;
+        border: 1px solid #B6D1E6;
+        overflow: hidden;
+    }
+
+    #demo2 .ks-switchable-nav {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        z-index: 99;
+    }
+
+    #demo2 .ks-switchable-nav li {
+        float: left;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        margin-left: 3px;
+        background-color: #FCF2CF;
+        border: 1px solid #F47500;
+        color: #D94B01;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    #demo2 .ks-switchable-nav li.ks-active {
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        margin-top: -1px;
+        color: #FFF;
+        background-color: #FFB442;
+        font-weight: bold;
+    }
+
+    #demo2 .ks-switchable-content li {
+        height: 150px;
+        width: 470px;
+        overflow: hidden;
+    }
+
+    /* for countdown plugin */
+    #demo2 .ks-switchable-nav li,
+    #demo2 .ks-switchable-trigger-content {
+        position: relative;
+    }
+
+    #demo2 .ks-switchable-trigger-mask {
+        position: absolute;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background-color: #FF9415;
+        visibility: hidden
+    }
+
+    #demo2 .ks-active .ks-switchable-trigger-mask {
+        visibility: visible
+    }
+
+     .list li {
+        margin-left: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        list-style-type: circle;
+    }
+
+</style>
+</head>
+<body>
+<h1>Slide - 淘宝首页卡盘</h1>
+<h2>键盘操作</h2>
+<ul class="list">
+    <li>tab 进入卡盘时，停止自动播放</li>
+    <li>上/左键：当焦点位于卡盘时，切换到上一个 slide 面板</li>
+    <li>下/右键：当焦点位于卡盘时，切换到下一个 slide 面板</li>
+    <li>tab 离开卡盘时，开始自动播放</li>
+</ul>
+<div id="demo2" class="section loading">
+    <ol class="ks-switchable-content">
+        <li><a href="slide-taobao.html#" target="_blank"><img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
+        <li class="hidden"><a target="_blank" href="slide-taobao.html#"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></a></li>
+        <li class="hidden"><a target="_blank" href="slide-taobao.html#"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-29/091229160359.jpg"/></a></li>
+        <li class="hidden"><a href="slide-taobao.html#" target="_blank"><img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
+        <li class="hidden">
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="470" height="150" class="holiday-logo">
+                <param name="movie" value="http://img04.taobaocdn.com/tps/i4/T1bblrXfBrXXXXXXXX.swf"/>
+                <param name="quality" value="high"/>
+                <param name="swfversion" value="8.0.0"/>
+                <param name="wmode" value="opaque"/>
+                <!--[if !IE]>-->
+                <object type="application/x-shockwave-flash" data="http://img04.taobaocdn.com/tps/i4/T1bblrXfBrXXXXXXXX.swf" width="470" height="150" name="holiday-logo" class="holiday-logo">
+                    <param name="wmode" value="opaque"/>
+                </object>
+                <!--<![endif]-->
+            </object>
+        </li>
+    </ol>
+</div>
+<button id="demo2-btn">stop autoplay</button>
+<script>
+    KISSY.use("event,switchable", function(S, Event, Switchable) {
+        var Slide = S.Slide;
+
+        S.ready(function(S) {
+
+            var s = Slide('#demo2', {
+                effect: 'scrolly',
+                easing: 'easeOutStrong',
+                countdown: true,
+                countdownFromStyle: 'width:18px'
+            });
+
+            Event.on('#demo2-btn', 'click', function() {
+                s.stop();
+            })
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+<script>
+    KISSY.use("ua,dom,event,node", function(S, UA, DOM, Event, Node) {
+        var NodeList = Node.List,
+
+                SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+
+        NodeList.all('p.code-switch').each(function(p) {
+            p.on('click', function() {
+                var showing = (p.text() === SHOW_CODE),
+                        next = p.next(),
+                        pre = next;
+
+                if (next[0].nodeName !== 'PRE') {
+                    pre = Node('<pre>');
+
+                    pre.attr('class', 'code')
+                            .html(p.prev().html());
+
+                    if (UA['ie']) {
+                        pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
+                    }
+
+                    DOM.insertAfter(pre[0], p[0]);
+                }
+
+                pre.css('display', showing ? 'block' : 'none');
+                p.html(showing ? HIDE_CODE : SHOW_CODE);
+            });
+        });
+    });
+</script>
+</body>
+</html>

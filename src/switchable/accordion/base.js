@@ -37,19 +37,21 @@ KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
          */
         _triggerIsValid: function(index) {
             // multiple 模式下，再次触发意味着切换展开/收缩状态
-            return this.activeIndex !== index || this.config.multiple;
+            return Accordion.superclass._triggerIsValid.call(this, index)
+                || this.config.multiple;
         },
 
         /**
          * 切换视图
          */
-        _switchView: function(fromPanels, toPanels, index) {
+        _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
             var self = this, cfg = self.config,
                 panel = toPanels[0];
 
             if (cfg.multiple) {
                 DOM.toggle(panel);
-                this._fireOnSwitch(index);
+                this._fireOnSwitch(index, ev);
+                callback.call(this);
             } else {
                 Accordion.superclass._switchView.apply(self, arguments);
             }
@@ -71,8 +73,7 @@ KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
  *
  *  - 支持动画
  *
- *  2011-05-10
- *
- *   承玉：review ,prepare for aria
+ *  承玉：2011.05.10
+ *   - review ,prepare for aria
  *
  */

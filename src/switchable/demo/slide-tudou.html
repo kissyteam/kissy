@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Slide - 有啊滚动新闻条</title>
+
+
+<script src="../../../build/kissy.js"></script>
+<script src="../../../build/datalazyload.js"></script>
+
+<script src="../base.js"></script>
+<script src="../aria.js"></script>
+<script src="../accordion/base.js"></script>
+<script src="../accordion/aria.js"></script>
+<script src="../autoplay.js"></script>
+<script src="../autorender.js"></script>
+<script src="../carousel/base.js"></script>
+<script src="../carousel/aria.js"></script>
+<script src="../effect.js"></script>
+<script src="../circular.js"></script>
+<script src="../countdown.js"></script>
+<script src="../lazyload.js"></script>
+<script src="../slide/base.js"></script>
+<script src="../slide/aria.js"></script>
+<script src="../tabs/base.js"></script>
+<script src="../tabs/aria.js"></script>
+<script src="../../switchable.js"></script>
+<link rel="stylesheet" href="../../../build/cssreset/reset-min.css"/>
+<style>
+    body {
+        padding: 20px 50px 50px;
+    }
+
+    h1 {
+        margin: 30px 0 10px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    h2 {
+        margin: 30px 0 10px;
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    .loading {
+        background: #EBF5FA url(../assets/loading.gif) no-repeat 50% 50%;
+    }
+
+    p.code-switch {
+        color: #09f;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    pre.code {
+        color: #444;
+        cursor: auto;
+        border-left: 2px solid #7F96AA;
+        margin-top: 5px;
+        padding: 0 10px 20px 10px;
+        font-size: 14px;
+    }
+
+    .list li {
+        margin-left: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        list-style-type: circle;
+    }
+
+</style>
+</head>
+<body>
+<h1>Slide - 土豆今日焦点</h1>
+<style>
+    #slideFocus {
+        border: 1px solid #C2C2C2;
+        height: 284px;
+        width: 678px;
+        overflow: hidden;
+    }
+
+    #slideFocus .h {
+        background: #f3f3f3;
+        padding: 3px 0 7px 12px;
+    }
+
+    #slideFocus .c {
+        padding: 9px 10px 0;
+    }
+
+    #slideFocus .pic {
+        width: 379px;
+        height: 233px;
+        overflow: hidden;
+        float: left;
+    }
+
+    #slideFocus .txt {
+        width: 270px;
+        float: right;
+    }
+
+    #slideFocus .desc-list h4 a {
+        font-size: 14px;
+        line-height: 25px;
+        color: #f60;
+    }
+
+    #slideFocus .desc-list p {
+        height: 55px;
+        line-height: 18px;
+        color: #666;
+        overflow: hidden;
+        margin: 10px 0;
+    }
+
+    #slideFocus .thumbs-list li {
+        float: left;
+        height: 62px;
+        width: 84px;
+        padding: 2px;
+        margin: 1px;
+        display: inline !important;
+    }
+
+    #slideFocus .thumbs-list li.current {
+        background-color: #f60;
+    }
+</style>
+<h2>键盘操作</h2>
+<ul class="list">
+    <li>tab 进入卡盘时，停止自动播放</li>
+    <li>上/左键：当焦点位于卡盘时，切换到上一个 slide 面板</li>
+    <li>下/右键：当焦点位于卡盘时，切换到下一个 slide 面板</li>
+    <li>tab 离开卡盘时，开始自动播放</li>
+</ul>
+
+<div id="slideFocus">
+    <div class="h">
+        <h3>今日焦点视频</h3>
+    </div>
+    <div class="c">
+        <div class="pic loading">
+            <ul class="pic-list">
+                <li><a href="#"><img alt="" src="http://at-img4.tdimg.com/board/2010/1/2235.jpg"/></a></li>
+                <li><a href="#"><img alt="" src="http://at-img3.tdimg.com/board/2010/1/2_5.jpg"/></a></li>
+                <li><a href="#"><img alt="" src="http://at-img4.tdimg.com/board/2010/1/tt.jpg"/></a></li>
+                <li><a href="#"><img alt="" src="http://at-img2.tdimg.com/board/2009/12/avatarchina.jpg"/></a></li>
+                <li><a href="#"><img alt="" src="http://at-img1.tdimg.com/board/2009/12/0101jyu-daxue379.jpg"/></a></li>
+                <li><a href="#"><img alt="" src="http://at-img2.tdimg.com/board/2010/1/24_1.jpg"/></a></li>
+            </ul>
+        </div>
+        <div class="txt">
+            <ul class="desc-list">
+                <li style="display: block">
+                    <h4><a title="《神话》热播 第05集21:10分上线" target="_blank" href="http://www.tudou.com/home/_53991369">《神话》热播 第05集21:10分上线</a></h4>
+                    <p>秦代的刑场上，一个身着奇装异服的年轻人从天而降，众将士议论纷纷，不敢近前，不知是叛贼来劫法场，还是神仙妖孽下凡……</p>
+                </li>
+                <li style="display: none">
+                    <h4><a target="_blank" href="http://www.tudou.com/playlist/playindex.do?lid=7684460&amp;iid=44145734&amp;cid=3">2010年第一场强降雪飘落京城</a></h4>
+                    <p>继昨日凌晨降下新年首场小雪，今日首场强降雪飘落京城，据气象台预计雪后北京将降温至-16℃，这也将创下近40年来的最低温记录。</p>
+                </li>
+                <li style="display: none">
+                    <h4><a target="_blank" href="http://www.tudou.com/playlist/playindex.do?lid=7683893">娱乐圈丑闻 导演张一白吸毒被抓</a></h4>
+                    <p>正拍摄《杜拉拉升职记》的导演张一白因吸毒被抓，据传是其捧红的徐静蕾“告密”，衣食无忧、事业有成的明星，为何屡屡曝出吸毒丑闻？</p>
+                </li>
+                <li style="display: none">
+                    <h4><a target="_blank" href="http://www.tudou.com/home/avatar2010">詹姆斯-卡梅隆传奇巨制《阿凡达》</a></h4>
+                    <p>曾因《泰坦尼克号》创造过票房记录的好莱坞导演詹姆斯-卡梅隆，经过了14年的酝酿，耗资4亿美元拍制的科幻巨献《阿凡达》将于4日在中国上映！</p>
+                </li>
+                <li style="display: none">
+                    <h4><a target="_blank" href="http://www.tudou.com/playlist/playindex.do?lid=7637976">2009年大学生十大杯具事件</a></h4>
+                    <p>从70岁老教授潜规则艺校女生，到上海贫困女硕士自杀，09年发生在大学生身上的是非真是多得来令人惊诧，除了心酸就只有“杯具”了。</p>
+                </li>
+                <li style="display: none">
+                    <h4><a target="_blank" href="http://www.tudou.com/home/_52974690/">尚周刊 第三期</a></h4>
+                    <p>全新《尚周刊》在新年里与大家新鲜见面。简约是本周最IN的街头风！闪亮派对妆是每个潮女必备美妆术！想了解更多时尚资讯来《尚周刊》！</p>
+                </li>
+            </ul>
+            <ul class="thumbs-list">
+                <li class="current"><img alt="" width="84" height="62" src="http://at-img4.tdimg.com/board/2010/1/%CA%D7%D2%B3%BD%B9%B5%E3%CD%BCs.jpg"/></li>
+                <li><img alt="" width="84" height="62" src="http://at-img3.tdimg.com/board/2010/1/2_4.jpg"/></li>
+                <li><img alt="" width="84" height="62" src="http://at-img4.tdimg.com/board/2010/1/tt1.jpg"/></li>
+                <li><img alt="" width="84" height="62" src="http://at-img2.tdimg.com/board/2009/12/avatarchina-s.jpg"/></li>
+                <li><img alt="" width="84" height="62" src="http://at-img4.tdimg.com/board/2009/12/0101jyu-82641.jpg"/></li>
+                <li><img alt="" width="84" height="62" src="http://at-img1.tdimg.com/board/2010/1/4_1.jpg"/></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    KISSY.use("dom,event,anim,switchable", function(S, DOM, Event, Anim, Switchable) {
+        var Slide = S.Slide,
+
+                Easing = S.Easing;
+
+        S.ready(function(S) {
+            var descList = DOM.children('#slideFocus ul.desc-list');
+
+            var slide = new Slide('#slideFocus', {
+                contentCls: 'pic-list',
+                navCls: 'thumbs-list',
+                activeTriggerCls: 'current',
+                effect: 'scrollx',
+                easing: Easing.easeOutStrong
+            });
+
+            slide.on('beforeSwitch', function(ev) {
+                S.each(descList, function(desc, i) {
+                    desc.style.display = i === ev.toIndex ? 'block' : 'none';
+                });
+            });
+        });
+    });
+</script>
+<p class="code-switch">显示源码</p>
+<script>
+    KISSY.use("ua,dom,event,node", function(S, UA, DOM, Event, Node) {
+        var NodeList = Node.List,
+
+                SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
+
+        NodeList.all('p.code-switch').each(function(p) {
+            p.on('click', function() {
+                var showing = (p.text() === SHOW_CODE),
+                        next = p.next(),
+                        pre = next;
+
+                if (next[0].nodeName !== 'PRE') {
+                    pre = Node('<pre>');
+
+                    pre.attr('class', 'code')
+                            .html(p.prev().html());
+
+                    if (UA['ie']) {
+                        pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
+                    }
+
+                    DOM.insertAfter(pre[0], p[0]);
+                }
+
+                pre.css('display', showing ? 'block' : 'none');
+                p.html(showing ? HIDE_CODE : SHOW_CODE);
+            });
+        });
+    });
+</script>
+</body>
+</html>

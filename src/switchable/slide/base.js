@@ -1,8 +1,8 @@
 /**
  * Tabs Widget
- * @creator     玉伯<lifesinger@gmail.com>
+ * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable/slide', function(S, Switchable) {
+KISSY.add('switchable/slide/base', function(S, Switchable) {
 
     /**
      * 默认配置，和 Switchable 相同的部分此处未列出
@@ -17,7 +17,7 @@ KISSY.add('switchable/slide', function(S, Switchable) {
      * @constructor
      */
     function Slide(container, config) {
-        
+
         var self = this;
 
         // factory or constructor
@@ -25,12 +25,19 @@ KISSY.add('switchable/slide', function(S, Switchable) {
             return new Slide(container, config);
         }
 
-        Slide.superclass.constructor.call(self, container, S.merge(defaultConfig, config));
+        Slide.superclass.constructor.apply(self, arguments);
         return 0;
     }
+
+    Slide.Config={
+        autoplay: true,
+        circular: true
+    };
+
+    Slide.Plugins=[];
 
     S.extend(Slide, Switchable);
 
     return Slide;
 
-}, { requires:["./base"]});
+}, { requires:["../base"]});
