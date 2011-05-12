@@ -14,12 +14,14 @@
             <path location="accordion/aria.js"/>
             <path location="autoplay.js"/>
             <path location="autorender.js"/>
-            <path location="carousel/carousel.js"/>
+            <path location="carousel/base.js"/>
+            <path location="carousel/aria.js"/>
             <path location="effect.js"/>
             <path location="circular.js"/>
             <path location="countdown.js"/>
             <path location="lazyload.js"/>
-            <path location="slide/slide.js"/>
+            <path location="slide/base.js"/>
+            <path location="slide/aria.js"/>
             <path location="tabs/base.js"/>
             <path location="tabs/aria.js"/>
             <path location="../switchable.js"/>
