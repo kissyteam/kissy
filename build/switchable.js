@@ -407,6 +407,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
          * 触发 switch 相关事件
          */
         _fireOnSwitch: function(index, ev) {
+
             this.fire(EVENT_SWITCH, S.mix(ev || {}, { currentIndex: index }));
         },
 
@@ -1096,7 +1097,7 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
  * aria support for carousel
  * @author:yiminghe@gmail.com
  */
-KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria,Carousel) {
+KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
     var KEY_PAGEUP = 33;
     var KEY_PAGEDOWN = 34;
@@ -1115,7 +1116,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria,Carousel) {
     var KEY_ENTER = 13;
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
-var setTabIndex=Aria.setTabIndex;
+    var setTabIndex = Aria.setTabIndex;
 
 
     function _switch(ev) {
@@ -1128,10 +1129,10 @@ var setTabIndex=Aria.setTabIndex;
         var triggers = self.triggers;
         var trigger = triggers[index];
 
-        var originalTarget = ev['originalTarget'];
+        var domEvent = !!ev.originalEvent.target;
 
         // dom 事件触发
-        if (originalTarget
+        if (domEvent
             // 初始化
             || activeIndex == -1) {
 
@@ -1145,7 +1146,9 @@ var setTabIndex=Aria.setTabIndex;
 
             setTabIndex(trigger, 0);
             setTabIndex(panel, 0);
-            if (originalTarget) {
+
+            //dom 事件触发时，才会进行聚焦，否则会干扰用户
+            if (domEvent) {
                 panel.focus();
             }
         }

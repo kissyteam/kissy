@@ -402,6 +402,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
          * 触发 switch 相关事件
          */
         _fireOnSwitch: function(index, ev) {
+
             this.fire(EVENT_SWITCH, S.mix(ev || {}, { currentIndex: index }));
         },
 
