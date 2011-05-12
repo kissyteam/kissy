@@ -54,7 +54,19 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
             Event.on(content, "focusout", _contentFocusout, self);
 
             setTabIndex(panels[0], 0);
-            self.__slideIndex = 0;
+
+            self.on("switch", function(ev) {
+                var index = ev.currentIndex,
+                    last = self.activeIndex;
+
+                // 其实只有第一次有用
+                self.__slideIndex = index;
+
+                if (last != -1) {
+                    setTabIndex(panels[last], -1);
+                }
+                setTabIndex(panels[index], 0);
+            });
         }
     });
 
@@ -93,9 +105,6 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
                 self.__slideIndex = dest;
                 S.log("keydown switchTo : " + dest);
                 self.switchTo(dest, FORWARD, undefined, function() {
-                    setTabIndex(panels[__slideIndex], -1);
-                    setTabIndex(panels[dest], 0);
-                    S.log(dest + ": focus");
                     panels[dest].focus();
                 });
                 e.halt();
@@ -115,8 +124,6 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
                 self.__slideIndex = dest;
 
                 self.switchTo(dest, BACKWARD, undefined, function() {
-                    setTabIndex(panels[__slideIndex], -1);
-                    setTabIndex(panels[dest], 0);
                     panels[dest].focus();
                 });
                 e.halt();
@@ -155,3 +162,14 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 }, {
     requires:["dom","event","../aria",'./base']
 });
+/**
+ 2011-05-12 承玉：add support for aria & keydown
+
+ <h2>键盘操作</h2>
+ <ul class="list">
+ <li>tab 进入卡盘时，停止自动播放</li>
+ <li>上/左键：当焦点位于卡盘时，切换到上一个 slide 面板</li>
+ <li>下/右键：当焦点位于卡盘时，切换到下一个 slide 面板</li>
+ <li>tab 离开卡盘时，开始自动播放</li>
+ </ul>
+ **/

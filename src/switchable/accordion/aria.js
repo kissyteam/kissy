@@ -299,9 +299,9 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 });
 
 /**
- * 2011-05-08 承玉：add support for aria & keydown
- * <h2>键盘快捷键</h2>
+ 2011-05-08 承玉：add support for aria & keydown
 
+ <h2>键盘快捷键</h2>
  <ul class="list">
  <li>左/上键:当焦点在标签时转到上一个标签
  <li>右/下键:当焦点在标签时转到下一个标签
@@ -310,4 +310,4 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
  <li>Control + PgUp and Control + Shift + Tab: 当然焦点在容器内时转到当前标签上一个标签
  <li>Control + PgDn and Control + Tab: 当然焦点在容器内时转到当前标签下一个标签
  </ul>
- */
+ **/
