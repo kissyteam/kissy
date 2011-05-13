@@ -86,22 +86,25 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         //self.content
 
         /**
-         * 当前激活的 index，内部使用，不可外部设置
+         * 当前激活的 index，内部使用，外部设置需要修改对应 html markup
+         * 不可和 switchTo 并列设置
          * @type Number
          */
-        self.activeIndex = config.activeIndex = -1;
+        self.activeIndex = config.activeIndex;
 
         /**
          * 正打算激活的 index，内部使用，不可外部设置
          * 一般和 activeIndex 相同，有动画时，则有落差
          */
-        self.ingIndex = -1;
+        self.ingIndex = self.activeIndex;
 
         self._init();
         self._initPlugins();
         self.fire(EVENT_INIT);
-        // 切换到指定项
-        if (S.isNumber(config.switchTo)) {
+
+        if (self.activeIndex > -1) {
+
+        } else if (S.isNumber(config.switchTo)) {
             self.switchTo(config.switchTo);
         }
 
